@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6D93064B8;
-	Sat, 25 Oct 2025 16:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B807B3064B8;
+	Sat, 25 Oct 2025 16:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409091; cv=none; b=gO36Yrk1a7Gf9JPwCOzeuYoRf2RNLMkJS7ygu0cGTjRE1pRMyf4nQC+wLi8i0TTiFgnGBbdO3ZOPc+zZmcyoTm+YWJAGOqXBijTnDmPpptR81aU2GR3kv8k18TnWdVqpKeHASbsloU6tveAWBqVAEn7L9bqp8tUNk+6Lobhx7IA=
+	t=1761409092; cv=none; b=Ogp+n9YocfiG/nNB8fqCeVilfBqLVPoLhYGR+kexllyeMCfYOJvnfeLCPo0Eu5aAhf5dee4XI47e8b2XXxuA4ybJ+MEuQZh5rILIojw7R6w1PmuOdvHz0RTQKLjo1Qqg8cIXb0IrE2aP3KLmI/TOcZ9604k/saGG81kxrZfIVdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409091; c=relaxed/simple;
-	bh=bcy/FNX2nM3rn9uGT7sz0nsEClOAEsUqgREQBxMDHZE=;
+	s=arc-20240116; t=1761409092; c=relaxed/simple;
+	bh=nTxO7X31FpijljNR2zZ4Ppp0tK8MEtpSt/YrYPIW/wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ruQN+xGvXR7bQ7GyIetKa1zII3trz7wGQhWnZeN2Ij3ZSs+O4Fganh6Z/KMf+m4Ho5veEfb+3eJSx3e9jqkIQhvxsgODzwnELLUYHaSJrQMqIzHQ0doiWHZEIpLBgJZaqJahf6sb81E4iWOB31y1MO2SbsSmOHPn3hH3pZoNHMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UO4OH+pp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ibz3BY9uXOl543NGGBDgMeP1PHuSTIvik+PaQQNf6gQFvwDFQqasPxM0GpFyXqgyG6A+aOi7Pjf65BrdVi1frIctCP16WOyE8zPBTxGdTXV3Z+6wdKlH94tv4pLLnJxTEzzy1VINcTe6eZQSnv/z5pMZn4D4U0G4/edIEJs++bI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JJxg9GPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UO4OH+pp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFBFC4CEFF;
-	Sat, 25 Oct 2025 16:18:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JJxg9GPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DCFC4CEFB;
+	Sat, 25 Oct 2025 16:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409089;
-	bh=bcy/FNX2nM3rn9uGT7sz0nsEClOAEsUqgREQBxMDHZE=;
+	s=k20201202; t=1761409092;
+	bh=nTxO7X31FpijljNR2zZ4Ppp0tK8MEtpSt/YrYPIW/wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UO4OH+ppx7Twhxgtd0pGwxlOBpCZPLs75312G5UHIbi4WYj9u/Burlf6IkqhHdzM1
-	 r/SYdxKW6xxNC/qxgQRPUX3kfpT6ft8fV9tIN3KyzdHwqRY2MJHWmZWLdrOSQxcuhV
-	 +BICj4T30/2hfVnxEZmVMP8RpmhOevTwoSfeg56GuDUDF5tAjRUAjFRVnuh8dIjWgY
-	 FxZJr4QyQd8oLQxyy05EMdO0/9AbCtEQU+1wX37mU5RRmLsWoxH4HA3Qck2+KKmCzg
-	 i/lzRat0uf1aG/UNgzG6VLeUgCLDT3kjTNUQvVED7r15Iam/oZSL1Tn3FTmbt7jzzo
-	 XvBvOW4uw8xNg==
+	b=JJxg9GPol7xilamtrWRn+PHhG/DBmqoB4w7w2J9VlHacB/fyaVeJ7Kw1snjg4MyPo
+	 gKspNo6V69/cFHVX+kj1vujbQ8Fvp7Ubpx087y9SuNGhmYZphhcX6MYB0KVbcMbILf
+	 VqvPUHegK5YYSDj5aJczyEe4E9uq0WtN1e8vOHFSG7kBIuOUe/Al75oOJFifc5I2ej
+	 Ba6GZoFOUj2cD5DJVrrQLDdEC3LC4foNRtNaX0sybeX+euF1Mpv8uWWShxyxqDz6io
+	 ZTUWg6vQhM69u5csZzmqcgBETHwLWpQnAwVG67WkHdMvJ7GXvxLsT1lT9a2CmHnaO7
+	 /iqCvuXD8Gl7w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhanjun Dong <zhanjun.dong@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+Cc: Nidhish A N <nidhish.a.n@intel.com>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe/guc: Increase GuC crash dump buffer size
-Date: Sat, 25 Oct 2025 11:57:10 -0400
-Message-ID: <20251025160905.3857885-199-sashal@kernel.org>
+	johannes.berg@intel.com,
+	emmanuel.grumbach@intel.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.12] wifi: iwlwifi: fw: Add ASUS to PPAG and TAS list
+Date: Sat, 25 Oct 2025 11:57:11 -0400
+Message-ID: <20251025160905.3857885-200-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,17 +54,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhanjun Dong <zhanjun.dong@intel.com>
+From: Nidhish A N <nidhish.a.n@intel.com>
 
-[ Upstream commit ad83b1da5b786ee2d245e41ce55cb1c71fed7c22 ]
+[ Upstream commit c5318e6e1c6436ce35ba521d96975e13cc5119f7 ]
 
-There are platforms already have a maximum dump size of 12KB, to avoid
-data truncating, increase GuC crash dump buffer size to 16KB.
+Add ASUS to the list of OEMs that are allowed to use
+the PPAG and TAS feature.
 
-Signed-off-by: Zhanjun Dong <zhanjun.dong@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://lore.kernel.org/r/20250829160427.1245732-1-zhanjun.dong@intel.com
+Signed-off-by: Nidhish A N <nidhish.a.n@intel.com>
+Reviewed-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250909061931.499af6568e89.Iafb2cb1c83ff82712c0e9d5529f76bc226ed12dd@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,71 +73,110 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What changed
-  - The non-debug GuC crash log buffer was doubled from 8 KB to 16 KB by
-    changing `CRASH_BUFFER_SIZE` from `SZ_8K` to `SZ_16K` in
-    drivers/gpu/drm/xe/xe_guc_log.h:20. Debug builds remain unchanged at
-    1 MB (drivers/gpu/drm/xe/xe_guc_log.h:16).
+  - Adds a new DMI allowlist entry for `DMI_SYS_VENDOR == "ASUS"`
+    alongside the existing `ASUSTeK COMPUTER INC.` entry for both PPAG
+    and TAS:
+    - PPAG list: drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:46
+      adds an `ASUSTEK` entry for `"ASUSTeK COMPUTER INC."` and a new
+      `ASUS` entry for `"ASUS"` at
+      drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:67.
+    - TAS list: mirrors the same pattern at
+      drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:149 (ASUSTEK)
+      and drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:154 (ASUS).
+  - The `.ident` strings are only labels; matching logic depends on
+    `.matches`.
 
-- Why it matters (bugfix, not a feature)
-  - Commit message states some platforms produce up to 12 KB crash
-    dumps; with an 8 KB buffer this causes truncation. That’s a
-    functional defect in diagnostics: incomplete crash logs hinder
-    debugging and postmortem analysis. Increasing to 16 KB fixes this
-    truncation.
+- How the lists are used
+  - PPAG gating: `iwl_is_ppag_approved()` checks
+    `dmi_ppag_approved_list` and, if not approved, disables PPAG by
+    clearing `fwrt->ppag_flags`
+    (drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:427–439).
+    Callers gate PPAG setup on this:
+    - MVM: drivers/net/wireless/intel/iwlwifi/mvm/fw.c:1068
+    - MLD: drivers/net/wireless/intel/iwlwifi/mld/regulatory.c:203
+  - TAS gating: `iwl_is_tas_approved()` checks `dmi_tas_approved_list`
+    (drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:441–445). If not
+    approved, MVM/MLD explicitly add US and Canada to the TAS block list
+    to disable the feature there:
+    - MVM: drivers/net/wireless/intel/iwlwifi/mvm/fw.c:1110–1120
+    - MLD: drivers/net/wireless/intel/iwlwifi/mld/regulatory.c:352–366
 
-- Containment and safety
-  - The size is consumed by the GuC CTL log parameter field using 4 KB
-    units unless the size is a multiple of 1 MB. With 16 KB, the unit
-    remains 4 KB and the value is encoded via `FIELD_PREP(GUC_LOG_CRASH,
-    CRASH_BUFFER_SIZE / LOG_UNIT - 1)` in
-    drivers/gpu/drm/xe/xe_guc.c:128, with `LOG_UNIT` set to `SZ_4K` for
-    this case (drivers/gpu/drm/xe/xe_guc.c:101-107).
-  - The GuC register field for the crash buffer size is 2 bits
-    (`GUC_LOG_CRASH` is `REG_GENMASK(5, 4)`,
-    drivers/gpu/drm/xe/xe_guc_fwif.h:94), encoding sizes of 4 KB, 8 KB,
-    12 KB, and 16 KB. Setting 16 KB is the maximum representable and
-    safely covers platforms needing 12 KB without truncation.
-  - Compile-time checks enforce correctness and alignment:
-    `BUILD_BUG_ON(!IS_ALIGNED(CRASH_BUFFER_SIZE, LOG_UNIT));` in
-    drivers/gpu/drm/xe/xe_guc.c:118. 16 KB is aligned to 4 KB, so it
-    passes.
-  - The total BO allocation for logs increases by only 8 KB via
-    `guc_log_size()` (drivers/gpu/drm/xe/xe_guc_log.c:61), which is
-    negligible and localized to this driver. No ABI/API changes.
-  - The change does not affect debug builds (`CONFIG_DRM_XE_DEBUG_GUC`),
-    which already use 1 MB (drivers/gpu/drm/xe/xe_guc_log.h:16).
+- Why this fits stable backport criteria
+  - User-visible bug fix: On some ASUS systems the DMI vendor is
+    reported as `"ASUS"` (not `"ASUSTeK COMPUTER INC."`). Without this
+    change, those systems are treated as unapproved, which disables PPAG
+    and restricts TAS (notably in US/CA), reducing performance or
+    altering behavior despite the OEM providing valid BIOS/UEFI tables.
+    This is a real-world mismatch rather than a new feature.
+  - Small and contained: The patch is limited to two allowlist arrays in
+    a single file and adds no new code paths or APIs.
+  - Low regression risk:
+    - Enabling PPAG/TAS still depends on valid BIOS/UEFI data and
+      firmware capabilities. If tables are missing/invalid, the driver
+      already logs and exits gracefully (e.g.,
+      `iwl_bios_get_ppag_table()` and `iwl_fill_ppag_table()` validation
+      flows). No change for non-ASUS systems.
+    - The allowlist pattern is established (e.g., other OEMs like HP,
+      SAMSUNG, DELL, HONOR, WIKO are present at
+      drivers/net/wireless/intel/iwlwifi/fw/regulatory.c:46–116 and
+      :118–177).
+  - No architectural changes: Only DMI matching tables are updated; the
+    control flow and firmware interfaces are unchanged.
 
-- Impact scope
-  - Only the Intel Xe driver’s GuC logging path is affected. No
-    architectural changes, no critical core subsystems touched. Memory
-    impact is minimal and bounded per GT/tile.
+- Backport notes
+  - The change is a straightforward data addition and typically applies
+    cleanly. If older stable trees differ slightly in array
+    ordering/naming, the same two additions can be adapted with no logic
+    changes.
 
-- Stable criteria assessment
-  - Fixes a real user-facing issue (truncated GuC crash dumps) that
-    impairs diagnostics.
-  - Small, contained change to a single constant; low regression risk.
-  - No new features; no behavioral change beyond preventing truncation.
-  - Aligns with hardware encodings and existing compile-time guards.
+Given the minimal, well-scoped nature of this OEM allowlist fix, its
+clear user impact for affected ASUS systems, and the existing safety
+checks around BIOS/UEFI data and firmware capabilities, it is a good
+candidate for backporting.
 
-Given the clear bugfix nature, minimal risk, and confined scope, this is
-a good candidate for stable backporting.
+ drivers/net/wireless/intel/iwlwifi/fw/regulatory.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
- drivers/gpu/drm/xe/xe_guc_log.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/xe/xe_guc_log.h b/drivers/gpu/drm/xe/xe_guc_log.h
-index f1e2b0be90a9f..98a47ac42b08f 100644
---- a/drivers/gpu/drm/xe/xe_guc_log.h
-+++ b/drivers/gpu/drm/xe/xe_guc_log.h
-@@ -17,7 +17,7 @@ struct xe_device;
- #define DEBUG_BUFFER_SIZE       SZ_8M
- #define CAPTURE_BUFFER_SIZE     SZ_2M
- #else
--#define CRASH_BUFFER_SIZE	SZ_8K
-+#define CRASH_BUFFER_SIZE	SZ_16K
- #define DEBUG_BUFFER_SIZE	SZ_64K
- #define CAPTURE_BUFFER_SIZE	SZ_1M
- #endif
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+index 3d6d1a85bb51b..a59f7f6b24da0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+@@ -59,11 +59,16 @@ static const struct dmi_system_id dmi_ppag_approved_list[] = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Microsoft Corporation"),
+ 		},
+ 	},
+-	{ .ident = "ASUS",
++	{ .ident = "ASUSTEK",
+ 	  .matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+ 		},
+ 	},
++	{ .ident = "ASUS",
++	  .matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++		},
++	},
+ 	{ .ident = "GOOGLE-HP",
+ 	  .matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
+@@ -141,11 +146,16 @@ static const struct dmi_system_id dmi_tas_approved_list[] = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+ 		},
+ 	},
+-	{ .ident = "ASUS",
++	{ .ident = "ASUSTEK",
+ 	  .matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+ 		},
+ 	},
++	{ .ident = "ASUS",
++	  .matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
++		},
++	},
+ 	{ .ident = "GOOGLE-HP",
+ 	  .matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Google"),
 -- 
 2.51.0
 
