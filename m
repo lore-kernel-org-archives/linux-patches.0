@@ -1,52 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5099F3090CB;
-	Sat, 25 Oct 2025 16:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851C23043D9;
+	Sat, 25 Oct 2025 16:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409452; cv=none; b=mlm4aWdtEPTQ+DbdDz5a3RpkK7joQiscC9At64zAYyOiASpsiJt+ef1arUUCZ4vR5nTafdy7S1nb4SsPun3pBte+eM0GgwF3y9OEBkZMp8fQ+wRLbMUt3IY5n4DtrqWwa8FD6ijvCAMkwRy/w5HFjmxVQypLh9aDB8/Kudk+gOQ=
+	t=1761409457; cv=none; b=ttDRgzLFHwVx4VJilcAojyFNdsBbELeoLv1c9kPe3T/IlfBkeVyO0MttbscCBn162f5aHJHSWc7jRl0jp9v/jrRRetv4ZBVrZ1Iay4bABNcbs/J/7j6AwrSRjWRFwwMJ0xDChRqr5o0jCMmhllayAVDjSPJfdkh6b6Xgg1V4eUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409452; c=relaxed/simple;
-	bh=kNpakNPI+HoD0YtFd2ODeOLYCyv2G8NIImYlxZ0hmJo=;
+	s=arc-20240116; t=1761409457; c=relaxed/simple;
+	bh=f2mXaMdRp5tDwnL9/a/EtwaLIu81gOvYcVwx5gGo0Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pMEfnvcSidZpDSZde2lStPSmhrWJ8S4O/PdYEKQ0qVkwY+oE56pFfo2RKBbAPLI1d2EV1N16Pe+X5z6ThTun5drDLJ7jobpsow82jfihbHjfpE5fVFUJMCilrJ69s0uwOwtZTk9nhWOSEMTDwcMRxubC6JJbzX9BqV0nOLly1v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F4bFF145; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IOByyjNvPE51MHaxYfybMbf7L0F/Cq+TUCS148RVNwJu1khaWnZwfoG0PuTj0oobgFdM8GilTMzTkRsrH6BOyrhsGCy7ZzbkENRmHsJx31PiE0iz5YnDAp31UEAm5EJ0G0t/3n2Fs9cYjbl9r/wdhXs3CMg7z8A/Kw/vDsP8V0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOcKMjis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F4bFF145"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C7FC4CEF5;
-	Sat, 25 Oct 2025 16:24:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOcKMjis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BB2C4CEFB;
+	Sat, 25 Oct 2025 16:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409452;
-	bh=kNpakNPI+HoD0YtFd2ODeOLYCyv2G8NIImYlxZ0hmJo=;
+	s=k20201202; t=1761409457;
+	bh=f2mXaMdRp5tDwnL9/a/EtwaLIu81gOvYcVwx5gGo0Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4bFF145c60IKsUgR9uHAQ5AjVRJNaUYXUKCxJzSwY1aT4qtHbRgc5xC5uOzXAoL1
-	 eg7A0hXO6vqkDC3pU8NWeMsXuVpKI9mt0NnUkgjTpgmAfVAKBXQOFx5nYv/fkTMjlP
-	 9lxrh56+a2/FUDxRpy0viSGAtrCqZFft3FYHTGC2li4wcCFZQpg5kPTq0yxiUxsWxU
-	 lU0Rbo1sNWHD3OOv++nnLTxy8RjyEdjDpCPJPgsuATifJ1UFH2wU9JtuGnxf0/nwAS
-	 ZhLxpKWG4fFDAB8Z+3wvLRDXqg2wudKQBx8zhmhykB6mAbLJH3jsAmIn+8ZEU9aZEF
-	 jwCP/kbJotEVw==
+	b=AOcKMjisDr8RTnjytlIPfw7mDluky3udoGpenqUk8Anmwni24QNA1Keiy4sMHClhE
+	 dWG7irViRQBVX0H7gHVfCODhjLllbcgu2xgGMcnVhGIELC0fopRfVPvALHLB4wO2/u
+	 vDmie2J6nSqoSiqmTMJN1BaimgbcMgyxAYX5QZxxThOZUSnqrmHnmWeVFtbXR/9oPj
+	 7sTfXnInLkHugtih2CgHEzGGbKCN3sZ66Pp8L3+eSdNgzVWyiEXTD3UU04VqWT9F5R
+	 8I4l6gQhZYXLMBArFDKaFpcWmNQ5F93mpeld9XhlTcw9/KDt0xxPvKb+aTaf3kskbL
+	 vVd6z9tE7HfXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Chen Wang <unicorn_wang@outlook.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	rmk+kernel@armlinux.org.uk,
-	andrew@lunn.ch,
-	0x1207@gmail.com,
-	pabeni@redhat.com,
+	s-vadapalli@ti.com,
+	bhelgaas@google.com,
+	alexander.deucher@amd.com,
+	kishon@kernel.org,
+	18255117159@163.com,
 	alexandre.f.demers@gmail.com,
-	netdev@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.10] net: stmmac: Check stmmac_hw_setup() in stmmac_resume()
-Date: Sat, 25 Oct 2025 11:59:22 -0400
-Message-ID: <20251025160905.3857885-331-sashal@kernel.org>
+	bwawrzyn@cisco.com,
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.10] PCI: cadence: Check for the existence of cdns_pcie::ops before using it
+Date: Sat, 25 Oct 2025 11:59:23 -0400
+Message-ID: <20251025160905.3857885-332-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -62,114 +58,126 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Chen Wang <unicorn_wang@outlook.com>
 
-[ Upstream commit 6896c2449a1858acb643014894d01b3a1223d4e5 ]
+[ Upstream commit 49a6c160ad4812476f8ae1a8f4ed6d15adfa6c09 ]
 
-stmmac_hw_setup() may return 0 on success and an appropriate negative
-integer as defined in errno.h file on failure, just check it and then
-return early if failed in stmmac_resume().
+cdns_pcie::ops might not be populated by all the Cadence glue drivers. This
+is going to be true for the upcoming Sophgo platform which doesn't set the
+ops.
 
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://patch.msgid.link/20250811073506.27513-2-yangtiezhu@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Hence, add a check to prevent NULL pointer dereference.
+
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+[mani: reworded subject and description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/35182ee1d972dfcd093a964e11205efcebbdc044.1757643388.git.unicorn_wang@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+**Why Backport**
+- The shared Cadence core dereferences `pcie->ops` unconditionally in
+  several hot paths (`drivers/pci/controller/cadence/pcie-cadence-
+  host.c:534`, `pcie-cadence.c:109` and `:140`, `pcie-cadence.h:497`,
+  `505`, `511`). If a glue driver legitimately leaves `ops` unset, the
+  host setup oopses during probe.
+- The new in-tree Sophgo driver (`drivers/pci/controller/cadence/pcie-
+  sg2042.c:35-69`) deliberately does not populate `pcie->ops`; without
+  this fix `cdns_pcie_host_setup()` trips the NULL dereference in
+  `cdns_pcie_host_init_address_translation()` immediately, so the
+  controller cannot even enumerate.
+- The patch simply wraps each dereference with `pcie->ops &&
+  pcie->ops->...`, meaning existing platforms that register callbacks
+  keep identical behaviour, while platforms that do not provide optional
+  hooks now fall back to the previously implied defaults — avoiding the
+  fatal crash.
 
-- What it fixes
-  - The resume path ignores the return value of stmmac_hw_setup(), which
-    is documented to return 0 on success or -errno on failure. See the
-    function signature and comment in
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:3396. Inside that
-    function, critical steps like stmmac_init_dma_engine() can fail and
-    return -errno (e.g., invalid DMA configuration, failed reset), see
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:3410.
-  - In the current resume path, the return from stmmac_hw_setup() is not
-    checked: drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:8033. The
-    code then proceeds to run initialization and enablement sequences
-    (e.g., stmmac_init_coalesce(), stmmac_set_rx_mode(),
-    stmmac_enable_all_queues(), stmmac_enable_all_dma_irq()), which
-    operate on hardware that may not be properly initialized after a
-    failure, risking hangs or crashes. These calls are at
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:8034,
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:8035,
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:8039, and
-    drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:8040,
-    respectively.
-  - The open path already does the right thing by checking the return
-    value and bailing on failure with an error message
-    (drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:3977). The resume
-    path should be consistent with this.
+**Risk**
+- Change is entirely in guard logic, no register programming altered
+  when `ops` is present. For platforms that rely on
+  `cpu_addr_fixup`/link callbacks, the functions still run because the
+  pointer remains non-NULL.
+- For platforms without callbacks, the driver already relied on the
+  default behaviour implied by the inline helpers; the patch just
+  matches that expectation. Regression risk is therefore minimal.
 
-- What the patch changes
-  - It assigns the return value of stmmac_hw_setup() to ret and checks
-    for errors. On error it logs and returns early after correctly
-    releasing the held locks (mutex_unlock and rtnl_unlock). This
-    prevents further use of uninitialized DMA/MAC state and keeps error
-    handling consistent with the open path.
+**Next Steps**
+- 1) Smoke/boot-test on at least one Cadence RC platform (e.g. TI J721E)
+  plus the Sophgo SG2042 host once both patches are staged, to confirm
+  link bring-up stays healthy.
 
-- Scope and risk
-  - Minimal and contained: only the stmmac driver, no API/ABI changes,
-    no feature additions. The change is a straightforward error-path fix
-    and mirrors existing patterns in __stmmac_open().
-  - Locking is handled correctly: the new early-return path explicitly
-    releases both the private mutex and rtnl lock before returning,
-    avoiding deadlocks.
-  - User impact: prevents resume-time failures from cascading into
-    deeper faults by stopping early and reporting a clear error.
+ drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
+ drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
+ drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-- Context and applicability
-  - Many stmmac glue drivers call stmmac_resume() directly, so this
-    affects a broad set of platforms (e.g.,
-    drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c:1183,
-    drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c:2066).
-  - The fix does not depend on newer phylink changes (e.g.,
-    phylink_prepare_resume()). While newer mainline code refines phylink
-    sequencing, this error check is orthogonal and safe to apply to
-    stable branches that don’t have those changes.
-  - The stmmac_resume() in current stable series has the same
-    problematic pattern (call stmmac_hw_setup() without checking its
-    return), so the patch is directly relevant.
-
-- Stable rules assessment
-  - Fixes a real bug that can lead to faults after resume.
-  - Small, localized change with minimal regression risk.
-  - No architectural or user-visible feature changes.
-  - Affects only the stmmac driver; well-scoped for backporting.
-
-Conclusion: This is a clear, low-risk bug fix that prevents unsafe
-continuation after hardware initialization failures during resume. It
-should be backported to stable kernels.
-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 7b16d1207b80c..b9f55e4e360fb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7977,7 +7977,14 @@ int stmmac_resume(struct device *dev)
- 	stmmac_free_tx_skbufs(priv);
- 	stmmac_clear_descriptors(priv, &priv->dma_conf);
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index 59a4631de79fe..fffd63d6665e8 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -531,7 +531,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
  
--	stmmac_hw_setup(ndev, false);
-+	ret = stmmac_hw_setup(ndev, false);
-+	if (ret < 0) {
-+		netdev_err(priv->dev, "%s: Hw setup failed\n", __func__);
-+		mutex_unlock(&priv->lock);
-+		rtnl_unlock();
-+		return ret;
-+	}
-+
- 	stmmac_init_coalesce(priv);
- 	phylink_rx_clk_stop_block(priv->phylink);
- 	stmmac_set_rx_mode(ndev);
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
+index 70a19573440ee..61806bbd8aa32 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.c
++++ b/drivers/pci/controller/cadence/pcie-cadence.c
+@@ -92,7 +92,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
+@@ -123,7 +123,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
+ 	}
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 1d81c4bf6c6db..2f07ba661bda7 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -468,7 +468,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
+ 
+ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->start_link)
++	if (pcie->ops && pcie->ops->start_link)
+ 		return pcie->ops->start_link(pcie);
+ 
+ 	return 0;
+@@ -476,13 +476,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ 
+ static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->stop_link)
++	if (pcie->ops && pcie->ops->stop_link)
+ 		pcie->ops->stop_link(pcie);
+ }
+ 
+ static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->link_up)
++	if (pcie->ops && pcie->ops->link_up)
+ 		return pcie->ops->link_up(pcie);
+ 
+ 	return true;
 -- 
 2.51.0
 
