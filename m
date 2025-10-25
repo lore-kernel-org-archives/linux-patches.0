@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAE6304BAF;
-	Sat, 25 Oct 2025 16:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52190304BB2;
+	Sat, 25 Oct 2025 16:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408791; cv=none; b=cx+z8QFpak3XqMrcXwf0PvkVHs6eHydTCrgZNHoN2xpGxIsWL34tQ84jTHNSGTBwRrRr3j0UI/1wfGMyXhEGJkM8EgYHrICZ6RLihZVqdKRukf30zeq5mw6s/6Sn/jUD5OQYXGRw11oZHPlRS0KhhjHI2v8XilAFW4rOqiES2a0=
+	t=1761408791; cv=none; b=WDKOgbTZ8InF2rhHfrrcv3tD9+oNU5//mOmFglQpIGX/FqHoDaS75Hjq0cw+UpsPKIS2a8eDTm/7yfcDqwXalojVYCcMZ6eUysFaeqyj5qbB7G3yfkQ59QoMix8qnctKKKElNmhZjGnM+SUer/TQrZFbLExBW2M9olD8B/Qjtw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408791; c=relaxed/simple;
-	bh=3HAkMJcO7ME+K1UEAYvFUsJyuig8YC1GCgd672ka0Sw=;
+	bh=SA476cL1oEZtSTZZYfW7hLhLpWqlSXC+EvyocnZrNYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KNt7kYc3thxN2BWwamtqySOkL2u3qDNEMpAVumOk4WsbPS8659fzxxXQckbvBaGjPpAysKUUiTfl9wzm+IpGZmm8bedCOa7scLcTY2cEjKl0oj179kQTxS/YEN87POpFhI6DPbWWfv4xJFzkoB935Hfg3S/QjEE3atdMHQ9B2Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eg5uHaSe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RYZTUjR+0Y03pDNxv9gvQXoLYGfN4som0ha85gx5y/uTsolaUQRTLIRv7L5ja6hUb8CCvL+xJVsL0lBIsqQwVnckdghRQPk/FfIrCVXzqmKVT4OqdpQTvG9Rh20dJ324UMN1sArEYjtKGIcjA1Mnqwh+ut0ya42Np60sz5zQNA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ijYrzgNR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eg5uHaSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC6AC4CEFB;
-	Sat, 25 Oct 2025 16:13:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ijYrzgNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBAFC116B1;
+	Sat, 25 Oct 2025 16:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408788;
-	bh=3HAkMJcO7ME+K1UEAYvFUsJyuig8YC1GCgd672ka0Sw=;
+	s=k20201202; t=1761408791;
+	bh=SA476cL1oEZtSTZZYfW7hLhLpWqlSXC+EvyocnZrNYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eg5uHaSeepvtGBVWlzG3geIHu0YnG07IrYhodrxRkcjPizuByz70ftwBisYq3RgA1
-	 xDO0eQY/g7rHzalCbJ9encqtiSKKc9xRDuLbG2XmJWh2voFINCo/zm8k3bYqjlgN++
-	 peq0oaECAjU9KeaSXojsA3w3vZe8FMNKRME8vozg/cDAX4w5oPimQeAF7t2s20BXY+
-	 +ysK7ipB8My30pebR3jRiq76wZMPGtSSj+i+OPUyh4aZfonKPiKuK7eeUZkZBsjiIT
-	 wEsKsDRdR9X2sWBxBnjtG22yVSRk4WWFSLmoSm5fu//IytMSRyDkv9XF6yvQBytCyA
-	 jQAfCxYN7PFvg==
+	b=ijYrzgNRkubHCKFEYph6jwXWzRMYkcIltW6h7moCuN0O59YPq1nNP+GOs2QSPrlw5
+	 XS2HewEbWEaFY+dIiE7whZo3LgIaJ5Q4GhVmqJG9tTX3dBIvqH2Pcu1NkSarVKPQ34
+	 C+pDRHteB25EF0+N2yFTcm7rehKgJwC4j+BT6MAS4L/akMXUkxdxv29XtrbvU5PGzd
+	 RhFtYBNFuychcwRt0Msrc+hC5tN51+Ha0IfVyvDO5dWRNueH9b/4T8asRndLS9QEuj
+	 KgQCV53OFHUW/xc6eUNdXNvZoi1ggSYZZ+4KTyoukUpIUyr5Ejsr4K57sVDoRaGKKK
+	 NOQlyAcqKg7Kg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mohsin Bashir <mohsin.bashr@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	horms@kernel.org,
-	pabeni@redhat.com,
-	alexanderduyck@fb.com,
-	sanman.p211993@gmail.com,
-	lee@trager.us,
-	alexandre.f.demers@gmail.com,
-	suhui@nfschina.com
-Subject: [PATCH AUTOSEL 6.17] eth: fbnic: Reset hw stats upon PCI error
-Date: Sat, 25 Oct 2025 11:55:00 -0400
-Message-ID: <20251025160905.3857885-69-sashal@kernel.org>
+	daniel@zonque.org,
+	haojian.zhuang@gmail.com,
+	robert.jarzmik@free.fr,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-arm-kernel@lists.infradead.org,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] ASoC: pxa: add GPIOLIB_LEGACY dependency
+Date: Sat, 25 Oct 2025 11:55:02 -0400
+Message-ID: <20251025160905.3857885-71-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -58,23 +57,28 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohsin Bashir <mohsin.bashr@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b1161b1863c5f3d592adba5accd6e5c79741720f ]
+[ Upstream commit 2d86d2585ab929a143d1e6f8963da1499e33bf13 ]
 
-Upon experiencing a PCI error, fbnic reset the device to recover from
-the failure. Reset the hardware stats as part of the device reset to
-ensure accurate stats reporting.
+The pxa27x platform uses the legacy gpiolib interfaces, including
+in its sound drivers:
 
-Note that the reset is not really resetting the aggregate value to 0,
-which may result in a spike for a system collecting deltas in stats.
-Rather, the reset re-latches the current value as previous, in case HW
-got reset.
+sound/arm/pxa2xx-ac97-lib.c: In function 'pxa2xx_ac97_hw_probe':
+sound/arm/pxa2xx-ac97-lib.c:374:23: error: implicit declaration of function 'gpio_request_one' [-Wimplicit-function-declaration]
+  374 |                 ret = gpio_request_one(reset_gpio, GPIOF_OUT_INIT_HIGH,
 
-Signed-off-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250825200206.2357713-3-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Make sure we don't select those drivers for compile-testing unless
+we are building for a pxa27x system, or CONFIG_GPIOLIB_LEGACY is
+already enabled.
+
+The SND_PXA_SOC_SSP driver accidentally used a dependency on PLAT_PXA,
+which includes both ARCH_PXA and ARCH_MMP, but it is only used on
+the former.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250808151822.536879-21-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -82,80 +86,70 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed and where
-  - Adds a single call to re-latch hardware stats on reattach:
-    `fbnic_reset_hw_stats(fbd)` in `__fbnic_pm_attach()` so stats are
-    consistent after device reset, including PCI AER recovery and PM
-    resume flows (drivers/net/ethernet/meta/fbnic/fbnic_pci.c:524).
-  - `__fbnic_pm_attach()` is invoked on both PM resume and PCI error
-    recovery:
-    - From PM resume wrapper:
-      drivers/net/ethernet/meta/fbnic/fbnic_pci.c:544
-    - From PCI AER resume handler:
-      drivers/net/ethernet/meta/fbnic/fbnic_pci.c:593
-  - The reset routine itself locks and re-latches all stats fields:
-    drivers/net/ethernet/meta/fbnic/fbnic_hw_stats.c:544. It uses
-    `hw_stats.lock` for most stats and relies on RTNL for MAC stats, as
-    documented in the function’s comment
-    (drivers/net/ethernet/meta/fbnic/fbnic_hw_stats.c:558). In this
-    tree, `__fbnic_pm_attach()` wraps the reset with RTNL (`rtnl_lock();
-    fbnic_reset_hw_stats(fbd); rtnl_unlock();`) to satisfy
-    `ASSERT_RTNL()` when `netdev` is present
-    (drivers/net/ethernet/meta/fbnic/fbnic_pci.c:521–526).
+Rationale
+- Fixes a real build failure during COMPILE_TEST when legacy GPIO APIs
+  are disabled. The failure stems from `gpio_request_one()` in the PXA
+  AC97 support code: `sound/arm/pxa2xx-ac97-lib.c:374` uses legacy GPIO
+  (gpio_request_one/`GPIOF_OUT_INIT_HIGH`). When `GPIOLIB_LEGACY` is not
+  enabled, these legacy interfaces are not available, leading to the
+  implicit declaration error cited in the commit message.
+- Targeted Kconfig gating avoids the bad configuration instead of
+  changing runtime code:
+  - `sound/soc/pxa/Kconfig:2` changes `SND_PXA2XX_SOC` from `depends on
+    ARCH_PXA || COMPILE_TEST` to `depends on ARCH_PXA || (COMPILE_TEST
+    && GPIOLIB_LEGACY)`. This ensures the PXA SoC audio stack (which
+    selects `SND_PXA2XX_LIB_AC97` and builds `pxa2xx-ac97-lib.c`) is not
+    compile-tested unless legacy GPIO support is present, eliminating
+    the build break.
+  - `sound/soc/pxa/Kconfig:27` changes `SND_PXA_SOC_SSP` from `depends
+    on PLAT_PXA` to `depends on ARCH_PXA`. `PLAT_PXA` is selected by
+    both PXA and MMP (`drivers/soc/pxa/Kconfig:2`, selected in
+    `arch/arm/mach-pxa/Kconfig:13` and `arch/arm/mach-mmp/Kconfig:8`),
+    which caused the PXA-specific SSP DAI driver (`sound/soc/pxa/pxa-
+    ssp.c` includes `<linux/pxa2xx_ssp.h>`) to be selectable on MMP
+    inadvertently. Tightening to `ARCH_PXA` corrects that misdependency.
 
-- Why it’s a bug fix affecting users
-  - After PCI errors and recovery (and likewise after suspend/resume),
-    the device is reset and hardware counters may be cleared. Without
-    re-latching the driver’s baseline, reported stats can become
-    inaccurate or exhibit wrap-like artifacts. The added reset ensures
-    accurate stats reporting post-recovery, matching the commit message
-    intent.
-  - The commit acknowledges a possible one-time spike for systems
-    collecting deltas, which is a normal and acceptable behavior when
-    re-basing stats after a reset.
+Why this suits stable
+- Small, contained Kconfig-only change; no runtime behavior or ABI
+  change.
+- Fixes a concrete build error affecting users of `COMPILE_TEST`
+  configurations without `GPIOLIB_LEGACY`.
+- Reduces accidental driver enablement on the wrong SoC family (MMP) by
+  replacing `PLAT_PXA` with `ARCH_PXA` for `SND_PXA_SOC_SSP`.
+- Minimal regression risk: only affects visibility of options under
+  specific Kconfig combinations. It does not introduce new features or
+  architectural changes.
 
-- Scope and risk
-  - Change is minimal and self-contained: a single function call in the
-    driver’s reattach path.
-  - No user-visible API changes, no architectural changes, and no impact
-    to the fast path.
-  - Concurrency is handled: `fbnic_reset_hw_stats()` uses a spinlock for
-    most stats and relies on RTNL for MAC stats; the caller holds RTNL
-    around the call
-    (drivers/net/ethernet/meta/fbnic/fbnic_pci.c:521–526), consistent
-    with the function’s comment
-    (drivers/net/ethernet/meta/fbnic/fbnic_hw_stats.c:558).
-  - Only touches the `fbnic` driver, not core networking or PCI
-    subsystems.
+Notes on applicability
+- This backport is most relevant to stable series that already have the
+  `GPIOLIB_LEGACY` split. Older stable trees that predate
+  `GPIOLIB_LEGACY` either won’t need this change (no build break) or may
+  require adjusting the dependency accordingly.
 
-- Stable backport criteria
-  - Fixes a real user-visible issue (incorrect stats after PCI/PM
-    reset).
-  - Small, focused change with low regression risk.
-  - No new features or architectural churn.
-  - Clear, intentional behavior with locking correctness.
+ sound/soc/pxa/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Given the above, this is a strong candidate for stable backporting. If
-targeting older stable trees, ensure prerequisites exist: the presence
-of `fbnic_reset_hw_stats()`
-(drivers/net/ethernet/meta/fbnic/fbnic_hw_stats.c:544) and that the call
-site holds RTNL when `netdev` is present (as done here).
-
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 28e23e3ffca88..c4d51490140eb 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -489,6 +489,8 @@ static void __fbnic_pm_attach(struct device *dev)
- 	struct net_device *netdev = fbd->netdev;
- 	struct fbnic_net *fbn;
+diff --git a/sound/soc/pxa/Kconfig b/sound/soc/pxa/Kconfig
+index e026f9912a6d1..e54abcd39f792 100644
+--- a/sound/soc/pxa/Kconfig
++++ b/sound/soc/pxa/Kconfig
+@@ -3,7 +3,7 @@ menu "PXA"
  
-+	fbnic_reset_hw_stats(fbd);
-+
- 	if (fbnic_init_failure(fbd))
- 		return;
+ config SND_PXA2XX_SOC
+ 	tristate "SoC Audio for the Intel PXA2xx chip"
+-	depends on ARCH_PXA || COMPILE_TEST
++	depends on ARCH_PXA || (COMPILE_TEST && GPIOLIB_LEGACY)
+ 	select SND_PXA2XX_LIB
+ 	help
+ 	  Say Y or M if you want to add support for codecs attached to
+@@ -26,7 +26,7 @@ config SND_PXA2XX_SOC_I2S
+ 
+ config SND_PXA_SOC_SSP
+ 	tristate "Soc Audio via PXA2xx/PXA3xx SSP ports"
+-	depends on PLAT_PXA
++	depends on ARCH_PXA
+ 	select PXA_SSP
+ 	select SND_PXA2XX_LIB
  
 -- 
 2.51.0
