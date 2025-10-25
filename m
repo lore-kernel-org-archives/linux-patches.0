@@ -1,45 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77E2304BCC;
-	Sat, 25 Oct 2025 16:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022342F5B;
+	Sat, 25 Oct 2025 16:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408748; cv=none; b=eVJurFeXjaGyzLEgvzx8R2JmCcIHIKBjUC5oNDQaApjCeAFW0YT93SONldRetPlD8+5dgR6jQEHd2LgEqiy/Ds/QfhtUxUISwH+cbp9ZGJfJ19qUT9MP2RvF6hEybNZ9i1GqrcRRqIXOKv8FzRC6Q4Gh00aCxbocXhr8PHE2BNY=
+	t=1761408762; cv=none; b=RGknJZZ9tXvfhMmX66qhbR6LHMtaWN6Pc97V5JBdrpYb9HkChZHazcBABvOS8iXcxLRdTUuQs6g6jvFteElzkdYJrrpgz4FIuRVuHiUAHK4UemrIpEU4wJwrr+bCMD/GLIqz9q2+qDtbwP5SdB5zcEpgkXdLde+JrIzV6dAtGug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408748; c=relaxed/simple;
-	bh=sAosseFIqyn79GZQOpJO8ZSLGhCkYL74cLZQbx3HAXI=;
+	s=arc-20240116; t=1761408762; c=relaxed/simple;
+	bh=uLvGDiPyH27dk/4Q7NdQdVZ0s446fdJmM4aDvApiQoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oP/txK6iS2YIotrKcKIULKKZoitMkTVvQT76VtFtCLItSAsucxAvTZRYjcbynQdXRJnrtY9/B7NFqsWVEN0enlnigL7Qdo2MC3r0ngyjQvoTIvLSTypVZuizg5TJLoAjaDnDtp0zfmBJyAG/C2XIh3qM6oF14JC1jI2i1ZOUhCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mx4GGTyr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qhaFYv6Z/djmRbhbxvoM9EZ1RaB6kU+6RoqmweKevvyTbusifHAbagqcWNp0WAPMF+9rL+pIh5lCODZEgBt3tNNyM1s+2Nk3SZh5iETPGEjvtuoAZ0o40N2wDUJeXVdTA7/ioT8lxBflySuwYm5znZI7LYuhCP2pv/c40jfwODM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pgYl304p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mx4GGTyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB26C4CEFF;
-	Sat, 25 Oct 2025 16:12:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pgYl304p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C15FC4CEF5;
+	Sat, 25 Oct 2025 16:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408748;
-	bh=sAosseFIqyn79GZQOpJO8ZSLGhCkYL74cLZQbx3HAXI=;
+	s=k20201202; t=1761408761;
+	bh=uLvGDiPyH27dk/4Q7NdQdVZ0s446fdJmM4aDvApiQoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mx4GGTyrIIOWeday2welugZDbwVLMzfbaehy9XEuEaplx6mFodl6uvnUxWhMvTF56
-	 l2IqAUEJ+OYZuO0F7r+uTeLnehCf7r+I0SaoOPfzy1QdSkvN/mUy5QtUTXXDrPZThb
-	 8KYn0vZvG1evf+pQvc5UvTowmAkqMBrfJo3tFyL3J6TZfiuX4yh7hUMz4D8NO9whfd
-	 g9UMKlGCR2NRVFyAO6p8eVbUNLVKYElkQZF9xJFaX3H5FScSxJVAlK2BGXGwj+JCO3
-	 TG5hWNigMiUosemvkPLDuM+5qLfYbUWVWmGXLsirKyLqqAJGft6btHfdKT/j9i+Q7b
-	 uWi6jVumYy1Ug==
+	b=pgYl304phxzOibORoSg5FusvQ+mEf6y5CmOrCwPwrF01dS6T4vPNxrcHiPge7u358
+	 yjvE6GqZHge724zpRZL3Xs50vnDnpQ1dUG+tgJq44kq+kM1RRrzaeF4p6fl0bDe3hD
+	 G+KgAumD1qtIE9yUPiB/N/mQu/PXBBKZ2b36sdgnGXuNGY9Gc4mfRIOuN2pD0HbN+R
+	 RjnsdlFrw4lsZmHCwbNq63ZXr8fXmdSJShYpcgKMBfe5B4D4se+kBcRvbs4WTeA5Et
+	 WqGMVa2y42m+RhHi2sFRmCB/3lA5ADFAvHRlFbxnwBltpEW1tPaWQdpWesUCnKovdW
+	 09YwdWcEmIOQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiang Liu <xiang.liu@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Terry Cheong <htcheong@chromium.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tao.zhou1@amd.com,
-	kevinyang.wang@amd.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	alexander.deucher@amd.com,
 	alexandre.f.demers@gmail.com,
-	victor.skvortsov@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Update IPID value for bad page threshold CPER
-Date: Sat, 25 Oct 2025 11:54:52 -0400
-Message-ID: <20251025160905.3857885-61-sashal@kernel.org>
+	kuninori.morimoto.gx@renesas.com,
+	nfraprado@collabora.com,
+	Parker.Yang@mediatek.com,
+	julien.massot@collabora.com,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] ASoC: mediatek: Use SND_JACK_AVOUT for HDMI/DP jacks
+Date: Sat, 25 Oct 2025 11:54:53 -0400
+Message-ID: <20251025160905.3857885-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,16 +62,18 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Liu <xiang.liu@amd.com>
+From: Terry Cheong <htcheong@chromium.org>
 
-[ Upstream commit 8f0245ee95c5ba65a2fe03f60386868353c6a3a0 ]
+[ Upstream commit 8ed2dca4df2297177e0edcb7e0c72ef87f3fd81a ]
 
-Update the IPID register value for bad page threshold CPER according to
-the latest definition.
+The SND_JACK_AVOUT is a more specific jack type for HDMI and DisplayPort.
+Updatae the MediaTek drivers to use such jack type, allowing system to
+determine the device type based on jack event.
 
-Signed-off-by: Xiang Liu <xiang.liu@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Terry Cheong <htcheong@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20250723-mtk-hdmi-v1-1-4ff945eb6136@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,98 +81,202 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed: In the bad page threshold CPER builder, the IPID fields
-  are no longer hardcoded; they are computed from the GPU’s socket ID
-  per the “latest definition.”
-  - Previous behavior: `IPID_LO = 0x0` and `IPID_HI = 0x96`
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:237-238).
-  - New behavior: Introduces `socket_id` and sets:
-    - `IPID_LO = (socket_id / 4) & 0x01`
-    - `IPID_HI = 0x096 | (((socket_id % 4) & 0x3) << 12)`
-    These replace the constants, encoding the socket information in IPID
-per the updated spec.
+Explanation
 
-- Scope and containment:
-  - The change is confined to one function:
-    `amdgpu_cper_entry_fill_bad_page_threshold_section()` in
-    drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c.
-  - It only affects construction of CPER records for “bad page
-    threshold” events; normal runtime, CE/DE/UE CPERs still use real ACA
-    bank IPID values (drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:391-404).
+- Problem fixed: MediaTek machine drivers currently create HDMI/DP jacks
+  with SND_JACK_LINEOUT only, while HDMI/DP codecs report jack state
+  using SND_JACK_AVOUT (LINEOUT|VIDEOOUT). This drops the VIDEOOUT part
+  from input and control reporting, preventing user space from
+  identifying an HDMI/DP sink based on jack events. The change aligns
+  the masks so both LINEOUT and VIDEOOUT are reported, enabling correct
+  device classification.
 
-- Rationale and user impact:
-  - This corrects CPER content by encoding the GPU socket in IPID,
-    improving RAS diagnostics. Previously, CPERs for this event carried
-    a fixed, misleading IPID, which can misidentify the device/location
-    and hamper triage and RMA workflows.
-  - The commit message aligns with this: “Update … according to the
-    latest definition,” i.e., a spec-compliance fix rather than a
-    feature.
+- Concrete mismatches today:
+  - hdmi-codec reports via SND_JACK_AVOUT: sound/soc/codecs/hdmi-
+    codec.c:946, sound/soc/codecs/hdmi-codec.c:967,
+    sound/soc/codecs/hdmi-codec.c:987
+  - Intel HDA HDMI does the same: sound/soc/codecs/hdac_hdmi.c:172,
+    sound/soc/codecs/hdac_hdmi.c:183
+  - MediaTek machines create HDMI/DP jacks as LINEOUT only:
+    - sound/soc/mediatek/mt8173/mt8173-rt5650.c:162
+    - sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c:381
+    - sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c:386
+    - sound/soc/mediatek/mt8186/mt8186-mt6366.c:365
+    - sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c:371
+    - sound/soc/mediatek/mt8195/mt8195-mt6359.c:363,
+      sound/soc/mediatek/mt8195/mt8195-mt6359.c:378
+    - sound/soc/mediatek/mt8188/mt8188-mt6359.c:253,
+      sound/soc/mediatek/mt8188/mt8188-mt6359.c:260,
+      sound/soc/mediatek/mt8188/mt8188-mt6359.c:640,
+      sound/soc/mediatek/mt8188/mt8188-mt6359.c:666
 
-- Dependencies and compatibility:
-  - It uses `adev->smuio.funcs->get_socket_id` if available, otherwise
-    falls back to 0, preserving prior behavior on ASICs without socket
-    ID support. This same pattern is already used elsewhere in this file
-    for `record_id` and FRU text
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c:73-81, 123-131), so there
-    is no new dependency risk.
-  - No API/ABI changes; no headers or structures changed; no
-    architectural changes.
+- Why AVOUT is correct and safe:
+  - AVOUT is defined as a combination of LINEOUT and VIDEOOUT, not a new
+    bit: include/sound/jack.h:45; it’s documented at
+    include/sound/jack.h:23 and has existed since 2009.
+  - Using AVOUT causes the input device to advertise both
+    SW_LINEOUT_INSERT and SW_VIDEOOUT_INSERT (additive capability) and
+    makes the jack control reflect AV presence as the codecs intend,
+    with no removal of existing behavior.
+  - The generic jack control name (“HDMI Jack”) is unchanged; only the
+    internal mask expands, so existing controls remain and an additional
+    VIDEOOUT switch becomes visible to input consumers.
+  - Other platforms already use AVOUT for HDMI/DP jacks (e.g.,
+    Qualcomm): sound/soc/qcom/common.c:261
 
-- Risk assessment:
-  - Minimal risk: pure data-field fix inside a CPER payload builder; no
-    control flow or subsystem behavior changes.
-  - Side effects are limited to CPER contents produced when bad page
-    threshold is exceeded (trigger path in
-    drivers/gpu/drm/amd/pm/amdgpu_dpm.c:764-778).
+- Scope of change:
+  - Small, contained swaps of SND_JACK_LINEOUT → SND_JACK_AVOUT and pin
+    masks for HDMI/DP in MediaTek machine drivers only; no architectural
+    changes, no API changes, no risk to other subsystems.
 
-- Stable backport criteria:
-  - Fixes a real (though non-crashing) bug affecting users of RAS/CPER
-    reporting in multi-GPU or multi-socket environments.
-  - Small, localized change with clear intent and low regression risk.
-  - No new features or architectural changes; adheres to stable rules.
+- User impact:
+  - Fixes real user-visible misclassification (HDMI/DP appearing as
+    generic “line out” only), enabling correct policy/routing. No known
+    regressions; change is additive.
 
-- Practical note for backporting:
-  - Backport to stable trees that already contain CPER generation for
-    bad page threshold and the `smuio.get_socket_id` plumbing. Where
-    `get_socket_id` is absent, the fallback keeps behavior identical to
-    pre-fix.
+- Stable criteria:
+  - Important correctness fix, minimal risk, confined to ASoC machine
+    drivers, no feature additions or interfaces changes. No Cc: stable
+    tag, but the fix aligns masks with existing codec behavior and long-
+    standing definitions.
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Conclusion: This is a low-risk, correctness-alignment change that
+improves HDMI/DP jack reporting and should be backported to stable.
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-index 25252231a68a9..6c266f18c5981 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-@@ -206,6 +206,7 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
+ sound/soc/mediatek/mt8173/mt8173-rt5650.c                 | 2 +-
+ sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c        | 2 +-
+ .../soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c  | 2 +-
+ sound/soc/mediatek/mt8186/mt8186-mt6366.c                 | 2 +-
+ sound/soc/mediatek/mt8188/mt8188-mt6359.c                 | 8 ++++----
+ sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c   | 2 +-
+ sound/soc/mediatek/mt8195/mt8195-mt6359.c                 | 4 ++--
+ 7 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650.c b/sound/soc/mediatek/mt8173/mt8173-rt5650.c
+index 7d6a3586cdd55..3d6d7bc05b872 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-rt5650.c
++++ b/sound/soc/mediatek/mt8173/mt8173-rt5650.c
+@@ -159,7 +159,7 @@ static int mt8173_rt5650_hdmi_init(struct snd_soc_pcm_runtime *rtd)
  {
- 	struct cper_sec_desc *section_desc;
- 	struct cper_sec_nonstd_err *section;
-+	uint32_t socket_id;
+ 	int ret;
  
- 	section_desc = (struct cper_sec_desc *)((uint8_t *)hdr + SEC_DESC_OFFSET(idx));
- 	section = (struct cper_sec_nonstd_err *)((uint8_t *)hdr +
-@@ -224,6 +225,9 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
- 	section->ctx.reg_arr_size = sizeof(section->ctx.reg_dump);
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT,
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT,
+ 				    &mt8173_rt5650_hdmi_jack);
+ 	if (ret)
+ 		return ret;
+diff --git a/sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c b/sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c
+index 3388e076ccc9e..983f3b91119a9 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c
++++ b/sound/soc/mediatek/mt8183/mt8183-da7219-max98357.c
+@@ -378,7 +378,7 @@ static int mt8183_da7219_max98357_hdmi_init(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_card_get_drvdata(rtd->card);
+ 	int ret;
  
- 	/* Hardcoded Reg dump for bad page threshold CPER */
-+	socket_id = (adev->smuio.funcs && adev->smuio.funcs->get_socket_id) ?
-+				adev->smuio.funcs->get_socket_id(adev) :
-+				0;
- 	section->ctx.reg_dump[CPER_ACA_REG_CTL_LO]    = 0x1;
- 	section->ctx.reg_dump[CPER_ACA_REG_CTL_HI]    = 0x0;
- 	section->ctx.reg_dump[CPER_ACA_REG_STATUS_LO] = 0x137;
-@@ -234,8 +238,8 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
- 	section->ctx.reg_dump[CPER_ACA_REG_MISC0_HI]  = 0x0;
- 	section->ctx.reg_dump[CPER_ACA_REG_CONFIG_LO] = 0x2;
- 	section->ctx.reg_dump[CPER_ACA_REG_CONFIG_HI] = 0x1ff;
--	section->ctx.reg_dump[CPER_ACA_REG_IPID_LO]   = 0x0;
--	section->ctx.reg_dump[CPER_ACA_REG_IPID_HI]   = 0x96;
-+	section->ctx.reg_dump[CPER_ACA_REG_IPID_LO]   = (socket_id / 4) & 0x01;
-+	section->ctx.reg_dump[CPER_ACA_REG_IPID_HI]   = 0x096 | (((socket_id % 4) & 0x3) << 12);
- 	section->ctx.reg_dump[CPER_ACA_REG_SYND_LO]   = 0x0;
- 	section->ctx.reg_dump[CPER_ACA_REG_SYND_HI]   = 0x0;
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT,
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT,
+ 				    &priv->hdmi_jack);
+ 	if (ret)
+ 		return ret;
+diff --git a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
+index 497a9043be7bb..0bc1f11e17aa7 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
++++ b/sound/soc/mediatek/mt8183/mt8183-mt6358-ts3a227-max98357.c
+@@ -383,7 +383,7 @@ mt8183_mt6358_ts3a227_max98357_hdmi_init(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_card_get_drvdata(rtd->card);
+ 	int ret;
+ 
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT,
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT,
+ 				    &priv->hdmi_jack);
+ 	if (ret)
+ 		return ret;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366.c b/sound/soc/mediatek/mt8186/mt8186-mt6366.c
+index 43546012cf613..45df69809cbab 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-mt6366.c
++++ b/sound/soc/mediatek/mt8186/mt8186-mt6366.c
+@@ -362,7 +362,7 @@ static int mt8186_mt6366_rt1019_rt5682s_hdmi_init(struct snd_soc_pcm_runtime *rt
+ 		return ret;
+ 	}
+ 
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT, jack);
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT, jack);
+ 	if (ret) {
+ 		dev_err(rtd->dev, "HDMI Jack creation failed: %d\n", ret);
+ 		return ret;
+diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+index ea814a0f726d6..c6e7461e8f764 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
++++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+@@ -250,14 +250,14 @@ enum mt8188_jacks {
+ static struct snd_soc_jack_pin mt8188_hdmi_jack_pins[] = {
+ 	{
+ 		.pin = "HDMI",
+-		.mask = SND_JACK_LINEOUT,
++		.mask = SND_JACK_AVOUT,
+ 	},
+ };
+ 
+ static struct snd_soc_jack_pin mt8188_dp_jack_pins[] = {
+ 	{
+ 		.pin = "DP",
+-		.mask = SND_JACK_LINEOUT,
++		.mask = SND_JACK_AVOUT,
+ 	},
+ };
+ 
+@@ -638,7 +638,7 @@ static int mt8188_hdmi_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 	int ret = 0;
+ 
+ 	ret = snd_soc_card_jack_new_pins(rtd->card, "HDMI Jack",
+-					 SND_JACK_LINEOUT, jack,
++					 SND_JACK_AVOUT, jack,
+ 					 mt8188_hdmi_jack_pins,
+ 					 ARRAY_SIZE(mt8188_hdmi_jack_pins));
+ 	if (ret) {
+@@ -663,7 +663,7 @@ static int mt8188_dptx_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 	struct snd_soc_component *component = snd_soc_rtd_to_codec(rtd, 0)->component;
+ 	int ret = 0;
+ 
+-	ret = snd_soc_card_jack_new_pins(rtd->card, "DP Jack", SND_JACK_LINEOUT,
++	ret = snd_soc_card_jack_new_pins(rtd->card, "DP Jack", SND_JACK_AVOUT,
+ 					 jack, mt8188_dp_jack_pins,
+ 					 ARRAY_SIZE(mt8188_dp_jack_pins));
+ 	if (ret) {
+diff --git a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+index bf483a8fb34a4..91c57765ab57b 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
++++ b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
+@@ -368,7 +368,7 @@ static int mt8192_mt6359_hdmi_init(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_rtd_to_codec(rtd, 0)->component;
+ 	int ret;
+ 
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT, jack);
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT, jack);
+ 	if (ret) {
+ 		dev_err(rtd->dev, "HDMI Jack creation failed: %d\n", ret);
+ 		return ret;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-mt6359.c b/sound/soc/mediatek/mt8195/mt8195-mt6359.c
+index e57391c213e7d..7b96c843a14a5 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-mt6359.c
++++ b/sound/soc/mediatek/mt8195/mt8195-mt6359.c
+@@ -360,7 +360,7 @@ static int mt8195_dptx_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_rtd_to_codec(rtd, 0)->component;
+ 	int ret;
+ 
+-	ret = snd_soc_card_jack_new(rtd->card, "DP Jack", SND_JACK_LINEOUT, jack);
++	ret = snd_soc_card_jack_new(rtd->card, "DP Jack", SND_JACK_AVOUT, jack);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -375,7 +375,7 @@ static int mt8195_hdmi_codec_init(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_rtd_to_codec(rtd, 0)->component;
+ 	int ret;
+ 
+-	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_LINEOUT, jack);
++	ret = snd_soc_card_jack_new(rtd->card, "HDMI Jack", SND_JACK_AVOUT, jack);
+ 	if (ret)
+ 		return ret;
  
 -- 
 2.51.0
