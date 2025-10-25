@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95481302756;
-	Sat, 25 Oct 2025 16:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9E4205AB6;
+	Sat, 25 Oct 2025 16:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408619; cv=none; b=oKI+VCa5UsfRCOVORTCdorxPqQpVTf13Brd501R+tmyPmdFij7rVH5KGeFcTwGmum7HXHZflcDHEaURIbhZZ5mk8MbyLg3H9FXbvNYPPmvF1O5KfedTKp33XxGxV4iii+9iUsOQPLjNi5LabxhY0s6wd5T/FQBcu1PA8Q7qDAZs=
+	t=1761408635; cv=none; b=cEaIPo1jRcc5fi1ap7oU4ZS62OG5H5swvkYXBj1y9IwNt+06hzPykn3vvbJALhZjNlIB82RFUWXFPf2HLUOhJpPNqj+vag4pExxJx1JxwpduRgnLRR2oMSiF22cRyjfAcm5lC3tq7v7kg/AQBskrLmAThqy6+JFbRADrjMjDhLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408619; c=relaxed/simple;
-	bh=pcGmMuMSi9n9N/ghJrWh3KPhOx5UytewPFJsWCrLLeE=;
+	s=arc-20240116; t=1761408635; c=relaxed/simple;
+	bh=Qqeh+a/uAh3IR7ymoARPEAMo/VUDPwtqSwVnWOwjuEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TtfUC699GxVT+RoLKNutFF5rKBXGfWYd29XErXiWIijl8csMnqxaEPl3fZc2xVbhVgd6D8TX0/AxBi7MLxtY3kIeizeCp3mT6E5s4+q0N8sDJw6kghpzy9ghFPdg86qVlOiOydnKlg8DaP68mf4gZKuw2xoEo58yhHexEWLdWIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=htPnnBJX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVUeNLlUEIT1dMWeLBtSxuss3H/1IfeftzHXCBj84x3T5JOGJuXVmN5FWmmYUkSJuIe7aAeBSeb7BL+eIdssRBqSwopxh2dVtpjCBkLbrSfayAID118EVMYaqXzEySTkELHaiSJA+IKHL9u8YQEm4KGxCMzFtaOzBBxhVUnUZFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AaVTRW2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="htPnnBJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472EFC4CEFF;
-	Sat, 25 Oct 2025 16:10:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AaVTRW2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082C7C4CEF5;
+	Sat, 25 Oct 2025 16:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408619;
-	bh=pcGmMuMSi9n9N/ghJrWh3KPhOx5UytewPFJsWCrLLeE=;
+	s=k20201202; t=1761408635;
+	bh=Qqeh+a/uAh3IR7ymoARPEAMo/VUDPwtqSwVnWOwjuEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=htPnnBJXaoadbQHFI3DodbmOnydStDoumkEqtogR0QY1aqAu1Ws5SjMCRT/pjrS62
-	 klqN0dHq4FfT/cIZMT+4rx8VGJ6cHZe427PsIr+urDyQA4NxEjzWl5SIQFOj4gzoq9
-	 g9C8EqJW8fKlgXrNQ0qFb4QPVCLLR8nb3ZZ3NUOUHwhYNAaY77fghPXaIOrdzKPBVf
-	 dBGqf0KTQHccb71zvVRdvziKgVwM9nv0XYkOPSDyfTNQM0ROkXXhGPPZQyzVnWXsoM
-	 9O0tvdNe55kvNCyELusf6RCxw63XNV6hp1vMnjuaYZ56Ca8N0GPnRs+S/XA55990ne
-	 MitGZ+WvL4qrw==
+	b=AaVTRW2s9WlcXTr7snAJog8FqDi5I2mbYvQRSayUki08x+Owob+siATuUyjyXB4vI
+	 kTBP6k7PB+5ATuWfFmWhaR+KOrFs/MJJNvn5WwZSYHykzfnhR1bQJdtzux5Jb1fkBb
+	 RAlDi8XeZlwIUpr6gb7yPSYGirJJdj9fLp5TdW23L0zzccVu2l5CjBoyPXtOhGfPhO
+	 93BG5xWt8/Zy2Wpss620mXZ5CX6QABssyKi5t9KP2KspMfUKm9ITJf4jeVv9xX1xAw
+	 Yc0EYox8Wq3qDFDRwVhWAhjnmEw2VMweE+qfvSq6DJj7DxV8yueqf3ULBsJRhknqib
+	 mtWsFF40RYfeQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+Cc: Somashekhar Puttagangaiah <somashekhar.puttagangaiah@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrzej.hajda@intel.com,
-	neil.armstrong@linaro.org,
-	rfoss@kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] drm/bridge: display-connector: don't set OP_DETECT for DisplayPorts
-Date: Sat, 25 Oct 2025 11:54:19 -0400
-Message-ID: <20251025160905.3857885-28-sashal@kernel.org>
+	johannes.berg@intel.com,
+	emmanuel.grumbach@intel.com,
+	daniel.gabay@intel.com,
+	pagadala.yesu.anjaneyulu@intel.com,
+	yedidya.ben.shimol@intel.com,
+	shaul.triebitz@intel.com
+Subject: [PATCH AUTOSEL 6.17] wifi: iwlwifi: mld: trigger mlo scan only when not in EMLSR
+Date: Sat, 25 Oct 2025 11:54:20 -0400
+Message-ID: <20251025160905.3857885-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,33 +53,20 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Somashekhar Puttagangaiah <somashekhar.puttagangaiah@intel.com>
 
-[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
+[ Upstream commit 14a4aca568f6e78af7564c6fc5f1ecc1a5a32c33 ]
 
-Detecting the monitor for DisplayPort targets is more complicated than
-just reading the HPD pin level: it requires reading the DPCD in order to
-check what kind of device is attached to the port and whether there is
-an actual display attached.
+When beacon loss happens or the RSSI drops, trigger MLO scan only
+if not in EMLSR. The link switch was meant to be done when we are
+not in EMLSR and we can try to switch to a better link.
+If in EMLSR, we exit first and then trigger MLO scan.
 
-In order to let DRM framework handle such configurations, disable
-DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
-driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
-it is valid for the bridge to report HPD events.
-
-Currently inside the kernel there are only two targets which list
-hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
-arm64/qcom/sa8295p-adp. Both should be fine with this change.
-
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Somashekhar Puttagangaiah <somashekhar.puttagangaiah@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250826184046.f6ae8e3882cf.I60901c16487371b8e62019bd0bf25c45ab23752f@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -87,97 +74,125 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - For DisplayPort connectors using the generic display-connector,
-    detection was based solely on the HPD GPIO, which is insufficient
-    for DP. The DP spec requires reading DPCD to determine sink
-    type/presence; HPD high alone can be a false positive (e.g.,
-    adapters/hubs with no actual display).
-  - This patch prevents the generic bridge from advertising “I can
-    detect” for DP, so the DRM framework will delegate detection to the
-    actual DP bridge/driver that can read DPCD.
+- Fixes a real logic bug: The driver was triggering internal MLO scans
+  even when EMLSR was active, which is the wrong phase for link
+  selection. The commit defers scanning until EMLSR is exited, aligning
+  behavior with the intended state machine (stay in EMLSR, decide if
+  exit is required, then scan and try switching). This prevents out-of-
+  order operations that can cause ineffective scans or state churn
+  during EMLSR.
 
-- Code paths and behavior change
-  - Previously, the generic connector always advertised
-    `DRM_BRIDGE_OP_DETECT` if either DDC was present or an HPD GPIO
-    existed:
-    - `drivers/gpu/drm/bridge/display-connector.c:363` sets
-      `DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT` when
-      `conn->bridge.ddc` exists (DP doesn’t use DDC).
-    - `drivers/gpu/drm/bridge/display-connector.c:367` sets
-      `DRM_BRIDGE_OP_DETECT` whenever `conn->hpd_gpio` exists (this is
-      the problematic path for DP).
-    - The detection callback itself relies on `hpd_gpio` to return
-      connected/disconnected (no DPCD), see
-      `drivers/gpu/drm/bridge/display-connector.c:42`.
-  - The patch changes the HPD path to skip `DRM_BRIDGE_OP_DETECT` for
-    DP:
-    - Replaces the unconditional HPD-based detect flag with: “if
-      `conn->hpd_gpio` and `type != DRM_MODE_CONNECTOR_DisplayPort` then
-      set `DRM_BRIDGE_OP_DETECT`.” Net effect: DP no longer claims
-      detect via HPD only.
-  - `DRM_BRIDGE_OP_HPD` remains enabled if the IRQ is available
-    (`drivers/gpu/drm/bridge/display-connector.c:368-369`), so hotplug
-    events still propagate correctly.
+- Precise code changes
+  - Beacon loss path:
+    `drivers/net/wireless/intel/iwlwifi/mld/link.c:568-576` changes the
+    unconditional MLO scan after beacon loss to only happen when not in
+    EMLSR:
+    - Before: always `iwl_mld_int_mlo_scan(mld, vif)` when
+      `missed_bcon_since_rx > IWL_MLD_MISSED_BEACONS_THRESHOLD`.
+    - After: guarded by `if (!iwl_mld_emlsr_active(vif))
+      iwl_mld_int_mlo_scan(mld, vif);`
+  - Low RSSI path:
+    `drivers/net/wireless/intel/iwlwifi/mld/stats.c:382-389` similarly
+    gates scans on poor signal only when not in EMLSR, and returns
+    early. If EMLSR is active, it computes an exit threshold and exits
+    EMLSR instead:
+    - Guarded scan when not in EMLSR: `if (sig <
+      IWL_MLD_LOW_RSSI_MLO_SCAN_THRESH) iwl_mld_int_mlo_scan(mld, vif);`
+    - EMLSR exit evaluation:
+      `drivers/net/wireless/intel/iwlwifi/mld/stats.c:391-399` calls
+      `iwl_mld_exit_emlsr(...)` if `sig < exit_emlsr_thresh`.
+  - EMLSR-aware flow consistency: The link.c path continues to handle
+    EMLSR exit conditions via missed beacon thresholds after the gated
+    scan decision
+    (`drivers/net/wireless/intel/iwlwifi/mld/link.c:578-596`),
+    preventing scans while still in EMLSR.
 
-- Why this is correct in DRM’s bridge pipeline
-  - DRM uses the last bridge in the chain that advertises
-    `DRM_BRIDGE_OP_DETECT` to perform detection
-    (`drivers/gpu/drm/display/drm_bridge_connector.c:177-188`). Before
-    this change, that “last” bridge was often the dp-connector (generic)
-    rather than the DP controller bridge, causing HPD-only detection to
-    be used for DP.
-  - By not setting `OP_DETECT` on dp-connector for DP, detection falls
-    back to the DP bridge/driver, which generally implements proper DP
-    detection (reads DPCD). Example: Qualcomm MSM DP sets
-    `DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_HPD` and implements `.detect =
-    dp_bridge_detect()` based on link readiness
-    (`drivers/gpu/drm/msm/dp/dp_drm.c:312-352`).
+- Correctness and architectural rationale
+  - EMLSR indicates multi-link operation is active; link switching via
+    MLO scan is intended when not in EMLSR. Triggering scans during
+    EMLSR can be pointless or lead to race/ordering issues.
+  - After EMLSR exit, scanning is still triggered by existing
+    mechanisms. For example, when EMLSR is unblocked the code explicitly
+    kicks off an internal MLO scan
+    (`drivers/net/wireless/intel/iwlwifi/mld/mlo.c:352` calls
+    `iwl_mld_int_mlo_scan(mld, vif)`), and subsequent low-RSSI/beacon-
+    loss events will also trigger scans since
+    `iwl_mld_emlsr_active(vif)` will be false.
 
-- Scope and regression risk
-  - Device tree usage audit shows that only two in-tree platforms
-    currently define `hpd-gpios` on `dp-connector` nodes (exactly as the
-    commit states), so the behavioral change is tightly scoped:
-    - `arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:46` (has `hpd-
-      gpios`)
-    - `arch/arm64/boot/dts/qcom/sa8295p-adp.dts:34,48,62,76,90,104`
-      (several DP/eDP-labelled connectors with `hpd-gpios`)
-  - `DRM_BRIDGE_OP_HPD` still gets set when the GPIO can provide
-    interrupts, so hotplug remains functional. For these platforms, the
-    MSM DP bridge advertises `OP_DETECT`, so detection naturally
-    migrates to the DP driver which reads DPCD.
-  - No architectural changes; the patch is a small, localized condition
-    guarding one flag. It doesn’t alter EDID handling or power control
-    and doesn’t affect non-DP connectors.
+- Scope and risk
+  - Small, contained change with clear semantics: two guarded call
+    sites, no API/UAPI changes, no cross-subsystem impact.
+  - Uses existing, well-scoped helper `iwl_mld_emlsr_active(vif)`
+    (`drivers/net/wireless/intel/iwlwifi/mld/mlo.h:22`) as the gate.
+  - Behavior when EMLSR is not supported/active is unchanged (guard
+    evaluates false and scans proceed as before).
+  - EMLSR exit logic remains intact and already handles when to leave
+    EMLSR and then allow link selection.
 
-- Stable policy fit
-  - This is a correctness fix for user-visible behavior (false
-    “connected” status on DP due to HPD-only detection), small and well-
-    contained, with minimal regression risk. It touches one driver file
-    and only DP behavior when `hpd-gpios` is present on dp-connector
-    nodes. It keeps HPD events intact and defers detect to the proper DP
-    driver as intended by DRM’s bridge design.
+- User impact
+  - Prevents unnecessary or ill-timed scans during EMLSR, reducing
+    potential instability, wasted cycles, or incorrect link switching
+    attempts when multi-link is in use.
+  - Improves robustness in beacon-loss and low-RSSI scenarios for MLO-
+    capable Intel devices.
 
-Conclusion: Backporting will improve correctness of DP detection with
-very low risk and no architectural churn.
+- Stable backport suitability
+  - Bug fix that corrects state machine behavior in iwlwifi MLO/EMLSR
+    flows.
+  - Minimal risk of regression; very small patch touching only Intel
+    iwlwifi MLD driver.
+  - No architectural changes, no new features, no ABI changes.
+  - Addresses conditions (missed beacons, low RSSI) that affect real
+    users on MLO/EMLSR-capable hardware.
 
- drivers/gpu/drm/bridge/display-connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Given the above, this is a good candidate for stable backport to trees
+that include iwlwifi MLO/EMLSR support.
 
-diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
-index 52b7b5889e6fe..4f0295efb8f68 100644
---- a/drivers/gpu/drm/bridge/display-connector.c
-+++ b/drivers/gpu/drm/bridge/display-connector.c
-@@ -373,7 +373,8 @@ static int display_connector_probe(struct platform_device *pdev)
- 	if (conn->bridge.ddc)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
- 				 |  DRM_BRIDGE_OP_DETECT;
--	if (conn->hpd_gpio)
-+	/* Detecting the monitor requires reading DPCD */
-+	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	if (conn->hpd_irq >= 0)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
+ drivers/net/wireless/intel/iwlwifi/mld/link.c  |  7 +++++--
+ drivers/net/wireless/intel/iwlwifi/mld/stats.c | 11 +++++++----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
+index 782fc41aa1c31..dfaa6fbf8a54d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
+@@ -572,8 +572,11 @@ void iwl_mld_handle_missed_beacon_notif(struct iwl_mld *mld,
+ 	if (missed_bcon_since_rx > IWL_MLD_MISSED_BEACONS_THRESHOLD) {
+ 		ieee80211_cqm_beacon_loss_notify(vif, GFP_ATOMIC);
+ 
+-		/* try to switch links, no-op if we don't have MLO */
+-		iwl_mld_int_mlo_scan(mld, vif);
++		/* Not in EMLSR and we can't hear the link.
++		 * Try to switch to a better link. EMLSR case is handled below.
++		 */
++		if (!iwl_mld_emlsr_active(vif))
++			iwl_mld_int_mlo_scan(mld, vif);
+ 	}
+ 
+ 	/* no more logic if we're not in EMLSR */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/stats.c b/drivers/net/wireless/intel/iwlwifi/mld/stats.c
+index cbc64db5eab6f..7b8709716324a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/stats.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/stats.c
+@@ -379,11 +379,14 @@ static void iwl_mld_update_link_sig(struct ieee80211_vif *vif, int sig,
+ 
+ 	/* TODO: task=statistics handle CQM notifications */
+ 
+-	if (sig < IWL_MLD_LOW_RSSI_MLO_SCAN_THRESH)
+-		iwl_mld_int_mlo_scan(mld, vif);
+-
+-	if (!iwl_mld_emlsr_active(vif))
++	if (!iwl_mld_emlsr_active(vif)) {
++		/* We're not in EMLSR and our signal is bad,
++		 * try to switch link maybe. EMLSR will be handled below.
++		 */
++		if (sig < IWL_MLD_LOW_RSSI_MLO_SCAN_THRESH)
++			iwl_mld_int_mlo_scan(mld, vif);
+ 		return;
++	}
+ 
+ 	/* We are in EMLSR, check if we need to exit */
+ 	exit_emlsr_thresh =
 -- 
 2.51.0
 
