@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0A3090F7;
-	Sat, 25 Oct 2025 16:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDDC1F12F8;
+	Sat, 25 Oct 2025 16:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408958; cv=none; b=AWMEgGWo722+KldlXwuiqKXlFnGZnb92hvYPjZXG3RlwY7AHaRF5OVoYJvWrdsHCb6UOUwtQ8l+LeSWzwPy4pjeePJskZ3l6s3LbeD+B/4gvRbeInJk9sVSTJY+PoL/59QgdsLdGvZ3z+imcxp+LpxIlZUuhZS40SOmlBgJpoyo=
+	t=1761408961; cv=none; b=k2MvqC41KCayFjvF8lTvRl+oT+uzlS9WtggzZlOcsfyoMSGhj+wVuyALknKg3sCNBNFULLze5acZq+Mkndpp3DE8TC6Watlx1+jUtO8MrnpHAjyrUkRILfoAHLSy5p2hcNxvGyhYJNoBV8hxw38kuiE/eo3iu4ipcrd+402Y3E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408958; c=relaxed/simple;
-	bh=MmWCn+a9rvnlVuGi+Ff6hilOGPA6cq70LX1d0Blxq8A=;
+	s=arc-20240116; t=1761408961; c=relaxed/simple;
+	bh=Se7CXFL4Uo48W3u+DbvFoo9vM8Z1l1NSp4MNKr/bUtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FJNDpG/QeEDpv8DTR8O1AeymKwGoKPaYxXxbtY/Un8WeQQwEq/BPKftnKOwS7TgP4yNL0aKvn8ZsnK7PK7U16vUNZOhOKEGAw5NE5rqfuksnJAadGegaDDawOQFFcdWIezEEvjVm8UQtNUtekyaTMK0npMWVHAwP0dccJ5Yjmjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=junmb6Ab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AsE7YRBxD0Lb/hr+Sj2waI9KSsEiMdGnAj6f5OhHtp9FlLIVtM+YzDGqnStMdNpRdn4JeqWiUpzYTiRO/uO71XLgQ/MyJ21Dx4ds7G9y3s8NHDePxmRje82npuZCqyuMqF2wKrE25F8FotWLTUwNv3dYpqDPG2OMwyikXPJsPjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FldUiHH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="junmb6Ab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C6BC4CEFB;
-	Sat, 25 Oct 2025 16:15:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FldUiHH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D38C4CEFF;
+	Sat, 25 Oct 2025 16:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408957;
-	bh=MmWCn+a9rvnlVuGi+Ff6hilOGPA6cq70LX1d0Blxq8A=;
+	s=k20201202; t=1761408960;
+	bh=Se7CXFL4Uo48W3u+DbvFoo9vM8Z1l1NSp4MNKr/bUtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=junmb6AbxhpbuQ6c+Ud6Im+Ez3/61c6UDXJhpNS9jltZ86god4r4AlNEFsV/TnJuB
-	 SG3kx6T/ZOzsSC7CLqpKL+n3/JSYbFn9iFEPmK5iNqT4kHS1dfb/FBUue4tX4fRzd4
-	 t3oFKNicPZgpngio2KkNrDe8cOYkCy7eWyNScmVhc+hemU0nA2rzNgcovuPA1ZbKNt
-	 NU21GNChQScl5hKyk+pFEi0UfqiuRyr6wRAr3bcDkFcBfQDFdrezazbqvcfDLo77Uq
-	 bdR+8hmCracrJSLUWkYRdB1bf8wUsc6W3OysvYyrX+QiWNgPCam9RBLuWVUt/kCPbu
-	 zb9yz/wAs5+qg==
+	b=FldUiHH/ZjvoIdFLwa7hZQiT1BJ4idQqcLyDtDJ67L3B8DBezzPzkTS2rDxL6pOK7
+	 QmdeTatv1epJSwWUs7UJjxEZwM7Ubw5rSWnnI7lBDHnjFJ6wF1GXRY+3nzOm1Z/Ebf
+	 V+pgKxP8A4AEwDMTXfrcy0QUNQQh1yLwwraSulgQgPy/cydd/Y5Bani1vK3qwQoGKs
+	 oEIoTQS9FCaWYlOGqqXsym38qk4nPXrYWRYrf+7F4QQawLY9IdkGlG7svFQNhCY+vF
+	 Z+/g8uw/NZJEOkkU1ELXuGx7/OBP1fVnJMwQcNTRdwsRvl3oLy1rni5bV+qQjz+Vsa
+	 0qn5Aehhub1eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+Cc: Michael Strauss <michael.strauss@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] PCI/PM: Skip resuming to D0 if device is disconnected
-Date: Sat, 25 Oct 2025 11:56:22 -0400
-Message-ID: <20251025160905.3857885-151-sashal@kernel.org>
+	PeiChen.Huang@amd.com,
+	meenakshikumar.somasundaram@amd.com,
+	zhikai.zhai@amd.com,
+	Brendan.Tam@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.6] drm/amd/display: Increase AUX Intra-Hop Done Max Wait Duration
+Date: Sat, 25 Oct 2025 11:56:23 -0400
+Message-ID: <20251025160905.3857885-152-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -48,93 +52,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 299fad4133677b845ce962f78c9cf75bded63f61 ]
+[ Upstream commit e3419e1e44b87d4176fb98679a77301b1ca40f63 ]
 
-When a device is surprise-removed (e.g., due to a dock unplug), the PCI
-core unconfigures all downstream devices and sets their error state to
-pci_channel_io_perm_failure. This marks them as disconnected via
-pci_dev_is_disconnected().
+[WHY]
+In the worst case, AUX intra-hop done can take hundreds of milliseconds as
+each retimer in a link might have to wait a full AUX_RD_INTERVAL to send
+LT abort downstream.
 
-During device removal, the runtime PM framework may attempt to resume the
-device to D0 via pm_runtime_get_sync(), which calls into pci_power_up().
-Since the device is already disconnected, this resume attempt is
-unnecessary and results in a predictable errors like this, typically when
-undocking from a TBT3 or USB4 dock with PCIe tunneling:
+[HOW]
+Wait 300ms for each retimer in a link to allow time to propagate a LT abort
+without infinitely waiting on intra-hop done.
+For no-retimer case, keep the max duration at 10ms.
 
-  pci 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-
-Avoid powering up disconnected devices by checking their status early in
-pci_power_up() and returning -EIO.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: add typical message]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://patch.msgid.link/20250909031916.4143121-1-superm1@kernel.org
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The new guard in `drivers/pci/pci.c:1321-1324` checks
-  `pci_dev_is_disconnected()` before touching PCI PM registers, so
-  surprise-removed devices short-circuit with `-EIO` while keeping
-  `current_state = PCI_D3cold`. This prevents the guaranteed `"Unable to
-  change power state..."` error emitted when `pci_read_config_word()`
-  hits a vanished device (see `drivers/pci/pci.c:1326-1331`), which
-  currently spams logs whenever users undock TBT3/USB4 systems.
-- Callers already expect a negative return in this scenario—the pre-
-  change path hit the same `-EIO` branch after the failing config
-  read—so observable behaviour stays the same aside from eliminating the
-  noisy and misleading error message. `pci_set_full_power_state()` and
-  runtime PM resume paths therefore retain their semantics but avoid
-  futile config accesses.
-- The fix is narrowly scoped to PCI PM, introduces no architectural
-  churn, and relies only on long-standing helpers present in supported
-  stables (confirmed `pci_dev_is_disconnected()` in tags like `p-6.6`).
-  It neither alters power-state transitions for healthy devices nor
-  affects platforms lacking PM caps because the new check comes after
-  the existing `!dev->pm_cap` fallback.
-- Avoiding config transactions on removed hardware reduces the chance of
-  host controller complaints and matches other PCI core code that tests
-  `pci_dev_is_disconnected()` before issuing requests, making this a
-  low-risk, high-signal bug fix well suited for stable backporting.
 
-Natural next step: 1) Queue the patch for the targeted stable series
-after double-checking those trees already expose
-`pci_dev_is_disconnected()` in `include/linux/pci.h`.
+- What changed
+  - In `drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+    :1011`, `dpcd_exit_training_mode()` previously polled the sink for
+    “intra‑hop AUX reply indication” clearing with a fixed 10 ms window
+    using `for (i = 0; i < 10; i++) ... fsleep(1000);` (see `drivers/gpu
+    /drm/amd/display/dc/link/protocols/link_dp_training.c:1024` and
+    `:1027`).
+  - The patch computes a per‑topology maximum wait based on the number
+    of LTTPR retimers and changes the loop bound accordingly:
+    - Introduces `lttpr_count = dp_parse_lttpr_repeater_count(link-
+      >dpcd_caps.lttpr_caps.phy_repeater_cnt)` and
+      `intra_hop_disable_time_ms = (lttpr_count > 0 ? lttpr_count * 300
+      : 10)` so the poll waits up to 300 ms per retimer, defaulting to
+      10 ms if none are present.
+    - Changes the loop counter type from `uint8_t` to `uint32_t` to
+      safely support multi‑second waits without overflow.
+  - The poll still checks `DP_SINK_STATUS` for
+    `DP_INTRA_HOP_AUX_REPLY_INDICATION` to go low and sleeps 1 ms per
+    iteration via `fsleep(1000)`.
 
- drivers/pci/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+- Why it matters (bug being fixed)
+  - For DP 2.0 (128b/132b), when exiting link training the source must
+    wait for intra‑hop AUX reply indication to clear. With retimers,
+    each hop may wait up to a full AUX_RD_INTERVAL to propagate the
+    link‑training abort downstream; worst case can be “hundreds of
+    milliseconds” per hop.
+  - The prior fixed 10 ms total window can be too short, causing
+    premature exit while retimers are still active. That can lead to
+    spurious failures or retries after training, affecting users with
+    LTTPR chains.
+  - The new logic scales the wait to the actual retimer count,
+    eliminating timeouts without risking indefinite waits.
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index b0f4d98036cdd..036511f5b2625 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1374,6 +1374,11 @@ int pci_power_up(struct pci_dev *dev)
- 		return -EIO;
- 	}
- 
-+	if (pci_dev_is_disconnected(dev)) {
-+		dev->current_state = PCI_D3cold;
-+		return -EIO;
-+	}
+- Context and correctness
+  - The helper `dp_parse_lttpr_repeater_count()` already exists and is
+    used elsewhere in DC to scale timeouts (e.g.,
+    `link_dp_training_128b_132b.c:248` sets `cds_wait_time_limit` from
+    the same count), so this change aligns with existing design
+    patterns.
+  - `lttpr_caps.phy_repeater_cnt` is populated during capability
+    discovery (`link_dp_capability.c:1500+`), and invalid counts are
+    handled (including forcing 1 in certain fixed‑VS cases), so the new
+    wait computation is robust.
+  - The change affects only the DP 2.0 path (`if (encoding ==
+    DP_128b_132b_ENCODING)` in `dpcd_exit_training_mode()`), leaving DP
+    1.x behavior untouched.
+  - The loop counter upgrade to `uint32_t` is necessary to avoid
+    overflow for waits >255 ms (a latent bug if the bound is raised).
+
+- Risk assessment
+  - Behavioral changes are confined to a small, well‑scoped polling loop
+    in AMD DC’s DP training teardown. No architectural changes, no ABI
+    changes, no new features.
+  - Regression risk is low: non‑retimer systems keep the 10 ms max;
+    retimer topologies get longer but finite waits (worst case ~2.4 s
+    for 8 retimers).
+  - The i915 driver also waits for the same intra‑hop indication to
+    clear (up to 500 ms total; see
+    `drivers/gpu/drm/i915/display/intel_dp_link_training.c:1119`), so
+    waiting here is consistent with cross‑driver practice.
+
+- Stable backport criteria
+  - Fixes a real user‑visible reliability issue (training teardown races
+    on DP 2.0 with retimers).
+  - Small, contained change with clear rationale and no dependency on
+    new infrastructure.
+  - No feature enablement; minimal regression surface; targeted to a
+    single function in AMD DC.
+
+- Recommendation
+  - Backport to stable trees that include AMD DC DP 2.0 (128b/132b)
+    support. This improves link‑training robustness for LTTPR topologies
+    with negligible risk for others.
+
+ .../drm/amd/display/dc/link/protocols/link_dp_training.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 2dc1a660e5045..134093ce5a8e8 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -1018,7 +1018,12 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
+ {
+ 	enum dc_status status;
+ 	uint8_t sink_status = 0;
+-	uint8_t i;
++	uint32_t i;
++	uint8_t lttpr_count = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
++	uint32_t intra_hop_disable_time_ms = (lttpr_count > 0 ? lttpr_count * 300 : 10);
 +
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
- 		pci_err(dev, "Unable to change power state from %s to D0, device inaccessible\n",
++	// Each hop could theoretically take over 256ms (max 128b/132b AUX RD INTERVAL)
++	// To be safe, allow 300ms per LTTPR and 10ms for no LTTPR case
+ 
+ 	/* clear training pattern set */
+ 	status = dpcd_set_training_pattern(link, DP_TRAINING_PATTERN_VIDEOIDLE);
+@@ -1028,7 +1033,7 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
+ 
+ 	if (encoding == DP_128b_132b_ENCODING) {
+ 		/* poll for intra-hop disable */
+-		for (i = 0; i < 10; i++) {
++		for (i = 0; i < intra_hop_disable_time_ms; i++) {
+ 			if ((core_link_read_dpcd(link, DP_SINK_STATUS, &sink_status, 1) == DC_OK) &&
+ 					(sink_status & DP_INTRA_HOP_AUX_REPLY_INDICATION) == 0)
+ 				break;
 -- 
 2.51.0
 
