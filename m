@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBD530ACE8;
-	Sat, 25 Oct 2025 16:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A346030ACE8;
+	Sat, 25 Oct 2025 16:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409000; cv=none; b=b5MQn6+eFS3UTbqRmxZVA4ktPmtQ8yK98YyIcIcBsjHjBW6qgrEVXhpaC3US+vURUbOVBN5ydy2uRa2raZceASBYt7YUNKPFS2vH1QtqpaNaCyS3Dh578hNpkRbxqM6kRM/BcBEB9G/CpZKys+3EOF/8e4RzHE/6pu5OD1358fE=
+	t=1761409001; cv=none; b=DGzLzlx2JIv9lz+pYxkRiIxASKNgJms7sOTXwo5drFOKqrklzodbuGBntYW4X73fDAC1s/uNBHkN8furzQn0WW7gDWvta0pAF/uN3v2U2MLKjsqGrE4asmRmZmBmqyawfUpqsEIOhC/SiYhr1md9Lc99ApWocZXe5WeoLbuChjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409000; c=relaxed/simple;
-	bh=BJNj1AKX4x8khA3V2BuAeQsKGL0gnc5G62vc3d98SzI=;
+	s=arc-20240116; t=1761409001; c=relaxed/simple;
+	bh=0DiN0DSS30aJOKfK0GaeAJCDUFPsH0AHzAp/5NqMP8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NfTRud16jVMB+BLB3iwhQpbcA06Gw2miSJq9DbDcanEJmTlXEagZiE6y6eyfZ8I20lIa4iVtzGRVJ/N5nir2H187M7MHksW1TIARNvk5hcqvse1+SFEbMcfZPFCypwjsgGDGyZKnCR67/YT20+FEtbCSEasJyDbFOsfGWuTqWsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CPIYGQit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g9O1mj9vfaNfMyIQ2fuYpK+uSjGeje1prUQvnNkSWnBIOlPf1ANnP3irLgOipjArfawzpw0/YPy/A+Zz4arGHOmo9Wy5oReABeNzTjg5UtlQ5b2IZGLNCgDmxWmKjadLlvPjp93rHr3xrsyG6oRt+bHG/5545K3q/e64iTE4QlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iujTM3QP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CPIYGQit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB9AC4CEFB;
-	Sat, 25 Oct 2025 16:16:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iujTM3QP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6FDC4CEF5;
+	Sat, 25 Oct 2025 16:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409000;
-	bh=BJNj1AKX4x8khA3V2BuAeQsKGL0gnc5G62vc3d98SzI=;
+	s=k20201202; t=1761409001;
+	bh=0DiN0DSS30aJOKfK0GaeAJCDUFPsH0AHzAp/5NqMP8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPIYGQitIuGVOHLExI6hVPNjCjoZxtNmL067vCxYnarugMoytfXI2cTRALvaAG3Yd
-	 w12SYStShAxlvt0WeIlPhhFmowsu3/b8WsSLG+IEUjibgU44RnhrfLXtumemy9PMtN
-	 n9AW0cP4ExuXYrYPAsNBiUVmh3n1xD2T0o2X25GqpFogkvK9OyguXYGfTjSistyawa
-	 8hALd0rcZEi2gRhZdaqVroO6F9e6XGmc8p+ZClKLVw0EVTVE7RW4i1CGOVpr63ZSww
-	 2BYDz83IWHUBGlIt5Jzb7qNvmCI33qv9v9KWfmeZDxjXbZ4HDpArL7v9TeFk6b9ckN
-	 EzGH4o7tC2aRw==
+	b=iujTM3QPzkS7WgjVo3gElK55HEO19K8NDNZKddEkb3cmhhnoMO/oI2ADblnkWGQZE
+	 ZOpfTUZyc23VbIR69fa3IsPdGGJQECZFWCAyhNNwFWu8xOhIN0P0OWdtXe778bho2v
+	 CGmxSDWxMmmuSjdJHpv36giKH+LksFIcDT7jrNqdSIhNTVULCZEl47Ci/H5sCnDrIR
+	 +FUzkTU7JJzhb8O2bSwwNBFXBlE7HpqtoJyqAsyoTZQo38EeibnGbfbdJzmCotRkpK
+	 Dx5yTRHyQfpGnP85QDGkXaaYC/Xvub5dVQJqPhG15M8Dxc8tf8rBWUXNf2plWwIrHo
+	 hLZWn+BToUZTg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Palash Kambar <quic_pkambar@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rmfrfs@gmail.com,
-	shawnguo@kernel.org,
-	linux-media@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17] media: imx-mipi-csis: Only set clock rate when specified in DT
-Date: Sat, 25 Oct 2025 11:56:40 -0400
-Message-ID: <20251025160905.3857885-169-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] scsi: ufs: ufs-qcom: Align programming sequence of Shared ICE for UFS controller v5
+Date: Sat, 25 Oct 2025 11:56:41 -0400
+Message-ID: <20251025160905.3857885-170-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,32 +53,26 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Palash Kambar <quic_pkambar@quicinc.com>
 
-[ Upstream commit 65673c6e33cf46f220cc5774166b373b3c087739 ]
+[ Upstream commit 3126b5fd02270380cce833d06f973a3ffb33a69b ]
 
-The imx-mipi-csis driver sets the rate of the wrap clock to the value
-specified in the device tree's "clock-frequency" property, and defaults
-to 166 MHz otherwise. This is a historical mistake, as clock rate
-selection should have been left to the assigned-clock-rates property.
+Disabling the AES core in Shared ICE is not supported during power
+collapse for UFS Host Controller v5.0, which may lead to data errors
+after Hibern8 exit. To comply with hardware programming guidelines and
+avoid this issue, issue a sync reset to ICE upon power collapse exit.
 
-Honouring the clock-frequency property can't be removed without breaking
-backwards compatibility, and the corresponding code isn't very
-intrusive. The 166 MHz default, on the other hand, prevents
-configuration of the clock rate through assigned-clock-rates, as the
-driver immediately overwrites the rate. This behaviour is confusing and
-has cost debugging time.
+Hence follow below steps to reset the ICE upon exiting power collapse
+and align with Hw programming guide.
 
-There is little value in a 166 MHz default. All mainline device tree
-sources that enable the CSIS specify a clock-frequency explicitly, and
-the default wrap clock configuration on supported platforms is at least
-as high as 166 MHz. Drop the default, and only set the clock rate
-manually when the clock-frequency property is specified.
+a. Assert the ICE sync reset by setting both SYNC_RST_SEL and
+   SYNC_RST_SW bits in UFS_MEM_ICE_CFG
 
-Link: https://lore.kernel.org/r/20250822002734.23516-10-laurent.pinchart@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+b. Deassert the reset by clearing SYNC_RST_SW in  UFS_MEM_ICE_CFG
+
+Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -89,117 +80,134 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a bug fix
-- The driver unconditionally forced the wrap clock to 166 MHz when the
-  DT lacked a clock-frequency property, which overrides DT-assigned
-  clock rates. That breaks the expected DT model where `assigned-clock-
-  rates` controls rates, leading to misconfiguration and hard-to-debug
-  behavior.
-- This change stops overriding the clock unless the DT explicitly
-  requests it, restoring correct DT semantics.
+Reasoning and code-specific analysis:
+- Fixes real data errors: The commit addresses data corruption “after
+  Hibern8 exit” on Qualcomm UFS Host Controller v5.0 when the Shared ICE
+  (Inline Crypto Engine) AES core state isn’t supported across power
+  collapse. This is a user-visible, serious bug that directly affects
+  storage reliability.
+- Small, localized change: The patch only touches the QCOM UFS variant
+  and adds a precise reset sequence in the resume path, tightly scoped
+  to the problematic hardware revision.
 
-What changed (code references)
-- Set rate only when explicitly requested:
-  - `drivers/media/platform/nxp/imx-mipi-csis.c:744` now guards
-    `clk_set_rate()` with `if (csis->clk_frequency) { ... }`, meaning
-    the driver only sets the rate when the DT provided `clock-
-    frequency`.
-- Drop the 166 MHz fallback:
-  - `drivers/media/platform/nxp/imx-mipi-csis.c:1483` now reads `clock-
-    frequency` without assigning a default if the property is absent,
-    removing the prior implicit 166 MHz default.
-- The removal of the default macro and fallback behavior eliminates the
-  unconditional override while preserving backward compatibility for DTs
-  that do specify `clock-frequency`.
+What changed
+- New hardware register and bit definitions:
+  - Adds `UFS_MEM_ICE_CFG` (0x2600) to the QCOM vendor register map:
+    drivers/ufs/host/ufs-qcom.h:85
+  - Adds ICE sync reset bit definitions local to the source:
+    - `UFS_ICE_SYNC_RST_SEL` and `UFS_ICE_SYNC_RST_SW`:
+      drivers/ufs/host/ufs-qcom.c:41-42
+- Reset sequence on resume for UFS v5.0.0:
+  - After enabling lane clocks (drivers/ufs/host/ufs-qcom.c:755-757), if
+    the link is not active and the controller version is exactly 5.0.0,
+    issue an ICE sync reset:
+    - Assert reset by setting both `UFS_ICE_SYNC_RST_SEL |
+      UFS_ICE_SYNC_RST_SW` into `UFS_MEM_ICE_CFG`: drivers/ufs/host/ufs-
+      qcom.c:759-764
+    - Read back, clear both bits, sleep 50–100 µs to allow flops to
+      settle, write back, and read again: drivers/ufs/host/ufs-
+      qcom.c:764-773
+  - The gating condition confines the behavior to the exact affected
+    hardware: `host->hw_ver.major == 5 && host->hw_ver.minor == 0 &&
+    host->hw_ver.step == 0` and only when the link is not active:
+    drivers/ufs/host/ufs-qcom.c:759-763
+- Correct ordering with ICE reinit:
+  - The reset happens before `ufs_qcom_ice_resume(host)`
+    (drivers/ufs/host/ufs-qcom.c:776), and `ufs_qcom_ice_resume()` calls
+    `qcom_ice_resume()` which reinitializes HWKM and waits for BIST
+    (drivers/soc/qcom/ice.c:274-287). This ensures a clean reinit after
+    the reset.
 
-Why it matters (user impact)
-- Systems using `assigned-clock-rates` in DT were previously ignored by
-  the driver due to the unconditional 166 MHz set, causing unexpected
-  clock rates and potential functional issues.
-- With this patch, DT-provided assigned rates take effect unless a
-  legacy DT explicitly uses `clock-frequency`, which is retained for
-  compatibility.
+Why this is safe for stable
+- Minimal risk, bounded scope:
+  - The behavior only triggers for a specific hardware revision (v5.0.0)
+    and only on a particular PM transition condition (link not active),
+    minimizing regression risk to other platforms.
+  - The register access is vendor-specific and does not affect other
+    subsystems.
+  - The added delay is tiny (50–100 µs), and the change is otherwise a
+    single MMIO reset sequence.
+- Clearly a bug fix, not a feature:
+  - No new capabilities or architectural changes. It aligns with the
+    hardware programming guide to prevent data errors.
+- Maintains correct init sequence:
+  - Reset is performed before ICE resume and HWKM init, ensuring keys
+    and state are reprogrammed after reset. The resume path remains
+    coherent.
 
-Risk and compatibility
-- Scope is small and contained to one driver; no core or architectural
-  changes.
-- Backward compatibility is preserved for legacy DTs that specify
-  `clock-frequency` (the driver still sets the rate in that case).
-- For DTs without `clock-frequency`, the driver no longer forces 166 MHz
-  and leaves the rate to the clock framework/DT assignments. The commit
-  rationale notes that all mainline DTs enabling CSIS already specify
-  `clock-frequency`, and default platform wrap clock configurations are
-  at least as high as 166 MHz, reducing regression risk.
-- The only functional behavior change is the removal of an incorrect
-  default that masked DT configuration.
-
-Stable criteria assessment
-- Fixes a real misbehavior that affects users (DT `assigned-clock-rates`
-  ignored).
-- Minimal, well-contained change in a single driver file.
-- No new features or architectural changes.
-- Low regression risk with explicit consideration for legacy DT
-  compatibility.
-- No explicit “Cc: stable” or “Fixes” tag, but technically aligns with
-  stable policy as a correctness fix that removes a problematic default
-  override.
+Stable tree criteria
+- Important bugfix: Prevents data corruption on affected hardware.
+- Small and contained: Limited to `drivers/ufs/host/ufs-qcom.c` and
+  `drivers/ufs/host/ufs-qcom.h`.
+- No broad side effects: Strict hardware version gating with link state
+  check.
+- No API/ABI changes or architectural refactors.
 
 Conclusion
-- This is a clear, low-risk bug fix that restores proper DT semantics
-  and prevents the driver from clobbering assigned clock rates. It
-  should be backported to stable.
+- This is a strong backport candidate that fixes a real, user-impacting
+  bug with minimal and well-scoped changes.
 
- drivers/media/platform/nxp/imx-mipi-csis.c | 23 +++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
+ drivers/ufs/host/ufs-qcom.h |  2 +-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
-index 2beb5f43c2c01..cea017a2b14ec 100644
---- a/drivers/media/platform/nxp/imx-mipi-csis.c
-+++ b/drivers/media/platform/nxp/imx-mipi-csis.c
-@@ -228,8 +228,6 @@
- #define MIPI_CSIS_PKTDATA_EVEN			0x3000
- #define MIPI_CSIS_PKTDATA_SIZE			SZ_4K
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 9574fdc2bb0fd..3ea6b08d2b526 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -38,6 +38,9 @@
+ #define DEEMPHASIS_3_5_dB	0x04
+ #define NO_DEEMPHASIS		0x0
  
--#define DEFAULT_SCLK_CSIS_FREQ			166000000UL
--
- struct mipi_csis_event {
- 	bool debug;
- 	u32 mask;
-@@ -704,12 +702,17 @@ static int mipi_csis_clk_get(struct mipi_csis_device *csis)
- 	if (ret < 0)
- 		return ret;
- 
--	/* Set clock rate */
--	ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
--			   csis->clk_frequency);
--	if (ret < 0)
--		dev_err(csis->dev, "set rate=%d failed: %d\n",
--			csis->clk_frequency, ret);
-+	if (csis->clk_frequency) {
-+		/*
-+		 * Set the clock rate. This is deprecated, for backward
-+		 * compatibility with old device trees.
-+		 */
-+		ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
-+				   csis->clk_frequency);
-+		if (ret < 0)
-+			dev_err(csis->dev, "set rate=%d failed: %d\n",
-+				csis->clk_frequency, ret);
-+	}
- 
- 	return ret;
- }
-@@ -1413,9 +1416,7 @@ static int mipi_csis_parse_dt(struct mipi_csis_device *csis)
++#define UFS_ICE_SYNC_RST_SEL	BIT(3)
++#define UFS_ICE_SYNC_RST_SW	BIT(4)
++
+ enum {
+ 	TSTBUS_UAWM,
+ 	TSTBUS_UARM,
+@@ -751,11 +754,29 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
  {
- 	struct device_node *node = csis->dev->of_node;
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	int err;
++	u32 reg_val;
  
--	if (of_property_read_u32(node, "clock-frequency",
--				 &csis->clk_frequency))
--		csis->clk_frequency = DEFAULT_SCLK_CSIS_FREQ;
-+	of_property_read_u32(node, "clock-frequency", &csis->clk_frequency);
+ 	err = ufs_qcom_enable_lane_clks(host);
+ 	if (err)
+ 		return err;
  
- 	return 0;
++	if ((!ufs_qcom_is_link_active(hba)) &&
++	    host->hw_ver.major == 5 &&
++	    host->hw_ver.minor == 0 &&
++	    host->hw_ver.step == 0) {
++		ufshcd_writel(hba, UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW, UFS_MEM_ICE_CFG);
++		reg_val = ufshcd_readl(hba, UFS_MEM_ICE_CFG);
++		reg_val &= ~(UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW);
++		/*
++		 * HW documentation doesn't recommend any delay between the
++		 * reset set and clear. But we are enforcing an arbitrary delay
++		 * to give flops enough time to settle in.
++		 */
++		usleep_range(50, 100);
++		ufshcd_writel(hba, reg_val, UFS_MEM_ICE_CFG);
++		ufshcd_readl(hba, UFS_MEM_ICE_CFG);
++	}
++
+ 	return ufs_qcom_ice_resume(host);
  }
+ 
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index e0e129af7c16b..88e2f322d37d8 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -60,7 +60,7 @@ enum {
+ 	UFS_AH8_CFG				= 0xFC,
+ 
+ 	UFS_RD_REG_MCQ				= 0xD00,
+-
++	UFS_MEM_ICE_CFG				= 0x2600,
+ 	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
+ 	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
+ 
 -- 
 2.51.0
 
