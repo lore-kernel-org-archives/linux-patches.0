@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEB307ADA;
-	Sat, 25 Oct 2025 16:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF7830EF94;
+	Sat, 25 Oct 2025 16:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409490; cv=none; b=XWXjW9sjR4h+t6a/f4WS+GYtym7xFXjaZrBf4dyr0DCtBDJjQdiZDGlZmCsAoaNtjtdQBp5wz4fqfMJXh/49vPac79Pud0K/oQLLMeIrbYz4astR1F1vCrbdAXUgj25x1bB/ke4EwpO22u93o3L2fEy4Mc5DeiqZICbR0hrHVEU=
+	t=1761409492; cv=none; b=cXVNf9BQnyvaZZGBm2y1lWQrx1SFDKEVOoZgWvRTumbIp02UxcC2uj9Aauj4xtOetgl2S1gI42+mnZU93B8Z2bfuDW08FqATeZn4+RIKsjWc8G+4FZMVuqqtBk37rq6M4nyznlny/UGUZMhHRds9L6C1mFGp7/vXFjtoMZAPjgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409490; c=relaxed/simple;
-	bh=nTpHRM+FCEoJ12pwLkMF4yFwFZpMpZd1oLTK9U32Gi8=;
+	s=arc-20240116; t=1761409492; c=relaxed/simple;
+	bh=bwtiFccQsOoGsrSvgCkYaSrdPPeWEvE9ONY3v48TobM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PTKfPLmNAgIgQABAAu6XVVDq4wUtvmPWXYsUgt48lKOWSRNu+iCiQ7t8uu4eCs0uXLojZuMdraYkhqaCIPZiiYwnlHEeaSRV7Ds7Tf/oZ2dtsTEOw0g2dF5GZJ6+bLIJ2nbtnYeSm+8gLpTCnOh6Cbbuiqq/0AkgRy5X5Rglj8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/tj2YQG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qO/uBx7v40jWEpDXHQ2sFajqSH4L/Rqf/7w/7+yshoXlzSO2+IHHxOl10yiEVdhmOXUt48uNtPZRgPA5qzVFRyRBc+Iw19EQC1WCIEW9TDhJ0RJOYmEZYfPmoPYMxjoTJrfLGK6KDH0HTHyMoY5mRP3iBBOT2xyZNslmWj7Csd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ndwyeTnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/tj2YQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C644C4CEFB;
-	Sat, 25 Oct 2025 16:24:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ndwyeTnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB44C4CEFB;
+	Sat, 25 Oct 2025 16:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409490;
-	bh=nTpHRM+FCEoJ12pwLkMF4yFwFZpMpZd1oLTK9U32Gi8=;
+	s=k20201202; t=1761409492;
+	bh=bwtiFccQsOoGsrSvgCkYaSrdPPeWEvE9ONY3v48TobM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/tj2YQGkcx6RKqIQxvFKhDssTFtDi1f+8U8z4Hwwah8k8pdUP+cYPIifdQvrB22h
-	 SgSt9GCUleM7GGToSB9Ov6Hwm/KEPhckGwdmuLMQMbFh3gEq2DYAKJy0PIBAdxfImZ
-	 jXoK+BeYlcYZqX5go2bifnZq09NlIvQH3zAtGUV0VJXnq1xKkrKz7tKlnC3gghNpAn
-	 eA2DbkPqyDdBA2H0XkyUx3zsMOQUAeKp+MMUlJNnyXigvjFRXMzAcK/6G8yeKDC90m
-	 XkT83UNgVI9psZg+MKD/eHnNj5l20SbfwlpTTnXggJ8pi4S5ELdK+CvGLo8yo3Faxz
-	 2PrSFiFnlOdxg==
+	b=ndwyeTnJ+pK6cdGLOWutBQnHfcHi1vlkVysMHl1TjwsPUwHrRpsiqK4SET0ncxMIU
+	 Qho80/iPHxQ3mSK/pmig4VYIvY2Xbh1xHpTq+Bze5NK3q4J0jZcpZO27w65fCnnhQm
+	 Guoyuzf/HW5426HtOu9yA3kSz8Oax0AFisYiCqWv+kidF7lTL/oEnGOV0IemPGwQb4
+	 GYFBOWZOzcsXXUXS3p2cu4aj4yCrlzI4YvMGnDqvcod9VN1zyUZIReL3nNEJjYxs62
+	 zywUAwKtiMklAgd1apw/RGQPs0k/x33T/kzvfiPwwt1Ah/53lA09qRZg5KB+7pEdyV
+	 Gu2e8EPPSghDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qianfeng Rong <rongqianfeng@vivo.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Jie Zhang <quic_jiezh@quicinc.com>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jack.xu@intel.com,
-	suman.kumar.chakraborty@intel.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.6] crypto: qat - use kcalloc() in qat_uclo_map_objs_from_mof()
-Date: Sat, 25 Oct 2025 11:59:39 -0400
-Message-ID: <20251025160905.3857885-348-sashal@kernel.org>
+	lumag@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] dt-bindings: display/msm/gmu: Update Adreno 623 bindings
+Date: Sat, 25 Oct 2025 11:59:40 -0400
+Message-ID: <20251025160905.3857885-349-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,23 +56,18 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Jie Zhang <quic_jiezh@quicinc.com>
 
-[ Upstream commit 4c634b6b3c77bba237ee64bca172e73f9cee0cb2 ]
+[ Upstream commit c2cc1e60c1afff4f23c22561b57a5d5157dde20d ]
 
-As noted in the kernel documentation [1], open-coded multiplication in
-allocator arguments is discouraged because it can lead to integer overflow.
+Update Adreno 623's dt-binding to remove smmu_clk which is not required
+for this GMU.
 
-Use kcalloc() to gain built-in overflow protection, making memory
-allocation safer when calculating allocation size compared to explicit
-multiplication.  Similarly, use size_add() instead of explicit addition
-for 'uobj_chunk_num + sobj_chunk_num'.
-
-Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments #1
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/672455/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,74 +75,102 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed: The allocation in
-  drivers/crypto/intel/qat/qat_common/qat_uclo.c:1903 switched from
-  open-coded arithmetic to overflow-aware helpers:
-  - New: kcalloc(size_add(uobj_chunk_num, sobj_chunk_num),
-    sizeof(*mobj_hdr), GFP_KERNEL) at
-    drivers/crypto/intel/qat/qat_common/qat_uclo.c:1903.
-  - This replaces a prior kzalloc((uobj_chunk_num + sobj_chunk_num) *
-    sizeof(*mobj_hdr), GFP_KERNEL) (per diff), eliminating unchecked
-    addition and multiplication in the allocator arguments.
+- What it fixes
+  - Corrects the GMU binding for Adreno 623 by removing an erroneous
+    “SMMU vote clock” requirement. Adreno 623 does not need (and DTS
+    does not provide) an `smmu_vote` clock, so the prior schema forced a
+    mismatch and dtbs_check failures/warnings.
+  - Aligns the binding with in-tree DTS for Adreno 623 (e.g., QCS8300),
+    which defines only GMU, CX, AXI, MEMNOC, AHB, and HUB clocks.
 
-- Why it matters: The element count comes directly from MOF-parsed
-  headers:
-  - Counts are read from the object headers at
-    drivers/crypto/intel/qat/qat_common/qat_uclo.c:1896–1901
-    (uobj_hdr->num_chunks, sobj_hdr->num_chunks; defined as unsigned
-    short in drivers/crypto/intel/qat/qat_common/icp_qat_uclo.h:562).
-  - The allocated array is then indexed for each chunk in two loops at
-    drivers/crypto/intel/qat/qat_common/qat_uclo.c:1916–1923 and
-    1926–1933. If the allocation were undersized due to integer overflow
-    in the size calculation, these loops could write past the end of the
-    buffer.
-  - The MOF data ultimately originates from firmware loaded via
-    request_firmware() and passed to qat_uclo_map_obj()
-    (drivers/crypto/intel/qat/qat_common/adf_accel_engine.c:67–85,
-    93–101), so a malformed or corrupted file can drive these values.
-    This makes integer-overflow hardening here security-relevant.
+- Specific code changes
+  - Adds a dedicated schema branch for `qcom,adreno-gmu-623.0` with
+    explicit registers and six clocks, notably without an SMMU vote
+    clock:
+    - Introduces the 623-specific conditional:
+      Documentation/devicetree/bindings/display/msm/gmu.yaml:121
+    - 623 clocks list (no smmu_vote):
+      Documentation/devicetree/bindings/display/msm/gmu.yaml:139
+    - 623 clock-names: `gmu`, `cxo`, `axi`, `memnoc`, `ahb`, `hub`:
+      Documentation/devicetree/bindings/display/msm/gmu.yaml:147
+  - Keeps SMMU vote clock only for other variants (635/660/663):
+    - Block for 635/660/663 explicitly lists “GPU SMMU vote clock” and
+      `smmu_vote`:
+      Documentation/devicetree/bindings/display/msm/gmu.yaml:176 and
+      Documentation/devicetree/bindings/display/msm/gmu.yaml:185
+  - This separation removes the incorrect inheritance of `smmu_vote` by
+    623 which previously happened when 623 was grouped with 635/660/663.
 
-- Why it’s a good stable backport:
-  - Bug fix: Prevents potential integer overflow (both addition and
-    multiplication) when computing an allocation size from externally
-    supplied data. kcalloc() provides built-in multiply overflow
-    checking; size_add() prevents addition overflow before the multiply.
-  - Minimal and contained: One-line behavioral change in a single
-    helper, no API/ABI or architectural changes, same zero-
-    initialization semantics as kzalloc.
-  - Low regression risk: On valid inputs behavior is unchanged; on
-    overflow it now fails cleanly with -ENOMEM at
-    drivers/crypto/intel/qat/qat_common/qat_uclo.c:1905, which
-    propagates to the existing error paths and cleanup.
-  - Subsystem impact: Localized to the Intel QAT firmware loading path;
-    does not affect core crypto or memory management.
+- Evidence DTS already matches this (demonstrating the prior schema was
+  wrong)
+  - QCS8300 GMU node uses six clocks (no `smmu_vote`): `gmu`, `cxo`,
+    `axi`, `memnoc`, `ahb`, `hub`:
+    arch/arm64/boot/dts/qcom/qcs8300.dtsi:4366
 
-- Notes for backporting:
-  - If a target stable series lacks size_add(), the same safety intent
-    can be preserved by using kcalloc(uobj_chunk_num + sobj_chunk_num,
-    sizeof(*mobj_hdr), GFP_KERNEL) where the kcalloc() multiply overflow
-    check still blocks the dangerous case. Using size_add() is preferred
-    when available.
+- Stable backport assessment
+  - Bug relevance: Yes — fixes dt-binding schema forcing an invalid
+    clock requirement, leading to dtbs_check issues for users building
+    DTs for Adreno 623 platforms.
+  - Size/scope: Small, contained to a single YAML schema file; no
+    driver/runtime changes.
+  - Risk/regression: Minimal. It only relaxes a wrong requirement for
+    623. Out-of-tree DTS that mistakenly provided `smmu_vote` for 623
+    would fail schema validation after this (those DTS are incorrect),
+    but kernel functionality is unaffected.
+  - No architectural churn, no features, and no cross-subsystem impact.
 
-Given the clear safety improvement, tiny scope, and near-zero regression
-risk, this is an appropriate candidate for stable backporting.
+Given it corrects a real schema bug affecting validation of in-tree DTS
+for Adreno 623, is small and low risk, and doesn’t alter runtime
+behavior, this is a good candidate for stable backport.
 
- drivers/crypto/intel/qat/qat_common/qat_uclo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/display/msm/gmu.yaml  | 34 +++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_uclo.c b/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-index 21d652a1c8ef3..18c3e4416dc51 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-@@ -1900,7 +1900,7 @@ static int qat_uclo_map_objs_from_mof(struct icp_qat_mof_handle *mobj_handle)
- 	if (sobj_hdr)
- 		sobj_chunk_num = sobj_hdr->num_chunks;
- 
--	mobj_hdr = kzalloc((uobj_chunk_num + sobj_chunk_num) *
-+	mobj_hdr = kcalloc(size_add(uobj_chunk_num, sobj_chunk_num),
- 			   sizeof(*mobj_hdr), GFP_KERNEL);
- 	if (!mobj_hdr)
- 		return -ENOMEM;
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+index 4392aa7a4ffe2..afc1879357440 100644
+--- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -124,6 +124,40 @@ allOf:
+           contains:
+             enum:
+               - qcom,adreno-gmu-623.0
++    then:
++      properties:
++        reg:
++          items:
++            - description: Core GMU registers
++            - description: Resource controller registers
++            - description: GMU PDC registers
++        reg-names:
++          items:
++            - const: gmu
++            - const: rscc
++            - const: gmu_pdc
++        clocks:
++          items:
++            - description: GMU clock
++            - description: GPU CX clock
++            - description: GPU AXI clock
++            - description: GPU MEMNOC clock
++            - description: GPU AHB clock
++            - description: GPU HUB CX clock
++        clock-names:
++          items:
++            - const: gmu
++            - const: cxo
++            - const: axi
++            - const: memnoc
++            - const: ahb
++            - const: hub
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,adreno-gmu-635.0
+               - qcom,adreno-gmu-660.1
+               - qcom,adreno-gmu-663.0
 -- 
 2.51.0
 
