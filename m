@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E886B31DDB6;
-	Sat, 25 Oct 2025 16:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02ED3090DE;
+	Sat, 25 Oct 2025 16:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409730; cv=none; b=J3sVjrLS3qJ/QImnGE16ZBJEWCVFAgXy6IUdzbBx+eGGKKTjFHSRjn02Bx5efgrUqI9y7Oi2wxbVpY4WzXTSOXCBVIy2ela9+Dk1I+Qi/AsYFUC1Fk+jDnZzNPPGWivI+cpV++YiA9TaHgcCkChsNtA2uJ3Fq2NMvBp76CVZGws=
+	t=1761409734; cv=none; b=alnfSSsE2pxknukiGdYkraLVNXrobm+XnsoISCOOVHzVR+++pEdf4zwLcpy9t+yz2Tdwd128qIOQbjT80OTK4WxZrAN/NmSq0ahfUck5mgopMcZt7BXOJh0qsrybcdJNXTmzANGS7kj0sGpHgKkhDyVIYMjWVBGqMj99YOGvNS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409730; c=relaxed/simple;
-	bh=ICEVXZZwVL6vwRTEshSvhyGw5kE+B0uJknae4Y+OU7I=;
+	s=arc-20240116; t=1761409734; c=relaxed/simple;
+	bh=IJFWxoj37kIAdOl8GO0f0EK+bwl+SAL8ePcWRoG5srQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=spiFNToztnGuq92k17zLKQhPRoxDiH9D93aG38lhVSFAJ8WheHaMhIqfuYTqWn1c/OFbTZgsNSg3JbR2uEkzzVXX1aWzndACKlxdvHxVk2Yf3bCO9tg6FPrilNEyBBcKASkSO2HUDwCD04VGY3YoYLisW41L/rvzGf866y0XABY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X+W3+AA3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VTwmYQ3gox3ibq6dCiaZrWJJZtxJrFgoc3sdo5KwNO8rhQyb5MrPYQrkK9SINLI4WnqJ0qCx8wY+6dqbxaXCKqXtzRsJo8nwS8zaVuIz7KIGWC2Z2Dox09qXaj6mu4YHTsLqno99l96yUBnV0UeuvrWsJnbNGMba6sorHtHt36w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RKcnJk8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+W3+AA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6D7C4CEF5;
-	Sat, 25 Oct 2025 16:28:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RKcnJk8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95519C4CEF5;
+	Sat, 25 Oct 2025 16:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409729;
-	bh=ICEVXZZwVL6vwRTEshSvhyGw5kE+B0uJknae4Y+OU7I=;
+	s=k20201202; t=1761409734;
+	bh=IJFWxoj37kIAdOl8GO0f0EK+bwl+SAL8ePcWRoG5srQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+W3+AA3ir4jByMeSIVoEj4LkbvKDw0TNiFK731YXrIxbI9qvLFZ37KlYecH6g81g
-	 0fw/PcZqukQS7eiin+RXx0ywL+0XuclO0wcyZ85WsFLXkcj3rGYOruS+7Wlhi4iqTf
-	 yueQiJVERDJvUuL30u7MC24lArcTbqZSNPEeHpzxjPfspZjVHU0TfqJr+sLMNT+/7O
-	 +ATGBn4J+gnOlbGRzlVP4snWwK1EDjDXaZZH+dd4E1OowMjigqiO543+6QWLmzj1hr
-	 JJjFUzNurAI/pcJZ+D448/JCXztVPre7y5oENlR55f8jXEtBV4y0Mh7+EfZcFG0pSP
-	 LXOo8BCoEgbiw==
+	b=RKcnJk8N94H9W32wYu2MHOHshK33sYy7rxuzXPSg6bC2al8/GKvWpxwA++TJ19Yvm
+	 ghJ5e2HsOGOuiQ8xJdGKnOQP9dlmp18P2QA7TU611I63VaBJh3RkqWBd/AQi5BzdGF
+	 oxzS6aJkcCAzoUAeLX87HtH5X0nvWYj2HMrg4VlHwozkTuwyLqP+1MM+5t5iR1+hBv
+	 34EzHYYWb/8ZPpQbERhRELEtI2jY2OGYqJgi1FeamgBd2fAObGou+ZLuasmkxq6Mqc
+	 11Ca9s3RLjBUJuleaOD6BZm2xC7ruLDqVxIxc0hp3bLU/NO2l3QWx1xHS20CzKCktD
+	 MX9wHlIbBx6+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	Thomas Andreatta <thomas.andreatta2000@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] Bluetooth: ISO: Use sk_sndtimeo as conn_timeout
-Date: Sat, 25 Oct 2025 12:01:11 -0400
-Message-ID: <20251025160905.3857885-440-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	thorsten.blum@linux.dev,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.4] dmaengine: sh: setup_xref error handling
+Date: Sat, 25 Oct 2025 12:01:12 -0400
+Message-ID: <20251025160905.3857885-441-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,238 +54,187 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Thomas Andreatta <thomasandreatta2000@gmail.com>
 
-[ Upstream commit 339a87883a14d6a818ca436fed41aa5d10e0f4bd ]
+[ Upstream commit d9a3e9929452780df16f3414f0d59b5f69d058cf ]
 
-This aligns the usage of socket sk_sndtimeo as conn_timeout when
-initiating a connection and then use it when scheduling the
-resulting HCI command, similar to what has been done in bf98feea5b65
-("Bluetooth: hci_conn: Always use sk_timeo as conn_timeout").
+This patch modifies the type of setup_xref from void to int and handles
+errors since the function can fail.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+`setup_xref` now returns the (eventual) error from
+`dmae_set_dmars`|`dmae_set_chcr`, while `shdma_tx_submit` handles the
+result, removing the chunks from the queue and marking PM as idle in
+case of an error.
+
+Signed-off-by: Thomas Andreatta <thomas.andreatta2000@gmail.com>
+Link: https://lore.kernel.org/r/20250827152442.90962-1-thomas.andreatta2000@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – this patch fixes a real regression in the ISO connection paths and
-is low‑risk for stable
+YES
 
-- The ISO helpers started passing `conn->conn_timeout` into the
-  synchronous HCI waits in v6.10 (commit bf98feea5b65), but the CIS/BIS
-  creation paths never stored a timeout, leaving the field zero. Every
-  call to `__hci_cmd_sync_status_sk()` that waits for
-  `HCI_LE_CREATE_CIS`, `HCI_OP_LE_BIG_CREATE_SYNC`, etc. therefore times
-  out immediately (`wait_event_timeout(..., 0)` returns 0) and the host
-  aborts the command, breaking CIS/BIS bring-up. See the wait sites in
-  `net/bluetooth/hci_sync.c:6723`, `net/bluetooth/hci_sync.c:7060`, and
-  `net/bluetooth/hci_sync.c:7158`.
+- What it fixes
+  - Previously, `sh_dmae_setup_xfer()` unconditionally programmed
+    DMARS/CHCR and ignored failures, so if the channel was busy (e.g.,
+    `dmae_is_busy()`), programming would silently fail. The engine then
+    proceeded as if configured, risking misconfigured or stalled
+    transfers. The former code path and even an in-code TODO
+    acknowledged this gap (see drivers/dma/sh/shdma-base.c:70, prior to
+    this change).
+  - This patch converts `.setup_xfer` to return an `int`, propagates
+    errors from `dmae_set_dmars()` and `dmae_set_chcr()`, and makes
+    `shdma_tx_submit()` unwind cleanly on failure.
 
-- The patch threads the socket’s send timeout through all ISO connection
-  constructors: new `u16 timeout` parameters in `hci_bind_cis/bis()` and
-  `hci_connect_cis/bis()` and the internal helper `hci_add_bis()` now
-  store the value in `conn->conn_timeout`
-  (`net/bluetooth/hci_conn.c:1581`, `net/bluetooth/hci_conn.c:1938`,
-  `net/bluetooth/hci_conn.c:2199`, `net/bluetooth/hci_conn.c:2326`). The
-  ISO socket code passes `READ_ONCE(sk->sk_sndtimeo)` into those helpers
-  (`net/bluetooth/iso.c:373`, `net/bluetooth/iso.c:383`,
-  `net/bluetooth/iso.c:471`, `net/bluetooth/iso.c:480`), so the HCI
-  command waits now honor the per-socket timeout instead of timing out
-  instantly.
+- Key changes (small and contained)
+  - drivers/dma/sh/shdma-base.c:133
+    - Now checks the return of `ops->setup_xfer(schan,
+      schan->slave_id)`. On error, it:
+      - Logs the error.
+      - Removes all chunks for this transaction from `ld_queue` and
+        marks them `DESC_IDLE` (drivers/dma/sh/shdma-base.c:137–143).
+      - Balances runtime PM by calling `pm_runtime_put()`
+        (drivers/dma/sh/shdma-base.c:145–147).
+      - Returns a negative error code via `tx_submit`, which is
+        supported by the DMAengine API (`dma_submit_error(cookie)`).
+  - drivers/dma/sh/shdmac.c:303
+    - `sh_dmae_setup_xfer()` now returns `int`. It propagates failures
+      from:
+      - `dmae_set_dmars(sh_chan, cfg->mid_rid)`
+        (drivers/dma/sh/shdmac.c:313–315).
+      - `dmae_set_chcr(sh_chan, cfg->chcr)`
+        (drivers/dma/sh/shdmac.c:317–319).
+    - For MEMCPY (`slave_id < 0`), it still calls `dmae_init(sh_chan)`
+      with no error (drivers/dma/sh/shdmac.c:321–323).
+  - include/linux/shdma-base.h:99
+    - `struct shdma_ops` changes `setup_xfer` from `void
+      (*setup_xfer)(...)` to `int (*setup_xfer)(...)`, enabling error
+      propagation while remaining internal to the SH DMAC driver family.
 
-- Default ISO connection timeout is still sourced from
-  `ISO_CONN_TIMEOUT`, now expressed as `secs_to_jiffies(20)` in
-  `net/bluetooth/iso.c:91`, matching the value assigned to
-  `sk->sk_sndtimeo` (`net/bluetooth/iso.c:913`); this is consistent with
-  the intent of the earlier regression fix. No other subsystems are
-  touched.
+- Why it fits stable criteria
+  - Bug fix that affects users: prevents silent misconfiguration when
+    programming fails due to a busy channel, a real condition indicated
+    by the underlying helpers (`dmae_set_dmars`/`dmae_set_chcr`).
+  - Minimal and localized: confined to the SH DMA engine base and
+    implementation; only one implementer of `shdma_ops->setup_xfer`
+    exists (drivers/dma/sh/shdmac.c:662 for the ops table), so the API
+    change is self-contained.
+  - Low regression risk:
+    - `tx_submit` returning negative errors is standard; clients
+      typically check with `dma_submit_error(cookie)`.
+    - On error, descriptors are unqueued and returned to `ld_free`, and
+      runtime PM is balanced; no dangling state.
+    - No functional change on success paths; MEMCPY path unchanged
+      except for return value plumbing.
+  - No architectural changes or feature additions; this is targeted
+    error handling and cleanup.
+  - Touches a driver-level subsystem, not core kernel frameworks.
 
-- The change is confined to the Bluetooth ISO stack, mirrors the earlier
-  ACL/SCO fix, and does not introduce new dependencies. Without it,
-  CIS/BIS connection establishment remains broken on any stable kernel
-  that picked up bf98feea5b65 (v6.10 and newer), so backporting is
-  strongly advised.
+- Side-effects considered
+  - Behavior now fails fast instead of silently proceeding on hardware
+    programming failure; this is an intended correctness improvement.
+  - Header change is internal to the SH DMAC base and its only in-tree
+    user; it should not impact other DMA drivers.
 
- include/net/bluetooth/hci_core.h | 10 ++++++----
- net/bluetooth/hci_conn.c         | 20 ++++++++++++--------
- net/bluetooth/iso.c              | 16 ++++++++++------
- 3 files changed, 28 insertions(+), 18 deletions(-)
+Overall, this is a straightforward, self-contained bug fix that improves
+robustness and correctness with minimal risk, making it a good candidate
+for stable backport.
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 6560b32f31255..a068beae93186 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1587,16 +1587,18 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
- 				 __u16 setting, struct bt_codec *codec,
- 				 u16 timeout);
- struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
--			      __u8 dst_type, struct bt_iso_qos *qos);
-+			      __u8 dst_type, struct bt_iso_qos *qos,
-+			      u16 timeout);
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 			      struct bt_iso_qos *qos,
--			      __u8 base_len, __u8 *base);
-+			      __u8 base_len, __u8 *base, u16 timeout);
- struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
--				 __u8 dst_type, struct bt_iso_qos *qos);
-+				 __u8 dst_type, struct bt_iso_qos *qos,
-+				 u16 timeout);
- struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				 __u8 dst_type, __u8 sid,
- 				 struct bt_iso_qos *qos,
--				 __u8 data_len, __u8 *data);
-+				 __u8 data_len, __u8 *data, u16 timeout);
- struct hci_conn *hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst,
- 		       __u8 dst_type, __u8 sid, struct bt_iso_qos *qos);
- int hci_conn_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index e524bb59bff23..f44286e59d316 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1540,7 +1540,7 @@ static int qos_set_bis(struct hci_dev *hdev, struct bt_iso_qos *qos)
- /* This function requires the caller holds hdev->lock */
- static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				    __u8 sid, struct bt_iso_qos *qos,
--				    __u8 base_len, __u8 *base)
-+				    __u8 base_len, __u8 *base, u16 timeout)
- {
- 	struct hci_conn *conn;
- 	int err;
-@@ -1582,6 +1582,7 @@ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ drivers/dma/sh/shdma-base.c | 25 +++++++++++++++++++------
+ drivers/dma/sh/shdmac.c     | 17 +++++++++++++----
+ include/linux/shdma-base.h  |  2 +-
+ 3 files changed, 33 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
+index 6b4fce453c85c..834741adadaad 100644
+--- a/drivers/dma/sh/shdma-base.c
++++ b/drivers/dma/sh/shdma-base.c
+@@ -129,12 +129,25 @@ static dma_cookie_t shdma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 			const struct shdma_ops *ops = sdev->ops;
+ 			dev_dbg(schan->dev, "Bring up channel %d\n",
+ 				schan->id);
+-			/*
+-			 * TODO: .xfer_setup() might fail on some platforms.
+-			 * Make it int then, on error remove chunks from the
+-			 * queue again
+-			 */
+-			ops->setup_xfer(schan, schan->slave_id);
++
++			ret = ops->setup_xfer(schan, schan->slave_id);
++			if (ret < 0) {
++				dev_err(schan->dev, "setup_xfer failed: %d\n", ret);
++
++				/* Remove chunks from the queue and mark them as idle */
++				list_for_each_entry_safe(chunk, c, &schan->ld_queue, node) {
++					if (chunk->cookie == cookie) {
++						chunk->mark = DESC_IDLE;
++						list_move(&chunk->node, &schan->ld_free);
++					}
++				}
++
++				schan->pm_state = SHDMA_PM_ESTABLISHED;
++				ret = pm_runtime_put(schan->dev);
++
++				spin_unlock_irq(&schan->chan_lock);
++				return ret;
++			}
  
- 	conn->state = BT_CONNECT;
- 	conn->sid = sid;
-+	conn->conn_timeout = timeout;
- 
- 	hci_conn_hold(conn);
- 	return conn;
-@@ -1922,7 +1923,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 			if (schan->pm_state == SHDMA_PM_PENDING)
+ 				shdma_chan_xfer_ld_queue(schan);
+diff --git a/drivers/dma/sh/shdmac.c b/drivers/dma/sh/shdmac.c
+index 093e449e19eee..603e15102e45e 100644
+--- a/drivers/dma/sh/shdmac.c
++++ b/drivers/dma/sh/shdmac.c
+@@ -300,21 +300,30 @@ static bool sh_dmae_channel_busy(struct shdma_chan *schan)
+ 	return dmae_is_busy(sh_chan);
  }
  
- struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
--			      __u8 dst_type, struct bt_iso_qos *qos)
-+			      __u8 dst_type, struct bt_iso_qos *qos,
-+			      u16 timeout)
+-static void sh_dmae_setup_xfer(struct shdma_chan *schan,
+-			       int slave_id)
++static int sh_dmae_setup_xfer(struct shdma_chan *schan, int slave_id)
  {
- 	struct hci_conn *cis;
+ 	struct sh_dmae_chan *sh_chan = container_of(schan, struct sh_dmae_chan,
+ 						    shdma_chan);
  
-@@ -1937,6 +1939,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 		cis->dst_type = dst_type;
- 		cis->iso_qos.ucast.cig = BT_ISO_QOS_CIG_UNSET;
- 		cis->iso_qos.ucast.cis = BT_ISO_QOS_CIS_UNSET;
-+		cis->conn_timeout = timeout;
- 	}
++	int ret = 0;
+ 	if (slave_id >= 0) {
+ 		const struct sh_dmae_slave_config *cfg =
+ 			sh_chan->config;
  
- 	if (cis->state == BT_CONNECTED)
-@@ -2176,7 +2179,7 @@ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
- 
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 			      struct bt_iso_qos *qos,
--			      __u8 base_len, __u8 *base)
-+			      __u8 base_len, __u8 *base, u16 timeout)
- {
- 	struct hci_conn *conn;
- 	struct hci_conn *parent;
-@@ -2197,7 +2200,7 @@ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 						   base, base_len);
- 
- 	/* We need hci_conn object using the BDADDR_ANY as dst */
--	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir);
-+	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir, timeout);
- 	if (IS_ERR(conn))
- 		return conn;
- 
-@@ -2250,13 +2253,13 @@ static void bis_mark_per_adv(struct hci_conn *conn, void *data)
- struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				 __u8 dst_type, __u8 sid,
- 				 struct bt_iso_qos *qos,
--				 __u8 base_len, __u8 *base)
-+				 __u8 base_len, __u8 *base, u16 timeout)
- {
- 	struct hci_conn *conn;
- 	int err;
- 	struct iso_list_data data;
- 
--	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base);
-+	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base, timeout);
- 	if (IS_ERR(conn))
- 		return conn;
- 
-@@ -2299,7 +2302,8 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- }
- 
- struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
--				 __u8 dst_type, struct bt_iso_qos *qos)
-+				 __u8 dst_type, struct bt_iso_qos *qos,
-+				 u16 timeout)
- {
- 	struct hci_conn *le;
- 	struct hci_conn *cis;
-@@ -2323,7 +2327,7 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 	hci_iso_qos_setup(hdev, le, &qos->ucast.in,
- 			  le->le_rx_phy ? le->le_rx_phy : hdev->le_rx_def_phys);
- 
--	cis = hci_bind_cis(hdev, dst, dst_type, qos);
-+	cis = hci_bind_cis(hdev, dst, dst_type, qos, timeout);
- 	if (IS_ERR(cis)) {
- 		hci_conn_drop(le);
- 		return cis;
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 247f6da31f9f3..9b263d061e051 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -91,8 +91,8 @@ static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
- 				 iso_sock_match_t match, void *data);
- 
- /* ---- ISO timers ---- */
--#define ISO_CONN_TIMEOUT	(HZ * 40)
--#define ISO_DISCONN_TIMEOUT	(HZ * 2)
-+#define ISO_CONN_TIMEOUT	secs_to_jiffies(20)
-+#define ISO_DISCONN_TIMEOUT	secs_to_jiffies(2)
- 
- static void iso_conn_free(struct kref *ref)
- {
-@@ -369,7 +369,8 @@ static int iso_connect_bis(struct sock *sk)
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		hcon = hci_bind_bis(hdev, &iso_pi(sk)->dst, iso_pi(sk)->bc_sid,
- 				    &iso_pi(sk)->qos, iso_pi(sk)->base_len,
--				    iso_pi(sk)->base);
-+				    iso_pi(sk)->base,
-+				    READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -378,7 +379,8 @@ static int iso_connect_bis(struct sock *sk)
- 		hcon = hci_connect_bis(hdev, &iso_pi(sk)->dst,
- 				       le_addr_type(iso_pi(sk)->dst_type),
- 				       iso_pi(sk)->bc_sid, &iso_pi(sk)->qos,
--				       iso_pi(sk)->base_len, iso_pi(sk)->base);
-+				       iso_pi(sk)->base_len, iso_pi(sk)->base,
-+				       READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -471,7 +473,8 @@ static int iso_connect_cis(struct sock *sk)
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
- 				    le_addr_type(iso_pi(sk)->dst_type),
--				    &iso_pi(sk)->qos);
-+				    &iso_pi(sk)->qos,
-+				    READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -479,7 +482,8 @@ static int iso_connect_cis(struct sock *sk)
+-		dmae_set_dmars(sh_chan, cfg->mid_rid);
+-		dmae_set_chcr(sh_chan, cfg->chcr);
++		ret = dmae_set_dmars(sh_chan, cfg->mid_rid);
++		if (ret < 0)
++			goto END;
++
++		ret = dmae_set_chcr(sh_chan, cfg->chcr);
++		if (ret < 0)
++			goto END;
++
  	} else {
- 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
- 				       le_addr_type(iso_pi(sk)->dst_type),
--				       &iso_pi(sk)->qos);
-+				       &iso_pi(sk)->qos,
-+				       READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
+ 		dmae_init(sh_chan);
+ 	}
++
++END:
++	return ret;
+ }
+ 
+ /*
+diff --git a/include/linux/shdma-base.h b/include/linux/shdma-base.h
+index 6dfd05ef5c2d9..03ba4dab2ef73 100644
+--- a/include/linux/shdma-base.h
++++ b/include/linux/shdma-base.h
+@@ -96,7 +96,7 @@ struct shdma_ops {
+ 	int (*desc_setup)(struct shdma_chan *, struct shdma_desc *,
+ 			  dma_addr_t, dma_addr_t, size_t *);
+ 	int (*set_slave)(struct shdma_chan *, int, dma_addr_t, bool);
+-	void (*setup_xfer)(struct shdma_chan *, int);
++	int (*setup_xfer)(struct shdma_chan *, int);
+ 	void (*start_xfer)(struct shdma_chan *, struct shdma_desc *);
+ 	struct shdma_desc *(*embedded_desc)(void *, int);
+ 	bool (*chan_irq)(struct shdma_chan *, int);
 -- 
 2.51.0
 
