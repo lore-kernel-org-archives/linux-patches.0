@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6412264D4;
-	Sat, 25 Oct 2025 16:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EDA2264D4;
+	Sat, 25 Oct 2025 16:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409550; cv=none; b=DN8CGWLpGJeuuoJN2UJPHYCmz5adZGRVRpeNzvBA9Rte0rADH2Txa6k751y0NQo3/x3ixFiLrA1YfkOHliMRn45XJw8UhgQTaV67OTowBeQ6wyrI5Um9Bhap/cK8S2r5wDVI3cCZCHjex6pcWmZWV5oflGL4nB/rBdj/RE/22fY=
+	t=1761409551; cv=none; b=htxx6fRTg5pQ4VhoFn5TSshdxf+tq7uhvJu9kitczfX3RDv+yHENwPuBGezrXnQtvbSq197fwek1bOVfLQYvigsjcWWQ8FO9AxfKljepWNNGisP/PzqmHPcBkVqn+HoQO3e3TEAOWw+SHL9jywtrwch2BsxVXVH1uq1YkyUv5go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409550; c=relaxed/simple;
-	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
+	s=arc-20240116; t=1761409551; c=relaxed/simple;
+	bh=Em1vmYzb3CPqjJdulvBWr7VV9J5NImJHW4FlbVzFjhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X0vfkH4B6SOIg0wDM6J/PJ6BCVhRcIlz8TLyEaC4BbFD5U0Z2425NITg5DA5DWN1kiUeHzc1TK9dpqsOi/Uwa+QxJqOb+gskutS3rbPcLkkBbvcfOuLpKRrVbo7pXsSaHvcc2XN5e7izzI4tVuP3Wj4/2kFdgXLLJawLtMIQR1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQluQAB0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZI0b/Rn82JXvIpb1S85nfxzRBKH5EsdnsNAdEX566vTWF6YlT69oAPR+KQ93Phn3T0nq/+QUMIVY6aHXsJvg0gzvHCguTZ7eCLIL/OZ0OSNGbX0QM6RorciXLCBatpO4R2VnDTXcIO+5bTLy59R0wFxnPiQbOzmYnvJHSQeayk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C83fisvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQluQAB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224D1C4CEF5;
-	Sat, 25 Oct 2025 16:25:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C83fisvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900E6C4CEFB;
+	Sat, 25 Oct 2025 16:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409549;
-	bh=/gMUlsevWP/kkCEbCOP7wyQ5geAlAwNaZlR4K/9Ax48=;
+	s=k20201202; t=1761409551;
+	bh=Em1vmYzb3CPqjJdulvBWr7VV9J5NImJHW4FlbVzFjhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQluQAB0A9aUiAbnBLmwr7WN2TvXO3cJR+UyNzwGFvVw2tnmaqil8a8eBjZxOWaU/
-	 SZXd+pWEWAycxIzZQCJYu6OAkHhEZqDLlKNOAlEL1ZuzxAPbr5kfp4Fc27Yhah2OyR
-	 rU+ey43mzS5xz8FBumIJuvW2YJqpaHS82HD4f8PSIdHLJgucFpH8vtyL2l0d4lpa8A
-	 +huNDNhbIt1B8v8HXDknbzIPlxDAmyVz9seei6EUDuWVkn8jm4fz6+SouTEa3lt6G5
-	 7QTeRumkpCafHGq10NrS85OLcpLD6blJFxVSgkJe/f+EMKzHPa5hYF5O4rQj2j2gSd
-	 fLB3IfNl9vCkQ==
+	b=C83fisvN6GC1POYJioqMtF7W6fBWly6hd2mrsBvtQI1QhukBKifLvwCCD66ABpG35
+	 ODhG5ogR7mIa+t6nAmJP/wHTZeQmQ3b5uOi8pS8Gi/hCBl9l4uDilJuvM32pvMJ5+M
+	 ES7YYSzCgpzI6lOojchjgQzPLG6kfUti3fV6Osu34EQHMDCY2gnbtsp7vIQpvBEu5w
+	 mf800yzNQItEXNTZFpNnD6OgfzjNVRbAnGnkqnQ15e80JgvzOhcuId2r7tgcsVzuzV
+	 2Un3LOGgfwlJ8elBcMhoNuSD8auWj8CoDdkPGFBZS7NUlTaTxQcoA/OPGdbtvt21Ji
+	 iS9DAI0bf5Itg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rob Herring (Arm)" <robh@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Cc: Hector Martin <marcan@marcan.st>,
+	Janne Grunau <j@jannau.net>,
+	Sven Peter <sven@kernel.org>,
+	Neal Gompa <neal@gompa.dev>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	robin.clark@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/msm: Use of_reserved_mem_region_to_resource() for "memory-region"
-Date: Sat, 25 Oct 2025 11:59:51 -0400
-Message-ID: <20251025160905.3857885-360-sashal@kernel.org>
+	joro@8bytes.org,
+	will@kernel.org,
+	asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-6.6] iommu/apple-dart: Clear stream error indicator bits for T8110 DARTs
+Date: Sat, 25 Oct 2025 11:59:52 -0400
+Message-ID: <20251025160905.3857885-361-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,22 +58,19 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Rob Herring (Arm)" <robh@kernel.org>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit fb53e8f09fc1e1a343fd08ea4f353f81613975d7 ]
+[ Upstream commit ecf6508923f87e4597228f70cc838af3d37f6662 ]
 
-Use the newly added of_reserved_mem_region_to_resource() function to
-handle "memory-region" properties.
+These registers exist and at least on the t602x variant the IRQ only
+clears when theses are cleared.
 
-The original code did not set 'zap_available' to false if
-of_address_to_resource() failed which seems like an oversight.
-
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/662275/
-Link: https://lore.kernel.org/r/20250703183442.2073717-1-robh@kernel.org
-[DB: dropped part related to VRAM, no longer applicable]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Link: https://lore.kernel.org/r/20250826-dart-t8110-stream-error-v1-1-e33395112014@jannau.net
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,130 +78,71 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Correctly handles DT “memory-region” for the zap shader by using the
-    reserved-memory helper rather than treating the phandle target like
-    a normal addressable node. This avoids misinterpreting reserved-
-    memory nodes and ensures the region is actually available.
-  - Fixes an oversight where failure to obtain the region did not mark
-    zap firmware as unavailable, causing the driver to propagate a hard
-    error instead of falling back.
+- Fixes a real bug: On T8110-class DARTs, the interrupt only deasserts
+  when per‑stream error indicator bits are cleared. Without clearing
+  them, the IRQ can remain asserted, causing repeated interrupts and
+  potential system instability.
+- Minimal, contained change: Adds one register define and a short clear
+  loop in the T8110 IRQ handler only.
+  - Adds `DART_T8110_ERROR_STREAMS` at `0x1c0` (drivers/iommu/apple-
+    dart.c:125).
+  - In `apple_dart_t8110_irq`, after acknowledging the error status
+    (`writel(error, ...)`), clears all stream error indicator words:
+    `for (int i = 0; i < BITS_TO_U32(dart->num_streams); i++)
+    writel(U32_MAX, dart->regs + DART_T8110_ERROR_STREAMS + 4 * i);`
+    (drivers/iommu/apple-dart.c:1093, drivers/iommu/apple-dart.c:1094,
+    drivers/iommu/apple-dart.c:1095).
+- Scoped to T8110 only: The handler is registered only for the T8110
+  hardware variant (drivers/iommu/apple-dart.c:1298), so it does not
+  affect other Apple DART generations.
+- Safe by design:
+  - `num_streams` is read from hardware (`DART_T8110_PARAMS4_NUM_SIDS`)
+    and bounded by `DART_MAX_STREAMS` (drivers/iommu/apple-dart.c:1152,
+    drivers/iommu/apple-dart.c:1153, drivers/iommu/apple-dart.c:1156,
+    drivers/iommu/apple-dart.c:1161).
+  - `BITS_TO_U32(...)` ensures the correct number of 32‑bit words are
+    cleared.
+  - The driver already uses the same write‑all‑ones bitmap pattern for
+    stream operations (e.g., enabling all streams) showing these
+    registers are W1C bitmaps and that this access pattern is
+    established and safe (drivers/iommu/apple-dart.c:485,
+    drivers/iommu/apple-dart.c:486).
+- No architectural changes or API/ABI effects: This is a straightforward
+  IRQ acknowledgment fix limited to the Apple DART IOMMU driver.
+- User impact: Prevents stuck/level interrupts and interrupt floods on
+  affected Apple SoCs (e.g., t602x using T8110 DART), improving
+  stability and correctness.
 
-- Key code changes
-  - Switch to the correct API for reserved memory:
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:13 switched include from
-      `linux/of_address.h` to `linux/of_reserved_mem.h`.
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:54 calls
-      `of_reserved_mem_region_to_resource(np, 0, &r)` and on any failure
-      now sets `zap_available = false` and returns the error (lines
-      54–58).
-  - Cleanup/removal of the old path:
-    - Replaces the `of_parse_phandle(..., "memory-region", ...)` +
-      `of_address_to_resource(...)` sequence with the reserved-mem
-      helper, removing the intermediate `mem_np` handling and
-      simplifying error paths.
+Given it is a clear bug fix, small and localized, with low regression
+risk and meaningful user impact, it is a strong candidate for
+backporting to stable kernels that include the T8110 DART support.
 
-- Why this matters for runtime behavior
-  - The zap shader loader’s public entry point treats “zap not
-    available” as a non-fatal condition to fall back on an alternate
-    secure-mode exit path:
-    - drivers/gpu/drm/msm/adreno/adreno_gpu.c:169–176 returns `-ENODEV`
-      when `zap_available` is false, triggering fallback.
-    - Callers explicitly handle `-ENODEV` as the “no zap shader” path:
-      - drivers/gpu/drm/msm/adreno/a5xx_gpu.c:987–1007 uses the fallback
-        when `a5xx_zap_shader_init()` returns `-ENODEV`.
-  - Previously, if `of_address_to_resource()` failed, the code returned
-    an error without setting `zap_available = false`. That meant callers
-    saw a generic error (not `-ENODEV`) and aborted bring-up instead of
-    taking the designed fallback. This is precisely the oversight the
-    commit fixes.
+ drivers/iommu/apple-dart.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-- Impact and risk assessment
-  - Scope is small and contained to one function in a single driver
-    file. No architectural changes.
-  - Behavior change is specifically in error handling: failures to
-    resolve “memory-region” now reliably signal “zap not available,”
-    aligning with the existing, intentional `-ENODEV` fallback path in
-    the Adreno bring-up sequence.
-  - Using `of_reserved_mem_region_to_resource()` ensures the driver only
-    uses regions actually initialized by the reserved-memory core
-    (drivers/of/of_reserved_mem.c) and returns `-ENODEV` if the memory-
-    region is missing or unavailable. This is safer than reading “reg”
-    directly from the node and avoids mapping memory that wasn’t
-    properly reserved.
-  - Note: the function no longer calls `of_node_put(np)` after
-    `of_get_child_by_name()`. There was already at least one leak path
-    for `np` (the early `!of_device_is_available(np)` return). This
-    commit removes the `of_node_put(np)` that existed on the success
-    path. The leak is a single DT node ref during probe/init and
-    practically negligible. It does not outweigh the bugfix in error
-    handling. If desired, a follow-up to put `np` after use is trivial
-    and independent of this fix.
-
-- Stable backport considerations
-  - This is a clear bugfix with a targeted change in error handling and
-    a move to the correct reserved-memory API.
-  - If a given stable series already has
-    `of_reserved_mem_region_to_resource()`, this applies cleanly and is
-    low risk.
-  - If not, the minimal backport can keep the existing
-    `of_address_to_resource()` path but still add the key fix (set
-    `zap_available = false` when it fails), preserving the functional
-    improvement with minimal churn.
-
-- Conclusion
-  - The change fixes a real user-visible issue (unnecessary bring-up
-    failure instead of the intended fallback), is small and localized,
-    and reduces misuse of DT reserved-memory. It satisfies stable
-    criteria as a low-risk bugfix suitable for backport.
-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index f1230465bf0d0..8c6336b007dc0 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -10,7 +10,7 @@
- #include <linux/interconnect.h>
- #include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/kernel.h>
--#include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
-@@ -33,7 +33,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 	struct device *dev = &gpu->pdev->dev;
- 	const struct firmware *fw;
- 	const char *signed_fwname = NULL;
--	struct device_node *np, *mem_np;
-+	struct device_node *np;
- 	struct resource r;
- 	phys_addr_t mem_phys;
- 	ssize_t mem_size;
-@@ -51,18 +51,11 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		return -ENODEV;
- 	}
+diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
+index 190f28d766151..8b1272b7bb44a 100644
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -122,6 +122,8 @@
+ #define DART_T8110_ERROR_ADDR_LO 0x170
+ #define DART_T8110_ERROR_ADDR_HI 0x174
  
--	mem_np = of_parse_phandle(np, "memory-region", 0);
--	of_node_put(np);
--	if (!mem_np) {
-+	ret = of_reserved_mem_region_to_resource(np, 0, &r);
-+	if (ret) {
- 		zap_available = false;
--		return -EINVAL;
--	}
--
--	ret = of_address_to_resource(mem_np, 0, &r);
--	of_node_put(mem_np);
--	if (ret)
- 		return ret;
--
-+	}
- 	mem_phys = r.start;
++#define DART_T8110_ERROR_STREAMS 0x1c0
++
+ #define DART_T8110_PROTECT 0x200
+ #define DART_T8110_UNPROTECT 0x204
+ #define DART_T8110_PROTECT_LOCK 0x208
+@@ -1077,6 +1079,9 @@ static irqreturn_t apple_dart_t8110_irq(int irq, void *dev)
+ 		error, stream_idx, error_code, fault_name, addr);
  
- 	/*
+ 	writel(error, dart->regs + DART_T8110_ERROR);
++	for (int i = 0; i < BITS_TO_U32(dart->num_streams); i++)
++		writel(U32_MAX, dart->regs + DART_T8110_ERROR_STREAMS + 4 * i);
++
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.51.0
 
