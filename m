@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221DD2FF168;
-	Sat, 25 Oct 2025 16:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E192FF168;
+	Sat, 25 Oct 2025 16:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408721; cv=none; b=aU2mWkq2wfXLsQ2EYq4uSjZ11v1KArRtQ9l8wDmU89LPAjYlX5MWppEhNXPB6ZAh/vUpQ4yoeP+dhMTXS2fXQm4Z8uw6dFf3RBrhbP0z1LQPDSVR4jYlibBkNtxw4bqgH3eeC72uFpbc//zLvOdEa+XzcoTK8A1dn7r+8+w2uak=
+	t=1761408725; cv=none; b=Ce77XRH9FBoSXHB0diqyv1YW9CrKeFHK/KoVPhmi2s9H1aDCuMzjwTkJ5bx2JngPDM4eF/LLdL3EIi7IOgrPWZBGs/a2lyq1Q3eXhC94iSs25/3Uu3Wi7PjAdKuVu5iMDyou2ySyewP4I3iCGxkMVtOYo7YPHGQCR5cq/w1iEiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408721; c=relaxed/simple;
-	bh=cw2E9WfvKRErIt2tmUnxebsySKme/KCmOZt2LmsU7Vc=;
+	s=arc-20240116; t=1761408725; c=relaxed/simple;
+	bh=JlEQJWHGmaGrcwOo1WVQA5/NAEd98onIIlKymUC1R80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VDv6yJwrM3FtkXHVG8bVLYG+Gex6KxoFTQAwfePMArGcoqEUbgJ/2pHA+BHjT6FmMS1BXiXrQ3k/TgoP45NlbAxZujoYXzgXZruUEYe6iWIqf4QePiBzGbuCqHVPAcDpR/3eViY/kHSkei2DKaLGhHDP92d4NXzqKlkmw1j1x3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=egrus4nY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zeb8muLjuYrLMET1Fr8ZTQBH2deDa1TrcU/VoRxhmMPiUJ6hhMS17JgYF7U5TcimM0+z4udSnlRnY3AAoCooGtGK+DOBl6W4SJvU58+1W/zIHO0cP8cnumujmxlL4IgNL9x7BoX2GtQ/FJuzl1GMuUZYMOfse2O76OFaJQGh9y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imxlmeIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="egrus4nY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD58EC4CEFB;
-	Sat, 25 Oct 2025 16:11:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imxlmeIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473B2C4CEF5;
+	Sat, 25 Oct 2025 16:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408721;
-	bh=cw2E9WfvKRErIt2tmUnxebsySKme/KCmOZt2LmsU7Vc=;
+	s=k20201202; t=1761408725;
+	bh=JlEQJWHGmaGrcwOo1WVQA5/NAEd98onIIlKymUC1R80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=egrus4nY6soyzjiHlvgiZidRkAk9ECJhFXll+BmBnu7EwYKjtuTAg+oqw9F5fhAw+
-	 M1TVe5zqayeSkXJrmEB7OnPh3MIcaG0+9v0Ig9YEZ0cEupo6KoaYNiU4Mu/o6J0/A2
-	 fre3NxLkagoWRjluc4S4DBhILuvyXHRLHNVCBiOouWiFdajhUmSwzBu9eHOAJIcIhD
-	 uxom2MDSG1+xFsEIMpwYbE5CFHNiYjMcm3aMjnsLVm911D2smtulFLxl0qDrDluTiR
-	 ocAQBNf+cJQrB7zTLUoMh5Z6inLCKPYrwlIH1Zc1SWHOn0X16zm3hfj9Pd3Al/1quk
-	 1xP2Z0JmSEhdA==
+	b=imxlmeIkL2s8eZIc2of2iJxRZtThpuU012lCeR4v1ZDGibA3NwTTgcf/1g2RkRCyX
+	 ioGYdXF5rQm78feD4YhUqL4IqzM0qq7Owh98G784eU3mCf/oi9ljvRxpN971UbCAgm
+	 JF5LLNaPbuIYrRLpfbP6LoszuhO4sm54fqpClbexNtxUPZKDPV2T4J+pSu72kb1zr4
+	 D9hCbZoDsu0q8bPDQer9HO301nWDBVKpxoF4RViHO0MwZ20qrp+6hEcO3HHik7MA+v
+	 hWOGn+cjcGLoEx1JYJfyfBbFeFUmiqrTNYRCDxD+6JZyP5YBbXXEZZCioJdse6NN0/
+	 MphLrqZyn0ItA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/xe: Extend wa_13012615864 to additional Xe2 and Xe3 platforms
-Date: Sat, 25 Oct 2025 11:54:44 -0400
-Message-ID: <20251025160905.3857885-53-sashal@kernel.org>
+	lars@metafoo.de,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] media: adv7180: Only validate format in querystd
+Date: Sat, 25 Oct 2025 11:54:46 -0400
+Message-ID: <20251025160905.3857885-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,27 +46,28 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit bcddb12c027434fdf0491c1a05a3fe4fd2263d71 ]
+[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
 
-Extend WA 13012615864 to Graphics Versions 20.01,20.02,20.04
-and 30.03.
+The .querystd callback should not program the device with the detected
+standard, it should only report the standard to user-space. User-space
+may then use .s_std to set the standard, if it wants to use it.
 
-Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
-Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://lore.kernel.org/r/20250731220143.72942-2-jonathan.cavitt@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+All that is required of .querystd is to setup the auto detection of
+standards and report its findings.
+
+While at it add some documentation on why this can't happen while
+streaming and improve the error handling using a scoped guard.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,112 +75,128 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What changed
-  - Adds WA 13012615864 (sets `TDL_TSL_CHICKEN` bit `RES_CHK_SPR_DIS`)
-    to Xe2 platforms:
-    - New entry for `GRAPHICS_VERSION(2004)` with
-      `xe_rtp_match_first_render_or_compute` in
-      `drivers/gpu/drm/xe/xe_wa.c` (adds a single masked register write
-      on first render/compute engine).
-    - New entry for `GRAPHICS_VERSION_RANGE(2001, 2002)` with
-      `xe_rtp_match_first_render_or_compute` in
-      `drivers/gpu/drm/xe/xe_wa.c`.
-  - Extends the existing Xe3 entry to also match
-    `GRAPHICS_VERSION(3003)` in `drivers/gpu/drm/xe/xe_wa.c` (previously
-    limited to `3000–3001`).
-  - The bit being set is defined in
-    `drivers/gpu/drm/xe/regs/xe_gt_regs.h:494-497` (`TDL_TSL_CHICKEN`
-    with `RES_CHK_SPR_DIS`).
+- What it fixes
+  - Removes unintended device reprogramming in `.querystd`: Previously,
+    after enabling autodetection and sampling, the code reprogrammed the
+    decoder using the configured `curr_norm` instead of leaving hardware
+    untouched. If userspace had never called `.s_std`, `curr_norm`
+    defaults to NTSC (drivers/media/i2c/adv7180.c:1463), so a simple
+    `.querystd` could force NTSC regardless of the detected standard.
+    The new code stops doing that and only reports the detected
+    standard.
+  - Aligns with V4L2 semantics: `.querystd` should detect and report,
+    not change the active standard. Userspace can call `.s_std` to set
+    it.
 
-- Why this is a bugfix
-  - WA 13012615864 disables a TDL/TSL resource check (`RES_CHK_SPR_DIS`)
-    known to be problematic; it was already applied to Xe3 LPG
-    (`GRAPHICS_VERSION_RANGE(3000, 3001)`) via the earlier upstream
-    commit (see existing entry at `drivers/gpu/drm/xe/xe_wa.c:649-653`
-    in this tree). This change recognizes the same hardware issue exists
-    on additional Xe2/Xe3 SKUs and applies the same single-bit
-    mitigation there.
-  - This is not a feature; it’s standard errata programming (a hardware
-    workaround) that prevents potential functional issues like
-    stalls/hangs or incorrect behavior on affected SKUs.
+- Key code changes
+  - adv7180_querystd only sets autodetect, waits, and reports the
+    detected standard:
+    - Sets autodetect: drivers/media/i2c/adv7180.c:388
+    - Returns detection result directly: drivers/media/i2c/adv7180.c:388
+    - Adds clear rationale comment about not running during streaming
+      since it touches VID_SEL: drivers/media/i2c/adv7180.c:388
+  - Removes the reprogramming step via
+    `v4l2_std_to_adv7180(state->curr_norm)` and the second
+    `adv7180_set_video_standard(...)` (these were in the old body and
+    are now gone), eliminating side effects of `.querystd`.
+  - Improves error handling and robustness by using a scoped guard for
+    the mutex (auto-unlock on all paths) and by returning the result of
+    `__adv7180_status()` instead of ignoring it
+    (drivers/media/i2c/adv7180.c:388).
 
-- Scope and risk
-  - Minimal, contained change:
-    - Only modifies the workaround tables in
-      `drivers/gpu/drm/xe/xe_wa.c`.
-    - Uses `XE_RTP_RULES(...,
-      FUNC(xe_rtp_match_first_render_or_compute))` so it programs once
-      per GT via the first render/compute engine, consistent with
-      neighboring WAs.
-    - The write is masked (`XE_REG_OPTION_MASKED`) to set only the
-      intended bit, per `drivers/gpu/drm/xe/regs/xe_gt_regs.h:494-497`.
-  - Consistency with existing code:
-    - The same register (`TDL_TSL_CHICKEN`) is already used for other
-      WAs on Xe2/Xe3 (e.g., `STK_ID_RESTRICT` at
-      `drivers/gpu/drm/xe/xe_wa.c:600-604`), so combining bits in that
-      register is expected.
-    - Extending the existing Xe3 WA to include `GRAPHICS_VERSION(3003)`
-      matches how other XE3 WAs are handled (see
-      `drivers/gpu/drm/xe/xe_wa.c:660-663` for other 3003-specific
-      entries).
-  - No architectural changes, no user-visible API changes, and no cross-
-    subsystem impact.
+- Why it’s safe and minimal
+  - Localized change: confined to `adv7180_querystd` only
+    (drivers/media/i2c/adv7180.c:388).
+  - No ABI or architectural changes; just corrects behavior to be read-
+    only.
+  - Streaming safety preserved: returns `-EBUSY` while streaming to
+    avoid touching VID_SEL mid-capture
+    (drivers/media/i2c/adv7180.c:388).
+  - Consistent control flow: `.s_std` now only validates and stores the
+    intended standard in `curr_norm` (drivers/media/i2c/adv7180.c:463),
+    and actual programming is done at stream start via
+    `adv7180_program_std()` (drivers/media/i2c/adv7180.c:449) called by
+    initialization/streaming code paths. Leaving the device in
+    autodetect after `.querystd` does not affect users because streaming
+    is off (enforced by `-EBUSY`) and streaming will reprogram from
+    `curr_norm` anyway.
 
-- Stable criteria
-  - Fixes a hardware erratum affecting real users on supported hardware.
-  - Very small and straightforward: a few table entries and one rule
-    expansion.
-  - Already precedent in stable: the original addition of WA 13012615864
-    for Xe3 (`3000–3001`) has been queued and carried in stable (e.g.,
-    6.14.5 stable queue), indicating stable acceptability for this WA
-    pattern.
-  - Harmless on trees lacking those hardware IDs: the rules are version-
-    gated and do nothing if the platform doesn’t match.
+- User-visible impact addressed
+  - Prevents `.querystd` from changing hardware state (e.g., enforcing
+    NTSC because `curr_norm` defaults to NTSC at probe:
+    drivers/media/i2c/adv7180.c:1463), which could break subsequent
+    expectations if userspace hasn’t explicitly called `.s_std`.
 
-Given the above, this commit is a low-risk, targeted bugfix that aligns
-with stable backport rules and should be backported.
+- Backport considerations
+  - The `guard(mutex)` scoped guard may not exist in older stable
+    series. That’s trivial to adapt to explicit
+    `mutex_lock_interruptible()`/`mutex_unlock()` with identical
+    behavior. No other dependencies or refactors are required.
 
- drivers/gpu/drm/xe/xe_wa.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+- Subsystem and risk profile
+  - Touches a single V4L2 i2c decoder driver; small, self-contained
+    change with clear behavioral bugfix and minimal regression risk.
+  - Follows stable rules: bugfix, no new features, no architectural
+    churn, and limited scope.
 
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 22a98600fd8f2..535067e7fb0c9 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -538,6 +538,11 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(HALF_SLICE_CHICKEN7, CLEAR_OPTIMIZATION_DISABLE))
- 	},
-+	{ XE_RTP_NAME("13012615864"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION(2004),
-+		       FUNC(xe_rtp_match_first_render_or_compute)),
-+	  XE_RTP_ACTIONS(SET(TDL_TSL_CHICKEN, RES_CHK_SPR_DIS))
-+	},
+Given these points, this is a good candidate for stable backporting.
+
+ drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 8100fe6b0f1d4..5accf3020e076 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -357,32 +357,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
+ static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
+ {
+ 	struct adv7180_state *state = to_state(sd);
+-	int err = mutex_lock_interruptible(&state->mutex);
+-	if (err)
+-		return err;
+-
+-	if (state->streaming) {
+-		err = -EBUSY;
+-		goto unlock;
+-	}
++	int ret;
  
- 	/* Xe2_HPG */
+-	err = adv7180_set_video_standard(state,
+-			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
+-	if (err)
+-		goto unlock;
++	guard(mutex)(&state->mutex);
  
-@@ -602,6 +607,11 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- 		       FUNC(xe_rtp_match_first_render_or_compute)),
- 	  XE_RTP_ACTIONS(SET(TDL_TSL_CHICKEN, STK_ID_RESTRICT))
- 	},
-+	{ XE_RTP_NAME("13012615864"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002),
-+		       FUNC(xe_rtp_match_first_render_or_compute)),
-+	  XE_RTP_ACTIONS(SET(TDL_TSL_CHICKEN, RES_CHK_SPR_DIS))
-+	},
+-	msleep(100);
+-	__adv7180_status(state, NULL, std);
++	/*
++	 * We can't sample the standard if the device is streaming as that would
++	 * interfere with the capture session as the VID_SEL reg is touched.
++	 */
++	if (state->streaming)
++		return -EBUSY;
  
- 	/* Xe2_LPM */
+-	err = v4l2_std_to_adv7180(state->curr_norm);
+-	if (err < 0)
+-		goto unlock;
++	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
++	ret = adv7180_set_video_standard(state,
++					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
++	if (ret)
++		return ret;
  
-@@ -647,7 +657,8 @@ static const struct xe_rtp_entry_sr engine_was[] = {
- 	  XE_RTP_ACTIONS(SET(TDL_CHICKEN, QID_WAIT_FOR_THREAD_NOT_RUN_DISABLE))
- 	},
- 	{ XE_RTP_NAME("13012615864"),
--	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3001),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3001), OR,
-+		       GRAPHICS_VERSION(3003),
- 		       FUNC(xe_rtp_match_first_render_or_compute)),
- 	  XE_RTP_ACTIONS(SET(TDL_TSL_CHICKEN, RES_CHK_SPR_DIS))
- 	},
+-	err = adv7180_set_video_standard(state, err);
++	/* Allow some time for the autodetection to run. */
++	msleep(100);
+ 
+-unlock:
+-	mutex_unlock(&state->mutex);
+-	return err;
++	return __adv7180_status(state, NULL, std);
+ }
+ 
+ static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
 -- 
 2.51.0
 
