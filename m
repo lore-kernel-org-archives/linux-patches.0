@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3150D1F12F8;
-	Sat, 25 Oct 2025 16:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A75305066;
+	Sat, 25 Oct 2025 16:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408937; cv=none; b=ZByokkoIT/6xGfOZc6IpIkGdUrYaYxSyLpTDyr90Sjg+SCfITtBfBZuZwM3W00OHGA8UyCAymPDg+bEgJZN8reuAfaBU5JkkL6sY7IGNKNhdREzWkxN4iPl4mkkoJknmfVVvz6Ft+da38bpYuar6rmGSeVd6YjXG/vwW8KKIOTk=
+	t=1761408939; cv=none; b=oSAbu+tS7vPNtJCakXBa0QCy2n1luvCZg7daUQDiEQ0BOb8144YP8NyAn3ONBPr2Ks4yBJc+/F+6+fa6F5R31olYgoTG5JkuQYfxd59dZsRaOG6T6nzMoEN0zfpeSW/YxMBD6Amz/AzS62MrKUUTW+YmJwSXj4l5ri6Jvh+EbW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408937; c=relaxed/simple;
-	bh=4FdEqkgIw2ja8qYOelOp6m1us7ZJTTKkOMzOaCdIfQI=;
+	s=arc-20240116; t=1761408939; c=relaxed/simple;
+	bh=S+sgQN+hicYkwFtKdfxBYx+U05oSh+5MKZu/RunLJv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SHC7UI7KPnKdR7awWObCJY1Req0NZxIh3c7/ylgZilBhDuWYVqrks6gWKb+r2UdsQ6vxAW+KgcjnPI8aIOIcI5fdrCiO4JRAAT2VdU9gnaVoS3K9s9sP+jzJegnSCbhBahqR7kbwd9HutTsjuZMFaS8F33ylDnHDfb0zUwm8Ui8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsE8yVaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VqeBirmjlwKVKOVW4AuzVE8e4z4+ayk5Dho4v67eKW7z2XE26Hah9Tdc5hY2Wynx38Zf5PG67YnEjCQv9kyjqd2UbSzcYxuGuoiQ7FZNJokNjDXuqFThA7MocqAgMHTWVm/DucSj1DLjzr+B2FXjD3hSC8Awne7pvRZkFSNUEE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMSVMdgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsE8yVaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDA7C4CEFB;
-	Sat, 25 Oct 2025 16:15:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMSVMdgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A13C4CEFB;
+	Sat, 25 Oct 2025 16:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408937;
-	bh=4FdEqkgIw2ja8qYOelOp6m1us7ZJTTKkOMzOaCdIfQI=;
+	s=k20201202; t=1761408939;
+	bh=S+sgQN+hicYkwFtKdfxBYx+U05oSh+5MKZu/RunLJv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsE8yVawlaJtqeZIT1QlplLZ4272B6PCP5v0cEs/p96tuQjdogpuZ9uunLMvUpm4M
-	 Wh6/+6RGRaVxGrmAa9VdlUzjhc8AJ0+ffwenSUNCxjaCfIjQGWlozPQrTG1fDscVRT
-	 +lQK2i/hO4kKBgzwSh5SBYQaLFgmbs3ULx+9U2qGM05egZWQwe6/Oo1PbPdE5yvda6
-	 Ue/CWbzei/W9wvbvQCJFD1VZ5kGmyDdUepAhIHZF61Yv5wLn2ciAnjqLyPPjF8YLkE
-	 /zNcCDWY6SzXYSP0Ep6RxbjmkX0psnD6k69zXnyeobvGdKanOuXhsaOJGD7iLehN9p
-	 /Mw+Ug39UaXlQ==
+	b=fMSVMdgFd9kofY22GnwnXBmA0gXl4VT4lEB70Hq2fGUUgKR9zyhzfvYIf4oI65wSP
+	 nN8xReUugl3sJN914nyltD3KPZhGFiX6xuJzyKj2ICHASCyecGb7iFnuq8F9Bg/YVr
+	 bUTJYSJB7UDjqieUhK8drRLget8PmeMlEvPAbpDVJ3XDzzAuJS1b5dfslvVLUi8Haf
+	 CnFB2Nszt/AIC14Cizy2TiCOU959XgdGIIB6iN88mj85dc0RzLaVikur7zlRqHbfWN
+	 GWVJvtOIw9FOFeVtOZMVZbLEakGeTmrgfh4P9TgI43ZIxoAo7KnNGKaxxVzpGbt5il
+	 42btcxHK6Kvkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: chenmiao <chenmiao.ku@gmail.com>,
-	Stafford Horne <shorne@gmail.com>,
+Cc: Timur Tabi <ttabi@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alexander.deucher@amd.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.12] openrisc: Add R_OR1K_32_PCREL relocation type module support
-Date: Sat, 25 Oct 2025 11:56:11 -0400
-Message-ID: <20251025160905.3857885-140-sashal@kernel.org>
+	airlied@redhat.com,
+	bskeggs@nvidia.com,
+	zhiw@nvidia.com
+Subject: [PATCH AUTOSEL 6.17] drm/nouveau: always set RMDevidCheckIgnore for GSP-RM
+Date: Sat, 25 Oct 2025 11:56:12 -0400
+Message-ID: <20251025160905.3857885-141-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,18 +53,36 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: chenmiao <chenmiao.ku@gmail.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit 9d0cb6d00be891586261a35da7f8c3c956825c39 ]
+[ Upstream commit 27738c3003bf3b124527c9ed75e1e0d0c013c101 ]
 
-To ensure the proper functioning of the jump_label test module, this patch
-adds support for the R_OR1K_32_PCREL relocation type for any modules. The
-implementation calculates the PC-relative offset by subtracting the
-instruction location from the target value and stores the result at the
-specified location.
+Always set the RMDevidCheckIgnore registry key for GSP-RM so that it
+will continue support newer variants of already supported GPUs.
 
-Signed-off-by: chenmiao <chenmiao.ku@gmail.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+GSP-RM maintains an internal list of PCI IDs of GPUs that it supports,
+and checks if the current GPU is on this list.  While the actual GPU
+architecture (as specified in the BOOT_0/BOOT_42 registers) determines
+how to enable the GPU, the PCI ID is used for the product name, e.g.
+"NVIDIA GeForce RTX 5090".
+
+Unfortunately, if there is no match, GSP-RM will refuse to initialize,
+even if the device is fully supported.  Nouveau will get an error
+return code, but by then it's too late.  This behavior may be corrected
+in a future version of GSP-RM, but that does not help Nouveau today.
+
+Fortunately, GSP-RM supports an undocumented registry key that tells it
+to ignore the mismatch.  In such cases, the product name returned will
+be a blank string, but otherwise GSP-RM will continue.
+
+Unlike Nvidia's proprietary driver, Nouveau cannot update to newer
+firmware versions to keep up with every new hardware release.  Instead,
+we can permanently set this registry key, and GSP-RM will continue
+to function the same with known hardware.
+
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Link: https://lore.kernel.org/r/20250808191340.1701983-1-ttabi@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,85 +90,92 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Adds missing relocation handling for OpenRISC modules:
-    `R_OR1K_32_PCREL` now computes a proper PC-relative value, enabling
-    modules that use this relocation (e.g., the jump_label test module)
-    to load and run correctly.
-  - Before this change, such relocations fell into the default case and
-    were left un-applied while only logging an error, which risks
-    loading a broken module without failing the load explicitly (see
-    `arch/openrisc/kernel/module.c:72` and the unconditional `return 0`
-    at `arch/openrisc/kernel/module.c:79`).
+- What changed
+  - Adds `"RMDevidCheckIgnore" = 1` to the always-applied GSP-RM
+    registry entries array `r535_registry_entries` so the key is sent
+    unconditionally to the GSP-RM firmware during bring-up:
+    drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c:586
+  - These entries are appended into the registry payload by the loop in
+    `r535_gsp_rpc_set_registry()`:
+    drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c:639
+  - The registry is pushed early in device initialization from
+    `r535_gsp_oneinit()`:
+    drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c:2185
 
-- Change details
-  - New case computes S + A − P for 32-bit PC-relative relocations and
-    writes the result directly:
-    - `arch/openrisc/kernel/module.c:58`: `case R_OR1K_32_PCREL:`
-    - `arch/openrisc/kernel/module.c:59`: `value -= (uint32_t)location;`
-    - `arch/openrisc/kernel/module.c:60`: `*location = value;`
-  - This mirrors established semantics for 32-bit PC-relative
-    relocations, consistent with other architectures’ module loaders
-    (e.g., `arch/hexagon/kernel/module.c:132` uses `*location = value -
-    (uint32_t)location;`).
-  - It fits alongside existing relocation handling already present for
-    OpenRISC:
-    - Absolute 32-bit relocations written directly
-      (`arch/openrisc/kernel/module.c:42`).
-    - Branch-style PC-relative relocations (`R_OR1K_INSN_REL_26`) that
-      subtract P, then encode into a 26-bit field
-      (`arch/openrisc/kernel/module.c:51`–`56`).
-    - Other recently added relocations such as `R_OR1K_AHI16` and
-      `R_OR1K_SLO16` (`arch/openrisc/kernel/module.c:62`–`71`).
+- Why it matters
+  - GSP-RM internally gates initialization on a PCI ID → product-name
+    table, refusing to initialize if there’s no match, even when the GPU
+    architecture is fully supported. This causes a hard failure on newly
+    released PCI ID variants of already supported architectures.
+  - The undocumented `RMDevidCheckIgnore` flag tells GSP-RM to ignore
+    the PCI ID table mismatch: initialization proceeds, but the product
+    name is blank. The driver does not rely on the RM-provided product
+    string for functionality.
+  - Nouveau cannot “chase” new PCI IDs via frequent firmware updates in
+    stable kernels; always setting this flag ensures supported
+    architectures remain usable as new board IDs are released.
 
-- Impact and scope
-  - The change is small and contained to a single switch case in the
-    OpenRISC module loader (`arch/openrisc/kernel/module.c`).
-  - It only affects module relocation handling, which is invoked during
-    module loading via the generic path in `kernel/module/main.c:1617`
-    (SHT_RELA → `apply_relocate_add`).
-  - No API or architectural changes; no effect on other subsystems or
-    architectures.
+- Scope and containment
+  - The change is a single, small addition to a constant array of
+    required registry entries; no logic changes, no interface changes,
+    no data structure changes:
+    drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c:586
+  - It only affects the r535 GSP-RM path, and only the firmware’s
+    registry configuration step.
 
-- Risk assessment
-  - Very low risk:
-    - The operation is a straightforward, canonical PC-relative
-      computation (S + A − P).
-    - It aligns with existing patterns for other architectures and with
-      OpenRISC’s own existing PC-relative branch relocation handling.
-  - High user value for OpenRISC users:
-    - Fixes module load-time correctness for modules emitting
-      `R_OR1K_32_PCREL`, including the jump_label test module.
+- Side effects and risk
+  - For already-known PCI IDs, the flag is inert; there is no change in
+    behavior.
+  - For unknown PCI IDs of supported architectures, initialization
+    proceeds (previously failed); the only visible difference is a blank
+    product name reported by RM. A code search finds no driver
+    dependence on the RM-provided product string in nouveau; device
+    naming in DRM/userspace flows from PCI data instead.
+  - If a truly unsupported architecture is encountered, architectural
+    checks elsewhere (e.g., BOOT_0/BOOT_42-based flows) will still
+    prevent successful bring-up; this flag does not bypass architectural
+    enablement logic.
+  - The module parameter `NVreg_RegistryDwords` still allows overrides;
+    adding this fixed entry does not create compatibility issues
+    (duplicate keys are benign on the RM side).
 
-- Backport considerations
-  - Suitable for stable: it’s a clear bug fix, minimal, and
-    architecture-local.
-  - If older stable trees predate `R_OR1K_*` relocation renaming, the
-    backport may need to map to the legacy names; otherwise the change
-    is mechanically the addition of this single case.
+- Stable backport criteria
+  - Fixes a real, user-visible failure (GPU initialization refusal on
+    new PCI IDs of supported GPUs).
+  - Minimal and low-risk change; no architectural rework; confined to
+    nouveau’s GSP-RM r535 path.
+  - No ABI changes; no new features; behavior matches the proprietary
+    driver’s ability to keep working as IDs update, but implemented via
+    a static registry setting since nouveau can’t update firmware
+    frequently on stable trees.
+  - Does not touch critical kernel subsystems beyond DRM/nouveau; is
+    self-contained and compile-time safe.
 
-Conclusion: This is a small, targeted, correctness fix to the OpenRISC
-module loader that prevents silently broken module loads and aligns with
-standard relocation semantics. It should be backported.
+Given the small, surgical change, the clear user impact (fixes hard
+initialization failures), and low regression risk, this is a strong
+candidate for stable backport.
 
- arch/openrisc/kernel/module.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/openrisc/kernel/module.c b/arch/openrisc/kernel/module.c
-index c9ff4c4a0b29b..4ac4fbaa827c1 100644
---- a/arch/openrisc/kernel/module.c
-+++ b/arch/openrisc/kernel/module.c
-@@ -55,6 +55,10 @@ int apply_relocate_add(Elf32_Shdr *sechdrs,
- 			value |= *location & 0xfc000000;
- 			*location = value;
- 			break;
-+		case R_OR1K_32_PCREL:
-+			value -= (uint32_t)location;
-+			*location = value;
-+			break;
- 		case R_OR1K_AHI16:
- 			/* Adjust the operand to match with a signed LO16.  */
- 			value += 0x8000;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
+index 588cb4ab85cb4..32e6a065d6d7a 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
+@@ -582,10 +582,13 @@ struct nv_gsp_registry_entries {
+  * RMSecBusResetEnable - enables PCI secondary bus reset
+  * RMForcePcieConfigSave - forces GSP-RM to preserve PCI configuration
+  *   registers on any PCI reset.
++ * RMDevidCheckIgnore - allows GSP-RM to boot even if the PCI dev ID
++ *   is not found in the internal product name database.
+  */
+ static const struct nv_gsp_registry_entries r535_registry_entries[] = {
+ 	{ "RMSecBusResetEnable", 1 },
+ 	{ "RMForcePcieConfigSave", 1 },
++	{ "RMDevidCheckIgnore", 1 },
+ };
+ #define NV_GSP_REG_NUM_ENTRIES ARRAY_SIZE(r535_registry_entries)
+ 
 -- 
 2.51.0
 
