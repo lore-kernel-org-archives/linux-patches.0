@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EAB303A1D;
-	Sat, 25 Oct 2025 16:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994B12FF168;
+	Sat, 25 Oct 2025 16:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408890; cv=none; b=M646e5cqEwRKUVy8IxGVEi1U2vP3XCwd3gGFV8p9+gM0L23EicjOnlIJDoFqaBPxzL1TjPvC8gMx+YgeBWP21jiTma8Q/3hM69vq5fj3ka+lNSk5pBJTP1GheX8y5ttt3Q3jgM9I5GICipeAWC8bmImjO+wyoxE4uG+IYoTDobo=
+	t=1761408891; cv=none; b=d+7jtipir+VqjlZZXROBijfipbFERsZvqDwcRFvrr8Le2K2B0Uoq+Q2TVPaLl49KqHVtYJsdJikZjYxNpLCle1ddl6TyU2wEpdSd5/T2ntULztrxE1axjTv+1dKIDhqV/HMNrY5CYVb6B1MeVoKiiCuJ5BwisjjKetFMQo1pCTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408890; c=relaxed/simple;
-	bh=44/FD+v7p/1c1qc7VtBQXHut+udvntTqFU3XRRRpCxA=;
+	s=arc-20240116; t=1761408891; c=relaxed/simple;
+	bh=o4h+IJZ3yueYChJvQ8+3UTbkMcoXNGMPA4CzIMmhnCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GOA5OcSK6HmPNNaGBCFPCvwIzveJfQWAph4RLKAT4q7TNoK0EfW4xd8FoelSjcjZbYKKPG702Ylrt8DJgtTSf4il4Dyrlhwv8bT9jAbTz8fMuny4jrLULDsV9RKSx7tVFkWoicBky8I1xB8XzY15IY/Givefd8B+V4Gkukftwo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpNj7Hzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FhHhWtO8mdtp4Z+vmAxW7H6zrTw7BExQVvEgSBn+wcQNxcHBed9LzoN6Vi4uucS2MjJDcMlzsP5xpoEGqkH8XxdKyx5yLldFSRBo2Lypxp4dqvuHI5j3R55BdGNFjd03wfopC0Wum9JfLoXhDDtAWJH9wv48JIosw5xkRv9o88U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MgCn02ND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpNj7Hzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F552C4CEFF;
-	Sat, 25 Oct 2025 16:14:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MgCn02ND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D48C4CEFB;
+	Sat, 25 Oct 2025 16:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408889;
-	bh=44/FD+v7p/1c1qc7VtBQXHut+udvntTqFU3XRRRpCxA=;
+	s=k20201202; t=1761408891;
+	bh=o4h+IJZ3yueYChJvQ8+3UTbkMcoXNGMPA4CzIMmhnCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpNj7HzmO6Sk0xWX4f805MHUGlbthZygGTTDF/002+LoU9h6YpaRPWxxYm07D18jb
-	 kKVAvvEUqv71rNBiPWRR8n4J1B4N74SkPMe1KGr7PpEhUNgyiuX1ERdqW9ifZCc5cU
-	 erE59PCuCZAfCZlovtGG6ixjllHq1C58zrLFRv6VfLSLkFOURGLtFuzqzGMT+DaQ4X
-	 hRWzEqTD9pXLuZHaIt9Cj3/COGDQOSmNy7CbSyD54ZpON1szD0ZUHNv5X2tYWFucPt
-	 nZzL72cX2UeZJo7YwAJ1YJmpuIM6mTXWDVUZp2gTetKaWz1Jz76ZXPcUEDMs/rUmXy
-	 mmii8lY728JEg==
+	b=MgCn02NDvpPHGZ3t1zTWPM3VGatilIwdOdAFRQMjjSwWtq+gfe+njG4F8CNlYKibX
+	 +eBHyOp3ZznqD6iQj5XW2h41F/Mqilit6np/sOCfLmN3kQVwYkHrxyQWB+n8noIVCf
+	 YHbLd5TE/ErD9P3atT0LFDJ4KGtkgnhNrVq0yBidsP2/0u0JfV8iMH9A9ODKKziJyD
+	 LYGQUn0JiKDlk+eQvFhKapNVfVN+uknnI1dOCuWih/1ILaneuLMzCV8W2mlvb0/bjm
+	 aCgclnXZCWhO2ahUNd97JR9bR48O5KZfRyoaMI5GO71ZxGthGBoMj+36QewoG0xEgf
+	 dhcBVcyKe+65w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	magnus.damm@gmail.com,
-	mailhol@kernel.org,
-	alexandre.f.demers@gmail.com,
-	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] can: rcar_canfd: Update bit rate constants for RZ/G3E and R-Car Gen4
-Date: Sat, 25 Oct 2025 11:55:46 -0400
-Message-ID: <20251025160905.3857885-115-sashal@kernel.org>
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de
+Subject: [PATCH AUTOSEL 6.17-6.12] drm: panel-backlight-quirks: Make EDID match optional
+Date: Sat, 25 Oct 2025 11:55:47 -0400
+Message-ID: <20251025160905.3857885-116-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,298 +50,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 100fafc3e46138cb5a6526ddc03dcede8b020c8c ]
+[ Upstream commit 9931e4be11f2129a20ffd908bc364598a63016f8 ]
 
-The calculation formula for nominal bit rate of classical CAN is the same as
-that of nominal bit rate of CANFD on the RZ/G3E and R-Car Gen4 SoCs
-compared to other SoCs. Update nominal bit rate constants.
+Currently, having a valid panel_id match is required to use the quirk
+system. For certain devices, we know that all SKUs need a certain quirk.
+Therefore, allow not specifying ident by only checking for a match
+if panel_id is non-zero.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250908120940.147196-2-biju.das.jz@bp.renesas.com
-[mkl: slightly improve wording of commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Tested-by: Philip Müller <philm@manjaro.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://lore.kernel.org/r/20250829145541.512671-2-lkml@antheas.dev
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: **YES**
-
----
-
-## COMPREHENSIVE ANALYSIS
-
-### Nature of the Commit
-
-This commit **fixes a functional bug** in the Renesas R-Car CAN FD
-driver that causes **incorrect bit timing constants** to be used for
-RZ/G3E and R-Car Gen4 SoCs when operating in Classical CAN mode.
-
----
-
-### Technical Analysis of the Bug
-
-**The Problem:**
-
-In `rcar_canfd_channel_probe()`
-(drivers/net/can/rcar/rcar_canfd.c:1921-1928), when the controller
-starts in Classical CAN mode (`!gpriv->fdmode`), the code was
-unconditionally using `rcar_canfd_bittiming_const` for all hardware
-variants.
-
-**Before the fix:**
-```c
-} else {
-    /* Controller starts in Classical CAN only mode */
-    priv->can.bittiming_const = &rcar_canfd_bittiming_const;
-    priv->can.ctrlmode_supported = CAN_CTRLMODE_BERR_REPORTING;
-}
-```
-
-**After the fix:**
-```c
-} else {
-    /* Controller starts in Classical CAN only mode */
-    if (gpriv->info->shared_can_regs)
-        priv->can.bittiming_const = gpriv->info->nom_bittiming;
-    else
-        priv->can.bittiming_const = &rcar_canfd_bittiming_const;
-    priv->can.ctrlmode_supported = CAN_CTRLMODE_BERR_REPORTING;
-}
-```
-
-**The Hardware Difference:**
-
-RZ/G3E and R-Car Gen4 SoCs have a unique characteristic: they use
-**shared registers** for both CAN-FD and Classical CAN operations
-(`shared_can_regs = 1`). This means the calculation formula for nominal
-bit rate of Classical CAN is **the same** as that of nominal bit rate of
-CANFD, unlike other SoCs.
-
-**Impact of Wrong Constants:**
-
-| Parameter | Wrong (generic) | Correct (Gen4) | Correct (Gen3) |
-|-----------|----------------|----------------|----------------|
-| tseg1_max | 16 | 256 | 128 |
-| tseg2_max | 8 | 128 | 32 |
-| sjw_max | 4 | 128 | 32 |
-| tseg1_min | 4 | 2 | 2 |
-
-The wrong constants are **dramatically more restrictive** (16x smaller
-for Gen4), preventing users from:
-1. Configuring valid bit rates that require larger timing segment values
-2. Fine-tuning bit timing for specific CAN bus topologies
-3. Using certain non-standard but valid CAN bus configurations
-4. Fully utilizing hardware capabilities
-
----
-
-### Affected Hardware and Timeline
-
-**R-Car Gen4:**
-- Initial support: v6.3 (commit 8716e6e79a148, January 2023)
-- Bug duration: ~2.5 years (v6.3 to v6.18)
-- Compatible strings: `renesas,rcar-gen4-canfd`,
-  `renesas,r8a779a0-canfd`
-
-**RZ/G3E:**
-- Initial support: v6.16 (commit be53aa0520085, April 2025)
-- Bug duration: ~5 months (v6.16 to v6.18)
-- Compatible string: `renesas,r9a09g047-canfd`
-
----
-
-### User-Visible Symptoms
-
-Users running these SoCs in Classical CAN mode would experience:
-
-1. **Configuration Failures**: Commands like `ip link set can0 type can
-   bitrate 500000 sample-point 0.875` might fail with "Invalid argument"
-   if the calculated timing parameters exceed the incorrect limits
-
-2. **Limited Flexibility**: Inability to configure certain valid bit
-   rates or sample points that the hardware actually supports
-
-3. **Incorrect Hardware Capabilities**: The driver reports artificial
-   limitations via sysfs/netlink that don't reflect actual hardware
-   capabilities
-
-4. **Potential Communication Issues**: In some cases, inability to match
-   timing requirements of existing CAN networks
-
----
-
-### Code Change Analysis
-
-**Location:** drivers/net/can/rcar/rcar_canfd.c, function
-`rcar_canfd_channel_probe()`
-
-**Lines Changed:** 1923-1926 (4 lines added, 1 line removed)
-
-**Change Type:** Conditional logic addition
-
-**Scope:** Extremely localized - only affects initialization path for
-Classical CAN mode on specific hardware
-
-**Dependencies:**
-- Requires `shared_can_regs` field (added in commit 836cc711fc187,
-  v6.16)
-- Requires `nom_bittiming` field in hw_info structure (present since
-  Gen4 support)
-
-**Risk Assessment:**
-
-✅ **Very Low Risk:**
-- Change is **hardware-specific** - only affects Gen4 and RZ/G3E with
-  `shared_can_regs=1`
-- Does not affect Gen3, RZG2L, or any other hardware variants
-- Does not affect CAN-FD mode operation
-- Simply selects correct constants based on hardware characteristics
-- No behavioral changes to register access or protocol logic
-- Reviewed by Geert Uytterhoeven (Renesas expert) and Marc Kleine-Budde
-  (CAN subsystem maintainer)
-
----
-
-### Why This Is a Bug Fix (Not a Feature)
-
-1. **Correctness Issue**: The hardware specification states these SoCs
-   use the same formula for Classical CAN and CANFD nominal bit rate.
-   The old code violated this specification.
-
-2. **Hardware Limitation**: Using wrong constants artificially limits
-   hardware capabilities
-
-3. **Functional Impact**: Users cannot configure valid settings that the
-   hardware supports
-
-4. **Longstanding Bug**: Gen4 has been broken since v6.3 (January 2023)
-
-5. **No Architectural Change**: Simply uses correct constants for
-   specific hardware
-
----
-
-### Stable Tree Backporting Criteria Analysis
-
-✅ **Important Bug Fix**: Corrects incorrect driver behavior that limits
-functionality
-
-✅ **Minimal and Obvious**: 5 lines changed, clear conditional logic
-
-✅ **Well-Contained**: Only affects specific hardware, doesn't touch
-critical paths
-
-✅ **No New Features**: Fixes existing feature to work correctly
-
-✅ **Low Regression Risk**: Hardware-specific, well-tested by maintainers
-
-✅ **Affects Users**: Anyone using Gen4/RZ/G3E in Classical CAN mode
-
----
-
-### Backporting Considerations
-
-**For v6.17 and v6.16:**
-- ✅ Direct backport - all dependencies present
-- ✅ `shared_can_regs` infrastructure exists
-- ✅ Both Gen4 and RZ/G3E support present (v6.16+)
-- ✅ Recommended for stable trees
-
-**For v6.15 and earlier:**
-- ⚠️ Requires backporting `shared_can_regs` infrastructure (commit
-  836cc711fc187)
-- 📝 Gen4 support exists (since v6.3) but uses older `is_gen4()` checks
-- 📝 More complex backport, may need adaptation
-- 🤔 Consider if effort is justified given hardware availability
-
-**For v6.2 and earlier:**
-- ❌ No Gen4 support - not applicable
-
----
-
-### Related Commits and Context
-
-**Prerequisite commits:**
-- 836cc711fc187: "can: rcar_canfd: Add shared_can_regs variable" (v6.16)
-- 8716e6e79a148: "can: rcar_canfd: Add support for R-Car Gen4" (v6.3)
-- be53aa0520085: "can: rcar_canfd: Add RZ/G3E support" (v6.16)
-
-**No follow-up fixes or reverts found** - commit is solid
-
----
-
-### Evidence of Correctness
-
-1. **Commit message** clearly states the hardware behavior: "The
-   calculation formula for nominal bit rate of classical CAN is the same
-   as that of nominal bit rate of CANFD"
-
-2. **Code structure** logically checks `shared_can_regs` to determine
-   which constants to use
-
-3. **Hardware-specific field** (`shared_can_regs`) was explicitly added
-   to handle this difference
-
-4. **Maintainer review** by experienced Renesas and CAN subsystem
-   experts
-
-5. **Consistent with other code** in the driver that already checks
-   `shared_can_regs` for Gen4-specific behavior (see lines 878, 1382,
-   1603, 1663, 1713)
-
----
-
-### Conclusion
-
-**This commit SHOULD be backported to stable kernel trees (v6.16+)**
-because:
-
-1. ✅ Fixes a **functional bug** that limits hardware capabilities
-2. ✅ Affects real users on Gen4 and RZ/G3E hardware
-3. ✅ Change is **small, obvious, and well-contained**
-4. ✅ **No regression risk** - hardware-specific fix
-5. ✅ Meets all stable tree criteria
-6. ✅ Simple backport path for v6.16 and v6.17
-
-**Backport Priority:** Medium-High
-- High for users of affected hardware
-- Medium overall given specific hardware scope
-
-**Recommended Stable Tags:**
-```
-Fixes: 836cc711fc18 ("can: rcar_canfd: Add shared_can_regs variable")
-Cc: stable@vger.kernel.org # v6.16+
-```
-
- drivers/net/can/rcar/rcar_canfd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
-index 7e8b1d2f1af65..4f3ce948d74da 100644
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -1913,7 +1913,10 @@ static int rcar_canfd_channel_probe(struct rcar_canfd_global *gpriv, u32 ch,
- 		priv->can.fd.do_get_auto_tdcv = rcar_canfd_get_auto_tdcv;
- 	} else {
- 		/* Controller starts in Classical CAN only mode */
--		priv->can.bittiming_const = &rcar_canfd_bittiming_const;
-+		if (gpriv->info->shared_can_regs)
-+			priv->can.bittiming_const = gpriv->info->nom_bittiming;
-+		else
-+			priv->can.bittiming_const = &rcar_canfd_bittiming_const;
- 		priv->can.ctrlmode_supported = CAN_CTRLMODE_BERR_REPORTING;
- 	}
+YES
+
+- What changed: In drivers/gpu/drm/drm_panel_backlight_quirks.c, the
+  match helper was relaxed to make the EDID check optional:
+  - Before: drm_panel_min_backlight_quirk_matches() unconditionally
+    required an EDID identity match and returned false if
+    drm_edid_match() failed.
+    - Code: drivers/gpu/drm/drm_panel_backlight_quirks.c, function
+      drm_panel_min_backlight_quirk_matches, the line was:
+      - if (!drm_edid_match(edid, &quirk->ident)) return false;
+  - After: The EDID check is performed only if the quirk’s EDID identity
+    contains a non-zero panel_id:
+    - Code: drivers/gpu/drm/drm_panel_backlight_quirks.c, function
+      drm_panel_min_backlight_quirk_matches:
+      - if (quirk->ident.panel_id && !drm_edid_match(edid,
+        &quirk->ident)) return false;
+
+- Why this matters (bug it addresses): Previously, even when the
+  platform (DMI) uniquely and reliably identifies devices that need a
+  backlight quirk “across all SKUs,” the quirk would not apply unless
+  the EDID identity also matched. For platforms where the quirk should
+  apply regardless of panel EDID (e.g., multiple panel variants shipping
+  under the same system SKU, or unreliable EDID), this produced a false
+  negative and the quirk was never applied. This can cause user-visible
+  issues such as unusable minimum brightness, flicker, or a too-dark
+  panel at low settings.
+
+- Scope and risk:
+  - Localized change: A single conditional in the matching helper; no
+    API/ABI change. All existing quirks that specify a valid EDID
+    panel_id keep the same behavior. Only quirks that intentionally set
+    ident.panel_id = 0 now match on DMI alone.
+  - Dependencies: The helper still requires DMI to match (via
+    dmi_match), and only skips the EDID check when ident.panel_id is
+    zero, so the chance of accidental overmatching is low. The EDID
+    match itself remains strict when requested (drm_edid_match compares
+    the computed panel_id and, if provided, the panel name).
+  - Callers/usage: The result is consumed to adjust backlight behavior
+    (e.g., min_brightness or brightness_mask) by drivers like AMDGPU on
+    eDP connectors (see
+    drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c:3692 calling
+    drm_get_panel_backlight_quirk). The change therefore directly
+    impacts user experience in a constrained and intended way.
+
+- Stable policy fit:
+  - Fixes a real user-visible problem (quirks not applying where they
+    should).
+  - Minimal, contained change (one conditional).
+  - No architectural changes or new features; it only enables proper use
+    of the existing quirk mechanism for platforms known to require it.
+  - Low regression risk: Existing EDID-specific quirks remain
+    unaffected; only explicitly EDID-agnostic entries (ident.panel_id =
+    0) are enabled.
+
+- Practical note: On its own, this change is largely inert unless there
+  are DMI-only quirk entries (with ident.panel_id unset) in the stable
+  branch’s quirk table. It is best paired with the corresponding quirk
+  entries that rely on this behavior. Nonetheless, backporting this
+  enabling fix is safe and prepares stable trees to accept those entries
+  cleanly.
+
+ drivers/gpu/drm/drm_panel_backlight_quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/drm_panel_backlight_quirks.c b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+index 598f812b7cb38..b38b33e26ea5c 100644
+--- a/drivers/gpu/drm/drm_panel_backlight_quirks.c
++++ b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+@@ -50,7 +50,7 @@ static bool drm_panel_min_backlight_quirk_matches(const struct drm_panel_min_bac
+ 	if (!dmi_match(quirk->dmi_match.field, quirk->dmi_match.value))
+ 		return false;
  
+-	if (!drm_edid_match(edid, &quirk->ident))
++	if (quirk->ident.panel_id && !drm_edid_match(edid, &quirk->ident))
+ 		return false;
+ 
+ 	return true;
 -- 
 2.51.0
 
