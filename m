@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D56430504A;
-	Sat, 25 Oct 2025 16:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DE9305065;
+	Sat, 25 Oct 2025 16:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408820; cv=none; b=Xt8K2gIhwWUbMlsHnLLJJulfDAIwprvZL8ID5KZGJKPnSjlLiBojqeXLY++8bVinDxV97SrgSTGeNAeWSFbWTUPvyE2lpmTJDzi4uCRBA0UZ4JvKNSKE1N+OfHdwj+kBIGNbdJOIxopxSrunq/m+pjkjM3U/B1jET+vAdzfRP48=
+	t=1761408820; cv=none; b=vAAzDSUVrfmLVaCdjB432y9pI29ta6g9dYfv99V9cSt9GXSlIXh+IPgGs3tvm51xLnGwI691KUGqx1ISV4idTgCL8V87ho82kfAgt2cqCAiJ/SxciQvwBa58ngSu+SLlBDXTtKHbMu6+w/auMst90KTn1M41wHp/Eqt2dQ4VfKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761408820; c=relaxed/simple;
-	bh=ykKpstcD/nFFD4tx9FG9wgDXP6IoofyoYUuh6BLPYos=;
+	bh=VcQp5qeVD6Y+aKXeAFG/9MBShNmhebThUlkMsWij/1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e/MyZwbr9MTZNgHdGJ8uYEwnFQ9nn3gQQP3YJrYnkG6lMJOhOjLkal0avWILhxhvIKkBt09HLsY1UyKqg1z7tjcwXt/fQVaN50GWsvk6pVq7CW1taqQViaYMCYzevr0T1MjVGYmayDusTupBUP/9eVIw0IX76q8c5iSd5exkXy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Art3gyvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bhHpEm8Wk1o2x4JxMBqd6r5jym7v+ZmLA2Y2UHEICPB5hL8XMp6EoEIXgHd82DMunaYJIe3UijSH1Yb9VR8eTSq6jMGsS2ytU1pEwq2FPCbNI1gZ8cSN7Hvi9lhvuMy6r81OdgrxVfMEvDvy8mZtnXuGIja5z6wTDKRNVVUtvV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0jibp8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Art3gyvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611DDC116B1;
-	Sat, 25 Oct 2025 16:13:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0jibp8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF44C4CEF5;
+	Sat, 25 Oct 2025 16:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408817;
-	bh=ykKpstcD/nFFD4tx9FG9wgDXP6IoofyoYUuh6BLPYos=;
+	s=k20201202; t=1761408820;
+	bh=VcQp5qeVD6Y+aKXeAFG/9MBShNmhebThUlkMsWij/1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Art3gyvDW7YsLgQ5MxH+GlcxwIzMPREX21vtGRhHmDvVZQ726tFnJwKu9xbWSffg0
-	 n9k2ivCgkAoXufNNPf667R/D2HEGklyhCxdXzaTf34cVaMwRC9gGtwbA51NPEyfGmF
-	 tQOL7dfb4svQH8NOI4FfEbvVxSYE3QtitM7jFCAV6B55twSUHxJ/ixZ7jCyeaIhFKd
-	 T7OVkS1Q7hV7kQAhAeMs7OLBnJFuYEWLmQtzrjWRVvBx51I13GW/XOMwWE6UxQd4QY
-	 BWGsjhVG80hC4JPz6H8WbbsN23jSqTU+skGN4y+YTdkARwUNvcADNCSwxYCIrN46/F
-	 IKLBa5XHnSv/A==
+	b=l0jibp8YN9sGf2h7dkYzzwdtb8A3p4PVwxHibX8C2q71ZUIRN6xIlvUc6gBVxI/Qx
+	 1PzXG8eHbaY72bEUWdBhIddfr/e/7eCeRaAQ+Xee9pF2TLuZj1nfTy5vqkrZpUPzcU
+	 0p7nteDqEdkZZ8UJG7BKR4IPQsb62J3R46eFzgeFYr7AaUGQ7dBKtD2Xp06kfWArPv
+	 Mj1PV4OAOyNoOExKT7llh55eh6u39RWMQVHG92sBf5I3l6p+qfOpLfgneIcn11e8Hl
+	 x5nnm73J4rVbxCxyoIO5/7sbfKH/U/7H0EdMAr45rPNs50ov32rxf13StaYjUkj6HG
+	 wENyaplbYH4Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Primoz Fiser <primoz.fiser@norik.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shawnguo@kernel.org,
-	linux-iio@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] iio: adc: imx93_adc: load calibrated values even calibration failed
-Date: Sat, 25 Oct 2025 11:55:13 -0400
-Message-ID: <20251025160905.3857885-82-sashal@kernel.org>
+	kas@kernel.org,
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com
+Subject: [PATCH AUTOSEL 6.17-5.4] x86/vsyscall: Do not require X86_PF_INSTR to emulate vsyscall
+Date: Sat, 25 Oct 2025 11:55:14 -0400
+Message-ID: <20251025160905.3857885-83-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -56,23 +55,32 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 12c9b09e981ab14ebec8e4eefa946cbd26dd306b ]
+[ Upstream commit 8ba38a7a9a699905b84fa97578a8291010dec273 ]
 
-ADC calibration might fail because of the noise on reference voltage.
-To avoid calibration fail, need to meet the following requirement:
-    ADC reference voltage Noise < 1.8V * 1/2^ENOB
+emulate_vsyscall() expects to see X86_PF_INSTR in PFEC on a vsyscall
+page fault, but the CPU does not report X86_PF_INSTR if neither
+X86_FEATURE_NX nor X86_FEATURE_SMEP are enabled.
 
-For the case which the ADC reference voltage on board do not meet
-the requirement, still load the calibrated values, so ADC can also
-work but maybe not that accurate.
+X86_FEATURE_NX should be enabled on nearly all 64-bit CPUs, except for
+early P4 processors that did not support this feature.
 
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Primoz Fiser <primoz.fiser@norik.com>
-Link: https://patch.msgid.link/20250812-adc-v2-2-0260833f13b8@nxp.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Instead of explicitly checking for X86_PF_INSTR, compare the fault
+address to RIP.
+
+On machines with X86_FEATURE_NX enabled, issue a warning if RIP is equal
+to fault address but X86_PF_INSTR is absent.
+
+[ dhansen: flesh out code comments ]
+
+Originally-by: Dave Hansen <dave.hansen@intel.com>
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/all/bd81a98b-f8d4-4304-ac55-d4151a1a77ab@intel.com
+Link: https://lore.kernel.org/all/20250624145918.2720487-1-kirill.shutemov%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,121 +88,116 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
-- Problem addressed: On some boards the i.MX93 ADC calibration fails due
-  to reference voltage noise (commit message). In the current code, a
-  calibration failure aborts driver probe, leaving the ADC unusable for
-  users.
-- Current failure path: `imx93_adc_calibration()` returns `-EAGAIN` on
-  calibration failure, explicitly powering down the ADC and aborting
-  probe:
-  - Failure check/return: drivers/iio/adc/imx93_adc.c:181 (checks
-    `IMX93_ADC_MSR_CALFAIL_MASK`) and drivers/iio/adc/imx93_adc.c:185
-    (returns `-EAGAIN`).
-  - Probe abort on error: drivers/iio/adc/imx93_adc.c:367 (calibration
-    call) and drivers/iio/adc/imx93_adc.c:368–396 (error unwinding).
-- What the patch changes:
-  - Adds `IMX93_ADC_CALCFG0` (0x3A0) and `IMX93_ADC_CALCFG0_LDFAIL_MASK`
-    (BIT(4)) so the driver can instruct hardware to load calibrated
-    values even if calibration “fails”.
-  - In `imx93_adc_calibration()` (drivers/iio/adc/imx93_adc.c:146),
-    before starting calibration, it writes
-    `IMX93_ADC_CALCFG0_LDFAIL_MASK` to `IMX93_ADC_CALCFG0` to enable
-    “load-on-fail”.
-  - It changes the failure handling on `CALFAIL`: instead of returning
-    `-EAGAIN`, it logs a warning and continues, allowing the driver to
-    register and the ADC to function, albeit with potentially reduced
-    accuracy.
-  - The timeout path remains unchanged and still returns an error if
-    calibration never completes (drivers/iio/adc/imx93_adc.c:171–178),
-    preserving safety for a hard failure.
-- User impact: This is a practical fix for real boards where Vref noise
-  is above the stated threshold; without it, the ADC never comes up.
-  With it, the ADC works (possibly with lower accuracy), which is
-  typically preferable to complete unavailability.
-- Scope and risk:
-  - Small, contained change in a single driver
-    (`drivers/iio/adc/imx93_adc.c`) with no ABI or framework changes.
-  - No architectural refactoring; only adds a register define and a
-    single bit write plus relaxed error handling.
-  - Timeout/hard-error behavior is unchanged; only soft failure
-    (CALFAIL) behavior is relaxed.
-  - The driver matches only `nxp,imx93-adc`
-    (drivers/iio/adc/imx93_adc.c:465–469), so the change is isolated to
-    this hardware.
-- Stable criteria:
-  - Fixes a user-visible bug (driver failing to probe on noisy Vref
-    boards).
-  - Minimal and low risk; confined to probe/calibration logic.
-  - No new features; behavior change is a robustness fix with guarded
-    warning.
-  - No broader side effects beyond this ADC device.
+Why this is a bug
+- Current emulation wrongly depends on `X86_PF_INSTR` to distinguish
+  instruction fetches from data accesses. On CPUs without NX and SMEP,
+  the CPU never sets `X86_PF_INSTR` for instruction faults, so genuine
+  vsyscall execution faults are misclassified as data accesses and not
+  emulated (breaking the legacy vsyscall ABI). Commit message explicitly
+  notes this hardware behavior and the affected systems.
 
-Given these points, this is a solid candidate for backporting to any
-stable trees that contain the i.MX93 ADC driver and its current fail-
-hard calibration path.
+What changes in the patch
+- Replaces the instruction-fault check from PFEC with an IP check:
+  - Old: `if (!(error_code & X86_PF_INSTR)) { ... return false; }`
+    `arch/x86/entry/vsyscall/vsyscall_64.c:127`
+  - New: Treat the page fault as an instruction fetch iff `address ==
+    regs->ip`, i.e., fault address equals RIP. This is the
+    architecturally correct, feature-agnostic way to identify
+    instruction fetch faults for vsyscall.
+- Preserves existing behavior for vsyscall reads:
+  - If `address != regs->ip`, still treat as a read-from-vsyscall-page
+    and refuse emulation, keeping the same warning behavior for non-
+    EMULATE modes.
+- Adds a sanity check for NX-enabled systems:
+  - If `X86_FEATURE_NX` is present but `X86_PF_INSTR` is missing despite
+    `address == regs->ip`, emit a one-time warning to help catch
+    anomalies without breaking functionality.
+- Removes the passive assertion `WARN_ON_ONCE(address != regs->ip)`
+  (previously only diagnostic at
+  `arch/x86/entry/vsyscall/vsyscall_64.c:144`) and makes
+  `address==regs->ip` the active gating condition, which fixes the
+  actual misclassification on NX/SMEP-less CPUs.
 
- drivers/iio/adc/imx93_adc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+Why it’s safe and appropriate for stable
+- Fixes a real user-visible bug: vsyscall emulation fails on certain
+  older x86-64 CPUs (notably some early P4 EM64T systems without NX),
+  breaking legacy binaries that still use vsyscalls.
+- Small, well-contained change: only touches
+  `arch/x86/entry/vsyscall/vsyscall_64.c`; no ABI or architectural
+  changes; no Kconfig or broad subsystem churn.
+- Behavior-preserving where it matters:
+  - On NX/SMEP-capable systems, functional behavior is unchanged; at
+    most a WARN_ON_ONCE if PFEC is inconsistent. Emulation continues to
+    occur only for instruction faults in the vsyscall page.
+  - Data accesses to the vsyscall page remain denied exactly as before.
+- Minimal regression risk:
+  - Instruction fetches are reliably indicated by `CR2 == RIP` for the
+    vsyscall fault path; the address gate plus `addr_to_vsyscall_nr()`
+    ensures emulation only proceeds for valid vsyscall addresses.
+  - The emulation code itself (syscall selection, seccomp handling,
+    return emulation) is untouched.
+- Conforms to stable rules: it’s a clear, targeted bugfix, not a
+  feature; the scope is limited to x86 vsyscall emulation; risk is low;
+  impact is correctness and compatibility on affected hardware.
 
-diff --git a/drivers/iio/adc/imx93_adc.c b/drivers/iio/adc/imx93_adc.c
-index 7feaafd2316f2..9f1546c3d39d5 100644
---- a/drivers/iio/adc/imx93_adc.c
-+++ b/drivers/iio/adc/imx93_adc.c
-@@ -38,6 +38,7 @@
- #define IMX93_ADC_PCDR6		0x118
- #define IMX93_ADC_PCDR7		0x11c
- #define IMX93_ADC_CALSTAT	0x39C
-+#define IMX93_ADC_CALCFG0	0x3A0
+Code references
+- PFEC-based gate being replaced:
+  `arch/x86/entry/vsyscall/vsyscall_64.c:127`
+- Prior assertion about IP equality (now replaced by active gating):
+  `arch/x86/entry/vsyscall/vsyscall_64.c:144`
+- Emulation entry point and context: `arch/x86/mm/fault.c:1321` calls
+  `emulate_vsyscall()` only for vsyscall addresses, ensuring the change
+  is confined to the intended path.
+
+Net effect
+- Restores correct vsyscall emulation on CPUs where the CPU never sets
+  `X86_PF_INSTR`, without impacting behavior where NX/SMEP is present.
+  This is an important, low-risk bugfix suitable for backporting to
+  stable trees.
+
+ arch/x86/entry/vsyscall/vsyscall_64.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
+index c9103a6fa06e8..6e6c0a7408371 100644
+--- a/arch/x86/entry/vsyscall/vsyscall_64.c
++++ b/arch/x86/entry/vsyscall/vsyscall_64.c
+@@ -124,7 +124,12 @@ bool emulate_vsyscall(unsigned long error_code,
+ 	if ((error_code & (X86_PF_WRITE | X86_PF_USER)) != X86_PF_USER)
+ 		return false;
  
- /* ADC bit shift */
- #define IMX93_ADC_MCR_MODE_MASK			BIT(29)
-@@ -58,6 +59,8 @@
- #define IMX93_ADC_IMR_ECH_MASK			BIT(0)
- #define IMX93_ADC_PCDR_CDATA_MASK		GENMASK(11, 0)
- 
-+#define IMX93_ADC_CALCFG0_LDFAIL_MASK		BIT(4)
-+
- /* ADC status */
- #define IMX93_ADC_MSR_ADCSTATUS_IDLE			0
- #define IMX93_ADC_MSR_ADCSTATUS_POWER_DOWN		1
-@@ -145,7 +148,7 @@ static void imx93_adc_config_ad_clk(struct imx93_adc *adc)
- 
- static int imx93_adc_calibration(struct imx93_adc *adc)
- {
--	u32 mcr, msr;
-+	u32 mcr, msr, calcfg;
- 	int ret;
- 
- 	/* make sure ADC in power down mode */
-@@ -158,6 +161,11 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
- 
- 	imx93_adc_power_up(adc);
- 
-+	/* Enable loading of calibrated values even in fail condition */
-+	calcfg = readl(adc->regs + IMX93_ADC_CALCFG0);
-+	calcfg |= IMX93_ADC_CALCFG0_LDFAIL_MASK;
-+	writel(calcfg, adc->regs + IMX93_ADC_CALCFG0);
-+
- 	/*
- 	 * TODO: we use the default TSAMP/NRSMPL/AVGEN in MCR,
- 	 * can add the setting of these bit if need in future.
-@@ -180,9 +188,13 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
- 	/* check whether calbration is success or not */
- 	msr = readl(adc->regs + IMX93_ADC_MSR);
- 	if (msr & IMX93_ADC_MSR_CALFAIL_MASK) {
-+		/*
-+		 * Only give warning here, this means the noise of the
-+		 * reference voltage do not meet the requirement:
-+		 *     ADC reference voltage Noise < 1.8V * 1/2^ENOB
-+		 * And the resault of ADC is not that accurate.
-+		 */
- 		dev_warn(adc->dev, "ADC calibration failed!\n");
--		imx93_adc_power_down(adc);
--		return -EAGAIN;
+-	if (!(error_code & X86_PF_INSTR)) {
++	/*
++	 * Assume that faults at regs->ip are because of an
++	 * instruction fetch. Return early and avoid
++	 * emulation for faults during data accesses:
++	 */
++	if (address != regs->ip) {
+ 		/* Failed vsyscall read */
+ 		if (vsyscall_mode == EMULATE)
+ 			return false;
+@@ -136,13 +141,19 @@ bool emulate_vsyscall(unsigned long error_code,
+ 		return false;
  	}
  
- 	return 0;
++	/*
++	 * X86_PF_INSTR is only set when NX is supported.  When
++	 * available, use it to double-check that the emulation code
++	 * is only being used for instruction fetches:
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_NX))
++		WARN_ON_ONCE(!(error_code & X86_PF_INSTR));
++
+ 	/*
+ 	 * No point in checking CS -- the only way to get here is a user mode
+ 	 * trap to a high address, which means that we're in 64-bit user code.
+ 	 */
+ 
+-	WARN_ON_ONCE(address != regs->ip);
+-
+ 	if (vsyscall_mode == NONE) {
+ 		warn_bad_vsyscall(KERN_INFO, regs,
+ 				  "vsyscall attempted with vsyscall=none");
 -- 
 2.51.0
 
