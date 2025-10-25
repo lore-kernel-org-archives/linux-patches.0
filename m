@@ -1,52 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D74307AC2;
-	Sat, 25 Oct 2025 16:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF33B305953;
+	Sat, 25 Oct 2025 16:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408979; cv=none; b=IMXbK1okUub9SKMmzzBW2NnlMHd8QN0Xq04fbaO8Y7/vTwXLiv2ZKgnf48PHGG3lGAEEE5Ype5FASxoTyciYzDF0uOPAxIEhZ4MoQnlWkgRpATpOzIHSC3DHnwRdfeg2LwgLAwaZ6V4c05QN+72UzWM6FZLsceP099chShHWcgI=
+	t=1761408985; cv=none; b=BNyLWtzOboPbAOuRNF4Fjn4OQoQAG2/kLb1R6MR9AwS1SVCMxnEEa3cUCabiFThkkZ/rPkcqMydloHZrfYXX++kL/fOP+gJriY61/yI8DDqkO6a4nATlTaaNMausr7yO3lfxsGW8DXU4EY4SaDtkBDTjHpkiC6h5M8YfyZ+BzKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408979; c=relaxed/simple;
-	bh=L1uUNHgl8/4BeQBUyYtJsKfCyFA5W2f7bRP8dMJzZcw=;
+	s=arc-20240116; t=1761408985; c=relaxed/simple;
+	bh=CGjjwZOGUgCKH1Ga50Ie8dlSNKHBsRez9e+JEdxD4Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDZSty9kmSIu0tfcJnRtJrUho27uneRdHl4XdikJSft0lkfi2hHYYxt5eFXcLKrPoqTk5iNoAAi7aqQuT6rhCsHCOxHVEDOiNpRHSnp/kh5aJbpU2McZvBdXGeenSPawR8jcBKZPzbQvmPh3urmAtq4uxZWQKj7qahNovSp4mI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HnSkbfVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lskFrKODtfe9ASiDO5ON8HVWqqXg/Vuj/r3xR7gNfgqgEXIZR3dHnPl0jrSAjOtOu6bDExK3yezybjafM2YaxRyiRm/Uo0mzmXdgy6m/QR1UNjp5R+CAFiUFJ4A4Ucc9mDgOQuH6MwSxvjTa4O2vohVS1N8jOK2MHoyGU+zmvhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vBoXNLMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HnSkbfVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49EBC4CEFB;
-	Sat, 25 Oct 2025 16:16:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vBoXNLMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280C0C4CEF5;
+	Sat, 25 Oct 2025 16:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408979;
-	bh=L1uUNHgl8/4BeQBUyYtJsKfCyFA5W2f7bRP8dMJzZcw=;
+	s=k20201202; t=1761408985;
+	bh=CGjjwZOGUgCKH1Ga50Ie8dlSNKHBsRez9e+JEdxD4Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnSkbfVbGJdGehNCnJ7hWX1woxvZFAP7qgOurw/MiYR3hi/mNjqS7vRCCt7Qs9Na3
-	 ckMLlS/iBAw+EcNdza3JxmnXdhXItzjx4/UUy5YfQI8eCCyR054/VdEn2ekSMqGiKm
-	 vFnZRMJKB9On94r4sj3z9DqUgHKyMOriM2Q2dx7LKtV8H794IUlCHVxe/16gz762vF
-	 iDEioPiglK+bPNNicVf3+VSasvmhFQUdA85Ti2BPCU9S4SnBCq5u0BgaCzPjs7/+EL
-	 pT5lkErPxFbOXgp7Tr3U/j4uVTgXaexiDCAwAfyuXsFTVskYr+orxhpP+w7IhnYkcq
-	 ZS0idYgUm9vSw==
+	b=vBoXNLMHca5gDZqWT0IXUqafJ0HAKQRYcFSt39a097XLBAvd+i8TSmAQ2x3U2yDNz
+	 Ob+qzxbj6ji/vACBrm6BRXo4U2AuCwo0xeTL5OEzkTrkVbQ/NMLWta8ld1lG96Gl0a
+	 8xxARnUQ2To/pUAnlNaOp00Cx3GGTmsdzkp1NecCa6p5+bQAA8Om5Fb4OXBZANOODx
+	 K1giejj46in/U8BGn0RavxFja84m0ufeKrDdWjoi1uRB0Vru0XfcexQdfM26hBpUaX
+	 O+qO7ENhFfyl4LX2W7zHVDhx8gh33+J/2UV1Lx7L3j52ABYVgQp7SGN2BXjfuduNGQ
+	 T7qujTtIuDZcQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ivan Lipski <ivan.lipski@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+Cc: Mangesh Gadre <Mangesh.Gadre@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	wayne.lin@amd.com,
-	roman.li@amd.com,
-	reza.amini@amd.com,
-	Yihan.Zhu@amd.com,
-	zhikai.zhai@amd.com,
-	peterson.guo@amd.com,
-	siqueira@igalia.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Support HW cursor 180 rot for any number of pipe splits
-Date: Sat, 25 Oct 2025 11:56:32 -0400
-Message-ID: <20251025160905.3857885-161-sashal@kernel.org>
+	sathishkumar.sundararaju@amd.com,
+	leo.liu@amd.com,
+	lijo.lazar@amd.com,
+	Stanley.Yang@amd.com,
+	alexandre.f.demers@gmail.com,
+	FangSheng.Huang@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Avoid jpeg v5.0.1 poison irq call trace on sriov guest
+Date: Sat, 25 Oct 2025 11:56:33 -0400
+Message-ID: <20251025160905.3857885-162-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -62,38 +57,15 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Mangesh Gadre <Mangesh.Gadre@amd.com>
 
-[ Upstream commit 8a359f0f138d5ac7ceffd21b73279be50e516c0a ]
+[ Upstream commit 01152c30eef972c5ca3b3eeb14f2984fa48d18c2 ]
 
-[Why]
-For the HW cursor, its current position in the pipe_ctx->stream struct is
-not affected by the 180 rotation, i. e. the top left corner is still at
-0,0. However, the DPP & HUBP set_cursor_position functions require rotated
-position.
+Sriov guest side doesn't init ras feature hence the poison irq shouldn't
+be put during hw fini
 
-The current approach is hard-coded for ODM 2:1, thus it's failing for
-ODM 4:1, resulting in a double cursor.
-
-[How]
-Instead of calculating the new cursor position relatively to the
-viewports, we calculate it using a viewavable clip_rect of each plane.
-
-The clip_rects are first offset and scaled to the same space as the
-src_rect, i. e. Stream space -> Plane space.
-
-In case of a pipe split, which divides the plane into 2 or more viewports,
-the clip_rect is the union of all the viewports of the given plane.
-
-With the assumption that the viewports in HUBP's set_cursor_position are
-in the Plane space as well, it should produce a correct cursor position
-for any number of pipe splits.
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Signed-off-by: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -102,178 +74,89 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Addresses a user-visible bug where the HW cursor shows up twice
-    (“double cursor”) when the plane is rotated 180° and split via ODM
-    4:1. The prior logic only handled ODM 2:1, so 4:1 (and generally
-    N:1) cases miscomputed the mirrored X coordinate (commit message).
-  - The bug affects real users in multi-pipe/high-resolution scenarios
-    and is limited to cursor positioning logic.
+- What changed: The patch adds a virtualization guard so
+  `jpeg_v5_0_1_hw_fini()` only releases the JPEG RAS poison interrupt on
+  bare-metal, not on an SR-IOV VF. Concretely, it changes the condition
+  to include `!amdgpu_sriov_vf(adev)` before calling `amdgpu_irq_put()`
+  in `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:318`.
 
-- How it fixes it
-  - Replaces ODM-2:1-specific mirroring math with a general solution
-    that mirrors across the plane’s visible clip rectangle, which by
-    definition equals the union of all viewports for that plane under
-    pipe split:
-    - Adds and uses `clip_x`/`clip_width` from `plane_state->clip_rect`,
-      normalized to plane space alongside the cursor position
-      (drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:3666,
-      drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:3700).
-    - For ROTATION_ANGLE_0 with horizontal mirror, and for
-      ROTATION_ANGLE_180 without horizontal mirror, replaces the entire
-      older ODM-specific branching with the single correct transform:
-      - `pos_cpy.x = clip_width - pos_cpy.x + 2 * clip_x;`
-      - drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:3750
-      - drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c:3831
-  - The cursor position remains computed in plane space as required by
-    HUBP/DPP programming; clip rect is a standard part of `struct
-    dc_plane_state` (drivers/gpu/drm/amd/display/dc/dc.h:1418).
+- The bug: On SR-IOV guests, the RAS feature for JPEG isn’t initialized
+  and the poison IRQ is never enabled (no matching amdgpu_irq_get).
+  Unconditionally calling `amdgpu_irq_put()` during fini triggers a
+  WARN/call trace because the IRQ isn’t enabled.
+  - `amdgpu_irq_put()` explicitly warns and returns an error if the
+    interrupt wasn’t enabled:
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:639`.
+  - The guest doesn’t enable this IRQ: `jpeg_v5_0_1_ras_late_init()`
+    only calls `amdgpu_irq_get()` if RAS is supported and the source has
+    funcs: `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:1075-1080`. On VFs,
+    this path typically isn’t taken, so there is no prior “get”.
+  - Compounding this, `amdgpu_ras_is_supported()` can return true via
+    the “poison mode” special-case even without full RAS enablement (and
+    in absence of proper init), which is why the old check was
+    insufficient on VFs: see logic enabling GFX/SDMA/VCN/JPEG by
+    mask/poison mode,
+    `drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:4806-4821`.
 
-- Scope and risk
-  - Change is small and self-contained to one function
-    (`dcn10_set_cursor_position`) used by DCN HWSS init across DCN
-    generations, but only affects cursor position logic for:
-    - Rotation 0° with horizontal mirror, and 180° without mirror (the
-      problematic cases).
-    - 90°/270° paths are untouched except for the benign addition of
-      clip rect normalization in the non-rotated path, preserving prior
-      behavior where appropriate.
-  - Removes brittle 2:1-specific branches and hotspot/width-dependent
-    corner cases that previously oscillated via fixes, reducing
-    regression risk.
-  - No API/ABI or architectural changes; no new features; strictly a
-    correctness fix in a well-contained area.
+- Why the new guard is correct and low risk:
+  - It prevents the mismatched put on VFs by requiring
+    `!amdgpu_sriov_vf(adev)` at the point of `amdgpu_irq_put()` in
+    `jpeg_v5_0_1_hw_fini()`
+    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:318-319`.
+  - It matches established patterns in adjacent IPs/versions:
+    - VCN v5.0.1 already gates the poison IRQ put with `&&
+      !amdgpu_sriov_vf(adev)`:
+      `drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:351-352`.
+    - JPEG v4.0.3 does the same:
+      `drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c:447-449`.
+  - `jpeg_v5_0_1_hw_fini()` already treats SR-IOV specially for power
+    gating with `if (!amdgpu_sriov_vf(adev)) ...`:
+    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:313-316`. Extending the
+    same guard to the RAS IRQ put maintains consistency.
+  - On bare-metal paths, behavior is unchanged: RAS init
+    (`jpeg_v5_0_1_ras_late_init`) gets the IRQ (`amdgpu_irq_get()` in
+    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:1077`), and fini puts it,
+    preserving correct pairing.
 
-- Stable backport criteria
-  - Fixes an important, user-visible bug (double cursor under ODM 4:1
-    with 180° rotation).
-  - Minimal, localized patch with clear intent and low risk of side
-    effects.
-  - Conforms to stable rules (bugfix, not a feature; no broad subsystem
-    refactor).
-  - Aligns with how HUBP/DPP expect rotated/plane-space positions to be
-    supplied (drivers/gpu/drm/amd/display/dc/dpp/dcn10/dcn10_dpp.c:434).
+- User impact: This fixes a real bug that causes kernel WARN/call traces
+  on SR-IOV guests when the JPEG block is torn down (e.g., during
+  suspend, driver unload, or GPU reset via `jpeg_v5_0_1_suspend()` which
+  calls `hw_fini`: `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:331-335`).
+  Avoiding such call traces is important for stability and clean logs in
+  virtualized environments.
 
-Given the above, this is a strong candidate for stable backporting.
+- Scope and risk: The change is a one-line conditional refinement in a
+  single driver file, touches only the SR-IOV VF path, and avoids an
+  unpaired interrupt disable. No architectural changes, no API changes,
+  minimal regression risk.
 
- .../amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 73 +++++++------------
- 1 file changed, 27 insertions(+), 46 deletions(-)
+- Stable criteria:
+  - Fixes an important bug (mismatched IRQ put leading to WARN call
+    trace).
+  - Small, self-contained change in DRM/amdgpu JPEG v5.0.1 block.
+  - No new features or architectural changes.
+  - Consistent with existing code in similar IP blocks/versions.
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index 39910f73ecd06..6a2fdbe974b53 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -3628,6 +3628,8 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	int y_plane = pipe_ctx->plane_state->dst_rect.y;
- 	int x_pos = pos_cpy.x;
- 	int y_pos = pos_cpy.y;
-+	int clip_x = pipe_ctx->plane_state->clip_rect.x;
-+	int clip_width = pipe_ctx->plane_state->clip_rect.width;
- 
- 	if ((pipe_ctx->top_pipe != NULL) || (pipe_ctx->bottom_pipe != NULL)) {
- 		if ((pipe_ctx->plane_state->src_rect.width != pipe_ctx->plane_res.scl_data.viewport.width) ||
-@@ -3646,7 +3648,7 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	 */
- 
- 	/**
--	 * Translate cursor from stream space to plane space.
-+	 * Translate cursor and clip offset from stream space to plane space.
- 	 *
- 	 * If the cursor is scaled then we need to scale the position
- 	 * to be in the approximately correct place. We can't do anything
-@@ -3663,6 +3665,10 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 				pipe_ctx->plane_state->dst_rect.width;
- 		y_pos = (y_pos - y_plane) * pipe_ctx->plane_state->src_rect.height /
- 				pipe_ctx->plane_state->dst_rect.height;
-+		clip_x = (clip_x - x_plane) * pipe_ctx->plane_state->src_rect.width /
-+				pipe_ctx->plane_state->dst_rect.width;
-+		clip_width = clip_width * pipe_ctx->plane_state->src_rect.width /
-+				pipe_ctx->plane_state->dst_rect.width;
+Given the direct bug fix, minimal blast radius, and alignment with
+existing patterns in the driver, this is a good candidate for stable
+backporting.
+
+ drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+index 8d74455dab1e2..7731ef262d39f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+@@ -315,7 +315,7 @@ static int jpeg_v5_0_1_hw_fini(struct amdgpu_ip_block *ip_block)
+ 			ret = jpeg_v5_0_1_set_powergating_state(ip_block, AMD_PG_STATE_GATE);
  	}
  
- 	/**
-@@ -3709,30 +3715,18 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
+-	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG))
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG) && !amdgpu_sriov_vf(adev))
+ 		amdgpu_irq_put(adev, &adev->jpeg.inst->ras_poison_irq, 0);
  
- 
- 	if (param.rotation == ROTATION_ANGLE_0) {
--		int viewport_width =
--			pipe_ctx->plane_res.scl_data.viewport.width;
--		int viewport_x =
--			pipe_ctx->plane_res.scl_data.viewport.x;
- 
- 		if (param.mirror) {
--			if (pipe_split_on || odm_combine_on) {
--				if (pos_cpy.x >= viewport_width + viewport_x) {
--					pos_cpy.x = 2 * viewport_width
--							- pos_cpy.x + 2 * viewport_x;
--				} else {
--					uint32_t temp_x = pos_cpy.x;
--
--					pos_cpy.x = 2 * viewport_x - pos_cpy.x;
--					if (temp_x >= viewport_x +
--						(int)hubp->curs_attr.width || pos_cpy.x
--						<= (int)hubp->curs_attr.width +
--						pipe_ctx->plane_state->src_rect.x) {
--						pos_cpy.x = 2 * viewport_width - temp_x;
--					}
--				}
--			} else {
--				pos_cpy.x = viewport_width - pos_cpy.x + 2 * viewport_x;
--			}
-+			/*
-+			 * The plane is split into multiple viewports.
-+			 * The combination of all viewports span the
-+			 * entirety of the clip rect.
-+			 *
-+			 * For no pipe_split, viewport_width is represents
-+			 * the full width of the clip_rect, so we can just
-+			 * mirror it.
-+			 */
-+			pos_cpy.x = clip_width - pos_cpy.x + 2 * clip_x;
- 		}
- 	}
- 	// Swap axis and mirror horizontally
-@@ -3802,30 +3796,17 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	}
- 	// Mirror horizontally and vertically
- 	else if (param.rotation == ROTATION_ANGLE_180) {
--		int viewport_width =
--			pipe_ctx->plane_res.scl_data.viewport.width;
--		int viewport_x =
--			pipe_ctx->plane_res.scl_data.viewport.x;
--
- 		if (!param.mirror) {
--			if (pipe_split_on || odm_combine_on) {
--				if (pos_cpy.x >= viewport_width + viewport_x) {
--					pos_cpy.x = 2 * viewport_width
--							- pos_cpy.x + 2 * viewport_x;
--				} else {
--					uint32_t temp_x = pos_cpy.x;
--
--					pos_cpy.x = 2 * viewport_x - pos_cpy.x;
--					if (temp_x >= viewport_x +
--						(int)hubp->curs_attr.width || pos_cpy.x
--						<= (int)hubp->curs_attr.width +
--						pipe_ctx->plane_state->src_rect.x) {
--						pos_cpy.x = temp_x + viewport_width;
--					}
--				}
--			} else {
--				pos_cpy.x = viewport_width - pos_cpy.x + 2 * viewport_x;
--			}
-+			/*
-+			 * The plane is split into multiple viewports.
-+			 * The combination of all viewports span the
-+			 * entirety of the clip rect.
-+			 *
-+			 * For no pipe_split, viewport_width is represents
-+			 * the full width of the clip_rect, so we can just
-+			 * mirror it.
-+			 */
-+			pos_cpy.x = clip_width - pos_cpy.x + 2 * clip_x;
- 		}
- 
- 		/**
+ 	return ret;
 -- 
 2.51.0
 
