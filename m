@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B298E30148D;
-	Sat, 25 Oct 2025 16:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047C830748D;
+	Sat, 25 Oct 2025 16:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409383; cv=none; b=fteJtisDjN0aavcYGvrXHVYbXkq0as25k9RIs2ZMLqWvRZrQx+vT8An3i3dMVGIg5deOes/KAT1Y7V4aMKbCMdEunAmmKYsPfNbhZ6XKaPUcnVnn1vcpLPQEqg2FRLQ7PrQAZtKdpPF1bUIXRj3PAb01OH28ntkZFnpkK/PcRtU=
+	t=1761409385; cv=none; b=QuBbpTUSqNqdIaTep5FFARwrGchEllfHbG5sy8VHLft9KWeAQ7ZQe5rd9SnS3XG2WN+I0AjK3k62PXrmiHbJnsr8o9j0IsXPoH6Y43ch+4+avfcNOLaJRB+7ymOvWbxWBIzuKT9ENYghX3fOqPt9YeKoS+GFulk8g8TJsYzRok4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409383; c=relaxed/simple;
-	bh=/eMEpdDt6AQ/dFpZTPlpt3W+VQN5MZlG/maBZ89HImY=;
+	s=arc-20240116; t=1761409385; c=relaxed/simple;
+	bh=h5wu0F/GDcGy7Kk3KFaZYd8l3/8csZ5h7fH9LksjW2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LCHS+fj8t8W6KD1i4kMmb2lXoLD+THsF46m12SI66Ac8VjI/5/VcI3LYvfQV9ppdenEQ0NTa11sU/GKOCy3ItMW1TQSUxaeWhyUL5E3qHL4m5sm7ANSoYcIl/4ED7hVf4EahYPPKyOBUccLJpu3u0iMF9LjE64Pa1tW5AdWiHBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcRAZTAZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uHEBy14MX3Ac1iib9h+2FE0P6ENOeLkqMfsOw6gd5ZgzHzMPHfMtcxuUMwjRqTODib9P09M8YKL/1e1nrog7NozzdyWc0zZIqypXYzp1nLLAZjBi6Yypl5w/pS3ZNRNVH+xIeRP92OzfqnozQerRZzsQchl0ilGMPBHy4mUE47w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E0UHd1GN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcRAZTAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1DAC4CEFF;
-	Sat, 25 Oct 2025 16:23:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E0UHd1GN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80E5C4CEF5;
+	Sat, 25 Oct 2025 16:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409383;
-	bh=/eMEpdDt6AQ/dFpZTPlpt3W+VQN5MZlG/maBZ89HImY=;
+	s=k20201202; t=1761409384;
+	bh=h5wu0F/GDcGy7Kk3KFaZYd8l3/8csZ5h7fH9LksjW2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcRAZTAZneJ0H2CNQOfcW8JRnadj50Z15Klu7HFuT3Tpu4zdN15JSYSeVFr8MOqko
-	 e8l0XWg+ZGXmLqrSt4cqzX7nFWTWZC8Nj26T7rJIzXH05jiC7BwoP2Q00e/l1OC/FS
-	 udy+9Ui/ZqLNAybOPJOFZL8ZUVHzvGqOSzaRsWBZOuYrVy4xtTZDEQ/xA8OM/bYrqA
-	 tuRykEt2WP/5Ip/C8zN8KyPEjgw3nlGHT9Y05CNNgEXFcdANy4NTE9aMsVucXB2oKr
-	 ZcHMWPeg1Bww5Y10O+OAft9tzYv5GFOXMej+MTKQRFTAQ/gQhfNCSfVI2KIjWBjBCC
-	 DSbLqaIeuDYfQ==
+	b=E0UHd1GNdPO2fxcEPeuW0rTCjeRx1sWuzDdxI0DjqywH/ZzWGDYRE7zH//hgxQljq
+	 RZ+EPv0LXIAeDeydRPEVHWBRN7gJ91VxBaTmdgK682soKS6oTHtFC4c3qhBd+KvHfX
+	 Ujp/cBwM6tiycDPBzBDMO9mliboZWWrg++sOBSYwoiyCwM6FO7UyNZzt++rWTfVtaz
+	 WjvbmOWTLO1zz92FhQJczCqzrxKo4aZefB/likqlrGcVbiSVl7z2ib80pct/ufpmBw
+	 /vzTRctGmEQsPi+M1xdktmVulh10O29xVCb2J1CdRY2Mi9TpxIoXklCnu0CK+0awi4
+	 8va4Dry98CDUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] media: adv7180: Add missing lock in suspend callback
-Date: Sat, 25 Oct 2025 11:58:49 -0400
-Message-ID: <20251025160905.3857885-298-sashal@kernel.org>
+	lucas.demarchi@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/xe/pf: Don't resume device from restart worker
+Date: Sat, 25 Oct 2025 11:58:50 -0400
+Message-ID: <20251025160905.3857885-299-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,16 +55,19 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 878c496ac5080f94a93a9216a8f70cfd67ace8c9 ]
+[ Upstream commit 9fd9f221440024b7451678898facfb34af054310 ]
 
-The adv7180_set_power() utilizes adv7180_write() which in turn requires
-the state mutex to be held, take it before calling adv7180_set_power()
-to avoid tripping a lockdep_assert_held().
+The PF's restart worker shouldn't attempt to resume the device on
+its own, since its goal is to finish PF and VFs reprovisioning on
+the recently reset GuC. Take extra RPM reference while scheduling
+a work and release it from the worker or when we cancel a work.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://lore.kernel.org/r/20250801142822.180530-4-michal.wajdeczko@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -69,85 +75,137 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Bug fixed: adv7180_set_power() calls adv7180_write(), which asserts
-  the device mutex must be held. See the assertion in
-  `drivers/media/i2c/adv7180.c:246`
-  (`lockdep_assert_held(&state->mutex)`) and the write from
-  adv7180_set_power() in `drivers/media/i2c/adv7180.c:286`. Without
-  holding the mutex, callers can trip lockdep and risk racy register
-  writes.
-- Missing lock covered in suspend: The change adds
-  `guard(mutex)(&state->mutex);` before powering down in the PM suspend
-  callback, ensuring the lockdep requirement is satisfied when calling
-  adv7180_set_power(false). In this tree that guard is present at
-  `drivers/media/i2c/adv7180.c:1555`, matching the intent of the commit
-  you’re evaluating.
-- Missing lock covered in resume: Similarly, the resume path takes the
-  mutex before calling adv7180_set_power() to restore power state. In
-  this tree that guard is present at `drivers/media/i2c/adv7180.c:1566`.
-  This avoids unprotected register writes during resume, when
-  concurrency is common.
-- Missing lock in set_pad_format when changing field: The diff also adds
-  the mutex guard around the active-format case where `state->field`
-  changes and the code power-cycles the device and calls
-  adv7180_set_field_mode(). Since that sequence invokes
-  adv7180_set_power(), it must hold the mutex to satisfy the lockdep
-  assertion. Protecting this block is consistent with the rest of the
-  driver, which already guards other adv7180_set_power() call sites
-  (e.g., `drivers/media/i2c/adv7180.c:933`,
-  `drivers/media/i2c/adv7180.c:939`, `drivers/media/i2c/adv7180.c:948`).
-- Scope and risk: The change is small, localized to the adv7180 driver’s
-  state mutex usage, and does not alter interfaces or architecture. It
-  enforces an existing locking contract rather than introducing new
-  behavior.
-- User impact: Without this fix, users can hit lockdep warnings and
-  potential races during suspend/resume or when changing the field mode
-  through pad format. With the fix, register accesses are serialized as
-  intended, preventing subtle resume/configuration issues.
-- Stable criteria: It’s a clear bug fix, minimal and self-contained,
-  with low regression risk in a single driver. While the commit message
-  doesn’t include a Stable tag, it meets stable backport rules
-  (correctness fix, no new features).
+- Bug fixed: Prevents the PF SR-IOV restart worker from forcing a
+  runtime PM resume, which can violate PM expectations, cause unwanted
+  wakeups, and race with suspend/resume. The worker’s role is to finish
+  PF/VF reprovisioning after a GuC reset, not to wake the device.
 
-Note: Older stable trees that lack the `guard(mutex)` helper will need a
-trivial adaptation to explicit
-`mutex_lock(&state->mutex)`/`mutex_unlock(&state->mutex)` at the same
-points.
+- Core change: Move the runtime PM ref from the worker body to the
+  queueing point.
+  - Before: Worker resumes device via `xe_pm_runtime_get(xe)` and later
+    `xe_pm_runtime_put(xe)` in `pf_restart()`
+    (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:229).
+  - After: `pf_queue_restart()` takes a non-resuming RPM reference via
+    `xe_pm_runtime_get_noresume(xe)` before `queue_work()`, and only
+    drops it either in the worker on completion or if the work is
+    canceled/disabled.
+    - New get: `pf_queue_restart()` adds
+      `xe_pm_runtime_get_noresume(xe)` and if `queue_work()` returns
+      false (already queued), it immediately `xe_pm_runtime_put(xe)` to
+      avoid leaks (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:244).
+    - New put on cancel/disable: If `cancel_work_sync()` or
+      `disable_work_sync()` returns true, drop the worker’s RPM ref
+      (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:206,
+      drivers/gpu/drm/xe/xe_gt_sriov_pf.c:55).
+    - Worker body: `pf_restart()` no longer resumes; it asserts device
+      is not suspended and only does the final `xe_pm_runtime_put(xe)`
+      to drop the ref held “on its behalf”
+      (drivers/gpu/drm/xe/xe_gt_sriov_pf.c:229).
 
- drivers/media/i2c/adv7180.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+- Correct PM lifetime: This pattern matches established XE usage for
+  async work (e.g., `xe_vm.c:1751`, `xe_sched_job.c:149`,
+  `xe_mocs.c:785`, `xe_pci_sriov.c:171`), where async paths use
+  `xe_pm_runtime_get_noresume()` to keep the device from autosuspending
+  without performing a resume from the inner worker.
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 5d90b8ab9b6df..84600fa75ae8a 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -813,6 +813,8 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
- 
- 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
- 		if (state->field != format->format.field) {
-+			guard(mutex)(&state->mutex);
+- Rationale and safety:
+  - `gt_reset()` already holds a runtime PM ref across reset and restart
+    scheduling (`drivers/gpu/drm/xe/xe_gt.c:822` get,
+    `drivers/gpu/drm/xe/xe_gt.c:857` put). Taking an additional
+    `get_noresume()` before queuing guarantees the device won’t
+    autosuspend before the worker executes, but crucially avoids an
+    unsolicited resume from the worker itself.
+  - The assert in `pf_restart()` (`!xe_pm_runtime_suspended(xe)`) is a
+    correctness guard ensuring the worker only runs with the device
+    awake; the RPM ref taken at queue time enforces this in practice.
+  - The cancellation/disable paths now correctly drop the worker’s PM
+    ref, preventing leaks when a pending restart is canceled because a
+    subsequent reset is about to happen (synergizes with the already
+    backported reset-cancellation change in this file).
+
+- Scope and risk:
+  - Change is small, self-contained, and limited to SR-IOV PF code in
+    `drivers/gpu/drm/xe/xe_gt_sriov_pf.c`.
+  - No API/ABI or architectural change; just corrects RPM reference
+    placement and balances puts on cancel/disable.
+  - Reduces risk of unintended device resumes and PM races; aligns with
+    driver PM policy.
+
+- Stable backport fit:
+  - Fixes a real PM semantics bug affecting SR-IOV PF restart handling
+    after GT resets.
+  - Minimal, contained, and follows existing patterns; low regression
+    risk.
+  - Depends only on existing helpers (e.g.,
+    `xe_pm_runtime_get_noresume`, `xe_pm_runtime_suspended`), which are
+    present in stable branches already carrying the async restart worker
+    (see prior “Move VFs reprovisioning to worker” backport).
+
+Given the above, this is a good candidate for stable backport.
+
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+index bdbd15f3afe38..c4dda87b47cc8 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+@@ -55,7 +55,12 @@ static void pf_init_workers(struct xe_gt *gt)
+ static void pf_fini_workers(struct xe_gt *gt)
+ {
+ 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
+-	disable_work_sync(&gt->sriov.pf.workers.restart);
 +
- 			state->field = format->format.field;
- 			adv7180_set_power(state, false);
- 			adv7180_set_field_mode(state);
-@@ -1549,6 +1551,8 @@ static int adv7180_suspend(struct device *dev)
- 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
- 	struct adv7180_state *state = to_state(sd);
- 
-+	guard(mutex)(&state->mutex);
-+
- 	return adv7180_set_power(state, false);
++	if (disable_work_sync(&gt->sriov.pf.workers.restart)) {
++		xe_gt_sriov_dbg_verbose(gt, "pending restart disabled!\n");
++		/* release an rpm reference taken on the worker's behalf */
++		xe_pm_runtime_put(gt_to_xe(gt));
++	}
  }
  
-@@ -1562,6 +1566,8 @@ static int adv7180_resume(struct device *dev)
- 	if (ret < 0)
- 		return ret;
+ /**
+@@ -207,8 +212,11 @@ static void pf_cancel_restart(struct xe_gt *gt)
+ {
+ 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
  
-+	guard(mutex)(&state->mutex);
+-	if (cancel_work_sync(&gt->sriov.pf.workers.restart))
++	if (cancel_work_sync(&gt->sriov.pf.workers.restart)) {
+ 		xe_gt_sriov_dbg_verbose(gt, "pending restart canceled!\n");
++		/* release an rpm reference taken on the worker's behalf */
++		xe_pm_runtime_put(gt_to_xe(gt));
++	}
+ }
+ 
+ /**
+@@ -226,9 +234,12 @@ static void pf_restart(struct xe_gt *gt)
+ {
+ 	struct xe_device *xe = gt_to_xe(gt);
+ 
+-	xe_pm_runtime_get(xe);
++	xe_gt_assert(gt, !xe_pm_runtime_suspended(xe));
 +
- 	ret = adv7180_set_power(state, state->powered);
- 	if (ret)
- 		return ret;
+ 	xe_gt_sriov_pf_config_restart(gt);
+ 	xe_gt_sriov_pf_control_restart(gt);
++
++	/* release an rpm reference taken on our behalf */
+ 	xe_pm_runtime_put(xe);
+ 
+ 	xe_gt_sriov_dbg(gt, "restart completed\n");
+@@ -247,8 +258,13 @@ static void pf_queue_restart(struct xe_gt *gt)
+ 
+ 	xe_gt_assert(gt, IS_SRIOV_PF(xe));
+ 
+-	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart))
++	/* take an rpm reference on behalf of the worker */
++	xe_pm_runtime_get_noresume(xe);
++
++	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart)) {
+ 		xe_gt_sriov_dbg(gt, "restart already in queue!\n");
++		xe_pm_runtime_put(xe);
++	}
+ }
+ 
+ /**
 -- 
 2.51.0
 
