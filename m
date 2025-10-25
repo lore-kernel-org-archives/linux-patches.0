@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7367E305E24;
-	Sat, 25 Oct 2025 16:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB67230ACE8;
+	Sat, 25 Oct 2025 16:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409228; cv=none; b=iWIUjtkGi/3nOqHG8eJV6Wiy2eLjil/Nfu/MDUKJXvgQ0YYza4GfTxDwuyP9o7cDLdInQA7x2bct2Z5c7VuQ2CMmaKayue0WdrukqrQzyvn7mDWNT59Iqosws7wljaHsSh58zOpF2lb4wJNNrmIHhUIg/82pZmmacLcLj1xcfHQ=
+	t=1761409231; cv=none; b=C+8lHdCCf2x4XkN/DZI9qlror3wyBJCusfskfWi2/RTNLIjDsZ+Wf3R3LAgTcak11KDSk/TfATxeBoiRUwQguKKZNo+tOe073J4F2rLLZax5TdtTJ24sXwtNom5UTC5hlCQy7DVtcwhI5rozfgPTmLcS3HqvRzc6R9PwRrZkqng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409228; c=relaxed/simple;
-	bh=2VI7w7ZUTHKRPuKx+Dn9sflj/cNOG32E4pMS/L2KDK4=;
+	s=arc-20240116; t=1761409231; c=relaxed/simple;
+	bh=tCDP0s7LLfFYsPtJAEB2G6FQJfyQtNO6EeViMTFEejM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PbRHIqZKXfe/Kh5sX+4nG8KJ6C3673kpz0ieAEG6z9x62FovZlHQq243FA9r92cFVAb6LG4H1Q5sX99iScRMa0FuH9vWdj9xW9v+sB2Qg9hDAllZ4LhjcpbLusHpxYiKGZC44+BahuagiODCxJlDrPaqCOXjdydT5PIn3gMD/ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f4LZOdgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sTm96gVpyqjjKD4nNdigTqeBauvUaAl/EOXmgaX+eDA+fA+emo95rzG5AwameffseK11S94qes3Iugny2ymmo94q2bsrtg77SgZfnzsKEw4yG9PPkSPndMp1z4WwtajRpsHErig2vy7KqPj5VpnS3Y5Q/YJiqMF0wWwMMfyB2RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkzJBP/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f4LZOdgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996E8C116D0;
-	Sat, 25 Oct 2025 16:20:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkzJBP/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6B1C116B1;
+	Sat, 25 Oct 2025 16:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409228;
-	bh=2VI7w7ZUTHKRPuKx+Dn9sflj/cNOG32E4pMS/L2KDK4=;
+	s=k20201202; t=1761409231;
+	bh=tCDP0s7LLfFYsPtJAEB2G6FQJfyQtNO6EeViMTFEejM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4LZOdgflwy7zKrb5K9k8CoE8NsdpLK7jMVA8IQ8GhJf83I5FOyXGJbZkBRQj/m0F
-	 kGSt0XMYYU20B4SXuWLnKn6JXEuxlDV8Hw5MzGNyCobg6Ltf6PvO2hWcAVToCFX8HS
-	 tQ93GCPydZ0fUbG17Rte3FMkaz+YSGRRFpvwVqNu5OMvrxZC8rUVzWL6jxiMCMfED6
-	 u7Tu58i3Uv+XVdBVLD7VlCnkSaNPMLi0WOvGoN0FJ5Z44DynEYlD0I4Kts3jveLodz
-	 tiP+FF7AIIo2kfsa38HW//DoOwBKtcEBshQEpJgVpc4WZgp/wATswp8OcyDcjMa+fi
-	 jXXKPh431PsIA==
+	b=NkzJBP/UU6PDXMoLHpM7YgvzYIQdIfgAUUQNO7N3jmm9Njm8QCGublNzaqk2ihQxp
+	 baxpnxHqlGW3sqVquDWgmi10RYdbRGlo3fwUrJvfI1Pi8Jbvvufao9TxnlMNb0nY3J
+	 n658n7nj+FQqL8HdWb0Wwr0cysOVTz23XzR7Vg5GY+WGzumBrtLij5XxTYActUd00K
+	 6xTKO/pNi0/dmFNpud4IylAtZF1IO6UKFDKTzloew5DopCUpMcZANK5+WWyj9kS5iU
+	 lumQ7tsYXRhxPxGRgtFwAvOG1zMZdCSqI8izO07sx4l0/DptKD0AUYAEYVla+6w2h5
+	 UXGT39h88nxAg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: Add USB ID 2001:3327 for D-Link AX18U rev. A1
-Date: Sat, 25 Oct 2025 11:58:01 -0400
-Message-ID: <20251025160905.3857885-250-sashal@kernel.org>
+	dlechner@baylibre.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17] iio: light: isl29125: Use iio_push_to_buffers_with_ts() to allow source size runtime check
+Date: Sat, 25 Oct 2025 11:58:02 -0400
+Message-ID: <20251025160905.3857885-251-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,18 +53,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 17002412a82feb21be040bd5577789049dfeebe2 ]
+[ Upstream commit f0ffec3b4fa7e430f92302ee233c79aeb021fe14 ]
 
-Add USB ID 2001:3327 for D-Link AX18U rev. A1 which is a RTL8832BU-based
-Wi-Fi adapter.
+Also move the structure used as the source to the stack as it is only 16
+bytes and not the target of an DMA or similar.
 
-Link: https://github.com/morrownr/rtw89/pull/17
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250903223100.3031-1-zenmchen@gmail.com
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20250802164436.515988-10-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,66 +72,117 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 - What changed
-  - Adds a new USB device ID entry for D-Link AX18U rev. A1 (vendor
-    0x2001, product 0x3327) to the rtw8852bu driver’s ID table so the
-    device binds to this driver:
-    drivers/net/wireless/realtek/rtw89/rtw8852bu.c:33–34.
-  - The entry maps to `rtw89_8852bu_info`, identical to existing 8852BU-
-    based devices in the same table:
-    drivers/net/wireless/realtek/rtw89/rtw8852bu.c:10–14,16–44.
+  - drivers/iio/light/isl29125.c: Removes the persistent scan buffer
+    from driver state by deleting the in-struct field “/* Ensure
+    timestamp is naturally aligned */ struct { u16 chans[3]; aligned_s64
+    timestamp; } scan;” from struct isl29125_data
+    (drivers/iio/light/isl29125.c:34).
+  - drivers/iio/light/isl29125.c: In the trigger handler, introduces a
+    stack-local, naturally aligned sample struct “struct { u16 chans[3];
+    aligned_s64 timestamp; } scan = { };” and fills it instead of the
+    removed in-struct buffer (drivers/iio/light/isl29125.c:~157).
+  - drivers/iio/light/isl29125.c: Switches from
+    iio_push_to_buffers_with_timestamp(indio_dev, &data->scan,
+    iio_get_time_ns(...)) to iio_push_to_buffers_with_ts(indio_dev,
+    &scan, sizeof(scan), iio_get_time_ns(...))
+    (drivers/iio/light/isl29125.c:~171).
 
-- Effect and correctness
-  - With this ID present, usbcore will match the device and call the
-    driver’s probe with the associated `driver_info`. The probe uses
-    `id->driver_info` to select the chip info and bring the device up:
-    drivers/net/wireless/realtek/rtw89/usb.c:940–945, and registers the
-    hw stack via the standard rtw89 USB path:
-    drivers/net/wireless/realtek/rtw89/usb.c:956–999.
-  - The new entry uses the same matching macro and interface class
-    triplet (`USB_DEVICE_AND_INTERFACE_INFO(..., 0xff, 0xff, 0xff)`) as
-    the existing entries, minimizing false positives and aligning with
-    vendor-specific Realtek interfaces:
-    drivers/net/wireless/realtek/rtw89/rtw8852bu.c:16–44.
+- Why it matters for stable
+  - Runtime size check: iio_push_to_buffers_with_ts() validates that the
+    provided source buffer length is at least the expected scan size
+    (indio_dev->scan_bytes). This prevents subtle under-sized pushes
+    where the core would write a timestamp into too-small storage (see
+    include/linux/iio/buffer.h: the helper checks and returns -ENOSPC
+    with “Undersized storage pushed to buffer”). While this specific
+    driver’s buffer sizing has been correct, the added check is defense-
+    in-depth and can prevent memory corruption if future changes
+    introduce mismatches.
+  - No functional/ABI change: The new helper ultimately calls the
+    existing iio_push_to_buffers_with_timestamp() after verifying size,
+    so data layout and user-visible behavior remain unchanged. The
+    driver still fills active channels via iio_for_each_active_channel()
+    and appends a naturally-aligned timestamp.
+  - Safe stack move: The per-sample buffer is very small (16 bytes:
+    three u16 values plus natural alignment and a 64-bit timestamp), not
+    used by DMA, and pushed by value into the IIO buffer. Making it
+    stack-local avoids persistent state without concurrency risk because
+    push copies the bytes immediately; the poll function is not re-
+    entrant for a given device due to trigger flow
+    (iio_trigger_notify_done()).
+  - Precedent and consistency: Many IIO drivers have been converted to
+    iio_push_to_buffers_with_ts() for this exact reason (runtime size
+    checking). Keeping isl29125 aligned with that pattern improves
+    maintainability and uniform robustness across IIO.
 
-- Scope and risk
-  - Purely additive, one-line functional change confined to a device ID
-    table; no logic, control flow, or data structure changes.
-  - No architectural impact; does not touch critical subsystems beyond
-    enabling auto-binding for this ID.
-  - Low regression risk for existing users; only affects systems that
-    plug in this specific device. If the device is indeed
-    RTL8832BU/8852B-family (as stated in the commit) the mapping to
-    `rtw89_8852bu_info` is correct and consistent with the rest of the
-    table.
+- Risk assessment
+  - Scope is minimal and contained to isl29125’s trigger path and struct
+    definition.
+  - No architectural changes; no behavior change except a sanity check.
+  - The zero-initialized stack sample avoids any chance of leaking stale
+    bytes if fewer channels are enabled in the scan mask.
+  - Performance/stack overhead is negligible (16 bytes on the stack in
+    the IRQ/poll context).
 
-- Stable backport criteria
-  - Fixes a real-world usability gap: without this ID, the adapter is
-    not recognized and cannot be used, which is treated as a practical
-    bug for end users.
-  - Minimal patch size and risk; typical “add device ID” enablement
-    often accepted for stable.
-  - No new features or behavioral changes to existing devices.
+- Dependencies/compatibility
+  - Requires the core helper iio_push_to_buffers_with_ts()
+    (include/linux/iio/buffer.h). For stable branches that don’t yet
+    have commit introducing this helper (8f08055bc67a3 “iio: introduced
+    iio_push_to_buffers_with_ts()…”), that core commit (or equivalent)
+    must be backported first. Branches that already carry the helper can
+    take this change standalone.
+  - No other dependencies beyond existing isl29125 driver and IIO
+    buffer/triggered buffer infrastructure.
 
-Recommendation: Backport to any stable trees that already contain the
-rtw89 USB support and `rtw8852bu.c`. This provides immediate hardware
-enablement with negligible risk.
+Conclusion: This is a small, low-risk robustness improvement that adds a
+valuable runtime check without changing behavior or design, and it keeps
+the driver consistent with broader IIO conversions. It is suitable for
+backporting to stable trees that already provide
+iio_push_to_buffers_with_ts(), or alongside backporting that helper.
 
- drivers/net/wireless/realtek/rtw89/rtw8852bu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/light/isl29125.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
-index b315cb997758a..0694272f7ffae 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
-@@ -30,6 +30,8 @@ static const struct usb_device_id rtw_8852bu_id_table[] = {
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0db0, 0x6931, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3327, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3574, 0x6121, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0100, 0xff, 0xff, 0xff),
+diff --git a/drivers/iio/light/isl29125.c b/drivers/iio/light/isl29125.c
+index 6bc23b164cc55..3acb8a4f1d120 100644
+--- a/drivers/iio/light/isl29125.c
++++ b/drivers/iio/light/isl29125.c
+@@ -51,11 +51,6 @@
+ struct isl29125_data {
+ 	struct i2c_client *client;
+ 	u8 conf1;
+-	/* Ensure timestamp is naturally aligned */
+-	struct {
+-		u16 chans[3];
+-		aligned_s64 timestamp;
+-	} scan;
+ };
+ 
+ #define ISL29125_CHANNEL(_color, _si) { \
+@@ -179,6 +174,11 @@ static irqreturn_t isl29125_trigger_handler(int irq, void *p)
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct isl29125_data *data = iio_priv(indio_dev);
+ 	int i, j = 0;
++	/* Ensure timestamp is naturally aligned */
++	struct {
++		u16 chans[3];
++		aligned_s64 timestamp;
++	} scan = { };
+ 
+ 	iio_for_each_active_channel(indio_dev, i) {
+ 		int ret = i2c_smbus_read_word_data(data->client,
+@@ -186,10 +186,10 @@ static irqreturn_t isl29125_trigger_handler(int irq, void *p)
+ 		if (ret < 0)
+ 			goto done;
+ 
+-		data->scan.chans[j++] = ret;
++		scan.chans[j++] = ret;
+ 	}
+ 
+-	iio_push_to_buffers_with_timestamp(indio_dev, &data->scan,
++	iio_push_to_buffers_with_ts(indio_dev, &scan, sizeof(scan),
+ 		iio_get_time_ns(indio_dev));
+ 
+ done:
 -- 
 2.51.0
 
