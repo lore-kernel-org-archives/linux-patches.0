@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB3030E0CB;
-	Sat, 25 Oct 2025 16:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC8130E826;
+	Sat, 25 Oct 2025 16:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409159; cv=none; b=gP4EHFa7i8U9VXpLytKflT3RnlbXJI/sKyYHpmCmYvimKUeGnK1/MPiKp3mZL1KK3y/nBGeWjXGH1DaJtSiwh/iU9qX4nvE2B/6/Q5D/ls74mxP9kpSPTJkZWzF4zLEXE1+SruJwep5EK53QsR5mC/MoPsKwupm34ft2zsQnNHk=
+	t=1761409160; cv=none; b=p2pPrAqp2DedTcB1WzCcxLFWE8UHhmfk192Mw5jeJT2Z7QyeaQWQzDVzYvK5IKEc3Ty5G+XHuprqXhQuuoVN5zYqhrAQJPGNsfAnlN5YbEwBaICSSKYQC+C+nHUI5PDmpcggf4AxkKn+DdtywZ3j3IcGEzI/I9t8J6vjt+Zdg+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409159; c=relaxed/simple;
-	bh=Wsu6QKwI0DSKEq3fPE6CqLzeTU6vyFmCP+L2tVWEmp4=;
+	s=arc-20240116; t=1761409160; c=relaxed/simple;
+	bh=9tuynwr3DlIJ4MzBHrEW0xZhrIW1/c8bpKQA5dTOmjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z1+oYZDGpJ4cpfOm/B/XQ1dn9DvL5wIeJ/aNe7++Y56OupUC7KZ1bQ3VqYgz3+RoGniZ26sRsLrm/3SZbxw0DuuAITYaHo6ezHJZn5p7l9xqEqMA32XuqDbj6xjoB9UlYGHQyJZZyOhZSWSa4H7s+t0arJBQnD/fN+xVdDHLp+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFeiK2q2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y+EJCf+Un0lB87+YzgZM4j3PjHRlMDSVCU5w2NJC4niZvtD86ZKUYyu3Shy/STIfb+tKsE56/VNXq9XcxRSy4lHvjY8+eZdq6n15ea5JL2zC9Au208cIWet8Dh7GaweJ61nSJhKtba9NfmXBgtHrLS4cc1j1TCLzzl/z8nH3Gg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TIQ/pP45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFeiK2q2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F31BC4CEF5;
-	Sat, 25 Oct 2025 16:19:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TIQ/pP45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17AEC4CEF5;
+	Sat, 25 Oct 2025 16:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409159;
-	bh=Wsu6QKwI0DSKEq3fPE6CqLzeTU6vyFmCP+L2tVWEmp4=;
+	s=k20201202; t=1761409160;
+	bh=9tuynwr3DlIJ4MzBHrEW0xZhrIW1/c8bpKQA5dTOmjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFeiK2q2suH9AxEw2HdE/JwAtVcCr8RV7wV29D8NWunQlFhMy30U3/T2j4E+zcO2H
-	 ncMflSRPvewTCIeQJEuuFwwHI160YHE7m0gHpItAkEW2j3mKlK877vg0Mu685Oxe+a
-	 XUO1h0v2SuqzMvtE1r8z1FfjpXogbvzHlFzCD+kCUDY78/O9uvuTfdIkkvxi23F9GG
-	 YytcsW73SEp4DvtKXVOqLFcOJKnOzWqw3qkUCPvceVYu9dXEsWM5ue9+wUBGOpbkCf
-	 STLLEi3TiLTyzpFpZvmqutJF1P0Hd4e6uBCcSBJQed8YkrbLdrz7GXlFGomAlLBt/4
-	 F36/yPW6ZP5Cg==
+	b=TIQ/pP45jRPtZfmRzoqLGzq9HrG/POVjtOXfY+tmA9pzrPBn4NamnIMjukVxdML7m
+	 lObPoCSTTJ+7J4v9vNUocOWA55sBjDmTQKT1r2xcShvUJy73SKcvm93/dmXkEJvHlX
+	 xF0ZeazXkBfuHJjTLguKfN9TbL7uK5w1pk5giDp0xcye6tf9+c1NROb1Vcxx6auNjW
+	 FgNa1GLGj9iZ/aVqxVIERpf6czr6KVHV00bKoyWY1ESHK5DEwInK7Xk/dhSQkd6gG3
+	 9JjnKdbTJAW6L2XeupiBdrJ6z0fFXJuM0kiQoC1v0Gu/71qDUajbawPy65C99be4/S
+	 eQTCp6CSw9q6w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ChunHao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Rosen Penev <rosenp@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nic_swsd@realtek.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] r8169: set EEE speed down ratio to 1
-Date: Sat, 25 Oct 2025 11:57:34 -0400
-Message-ID: <20251025160905.3857885-223-sashal@kernel.org>
+	dmaengine@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] dmaengine: mv_xor: match alloc_wc and free_wc
+Date: Sat, 25 Oct 2025 11:57:35 -0400
+Message-ID: <20251025160905.3857885-224-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,86 +51,86 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChunHao Lin <hau@realtek.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit bf7154ffb1c65a201906296a9d3eb22e9daa5ffc ]
+[ Upstream commit a33e3b667d2f004fdfae6b442bd4676f6c510abb ]
 
-EEE speed down means speed down MAC MCU clock. It is not from spec.
-It is kind of Realtek specific power saving feature. But enable it
-may cause some issues, like packet drop or interrupt loss. Different
-hardware may have different issues.
+dma_alloc_wc is used but not dma_free_wc.
 
-EEE speed down ratio (mac ocp 0xe056[7:4]) is used to set EEE speed
-down rate. The larger this value is, the more power can save. But it
-actually save less power then we expected. And, as mentioned above,
-will impact compatibility. So set it to 1 (mac ocp 0xe056[7:4] = 0)
-, which means not to speed down, to improve compatibility.
-
-Signed-off-by: ChunHao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20250918023425.3463-1-hau@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/r/20250821220942.10578-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The change simply clears the EEE speed-down ratio bits during MAC init
-  for the affected chip families—`rtl_hw_start_8168h_1`
-  (drivers/net/ethernet/realtek/r8169_main.c:3412), `rtl_hw_start_8117`
-  (drivers/net/ethernet/realtek/r8169_main.c:3517), and
-  `rtl_hw_start_8125_common`
-  (drivers/net/ethernet/realtek/r8169_main.c:3718)—so those NICs stop
-  lowering their MAC MCU clock when EEE is active.
-- Realtek’s changelog explains the existing register settings
-  (0x70/0x30) are not from the Ethernet spec and have been seen to
-  trigger packet drops and lost interrupts; clearing the bits (ratio =
-  1) removes that Realtek-specific power-saving mode to restore
-  reliability.
-- The tweak is tiny and localized to the start-up sequences selected for
-  the relevant MAC versions (e.g. RTL_GIGA_MAC_VER_46/48/52/63/70/80),
-  with no knock-on effects elsewhere; the only behavioral trade-off is a
-  modest loss of power savings, which is acceptable compared to fixing
-  data loss.
-- Because it addresses a user-visible reliability bug, carries minimal
-  regression risk, and doesn’t alter driver architecture, it satisfies
-  the stable backport guidelines.
 
- drivers/net/ethernet/realtek/r8169_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+- The change fixes a real API mismatch: the descriptor pool is allocated
+  with write‑combined attributes via `dma_alloc_wc`, but previously
+  freed with `dma_free_coherent`. The patch replaces those frees with
+  the correct `dma_free_wc` in both teardown paths:
+  - `mv_xor_channel_remove`: drivers/dma/mv_xor.c:1016-1017
+  - `mv_xor_channel_add` error path (`err_free_dma`):
+    drivers/dma/mv_xor.c:1166-1167
+- The allocation site clearly uses WC memory for the descriptor pool:
+  - `dma_alloc_wc(&pdev->dev, MV_XOR_POOL_SIZE, &mv_chan->dma_desc_pool,
+    GFP_KERNEL)`: drivers/dma/mv_xor.c:1079-1082
+  - The surrounding comment explicitly notes the write-combine choice
+    for performance and the need to handle it correctly.
+- Why this matters:
+  - The DMA API requires pairing `dma_alloc_wc` with `dma_free_wc`.
+    Freeing WC allocations with `dma_free_coherent` can fail to tear
+    down mappings with the correct attributes, leading to DMA-API debug
+    warnings, potential resource leaks, or attribute mismatches on some
+    architectures.
+  - The affected code runs in deterministic paths (channel remove and
+    probe error unwind), so it’s directly user-visible on driver unload,
+    device removal, or probe failures.
+- Risk assessment:
+  - The fix is minimal and localized (two call-site substitutions), with
+    no architectural or behavioral changes to normal data paths.
+  - It is strictly a correctness fix and reduces the chance of DMA-API
+    issues; it does not introduce new features or touch wider
+    subsystems.
+- Stable backport criteria:
+  - Fixes a concrete bug (API misuse) that can affect users (warnings,
+    potential mapping/attribute teardown issues).
+  - Small, self-contained change limited to `drivers/dma/mv_xor.c`.
+  - Very low regression risk, as the free operations now match the
+    established allocation method already in use.
+- Applicability note:
+  - This should be backported to stable series where `mv_xor` allocates
+    the descriptor pool with `dma_alloc_wc`. If an older stable tree
+    still uses `dma_alloc_coherent` for this pool, the patch is not
+    applicable there.
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 4b0ac73565ea9..bf79e2e9b7ecb 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -3409,7 +3409,7 @@ static void rtl_hw_start_8168h_1(struct rtl8169_private *tp)
- 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
- 	}
+ drivers/dma/mv_xor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 1fdcb0f5c9e72..5e83862960461 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1013,7 +1013,7 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
  
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xe052, 0x6000, 0x8008);
- 	r8168_mac_ocp_modify(tp, 0xe0d6, 0x01ff, 0x017f);
- 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
-@@ -3514,7 +3514,7 @@ static void rtl_hw_start_8117(struct rtl8169_private *tp)
- 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
- 	}
+ 	dma_async_device_unregister(&mv_chan->dmadev);
  
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_write(tp, 0xea80, 0x0003);
- 	r8168_mac_ocp_modify(tp, 0xe052, 0x0000, 0x0009);
- 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
-@@ -3715,7 +3715,7 @@ static void rtl_hw_start_8125_common(struct rtl8169_private *tp)
- 	r8168_mac_ocp_modify(tp, 0xc0b4, 0x0000, 0x000c);
- 	r8168_mac_ocp_modify(tp, 0xeb6a, 0x00ff, 0x0033);
- 	r8168_mac_ocp_modify(tp, 0xeb50, 0x03e0, 0x0040);
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0030);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xe040, 0x1000, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xea1c, 0x0003, 0x0001);
- 	if (tp->mac_version == RTL_GIGA_MAC_VER_70 ||
+-	dma_free_coherent(dev, MV_XOR_POOL_SIZE,
++	dma_free_wc(dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ 	dma_unmap_single(dev, mv_chan->dummy_src_addr,
+ 			 MV_XOR_MIN_BYTE_COUNT, DMA_FROM_DEVICE);
+@@ -1163,7 +1163,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ err_free_irq:
+ 	free_irq(mv_chan->irq, mv_chan);
+ err_free_dma:
+-	dma_free_coherent(&pdev->dev, MV_XOR_POOL_SIZE,
++	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ err_unmap_dst:
+ 	dma_unmap_single(dma_dev->dev, mv_chan->dummy_dst_addr,
 -- 
 2.51.0
 
