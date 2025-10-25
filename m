@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8281B3093DF;
-	Sat, 25 Oct 2025 16:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3761E2957B6;
+	Sat, 25 Oct 2025 16:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409149; cv=none; b=Gldl2dKmyJIJ3PopjbjeVJ4EmrTDi6vbvVYsbHtn2ZJnGiUKDqmKNtx9Gmy4YEjdb7CH8lr7yQWePrjxxBz1RFKol6KRDSAoSgiHFlxlYiZc2imJYPDWvn5HG7M3ktrIT/Yp+WVkgvsFBsntyI5kgYRJxJVSuzcDHfj77XE5rjQ=
+	t=1761409151; cv=none; b=PpoYaKsE/J4lEVJvjfXIdOIdM7oGCSdXet2aD+henmKkEYA8iN52BbmyjZXTl4nuLYpyfOAhvk4jnGAW4KkAQNNfuVh0GOl6ml3BlsVNqduk8q8SCm7Cy76kzVxbOBdMsDDxU+G0eKh5Nj4U5h61fflcU+csPVV/aL9VBcoyJDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409149; c=relaxed/simple;
-	bh=wrHlvT9NGSd6dIpXwpHqzRvQB03j4gJMxxZs9rXSKQY=;
+	s=arc-20240116; t=1761409151; c=relaxed/simple;
+	bh=OLf6/ptVNL1scBdHLwHemDk/GF1yF4+2HTt4hWme+NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aNO/mOeqaIMJQwsfkdBws64gGMHD4aw6YX5q3HzdmtPeULc4jAOtr3Eauk32If4Eoa1YW6A4Xa3UqrAuLPXx+kkUcRbhI9GJQ9qkOQoQfTNrAsvU7lnnH4z4PC//nqL8mBHhw4yeuINMJV7kebxcjam1waxyi7BAowMjR70YyeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RZ5DNFSc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IoWJL77R2uLaDk8oN7hOh+wymtSXfgvnFrzjVmToXdU2ZhR7Rot/UvrT9We8p83VpXRKXlsUFPUSRz2WhUXlFhCg0G5CkgKENi0+HsW9GBqiqs0Cqp9mrbBdADTV7hkprR1kt0sjA/N9GQTUZmIY5bZApFd4oEhi8mRKtdSooN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mt9xNRMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RZ5DNFSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793E1C116B1;
-	Sat, 25 Oct 2025 16:19:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mt9xNRMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BF7C4CEF5;
+	Sat, 25 Oct 2025 16:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409149;
-	bh=wrHlvT9NGSd6dIpXwpHqzRvQB03j4gJMxxZs9rXSKQY=;
+	s=k20201202; t=1761409151;
+	bh=OLf6/ptVNL1scBdHLwHemDk/GF1yF4+2HTt4hWme+NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZ5DNFSc/pJTAXiik6ht9hSFgZsXkUhXB0BmMasVII178prpdnHSo5UNJ0L2VJRG2
-	 zrWsDiY48t1FpAdXIbtroyZTuvAdSHSoRQhr5f0vOBPepGzG9Z46Tw390BC+3LSNx7
-	 XJtNdm2BPBYpLqvvxGpvWhtzZ8cXGLNzIZ1t3X0s85NYSKN8MyVpj6DMP/6h4eyn+G
-	 2p46OB+0NaebwQidS49m60WWqxJI0bGDcpZP+WJgRWup/UW/i3Maiip964SuiQmC2P
-	 eZJKAR+xKjjTiXf+aQo9xQnS3VmibaR4Q6BGR/DCnmzSkCNxr3O+fVKs+fQA5VE/jB
-	 XdR0c+dhKfL2Q==
+	b=Mt9xNRMOYDRpAaUUM8CvL0XC+H+JcdOuIU7Lffadyar1A1x6XnZrOcmv53Knbc7ts
+	 dMnjKZC2lMV8CcOXNcfDaOvcm5QRV7KAgeE4SEcA5VRqzF9YT0iTAKoiUlEFPuyZaV
+	 7QAbRzr8ARLc134/rLGEe8sbUw1SL4EkjWh2tqszpeo+a5e7wX7kpoxkEQtNvUeBem
+	 qo1nOONoNm0mmGK1mmnFzq65dv0mchFlWAXMW9g+/FVOh1PAvtHG68FscOUxxI9adM
+	 vzW/kARoqwVAnPZDL83jcrH3JvAZMbPqb6crV9N1Yw94KGcXgzqq09/1KTtrFo77vA
+	 LATCUn9wLOnjQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	kadlec@netfilter.org,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org
-Subject: [PATCH AUTOSEL 6.17] netfilter: nf_tables: all transaction allocations can now sleep
-Date: Sat, 25 Oct 2025 11:57:29 -0400
-Message-ID: <20251025160905.3857885-218-sashal@kernel.org>
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] media: qcom: camss: csiphy-3ph: Add CSIPHY 2ph DPHY v2.0.1 init sequence
+Date: Sat, 25 Oct 2025 11:57:30 -0400
+Message-ID: <20251025160905.3857885-219-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,20 +55,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 3d95a2e016abab29ccb6f384576b2038e544a5a8 ]
+[ Upstream commit ce63fbdf849f52584d9b5d9a4cc23cbc88746c30 ]
 
-Now that nft_setelem_flush is not called with rcu read lock held or
-disabled softinterrupts anymore this can now use GFP_KERNEL too.
+This is the CSI PHY version found in QCS2290/QCM2290 SoCs.
+The table is extracted from downstream camera driver.
 
-This is the last atomic allocation of transaction elements, so remove
-all gfp_t arguments and the wrapper function.
-
-This makes attempts to delete large sets much more reliable, before
-this was prone to transient memory allocation failures.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,247 +73,213 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation
+- User impact and scope
+  - Fixes non-functional camera PHY initialization on QCS2290/QCM2290 by
+    adding the correct D-PHY v2.0.1 register init sequence. Without
+    this, CSIPHY programming is incomplete and CSI2 links can fail to
+    come up on this SoC.
+  - Change is tightly scoped to the Qualcomm CAMSS CSIPHY 3-phase 1.0
+    driver and only activates for `CAMSS_2290`.
 
-What changed
-- Switched all nf_tables transaction element allocations to use
-  sleepable allocations and removed gfp plumbing.
-  - `nft_trans_alloc()` now always uses `kzalloc(..., GFP_KERNEL)`
-    instead of parameterized gfp or `GFP_ATOMIC` via wrapper removal:
-    net/netfilter/nf_tables_api.c:154.
-  - Set-element transaction collapsing uses `krealloc(..., GFP_KERNEL)`:
-    net/netfilter/nf_tables_api.c:457.
-  - Removed gfp_t parameters from commit-list helpers and collapse
-    logic; `nft_trans_commit_list_add_elem()` no longer takes/propagates
-    gfp and simply collapses or enqueues:
-    net/netfilter/nf_tables_api.c:535.
-  - Bulk element flush paths allocate transactions and enqueue them
-    without any atomic gfp flags:
-    - `nft_setelem_flush()` allocates with `nft_trans_alloc(...
-      GFP_KERNEL)` and enqueues via `nft_trans_commit_list_add_elem()`:
-      net/netfilter/nf_tables_api.c:7872,
-      net/netfilter/nf_tables_api.c:7893.
-    - Catchall flush similarly enqueues with the new helper:
-      net/netfilter/nf_tables_api.c:7906,
-      net/netfilter/nf_tables_api.c:7912.
+- What the change does
+  - Adds a SoC-specific init table used by the Gen2 programming path:
+    - New `lane_regs_qcm2290` table programs the 14nm 2PH v2.0.1 D-PHY
+      sequence, including per-lane settle count override points:
+      - `drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:403`
+        through `drivers/media/platform/qcom/camss/camss-
+        csiphy-3ph-1-0.c:483`
+      - Entries like `0x0008`, `0x0208`, `0x0408`, `0x0608`, `0x0708`
+        are tagged `CSIPHY_SETTLE_CNT_LOWER_BYTE`, which
+        `csiphy_gen2_config_lanes()` will replace with the runtime-
+        computed settle count (see
+        `drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:702`).
+  - Ensures the Gen2 path is selected for this SoC:
+    - Adds `CAMSS_2290` to the Gen2 detection so that
+      `csiphy_lanes_enable()` chooses `csiphy_gen2_config_lanes()` over
+      the generic Gen1 sequence:
+      - Gen2 check updated in `csiphy_is_gen2()` (commit diff shows new
+        case for `CAMSS_2290`), which is used at
+        `drivers/media/platform/qcom/camss/camss-
+        csiphy-3ph-1-0.c:957-960`.
+  - Hooks the new table for 2290 during init:
+    - `csiphy_init()` selects `lane_regs_qcm2290` and its size when
+      `camss->res->version == CAMSS_2290`:
+      - `drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:998`
+        to `drivers/media/platform/qcom/camss/camss-
+        csiphy-3ph-1-0.c:1001`.
+  - Identifies the SoC variant in the CAMSS version enum:
+    - Adds `CAMSS_2290` to `enum camss_version`:
+      - `drivers/media/platform/qcom/camss/camss.h:81`.
 
-Why this is safe now (sleepable paths are guaranteed)
-- The iter callback used for set-element flushing (`.fn =
-  nft_setelem_flush`) runs in a context where sleeping is allowed during
-  UPDATE walks:
-  - Hash backend creates a snapshot under RCU and then iterates that
-    snapshot with `commit_mutex` held so the callback “can sleep”
-    (explicitly documented): net/netfilter/nft_set_hash.c:324–332,
-    372–383.
-  - Rbtree backend asserts `commit_mutex` for UPDATE walks and calls
-    `iter->fn` under that mutex (no BH/RCU read section):
-    net/netfilter/nft_set_rbtree.c:609–627.
-  - Bitmap backend traverses with RCU but protected by `commit_mutex`
-    (writer lock allowed for traversal) and calls `iter->fn` under that
-    protection (sleepable): net/netfilter/nft_set_bitmap.c:230–241.
-- The bulk delete entry point (`nf_tables_delsetelem`) sets up UPDATE
-  walk (`.type = NFT_ITER_UPDATE`) and uses `nft_set_flush()` which
-  wires `nft_setelem_flush` as the callback, ensuring it executes in the
-  above sleepable contexts: net/netfilter/nf_tables_api.c:7940–7955.
-- Transaction element additions/deletions are performed from netlink
-  processing paths (process context), not hardirq/softirq handlers, so
-  allocating with `GFP_KERNEL` is appropriate in all call sites shown by
-  the new helpers: net/netfilter/nf_tables_api.c:7568–7597, 7847–7895,
-  7906–7912.
+- Context in the subsystem
+  - QCM2290 CAMSS resources already bind the CSIPHY instance to this
+    driver and versioned resources set `.hw_ops = &csiphy_ops_3ph_1_0`
+    for this SoC (e.g., `drivers/media/platform/qcom/camss/camss.c:518`
+    for `csiphy_res_2290` and
+    `drivers/media/platform/qcom/camss/camss.c:4330` for `.version =
+    CAMSS_2290`), so this change fills the missing CSIPHY programming
+    piece required for link bring-up on 2290.
+  - The Gen2 write path (`csiphy_gen2_config_lanes`) consumes the new
+    table and applies settle count correctly at the tagged offsets
+    (`drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:702`).
 
-User-visible impact (bug fix)
-- Deleting large sets previously used `GFP_ATOMIC` along the
-  flush/commit-item path, making allocations prone to transient failures
-  under memory pressure. By switching to `GFP_KERNEL` and permitting
-  sleeping, large set deletions become substantially more reliable,
-  aligning with the commit message intent.
-  - The collapsing path (`nft_trans_collapse_set_elem`) that may
-    `krealloc` the transaction to coalesce elements now does so with
-    `GFP_KERNEL`, reducing failure rates:
-    net/netfilter/nf_tables_api.c:457–468.
+- Stable backport criteria
+  - Bug fix: Yes. It corrects CSIPHY initialization for QCS/QCM2290,
+    enabling a non-working camera interface on supported hardware.
+  - Small and contained: Yes. Adds one SoC-specific data table and two
+    switch cases; no broad refactors or ABI changes.
+  - Side effects: Minimal. Only affects `CAMSS_2290` via explicit
+    version checks; other SoCs are untouched.
+  - Architectural changes: None; follows existing pattern used for
+    SM8250/SM8550/etc.
+  - Critical subsystems: Media platform driver (CAMSS), not core kernel;
+    limited blast radius.
+  - Stable tags: None in message, but the change clearly fits “important
+    bugfix, minimal risk”.
 
-Scope and risk
-- Scope: confined to nf_tables internal transaction allocation/path; no
-  UAPI changes, no semantic changes to ruleset behavior.
-- Architectural changes: none; this is a cleanup following prior design
-  changes that made iter callbacks sleepable.
-- Side effects: allocations may now sleep. This is intended and correct
-  given the current walk/flush call paths hold `commit_mutex` or operate
-  on snapshot lists designed for sleepable callbacks, as shown above.
-- Regression risk: low in trees that already have the reworked set
-  walk/flush semantics (snapshot under RCU or commit_mutex-protected
-  UPDATE walks). If a target stable tree does not include those enabling
-  changes, backporting this patch alone would be unsafe because it could
-  sleep in contexts that used to run under RCU read lock or with
-  softirqs disabled. In such cases, this commit should be backported
-  together with the prerequisite walk/flush changes (e.g., the
-  hash/rbtree/bitmap UPDATE-walk designs that explicitly allow
-  sleeping).
+- Risk assessment
+  - Limited to 2290; if values were wrong, the only impact would be on
+    camera bring-up on that SoC.
+  - Enum addition is internal to the driver family; not user-visible
+    ABI.
+  - The settle count path remains computed dynamically and is properly
+    injected into the register sequence, matching existing Gen2
+    implementations.
 
-Conclusion
-- This is a contained reliability fix that removes the last atomic
-  allocation along nf_tables transaction element paths and is consistent
-  with the current, sleepable UPDATE-walk design. It reduces transient
-  ENOMEM failures when deleting large sets with minimal risk, provided
-  the prerequisite sleepable-walk changes are present in the target
-  stable series. Recommended for stable backport with that dependency
-  consideration.
+Given this is a targeted fix that enables camera functionality on
+QCS2290/QCM2290 by providing the correct PHY init sequence with low
+regression risk, it is a good candidate for stable backport.
 
- net/netfilter/nf_tables_api.c | 47 ++++++++++++++---------------------
- 1 file changed, 19 insertions(+), 28 deletions(-)
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 89 +++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss.h     |  1 +
+ 2 files changed, 90 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index c3c73411c40c4..eed434e0a9702 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -151,12 +151,12 @@ static void nft_ctx_init(struct nft_ctx *ctx,
- 	bitmap_zero(ctx->reg_inited, NFT_REG32_NUM);
- }
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+index 88c0ba495c327..a128a42f1303d 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+@@ -319,6 +319,90 @@ csiphy_lane_regs lane_regs_sm8250[] = {
+ 	{0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+ };
  
--static struct nft_trans *nft_trans_alloc_gfp(const struct nft_ctx *ctx,
--					     int msg_type, u32 size, gfp_t gfp)
-+static struct nft_trans *nft_trans_alloc(const struct nft_ctx *ctx,
-+					 int msg_type, u32 size)
- {
- 	struct nft_trans *trans;
++/* 14nm 2PH v 2.0.1 2p5Gbps 4 lane DPHY mode */
++static const struct
++csiphy_lane_regs lane_regs_qcm2290[] = {
++	{0x0030, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x002c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0034, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0028, 0x04, 0x00, CSIPHY_DNP_PARAMS},
++	{0x003c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x001c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0000, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0004, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0020, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0008, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x000c, 0xff, 0x00, CSIPHY_DNP_PARAMS},
++	{0x0010, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0038, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0060, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0064, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0730, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x072c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0734, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0728, 0x04, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x073c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x071c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0700, 0xc0, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0704, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0720, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0708, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x070c, 0xff, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0710, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0738, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0760, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0764, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0230, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x022c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0234, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0228, 0x04, 0x00, CSIPHY_DNP_PARAMS},
++	{0x023c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x021c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0200, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0204, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0220, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0208, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x020c, 0xff, 0x00, CSIPHY_DNP_PARAMS},
++	{0x0210, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0238, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0260, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0264, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0430, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x042c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0434, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0428, 0x04, 0x00, CSIPHY_DNP_PARAMS},
++	{0x043c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x041c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0400, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0404, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0420, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0408, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x040C, 0xff, 0x00, CSIPHY_DNP_PARAMS},
++	{0x0410, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0438, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0460, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0464, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
++
++	{0x0630, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x062c, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0634, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0628, 0x04, 0x00, CSIPHY_DNP_PARAMS},
++	{0x063c, 0xb8, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x061c, 0x0a, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0600, 0xd7, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0604, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0620, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0608, 0x04, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
++	{0x060C, 0xff, 0x00, CSIPHY_DNP_PARAMS},
++	{0x0610, 0x50, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0638, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
++	{0x0664, 0x3f, 0x00, CSIPHY_DEFAULT_PARAMS},
++};
++
+ /* GEN2 2.1.2 2PH DPHY mode */
+ static const struct
+ csiphy_lane_regs lane_regs_sm8550[] = {
+@@ -744,6 +828,7 @@ static bool csiphy_is_gen2(u32 version)
+ 	bool ret = false;
  
--	trans = kzalloc(size, gfp);
-+	trans = kzalloc(size, GFP_KERNEL);
- 	if (trans == NULL)
- 		return NULL;
+ 	switch (version) {
++	case CAMSS_2290:
+ 	case CAMSS_7280:
+ 	case CAMSS_8250:
+ 	case CAMSS_8280XP:
+@@ -829,6 +914,10 @@ static int csiphy_init(struct csiphy_device *csiphy)
+ 		regs->lane_regs = &lane_regs_sdm845[0];
+ 		regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+ 		break;
++	case CAMSS_2290:
++		regs->lane_regs = &lane_regs_qcm2290[0];
++		regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
++		break;
+ 	case CAMSS_7280:
+ 	case CAMSS_8250:
+ 		regs->lane_regs = &lane_regs_sm8250[0];
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index 63c0afee154a0..377707d91ff2f 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -78,6 +78,7 @@ enum pm_domain {
  
-@@ -172,12 +172,6 @@ static struct nft_trans *nft_trans_alloc_gfp(const struct nft_ctx *ctx,
- 	return trans;
- }
- 
--static struct nft_trans *nft_trans_alloc(const struct nft_ctx *ctx,
--					 int msg_type, u32 size)
--{
--	return nft_trans_alloc_gfp(ctx, msg_type, size, GFP_KERNEL);
--}
--
- static struct nft_trans_binding *nft_trans_get_binding(struct nft_trans *trans)
- {
- 	switch (trans->msg_type) {
-@@ -442,8 +436,7 @@ static bool nft_trans_collapse_set_elem_allowed(const struct nft_trans_elem *a,
- 
- static bool nft_trans_collapse_set_elem(struct nftables_pernet *nft_net,
- 					struct nft_trans_elem *tail,
--					struct nft_trans_elem *trans,
--					gfp_t gfp)
-+					struct nft_trans_elem *trans)
- {
- 	unsigned int nelems, old_nelems = tail->nelems;
- 	struct nft_trans_elem *new_trans;
-@@ -466,9 +459,11 @@ static bool nft_trans_collapse_set_elem(struct nftables_pernet *nft_net,
- 	/* krealloc might free tail which invalidates list pointers */
- 	list_del_init(&tail->nft_trans.list);
- 
--	new_trans = krealloc(tail, struct_size(tail, elems, nelems), gfp);
-+	new_trans = krealloc(tail, struct_size(tail, elems, nelems),
-+			     GFP_KERNEL);
- 	if (!new_trans) {
--		list_add_tail(&tail->nft_trans.list, &nft_net->commit_list);
-+		list_add_tail(&tail->nft_trans.list,
-+			      &nft_net->commit_list);
- 		return false;
- 	}
- 
-@@ -484,7 +479,7 @@ static bool nft_trans_collapse_set_elem(struct nftables_pernet *nft_net,
- }
- 
- static bool nft_trans_try_collapse(struct nftables_pernet *nft_net,
--				   struct nft_trans *trans, gfp_t gfp)
-+				   struct nft_trans *trans)
- {
- 	struct nft_trans *tail;
- 
-@@ -501,7 +496,7 @@ static bool nft_trans_try_collapse(struct nftables_pernet *nft_net,
- 	case NFT_MSG_DELSETELEM:
- 		return nft_trans_collapse_set_elem(nft_net,
- 						   nft_trans_container_elem(tail),
--						   nft_trans_container_elem(trans), gfp);
-+						   nft_trans_container_elem(trans));
- 	}
- 
- 	return false;
-@@ -537,17 +532,14 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- 	}
- }
- 
--static void nft_trans_commit_list_add_elem(struct net *net, struct nft_trans *trans,
--					   gfp_t gfp)
-+static void nft_trans_commit_list_add_elem(struct net *net, struct nft_trans *trans)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 
- 	WARN_ON_ONCE(trans->msg_type != NFT_MSG_NEWSETELEM &&
- 		     trans->msg_type != NFT_MSG_DELSETELEM);
- 
--	might_alloc(gfp);
--
--	if (nft_trans_try_collapse(nft_net, trans, gfp)) {
-+	if (nft_trans_try_collapse(nft_net, trans)) {
- 		kfree(trans);
- 		return;
- 	}
-@@ -7573,7 +7565,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 						}
- 
- 						ue->priv = elem_priv;
--						nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
-+						nft_trans_commit_list_add_elem(ctx->net, trans);
- 						goto err_elem_free;
- 					}
- 				}
-@@ -7597,7 +7589,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	}
- 
- 	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
--	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
-+	nft_trans_commit_list_add_elem(ctx->net, trans);
- 	return 0;
- 
- err_set_full:
-@@ -7863,7 +7855,7 @@ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
- 	nft_setelem_data_deactivate(ctx->net, set, elem.priv);
- 
- 	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
--	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
-+	nft_trans_commit_list_add_elem(ctx->net, trans);
- 	return 0;
- 
- fail_ops:
-@@ -7888,9 +7880,8 @@ static int nft_setelem_flush(const struct nft_ctx *ctx,
- 	if (!nft_set_elem_active(ext, iter->genmask))
- 		return 0;
- 
--	trans = nft_trans_alloc_gfp(ctx, NFT_MSG_DELSETELEM,
--				    struct_size_t(struct nft_trans_elem, elems, 1),
--				    GFP_ATOMIC);
-+	trans = nft_trans_alloc(ctx, NFT_MSG_DELSETELEM,
-+				struct_size_t(struct nft_trans_elem, elems, 1));
- 	if (!trans)
- 		return -ENOMEM;
- 
-@@ -7901,7 +7892,7 @@ static int nft_setelem_flush(const struct nft_ctx *ctx,
- 	nft_trans_elem_set(trans) = set;
- 	nft_trans_container_elem(trans)->nelems = 1;
- 	nft_trans_container_elem(trans)->elems[0].priv = elem_priv;
--	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_ATOMIC);
-+	nft_trans_commit_list_add_elem(ctx->net, trans);
- 
- 	return 0;
- }
-@@ -7918,7 +7909,7 @@ static int __nft_set_catchall_flush(const struct nft_ctx *ctx,
- 
- 	nft_setelem_data_deactivate(ctx->net, set, elem_priv);
- 	nft_trans_container_elem(trans)->elems[0].priv = elem_priv;
--	nft_trans_commit_list_add_elem(ctx->net, trans, GFP_KERNEL);
-+	nft_trans_commit_list_add_elem(ctx->net, trans);
- 
- 	return 0;
- }
+ enum camss_version {
+ 	CAMSS_660,
++	CAMSS_2290,
+ 	CAMSS_7280,
+ 	CAMSS_8x16,
+ 	CAMSS_8x53,
 -- 
 2.51.0
 
