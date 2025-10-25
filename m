@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195363074A4;
-	Sat, 25 Oct 2025 16:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F048530AAD6;
+	Sat, 25 Oct 2025 16:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409403; cv=none; b=Y8qCDo7bmI1N/772bxcQ3C5gr+NLdfAPcRrYRCzXUs+YH7eX1YJFsNUuTTsqKbbxJ3WyTrQIaGL3Ipq908pJeANst+d/keFnG6jSX0oYnE6xg4KwZSliDxON5g66UVNY1II0qpFUDkoSKl0/pUZUucm2zXLU9UV2CMVpWsvqJoI=
+	t=1761409406; cv=none; b=Dd2ECbu/LV0Hhvfx2nVb/2CRMW04zXzudqrvNROxtq+Z5VL0ziaNehJB4nUlbIMkRsH1EuVF0aIVMRLIohomLGOOoNPAjGsX50+dV7T66Oq0vkMVclVXnHryPU9BEjk66kKKgH8tUYBJIQKxQOEDi2FKSUNv2ZtdGPK6XPIjIbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409403; c=relaxed/simple;
-	bh=5I9qk3gBTLLnPcYT8Lh1cfTu7Bsse6b7DIeDzWni5yk=;
+	s=arc-20240116; t=1761409406; c=relaxed/simple;
+	bh=tqD7wQXMOM5PwsngKwg1xLbplDqYzrJdEa4gjMqbcw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sZ7rsfNGo3TPMxnsh5HWkwxYV3eHVhOSryrmCYTznPGe2zx1E1slxZv6ml6FEp/Jra4Mgkh5voOqJKuBFfw5vI6tVp/CwmEMIgOItFlji66LqxzPZvXMJOofBi8eU3p5T4CgLL/n/COF/7yd+RBG6yDjAtb1uImUB8HYzANGwPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNxAC9HQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TeR3Cy/gJ33+ce2PThlon0nQMEZO2fULWhnKe1je2dCCmPIuyc61reRpc+AUpD1Li7syMj093uoPa1x2UZOKp5q+97wGW57I8xcTyyc0ATiewB4W47xqc53QwQEsL1LSd8fnuiEYL8l2robxW1FnnjJlUR1nlf3y0WVFoLKcvKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWaKgXST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNxAC9HQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDBDC4CEF5;
-	Sat, 25 Oct 2025 16:23:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWaKgXST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BD9C4CEF5;
+	Sat, 25 Oct 2025 16:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409402;
-	bh=5I9qk3gBTLLnPcYT8Lh1cfTu7Bsse6b7DIeDzWni5yk=;
+	s=k20201202; t=1761409405;
+	bh=tqD7wQXMOM5PwsngKwg1xLbplDqYzrJdEa4gjMqbcw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNxAC9HQ5qTXu+xh2XLpNJqKOyybZ4uHkeG6pbEsfX/fLpv72dRV3JoaEx0ZRQlfl
-	 zKJm3MR7gLwMBDFP1o2j6ebsiTskMhOOOmVtb+eqDaEaZt/qAYe+kx3E3yujQRd/dB
-	 G2RxuehLnnNYSdZLRTxiuho+/lGP2EzRktogQvSoTiQDOjb/dAfI0BNYHcL/Ss9vCH
-	 wCbw/m9gWXQpvGlVOgpIGSLF0p+DGp/EE2osr5Va1KugP8kdimIXv6+ISjqMeIBFKB
-	 /G+9mp09FQqbA8hmbySMGuZwzgHluoKkqHn8bcpAwFQJdOXX/+CSkGLDj1NNBTgpEF
-	 LzMuk8dob4w9A==
+	b=ZWaKgXSTFKlZa0PzxF0ijFdywcxZRnktqbFZb60xBPB+gzh/2iWHnjWNFeP7MNWUW
+	 gPXf97cygtyTor6io5DJeXO397ByBHHWMqkwxKf/HKisSdS2Vrqlj1zkNT+ixK6XDO
+	 e5lnHt2JpYsaCBs3WBDVwWZ+FEBzhESln7S3RPQ8a4SvbUgUO5HIWfMFEZg8a6pG3e
+	 ctmo6U103jeEN2f62eAJ8FCBl0XIHw94ocwYE5yk5WJpY/wkF9asJGtDNlRwUbwR1Z
+	 HaNKW5DpxP1Ho91FBOEnlHjGF+zpXoU24nxZnaNZLBz5zV7xBNh1Ov8kaFlcYqj3eo
+	 3qweErNtC0nTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+Cc: Sridevi Arvindekar <sarvinde@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kuba@kernel.org,
-	alexander.deucher@amd.com,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-6.1] mips: lantiq: danube: rename stp node on EASY50712 reference board
-Date: Sat, 25 Oct 2025 11:58:58 -0400
-Message-ID: <20251025160905.3857885-307-sashal@kernel.org>
+	Dillon.Varone@amd.com,
+	alex.hung@amd.com,
+	ray.wu@amd.com,
+	mwen@igalia.com,
+	Ausef.Yousof@amd.com,
+	alexandre.f.demers@gmail.com,
+	rostrows@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Fix for test crash due to power gating
+Date: Sat, 25 Oct 2025 11:58:59 -0400
+Message-ID: <20251025160905.3857885-308-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,87 +60,66 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Sridevi Arvindekar <sarvinde@amd.com>
 
-[ Upstream commit 2b9706ce84be9cb26be03e1ad2e43ec8bc3986be ]
+[ Upstream commit 0bf6b216d4783cb51f9af05a49d3cce4fc22dc24 ]
 
-This fixes the following warning:
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: stp@e100bb0 (lantiq,gpio-stp-xway): $nodename:0: 'stp@e100bb0' does not match '^gpio@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/gpio/gpio-stp-xway.yaml#
+[Why/How]
+Call power gating routine only if it is defined.
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Sridevi Arvindekar <sarvinde@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES – Adding the NULL guard in `dcn20_fpga_init_hw` keeps the FPGA init
+path from dereferencing a deliberately cleared power‑gating hook on
+Navi12.
 
-- What changed: The node name was renamed from `stp@e100bb0` to
-  `gpio@e100bb0` under the `stp0` label in the EASY50712 DTS, aligning
-  the node name with the binding while keeping all properties intact
-  (arch/mips/boot/dts/lantiq/danube_easy50712.dts:99; compatible remains
-  lantiq,gpio-stp-xway at
-  arch/mips/boot/dts/lantiq/danube_easy50712.dts:101).
-- Binding compliance: The binding explicitly requires the nodename to
-  match `^gpio@[0-9a-f]+$` (Documentation/devicetree/bindings/gpio/gpio-
-  stp-xway.yaml:20), and its example shows `gpio@e100bb0`
-  (Documentation/devicetree/bindings/gpio/gpio-stp-xway.yaml:84). This
-  change removes the schema warning cited in the commit message.
-- Functional fix beyond a warning: On Lantiq/XWAY SoCs the PMU-based
-  clock lookup for STP is registered against device-id `1e100bb0.gpio`
-  (arch/mips/lantiq/xway/sysctrl.c:488). Platform device names for OF
-  nodes are derived from the translated address and the node name
-  (`of_device_make_bus_id`), yielding `1e100bb0.<node-name>`
-  (drivers/of/device.c:284). With the old name, the device-id would be
-  `1e100bb0.stp`, which does not match the PMU registration, causing
-  `devm_clk_get_enabled(&pdev->dev, NULL)` to fail and the driver to
-  abort probe (drivers/gpio/gpio-stp-xway.c:299). Renaming the node to
-  `gpio@…` makes the dev_name `1e100bb0.gpio`, matching the PMU
-  registration and allowing the driver to get and enable its clock.
-- Impact: Without this rename, the STP GPIO controller on this board is
-  very likely non-functional due to clock lookup failure, not just
-  “noisy” during `dtbs_check`. The change is a one-line DTS fix that
-  restores driver probe on the EASY50712 reference board.
-- Risk assessment:
-  - Scope: Single DTS node rename for one board; no code or
-    architectural changes; no changes to `compatible`, `reg`, or gpio
-    properties (arch/mips/boot/dts/lantiq/danube_easy50712.dts:99).
-  - ABI considerations: While node path strings change, the phandle
-    label `stp0` remains stable for intra-DT references. There are no
-    in-tree references to the old path, and this is a reference board.
-    The practical risk of breaking external overlays is low, and the fix
-    enables the hardware to function.
-- Stable criteria fit:
-  - Fixes a user-visible functional bug (driver failing to get its
-    clock, thus failing probe).
-  - Minimal, contained change in a non-critical subsystem (board DTS).
-  - No new features or architectural churn.
-  - Commit message targets a schema warning; however, code analysis
-    shows it also resolves a real runtime issue due to `clkdev` dev_id
-    mismatch.
+- Root cause is that Navi12 forces
+  `dc->hwseq->funcs.enable_power_gating_plane = NULL` to avoid the
+  unwanted register programming (`drivers/gpu/drm/amd/display/dc/resourc
+  e/dcn20/dcn20_resource.c:2728`), so the unguarded call in the FPGA
+  init routine dereferenced a NULL function pointer and crashed the test
+  path (`drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c:3132`
+  before this fix).
+- The patch simply checks the pointer before calling, matching the
+  pattern already used in other init flows such as `dcn10_init_hw` and
+  newer DCN generations, so functional behaviour is unchanged when the
+  hook exists and we correctly skip it when it is absent.
+- Impacted hardware (Navi12/DCN2.0) ships in currently supported stable
+  kernels, and the unfixed bug is an outright NULL dereference, so users
+  running the FPGA/diagnostic init sequence still hit a crash today.
+- Change is localized, does not pull in other dependencies, and aligns
+  with existing defensive guards elsewhere in the display stack, making
+  regression risk very low.
 
-Given the functional mismatch between the old node name-derived
-`dev_name` and the clock lookup key, this is an important, low-risk fix
-appropriate for stable backporting.
+Suggested follow-up: 1) Run the relevant FPGA/Navi12 display init test
+(or the scenario that originally crashed) on the target stable branch to
+confirm the NULL dereference is gone.
 
- arch/mips/boot/dts/lantiq/danube_easy50712.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-index ab70028dbefcf..c9f7886f57b8c 100644
---- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-+++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-@@ -96,7 +96,7 @@ ethernet@e180000 {
- 			lantiq,tx-burst-length = <4>;
- 		};
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 9d3946065620a..f7b72b24b7509 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -3129,7 +3129,8 @@ void dcn20_fpga_init_hw(struct dc *dc)
+ 		res_pool->dccg->funcs->dccg_init(res_pool->dccg);
  
--		stp0: stp@e100bb0 {
-+		stp0: gpio@e100bb0 {
- 			#gpio-cells = <2>;
- 			compatible = "lantiq,gpio-stp-xway";
- 			gpio-controller;
+ 	//Enable ability to power gate / don't force power on permanently
+-	hws->funcs.enable_power_gating_plane(hws, true);
++	if (hws->funcs.enable_power_gating_plane)
++		hws->funcs.enable_power_gating_plane(hws, true);
+ 
+ 	// Specific to FPGA dccg and registers
+ 	REG_WRITE(RBBMIF_TIMEOUT_DIS, 0xFFFFFFFF);
 -- 
 2.51.0
 
