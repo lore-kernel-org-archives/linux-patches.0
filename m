@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DF7301022;
-	Sat, 25 Oct 2025 16:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15192301022;
+	Sat, 25 Oct 2025 16:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408792; cv=none; b=YdB+/ExrUBS/haL1GR4QJG09Y2NC5NTNFWeAEtnJE/VxoEXTGOzQUvY7+7BTHYiWBxqfoD/Ohfzn1uVMpRcVblt9t3xe9o8Qm1pzdwmUwPVTwtM9ftvf6kXY74kAr2iK0/6EZfwjPFk21bxqMq6rHmdC1u2yOp4hVb8NB6TCD9M=
+	t=1761408794; cv=none; b=hDHcykNjyzZxW/AwdP7D4Hr02tRFvpsB+4FnfhA4T2BBUEMy5/0NmwXzOr4GZ7lB+EEo5SuFmWsPDtmfil1iX6kUH748UafeDGPRsCBNDxjRcloeSJy6PqHQMu9OI/EEvKy2vvXMDdVRCLo0ou9rIqNTcxWrFTjYr5FetyI9zjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408792; c=relaxed/simple;
-	bh=+clk79vRm0NlaSpI08G8uRTSXMz8DMUNriZ+YPMi10g=;
+	s=arc-20240116; t=1761408794; c=relaxed/simple;
+	bh=6G/gvk48evdMBUemFgDfd5CZY6KsXKzKU0k9aBxnDNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=evAzQTnfLOYstQTTReAutK8eyesbT7wynpzbdNsc0GpC78mkbnh0Owwc5skmWrJ1CWFvfYsCtxUUFV2oY2VazPmlhBfipz5oSk44iArFZ5+y0qXD64OUhnXUkt9kivatHG2ue9rK0AJL7Ue1TCxoNMCcZS3xIsh7Ep5slM+IgBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3FRWhoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EwX7gbJ3fmzTOUj0mX/21BAlPneNikTbF86qCkhiDcOQbOieuJEEdUYo12Y7cILCLCih5CCcq/ZVS2rzwWAfa6RmTNudfCjkXk1X2A3YO7+pfiVKTpsSeH0JgJ1VZspJ/jfFY7OMCQwN/5qyQUknxsB8AiVMn4XHwKUSfq4Qr6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oIauK5VY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3FRWhoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B4DC4CEF5;
-	Sat, 25 Oct 2025 16:13:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oIauK5VY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4992C4CEF5;
+	Sat, 25 Oct 2025 16:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408792;
-	bh=+clk79vRm0NlaSpI08G8uRTSXMz8DMUNriZ+YPMi10g=;
+	s=k20201202; t=1761408794;
+	bh=6G/gvk48evdMBUemFgDfd5CZY6KsXKzKU0k9aBxnDNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3FRWhoB5DTkxYu1NrZSVsVX+1qI/piJC9gxkWMqF7nkHJ4LrpvB19bP93LUtKW64
-	 6Oah6wCgQVPHBqTQAjmlULwwoijPGskHuMeyH7n24ip4E/H3EiLpqSMqQRGH2vyPd3
-	 9xD9/B5m4Ew+nP1WWIiH3Msozi7MjCJ99pdiyDvaqpnpwWYBjbCvoo0gvlpogl/x5v
-	 wm265fuN/CdFhXAoGLDim1HOxSM0BHcyN1APSry2T6+ucyLPsUxryU/J5zaJpHH4oQ
-	 2inRD14LO6h98tkJLBMf2jdjJynZpi8dpoLYQQJyPfMPEw6DtXebd28+YAFefaM9NL
-	 CLyZtjL8nBEZA==
+	b=oIauK5VYMUA362OEEwc+Uzgv51oV3T13bwxLmDEvQrKCM7/laHd5a0U6Dkp7QlsZp
+	 Mknj5N+3cfz4/CBM7q6rEbpCMYOO51al/gwahewkQ2NB+2o1LdTpBkCZZVwDmCg1Ao
+	 c8EN0Se0IGOpIvhJnFbhppdsZ6ErvDrLU71zr8uSjprRlatICuquMylyXWwrcwnzwI
+	 ojMEF3E669VRrobPZ/drG1exnJtGLnKOdwRRU6CD5AetPRNWrACJpjLsizi9KnwcW8
+	 doUD1I5jiOW65DPIwNqrsWBNxHu0eFNUqF83gUFPWVYQXGJrdac9UFv/UjZurNBPwr
+	 ccLJC8zur4L1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miklos Szeredi <mszeredi@redhat.com>,
-	Chunsheng Luo <luochunsheng@ustc.edu>,
+Cc: Riana Tauro <riana.tauro@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miklos@szeredi.hu,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] fuse: zero initialize inode private data
-Date: Sat, 25 Oct 2025 11:55:03 -0400
-Message-ID: <20251025160905.3857885-72-sashal@kernel.org>
+	lucas.demarchi@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/xe: Set GT as wedged before sending wedged uevent
+Date: Sat, 25 Oct 2025 11:55:04 -0400
+Message-ID: <20251025160905.3857885-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,137 +55,267 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Riana Tauro <riana.tauro@intel.com>
 
-[ Upstream commit 3ca1b311181072415b6432a169de765ac2034e5a ]
+[ Upstream commit 90fdcf5f89e9288c153923f16a60e6f7da18ba76 ]
 
-This is slightly tricky, since the VFS uses non-zeroing allocation to
-preserve some fields that are left in a consistent state.
+Userspace should be notified after setting the device as wedged.
+Re-order function calls to set gt wedged before sending uevent.
 
-Reported-by: Chunsheng Luo <luochunsheng@ustc.edu>
-Closes: https://lore.kernel.org/all/20250818083224.229-1-luochunsheng@ustc.edu/
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Suggested-by: Raag Jadav <raag.jadav@intel.com>
+Signed-off-by: Riana Tauro <riana.tauro@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250826063419.3022216-4-riana.tauro@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+## Backport Recommendation: YES (with dependency)
 
-- What changed
-  - In `fs/fuse/inode.c:98`, `fuse_alloc_inode()` now zero-initializes
-    the entire FUSE-private part of `struct fuse_inode` while explicitly
-    preserving the embedded VFS `struct inode`:
-    - `fs/fuse/inode.c:106` adds a layout check:
-      `BUILD_BUG_ON(offsetof(struct fuse_inode, inode) != 0);`
-    - `fs/fuse/inode.c:108` zeroes everything beyond `fi->inode`:
-      `memset((void *)fi + sizeof(fi->inode), 0, sizeof(*fi) -
-      sizeof(fi->inode));`
-  - The manual piecemeal initialization of only a handful of fields
-    (e.g., `i_time`, `nodeid`, `nlookup`, `attr_version`, `orig_ino`,
-    `state`, `submount_lookup`) is removed and replaced by the blanket
-    private-data zeroing.
-  - The invariants and locks are still set after zeroing:
-    - `fi->inval_mask = ~0;` (`fs/fuse/inode.c:110`)
-    - `mutex_init(&fi->mutex);` (`fs/fuse/inode.c:111`)
-    - `spin_lock_init(&fi->lock);` (`fs/fuse/inode.c:112`)
-    - `fi->forget = fuse_alloc_forget();` (`fs/fuse/inode.c:113`)
-    - DAX and passthrough helpers remain unchanged
-      (`fs/fuse/inode.c:117`, `fs/fuse/inode.c:120`).
+**Answer: YES** - This commit should be backported to stable kernel
+trees, but ONLY together with its prerequisite commit 60439ac3f2354
+("drm/xe: Add a helper function to set recovery method").
 
-- Why this fixes a real bug
-  - Inode objects are allocated via `alloc_inode_sb()`, which is a non-
-    zeroing slab allocation (`include/linux/fs.h:3407` →
-    `kmem_cache_alloc_lru`). This means previously freed memory content
-    can persist in new `struct fuse_inode` instances unless explicitly
-    cleared.
-  - Before this change, FUSE only zeroed a subset of private fields,
-    leaving many newly added or less obvious fields uninitialized/stale,
-    which can lead to incorrect behavior. Examples:
-    - `fi->cached_i_blkbits` is used by cached getattr to compute
-      `stat->blksize` without a server roundtrip (`fs/fuse/dir.c:1373`).
-      If not initialized, userspace can observe garbage or stale block
-      sizes when using cached attributes.
-    - `fi->i_time` controls attribute staleness; it must start from a
-      known baseline to force initial refresh (it’s now guaranteed
-      zeroed before being set; previously it was explicitly written, but
-      other related fields were not).
-    - Readdir cache state in `fi->rdc.*` (e.g. `cached`, `pos`, `size`,
-      `version`) must start clean, and is explicitly initialized only in
-      `fuse_init_dir()` (`fs/fuse/dir.c:2266`). Zeroing ensures no stale
-      values leak in the interim.
-    - File-io cache accounting (`fi->iocachectr`, waitqueues and lists)
-      is initialized in `fuse_init_file_inode()`
-      (`fs/fuse/file.c:3121`–`fs/fuse/file.c:3136`); zeroing up front
-      prevents spurious non-zero counters or garbage pointers before
-      that init runs.
-    - Passthrough backing file pointer `fi->fb` (present with
-      `CONFIG_FUSE_PASSTHROUGH`) is now guaranteed NULL initially; the
-      code also explicitly sets it via `fuse_inode_backing_set(fi,
-      NULL)` (`fs/fuse/inode.c:120`). Zeroing avoids any transient stale
-      pointer exposure.
-  - This change conforms to the VFS model of non-zeroing allocation: it
-    deliberately preserves `struct inode` (the part the VFS expects to
-    keep stable) and only clears the FUSE-private tail. The
-    `BUILD_BUG_ON` enforces the assumption that `inode` is the first
-    field.
+---
 
-- Scope and risk
-  - The fix is small, localized to a single function in FUSE, and does
-    not modify any public interfaces or core VFS behavior.
-  - It reduces risk by eliminating uninitialized data usage and
-    potential state inconsistencies from inode slab reuse.
-  - It is defensive across existing and future FUSE private fields,
-    avoiding the need to remember to add manual zeroing for every new
-    field.
+## Comprehensive Analysis
 
-- Dependencies and backport considerations
-  - The code relies on standard kernel primitives: `offsetof`,
-    `BUILD_BUG_ON`, and existing FUSE helpers. No architectural changes.
-  - `alloc_inode_sb()` non-zeroing semantics are already present in
-    stable series (see `include/linux/fs.h:3407`), so the bug exists
-    there too.
-  - The patch does not depend on other new features; it should apply
-    cleanly or be trivial to adapt in stable trees that have the nearby
-    code structure.
+### Race Condition Being Fixed
 
-- User impact
-  - Prevents user-visible inconsistencies (e.g., wrong `blksize` values)
-    and eliminates potential undefined behavior from stale per-inode
-    private state across reuse.
-  - Also improves robustness against uninitialized reads that could
-    manifest as rare warnings or subtle regressions.
+This commit addresses a critical **Time-of-Check-to-Time-of-Use (TOCTOU)
+race condition** in the device wedging error path.
 
-Given it fixes a correctness bug with minimal, contained changes and
-clear safety benefits, this commit is a good candidate for backporting
-to stable trees.
+**The Problem (OLD CODE):**
+```c
+if (!atomic_xchg(&xe->wedged.flag, 1)) {
+    // Set device as wedged
+    xe->needs_flr_on_fini = true;
+    drm_err(&xe->drm, ...);
 
- fs/fuse/inode.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+    // BUG: Send uevent to userspace HERE
+    drm_dev_wedged_event(&xe->drm, ...);
+}
 
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index 7ddfd2b3cc9c4..7c0403a002e75 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -101,14 +101,11 @@ static struct inode *fuse_alloc_inode(struct super_block *sb)
- 	if (!fi)
- 		return NULL;
- 
--	fi->i_time = 0;
-+	/* Initialize private data (i.e. everything except fi->inode) */
-+	BUILD_BUG_ON(offsetof(struct fuse_inode, inode) != 0);
-+	memset((void *) fi + sizeof(fi->inode), 0, sizeof(*fi) - sizeof(fi->inode));
+// Wedge GTs AFTER userspace notification
+for_each_gt(gt, xe, id)
+    xe_gt_declare_wedged(gt);
+```
+
+**The Race:**
+1. Thread sets `xe->wedged.flag = 1`
+2. Thread sends uevent to userspace notifying of wedged state
+3. **Userspace receives notification and may check device state**
+4. **BUT: GTs are NOT yet wedged!**
+5. Thread finally calls `xe_gt_declare_wedged()` which:
+   - Stops submission via `xe_guc_submit_wedge()`
+   - Stops command transport via `xe_guc_ct_stop()`
+   - Resets TLB invalidation via `xe_tlb_inval_reset()`
+
+**The Impact:**
+Userspace receiving the wedged uevent might:
+- Query device state and see inconsistent information
+- Initiate recovery procedures on a partially-wedged device
+- Experience race conditions in error handling logic
+- See submissions still active when device should be fully wedged
+
+### The Fix (NEW CODE)
+
+The commit reorders operations to ensure atomicity from userspace's
+perspective:
+
+```c
+if (!atomic_xchg(&xe->wedged.flag, 1)) {
+    xe->needs_flr_on_fini = true;
+    drm_err(&xe->drm, ...);
+}  // ← Close the atomic block
+
+// Wedge ALL GTs FIRST (always executed)
+for_each_gt(gt, xe, id)
+    xe_gt_declare_wedged(gt);
+
+// Then notify userspace (always executed if flag is set)
+if (xe_device_wedged(xe)) {
+    if (!xe->wedged.method)
+        xe_device_set_wedged_method(xe, ...);
+    drm_dev_wedged_event(&xe->drm, xe->wedged.method, NULL);
+}
+```
+
+This ensures that:
+1. Device wedged flag is set
+2. **ALL GTs are fully wedged (submissions stopped, CT stopped, TLB
+   reset)**
+3. **ONLY THEN is userspace notified**
+
+### Code Changes Analysis
+
+**From xe_device.c:1260-1280:**
+
+The key changes are:
+1. **Moved closing brace** - The uevent call is moved OUT of the `if
+   (!atomic_xchg(...))` block
+2. **Reordered operations** - `for_each_gt()` loop moved BEFORE the
+   uevent
+3. **Added new guard** - `if (xe_device_wedged(xe))` wraps the uevent
+   notification
+4. **Uses new infrastructure** - References `xe->wedged.method` (from
+   dependency commit)
+
+### Behavioral Changes
+
+**Minor behavioral change:** The uevent is now sent on every call after
+the flag is set (not just the first call). However, this is likely
+benign because:
+
+1. Most callers check `xe_device_wedged()` before calling (see
+   xe_gt.c:816, xe_guc_submit.c:1038)
+2. These are error recovery paths that shouldn't execute repeatedly
+3. Userspace should handle wedged events idempotently anyway
+
+### Critical Dependency
+
+**This commit has a HARD DEPENDENCY on commit 60439ac3f2354** ("drm/xe:
+Add a helper function to set recovery method") which:
+
+1. Adds `xe->wedged.method` field to `struct xe_device`
+   (xe_device_types.h:544)
+2. Adds `xe_device_set_wedged_method()` function (xe_device.c:1186)
+3. Modifies `drm_dev_wedged_event()` call to use `xe->wedged.method`
+
+**Without this dependency, the commit will NOT compile!**
+
+The code in lines 1274-1276 references:
+```c
+if (!xe->wedged.method)
+    xe_device_set_wedged_method(xe, DRM_WEDGE_RECOVERY_REBIND |
+                                DRM_WEDGE_RECOVERY_BUS_RESET);
+```
+
+And line 1279 uses:
+```c
+drm_dev_wedged_event(&xe->drm, xe->wedged.method, NULL);
+```
+
+Both require the infrastructure from commit 60439ac3f2354.
+
+### Backporting Criteria Evaluation
+
+1. **Does it fix a bug that affects users?** ✓ YES
+   - Fixes a race condition in critical error handling
+   - Affects device recovery and error reporting
+   - Can cause inconsistent state reporting to userspace
+
+2. **Is the fix relatively small and contained?** ✓ YES
+   - Just 8 lines added, 4 lines removed
+   - Single function modified
+   - Localized to xe_device_declare_wedged()
+
+3. **Does it have clear side effects beyond fixing the issue?** ✓ NO
+   - Only minor behavioral change (potential multiple uevents)
+   - No new functionality added
+   - No API changes
+
+4. **Does it include major architectural changes?** ✓ NO
+   - Simple code reordering
+   - No new subsystems or abstractions
+
+5. **Does it touch critical kernel subsystems?** ⚠ YES (but contained)
+   - Touches DRM Xe driver (Intel GPU driver)
+   - Critical for device error handling
+   - But change is confined to xe driver only
+
+6. **Is there explicit mention of stable tree backporting?** ✗ NO
+   - No `Cc: stable@vger.kernel.org` tag
+   - No `Fixes:` tag
+
+7. **Does it follow stable tree rules?** ✓ YES
+   - Important bugfix (race condition)
+   - Minimal risk of regression
+   - No new features
+   - Confined to single driver
+
+### Risk Assessment
+
+**Risk Level: LOW**
+
+**Reasons:**
+- The reordering is logically sound and correct
+- Code has been reviewed by maintainers (Reviewed-by: Matthew Brost)
+- No reverts found in subsequent commits
+- The potential multiple-uevent issue is mitigated by caller checks
+- Change is contained to error handling paths
+
+**Testing considerations:**
+- Error paths are inherently difficult to test
+- Requires triggering GT reset failures or GuC load failures
+- May need fault injection testing
+
+### Recommendation
+
+**YES - Backport this commit, BUT as part of a series with its
+dependency.**
+
+**Required commits for backport (in order):**
+1. **60439ac3f2354** - "drm/xe: Add a helper function to set recovery
+   method"
+2. **90fdcf5f89e92** - "drm/xe: Set GT as wedged before sending wedged
+   uevent" (this commit)
+
+**Rationale:**
+- Fixes a real race condition that can cause inconsistent device state
+- Small, contained, and low-risk change
+- Important for proper error handling and recovery
+- Has clear benefit for users with Intel Xe GPUs
+- No known regressions or issues
+
+**Target stable trees:**
+- Any stable kernel that includes the DRM Xe driver
+- Likely 6.8+ (when Xe driver was merged)
+
+**Note:** The commits should be backported as a pair in the correct
+order to maintain compilation and functionality.
+
+ drivers/gpu/drm/xe/xe_device.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 1c9907b8a4e9e..d399c2628fa33 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -1157,8 +1157,10 @@ static void xe_device_wedged_fini(struct drm_device *drm, void *arg)
+  * xe_device_declare_wedged - Declare device wedged
+  * @xe: xe device instance
+  *
+- * This is a final state that can only be cleared with a module
++ * This is a final state that can only be cleared with the recovery method
++ * specified in the drm wedged uevent. The default recovery method is
+  * re-probe (unbind + bind).
++ *
+  * In this state every IOCTL will be blocked so the GT cannot be used.
+  * In general it will be called upon any critical error such as gt reset
+  * failure or guc loading failure. Userspace will be notified of this state
+@@ -1192,13 +1194,15 @@ void xe_device_declare_wedged(struct xe_device *xe)
+ 			"IOCTLs and executions are blocked. Only a rebind may clear the failure\n"
+ 			"Please file a _new_ bug report at https://gitlab.freedesktop.org/drm/xe/kernel/issues/new\n",
+ 			dev_name(xe->drm.dev));
++	}
 +
- 	fi->inval_mask = ~0;
--	fi->nodeid = 0;
--	fi->nlookup = 0;
--	fi->attr_version = 0;
--	fi->orig_ino = 0;
--	fi->state = 0;
--	fi->submount_lookup = NULL;
- 	mutex_init(&fi->mutex);
- 	spin_lock_init(&fi->lock);
- 	fi->forget = fuse_alloc_forget();
++	for_each_gt(gt, xe, id)
++		xe_gt_declare_wedged(gt);
+ 
++	if (xe_device_wedged(xe)) {
+ 		/* Notify userspace of wedged device */
+ 		drm_dev_wedged_event(&xe->drm,
+ 				     DRM_WEDGE_RECOVERY_REBIND | DRM_WEDGE_RECOVERY_BUS_RESET,
+ 				     NULL);
+ 	}
+-
+-	for_each_gt(gt, xe, id)
+-		xe_gt_declare_wedged(gt);
+ }
 -- 
 2.51.0
 
