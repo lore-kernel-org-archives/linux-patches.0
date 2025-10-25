@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF86723D288;
-	Sat, 25 Oct 2025 16:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939EE30100D;
+	Sat, 25 Oct 2025 16:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409210; cv=none; b=k9sNFucU7jLhqNvZlWN4mgRlM4WdTdX5TNDH+HuzbInDZ+jxqjohzqNt8L7+rAnNdQ3Fdmyak7KQw0wrFwBaOD756cx+iMuUr03w7fbd/BQ4XUEUNVWp7MLRDwcguzysBcCBB0cjZpMQp8EgSCgeD7YgnF3YIccNlTfNm0rgQ0M=
+	t=1761409214; cv=none; b=dITe34+OxsIgQYIjQ0uS58335H/dSkaeYgYd6efFyDxF+fkceS069Hv7cwAbO/HSQ77Jdk4/GCYMDwkOZFXimxPNP7mLqcPCp1sXW4s6UvurzY01ZgZKyxclpSRngw0EvLoOzmPkjWEvxDG9x1hLP4h1fUyi8QDYuq45O9fPAYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409210; c=relaxed/simple;
-	bh=Azs5/WmDLV1h8jBKANAqoGYQS7sR47L8sRbriesti6Q=;
+	s=arc-20240116; t=1761409214; c=relaxed/simple;
+	bh=Ivqf6B06RLQJ75RU1eKMgPmPo0bxsOmzuxLQdcmvNqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7n/TuDWHpYrZcQYZjlGrt0h7mZJf/sqCokgViXFvSTkSQ7U2I6kIsLfx2S6xh4o6YIWACSx63KLh6l33Ln46jkOXqV8wJerfTUhUlt/UZDa7IgqzI/jGX/VM6OcUul63DqRKpQ4WRbv1KTGGIQfqFPbZLW+UK0/ENa77seBBOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prW4GD0y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MSo456wKhFiG3oHohcbUiIaTRTw4mUCMy2PE5r1JzQy4iCAvnWUHLOTldbqjCdnnNwO8vwvnqknu4tld0OFxRjxgyjzbL8d1+tQaTfzosgd5rPnLAou19NbcXL+G6rPMFJGfh4mKYLOUZzLMy9IVgbfE42gF/hWv06xexVD9jcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZT9Pj2pY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prW4GD0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34535C4CEF5;
-	Sat, 25 Oct 2025 16:20:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZT9Pj2pY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F707C4CEF5;
+	Sat, 25 Oct 2025 16:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409210;
-	bh=Azs5/WmDLV1h8jBKANAqoGYQS7sR47L8sRbriesti6Q=;
+	s=k20201202; t=1761409214;
+	bh=Ivqf6B06RLQJ75RU1eKMgPmPo0bxsOmzuxLQdcmvNqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prW4GD0yp1qrBAMOTDJzSbMwUJjYeBYNC0YnYHSq6n3RRtH4Bl3Y5g9sZCbtXLd3j
-	 iG9A56YUIvtR8R5kzqezgLfipFT+he/GagiFbZ58OVZ/DQYlXHO+ugf5RM8dBNC6ML
-	 U/Fj2nqagxIOMmSybM0kG4q/BuMi0KOsb12ZTnIgIxZ6tBrzM3j/avOu1yc5CIsTR5
-	 61XROhUeVkV+3UeEnDyNV6Rh0Xq89Jhjt9a93JaPQefkeQZV2jdeaqjZeYR5GoJ8uI
-	 Hi0YJOMSuQKbW80q8JhGyorz6qOyuc2U4v5QS1yEvJd+mlYBNe/rGO22cS9G2Zqi4Z
-	 aRob4oB4OFatQ==
+	b=ZT9Pj2pYM4geut9A5VgktL1f/jk1N+Dv7t695vlPFfE5KhuZ21teAizFG6BwdUsaQ
+	 bPO43YHjxikRlq8UsUWcSb5RVZH3Q2XSrfPwXF2vS3o74RvjMkE0sft1zfulBcUHfO
+	 SE2vifEY3ccDO4C0g5ywCcaNMKo/hswMRG/8St+89Jtc0bC8wRuX1w2C8u4ue8g3BB
+	 LNPFH/yKUHACCtFUG03zXlU9Vn53NAIBIbSLrRhQ6ZF7kQCP9LoCQOsmSS8G2u2Kov
+	 HSgYrm6SDU+fbHd0Bz0kesUHxKyQ/y4B9Tus9UUHAL7kAA+2m+ie8fKCUW9XnMWRoB
+	 rnmMmx50rOTqw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	kovalev@altlinux.org,
-	brauner@kernel.org,
+	Hawking.Zhang@amd.com,
+	christian.koenig@amd.com,
+	sunil.khatri@amd.com,
+	xiang.liu@amd.com,
 	alexandre.f.demers@gmail.com,
-	chentaotao@didiglobal.com,
-	lizhi.xu@windriver.com,
-	jfs-discussion@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.17-5.4] jfs: Verify inode mode when loading from disk
-Date: Sat, 25 Oct 2025 11:57:54 -0400
-Message-ID: <20251025160905.3857885-243-sashal@kernel.org>
+	shiwu.zhang@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Add fallback to pipe reset if KCQ ring reset fails
+Date: Sat, 25 Oct 2025 11:57:55 -0400
+Message-ID: <20251025160905.3857885-244-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -58,73 +57,94 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
 
-[ Upstream commit 7a5aa54fba2bd591b22b9b624e6baa9037276986 ]
+[ Upstream commit 7469567d882374dcac3fdb8b300e0f28cf875a75 ]
 
-The inode mode loaded from corrupted disk can be invalid. Do like what
-commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
-does.
+Add a fallback mechanism to attempt pipe reset when KCQ reset
+fails to recover the ring. After performing the KCQ reset and
+queue remapping, test the ring functionality. If the ring test
+fails, initiate a pipe reset as an additional recovery step.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+v2: fix the typo (Lijo)
+v3: try pipeline reset when kiq mapping fails (Lijo)
+
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The change bounds the special-file path in `jfs_iget()` to the four
-  valid special inode classes (`S_ISCHR/S_ISBLK/S_ISFIFO/S_ISSOCK`)
-  before calling `init_special_inode()` (`fs/jfs/inode.c:62-65`). That
-  prevents invalid on-disk modes from silently flowing into
-  `init_special_inode()`, which otherwise only emits a debug message and
-  leaves `i_fop` unset (`fs/inode.c:2560-2583`), making later VFS
-  operations trip over a `NULL` method table. Syzkaller already hit that
-  crash scenario on corrupted metadata, so this is a real bug fix, not
-  just hardening.
-- When the mode is outside every legal class, the new branch logs the
-  anomaly and fails the iget (`fs/jfs/inode.c:67-70`). Returning
-  `ERR_PTR(-EIO)` is the standard idiom already used a few lines above
-  for other `diRead()` failures (`fs/jfs/inode.c:34-38`), so callers
-  such as `jfs_read_super()` and `jfs_lookup()` already expect and
-  handle it. That turns a kernel crash into an I/O error, matching the
-  stable tree goal of “don’t panic on corrupted media.”
-- The patch is minimal and self-contained: it touches a single function,
-  adds no new APIs, and mirrors the already-upstreamed isofs fix for the
-  same syzbot report. Normal workloads (regular files, directories,
-  symlinks, and well-formed special files) stay on their existing paths,
-  so regression risk is negligible while the payoff is preventing a
-  user-triggerable crash on damaged volumes—squarely within stable
-  backport policy. Potential next step: queue it for all supported
-  stable series that still carry the vulnerable code path.
+- The patch makes `gfx_v9_4_3_reset_kcq()` retry with a pipe-level reset
+  when queue-level recovery fails: it tracks the current mode
+  (`reset_mode` at drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:3563), flips
+  it when `gfx_v9_4_3_reset_hw_pipe()` runs
+  (drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:3600), and now re-enters the
+  reset logic if the KIQ queue remap or the final ring validation still
+  fail while only a per-queue reset was attempted
+  (drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:3623 and :3631). This plugs
+  the hole where the earlier pipe-reset support never triggered on those
+  later failure points.
+- Without this fallback, a KCQ reset that cannot revive the ring bubbles
+  up as an error, sending the scheduler down the full GPU reset path in
+  `amdgpu_job.c` (drivers/gpu/drm/amd/amdgpu/amdgpu_job.c:132-170); that
+  is a user-visible functional failure. The new logic keeps recovery
+  local to the ring, exactly as the original pipe-reset series intended.
+- The change is confined to GC 9.4.3’s compute reset path, only
+  exercises when recovery is already failing, and relies solely on the
+  pipe-reset infrastructure that has shipped since v6.12 (e.g., commit
+  ad17b124). Risk of regression is therefore minimal for stable trees
+  carrying this IP block. Branches that lack the earlier pipe-reset
+  support simply wouldn’t take this patch.
 
- fs/jfs/inode.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
-index fcedeb514e14a..21f3d029da7dd 100644
---- a/fs/jfs/inode.c
-+++ b/fs/jfs/inode.c
-@@ -59,9 +59,15 @@ struct inode *jfs_iget(struct super_block *sb, unsigned long ino)
- 			 */
- 			inode->i_link[inode->i_size] = '\0';
- 		}
--	} else {
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		inode->i_op = &jfs_file_inode_operations;
- 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
-+	} else {
-+		printk(KERN_DEBUG "JFS: Invalid file type 0%04o for inode %lu.\n",
-+		       inode->i_mode, inode->i_ino);
-+		iget_failed(inode);
-+		return ERR_PTR(-EIO);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+index 51babf5c78c86..f06bc94cf6e14 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+@@ -3562,6 +3562,7 @@ static int gfx_v9_4_3_reset_kcq(struct amdgpu_ring *ring,
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct amdgpu_kiq *kiq = &adev->gfx.kiq[ring->xcc_id];
+ 	struct amdgpu_ring *kiq_ring = &kiq->ring;
++	int reset_mode = AMDGPU_RESET_TYPE_PER_QUEUE;
+ 	unsigned long flags;
+ 	int r;
+ 
+@@ -3599,6 +3600,7 @@ static int gfx_v9_4_3_reset_kcq(struct amdgpu_ring *ring,
+ 		if (!(adev->gfx.compute_supported_reset & AMDGPU_RESET_TYPE_PER_PIPE))
+ 			return -EOPNOTSUPP;
+ 		r = gfx_v9_4_3_reset_hw_pipe(ring);
++		reset_mode = AMDGPU_RESET_TYPE_PER_PIPE;
+ 		dev_info(adev->dev, "ring: %s pipe reset :%s\n", ring->name,
+ 				r ? "failed" : "successfully");
+ 		if (r)
+@@ -3621,10 +3623,20 @@ static int gfx_v9_4_3_reset_kcq(struct amdgpu_ring *ring,
+ 	r = amdgpu_ring_test_ring(kiq_ring);
+ 	spin_unlock_irqrestore(&kiq->ring_lock, flags);
+ 	if (r) {
++		if (reset_mode == AMDGPU_RESET_TYPE_PER_QUEUE)
++			goto pipe_reset;
++
+ 		dev_err(adev->dev, "fail to remap queue\n");
+ 		return r;
  	}
- 	unlock_new_inode(inode);
- 	return inode;
+ 
++	if (reset_mode == AMDGPU_RESET_TYPE_PER_QUEUE) {
++		r = amdgpu_ring_test_ring(ring);
++		if (r)
++			goto pipe_reset;
++	}
++
++
+ 	return amdgpu_ring_reset_helper_end(ring, timedout_fence);
+ }
+ 
 -- 
 2.51.0
 
