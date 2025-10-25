@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E71303A17;
-	Sat, 25 Oct 2025 16:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4511F1306;
+	Sat, 25 Oct 2025 16:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408589; cv=none; b=Gy264ZwCqudYUnIzHET+h3k9UcG4dSk99M4ME+ypqvfqStfM5GJ/u/Vmwu/6BGPaQOXy97YcEbjiKslR5yNe1tpObgm5Sw98sRKKibSqi11H5bNkXBW/FKmV4rzu7jVVd/Af1sJt/i/m+/9BuwqJeRSC81gxqZkCCQuV0VeNbks=
+	t=1761408593; cv=none; b=OP/a8nmAPPMNsUakk2qZSMYp4Gutf02t8s7KqIc0Z0CanepOZ6mT6VtnSu+qD3hsK0j6dZnRlO9JzfdlXTUye6IDBQ3zJkkzIutdEG0NV/iK4LrASTOXCgGkvWdbg2KJY/KC8ioX2gXt6C72Trwtf9C+P/tlmJnt/JIWMtoEaaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408589; c=relaxed/simple;
-	bh=zqY1tD5cG9nV0tP5vTOtO3T1wE6vD00rGkksPeB8h6E=;
+	s=arc-20240116; t=1761408593; c=relaxed/simple;
+	bh=OdZA1HiWmkqu4807gPzRUy10prSohL7QPKQXIED9hgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c6jY2Bj9lmIFmdK7SbOIQ4hR/9PFxcjZCsoKuc77tbSXeWekb8FhYN1FcMzbIdMMrMsGY8PTAPPO+n0ZoSEfxjcfAeAMizwD/7gPSxL8PInDOB5gTgf0mglmrD48+MG2A1GyK13ia6JmDG7bQqNL78KcEDb9rCFZuu5srzSiM6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9CVcHBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oboxrFdqbLkLT8eX2DB95dPSe+fUfaX/7QW+39Wl8o9oZOSgOYXJo5w86qb/eBJKuXeWMSLvvGAGu61mqzRXZuHfJGAgb26TRpn5/MvFlMR9uaDMMHJVgQUA0TlhYjiDd9jZmqyUgPJ3c/jM0nfNMms0ZFFLWUSTrArj/gn0g0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zv5pjKuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9CVcHBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84EBC4CEF5;
-	Sat, 25 Oct 2025 16:09:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zv5pjKuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFF4C4CEF5;
+	Sat, 25 Oct 2025 16:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408588;
-	bh=zqY1tD5cG9nV0tP5vTOtO3T1wE6vD00rGkksPeB8h6E=;
+	s=k20201202; t=1761408592;
+	bh=OdZA1HiWmkqu4807gPzRUy10prSohL7QPKQXIED9hgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9CVcHBxWQ2A3ZJSApeo+/md5pDP5b3K8sKV0vVPiOqm5skVkKsbW9pIwSYIp88pp
-	 Iu4Vkk2fBhm4zx0XbUg2rwg24SJ9L5s+Wsg3y3KVuAcZZv7U31gaeygH5EjdFDNIJA
-	 lFWhkXxFZcknP6zqbhEVpsKrQccznJOI/Zj2MMh+Uk4Udl4hO7f06SXCw6CJQ2hcf4
-	 UHFvf7zPSifJNZaYflO+GQF3Ec0UL41lddap3hORroMhknkNoCLnrKPUZBhuw2P79O
-	 Ri4GpdVI426lZGsAKJOtpwjHhn9od/oG2xM5FIQeR5d2abwFVROFABXc8vpE2+k5ac
-	 nomTEhLPwudIQ==
+	b=Zv5pjKuoZcN/NuT+kcWcX8uzvQTmkP9sVUnGN4rWoBXqOf9cMQytCckje2GQ3xcQO
+	 8I4DvO8mHiK4DTXx29Cy1rnJAaCPDSuIvRBToxj7Cg9vC9nQ5I74hKScdgwitmzlih
+	 wAYfmZkWoaQ6un3A1k/knp8Bt3WDmOJSQk6oGBoLj2+TrFalQU/662z9Z4k4mg3ZiT
+	 ZI3uY09OXDNHgOaPqoX6+D1JS7Tlg3lg8MyX/0jPxPcdxLgK3tLBYK/fjL5fnvC1SL
+	 uwSL/7Euz6B31++rvQXLkqWF1CbPFT+OY0En06PpgEk5uQzUSRSLK8jBJwn1vJvngr
+	 MwnHsbxrPpj3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+Cc: Yunxiang Li <Yunxiang.Li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dwmw2@infradead.org,
-	iommu@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17] iommu/vt-d: Remove LPIG from page group response descriptor
-Date: Sat, 25 Oct 2025 11:54:05 -0400
-Message-ID: <20251025160905.3857885-14-sashal@kernel.org>
+	lijo.lazar@amd.com,
+	christian.koenig@amd.com,
+	Hawking.Zhang@amd.com,
+	mario.limonciello@amd.com,
+	alexandre.f.demers@gmail.com,
+	cesun102@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: skip mgpu fan boost for multi-vf
+Date: Sat, 25 Oct 2025 11:54:06 -0400
+Message-ID: <20251025160905.3857885-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -52,103 +56,96 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit 4402e8f39d0bfff5c0a5edb5e1afe27a56545e11 ]
+[ Upstream commit ba5e322b2617157edb757055252a33587b6729e0 ]
 
-Bit 66 in the page group response descriptor used to be the LPIG (Last
-Page in Group), but it was marked as Reserved since Specification 4.0.
-Remove programming on this bit to make it consistent with the latest
-specification.
+On multi-vf setup if the VM have two vf assigned, perhaps from two
+different gpus, mgpu fan boost will fail.
 
-Existing hardware all treats bit 66 of the page group response descriptor
-as "ignored", therefore this change doesn't break any existing hardware.
-
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250901053943.1708490-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- VT-d responses no longer program bit 66 (`QI_PGRP_LPIG`), which the
-  Intel spec has marked reserved since 4.0; both the macro removal in
-  `drivers/iommu/intel/iommu.h:455-463` and the descriptor writes in
-  `drivers/iommu/intel/prq.c:149-155` and
-  `drivers/iommu/intel/prq.c:372-395` now guarantee the reserved bit is
-  left zero. That brings the driver back into spec compliance and avoids
-  undefined behaviour on newer hardware that enforces the “reserved must
-  be zero” rule for page-request responses.
-- Without this change the kernel still reflected `req->lpig` into the
-  response descriptor (`drivers/iommu/intel/prq.c:149-155`, `372-395`
-  before the patch), so a “last-page” response would carry a ‘1’ in a
-  field the spec now forbids. VT-d PRQ handshakes are sensitive: if the
-  IOMMU rejects the response, devices stall waiting for completion, so
-  this is a real bug for any implementation following the latest spec.
-  Existing hardware already ignores the bit, so clearing it cannot
-  regress older systems.
-- The fix is tightly scoped to the Intel VT-d page-request path, keeps
-  the driver’s outward behaviour (e.g. still reporting
-  `IOMMU_FAULT_PAGE_REQUEST_LAST_PAGE` to device drivers at
-  `drivers/iommu/intel/prq.c:187-194`), and has no dependencies beyond
-  trivial code motion. Backporting simply drops the `QI_PGRP_LPIG()`
-  usage in the equivalent response paths (older stable trees have the
-  same logic in `svm.c`), so the risk of regression is minimal while the
-  upside is support for spec-compliant hardware.
 
- drivers/iommu/intel/iommu.h | 1 -
- drivers/iommu/intel/prq.c   | 7 ++-----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+Explanation
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 2c261c069001c..21b2c3f85ddc5 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -462,7 +462,6 @@ enum {
- #define QI_PGRP_PASID(pasid)	(((u64)(pasid)) << 32)
- 
- /* Page group response descriptor QW1 */
--#define QI_PGRP_LPIG(x)		(((u64)(x)) << 2)
- #define QI_PGRP_IDX(idx)	(((u64)(idx)) << 3)
- 
- 
-diff --git a/drivers/iommu/intel/prq.c b/drivers/iommu/intel/prq.c
-index 52570e42a14c0..ff63c228e6e19 100644
---- a/drivers/iommu/intel/prq.c
-+++ b/drivers/iommu/intel/prq.c
-@@ -151,8 +151,7 @@ static void handle_bad_prq_event(struct intel_iommu *iommu,
- 			QI_PGRP_PASID_P(req->pasid_present) |
- 			QI_PGRP_RESP_CODE(result) |
- 			QI_PGRP_RESP_TYPE;
--	desc.qw1 = QI_PGRP_IDX(req->prg_index) |
--			QI_PGRP_LPIG(req->lpig);
-+	desc.qw1 = QI_PGRP_IDX(req->prg_index);
- 
- 	qi_submit_sync(iommu, &desc, 1, 0);
- }
-@@ -379,19 +378,17 @@ void intel_iommu_page_response(struct device *dev, struct iopf_fault *evt,
- 	struct iommu_fault_page_request *prm;
- 	struct qi_desc desc;
- 	bool pasid_present;
--	bool last_page;
- 	u16 sid;
- 
- 	prm = &evt->fault.prm;
- 	sid = PCI_DEVID(bus, devfn);
- 	pasid_present = prm->flags & IOMMU_FAULT_PAGE_REQUEST_PASID_VALID;
--	last_page = prm->flags & IOMMU_FAULT_PAGE_REQUEST_LAST_PAGE;
- 
- 	desc.qw0 = QI_PGRP_PASID(prm->pasid) | QI_PGRP_DID(sid) |
- 			QI_PGRP_PASID_P(pasid_present) |
- 			QI_PGRP_RESP_CODE(msg->code) |
- 			QI_PGRP_RESP_TYPE;
--	desc.qw1 = QI_PGRP_IDX(prm->grpid) | QI_PGRP_LPIG(last_page);
-+	desc.qw1 = QI_PGRP_IDX(prm->grpid);
- 	desc.qw2 = 0;
- 	desc.qw3 = 0;
- 
+- What changed and where:
+  - The condition in `amdgpu_device_enable_mgpu_fan_boost()` now skips
+    enabling MGPU fan boost when running in SR-IOV multi-VF mode by
+    adding `amdgpu_sriov_multi_vf_mode(adev)` to the exclusion check:
+    - Old: only skips APUs
+    - New: also skips multi-VF VFs
+    - File: drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:3373
+  - This function is invoked during late init:
+    - File: drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:3455
+
+- Why the change is needed (bug context and behavior today):
+  - In SR-IOV multi-VF mode, the SMU power management is intentionally
+    disabled:
+    - File: drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c:1868
+      - In `smu_hw_init()`: `if (amdgpu_sriov_multi_vf_mode(adev)) {
+        smu->pm_enabled = false; return 0; }`
+  - Consequently, attempting to enable MGPU fan boost from a VF returns
+    `-EOPNOTSUPP`:
+    - File: drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c:3668
+      - In `smu_enable_mgpu_fan_boost()`: returns `-EOPNOTSUPP` when
+        `!smu->pm_enabled || !smu->adev->pm.dpm_enabled`
+  - Today, `amdgpu_device_enable_mgpu_fan_boost()` breaks out of its
+    loop on the first failure (`if (ret) break;`), which:
+    - Spams the logs with “enable mgpu fan boost failed” messages.
+    - Can prevent enabling MGPU fan boost for other eligible GPUs in
+      mixed setups because it stops at the first error.
+    - File: drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:3373
+
+- Why this is safe and suitable for stable:
+  - Small and contained: one conditional update, no API or structural
+    changes; uses existing and widely used macro
+    `amdgpu_sriov_multi_vf_mode()`:
+    - Macro: drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h:27
+  - Matches established pattern: AMDGPU already disables many PM
+    features in multi-VF mode and guards calls on `pm_enabled`.
+  - Prevents a known failure path and avoids breaking out early in the
+    loop, improving behavior without changing functionality for
+    supported cases.
+  - No behavioral change for PFs or single-VF (“PP_ONE_VF”)
+    environments; only avoids unsupported operations for multi-VF VFs.
+
+- Stable tree criteria assessment:
+  - Fixes a user-visible bug (failed MGPU fan boost attempts and log
+    noise; prevents premature loop exit from blocking other devices).
+  - Minimal risk and scope; no architectural changes; confined to
+    AMDGPU.
+  - No new features; purely defensive fix to avoid unsupported
+    operations.
+  - While there’s no explicit “Fixes:” or “Cc: stable” tag, it is a low-
+    risk, clear bug-avoidance change acked by AMD maintainers.
+
+Conclusion: This commit is a good candidate for backport to stable
+kernels that have the MGPU fan boost path and
+`amdgpu_sriov_multi_vf_mode()` available.
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index dfa68cb411966..097ceee79ece6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3389,7 +3389,7 @@ static int amdgpu_device_enable_mgpu_fan_boost(void)
+ 	for (i = 0; i < mgpu_info.num_dgpu; i++) {
+ 		gpu_ins = &(mgpu_info.gpu_ins[i]);
+ 		adev = gpu_ins->adev;
+-		if (!(adev->flags & AMD_IS_APU) &&
++		if (!(adev->flags & AMD_IS_APU || amdgpu_sriov_multi_vf_mode(adev)) &&
+ 		    !gpu_ins->mgpu_fan_enabled) {
+ 			ret = amdgpu_dpm_enable_mgpu_fan_boost(adev);
+ 			if (ret)
 -- 
 2.51.0
 
