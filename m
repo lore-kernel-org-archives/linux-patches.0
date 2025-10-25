@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DBE3074A4;
-	Sat, 25 Oct 2025 16:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195363074A4;
+	Sat, 25 Oct 2025 16:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409400; cv=none; b=tZSkXuF+gpunERWqsSDejgVHd8Rr/2fqTrCGGbaBg7hKyhicvLRekmmYIKS78zkPzPX2IV3JFQ025cSR8pDFW7hfxUJmPrcohDHczew7/tLjbwMJMGM2yLnB+gxjFcT+FIAwFgci6XGTCPvPJp2EaY2fyiD1EZ5GD05XCv4S/uI=
+	t=1761409403; cv=none; b=Y8qCDo7bmI1N/772bxcQ3C5gr+NLdfAPcRrYRCzXUs+YH7eX1YJFsNUuTTsqKbbxJ3WyTrQIaGL3Ipq908pJeANst+d/keFnG6jSX0oYnE6xg4KwZSliDxON5g66UVNY1II0qpFUDkoSKl0/pUZUucm2zXLU9UV2CMVpWsvqJoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409400; c=relaxed/simple;
-	bh=kvOgwdQrw973c1NxaZGdn6a9qg1RHHxO83UtbFKpj0s=;
+	s=arc-20240116; t=1761409403; c=relaxed/simple;
+	bh=5I9qk3gBTLLnPcYT8Lh1cfTu7Bsse6b7DIeDzWni5yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BFLjvjvfiLzRoHRSddyURyvLHh45zQdv49timIRuRhXepZMlcGodneaVJKeS7G7s160GAhDe+JvaZLlElpVaOEvX3Wt+8v8BHNj+o+fn8pFZxfM3a35gfk81rI8nDt0Q7KXG+XoLBpW6vbddfMsf2fwT2IRzawmSqQvSsBqmFXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/7MKA6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sZ7rsfNGo3TPMxnsh5HWkwxYV3eHVhOSryrmCYTznPGe2zx1E1slxZv6ml6FEp/Jra4Mgkh5voOqJKuBFfw5vI6tVp/CwmEMIgOItFlji66LqxzPZvXMJOofBi8eU3p5T4CgLL/n/COF/7yd+RBG6yDjAtb1uImUB8HYzANGwPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNxAC9HQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/7MKA6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E11C4CEFF;
-	Sat, 25 Oct 2025 16:23:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNxAC9HQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDBDC4CEF5;
+	Sat, 25 Oct 2025 16:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409400;
-	bh=kvOgwdQrw973c1NxaZGdn6a9qg1RHHxO83UtbFKpj0s=;
+	s=k20201202; t=1761409402;
+	bh=5I9qk3gBTLLnPcYT8Lh1cfTu7Bsse6b7DIeDzWni5yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/7MKA6fBJMJpjU0k3IL4rHozeNOwEaqZW0OMIfTp0TAj0wyXJGqw5q2XHDEq+sNO
-	 /ErRrFGFVCO75E/qfFAEBXYkQQnfMsmzi5++w936pP+ePz409ih8fJadZ8+YBqFzCi
-	 o97ZcNlXcHMe/kFMve9rmuB4tsXPdJijaaC6fqEU4tZHhEfayPlcZVriKJiiWOsRa3
-	 iqS2G40CbMOr3m11+s3FTRu3EtUsOO8Rcl3/mdgIUIOyH3U7i2EGiYC3DADm1OlOcH
-	 5Hu7X5zZFRaHKrF/iskP152qXcDcP6gb4m9y3U7ZAbJhhsUbwM+tpsOubES/AUUqH+
-	 mHfCOPA1YHdDQ==
+	b=HNxAC9HQ5qTXu+xh2XLpNJqKOyybZ4uHkeG6pbEsfX/fLpv72dRV3JoaEx0ZRQlfl
+	 zKJm3MR7gLwMBDFP1o2j6ebsiTskMhOOOmVtb+eqDaEaZt/qAYe+kx3E3yujQRd/dB
+	 G2RxuehLnnNYSdZLRTxiuho+/lGP2EzRktogQvSoTiQDOjb/dAfI0BNYHcL/Ss9vCH
+	 wCbw/m9gWXQpvGlVOgpIGSLF0p+DGp/EE2osr5Va1KugP8kdimIXv6+ISjqMeIBFKB
+	 /G+9mp09FQqbA8hmbySMGuZwzgHluoKkqHn8bcpAwFQJdOXX/+CSkGLDj1NNBTgpEF
+	 LzMuk8dob4w9A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ivan Pravdin <ipravdin.official@gmail.com>,
-	syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] Bluetooth: bcsp: receive data only if registered
-Date: Sat, 25 Oct 2025 11:58:57 -0400
-Message-ID: <20251025160905.3857885-306-sashal@kernel.org>
+	kuba@kernel.org,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.1] mips: lantiq: danube: rename stp node on EASY50712 reference board
+Date: Sat, 25 Oct 2025 11:58:58 -0400
+Message-ID: <20251025160905.3857885-307-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,88 +53,87 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Pravdin <ipravdin.official@gmail.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit ca94b2b036c22556c3a66f1b80f490882deef7a6 ]
+[ Upstream commit 2b9706ce84be9cb26be03e1ad2e43ec8bc3986be ]
 
-Currently, bcsp_recv() can be called even when the BCSP protocol has not
-been registered. This leads to a NULL pointer dereference, as shown in
-the following stack trace:
+This fixes the following warning:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: stp@e100bb0 (lantiq,gpio-stp-xway): $nodename:0: 'stp@e100bb0' does not match '^gpio@[0-9a-f]+$'
+	from schema $id: http://devicetree.org/schemas/gpio/gpio-stp-xway.yaml#
 
-    KASAN: null-ptr-deref in range [0x0000000000000108-0x000000000000010f]
-    RIP: 0010:bcsp_recv+0x13d/0x1740 drivers/bluetooth/hci_bcsp.c:590
-    Call Trace:
-     <TASK>
-     hci_uart_tty_receive+0x194/0x220 drivers/bluetooth/hci_ldisc.c:627
-     tiocsti+0x23c/0x2c0 drivers/tty/tty_io.c:2290
-     tty_ioctl+0x626/0xde0 drivers/tty/tty_io.c:2706
-     vfs_ioctl fs/ioctl.c:51 [inline]
-     __do_sys_ioctl fs/ioctl.c:907 [inline]
-     __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
-     do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-     do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-To prevent this, ensure that the HCI_UART_REGISTERED flag is set before
-processing received data. If the protocol is not registered, return
--EUNATCH.
-
-Reported-by: syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ed6852d4da4606c93da
-Tested-by: syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com
-Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – Guarding `bcsp_recv()` until the HCI UART core has successfully
-registered the driver prevents the real NULL-deref crash syzbot found,
-and the change is tiny, self-contained, and consistent with the rest of
-the UART transports.
+YES
 
-- `bcsp_complete_rx_pkt()` still hands completed frames to the core with
-  `hci_recv_frame(hu->hdev, …)` (`drivers/bluetooth/hci_bcsp.c:562`), so
-  if registration fails or has not finished, `hu->hdev` stays NULL and
-  the dereference blows up exactly as in the reported stack trace.
-- The fix adds a single early `test_bit(HCI_UART_REGISTERED…)` gate
-  (`drivers/bluetooth/hci_bcsp.c:585-586`). Returning `-EUNATCH` in this
-  situation matches what the other UART transports already do
-  (`drivers/bluetooth/hci_h4.c:112-113`,
-  `drivers/bluetooth/hci_bcm.c:698-699`, etc.), so runtime behavior
-  becomes consistent across protocols.
-- Callers ignore the return value and only bump stats when `hu->hdev` is
-  valid (`drivers/bluetooth/hci_ldisc.c:618-631`), so refusing to
-  process data before registration has no side effects beyond dropping
-  input that could not be delivered anyway.
-- `HCI_UART_REGISTERED` is set only after `hci_register_dev()` succeeds
-  (`drivers/bluetooth/hci_ldisc.c:691-699`) and is left clear when the
-  registration path fails and `hu->hdev` is nulled
-  (`drivers/bluetooth/hci_ldisc.c:693-695`), so the new guard precisely
-  covers the hazardous window.
-- The change is minimal (two new lines), purely defensive, and fixes a
-  syzbot-reported NULL dereference without touching protocol state
-  machines or timing, making it an excellent candidate for stable
-  backporting.
+- What changed: The node name was renamed from `stp@e100bb0` to
+  `gpio@e100bb0` under the `stp0` label in the EASY50712 DTS, aligning
+  the node name with the binding while keeping all properties intact
+  (arch/mips/boot/dts/lantiq/danube_easy50712.dts:99; compatible remains
+  lantiq,gpio-stp-xway at
+  arch/mips/boot/dts/lantiq/danube_easy50712.dts:101).
+- Binding compliance: The binding explicitly requires the nodename to
+  match `^gpio@[0-9a-f]+$` (Documentation/devicetree/bindings/gpio/gpio-
+  stp-xway.yaml:20), and its example shows `gpio@e100bb0`
+  (Documentation/devicetree/bindings/gpio/gpio-stp-xway.yaml:84). This
+  change removes the schema warning cited in the commit message.
+- Functional fix beyond a warning: On Lantiq/XWAY SoCs the PMU-based
+  clock lookup for STP is registered against device-id `1e100bb0.gpio`
+  (arch/mips/lantiq/xway/sysctrl.c:488). Platform device names for OF
+  nodes are derived from the translated address and the node name
+  (`of_device_make_bus_id`), yielding `1e100bb0.<node-name>`
+  (drivers/of/device.c:284). With the old name, the device-id would be
+  `1e100bb0.stp`, which does not match the PMU registration, causing
+  `devm_clk_get_enabled(&pdev->dev, NULL)` to fail and the driver to
+  abort probe (drivers/gpio/gpio-stp-xway.c:299). Renaming the node to
+  `gpio@…` makes the dev_name `1e100bb0.gpio`, matching the PMU
+  registration and allowing the driver to get and enable its clock.
+- Impact: Without this rename, the STP GPIO controller on this board is
+  very likely non-functional due to clock lookup failure, not just
+  “noisy” during `dtbs_check`. The change is a one-line DTS fix that
+  restores driver probe on the EASY50712 reference board.
+- Risk assessment:
+  - Scope: Single DTS node rename for one board; no code or
+    architectural changes; no changes to `compatible`, `reg`, or gpio
+    properties (arch/mips/boot/dts/lantiq/danube_easy50712.dts:99).
+  - ABI considerations: While node path strings change, the phandle
+    label `stp0` remains stable for intra-DT references. There are no
+    in-tree references to the old path, and this is a reference board.
+    The practical risk of breaking external overlays is low, and the fix
+    enables the hardware to function.
+- Stable criteria fit:
+  - Fixes a user-visible functional bug (driver failing to get its
+    clock, thus failing probe).
+  - Minimal, contained change in a non-critical subsystem (board DTS).
+  - No new features or architectural churn.
+  - Commit message targets a schema warning; however, code analysis
+    shows it also resolves a real runtime issue due to `clkdev` dev_id
+    mismatch.
 
- drivers/bluetooth/hci_bcsp.c | 3 +++
- 1 file changed, 3 insertions(+)
+Given the functional mismatch between the old node name-derived
+`dev_name` and the clock lookup key, this is an important, low-risk fix
+appropriate for stable backporting.
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index 664d82d1e6139..591abe6d63ddb 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -582,6 +582,9 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
- 	struct bcsp_struct *bcsp = hu->priv;
- 	const unsigned char *ptr;
+ arch/mips/boot/dts/lantiq/danube_easy50712.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+index ab70028dbefcf..c9f7886f57b8c 100644
+--- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
++++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+@@ -96,7 +96,7 @@ ethernet@e180000 {
+ 			lantiq,tx-burst-length = <4>;
+ 		};
  
-+	if (!test_bit(HCI_UART_REGISTERED, &hu->flags))
-+		return -EUNATCH;
-+
- 	BT_DBG("hu %p count %d rx_state %d rx_count %ld",
- 	       hu, count, bcsp->rx_state, bcsp->rx_count);
- 
+-		stp0: stp@e100bb0 {
++		stp0: gpio@e100bb0 {
+ 			#gpio-cells = <2>;
+ 			compatible = "lantiq,gpio-stp-xway";
+ 			gpio-controller;
 -- 
 2.51.0
 
