@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7526309EE8;
-	Sat, 25 Oct 2025 16:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2263A32AAAC;
+	Sat, 25 Oct 2025 16:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409770; cv=none; b=rroGItP4Rc6ioAJAefO7/mGH56jZe0HgS9pnLfguddoZ8pJTrYJrWMUR62x5pUGxDofxGcjzc5SG3QaJPLaw/ZRzF9a26dIRBNa5Ic183Jzt25STtcQ+kP7ubmVH+45gzprXmX3dToETsxHpp1bIt7/ygLAG2QIvpWdhRGJqgAE=
+	t=1761409772; cv=none; b=EKoAzBZBn++pI8UEUZj3XA1l6vl6F0AK5LmhIk3ihoLLDrveic5+/v0KIeiLY5NVKVW7cOD8n2/rpG0A8dQak8E4R2LPVTRx8gVt1gVlIb6kGIcU9gr3ABNaALpG+N1jc0LGhb1dCLdH/jcJLJZJgdWtST2sUvZzPqlAEeqczTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409770; c=relaxed/simple;
-	bh=vokghphZFN7cPlJYGHUkiv2cttRvCZNnrb6NHwYUJ1I=;
+	s=arc-20240116; t=1761409772; c=relaxed/simple;
+	bh=t58dezqz4gN5IwHByHWrAXrcxcmxkrdM49NVnbP9aiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bkqg32M7PuEVIi2PdV0OYgX7Dzz0HrELUkN/w8fwV42zCdgw4xBrgMxWf+SriXbT0Bknt5hH3rqXI0Gvy8SLuTflwPFdDhR46WbwWp72a8Ibco/F+TNJ5U9D7dS8xnZfwvwWicNruwQCTPMyDIhEV60Gw6edMIK3lLAh3FUgzTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAotVmFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JDuadvV8+dGwQARrSaAp8DVLVBHa5fGCv1aELDqYV86F68eZGPwgruSQ4i5fadTTAvbGeHYDogpzBK3+kF/ybioD2kDPclOBjD9A7YsyiU5kcgR/ca4HJrDvoUmqAULwWbP8yQ77DpQVSJw37ynIpKm27aq4xeNWH8yIDDxOP4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SiGtk6hI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAotVmFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEB8C4CEFB;
-	Sat, 25 Oct 2025 16:29:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SiGtk6hI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F45CC4CEF5;
+	Sat, 25 Oct 2025 16:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409770;
-	bh=vokghphZFN7cPlJYGHUkiv2cttRvCZNnrb6NHwYUJ1I=;
+	s=k20201202; t=1761409772;
+	bh=t58dezqz4gN5IwHByHWrAXrcxcmxkrdM49NVnbP9aiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAotVmFVX3zIEdvLhVQcYGs4HTZaSQD/73eLPX5z3+wnypPAZu/Y5u2RNkYAKyP3N
-	 mEoZMk5U04Re2ezGSm6b5ljxhrLtP/3RhUFhnqkj+ptiaOGIiBFK+tBe0Kb3F7i+rs
-	 cfCovJBZjwwEa5pkZDr3k09sCdxFYsAfdImxoTj1g/9VaX8fLEC/1w5HZnNDtL84Xl
-	 rE36pm1aaNJrULBo/ZBYTHgvgm+ATfuDfpugM9pIvf60TA4l5mXfxTGJapjiN8e0w6
-	 OLuaAWhaU//XCEcC3q1uAlqPgOVcU0qk0KaVZHkl4UGIIocMoIaz52oaLVO8b/Tsw/
-	 g8jCkiqmEvqPg==
+	b=SiGtk6hI253r1zL9O/R84y3pmtBHE0cv0Yxgw7D5a6QalyWrKNPyGvJGu2lmo1xJZ
+	 vIC8Qivda4rXLyUEgM/vnk58rXFQ95ioA+LA4qMRltWJ3sAbTQj+vOdxT7TYVCw//r
+	 2/8xRJuw3gY6wgEzYsgQSqYDf++EVFhk4X+JFEwC/HoHrPyi0bsy6cCCD1jd0wBVAV
+	 /ftAhDRo8q/du8516XWWu7SL/ijP50j/imBGTc9Mw6lK/FP1W0vwtWgMMUaxyLspxB
+	 Ouf8BDT2JCUlBKcDItEwCx0veO1cDGtXRAi4Q3A24TUyZ1Be3Q2UtrX6zugnLclS4O
+	 DlXw/mRxqcLcA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hawk@kernel.org,
-	ilias.apalodimas@linaro.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.15] page_pool: always add GFP_NOWARN for ATOMIC allocations
-Date: Sat, 25 Oct 2025 12:01:29 -0400
-Message-ID: <20251025160905.3857885-458-sashal@kernel.org>
+	paul.ely@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.15] scsi: lpfc: Remove ndlp kref decrement clause for F_Port_Ctrl in lpfc_cleanup
+Date: Sat, 25 Oct 2025 12:01:30 -0400
+Message-ID: <20251025160905.3857885-459-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,221 +49,94 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit f3b52167a0cb23b27414452fbc1278da2ee884fc ]
+[ Upstream commit a4809b98eb004fcbf7c4d45eb5a624d1c682bb73 ]
 
-Driver authors often forget to add GFP_NOWARN for page allocation
-from the datapath. This is annoying to users as OOMs are a fact
-of life, and we pretty much expect network Rx to hit page allocation
-failures during OOM. Make page pool add GFP_NOWARN for ATOMIC allocations
-by default.
+In lpfc_cleanup, there is an extraneous nlp_put for NPIV ports on the
+F_Port_Ctrl ndlp object.  In cases when an ABTS is issued, the
+outstanding kref is needed for when a second XRI_ABORTED CQE is
+received.  The final kref for the ndlp is designed to be decremented in
+lpfc_sli4_els_xri_aborted instead.  Also, add a new log message to allow
+for future diagnostics when debugging related issues.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250912161703.361272-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-5-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my extensive research and analysis of this commit, here is my
-determination:
+YES
+**Why Backport**
+- `lpfc_cleanup` no longer drops the last reference for NPIV fabric
+  nodes up front, so those entries now flow through the normal discovery
+  teardown path instead of triggering a premature `lpfc_nlp_put()`
+  (drivers/scsi/lpfc/lpfc_init.c:3059-3076). The old short-circuit let
+  the ndlp hit a zero kref while exchanges were still draining.
+- During ABTS processing each aborted ELS exchange takes its own
+  reference (`lpfc_nlp_get`) before parking on `lpfc_abts_els_sgl_list`;
+  if the cleanup path has already removed the final reference, the
+  second `XRI_ABORTED` CQE arrives with a dangling pointer, leading to
+  crashes or RRQ cleanup failures
+  (drivers/scsi/lpfc/lpfc_sli.c:1399-1407).
+- The final release of those references is already centralized in
+  `lpfc_sli4_els_xri_aborted`, so keeping the extra kref alive until the
+  CQE arrives matches the intended life cycle; the new log line simply
+  aids diagnosis (drivers/scsi/lpfc/lpfc_els.c:12020-12029). Any ndlp
+  that never sees its CQE still gets dropped by
+  `lpfc_sli4_vport_delete_els_xri_aborted` when the vport is torn down
+  (drivers/scsi/lpfc/lpfc_els.c:11953-11979).
 
-## **BACKPORT RECOMMENDATION: YES**
+**Risk**
+- Change is tightly scoped to the lpfc driver, removes an overzealous
+  `kref_put`, and relies on existing cleanup paths; no API shifts or
+  cross-subsystem dependencies. Impact of not backporting is a real NPIV
+  crash/UAF when ABTS races with vport removal, so the bug fix outweighs
+  the low regression risk.
 
-## Detailed Analysis
+ drivers/scsi/lpfc/lpfc_els.c  | 6 +++++-
+ drivers/scsi/lpfc/lpfc_init.c | 7 -------
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-### What This Commit Does
-
-This commit adds the `__GFP_NOWARN` flag to GFP_ATOMIC allocations in
-the page_pool subsystem by modifying the
-`__page_pool_alloc_netmems_slow()` function in `net/core/page_pool.c`.
-The change is minimal (6 lines) and specifically targets atomic
-allocations that occur during network packet reception in NAPI context.
-
-**Code change at net/core/page_pool.c:554-558:**
-```c
-+   /* Unconditionally set NOWARN if allocating from NAPI.
-+    * Drivers forget to set it, and OOM reports on packet Rx are
-useless.
-+    */
-+   if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
-+       gfp |= __GFP_NOWARN;
-```
-
-This modification affects both bulk page allocations (via
-`alloc_pages_bulk_node`) and high-order page allocations (via
-`__page_pool_alloc_page_order`).
-
-### Historical Context and Broader Pattern
-
-Through extensive git history analysis, I discovered this is part of a
-**systematic effort by Jakub Kicinski** to address OOM warnings in the
-network stack:
-
-1. **March 2024** (commit 6e9b01909a811): Modified `napi_alloc_skb()` to
-   hardcode `GFP_ATOMIC | __GFP_NOWARN`
-   - Commit message stated: *"the resulting OOM warning is the top
-     networking warning in our fleet"* (Meta's production environment)
-   - Rationale: *"allocation failures in atomic context will happen, and
-     printing warnings in logs, effectively for a packet drop, is both
-     too much and very likely non-actionable"*
-
-2. **August 2024** (commit c89cca307b209): Added `__GFP_NOWARN` to
-   skbuff ingress allocations
-   - Similar rationale: *"build_skb() and frag allocations done with
-     GFP_ATOMIC will fail in real life, when system is under memory
-     pressure, and there's nothing we can do about that. So no point
-     printing warnings."*
-
-3. **September 2025** (this commit): Extends the same principle to
-   page_pool allocations
-
-### Existing Precedent Validates This Approach
-
-My code research revealed:
-
-**Helper function already uses this pattern**
-(include/net/page_pool/helpers.h:92-96):
-```c
-static inline struct page *page_pool_dev_alloc_pages(struct page_pool
-*pool)
-{
-    gfp_t gfp = (GFP_ATOMIC | __GFP_NOWARN);
-    return page_pool_alloc_pages(pool, gfp);
-}
-```
-
-**Drivers manually adding NOWARN since 2022**:
-- `drivers/net/ethernet/mediatek/mtk_eth_soc.c:1916` - Added in July
-  2022 (commit 23233e577ef973)
-- `drivers/net/vmxnet3/vmxnet3_drv.c:1425` - Also includes manual NOWARN
-
-This demonstrates driver authors were already aware of the need for
-`__GFP_NOWARN` with page_pool allocations, validating the approach.
-
-### Why This Should Be Backported
-
-**1. Fixes Real User-Visible Issue**
-- OOM warnings during network Rx are non-actionable and create log spam
-- Confirmed as "top networking warning" at large-scale deployments
-  (Meta)
-- OOM during memory pressure is expected behavior, not an error
-  condition
-- Warnings provide no value but clutter logs and may trigger false
-  alarms
-
-**2. Minimal Risk**
-- Only 6 lines of code added to a single function
-- Only suppresses warning messages, doesn't change allocation behavior
-- Allocation failures are still detected and properly handled by drivers
-- Network stack provides proper statistics via qstats (rx-alloc-fail
-  counter)
-- No change to actual page allocation logic or error handling paths
-
-**3. No Regressions Found**
-- No subsequent commits fixing or reverting this change
-- No Fixes: tags referencing this commit
-- Commit has been in mainline since September 2025 with no reported
-  issues
-- Subsequent commit (a1b501a8c6a87) is unrelated (pool size clamping)
-
-**4. Makes Behavior Consistent**
-- Aligns with existing helper function behavior
-- Removes burden from driver authors who often forget this flag
-- Prevents inconsistency where some drivers add NOWARN and others don't
-- Follows established pattern from napi_alloc_skb() and skbuff
-  allocations
-
-**5. Meets Stable Kernel Criteria**
-- ✅ Fixes a real bug that bothers people (log spam annoys users and
-  operators)
-- ✅ Obviously correct (trivial change, well-understood semantics)
-- ✅ Small and self-contained (6 lines, single file)
-- ✅ No regression risk (only suppresses warnings)
-- ✅ No API changes (internal implementation detail)
-
-### Technical Correctness
-
-**GFP_ATOMIC context** (from include/linux/gfp_types.h:316-318):
-> "GFP_ATOMIC users can not sleep and need the allocation to succeed. A
-lower watermark is applied to allow access to 'atomic reserves'."
-
-**__GFP_NOWARN semantics** (from include/linux/gfp_types.h:274):
-> "__GFP_NOWARN suppresses allocation failure reports."
-
-The change is semantically correct: When page_pool allocates pages in
-atomic context (NAPI), allocation failures are expected during OOM and
-warnings serve no purpose. The allocation failure is still detected and
-handled - only the noisy warning is suppressed.
-
-### Why Not Explicitly Tagged for Stable
-
-While the commit lacks a `Cc: stable` tag, this doesn't necessarily mean
-it shouldn't be backported. Examining similar commits:
-- Neither the napi_alloc_skb nor skbuff NOWARN commits had explicit
-  stable tags
-- Quality-of-life improvements often aren't tagged by authors but are
-  valuable for stable trees
-- Stable backport decisions should be based on technical merit and user
-  benefit
-
-### Potential Concerns Addressed
-
-**"Does this hide real bugs?"**
-No - drivers still detect and handle allocation failures. The difference
-is only in logging.
-
-**"Could this affect debugging?"**
-Minimal impact - allocation failures are tracked via qstats. OOM
-warnings during memory pressure are expected, not diagnostic.
-
-**"Is this actually a bug fix?"**
-Yes - it fixes the "bug" of annoying, non-actionable log spam that
-affects production deployments at scale.
-
-### Conclusion
-
-This commit should be backported because it:
-1. Solves a real, annoying user-visible problem (confirmed at production
-   scale)
-2. Has essentially zero risk (only suppresses warnings)
-3. Is part of a well-vetted, systematic improvement
-4. Makes the page_pool behavior consistent with established patterns
-5. Reduces operational burden and log noise
-
-While this is more of a quality-of-life improvement than a critical
-functional fix, the combination of high user benefit, zero risk, and
-strong technical justification makes it a good candidate for stable
-backporting.
-
-**Final Answer: YES** - This commit should be backported to stable
-kernel trees.
-
- net/core/page_pool.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 19c92aa04e549..e224d2145eed9 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -596,6 +596,12 @@ static noinline netmem_ref __page_pool_alloc_netmems_slow(struct page_pool *pool
- 	netmem_ref netmem;
- 	int i, nr_pages;
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index 4c405bade4f34..3f703932b2f07 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -12013,7 +12013,11 @@ lpfc_sli4_els_xri_aborted(struct lpfc_hba *phba,
+ 			sglq_entry->state = SGL_FREED;
+ 			spin_unlock_irqrestore(&phba->sli4_hba.sgl_list_lock,
+ 					       iflag);
+-
++			lpfc_printf_log(phba, KERN_INFO, LOG_ELS | LOG_SLI |
++					LOG_DISCOVERY | LOG_NODE,
++					"0732 ELS XRI ABORT on Node: ndlp=x%px "
++					"xri=x%x\n",
++					ndlp, xri);
+ 			if (ndlp) {
+ 				lpfc_set_rrq_active(phba, ndlp,
+ 					sglq_entry->sli4_lxritag,
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 4081d2a358eee..f7824266db5e8 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -3057,13 +3057,6 @@ lpfc_cleanup(struct lpfc_vport *vport)
+ 		lpfc_vmid_vport_cleanup(vport);
  
-+	/* Unconditionally set NOWARN if allocating from NAPI.
-+	 * Drivers forget to set it, and OOM reports on packet Rx are useless.
-+	 */
-+	if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
-+		gfp |= __GFP_NOWARN;
-+
- 	/* Don't support bulk alloc for high-order pages */
- 	if (unlikely(pp_order))
- 		return page_to_netmem(__page_pool_alloc_page_order(pool, gfp));
+ 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
+-		if (vport->port_type != LPFC_PHYSICAL_PORT &&
+-		    ndlp->nlp_DID == Fabric_DID) {
+-			/* Just free up ndlp with Fabric_DID for vports */
+-			lpfc_nlp_put(ndlp);
+-			continue;
+-		}
+-
+ 		if (ndlp->nlp_DID == Fabric_Cntl_DID &&
+ 		    ndlp->nlp_state == NLP_STE_UNUSED_NODE) {
+ 			lpfc_nlp_put(ndlp);
 -- 
 2.51.0
 
