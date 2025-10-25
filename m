@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFD827055E;
-	Sat, 25 Oct 2025 16:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F37725DB1A;
+	Sat, 25 Oct 2025 16:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409051; cv=none; b=iQ/mC8s93y9uUMUTncqyC5aJHE/zuGAz05uMNZeOFoZvfDdjIdxy60g/gqWjb5FaYYA3sXWe5qyQPXdJN7NkTryoMRLqyWhysC9b5d/gPlJmNHRD8BMAWAargJ8UDFSSO5b8ppnXlgJxzVbS1jZMZIu5iKf3HODHZu0atij/PlI=
+	t=1761409053; cv=none; b=T+nhOr9K+GVQdoRI7csfhOrazchznL7o4E4AfJTpkCF437svRk4WwQiYJ4DvMP6oLV/jQnMDVmiMY8J46fWfFnycMW1D4/k2CcGSYKxfl2YaWbJx7Su2Y/1+bO6DqRvnUEd28wNf3s5zfjQGaqmt+lRM0Sy3b3mxYkKcaxKKTM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409051; c=relaxed/simple;
-	bh=YRVHUjR+ZEhme/5Xu4snMahSNXDQiFNLSw7elUXYmAA=;
+	s=arc-20240116; t=1761409053; c=relaxed/simple;
+	bh=D8G4IjAJAqWB3KeYAjtPUEUlzXJZkrngtoQG2vgZKB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9MjcFHfUz+jXzGyc8guM7YIQiJtqf5z8dPxm+GtbTOjkzmd+jWG0n16bKfl6NjL3Di+8PWtrpwi5+UxPULKv8Mis446orUmdBYpuOOpkFgpQtAwILvOHrB+UpdHwyTIJdXKX4oaikcEA4DFbz5np29J3IakLch15X91FY40EUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bexUw7Fb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mVINhqxJW+O73x21PaYQEs4iuJtyCTG7NWIp6YWjdakS43LP+9KTwarH2KvViM8bNMtv8diXx0ZkASl1C1iNVblTfzlGyJLqnuZFtpJXRVO0dcfV6DJRPZWhJoVhI9wApOcFeIk+8L78rkdXpBf0FTuCHVvmIWcw0K1bknT87Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uw5SXbBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bexUw7Fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F393C4CEF5;
-	Sat, 25 Oct 2025 16:17:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uw5SXbBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D31EC4CEFB;
+	Sat, 25 Oct 2025 16:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409051;
-	bh=YRVHUjR+ZEhme/5Xu4snMahSNXDQiFNLSw7elUXYmAA=;
+	s=k20201202; t=1761409053;
+	bh=D8G4IjAJAqWB3KeYAjtPUEUlzXJZkrngtoQG2vgZKB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bexUw7Fb6TlMhRw1ycEoXEfzsOesNJAi1bzF+I8cSPFSLrXon9KmZwIHKV3nWP0w4
-	 T7ZXG2YGUxZj14YULcxJu+FxBpY0n0ERCJI4f1vDWlT1dp0Mq70YD6T6NDtuG5WS8G
-	 Zg5bZItoT5OR485vnd85mNzaBWpG7l1bui9ukk25HyecIIWuA2u5PABRObXC0Otrq4
-	 lQr7EdkRZnG8wnwltZieUgczsnJ2iPYM8HmFGAmES40amY+U1F76nwQCEvxXiU4ZJH
-	 a0yNx8K77QnRdLVmK2RbRR+U7WK8I4/yUlFs5HHM2pOR7iq4Bp0KQtTn+D10ZAAhbh
-	 aN+LB6uahlMKQ==
+	b=uw5SXbBiuIC44hv5UMxhha1tTW4F/h3uNFTjfgZTUTqrRBAZ2orcQT/vV+vSgJYDc
+	 NkrHJdghWAKGGy/tF+eLaPZEXoM/uFUK5f+dUWXWWE8g5Jo6JIk8q4avwaLOTwDL0L
+	 f9BOpCpQPfvOIMNeGnyrW1gZ5UcCR4Do+nAVj7Sf3+PjU1k2XFA+pIxdgdhVlbyvuX
+	 l+ad2CyqUoz+TKmJTjdSi5qTaF9J7BWZWw7US1UWmehYLwOy9TGn1fmFhBYDoyg635
+	 AOSPmVLKk+gOKJsNnQiM5ckNCHRjAwI8KlDJn0FVZKoQeUGvf6pT5YuLWaYrSDh937
+	 SniUliKLRKrmw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jyri.sarha@iki.fi,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/tidss: Remove early fb
-Date: Sat, 25 Oct 2025 11:56:55 -0400
-Message-ID: <20251025160905.3857885-184-sashal@kernel.org>
+	anthony.l.nguyen@intel.com,
+	intel-wired-lan@lists.osuosl.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] ice: Don't use %pK through printk or tracepoints
+Date: Sat, 25 Oct 2025 11:56:56 -0400
+Message-ID: <20251025160905.3857885-185-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -46,21 +52,37 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
 Content-Transfer-Encoding: 8bit
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 942e54a372b44da3ffb0191b4d289d476256c861 ]
+[ Upstream commit 66ceb45b7d7e9673254116eefe5b6d3a44eba267 ]
 
-Add a call to drm_aperture_remove_framebuffers() to drop the possible
-early fb (simplefb).
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20250416-tidss-splash-v1-2-4ff396eb5008@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
+There are still a few users of %pK left, but these use it through seq_file,
+for which its usage is safe.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250811-restricted-pointers-net-v5-1-2e2fdc7d3f2c@linutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -68,120 +90,133 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a bug fix that helps users
-- Removes firmware/early framebuffer (e.g., simplefb) so TIDSS can take
-  over display cleanly. Without this, users can see takeover failures,
-  flicker, or double-bound consoles when the SoC boots with a
-  splash/firmware FB and then loads the real DRM driver. This is a
-  common class of issues addressed in many DRM drivers.
+- What changes: The patch replaces %pK with %p in a single debug printk
+  and several tracepoint TP_printk format strings:
+  - drivers/net/ethernet/intel/ice/ice_main.c:9112
+  - drivers/net/ethernet/intel/ice/ice_trace.h:133, 161, 185, 208, 231
 
-What the change does
-- Adds `#include <linux/aperture.h>` to use the aperture helpers
-  (drivers/gpu/drm/tidss/tidss_drv.c).
-- Calls `aperture_remove_all_conflicting_devices(tidss_driver.name)`
-  after successful device registration and before setting up the DRM
-  client/fbdev to explicitly drop early FBs (simplefb). In the posted
-  diff this is placed after `drm_dev_register()` and before the
-  fbdev/client setup call, matching the documented ordering for
-  `drm_client_setup()`.
-- Adds an error path (`err_drm_dev_unreg:`) to unwind with
-  `drm_dev_unregister(ddev)` if removal unexpectedly fails.
+- Why it matters:
+  - %p hashing is safe since v4.15: Commit ad67b74d2469 (“printk: hash
+    addresses printed with %p”) ensures %p prints hashed addresses by
+    default, avoiding raw pointer leaks.
+    - See lib/vsprintf.c:837-848 for the %p default hashing path.
+  - %pK is problematic in printk/tracepoints:
+    - In IRQ/softirq/NMI when kptr_restrict==1 (a common distro
+      hardening default), %pK deliberately refuses to operate and emits
+      “pK-error” instead of a pointer, degrading trace readability and
+      consistency in hot paths like TX/RX cleanups.
+      - See lib/vsprintf.c:850 (kptr_restrict) and
+        lib/vsprintf.c:864-871 (IRQ/softirq/NMI path to “pK-error”).
+    - The restricted-pointer policy was never intended for
+      printk/tracepoints; using %pK can also involve capability/cred
+      checks that are inappropriate in atomic contexts.
+  - ice tracepoints are often hit from NAPI/IRQ context. The current %pK
+    usage in:
+    - ice_trace.h:133, 161, 185, 208, 231 (ring/desc/buf/skb pointers)
+    can produce “pK-error” under kptr_restrict==1 instead of hashed
+values, while %p provides consistent, safe hashed output.
+  - The dev_dbg change in drivers/net/ethernet/intel/ice/ice_main.c:9112
+    similarly aligns with the policy of avoiding %pK in printk; %p
+    remains non-leaky (hashed).
 
-Evidence this is the right pattern
-- The kernel already provides standard helpers for this exact purpose
-  and other SoC DRM drivers use them in probe/bind:
-  - `drivers/gpu/drm/sun4i/sun4i_drv.c:101`:
-    `drm_aperture_remove_framebuffers(&sun4i_drv_driver);`
-  - `drivers/gpu/drm/rockchip/rockchip_drm_drv.c:148`:
-    `drm_aperture_remove_framebuffers(&rockchip_drm_driver);`
-  - `drivers/gpu/drm/stm/drv.c:191`,
-    `drivers/gpu/drm/vc4/vc4_drv.c:359`, etc.
-- Aperture helpers are specifically designed to hot-unplug firmware fb
-  drivers and prevent sysfb from re-registering them
-  (drivers/video/aperture.c). The wrapper used here
-  (`aperture_remove_all_conflicting_devices`) is equivalent in intent to
-  `drm_aperture_remove_framebuffers()` and is safe even if
-  CONFIG_APERTURE_HELPERS=n (it is a no-op stub that returns 0).
+- Risk assessment:
+  - Minimal and contained: only format strings change; no functional
+    logic, state, or ABI changes to tracepoint fields (the field layout
+    defined by __field/__string is unchanged; only TP_printk’s human-
+    readable text changes).
+  - No cross-subsystem dependencies or architectural impact.
+  - Improves safety/observability without adding new features.
 
-Scope, risk, and side effects
-- Small, localized to a single driver. No architectural changes.
-- Only affects takeover of early/firmware framebuffers; normal operation
-  otherwise unchanged.
-- Error handling is conservative: on failure it unregisters the DRM
-  device and unwinds. In practice, the current implementation of
-  `aperture_remove_conflicting_devices()` for non-PCI platforms returns
-  0 (and performs the detach), so the new error path should not trigger.
-- This follows the long-standing DRM takeover model; many drivers rely
-  on exactly this call to avoid conflicts with simplefb/efifb/vesafb.
+- Precedent in stable: Multiple similar “Don’t use %pK through printk”
+  patches have already been accepted into stable trees, citing the same
+  rationale:
+  - bpf: b2131336289fa
+  - timer_list: 3fb9ee05ec15f
+  - spi loopback-test: e0bdc3d17b388
+  Each includes a Sasha Levin Signed-off-by indicating stable
+backporting.
 
-Stable backport considerations
-- This is a classic stable-friendly fix: improves reliability of display
-  takeover; minimal risk; contained to a driver; no new features.
-- The specific helper used in the patch
-  (`aperture_remove_all_conflicting_devices`) lives in
-  `include/linux/aperture.h` and exists in 6.1+; for older stable trees
-  (e.g., 5.10/5.15), use the DRM helper instead:
-  - `drm_aperture_remove_framebuffers(&tidss_driver);` (include
-    `drm/drm_aperture.h`)
-- Placement must remain before the fbdev/client setup for the DRM
-  device:
-  - In current trees using `drm_client_setup()`: keep it after
-    `drm_dev_register()` and before `drm_client_setup()`.
-  - In older trees using `drm_fbdev_dma_setup()` (e.g.,
-    drivers/gpu/drm/tidss/tidss_drv.c:189): insert removal between
-    `drm_dev_register()` (drivers/gpu/drm/tidss/tidss_drv.c:183) and
-    fbdev setup (drivers/gpu/drm/tidss/tidss_drv.c:189).
-- The posted diff also shows `#include "tidss_oldi.h"` and a
-  `tidss_oldi_deinit(tidss)` call in an error path; those appear to be
-  from adjacent series and are not required to deliver the early-FB
-  removal. For minimal-risk stable backports, restrict the change to
-  adding the early FB removal call and associated include, and keep
-  existing error handling as-is unless those oldi changes already exist
-  in the target stable branch.
+- Stable policy fit:
+  - Fixes a real issue for users who rely on trace readability under
+    hardened kptr_restrict settings and removes a misuse of %pK in
+    printk/tracepoints.
+  - Small, self-contained, low regression risk, no new features,
+    confined to a driver.
 
-Conclusion
-- This is a low-risk, targeted fix that aligns TIDSS with standard DRM
-  takeover practices, prevents conflicts with early/simplefb
-  framebuffers, and improves user experience on TI SoCs that boot with a
-  splash/firmware FB. It is suitable for stable backporting, with minor
-  API adaptation on older series as noted.
+- Compatibility note: All maintained LTS series (>= v4.19) already
+  include %p hashing from v4.15, so this change is safe across active
+  stable kernels.
 
- drivers/gpu/drm/tidss/tidss_drv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Conclusion: Backporting this patch improves correctness and safety of
+diagnostic output in the ice driver with negligible risk and clear
+precedent.
 
-diff --git a/drivers/gpu/drm/tidss/tidss_drv.c b/drivers/gpu/drm/tidss/tidss_drv.c
-index a1b12e52aca47..27d9a8fd541fc 100644
---- a/drivers/gpu/drm/tidss/tidss_drv.c
-+++ b/drivers/gpu/drm/tidss/tidss_drv.c
-@@ -8,6 +8,7 @@
- #include <linux/of.h>
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
-+#include <linux/aperture.h>
- 
- #include <drm/clients/drm_client_setup.h>
- #include <drm/drm_atomic.h>
-@@ -192,12 +193,20 @@ static int tidss_probe(struct platform_device *pdev)
- 		goto err_irq_uninstall;
+ drivers/net/ethernet/intel/ice/ice_main.c  |  2 +-
+ drivers/net/ethernet/intel/ice/ice_trace.h | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 77781277aa8e4..92b95d92d5992 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -9125,7 +9125,7 @@ static int ice_create_q_channels(struct ice_vsi *vsi)
+ 		list_add_tail(&ch->list, &vsi->ch_list);
+ 		vsi->tc_map_vsi[i] = ch->ch_vsi;
+ 		dev_dbg(ice_pf_to_dev(pf),
+-			"successfully created channel: VSI %pK\n", ch->ch_vsi);
++			"successfully created channel: VSI %p\n", ch->ch_vsi);
  	}
- 
-+	/* Remove possible early fb before setting up the fbdev */
-+	ret = aperture_remove_all_conflicting_devices(tidss_driver.name);
-+	if (ret)
-+		goto err_drm_dev_unreg;
-+
- 	drm_client_setup(ddev, NULL);
- 
- 	dev_dbg(dev, "%s done\n", __func__);
- 
  	return 0;
  
-+err_drm_dev_unreg:
-+	drm_dev_unregister(ddev);
-+
- err_irq_uninstall:
- 	tidss_irq_uninstall(ddev);
+diff --git a/drivers/net/ethernet/intel/ice/ice_trace.h b/drivers/net/ethernet/intel/ice/ice_trace.h
+index 07aab6e130cd5..4f35ef8d6b299 100644
+--- a/drivers/net/ethernet/intel/ice/ice_trace.h
++++ b/drivers/net/ethernet/intel/ice/ice_trace.h
+@@ -130,7 +130,7 @@ DECLARE_EVENT_CLASS(ice_tx_template,
+ 				   __entry->buf = buf;
+ 				   __assign_str(devname);),
  
+-		    TP_printk("netdev: %s ring: %pK desc: %pK buf %pK", __get_str(devname),
++		    TP_printk("netdev: %s ring: %p desc: %p buf %p", __get_str(devname),
+ 			      __entry->ring, __entry->desc, __entry->buf)
+ );
+ 
+@@ -158,7 +158,7 @@ DECLARE_EVENT_CLASS(ice_rx_template,
+ 				   __entry->desc = desc;
+ 				   __assign_str(devname);),
+ 
+-		    TP_printk("netdev: %s ring: %pK desc: %pK", __get_str(devname),
++		    TP_printk("netdev: %s ring: %p desc: %p", __get_str(devname),
+ 			      __entry->ring, __entry->desc)
+ );
+ DEFINE_EVENT(ice_rx_template, ice_clean_rx_irq,
+@@ -182,7 +182,7 @@ DECLARE_EVENT_CLASS(ice_rx_indicate_template,
+ 				   __entry->skb = skb;
+ 				   __assign_str(devname);),
+ 
+-		    TP_printk("netdev: %s ring: %pK desc: %pK skb %pK", __get_str(devname),
++		    TP_printk("netdev: %s ring: %p desc: %p skb %p", __get_str(devname),
+ 			      __entry->ring, __entry->desc, __entry->skb)
+ );
+ 
+@@ -205,7 +205,7 @@ DECLARE_EVENT_CLASS(ice_xmit_template,
+ 				   __entry->skb = skb;
+ 				   __assign_str(devname);),
+ 
+-		    TP_printk("netdev: %s skb: %pK ring: %pK", __get_str(devname),
++		    TP_printk("netdev: %s skb: %p ring: %p", __get_str(devname),
+ 			      __entry->skb, __entry->ring)
+ );
+ 
+@@ -228,7 +228,7 @@ DECLARE_EVENT_CLASS(ice_tx_tstamp_template,
+ 		    TP_fast_assign(__entry->skb = skb;
+ 				   __entry->idx = idx;),
+ 
+-		    TP_printk("skb %pK idx %d",
++		    TP_printk("skb %p idx %d",
+ 			      __entry->skb, __entry->idx)
+ );
+ #define DEFINE_TX_TSTAMP_OP_EVENT(name) \
 -- 
 2.51.0
 
