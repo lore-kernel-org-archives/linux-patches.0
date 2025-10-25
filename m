@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6F431DD81;
-	Sat, 25 Oct 2025 16:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E886B31DDB6;
+	Sat, 25 Oct 2025 16:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409728; cv=none; b=mDD0t3NVH3SNpTTqH8SyJdzqAix/YOBZ2ZHz+YKsuTsRhcvAKhqwh+f/jhcdLMrkw7iq1DgNRNqCHpRGH4vGLxxq5P3abOLXzMYKYAbJwx9dpO641XnUAVuhkETrbkfk7aYi10IySCcoDBpz1dM/LfnfLqOLG++HX2UthoCyMxw=
+	t=1761409730; cv=none; b=J3sVjrLS3qJ/QImnGE16ZBJEWCVFAgXy6IUdzbBx+eGGKKTjFHSRjn02Bx5efgrUqI9y7Oi2wxbVpY4WzXTSOXCBVIy2ela9+Dk1I+Qi/AsYFUC1Fk+jDnZzNPPGWivI+cpV++YiA9TaHgcCkChsNtA2uJ3Fq2NMvBp76CVZGws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409728; c=relaxed/simple;
-	bh=TfrFbL7AB1XylbjJq1W+p29Kf2IE5kP36er6lCkkHzw=;
+	s=arc-20240116; t=1761409730; c=relaxed/simple;
+	bh=ICEVXZZwVL6vwRTEshSvhyGw5kE+B0uJknae4Y+OU7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pXRmwX0vv0ECFHsQ7QqcwyMDDXCsiOWfrXDj04GPnMbQzn6rG6GuW2t3KpqVtfZz0BdikJx2sve8N1BJy/gqzo7ynJpOvZ5+4N4+0/3usfulSUZ1UKthBU1hLIoyDh6Yf0r9SaW6Lf1aBM0xKzDxUe0ZxFqv08UklIjfr0XeBlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=idr/AbxF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=spiFNToztnGuq92k17zLKQhPRoxDiH9D93aG38lhVSFAJ8WheHaMhIqfuYTqWn1c/OFbTZgsNSg3JbR2uEkzzVXX1aWzndACKlxdvHxVk2Yf3bCO9tg6FPrilNEyBBcKASkSO2HUDwCD04VGY3YoYLisW41L/rvzGf866y0XABY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X+W3+AA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="idr/AbxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4AEC4CEF5;
-	Sat, 25 Oct 2025 16:28:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+W3+AA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6D7C4CEF5;
+	Sat, 25 Oct 2025 16:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409728;
-	bh=TfrFbL7AB1XylbjJq1W+p29Kf2IE5kP36er6lCkkHzw=;
+	s=k20201202; t=1761409729;
+	bh=ICEVXZZwVL6vwRTEshSvhyGw5kE+B0uJknae4Y+OU7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idr/AbxFY4jC4MTkz8DrNG2UNh9r3Xz8rej9VRw/Ng70MaaaS8YQp+xqN+jDV7kGe
-	 W2IbS8M/DLfn4PrAvsc4yulzFOgcIqRnSPZwjhxsrNtC2BkKBdM9jk6/WpDmMTie8Q
-	 H4DrSjfbVpDoXlO7cw5MBPt3hyjG1btmz4NtuUpmEMRO7Cwz2wsUrJEZwjYuB56fkC
-	 d4b4gAQ8RuJoc9vNO2ErrArZz+KJOkvIp8VR93vTPAAXaHiyBr0OoJLow2jFk9kHzp
-	 BgiyIftfcLzPrIWjVUBOEGVrfuxLwpsIt7UlgGY5h8+5rvzG6q2WbODM2l5NN9fd2q
-	 qmS5OQ1JE3p/Q==
+	b=X+W3+AA3ir4jByMeSIVoEj4LkbvKDw0TNiFK731YXrIxbI9qvLFZ37KlYecH6g81g
+	 0fw/PcZqukQS7eiin+RXx0ywL+0XuclO0wcyZ85WsFLXkcj3rGYOruS+7Wlhi4iqTf
+	 yueQiJVERDJvUuL30u7MC24lArcTbqZSNPEeHpzxjPfspZjVHU0TfqJr+sLMNT+/7O
+	 +ATGBn4J+gnOlbGRzlVP4snWwK1EDjDXaZZH+dd4E1OowMjigqiO543+6QWLmzj1hr
+	 JJjFUzNurAI/pcJZ+D448/JCXztVPre7y5oENlR55f8jXEtBV4y0Mh7+EfZcFG0pSP
+	 LXOo8BCoEgbiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de
-Subject: [PATCH AUTOSEL 6.17] drm/gpusvm: fix hmm_pfn_to_map_order() usage
-Date: Sat, 25 Oct 2025 12:01:10 -0400
-Message-ID: <20251025160905.3857885-439-sashal@kernel.org>
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] Bluetooth: ISO: Use sk_sndtimeo as conn_timeout
+Date: Sat, 25 Oct 2025 12:01:11 -0400
+Message-ID: <20251025160905.3857885-440-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -48,176 +47,244 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit c50729c68aaf93611c855752b00e49ce1fdd1558 ]
+[ Upstream commit 339a87883a14d6a818ca436fed41aa5d10e0f4bd ]
 
-Handle the case where the hmm range partially covers a huge page (like
-2M), otherwise we can potentially end up doing something nasty like
-mapping memory which is outside the range, and maybe not even mapped by
-the mm. Fix is based on the xe userptr code, which in a future patch
-will directly use gpusvm, so needs alignment here.
+This aligns the usage of socket sk_sndtimeo as conn_timeout when
+initiating a connection and then use it when scheduling the
+resulting HCI command, similar to what has been done in bf98feea5b65
+("Bluetooth: hci_conn: Always use sk_timeo as conn_timeout").
 
-v2:
-  - Add kernel-doc (Matt B)
-  - s/fls/ilog2/ (Thomas)
-
-Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://lore.kernel.org/r/20250828142430.615826-11-matthew.auld@intel.com
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+YES – this patch fixes a real regression in the ISO connection paths and
+is low‑risk for stable
 
-- What it fixes
-  - The old code advanced through the HMM PFN array and chose DMA map
-    sizes based solely on `hmm_pfn_to_map_order(pfns[i])`, which
-    describes the CPU PTE size (e.g., 2 MiB) but explicitly warns that
-    the PTE can extend past the `hmm_range_fault()` range. See
-    include/linux/hmm.h:81-89.
-  - This could cause overmapping on the GPU side: mapping memory outside
-    the requested range and potentially not even mapped by the owning
-    `mm`, exactly as described in the commit message.
-  - The new helper clamps the map size so it never crosses either the
-    current huge-CPU-PTE boundary or the end of the HMM range:
-    - Added helper: `drm_gpusvm_hmm_pfn_to_order()` computes the maximum
-      safe order from the current PFN index, adjusting for the offset
-      into the huge PTE and clamping to the remaining range size. See
-      drivers/gpu/drm/drm_gpusvm.c:666-679.
-    - It does:
-      - `size = 1UL << hmm_pfn_to_map_order(hmm_pfn);`
-      - Subtracts the intra-PTE offset: `size -= (hmm_pfn &
-        ~HMM_PFN_FLAGS) & (size - 1);`
-      - Clamps to the remaining range pages: if `hmm_pfn_index + size >
-        npages`, reduce `size` accordingly.
-      - Returns `ilog2(size)` so callers continue to work in orders.
+- The ISO helpers started passing `conn->conn_timeout` into the
+  synchronous HCI waits in v6.10 (commit bf98feea5b65), but the CIS/BIS
+  creation paths never stored a timeout, leaving the field zero. Every
+  call to `__hci_cmd_sync_status_sk()` that waits for
+  `HCI_LE_CREATE_CIS`, `HCI_OP_LE_BIG_CREATE_SYNC`, etc. therefore times
+  out immediately (`wait_event_timeout(..., 0)` returns 0) and the host
+  aborts the command, breaking CIS/BIS bring-up. See the wait sites in
+  `net/bluetooth/hci_sync.c:6723`, `net/bluetooth/hci_sync.c:7060`, and
+  `net/bluetooth/hci_sync.c:7158`.
 
-- Where it applies
-  - Page validity checking loop now skips PFNs safely without
-    overshooting the HMM range, using the new helper to compute how far
-    to jump. See drivers/gpu/drm/drm_gpusvm.c:739.
-  - The GPU DMA mapping loop now maps only within the range and within
-    the current CPU PTE boundary:
-    - Order is now `drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages)`.
-      See drivers/gpu/drm/drm_gpusvm.c:1361.
-    - Device-private mappings call `dpagemap->ops->device_map(..., page,
-      order, ...)` with the clamped order. See
-      drivers/gpu/drm/drm_gpusvm.c:1388-1391.
-    - System memory mappings use `dma_map_page(..., PAGE_SIZE << order,
-      ...)` with the clamped order. See
-      drivers/gpu/drm/drm_gpusvm.c:1410-1413.
-  - Together, this prevents mapping outside `[start, end)` even when the
-    range only partially covers a huge PTE (e.g., 2 MiB).
+- The patch threads the socket’s send timeout through all ISO connection
+  constructors: new `u16 timeout` parameters in `hci_bind_cis/bis()` and
+  `hci_connect_cis/bis()` and the internal helper `hci_add_bis()` now
+  store the value in `conn->conn_timeout`
+  (`net/bluetooth/hci_conn.c:1581`, `net/bluetooth/hci_conn.c:1938`,
+  `net/bluetooth/hci_conn.c:2199`, `net/bluetooth/hci_conn.c:2326`). The
+  ISO socket code passes `READ_ONCE(sk->sk_sndtimeo)` into those helpers
+  (`net/bluetooth/iso.c:373`, `net/bluetooth/iso.c:383`,
+  `net/bluetooth/iso.c:471`, `net/bluetooth/iso.c:480`), so the HCI
+  command waits now honor the per-socket timeout instead of timing out
+  instantly.
 
-- Why it matters for stable
-  - User-visible bug: Overmapping beyond the requested user range can
-    result in mapping pages not owned/mapped by the process. That risks
-    correctness (DMA into the wrong memory) and could have security
-    implications (DMA reading/writing unintended memory).
-  - Small and contained: The change adds a small static helper and
-    modifies two call sites in `drm_gpusvm.c`. No ABI/UAPI change. No
-    architectural changes.
-  - Matches HMM contract: The HMM API explicitly warns that `map_order`
-    can extend past the queried range; this patch implements the
-    necessary clamping.
-  - Low regression risk: The helper is purely defensive. Worst case it
-    results in additional smaller DMA mapping segments when starting in
-    the middle of a huge PTE or near range end, which is safe. It
-    mirrors proven logic used in Xe userptr code.
-  - Scope: Limited to DRM GPU SVM memory acquisition and validation
-    paths:
-    - `drm_gpusvm_check_pages()` at
-      drivers/gpu/drm/drm_gpusvm.c:693-745.
-    - `drm_gpusvm_get_pages()` mapping loop at
-      drivers/gpu/drm/drm_gpusvm.c:1358-1426.
-  - No feature additions: Pure bugfix that tightens bounds.
+- Default ISO connection timeout is still sourced from
+  `ISO_CONN_TIMEOUT`, now expressed as `secs_to_jiffies(20)` in
+  `net/bluetooth/iso.c:91`, matching the value assigned to
+  `sk->sk_sndtimeo` (`net/bluetooth/iso.c:913`); this is consistent with
+  the intent of the earlier regression fix. No other subsystems are
+  touched.
 
-- Stable backport criteria assessment
-  - Fixes an important correctness (and potential security) bug that can
-    affect users.
-  - Change is minimal, self-contained, and localized to one file.
-  - No broader side effects; does not alter subsystem architecture or
-    interfaces.
-  - Even though the commit message does not include “Cc: stable”, it
-    clearly qualifies under stable rules as a targeted bugfix with low
-    risk.
+- The change is confined to the Bluetooth ISO stack, mirrors the earlier
+  ACL/SCO fix, and does not introduce new dependencies. Without it,
+  CIS/BIS connection establishment remains broken on any stable kernel
+  that picked up bf98feea5b65 (v6.10 and newer), so backporting is
+  strongly advised.
 
-Conclusion: This is a clear, low-risk bugfix preventing out-of-range DMA
-mappings when HMM ranges partially cover huge PTEs. It should be
-backported to stable trees that contain GPU SVM.
+ include/net/bluetooth/hci_core.h | 10 ++++++----
+ net/bluetooth/hci_conn.c         | 20 ++++++++++++--------
+ net/bluetooth/iso.c              | 16 ++++++++++------
+ 3 files changed, 28 insertions(+), 18 deletions(-)
 
- drivers/gpu/drm/drm_gpusvm.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/drm_gpusvm.c b/drivers/gpu/drm/drm_gpusvm.c
-index 5bb4c77db2c3c..1dd8f3b593df6 100644
---- a/drivers/gpu/drm/drm_gpusvm.c
-+++ b/drivers/gpu/drm/drm_gpusvm.c
-@@ -708,6 +708,35 @@ drm_gpusvm_range_alloc(struct drm_gpusvm *gpusvm,
- 	return range;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 6560b32f31255..a068beae93186 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1587,16 +1587,18 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 				 __u16 setting, struct bt_codec *codec,
+ 				 u16 timeout);
+ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+-			      __u8 dst_type, struct bt_iso_qos *qos);
++			      __u8 dst_type, struct bt_iso_qos *qos,
++			      u16 timeout);
+ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
+ 			      struct bt_iso_qos *qos,
+-			      __u8 base_len, __u8 *base);
++			      __u8 base_len, __u8 *base, u16 timeout);
+ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+-				 __u8 dst_type, struct bt_iso_qos *qos);
++				 __u8 dst_type, struct bt_iso_qos *qos,
++				 u16 timeout);
+ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 				 __u8 dst_type, __u8 sid,
+ 				 struct bt_iso_qos *qos,
+-				 __u8 data_len, __u8 *data);
++				 __u8 data_len, __u8 *data, u16 timeout);
+ struct hci_conn *hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst,
+ 		       __u8 dst_type, __u8 sid, struct bt_iso_qos *qos);
+ int hci_conn_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index e524bb59bff23..f44286e59d316 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1540,7 +1540,7 @@ static int qos_set_bis(struct hci_dev *hdev, struct bt_iso_qos *qos)
+ /* This function requires the caller holds hdev->lock */
+ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 				    __u8 sid, struct bt_iso_qos *qos,
+-				    __u8 base_len, __u8 *base)
++				    __u8 base_len, __u8 *base, u16 timeout)
+ {
+ 	struct hci_conn *conn;
+ 	int err;
+@@ -1582,6 +1582,7 @@ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 
+ 	conn->state = BT_CONNECT;
+ 	conn->sid = sid;
++	conn->conn_timeout = timeout;
+ 
+ 	hci_conn_hold(conn);
+ 	return conn;
+@@ -1922,7 +1923,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
  }
  
-+/**
-+ * drm_gpusvm_hmm_pfn_to_order() - Get the largest CPU mapping order.
-+ * @hmm_pfn: The current hmm_pfn.
-+ * @hmm_pfn_index: Index of the @hmm_pfn within the pfn array.
-+ * @npages: Number of pages within the pfn array i.e the hmm range size.
-+ *
-+ * To allow skipping PFNs with the same flags (like when they belong to
-+ * the same huge PTE) when looping over the pfn array, take a given a hmm_pfn,
-+ * and return the largest order that will fit inside the CPU PTE, but also
-+ * crucially accounting for the original hmm range boundaries.
-+ *
-+ * Return: The largest order that will safely fit within the size of the hmm_pfn
-+ * CPU PTE.
-+ */
-+static unsigned int drm_gpusvm_hmm_pfn_to_order(unsigned long hmm_pfn,
-+						unsigned long hmm_pfn_index,
-+						unsigned long npages)
-+{
-+	unsigned long size;
-+
-+	size = 1UL << hmm_pfn_to_map_order(hmm_pfn);
-+	size -= (hmm_pfn & ~HMM_PFN_FLAGS) & (size - 1);
-+	hmm_pfn_index += size;
-+	if (hmm_pfn_index > npages)
-+		size -= (hmm_pfn_index - npages);
-+
-+	return ilog2(size);
-+}
-+
- /**
-  * drm_gpusvm_check_pages() - Check pages
-  * @gpusvm: Pointer to the GPU SVM structure
-@@ -766,7 +795,7 @@ static bool drm_gpusvm_check_pages(struct drm_gpusvm *gpusvm,
- 			err = -EFAULT;
- 			goto err_free;
- 		}
--		i += 0x1 << hmm_pfn_to_map_order(pfns[i]);
-+		i += 0x1 << drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages);
+ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+-			      __u8 dst_type, struct bt_iso_qos *qos)
++			      __u8 dst_type, struct bt_iso_qos *qos,
++			      u16 timeout)
+ {
+ 	struct hci_conn *cis;
+ 
+@@ -1937,6 +1939,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		cis->dst_type = dst_type;
+ 		cis->iso_qos.ucast.cig = BT_ISO_QOS_CIG_UNSET;
+ 		cis->iso_qos.ucast.cis = BT_ISO_QOS_CIS_UNSET;
++		cis->conn_timeout = timeout;
  	}
  
- err_free:
-@@ -1342,7 +1371,7 @@ int drm_gpusvm_range_get_pages(struct drm_gpusvm *gpusvm,
- 	for (i = 0, j = 0; i < npages; ++j) {
- 		struct page *page = hmm_pfn_to_page(pfns[i]);
+ 	if (cis->state == BT_CONNECTED)
+@@ -2176,7 +2179,7 @@ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
  
--		order = hmm_pfn_to_map_order(pfns[i]);
-+		order = drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages);
- 		if (is_device_private_page(page) ||
- 		    is_device_coherent_page(page)) {
- 			if (zdd != page->zone_device_data && i > 0) {
+ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
+ 			      struct bt_iso_qos *qos,
+-			      __u8 base_len, __u8 *base)
++			      __u8 base_len, __u8 *base, u16 timeout)
+ {
+ 	struct hci_conn *conn;
+ 	struct hci_conn *parent;
+@@ -2197,7 +2200,7 @@ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
+ 						   base, base_len);
+ 
+ 	/* We need hci_conn object using the BDADDR_ANY as dst */
+-	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir);
++	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir, timeout);
+ 	if (IS_ERR(conn))
+ 		return conn;
+ 
+@@ -2250,13 +2253,13 @@ static void bis_mark_per_adv(struct hci_conn *conn, void *data)
+ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 				 __u8 dst_type, __u8 sid,
+ 				 struct bt_iso_qos *qos,
+-				 __u8 base_len, __u8 *base)
++				 __u8 base_len, __u8 *base, u16 timeout)
+ {
+ 	struct hci_conn *conn;
+ 	int err;
+ 	struct iso_list_data data;
+ 
+-	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base);
++	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base, timeout);
+ 	if (IS_ERR(conn))
+ 		return conn;
+ 
+@@ -2299,7 +2302,8 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ }
+ 
+ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+-				 __u8 dst_type, struct bt_iso_qos *qos)
++				 __u8 dst_type, struct bt_iso_qos *qos,
++				 u16 timeout)
+ {
+ 	struct hci_conn *le;
+ 	struct hci_conn *cis;
+@@ -2323,7 +2327,7 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	hci_iso_qos_setup(hdev, le, &qos->ucast.in,
+ 			  le->le_rx_phy ? le->le_rx_phy : hdev->le_rx_def_phys);
+ 
+-	cis = hci_bind_cis(hdev, dst, dst_type, qos);
++	cis = hci_bind_cis(hdev, dst, dst_type, qos, timeout);
+ 	if (IS_ERR(cis)) {
+ 		hci_conn_drop(le);
+ 		return cis;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 247f6da31f9f3..9b263d061e051 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -91,8 +91,8 @@ static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
+ 				 iso_sock_match_t match, void *data);
+ 
+ /* ---- ISO timers ---- */
+-#define ISO_CONN_TIMEOUT	(HZ * 40)
+-#define ISO_DISCONN_TIMEOUT	(HZ * 2)
++#define ISO_CONN_TIMEOUT	secs_to_jiffies(20)
++#define ISO_DISCONN_TIMEOUT	secs_to_jiffies(2)
+ 
+ static void iso_conn_free(struct kref *ref)
+ {
+@@ -369,7 +369,8 @@ static int iso_connect_bis(struct sock *sk)
+ 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
+ 		hcon = hci_bind_bis(hdev, &iso_pi(sk)->dst, iso_pi(sk)->bc_sid,
+ 				    &iso_pi(sk)->qos, iso_pi(sk)->base_len,
+-				    iso_pi(sk)->base);
++				    iso_pi(sk)->base,
++				    READ_ONCE(sk->sk_sndtimeo));
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto unlock;
+@@ -378,7 +379,8 @@ static int iso_connect_bis(struct sock *sk)
+ 		hcon = hci_connect_bis(hdev, &iso_pi(sk)->dst,
+ 				       le_addr_type(iso_pi(sk)->dst_type),
+ 				       iso_pi(sk)->bc_sid, &iso_pi(sk)->qos,
+-				       iso_pi(sk)->base_len, iso_pi(sk)->base);
++				       iso_pi(sk)->base_len, iso_pi(sk)->base,
++				       READ_ONCE(sk->sk_sndtimeo));
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto unlock;
+@@ -471,7 +473,8 @@ static int iso_connect_cis(struct sock *sk)
+ 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
+ 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
+ 				    le_addr_type(iso_pi(sk)->dst_type),
+-				    &iso_pi(sk)->qos);
++				    &iso_pi(sk)->qos,
++				    READ_ONCE(sk->sk_sndtimeo));
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto unlock;
+@@ -479,7 +482,8 @@ static int iso_connect_cis(struct sock *sk)
+ 	} else {
+ 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
+ 				       le_addr_type(iso_pi(sk)->dst_type),
+-				       &iso_pi(sk)->qos);
++				       &iso_pi(sk)->qos,
++				       READ_ONCE(sk->sk_sndtimeo));
+ 		if (IS_ERR(hcon)) {
+ 			err = PTR_ERR(hcon);
+ 			goto unlock;
 -- 
 2.51.0
 
