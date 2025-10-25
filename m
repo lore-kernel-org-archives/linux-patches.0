@@ -1,45 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA452305051;
-	Sat, 25 Oct 2025 16:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF48306498;
+	Sat, 25 Oct 2025 16:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409074; cv=none; b=clt8cVr4VWLU+BtnAm0QrCuB5jaI2h7YixTJsf7Tz0gHor9B17P5/DB/iL2p9kexS0sALjWaDA05bYLc6F/fN2MXPDcmauXU8RBdo0NAl1uVhTczcx/C9VDHJvPbSJNkAkfrNzBW5YpiLgHhepTbfNUyst/FWAKCgAklGnlJpxo=
+	t=1761409078; cv=none; b=MuKRGyLSjdIY8lQGCptLbkDax6sf80TcsADkfQeWqT8I/7C9ZjMf6ZY6lEED3zZF/fqzxy/16drA7HNhzZcgrQEaG8nci2Rh1XeaBRc+genngQcCpCGuEwqA6qt4bDqJMrou+AD7jWWkPAccLbH8qWn2lLsozf5wf7SssnkWoY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409074; c=relaxed/simple;
-	bh=FCArMVWjnscGMtnJ113N+YYqdfA9EBJA1KumvbQntPo=;
+	s=arc-20240116; t=1761409078; c=relaxed/simple;
+	bh=SlFMHbG3IUa6AzlLmrtJS+LPhgeeFmQdhudk9AS2AsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PE+P2Qiqf2FC+iPJWRNZqDMItn6dt6Z5vO+p1/D02hx0dMV/q/hM1vmhb9S/m16YItAk+/eWELXpIXWF2m8FefPGp8mVHe5EBDJznGa38oEH7ig8cCUlKvtecgD943LoLp2eGDzBQGQmbwzo/QTPkf6+PdQ+VXhhwnkFA+z5rpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXraoycf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ya1yxOij4G5ivyqPlFAm7TUR/ucLxVeKCRTx1MU3H2y2cjFjT1DwxlfIoh2dRJ3AGT/HUXTwD26Uw9qOUCxLK04AzkVDciKQpFSjwKmIc3igmMKgio+MTLKzWXJIJDz2aTEfCxme92005rMHzoTsUYT6rq0hkcF4sXIVrRjyf6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bdfZ5Ez8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXraoycf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39383C4CEF5;
-	Sat, 25 Oct 2025 16:17:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bdfZ5Ez8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DEDC4CEF5;
+	Sat, 25 Oct 2025 16:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409074;
-	bh=FCArMVWjnscGMtnJ113N+YYqdfA9EBJA1KumvbQntPo=;
+	s=k20201202; t=1761409078;
+	bh=SlFMHbG3IUa6AzlLmrtJS+LPhgeeFmQdhudk9AS2AsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXraoycfyT5KOWnUbQY1XO45zlKGAQQaGkd/FN3t4CNt1PeASQ2PDxckHggtetSbN
-	 AYos0F/paKq10V5SMX8/oHAEB1GGsEu0wIF2G7e6yoqQhKmety8jPu3SBM6aaDi3iQ
-	 nW3c4WKY1w6UCqZ4T/GzS3qKcOEAv8cDLJ5pFwcVoanEKUL2nUeHmpNyucrb/Vde0t
-	 hqxL6etbUibnqv4RDR4qG7VdfBHSD2vAagH+1Ag+M14CGkXM90I8zoYE3RzmLOk/51
-	 V2H85rzvm4YDAtSeuUuVuBjI9rpfr1LbEML5LzCVE60WLA3P0HUnIUkh1J5JvFMgLf
-	 EBJh+DL/AUIYw==
+	b=bdfZ5Ez839LsjqIO83ZpuWnonI7qy8CDdyMYh7e3n1kJCXCXzIKOP7q0O2DUWfbOq
+	 m+Hy1kBKXk6TXDPjKnjO/UbpPAoD71WZ8Ro+vz44+CIK8oyiq/el4/p/GKI9F355WO
+	 pj+ngmQymZ6thXj0QaaqHYal+FI2PyYGvjAf48Tdu7JgvRL5m6lSng8snkjFyYvFoI
+	 gN/IyGVTiQDP+h7pkW1ejA5DfXqs4uiVCtLBZeqfDaKQpwRh33QCQQGHuFYrpl1X+f
+	 ARyoLwCji5/19drTFg+3yjxXf9YjqTWprjQLjrAfkV93B5g11e5sp5aV8erLfDLlzw
+	 cTdkff7E0Hsaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiang Liu <xiang.liu@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
+Cc: TungYu Lu <tungyu.lu@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Hawking.Zhang@amd.com,
-	kevinyang.wang@amd.com,
+	charlene.liu@amd.com,
+	alex.hung@amd.com,
+	aric.cyr@amd.com,
+	christophe.jaillet@wanadoo.fr,
+	Josip.Pavic@amd.com,
 	alexandre.f.demers@gmail.com,
-	cesun102@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdgpu: Skip poison aca bank from UE channel
-Date: Sat, 25 Oct 2025 11:57:03 -0400
-Message-ID: <20251025160905.3857885-192-sashal@kernel.org>
+	dmytro.laktyushkin@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Wait until OTG enable state is cleared
+Date: Sat, 25 Oct 2025 11:57:04 -0400
+Message-ID: <20251025160905.3857885-193-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,14 +60,24 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Liu <xiang.liu@amd.com>
+From: TungYu Lu <tungyu.lu@amd.com>
 
-[ Upstream commit 8e8e08c831f088ed581444c58a635c49ea1222ab ]
+[ Upstream commit e7496c15d830689cc4fc666b976c845ed2c5ed28 ]
 
-Avoid GFX poison consumption errors logged when fatal error occurs.
+[Why]
+Customer reported an issue that OS starts and stops device multiple times
+during driver installation. Frequently disabling and enabling OTG may
+prevent OTG from being safely disabled and cause incorrect configuration
+upon the next enablement.
 
-Signed-off-by: Xiang Liu <xiang.liu@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+[How]
+Add a wait until OTG_CURRENT_MASTER_EN_STATE is cleared as a short term
+solution.
+
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: TungYu Lu <tungyu.lu@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -71,160 +86,101 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - The change filters out non-UMC ACA banks that only indicate “poison”
-    when processing the UE (uncorrectable error) channel, which avoids
-    spurious “GFX poison consumption” errors being logged during fatal
-    errors. This directly addresses noisy/misleading error reporting
-    that affects users during GPU fatal error scenarios.
+- What it fixes: The change addresses a real, user-visible race during
+  rapid start/stop sequences where disabling and then quickly re-
+  enabling the OTG can leave the hardware in a partially enabled state,
+  leading to incorrect configuration on the next enable. The commit
+  explicitly frames this as a customer-reported problem during driver
+  installation.
 
-- Key code changes
-  - In `aca_smu_get_valid_aca_banks`
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:135), a new conditional
-    skip is added inside the per‑bank loop:
-    - Conditions: `type == ACA_SMU_TYPE_UE`,
-      `ACA_REG__STATUS__POISON(bank.regs[ACA_REG_IDX_STATUS])`, and
-      `!aca_bank_hwip_is_matched(&bank, ACA_HWIP_TYPE_UMC)`.
-    - Effect: For UE processing, ACA banks with the POISON bit set that
-      are not from UMC are skipped (not logged/processed). This is the
-      core behavioral fix.
-  - The helper `aca_bank_hwip_is_matched` is moved above to allow its
-    use in that function (no behavioral change; just reordering). In
-    trees where it’s defined later (e.g.,
-    drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:183), either move it up or
-    add a static prototype to avoid implicit declaration errors.
-  - The rest of the diff context (e.g., extra logging such as SCRUB) is
-    not central to this fix and does not alter the backport’s intent.
+- What changes: A single wait is added to the DCN401 OTG disable path to
+  ensure the hardware has actually cleared the enable state before
+  proceeding.
+  - In `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:223`
+    the code disables OTG via `REG_UPDATE(OTG_CONTROL, OTG_MASTER_EN,
+    0);`.
+  - In
+    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:226-227`
+    it disables VTG via `REG_UPDATE(CONTROL, VTG0_ENABLE, 0);`.
+  - The patch adds immediately after those writes a poll for the status
+    bit to clear:
+    - `REG_WAIT(OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE, 0, 10,
+      15000);` (inserted between the VTG disable and the existing
+      clock/idle wait).
+  - The existing wait for the OTG to go idle remains:
+    - `REG_WAIT(OTG_CLOCK_CONTROL, OTG_BUSY, 0, 1, 150000);` at `drivers
+      /gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c:230-232`.
 
-- Why it’s correct and minimal
-  - “Poison” originates from memory (UMC). When a fatal UE occurs, other
-    IPs may reflect poison consumption but should not be counted/logged
-    as distinct UE sources; this commit ensures only UMC poison is
-    considered in the UE path.
-  - The change is localized to one function and one driver file. It does
-    not alter SMU programming, scheduling, or broader recovery flow.
-  - It only reduces false positives: non-UMC banks with POISON on the UE
-    channel are dropped early; non-POISON or UMC banks continue to be
-    processed as before.
+- Rationale and precedent: Waiting for `OTG_CURRENT_MASTER_EN_STATE` to
+  assert/deassert is already a known-safe pattern in older DCN code
+  paths:
+  - See `drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c:274-279`
+    (wait for 0 after disable) and
+    `drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c:351-353`
+    (wait for 1 after enable). This demonstrates that using
+    `OTG_CURRENT_MASTER_EN_STATE` for synchronization is standard
+    practice in the display code.
 
-- Risk and side effects
-  - Low risk: The filter applies only when `type == ACA_SMU_TYPE_UE` and
-    the POISON bit is set, and only for non‑UMC hardware IPs. It does
-    not hide non‑poison UE errors, nor any UMC-origin errors.
-  - It reduces misleading GFX-side logs and counters, which can
-    otherwise trigger unnecessary investigations or misleading event
-    paths.
-  - No architectural changes; no API changes; no new features.
+- Scope and risk:
+  - Small, contained change in one function of one file:
+    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c`.
+  - No interfaces or architectural changes; purely a
+    sequencing/synchronization fix.
+  - The added wait is bounded (10 µs interval, 15000 tries ≈ 150 ms
+    worst case), consistent with existing waits in the same path
+    (`OTG_BUSY` wait is already up to ~150 ms). Given this occurs during
+    CRTC disable, the latency impact is acceptable and low-risk.
+  - Security impact: none.
 
-- Stable/backport suitability
-  - Important bug fix: prevents spurious/misleading error logs during
-    fatal events.
-  - Small and contained change to a single driver file.
-  - No new interfaces; purely defensive filtering logic.
-  - Dependencies exist in stable trees:
-    - `ACA_REG__STATUS__POISON` is defined
-      (drivers/gpu/drm/amd/amdgpu/amdgpu_aca.h:48).
-    - `ACA_HWIP_TYPE_UMC` and `aca_bank_hwip_is_matched` exist
-      (drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:183 for the helper; may
-      require moving it above or adding a forward declaration).
-    - The new check uses the `type` argument already present in
-      `aca_smu_get_valid_aca_banks`; it does not depend on newer struct
-      fields (e.g., `smu_err_type`) for this logic.
-  - No evidence of required follow-ups or reverts for this particular
-    behavior. The change is orthogonal to other ACA fixes already in
-    stable (e.g., boundary checks).
+- Dependencies to verify when backporting:
+  - Ensure the register field mapping for `OTG_CURRENT_MASTER_EN_STATE`
+    is wired for DCN401 so the wait checks the correct bit. The bit is
+    defined for DCN 4.1 in
+    `drivers/gpu/drm/amd/include/asic_reg/dcn/dcn_4_1_0_sh_mask.h:26946,
+    26953`.
+  - In this tree, the DCN common TG field set includes
+    `OTG_CURRENT_MASTER_EN_STATE` (see
+    `drivers/gpu/drm/amd/display/dc/optc/dcn10/dcn10_optc.h:242, 404`),
+    but DCN401’s mask/shift list is curated in
+    `drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.h`. If the
+    target stable branch’s `OPTC_COMMON_MASK_SH_LIST_DCN401` does not
+    include `SF(OTG0_OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE,
+    mask_sh)`, add it; otherwise the new wait may degenerate into a no-
+    op due to an unset mask/shift.
 
-- Backport note
-  - When applying to trees where `aca_bank_hwip_is_matched` is defined
-    after `aca_smu_get_valid_aca_banks`
-    (drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c:183), either move the
-    helper above or add `static bool aca_bank_hwip_is_matched(struct
-    aca_bank *, enum aca_hwip_type);` before use to satisfy kernel build
-    rules (no implicit declarations).
+- Stable criteria:
+  - Fixes a real, user-facing bug (incorrect OTG reconfiguration under
+    rapid toggling).
+  - Minimal and localized change (one added wait).
+  - No new features or architectural rework.
+  - Low regression risk; follows established synchronization patterns
+    used in other DCN generations.
 
-Conclusion: This is a targeted, low-risk bugfix that reduces false
-poison consumption logging during fatal UEs. It fits stable criteria
-well and should be backported.
+Conclusion: This is a good candidate for stable backporting. It’s a
+narrowly scoped hardware sequencing fix with clear user impact,
+implemented using a standard wait on an existing status bit. Ensure the
+DCN401 mask/shift mapping includes `OTG_CURRENT_MASTER_EN_STATE` in the
+target stable branch so the wait is effective.
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c | 51 +++++++++++++++----------
- 1 file changed, 30 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-index cbc40cad581b4..d1e431818212d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
-@@ -130,6 +130,27 @@ static void aca_smu_bank_dump(struct amdgpu_device *adev, int idx, int total, st
- 		RAS_EVENT_LOG(adev, event_id, HW_ERR "hardware error logged by the scrubber\n");
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
+index ff79c38287df1..5af13706e6014 100644
+--- a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
+@@ -226,6 +226,11 @@ bool optc401_disable_crtc(struct timing_generator *optc)
+ 	REG_UPDATE(CONTROL,
+ 			VTG0_ENABLE, 0);
  
-+static bool aca_bank_hwip_is_matched(struct aca_bank *bank, enum aca_hwip_type type)
-+{
++	// wait until CRTC_CURRENT_MASTER_EN_STATE == 0
++	REG_WAIT(OTG_CONTROL,
++			 OTG_CURRENT_MASTER_EN_STATE,
++			 0, 10, 15000);
 +
-+	struct aca_hwip *hwip;
-+	int hwid, mcatype;
-+	u64 ipid;
-+
-+	if (!bank || type == ACA_HWIP_TYPE_UNKNOW)
-+		return false;
-+
-+	hwip = &aca_hwid_mcatypes[type];
-+	if (!hwip->hwid)
-+		return false;
-+
-+	ipid = bank->regs[ACA_REG_IDX_IPID];
-+	hwid = ACA_REG__IPID__HARDWAREID(ipid);
-+	mcatype = ACA_REG__IPID__MCATYPE(ipid);
-+
-+	return hwip->hwid == hwid && hwip->mcatype == mcatype;
-+}
-+
- static int aca_smu_get_valid_aca_banks(struct amdgpu_device *adev, enum aca_smu_type type,
- 				       int start, int count,
- 				       struct aca_banks *banks, struct ras_query_context *qctx)
-@@ -168,6 +189,15 @@ static int aca_smu_get_valid_aca_banks(struct amdgpu_device *adev, enum aca_smu_
- 
- 		bank.smu_err_type = type;
- 
-+		/*
-+		 * Poison being consumed when injecting a UE while running background workloads,
-+		 * which are unexpected.
-+		 */
-+		if (type == ACA_SMU_TYPE_UE &&
-+		    ACA_REG__STATUS__POISON(bank.regs[ACA_REG_IDX_STATUS]) &&
-+		    !aca_bank_hwip_is_matched(&bank, ACA_HWIP_TYPE_UMC))
-+			continue;
-+
- 		aca_smu_bank_dump(adev, i, count, &bank, qctx);
- 
- 		ret = aca_banks_add_bank(banks, &bank);
-@@ -178,27 +208,6 @@ static int aca_smu_get_valid_aca_banks(struct amdgpu_device *adev, enum aca_smu_
- 	return 0;
- }
- 
--static bool aca_bank_hwip_is_matched(struct aca_bank *bank, enum aca_hwip_type type)
--{
--
--	struct aca_hwip *hwip;
--	int hwid, mcatype;
--	u64 ipid;
--
--	if (!bank || type == ACA_HWIP_TYPE_UNKNOW)
--		return false;
--
--	hwip = &aca_hwid_mcatypes[type];
--	if (!hwip->hwid)
--		return false;
--
--	ipid = bank->regs[ACA_REG_IDX_IPID];
--	hwid = ACA_REG__IPID__HARDWAREID(ipid);
--	mcatype = ACA_REG__IPID__MCATYPE(ipid);
--
--	return hwip->hwid == hwid && hwip->mcatype == mcatype;
--}
--
- static bool aca_bank_is_valid(struct aca_handle *handle, struct aca_bank *bank, enum aca_smu_type type)
- {
- 	const struct aca_bank_ops *bank_ops = handle->bank_ops;
+ 	/* CRTC disabled, so disable  clock. */
+ 	REG_WAIT(OTG_CLOCK_CONTROL,
+ 			OTG_BUSY, 0,
 -- 
 2.51.0
 
