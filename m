@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255F9313286;
-	Sat, 25 Oct 2025 16:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851473074A4;
+	Sat, 25 Oct 2025 16:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409390; cv=none; b=WS0KTDR4ALPXy8y0vqUrxSY22NNKSirqjMpCipJkZucbRnXHo90u7LxzsoQwma82fqHZHW8ovoiQM3ZgH0fe5jCzGb/VQ/0tTp2ppx0IGuO5oND4PTngRsuELQuGX3fXPZmumBUcZm9ODlgTTNpbpEpSY+oMd9b+dWn1sKNY34w=
+	t=1761409391; cv=none; b=F4abrpOjdBgXpMbeeUHHc7nsHAF/qEtKvPQ1K82MmzOxq4PXbpuR5FW6VJn2hL6YwyUAABGJxZr1OyRg32zB0eXINlAKFBxQcB0RjVuLSJlKVwc6PivlxqHkmgxkW9nfHzsJCDPwsZmHpj9utNnIbyLC7CTutollc+LndA/PRUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409390; c=relaxed/simple;
-	bh=wtCywLTFkiRyb4YuANo/iy9dCbFZ3i6HWTknPNjyz4g=;
+	s=arc-20240116; t=1761409391; c=relaxed/simple;
+	bh=Eo1dzXjyZ4j2Et5f+6SWckQLSKp7VD275jrVBd3zdBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mTsNCsfMPh1/rP9jK9JE+kPZQWA1ywcfwu3cb1iR58QvDUXO2x13qtdK+GLN0dFi2qgVtomgP2k2S7jsOsVb/7kUqF0yIOqkTshFSrHBi75vnOQT2Jz5M72js+RTVY9VnllbV3fZGJNYfjgoYaat6KTnaGJ8KhDDV3px9L4hnLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVr5kKUf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oGD656SvChlO+IrwM9B00ZUX4mS4kVjOqfi0y9wQIJFpjERYC+I69tRrhf3NpX4kkenWoTnJA4yKGbiZNMeUpWnmCI7qkxg/0OxnkF0nYk2uNFp6Xh1MrgUCASpO9107Y1NHJk+QHh1DJEbuylOefAI3vASgVT/nlKdY3KGOIqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=frffo4kX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVr5kKUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83D3C4CEF5;
-	Sat, 25 Oct 2025 16:23:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="frffo4kX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688C6C4CEF5;
+	Sat, 25 Oct 2025 16:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409390;
-	bh=wtCywLTFkiRyb4YuANo/iy9dCbFZ3i6HWTknPNjyz4g=;
+	s=k20201202; t=1761409391;
+	bh=Eo1dzXjyZ4j2Et5f+6SWckQLSKp7VD275jrVBd3zdBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVr5kKUftcTYcZ/9tJSTZnPs3ldKCxcFbFFHfF9CbqprfyuZHq5BemuJpQP77770g
-	 0uehxRD8G0+FLEQsYieadjLgjd01RrCQ1wudD1mJPWx/dftFHMKQs6Vmf+kmrufKq2
-	 fE0OdmVnHagUIrJLcW5PIiEcJguDnylQurkodSjs8u/9xg67l2s6QFJLOYF6xE0cbF
-	 04XoYufVofI2q87dtznRhciGgFui0BkHK6GPbamj3t0pGmeLfn1TDle+kaaHPdZYJD
-	 RFZ8yQbcGIr7gr1Ymv9zDAmK7OTn5atZBw4M7OQgj+sqZo/78DdvOZWMFMmoz8lKzm
-	 /n5oF/lSIfNWQ==
+	b=frffo4kXwWag4ETZ9TXSEotj3lsFEDbXpX5gJHQA21QB8nhRclU6JfojSsHH2Ic3L
+	 pIQ6p/AxwJRpj4WtfKlu//J19qjKYoJM2r7Ji4ejKJ1Dcb9ClHnKdy1qtjKHfEqIlT
+	 D4LeCWypXqrj0k0zMJqstGU3tjv5Gb7ixMz9T40mvO+YKjNVDbrEDC3/ID4z+yJtF2
+	 CmrYIC4lquUe9agsIl4tMXGpm5T0tcnVYIzyQsKe2lNlwEPTsx+uaRaXhaxDPD1eYz
+	 bN79Y+jvXhCV7Vog3KGv+xVF4F0OjyOraSXpHEhbwhgw3iQ0hN2SrEYedCBoGytz1p
+	 K0MksCbe9Y2Ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Julian Sun <sunjunchao@bytedance.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] ext4: increase IO priority of fastcommit
-Date: Sat, 25 Oct 2025 11:58:53 -0400
-Message-ID: <20251025160905.3857885-302-sashal@kernel.org>
+	ncardwell@google.com,
+	davem@davemloft.net,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] tcp: use dst_dev_rcu() in tcp_fastopen_active_disable_ofo_check()
+Date: Sat, 25 Oct 2025 11:58:54 -0400
+Message-ID: <20251025160905.3857885-303-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -55,83 +54,115 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 46e75c56dfeafb6756773b71cabe187a6886859a ]
+[ Upstream commit b62a59c18b692f892dcb8109c1c2e653b2abc95c ]
 
-The following code paths may result in high latency or even task hangs:
-   1. fastcommit io is throttled by wbt.
-   2. jbd2_fc_wait_bufs() might wait for a long time while
-JBD2_FAST_COMMIT_ONGOING is set in journal->flags, and then
-jbd2_journal_commit_transaction() waits for the
-JBD2_FAST_COMMIT_ONGOING bit for a long time while holding the write
-lock of j_state_lock.
-   3. start_this_handle() waits for read lock of j_state_lock which
-results in high latency or task hang.
+Use RCU to avoid a pair of atomic operations and a potential
+UAF on dst_dev()->flags.
 
-Given the fact that ext4_fc_commit() already modifies the current
-process' IO priority to match that of the jbd2 thread, it should be
-reasonable to match jbd2's IO submission flags as well.
-
-Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20250827121812.1477634-1-sunjunchao@bytedance.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – aligning fast-commit writes with the journal’s request flags fixes
-real stall/hang scenarios without introducing new risk.
+YES
 
-**Bug Impact**
-- When `ext4_fc_submit_bh()` tags fast-commit buffers with only
-  `REQ_SYNC`, writeback throttling treats them as ordinary sync writes
-  and can block them, triggering the long waits called out in the commit
-  message; see the change at `fs/ext4/fast_commit.c:666`.
-- WBT explicitly exempts requests carrying both `REQ_SYNC` and
-  `REQ_IDLE`, so the old flag set lets throttling kick in (`block/blk-
-  wbt.c:606`), holding `JBD2_FAST_COMMIT_ONGOING`, which then stalls
-  `jbd2_fc_wait_bufs()` (`fs/jbd2/journal.c:868-895`) and anything
-  needing `j_state_lock`. That behavior matches the reported high
-  latencies / task hangs.
+Explanation and rationale
+- What it fixes
+  - Eliminates a race that can lead to a use-after-free when reading
+    `dev->flags` from a `dst_entry` without RCU protection. The pre-
+    change pattern `sk_dst_get()` → `dst_dev()` → `dev->flags` →
+    `dst_release()` can observe a freed `struct net_device` and
+    dereference `dev->flags`, risking UAF.
+  - The change uses RCU to safely dereference the route device and avoid
+    the refcount pair on `dst` (performance benefit is secondary to
+    correctness).
 
-**Why the Fix Is Safe**
-- `JBD2_JOURNAL_REQ_FLAGS` expands to `REQ_META | REQ_SYNC | REQ_IDLE`
-  (`include/linux/jbd2.h:1372`), exactly what core journaling already
-  uses for its writes (`fs/jbd2/commit.c:122`). Fast commits simply
-  inherit the same metadata/high-priority treatment.
-- The change is a single-line adjustment confined to the fast-commit
-  buffer submission path, with no format or architectural impact and no
-  new dependencies (the macro has existed long before fast commits
-  shipped).
-- Ext4 already boosts the committing task’s IO priority to match the
-  journal thread (`fs/ext4/fast_commit.c:1211-1218`); matching the
-  submission flags keeps behavior consistent and predictable.
+- Code specifics
+  - Affected function: `net/ipv4/tcp_fastopen.c:559`
+    (tcp_fastopen_active_disable_ofo_check)
+  - Before (conceptually): `dst = sk_dst_get(sk); dev = dst ?
+    dst_dev(dst) : NULL; if (!(dev && (dev->flags & IFF_LOOPBACK)))
+    atomic_set(..., 0); dst_release(dst);`
+    - Problem: `dev->flags` is read without RCU or a device reference;
+      `struct net_device` is RCU-freed, so this can race and UAF.
+  - After:
+    - `rcu_read_lock();`
+    - `dst = __sk_dst_get(sk);` (RCU-protected view of
+      `sk->sk_dst_cache`; `include/net/sock.h:2142`)
+    - `dev = dst ? dst_dev_rcu(dst) : NULL;` (RCU-safe deref of device;
+      `include/net/dst.h:574`)
+    - `if (!(dev && (dev->flags & IFF_LOOPBACK)))
+      atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);`
+    - `rcu_read_unlock();`
+    - See current code at `net/ipv4/tcp_fastopen.c:581` for the RCU
+      pattern.
+  - The function is invoked in normal teardown paths, so it can be hit
+    in practice:
+    - `net/ipv4/tcp_ipv4.c:2570`
+    - `net/ipv4/tcp.c:3382`
 
-Given the real-world stalls this resolves, the minimal and well-
-understood code change, and its tight scope within ext4 fast commits, it
-aligns with stable-tree rules and should be backported.
+- Scope and risk
+  - Small, contained change in a single function, no ABI changes, no
+    architectural refactors.
+  - Only affects active TCP Fast Open logic when clearing the global
+    backoff counter on non-loopback devices.
+  - Behavior is unchanged except making the device lookup and flag read
+    concurrency-safe and cheaper (no `dst` refcount inc/dec).
+  - Reading `IFF_LOOPBACK` under RCU is safe; the bit is effectively
+    stable for the loopback device, and RCU guarantees pointer lifetime
+    during the check.
 
- fs/ext4/fast_commit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+- Stable backport fit
+  - Fixes a real concurrency/UAF bug that can crash the kernel; it’s not
+    a feature change.
+  - Minimal risk of regression and confined to TCP/TFO.
+  - Uses widely available helpers:
+    - `__sk_dst_get()` at `include/net/sock.h:2142`
+    - `dst_dev_rcu()` at `include/net/dst.h:574`
+  - If an older stable branch lacked `dst_dev_rcu()`, the change is
+    trivially adaptable using `rcu_dereference(dst->dev)` under
+    `rcu_read_lock()`. But in maintained series this helper is already
+    present in the networking core.
 
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index 42bee1d4f9f97..fa66b08de9994 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -663,7 +663,7 @@ void ext4_fc_track_range(handle_t *handle, struct inode *inode, ext4_lblk_t star
+- Why it matters
+  - Even if exploitation is unlikely (requires racing TFO teardown with
+    route/device changes), it’s a correctness and reliability fix in a
+    core network path and should be in stable trees.
+
+Conclusion
+- This is a clear bug fix for a potential UAF with a minimal, localized
+  RCU conversion. It aligns with stable criteria and should be
+  backported.
+
+ net/ipv4/tcp_fastopen.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index f1884f0c9e523..7d945a527daf0 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -576,11 +576,12 @@ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
+ 		}
+ 	} else if (tp->syn_fastopen_ch &&
+ 		   atomic_read(&sock_net(sk)->ipv4.tfo_active_disable_times)) {
+-		dst = sk_dst_get(sk);
+-		dev = dst ? dst_dev(dst) : NULL;
++		rcu_read_lock();
++		dst = __sk_dst_get(sk);
++		dev = dst ? dst_dev_rcu(dst) : NULL;
+ 		if (!(dev && (dev->flags & IFF_LOOPBACK)))
+ 			atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);
+-		dst_release(dst);
++		rcu_read_unlock();
+ 	}
+ }
  
- static void ext4_fc_submit_bh(struct super_block *sb, bool is_tail)
- {
--	blk_opf_t write_flags = REQ_SYNC;
-+	blk_opf_t write_flags = JBD2_JOURNAL_REQ_FLAGS;
- 	struct buffer_head *bh = EXT4_SB(sb)->s_fc_bh;
- 
- 	/* Add REQ_FUA | REQ_PREFLUSH only its tail */
 -- 
 2.51.0
 
