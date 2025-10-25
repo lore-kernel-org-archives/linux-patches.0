@@ -1,49 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E383304BB8;
-	Sat, 25 Oct 2025 16:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D0301022;
+	Sat, 25 Oct 2025 16:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409117; cv=none; b=smSkMJ/dGzJnqe+1uS7ATBaC/QBXhYF8I2rs90jrXnnQpzbWSjwpP7LYkBEmjNG42XYX2jrh0Rh6Q7yuoU32CyRNCVe2XRGNwtNhAITk+C+e4NvlgJsVJK/XHQBPaFYjTl8RpHB8o8HUuCousjCHeDgfBZFGrXQSXZJ+L45YXGU=
+	t=1761409121; cv=none; b=niKoDwduThjofhXuAukj+1fJY19ipxU+D3H4ZOYkXLIL9IzSFRWEzsxQUon5m6ZuLCL+bduHMWpMkbiv0LHtzGVvE7wz4RxUcZ4Z5Z6JM+5U7XsNBqHiC+WidEH1MEMPW2G5Oqrm4kINir3Cu1hOTqkNOeUVKyMHF08gYRGho/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409117; c=relaxed/simple;
-	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
+	s=arc-20240116; t=1761409121; c=relaxed/simple;
+	bh=QAgLSewJZFccX3NcwGtj/VLiSP21lCVfi8MekQCS2i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n90mTiVhZm6kkG+ETbT0vPKJwflIz7yxewyo+EvsPYvcQWpsb9h8cqvL6mJV5P8WVhFSkwE7ylNAog6SlmhZr1YfwYj+WrEDOLVXKkQx3CtABjtZ6uoE9zhvaM5D3Xp5h9q8fUSBHhGiIiXdm/RslGEoV84gyptKIoWorbHrkCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eiv/itaA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b7kYk+DE7HoJHVVUrwsafxs3TdTkOXUVHSE4r4eiHUBbP/1EcyJV/Fy+7Xwz92+qgU2kKxP9J7CJLlIl68GrDkS6OGYto4qtNh/mq29HmJsKIeKMOZuycQENqbooOZqJ6w+0+rHIg/uajnAj3jz/3l2u60qRd8ddmF27J8O2ssg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W0tcKLIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eiv/itaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB5C4CEF5;
-	Sat, 25 Oct 2025 16:18:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W0tcKLIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4F0C4CEF5;
+	Sat, 25 Oct 2025 16:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409117;
-	bh=MqWjGTemgYbJk4aKJXikLaSuGnhNkeFWTQuYp2fq9qA=;
+	s=k20201202; t=1761409120;
+	bh=QAgLSewJZFccX3NcwGtj/VLiSP21lCVfi8MekQCS2i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eiv/itaAJz4Z24KXEuDNoVqMeDLruzhZEDGOz90JGYBoDVW5ULH5W23kcwcK+SK4A
-	 nreaZsjdwvz/5o0mgVYeDC956spgFGMqFL4QsxzCWbPyUmHCXnlGTWUNA34KRdxmRQ
-	 n/VWA1+i98TO3F0/1Fqn1loXyiouIfli+yfgSLDQhYvCD34YTlKhb8qgZlXNfAZlof
-	 qiJ6xIA6VwSM1sIPSO4ijfrkI3+UrBAU8A2QMod3zkrhZIWJtnFkkoZWp1GTI/PCok
-	 rpdEUoGb9tlqJONxiTPyQGSnLWNghvu0NHSSk0o1t+UVIw1c9LtnoFPS+Dsdu4CsSJ
-	 FG7OwXmRhUTDg==
+	b=W0tcKLIbmzxjjupKCqAgTOK+iF/GKjReoXuLfgzFmXrbKgV+AGHmaa9ZirSQnbbYA
+	 gGpbHPJhuM6XPjp7BhOFSNRX0MruFuS7jE6NbqBWi/IROzooabOHsFvD6zaE8vYfkO
+	 inOZXgbA9Hy1rJQfMTKvaJAJ1peLpwAG4GyelwliIwnsGeA3pb64D5JLqLrzRPESUy
+	 mFGraOgFNsm8mFGwsyL5b42bG2tQaY08jMMUDbz+z11feDg/3fzsIjPxDkLc8F/Agg
+	 gpb5nYljDjKwGqxO0HHdJB7tgSjN8FDPzlntWejJT94JB+YAij7m4TpU448XnWgYmK
+	 cycF3Y4MD2bZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	srini@kernel.org,
-	p.zabel@pengutronix.de,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] ASoC: codecs: wsa883x: Handle shared reset GPIO for WSA883x speakers
-Date: Sat, 25 Oct 2025 11:57:16 -0400
-Message-ID: <20251025160905.3857885-205-sashal@kernel.org>
+	Jesse.zhang@amd.com,
+	christian.koenig@amd.com,
+	boyuan.zhang@amd.com,
+	sunil.khatri@amd.com,
+	mario.limonciello@amd.com,
+	pierre-eric.pelloux-prayer@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu/vpe: cancel delayed work in hw_fini
+Date: Sat, 25 Oct 2025 11:57:17 -0400
+Message-ID: <20251025160905.3857885-206-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -59,22 +57,16 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit cf65182247761f7993737b710afe8c781699356b ]
+[ Upstream commit ec813f384b1a9df332e86ff46c422e5d2d00217f ]
 
-On some Qualcomm platforms such as QCS6490-RB3Gen2, the multiple
-WSA8830/WSA8835 speaker amplifiers share a common reset (shutdown) GPIO.
+We need to cancel any outstanding work at both suspend
+and driver teardown. Move the cancel to hw_fini which
+gets called in both cases.
 
-To handle such scenario, use the reset controller framework and its
-"reset-gpio" driver to handle such case. This allows proper handling
-of all WSA883x speaker amplifiers on QCS6490-RB3Gen2 board.
-
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250815172353.2430981-3-mohammad.rafi.shaik@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -82,194 +74,81 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Addresses real functional issues on platforms where multiple WSA883x
-    amplifiers share a single shutdown/reset line (e.g.,
-    QCS6490-RB3Gen2). Using a plain GPIO per-device does not coordinate
-    shared users; one instance toggling the line can inadvertently reset
-    others. The patch switches to the reset controller framework with
-    the reset‑gpio backend to handle shared lines correctly.
+- What it fixes: Prevents a race/UAF by ensuring the VPE idle delayed
+  work is canceled during both suspend and full driver teardown. The
+  idle work is initialized and used for power-gating idling
+  (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:355) and is scheduled in
+  normal operation (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:873) and can
+  reschedule itself (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:336).
+  Without canceling it on teardown, it may run after the ring is stopped
+  or while/after resources are being freed.
 
-- Scope and minimality
-  - Single-file, localized change in `sound/soc/codecs/wsa883x.c`.
-  - No ABI or architectural changes; strictly startup/shutdown control
-    path in probe.
-  - Optional feature: falls back to existing `powerdown-gpios` behavior
-    if no reset controller is provided, keeping backward compatibility.
+- Change details:
+  - Added cancellation in teardown path:
+    `cancel_delayed_work_sync(&adev->vpe.idle_work);` in `vpe_hw_fini()`
+    so it runs on both suspend and teardown
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:439).
+  - Simplified suspend path to delegate to `vpe_hw_fini()`
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:449–451), ensuring the same
+    cancel happens on suspend.
+  - The IP block ops confirm suspend and hw_fini are the hooks used by
+    both flows (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:978–981).
 
-- Specific code changes and rationale
-  - Adds reset framework usage
-    - Include added: `#include <linux/reset.h>` in
-      `sound/soc/codecs/wsa883x.c`.
-    - Private data gains an optional reset handle: `struct reset_control
-      *sd_reset;` alongside the existing `sd_n` GPIO
-      (sound/soc/codecs/wsa883x.c:462).
-  - Centralized assert/deassert helpers
-    - New helpers `wsa883x_reset_assert()` and
-      `wsa883x_reset_deassert()` switch between
-      `reset_control_assert/deassert()` and
-      `gpiod_direction_output(sd_n, 1/0)` depending on whether a reset
-      control is present.
-  - Robust resource acquisition with graceful fallback
-    - New `wsa883x_get_reset()` first tries
-      `devm_reset_control_get_optional_shared(dev, NULL)` and, if none,
-      falls back to the existing `devm_gpiod_get_optional(dev,
-      "powerdown", ...)` path. This keeps old DTs working while enabling
-      shared-reset handling when “resets”/“reset-gpios” is used.
-  - Safer cleanup on errors/unbind
-    - In `wsa883x_probe()`, instead of manually asserting the GPIO only
-      on regmap-init failure (previous code:
-      `gpiod_direction_output(wsa883x->sd_n, 1)` in the error path at
-      sound/soc/codecs/wsa883x.c:1579–1585), the patch calls
-      `wsa883x_reset_deassert(wsa883x)` to bring the device out of
-      reset, then registers `devm_add_action_or_reset(dev,
-      wsa883x_reset_assert, wsa883x)`. This guarantees the reset is
-      asserted on any probe failure or device removal, mirroring the
-      established pattern used in other codecs.
-  - Probe flow changes (localized, low risk)
-    - Replaces the hardwired GPIO bring-up:
-      - Old: acquire `powerdown-gpios` then
-        `gpiod_direction_output(sd_n, 0)` to deassert
-        (sound/soc/codecs/wsa883x.c:1572–1575, 1561–1568).
-      - New: `wsa883x_get_reset()` and `wsa883x_reset_deassert()` with
-        `devm_add_action_or_reset` to ensure deterministic cleanup.
-        Functionally equivalent for non-shared setups, but robust for
-        shared lines.
+- Why it matters: The idle work handler toggles power gating
+  (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:333–336). If it remains
+  queued while the ring is being stopped
+  (drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:441) or while memory is being
+  torn down in `sw_fini()`, it can touch freed objects or hardware in an
+  invalid state. Moving the cancel to `hw_fini()` guarantees it runs
+  before ring stop and power gating, and before subsequent teardown.
 
-- Precedent and consistency
-  - The WSA884x codec already uses the same reset-controller-with-
-    fallback pattern (e.g., `sound/soc/codecs/wsa884x.c:1999–2060`),
-    demonstrating the approach is accepted upstream and low risk. This
-    change brings WSA883x in line with WSA884x.
+- Scope and risk:
+  - Small, contained change in a single driver file; no API or
+    architectural change.
+  - Uses standard `cancel_delayed_work_sync`, which safely flushes and
+    prevents requeue.
+  - Consistent with existing practice elsewhere in amdgpu (e.g.,
+    cancellation when starting to use the ring:
+    drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c:849).
+  - Low regression risk; only affects teardown/suspend sequencing of a
+    driver-local delayed work.
 
-- Backport risk assessment
-  - Small, contained, and backwards compatible: if no reset controller,
-    code behaves as before with the `powerdown-gpios` line.
-  - No behavioral change to runtime PM/audio paths; only reset/powerdown
-    handling in probe/cleanup is touched.
-  - No dependencies beyond standard reset framework and `reset-gpio`,
-    both present in stable series; the driver already builds with reset
-    APIs (used elsewhere in tree).
-  - Documentation note: current 6.17 binding for WSA883x
-    (`Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml`) lists
-    `powerdown-gpios`, not `reset-gpios`/`resets`. Functionally this is
-    fine (fallback keeps working), but if boards want to use shared
-    reset via reset-gpio, a binding backport (to allow `reset-gpios` or
-    `resets`) may be desirable to avoid dtbs_check warnings. This is
-    documentation-only and does not affect runtime.
+- Stable backport fit:
+  - Fixes a real race that can cause crashes during suspend/unload
+    (user-visible reliability issue).
+  - Minimal and targeted; no new features.
+  - Touches a non-core subsystem (amdgpu VPE), keeping risk bounded.
 
-- Stable criteria
-  - Fixes a real platform issue (shared reset handling) affecting users.
-  - No new features to the audio path; no architectural refactor.
-  - Very low regression risk, self-contained, and aligns with existing
-    patterns in sibling drivers.
-  - While there is no explicit “Fixes:” or “Cc: stable”, the change
-    clearly improves correctness on affected hardware with minimal
-    impact elsewhere, making it a good stable candidate.
+Conclusion: This is a clear, low-risk bug fix that aligns with stable
+rules and should be backported.
 
- sound/soc/codecs/wsa883x.c | 57 ++++++++++++++++++++++++++++++++------
- 1 file changed, 49 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 188363b03b937..ca4520ade79aa 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -14,6 +14,7 @@
- #include <linux/printk.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/soundwire/sdw.h>
- #include <linux/soundwire/sdw_registers.h>
-@@ -468,6 +469,7 @@ struct wsa883x_priv {
- 	struct sdw_stream_runtime *sruntime;
- 	struct sdw_port_config port_config[WSA883X_MAX_SWR_PORTS];
- 	struct gpio_desc *sd_n;
-+	struct reset_control *sd_reset;
- 	bool port_prepared[WSA883X_MAX_SWR_PORTS];
- 	bool port_enable[WSA883X_MAX_SWR_PORTS];
- 	int active_ports;
-@@ -1546,6 +1548,46 @@ static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
- 	.info	= wsa883x_hwmon_info,
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
+index 121ee17b522bd..dcdb2654ceb4a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
+@@ -435,6 +435,8 @@ static int vpe_hw_fini(struct amdgpu_ip_block *ip_block)
+ 	struct amdgpu_device *adev = ip_block->adev;
+ 	struct amdgpu_vpe *vpe = &adev->vpe;
  
-+static void wsa883x_reset_assert(void *data)
-+{
-+	struct wsa883x_priv *wsa883x = data;
++	cancel_delayed_work_sync(&adev->vpe.idle_work);
 +
-+	if (wsa883x->sd_reset)
-+		reset_control_assert(wsa883x->sd_reset);
-+	else
-+		gpiod_direction_output(wsa883x->sd_n, 1);
-+}
-+
-+static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
-+{
-+	if (wsa883x->sd_reset)
-+		reset_control_deassert(wsa883x->sd_reset);
-+	else
-+		gpiod_direction_output(wsa883x->sd_n, 0);
-+}
-+
-+static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *wsa883x)
-+{
-+	wsa883x->sd_reset = devm_reset_control_get_optional_shared(dev, NULL);
-+	if (IS_ERR(wsa883x->sd_reset))
-+		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_reset),
-+				     "Failed to get reset\n");
-+	/*
-+	 * if sd_reset: NULL, so use the backwards compatible way for powerdown-gpios,
-+	 * which does not handle sharing GPIO properly.
-+	 */
-+	if (!wsa883x->sd_reset) {
-+		wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
-+							GPIOD_FLAGS_BIT_NONEXCLUSIVE |
-+							GPIOD_OUT_HIGH);
-+		if (IS_ERR(wsa883x->sd_n))
-+			return dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
-+					     "Shutdown Control GPIO not found\n");
-+	}
-+
-+	return 0;
-+}
-+
- static int wsa883x_probe(struct sdw_slave *pdev,
- 			 const struct sdw_device_id *id)
+ 	vpe_ring_stop(vpe);
+ 
+ 	/* Power off VPE */
+@@ -445,10 +447,6 @@ static int vpe_hw_fini(struct amdgpu_ip_block *ip_block)
+ 
+ static int vpe_suspend(struct amdgpu_ip_block *ip_block)
  {
-@@ -1566,13 +1608,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to enable vdd regulator\n");
+-	struct amdgpu_device *adev = ip_block->adev;
+-
+-	cancel_delayed_work_sync(&adev->vpe.idle_work);
+-
+ 	return vpe_hw_fini(ip_block);
+ }
  
--	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown",
--						GPIOD_FLAGS_BIT_NONEXCLUSIVE | GPIOD_OUT_HIGH);
--	if (IS_ERR(wsa883x->sd_n)) {
--		ret = dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
--				    "Shutdown Control GPIO not found\n");
-+	ret = wsa883x_get_reset(dev, wsa883x);
-+	if (ret)
- 		goto err;
--	}
- 
- 	dev_set_drvdata(dev, wsa883x);
- 	wsa883x->slave = pdev;
-@@ -1595,11 +1633,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
- 	pdev->prop.simple_clk_stop_capable = true;
- 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
- 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
--	gpiod_direction_output(wsa883x->sd_n, 0);
-+
-+	wsa883x_reset_deassert(wsa883x);
-+	ret = devm_add_action_or_reset(dev, wsa883x_reset_assert, wsa883x);
-+	if (ret)
-+		return ret;
- 
- 	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
- 	if (IS_ERR(wsa883x->regmap)) {
--		gpiod_direction_output(wsa883x->sd_n, 1);
- 		ret = dev_err_probe(dev, PTR_ERR(wsa883x->regmap),
- 				    "regmap_init failed\n");
- 		goto err;
 -- 
 2.51.0
 
