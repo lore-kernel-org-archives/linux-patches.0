@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A4F30505C;
-	Sat, 25 Oct 2025 16:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDFD3043CD;
+	Sat, 25 Oct 2025 16:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408822; cv=none; b=nqqCTDHmD8beO0oZ7RHcvrXkJLMVxvncWNy2g+OHzAVAWxlnPGFVYPlzDg5G5KTuftBawLrkeGLsvpDsCI38Ux5A4XtBdxuSG4lV2H9juoupBhLGKm34GituYKMBJgZs0gWQ0z1ShFtOsA3vrH2dLKBsNF5gOKMQ4eDHV7vRDNM=
+	t=1761408823; cv=none; b=sXSwonvfJZ3PS3fIzf4+chlOM9xy2D2/dlmLp82hQOn7hSiOk9qeKCvf+l6I9gkLMu/12j/CK98Ptye+BJY7sk/heJJTlOdfiqLIAPzI+xehnYZZGneyzX+AsLV7WGG4/GSbs/LtEwL6a6ZHR8nzA+HxItVW4pdCq+WjfsYmcg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408822; c=relaxed/simple;
-	bh=5OAOeHTcbADLXMuRZH9wy4isX8zkwFuM85Qa2+sanXA=;
+	s=arc-20240116; t=1761408823; c=relaxed/simple;
+	bh=b4TnuM5r5LEOWG26HLo90ipWlCN4YEvRfomuc6RUuHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d4ePArfx3JRtceEpLbLHPXUM5G4aRSgrj3TcFYBHZSpFJgfKwTwFupCCqbA/rMpjOpqKtAcx5b+AMsYkpoCJRuYvVUBZGMk6VsYOhWU2n4zvlpQgcclTCawiU/tmnszqnGmEZcE6sdLpUVY9rVM0dyk/oC+c6xvQECNURidfCiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVDL2e1r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uUQSNnriJEDEnp/Q3mwuUWtzPodnk0kRArzzo0LZdhMhI0uAdU9bOHMQcHlf7FJcVr7Xiv1f6S1a1A1wzPD62C7YB3muUl4N1ZgTSWaaZhnccyHW4t+bjsRbYFd3PYygUXYYP09XcjKtScle9n/w+Xi6qyDVYrlYTWdHrY9EVK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cULVP5y9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVDL2e1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE40DC4AF0B;
-	Sat, 25 Oct 2025 16:13:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cULVP5y9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A7FC4CEF5;
+	Sat, 25 Oct 2025 16:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408822;
-	bh=5OAOeHTcbADLXMuRZH9wy4isX8zkwFuM85Qa2+sanXA=;
+	s=k20201202; t=1761408823;
+	bh=b4TnuM5r5LEOWG26HLo90ipWlCN4YEvRfomuc6RUuHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVDL2e1re0CVkjFGQI/WCCgZW0mZwUxNDHZNBWUCyV727aNW4P6YGPDbwxrslQxZD
-	 WJ+T1Z6YEXn42perCT60C+NloMi4jhnBRAPXrDGkTVF4JzvSvCS1poG9LFaRAIbov5
-	 f1Pv/cCBekaJ6p9g6CTo9AhmCKuS7PcdfZJ3o3dwkPMIQ0S5Etcwvu4jOsWV0r8hom
-	 KA4HoHtu9uHO/CfN6AImjABMlbUUzMeS89j7e1lw57QKJBuKJuT6HEplFsi7penYOP
-	 ZyrAEEQi+uN27JZK6WuoON5YmlZLWVc930CE2wXhBo1N8tjsWUNS1gN+5LkH88ACkB
-	 tMu80u/MhwKDg==
+	b=cULVP5y9oUJNGY0ZQz9hDYQS29nI9+Wwxf53xzEPIRTaOjzr9e42VDGkB41qjEOHU
+	 PYfW1btUThFtzP8ovpQPGgXgdrOLrvscmP0XNPYxCgUw/q+OR8iLnNhXbByfh+tNeu
+	 L1TxOTtv8358PGrvYQ66T/60XHLRBC8ZmxrGmCkcSjKyuTNR8yrjvLqSH3IV+cA8B5
+	 Vkh1KTGjfX1uRpty6XmUksHwtYjHK421/IG8TWFW1ijH766P1Vnt0hX+q4ogaKHbkC
+	 CoPD96+oMH8kJw4dwe2mOlnVYld8fGW60JAqE+rogA2ZV/mSEnM39nezcTZBf9BtdP
+	 njAbLcYBCzeuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] platform/x86/intel-uncore-freq: Fix warning in partitioned system
-Date: Sat, 25 Oct 2025 11:55:16 -0400
-Message-ID: <20251025160905.3857885-85-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] PCI: Set up bridge resources earlier
+Date: Sat, 25 Oct 2025 11:55:17 -0400
+Message-ID: <20251025160905.3857885-86-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,124 +51,95 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6d47b4f08436cb682fb2644e6265a3897fd42a77 ]
+[ Upstream commit a43ac325c7cbbfe72bdf9178059b3ee9f5a2c7dd ]
 
-A partitioned system configured with only one package and one compute
-die, warning will be generated for duplicate sysfs entry. This typically
-occurs during the platform bring-up phase.
+Bridge windows are read twice from PCI Config Space, the first time from
+pci_read_bridge_windows(), which does not set up the device's resources.
+This causes problems down the road as child resources of the bridge cannot
+check whether they reside within the bridge window or not.
 
-Partitioned systems expose dies, equivalent to TPMI compute domains,
-through the CPUID. Each partitioned system must contains at least one
-compute die per partition, resulting in a minimum of two dies per
-package. Hence the function topology_max_dies_per_package() returns at
-least two, and the condition "topology_max_dies_per_package() > 1"
-prevents the creation of a root domain.
+Set up the bridge windows already in pci_read_bridge_windows().
 
-In this case topology_max_dies_per_package() will return 1 and root
-domain will be created for partition 0 and a duplicate sysfs warning
-for partition 1 as both partitions have same package ID.
-
-To address this also check for non zero partition in addition to
-topology_max_dies_per_package() > 1.
-
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://lore.kernel.org/r/20250819211034.3776284-1-srinivas.pandruvada@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250924134228.1663-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
+- `pci_alloc_child_bus()` copies each subordinate bus window to
+  `child->resource[i] = &bridge->resource[PCI_BRIDGE_RESOURCES+i]`
+  before any child is scanned (`drivers/pci/probe.c:1245-1248`). Without
+  this patch, those `bridge->resource[...]` entries are still zeroed;
+  the first call to `pci_read_bridge_windows()` only logged with a
+  stack-local `struct resource`.
+- Child drivers often probe immediately (device_add → bus_probe_device)
+  while the bus scan is still in progress. During their
+  `pci_enable_device()` they hit `pci_claim_resource()`
+  (`drivers/pci/setup-res.c:154-169`), which calls
+  `pci_find_parent_resource()` to make sure the BAR sits inside an
+  upstream bridge window (`drivers/pci/pci.c:737-767`). Because
+  `pcibios_fixup_bus()` (the point where `pci_read_bridge_bases()` re-
+  reads the window into the real resource) runs only after the entire
+  bus has been scanned (`drivers/pci/probe.c:3091-3106`), the parent
+  window is still zero and the containment test fails. Result:
+  `pci_enable_device()` reports “can't claim; no compatible bridge
+  window” and the device never comes up behind that bridge.
+- The patch fixes that race by writing the values directly into the
+  bridge’s real resources the first time we read config space
+  (`drivers/pci/probe.c:540-588`). When the subordinate bus is created,
+  the copied pointers already describe the real aperture, so drivers can
+  claim their BARs successfully even if they probe before the later
+  fixup.
+- Behavioural risk is negligible: we still populate the same resource
+  structures with the same data, only earlier; the later
+  `pci_read_bridge_bases()` call simply refreshes them with `log=false`.
+  No new dependencies or behavioural changes outside this bug fix path,
+  making it safe for stable.
 
-- What it fixes
-  - Prevents duplicate sysfs root-domain creation on partitioned systems
-    that expose only one die per package via CPU topology, which leads
-    to a duplicate-name error and probe failure for the second
-    partition.
-  - The duplicate arises because both partitions share the same
-    `package_id`, so the root-domain sysfs name “package_%02d_die_%02d”
-    collides.
+Natural next step: consider tagging with a `Fixes` reference upstream to
+ease stable selection.
 
-- Precise change
-  - Adds a guard to skip creating the per-package root domain if the
-    device is for a non-zero partition:
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      tpmi.c:713
-      - Changed from `if (topology_max_dies_per_package() > 1)` to `if
-        (topology_max_dies_per_package() > 1 || plat_info->partition)`.
-  - This ensures only partition 0 attempts the root-domain sysfs,
-    avoiding a collision on partition 1.
+ drivers/pci/probe.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-- Why the issue occurs
-  - Platform partition information is provided via TPMI
-    (`tpmi_get_platform_data`), including `partition` and `package_id`:
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      tpmi.c:590
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      tpmi.c:597
-  - The `partition` field comes from `struct oobmsm_plat_info`, where it
-    denotes the per-package partition id:
-    - include/linux/intel_vsec.h:164
-  - Root-domain sysfs naming uses `package_id` and `die_id`:
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      common.c:274
-      - `sprintf(data->name, "package_%02d_die_%02d", data->package_id,
-        data->die_id);`
-  - On partitioned systems where `topology_max_dies_per_package()`
-    (CPUID-based) returns 1, both partition 0 and 1 attempt to create
-    the same “package_%02d_die_%02d” entry, causing a duplicate.
-
-- User-visible impact of the bug
-  - The duplicate sysfs group creation fails; in the TPMI probe path
-    this failure tears down all already-created cluster entries for that
-    device:
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      tpmi.c:721 calls `uncore_freq_add_entry(...)`
-    - drivers/platform/x86/intel/uncore-frequency/uncore-frequency-
-      tpmi.c:722–723 jumps to `remove_clusters` on error, removing
-      entries
-  - So this is not just a warning; it can cause probe failure for the
-    second partition, removing uncore controls for that partition.
-
-- Why the fix is safe and minimal
-  - One-line condition change in a single driver; no API/ABI changes.
-  - Only alters behavior when `plat_info->partition != 0`, a case where
-    creating the root domain would conflict. Non-partitioned systems
-    (`partition == 0`) and multi-die systems
-    (`topology_max_dies_per_package() > 1`) are unaffected.
-  - The logic remains consistent with existing behavior that already
-    skips root-domain creation on multi-die systems.
-
-- Stable backport criteria
-  - Fixes a real bug that affects users of partitioned platforms
-    (duplicate sysfs + probe failure).
-  - Small, contained change with minimal regression risk.
-  - No architectural changes or new features; confined to `platform/x86`
-    Intel uncore-frequency TPMI path.
-
-Given the above, this is a clear, low-risk bug fix that prevents a
-probe-time failure on partitioned systems and should be backported to
-stable.
-
- .../platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-index bfcf92aa4d69d..3e531fd1c6297 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-@@ -638,7 +638,7 @@ static int uncore_probe(struct auxiliary_device *auxdev, const struct auxiliary_
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index a56dfa1c9b6ff..0b8c82c610baa 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -524,10 +524,14 @@ static void pci_read_bridge_windows(struct pci_dev *bridge)
+ 	}
+ 	if (io) {
+ 		bridge->io_window = 1;
+-		pci_read_bridge_io(bridge, &res, true);
++		pci_read_bridge_io(bridge,
++				   pci_resource_n(bridge, PCI_BRIDGE_IO_WINDOW),
++				   true);
+ 	}
  
- 	auxiliary_set_drvdata(auxdev, tpmi_uncore);
+-	pci_read_bridge_mmio(bridge, &res, true);
++	pci_read_bridge_mmio(bridge,
++			     pci_resource_n(bridge, PCI_BRIDGE_MEM_WINDOW),
++			     true);
  
--	if (topology_max_dies_per_package() > 1)
-+	if (topology_max_dies_per_package() > 1 || plat_info->partition)
- 		return 0;
+ 	/*
+ 	 * DECchip 21050 pass 2 errata: the bridge may miss an address
+@@ -565,7 +569,10 @@ static void pci_read_bridge_windows(struct pci_dev *bridge)
+ 			bridge->pref_64_window = 1;
+ 	}
  
- 	tpmi_uncore->root_cluster.root_domain = true;
+-	pci_read_bridge_mmio_pref(bridge, &res, true);
++	pci_read_bridge_mmio_pref(bridge,
++				  pci_resource_n(bridge,
++						 PCI_BRIDGE_PREF_MEM_WINDOW),
++				  true);
+ }
+ 
+ void pci_read_bridge_bases(struct pci_bus *child)
 -- 
 2.51.0
 
