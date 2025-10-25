@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C86306D50;
-	Sat, 25 Oct 2025 16:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D2309F1E;
+	Sat, 25 Oct 2025 16:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408967; cv=none; b=EZP3remUQ6mnkZ1KuH6rDPfMJotbbOjCjfr29x/52bsxTC7NgOZaObhlbNdY3GLSJ1PvOAuMe11XBbtIDfXUDNjbpAu/fGcmGCdkQxoUw6LH2Rx/pJahhWJ4IRP0u5ilnggbLeDhNwUFxsUQXkB5Ccu9RUT0E/85ESSBn5VJtds=
+	t=1761408968; cv=none; b=jHOv08rMCw8uAraXTq6OPLMVMHrTKDVnHR++DdJu3Sm+xuIgrP4JQTqnRVE7+bHO/R+4tU5qFmYRZe/4FeLjhRW/kELV18V4biQktfUY5QMZOeKlGangyCOGZ5LKgeT5zetokwCriQkqp5GJtNhGBlTrpsf9KrSEu1MQs6EHyYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408967; c=relaxed/simple;
-	bh=lyJh3iMHKiH1eHeVXb+VzrOsb7MZtUAcEgdXBjvlnZs=;
+	s=arc-20240116; t=1761408968; c=relaxed/simple;
+	bh=rsWNTG25FhSE1nJRwlXwFhFi4xH/hL0IACkrwJQOo8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d4RKqR4lNcpvs60Pup4detRHj8CeN+VSmHPlJc6+O0MDL5ZiylZtsDwngxorXW70N0l6uSOIUq5uuL9y967n+z1LUi9SBQqppuFzwb+gdV2WKIYc991lZnRVJIsQHU25reQIP7hOPWe+aHDajTdf0GL5madxHntbYcT4PyNLqt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3j1aXHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyvDOZSe6KFaerCES74NiKKWlhRIAoQUtKmPufqilpeE4ooZ0nByoLPWDkw3jv1ofzbe4BeYAlweATmdc6s5ack+0Ox4UeHmdIGXsxpN5GARJe3R/gogTi0XU9ZdvYo/qgjnxmx4Xnt/6EcYo3pVHzHA7NOe/bFo1WB/4vxNRA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=psQpycTY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3j1aXHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2703C116B1;
-	Sat, 25 Oct 2025 16:16:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="psQpycTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74076C113D0;
+	Sat, 25 Oct 2025 16:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408964;
-	bh=lyJh3iMHKiH1eHeVXb+VzrOsb7MZtUAcEgdXBjvlnZs=;
+	s=k20201202; t=1761408968;
+	bh=rsWNTG25FhSE1nJRwlXwFhFi4xH/hL0IACkrwJQOo8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3j1aXHgf+dL4LbJI182kSSrNLDw5cizDOVSCsW0XPz+LudSb9ft6mARRDbJ6WyAa
-	 Wz9qwUvLBdkvn/zaG47IYXL7SwCJI3o7R+Ol2V+P+TvwhK2sFscdCuVBNG1kJKXVev
-	 9IW8hMgYH5ji0QxcIwFD+n8MbG4TUEAHnbhOdKcR62NZaulAt1+evYpBEW91+roIxV
-	 Ai8YA9V4Ld8Moz7Z284epSt7DaBoF9XsfjomGaLSAZt+pr7xQ+n5vANnugNibsX5JL
-	 tWADoYXctbW5TP8iyE5D0fwydEwT8ncOi+eQShuML3jJAYpq97S1EyWsEbGXyQdx7A
-	 yE9aSAUp2YakQ==
+	b=psQpycTYgXF9sTWYosr/exFaNIkYHw19O+aHvZOPfiqhcIugAOsHxF7PtLthBx9dA
+	 UMDP7q4Z+WG673aS5tm2yGeXPGoL5XkivirOWbFGW0MP3MXopEDArjISTCTwrXNYQF
+	 LK2OpCYtvmk78WU1HY0QMcLW7sig9wV80ZS/IgrmfXLzHtNzERylNfDaUch0bj0NQM
+	 /lLzy0KXfruC5A2Ty4zNzfq9xlt9H5kFPLnfHMsDxa1JZyz6P9aHNZQk3OqAdj1rjL
+	 X8dGXoF5FaEemn3lpsfTaKyWkYGz10HKHzD+KxQazvrpZZIO78Ti1++qxtOJn4ju6P
+	 LIopo4lv6/2WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.ely@broadcom.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] scsi: lpfc: Clean up allocated queues when queue setup mbox commands fail
-Date: Sat, 25 Oct 2025 11:56:26 -0400
-Message-ID: <20251025160905.3857885-155-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.10] ALSA: usb-audio: add mono main switch to Presonus S1824c
+Date: Sat, 25 Oct 2025 11:56:28 -0400
+Message-ID: <20251025160905.3857885-157-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,72 +49,103 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-[ Upstream commit 803dfd83df33b7565f23aef597d5dd036adfa792 ]
+[ Upstream commit 659169c4eb21f8d9646044a4f4e1bc314f6f9d0c ]
 
-lpfc_sli4_queue_setup() does not allocate memory and is used for
-submitting CREATE_QUEUE mailbox commands.  Thus, if such mailbox
-commands fail we should clean up by also freeing the memory allocated
-for the queues with lpfc_sli4_queue_destroy().  Change the intended
-clean up label for the lpfc_sli4_queue_setup() error case to
-out_destroy_queue.
+The 1824c does not have the A/B switch that the 1810c has,
+but instead it has a mono main switch that sums the two
+main output channels to mono.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Message-ID: <20250915180811.137530-4-justintee8345@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The failure path after `lpfc_sli4_queue_setup()` now jumps to
-  `out_destroy_queue` (`drivers/scsi/lpfc/lpfc_sli.c:8820`),
-  guaranteeing that any queues allocated by `lpfc_sli4_queue_create()`
-  are torn down before we bail out.
-- Those queues hold DMAable pages allocated in large batches
-  (`drivers/scsi/lpfc/lpfc_init.c:10420`), so skipping
-  `lpfc_sli4_queue_destroy()` leaked real memory whenever the mailbox
-  CREATE_QUEUE commands failed—precisely the scenario this fix covers.
-- `out_destroy_queue` already performs the paired cleanup
-  (`drivers/scsi/lpfc/lpfc_sli.c:9104`), invoking
-  `lpfc_sli4_queue_destroy()` which handles partial setups and releases
-  every queue resource (`drivers/scsi/lpfc/lpfc_init.c:10862`); we
-  simply make sure the queue-setup error uses the same, already-tested
-  path.
-- The change is tiny (one goto target), touches only the error path, and
-  aligns this branch with other existing failures that already call
-  `out_destroy_queue`, so regression risk is minimal while preventing a
-  concrete resource leak on failed probe/recovery attempts.
+- Adds device-specific control IDs and state slots for the 1824c mono
+  button so the driver can address the hardware selector correctly
+  (`sound/usb/mixer_s1810c.c:94` and `sound/usb/mixer_s1810c.c:124`).
+- Introduces a dedicated `Mono Main Out` control wired into the existing
+  switch helpers, replacing the bogus A/B selector previously shown to
+  1824c users and restoring the intended functionality
+  (`sound/usb/mixer_s1810c.c:542`).
+- Updates mixer initialisation to choose the mono switch only for USB ID
+  `0x194f:0x010d`, leaving the 1810c path unchanged, which confines the
+  behaviour change to the affected device and avoids regressions on
+  others (`sound/usb/mixer_s1810c.c:637`).
+- This is a hardware capability fix rather than a feature: without it,
+  1824c owners see an unusable control and cannot toggle the mono
+  summing from ALSA, so backporting improves correctness with minimal
+  code churn or architectural impact.
 
- drivers/scsi/lpfc/lpfc_sli.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Suggested next step: verify on an 1824c that `alsamixer` now exposes a
+working mono main switch.
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index a8fbdf7119d88..d82ea9df098b8 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -8820,7 +8820,7 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
- 	if (unlikely(rc)) {
- 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
- 				"0381 Error %d during queue setup.\n", rc);
--		goto out_stop_timers;
-+		goto out_destroy_queue;
- 	}
- 	/* Initialize the driver internal SLI layer lists. */
- 	lpfc_sli4_setup(phba);
-@@ -9103,7 +9103,6 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
- 	lpfc_free_iocb_list(phba);
- out_destroy_queue:
- 	lpfc_sli4_queue_destroy(phba);
--out_stop_timers:
- 	lpfc_stop_hba_timers(phba);
- out_free_mbox:
- 	mempool_free(mboxq, phba->mbox_mem_pool);
+ sound/usb/mixer_s1810c.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index fac4bbc6b2757..bd24556f6a7fb 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -93,6 +93,7 @@ struct s1810c_ctl_packet {
+ 
+ #define SC1810C_CTL_LINE_SW	0
+ #define SC1810C_CTL_MUTE_SW	1
++#define SC1824C_CTL_MONO_SW	2
+ #define SC1810C_CTL_AB_SW	3
+ #define SC1810C_CTL_48V_SW	4
+ 
+@@ -123,6 +124,7 @@ struct s1810c_state_packet {
+ #define SC1810C_STATE_48V_SW	58
+ #define SC1810C_STATE_LINE_SW	59
+ #define SC1810C_STATE_MUTE_SW	60
++#define SC1824C_STATE_MONO_SW	61
+ #define SC1810C_STATE_AB_SW	62
+ 
+ struct s1810_mixer_state {
+@@ -502,6 +504,15 @@ static const struct snd_kcontrol_new snd_s1810c_mute_sw = {
+ 	.private_value = (SC1810C_STATE_MUTE_SW | SC1810C_CTL_MUTE_SW << 8)
+ };
+ 
++static const struct snd_kcontrol_new snd_s1824c_mono_sw = {
++	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
++	.name = "Mono Main Out Switch",
++	.info = snd_ctl_boolean_mono_info,
++	.get = snd_s1810c_switch_get,
++	.put = snd_s1810c_switch_set,
++	.private_value = (SC1824C_STATE_MONO_SW | SC1824C_CTL_MONO_SW << 8)
++};
++
+ static const struct snd_kcontrol_new snd_s1810c_48v_sw = {
+ 	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
+ 	.name = "48V Phantom Power On Mic Inputs Switch",
+@@ -588,8 +599,17 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
+-	if (ret < 0)
+-		return ret;
++	// The 1824c has a Mono Main switch instead of a
++	// A/B select switch.
++	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
++		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
++		if (ret < 0)
++			return ret;
++	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
++		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
++		if (ret < 0)
++			return ret;
++	}
++
+ 	return ret;
+ }
 -- 
 2.51.0
 
