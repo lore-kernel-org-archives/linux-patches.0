@@ -1,73 +1,73 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA5A302CAA
-	for <patches@lists.linux.dev>; Sat, 25 Oct 2025 15:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179A302CDE
+	for <patches@lists.linux.dev>; Sat, 25 Oct 2025 15:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761406232; cv=none; b=abv+2JgZIQJ7m1EJHTWysOApt5dwSs8Y6naBRIWai0nV9CbGqnT2i8f4YcJaZ20rY3E2jT2LkIDGDnclMDo7cnU/WyEwrKkOWLSsbxJVL7njt4uxb7xIVR9DQP7vNW9q3TnKeqENhsNInnw+R5lon4x6Cz2Slr35vQ7D4zWQb3I=
+	t=1761406844; cv=none; b=nih365M30QZSU7Mi23oojwCDavW2Gxzw4E04UkG9iKzeFsD6n5dw302km5Qpw6G/FbFwjeBlQwxnuIfxE/3aQDD7raKsRWikf+yhzCWm2MNxjCNP7bF6T53opwKx4o2HpkvqgsdMOyFtQcu6ZCi7u3A2li1e/NN9mGRL4o3jaGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761406232; c=relaxed/simple;
-	bh=YQe91ROlP9epeFIBAVeb7AxK2YjKLaeOQX5QP76voII=;
+	s=arc-20240116; t=1761406844; c=relaxed/simple;
+	bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IxhNmtcgpuCqD+zwpqropyll74TadkGtSW54TPoAUZ7kBes7xFJ9A7x5d7jqv8jCVVRSF+GBLDv6rqYjlj6yPdQaKrm4H2x8VRdkwAW06uNUhYPavfwevvIVxm7w4+t+bAXy5d8ScxiL9BDVDzqM8eMDmIl9Y4zbelKxigZCIiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=soleen.com; spf=pass smtp.mailfrom=soleen.com; dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b=LjG7MzXA; arc=none smtp.client-ip=209.85.208.42
+	 To:Cc:Content-Type; b=E2S/LYoP+ZA8Pvk8JiOLn8QbDYL23UTIU6kQpbySaqpcqRu2rphQRbMsiuCMSx4JLcRAuzkYb9iexKtYcwiMF9t3kxQR5XbMPiaYcZZPCVFwzDxeDezNXoO35X8cKCtMVIIBa+zCwhyTvAAE849SJrms8pvG5HRnXlHQ4BQGPgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=soleen.com; spf=pass smtp.mailfrom=soleen.com; dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b=Er46V1n6; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=soleen.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=soleen.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b="LjG7MzXA"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61feb87fe26so5412425a12.1
-        for <patches@lists.linux.dev>; Sat, 25 Oct 2025 08:30:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=soleen.com header.i=@soleen.com header.b="Er46V1n6"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-63c0c9a408aso5056489a12.3
+        for <patches@lists.linux.dev>; Sat, 25 Oct 2025 08:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=soleen.com; s=google; t=1761406228; x=1762011028; darn=lists.linux.dev;
+        d=soleen.com; s=google; t=1761406841; x=1762011641; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YQe91ROlP9epeFIBAVeb7AxK2YjKLaeOQX5QP76voII=;
-        b=LjG7MzXAPjqtnvCn3OJO0gaiIS0BXh6jeqWpG+fmNWStQa7Yeu3OBIxuiUmpMTB4XK
-         m2WXtzYIWlAgOXmF62Ap4+PYDzA5B5zr7VQOAP5ZRrPtQvhvkQYvkWi/ssgYtxO7iH0x
-         GBxl2YAZ4FiBvTsOCdG3HzGUys1lU/tbq50euwGL25k4A0rZS8irYiOcbQi6u56i28sx
-         YusWZeXlO+IoJ9949Pc615oIYVnEPLu2LLV0aRzNG5YJi5DY/bYxDzliSKHW4JozxW7i
-         lhv60b4F/wlJYeLrZPN8GDBlGZGJGfr4SJ+6u7TVOrzJ0qaBrhyHG1dp7XLYBQzccjFz
-         U3TQ==
+        bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
+        b=Er46V1n6Fw6/BPk9iMgnmBgWni2LuJKZB2sAPWxSTGpy86AZ1P1+iLSbSP9CDq4i3O
+         4YiHrUj4/+P1ZceZA8X0Wd4TF2PZ/cBT4myv2/ZjLaUVEs6G9mVjdua3KZML+k8v7UTw
+         ck+XQQ4VOlX5t8C2Xhere1g2ZL2IfATPRj9k0VlKmdj2gHSHpJcmTxrJj9dUNADzsqxM
+         /OneHyvqQKx7uWMTAdLdXVxC89WMfhhuiBhR5i61dUT2+0uPq8D5cDU9jjPD1V6nRP6s
+         x+YSYAnWWmUOwsESA8prd3L/kPqVzNP7bZek0gVAgZ+scO/y6aZRH/3+Pu5cvOi20Q8/
+         1v0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761406228; x=1762011028;
+        d=1e100.net; s=20230601; t=1761406841; x=1762011641;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YQe91ROlP9epeFIBAVeb7AxK2YjKLaeOQX5QP76voII=;
-        b=dUYVcvTxAHt5u5ssNZBXAvz+S0iZU9uzYmShQmVPRe4/8uNKhAE41GYElcToLB//Qd
-         1VAM5BREqSgkehy5WZm5PiC1EdZPvQCu01h/FJNt68nuARbwUChxTVHOwubaURc7yy2N
-         LBPcOjSozqX0QW50yBrwy6gaocnvYBMVF31Oru0kzFM+J9fQZwGgQmMk1bwtKmkQUZ5b
-         b7cWefKmCRJanNU2+G8OnDykce94s3qZmDEcOtQQAxNuXcv+tdKNXRLUAc6mBvhC+LwZ
-         V2ViyBZBpNUSes/bK0Zo2hyV5MvHCFZ/hqZlrivB01J+1qjk11wFCNjnYRhBQbLPs4KC
-         rheQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX1TSj+maLqTVWV7YVF+TQmRv0Ir3ncc30ZkkAuXZr6wXFTdO1tpzNB2fpzjGzMSFxQ0kNaCrwa@lists.linux.dev
-X-Gm-Message-State: AOJu0YxPsc/fBeSgV/3cM18FfTNhHVhVqXf8v4ZqCtf6MqE40bJCMrP0
-	0hUH6eISaO5BfN/1v49Vka2ULqHVT1AE/0E5GtePQ+1FvblWMAuslUnIX+zqcBdTO0C7/wQ+5J6
-	wzg4pMlO1Rs4zTFfvjSUrPDnZFbSQAQ1pBYrk9dDNaQ==
-X-Gm-Gg: ASbGnct9WXNZSO+Qfv6OXeiuSTKPbxKxijBuZrvaDC77zl7GIxijjdFyYE2U345EHzI
-	SKD8Nc68tZtiSYE3Pf6iSKRsV4yC3RV++HO4S7S3joPKfMKaSBVJK/A1VRgFqRW4YNA4gYifs7F
-	tSZ92c2T58bkMvmBGICQa5TaUify3qCq/9zmO9X5Ez/Exrg/1UplxD/evxsRLxygb+hel8vXEpX
-	Vhfz/0DlYl+anl1nnwfLCbt5hfr978HGYwenLSLUhUG+8TXaLEuPHI75alhCrkOSBTlZtar9wWu
-	1plqZ/gU+CgwMLm/g1VHifwjit0g
-X-Google-Smtp-Source: AGHT+IHyii/MACqqA1gMbxyh8CZfZM/MVeB0dSh2M8XUI9vv6+1k3VQ9IQ7FPNSu6S0HuT0ITqx9emJSEDbCLG+Yc0Y=
-X-Received: by 2002:a05:6402:350c:b0:61c:cf8d:e51d with SMTP id
- 4fb4d7f45d1cf-63e6007d198mr5362602a12.22.1761406228044; Sat, 25 Oct 2025
- 08:30:28 -0700 (PDT)
+        bh=0HY16VFXZq4Fs4AqSUpKJwWPQq433JoGDwf5zAVL/Es=;
+        b=ovTnl2T4CAVOq6GkAUwDbNSnL2MoSj8CA0OGau4C0yxbl+nXSe+GRUiCYCHmHPty+g
+         XyCiC1sh5CR2idNZkQIF90GWlSS3SLcq0M02aUbpuc+w/CcUsFfKesZ0jyMXyv+7j0IC
+         GmoSNt5qY9DsLkv71w4F6wMZ5loSZUYcqZ5Qug+z29OC292JbjZ6Uz0UbovkIMMjkNs5
+         NnHyHWxy2V/Co2A3YW0rTJ8bkLbuU2UPvP6RpbABKmAnZsQbK3lszf7jWvyLRpx4QFec
+         r6PqFx6o78mHfBkxopdmLol7msSOLzy94rcdW3+uH89FmJfwSafwuM5coTfWmYWoefuH
+         xgaA==
+X-Forwarded-Encrypted: i=1; AJvYcCUvepvsuNBLw0F2LiRgkYjjtoD0Un1TckKtJk3tAmAd8i8ueMvVLY/hblNv21WbTNI2iDa4bqRt@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPQeww72m7ijkNZnA6uRM99Y9h475XJxRvrjYtGWaOPVffH7UI
+	6tMQ9H6pOJSQRvHlPBlHVzrHU0G1XPjXTtBd1uWXUnHbYuISuCowm73baX7gMEYYy3L/MomE9Sk
+	zSMRab2C4/LyS0hL8pNquGbACZ2L29lCTRSwhLRdOvA==
+X-Gm-Gg: ASbGncsGeTjR5uA+GiYuyFLbtYP36s+dhH/hYEnZFoSJkr4ltvwA4FQPnHZw91YNqDP
+	08ST7ZrqSgWg2QWLjmYgDiZr8dAZqgB4/lAwofkwv3q286WA3AkOz6Wg4PxaDfUeH6qJ1rTpihS
+	/y0Pn4lsIVjOZBIGg6ilR+53ZWFkKjJYPOirrtqaPCRx8NdehIal3Xjn6T3WuO0i8xg3Z8xciJW
+	kgaYIVo+tPGr/AkIMYCe1IQbu0rVrgvVR+kSR/vOBIyTjcLt3U+ctz8Hyrf2mR4Un7NKS8nnGSU
+	2lZXGPkcvxb6+f994A==
+X-Google-Smtp-Source: AGHT+IHusR3pR0UReEeTXHeTWS5omMas6c+gaYiIEsLmjRg06Miw4AMQcuQX3fi9PVgOyyAmpc1NpRtLuc0jLuFpHKE=
+X-Received: by 2002:a05:6402:4504:b0:63c:103b:e1cf with SMTP id
+ 4fb4d7f45d1cf-63c1f584283mr30192670a12.0.1761406840700; Sat, 25 Oct 2025
+ 08:40:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com> <5-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
-In-Reply-To: <5-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
+References: <0-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com> <6-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
+In-Reply-To: <6-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
 From: Pasha Tatashin <pasha.tatashin@soleen.com>
-Date: Sat, 25 Oct 2025 11:29:51 -0400
-X-Gm-Features: AWmQ_bmUOgV3_0ASbOM3QoMzXfGDVzgu3GeEUS2HtNMs-zqEXMaBdqidVXde5tM
-Message-ID: <CA+CK2bBHzGi-4dqXeQn+OvahYfm5miKEhSuVmYCpo=Z4cUdONw@mail.gmail.com>
-Subject: Re: [PATCH v7 05/15] iommupt: Add iova_to_phys op
+Date: Sat, 25 Oct 2025 11:40:04 -0400
+X-Gm-Features: AWmQ_bmCjfexrZLPPfdt56XAonJ2DbSa1CpJkmBpIfIxbAsyN_ouXa6sCMuBecc
+Message-ID: <CA+CK2bDZ1RX9o80x2+HTshix0zxLcruzDfW--NMS8CjWo1PfUg@mail.gmail.com>
+Subject: Re: [PATCH v7 06/15] iommupt: Add unmap_pages op
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>, 
 	Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev, 
@@ -87,10 +87,42 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Oct 23, 2025 at 2:20=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
 ote:
 >
-> iova_to_phys is a performance path for the DMA API and iommufd, implement
-> it using an unrolled get_user_pages() like function waterfall scheme.
+> unmap_pages removes mappings and any fully contained interior tables from
+> the given range. This follows the now-standard iommu_domain API definitio=
+n
+> where it does not split up larger page sizes into smaller. The caller mus=
+t
+> perform unmap only on ranges created by map or it must have somehow
+> otherwise determined safe cut points (eg iommufd/vfio use iova_to_phys to
+> scan for them)
 >
-> The implementation itself is fairly trivial.
+> A future work will provide 'cut' which explicitly does the page size spli=
+t
+> if the HW can support it.
+
+Are there plans to add "free" when a table becomes empty on an unmap?
+Not sure what would be an efficient implementation for that, maybe a
+refcnt for # entries in table?
+
+> unmap is implemented with a recursive descent of the tree. If the caller
+> provides a VA range that spans an entire table item then the table memory
+> can be freed as well.
+>
+> If an entire table item can be freed then this version will also check th=
+e
+> leaf-only level of the tree to ensure that all entries are present to
+> generate -EINVAL. Many of the existing drivers don't do this extra check.
+>
+> This version sits under the iommu_domain_ops as unmap_pages() but does no=
+t
+> require the external page size calculation. The implementation is actuall=
+y
+> unmap_range() and can do arbitrary ranges, internally handling all the
+> validation and supporting any arrangment of page sizes. A future series
+> can optimize __iommu_unmap() to take advantage of this.
+>
+> Freed page table memory is batched up in the gather and will be freed in
+> the driver's iotlb_sync() callback after the IOTLB flush completes.
 >
 > Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 > Reviewed-by: Kevin Tian <kevin.tian@intel.com>
