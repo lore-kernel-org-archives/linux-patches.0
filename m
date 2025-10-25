@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609662FC893;
-	Sat, 25 Oct 2025 16:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E1B2FF17F;
+	Sat, 25 Oct 2025 16:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408990; cv=none; b=i2Jcwt4gAFUif+6hiujAsTE15Xb+Ate13BHmKcZRqdFdmv4dyQPha1Id28Ynxd4K1gTyY0d7vGxaljDutXyJ/GwbYISHZ6D/w+9yF721djutIMYA+VSI5pALXHzmshgi+5gXKg83zWCSSb5EasZqPunaan05kkwbPTrciZUX0f8=
+	t=1761408993; cv=none; b=vBG7G4PIyQYLDr/iNX/lypH1fJ/+nG4+Xv4IDUcjGUxQDEA4vUsgNk8HucphxzdxJGWivwlfxKA2aTQXsMMHctYXu+dkLIr/ZMFP6s2Nf4tnIPFohxoWkFWPQZH0AFJGO/bDqtALdtOE1XHUneYybaQ0qsBshKB6htkstWCRwK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408990; c=relaxed/simple;
-	bh=4EA5bMaYbTU6sGOO7qq4zllRTdwBpuv6NlEFMW8tDa4=;
+	s=arc-20240116; t=1761408993; c=relaxed/simple;
+	bh=BQCsZ/euEk4mk5VUcdP0eXtTQrwVCGsm/RVd3a4cC88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=suRYRaow0uz7P1CKKPPtIQ9l8/W24KSDwqB9urKTzTyp4MPqVb0i9UvUZQ1kMbc1/feBOgEeZlcVmLcTFiy0bgoBxUI5nzwN3jVum9dCyxER22R1bhRH/cHKldneXi6R44k2L/oQh2dTvemfa5Rm+XJNzsvWEQ1TlkIbqPnqJDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCoY5LYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dah+nxBSdLGm1V7LS70NZnqLTskS60S+JMDmHGBrngCJqjUwuW+Ikathk9Ey+42pGTX/G4CfOgUkpGvrmMAzEKTeinAp2d42Y4o0KaX2qTXLkLZyya7k5SSWBtT33zacNjVGvydfgpijCIX8ICDQcuaz3p4ye3j2sR0WDdAn2ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOKdqBlR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCoY5LYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A90C116B1;
-	Sat, 25 Oct 2025 16:16:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOKdqBlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6837C4CEF5;
+	Sat, 25 Oct 2025 16:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408990;
-	bh=4EA5bMaYbTU6sGOO7qq4zllRTdwBpuv6NlEFMW8tDa4=;
+	s=k20201202; t=1761408993;
+	bh=BQCsZ/euEk4mk5VUcdP0eXtTQrwVCGsm/RVd3a4cC88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCoY5LYDMsd6dOelFJl99eKwGf2rfXcaPmywB69ltc7d6KVTK6lWbSZAoKreMpLLE
-	 yDfvN5/wPMd+/MThoBxaVCxaAc6+efRn/WY7dVEkuJOOuqXBTyeqML7aBIF+xG6usG
-	 YzND/S2VYA5Uyq8LxlE8mv2TrSuU8M/WHStw/a2FvoNvAVktzIqTyo74xkC6C1nwJf
-	 QrqmpMIr3nJNrnxgD5rxbzTcX497KtMewBR9HFXah/wsexvBUk96h6MLfyECrPt50W
-	 H+0gv0qN3M0MB1pmSOQo7IcWHbMP3GTmK27PlAYiMTYIkSDNJtr8hhvfk37C7kploI
-	 SCBOfId+K/eOQ==
+	b=FOKdqBlR9FFYsgnsFC1LukI2Y8SYz2ClwfOib+nLEsGEwLyKMR0pEY+5GwzlEHZrP
+	 1IfhyD2mRZ6tAzlE1NucZ/DSJ9OHllARaE0qOWLCjcpqVHC3chn+p949nIEkylA13f
+	 zSndit+NJ2n3c1oZ3zBVpgomLTHWRqpnEkXhmz/URAB/NbwKnRnB5NfzAIfGnFsmSV
+	 THpemKd1qIc6m5PUmurKVZGlLbD6DFfg0t7x6Oo+xvvxU0DrFRkd4+dOOKyIkBKuSJ
+	 msWNr34/MXo5RDX6HZEKsoc9Fq++1TnzVU5UmYKeqaPqcA7Sh5I4E5fzRU7R7jBFKD
+	 g35idBgcTUw/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-5.4] char: misc: Does not request module for miscdevice with dynamic minor
-Date: Sat, 25 Oct 2025 11:56:35 -0400
-Message-ID: <20251025160905.3857885-164-sashal@kernel.org>
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	kenneth.feng@amd.com,
+	kevinyang.wang@amd.com,
+	boyuan.zhang@amd.com,
+	siqueira@igalia.com,
+	arefev@swemel.ru,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-5.10] drm/amd/pm: Use cached metrics data on arcturus
+Date: Sat, 25 Oct 2025 11:56:36 -0400
+Message-ID: <20251025160905.3857885-165-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,23 +57,17 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 1ba0fb42aa6a5f072b1b8c0b0520b32ad4ef4b45 ]
+[ Upstream commit 2f3b1ccf83be83a3330e38194ddfd1a91fec69be ]
 
-misc_open() may request module for miscdevice with dynamic minor, which
-is meaningless since:
+Cached metrics data validity is 1ms on arcturus. It's not reasonable for
+any client to query gpu_metrics at a faster rate and constantly
+interrupt PMFW.
 
-- The dynamic minor allocated is unknown in advance without registering
-  miscdevice firstly.
-- Macro MODULE_ALIAS_MISCDEV() is not applicable for dynamic minor.
-
-Fix by only requesting module for miscdevice with fixed minor.
-
-Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-6-2ed949665bde@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,109 +75,83 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- What it fixes
-  - Prevents meaningless module autoload attempts for misc devices with
-    dynamically assigned minors. Such modules cannot advertise a stable
-    alias, so `request_module("char-major-10-<minor>")` can never match
-    them. This avoids pointless usermode helper invocations and
-    potential delays or log noise when opening such device nodes.
+- What changed
+  - In `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:2327`,
+    `arcturus_get_gpu_metrics()` currently calls
+    `smu_cmn_get_metrics_table(smu, &metrics, true);`, i.e., it always
+    bypasses the cache and forces a PMFW interaction. The commit flips
+    the third argument to `false`, switching to the existing 1 ms cache.
+  - The callee’s API explicitly defines the third parameter as
+    `bypass_cache` (see `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h:122`),
+    so `false` means “use cached metrics.”
+  - The common metrics helper implements a 1 ms cache window (see
+    `drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c:1013-1041`), only fetching
+    fresh data if either explicitly bypassed or the last fetch is older
+    than 1 ms. The per-ASIC table initialization sets `metrics_time =
+    0`, ensuring the first call still fetches fresh metrics (see
+    `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:274`).
 
-- Code-level analysis
-  - Current behavior: In `misc_open()` the code unconditionally requests
-    a module if no matching `miscdevice` is found on first lookup, then
-    retries the lookup (drivers/char/misc.c:118,
-    drivers/char/misc.c:135–149).
-  - Change: Only request a module when the minor is a fixed, known
-    value; i.e., add a guard `minor < MISC_DYNAMIC_MINOR` around the
-    autoload attempt, and move the final “not found” check outside the
-    block so logic remains identical otherwise. The semantic change is
-    that no autoload is attempted for dynamic minors.
-  - Rationale supported by headers:
-    - `MISC_DYNAMIC_MINOR` is a sentinel 255
-      (include/linux/miscdevice.h:74). Dynamic minors are allocated from
-      `MISC_DYNAMIC_MINOR + 1` upward (drivers/char/misc.c:65–76), so
-      they are unknown until registration and cannot be known in advance
-      of module load.
-    - `MODULE_ALIAS_MISCDEV(minor)` expands to a fixed `char-
-      major-10-<minor>` alias (include/linux/miscdevice.h:105–107). It
-      cannot be used for dynamically assigned minors (which aren’t
-      constant at build time). Thus, `request_module("char-major-%d-%d",
-      MISC_MAJOR, minor)` (drivers/char/misc.c:137) can never succeed
-      for dynamic minors.
-  - Correctness of control flow:
-    - After patch, if `new_fops` is still NULL, the function immediately
-      fails with `-ENODEV`, just as it did before when autoload didn’t
-      resolve the device. Moving the `if (!new_fops) goto fail;` outside
-      the conditional preserves behavior for fixed-minor flows and
-      removes only the futile autoload for dynamic minors.
+- Why it matters (bug-like behavior and user impact)
+  - The current arcturus path always bypasses the cache on every
+    `gpu_metrics` query (see `arcturus_ppt.c:2327-2329`), needlessly
+    interrupting PMFW for callers that poll frequently. The commit
+    message states cache validity is 1 ms on arcturus and that frequent
+    queries “constantly interrupt PMFW,” which is undesirable and can
+    degrade performance or reliability.
+  - Using the cache still guarantees data freshness within 1 ms and
+    avoids spamming PMFW when clients poll faster than that. From user
+    space, the only observable difference is that very high-rate queries
+    (>1 kHz) won’t force a new PMFW read each time; metrics can be up to
+    1 ms old. This aligns with the existing caching design and does not
+    change the ABI or data layout returned by `gpu_metrics` (the rest of
+    the function remains unchanged; e.g., field population and
+    `system_clock_counter` at
+    `drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c:2373`).
 
-- User impact
-  - Eliminates unnecessary invocations of modprobe/kmod when opening
-    stale or handcrafted device nodes with dynamic minors. This reduces
-    latency and log spam without changing any successful open path for
-    valid misc devices.
-
-- Security considerations
-  - Reduces the surface for unintended autoloading by user-triggered
-    opens of arbitrary `char-major-10-<large minor>` device nodes where
-    no legitimate alias can exist. While not a direct vulnerability fix,
-    it narrows pointless autoloading opportunities.
-
-- Scope and risk
-  - Small, localized change in `drivers/char/misc.c::misc_open()`
-    (drivers/char/misc.c:118). No ABI/API changes. No architectural
-    changes.
-  - Only affects the autoload attempt for “not found” cases; normal open
-    paths (where the `miscdevice` is registered) are unchanged.
-  - Fixed-minor devices keep working as before because the autoload
-    remains in place for minors `< MISC_DYNAMIC_MINOR`.
+- Scope and risk assessment
+  - Change is one boolean flip in a single ASIC-specific path, no
+    architectural changes, no cross-subsystem effects.
+  - It leverages existing, well-tested caching in
+    `smu_cmn_get_metrics_table()`; behavior falls back to the exact
+    update path after at most 1 ms (`smu_cmn.c:1022-1035`).
+  - Initial fetch correctness is preserved because `metrics_time` starts
+    at zero (`arcturus_ppt.c:274`), so the first call is always fresh.
+  - Potential side effects are minimal: clients polling at sub-
+    millisecond rates may see identical metrics across calls within a 1
+    ms window, which is explicitly intended by the caching policy and
+    called out in the commit rationale.
 
 - Stable backport criteria
-  - Fixes a real, user-visible misbehavior (unnecessary autoload
-    attempts) with potential performance/log impact.
-  - Minimal, well-scoped change to a mature code path.
-  - No new features; purely a behavioral correction for an edge case.
-  - Acknowledged and merged by subsystem maintainer; Signed-off-by Greg
-    Kroah-Hartman indicates upstream acceptance.
-  - Applies cleanly across stable series; `misc_open()` and the related
-    defines/macros are long-stable and consistent.
+  - Fixes a real, user-facing problem: unnecessary PMFW interruptions
+    from high-frequency polling, which can affect performance and system
+    behavior.
+  - The change is small, contained, and low risk (one-argument change).
+  - No new features or ABI changes; it aligns arcturus with the existing
+    1 ms caching policy implemented in common code.
+  - No major architectural changes or complex dependencies; the function
+    signature and caching logic already exist in stable trees.
 
-- Conclusion
-  - Recommended for backport: it’s a safe, contained fix that prevents
-    futile module requests for dynamic minors and aligns behavior with
-    the documented aliasing mechanism for misc devices.
+Given the minimal, targeted nature of the change, its alignment with
+existing caching semantics, and the clear benefit of reducing PMFW
+interruptions without altering user-visible interfaces, this is a good
+candidate for stable backporting.
 
- drivers/char/misc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 255a164eec86d..4c276b8066ff8 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -132,7 +132,8 @@ static int misc_open(struct inode *inode, struct file *file)
- 		break;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+index 9ad46f545d15c..599eddb5a67d5 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+@@ -1897,7 +1897,7 @@ static ssize_t arcturus_get_gpu_metrics(struct smu_context *smu,
  
--	if (!new_fops) {
-+	/* Only request module for fixed minor code */
-+	if (!new_fops && minor < MISC_DYNAMIC_MINOR) {
- 		mutex_unlock(&misc_mtx);
- 		request_module("char-major-%d-%d", MISC_MAJOR, minor);
- 		mutex_lock(&misc_mtx);
-@@ -144,10 +145,11 @@ static int misc_open(struct inode *inode, struct file *file)
- 			new_fops = fops_get(iter->fops);
- 			break;
- 		}
--		if (!new_fops)
--			goto fail;
- 	}
+ 	ret = smu_cmn_get_metrics_table(smu,
+ 					&metrics,
+-					true);
++					false);
+ 	if (ret)
+ 		return ret;
  
-+	if (!new_fops)
-+		goto fail;
-+
- 	/*
- 	 * Place the miscdevice in the file's
- 	 * private_data so it can be used by the
 -- 
 2.51.0
 
