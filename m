@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D2309F1E;
-	Sat, 25 Oct 2025 16:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29AE303A18;
+	Sat, 25 Oct 2025 16:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408968; cv=none; b=jHOv08rMCw8uAraXTq6OPLMVMHrTKDVnHR++DdJu3Sm+xuIgrP4JQTqnRVE7+bHO/R+4tU5qFmYRZe/4FeLjhRW/kELV18V4biQktfUY5QMZOeKlGangyCOGZ5LKgeT5zetokwCriQkqp5GJtNhGBlTrpsf9KrSEu1MQs6EHyYM=
+	t=1761408971; cv=none; b=QazPRQjCa5o4uyx66LEk44KSl264cFHbt2Pm1loCTN1GJ3I9v3qINgC1o2XGrd5S9+hE9xgLmBdKVWAahslTWky1ywlQlG3l84q+8VehCHo9jkVsVxR+FXAyMaN7t1jS3zCJ1UfGEYS32k0gTbecNZCYLYDtCk1N6n+i1jtWAPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408968; c=relaxed/simple;
-	bh=rsWNTG25FhSE1nJRwlXwFhFi4xH/hL0IACkrwJQOo8U=;
+	s=arc-20240116; t=1761408971; c=relaxed/simple;
+	bh=VUZRIOpaRwnYppqOeIiHGqkQiRwCcS71uyrgTiJ/dxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyvDOZSe6KFaerCES74NiKKWlhRIAoQUtKmPufqilpeE4ooZ0nByoLPWDkw3jv1ofzbe4BeYAlweATmdc6s5ack+0Ox4UeHmdIGXsxpN5GARJe3R/gogTi0XU9ZdvYo/qgjnxmx4Xnt/6EcYo3pVHzHA7NOe/bFo1WB/4vxNRA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=psQpycTY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=REQogzchqmpdvd9/sKPoe9uAOzrtdUR0EvrTL+QO+YI9aef1pcLI8E5Wvcqf3dB3vxpRIJcJjjQ1Azxd12HOGOefMkQVGFGpzzDtqCpFMOroN4qaGHq8rhGmuSyO/lm1wqwUinz/ejbn2MMhdcM6StqQkVXgdn1E/VD4L+gcprc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nRu9WCw9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="psQpycTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74076C113D0;
-	Sat, 25 Oct 2025 16:16:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nRu9WCw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57BDC4CEFB;
+	Sat, 25 Oct 2025 16:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408968;
-	bh=rsWNTG25FhSE1nJRwlXwFhFi4xH/hL0IACkrwJQOo8U=;
+	s=k20201202; t=1761408970;
+	bh=VUZRIOpaRwnYppqOeIiHGqkQiRwCcS71uyrgTiJ/dxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=psQpycTYgXF9sTWYosr/exFaNIkYHw19O+aHvZOPfiqhcIugAOsHxF7PtLthBx9dA
-	 UMDP7q4Z+WG673aS5tm2yGeXPGoL5XkivirOWbFGW0MP3MXopEDArjISTCTwrXNYQF
-	 LK2OpCYtvmk78WU1HY0QMcLW7sig9wV80ZS/IgrmfXLzHtNzERylNfDaUch0bj0NQM
-	 /lLzy0KXfruC5A2Ty4zNzfq9xlt9H5kFPLnfHMsDxa1JZyz6P9aHNZQk3OqAdj1rjL
-	 X8dGXoF5FaEemn3lpsfTaKyWkYGz10HKHzD+KxQazvrpZZIO78Ti1++qxtOJn4ju6P
-	 LIopo4lv6/2WA==
+	b=nRu9WCw9LfDQcffcUkvbe0NMotVgtqKGlFchxsnIwR4GaPANjr3auXBa5sHuLgj8A
+	 ONJyFBXtxJRVWV1jcYN6eQP1RY0VtPzl3do9Nn76qr+h0+fhuqtdKSStkLGR7y+fXN
+	 9bamhs/t4HyDdv/Wj6HlWhQNCHlWaPoQ4nJt1vU42GHg7awuvFf97/fw6LXB3ZxP25
+	 FCjzzokEWCXnJiGrm2OxtZ6HJOhAvHMATDF5Z13o/bXG6WODhJzTNM2DiJ3olJsgGN
+	 fVy8HnKzC70wqrmfChtkdU3sOTyew0KktdJixO8Ylf8QZS5d6eP7iZnGVfq2WcdGGb
+	 oNVYSAhpwzLiw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Zizhi Wo <wozizhi@huaweicloud.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
+	npitre@baylibre.com,
+	jirislaby@kernel.org,
 	alexander.deucher@amd.com,
 	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17-5.10] ALSA: usb-audio: add mono main switch to Presonus S1824c
-Date: Sat, 25 Oct 2025 11:56:28 -0400
-Message-ID: <20251025160905.3857885-157-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.12] tty/vt: Add missing return value for VT_RESIZE in vt_ioctl()
+Date: Sat, 25 Oct 2025 11:56:29 -0400
+Message-ID: <20251025160905.3857885-158-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -49,103 +51,103 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+From: Zizhi Wo <wozizhi@huaweicloud.com>
 
-[ Upstream commit 659169c4eb21f8d9646044a4f4e1bc314f6f9d0c ]
+[ Upstream commit da7e8b3823962b13e713d4891e136a261ed8e6a2 ]
 
-The 1824c does not have the A/B switch that the 1810c has,
-but instead it has a mono main switch that sums the two
-main output channels to mono.
+In vt_ioctl(), the handler for VT_RESIZE always returns 0, which prevents
+users from detecting errors. Add the missing return value so that errors
+can be properly reported to users like vt_resizex().
 
-Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://lore.kernel.org/r/20250904023955.3892120-1-wozizhi@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- Adds device-specific control IDs and state slots for the 1824c mono
-  button so the driver can address the hardware selector correctly
-  (`sound/usb/mixer_s1810c.c:94` and `sound/usb/mixer_s1810c.c:124`).
-- Introduces a dedicated `Mono Main Out` control wired into the existing
-  switch helpers, replacing the bogus A/B selector previously shown to
-  1824c users and restoring the intended functionality
-  (`sound/usb/mixer_s1810c.c:542`).
-- Updates mixer initialisation to choose the mono switch only for USB ID
-  `0x194f:0x010d`, leaving the 1810c path unchanged, which confines the
-  behaviour change to the affected device and avoids regressions on
-  others (`sound/usb/mixer_s1810c.c:637`).
-- This is a hardware capability fix rather than a feature: without it,
-  1824c owners see an unusable control and cannot toggle the mono
-  summing from ALSA, so backporting improves correctness with minimal
-  code churn or architectural impact.
 
-Suggested next step: verify on an 1824c that `alsamixer` now exposes a
-working mono main switch.
+- What it fixes: VT_RESIZE ioctl silently masked errors. In the
+  VT_RESIZE handler, the kernel invoked `__vc_resize(...)` but ignored
+  its return value and then fell through to the function’s final `return
+  0`, making user space believe resize always succeeded even when it
+  failed (e.g., allocation failure, invalid dimensions, or driver
+  refusal). The patch propagates the error so users can detect failures.
 
- sound/usb/mixer_s1810c.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+- Precise change: In `drivers/tty/vt/vt_ioctl.c:911`, the VT_RESIZE path
+  now captures and checks the return from `__vc_resize(...)`:
+  - Before: `__vc_resize(vc_cons[i].d, cc, ll, true);` then `break` →
+    function ending `return 0`.
+  - After: `ret = __vc_resize(vc_cons[i].d, cc, ll, true); if (ret)
+    return ret;` ensuring a proper error code is returned to userspace
+    on failure.
+  - Context: `guard(console_lock)();` wraps the loop; early returns
+    correctly release the console lock via the cleanup guard
+    (include/linux/console.h:669, include/linux/cleanup.h:390).
 
-diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
-index fac4bbc6b2757..bd24556f6a7fb 100644
---- a/sound/usb/mixer_s1810c.c
-+++ b/sound/usb/mixer_s1810c.c
-@@ -93,6 +93,7 @@ struct s1810c_ctl_packet {
+- Consistency with VT_RESIZEX: `VT_RESIZEX` already reports errors,
+  directly returning the error from `__vc_resize()`, as seen in
+  `drivers/tty/vt/vt_ioctl.c:662` (inside `vt_resizex`) and the
+  VT_RESIZEX case path `drivers/tty/vt/vt_ioctl.c:919`. This patch
+  brings VT_RESIZE in line with VT_RESIZEX behavior, improving interface
+  consistency.
+
+- Error sources now visible to users:
+  - `__vc_resize()` simply forwards the result of `vc_do_resize(...)`
+    (`drivers/tty/vt/vt.c:1300`), so errors like:
+    - `-EINVAL` for invalid sizes (e.g., exceeding limits) in
+      `vc_do_resize` (`drivers/tty/vt/vt.c:1141` start; early checks
+      inside return `-EINVAL`).
+    - `-ENOMEM` for allocation failures in `vc_do_resize` (kzalloc
+      failure in that function).
+    - Driver-specific failures from `con_resize` via
+      `resize_screen(...)`, which `vc_do_resize` propagates.
+  - These conditions were previously hidden from users when using
+    VT_RESIZE.
+
+- Scope and risk:
+  - Small, contained change in a single file and single switch-case path
+    (`drivers/tty/vt/vt_ioctl.c`).
+  - No API or ABI changes; only error return propagation.
+  - Locks remain correct: early returns under `guard(console_lock)()`
+    still release the lock via scope-based cleanup.
+  - Behavior on success remains unchanged (still returns 0).
+  - The change may expose previously masked errors to userspace, but
+    that aligns with kernel/user ABI expectations for ioctls and matches
+    VT_RESIZEX.
+
+- Stable policy fit:
+  - Fixes a real user-visible bug (silent success on failure).
+  - Minimal and low-risk; no architectural changes.
+  - Confined to the VT/TTY ioctl handling path.
+
+Given these points, this is a clear, low-risk bugfix that improves error
+reporting, aligns VT_RESIZE with VT_RESIZEX, and should be backported to
+stable trees.
+
+ drivers/tty/vt/vt_ioctl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/vt/vt_ioctl.c b/drivers/tty/vt/vt_ioctl.c
+index 61342e06970a0..eddb25bec996e 100644
+--- a/drivers/tty/vt/vt_ioctl.c
++++ b/drivers/tty/vt/vt_ioctl.c
+@@ -923,7 +923,9 @@ int vt_ioctl(struct tty_struct *tty,
  
- #define SC1810C_CTL_LINE_SW	0
- #define SC1810C_CTL_MUTE_SW	1
-+#define SC1824C_CTL_MONO_SW	2
- #define SC1810C_CTL_AB_SW	3
- #define SC1810C_CTL_48V_SW	4
- 
-@@ -123,6 +124,7 @@ struct s1810c_state_packet {
- #define SC1810C_STATE_48V_SW	58
- #define SC1810C_STATE_LINE_SW	59
- #define SC1810C_STATE_MUTE_SW	60
-+#define SC1824C_STATE_MONO_SW	61
- #define SC1810C_STATE_AB_SW	62
- 
- struct s1810_mixer_state {
-@@ -502,6 +504,15 @@ static const struct snd_kcontrol_new snd_s1810c_mute_sw = {
- 	.private_value = (SC1810C_STATE_MUTE_SW | SC1810C_CTL_MUTE_SW << 8)
- };
- 
-+static const struct snd_kcontrol_new snd_s1824c_mono_sw = {
-+	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
-+	.name = "Mono Main Out Switch",
-+	.info = snd_ctl_boolean_mono_info,
-+	.get = snd_s1810c_switch_get,
-+	.put = snd_s1810c_switch_set,
-+	.private_value = (SC1824C_STATE_MONO_SW | SC1824C_CTL_MONO_SW << 8)
-+};
-+
- static const struct snd_kcontrol_new snd_s1810c_48v_sw = {
- 	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
- 	.name = "48V Phantom Power On Mic Inputs Switch",
-@@ -588,8 +599,17 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
--	if (ret < 0)
--		return ret;
-+	// The 1824c has a Mono Main switch instead of a
-+	// A/B select switch.
-+	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
-+		if (ret < 0)
-+			return ret;
-+	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	return ret;
- }
+ 			if (vc) {
+ 				/* FIXME: review v tty lock */
+-				__vc_resize(vc_cons[i].d, cc, ll, true);
++				ret = __vc_resize(vc_cons[i].d, cc, ll, true);
++				if (ret)
++					return ret;
+ 			}
+ 		}
+ 		console_unlock();
 -- 
 2.51.0
 
