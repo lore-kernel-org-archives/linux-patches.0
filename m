@@ -1,50 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7A830C63E;
-	Sat, 25 Oct 2025 16:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC0630CD86;
+	Sat, 25 Oct 2025 16:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409776; cv=none; b=EOigXHQP90fJdXZ9T8RN4Oya7N9bi+BP+6i8UkjZ7zbVCxUihVbQ87YuAt8oA9gUy5vGmV0DDI3hULJPO3JZ1w4zzWYHFBWRwnwg+ZZ7AUCUmUYt2dpKvvU+ZIwve9PXfQ/7UI8rA0lcf7bSvyd5e5mLG+esH2hLsYAiQiRcVzU=
+	t=1761409785; cv=none; b=g90j3wkeeZIwaSJrA8lbmpwqVHAdAS9V74ipEMyYZd9EW7MifpBqmxfLN0glRlSU/FcgG++IOcXm3FqCSdZMn9PjjToK+OYmpomOrEnBZzQI83ONEfOCVlaAltpdpUHF9LJ3g2JGEg1/Tu0Qe0X4VGTqlPobP1jpLEmmn3/MafI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409776; c=relaxed/simple;
-	bh=9VEmU0KcJcDGOmMaXLKVl/CnUXnEcBiyGx39tor1Sog=;
+	s=arc-20240116; t=1761409785; c=relaxed/simple;
+	bh=UYLaXgxBZuixrGorznAnJsn1dLXnLo7841ii6Fv8oO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rd2a/wBqs8uWdeYhplXn7f9UVoVHlD5Y5nKs9nOx1kS0pJitlwSJ8WWKi/XAQlXorebZjOqj0cfdQ0D2feJ4bRy+1iv2lvZ+BW91Ia4dWTkibQMOAZEdF6qzxynAhI3qGqHdMa/n8ID3pcoLEZPTP16KgttZjzJeHiwAlzwtNIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mjupDYe0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X9keUk2e0Aqxk1PNxZzWjAIf+fX1iHw+sYP47IyyneqVS471CvQYmoyOtJN2zO9JRuJR2ZMdbBj8VNnAQJGIejuqRSD2v25L4RnQPK8C+AqpfOVW3Hwr0X6wg9TqabWQ+kzgIyH0gpla21Ucz/7JhIfcmkDNYBBgp2xdxzxVVzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pqQ3e9fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mjupDYe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510D2C4CEF5;
-	Sat, 25 Oct 2025 16:29:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pqQ3e9fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342B8C4CEF5;
+	Sat, 25 Oct 2025 16:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409775;
-	bh=9VEmU0KcJcDGOmMaXLKVl/CnUXnEcBiyGx39tor1Sog=;
+	s=k20201202; t=1761409785;
+	bh=UYLaXgxBZuixrGorznAnJsn1dLXnLo7841ii6Fv8oO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjupDYe0+bT0tKbooLpRtXfPCSQLZ6M5BvkD3CUlCivDVxP38mJ349z3x5Xn2sx5f
-	 OT62ISK2c54h5tkq6/BleIBpFWrKJdwBb3IQgm6shAf4J5eeIq7YcZEEo4hbWKW4jk
-	 klPgRLrYRWvU749h9tE3zcDhTj7RfV+2hDj6QLzYUoWCMAUCpDiQGd/vJz6D4l0tTw
-	 zdRRBGfFR2LRVg9Q8P/sY6VbgKXM/Kz1GqsoAA2kDyF69dtfLH81UYI/j0W4IAG92O
-	 E2C1lphBO2FttiJeogrzbn5e4jYNhpMFibrCprd3Epiidb8imj/kn8dVpkmjTyUdJx
-	 N7PVzWc3SPNiQ==
+	b=pqQ3e9fuaMjT6aud62z1DhMbcXilTaXLQZuogGcUcmo9TEob1Uu31uOfVdB9RU5kp
+	 8PSI/2UMzbw5fIBhAMM+pHqpY4ddt4YeSH495V2U0qL/NMDrlE2TgXW1V2esfD3rsO
+	 Z/gBufgo7ey/8duGYcbJyQoOcne/o4un5pyaHFaa9pxpZ3QZg0f9b/4udKqN7p2X3/
+	 krHvgRZTqeP6oTdBlvu1Nx+D3n8u0p9/LLtnQNmaXNDJzTBIxrZzz22Vk+j4LIJQ+L
+	 859o8I9rHaeJz8y8LGQNORjf6iwRIbYmt7/8g+CSwYWtSaiOWPaSQP+0xJR9364LfT
+	 IgFixCfZxShUQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miroslav Lichvar <mlichvar@redhat.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Stultz <jstultz@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Michael Strauss <michael.strauss@amd.com>,
+	"Ovidiu (Ovi) Bunea" <ovidiu.bunea@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] ptp: Limit time setting of PTP clocks
-Date: Sat, 25 Oct 2025 12:01:32 -0400
-Message-ID: <20251025160905.3857885-461-sashal@kernel.org>
+	Charlene.Liu@amd.com,
+	alex.hung@amd.com,
+	aurabindo.pillai@amd.com,
+	alvin.lee2@amd.com,
+	Ausef.Yousof@amd.com,
+	Ovidiu.Bunea@amd.com,
+	alexandre.f.demers@gmail.com,
+	srinivasan.shanmugam@amd.com,
+	Martin.Leung@amd.com,
+	danny.wang@amd.com,
+	Dillon.Varone@amd.com,
+	ray.wu@amd.com,
+	mwen@igalia.com,
+	rostrows@amd.com,
+	chiahsuan.chung@amd.com,
+	yihan.zhu@amd.com,
+	karthi.kandasamy@amd.com,
+	ryanseto@amd.com,
+	peterson.guo@amd.com,
+	wenjing.liu@amd.com,
+	meenakshikumar.somasundaram@amd.com,
+	Cruise.Hung@amd.com,
+	PeiChen.Huang@amd.com,
+	george.shen@amd.com,
+	chris.park@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/amd/display: Move setup_stream_attribute
+Date: Sat, 25 Oct 2025 12:01:33 -0400
+Message-ID: <20251025160905.3857885-462-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,36 +78,27 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miroslav Lichvar <mlichvar@redhat.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 5a8c02a6bf52b1cf9cfb7868a8330f7c3c6aebe9 ]
+[ Upstream commit 2681bf4ae8d24df950138b8c9ea9c271cd62e414 ]
 
-Networking drivers implementing PTP clocks and kernel socket code
-handling hardware timestamps use the 64-bit signed ktime_t type counting
-nanoseconds. When a PTP clock reaches the maximum value in year 2262,
-the timestamps returned to applications will overflow into year 1667.
-The same thing happens when injecting a large offset with
-clock_adjtime(ADJ_SETOFFSET).
+[WHY]
+If symclk RCO is enabled, stream encoder may not be receiving an ungated
+clock by the time we attempt to set stream attributes when setting dpms
+on. Since the clock is gated, register writes to the stream encoder fail.
 
-The commit 7a8e61f84786 ("timekeeping: Force upper bound for setting
-CLOCK_REALTIME") limited the maximum accepted value setting the system
-clock to 30 years before the maximum representable value (i.e. year
-2232) to avoid the overflow, assuming the system will not run for more
-than 30 years.
+[HOW]
+Move set_stream_attribute call into enable_stream, just after the point
+where symclk32_se is ungated.
+Logically there is no need to set stream attributes as early as is
+currently done in link_set_dpms_on, so this should have no impact beyond
+the RCO fix.
 
-Enforce the same limit for PTP clocks. Don't allow negative values and
-values closer than 30 years to the maximum value. Drivers may implement
-an even lower limit if the hardware registers cannot represent the whole
-interval between years 1970 and 2262 in the required resolution.
-
-Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
-Cc: Richard Cochran <richardcochran@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: John Stultz <jstultz@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250828103300.1387025-1-mlichvar@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Ovidiu (Ovi) Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -97,85 +106,194 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- Fixes a real bug: Prevents PTP clocks and timestamping from
-  overflowing 64-bit signed ktime_t (wrap to year 1667) when a clock is
-  set near the representable maximum or when a large offset is injected
-  via ADJ_SETOFFSET. This is user-visible and can be triggered
-  immediately by userspace with large offsets, not only in year 2262.
-- Small, contained change in the PTP core:
-  - Validates absolute settime requests using the established helper.
-    Added check in `ptp_clock_settime()` to reject invalid targets:
-    `drivers/ptp/ptp_clock.c:104`.
-  - Validates relative ADJ_SETOFFSET by first reading current time,
-    adding the offset, then rejecting if the resulting time would be
-    invalid: `ptp_clock_gettime()` call `drivers/ptp/ptp_clock.c:151`,
-    compute sum `drivers/ptp/ptp_clock.c:154`, and validate with
-    `timespec64_valid_settod()` `drivers/ptp/ptp_clock.c:155`.
-- Aligns PTP behavior with system clock rules: Uses the same upper-bound
-  policy as CLOCK_REALTIME by calling `timespec64_valid_settod()`, which
-  rejects negative times and values within 30 years of ktime’s max
-  (`include/linux/time64.h:118`). This matches the prior “timekeeping:
-  Force upper bound for setting CLOCK_REALTIME” change and ensures
-  consistent semantics across clocks.
-- Minimal regression risk:
-  - Only rejects out-of-range inputs that previously produced overflowed
-    timestamps; returns `-EINVAL` instead of silently wrapping.
-  - No architectural changes; no driver APIs change; ADJ_OFFSET and
-    ADJ_FREQUENCY paths are untouched (besides existing range checks).
-  - Matches existing kernel timekeeping validation patterns (system
-    clock already enforces the same limits).
-- Touches a non-core subsystem (PTP POSIX clock ops) and is
-  straightforward to review and backport.
-- Backport note: The change depends on `timespec64_valid_settod()` and
-  related defines in `include/linux/time64.h`. If a target stable branch
-  predates this helper, a trivial adaptation (or backport of the helper)
-  is needed.
+- Problem addressed: On some AMD DCN platforms with root clock
+  optimization (RCO) for symclk enabled, the stream encoder can still be
+  clock-gated when DPMS is turned on. Programming stream attributes at
+  that point silently fails because the encoder’s registers are not
+  clocked.
 
-Given the clear correctness benefit, minimal scope, and alignment with
-existing timekeeping policy, this is a good candidate for stable
-backport.
+- What changed
+  - Moved programming of stream attributes from the DPMS-on path to the
+    “enable stream” path after clocks are ungated:
+    - Removed early call in
+      `drivers/gpu/drm/amd/display/dc/link/link_dpms.c:2493` where
+      `link_hwss->setup_stream_attribute(pipe_ctx);` is invoked before
+      the encoder clocks are guaranteed to be ungated.
+    - Added `link_hwss->setup_stream_attribute(pipe_ctx);` into the
+      hardware-specific enable paths:
+      - `drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c:661`
+        (within `dce110_enable_stream`) before encoder setup.
+      - `drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c:2969`
+        (within `dcn20_enable_stream`) immediately after
+        `dccg->funcs->enable_symclk32_se(...)` or
+        `enable_symclk_se(...)` so the writes occur with an ungated
+        clock.
+      - `drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c:987`
+        (within `dcn401_enable_stream`) likewise after the corresponding
+        clock enable (`enable_symclk32_se`/`enable_symclk_se`).
+  - Completed the virtual encoder vtable by adding a no-op LVDS
+    attribute setter so that all attribute paths are consistently
+    defined:
+    - `drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c`
+      adds `lvds_set_stream_attribute` and wires it into
+      `virtual_str_enc_funcs`. This aligns with how
+      `setup_dio_stream_attribute` routes LVDS to
+      `stream_encoder->funcs->lvds_set_stream_attribute` (see
+      `drivers/gpu/drm/amd/display/dc/link/hwss/link_hwss_dio.c:98`).
 
- drivers/ptp/ptp_clock.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+- Why this fixes the bug
+  - In the old flow, `link_set_dpms_on` programmed attributes too early
+    (before `dc->hwss.enable_stream` and before symclk ungating for
+    DCN). If the encoder clock was gated due to RCO, attribute register
+    writes were dropped.
+  - The new flow defers `setup_stream_attribute` until
+    `dcn20_enable_stream`/`dcn401_enable_stream` have called
+    `dccg->funcs->enable_symclk32_se` (or `enable_symclk_se` for non-
+    HPO), guaranteeing an ungated clock. For DCE110, placing it at the
+    start of `dce110_enable_stream` ensures the attribute programming is
+    still done during enable, not during DPMS-on.
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 1cc06b7cb17ef..3e0726c6f55b3 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -100,6 +100,9 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
- 		return -EBUSY;
+- Ordering and side-effects
+  - InfoFrames are still updated after attributes are set, consistent
+    with prior behavior:
+    - Before: attributes set in `link_dpms.c`, then
+      `resource_build_info_frame` + `update_info_frame`, then later
+      `dc->hwss.enable_stream`.
+    - After: attributes set in `*_enable_stream`, and in those functions
+      `dc->hwss.update_info_frame(pipe_ctx)` still occurs after
+      attribute programming (e.g., `dcn20_hwseq.c:2969+`,
+      `dcn401_hwseq.c:987+`, `dce110_hwseq.c:661+`), preserving logical
+      order.
+  - Pixel-rate divider setup remains the same or occurs adjacent; moving
+    attributes just past clock ungating makes register programming
+    reliable without altering the broader sequence (e.g.,
+    `dcn20_hwseq.c` sets DTO/clock, then attributes, then pixel rate
+    div, then stream encoder setup).
+  - Seamless boot/eDP fast boot paths in `link_set_dpms_on` still early-
+    return before `dc->hwss.enable_stream(pipe_ctx)`. Previously, those
+    paths benefitted from early attribute programming in `link_dpms.c`;
+    this change stops reprogramming attributes on those fast/avoid-
+    flicker paths. That matches the intent of “seamless” (avoid re-
+    touching the running stream), and InfoFrames are still
+    rebuilt/updated before those returns. AMD’s rationale states “no
+    impact beyond the RCO fix,” which is consistent with seamless/fast-
+    boot flows not re-writing SE attributes while avoiding re-enables.
+
+- Scope and risk assessment
+  - Bug fix, no new features; localized to AMD DC link/hw sequence code
+    paths and the virtual encoder stub.
+  - No architectural changes; only call-site reordering and one no-op
+    stub addition.
+  - Interactions with other subsystems are minimal; the change is
+    contained to display bring-up order.
+  - Security impact: none (timing/order-of-programming fix).
+  - Regression risk: low. The programming window was only moved to a
+    safer point (after clock ungating). Virtual encoder LVDS stub
+    eliminates any possibility of null callbacks where LVDS is
+    referenced.
+
+- Stable backport criteria
+  - Fixes a real, user-visible issue (attribute programming failing
+    under symclk RCO gating → potential blank/corruption or wrong video
+    parameters).
+  - Small, self-contained change with clear rationale and tested-
+    by/reviewed-by tags.
+  - No API/ABI churn; fits stable rules.
+
+Conclusion: Backporting is advisable to affected stable trees so stream
+attribute programming reliably occurs with an ungated encoder clock.
+
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 1 +
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c    | 2 ++
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c  | 2 ++
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c            | 3 ---
+ .../drm/amd/display/dc/virtual/virtual_stream_encoder.c    | 7 +++++++
+ 5 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index c69194e04ff93..32fd6bdc18d73 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -671,6 +671,7 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
+ 	uint32_t early_control = 0;
+ 	struct timing_generator *tg = pipe_ctx->stream_res.tg;
+ 
++	link_hwss->setup_stream_attribute(pipe_ctx);
+ 	link_hwss->setup_stream_encoder(pipe_ctx);
+ 
+ 	dc->hwss.update_info_frame(pipe_ctx);
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 5e57bd1a08e73..9d3946065620a 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -3052,6 +3052,8 @@ void dcn20_enable_stream(struct pipe_ctx *pipe_ctx)
+ 						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
  	}
  
-+	if (!timespec64_valid_settod(tp))
-+		return -EINVAL;
++	link_hwss->setup_stream_attribute(pipe_ctx);
 +
- 	return  ptp->info->settime64(ptp->info, tp);
- }
+ 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div)
+ 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
+ 			dc->res_pool->dccg,
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index 61167c19359d5..e86bb4fb9e952 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -965,6 +965,8 @@ void dcn401_enable_stream(struct pipe_ctx *pipe_ctx)
+ 		}
+ 	}
  
-@@ -130,7 +133,7 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 	ops = ptp->info;
- 
- 	if (tx->modes & ADJ_SETOFFSET) {
--		struct timespec64 ts;
-+		struct timespec64 ts, ts2;
- 		ktime_t kt;
- 		s64 delta;
- 
-@@ -143,6 +146,14 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 		if ((unsigned long) ts.tv_nsec >= NSEC_PER_SEC)
- 			return -EINVAL;
- 
-+		/* Make sure the offset is valid */
-+		err = ptp_clock_gettime(pc, &ts2);
-+		if (err)
-+			return err;
-+		ts2 = timespec64_add(ts2, ts);
-+		if (!timespec64_valid_settod(&ts2))
-+			return -EINVAL;
++	link_hwss->setup_stream_attribute(pipe_ctx);
 +
- 		kt = timespec64_to_ktime(ts);
- 		delta = ktime_to_ns(kt);
- 		err = ops->adjtime(ops, delta);
+ 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div) {
+ 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
+ 			dc->res_pool->dccg,
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 8c8682f743d6f..cb80b45999360 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2458,7 +2458,6 @@ void link_set_dpms_on(
+ 	struct link_encoder *link_enc = pipe_ctx->link_res.dio_link_enc;
+ 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;
+ 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
+-	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
+ 	bool apply_edp_fast_boot_optimization =
+ 		pipe_ctx->stream->apply_edp_fast_boot_optimization;
+ 
+@@ -2502,8 +2501,6 @@ void link_set_dpms_on(
+ 		pipe_ctx->stream_res.tg->funcs->set_out_mux(pipe_ctx->stream_res.tg, otg_out_dest);
+ 	}
+ 
+-	link_hwss->setup_stream_attribute(pipe_ctx);
+-
+ 	pipe_ctx->stream->apply_edp_fast_boot_optimization = false;
+ 
+ 	// Enable VPG before building infoframe
+diff --git a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
+index ad088d70e1893..6ffc74fc9dcd8 100644
+--- a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
+@@ -44,6 +44,11 @@ static void virtual_stream_encoder_dvi_set_stream_attribute(
+ 	struct dc_crtc_timing *crtc_timing,
+ 	bool is_dual_link) {}
+ 
++static void virtual_stream_encoder_lvds_set_stream_attribute(
++	struct stream_encoder *enc,
++	struct dc_crtc_timing *crtc_timing)
++{}
++
+ static void virtual_stream_encoder_set_throttled_vcp_size(
+ 	struct stream_encoder *enc,
+ 	struct fixed31_32 avg_time_slots_per_mtp)
+@@ -115,6 +120,8 @@ static const struct stream_encoder_funcs virtual_str_enc_funcs = {
+ 		virtual_stream_encoder_hdmi_set_stream_attribute,
+ 	.dvi_set_stream_attribute =
+ 		virtual_stream_encoder_dvi_set_stream_attribute,
++	.lvds_set_stream_attribute =
++		virtual_stream_encoder_lvds_set_stream_attribute,
+ 	.set_throttled_vcp_size =
+ 		virtual_stream_encoder_set_throttled_vcp_size,
+ 	.update_hdmi_info_packets =
 -- 
 2.51.0
 
