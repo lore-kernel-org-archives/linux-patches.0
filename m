@@ -1,53 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191622FD7DD;
-	Sat, 25 Oct 2025 16:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA7C2E8B86;
+	Sat, 25 Oct 2025 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409577; cv=none; b=F3699Rn/1sffgD+ujSQhPbXamT5cdAeQgX327RUtERqakp51drwJmMXl2M+5A16rKvwQ0J/udHOCtR7IFnrdiFvUlN5IlZ6nHX/Vuj6VxMIBVvZJJ5iQG8V9OOsVAxe3azJLP4hHHB9qLwhZaC4ciBa5LS4za6U7N0zqZRU/4js=
+	t=1761409579; cv=none; b=cScDA02LhWkU03cnHMbVgUrbIlXjR4+1NNLpV4RIz+da1uPmDdfAF8j+hVKBw1L+mqt9K8hRp+/SkMPlzxvSGj0gUFfXiUoqI9/rb+Brq8lTLoPW1FaAlpXIAE95dC3Y9QenOynTttwFNe7GsjVzvfPbNAM7djFrl8X+a/IDXiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409577; c=relaxed/simple;
-	bh=aI9x5Ft64P52IloQJOMbGzdMOh0uQz2zl6nsikDg0eU=;
+	s=arc-20240116; t=1761409579; c=relaxed/simple;
+	bh=TTPFQPjhgfnF0VqXDar2dd7qhmfsUyK41ErUY6wpt7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgfOnxHb7VQ+dGfVUptjWetw9IL5rx/KOSMWeTILiCOHvp3sy9buWSbLb+5S1N0m4tCN3XecZOGZqIQQ1YFFJfI7BxWxarM4GF9APIGaemfd7xtPqFR1saB/cE3wQpQw8nkF7fD8zlgK3zb4Jxh7N5833sCrPh3MZCvtpnmLkmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tmBrh1Qy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KmSUsmh7E1gHds+9V85iwfYK2V3G8lY52xPM5Mj80AtRf2rkAXMo8cVFYxsIuBPA8IL2Nt45W5sXWK5Hf+gtnrMJLIzWogm4R4pxlbyNIjMUilg76tWD+Ug2F7BmcKS3IAc09NPKoaszVoS6ci92K0PxFPZSGVT9bYk5ChKH+6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aL/tYGY9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tmBrh1Qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5FCC4CEF5;
-	Sat, 25 Oct 2025 16:26:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aL/tYGY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D934C4CEF5;
+	Sat, 25 Oct 2025 16:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409577;
-	bh=aI9x5Ft64P52IloQJOMbGzdMOh0uQz2zl6nsikDg0eU=;
+	s=k20201202; t=1761409578;
+	bh=TTPFQPjhgfnF0VqXDar2dd7qhmfsUyK41ErUY6wpt7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmBrh1QyUCUhxb9jFgOx7olS4xh4u3JxS1K29NQ8hxLKvdZKhiurNhBiOVWzlbFr4
-	 KoJ2RQahIIm3SdpoyeghGgn4JlaThHgbmDXj15tQkUh2KhpZDHJz1OL76cSPrOLDNn
-	 uUwNWokn/KdBrBCLBUorus+0I8fiO9iJpOhqdKPmIoHxGI2jKfZ55NoXkAGfPwF5w6
-	 e4Ab8p8JPXGOj6M1Gq8qrtVnK0vMdYgy1jb2h+K6aQWI4SS4efNV3Zy3WXCzIA/DGM
-	 2S1955WFyLaWP+4R3jxP/M2LmMAoXzft9HELBOD+gkARQ7kws9OVVn5pzQRsoCdOlP
-	 tbRKNEb+aQiig==
+	b=aL/tYGY9FxN6fLwOViMzPBQfeO52uqYOYr2Af3GX6JbonUbUJNSDG188Ck2Tw130Q
+	 X7exw+XgE0xHjXTDChduQF0Q6hGY6fhGgY6m27bwsLZvQTdYeyb68+CLAaQTqng9+N
+	 SpOxcdwzWKvZwc+0mKLb5/oW7+m4wOz9T39KCi80pJ3WqpCHDqhZIz0pCzgNKILOfU
+	 TxGFxq6hKxrrwD5EVUSOJSiAuBbNqcpeMsvTXpP4ikhOCyhjJv1ocFRGkMXdlNufUa
+	 NRxz0mDHko2inyOBhOEO6D1CIULBiCliRF2xeM9m5QNzu6F4qHyOIgItDsgs1xDpS8
+	 iDQMlhc9yRh6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kai Huang <kai.huang@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Farrah Chen <farrah.chen@intel.com>,
+Cc: Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	seanjc@google.com,
-	pbonzini@redhat.com,
-	rick.p.edgecombe@intel.com,
-	isaku.yamahata@intel.com,
-	alexandre.f.demers@gmail.com,
-	vannapurve@google.com,
-	thuth@redhat.com,
-	adrian.hunter@intel.com,
-	x86@kernel.org,
-	linux-coco@lists.linux.dev,
-	kvm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] x86/virt/tdx: Use precalculated TDVPR page physical address
-Date: Sat, 25 Oct 2025 12:00:04 -0400
-Message-ID: <20251025160905.3857885-373-sashal@kernel.org>
+	sathya.prakash@broadcom.com,
+	kashyap.desai@broadcom.com,
+	sumit.saxena@broadcom.com,
+	sreekanth.reddy@broadcom.com,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] scsi: mpi3mr: Fix device loss during enclosure reboot due to zero link speed
+Date: Sat, 25 Oct 2025 12:00:05 -0400
+Message-ID: <20251025160905.3857885-374-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -60,234 +53,302 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai Huang <kai.huang@intel.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit e414b1005891d74bb0c3d27684c58dfbfbd1754b ]
+[ Upstream commit d6c8e8b7c98c3cb326515ef4bc5c57e16ac5ae4e ]
 
-All of the x86 KVM guest types (VMX, SEV and TDX) do some special context
-tracking when entering guests. This means that the actual guest entry
-sequence must be noinstr.
+During enclosure reboot or expander reset, firmware may report a link
+speed of 0 in "Device Add" events while the link is still coming up.
+The driver drops such devices, leaving them missing even after the link
+recovers.
 
-Part of entering a TDX guest is passing a physical address to the TDX
-module. Right now, that physical address is stored as a 'struct page'
-and converted to a physical address at guest entry. That page=>phys
-conversion can be complicated, can vary greatly based on kernel
-config, and it is definitely _not_ a noinstr path today.
+Fix this by treating link speed 0 as 1.5 Gbps during device addition so
+the device is exposed to the OS. The actual link speed will be updated
+later when link-up events arrive.
 
-There have been a number of tinkering approaches to try and fix this
-up, but they all fall down due to some part of the page=>phys
-conversion infrastructure not being noinstr friendly.
-
-Precalculate the page=>phys conversion and store it in the existing
-'tdx_vp' structure.  Use the new field at every site that needs a
-tdvpr physical address. Remove the now redundant tdx_tdvpr_pa().
-Remove the __flatten remnant from the tinkering.
-
-Note that only one user of the new field is actually noinstr. All
-others can use page_to_phys(). But, they might as well save the effort
-since there is a pre-calculated value sitting there for them.
-
-[ dhansen: rewrite all the text ]
-
-Signed-off-by: Kai Huang <kai.huang@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Tested-by: Farrah Chen <farrah.chen@intel.com>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://lore.kernel.org/r/20250820084138.228471-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+Based on my comprehensive analysis of this commit, I can now provide my
+final recommendation.
 
-Rationale
-- Fixes a real correctness bug in a critical noinstr path. Entering a
-  TDX guest must be noinstr; previously, `tdh_vp_enter()` converted a
-  `struct page` to a physical address at runtime, which is not noinstr-
-  safe. The patch removes the runtime `page_to_phys()` from the guest-
-  entry path and uses a precomputed physical address instead.
-- Minimal, contained change in the TDX/KVM code. No ABI changes; all
-  updates are internal to TDX vCPU state and seamcall wrappers.
+## **BACKPORT RECOMMENDATION: YES**
 
-Key Changes
-- Precompute and store the TDVPR physical address:
-  - Adds `phys_addr_t tdvpr_pa;` to `struct tdx_vp` to hold
-    `page_to_phys(tdvpr_page)` for reuse in noinstr code:
-    arch/x86/include/asm/tdx.h:171.
-  - Computes and assigns the field during vCPU init, with an explicit
-    comment explaining noinstr constraints: arch/x86/kvm/vmx/tdx.c:2936.
-  - Clears the field on free/error paths to avoid stale use:
-    arch/x86/kvm/vmx/tdx.c:855, arch/x86/kvm/vmx/tdx.c:3004.
-- Make the guest entry truly noinstr:
-  - `tdh_vp_enter()` now uses the precomputed `td->tdvpr_pa` and stays
-    within noinstr constraints: arch/x86/virt/vmx/tdx/tdx.c:1518.
-  - Also removes the `__flatten` remnant and wraps the seamcall with the
-    cache-dirty helper, aligning with other TDX seamcall usage.
-- Replace page->phys conversions with the precomputed value at all sites
-  that use the TDVPR:
-  - Updated callers pass `vp->tdvpr_pa` instead of recomputing:
-    arch/x86/virt/vmx/tdx/tdx.c:1581, 1650, 1706, 1752, 1769, 1782.
-  - Removes the now-redundant inline helper that did `page_to_phys()`
-    for TDVPR.
+---
 
-Why This Fits Stable
-- User impact: Fixes potential WARN/BUG and undefined behavior from
-  invoking non-noinstr code in a noinstr entry path for TDX guests. This
-  can affect real deployments using debug/instrumented kernels and is
-  correctness-critical for a guest entry path.
-- Scope and risk: Small, straightforward refactor; adds one cached field
-  and replaces callers to use it. Memory lifetime is well-defined (page
-  is allocated at init and reclaimed at teardown), and the physical
-  address of a page is stable; zeroing on teardown/error prevents stale
-  usage.
-- No feature or architectural changes; KVM/TDX only. No user-visible ABI
-  changes. The seamcall helper infrastructure (`__seamcall_dirty_cache`,
-  `__seamcall_saved_ret`) is already present in this subsystem.
-- Reviewed and tested upstream (Reviewed-by/Tested-by tags), and
-  consistent with prior attempts to fix noinstr issues (this replaces
-  earlier, more fragile approaches like `__flatten`).
+## **DETAILED ANALYSIS**
 
-Conclusion
-- This is a low-risk, correctness fix to a critical guest-entry path,
-  improving noinstr compliance. It should be backported to stable
-  kernels that have TDX support.
+### **1. PROBLEM DESCRIPTION**
 
- arch/x86/include/asm/tdx.h  |  2 ++
- arch/x86/kvm/vmx/tdx.c      |  9 +++++++++
- arch/x86/virt/vmx/tdx/tdx.c | 21 ++++++++-------------
- 3 files changed, 19 insertions(+), 13 deletions(-)
+The commit fixes a critical device loss issue in the Broadcom mpi3mr
+SAS/SATA HBA driver. During enclosure reboot or expander reset
+operations, the firmware reports a link speed of 0
+(MPI3_SAS_NEG_LINK_RATE_UNKNOWN_LINK_RATE = 0x00) in "Device Add" events
+while the physical link is still initializing. The driver was
+incorrectly dropping these devices, and they remained missing even after
+the link fully recovered to operational speed.
 
-diff --git a/arch/x86/include/asm/tdx.h b/arch/x86/include/asm/tdx.h
-index 0922265c6bdcb..17a051d9c9398 100644
---- a/arch/x86/include/asm/tdx.h
-+++ b/arch/x86/include/asm/tdx.h
-@@ -169,6 +169,8 @@ struct tdx_td {
- struct tdx_vp {
- 	/* TDVP root page */
- 	struct page *tdvpr_page;
-+	/* precalculated page_to_phys(tdvpr_page) for use in noinstr code */
-+	phys_addr_t tdvpr_pa;
+### **2. CODE CHANGES ANALYSIS**
+
+The fix consists of four distinct changes across two files:
+
+#### **Change 1: mpi3mr_expander_add() (mpi3mr_transport.c:2084-2085)**
+```c
++if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++    link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+```
+**Impact**: During expander device addition, treats link speeds below
+1.5 Gbps (including 0) as 1.5 Gbps, allowing the device to be exposed to
+the OS.
+
+#### **Change 2: mpi3mr_report_tgtdev_to_sas_transport()
+(mpi3mr_transport.c:2395-2396)**
+```c
++if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++    link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+```
+**Impact**: Same treatment for target device reporting to SAS transport
+layer.
+
+#### **Change 3: mpi3mr_remove_device_by_sas_address()
+(mpi3mr_transport.c:417-420)**
+```c
+-list_del_init(&tgtdev->list);
+ was_on_tgtdev_list = 1;
+-mpi3mr_tgtdev_put(tgtdev);
++if (tgtdev->state == MPI3MR_DEV_REMOVE_HS_STARTED) {
++    list_del_init(&tgtdev->list);
++    mpi3mr_tgtdev_put(tgtdev);
++}
+```
+**Impact**: Prevents premature device list deletion by checking the
+device state. Only removes devices from the list if they're in the
+MPI3MR_DEV_REMOVE_HS_STARTED state, avoiding race conditions during
+device state transitions.
+
+#### **Change 4: Debug logging improvements (mpi3mr_os.c:2058, 3078)**
+**Impact**: Adds event context (0x%08x) to debug messages for better
+diagnostics. Purely cosmetic, aids debugging.
+
+### **3. HISTORICAL CONTEXT & PATTERN CONSISTENCY**
+
+My research reveals this fix **extends an existing pattern** already
+established in the codebase:
+
+- **Commit 42fc9fee116fc6** (August 2022, v6.1): Introduced similar link
+  rate handling in `mpi3mr_sas_host_refresh()` at line 1174:
+  ```c
+  if (attached_handle && link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
+  link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+  ```
+
+- **Commit 3f1254ed01d086** (March 2023, v6.4): Added the
+  `mpi3mr_dev_state` enum to fix "Successive VD delete and add causes FW
+  fault"
+
+This commit applies the same defensive link rate handling to two
+additional code paths that were missing it.
+
+### **4. DEPENDENCY ANALYSIS**
+
+**Required for v6.4+:**
+- ✅ MPI3_SAS_NEG_LINK_RATE constants (present since driver introduction)
+- ✅ mpi3mr_update_links() function (added v6.1)
+- ✅ `enum mpi3mr_dev_state` with MPI3MR_DEV_REMOVE_HS_STARTED (added
+  v6.4)
+
+**Backporting to < v6.4:** Would require either:
+1. Backporting commit 3f1254ed01d086 first, OR
+2. Omitting the device state check portion (changes 1-2 would still
+   provide value)
+
+### **5. RISK ASSESSMENT**
+
+**RISK LEVEL: LOW**
+
+✅ **Positive factors:**
+- Small, surgical changes (13 insertions, 6 deletions)
+- Follows established code pattern (line 1174)
+- No API changes or function signature modifications
+- Confined to single driver subsystem (mpi3mr)
+- No new functionality - purely defensive fix
+- All code paths already exist, just adding validation
+
+⚠️ **Considerations:**
+- Device state check requires v6.4+ (manageable dependency)
+- Affects device lifecycle management (but improves correctness)
+
+### **6. USER IMPACT**
+
+**SEVERITY: HIGH - User-Visible Bug**
+
+**Affected scenario:** Common operational maintenance activities:
+- Enclosure reboots/power cycles
+- Expander resets
+- Fabric reconfiguration
+- Hot-plug operations
+
+**User experience without fix:**
+1. Enclosure/expander is rebooted for maintenance
+2. Firmware sends Device Add events with link_rate=0 during link
+   initialization
+3. Driver drops the device
+4. Link comes up to full speed (1.5/3.0/6.0/12.0 Gbps)
+5. **Device remains missing permanently** - requires driver reload or
+   system reboot
+
+**User experience with fix:**
+1. Enclosure/expander is rebooted
+2. Device is added with temporary 1.5 Gbps link rate
+3. Link completes initialization
+4. Actual link speed is updated via subsequent link-up events
+5. **Device remains accessible throughout**
+
+**No workaround available** - users cannot prevent firmware from
+reporting link_rate=0 during initialization.
+
+### **7. TESTING & VALIDATION**
+
+Based on git history analysis:
+- ✅ No reverts found for this commit
+- ✅ No follow-up regression fixes found
+- ✅ Similar pattern at line 1174 has been stable since v6.1 (2+ years)
+- ✅ One stable backport already exists (837115eeb55b3), indicating it's
+  being considered for stable trees
+
+### **8. STABLE TREE CRITERIA COMPLIANCE**
+
+Checking against stable kernel rules:
+
+| Criterion | Status | Evidence |
+|-----------|--------|----------|
+| **Fixes important bug** | ✅ YES | Devices lost during enclosure
+operations |
+| **User-visible impact** | ✅ YES | Missing storage devices, requires
+reboot |
+| **Small and contained** | ✅ YES | 13 lines added, 6 removed, 2 files |
+| **No new features** | ✅ YES | Pure bug fix |
+| **Minimal regression risk** | ✅ YES | Follows existing pattern, low
+complexity |
+| **Confined to subsystem** | ✅ YES | Only affects mpi3mr driver |
+| **Real-world issue** | ✅ YES | Common during enclosure maintenance |
+
+**Note:** Commit does NOT have explicit Cc: stable tag, but meets all
+technical criteria.
+
+### **9. ARCHITECTURAL CONSIDERATIONS**
+
+The fix demonstrates good defensive programming:
+
+1. **Graceful degradation**: Treats unknown/zero link speed as minimum
+   viable speed rather than failing
+2. **Eventual consistency**: Allows initial device exposure with
+   conservative speed, updates later
+3. **State machine correctness**: Device removal now properly respects
+   state transitions
+4. **Consistency**: Applies same defensive pattern across all device
+   addition code paths
+
+### **10. FINAL RECOMMENDATION**
+
+## **YES - STRONGLY RECOMMEND BACKPORTING to v6.4+**
+
+**Justification:**
+
+1. ✅ **Critical user-facing bug** - Devices permanently lost during
+   routine maintenance
+2. ✅ **Low risk** - Small, well-contained changes following established
+   patterns
+3. ✅ **High confidence** - Similar code has been stable since v6.1
+4. ✅ **Clean dependencies** - All prerequisites present in v6.4+
+5. ✅ **Stable tree appropriate** - Meets all criteria for important
+   bugfixes
+6. ✅ **Common scenario** - Affects standard operational procedures
+7. ✅ **No workarounds** - Users cannot avoid this firmware behavior
+
+**Target stable versions:** 6.4+, 6.6 LTS, 6.12 LTS
+
+**Adaptation note for < v6.4:** If backporting to kernels older than
+v6.4, the device state check in `mpi3mr_remove_device_by_sas_address()`
+would need to be omitted or commit 3f1254ed01d086 backported first.
+However, the link rate fixes (changes 1-2) alone would still provide
+significant value.
+
+ drivers/scsi/mpi3mr/mpi3mr_os.c        |  8 ++++----
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 11 +++++++++--
+ 2 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index e467b56949e98..1582cdbc66302 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2049,8 +2049,8 @@ static void mpi3mr_fwevt_bh(struct mpi3mr_ioc *mrioc,
+ 	if (!fwevt->process_evt)
+ 		goto evt_ack;
  
- 	/* TD vCPU control structure: */
- 	struct page **tdcx_pages;
-diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-index d91d9d6bb26c1..987c0eb10545c 100644
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -861,6 +861,7 @@ void tdx_vcpu_free(struct kvm_vcpu *vcpu)
- 	if (tdx->vp.tdvpr_page) {
- 		tdx_reclaim_control_page(tdx->vp.tdvpr_page);
- 		tdx->vp.tdvpr_page = 0;
-+		tdx->vp.tdvpr_pa = 0;
+-	dprint_event_bh(mrioc, "processing event(0x%02x) in the bottom half handler\n",
+-	    fwevt->event_id);
++	dprint_event_bh(mrioc, "processing event(0x%02x) -(0x%08x) in the bottom half handler\n",
++			fwevt->event_id, fwevt->evt_ctx);
+ 
+ 	switch (fwevt->event_id) {
+ 	case MPI3_EVENT_DEVICE_ADDED:
+@@ -3076,8 +3076,8 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
  	}
+ 	if (process_evt_bh || ack_req) {
+ 		dprint_event_th(mrioc,
+-			"scheduling bottom half handler for event(0x%02x),ack_required=%d\n",
+-			evt_type, ack_req);
++		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
++		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
+ 		sz = event_reply->event_data_length * 4;
+ 		fwevt = mpi3mr_alloc_fwevt(sz);
+ 		if (!fwevt) {
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index c8d6ced5640e9..d70f002d6487d 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -413,9 +413,11 @@ static void mpi3mr_remove_device_by_sas_address(struct mpi3mr_ioc *mrioc,
+ 			 sas_address, hba_port);
+ 	if (tgtdev) {
+ 		if (!list_empty(&tgtdev->list)) {
+-			list_del_init(&tgtdev->list);
+ 			was_on_tgtdev_list = 1;
+-			mpi3mr_tgtdev_put(tgtdev);
++			if (tgtdev->state == MPI3MR_DEV_REMOVE_HS_STARTED) {
++				list_del_init(&tgtdev->list);
++				mpi3mr_tgtdev_put(tgtdev);
++			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
+@@ -2079,6 +2081,8 @@ int mpi3mr_expander_add(struct mpi3mr_ioc *mrioc, u16 handle)
+ 				link_rate = (expander_pg1.negotiated_link_rate &
+ 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_MASK) >>
+ 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_SHIFT;
++				if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++					link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+ 				mpi3mr_update_links(mrioc, sas_address_parent,
+ 				    handle, i, link_rate, hba_port);
+ 			}
+@@ -2388,6 +2392,9 @@ int mpi3mr_report_tgtdev_to_sas_transport(struct mpi3mr_ioc *mrioc,
  
- 	tdx->state = VCPU_TD_STATE_UNINITIALIZED;
-@@ -2940,6 +2941,13 @@ static int tdx_td_vcpu_init(struct kvm_vcpu *vcpu, u64 vcpu_rcx)
- 		return -ENOMEM;
- 	tdx->vp.tdvpr_page = page;
+ 	link_rate = mpi3mr_get_sas_negotiated_logical_linkrate(mrioc, tgtdev);
  
-+	/*
-+	 * page_to_phys() does not work in 'noinstr' code, like guest
-+	 * entry via tdh_vp_enter(). Precalculate and store it instead
-+	 * of doing it at runtime later.
-+	 */
-+	tdx->vp.tdvpr_pa = page_to_phys(tdx->vp.tdvpr_page);
++	if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++		link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
 +
- 	tdx->vp.tdcx_pages = kcalloc(kvm_tdx->td.tdcx_nr_pages, sizeof(*tdx->vp.tdcx_pages),
- 			       	     GFP_KERNEL);
- 	if (!tdx->vp.tdcx_pages) {
-@@ -3002,6 +3010,7 @@ static int tdx_td_vcpu_init(struct kvm_vcpu *vcpu, u64 vcpu_rcx)
- 	if (tdx->vp.tdvpr_page)
- 		__free_page(tdx->vp.tdvpr_page);
- 	tdx->vp.tdvpr_page = 0;
-+	tdx->vp.tdvpr_pa = 0;
+ 	mpi3mr_update_links(mrioc, sas_address_parent, tgtdev->dev_handle,
+ 	    parent_phy_number, link_rate, hba_port);
  
- 	return ret;
- }
-diff --git a/arch/x86/virt/vmx/tdx/tdx.c b/arch/x86/virt/vmx/tdx/tdx.c
-index 3ea6f587c81a3..b54581a795f5b 100644
---- a/arch/x86/virt/vmx/tdx/tdx.c
-+++ b/arch/x86/virt/vmx/tdx/tdx.c
-@@ -1502,11 +1502,6 @@ static inline u64 tdx_tdr_pa(struct tdx_td *td)
- 	return page_to_phys(td->tdr_page);
- }
- 
--static inline u64 tdx_tdvpr_pa(struct tdx_vp *td)
--{
--	return page_to_phys(td->tdvpr_page);
--}
--
- /*
-  * The TDX module exposes a CLFLUSH_BEFORE_ALLOC bit to specify whether
-  * a CLFLUSH of pages is required before handing them to the TDX module.
-@@ -1518,9 +1513,9 @@ static void tdx_clflush_page(struct page *page)
- 	clflush_cache_range(page_to_virt(page), PAGE_SIZE);
- }
- 
--noinstr __flatten u64 tdh_vp_enter(struct tdx_vp *td, struct tdx_module_args *args)
-+noinstr u64 tdh_vp_enter(struct tdx_vp *td, struct tdx_module_args *args)
- {
--	args->rcx = tdx_tdvpr_pa(td);
-+	args->rcx = td->tdvpr_pa;
- 
- 	return __seamcall_dirty_cache(__seamcall_saved_ret, TDH_VP_ENTER, args);
- }
-@@ -1581,7 +1576,7 @@ u64 tdh_vp_addcx(struct tdx_vp *vp, struct page *tdcx_page)
- {
- 	struct tdx_module_args args = {
- 		.rcx = page_to_phys(tdcx_page),
--		.rdx = tdx_tdvpr_pa(vp),
-+		.rdx = vp->tdvpr_pa,
- 	};
- 
- 	tdx_clflush_page(tdcx_page);
-@@ -1650,7 +1645,7 @@ EXPORT_SYMBOL_GPL(tdh_mng_create);
- u64 tdh_vp_create(struct tdx_td *td, struct tdx_vp *vp)
- {
- 	struct tdx_module_args args = {
--		.rcx = tdx_tdvpr_pa(vp),
-+		.rcx = vp->tdvpr_pa,
- 		.rdx = tdx_tdr_pa(td),
- 	};
- 
-@@ -1706,7 +1701,7 @@ EXPORT_SYMBOL_GPL(tdh_mr_finalize);
- u64 tdh_vp_flush(struct tdx_vp *vp)
- {
- 	struct tdx_module_args args = {
--		.rcx = tdx_tdvpr_pa(vp),
-+		.rcx = vp->tdvpr_pa,
- 	};
- 
- 	return seamcall(TDH_VP_FLUSH, &args);
-@@ -1752,7 +1747,7 @@ EXPORT_SYMBOL_GPL(tdh_mng_init);
- u64 tdh_vp_rd(struct tdx_vp *vp, u64 field, u64 *data)
- {
- 	struct tdx_module_args args = {
--		.rcx = tdx_tdvpr_pa(vp),
-+		.rcx = vp->tdvpr_pa,
- 		.rdx = field,
- 	};
- 	u64 ret;
-@@ -1769,7 +1764,7 @@ EXPORT_SYMBOL_GPL(tdh_vp_rd);
- u64 tdh_vp_wr(struct tdx_vp *vp, u64 field, u64 data, u64 mask)
- {
- 	struct tdx_module_args args = {
--		.rcx = tdx_tdvpr_pa(vp),
-+		.rcx = vp->tdvpr_pa,
- 		.rdx = field,
- 		.r8 = data,
- 		.r9 = mask,
-@@ -1782,7 +1777,7 @@ EXPORT_SYMBOL_GPL(tdh_vp_wr);
- u64 tdh_vp_init(struct tdx_vp *vp, u64 initial_rcx, u32 x2apicid)
- {
- 	struct tdx_module_args args = {
--		.rcx = tdx_tdvpr_pa(vp),
-+		.rcx = vp->tdvpr_pa,
- 		.rdx = initial_rcx,
- 		.r8 = x2apicid,
- 	};
 -- 
 2.51.0
 
