@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0271313AD3F;
-	Sat, 25 Oct 2025 16:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500EE13AD3F;
+	Sat, 25 Oct 2025 16:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409283; cv=none; b=iWYuw7hGDvfzNF/IJ1X6KvXCcMAZGTqdbWXVz258HJsuLDNMI3Yk5AJSbZXLljlpBtyl7IiWDrJ8rEsJPjqettEbZB4aC0nGn+6LTNx7zvDsL1YGyDQEyvsFlsj2kJCVqpmtsfBsPAGiOH9v2Cis07HLkZyxxABhXDLz77jfULY=
+	t=1761409288; cv=none; b=uFzXXDM3FoAywnuJGWcikddcV9pbc2kw5BSy4XncYbcubiemmWLCULAvDOGlC0CLmF4tjOqck4AMcLDT5FHB+MkG+YU4yGrUOy9WVpO622sBhm7FC/2Lp74JVcWcDTPNRuRBWDqjobHTKabzC14Ye9S3krWpsS7W709RzivwfuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409283; c=relaxed/simple;
-	bh=EVEwCBOHwD3E+CFJT3PvAv4ES+hDr4wbikh8kpOQngo=;
+	s=arc-20240116; t=1761409288; c=relaxed/simple;
+	bh=CNuXg6T1FBt0H9ahAPfbDf9MKjLact3hI0yEzcJrYmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YomJ7t+jvzoHIxATF2nDN+HpxKikX/dLjEmxTSGHO+ktUmAibVwUqz2IVg2O0HRoxf4UJxsdIhTtnFlKok96JoOkjFkDVr9XWKmrAFwpV/4y29M01UVffmjZ0yJwjGVOHeGzHZ36c5DW5L/mnG2vg9slg5EdPLtdLYy2P4n0agw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t0F76UVW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qDZ+gztDiIK48pZdlavVM2e02QhDlRHpiWEHre3WxyN+zdvF3PPfIXIbTX3IolksXswGBjoNfO04ZcnYo/B7/f/m3wvE3dlxpSucLni0ob/P/eDPz9QhovU9RsM2fKIThUnrM9h5U8C7pOiF/sUcG3Xo/n9AAf76jm7k4kC6rGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pw8gVxDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t0F76UVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E368AC19423;
-	Sat, 25 Oct 2025 16:21:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pw8gVxDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F7EC19422;
+	Sat, 25 Oct 2025 16:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409282;
-	bh=EVEwCBOHwD3E+CFJT3PvAv4ES+hDr4wbikh8kpOQngo=;
+	s=k20201202; t=1761409288;
+	bh=CNuXg6T1FBt0H9ahAPfbDf9MKjLact3hI0yEzcJrYmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0F76UVWv+rhbtiYRr+ZTQREfpms4CYWPTLMRToUotizaUW93I1oedY+A1/BrJtSl
-	 4GOd3FaxEajogMhzyylHHEWxH+CeViDMUvCbADFZQ2XE8Vrmrt8si4FGRY5NsREbGb
-	 v6lxfCXVyylhAYP3XkWN9dhggEKrx6haNUCiYFOc6ZBl59dQY/qypCZFH8BvmZqwcy
-	 7b6j4cvNK1uGAF/9EDbDMQRsWt9llL2ElH4/VjJjMiNWOd1GHHlV0TU5udISLQedcm
-	 sHvcAfzHDis7lYJP3QbEgFj+iAJd9cgx+ZpSrLGkTut9F8IVSHQtFUCE9z8H3txW2A
-	 iOG9k5h3bi5qw==
+	b=Pw8gVxDpTN1qibdprIeko6/I+bPcQOWkBqR6ikQmD1JSwUXA8KEy6YFTD241QF2ly
+	 YmFamDoSpBY3gA4qKj8uWNBYKpd9RdpM729bPc2yIZTBDAIdasF1p3QoxDzrDC1esu
+	 NZyXLdHocobY7s8v7tdJuOYH4yzD3S75PIyA4fhuYLC0SMBJ0I3Gn9RT+xVgOOb2V1
+	 mlgtqh14R+xUrYf0pYywABgqMy81FBcN4Hv0FZg2i0zI+rQfmcC9pmhfLdGozADQn7
+	 TbmUHpo4XvE7hyaKmJ0i6fzGLDq/ctU3khh8qmoQnEdVCfUzOO5MZKjth1dFU5wpzi
+	 KnyHybbtuJ6oQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Alexandre Courbot <acourbot@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	srini@kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
-Date: Sat, 25 Oct 2025 11:58:12 -0400
-Message-ID: <20251025160905.3857885-261-sashal@kernel.org>
+	dakr@kernel.org,
+	aliceryhl@google.com,
+	tamird@gmail.com,
+	nouveau@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] gpu: nova-core: register: allow fields named `offset`
+Date: Sat, 25 Oct 2025 11:58:13 -0400
+Message-ID: <20251025160905.3857885-262-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -53,76 +56,149 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit 9565c9d53c5b440f0dde6fa731a99c1b14d879d2 ]
+[ Upstream commit c5aeb264b6b27c52fc6c9ef3b50eaaebff5d9b60 ]
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+`offset` is a common field name, yet using it triggers a build error due
+to the conflict between the uppercased field constant (which becomes
+`OFFSET` in this case) containing the bitrange of the field, and the
+`OFFSET` constant constaining the offset of the register.
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250911154340.2798304-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by adding `_RANGE` the field's range constant to avoid the
+name collision.
+
+[acourbot@nvidia.com: fix merge conflict due to switch from `as u32` to
+`u32::from`.]
+
+Reported-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://lore.kernel.org/r/20250718-nova-regs-v2-3-7b6a762aa1cd@nvidia.com
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – forcing S16LE in the backend fixup is a necessary bug fix and safe
-to carry into stable.
+YES
 
-- `sc8280xp_be_hw_params_fixup()` now applies `snd_mask_set_format(fmt,
-  SNDRV_PCM_FORMAT_S16_LE)` (sound/soc/qcom/sc8280xp.c:92-101) and
-  includes the proper header to access that helper
-  (sound/soc/qcom/sc8280xp.c:10). Without this restriction the BE
-  inherits whatever format the FE negotiated (often S32_LE), so the CDC
-  DMA path tries to run at the wrong width.
-- The hardware side really needs the negotiated width to be 16-bit: the
-  Q6 backend programs `cfg->bit_width = params_width(params);` before
-  starting the CDC DMA port (sound/soc/qcom/qdsp6/q6afe-dai.c:364-366).
-  When the format stays at 32‑bit the DSP refuses to start compressed-
-  playback streams, which is the user-visible failure cited in the
-  commit message.
-- Other Qualcomm soundwire machine drivers already lock their BE formats
-  to S16LE (e.g. sound/soc/qcom/sm8250.c:62-71), so this change simply
-  brings sc8280xp into line with established practice and with the
-  firmware expectations of the WCD/WSA codecs on this platform.
-- The patch is tiny, contained to the machine driver, and has no
-  architectural fallout. It fixes a real regression (compressed playback
-  breaking on supported boards) and does not alter the channel/rate
-  handling beyond what was already enforced, so the regression risk is
-  minimal.
+- What it fixes
+  - Resolves a hard build error when a register defines a field named
+    `offset`. The `register!` macro currently generates an associated
+    constant for the field’s bit range named after the field uppercased
+    (e.g., `OFFSET`), which collides with the register’s own associated
+    constant `OFFSET` that holds the register’s offset (introduced
+    earlier). This creates a duplicate associated constant in the same
+    type.
+  - Root cause: `pub(crate) const OFFSET: usize = $offset;` is emitted
+    for every register type (drivers/gpu/nova-core/regs/macros.rs:147),
+    while the field bitrange constant is currently emitted as `const
+    OFFSET: RangeInclusive<u8> = ...` when the field is named `offset`
+    (see below).
 
-Given the clear user impact, alignment with existing platforms, and the
-low risk of the change, it should be backported to stable kernels that
-carry the sc8280xp machine driver.
+- Code changes
+  - Rename the generated bitrange constant to avoid collision:
+    - Old: `const [<$field:upper>]: RangeInclusive<u8> = $lo..=$hi;`
+    - New: `const [<$field:upper _RANGE>]: RangeInclusive<u8> =
+      $lo..=$hi;`
+    - Location: drivers/gpu/nova-core/regs/macros.rs:281 (change to add
+      `_RANGE` suffix).
+  - Update call sites that used the old constant name for `.len()`:
+    - Change `Self::ARCHITECTURE_0.len()` to
+      `Self::ARCHITECTURE_0_RANGE.len()` in NV_PMC_BOOT_0::architecture
+      - Location: drivers/gpu/nova-core/regs.rs:31
+    - Change `Self::IMPLEMENTATION.len()` to
+      `Self::IMPLEMENTATION_RANGE.len()` in NV_PMC_BOOT_0::chipset
+      - Location: drivers/gpu/nova-core/regs.rs:39
+  - The register offset constant remains unchanged and is still
+    available as `pub(crate) const OFFSET: usize = ...`
+    (drivers/gpu/nova-core/regs/macros.rs:147). This preserves existing
+    uses like `regs::NV_FUSE_OPT_FPF_*::OFFSET` (e.g., drivers/gpu/nova-
+    core/falcon/hal/ga102.rs:58, :60, :62).
 
- sound/soc/qcom/sc8280xp.c | 3 +++
- 1 file changed, 3 insertions(+)
+- Why it matters
+  - The register offset constant `OFFSET` (drivers/gpu/nova-
+    core/regs/macros.rs:147) was added by commit “gpu: nova-core: expose
+    the offset of each register as a type constant.” Without this patch,
+    any field named `offset` would generate another associated constant
+    `OFFSET` for the field’s bit range, causing a compile-time name
+    collision in the same type.
+  - Even if current in-tree fields avoid the name `offset` (e.g., use
+    `offs` in drivers/gpu/nova-core/regs.rs:250, :265), this is a latent
+    build bug that blocks legitimate and common field naming. The commit
+    unblocks this and aligns with typical hardware field naming
+    conventions.
 
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-index 6847ae4acbd18..78e327bc2f077 100644
---- a/sound/soc/qcom/sc8280xp.c
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include <sound/jack.h>
- #include <linux/input-event-codes.h>
-@@ -86,8 +87,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
+- Risk and side effects
+  - Minimal and contained:
+    - Only renames the generated field-bitrange associated constant to
+      `<FIELD>_RANGE`.
+    - Updates the two in-tree references that used `.len()` on the old
+      constant name (drivers/gpu/nova-core/regs.rs:31, :39).
+    - No runtime behavior changes; constants are used purely at compile
+      time.
+  - API stability:
+    - This affects only internal, per-register associated constants
+      generated by a private macro used within `drivers/gpu/nova-core`.
+      No external kernel API/ABI is touched.
+    - Tree-wide search shows no other in-tree usage of the old `<FIELD>`
+      bitrange associated constant name beyond the two places updated.
+
+- Stable backport criteria
+  - Fixes a real (and easy-to-hit) build failure class introduced when
+    the `OFFSET` associated constant was added for registers. It is a
+    correctness fix, not a new feature.
+  - Small, straightforward, and self-contained; no architectural
+    changes.
+  - Low regression risk; confined to `drivers/gpu/nova-core`.
+  - No functional side effects beyond eliminating the name collision and
+    updating the two references to the renamed constant.
+
+Conclusion: Suitable for stable. The change is a small macro-level bug
+fix eliminating a compile-time name collision, with trivial call-site
+updates and no runtime impact.
+
+ drivers/gpu/nova-core/regs.rs        | 5 +++--
+ drivers/gpu/nova-core/regs/macros.rs | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/nova-core/regs.rs b/drivers/gpu/nova-core/regs.rs
+index d49fddf6a3c6e..c8f8adb24f6e4 100644
+--- a/drivers/gpu/nova-core/regs.rs
++++ b/drivers/gpu/nova-core/regs.rs
+@@ -28,7 +28,7 @@ impl NV_PMC_BOOT_0 {
+     /// Combines `architecture_0` and `architecture_1` to obtain the architecture of the chip.
+     pub(crate) fn architecture(self) -> Result<Architecture> {
+         Architecture::try_from(
+-            self.architecture_0() | (self.architecture_1() << Self::ARCHITECTURE_0.len()),
++            self.architecture_0() | (self.architecture_1() << Self::ARCHITECTURE_0_RANGE.len()),
+         )
+     }
  
- 	rate->min = rate->max = 48000;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
- 	channels->min = 2;
- 	channels->max = 2;
- 	switch (cpu_dai->id) {
+@@ -36,7 +36,8 @@ pub(crate) fn architecture(self) -> Result<Architecture> {
+     pub(crate) fn chipset(self) -> Result<Chipset> {
+         self.architecture()
+             .map(|arch| {
+-                ((arch as u32) << Self::IMPLEMENTATION.len()) | u32::from(self.implementation())
++                ((arch as u32) << Self::IMPLEMENTATION_RANGE.len())
++                    | u32::from(self.implementation())
+             })
+             .and_then(Chipset::try_from)
+     }
+diff --git a/drivers/gpu/nova-core/regs/macros.rs b/drivers/gpu/nova-core/regs/macros.rs
+index a3e6de1779d41..00b398522ea18 100644
+--- a/drivers/gpu/nova-core/regs/macros.rs
++++ b/drivers/gpu/nova-core/regs/macros.rs
+@@ -278,7 +278,7 @@ impl $name {
+             { $process:expr } $to_type:ty => $res_type:ty $(, $comment:literal)?;
+     ) => {
+         ::kernel::macros::paste!(
+-        const [<$field:upper>]: ::core::ops::RangeInclusive<u8> = $lo..=$hi;
++        const [<$field:upper _RANGE>]: ::core::ops::RangeInclusive<u8> = $lo..=$hi;
+         const [<$field:upper _MASK>]: u32 = ((((1 << $hi) - 1) << 1) + 1) - ((1 << $lo) - 1);
+         const [<$field:upper _SHIFT>]: u32 = Self::[<$field:upper _MASK>].trailing_zeros();
+         );
 -- 
 2.51.0
 
