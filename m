@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1596322689C;
-	Sat, 25 Oct 2025 16:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BC2303A2A;
+	Sat, 25 Oct 2025 16:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408613; cv=none; b=fvAWsPas6nhuvmX8iKzfUB4Zy/WZE6uClTOp4XTNrTW9GNLAFLDcV2XVKVO+pgHxScagSr6lLUaJfyn0QL+zqEH4dKX9NMoPMPT0Gxu9pbQUruOPTZJ2ld4J6x6UAiLMcAbEZ9YEsAixlB2BaX3tRAcKNyurzLz2d3xNfk2++xc=
+	t=1761408615; cv=none; b=WhT4CiLPofExqhA30pqUAxSwaxfxN7ywLzYAqqhRDjkmPlRMl327LSvRfQcJLpRzp+34HQhWM4t771PHmbl8Mgc4ihFcdo1RLxx19fyu7/BbPI0XG4pgAD/7CVeRzxCJM+dvEY7HGNpPV47akdXTwDeTTFNNXts/vMtr0ecSsG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408613; c=relaxed/simple;
-	bh=isqCRwOCBVRNqs2PP7VApvkhVQSV1C4LUQqkc8P6sLI=;
+	s=arc-20240116; t=1761408615; c=relaxed/simple;
+	bh=RVIKXVH5UErh0acqJO/K+Fvyk5QKptR9ypjhsRzx8vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BG2VjHaX369YNAMe74L8Xovtbpsy9LyW/geId0K+x1pYknHJlVZXFyVJhXgqQ9s33lYMZNc9A0D+mld4jqEfK3O2anqMXypnkKNaQEnL+X9UsP9sd2/U5aqJAfBdC8Kea33BD86vyqKSZAohvVd7bLJ668GQGLY2YSLX2fblnoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kYtxWHVW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XB9fM69u0NGp/jgrqt52EbtWfyS5r5y8dboTKRLhDHfQ2gBGoGh5OCmC3hC6S++QRjeh5XtdzJpb9D5omAbUuAxIoM183IEhz5OuM6fvbR+6bSO80dIPQNTHh2D9CMG9NOwN0j9MJbdPitF067Pt+ksheHBxdMMTFu/zbRN9dq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PQArbhm3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kYtxWHVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F1BC4CEFF;
-	Sat, 25 Oct 2025 16:10:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PQArbhm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE34C4CEFF;
+	Sat, 25 Oct 2025 16:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408612;
-	bh=isqCRwOCBVRNqs2PP7VApvkhVQSV1C4LUQqkc8P6sLI=;
+	s=k20201202; t=1761408615;
+	bh=RVIKXVH5UErh0acqJO/K+Fvyk5QKptR9ypjhsRzx8vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYtxWHVWdY3g9iuss4UaUCmz906KVco75LesQpjQ/qF3Z/cn3bjvN6nOvt8jkUFMe
-	 kiGKLIhkkhk+yYGd74C437FZK2chpSfK78R9YHsaaho1EicVyzS9uKd+6RYGNVF5+W
-	 kZq1pzEuwzHBEgdVKWxdI0m6nE9PurzzaWiXHZ/RBXnIll6XxCj5XGV0PGUKMDWko0
-	 GIh64pmzDhd35o9ES3X/veuwzjqs3tvOG40leqlN07UbizN4AzeTmCj+0NtSs/ZWxs
-	 E+ALs31o+mEb0DMmhcmOpllYBHd7nUhaWfJpbFKchp/LFX5UGomIcjIhYQad+1Myp1
-	 1u3QX4CmzKoFw==
+	b=PQArbhm3tGtHhTQPz/C0noOHEp5R2lU6qYTestsaOPrZsXcemEwY4G9zSKm+cH8+4
+	 Y6FTUibImLYh3lwDE8qnqiM7eIdg3/yFNC0KLVlWcD9rmYooOXyzVv0bagl/E4vywk
+	 5JFLfYEEd5JSMZ/rRvVvALD0kvdFBY1fbXPU6ILc76/tftrmkkz6ISUr0p0fd+TR1I
+	 i4vwai6MwwVy9iHVkH1c/TT4nUzzTeT+KF6Gi922ly9mSJ/RvCIM4lJEDtSw9+v1UD
+	 Dzz/nUV1ikDkZWOviQ0GntjDup2bb0vNU7fF+nU9DJs9rlOcTPJnluIF/E81qppDoD
+	 wO/g+X7a2bL/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	Michael.Hennerich@analog.com
-Subject: [PATCH AUTOSEL 6.17] iio: adc: ad7124: do not require mclk
-Date: Sat, 25 Oct 2025 11:54:15 -0400
-Message-ID: <20251025160905.3857885-24-sashal@kernel.org>
+	lucas.demarchi@intel.com,
+	rodrigo.vivi@intel.com,
+	sumit.semwal@linaro.org,
+	christian.koenig@amd.com,
+	intel-xe@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org
+Subject: [PATCH AUTOSEL 6.17] drm/xe: improve dma-resv handling for backup object
+Date: Sat, 25 Oct 2025 11:54:16 -0400
+Message-ID: <20251025160905.3857885-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -46,30 +54,25 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Lechner <dlechner@baylibre.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit aead8e4cc04612f74c7277de137cc995df280829 ]
+[ Upstream commit edb1745fc618ba8ef63a45ce3ae60de1bdf29231 ]
 
-Make the "mclk" clock optional in the ad7124 driver. The MCLK is an
-internal counter on the ADC, so it is not something that should be
-coming from the devicetree. However, existing users may be using this
-to essentially select the power mode of the ADC from the devicetree.
-In order to not break those users, we have to keep the existing "mclk"
-handling, but now it is optional.
+Since the dma-resv is shared we don't need to reserve and add a fence
+slot fence twice, plus no need to loop through the dependencies.
 
-Now, when the "mclk" clock is omitted from the devicetree, the driver
-will default to the full power mode. Support for an external clock
-and dynamic power mode switching can be added later if needed.
-
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250828-iio-adc-ad7124-proper-clock-support-v3-2-0b317b4605e5@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://lore.kernel.org/r/20250829164715.720735-2-matthew.auld@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,175 +80,159 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Explanation:
-- Fixes a real usability bug: The driver previously required a DT “mclk”
-  that represents the ADC’s internal master clock, which is not a
-  hardware-provided clock. That caused probe failures or forced fake
-  clock providers in DTS. Making it optional lets the driver work on
-  correct DTs without a fake clock, which benefits users and
-  downstreams.
-- Small, contained change in one driver: All changes are local to
-  `drivers/iio/adc/ad7124.c`, with no ABI or cross-subsystem impact.
+Explanation
 
-Key code changes and rationale:
-- Optional clock retrieval, not mandatory:
-  - Probe path: Removes the unconditional
-    `devm_clk_get_enabled(&spi->dev, "mclk")` and any `st->mclk` state.
-    Instead, `ad7124_setup()` now calls
-    `devm_clk_get_optional_enabled(dev, "mclk")` and proceeds if it’s
-    absent. This directly fixes the “fake mclk required” problem while
-    preserving support for legacy DTS that specify it.
-- Sensible default behavior without DT clock:
-  - `ad7124_setup()` now defaults to full power mode via
-    `AD7124_ADC_CONTROL_POWER_MODE_FULL` when no “mclk” is provided,
-    aligning with device expectations and maximizing performance by
-    default. This maintains a consistent, predictable baseline when the
-    DT no longer provides the legacy clock.
-- Backwards compatibility with existing DTS using “mclk”:
-  - If “mclk” is present, the driver derives `power_mode` from its rate
-    via `ad7124_find_closest_match(ad7124_master_clk_freq_hz, …,
-    mclk_hz)` and keeps the existing behavior. It even attempts
-    `clk_set_rate(mclk, mclk_hz)` to preserve prior semantics. This
-    avoids breaking older device trees that used “mclk” as a proxy for
-    power mode.
-- Correct ODR calculation without a real clock:
-  - `ad7124_set_channel_odr()` switches from `fclk =
-    clk_get_rate(st->mclk)` to using the ADC’s internal master clock
-    frequency table: `fclk =
-    ad7124_master_clk_freq_hz[FIELD_GET(AD7124_ADC_CONTROL_POWER_MODE,
-    st->adc_control)]`. This is the right model for this ADC (MCLK is
-    internal and determined by power mode), and avoids dependency on a
-    fake external rate. The FS computation and clamping remain unchanged
-    (DIV_ROUND_CLOSEST, clamp to [1..2047]), so behavior is stable aside
-    from using the correct source clock.
-- No functional loss or architectural change:
-  - The change doesn’t remove capabilities; it simply makes “mclk”
-    optional and aligns the f_clk source with the hardware model. It
-    also leaves a clear path for adding true external clock support and
-    dynamic power-mode switching later without affecting current stable
-    users.
+- What it fixes
+  - Removes redundant dma-resv operations when a backup BO shares the
+    same reservation object as the original BO, preventing the same
+    fence from being reserved/added twice to the same `dma_resv`.
+  - Avoids scanning the same dependency set twice when source and
+    destination BOs share the same `dma_resv`.
 
-Risk assessment:
-- Low regression risk:
-  - Existing DTs specifying “mclk” continue to work, with `power_mode`
-    still selected based on that rate.
-  - DTs without “mclk” now work (previously failed), defaulting to full
-    power. Increased power use is the intended default and preferable to
-    a probe failure; it’s not a regression for any previously working
-    configuration.
-  - Changes are isolated to the driver and maintain the same IIO ABI.
-- No security concerns and no critical subsystem changes.
+- Why the change is correct
+  - The backup object is created to share the parent’s reservation
+    object, so a single reserve/add is sufficient:
+    - The backup BO is initialized with the parent’s resv:
+      `drivers/gpu/drm/xe/xe_bo.c:1309` (`xe_bo_init_locked(...,
+      bo->ttm.base.resv, ...)`), ensuring `bo->ttm.base.resv ==
+      backup->ttm.base.resv`.
+    - The patch adds an explicit invariant check to document and enforce
+      this: `drivers/gpu/drm/xe/xe_bo.c:1225` (`xe_assert(xe,
+      bo->ttm.base.resv == backup->ttm.base.resv)`).
+  - With shared `dma_resv`, adding the same fence twice is at best
+    redundant (wasting fence slots and memory) and at worst error-prone.
+    Reserving fence slots only once and adding the fence once is the
+    correct behavior.
 
-Stable tree suitability:
-- Addresses a real-world misconfiguration/DT friction that blocks driver
-  use.
-- Minimal, targeted changes; no feature additions; follows stable policy
-  of important low-risk fixes.
-- Commit message clearly states intent and backwards compatibility with
-  existing DTs.
+- Specific code changes and effects
+  - Evict path (GPU migration copy case):
+    - Before: reserves and adds fence on both `bo->ttm.base.resv` and
+      `backup->ttm.base.resv`.
+    - After: reserves and adds exactly once, guarded by the shared-resv
+      assertion.
+    - See single reserve and add: `drivers/gpu/drm/xe/xe_bo.c:1226`
+      (reserve) and `drivers/gpu/drm/xe/xe_bo.c:1237` (add fence). This
+      is the core fix; the removed second reserve/add on the backup is
+      the redundant part eliminated.
+  - Restore path (migration copy back):
+    - Same simplification: reserve once, add once on the shared
+      `dma_resv`.
+    - See single reserve and add: `drivers/gpu/drm/xe/xe_bo.c:1375`
+      (reserve) and `drivers/gpu/drm/xe/xe_bo.c:1387` (add fence).
+  - Dependency handling in migrate:
+    - Before: added deps for both src and dst based only on `src_bo !=
+      dst_bo`.
+    - After: only add dst deps if the resv objects differ, avoiding
+      double-walking the same `dma_resv`.
+    - See updated condition: `drivers/gpu/drm/xe/xe_migrate.c:932`
+      (`src_bo->ttm.base.resv != dst_bo->ttm.base.resv`).
 
-Conclusion: This is a good, low-risk bugfix for stable backporting.
+- User-visible impact without the patch
+  - Duplicate `dma_resv_add_fence()` calls on the same reservation
+    object can:
+    - Consume extra shared-fence slots and memory.
+    - Inflate dependency lists, causing unnecessary scheduler waits and
+      overhead.
+    - Increase failure likelihood of `dma_resv_reserve_fences()` under
+      memory pressure.
+  - These paths are exercised during suspend/resume flows of pinned VRAM
+    BOs (evict/restore), so reliability and performance in power
+    transitions can be affected.
 
- drivers/iio/adc/ad7124.c | 62 ++++++++++++++++++++++++++++------------
- 1 file changed, 44 insertions(+), 18 deletions(-)
+- Scope and risk
+  - Small, focused changes localized to the Intel Xe driver
+    migration/evict/restore paths:
+    - Files: `drivers/gpu/drm/xe/xe_bo.c`,
+      `drivers/gpu/drm/xe/xe_migrate.c`.
+  - No API changes or architectural refactors; logic strictly reduces
+    redundant operations.
+  - The `xe_assert` acts as a safety net to catch unexpected non-shared
+    `resv` usage; normal runtime behavior is unchanged when the
+    invariant holds.
+  - The CPU copy fallback paths are untouched.
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 4d8c6bafd1c31..ed35d2a8bbf1b 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -174,7 +174,6 @@ struct ad7124_state {
- 	struct ad_sigma_delta sd;
- 	struct ad7124_channel *channels;
- 	struct regulator *vref[4];
--	struct clk *mclk;
- 	unsigned int adc_control;
- 	unsigned int num_channels;
- 	struct mutex cfgs_lock; /* lock for configs access */
-@@ -254,7 +253,9 @@ static void ad7124_set_channel_odr(struct ad7124_state *st, unsigned int channel
- {
- 	unsigned int fclk, odr_sel_bits;
+- Stable backport considerations
+  - This is a clear correctness and robustness fix, not a feature.
+  - Low regression risk if the stable branch also creates the backup BO
+    with the parent’s `dma_resv` (as shown by the use of
+    `xe_bo_init_locked(..., bo->ttm.base.resv, ...)` in
+    `drivers/gpu/drm/xe/xe_bo.c:1309`).
+  - If a stable branch diverges and the backup BO does not share the
+    resv, this patch would need adjustment (i.e., keep dual reserve/add
+    in that case). The added `xe_assert` helps surface such mismatches
+    during testing.
+
+Conclusion: This commit fixes a real bug (duplicate fence reserve/add
+and duplicate dependency scanning on a shared `dma_resv`) with a
+minimal, well-scoped change. It aligns with stable rules (important
+bugfix, low risk, contained), so it should be backported.
+
+ drivers/gpu/drm/xe/xe_bo.c      | 13 +------------
+ drivers/gpu/drm/xe/xe_migrate.c |  2 +-
+ 2 files changed, 2 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index d07e23eb1a54d..5a61441d68af5 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1242,14 +1242,11 @@ int xe_bo_evict_pinned(struct xe_bo *bo)
+ 		else
+ 			migrate = mem_type_to_migrate(xe, bo->ttm.resource->mem_type);
  
--	fclk = clk_get_rate(st->mclk);
-+	fclk = ad7124_master_clk_freq_hz[FIELD_GET(AD7124_ADC_CONTROL_POWER_MODE,
-+						   st->adc_control)];
-+
- 	/*
- 	 * FS[10:0] = fCLK / (fADC x 32) where:
- 	 * fADC is the output data rate
-@@ -1111,21 +1112,50 @@ static int ad7124_parse_channel_config(struct iio_dev *indio_dev,
- static int ad7124_setup(struct ad7124_state *st)
- {
- 	struct device *dev = &st->sd.spi->dev;
--	unsigned int fclk, power_mode;
-+	unsigned int power_mode;
-+	struct clk *mclk;
- 	int i, ret;
++		xe_assert(xe, bo->ttm.base.resv == backup->ttm.base.resv);
+ 		ret = dma_resv_reserve_fences(bo->ttm.base.resv, 1);
+ 		if (ret)
+ 			goto out_backup;
  
--	fclk = clk_get_rate(st->mclk);
--	if (!fclk)
--		return dev_err_probe(dev, -EINVAL, "Failed to get mclk rate\n");
-+	/*
-+	 * Always use full power mode for max performance. If needed, the driver
-+	 * could be adapted to use a dynamic power mode based on the requested
-+	 * output data rate.
-+	 */
-+	power_mode = AD7124_ADC_CONTROL_POWER_MODE_FULL;
- 
--	/* The power mode changes the master clock frequency */
--	power_mode = ad7124_find_closest_match(ad7124_master_clk_freq_hz,
--					ARRAY_SIZE(ad7124_master_clk_freq_hz),
--					fclk);
--	if (fclk != ad7124_master_clk_freq_hz[power_mode]) {
--		ret = clk_set_rate(st->mclk, fclk);
+-		ret = dma_resv_reserve_fences(backup->ttm.base.resv, 1);
 -		if (ret)
--			return dev_err_probe(dev, ret, "Failed to set mclk rate\n");
-+	/*
-+	 * This "mclk" business is needed for backwards compatibility with old
-+	 * devicetrees that specified a fake clock named "mclk" to select the
-+	 * power mode.
-+	 */
-+	mclk = devm_clk_get_optional_enabled(dev, "mclk");
-+	if (IS_ERR(mclk))
-+		return dev_err_probe(dev, PTR_ERR(mclk), "Failed to get mclk\n");
-+
-+	if (mclk) {
-+		unsigned long mclk_hz;
-+
-+		mclk_hz = clk_get_rate(mclk);
-+		if (!mclk_hz)
-+			return dev_err_probe(dev, -EINVAL,
-+					     "Failed to get mclk rate\n");
-+
-+		/*
-+		 * This logic is a bit backwards, which is why it is only here
-+		 * for backwards compatibility. The driver should be able to set
-+		 * the power mode as it sees fit and the f_clk/mclk rate should
-+		 * be dynamic accordingly. But here, we are selecting a fixed
-+		 * power mode based on the given "mclk" rate.
-+		 */
-+		power_mode = ad7124_find_closest_match(ad7124_master_clk_freq_hz,
-+			ARRAY_SIZE(ad7124_master_clk_freq_hz), mclk_hz);
-+
-+		if (mclk_hz != ad7124_master_clk_freq_hz[power_mode]) {
-+			ret = clk_set_rate(mclk, mclk_hz);
-+			if (ret)
-+				return dev_err_probe(dev, ret,
-+						     "Failed to set mclk rate\n");
-+		}
- 	}
- 
- 	/* Set the power mode */
-@@ -1303,10 +1333,6 @@ static int ad7124_probe(struct spi_device *spi)
- 			return dev_err_probe(dev, ret, "Failed to register disable handler for regulator #%d\n", i);
- 	}
- 
--	st->mclk = devm_clk_get_enabled(&spi->dev, "mclk");
--	if (IS_ERR(st->mclk))
--		return dev_err_probe(dev, PTR_ERR(st->mclk), "Failed to get mclk\n");
+-			goto out_backup;
 -
- 	ret = ad7124_soft_reset(st);
- 	if (ret < 0)
- 		return ret;
+ 		fence = xe_migrate_copy(migrate, bo, backup, bo->ttm.resource,
+ 					backup->ttm.resource, false);
+ 		if (IS_ERR(fence)) {
+@@ -1259,8 +1256,6 @@ int xe_bo_evict_pinned(struct xe_bo *bo)
+ 
+ 		dma_resv_add_fence(bo->ttm.base.resv, fence,
+ 				   DMA_RESV_USAGE_KERNEL);
+-		dma_resv_add_fence(backup->ttm.base.resv, fence,
+-				   DMA_RESV_USAGE_KERNEL);
+ 		dma_fence_put(fence);
+ 	} else {
+ 		ret = xe_bo_vmap(backup);
+@@ -1338,10 +1333,6 @@ int xe_bo_restore_pinned(struct xe_bo *bo)
+ 		if (ret)
+ 			goto out_unlock_bo;
+ 
+-		ret = dma_resv_reserve_fences(backup->ttm.base.resv, 1);
+-		if (ret)
+-			goto out_unlock_bo;
+-
+ 		fence = xe_migrate_copy(migrate, backup, bo,
+ 					backup->ttm.resource, bo->ttm.resource,
+ 					false);
+@@ -1352,8 +1343,6 @@ int xe_bo_restore_pinned(struct xe_bo *bo)
+ 
+ 		dma_resv_add_fence(bo->ttm.base.resv, fence,
+ 				   DMA_RESV_USAGE_KERNEL);
+-		dma_resv_add_fence(backup->ttm.base.resv, fence,
+-				   DMA_RESV_USAGE_KERNEL);
+ 		dma_fence_put(fence);
+ 	} else {
+ 		ret = xe_bo_vmap(backup);
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 2a627ed64b8f8..ba9b8590eccb2 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -901,7 +901,7 @@ struct dma_fence *xe_migrate_copy(struct xe_migrate *m,
+ 		if (!fence) {
+ 			err = xe_sched_job_add_deps(job, src_bo->ttm.base.resv,
+ 						    DMA_RESV_USAGE_BOOKKEEP);
+-			if (!err && src_bo != dst_bo)
++			if (!err && src_bo->ttm.base.resv != dst_bo->ttm.base.resv)
+ 				err = xe_sched_job_add_deps(job, dst_bo->ttm.base.resv,
+ 							    DMA_RESV_USAGE_BOOKKEEP);
+ 			if (err)
 -- 
 2.51.0
 
