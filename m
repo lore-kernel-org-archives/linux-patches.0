@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3853090C2;
-	Sat, 25 Oct 2025 16:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E4331282A;
+	Sat, 25 Oct 2025 16:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409368; cv=none; b=UaR5th/ZKpJT1kBn71oZ/no87NbgI/OBovANQE/5jJNT7g4hZDJ853qZB/7+RUbCeEJP4L78Os24gnTFB1hZz1CbQvw9QUEtA6A9FxNZda2238UsevLbSA/OgqgVYGWHYNvxtMat+0Ey53qo77lo/CzQFvsSA+VTXR6S6PX31N8=
+	t=1761409371; cv=none; b=JvVbrYr2J18dRD4+GuZXKMmfORHdFiJu/8JepFfbH+xp+4YN/FAJUugjYVREojSIwG+aoGsxQK7lHDaJN6XQ4pf2hycaM6mtd3ZmXHs6Wl557cVjGM5hpeNvZ3cBGDTPFxJOTTdEujqUnE30mT50U9YuYkwEGnNoYtU+/Zk9G0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409368; c=relaxed/simple;
-	bh=owlvbVqMoJ68QLNIEi2hG503jMvRcodLtd1ia//GRV0=;
+	s=arc-20240116; t=1761409371; c=relaxed/simple;
+	bh=FyVNBJtoXIU+UCMoupIR3bW+8ILc9AsMBD2jKWbal20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k0vWfa1sw5YIXiT8apizHXzXmjE2HvucCzOFHt0I+K/PcE8MRQ8HhE24xN7e4+Ug1gW7AztpZZgHsOH6QySsbirrmpI7uVeCuKsHdQXa+uMnr+kLiM4iuEfh9EwRKgZv/Uzfwmer3ms+t/JkAlNgdJjVVU23iwhTAppWFe3atv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EyJj3rFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AX4aA7mtLiwdE/cqduh8P4qwiOjgQKzlAWFDoF9BdRMKh5rVki02OQ7JpdnrUDR9j48uvtl6zrOhXYrkOvm6IJZ3fvEdVZVScNlTc7yvT0B6hvcCS66zYH6dtUxgtG61ilARUfIIM0o+WbOooS8DIO66+kHJiZ6wkZXY6/9YfD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s46ke+pA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EyJj3rFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D865C4CEFB;
-	Sat, 25 Oct 2025 16:22:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s46ke+pA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BFAC4CEF5;
+	Sat, 25 Oct 2025 16:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409368;
-	bh=owlvbVqMoJ68QLNIEi2hG503jMvRcodLtd1ia//GRV0=;
+	s=k20201202; t=1761409371;
+	bh=FyVNBJtoXIU+UCMoupIR3bW+8ILc9AsMBD2jKWbal20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyJj3rFH9SEmRCg8OH9V6RAuWLQZ/WDbx6RxgJFXCY80bOuO1/y4+SlcREHO5LUrx
-	 57UWBCtEmRj02fAefKb1Ui8lIIOS+6fAPQQY9TQhQpmDUA9/RaoytacMHxf6IMWH5W
-	 i2rC1bXZJfDimXqFk45BLkgSGr8KsAqsZ5CzQuKnTocICUPN6G+quOuveLA3+0Llna
-	 5yW1ub5mwd3bO6RVq4HvWoQdjC83RFvxgzL0s8SoDUNA+32YvvhXcevNQ4Nwh6tufw
-	 n6wN0KDCsYGxv6Fsyp5s8wi76g1ISbeHdLMW7zq7g6Aby+aMI4wEum0FksSynnbwYi
-	 KjEd8tFWnvB3Q==
+	b=s46ke+pATOndPT///X9+JRsx6nDOzzinpMFjYnY6Ot+0dl09FEtEqnH8cCB2J0QEM
+	 pUM//s9ByNil4u84v46ld7E7b62+XtTyr5ehZHsZR66Hb2K3xiEa7KusS6g0QfAkYW
+	 apoaNbi+GV6k1BDBiqr2QVNAchotLABmd7X0ChfBe9SKStsdy1jHa2yyNGhXfA8YfY
+	 hkkS5Nu4/udMqzDz1IsmJ8QeaRUK/IY/QZyOuOiEoNwbHEwrDWdQFTF4IqtArTcab4
+	 nN6GdOkkBU4vEpWwXa/bPGM2/LVwlT7ju31EDIzlkd6w9mtHSVfJEVOUCTHrQvmKpq
+	 gWcAySPNeXXbg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alice Chao <alice.chao@mediatek.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-scsi@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.1] scsi: ufs: host: mediatek: Assign power mode userdata before FASTAUTO mode change
-Date: Sat, 25 Oct 2025 11:58:44 -0400
-Message-ID: <20251025160905.3857885-293-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	lijo.lazar@amd.com,
+	kent.russell@amd.com,
+	alexandre.f.demers@gmail.com,
+	arnd@arndb.de
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: add to custom amdgpu_drm_release drm_dev_enter/exit
+Date: Sat, 25 Oct 2025 11:58:45 -0400
+Message-ID: <20251025160905.3857885-294-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -51,26 +50,26 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alice Chao <alice.chao@mediatek.com>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-[ Upstream commit 979feee0cf43b32d288931649d7c6d9a5524ea55 ]
+[ Upstream commit c31f486bc8dd6f481adcb9cca4a6e1837b8cf127 ]
 
-Assign power mode userdata settings before transitioning to FASTAUTO
-power mode. This ensures that default timeout values are set for various
-parameters, enhancing the reliability and performance of the power mode
-change process.
+User queues are disabled before GEM objects are released
+(protecting against user app crashes).
+No races with PCI hot-unplug (because drm_dev_enter prevents cleanup
+if iewdevice is being removed).
 
-Signed-off-by: Alice Chao <alice.chao@mediatek.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250811131423.3444014-7-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,99 +78,111 @@ LLM Generated explanations, may be completely bogus:
 YES
 
 Rationale
-- Fixes a real gap in the Mediatek FASTAUTO transition path. In the
-  Mediatek vendor pre-change hook `ufs_mtk_pre_pwr_change()` the driver
-  performs an intermediate power mode switch to HSG1B FASTAUTO by
-  calling `ufshcd_uic_change_pwr_mode(hba, FASTAUTO_MODE << 4 |
-  FASTAUTO_MODE)` without first programming the UniPro power mode
-  userdata timeouts. See the existing call in `drivers/ufs/host/ufs-
-  mediatek.c:1119`. The change adds programming of
-  `PA_PWRMODEUSERDATA[0..5]` and `DME_Local*` timeout attributes
-  immediately before that FASTAUTO change (inside the `if
-  (ufs_mtk_pmc_via_fastauto(...))` block near `drivers/ufs/host/ufs-
-  mediatek.c:1101`), ensuring sane timer values are in place for the
-  intermediate FASTAUTO PWR mode operation.
-- Aligns Mediatek path with core behavior. The UFS core already sets
-  these exact defaults when it performs a (final) power mode change in
-  `ufshcd_change_power_mode()` (see `drivers/ufs/core/ufshcd.c:4674`
-  through `drivers/ufs/core/ufshcd.c:4693`). Because Mediatek does an
-  extra, vendor-specific FASTAUTO step earlier in the PRE_CHANGE hook,
-  not setting these beforehand can leave the link using unset/legacy
-  timeout values during that intermediate transition, increasing the
-  chance of DL/FC/Replay/AFC timer-related failures (the driver even
-  logs “HSG1B FASTAUTO failed” on error at `drivers/ufs/host/ufs-
-  mediatek.c:1122`).
-- Small, contained, and low-risk. The patch:
-  - Only touches `drivers/ufs/host/ufs-mediatek.c` and only executes
-    when `UFS_MTK_CAP_PMC_VIA_FASTAUTO` is enabled via DT
-    (“mediatek,ufs-pmc-via-fastauto” in `ufs_mtk_init_host_caps()`).
-  - Uses standard UniPro attributes and the same default values already
-    used by the core (`include/ufs/unipro.h`), so it’s consistent with
-    existing code paths.
-  - Is guarded by `UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING`,
-    mirroring core behavior, so it won’t override vendor-specific
-    tunings on platforms that explicitly skip the defaults.
-  - Has no API/ABI changes and doesn’t alter flow outside the Mediatek-
-    specific fastauto path.
-- Addresses user-visible reliability. While the commit message frames it
-  as improving “reliability and performance,” the operational effect is
-  to prevent misconfigured timeout values during a UIC PWR mode
-  transition that the driver initiates. That is a correctness fix for
-  affected platforms, not a feature.
+- Fixes a real race: amdgpu file release can run concurrently with PCI
+  hot-unplug. Wrapping per-file cleanup in `drm_dev_enter/exit` prevents
+  touching device state after `drm_dev_unplug()`, avoiding UAFs or
+  deadlocks.
+- Small, contained change: adds `drm_dev_enter/exit` and local
+  variables, no API/ABI changes, no architectural churn. Only touches
+  one function.
 
-Backport considerations
-- No new symbols or dependencies; the macros `PA_PWRMODEUSERDATA*`,
-  `DME_Local*`, and the quirk flag exist in current stable branches
-  (e.g., `include/ufs/unipro.h`, `include/ufs/ufshcd.h:620`).
-- The surrounding function and fastauto path exist in stable (see
-  `drivers/ufs/host/ufs-mediatek.c:1083` onward), so the change applies
-  cleanly.
-- Writing these values twice (once before the intermediate FASTAUTO,
-  again before the final power mode change in core) is benign and
-  matches existing practice in other drivers.
+What changes and why it helps
+- Release path gating
+  - Patch wraps per-file cleanup in `drm_dev_enter()`:
+    - Before: `amdgpu_drm_release` unconditionally does per-fpriv
+      cleanup: sets `fd_closing`, destroys eviction fence manager, and
+      finalizes user queues, then calls `drm_release()`
+      (drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2932–2944).
+    - After: it first gets `dev = file_priv->minor->dev`, then runs
+      those cleanup calls only if `drm_dev_enter(dev, &idx)` succeeds,
+      followed by `drm_dev_exit(idx)`.
+  - This prevents cleanup that touches device state when the DRM device
+    is being unplugged, eliminating hot-unplug races.
+
+- Correct ordering vs GEM release
+  - The custom release ensures user queues are torn down before GEM
+    objects are released by core DRM via `drm_release()`
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2943). This ordering avoids
+    userspace-visible crashes if queues reference GEM BOs that core is
+    about to free.
+
+Evidence from this branch (linux-autosel-6.17)
+- Custom release exists and currently runs device-touching cleanup
+  unconditionally:
+  - `amdgpu_drm_release` with `amdgpu_eviction_fence_destroy()` and
+    `amdgpu_userq_mgr_fini()`
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2932–2944).
+  - fops uses this custom release
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2993–3001).
+- The per-fpriv cleanups do interact with device and schedule/cancel
+  work:
+  - `amdgpu_eviction_fence_destroy()` flushes delayed work on
+    `evf_mgr->suspend_work`
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_eviction_fence.c:176–208).
+  - `amdgpu_userq_mgr_fini()` locks `adev->userq_mutex`, walks per-
+    device `userq_mgr_list`, unmaps queues and removes from the list
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c:840–875). This uses
+    `userq_mgr->adev` and BO handling; unsafe if device teardown is
+    racing.
+- Hot-unplug path calls `drm_dev_unplug()` early, then device teardown:
+  - `amdgpu_pci_remove()` calls `drm_dev_unplug(dev)` before
+    `amdgpu_driver_unload_kms(dev)`
+    (drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2568–2602 vicinity; see
+    unplug and unload sequence).
+  - Device suspend/teardown already globally suspends user queues (e.g.,
+    `amdgpu_userq_suspend(adev)` in `amdgpu_device.c:3569` and
+    `amdgpu_device.c:5160`), so skipping per-file queue finalize during
+    unplug is safer than racing device shutdown.
+
+Stable backport criteria
+- Important bugfix: prevents hot-unplug races and potential UAFs in
+  release path; also enforces correct queue/GEM teardown ordering.
+- Minimal risk: surgical addition of `drm_dev_enter/exit` around
+  existing cleanup; no new features, no ABI changes, confined to AMDGPU.
+- Applies to branches that already have the custom `amdgpu_drm_release`
+  and userq/evf infrastructure (present here: see
+  `amdgpu_runtime_idle_check_userq` at
+  drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c:2925 and userq files). For
+  trees without these features, the change is not applicable, but for
+  linux-autosel-6.17 it is directly relevant.
+
+Security and regression considerations
+- Security: reduces UAF risk during device removal by preventing device-
+  affecting work from running after unplug detection.
+- Regression risk: low. On unplug, global suspend paths handle userq
+  state; skipping per-file finalize when `drm_dev_enter` fails avoids
+  races. Normal close still performs full cleanup before
+  `drm_release()`.
 
 Conclusion
-- This is an important, narrowly scoped reliability fix for Mediatek UFS
-  hosts that perform PMC via FASTAUTO. It follows stable rules (bugfix,
-  minimal risk, no architectural changes, confined to a vendor driver)
-  and should be backported.
+- This is a focused race fix in a hot path with clear user impact and
+  low regression risk. It should be backported to stable trees that
+  include the custom `amdgpu_drm_release` and userq/evf code, such as
+  this 6.17-based branch.
 
- drivers/ufs/host/ufs-mediatek.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 4171fa672450d..ada21360aa270 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1349,6 +1349,28 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
- 		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXHSADAPTTYPE),
- 			       PA_NO_ADAPT);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index c1792e9ab126d..5e81ff3ffdc3f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2937,11 +2937,14 @@ static int amdgpu_drm_release(struct inode *inode, struct file *filp)
+ {
+ 	struct drm_file *file_priv = filp->private_data;
+ 	struct amdgpu_fpriv *fpriv = file_priv->driver_priv;
++	struct drm_device *dev = file_priv->minor->dev;
++	int idx;
  
-+		if (!(hba->quirks & UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING)) {
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA0),
-+					DL_FC0ProtectionTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA1),
-+					DL_TC0ReplayTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA2),
-+					DL_AFC0ReqTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA3),
-+					DL_FC1ProtectionTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA4),
-+					DL_TC1ReplayTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA5),
-+					DL_AFC1ReqTimeOutVal_Default);
-+
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalFC0ProtectionTimeOutVal),
-+					DL_FC0ProtectionTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalTC0ReplayTimeOutVal),
-+					DL_TC0ReplayTimeOutVal_Default);
-+			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalAFC0ReqTimeOutVal),
-+					DL_AFC0ReqTimeOutVal_Default);
-+		}
-+
- 		ret = ufshcd_uic_change_pwr_mode(hba,
- 					FASTAUTO_MODE << 4 | FASTAUTO_MODE);
+-	if (fpriv) {
++	if (fpriv && drm_dev_enter(dev, &idx)) {
+ 		fpriv->evf_mgr.fd_closing = true;
+ 		amdgpu_eviction_fence_destroy(&fpriv->evf_mgr);
+ 		amdgpu_userq_mgr_fini(&fpriv->userq_mgr);
++		drm_dev_exit(idx);
+ 	}
  
+ 	return drm_release(inode, filp);
 -- 
 2.51.0
 
