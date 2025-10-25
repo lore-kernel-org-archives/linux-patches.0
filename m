@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86D330597B;
-	Sat, 25 Oct 2025 16:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D1E305976;
+	Sat, 25 Oct 2025 16:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408896; cv=none; b=Loak8ldaCa3K6sMKiNO133WPmTIBDAnp/YOoApEMGHvxdRvVWvV4X1f26Wn4amgcV+bDFXzwmjcTnRygfPB3GLzZFpPTQEW8BneUYRHJSL+pGOqGRYnnl8yuGWp1M6erX6AWBzMULgY8mhew+L9KCR3H7jCBya1Zr95r2YqexgY=
+	t=1761408898; cv=none; b=U9CXIPnnhafYpUa39FDJl2bAJpfBIoKNRPyfgDNmye2edSDGuczRDNjpI6Ycap5BflNjUOQIPgGIcqLLOBXUQNsk9K06MRMHiTH+YMYyGQSIJ/w4SK23XzUL8XKLaoPwoEgaazt8lLioxsmx/11W3LgePU3RbsNNrJS2wavbR6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408896; c=relaxed/simple;
-	bh=SJ2tykIRrO3VfuRAjf9XZkC0hbketZ/+M4J680sx3J8=;
+	s=arc-20240116; t=1761408898; c=relaxed/simple;
+	bh=xLX1ufVd46T/Bd8jrT4KiLflV51OPQFbnAn09kIUJEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBPEW9disJ0F0t8TLCVw3BxSUtrerPtkItlJiznSXJfBmxuUslwrcNS8s0go4yOFYgPHFig6sT0jgdAlJO9Gm8rYDvecpQEilbwrFWAbGlYNMyOsjDagP2yxEQxQK+VXYFrW5JaeATN9RKCudz4kqErIIVMkZrSKBqzQhXLYGYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TPL0zfV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PpYBy8vxzxUwTBOe3kxZLp4b8fgFlHIJyNYBuWTWu0PodJ8fxI6h1yc66N7KqBK94dN0iTqpPSqf530ewWKVt5aYCivUaNJkQn1BF78hRK/OiKsJAh2+9L7QBPDhu3e4zMHQcefHdNvzgQ9kbcDqOWbqSDM+CmDoGNMjDblJG0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WhbwK3q+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TPL0zfV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33F4C4CEFB;
-	Sat, 25 Oct 2025 16:14:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WhbwK3q+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB85C113D0;
+	Sat, 25 Oct 2025 16:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408896;
-	bh=SJ2tykIRrO3VfuRAjf9XZkC0hbketZ/+M4J680sx3J8=;
+	s=k20201202; t=1761408897;
+	bh=xLX1ufVd46T/Bd8jrT4KiLflV51OPQFbnAn09kIUJEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPL0zfV2Qwbq7utETjxjgS+g/9Oug8xwJHPFr5pgf0ghb3/CEdCbOTb2V7bRdmqkL
-	 YcZK1VMqIGgjJHdZAhOkF4WfM5aGjw7cBiY7zUEpQ6USaLvxBTagLo5RLMNOYcUC+h
-	 VcetzaIYiclIk9bLp5V+w0WFNx2oBB+LXVoOzN/EsuJ5ThQWxMggwUP2+OpqVe9jat
-	 hKdR3hqhDG3cAJGJwC/PYBZTEXnGq3AD5xklZPE1iZvMb76tatdISAgZsBGMBTgTsk
-	 Mrr56Ui90MZTn2g2xCLFSXXMedM6dQln3/Ev9tBSHWSzaeXq/UzTQnpY00TlD3iZae
-	 XnbzuBLPAH4Ug==
+	b=WhbwK3q+lIyvs9+C5lZAC1ryar1xi7MjkFAQktaeA3ZVN2OTzSDRmxtVfEK7aRfH9
+	 DlJY5mBYnh+bYiE8g4l1vJtY10iYnfDoOI/8bqlY371h/99uo7/5dmyqBi7Pw8k1vg
+	 WmGe9chhI6vJtRm1hjuufagwQlLbNhBQSe2/Bm5e5ifFV4PJaYcu7VhTcrA4OEWpQU
+	 wyLSrebXGxXZpkYyc4KFoWy+qwo5lHxWGBamB56tmq2nc1vlwUtq4lTwBJBTLxLZer
+	 Ts07wdYSRd2eqXhbM6edvxk4HyPB+YoTkyfZGjkfTqcrR7OyK/zdUcU3qOgJRP2U+l
+	 0idSiFU6vItpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
+Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] wifi: rtw89: add dummy C2H handlers for BCN resend and update done
-Date: Sat, 25 Oct 2025 11:55:51 -0400
-Message-ID: <20251025160905.3857885-120-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] HID: pidff: PERMISSIVE_CONTROL quirk autodetection
+Date: Sat, 25 Oct 2025 11:55:52 -0400
+Message-ID: <20251025160905.3857885-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -46,29 +47,23 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 04a2de8cfc95076d6c65d4d6d06d0f9d964a2105 ]
+[ Upstream commit c2dc9f0b368c08c34674311cf78407718d5715a7 ]
 
-Two C2H events are not listed, and driver throws
+Fixes force feedback for devices built with MMOS firmware and many more
+not yet detected devices.
 
-  MAC c2h class 0 func 6 not support
-  MAC c2h class 1 func 3 not support
+Update quirks mask debug message to always contain all 32 bits of data.
 
-Since the implementation in vendor driver does nothing, add two dummy
-functions for them.
-
-Reported-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/d2d62793-046c-4b55-93ed-1d1f43cff7f2@gmail.com/
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250804012234.8913-3-pkshih@realtek.com
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,141 +71,111 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-- User-visible issue: firmware sends two valid C2H events which the
-  driver doesn’t list/handle, producing noisy logs:
-  - “MAC c2h class 0 func 6 not support” (INFO class, func 6)
-  - “MAC c2h class 1 func 3 not support” (OFLD class, func 3)
-  - Current dispatcher prints this whenever a handler is missing:
-    drivers/net/wireless/realtek/rtw89/mac.c:5539.
+Why this is a good stable backport
+- Fixes real user-visible breakage: enables force feedback on devices
+  with MMOS firmware and other devices misreporting PID_DEVICE_CONTROL’s
+  logical_minimum (previously failed to initialize FF).
+- Small, contained change in HID PID FF driver; no architectural changes
+  or cross‑subsystem impacts.
+- Risk is low: the new behavior only relaxes a check if the strict path
+  fails, and only for the specific Device Control field; otherwise
+  behavior remains identical.
+- Improves diagnostics (full 32‑bit quirks mask) without functional side
+  effects.
+- Aligns with stable rules: important bugfix, minimal risk, confined to
+  HID/PIDFF.
 
-- Root cause in current trees:
-  - OFLD class has `RTW89_MAC_C2H_FUNC_BCN_RESEND` but its slot is
-    `NULL` in the handler table, so it logs as unsupported:
-    drivers/net/wireless/realtek/rtw89/mac.c:5410 and
-    drivers/net/wireless/realtek/rtw89/mac.h:390.
-  - INFO class has no enumerant for BCN update-done, so func 6 is out-
-    of-range and also logs unsupported:
-    drivers/net/wireless/realtek/rtw89/mac.h:398..403 and
-    drivers/net/wireless/realtek/rtw89/mac.c:5418.
+What changes, concretely
+- Autodetect and set PERMISSIVE_CONTROL only when needed:
+  - Before: Device Control lookup was strict unless the quirk was pre-
+    specified (e.g., via device ID). If logical_minimum != 1, driver
+    failed with “device control field not found”.
+  - After: Try strict lookup first; if not found, set
+    `HID_PIDFF_QUIRK_PERMISSIVE_CONTROL` and retry without enforcing
+    min==1. This allows devices with non‑conforming descriptors to work
+    without hardcoding IDs.
+- Debug formatting improvement: print all 32 bits of the quirks mask.
 
-- What this patch changes (small and contained):
-  - Adds two no-op handlers:
-    - `rtw89_mac_c2h_bcn_resend(...)` in `mac.c` and wires it into
-      `[RTW89_MAC_C2H_FUNC_BCN_RESEND]` in
-      `rtw89_mac_c2h_ofld_handler[]`.
-    - `rtw89_mac_c2h_bcn_upd_done(...)` in `mac.c` and wires it into
-      `[RTW89_MAC_C2H_FUNC_BCN_UPD_DONE]` in
-      `rtw89_mac_c2h_info_handler[]`.
-  - Extends the INFO function enum with `RTW89_MAC_C2H_FUNC_BCN_UPD_DONE
-    = 0x06`, which bumps `RTW89_MAC_C2H_FUNC_INFO_MAX` accordingly so
-    func 6 becomes in-range: drivers/net/wireless/realtek/rtw89/mac.h
-    (new enumerant before `RTW89_MAC_C2H_FUNC_INFO_MAX`).
+Relevant code references (current tree)
+- Device Control lookup currently enforces min==1 unless the quirk is
+  already set:
+  - drivers/hid/usbhid/hid-pidff.c:1135
+    - `pidff->device_control = pidff_find_special_field(...,
+      PID_DEVICE_CONTROL_ARRAY, !(pidff->quirks &
+      HID_PIDFF_QUIRK_PERMISSIVE_CONTROL));`
+  - The change will:
+    - First call with `enforce_min=1`, then if null:
+      - `pr_debug("Setting PERMISSIVE_CONTROL quirk");`
+      - `pidff->quirks |= HID_PIDFF_QUIRK_PERMISSIVE_CONTROL;`
+      - Retry with `enforce_min=0`.
+  - Safety: If the usage isn’t present at all, the second lookup still
+    returns NULL and the function returns error exactly as before.
+- Quirk definition already exists:
+  - drivers/hid/usbhid/hid-pidff.h:16
+    - `#define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL BIT(2)`
+- Quirks debug formatting to widen to 8 hex digits:
+  - drivers/hid/usbhid/hid-pidff.c:1477
+    - Currently: `hid_dbg(dev, "Active quirks mask: 0x%x\n",
+      pidff->quirks);`
+    - Change to: `0x%08x` (formatting only, no logic impact).
 
-- Behavioral effect:
-  - These two events are now recognized and consumed without logging
-    “not support,” matching vendor driver behavior (“implementation in
-    vendor driver does nothing”).
-  - No functional change to MAC/PHY state; only eliminates spurious logs
-    for valid firmware events.
+Compatibility and dependencies
+- Depends on the existing quirk bit and infrastructure (already present
+  since “HID: pidff: Add PERMISSIVE_CONTROL quirk”; this is in-tree with
+  Signed-off-by: Sasha Levin, so it has been flowing into stable).
+- Interacts safely with the more recent fix to Device Control handling:
+  - “HID: pidff: Fix set_device_control()” ensures correct 1‑based
+    indexing and guards against missing fields; the autodetection does
+    not invalidate those fixes.
 
-- Risk assessment:
-  - Minimal: adds two static no-op functions and table entries; no
-    locking or state changes.
-  - `INFO_MAX` increases to include 0x06, and the handler table
-    explicitly sets index 6, preventing out-of-bounds. Indices 4–5
-    remain NULL (and still log “not support” if ever seen), maintaining
-    current behavior for other undefined funcs.
-  - No ABI/API changes; touches only
-    `drivers/net/wireless/realtek/rtw89/`.
+Regression risk assessment
+- Previously working devices (strict path succeeds) are unchanged.
+- Previously non-working devices (strict path fails) now work via a
+  guarded fallback; without the usage present, behavior remains
+  identical (fail).
+- The quirk only changes acceptance of the Device Control field; no
+  other code paths are altered.
 
-- Impacted subsystems:
-  - Confined to rtw89 MAC C2H handling; does not touch core
-    networking/mac80211 subsystems.
+Conclusion
+- This is a targeted, low-risk fix that unlocks FF functionality for a
+  notable set of devices without broad side effects. It’s well-suited
+  for backporting to stable trees that already carry the
+  PERMISSIVE_CONTROL quirk.
 
-- Stable criteria fit:
-  - Fixes an end-user visible annoyance (log spam/false “unsupported”)
-    triggered by normal firmware behavior.
-  - Very small, localized, and low-risk; no new features or
-    architectural changes.
-  - Reviewed-by present; linked to user report and discussion.
+ drivers/hid/usbhid/hid-pidff.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-- Cross-version applicability:
-  - The OFLD BCN_RESEND enumerant is present with a NULL handler in
-    older trees (e.g., v6.1: mac.c:3928..3952 shows NULL; mac.h:303..330
-    lists BCN_RESEND), so wiring a no-op handler backports cleanly.
-  - INFO func 6 is currently out-of-range; adding
-    `RTW89_MAC_C2H_FUNC_BCN_UPD_DONE = 0x06` and the matching handler
-    table entry brings parity with firmware without altering other
-    values.
-
-- Security considerations:
-  - None; pure handling/no-op of already-received control indications.
-
-- Conclusion:
-  - This is an ideal stable backport: it resolves a real annoyance with
-    negligible regression risk and no functional downside, aligning
-    mainline behavior with vendor expectations.
-
- drivers/net/wireless/realtek/rtw89/mac.c | 13 ++++++++++++-
- drivers/net/wireless/realtek/rtw89/mac.h |  1 +
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index ef17a307b7702..33a7dd9d6f0e6 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5235,6 +5235,11 @@ rtw89_mac_c2h_bcn_cnt(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
- {
- }
- 
-+static void
-+rtw89_mac_c2h_bcn_upd_done(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
-+{
-+}
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index c6b4f61e535d5..711eefff853bb 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -1151,8 +1151,16 @@ static int pidff_find_special_fields(struct pidff_device *pidff)
+ 					 PID_DIRECTION, 0);
+ 	pidff->device_control =
+ 		pidff_find_special_field(pidff->reports[PID_DEVICE_CONTROL],
+-			PID_DEVICE_CONTROL_ARRAY,
+-			!(pidff->quirks & HID_PIDFF_QUIRK_PERMISSIVE_CONTROL));
++			PID_DEVICE_CONTROL_ARRAY, 1);
 +
- static void
- rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
- 			   u32 len)
-@@ -5257,6 +5262,11 @@ rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
- 	rtw89_complete_cond(wait, cond, &data);
- }
++	/* Detect and set permissive control quirk */
++	if (!pidff->device_control) {
++		pr_debug("Setting PERMISSIVE_CONTROL quirk\n");
++		pidff->quirks |= HID_PIDFF_QUIRK_PERMISSIVE_CONTROL;
++		pidff->device_control = pidff_find_special_field(
++			pidff->reports[PID_DEVICE_CONTROL],
++			PID_DEVICE_CONTROL_ARRAY, 0);
++	}
  
-+static void
-+rtw89_mac_c2h_bcn_resend(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
-+{
-+}
-+
- static void
- rtw89_mac_c2h_tx_duty_rpt(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h, u32 len)
- {
-@@ -5646,7 +5656,7 @@ void (* const rtw89_mac_c2h_ofld_handler[])(struct rtw89_dev *rtwdev,
- 	[RTW89_MAC_C2H_FUNC_EFUSE_DUMP] = NULL,
- 	[RTW89_MAC_C2H_FUNC_READ_RSP] = NULL,
- 	[RTW89_MAC_C2H_FUNC_PKT_OFLD_RSP] = rtw89_mac_c2h_pkt_ofld_rsp,
--	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = NULL,
-+	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = rtw89_mac_c2h_bcn_resend,
- 	[RTW89_MAC_C2H_FUNC_MACID_PAUSE] = rtw89_mac_c2h_macid_pause,
- 	[RTW89_MAC_C2H_FUNC_SCANOFLD_RSP] = rtw89_mac_c2h_scanofld_rsp,
- 	[RTW89_MAC_C2H_FUNC_TX_DUTY_RPT] = rtw89_mac_c2h_tx_duty_rpt,
-@@ -5661,6 +5671,7 @@ void (* const rtw89_mac_c2h_info_handler[])(struct rtw89_dev *rtwdev,
- 	[RTW89_MAC_C2H_FUNC_DONE_ACK] = rtw89_mac_c2h_done_ack,
- 	[RTW89_MAC_C2H_FUNC_C2H_LOG] = rtw89_mac_c2h_log,
- 	[RTW89_MAC_C2H_FUNC_BCN_CNT] = rtw89_mac_c2h_bcn_cnt,
-+	[RTW89_MAC_C2H_FUNC_BCN_UPD_DONE] = rtw89_mac_c2h_bcn_upd_done,
- };
+ 	pidff->block_load_status =
+ 		pidff_find_special_field(pidff->reports[PID_BLOCK_LOAD],
+@@ -1492,7 +1500,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
+ 	ff->playback = pidff_playback;
  
- static
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index 241e89983c4ad..25fe5e5c8a979 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -419,6 +419,7 @@ enum rtw89_mac_c2h_info_func {
- 	RTW89_MAC_C2H_FUNC_DONE_ACK,
- 	RTW89_MAC_C2H_FUNC_C2H_LOG,
- 	RTW89_MAC_C2H_FUNC_BCN_CNT,
-+	RTW89_MAC_C2H_FUNC_BCN_UPD_DONE = 0x06,
- 	RTW89_MAC_C2H_FUNC_INFO_MAX,
- };
+ 	hid_info(dev, "Force feedback for USB HID PID devices by Anssi Hannula <anssi.hannula@gmail.com>\n");
+-	hid_dbg(dev, "Active quirks mask: 0x%x\n", pidff->quirks);
++	hid_dbg(dev, "Active quirks mask: 0x%08x\n", pidff->quirks);
+ 
+ 	hid_device_io_stop(hid);
  
 -- 
 2.51.0
