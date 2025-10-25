@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F84A22A813;
-	Sat, 25 Oct 2025 16:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8616D22A813;
+	Sat, 25 Oct 2025 16:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761409595; cv=none; b=IQlXYzr8vuNoscs9QIUEEhTNf9AOHTE1UfiCY7ms9BwawwXfS5Zoss/r3ZJeLTuXkQjAJHFyAb81BpZCcpyHdYks632QUkfdgPlWUjCqSNbPtDoK+CzHjRmaYU5mgSeHTRmKqDAlt3C/skwQbnAFiJSWc2clsIHoJ/Zw/xm7b4g=
+	t=1761409597; cv=none; b=Iss7MjWse+sscg4tev6eGSuxDZ7sx7kAcA+D1eshTwicR5YikKGhy83DrjKqs+6JtpgZPxt3z70Ii4Kj2z/oOZf09z21jM7+NVtSuQTaUOKbScazbSfQs0FuF0JeHbtZBdjPWyTkbr5pPomsbNDARbLYxAeklSDEubq8E5wt37U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761409595; c=relaxed/simple;
-	bh=WMgKJKUFglfTw6umt4dbRhXzGNq4wSkMscRE4m0ySS8=;
+	s=arc-20240116; t=1761409597; c=relaxed/simple;
+	bh=x/+AB9VcolXETwZPh43T7yT+yzubNlJGGjsrCP8l1uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cIpnFAY2zeMidQz+R+BfbUoBu24jsNo/XJI8BaEeRzeXIkCootovlDeQWux9gam9Z++hdPS4iupxVp3tfoIr/jjhkBK4iTnvZRsUp5MhffeDwc36f3NyKxP2ybG/yFcK5f2kXp7o+yvW8hHlSE5HDUtlumwD9R+482oO5wl8QrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qrKCAqke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M6cyL6g0bAY/38gUBHziD2+7H95dlDJAnEUS03WGfrshdxxEe+CgPNWEV0tmZ4rrC4+akWtMvCwQQ1cAVAYAeK8Fz64J3DskNOc2cOvsv33PEIYBtPofokEY0W0GorQAWOt9epnskwpwD/CHPIYW2ZSBuFvnpGUlJvfNi832ZyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/vGGDQi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qrKCAqke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720EBC4CEFB;
-	Sat, 25 Oct 2025 16:26:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/vGGDQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED142C4CEF5;
+	Sat, 25 Oct 2025 16:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761409595;
-	bh=WMgKJKUFglfTw6umt4dbRhXzGNq4wSkMscRE4m0ySS8=;
+	s=k20201202; t=1761409597;
+	bh=x/+AB9VcolXETwZPh43T7yT+yzubNlJGGjsrCP8l1uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrKCAqkeRmGwZtiv9YyTt0ZEQLs9cUuycZyL+sU1q++E1E9+wuSFwNqhcIxof4uk5
-	 C9KcW2noKNFmFX0B+B3GD+4zmphpM77NTvPP2Wn0OR653gzFVh8asr8u+ngMz3sObz
-	 a7ueaSs3tlt5DmdsPkN0WvAB3x7Lgkf0T3VW+s/HnTRH/BVHbzvyaAIwV+BIykh9Q6
-	 92oAqvB/PekqPt4dTCLf7sCq1ZYVpkXy8X7tOw81fkP/XW9bi02CbESqUMcc8SMuDN
-	 4K+DaGbtzuOiBdNONtrotR3HBSUbA6FUkauMUv010b/PXx8HqwZyy4ShoSJqRydFDz
-	 w/o2IMEr8YzyA==
+	b=T/vGGDQij3tS9gJUqdPkuQ2Yrnd6qQ35CV391OlF1pUqcvHGUgsff/CbqkWQJ0k4u
+	 j4XYBRRBOYoOLuYPPMsPAdQIxYIOk19YStZdOry8Ur6DUtHgiNaSNA7IQZj2u+ioPn
+	 eGq3UFqFaVlevRmf5KACszCcsF8iOE25kdOCJI3cYZkSj7OInbixOyL7RMWyszciJS
+	 +zfwR55rZoVVM1yY+STrWFQ4UQcV1vlyFl/KU+x6THCOdkad6C4xAFO4dXXpn+HatW
+	 LFcYoCnx1JtDjrPnFgKRgcgJs0+q8hOpC5uOhIxIFG9YYJ98KhgXcX3Whe7HvQmvd9
+	 7rRLuLlDSn7Ng==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	ast@kernel.org,
+	daniel@iogearbox.net,
 	hawk@kernel.org,
-	ilias.apalodimas@linaro.org,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] page_pool: Clamp pool size to max 16K pages
-Date: Sat, 25 Oct 2025 12:00:13 -0400
-Message-ID: <20251025160905.3857885-382-sashal@kernel.org>
+	john.fastabend@gmail.com,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] selftests: drv-net: hds: restore hds settings
+Date: Sat, 25 Oct 2025 12:00:14 -0400
+Message-ID: <20251025160905.3857885-383-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -54,80 +59,196 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit a1b501a8c6a87c9265fd03bd004035199e2e8128 ]
+[ Upstream commit ee3ae27721fb994ac0b4705b5806ce68a5a74c73 ]
 
-page_pool_init() returns E2BIG when the page_pool size goes above 32K
-pages. As some drivers are configuring the page_pool size according to
-the MTU and ring size, there are cases where this limit is exceeded and
-the queue creation fails.
+The test currently modifies the HDS settings and doesn't restore them.
+This may cause subsequent tests to fail (or pass when they should not).
+Add defer()ed reset handling.
 
-The page_pool size doesn't have to cover a full queue, especially for
-larger ring size. So clamp the size instead of returning an error. Do
-this in the core to avoid having each driver do the clamping.
-
-The current limit was deemed to high [1] so it was reduced to 16K to avoid
-page waste.
-
-[1] https://lore.kernel.org/all/1758532715-820422-3-git-send-email-tariqt@nvidia.com/
-
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250926131605.2276734-2-dtatulea@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250825175939.2249165-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- The change at `net/core/page_pool.c:213` and
-  `net/core/page_pool.c:214` stops rejecting large pools and instead
-  clamps the ptr_ring allocation to 16k entries, which keeps queue setup
-  from failing with `-E2BIG` while still bounding the cached page
-  budget. Without this patch, any driver that computes a `pool_size`
-  above 32768 immediately aborts queue creation; for example,
-  `mlx5e_alloc_rq()` sets `pp_params.pool_size = pool_size` in
-  `drivers/net/ethernet/mellanox/mlx5/core/en_main.c:906` and again at
-  `drivers/net/ethernet/mellanox/mlx5/core/en_main.c:1011`, and on error
-  it propagates the failure (`goto err_free_by_rq_type`) so the RX queue
-  never comes up. `stmmac_init_rx_buffers()` follows the same pattern in
-  `drivers/net/ethernet/stmicro/stmmac/stmmac_main.c:2051`–`drivers/net/
-  ethernet/stmicro/stmmac/stmmac_main.c:2066`, meaning larger rings or
-  MTU-derived pools currently make the interface unusable.
-- The lower cap is safe: when the ptr_ring fills, the existing slow-path
-  already frees excess pages (`page_pool_recycle_in_ring()` at
-  `net/core/page_pool.c:746` together with the fallback in
-  `page_pool_put_unrefed_netmem()` at `net/core/page_pool.c:873`), so a
-  smaller cache only increases occasional allocations but does not
-  change correctness. No ABI or driver interfaces are touched, and every
-  driver benefits automatically without per-driver clamps.
-- This is a minimal, localized fix that prevents hard user-visible
-  failures (device queues refusing to start) on systems with large RX
-  rings or jumbo MTUs, making it an excellent candidate for stable
-  backports.
 
- net/core/page_pool.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+- Fixes a real bug in the selftest: The test was mutating device HDS
+  settings and not restoring them, which can make subsequent tests fail
+  or pass incorrectly. The commit adds a robust, deferred cleanup to
+  restore both HDS mode and threshold to their original values, directly
+  addressing the issue described in the commit message.
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index e224d2145eed9..1a5edec485f14 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -211,11 +211,7 @@ static int page_pool_init(struct page_pool *pool,
- 		return -EINVAL;
+- Adds targeted, low-risk cleanup helpers:
+  - Introduces `_hds_reset()` to restore original settings captured
+    before modification. It first tries resetting `tcp-data-split` to
+    `"unknown"` (auto) and, if that doesn’t match the prior value, falls
+    back to the exact original value; it also restores `hds-thresh` if
+    it changed. See `tools/testing/selftests/drivers/net/hds.py:63`–81.
+  - Adds `_defer_reset_hds()` which captures the current ring settings
+    (if supported) and schedules `_hds_reset()` using the existing
+    deferred cleanup mechanism. See
+    `tools/testing/selftests/drivers/net/hds.py:84`–90.
+  - This follows existing patterns used elsewhere in the selftests
+    (e.g., explicit defers in iou-zcrx), increasing consistency across
+    tests (cf. `tools/testing/selftests/drivers/net/hw/iou-
+    zcrx.py:50`–54, 81–85, 112–116).
+
+- Ensures cleanup runs even on failures: The selftest framework flushes
+  the global defer queue after each subtest, so scheduled resets will
+  execute regardless of exceptions or skips. See
+  `tools/testing/selftests/net/lib/py/ksft.py:271`.
+
+- Minimal, contained changes: Only test code is touched (no kernel or
+  driver changes). The changes are small and localized to
+  `tools/testing/selftests/drivers/net/hds.py`.
+
+- Defensive behavior and broad compatibility:
+  - `_defer_reset_hds()` only schedules a reset if the device reports
+    `hds-thresh` or `tcp-data-split` support and quietly ignores
+    `NlError` exceptions (graceful on older kernels/drivers that don’t
+    support these attributes), see
+    `tools/testing/selftests/drivers/net/hds.py:84`–90.
+  - Individual setters still check capabilities and skip when features
+    aren’t supported (e.g., `get_hds`, `get_hds_thresh`), maintaining
+    current skip behavior.
+
+- Systematic application at mutation points: The new
+  `_defer_reset_hds()` is invoked at the start of each function that
+  modifies HDS-related state:
+  - `set_hds_enable()` at
+    `tools/testing/selftests/drivers/net/hds.py:93`–99.
+  - `set_hds_disable()` at
+    `tools/testing/selftests/drivers/net/hds.py:111`–119.
+  - `set_hds_thresh_zero()` at
+    `tools/testing/selftests/drivers/net/hds.py:129`–137.
+  - `set_hds_thresh_random()` at
+    `tools/testing/selftests/drivers/net/hds.py:147`–156`.
+  - `set_hds_thresh_max()` at
+    `tools/testing/selftests/drivers/net/hds.py:178`–186`.
+  - `set_hds_thresh_gt()` at
+    `tools/testing/selftests/drivers/net/hds.py:196`–205`.
+  - `set_xdp()` when it changes `tcp-data-split` from `'enabled'` to
+    `'unknown'` at
+    `tools/testing/selftests/drivers/net/hds.py:217`–223`.
+  - Existing explicit defer in `enabled_set_xdp()` remains (restores
+    `'unknown'`), see
+    `tools/testing/selftests/drivers/net/hds.py:235`–239.
+
+- No architectural or behavioral risk to the kernel: The change affects
+  only Python selftests, improving test isolation and reliability. It
+  does not introduce new features or alter kernel behavior.
+
+Given it is a clear test fix that prevents cross-test contamination, is
+self-contained, low-risk, and improves the reliability of the selftest
+suite, it meets stable backport criteria.
+
+ tools/testing/selftests/drivers/net/hds.py | 39 ++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/tools/testing/selftests/drivers/net/hds.py b/tools/testing/selftests/drivers/net/hds.py
+index 7c90a040ce45a..a2011474e6255 100755
+--- a/tools/testing/selftests/drivers/net/hds.py
++++ b/tools/testing/selftests/drivers/net/hds.py
+@@ -3,6 +3,7 @@
  
- 	if (pool->p.pool_size)
--		ring_qsize = pool->p.pool_size;
--
--	/* Sanity limit mem that can be pinned down */
--	if (ring_qsize > 32768)
--		return -E2BIG;
-+		ring_qsize = min(pool->p.pool_size, 16384);
+ import errno
+ import os
++from typing import Union
+ from lib.py import ksft_run, ksft_exit, ksft_eq, ksft_raises, KsftSkipEx
+ from lib.py import CmdExitFailure, EthtoolFamily, NlError
+ from lib.py import NetDrvEnv
+@@ -58,7 +59,39 @@ def get_hds_thresh(cfg, netnl) -> None:
+     if 'hds-thresh' not in rings:
+         raise KsftSkipEx('hds-thresh not supported by device')
  
- 	/* DMA direction is either DMA_FROM_DEVICE or DMA_BIDIRECTIONAL.
- 	 * DMA_BIDIRECTIONAL is for allowing page used for DMA sending,
++
++def _hds_reset(cfg, netnl, rings) -> None:
++    cur = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++
++    arg = {'header': {'dev-index': cfg.ifindex}}
++    if cur.get('tcp-data-split') != rings.get('tcp-data-split'):
++        # Try to reset to "unknown" first, we don't know if the setting
++        # was the default or user chose it. Default seems more likely.
++        arg['tcp-data-split'] = "unknown"
++        netnl.rings_set(arg)
++        cur = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++        if cur['tcp-data-split'] == rings['tcp-data-split']:
++            del arg['tcp-data-split']
++        else:
++            # Try the explicit setting
++            arg['tcp-data-split'] = rings['tcp-data-split']
++    if cur.get('hds-thresh') != rings.get('hds-thresh'):
++        arg['hds-thresh'] = rings['hds-thresh']
++    if len(arg) > 1:
++        netnl.rings_set(arg)
++
++
++def _defer_reset_hds(cfg, netnl) -> Union[dict, None]:
++    try:
++        rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++        if 'hds-thresh' in rings or 'tcp-data-split' in rings:
++            defer(_hds_reset, cfg, netnl, rings)
++    except NlError as e:
++        pass
++
++
+ def set_hds_enable(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'tcp-data-split': 'enabled'})
+     except NlError as e:
+@@ -76,6 +109,7 @@ def set_hds_enable(cfg, netnl) -> None:
+     ksft_eq('enabled', rings['tcp-data-split'])
+ 
+ def set_hds_disable(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'tcp-data-split': 'disabled'})
+     except NlError as e:
+@@ -93,6 +127,7 @@ def set_hds_disable(cfg, netnl) -> None:
+     ksft_eq('disabled', rings['tcp-data-split'])
+ 
+ def set_hds_thresh_zero(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'hds-thresh': 0})
+     except NlError as e:
+@@ -110,6 +145,7 @@ def set_hds_thresh_zero(cfg, netnl) -> None:
+     ksft_eq(0, rings['hds-thresh'])
+ 
+ def set_hds_thresh_random(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -140,6 +176,7 @@ def set_hds_thresh_random(cfg, netnl) -> None:
+     ksft_eq(hds_thresh, rings['hds-thresh'])
+ 
+ def set_hds_thresh_max(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -157,6 +194,7 @@ def set_hds_thresh_max(cfg, netnl) -> None:
+     ksft_eq(rings['hds-thresh'], rings['hds-thresh-max'])
+ 
+ def set_hds_thresh_gt(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -178,6 +216,7 @@ def set_xdp(cfg, netnl) -> None:
+     """
+     mode = _get_hds_mode(cfg, netnl)
+     if mode == 'enabled':
++        _defer_reset_hds(cfg, netnl)
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex},
+                          'tcp-data-split': 'unknown'})
+ 
 -- 
 2.51.0
 
