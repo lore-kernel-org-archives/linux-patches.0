@@ -1,47 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF33B305953;
-	Sat, 25 Oct 2025 16:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937B73043C9;
+	Sat, 25 Oct 2025 16:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408985; cv=none; b=BNyLWtzOboPbAOuRNF4Fjn4OQoQAG2/kLb1R6MR9AwS1SVCMxnEEa3cUCabiFThkkZ/rPkcqMydloHZrfYXX++kL/fOP+gJriY61/yI8DDqkO6a4nATlTaaNMausr7yO3lfxsGW8DXU4EY4SaDtkBDTjHpkiC6h5M8YfyZ+BzKY=
+	t=1761408989; cv=none; b=qv1XfXmWssuY9c2ZrpujIhWZfffgk9NT0B6qhI3E7i6BPY+I+Y8aykurtQa1DOimng/DKlgOyZO1n2i6eBcV8M6gRpG2U3Bw/7hn7Vr2TEXxz5qza2EL0vtvb4kOnTtOAvntyme267Qj6C9nXjn71idnw2W79AecCs18DLPv0N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408985; c=relaxed/simple;
-	bh=CGjjwZOGUgCKH1Ga50Ie8dlSNKHBsRez9e+JEdxD4Lw=;
+	s=arc-20240116; t=1761408989; c=relaxed/simple;
+	bh=bE7nhi3nBJ8lb7v6OKlwa06afIpeM8sKaVko1BcFik0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lskFrKODtfe9ASiDO5ON8HVWqqXg/Vuj/r3xR7gNfgqgEXIZR3dHnPl0jrSAjOtOu6bDExK3yezybjafM2YaxRyiRm/Uo0mzmXdgy6m/QR1UNjp5R+CAFiUFJ4A4Ucc9mDgOQuH6MwSxvjTa4O2vohVS1N8jOK2MHoyGU+zmvhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vBoXNLMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IKqK+F6Mt5+9uZYaNLYbgYG5EVQcnVV6HZrtkpOVJZpsw6rxSlj8X4OXRWxuZ0EwRk6/s7JQH/a78x/wA5ttoE/tgBt5qP3aXsl2IRNFg4uieRjRLeybToI9dEgSUbr89IqB1y5zY9yaoAoLDdGY2VxWMlcxAe/f+Ou+GNksxdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksiZ7ynV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vBoXNLMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280C0C4CEF5;
-	Sat, 25 Oct 2025 16:16:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksiZ7ynV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C31FC4CEF5;
+	Sat, 25 Oct 2025 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408985;
-	bh=CGjjwZOGUgCKH1Ga50Ie8dlSNKHBsRez9e+JEdxD4Lw=;
+	s=k20201202; t=1761408989;
+	bh=bE7nhi3nBJ8lb7v6OKlwa06afIpeM8sKaVko1BcFik0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBoXNLMHca5gDZqWT0IXUqafJ0HAKQRYcFSt39a097XLBAvd+i8TSmAQ2x3U2yDNz
-	 Ob+qzxbj6ji/vACBrm6BRXo4U2AuCwo0xeTL5OEzkTrkVbQ/NMLWta8ld1lG96Gl0a
-	 8xxARnUQ2To/pUAnlNaOp00Cx3GGTmsdzkp1NecCa6p5+bQAA8Om5Fb4OXBZANOODx
-	 K1giejj46in/U8BGn0RavxFja84m0ufeKrDdWjoi1uRB0Vru0XfcexQdfM26hBpUaX
-	 O+qO7ENhFfyl4LX2W7zHVDhx8gh33+J/2UV1Lx7L3j52ABYVgQp7SGN2BXjfuduNGQ
-	 T7qujTtIuDZcQ==
+	b=ksiZ7ynViKUIz1mhsFozvc487tWVm8z2iRfp49X0qnzlkikNHZIUzYp3q8c/08F5F
+	 6XxpCVWFcWPVpl4Cv5COmiaSAcolAvVvso5sL0GHzXfgSsumPRs6unOErN3lD39XLS
+	 b0SF6hOXi4cSZFH0L/gdl0Fkr4dFjLlRFhTsE+F6vsUwpnmecxBT41Bnh8J7mgw8EE
+	 pwV8DPiw+JV2HyzbBVjmcgyeV1XhNin/2yW2xVRtJaDmwk+znrHryNLqXlqd4uSsLr
+	 OxaXOl8qQSb6cb+jwFZgjW2LmuQApf41RpfpqZKrGqiRBDB2Jusme4oioL+80zJEqI
+	 Uo8Nc+MoUjWuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mangesh Gadre <Mangesh.Gadre@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+Cc: Mario Limonciello <Mario.Limonciello@amd.com>,
+	Mauri Carvalho <mcarvalho3@lenovo.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sathishkumar.sundararaju@amd.com,
-	leo.liu@amd.com,
-	lijo.lazar@amd.com,
-	Stanley.Yang@amd.com,
-	alexandre.f.demers@gmail.com,
-	FangSheng.Huang@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Avoid jpeg v5.0.1 poison irq call trace on sriov guest
-Date: Sat, 25 Oct 2025 11:56:33 -0400
-Message-ID: <20251025160905.3857885-162-sashal@kernel.org>
+	mario.limonciello@amd.com,
+	alex.hung@amd.com,
+	Wayne.Lin@amd.com,
+	aurabindo.pillai@amd.com,
+	chiahsuan.chung@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17-6.1] drm/amd/display: Set up pixel encoding for YCBCR422
+Date: Sat, 25 Oct 2025 11:56:34 -0400
+Message-ID: <20251025160905.3857885-163-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -57,106 +60,198 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mangesh Gadre <Mangesh.Gadre@amd.com>
+From: Mario Limonciello <Mario.Limonciello@amd.com>
 
-[ Upstream commit 01152c30eef972c5ca3b3eeb14f2984fa48d18c2 ]
+[ Upstream commit 5e76bc677cb7c92b37d8bc66bb67a18922895be2 ]
 
-Sriov guest side doesn't init ras feature hence the poison irq shouldn't
-be put during hw fini
+[Why]
+fill_stream_properties_from_drm_display_mode() will not configure pixel
+encoding to YCBCR422 when the DRM color format supports YCBCR422 but not
+YCBCR420 or YCBCR4444.  Instead it will fallback to RGB.
 
-Signed-off-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+[How]
+Add support for YCBCR422 in pixel encoding mapping.
+
+Suggested-by: Mauri Carvalho <mcarvalho3@lenovo.com>
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Mario Limonciello <Mario.Limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
+## **Backport Recommendation: CONDITIONAL YES**
 
-- What changed: The patch adds a virtualization guard so
-  `jpeg_v5_0_1_hw_fini()` only releases the JPEG RAS poison interrupt on
-  bare-metal, not on an SR-IOV VF. Concretely, it changes the condition
-  to include `!amdgpu_sriov_vf(adev)` before calling `amdgpu_irq_put()`
-  in `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:318`.
+**This commit should be backported ONLY as part of a series with commit
+db291ed1732e0 "drm/amd/display: Add fallback path for YCBCR422".
+Backporting this commit alone is NOT recommended.**
 
-- The bug: On SR-IOV guests, the RAS feature for JPEG isn’t initialized
-  and the poison IRQ is never enabled (no matching amdgpu_irq_get).
-  Unconditionally calling `amdgpu_irq_put()` during fini triggers a
-  WARN/call trace because the IRQ isn’t enabled.
-  - `amdgpu_irq_put()` explicitly warns and returns an error if the
-    interrupt wasn’t enabled:
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:639`.
-  - The guest doesn’t enable this IRQ: `jpeg_v5_0_1_ras_late_init()`
-    only calls `amdgpu_irq_get()` if RAS is supported and the source has
-    funcs: `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:1075-1080`. On VFs,
-    this path typically isn’t taken, so there is no prior “get”.
-  - Compounding this, `amdgpu_ras_is_supported()` can return true via
-    the “poison mode” special-case even without full RAS enablement (and
-    in absence of proper init), which is why the old check was
-    insufficient on VFs: see logic enabling GFX/SDMA/VCN/JPEG by
-    mask/poison mode,
-    `drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:4806-4821`.
+---
 
-- Why the new guard is correct and low risk:
-  - It prevents the mismatched put on VFs by requiring
-    `!amdgpu_sriov_vf(adev)` at the point of `amdgpu_irq_put()` in
-    `jpeg_v5_0_1_hw_fini()`
-    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:318-319`.
-  - It matches established patterns in adjacent IPs/versions:
-    - VCN v5.0.1 already gates the poison IRQ put with `&&
-      !amdgpu_sriov_vf(adev)`:
-      `drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c:351-352`.
-    - JPEG v4.0.3 does the same:
-      `drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c:447-449`.
-  - `jpeg_v5_0_1_hw_fini()` already treats SR-IOV specially for power
-    gating with `if (!amdgpu_sriov_vf(adev)) ...`:
-    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:313-316`. Extending the
-    same guard to the RAS IRQ put maintains consistency.
-  - On bare-metal paths, behavior is unchanged: RAS init
-    (`jpeg_v5_0_1_ras_late_init`) gets the IRQ (`amdgpu_irq_get()` in
-    `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:1077`), and fini puts it,
-    preserving correct pairing.
+## Detailed Analysis
 
-- User impact: This fixes a real bug that causes kernel WARN/call traces
-  on SR-IOV guests when the JPEG block is torn down (e.g., during
-  suspend, driver unload, or GPU reset via `jpeg_v5_0_1_suspend()` which
-  calls `hw_fini`: `drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c:331-335`).
-  Avoiding such call traces is important for stability and clean logs in
-  virtualized environments.
+### What the Commit Does
 
-- Scope and risk: The change is a one-line conditional refinement in a
-  single driver file, touches only the SR-IOV VF path, and avoids an
-  unpaired interrupt disable. No architectural changes, no API changes,
-  minimal regression risk.
+Commit `5e76bc677cb7c` adds YCBCR422 pixel encoding support to the
+`fill_stream_properties_from_drm_display_mode()` function in
+`/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c` (lines 6408-6410 in
+the diff):
 
-- Stable criteria:
-  - Fixes an important bug (mismatched IRQ put leading to WARN call
-    trace).
-  - Small, self-contained change in DRM/amdgpu JPEG v5.0.1 block.
-  - No new features or architectural changes.
-  - Consistent with existing code in similar IP blocks/versions.
+```c
+else if ((connector->display_info.color_formats &
+DRM_COLOR_FORMAT_YCBCR422)
+                && stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+        timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+```
 
-Given the direct bug fix, minimal blast radius, and alignment with
-existing patterns in the driver, this is a good candidate for stable
-backporting.
+**The Bug Being Fixed**: Before this commit, when a display supported
+YCBCR422 color format but NOT YCBCR420 or YCBCR444, the driver would
+incorrectly fall back to RGB encoding instead of using the supported
+YCBCR422 encoding. This is a logic gap in the if-else chain that selects
+pixel encoding.
 
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+### Critical Discovery: Immediate Follow-up Commit
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-index 8d74455dab1e2..7731ef262d39f 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-@@ -315,7 +315,7 @@ static int jpeg_v5_0_1_hw_fini(struct amdgpu_ip_block *ip_block)
- 			ret = jpeg_v5_0_1_set_powergating_state(ip_block, AMD_PG_STATE_GATE);
- 	}
- 
--	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG))
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG) && !amdgpu_sriov_vf(adev))
- 		amdgpu_irq_put(adev, &adev->jpeg.inst->ras_poison_irq, 0);
- 
- 	return ret;
+Through extensive git history analysis, I discovered that commit
+`db291ed1732e0` "drm/amd/display: Add fallback path for YCBCR422" was
+committed **the very next day** (Aug 27, 2025) and **directly modifies
+the code added by this commit**:
+
+**Original implementation (5e76bc677cb7c)**:
+```c
+else if ((connector->display_info.color_formats &
+DRM_COLOR_FORMAT_YCBCR422)
+                && stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)  // Check
+for HDMI
+        timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+```
+
+**Modified by follow-up (db291ed1732e0)**:
+```c
+else if ((connector->display_info.color_formats &
+DRM_COLOR_FORMAT_YCBCR422)
+                && aconnector
+                && aconnector->force_yuv422_output)  // Changed to opt-
+in flag
+        timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+```
+
+### Why This Matters
+
+The follow-up commit `db291ed1732e0`:
+
+1. **Changes the behavior** from automatic YCBCR422 selection (when HDMI
+   display supports it) to opt-in via `force_yuv422_output` flag
+2. **Adds a progressive fallback mechanism** for DisplayPort bandwidth
+   validation failures:
+   - First tries YUV422 8bpc (bandwidth efficient)
+   - Then YUV422 6bpc (reduced color depth)
+   - Finally YUV420 (last resort)
+3. **Fixes a serious issue**: "This resolves cases where displays would
+   show no image due to insufficient DP link bandwidth for the requested
+   RGB mode"
+4. **Adds the `force_yuv422_output` field** to `struct
+   amdgpu_dm_connector` in `amdgpu_dm.h`
+
+### Evidence of Close Relationship
+
+- **Same author**: Mario Limonciello (both commits)
+- **Same suggested-by**: Mauri Carvalho (both commits)
+- **Same reviewer**: Wayne Lin (both commits)
+- **Same tester**: Daniel Wheeler (both commits)
+- **Consecutive commits**: Aug 26 and Aug 27, 2025
+- **No intervening commits**: These are back-to-back commits in the AMD
+  display driver
+
+### Technical Analysis Using Semcode
+
+Using the `mcp__semcode__find_function` tool, I confirmed that:
+- YCBCR422 encoding (`PIXEL_ENCODING_YCBCR422`) is already well-
+  established in the AMD display driver
+- It's used in 13+ different locations across the driver subsystem for
+  clock calculations, stream encoding, and bandwidth management
+- The missing check in `fill_stream_properties_from_drm_display_mode()`
+  was indeed a gap that needed to be filled
+
+### Backporting Criteria Assessment
+
+**For commit 5e76bc677cb7c ALONE:**
+
+✅ **Fixes a bug**: Yes - incorrect pixel encoding selection
+✅ **Small and contained**: Yes - only 3 lines added
+❌ **Minimal risk**: Questionable - behavior was modified the next day
+✅ **No architectural changes**: Yes
+✅ **Confined to subsystem**: Yes - AMD display driver only
+❌ **Stable tag present**: No `Cc: stable@vger.kernel.org` tag
+⚠️ **Complete fix**: No - requires follow-up commit for full
+functionality
+
+**For BOTH commits as a series:**
+
+✅ All criteria above
+✅ **Complete feature**: Yes - implements both HDMI YCBCR422 support and
+DP fallback
+✅ **Tested together**: Yes - same test cycle, same tester
+✅ **No known regressions**: No fixes or reverts found in subsequent
+history
+
+### Risk Analysis
+
+**Risk of backporting 5e76bc677cb7c alone**: MODERATE-HIGH
+- Would enable automatic YCBCR422 for HDMI displays, which the follow-up
+  commit changed to opt-in
+- Would not include the DP bandwidth fallback mechanism that fixes "no
+  image" issues
+- Could introduce unexpected behavior changes that were corrected in
+  db291ed1732e0
+- Missing the `force_yuv422_output` field addition would cause
+  compilation issues if the field is referenced elsewhere
+
+**Risk of backporting both commits together**: LOW
+- Represents the complete, tested implementation
+- Small, focused changes to AMD display driver
+- No subsequent fixes or reverts found
+- Addresses both HDMI pixel encoding and DP bandwidth issues
+
+### Recommendation
+
+**YES - Backport to stable trees, BUT ONLY as a two-commit series:**
+
+1. **5e76bc677cb7c** "drm/amd/display: Set up pixel encoding for
+   YCBCR422"
+2. **db291ed1732e0** "drm/amd/display: Add fallback path for YCBCR422"
+
+**These commits should be treated as a single logical changeset**
+because:
+- They implement a complete feature (YCBCR422 support + DP fallback)
+- The second commit fundamentally modifies the first commit's behavior
+- They were developed, reviewed, and tested together
+- They fix related display issues (pixel encoding correctness and
+  bandwidth management)
+
+**DO NOT backport commit 5e76bc677cb7c alone** as it represents an
+incomplete implementation that was refined the next day.
+
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 8eb2fc4133487..3762b3c0ef983 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6399,6 +6399,9 @@ static void fill_stream_properties_from_drm_display_mode(
+ 			&& aconnector
+ 			&& aconnector->force_yuv420_output)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR420;
++	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR422)
++			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
++		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+ 	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR444)
+ 			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR444;
 -- 
 2.51.0
 
