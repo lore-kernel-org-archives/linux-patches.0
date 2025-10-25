@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8803130596A;
-	Sat, 25 Oct 2025 16:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDE43043D7;
+	Sat, 25 Oct 2025 16:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761408839; cv=none; b=oQUxzKYDZQ5plwr2ueOXk1FnXZZdVjL+0HuLJlOyrTbV7xpV6cZH4NxrxsMAgW2dGHAB9QgkfLZa768LkgbJbZFRM4MrDh5y8ZvDLpjZ8W9335UcwJKyGtjcKOwrO7nVyIg42yyycruw5D/yzaOquJcbpveZCkTpDakChdoYn2I=
+	t=1761408842; cv=none; b=jmaHzuJHCdvRaU7OoFl5C0rHmNygUQznacFcIYF9MXXxrmEZjYMZg45tcGQJ83h3lzE3vc74mkSb6ibF8WKoENHYV8+/oSjX5tPdeYHGpPIFz8jVQQIYEeHWcLMJm1KsBO1pY+BJphrODyIYo2ZcRHmYYP3ScvRRwTTHzS01xnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761408839; c=relaxed/simple;
-	bh=TB5Z+F1tILjc2GPJwMgpGIeudcSpbtWIlR6TLGmC/Fg=;
+	s=arc-20240116; t=1761408842; c=relaxed/simple;
+	bh=IgmH45LL+d82P6e6wIvlesGK2AuuKkSZcgJBaHhKPoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pGGl5P+Yw4ux56eQGwS+6hoPIoQpvVIf4GQCRZsjw8kpG2lVNNCKjfZsBttRNFQbcW4JkCo/Dci5nhhTI6Ky1V6Hb5YDyugSgqeYUo67ZlXbVmreQBSkyJboML1WscVhvTmiw9VM55tTXKA4aX98dG7f8OkMpe3MSjPaOKgFTKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=au0INgSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P/H/03LXwEELSCmBJyQjcJpO2HtHsBXR1tck2uge4dooTKRNZ0Dhl3RvPDnAnHcGaMRxh29drXTsaJntYqzX1msNZ7Q0AKsTPpvGC8DgwRjTFhAnAf3n/hthWT48E9w49F8LeYwG00Y+6HfXRXX0sEIKNPuuj3WYXxEBoJd5M6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGkkhijI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="au0INgSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377E6C4CEF5;
-	Sat, 25 Oct 2025 16:13:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGkkhijI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB51CC4CEFB;
+	Sat, 25 Oct 2025 16:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761408839;
-	bh=TB5Z+F1tILjc2GPJwMgpGIeudcSpbtWIlR6TLGmC/Fg=;
+	s=k20201202; t=1761408842;
+	bh=IgmH45LL+d82P6e6wIvlesGK2AuuKkSZcgJBaHhKPoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=au0INgSAeZ6/UnXj5AxdTu+ZbfRVQuA05x6tvgzyTXkTTet77d+H27fav1TvyYqCK
-	 kis+XJrgvnjuZUmK/dnURkGU/UposFqQvt8jVc7meqXWNW3nCkfns4zNDR1LFopA+N
-	 2htR+NGv0f/iq7KMRumLd5TojEF4fyYY3yxaPHbi2ystDkbDwlX4JblYp3IOSnGv2c
-	 mYTHiVjErQxrVW9HgQCNHkYsDSr9SbsHR2eBYetrEZWWTEMJPeMMeo/7hDvt+BdQqN
-	 qN/FuKuzmWxUDbwb6AwbTqo8qgU7Ps1lyylMEOxzEmArpsRwBpDYv8doGNZQGxnPN/
-	 KxbUA0AgP7Qdw==
+	b=UGkkhijIxhVtQfEbIu5+dxRfxV0Iv+Rx3ZJfwmqVI6uNpYpazHSb/QVMOqiRImKpH
+	 LIeqrP+uwqv9w6Qprgd6xk7au69VfyMjfsDhywR1gupRcdpxhuQpzFwiih1LQD6tQK
+	 FSPsl/gNMzLLhTQ8E/io4EDW+qcpHuLJnkllGdGNiuRM6bulUwfZZQiWPmIqjnyWlw
+	 xYAgIP8DufNcuAt5dXbj5ggtz0tnQ/p830MNAnTEWX/w5B2N0IIgE3KJZmp9HXnDhk
+	 6r3bQsDtp/TyRxBlb2IsixlOG5OGfOKreBLs+5iD4IklgcuNtl5jocgNk8eOhVyp9Y
+	 J/utLUzAMTzkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christoph Paasch <cpaasch@openai.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Donald Hunter <donald.hunter@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	davem@davemloft.net,
+	dsahern@kernel.org,
+	chuck.lever@oracle.com,
+	matttbe@kernel.org,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com,
 	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] net: When removing nexthops, don't call synchronize_net if it is not necessary
-Date: Sat, 25 Oct 2025 11:55:25 -0400
-Message-ID: <20251025160905.3857885-94-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17] netlink: specs: fou: change local-v6/peer-v6 check
+Date: Sat, 25 Oct 2025 11:55:26 -0400
+Message-ID: <20251025160905.3857885-95-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251025160905.3857885-1-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
@@ -50,78 +52,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Paasch <cpaasch@openai.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
+[ Upstream commit 9f9581ba74a931843c6d807ecfeaff9fb8c1b731 ]
 
-When removing a nexthop, commit
-90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
-call to synchronize_rcu() (later changed to _net()) to make sure
-everyone sees the new nexthop-group before the rtnl-lock is released.
+While updating the binary min-len implementation, I noticed that
+the only user, should AFAICT be using exact-len instead.
 
-When one wants to delete a large number of groups and nexthops, it is
-fastest to first flush the groups (ip nexthop flush groups) and then
-flush the nexthops themselves (ip -6 nexthop flush). As that way the
-groups don't need to be rebalanced.
+In net/ipv4/fou_core.c FOU_ATTR_LOCAL_V6 and FOU_ATTR_PEER_V6
+are only used for singular IPv6 addresses, and there are AFAICT
+no known implementations trying to send more, it therefore
+appears safe to change it to an exact-len policy.
 
-However, `ip -6 nexthop flush` will still take a long time if there is
-a very large number of nexthops because of the call to
-synchronize_net(). Now, if there are no more groups, there is no point
-in calling synchronize_net(). So, let's skip that entirely by checking
-if nh->grp_list is empty.
+This patch therefore changes the local-v6/peer-v6 attributes to
+use an exact-len check, instead of a min-len check.
 
-This gives us a nice speedup:
-
-BEFORE:
-=======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	1m45.345s
-user	0m0.001s
-sys	0m0.005s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	3m10.430s
-user	0m0.002s
-sys	0m0.004s
-
-AFTER:
-======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	0m17.545s
-user	0m0.003s
-sys	0m0.003s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	0m35.823s
-user	0m0.002s
-sys	0m0.004s
-
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://patch.msgid.link/20250902154640.759815-2-ast@fiberby.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -130,106 +84,97 @@ LLM Generated explanations, may be completely bogus:
 
 YES
 
-Why this is a good stable backport
-- Fixes a real, user-facing regression in large-scale environments:
-  deleting many nexthops pays an O(N) cost from an unnecessary RCU grace
-  period per nexthop. The commit message shows dramatic runtime
-  reductions (minutes → seconds) for “ip -6 nexthop flush” on millions
-  of nexthops. This is an operational pain point, not a micro-
-  optimization.
-- Minimal, localized change with no functional/architectural impact: it
-  only short-circuits a barrier when there is provably nothing to
-  synchronize. No API changes, no behavior changes when cleanup is
-  actually needed.
-- Preserves correctness: the synchronize call was introduced to
-  serialize readers after updating a published group array (commit
-  90f33bffa382). Skipping it is safe when there were no group updates.
+- What changed: The fou netlink spec and generated policy now enforce
+  exact 16‑byte lengths for IPv6 address attributes instead of allowing
+  any payload ≥16 bytes.
+  - Documentation change: `Documentation/netlink/specs/fou.yaml:55` and
+    `Documentation/netlink/specs/fou.yaml:63` switch `checks` from `min-
+    len: 16` to `exact-len: 16`.
+  - Generated policy change: `net/ipv4/fou_nl.c:21` and
+    `net/ipv4/fou_nl.c:23` switch from a plain length to
+    `NLA_POLICY_EXACT_LEN(16)` for `FOU_ATTR_LOCAL_V6` and
+    `FOU_ATTR_PEER_V6`.
 
-Specific code and history analysis
-- Barrier origin and purpose:
-  - 90f33bffa382 added a post-update grace period to “make sure all see
-    the newly published array before releasing RTNL” by calling
-    `synchronize_rcu()` (later became `synchronize_net()`).
-  - See 90f33bffa382: net/ipv4/nexthop.c: the barrier was added after
-    removing a nexthop from groups.
-- Current code path (pre-patch):
-  - `remove_nexthop_from_groups()` iterates `nh->grp_list`, potentially
-    updating group arrays via `remove_nh_grp_entry()`, then
-    unconditionally calls `synchronize_net()`; net/ipv4/nexthop.c:2085
-    and net/ipv4/nexthop.c:2094.
-  - This function runs for non-group nexthops during deletion; see call
-    site in `__remove_nexthop()`: net/ipv4/nexthop.c:2166. The RTNL lock
-    is held across deletion (rtnl lock in `rtm_del_nexthop()`);
-    net/ipv4/nexthop.c:3310.
-- The patch’s exact change:
-  - Adds an early return when there is nothing to remove:
-    - New check: `if (list_empty(&nh->grp_list)) return;`
-    - This prevents the unconditional `synchronize_net()` when `nh`
-      belongs to no groups.
-  - The loop and the barrier still run when there are entries to remove,
-    preserving the original safety guarantee.
-- Why the early return is safe:
-  - If `&nh->grp_list` is empty, no group arrays are modified; there is
-    nothing to “publish” and thus no readers to wait out. The barrier is
-    purely to serialize readers after `rcu_assign_pointer()` of a new
-    group array (e.g., in `remove_nh_grp_entry()` which calls
-    `rcu_assign_pointer(nhp->nh_grp, newg)`; net/ipv4/nexthop.c:around
-    2020). With no modifications, the barrier is a no-op, only adding
-    latency.
-  - Concurrency context is correct: group membership modifications
-    happen under RTNL, and `remove_nexthop_from_groups()` is called
-    under RTNL; `list_empty()` on `nh->grp_list` is consistent. The list
-    head is always initialized (`INIT_LIST_HEAD(&nh->grp_list)`;
-    net/ipv4/nexthop.c:542).
-  - Other RCU barriers in the file that protect real publications remain
-    intact (e.g., in group replacement, `synchronize_net()` remains;
-    net/ipv4/nexthop.c:2291).
+- Why it matters: Fou only ever uses a single IPv6 address for these
+  attributes; there is no valid case for longer payloads. The parser
+  reads exactly one IPv6 address with `nla_get_in6_addr()`:
+  - Read paths: `net/ipv4/fou_core.c:716` (LOCAL_V6) and
+    `net/ipv4/fou_core.c:722` (PEER_V6) copy exactly 16 bytes.
+  - Reply paths also emit exactly 16 bytes with `nla_put_in6_addr()`
+    (`net/ipv4/fou_core.c:801`, `net/ipv4/fou_core.c:805`), confirming
+    the intent is a fixed-size IPv6 address.
 
-Stable policy considerations
-- Scope is tiny and self-contained (one function, one early return); no
-  cross-subsystem impact.
-- Not a feature; it is a performance fix for a behavior introduced by an
-  earlier change (90f33bffa382) that added unconditional grace periods
-  even when nothing changed.
-- Risk of regression is very low: previously, the barrier was sometimes
-  unnecessary. Now it remains when necessary and is skipped when
-  provably unneeded. No change to notifier behavior or group update
-  logic.
+- Bug fixed: With a min-length check, malformed attributes longer than
+  16 bytes are accepted and silently truncated by `nla_get_in6_addr()`.
+  This change correctly rejects such input at policy time, aligning
+  validation with actual usage and preventing garbage/trailing data from
+  slipping through.
 
-Practical backport notes
-- Older stable trees may have `synchronize_rcu()` instead of
-  `synchronize_net()` at the end of `remove_nexthop_from_groups()`. The
-  early return remains valid and safe regardless; adapt the barrier name
-  to the tree’s version if needed.
-- The infrastructure used by the check (`nh->grp_list`) and usage
-  context (RTNL held) are long-standing and present in stable kernels
-  that have nexthop groups.
+- Scope and risk:
+  - Small and contained: Only touches fou’s netlink policy and its spec;
+    no broader architectural or behavioral changes.
+  - ABI correctness: Tightens validation to the actual fixed-size ABI
+    already assumed by the code and reply side.
+  - Compatibility: Legitimate userspace already sends 16‑byte IPv6
+    addresses; the commit message notes no known implementations rely on
+    larger lengths. Any breakage would only affect incorrect/malformed
+    senders, which is desired.
+  - Consistency: Matches common practice elsewhere for IPv6 attributes
+    (e.g., other generated policies using `NLA_POLICY_EXACT_LEN(16)`).
 
-Conclusion
-- This change is a classic stable backport candidate: important user-
-  visible improvement, minimal risk, no semantics change, and tightly
-  scoped to the nexthop cleanup path.
+- Stable backport criteria:
+  - Fixes a real validation/robustness bug that could affect users
+    (acceptance of malformed attributes).
+  - Minimal risk of regression and no architectural changes.
+  - Confined to a specific subsystem (fou netlink family).
+  - Clear, small change with direct correspondence between spec and
+    code.
 
- net/ipv4/nexthop.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Given the above, this is a low-risk, correctness/robustness fix that
+should be backported.
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 34137768e7f9a..15acfb74fd238 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2087,6 +2087,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
- {
- 	struct nh_grp_entry *nhge, *tmp;
- 
-+	/* If there is nothing to do, let's avoid the costly call to
-+	 * synchronize_net()
-+	 */
-+	if (list_empty(&nh->grp_list))
-+		return;
-+
- 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
- 		remove_nh_grp_entry(net, nhge, nlinfo);
- 
+ Documentation/netlink/specs/fou.yaml | 4 ++--
+ net/ipv4/fou_nl.c                    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/netlink/specs/fou.yaml b/Documentation/netlink/specs/fou.yaml
+index 57735726262ec..8e7974ec453fc 100644
+--- a/Documentation/netlink/specs/fou.yaml
++++ b/Documentation/netlink/specs/fou.yaml
+@@ -52,7 +52,7 @@ attribute-sets:
+         name: local-v6
+         type: binary
+         checks:
+-          min-len: 16
++          exact-len: 16
+       -
+         name: peer-v4
+         type: u32
+@@ -60,7 +60,7 @@ attribute-sets:
+         name: peer-v6
+         type: binary
+         checks:
+-          min-len: 16
++          exact-len: 16
+       -
+         name: peer-port
+         type: u16
+diff --git a/net/ipv4/fou_nl.c b/net/ipv4/fou_nl.c
+index 3d9614609b2d3..506260b4a4dc2 100644
+--- a/net/ipv4/fou_nl.c
++++ b/net/ipv4/fou_nl.c
+@@ -18,9 +18,9 @@ const struct nla_policy fou_nl_policy[FOU_ATTR_IFINDEX + 1] = {
+ 	[FOU_ATTR_TYPE] = { .type = NLA_U8, },
+ 	[FOU_ATTR_REMCSUM_NOPARTIAL] = { .type = NLA_FLAG, },
+ 	[FOU_ATTR_LOCAL_V4] = { .type = NLA_U32, },
+-	[FOU_ATTR_LOCAL_V6] = { .len = 16, },
++	[FOU_ATTR_LOCAL_V6] = NLA_POLICY_EXACT_LEN(16),
+ 	[FOU_ATTR_PEER_V4] = { .type = NLA_U32, },
+-	[FOU_ATTR_PEER_V6] = { .len = 16, },
++	[FOU_ATTR_PEER_V6] = NLA_POLICY_EXACT_LEN(16),
+ 	[FOU_ATTR_PEER_PORT] = { .type = NLA_BE16, },
+ 	[FOU_ATTR_IFINDEX] = { .type = NLA_S32, },
+ };
 -- 
 2.51.0
 
