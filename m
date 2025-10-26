@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AEE2E8E11;
-	Sun, 26 Oct 2025 14:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B702E8E11;
+	Sun, 26 Oct 2025 14:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490262; cv=none; b=UNHfzdp7mDBR1rdMqZvz/VVcyla0RyVxQBZe89OYZOEn4QObqFhtyzpLSv0z6as32DJShAMSn5FpWvIL+Ds+5ffQLgJSva+EeALzjL5ASofWMgo55vxrvIZqsKpmiUpuw2378DoTQQGg9i5jO0DU4eBzX0RzQEfYlXr+fXFTW5A=
+	t=1761490263; cv=none; b=C1OstHEEJvkfjYMdlafgUeAVn9alrnw+GCsiuptTFE7fEZB8RB/6NHMMwOVyEEaN07TsbUBs5pEm1X2f3Z7ySzEtTM//2ljM3yieCcF5SkKdL1iH6kKe1shxBNJ9dO9PLSkTq8HP//V0iDA1j7oEodNQGldd57m7XBxy79DWAx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490262; c=relaxed/simple;
-	bh=9kEgSAYsSigKfGGF1IT/ZkYyori9kizJe2q3r8cLExU=;
+	s=arc-20240116; t=1761490263; c=relaxed/simple;
+	bh=HlMAJ9IaNZcUJiFMGnYe3oG9DwObQe8LVhMD4NTvCpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SrVBxd4yOUfZbBe+G23RZK3HPtM1lH3h6YcQaa1QNrBeajvyG4sLTCSaeCD+j+rp7KaxI/XClI7cNv4xLwSMqzD7An8a6oN/MwlTjWB/7up40Gu6VPmcaVdaMTLwrVlK5lhC75fds0UxmKYNNRt8+FqY2hHudHnMkBZqY3F+YlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h/lCt9F+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LgJLmnmNS3L9o52F2fUPeEUDMeihA2feLTyOQhC5zZKvTkdtKn/bE0Hbgi3VjzD3pWIcFqDm5svLKhqKZTrZPmZEObLiatTkECNcWwRri6N1vgrjBfgdU8tjYaXhkbCbCr83/7kLlAvUNxeiQQLoiKvuLmQ4eawC6LYR3FM663o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ha8pX/N+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h/lCt9F+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE8CC116B1;
-	Sun, 26 Oct 2025 14:51:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ha8pX/N+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B61AC4CEFB;
+	Sun, 26 Oct 2025 14:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490262;
-	bh=9kEgSAYsSigKfGGF1IT/ZkYyori9kizJe2q3r8cLExU=;
+	s=k20201202; t=1761490263;
+	bh=HlMAJ9IaNZcUJiFMGnYe3oG9DwObQe8LVhMD4NTvCpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/lCt9F+0irZPkrJVBk6ZU84xcZwkqqzLuiPamYzOpTuKgndSnsMaIQ/Va765AwDJ
-	 XGCQ5h4XCCPr9/mh0DY5dIK+EU1OkviDOHba6UkMyh+9qN0o8F8q3Cy0qstm9ickrx
-	 v3PZZJrqTQc4iXXjMPX+KUPgYAWiD1V86ullGce+6RgleoefPLCuZqgDsufzAHeSgl
-	 0T07BswjVePWgvb054D6WcvNnItrC+CpaV/wcOwqUWQkmCgl9LGM9ackNhFZ5nAj1k
-	 U6cViGlnmYSb01d1QrIlSGrbrx8g9y1aKo0X/+ufYvkpNmLrTE65WEhLppzuYwc9wi
-	 e8C1o9UUxZL1Q==
+	b=ha8pX/N+Xihww4TrFDpgE+t16LQM3Jc5N3Sdv3cr4fqpZYwdBKhGO6SxOmTYPZGtM
+	 zGQN9cUCcyxswNucZHr4zzG06Ke+kyh5JedffNOQ/FjVm4kI9DZ8iFRqRqy4lrzsmY
+	 MM41Hhnaw0N467YeHlwKRusnmANs5eRpZDCvGmb96MI1cUBcmZprwETjQzLOkHG5bu
+	 HcQdim7/dVOleQAykhEr0zbCkFfAU39ZLPTJ/k8GduTFeohanEqPEk6kcw6ZHg87oy
+	 1xah2+gULWXfGWv2HofbZcnO2grGz9EyD8FCbGGfYBXy8ehix8ulwpTCs6EGC8o9Xu
+	 X26TCwzf+BmoA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Philip Yang <Philip.Yang@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	amd-gfx@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/amdkfd: Fix mmap write lock not release
-Date: Sun, 26 Oct 2025 10:49:07 -0400
-Message-ID: <20251026144958.26750-29-sashal@kernel.org>
+	xiubli@redhat.com,
+	ceph-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] ceph: fix potential race condition in ceph_ioctl_lazyio()
+Date: Sun, 26 Oct 2025 10:49:08 -0400
+Message-ID: <20251026144958.26750-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -53,70 +53,111 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 7574f30337e19045f03126b4c51f525b84e5049e ]
+[ Upstream commit 5824ccba9a39a3ad914fc9b2972a2c1119abaac9 ]
 
-If mmap write lock is taken while draining retry fault, mmap write lock
-is not released because svm_range_restore_pages calls mmap_read_unlock
-then returns. This causes deadlock and system hangs later because mmap
-read or write lock cannot be taken.
+The Coverity Scan service has detected potential
+race condition in ceph_ioctl_lazyio() [1].
 
-Downgrade mmap write lock to read lock if draining retry fault fix this
-bug.
+The CID 1591046 contains explanation: "Check of thread-shared
+field evades lock acquisition (LOCK_EVASION). Thread1 sets
+fmode to a new value. Now the two threads have an inconsistent
+view of fmode and updates to fields correlated with fmode
+may be lost. The data guarded by this critical section may
+be read while in an inconsistent state or modified by multiple
+racing threads. In ceph_ioctl_lazyio: Checking the value of
+a thread-shared field outside of a locked region to determine
+if a locked operation involving that thread shared field
+has completed. (CWE-543)".
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The patch places fi->fmode field access under ci->i_ceph_lock
+protection. Also, it introduces the is_file_already_lazy
+variable that is set under the lock and it is checked later
+out of scope of critical section.
+
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1591046
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `svm_range_restore_pages()` can upgrade to a `mmap_write_lock()` when
-  it must recreate a missing SVM range; if the retry-fault path is hit
-  before the range is rebuilt we return `-EAGAIN` while still holding
-  the write lock, so the later `mmap_read_unlock()` never releases it,
-  leaving the mm’s mmap_lock stuck and hanging future faults
-  (`drivers/gpu/drm/amd/amdkfd/kfd_svm.c:3022-3029`).
-- The fix simply downgrades the lock back to read mode before that early
-  return (`drivers/gpu/drm/amd/amdkfd/kfd_svm.c:3026-3027`), matching
-  the existing teardown path already used when range creation fails
-  (`drivers/gpu/drm/amd/amdkfd/kfd_svm.c:3053-3063`). This ensures the
-  subsequent `mmap_read_unlock()` actually drops the lock.
-- The regression was introduced by commit f844732e3ad9 (“drm/amdgpu: Fix
-  the race condition for draining retry fault”), which is already in
-  v6.15 and newer tags, so affected stable trees will deadlock under
-  retry-fault draining unless they get this fix.
-- Change is tiny, self-contained, and follows existing locking
-  conventions; no new APIs or behavioral changes beyond correcting the
-  lock lifecycle, so regression risk is low while preventing a user-
-  visible hang in the GPU fault handler
-  (`drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c:2896-2920`).
+- The race arises because the pre-patch code reads `fi->fmode` without
+  holding `ci->i_ceph_lock`, so two threads can both see the lazy bit
+  clear, then each increment
+  `ci->i_nr_by_mode[ffs(CEPH_FILE_MODE_LAZY)]++` before either releases
+  the lock. That leaves the counter permanently elevated,
+  desynchronising the per-mode counts that `ceph_put_fmode()` relies on
+  to drop capability refs (`fs/ceph/ioctl.c` before line 212, contrasted
+  with `fs/ceph/caps.c:4744-4789`).
+- The patch now performs the test and update while the lock is held
+  (`fs/ceph/ioctl.c:212-220`), eliminating the window where concurrent
+  callers can both act on stale state; the new `is_file_already_lazy`
+  flag preserves the existing logging/`ceph_check_caps()` calls after
+  the lock is released (`fs/ceph/ioctl.c:221-228`) so behaviour remains
+  unchanged aside from closing the race.
+- Keeping `i_nr_by_mode` accurate is important beyond metrics: it feeds
+  `__ceph_caps_file_wanted()` when deciding what caps to request or drop
+  (`fs/ceph/caps.c:1006-1061`). With the race, a leaked lazy count
+  prevents the last close path from seeing the inode as idle, delaying
+  capability release and defeating the lazyio semantics the ioctl is
+  supposed to provide.
+- The change is tightly scoped (one function, no API or struct changes,
+  same code paths still call `__ceph_touch_fmode()` and
+  `ceph_check_caps()`), so regression risk is minimal while the fix
+  hardens a locking invariant already respected by other fmode
+  transitions such as `ceph_get_fmode()` (`fs/ceph/caps.c:4727-4754`).
+- No newer infrastructure is required—the fields, lock, and helpers
+  touched here have existed in long-term stable kernels—so this bug fix
+  is suitable for stable backporting despite the likely need to adjust
+  the `doutc` helper name on older branches.
 
-Possible next steps:
-1. Queue 8cf4d56246c236935fc87384b2e2e32d12f57b91 for all stable
-   branches that contain f844732e3ad9.
-2. Run KFD retry-fault stress tests (e.g., `kfdtest --stress`) on an
-   affected GPU to confirm the hang no longer occurs.
+ fs/ceph/ioctl.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 3d8b20828c068..6fa08f12cb429 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -3023,6 +3023,8 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
- 	if (svms->checkpoint_ts[gpuidx] != 0) {
- 		if (amdgpu_ih_ts_after_or_equal(ts,  svms->checkpoint_ts[gpuidx])) {
- 			pr_debug("draining retry fault, drop fault 0x%llx\n", addr);
-+			if (write_locked)
-+				mmap_write_downgrade(mm);
- 			r = -EAGAIN;
- 			goto out_unlock_svms;
- 		} else {
+diff --git a/fs/ceph/ioctl.c b/fs/ceph/ioctl.c
+index e861de3c79b9e..15cde055f3da1 100644
+--- a/fs/ceph/ioctl.c
++++ b/fs/ceph/ioctl.c
+@@ -246,21 +246,28 @@ static long ceph_ioctl_lazyio(struct file *file)
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	struct ceph_client *cl = mdsc->fsc->client;
++	bool is_file_already_lazy = false;
+ 
++	spin_lock(&ci->i_ceph_lock);
+ 	if ((fi->fmode & CEPH_FILE_MODE_LAZY) == 0) {
+-		spin_lock(&ci->i_ceph_lock);
+ 		fi->fmode |= CEPH_FILE_MODE_LAZY;
+ 		ci->i_nr_by_mode[ffs(CEPH_FILE_MODE_LAZY)]++;
+ 		__ceph_touch_fmode(ci, mdsc, fi->fmode);
+-		spin_unlock(&ci->i_ceph_lock);
++	} else {
++		is_file_already_lazy = true;
++	}
++	spin_unlock(&ci->i_ceph_lock);
++
++	if (is_file_already_lazy) {
++		doutc(cl, "file %p %p %llx.%llx already lazy\n", file, inode,
++		      ceph_vinop(inode));
++	} else {
+ 		doutc(cl, "file %p %p %llx.%llx marked lazy\n", file, inode,
+ 		      ceph_vinop(inode));
+ 
+ 		ceph_check_caps(ci, 0);
+-	} else {
+-		doutc(cl, "file %p %p %llx.%llx already lazy\n", file, inode,
+-		      ceph_vinop(inode));
+ 	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
