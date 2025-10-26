@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49A72609D6;
-	Sun, 26 Oct 2025 14:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9701527B4;
+	Sun, 26 Oct 2025 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490219; cv=none; b=rlVtzsaRWgOh8rCo3qyUISPFgGCuSTd4VA5gochup+X026/f/0HXWTVJmr2P7g9az8MlY+lbOyNgyHKluZHyni5E2MMRN6XX3Y/UyrU32JwBX+q8VBmFdYYSJIC4b3fUAd9oaJ4ZDiU27IlReMKSOp7LQjZQUCfb5mdX03yuUyI=
+	t=1761490221; cv=none; b=UrnF9Y982/d+lndCOf+jQArk26P+TjMSC/9Vb0ZbfwsUXAm9XeuSWrnknziVQq5ixLWGTk3iXpDK34Om5LIZ+17e93oq3AZo9CuPofFMQPpGURbifCm4t4saOp7MvjyZ2dKF7nN/KLntlvrWayZfadxSdgsUfgql3kuMHOwY29w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490219; c=relaxed/simple;
-	bh=KmiJMuNTVluGqoO5cmOrCav6DccbWSUzZwrYyrynEvA=;
+	s=arc-20240116; t=1761490221; c=relaxed/simple;
+	bh=jMTtq6Xo1XlrvYqcb4wROaYCZBEw5JdAq4ePIhysOLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aCSix9BpVUN/12kKuhB/dCfaAycfvCtz7+jCG4OPji7oD2/fJOmSXYHWs5JP/tCtv+X73c0LXLBC/tRORtZmulQc/brebkerQq+ee/NeQRPnWD/qUYwuZfKEDCQWrVuNcPTuGMxtzxqBcc8vmHt+4kyCO2aczb4Z62Fg4gNHPwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZDa/VjgP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q0m5MjLpGx9kYEmJDEpaXC0lkvhFu4iBm8D6cbRey0oRSn/59rsu1GF84vffk7TNpkn65jHKt2EQP2wsQb4xSrs51e+m50BWR8cTGzECfJynOsYbGKwXc/tHCjB3n3JTbTj7rdxdygO6LREDtB286DbkjlV6BMEjjkyQkhu3iTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G37DIfby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZDa/VjgP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3147C4CEE7;
-	Sun, 26 Oct 2025 14:50:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G37DIfby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94EFC4CEF1;
+	Sun, 26 Oct 2025 14:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490219;
-	bh=KmiJMuNTVluGqoO5cmOrCav6DccbWSUzZwrYyrynEvA=;
+	s=k20201202; t=1761490220;
+	bh=jMTtq6Xo1XlrvYqcb4wROaYCZBEw5JdAq4ePIhysOLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDa/VjgPmE1YkypMBDdBEefri531Mg7+3znbgvQUv8SHbyTp0/z+55Im8kSIC1geg
-	 DNOIKRPg1+ohjTGxlpt5JgDiHzlSMxSf6NDBcT42atvFiqsJfLhK27e1vrf9ZmVJK3
-	 N+HQ8Do2ZOz84G8UsaXzotm9X6233aGO7GSGjCWOs1HNH3SZ/xjhgVW3MFBrCRn/Jx
-	 wCNEQOT2AgcbpCV025Y0e59Gil51X2x6m9htNREriZZsDRCFTiu6z7p1Uy0JnLGnaF
-	 XHb9rq3tG8xWNhjTxUp+7O9+AEEGchOmGpXfq9SlwkxJGE6fyYAfK1sCbmo62hj9wP
-	 MM36GSWUDEPzg==
+	b=G37DIfbyVj9pg2udsJc3AEnkoKA10XRbnPRlHhoFqW9GgI+TZklVde0cQBOzAShGW
+	 rgWCpL5G2HsfPSk1rraanJh1i/f8jY3wz23PY3ASwFYgGaFFOglvn/zCUd+UNqPecG
+	 hCE/1Pm223Q90HIdelf5OpwUugadxP4MwhTeDVJBy+WRo/UFnFUELMuB/WQmDpOJFO
+	 7cyRHMgSxH6C+f6cEdylPoz/j6xRv/N4ZPtgn6CVWsoKTUPvgJ9Ij45k3UKjgY4wxt
+	 skmdSKJJilfllhWtrmeY1r3BiZyEId3x8fpMMLF+dgdnLaoAF3nXcaYXsGw0R301gm
+	 x0ApNbId5USnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zsolt Kajtar <soci@c64.rulez.org>,
-	Helge Deller <deller@gmx.de>,
+Cc: Valerio Setti <vsetti@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	simona@ffwll.ch
-Subject: [PATCH AUTOSEL 6.17] fbdev: core: Fix ubsan warning in pixel_to_pat
-Date: Sun, 26 Oct 2025 10:48:48 -0400
-Message-ID: <20251026144958.26750-10-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	khilman@baylibre.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-amlogic@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.10] ASoC: meson: aiu-encoder-i2s: fix bit clock polarity
+Date: Sun, 26 Oct 2025 10:48:49 -0400
+Message-ID: <20251026144958.26750-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -51,57 +56,78 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zsolt Kajtar <soci@c64.rulez.org>
+From: Valerio Setti <vsetti@baylibre.com>
 
-[ Upstream commit aad1d99beaaf132e2024a52727c24894cdf9474a ]
+[ Upstream commit 4c4ed5e073a923fb3323022e1131cb51ad8df7a0 ]
 
-It could be triggered on 32 bit big endian machines at 32 bpp in the
-pattern realignment. In this case just return early as the result is
-an identity.
+According to I2S specs audio data is sampled on the rising edge of the
+clock and it can change on the falling one. When operating in normal mode
+this SoC behaves the opposite so a clock polarity inversion is required
+in this case.
 
-Signed-off-by: Zsolt Kajtar <soci@c64.rulez.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This was tested on an OdroidC2 (Amlogic S905 SoC) board.
+
+Signed-off-by: Valerio Setti <vsetti@baylibre.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Tested-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20251007-fix-i2s-polarity-v1-1-86704d9cda10@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES
-- Returning early in the default branch
-  (`drivers/video/fbdev/core/fb_fillrect.h:94`) keeps `pixel_to_pat()`
-  from reaching the big-endian realignment block at
-  `drivers/video/fbdev/core/fb_fillrect.h:97-99`, eliminating the
-  undefined `pattern >> bpp` shift that UBSAN reports when `bpp ==
-  BITS_PER_LONG` (e.g., 32 bpp on 32-bit BE). The skipped logic was an
-  identity operation in that case, so correctness is preserved.
-- The old undefined shift was triggered during ordinary rectangle fills
-  (`drivers/video/fbdev/core/fb_fillrect.h:266`) on big-endian
-  framebuffers, causing sanitizer aborts and risking miscompilation even
-  without UBSAN, so this is a real bug fix with direct user impact.
-- The change is tightly scoped, has no dependencies, and leaves little-
-  endian paths and sub-word `bpp` handling untouched, keeping regression
-  risk very low while restoring defined behavior.
+YES – this change fixes a long-standing functional bug with the Meson
+AIU I²S encoder and is low risk to backport.
+- The updated `aiu_encoder_i2s_set_fmt()` now inverts the bit clock
+  whenever the DAI format requests the normal (non-inverted) polarity
+  (`SND_SOC_DAIFMT_NB_*`), matching the hardware quirk described in the
+  new comment (`sound/soc/meson/aiu-encoder-i2s.c:239-245`). Without
+  this inversion, the CPU-side master drives BCLK so that data toggles
+  on the rising edge, which makes all mainline DT users (e.g. Odroid C2)
+  sample on the wrong edge and yields audible corruption.
+- Frames (`LRCLK`) are still handled exactly as before, and the fix only
+  flips which `inv` combinations set `AIU_CLK_CTRL_AOCLK_INVERT`, so
+  `IB_*` formats continue to work as they already matched the SoC’s
+  “inverted” default.
+- The change is tightly scoped to one helper in the Meson AIU encoder
+  driver, leaves register programming and clock sequencing untouched,
+  and has been validated on real hardware per the commit log.
+- Mainline device trees for this DAI all rely on the default `NB_NF`
+  format, so the bug is user-visible today; there are no dependency or
+  API concerns blocking stable backporting.
 
-Next steps: 1. If feasible, rebuild a BE configuration with UBSAN to
-confirm the warning is gone.
+Suggested follow-up: 1) Run a quick playback sanity test on an Odroid C2
+(or any Meson GX board using the AIU encoder) after backporting to
+confirm audio becomes clean.
 
- drivers/video/fbdev/core/fb_fillrect.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/meson/aiu-encoder-i2s.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fb_fillrect.h b/drivers/video/fbdev/core/fb_fillrect.h
-index 66042e534de77..f366670a53af8 100644
---- a/drivers/video/fbdev/core/fb_fillrect.h
-+++ b/drivers/video/fbdev/core/fb_fillrect.h
-@@ -92,8 +92,7 @@ static unsigned long pixel_to_pat(int bpp, u32 color)
- 		pattern = pattern | pattern << bpp;
- 		break;
- 	default:
--		pattern = color;
--		break;
-+		return color;
- 	}
- #ifndef __LITTLE_ENDIAN
- 	pattern <<= (BITS_PER_LONG % bpp);
+diff --git a/sound/soc/meson/aiu-encoder-i2s.c b/sound/soc/meson/aiu-encoder-i2s.c
+index a0dd914c8ed13..3b4061508c180 100644
+--- a/sound/soc/meson/aiu-encoder-i2s.c
++++ b/sound/soc/meson/aiu-encoder-i2s.c
+@@ -236,8 +236,12 @@ static int aiu_encoder_i2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 	    inv == SND_SOC_DAIFMT_IB_IF)
+ 		val |= AIU_CLK_CTRL_LRCLK_INVERT;
+ 
+-	if (inv == SND_SOC_DAIFMT_IB_NF ||
+-	    inv == SND_SOC_DAIFMT_IB_IF)
++	/*
++	 * The SoC changes data on the rising edge of the bitclock
++	 * so an inversion of the bitclock is required in normal mode
++	 */
++	if (inv == SND_SOC_DAIFMT_NB_NF ||
++	    inv == SND_SOC_DAIFMT_NB_IF)
+ 		val |= AIU_CLK_CTRL_AOCLK_INVERT;
+ 
+ 	/* Signal skew */
+@@ -328,4 +332,3 @@ const struct snd_soc_dai_ops aiu_encoder_i2s_dai_ops = {
+ 	.startup	= aiu_encoder_i2s_startup,
+ 	.shutdown	= aiu_encoder_i2s_shutdown,
+ };
+-
 -- 
 2.51.0
 
