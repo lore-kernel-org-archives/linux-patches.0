@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE902DF15E;
-	Sun, 26 Oct 2025 14:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5851B21255B;
+	Sun, 26 Oct 2025 14:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490285; cv=none; b=s1K+mlOZjZsZoAmK3hNhxwEXJtKo0+KaLM5odcUX1OLkQm4nOBH/eRd1Du1wfWPvPQzR/HBGnV7DIR5m5jdkAt1Mc966RYk0FYJ1Bh4iu9OvmLA5UqwKaeFzrydnxUh0Ih0FGxUelthvk8hIlDW67GB/Tw08fIEHnvycpp5L2/g=
+	t=1761490287; cv=none; b=ilZNFkJOrM5ztWPcRYGJmn/COu4IdFOSOhlEy8mfFMLNyPbcb19oIGaFuU625lvYiCIatZ9yqFZHKF/a0ERH5wXxIhLBVe5RU1/IAIJVSQyYhQ9YewRK8T2Umx6Wm3dzZf7Cm956y41GtIcTe8tOV1kFe0+ac5ZsQu2s1wkbx8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490285; c=relaxed/simple;
-	bh=zcvqXRuTUF9jQBSa3cAUl/qxhCMKR5cmmCS0GeuQS14=;
+	s=arc-20240116; t=1761490287; c=relaxed/simple;
+	bh=8nsVpQVtNVpmV3fm9Jme7NuegNhWqMUpue44vydCMqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=umtvvDXcUPvFGZS6oTQZojogHQNtouSlpOdYK/mnG01ky4XZpN9V1k/MFWkfqtF0++mlNdDGSGTnG2+d4eohLeVqRKYZYlyaG+kkys23gunYSNFQntbSqlEDWRV405tSUbcFFqJ4jmXQ16K004n/DJ+ka1cPP0oR/Qkuy1DhNQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUgZ4DWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FCyLktGfpDeRBSmbJHklgZo7pc/nRroE90aKgE4HUmlcmyHOllw+x2nDsEOGA1majw1rBOaR3YvyaH4rl1mzbQgKEAdaJ7NmXlckNNfEGVvxeyO6rL/UQHtT43fZ5Rt3VOXVgLN1I+rdTUWOMEmzLTcBt3CY6CgewpFv/OATpUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V2OW88Dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUgZ4DWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9A2C116B1;
-	Sun, 26 Oct 2025 14:51:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V2OW88Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06643C4CEF1;
+	Sun, 26 Oct 2025 14:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490284;
-	bh=zcvqXRuTUF9jQBSa3cAUl/qxhCMKR5cmmCS0GeuQS14=;
+	s=k20201202; t=1761490287;
+	bh=8nsVpQVtNVpmV3fm9Jme7NuegNhWqMUpue44vydCMqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUgZ4DWLbQfcPvJj2d5ZHUbufuCTKqlo+aHoe2pu1AaF1S2YsgMWhWUDqLk0bSMZF
-	 ABNRXeF2cq5jh4snF600YVPQSvai2+nLnoLQ7lBouHwN1oHes1lI5ZOidG++H8uBUk
-	 vR3TVVTe6ENdc7PV/Z/AAKZfm6CEs7v0a2Qv2hxvxigGw4rQJ6woHPqYv5gbDULPrs
-	 JgyHv9QPve0X+3dfopKoWCKfnk5ab2qqqjqZeWGfOBzrIhxo34qKxmjFvCr6lggMt/
-	 +8ZdtCFrnPfqT/t4oJzA07Cit5XVpbR+MgOg/QlJsCAzq+Lkj+LVSkbbCcgwLY8IW1
-	 sRjnaDM9bQgtw==
+	b=V2OW88DcnU+tMFM74K3zFh6b2on5gymtS5srKNUfc1l0nacUa5zOrlqfAASi5S4qG
+	 BjHcuqqbB5UaY6ICvq8ULZ/caS8IPBz01jqfYUYwQlBco+O9lfnT9tPcfJF1uFZ0ao
+	 xMarniUHXdTOFnkFKkmfiCWa2jZIvOqT0CAZXl/8x1qroCrexMhZG9CAS2Q15shgmQ
+	 0LCQL/vIhadPZBaEYbJyqOGMfyevTOKvM/A73Ci2QBAHz2CSubONXGs63BTzAmV2+l
+	 hSdyzappLcXEc7eNm33dWQVZThSEHiS1I+ZrX4UVei5UiStuD0hMVIMlzqo3kdNIH6
+	 Fglyi4sE8i+kA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Masney <bmasney@redhat.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Peng Fan <peng.fan@nxp.com>,
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-clk@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.12] clk: scmi: migrate round_rate() to determine_rate()
-Date: Sun, 26 Oct 2025 10:49:17 -0400
-Message-ID: <20251026144958.26750-39-sashal@kernel.org>
+	michal.simek@amd.com,
+	anatoliy.klymenko@amd.com,
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com,
+	bmasney@redhat.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.12] clk: clocking-wizard: Fix output clock register offset for Versal platforms
+Date: Sun, 26 Oct 2025 10:49:18 -0400
+Message-ID: <20251026144958.26750-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -56,137 +56,72 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Masney <bmasney@redhat.com>
+From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
 
-[ Upstream commit 80cb2b6edd8368f7e1e8bf2f66aabf57aa7de4b7 ]
+[ Upstream commit 7c2e86f7b5af93d0e78c16e4359318fe7797671d ]
 
-This driver implements both the determine_rate() and round_rate() clk
-ops, and the round_rate() clk ops is deprecated. When both are defined,
-clk_core_determine_round_nolock() from the clk core will only use the
-determine_rate() clk ops.
+The output clock register offset used in clk_wzrd_register_output_clocks
+was incorrectly referencing 0x3C instead of 0x38, which caused
+misconfiguration of output dividers on Versal platforms.
 
-The existing scmi_clk_determine_rate() is a noop implementation that
-lets the firmware round the rate as appropriate. Drop the existing
-determine_rate implementation and convert the existing round_rate()
-implementation over to determine_rate().
+Correcting the off-by-one error ensures proper configuration of output
+clocks.
 
-scmi_clk_determine_rate() was added recently when the clock parent
-support was added, so it's not expected that this change will regress
-anything.
-
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Peng Fan <peng.fan@nxp.com> #i.MX95-19x19-EVK
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES The patch restores the SCMI clock driver's ability to return a valid
-rounded rate when the framework asks for it.
+YES – the change in `drivers/clk/xilinx/clk-xlnx-clock-wizard.c:1120`
+moves the Versal per-output divider base from
+`WZRD_CLK_CFG_REG(is_versal, 3)` to `... 2`, fixing the off-by-one that
+pointed each divider at the wrong MMIO pair.
 
-- With the regression-introducing stub in `scmi_clk_determine_rate()`
-  every request fell through without touching `req->rate`, so
-  `clk_core_determine_round_nolock()` would return the caller’s original
-  value whenever both ops were present (`drivers/clk/clk.c:1596-1613`),
-  making `clk_round_rate()` lie about the hardware outcome on platforms
-  that advertise min/max/step limits.
-- The new implementation in `drivers/clk/clk-scmi.c:57-90` moves the
-  logic that used to live in `.round_rate()` into `.determine_rate()`,
-  clamping to `min_rate`/`max_rate` and quantising by `step_size`,
-  exactly reproducing the behaviour that worked before the noop
-  `determine_rate()` was introduced.
-- Discrete-rate clocks remain unchanged—the function still bails out
-  early (`drivers/clk/clk-scmi.c:63-71`), matching the old behaviour—and
-  the ops table simply stops advertising the deprecated `.round_rate()`
-  callback (`drivers/clk/clk-scmi.c:299-304`), so risk is minimal and
-  confined to SCMI clocks.
-- The bug has shipped since the recent parent-support work (first seen
-  in v6.10), so stable kernels carrying that change are returning
-  incorrect values to consumers today.
+- With the old offset, `clk_wzrd_ver_register_divider()` handed
+  `clk_wzrd_ver_dynamic_reconfig()` a base that skips the first 32-bit
+  register. You can see in `clk_wzrd_ver_dynamic_reconfig()`
+  (`drivers/clk/xilinx/clk-xlnx-clock-wizard.c:235-262`) that we expect
+  `div_addr` to hold the low/high-time bits (`WZRD_CLKFBOUT_PREDIV2`,
+  `WZRD_EDGE_SHIFT`, etc.) and we write the high-time value to `div_addr
+  + 4`. Starting from `... + 3` caused us to read/write the wrong
+  register pair—programming the high-time word first and then trampling
+  the next output’s low-time register—so the dividers for every Versal
+  output were misconfigured.
+- The corrected offset now matches the register map already hard-coded
+  elsewhere (e.g., the `DIV_ALL` path in
+  `clk_wzrd_dynamic_ver_all_nolock()` uses `WZRD_CLK_CFG_REG(1,
+  WZRD_CLKOUT0_1)` where `WZRD_CLKOUT0_1` is 2). That consistency makes
+  the fix obviously right and keeps the non-Versal path untouched
+  because the change sits under `if (is_versal)`.
+- The regression was introduced with Versal support (`Fixes:
+  3a96393a46e78`, first in v6.10), so every stable branch carrying that
+  commit currently ships broken output clocks; the patch is a tiny,
+  self-contained offset adjustment and does not depend on newer
+  infrastructure, making it straightforward to backport.
 
-Because this is a regression fix with low risk and no architectural
-churn, it is a good candidate for backporting to every stable series
-that contains the broken noop `determine_rate()`.
+Given the severity (Versal outputs can’t be programmed correctly) and
+the minimal, well-scoped fix, this is a strong stable-candidate.
+Suggested follow-up: once backported, validate on a Versal board to
+confirm the dividers now lock to requested rates.
 
- drivers/clk/clk-scmi.c | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-index d2408403283fc..78dd2d9c7cabd 100644
---- a/drivers/clk/clk-scmi.c
-+++ b/drivers/clk/clk-scmi.c
-@@ -54,8 +54,8 @@ static unsigned long scmi_clk_recalc_rate(struct clk_hw *hw,
- 	return rate;
- }
- 
--static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
--				unsigned long *parent_rate)
-+static int scmi_clk_determine_rate(struct clk_hw *hw,
-+				   struct clk_rate_request *req)
- {
- 	u64 fmin, fmax, ftmp;
- 	struct scmi_clk *clk = to_scmi_clk(hw);
-@@ -67,20 +67,27 @@ static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
- 	 * running at then.
- 	 */
- 	if (clk->info->rate_discrete)
--		return rate;
-+		return 0;
- 
- 	fmin = clk->info->range.min_rate;
- 	fmax = clk->info->range.max_rate;
--	if (rate <= fmin)
--		return fmin;
--	else if (rate >= fmax)
--		return fmax;
-+	if (req->rate <= fmin) {
-+		req->rate = fmin;
-+
-+		return 0;
-+	} else if (req->rate >= fmax) {
-+		req->rate = fmax;
- 
--	ftmp = rate - fmin;
-+		return 0;
-+	}
-+
-+	ftmp = req->rate - fmin;
- 	ftmp += clk->info->range.step_size - 1; /* to round up */
- 	do_div(ftmp, clk->info->range.step_size);
- 
--	return ftmp * clk->info->range.step_size + fmin;
-+	req->rate = ftmp * clk->info->range.step_size + fmin;
-+
-+	return 0;
- }
- 
- static int scmi_clk_set_rate(struct clk_hw *hw, unsigned long rate,
-@@ -119,15 +126,6 @@ static u8 scmi_clk_get_parent(struct clk_hw *hw)
- 	return p_idx;
- }
- 
--static int scmi_clk_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
--{
--	/*
--	 * Suppose all the requested rates are supported, and let firmware
--	 * to handle the left work.
--	 */
--	return 0;
--}
--
- static int scmi_clk_enable(struct clk_hw *hw)
- {
- 	struct scmi_clk *clk = to_scmi_clk(hw);
-@@ -300,7 +298,6 @@ scmi_clk_ops_alloc(struct device *dev, unsigned long feats_key)
- 
- 	/* Rate ops */
- 	ops->recalc_rate = scmi_clk_recalc_rate;
--	ops->round_rate = scmi_clk_round_rate;
- 	ops->determine_rate = scmi_clk_determine_rate;
- 	if (feats_key & BIT(SCMI_CLK_RATE_CTRL_SUPPORTED))
- 		ops->set_rate = scmi_clk_set_rate;
+diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
+index 0295a13a811cf..f209a02e82725 100644
+--- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
++++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
+@@ -1108,7 +1108,7 @@ static int clk_wzrd_register_output_clocks(struct device *dev, int nr_outputs)
+ 						(dev,
+ 						 clkout_name, clk_name, 0,
+ 						 clk_wzrd->base,
+-						 (WZRD_CLK_CFG_REG(is_versal, 3) + i * 8),
++						 (WZRD_CLK_CFG_REG(is_versal, 2) + i * 8),
+ 						 WZRD_CLKOUT_DIVIDE_SHIFT,
+ 						 WZRD_CLKOUT_DIVIDE_WIDTH,
+ 						 CLK_DIVIDER_ONE_BASED |
 -- 
 2.51.0
 
