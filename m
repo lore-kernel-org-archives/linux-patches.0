@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9701527B4;
-	Sun, 26 Oct 2025 14:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80D1527B4;
+	Sun, 26 Oct 2025 14:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490221; cv=none; b=UrnF9Y982/d+lndCOf+jQArk26P+TjMSC/9Vb0ZbfwsUXAm9XeuSWrnknziVQq5ixLWGTk3iXpDK34Om5LIZ+17e93oq3AZo9CuPofFMQPpGURbifCm4t4saOp7MvjyZ2dKF7nN/KLntlvrWayZfadxSdgsUfgql3kuMHOwY29w=
+	t=1761490222; cv=none; b=ElRShPiR8ysBnWIe5DCJTWeTaqQ5xSDiGlKjUG+jassR7TC3Qck9dY4MB5/CzJBabI4uA1qlJ68vaI2RzszlVjUhx0CmCrve6G4JbFyWOVZMX2T6xdAAKi+bN82gFVNy3cIfWH3/7kliBVAkH1SnZIj3d3t+fhTkhmltoZRE6Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490221; c=relaxed/simple;
-	bh=jMTtq6Xo1XlrvYqcb4wROaYCZBEw5JdAq4ePIhysOLk=;
+	s=arc-20240116; t=1761490222; c=relaxed/simple;
+	bh=nD1RF0zkH787kOGZ392ZfvmB58XUzVJDUKgtF6+ndYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q0m5MjLpGx9kYEmJDEpaXC0lkvhFu4iBm8D6cbRey0oRSn/59rsu1GF84vffk7TNpkn65jHKt2EQP2wsQb4xSrs51e+m50BWR8cTGzECfJynOsYbGKwXc/tHCjB3n3JTbTj7rdxdygO6LREDtB286DbkjlV6BMEjjkyQkhu3iTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G37DIfby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YQORqvcVrxCSnh5kD+jYORpw0EB0IoXqJA2cnoZHkeQgglJRBFKVIhPSBupkWvU8qFGBRbSD8oWbq2FVXv8hRKokyKKw7PBiMvunv9eQNxOk4pz8yFiGEYzDUo4xAr9U7Hbg9AZPMeN3VKKAp7vMj0t6woVq2InvNPKDAUdaYRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rHaEkTvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G37DIfby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94EFC4CEF1;
-	Sun, 26 Oct 2025 14:50:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rHaEkTvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D628C4CEFB;
+	Sun, 26 Oct 2025 14:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490220;
-	bh=jMTtq6Xo1XlrvYqcb4wROaYCZBEw5JdAq4ePIhysOLk=;
+	s=k20201202; t=1761490222;
+	bh=nD1RF0zkH787kOGZ392ZfvmB58XUzVJDUKgtF6+ndYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G37DIfbyVj9pg2udsJc3AEnkoKA10XRbnPRlHhoFqW9GgI+TZklVde0cQBOzAShGW
-	 rgWCpL5G2HsfPSk1rraanJh1i/f8jY3wz23PY3ASwFYgGaFFOglvn/zCUd+UNqPecG
-	 hCE/1Pm223Q90HIdelf5OpwUugadxP4MwhTeDVJBy+WRo/UFnFUELMuB/WQmDpOJFO
-	 7cyRHMgSxH6C+f6cEdylPoz/j6xRv/N4ZPtgn6CVWsoKTUPvgJ9Ij45k3UKjgY4wxt
-	 skmdSKJJilfllhWtrmeY1r3BiZyEId3x8fpMMLF+dgdnLaoAF3nXcaYXsGw0R301gm
-	 x0ApNbId5USnQ==
+	b=rHaEkTvlcq9VG3R1/C7Jz/v//zwA2jHssbsnmDrD8uJhIj4JoMthg+NFCjbuJgKfs
+	 GNuUEUFK9F89nEVOJ5Uow0OhtIcZC1Qun7RYAji0fqxer9bm8TC2XCv80NWze9h0Qa
+	 vR8l+HpOCw78VetAApeZGzKDrxjUeXb+AaskLgQAlFgTTV4a+dFifwCrdv2i+ji0Jm
+	 h6Gmw8tjLuSX1MQ4Qq2IGYnkYYoEt16hY4EDDUGyCzX/w2KYrs5kWOsbC9ayOiI1Ey
+	 NlX30vg+TOGGS168/vcatse4hcTtBSKhubdyVO0GIdUCtOHzzW7kYMHavEyEjQ3PDF
+	 fGjur8+3G01RA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Valerio Setti <vsetti@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Yikang Yue <yikangy2@illinois.edu>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	khilman@baylibre.com,
-	linux-sound@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-amlogic@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.10] ASoC: meson: aiu-encoder-i2s: fix bit clock polarity
-Date: Sun, 26 Oct 2025 10:48:49 -0400
-Message-ID: <20251026144958.26750-11-sashal@kernel.org>
+	mikulas@artax.karlin.mff.cuni.cz
+Subject: [PATCH AUTOSEL 6.17-5.4] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
+Date: Sun, 26 Oct 2025 10:48:50 -0400
+Message-ID: <20251026144958.26750-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -56,78 +51,112 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Valerio Setti <vsetti@baylibre.com>
+From: Yikang Yue <yikangy2@illinois.edu>
 
-[ Upstream commit 4c4ed5e073a923fb3323022e1131cb51ad8df7a0 ]
+[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
 
-According to I2S specs audio data is sampled on the rising edge of the
-clock and it can change on the falling one. When operating in normal mode
-this SoC behaves the opposite so a clock polarity inversion is required
-in this case.
+The function call new_inode() is a primitive for allocating an inode in memory,
+rather than planning disk space for it. Therefore, -ENOMEM should be returned
+as the error code rather than -ENOSPC.
 
-This was tested on an OdroidC2 (Amlogic S905 SoC) board.
+To be specific, new_inode()'s call path looks like this:
+new_inode
+  new_inode_pseudo
+    alloc_inode
+      ops->alloc_inode (hpfs_alloc_inode)
+        alloc_inode_sb
+          kmem_cache_alloc_lru
 
-Signed-off-by: Valerio Setti <vsetti@baylibre.com>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Tested-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20251007-fix-i2s-polarity-v1-1-86704d9cda10@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
+not a lack of disk space. However, the current implementation of
+hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
+This patch fix this by set err to -ENOMEM before the goto statement.
+
+BTW, we also noticed that other nested calls within these four functions,
+like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
+But similarly, only -ENOSPC is returned. Addressing these will involve code
+modifications in other functions, and we plan to submit dedicated patches for these
+issues in the future. For this patch, we focus on new_inode().
+
+Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – this change fixes a long-standing functional bug with the Meson
-AIU I²S encoder and is low risk to backport.
-- The updated `aiu_encoder_i2s_set_fmt()` now inverts the bit clock
-  whenever the DAI format requests the normal (non-inverted) polarity
-  (`SND_SOC_DAIFMT_NB_*`), matching the hardware quirk described in the
-  new comment (`sound/soc/meson/aiu-encoder-i2s.c:239-245`). Without
-  this inversion, the CPU-side master drives BCLK so that data toggles
-  on the rising edge, which makes all mainline DT users (e.g. Odroid C2)
-  sample on the wrong edge and yields audible corruption.
-- Frames (`LRCLK`) are still handled exactly as before, and the fix only
-  flips which `inv` combinations set `AIU_CLK_CTRL_AOCLK_INVERT`, so
-  `IB_*` formats continue to work as they already matched the SoC’s
-  “inverted” default.
-- The change is tightly scoped to one helper in the Meson AIU encoder
-  driver, leaves register programming and clock sequencing untouched,
-  and has been validated on real hardware per the commit log.
-- Mainline device trees for this DAI all rely on the default `NB_NF`
-  format, so the bug is user-visible today; there are no dependency or
-  API concerns blocking stable backporting.
+YES
+- hpfs still preloads `err = -ENOSPC` in each operation, so a
+  `new_inode()` failure is reported as disk space exhaustion; the patch
+  overwrites `err` with `-ENOMEM` before bailing in `hpfs_mkdir()`
+  (`fs/hpfs/namei.c:54`), `hpfs_create()` (`fs/hpfs/namei.c:157`),
+  `hpfs_mknod()` (`fs/hpfs/namei.c:244`), and `hpfs_symlink()`
+  (`fs/hpfs/namei.c:320`).
+- `new_inode()` can only fail because the slab allocation chain
+  `new_inode()` → `alloc_inode()` (`fs/inode.c:1145`, `fs/inode.c:340`)
+  → `alloc_inode_sb()` (`include/linux/fs.h:3407`) returns `NULL` on
+  memory pressure, so `-ENOMEM` is the correct status; returning
+  `-ENOSPC` misleads user space and scripts about the root cause.
+- This is a clean, localized bug fix with no behavioral risk beyond
+  correcting the errno, so it fits stable backport guidelines.
 
-Suggested follow-up: 1) Run a quick playback sanity test on an Odroid C2
-(or any Meson GX board using the AIU encoder) after backporting to
-confirm audio becomes clean.
+ fs/hpfs/namei.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
- sound/soc/meson/aiu-encoder-i2s.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/sound/soc/meson/aiu-encoder-i2s.c b/sound/soc/meson/aiu-encoder-i2s.c
-index a0dd914c8ed13..3b4061508c180 100644
---- a/sound/soc/meson/aiu-encoder-i2s.c
-+++ b/sound/soc/meson/aiu-encoder-i2s.c
-@@ -236,8 +236,12 @@ static int aiu_encoder_i2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
- 	    inv == SND_SOC_DAIFMT_IB_IF)
- 		val |= AIU_CLK_CTRL_LRCLK_INVERT;
+diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
+index e3cdc421dfba7..353e13a615f56 100644
+--- a/fs/hpfs/namei.c
++++ b/fs/hpfs/namei.c
+@@ -52,8 +52,10 @@ static struct dentry *hpfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.fnode = cpu_to_le32(fno);
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail2;
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -153,9 +155,10 @@ static int hpfs_create(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
--	if (inv == SND_SOC_DAIFMT_IB_NF ||
--	    inv == SND_SOC_DAIFMT_IB_IF)
-+	/*
-+	 * The SoC changes data on the rising edge of the bitclock
-+	 * so an inversion of the bitclock is required in normal mode
-+	 */
-+	if (inv == SND_SOC_DAIFMT_NB_NF ||
-+	    inv == SND_SOC_DAIFMT_NB_IF)
- 		val |= AIU_CLK_CTRL_AOCLK_INVERT;
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-	
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	result->i_mode |= S_IFREG;
+@@ -239,9 +242,10 @@ static int hpfs_mknod(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
- 	/* Signal skew */
-@@ -328,4 +332,3 @@ const struct snd_soc_dai_ops aiu_encoder_i2s_dai_ops = {
- 	.startup	= aiu_encoder_i2s_startup,
- 	.shutdown	= aiu_encoder_i2s_shutdown,
- };
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
 -
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -314,8 +318,10 @@ static int hpfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
++	}
+ 	result->i_ino = fno;
+ 	hpfs_init_inode(result);
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
 -- 
 2.51.0
 
