@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10960248F58;
-	Sun, 26 Oct 2025 14:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950A4248F58;
+	Sun, 26 Oct 2025 14:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490242; cv=none; b=cGmSi3u3rWr+nGgwy+S7ywov/rsauxSHcFzVRVdy0/ODuXOnG2IlLl75RM6bhGHZ/oT8frgB9SH7FJJs7sRZIEdbvnzXDK3uPCYeXpGaHfgmg+tiyo9uI1pc50Ae6DvIW9dzY6BefwUr0ApxFD6uhm6RUaGZZ74HgtbAC0/hjKo=
+	t=1761490244; cv=none; b=skpoiVD7fO80ruQXs5DeQmxomML23DF09cvOoYPQv3K8NJqa98NPIWBwLar4V7pJzh5zBkYlrSYFFfKCD/NTF8yqmkrVQzTXo/zM5qvUnNBCYGob0PaAGcBBvEWD2WMyTBMYK6TLYEK081FeiBFG1/RaVmf0uxOKBsFgW3WghHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490242; c=relaxed/simple;
-	bh=B6TTp9htOTtjCgFPG/S4E5+x6iGd3SFmBjkH5WLx/J8=;
+	s=arc-20240116; t=1761490244; c=relaxed/simple;
+	bh=hItZ/nQ92TYBe6pBH4hVPjO4G4EKPIeoQBm01mngkUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=osQiorqMFCqaITQp2vxCzpwZaTEqCZU5vN2GYxHXYJ1epI/tkqh926Z3QKPyaga0PC1+4VxVNmN0JLhLwQhwpziEat9raOVT1OVQNj0SoNmsxlFzHWNpSVCjis5ySOXm3BXAX/tS0CZiPvB7n2KXEJHdasFu0Bi8Aq2s1mKipr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=efw+Tat/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qZZpPPXrcvlaqJM2L/n9mueSMrMynTRffJtsRmIEs9XxGP2iidxYy5Rdynyl27AGf2KzxE78PRRmeU6iguicufNOFx5uudpFOzxEp1Z7iumNdhuok2K/6WghMg44o3OfllYrGq7Xe/5lLmEtx/4V8vGi+gu0uXpGNUL/URkDgV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Spr1Z5PU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="efw+Tat/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CD4C4CEF1;
-	Sun, 26 Oct 2025 14:50:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Spr1Z5PU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2F3C4CEE7;
+	Sun, 26 Oct 2025 14:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490241;
-	bh=B6TTp9htOTtjCgFPG/S4E5+x6iGd3SFmBjkH5WLx/J8=;
+	s=k20201202; t=1761490244;
+	bh=hItZ/nQ92TYBe6pBH4hVPjO4G4EKPIeoQBm01mngkUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efw+Tat/3zc+LG5JMYPEvsnm7uuIQUY9iNNKm4T6vXGn0VYVBjWV/4X7rhNip/6FO
-	 rph9ms1/I4/uAxWT55AihACodR04rEm6ecTzK/fq7ZW8YHyWz7URkHAsPLkG+pDYQq
-	 5CFi7oYZkIonZwL2jIliwkGx4Mr8pQMnatadP8+dKMMAJFgDfGsSTglYFI+ipOB7X6
-	 IOlzy6LVlEtXaATmoMoLAz7KwGWjvtzDtbTu8Wb7dty7B+M+sjp04UqXSGbnEiEM9M
-	 QCpzXgD9xZyo3bUrBrMD1EJnXjn87xXXyTfw2StZhAAduBP30ytNIIngrSR28Dc7HI
-	 XNtZyLLp720rA==
+	b=Spr1Z5PU84EpzX657iBqm6cwWik5vbViMndsC0Q25wvuZBxlwXuGf7VeoKegI5DSZ
+	 ny56iNpul/+OOUuafebJv+tUmXt4eJktAqL6UzdLg8W7SfFW5Ms+Mm33MKoipp2zOJ
+	 7xSP4uL2ZadYKAPdXrz556tflK+X0aUOWwyRO18m8WWMMoX1Rsy/9eyWPLtn6I3pRK
+	 LaGRz9FKNTj3oRFWyY6fCpVhmABStkavwUzgEFA9oWxxJyLWmt3Ggyuu7K8OyRpQ6P
+	 U69n7CX13DCvKJVSs2NEHkCzFOqxjSRoSkvbyAHalmcf1rkveZyE0S/ISezlXhZPm5
+	 i/yNMkCWYufUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bruno Thomsen <bruno.thomsen@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Ryan Wanner <Ryan.Wanner@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rtc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.6] rtc: pcf2127: fix watchdog interrupt mask on pcf2131
-Date: Sun, 26 Oct 2025 10:48:56 -0400
-Message-ID: <20251026144958.26750-18-sashal@kernel.org>
+	alexandre.belloni@bootlin.com,
+	claudiu.beznea@tuxon.dev,
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.15] clk: at91: clk-master: Add check for divide by 3
+Date: Sun, 26 Oct 2025 10:48:57 -0400
+Message-ID: <20251026144958.26750-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -51,74 +55,59 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bruno Thomsen <bruno.thomsen@gmail.com>
+From: Ryan Wanner <Ryan.Wanner@microchip.com>
 
-[ Upstream commit 87064da2db7be537a7da20a25c18ba912c4db9e1 ]
+[ Upstream commit e0237f5635727d64635ec6665e1de9f4cacce35c ]
 
-When using interrupt pin (INT A) as watchdog output all other
-interrupt sources need to be disabled to avoid additional
-resets. Resulting INT_A_MASK1 value is 55 (0x37).
+A potential divider for the master clock is div/3. The register
+configuration for div/3 is MASTER_PRES_MAX. The current bit shifting
+method does not work for this case. Checking for MASTER_PRES_MAX will
+ensure the correct decimal value is stored in the system.
 
-Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Link: https://lore.kernel.org/r/20250902182235.6825-1-bruno.thomsen@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES — this change should go to stable.
+YES – the change fixes a real bug in the sama7g5 master clock code with
+minimal risk.
 
-- `drivers/rtc/rtc-pcf2127.c:611-623` now masks every INT A source
-  except the watchdog bit on PCF2131 when `reset-source` is in use, so
-  the INT A pin stays dedicated to driving the external reset pulse
-  instead of reasserting on alarm/periodic/tamper events.
-- Before this fix, `drivers/rtc/rtc-pcf2127.c:1174-1182` left all INT A
-  mask bits cleared, and the probe path unconditionally enables several
-  interrupt sources (see `pcf2127_enable_ts()` at `drivers/rtc/rtc-
-  pcf2127.c:1128-1163`). With INT A wired as the watchdog output, any of
-  those interrupts could immediately toggle the line and spuriously
-  reset the system—effectively breaking boards that request
-  watchdog/reset operation.
-- The new masking runs only when CONFIG_WATCHDOG is enabled and the DT
-  property requests watchdog output (`drivers/rtc/rtc-
-  pcf2127.c:575-617`), so normal RTC users keep their interrupt
-  functionality. If the write were to fail, behaviour simply falls back
-  to the pre-fix state, so the delta carries minimal regression risk.
-- The patch is tiny, self-contained to this driver, and fixes a user-
-  visible bug (unwanted resets) without altering interfaces, making it
-  an appropriate and low-risk stable backport candidate.
+- `clk_sama7g5_master_recalc_rate()` now treats the special register
+  value used for divide-by-3, returning `parent_rate / 3` instead of
+  wrongly shifting by `1 << 7` and reporting a 1/128 rate
+  (drivers/clk/at91/clk-master.c:583). This corrects `clk_get_rate()`
+  for every consumer of the master clock when that divider is active.
+- The rest of the sama7g5 clock logic already maps the same register
+  value to divide-by-3 (e.g. `clk_sama7g5_master_set_rate()` stores
+  `MASTER_PRES_MAX` for a /3 request), so the fix restores consistency
+  in the clock framework and prevents child clocks from inheriting a
+  bogus rate (drivers/clk/at91/clk-master.c:732).
+- Other SoCs using the generic master clock ops are unaffected; the new
+  branch lives only in the sama7g5-specific implementation and matches
+  existing handling of this divider elsewhere in the driver
+  (drivers/clk/at91/clk-master.c:392).
 
-Suggested follow-up for maintainers: consider backporting anywhere
-PCF2131 watchdog/reset support exists alongside unmasked INT A sources.
+Because the bug misreports hardware frequencies and can break downstream
+rate selection, and the fix is self-contained and low risk, this commit
+is a good candidate for stable backporting.
 
- drivers/rtc/rtc-pcf2127.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/clk/at91/clk-master.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
-index 3ba1de30e89c2..bb4fe81d3d62c 100644
---- a/drivers/rtc/rtc-pcf2127.c
-+++ b/drivers/rtc/rtc-pcf2127.c
-@@ -608,6 +608,21 @@ static int pcf2127_watchdog_init(struct device *dev, struct pcf2127 *pcf2127)
- 			set_bit(WDOG_HW_RUNNING, &pcf2127->wdd.status);
- 	}
+diff --git a/drivers/clk/at91/clk-master.c b/drivers/clk/at91/clk-master.c
+index 7a544e429d34e..d5ea2069ec83a 100644
+--- a/drivers/clk/at91/clk-master.c
++++ b/drivers/clk/at91/clk-master.c
+@@ -580,6 +580,9 @@ clk_sama7g5_master_recalc_rate(struct clk_hw *hw,
+ {
+ 	struct clk_master *master = to_clk_master(hw);
  
-+	/*
-+	 * When using interrupt pin (INT A) as watchdog output, only allow
-+	 * watchdog interrupt (PCF2131_BIT_INT_WD_CD) and disable (mask) all
-+	 * other interrupts.
-+	 */
-+	if (pcf2127->cfg->type == PCF2131) {
-+		ret = regmap_write(pcf2127->regmap,
-+				   PCF2131_REG_INT_A_MASK1,
-+				   PCF2131_BIT_INT_BLIE |
-+				   PCF2131_BIT_INT_BIE |
-+				   PCF2131_BIT_INT_AIE |
-+				   PCF2131_BIT_INT_SI |
-+				   PCF2131_BIT_INT_MI);
-+	}
++	if (master->div == MASTER_PRES_MAX)
++		return DIV_ROUND_CLOSEST_ULL(parent_rate, 3);
 +
- 	return devm_watchdog_register_device(dev, &pcf2127->wdd);
+ 	return DIV_ROUND_CLOSEST_ULL(parent_rate, (1 << master->div));
  }
  
 -- 
