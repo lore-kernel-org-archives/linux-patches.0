@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80D1527B4;
-	Sun, 26 Oct 2025 14:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D65B23EA89;
+	Sun, 26 Oct 2025 14:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490222; cv=none; b=ElRShPiR8ysBnWIe5DCJTWeTaqQ5xSDiGlKjUG+jassR7TC3Qck9dY4MB5/CzJBabI4uA1qlJ68vaI2RzszlVjUhx0CmCrve6G4JbFyWOVZMX2T6xdAAKi+bN82gFVNy3cIfWH3/7kliBVAkH1SnZIj3d3t+fhTkhmltoZRE6Q0=
+	t=1761490225; cv=none; b=ANF1zsUsoN4wZYJISb7PkJ2G2CUgCE1TaD9aqI5YPJMOBY9trz63PXQQBOmb1YkAqACGtT6rdWghARcqYtXQ9BGI/nnuEzL04m2zTINn4425QkuJEvD1Elm1LlvHm2s64hULaAPoS/aPdPHYTOty+8cWzlh148iq+v2NsJC1I0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490222; c=relaxed/simple;
-	bh=nD1RF0zkH787kOGZ392ZfvmB58XUzVJDUKgtF6+ndYY=;
+	s=arc-20240116; t=1761490225; c=relaxed/simple;
+	bh=nAPdwis2vsUYx9A+DDlbYAp2acEo+E4+SZdScECi7/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YQORqvcVrxCSnh5kD+jYORpw0EB0IoXqJA2cnoZHkeQgglJRBFKVIhPSBupkWvU8qFGBRbSD8oWbq2FVXv8hRKokyKKw7PBiMvunv9eQNxOk4pz8yFiGEYzDUo4xAr9U7Hbg9AZPMeN3VKKAp7vMj0t6woVq2InvNPKDAUdaYRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rHaEkTvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wgjl3MxkcGRBridC7j3/Ce/4DtN1dUCS+BG/QemK53yoAwgHlfKlmmSfvuXNIouhr1iaMkqj/snchCHZRO9mFMRr6e0J41I1hbRr3hFa126yIvMSqRpn/9VR1MQLV2Eog1Nl9y2JTiP1Yngd00nsljyHbb2MgJIeli7Z7UKWgZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lWVOVw27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rHaEkTvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D628C4CEFB;
-	Sun, 26 Oct 2025 14:50:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lWVOVw27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D088EC4CEE7;
+	Sun, 26 Oct 2025 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490222;
-	bh=nD1RF0zkH787kOGZ392ZfvmB58XUzVJDUKgtF6+ndYY=;
+	s=k20201202; t=1761490225;
+	bh=nAPdwis2vsUYx9A+DDlbYAp2acEo+E4+SZdScECi7/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHaEkTvlcq9VG3R1/C7Jz/v//zwA2jHssbsnmDrD8uJhIj4JoMthg+NFCjbuJgKfs
-	 GNuUEUFK9F89nEVOJ5Uow0OhtIcZC1Qun7RYAji0fqxer9bm8TC2XCv80NWze9h0Qa
-	 vR8l+HpOCw78VetAApeZGzKDrxjUeXb+AaskLgQAlFgTTV4a+dFifwCrdv2i+ji0Jm
-	 h6Gmw8tjLuSX1MQ4Qq2IGYnkYYoEt16hY4EDDUGyCzX/w2KYrs5kWOsbC9ayOiI1Ey
-	 NlX30vg+TOGGS168/vcatse4hcTtBSKhubdyVO0GIdUCtOHzzW7kYMHavEyEjQ3PDF
-	 fGjur8+3G01RA==
+	b=lWVOVw27kIquhwL2M/Je+0DBXAsf9r3fa3XUx/VoLgJbnQehvg9pvr1AjzD1V3srr
+	 zD4ui1Nx5l6yvGnrgJUtfw1JgEyAk+6x4Vi3u+H21na7AR888WcPHjuUsK9rdz+SRo
+	 uskJ+sT6kCJEWwVPwrIf/CCROqpdJUluqj5/pWgwhvYIdytsliL+tJLOGKtLp72izp
+	 7UrprPvpaTXvlD7e8QtlzJ1Z0NDGGlAm5KqZZOSMH3dew2lKONbBe8uftVeQx2wMb/
+	 EW6Cs5OmLYQdet13x5NL5DKjICl5xMlbuiPg4tqgEY1AERGLkIkHstCTsWoCrRWgFs
+	 wVAHBUyNYDchg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yikang Yue <yikangy2@illinois.edu>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mikulas@artax.karlin.mff.cuni.cz
-Subject: [PATCH AUTOSEL 6.17-5.4] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
-Date: Sun, 26 Oct 2025 10:48:50 -0400
-Message-ID: <20251026144958.26750-12-sashal@kernel.org>
+	christian.koenig@amd.com,
+	Hawking.Zhang@amd.com,
+	mario.limonciello@amd.com,
+	alexandre.f.demers@gmail.com,
+	cesun102@amd.com
+Subject: [PATCH AUTOSEL 6.17] drm/amdgpu: Report individual reset error
+Date: Sun, 26 Oct 2025 10:48:51 -0400
+Message-ID: <20251026144958.26750-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -51,112 +56,106 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yikang Yue <yikangy2@illinois.edu>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
+[ Upstream commit 2e97663760e5fb7ee14f399c68e57b894f01e505 ]
 
-The function call new_inode() is a primitive for allocating an inode in memory,
-rather than planning disk space for it. Therefore, -ENOMEM should be returned
-as the error code rather than -ENOSPC.
+If reinitialization of one of the GPUs fails after reset, it logs
+failure on all subsequent GPUs eventhough they have resumed
+successfully.
 
-To be specific, new_inode()'s call path looks like this:
-new_inode
-  new_inode_pseudo
-    alloc_inode
-      ops->alloc_inode (hpfs_alloc_inode)
-        alloc_inode_sb
-          kmem_cache_alloc_lru
+A sample log where only device at 0000:95:00.0 had a failure -
 
-Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
-not a lack of disk space. However, the current implementation of
-hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
-This patch fix this by set err to -ENOMEM before the goto statement.
+	amdgpu 0000:15:00.0: amdgpu: GPU reset(19) succeeded!
+	amdgpu 0000:65:00.0: amdgpu: GPU reset(19) succeeded!
+	amdgpu 0000:75:00.0: amdgpu: GPU reset(19) succeeded!
+	amdgpu 0000:85:00.0: amdgpu: GPU reset(19) succeeded!
+	amdgpu 0000:95:00.0: amdgpu: GPU reset(19) failed
+	amdgpu 0000:e5:00.0: amdgpu: GPU reset(19) failed
+	amdgpu 0000:f5:00.0: amdgpu: GPU reset(19) failed
+	amdgpu 0000:05:00.0: amdgpu: GPU reset(19) failed
+	amdgpu 0000:15:00.0: amdgpu: GPU reset end with ret = -5
 
-BTW, we also noticed that other nested calls within these four functions,
-like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
-But similarly, only -ENOSPC is returned. Addressing these will involve code
-modifications in other functions, and we plan to submit dedicated patches for these
-issues in the future. For this patch, we focus on new_inode().
+To avoid confusion, report the error for each device
+separately and return the first error as the overall result.
 
-Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- hpfs still preloads `err = -ENOSPC` in each operation, so a
-  `new_inode()` failure is reported as disk space exhaustion; the patch
-  overwrites `err` with `-ENOMEM` before bailing in `hpfs_mkdir()`
-  (`fs/hpfs/namei.c:54`), `hpfs_create()` (`fs/hpfs/namei.c:157`),
-  `hpfs_mknod()` (`fs/hpfs/namei.c:244`), and `hpfs_symlink()`
-  (`fs/hpfs/namei.c:320`).
-- `new_inode()` can only fail because the slab allocation chain
-  `new_inode()` → `alloc_inode()` (`fs/inode.c:1145`, `fs/inode.c:340`)
-  → `alloc_inode_sb()` (`include/linux/fs.h:3407`) returns `NULL` on
-  memory pressure, so `-ENOMEM` is the correct status; returning
-  `-ENOSPC` misleads user space and scripts about the root cause.
-- This is a clean, localized bug fix with no behavioral risk beyond
-  correcting the errno, so it fits stable backport guidelines.
+- The fix makes `amdgpu_device_sched_resume()` report failures per-
+  device by gating the failure path on `tmp_adev->asic_reset_res` and
+  logging the GPU-specific errno
+  (`drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6341-6356`). Without
+  this, once any GPU in an XGMI hive fails to reinitialize, every
+  subsequent GPU is logged — and reported to SR-IOV guests — as failed
+  even when it succeeds, exactly matching the problem described in the
+  commit message.
+- `amdgpu_vf_error_put()` now receives the correct GPU’s error code,
+  preventing benign devices from being flagged as reset failures to the
+  management stack
+  (`drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6354-6356`).
+- By only recording the first non-zero `r` and leaving later successful
+  devices untouched
+  (`drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:6357-6359`), the overall
+  reset outcome still reflects a real fault while no longer clobbering
+  it with spurious data.
+- The change is self-contained (single function, no new APIs, no
+  behavior change for the success path), so regression risk is minimal,
+  yet it fixes a real user-visible bug in multi-GPU recovery flows—clear
+  stable-tree material.
 
- fs/hpfs/namei.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 25 +++++++++++++---------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
-index e3cdc421dfba7..353e13a615f56 100644
---- a/fs/hpfs/namei.c
-+++ b/fs/hpfs/namei.c
-@@ -52,8 +52,10 @@ static struct dentry *hpfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 	dee.fnode = cpu_to_le32(fno);
- 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
- 	result = new_inode(dir->i_sb);
--	if (!result)
-+	if (!result) {
-+		err = -ENOMEM;
- 		goto bail2;
-+	}
- 	hpfs_init_inode(result);
- 	result->i_ino = fno;
- 	hpfs_i(result)->i_parent_dir = dir->i_ino;
-@@ -153,9 +155,10 @@ static int hpfs_create(struct mnt_idmap *idmap, struct inode *dir,
- 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index c8459337fcb89..690bda2ab8d2b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -6338,23 +6338,28 @@ static int amdgpu_device_sched_resume(struct list_head *device_list,
+ 		if (!drm_drv_uses_atomic_modeset(adev_to_drm(tmp_adev)) && !job_signaled)
+ 			drm_helper_resume_force_mode(adev_to_drm(tmp_adev));
  
- 	result = new_inode(dir->i_sb);
--	if (!result)
-+	if (!result) {
-+		err = -ENOMEM;
- 		goto bail1;
--	
-+	}
- 	hpfs_init_inode(result);
- 	result->i_ino = fno;
- 	result->i_mode |= S_IFREG;
-@@ -239,9 +242,10 @@ static int hpfs_mknod(struct mnt_idmap *idmap, struct inode *dir,
- 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
- 
- 	result = new_inode(dir->i_sb);
--	if (!result)
-+	if (!result) {
-+		err = -ENOMEM;
- 		goto bail1;
+-		if (tmp_adev->asic_reset_res)
+-			r = tmp_adev->asic_reset_res;
 -
-+	}
- 	hpfs_init_inode(result);
- 	result->i_ino = fno;
- 	hpfs_i(result)->i_parent_dir = dir->i_ino;
-@@ -314,8 +318,10 @@ static int hpfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
- 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
- 
- 	result = new_inode(dir->i_sb);
--	if (!result)
-+	if (!result) {
-+		err = -ENOMEM;
- 		goto bail1;
-+	}
- 	result->i_ino = fno;
- 	hpfs_init_inode(result);
- 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+-		tmp_adev->asic_reset_res = 0;
+-
+-		if (r) {
++		if (tmp_adev->asic_reset_res) {
+ 			/* bad news, how to tell it to userspace ?
+ 			 * for ras error, we should report GPU bad status instead of
+ 			 * reset failure
+ 			 */
+ 			if (reset_context->src != AMDGPU_RESET_SRC_RAS ||
+ 			    !amdgpu_ras_eeprom_check_err_threshold(tmp_adev))
+-				dev_info(tmp_adev->dev, "GPU reset(%d) failed\n",
+-					atomic_read(&tmp_adev->gpu_reset_counter));
+-			amdgpu_vf_error_put(tmp_adev, AMDGIM_ERROR_VF_GPU_RESET_FAIL, 0, r);
++				dev_info(
++					tmp_adev->dev,
++					"GPU reset(%d) failed with error %d \n",
++					atomic_read(
++						&tmp_adev->gpu_reset_counter),
++					tmp_adev->asic_reset_res);
++			amdgpu_vf_error_put(tmp_adev,
++					    AMDGIM_ERROR_VF_GPU_RESET_FAIL, 0,
++					    tmp_adev->asic_reset_res);
++			if (!r)
++				r = tmp_adev->asic_reset_res;
++			tmp_adev->asic_reset_res = 0;
+ 		} else {
+-			dev_info(tmp_adev->dev, "GPU reset(%d) succeeded!\n", atomic_read(&tmp_adev->gpu_reset_counter));
++			dev_info(tmp_adev->dev, "GPU reset(%d) succeeded!\n",
++				 atomic_read(&tmp_adev->gpu_reset_counter));
+ 			if (amdgpu_acpi_smart_shift_update(tmp_adev,
+ 							   AMDGPU_SS_DEV_D0))
+ 				dev_warn(tmp_adev->dev,
 -- 
 2.51.0
 
