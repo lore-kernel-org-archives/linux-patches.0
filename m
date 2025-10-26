@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B867321255B;
-	Sun, 26 Oct 2025 14:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1944C21255B;
+	Sun, 26 Oct 2025 14:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490281; cv=none; b=ip7IF5iUQiw5x1sY3bCc8uyJuuAP9u/armmtcZjh8Y4dCi2XDtuFG6rAxzbbIHOS+5jSKw/qVMeMBhjkwsA6Z3+kxgzDwikoNNwNylFgQI5w5DJJ1JjOIlZj0+avrDA4aDE2MDwN1TVM06gbyPqimenBDljLJssD0RLYZG7UnRY=
+	t=1761490283; cv=none; b=pvsDp/YThwwy0QDbJZcMT67bqHvArFMXvjI3oUHOzHYgFGqsuVXUb55RTBIlrCgwcVziXcSXfMf7okvR+NMcExklSYpr8FQQ7uzkdyTVBzlpaxKhnQc2qS0bpfEm2rRltc/fEAWK8ESWmBaGjYHj25yOfD35gU8dGmy6nefDqsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490281; c=relaxed/simple;
-	bh=6OSW80ODX/+DPFmwrdr1NBBw2wtaMF99V8+T407di4k=;
+	s=arc-20240116; t=1761490283; c=relaxed/simple;
+	bh=6TWHTS7reub2A02Su6wGVDL/IsI4EyEuJgfG8j6eSR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tjxci/ZwxIqucXLXyC/1ek5AGHhmQFk+TxL/qBfAXFGtUc5vGpLiOdOTzKsn5WBl8bxYRftvOAayU0gDSG3KDhBXKtuS1AZfhNeSghCjCEzWv7Gev1w56/wl5pVrycPbu6ZlzwebJ/3+G9PBnAaQVul6RtfqegzocsCthy09em4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gtgAL0fF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eFrA4bf7V2398LEVvutJcvfWXna6rzXjUCemYWJnP8i1Jyjs8bzul1F0UqjxJwkZ1c984pp15MR8Ct8qQU6H0hAPKgc48spJr7qvwoY35yxKHrG2CL6u2flO7NKACk+BxtxgQ9O3l3mVXToxzBh83soFwjyZnpNYwXGlghnDp3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HKMQXkDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gtgAL0fF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF2DC4CEE7;
-	Sun, 26 Oct 2025 14:51:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HKMQXkDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F826C4CEF1;
+	Sun, 26 Oct 2025 14:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490281;
-	bh=6OSW80ODX/+DPFmwrdr1NBBw2wtaMF99V8+T407di4k=;
+	s=k20201202; t=1761490283;
+	bh=6TWHTS7reub2A02Su6wGVDL/IsI4EyEuJgfG8j6eSR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtgAL0fFSaUhB0X9DH1E0KYo7THFR5qkYAd0V6N5vPjPXvDg9Nm7aVutRy30dDCCr
-	 5mdKEMuZpJF2q2kfMNcJ9yV9m7oBDXt7gfC241mu5/mfSQX6+GcAFqqYJ3sd42ZG8c
-	 bHZlMojs+AtU5E1w4M2RMnJ4zKM7XaeV/y2Od/QOpclPXyq6m2IAp6h7LGLBpBwPsC
-	 AFfnm+vChNcgJofsJGm3rvIdACv07+M51Lp9C3uMRM+dWbQPO5AAC6gI+OgWe4KlQP
-	 Tze2guZouTRKLdjQAI5rP+t3ckFalxbxiW5bOI62W8uvGdS0tuCtWmPm4YNMyuk8js
-	 ZJNK9f+ZGUgdg==
+	b=HKMQXkDZR8iRmAzhaf5BY+bG0Xm3tI+zQGBvB1U4g19NIsqwMjL//j8Ok7Y6ltNpx
+	 7msvA5TH1b4mbohAgDyTedG6IT8mkNVSwIYa6L1NZzIl+BprysTPjU4zL9FACaFLLk
+	 dSRil39mhZugxxI0JmW3L7aT3V+7IDgQprbNe6OSZhENXKe/ucg0v35SzUbLDwEAV6
+	 U6cdsxLpdd1mUzJeiO/RBQl/DQATfJ7+vPO9A3qLntRHeICcEXJnL4Q91zUxXTzfuJ
+	 /bq381fHjH69kjKxlvw1+NoNhONqmjuyLZmvkOInNnlVTf87KdrxGPq58He/6JDcxa
+	 J4179SZA1Pdog==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hoyoung Seo <hy50.seo@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com,
-	avri.altman@wdc.com
-Subject: [PATCH AUTOSEL 6.17-6.1] scsi: ufs: core: Include UTP error in INT_FATAL_ERRORS
-Date: Sun, 26 Oct 2025 10:49:15 -0400
-Message-ID: <20251026144958.26750-37-sashal@kernel.org>
+	samuel@sholland.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17-6.1] clk: sunxi-ng: sun6i-rtc: Add A523 specifics
+Date: Sun, 26 Oct 2025 10:49:16 -0400
+Message-ID: <20251026144958.26750-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -51,103 +50,87 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hoyoung Seo <hy50.seo@samsung.com>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 558ae4579810fa0fef011944230c65a6f3087f85 ]
+[ Upstream commit 7aa8781f379c32c31bd78f1408a31765b2297c43 ]
 
-When a UTP error occurs in isolation, UFS is not currently recoverable.
-This is because the UTP error is not considered fatal in the error
-handling code, leading to either an I/O timeout or an OCS error.
+The A523's RTC block is backward compatible with the R329's, but it also
+has a calibration function for its internal oscillator, which would
+allow it to provide a clock rate closer to the desired 32.768 KHz. This
+is useful on the Radxa Cubie A5E, which does not have an external 32.768
+KHz crystal.
 
-Add the UTP error flag to INT_FATAL_ERRORS so the controller will be
-reset in this situation.
+Add new compatible-specific data for it.
 
-  sd 0:0:0:0: [sda] tag#38 UNKNOWN(0x2003) Result: hostbyte=0x07
-  driverbyte=DRIVER_OK cmd_age=0s
-  sd 0:0:0:0: [sda] tag#38 CDB: opcode=0x28 28 00 00 51 24 e2 00 00 08 00
-  I/O error, dev sda, sector 42542864 op 0x0:(READ) flags 0x80700 phys_seg
-  8 prio class 2
-  OCS error from controller = 9 for tag 39
-  pa_err[1] = 0x80000010 at 2667224756 us
-  pa_err: total cnt=2
-  dl_err[0] = 0x80000002 at 2667148060 us
-  dl_err[1] = 0x80002000 at 2667282844 us
-  No record of nl_err
-  No record of tl_err
-  No record of dme_err
-  No record of auto_hibern8_err
-  fatal_err[0] = 0x804 at 2667282836 us
-
-  ---------------------------------------------------
-  		REGISTER
-  ---------------------------------------------------
-                             NAME	      OFFSET	         VALUE
-                      STD HCI SFR	  0xfffffff0	           0x0
-                             AHIT	        0x18	         0x814
-                 INTERRUPT STATUS	        0x20	        0x1000
-                 INTERRUPT ENABLE	        0x24	       0x70ef5
-
-[mkp: commit desc]
-
-Signed-off-by: Hoyoung Seo <hy50.seo@samsung.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Message-Id: <20250930061428.617955-1-hy50.seo@samsung.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20250909170947.2221611-1-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 YES
-- `include/ufs/ufshci.h:183` introduces the missing `UTP_ERROR` status
-  bit and the same file at `include/ufs/ufshci.h:199-204` folds it into
-  `INT_FATAL_ERRORS`, so a controller that raises only UTP_ERROR now
-  trips `UFSHCD_ERROR_MASK` instead of being silently ignored.
-- Once in the mask, `ufshcd_sl_intr()` hands that interrupt to
-  `ufshcd_check_errors()` (`drivers/ufs/core/ufshcd.c:7089`), which
-  records the bit (`drivers/ufs/core/ufshcd.c:6948`) and flags it as
-  fatal (`drivers/ufs/core/ufshcd.c:6950`), ensuring error handling runs
-  instead of timing out with hostbyte 0x07/OCS errors as seen in the
-  report.
-- The fatal classification propagates through
-  `ufshcd_is_saved_err_fatal()` (`drivers/ufs/core/ufshcd.c:6444-6447`)
-  into `ufshcd_err_handler()`, forcing the controller reset that is
-  currently the only recovery path; without this one-line change the
-  link never recovers from isolated UTP errors, leaving users with
-  permanent I/O failures.
-- The patch is header-only, touches no normal data-path logic, and
-  merely aligns the interrupt mask with the hardware-defined fatal
-  condition, making the regression risk minimal relative to the
-  unrecoverable bug it resolves; no prerequisite commits are needed for
-  stable backporting.
+- `drivers/clk/sunxi-ng/ccu-sun6i-rtc.c:328-346` adds a dedicated
+  `sun55i_a523_rtc_ccu_data` entry and wires the
+  `"allwinner,sun55i-a523-rtc"` compatible to it, which is already used
+  by the SoC DT (`arch/arm64/boot/dts/allwinner/sun55i-a523.dtsi:683`).
+  Without this entry the node falls back to the R329 table and leaves
+  `have_iosc_calibration` unset, so the SoC never enables its oscillator
+  calibration logic.
+- The calibration flag drives the guard checks in
+  `ccu_iosc_recalc_rate()` and `ccu_iosc_32k_prepare()`
+  (`drivers/clk/sunxi-ng/ccu-sun6i-rtc.c:83-178`). With the flag cleared
+  the internal 32 kHz path keeps the default ±30 % accuracy
+  (`IOSC_ACCURACY`), which is a severe timekeeping bug on boards like
+  the Radxa Cubie A5E that ship without an external 32 kHz crystal.
+- Once the new match data sets `have_iosc_calibration = true`, the probe
+  stores it via `have_iosc_calibration = data->have_iosc_calibration;`
+  in `sun6i_rtc_ccu_probe()` (`drivers/clk/sunxi-ng/ccu-
+  sun6i-rtc.c:352-360`), letting the prepare hook enable
+  `IOSC_CLK_CALI_EN` so the RTC clock actually converges to 32.768 kHz.
+  This directly fixes the observed drift.
+- Risk is minimal: the change is limited to a new compatible entry that
+  reuses the existing R329 parent set and does not alter behaviour for
+  any other SoC. All other compatibles keep their prior data, so
+  regression surface is effectively isolated to hardware that already
+  depends on the new compatible.
 
- include/ufs/ufshci.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu-sun6i-rtc.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/ufs/ufshci.h b/include/ufs/ufshci.h
-index 612500a7088f0..e64b701321010 100644
---- a/include/ufs/ufshci.h
-+++ b/include/ufs/ufshci.h
-@@ -180,6 +180,7 @@ static inline u32 ufshci_version(u32 major, u32 minor)
- #define UTP_TASK_REQ_COMPL			0x200
- #define UIC_COMMAND_COMPL			0x400
- #define DEVICE_FATAL_ERROR			0x800
-+#define UTP_ERROR				0x1000
- #define CONTROLLER_FATAL_ERROR			0x10000
- #define SYSTEM_BUS_FATAL_ERROR			0x20000
- #define CRYPTO_ENGINE_FATAL_ERROR		0x40000
-@@ -199,7 +200,8 @@ static inline u32 ufshci_version(u32 major, u32 minor)
- 				CONTROLLER_FATAL_ERROR |\
- 				SYSTEM_BUS_FATAL_ERROR |\
- 				CRYPTO_ENGINE_FATAL_ERROR |\
--				UIC_LINK_LOST)
-+				UIC_LINK_LOST |\
-+				UTP_ERROR)
+diff --git a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
+index 0536e880b80fe..f6bfeba009e8e 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
++++ b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
+@@ -325,6 +325,13 @@ static const struct sun6i_rtc_match_data sun50i_r329_rtc_ccu_data = {
+ 	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
+ };
  
- /* HCS - Host Controller Status 30h */
- #define DEVICE_PRESENT				0x1
++static const struct sun6i_rtc_match_data sun55i_a523_rtc_ccu_data = {
++	.have_ext_osc32k	= true,
++	.have_iosc_calibration	= true,
++	.osc32k_fanout_parents	= sun50i_r329_osc32k_fanout_parents,
++	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
++};
++
+ static const struct of_device_id sun6i_rtc_ccu_match[] = {
+ 	{
+ 		.compatible	= "allwinner,sun50i-h616-rtc",
+@@ -334,6 +341,10 @@ static const struct of_device_id sun6i_rtc_ccu_match[] = {
+ 		.compatible	= "allwinner,sun50i-r329-rtc",
+ 		.data		= &sun50i_r329_rtc_ccu_data,
+ 	},
++	{
++		.compatible	= "allwinner,sun55i-a523-rtc",
++		.data		= &sun55i_a523_rtc_ccu_data,
++	},
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, sun6i_rtc_ccu_match);
 -- 
 2.51.0
 
