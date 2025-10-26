@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5851B21255B;
-	Sun, 26 Oct 2025 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8769B21255B;
+	Sun, 26 Oct 2025 14:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490287; cv=none; b=ilZNFkJOrM5ztWPcRYGJmn/COu4IdFOSOhlEy8mfFMLNyPbcb19oIGaFuU625lvYiCIatZ9yqFZHKF/a0ERH5wXxIhLBVe5RU1/IAIJVSQyYhQ9YewRK8T2Umx6Wm3dzZf7Cm956y41GtIcTe8tOV1kFe0+ac5ZsQu2s1wkbx8E=
+	t=1761490288; cv=none; b=rFaffMQ/NEu/knfyIi5qxSl3UEKoa0txrVMA0G1tadFBQB0C9qI6Ua01GK/Zp3idVoKyS/5x/j/z0SNCc6CPvlI7XuNrRWoRrNU0S9aZqhoGdqhX87mHE8BVtYWYl3ZhHilyHdT0lhfgKNx8mtj/xq5LzaiirxRzhwDGW0Lqaas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490287; c=relaxed/simple;
-	bh=8nsVpQVtNVpmV3fm9Jme7NuegNhWqMUpue44vydCMqw=;
+	s=arc-20240116; t=1761490288; c=relaxed/simple;
+	bh=GQsSIbbSiGqbxHBpUr35ZkRfeYDE4drKevvvkFsUbIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FCyLktGfpDeRBSmbJHklgZo7pc/nRroE90aKgE4HUmlcmyHOllw+x2nDsEOGA1majw1rBOaR3YvyaH4rl1mzbQgKEAdaJ7NmXlckNNfEGVvxeyO6rL/UQHtT43fZ5Rt3VOXVgLN1I+rdTUWOMEmzLTcBt3CY6CgewpFv/OATpUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V2OW88Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fdqdRUas/GafvcLXALODpF/aDyfd8TsGHNQOBPd9+05yfX10KP8D4hrXEPXLc+1uTKniLpWL9HEehFZ3P4daGEgbQ28Pv17AfoEGTOYL0dAe4N5q/kYehdxp57dXAB0vRwE/1J+EYjrHpPY2XWxrISoNMr/4DUGADc98IhwsOlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdfNygPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V2OW88Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06643C4CEF1;
-	Sun, 26 Oct 2025 14:51:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdfNygPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B122FC4CEE7;
+	Sun, 26 Oct 2025 14:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490287;
-	bh=8nsVpQVtNVpmV3fm9Jme7NuegNhWqMUpue44vydCMqw=;
+	s=k20201202; t=1761490288;
+	bh=GQsSIbbSiGqbxHBpUr35ZkRfeYDE4drKevvvkFsUbIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2OW88DcnU+tMFM74K3zFh6b2on5gymtS5srKNUfc1l0nacUa5zOrlqfAASi5S4qG
-	 BjHcuqqbB5UaY6ICvq8ULZ/caS8IPBz01jqfYUYwQlBco+O9lfnT9tPcfJF1uFZ0ao
-	 xMarniUHXdTOFnkFKkmfiCWa2jZIvOqT0CAZXl/8x1qroCrexMhZG9CAS2Q15shgmQ
-	 0LCQL/vIhadPZBaEYbJyqOGMfyevTOKvM/A73Ci2QBAHz2CSubONXGs63BTzAmV2+l
-	 hSdyzappLcXEc7eNm33dWQVZThSEHiS1I+ZrX4UVei5UiStuD0hMVIMlzqo3kdNIH6
-	 Fglyi4sE8i+kA==
+	b=XdfNygPd1IBhIyDOxHu71HingXGyJv9IVEughrQs6gRyG+5m0Y0Y5vPpA29BrplRi
+	 CwX6Hl0K3903wW95kB6WxPGX+LECI+SYEKIT0TSHXkngIXkCViWqbICV6nW/v/GpTo
+	 jSaB+mRJqlQwa5Fg/SObL3S6DOTLK2Ul800XOoH3ucJd5qSHOOqyrMnhHQo8h1rr28
+	 EuHtGjJHWpEjNN9eaRmJOWMDsPIHbiXOY2DT+CpQgtDJTC/IPdQus6wdDyXUOmdIye
+	 IKbjMEQ6ta3bQcLzO/9kqudF1cwp1nXJIlWOPx8nGEV/0BOFCxi86qD8bxJjcxJ74Y
+	 OXGckA8deLJcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+Cc: Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
-	anatoliy.klymenko@amd.com,
-	alexander.deucher@amd.com,
-	alexandre.f.demers@gmail.com,
-	bmasney@redhat.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.12] clk: clocking-wizard: Fix output clock register offset for Versal platforms
-Date: Sun, 26 Oct 2025 10:49:18 -0400
-Message-ID: <20251026144958.26750-40-sashal@kernel.org>
+	oder_chiou@realtek.com
+Subject: [PATCH AUTOSEL 6.17] ASoC: rt722: add settings for rt722VB
+Date: Sun, 26 Oct 2025 10:49:19 -0400
+Message-ID: <20251026144958.26750-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -56,72 +51,143 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit 7c2e86f7b5af93d0e78c16e4359318fe7797671d ]
+[ Upstream commit a27539810e1e61efcfdeb51777ed875dc61e9d49 ]
 
-The output clock register offset used in clk_wzrd_register_output_clocks
-was incorrectly referencing 0x3C instead of 0x38, which caused
-misconfiguration of output dividers on Versal platforms.
+This patch adds settings for RT722VB.
 
-Correcting the off-by-one error ensures proper configuration of output
-clocks.
-
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20251007080950.1999411-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – the change in `drivers/clk/xilinx/clk-xlnx-clock-wizard.c:1120`
-moves the Versal per-output divider base from
-`WZRD_CLK_CFG_REG(is_versal, 3)` to `... 2`, fixing the off-by-one that
-pointed each divider at the wrong MMIO pair.
+YES
+- Detects silicon revision and stores it in `rt722->hw_vid` so the
+  driver can specialize init for RT722VB
+  (`sound/soc/codecs/rt722-sdca.c:1558`,
+  `sound/soc/codecs/rt722-sdca.h:42`,
+  `sound/soc/codecs/rt722-sdca.h:237`); without this read the firmware
+  treats VB as VA and never applies the vendor-required fixes, leaving
+  VB boards misconfigured (no DMIC/amp/jack functionality).
+- Adds VB-specific register programming in each preset stage
+  (`sound/soc/codecs/rt722-sdca.c:1381`,
+  `sound/soc/codecs/rt722-sdca.c:1421`,
+  `sound/soc/codecs/rt722-sdca.c:1515`) to clear new vendor registers
+  0x2f52/0x2f54/0x2f51; Realtek’s VB parts require these writes to bring
+  up the mic, speaker amp, and jack paths, so existing stable kernels
+  fail on RT722VB hardware.
+- Extends the SDW MBQ map to cover the new 0x2f51–0x2f52 range
+  (`sound/soc/codecs/rt722-sdca-sdw.c:24`), ensuring the regmap accepts
+  those writes; without it, attempted configuration would error out, so
+  the fix cannot be backported piecemeal.
+- Changes are tightly scoped to the Realtek codec driver, gated by the
+  detected revision, and mirror the version-handling pattern already
+  used in other RT71x drivers, keeping regression risk low for existing
+  RT722VA systems while fixing a real user-visible failure on the newer
+  silicon.
 
-- With the old offset, `clk_wzrd_ver_register_divider()` handed
-  `clk_wzrd_ver_dynamic_reconfig()` a base that skips the first 32-bit
-  register. You can see in `clk_wzrd_ver_dynamic_reconfig()`
-  (`drivers/clk/xilinx/clk-xlnx-clock-wizard.c:235-262`) that we expect
-  `div_addr` to hold the low/high-time bits (`WZRD_CLKFBOUT_PREDIV2`,
-  `WZRD_EDGE_SHIFT`, etc.) and we write the high-time value to `div_addr
-  + 4`. Starting from `... + 3` caused us to read/write the wrong
-  register pair—programming the high-time word first and then trampling
-  the next output’s low-time register—so the dividers for every Versal
-  output were misconfigured.
-- The corrected offset now matches the register map already hard-coded
-  elsewhere (e.g., the `DIV_ALL` path in
-  `clk_wzrd_dynamic_ver_all_nolock()` uses `WZRD_CLK_CFG_REG(1,
-  WZRD_CLKOUT0_1)` where `WZRD_CLKOUT0_1` is 2). That consistency makes
-  the fix obviously right and keeps the non-Versal path untouched
-  because the change sits under `if (is_versal)`.
-- The regression was introduced with Versal support (`Fixes:
-  3a96393a46e78`, first in v6.10), so every stable branch carrying that
-  commit currently ships broken output clocks; the patch is a tiny,
-  self-contained offset adjustment and does not depend on newer
-  infrastructure, making it straightforward to backport.
+Next step: 1) Verify audio bring-up on an RT722VB-based platform after
+backport.
 
-Given the severity (Versal outputs can’t be programmed correctly) and
-the minimal, well-scoped fix, this is a strong stable-candidate.
-Suggested follow-up: once backported, validate on a Versal board to
-confirm the dividers now lock to requested rates.
+ sound/soc/codecs/rt722-sdca-sdw.c |  2 +-
+ sound/soc/codecs/rt722-sdca.c     | 14 ++++++++++++++
+ sound/soc/codecs/rt722-sdca.h     |  6 ++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
 
- drivers/clk/xilinx/clk-xlnx-clock-wizard.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-index 0295a13a811cf..f209a02e82725 100644
---- a/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-+++ b/drivers/clk/xilinx/clk-xlnx-clock-wizard.c
-@@ -1108,7 +1108,7 @@ static int clk_wzrd_register_output_clocks(struct device *dev, int nr_outputs)
- 						(dev,
- 						 clkout_name, clk_name, 0,
- 						 clk_wzrd->base,
--						 (WZRD_CLK_CFG_REG(is_versal, 3) + i * 8),
-+						 (WZRD_CLK_CFG_REG(is_versal, 2) + i * 8),
- 						 WZRD_CLKOUT_DIVIDE_SHIFT,
- 						 WZRD_CLKOUT_DIVIDE_WIDTH,
- 						 CLK_DIVIDER_ONE_BASED |
+diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
+index 70700bdb80a14..5ea40c1b159a8 100644
+--- a/sound/soc/codecs/rt722-sdca-sdw.c
++++ b/sound/soc/codecs/rt722-sdca-sdw.c
+@@ -21,7 +21,7 @@ static int rt722_sdca_mbq_size(struct device *dev, unsigned int reg)
+ 	switch (reg) {
+ 	case 0x2f01 ... 0x2f0a:
+ 	case 0x2f35 ... 0x2f36:
+-	case 0x2f50:
++	case 0x2f50 ... 0x2f52:
+ 	case 0x2f54:
+ 	case 0x2f58 ... 0x2f5d:
+ 	case SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT0, RT722_SDCA_CTL_FUNC_STATUS, 0):
+diff --git a/sound/soc/codecs/rt722-sdca.c b/sound/soc/codecs/rt722-sdca.c
+index 333611490ae35..79b8b7e70a334 100644
+--- a/sound/soc/codecs/rt722-sdca.c
++++ b/sound/soc/codecs/rt722-sdca.c
+@@ -1378,6 +1378,9 @@ static void rt722_sdca_dmic_preset(struct rt722_sdca_priv *rt722)
+ 		/* PHYtiming TDZ/TZD control */
+ 		regmap_write(rt722->regmap, 0x2f03, 0x06);
+ 
++		if (rt722->hw_vid == RT722_VB)
++			regmap_write(rt722->regmap, 0x2f52, 0x00);
++
+ 		/* clear flag */
+ 		regmap_write(rt722->regmap,
+ 			SDW_SDCA_CTL(FUNC_NUM_MIC_ARRAY, RT722_SDCA_ENT0, RT722_SDCA_CTL_FUNC_STATUS, 0),
+@@ -1415,6 +1418,9 @@ static void rt722_sdca_amp_preset(struct rt722_sdca_priv *rt722)
+ 			SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT_OT23,
+ 				RT722_SDCA_CTL_VENDOR_DEF, CH_08), 0x04);
+ 
++		if (rt722->hw_vid == RT722_VB)
++			regmap_write(rt722->regmap, 0x2f54, 0x00);
++
+ 		/* clear flag */
+ 		regmap_write(rt722->regmap,
+ 			SDW_SDCA_CTL(FUNC_NUM_AMP, RT722_SDCA_ENT0, RT722_SDCA_CTL_FUNC_STATUS, 0),
+@@ -1506,6 +1512,9 @@ static void rt722_sdca_jack_preset(struct rt722_sdca_priv *rt722)
+ 		rt722_sdca_index_write(rt722, RT722_VENDOR_REG, RT722_DIGITAL_MISC_CTRL4,
+ 			0x0010);
+ 
++		if (rt722->hw_vid == RT722_VB)
++			regmap_write(rt722->regmap, 0x2f51, 0x00);
++
+ 		/* clear flag */
+ 		regmap_write(rt722->regmap,
+ 			SDW_SDCA_CTL(FUNC_NUM_JACK_CODEC, RT722_SDCA_ENT0, RT722_SDCA_CTL_FUNC_STATUS, 0),
+@@ -1516,6 +1525,7 @@ static void rt722_sdca_jack_preset(struct rt722_sdca_priv *rt722)
+ int rt722_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+ {
+ 	struct rt722_sdca_priv *rt722 = dev_get_drvdata(dev);
++	unsigned int val;
+ 
+ 	rt722->disable_irq = false;
+ 
+@@ -1545,6 +1555,10 @@ int rt722_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+ 
+ 	pm_runtime_get_noresume(&slave->dev);
+ 
++	rt722_sdca_index_read(rt722, RT722_VENDOR_REG, RT722_JD_PRODUCT_NUM, &val);
++	rt722->hw_vid = (val & 0x0f00) >> 8;
++	dev_dbg(&slave->dev, "%s hw_vid=0x%x\n", __func__, rt722->hw_vid);
++
+ 	rt722_sdca_dmic_preset(rt722);
+ 	rt722_sdca_amp_preset(rt722);
+ 	rt722_sdca_jack_preset(rt722);
+diff --git a/sound/soc/codecs/rt722-sdca.h b/sound/soc/codecs/rt722-sdca.h
+index 3c383705dd3cd..823abee9ab76c 100644
+--- a/sound/soc/codecs/rt722-sdca.h
++++ b/sound/soc/codecs/rt722-sdca.h
+@@ -39,6 +39,7 @@ struct  rt722_sdca_priv {
+ 	/* For DMIC */
+ 	bool fu1e_dapm_mute;
+ 	bool fu1e_mixer_mute[4];
++	int hw_vid;
+ };
+ 
+ struct rt722_sdca_dmic_kctrl_priv {
+@@ -233,6 +234,11 @@ enum rt722_sdca_jd_src {
+ 	RT722_JD1,
+ };
+ 
++enum rt722_sdca_version {
++	RT722_VA,
++	RT722_VB,
++};
++
+ int rt722_sdca_io_init(struct device *dev, struct sdw_slave *slave);
+ int rt722_sdca_init(struct device *dev, struct regmap *regmap, struct sdw_slave *slave);
+ int rt722_sdca_index_write(struct rt722_sdca_priv *rt722,
 -- 
 2.51.0
 
