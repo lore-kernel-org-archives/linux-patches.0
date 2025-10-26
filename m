@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D302DF13A;
-	Sun, 26 Oct 2025 14:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10960248F58;
+	Sun, 26 Oct 2025 14:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490241; cv=none; b=HWGa6BVADN6GrSRcohBfG+4y5fbFLHeO/p8MHNzSAhaf6SyU1fBu69V84wgXWSh2UQ69q73k+7KYae6wAa517QNleNfDQaZ9i+Eydi6PCViCsObTBPS5TMCocVkYgO+tJmh5xjN9FjwDXCWFkbonUVw+KIRET5Bq2/lbAntg1Bw=
+	t=1761490242; cv=none; b=cGmSi3u3rWr+nGgwy+S7ywov/rsauxSHcFzVRVdy0/ODuXOnG2IlLl75RM6bhGHZ/oT8frgB9SH7FJJs7sRZIEdbvnzXDK3uPCYeXpGaHfgmg+tiyo9uI1pc50Ae6DvIW9dzY6BefwUr0ApxFD6uhm6RUaGZZ74HgtbAC0/hjKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490241; c=relaxed/simple;
-	bh=ZF7t5uIV172t+m2t7jx1vVOLVPSTzJbCEn2iGsK/fNc=;
+	s=arc-20240116; t=1761490242; c=relaxed/simple;
+	bh=B6TTp9htOTtjCgFPG/S4E5+x6iGd3SFmBjkH5WLx/J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PWTVSd/Jv0N7nV37nmA9E7gCDFvGiLZR46Zt5wR0z1gKzfwpAcCZFSbuKlwEADWbMB1HbduXq8O6L9ktqpJlpLuNyHcQnjfHduqNBHuHIEBfcqLYqa4vi6glXRvx6QEsAyj1rHW42pZzyi7xxHFCE/DBK0EhRH6yE3HaYgT1WLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I4uxg9xA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=osQiorqMFCqaITQp2vxCzpwZaTEqCZU5vN2GYxHXYJ1epI/tkqh926Z3QKPyaga0PC1+4VxVNmN0JLhLwQhwpziEat9raOVT1OVQNj0SoNmsxlFzHWNpSVCjis5ySOXm3BXAX/tS0CZiPvB7n2KXEJHdasFu0Bi8Aq2s1mKipr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=efw+Tat/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I4uxg9xA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DC2C4CEFB;
-	Sun, 26 Oct 2025 14:50:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="efw+Tat/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CD4C4CEF1;
+	Sun, 26 Oct 2025 14:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490240;
-	bh=ZF7t5uIV172t+m2t7jx1vVOLVPSTzJbCEn2iGsK/fNc=;
+	s=k20201202; t=1761490241;
+	bh=B6TTp9htOTtjCgFPG/S4E5+x6iGd3SFmBjkH5WLx/J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4uxg9xA1zacNgtEP7WmqVNIbTU38uqiWwkqMQhQ86uA+9vdt08CIgUkWTO6i1LPp
-	 vGHgp7ac1dGy0l5xArTKA7i0ZvHqaV6rn1MKkUT9CKoMNKwaOd+rZsba3U/wQnBr43
-	 zPBi2RVVXiuQRurP5xQYICl2vTJNFKbcrq0nqtDz9yauDBfmzMOvJp8kTD0oOOhcId
-	 KqbQDHImQXCAnbgTXTzJ/Fvh2nZKjh8f2SY9CCCDaoq5g+gHOoSmvTIE8jERwnbXdX
-	 P4/oIH1DMSYInLIH764szsiu4PBGst25GLlqth/plf3MD4qRvsha8/jqKKOM+7RT+H
-	 +ajhiJ0OFsg9Q==
+	b=efw+Tat/3zc+LG5JMYPEvsnm7uuIQUY9iNNKm4T6vXGn0VYVBjWV/4X7rhNip/6FO
+	 rph9ms1/I4/uAxWT55AihACodR04rEm6ecTzK/fq7ZW8YHyWz7URkHAsPLkG+pDYQq
+	 5CFi7oYZkIonZwL2jIliwkGx4Mr8pQMnatadP8+dKMMAJFgDfGsSTglYFI+ipOB7X6
+	 IOlzy6LVlEtXaATmoMoLAz7KwGWjvtzDtbTu8Wb7dty7B+M+sjp04UqXSGbnEiEM9M
+	 QCpzXgD9xZyo3bUrBrMD1EJnXjn87xXXyTfw2StZhAAduBP30ytNIIngrSR28Dc7HI
+	 XNtZyLLp720rA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
+Cc: Bruno Thomsen <bruno.thomsen@gmail.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.10] ARM: at91: pm: save and restore ACR during PLL disable/enable
-Date: Sun, 26 Oct 2025 10:48:55 -0400
-Message-ID: <20251026144958.26750-17-sashal@kernel.org>
+	linux-rtc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] rtc: pcf2127: fix watchdog interrupt mask on pcf2131
+Date: Sun, 26 Oct 2025 10:48:56 -0400
+Message-ID: <20251026144958.26750-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -53,92 +51,76 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Bruno Thomsen <bruno.thomsen@gmail.com>
 
-[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
+[ Upstream commit 87064da2db7be537a7da20a25c18ba912c4db9e1 ]
 
-Add a new word in assembly to store ACR value during the calls
-to at91_plla_disable/at91_plla_enable macros and use it.
+When using interrupt pin (INT A) as watchdog output all other
+interrupt sources need to be disabled to avoid additional
+resets. Resulting INT_A_MASK1 value is 55 (0x37).
 
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
+Link: https://lore.kernel.org/r/20250902182235.6825-1-bruno.thomsen@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – the patch fixes a real suspend/resume regression on the
-SAM9X60-style PLLs and is safe to backport.
+YES — this change should go to stable.
 
-- `arch/arm/mach-at91/pm_suspend.S:693-767` now snapshots the PMC PLL
-  Analog Control Register before disabling PLLA and restores that exact
-  value when the PLL comes back up, instead of blindly reloading the
-  legacy default `0x00020010`. Without this, every suspend cycle
-  overwrote any board-/SoC-specific analog tuning done at boot, so PLLA
-  resumed with the wrong charge-pump/loop-filter settings.
-- The saved word added at `arch/arm/mach-at91/pm_suspend.S:1214-1215` is
-  the only state needed; no other logic changes are introduced.
-- Multiple SAM9X60-family clock descriptions (for example
-  `drivers/clk/at91/sama7g5.c:110-126`,
-  `drivers/clk/at91/sam9x60.c:39-52`) program PLL-specific `acr` values
-  via `clk-sam9x60-pll.c`, and that driver explicitly writes those
-  values into PMC_PLL_ACR before enabling the PLL
-  (`drivers/clk/at91/clk-sam9x60-pll.c:106-134`). After suspend, the old
-  code immediately replaced them with `AT91_PMC_PLL_ACR_DEFAULT_PLLA`,
-  undoing the driver’s configuration and risking unlock or unstable
-  clocks on affected boards.
-- The regression has existed since the original SAM9X60 PLL support
-  (`4fd36e458392`), so every stable kernel that supports these SoCs can
-  lose PLL configuration across low-power transitions. The fix is
-  minimal, architecture-local, and does not alter behaviour on older PMC
-  version 1 platforms because the new code is gated by both the PMC
-  version check and `CONFIG_HAVE_AT91_SAM9X60_PLL`.
+- `drivers/rtc/rtc-pcf2127.c:611-623` now masks every INT A source
+  except the watchdog bit on PCF2131 when `reset-source` is in use, so
+  the INT A pin stays dedicated to driving the external reset pulse
+  instead of reasserting on alarm/periodic/tamper events.
+- Before this fix, `drivers/rtc/rtc-pcf2127.c:1174-1182` left all INT A
+  mask bits cleared, and the probe path unconditionally enables several
+  interrupt sources (see `pcf2127_enable_ts()` at `drivers/rtc/rtc-
+  pcf2127.c:1128-1163`). With INT A wired as the watchdog output, any of
+  those interrupts could immediately toggle the line and spuriously
+  reset the system—effectively breaking boards that request
+  watchdog/reset operation.
+- The new masking runs only when CONFIG_WATCHDOG is enabled and the DT
+  property requests watchdog output (`drivers/rtc/rtc-
+  pcf2127.c:575-617`), so normal RTC users keep their interrupt
+  functionality. If the write were to fail, behaviour simply falls back
+  to the pre-fix state, so the delta carries minimal regression risk.
+- The patch is tiny, self-contained to this driver, and fixes a user-
+  visible bug (unwanted resets) without altering interfaces, making it
+  an appropriate and low-risk stable backport candidate.
 
-Given the clear bug fix, confined scope, and lack of risky side effects,
-this change fits the stable backport criteria. A good follow-up when
-backporting is to run a suspend/resume cycle on a SAM9X60/SAMA7 board to
-confirm PLL lock persists.
+Suggested follow-up for maintainers: consider backporting anywhere
+PCF2131 watchdog/reset support exists alongside unmasked INT A sources.
 
- arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-pcf2127.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index 7e6c94f8edeef..aad53ec9e957b 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -689,6 +689,10 @@ sr_dis_exit:
- 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
- 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
+diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
+index 3ba1de30e89c2..bb4fe81d3d62c 100644
+--- a/drivers/rtc/rtc-pcf2127.c
++++ b/drivers/rtc/rtc-pcf2127.c
+@@ -608,6 +608,21 @@ static int pcf2127_watchdog_init(struct device *dev, struct pcf2127 *pcf2127)
+ 			set_bit(WDOG_HW_RUNNING, &pcf2127->wdd.status);
+ 	}
  
-+	/* save acr */
-+	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
-+	str	tmp2, .saved_acr
++	/*
++	 * When using interrupt pin (INT A) as watchdog output, only allow
++	 * watchdog interrupt (PCF2131_BIT_INT_WD_CD) and disable (mask) all
++	 * other interrupts.
++	 */
++	if (pcf2127->cfg->type == PCF2131) {
++		ret = regmap_write(pcf2127->regmap,
++				   PCF2131_REG_INT_A_MASK1,
++				   PCF2131_BIT_INT_BLIE |
++				   PCF2131_BIT_INT_BIE |
++				   PCF2131_BIT_INT_AIE |
++				   PCF2131_BIT_INT_SI |
++				   PCF2131_BIT_INT_MI);
++	}
 +
- 	/* save div. */
- 	mov	tmp1, #0
- 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
-@@ -758,7 +762,7 @@ sr_dis_exit:
- 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
+ 	return devm_watchdog_register_device(dev, &pcf2127->wdd);
+ }
  
- 	/* step 2. */
--	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
-+	ldr	tmp1, .saved_acr
- 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
- 
- 	/* step 3. */
-@@ -1207,6 +1211,8 @@ ENDPROC(at91_pm_suspend_in_sram)
- #endif
- .saved_mckr:
- 	.word 0
-+.saved_acr:
-+	.word 0
- .saved_pllar:
- 	.word 0
- .saved_sam9_lpr:
 -- 
 2.51.0
 
