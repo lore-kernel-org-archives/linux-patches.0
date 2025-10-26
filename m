@@ -1,65 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239562E8E10;
-	Sun, 26 Oct 2025 14:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21802DF15E;
+	Sun, 26 Oct 2025 14:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490271; cv=none; b=WMzCyLdutVBwpC6cIEruXNrVPbPUXt0o1tkwxobS70nLvFJJ3K530SCj0++sTnmeWuJCArRT13+BlU0WxkfewLQuBueFjyFbTDvAB2q7O2XKqQeXBwETYlsd5LDpoXGR08nE30+4Ug2x/NWC1hCoPt0S8CUWkbrkGxvJ97hEsZ0=
+	t=1761490275; cv=none; b=guvFX9TQlZZV2efrq+otAcnnPSePMtdLyJNz4G1wHxQKoT7tdDAk3gL/nJlAUOhX7rEQhx6/9H0zFVMnnIJdEZRaiuf8A6WD5P4UC/igKCQ/8RHC4ebUWMKiPp4gqEMgUdP1Ep4usQF1CZ/0dFjiHQqVsf3oIMMZBR4kFeBbJnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490271; c=relaxed/simple;
-	bh=mYA0kuEy+iMjCDuLWSe3e9vl19YomaAULcFIHykUdUg=;
+	s=arc-20240116; t=1761490275; c=relaxed/simple;
+	bh=UhPJlnk6oqzw+kXq9UF+FRHpyVYBOApiknhaNghX/Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NXhQLPZ2hNAol1HmvGiu7/ufZJ2d3rJxADYcUDwJOQgu67Qf5KCRp3aIJHlWype7rOT1PhHxNJ/44SgzraALDHHikWSO2Oq03Lvkx8P57P+VlVFDLUdu/0DM8zftWtEhtulxQGEVm3pxFaqWmmumL6rX9TIGysB3f8CG7/M+Ll8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tLyuvgHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sVYcjUSwvwZCJ9t4AXNDFUOwCM6bhlrnEGxyPKPf4xJkLkEX3U/kjHBovkEnvKQfpWYVrEbJghldxffYKNirUHrA/+rdWeiM9Lms+x6CMC9i/7QbSxQmS+QCY9lQdpLBb8ZTeg66/frPqL10GpezYtsA31A7LgJnr8T62m8zup8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pmd2uNgW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tLyuvgHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E63C4CEE7;
-	Sun, 26 Oct 2025 14:51:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pmd2uNgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AC1C4CEE7;
+	Sun, 26 Oct 2025 14:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490271;
-	bh=mYA0kuEy+iMjCDuLWSe3e9vl19YomaAULcFIHykUdUg=;
+	s=k20201202; t=1761490275;
+	bh=UhPJlnk6oqzw+kXq9UF+FRHpyVYBOApiknhaNghX/Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLyuvgHPZ/zaAtoMUy5DWpJp6ZTy4ar01p2AuXHZ+BBJVo9AZU0uu6o65edkRTF4S
-	 BVHdJcs7LTHgzRihNVakE7MK1MsXc1egMODd//QrReO9XEdylJ8NrNkCqc7dkEY4hc
-	 o6gfLHL3QYVWbBtcoiLp/7kBLJf3jc0dHy3hEcM73NIVvmyk4jp2OpkFXAqfGe2igY
-	 8uLoYaYVgF32YnKRZF3OLDN7/7aDWUJiVRKA+v33jrhwr6nKrgC0+wt9Jhq+4CEuVg
-	 dd0gOc+KR9nJkC1mIlM3XD9pH1BM/gM+eI0eg7irga4CIszALB3gyYOkhy1DK7fm7N
-	 IDcxkw7m0YSHg==
+	b=pmd2uNgWLLvB5xjkVMjxf8Oe6ECC+cHXtpg+/JvPqJkQK0OtqdoEfxmnsmyMxNMWG
+	 1RMuZ6bgQDQZONCkEECPWDZ67kNaXJMUi9m1NR6PMros2B1V0pCT6kriF6DvTmBq7j
+	 Ub6zPIlf7yIxIyo7PNnZU4k1QMwKKC0d7+HraDBC1hIsRJ658TpU7HU/AsCw4sIttb
+	 Wow1sih+d6KJ7afPpxalEgAl7DV3zzR+qX85T3ronpEYyiDv3cszzJnSfqpgvrE6ZN
+	 3fEr3Dd0cSQRuE/zTwwBALllugr82i9xs1wEgAtGEDzsbTPxLykDiaK2nn3murN0/o
+	 bI/NHixKrmRhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Rogers <irogers@google.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Darren Hart <dvhart@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jonas Gottlieb <jonas.gottlieb@stackit.cloud>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Maurice Lambert <mauricelambert434@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Machata <petrm@nvidia.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.17-5.4] tools bitmap: Add missing asm-generic/bitsperlong.h include
-Date: Sun, 26 Oct 2025 10:49:11 -0400
-Message-ID: <20251026144958.26750-33-sashal@kernel.org>
+Cc: Adam Holliday <dochollidayxx@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: Add quirk for ASUS ROG Zephyrus Duo
+Date: Sun, 26 Oct 2025 10:49:12 -0400
+Message-ID: <20251026144958.26750-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -69,87 +48,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Adam Holliday <dochollidayxx@gmail.com>
 
-[ Upstream commit f38ce0209ab4553906b44bd1159e35c740a84161 ]
+[ Upstream commit 328b80b29a6a165c47fcc04d2bef3e09ed1d28f9 ]
 
-small_const_nbits is defined in asm-generic/bitsperlong.h which
-bitmap.h uses but doesn't include causing build failures in some build
-systems. Add the missing #include.
+The ASUS ROG Zephyrus Duo 15 SE (GX551QS) with ALC 289 codec requires specific
+pin configuration for proper volume control. Without this quirk, volume
+adjustments produce a muffled sound effect as only certain channels attenuate,
+leaving bass frequency at full volume.
 
-Note the bitmap.h in tools has diverged from that of the kernel, so no
-changes are made there.
+Testing with hdajackretask confirms these pin tweaks fix the issue:
+- Pin 0x17: Internal Speaker (LFE)
+- Pin 0x1e: Internal Speaker
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Yury Norov <yury.norov@gmail.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: André Almeida <andrealmeid@igalia.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Darren Hart <dvhart@infradead.org>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Jason Xing <kerneljasonxing@gmail.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonas Gottlieb <jonas.gottlieb@stackit.cloud>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Maurice Lambert <mauricelambert434@gmail.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Petr Machata <petrm@nvidia.com>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Yuyang Huang <yuyanghuang@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Adam Holliday <dochollidayxx@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-YES – `tools/include/linux/bitmap.h:6` now includes `asm-
-generic/bitsperlong.h`, which is where `small_const_nbits()` lives after
-the 2021 restructuring. Without that include, every inline helper in
-`tools/include/linux/bitmap.h` that uses `small_const_nbits()` (for
-example the very first helper `bitmap_zero()` at
-`tools/include/linux/bitmap.h:34`) leaves translation units like
-`tools/lib/bitmap.c` and numerous perf/selftest sources including this
-header alone with an undefined macro, producing build failures on
-toolchains that don’t happen to pull the header indirectly. This is a
-pure dependency fix with no functional or ABI side effects: the new
-header is already part of the tools copy of the UAPI
-(`tools/include/asm-generic/bitsperlong.h`) and just restores the direct
-include that should have accompanied the earlier macro move. Because it
-fixes an actual build break in user-visible tooling, is tiny and self-
-contained, and has no regression risk beyond adding a required header,
-it is an excellent candidate for stable backporting.
+YES – The change cleanly fixes a user-visible volume-control bug on the
+ASUS ROG Zephyrus Duo 15 SE without touching other systems and should be
+backported.
 
- tools/include/linux/bitmap.h | 1 +
- 1 file changed, 1 insertion(+)
+- `sound/hda/codecs/realtek/alc269.c:3740` appends a new enum ID
+  `ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK` at the end of the fixup list, so
+  no previously assigned indices shift, keeping existing quirks stable.
+- `sound/hda/codecs/realtek/alc269.c:6170-6177` defines the quirk body
+  with `HDA_FIXUP_PINS`, remapping pins 0x17/0x1e to the internal
+  speaker and LFE path; these values match Realtek conventions
+  (`0x9017015x`) and correct the bass channel attenuation defect
+  reported in the commit message.
+- `sound/hda/codecs/realtek/alc269.c:6733` wires the PCI SSID
+  `0x1043:0x1652` for the GX551QS to the new fixup, tightly scoping the
+  change to the affected laptop; other ASUS entries keep their existing
+  fixups.
+- No functional dependencies or architectural changes accompany the
+  quirk—other ALC289 platforms retain their existing chains, and the new
+  entry is not chained to anything else, keeping regression risk
+  minimal.
+- The bug is significant (volume slider leaves bass at full power) and
+  has been validated with hdajackretask, so stable users of this
+  hardware gain a real fix with negligible downside.
 
-diff --git a/tools/include/linux/bitmap.h b/tools/include/linux/bitmap.h
-index d4d300040d019..0d992245c600d 100644
---- a/tools/include/linux/bitmap.h
-+++ b/tools/include/linux/bitmap.h
-@@ -3,6 +3,7 @@
- #define _TOOLS_LINUX_BITMAP_H
+Given the targeted scope, tiny code delta, and user-facing impact, the
+patch satisfies stable backport criteria. Suggested next step: queue for
+the relevant supported stable series.
+
+ sound/hda/codecs/realtek/alc269.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 8fb1a5c6ff6df..28297e936a96f 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3737,6 +3737,7 @@ enum {
+ 	ALC285_FIXUP_ASUS_GA605K_HEADSET_MIC,
+ 	ALC285_FIXUP_ASUS_GA605K_I2C_SPEAKER2_TO_DAC1,
+ 	ALC269_FIXUP_POSITIVO_P15X_HEADSET_MIC,
++	ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK,
+ };
  
- #include <string.h>
-+#include <asm-generic/bitsperlong.h>
- #include <linux/align.h>
- #include <linux/bitops.h>
- #include <linux/find.h>
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -6166,6 +6167,14 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269VC_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	},
++	[ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x17, 0x90170151 }, /* Internal Speaker LFE */
++			{ 0x1e, 0x90170150 }, /* Internal Speaker */
++			{ }
++		},
++	}
+ };
+ 
+ static const struct hda_quirk alc269_fixup_tbl[] = {
+@@ -6721,6 +6730,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1683, "ASUS UM3402YAR", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.51.0
 
