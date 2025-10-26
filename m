@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34272EA169;
-	Sun, 26 Oct 2025 14:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072C22E8E11;
+	Sun, 26 Oct 2025 14:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761490292; cv=none; b=EP9MmyRNrhWyxkyHffJ+896COlq61GDeFuOIPb92LipZMpfiEfKnNCw8lLIOG7KiDFX6Dy8dtNxzOqbXlwPvXacbAPx+2giXzqt6rbi2Prz0C/+wyoN0U9D4KI6kChwFFF03sxvDWNJhLXmHeZDVj5SimBr+OBGzKVRtnaSm21U=
+	t=1761490294; cv=none; b=V4ncbqNZi9RNmCD6cuP/PKUyMusy0NZ567DtmaUeebHzHPY+2v4DXQ+MwQa8fKNW4Sz5gkkj4MvSFNzY8PliqfaT1Kzx11QbBBQq6ZR87OKbYX9iXGtaixUpN+xaULH8u/uoAugeoRaF8cFafEHJyiRrFMncp1ocdOz2ksLaDek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761490292; c=relaxed/simple;
-	bh=tTi4MHzT88X6XVu0HEP++yMrgXZ8vt0/1lW2TgRQeKQ=;
+	s=arc-20240116; t=1761490294; c=relaxed/simple;
+	bh=fY3bO3hEigomiCqYnPJcfKwveNBMLO73W1Mb3J4iJsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GyhxGYcwTn4vno6tlBx1Z2g1lboJuORFC58SQseNfJJ5Mx4FHgoRR1ZKpmtSnz/vyyEE8CXVFJQRLiKKX4+i6qS56QSs2y28x5dUlRkwyVycePEIxIBc8b7YSJzZyEtQWFnIb5lkhtNuYUQYnTZtPGAiV1sbQOFm5niV7VSLb20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vK6tBgXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pe5ouDdVDIhR2SGMcn/vxs5zu31G9iSQ5MCQsPSxx5jQuuMpLtWVG498KxvLKQxYXPB1hqPzRxjGeBrHAHtjkeREhOFzff22jLanB9fsQv0d21zg+SKjU4yzMjGZRBUXItbPPwCbt+PBp1qR3HQfA3ZrgUKZiCDxPdxz54OjDbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oHLFifWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vK6tBgXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07E8C4CEE7;
-	Sun, 26 Oct 2025 14:51:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oHLFifWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7819C4CEFB;
+	Sun, 26 Oct 2025 14:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761490292;
-	bh=tTi4MHzT88X6XVu0HEP++yMrgXZ8vt0/1lW2TgRQeKQ=;
+	s=k20201202; t=1761490293;
+	bh=fY3bO3hEigomiCqYnPJcfKwveNBMLO73W1Mb3J4iJsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vK6tBgXrWXQ8s986+u/jHxk/R5bY1yGlITMbv639WelsVd5fKnxWobuk2XzqxEbzf
-	 xLwnb+t8UNJzz2LJw6/pJqLICbuoACShQWGwdDXDC2q4y5cMJYJHl0LkvcANuJUh5H
-	 7J+WeVI8klb1SVnXQvgZcP4rOKbZvAfc6PIbGGqVqQCU/ceT+WhKiMzcNiRBSqJ9iC
-	 eGeVYJY3Gx2MoK8FIkGZYWQY2BlCitjXdvi6+eM5VyMYxJqXnrhYoMCP7CHkco4NMi
-	 iU7g2tgsw9NbZFzrNaQ/FmYKuNv51+frWouX7z2GlDUwcQBQM0JjloTKKSUDGEOata
-	 /lY9roVPT5zEA==
+	b=oHLFifWFRE2a3vtWkdDczvYPVkSTJ8MFu3vzNOlny7Uk5JHPChXfYgcy/JtKSStEK
+	 DEFYU4tFL4NoVnHAczuc9cBaY+XDEBfrF5/dOJ996c/jcmOA6PWfweCleKQa5VgsRF
+	 GM+fWBqaFES6U8VhTYcwcfSEE4d1+RQHrubJNucv2CKdn2UTkybE6REgzPh0imFGPb
+	 z8wncx0YIo4KVEOHIZ9Qdw6cP2csq+qhe9JHOCX2fxsDByF9YWYrKQD0O3QvVjisEE
+	 zMbCmlvrOFqc+NIJ87H0b4WEGRzKIYRMffmHNVYPgdmDsSwK2hNa/0rbi7emo+Xfcs
+	 1xnH1VDGrNNEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+Cc: Sammy Hsu <zelda3121@gmail.com>,
+	Sammy Hsu <sammy.hsu@wnc.com.tw>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	p.zabel@pengutronix.de,
-	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] clk: renesas: rzv2h: Re-assert reset on deassert timeout
-Date: Sun, 26 Oct 2025 10:49:22 -0400
-Message-ID: <20251026144958.26750-44-sashal@kernel.org>
+	chandrashekar.devegowda@intel.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.12] net: wwan: t7xx: add support for HP DRMR-H01
+Date: Sun, 26 Oct 2025 10:49:23 -0400
+Message-ID: <20251026144958.26750-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251026144958.26750-1-sashal@kernel.org>
 References: <20251026144958.26750-1-sashal@kernel.org>
@@ -52,252 +53,58 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Sammy Hsu <zelda3121@gmail.com>
 
-[ Upstream commit f8c002165ca27d95d3d15e865dd0a47c0a1b14dd ]
+[ Upstream commit 370e98728bda92b1bdffb448d1acdcbe19dadb4c ]
 
-Prevent issues during reset deassertion by re-asserting the reset if a
-timeout occurs when trying to deassert. This ensures the reset line is in a
-known state and improves reliability for hardware that may not immediately
-clear the reset monitor bit.
+add support for HP DRMR-H01 (0x03f0, 0x09c8)
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://lore.kernel.org/20250903082757.115778-4-tommaso.merciai.xr@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Sammy Hsu <sammy.hsu@wnc.com.tw>
+Link: https://patch.msgid.link/20251002024841.5979-1-sammy.hsu@wnc.com.tw
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis, I'll now provide my final
-recommendation.
+YES – adding the HP DRMR-H01 PCI ID lets existing t7xx hardware autoload
+the driver without touching any other logic, so it is a low-risk
+usability fix that fits stable policy.
 
-## **Backport Recommendation: YES**
+- The change only extends the match table with `{ PCI_DEVICE(0x03f0,
+  0x09c8) }` in `drivers/net/wwan/t7xx/t7xx_pci.c:940-944`, mirroring
+  the existing Dell-specific entry and leaving probe/remove logic
+  untouched.
+- `t7xx_pci_probe()` (drivers/net/wwan/t7xx/t7xx_pci.c:834-917) runs the
+  same initialization path for all matched devices; no vendor-based
+  branching exists, so the new ID simply enables already-tested code on
+  this HP-branded modem.
+- Without this entry, kernels cannot bind the built-in driver to
+  DRMR-H01 hardware, which is a clear user-visible malfunction for any
+  system shipping with that modem.
+- The modification is self-contained, has no architectural impact, and
+  aligns with prior stable-acceptable device-ID additions for the same
+  subsystem.
 
-### **Summary**
+Backporting will restore driver functionality on new HP platforms with
+virtually zero regression risk. Potential next step: 1) Queue it for the
+maintained stable branches that carry the t7xx driver.
 
-This commit improves hardware reliability by adding defensive error
-handling to the reset controller for Renesas RZ/V2H/RZ/V2N/RZ/G3E SoCs.
-While it's a preventive fix rather than addressing a specific user-
-reported bug, it should be backported to stable kernels due to its
-critical nature and minimal risk.
+ drivers/net/wwan/t7xx/t7xx_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
----
-
-### **Detailed Analysis**
-
-#### **1. What the Code Changes Do**
-
-The commit modifies the `__rzv2h_cpg_assert()` function in
-`drivers/clk/renesas/rzv2h-cpg.c` (lines 869-876):
-
-**Before:**
-```c
-return readl_poll_timeout_atomic(priv->base + reg, value,
-                 assert ? (value & mask) : !(value & mask),
-                 10, 200);
-```
-
-**After:**
-```c
-ret = readl_poll_timeout_atomic(priv->base + reg, value,
-                 assert ? (value & mask) : !(value & mask),
-                 10, 200);
-if (ret && !assert) {
-    value = mask << 16;
-    writel(value, priv->base +
-GET_RST_OFFSET(priv->resets[id].reset_index));
-}
-
-return ret;
-```
-
-**What this does:**
-- When attempting to **deassert** a reset (bring hardware out of reset),
-  the code polls a monitor register with a 200µs timeout
-- **NEW BEHAVIOR**: If the timeout occurs during deassert (`ret != 0`
-  and `!assert`), the code now **re-asserts** the reset by writing `mask
-  << 16` (which clears the bit)
-- This ensures the hardware is returned to a **known state** (reset
-  asserted) rather than being left in an undefined state
-
-#### **2. Driver Context and Timeline**
-
-- **v6.12 (Aug 2024)**: RZ/V2H CPG driver introduced (commit
-  36932cbc3e6cc)
-- **v6.16 (March 2025)**: Code refactored to create
-  `__rzv2h_cpg_assert()` helper function (commit b224c42568bc4)
-- **v6.18-rc1 (Sept 2025)**: This fix applied (commit f8c002165ca27)
-
-The driver is relatively new but has been actively developed with 36+
-commits between introduction and this fix.
-
-#### **3. Technical Impact**
-
-**Problem being solved:**
-According to the commit message and mailing list discussion, some
-hardware may not immediately clear the reset monitor bit. Without this
-fix:
-- Timeout during reset deassertion leaves hardware in **undefined
-  state** (partially out of reset)
-- Can lead to **hardware malfunction** or **instability**
-- No recovery mechanism exists
-
-**With this fix:**
-- Hardware is returned to **known reset state** on timeout
-- Improves **reliability** for slow-responding hardware
-- Enables proper error recovery
-
-#### **4. Risk Assessment**
-
-**Very Low Risk:**
-- ✅ Only adds code to **error path** (when timeout occurs)
-- ✅ **No changes** to normal operation (when reset succeeds)
-- ✅ Only 10 lines of code added
-- ✅ Same pattern successfully used in `rzg2l-cpg.c` driver (commit
-  f8c5f0dc77d86)
-- ✅ Reviewed by Geert Uytterhoeven (Renesas maintainer)
-- ✅ No functional dependencies beyond the driver itself
-
-#### **5. Affected Hardware**
-
-This fix affects the reset controller for:
-- Renesas RZ/V2H (r9a09g057) SoC
-- Renesas RZ/V2N (r9a09g056) SoC
-- Renesas RZ/G3E (r9a09g047) SoC
-
-These are industrial/embedded SoCs used in:
-- Industrial automation
-- Camera systems
-- Edge computing devices
-
-Reset controller failures can cause:
-- Device initialization failures
-- System instability
-- Hardware lockups
-
-#### **6. Backporting Considerations**
-
-**For stable kernels v6.16+ and v6.17:**
-- Can apply cleanly (has `__rzv2h_cpg_assert()` function from commit
-  b224c42568bc4)
-
-**For stable kernels v6.12-v6.15:**
-- Would require adaptation to apply to `rzv2h_cpg_deassert()` function
-  directly
-- The older code structure (before refactoring) had separate functions
-- Fix is still applicable but needs modification
-
-**Code before refactoring (v6.12-v6.15) at
-drivers/clk/renesas/rzv2h-cpg.c:**
-```c
-static int rzv2h_cpg_deassert(struct reset_controller_dev *rcdev,
-                              unsigned long id)
-{
-    ...
-    return readl_poll_timeout_atomic(priv->base + reg, value,
-                                     !(value & mask), 10, 200);
-}
-```
-
-Would need to change to:
-```c
-static int rzv2h_cpg_deassert(struct reset_controller_dev *rcdev,
-                              unsigned long id)
-{
-    ...
-    ret = readl_poll_timeout_atomic(priv->base + reg, value,
-                                     !(value & mask), 10, 200);
-    if (ret) {
-        unsigned int reset_reg =
-GET_RST_OFFSET(priv->resets[id].reset_index);
-        u32 reset_mask = BIT(priv->resets[id].reset_bit);
-        writel(reset_mask << 16, priv->base + reset_reg);
-    }
-    return ret;
-}
-```
-
-#### **7. Why This Should Be Backported**
-
-**Meets stable kernel criteria:**
-1. ✅ **Fixes important bug**: Prevents hardware undefined state
-2. ✅ **Small and self-contained**: Only 10 lines
-3. ✅ **Low regression risk**: Only affects error path
-4. ✅ **Critical subsystem**: Reset controller is fundamental
-5. ✅ **Improves reliability**: Defensive programming for hardware quirks
-
-**Additional factors:**
-- Identical pattern used in rzg2l driver indicates this is a
-  **systematic issue** across Renesas clock drivers
-- Reset controller failures are **difficult to debug** in the field
-- Industrial/embedded users need **maximum reliability**
-- No side effects or architectural changes
-
-#### **8. Caveats**
-
-**Note:** This commit does NOT have:
-- `Cc: stable@vger.kernel.org` tag
-- `Fixes:` tag pointing to a specific buggy commit
-
-This suggests the **author did not explicitly request stable backport**.
-However, the technical merits (critical subsystem, low risk, clear
-improvement) support backporting despite the lack of explicit request.
-
----
-
-### **Conclusion**
-
-**Recommendation: YES - Backport to stable kernels v6.16+ and v6.17**
-
-This is a **defensive fix** that prevents potential hardware failures in
-reset controller operations. While not fixing a specific reported bug,
-it addresses a **real hardware reliability issue** with **minimal risk**
-and clear benefit. The reset controller is a **critical subsystem**
-where failures can cause system-wide instability.
-
-**For kernels v6.12-v6.15**: Consider backporting with adaptation if
-there's evidence of reset timeout issues in the field for these SoCs,
-otherwise optional.
-
-**For kernels v6.16+**: Strongly recommend backporting - applies cleanly
-and provides important reliability improvement.
-
- drivers/clk/renesas/rzv2h-cpg.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clk/renesas/rzv2h-cpg.c b/drivers/clk/renesas/rzv2h-cpg.c
-index f468afbb54e2d..5dfe660d13422 100644
---- a/drivers/clk/renesas/rzv2h-cpg.c
-+++ b/drivers/clk/renesas/rzv2h-cpg.c
-@@ -864,6 +864,7 @@ static int __rzv2h_cpg_assert(struct reset_controller_dev *rcdev,
- 	u32 mask = BIT(priv->resets[id].reset_bit);
- 	u8 monbit = priv->resets[id].mon_bit;
- 	u32 value = mask << 16;
-+	int ret;
+diff --git a/drivers/net/wwan/t7xx/t7xx_pci.c b/drivers/net/wwan/t7xx/t7xx_pci.c
+index 8bf63f2dcbbfd..eb137e0784232 100644
+--- a/drivers/net/wwan/t7xx/t7xx_pci.c
++++ b/drivers/net/wwan/t7xx/t7xx_pci.c
+@@ -939,6 +939,7 @@ static void t7xx_pci_remove(struct pci_dev *pdev)
  
- 	dev_dbg(rcdev->dev, "%s id:%ld offset:0x%x\n",
- 		assert ? "assert" : "deassert", id, reg);
-@@ -875,9 +876,15 @@ static int __rzv2h_cpg_assert(struct reset_controller_dev *rcdev,
- 	reg = GET_RST_MON_OFFSET(priv->resets[id].mon_index);
- 	mask = BIT(monbit);
- 
--	return readl_poll_timeout_atomic(priv->base + reg, value,
--					 assert ? (value & mask) : !(value & mask),
--					 10, 200);
-+	ret = readl_poll_timeout_atomic(priv->base + reg, value,
-+					assert ? (value & mask) : !(value & mask),
-+					10, 200);
-+	if (ret && !assert) {
-+		value = mask << 16;
-+		writel(value, priv->base + GET_RST_OFFSET(priv->resets[id].reset_index));
-+	}
-+
-+	return ret;
- }
- 
- static int rzv2h_cpg_assert(struct reset_controller_dev *rcdev,
+ static const struct pci_device_id t7xx_pci_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK, 0x4d75) },
++	{ PCI_DEVICE(0x03f0, 0x09c8) }, // HP DRMR-H01
+ 	{ PCI_DEVICE(0x14c0, 0x4d75) }, // Dell DW5933e
+ 	{ }
+ };
 -- 
 2.51.0
 
