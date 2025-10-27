@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9C83074AC;
-	Mon, 27 Oct 2025 19:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEC2202963;
+	Mon, 27 Oct 2025 19:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592003; cv=none; b=L2OTKydIWOBg6r24poordK6izY58sJoT6FTFI9k52wgZTJb7kos6tBjZJShvL+t3OmnAc03lring+QldxcXldvd32d9SxouMbZNNp+1gxLK0AVKjS36PNRWHJxu+iwOim23/aziUNMPhN8kI7aBVKWfx9S7Qc29Us2l9DOt8l/8=
+	t=1761592005; cv=none; b=ceXiJnhQC8pX2V8Vt0o35yuFYRvZYwFepIO6iFInnR9V92Ox5WVb1Bp6p/zILswTNNZsTgP44gPVlWdd9Um9iqIgxf4oBWXyf7enxqxtffroiBpN0M6HTPzsahWcxtPZGXGEwMOENM31YsR/lWPL2k2PAx6kcfP+Wggk8x9nKFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592003; c=relaxed/simple;
-	bh=PNVs1+schTPRYJ9QVvtY5HrH5Dg9muMj0l+6eKPGr6g=;
+	s=arc-20240116; t=1761592005; c=relaxed/simple;
+	bh=ej2KkGEBD31qR+tbCg/Cnm9FfvP7SNgZItuhn7WQpNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4PsuML27OASJpVpNj3OBhGyFKWVu3EuUafWvJOfpFYBLuVYQDk+WiVwznlYuTKyLy1MPb9NIXHRoeLgmeagiWsDb5Q8WxOx7Af7a8NBkCs+MAT0HSJGCvWPj3RRPvzsR5QDjwEiALb/5vOaH3yM9j+Xlh8hHCahiR42muFBN3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWvPifu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QLpRaS158DHL0yK6sF9MB9WFV62A+gEE2gA+if5lyvp6zBe6bEyeZxQ3VO+z3mCNJCGyCbCBLMFZq39xD3hOfu5mByx2BWGTaqeEYNcQPGBcUCx3SIS1U43mF8AcKqUmt2mnTm7XCz4zoQZvIIEFeqsecBPuzi8quc2ztt/XwWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZuUGLww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWvPifu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F223C4CEF1;
-	Mon, 27 Oct 2025 19:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZuUGLww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9E0C4CEF1;
+	Mon, 27 Oct 2025 19:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592002;
-	bh=PNVs1+schTPRYJ9QVvtY5HrH5Dg9muMj0l+6eKPGr6g=;
+	s=korg; t=1761592005;
+	bh=ej2KkGEBD31qR+tbCg/Cnm9FfvP7SNgZItuhn7WQpNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cWvPifu1lJ1jy/HK7xhwcN5Z0xpeZtgqI6p9ThN9Kpz0GIruv0H3GKV8Upvk3ddXs
-	 2NZcdN1kllxJDJVHtguNusRvNvRAR1IBLaPvVpbl9jXPpeWZnje5G0x9P9TW66vLY0
-	 /zm7s4y33YEJhuEbK+dl0HyNwC0YBBcATOuxJKfQ=
+	b=ZZuUGLwwapElZ/wp/kzLzoHRXnKGcP1DBUcodS3+Ora2JSF1BLas+XIOCA6QgLaD+
+	 ZiFDAOAVIrxwS3hWgptAT1pyZ8r5p3ONjdxZY1Kk56q9iBkJDyXXMW64TYDpKZtZvY
+	 Dj4B6LntubFHk2e/7b4GHVZtpMcjIYEmrYziK8fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu-Ting Tseng <yutingtseng@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 5.15 081/123] binder: remove "invalid inc weak" check
-Date: Mon, 27 Oct 2025 19:36:01 +0100
-Message-ID: <20251027183448.559288758@linuxfoundation.org>
+	syzbot+f6c3c066162d2c43a66c@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 082/123] comedi: fix divide-by-zero in comedi_buf_munge()
+Date: Mon, 27 Oct 2025 19:36:02 +0100
+Message-ID: <20251027183448.585126928@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -50,55 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit d90eeb8ecd227c204ab6c34a17b372bd950b7aa2 upstream.
+commit 87b318ba81dda2ee7b603f4f6c55e78ec3e95974 upstream.
 
-There are no scenarios where a weak increment is invalid on binder_node.
-The only possible case where it could be invalid is if the kernel
-delivers BR_DECREFS to the process that owns the node, and then
-increments the weak refcount again, effectively "reviving" a dead node.
+The comedi_buf_munge() function performs a modulo operation
+`async->munge_chan %= async->cmd.chanlist_len` without first
+checking if chanlist_len is zero. If a user program submits a command with
+chanlist_len set to zero, this causes a divide-by-zero error when the device
+processes data in the interrupt handler path.
 
-However, that is not possible: when the BR_DECREFS command is delivered,
-the kernel removes and frees the binder_node. The fact that you were
-able to call binder_inc_node_nilocked() implies that the node is not yet
-destroyed, which implies that BR_DECREFS has not been delivered to
-userspace, so incrementing the weak refcount is valid.
+Add a check for zero chanlist_len at the beginning of the
+function, similar to the existing checks for !map and
+CMDF_RAWDATA flag. When chanlist_len is zero, update
+munge_count and return early, indicating the data was
+handled without munging.
 
-Note that it's currently possible to trigger this condition if the owner
-calls BINDER_THREAD_EXIT while node->has_weak_ref is true. This causes
-BC_INCREFS on binder_ref instances to fail when they should not.
+This prevents potential kernel panics from malformed user commands.
 
+Reported-by: syzbot+f6c3c066162d2c43a66c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f6c3c066162d2c43a66c
 Cc: stable@vger.kernel.org
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
-Reported-by: Yu-Ting Tseng <yutingtseng@google.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20251015-binder-weak-inc-v1-1-7914b092c371@google.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20250924102639.1256191-1-kartikey406@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/comedi/comedi_buf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -818,17 +818,8 @@ static int binder_inc_node_nilocked(stru
- 	} else {
- 		if (!internal)
- 			node->local_weak_refs++;
--		if (!node->has_weak_ref && list_empty(&node->work.entry)) {
--			if (target_list == NULL) {
--				pr_err("invalid inc weak node for %d\n",
--					node->debug_id);
--				return -EINVAL;
--			}
--			/*
--			 * See comment above
--			 */
-+		if (!node->has_weak_ref && target_list && list_empty(&node->work.entry))
- 			binder_enqueue_work_ilocked(&node->work, target_list);
--		}
+--- a/drivers/comedi/comedi_buf.c
++++ b/drivers/comedi/comedi_buf.c
+@@ -369,7 +369,7 @@ static unsigned int comedi_buf_munge(str
+ 	unsigned int count = 0;
+ 	const unsigned int num_sample_bytes = comedi_bytes_per_sample(s);
+ 
+-	if (!s->munge || (async->cmd.flags & CMDF_RAWDATA)) {
++	if (!s->munge || (async->cmd.flags & CMDF_RAWDATA) || async->cmd.chanlist_len == 0) {
+ 		async->munge_count += num_bytes;
+ 		return num_bytes;
  	}
- 	return 0;
- }
 
 
