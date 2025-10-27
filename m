@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D80A322C89;
-	Mon, 27 Oct 2025 18:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF6E31B82C;
+	Mon, 27 Oct 2025 18:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590667; cv=none; b=RIFvHmyv9GS3Yw6Zik1JCe30oVuetcRuxVBUpqXkNLulk0kobuNKRdZy5ELBPji9ihU9GdW11Jt4R/CYKndKQtWE96Ep9V8ilXgIMcFOmob5X/hvf6KmAxhRqX3iVCQ+egNHBfh+spCSrKtaLKS3OHSnRWK7fpRiJNs/8E6BZuc=
+	t=1761590670; cv=none; b=ZIl6kiaQEKu8z2woUkbNtVoE4OLrr+h3fneKRYWChawExUm6f6+NYkBX+V21bkEuVNRJgpDncxeWvPQum1RJD0oNWouhI0u1dHMbSpwaYJRCQZS4IZd+meLroRShbAFGVQAe4CPGVYesaN1jbhN58utj5D+b2TmE4L0rERGyeAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590667; c=relaxed/simple;
-	bh=cY461Zuaq191u+V6P+SpJdrWKZ4iEB+r2Xs5Zy0JsGM=;
+	s=arc-20240116; t=1761590670; c=relaxed/simple;
+	bh=ZQ1Pga82YqKwa2yMoQoAKF+D1THFdS+l3H8QjKDn9Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkAWN9S6tpmg5UsU0YjOZ/cpnSnR1xu6I1isKhuyM7Bp6nAAYMxQJPKuY6LduXuLrqmmfX84kIcFIq4m+dJRQz7yp/bDtK9bdM9WZMHc82SS2E4HL7KcGxOBWYrYcGtzy/+knk6mf0XIxGWAdm7ZsYMG3RwhEiz0jUrk0KdYv98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6GjK1jd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owoK2D0Vp3l14ie9YMPn/AJ6ta05EjUCdabjsQJa04Poce5/Rzcdipryhqhg5paNK+r7HkOM++hdWdioSoPJFX7xrwQqEtee+Zku0vgqn7eD/NVPp3FgS+eL9qnJQVGIE9lJe48ncnT7m/Ca+GLZcw9k0a5POCFEH9erI4IQk6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SwqDeV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6GjK1jd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D03C4CEF1;
-	Mon, 27 Oct 2025 18:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SwqDeV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22195C4CEF1;
+	Mon, 27 Oct 2025 18:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590666;
-	bh=cY461Zuaq191u+V6P+SpJdrWKZ4iEB+r2Xs5Zy0JsGM=;
+	s=korg; t=1761590669;
+	bh=ZQ1Pga82YqKwa2yMoQoAKF+D1THFdS+l3H8QjKDn9Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6GjK1jdWPTL5f6X0lCtSm37dRMmQu0WhQ/fAFV1ak7URZ+nX2axJ2Fg9ywFB2myK
-	 aBDaWvT7bxs7CtPtnq/HtO2f3XvAewxq+4PVUGFfqh72oqSvtAOOpWHqdBZHPGafdm
-	 VeUOHv/29F+gmHut4qF8r6BikWKOYyTsELu/Xxec=
+	b=2SwqDeV0LPdn3QMGuHDVgz6VcD+0E8sBG3AZdOdAeI/AbRiitZvO7f19XRyLa0nM9
+	 h7jBhoF8qrPttA3Q+r5xy4y64wn01Cm6Z7zdb67FRns/euDhM6cFUby9yEoY2MhPaB
+	 mvB4f5XV7pVYRdeHlcJfpL5OMpIOgjtr4nwZ7N7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	syzbot+0be4f339a8218d2a5bb1@syzkaller.appspotmail.com,
 	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Albin Babu Varghese <albinbabuvarghese20@gmail.com>,
+	Ahmet Eray Karadag <eraykrdg1@gmail.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 130/224] ext4: correctly handle queries for metadata mappings
-Date: Mon, 27 Oct 2025 19:34:36 +0100
-Message-ID: <20251027183512.459987249@linuxfoundation.org>
+Subject: [PATCH 5.4 131/224] ext4: guard against EA inode refcount underflow in xattr update
+Date: Mon, 27 Oct 2025 19:34:37 +0100
+Message-ID: <20251027183512.486516430@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,98 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Ahmet Eray Karadag <eraykrdg1@gmail.com>
 
-commit 46c22a8bb4cb03211da1100d7ee4a2005bf77c70 upstream.
+commit 57295e835408d8d425bef58da5253465db3d6888 upstream.
 
-Currently, our handling of metadata is _ambiguous_ in some scenarios,
-that is, we end up returning unknown if the range only covers the
-mapping partially.
+syzkaller found a path where ext4_xattr_inode_update_ref() reads an EA
+inode refcount that is already <= 0 and then applies ref_change (often
+-1). That lets the refcount underflow and we proceed with a bogus value,
+triggering errors like:
 
-For example, in the following case:
+  EXT4-fs error: EA inode <n> ref underflow: ref_count=-1 ref_change=-1
+  EXT4-fs warning: ea_inode dec ref err=-117
 
-$ xfs_io -c fsmap -d
+Make the invariant explicit: if the current refcount is non-positive,
+treat this as on-disk corruption, emit ext4_error_inode(), and fail the
+operation with -EFSCORRUPTED instead of updating the refcount. Delete the
+WARN_ONCE() as negative refcounts are now impossible; keep error reporting
+in ext4_error_inode().
 
-  0: 254:16 [0..7]: static fs metadata 8
-  1: 254:16 [8..15]: special 102:1 8
-  2: 254:16 [16..5127]: special 102:2 5112
-  3: 254:16 [5128..5255]: special 102:3 128
-  4: 254:16 [5256..5383]: special 102:4 128
-  5: 254:16 [5384..70919]: inodes 65536
-  6: 254:16 [70920..70967]: unknown 48
-  ...
+This prevents the underflow and the follow-on orphan/cleanup churn.
 
-$ xfs_io -c fsmap -d 24 33
-
-  0: 254:16 [24..39]: unknown 16  <--- incomplete reporting
-
-$ xfs_io -c fsmap -d 24 33  (With patch)
-
-    0: 254:16 [16..5127]: special 102:2 5112
-
-This is because earlier in ext4_getfsmap_meta_helper, we end up ignoring
-any extent that starts before our queried range, but overlaps it. While
-the man page [1] is a bit ambiguous on this, this fix makes the output
-make more sense since we are anyways returning an "unknown" extent. This
-is also consistent to how XFS does it:
-
-$ xfs_io -c fsmap -d
-
-  ...
-  6: 254:16 [104..127]: free space 24
-  7: 254:16 [128..191]: inodes 64
-  ...
-
-$ xfs_io -c fsmap -d 137 150
-
-  0: 254:16 [128..191]: inodes 64   <-- full extent returned
-
- [1] https://man7.org/linux/man-pages/man2/ioctl_getfsmap.2.html
-
-Reported-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reported-by: syzbot+0be4f339a8218d2a5bb1@syzkaller.appspotmail.com
+Fixes: https://syzbot.org/bug?extid=0be4f339a8218d2a5bb1
 Cc: stable@kernel.org
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <023f37e35ee280cd9baac0296cbadcbe10995cab.1757058211.git.ojaswin@linux.ibm.com>
+Co-developed-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
+Signed-off-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
+Signed-off-by: Ahmet Eray Karadag <eraykrdg1@gmail.com>
+Message-ID: <20250920021342.45575-1-eraykrdg1@gmail.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fsmap.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ fs/ext4/xattr.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -74,7 +74,8 @@ static int ext4_getfsmap_dev_compare(con
- static bool ext4_getfsmap_rec_before_low_key(struct ext4_getfsmap_info *info,
- 					     struct ext4_fsmap *rec)
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1030,7 +1030,7 @@ static int ext4_xattr_inode_update_ref(h
+ 				       int ref_change)
  {
--	return rec->fmr_physical < info->gfi_low.fmr_physical;
-+	return rec->fmr_physical + rec->fmr_length <=
-+	       info->gfi_low.fmr_physical;
- }
+ 	struct ext4_iloc iloc;
+-	s64 ref_count;
++	u64 ref_count;
+ 	int ret;
  
- /*
-@@ -200,15 +201,18 @@ static int ext4_getfsmap_meta_helper(str
- 			  ext4_group_first_block_no(sb, agno));
- 	fs_end = fs_start + EXT4_C2B(sbi, len);
+ 	inode_lock_nested(ea_inode, I_MUTEX_XATTR);
+@@ -1040,13 +1040,17 @@ static int ext4_xattr_inode_update_ref(h
+ 		goto out;
  
--	/* Return relevant extents from the meta_list */
-+	/*
-+	 * Return relevant extents from the meta_list. We emit all extents that
-+	 * partially/fully overlap with the query range
-+	 */
- 	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
--		if (p->fmr_physical < info->gfi_next_fsblk) {
-+		if (p->fmr_physical + p->fmr_length <= info->gfi_next_fsblk) {
- 			list_del(&p->fmr_list);
- 			kfree(p);
- 			continue;
+ 	ref_count = ext4_xattr_inode_get_ref(ea_inode);
++	if ((ref_count == 0 && ref_change < 0) || (ref_count == U64_MAX && ref_change > 0)) {
++		ext4_error_inode(ea_inode, __func__, __LINE__, 0,
++			"EA inode %lu ref wraparound: ref_count=%lld ref_change=%d",
++			ea_inode->i_ino, ref_count, ref_change);
++		ret = -EFSCORRUPTED;
++		goto out;
++	}
+ 	ref_count += ref_change;
+ 	ext4_xattr_inode_set_ref(ea_inode, ref_count);
+ 
+ 	if (ref_change > 0) {
+-		WARN_ONCE(ref_count <= 0, "EA inode %lu ref_count=%lld",
+-			  ea_inode->i_ino, ref_count);
+-
+ 		if (ref_count == 1) {
+ 			WARN_ONCE(ea_inode->i_nlink, "EA inode %lu i_nlink=%u",
+ 				  ea_inode->i_ino, ea_inode->i_nlink);
+@@ -1055,9 +1059,6 @@ static int ext4_xattr_inode_update_ref(h
+ 			ext4_orphan_del(handle, ea_inode);
  		}
--		if (p->fmr_physical <= fs_start ||
--		    p->fmr_physical + p->fmr_length <= fs_end) {
-+		if (p->fmr_physical <= fs_end &&
-+		    p->fmr_physical + p->fmr_length > fs_start) {
- 			/* Emit the retained free extent record if present */
- 			if (info->gfi_lastfree.fmr_owner) {
- 				error = ext4_getfsmap_helper(sb, info,
+ 	} else {
+-		WARN_ONCE(ref_count < 0, "EA inode %lu ref_count=%lld",
+-			  ea_inode->i_ino, ref_count);
+-
+ 		if (ref_count == 0) {
+ 			WARN_ONCE(ea_inode->i_nlink != 1,
+ 				  "EA inode %lu i_nlink=%u",
 
 
