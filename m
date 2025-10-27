@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458373064AA;
-	Mon, 27 Oct 2025 19:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E23A323403;
+	Mon, 27 Oct 2025 19:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592354; cv=none; b=brL6QIO126xTiSFbaWtmpCkUSIy/+6+PQ8cs3IjKTbvTOxb+uFKAv0LHstcNNyf2sWIaze37uWX9TL9dN99yFdJcLOKvxxGVi+/fqNtt2oWKlcTJQdF4o5bmDGfEjM/UtChLZqUcR11aZLjSpSJ57Hf1yea93op7CS2zqRfR0/Y=
+	t=1761592357; cv=none; b=dpXx+nQY3VLOCktRzIzahesdetzvcfYmNdFzcw+d4vjPhISYufXyBM9PIgqwLPFdzGYQHwRgBrOjYrP5IFpaQhQ21y4OsSKgFF4N2h/hJwldUml3czx+yQgwSAZhyJLoZDhZggKly3DiFqtWL8QlRNDFVjVlmnyPA668fJRag9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592354; c=relaxed/simple;
-	bh=2GLVcb/VzMP2WW5eqio5u69YTbOWQOqTSPjRBHJk0wk=;
+	s=arc-20240116; t=1761592357; c=relaxed/simple;
+	bh=voxiq+H4Skcm9NBmuClD0tjPzxxbI3q3d0SggHx5xVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7AQUNUHZWvNImBO7hIcVNWr2kwOQpuksaXHKV6QL1q2CJyw3xP5K4mzXEZezKSz0bGALeQtBeexxktJ7YvX7ERQpDBwLovv4uciY6f+lOrbeBKB2sITHk+Yq3kezO9MQ5ODfl1L052CVk+EzR9vQv51RBZnnyR63ERiN6GtXF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TS27N/MG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Imi0U8+QjbixMxSgNrLCFceTKFpZ6wqvkYZoTip7zuOQzKCrchu2kvfkk7AH37Cb5B2A/fosmg9eF4CrEvm6oSmGuNd04vVnt9839bQ91PGI/p80rTBc+uv1UxABdIhvY2q0TH0svppKFyyhRXklAFYRivPRN/92o9gek2bFwPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4kmYu4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TS27N/MG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA177C4CEF1;
-	Mon, 27 Oct 2025 19:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4kmYu4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E41C4CEF1;
+	Mon, 27 Oct 2025 19:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592354;
-	bh=2GLVcb/VzMP2WW5eqio5u69YTbOWQOqTSPjRBHJk0wk=;
+	s=korg; t=1761592356;
+	bh=voxiq+H4Skcm9NBmuClD0tjPzxxbI3q3d0SggHx5xVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TS27N/MG9GwoMXK4986/gZM38cCioUO53tndBrT1J6MhNw0O5uFsTMBMcpEyJQ90P
-	 +aLtsJA4x5LtF8nTUJok5ZHTPykkB+snkXv2J+MGbl/O6vF5zbCZK8lgAXKxKskJ1d
-	 0vmGozZe7+/WNwjA8Mqg8OfaeHkhS42ygJuxtmS4=
+	b=K4kmYu4IfBzzmtNVL6F8/L6IuioWd2g3yAws1znLEtmL/lcsekh8SLGW+wtMVuq+S
+	 vYUECLFuOjJxJ4EpSPOxPSBpj22w3Am+5IglkmoEUrWGH5umcnlpa4XPAbEKUgWOcI
+	 ib4Gb0yCP0igx1G6fbRE/F/SW3LssFrxRX9zzm+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Lalaev <andrey.lalaev@gmail.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 090/157] can: netlink: can_changelink(): allow disabling of automatic restart
-Date: Mon, 27 Oct 2025 19:35:51 +0100
-Message-ID: <20251027183503.683885982@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.1 091/157] MIPS: Malta: Fix keyboard resource preventing i8042 driver from registering
+Date: Mon, 27 Oct 2025 19:35:52 +0100
+Message-ID: <20251027183503.709890375@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -44,68 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 8e93ac51e4c6dc399fad59ec21f55f2cfb46d27c upstream.
+commit bf5570590a981d0659d0808d2d4bcda21b27a2a5 upstream.
 
-Since the commit c1f3f9797c1f ("can: netlink: can_changelink(): fix NULL
-pointer deref of struct can_priv::do_set_mode"), the automatic restart
-delay can only be set for devices that implement the restart handler struct
-can_priv::do_set_mode. As it makes no sense to configure a automatic
-restart for devices that doesn't support it.
+MIPS Malta platform code registers the PCI southbridge legacy port I/O
+PS/2 keyboard range as a standard resource marked as busy.  It prevents
+the i8042 driver from registering as it fails to claim the resource in
+a call to i8042_platform_init().  Consequently PS/2 keyboard and mouse
+devices cannot be used with this platform.
 
-However, since systemd commit 13ce5d4632e3 ("network/can: properly handle
-CAN.RestartSec=0") [1], systemd-networkd correctly handles a restart delay
-of "0" (i.e. the restart is disabled). Which means that a disabled restart
-is always configured in the kernel.
+Fix the issue by removing the busy marker from the standard reservation,
+making the driver register successfully:
 
-On systems with both changes active this causes that CAN interfaces that
-don't implement a restart handler cannot be brought up by systemd-networkd.
+  serio: i8042 KBD port at 0x60,0x64 irq 1
+  serio: i8042 AUX port at 0x60,0x64 irq 12
 
-Solve this problem by allowing a delay of "0" to be configured, even if the
-device does not implement a restart handler.
+and the resource show up as expected among the legacy devices:
 
-[1] https://github.com/systemd/systemd/commit/13ce5d4632e395521e6205c954493c7fc1c4c6e0
+  00000000-00ffffff : MSC PCI I/O
+    00000000-0000001f : dma1
+    00000020-00000021 : pic1
+    00000040-0000005f : timer
+    00000060-0000006f : keyboard
+      00000060-0000006f : i8042
+    00000070-00000077 : rtc0
+    00000080-0000008f : dma page reg
+    000000a0-000000a1 : pic2
+    000000c0-000000df : dma2
+    [...]
 
+If the i8042 driver has not been configured, then the standard resource
+will remain there preventing any conflicting dynamic assignment of this
+PCI port I/O address range.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Cc: stable@vger.kernel.org
-Cc: Andrei Lalaev <andrey.lalaev@gmail.com>
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/all/20251020-certain-arrogant-vole-of-sunshine-141841-mkl@pengutronix.de
-Fixes: c1f3f9797c1f ("can: netlink: can_changelink(): fix NULL pointer deref of struct can_priv::do_set_mode")
-Link: https://patch.msgid.link/20251020-netlink-fix-restart-v1-1-3f53c7f8520b@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://patch.msgid.link/alpine.DEB.2.21.2510211919240.8377@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/dev/netlink.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/mips/mti-malta/malta-setup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -252,7 +252,9 @@ static int can_changelink(struct net_dev
- 	}
- 
- 	if (data[IFLA_CAN_RESTART_MS]) {
--		if (!priv->do_set_mode) {
-+		unsigned int restart_ms = nla_get_u32(data[IFLA_CAN_RESTART_MS]);
-+
-+		if (restart_ms != 0 && !priv->do_set_mode) {
- 			NL_SET_ERR_MSG(extack,
- 				       "Device doesn't support restart from Bus Off");
- 			return -EOPNOTSUPP;
-@@ -261,7 +263,7 @@ static int can_changelink(struct net_dev
- 		/* Do not allow changing restart delay while running */
- 		if (dev->flags & IFF_UP)
- 			return -EBUSY;
--		priv->restart_ms = nla_get_u32(data[IFLA_CAN_RESTART_MS]);
-+		priv->restart_ms = restart_ms;
- 	}
- 
- 	if (data[IFLA_CAN_RESTART]) {
+--- a/arch/mips/mti-malta/malta-setup.c
++++ b/arch/mips/mti-malta/malta-setup.c
+@@ -47,7 +47,7 @@ static struct resource standard_io_resou
+ 		.name = "keyboard",
+ 		.start = 0x60,
+ 		.end = 0x6f,
+-		.flags = IORESOURCE_IO | IORESOURCE_BUSY
++		.flags = IORESOURCE_IO
+ 	},
+ 	{
+ 		.name = "dma page reg",
 
 
