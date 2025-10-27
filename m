@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6EA324B2E;
-	Mon, 27 Oct 2025 19:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F52324B09;
+	Mon, 27 Oct 2025 19:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593424; cv=none; b=mKDOEHP27Q/C5NKqVxq74MDbUMoWtnOyAl+WCOWnJjqWBhJvHPrbQB9pVS7NRqamA51yMJeh+SXJ8tLvH+MZmw/C2JMmG4fgFxNfmzuJEnPrDueVpbkgvgJO8aV8LWnQHm8jBgchRpLAkdxZAU9GNxeWY3BelV/pgAhsXId5ads=
+	t=1761593427; cv=none; b=YLj8lAUuCCyOY6cZH7XSabqsq9oM4tbZJR+L8AqQ3a0rcub7dRtMYN4kKNA62RwYaCQ7hH8WX2LsyS3IGmYwELEI/YvhS4JYVnp8lOLPrpvw/fUstQfwwQsF0nFa+YB+1p0Cz7d3ykYKMPbsyoK1vm8/uEOk1/E9IkYaToWrhck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593424; c=relaxed/simple;
-	bh=vlSAGDWT8bm4kxqf3XK5idS+L+USqsYg5aDaioOcbDc=;
+	s=arc-20240116; t=1761593427; c=relaxed/simple;
+	bh=3f41haB/1/7Ri6moilzTWDdciubzvYpo8AIDVNrxJ5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJB2UykaRJu2viBRLvNwG44UIswAUMl5rlRzvNh07XF4lCzAqq8GGX7fCaP36KG+Q3OzADiszDDhkuDrx38KN4lJZwGB57fI5CxOqtxtGu/Eds4fW08qwxcDFL3BtEAmVBSqGdf9IhZzHMGdh8n74xxIlg1L0oy5DEg0YAOGovs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ce9uvO53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DW4YntgSBplT1LyRlAYpJWB9+Jfyrn5efPtu116cSt4g36wyG/Nac3JEFogzWvPypy3fK/RDkmJjFrxxpabiRYGUoi42ugGLJd942/g5Fo0no+Dy2DHYm6DG/B2qoc3K/3l+q8eDG2X5MSfgmOK43kxvoyy1x5U/kfFDkOGwgPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3o82luQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ce9uvO53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEDFC4CEF1;
-	Mon, 27 Oct 2025 19:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3o82luQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CC0C4CEF1;
+	Mon, 27 Oct 2025 19:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593423;
-	bh=vlSAGDWT8bm4kxqf3XK5idS+L+USqsYg5aDaioOcbDc=;
+	s=korg; t=1761593426;
+	bh=3f41haB/1/7Ri6moilzTWDdciubzvYpo8AIDVNrxJ5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ce9uvO53eYsw4frT6JWmdxh+yCiYj1XhH+juIcsNObGNM/6GiA/zPfJK7tx0Rc1pT
-	 /sbJKrjSuoWWXnV5iT3cfK2RNMCr3iHA3JzaOWeGHWDVHmwDd4S8+t/nwZZZLVEdgA
-	 qGnhGHEaOcIHWtiLpCZvqC/003zx7BtsRjKUp1Zk=
+	b=X3o82luQdm0sT5/7vAuUwTq2zzqe1G4uOImcsH+98vT91huqfCnhqoMIDdjHFsbpR
+	 o7KZCSAAH01pyvhYcBtofDU2wJN/mL0KFddaXg2/LW6sPl981wG5Kiwq/RFaG8WJWM
+	 4I/rL46ELIQMxbbGPNPUishcnEHdHeqAnstppACY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Cynthia <cynthia@kosmx.dev>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 129/184] spi: airoha: fix reading/writing of flashes with more than one plane per lun
-Date: Mon, 27 Oct 2025 19:36:51 +0100
-Message-ID: <20251027183518.417930464@linuxfoundation.org>
+Subject: [PATCH 6.17 130/184] sysfs: check visibility before changing group attribute ownership
+Date: Mon, 27 Oct 2025 19:36:52 +0100
+Message-ID: <20251027183518.445598273@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,110 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 0b7d9b25e4bc2e478c9d06281a65f930769fca09 ]
+[ Upstream commit c7fbb8218b4ad35fec0bd2256d2b9c8d60331f33 ]
 
-Attaching UBI on the flash with more than one plane per lun will lead to
-the following error:
+Since commit 0c17270f9b92 ("net: sysfs: Implement is_visible for
+phys_(port_id, port_name, switch_id)"), __dev_change_net_namespace() can
+hit WARN_ON() when trying to change owner of a file that isn't visible.
+See the trace below:
 
-[    2.980989] spi-nand spi0.0: Micron SPI NAND was found.
-[    2.986309] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
-[    2.994978] 2 fixed-partitions partitions found on MTD device spi0.0
-[    3.001350] Creating 2 MTD partitions on "spi0.0":
-[    3.006159] 0x000000000000-0x000000020000 : "bl2"
-[    3.011663] 0x000000020000-0x000010000000 : "ubi"
-...
-[    6.391748] ubi0: attaching mtd1
-[    6.412545] ubi0 error: ubi_attach: PEB 0 contains corrupted VID header, and the data does not contain all 0xFF
-[    6.422677] ubi0 error: ubi_attach: this may be a non-UBI PEB or a severe VID header corruption which requires manual inspection
-[    6.434249] Volume identifier header dump:
-[    6.438349]     magic     55424923
-[    6.441482]     version   1
-[    6.444007]     vol_type  0
-[    6.446539]     copy_flag 0
-[    6.449068]     compat    0
-[    6.451594]     vol_id    0
-[    6.454120]     lnum      1
-[    6.456651]     data_size 4096
-[    6.459442]     used_ebs  1061644134
-[    6.462748]     data_pad  0
-[    6.465274]     sqnum     0
-[    6.467805]     hdr_crc   61169820
-[    6.470943] Volume identifier header hexdump:
-[    6.475308] hexdump of PEB 0 offset 4096, length 126976
-[    6.507391] ubi0 warning: ubi_attach: valid VID header but corrupted EC header at PEB 4
-[    6.515415] ubi0 error: ubi_compare_lebs: unsupported on-flash UBI format
-[    6.522222] ubi0 error: ubi_attach_mtd_dev: failed to attach mtd1, error -22
-[    6.529294] UBI error: cannot attach mtd1
+ WARNING: CPU: 6 PID: 2938 at net/core/dev.c:12410 __dev_change_net_namespace+0xb89/0xc30
+ CPU: 6 UID: 0 PID: 2938 Comm: incusd Not tainted 6.17.1-1-mainline #1 PREEMPT(full)  4b783b4a638669fb644857f484487d17cb45ed1f
+ Hardware name: Framework Laptop 13 (AMD Ryzen 7040Series)/FRANMDCP07, BIOS 03.07 02/19/2025
+ RIP: 0010:__dev_change_net_namespace+0xb89/0xc30
+ [...]
+ Call Trace:
+  <TASK>
+  ? if6_seq_show+0x30/0x50
+  do_setlink.isra.0+0xc7/0x1270
+  ? __nla_validate_parse+0x5c/0xcc0
+  ? security_capable+0x94/0x1a0
+  rtnl_newlink+0x858/0xc20
+  ? update_curr+0x8e/0x1c0
+  ? update_entity_lag+0x71/0x80
+  ? sched_balance_newidle+0x358/0x450
+  ? psi_task_switch+0x113/0x2a0
+  ? __pfx_rtnl_newlink+0x10/0x10
+  rtnetlink_rcv_msg+0x346/0x3e0
+  ? sched_clock+0x10/0x30
+  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+  netlink_rcv_skb+0x59/0x110
+  netlink_unicast+0x285/0x3c0
+  ? __alloc_skb+0xdb/0x1a0
+  netlink_sendmsg+0x20d/0x430
+  ____sys_sendmsg+0x39f/0x3d0
+  ? import_iovec+0x2f/0x40
+  ___sys_sendmsg+0x99/0xe0
+  __sys_sendmsg+0x8a/0xf0
+  do_syscall_64+0x81/0x970
+  ? __sys_bind+0xe3/0x110
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? sock_alloc_file+0x63/0xc0
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? alloc_fd+0x12e/0x190
+  ? put_unused_fd+0x2a/0x70
+  ? do_sys_openat2+0xa2/0xe0
+  ? syscall_exit_work+0x143/0x1b0
+  ? do_syscall_64+0x244/0x970
+  ? exc_page_fault+0x7e/0x1a0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ [...]
+  </TASK>
 
-Non dirmap reading works good. Looking to spi_mem_no_dirmap_read() code we'll see:
+Fix this by checking is_visible() before trying to touch the attribute.
 
-	static ssize_t spi_mem_no_dirmap_read(struct spi_mem_dirmap_desc *desc,
-					      u64 offs, size_t len, void *buf)
-	{
-		struct spi_mem_op op = desc->info.op_tmpl;
-		int ret;
-
-// --- see here ---
-		op.addr.val = desc->info.offset + offs;
-//-----------------
-		op.data.buf.in = buf;
-		op.data.nbytes = len;
-		ret = spi_mem_adjust_op_size(desc->mem, &op);
-		if (ret)
-		return ret;
-
-		ret = spi_mem_exec_op(desc->mem, &op);
-		if (ret)
-			return ret;
-
-		return op.data.nbytes;
-	}
-
-The similar happens for spi_mem_no_dirmap_write(). Thus the address
-passed to the flash should take in the account the value of
-desc->info.offset.
-
-This patch fix dirmap reading/writing of flashes with more than one
-plane per lun.
-
-Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251012121707.2296160-7-mikhail.kshevetskiy@iopsys.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 303a42769c4c ("sysfs: add sysfs_group{s}_change_owner()")
+Fixes: 0c17270f9b92 ("net: sysfs: Implement is_visible for phys_(port_id, port_name, switch_id)")
+Reported-by: Cynthia <cynthia@kosmx.dev>
+Closes: https://lore.kernel.org/netdev/01070199e22de7f8-28f711ab-d3f1-46d9-b9a0-048ab05eb09b-000000@eu-central-1.amazonses.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20251016101456.4087-1-fmancera@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/sysfs/group.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 8143fbb0cf4e6..b78163eaed61d 100644
---- a/drivers/spi/spi-airoha-snfi.c
-+++ b/drivers/spi/spi-airoha-snfi.c
-@@ -733,8 +733,9 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		goto error_dma_unmap;
+diff --git a/fs/sysfs/group.c b/fs/sysfs/group.c
+index 2d78e94072a0d..e142bac4f9f80 100644
+--- a/fs/sysfs/group.c
++++ b/fs/sysfs/group.c
+@@ -498,17 +498,26 @@ int compat_only_sysfs_link_entry_to_kobj(struct kobject *kobj,
+ }
+ EXPORT_SYMBOL_GPL(compat_only_sysfs_link_entry_to_kobj);
  
--	/* set read addr */
--	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_RD_CTL3, 0x0);
-+	/* set read addr: zero page offset + descriptor read offset */
-+	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_RD_CTL3,
-+			   desc->info.offset);
- 	if (err)
- 		goto error_dma_unmap;
+-static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
++static int sysfs_group_attrs_change_owner(struct kobject *kobj,
++					  struct kernfs_node *grp_kn,
+ 					  const struct attribute_group *grp,
+ 					  struct iattr *newattrs)
+ {
+ 	struct kernfs_node *kn;
+-	int error;
++	int error, i;
++	umode_t mode;
  
-@@ -870,7 +871,9 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		goto error_dma_unmap;
+ 	if (grp->attrs) {
+ 		struct attribute *const *attr;
  
--	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_PG_CTL2, 0x0);
-+	/* set write addr: zero page offset + descriptor write offset */
-+	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_PG_CTL2,
-+			   desc->info.offset);
- 	if (err)
- 		goto error_dma_unmap;
+-		for (attr = grp->attrs; *attr; attr++) {
++		for (i = 0, attr = grp->attrs; *attr; i++, attr++) {
++			if (grp->is_visible) {
++				mode = grp->is_visible(kobj, *attr, i);
++				if (mode & SYSFS_GROUP_INVISIBLE)
++					break;
++				if (!mode)
++					continue;
++			}
+ 			kn = kernfs_find_and_get(grp_kn, (*attr)->name);
+ 			if (!kn)
+ 				return -ENOENT;
+@@ -523,7 +532,14 @@ static int sysfs_group_attrs_change_owner(struct kernfs_node *grp_kn,
+ 	if (grp->bin_attrs) {
+ 		const struct bin_attribute *const *bin_attr;
+ 
+-		for (bin_attr = grp->bin_attrs; *bin_attr; bin_attr++) {
++		for (i = 0, bin_attr = grp->bin_attrs; *bin_attr; i++, bin_attr++) {
++			if (grp->is_bin_visible) {
++				mode = grp->is_bin_visible(kobj, *bin_attr, i);
++				if (mode & SYSFS_GROUP_INVISIBLE)
++					break;
++				if (!mode)
++					continue;
++			}
+ 			kn = kernfs_find_and_get(grp_kn, (*bin_attr)->attr.name);
+ 			if (!kn)
+ 				return -ENOENT;
+@@ -573,7 +589,7 @@ int sysfs_group_change_owner(struct kobject *kobj,
+ 
+ 	error = kernfs_setattr(grp_kn, &newattrs);
+ 	if (!error)
+-		error = sysfs_group_attrs_change_owner(grp_kn, grp, &newattrs);
++		error = sysfs_group_attrs_change_owner(kobj, grp_kn, grp, &newattrs);
+ 
+ 	kernfs_put(grp_kn);
  
 -- 
 2.51.0
