@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88C13314DD;
-	Mon, 27 Oct 2025 19:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05C629E110;
+	Mon, 27 Oct 2025 19:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591902; cv=none; b=ElCdhfcQ9bnQmOhP7xiCHmvCEK3Ld03ggkIOEoVtbbAyGAV3NP2eivVW3JVURPLpcpxXVefoawl+B7/RqjO3e7qp1Gho5Fy3gS+VLF90cY6vAwKgtuXeVoABID1yQwTfDNai+GT6+CkgR6kiO2Z5OdigavLcDwWkt7akos5rJdI=
+	t=1761591906; cv=none; b=KJ3RicMFtBzXhytZGRZt9/V1WkHmYxA0E6GpEGLe11IE/gOJPNp8fd0Q4WX/RBfyknZp9dD9an95QE7NSnL3TX+0fNBdUk5qroRYNGC+xVdVNr/aG2xD2w7UUly1gCOwYKp2Mxk3aCkWCIDMdgUTS5z0PzQ68ou77WERz+jdLm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591902; c=relaxed/simple;
-	bh=4JDtOfiZbYihCzsoQGpX6yBp1u2A557WPMXU71kLU+U=;
+	s=arc-20240116; t=1761591906; c=relaxed/simple;
+	bh=ygj/HSQHjdeQV2sB903Xdbw9MoB5uxy7cXMfuze5x4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZewuNv0HTZPI+2i4C7dFyzUdM3T5ygr9sQt8rAKDgxpSdQDVQoLwTUfnyw4t1BFE1KxByk+wxcAhfg1yifsBeZCJVq+GtevSHrCPPzkjJDI0tkJEkFtR9DVtsSQb+Iz7w622JSYMcaj11SD/W+we9dMInA0vz5H9jU0REmtcFu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJs6XrI5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpagRI/AZKxKRYYrSu3zx/at91ZJ/hB99euV21SsW+8YWLJ/5WJyS/beGQoejhgR4ZO0zRf4N5GtPx4Kb95qxcZsWl7qpk3xi+r3iEBLBp2vbKmmaq0bbxt9dxxH4nPwXjmo2ZF1sV0+2+M9UMmWWu7HYOAlKyvG04jGmTvpUzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/9x39zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJs6XrI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7914DC4CEF1;
-	Mon, 27 Oct 2025 19:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/9x39zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B34C4CEF1;
+	Mon, 27 Oct 2025 19:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591901;
-	bh=4JDtOfiZbYihCzsoQGpX6yBp1u2A557WPMXU71kLU+U=;
+	s=korg; t=1761591904;
+	bh=ygj/HSQHjdeQV2sB903Xdbw9MoB5uxy7cXMfuze5x4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJs6XrI5U6+HUY9cUrgb/2H29yyTbaTnIAxmXNVuGOkjO1u9bQUP+qnmucAnM+wzZ
-	 o1JVJrl0/X8UyioCLrUqaGCLAjkssDYWEW9ISdqhNLy2fIDH8frqP1BZYIBBsHGYiB
-	 8W0v/sF949GobppFwl9ETOzAQ9aYbFTSQ+c5pcng=
+	b=Z/9x39zkCGim/OcXoLlFOWWPgj5qovKA12zLEV7xBjY0rp6wSuX1wnS8CXhftOH2q
+	 QaVIqTLdYiUh35hH6vmQTOZBg7A26tKeLBIQI2F7+uV3mAeMBeaf/MlF3QTZizqwJG
+	 kLbRBeO/Ehrd6s828DpNtlSQ2fwvAfCYYyUeF4rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	Andreas Oetken <andreas.oetken@siemens-energy.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/123] nios2: ensure that memblock.current_limit is set when setting pfn limits
-Date: Mon, 27 Oct 2025 19:35:22 +0100
-Message-ID: <20251027183447.528372867@linuxfoundation.org>
+Subject: [PATCH 5.15 043/123] hfs: clear offset and space out of valid records in b-tree node
+Date: Mon, 27 Oct 2025 19:35:23 +0100
+Message-ID: <20251027183447.554869992@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,71 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
+[ Upstream commit 18b07c44f245beb03588b00b212b38fce9af7cc9 ]
 
-On nios2, with CONFIG_FLATMEM set, the kernel relies on
-memblock_get_current_limit() to determine the limits of mem_map, in
-particular for max_low_pfn.
-Unfortunately, memblock.current_limit is only default initialized to
-MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
-to situations where max_low_pfn can erroneously exceed the value of
-max_pfn and, thus, the valid range of available DRAM.
+Currently, hfs_brec_remove() executes moving records
+towards the location of deleted record and it updates
+offsets of moved records. However, the hfs_brec_remove()
+logic ignores the "mess" of b-tree node's free space and
+it doesn't touch the offsets out of records number.
+Potentially, it could confuse fsck or driver logic or
+to be a reason of potential corruption cases.
 
-This can in turn cause kernel-level paging failures, e.g.:
+This patch reworks the logic of hfs_brec_remove()
+by means of clearing freed space of b-tree node
+after the records moving. And it clear the last
+offset that keeping old location of free space
+because now the offset before this one is keeping
+the actual offset to the free space after the record
+deletion.
 
-[   76.900000] Unable to handle kernel paging request at virtual address 20303000
-[   76.900000] ea = c0080890, ra = c000462c, cause = 14
-[   76.900000] Kernel panic - not syncing: Oops
-[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
-
-This patch fixes this by pre-calculating memblock.current_limit
-based on the upper limits of the available memory ranges via
-adjust_lowmem_bounds, a simplified version of the equivalent
-implementation within the arm architecture.
-
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250815194918.38165-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/setup.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/hfs/brec.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
-index 40bc8fb75e0b5..e2fc4b59d93ea 100644
---- a/arch/nios2/kernel/setup.c
-+++ b/arch/nios2/kernel/setup.c
-@@ -147,6 +147,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
- 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
- }
+diff --git a/fs/hfs/brec.c b/fs/hfs/brec.c
+index 896396554bcc1..b01db1fae147c 100644
+--- a/fs/hfs/brec.c
++++ b/fs/hfs/brec.c
+@@ -179,6 +179,7 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	struct hfs_btree *tree;
+ 	struct hfs_bnode *node, *parent;
+ 	int end_off, rec_off, data_off, size;
++	int src, dst, len;
  
-+static void __init adjust_lowmem_bounds(void)
-+{
-+	phys_addr_t block_start, block_end;
-+	u64 i;
-+	phys_addr_t memblock_limit = 0;
-+
-+	for_each_mem_range(i, &block_start, &block_end) {
-+		if (block_end > memblock_limit)
-+			memblock_limit = block_end;
+ 	tree = fd->tree;
+ 	node = fd->bnode;
+@@ -208,10 +209,14 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	}
+ 	hfs_bnode_write_u16(node, offsetof(struct hfs_bnode_desc, num_recs), node->num_recs);
+ 
+-	if (rec_off == end_off)
+-		goto skip;
+ 	size = fd->keylength + fd->entrylength;
+ 
++	if (rec_off == end_off) {
++		src = fd->keyoffset;
++		hfs_bnode_clear(node, src, size);
++		goto skip;
 +	}
 +
-+	memblock_set_current_limit(memblock_limit);
-+}
+ 	do {
+ 		data_off = hfs_bnode_read_u16(node, rec_off);
+ 		hfs_bnode_write_u16(node, rec_off + 2, data_off - size);
+@@ -219,9 +224,23 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	} while (rec_off >= end_off);
+ 
+ 	/* fill hole */
+-	hfs_bnode_move(node, fd->keyoffset, fd->keyoffset + size,
+-		       data_off - fd->keyoffset - size);
++	dst = fd->keyoffset;
++	src = fd->keyoffset + size;
++	len = data_off - src;
 +
- void __init setup_arch(char **cmdline_p)
- {
- 	console_verbose();
-@@ -160,6 +174,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Keep a copy of command line */
- 	*cmdline_p = boot_command_line;
- 
-+	adjust_lowmem_bounds();
- 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
- 	max_mapnr = max_low_pfn;
- 
++	hfs_bnode_move(node, dst, src, len);
++
++	src = dst + len;
++	len = data_off - src;
++
++	hfs_bnode_clear(node, src, len);
++
+ skip:
++	/*
++	 * Remove the obsolete offset to free space.
++	 */
++	hfs_bnode_write_u16(node, end_off, 0);
++
+ 	hfs_bnode_dump(node);
+ 	if (!fd->record)
+ 		hfs_brec_update_parent(fd);
 -- 
 2.51.0
 
