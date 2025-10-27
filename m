@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FF5198A11;
-	Mon, 27 Oct 2025 18:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F233832ED45;
+	Mon, 27 Oct 2025 18:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591260; cv=none; b=PQMnoH9CjWeeHwSCPuVYkuMkrr7CRr5errCFeDu6PFD9OhPxDRBYLbErsyP37DxQnJ/h7+/euniRmasSMTLIEoAJm7xz+rL265224GD1RwVCfyNvTbHVmKLOQl6ZAa8jkGFDMM3CBxa4Wk++NIIe3BxAtAPgmeqQ4hogShnjdv8=
+	t=1761591263; cv=none; b=taYe/A4tSfje+My3xAdP2ZIZtnpSnta3J7KlQTtxBoVrgitquvvqBfHJjTTb+7JiWcSJhxGy7GscodsMTHC9tdQnx0ukv2MOC8+8Vw1z+/GxYNdn1wqGCZVRdNDxLjQrOEQVllF2yuHV+Rtf/B0Lse/Yf4LUZscw/R6mxwUpNXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591260; c=relaxed/simple;
-	bh=98Aumik56HVvLoKATIf8VKWLRPYFhTarNV9b48BYtiM=;
+	s=arc-20240116; t=1761591263; c=relaxed/simple;
+	bh=4RRpqmgeayvP6US3HlBo5FbkXDdvG7+vlYm0BHc95a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/0ujC5mRUuITWGzZ6EJUhKEtkfpmZg7W4f1HUKG7qxQmnX7JkusBCv0eqSw00XHNaIvBtfnyf5wNY/+zgn56VwXyXlCc070R1p6vBM49ppZjnhXGEq16S2ceFZy6coltpy1SbdnKPbfB7o0945RsfvnEp+mUYkQx6+aun+kvj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13f5ChOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AC8jAl3fQKLeOtZ+ItrqDWpkc1BHb+f+VY4vynfJ8aU3H5vj/w2WQx4ab9RxoxfH2aMVQd0+cTYk33CCjJVXlFLfIKIPWJeAPezja1QJRepyH9X/1LCPnTtwdSubOXgNeYjLaHLYB52CTR4YyT7X5ENTLHJp+rjrRCvi4GmwamE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=En28RIgA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13f5ChOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03068C4CEF1;
-	Mon, 27 Oct 2025 18:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="En28RIgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D29C4CEF1;
+	Mon, 27 Oct 2025 18:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591260;
-	bh=98Aumik56HVvLoKATIf8VKWLRPYFhTarNV9b48BYtiM=;
+	s=korg; t=1761591262;
+	bh=4RRpqmgeayvP6US3HlBo5FbkXDdvG7+vlYm0BHc95a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13f5ChOlMQ7hi8zuf0oJib7Rs4DlBXNMTfyByxrle73eGWlh+gehLytG6JiwaeBGp
-	 86cdcuGkt3n/Lh2VYAS2Bt+w8sGm8yquWuBW6IahkWjOl563x/dN45S0GVxCUlQTDz
-	 fmMuXn93KbySnPWLUafEUX4foT9oTRsuiz6ZpBFc=
+	b=En28RIgAKsh6A9lrvgCAEHEDt03BaebOeZgdFf6kwSaoXdLX8zIWSSpqDmcAGoQ/L
+	 zjQn1feyc9qp86QyAdIt4O1xCLnbPCZk3JiEurFQ73dhZnHtXMUOpy3du9//itYCHb
+	 pgqVZ22ypW9k5t+V9QIrjBwjTfSPOzwzVgf2J5TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 129/332] arm64: dts: qcom: msm8916: Add missing MDSS reset
-Date: Mon, 27 Oct 2025 19:33:02 +0100
-Message-ID: <20251027183528.034650800@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Kevin Hilman <khilman@baylibre.com>
+Subject: [PATCH 5.10 130/332] ARM: OMAP2+: pm33xx-core: ix device node reference leaks in amx3_idle_init
+Date: Mon, 27 Oct 2025 19:33:03 +0100
+Message-ID: <20251027183528.064924748@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,54 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 99b78773c2ae55dcc01025f94eae8ce9700ae985 upstream.
+commit 74139a64e8cedb6d971c78d5d17384efeced1725 upstream.
 
-On most MSM8916 devices (aside from the DragonBoard 410c), the bootloader
-already initializes the display to show the boot splash screen. In this
-situation, MDSS is already configured and left running when starting Linux.
-To avoid side effects from the bootloader configuration, the MDSS reset can
-be specified in the device tree to start again with a clean hardware state.
+Add missing of_node_put() calls to release
+device node references obtained via of_parse_phandle().
 
-The reset for MDSS is currently missing in msm8916.dtsi, which causes
-errors when the MDSS driver tries to re-initialize the registers:
-
- dsi_err_worker: status=6
- dsi_err_worker: status=6
- dsi_err_worker: status=6
- ...
-
-It turns out that we have always indirectly worked around this by building
-the MDSS driver as a module. Before v6.17, the power domain was temporarily
-turned off until the module was loaded, long enough to clear the register
-contents. In v6.17, power domains are not turned off during boot until
-sync_state() happens, so this is no longer working. Even before v6.17 this
-resulted in broken behavior, but notably only when the MDSS driver was
-built-in instead of a module.
-
+Fixes: 06ee7a950b6a ("ARM: OMAP2+: pm33xx-core: Add cpuidle_ops for am335x/am437x")
 Cc: stable@vger.kernel.org
-Fixes: 305410ffd1b2 ("arm64: dts: msm8916: Add display support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250915-msm8916-resets-v1-1-a5c705df0c45@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20250902075943.2408832-1-linmq006@gmail.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mach-omap2/pm33xx-core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -899,6 +899,8 @@
+--- a/arch/arm/mach-omap2/pm33xx-core.c
++++ b/arch/arm/mach-omap2/pm33xx-core.c
+@@ -393,12 +393,15 @@ static int __init amx3_idle_init(struct
+ 		if (!state_node)
+ 			break;
  
- 			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+-		if (!of_device_is_available(state_node))
++		if (!of_device_is_available(state_node)) {
++			of_node_put(state_node);
+ 			continue;
++		}
  
-+			resets = <&gcc GCC_MDSS_BCR>;
-+
- 			interrupt-controller;
- 			#interrupt-cells = <1>;
+ 		if (i == CPUIDLE_STATE_MAX) {
+ 			pr_warn("%s: cpuidle states reached max possible\n",
+ 				__func__);
++			of_node_put(state_node);
+ 			break;
+ 		}
+ 
+@@ -408,6 +411,7 @@ static int __init amx3_idle_init(struct
+ 			states[state_count].wfi_flags |= WFI_FLAG_WAKE_M3 |
+ 							 WFI_FLAG_FLUSH_CACHE;
+ 
++		of_node_put(state_node);
+ 		state_count++;
+ 	}
  
 
 
