@@ -1,39 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F053326D6C;
-	Mon, 27 Oct 2025 18:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D932ABC2;
+	Mon, 27 Oct 2025 18:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591182; cv=none; b=fwz/Ko4nc8RIj4+ny5V27UnSu9DpPLfcGhZQNbVRHXc59jw5t0etskdptyn9KDVn/xvMTx/GzUuht75/8Pffubd95W7RD5EDrkoVCTWG6jw5LQwT5zn6+Q4RVuRPVIwWHTf2ZTZ1OqcGR+NC2peaZy3TLSilhkFsdoumlg8mC+A=
+	t=1761591185; cv=none; b=blDagKCojFRwuJTUbJf/Yy1X4PZ1TY/I5KgCiEGHWazkgqi78w4l+TOhyMkvtMmZsOYErvwJI60b1T3kNbI4cG8CDBEiBR//fa42crg2yXJlpZSkONyz1Fy4MuI2hPWx24ysRt/LFEV+VH1usKDXWFtCa++2j1r8wd3do9uhcZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591182; c=relaxed/simple;
-	bh=fs95iPpj359tgxuYr8ftaLLYndQJnQ+ldZgr47oO/SU=;
+	s=arc-20240116; t=1761591185; c=relaxed/simple;
+	bh=8qWg3GZJ9Cm44gHsdEiJ2OwZNo4e1Uxrvs3XY2o7dKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BBe5nT3mSu/DcVoJlwfEYjuHwoTa+C7k0kodrO8JiMeuORlO7Hae0cWOI3GjgjoGVmnGLuY7l7LiC1YpsVcXqTLKkb/L9bZZpar6epTh9owpxoS4u+vnZYaPiU8WbDJl7LnuLQkrUtxE2HDz4fs++z57BqoyqQ+dq4I9NjGB1NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCUwYGpX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsbwMzQRYqlhqzqZLYyUWcL8JrXPvs9FRBpAIhHbZaR71FsI8w948Tmrq2digPVCGhg1kt8Wfs7yj4nM4EQCpiZlWfY0IgWZhPTN8cgKOu+C0C/58K7J4CQAGLQE/Qa+kRHk1a2473Bj42lx71Y1sbd3DXrx2vFj7/iHzKeZIqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKYDt3Tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCUwYGpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A15C4CEF1;
-	Mon, 27 Oct 2025 18:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKYDt3Tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC2EC4CEF1;
+	Mon, 27 Oct 2025 18:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591182;
-	bh=fs95iPpj359tgxuYr8ftaLLYndQJnQ+ldZgr47oO/SU=;
+	s=korg; t=1761591184;
+	bh=8qWg3GZJ9Cm44gHsdEiJ2OwZNo4e1Uxrvs3XY2o7dKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCUwYGpXzGqdcmqNenZkHVkzv4SMkz7wO4+2IWqawHUhgyag0kTDGUmLxl4sVKN7Y
-	 S9HUtrNi2h8OnPVvk2sfTzzgkPM78xpGpUsFow+F1SeyX+HGklxOa/MEM6uWyRPBkv
-	 SHSvao8G90yVCJmRHCHuY+HbJseS+U6l967xhlRo=
+	b=HKYDt3TkSdKV/c6R0Ypb4CO0s2VDbFcBfhEwlHy0YyqkKdR4KHQc9h+tMMawVxurY
+	 Fuhq+lOHvSCK10paXjHqAEWLHnWWWEQbvyLjz/MrbKtgnh1wT+l1mkvkZ7CQwqIjdK
+	 ogERvKsHw1Di6dLRo5bGh3vaZVhmYxe9i1nBBul0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 098/332] iio: frequency: adf4350: Fix ADF4350_REG3_12BIT_CLKDIV_MODE
-Date: Mon, 27 Oct 2025 19:32:31 +0100
-Message-ID: <20251027183527.206986399@linuxfoundation.org>
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Blake Jones <blakejones@google.com>,
+	Chun-Tse Shao <ctshao@google.com>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 099/332] libperf event: Ensure tracing data is multiple of 8 sized
+Date: Mon, 27 Oct 2025 19:32:32 +0100
+Message-ID: <20251027183527.233037096@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -46,41 +64,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 1d8fdabe19267338f29b58f968499e5b55e6a3b6 upstream.
+[ Upstream commit b39c915a4f365cce6bdc0e538ed95d31823aea8f ]
 
-The clk div bits (2 bits wide) do not start in bit 16 but in bit 15. Fix it
-accordingly.
+Perf's synthetic-events.c will ensure 8-byte alignment of tracing
+data, writing it after a perf_record_header_tracing_data event.
 
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-2-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add padding to struct perf_record_header_tracing_data to make it 16-byte
+rather than 12-byte sized.
+
+Fixes: 055c67ed39887c55 ("perf tools: Move event synthesizing routines to separate .c file")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Blake Jones <blakejones@google.com>
+Cc: Chun-Tse Shao <ctshao@google.com>
+Cc: Collin Funk <collin.funk1@gmail.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jan Polensky <japo@linux.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Nam Cao <namcao@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250821163820.1132977-6-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iio/frequency/adf4350.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/perf/include/perf/event.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/iio/frequency/adf4350.h
-+++ b/include/linux/iio/frequency/adf4350.h
-@@ -51,7 +51,7 @@
+diff --git a/tools/lib/perf/include/perf/event.h b/tools/lib/perf/include/perf/event.h
+index 4a24b855d3ce2..4b0f576e1e6c0 100644
+--- a/tools/lib/perf/include/perf/event.h
++++ b/tools/lib/perf/include/perf/event.h
+@@ -201,6 +201,7 @@ struct perf_record_header_event_type {
+ struct perf_record_header_tracing_data {
+ 	struct perf_event_header header;
+ 	__u32			 size;
++	__u32			 pad;
+ };
  
- /* REG3 Bit Definitions */
- #define ADF4350_REG3_12BIT_CLKDIV(x)		((x) << 3)
--#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 16)
-+#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 15)
- #define ADF4350_REG3_12BIT_CSR_EN		(1 << 18)
- #define ADF4351_REG3_CHARGE_CANCELLATION_EN	(1 << 21)
- #define ADF4351_REG3_ANTI_BACKLASH_3ns_EN	(1 << 22)
+ #define PERF_RECORD_MISC_BUILD_ID_SIZE (1 << 15)
+-- 
+2.51.0
+
 
 
