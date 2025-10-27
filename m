@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB61F2C11DF;
-	Mon, 27 Oct 2025 19:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390002C11DF;
+	Mon, 27 Oct 2025 19:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593360; cv=none; b=oAfYy/+JaRNQCFIdVPuNsmTIe1X61SfBm7VaJDbYk4B1HYKTchu6JJSjU/dJZ9Yrsvogw+AcbRCIbKgl9hhxOrKnIDuLAoAPWKwqQijbFhZMI6KHOW2NhFXBy3QnGiXwlOtRJGM1EU/cUutODA8ORKQ729xBat2VzdTrOIjEcI8=
+	t=1761593364; cv=none; b=XXJgpfpoDQ3SRV3KVtmc62+9N8wfUfUeuZTdbhfa/i5SPenKFAmkDKWtFWnYHn8HoeKZeaj2F92kUXu3inDB1AhkXr976qCemOkYUPc//biU3VF4k/6ToiPOWk5uUbR1f0CZdp+4nIED1biSYFQc3qDR++P0ydpd3sqrbneNGzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593360; c=relaxed/simple;
-	bh=H72p1qsb7Id9judXdX6pZHlA/SmsTi5b82ay5DZZnaU=;
+	s=arc-20240116; t=1761593364; c=relaxed/simple;
+	bh=4a4xrmfYhShRPY9YZ3JOYMDcPCNzZ33ef24hx1SX5rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1FgZzcP9awbM0MlDex9Lha/DcN9pRLwik2TlQAF/DYa0psySa22ZldhSVRIZhPhRKiKlTU09XeCtN6I2Grx06U8BoSWBNHMQqT9Rc+zedp98RArlvU1IM1K9cJvtYV/mffQ2MPe7zyu4pGBOaLCVHViLcsSXOPUKxJzqN41TVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke+zLx+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tz82guoxszRrCmGHhWjVSxro6NUQO4eQRIVvRe1HazV/JIcLB0GOHv/bGY5msM+JAfmW5JFMjPGb0i3IBhp8mQNzh9vzrGAcoH2zEDyxD4f1zpOF7eOoXd1vph2Tc6cWZx6Tqm6nIaO1knptHxuAKQ4ove9WOPV2tOZbNhEQ+bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6xBYI3U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke+zLx+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261B8C4CEF1;
-	Mon, 27 Oct 2025 19:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6xBYI3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0544C4CEF1;
+	Mon, 27 Oct 2025 19:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593360;
-	bh=H72p1qsb7Id9judXdX6pZHlA/SmsTi5b82ay5DZZnaU=;
+	s=korg; t=1761593364;
+	bh=4a4xrmfYhShRPY9YZ3JOYMDcPCNzZ33ef24hx1SX5rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ke+zLx+D78I4mWLS/b6ZPQzBPHsENfK1AP3bO1EnuRrWnV20lQth93A6ms6bbjdck
-	 rmx2El77YSZKvqlzU/ViDG93ZWTS4chMrofI0qXikLmp464JX90/KqzcE+ycTRWxMu
-	 SKiJVNNYzC+N2mSiHLLl58l3Pmz+rk9N9sdqIxSo=
+	b=o6xBYI3U7fWwZvnBKha7wawcxENHCgTizGKeDQpJu4qwUUNSSRwxkwuBGOcpaphMB
+	 o76Tix6QKQSxJcYk+wiuB9mECBLgxqV4NIS7I6bGJEhY9hXRd43aK9v70SoyWWSyJg
+	 ecuZV3Xm1Uc7rTWwG4gJssKWCq8dFBm/yplVFi6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Chris Park <chris.park@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>
-Subject: [PATCH 6.17 108/184] drm/amd/display: increase max link count and fix link->enc NULL pointer access
-Date: Mon, 27 Oct 2025 19:36:30 +0100
-Message-ID: <20251027183517.829787385@linuxfoundation.org>
+	Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	William Breathitt Gray <wbg@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.17 074/184] gpio: pci-idio-16: Define maximum valid register address offset
+Date: Mon, 27 Oct 2025 19:35:56 +0100
+Message-ID: <20251027183516.890827221@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -54,60 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: William Breathitt Gray <wbg@kernel.org>
 
-commit bec947cbe9a65783adb475a5fb47980d7b4f4796 upstream.
+commit d37623132a6347b4ab9e2179eb3f2fa77863c364 upstream.
 
-[why]
-1.) dc->links[MAX_LINKS] array size smaller than actual requested.
-max_connector + max_dpia + 4 virtual = 14.
-increase from 12 to 14.
+Attempting to load the pci-idio-16 module fails during regmap
+initialization with a return error -EINVAL. This is a result of the
+regmap cache failing initialization. Set the idio_16_regmap_config
+max_register member to fix this failure.
 
-2.) hw_init() access null LINK_ENC for dpia non display_endpoint.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d7f5a61e1b04ed87b008c8d327649d184dc5bb45)
+Fixes: 73d8f3efc5c2 ("gpio: pci-idio-16: Migrate to the regmap API")
+Reported-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Closes: https://lore.kernel.org/r/9b0375fd-235f-4ee1-a7fa-daca296ef6bf@nutanix.com
+Suggested-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20251020-fix-gpio-idio-16-regmap-v2-2-ebeb50e93c33@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    3 +++
- drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h         |    8 +++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-pci-idio-16.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -200,6 +200,9 @@ void dcn401_init_hw(struct dc *dc)
- 		 */
- 		struct dc_link *link = dc->links[i];
- 
-+		if (link->ep_type != DISPLAY_ENDPOINT_PHY)
-+			continue;
-+
- 		link->link_enc->funcs->hw_init(link->link_enc);
- 
- 		/* Check for enabled DIG to identify enabled display */
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
-@@ -44,7 +44,13 @@
-  */
- #define MAX_PIPES 6
- #define MAX_PHANTOM_PIPES (MAX_PIPES / 2)
--#define MAX_LINKS (MAX_PIPES * 2 +2)
-+
-+#define MAX_DPIA 6
-+#define MAX_CONNECTOR 6
-+#define MAX_VIRTUAL_LINKS 4
-+
-+#define MAX_LINKS (MAX_DPIA + MAX_CONNECTOR + MAX_VIRTUAL_LINKS)
-+
- #define MAX_DIG_LINK_ENCODERS 7
- #define MAX_DWB_PIPES	1
- #define MAX_HPO_DP2_ENCODERS	4
+--- a/drivers/gpio/gpio-pci-idio-16.c
++++ b/drivers/gpio/gpio-pci-idio-16.c
+@@ -41,6 +41,7 @@ static const struct regmap_config idio_1
+ 	.reg_stride = 1,
+ 	.val_bits = 8,
+ 	.io_port = true,
++	.max_register = 0x7,
+ 	.wr_table = &idio_16_wr_table,
+ 	.rd_table = &idio_16_rd_table,
+ 	.volatile_table = &idio_16_rd_table,
 
 
