@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A04C3016F9;
-	Mon, 27 Oct 2025 19:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D17117F4F6;
+	Mon, 27 Oct 2025 19:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592547; cv=none; b=P6r85MC7P/6VYPgqWYM1zMU/ZMZ+81N9sVn7sQAZ0EoAHBTt4jA99yRwa1Q9I5AqQeQkgnkaejkXP4zOKEeXZ9bAqrXpZu6IGl4NutzZWsy9JbimP+tCjiROwHkLYkImjP51P/eWs5hmnzC0oWSPpuQXuuC22u4fGXN6vytvc4A=
+	t=1761592550; cv=none; b=jYobUzt+kd/Bw94nQ+90gs16M0qsIK8Y2hYhIPWQ3leHNJofGGWxUSa+o4SSzFqSFoVaHNyh/hHmhlofEHJZ+bPgAsruZk4SVcfpMYNIX7NVmBi4lWCE7WRhki+jxw14F9wjb7DoudmliVnmVp8tPu+69nuZhGke5ib3oRoad84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592547; c=relaxed/simple;
-	bh=hbtwNQ0B81OM5ckwGAyCBrrri9jxJlVs3znbQv08yVo=;
+	s=arc-20240116; t=1761592550; c=relaxed/simple;
+	bh=tVcG+aUPqzTAsqtBg/lHAIrZ/eAoafLA/Hnr9Ki7FFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vw6aaosywiikK8JuikCxyeeRoCovXJYbeIxWk5FUwpqRBXMoKPMpb0Ei1bxULrXCijM7cQXgSBE0kmWhk/XqBpgW58pHZ+eBbjoeBvTDKt5BCNPPOXbvEARLzKsnJfW9Uui541wQRgVtgeF96L3j5ijaguNOzDaDsYuXz9YkfM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8EJ3+ns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=io7+0ybZm5JivLTL7QpS1tmLBEctaeRmR205zWqFPKQhTx+8eoOGCutgBsdTVbCdTJ71nz68xk2bBZaQiuGyK6RfwKiC8c1U5SLG+QizpfI1Wi2Ki2erSg3Y0k5qwIxSK4ey3jEUn2JzNqJsGAewH4volnKb+Sd5Wonp8e2W1lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZDIiBN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8EJ3+ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1319BC4CEF1;
-	Mon, 27 Oct 2025 19:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZDIiBN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B719CC4CEF1;
+	Mon, 27 Oct 2025 19:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592547;
-	bh=hbtwNQ0B81OM5ckwGAyCBrrri9jxJlVs3znbQv08yVo=;
+	s=korg; t=1761592550;
+	bh=tVcG+aUPqzTAsqtBg/lHAIrZ/eAoafLA/Hnr9Ki7FFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8EJ3+nsHDFCWqJU58aaySomW3YBekWGi0sRwvmSp+OelpfGkeBqtdK8VlsSThrqR
-	 Bq/0qrwgppo+jhQWu/MpCx6VEMJjm42wUY7HyE9E9Nepxr1i8f+ir3taK9MjSyUtPy
-	 kcmUeZNHk9xRaCmZ21E+04mNijt3iYTIuCyICcYA=
+	b=DZDIiBN98/prqcXIvQ78Iii4AKLqnO5KpfVBpLUGt9oMhSzLiITZauLJQ6M4cjaoK
+	 TMPF108FGy9/y1f/pu1MDMKaJjjq9RlKV4hSLo+SsV+Vd2ZEc355nKh7ayC9F0Wo5I
+	 8vIT90p+4QnfgzBI8Qa5jELRz1N8tBvuzz9pKwRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"akpm@linux-foundation.org, david@redhat.com, lorenzo.stoakes@oracle.com, lance.yang@linux.dev, shuah@kernel.org, linux-mm@kvack.org, linux-kernel@vger.kernel.org, Leon Hwang" <leon.hwang@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>
-Subject: [PATCH 6.1 155/157] Revert "selftests: mm: fix map_hugetlb failure on 64K page size systems"
-Date: Mon, 27 Oct 2025 19:36:56 +0100
-Message-ID: <20251027183505.453092948@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: [PATCH 6.1 156/157] arm64: cputype: Add Neoverse-V3AE definitions
+Date: Mon, 27 Oct 2025 19:36:57 +0100
+Message-ID: <20251027183505.481045711@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -50,49 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Mark Rutland <mark.rutland@arm.com>
 
-This reverts commit a584c7734a4dd050451fcdd65c66317e15660e81 which is
-commit 91b80cc5b39f00399e8e2d17527cad2c7fa535e2 upstream.
+commit 3bbf004c4808e2c3241e5c1ad6cc102f38a03c39 upstream.
 
-This fixes the following build error:
+Add cputype definitions for Neoverse-V3AE. These will be used for errata
+detection in subsequent patches.
 
-map_hugetlb.c: In function 'main':
-map_hugetlb.c:79:25: warning: implicit declaration of function 'default_huge_page_size' [-Wimplicit-function-declaration]
-79 |         hugepage_size = default_huge_page_size();
+These values can be found in the Neoverse-V3AE TRM:
 
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+  https://developer.arm.com/documentation/SDEN-2615521/9-0/
+
+... in section A.6.1 ("MIDR_EL1, Main ID Register").
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Ryan: Trivial backport ]
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/map_hugetlb.c |    7 -------
- 1 file changed, 7 deletions(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/vm/map_hugetlb.c
-+++ b/tools/testing/selftests/vm/map_hugetlb.c
-@@ -15,7 +15,6 @@
- #include <unistd.h>
- #include <sys/mman.h>
- #include <fcntl.h>
--#include "vm_util.h"
- 
- #define LENGTH (256UL*1024*1024)
- #define PROTECTION (PROT_READ | PROT_WRITE)
-@@ -71,16 +70,10 @@ int main(int argc, char **argv)
- {
- 	void *addr;
- 	int ret;
--	size_t hugepage_size;
- 	size_t length = LENGTH;
- 	int flags = FLAGS;
- 	int shift = 0;
- 
--	hugepage_size = default_huge_page_size();
--	/* munmap with fail if the length is not page aligned */
--	if (hugepage_size > length)
--		length = hugepage_size;
--
- 	if (argc > 1)
- 		length = atol(argv[1]) << 20;
- 	if (argc > 2) {
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -93,6 +93,7 @@
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
++#define ARM_CPU_PART_NEOVERSE_V3AE	0xD83
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
+ #define ARM_CPU_PART_CORTEX_A725	0xD87
+@@ -173,6 +174,7 @@
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
++#define MIDR_NEOVERSE_V3AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3AE)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
 
 
