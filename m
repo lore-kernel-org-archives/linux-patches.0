@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC98330333;
-	Mon, 27 Oct 2025 18:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DE83128D0;
+	Mon, 27 Oct 2025 18:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591526; cv=none; b=uQqzEdQ57s0JgmZD2vLh2SMOfC3XqZ8R2GeVyxraocppXhpMPQRKGc18PxdkjlYn5sXGq5YfAZshl6wVKLkAPIELLmwFENYRF1/eAKemH1FBwWg/euhP/oEVZO5UC7qATYjAWKHSxHdaJy22MbEYrKGJ40/r9tU3NeMqKB0WsCI=
+	t=1761591528; cv=none; b=ec5kPtDYc1o1NRPyDMThxGiRIM7Ep/IfCLA68idcsxtHHvzerwh0qSshzKM8sbSvsuAlBhSD/irN1yN4P3wBQyX7Aqt1BzVc8z/SHzLt78DbPPfCeZ7qxoe70eoi2rjaNIa5YUqq9bK0ZA7Y552nc8AdRY2VA3lm5qpTF3nVZAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591526; c=relaxed/simple;
-	bh=8FLYR/LCaeJaLIM59ednxwF56ntO9wNw8AVdUtxrmnw=;
+	s=arc-20240116; t=1761591528; c=relaxed/simple;
+	bh=I5I5YaRmWTjLmeQxd13+0Y12xwZnOSASXPI7D5CipD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuzmE9+RvBmDm9syXY6kAby4drIgsq0BGjhBAtNF9T16yQplS67iYb3kl2AZIvq7wQdzvsNLp53FDWlZwcSZM0gxp3gRbk0asN4WaxU4uHwwfCUNkYu5F4XfTjL+4f6G7HGeE+J7i+ep52VnYrgCqMzwW4AzIYjfOYVGxKo726w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ni2OxErk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFgGwZWvdRD2/2MUDG3vkpixz9/7Vo2LdpvzAAErhy4RYswR4YsCDeNJYbBz/AnuAd1vGqk8sggZSneMvH3HgkNwyLsHtYaBZf7VD86feMEioAvfNZY6ER4v/GnRgp8mG5Q6eXFk5Okzuaa7lABUtDdqVAo70oWocwz1JzjNlQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQ38RQgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ni2OxErk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1B8C4CEF1;
-	Mon, 27 Oct 2025 18:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQ38RQgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83ACC4CEF1;
+	Mon, 27 Oct 2025 18:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591525;
-	bh=8FLYR/LCaeJaLIM59ednxwF56ntO9wNw8AVdUtxrmnw=;
+	s=korg; t=1761591528;
+	bh=I5I5YaRmWTjLmeQxd13+0Y12xwZnOSASXPI7D5CipD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ni2OxErkk6DMh5S/9M2H1a854kAQKAjz3FaHCzwv4oRw0Aiii5wiiNcsqep9BnOi+
-	 s480nGUjddFdtWkdsjbm9DmWNaBO1Z1PYjsKSJx8fKiUomN0MTKgf8tJWFLTG2MnMB
-	 5E3tjMEcnAs4w0waFXk2SY43biFDg9oI8FBWECkg=
+	b=oQ38RQgDf3tvrNjyD6pv6J5XBnZe7+2JzttNDFzfQnIoqKnb+uXK3728iGltWdelG
+	 nei9XFQdPx14QRFybkCxDc2XGBt8uy6+ilRp5i8dknzU3jV7Lu6yXAgn4viGiutqrT
+	 PEpiAAheHmaxQXEVg3VMkEiBSx24VLO3Z95qm5mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Gergely Kovacs <Gergely.Kovacs2@arm.com>,
+	Will Deacon <will@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/332] fscontext: do not consume log entries when returning -EMSGSIZE
-Date: Mon, 27 Oct 2025 19:34:05 +0100
-Message-ID: <20251027183529.756849906@linuxfoundation.org>
+Subject: [PATCH 5.10 193/332] arm64: mte: Do not flag the zero page as PG_mte_tagged
+Date: Mon, 27 Oct 2025 19:34:06 +0100
+Message-ID: <20251027183529.787921724@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,122 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 72d271a7baa7062cb27e774ac37c5459c6d20e22 ]
+[ Upstream commit f620d66af3165838bfa845dcf9f5f9b4089bf508 ]
 
-Userspace generally expects APIs that return -EMSGSIZE to allow for them
-to adjust their buffer size and retry the operation. However, the
-fscontext log would previously clear the message even in the -EMSGSIZE
-case.
+Commit 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the
+zero page") attempted to fix ptrace() reading of tags from the zero page
+by marking it as PG_mte_tagged during cpu_enable_mte(). The same commit
+also changed the ptrace() tag access permission check to the VM_MTE vma
+flag while turning the page flag test into a WARN_ON_ONCE().
 
-Given that it is very cheap for us to check whether the buffer is too
-small before we remove the message from the ring buffer, let's just do
-that instead. While we're at it, refactor some fscontext_read() into a
-separate helper to make the ring buffer logic a bit easier to read.
+Attempting to set the PG_mte_tagged flag early with
+CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled may either hang (after commit
+d77e59a8fccd "arm64: mte: Lock a page for MTE tag initialisation") or
+have the flags cleared later during page_alloc_init_late(). In addition,
+pages_identical() -> memcmp_pages() will reject any comparison with the
+zero page as it is marked as tagged.
 
-Fixes: 007ec26cdc9f ("vfs: Implement logging through fs_context")
-Cc: David Howells <dhowells@redhat.com>
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/20250807-fscontext-log-cleanups-v3-1-8d91d6242dc3@cyphar.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Partially revert the above commit to avoid setting PG_mte_tagged on the
+zero page. Update the __access_remote_tags() warning on untagged pages
+to ignore the zero page since it is known to have the tags initialised.
+
+Note that all user mapping of the zero page are marked as pte_special().
+The arm64 set_pte_at() will not call mte_sync_tags() on such pages, so
+PG_mte_tagged will remain cleared.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the zero page")
+Reported-by: Gergely Kovacs <Gergely.Kovacs2@arm.com>
+Cc: stable@vger.kernel.org # 5.10.x
+Cc: Will Deacon <will@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Acked-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ replaced is_zero_page() with is_zero_pfn(page_to_pfn()) and folio APIs with page APIs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fsopen.c |   70 ++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ arch/arm64/kernel/cpufeature.c |   10 ++++++++--
+ arch/arm64/kernel/mte.c        |    3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/fs/fsopen.c
-+++ b/fs/fsopen.c
-@@ -18,50 +18,56 @@
- #include "internal.h"
- #include "mount.h"
- 
-+static inline const char *fetch_message_locked(struct fc_log *log, size_t len,
-+					       bool *need_free)
-+{
-+	const char *p;
-+	int index;
-+
-+	if (unlikely(log->head == log->tail))
-+		return ERR_PTR(-ENODATA);
-+
-+	index = log->tail & (ARRAY_SIZE(log->buffer) - 1);
-+	p = log->buffer[index];
-+	if (unlikely(strlen(p) > len))
-+		return ERR_PTR(-EMSGSIZE);
-+
-+	log->buffer[index] = NULL;
-+	*need_free = log->need_free & (1 << index);
-+	log->need_free &= ~(1 << index);
-+	log->tail++;
-+
-+	return p;
-+}
-+
- /*
-  * Allow the user to read back any error, warning or informational messages.
-+ * Only one message is returned for each read(2) call.
-  */
- static ssize_t fscontext_read(struct file *file,
- 			      char __user *_buf, size_t len, loff_t *pos)
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1768,12 +1768,18 @@ static void bti_enable(const struct arm6
+ #ifdef CONFIG_ARM64_MTE
+ static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
  {
- 	struct fs_context *fc = file->private_data;
--	struct fc_log *log = fc->log.log;
--	unsigned int logsize = ARRAY_SIZE(log->buffer);
--	ssize_t ret;
--	char *p;
-+	ssize_t err;
-+	const char *p __free(kfree) = NULL, *message;
- 	bool need_free;
--	int index, n;
--
--	ret = mutex_lock_interruptible(&fc->uapi_mutex);
--	if (ret < 0)
--		return ret;
--
--	if (log->head == log->tail) {
--		mutex_unlock(&fc->uapi_mutex);
--		return -ENODATA;
--	}
-+	int n;
- 
--	index = log->tail & (logsize - 1);
--	p = log->buffer[index];
--	need_free = log->need_free & (1 << index);
--	log->buffer[index] = NULL;
--	log->need_free &= ~(1 << index);
--	log->tail++;
-+	err = mutex_lock_interruptible(&fc->uapi_mutex);
-+	if (err < 0)
-+		return err;
-+	message = fetch_message_locked(fc->log.log, len, &need_free);
- 	mutex_unlock(&fc->uapi_mutex);
-+	if (IS_ERR(message))
-+		return PTR_ERR(message);
- 
--	ret = -EMSGSIZE;
--	n = strlen(p);
--	if (n > len)
--		goto err_free;
--	ret = -EFAULT;
--	if (copy_to_user(_buf, p, n) != 0)
--		goto err_free;
--	ret = n;
--
--err_free:
- 	if (need_free)
--		kfree(p);
--	return ret;
-+		p = message;
++	static bool cleared_zero_page = false;
 +
-+	n = strlen(message);
-+	if (copy_to_user(_buf, message, n))
-+		return -EFAULT;
-+	return n;
+ 	/*
+ 	 * Clear the tags in the zero page. This needs to be done via the
+-	 * linear map which has the Tagged attribute.
++	 * linear map which has the Tagged attribute. Since this page is
++	 * always mapped as pte_special(), set_pte_at() will not attempt to
++	 * clear the tags or set PG_mte_tagged.
+ 	 */
+-	if (!test_and_set_bit(PG_mte_tagged, &ZERO_PAGE(0)->flags))
++	if (!cleared_zero_page) {
++		cleared_zero_page = true;
+ 		mte_clear_page_tags(lm_alias(empty_zero_page));
++	}
  }
+ #endif /* CONFIG_ARM64_MTE */
  
- static int fscontext_release(struct inode *inode, struct file *file)
+--- a/arch/arm64/kernel/mte.c
++++ b/arch/arm64/kernel/mte.c
+@@ -247,7 +247,8 @@ static int __access_remote_tags(struct m
+ 			put_page(page);
+ 			break;
+ 		}
+-		WARN_ON_ONCE(!test_bit(PG_mte_tagged, &page->flags));
++		WARN_ON_ONCE(!test_bit(PG_mte_tagged, &page->flags) &&
++			     !is_zero_pfn(page_to_pfn(page)));
+ 
+ 		/* limit access to the end of the page */
+ 		offset = offset_in_page(addr);
 
 
