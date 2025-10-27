@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7B431E0FB;
-	Mon, 27 Oct 2025 19:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6F0328B4F;
+	Mon, 27 Oct 2025 19:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591656; cv=none; b=D+CgO2ZkmCI2MF2bBA/ye+plF3+NDIoQjt7beF+b6Q4ymN3/6b9gIN+dawXuMcEDYnR7yxi5ul+DQZ16EIihjreY6tKNIfr4mXQZWxO8/7AAlLJM738ZlJma8F7YIqh8uN0HsdVWu3zxaMdVJy5SlQ6+YKwVQyk5La5rrXD050M=
+	t=1761591658; cv=none; b=OC9GUDVpur52c/AuDhSkJ1EN94s0rJVCMZuOd/ZJXymB7rYRShZm1zZ6yYXDqrZQVCjmXp1huK+NXHMVweNrcT0LUr+NSpK4QQHn6d9F4m9bdXm7y48qFIyJCSHXj/1+tlJPfH3Pa8ZxlimM1LS/HN3b0NY2Gwa1gvLLYAxT5MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591656; c=relaxed/simple;
-	bh=iRFId96aEn3z3K9bqctblBEVuW+NntP+5fe4moHDUb0=;
+	s=arc-20240116; t=1761591658; c=relaxed/simple;
+	bh=cdEK1XfsHGXbQK6f4tIFKfWx5xzCcnkV4kbk19eipKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONVh99ENWnB4k2yfpVwrWagxBcHwdqFYTencWjybT8xAhYhfV3jx61IeHsTlJ+i8rM8t00YpewbyR+9kez7aNjUT2DQy3K4uRLM0odnvssuuEOZtM3gfnReylIFUmt0yQthQfwgZ/jp/TuEd5KCX3VkTyDrP6NQYXk6AjrZyaco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWi/NW8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjASCMhG2Ie/JxJbd/GqkyibxqhIUtaKcY4frdShmz7S/KzatufG6xkhbd5nm/cQFm01ejEf8dQ3BemjqXagmnQwg/i90Wa4Gw5iPXzB+veVyL0us0Tifn1o1LxzxalR7quePCeuUI0lqL17m5fS+S0BctBERgOmWEGrtVX89nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCMa6pk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWi/NW8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FE9C4CEF1;
-	Mon, 27 Oct 2025 19:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCMa6pk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F233C4CEF1;
+	Mon, 27 Oct 2025 19:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591656;
-	bh=iRFId96aEn3z3K9bqctblBEVuW+NntP+5fe4moHDUb0=;
+	s=korg; t=1761591658;
+	bh=cdEK1XfsHGXbQK6f4tIFKfWx5xzCcnkV4kbk19eipKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWi/NW8vgI5u/4dOlKg7PKvK5GvBhKQPjpzL//hE/ppTi9CNVXN2koWo6EFECsttV
-	 +OPg3Av+Zg+hmguQRLzQ6p4t3ab0WS3cLZ6CSvnUQV2Oi9Eore25LmEx0cDb1+9Mhf
-	 oeLGQ+oAffgqqcR9LxyqLyuwiNd7GkWcGvUFJ9Lg=
+	b=vCMa6pk+N8pF6+i8tp4kflQJsZ9baRdT5ewtuncO8Wq8Ut6mv9AT9Hhn7L/wtX5Jn
+	 6qeNB1Rft0zosXsoye+ThX6HA15ax5AdqXCzSxDfcHFqa3EJuTx3IDVyYKFZ7iWioc
+	 NvC8N+nit8i81tUnkv2xn9OoovSrwv2fGeoBZnnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Vincent Bernat <vincent@bernat.ch>,
-	Tonghao Zhang <tonghao@bamaicloud.com>
-Subject: [PATCH 5.10 280/332] net: bonding: fix possible peer notify event loss or dup issue
-Date: Mon, 27 Oct 2025 19:35:33 +0100
-Message-ID: <20251027183532.254228518@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 281/332] Revert "cpuidle: menu: Avoid discarding useful information"
+Date: Mon, 27 Oct 2025 19:35:34 +0100
+Message-ID: <20251027183532.279608387@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -57,113 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 10843e1492e474c02b91314963161731fa92af91 upstream.
+commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
 
-If the send_peer_notif counter and the peer event notify are not synchronized.
-It may cause problems such as the loss or dup of peer notify event.
+It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
+useful information") led to a performance regression on Intel Jasper Lake
+systems because it reduced the time spent by CPUs in idle state C7 which
+is correlated to the maximum frequency the CPUs can get to because of an
+average running power limit [1].
 
-Before this patch:
-- If should_notify_peers is true and the lock for send_peer_notif-- fails, peer
-  event may be sent again in next mii_monitor loop, because should_notify_peers
-  is still true.
-- If should_notify_peers is true and the lock for send_peer_notif-- succeeded,
-  but the lock for peer event fails, the peer event will be lost.
+Before that commit, get_typical_interval() would have returned UINT_MAX
+whenever it had been unable to make a high-confidence prediction which
+had led to selecting the deepest available idle state too often and
+both power and performance had been inadequate as a result of that on
+some systems.  However, this had not been a problem on systems with
+relatively aggressive average running power limits, like the Jasper Lake
+systems in question, because on those systems it was compensated by the
+ability to run CPUs faster.
 
-This patch locks the RTNL for send_peer_notif, events, and commit simultaneously.
+It was addressed by causing get_typical_interval() to return a number
+based on the recent idle duration information available to it even if it
+could not make a high-confidence prediction, but that clearly did not
+take the possible correlation between idle power and available CPU
+capacity into account.
 
-Fixes: 07a4ddec3ce9 ("bonding: add an option to specify a delay between peer notifications")
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Vincent Bernat <vincent@bernat.ch>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20251021050933.46412-1-tonghao@bamaicloud.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+For this reason, revert most of the changes made by commit 85975daeaa4d,
+except for one cosmetic cleanup, and add a comment explaining the
+rationale for returning UINT_MAX from get_typical_interval() when it
+is unable to make a high-confidence prediction.
+
+Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
+Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
+Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |   40 ++++++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 22 deletions(-)
+ drivers/cpuidle/governors/menu.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2617,7 +2617,7 @@ static void bond_mii_monitor(struct work
- {
- 	struct bonding *bond = container_of(work, struct bonding,
- 					    mii_work.work);
--	bool should_notify_peers = false;
-+	bool should_notify_peers;
- 	bool commit;
- 	unsigned long delay;
- 	struct slave *slave;
-@@ -2629,30 +2629,33 @@ static void bond_mii_monitor(struct work
- 		goto re_arm;
- 
- 	rcu_read_lock();
-+
- 	should_notify_peers = bond_should_notify_peers(bond);
- 	commit = !!bond_miimon_inspect(bond);
--	if (bond->send_peer_notif) {
--		rcu_read_unlock();
--		if (rtnl_trylock()) {
--			bond->send_peer_notif--;
--			rtnl_unlock();
--		}
--	} else {
--		rcu_read_unlock();
--	}
- 
--	if (commit) {
-+	rcu_read_unlock();
-+
-+	if (commit || bond->send_peer_notif) {
- 		/* Race avoidance with bond_close cancel of workqueue */
- 		if (!rtnl_trylock()) {
- 			delay = 1;
--			should_notify_peers = false;
- 			goto re_arm;
- 		}
- 
--		bond_for_each_slave(bond, slave, iter) {
--			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
-+		if (commit) {
-+			bond_for_each_slave(bond, slave, iter) {
-+				bond_commit_link_state(slave,
-+						       BOND_SLAVE_NOTIFY_LATER);
-+			}
-+			bond_miimon_commit(bond);
-+		}
-+
-+		if (bond->send_peer_notif) {
-+			bond->send_peer_notif--;
-+			if (should_notify_peers)
-+				call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
-+							 bond->dev);
- 		}
--		bond_miimon_commit(bond);
- 
- 		rtnl_unlock();	/* might sleep, hold no other locks */
- 	}
-@@ -2660,13 +2663,6 @@ static void bond_mii_monitor(struct work
- re_arm:
- 	if (bond->params.miimon)
- 		queue_delayed_work(bond->wq, &bond->mii_work, delay);
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -256,20 +256,17 @@ again:
+ 	 *
+ 	 * This can deal with workloads that have long pauses interspersed
+ 	 * with sporadic activity with a bunch of short pauses.
++	 *
++	 * However, if the number of remaining samples is too small to exclude
++	 * any more outliers, allow the deepest available idle state to be
++	 * selected because there are systems where the time spent by CPUs in
++	 * deep idle states is correlated to the maximum frequency the CPUs
++	 * can get to.  On those systems, shallow idle states should be avoided
++	 * unless there is a clear indication that the given CPU is most likley
++	 * going to be woken up shortly.
+ 	 */
+-	if (divisor * 4 <= INTERVALS * 3) {
+-		/*
+-		 * If there are sufficiently many data points still under
+-		 * consideration after the outliers have been eliminated,
+-		 * returning without a prediction would be a mistake because it
+-		 * is likely that the next interval will not exceed the current
+-		 * maximum, so return the latter in that case.
+-		 */
+-		if (divisor >= INTERVALS / 2)
+-			return max;
 -
--	if (should_notify_peers) {
--		if (!rtnl_trylock())
--			return;
--		call_netdevice_notifiers(NETDEV_NOTIFY_PEERS, bond->dev);
--		rtnl_unlock();
++	if (divisor * 4 <= INTERVALS * 3)
+ 		return UINT_MAX;
 -	}
- }
  
- static int bond_upper_dev_walk(struct net_device *upper,
+ 	thresh = max - 1;
+ 	goto again;
 
 
