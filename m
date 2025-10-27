@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9717329C41;
-	Mon, 27 Oct 2025 19:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A60732A3F2;
+	Mon, 27 Oct 2025 19:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593306; cv=none; b=fwbBbNOESBn6ipVS+TTE4jmVa6ybMl6DvDBlVafCUAzPuk6uq8kci+S32I6SWqM7kkEnCvldojeR/uNd8qstonghiVqBQVfM5PHZMgLDuiyW1VlnUpMyn1gfnloFUy5wre93sPDNjJVaqYGPie8nK+QmeilZNTmu3F//gOuD/TE=
+	t=1761593309; cv=none; b=NCTUlP52cjgwtdgSnYNX12+1NFY2v6YasiuoSiGYKMjutw/G7Q02kh/xsvdKVC5DIs9AGKvIbbQBJiPpns+cPlRr8IUTzezPlrhsn+PvnSbmQmCZ26yI5m5uU9td+ndO8D/eqD6TDnQ00tyJU5N4ZyHPLRBtDXzpBsdVILlQlhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593306; c=relaxed/simple;
-	bh=vkSZXTTFcYecnxkx++gIBiN/as5LwjYtuy0xShZ2X1M=;
+	s=arc-20240116; t=1761593309; c=relaxed/simple;
+	bh=7cb4UbzG1S4Tk5KBbms/mtmfK57bgyRzYYcu2SMK9PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOks0uNd9tDNA5YHtvg4m8GBX34vhuOYdUfV7lDtdi+RUYtjII/gCOy4hfpXi9kOoVkjfwwbGxgyGhnt4zv1c2iXYkvdUs8QrXqnmwAlN6+rPUrGNcG8ELNG4W76Mre8cGQ0l4k4MV4icaezehd1cG5yXf3rGHctmNWwnuZrZtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZhbFm4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uz+j073llB0jKHFJjD7Pi4jLIjWh7+dJ9XI/f1xrfVS48fXYjnueOUvLiO2fjT3e7vrMqswQm+xE58R2vhOAGGuc3TexwL86WQ6CDJ9g/u8BIecqwoTdlFPPAnrnR27fc1WTKeUBjnyDO2Jjl6NuycZWJMhgDUL17yo5UNhsucc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta1w11Uj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZhbFm4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F653C4CEF1;
-	Mon, 27 Oct 2025 19:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta1w11Uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2404C4CEF1;
+	Mon, 27 Oct 2025 19:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593306;
-	bh=vkSZXTTFcYecnxkx++gIBiN/as5LwjYtuy0xShZ2X1M=;
+	s=korg; t=1761593309;
+	bh=7cb4UbzG1S4Tk5KBbms/mtmfK57bgyRzYYcu2SMK9PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZhbFm4QkMWVnb+/TW5p9X17FLCLD/C08+M/W0UXQYBUN6Hljkgg/KWgBgK0V7qxo
-	 8Dk87QasjYKEr6YGVuxymehYgSRwOMWOuOBRFeqytmdY+UZwgn7sas/mhYyO/hiJon
-	 wTGcVvhhw8GOtgo7hYLh9fXl/HSt4Nis3WGHN8Js=
+	b=Ta1w11UjEpNJrTpJL1HHBouFF2R8R+EeMsMnFTlfCEifihkmAmODqDCmLSQbXtQ8e
+	 F+tzjbs0PGR0jIOCnaLLi4lV2tuNfyx/6cD/6X4qj7FQC8PGc+V7AM77RZpEVDKdFk
+	 YAcBIpNgxIVW4QtQ2DyWwQ9C+A27fZCvebm7rVBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com,
-	Mark Fasheh <mark@fasheh.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 092/184] ocfs2: clear extent cache after moving/defragmenting extents
-Date: Mon, 27 Oct 2025 19:36:14 +0100
-Message-ID: <20251027183517.373871095@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>
+Subject: [PATCH 6.17 093/184] rv: Fully convert enabled_monitors to use list_head as iterator
+Date: Mon, 27 Oct 2025 19:36:15 +0100
+Message-ID: <20251027183517.404836055@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -57,62 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 78a63493f8e352296dbc7cb7b3f4973105e8679e upstream.
+commit 103541e6a5854b08a25e4caa61e990af1009a52e upstream.
 
-The extent map cache can become stale when extents are moved or
-defragmented, causing subsequent operations to see outdated extent flags.
-This triggers a BUG_ON in ocfs2_refcount_cal_cow_clusters().
+The callbacks in enabled_monitors_seq_ops are inconsistent. Some treat the
+iterator as struct rv_monitor *, while others treat the iterator as struct
+list_head *.
 
-The problem occurs when:
-1. copy_file_range() creates a reflinked extent with OCFS2_EXT_REFCOUNTED
-2. ioctl(FITRIM) triggers ocfs2_move_extents()
-3. __ocfs2_move_extents_range() reads and caches the extent (flags=0x2)
-4. ocfs2_move_extent()/ocfs2_defrag_extent() calls __ocfs2_move_extent()
-   which clears OCFS2_EXT_REFCOUNTED flag on disk (flags=0x0)
-5. The extent map cache is not invalidated after the move
-6. Later write() operations read stale cached flags (0x2) but disk has
-   updated flags (0x0), causing a mismatch
-7. BUG_ON(!(rec->e_flags & OCFS2_EXT_REFCOUNTED)) triggers
+This causes a wrong type cast and crashes the system as reported by Nathan.
 
-Fix by clearing the extent map cache after each extent move/defrag
-operation in __ocfs2_move_extents_range().  This ensures subsequent
-operations read fresh extent data from disk.
+Convert everything to use struct list_head * as iterator. This also makes
+enabled_monitors consistent with available_monitors.
 
-Link: https://lore.kernel.org/all/20251009142917.517229-1-kartikey406@gmail.com/T/
-Link: https://lkml.kernel.org/r/20251009154903.522339-1-kartikey406@gmail.com
-Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
-Tested-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=2959889e1f6e216585ce522f7e8bc002b46ad9e7
-Reviewed-by: Mark Fasheh <mark@fasheh.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: de090d1ccae1 ("rv: Fix wrong type cast in enabled_monitors_next()")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-trace-kernel/20250923002004.GA2836051@ax162/
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/r/20251002082235.973099-1-namcao@linutronix.de
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/move_extents.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/trace/rv/rv.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -867,6 +867,11 @@ static int __ocfs2_move_extents_range(st
- 			mlog_errno(ret);
- 			goto out;
- 		}
-+		/*
-+		 * Invalidate extent cache after moving/defragging to prevent
-+		 * stale cached data with outdated extent flags.
-+		 */
-+		ocfs2_extent_map_trunc(inode, cpos);
+diff --git a/kernel/trace/rv/rv.c b/kernel/trace/rv/rv.c
+index 48338520376f..43e9ea473cda 100644
+--- a/kernel/trace/rv/rv.c
++++ b/kernel/trace/rv/rv.c
+@@ -501,7 +501,7 @@ static void *enabled_monitors_next(struct seq_file *m, void *p, loff_t *pos)
  
- 		context->clusters_moved += alloc_size;
- next:
+ 	list_for_each_entry_continue(mon, &rv_monitors_list, list) {
+ 		if (mon->enabled)
+-			return mon;
++			return &mon->list;
+ 	}
+ 
+ 	return NULL;
+@@ -509,7 +509,7 @@ static void *enabled_monitors_next(struct seq_file *m, void *p, loff_t *pos)
+ 
+ static void *enabled_monitors_start(struct seq_file *m, loff_t *pos)
+ {
+-	struct rv_monitor *mon;
++	struct list_head *head;
+ 	loff_t l;
+ 
+ 	mutex_lock(&rv_interface_lock);
+@@ -517,15 +517,15 @@ static void *enabled_monitors_start(struct seq_file *m, loff_t *pos)
+ 	if (list_empty(&rv_monitors_list))
+ 		return NULL;
+ 
+-	mon = list_entry(&rv_monitors_list, struct rv_monitor, list);
++	head = &rv_monitors_list;
+ 
+ 	for (l = 0; l <= *pos; ) {
+-		mon = enabled_monitors_next(m, mon, &l);
+-		if (!mon)
++		head = enabled_monitors_next(m, head, &l);
++		if (!head)
+ 			break;
+ 	}
+ 
+-	return mon;
++	return head;
+ }
+ 
+ /*
+-- 
+2.51.1
+
 
 
