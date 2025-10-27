@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE97831A06A;
-	Mon, 27 Oct 2025 19:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C59E2C15BB;
+	Mon, 27 Oct 2025 19:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592317; cv=none; b=XrdZMQcN84P/2ACdg/tudIWt6PWDJ80/AkP7R+8AjofssnDYCPEmy+IHQk4QfDArEjdzXKatqwxZRoIT3p1GOkIUjiwwtEzgrE+CTTY3YJOXX/aQR33BCpGQtBg3NQ2mrVcJ4GZJAgTg2TMaz9c6a5/B/qCtLjENkasUTlOVlaQ=
+	t=1761592320; cv=none; b=RrC4hCA3+5tr2pNr84FKxgp3x0RICY07JpvuaYs/VzEtrZCKHH1zCB4yDYAzHQBRxZJoFiR3rWUHu2Ycho6VUljFoIDq83f7wGPIOqnBbTRWAmU7XyzkOAxd03WeXY+vCy7eyrMMyoptgKdwJjM9y52BdCR9ICR8caUuAiMSDDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592317; c=relaxed/simple;
-	bh=cMwu6LCZ5fxrnHhNhydA2Wv5qRKu/VyRU+w0El3uzEM=;
+	s=arc-20240116; t=1761592320; c=relaxed/simple;
+	bh=HovdNNQB4whTRWhq6M5iowX4zobTW8P1gy2B2gY+Ni4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdqe8oT8c1/95ZfevOvYmnY0oFgwt1iOG83MsdRMAxxUSkU54Ah1l3ykJx7BZB05A+Tq9cI997Q/ku5W6t31JAz9nn1ziZpMuHYcmMiCZye6MfKuaHiPqMqhKvW6j/PJydatn386ElOCStugNz8poOhAPZrbpfKDm1UQNnOktjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo9lH2av; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWQGc6UzV5HSjeteziUN5NMd623lVgwqDo7ChilV4e/WnBJtMBy+k0o2S8EOAkWoh7yIpocLDZ+Gt/50A/pW/yurhfsTgVEPkYX27Y6iL3wPM6EEgOIrt9ryL9vjsOFGmvb4pVXPVChDX3y9V0oLxVleXhWc/YMmh6XALOTI+tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBWnWcin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo9lH2av"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A09C4CEF1;
-	Mon, 27 Oct 2025 19:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBWnWcin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA398C4CEF1;
+	Mon, 27 Oct 2025 19:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592317;
-	bh=cMwu6LCZ5fxrnHhNhydA2Wv5qRKu/VyRU+w0El3uzEM=;
+	s=korg; t=1761592320;
+	bh=HovdNNQB4whTRWhq6M5iowX4zobTW8P1gy2B2gY+Ni4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fo9lH2av5fBubqx3yfhqAK+fumHXH9uxQbJ+3tpDiO3DFyqqEGjHrdf43y2ufjQBg
-	 5hYT7RCKirEgwQpTJ4+kEIb0xvR92rPKoXbBP3gC/mJ5HGsXlKyiCB8AkLTReggbyV
-	 x59b2HU7lr3Ec+B+4HEPtUxoBRuuw4DHFWqDQOFQ=
+	b=DBWnWcin4XpEZjj4ob2/HaD9cNLnOqrUe2NHwlX0Y7i7tw3vbWQ/Tu1CYshEW/JVM
+	 MqW/HY3TwuaBrYtcpHRaN1qHSATGyKRzirRrTogg9IWMi+GVhuKjxXip2rPekMAPxp
+	 0jvcyigcb/BtlBynB/n9aNaczxQom/JqOT5RAjwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/157] tls: wait for pending async decryptions if tls_strp_msg_hold fails
-Date: Mon, 27 Oct 2025 19:35:09 +0100
-Message-ID: <20251027183502.582185242@linuxfoundation.org>
+Subject: [PATCH 6.1 075/157] hfs: fix KMSAN uninit-value issue in hfs_find_set_zero_bits()
+Date: Mon, 27 Oct 2025 19:35:36 +0100
+Message-ID: <20251027183503.293327366@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,44 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit b8a6ff84abbcbbc445463de58704686011edc8e1 ]
+[ Upstream commit 2048ec5b98dbdfe0b929d2e42dc7a54c389c53dd ]
 
-Async decryption calls tls_strp_msg_hold to create a clone of the
-input skb to hold references to the memory it uses. If we fail to
-allocate that clone, proceeding with async decryption can lead to
-various issues (UAF on the skb, writing into userspace memory after
-the recv() call has returned).
+The syzbot reported issue in hfs_find_set_zero_bits():
 
-In this case, wait for all pending decryption requests.
+=====================================================
+BUG: KMSAN: uninit-value in hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
+ hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
+ hfs_vbm_search_free+0x13c/0x5b0 fs/hfs/bitmap.c:151
+ hfs_extend_file+0x6a5/0x1b00 fs/hfs/extent.c:408
+ hfs_get_block+0x435/0x1150 fs/hfs/extent.c:353
+ __block_write_begin_int+0xa76/0x3030 fs/buffer.c:2151
+ block_write_begin fs/buffer.c:2262 [inline]
+ cont_write_begin+0x10e1/0x1bc0 fs/buffer.c:2601
+ hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
+ cont_expand_zero fs/buffer.c:2528 [inline]
+ cont_write_begin+0x35a/0x1bc0 fs/buffer.c:2591
+ hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
+ hfs_file_truncate+0x1d6/0xe60 fs/hfs/extent.c:494
+ hfs_inode_setattr+0x964/0xaa0 fs/hfs/inode.c:654
+ notify_change+0x1993/0x1aa0 fs/attr.c:552
+ do_truncate+0x28f/0x310 fs/open.c:68
+ do_ftruncate+0x698/0x730 fs/open.c:195
+ do_sys_ftruncate fs/open.c:210 [inline]
+ __do_sys_ftruncate fs/open.c:215 [inline]
+ __se_sys_ftruncate fs/open.c:213 [inline]
+ __x64_sys_ftruncate+0x11b/0x250 fs/open.c:213
+ x64_sys_call+0xfe3/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:78
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/b9fe61dcc07dab15da9b35cf4c7d86382a98caf2.1760432043.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4154 [inline]
+ slab_alloc_node mm/slub.c:4197 [inline]
+ __kmalloc_cache_noprof+0x7f7/0xed0 mm/slub.c:4354
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ hfs_mdb_get+0x1cc8/0x2a90 fs/hfs/mdb.c:175
+ hfs_fill_super+0x3d0/0xb80 fs/hfs/super.c:337
+ get_tree_bdev_flags+0x6e3/0x920 fs/super.c:1681
+ get_tree_bdev+0x38/0x50 fs/super.c:1704
+ hfs_get_tree+0x35/0x40 fs/hfs/super.c:388
+ vfs_get_tree+0xb0/0x5c0 fs/super.c:1804
+ do_new_mount+0x738/0x1610 fs/namespace.c:3902
+ path_mount+0x6db/0x1e90 fs/namespace.c:4226
+ do_mount fs/namespace.c:4239 [inline]
+ __do_sys_mount fs/namespace.c:4450 [inline]
+ __se_sys_mount+0x6eb/0x7d0 fs/namespace.c:4427
+ __x64_sys_mount+0xe4/0x150 fs/namespace.c:4427
+ x64_sys_call+0xfa7/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:166
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 1 UID: 0 PID: 12609 Comm: syz.1.2692 Not tainted 6.16.0-syzkaller #0 PREEMPT(none)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+=====================================================
+
+The HFS_SB(sb)->bitmap buffer is allocated in hfs_mdb_get():
+
+HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
+
+Finally, it can trigger the reported issue because kmalloc()
+doesn't clear the allocated memory. If allocated memory contains
+only zeros, then everything will work pretty fine.
+But if the allocated memory contains the "garbage", then
+it can affect the bitmap operations and it triggers
+the reported issue.
+
+This patch simply exchanges the kmalloc() on kzalloc()
+with the goal to guarantee the correctness of bitmap operations.
+Because, newly created allocation bitmap should have all
+available blocks free. Potentially, initialization bitmap's read
+operation could not fill the whole allocated memory and
+"garbage" in the not initialized memory will be the reason of
+volume coruptions and file system driver bugs.
+
+Reported-by: syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=773fa9d79b29bd8b6831
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250820230636.179085-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/hfs/mdb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 0e378d7cb6903..baed07edc6395 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1724,8 +1724,10 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
- 
- 	if (unlikely(darg->async)) {
- 		err = tls_strp_msg_hold(&ctx->strp, &ctx->async_hold);
--		if (err)
--			__skb_queue_tail(&ctx->async_hold, darg->skb);
-+		if (err) {
-+			err = tls_decrypt_async_wait(ctx);
-+			darg->async = false;
-+		}
- 		return err;
+diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
+index 8082eb01127cd..bf811347bb07d 100644
+--- a/fs/hfs/mdb.c
++++ b/fs/hfs/mdb.c
+@@ -172,7 +172,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		pr_warn("continuing without an alternate MDB\n");
  	}
+ 
+-	HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
++	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
+ 	if (!HFS_SB(sb)->bitmap)
+ 		goto out;
  
 -- 
 2.51.0
