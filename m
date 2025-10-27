@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46AD261B99;
-	Mon, 27 Oct 2025 18:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2D932AABA;
+	Mon, 27 Oct 2025 18:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590641; cv=none; b=N6LrV7I5hUlkWd7COceoZSSFJENMs70muF2MqjqQd4bOM14Y3Pd3Jr7YGfHKULn3cpgFmpEJ3wRtmsJNCyfRUh9ksEHNmB1t7dv9AxAB79p80bvNaI7UKNqaVDCnJJ80tw9gyqqrDjNrQFWCsKKAU0PgQokap2Vq6XSZsKAkK6U=
+	t=1761590644; cv=none; b=nHvM9iJCbSDk2gTpCsUIAEnmkXMiUdqKzYFYsvgpcPdpINMbANl+jy9iZtsUy4nWqr1rlmXoEDI9UedyzQg3Ee/0m2Y4E0l8bXZmNgGWjs2+30iWbKYwIG48mTfJiaP0C5naqqv68PkWzdBJTT3vWficoeXvgAFpAdhXaHsFZLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590641; c=relaxed/simple;
-	bh=GceLdZs3PxhHtF7VvySv7DXU586xmkBOVWgu1OBdbAk=;
+	s=arc-20240116; t=1761590644; c=relaxed/simple;
+	bh=+v4w8XGqp3kdmNjD+wYvO7r6nRd+L3M0YrhWaN1lras=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUUbXtK34r/+KzzBOfdSed9jCuieem0D5B+KI0FSY2gKZGAsa8rO/lLQPCKaKA23tCHgcCLB30vNXe4uE+oCP5hfejMV/gkK+vciEL0Z8KSEw+REpymnuGYex2huCqoDrILFojv6TdRX7mXt57kZG9CV4UcKq0PIhZpBghT7LjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ/sDCMx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PPViuOrUQ12ibftHunQQObCTvv7V9v7Gba8RPeQpTStXaUyCwCaQO1KqAlUHgasfvOva9b2iUCYvAh7rlamW4umoZEiXajFwJy660/b1LINt/bjBg5gOldKGJXnbsZZPkvQY5N0/N+30i1OjEA5xCoEW0PzyUPMcqLqmWqehu0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmIL1kLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ/sDCMx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9C5C4CEFD;
-	Mon, 27 Oct 2025 18:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmIL1kLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920A2C4CEFD;
+	Mon, 27 Oct 2025 18:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590641;
-	bh=GceLdZs3PxhHtF7VvySv7DXU586xmkBOVWgu1OBdbAk=;
+	s=korg; t=1761590643;
+	bh=+v4w8XGqp3kdmNjD+wYvO7r6nRd+L3M0YrhWaN1lras=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJ/sDCMxrBtB/JVavhtoq8WcVfMRaMCHnRewaxALkqxYBhVGLPBjdMDbbAa6e4uk0
-	 4Zf1lFHua5N0QaiP2aRCYV7Gd67eDfOQ7k8jnBCQIe/ugNyxy8qdJAX7fv4Cyk/pzw
-	 ImNKGI2Sdr+mD33LUjYHzptOK6EjAA2CfiQ29+g8=
+	b=cmIL1kLKySF149LQIZC3GfsqOnjKHvIY3hR5ncOIypJwm2GKRelOZboIjx1NBkA7N
+	 t+abtoWQiqTCb4vbIjDesX6VLFT80/oC/0Wc8JSaO7GW59MpcpKzSpUxP8LyH8BWFx
+	 5nYZJ+UOBQZ2Qkf0fuvzXV9Yt/81GWN4nIpNnYx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esben Haabendal <esben@geanix.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.4 121/224] rtc: interface: Fix long-standing race when setting alarm
-Date: Mon, 27 Oct 2025 19:34:27 +0100
-Message-ID: <20251027183512.221964304@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Florian Weimer <fweimer@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH 5.4 122/224] rseq/selftests: Use weak symbol reference, not definition, to link with glibc
+Date: Mon, 27 Oct 2025 19:34:28 +0100
+Message-ID: <20251027183512.248238215@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -50,71 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 795cda8338eab036013314dbc0b04aae728880ab upstream.
+commit a001cd248ab244633c5fabe4f7c707e13fc1d1cc upstream.
 
-As described in the old comment dating back to
-commit 6610e0893b8b ("RTC: Rework RTC code to use timerqueue for events")
-from 2010, we have been living with a race window when setting alarm
-with an expiry in the near future (i.e. next second).
-With 1 second resolution, it can happen that the second ticks after the
-check for the timer having expired, but before the alarm is actually set.
-When this happen, no alarm IRQ is generated, at least not with some RTC
-chips (isl12022 is an example of this).
+Add "extern" to the glibc-defined weak rseq symbols to convert the rseq
+selftest's usage from weak symbol definitions to weak symbol _references_.
+Effectively re-defining the glibc symbols wreaks havoc when building with
+-fno-common, e.g. generates segfaults when running multi-threaded programs,
+as dynamically linked applications end up with multiple versions of the
+symbols.
 
-With UIE RTC timer being implemented on top of alarm irq, being re-armed
-every second, UIE will occasionally fail to work, as an alarm irq lost
-due to this race will stop the re-arming loop.
+Building with -fcommon, which until recently has the been the default for
+GCC and clang, papers over the bug by allowing the linker to resolve the
+weak/tentative definition to glibc's "real" definition.
 
-For now, I have limited the additional expiry check to only be done for
-alarms set to next seconds. I expect it should be good enough, although I
-don't know if we can now for sure that systems with loads could end up
-causing the same problems for alarms set 2 seconds or even longer in the
-future.
+Note, the symbol itself (or rather its address), not the value of the
+symbol, is set to 0/NULL for unresolved weak symbol references, as the
+symbol doesn't exist and thus can't have a value.  Check for a NULL rseq
+size pointer to handle the scenario where the test is statically linked
+against a libc that doesn't support rseq in any capacity.
 
-I haven't been able to reproduce the problem with this check in place.
-
+Fixes: 3bcbc20942db ("selftests/rseq: Play nice with binaries statically linked against glibc 2.35+")
+Reported-by: Thomas Gleixner <tglx@linutronix.de>
+Suggested-by: Florian Weimer <fweimer@redhat.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/r/20250516-rtc-uie-irq-fixes-v2-1-3de8e530a39e@geanix.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Closes: https://lore.kernel.org/all/87frdoybk4.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ tools/testing/selftests/rseq/rseq.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -442,6 +442,29 @@ static int __rtc_set_alarm(struct rtc_de
- 	else
- 		err = rtc->ops->set_alarm(rtc->dev.parent, alarm);
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -38,9 +38,9 @@
+  * Define weak versions to play nice with binaries that are statically linked
+  * against a libc that doesn't support registering its own rseq.
+  */
+-__weak ptrdiff_t __rseq_offset;
+-__weak unsigned int __rseq_size;
+-__weak unsigned int __rseq_flags;
++extern __weak ptrdiff_t __rseq_offset;
++extern __weak unsigned int __rseq_size;
++extern __weak unsigned int __rseq_flags;
  
-+	/*
-+	 * Check for potential race described above. If the waiting for next
-+	 * second, and the second just ticked since the check above, either
-+	 *
-+	 * 1) It ticked after the alarm was set, and an alarm irq should be
-+	 *    generated.
-+	 *
-+	 * 2) It ticked before the alarm was set, and alarm irq most likely will
-+	 * not be generated.
-+	 *
-+	 * While we cannot easily check for which of these two scenarios we
-+	 * are in, we can return -ETIME to signal that the timer has already
-+	 * expired, which is true in both cases.
-+	 */
-+	if ((scheduled - now) <= 1) {
-+		err = __rtc_read_time(rtc, &tm);
-+		if (err)
-+			return err;
-+		now = rtc_tm_to_time64(&tm);
-+		if (scheduled <= now)
-+			return -ETIME;
-+	}
-+
- 	trace_rtc_set_alarm(rtc_tm_to_time64(&alarm->time), err);
- 	return err;
- }
+ static const ptrdiff_t *libc_rseq_offset_p = &__rseq_offset;
+ static const unsigned int *libc_rseq_size_p = &__rseq_size;
+@@ -124,7 +124,7 @@ void rseq_init(void)
+ 	 * libc not having registered a restartable sequence.  Try to find the
+ 	 * symbols if that's the case.
+ 	 */
+-	if (!*libc_rseq_size_p) {
++	if (!libc_rseq_size_p || !*libc_rseq_size_p) {
+ 		libc_rseq_offset_p = dlsym(RTLD_NEXT, "__rseq_offset");
+ 		libc_rseq_size_p = dlsym(RTLD_NEXT, "__rseq_size");
+ 		libc_rseq_flags_p = dlsym(RTLD_NEXT, "__rseq_flags");
 
 
