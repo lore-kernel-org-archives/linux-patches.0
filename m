@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00D632C937;
-	Mon, 27 Oct 2025 19:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7C32D542A;
+	Mon, 27 Oct 2025 19:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592087; cv=none; b=Ui0FBOuyiIC69TQmubVl4qOAR0t7RGxtFPrcD5PCk/7GnMnQbqqkxZxxk5LuX5lrDRibP8ZQu5TSzblutPxWs7nfZyZOirV6qKmMKQqP2Y9LHi4nARn7JJPtK1gtHXcIxOpPzClFBUcdmaU9DuUAnhR/jamutJ3nZe8pYM64G+Q=
+	t=1761592090; cv=none; b=TR5U1dKs6td4tgxbpuHBvij6Ms8UKJC4jB7iCl0LSEuE6wFx9csUgidn825x3MYiY+g9W0/2l6JilIXLMvWwAlTbY1dpvH1HQx6ZKOjbsaQsJIp01Czy0vVgoFXQVkOR6yWRjmGLRSYl2cfp1crAWZoupoiKIMo//h8mftW0eT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592087; c=relaxed/simple;
-	bh=7Xeu46Hz73p0ba/6inHDEzMo3Kcj9K9m0RilQHAXVWA=;
+	s=arc-20240116; t=1761592090; c=relaxed/simple;
+	bh=jflKjM+q3ZKnQJgKmwXokm84Mq6UjgN5G0HimLleXhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbxDPftl+6Pdmjp/7sQ/SOVZzHBqHLsdgoFkKCAYrftOqQITFGbVuCp5nH1RwNoRSjK2RYuyFrILzZ58IKOmCC7X8X8MceE0hJNzwVk6mkUmM5Tch587UwJUtBQtbE0K+Pj8w8f8gMfHem9yeeLRqLkXllGr7oa8HHJVtk+35Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=az2d58M2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMBQh2Jwg2nuUnTfSjA6D+RsyI4vBWqK4Kp1beZztR/Z4tZoubTcNahPFdIohn9m0fIfqVDgJcNrDMQFtzelBzzEs9Dj2HtBoDjLCtsLZQOGLMY4GDhLMgQoNtfuPz8ACGMAvKOON5p/33t35ts10INv6sUDCbUiOAbf+5fJEGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPYWUnA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="az2d58M2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F78DC4CEF1;
-	Mon, 27 Oct 2025 19:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPYWUnA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AAAC4CEF1;
+	Mon, 27 Oct 2025 19:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592087;
-	bh=7Xeu46Hz73p0ba/6inHDEzMo3Kcj9K9m0RilQHAXVWA=;
+	s=korg; t=1761592090;
+	bh=jflKjM+q3ZKnQJgKmwXokm84Mq6UjgN5G0HimLleXhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=az2d58M2/Aye0Q1vhgJ18n2zPpL6Oles3xcAaGU1+A4VJEJA0QN4VAiHP7gL7pZBG
-	 EmYQakDrw1SdWn03I7RNP/wnZPYgTAG5MFS4p2hoU+x7h2llrndGTeMX2SuVhaVUzp
-	 xpRzAgZHsz/zfexnQRYzlgu7ADatwu6FeX+H8uKo=
+	b=XPYWUnA8qImfuEPH4jYbRuC2aY/m1O4eQYvHXnJkMAO1wHM+FVoOu2zP4+8MupXTs
+	 NeXvGRAlMuNyd1T3B9zxTB/aTlUPyPOvgFApAfGQCukLBMPAIkf/AnHKhTSBr1dbOV
+	 8bIwQ5F7xccjp0uom3Cuq5zMzarbposIk+yKT5Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	Maarten Lankhorst <dev@lankhorst.se>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/123] PCI: tegra194: Reset BARs when running in PCIe endpoint mode
-Date: Mon, 27 Oct 2025 19:36:33 +0100
-Message-ID: <20251027183449.410731361@linuxfoundation.org>
+Subject: [PATCH 5.15 114/123] devcoredump: Fix circular locking dependency with devcd->mutex.
+Date: Mon, 27 Oct 2025 19:36:34 +0100
+Message-ID: <20251027183449.436290514@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,83 +57,386 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit 42f9c66a6d0cc45758dab77233c5460e1cf003df ]
+[ Upstream commit a91c8096590bd7801a26454789f2992094fe36da ]
 
-Tegra already defines all BARs except BAR0 as BAR_RESERVED.  This is
-sufficient for pci-epf-test to not allocate backing memory and to not call
-set_bar() for those BARs. However, marking a BAR as BAR_RESERVED does not
-mean that the BAR gets disabled.
+The original code causes a circular locking dependency found by lockdep.
 
-The host side driver, pci_endpoint_test, simply does an ioremap for all
-enabled BARs and will run tests against all enabled BARs, so it will run
-tests against the BARs marked as BAR_RESERVED.
+======================================================
+WARNING: possible circular locking dependency detected
+6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 Tainted: G S   U
+------------------------------------------------------
+xe_fault_inject/5091 is trying to acquire lock:
+ffff888156815688 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}, at: __flush_work+0x25d/0x660
 
-After running the BAR tests (which will write to all enabled BARs), the
-inbound address translation is broken. This is because the tegra controller
-exposes the ATU Port Logic Structure in BAR4, so when BAR4 is written, the
-inbound address translation settings get overwritten.
+but task is already holding lock:
 
-To avoid this, implement the dw_pcie_ep_ops .init() callback and start off
-by disabling all BARs (pci-epf-test will later enable/configure BARs that
-are not defined as BAR_RESERVED).
+ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
+which lock already depends on the new lock.
+the existing dependency chain (in reverse order) is:
+-> #2 (&devcd->mutex){+.+.}-{3:3}:
+       mutex_lock_nested+0x4e/0xc0
+       devcd_data_write+0x27/0x90
+       sysfs_kf_bin_write+0x80/0xf0
+       kernfs_fop_write_iter+0x169/0x220
+       vfs_write+0x293/0x560
+       ksys_write+0x72/0xf0
+       __x64_sys_write+0x19/0x30
+       x64_sys_call+0x2bf/0x2660
+       do_syscall_64+0x93/0xb60
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+-> #1 (kn->active#236){++++}-{0:0}:
+       kernfs_drain+0x1e2/0x200
+       __kernfs_remove+0xae/0x400
+       kernfs_remove_by_name_ns+0x5d/0xc0
+       remove_files+0x54/0x70
+       sysfs_remove_group+0x3d/0xa0
+       sysfs_remove_groups+0x2e/0x60
+       device_remove_attrs+0xc7/0x100
+       device_del+0x15d/0x3b0
+       devcd_del+0x19/0x30
+       process_one_work+0x22b/0x6f0
+       worker_thread+0x1e8/0x3d0
+       kthread+0x11c/0x250
+       ret_from_fork+0x26c/0x2e0
+       ret_from_fork_asm+0x1a/0x30
+-> #0 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}:
+       __lock_acquire+0x1661/0x2860
+       lock_acquire+0xc4/0x2f0
+       __flush_work+0x27a/0x660
+       flush_delayed_work+0x5d/0xa0
+       dev_coredump_put+0x63/0xa0
+       xe_driver_devcoredump_fini+0x12/0x20 [xe]
+       devm_action_release+0x12/0x30
+       release_nodes+0x3a/0x120
+       devres_release_all+0x8a/0xd0
+       device_unbind_cleanup+0x12/0x80
+       device_release_driver_internal+0x23a/0x280
+       device_driver_detach+0x14/0x20
+       unbind_store+0xaf/0xc0
+       drv_attr_store+0x21/0x50
+       sysfs_kf_write+0x4a/0x80
+       kernfs_fop_write_iter+0x169/0x220
+       vfs_write+0x293/0x560
+       ksys_write+0x72/0xf0
+       __x64_sys_write+0x19/0x30
+       x64_sys_call+0x2bf/0x2660
+       do_syscall_64+0x93/0xb60
+       entry_SYSCALL_64_after_hwframe+0x76/0x7e
+other info that might help us debug this:
+Chain exists of: (work_completion)(&(&devcd->del_wk)->work) --> kn->active#236 --> &devcd->mutex
+ Possible unsafe locking scenario:
+       CPU0                    CPU1
+       ----                    ----
+  lock(&devcd->mutex);
+                               lock(kn->active#236);
+                               lock(&devcd->mutex);
+  lock((work_completion)(&(&devcd->del_wk)->work));
+ *** DEADLOCK ***
+5 locks held by xe_fault_inject/5091:
+ #0: ffff8881129f9488 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x72/0xf0
+ #1: ffff88810c755078 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x123/0x220
+ #2: ffff8881054811a0 (&dev->mutex){....}-{3:3}, at: device_release_driver_internal+0x55/0x280
+ #3: ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
+ #4: ffffffff8359e020 (rcu_read_lock){....}-{1:2}, at: __flush_work+0x72/0x660
+stack backtrace:
+CPU: 14 UID: 0 PID: 5091 Comm: xe_fault_inject Tainted: G S   U              6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 PREEMPT_{RT,(lazy)}
+Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+Hardware name: Micro-Star International Co., Ltd. MS-7D25/PRO Z690-A DDR4(MS-7D25), BIOS 1.10 12/13/2021
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x91/0xf0
+ dump_stack+0x10/0x20
+ print_circular_bug+0x285/0x360
+ check_noncircular+0x135/0x150
+ ? register_lock_class+0x48/0x4a0
+ __lock_acquire+0x1661/0x2860
+ lock_acquire+0xc4/0x2f0
+ ? __flush_work+0x25d/0x660
+ ? mark_held_locks+0x46/0x90
+ ? __flush_work+0x25d/0x660
+ __flush_work+0x27a/0x660
+ ? __flush_work+0x25d/0x660
+ ? trace_hardirqs_on+0x1e/0xd0
+ ? __pfx_wq_barrier_func+0x10/0x10
+ flush_delayed_work+0x5d/0xa0
+ dev_coredump_put+0x63/0xa0
+ xe_driver_devcoredump_fini+0x12/0x20 [xe]
+ devm_action_release+0x12/0x30
+ release_nodes+0x3a/0x120
+ devres_release_all+0x8a/0xd0
+ device_unbind_cleanup+0x12/0x80
+ device_release_driver_internal+0x23a/0x280
+ ? bus_find_device+0xa8/0xe0
+ device_driver_detach+0x14/0x20
+ unbind_store+0xaf/0xc0
+ drv_attr_store+0x21/0x50
+ sysfs_kf_write+0x4a/0x80
+ kernfs_fop_write_iter+0x169/0x220
+ vfs_write+0x293/0x560
+ ksys_write+0x72/0xf0
+ __x64_sys_write+0x19/0x30
+ x64_sys_call+0x2bf/0x2660
+ do_syscall_64+0x93/0xb60
+ ? __f_unlock_pos+0x15/0x20
+ ? __x64_sys_getdents64+0x9b/0x130
+ ? __pfx_filldir64+0x10/0x10
+ ? do_syscall_64+0x1a2/0xb60
+ ? clear_bhb_loop+0x30/0x80
+ ? clear_bhb_loop+0x30/0x80
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x76e292edd574
+Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
+RSP: 002b:00007fffe247a828 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000076e292edd574
+RDX: 000000000000000c RSI: 00006267f6306063 RDI: 000000000000000b
+RBP: 000000000000000c R08: 000076e292fc4b20 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000202 R12: 00006267f6306063
+R13: 000000000000000b R14: 00006267e6859c00 R15: 000076e29322a000
+ </TASK>
+xe 0000:03:00.0: [drm] Xe device coredump has been deleted.
 
-This matches the behavior of other PCIe endpoint drivers: dra7xx, imx6,
-layerscape-ep, artpec6, dw-rockchip, qcom-ep, rcar-gen4, and uniphier-ep.
-
-With this, the PCI endpoint kselftest test case CONSECUTIVE_BAR_TEST (which
-was specifically made to detect address translation issues) passes.
-
-Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922140822.519796-7-cassel@kernel.org
-[ changed dw_pcie_ep_ops .init to .ep_init and exported dw_pcie_ep_reset_bar ]
+Fixes: 01daccf74832 ("devcoredump : Serialize devcd_del work")
+Cc: Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org # v6.1+
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250723142416.1020423-1-dev@lankhorst.se
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ replaced disable_delayed_work_sync() with cancel_delayed_work_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c |    1 +
- drivers/pci/controller/dwc/pcie-tegra194.c      |   10 ++++++++++
- 2 files changed, 11 insertions(+)
+ drivers/base/devcoredump.c |  138 +++++++++++++++++++++++++++------------------
+ 1 file changed, 84 insertions(+), 54 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -84,6 +84,7 @@ void dw_pcie_ep_reset_bar(struct dw_pcie
- 	for (func_no = 0; func_no < funcs; func_no++)
- 		__dw_pcie_ep_reset_bar(pci, func_no, bar, 0);
- }
-+EXPORT_SYMBOL_GPL(dw_pcie_ep_reset_bar);
- 
- static u8 __dw_pcie_ep_find_next_cap(struct dw_pcie_ep *ep, u8 func_no,
- 		u8 cap_ptr, u8 cap)
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1839,6 +1839,15 @@ static irqreturn_t tegra_pcie_ep_pex_rst
- 	return IRQ_HANDLED;
- }
- 
-+static void tegra_pcie_ep_init(struct dw_pcie_ep *ep)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	enum pci_barno bar;
-+
-+	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++)
-+		dw_pcie_ep_reset_bar(pci, bar);
-+};
-+
- static int tegra_pcie_ep_raise_legacy_irq(struct tegra_pcie_dw *pcie, u16 irq)
- {
- 	/* Tegra194 supports only INTA */
-@@ -1912,6 +1921,7 @@ tegra_pcie_ep_get_features(struct dw_pci
- }
- 
- static const struct dw_pcie_ep_ops pcie_ep_ops = {
-+	.ep_init = tegra_pcie_ep_init,
- 	.raise_irq = tegra_pcie_ep_raise_irq,
- 	.get_features = tegra_pcie_ep_get_features,
+--- a/drivers/base/devcoredump.c
++++ b/drivers/base/devcoredump.c
+@@ -26,50 +26,46 @@ struct devcd_entry {
+ 	void *data;
+ 	size_t datalen;
+ 	/*
+-	 * Here, mutex is required to serialize the calls to del_wk work between
+-	 * user/kernel space which happens when devcd is added with device_add()
+-	 * and that sends uevent to user space. User space reads the uevents,
+-	 * and calls to devcd_data_write() which try to modify the work which is
+-	 * not even initialized/queued from devcoredump.
++	 * There are 2 races for which mutex is required.
+ 	 *
++	 * The first race is between device creation and userspace writing to
++	 * schedule immediately destruction.
+ 	 *
++	 * This race is handled by arming the timer before device creation, but
++	 * when device creation fails the timer still exists.
+ 	 *
+-	 *        cpu0(X)                                 cpu1(Y)
++	 * To solve this, hold the mutex during device_add(), and set
++	 * init_completed on success before releasing the mutex.
+ 	 *
+-	 *        dev_coredump() uevent sent to user space
+-	 *        device_add()  ======================> user space process Y reads the
+-	 *                                              uevents writes to devcd fd
+-	 *                                              which results into writes to
++	 * That way the timer will never fire until device_add() is called,
++	 * it will do nothing if init_completed is not set. The timer is also
++	 * cancelled in that case.
+ 	 *
+-	 *                                             devcd_data_write()
+-	 *                                               mod_delayed_work()
+-	 *                                                 try_to_grab_pending()
+-	 *                                                   del_timer()
+-	 *                                                     debug_assert_init()
+-	 *       INIT_DELAYED_WORK()
+-	 *       schedule_delayed_work()
+-	 *
+-	 *
+-	 * Also, mutex alone would not be enough to avoid scheduling of
+-	 * del_wk work after it get flush from a call to devcd_free()
+-	 * mentioned as below.
+-	 *
+-	 *	disabled_store()
+-	 *        devcd_free()
+-	 *          mutex_lock()             devcd_data_write()
+-	 *          flush_delayed_work()
+-	 *          mutex_unlock()
+-	 *                                   mutex_lock()
+-	 *                                   mod_delayed_work()
+-	 *                                   mutex_unlock()
+-	 * So, delete_work flag is required.
++	 * The second race involves multiple parallel invocations of devcd_free(),
++	 * add a deleted flag so only 1 can call the destructor.
+ 	 */
+ 	struct mutex mutex;
+-	bool delete_work;
++	bool init_completed, deleted;
+ 	struct module *owner;
+ 	ssize_t (*read)(char *buffer, loff_t offset, size_t count,
+ 			void *data, size_t datalen);
+ 	void (*free)(void *data);
++	/*
++	 * If nothing interferes and device_add() was returns success,
++	 * del_wk will destroy the device after the timer fires.
++	 *
++	 * Multiple userspace processes can interfere in the working of the timer:
++	 * - Writing to the coredump will reschedule the timer to run immediately,
++	 *   if still armed.
++	 *
++	 *   This is handled by using "if (cancel_delayed_work()) {
++	 *   schedule_delayed_work() }", to prevent re-arming after having
++	 *   been previously fired.
++	 * - Writing to /sys/class/devcoredump/disabled will destroy the
++	 *   coredump synchronously.
++	 *   This is handled by using disable_delayed_work_sync(), and then
++	 *   checking if deleted flag is set with &devcd->mutex held.
++	 */
+ 	struct delayed_work del_wk;
+ 	struct device *failing_dev;
  };
+@@ -98,14 +94,27 @@ static void devcd_dev_release(struct dev
+ 	kfree(devcd);
+ }
+ 
++static void __devcd_del(struct devcd_entry *devcd)
++{
++	devcd->deleted = true;
++	device_del(&devcd->devcd_dev);
++	put_device(&devcd->devcd_dev);
++}
++
+ static void devcd_del(struct work_struct *wk)
+ {
+ 	struct devcd_entry *devcd;
++	bool init_completed;
+ 
+ 	devcd = container_of(wk, struct devcd_entry, del_wk.work);
+ 
+-	device_del(&devcd->devcd_dev);
+-	put_device(&devcd->devcd_dev);
++	/* devcd->mutex serializes against dev_coredumpm_timeout */
++	mutex_lock(&devcd->mutex);
++	init_completed = devcd->init_completed;
++	mutex_unlock(&devcd->mutex);
++
++	if (init_completed)
++		__devcd_del(devcd);
+ }
+ 
+ static ssize_t devcd_data_read(struct file *filp, struct kobject *kobj,
+@@ -125,12 +134,12 @@ static ssize_t devcd_data_write(struct f
+ 	struct device *dev = kobj_to_dev(kobj);
+ 	struct devcd_entry *devcd = dev_to_devcd(dev);
+ 
+-	mutex_lock(&devcd->mutex);
+-	if (!devcd->delete_work) {
+-		devcd->delete_work = true;
+-		mod_delayed_work(system_wq, &devcd->del_wk, 0);
+-	}
+-	mutex_unlock(&devcd->mutex);
++	/*
++	 * Although it's tempting to use mod_delayed work here,
++	 * that will cause a reschedule if the timer already fired.
++	 */
++	if (cancel_delayed_work(&devcd->del_wk))
++		schedule_delayed_work(&devcd->del_wk, 0);
+ 
+ 	return count;
+ }
+@@ -158,11 +167,21 @@ static int devcd_free(struct device *dev
+ {
+ 	struct devcd_entry *devcd = dev_to_devcd(dev);
+ 
++	/*
++	 * To prevent a race with devcd_data_write(), cancel work and
++	 * complete manually instead.
++	 *
++	 * We cannot rely on the return value of
++	 * cancel_delayed_work_sync() here, because it might be in the
++	 * middle of a cancel_delayed_work + schedule_delayed_work pair.
++	 *
++	 * devcd->mutex here guards against multiple parallel invocations
++	 * of devcd_free().
++	 */
++	cancel_delayed_work_sync(&devcd->del_wk);
+ 	mutex_lock(&devcd->mutex);
+-	if (!devcd->delete_work)
+-		devcd->delete_work = true;
+-
+-	flush_delayed_work(&devcd->del_wk);
++	if (!devcd->deleted)
++		__devcd_del(devcd);
+ 	mutex_unlock(&devcd->mutex);
+ 	return 0;
+ }
+@@ -186,12 +205,10 @@ static ssize_t disabled_show(struct clas
+  *                                                                 put_device() <- last reference
+  *             error = fn(dev, data)                           devcd_dev_release()
+  *             devcd_free(dev, data)                           kfree(devcd)
+- *             mutex_lock(&devcd->mutex);
+  *
+  *
+- * In the above diagram, It looks like disabled_store() would be racing with parallely
+- * running devcd_del() and result in memory abort while acquiring devcd->mutex which
+- * is called after kfree of devcd memory  after dropping its last reference with
++ * In the above diagram, it looks like disabled_store() would be racing with parallelly
++ * running devcd_del() and result in memory abort after dropping its last reference with
+  * put_device(). However, this will not happens as fn(dev, data) runs
+  * with its own reference to device via klist_node so it is not its last reference.
+  * so, above situation would not occur.
+@@ -353,7 +370,7 @@ void dev_coredumpm(struct device *dev, s
+ 	devcd->read = read;
+ 	devcd->free = free;
+ 	devcd->failing_dev = get_device(dev);
+-	devcd->delete_work = false;
++	devcd->deleted = false;
+ 
+ 	mutex_init(&devcd->mutex);
+ 	device_initialize(&devcd->devcd_dev);
+@@ -362,8 +379,14 @@ void dev_coredumpm(struct device *dev, s
+ 		     atomic_inc_return(&devcd_count));
+ 	devcd->devcd_dev.class = &devcd_class;
+ 
+-	mutex_lock(&devcd->mutex);
+ 	dev_set_uevent_suppress(&devcd->devcd_dev, true);
++
++	/* devcd->mutex prevents devcd_del() completing until init finishes */
++	mutex_lock(&devcd->mutex);
++	devcd->init_completed = false;
++	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
++	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
++
+ 	if (device_add(&devcd->devcd_dev))
+ 		goto put_device;
+ 
+@@ -380,13 +403,20 @@ void dev_coredumpm(struct device *dev, s
+ 
+ 	dev_set_uevent_suppress(&devcd->devcd_dev, false);
+ 	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
+-	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
+-	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
++
++	/*
++	 * Safe to run devcd_del() now that we are done with devcd_dev.
++	 * Alternatively we could have taken a ref on devcd_dev before
++	 * dropping the lock.
++	 */
++	devcd->init_completed = true;
+ 	mutex_unlock(&devcd->mutex);
+ 	return;
+  put_device:
+-	put_device(&devcd->devcd_dev);
+ 	mutex_unlock(&devcd->mutex);
++	cancel_delayed_work_sync(&devcd->del_wk);
++	put_device(&devcd->devcd_dev);
++
+  put_module:
+ 	module_put(owner);
+  free:
 
 
