@@ -1,56 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B599C31B82C;
-	Mon, 27 Oct 2025 18:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482EB31D36D;
+	Mon, 27 Oct 2025 18:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590571; cv=none; b=ZG5X2AaGYxUDDgs0HwQ+/7bKFlk5SrSCucqdHiyqaRPOFuYJMBmb4Wpp1tVLcpZbQKnaat6J/nAthGnwSSx9LIn6pllM+m4no+o4TCet0bymvPbmxxwOptQVtv5gm8PmLf7Isn3WxdCYFVT9g2374fvbj4RNkq52UAjkmkdb2/U=
+	t=1761590574; cv=none; b=G1azkTki9am9TvXRicUbhhVE9LjgXgL6wGf5lslrGhuqe7jhIkX6fy/aeeXuBls2HKwkxZQAvegw3XrLTKriioq/gv2DQCp3v1PhYbOO7kzy15BVXFPreNMg+wDOQ8VEMpsCt2W3TV2cs7z8LMqygBMREX8llcST3IdwCjz1vgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590571; c=relaxed/simple;
-	bh=PBZ8rMX+mPNq8fRt6QUEz4ASQKHV7PQ2IjdGdCaQDeI=;
+	s=arc-20240116; t=1761590574; c=relaxed/simple;
+	bh=AqXWdngtoQTNfc656/amsq+Z3Cgkfvv9wORH5X1WdAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SERObcAwFKhSZN34AUoRf3JhetkEwamg6Bs7g22nhmCWDEU2XP3cxNfn0alDgGZ9HPINBQNEXaCcqyZCSgPNkXxfrl2T/6yBuMT5HoYJSaMLc7OZk7avoufLBoH4gnYTg4FR+Pbo8ne7Yq8esvcaagY3vzCx0qLZHD6eCH+cFKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzQH27vO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XInheFBxGcQOeUiBMBIgKoInkimXv4b4mJg03q6B+LZjLMkuEq118++2TL4B0RYI70+LnYZK1xUhFMDYt9wo5HegNG1et4g48qUTxLP8xJzWBOtYneZxqa1rujl6skiy9m383W9xWKXvAThYcI4Vr2rz6T+AurYwW9Wn5wlVuhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OQjGDuE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzQH27vO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C14C4AF0B;
-	Mon, 27 Oct 2025 18:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OQjGDuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0546C113D0;
+	Mon, 27 Oct 2025 18:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590571;
-	bh=PBZ8rMX+mPNq8fRt6QUEz4ASQKHV7PQ2IjdGdCaQDeI=;
+	s=korg; t=1761590574;
+	bh=AqXWdngtoQTNfc656/amsq+Z3Cgkfvv9wORH5X1WdAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzQH27vOrAsdWmRoHcXMxjhKT0axtoLz04wWCQ4vEz/EZbP8fUZH/T9kvy6gZF89w
-	 5ViB/Cj0sdtMMVzx9AkPivDxV2u8O7vLlO8wuIl71cSIKqvogDpw8gJO0tDirTiyM2
-	 f9aztAaDlHIUzbNX7X4t7IY1pxpuVP5X2Erf1EwU=
+	b=1OQjGDuETON5RgHBSBqwT3YyxmW/MjZueV6wWfjC37LeYXGFuRPUIROsHkwGxrUjh
+	 8sj2SMznz+laQkxXPfXw9oeOSlWMk/5w16VFmgVvKeQnTugQ3GDlUUregQaKJeix0q
+	 vKOtPwYNXkCZtNTkkCNxFWD6fZT2gaB2sihY1Peg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	linux-kernel@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/224] tools build: Align warning options with perf
-Date: Mon, 27 Oct 2025 19:34:00 +0100
-Message-ID: <20251027183511.506524132@linuxfoundation.org>
+Subject: [PATCH 5.4 095/224] mailbox: zynqmp-ipi: Remove redundant mbox_controller_unregister() call
+Date: Mon, 27 Oct 2025 19:34:01 +0100
+Message-ID: <20251027183511.531970490@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -69,60 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit 53d067feb8c4f16d1f24ce3f4df4450bb18c555f ]
+[ Upstream commit 341867f730d3d3bb54491ee64e8b1a0c446656e7 ]
 
-The feature test programs are built without enabling '-Wall -Werror'
-options. As a result, a feature may appear to be available, but later
-building in perf can fail with stricter checks.
+The controller is registered using the device-managed function
+'devm_mbox_controller_register()'. As documented in mailbox.c, this
+ensures the devres framework automatically calls
+mbox_controller_unregister() when device_unregister() is invoked, making
+the explicit call unnecessary.
 
-Make the feature test program use the same warning options as perf.
+Remove redundant mbox_controller_unregister() call as
+device_unregister() handles controller cleanup.
 
-Fixes: 1925459b4d92 ("tools build: Fix feature Makefile issues with 'O='")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-1-4305590795b2@arm.com
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: linux-riscv@lists.infradead.org
-Cc: llvm@lists.linux.dev
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-perf-users@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index 8104e505efde6..f5b7b1489e1fc 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -258,10 +258,10 @@ $(OUTPUT)test-sync-compare-and-swap.bin:
- 	$(BUILD)
- 
- $(OUTPUT)test-compile-32.bin:
--	$(CC) -m32 -o $@ test-compile.c
-+	$(CC) -m32 -Wall -Werror -o $@ test-compile.c
- 
- $(OUTPUT)test-compile-x32.bin:
--	$(CC) -mx32 -o $@ test-compile.c
-+	$(CC) -mx32 -Wall -Werror -o $@ test-compile.c
- 
- $(OUTPUT)test-zlib.bin:
- 	$(BUILD) -lz
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index bb7bb17386475..8395f4013b111 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -619,7 +619,6 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+-			mbox_controller_unregister(&ipi_mbox->mbox);
+ 			if (device_is_registered(&ipi_mbox->dev))
+ 				device_unregister(&ipi_mbox->dev);
+ 		}
 -- 
 2.51.0
 
