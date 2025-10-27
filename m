@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D767D2C3745;
-	Mon, 27 Oct 2025 19:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771CB27978C;
+	Mon, 27 Oct 2025 19:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591676; cv=none; b=XttD3SG5YQAeBFVKs6Ic47fqcuZDrSc4pgGoiYoEiV00RZ+iOxCL/LrT/U9ZWx+z6QsqEQLK4XFsLbCqtamrTYQTd8nPl2TURxrPXtdkqgvJrAJcIHZgM9GpKW/Fktx6/6oeFIlq/Ph+NV1jz4RSsNw59F9dySGL/TBIjNJxpHU=
+	t=1761591679; cv=none; b=GHmby58rLokwIvSN716WieUIPp1LnLT3A/FM0c/gQQAptkuUIABI92UzjzGasoEOQyPrivzjkb8iirOBMNyZFsa8wvv/UYHoOZmjV1+fa6i3tYJXcNiMtnt8Ae2siGn0tKu1zBg+67iyYMMGUlFQe6gQpFhfn1EE3OJ3RQnuUc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591676; c=relaxed/simple;
-	bh=uru+4rWf4vW3bCxUvPOXnnGrXOFnmg8555v+TfzqqBU=;
+	s=arc-20240116; t=1761591679; c=relaxed/simple;
+	bh=QFL6x9NCX5Aom62c6jC196CjU5wCaewaA8Lc6SGY/qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEEyNbXmfNQKE8XhKQy63tsRy5VsGR2hZ++Dg2+zlvcdUPM+rVLOz/31xkwYqOrUDq64iulM3FvIT2FwgFjPrmtFLNJmxx/MV5J1ZHB6RSssC+t+uDbVO6+T+22XarO5wzAe/EOIYYwirNJ6zORkBl0gOrFhfpcnz7NI0FZA7W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glxakcG2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qoCe1lvbusdYyCliDC4CSIdCTDLU71K7CR8+ZKjz1n2EwtBoiZ0jQkzXLwQ/Yj/RnuKBr3uugAPKJqFng9GDLbkuBHNhN8lLp9+CDepizWf3Wm8VBqILDfuG59tACw3Ktm0wq8zrUVzqT1pqw2TtnRHFxI1W8+ull0WMiLzE7B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZgNcAdb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glxakcG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A357C4CEF1;
-	Mon, 27 Oct 2025 19:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZgNcAdb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD3FC4CEF1;
+	Mon, 27 Oct 2025 19:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591676;
-	bh=uru+4rWf4vW3bCxUvPOXnnGrXOFnmg8555v+TfzqqBU=;
+	s=korg; t=1761591679;
+	bh=QFL6x9NCX5Aom62c6jC196CjU5wCaewaA8Lc6SGY/qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glxakcG2LEi8fXGl+g+a5o1OmLeTaWzH5DKTQS3CFxh5/xxekWGgMGWbWRdTieHdK
-	 9nOterjYRF6L2wOe3fetdEceKXi5xcC5wijNo46KSZOqGdrm55i+EIsbb6rOuFqmBL
-	 zbe5O6nbDY9+RK3/XAReplQFykdawRlmqVf27TVY=
+	b=tZgNcAdbkqZsJV5Xjn7ok4YDlpt1RZH9HnbZqyxSULldUdI90CNFV6md1GbAZskKC
+	 30lkLF4xCwoXXwADHXbmLjOWVc08FQ6KpgBcY/RSZOdDPpnIaFvRvt93p/H0wtBow7
+	 VhDDy6nwWIRB8Mu5hxnd1f7+bCFKA/8Iu93TXH0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sunil V L <sunilvl@ventanamicro.com>,
 	Atish Patra <atishp@rivosinc.com>,
-	Tsukasa OI <research_trasio@irq.a4lg.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Anup Patel <anup@brainfault.org>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 288/332] RISC-V: Minimal parser for "riscv, isa" strings
-Date: Mon, 27 Oct 2025 19:35:41 +0100
-Message-ID: <20251027183532.463182630@linuxfoundation.org>
+Subject: [PATCH 5.10 289/332] riscv: cpu: Add 64bit hartid support on RV64
+Date: Mon, 27 Oct 2025 19:35:42 +0100
+Message-ID: <20251027183532.488170688@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -54,143 +52,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tsukasa OI <research_trasio@irq.a4lg.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-[ Upstream commit 2a31c54be097c74344b4fab20ea6104012d2cb8b ]
+[ Upstream commit ad635e723e17379b192a5ba9c182e3eedfc24d16 ]
 
-Current hart ISA ("riscv,isa") parser don't correctly parse:
+The hartid can be a 64bit value on RV64 platforms.
 
-1. Multi-letter extensions
-2. Version numbers
+Add support for 64bit hartid in riscv_of_processor_hartid() and
+update its callers.
 
-All ISA extensions ratified recently has multi-letter extensions
-(except 'H'). The current "riscv,isa" parser that is easily confused
-by multi-letter extensions and "p" in version numbers can be a huge
-problem for adding new extensions through the device tree.
-
-Leaving it would create incompatible hacks and would make "riscv,isa"
-value unreliable.
-
-This commit implements minimal parser for "riscv,isa" strings.  With this,
-we can safely ignore multi-letter extensions and version numbers.
-
-[Improved commit text and fixed a bug around 's' in base extension]
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-[Fixed workaround for QEMU]
-Signed-off-by: Tsukasa OI <research_trasio@irq.a4lg.com>
-Tested-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20220527051743.2829940-5-sunilvl@ventanamicro.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Stable-dep-of: d2721bb165b3 ("RISC-V: Don't print details of CPUs disabled in DT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpufeature.c | 72 ++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ arch/riscv/include/asm/processor.h |  4 ++--
+ arch/riscv/kernel/cpu.c            | 26 +++++++++++++++-----------
+ arch/riscv/kernel/cpufeature.c     |  6 ++++--
+ arch/riscv/kernel/smpboot.c        |  9 +++++----
+ drivers/clocksource/timer-riscv.c  | 15 ++++++++-------
+ drivers/irqchip/irq-riscv-intc.c   |  7 ++++---
+ drivers/irqchip/irq-sifive-plic.c  |  7 ++++---
+ 7 files changed, 42 insertions(+), 32 deletions(-)
 
+diff --git a/arch/riscv/include/asm/processor.h b/arch/riscv/include/asm/processor.h
+index bdddcd5c1b71d..b5295806643b1 100644
+--- a/arch/riscv/include/asm/processor.h
++++ b/arch/riscv/include/asm/processor.h
+@@ -66,8 +66,8 @@ static inline void wait_for_interrupt(void)
+ }
+ 
+ struct device_node;
+-int riscv_of_processor_hartid(struct device_node *node);
+-int riscv_of_parent_hartid(struct device_node *node);
++int riscv_of_processor_hartid(struct device_node *node, unsigned long *hartid);
++int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid);
+ 
+ extern void riscv_fill_hwcap(void);
+ 
+diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
+index f13b2c9ea912d..11d6d6cc61d51 100644
+--- a/arch/riscv/kernel/cpu.c
++++ b/arch/riscv/kernel/cpu.c
+@@ -12,37 +12,36 @@
+  * Returns the hart ID of the given device tree node, or -ENODEV if the node
+  * isn't an enabled and valid RISC-V hart node.
+  */
+-int riscv_of_processor_hartid(struct device_node *node)
++int riscv_of_processor_hartid(struct device_node *node, unsigned long *hart)
+ {
+ 	const char *isa;
+-	u32 hart;
+ 
+ 	if (!of_device_is_compatible(node, "riscv")) {
+ 		pr_warn("Found incompatible CPU\n");
+ 		return -ENODEV;
+ 	}
+ 
+-	hart = of_get_cpu_hwid(node, 0);
+-	if (hart == ~0U) {
++	*hart = (unsigned long) of_get_cpu_hwid(node, 0);
++	if (*hart == ~0UL) {
+ 		pr_warn("Found CPU without hart ID\n");
+ 		return -ENODEV;
+ 	}
+ 
+ 	if (!of_device_is_available(node)) {
+-		pr_info("CPU with hartid=%d is not available\n", hart);
++		pr_info("CPU with hartid=%lu is not available\n", *hart);
+ 		return -ENODEV;
+ 	}
+ 
+ 	if (of_property_read_string(node, "riscv,isa", &isa)) {
+-		pr_warn("CPU with hartid=%d has no \"riscv,isa\" property\n", hart);
++		pr_warn("CPU with hartid=%lu has no \"riscv,isa\" property\n", *hart);
+ 		return -ENODEV;
+ 	}
+ 	if (isa[0] != 'r' || isa[1] != 'v') {
+-		pr_warn("CPU with hartid=%d has an invalid ISA of \"%s\"\n", hart, isa);
++		pr_warn("CPU with hartid=%lu has an invalid ISA of \"%s\"\n", *hart, isa);
+ 		return -ENODEV;
+ 	}
+ 
+-	return hart;
++	return 0;
+ }
+ 
+ /*
+@@ -51,11 +50,16 @@ int riscv_of_processor_hartid(struct device_node *node)
+  * To achieve this, we walk up the DT tree until we find an active
+  * RISC-V core (HART) node and extract the cpuid from it.
+  */
+-int riscv_of_parent_hartid(struct device_node *node)
++int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
+ {
++	int rc;
++
+ 	for (; node; node = node->parent) {
+-		if (of_device_is_compatible(node, "riscv"))
+-			return riscv_of_processor_hartid(node);
++		if (of_device_is_compatible(node, "riscv")) {
++			rc = riscv_of_processor_hartid(node, hartid);
++			if (!rc)
++				return 0;
++		}
+ 	}
+ 
+ 	return -1;
 diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index ece126dad3547..54d230bdaf976 100644
+index 54d230bdaf976..f46efff26e3dc 100644
 --- a/arch/riscv/kernel/cpufeature.c
 +++ b/arch/riscv/kernel/cpufeature.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <linux/bitmap.h>
-+#include <linux/ctype.h>
- #include <linux/of.h>
- #include <asm/processor.h>
- #include <asm/hwcap.h>
-@@ -66,7 +67,7 @@ void riscv_fill_hwcap(void)
+@@ -67,8 +67,9 @@ void riscv_fill_hwcap(void)
  	struct device_node *node;
  	const char *isa;
  	char print_str[NUM_ALPHA_EXTS + 1];
--	size_t i, j, isa_len;
-+	int i, j;
+-	int i, j;
++	int i, j, rc;
  	static unsigned long isa2hwcap[256] = {0};
++	unsigned long hartid;
  
  	isa2hwcap['i'] = isa2hwcap['I'] = COMPAT_HWCAP_ISA_I;
-@@ -92,23 +93,72 @@ void riscv_fill_hwcap(void)
+ 	isa2hwcap['m'] = isa2hwcap['M'] = COMPAT_HWCAP_ISA_M;
+@@ -85,7 +86,8 @@ void riscv_fill_hwcap(void)
+ 		unsigned long this_hwcap = 0;
+ 		unsigned long this_isa = 0;
+ 
+-		if (riscv_of_processor_hartid(node) < 0)
++		rc = riscv_of_processor_hartid(node, &hartid);
++		if (rc < 0)
+ 			continue;
+ 
+ 		if (of_property_read_string(node, "riscv,isa", &isa)) {
+diff --git a/arch/riscv/kernel/smpboot.c b/arch/riscv/kernel/smpboot.c
+index 0e0aed380e281..9df6413771923 100644
+--- a/arch/riscv/kernel/smpboot.c
++++ b/arch/riscv/kernel/smpboot.c
+@@ -67,15 +67,16 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
+ void __init setup_smp(void)
+ {
+ 	struct device_node *dn;
+-	int hart;
++	unsigned long hart;
+ 	bool found_boot_cpu = false;
+ 	int cpuid = 1;
++	int rc;
+ 
+ 	cpu_set_ops(0);
+ 
+ 	for_each_of_cpu_node(dn) {
+-		hart = riscv_of_processor_hartid(dn);
+-		if (hart < 0)
++		rc = riscv_of_processor_hartid(dn, &hart);
++		if (rc < 0)
+ 			continue;
+ 
+ 		if (hart == cpuid_to_hartid_map(0)) {
+@@ -84,7 +85,7 @@ void __init setup_smp(void)
  			continue;
  		}
- 
--		i = 0;
--		isa_len = strlen(isa);
- #if IS_ENABLED(CONFIG_32BIT)
- 		if (!strncmp(isa, "rv32", 4))
--			i += 4;
-+			isa += 4;
- #elif IS_ENABLED(CONFIG_64BIT)
- 		if (!strncmp(isa, "rv64", 4))
--			i += 4;
-+			isa += 4;
- #endif
--		for (; i < isa_len; ++i) {
--			this_hwcap |= isa2hwcap[(unsigned char)(isa[i])];
-+		for (; *isa; ++isa) {
-+			const char *ext = isa++;
-+			const char *ext_end = isa;
-+			bool ext_long = false, ext_err = false;
-+
-+			switch (*ext) {
-+			case 's':
-+				/**
-+				 * Workaround for invalid single-letter 's' & 'u'(QEMU).
-+				 * No need to set the bit in riscv_isa as 's' & 'u' are
-+				 * not valid ISA extensions. It works until multi-letter
-+				 * extension starting with "Su" appears.
-+				 */
-+				if (ext[-1] != '_' && ext[1] == 'u') {
-+					++isa;
-+					ext_err = true;
-+					break;
-+				}
-+				fallthrough;
-+			case 'x':
-+			case 'z':
-+				ext_long = true;
-+				/* Multi-letter extension must be delimited */
-+				for (; *isa && *isa != '_'; ++isa)
-+					if (!islower(*isa) && !isdigit(*isa))
-+						ext_err = true;
-+				break;
-+			default:
-+				if (unlikely(!islower(*ext))) {
-+					ext_err = true;
-+					break;
-+				}
-+				/* Find next extension */
-+				if (!isdigit(*isa))
-+					break;
-+				/* Skip the minor version */
-+				while (isdigit(*++isa))
-+					;
-+				if (*isa != 'p')
-+					break;
-+				if (!isdigit(*++isa)) {
-+					--isa;
-+					break;
-+				}
-+				/* Skip the major version */
-+				while (isdigit(*++isa))
-+					;
-+				break;
-+			}
-+			if (*isa != '_')
-+				--isa;
- 			/*
--			 * TODO: X, Y and Z extension parsing for Host ISA
--			 * bitmap will be added in-future.
-+			 * TODO: Full version-aware handling including
-+			 * multi-letter extensions will be added in-future.
- 			 */
--			if ('a' <= isa[i] && isa[i] < 'x')
--				this_isa |= (1UL << (isa[i] - 'a'));
-+			if (ext_err || ext_long)
-+				continue;
-+			this_hwcap |= isa2hwcap[(unsigned char)(*ext)];
-+			this_isa |= (1UL << (*ext - 'a'));
+ 		if (cpuid >= NR_CPUS) {
+-			pr_warn("Invalid cpuid [%d] for hartid [%d]\n",
++			pr_warn("Invalid cpuid [%d] for hartid [%lu]\n",
+ 				cpuid, hart);
+ 			break;
  		}
+diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
+index c51c5ed15aa75..4930d08c9374a 100644
+--- a/drivers/clocksource/timer-riscv.c
++++ b/drivers/clocksource/timer-riscv.c
+@@ -92,20 +92,21 @@ static irqreturn_t riscv_timer_interrupt(int irq, void *dev_id)
  
- 		/*
+ static int __init riscv_timer_init_dt(struct device_node *n)
+ {
+-	int cpuid, hartid, error;
++	int cpuid, error;
++	unsigned long hartid;
+ 	struct device_node *child;
+ 	struct irq_domain *domain;
+ 
+-	hartid = riscv_of_processor_hartid(n);
+-	if (hartid < 0) {
+-		pr_warn("Not valid hartid for node [%pOF] error = [%d]\n",
++	error = riscv_of_processor_hartid(n, &hartid);
++	if (error < 0) {
++		pr_warn("Not valid hartid for node [%pOF] error = [%lu]\n",
+ 			n, hartid);
+-		return hartid;
++		return error;
+ 	}
+ 
+ 	cpuid = riscv_hartid_to_cpuid(hartid);
+ 	if (cpuid < 0) {
+-		pr_warn("Invalid cpuid for hartid [%d]\n", hartid);
++		pr_warn("Invalid cpuid for hartid [%lu]\n", hartid);
+ 		return cpuid;
+ 	}
+ 
+@@ -131,7 +132,7 @@ static int __init riscv_timer_init_dt(struct device_node *n)
+ 		return -ENODEV;
+ 	}
+ 
+-	pr_info("%s: Registering clocksource cpuid [%d] hartid [%d]\n",
++	pr_info("%s: Registering clocksource cpuid [%d] hartid [%lu]\n",
+ 	       __func__, cpuid, hartid);
+ 	error = clocksource_register_hz(&riscv_clocksource, riscv_timebase);
+ 	if (error) {
+diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
+index 8017f6d32d52b..edbf90a7565f6 100644
+--- a/drivers/irqchip/irq-riscv-intc.c
++++ b/drivers/irqchip/irq-riscv-intc.c
+@@ -95,10 +95,11 @@ static const struct irq_domain_ops riscv_intc_domain_ops = {
+ static int __init riscv_intc_init(struct device_node *node,
+ 				  struct device_node *parent)
+ {
+-	int rc, hartid;
++	int rc;
++	unsigned long hartid;
+ 
+-	hartid = riscv_of_parent_hartid(node);
+-	if (hartid < 0) {
++	rc = riscv_of_parent_hartid(node, &hartid);
++	if (rc < 0) {
+ 		pr_warn("unable to find hart id for %pOF\n", node);
+ 		return 0;
+ 	}
+diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
+index bd99ee0ae433d..5fdf0eae48f7d 100644
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -315,7 +315,8 @@ static int __init plic_init(struct device_node *node,
+ 	for (i = 0; i < nr_contexts; i++) {
+ 		struct of_phandle_args parent;
+ 		irq_hw_number_t hwirq;
+-		int cpu, hartid;
++		int cpu;
++		unsigned long hartid;
+ 
+ 		if (of_irq_parse_one(node, i, &parent)) {
+ 			pr_err("failed to parse parent for context %d.\n", i);
+@@ -329,8 +330,8 @@ static int __init plic_init(struct device_node *node,
+ 		if (parent.args[0] != RV_IRQ_EXT)
+ 			continue;
+ 
+-		hartid = riscv_of_parent_hartid(parent.np);
+-		if (hartid < 0) {
++		error = riscv_of_parent_hartid(parent.np, &hartid);
++		if (error < 0) {
+ 			pr_warn("failed to parse hart ID for context %d.\n", i);
+ 			continue;
+ 		}
 -- 
 2.51.0
 
