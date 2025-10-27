@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F190632BF32;
-	Mon, 27 Oct 2025 19:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999F62D5A14;
+	Mon, 27 Oct 2025 19:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592518; cv=none; b=FRuPqqE5KBht2gnRJaNmNxCIuSdLXaqc48KG1KP+ARhZJ7RvoZV4d9zxoETUtbTt2BDx1N8VYTUgM5/SPJBwddMcJkIoRUhHCs3fNH39RsiEvOVjlht6ajq0U8Jb5SWeBzq1Y5qq5S93yClJaSYUJjibm2P43R8bpsvFEBZdzVY=
+	t=1761592520; cv=none; b=eFqp5DCrd0ZlknbNOervB4yL8Ax0d+DACMpPNl4EqdYPXvszJ9AKvS08UxM1RDvu9FsnKjZEuO+qxH/BHUNXbfKxIiQ5S/ujWnG/k+h793z/IIgfUMxzyJ7wQfOJ7phW1bkXENwWUqM1UuZU4lkDsyN+PANdGAWTpxyUl5hc1J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592518; c=relaxed/simple;
-	bh=gBbc+fotrX+RMKMSBXJ7BVOBwokjef2x+YQQmRlPdos=;
+	s=arc-20240116; t=1761592520; c=relaxed/simple;
+	bh=eTjVIqLpIS6fKAWZpMUynJ6wVQjrwGRRR6k8lpat9TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PKgIaFFyCabM7KWB03DfvgndGvfR4FZNvAA1mYc2ArFYXhonKeg2WcZN3T/H4B0T4wla/7ZkS1E3Qvtt84IHnrdRnDll9up2TOqtCeFWuICP3KvtBjXlnWQyzuzUVTc6oUd2eQK8kXcrctk46XKMaCmUguZZKqcHoWlLBGxlYCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGrrSqD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1Fr4pgcOqM5+XDQnuGBycdZ8PKaJ8VyEkRqoZismk7USYMVTzoPa7vKe1zYFMyujloGwDGipKmVjOA/QOmoTZc5Jom3qHnhIyP3x6grvoediV195vksPVy5DWboXVNefm63+1yFDMi4wmsUeBVacGNb634o4I0AQDR744Le9SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzFl5anJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGrrSqD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B078C4CEF1;
-	Mon, 27 Oct 2025 19:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzFl5anJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233ECC4CEF1;
+	Mon, 27 Oct 2025 19:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592517;
-	bh=gBbc+fotrX+RMKMSBXJ7BVOBwokjef2x+YQQmRlPdos=;
+	s=korg; t=1761592520;
+	bh=eTjVIqLpIS6fKAWZpMUynJ6wVQjrwGRRR6k8lpat9TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jGrrSqD0A2IJKNvmrMiTCuKsDj6iVr3jKkK7laY+CqZpjIe9E6pY7nyuFeRfwVAy4
-	 6PsfafUDodXdAVNXcd05yHpZvshksbnPiJSFYyOkPQDBgHnT5YJxgdhwNMzrkFSreq
-	 yxW1cJ6xvwArvun/yc/P2EY88Rj5ny1ni9pEmb0Y=
+	b=ZzFl5anJZ5X0CPp3B6GzLSn2g+F/duc94XPQq7blo2zVlPGAgtksjrta1Jn/B9BG9
+	 flcTys/0CPmez9Y3nukiBePH+VmRIBsOggFwR9zq61XCkgnUqBKuvPO5+ZzRZjRcak
+	 FLFBo6ucUEdkSDwl5uZJpzN3jss8YQU1UJCr+Xdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/157] devcoredump: Fix circular locking dependency with devcd->mutex.
-Date: Mon, 27 Oct 2025 19:36:51 +0100
-Message-ID: <20251027183505.318771749@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 6.1 151/157] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
+Date: Mon, 27 Oct 2025 19:36:52 +0100
+Message-ID: <20251027183505.344460318@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -57,386 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Babu Moger <babu.moger@amd.com>
 
-[ Upstream commit a91c8096590bd7801a26454789f2992094fe36da ]
+[ Upstream commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 ]
 
-The original code causes a circular locking dependency found by lockdep.
+Users can create as many monitoring groups as the number of RMIDs supported
+by the hardware. However, on AMD systems, only a limited number of RMIDs
+are guaranteed to be actively tracked by the hardware. RMIDs that exceed
+this limit are placed in an "Unavailable" state.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 Tainted: G S   U
-------------------------------------------------------
-xe_fault_inject/5091 is trying to acquire lock:
-ffff888156815688 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}, at: __flush_work+0x25d/0x660
+When a bandwidth counter is read for such an RMID, the hardware sets
+MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
+again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
+remains set on first read after tracking re-starts and is clear on all
+subsequent reads as long as the RMID is tracked.
 
-but task is already holding lock:
+resctrl miscounts the bandwidth events after an RMID transitions from the
+"Unavailable" state back to being tracked. This happens because when the
+hardware starts counting again after resetting the counter to zero, resctrl
+in turn compares the new count against the counter value stored from the
+previous time the RMID was tracked.
 
-ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #2 (&devcd->mutex){+.+.}-{3:3}:
-       mutex_lock_nested+0x4e/0xc0
-       devcd_data_write+0x27/0x90
-       sysfs_kf_bin_write+0x80/0xf0
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
--> #1 (kn->active#236){++++}-{0:0}:
-       kernfs_drain+0x1e2/0x200
-       __kernfs_remove+0xae/0x400
-       kernfs_remove_by_name_ns+0x5d/0xc0
-       remove_files+0x54/0x70
-       sysfs_remove_group+0x3d/0xa0
-       sysfs_remove_groups+0x2e/0x60
-       device_remove_attrs+0xc7/0x100
-       device_del+0x15d/0x3b0
-       devcd_del+0x19/0x30
-       process_one_work+0x22b/0x6f0
-       worker_thread+0x1e8/0x3d0
-       kthread+0x11c/0x250
-       ret_from_fork+0x26c/0x2e0
-       ret_from_fork_asm+0x1a/0x30
--> #0 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}:
-       __lock_acquire+0x1661/0x2860
-       lock_acquire+0xc4/0x2f0
-       __flush_work+0x27a/0x660
-       flush_delayed_work+0x5d/0xa0
-       dev_coredump_put+0x63/0xa0
-       xe_driver_devcoredump_fini+0x12/0x20 [xe]
-       devm_action_release+0x12/0x30
-       release_nodes+0x3a/0x120
-       devres_release_all+0x8a/0xd0
-       device_unbind_cleanup+0x12/0x80
-       device_release_driver_internal+0x23a/0x280
-       device_driver_detach+0x14/0x20
-       unbind_store+0xaf/0xc0
-       drv_attr_store+0x21/0x50
-       sysfs_kf_write+0x4a/0x80
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-other info that might help us debug this:
-Chain exists of: (work_completion)(&(&devcd->del_wk)->work) --> kn->active#236 --> &devcd->mutex
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&devcd->mutex);
-                               lock(kn->active#236);
-                               lock(&devcd->mutex);
-  lock((work_completion)(&(&devcd->del_wk)->work));
- *** DEADLOCK ***
-5 locks held by xe_fault_inject/5091:
- #0: ffff8881129f9488 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x72/0xf0
- #1: ffff88810c755078 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x123/0x220
- #2: ffff8881054811a0 (&dev->mutex){....}-{3:3}, at: device_release_driver_internal+0x55/0x280
- #3: ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
- #4: ffffffff8359e020 (rcu_read_lock){....}-{1:2}, at: __flush_work+0x72/0x660
-stack backtrace:
-CPU: 14 UID: 0 PID: 5091 Comm: xe_fault_inject Tainted: G S   U              6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 PREEMPT_{RT,(lazy)}
-Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-Hardware name: Micro-Star International Co., Ltd. MS-7D25/PRO Z690-A DDR4(MS-7D25), BIOS 1.10 12/13/2021
-Call Trace:
- <TASK>
- dump_stack_lvl+0x91/0xf0
- dump_stack+0x10/0x20
- print_circular_bug+0x285/0x360
- check_noncircular+0x135/0x150
- ? register_lock_class+0x48/0x4a0
- __lock_acquire+0x1661/0x2860
- lock_acquire+0xc4/0x2f0
- ? __flush_work+0x25d/0x660
- ? mark_held_locks+0x46/0x90
- ? __flush_work+0x25d/0x660
- __flush_work+0x27a/0x660
- ? __flush_work+0x25d/0x660
- ? trace_hardirqs_on+0x1e/0xd0
- ? __pfx_wq_barrier_func+0x10/0x10
- flush_delayed_work+0x5d/0xa0
- dev_coredump_put+0x63/0xa0
- xe_driver_devcoredump_fini+0x12/0x20 [xe]
- devm_action_release+0x12/0x30
- release_nodes+0x3a/0x120
- devres_release_all+0x8a/0xd0
- device_unbind_cleanup+0x12/0x80
- device_release_driver_internal+0x23a/0x280
- ? bus_find_device+0xa8/0xe0
- device_driver_detach+0x14/0x20
- unbind_store+0xaf/0xc0
- drv_attr_store+0x21/0x50
- sysfs_kf_write+0x4a/0x80
- kernfs_fop_write_iter+0x169/0x220
- vfs_write+0x293/0x560
- ksys_write+0x72/0xf0
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x2bf/0x2660
- do_syscall_64+0x93/0xb60
- ? __f_unlock_pos+0x15/0x20
- ? __x64_sys_getdents64+0x9b/0x130
- ? __pfx_filldir64+0x10/0x10
- ? do_syscall_64+0x1a2/0xb60
- ? clear_bhb_loop+0x30/0x80
- ? clear_bhb_loop+0x30/0x80
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x76e292edd574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007fffe247a828 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000076e292edd574
-RDX: 000000000000000c RSI: 00006267f6306063 RDI: 000000000000000b
-RBP: 000000000000000c R08: 000076e292fc4b20 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00006267f6306063
-R13: 000000000000000b R14: 00006267e6859c00 R15: 000076e29322a000
- </TASK>
-xe 0000:03:00.0: [drm] Xe device coredump has been deleted.
+This results in resctrl computing an event value that is either undercounting
+(when new counter is more than stored counter) or a mistaken overflow (when
+new counter is less than stored counter).
 
-Fixes: 01daccf74832 ("devcoredump : Serialize devcd_del work")
-Cc: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250723142416.1020423-1-dev@lankhorst.se
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ replaced disable_delayed_work_sync() with cancel_delayed_work_sync() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
+zero whenever the RMID is in the "Unavailable" state to ensure accurate
+counting after the RMID resets to zero when it starts to be tracked again.
+
+Example scenario that results in mistaken overflow
+==================================================
+1. The resctrl filesystem is mounted, and a task is assigned to a
+   monitoring group.
+
+   $mount -t resctrl resctrl /sys/fs/resctrl
+   $mkdir /sys/fs/resctrl/mon_groups/test1/
+   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   21323            <- Total bytes on domain 0
+   "Unavailable"    <- Total bytes on domain 1
+
+   Task is running on domain 0. Counter on domain 1 is "Unavailable".
+
+2. The task runs on domain 0 for a while and then moves to domain 1. The
+   counter starts incrementing on domain 1.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   7345357          <- Total bytes on domain 0
+   4545             <- Total bytes on domain 1
+
+3. At some point, the RMID in domain 0 transitions to the "Unavailable"
+   state because the task is no longer executing in that domain.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   "Unavailable"    <- Total bytes on domain 0
+   434341           <- Total bytes on domain 1
+
+4.  Since the task continues to migrate between domains, it may eventually
+    return to domain 0.
+
+    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+    17592178699059  <- Overflow on domain 0
+    3232332         <- Total bytes on domain 1
+
+In this case, the RMID on domain 0 transitions from "Unavailable" state to
+active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
+the counter is read and begins tracking the RMID counting from 0.
+
+Subsequent reads succeed but return a value smaller than the previously
+saved MSR value (7345357). Consequently, the resctrl's overflow logic is
+triggered, it compares the previous value (7345357) with the new, smaller
+value and incorrectly interprets this as a counter overflow, adding a large
+delta.
+
+In reality, this is a false positive: the counter did not overflow but was
+simply reset when the RMID transitioned from "Unavailable" back to active
+state.
+
+Here is the text from APM [1] available from [2].
+
+"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
+first QM_CTR read when it begins tracking an RMID that it was not
+previously tracking. The U bit will be zero for all subsequent reads from
+that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
+read with the U bit set when that RMID is in use by a processor can be
+considered 0 when calculating the difference with a subsequent read."
+
+[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
+    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
+    Bandwidth (MBM).
+
+  [ bp: Split commit message into smaller paragraph chunks for better
+    consumption. ]
+
+Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
+(cherry picked from commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92)
+[babu.moger@amd.com: Fix conflict for v6.1 stable]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/devcoredump.c |  138 +++++++++++++++++++++++++++------------------
- 1 file changed, 84 insertions(+), 54 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -26,50 +26,46 @@ struct devcd_entry {
- 	void *data;
- 	size_t datalen;
- 	/*
--	 * Here, mutex is required to serialize the calls to del_wk work between
--	 * user/kernel space which happens when devcd is added with device_add()
--	 * and that sends uevent to user space. User space reads the uevents,
--	 * and calls to devcd_data_write() which try to modify the work which is
--	 * not even initialized/queued from devcoredump.
-+	 * There are 2 races for which mutex is required.
- 	 *
-+	 * The first race is between device creation and userspace writing to
-+	 * schedule immediately destruction.
- 	 *
-+	 * This race is handled by arming the timer before device creation, but
-+	 * when device creation fails the timer still exists.
- 	 *
--	 *        cpu0(X)                                 cpu1(Y)
-+	 * To solve this, hold the mutex during device_add(), and set
-+	 * init_completed on success before releasing the mutex.
- 	 *
--	 *        dev_coredump() uevent sent to user space
--	 *        device_add()  ======================> user space process Y reads the
--	 *                                              uevents writes to devcd fd
--	 *                                              which results into writes to
-+	 * That way the timer will never fire until device_add() is called,
-+	 * it will do nothing if init_completed is not set. The timer is also
-+	 * cancelled in that case.
- 	 *
--	 *                                             devcd_data_write()
--	 *                                               mod_delayed_work()
--	 *                                                 try_to_grab_pending()
--	 *                                                   del_timer()
--	 *                                                     debug_assert_init()
--	 *       INIT_DELAYED_WORK()
--	 *       schedule_delayed_work()
--	 *
--	 *
--	 * Also, mutex alone would not be enough to avoid scheduling of
--	 * del_wk work after it get flush from a call to devcd_free()
--	 * mentioned as below.
--	 *
--	 *	disabled_store()
--	 *        devcd_free()
--	 *          mutex_lock()             devcd_data_write()
--	 *          flush_delayed_work()
--	 *          mutex_unlock()
--	 *                                   mutex_lock()
--	 *                                   mod_delayed_work()
--	 *                                   mutex_unlock()
--	 * So, delete_work flag is required.
-+	 * The second race involves multiple parallel invocations of devcd_free(),
-+	 * add a deleted flag so only 1 can call the destructor.
- 	 */
- 	struct mutex mutex;
--	bool delete_work;
-+	bool init_completed, deleted;
- 	struct module *owner;
- 	ssize_t (*read)(char *buffer, loff_t offset, size_t count,
- 			void *data, size_t datalen);
- 	void (*free)(void *data);
-+	/*
-+	 * If nothing interferes and device_add() was returns success,
-+	 * del_wk will destroy the device after the timer fires.
-+	 *
-+	 * Multiple userspace processes can interfere in the working of the timer:
-+	 * - Writing to the coredump will reschedule the timer to run immediately,
-+	 *   if still armed.
-+	 *
-+	 *   This is handled by using "if (cancel_delayed_work()) {
-+	 *   schedule_delayed_work() }", to prevent re-arming after having
-+	 *   been previously fired.
-+	 * - Writing to /sys/class/devcoredump/disabled will destroy the
-+	 *   coredump synchronously.
-+	 *   This is handled by using disable_delayed_work_sync(), and then
-+	 *   checking if deleted flag is set with &devcd->mutex held.
-+	 */
- 	struct delayed_work del_wk;
- 	struct device *failing_dev;
- };
-@@ -98,14 +94,27 @@ static void devcd_dev_release(struct dev
- 	kfree(devcd);
- }
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -224,11 +224,15 @@ int resctrl_arch_rmid_read(struct rdt_re
+ 	if (!cpumask_test_cpu(smp_processor_id(), &d->cpu_mask))
+ 		return -EINVAL;
  
-+static void __devcd_del(struct devcd_entry *devcd)
-+{
-+	devcd->deleted = true;
-+	device_del(&devcd->devcd_dev);
-+	put_device(&devcd->devcd_dev);
-+}
++	am = get_arch_mbm_state(hw_dom, rmid, eventid);
 +
- static void devcd_del(struct work_struct *wk)
- {
- 	struct devcd_entry *devcd;
-+	bool init_completed;
+ 	ret = __rmid_read(rmid, eventid, &msr_val);
+-	if (ret)
++	if (ret) {
++		if (am && ret == -EINVAL)
++			am->prev_msr = 0;
+ 		return ret;
++	}
  
- 	devcd = container_of(wk, struct devcd_entry, del_wk.work);
- 
--	device_del(&devcd->devcd_dev);
--	put_device(&devcd->devcd_dev);
-+	/* devcd->mutex serializes against dev_coredumpm_timeout */
-+	mutex_lock(&devcd->mutex);
-+	init_completed = devcd->init_completed;
-+	mutex_unlock(&devcd->mutex);
-+
-+	if (init_completed)
-+		__devcd_del(devcd);
- }
- 
- static ssize_t devcd_data_read(struct file *filp, struct kobject *kobj,
-@@ -125,12 +134,12 @@ static ssize_t devcd_data_write(struct f
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
--	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work) {
--		devcd->delete_work = true;
--		mod_delayed_work(system_wq, &devcd->del_wk, 0);
--	}
--	mutex_unlock(&devcd->mutex);
-+	/*
-+	 * Although it's tempting to use mod_delayed work here,
-+	 * that will cause a reschedule if the timer already fired.
-+	 */
-+	if (cancel_delayed_work(&devcd->del_wk))
-+		schedule_delayed_work(&devcd->del_wk, 0);
- 
- 	return count;
- }
-@@ -158,11 +167,21 @@ static int devcd_free(struct device *dev
- {
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
-+	/*
-+	 * To prevent a race with devcd_data_write(), cancel work and
-+	 * complete manually instead.
-+	 *
-+	 * We cannot rely on the return value of
-+	 * cancel_delayed_work_sync() here, because it might be in the
-+	 * middle of a cancel_delayed_work + schedule_delayed_work pair.
-+	 *
-+	 * devcd->mutex here guards against multiple parallel invocations
-+	 * of devcd_free().
-+	 */
-+	cancel_delayed_work_sync(&devcd->del_wk);
- 	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work)
--		devcd->delete_work = true;
--
--	flush_delayed_work(&devcd->del_wk);
-+	if (!devcd->deleted)
-+		__devcd_del(devcd);
- 	mutex_unlock(&devcd->mutex);
- 	return 0;
- }
-@@ -186,12 +205,10 @@ static ssize_t disabled_show(struct clas
-  *                                                                 put_device() <- last reference
-  *             error = fn(dev, data)                           devcd_dev_release()
-  *             devcd_free(dev, data)                           kfree(devcd)
-- *             mutex_lock(&devcd->mutex);
-  *
-  *
-- * In the above diagram, It looks like disabled_store() would be racing with parallely
-- * running devcd_del() and result in memory abort while acquiring devcd->mutex which
-- * is called after kfree of devcd memory  after dropping its last reference with
-+ * In the above diagram, it looks like disabled_store() would be racing with parallelly
-+ * running devcd_del() and result in memory abort after dropping its last reference with
-  * put_device(). However, this will not happens as fn(dev, data) runs
-  * with its own reference to device via klist_node so it is not its last reference.
-  * so, above situation would not occur.
-@@ -353,7 +370,7 @@ void dev_coredumpm(struct device *dev, s
- 	devcd->read = read;
- 	devcd->free = free;
- 	devcd->failing_dev = get_device(dev);
--	devcd->delete_work = false;
-+	devcd->deleted = false;
- 
- 	mutex_init(&devcd->mutex);
- 	device_initialize(&devcd->devcd_dev);
-@@ -362,8 +379,14 @@ void dev_coredumpm(struct device *dev, s
- 		     atomic_inc_return(&devcd_count));
- 	devcd->devcd_dev.class = &devcd_class;
- 
--	mutex_lock(&devcd->mutex);
- 	dev_set_uevent_suppress(&devcd->devcd_dev, true);
-+
-+	/* devcd->mutex prevents devcd_del() completing until init finishes */
-+	mutex_lock(&devcd->mutex);
-+	devcd->init_completed = false;
-+	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
-+	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
-+
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
- 
-@@ -380,13 +403,20 @@ void dev_coredumpm(struct device *dev, s
- 
- 	dev_set_uevent_suppress(&devcd->devcd_dev, false);
- 	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
--	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
--	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
-+
-+	/*
-+	 * Safe to run devcd_del() now that we are done with devcd_dev.
-+	 * Alternatively we could have taken a ref on devcd_dev before
-+	 * dropping the lock.
-+	 */
-+	devcd->init_completed = true;
- 	mutex_unlock(&devcd->mutex);
- 	return;
-  put_device:
--	put_device(&devcd->devcd_dev);
- 	mutex_unlock(&devcd->mutex);
-+	cancel_delayed_work_sync(&devcd->del_wk);
-+	put_device(&devcd->devcd_dev);
-+
-  put_module:
- 	module_put(owner);
-  free:
+-	am = get_arch_mbm_state(hw_dom, rmid, eventid);
+ 	if (am) {
+ 		am->chunks += mbm_overflow_count(am->prev_msr, msr_val,
+ 						 hw_res->mbm_width);
 
 
