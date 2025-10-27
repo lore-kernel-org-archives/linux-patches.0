@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC80324B3B;
-	Mon, 27 Oct 2025 18:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5401932E152;
+	Mon, 27 Oct 2025 18:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590996; cv=none; b=jz8/DyQe33tQIxeaVmDM5Ie3sSJH4rxEIfO3Kt0KlSAYMziAv/5Or9dWR4X9rnIz0Na29wtgep5gWpu2igtoDIR9V/MmqtVeBYOuebqgi1MMzeevYsW3Qt4GU5bjpzjaO8AgK2XUB3FKTpgWcmOkO2e2rxBu19C0vg3+oJECFsk=
+	t=1761590998; cv=none; b=XgaKYN/jmIdyJ2SVlz0bb6P7yFcF5uyOgT7Arc5F6ROcKc2+vfmyd30z6/7dDeTQMVuytRuK7HmHi8IYUiqJSM4sGGT62hi0wahUzpxEzaX5jTSjNkJB4a6+HSxj1wGio14+BXCdH6NxQ1lMTnIyOEvlP5sSoaR3qqlR4BkebNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590996; c=relaxed/simple;
-	bh=LfzeHvNgOQ90dOo4w+29MWgRDsS5yxhbvnAsjCklDTg=;
+	s=arc-20240116; t=1761590998; c=relaxed/simple;
+	bh=jqAusKmxK0OuxSECl3AAfkvCW4DMCIEm7v7Gqit/5aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnuVJcb5OqPQA/EPw1kgC11Xys57A/9R+gy9lMZY4WcaEmJ0ULdyUYlxhdIyu6a760AV0b6tipV6j8r2DZ1h6O7lOgK5yOUy2zITcXhAv4/ER+9t3+4xiGsJpIrV7MdhGaNZlwkIaqYvKHSw2THFk0sLUVCurQhyhem7AXVOCb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGNqoivN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoNg9uWXPl2teGu1k0AJFI5yuwVyDhsGoMD55RLbBaDzN9iSnTBMH+9JNAueo2nKgKWH1i+jJ4pFSeYvvNeJgIuEq79eo46amT+ZjvuX8sdIuGWPkOHl/p+95eqP/zlM4cnIU2LJKdQHeh5C56+X9m3NCJLWpBuzFZQoxUvJqKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRJOdbDV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGNqoivN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5324CC116B1;
-	Mon, 27 Oct 2025 18:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRJOdbDV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8501C4CEF1;
+	Mon, 27 Oct 2025 18:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590995;
-	bh=LfzeHvNgOQ90dOo4w+29MWgRDsS5yxhbvnAsjCklDTg=;
+	s=korg; t=1761590998;
+	bh=jqAusKmxK0OuxSECl3AAfkvCW4DMCIEm7v7Gqit/5aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGNqoivN7eNH+cDSmsdfcJBKhpPCtc+6ljrI2RElS/wzhYWCmeTpqd4vcQDQbTmWe
-	 Lp3ToM4CEXey6uPdW4STFPaPtIUbOQrXdMW0au/29zMX5gGjAONPAe3UbZQE/uuptW
-	 1si+ahn52x1NFUJ49Knmj6KAUbvPvxfRgwbg9DkQ=
+	b=FRJOdbDVZ6V3Utd99cjljSz/ZbFkeLtBkL38cRR72rkub0CYdASdDqF4WIueq4OTw
+	 JcsvNAwsMGwmtrTqctlENt46UJz//48PO6pE5uypiiyboi3bQqnfB2yWrjaFE5HYTt
+	 kWCHGgtYMaPF791LNFWmdCc0gLhuMN6fMCsLY1Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Da Xue <da@libre.computer>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/332] soc: qcom: rpmh-rsc: Unconditionally clear _TRIGGER bit for TCS
-Date: Mon, 27 Oct 2025 19:31:20 +0100
-Message-ID: <20251027183525.339452636@linuxfoundation.org>
+Subject: [PATCH 5.10 028/332] pinctrl: meson-gxl: add missing i2c_d pinmux
+Date: Mon, 27 Oct 2025 19:31:21 +0100
+Message-ID: <20251027183525.365267059@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit f87412d18edb5b8393eb8cb1c2d4a54f90185a21 ]
+[ Upstream commit d8c2a9edd181f0cc4a66eec954b3d8f6a1d954a7 ]
 
-Unconditionally clear the TCS_AMC_MODE_TRIGGER bit when a
-transaction completes. Previously this bit was only cleared when
-a wake TCS was borrowed as an AMC TCS but not for dedicated
-AMC TCS. Leaving this bit set for AMC TCS and entering deeper low
-power modes can generate a false completion IRQ.
+Amlogic GXL has 4 I2C attached to gpio-periphs. I2C_D is on GPIOX_10/11.
 
-Prevent this scenario by always clearing the TCS_AMC_MODE_TRIGGER
-bit upon receiving a completion IRQ.
+Add the relevant func 3 pinmux per the datasheet for S805X/S905X/S905D.
 
-Fixes: 15b3bf61b8d4 ("soc: qcom: rpmh-rsc: Clear active mode configuration for wake TCS")
-Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250825-rpmh_rsc_change-v1-1-138202c31bf6@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 0f15f500ff2c ("pinctrl: meson: Add GXL pinctrl definitions")
+Signed-off-by: Da Xue <da@libre.computer>
+Link: https://lore.kernel.org/20250821233335.1707559-1-da@libre.computer
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-gxl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 26e6dd860b5d9..dbad1c4435cf4 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -432,13 +432,10 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+diff --git a/drivers/pinctrl/meson/pinctrl-meson-gxl.c b/drivers/pinctrl/meson/pinctrl-meson-gxl.c
+index 32552d795bb2c..cd2685b65b7f4 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson-gxl.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-gxl.c
+@@ -187,6 +187,9 @@ static const unsigned int i2c_sda_c_pins[]	= { GPIODV_28 };
+ static const unsigned int i2c_sck_c_dv19_pins[] = { GPIODV_19 };
+ static const unsigned int i2c_sda_c_dv18_pins[] = { GPIODV_18 };
  
- 		trace_rpmh_tx_done(drv, i, req, err);
++static const unsigned int i2c_sck_d_pins[]	= { GPIOX_11 };
++static const unsigned int i2c_sda_d_pins[]	= { GPIOX_10 };
++
+ static const unsigned int eth_mdio_pins[]	= { GPIOZ_0 };
+ static const unsigned int eth_mdc_pins[]	= { GPIOZ_1 };
+ static const unsigned int eth_clk_rx_clk_pins[] = { GPIOZ_2 };
+@@ -411,6 +414,8 @@ static struct meson_pmx_group meson_gxl_periphs_groups[] = {
+ 	GPIO_GROUP(GPIO_TEST_N),
  
--		/*
--		 * If wake tcs was re-purposed for sending active
--		 * votes, clear AMC trigger & enable modes and
-+		/* Clear AMC trigger & enable modes and
- 		 * disable interrupt for this TCS
- 		 */
--		if (!drv->tcs[ACTIVE_TCS].num_tcs)
--			__tcs_set_trigger(drv, i, false);
-+		__tcs_set_trigger(drv, i, false);
- skip:
- 		/* Reclaim the TCS */
- 		write_tcs_reg(drv, RSC_DRV_CMD_ENABLE, i, 0);
+ 	/* Bank X */
++	GROUP(i2c_sda_d,	5,	5),
++	GROUP(i2c_sck_d,	5,	4),
+ 	GROUP(sdio_d0,		5,	31),
+ 	GROUP(sdio_d1,		5,	30),
+ 	GROUP(sdio_d2,		5,	29),
+@@ -651,6 +656,10 @@ static const char * const i2c_c_groups[] = {
+ 	"i2c_sck_c", "i2c_sda_c", "i2c_sda_c_dv18", "i2c_sck_c_dv19",
+ };
+ 
++static const char * const i2c_d_groups[] = {
++	"i2c_sck_d", "i2c_sda_d",
++};
++
+ static const char * const eth_groups[] = {
+ 	"eth_mdio", "eth_mdc", "eth_clk_rx_clk", "eth_rx_dv",
+ 	"eth_rxd0", "eth_rxd1", "eth_rxd2", "eth_rxd3",
+@@ -777,6 +786,7 @@ static struct meson_pmx_func meson_gxl_periphs_functions[] = {
+ 	FUNCTION(i2c_a),
+ 	FUNCTION(i2c_b),
+ 	FUNCTION(i2c_c),
++	FUNCTION(i2c_d),
+ 	FUNCTION(eth),
+ 	FUNCTION(pwm_a),
+ 	FUNCTION(pwm_b),
 -- 
 2.51.0
 
