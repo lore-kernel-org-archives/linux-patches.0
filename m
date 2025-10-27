@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60A632142E;
-	Mon, 27 Oct 2025 19:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688C231CA72;
+	Mon, 27 Oct 2025 19:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591927; cv=none; b=mT/2WSSIpL5jfbCAFc5Fzh/AtKCnITf3JRmcBA2E9vhJlSY6sR+UlymPu3iWlgzUKpsv/t/49HZsi8O2xuvtYf6H5UttbaUWCo9KcvNik1PY/2i4BPdqwVOmRy4aM2WTbHLnKxCz8KMf8ddtKhbSsWy04+UjKiTKS4oCoZKDDXU=
+	t=1761591930; cv=none; b=YPmRqoh+c0/K21cRAebapSS4DW+cbqCFv2EHX1o63ni/vughyFCDIuZQGzm6RlFPH12K+YeA+1AlXQZil5D8A/FavWx9637g9kvhNm/+KgvJSI3jNN9MKZ9ZWuTHu7IsvQK29LNv+yOpuptibnFEC1cm6NMw8A6fFRSM9fuYnNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591927; c=relaxed/simple;
-	bh=A4zcaHgObvGCC7tHoVlC8miTPXma6Qa9aKisUaOQ5Ew=;
+	s=arc-20240116; t=1761591930; c=relaxed/simple;
+	bh=KZB96dmoK0PqbciWCg/LuQTuDHQyr4eM/B0fj5TvnTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MltluufOssnek0N/HbKu+mY5dW4WnR2pou6Q50Ye4Ca+G5h47YUtxnOpLbsOkVq3e5mNH6ZhY20lRIKl6SiInCE5wfpNe6bfjSGLi2eeBzHHtXSkYV8E8E9zWsASXI0CMgqg8NKBz1PPYPbi0mtj4Wi3z9p9usXAzOoiRSDnatg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+t4/Fxk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8ppO2531pwMwm6NURIAPqqMMa4Tp81rq6pAbVUMwPCwxrsRUpCYuEJulu44VwV1k8uIHkP9+0SDhIZvvJZ0N/RKgznnllhHYRRPIdhDpPpTfdnQsBVwfu3uyM+pa4f62aMFUIcdlpFXyUXzdjeVqs/z+4hW9YVg2RotA7m7ig8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHJtvWh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+t4/Fxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6D8C4CEF1;
-	Mon, 27 Oct 2025 19:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHJtvWh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3CDC4CEF1;
+	Mon, 27 Oct 2025 19:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591927;
-	bh=A4zcaHgObvGCC7tHoVlC8miTPXma6Qa9aKisUaOQ5Ew=;
+	s=korg; t=1761591930;
+	bh=KZB96dmoK0PqbciWCg/LuQTuDHQyr4eM/B0fj5TvnTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+t4/FxkY7EK+TyIVT6xDQcZgdYgObnkKUDpy6cGO2INHCPwd8VhmcSUtoj29qgYE
-	 lXTQrJRv6SymXiSRIb73JjURKSTHM7YD8EwVUkZAPk1cOncfdCm8yAiuMmWvVkzdXZ
-	 F1TriQOHT8nVpJ3DmJVMnglyIREm9H3gup2UBA/o=
+	b=oHJtvWh9HupYR0awVB9B3zwuYR9cykqex8z43YzhqFdvWGxHYstI0bSHZFXzRbd/S
+	 4o3NEq556niXBBm2YxFKcPzjTafAt3RKIGky9JPRM+tcJQxy5DUGSdWymKV+XUtAui
+	 Rb+b5yqLiE9N921zrd0JX3dtLaA7Y1LKXzQu7dB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/123] m68k: bitops: Fix find_*_bit() signatures
-Date: Mon, 27 Oct 2025 19:35:31 +0100
-Message-ID: <20251027183447.762983493@linuxfoundation.org>
+Subject: [PATCH 5.15 052/123] net: rtnetlink: add helper to extract msg types kind
+Date: Mon, 27 Oct 2025 19:35:32 +0100
+Message-ID: <20251027183447.789942480@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,88 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 6d5674090543b89aac0c177d67e5fb32ddc53804 ]
+[ Upstream commit 2e9ea3e30f696fd438319c07836422bb0bbb4608 ]
 
-The function signatures of the m68k-optimized implementations of the
-find_{first,next}_{,zero_}bit() helpers do not match the generic
-variants.
+Add a helper which extracts the msg type's kind using the kind mask (0x3).
 
-Fix this by changing all non-pointer inputs and outputs to "unsigned
-long", and updating a few local variables.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202509092305.ncd9mzaZ-lkp@intel.com/
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Acked-by: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Link: https://patch.msgid.link/de6919554fbb4cd1427155c6bafbac8a9df822c8.1757517135.git.geert@linux-m68k.org
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: bf29555f5bdc ("rtnetlink: Allow deleting FDB entries in user namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/include/asm/bitops.h | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ include/net/rtnetlink.h | 6 ++++++
+ net/core/rtnetlink.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/m68k/include/asm/bitops.h b/arch/m68k/include/asm/bitops.h
-index 7b414099e5fc2..cca33f8ba0f67 100644
---- a/arch/m68k/include/asm/bitops.h
-+++ b/arch/m68k/include/asm/bitops.h
-@@ -314,12 +314,12 @@ static inline int bfchg_mem_test_and_change_bit(int nr,
- #include <asm-generic/bitops/ffz.h>
- #else
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index dcb1c92e69879..d2961e2ed30bd 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -19,6 +19,12 @@ enum rtnl_kinds {
+ 	RTNL_KIND_GET,
+ 	RTNL_KIND_SET
+ };
++#define RTNL_KIND_MASK 0x3
++
++static inline enum rtnl_kinds rtnl_msgtype_kind(int msgtype)
++{
++	return msgtype & RTNL_KIND_MASK;
++}
  
--static inline int find_first_zero_bit(const unsigned long *vaddr,
--				      unsigned size)
-+static inline unsigned long find_first_zero_bit(const unsigned long *vaddr,
-+						unsigned long size)
- {
- 	const unsigned long *p = vaddr;
--	int res = 32;
--	unsigned int words;
-+	unsigned long res = 32;
-+	unsigned long words;
- 	unsigned long num;
+ struct rtnl_msg_handler {
+ 	struct module *owner;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index e8e67429e437f..79fb6d74e6dab 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -5572,7 +5572,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		return 0;
  
- 	if (!size)
-@@ -340,8 +340,9 @@ static inline int find_first_zero_bit(const unsigned long *vaddr,
- }
- #define find_first_zero_bit find_first_zero_bit
+ 	family = ((struct rtgenmsg *)nlmsg_data(nlh))->rtgen_family;
+-	kind = type&3;
++	kind = rtnl_msgtype_kind(type);
  
--static inline int find_next_zero_bit(const unsigned long *vaddr, int size,
--				     int offset)
-+static inline unsigned long find_next_zero_bit(const unsigned long *vaddr,
-+					       unsigned long size,
-+					       unsigned long offset)
- {
- 	const unsigned long *p = vaddr + (offset >> 5);
- 	int bit = offset & 31UL, res;
-@@ -370,11 +371,12 @@ static inline int find_next_zero_bit(const unsigned long *vaddr, int size,
- }
- #define find_next_zero_bit find_next_zero_bit
- 
--static inline int find_first_bit(const unsigned long *vaddr, unsigned size)
-+static inline unsigned long find_first_bit(const unsigned long *vaddr,
-+					   unsigned long size)
- {
- 	const unsigned long *p = vaddr;
--	int res = 32;
--	unsigned int words;
-+	unsigned long res = 32;
-+	unsigned long words;
- 	unsigned long num;
- 
- 	if (!size)
-@@ -395,8 +397,9 @@ static inline int find_first_bit(const unsigned long *vaddr, unsigned size)
- }
- #define find_first_bit find_first_bit
- 
--static inline int find_next_bit(const unsigned long *vaddr, int size,
--				int offset)
-+static inline unsigned long find_next_bit(const unsigned long *vaddr,
-+					  unsigned long size,
-+					  unsigned long offset)
- {
- 	const unsigned long *p = vaddr + (offset >> 5);
- 	int bit = offset & 31UL, res;
+ 	if (kind != RTNL_KIND_GET && !netlink_net_capable(skb, CAP_NET_ADMIN))
+ 		return -EPERM;
 -- 
 2.51.0
 
