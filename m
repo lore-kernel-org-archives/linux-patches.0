@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3F8324B24;
-	Mon, 27 Oct 2025 18:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A0324B24;
+	Mon, 27 Oct 2025 18:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590941; cv=none; b=mniO+WlERdEogYCqqo9zGti+sjEmkxtAm3j0y+jlq98/4fnwiauZA/KFLlsQIkMh+2SMjk8xtSNDQpYPcY5daKdtqN9+aEcz+ZzRmMtlcIR5aT7TRYHAWBYkniwT1aqVN0BQT9KwmD9rKsd4b0arbnEiyDozoQi+KdLleb2KO2Y=
+	t=1761590943; cv=none; b=D3UMPkjHh0BZqbOV9W2qCqZt6W0dY8Mt8PpHUw9zBtkNUH67fGHO7fm5k5s0Dvp0Z+TafhcEBH7JI9gqE+IF5nifrVpotV+u+W7QhHnMKzWNu7F86ifiuTydwWHcDQi/KUXWHTD2rcLJhqpEp37H5tpZUtMgW5C8SscHZCj+4Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590941; c=relaxed/simple;
-	bh=bG9a4tWe2v0mNmHSW4H+CaE4AIUCmK3mEy5s2adXmM0=;
+	s=arc-20240116; t=1761590943; c=relaxed/simple;
+	bh=ty0ZMLeGslOetsCRqU9ydELgFOnxvO3h+Q+oz3BYSzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6d22oPu5mocBovmCZ9YiAQ5Nx3o4ZMX2M0T2Kc7qa3knwL2U25yG1jVYTKbmC4WxqH+UYHuBwmyvL2UqKIqxamw37UFPTfSLbllVJV9Yx8tXYWHkqVe7vZNhk8gIKGbq1xmE6aLdo0o6w3Lkp+yGJPMsjR0EK98Tp2R0ZEYGmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfIOy0UH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgXIRoJoA58dK+W3RnKIrFqwbaGb7+JMCugOjaoRnOVujel+zxtlHGR8C4Iv6t+lreO/M7bktEjpa0drijTwAYDPpuuTXWIFqWIXsbqN3erFcd3H44PfuINU6GimDmnfZZW7hbke9RPZ0PrxuxjpD2zEbjPudsgC/u5sxTSd3Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhA4PRct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfIOy0UH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEA9C4CEFD;
-	Mon, 27 Oct 2025 18:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhA4PRct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E3BC4CEF1;
+	Mon, 27 Oct 2025 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590941;
-	bh=bG9a4tWe2v0mNmHSW4H+CaE4AIUCmK3mEy5s2adXmM0=;
+	s=korg; t=1761590943;
+	bh=ty0ZMLeGslOetsCRqU9ydELgFOnxvO3h+Q+oz3BYSzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfIOy0UHl8PjIoR92YUY2B+WE+JEuluyRob709tojgQlKLBDkyea7DqTLOqG2d7WT
-	 D4fJPBo4Jb2dzwsKu8ThddKX+IyXLlpZjIkpB9z2Rz1bSOTnQO6K7CuebGXchub5Vq
-	 O8NLb3vUmRCavKzMs5a5N4kNOKz6xfaKh6EYppUk=
+	b=RhA4PRct3p5FFofpjebm6ugvxMsjLKrGiAHtgv5rfIgp6CAEzBQhBTmG0XcLg6oTn
+	 0CWB5XKdyA6KamLpAsRniyhyNmXqv4vwTfAi5Blg0vPq78UXRX69+2zytoZeKdN52P
+	 tG8fkKBfkgdcbBCEHv2OwO7xuCUpKbTrtvw1ybls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>
-Subject: [PATCH 5.4 207/224] arm64: cputype: Add Neoverse-V3AE definitions
-Date: Mon, 27 Oct 2025 19:35:53 +0100
-Message-ID: <20251027183514.313070308@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 198/224] net: usb: rtl8150: Fix frame padding
+Date: Mon, 27 Oct 2025 19:35:44 +0100
+Message-ID: <20251027183514.106607164@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-commit 3bbf004c4808e2c3241e5c1ad6cc102f38a03c39 upstream.
+commit 75cea9860aa6b2350d90a8d78fed114d27c7eca2 upstream.
 
-Add cputype definitions for Neoverse-V3AE. These will be used for errata
-detection in subsequent patches.
+TX frames aren't padded and unknown memory is sent into the ether.
 
-These values can be found in the Neoverse-V3AE TRM:
+Theoretically, it isn't even guaranteed that the extra memory exists
+and can be sent out, which could cause further problems. In practice,
+I found that plenty of tailroom exists in the skb itself (in my test
+with ping at least) and skb_padto() easily succeeds, so use it here.
 
-  https://developer.arm.com/documentation/SDEN-2615521/9-0/
+In the event of -ENOMEM drop the frame like other drivers do.
 
-... in section A.6.1 ("MIDR_EL1, Main ID Register").
+The use of one more padding byte instead of a USB zero-length packet
+is retained to avoid regression. I have a dodgy Etron xHCI controller
+which doesn't seem to support sending ZLPs at all.
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ Ryan: Trivial backport ]
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251014203528.3f9783c4.michal.pecio@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/rtl8150.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -87,6 +87,7 @@
- #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
- #define ARM_CPU_PART_CORTEX_A720	0xD81
- #define ARM_CPU_PART_CORTEX_X4		0xD82
-+#define ARM_CPU_PART_NEOVERSE_V3AE	0xD83
- #define ARM_CPU_PART_NEOVERSE_V3	0xD84
- #define ARM_CPU_PART_CORTEX_X925	0xD85
- #define ARM_CPU_PART_CORTEX_A725	0xD87
-@@ -139,6 +140,7 @@
- #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
- #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
- #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
-+#define MIDR_NEOVERSE_V3AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3AE)
- #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
- #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
- #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -705,9 +705,16 @@ static netdev_tx_t rtl8150_start_xmit(st
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	int count, res;
+ 
++	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
++	count = max(skb->len, ETH_ZLEN);
++	if (count % 64 == 0)
++		count++;
++	if (skb_padto(skb, count)) {
++		netdev->stats.tx_dropped++;
++		return NETDEV_TX_OK;
++	}
++
+ 	netif_stop_queue(netdev);
+-	count = (skb->len < 60) ? 60 : skb->len;
+-	count = (count & 0x3f) ? count : count + 1;
+ 	dev->tx_skb = skb;
+ 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
+ 		      skb->data, count, write_bulk_callback, dev);
 
 
