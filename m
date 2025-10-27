@@ -1,180 +1,102 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B199C2F1FC2
-	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 12:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF4F624DCED;
+	Mon, 27 Oct 2025 12:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761568775; cv=none; b=YT6mKfJz6GE3fA9GPeh0l7YsAhql7UNNjHtwHW6OAE2bTO381I8pFN9a5erHWQ7zHRONkqiIhh2yDsYrAmrfTPHdLtR2n9isTE+J/wj8HCmPnWmqehSMHUxl4i6N5cnI3Xhfi6slkb9KPLsh7a6WWVFV5Pcrrwv2cXdkH7sXjfs=
+	t=1761569759; cv=none; b=isT81xFxsGKsHMiUdQmGhicigFp4PhSC8JOZiFcsHVrthgzlr/X8gPmy63Xj/RFF1nerD1+R187PcLAuzTbRvpwfEFz9zvijO54gHbsz94BnJCvv8GXI4/Xmp6Q7EeRsAuFv7OXgQ/phCUKFCsw6se0lxc8i8m04mRX02SjC7J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761568775; c=relaxed/simple;
-	bh=yecWNA4wwbIRwYTkZaHccVrAfGqGyJNVVjd0Nl0ezqI=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=pMzCbcWkQATMW7mEDjIpjdcNbHRceySWH7zl9Q8n8XGQqQnu3prZeOyp+VA1iiASWJBQGogxmkZ2+swRf1a4xr09vjElftQmX7u8qybHYuSWTKRhEsNfmVpYq+bPFMDx1hwrp9AqGB/1IRwUtl1Wfliznj7WUSVXJtyTczUqzkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kzzw1vjO; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1761569759; c=relaxed/simple;
+	bh=wdPrvvPNgCJ92pfYnd82XapNMb2/K9Lk7SnMdXsPwYo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EcxjKKuroC0M+JM/6H3PTXelv5YUJUaRVBaBlump9zUQEFADlhhcYntmpeub5vf3hjGcblHLCpBw9dccC5iPf1B+yXbbwXj4vbf0GKyH+bhl3QV31b90Tf1EuP7MOHgTSfjncgROJu/kG0BgyCmumZifBhOlpdDp5F/lWEw2ej8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=HA4IsI57; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kzzw1vjO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761568773; x=1793104773;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=yecWNA4wwbIRwYTkZaHccVrAfGqGyJNVVjd0Nl0ezqI=;
-  b=kzzw1vjOguKeH7t8znItpOhZNkol0wTHbQQfGiiKQskIGe7H4IppQo8K
-   EBro3w4/tntfYvsbuQVMTQUYTi1ThMKJcNzyfoOEyOibg2upyhPyaZBpJ
-   myq43xApGwQ593QAEqs4UpkGhK+vk8JWdWPRrxgBPxHDP5Gs/FUyx5Xhn
-   +dSMrInc+32VVOKVajIalfiF9l2ZWdydts/v6FX6od9u3z4Lwv9P2vlhq
-   HevD9q1tVl3+dA9hKhnXhK12LW89zcCNjy6apAvgQTpLuB1E89fRlUnf4
-   L3AoL3vyWGtqdiSIg4uhz62uDjHtiGleOL8Bx4AOFl+zOJ9T6vQD4+VOi
-   w==;
-X-CSE-ConnectionGUID: eNATmP4JRmapmRzxMbqYHg==
-X-CSE-MsgGUID: cOqt7xx9Ql6M0TxcZPjCmA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63550623"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="63550623"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 05:39:33 -0700
-X-CSE-ConnectionGUID: AfKdF+xtQ1qvXv7IYHj5gQ==
-X-CSE-MsgGUID: IwRhMD4yQpeHU9lAlDwbfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; 
-   d="scan'208";a="184259452"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.41])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 05:39:31 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 27 Oct 2025 14:39:27 +0200 (EET)
-To: Sasha Levin <sashal@kernel.org>
-cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-    Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.17-6.12] PCI: Set up bridge resources earlier
-In-Reply-To: <20251025160905.3857885-86-sashal@kernel.org>
-Message-ID: <4b5020d1-51c1-a556-175b-a4c4e1995c61@linux.intel.com>
-References: <20251025160905.3857885-1-sashal@kernel.org> <20251025160905.3857885-86-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="HA4IsI57"
+Received: from 8bytes.org (p549214ac.dip0.t-ipconnect.de [84.146.20.172])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 574F959993;
+	Mon, 27 Oct 2025 13:55:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1761569756;
+	bh=wdPrvvPNgCJ92pfYnd82XapNMb2/K9Lk7SnMdXsPwYo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HA4IsI57/crRJKm5huZnz2yM9cueuQ83JrqqF31F0g7mwiTfeSnd43x0jF6LZthZc
+	 xInJr7Dl8APiu4Qf/1dKwgAOW7EJNTBxKaqeF3SCeMWstoORITwx7nsvUeINWh5k+9
+	 Ny8WfW/m0sLSzi4YzjffMfU5XZZBpghT634JsVKbHjtinJ84F0IqokpBXMlZ9vPJO6
+	 HareDmhYXldiDUpmdDec87KCRVmJXWOlsHVldVZQAV6o+WAdhsPOkS6ZLKvwvFxjCx
+	 iZSNYPT42T4jbU1r7D4nVssf6XfXSjG7/V3tsl+vP1evUijU+Z9RswofRmqxeAExhN
+	 NJmXcf6NEl0nQ==
+Date: Mon, 27 Oct 2025 13:55:55 +0100
+From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, suravee.suthikulpanit@amd.com, 
+	will@kernel.org, robin.murphy@arm.com, sven@kernel.org, j@jannau.net, 
+	robin.clark@oss.qualcomm.com, m.szyprowski@samsung.com, krzk@kernel.org, dwmw2@infradead.org, 
+	baolu.lu@linux.intel.com, yong.wu@mediatek.com, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, tjeznach@rivosinc.com, pjw@kernel.org, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, heiko@sntech.de, schnelle@linux.ibm.com, mjrosato@linux.ibm.com, 
+	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, wens@csie.org, 
+	jernej.skrabec@gmail.com, samuel@sholland.org, thierry.reding@gmail.com, 
+	jonathanh@nvidia.com, jean-philippe@linaro.org, iommu@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v2 0/6] iommu: Pass in old_domain pointer to attach_dev
+Message-ID: <xlu227m6u3wubnexhxh2cpx7nwudhvbmgqcqoas57a6sqgvege@p4s5i5p77v7a>
+References: <cover.1761017765.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1686847934-1761568758=:970"
-Content-ID: <e73c78d0-09b7-c25a-0213-7ad3643b78bb@linux.intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1761017765.git.nicolinc@nvidia.com>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Oct 22, 2025 at 07:21:03PM -0700, Nicolin Chen wrote:
+> Jason Gunthorpe (1):
+>   iommu: Generic support for RMRs during device release
+> 
+> Nicolin Chen (5):
+>   iommu/arm-smmu-v3: Set release_domain to arm_smmu_blocked_domain
+>   iommu/exynos-iommu: Set release_domain to exynos_identity_domain
+>   iommu/amd: Set release_domain to blocked_domain
+>   iommu: Do not revert set_domain for the last gdev
+>   iommu: Pass in old domain to attach_dev callback functions
+> 
+>  include/linux/iommu.h                         |  3 +-
+>  arch/powerpc/kernel/iommu.c                   |  5 ++-
+>  drivers/iommu/amd/iommu.c                     | 21 +++------
+>  drivers/iommu/apple-dart.c                    |  9 ++--
+>  .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  5 ++-
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 31 ++++++-------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c         |  9 ++--
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c       | 11 ++---
+>  drivers/iommu/exynos-iommu.c                  | 11 ++---
+>  drivers/iommu/fsl_pamu_domain.c               | 12 ++---
+>  drivers/iommu/intel/iommu.c                   | 10 +++--
+>  drivers/iommu/intel/nested.c                  |  2 +-
+>  drivers/iommu/iommu.c                         | 44 +++++++++++++------
+>  drivers/iommu/iommufd/selftest.c              |  2 +-
+>  drivers/iommu/ipmmu-vmsa.c                    | 10 ++---
+>  drivers/iommu/msm_iommu.c                     | 11 ++---
+>  drivers/iommu/mtk_iommu.c                     |  8 ++--
+>  drivers/iommu/mtk_iommu_v1.c                  |  7 ++-
+>  drivers/iommu/omap-iommu.c                    | 12 ++---
+>  drivers/iommu/riscv/iommu.c                   |  9 ++--
+>  drivers/iommu/rockchip-iommu.c                | 20 ++++++---
+>  drivers/iommu/s390-iommu.c                    | 13 +++---
+>  drivers/iommu/sprd-iommu.c                    |  3 +-
+>  drivers/iommu/sun50i-iommu.c                  |  8 ++--
+>  drivers/iommu/tegra-smmu.c                    | 10 ++---
+>  drivers/iommu/virtio-iommu.c                  |  6 ++-
+>  26 files changed, 172 insertions(+), 120 deletions(-)
 
---8323328-1686847934-1761568758=:970
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <52d35f17-b4f8-7315-e5bb-d31a6e9aa655@linux.intel.com>
-
-On Sat, 25 Oct 2025, Sasha Levin wrote:
-
-> From: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
->=20
-> [ Upstream commit a43ac325c7cbbfe72bdf9178059b3ee9f5a2c7dd ]
->=20
-> Bridge windows are read twice from PCI Config Space, the first time from
-> pci_read_bridge_windows(), which does not set up the device's resources.
-> This causes problems down the road as child resources of the bridge canno=
-t
-> check whether they reside within the bridge window or not.
->=20
-> Set up the bridge windows already in pci_read_bridge_windows().
->=20
-> Signed-off-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> Link: https://patch.msgid.link/20250924134228.1663-2-ilpo.jarvinen@linux.=
-intel.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-
-This change was reverted by the commit 469276c06aff ("PCI: Revert early=20
-bridge resource set up").
-
---
- i.
-
-
-> ---
->=20
-> LLM Generated explanations, may be completely bogus:
->=20
-> YES
-> - `pci_alloc_child_bus()` copies each subordinate bus window to
->   `child->resource[i] =3D &bridge->resource[PCI_BRIDGE_RESOURCES+i]`
->   before any child is scanned (`drivers/pci/probe.c:1245-1248`). Without
->   this patch, those `bridge->resource[...]` entries are still zeroed;
->   the first call to `pci_read_bridge_windows()` only logged with a
->   stack-local `struct resource`.
-> - Child drivers often probe immediately (device_add =E2=86=92 bus_probe_d=
-evice)
->   while the bus scan is still in progress. During their
->   `pci_enable_device()` they hit `pci_claim_resource()`
->   (`drivers/pci/setup-res.c:154-169`), which calls
->   `pci_find_parent_resource()` to make sure the BAR sits inside an
->   upstream bridge window (`drivers/pci/pci.c:737-767`). Because
->   `pcibios_fixup_bus()` (the point where `pci_read_bridge_bases()` re-
->   reads the window into the real resource) runs only after the entire
->   bus has been scanned (`drivers/pci/probe.c:3091-3106`), the parent
->   window is still zero and the containment test fails. Result:
->   `pci_enable_device()` reports =E2=80=9Ccan't claim; no compatible bridg=
-e
->   window=E2=80=9D and the device never comes up behind that bridge.
-> - The patch fixes that race by writing the values directly into the
->   bridge=E2=80=99s real resources the first time we read config space
->   (`drivers/pci/probe.c:540-588`). When the subordinate bus is created,
->   the copied pointers already describe the real aperture, so drivers can
->   claim their BARs successfully even if they probe before the later
->   fixup.
-> - Behavioural risk is negligible: we still populate the same resource
->   structures with the same data, only earlier; the later
->   `pci_read_bridge_bases()` call simply refreshes them with `log=3Dfalse`=
-=2E
->   No new dependencies or behavioural changes outside this bug fix path,
->   making it safe for stable.
->=20
-> Natural next step: consider tagging with a `Fixes` reference upstream to
-> ease stable selection.
->
->  drivers/pci/probe.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-> index a56dfa1c9b6ff..0b8c82c610baa 100644
-> --- a/drivers/pci/probe.c
-> +++ b/drivers/pci/probe.c
-> @@ -524,10 +524,14 @@ static void pci_read_bridge_windows(struct pci_dev =
-*bridge)
->  =09}
->  =09if (io) {
->  =09=09bridge->io_window =3D 1;
-> -=09=09pci_read_bridge_io(bridge, &res, true);
-> +=09=09pci_read_bridge_io(bridge,
-> +=09=09=09=09   pci_resource_n(bridge, PCI_BRIDGE_IO_WINDOW),
-> +=09=09=09=09   true);
->  =09}
-> =20
-> -=09pci_read_bridge_mmio(bridge, &res, true);
-> +=09pci_read_bridge_mmio(bridge,
-> +=09=09=09     pci_resource_n(bridge, PCI_BRIDGE_MEM_WINDOW),
-> +=09=09=09     true);
-> =20
->  =09/*
->  =09 * DECchip 21050 pass 2 errata: the bridge may miss an address
-> @@ -565,7 +569,10 @@ static void pci_read_bridge_windows(struct pci_dev *=
-bridge)
->  =09=09=09bridge->pref_64_window =3D 1;
->  =09}
-> =20
-> -=09pci_read_bridge_mmio_pref(bridge, &res, true);
-> +=09pci_read_bridge_mmio_pref(bridge,
-> +=09=09=09=09  pci_resource_n(bridge,
-> +=09=09=09=09=09=09 PCI_BRIDGE_PREF_MEM_WINDOW),
-> +=09=09=09=09  true);
->  }
-> =20
->  void pci_read_bridge_bases(struct pci_bus *child)
->=20
-
---8323328-1686847934-1761568758=:970--
+Applied, thanks.
