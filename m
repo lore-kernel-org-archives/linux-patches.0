@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB472D7DDA;
-	Mon, 27 Oct 2025 19:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79461E47CA;
+	Mon, 27 Oct 2025 19:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592539; cv=none; b=Ce9vyfJz4Jbbh16NeF3xGthHxqKXupbs1VF0MnIoEcCTCjZoePehSs5iM17DKNNRnYI0bP5MH2g3f4ajcyvZlrSZUDTe6N9oEl8tzC3Hi4wa+WIFRU4hyR6IIvq1lTj72Pi234eW1qiu07PIj42XTp0vreqRkiZezzzQlWk5Sgk=
+	t=1761592542; cv=none; b=HFr1FNa7sO5NSzMXJtLXBpunU79uPRI8/dFE9cOAjdpc6qK3pyIirQPZaiECs5EANuiwTofX0fKBdjtguWAAqQrTt66Pm0DL/N6FPuKt9DcHSahnfqNKAfkZ1/juA+jDCRqkCBGCa1h0jbtx7Bn0x1NgOmd5wHPJJfNI3QnlP5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592539; c=relaxed/simple;
-	bh=TGkRWxxSSHl9scq5lAjnBxahVQQ1ULanb0VTecItDIc=;
+	s=arc-20240116; t=1761592542; c=relaxed/simple;
+	bh=WKaDVqVIFnkoPVfzD5tXoh0gSEXEeAfXF/YR+lWIsg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkr4zdlnlfXmk4Re2USzCRHy5LeTGZu97YMtMBHcengTE7UW0vrnRJk1i8CqXJJDgm5jIlXVmFpkFfbDYxyi8Pzt2iMoftHWr3WHihHI3gGBHPIbBH5Al8LXTQV9ZMwbrjqf0GygDHcYl5vYKEWjky/WQ8zAsehMF8T7CanTwZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl7kw4tM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GY61iJXiCcvV2cN348RZyJr+vugVNxr9JalKtwUPXQ++9LKXDtjwFV/QxhBDYxj1Ee7OckfMQb5jnFRt+FelYfaVvJmSimfcgh28BWZ6VD/mi9R4lgaYb1z2cOqorj7gERRZAY9LtYuMB9pPtFJX+Wt6k448G5zS9Q0CsIPDSuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpRt9g7u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl7kw4tM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB86EC4CEF1;
-	Mon, 27 Oct 2025 19:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpRt9g7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B984C4CEF1;
+	Mon, 27 Oct 2025 19:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592539;
-	bh=TGkRWxxSSHl9scq5lAjnBxahVQQ1ULanb0VTecItDIc=;
+	s=korg; t=1761592541;
+	bh=WKaDVqVIFnkoPVfzD5tXoh0gSEXEeAfXF/YR+lWIsg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bl7kw4tMoqc0zArLAlF8jDV5v1IKquOuHqdzY1ZJk2N9EyoISNTNhp/7l15Er7/Be
-	 dpYunzM5QF5ZDNR30WbVLAiIwWQvXqIiBeEVnS8GF+EDd6/c2XkbaN2K58DfiB0paU
-	 Yibqfcub2qlJtp8JCyzzJTGGTtTWnN2eS3jHshQQ=
+	b=SpRt9g7ue7D3nYy5/vEqRUrdFz+9lNNWjxe7NoiPPxtmuxlA/TtSd2MxwgIojdZPm
+	 QzVZts7FZVBRdvBex7UWz/PJqiVIIJ+dAry7ezf2J7HYgUB5H96ry0xYSPPe5r+CgE
+	 Mp8vE+owD1tGue+Yn2k+i1hTdt3aDgGe0aVOoIyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Subject: [PATCH 6.1 113/157] most: usb: Fix use-after-free in hdm_disconnect
-Date: Mon, 27 Oct 2025 19:36:14 +0100
-Message-ID: <20251027183504.280932677@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.1 153/157] s390/cio: Update purge function to unregister the unused subchannels
+Date: Mon, 27 Oct 2025 19:36:54 +0100
+Message-ID: <20251027183505.400732721@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -51,66 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-commit 4b1270902609ef0d935ed2faa2ea6d122bd148f5 upstream.
+commit 9daa5a8795865f9a3c93d8d1066785b07ded6073 upstream.
 
-hdm_disconnect() calls most_deregister_interface(), which eventually
-unregisters the MOST interface device with device_unregister(iface->dev).
-If that drops the last reference, the device core may call release_mdev()
-immediately while hdm_disconnect() is still executing.
+Starting with 'commit 2297791c92d0 ("s390/cio: dont unregister
+subchannel from child-drivers")', cio no longer unregisters
+subchannels when the attached device is invalid or unavailable.
 
-The old code also freed several mdev-owned allocations in
-hdm_disconnect() and then performed additional put_device() calls.
-Depending on refcount order, this could lead to use-after-free or
-double-free when release_mdev() ran (or when unregister paths also
-performed puts).
+As an unintended side-effect, the cio_ignore purge function no longer
+removes subchannels for devices on the cio_ignore list if no CCW device
+is attached. This situation occurs when a CCW device is non-operational
+or unavailable
 
-Fix by moving the frees of mdev-owned allocations into release_mdev(),
-so they happen exactly once when the device is truly released, and by
-dropping the extra put_device() calls in hdm_disconnect() that are
-redundant after device_unregister() and most_deregister_interface().
+To ensure the same outcome of the purge function as when the
+current cio_ignore list had been active during boot, update the purge
+function to remove I/O subchannels without working CCW devices if the
+associated device number is found on the cio_ignore list.
 
-This addresses the KASAN slab-use-after-free reported by syzbot in
-hdm_disconnect(). See report and stack traces in the bug link below.
-
-Reported-by: syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=916742d5d24f6c254761
-Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
-Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Link: https://patch.msgid.link/20251010105241.4087114-2-Victoria.Votokina@kaspersky.com
+Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
+Suggested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/most/most_usb.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/s390/cio/device.c |   39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
---- a/drivers/most/most_usb.c
-+++ b/drivers/most/most_usb.c
-@@ -929,6 +929,10 @@ static void release_mdev(struct device *
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1309,23 +1309,34 @@ void ccw_device_schedule_recovery(void)
+ 	spin_unlock_irqrestore(&recovery_lock, flags);
+ }
+ 
+-static int purge_fn(struct device *dev, void *data)
++static int purge_fn(struct subchannel *sch, void *data)
  {
- 	struct most_dev *mdev = to_mdev_from_dev(dev);
- 
-+	kfree(mdev->busy_urbs);
-+	kfree(mdev->cap);
-+	kfree(mdev->conf);
-+	kfree(mdev->ep_address);
- 	kfree(mdev);
- }
- /**
-@@ -1121,13 +1125,6 @@ static void hdm_disconnect(struct usb_in
- 	if (mdev->dci)
- 		device_unregister(&mdev->dci->dev);
- 	most_deregister_interface(&mdev->iface);
+-	struct ccw_device *cdev = to_ccwdev(dev);
+-	struct ccw_dev_id *id = &cdev->private->dev_id;
+-	struct subchannel *sch = to_subchannel(cdev->dev.parent);
 -
--	kfree(mdev->busy_urbs);
--	kfree(mdev->cap);
--	kfree(mdev->conf);
--	kfree(mdev->ep_address);
--	put_device(&mdev->dci->dev);
--	put_device(&mdev->dev);
+-	spin_lock_irq(cdev->ccwlock);
+-	if (is_blacklisted(id->ssid, id->devno) &&
+-	    (cdev->private->state == DEV_STATE_OFFLINE) &&
+-	    (atomic_cmpxchg(&cdev->private->onoff, 0, 1) == 0)) {
+-		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
+-			      id->devno);
++	struct ccw_device *cdev;
++
++	spin_lock_irq(sch->lock);
++	if (sch->st != SUBCHANNEL_TYPE_IO || !sch->schib.pmcw.dnv)
++		goto unlock;
++
++	if (!is_blacklisted(sch->schid.ssid, sch->schib.pmcw.dev))
++		goto unlock;
++
++	cdev = sch_get_cdev(sch);
++	if (cdev) {
++		if (cdev->private->state != DEV_STATE_OFFLINE)
++			goto unlock;
++
++		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
++			goto unlock;
+ 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
+-		css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 		atomic_set(&cdev->private->onoff, 0);
+ 	}
+-	spin_unlock_irq(cdev->ccwlock);
++
++	css_sched_sch_todo(sch, SCH_TODO_UNREG);
++	CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x%s\n", sch->schid.ssid,
++		      sch->schib.pmcw.dev, cdev ? "" : " (no cdev)");
++
++unlock:
++	spin_unlock_irq(sch->lock);
+ 	/* Abort loop in case of pending signal. */
+ 	if (signal_pending(current))
+ 		return -EINTR;
+@@ -1341,7 +1352,7 @@ static int purge_fn(struct device *dev,
+ int ccw_purge_blacklisted(void)
+ {
+ 	CIO_MSG_EVENT(2, "ccw: purging blacklisted devices\n");
+-	bus_for_each_dev(&ccw_bus_type, NULL, NULL, purge_fn);
++	for_each_subchannel_staged(purge_fn, NULL, NULL);
+ 	return 0;
  }
  
- static int hdm_suspend(struct usb_interface *interface, pm_message_t message)
 
 
