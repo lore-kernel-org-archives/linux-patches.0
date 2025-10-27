@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3992030FC0F;
-	Mon, 27 Oct 2025 18:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC0E218EB1;
+	Mon, 27 Oct 2025 18:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590399; cv=none; b=ud56PCuPSpfLIVVB606lwrIrn784G/umyicUBhaMgbpQrrMjfiVXULSEoR5bb7r+9rWaAJxpi+kh6LK2yKZIMIo2Oec81jjWnsL26o325pZCtlcLIWzsozAkbh7WdBWkoXXuINc14QmK1IYpRVS+xkGvprPSEJQMz3ez6jte/yY=
+	t=1761590401; cv=none; b=NdEuL23YmW1c4smZfdvVgC/whNwyWS70OE2cukrDJnGdte/YytXVcBWdBWbCXdspEb2lu6+eZCC4NSMdbsyvlokwuAwsNV2ENaLauxIS3eiLsnwG1r/GXOC4HRG89TwG2bin/N0+2Bq+yJn0kHvO/aEgclF+72XRVFIdpQHaW6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590399; c=relaxed/simple;
-	bh=HX5/yP8ozAj+9mQoyWP7pKzJteyP7UbdCKbo2kZziXk=;
+	s=arc-20240116; t=1761590401; c=relaxed/simple;
+	bh=lgnaPq9Cyz2rTUASZfjHT8J9ulVM7b7itUYLADg126Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKTFmDN7b0FY+b0eE550C3xZK7s6Uv9WvUN9qK/y/mjKYnaa7Q580A4z0FWZmCVrC8aAz2SX0DXsxmAw6ZEeREfS3N95AgOzWz76SZ5gyRSyuXSOFIyYqNagTAHxMNB/JqXPTjtwVmw89d4/tpvxQG0q2wR65ndRxlZ6dc3im/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlqwhGS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNulDuUcJ1nQiOsNp3m2iQChMyK0B+IbJ7WdX28kZwHpdOLGtfeRaqg6b9AeQ1LpRTk8dxsv6JrwB9/9jLZr1t8LQ5uZOGteAendHaaWff6sIfjo4//QUceogudNaRw15n91k7H5tCh4ct1tgE0CRNi0fIzaPhFcqzsQtEDjkug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4Db4IN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlqwhGS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5087C4CEF1;
-	Mon, 27 Oct 2025 18:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4Db4IN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FB6C4CEF1;
+	Mon, 27 Oct 2025 18:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590399;
-	bh=HX5/yP8ozAj+9mQoyWP7pKzJteyP7UbdCKbo2kZziXk=;
+	s=korg; t=1761590401;
+	bh=lgnaPq9Cyz2rTUASZfjHT8J9ulVM7b7itUYLADg126Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlqwhGS+z9V1OVUe2hZHMMtIAvWi+ZGHKykw6RC0+bfbQCTaAZnHLq2aGeANL3FCL
-	 R7+Qqo7MBhPIuK5mThMd8uGmMO700+dmRl6sli5S8sI2VKCp7P/WFxiL282SZokn+q
-	 J5cJxHZyZCNe8EPBoMioTWnIQT45r2jQbbTcDQO0=
+	b=q4Db4IN/fYXWJS7yBYa/Zd9aquvbSex7G6wzmV2MgsBYjE9VBkN2JUsxkWH9t9Y7G
+	 13qEgKaWms9YmN41/xvRvrZVWr8pVUrVrMla/JvULlPP5goMW4H+zBHk9UAdR9HlnZ
+	 3bEi65xG4h+wF5GuE6L1rHkK5CGvLjPtP3PvyBq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Dowling <madowlin@amazon.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yifei Liu <yifei.l.liu@oracle.com>
-Subject: [PATCH 5.4 003/224] udp: Fix memory accounting leak.
-Date: Mon, 27 Oct 2025 19:32:29 +0100
-Message-ID: <20251027183509.063825731@linuxfoundation.org>
+	Kohei Ito <ito.kohei@socionext.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 030/224] i2c: designware: Add disabling clocks when probe fails
+Date: Mon, 27 Oct 2025 19:32:56 +0100
+Message-ID: <20251027183509.811101159@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,168 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit df207de9d9e7a4d92f8567e2c539d9c8c12fd99d upstream.
+[ Upstream commit c149841b069ccc6e480b00e11f35a57b5d88c7bb ]
 
-Matt Dowling reported a weird UDP memory usage issue.
+After an error occurs during probing state, dw_i2c_plat_pm_cleanup() is
+called. However, this function doesn't disable clocks and the clock-enable
+count keeps increasing. Should disable these clocks explicitly.
 
-Under normal operation, the UDP memory usage reported in /proc/net/sockstat
-remains close to zero.  However, it occasionally spiked to 524,288 pages
-and never dropped.  Moreover, the value doubled when the application was
-terminated.  Finally, it caused intermittent packet drops.
-
-We can reproduce the issue with the script below [0]:
-
-  1. /proc/net/sockstat reports 0 pages
-
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 0
-
-  2. Run the script till the report reaches 524,288
-
-    # python3 test.py & sleep 5
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> PAGE_SHIFT
-
-  3. Kill the socket and confirm the number never drops
-
-    # pkill python3 && sleep 5
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 524288
-
-  4. (necessary since v6.0) Trigger proto_memory_pcpu_drain()
-
-    # python3 test.py & sleep 1 && pkill python3
-
-  5. The number doubles
-
-    # cat /proc/net/sockstat | grep UDP:
-    UDP: inuse 1 mem 1048577
-
-The application set INT_MAX to SO_RCVBUF, which triggered an integer
-overflow in udp_rmem_release().
-
-When a socket is close()d, udp_destruct_common() purges its receive
-queue and sums up skb->truesize in the queue.  This total is calculated
-and stored in a local unsigned integer variable.
-
-The total size is then passed to udp_rmem_release() to adjust memory
-accounting.  However, because the function takes a signed integer
-argument, the total size can wrap around, causing an overflow.
-
-Then, the released amount is calculated as follows:
-
-  1) Add size to sk->sk_forward_alloc.
-  2) Round down sk->sk_forward_alloc to the nearest lower multiple of
-      PAGE_SIZE and assign it to amount.
-  3) Subtract amount from sk->sk_forward_alloc.
-  4) Pass amount >> PAGE_SHIFT to __sk_mem_reduce_allocated().
-
-When the issue occurred, the total in udp_destruct_common() was 2147484480
-(INT_MAX + 833), which was cast to -2147482816 in udp_rmem_release().
-
-At 1) sk->sk_forward_alloc is changed from 3264 to -2147479552, and
-2) sets -2147479552 to amount.  3) reverts the wraparound, so we don't
-see a warning in inet_sock_destruct().  However, udp_memory_allocated
-ends up doubling at 4).
-
-Since commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
-memory_allocated"), memory usage no longer doubles immediately after
-a socket is close()d because __sk_mem_reduce_allocated() caches the
-amount in udp_memory_per_cpu_fw_alloc.  However, the next time a UDP
-socket receives a packet, the subtraction takes effect, causing UDP
-memory usage to double.
-
-This issue makes further memory allocation fail once the socket's
-sk->sk_rmem_alloc exceeds net.ipv4.udp_rmem_min, resulting in packet
-drops.
-
-To prevent this issue, let's use unsigned int for the calculation and
-call sk_forward_alloc_add() only once for the small delta.
-
-Note that first_packet_length() also potentially has the same problem.
-
-[0]:
-from socket import *
-
-SO_RCVBUFFORCE = 33
-INT_MAX = (2 ** 31) - 1
-
-s = socket(AF_INET, SOCK_DGRAM)
-s.bind(('', 0))
-s.setsockopt(SOL_SOCKET, SO_RCVBUFFORCE, INT_MAX)
-
-c = socket(AF_INET, SOCK_DGRAM)
-c.connect(s.getsockname())
-
-data = b'a' * 100
-
-while True:
-    c.send(data)
-
-Fixes: f970bd9e3a06 ("udp: implement memory accounting helpers")
-Reported-by: Matt Dowling <madowlin@amazon.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250401184501.67377-3-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Yifei: resolve minor conflicts ]
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
+Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1371,12 +1371,12 @@ static bool udp_skb_has_head_state(struc
- }
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index 75313c80f132f..fd5ffe13c7033 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -414,6 +414,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
  
- /* fully reclaim rmem/fwd memory allocated for skb */
--static void udp_rmem_release(struct sock *sk, int size, int partial,
--			     bool rx_queue_lock_held)
-+static void udp_rmem_release(struct sock *sk, unsigned int size,
-+			     int partial, bool rx_queue_lock_held)
- {
- 	struct udp_sock *up = udp_sk(sk);
- 	struct sk_buff_head *sk_queue;
--	int amt;
-+	unsigned int amt;
- 
- 	if (likely(partial)) {
- 		up->forward_deficit += size;
-@@ -1396,10 +1396,8 @@ static void udp_rmem_release(struct sock
- 	if (!rx_queue_lock_held)
- 		spin_lock(&sk_queue->lock);
- 
--
--	sk->sk_forward_alloc += size;
--	amt = (sk->sk_forward_alloc - partial) & ~(SK_MEM_QUANTUM - 1);
--	sk->sk_forward_alloc -= amt;
-+	amt = (size + sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
-+	sk->sk_forward_alloc += size - amt;
- 
- 	if (amt)
- 		__sk_mem_reduce_allocated(sk, amt >> SK_MEM_QUANTUM_SHIFT);
-@@ -1583,7 +1581,7 @@ EXPORT_SYMBOL_GPL(skb_consume_udp);
- 
- static struct sk_buff *__first_packet_length(struct sock *sk,
- 					     struct sk_buff_head *rcvq,
--					     int *total)
-+					     unsigned int *total)
- {
- 	struct sk_buff *skb;
- 
-@@ -1616,8 +1614,8 @@ static int first_packet_length(struct so
- {
- 	struct sk_buff_head *rcvq = &udp_sk(sk)->reader_queue;
- 	struct sk_buff_head *sk_queue = &sk->sk_receive_queue;
-+	unsigned int total = 0;
- 	struct sk_buff *skb;
--	int total = 0;
- 	int res;
- 
- 	spin_lock_bh(&rcvq->lock);
+ exit_probe:
+ 	dw_i2c_plat_pm_cleanup(dev);
++	i2c_dw_prepare_clk(dev, false);
+ exit_reset:
+ 	reset_control_assert(dev->rst);
+ 	return ret;
+-- 
+2.51.0
+
 
 
