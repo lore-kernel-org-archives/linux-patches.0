@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997FE2222AA;
-	Mon, 27 Oct 2025 19:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBFC31D399;
+	Mon, 27 Oct 2025 19:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592573; cv=none; b=K+Sj2PcOBUw0W4+dAMByuGTTpXkkTVTic/kZBFEIuiDMcYnBjlyr8KCNcg+0tLJK9ACk6Aar1u5p/ZauCcpjHVZR7Fl2YudAEfPsOK0v1IeyeaBOROnEaMZXeeR8SdQlTYxBhpaXgwdv54POMv09CUjER4I+x1ewQOb1xI/IjfY=
+	t=1761592575; cv=none; b=rFtEuA8eFvPUjQe8FL5wzvYXIF3i3ewLZbXO0semdpThVYcZNWxtkp3Vorb9a1yrISbSJW1ONXqJXSF1ADwuDqY7TkBpuTyB4iGWrc6JUjhMKzEkMMnz1jytmgtGwj3fmZo3jTP0HD79O0gscP5IDalhkK2eeFYn59+JGx2b5DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592573; c=relaxed/simple;
-	bh=8w7I5chpfB9usadMEUljhkSFIxzfWOdFs8faqhFiPEk=;
+	s=arc-20240116; t=1761592575; c=relaxed/simple;
+	bh=yZgcKAJIcrJFvc6zYgj4WEh+LrirqMMUIP/2ftLRfnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYbMsm2lVbR9lWPUMEQ3XI+POmVu+U6i618D/AjSyq0Wcq5dDxV2pHSALsgbyzXOmA+dcb6O7millOotbC3YQFRp84edJhlaaOexPnjuyFHb0bLH3/lHt9hWL6lTb/RHtpRxaj61L6BT1/zLb9pKfsjAmw3rI+d48WPhLcD66Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBMi4v5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSXPFoygLTbnktSF3cZvfwfdr8HBZ50HCayVG8jjBpFevpXHA6uDoYAOtpqeETWy9OSrA8ZwePhk9Fmc3Tjp3Tf31uu4FKe4OJQtirk2oZClsKcrs05DFC29eCLnbeKVdjxqHT+IEcS6Uax0RIELVuHDccPd4bOP7RyFsRZXdUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FctM8cU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBMi4v5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACE4C4CEF1;
-	Mon, 27 Oct 2025 19:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FctM8cU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2C3C4CEF1;
+	Mon, 27 Oct 2025 19:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592573;
-	bh=8w7I5chpfB9usadMEUljhkSFIxzfWOdFs8faqhFiPEk=;
+	s=korg; t=1761592575;
+	bh=yZgcKAJIcrJFvc6zYgj4WEh+LrirqMMUIP/2ftLRfnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBMi4v5nUPk0JurYRBneHu5ljmxSLbq9kopNVZVXyEwYYQ7eyX8mmrIt7JR/bSO8f
-	 AAQ4bZ9WKzXunBG8sumuu4q9gJG+AMRMLr1/FxdSDZ3LR6au6XVYzWCtfnsy9GaM5u
-	 FDN2+kUXdAovzNxy3dquBGm5VatfOqxeiID4YC94=
+	b=FctM8cU0HYcWcCr7qyzqFPeOdsirFww0FhAPJRhmTwsz1MVdeto49ivLubSjp5XkP
+	 wsMb/hwZ/PTek+Xz4nha1p8r67W4nG7pLJwM7nx8qZsh13EUwWELvC8Pvwnec1tRPk
+	 7qi6OzoR8CH6GbHx40ch1G1Hfl3+MVDxSo1Ay/L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 15/84] smb: server: let smb_direct_flush_send_list() invalidate a remote key first
-Date: Mon, 27 Oct 2025 19:36:04 +0100
-Message-ID: <20251027183439.224015819@linuxfoundation.org>
+Subject: [PATCH 6.6 16/84] Unbreak make tools/* for user-space targets
+Date: Mon, 27 Oct 2025 19:36:05 +0100
+Message-ID: <20251027183439.248736733@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -56,49 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 1b53426334c3c942db47e0959a2527a4f815af50 ]
+[ Upstream commit ee916dccd4df6e2fd19c3606c4735282b72f1473 ]
 
-If we want to invalidate a remote key we should do that as soon as
-possible, so do it in the first send work request.
+This pattern isn't very documented, and apparently not used much outside
+of 'make tools/help', but it has existed for over a decade (since commit
+ea01fa9f63ae: "tools: Connect to the kernel build system").
 
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+However, it doesn't work very well for most cases, particularly the
+useful "tools/all" target, because it overrides the LDFLAGS value with
+an empty one.
+
+And once overridden, 'make' will then not honor the tooling makefiles
+trying to change it - which then makes any LDFLAGS use in the tooling
+directory break, typically causing odd link errors.
+
+Remove that LDFLAGS override, since it seems to be entirely historical.
+The core kernel makefiles no longer modify LDFLAGS as part of the build,
+and use kernel-specific link flags instead (eg 'KBUILD_LDFLAGS' and
+friends).
+
+This allows more of the 'make tools/*' cases to work.  I say 'more',
+because some of the tooling build rules make various other assumptions
+or have other issues, so it's still a bit hit-or-miss.  But those issues
+tend to show up with the 'make -C tools xyz' pattern too, so now it's no
+longer an issue of this particular 'tools/*' build rule being special.
+
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
-index 31c1ac256e1be..91e85a1a154fd 100644
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -938,12 +938,15 @@ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
- 			       struct smb_direct_sendmsg,
- 			       list);
+diff --git a/Makefile b/Makefile
+index ad3952fb542d3..de7b2f9a50338 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1358,11 +1358,11 @@ endif
  
-+	if (send_ctx->need_invalidate_rkey) {
-+		first->wr.opcode = IB_WR_SEND_WITH_INV;
-+		first->wr.ex.invalidate_rkey = send_ctx->remote_key;
-+		send_ctx->need_invalidate_rkey = false;
-+		send_ctx->remote_key = 0;
-+	}
-+
- 	last->wr.send_flags = IB_SEND_SIGNALED;
- 	last->wr.wr_cqe = &last->cqe;
--	if (is_last && send_ctx->need_invalidate_rkey) {
--		last->wr.opcode = IB_WR_SEND_WITH_INV;
--		last->wr.ex.invalidate_rkey = send_ctx->remote_key;
--	}
+ tools/: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
++	$(Q)$(MAKE) O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
  
- 	ret = smb_direct_post_send(t, &first->wr);
- 	if (!ret) {
+ tools/%: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
++	$(Q)$(MAKE) O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
+ 
+ # ---------------------------------------------------------------------------
+ # Kernel selftest
 -- 
 2.51.0
 
