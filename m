@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD642EDD62;
-	Mon, 27 Oct 2025 18:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26AB308F3A;
+	Mon, 27 Oct 2025 18:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590457; cv=none; b=tQi04KjmEZGF+qKxAPesOxq5DYvduXwiBSDy7UgbGMtGhyyvueuhnK+Z4n/h2IK22ksjGCBuUo8vJgdIILb3AOTOJ0/pvGecfiIXNoYsz9l8M2Bb8P3l0IdLIm+dqdU/NsleDnVbFr1DUBoKyaTvsYhL1EQiKoUDrmwpfQvfWNo=
+	t=1761590461; cv=none; b=Uy1pCY+ywjXVNlsmn+IV3d4k6HtVKipyapNHVl8AOhRaRF4fHVAmNMcRxfYQUe019dPUGyHsh1s2MlHtk0D8vPvfrsfWCj5uwo3sLqfxSGzQ1HnRD5Et/w4CFPUcKtk6Wdo5tBPJ63if5dfvGRkrUhLzP8CZLQpmGddcuGw/VQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590457; c=relaxed/simple;
-	bh=drNRIW+Lvi40vnhCxRsvlvX2FcCWk8Cb7EjNCbLsWgU=;
+	s=arc-20240116; t=1761590461; c=relaxed/simple;
+	bh=Kij9IZHJO4gb8cWer+YKpeeEHbNGdGTufZdIdQzCv2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVekpy0kntMY0kVsGgsB2ya/dy6ttdEKrSPseWOZBtNhADQTg/df5M1xsHw7ICHk9VdFa4hC1bfCZFqxhJqlh/TJleOH/N0FVsolq7hDNVqe+JV0VutXanlA2eOJcEgBn5Ec4zPcv8hyiRHExbcjX4HUNZlNgNk63atwkDf/feE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfuH0O0w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTxba7F429gohYMyl+fsNfDFvygJZ5DNmU2JUWqN1bGr9Blv65YLgKmkH2yMjApqvZwcmSILg4MGPN/Wrk+T6LimT58ZyGTNrSsc6C25J/E3I7tgtLh+C2nmoNwR2ifpulIyk0LvqjDVMN2Hn9iGdNJHa+oQMYMr6diZxu4Oua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtVOAa+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfuH0O0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1114DC4CEF1;
-	Mon, 27 Oct 2025 18:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtVOAa+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB73C4CEF1;
+	Mon, 27 Oct 2025 18:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590457;
-	bh=drNRIW+Lvi40vnhCxRsvlvX2FcCWk8Cb7EjNCbLsWgU=;
+	s=korg; t=1761590460;
+	bh=Kij9IZHJO4gb8cWer+YKpeeEHbNGdGTufZdIdQzCv2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfuH0O0wWcUw0OegrR3BV5XjKALpWnuZVU3Fk4q7/yAaEkDoNrMgOtawrNQjrw2hg
-	 /D3XXg/WuOBsku1ZYNkRVs/rfuSCFSlRAj2zd47u+mefwRzlPLYC/4l9b+QfD3GoxC
-	 opVnKZwG0CL7B8q8s9d87nZtk31G1a2LiQkcn+Ro=
+	b=qtVOAa+iRdoxUq9hDJzMNqKSiFy1qQ18t1XmxVFfsUwWjFUh3Ai02z7rDF4ASIpnW
+	 R1Ysb1eSfCVPiCmN+R6VJETs55UdBSO0UdbVT4s1XQltLKOPuvupZexdnG+ZyzQqUO
+	 FX7Op8G45U3sF9HQJPYTt9TLganAyhGNYMvC1IL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parav Pandit <parav@nvidia.com>,
 	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 053/224] RDMA/core: Resolve MAC of next-hop device without ARP support
-Date: Mon, 27 Oct 2025 19:33:19 +0100
-Message-ID: <20251027183510.418800369@linuxfoundation.org>
+Subject: [PATCH 5.4 054/224] IB/sa: Fix sa_local_svc_timeout_ms read race
+Date: Mon, 27 Oct 2025 19:33:20 +0100
+Message-ID: <20251027183510.445609755@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,51 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parav Pandit <parav@nvidia.com>
+From: Vlad Dumitrescu <vdumitrescu@nvidia.com>
 
-[ Upstream commit 200651b9b8aadfbbec852f0e5d042d9abe75e2ab ]
+[ Upstream commit 1428cd764cd708d53a072a2f208d87014bfe05bc ]
 
-Currently, if the next-hop netdevice does not support ARP resolution,
-the destination MAC address is silently set to zero without reporting
-an error. This leads to incorrect behavior and may result in packet
-transmission failures.
+When computing the delta, the sa_local_svc_timeout_ms is read without
+ib_nl_request_lock held. Though unlikely in practice, this can cause
+a race condition if multiple local service threads are managing the
+timeout.
 
-Fix this by deferring MAC resolution to the IP stack via neighbour
-lookup, allowing proper resolution or error reporting as appropriate.
-
-Fixes: 7025fcd36bd6 ("IB: address translation to map IP toIB addresses (GIDs)")
-Signed-off-by: Parav Pandit <parav@nvidia.com>
-Reviewed-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+Fixes: 2ca546b92a02 ("IB/sa: Route SA pathrecord query through netlink")
+Signed-off-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
 Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20250916111103.84069-3-edwards@nvidia.com
+Link: https://patch.msgid.link/20250916163112.98414-1-edwards@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/addr.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/infiniband/core/sa_query.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index c9e63c692b6e8..48de2285922f8 100644
---- a/drivers/infiniband/core/addr.c
-+++ b/drivers/infiniband/core/addr.c
-@@ -459,14 +459,10 @@ static int addr_resolve_neigh(const struct dst_entry *dst,
- {
- 	int ret = 0;
+diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
+index 11ab6390eda4d..b05df8694a4a5 100644
+--- a/drivers/infiniband/core/sa_query.c
++++ b/drivers/infiniband/core/sa_query.c
+@@ -1036,6 +1036,8 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
+ 	if (timeout > IB_SA_LOCAL_SVC_TIMEOUT_MAX)
+ 		timeout = IB_SA_LOCAL_SVC_TIMEOUT_MAX;
  
--	if (ndev_flags & IFF_LOOPBACK) {
-+	if (ndev_flags & IFF_LOOPBACK)
- 		memcpy(addr->dst_dev_addr, addr->src_dev_addr, MAX_ADDR_LEN);
--	} else {
--		if (!(ndev_flags & IFF_NOARP)) {
--			/* If the device doesn't do ARP internally */
--			ret = fetch_ha(dst, addr, dst_in, seq);
--		}
--	}
-+	else
-+		ret = fetch_ha(dst, addr, dst_in, seq);
- 	return ret;
++	spin_lock_irqsave(&ib_nl_request_lock, flags);
++
+ 	delta = timeout - sa_local_svc_timeout_ms;
+ 	if (delta < 0)
+ 		abs_delta = -delta;
+@@ -1043,7 +1045,6 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
+ 		abs_delta = delta;
+ 
+ 	if (delta != 0) {
+-		spin_lock_irqsave(&ib_nl_request_lock, flags);
+ 		sa_local_svc_timeout_ms = timeout;
+ 		list_for_each_entry(query, &ib_nl_request_list, list) {
+ 			if (delta < 0 && abs_delta > query->timeout)
+@@ -1061,9 +1062,10 @@ int ib_nl_handle_set_timeout(struct sk_buff *skb,
+ 		if (delay)
+ 			mod_delayed_work(ib_nl_wq, &ib_nl_timed_work,
+ 					 (unsigned long)delay);
+-		spin_unlock_irqrestore(&ib_nl_request_lock, flags);
+ 	}
+ 
++	spin_unlock_irqrestore(&ib_nl_request_lock, flags);
++
+ settimeout_out:
+ 	return 0;
  }
- 
 -- 
 2.51.0
 
