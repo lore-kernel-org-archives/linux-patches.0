@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298A22D8793;
-	Mon, 27 Oct 2025 19:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB61F2C11DF;
+	Mon, 27 Oct 2025 19:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593357; cv=none; b=r4Q7FUO7E6dyF1y8o7FaDlBzkLWbsj+mJjEAdJipQCwDjvmndupUi8xsBSW7YgyWnPVUv7AvWNvyPrazSW0MhN68CaWfgsT/y+kWFJagTvTvkArhDiaySuSXWMwUU1k3QPNHqeu2k3UKXOL8fTJwVjt2gECn6UBnPZwU6+TSFHE=
+	t=1761593360; cv=none; b=oAfYy/+JaRNQCFIdVPuNsmTIe1X61SfBm7VaJDbYk4B1HYKTchu6JJSjU/dJZ9Yrsvogw+AcbRCIbKgl9hhxOrKnIDuLAoAPWKwqQijbFhZMI6KHOW2NhFXBy3QnGiXwlOtRJGM1EU/cUutODA8ORKQ729xBat2VzdTrOIjEcI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593357; c=relaxed/simple;
-	bh=yBRS6bLoLnShApop7VJQAzw5WxdFbyNAZ+TIoJLqXgw=;
+	s=arc-20240116; t=1761593360; c=relaxed/simple;
+	bh=H72p1qsb7Id9judXdX6pZHlA/SmsTi5b82ay5DZZnaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiKYV4gLbHK7k8Sl4s8Q8ecSTb+GsijCjO69PcnLEGC3Zo3680znM86XmizM29Z6qc60xsXmnsA2XgtW9Vk5vEUqsRCpokb9E5u1aJ4T1OUiUGuw/d84yfKnWEpJ4Iijtk+z1mlV4jz/v1B3tzHQNGGNX94KVy2Lc+j2vBq6fQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGxR1Ls+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1FgZzcP9awbM0MlDex9Lha/DcN9pRLwik2TlQAF/DYa0psySa22ZldhSVRIZhPhRKiKlTU09XeCtN6I2Grx06U8BoSWBNHMQqT9Rc+zedp98RArlvU1IM1K9cJvtYV/mffQ2MPe7zyu4pGBOaLCVHViLcsSXOPUKxJzqN41TVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke+zLx+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGxR1Ls+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B8DC4CEF1;
-	Mon, 27 Oct 2025 19:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke+zLx+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261B8C4CEF1;
+	Mon, 27 Oct 2025 19:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593357;
-	bh=yBRS6bLoLnShApop7VJQAzw5WxdFbyNAZ+TIoJLqXgw=;
+	s=korg; t=1761593360;
+	bh=H72p1qsb7Id9judXdX6pZHlA/SmsTi5b82ay5DZZnaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGxR1Ls+ScpHhEESoS6226Wu8EMk4fSQc0TMy/QEnNypZlvf6V5YsVjwcmeSHJcu5
-	 s+7MKNpiocira9g6gfl73Jthzuj8mvc4EuoCiNEKOJGASpNcwZYBfIz1H2Si/CZ4J6
-	 bkI49Xxo6wqXEsv08ZLHdQD1yF67KUDEPZvEERTs=
+	b=Ke+zLx+D78I4mWLS/b6ZPQzBPHsENfK1AP3bO1EnuRrWnV20lQth93A6ms6bbjdck
+	 rmx2El77YSZKvqlzU/ViDG93ZWTS4chMrofI0qXikLmp464JX90/KqzcE+ycTRWxMu
+	 SKiJVNNYzC+N2mSiHLLl58l3Pmz+rk9N9sdqIxSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.17 107/184] drm/xe: Check return value of GGTT workqueue allocation
-Date: Mon, 27 Oct 2025 19:36:29 +0100
-Message-ID: <20251027183517.803246330@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
+	Chris Park <chris.park@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>
+Subject: [PATCH 6.17 108/184] drm/amd/display: increase max link count and fix link->enc NULL pointer access
+Date: Mon, 27 Oct 2025 19:36:30 +0100
+Message-ID: <20251027183517.829787385@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,37 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-commit ce29214ada6d08dbde1eeb5a69c3b09ddf3da146 upstream.
+commit bec947cbe9a65783adb475a5fb47980d7b4f4796 upstream.
 
-Workqueue allocation can fail, so check the return value of the GGTT
-workqueue allocation and fail driver initialization if the allocation
-fails.
+[why]
+1.) dc->links[MAX_LINKS] array size smaller than actual requested.
+max_connector + max_dpia + 4 virtual = 14.
+increase from 12 to 14.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+2.) hw_init() access null LINK_ENC for dpia non display_endpoint.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+Reviewed-by: Chris Park <chris.park@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d7f5a61e1b04ed87b008c8d327649d184dc5bb45)
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://lore.kernel.org/r/20251022005538.828980-2-matthew.brost@intel.com
-(cherry picked from commit 1f1314e8e71385bae319e43082b798c11f6648bc)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_ggtt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    3 +++
+ drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h         |    8 +++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_ggtt.c
-+++ b/drivers/gpu/drm/xe/xe_ggtt.c
-@@ -291,6 +291,9 @@ int xe_ggtt_init_early(struct xe_ggtt *g
- 		ggtt->pt_ops = &xelp_pt_ops;
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -200,6 +200,9 @@ void dcn401_init_hw(struct dc *dc)
+ 		 */
+ 		struct dc_link *link = dc->links[i];
  
- 	ggtt->wq = alloc_workqueue("xe-ggtt-wq", 0, WQ_MEM_RECLAIM);
-+	if (!ggtt->wq)
-+		return -ENOMEM;
++		if (link->ep_type != DISPLAY_ENDPOINT_PHY)
++			continue;
 +
- 	__xe_ggtt_init_early(ggtt, xe_wopcm_size(xe));
+ 		link->link_enc->funcs->hw_init(link->link_enc);
  
- 	err = drmm_add_action_or_reset(&xe->drm, ggtt_fini_early, ggtt);
+ 		/* Check for enabled DIG to identify enabled display */
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
+@@ -44,7 +44,13 @@
+  */
+ #define MAX_PIPES 6
+ #define MAX_PHANTOM_PIPES (MAX_PIPES / 2)
+-#define MAX_LINKS (MAX_PIPES * 2 +2)
++
++#define MAX_DPIA 6
++#define MAX_CONNECTOR 6
++#define MAX_VIRTUAL_LINKS 4
++
++#define MAX_LINKS (MAX_DPIA + MAX_CONNECTOR + MAX_VIRTUAL_LINKS)
++
+ #define MAX_DIG_LINK_ENCODERS 7
+ #define MAX_DWB_PIPES	1
+ #define MAX_HPO_DP2_ENCODERS	4
 
 
