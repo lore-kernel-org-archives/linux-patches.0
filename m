@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664742C11DF;
-	Mon, 27 Oct 2025 19:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095D0241663;
+	Mon, 27 Oct 2025 19:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592116; cv=none; b=Xn1ZosDN15B4Bvj5dTp2yc6qnWyhbdV9ITTPSsY0s2H1KCItqnvZ9PTp5m39AA5EheSBFpVxjczeRAj6JMp2KjuBC/lWPqSBpcGmXrWpCQ/sylsHhcdWBzHc60ZEFN55CHIGALfXuXCS6aqb3fI79r45xVAe3Ns6NAelCkhY1Fw=
+	t=1761592119; cv=none; b=mcPsloUr05tZEHuT1smlP6dCfa56GgtX1j3XA5kbJZYyqSU39xnfzOGBhHMYPGdSYJEPkk/iki4I2KvQAQmbqSbg+6R3J968959yC1wvVQAP8/iMubciQ850HOqSN+jbrFXJQdih3kh5gsK8QibsteCGWZ/d86FTNOEGnEU/EO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592116; c=relaxed/simple;
-	bh=yoU/DdN1dcdDWsB8loECDLQllI7pMpQ3AK80EHC8FT4=;
+	s=arc-20240116; t=1761592119; c=relaxed/simple;
+	bh=U5bV/PCwiBFWwsiQSewW6IEFPt8tcr1Co4Cu639bnOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TyfcgQGNCeHvOdiWAYXp+HvpGTNPPwWKUGkhoPzLGoqjtJHPo5UgIes0wiz+jRb3W6Qq6EL8wBMNr5A2lmimWYmypPQwt0DwinYtgDJ5NbhUNnflKRpzQ7I/voskbCcpeZnv7zBNPQi8pxSK4X8lTF1MXNFe2KCzKTqj7Y5ql+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsR4SP28; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtZL8+NuYSTY/RtZ9dkwhbGp6k+um/Ug43qbifmYhYMjYfaFPArWWVwiJKjf/TKXUv/F3c9SHTfnz0RuThzHRw6vTdpX8hgdlCZZsP3/FfxosLJ+hdRK+nFSOzWYBxpHKX19oPrQt/G7/fMToc71l3eVvUligJ0TalJX65i6sig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qN7C/bjS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsR4SP28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC103C4CEF1;
-	Mon, 27 Oct 2025 19:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qN7C/bjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830D2C4CEF1;
+	Mon, 27 Oct 2025 19:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592116;
-	bh=yoU/DdN1dcdDWsB8loECDLQllI7pMpQ3AK80EHC8FT4=;
+	s=korg; t=1761592118;
+	bh=U5bV/PCwiBFWwsiQSewW6IEFPt8tcr1Co4Cu639bnOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsR4SP28iHVf2KqofPp3suaF5d2TSchxgkCN89DUvZPW9Hi7gYf8+ZcL29bR23Z1S
-	 HGXrOU9l//qVTNXnravPavm9zgfnyDwcAp7R8oux6wb1R2RXrTQMfFto2mdJVYspUK
-	 rh5HgDx+m9Kwu4A61hROOq55ERs+DmbZYdQAUzfw=
+	b=qN7C/bjSh6PpGFrq7kvF1LGLjZkzHD4pqGANiy4MdfIJaeiY0RJKkLfTVXB8aHzGW
+	 A/ehY8tSEK+f+xMaMMuxjentHgJpoQM/DE5Ivt7Yx73HLDFsOW6zowoT2NOQCU9xX0
+	 caRjibcKYP1GQdo3zqSYhv92v0TqemQomk/gaUt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 123/123] RISC-V: Dont fail in riscv_of_parent_hartid() for disabled HARTs
-Date: Mon, 27 Oct 2025 19:36:43 +0100
-Message-ID: <20251027183449.672926685@linuxfoundation.org>
+	Xiao Liang <shaw.leon@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 099/123] padata: Reset next CPU when reorder sequence wraps around
+Date: Mon, 27 Oct 2025 19:36:19 +0100
+Message-ID: <20251027183449.042846740@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -51,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-commit c4676f8dc1e12e68d6511f9ed89707fdad4c962c upstream.
+[ Upstream commit 501302d5cee0d8e8ec2c4a5919c37e0df9abc99b ]
 
-The riscv_of_processor_hartid() used by riscv_of_parent_hartid() fails
-for HARTs disabled in the DT. This results in the following warning
-thrown by the RISC-V INTC driver for the E-core on SiFive boards:
+When seq_nr wraps around, the next reorder job with seq 0 is hashed to
+the first CPU in padata_do_serial(). Correspondingly, need reset pd->cpu
+to the first one when pd->processed wraps around. Otherwise, if the
+number of used CPUs is not a power of 2, padata_find_next() will be
+checking a wrong list, hence deadlock.
 
-[    0.000000] riscv-intc: unable to find hart id for /cpus/cpu@0/interrupt-controller
-
-The riscv_of_parent_hartid() is only expected to read the hartid
-from the DT so we directly call of_get_cpu_hwid() instead of calling
-riscv_of_processor_hartid().
-
-Fixes: ad635e723e17 ("riscv: cpu: Add 64bit hartid support on RV64")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20231027154254.355853-2-apatel@ventanamicro.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 6fc4dbcf0276 ("padata: Replace delayed timer with immediate workqueue in padata_reorder")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ moved fix from padata_reorder() to padata_find_next() and adapted cpumask_next_wrap() to 4-argument signature ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cpu.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/padata.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/cpu.c
-+++ b/arch/riscv/kernel/cpu.c
-@@ -50,13 +50,14 @@ int riscv_of_processor_hartid(struct dev
-  */
- int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
- {
--	int rc;
--
- 	for (; node; node = node->parent) {
- 		if (of_device_is_compatible(node, "riscv")) {
--			rc = riscv_of_processor_hartid(node, hartid);
--			if (!rc)
--				return 0;
-+			*hartid = (unsigned long)of_get_cpu_hwid(node, 0);
-+			if (*hartid == ~0UL) {
-+				pr_warn("Found CPU without hart ID\n");
-+				return -ENODEV;
-+			}
-+			return 0;
- 		}
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -282,7 +282,11 @@ static struct padata_priv *padata_find_n
+ 	if (remove_object) {
+ 		list_del_init(&padata->list);
+ 		++pd->processed;
+-		pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		/* When sequence wraps around, reset to the first CPU. */
++		if (unlikely(pd->processed == 0))
++			pd->cpu = cpumask_first(pd->cpumask.pcpu);
++		else
++			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
  	}
  
+ 	spin_unlock(&reorder->lock);
 
 
