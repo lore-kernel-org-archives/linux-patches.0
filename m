@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D8B19D07A;
-	Mon, 27 Oct 2025 19:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1172431E0F2;
+	Mon, 27 Oct 2025 19:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593267; cv=none; b=XqpBKvJHVpjRHmE+mhiCviGlb9hPV89czKUKHluUH/LzkLAtP7YlD+mQTcrPt2cXdnjfOM+lH4svI+j189RbtoKo55Nya/OAexETX18+w+1ERpZjYrcqjQN/PLZx5VyMfQAqVCjtzweEr+WtrQTljzNPC5YcGYEZ1AL0Vo0KGcs=
+	t=1761593270; cv=none; b=YZGRnAdFzvVhvMqyF62aicARUdIO9Uxy2stLjDs24JE0+EJ9sj8MxRE1Hpec6VpBGXnco2+e3tgmdzR2iVj4i/WRWGeAgoWThhuHIrMaQQbRRuIhGOPY0QkTaMscv79vUr6ZKRxAPxcmKUeazHQCB+jMtSNx5NSNkRIUtaSCh34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593267; c=relaxed/simple;
-	bh=uTdsn9gl3a9gH8Q/bdU8NHVTigpfkcc25nTSNG7CqjQ=;
+	s=arc-20240116; t=1761593270; c=relaxed/simple;
+	bh=5X9BKoueeCCsr5HWB4IYOTsNEqYwWUVcYKPLxPg/Cl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pU27uyUZFwhqGk2MYk+dtW4hgmTu23QE7z/qn5YqygMhVOkFDF3UTxwDifV9fU2nyi6UebGdobEfo9NAB4je6uWXH0bus04m9zFIqaMFPKSbdOeL9p2ylUn/GkwApB+yMSTn3NZLBN6amK+JpSH3ossDizfcUlXAjTt0X5u/nvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9GP9ycR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNfEloKha+UdXMEKHlS2E8G90LJdYAJv8aH2KkjhT0y/Rc5bs+6XS2mQXFawTy3dSrljb1Y7bBGtU0u5gn12vyeYUaHk9FSqk7wdylwO5NV9SIMn2ek6139p306gIEAelyRdNpZSOnPgA83487Vye/hNTTS1NxHHGKitK+hGSc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKZWYzrS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9GP9ycR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8CBC4CEF1;
-	Mon, 27 Oct 2025 19:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKZWYzrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98290C4CEFD;
+	Mon, 27 Oct 2025 19:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593267;
-	bh=uTdsn9gl3a9gH8Q/bdU8NHVTigpfkcc25nTSNG7CqjQ=;
+	s=korg; t=1761593269;
+	bh=5X9BKoueeCCsr5HWB4IYOTsNEqYwWUVcYKPLxPg/Cl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9GP9ycRR3vQF4tVf9fHivFGX72yReeDK3Z1uAhon2XGIUaTtnp4PhxfbrNYcmqvX
-	 I8R0NF8mYUqaEwA8uLittiBu84ceZyhyZQ3ZA7sV7430biPbM29bnOJ6k1NSErbSUf
-	 rz4eRbuP7uT5dz4fM1ilDBUJWeUHzQTyihsX8jj8=
+	b=kKZWYzrSjZUEhC52yvdc2ZZeBYr0T3jPxf1HvZwJxNCczf4U8NlxBT16qArrZMQeg
+	 hJYeraUCJ+iMgAgEx4Uov+pbbCHfWNrphHOXCxmrGMhQRV3K6J74jVddWJSI2Qbjqo
+	 ILKQ0/kTTFG33birCqbL8fcXXRH0EQeR7ZEgChCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 029/184] smb: client: limit the range of info->receive_credit_target
-Date: Mon, 27 Oct 2025 19:35:11 +0100
-Message-ID: <20251027183515.709498571@linuxfoundation.org>
+	Daniel Vacek <neelx@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Dewei Meng <mengdewei@cqsoftware.com.cn>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.17 071/184] btrfs: directly free partially initialized fs_info in btrfs_check_leaked_roots()
+Date: Mon, 27 Oct 2025 19:35:53 +0100
+Message-ID: <20251027183516.804195385@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -57,73 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Dewei Meng <mengdewei@cqsoftware.com.cn>
 
-[ Upstream commit 9219f8cac296769324bbe8a28c289586114244c4 ]
+commit 17679ac6df6c4830ba711835aa8cf961be36cfa1 upstream.
 
-This simplifies further changes...
+If fs_info->super_copy or fs_info->super_for_commit allocated failed in
+btrfs_get_tree_subvol(), then no need to call btrfs_free_fs_info().
+Otherwise btrfs_check_leaked_roots() would access NULL pointer because
+fs_info->allocated_roots had not been initialised.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+syzkaller reported the following information:
+  ------------[ cut here ]------------
+  BUG: unable to handle page fault for address: fffffffffffffbb0
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 64c9067 P4D 64c9067 PUD 64cb067 PMD 0
+  Oops: Oops: 0000 [#1] SMP KASAN PTI
+  CPU: 0 UID: 0 PID: 1402 Comm: syz.1.35 Not tainted 6.15.8 #4 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), (...)
+  RIP: 0010:arch_atomic_read arch/x86/include/asm/atomic.h:23 [inline]
+  RIP: 0010:raw_atomic_read include/linux/atomic/atomic-arch-fallback.h:457 [inline]
+  RIP: 0010:atomic_read include/linux/atomic/atomic-instrumented.h:33 [inline]
+  RIP: 0010:refcount_read include/linux/refcount.h:170 [inline]
+  RIP: 0010:btrfs_check_leaked_roots+0x18f/0x2c0 fs/btrfs/disk-io.c:1230
+  [...]
+  Call Trace:
+   <TASK>
+   btrfs_free_fs_info+0x310/0x410 fs/btrfs/disk-io.c:1280
+   btrfs_get_tree_subvol+0x592/0x6b0 fs/btrfs/super.c:2029
+   btrfs_get_tree+0x63/0x80 fs/btrfs/super.c:2097
+   vfs_get_tree+0x98/0x320 fs/super.c:1759
+   do_new_mount+0x357/0x660 fs/namespace.c:3899
+   path_mount+0x716/0x19c0 fs/namespace.c:4226
+   do_mount fs/namespace.c:4239 [inline]
+   __do_sys_mount fs/namespace.c:4450 [inline]
+   __se_sys_mount fs/namespace.c:4427 [inline]
+   __x64_sys_mount+0x28c/0x310 fs/namespace.c:4427
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x92/0x180 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f032eaffa8d
+  [...]
+
+Fixes: 3bb17a25bcb0 ("btrfs: add get_tree callback for new mount API")
+CC: stable@vger.kernel.org # 6.12+
+Reviewed-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Dewei Meng <mengdewei@cqsoftware.com.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c | 7 ++++++-
- fs/smb/client/smbdirect.h | 2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/btrfs/super.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index b3e04b410afe6..cbf1deff11065 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -429,6 +429,7 @@ static bool process_negotiation_response(
- 		return false;
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2070,7 +2070,13 @@ static int btrfs_get_tree_subvol(struct
+ 	fs_info->super_copy = kzalloc(BTRFS_SUPER_INFO_SIZE, GFP_KERNEL);
+ 	fs_info->super_for_commit = kzalloc(BTRFS_SUPER_INFO_SIZE, GFP_KERNEL);
+ 	if (!fs_info->super_copy || !fs_info->super_for_commit) {
+-		btrfs_free_fs_info(fs_info);
++		/*
++		 * Dont call btrfs_free_fs_info() to free it as it's still
++		 * initialized partially.
++		 */
++		kfree(fs_info->super_copy);
++		kfree(fs_info->super_for_commit);
++		kvfree(fs_info);
+ 		return -ENOMEM;
  	}
- 	info->receive_credit_target = le16_to_cpu(packet->credits_requested);
-+	info->receive_credit_target = min_t(u16, info->receive_credit_target, sp->recv_credit_max);
- 
- 	if (packet->credits_granted == 0) {
- 		log_rdma_event(ERR, "error: credits_granted==0\n");
-@@ -537,7 +538,7 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct smbdirect_socket_parameters *sp = &sc->parameters;
- 	struct smbd_connection *info =
- 		container_of(sc, struct smbd_connection, socket);
--	int old_recv_credit_target;
-+	u16 old_recv_credit_target;
- 	u32 data_offset = 0;
- 	u32 data_length = 0;
- 	u32 remaining_data_length = 0;
-@@ -603,6 +604,10 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		old_recv_credit_target = info->receive_credit_target;
- 		info->receive_credit_target =
- 			le16_to_cpu(data_transfer->credits_requested);
-+		info->receive_credit_target =
-+			min_t(u16, info->receive_credit_target, sp->recv_credit_max);
-+		info->receive_credit_target =
-+			max_t(u16, info->receive_credit_target, 1);
- 		if (le16_to_cpu(data_transfer->credits_granted)) {
- 			atomic_add(le16_to_cpu(data_transfer->credits_granted),
- 				&info->send_credits);
-diff --git a/fs/smb/client/smbdirect.h b/fs/smb/client/smbdirect.h
-index 4ca9b2b2c57f9..ed362267dd11d 100644
---- a/fs/smb/client/smbdirect.h
-+++ b/fs/smb/client/smbdirect.h
-@@ -63,7 +63,7 @@ struct smbd_connection {
- 	int protocol;
- 	atomic_t send_credits;
- 	atomic_t receive_credits;
--	int receive_credit_target;
-+	u16 receive_credit_target;
- 
- 	/* Memory registrations */
- 	/* Maximum number of RDMA read/write outstanding on this connection */
--- 
-2.51.0
-
+ 	btrfs_init_fs_info(fs_info);
 
 
