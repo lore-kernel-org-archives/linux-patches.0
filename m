@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA7330B3E;
-	Mon, 27 Oct 2025 18:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBE03277B4;
+	Mon, 27 Oct 2025 18:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591055; cv=none; b=AWQjF8MhAGWW729SeLNJu1oGiK1UaEzNfz5JfJMBtnqs2mOxiGVTuC0s6YZIn4Js8FFasuRt57g7e5wbmoRNBcvXbKCuO1lu/cLPO3PRBVwn3bP0oBnnQ1eOY4enxCzF2WezPE6TvYB2yGp4iAVxHrc3g5fqV1TicfFwD7OXzAM=
+	t=1761591058; cv=none; b=pZ2hSCd83CuLO67A2shC71dpf1EQmXmMipNNoyff8suNq8QkX4+nOW27mUbNSRShnYD370DnbcLpN4GxP+vnJggxlQ76TB3heW08wmOvEc7ANsDe9dpxCKxIq1zUIMMLClmN+UfsVlXsafTULWDbyPAscmMNLmiBPnSvNJ41j4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591055; c=relaxed/simple;
-	bh=jqKO5wy40qphAaI4EBgtPcCmqwpFFGiBI7LXlMur64U=;
+	s=arc-20240116; t=1761591058; c=relaxed/simple;
+	bh=OTHP9QObnIP/3Hsg46vqqj+i+129qf0U3f6iDQvXpuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJx8Ej3rlm4xci7X2eyAH7YmyjEMRfpRHBefGbiidPdiD6INDld56hU9Pfxn08g25/xUwJpJem6eHxr+FEhZXmBSMGjZobvfcUH3ECF6J3+DE5+CGc/wXQBGV2NtTaD5H+g7x/2BgMebJjjggFFlBkwex6FfKU2YXgW1zhpgL7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGObLa/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGLX3+6A4EmtcV6wyTnegAPA6WFaqQxvaKsKRtkTdSRk3Ntw9LoNE5KmgUttpS41QnNlMoqaks43mZPK/Qa/h8adAdp3h01AKNpzxSIOC8KWJvTbsgU1VvKASNpKLLNOTex3MMr/ke1o1hfiK068O6909FUZUjre8YyCaG0SXyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyC3b46U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGObLa/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FEC4CEF1;
-	Mon, 27 Oct 2025 18:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyC3b46U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC80FC4CEF1;
+	Mon, 27 Oct 2025 18:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591055;
-	bh=jqKO5wy40qphAaI4EBgtPcCmqwpFFGiBI7LXlMur64U=;
+	s=korg; t=1761591058;
+	bh=OTHP9QObnIP/3Hsg46vqqj+i+129qf0U3f6iDQvXpuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGObLa/wUfQrDtaLgOrkXUUkSXfV7uhDpYVARjZYTamcqLuLhjKVssfqY5DzumpQ3
-	 o+eKCyAy+eBNOFC0sOzKsZKwQIqtdr26arjWP7yQjBeoVLLvsLIW74pieVL4B/IY6I
-	 bVeZ+IYzDubMQbSJRNBPd0C6TT5GQ9OM7WRyIPdU=
+	b=GyC3b46Ufyuzjgq6Bvk4dMHs4j0zsRY2TgB6tYPU1uI2yXgcYzLh6ZnG6/VQnAHOt
+	 oGICeATiwWah9CEIVcg72F5oif8gYbUNO1Pg+54mioYnDKfRGLKJAgojnrQzaB/H14
+	 TmM8WKyZ+KxKH5wV+bTlUOvrwGAGm+pM7EfZ0CV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	William Wu <william.wu@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/332] arm64: dts: mediatek: mt8516-pumpkin: Fix machine compatible
-Date: Mon, 27 Oct 2025 19:31:26 +0100
-Message-ID: <20251027183525.495361445@linuxfoundation.org>
+Subject: [PATCH 5.10 051/332] usb: gadget: configfs: Correctly set use_os_string at bind
+Date: Mon, 27 Oct 2025 19:31:44 +0100
+Message-ID: <20251027183525.970465798@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,37 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit ffe6a5d1dd4d4d8af0779526cf4e40522647b25f ]
+[ Upstream commit e271cc0d25015f4be6c88bd7731444644eb352c2 ]
 
-This devicetree contained only the SoC compatible but lacked the
-machine specific one: add a "mediatek,mt8516-pumpkin" compatible
-to the list to fix dtbs_check warnings.
+Once the use_os_string flag is set to true for some functions
+(e.g. adb/mtp) which need to response the OS string, and then
+if we re-bind the ConfigFS gadget to use the other functions
+(e.g. hid) which should not to response the OS string, however,
+because the use_os_string flag is still true, so the usb gadget
+response the OS string descriptor incorrectly, this can cause
+the USB device to be unrecognizable on the Windows system.
 
-Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20250724083914.61351-39-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+An example of this as follows:
+
+echo 1 > os_desc/use
+ln -s functions/ffs.adb configs/b.1/function0
+start adbd
+echo "<udc device>" > UDC   #succeed
+
+stop adbd
+rm configs/b.1/function0
+echo 0 > os_desc/use
+ln -s functions/hid.gs0 configs/b.1/function0
+echo "<udc device>" > UDC  #fail to connect on Windows
+
+This patch sets the use_os_string flag to false at bind if
+the functions not support OS Descriptors.
+
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Fixes: 87213d388e92 ("usb: gadget: configfs: OS String support")
+Link: https://lore.kernel.org/r/1755833769-25434-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/configfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-index cce642c538128..3d3db33a64dc6 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
-@@ -11,7 +11,7 @@
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index d810b96a7ba43..4256b1d09380f 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -1358,6 +1358,8 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
+ 		cdev->use_os_string = true;
+ 		cdev->b_vendor_code = gi->b_vendor_code;
+ 		memcpy(cdev->qw_sign, gi->qw_sign, OS_STRING_QW_SIGN_LEN);
++	} else {
++		cdev->use_os_string = false;
+ 	}
  
- / {
- 	model = "Pumpkin MT8516";
--	compatible = "mediatek,mt8516";
-+	compatible = "mediatek,mt8516-pumpkin", "mediatek,mt8516";
- 
- 	memory@40000000 {
- 		device_type = "memory";
+ 	if (gadget_is_otg(gadget) && !otg_desc[0]) {
 -- 
 2.51.0
 
