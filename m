@@ -1,56 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF4631B83D;
-	Mon, 27 Oct 2025 18:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634AE31BC91;
+	Mon, 27 Oct 2025 18:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591271; cv=none; b=nDOF7c3OhPuy9ktQxXF1zGU7952CgeaGWKp/SWIMIlH6CtwtokVqbzz9SCzGn5em2MXdEyKud5biBX3nrQupFv6ArzmPw+KRkm2rSyvEoQO8yFcC6XLFNB5nAxzqJFsZ2MkbGI+9aSSyq02qWdtCH1rR1ikPbTx8MDpYvnQFuoM=
+	t=1761591273; cv=none; b=OEy1gsOEDp41ofvxEE20B3OrzFMcF2oJ4iUCHszeY5abIaM1YqzEAmgvicWidmWgd8z1fizEQL4tCvRUNuSoCtDeByKB/GxBwZiOjcEHe1HXFF5jEPQgVQxtK5yN7Oswjgorr2DoviUiudJ9OitJe/mja7NJVI2uBoLB9bYTon0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591271; c=relaxed/simple;
-	bh=6cZMDV+BjGQnoIwQOHca0ck+cTfgmR37j/0hHNPGaDE=;
+	s=arc-20240116; t=1761591273; c=relaxed/simple;
+	bh=L4b/F9EOZyJD6hh7oDwEd0BSO/3zMCCZBbOl25lX4QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBR3G6JQKG6EFiucxnKRIFzuAqRDWZCi7loqVarV3EOhqaW3/sZvNxmDm+ik++Td6MTOSZBf3/VmmLTQjhgA7SM8OSPc6GAq5cOMEs9rVJvKu6SW2iHpfNo8AH7LlQxv9N6ZZb1zdv++WqGgZ/Nfv1y+TFvt9Ztx3xbnjHXkhvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHca9hQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4XuzuOaj3+w8yLc3ztjLZ+AZkRZPAZAziaqaZZoUlmNINp74Yb/GadChSDCX3oDJXe8dA95UCrcFAAakmI3BDriPqq6HaVjl1fCoxvNy+6t1jZ3X/cl17Xpw+aRyo4nbYkt4CqDD3orwWNwK6P+XSMOOPyZKOW0S22egmNFBBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6yvGwrw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHca9hQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE0FC4CEF1;
-	Mon, 27 Oct 2025 18:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6yvGwrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8012C4CEF1;
+	Mon, 27 Oct 2025 18:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591270;
-	bh=6cZMDV+BjGQnoIwQOHca0ck+cTfgmR37j/0hHNPGaDE=;
+	s=korg; t=1761591273;
+	bh=L4b/F9EOZyJD6hh7oDwEd0BSO/3zMCCZBbOl25lX4QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHca9hQJemGz4u1J/ZGJuJ+o/3cvMHrtd/QZK2FIvPIClJgJP/XE8ZrB52gK0yrf6
-	 YJqWfad27XcV6xH/NW0sKp/RWb30yBrme7YfWjR50b0R1p9QsGa3Gyby5v3ORjFt7T
-	 s/in6SLsIDCRWfLYh4phvObeEVTG/9bty4nOKRKs=
+	b=a6yvGwrwca/ifx3hLPmZ8XyYf+Mt1OPaEwmBCjyx1P2FVvQQA0G4SpLjpqoGMoesD
+	 BhNAu9f9xWb7y16oqv0BwZkwhxlDIU/eoxXwIHhUr/fW1Ur0Jin2E54ibYok3XZGEK
+	 ecPWUcHGQYJ9dkkrbkpeUsoPJ09d0SuErzoVo10g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	linux-kernel@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/332] tools build: Align warning options with perf
-Date: Mon, 27 Oct 2025 19:32:48 +0100
-Message-ID: <20251027183527.652011522@linuxfoundation.org>
+	Carlo Caione <ccaione@baylibre.com>,
+	Johan Hovold <johan@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.10 133/332] firmware: meson_sm: fix device leak at probe
+Date: Mon, 27 Oct 2025 19:33:06 +0100
+Message-ID: <20251027183528.143389101@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -69,62 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 53d067feb8c4f16d1f24ce3f4df4450bb18c555f ]
+commit 8ece3173f87df03935906d0c612c2aeda9db92ca upstream.
 
-The feature test programs are built without enabling '-Wall -Werror'
-options. As a result, a feature may appear to be available, but later
-building in perf can fail with stricter checks.
+Make sure to drop the reference to the secure monitor device taken by
+of_find_device_by_node() when looking up its driver data on behalf of
+other drivers (e.g. during probe).
 
-Make the feature test program use the same warning options as perf.
+Note that holding a reference to the platform device does not prevent
+its driver data from going away so there is no point in keeping the
+reference after the helper returns.
 
-Fixes: 1925459b4d92 ("tools build: Fix feature Makefile issues with 'O='")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-1-4305590795b2@arm.com
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: linux-riscv@lists.infradead.org
-Cc: llvm@lists.linux.dev
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-perf-users@vger.kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8cde3c2153e8 ("firmware: meson_sm: Rework driver as a proper platform driver")
+Cc: stable@vger.kernel.org	# 5.5
+Cc: Carlo Caione <ccaione@baylibre.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250725074019.8765-1-johan@kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/build/feature/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/meson/meson_sm.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index 221250973d078..432a35bb5e90a 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -263,10 +263,10 @@ $(OUTPUT)test-sync-compare-and-swap.bin:
- 	$(BUILD)
+--- a/drivers/firmware/meson/meson_sm.c
++++ b/drivers/firmware/meson/meson_sm.c
+@@ -225,11 +225,16 @@ EXPORT_SYMBOL(meson_sm_call_write);
+ struct meson_sm_firmware *meson_sm_get(struct device_node *sm_node)
+ {
+ 	struct platform_device *pdev = of_find_device_by_node(sm_node);
++	struct meson_sm_firmware *fw;
  
- $(OUTPUT)test-compile-32.bin:
--	$(CC) -m32 -o $@ test-compile.c
-+	$(CC) -m32 -Wall -Werror -o $@ test-compile.c
+ 	if (!pdev)
+ 		return NULL;
  
- $(OUTPUT)test-compile-x32.bin:
--	$(CC) -mx32 -o $@ test-compile.c
-+	$(CC) -mx32 -Wall -Werror -o $@ test-compile.c
+-	return platform_get_drvdata(pdev);
++	fw = platform_get_drvdata(pdev);
++
++	put_device(&pdev->dev);
++
++	return fw;
+ }
+ EXPORT_SYMBOL_GPL(meson_sm_get);
  
- $(OUTPUT)test-zlib.bin:
- 	$(BUILD) -lz
--- 
-2.51.0
-
 
 
