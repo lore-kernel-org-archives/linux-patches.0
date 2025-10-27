@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6602B31B137;
-	Mon, 27 Oct 2025 18:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67680313520;
+	Mon, 27 Oct 2025 18:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590444; cv=none; b=mUU32ArcLbpYcvg40X6ysDtXgFrUwp13O/q9xG34jasbNeNmYj9DCUdyBrag9qZFO9a+Xh4GorbqFnHkgRiVky0SoCQPhTkYCBZwz1IrMdHPezUoSs40j5SIfMg8iLSSXsHatftESXgd1KZ/FUuQTDPlYJDvOZq0RwEL7+p+J5Y=
+	t=1761590447; cv=none; b=GvqStLh1Jpe8CEPR77g3hAGp9J1c1iIliUtau9Kcq6vmvOuORo6FLx7+k1yiHG2Krj8i/EzvWtn1LoFftgsnqVkyxJaOzp5VNqyjjzbOkkPMW1hCBIH5LfTWH7P8b209y6MnF5XgLOfv+DrB2nCS45ayaGxFpPiJve5un8T9f+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590444; c=relaxed/simple;
-	bh=C8jlbmabZFgew2UAaJ4hG/nnm2hkZIQNiJ79YnWyob0=;
+	s=arc-20240116; t=1761590447; c=relaxed/simple;
+	bh=IEYSs8GIvwgB3DY3WaYjOs89BH3CEynqRa7ou8qtkds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iA1Rpzne7pErUyjHpNeMSBpPj3T/9ItKqHAN/tLYA4uwP6oFcLGBLGURw5sOev9P1cHUmM6zYuiImzp91Bt9Re4v9L0v3bW6zaqCQXtrZtcXkCYw2+BWusmSO3VefLLS6Y0baWN/o2ZX0WnBlXuj3IYalc+TZaT1oF4f2wZ+6Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1xFh35J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvPex6ERpKRgelP3ncL4G3xML57EYPO0lpDYPs2Qa4iudRbKfzU5GJAuOCUASP2IgC/ERNkWjfXmwn2BvluhpGkW5RIicXv6CKYl65ORU2N7CQGGcB0iEBa/PkL9UfNikWiH9PY08Br8GsS3MQoJsOfEKXaMavo2MeMP/8br4qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfg7EJv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1xFh35J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8C5C4CEF1;
-	Mon, 27 Oct 2025 18:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfg7EJv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9C4C4CEF1;
+	Mon, 27 Oct 2025 18:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590444;
-	bh=C8jlbmabZFgew2UAaJ4hG/nnm2hkZIQNiJ79YnWyob0=;
+	s=korg; t=1761590447;
+	bh=IEYSs8GIvwgB3DY3WaYjOs89BH3CEynqRa7ou8qtkds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1xFh35Jal1YXF4LEi+ayYikf6keE40tbzlM9sUpysgqWuTEblmiZH3/FXI4P/BzN
-	 2z6ML8YnpNpBJtkm6ns0QvjDm/6+8i+2shAJmCP3gLxLGIdRw+GLvvEopxaC+BjVco
-	 EbWGvKPif+J2eVKxh+BSMFaizIhnD88O+adTMVGk=
+	b=jfg7EJv5rU5czMGpriFM14mQZClzKcSRl4Np/LscxFjQC0xdLm3+brxvQkpNP+keZ
+	 hjaERu3EAzrkSKBhWB88HyWYv70SntcI+AWC5XMskqlYr9aV8O6FcdkKIqAi5h79P+
+	 2/NFFsQbmLtZ5fSVAvpv/4heKljs7q/pjZ3cnKGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Beguin <liambeguin@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 048/224] iio: consumers: Fix offset handling in iio_convert_raw_to_processed()
-Date: Mon, 27 Oct 2025 19:33:14 +0100
-Message-ID: <20251027183510.286054726@linuxfoundation.org>
+Subject: [PATCH 5.4 049/224] netfilter: ipset: Remove unused htable_bits in macro ahash_region
+Date: Mon, 27 Oct 2025 19:33:15 +0100
+Message-ID: <20251027183510.311345547@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,39 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-[ Upstream commit 33f5c69c4daff39c010b3ea6da8ebab285f4277b ]
+[ Upstream commit ba941796d7cd1e81f51eed145dad1b47240ff420 ]
 
-Fix iio_convert_raw_to_processed() offset handling for channels without
-a scale attribute.
+Since the ahash_region() macro was redefined to calculate the region
+index solely from HTABLE_REGION_BITS, the htable_bits parameter became
+unused.
 
-The offset has been applied to the raw64 value not to the original raw
-value. Use the raw64 value so that the offset is taken into account.
+Remove the unused htable_bits argument and its call sites, simplifying
+the code without changing semantics.
 
-Fixes: 14b457fdde38 ("iio: inkern: apply consumer scale when no channel scale is available")
-Cc: Liam Beguin <liambeguin@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250831104825.15097-3-hansg@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 8478a729c046 ("netfilter: ipset: fix region locking in hash types")
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/inkern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_hash_gen.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index 6374d50915557..6bdd175df021d 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -627,7 +627,7 @@ static int iio_convert_raw_to_processed_unlocked(struct iio_channel *chan,
- 		 * If no channel scaling is available apply consumer scale to
- 		 * raw value and return.
- 		 */
--		*processed = raw * scale;
-+		*processed = raw64 * scale;
- 		return 0;
- 	}
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 297631f9717bc..0dcba0a87283d 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -87,7 +87,7 @@ struct hbucket {
+ 		: jhash_size((htable_bits) - HTABLE_REGION_BITS))
+ #define ahash_sizeof_regions(htable_bits)		\
+ 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
+-#define ahash_region(n, htable_bits)		\
++#define ahash_region(n)		\
+ 	((n) / jhash_size(HTABLE_REGION_BITS))
+ #define ahash_bucket_start(h,  htable_bits)	\
+ 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
+@@ -716,7 +716,7 @@ mtype_resize(struct ip_set *set, bool retried)
+ #endif
+ 				key = HKEY(data, h->initval, htable_bits);
+ 				m = __ipset_dereference(hbucket(t, key));
+-				nr = ahash_region(key, htable_bits);
++				nr = ahash_region(key);
+ 				if (!m) {
+ 					m = kzalloc(sizeof(*m) +
+ 					    AHASH_INIT_SIZE * dsize,
+@@ -866,7 +866,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	rcu_read_lock_bh();
+ 	t = rcu_dereference_bh(h->table);
+ 	key = HKEY(value, h->initval, t->htable_bits);
+-	r = ahash_region(key, t->htable_bits);
++	r = ahash_region(key);
+ 	atomic_inc(&t->uref);
+ 	elements = t->hregion[r].elements;
+ 	maxelem = t->maxelem;
+@@ -1059,7 +1059,7 @@ mtype_del(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	rcu_read_lock_bh();
+ 	t = rcu_dereference_bh(h->table);
+ 	key = HKEY(value, h->initval, t->htable_bits);
+-	r = ahash_region(key, t->htable_bits);
++	r = ahash_region(key);
+ 	atomic_inc(&t->uref);
+ 	rcu_read_unlock_bh();
  
 -- 
 2.51.0
