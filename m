@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA32233735;
-	Mon, 27 Oct 2025 19:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94F732145A;
+	Mon, 27 Oct 2025 19:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593028; cv=none; b=PSQ3NwYJCrG0xWsizk09cwyKtqO1EEwm6EegIWMstqu/EhNlzRNMkLnRXQIGLkwvvjEv7O2ZEnpd2gCRWSCK5vNV1XTAaYJ2MPzLtKsdNSJnqb9WjGwExn1TKxxeTyNZIKfuoPsqDAGXQNMh4KdYxBnmRqmIz5BjOGmWGS8kjPc=
+	t=1761593030; cv=none; b=NB/prn8pkpWGr8cUn0XFTGnp7ht3QIUI5NWPHDJyLlQ/aqe3cYmaS6gxLbziT0Bl/aFJROJSHSzvd5z3Md4bs1QznTrWqNB5nWeXdIsqcRwuSPwSKcZSqgy/y/JQchIVIWDyMBoyHRuZEclTY4JV8oR2LmRLgp8AI8Nb5yfy/qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593028; c=relaxed/simple;
-	bh=S5ZAutcr7l39/ciU9WTL2qZmQk2rn1wHS6HPqu4eGe4=;
+	s=arc-20240116; t=1761593030; c=relaxed/simple;
+	bh=ujQn+kfm+HWuFL87MrJzH2y43yQpcDKQgDz7/dv/tdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sm85aOhCLd6sabbvyolPLCZ/GRl3NEQO+ldS2lbY8f2znJko4EuvEjq87w+2fSt0hyEXdPG5m8m1Gx3WQFLZSTzJlyJTFPb66QRFCqCIjYAT108AWWBhtndhG8KuilRA4ISxqOE0Cf13X3lA+QhSUoOPHlkVg8OBkwV+KQAKlUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzPuLz37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pcA4Uy8seAeF1j/b/Vy3r61eLwqnC4+TZVloHvAE5FuoUx2nnRSgq4gZeklXLn3tjdJ2xhlTPD/CUHrH/1eAODDH65p6vUdXPGPepzfEbVrqPxh8l1zEDrIazHV/8BkGaVSxr1plH1VGPJiGcCfB+cVcrPJ5s52nIzh4COjeD6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmW4uB8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzPuLz37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5910C113D0;
-	Mon, 27 Oct 2025 19:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmW4uB8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C64BC4CEF1;
+	Mon, 27 Oct 2025 19:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593028;
-	bh=S5ZAutcr7l39/ciU9WTL2qZmQk2rn1wHS6HPqu4eGe4=;
+	s=korg; t=1761593030;
+	bh=ujQn+kfm+HWuFL87MrJzH2y43yQpcDKQgDz7/dv/tdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzPuLz37PaqdNq3R6s7/AB/IHben8zG7eTWX+pfTBPuMbi8aJ3ONuP1G6eytbKo98
-	 0USecphh+4f9V37LVOvWZvz8oz1R0EKOj57KVlcZJpOV0OqldWDjNq5pEajC7OrWkH
-	 Y7AKFLq0CczSAm4EiC2WKqAtgjnrI0qNWHhjOTFA=
+	b=hmW4uB8k26GTGhtpjBCd4BvG/3rRwGbp0pKib93pSn4Vw+qx6LtsGiOTewNT5NKKT
+	 jZNRPpJQiq4FIUOGxAHCdEgZ7iycIHV8cwvCOYptpQ5fUr6NAVVxbo+grIePmujo1I
+	 0fovaThAKZ7zuDCy4s3roBGI/B4sXALMF8uZR6VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.12 101/117] x86/microcode: Fix Entrysign revision check for Zen1/Naples
-Date: Mon, 27 Oct 2025 19:37:07 +0100
-Message-ID: <20251027183456.753730862@linuxfoundation.org>
+	Yu-Ting Tseng <yutingtseng@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.12 102/117] binder: remove "invalid inc weak" check
+Date: Mon, 27 Oct 2025 19:37:08 +0100
+Message-ID: <20251027183456.780554496@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -51,34 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 876f0d43af78639790bee0e57b39d498ae35adcf upstream.
+commit d90eeb8ecd227c204ab6c34a17b372bd950b7aa2 upstream.
 
-... to match AMD's statement here:
+There are no scenarios where a weak increment is invalid on binder_node.
+The only possible case where it could be invalid is if the kernel
+delivers BR_DECREFS to the process that owns the node, and then
+increments the weak refcount again, effectively "reviving" a dead node.
 
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7033.html
+However, that is not possible: when the BR_DECREFS command is delivered,
+the kernel removes and frees the binder_node. The fact that you were
+able to call binder_inc_node_nilocked() implies that the node is not yet
+destroyed, which implies that BR_DECREFS has not been delivered to
+userspace, so incrementing the weak refcount is valid.
 
-Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20251020144124.2930784-1-andrew.cooper3@citrix.com
+Note that it's currently possible to trigger this condition if the owner
+calls BINDER_THREAD_EXIT while node->has_weak_ref is true. This causes
+BC_INCREFS on binder_ref instances to fail when they should not.
+
+Cc: stable@vger.kernel.org
+Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
+Reported-by: Yu-Ting Tseng <yutingtseng@google.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20251015-binder-weak-inc-v1-1-7914b092c371@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -182,7 +182,7 @@ static bool need_sha_check(u32 cur_rev)
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -846,17 +846,8 @@ static int binder_inc_node_nilocked(stru
+ 	} else {
+ 		if (!internal)
+ 			node->local_weak_refs++;
+-		if (!node->has_weak_ref && list_empty(&node->work.entry)) {
+-			if (target_list == NULL) {
+-				pr_err("invalid inc weak node for %d\n",
+-					node->debug_id);
+-				return -EINVAL;
+-			}
+-			/*
+-			 * See comment above
+-			 */
++		if (!node->has_weak_ref && target_list && list_empty(&node->work.entry))
+ 			binder_enqueue_work_ilocked(&node->work, target_list);
+-		}
  	}
- 
- 	switch (cur_rev >> 8) {
--	case 0x80012: return cur_rev <= 0x800126f; break;
-+	case 0x80012: return cur_rev <= 0x8001277; break;
- 	case 0x80082: return cur_rev <= 0x800820f; break;
- 	case 0x83010: return cur_rev <= 0x830107c; break;
- 	case 0x86001: return cur_rev <= 0x860010e; break;
+ 	return 0;
+ }
 
 
