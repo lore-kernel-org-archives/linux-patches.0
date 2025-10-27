@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE367218EB1;
-	Mon, 27 Oct 2025 18:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA3D218EB1;
+	Mon, 27 Oct 2025 18:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590394; cv=none; b=f/3nXjeG8KQ0XQN823jREir6xpbfG8FOaO4mtZ+EnH7OefioxpvtdZygfAaDZRaRff2/UTmRIXK1pu9pXkCnFFH9QEs3L0YDmsJzmNPsHPYX9t2fQNirWWURytRThOluVXzI72j0bDusxTlcfsL2K2SwzELjbLvSPeSXGlQW5WQ=
+	t=1761590396; cv=none; b=LtXQ/Rpn7tpQyVvZBjix3BEZ56CpL/ky49Eqs9MCqEGjCSBxrzjbuXovzx8HCBNvuEyqmR+u9M78ShUapWu7oIXK5gdpPQwb3iKpwdSjpw4d5jSVh9mCMmFR+Is7BZyWPM6ns03mrYHE524iJ2RpSBuJVkuc3aaY32oOYb7/KjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590394; c=relaxed/simple;
-	bh=SQUzB8EoNnmeweFdYTvktuG2DdDAcG0rNCQ0q/Gdi5U=;
+	s=arc-20240116; t=1761590396; c=relaxed/simple;
+	bh=cSkJ8ddCQZVc02kK4DTBkAeMUxPSaYCqEtuuoCbAIQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzVgw+36B9eQuFPG69xM76UeIhFerqBq2VpYyyP+dPY8Q9oMPU0EXIL6LUj8aGnCkurGGpxol7Eet9XwJO4viiJJBhiZUMb/exRAPAUPc2uuziL3rli4yGeeF5PxoZxuEszUczJxxZyGJ/XZ6kGnr+V7UmupVzMwO4TtJpPt3mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+ooWAHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WWTRz0j8hbT/fzVrWN7HTr4RDSddq4zIJwVij+W5YAVjsgkTHtn6yBqsfwOiVcrBkTa7SzNcwevsW/JXXkpCcOyDNO0sNQPEcsZF7djM5XAbU0oqHq8pIsDEx7kNJy8EK1VvE77aja3t46iuEsWpj72ZMyIbggVq5eHsOejrYuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RK8JX9kN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+ooWAHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC68C4CEF1;
-	Mon, 27 Oct 2025 18:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RK8JX9kN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B29C113D0;
+	Mon, 27 Oct 2025 18:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590393;
-	bh=SQUzB8EoNnmeweFdYTvktuG2DdDAcG0rNCQ0q/Gdi5U=;
+	s=korg; t=1761590396;
+	bh=cSkJ8ddCQZVc02kK4DTBkAeMUxPSaYCqEtuuoCbAIQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+ooWAHKqzxPGrXgc7q3dSC41J6wRIXMCOgS+NlrpUaAWi32pnawSyFeCEQbiVtcG
-	 PSlx7O3Yeg/25kAF783y7ZrtZ5mr18QILbkr1YqVoP5vyqkkNlXHVSUAsz3RLNjB7x
-	 3vbxftORq1W+DDoV84Ml/w10MtNP0+4aDlsCmm/0=
+	b=RK8JX9kNtxbDb7ZoyxmUmoDkXsyKXtuKdWoHOVNO+yfPH+kJUPvbloRLaJ0FKp1gH
+	 HsNsJ/c47w6uX+cIqbwIUke1dsWAQ1xBmEg8GIvzyFTpWk5NrWkvh+OSx1B7BulziO
+	 Nd8wAKgZhqM0HbrOKTDtOU8Jr1+eF4P0KXEJ1XPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+136ca59d411f92e821b7@syzkaller.appspotmail.com,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	"Leilk.Liu" <leilk.liu@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 028/224] bpf: Explicitly check accesses to bpf_sock_addr
-Date: Mon, 27 Oct 2025 19:32:54 +0100
-Message-ID: <20251027183509.759350020@linuxfoundation.org>
+Subject: [PATCH 5.4 029/224] i2c: mediatek: fix potential incorrect use of I2C_MASTER_WRRD
+Date: Mon, 27 Oct 2025 19:32:55 +0100
+Message-ID: <20251027183509.786297134@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -47,79 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Leilk.Liu <leilk.liu@mediatek.com>
 
-[ Upstream commit 6fabca2fc94d33cdf7ec102058983b086293395f ]
+[ Upstream commit b492183652808e0f389272bf63dc836241b287ff ]
 
-Syzkaller found a kernel warning on the following sock_addr program:
+The old IC does not support the I2C_MASTER_WRRD (write-then-read)
+function, but the current code’s handling of i2c->auto_restart may
+potentially lead to entering the I2C_MASTER_WRRD software flow,
+resulting in unexpected bugs.
 
-    0: r0 = 0
-    1: r2 = *(u32 *)(r1 +60)
-    2: exit
+Instead of repurposing the auto_restart flag, add a separate flag
+to signal I2C_MASTER_WRRD operations.
 
-which triggers:
+Also fix handling of msgs. If the operation (i2c->op) is
+I2C_MASTER_WRRD, then the msgs pointer is incremented by 2.
+For all other operations, msgs is simply incremented by 1.
 
-    verifier bug: error during ctx access conversion (0)
-
-This is happening because offset 60 in bpf_sock_addr corresponds to an
-implicit padding of 4 bytes, right after msg_src_ip4. Access to this
-padding isn't rejected in sock_addr_is_valid_access and it thus later
-fails to convert the access.
-
-This patch fixes it by explicitly checking the various fields of
-bpf_sock_addr in sock_addr_is_valid_access.
-
-I checked the other ctx structures and is_valid_access functions and
-didn't find any other similar cases. Other cases of (properly handled)
-padding are covered in new tests in a subsequent patch.
-
-Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
-Reported-by: syzbot+136ca59d411f92e821b7@syzkaller.appspotmail.com
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Closes: https://syzkaller.appspot.com/bug?extid=136ca59d411f92e821b7
-Link: https://lore.kernel.org/bpf/b58609d9490649e76e584b0361da0abd3c2c1779.1758094761.git.paul.chaignon@gmail.com
+Fixes: b2ed11e224a2 ("I2C: mediatek: Add driver for MediaTek MT8173 I2C controller")
+Signed-off-by: Leilk.Liu <leilk.liu@mediatek.com>
+Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/i2c/busses/i2c-mt65xx.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index fd18497977bdf..2c56c910a0c13 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7132,13 +7132,17 @@ static bool sock_addr_is_valid_access(int off, int size,
- 			return false;
- 		info->reg_type = PTR_TO_SOCKET;
- 		break;
--	default:
--		if (type == BPF_READ) {
--			if (size != size_default)
--				return false;
--		} else {
-+	case bpf_ctx_range(struct bpf_sock_addr, user_family):
-+	case bpf_ctx_range(struct bpf_sock_addr, family):
-+	case bpf_ctx_range(struct bpf_sock_addr, type):
-+	case bpf_ctx_range(struct bpf_sock_addr, protocol):
-+		if (type != BPF_READ)
- 			return false;
--		}
-+		if (size != size_default)
-+			return false;
-+		break;
-+	default:
-+		return false;
+diff --git a/drivers/i2c/busses/i2c-mt65xx.c b/drivers/i2c/busses/i2c-mt65xx.c
+index 5587e7c549c4f..2b56ad08efed1 100644
+--- a/drivers/i2c/busses/i2c-mt65xx.c
++++ b/drivers/i2c/busses/i2c-mt65xx.c
+@@ -782,6 +782,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ {
+ 	int ret;
+ 	int left_num = num;
++	bool write_then_read_en = false;
+ 	struct mtk_i2c *i2c = i2c_get_adapdata(adap);
+ 
+ 	ret = mtk_i2c_clock_enable(i2c);
+@@ -795,6 +796,7 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		if (!(msgs[0].flags & I2C_M_RD) && (msgs[1].flags & I2C_M_RD) &&
+ 		    msgs[0].addr == msgs[1].addr) {
+ 			i2c->auto_restart = 0;
++			write_then_read_en = true;
+ 		}
  	}
  
- 	return true;
+@@ -818,12 +820,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		else
+ 			i2c->op = I2C_MASTER_WR;
+ 
+-		if (!i2c->auto_restart) {
+-			if (num > 1) {
+-				/* combined two messages into one transaction */
+-				i2c->op = I2C_MASTER_WRRD;
+-				left_num--;
+-			}
++		if (write_then_read_en) {
++			/* combined two messages into one transaction */
++			i2c->op = I2C_MASTER_WRRD;
++			left_num--;
+ 		}
+ 
+ 		/* always use DMA mode. */
+@@ -831,7 +831,10 @@ static int mtk_i2c_transfer(struct i2c_adapter *adap,
+ 		if (ret < 0)
+ 			goto err_exit;
+ 
+-		msgs++;
++		if (i2c->op == I2C_MASTER_WRRD)
++			msgs += 2;
++		else
++			msgs++;
+ 	}
+ 	/* the return value is number of executed messages */
+ 	ret = num;
 -- 
 2.51.0
 
