@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3813081AE;
-	Mon, 27 Oct 2025 18:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2312D839A;
+	Mon, 27 Oct 2025 18:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591377; cv=none; b=H6UHg4r+JIUWDZ8ao272dQN1gMjgzkoII9qRFHcvMJJOR/mTXae695gcQBnUSOw/Kr6sX7I6vlaM2J9FgZI1OhTMevGjWst+GM9k5mFLQRNz+W2c03aaqVjV/Lom6K6ZT0z819ZSDEkJN6ADSaIfGdr4BSWls6hK4eRcTCq/QIM=
+	t=1761591379; cv=none; b=P03JDXaSN8AtxScI3y2p9JLMiR2bO8BITqbzlRnVW0vlMD0jQl8ySEiwms3wmiqVMgdE3lr+7W41RPFSJEynDqsnnQb/X8VyYHgVY0Vi9bSfys1fLwybTDeh8FcaqEV7UjQkyx3xNM3wEyaPFQjysnP4EDERtrDVvQfmmHLcLhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591377; c=relaxed/simple;
-	bh=hMszEKO2MyfpOh8G0jssNo2jy6aViXR084Y4DD4ovMU=;
+	s=arc-20240116; t=1761591379; c=relaxed/simple;
+	bh=mOwGkdqF8xXOweahBnws4egJl5lDgJ+YsWzS24RTFDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TCaE2DlmIzUT8LTz+hRusxOAmN2qYI5xVNzNtzmXPpa/N/qWz/sRhaacoihtsBvudgZGPjNAZXlTKtrw6G8ZwuRNKKmGkFwFPjk5awb8YOr8UMSZiG4aSwuYj5unjEAehOotbo25t7Oydn1MWMjb4vZi+SgVUXa4hi2qO7L/dUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsFdUN9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/gY3d2agbRALKvvvOEwtATixi4/0OXkCXKGfWaIZp0civb0cd69/WR15c/YgeQ/XZL1xcVpftJABZx+iJtkvFIbu+1v29rZK3qXWlWg4KDMCat9WNek7u0RUL/w3j8ZKEWXJ1MWISgbCPYo04Rkq1Bsi23riegj/plEYDPsBIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb8zePB+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsFdUN9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D51EC4CEF1;
-	Mon, 27 Oct 2025 18:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb8zePB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15126C4CEF1;
+	Mon, 27 Oct 2025 18:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591376;
-	bh=hMszEKO2MyfpOh8G0jssNo2jy6aViXR084Y4DD4ovMU=;
+	s=korg; t=1761591379;
+	bh=mOwGkdqF8xXOweahBnws4egJl5lDgJ+YsWzS24RTFDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsFdUN9y+geknia/4SxRxnHnWXM6j8p6kv0pIff8oBt0hT+CS4y+icj9UTBInmMFT
-	 jSUmXoXEN+9SxLl+ThWFwUjWhJEknQ6S0jpSXhkrQqoN3dogxGkODJW58U/AU6ulzM
-	 e/efdQBmEewT9UYtdZUhiqfQAmcad6ojBDiLTVPM=
+	b=hb8zePB+iBYdB2ya4RxJ/q0CKS/qWuirL0ii0dEu1gNPbIiLg9e2Al6UwtkdfN1n8
+	 dm7YPUlGEl3u8NlWfosKgdQDNHNQ/mU3E9pfbIna8AmuzbhKhC+zNX44vIqjPdPl6n
+	 Pq3yIC4CUUFzw2gfecwTaQu6Vg1i4aKndNDbsiPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/332] tracing: Fix race condition in kprobe initialization causing NULL pointer dereference
-Date: Mon, 27 Oct 2025 19:33:46 +0100
-Message-ID: <20251027183529.198853734@linuxfoundation.org>
+Subject: [PATCH 5.10 174/332] dm: fix NULL pointer dereference in __dm_suspend()
+Date: Mon, 27 Oct 2025 19:33:47 +0100
+Message-ID: <20251027183529.230649809@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -45,239 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 9cf9aa7b0acfde7545c1a1d912576e9bab28dc6f ]
+[ Upstream commit 8d33a030c566e1f105cd5bf27f37940b6367f3be ]
 
-There is a critical race condition in kprobe initialization that can lead to
-NULL pointer dereference and kernel crash.
+There is a race condition between dm device suspend and table load that
+can lead to null pointer dereference. The issue occurs when suspend is
+invoked before table load completes:
 
-[1135630.084782] Unable to handle kernel paging request at virtual address 0000710a04630000
-...
-[1135630.260314] pstate: 404003c9 (nZcv DAIF +PAN -UAO)
-[1135630.269239] pc : kprobe_perf_func+0x30/0x260
-[1135630.277643] lr : kprobe_dispatcher+0x44/0x60
-[1135630.286041] sp : ffffaeff4977fa40
-[1135630.293441] x29: ffffaeff4977fa40 x28: ffffaf015340e400
-[1135630.302837] x27: 0000000000000000 x26: 0000000000000000
-[1135630.312257] x25: ffffaf029ed108a8 x24: ffffaf015340e528
-[1135630.321705] x23: ffffaeff4977fc50 x22: ffffaeff4977fc50
-[1135630.331154] x21: 0000000000000000 x20: ffffaeff4977fc50
-[1135630.340586] x19: ffffaf015340e400 x18: 0000000000000000
-[1135630.349985] x17: 0000000000000000 x16: 0000000000000000
-[1135630.359285] x15: 0000000000000000 x14: 0000000000000000
-[1135630.368445] x13: 0000000000000000 x12: 0000000000000000
-[1135630.377473] x11: 0000000000000000 x10: 0000000000000000
-[1135630.386411] x9 : 0000000000000000 x8 : 0000000000000000
-[1135630.395252] x7 : 0000000000000000 x6 : 0000000000000000
-[1135630.403963] x5 : 0000000000000000 x4 : 0000000000000000
-[1135630.412545] x3 : 0000710a04630000 x2 : 0000000000000006
-[1135630.421021] x1 : ffffaeff4977fc50 x0 : 0000710a04630000
-[1135630.429410] Call trace:
-[1135630.434828]  kprobe_perf_func+0x30/0x260
-[1135630.441661]  kprobe_dispatcher+0x44/0x60
-[1135630.448396]  aggr_pre_handler+0x70/0xc8
-[1135630.454959]  kprobe_breakpoint_handler+0x140/0x1e0
-[1135630.462435]  brk_handler+0xbc/0xd8
-[1135630.468437]  do_debug_exception+0x84/0x138
-[1135630.475074]  el1_dbg+0x18/0x8c
-[1135630.480582]  security_file_permission+0x0/0xd0
-[1135630.487426]  vfs_write+0x70/0x1c0
-[1135630.493059]  ksys_write+0x5c/0xc8
-[1135630.498638]  __arm64_sys_write+0x24/0x30
-[1135630.504821]  el0_svc_common+0x78/0x130
-[1135630.510838]  el0_svc_handler+0x38/0x78
-[1135630.516834]  el0_svc+0x8/0x1b0
+BUG: kernel NULL pointer dereference, address: 0000000000000054
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
+RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
+Call Trace:
+  <TASK>
+  blk_mq_quiesce_queue+0x2c/0x50
+  dm_stop_queue+0xd/0x20
+  __dm_suspend+0x130/0x330
+  dm_suspend+0x11a/0x180
+  dev_suspend+0x27e/0x560
+  ctl_ioctl+0x4cf/0x850
+  dm_ctl_ioctl+0xd/0x20
+  vfs_ioctl+0x1d/0x50
+  __se_sys_ioctl+0x9b/0xc0
+  __x64_sys_ioctl+0x19/0x30
+  x64_sys_call+0x2c4a/0x4620
+  do_syscall_64+0x9e/0x1b0
 
-kernel/trace/trace_kprobe.c: 1308
-0xffff3df8995039ec <kprobe_perf_func+0x2c>:     ldr     x21, [x24,#120]
-include/linux/compiler.h: 294
-0xffff3df8995039f0 <kprobe_perf_func+0x30>:     ldr     x1, [x21,x0]
+The issue can be triggered as below:
 
-kernel/trace/trace_kprobe.c
-1308: head = this_cpu_ptr(call->perf_events);
-1309: if (hlist_empty(head))
-1310: 	return 0;
+T1 						T2
+dm_suspend					table_load
+__dm_suspend					dm_setup_md_queue
+						dm_mq_init_request_queue
+						blk_mq_init_allocated_queue
+						=> q->mq_ops = set->ops; (1)
+dm_stop_queue / dm_wait_for_completion
+=> q->tag_set NULL pointer!	(2)
+						=> q->tag_set = set; (3)
 
-crash> struct trace_event_call -o
-struct trace_event_call {
-  ...
-  [120] struct hlist_head *perf_events;  //(call->perf_event)
-  ...
-}
+Fix this by checking if a valid table (map) exists before performing
+request-based suspend and waiting for target I/O. When map is NULL,
+skip these table-dependent suspend steps.
 
-crash> struct trace_event_call ffffaf015340e528
-struct trace_event_call {
-  ...
-  perf_events = 0xffff0ad5fa89f088, //this value is correct, but x21 = 0
-  ...
-}
+Even when map is NULL, no I/O can reach any target because there is
+no table loaded; I/O submitted in this state will fail early in the
+DM layer. Skipping the table-dependent suspend logic in this case
+is safe and avoids NULL pointer dereferences.
 
-Race Condition Analysis:
-
-The race occurs between kprobe activation and perf_events initialization:
-
-  CPU0                                    CPU1
-  ====                                    ====
-  perf_kprobe_init
-    perf_trace_event_init
-      tp_event->perf_events = list;(1)
-      tp_event->class->reg (2)← KPROBE ACTIVE
-                                          Debug exception triggers
-                                          ...
-                                          kprobe_dispatcher
-                                            kprobe_perf_func (tk->tp.flags & TP_FLAG_PROFILE)
-                                              head = this_cpu_ptr(call->perf_events)(3)
-                                              (perf_events is still NULL)
-
-Problem:
-1. CPU0 executes (1) assigning tp_event->perf_events = list
-2. CPU0 executes (2) enabling kprobe functionality via class->reg()
-3. CPU1 triggers and reaches kprobe_dispatcher
-4. CPU1 checks TP_FLAG_PROFILE - condition passes (step 2 completed)
-5. CPU1 calls kprobe_perf_func() and crashes at (3) because
-   call->perf_events is still NULL
-
-CPU1 sees that kprobe functionality is enabled but does not see that
-perf_events has been assigned.
-
-Add pairing read and write memory barriers to guarantee that if CPU1
-sees that kprobe functionality is enabled, it must also see that
-perf_events has been assigned.
-
-Link: https://lore.kernel.org/all/20251001022025.44626-1-chenyuan_fl@163.com/
-
-Fixes: 50d780560785 ("tracing/kprobes: Add probe handler dispatcher to support perf and ftrace concurrent use")
+Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ Dropped ftrace changes + context ]
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ omitted DMF_QUEUE_STOPPED flag setting and braces absent in 5.15 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c |   11 +++++++----
- kernel/trace/trace_probe.h  |    9 +++++++--
- kernel/trace/trace_uprobe.c |   12 ++++++++----
- 3 files changed, 22 insertions(+), 10 deletions(-)
+ drivers/md/dm.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -1782,14 +1782,15 @@ static int kprobe_register(struct trace_
- static int kprobe_dispatcher(struct kprobe *kp, struct pt_regs *regs)
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2457,7 +2457,7 @@ static int __dm_suspend(struct mapped_de
  {
- 	struct trace_kprobe *tk = container_of(kp, struct trace_kprobe, rp.kp);
-+	unsigned int flags = trace_probe_load_flag(&tk->tp);
- 	int ret = 0;
+ 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
+ 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
+-	int r;
++	int r = 0;
  
- 	raw_cpu_inc(*tk->nhit);
+ 	lockdep_assert_held(&md->suspend_lock);
  
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	if (flags & TP_FLAG_TRACE)
- 		kprobe_trace_func(tk, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret = kprobe_perf_func(tk, regs);
- #endif
- 	return ret;
-@@ -1800,13 +1801,15 @@ static int
- kretprobe_dispatcher(struct kretprobe_instance *ri, struct pt_regs *regs)
- {
- 	struct trace_kprobe *tk = container_of(ri->rp, struct trace_kprobe, rp);
-+	unsigned int flags;
+@@ -2509,7 +2509,7 @@ static int __dm_suspend(struct mapped_de
+ 	 * Stop md->queue before flushing md->wq in case request-based
+ 	 * dm defers requests to md->wq from md->queue.
+ 	 */
+-	if (dm_request_based(md))
++	if (map && dm_request_based(md))
+ 		dm_stop_queue(md->queue);
  
- 	raw_cpu_inc(*tk->nhit);
+ 	flush_workqueue(md->wq);
+@@ -2519,7 +2519,8 @@ static int __dm_suspend(struct mapped_de
+ 	 * We call dm_wait_for_completion to wait for all existing requests
+ 	 * to finish.
+ 	 */
+-	r = dm_wait_for_completion(md, task_state);
++	if (map)
++		r = dm_wait_for_completion(md, task_state);
+ 	if (!r)
+ 		set_bit(dmf_suspended_flag, &md->flags);
  
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tk->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		kretprobe_trace_func(tk, ri, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		kretprobe_perf_func(tk, ri, regs);
- #endif
- 	return 0;	/* We don't tweek kernel, so just return 0 */
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -251,16 +251,21 @@ struct event_file_link {
- 	struct list_head		list;
- };
- 
-+static inline unsigned int trace_probe_load_flag(struct trace_probe *tp)
-+{
-+	return smp_load_acquire(&tp->event->flags);
-+}
-+
- static inline bool trace_probe_test_flag(struct trace_probe *tp,
- 					 unsigned int flag)
- {
--	return !!(tp->event->flags & flag);
-+	return !!(trace_probe_load_flag(tp) & flag);
- }
- 
- static inline void trace_probe_set_flag(struct trace_probe *tp,
- 					unsigned int flag)
- {
--	tp->event->flags |= flag;
-+	smp_store_release(&tp->event->flags, tp->event->flags | flag);
- }
- 
- static inline void trace_probe_clear_flag(struct trace_probe *tp,
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1484,6 +1484,7 @@ static int uprobe_dispatcher(struct upro
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
- 	int dsize, esize;
-+	unsigned int flags;
- 	int ret = 0;
- 
- 
-@@ -1504,11 +1505,12 @@ static int uprobe_dispatcher(struct upro
- 	ucb = uprobe_buffer_get();
- 	store_trace_args(ucb->buf, &tu->tp, regs, esize, dsize);
- 
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		ret |= uprobe_trace_func(tu, regs, ucb, dsize);
- 
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret |= uprobe_perf_func(tu, regs, ucb, dsize);
- #endif
- 	uprobe_buffer_put(ucb);
-@@ -1522,6 +1524,7 @@ static int uretprobe_dispatcher(struct u
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
- 	int dsize, esize;
-+	unsigned int flags;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
- 
-@@ -1539,11 +1542,12 @@ static int uretprobe_dispatcher(struct u
- 	ucb = uprobe_buffer_get();
- 	store_trace_args(ucb->buf, &tu->tp, regs, esize, dsize);
- 
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		uretprobe_trace_func(tu, func, regs, ucb, dsize);
- 
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		uretprobe_perf_func(tu, func, regs, ucb, dsize);
- #endif
- 	uprobe_buffer_put(ucb);
 
 
