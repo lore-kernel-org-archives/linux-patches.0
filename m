@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85A33314DD;
-	Mon, 27 Oct 2025 19:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBB73314DD;
+	Mon, 27 Oct 2025 19:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591914; cv=none; b=WDbHre3fUDshegQbqTYy/95in2RDJYfnh7tPE+XyqPkeUeB/unPEoAzggZPGqEcKtZjZTedhxM5zPJE0X7pK0Nfvi5NCk6L6zsbNPUe1487cY3ScMVafrV+rU8kOmUInCZnw+ShNuUB8vN1Gh6sWAYvkc/XTH5Pqentl/8B3ThM=
+	t=1761591917; cv=none; b=JXKh9AEkU7q3/c2Jt+AkChXivLrS0Bx6wyDIdETyFNVwz7pFMCv5LnyZOfU6DSsEh7Fd+da6zSR7LD/ViqNfnjHyI75HjJIpLnl9a4bnbC5ABKtI7QyvEerttuJIQw2VePntzyfi+UfKtEtqIszIPW0Tr6dS5s4F3+8vnxtt11Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591914; c=relaxed/simple;
-	bh=cUHJQGDnHXTVwiO89N31F6jM+yKBSiVQ1fIu4HFLDQk=;
+	s=arc-20240116; t=1761591917; c=relaxed/simple;
+	bh=GgCOAzqYYB9L/PjW52JjLj3qVbwiaD1C/ZMvvY8O8I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqeiVWIs9W7OUvzrYRY7ePlnNT8Fpv0rKZ7fJhYpiQposMx3KEzAJjPWBm87kUWX7coX66zrttROsw4WJDPeR1M7RLXgjp2dziMnU6qugUd/oLk7zbA5qKRndaY3j+bd8p+XJvMNZ7drGg0oMdv/pLsXdhklqTXQLOtqsI4FRtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6k6y05G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7LI7f8uGJtbv1Oy3YFpme9vI5X92f8CWD/duNo7DzwFqz7LmyIgVex4ezwLpOrjAUFKdz3i6RNf9NmOAUgZgoBWsrDXaY1/kTrTIFhPFbO673vnUXPdzR5P4aaozemzcdNs+rS0aRizeatFXR7kH7DCyRDyF++dBrUv2uJ4PBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE5VsKjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6k6y05G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B411C4CEF1;
-	Mon, 27 Oct 2025 19:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE5VsKjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CF0C4CEF1;
+	Mon, 27 Oct 2025 19:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591914;
-	bh=cUHJQGDnHXTVwiO89N31F6jM+yKBSiVQ1fIu4HFLDQk=;
+	s=korg; t=1761591917;
+	bh=GgCOAzqYYB9L/PjW52JjLj3qVbwiaD1C/ZMvvY8O8I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6k6y05GfsCng7UcEGYs8hrTat0HrkPgBGwVK6wYg1u6JGZCqfkEWWqsVkh7IWCkm
-	 RGOIfUJwkQ84w7e7kcdcbdEAJQB2ZIV3jnQky8siVR5VRf0GWHDfGHPGgvY20u9k48
-	 vH3Dd80SFdxfEidDNbOxodfHqBdX83N8lm72dGWY=
+	b=CE5VsKjfSSmj+NEbglZo0POfxTciTRqX/678mUrr8oSIau9Gm07UfiScnv1ik1Pt/
+	 ebSX1dBBR440YdT+8MFxyNcFZVjOSU9Tp1W7HvUzpOB3ggifran29n8R4C+Wx5xh2j
+	 AJMf+WoaxEQG01uluxjoUEIweZghdJHJ3Qj6X1JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+356aed408415a56543cd@syzkaller.appspotmail.com,
-	Yang Chenzhi <yang.chenzhi@vivo.com>,
+	syzbot <syzbot+fdedff847a0e5e84c39f@syzkaller.appspotmail.com>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/123] hfs: validate record offset in hfsplus_bmap_alloc
-Date: Mon, 27 Oct 2025 19:35:26 +0100
-Message-ID: <20251027183447.631497582@linuxfoundation.org>
+Subject: [PATCH 5.15 047/123] hfsplus: fix KMSAN uninit-value issue in hfsplus_delete_cat()
+Date: Mon, 27 Oct 2025 19:35:27 +0100
+Message-ID: <20251027183447.658172803@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,215 +54,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Chenzhi <yang.chenzhi@vivo.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 738d5a51864ed8d7a68600b8c0c63fe6fe5c4f20 ]
+[ Upstream commit 9b3d15a758910bb98ba8feb4109d99cc67450ee4 ]
 
-hfsplus_bmap_alloc can trigger a crash if a
-record offset or length is larger than node_size
+The syzbot reported issue in hfsplus_delete_cat():
 
-[   15.264282] BUG: KASAN: slab-out-of-bounds in hfsplus_bmap_alloc+0x887/0x8b0
-[   15.265192] Read of size 8 at addr ffff8881085ca188 by task test/183
-[   15.265949]
-[   15.266163] CPU: 0 UID: 0 PID: 183 Comm: test Not tainted 6.17.0-rc2-gc17b750b3ad9 #14 PREEMPT(voluntary)
-[   15.266165] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   15.266167] Call Trace:
-[   15.266168]  <TASK>
-[   15.266169]  dump_stack_lvl+0x53/0x70
-[   15.266173]  print_report+0xd0/0x660
-[   15.266181]  kasan_report+0xce/0x100
-[   15.266185]  hfsplus_bmap_alloc+0x887/0x8b0
-[   15.266208]  hfs_btree_inc_height.isra.0+0xd5/0x7c0
-[   15.266217]  hfsplus_brec_insert+0x870/0xb00
-[   15.266222]  __hfsplus_ext_write_extent+0x428/0x570
-[   15.266225]  __hfsplus_ext_cache_extent+0x5e/0x910
-[   15.266227]  hfsplus_ext_read_extent+0x1b2/0x200
-[   15.266233]  hfsplus_file_extend+0x5a7/0x1000
-[   15.266237]  hfsplus_get_block+0x12b/0x8c0
-[   15.266238]  __block_write_begin_int+0x36b/0x12c0
-[   15.266251]  block_write_begin+0x77/0x110
-[   15.266252]  cont_write_begin+0x428/0x720
-[   15.266259]  hfsplus_write_begin+0x51/0x100
-[   15.266262]  cont_write_begin+0x272/0x720
-[   15.266270]  hfsplus_write_begin+0x51/0x100
-[   15.266274]  generic_perform_write+0x321/0x750
-[   15.266285]  generic_file_write_iter+0xc3/0x310
-[   15.266289]  __kernel_write_iter+0x2fd/0x800
-[   15.266296]  dump_user_range+0x2ea/0x910
-[   15.266301]  elf_core_dump+0x2a94/0x2ed0
-[   15.266320]  vfs_coredump+0x1d85/0x45e0
-[   15.266349]  get_signal+0x12e3/0x1990
-[   15.266357]  arch_do_signal_or_restart+0x89/0x580
-[   15.266362]  irqentry_exit_to_user_mode+0xab/0x110
-[   15.266364]  asm_exc_page_fault+0x26/0x30
-[   15.266366] RIP: 0033:0x41bd35
-[   15.266367] Code: bc d1 f3 0f 7f 27 f3 0f 7f 6f 10 f3 0f 7f 77 20 f3 0f 7f 7f 30 49 83 c0 0f 49 29 d0 48 8d 7c 17 31 e9 9f 0b 00 00 66 0f ef c0 <f3> 0f 6f 0e f3 0f 6f 56 10 66 0f 74 c1 66 0f d7 d0 49 83 f8f
-[   15.266369] RSP: 002b:00007ffc9e62d078 EFLAGS: 00010283
-[   15.266371] RAX: 00007ffc9e62d100 RBX: 0000000000000000 RCX: 0000000000000000
-[   15.266372] RDX: 00000000000000e0 RSI: 0000000000000000 RDI: 00007ffc9e62d100
-[   15.266373] RBP: 0000400000000040 R08: 00000000000000e0 R09: 0000000000000000
-[   15.266374] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-[   15.266375] R13: 0000000000000000 R14: 0000000000000000 R15: 0000400000000000
-[   15.266376]  </TASK>
+[   70.682285][ T9333] =====================================================
+[   70.682943][ T9333] BUG: KMSAN: uninit-value in hfsplus_subfolders_dec+0x1d7/0x220
+[   70.683640][ T9333]  hfsplus_subfolders_dec+0x1d7/0x220
+[   70.684141][ T9333]  hfsplus_delete_cat+0x105d/0x12b0
+[   70.684621][ T9333]  hfsplus_rmdir+0x13d/0x310
+[   70.685048][ T9333]  vfs_rmdir+0x5ba/0x810
+[   70.685447][ T9333]  do_rmdir+0x964/0xea0
+[   70.685833][ T9333]  __x64_sys_rmdir+0x71/0xb0
+[   70.686260][ T9333]  x64_sys_call+0xcd8/0x3cf0
+[   70.686695][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.687119][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.687646][ T9333]
+[   70.687856][ T9333] Uninit was stored to memory at:
+[   70.688311][ T9333]  hfsplus_subfolders_inc+0x1c2/0x1d0
+[   70.688779][ T9333]  hfsplus_create_cat+0x148e/0x1800
+[   70.689231][ T9333]  hfsplus_mknod+0x27f/0x600
+[   70.689730][ T9333]  hfsplus_mkdir+0x5a/0x70
+[   70.690146][ T9333]  vfs_mkdir+0x483/0x7a0
+[   70.690545][ T9333]  do_mkdirat+0x3f2/0xd30
+[   70.690944][ T9333]  __x64_sys_mkdir+0x9a/0xf0
+[   70.691380][ T9333]  x64_sys_call+0x2f89/0x3cf0
+[   70.691816][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.692229][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.692773][ T9333]
+[   70.692990][ T9333] Uninit was stored to memory at:
+[   70.693469][ T9333]  hfsplus_subfolders_inc+0x1c2/0x1d0
+[   70.693960][ T9333]  hfsplus_create_cat+0x148e/0x1800
+[   70.694438][ T9333]  hfsplus_fill_super+0x21c1/0x2700
+[   70.694911][ T9333]  mount_bdev+0x37b/0x530
+[   70.695320][ T9333]  hfsplus_mount+0x4d/0x60
+[   70.695729][ T9333]  legacy_get_tree+0x113/0x2c0
+[   70.696167][ T9333]  vfs_get_tree+0xb3/0x5c0
+[   70.696588][ T9333]  do_new_mount+0x73e/0x1630
+[   70.697013][ T9333]  path_mount+0x6e3/0x1eb0
+[   70.697425][ T9333]  __se_sys_mount+0x733/0x830
+[   70.697857][ T9333]  __x64_sys_mount+0xe4/0x150
+[   70.698269][ T9333]  x64_sys_call+0x2691/0x3cf0
+[   70.698704][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.699117][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.699730][ T9333]
+[   70.699946][ T9333] Uninit was created at:
+[   70.700378][ T9333]  __alloc_pages_noprof+0x714/0xe60
+[   70.700843][ T9333]  alloc_pages_mpol_noprof+0x2a2/0x9b0
+[   70.701331][ T9333]  alloc_pages_noprof+0xf8/0x1f0
+[   70.701774][ T9333]  allocate_slab+0x30e/0x1390
+[   70.702194][ T9333]  ___slab_alloc+0x1049/0x33a0
+[   70.702635][ T9333]  kmem_cache_alloc_lru_noprof+0x5ce/0xb20
+[   70.703153][ T9333]  hfsplus_alloc_inode+0x5a/0xd0
+[   70.703598][ T9333]  alloc_inode+0x82/0x490
+[   70.703984][ T9333]  iget_locked+0x22e/0x1320
+[   70.704428][ T9333]  hfsplus_iget+0x5c/0xba0
+[   70.704827][ T9333]  hfsplus_btree_open+0x135/0x1dd0
+[   70.705291][ T9333]  hfsplus_fill_super+0x1132/0x2700
+[   70.705776][ T9333]  mount_bdev+0x37b/0x530
+[   70.706171][ T9333]  hfsplus_mount+0x4d/0x60
+[   70.706579][ T9333]  legacy_get_tree+0x113/0x2c0
+[   70.707019][ T9333]  vfs_get_tree+0xb3/0x5c0
+[   70.707444][ T9333]  do_new_mount+0x73e/0x1630
+[   70.707865][ T9333]  path_mount+0x6e3/0x1eb0
+[   70.708270][ T9333]  __se_sys_mount+0x733/0x830
+[   70.708711][ T9333]  __x64_sys_mount+0xe4/0x150
+[   70.709158][ T9333]  x64_sys_call+0x2691/0x3cf0
+[   70.709630][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.710053][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.710611][ T9333]
+[   70.710842][ T9333] CPU: 3 UID: 0 PID: 9333 Comm: repro Not tainted 6.12.0-rc6-dirty #17
+[   70.711568][ T9333] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.712490][ T9333] =====================================================
+[   70.713085][ T9333] Disabling lock debugging due to kernel taint
+[   70.713618][ T9333] Kernel panic - not syncing: kmsan.panic set ...
+[   70.714159][ T9333] CPU: 3 UID: 0 PID: 9333 Comm: repro Tainted: G    B              6.12.0-rc6-dirty #17
+[   70.715007][ T9333] Tainted: [B]=BAD_PAGE
+[   70.715365][ T9333] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.716311][ T9333] Call Trace:
+[   70.716621][ T9333]  <TASK>
+[   70.716899][ T9333]  dump_stack_lvl+0x1fd/0x2b0
+[   70.717350][ T9333]  dump_stack+0x1e/0x30
+[   70.717743][ T9333]  panic+0x502/0xca0
+[   70.718116][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.718611][ T9333]  kmsan_report+0x296/0x2a0
+[   70.719038][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.719859][ T9333]  ? __msan_warning+0x96/0x120
+[   70.720345][ T9333]  ? hfsplus_subfolders_dec+0x1d7/0x220
+[   70.720881][ T9333]  ? hfsplus_delete_cat+0x105d/0x12b0
+[   70.721412][ T9333]  ? hfsplus_rmdir+0x13d/0x310
+[   70.721880][ T9333]  ? vfs_rmdir+0x5ba/0x810
+[   70.722458][ T9333]  ? do_rmdir+0x964/0xea0
+[   70.722883][ T9333]  ? __x64_sys_rmdir+0x71/0xb0
+[   70.723397][ T9333]  ? x64_sys_call+0xcd8/0x3cf0
+[   70.723915][ T9333]  ? do_syscall_64+0xd9/0x1d0
+[   70.724454][ T9333]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.725110][ T9333]  ? vprintk_emit+0xd1f/0xe60
+[   70.725616][ T9333]  ? vprintk_default+0x3f/0x50
+[   70.726175][ T9333]  ? vprintk+0xce/0xd0
+[   70.726628][ T9333]  ? _printk+0x17e/0x1b0
+[   70.727129][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.727739][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.728324][ T9333]  __msan_warning+0x96/0x120
+[   70.728854][ T9333]  hfsplus_subfolders_dec+0x1d7/0x220
+[   70.729479][ T9333]  hfsplus_delete_cat+0x105d/0x12b0
+[   70.729984][ T9333]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.730646][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.731296][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.731863][ T9333]  hfsplus_rmdir+0x13d/0x310
+[   70.732390][ T9333]  ? __pfx_hfsplus_rmdir+0x10/0x10
+[   70.732919][ T9333]  vfs_rmdir+0x5ba/0x810
+[   70.733416][ T9333]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.734044][ T9333]  do_rmdir+0x964/0xea0
+[   70.734537][ T9333]  __x64_sys_rmdir+0x71/0xb0
+[   70.735032][ T9333]  x64_sys_call+0xcd8/0x3cf0
+[   70.735579][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.736092][ T9333]  ? irqentry_exit+0x16/0x60
+[   70.736637][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.737269][ T9333] RIP: 0033:0x7fa9424eafc9
+[   70.737775][ T9333] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 48
+[   70.739844][ T9333] RSP: 002b:00007fff099cd8d8 EFLAGS: 00000202 ORIG_RAX: 0000000000000054
+[   70.740760][ T9333] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fa9424eafc9
+[   70.741642][ T9333] RDX: 006c6f72746e6f63 RSI: 000000000000000a RDI: 0000000020000100
+[   70.742543][ T9333] RBP: 00007fff099cd8e0 R08: 00007fff099cd910 R09: 00007fff099cd910
+[   70.743376][ T9333] R10: 0000000000000000 R11: 0000000000000202 R12: 0000565430642260
+[   70.744247][ T9333] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[   70.745082][ T9333]  </TASK>
 
-When calling hfsplus_bmap_alloc to allocate a free node, this function
-first retrieves the bitmap from header node and map node using node->page
-together with the offset and length from hfs_brec_lenoff
+The main reason of the issue that struct hfsplus_inode_info
+has not been properly initialized for the case of root folder.
+In the case of root folder, hfsplus_fill_super() calls
+the hfsplus_iget() that implements only partial initialization of
+struct hfsplus_inode_info and subfolders field is not
+initialized by hfsplus_iget() logic.
 
-```
-len = hfs_brec_lenoff(node, 2, &off16);
-off = off16;
+This patch implements complete initialization of
+struct hfsplus_inode_info in the hfsplus_iget() logic with
+the goal to prevent likewise issues for the case of
+root folder.
 
-off += node->page_offset;
-pagep = node->page + (off >> PAGE_SHIFT);
-data = kmap_local_page(*pagep);
-```
-
-However, if the retrieved offset or length is invalid(i.e. exceeds
-node_size), the code may end up accessing pages outside the allocated
-range for this node.
-
-This patch adds proper validation of both offset and length before use,
-preventing out-of-bounds page access. Move is_bnode_offset_valid and
-check_and_correct_requested_length to hfsplus_fs.h, as they may be
-required by other functions.
-
-Reported-by: syzbot+356aed408415a56543cd@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67bcb4a6.050a0220.bbfd1.008f.GAE@google.com/
-Signed-off-by: Yang Chenzhi <yang.chenzhi@vivo.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: syzbot <syzbot+fdedff847a0e5e84c39f@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=fdedff847a0e5e84c39f
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250818141734.8559-2-yang.chenzhi@vivo.com
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250825225103.326401-1-slava@dubeyko.com
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/bnode.c      | 41 ----------------------------------------
- fs/hfsplus/btree.c      |  6 ++++++
- fs/hfsplus/hfsplus_fs.h | 42 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 48 insertions(+), 41 deletions(-)
+ fs/hfsplus/super.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index c9c38fddf505b..e566cea238279 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -18,47 +18,6 @@
- #include "hfsplus_fs.h"
- #include "hfsplus_raw.h"
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index 392edb60edd07..16cf5e1c685bf 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -67,13 +67,26 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
+ 	if (!(inode->i_state & I_NEW))
+ 		return inode;
  
--static inline
--bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
--{
--	bool is_valid = off < node->tree->node_size;
--
--	if (!is_valid) {
--		pr_err("requested invalid offset: "
--		       "NODE: id %u, type %#x, height %u, "
--		       "node_size %u, offset %d\n",
--		       node->this, node->type, node->height,
--		       node->tree->node_size, off);
--	}
--
--	return is_valid;
--}
--
--static inline
--int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
--{
--	unsigned int node_size;
--
--	if (!is_bnode_offset_valid(node, off))
--		return 0;
--
--	node_size = node->tree->node_size;
--
--	if ((off + len) > node_size) {
--		int new_len = (int)node_size - off;
--
--		pr_err("requested length has been corrected: "
--		       "NODE: id %u, type %#x, height %u, "
--		       "node_size %u, offset %d, "
--		       "requested_len %d, corrected_len %d\n",
--		       node->this, node->type, node->height,
--		       node->tree->node_size, off, len, new_len);
--
--		return new_len;
--	}
--
--	return len;
--}
+-	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
+-	mutex_init(&HFSPLUS_I(inode)->extents_lock);
+-	HFSPLUS_I(inode)->flags = 0;
++	atomic_set(&HFSPLUS_I(inode)->opencnt, 0);
++	HFSPLUS_I(inode)->first_blocks = 0;
++	HFSPLUS_I(inode)->clump_blocks = 0;
++	HFSPLUS_I(inode)->alloc_blocks = 0;
++	HFSPLUS_I(inode)->cached_start = U32_MAX;
++	HFSPLUS_I(inode)->cached_blocks = 0;
++	memset(HFSPLUS_I(inode)->first_extents, 0, sizeof(hfsplus_extent_rec));
++	memset(HFSPLUS_I(inode)->cached_extents, 0, sizeof(hfsplus_extent_rec));
+ 	HFSPLUS_I(inode)->extent_state = 0;
++	mutex_init(&HFSPLUS_I(inode)->extents_lock);
+ 	HFSPLUS_I(inode)->rsrc_inode = NULL;
+-	atomic_set(&HFSPLUS_I(inode)->opencnt, 0);
++	HFSPLUS_I(inode)->create_date = 0;
++	HFSPLUS_I(inode)->linkid = 0;
++	HFSPLUS_I(inode)->flags = 0;
++	HFSPLUS_I(inode)->fs_blocks = 0;
++	HFSPLUS_I(inode)->userflags = 0;
++	HFSPLUS_I(inode)->subfolders = 0;
++	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
++	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
++	HFSPLUS_I(inode)->phys_size = 0;
  
- /* Copy a specified range of bytes from the raw data of a node */
- void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
-diff --git a/fs/hfsplus/btree.c b/fs/hfsplus/btree.c
-index 66774f4cb4fd5..2211907537fec 100644
---- a/fs/hfsplus/btree.c
-+++ b/fs/hfsplus/btree.c
-@@ -392,6 +392,12 @@ struct hfs_bnode *hfs_bmap_alloc(struct hfs_btree *tree)
- 	len = hfs_brec_lenoff(node, 2, &off16);
- 	off = off16;
- 
-+	if (!is_bnode_offset_valid(node, off)) {
-+		hfs_bnode_put(node);
-+		return ERR_PTR(-EIO);
-+	}
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	pagep = node->page + (off >> PAGE_SHIFT);
- 	data = kmap(*pagep);
-diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
-index c01bf9ff56a96..8396964b056f0 100644
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -572,6 +572,48 @@ hfsplus_btree_lock_class(struct hfs_btree *tree)
- 	return class;
- }
- 
-+static inline
-+bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
-+{
-+	bool is_valid = off < node->tree->node_size;
-+
-+	if (!is_valid) {
-+		pr_err("requested invalid offset: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off);
-+	}
-+
-+	return is_valid;
-+}
-+
-+static inline
-+int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
-+{
-+	unsigned int node_size;
-+
-+	if (!is_bnode_offset_valid(node, off))
-+		return 0;
-+
-+	node_size = node->tree->node_size;
-+
-+	if ((off + len) > node_size) {
-+		int new_len = (int)node_size - off;
-+
-+		pr_err("requested length has been corrected: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, "
-+		       "requested_len %d, corrected_len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len, new_len);
-+
-+		return new_len;
-+	}
-+
-+	return len;
-+}
-+
- /* compatibility */
- #define hfsp_mt2ut(t)		(struct timespec64){ .tv_sec = __hfsp_mt2ut(t) }
- #define hfsp_ut2mt(t)		__hfsp_ut2mt((t).tv_sec)
+ 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
+ 	    inode->i_ino == HFSPLUS_ROOT_CNID) {
 -- 
 2.51.0
 
