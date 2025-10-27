@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E3218EB1;
-	Mon, 27 Oct 2025 18:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768D62D8DB9;
+	Mon, 27 Oct 2025 18:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590420; cv=none; b=S87Ir2So2IlFKCRJelbwl1KYiViriTSLc0TzfYh/oU6W3Q1tLKQwv5sSeF2rCZ2rR+PsaZHBRQDta5wv0OdFPmqCu0Y2gCqfed9EBoTI3FPQwIqd7xa5jsXeehv4fFKutpNCodphEo/WIN+mrhcD+H5hmET86Mntaz3+s0T8I9E=
+	t=1761590423; cv=none; b=YVyKcPzzUaIHsi4QTceFvc/fJx9nKWx3/b2iniuFPoeX91CXFR0LavH7sAdBck9JN37QI7cfnJXu/6ix66pNanHyYrvXGovWvtzSH5nhd258BIwURWpx/BXTgj2IkkmpYAT0bAAGqE+ZQFF+Tdn+/x+jn0jq9JNi4ZhjtWXi+hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590420; c=relaxed/simple;
-	bh=f8bjUNeRC/7bnqK4XXZL3j1MMIZ3f6+gdnwNDVULnQA=;
+	s=arc-20240116; t=1761590423; c=relaxed/simple;
+	bh=qv3KqFWUE8YsvdANCtb4lPe1BF9MUY34PL7Od3K3n5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xa5nBqosV/onq8OUBxIrEN8aIDtv4LQ10GbWjo3LBv28+W5fswSa5S1V1fngKay3M7ekhXY5NEBPBtX1wS2qgPLLbFYXLr6+2FFNrSySQMVLAuqEUOyMxP1bfE9e5eKB2mxgOp5p3h9ZgoME5pDUNYZn8gfF0jLwUlkVGmm7oXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMmFrmRl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZubFzfjQQ9y9L4uEiZUoi3X+ZbHMGXabomIQ0Qp/gdZc9RVwmpxV5YzoVeN4wQCS4xH9dKg3qeAJojnoTaicxX0MrJdO51OXUQN+lSuMwGskwygJx2f+9u3o2GcEm4Qr8e53HoSQst3WuN+Qa+u+CKEEeCWvpaGpyyPhHOBNG+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpc/ETmH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMmFrmRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34D2C4CEF1;
-	Mon, 27 Oct 2025 18:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpc/ETmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58CDC4CEF1;
+	Mon, 27 Oct 2025 18:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590420;
-	bh=f8bjUNeRC/7bnqK4XXZL3j1MMIZ3f6+gdnwNDVULnQA=;
+	s=korg; t=1761590423;
+	bh=qv3KqFWUE8YsvdANCtb4lPe1BF9MUY34PL7Od3K3n5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TMmFrmRlRgM2tPNpkSJkejtKGl9bs5KmVwwRO9lyO9J+Mknq93hD2fNeCygKAP8En
-	 5SI5ddnb/ywx8Xrd5/gZidWUNbWj2RKozdd4vffqo6xURQwIMQCA3+fsWCiAuSess/
-	 aDVTPD2bJpPdmu8Z2gag3ROqPOwBeKNi7CnSCDRY=
+	b=wpc/ETmH89sVJMLrvj1c9EK0UyxamWtfMZQZt/ukXLXax09FpJ9RfKNE/B87c4Rmm
+	 iehsBNPRWN6mp6saRfop1hs3kru09fxmrwtMV/QcFTRjZCi0LgHzg4zJtgru3S9puA
+	 4Tg8v1Zjlr1JmYcthsaYMcfxx3t7FhwC05eoKFHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Flavius Georgescu <pretoriano.mp@gmail.com>,
+	Chris Vandomelen <chris@sightworks.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 006/224] media: i2c: tc358743: Fix use-after-free bugs caused by orphan timer in probe
-Date: Mon, 27 Oct 2025 19:32:32 +0100
-Message-ID: <20251027183509.148394028@linuxfoundation.org>
+Subject: [PATCH 5.4 007/224] media: rc: Add support for another iMON 0xffdc device
+Date: Mon, 27 Oct 2025 19:32:33 +0100
+Message-ID: <20251027183509.176655491@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,146 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Flavius Georgescu <pretoriano.mp@gmail.com>
 
-[ Upstream commit 79d10f4f21a92e459b2276a77be62c59c1502c9d ]
+[ Upstream commit cf330691668a3bee37b8ac8212709b3ccdd87997 ]
 
-The state->timer is a cyclic timer that schedules work_i2c_poll and
-delayed_work_enable_hotplug, while rearming itself. Using timer_delete()
-fails to guarantee the timer isn't still running when destroyed, similarly
-cancel_delayed_work() cannot ensure delayed_work_enable_hotplug has
-terminated if already executing. During probe failure after timer
-initialization, these may continue running as orphans and reference the
-already-freed tc358743_state object through tc358743_irq_poll_timer.
+The device it's an iMON UltraBay (0x98 in config byte) with LCD,
+IR and dual-knobs front panel.
 
-The following is the trace captured by KASAN.
+To work properly the device also require its own key table,
+and repeat suppression for all buttons.
 
-BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
-Write of size 8 at addr ffff88800ded83c8 by task swapper/1/0
-...
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_report+0xcf/0x610
- ? __pfx_sched_balance_find_src_group+0x10/0x10
- ? __run_timer_base.part.0+0x7d7/0x8c0
- kasan_report+0xb8/0xf0
- ? __run_timer_base.part.0+0x7d7/0x8c0
- __run_timer_base.part.0+0x7d7/0x8c0
- ? rcu_sched_clock_irq+0xb06/0x27d0
- ? __pfx___run_timer_base.part.0+0x10/0x10
- ? try_to_wake_up+0xb15/0x1960
- ? tmigr_update_events+0x280/0x740
- ? _raw_spin_lock_irq+0x80/0xe0
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- tmigr_handle_remote_up+0x603/0x7e0
- ? __pfx_tmigr_handle_remote_up+0x10/0x10
- ? sched_balance_trigger+0x98/0x9f0
- ? sched_tick+0x221/0x5a0
- ? _raw_spin_lock_irq+0x80/0xe0
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- ? tick_nohz_handler+0x339/0x440
- ? __pfx_tmigr_handle_remote_up+0x10/0x10
- __walk_groups.isra.0+0x42/0x150
- tmigr_handle_remote+0x1f4/0x2e0
- ? __pfx_tmigr_handle_remote+0x10/0x10
- ? ktime_get+0x60/0x140
- ? lapic_next_event+0x11/0x20
- ? clockevents_program_event+0x1d4/0x2a0
- ? hrtimer_interrupt+0x322/0x780
- handle_softirqs+0x16a/0x550
- irq_exit_rcu+0xaf/0xe0
- sysvec_apic_timer_interrupt+0x70/0x80
- </IRQ>
-...
-
-Allocated by task 141:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- __kmalloc_node_track_caller_noprof+0x198/0x430
- devm_kmalloc+0x7b/0x1e0
- tc358743_probe+0xb7/0x610  i2c_device_probe+0x51d/0x880
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __device_attach_driver+0x174/0x220
- bus_for_each_drv+0x100/0x190
- __device_attach+0x206/0x370
- bus_probe_device+0x123/0x170
- device_add+0xd25/0x1470
- i2c_new_client_device+0x7a0/0xcd0
- do_one_initcall+0x89/0x300
- do_init_module+0x29d/0x7f0
- load_module+0x4f48/0x69e0
- init_module_from_file+0xe4/0x150
- idempotent_init_module+0x320/0x670
- __x64_sys_finit_module+0xbd/0x120
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 141:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x3f/0x50
- kfree+0x137/0x370
- release_nodes+0xa4/0x100
- devres_release_group+0x1b2/0x380
- i2c_device_probe+0x694/0x880
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __device_attach_driver+0x174/0x220
- bus_for_each_drv+0x100/0x190
- __device_attach+0x206/0x370
- bus_probe_device+0x123/0x170
- device_add+0xd25/0x1470
- i2c_new_client_device+0x7a0/0xcd0
- do_one_initcall+0x89/0x300
- do_init_module+0x29d/0x7f0
- load_module+0x4f48/0x69e0
- init_module_from_file+0xe4/0x150
- idempotent_init_module+0x320/0x670
- __x64_sys_finit_module+0xbd/0x120
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
-
-Replace timer_delete() with timer_delete_sync() and cancel_delayed_work()
-with cancel_delayed_work_sync() to ensure proper termination of timer and
-work items before resource cleanup.
-
-This bug was initially identified through static analysis. For reproduction
-and testing, I created a functional emulation of the tc358743 device via a
-kernel module and introduced faults through the debugfs interface.
-
-Fixes: 869f38ae07f7 ("media: i2c: tc358743: Fix crash in the probe error path when using polling")
-Fixes: d32d98642de6 ("[media] Driver for Toshiba TC358743 HDMI to CSI-2 bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ replaced del_timer() instead of timer_delete() ]
+Signed-off-by: Flavius Georgescu <pretoriano.mp@gmail.com>
+Co-developed-by: Chris Vandomelen <chris@sightworks.com>
+Signed-off-by: Chris Vandomelen <chris@sightworks.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Stable-dep-of: fa0f61cc1d82 ("media: rc: fix races with imon_disconnect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/tc358743.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/rc/imon.c |   61 ++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 51 insertions(+), 10 deletions(-)
 
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -2200,10 +2200,10 @@ static int tc358743_probe(struct i2c_cli
- err_work_queues:
- 	cec_unregister_adapter(state->cec_adap);
- 	if (!state->i2c_client->irq) {
--		del_timer(&state->timer);
-+		timer_delete_sync(&state->timer);
- 		flush_work(&state->work_i2c_poll);
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -83,6 +83,7 @@ struct imon_usb_dev_descr {
+ 	__u16 flags;
+ #define IMON_NO_FLAGS 0
+ #define IMON_NEED_20MS_PKT_DELAY 1
++#define IMON_SUPPRESS_REPEATED_KEYS 2
+ 	struct imon_panel_key_table key_table[];
+ };
+ 
+@@ -149,8 +150,9 @@ struct imon_context {
+ 	struct timer_list ttimer;	/* touch screen timer */
+ 	int touch_x;			/* x coordinate on touchscreen */
+ 	int touch_y;			/* y coordinate on touchscreen */
+-	struct imon_usb_dev_descr *dev_descr; /* device description with key
+-						 table for front panels */
++	const struct imon_usb_dev_descr *dev_descr;
++					/* device description with key */
++					/* table for front panels */
+ };
+ 
+ #define TOUCH_TIMEOUT	(HZ/30)
+@@ -315,6 +317,32 @@ static const struct imon_usb_dev_descr i
  	}
--	cancel_delayed_work(&state->delayed_work_enable_hotplug);
-+	cancel_delayed_work_sync(&state->delayed_work_enable_hotplug);
- 	mutex_destroy(&state->confctl_mutex);
- err_hdl:
- 	media_entity_cleanup(&sd->entity);
+ };
+ 
++/* imon ultrabay front panel key table */
++static const struct imon_usb_dev_descr ultrabay_table = {
++	.flags = IMON_SUPPRESS_REPEATED_KEYS,
++	.key_table = {
++		{ 0x0000000f0000ffeell, KEY_MEDIA },      /* Go */
++		{ 0x000000000100ffeell, KEY_UP },
++		{ 0x000000000001ffeell, KEY_DOWN },
++		{ 0x000000160000ffeell, KEY_ENTER },
++		{ 0x0000001f0000ffeell, KEY_AUDIO },      /* Music */
++		{ 0x000000200000ffeell, KEY_VIDEO },      /* Movie */
++		{ 0x000000210000ffeell, KEY_CAMERA },     /* Photo */
++		{ 0x000000270000ffeell, KEY_DVD },        /* DVD */
++		{ 0x000000230000ffeell, KEY_TV },         /* TV */
++		{ 0x000000050000ffeell, KEY_PREVIOUS },   /* Previous */
++		{ 0x000000070000ffeell, KEY_REWIND },
++		{ 0x000000040000ffeell, KEY_STOP },
++		{ 0x000000020000ffeell, KEY_PLAYPAUSE },
++		{ 0x000000080000ffeell, KEY_FASTFORWARD },
++		{ 0x000000060000ffeell, KEY_NEXT },       /* Next */
++		{ 0x000100000000ffeell, KEY_VOLUMEUP },
++		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
++		{ 0x000000010000ffeell, KEY_MUTE },
++		{ 0, KEY_RESERVED },
++	}
++};
++
+ /*
+  * USB Device ID for iMON USB Control Boards
+  *
+@@ -1261,9 +1289,11 @@ static u32 imon_mce_key_lookup(struct im
+ 
+ static u32 imon_panel_key_lookup(struct imon_context *ictx, u64 code)
+ {
+-	int i;
++	const struct imon_panel_key_table *key_table;
+ 	u32 keycode = KEY_RESERVED;
+-	struct imon_panel_key_table *key_table = ictx->dev_descr->key_table;
++	int i;
++
++	key_table = ictx->dev_descr->key_table;
+ 
+ 	for (i = 0; key_table[i].hw_code != 0; i++) {
+ 		if (key_table[i].hw_code == (code | 0xffee)) {
+@@ -1547,7 +1577,6 @@ static void imon_incoming_packet(struct
+ 	u32 kc;
+ 	u64 scancode;
+ 	int press_type = 0;
+-	long msec;
+ 	ktime_t t;
+ 	static ktime_t prev_time;
+ 	u8 ktype;
+@@ -1649,14 +1678,16 @@ static void imon_incoming_packet(struct
+ 	spin_lock_irqsave(&ictx->kc_lock, flags);
+ 
+ 	t = ktime_get();
+-	/* KEY_MUTE repeats from knob need to be suppressed */
+-	if (ictx->kc == KEY_MUTE && ictx->kc == ictx->last_keycode) {
+-		msec = ktime_ms_delta(t, prev_time);
+-		if (msec < ictx->idev->rep[REP_DELAY]) {
++	/* KEY repeats from knob and panel that need to be suppressed */
++	if (ictx->kc == KEY_MUTE ||
++	    ictx->dev_descr->flags & IMON_SUPPRESS_REPEATED_KEYS) {
++		if (ictx->kc == ictx->last_keycode &&
++		    ktime_ms_delta(t, prev_time) < ictx->idev->rep[REP_DELAY]) {
+ 			spin_unlock_irqrestore(&ictx->kc_lock, flags);
+ 			return;
+ 		}
+ 	}
++
+ 	prev_time = t;
+ 	kc = ictx->kc;
+ 
+@@ -1844,6 +1875,14 @@ static void imon_get_ffdc_type(struct im
+ 		dev_info(ictx->dev, "0xffdc iMON Inside, iMON IR");
+ 		ictx->display_supported = false;
+ 		break;
++	/* Soundgraph iMON UltraBay */
++	case 0x98:
++		dev_info(ictx->dev, "0xffdc iMON UltraBay, LCD + IR");
++		detected_display_type = IMON_DISPLAY_TYPE_LCD;
++		allowed_protos = RC_PROTO_BIT_IMON | RC_PROTO_BIT_RC6_MCE;
++		ictx->dev_descr = &ultrabay_table;
++		break;
++
+ 	default:
+ 		dev_info(ictx->dev, "Unknown 0xffdc device, defaulting to VFD and iMON IR");
+ 		detected_display_type = IMON_DISPLAY_TYPE_VFD;
+@@ -1975,10 +2014,12 @@ out:
+ 
+ static struct input_dev *imon_init_idev(struct imon_context *ictx)
+ {
+-	struct imon_panel_key_table *key_table = ictx->dev_descr->key_table;
++	const struct imon_panel_key_table *key_table;
+ 	struct input_dev *idev;
+ 	int ret, i;
+ 
++	key_table = ictx->dev_descr->key_table;
++
+ 	idev = input_allocate_device();
+ 	if (!idev)
+ 		goto out;
 
 
