@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF8D31BCBC;
-	Mon, 27 Oct 2025 19:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5D7328B62;
+	Mon, 27 Oct 2025 19:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591756; cv=none; b=ST7Q/FZumMuPoDN5CdHWs7Y47NZzYufIJVE9dpzs7ZxapCjTBpBmtJe/PQh5Dwvys/VAVUod6alWEX/aHlS185+YfRmXq9ozh5/JrPSX/4dDheyKav/LQJBSRRpeb/6YCebImxjAAghr7dHkXCKGVCF++tPevqlxvvYPEmvBLO4=
+	t=1761591759; cv=none; b=t8AEG/mfWii8h0uPNyl94UFr45z2XyXVL1g2I+7e6rAfeot65CHiom17F6+nTI6gkBQYP5OEGItDHjclglDKDeNuLqYsaOrUPkxOaE+6bHN0cAzMUml+tRIxKw7COquH0p4inXyRS4nn/GK369raUYBSe1c9iHRzWiA0kxEkYNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591756; c=relaxed/simple;
-	bh=bZieJOUU9z7xl1UPmgO+oZ5pAJaIgnu/sFup+zTwwrw=;
+	s=arc-20240116; t=1761591759; c=relaxed/simple;
+	bh=YTe3DgW/gnqG0xVNFO+BENWG/JK02ydyUOEqLA8PXiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDj/obttNL1Bv7UbC1UeQxXrAdBw0WaHHaB7YZBBGl089vfqZFwIAXVdr+auSU//XLVbBIZyGY//TcOpfOndczrT0dgHovISg/kAv+382ooHfOcoQAOwXLQ2G+UjmRJY2Kjoin306gE+zkEKnbbOyKi+IEzTU3z2n2qFmcCUwDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7+d8BsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FpzDktN4FF+Ijx6TJLpq67rQTs7PL8FUlmoA/hY7XSegbSogIPb/skb8JN8ujtfxrguihaV5gW4NnfcwKqRIahbazX3f1DE54wCL1MaT9tPOQ8XNXxC1TnxNzDLb/f0PGi6PlR2M1g0j51gNNXi9PJaV7gMXrPGMjjRb8S+tdiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m102FCj0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7+d8BsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CEAC4CEF1;
-	Mon, 27 Oct 2025 19:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m102FCj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2723C4CEF1;
+	Mon, 27 Oct 2025 19:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591756;
-	bh=bZieJOUU9z7xl1UPmgO+oZ5pAJaIgnu/sFup+zTwwrw=;
+	s=korg; t=1761591759;
+	bh=YTe3DgW/gnqG0xVNFO+BENWG/JK02ydyUOEqLA8PXiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7+d8BsVQFtZjqKg1mbJLvBoq0aWkA6Jnq3yHAxJ0kKrv3sPpA17erM8OL5OPgxxg
-	 Tm635fyktvRlyFN7PJWNWiRiUOOrD1Usbqnrk6gaqBFFPZS4MhgPgDT29Y78OC8Zwk
-	 Fy73+4iqXyeEX5PYelzLJMY000Sf1t2eJpa+CyRs=
+	b=m102FCj0CRThVODS4o7nH+pegh2PjjzrDOilTQ+HldAfgrATUwOR0T2t3Q5hf/Umy
+	 Aq2yBRFDU4boBaOJ/pAW3N8NsZxmSGz5ar11eSNLK2vzepIaqtay4jtGU3BnPxEbEO
+	 wtZ0J4uKZnMocnLLo8Spk8g52beQnRcrx5L1bmVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 319/332] PCI: j721e: Fix programming sequence of "strap" settings
-Date: Mon, 27 Oct 2025 19:36:12 +0100
-Message-ID: <20251027183533.286209411@linuxfoundation.org>
+Subject: [PATCH 5.10 320/332] PCI: Add sysfs attribute for device power state
+Date: Mon, 27 Oct 2025 19:36:13 +0100
+Message-ID: <20251027183533.312071326@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,88 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit f842d3313ba179d4005096357289c7ad09cec575 ]
+[ Upstream commit 80a129afb75cba8434fc5071bd6919172442315c ]
 
-The Cadence PCIe Controller integrated in the TI K3 SoCs supports both
-Root-Complex and Endpoint modes of operation. The Glue Layer allows
-"strapping" the Mode of operation of the Controller, the Link Speed
-and the Link Width. This is enabled by programming the "PCIEn_CTRL"
-register (n corresponds to the PCIe instance) within the CTRL_MMR
-memory-mapped register space. The "reset-values" of the registers are
-also different depending on the mode of operation.
+While PCI power states D0-D3hot can be queried from user-space via lspci,
+D3cold cannot.  lspci cannot provide an accurate value when the device is
+in D3cold as it has to restore the device to D0 before it can access its
+power state via the configuration space, leading to it reporting D0 or
+another on-state. Thus lspci cannot be used to diagnose power consumption
+issues for devices that can enter D3cold or to ensure that devices properly
+enter D3cold at all.
 
-Since the PCIe Controller latches onto the "reset-values" immediately
-after being powered on, if the Glue Layer configuration is not done while
-the PCIe Controller is off, it will result in the PCIe Controller latching
-onto the wrong "reset-values". In practice, this will show up as a wrong
-representation of the PCIe Controller's capability structures in the PCIe
-Configuration Space. Some such capabilities which are supported by the PCIe
-Controller in the Root-Complex mode but are incorrectly latched onto as
-being unsupported are:
-- Link Bandwidth Notification
-- Alternate Routing ID (ARI) Forwarding Support
-- Next capability offset within Advanced Error Reporting (AER) capability
+Add a new sysfs device attribute for the PCI power state, showing the
+current power state as seen by the kernel.
 
-Fix this by powering off the PCIe Controller before programming the "strap"
-settings and powering it on after that. The runtime PM APIs namely
-pm_runtime_put_sync() and pm_runtime_get_sync() will decrement and
-increment the usage counter respectively, causing GENPD to power off and
-power on the PCIe Controller.
-
-Fixes: f3e25911a430 ("PCI: j721e: Add TI J721E PCIe driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250908120828.1471776-1-s-vadapalli@ti.com
-[ removed offset parameter from j721e_pcie_set_mode() and ACSPCIE refclk handling ]
+[bhelgaas: drop READ_ONCE(), see discussion at the link]
+Link: https://lore.kernel.org/r/20201102141520.831630-1-luzmaximilian@gmail.com
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: 48991e493507 ("PCI/sysfs: Ensure devices are powered for config reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ Documentation/ABI/testing/sysfs-bus-pci |    9 +++++++++
+ drivers/pci/pci-sysfs.c                 |   10 ++++++++++
+ 2 files changed, 19 insertions(+)
 
---- a/drivers/pci/controller/cadence/pci-j721e.c
-+++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -227,6 +227,25 @@ static int j721e_pcie_ctrl_init(struct j
- 		return PTR_ERR(syscon);
- 	}
- 
-+	/*
-+	 * The PCIe Controller's registers have different "reset-values"
-+	 * depending on the "strap" settings programmed into the PCIEn_CTRL
-+	 * register within the CTRL_MMR memory-mapped register space.
-+	 * The registers latch onto a "reset-value" based on the "strap"
-+	 * settings sampled after the PCIe Controller is powered on.
-+	 * To ensure that the "reset-values" are sampled accurately, power
-+	 * off the PCIe Controller before programming the "strap" settings
-+	 * and power it on after that. The runtime PM APIs namely
-+	 * pm_runtime_put_sync() and pm_runtime_get_sync() will decrement and
-+	 * increment the usage counter respectively, causing GENPD to power off
-+	 * and power on the PCIe Controller.
-+	 */
-+	ret = pm_runtime_put_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to power off PCIe Controller\n");
-+		return ret;
-+	}
+--- a/Documentation/ABI/testing/sysfs-bus-pci
++++ b/Documentation/ABI/testing/sysfs-bus-pci
+@@ -377,3 +377,12 @@ Contact:	Heiner Kallweit <hkallweit1@gma
+ Description:	If ASPM is supported for an endpoint, these files can be
+ 		used to disable or enable the individual power management
+ 		states. Write y/1/on to enable, n/0/off to disable.
 +
- 	ret = j721e_pcie_set_mode(pcie, syscon);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to set pci mode\n");
-@@ -245,6 +264,12 @@ static int j721e_pcie_ctrl_init(struct j
- 		return ret;
- 	}
- 
-+	ret = pm_runtime_get_sync(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to power on PCIe Controller\n");
-+		return ret;
-+	}
-+
- 	return 0;
++What:		/sys/bus/pci/devices/.../power_state
++Date:		November 2020
++Contact:	Linux PCI developers <linux-pci@vger.kernel.org>
++Description:
++		This file contains the current PCI power state of the device.
++		The value comes from the PCI kernel device state and can be one
++		of: "unknown", "error", "D0", D1", "D2", "D3hot", "D3cold".
++		The file is read only.
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -124,6 +124,15 @@ static ssize_t cpulistaffinity_show(stru
  }
+ static DEVICE_ATTR_RO(cpulistaffinity);
  
++static ssize_t power_state_show(struct device *dev,
++				struct device_attribute *attr, char *buf)
++{
++	struct pci_dev *pdev = to_pci_dev(dev);
++
++	return sprintf(buf, "%s\n", pci_power_name(pdev->current_state));
++}
++static DEVICE_ATTR_RO(power_state);
++
+ /* show resources */
+ static ssize_t resource_show(struct device *dev, struct device_attribute *attr,
+ 			     char *buf)
+@@ -603,6 +612,7 @@ static ssize_t driver_override_show(stru
+ static DEVICE_ATTR_RW(driver_override);
+ 
+ static struct attribute *pci_dev_attrs[] = {
++	&dev_attr_power_state.attr,
+ 	&dev_attr_resource.attr,
+ 	&dev_attr_vendor.attr,
+ 	&dev_attr_device.attr,
 
 
