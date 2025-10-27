@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EDD322C8A;
-	Mon, 27 Oct 2025 19:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D93320A32;
+	Mon, 27 Oct 2025 19:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593551; cv=none; b=R1e3g7OGnFJCmaJlCoi9SVDBkigBnsPqYo5RVf46yXOsBecK276V1ud4sv2OJ6z+lhq3ZB2zaX1PosMk01LnFepB8banFCFKcOT4i1MJn0qQxWwHF9jJRMsqry1YR+uOOBpbhkjwwevOPxiJZDagh3lUYWh5/WLkQT7U2XkLWiw=
+	t=1761593554; cv=none; b=OirGnpSSjh3XdgRLmVyEPh3EFSrkaXTzy8YhlBBc1GeWb3y9PivudPcLueVU3fzf+yjfTz9s35g6XOJRAfpZow51uPZJ86SW9qELz4PxDb0PW+zjeGRKnBwhUibXPpzXQHJcmtIf8HrHt6VItkuX0DnaP1PJwWgN4RjW9L27LkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593551; c=relaxed/simple;
-	bh=2MS1yJOphfZjQnzyRgMPJ+N6mpcrxQz1dA0e80ehnME=;
+	s=arc-20240116; t=1761593554; c=relaxed/simple;
+	bh=MxFCO2eJLiQZPKQIPAHAVqDSxZEJDEr8rqI0QmxqNao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1XV2b/SPnY7X0ehXg+TfEL7NhMKMj51fRMeZRnHIsx/FS58H1/espDKqG5K4wPVIGQIGymCYHt2l8W//w+SXV6yTrcXC7aXtVJO0b8NsK54ABKfg/RtqoSQE4UgHyBsFrSEPwrrz/IzGmiz3KkjCrLQ3cLZ0ExZkuG+87+7N0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghduVcXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6xx4Eyw3owJWKOMOfsNAAx6R/AqSSCzCp+9mL59poAsxjUSkYTn2dypofp0uI9FV8df0GwuSAKJA92U2zgUrZA8YNdwEONyR7RWrjCJxE/G7iYjjojTqJgASv5PeqCnkTSBA0i5JeLLCEWjtFXwmqdPSlOEzrN34EAmag9WdJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZecYQGgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghduVcXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF0FC4CEF1;
-	Mon, 27 Oct 2025 19:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZecYQGgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E705C4CEF1;
+	Mon, 27 Oct 2025 19:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593550;
-	bh=2MS1yJOphfZjQnzyRgMPJ+N6mpcrxQz1dA0e80ehnME=;
+	s=korg; t=1761593554;
+	bh=MxFCO2eJLiQZPKQIPAHAVqDSxZEJDEr8rqI0QmxqNao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghduVcXT6McQLSvzPdm/BqjKS92jws/Sq+0B4HRMvnqml9GQciOu3mWl1y9pwT5UT
-	 Dq1BKcowEN2VGn8/GglEQk6dl7rWzmATMg1eVXiXXg43YmwmD8BgfTxs4YBYY0Ua0U
-	 9Yq0nJ6J/wgboLVWYyL9+NhYewpO/e7j4Kb6Xw4Y=
+	b=ZecYQGgpiKRJSoRxgPKlvquUb7GyqSG/QIyiU6Yxoru4OnKSm6QRS9H4ppbyUBVvf
+	 Xdm0ffgWqW56nLpOe7gQJbJfLx8SeOyW4rQ0Xc3XIyHNvGY2qepsJtstNSH0yCC98Z
+	 hlWZWGHDEyI8ODmz7J1l/W6n+fKvb+P3qmXO5RiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Artem Shimko <a.shimko.dev@gmail.com>
-Subject: [PATCH 6.17 170/184] serial: 8250_dw: handle reset control deassert error
-Date: Mon, 27 Oct 2025 19:37:32 +0100
-Message-ID: <20251027183519.502449684@linuxfoundation.org>
+	Florian Eckert <fe@dev.tdt.de>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.17 171/184] serial: 8250_exar: add support for Advantech 2 port card with Device ID 0x0018
+Date: Mon, 27 Oct 2025 19:37:33 +0100
+Message-ID: <20251027183519.527991026@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -50,42 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Shimko <a.shimko.dev@gmail.com>
+From: Florian Eckert <fe@dev.tdt.de>
 
-commit daeb4037adf7d3349b4a1fb792f4bc9824686a4b upstream.
+commit e7cbce761fe3fcbcb49bcf30d4f8ca5e1a9ee2a0 upstream.
 
-Check the return value of reset_control_deassert() in the probe
-function to prevent continuing probe when reset deassertion fails.
+The Advantech 2-port serial card with PCI vendor=0x13fe and device=0x0018
+has a 'XR17V35X' chip installed on the circuit board. Therefore, this
+driver can be used instead of theu outdated out-of-tree driver from the
+manufacturer.
 
-Previously, reset_control_deassert() was called without checking its
-return value, which could lead to probe continuing even when the
-device reset wasn't properly deasserted.
-
-The fix checks the return value and returns an error with dev_err_probe()
-if reset deassertion fails, providing better error handling and
-diagnostics.
-
-Fixes: acbdad8dd1ab ("serial: 8250_dw: simplify optional reset handling")
+Signed-off-by: Florian Eckert <fe@dev.tdt.de>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
-Link: https://patch.msgid.link/20251019095131.252848-1-a.shimko.dev@gmail.com
+Link: https://patch.msgid.link/20250924134115.2667650-1-fe@dev.tdt.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_exar.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -635,7 +635,9 @@ static int dw8250_probe(struct platform_
- 	if (IS_ERR(data->rst))
- 		return PTR_ERR(data->rst);
+--- a/drivers/tty/serial/8250/8250_exar.c
++++ b/drivers/tty/serial/8250/8250_exar.c
+@@ -40,6 +40,8 @@
+ #define PCI_DEVICE_ID_ACCESSIO_COM_4SM		0x10db
+ #define PCI_DEVICE_ID_ACCESSIO_COM_8SM		0x10ea
  
--	reset_control_deassert(data->rst);
-+	err = reset_control_deassert(data->rst);
-+	if (err)
-+		return dev_err_probe(dev, err, "failed to deassert resets\n");
++#define PCI_DEVICE_ID_ADVANTECH_XR17V352	0x0018
++
+ #define PCI_DEVICE_ID_COMMTECH_4224PCI335	0x0002
+ #define PCI_DEVICE_ID_COMMTECH_4222PCI335	0x0004
+ #define PCI_DEVICE_ID_COMMTECH_2324PCI335	0x000a
+@@ -1622,6 +1624,12 @@ static const struct exar8250_board pbn_f
+ 	.exit		= pci_xr17v35x_exit,
+ };
  
- 	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
- 	if (err)
++static const struct exar8250_board pbn_adv_XR17V352 = {
++	.num_ports	= 2,
++	.setup		= pci_xr17v35x_setup,
++	.exit		= pci_xr17v35x_exit,
++};
++
+ static const struct exar8250_board pbn_exar_XR17V4358 = {
+ 	.num_ports	= 12,
+ 	.setup		= pci_xr17v35x_setup,
+@@ -1696,6 +1704,9 @@ static const struct pci_device_id exar_p
+ 	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
+ 	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
+ 
++	/* ADVANTECH devices */
++	EXAR_DEVICE(ADVANTECH, XR17V352, pbn_adv_XR17V352),
++
+ 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
+ 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
+ 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
 
 
