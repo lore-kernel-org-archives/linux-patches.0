@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A3E18A6A5;
-	Mon, 27 Oct 2025 19:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6C132143F;
+	Mon, 27 Oct 2025 19:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592328; cv=none; b=WpvhqFxby//T1NDN3TG0zg0XDGFNetNVSmITCvm4ZCDZaO/dtJZAjjWnA2kkwmSU2YGDMK14KeiXjrS1MghBRx64JpIHYYqcMrCFhrX1xPmXfBNBWQuC5h9Bdb+seXS3L8c0jRa86yw3i0LTW/rmkfPDNziKc09W5LXywXG2kiA=
+	t=1761592328; cv=none; b=WL3R2uKOjA0452th1vQ8txpwSxZ+PHNlB4Ep4wpl/E7L/DHgmM98R2WbbR+Hhph5eS1r3uNm+0tK2Is8Won9LrICvQkJmreuYWP9e9G5FpAU17zuoj9FICHWhAGgHAxYI1BmAfTrJUUf+Se3Jbx8tXUTJZkuM3wcScN+F61fMBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761592328; c=relaxed/simple;
-	bh=u7UTFr/1aOeLMMKIBdAT7xVxFBgq6lC/UJHBDtN8tIU=;
+	bh=SUkhqzpTy5OhMOcx7zV20uhCJkXwYL62javajhYgogU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHNbh2gK86e0izr9jVwY2lB/94MP+ubMeomMdY1HlIqffjxDwOoMRAfV0XFeEsS08fuRxFXgiHWC5Im2BiESGF6xZjX3wrqqnhjZP37YChybIJFWHZY/DwTcZaEgkvmQ6sXcHdydk1KRJHAb71vjWYwN54YjDUqCYcNKd+Urj34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQmokOt7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rC+DltC0Mmzz4ZXtUNkjfv47Yw5R1RsQ429Yzr1Ta0h4CdmVGw3l/WhBbpAaCo7i9GOxsMXQzrqhyoCsSTs1H8sx5x5FyUhFwsJrypFuGWoQXAJqidOXNlTcK9RCnANFHyNn2TAFBTyJzj5m90F3WLexOBACiDLtO+JxIq/gCcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDFK31Fn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQmokOt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E3DC4CEF1;
-	Mon, 27 Oct 2025 19:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDFK31Fn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA6BC4CEFD;
+	Mon, 27 Oct 2025 19:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592325;
-	bh=u7UTFr/1aOeLMMKIBdAT7xVxFBgq6lC/UJHBDtN8tIU=;
+	s=korg; t=1761592328;
+	bh=SUkhqzpTy5OhMOcx7zV20uhCJkXwYL62javajhYgogU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQmokOt7NC7zWjNcKVupAc6rYRFDesmFjNo4RoosrjJWfM1CQkszHqydciJ+BlCCe
-	 0JRhr8da1/0n1XitZyZRZDh369kt+wXUFHSFj45kfx1LH7+qTgNzXpXOKPhf95wMLi
-	 sTdNym0dnVbRrRMLiY7N/PvfqskBPPNN0BJBDRKk=
+	b=hDFK31FntgWEgPEo6KoLoK6owAe99qamMYjWTHt0VO0Ao/FfMNAyQw5td0Bxx8bqM
+	 Pa3/jISe7LnZdDEwuymP6+esIJBvlz+EGyDvPloIHz4cSx76SftQccagoew6dcDY9k
+	 /SOoc75epvoXM6KS1wm85R+bIT8CNMLhEIHZ6uwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/157] tls: dont rely on tx_work during send()
-Date: Mon, 27 Oct 2025 19:35:10 +0100
-Message-ID: <20251027183502.608271558@linuxfoundation.org>
+Subject: [PATCH 6.1 050/157] net: usb: lan78xx: Add error handling to lan78xx_init_mac_address
+Date: Mon, 27 Oct 2025 19:35:11 +0100
+Message-ID: <20251027183502.633545757@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,60 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 7f846c65ca11e63d2409868ff039081f80e42ae4 ]
+[ Upstream commit 6f31135894ec96481e2bda93a1da70712f5e57c1 ]
 
-With async crypto, we rely on tx_work to actually transmit records
-once encryption completes. But while send() is running, both the
-tx_lock and socket lock are held, so tx_work_handler cannot process
-the queue of encrypted records, and simply reschedules itself. During
-a large send(), this could last a long time, and use a lot of memory.
+Convert `lan78xx_init_mac_address` to return error codes and handle
+failures in register read and write operations. Update `lan78xx_reset`
+to check for errors during MAC address initialization and propagate them
+appropriately.
 
-Transmit any pending encrypted records before restarting the main
-loop of tls_sw_sendmsg_locked.
-
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/8396631478f70454b44afb98352237d33f48d34d.1760432043.git.sd@queasysnail.net
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241209130751.703182-3-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8d93ff40d49d ("net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/usb/lan78xx.c | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index baed07edc6395..e7f151c98eb93 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1109,6 +1109,13 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 				} else if (ret != -EAGAIN)
- 					goto send_end;
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
-+
- 			continue;
- rollback_iter:
- 			copied -= try_to_copy;
-@@ -1163,6 +1170,12 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 					goto send_end;
- 				}
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
- 		}
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 0f1c9009d793e..08fb03bcf4952 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1940,13 +1940,19 @@ static const struct ethtool_ops lan78xx_ethtool_ops = {
+ 	.get_regs	= lan78xx_get_regs,
+ };
  
- 		continue;
+-static void lan78xx_init_mac_address(struct lan78xx_net *dev)
++static int lan78xx_init_mac_address(struct lan78xx_net *dev)
+ {
+ 	u32 addr_lo, addr_hi;
+ 	u8 addr[6];
++	int ret;
++
++	ret = lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
++	if (ret < 0)
++		return ret;
+ 
+-	lan78xx_read_reg(dev, RX_ADDRL, &addr_lo);
+-	lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
++	ret = lan78xx_read_reg(dev, RX_ADDRH, &addr_hi);
++	if (ret < 0)
++		return ret;
+ 
+ 	addr[0] = addr_lo & 0xFF;
+ 	addr[1] = (addr_lo >> 8) & 0xFF;
+@@ -1979,14 +1985,26 @@ static void lan78xx_init_mac_address(struct lan78xx_net *dev)
+ 			  (addr[2] << 16) | (addr[3] << 24);
+ 		addr_hi = addr[4] | (addr[5] << 8);
+ 
+-		lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
+-		lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
++		ret = lan78xx_write_reg(dev, RX_ADDRL, addr_lo);
++		if (ret < 0)
++			return ret;
++
++		ret = lan78xx_write_reg(dev, RX_ADDRH, addr_hi);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+-	lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
+-	lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
++	ret = lan78xx_write_reg(dev, MAF_LO(0), addr_lo);
++	if (ret < 0)
++		return ret;
++
++	ret = lan78xx_write_reg(dev, MAF_HI(0), addr_hi | MAF_HI_VALID_);
++	if (ret < 0)
++		return ret;
+ 
+ 	eth_hw_addr_set(dev->net, addr);
++
++	return 0;
+ }
+ 
+ /* MDIO read and write wrappers for phylib */
+@@ -2910,7 +2928,9 @@ static int lan78xx_reset(struct lan78xx_net *dev)
+ 		}
+ 	} while (buf & HW_CFG_LRST_);
+ 
+-	lan78xx_init_mac_address(dev);
++	ret = lan78xx_init_mac_address(dev);
++	if (ret < 0)
++		return ret;
+ 
+ 	/* save DEVID for later usage */
+ 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
 -- 
 2.51.0
 
