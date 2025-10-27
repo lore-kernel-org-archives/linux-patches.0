@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F01630F534;
-	Mon, 27 Oct 2025 18:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DB0326D4A;
+	Mon, 27 Oct 2025 18:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591007; cv=none; b=TiWUhAFrCz4ExasE68zErUcMBwDgCd13/Xlucp15P2W5IOAei+7oTdi+BW1jtrzVwsZ1NZAWxt2k+4HqZlS1Z/JAQY1pC7EJNiX4dsJAo/LpQn1xRXgjuv7HKFwfTMYmtId41Q0YMuX8oaqAr6WleFS+pHpsxjuCn91B3h5wa7Q=
+	t=1761591009; cv=none; b=sUF1dXPSRHK7b7UxLJVndOJoHXl7QxbsjEJN9kVPb6iiWFbMuWtYj7zPG35HF2YIAa0zHKzPTNr47bE8F/RuY2X6gfOyD+UNE+63ElJSyjIBdqO+VbphkuskaizLydo/dm/7Z2rNs+FjbvKDdp2Vde/RXV4/4Cpt3j/N3/hrg3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591007; c=relaxed/simple;
-	bh=A0ds4LjdAUGJ6cOZIe0e6ESLj5ELzzgWE3t5/yRT23o=;
+	s=arc-20240116; t=1761591009; c=relaxed/simple;
+	bh=BPMdqYTAPvOzDUtOe47ocuMHyP/w2nlx4FDMIG/is2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWY5zASkiNn2B7oViEfQKOw68NDGrdKWN+PDG+pNdfoeqBAZim4qL4w/FDnFboim35Ep1J9Fjx7ulLDdGaoKpkVNDRrFdyqK0BfTwjsbcObikY6VqBYjzsb8yD9b79/7TP8il4DGjAuGZLruQNRK+j4O9XT3uNR0O4hpW4IHspc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWY9H/6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlXBsRo3YKPJktpSpji0GFkgnFCRpRjnv06hfh2oD9Lszmsxh8zAASdr2RvMATBOSTPbFVu7TR5P/WQojlq3Sh0ytBax2R1KofUfd5xLvD0IwqgrM5fQiBUDFsDZHEl9dhEJskqigY6fUqBobGsxAGlt9qEFiPfIWKVc3WSxlcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzL0iMaS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWY9H/6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5500FC4CEF1;
-	Mon, 27 Oct 2025 18:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzL0iMaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B718C4CEF1;
+	Mon, 27 Oct 2025 18:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591003;
-	bh=A0ds4LjdAUGJ6cOZIe0e6ESLj5ELzzgWE3t5/yRT23o=;
+	s=korg; t=1761591009;
+	bh=BPMdqYTAPvOzDUtOe47ocuMHyP/w2nlx4FDMIG/is2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWY9H/6Zty99ICIXFgVEB1z60jZarNvV2sixdMAsiJNDzfydgAZbMNSgzk5xTQSyi
-	 kHpjt64DOpe/YXMW+uJ9JFPZ6pQrmvbX3Cgp3Zsxbxx6G6kboERwiuuVANf4k91DU+
-	 6I0vobSRPLMhuvguCZJw3k/0WYd6OLeN63igimBI=
+	b=fzL0iMaS33GbM+xGg2+R+TYepidKVo9dcLWXu5tnWRIgBkbo+aINkDvv4mRzSsiBi
+	 EDe9yKT7b6sRb3BisnDnM2SsiW3hbL+yMef4iLYKkFeHrWPiwR6Go9JTqHLr95uomL
+	 iAcaz8sdEBQ268K8so2O7d1y3gaM6kWm4jBssMYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
-	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 003/332] media: rc: fix races with imon_disconnect()
-Date: Mon, 27 Oct 2025 19:30:56 +0100
-Message-ID: <20251027183524.707535933@linuxfoundation.org>
+	Matt Dowling <madowlin@amazon.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yifei Liu <yifei.l.liu@oracle.com>
+Subject: [PATCH 5.10 004/332] udp: Fix memory accounting leak.
+Date: Mon, 27 Oct 2025 19:30:57 +0100
+Message-ID: <20251027183524.733429906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,160 +53,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
+commit df207de9d9e7a4d92f8567e2c539d9c8c12fd99d upstream.
 
-Syzbot reports a KASAN issue as below:
-BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
-BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
+Matt Dowling reported a weird UDP memory usage issue.
 
-CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
-Call Trace:
- <TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-__create_pipe include/linux/usb.h:1945 [inline]
-send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
-vfs_write+0x2d7/0xdd0 fs/read_write.c:576
-ksys_write+0x127/0x250 fs/read_write.c:631
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Under normal operation, the UDP memory usage reported in /proc/net/sockstat
+remains close to zero.  However, it occasionally spiked to 524,288 pages
+and never dropped.  Moreover, the value doubled when the application was
+terminated.  Finally, it caused intermittent packet drops.
 
-The iMON driver improperly releases the usb_device reference in
-imon_disconnect without coordinating with active users of the
-device.
+We can reproduce the issue with the script below [0]:
 
-Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
-protected by the users counter (ictx->users). During probe,
-imon_init_intf0 or imon_init_intf1 increments the usb_device
-reference count depending on the interface. However, during
-disconnect, usb_put_dev is called unconditionally, regardless of
-actual usage.
+  1. /proc/net/sockstat reports 0 pages
 
-As a result, if vfd_write or other operations are still in
-progress after disconnect, this can lead to a use-after-free of
-the usb_device pointer.
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 0
 
-Thread 1 vfd_write                      Thread 2 imon_disconnect
-                                        ...
-                                        if
-                                          usb_put_dev(ictx->usbdev_intf0)
-                                        else
-                                          usb_put_dev(ictx->usbdev_intf1)
-...
-while
-  send_packet
-    if
-      pipe = usb_sndintpipe(
-        ictx->usbdev_intf0) UAF
-    else
-      pipe = usb_sndctrlpipe(
-        ictx->usbdev_intf0, 0) UAF
+  2. Run the script till the report reaches 524,288
 
-Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
-checking ictx->disconnected in all writer paths. Add early return
-with -ENODEV in send_packet(), vfd_write(), lcd_write() and
-display_open() if the device is no longer present.
+    # python3 test.py & sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 3 mem 524288  <-- (INT_MAX + 1) >> PAGE_SHIFT
 
-Set and read ictx->disconnected under ictx->lock to ensure memory
-synchronization. Acquire the lock in imon_disconnect() before setting
-the flag to synchronize with any ongoing operations.
+  3. Kill the socket and confirm the number never drops
 
-Ensure writers exit early and safely after disconnect before the USB
-core proceeds with cleanup.
+    # pkill python3 && sleep 5
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 524288
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+  4. (necessary since v6.0) Trigger proto_memory_pcpu_drain()
 
-Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Cc: stable@vger.kernel.org
+    # python3 test.py & sleep 1 && pkill python3
 
-Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+  5. The number doubles
+
+    # cat /proc/net/sockstat | grep UDP:
+    UDP: inuse 1 mem 1048577
+
+The application set INT_MAX to SO_RCVBUF, which triggered an integer
+overflow in udp_rmem_release().
+
+When a socket is close()d, udp_destruct_common() purges its receive
+queue and sums up skb->truesize in the queue.  This total is calculated
+and stored in a local unsigned integer variable.
+
+The total size is then passed to udp_rmem_release() to adjust memory
+accounting.  However, because the function takes a signed integer
+argument, the total size can wrap around, causing an overflow.
+
+Then, the released amount is calculated as follows:
+
+  1) Add size to sk->sk_forward_alloc.
+  2) Round down sk->sk_forward_alloc to the nearest lower multiple of
+      PAGE_SIZE and assign it to amount.
+  3) Subtract amount from sk->sk_forward_alloc.
+  4) Pass amount >> PAGE_SHIFT to __sk_mem_reduce_allocated().
+
+When the issue occurred, the total in udp_destruct_common() was 2147484480
+(INT_MAX + 833), which was cast to -2147482816 in udp_rmem_release().
+
+At 1) sk->sk_forward_alloc is changed from 3264 to -2147479552, and
+2) sets -2147479552 to amount.  3) reverts the wraparound, so we don't
+see a warning in inet_sock_destruct().  However, udp_memory_allocated
+ends up doubling at 4).
+
+Since commit 3cd3399dd7a8 ("net: implement per-cpu reserves for
+memory_allocated"), memory usage no longer doubles immediately after
+a socket is close()d because __sk_mem_reduce_allocated() caches the
+amount in udp_memory_per_cpu_fw_alloc.  However, the next time a UDP
+socket receives a packet, the subtraction takes effect, causing UDP
+memory usage to double.
+
+This issue makes further memory allocation fail once the socket's
+sk->sk_rmem_alloc exceeds net.ipv4.udp_rmem_min, resulting in packet
+drops.
+
+To prevent this issue, let's use unsigned int for the calculation and
+call sk_forward_alloc_add() only once for the small delta.
+
+Note that first_packet_length() also potentially has the same problem.
+
+[0]:
+from socket import *
+
+SO_RCVBUFFORCE = 33
+INT_MAX = (2 ** 31) - 1
+
+s = socket(AF_INET, SOCK_DGRAM)
+s.bind(('', 0))
+s.setsockopt(SOL_SOCKET, SO_RCVBUFFORCE, INT_MAX)
+
+c = socket(AF_INET, SOCK_DGRAM)
+c.connect(s.getsockname())
+
+data = b'a' * 100
+
+while True:
+    c.send(data)
+
+Fixes: f970bd9e3a06 ("udp: implement memory accounting helpers")
+Reported-by: Matt Dowling <madowlin@amazon.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250401184501.67377-3-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Yifei: resolve minor conflicts ]
+Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ net/ipv4/udp.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -536,7 +536,9 @@ static int display_open(struct inode *in
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1445,12 +1445,12 @@ static bool udp_skb_has_head_state(struc
+ }
  
- 	mutex_lock(&ictx->lock);
+ /* fully reclaim rmem/fwd memory allocated for skb */
+-static void udp_rmem_release(struct sock *sk, int size, int partial,
+-			     bool rx_queue_lock_held)
++static void udp_rmem_release(struct sock *sk, unsigned int size,
++			     int partial, bool rx_queue_lock_held)
+ {
+ 	struct udp_sock *up = udp_sk(sk);
+ 	struct sk_buff_head *sk_queue;
+-	int amt;
++	unsigned int amt;
  
--	if (!ictx->display_supported) {
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+	} else if (!ictx->display_supported) {
- 		pr_err("display not supported by device\n");
- 		retval = -ENODEV;
- 	} else if (ictx->display_isopen) {
-@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
- 	int retval = 0;
- 	struct usb_ctrlrequest *control_req = NULL;
+ 	if (likely(partial)) {
+ 		up->forward_deficit += size;
+@@ -1470,10 +1470,8 @@ static void udp_rmem_release(struct sock
+ 	if (!rx_queue_lock_held)
+ 		spin_lock(&sk_queue->lock);
  
-+	if (ictx->disconnected)
-+		return -ENODEV;
-+
- 	/* Check if we need to use control or interrupt urb */
- 	if (!ictx->tx_control) {
- 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
-@@ -954,12 +959,14 @@ static ssize_t vfd_write(struct file *fi
- 	static const unsigned char vfd_packet6[] = {
- 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
- 
--	if (ictx->disconnected)
--		return -ENODEV;
 -
- 	if (mutex_lock_interruptible(&ictx->lock))
- 		return -ERESTARTSYS;
+-	sk->sk_forward_alloc += size;
+-	amt = (sk->sk_forward_alloc - partial) & ~(SK_MEM_QUANTUM - 1);
+-	sk->sk_forward_alloc -= amt;
++	amt = (size + sk->sk_forward_alloc - partial) & ~(PAGE_SIZE - 1);
++	sk->sk_forward_alloc += size - amt;
  
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
- 		retval = -ENODEV;
-@@ -1034,11 +1041,13 @@ static ssize_t lcd_write(struct file *fi
- 	int retval = 0;
- 	struct imon_context *ictx = file->private_data;
+ 	if (amt)
+ 		__sk_mem_reduce_allocated(sk, amt >> SK_MEM_QUANTUM_SHIFT);
+@@ -1657,7 +1655,7 @@ EXPORT_SYMBOL_GPL(skb_consume_udp);
  
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	mutex_lock(&ictx->lock);
+ static struct sk_buff *__first_packet_length(struct sock *sk,
+ 					     struct sk_buff_head *rcvq,
+-					     int *total)
++					     unsigned int *total)
+ {
+ 	struct sk_buff *skb;
  
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->display_supported) {
- 		pr_err_ratelimited("no iMON display present\n");
- 		retval = -ENODEV;
-@@ -2502,7 +2511,11 @@ static void imon_disconnect(struct usb_i
- 	int ifnum;
+@@ -1690,8 +1688,8 @@ static int first_packet_length(struct so
+ {
+ 	struct sk_buff_head *rcvq = &udp_sk(sk)->reader_queue;
+ 	struct sk_buff_head *sk_queue = &sk->sk_receive_queue;
++	unsigned int total = 0;
+ 	struct sk_buff *skb;
+-	int total = 0;
+ 	int res;
  
- 	ictx = usb_get_intfdata(interface);
-+
-+	mutex_lock(&ictx->lock);
- 	ictx->disconnected = true;
-+	mutex_unlock(&ictx->lock);
-+
- 	dev = ictx->dev;
- 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
- 
+ 	spin_lock_bh(&rcvq->lock);
 
 
