@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AEE33508C;
-	Mon, 27 Oct 2025 19:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28878336ED9;
+	Mon, 27 Oct 2025 19:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591612; cv=none; b=t4NVqAQ0OHN3itcnVPIsHvaBCqjrxcz7NuV3KVNki4MXLJJnTkIJe5rVlDS5+4YeQkGu6LKoRcSchdK2u31R+y9h3o6Z7NPO9F7aV5mDr9AkSj3d5U7w6eFmbkdtMbjmKQw9od0IVWUiuAfAdA6CFly1LvqAuNxyXoD/F75tugE=
+	t=1761591615; cv=none; b=Ts/u/SYcLVKPnIvX/PN0UG3igDQHzApMDVVtV97C5PfHT74LfV3hJL39kQFdx6mQkfKCxde8tEgx9Z1x+s5eH0vT1kTk01Z7grzKEXxFYj6lZA80iqIlknIZXzeA4XbZme3OMlrwRwKdmGPXHQjT17hNbzFrP1BXGETFzFzGpmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591612; c=relaxed/simple;
-	bh=FRmIOf6T74eJPDrhLJXTGPAAsWBRZW/x1kqweQF5SX0=;
+	s=arc-20240116; t=1761591615; c=relaxed/simple;
+	bh=BQnAuEJUKUc/hIJ2bGaw9L3fNkItKWY5oCIA7k68NRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtvAgSrOTrgBnqxBmWcgv17Rhc8N9GVW9r5SrdqQMVoO3DKnZyEJxNXjHkBuF8Ojz7TA+SdSCcpoKbR8Ct+WmnYgZrllASQ2306acPFtJBLepICEl76x2AEQtgeWcM5gT4ZSuUlhOnO/xqR0qML37c2XSeGyuMPHHJyc6AkyH0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+NcPzab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6kKi/CoCmlDfecO71et2Av7eDfOr0/9zGNV02IIw2+aaX+0aUoCIaWCGxmZ7xhs88xRcZ5dZEs4YV1UEXqJRoj/LEkuXNhVuvDtH5ThwNHudP3Sra0xEdQdI0hG8I3CRAe5IzT6A5+9pGC4A00g3ShFGkpuLToEeBJVjF0gF4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wA+Xdb9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+NcPzab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5F8C4CEF1;
-	Mon, 27 Oct 2025 19:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wA+Xdb9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C06C4CEF1;
+	Mon, 27 Oct 2025 19:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591612;
-	bh=FRmIOf6T74eJPDrhLJXTGPAAsWBRZW/x1kqweQF5SX0=;
+	s=korg; t=1761591614;
+	bh=BQnAuEJUKUc/hIJ2bGaw9L3fNkItKWY5oCIA7k68NRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+NcPzabTufG1QKyk6u2p9qXIJK0YDJ1ohdOnPN1VArzG2Wx1Ytdf6dJC3SiEXAY5
-	 9UfpxjG9EyHmNupHeTNQoGIZ7Ve9wSHPtw4+ZI67Zry9s7jvy8MTUlAEXPGArhI2rI
-	 4wv3Oqy3rjwEtNj1YxR1+CsebN4AxUvTeqimX4iw=
+	b=wA+Xdb9wdLuCdga5v28Vp2lNuhRs1j9awqapPBNOB3rr6xQKX760adlhl2QnIny0f
+	 Gl0ELmZleI8m1PceOpyYeYO77I8RoA853Xr0d7X09RyvPRFLzQXJ6tcIrVI5sCPKau
+	 C3itVbkb/szyGj4Hm6Dmr6Rl14IFI6YEkWCX38nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Xue <zxue@semtech.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Inki Dae <inki.dae@samsung.com>,
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/332] bus: mhi: host: Do not use uninitialized dev pointer in mhi_init_irq_setup()
-Date: Mon, 27 Oct 2025 19:34:45 +0100
-Message-ID: <20251027183530.935618719@linuxfoundation.org>
+Subject: [PATCH 5.10 233/332] drm/exynos: exynos7_drm_decon: remove ctx->suspended
+Date: Mon, 27 Oct 2025 19:34:46 +0100
+Message-ID: <20251027183530.964547447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,55 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Xue <zxue@semtech.com>
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
 
-[ Upstream commit d0856a6dff57f95cc5d2d74e50880f01697d0cc4 ]
+[ Upstream commit e1361a4f1be9cb69a662c6d7b5ce218007d6e82b ]
 
-In mhi_init_irq_setup, the device pointer used for dev_err() was not
-initialized. Use the pointer from mhi_cntrl instead.
+Condition guards are found to be redundant, as the call flow is properly
+managed now, as also observed in the Exynos5433 DECON driver. Since
+state checking is no longer necessary, remove it.
 
-Fixes: b0fc0167f254 ("bus: mhi: core: Allow shared IRQ for event rings")
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Signed-off-by: Adam Xue <zxue@semtech.com>
-[mani: reworded subject/description and CCed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+This also fixes an issue which prevented decon_commit() from
+decon_atomic_enable() due to an incorrect state change setting.
+
+Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250905174118.38512-1-zxue@semtech.com
+Suggested-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 [ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/init.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c |   36 -----------------------------
+ 1 file changed, 36 deletions(-)
 
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -147,7 +147,6 @@ void mhi_deinit_free_irq(struct mhi_cont
- int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+--- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+@@ -51,7 +51,6 @@ struct decon_context {
+ 	void __iomem			*regs;
+ 	unsigned long			irq_flags;
+ 	bool				i80_if;
+-	bool				suspended;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 
+@@ -85,9 +84,6 @@ static void decon_wait_for_vblank(struct
  {
- 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	int i, ret;
+ 	struct decon_context *ctx = crtc->ctx;
  
- 	/* Setup BHI_INTVEC IRQ */
-@@ -163,7 +162,7 @@ int mhi_init_irq_setup(struct mhi_contro
- 			continue;
+-	if (ctx->suspended)
+-		return;
+-
+ 	atomic_set(&ctx->wait_vsync_event, 1);
  
- 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
--			dev_err(dev, "irq %d not available for event ring\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "irq %d not available for event ring\n",
- 				mhi_event->irq);
- 			ret = -EINVAL;
- 			goto error_request;
-@@ -174,7 +173,7 @@ int mhi_init_irq_setup(struct mhi_contro
- 				  IRQF_SHARED | IRQF_NO_SUSPEND,
- 				  "mhi", mhi_event);
- 		if (ret) {
--			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-+			dev_err(mhi_cntrl->cntrl_dev, "Error requesting irq:%d for ev:%d\n",
- 				mhi_cntrl->irq[mhi_event->irq], i);
- 			goto error_request;
- 		}
+ 	/*
+@@ -155,9 +151,6 @@ static void decon_commit(struct exynos_d
+ 	struct drm_display_mode *mode = &crtc->base.state->adjusted_mode;
+ 	u32 val, clkdiv;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/* nothing to do if we haven't set the mode yet */
+ 	if (mode->htotal == 0 || mode->vtotal == 0)
+ 		return;
+@@ -219,9 +212,6 @@ static int decon_enable_vblank(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return -EPERM;
+-
+ 	if (!test_and_set_bit(0, &ctx->irq_flags)) {
+ 		val = readl(ctx->regs + VIDINTCON0);
+ 
+@@ -244,9 +234,6 @@ static void decon_disable_vblank(struct
+ 	struct decon_context *ctx = crtc->ctx;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	if (test_and_clear_bit(0, &ctx->irq_flags)) {
+ 		val = readl(ctx->regs + VIDINTCON0);
+ 
+@@ -369,9 +356,6 @@ static void decon_atomic_begin(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	for (i = 0; i < WINDOWS_NR; i++)
+ 		decon_shadow_protect_win(ctx, i, true);
+ }
+@@ -391,9 +375,6 @@ static void decon_update_plane(struct ex
+ 	unsigned int cpp = fb->format->cpp[0];
+ 	unsigned int pitch = fb->pitches[0];
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/*
+ 	 * SHADOWCON/PRTCON register is used for enabling timing.
+ 	 *
+@@ -481,9 +462,6 @@ static void decon_disable_plane(struct e
+ 	unsigned int win = plane->index;
+ 	u32 val;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/* protect windows */
+ 	decon_shadow_protect_win(ctx, win, true);
+ 
+@@ -502,9 +480,6 @@ static void decon_atomic_flush(struct ex
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	for (i = 0; i < WINDOWS_NR; i++)
+ 		decon_shadow_protect_win(ctx, i, false);
+ 	exynos_crtc_handle_event(crtc);
+@@ -531,9 +506,6 @@ static void decon_atomic_enable(struct e
+ {
+ 	struct decon_context *ctx = crtc->ctx;
+ 
+-	if (!ctx->suspended)
+-		return;
+-
+ 	pm_runtime_get_sync(ctx->dev);
+ 
+ 	decon_init(ctx);
+@@ -543,8 +515,6 @@ static void decon_atomic_enable(struct e
+ 		decon_enable_vblank(ctx->crtc);
+ 
+ 	decon_commit(ctx->crtc);
+-
+-	ctx->suspended = false;
+ }
+ 
+ static void decon_atomic_disable(struct exynos_drm_crtc *crtc)
+@@ -552,9 +522,6 @@ static void decon_atomic_disable(struct
+ 	struct decon_context *ctx = crtc->ctx;
+ 	int i;
+ 
+-	if (ctx->suspended)
+-		return;
+-
+ 	/*
+ 	 * We need to make sure that all windows are disabled before we
+ 	 * suspend that connector. Otherwise we might try to scan from
+@@ -564,8 +531,6 @@ static void decon_atomic_disable(struct
+ 		decon_disable_plane(crtc, &ctx->planes[i]);
+ 
+ 	pm_runtime_put_sync(ctx->dev);
+-
+-	ctx->suspended = true;
+ }
+ 
+ static const struct exynos_drm_crtc_ops decon_crtc_ops = {
+@@ -687,7 +652,6 @@ static int decon_probe(struct platform_d
+ 		return -ENOMEM;
+ 
+ 	ctx->dev = dev;
+-	ctx->suspended = true;
+ 
+ 	i80_if_timings = of_get_child_by_name(dev->of_node, "i80-if-timings");
+ 	if (i80_if_timings)
 
 
