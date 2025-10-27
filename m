@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2498127978C;
-	Mon, 27 Oct 2025 18:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A07328639;
+	Mon, 27 Oct 2025 18:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591131; cv=none; b=JAXw+XGPkI5C60tjef5RZBv+2necX6GXEC8A0fYzYN16Jn3Sn2pLNv1fTJM+/XPzjLDdlkI7Gfs2cGnFSKHxcC8Q/CvRlDsgX+wcbFxEmR/5/86uZo2S8wnwH42LL38akmENzMo+98VX0gDB6VRRuzIxESad+EYE9mhXrQQXxGk=
+	t=1761591133; cv=none; b=ifAjpPB/Xj59ObT6mRS7JaUlBJDK0eBJotZhMp/bhB6ll9Az7jF98O51aLXLqaTeDsc5Ced9IXNb7zouDWASnAP7xoF8cVwrgh4CGflckkKZENqQrdGVaWnco2wdizfJitg2Tvqa87G97M3d5kpu95XhgQ5AoEbJdiUKYFODRlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591131; c=relaxed/simple;
-	bh=GNia7qozofOFRq2aX9esTQVXsf73Vdx6L6sxUq8LZfk=;
+	s=arc-20240116; t=1761591133; c=relaxed/simple;
+	bh=FI/fR5x5Hux4KWQtcc78ljw869A/ALsj0SgYiIEvseM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FE4l89yUSBSVjB0WtT3EavMknV5W413BLiCFNa4EbkKAzYM9zd3/Kq3BWdMRXnoyQy6XWn9QmWb3zKRnwKPGv9NTNVOJ7s+s0OaXIJySlVmnUyg6TA7YJ+gH1sNIDgyKr/qkbPNXxQ7M2TNxt5HtOUHJifPq3HTmnjhwhoHpb9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nbpg606z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1Upt0pz9cDNtBrhW4jDkidX8oY9wk/JGQKA0+Z+EFmNcWxA5OSVuhfEOr6FjgJICpexpYBnnkYKetM4+EmRa4GGDcz4AXbCeVejZOGuyqjw48vyPGNzXxK0hV2jpKZHNutLsSt6/p5vnZ0+Agnk0Kuldb0NDk32LA5cTBFaWaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFx/PbUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nbpg606z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5096FC4CEF1;
-	Mon, 27 Oct 2025 18:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFx/PbUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F61C4CEF1;
+	Mon, 27 Oct 2025 18:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591130;
-	bh=GNia7qozofOFRq2aX9esTQVXsf73Vdx6L6sxUq8LZfk=;
+	s=korg; t=1761591133;
+	bh=FI/fR5x5Hux4KWQtcc78ljw869A/ALsj0SgYiIEvseM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nbpg606zFflHJoRo4a4ks8xT3OLeVtF0hDGEZ8olZZVoBl5rMGc0TamPwhwVjLSXr
-	 qiz318Il6BjE1UpSS/Jdh2etzUTBZufn3RvyCasHEfnGy0b+5MUt1dFUpmn+RLNx9o
-	 6jQTqwrRVc7hEvvv8TuSy0zMoT9v85tDVVqjAM+Y=
+	b=ZFx/PbUC6Rr2pl/fJK+t55NBLKtnWZpo2DD/GlqohkbRp9mjiFZC8Nwx3c9oWMdtN
+	 WkC8ScMtSKfyAekxH8mxDQHfsTxYFLPmYwGcCPeFlprZ7Y6vjd4zmrjqlLNs3qbXHp
+	 qARTCCeIjXNxUiRZThaVCR1RDYdpq+e53ldt8kdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Sasha Levin <sashal@kernel.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Tony Rodriguez <unixpro1970@gmail.com>
-Subject: [PATCH 5.10 072/332] sparc: fix accurate exception reporting in copy_{from,to}_user for M7
-Date: Mon, 27 Oct 2025 19:32:05 +0100
-Message-ID: <20251027183526.524095056@linuxfoundation.org>
+	Nishanth Menon <nm@ti.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 081/332] hwrng: ks-sa - fix division by zero in ks_sa_rng_init
+Date: Mon, 27 Oct 2025 19:32:14 +0100
+Message-ID: <20251027183526.758531146@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,110 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit 936fb512752af349fc30ccbe0afe14a2ae6d7159 ]
+[ Upstream commit 612b1dfeb414dfa780a6316014ceddf9a74ff5c0 ]
 
-The referenced commit introduced exception handlers on user-space memory
-references in copy_from_user and copy_to_user. These handlers return from
-the respective function and calculate the remaining bytes left to copy
-using the current register contents. This commit fixes a couple of bad
-calculations. This will fix the return value of copy_from_user and
-copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
+Fix division by zero in ks_sa_rng_init caused by missing clock
+pointer initialization. The clk_get_rate() call is performed on
+an uninitialized clk pointer, resulting in division by zero when
+calculating delay values.
 
-Fixes: 34060b8fffa7 ("arch/sparc: Add accurate exception reporting in M7memcpy")
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on Oracle SPARC S7
-Tested-by: Tony Rodriguez <unixpro1970@gmail.com> # S7, see https://lore.kernel.org/r/98564e2e68df2dda0e00c67a75c7f7dfedb33c7e.camel@physik.fu-berlin.de
-Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-5-1ca72dda195b@mkarcher.dialup.fu-berlin.de
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Add clock initialization code before using the clock.
+
+Fixes: 6d01d8511dce ("hwrng: ks-sa - Add minimum sleep time before ready-polling")
+Signed-off-by: Nishanth Menon <nm@ti.com>
+
+ drivers/char/hw_random/ks-sa-rng.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/lib/M7memcpy.S     | 20 ++++++++++----------
- arch/sparc/lib/Memcpy_utils.S |  9 +++++++++
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/sparc/lib/M7memcpy.S b/arch/sparc/lib/M7memcpy.S
-index cbd42ea7c3f7c..99357bfa8e82a 100644
---- a/arch/sparc/lib/M7memcpy.S
-+++ b/arch/sparc/lib/M7memcpy.S
-@@ -696,16 +696,16 @@ FUNC_NAME:
- 	EX_LD_FP(LOAD(ldd, %o4+40, %f26), memcpy_retl_o2_plus_o5_plus_40)
- 	faligndata %f24, %f26, %f10
- 	EX_ST_FP(STORE(std, %f6, %o0+24), memcpy_retl_o2_plus_o5_plus_40)
--	EX_LD_FP(LOAD(ldd, %o4+48, %f28), memcpy_retl_o2_plus_o5_plus_40)
-+	EX_LD_FP(LOAD(ldd, %o4+48, %f28), memcpy_retl_o2_plus_o5_plus_32)
- 	faligndata %f26, %f28, %f12
--	EX_ST_FP(STORE(std, %f8, %o0+32), memcpy_retl_o2_plus_o5_plus_40)
-+	EX_ST_FP(STORE(std, %f8, %o0+32), memcpy_retl_o2_plus_o5_plus_32)
- 	add	%o4, 64, %o4
--	EX_LD_FP(LOAD(ldd, %o4-8, %f30), memcpy_retl_o2_plus_o5_plus_40)
-+	EX_LD_FP(LOAD(ldd, %o4-8, %f30), memcpy_retl_o2_plus_o5_plus_24)
- 	faligndata %f28, %f30, %f14
--	EX_ST_FP(STORE(std, %f10, %o0+40), memcpy_retl_o2_plus_o5_plus_40)
--	EX_ST_FP(STORE(std, %f12, %o0+48), memcpy_retl_o2_plus_o5_plus_40)
-+	EX_ST_FP(STORE(std, %f10, %o0+40), memcpy_retl_o2_plus_o5_plus_24)
-+	EX_ST_FP(STORE(std, %f12, %o0+48), memcpy_retl_o2_plus_o5_plus_16)
- 	add	%o0, 64, %o0
--	EX_ST_FP(STORE(std, %f14, %o0-8), memcpy_retl_o2_plus_o5_plus_40)
-+	EX_ST_FP(STORE(std, %f14, %o0-8), memcpy_retl_o2_plus_o5_plus_8)
- 	fsrc2	%f30, %f14
- 	bgu,pt	%xcc, .Lunalign_sloop
- 	 prefetch [%o4 + (8 * BLOCK_SIZE)], 20
-@@ -728,7 +728,7 @@ FUNC_NAME:
- 	add	%o4, 8, %o4
- 	faligndata %f0, %f2, %f16
- 	subcc	%o5, 8, %o5
--	EX_ST_FP(STORE(std, %f16, %o0), memcpy_retl_o2_plus_o5)
-+	EX_ST_FP(STORE(std, %f16, %o0), memcpy_retl_o2_plus_o5_plus_8)
- 	fsrc2	%f2, %f0
- 	bgu,pt	%xcc, .Lunalign_by8
- 	 add	%o0, 8, %o0
-@@ -772,7 +772,7 @@ FUNC_NAME:
- 	subcc	%o5, 0x20, %o5
- 	EX_ST(STORE(stx, %o3, %o0 + 0x00), memcpy_retl_o2_plus_o5_plus_32)
- 	EX_ST(STORE(stx, %g2, %o0 + 0x08), memcpy_retl_o2_plus_o5_plus_24)
--	EX_ST(STORE(stx, %g7, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_24)
-+	EX_ST(STORE(stx, %g7, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_16)
- 	EX_ST(STORE(stx, %o4, %o0 + 0x18), memcpy_retl_o2_plus_o5_plus_8)
- 	bne,pt	%xcc, 1b
- 	 add	%o0, 0x20, %o0
-@@ -804,12 +804,12 @@ FUNC_NAME:
- 	brz,pt	%o3, 2f
- 	 sub	%o2, %o3, %o2
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 8f1d47ff97996..994cfdf346e15 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -240,6 +240,10 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
--1:	EX_LD(LOAD(ldub, %o1 + 0x00, %g2), memcpy_retl_o2_plus_g1)
-+1:	EX_LD(LOAD(ldub, %o1 + 0x00, %g2), memcpy_retl_o2_plus_o3)
- 	add	%o1, 1, %o1
- 	subcc	%o3, 1, %o3
- 	add	%o0, 1, %o0
- 	bne,pt	%xcc, 1b
--	 EX_ST(STORE(stb, %g2, %o0 - 0x01), memcpy_retl_o2_plus_g1_plus_1)
-+	 EX_ST(STORE(stb, %g2, %o0 - 0x01), memcpy_retl_o2_plus_o3_plus_1)
- 2:
- 	and	%o1, 0x7, %o3
- 	brz,pn	%o3, .Lmedium_noprefetch_cp
-diff --git a/arch/sparc/lib/Memcpy_utils.S b/arch/sparc/lib/Memcpy_utils.S
-index 64fbac28b3db1..207343367bb2d 100644
---- a/arch/sparc/lib/Memcpy_utils.S
-+++ b/arch/sparc/lib/Memcpy_utils.S
-@@ -137,6 +137,15 @@ ENTRY(memcpy_retl_o2_plus_63_8)
- 	ba,pt	%xcc, __restore_asi
- 	 add	%o2, 8, %o0
- ENDPROC(memcpy_retl_o2_plus_63_8)
-+ENTRY(memcpy_retl_o2_plus_o3)
-+	ba,pt	%xcc, __restore_asi
-+	 add	%o2, %o3, %o0
-+ENDPROC(memcpy_retl_o2_plus_o3)
-+ENTRY(memcpy_retl_o2_plus_o3_plus_1)
-+	add	%o3, 1, %o3
-+	ba,pt	%xcc, __restore_asi
-+	 add	%o2, %o3, %o0
-+ENDPROC(memcpy_retl_o2_plus_o3_plus_1)
- ENTRY(memcpy_retl_o2_plus_o5)
- 	ba,pt	%xcc, __restore_asi
- 	 add	%o2, %o5, %o0
++	ks_sa_rng->clk = devm_clk_get_enabled(dev, NULL);
++	if (IS_ERR(ks_sa_rng->clk))
++		return dev_err_probe(dev, PTR_ERR(ks_sa_rng->clk), "Failed to get clock\n");
++
+ 	pm_runtime_enable(dev);
+ 	ret = pm_runtime_get_sync(dev);
+ 	if (ret < 0) {
 -- 
 2.51.0
 
