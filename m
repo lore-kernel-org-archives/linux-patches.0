@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2B31FBC92;
-	Mon, 27 Oct 2025 19:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5F2D5C95;
+	Mon, 27 Oct 2025 19:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592800; cv=none; b=kswCd7DU2qHlEtoxpHJOrXUJ/ClajBlQ16N6G3UKsqM5YaKrNp4+mXjryI94SGfBlWFlznmwNCa1AOlo/ZWmZ4MmG68LmwrkfmRGRbM2MMG2+JrrRKWRJoIcMpWGgbLN0G0qE3jSq6HUNm95bfnsDIqEbOC715W9vHIFh/rIeZE=
+	t=1761592803; cv=none; b=Rx0vl+u4qCV4MOdKt9fTHCOH8GQhlxLSbL0bBH3bK23e6Zw6jlmcryRTwGvasW8NlSrbLqg8wpbou2m3juXGvSONkYbToWX53n+5O7Di0pTjntQA4wQSN1Vkz60XOnCHJb//SBeCpRHG/NtYyB2fEwrxnBg1Nau6oeEyk5eJ/OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592800; c=relaxed/simple;
-	bh=i9vwRb1t/bl4pkKetN5U0J1+twn9j3o/8loS71zlk9w=;
+	s=arc-20240116; t=1761592803; c=relaxed/simple;
+	bh=j/MfnhgQTJQFcjdb5chKDLlRraoRg9Y1QK9Dmwrweu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqhR8K2APEZbdDedMPf7MSfQ/hpiFaeZueN3yYVsPGrpFFKwpWy6f33w5CNZPiRdzOZD4cGl31iNZCY/9i/R2unMt9Rrin8obsAV/+l8SddkW3GDfjezQYzfKuyEdsQDQLBgFm8nWo5PIYaZMtSE42aNJry5DI+4i8JTiIakA2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMm+wNEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n50NvDdJoUl6xqNDtgWiNt9CnSgqeUzS4b5xpADTVyzwBbVMy36VG5ilWI5x3iYY/OoVIzLPwmFn8KgJ6zFYCXiFU6H9scf12v0etus1071UvucAqi3lrK4uo+DgowIYv9TzzmN7N+tLOvDoRGx/XIEp0veZTmghriQ95K1HPC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+zCEp91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMm+wNEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84E7C4CEF1;
-	Mon, 27 Oct 2025 19:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+zCEp91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749A9C4CEF1;
+	Mon, 27 Oct 2025 19:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592800;
-	bh=i9vwRb1t/bl4pkKetN5U0J1+twn9j3o/8loS71zlk9w=;
+	s=korg; t=1761592802;
+	bh=j/MfnhgQTJQFcjdb5chKDLlRraoRg9Y1QK9Dmwrweu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMm+wNEyMMOvlVniU6oK/k62pPDrFaGfWmskovls2AoInRuWYSA5y12pkwyLUeewO
-	 F69St+CJKE2kMI0FfWlcPVeUBfyLI/FlSQota4TvB+DNe8hvjhuU/4o+kb+Ac46JQr
-	 P42Cf4AiikdG5am7mz48gL/IJ6u+aENZbExKdM/8=
+	b=N+zCEp91nCLlIIjGMGWPOSbKhq9o7opAbNz10omkCSLcEGxg3pO2oG9RRSB27OLzQ
+	 COtHx4dagM0+0fyN6MgIWdVWz0skZ361I/dzlbIFLxNe2wGHMUa7VBCHafPUg8IIoh
+	 a52Nz2wULcaXyIMDxwQZZGL1xoWTSL0Aij1+anS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Yushan Wang <wangyushan12@huawei.com>,
-	Will Deacon <will@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/117] drivers/perf: hisi: Relax the event ID check in the framework
-Date: Mon, 27 Oct 2025 19:35:43 +0100
-Message-ID: <20251027183454.413288057@linuxfoundation.org>
+Subject: [PATCH 6.12 018/117] s390/mm: Use __GFP_ACCOUNT for user page table allocations
+Date: Mon, 27 Oct 2025 19:35:44 +0100
+Message-ID: <20251027183454.440356276@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -53,52 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 43de0ac332b815cf56dbdce63687de9acfd35d49 ]
+[ Upstream commit 5671ce2a1fc6b4a16cff962423bc416b92cac3c8 ]
 
-Event ID is only using the attr::config bit [7, 0] but we check the
-event range using the whole 64bit field. It blocks the usage of the
-rest field of attr::config. Relax the check by only using the
-bit [7, 0].
+Add missing kmemcg accounting of user page table allocations.
 
-Acked-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Yushan Wang <wangyushan12@huawei.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hisi_uncore_pmu.c | 2 +-
- drivers/perf/hisilicon/hisi_uncore_pmu.h | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/mm/pgalloc.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
-index 918cdc31de572..e37682b280db5 100644
---- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
-@@ -198,7 +198,7 @@ int hisi_uncore_pmu_event_init(struct perf_event *event)
- 		return -EINVAL;
+diff --git a/arch/s390/mm/pgalloc.c b/arch/s390/mm/pgalloc.c
+index f5dece9353535..a2ec82ec78ac9 100644
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -43,9 +43,13 @@ __initcall(page_table_register_sysctl);
  
- 	hisi_pmu = to_hisi_pmu(event->pmu);
--	if (event->attr.config > hisi_pmu->check_event)
-+	if ((event->attr.config & HISI_EVENTID_MASK) > hisi_pmu->check_event)
- 		return -EINVAL;
+ unsigned long *crst_table_alloc(struct mm_struct *mm)
+ {
+-	struct ptdesc *ptdesc = pagetable_alloc(GFP_KERNEL, CRST_ALLOC_ORDER);
++	gfp_t gfp = GFP_KERNEL_ACCOUNT;
++	struct ptdesc *ptdesc;
+ 	unsigned long *table;
  
- 	if (hisi_pmu->on_cpu == -1)
-diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.h b/drivers/perf/hisilicon/hisi_uncore_pmu.h
-index 25b2d43b72bf9..ab5d54170b416 100644
---- a/drivers/perf/hisilicon/hisi_uncore_pmu.h
-+++ b/drivers/perf/hisilicon/hisi_uncore_pmu.h
-@@ -43,7 +43,8 @@
- 		return FIELD_GET(GENMASK_ULL(hi, lo), event->attr.config);  \
- 	}
++	if (mm == &init_mm)
++		gfp &= ~__GFP_ACCOUNT;
++	ptdesc = pagetable_alloc(gfp, CRST_ALLOC_ORDER);
+ 	if (!ptdesc)
+ 		return NULL;
+ 	table = ptdesc_to_virt(ptdesc);
+@@ -142,7 +146,7 @@ struct ptdesc *page_table_alloc_pgste(struct mm_struct *mm)
+ 	struct ptdesc *ptdesc;
+ 	u64 *table;
  
--#define HISI_GET_EVENTID(ev) (ev->hw.config_base & 0xff)
-+#define HISI_EVENTID_MASK		GENMASK(7, 0)
-+#define HISI_GET_EVENTID(ev)		((ev)->hw.config_base & HISI_EVENTID_MASK)
+-	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
++	ptdesc = pagetable_alloc(GFP_KERNEL_ACCOUNT, 0);
+ 	if (ptdesc) {
+ 		table = (u64 *)ptdesc_to_virt(ptdesc);
+ 		__arch_set_page_dat(table, 1);
+@@ -161,10 +165,13 @@ void page_table_free_pgste(struct ptdesc *ptdesc)
  
- #define HISI_PMU_EVTYPE_BITS		8
- #define HISI_PMU_EVTYPE_SHIFT(idx)	((idx) % 4 * HISI_PMU_EVTYPE_BITS)
+ unsigned long *page_table_alloc(struct mm_struct *mm)
+ {
++	gfp_t gfp = GFP_KERNEL_ACCOUNT;
+ 	struct ptdesc *ptdesc;
+ 	unsigned long *table;
+ 
+-	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
++	if (mm == &init_mm)
++		gfp &= ~__GFP_ACCOUNT;
++	ptdesc = pagetable_alloc(gfp, 0);
+ 	if (!ptdesc)
+ 		return NULL;
+ 	if (!pagetable_pte_ctor(ptdesc)) {
 -- 
 2.51.0
 
