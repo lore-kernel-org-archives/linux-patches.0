@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DA631B82B;
-	Mon, 27 Oct 2025 18:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30321321440;
+	Mon, 27 Oct 2025 18:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590647; cv=none; b=VJFhSbJzmzQimrBKw4af1YfOycWWW8r3OAD60mYpI/UECOIgOkccS0EQ4V22DnKePRMUBn85nO3hAUOIBYe9iv6moRhaDJQCuq7kTZBbbXpLtDvTtd1eWiH+LfqraJ6S9mCGMD15DcC9mbzSxw9AS7MWDH6ezXiwQR8YHnAPX6k=
+	t=1761590649; cv=none; b=eGjA4YZZL7O7ZKg5+N/1b2UZNyksEAQv9ikQESJhmsE4ZP461VRw72T4faqHiik19peTS+R4rJ470Jeb3Ac7faeiG9Lsl+FAI4Gn0v75AnSAHZBCX5AIXCZV3U7ml5fI/Icalag5zkEkZ2U7usevoqkdgfxvUjQP5jAeJKExeSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590647; c=relaxed/simple;
-	bh=LsrAqeh+avUHEwlcu9sB4P+tQ9jjCglwc+C/nYER/u8=;
+	s=arc-20240116; t=1761590649; c=relaxed/simple;
+	bh=/TR/YxnRxkk+4x6xGP4hy4ZXWg7mF08KgxLXTs+mNCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeWKitCx2yHZG6vn9dML5iHtj5UiyhfGTR9JZC2W5QXS8QROKdzUflDhOzdi3bWaJVWfjWNe2LIGDZFQHCxxgUtAnvwCfXVqFNsIVZBZYgMjRjKJ6J3H//2MGOXUVTETNLicRiPvsRtFnh/tuLfq66lNo9Gcx6obsk3CHLIqekk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A140wuuL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwJWfDxbqqcx2FNdV8p0SlY0KsniB8Uc7GubHrVRodjmlaonLWP3wGDD3tiXCcU+o1Z8b2lQXa055kXsvD6oV95xeFuLHdUfnOIVXV6LWuR0KNJyas03ZUYubVL4KcgcPORGTUExOAttWbUQ51jQufDz+gC6oH4CXjXRdAV38xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSc+l8cx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A140wuuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3D9C4CEFD;
-	Mon, 27 Oct 2025 18:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSc+l8cx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF342C4CEFD;
+	Mon, 27 Oct 2025 18:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590646;
-	bh=LsrAqeh+avUHEwlcu9sB4P+tQ9jjCglwc+C/nYER/u8=;
+	s=korg; t=1761590649;
+	bh=/TR/YxnRxkk+4x6xGP4hy4ZXWg7mF08KgxLXTs+mNCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A140wuuLPgJIJnV+Oumom+P6AjCeCPvT4VhREaE+S4uBqzdKsPQMeMMPGyr2oitRC
-	 37o6Ol/naXS7Iuk+8WP9zaj6zWP5TsSjmUrNdypRGqe0R8LY0Os8xErzUhuA5uwlTM
-	 /3rO8QHKeKckdlCrJXcCFX1tv5ro97DJQeoO5ouc=
+	b=SSc+l8cxYJAYOP9DuGSb6c71a3Ut0GyBir3WPjE2HlPgUvBKqsK72ymmmttsE5S9t
+	 x/38QIHRvKpuFFg9P+zM6xOZPHLUfB4nCA48qXFq+L+BqRIgmFSitUb1I4f3fSxZfl
+	 u1H4Z+mE43xcXoHAAzd5GoXq2KG8mUqiKy9ByhJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Julian Ruess <julianr@linux.ibm.com>
-Subject: [PATCH 5.4 123/224] PCI/IOV: Add PCI rescan-remove locking when enabling/disabling SR-IOV
-Date: Mon, 27 Oct 2025 19:34:29 +0100
-Message-ID: <20251027183512.275456035@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 5.4 124/224] PCI/AER: Fix missing uevent on recovery when a reset is requested
+Date: Mon, 27 Oct 2025 19:34:30 +0100
+Message-ID: <20251027183512.299705588@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -55,103 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 05703271c3cdcc0f2a8cf6ebdc45892b8ca83520 upstream.
+commit bbf7d0468d0da71d76cc6ec9bc8a224325d07b6b upstream.
 
-Before disabling SR-IOV via config space accesses to the parent PF,
-sriov_disable() first removes the PCI devices representing the VFs.
+Since commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery
+status for udev") AER uses the result of error_detected() as parameter
+to pci_uevent_ers(). As pci_uevent_ers() however does not handle
+PCI_ERS_RESULT_NEED_RESET this results in a missing uevent for the
+beginning of recovery if drivers request a reset. Fix this by treating
+PCI_ERS_RESULT_NEED_RESET as beginning recovery.
 
-Since commit 9d16947b7583 ("PCI: Add global pci_lock_rescan_remove()")
-such removal operations are serialized against concurrent remove and
-rescan using the pci_rescan_remove_lock. No such locking was ever added
-in sriov_disable() however. In particular when commit 18f9e9d150fc
-("PCI/IOV: Factor out sriov_add_vfs()") factored out the PCI device
-removal into sriov_del_vfs() there was still no locking around the
-pci_iov_remove_virtfn() calls.
-
-On s390 the lack of serialization in sriov_disable() may cause double
-remove and list corruption with the below (amended) trace being observed:
-
-  PSW:  0704c00180000000 0000000c914e4b38 (klist_put+56)
-  GPRS: 000003800313fb48 0000000000000000 0000000100000001 0000000000000001
-	00000000f9b520a8 0000000000000000 0000000000002fbd 00000000f4cc9480
-	0000000000000001 0000000000000000 0000000000000000 0000000180692828
-	00000000818e8000 000003800313fe2c 000003800313fb20 000003800313fad8
-  #0 [3800313fb20] device_del at c9158ad5c
-  #1 [3800313fb88] pci_remove_bus_device at c915105ba
-  #2 [3800313fbd0] pci_iov_remove_virtfn at c9152f198
-  #3 [3800313fc28] zpci_iov_remove_virtfn at c90fb67c0
-  #4 [3800313fc60] zpci_bus_remove_device at c90fb6104
-  #5 [3800313fca0] __zpci_event_availability at c90fb3dca
-  #6 [3800313fd08] chsc_process_sei_nt0 at c918fe4a2
-  #7 [3800313fd60] crw_collect_info at c91905822
-  #8 [3800313fe10] kthread at c90feb390
-  #9 [3800313fe68] __ret_from_fork at c90f6aa64
-  #10 [3800313fe98] ret_from_fork at c9194f3f2.
-
-This is because in addition to sriov_disable() removing the VFs, the
-platform also generates hot-unplug events for the VFs. This being the
-reverse operation to the hotplug events generated by sriov_enable() and
-handled via pdev->no_vf_scan. And while the event processing takes
-pci_rescan_remove_lock and checks whether the struct pci_dev still exists,
-the lack of synchronization makes this checking racy.
-
-Other races may also be possible of course though given that this lack of
-locking persisted so long observable races seem very rare. Even on s390 the
-list corruption was only observed with certain devices since the platform
-events are only triggered by config accesses after the removal, so as long
-as the removal finished synchronously they would not race. Either way the
-locking is missing so fix this by adding it to the sriov_del_vfs() helper.
-
-Just like PCI rescan-remove, locking is also missing in sriov_add_vfs()
-including for the error case where pci_stop_and_remove_bus_device() is
-called without the PCI rescan-remove lock being held. Even in the non-error
-case, adding new PCI devices and buses should be serialized via the PCI
-rescan-remove lock. Add the necessary locking.
-
-Fixes: 18f9e9d150fc ("PCI/IOV: Factor out sriov_add_vfs()")
+Fixes: 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for udev")
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250826-pci_fix_sriov_disable-v1-1-2d0bc938f2a3@linux.ibm.com
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-1-adf85b0620b0@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/iov.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/pci-driver.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/iov.c
-+++ b/drivers/pci/iov.c
-@@ -431,15 +431,18 @@ static int sriov_add_vfs(struct pci_dev
- 	if (dev->no_vf_scan)
- 		return 0;
- 
-+	pci_lock_rescan_remove();
- 	for (i = 0; i < num_vfs; i++) {
- 		rc = pci_iov_add_virtfn(dev, i);
- 		if (rc)
- 			goto failed;
- 	}
-+	pci_unlock_rescan_remove();
- 	return 0;
- failed:
- 	while (i--)
- 		pci_iov_remove_virtfn(dev, i);
-+	pci_unlock_rescan_remove();
- 
- 	return rc;
- }
-@@ -562,8 +565,10 @@ static void sriov_del_vfs(struct pci_dev
- 	if (dev->no_vf_scan)
- 		return;
- 
-+	pci_lock_rescan_remove();
- 	for (i = 0; i < iov->num_VFs; i++)
- 		pci_iov_remove_virtfn(dev, i);
-+	pci_unlock_rescan_remove();
- }
- 
- static void sriov_disable(struct pci_dev *dev)
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1603,6 +1603,7 @@ void pci_uevent_ers(struct pci_dev *pdev
+ 	switch (err_type) {
+ 	case PCI_ERS_RESULT_NONE:
+ 	case PCI_ERS_RESULT_CAN_RECOVER:
++	case PCI_ERS_RESULT_NEED_RESET:
+ 		envp[idx++] = "ERROR_EVENT=BEGIN_RECOVERY";
+ 		envp[idx++] = "DEVICE_ONLINE=0";
+ 		break;
 
 
