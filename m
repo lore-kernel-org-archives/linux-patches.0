@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7F218EB1;
-	Mon, 27 Oct 2025 19:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF731B127;
+	Mon, 27 Oct 2025 19:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591708; cv=none; b=WagCzp3d8duW17PvNjSIw2wnzlsRQay0JOHy8aFYu3Grv3Vx188hMLNuZpF8OwauQ2DNx+NNRcTE0BOBW5XS1mKfyFqu+yJzNjFenNG4afNAgh/QjGgbnX/qLes7VAs5ygvWiolfcH5aEIjKdGejzLBOeGjU9al/boEbU6qAcSo=
+	t=1761591710; cv=none; b=l6QyxXx96mmF0U/nAJsXmTUEl6l0Qba4TEipgLPcG+Z8GL57VFAiMU/R4l8yasCQaayaFZfsQZvFA0fP856aDtAAkWovbEeWPKU5tpdQNX2P0evf4mXeTuqlz05kCTHmev196uS/5zOt/mo2xgFFJM0YpeQEwHihqKJ8RFXdBC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591708; c=relaxed/simple;
-	bh=TE3jv08jtfHGcOtosIVS73UL958EC0h0gnWva5joFNQ=;
+	s=arc-20240116; t=1761591710; c=relaxed/simple;
+	bh=2p0OLRacqdB4Vz6Abt2wJyX/wpvX8eD3L2ikcbU1Kpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=henktSQyXs+lM/Xc9A9JDXf90AKlQOrln7qVoQIFz05Nz8pR4WCEx3ySPSjhbOARe8SY8a/9tuqRCOUiZ4QWkFoMXdyjq2zXdPZThO5o1b3AcxRvq2rmLj1g7DWyl3XQ+Emr3HlsmuYlimb6J7YxSqu4/3ciLGJPecXKlde1nOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpw5cocd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FkH7ty+zXGk2er/kfPUAjpZQF0MWRaZzT1O3Q0wsR6+tBzbY4dAq+S26jMJsVpHPyNBIpMxATxVsmg77cogDFL8pIOAnrHmKjTYIoil33qzrEz/PAO4wryHag7tZxHdikcuF40dz1Ky1JaWvH0TB+yOIdr2qctxkCVAwtTiCOMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9acUrUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpw5cocd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDA9C4CEF1;
-	Mon, 27 Oct 2025 19:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9acUrUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD44C4CEF1;
+	Mon, 27 Oct 2025 19:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591707;
-	bh=TE3jv08jtfHGcOtosIVS73UL958EC0h0gnWva5joFNQ=;
+	s=korg; t=1761591710;
+	bh=2p0OLRacqdB4Vz6Abt2wJyX/wpvX8eD3L2ikcbU1Kpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpw5cocdBeHXCCXravli1zCzXkwXu1elYngX09Q/G7gqMT8pScKRSjVjsmuF1GVZb
-	 0G+/TRYMgSYJzuFegMYa56dLlUJ5Z1DG0bCBksJIo96Ubf6nf4jHb22xZIWekR+pF1
-	 1Dsti/U+FImqkuQlWXXswhyX0L5DLWqanL4kqXYY=
+	b=H9acUrUbuXNTAY3JEW7TZpBYhesln3pzZsI5ZghSJcX/xw+WthjZInO7KhcV1u/AK
+	 jJpckJqLWTjo35YUYCU0yJ2GP+e3qtovoNOTRVTG8uRlLxS33206PC+lG/Mldoa+AZ
+	 cXN3nrog3XKyaeV5Q0qRZhxnIp5/lflre2xAHNmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 5.10 299/332] mei: me: add wildcat lake P DID
-Date: Mon, 27 Oct 2025 19:35:52 +0100
-Message-ID: <20251027183532.745912421@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 264/332] dlm: check for defined force value in dlm_lockspace_release
+Date: Mon, 27 Oct 2025 19:35:17 +0100
+Message-ID: <20251027183531.823753839@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,44 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 410d6c2ad4d1a88efa0acbb9966693725b564933 upstream.
+[ Upstream commit 6af515c9f3ccec3eb8a262ca86bef2c499d07951 ]
 
-Add Wildcat Lake P device id.
+Force values over 3 are undefined, so don't treat them as 3.
 
-Cc: stable@vger.kernel.org
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20251016125912.2146136-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/dlm/lockspace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -120,6 +120,8 @@
- #define MEI_DEV_ID_PTL_H      0xE370  /* Panther Lake H */
- #define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
+diff --git a/fs/dlm/lockspace.c b/fs/dlm/lockspace.c
+index 624617c12250a..db33e521556e3 100644
+--- a/fs/dlm/lockspace.c
++++ b/fs/dlm/lockspace.c
+@@ -783,7 +783,7 @@ static int release_lockspace(struct dlm_ls *ls, int force)
  
-+#define MEI_DEV_ID_WCL_P      0x4D70  /* Wildcat Lake P */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -126,6 +126,8 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_H, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
+ 	dlm_device_deregister(ls);
  
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_WCL_P, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
+-	if (force < 3 && dlm_user_daemon_available())
++	if (force != 3 && dlm_user_daemon_available())
+ 		do_uevent(ls, 0);
+ 
+ 	dlm_recoverd_stop(ls);
+-- 
+2.51.0
+
 
 
