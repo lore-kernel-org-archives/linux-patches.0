@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43A22D5A14;
-	Mon, 27 Oct 2025 19:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4D52D6E70;
+	Mon, 27 Oct 2025 19:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592696; cv=none; b=dRbq39feY9gF/i9MPyWVsJGgisdRwUmTL5rKdm0kZ62AL6sqzfvijSXNayPKQYWbAC/Cqv8svAT/IOBYrnyvP9rOIW2iqWXqBOpQXgcj04qVu9bG+QDALi0EiDWtPr9HbPs19C4Y9WKETjSfFSPJ82oozi6MiyDcLP5rFthmtCQ=
+	t=1761592699; cv=none; b=DomYVK5Ju+mt3WIPmQJpXUtyZfYCmhRDjDMNu5gzgrriVpkn3c6Zfr07OoVZ4H67m9UOA8S8GfwbVcTADdREDyBAzL1Ja6NC+sgO4NjilxH+qBdybIeLQXjLYrmQk0FstN2CWzHWgTMGNjTOwbVqYpALBnANhP4M74AEJsKJP4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592696; c=relaxed/simple;
-	bh=9O7qHmvV2bRIFwwAdku3QP+JQ6CQOy7+daJgLucuRpo=;
+	s=arc-20240116; t=1761592699; c=relaxed/simple;
+	bh=j6nL9DxpLauzjuOEY7soJY6U+3khwRTrv6VsYZnMxAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r83IcspnqulgfX4y88EnuSP9e7QOIYgXK119Da2cxj272fIkgRotHcJFgLkVL7D31anllK4oSDWZTqEIlpBkJOYWWsx/OCdWz3sO8bDbQPDAp1gpXW6eQwIi8Ko50ZgQO82Auez9ocD5CfBxokq8in5hBiQjPmS3l6ST/Piyzas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyNkgsXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gCzvbbJ7O6GR5zB24bR16EQU+4uPeaIymg2oIg2OM5WzxepyQ2DmW/JRWX9Hw0OY+EqdZ8O/tU/vqi1C/KZM4XlEG55d+mMMJCDuJYEwFvQo1UF0LKsQXFhWsH3QU3+TMZu/bJiFuFuS7+BBLhaNlLohBpaF5qW4g8sTCCnk9yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aiFd83r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyNkgsXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E29C4CEF1;
-	Mon, 27 Oct 2025 19:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aiFd83r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05EEC4CEF1;
+	Mon, 27 Oct 2025 19:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592696;
-	bh=9O7qHmvV2bRIFwwAdku3QP+JQ6CQOy7+daJgLucuRpo=;
+	s=korg; t=1761592699;
+	bh=j6nL9DxpLauzjuOEY7soJY6U+3khwRTrv6VsYZnMxAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyNkgsXpx0sfr9hFAmpLkaoDNmuLksbOYJ7pJx9XZWzmZxWfFDgIw8y2Qw+8MQxP5
-	 r+G14gRYXmAlainy4h3gWk6WK0iCh2jlMpi8Cdy+nTzZMQKUweH4r9YfPxxir8pWtr
-	 6x3XZfnS0AXPi9gp6eckoMvaxqNwVYweZA+H/y4Y=
+	b=1aiFd83rj1++FVBxHws3pcQoVYIusfrSLTlVRYDyvZ7MvTn+np5TvHU+GYWroz+NU
+	 ZcmGNhs0FcnX8oG+D/ZCdz/oBjozqCvZN1A7JVsYa/pFk1mkzjYqQa82JVRnwsC4zl
+	 R2Uj9NcJebC0m8p6MkbZnWqTVKkSB0458s9WJi1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Robin Murohy <robin.murphy@arm.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 32/84] dma-debug: dont report false positives with DMA_BOUNCE_UNALIGNED_KMALLOC
-Date: Mon, 27 Oct 2025 19:36:21 +0100
-Message-ID: <20251027183439.676910418@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 6.6 33/84] arch_topology: Fix incorrect error check in topology_parse_cpu_capacity()
+Date: Mon, 27 Oct 2025 19:36:22 +0100
+Message-ID: <20251027183439.704393007@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -54,59 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-commit 03521c892bb8d0712c23e158ae9bdf8705897df8 upstream.
+commit 2eead19334516c8e9927c11b448fbe512b1f18a1 upstream.
 
-Commit 370645f41e6e ("dma-mapping: force bouncing if the kmalloc() size is
-not cache-line-aligned") introduced DMA_BOUNCE_UNALIGNED_KMALLOC feature
-and permitted architecture specific code configure kmalloc slabs with
-sizes smaller than the value of dma_get_cache_alignment().
+Fix incorrect use of PTR_ERR_OR_ZERO() in topology_parse_cpu_capacity()
+which causes the code to proceed with NULL clock pointers. The current
+logic uses !PTR_ERR_OR_ZERO(cpu_clk) which evaluates to true for both
+valid pointers and NULL, leading to potential NULL pointer dereference
+in clk_get_rate().
 
-When that feature is enabled, the physical address of some small
-kmalloc()-ed buffers might be not aligned to the CPU cachelines, thus not
-really suitable for typical DMA.  To properly handle that case a SWIOTLB
-buffer bouncing is used, so no CPU cache corruption occurs.  When that
-happens, there is no point reporting a false-positive DMA-API warning that
-the buffer is not properly aligned, as this is not a client driver fault.
+Per include/linux/err.h documentation, PTR_ERR_OR_ZERO(ptr) returns:
+"The error code within @ptr if it is an error pointer; 0 otherwise."
 
-[m.szyprowski@samsung.com: replace is_swiotlb_allocated() with is_swiotlb_active(), per Catalin]
-  Link: https://lkml.kernel.org/r/20251010173009.3916215-1-m.szyprowski@samsung.com
-Link: https://lkml.kernel.org/r/20251009141508.2342138-1-m.szyprowski@samsung.com
-Fixes: 370645f41e6e ("dma-mapping: force bouncing if the kmalloc() size is not cache-line-aligned")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Inki Dae <m.szyprowski@samsung.com>
-Cc: Robin Murohy <robin.murphy@arm.com>
-Cc: "Isaac J. Manjarres" <isaacmanjarres@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This means PTR_ERR_OR_ZERO() returns 0 for both valid pointers AND NULL
+pointers. Therefore !PTR_ERR_OR_ZERO(cpu_clk) evaluates to true (proceed)
+when cpu_clk is either valid or NULL, causing clk_get_rate(NULL) to be
+called when of_clk_get() returns NULL.
+
+Replace with !IS_ERR_OR_NULL(cpu_clk) which only proceeds for valid
+pointers, preventing potential NULL pointer dereference in clk_get_rate().
+
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: b8fe128dad8f ("arch_topology: Adjust initial CPU capacities with current freq")
+Link: https://patch.msgid.link/20250923174308.1771906-1-kaushlendra.kumar@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/debug.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/base/arch_topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -23,6 +23,7 @@
- #include <linux/ctype.h>
- #include <linux/list.h>
- #include <linux/slab.h>
-+#include <linux/swiotlb.h>
- #include <asm/sections.h>
- #include "debug.h"
- 
-@@ -601,7 +602,9 @@ static void add_dma_entry(struct dma_deb
- 	if (rc == -ENOMEM) {
- 		pr_err_once("cacheline tracking ENOMEM, dma-debug disabled\n");
- 		global_disable = true;
--	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC)) {
-+	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
-+		   !(IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) &&
-+		     is_swiotlb_active(entry->dev))) {
- 		err_printk(entry->dev, entry,
- 			"cacheline tracking EEXIST, overlapping mappings aren't supported\n");
- 	}
+--- a/drivers/base/arch_topology.c
++++ b/drivers/base/arch_topology.c
+@@ -326,7 +326,7 @@ bool __init topology_parse_cpu_capacity(
+ 		 * frequency (by keeping the initial capacity_freq_ref value).
+ 		 */
+ 		cpu_clk = of_clk_get(cpu_node, 0);
+-		if (!PTR_ERR_OR_ZERO(cpu_clk)) {
++		if (!IS_ERR_OR_NULL(cpu_clk)) {
+ 			per_cpu(capacity_freq_ref, cpu) =
+ 				clk_get_rate(cpu_clk) / HZ_PER_KHZ;
+ 			clk_put(cpu_clk);
 
 
