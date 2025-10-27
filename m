@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AD31C580;
-	Mon, 27 Oct 2025 19:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B835965;
+	Mon, 27 Oct 2025 19:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592286; cv=none; b=hSorB5iFcKtaoFi78J6nXAdjgkKeEd+R1qt3ts0uWnnFVUtcGqYfEiUlcNB6IxzXj+5T5bcsVmHKCdEE/3YKs2tK66RhlqOWoV1sucR/N6abID2DahmoCnpbxAj46qfiRm3fXWspCdRN6mUFWCkUQW94U2OvgyPNEYB2coh5l/g=
+	t=1761592289; cv=none; b=V9XQX7/KzUgYAY9PPtWd+2S1GbBeF0tdgDC/gnjJbektSpjhdZSETD6kHh+jhrrZqUwXRiQMeSZ9Stin3hPUJPcGFXSqlv3wOYs1atwGTQmkqlSDcRXhQEU52ObPXoOTsWl3gY6qeJiedVeZGLxUx5Y8Sk3WZ8WBHr8557ePsmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592286; c=relaxed/simple;
-	bh=vaWqS1xA/z59OyiAy60/wUU4YMwTzVdpXlduIrZK8VE=;
+	s=arc-20240116; t=1761592289; c=relaxed/simple;
+	bh=eKQ1Jm+IiFj4CzIAFwfC0ivVdCZ/f2myOCVVaEsWpso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohnBKWMuUxbUMIs0Q0Rw4clX9bSSkipELZk5NA5LvylNmSV+WGqPn41asU/slGxHLSV/A26ODSwiBJueSwRpqvbKZEsJqV/oipJ7ArKVrOrDUKhzTP/mDDK+sPVgpna73u+NuwY6HSR/JPxTuWEX4nmGVV4FWe90iFzJii1V8F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rU30/Vdq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0+A3eeCJhxNpS/NDyQFjBenayb6Ao66/35U+CooMjzxcU7t5KizgvfG+fuP59XeWo5PGNDziSRClTxFgCGmmtnTRj1zTZ1ylALfuZOfnwnH6AEK0YxKE96CMlWBHhqoagqV71kGCN2b7Tq4mlxNB+QkEH5T56MeOKPWswy5Rmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaOPQUFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rU30/Vdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44945C4CEF1;
-	Mon, 27 Oct 2025 19:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaOPQUFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F4C4CEF1;
+	Mon, 27 Oct 2025 19:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592286;
-	bh=vaWqS1xA/z59OyiAy60/wUU4YMwTzVdpXlduIrZK8VE=;
+	s=korg; t=1761592289;
+	bh=eKQ1Jm+IiFj4CzIAFwfC0ivVdCZ/f2myOCVVaEsWpso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rU30/Vdq+0E4wvi/DMA61Hu1jiQR9ODNmpDiTFD/rMloOD39/CfoUU+h9997m+wLJ
-	 +7h8irItmeuu4ImYErGSH7ElBLO31j3ZeLi9ZOrGsJalIeW8zwQDE473hUAE/235ws
-	 E0GHaIQW+i2vFmmogRfQi1VRPmG2raid06dNuvVs=
+	b=OaOPQUFZwPLlypSZe1roC/G+lWxHu7qI/84SwUcRc41PVBspe8lKzS58RcARa5Bqk
+	 L76QE/F9Vk1qMr95iXk4NRIcpbDK2s5U8jzq6gC79ZqWcQMJdO7o9rraIShuUqPK5O
+	 ZMqSTabtBxmWBHDmiHKwHoYf2w+d69JwtiS+Gnv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Jann Horn <jannh@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/157] HID: multitouch: fix name of Stylus input devices
-Date: Mon, 27 Oct 2025 19:35:25 +0100
-Message-ID: <20251027183503.000728679@linuxfoundation.org>
+Subject: [PATCH 6.1 047/157] tls: always set record_type in tls_process_cmsg
+Date: Mon, 27 Oct 2025 19:35:08 +0100
+Message-ID: <20251027183502.556307891@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,49 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit aa4daea418ee4215dca5c8636090660c545cb233 ]
+[ Upstream commit b6fe4c29bb51cf239ecf48eacf72b924565cb619 ]
 
-HID_DG_PEN devices should have a suffix of "Stylus", as pointed out by
-commit c0ee1d571626 ("HID: hid-input: Add suffix also for HID_DG_PEN").
-However, on multitouch devices, these suffixes may be overridden. Before
-that commit, HID_DG_PEN devices would get the "Stylus" suffix, but after
-that, multitouch would override them to have an "UNKNOWN" suffix. Just add
-HID_DG_PEN to the list of non-overriden suffixes in multitouch.
+When userspace wants to send a non-DATA record (via the
+TLS_SET_RECORD_TYPE cmsg), we need to send any pending data from a
+previous MSG_MORE send() as a separate DATA record. If that DATA record
+is encrypted asynchronously, tls_handle_open_record will return
+-EINPROGRESS. This is currently treated as an error by
+tls_process_cmsg, and it will skip setting record_type to the correct
+value, but the caller (tls_sw_sendmsg_locked) handles that return
+value correctly and proceeds with sending the new message with an
+incorrect record_type (DATA instead of whatever was requested in the
+cmsg).
 
-Before this fix:
+Always set record_type before handling the open record. If
+tls_handle_open_record returns an error, record_type will be
+ignored. If it succeeds, whether with synchronous crypto (returning 0)
+or asynchronous (returning -EINPROGRESS), the caller will proceed
+correctly.
 
-[    0.470981] input: ELAN9008:00 04F3:2E14 UNKNOWN as /devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-16/i2c-ELAN9008:00/0018:04F3:2E14.0001/input/input8
-ELAN9008:00 04F3:2E14 UNKNOWN
-
-After this fix:
-
-[    0.474332] input: ELAN9008:00 04F3:2E14 Stylus as /devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-16/i2c-ELAN9008:00/0018:04F3:2E14.0001/input/input8
-
-ELAN9008:00 04F3:2E14 Stylus
-
-Fixes: c0ee1d571626 ("HID: hid-input: Add suffix also for HID_DG_PEN")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/0457252e578a10a94e40c72ba6288b3a64f31662.1760432043.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/tls/tls_main.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 6f1e54ee8f05d..b9e67b408a4b9 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1658,6 +1658,7 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 	case HID_CP_CONSUMER_CONTROL:
- 	case HID_GD_WIRELESS_RADIO_CTLS:
- 	case HID_GD_SYSTEM_MULTIAXIS:
-+	case HID_DG_PEN:
- 		/* already handled by hid core */
- 		break;
- 	case HID_DG_TOUCHSCREEN:
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 14d01558311d2..4797f68b9ec80 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -208,12 +208,9 @@ int tls_process_cmsg(struct sock *sk, struct msghdr *msg,
+ 			if (msg->msg_flags & MSG_MORE)
+ 				return -EINVAL;
+ 
+-			rc = tls_handle_open_record(sk, msg->msg_flags);
+-			if (rc)
+-				return rc;
+-
+ 			*record_type = *(unsigned char *)CMSG_DATA(cmsg);
+-			rc = 0;
++
++			rc = tls_handle_open_record(sk, msg->msg_flags);
+ 			break;
+ 		default:
+ 			return -EINVAL;
 -- 
 2.51.0
 
