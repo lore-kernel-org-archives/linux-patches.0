@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6EE31E0E6;
-	Mon, 27 Oct 2025 19:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D992D5A14;
+	Mon, 27 Oct 2025 19:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592377; cv=none; b=uT5MVBg1eGRckL4B7hpTIU0gNGgV/ZiRSyC+MOX63w+avLDNo+gpBe/potWqOfPjXsFShb+kSCm+vxqMcfsK13iRa11z1jbnny8oZ8y5WKs4x7qaitkyUriZyahPG9NL0OfLIFpXRW1Sb8wiWWZnFTjUUbfGGC9LvnZBpV8u8S4=
+	t=1761592379; cv=none; b=ln9TKIt5zk6K/Pyqn2gQNq+UKVZBAqmGmXOy38hWzRFvxMIfeWl95DIw0IXJOWIM/d6utxDwudPV0f8tv7a/kQzypJvdn6RQCl+lZDNMeAikzjyhuFQQ/cGMlwLyKY9oohDks7742HmZwWn6OxBQGw0IRZ2E3Xy6aUVfi97AsNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592377; c=relaxed/simple;
-	bh=pWbQGJOww4I2M4ciK4yn0111l5v2UQPvbfX0T/Z1+Qg=;
+	s=arc-20240116; t=1761592379; c=relaxed/simple;
+	bh=nj3yxv5viiaNE7KjZrZob+dJcSSpTSH0Pu0SCrX/+Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R/rcs7fkieEvuAqm27wqtqWGtsH8h9e9sFt3EUvmQIQImR1n2qFQX4Wum5fNmHZmKDKjl+iaKQUTBQwBdQm2jo34YN0dii18xhpMp35+bRVVE3s5kqlDKdWq6YdlMt025oPONGx+1N1UYkntjdpgaMhemE7d9mFbJFLYs5ECdsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdT/teEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IysYaoFD4icZ/SwnjY1mSTkXUoLJ1a0tLJLCMkbpAQu2Ar15pdvZQUHucorFCQn7cd4LG23gTvj/r5XZrlrfv7Siva1viLplKCOwCFLbDNC8e7XQMQ7aWTy6ta92RhPPx5gxhaKF0VnwIlXg0pEZ/SUZ8F8NEKOGDulMvj9Xsuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6uHzOGP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdT/teEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBF1C4CEF1;
-	Mon, 27 Oct 2025 19:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6uHzOGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69D9C4CEF1;
+	Mon, 27 Oct 2025 19:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592376;
-	bh=pWbQGJOww4I2M4ciK4yn0111l5v2UQPvbfX0T/Z1+Qg=;
+	s=korg; t=1761592379;
+	bh=nj3yxv5viiaNE7KjZrZob+dJcSSpTSH0Pu0SCrX/+Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdT/teEbZOEWE0S0NCo1b3JLTez8XRqN0iy9jxT8TTh8RQE0UALEnwkJ2JXFErzFo
-	 Xo/gWRi/vc6aYslazJ3mbplvFG80BXHppzZg47zEqwFD8Bs8pFCk3Sc8WpDu9JX/8j
-	 Oa5KFceUEguuJPxjyHQl96nIHCfabU7KKgqkvJMY=
+	b=e6uHzOGP4fvPjDVggBz51vEtUzHPYiNzJWTMLI5rOH4cCF/rkOJVMDoscUHOciXa7
+	 oQN9hEdBcaPNThFUEuIM09J1meAsTyv35ej8BEdqvfOpeegEQo9yJHkoaa8q8fSC5P
+	 WsF73s7rS0BaohT2ETFxxYPgdpC+bDhCY0+GckbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 097/157] net: ravb: Ensure memory write completes before ringing TX doorbell
-Date: Mon, 27 Oct 2025 19:35:58 +0100
-Message-ID: <20251027183503.867037546@linuxfoundation.org>
+Subject: [PATCH 6.1 098/157] selftests: mptcp: join: mark flush re-add as skipped if not supported
+Date: Mon, 27 Oct 2025 19:35:59 +0100
+Message-ID: <20251027183503.895462857@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -46,56 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 706136c5723626fcde8dd8f598a4dcd251e24927 upstream.
+commit d68460bc31f9c8c6fc81fbb56ec952bec18409f1 upstream.
 
-Add a final dma_wmb() barrier before triggering the transmit request
-(TCCR_TSRQ) to ensure all descriptor and buffer writes are visible to
-the DMA engine.
+The call to 'continue_if' was missing: it properly marks a subtest as
+'skipped' if the attached condition is not valid.
 
-According to the hardware manual, a read-back operation is required
-before writing to the doorbell register to guarantee completion of
-previous writes. Instead of performing a dummy read, a dma_wmb() is
-used to both enforce the same ordering semantics on the CPU side and
-also to ensure completion of writes.
+Without that, the test is wrongly marked as passed on older kernels.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Fixes: e06959e9eebd ("selftests: mptcp: join: test for flush/re-add endpoints")
 Cc: stable@vger.kernel.org
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20251017151830.171062-5-prabhakar.mahadev-lad.rj@bp.renesas.com
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-2-8207030cb0e8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2075,6 +2075,14 @@ static netdev_tx_t ravb_start_xmit(struc
- 		dma_wmb();
- 		desc->die_dt = DT_FSINGLE;
- 	}
-+
-+	/* Before ringing the doorbell we need to make sure that the latest
-+	 * writes have been committed to memory, otherwise it could delay
-+	 * things until the doorbell is rang again.
-+	 * This is in replacement of the read operation mentioned in the HW
-+	 * manuals.
-+	 */
-+	dma_wmb();
- 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3457,7 +3457,7 @@ endpoint_tests()
  
- 	priv->cur_tx[q] += num_tx_desc;
+ 	# flush and re-add
+ 	if reset_with_tcp_filter "flush re-add" ns2 10.0.3.2 REJECT OUTPUT &&
+-	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+ 		pm_nl_set_limits $ns1 0 2
+ 		pm_nl_set_limits $ns2 1 2
+ 		# broadcast IP: no packet for this address will be received on ns1
 
 
