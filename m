@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDB6321454;
-	Mon, 27 Oct 2025 19:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C243254B1;
+	Mon, 27 Oct 2025 19:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592449; cv=none; b=jZnEIHNhg85wszvRiy2jnHdJFg24ii+cYs5LeRFzvcDicoufE8SKogVqKh0PfqeZcfk46Ko5dlAz1CTEgqPxZNIbWaEHMGHGYrJ+szYDQsD3tbEHoq95UT4Spx1NP56Af6Fb3I3LguK7mele248xqQqzcjJZXNqI2krLAwh1Ouw=
+	t=1761592450; cv=none; b=SnOqmAgaWNXwFsNAgAzf7cxeUIMwnrfkb3zbHbdD3ADjdWme7S5LYrx8ZrCABrSh2izwkFQCV5TUnWuPlLU1OHN8LyaoydLkchheV5vGRCgsZk0qqb5ogLyQPSN+ey3I9A/L90fCyExKfpuLTNTU25IzY1vrwu1zT71xKLV/1Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592449; c=relaxed/simple;
-	bh=l+t0vBEGJPUkdMaWLqaA8K9TG67p6KPSTmAxyEbwbvE=;
+	s=arc-20240116; t=1761592450; c=relaxed/simple;
+	bh=e2uFfYMQaHrcq6Jkl9b3c8eZMqCsVBTKSjjFhqFMQvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zze405kfgMEORvdn/Fhx1BIwY8+T/jyD5zkU9MPBhRfEG54DkMvAAo2qaYU4Q0NU8YBpyYliEQdcq9LT/D/hOazQIuOkLtj/SO9lCGlfUN2gHXogSeXOhhq9XIFcThYTEpeoHBmVim5F1UuZTi5QDVaVv+HFWZvemroaqjvdGzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOh6x6rZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rMZjavEQgBKBmtYv4mWCkNIc0yHQv9xZL3SceQlfkUpm8B5cIxrUNk3/iS4fgVtL4QOawUD9ATCtEfdLD2w1dFEp9bc+qu9UsL3CQItuM4d6DRbB9dN582sVSAMroZsxf8jcAZssXKCZm6wyta49/H7Os93jqlbxZ2OoVh6STwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQinwap0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOh6x6rZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B572C4CEFD;
-	Mon, 27 Oct 2025 19:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQinwap0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31FEC4CEF1;
+	Mon, 27 Oct 2025 19:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592447;
-	bh=l+t0vBEGJPUkdMaWLqaA8K9TG67p6KPSTmAxyEbwbvE=;
+	s=korg; t=1761592450;
+	bh=e2uFfYMQaHrcq6Jkl9b3c8eZMqCsVBTKSjjFhqFMQvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOh6x6rZF+iScZH0QnSBNZ+8ym2RiJ/wWaNL+rV11QEzpep3GJ7GBYl4q5Oo/x6Lq
-	 i+MSFgCzhHJn9a4m6S/Os4ot42hDZEcsJOZcIh+DewIXWlFf2jBoyNRtcuPXyj9MCI
-	 wtQRKRqfOjyhqWjksi12Gowy3Setsx+cCpSoeRRE=
+	b=YQinwap00/6UCmAJDYUvta7ooZLMBuPjzlAog2A/+RRF0dT9lJI4rjw1wM59hTdwY
+	 /e6Jgk94agab/oRlqG9JMByCaWeJwnxS4/WJYvHD/i50oxaIkWUR0SAB2TqT0dY+mV
+	 boOaJcVONOMFKW8XyUKNDgBe3TpWAT6jzvQN4xCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/157] padata: Reset next CPU when reorder sequence wraps around
-Date: Mon, 27 Oct 2025 19:36:26 +0100
-Message-ID: <20251027183504.603861114@linuxfoundation.org>
+Subject: [PATCH 6.1 126/157] fuse: allocate ff->release_args only if release is needed
+Date: Mon, 27 Oct 2025 19:36:27 +0100
+Message-ID: <20251027183504.630545833@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -51,41 +51,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Liang <shaw.leon@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 501302d5cee0d8e8ec2c4a5919c37e0df9abc99b ]
+[ Upstream commit e26ee4efbc79610b20e7abe9d96c87f33dacc1ff ]
 
-When seq_nr wraps around, the next reorder job with seq 0 is hashed to
-the first CPU in padata_do_serial(). Correspondingly, need reset pd->cpu
-to the first one when pd->processed wraps around. Otherwise, if the
-number of used CPUs is not a power of 2, padata_find_next() will be
-checking a wrong list, hence deadlock.
+This removed the need to pass isdir argument to fuse_put_file().
 
-Fixes: 6fc4dbcf0276 ("padata: Replace delayed timer with immediate workqueue in padata_reorder")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ applied fix in padata_find_next() instead of padata_reorder() ]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/padata.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/fuse/dir.c    |    2 -
+ fs/fuse/file.c   |   69 +++++++++++++++++++++++++++++++------------------------
+ fs/fuse/fuse_i.h |    2 -
+ 3 files changed, 41 insertions(+), 32 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -282,7 +282,11 @@ static struct padata_priv *padata_find_n
- 	if (remove_object) {
- 		list_del_init(&padata->list);
- 		++pd->processed;
--		pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
-+		/* When sequence wraps around, reset to the first CPU. */
-+		if (unlikely(pd->processed == 0))
-+			pd->cpu = cpumask_first(pd->cpumask.pcpu);
-+		else
-+			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -584,7 +584,7 @@ static int fuse_create_open(struct inode
+ 		goto out_err;
+ 
+ 	err = -ENOMEM;
+-	ff = fuse_file_alloc(fm);
++	ff = fuse_file_alloc(fm, true);
+ 	if (!ff)
+ 		goto out_put_forget_req;
+ 
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -54,7 +54,7 @@ struct fuse_release_args {
+ 	struct inode *inode;
+ };
+ 
+-struct fuse_file *fuse_file_alloc(struct fuse_mount *fm)
++struct fuse_file *fuse_file_alloc(struct fuse_mount *fm, bool release)
+ {
+ 	struct fuse_file *ff;
+ 
+@@ -63,11 +63,13 @@ struct fuse_file *fuse_file_alloc(struct
+ 		return NULL;
+ 
+ 	ff->fm = fm;
+-	ff->release_args = kzalloc(sizeof(*ff->release_args),
+-				   GFP_KERNEL_ACCOUNT);
+-	if (!ff->release_args) {
+-		kfree(ff);
+-		return NULL;
++	if (release) {
++		ff->release_args = kzalloc(sizeof(*ff->release_args),
++					   GFP_KERNEL_ACCOUNT);
++		if (!ff->release_args) {
++			kfree(ff);
++			return NULL;
++		}
  	}
  
- 	spin_unlock(&reorder->lock);
+ 	INIT_LIST_HEAD(&ff->write_entry);
+@@ -103,14 +105,14 @@ static void fuse_release_end(struct fuse
+ 	kfree(ra);
+ }
+ 
+-static void fuse_file_put(struct fuse_file *ff, bool sync, bool isdir)
++static void fuse_file_put(struct fuse_file *ff, bool sync)
+ {
+ 	if (refcount_dec_and_test(&ff->count)) {
+-		struct fuse_args *args = &ff->release_args->args;
++		struct fuse_release_args *ra = ff->release_args;
++		struct fuse_args *args = (ra ? &ra->args : NULL);
+ 
+-		if (isdir ? ff->fm->fc->no_opendir : ff->fm->fc->no_open) {
+-			/* Do nothing when client does not implement 'open' */
+-			fuse_release_end(ff->fm, args, 0);
++		if (!args) {
++			/* Do nothing when server does not implement 'open' */
+ 		} else if (sync) {
+ 			fuse_simple_request(ff->fm, args);
+ 			fuse_release_end(ff->fm, args, 0);
+@@ -130,15 +132,16 @@ struct fuse_file *fuse_file_open(struct
+ 	struct fuse_conn *fc = fm->fc;
+ 	struct fuse_file *ff;
+ 	int opcode = isdir ? FUSE_OPENDIR : FUSE_OPEN;
++	bool open = isdir ? !fc->no_opendir : !fc->no_open;
+ 
+-	ff = fuse_file_alloc(fm);
++	ff = fuse_file_alloc(fm, open);
+ 	if (!ff)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	ff->fh = 0;
+ 	/* Default for no-open */
+ 	ff->open_flags = FOPEN_KEEP_CACHE | (isdir ? FOPEN_CACHE_DIR : 0);
+-	if (isdir ? !fc->no_opendir : !fc->no_open) {
++	if (open) {
+ 		struct fuse_open_out outarg;
+ 		int err;
+ 
+@@ -146,11 +149,13 @@ struct fuse_file *fuse_file_open(struct
+ 		if (!err) {
+ 			ff->fh = outarg.fh;
+ 			ff->open_flags = outarg.open_flags;
+-
+ 		} else if (err != -ENOSYS) {
+ 			fuse_file_free(ff);
+ 			return ERR_PTR(err);
+ 		} else {
++			/* No release needed */
++			kfree(ff->release_args);
++			ff->release_args = NULL;
+ 			if (isdir)
+ 				fc->no_opendir = 1;
+ 			else
+@@ -272,7 +277,7 @@ out_inode_unlock:
+ }
+ 
+ static void fuse_prepare_release(struct fuse_inode *fi, struct fuse_file *ff,
+-				 unsigned int flags, int opcode)
++				 unsigned int flags, int opcode, bool sync)
+ {
+ 	struct fuse_conn *fc = ff->fm->fc;
+ 	struct fuse_release_args *ra = ff->release_args;
+@@ -290,6 +295,9 @@ static void fuse_prepare_release(struct
+ 
+ 	wake_up_interruptible_all(&ff->poll_wait);
+ 
++	if (!ra)
++		return;
++
+ 	ra->inarg.fh = ff->fh;
+ 	ra->inarg.flags = flags;
+ 	ra->args.in_numargs = 1;
+@@ -299,6 +307,13 @@ static void fuse_prepare_release(struct
+ 	ra->args.nodeid = ff->nodeid;
+ 	ra->args.force = true;
+ 	ra->args.nocreds = true;
++
++	/*
++	 * Hold inode until release is finished.
++	 * From fuse_sync_release() the refcount is 1 and everything's
++	 * synchronous, so we are fine with not doing igrab() here.
++	 */
++	ra->inode = sync ? NULL : igrab(&fi->inode);
+ }
+ 
+ void fuse_file_release(struct inode *inode, struct fuse_file *ff,
+@@ -308,14 +323,12 @@ void fuse_file_release(struct inode *ino
+ 	struct fuse_release_args *ra = ff->release_args;
+ 	int opcode = isdir ? FUSE_RELEASEDIR : FUSE_RELEASE;
+ 
+-	fuse_prepare_release(fi, ff, open_flags, opcode);
++	fuse_prepare_release(fi, ff, open_flags, opcode, false);
+ 
+-	if (ff->flock) {
++	if (ra && ff->flock) {
+ 		ra->inarg.release_flags |= FUSE_RELEASE_FLOCK_UNLOCK;
+ 		ra->inarg.lock_owner = fuse_lock_owner_id(ff->fm->fc, id);
+ 	}
+-	/* Hold inode until release is finished */
+-	ra->inode = igrab(inode);
+ 
+ 	/*
+ 	 * Normally this will send the RELEASE request, however if
+@@ -326,7 +339,7 @@ void fuse_file_release(struct inode *ino
+ 	 * synchronous RELEASE is allowed (and desirable) in this case
+ 	 * because the server can be trusted not to screw up.
+ 	 */
+-	fuse_file_put(ff, ff->fm->fc->destroy, isdir);
++	fuse_file_put(ff, ff->fm->fc->destroy);
+ }
+ 
+ void fuse_release_common(struct file *file, bool isdir)
+@@ -361,12 +374,8 @@ void fuse_sync_release(struct fuse_inode
+ 		       unsigned int flags)
+ {
+ 	WARN_ON(refcount_read(&ff->count) > 1);
+-	fuse_prepare_release(fi, ff, flags, FUSE_RELEASE);
+-	/*
+-	 * iput(NULL) is a no-op and since the refcount is 1 and everything's
+-	 * synchronous, we are fine with not doing igrab() here"
+-	 */
+-	fuse_file_put(ff, true, false);
++	fuse_prepare_release(fi, ff, flags, FUSE_RELEASE, true);
++	fuse_file_put(ff, true);
+ }
+ EXPORT_SYMBOL_GPL(fuse_sync_release);
+ 
+@@ -923,7 +932,7 @@ static void fuse_readpages_end(struct fu
+ 		put_page(page);
+ 	}
+ 	if (ia->ff)
+-		fuse_file_put(ia->ff, false, false);
++		fuse_file_put(ia->ff, false);
+ 
+ 	fuse_io_free(ia);
+ }
+@@ -1670,7 +1679,7 @@ static void fuse_writepage_free(struct f
+ 		__free_page(ap->pages[i]);
+ 
+ 	if (wpa->ia.ff)
+-		fuse_file_put(wpa->ia.ff, false, false);
++		fuse_file_put(wpa->ia.ff, false);
+ 
+ 	kfree(ap->pages);
+ 	kfree(wpa);
+@@ -1918,7 +1927,7 @@ int fuse_write_inode(struct inode *inode
+ 	ff = __fuse_write_file_get(fi);
+ 	err = fuse_flush_times(inode, ff);
+ 	if (ff)
+-		fuse_file_put(ff, false, false);
++		fuse_file_put(ff, false);
+ 
+ 	return err;
+ }
+@@ -2316,7 +2325,7 @@ static int fuse_writepages(struct addres
+ 		fuse_writepages_send(&data);
+ 	}
+ 	if (data.ff)
+-		fuse_file_put(data.ff, false, false);
++		fuse_file_put(data.ff, false);
+ 
+ 	kfree(data.orig_pages);
+ out:
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -1022,7 +1022,7 @@ void fuse_read_args_fill(struct fuse_io_
+  */
+ int fuse_open_common(struct inode *inode, struct file *file, bool isdir);
+ 
+-struct fuse_file *fuse_file_alloc(struct fuse_mount *fm);
++struct fuse_file *fuse_file_alloc(struct fuse_mount *fm, bool release);
+ void fuse_file_free(struct fuse_file *ff);
+ void fuse_finish_open(struct inode *inode, struct file *file);
+ 
 
 
