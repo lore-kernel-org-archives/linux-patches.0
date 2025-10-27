@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EAE27FD62;
-	Mon, 27 Oct 2025 19:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A168823EA92;
+	Mon, 27 Oct 2025 19:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593007; cv=none; b=K0sAwkwses+RnWm0coUrl29cJcVi9yq+rH4971Gcs3dK9Cco+zC4dZWnJ6NMXW0EETWEQyhOlzR1aMy/6RI2B5lTZ2eGglwyZc1Nyq0Vn+SfYolaIUa9bkp1UUcZJdewgrKZrGHnidMROycK2jfvX6dDrtPmINjQnO3x5fTIGZ4=
+	t=1761593009; cv=none; b=GTXZJGYnV5UkH3nS7J2+Ir9vOLUppxa/tilgl5+eXq3yYoFEQyuA+FV8Ib4oafh6JcDfkxcs32GLXbiPj3dfB0ms9WiAByWl/jc71KJQKYzabKzCGPWRZRu94dr86upCbFoqdWWt42x24wAdXwXg8ODpmJpZSHNjW9Ec0geNIv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593007; c=relaxed/simple;
-	bh=WUsvJuEEmaPYn4FCDa4xua4WpGA73xwfQ/B9Klb3D+M=;
+	s=arc-20240116; t=1761593009; c=relaxed/simple;
+	bh=GrEb2oOm59MfHdevs3Ci9Xi0FNRx89JQ7VpZX2nt0t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/GjWcCQl8fUBC2CJGwaiI0kmdWn2Rm1VcxDwzhNHl1Vog03RuV3IuMMWr2nRGF4QdAmWuiHmKxFTUi+y4eZ6YtWqNcZ/iybKsqVZlNDshWTn1IVD5hhpqF2ULL7ugq0YiiNlsjVYsViCTUAH8R0JlUsSxRe1msO1un6UvsvKTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow92RrNs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9SIqk0JLgjSjGjHeSs2pUMhrsvqUi4582RZIFD0RB96iSYwm9S6/6Y7RaYwJCRm/3ZwwQ2ZDvRX2eewTiz5oifNW/8Ma+2GbdwThx2j/L++Zq9Tgkb+VOYXRnsln5qEfd2i0SLXHwK+6pf2di0MvI8aeqOfNP5x4vqpCHriq7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svF9nhPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow92RrNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5283C113D0;
-	Mon, 27 Oct 2025 19:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svF9nhPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AF7C4CEFD;
+	Mon, 27 Oct 2025 19:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593007;
-	bh=WUsvJuEEmaPYn4FCDa4xua4WpGA73xwfQ/B9Klb3D+M=;
+	s=korg; t=1761593009;
+	bh=GrEb2oOm59MfHdevs3Ci9Xi0FNRx89JQ7VpZX2nt0t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ow92RrNsJ3gn1t6jekdFl/Xvky4TXY1vYecAjp1foxHbwSbA45iiShtkHfxZfaegn
-	 qJn6HUU8T42zQbHGO45UwmuX4xmiPNHTInRxpoD2UFIdyX6h1495w8kAKK0S4zYsz8
-	 fHRG7wsCCkVLXjoj5DZWtqkfQUehKRYcEJCsEiqM=
+	b=svF9nhPSnP9x6n6I/VYLhQT3H7BMjyO2y0AYh6d23ElB4IVof+DPeJzrZvhEILuAP
+	 Pi9hxe8BRhYhgl110mLOcgxPvYtvUTKF3UFPeXoh7UAfHA7Mrj68flGn68SYaD8SOQ
+	 9ko1gf2B447Rs5xCxtVCZ5A/T86Ig7j+KK9vtWv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
+	LI Qingwu <Qing-wu.Li@leica-geosystems.com.cn>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 095/117] USB: serial: option: add Quectel RG255C
-Date: Mon, 27 Oct 2025 19:37:01 +0100
-Message-ID: <20251027183456.588458950@linuxfoundation.org>
+Subject: [PATCH 6.12 096/117] USB: serial: option: add Telit FN920C04 ECM compositions
+Date: Mon, 27 Oct 2025 19:37:02 +0100
+Message-ID: <20251027183456.615287333@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -50,37 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: LI Qingwu <Qing-wu.Li@leica-geosystems.com.cn>
 
-commit 89205c60c0fc96b73567a2e9fe27ee3f59d01193 upstream.
+commit 622865c73ae30f254abdf182f4b66cccbe3e0f10 upstream.
 
-Add support for Quectel RG255C devices to complement commit 5c964c8a97c1
-("net: usb: qmi_wwan: add Quectel RG255C").
-The composition is DM / NMEA / AT / QMI.
+Add support for the Telit Cinterion FN920C04 module when operating in
+ECM (Ethernet Control Model) mode. The following USB product IDs are
+used by the module when AT#USBCFG is set to 3 or 7.
 
-T:  Bus=01 Lev=02 Prnt=99 Port=01 Cnt=02 Dev#=110 Spd=480  MxCh= 0
+0x10A3: ECM + tty (NMEA) + tty (DUN) [+ tty (DIAG)]
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
 D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0316 Rev= 5.15
-S:  Manufacturer=Quectel
-S:  Product=RG255C-GL
-S:  SerialNumber=xxxxxxxx
-C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+P:  Vendor=1bc7 ProdID=10a3 Rev= 5.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=76e7cb38
+C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
 E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10A8: ECM + tty (DUN) + tty (AUX) [+ tty (DIAG)]
+T:  Bus=03 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a8 Rev= 5.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=76e7cb38
+C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
 E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
 E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Adding these IDs allows the option driver to automatically create the
+corresponding /dev/ttyUSB* ports under ECM mode.
+
+Tested with FN920C04 under ECM configuration (USBCFG=3 and 7).
+
+Signed-off-by: LI Qingwu <Qing-wu.Li@leica-geosystems.com.cn>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -90,23 +125,20 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -273,6 +273,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM05CN			0x0312
- #define QUECTEL_PRODUCT_EM05G_GR		0x0313
- #define QUECTEL_PRODUCT_EM05G_RS		0x0314
-+#define QUECTEL_PRODUCT_RG255C			0x0316
- #define QUECTEL_PRODUCT_EM12			0x0512
- #define QUECTEL_PRODUCT_RM500Q			0x0800
- #define QUECTEL_PRODUCT_RM520N			0x0801
-@@ -1271,6 +1272,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x40) },
- 
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
+@@ -1403,10 +1403,14 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a3, 0xff),	/* Telit FN920C04 (ECM) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
+ 	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a8, 0xff),	/* Telit FN920C04 (ECM) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
 
 
