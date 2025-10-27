@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4091631D754;
-	Mon, 27 Oct 2025 19:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AB130CD92;
+	Mon, 27 Oct 2025 19:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592958; cv=none; b=OrHLJyzm0wJvFXHkZBA79PkI/pAex59Lpn2bQv8C3Tpcnp5WhynvdXilnsm/VNuYDhdoTm2U6nOD9YqRm0XWpyNt+oJW+Yeo8TfyuNpi4WntMeqf86BmBWpNo9nUnZISb+5N3eh9B4sqRWEjUVHHdL7jgp1higTUtePU+T/vqzY=
+	t=1761592960; cv=none; b=Z+ZWXUpNJLEYoQmXr2iZj1pzkJq+XYBwnyS19v6PFsvLGVJpZ9z2gfaBzDPU9gPUwpU08u2OFqahJfPp2EK30WutWVgFP3fPWFvEOR3s6lrpq9RR+oZ7oNtrDFsZnBoP82W5UgcMH+wg+M2fc4ayVnlOW1lCZnPZaEykDmkmU/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592958; c=relaxed/simple;
-	bh=9VwdrRAxPOxDi4sCmTPCzEDHm0e99Xn/asD1/lAphtI=;
+	s=arc-20240116; t=1761592960; c=relaxed/simple;
+	bh=yBgHncSkiIXHfz+/0qgFa5gzdaqI8h4t+O9EkFGsUss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozXn2z7N5uGVK6QK6jB91GWqcYj1i87rt79IdLfnEybVbW25MZgYx9Jd0VsJVBbr0BrbGPJh8RlYPXOqUI2O6hNqYREpOb9/VAFjALRl8vDuG/4O6brexXhsHvReZY8Uew4Yixsy/K5A17EBHDiNhE8VKLZBpMVjsaDiyQB23yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGd9FXT4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RFC7q7N4QeX2Si1Gwx1egKElWsVWfd3qgt/lPXFsd5AlEFWsr9wxuDAeME49F/kiifWK+G1l7jSUkG9YmW/pwqNSTkoWpwVV8fj8hbez3TiMFry+8N6Fi5xf6MBnCT6kK9eQxQqQ4HENictvLn9lZAuS2kPgwy0NYdKLdj/T7EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVdYkCVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGd9FXT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE1FC4CEF1;
-	Mon, 27 Oct 2025 19:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVdYkCVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63589C113D0;
+	Mon, 27 Oct 2025 19:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592958;
-	bh=9VwdrRAxPOxDi4sCmTPCzEDHm0e99Xn/asD1/lAphtI=;
+	s=korg; t=1761592960;
+	bh=yBgHncSkiIXHfz+/0qgFa5gzdaqI8h4t+O9EkFGsUss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGd9FXT4RNYtt6HC9l5zRFgcMcewIfrlDPUkcveKx9+eCgpCfglS8tG2FZAEEetFI
-	 8GbYuxFZyvC4vZN3ryDdjjZf0kOmrdP4uBXxDIXaZ4OUdICVMvWXwNxSqUZkVBpdk0
-	 s38MwQp9wcRYhzcSA85Bu/6SH2emaY3wOVlhaYEQ=
+	b=zVdYkCVlL0dpIVBII6Qfg/JSHwc0d2ogJADcscHWrT8tRkZOddE8gd+Ch7IAGYfUt
+	 sU8B2LRBo4uVWK+XH4I9ToM22nE1qbV4Bjhh7dZhLKhpiPptTKwjpwv6JzZUymw3o4
+	 xBA8eZlv4b7vbKzHq96MOb+z9yhN4abfanMR8a84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Akash Goel <akash.goel@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/117] spi: airoha: fix reading/writing of flashes with more than one plane per lun
-Date: Mon, 27 Oct 2025 19:36:44 +0100
-Message-ID: <20251027183456.138575363@linuxfoundation.org>
+Subject: [PATCH 6.12 079/117] drm/panthor: Fix kernel panic on partial unmap of a GPU VA region
+Date: Mon, 27 Oct 2025 19:36:45 +0100
+Message-ID: <20251027183456.162510280@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,111 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Akash Goel <akash.goel@arm.com>
 
-[ Upstream commit 0b7d9b25e4bc2e478c9d06281a65f930769fca09 ]
+[ Upstream commit 4eabd0d8791eaf9a7b114ccbf56eb488aefe7b1f ]
 
-Attaching UBI on the flash with more than one plane per lun will lead to
-the following error:
+This commit address a kernel panic issue that can happen if Userspace
+tries to partially unmap a GPU virtual region (aka drm_gpuva).
+The VM_BIND interface allows partial unmapping of a BO.
 
-[    2.980989] spi-nand spi0.0: Micron SPI NAND was found.
-[    2.986309] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
-[    2.994978] 2 fixed-partitions partitions found on MTD device spi0.0
-[    3.001350] Creating 2 MTD partitions on "spi0.0":
-[    3.006159] 0x000000000000-0x000000020000 : "bl2"
-[    3.011663] 0x000000020000-0x000010000000 : "ubi"
-...
-[    6.391748] ubi0: attaching mtd1
-[    6.412545] ubi0 error: ubi_attach: PEB 0 contains corrupted VID header, and the data does not contain all 0xFF
-[    6.422677] ubi0 error: ubi_attach: this may be a non-UBI PEB or a severe VID header corruption which requires manual inspection
-[    6.434249] Volume identifier header dump:
-[    6.438349]     magic     55424923
-[    6.441482]     version   1
-[    6.444007]     vol_type  0
-[    6.446539]     copy_flag 0
-[    6.449068]     compat    0
-[    6.451594]     vol_id    0
-[    6.454120]     lnum      1
-[    6.456651]     data_size 4096
-[    6.459442]     used_ebs  1061644134
-[    6.462748]     data_pad  0
-[    6.465274]     sqnum     0
-[    6.467805]     hdr_crc   61169820
-[    6.470943] Volume identifier header hexdump:
-[    6.475308] hexdump of PEB 0 offset 4096, length 126976
-[    6.507391] ubi0 warning: ubi_attach: valid VID header but corrupted EC header at PEB 4
-[    6.515415] ubi0 error: ubi_compare_lebs: unsupported on-flash UBI format
-[    6.522222] ubi0 error: ubi_attach_mtd_dev: failed to attach mtd1, error -22
-[    6.529294] UBI error: cannot attach mtd1
+Panthor driver pre-allocates memory for the new drm_gpuva structures
+that would be needed for the map/unmap operation, done using drm_gpuvm
+layer. It expected that only one new drm_gpuva would be needed on umap
+but a partial unmap can require 2 new drm_gpuva and that's why it
+ended up doing a NULL pointer dereference causing a kernel panic.
 
-Non dirmap reading works good. Looking to spi_mem_no_dirmap_read() code we'll see:
+Following dump was seen when partial unmap was exercised.
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000078
+ Mem abort info:
+   ESR = 0x0000000096000046
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+   FSC = 0x06: level 2 translation fault
+ Data abort info:
+   ISV = 0, ISS = 0x00000046, ISS2 = 0x00000000
+   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+ user pgtable: 4k pages, 48-bit VAs, pgdp=000000088a863000
+ [000000000000078] pgd=080000088a842003, p4d=080000088a842003, pud=0800000884bf5003, pmd=0000000000000000
+ Internal error: Oops: 0000000096000046 [#1] PREEMPT SMP
+ <snip>
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : panthor_gpuva_sm_step_remap+0xe4/0x330 [panthor]
+ lr : panthor_gpuva_sm_step_remap+0x6c/0x330 [panthor]
+ sp : ffff800085d43970
+ x29: ffff800085d43970 x28: ffff00080363e440 x27: ffff0008090c6000
+ x26: 0000000000000030 x25: ffff800085d439f8 x24: ffff00080d402000
+ x23: ffff800085d43b60 x22: ffff800085d439e0 x21: ffff00080abdb180
+ x20: 0000000000000000 x19: 0000000000000000 x18: 0000000000000010
+ x17: 6e656c202c303030 x16: 3666666666646466 x15: 393d61766f69202c
+ x14: 312d3d7361203a70 x13: 303030323d6e656c x12: ffff80008324bf58
+ x11: 0000000000000003 x10: 0000000000000002 x9 : ffff8000801a6a9c
+ x8 : ffff00080360b300 x7 : 0000000000000000 x6 : 000000088aa35fc7
+ x5 : fff1000080000000 x4 : ffff8000842ddd30 x3 : 0000000000000001
+ x2 : 0000000100000000 x1 : 0000000000000001 x0 : 0000000000000078
+ Call trace:
+  panthor_gpuva_sm_step_remap+0xe4/0x330 [panthor]
+  op_remap_cb.isra.22+0x50/0x80
+  __drm_gpuvm_sm_unmap+0x10c/0x1c8
+  drm_gpuvm_sm_unmap+0x40/0x60
+  panthor_vm_exec_op+0xb4/0x3d0 [panthor]
+  panthor_vm_bind_exec_sync_op+0x154/0x278 [panthor]
+  panthor_ioctl_vm_bind+0x160/0x4a0 [panthor]
+  drm_ioctl_kernel+0xbc/0x138
+  drm_ioctl+0x240/0x500
+  __arm64_sys_ioctl+0xb0/0xf8
+  invoke_syscall+0x4c/0x110
+  el0_svc_common.constprop.1+0x98/0xf8
+  do_el0_svc+0x24/0x38
+  el0_svc+0x40/0xf8
+  el0t_64_sync_handler+0xa0/0xc8
+  el0t_64_sync+0x174/0x178
 
-	static ssize_t spi_mem_no_dirmap_read(struct spi_mem_dirmap_desc *desc,
-					      u64 offs, size_t len, void *buf)
-	{
-		struct spi_mem_op op = desc->info.op_tmpl;
-		int ret;
-
-// --- see here ---
-		op.addr.val = desc->info.offset + offs;
-//-----------------
-		op.data.buf.in = buf;
-		op.data.nbytes = len;
-		ret = spi_mem_adjust_op_size(desc->mem, &op);
-		if (ret)
-		return ret;
-
-		ret = spi_mem_exec_op(desc->mem, &op);
-		if (ret)
-			return ret;
-
-		return op.data.nbytes;
-	}
-
-The similar happens for spi_mem_no_dirmap_write(). Thus the address
-passed to the flash should take in the account the value of
-desc->info.offset.
-
-This patch fix dirmap reading/writing of flashes with more than one
-plane per lun.
-
-Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251012121707.2296160-7-mikhail.kshevetskiy@iopsys.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Akash Goel <akash.goel@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20251017102922.670084-1-akash.goel@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 8143fbb0cf4e6..b78163eaed61d 100644
---- a/drivers/spi/spi-airoha-snfi.c
-+++ b/drivers/spi/spi-airoha-snfi.c
-@@ -733,8 +733,9 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		goto error_dma_unmap;
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index b57824abeb9ee..2214dbf472fa4 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1168,10 +1168,14 @@ panthor_vm_op_ctx_prealloc_vmas(struct panthor_vm_op_ctx *op_ctx)
+ 		break;
  
--	/* set read addr */
--	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_RD_CTL3, 0x0);
-+	/* set read addr: zero page offset + descriptor read offset */
-+	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_RD_CTL3,
-+			   desc->info.offset);
- 	if (err)
- 		goto error_dma_unmap;
+ 	case DRM_PANTHOR_VM_BIND_OP_TYPE_UNMAP:
+-		/* Partial unmaps might trigger a remap with either a prev or a next VA,
+-		 * but not both.
++		/* Two VMAs can be needed for an unmap, as an unmap can happen
++		 * in the middle of a drm_gpuva, requiring a remap with both
++		 * prev & next VA. Or an unmap can span more than one drm_gpuva
++		 * where the first and last ones are covered partially, requring
++		 * a remap for the first with a prev VA and remap for the last
++		 * with a next VA.
+ 		 */
+-		vma_count = 1;
++		vma_count = 2;
+ 		break;
  
-@@ -870,7 +871,9 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
- 	if (err)
- 		goto error_dma_unmap;
- 
--	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_PG_CTL2, 0x0);
-+	/* set write addr: zero page offset + descriptor write offset */
-+	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_PG_CTL2,
-+			   desc->info.offset);
- 	if (err)
- 		goto error_dma_unmap;
- 
+ 	default:
 -- 
 2.51.0
 
