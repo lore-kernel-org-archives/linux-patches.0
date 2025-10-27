@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A543203BB;
-	Mon, 27 Oct 2025 18:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2887F326D69;
+	Mon, 27 Oct 2025 18:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591492; cv=none; b=RVU9OcnK5SHyOXbmxiQ/vDqwdXQJSuFUOTK1/dPoeQ/34fYaiqqzK56h35YDBHJzuoezavigg5szy0ik0trgXCLHXNQ9box+jQc70bC9zRu414vBq4eutEkmr+sH0+vNZXpYCeaaT2rIJxvng3zxqBWHdnO8wV/X2TLMuMpcdag=
+	t=1761591495; cv=none; b=pzOpZmkz+8cvS3s0mBZ0kykMfhQ0SI684lr/83B97xOGVhebWdqbR6olZXq3HXb2AQTg7vS7chIE1t64yqbVPtV+XAUqoLBvlUGcxVGCi47hXqbIrDF0kv9pslPz/PhrDR043LDcIYZ6IPKBqr90jpdfzNcQIer76HaUAg2+Umg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591492; c=relaxed/simple;
-	bh=DZRX1voD3lc14K7CVZ3YCt6Ul7Yha88YINYv0c1rGhM=;
+	s=arc-20240116; t=1761591495; c=relaxed/simple;
+	bh=Rn6qcdOGIFCGZZKQiV9vKsYa5sYuFY7JMJb1wHdLu2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEKdrNDcm9rZdeYugkOdAuztDwC9SOsK2LPfD+eKOkmHr9MC7lzCr55qoPJ16fSog5ftoWYudYhp1hQaO53YfbRngq75Z5q8ZejUg5MpKEz/MCcfnik2ZzuXbJMtNToqwCdzxjiQXeEuTJ1a8LS8AAVWxzb6VnvOd9EYrzofJ48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYJJykYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dm8Cwblsayce2mnNZ9K0o43+FALtitmvgU71qE/UJSh+eFJZWe9HLDzQ0kWFwIcfIK0axlZzluNRufAUxXmlizODuPoUxSq6bA/UZBYiU9wQve76pwQmjF6SXOH7ahvUJCvuuLdQV8qbIqR9RG1lJ8o7Yg9FVzaWTDBvBvxHkBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDW1+L1b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYJJykYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A237FC4CEF1;
-	Mon, 27 Oct 2025 18:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDW1+L1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34850C4CEF1;
+	Mon, 27 Oct 2025 18:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591492;
-	bh=DZRX1voD3lc14K7CVZ3YCt6Ul7Yha88YINYv0c1rGhM=;
+	s=korg; t=1761591494;
+	bh=Rn6qcdOGIFCGZZKQiV9vKsYa5sYuFY7JMJb1wHdLu2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYJJykYDNiST3ucZlohuyMWXrPZqx0qnF+ze0idQxvx0ggxBZMojEjKw1leQ9FN2s
-	 xuX4Pd+arNT1pCzrOhRdluaPlASQDkAfWgcp4N9ubGQAFDuF2ikGed4g65oqY1QcWn
-	 y4j7xKDurUQfWrG46SqmEO2lvZX23t1SRZcQq5Ag=
+	b=sDW1+L1b57yjI1m4NVXajBSQdWoYZy3Ct+X1qXadHPc2q76nm8fECFTBck1c1rBSE
+	 K51ghtkeeVb/6F4g/oXNRbIClCeODNgvP91RjFBttlgH3k05ll8je2JeIy3EVYgcZ9
+	 28JdLXwE86vRo1lk7dmFWDiMdqGkxdyECquNozak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pedro Falcato <pedro.falcato@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 216/332] minmax.h: reduce the #define expansion of min(), max() and clamp()
-Date: Mon, 27 Oct 2025 19:34:29 +0100
-Message-ID: <20251027183530.462700198@linuxfoundation.org>
+Subject: [PATCH 5.10 217/332] minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()
+Date: Mon, 27 Oct 2025 19:34:30 +0100
+Message-ID: <20251027183530.494634000@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -63,15 +63,13 @@ Content-Transfer-Encoding: 8bit
 
 From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit b280bb27a9f7c91ddab730e1ad91a9c18a051f41 ]
+[ Upstream commit a5743f32baec4728711bbc01d6ac2b33d4c67040 ]
 
-Since the test for signed values being non-negative only relies on
-__builtion_constant_p() (not is_constexpr()) it can use the 'ux' variable
-instead of the caller supplied expression.  This means that the #define
-parameters are only expanded twice.  Once in the code and once quoted in
-the error message.
+Use BUILD_BUG_ON_MSG(statically_true(ulo > uhi), ...) for the sanity check
+of the bounds in clamp().  Gives better error coverage and one less
+expansion of the arguments.
 
-Link: https://lkml.kernel.org/r/051afc171806425da991908ed8688a98@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com
 Signed-off-by: David Laight <david.laight@aculab.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Arnd Bergmann <arnd@kernel.org>
@@ -87,71 +85,20 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ include/linux/minmax.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -46,10 +46,10 @@
-  * comparison, and these expressions only need to be careful to not cause
-  * warnings for pointer use.
-  */
--#define __signed_type_use(x, ux) (2 + __is_nonneg(x, ux))
--#define __unsigned_type_use(x, ux) (1 + 2 * (sizeof(ux) < 4))
--#define __sign_use(x, ux) (is_signed_type(typeof(ux)) ? \
--	__signed_type_use(x, ux) : __unsigned_type_use(x, ux))
-+#define __signed_type_use(ux) (2 + __is_nonneg(ux))
-+#define __unsigned_type_use(ux) (1 + 2 * (sizeof(ux) < 4))
-+#define __sign_use(ux) (is_signed_type(typeof(ux)) ? \
-+	__signed_type_use(ux) : __unsigned_type_use(ux))
- 
- /*
-  * Check whether a signed value is always non-negative.
-@@ -71,13 +71,13 @@
- #else
-   #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L))
- #endif
--#define __is_nonneg(x, ux) statically_true((__signed_type(ux))(x) >= 0)
-+#define __is_nonneg(ux) statically_true((__signed_type(ux))(ux) >= 0)
- 
--#define __types_ok(x, y, ux, uy) \
--	(__sign_use(x, ux) & __sign_use(y, uy))
-+#define __types_ok(ux, uy) \
-+	(__sign_use(ux) & __sign_use(uy))
- 
--#define __types_ok3(x, y, z, ux, uy, uz) \
--	(__sign_use(x, ux) & __sign_use(y, uy) & __sign_use(z, uz))
-+#define __types_ok3(ux, uy, uz) \
-+	(__sign_use(ux) & __sign_use(uy) & __sign_use(uz))
- 
- #define __cmp_op_min <
- #define __cmp_op_max >
-@@ -92,7 +92,7 @@
- 
- #define __careful_cmp_once(op, x, y, ux, uy) ({		\
- 	__auto_type ux = (x); __auto_type uy = (y);	\
--	BUILD_BUG_ON_MSG(!__types_ok(x, y, ux, uy),	\
-+	BUILD_BUG_ON_MSG(!__types_ok(ux, uy),		\
- 		#op"("#x", "#y") signedness error");	\
- 	__cmp(op, ux, uy); })
- 
-@@ -109,7 +109,7 @@
- 	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
- 			(lo) <= (hi), true),					\
+@@ -106,8 +106,7 @@
+ 	__auto_type uval = (val);						\
+ 	__auto_type ulo = (lo);							\
+ 	__auto_type uhi = (hi);							\
+-	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
+-			(lo) <= (hi), true),					\
++	BUILD_BUG_ON_MSG(statically_true(ulo > uhi),				\
  		"clamp() low limit " #lo " greater than high limit " #hi);	\
--	BUILD_BUG_ON_MSG(!__types_ok3(val, lo, hi, uval, ulo, uhi),		\
-+	BUILD_BUG_ON_MSG(!__types_ok3(uval, ulo, uhi),				\
+ 	BUILD_BUG_ON_MSG(!__types_ok3(uval, ulo, uhi),				\
  		"clamp("#val", "#lo", "#hi") signedness error");		\
- 	__clamp(uval, ulo, uhi); })
- 
-@@ -149,7 +149,7 @@
- 
- #define __careful_op3(op, x, y, z, ux, uy, uz) ({			\
- 	__auto_type ux = (x); __auto_type uy = (y);__auto_type uz = (z);\
--	BUILD_BUG_ON_MSG(!__types_ok3(x, y, z, ux, uy, uz),		\
-+	BUILD_BUG_ON_MSG(!__types_ok3(ux, uy, uz),			\
- 		#op"3("#x", "#y", "#z") signedness error");		\
- 	__cmp(op, ux, __cmp(op, uy, uz)); })
- 
 
 
