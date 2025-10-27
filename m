@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE6431B82B;
-	Mon, 27 Oct 2025 18:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F632B98B;
+	Mon, 27 Oct 2025 18:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590652; cv=none; b=WuY/bTXV5xDKVqbtQLf+SKz5f8rUV/Z1CZOi0unKGZded+87ZZHW+Wf3MFcitZK6sxH1dOG/HIMQr/t/OwJZq1q8VsCYwFADAor6k0OhdAZgQqDZa7GHYQUcRonUDEpaTsXhQYcfnmIaARlQHSEBadLOXzM3yoR8IXOTDzYfrlI=
+	t=1761590654; cv=none; b=EwuL9ERorr3YSevCt3yTZ0P75kyiEtrRuWngvMtl+mJNmcode0gsocQyJu+/WoPT0nmA1hktfqW56sOWOdSAPGjbt+tpD9IvlNGEMHD6AqmoBlNuOILYrUKtn2eOVnVfpoflL661N71HMPxs4/cbiNIcSQe7klVIsZ8BAirUzhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590652; c=relaxed/simple;
-	bh=97Mfm1c1O8vUh4YG0PG8I6h9Vn4SWWCfaWbD9dWIouU=;
+	s=arc-20240116; t=1761590654; c=relaxed/simple;
+	bh=BvzMsHaRZbAXnYHP4cy8hX8Uy+vvT79YmjQqaRGQMOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3LlOoVBPKGzEB6Aa/thWa9tk2WXrdvsVrypza0oETbGHhnQg/TQook1PIO41Z0qIbevc9mITHXPccsZvcHrAyvBAyS4tA9Oko3OQLRGrqUNiqTHgH0iKd2SbS1SW9s7c45ZTfknkpTRzjurPYt+9cdt3UMGGxGzp0NMUtdKa70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMbeNyJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HiZWWzUzIW8Gb7B2+iqWzi0KKreLMPl8hhvHmcuYvc+0CV89c5dJgkexSNqOrRL936NXUr+sxpjsb38/G13mgbrPZ5HRT7RpKHZktGN+LzZjMDlEi549Kd4G0oK++GGnK47+AkOGTieIWY8kFkqP83yFnwbPOC7qiJiR1uUX/IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yk5Ce76U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMbeNyJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F5EC4CEFD;
-	Mon, 27 Oct 2025 18:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yk5Ce76U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C420FC4CEF1;
+	Mon, 27 Oct 2025 18:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590651;
-	bh=97Mfm1c1O8vUh4YG0PG8I6h9Vn4SWWCfaWbD9dWIouU=;
+	s=korg; t=1761590654;
+	bh=BvzMsHaRZbAXnYHP4cy8hX8Uy+vvT79YmjQqaRGQMOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMbeNyJQzpnd/lhc4Wr+q7tNRCbz+gnZoAQ1eCxSVIUaQWbE/mEdYchewbcjC/vmk
-	 WDQpK7yT2O1KCENUJTtv7f4kT39VnFc2TaiR8FJE0MqT91gmE5gMY8C/8NRfRvxyWd
-	 Dlb0ij178Lie1/ALXow0M3vXiiylMz/XCYhjQCC8=
+	b=yk5Ce76UFzWP3DM/OHv6dt6jj5oyASZ3z7efeVhLA6rLsSDYI0/3+zhF1mo79vFM3
+	 PH5WUNx6Z3PzHZ2mo5oAwn4VtJwoxIp6gOSkLEKsAoDwsA7lx+vSyVO6O3QUoXMpUR
+	 pQHUohP9qO4Iwp0l7cOKb5TqSIhcuzEqlKuYMqKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 5.4 125/224] PCI: keystone: Use devm_request_irq() to free "ks-pcie-error-irq" on exit
-Date: Mon, 27 Oct 2025 19:34:31 +0100
-Message-ID: <20251027183512.325515262@linuxfoundation.org>
+	Dan Snyder <dansnyder@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.4 126/224] x86/umip: Check that the instruction opcode is at least two bytes
+Date: Mon, 27 Oct 2025 19:34:32 +0100
+Message-ID: <20251027183512.351105284@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,43 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit e51d05f523e43ce5d2bad957943a2b14f68078cd upstream.
+commit 32278c677947ae2f042c9535674a7fff9a245dd3 upstream.
 
-Commit under Fixes introduced the IRQ handler for "ks-pcie-error-irq".
-The interrupt is acquired using "request_irq()" but is never freed if
-the driver exits due to an error. Although the section in the driver that
-invokes "request_irq()" has moved around over time, the issue hasn't been
-addressed until now.
+When checking for a potential UMIP violation on #GP, verify the decoder found
+at least two opcode bytes to avoid false positives when the kernel encounters
+an unknown instruction that starts with 0f.  Because the array of opcode.bytes
+is zero-initialized by insn_init(), peeking at bytes[1] will misinterpret
+garbage as a potential SLDT or STR instruction, and can incorrectly trigger
+emulation.
 
-Fix this by using "devm_request_irq()" which automatically frees the
-interrupt if the driver exits.
+E.g. if a VPALIGNR instruction
 
-Fixes: 025dd3daeda7 ("PCI: keystone: Add error IRQ handler")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Closes: https://lore.kernel.org/r/3d3a4b52-e343-42f3-9d69-94c259812143@kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+   62 83 c5 05 0f 08 ff     vpalignr xmm17{k5},xmm23,XMMWORD PTR [r8],0xff
+
+hits a #GP, the kernel emulates it as STR and squashes the #GP (and corrupts
+the userspace code stream).
+
+Arguably the check should look for exactly two bytes, but no three byte
+opcodes use '0f 00 xx' or '0f 01 xx' as an escape, i.e. it should be
+impossible to get a false positive if the first two opcode bytes match '0f 00'
+or '0f 01'.  Go with a more conservative check with respect to the existing
+code to minimize the chances of breaking userspace, e.g. due to decoder
+weirdness.
+
+Analyzed by Nick Bray <ncbray@google.com>.
+
+Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
+Reported-by: Dan Snyder <dansnyder@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250912100802.3136121-2-s-vadapalli@ti.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
+ arch/x86/kernel/umip.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1294,8 +1294,8 @@ static int ks_pcie_probe(struct platform
- 		return irq;
- 	}
+--- a/arch/x86/kernel/umip.c
++++ b/arch/x86/kernel/umip.c
+@@ -155,8 +155,8 @@ static int identify_insn(struct insn *in
+ 	if (!insn->modrm.nbytes)
+ 		return -EINVAL;
  
--	ret = request_irq(irq, ks_pcie_err_irq_handler, IRQF_SHARED,
--			  "ks-pcie-error-irq", ks_pcie);
-+	ret = devm_request_irq(dev, irq, ks_pcie_err_irq_handler, IRQF_SHARED,
-+			       "ks-pcie-error-irq", ks_pcie);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to request error IRQ %d\n",
- 			irq);
+-	/* All the instructions of interest start with 0x0f. */
+-	if (insn->opcode.bytes[0] != 0xf)
++	/* The instructions of interest have 2-byte opcodes: 0F 00 or 0F 01. */
++	if (insn->opcode.nbytes < 2 || insn->opcode.bytes[0] != 0xf)
+ 		return -EINVAL;
+ 
+ 	if (insn->opcode.bytes[1] == 0x1) {
 
 
