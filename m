@@ -1,55 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB14320A00;
-	Mon, 27 Oct 2025 18:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1D0302CB9;
+	Mon, 27 Oct 2025 18:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591531; cv=none; b=O8KkqSULVsFYlLN0BZJj1bnuvEChpePPjpitTXQHc9b9A5wbco59bKtnFaQvSWXPIvxt5N99HGpGd6wa7+nXHwcNhLhdQ8/pl3BxG5zxivlbLfjgCSFMPoqwhvwjqkLqW+S4uA8R6JY8+cvQgUJG95+tPdW+H57r3fxuiuJDbfs=
+	t=1761591533; cv=none; b=TfozYl+3kxyOcYseCcqyR1qdhro1HghqP55KVxzUVk66FmeF0qRSUxkKY5nvUZmqFKJI2yFDzG6rZhh32Xe2c5DNP1nl7NutEDjh6wj7FxhTHoJYmrpeWuOPllqcwUIPwY82b11LZrig/GD+eBqH0x7Lw5f/Y6BoWR3pIu7aWM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591531; c=relaxed/simple;
-	bh=c+qDXSQQm6c3mutdKHQS8Z1Xl1+N/CDye03pg2SH9MY=;
+	s=arc-20240116; t=1761591533; c=relaxed/simple;
+	bh=wSxgOr+pVV6j10tj7KxKvxGbNy+rvAABnLFB7D3XYzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S7Ns4SstW665nhTBFvSgDcwpDGsADhdVcRAbG7tAgNv132OHm6FgpUMxenErhEh1AACx+yeGmeYVmE1cdthug7Jvi2GCE5Kkt/cLBztgdQQsFoRnXeSfhlSl/9/8cgWL31VSeG3J7/pE1JbD6+M3dTbtPju3Gci+D5EyTIUPqoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti/1nyfv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIXzjkkFMFktxsOG4iPnJQc9HPb2GyJxZqzqJ8R/YcLZazy0a+x2mlkUKAcoBrL9N1YB9tM3MFsBcYb4HzM1K5MglJN3+a2zZb3babYjH9lR0dm9xAVZJb0JVSqHjeUb0CrjYG21nJC+PfMreL9Ph6DtwJHr9wQkBFOwHIkNpxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jnOSP1W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti/1nyfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D52FC4CEF1;
-	Mon, 27 Oct 2025 18:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jnOSP1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5DEC4CEF1;
+	Mon, 27 Oct 2025 18:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591530;
-	bh=c+qDXSQQm6c3mutdKHQS8Z1Xl1+N/CDye03pg2SH9MY=;
+	s=korg; t=1761591533;
+	bh=wSxgOr+pVV6j10tj7KxKvxGbNy+rvAABnLFB7D3XYzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ti/1nyfvOd6wy6xS+wydctU92UqLo+f5d6+pPbIgUgPnD519Omc1J6nA9KTiFwzry
-	 0dfn4NUTQ6rUsECrSudvW+22jzBMcwSJSR7U80Gsvwy8kQ//2zNsivPkVpDuFZKJZ9
-	 zWNUucqRBDpvV0dOK+E+LjTtSMAuzJG1F8VUzPrA=
+	b=2jnOSP1WeEyzEN1nb22Nwn6nP1CyzWb/mOohQJx5CICYypzqQIGnYyOgltC2EeNmi
+	 KufbXx62aawLt+jvPlEOF0CscnRkCzboV3NWwWaTJCQpfw3Rql88i6PgbZyecUS6IZ
+	 2wXUHvK/2dy4Lo6Cg3d2VrilEzpW1Vz8iLbXbOHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Isabella Basso <isabbasso@riseup.net>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sander Vanheule <sander@svanheule.net>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Yury Norov <yury.norov@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 194/332] overflow, tracing: Define the is_signed_type() macro once
-Date: Mon, 27 Oct 2025 19:34:07 +0100
-Message-ID: <20251027183529.816948999@linuxfoundation.org>
+	syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 185/332] KVM: x86: Dont (re)check L1 intercepts when completing userspace I/O
+Date: Mon, 27 Oct 2025 19:33:58 +0100
+Message-ID: <20251027183529.555227413@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -68,84 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 92d23c6e94157739b997cacce151586a0d07bb8a ]
+[ Upstream commit e750f85391286a4c8100275516973324b621a269 ]
 
-There are two definitions of the is_signed_type() macro: one in
-<linux/overflow.h> and a second definition in <linux/trace_events.h>.
+When completing emulation of instruction that generated a userspace exit
+for I/O, don't recheck L1 intercepts as KVM has already finished that
+phase of instruction execution, i.e. has already committed to allowing L2
+to perform I/O.  If L1 (or host userspace) modifies the I/O permission
+bitmaps during the exit to userspace,  KVM will treat the access as being
+intercepted despite already having emulated the I/O access.
 
-As suggested by Linus Torvalds, move the definition of the
-is_signed_type() macro into the <linux/compiler.h> header file. Change
-the definition of the is_signed_type() macro to make sure that it does
-not trigger any sparse warnings with future versions of sparse for
-bitwise types. See also:
-https://lore.kernel.org/all/CAHk-=whjH6p+qzwUdx5SOVVHjS3WvzJQr6mDUwhEyTf6pJWzaQ@mail.gmail.com/
-https://lore.kernel.org/all/CAHk-=wjQGnVfb4jehFR0XyZikdQvCZouE96xR_nnf5kqaM5qqQ@mail.gmail.com/
+Pivot on EMULTYPE_NO_DECODE to detect that KVM is completing emulation.
+Of the three users of EMULTYPE_NO_DECODE, only complete_emulated_io() (the
+intended "recipient") can reach the code in question.  gp_interception()'s
+use is mutually exclusive with is_guest_mode(), and
+complete_emulated_insn_gp() unconditionally pairs EMULTYPE_NO_DECODE with
+EMULTYPE_SKIP.
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Isabella Basso <isabbasso@riseup.net>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Sander Vanheule <sander@svanheule.net>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20220826162116.1050972-3-bvanassche@acm.org
-Signed-off-by: Eliav Farber <farbere@amazon.com>
+The bad behavior was detected by a syzkaller program that toggles port I/O
+interception during the userspace I/O exit, ultimately resulting in a WARN
+on vcpu->arch.pio.count being non-zero due to KVM no completing emulation
+of the I/O instruction.
+
+  WARNING: CPU: 23 PID: 1083 at arch/x86/kvm/x86.c:8039 emulator_pio_in_out+0x154/0x170 [kvm]
+  Modules linked in: kvm_intel kvm irqbypass
+  CPU: 23 UID: 1000 PID: 1083 Comm: repro Not tainted 6.16.0-rc5-c1610d2d66b1-next-vm #74 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:emulator_pio_in_out+0x154/0x170 [kvm]
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   kvm_fast_pio+0xd6/0x1d0 [kvm]
+   vmx_handle_exit+0x149/0x610 [kvm_intel]
+   kvm_arch_vcpu_ioctl_run+0xda8/0x1ac0 [kvm]
+   kvm_vcpu_ioctl+0x244/0x8c0 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0x5d/0xc60
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+
+Reported-by: syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68790db4.a00a0220.3af5df.0020.GAE@google.com
+Fixes: 8a76d7f25f8f ("KVM: x86: Add x86 callback for intercept check")
+Cc: stable@vger.kernel.org
+Cc: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250715190638.1899116-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ is_guest_mode() was open coded ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler.h     |    6 ++++++
- include/linux/overflow.h     |    1 -
- include/linux/trace_events.h |    2 --
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/kvm/emulate.c     |   11 ++++-------
+ arch/x86/kvm/kvm_emulate.h |    2 +-
+ arch/x86/kvm/x86.c         |    9 ++++++++-
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -246,6 +246,12 @@ static inline void *offset_to_ptr(const
- #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -5544,12 +5544,11 @@ void init_decode_cache(struct x86_emulat
+ 	ctxt->mem_read.end = 0;
+ }
  
- /*
-+ * Whether 'type' is a signed type or an unsigned type. Supports scalar types,
-+ * bool and also pointer types.
-+ */
-+#define is_signed_type(type) (((type)(-1)) < (__force type)1)
-+
-+/*
-  * This is needed in functions which generate the stack canary, see
-  * arch/x86/kernel/smpboot.c::start_secondary() for an example.
-  */
---- a/include/linux/overflow.h
-+++ b/include/linux/overflow.h
-@@ -29,7 +29,6 @@
-  * https://mail-index.netbsd.org/tech-misc/2007/02/05/0000.html -
-  * credit to Christian Biere.
-  */
--#define is_signed_type(type)       (((type)(-1)) < (type)1)
- #define __type_half_max(type) ((type)1 << (8*sizeof(type) - 1 - is_signed_type(type)))
- #define type_max(T) ((T)((__type_half_max(T) - 1) + __type_half_max(T)))
- #define type_min(T) ((T)((T)-type_max(T)-(T)1))
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -700,8 +700,6 @@ extern int trace_add_event_call(struct t
- extern int trace_remove_event_call(struct trace_event_call *call);
- extern int trace_event_get_offsets(struct trace_event_call *call);
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts)
+ {
+ 	const struct x86_emulate_ops *ops = ctxt->ops;
+ 	int rc = X86EMUL_CONTINUE;
+ 	int saved_dst_type = ctxt->dst.type;
+-	unsigned emul_flags;
  
--#define is_signed_type(type)	(((type)(-1)) < (type)1)
+ 	ctxt->mem_read.pos = 0;
+ 
+@@ -5563,8 +5562,6 @@ int x86_emulate_insn(struct x86_emulate_
+ 		rc = emulate_ud(ctxt);
+ 		goto done;
+ 	}
 -
- int ftrace_set_clr_event(struct trace_array *tr, char *buf, int set);
- int trace_set_clr_event(const char *system, const char *event, int set);
- int trace_array_set_clr_event(struct trace_array *tr, const char *system,
+-	emul_flags = ctxt->ops->get_hflags(ctxt);
+ 	if (unlikely(ctxt->d &
+ 		     (No64|Undefined|Sse|Mmx|Intercept|CheckPerm|Priv|Prot|String))) {
+ 		if ((ctxt->mode == X86EMUL_MODE_PROT64 && (ctxt->d & No64)) ||
+@@ -5598,7 +5595,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				fetch_possible_mmx_operand(&ctxt->dst);
+ 		}
+ 
+-		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && ctxt->intercept) {
++		if (unlikely(check_intercepts) && ctxt->intercept) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_PRE_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5627,7 +5624,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 				goto done;
+ 		}
+ 
+-		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
++		if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 						      X86_ICPT_POST_EXCEPT);
+ 			if (rc != X86EMUL_CONTINUE)
+@@ -5681,7 +5678,7 @@ int x86_emulate_insn(struct x86_emulate_
+ 
+ special_insn:
+ 
+-	if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
++	if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
+ 		rc = emulator_check_intercept(ctxt, ctxt->intercept,
+ 					      X86_ICPT_POST_MEMACCESS);
+ 		if (rc != X86EMUL_CONTINUE)
+--- a/arch/x86/kvm/kvm_emulate.h
++++ b/arch/x86/kvm/kvm_emulate.h
+@@ -499,7 +499,7 @@ bool x86_page_table_writing_insn(struct
+ #define EMULATION_RESTART 1
+ #define EMULATION_INTERCEPTED 2
+ void init_decode_cache(struct x86_emulate_ctxt *ctxt);
+-int x86_emulate_insn(struct x86_emulate_ctxt *ctxt);
++int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts);
+ int emulator_task_switch(struct x86_emulate_ctxt *ctxt,
+ 			 u16 tss_selector, int idt_index, int reason,
+ 			 bool has_error_code, u32 error_code);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7668,7 +7668,14 @@ restart:
+ 		ctxt->exception.address = 0;
+ 	}
+ 
+-	r = x86_emulate_insn(ctxt);
++	/*
++	 * Check L1's instruction intercepts when emulating instructions for
++	 * L2, unless KVM is re-emulating a previously decoded instruction,
++	 * e.g. to complete userspace I/O, in which case KVM has already
++	 * checked the intercepts.
++	 */
++	r = x86_emulate_insn(ctxt, is_guest_mode(vcpu) &&
++				   !(emulation_type & EMULTYPE_NO_DECODE));
+ 
+ 	if (r == EMULATION_INTERCEPTED)
+ 		return 1;
 
 
