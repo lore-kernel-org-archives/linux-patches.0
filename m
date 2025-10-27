@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C822339713;
-	Mon, 27 Oct 2025 19:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3360F3375CF;
+	Mon, 27 Oct 2025 19:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591622; cv=none; b=DD06PXR5KHiXbfk7/Js26kEsJRdE1ViCdIcC0AJIqjjPKGOrQM0V5QQJzaaP4LBcmZh+LcTFTgHOP8GU5TaDX1LSNu5CLZ59zdro7f7ddEMYbeHYnJb8bon3cyCnL3iwFbmgIBbXLDCl65y+BYrUbte0i661KRVpGCM5UQxP/Ic=
+	t=1761591625; cv=none; b=dLAzCBVUq5fcDKsFYR//JbX/Zo1Kn+X0O4FYpTSL8MxiIGJeLMu3SkE5lMVfUpQByrt42Rh2ASD6aM/8EpWchB1EKZ1OMNKorcIw+nsFbLAVHRw47+fAfAkwGLZvF2P82VSj28v/ehFOA6Wlv+LxkBjiiqF0VF/cqYZBdj6v6/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591622; c=relaxed/simple;
-	bh=LwLjAg+7ZFqq8/ZvdUwfpxLE4nfOpCg5yxE6uSrL4GE=;
+	s=arc-20240116; t=1761591625; c=relaxed/simple;
+	bh=+aB7JFhThL0FR9QK0C21GvOiNMwma45XjL1ZqeDVwXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ml3DPoJ/A/owMT70lh+XpneSTtRjAkDl4E22eVW+Mkzp/Ll1HQG/n9lgSmdoVSHisYH8QKpckP87n2GKLPQphqDaE+Z3yacBBFOuC5o5QFMPKIAiJnIfwOsp1/fIpNzdWdCL2oA5uJGGnRStibteGWMcJIgvDXFj4fVTjyBKfss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKGCcAYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sO4C5H8DDwxb+21qkIgRq9jdP2YA1Ca5aZuKNq/m94f0YyXDZrV3YSh36SgL79JyBOrmf7BPAQhgMtjTJbdzgcX7Cf6jkFbWcWQwVm30t8lKRdO3ORrU/9ATK9G7Ev5FvXSX4YhXgv15d3oQYt6vTZAWoylz5K3bIYfV47Bb2Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFvi+e/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKGCcAYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF0BC4CEFD;
-	Mon, 27 Oct 2025 19:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFvi+e/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EF9C4CEFD;
+	Mon, 27 Oct 2025 19:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591622;
-	bh=LwLjAg+7ZFqq8/ZvdUwfpxLE4nfOpCg5yxE6uSrL4GE=;
+	s=korg; t=1761591625;
+	bh=+aB7JFhThL0FR9QK0C21GvOiNMwma45XjL1ZqeDVwXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKGCcAYFXBidBWxGQGYBVp5S+xkYw5UjXUfH+2loUDMWu7OC25I926m+izu+IMJQg
-	 8274bm099KKzhYP+xqgzvhE1NdvmY4ZuV2gTxjBB/43gK0tJaxJbaNxY4PEH9Hb4tL
-	 XGk89fYi1f45LieFj/gTG0PdJL96Rvap7huKYNR0=
+	b=BFvi+e/sQfIfCaAZHDdMizbiEnK3S3E32ZI1Lx1kORmj//yroWV2XsRkoqnJ7RaO7
+	 hzRbGxiUOGQnyso7ZANrNLPypVwaRlWAa5KTTDZBnNwXScyRUcSVZHtMr+4HXY3Ndp
+	 ZRn+NeQqTyKw2oduSvIwER4Bd1hrDOK0NmXoOGbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Helmut Schaa <helmut.schaa@googlemail.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 226/332] wifi: rt2x00: use explicitly signed or unsigned types
-Date: Mon, 27 Oct 2025 19:34:39 +0100
-Message-ID: <20251027183530.763176663@linuxfoundation.org>
+	syzbot <syzbot+55ad87f38795d6787521@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 261/332] hfsplus: fix KMSAN uninit-value issue in __hfsplus_ext_cache_extent()
+Date: Mon, 27 Oct 2025 19:35:14 +0100
+Message-ID: <20251027183531.739680649@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -55,367 +54,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-commit 66063033f77e10b985258126a97573f84bb8d3b4 upstream.
+[ Upstream commit 4840ceadef4290c56cc422f0fc697655f3cbf070 ]
 
-On some platforms, `char` is unsigned, but this driver, for the most
-part, assumed it was signed. In other places, it uses `char` to mean an
-unsigned number, but only in cases when the values are small. And in
-still other places, `char` is used as a boolean. Put an end to this
-confusion by declaring explicit types, depending on the context.
+The syzbot reported issue in __hfsplus_ext_cache_extent():
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Stanislaw Gruszka <stf_xl@wp.pl>
-Cc: Helmut Schaa <helmut.schaa@googlemail.com>
-Cc: Kalle Valo <kvalo@kernel.org>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221019155541.3410813-1-Jason@zx2c4.com
-Signed-off-by: Eliav Farber <farbere@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[   70.194323][ T9350] BUG: KMSAN: uninit-value in __hfsplus_ext_cache_extent+0x7d0/0x990
+[   70.195022][ T9350]  __hfsplus_ext_cache_extent+0x7d0/0x990
+[   70.195530][ T9350]  hfsplus_file_extend+0x74f/0x1cf0
+[   70.195998][ T9350]  hfsplus_get_block+0xe16/0x17b0
+[   70.196458][ T9350]  __block_write_begin_int+0x962/0x2ce0
+[   70.196959][ T9350]  cont_write_begin+0x1000/0x1950
+[   70.197416][ T9350]  hfsplus_write_begin+0x85/0x130
+[   70.197873][ T9350]  generic_perform_write+0x3e8/0x1060
+[   70.198374][ T9350]  __generic_file_write_iter+0x215/0x460
+[   70.198892][ T9350]  generic_file_write_iter+0x109/0x5e0
+[   70.199393][ T9350]  vfs_write+0xb0f/0x14e0
+[   70.199771][ T9350]  ksys_write+0x23e/0x490
+[   70.200149][ T9350]  __x64_sys_write+0x97/0xf0
+[   70.200570][ T9350]  x64_sys_call+0x3015/0x3cf0
+[   70.201065][ T9350]  do_syscall_64+0xd9/0x1d0
+[   70.201506][ T9350]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.202054][ T9350]
+[   70.202279][ T9350] Uninit was created at:
+[   70.202693][ T9350]  __kmalloc_noprof+0x621/0xf80
+[   70.203149][ T9350]  hfsplus_find_init+0x8d/0x1d0
+[   70.203602][ T9350]  hfsplus_file_extend+0x6ca/0x1cf0
+[   70.204087][ T9350]  hfsplus_get_block+0xe16/0x17b0
+[   70.204561][ T9350]  __block_write_begin_int+0x962/0x2ce0
+[   70.205074][ T9350]  cont_write_begin+0x1000/0x1950
+[   70.205547][ T9350]  hfsplus_write_begin+0x85/0x130
+[   70.206017][ T9350]  generic_perform_write+0x3e8/0x1060
+[   70.206519][ T9350]  __generic_file_write_iter+0x215/0x460
+[   70.207042][ T9350]  generic_file_write_iter+0x109/0x5e0
+[   70.207552][ T9350]  vfs_write+0xb0f/0x14e0
+[   70.207961][ T9350]  ksys_write+0x23e/0x490
+[   70.208375][ T9350]  __x64_sys_write+0x97/0xf0
+[   70.208810][ T9350]  x64_sys_call+0x3015/0x3cf0
+[   70.209255][ T9350]  do_syscall_64+0xd9/0x1d0
+[   70.209680][ T9350]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.210230][ T9350]
+[   70.210454][ T9350] CPU: 2 UID: 0 PID: 9350 Comm: repro Not tainted 6.12.0-rc5 #5
+[   70.211174][ T9350] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.212115][ T9350] =====================================================
+[   70.212734][ T9350] Disabling lock debugging due to kernel taint
+[   70.213284][ T9350] Kernel panic - not syncing: kmsan.panic set ...
+[   70.213858][ T9350] CPU: 2 UID: 0 PID: 9350 Comm: repro Tainted: G    B              6.12.0-rc5 #5
+[   70.214679][ T9350] Tainted: [B]=BAD_PAGE
+[   70.215057][ T9350] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.215999][ T9350] Call Trace:
+[   70.216309][ T9350]  <TASK>
+[   70.216585][ T9350]  dump_stack_lvl+0x1fd/0x2b0
+[   70.217025][ T9350]  dump_stack+0x1e/0x30
+[   70.217421][ T9350]  panic+0x502/0xca0
+[   70.217803][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+
+[   70.218294][ Message fromT sy9350]  kmsan_report+0x296/slogd@syzkaller 0x2aat Aug 18 22:11:058 ...
+ kernel
+:[   70.213284][ T9350] Kernel panic - not syncing: kmsan.panic [   70.220179][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+set ...
+[   70.221254][ T9350]  ? __msan_warning+0x96/0x120
+[   70.222066][ T9350]  ? __hfsplus_ext_cache_extent+0x7d0/0x990
+[   70.223023][ T9350]  ? hfsplus_file_extend+0x74f/0x1cf0
+[   70.224120][ T9350]  ? hfsplus_get_block+0xe16/0x17b0
+[   70.224946][ T9350]  ? __block_write_begin_int+0x962/0x2ce0
+[   70.225756][ T9350]  ? cont_write_begin+0x1000/0x1950
+[   70.226337][ T9350]  ? hfsplus_write_begin+0x85/0x130
+[   70.226852][ T9350]  ? generic_perform_write+0x3e8/0x1060
+[   70.227405][ T9350]  ? __generic_file_write_iter+0x215/0x460
+[   70.227979][ T9350]  ? generic_file_write_iter+0x109/0x5e0
+[   70.228540][ T9350]  ? vfs_write+0xb0f/0x14e0
+[   70.228997][ T9350]  ? ksys_write+0x23e/0x490
+[   70.229458][ T9350]  ? __x64_sys_write+0x97/0xf0
+[   70.229939][ T9350]  ? x64_sys_call+0x3015/0x3cf0
+[   70.230432][ T9350]  ? do_syscall_64+0xd9/0x1d0
+[   70.230941][ T9350]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.231926][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.232738][ T9350]  ? kmsan_internal_set_shadow_origin+0x77/0x110
+[   70.233711][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.234516][ T9350]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.235398][ T9350]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.236323][ T9350]  ? hfsplus_brec_find+0x218/0x9f0
+[   70.237090][ T9350]  ? __pfx_hfs_find_rec_by_key+0x10/0x10
+[   70.237938][ T9350]  ? __msan_instrument_asm_store+0xbf/0xf0
+[   70.238827][ T9350]  ? __msan_metadata_ptr_for_store_4+0x27/0x40
+[   70.239772][ T9350]  ? __hfsplus_ext_write_extent+0x536/0x620
+[   70.240666][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.241175][ T9350]  __msan_warning+0x96/0x120
+[   70.241645][ T9350]  __hfsplus_ext_cache_extent+0x7d0/0x990
+[   70.242223][ T9350]  hfsplus_file_extend+0x74f/0x1cf0
+[   70.242748][ T9350]  hfsplus_get_block+0xe16/0x17b0
+[   70.243255][ T9350]  ? kmsan_internal_set_shadow_origin+0x77/0x110
+[   70.243878][ T9350]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.244400][ T9350]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.244967][ T9350]  __block_write_begin_int+0x962/0x2ce0
+[   70.245531][ T9350]  ? __pfx_hfsplus_get_block+0x10/0x10
+[   70.246079][ T9350]  cont_write_begin+0x1000/0x1950
+[   70.246598][ T9350]  hfsplus_write_begin+0x85/0x130
+[   70.247105][ T9350]  ? __pfx_hfsplus_get_block+0x10/0x10
+[   70.247650][ T9350]  ? __pfx_hfsplus_write_begin+0x10/0x10
+[   70.248211][ T9350]  generic_perform_write+0x3e8/0x1060
+[   70.248752][ T9350]  __generic_file_write_iter+0x215/0x460
+[   70.249314][ T9350]  generic_file_write_iter+0x109/0x5e0
+[   70.249856][ T9350]  ? kmsan_internal_set_shadow_origin+0x77/0x110
+[   70.250487][ T9350]  vfs_write+0xb0f/0x14e0
+[   70.250930][ T9350]  ? __pfx_generic_file_write_iter+0x10/0x10
+[   70.251530][ T9350]  ksys_write+0x23e/0x490
+[   70.251974][ T9350]  __x64_sys_write+0x97/0xf0
+[   70.252450][ T9350]  x64_sys_call+0x3015/0x3cf0
+[   70.252924][ T9350]  do_syscall_64+0xd9/0x1d0
+[   70.253384][ T9350]  ? irqentry_exit+0x16/0x60
+[   70.253844][ T9350]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.254430][ T9350] RIP: 0033:0x7f7a92adffc9
+[   70.254873][ T9350] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 48
+[   70.256674][ T9350] RSP: 002b:00007fff0bca3188 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+[   70.257485][ T9350] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f7a92adffc9
+[   70.258246][ T9350] RDX: 000000000208e24b RSI: 0000000020000100 RDI: 0000000000000004
+[   70.258998][ T9350] RBP: 00007fff0bca31a0 R08: 00007fff0bca31a0 R09: 00007fff0bca31a0
+[   70.259769][ T9350] R10: 0000000000000000 R11: 0000000000000202 R12: 000055e0d75f8250
+[   70.260520][ T9350] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[   70.261286][ T9350]  </TASK>
+[   70.262026][ T9350] Kernel Offset: disabled
+
+(gdb) l *__hfsplus_ext_cache_extent+0x7d0
+0xffffffff8318aef0 is in __hfsplus_ext_cache_extent (fs/hfsplus/extents.c:168).
+163		fd->key->ext.cnid = 0;
+164		res = hfs_brec_find(fd, hfs_find_rec_by_key);
+165		if (res && res != -ENOENT)
+166			return res;
+167		if (fd->key->ext.cnid != fd->search_key->ext.cnid ||
+168		    fd->key->ext.fork_type != fd->search_key->ext.fork_type)
+169			return -ENOENT;
+170		if (fd->entrylength != sizeof(hfsplus_extent_rec))
+171			return -EIO;
+172		hfs_bnode_read(fd->bnode, extent, fd->entryoffset,
+
+The __hfsplus_ext_cache_extent() calls __hfsplus_ext_read_extent():
+
+res = __hfsplus_ext_read_extent(fd, hip->cached_extents, inode->i_ino,
+				block, HFSPLUS_IS_RSRC(inode) ?
+					HFSPLUS_TYPE_RSRC :
+					HFSPLUS_TYPE_DATA);
+
+And if inode->i_ino could be equal to zero or any non-available CNID,
+then hfs_brec_find() could not find the record in the tree. As a result,
+fd->key could be compared with fd->search_key. But hfsplus_find_init()
+uses kmalloc() for fd->key and fd->search_key allocation:
+
+int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
+{
+<skipped>
+        ptr = kmalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
+        if (!ptr)
+                return -ENOMEM;
+        fd->search_key = ptr;
+        fd->key = ptr + tree->max_key_len + 2;
+<skipped>
+}
+
+Finally, fd->key is still not initialized if hfs_brec_find()
+has found nothing.
+
+This patch changes kmalloc() on kzalloc() in hfs_find_init()
+and intializes fd->record, fd->keyoffset, fd->keylength,
+fd->entryoffset, fd->entrylength for the case if hfs_brec_find()
+has been found nothing in the b-tree node.
+
+Reported-by: syzbot <syzbot+55ad87f38795d6787521@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=55ad87f38795d6787521
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250818225232.126402-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2400pci.c |    8 ++---
- drivers/net/wireless/ralink/rt2x00/rt2400pci.h |    2 -
- drivers/net/wireless/ralink/rt2x00/rt2500pci.c |    8 ++---
- drivers/net/wireless/ralink/rt2x00/rt2500pci.h |    2 -
- drivers/net/wireless/ralink/rt2x00/rt2500usb.c |    8 ++---
- drivers/net/wireless/ralink/rt2x00/rt2500usb.h |    2 -
- drivers/net/wireless/ralink/rt2x00/rt2800lib.c |   36 ++++++++++++-------------
- drivers/net/wireless/ralink/rt2x00/rt2800lib.h |    8 ++---
- drivers/net/wireless/ralink/rt2x00/rt2x00usb.c |    6 ++--
- drivers/net/wireless/ralink/rt2x00/rt61pci.c   |    4 +-
- drivers/net/wireless/ralink/rt2x00/rt61pci.h   |    2 -
- drivers/net/wireless/ralink/rt2x00/rt73usb.c   |    4 +-
- drivers/net/wireless/ralink/rt2x00/rt73usb.h   |    2 -
- 13 files changed, 46 insertions(+), 46 deletions(-)
+ fs/hfsplus/bfind.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
-@@ -1023,9 +1023,9 @@ static int rt2400pci_set_state(struct rt
- {
- 	u32 reg, reg2;
- 	unsigned int i;
--	char put_to_sleep;
--	char bbp_state;
--	char rf_state;
-+	bool put_to_sleep;
-+	u8 bbp_state;
-+	u8 rf_state;
+diff --git a/fs/hfsplus/bfind.c b/fs/hfsplus/bfind.c
+index 901e83d65d202..26ebac4c60424 100644
+--- a/fs/hfsplus/bfind.c
++++ b/fs/hfsplus/bfind.c
+@@ -18,7 +18,7 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
  
- 	put_to_sleep = (state != STATE_AWAKE);
+ 	fd->tree = tree;
+ 	fd->bnode = NULL;
+-	ptr = kmalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
++	ptr = kzalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 	fd->search_key = ptr;
+@@ -158,6 +158,12 @@ int hfs_brec_find(struct hfs_find_data *fd, search_strategy_t do_key_compare)
+ 	__be32 data;
+ 	int height, res;
  
-@@ -1561,7 +1561,7 @@ static int rt2400pci_probe_hw_mode(struc
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *tx_power;
-+	u8 *tx_power;
- 	unsigned int i;
- 
- 	/*
---- a/drivers/net/wireless/ralink/rt2x00/rt2400pci.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2400pci.h
-@@ -939,7 +939,7 @@
- #define DEFAULT_TXPOWER	39
- 
- #define __CLAMP_TX(__txpower) \
--	clamp_t(char, (__txpower), MIN_TXPOWER, MAX_TXPOWER)
-+	clamp_t(u8, (__txpower), MIN_TXPOWER, MAX_TXPOWER)
- 
- #define TXPOWER_FROM_DEV(__txpower) \
- 	((__CLAMP_TX(__txpower) - MAX_TXPOWER) + MIN_TXPOWER)
---- a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
-@@ -1176,9 +1176,9 @@ static int rt2500pci_set_state(struct rt
- {
- 	u32 reg, reg2;
- 	unsigned int i;
--	char put_to_sleep;
--	char bbp_state;
--	char rf_state;
-+	bool put_to_sleep;
-+	u8 bbp_state;
-+	u8 rf_state;
- 
- 	put_to_sleep = (state != STATE_AWAKE);
- 
-@@ -1856,7 +1856,7 @@ static int rt2500pci_probe_hw_mode(struc
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *tx_power;
-+	u8 *tx_power;
- 	unsigned int i;
- 
- 	/*
---- a/drivers/net/wireless/ralink/rt2x00/rt2500pci.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2500pci.h
-@@ -1219,6 +1219,6 @@
- 	(((u8)(__txpower)) > MAX_TXPOWER) ? DEFAULT_TXPOWER : (__txpower)
- 
- #define TXPOWER_TO_DEV(__txpower) \
--	clamp_t(char, __txpower, MIN_TXPOWER, MAX_TXPOWER)
-+	clamp_t(u8, __txpower, MIN_TXPOWER, MAX_TXPOWER)
- 
- #endif /* RT2500PCI_H */
---- a/drivers/net/wireless/ralink/rt2x00/rt2500usb.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2500usb.c
-@@ -984,9 +984,9 @@ static int rt2500usb_set_state(struct rt
- 	u16 reg;
- 	u16 reg2;
- 	unsigned int i;
--	char put_to_sleep;
--	char bbp_state;
--	char rf_state;
-+	bool put_to_sleep;
-+	u8 bbp_state;
-+	u8 rf_state;
- 
- 	put_to_sleep = (state != STATE_AWAKE);
- 
-@@ -1663,7 +1663,7 @@ static int rt2500usb_probe_hw_mode(struc
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *tx_power;
-+	u8 *tx_power;
- 	unsigned int i;
- 
- 	/*
---- a/drivers/net/wireless/ralink/rt2x00/rt2500usb.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2500usb.h
-@@ -839,6 +839,6 @@
- 	(((u8)(__txpower)) > MAX_TXPOWER) ? DEFAULT_TXPOWER : (__txpower)
- 
- #define TXPOWER_TO_DEV(__txpower) \
--	clamp_t(char, __txpower, MIN_TXPOWER, MAX_TXPOWER)
-+	clamp_t(u8, __txpower, MIN_TXPOWER, MAX_TXPOWER)
- 
- #endif /* RT2500USB_H */
---- a/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
-@@ -3297,10 +3297,10 @@ static void rt2800_config_channel_rf53xx
- 	if (rt2x00_has_cap_bt_coexist(rt2x00dev)) {
- 		if (rt2x00_rt_rev_gte(rt2x00dev, RT5390, REV_RT5390F)) {
- 			/* r55/r59 value array of channel 1~14 */
--			static const char r55_bt_rev[] = {0x83, 0x83,
-+			static const u8 r55_bt_rev[] = {0x83, 0x83,
- 				0x83, 0x73, 0x73, 0x63, 0x53, 0x53,
- 				0x53, 0x43, 0x43, 0x43, 0x43, 0x43};
--			static const char r59_bt_rev[] = {0x0e, 0x0e,
-+			static const u8 r59_bt_rev[] = {0x0e, 0x0e,
- 				0x0e, 0x0e, 0x0e, 0x0b, 0x0a, 0x09,
- 				0x07, 0x07, 0x07, 0x07, 0x07, 0x07};
- 
-@@ -3309,7 +3309,7 @@ static void rt2800_config_channel_rf53xx
- 			rt2800_rfcsr_write(rt2x00dev, 59,
- 					   r59_bt_rev[idx]);
- 		} else {
--			static const char r59_bt[] = {0x8b, 0x8b, 0x8b,
-+			static const u8 r59_bt[] = {0x8b, 0x8b, 0x8b,
- 				0x8b, 0x8b, 0x8b, 0x8b, 0x8a, 0x89,
- 				0x88, 0x88, 0x86, 0x85, 0x84};
- 
-@@ -3317,10 +3317,10 @@ static void rt2800_config_channel_rf53xx
- 		}
- 	} else {
- 		if (rt2x00_rt_rev_gte(rt2x00dev, RT5390, REV_RT5390F)) {
--			static const char r55_nonbt_rev[] = {0x23, 0x23,
-+			static const u8 r55_nonbt_rev[] = {0x23, 0x23,
- 				0x23, 0x23, 0x13, 0x13, 0x03, 0x03,
- 				0x03, 0x03, 0x03, 0x03, 0x03, 0x03};
--			static const char r59_nonbt_rev[] = {0x07, 0x07,
-+			static const u8 r59_nonbt_rev[] = {0x07, 0x07,
- 				0x07, 0x07, 0x07, 0x07, 0x07, 0x07,
- 				0x07, 0x07, 0x06, 0x05, 0x04, 0x04};
- 
-@@ -3331,14 +3331,14 @@ static void rt2800_config_channel_rf53xx
- 		} else if (rt2x00_rt(rt2x00dev, RT5390) ||
- 			   rt2x00_rt(rt2x00dev, RT5392) ||
- 			   rt2x00_rt(rt2x00dev, RT6352)) {
--			static const char r59_non_bt[] = {0x8f, 0x8f,
-+			static const u8 r59_non_bt[] = {0x8f, 0x8f,
- 				0x8f, 0x8f, 0x8f, 0x8f, 0x8f, 0x8d,
- 				0x8a, 0x88, 0x88, 0x87, 0x87, 0x86};
- 
- 			rt2800_rfcsr_write(rt2x00dev, 59,
- 					   r59_non_bt[idx]);
- 		} else if (rt2x00_rt(rt2x00dev, RT5350)) {
--			static const char r59_non_bt[] = {0x0b, 0x0b,
-+			static const u8 r59_non_bt[] = {0x0b, 0x0b,
- 				0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0a,
- 				0x0a, 0x09, 0x08, 0x07, 0x07, 0x06};
- 
-@@ -3961,23 +3961,23 @@ static void rt2800_iq_calibrate(struct r
- 	rt2800_bbp_write(rt2x00dev, 159, cal != 0xff ? cal : 0);
- }
- 
--static char rt2800_txpower_to_dev(struct rt2x00_dev *rt2x00dev,
-+static s8 rt2800_txpower_to_dev(struct rt2x00_dev *rt2x00dev,
- 				  unsigned int channel,
--				  char txpower)
-+				  s8 txpower)
- {
- 	if (rt2x00_rt(rt2x00dev, RT3593) ||
- 	    rt2x00_rt(rt2x00dev, RT3883))
- 		txpower = rt2x00_get_field8(txpower, EEPROM_TXPOWER_ALC);
- 
- 	if (channel <= 14)
--		return clamp_t(char, txpower, MIN_G_TXPOWER, MAX_G_TXPOWER);
-+		return clamp_t(s8, txpower, MIN_G_TXPOWER, MAX_G_TXPOWER);
- 
- 	if (rt2x00_rt(rt2x00dev, RT3593) ||
- 	    rt2x00_rt(rt2x00dev, RT3883))
--		return clamp_t(char, txpower, MIN_A_TXPOWER_3593,
-+		return clamp_t(s8, txpower, MIN_A_TXPOWER_3593,
- 			       MAX_A_TXPOWER_3593);
- 	else
--		return clamp_t(char, txpower, MIN_A_TXPOWER, MAX_A_TXPOWER);
-+		return clamp_t(s8, txpower, MIN_A_TXPOWER, MAX_A_TXPOWER);
- }
- 
- static void rt3883_bbp_adjust(struct rt2x00_dev *rt2x00dev,
-@@ -8473,11 +8473,11 @@ static int rt2800_rf_lp_config(struct rt
- 	return 0;
- }
- 
--static char rt2800_lp_tx_filter_bw_cal(struct rt2x00_dev *rt2x00dev)
-+static s8 rt2800_lp_tx_filter_bw_cal(struct rt2x00_dev *rt2x00dev)
- {
- 	unsigned int cnt;
- 	u8 bbp_val;
--	char cal_val;
-+	s8 cal_val;
- 
- 	rt2800_bbp_dcoc_write(rt2x00dev, 0, 0x82);
- 
-@@ -8509,7 +8509,7 @@ static void rt2800_bw_filter_calibration
- 	u8 rx_filter_target_20m = 0x27, rx_filter_target_40m = 0x31;
- 	int loop = 0, is_ht40, cnt;
- 	u8 bbp_val, rf_val;
--	char cal_r32_init, cal_r32_val, cal_diff;
-+	s8 cal_r32_init, cal_r32_val, cal_diff;
- 	u8 saverfb5r00, saverfb5r01, saverfb5r03, saverfb5r04, saverfb5r05;
- 	u8 saverfb5r06, saverfb5r07;
- 	u8 saverfb5r08, saverfb5r17, saverfb5r18, saverfb5r19, saverfb5r20;
-@@ -9960,9 +9960,9 @@ static int rt2800_probe_hw_mode(struct r
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *default_power1;
--	char *default_power2;
--	char *default_power3;
-+	s8 *default_power1;
-+	s8 *default_power2;
-+	s8 *default_power3;
- 	unsigned int i, tx_chains, rx_chains;
- 	u32 reg;
- 
---- a/drivers/net/wireless/ralink/rt2x00/rt2800lib.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2800lib.h
-@@ -22,10 +22,10 @@
- struct rt2800_drv_data {
- 	u8 calibration_bw20;
- 	u8 calibration_bw40;
--	char rx_calibration_bw20;
--	char rx_calibration_bw40;
--	char tx_calibration_bw20;
--	char tx_calibration_bw40;
-+	s8 rx_calibration_bw20;
-+	s8 rx_calibration_bw40;
-+	s8 tx_calibration_bw20;
-+	s8 tx_calibration_bw40;
- 	u8 bbp25;
- 	u8 bbp26;
- 	u8 txmixer_gain_24g;
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00usb.c
-@@ -117,12 +117,12 @@ int rt2x00usb_vendor_request_buff(struct
- 				  const u16 buffer_length)
- {
- 	int status = 0;
--	unsigned char *tb;
-+	u8 *tb;
- 	u16 off, len, bsize;
- 
- 	mutex_lock(&rt2x00dev->csr_mutex);
- 
--	tb  = (char *)buffer;
-+	tb  = (u8 *)buffer;
- 	off = offset;
- 	len = buffer_length;
- 	while (len && !status) {
-@@ -215,7 +215,7 @@ void rt2x00usb_register_read_async(struc
- 	rd->cr.wLength = cpu_to_le16(sizeof(u32));
- 
- 	usb_fill_control_urb(urb, usb_dev, usb_rcvctrlpipe(usb_dev, 0),
--			     (unsigned char *)(&rd->cr), &rd->reg, sizeof(rd->reg),
-+			     (u8 *)(&rd->cr), &rd->reg, sizeof(rd->reg),
- 			     rt2x00usb_register_read_async_cb, rd);
- 	usb_anchor_urb(urb, rt2x00dev->anchor);
- 	if (usb_submit_urb(urb, GFP_ATOMIC) < 0) {
---- a/drivers/net/wireless/ralink/rt2x00/rt61pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
-@@ -1709,7 +1709,7 @@ static int rt61pci_set_state(struct rt2x
- {
- 	u32 reg, reg2;
- 	unsigned int i;
--	char put_to_sleep;
-+	bool put_to_sleep;
- 
- 	put_to_sleep = (state != STATE_AWAKE);
- 
-@@ -2656,7 +2656,7 @@ static int rt61pci_probe_hw_mode(struct
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *tx_power;
-+	u8 *tx_power;
- 	unsigned int i;
- 
- 	/*
---- a/drivers/net/wireless/ralink/rt2x00/rt61pci.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt61pci.h
-@@ -1484,6 +1484,6 @@ struct hw_pairwise_ta_entry {
- 	(((u8)(__txpower)) > MAX_TXPOWER) ? DEFAULT_TXPOWER : (__txpower)
- 
- #define TXPOWER_TO_DEV(__txpower) \
--	clamp_t(char, __txpower, MIN_TXPOWER, MAX_TXPOWER)
-+	clamp_t(u8, __txpower, MIN_TXPOWER, MAX_TXPOWER)
- 
- #endif /* RT61PCI_H */
---- a/drivers/net/wireless/ralink/rt2x00/rt73usb.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt73usb.c
-@@ -1378,7 +1378,7 @@ static int rt73usb_set_state(struct rt2x
- {
- 	u32 reg, reg2;
- 	unsigned int i;
--	char put_to_sleep;
-+	bool put_to_sleep;
- 
- 	put_to_sleep = (state != STATE_AWAKE);
- 
-@@ -2090,7 +2090,7 @@ static int rt73usb_probe_hw_mode(struct
- {
- 	struct hw_mode_spec *spec = &rt2x00dev->spec;
- 	struct channel_info *info;
--	char *tx_power;
-+	u8 *tx_power;
- 	unsigned int i;
- 
- 	/*
---- a/drivers/net/wireless/ralink/rt2x00/rt73usb.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt73usb.h
-@@ -1063,6 +1063,6 @@ struct hw_pairwise_ta_entry {
- 	(((u8)(__txpower)) > MAX_TXPOWER) ? DEFAULT_TXPOWER : (__txpower)
- 
- #define TXPOWER_TO_DEV(__txpower) \
--	clamp_t(char, __txpower, MIN_TXPOWER, MAX_TXPOWER)
-+	clamp_t(u8, __txpower, MIN_TXPOWER, MAX_TXPOWER)
- 
- #endif /* RT73USB_H */
++	fd->record = -1;
++	fd->keyoffset = -1;
++	fd->keylength = -1;
++	fd->entryoffset = -1;
++	fd->entrylength = -1;
++
+ 	tree = fd->tree;
+ 	if (fd->bnode)
+ 		hfs_bnode_put(fd->bnode);
+-- 
+2.51.0
+
 
 
