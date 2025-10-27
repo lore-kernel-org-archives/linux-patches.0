@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61580325493;
-	Mon, 27 Oct 2025 18:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2164325495;
+	Mon, 27 Oct 2025 18:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591431; cv=none; b=XVKaqf9FaBZvbQ4BIJTOL8oT91hWARMHP3qugxaa0MS8rFk/9j77RnfKbmnnkyLqffmsui8vMnkXGhRosZ+G3cSQnJ6FUNo2Ph4b4U/ZLY24dYrD5DV/WXZE/uz6YuR/4QEu/OXdObx14vC8TFPYtriOJI/6FHTZkNVavKTE6jA=
+	t=1761591434; cv=none; b=pmIqUMx3wMtdV+0PRvDn65vkExgIStSDJMAqCeprXqu2nvos/LlBylB7TmjB/W9Qoj5aqKx1/5P6uyeFuMhzQ45WnLB+TDdVJnVy21UjXZefdMEoQ2DANbxa//p3lPMVvIyU95cwkevy1PjfZ2uLZHcJImHhGp7SBSKXEjUAB/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591431; c=relaxed/simple;
-	bh=cGRvibBMuBCOSCjPrC6I++jhvhwFiKfZ6U70QuD29M8=;
+	s=arc-20240116; t=1761591434; c=relaxed/simple;
+	bh=SU/6rOFGSCXOr9EcklkYxtPRusZv3qf5CFZFg0a9Zus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLIAOaK9aL4gs5CFhKe+T2l0wzHkGp0eN63gz2hg8fG1kjdSIYowESqwc4oNVtkyqvNQ5CvTq02ruSu3hIvsmS8Acc9ZkuVZxbtwya0mjqE3Mcip7lNs6CZ/K8A6xiB6jBhTkFN91aJtNz7xufowlpdTrw17hCqP3gpODnrgM8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgf0Bl8u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYW46pr0xCiVT9VL14QHgGsvjtdyv2jJioyPISWUUtRHlxoHXKakDDI3zsjWZ9WwEpFhjHYY3o8840eEenALzI8CGrHKtbNovsUxcwGnXu/MG9duoxMf6C+WrzWpoUwqHo40mdNITILBCgK+hQu7DAe4frFYjEq7pGnwTAuWD3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vw8vzUXw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgf0Bl8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9E2C4CEF1;
-	Mon, 27 Oct 2025 18:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vw8vzUXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7278FC4CEF1;
+	Mon, 27 Oct 2025 18:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591431;
-	bh=cGRvibBMuBCOSCjPrC6I++jhvhwFiKfZ6U70QuD29M8=;
+	s=korg; t=1761591433;
+	bh=SU/6rOFGSCXOr9EcklkYxtPRusZv3qf5CFZFg0a9Zus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgf0Bl8uY2oA1+QKBh9xU/VUwKKP0KxuVdL7aWOI3gXoiMFcrM7qzLCYlI7awUVM2
-	 yGJwci+s20witFg1bH9W+3W2FvcyApK+/Di+KW49vMz9v+FBL4R/DUejKm9InvDJDx
-	 3jPXehVwCqGtOpMjuwVgoIoYW9Ud1aN5Ox/r0LeM=
+	b=Vw8vzUXweY0hOzyIQHh8Fcfw16+fd43dpgWHD8g8ZE2WoJqNL1PwB0Mw9d8rjLvmX
+	 H1rGREnmeCd/56vH5O+Ure34MaLpVSxqlhA5RWHjToBE2GisEV0VB40KEQRjHPk0fH
+	 q6CjJ5AIAtEx+oySZsvtrHDjz265vLk/Wxhbjivk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 195/332] btrfs: remove duplicated in_range() macro
-Date: Mon, 27 Oct 2025 19:34:08 +0100
-Message-ID: <20251027183529.850039237@linuxfoundation.org>
+Subject: [PATCH 5.10 196/332] minmax: sanity check constant bounds when clamping
+Date: Mon, 27 Oct 2025 19:34:09 +0100
+Message-ID: <20251027183529.877576442@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,67 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-[ Upstream commit cea628008fc8c6c9c7b53902f6659e040f33c790 ]
+[ Upstream commit 5efcecd9a3b18078d3398b359a84c83f549e22cf ]
 
-The in_range() macro is defined twice in btrfs' source, once in ctree.h
-and once in misc.h.
+The clamp family of functions only makes sense if hi>=lo.  If hi and lo
+are compile-time constants, then raise a build error.  Doing so has
+already caught buggy code.  This also introduces the infrastructure to
+improve the clamping function in subsequent commits.
 
-Remove the definition in ctree.h and include misc.h in the files depending
-on it.
-
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[akpm@linux-foundation.org: coding-style cleanups]
+[akpm@linux-foundation.org: s@&&\@&& \@]
+Link: https://lkml.kernel.org/r/20220926133435.1333846-1-Jason@zx2c4.com
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h     |    2 --
- fs/btrfs/extent_io.c |    1 +
- fs/btrfs/file-item.c |    1 +
- fs/btrfs/raid56.c    |    1 +
- 4 files changed, 3 insertions(+), 2 deletions(-)
+ include/linux/minmax.h |   26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -3597,8 +3597,6 @@ static inline int btrfs_defrag_cancelled
- 	return signal_pending(current);
- }
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -37,6 +37,28 @@
+ 		__cmp(x, y, op), \
+ 		__cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
  
--#define in_range(b, first, len) ((b) >= (first) && (b) < (first) + (len))
--
- /* Sanity test specific functions */
- #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- void btrfs_test_destroy_inode(struct inode *inode);
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -13,6 +13,7 @@
- #include <linux/pagevec.h>
- #include <linux/prefetch.h>
- #include <linux/cleancache.h>
-+#include "misc.h"
- #include "extent_io.h"
- #include "extent-io-tree.h"
- #include "extent_map.h"
---- a/fs/btrfs/file-item.c
-+++ b/fs/btrfs/file-item.c
-@@ -9,6 +9,7 @@
- #include <linux/highmem.h>
- #include <linux/sched/mm.h>
- #include <crypto/hash.h>
-+#include "misc.h"
- #include "ctree.h"
- #include "disk-io.h"
- #include "transaction.h"
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -13,6 +13,7 @@
- #include <linux/list_sort.h>
- #include <linux/raid/xor.h>
- #include <linux/mm.h>
-+#include "misc.h"
- #include "ctree.h"
- #include "disk-io.h"
- #include "volumes.h"
++#define __clamp(val, lo, hi)	\
++	__cmp(__cmp(val, lo, >), hi, <)
++
++#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
++		typeof(val) unique_val = (val);				\
++		typeof(lo) unique_lo = (lo);				\
++		typeof(hi) unique_hi = (hi);				\
++		__clamp(unique_val, unique_lo, unique_hi); })
++
++#define __clamp_input_check(lo, hi)					\
++        (BUILD_BUG_ON_ZERO(__builtin_choose_expr(			\
++                __is_constexpr((lo) > (hi)), (lo) > (hi), false)))
++
++#define __careful_clamp(val, lo, hi) ({					\
++	__clamp_input_check(lo, hi) +					\
++	__builtin_choose_expr(__typecheck(val, lo) && __typecheck(val, hi) && \
++			      __typecheck(hi, lo) && __is_constexpr(val) && \
++			      __is_constexpr(lo) && __is_constexpr(hi),	\
++		__clamp(val, lo, hi),					\
++		__clamp_once(val, lo, hi, __UNIQUE_ID(__val),		\
++			     __UNIQUE_ID(__lo), __UNIQUE_ID(__hi))); })
++
+ /**
+  * min - return minimum of two values of the same or compatible types
+  * @x: first value
+@@ -103,7 +125,7 @@
+  * This macro does strict typechecking of @lo/@hi to make sure they are of the
+  * same type as @val.  See the unnecessary pointer comparisons.
+  */
+-#define clamp(val, lo, hi) min((typeof(val))max(val, lo), hi)
++#define clamp(val, lo, hi) __careful_clamp(val, lo, hi)
+ 
+ /*
+  * ..and if you can't take the strict
+@@ -138,7 +160,7 @@
+  * This macro does no typechecking and uses temporary variables of type
+  * @type to make all the comparisons.
+  */
+-#define clamp_t(type, val, lo, hi) min_t(type, max_t(type, val, lo), hi)
++#define clamp_t(type, val, lo, hi) __careful_clamp((type)(val), (type)(lo), (type)(hi))
+ 
+ /**
+  * clamp_val - return a value clamped to a given range using val's type
 
 
