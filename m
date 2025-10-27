@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A974C246BB7;
-	Mon, 27 Oct 2025 18:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E161246BB7;
+	Mon, 27 Oct 2025 18:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591252; cv=none; b=WmHatrgUx7BBpu9jMUksjD9v6M8ebQMBeAdjpYWS3VfxRGFEcr6/wpvbhj6dDrUMzt2esaWbwmnmvMRychRftG9PKMNUv3pKLN1IhSCE8Co5KD17qFIhxw2Xh78onyUwsOPGMLPGYz5cnMWelM0B+Yu+pMpF5ZPx8gEooY3KXKk=
+	t=1761591255; cv=none; b=Z70WeE+9leihEZL3+mp9y9YIQ+eSet/yCA49RyfbD37LD6qdciqLDIKCc6pqZeZ+YQXQaRlBpe0dSiFM1mKnMAfQyvTf1Qw8JKP79L0xFj8rTnBLM2w7DqUQLuDJTVCUopnMTmv+wDiJFcW8hwOOkXD8K0Odq4bRXJyKLVJ5s3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591252; c=relaxed/simple;
-	bh=qDhBSHD+8GfOjzxYNE9MOafgv9TQZ83kJPkrAXsbDJw=;
+	s=arc-20240116; t=1761591255; c=relaxed/simple;
+	bh=roBlNR6RNMqTHJRopVl4kMQ8Won8J2w/TFGyJNY+DW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0JzBfLsk9At1bpGPfaJRDDW6y843fRCzTSZ4p9c74xL5LYcBoa/AdeBaC8BroU8repq3CofzEmtSrJUXjFGZg9k80O5aCgKgrNQqn+p15nIHUeKULeysCJfKcDVo5GAD/ZdCW7q5npIwDcpg2asr9bcBG1xnei/1U7ULEUw+8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnGVxWbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKI/R9FrnHm4c8OdhwVTQtm1lnqrzFEgtByY1BtHZYtI88tBJXimtrfIJOsYXSd/a7kDiI8oSii9nzv3Tg8VjwsQLrw7lvoyKXU6A/L7YEJK0HKGoVXd0YuXEDdTB/wEWcPM6Eix7r/cBljakmIOwePdB3G/+pk2cr2id3BzAro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbXPwyC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnGVxWbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359EFC4CEF1;
-	Mon, 27 Oct 2025 18:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbXPwyC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50F7C4CEF1;
+	Mon, 27 Oct 2025 18:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591252;
-	bh=qDhBSHD+8GfOjzxYNE9MOafgv9TQZ83kJPkrAXsbDJw=;
+	s=korg; t=1761591255;
+	bh=roBlNR6RNMqTHJRopVl4kMQ8Won8J2w/TFGyJNY+DW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnGVxWbT2wNjHcb6QFdrwqjaz/dx9oF5VHYc8Ge3a9jI9Iw/muMJ4uGRV8vStVchc
-	 vBprDwz4/BrRMp+MhsvnsqqfEKouwTFu3pGIYycAtgWH/10Q9rC2Yapph/WEZPex8r
-	 aKVRC2qdUApDJTOcwW1zWtM8v70JQPP4++TQ1mwk=
+	b=gbXPwyC7+1BhZcni4Dr8WjkZ9JgyBXq5+ScgWvp2zCvQf52xj7st5XkjK6oA0THGm
+	 7zInAz/jfd9NUDNJYfVkJKLg3NR3ia4uYaoZziu2A8KhiRLZks6zdZiq8pOd2IM3ag
+	 iLaCWPcV1C3syjNGMSKZ9xuxbRzN7tuTTFfBKjwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/332] gpio: wcd934x: mark the GPIO controller as sleeping
-Date: Mon, 27 Oct 2025 19:32:59 +0100
-Message-ID: <20251027183527.938731851@linuxfoundation.org>
+	Daniel Tang <danielzgtg.opensource@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 127/332] ACPI: TAD: Add missing sysfs_remove_group() for ACPI_TAD_RT
+Date: Mon, 27 Oct 2025 19:33:00 +0100
+Message-ID: <20251027183527.963006337@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,37 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Daniel Tang <danielzgtg.opensource@gmail.com>
 
-[ Upstream commit b5f8aa8d4bde0cf3e4595af5a536da337e5f1c78 ]
+commit 4aac453deca0d9c61df18d968f8864c3ae7d3d8d upstream.
 
-The slimbus regmap passed to the GPIO driver down from MFD does not use
-fast_io. This means a mutex is used for locking and thus this GPIO chip
-must not be used in atomic context. Change the can_sleep switch in
-struct gpio_chip to true.
+Previously, after `rmmod acpi_tad`, `modprobe acpi_tad` would fail
+with this dmesg:
 
-Fixes: 59c324683400 ("gpio: wcd934x: Add support to wcd934x gpio controller")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+sysfs: cannot create duplicate filename '/devices/platform/ACPI000E:00/time'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6c/0x90
+ dump_stack+0x10/0x20
+ sysfs_warn_dup+0x8b/0xa0
+ sysfs_add_file_mode_ns+0x122/0x130
+ internal_create_group+0x1dd/0x4c0
+ sysfs_create_group+0x13/0x20
+ acpi_tad_probe+0x147/0x1f0 [acpi_tad]
+ platform_probe+0x42/0xb0
+ </TASK>
+acpi-tad ACPI000E:00: probe with driver acpi-tad failed with error -17
+
+Fixes: 3230b2b3c1ab ("ACPI: TAD: Add low-level support for real time capability")
+Signed-off-by: Daniel Tang <danielzgtg.opensource@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/2881298.hMirdbgypa@daniel-desktop3
+Cc: 5.2+ <stable@vger.kernel.org> # 5.2+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_tad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
-index cbbbd105a5a7b..26d70ac90933c 100644
---- a/drivers/gpio/gpio-wcd934x.c
-+++ b/drivers/gpio/gpio-wcd934x.c
-@@ -101,7 +101,7 @@ static int wcd_gpio_probe(struct platform_device *pdev)
- 	chip->base = -1;
- 	chip->ngpio = WCD934X_NPINS;
- 	chip->label = dev_name(dev);
--	chip->can_sleep = false;
-+	chip->can_sleep = true;
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -563,6 +563,9 @@ static int acpi_tad_remove(struct platfo
  
- 	return devm_gpiochip_add_data(dev, chip, data);
- }
--- 
-2.51.0
-
+ 	pm_runtime_get_sync(dev);
+ 
++	if (dd->capabilities & ACPI_TAD_RT)
++		sysfs_remove_group(&dev->kobj, &acpi_tad_time_attr_group);
++
+ 	if (dd->capabilities & ACPI_TAD_DC_WAKE)
+ 		sysfs_remove_group(&dev->kobj, &acpi_tad_dc_attr_group);
+ 
 
 
