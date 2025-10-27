@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2365308F38;
-	Mon, 27 Oct 2025 18:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AE6324B19;
+	Mon, 27 Oct 2025 18:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590846; cv=none; b=R6TzMtpD38iIIZBJ3xHXcPAx9k3PsoSX5CRxxbEfrEDMt5BKEKWmnxW6djUcWDd0jnabBhjCyunogp7XhQEMB1t8tINdSi3BPNPkUeRbHTI3b1tXmPvZ9BDkRGOgCx0tFfG/SyhmyYy8Z2U/PV7hHiCzP10fi0k82idv88RPbsE=
+	t=1761590848; cv=none; b=mTiQYHQiVkVo87l+U40g1nQE4sjtZg1qXXUKsH7Tc/wYf13SslniVcut/6GnX+iH6VN+8LBWnw0qHNk6CuP6MxVZ6VE2P9lWihPTon1K4h6OnXu9vs9mdqTZfep+WDPNtukNuAZ14QfYe/TNxGb53me8WBSaa1MobJohGNnBWTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590846; c=relaxed/simple;
-	bh=UdRmqNnDWSA2CRbSFACU+GrLQdqEDxyIKaQAqvG6a9A=;
+	s=arc-20240116; t=1761590848; c=relaxed/simple;
+	bh=vjOQwrKXgX8cBGA7L3ZiGMT7NQpx0jAgw2Ofz6PgvoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdnwDlEFJgkhKsz9I5mUgK1v1f5hchaGWaf7HKikjccHtng/O71/vyIw1Up1bm8omNzLI41RiZsv6rle8CP4jeNU1/vAbTrv+u8+L16qEiWTixaNAGek2Hz30EgUHQxSPLlAP4X1qwjz030fuWQMZcz+DgjLxxHTH5elXANcNoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02VtCp24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nizcv2fPWp/va+SG6aqB3t5V1G2tOVckM06kfjHPPOj3WEGj933VD5p+EkPu8y56yfstQtRLXmTU8AV0+sMGcgbsNuJHuPnC2OzOZFglNn6ui4mGEstsGfh3mxnXtRqMUYm1W2/okZqy81M+aYjwaJWsRXqmHdd98f1a6qOS+XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVhN3AcX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02VtCp24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77837C4CEF1;
-	Mon, 27 Oct 2025 18:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVhN3AcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16877C4CEF1;
+	Mon, 27 Oct 2025 18:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590845;
-	bh=UdRmqNnDWSA2CRbSFACU+GrLQdqEDxyIKaQAqvG6a9A=;
+	s=korg; t=1761590848;
+	bh=vjOQwrKXgX8cBGA7L3ZiGMT7NQpx0jAgw2Ofz6PgvoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=02VtCp243XoSVe+sHrRrYD2v5WVzsCL7uVRLriwgo+umF4Ow2r6vmB7sZAHuoFGoQ
-	 P34rRLH0zix2dRIM2+L0WB9TwMToiGXAPsPCaFdJox6LwHCEWlLWHUCvPaLycuyYSD
-	 3D7Wo4AhkeakcEB2h20HyslKfo3KCKxUzw0Dxuy8=
+	b=SVhN3AcX5aCBtJMegaGk1apaQ+T00Hm4BdIvfPCgfC9lnHAaaunuspzs0x75wKRSv
+	 xC9J2o5Xln0E13c+ledHCHiqfVrcL5px1LwYqZu/LeCQnnwB7eXz0Ey7Q+wgr3ZsD4
+	 4zbw4oK617OPK1iPcxFLaLp7npE823qcFEwGZwAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 195/224] Revert "cpuidle: menu: Avoid discarding useful information"
-Date: Mon, 27 Oct 2025 19:35:41 +0100
-Message-ID: <20251027183514.037196025@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.4 196/224] MIPS: Malta: Fix keyboard resource preventing i8042 driver from registering
+Date: Mon, 27 Oct 2025 19:35:42 +0100
+Message-ID: <20251027183514.059403410@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -44,84 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
+commit bf5570590a981d0659d0808d2d4bcda21b27a2a5 upstream.
 
-It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
-useful information") led to a performance regression on Intel Jasper Lake
-systems because it reduced the time spent by CPUs in idle state C7 which
-is correlated to the maximum frequency the CPUs can get to because of an
-average running power limit [1].
+MIPS Malta platform code registers the PCI southbridge legacy port I/O
+PS/2 keyboard range as a standard resource marked as busy.  It prevents
+the i8042 driver from registering as it fails to claim the resource in
+a call to i8042_platform_init().  Consequently PS/2 keyboard and mouse
+devices cannot be used with this platform.
 
-Before that commit, get_typical_interval() would have returned UINT_MAX
-whenever it had been unable to make a high-confidence prediction which
-had led to selecting the deepest available idle state too often and
-both power and performance had been inadequate as a result of that on
-some systems.  However, this had not been a problem on systems with
-relatively aggressive average running power limits, like the Jasper Lake
-systems in question, because on those systems it was compensated by the
-ability to run CPUs faster.
+Fix the issue by removing the busy marker from the standard reservation,
+making the driver register successfully:
 
-It was addressed by causing get_typical_interval() to return a number
-based on the recent idle duration information available to it even if it
-could not make a high-confidence prediction, but that clearly did not
-take the possible correlation between idle power and available CPU
-capacity into account.
+  serio: i8042 KBD port at 0x60,0x64 irq 1
+  serio: i8042 AUX port at 0x60,0x64 irq 12
 
-For this reason, revert most of the changes made by commit 85975daeaa4d,
-except for one cosmetic cleanup, and add a comment explaining the
-rationale for returning UINT_MAX from get_typical_interval() when it
-is unable to make a high-confidence prediction.
+and the resource show up as expected among the legacy devices:
 
-Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
-Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
-Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
+  00000000-00ffffff : MSC PCI I/O
+    00000000-0000001f : dma1
+    00000020-00000021 : pic1
+    00000040-0000005f : timer
+    00000060-0000006f : keyboard
+      00000060-0000006f : i8042
+    00000070-00000077 : rtc0
+    00000080-0000008f : dma page reg
+    000000a0-000000a1 : pic2
+    000000c0-000000df : dma2
+    [...]
+
+If the i8042 driver has not been configured, then the standard resource
+will remain there preventing any conflicting dynamic assignment of this
+PCI port I/O address range.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/alpine.DEB.2.21.2510211919240.8377@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ arch/mips/mti-malta/malta-setup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -258,20 +258,17 @@ again:
- 	 *
- 	 * This can deal with workloads that have long pauses interspersed
- 	 * with sporadic activity with a bunch of short pauses.
-+	 *
-+	 * However, if the number of remaining samples is too small to exclude
-+	 * any more outliers, allow the deepest available idle state to be
-+	 * selected because there are systems where the time spent by CPUs in
-+	 * deep idle states is correlated to the maximum frequency the CPUs
-+	 * can get to.  On those systems, shallow idle states should be avoided
-+	 * unless there is a clear indication that the given CPU is most likley
-+	 * going to be woken up shortly.
- 	 */
--	if (divisor * 4 <= INTERVALS * 3) {
--		/*
--		 * If there are sufficiently many data points still under
--		 * consideration after the outliers have been eliminated,
--		 * returning without a prediction would be a mistake because it
--		 * is likely that the next interval will not exceed the current
--		 * maximum, so return the latter in that case.
--		 */
--		if (divisor >= INTERVALS / 2)
--			return max;
--
-+	if (divisor * 4 <= INTERVALS * 3)
- 		return UINT_MAX;
--	}
- 
- 	thresh = max - 1;
- 	goto again;
+--- a/arch/mips/mti-malta/malta-setup.c
++++ b/arch/mips/mti-malta/malta-setup.c
+@@ -48,7 +48,7 @@ static struct resource standard_io_resou
+ 		.name = "keyboard",
+ 		.start = 0x60,
+ 		.end = 0x6f,
+-		.flags = IORESOURCE_IO | IORESOURCE_BUSY
++		.flags = IORESOURCE_IO
+ 	},
+ 	{
+ 		.name = "dma page reg",
 
 
