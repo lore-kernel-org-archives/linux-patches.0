@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B13274FD0;
-	Mon, 27 Oct 2025 19:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C607430147E;
+	Mon, 27 Oct 2025 19:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593151; cv=none; b=VneuMzbMflTpf8TTxFZbBfsN6rNYDmO1JRDIM0Se1N2+rTK9pzFIpihf5Ph8J/DgB0V3OQN+kC0DRzbFtqdb42i+elWEiPATc26uhI5ChHybq80Ucb1jy+5U+UP8oVRv8QQs556EfWqWiop85uvNIkdm8DR2Eo3UiCHQh6itwjM=
+	t=1761593153; cv=none; b=AVOU6+9Zms4DRimqkqwls4j7+kKHVPNnHXHZOY7kskWlpN01xY/cw1XeYLecdW4CQUN2ySTZ78oQoI2jA9W60hfBWYQZobsij3eelhR2KawPbc/2UGcjO43DMNoNXcLVcYMWcuFWHJox3GbV66YzpDNNmiie4/ShGEMwvu+qAV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593151; c=relaxed/simple;
-	bh=AuzCwT7mar1ZeStfaBa9lx92xPF2mDia1YZMPlIZhag=;
+	s=arc-20240116; t=1761593153; c=relaxed/simple;
+	bh=9zNijjUfyA+iWE2uLH6+zjNwv/0FpWmQ3rTshNJz6b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKP3o4CC7FTHx0xKeWV+Gttm50M/zplQMJhm1MFe/DttuHbIvELIY09uzdDGrqUf9fihMxXH7Hdwm/OWzcZjqFwDjHshcoDEqrlHaKQtWrguhrqbHBBj6CghpTsGnGApelSx5K7RhsHl3Bpo6CxP4yJZbITt/30tw5PaaBH0VpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thMM2SNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=he4kETpprtb3UrBeottHO1cqwLOqRgQn8gRhtF4GEGK+KH97pPc6qk2BXmpjgx7P7qAyiJhXC/4kKW/sZ+jWjZXNe/ix1FpO/17mcF/9hqy+JNgK+AIpgwJBv806GpuxNL+vDIPil9OJ0qp2TD7tuww7C0iaqEvedMofu2NH4FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7wAE04D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thMM2SNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB029C4CEF1;
-	Mon, 27 Oct 2025 19:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7wAE04D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F444C4CEF1;
+	Mon, 27 Oct 2025 19:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593151;
-	bh=AuzCwT7mar1ZeStfaBa9lx92xPF2mDia1YZMPlIZhag=;
+	s=korg; t=1761593153;
+	bh=9zNijjUfyA+iWE2uLH6+zjNwv/0FpWmQ3rTshNJz6b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thMM2SNjU/r0FEWdJHLpgqju45iPEiPpDClPJs1pkWkGRvEjg/HqPF7ThFvRuxDNb
-	 As81tVNbk6JQPT1snZh7YlGu0+yu+wmxwSUec62x32UzqaEIT8LOHGImYwFEDTUCdh
-	 Ch1GdYbYIJ4SmzDI4enyZS7GjDwg/mWqcQmZxGXc=
+	b=E7wAE04DmU6XGIUg3irnBuUWUiXMMHyFHPVeanwRNBh5gl5dQKSta9xihUBoLXbkM
+	 oVexnIPqDfP3PfjVqdJ6ui4470i2R/fuA2PN6P8URPmsc46KIVfYR/ImKQoh9PWV4u
+	 eVas3xMJMGIdvh+nZA90gVp3+ZOGXCNm2XGw6kjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xichao Zhao <zhao.xichao@vivo.com>,
-	Jan Kara <jack@suse.cz>,
-	Kees Cook <kees@kernel.org>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 006/184] exec: Fix incorrect type for ret
-Date: Mon, 27 Oct 2025 19:34:48 +0100
-Message-ID: <20251027183515.110447705@linuxfoundation.org>
+Subject: [PATCH 6.17 007/184] nios2: ensure that memblock.current_limit is set when setting pfn limits
+Date: Mon, 27 Oct 2025 19:34:49 +0100
+Message-ID: <20251027183515.136818975@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,36 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xichao Zhao <zhao.xichao@vivo.com>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-[ Upstream commit 5e088248375d171b80c643051e77ade6b97bc386 ]
+[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
 
-In the setup_arg_pages(), ret is declared as an unsigned long.
-The ret might take a negative value. Therefore, its type should
-be changed to int.
+On nios2, with CONFIG_FLATMEM set, the kernel relies on
+memblock_get_current_limit() to determine the limits of mem_map, in
+particular for max_low_pfn.
+Unfortunately, memblock.current_limit is only default initialized to
+MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
+to situations where max_low_pfn can erroneously exceed the value of
+max_pfn and, thus, the valid range of available DRAM.
 
-Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20250825073609.219855-1-zhao.xichao@vivo.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+This can in turn cause kernel-level paging failures, e.g.:
+
+[   76.900000] Unable to handle kernel paging request at virtual address 20303000
+[   76.900000] ea = c0080890, ra = c000462c, cause = 14
+[   76.900000] Kernel panic - not syncing: Oops
+[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
+
+This patch fixes this by pre-calculating memblock.current_limit
+based on the upper limits of the available memory ranges via
+adjust_lowmem_bounds, a simplified version of the equivalent
+implementation within the arm architecture.
+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/nios2/kernel/setup.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index a69a2673f6311..1515e0585e259 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -599,7 +599,7 @@ int setup_arg_pages(struct linux_binprm *bprm,
- 		    unsigned long stack_top,
- 		    int executable_stack)
+diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
+index 2a40150142c36..f43f01c4ab934 100644
+--- a/arch/nios2/kernel/setup.c
++++ b/arch/nios2/kernel/setup.c
+@@ -142,6 +142,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
+ 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
+ }
+ 
++static void __init adjust_lowmem_bounds(void)
++{
++	phys_addr_t block_start, block_end;
++	u64 i;
++	phys_addr_t memblock_limit = 0;
++
++	for_each_mem_range(i, &block_start, &block_end) {
++		if (block_end > memblock_limit)
++			memblock_limit = block_end;
++	}
++
++	memblock_set_current_limit(memblock_limit);
++}
++
+ void __init setup_arch(char **cmdline_p)
  {
--	unsigned long ret;
-+	int ret;
- 	unsigned long stack_shift;
- 	struct mm_struct *mm = current->mm;
- 	struct vm_area_struct *vma = bprm->vma;
+ 	console_verbose();
+@@ -157,6 +171,7 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Keep a copy of command line */
+ 	*cmdline_p = boot_command_line;
+ 
++	adjust_lowmem_bounds();
+ 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
+ 
+ 	memblock_reserve(__pa_symbol(_stext), _end - _stext);
 -- 
 2.51.0
 
