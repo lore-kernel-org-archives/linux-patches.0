@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B412EDD62;
-	Mon, 27 Oct 2025 18:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7495218EB1;
+	Mon, 27 Oct 2025 18:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590407; cv=none; b=X9olm7xje0Njwn/Axz7wX7lrdDUaIEWZibgv3RGMx7nTelMLLTPtSC49uG0GhPhcUVhTvp66KV6UVeL5M6rtM5Iia9hMWiJ9Fig2mMGBqNw8Zm88kED6SPZJpnwjPHi1KtjBZlTSyJnHpL/C4Lgzkke72Z7H4g+CQKFkcI2RYxc=
+	t=1761590409; cv=none; b=j92NLSZkAOTKEUpdW+EonhedZteEur4IwR5Bf9X6+0xp0jbJBEk5TdBqKAluu0NfbwbFgGNwVywoVF+Gc7E3xMcRo9XUe8Q8b6gGYzIMD31lQd/xumIwwVaSpO+QOuH0ASfB+f92v+VcicfsHdHyL3GF+TpdGafI6byonx6cqpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590407; c=relaxed/simple;
-	bh=pjyyoAS8/r1n094quXNclhWktytgON5vWS8DN5O8R3I=;
+	s=arc-20240116; t=1761590409; c=relaxed/simple;
+	bh=rgXa+i+8Q9t/Lky4eBRoKbL3u57tcLtCRslXusZu+SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sm2B1HBVDArDx4wozVsL/kuE2cfkSNfHyCrMhzxPQ3Eq1ozP+gVHhATNgb/ahP2MZoVjAtfMysx9qRl2QP5reGzmXnS0z66o/MtzcEl6ic+ko6ODXzHQPWtwTwIi0VzKttpwuYXZc/FyAUv0Qg324f1rLpKkjQwSdPCpK3YcoUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGNYIAu3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZ81LzJxkWSwAUzbuDZjstgBynIzH38tkMkVp3GwXkfbqV9G84rusUKQfEJgZMoeAZ+skrSpzwTRbXOabJvGcAGBT5aBpIeLyxVCBHaYATAFwMF5YLx7iiPhg9/o5GlTQV8BEdM08PV1Jwv1zDNVwDHsaYXz29/bNMXObtriTMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGCgOtys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGNYIAu3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9459BC4CEF1;
-	Mon, 27 Oct 2025 18:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGCgOtys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3931CC4CEF1;
+	Mon, 27 Oct 2025 18:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590406;
-	bh=pjyyoAS8/r1n094quXNclhWktytgON5vWS8DN5O8R3I=;
+	s=korg; t=1761590409;
+	bh=rgXa+i+8Q9t/Lky4eBRoKbL3u57tcLtCRslXusZu+SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGNYIAu3W8xx9q4hBVGmlwzzC9RekE4HbjZz1CsvZVKlrWd4wW7QE0Jy63a5x+ZFD
-	 olt1qzle9B06ET3HgrxeoHxJ6jogMZlZpxzfUs49bAxM0eui67IBSuE25qKXAK5FYF
-	 XEOlnP0D86/xEVMyyjvJXlaJZTsvBvH/RngWjcQU=
+	b=NGCgOtys5rWDBCdZOpit2Mn22SKiMlst0UfI0mPowABAmd9siKzbRLkqOJb2nSFrP
+	 LNpvjHYcfhM+V+DT4iTdP3SYhSnPKpMmzdYlTVEI3eAxgBqC1+PS6z3HQgnXjKR6VK
+	 OldSEXbalqjVr/5R8Yvc3hUjc+lMppPrlf0l9QOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/224] usb: host: max3421-hcd: Fix error pointer dereference in probe cleanup
-Date: Mon, 27 Oct 2025 19:32:58 +0100
-Message-ID: <20251027183509.864788796@linuxfoundation.org>
+Subject: [PATCH 5.4 033/224] serial: max310x: Add error checking in probe()
+Date: Mon, 27 Oct 2025 19:32:59 +0100
+Message-ID: <20251027183509.892836543@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,33 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 186e8f2bdba551f3ae23396caccd452d985c23e3 ]
+[ Upstream commit 672a37ba8af1f2ebcedeb94aea2cdd047f805f30 ]
 
-The kthread_run() function returns error pointers so the
-max3421_hcd->spi_thread pointer can be either error pointers or NULL.
-Check for both before dereferencing it.
+Check if devm_i2c_new_dummy_device() fails.
 
-Fixes: 05dfa5c9bc37 ("usb: host: max3421-hcd: fix "spi_rd8" uses dynamic stack allocation warning")
+Fixes: 2e1f2d9a9bdb ("serial: max310x: implement I2C support")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aJTMVAPtRe5H6jug@stanley.mountain
+Link: https://lore.kernel.org/r/aJTMPZiKqeXSE-KM@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/max310x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
-index 5a21777197e95..cfdbe90f867e0 100644
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -1925,7 +1925,7 @@ max3421_probe(struct spi_device *spi)
- 	if (hcd) {
- 		kfree(max3421_hcd->tx);
- 		kfree(max3421_hcd->rx);
--		if (max3421_hcd->spi_thread)
-+		if (!IS_ERR_OR_NULL(max3421_hcd->spi_thread))
- 			kthread_stop(max3421_hcd->spi_thread);
- 		usb_put_hcd(hcd);
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index 363b68555fe62..4ef2762347f62 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -1660,6 +1660,8 @@ static int max310x_i2c_probe(struct i2c_client *client)
+ 		port_client = devm_i2c_new_dummy_device(&client->dev,
+ 							client->adapter,
+ 							port_addr);
++		if (IS_ERR(port_client))
++			return PTR_ERR(port_client);
+ 
+ 		regmaps[i] = devm_regmap_init_i2c(port_client, &regcfg_i2c);
  	}
 -- 
 2.51.0
