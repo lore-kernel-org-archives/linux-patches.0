@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF9A32E142;
-	Mon, 27 Oct 2025 18:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F4B3081BE;
+	Mon, 27 Oct 2025 18:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590980; cv=none; b=jVR7ixIabKBe+S9uv7nX6XB7/69zmWRRTiuC9/ArbIfXkjbhpqyzSN/Al9R/JQpPHNsc1EKHfACbbTOFb/VQcTDY8JtjFQULZxET3tSOs+zLph/QsIFfwGcUFMIrKMqeKE/mgfu7JPAWv7HUcZ3rf4NeJhgIQZqAWUpFUJ+zWj0=
+	t=1761590982; cv=none; b=MurgeH8gDNejv+7yjYWs2t877YIwn8amHEoI78262fVJstpl7eqAx4oWH7Zoz//w+Z1eHpm6BLel07ziTeAAPBNUTkpEsy2tP4ChXA1gAyGR+OTpL8IvqNyqERYH9sQGTLHCVZdRmnvbB3Ba3de6lru5yvqvSiXZthtpUEy8nvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590980; c=relaxed/simple;
-	bh=hEGXR8O2KDLvJLTiMUsYitjCZlfXbxIP23PAOs7TFLw=;
+	s=arc-20240116; t=1761590982; c=relaxed/simple;
+	bh=PvzBRkuDT+wcACqnibaTfXwubBYK5H1+VztIWYuK3sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtMoli/OPUPBTAoSvpFAioQEDEAP4y0r0uyHbyQdE3+twOYx3Po681HTJbwZekLzSd/rXaL4KYbXVGaYAIzS3kqapOelo/+xHFjDJXKMoKj3N/l160+zFK4qbuGcWL4OSqwofF2fupcNJo6moUhBKxKTdWWPbgPcUgyztKplyys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUsROXfK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fzQtIJUeJjmBEGmzjw9w78Jhh78GrGP88RArgrnPYcoZ+9u4lb7G/Kq8TNiO08/QSK89LiS4Pm7KEabuPoy3gkCQUNmH5K48RK1+47Kst4up10pHQLFptu+sOybhngAMEgxGWk60Rag0Cx0JjOy5n03Y4n6oPzXycxgMPutC3uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+S7dQKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUsROXfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AF0C4CEF1;
-	Mon, 27 Oct 2025 18:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+S7dQKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F5BC4CEF1;
+	Mon, 27 Oct 2025 18:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590979;
-	bh=hEGXR8O2KDLvJLTiMUsYitjCZlfXbxIP23PAOs7TFLw=;
+	s=korg; t=1761590982;
+	bh=PvzBRkuDT+wcACqnibaTfXwubBYK5H1+VztIWYuK3sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUsROXfKQtmex3yqXBO+/p/Omi9g4hVhbagBiEIqFx88wrjtxAOne690QhbDD/4V1
-	 MpHNfykyP1pyTKSsSlV/N5/dI7SGLH4ViMFHSarsrdyM0dV9cESYSSs3IJUrRQps0X
-	 TB5su8TUndrdea/ytHurZpadWAsdWA5fDS/fk1ec=
+	b=N+S7dQKG2J1ecXSARju6M0B/nce6N+pZLV0fCWb2tzCIHvAYzPmSNQcGJYHaJJUHo
+	 3yzlZxocUZKYQz+1aOfE4zWfotpflnVKO3/kxVV7osWCJvN8Ak63LpQSCuu2VBlVXv
+	 SXmiLLV8P7lT/kFJIFzHDOyJ+RFqSYzA8ZuSGO8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/332] selftests: arm64: Check fread return value in exec_target
-Date: Mon, 27 Oct 2025 19:31:14 +0100
-Message-ID: <20251027183525.180734659@linuxfoundation.org>
+Subject: [PATCH 5.10 022/332] perf: arm_spe: Prevent overflow in PERF_IDX2OFF()
+Date: Mon, 27 Oct 2025 19:31:15 +0100
+Message-ID: <20251027183525.206583513@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit a679e5683d3eef22ca12514ff8784b2b914ebedc ]
+[ Upstream commit a29fea30dd93da16652930162b177941abd8c75e ]
 
-Fix -Wunused-result warning generated when compiled with gcc 13.3.0,
-by checking fread's return value and handling errors, preventing
-potential failures when reading from stdin.
+Cast nr_pages to unsigned long to avoid overflow when handling large
+AUX buffer sizes (>= 2 GiB).
 
-Fixes compiler warning:
-warning: ignoring return value of 'fread' declared with attribute
-'warn_unused_result' [-Wunused-result]
-
-Fixes: 806a15b2545e ("kselftests/arm64: add PAuth test for whether exec() changes keys")
-
-Signed-off-by: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/pauth/exec_target.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/perf/arm_spe_pmu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/pauth/exec_target.c b/tools/testing/selftests/arm64/pauth/exec_target.c
-index 4435600ca400d..e597861b26d6b 100644
---- a/tools/testing/selftests/arm64/pauth/exec_target.c
-+++ b/tools/testing/selftests/arm64/pauth/exec_target.c
-@@ -13,7 +13,12 @@ int main(void)
- 	unsigned long hwcaps;
- 	size_t val;
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index 6fbfcab4918cf..3280c4b488d44 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -93,7 +93,8 @@ struct arm_spe_pmu {
+ #define to_spe_pmu(p) (container_of(p, struct arm_spe_pmu, pmu))
  
--	fread(&val, sizeof(size_t), 1, stdin);
-+	size_t size = fread(&val, sizeof(size_t), 1, stdin);
-+
-+	if (size != 1) {
-+		fprintf(stderr, "Could not read input from stdin\n");
-+		return EXIT_FAILURE;
-+	}
+ /* Convert a free-running index from perf into an SPE buffer offset */
+-#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
++#define PERF_IDX2OFF(idx, buf) \
++	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
  
- 	/* don't try to execute illegal (unimplemented) instructions) caller
- 	 * should have checked this and keep worker simple
+ /* Keep track of our dynamic hotplug state */
+ static enum cpuhp_state arm_spe_pmu_online;
 -- 
 2.51.0
 
