@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0455241663;
-	Mon, 27 Oct 2025 19:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664742C11DF;
+	Mon, 27 Oct 2025 19:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592113; cv=none; b=cO96Gg5fgJ2Ie72IqfCNdv1OvBRd7qdS4tS4dSxXnZFMbTRS0yqbOqUGJR/ZKqpqiq6bzBCwcqiSDUVkTjsp4vNjibI0O7/yTsku4WO1ZXnFlTEhO2v+9Y7+zEFscGcjfFzFOc/3wVSUum+We+mxbf++Q8n5F/NK5xGuTxXuQ28=
+	t=1761592116; cv=none; b=Xn1ZosDN15B4Bvj5dTp2yc6qnWyhbdV9ITTPSsY0s2H1KCItqnvZ9PTp5m39AA5EheSBFpVxjczeRAj6JMp2KjuBC/lWPqSBpcGmXrWpCQ/sylsHhcdWBzHc60ZEFN55CHIGALfXuXCS6aqb3fI79r45xVAe3Ns6NAelCkhY1Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592113; c=relaxed/simple;
-	bh=vm04eoohS/JRdwPjzNQrVICLRPsA0JnKEJBrBvZRsA0=;
+	s=arc-20240116; t=1761592116; c=relaxed/simple;
+	bh=yoU/DdN1dcdDWsB8loECDLQllI7pMpQ3AK80EHC8FT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SsoaT1GDoDI2Z1KquWkTfESKuD9RE6L2/93Z3NDLY+cXhbXkYD3JdDCFOTaQnPu/fRxt8ZHWFRoclZjc5IbAi0M0qA2p0GFbWCIiSCTF9LhTlHANyqzIeeB71PsBo+mLV4bgsJmGQczzqdG0hdzfM+7D853H2/udN9gCof4eaP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeZdtPZg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyfcgQGNCeHvOdiWAYXp+HvpGTNPPwWKUGkhoPzLGoqjtJHPo5UgIes0wiz+jRb3W6Qq6EL8wBMNr5A2lmimWYmypPQwt0DwinYtgDJ5NbhUNnflKRpzQ7I/voskbCcpeZnv7zBNPQi8pxSK4X8lTF1MXNFe2KCzKTqj7Y5ql+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LsR4SP28; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeZdtPZg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC58C4CEF1;
-	Mon, 27 Oct 2025 19:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LsR4SP28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC103C4CEF1;
+	Mon, 27 Oct 2025 19:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592113;
-	bh=vm04eoohS/JRdwPjzNQrVICLRPsA0JnKEJBrBvZRsA0=;
+	s=korg; t=1761592116;
+	bh=yoU/DdN1dcdDWsB8loECDLQllI7pMpQ3AK80EHC8FT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YeZdtPZgKCNzNinEq1L6PqyQPg5XuTv/uz33ZQbz04ey4DTmDyjAMUVCfDmKQnMU0
-	 jQLEixGWrbEuFt76KYLOJfwz3+fjJ3TzYMZwmHyKtsTLuYM8aHKumZ2PxLOd14rsmU
-	 x8mkz1GR1MJPtuO6sXXzvU/K0FDLTxkLlNjvzNL8=
+	b=LsR4SP28iHVf2KqofPp3suaF5d2TSchxgkCN89DUvZPW9Hi7gYf8+ZcL29bR23Z1S
+	 HGXrOU9l//qVTNXnravPavm9zgfnyDwcAp7R8oux6wb1R2RXrTQMfFto2mdJVYspUK
+	 rh5HgDx+m9Kwu4A61hROOq55ERs+DmbZYdQAUzfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.15 122/123] PCI: rcar: Demote WARN() to dev_warn_ratelimited() in rcar_pcie_wakeup()
-Date: Mon, 27 Oct 2025 19:36:42 +0100
-Message-ID: <20251027183449.648614205@linuxfoundation.org>
+	Anup Patel <apatel@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 123/123] RISC-V: Dont fail in riscv_of_parent_hartid() for disabled HARTs
+Date: Mon, 27 Oct 2025 19:36:43 +0100
+Message-ID: <20251027183449.672926685@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -45,74 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Anup Patel <apatel@ventanamicro.com>
 
-commit c93637e6a4c4e1d0e85ef7efac78d066bbb24d96 upstream.
+commit c4676f8dc1e12e68d6511f9ed89707fdad4c962c upstream.
 
-Avoid large backtrace, it is sufficient to warn the user that there has
-been a link problem. Either the link has failed and the system is in need
-of maintenance, or the link continues to work and user has been informed.
-The message from the warning can be looked up in the sources.
+The riscv_of_processor_hartid() used by riscv_of_parent_hartid() fails
+for HARTs disabled in the DT. This results in the following warning
+thrown by the RISC-V INTC driver for the E-core on SiFive boards:
 
-This makes an actual link issue less verbose.
+[    0.000000] riscv-intc: unable to find hart id for /cpus/cpu@0/interrupt-controller
 
-First of all, this controller has a limitation in that the controller
-driver has to assist the hardware with transition to L1 link state by
-writing L1IATN to PMCTRL register, the L1 and L0 link state switching
-is not fully automatic on this controller.
+The riscv_of_parent_hartid() is only expected to read the hartid
+from the DT so we directly call of_get_cpu_hwid() instead of calling
+riscv_of_processor_hartid().
 
-In case of an ASMedia ASM1062 PCIe SATA controller which does not support
-ASPM, on entry to suspend or during platform pm_test, the SATA controller
-enters D3hot state and the link enters L1 state. If the SATA controller
-wakes up before rcar_pcie_wakeup() was called and returns to D0, the link
-returns to L0 before the controller driver even started its transition to
-L1 link state. At this point, the SATA controller did send an PM_ENTER_L1
-DLLP to the PCIe controller and the PCIe controller received it, and the
-PCIe controller did set PMSR PMEL1RX bit.
-
-Once rcar_pcie_wakeup() is called, if the link is already back in L0 state
-and PMEL1RX bit is set, the controller driver has no way to determine if
-it should perform the link transition to L1 state, or treat the link as if
-it is in L0 state. Currently the driver attempts to perform the transition
-to L1 link state unconditionally, which in this specific case fails with a
-PMSR L1FAEG poll timeout, however the link still works as it is already
-back in L0 state.
-
-Reduce this warning verbosity. In case the link is really broken, the
-rcar_pcie_config_access() would fail, otherwise it will succeed and any
-system with this controller and ASM1062 can suspend without generating
-a backtrace.
-
-Fixes: 84b576146294 ("PCI: rcar: Finish transition to L1 state in rcar_pcie_config_access()")
-Link: https://lore.kernel.org/linux-pci/20240511235513.77301-1-marek.vasut+renesas@mailbox.org
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: ad635e723e17 ("riscv: cpu: Add 64bit hartid support on RV64")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20231027154254.355853-2-apatel@ventanamicro.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/cpu.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/controller/pcie-rcar-host.c
-+++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -87,7 +87,11 @@ static int rcar_pcie_wakeup(struct devic
- 		writel(L1IATN, pcie_base + PMCTLR);
- 		ret = readl_poll_timeout_atomic(pcie_base + PMSR, val,
- 						val & L1FAEG, 10, 1000);
--		WARN(ret, "Timeout waiting for L1 link state, ret=%d\n", ret);
-+		if (ret) {
-+			dev_warn_ratelimited(pcie_dev,
-+					     "Timeout waiting for L1 link state, ret=%d\n",
-+					     ret);
-+		}
- 		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
+--- a/arch/riscv/kernel/cpu.c
++++ b/arch/riscv/kernel/cpu.c
+@@ -50,13 +50,14 @@ int riscv_of_processor_hartid(struct dev
+  */
+ int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
+ {
+-	int rc;
+-
+ 	for (; node; node = node->parent) {
+ 		if (of_device_is_compatible(node, "riscv")) {
+-			rc = riscv_of_processor_hartid(node, hartid);
+-			if (!rc)
+-				return 0;
++			*hartid = (unsigned long)of_get_cpu_hwid(node, 0);
++			if (*hartid == ~0UL) {
++				pr_warn("Found CPU without hart ID\n");
++				return -ENODEV;
++			}
++			return 0;
+ 		}
  	}
  
 
