@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7C625784E;
-	Mon, 27 Oct 2025 18:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC29328B71;
+	Mon, 27 Oct 2025 18:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590782; cv=none; b=H3iIqQBj53XoRF+ndJHgpdNa1E/ZAFKPbcoAr8reHJvUSOC1J6CAlAfQ1kqsvXAomSkv3kzntSuPybe5g55VbpmYYvYzvvLEmD5VdfATFOHE84BYDDpNw9piapOFX2ZFuLTgV3lWxImfRDZXvqxc1A/gDdEu7Q1t/M79953rr30=
+	t=1761590784; cv=none; b=FMxoYIL097IZ8Xa6Kc8Lh84HHG444dGFVfEcHftdAHa18xBTPyAXqg8HFpCxBhNnvjjffGrDMPywLWfm8xLGUbjc1Ee8wHKf0aYhP8GTsZiVbml5SUNpATDkDjLG6hdy5UwdEHl7zN3ztJKPcq/xDi65vKwjXQeqSW6GaxEcsoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590782; c=relaxed/simple;
-	bh=VO049xwA7GKA7xCNlm0aul/jF6zu32ssD9eI1CRrbek=;
+	s=arc-20240116; t=1761590784; c=relaxed/simple;
+	bh=0zLDJMNzGQkQew7esBYOuCw1bqwsmr33c3hakPzNFu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgzzndgBOc7jqIpcYXEOQCw06CF2uI/fORpVbVdqD3r3W338yQ/Vgktk3DEoQCG9gIxm0NHe2B+8XO0einI3QhQoGLDiR4haKSzOGm66ZMCgQTcu94bxNXwzOrCeaupCSfPGMnwi80TYB95ptvsXAOKBnUpLR7ZOwpk632GTHQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVXwhC5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eL3+VrWUOu5e4W2/+zaSaZnQb9+j77/nJ7WUKbTMbAE5skCN35nzoV1CaPcKXm7w6r7OsAh8WgS5swOmiFiEaRhHNTE8TXDwgx8SnQ2Ef81FmguKNPFT31eT+z7B7z657lSDMxqQuMMg9ti2QNJQz+1tshxjvQi/40A/zdf7NPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyKX2IeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVXwhC5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C44C4CEF1;
-	Mon, 27 Oct 2025 18:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyKX2IeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F21C4CEFD;
+	Mon, 27 Oct 2025 18:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590781;
-	bh=VO049xwA7GKA7xCNlm0aul/jF6zu32ssD9eI1CRrbek=;
+	s=korg; t=1761590784;
+	bh=0zLDJMNzGQkQew7esBYOuCw1bqwsmr33c3hakPzNFu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVXwhC5Yl2Kd+SsMq1YkYTW/vFi1OPA0kmf4Mz8Oo6iQxjJOT82L8A9UM8r8VQxp9
-	 EaEXOYWpuhIDiPhABZik0K6nLveUNeD/AEFnK1O9AYqB0ys0cdxsCXWK7rwyyBXXkC
-	 80fIrC9sftk0+kwlNQjPc65jwJ9ajd5Qc1CYypuU=
+	b=KyKX2IeFl9txlBRZecDZWM7YzuQbr/IJIblQEQyAaqfUyVsWlyN7FonSlLEUYyQFE
+	 Wsk2lZrq6L70xt9zE7Mq3cQVwtQQ5y0LNVyiu/Qu6ekCpwVvXI7NDtDrHTH9nBJO1Z
+	 W46E9tOPEzkg/r0XClCo670yfCaybkmp/Hcbf5oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 165/224] tls: dont rely on tx_work during send()
-Date: Mon, 27 Oct 2025 19:35:11 +0100
-Message-ID: <20251027183513.333976801@linuxfoundation.org>
+Subject: [PATCH 5.4 174/224] hfs: make proper initalization of struct hfs_find_data
+Date: Mon, 27 Oct 2025 19:35:20 +0100
+Message-ID: <20251027183513.540869750@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,60 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 7f846c65ca11e63d2409868ff039081f80e42ae4 ]
+[ Upstream commit c62663a986acee7c4485c1fa9de5fc40194b6290 ]
 
-With async crypto, we rely on tx_work to actually transmit records
-once encryption completes. But while send() is running, both the
-tx_lock and socket lock are held, so tx_work_handler cannot process
-the queue of encrypted records, and simply reschedules itself. During
-a large send(), this could last a long time, and use a lot of memory.
+Potenatially, __hfs_ext_read_extent() could operate by
+not initialized values of fd->key after hfs_brec_find() call:
 
-Transmit any pending encrypted records before restarting the main
-loop of tls_sw_sendmsg_locked.
+static inline int __hfs_ext_read_extent(struct hfs_find_data *fd, struct hfs_extent *extent,
+                                        u32 cnid, u32 block, u8 type)
+{
+        int res;
 
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/8396631478f70454b44afb98352237d33f48d34d.1760432043.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+        hfs_ext_build_key(fd->search_key, cnid, block, type);
+        fd->key->ext.FNum = 0;
+        res = hfs_brec_find(fd);
+        if (res && res != -ENOENT)
+                return res;
+        if (fd->key->ext.FNum != fd->search_key->ext.FNum ||
+            fd->key->ext.FkType != fd->search_key->ext.FkType)
+                return -ENOENT;
+        if (fd->entrylength != sizeof(hfs_extent_rec))
+                return -EIO;
+        hfs_bnode_read(fd->bnode, extent, fd->entryoffset, sizeof(hfs_extent_rec));
+        return 0;
+}
+
+This patch changes kmalloc() on kzalloc() in hfs_find_init()
+and intializes fd->record, fd->keyoffset, fd->keylength,
+fd->entryoffset, fd->entrylength for the case if hfs_brec_find()
+has been found nothing in the b-tree node.
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250818225252.126427-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/hfs/bfind.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 8dabbbf521688..b175f0595a478 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1052,6 +1052,13 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 				else if (ret != -EAGAIN)
- 					goto send_end;
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
-+
- 			continue;
- rollback_iter:
- 			copied -= try_to_copy;
-@@ -1106,6 +1113,12 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 					goto send_end;
- 				}
- 			}
-+
-+			/* Transmit if any encryptions have completed */
-+			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
-+				cancel_delayed_work(&ctx->tx_work.work);
-+				tls_tx_records(sk, msg->msg_flags);
-+			}
- 		}
+diff --git a/fs/hfs/bfind.c b/fs/hfs/bfind.c
+index ef9498a6e88ac..6d37b4c759034 100644
+--- a/fs/hfs/bfind.c
++++ b/fs/hfs/bfind.c
+@@ -18,7 +18,7 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
  
- 		continue;
+ 	fd->tree = tree;
+ 	fd->bnode = NULL;
+-	ptr = kmalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
++	ptr = kzalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 	fd->search_key = ptr;
+@@ -112,6 +112,12 @@ int hfs_brec_find(struct hfs_find_data *fd)
+ 	__be32 data;
+ 	int height, res;
+ 
++	fd->record = -1;
++	fd->keyoffset = -1;
++	fd->keylength = -1;
++	fd->entryoffset = -1;
++	fd->entrylength = -1;
++
+ 	tree = fd->tree;
+ 	if (fd->bnode)
+ 		hfs_bnode_put(fd->bnode);
 -- 
 2.51.0
 
