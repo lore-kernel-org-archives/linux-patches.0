@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDDC328618;
-	Mon, 27 Oct 2025 19:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFCF324B2E;
+	Mon, 27 Oct 2025 19:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593064; cv=none; b=cR2J4wRXfL1q1vn7xXLloyHiZAYC5Nie1M5OUWLtMW+nhVl3nZkv6qHzGJukQA0/tkqZq6Bz8SZ+qmiyZF821id435bKethznd0fZzRj2LgCm5x+trUo80cpJva8GYAFQb/gNgf4v0BWAjCa0dTFMzMgtF3vZ4+ZraynQ3d/kLk=
+	t=1761593067; cv=none; b=eEoSgqv/O42jzz/8vDB1FGfhBJZriO+aKN0fK1YVh6jK75Lub6+DGNJqr+SwNWQ0pGiu02xTgKvpAWwkrAVo6db53zk6+HseYixUk+/YV8KYnhcQxBk4vR0JaynK4jjC/vjDGcZIKdAIljPGE6kzwLMEesFBPw5EGpCMocxyEPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593064; c=relaxed/simple;
-	bh=FujQRMdW50bVPfjvFcxvXtnEGBvUnfAxTu504FoyVlA=;
+	s=arc-20240116; t=1761593067; c=relaxed/simple;
+	bh=rLUwKBl6XRVzmL6aNoI1LJMX1sIEZvdVMHThWuAo4+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hr0EWCkr32rMMg/gO+MA2Suf1ux67Jj+zndcotoy3cGEzP8DtLE0kOuvnbxmhPbfVoIlm/1v2JL1Io0Tc5ptx1QRpF4Ig5pB2gxmmpbTtS5/GmqBhMqEY6rX9dLZDrBsONqt4bEIwKlTuXZ7iwAqnpflpZSH3byuM/sAF+Gw0hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAWGtTro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ly1YpulEvXdE1O43Ym6haz99uJhJ8mLInLRTda4gqgy6enoEp4EAM4eLhByIg3InWJWEQGqRui/KqqqSLLZC2Drqtm6Xlenhz8rq7puy8c3lbrhGl1bd01IX4qNpw8fPio25cZyHfy89jUi3t9iL8EOFKPgonoDnzMTwdP3TXfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkM8JP/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAWGtTro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEC9C4CEFD;
-	Mon, 27 Oct 2025 19:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkM8JP/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951BDC4CEF1;
+	Mon, 27 Oct 2025 19:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593064;
-	bh=FujQRMdW50bVPfjvFcxvXtnEGBvUnfAxTu504FoyVlA=;
+	s=korg; t=1761593066;
+	bh=rLUwKBl6XRVzmL6aNoI1LJMX1sIEZvdVMHThWuAo4+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAWGtTroPh3bruX5awr5RYNhJ/fP13Qf8MsWDQsEo4jbJHPC2BxJ/2M8+JK8bF23b
-	 FD14IOuLvjUAIZx/zx0meHl2qDt3yYyZODNrugWDVNJBLcss+OKSP1Lw5H00Qda/I+
-	 V5WkVeyd+MG+zId4DjW/d/VrASBGHIXvcpLQHk5U=
+	b=wkM8JP/oZTtJb7L18M8eArJjTExEGhylr8zieqvnci+4U8dH1qUdNvPsWg8SRN8YH
+	 IjAMfUr5MMXVARcIHid4E3jCJBcr7rV4JOgvhvyRBOvtPBqML3B4lcC1uUuT1D4Px0
+	 WMHlv1kVOhVOczunrjvlCid+IblQXr1tkKvRAR0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 117/117] xfs: always warn about deprecated mount options
-Date: Mon, 27 Oct 2025 19:37:23 +0100
-Message-ID: <20251027183457.197036769@linuxfoundation.org>
+	syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Subject: [PATCH 6.12 107/117] most: usb: Fix use-after-free in hdm_disconnect
+Date: Mon, 27 Oct 2025 19:37:13 +0100
+Message-ID: <20251027183456.917653993@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -53,90 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
 
-[ Upstream commit 630785bfbe12c3ee3ebccd8b530a98d632b7e39d ]
+commit 4b1270902609ef0d935ed2faa2ea6d122bd148f5 upstream.
 
-The deprecation of the 'attr2' mount option in 6.18 wasn't entirely
-successful because nobody noticed that the kernel never printed a
-warning about attr2 being set in fstab if the only xfs filesystem is the
-root fs; the initramfs mounts the root fs with no mount options; and the
-init scripts only conveyed the fstab options by remounting the root fs.
+hdm_disconnect() calls most_deregister_interface(), which eventually
+unregisters the MOST interface device with device_unregister(iface->dev).
+If that drops the last reference, the device core may call release_mdev()
+immediately while hdm_disconnect() is still executing.
 
-Fix this by making it complain all the time.
+The old code also freed several mdev-owned allocations in
+hdm_disconnect() and then performed additional put_device() calls.
+Depending on refcount order, this could lead to use-after-free or
+double-free when release_mdev() ran (or when unregister paths also
+performed puts).
 
-Cc: stable@vger.kernel.org # v5.13
-Fixes: 92cf7d36384b99 ("xfs: Skip repetitive warnings about mount options")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ Update existing xfs_fs_warn_deprecated() callers ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by moving the frees of mdev-owned allocations into release_mdev(),
+so they happen exactly once when the device is truly released, and by
+dropping the extra put_device() calls in hdm_disconnect() that are
+redundant after device_unregister() and most_deregister_interface().
+
+This addresses the KASAN slab-use-after-free reported by syzbot in
+hdm_disconnect(). See report and stack traces in the bug link below.
+
+Reported-by: syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=916742d5d24f6c254761
+Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
+Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Link: https://patch.msgid.link/20251010105241.4087114-2-Victoria.Votokina@kaspersky.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_super.c |   33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ drivers/most/most_usb.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -1232,16 +1232,25 @@ suffix_kstrtoint(
- static inline void
- xfs_fs_warn_deprecated(
- 	struct fs_context	*fc,
--	struct fs_parameter	*param,
--	uint64_t		flag,
--	bool			value)
-+	struct fs_parameter	*param)
+--- a/drivers/most/most_usb.c
++++ b/drivers/most/most_usb.c
+@@ -929,6 +929,10 @@ static void release_mdev(struct device *
  {
--	/* Don't print the warning if reconfiguring and current mount point
--	 * already had the flag set
-+	/*
-+	 * Always warn about someone passing in a deprecated mount option.
-+	 * Previously we wouldn't print the warning if we were reconfiguring
-+	 * and current mount point already had the flag set, but that was not
-+	 * the right thing to do.
-+	 *
-+	 * Many distributions mount the root filesystem with no options in the
-+	 * initramfs and rely on mount -a to remount the root fs with the
-+	 * options in fstab.  However, the old behavior meant that there would
-+	 * never be a warning about deprecated mount options for the root fs in
-+	 * /etc/fstab.  On a single-fs system, that means no warning at all.
-+	 *
-+	 * Compounding this problem are distribution scripts that copy
-+	 * /proc/mounts to fstab, which means that we can't remove mount
-+	 * options unless we're 100% sure they have only ever been advertised
-+	 * in /proc/mounts in response to explicitly provided mount options.
- 	 */
--	if ((fc->purpose & FS_CONTEXT_FOR_RECONFIGURE) &&
--            !!(XFS_M(fc->root->d_sb)->m_features & flag) == value)
--		return;
- 	xfs_warn(fc->s_fs_info, "%s mount option is deprecated.", param->key);
+ 	struct most_dev *mdev = to_mdev_from_dev(dev);
+ 
++	kfree(mdev->busy_urbs);
++	kfree(mdev->cap);
++	kfree(mdev->conf);
++	kfree(mdev->ep_address);
+ 	kfree(mdev);
+ }
+ /**
+@@ -1121,13 +1125,6 @@ static void hdm_disconnect(struct usb_in
+ 	if (mdev->dci)
+ 		device_unregister(&mdev->dci->dev);
+ 	most_deregister_interface(&mdev->iface);
+-
+-	kfree(mdev->busy_urbs);
+-	kfree(mdev->cap);
+-	kfree(mdev->conf);
+-	kfree(mdev->ep_address);
+-	put_device(&mdev->dci->dev);
+-	put_device(&mdev->dev);
  }
  
-@@ -1380,19 +1389,19 @@ xfs_fs_parse_param(
- #endif
- 	/* Following mount options will be removed in September 2025 */
- 	case Opt_ikeep:
--		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, true);
-+		xfs_fs_warn_deprecated(fc, param);
- 		parsing_mp->m_features |= XFS_FEAT_IKEEP;
- 		return 0;
- 	case Opt_noikeep:
--		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, false);
-+		xfs_fs_warn_deprecated(fc, param);
- 		parsing_mp->m_features &= ~XFS_FEAT_IKEEP;
- 		return 0;
- 	case Opt_attr2:
--		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_ATTR2, true);
-+		xfs_fs_warn_deprecated(fc, param);
- 		parsing_mp->m_features |= XFS_FEAT_ATTR2;
- 		return 0;
- 	case Opt_noattr2:
--		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_NOATTR2, true);
-+		xfs_fs_warn_deprecated(fc, param);
- 		parsing_mp->m_features |= XFS_FEAT_NOATTR2;
- 		return 0;
- 	default:
+ static int hdm_suspend(struct usb_interface *interface, pm_message_t message)
 
 
