@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFFE3016F9;
-	Mon, 27 Oct 2025 19:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234851BC4E;
+	Mon, 27 Oct 2025 19:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592707; cv=none; b=UeV59k69BAYX09DMfaO/jdM5bpstYiOolV0VaLHKAWsc75MzLtXyI1Clwjs+5gpDvzWMw2iCtqVIF1PyncBTMMoMRVVylsqwGnuQr3vIu37MCKffegDspBcEYLp8CKEI1o7u4mM0lJ5cZjqtyEvfs5QyRUTAmoo2gx7qGfViLVs=
+	t=1761592710; cv=none; b=QRFHm+sfvcKSBT2GWsSDFTObhyEub++SZ9Fli7AZyMIGuKZFqflv7Rddiq/Om/a/wOLCAEGTYdKPZRhxpBrQS+0bv2kfWLd0yhjiqp/nrlyIkk1P//fN0irMnRJ1pd2Ec8t5rxgSPspI/9/01+/6zY9L0HD7bWzvgaq3qi6niyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592707; c=relaxed/simple;
-	bh=e//OSrnJc/nklL9tu0RMbiSh7hYeT2KMfjpv1FCAHHc=;
+	s=arc-20240116; t=1761592710; c=relaxed/simple;
+	bh=SvLyZu46k3QjFMGDz04hy4p0lTm0i3rNnuvqdMho9Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAFaPWsMEizSabXzvpUm+2HxvR7xtUm1NZqQxt5MDXR2h3GZGHSYnwe/0qPb8TmKI9wC6jvgfGh8emqkalbZsNHspOZMYOmzfvmolS5j0M/eZGoo8IrhtZ9YGchltUnOzLqz/MPk8SMI2N2cHqL0WIGjTFtrQeizT+xTAdEKlJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8aLgx9G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkqxGexywhP+SfgrE/IPdNRuiOrp0IpwYNQrDIJk0llAI1RJ7tKmNbQ1OL5sNDa+2N+4YklqUGdZJNXzYzbZiVRR53PbbGuKMaWHqRrZ2l9rPAyyKHWefCUlTCe5qkaBjaJktAVsk5t/65F7JUSV+nu1xm9GtfnpER7lZlaXpbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0naIEddT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8aLgx9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6578C4CEF1;
-	Mon, 27 Oct 2025 19:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0naIEddT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591CAC4CEF1;
+	Mon, 27 Oct 2025 19:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592707;
-	bh=e//OSrnJc/nklL9tu0RMbiSh7hYeT2KMfjpv1FCAHHc=;
+	s=korg; t=1761592709;
+	bh=SvLyZu46k3QjFMGDz04hy4p0lTm0i3rNnuvqdMho9Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8aLgx9GGbJ5CBgP/RSChXiTnYVJb4BZcU2OvOyCExbWDQMLSLacLqCptpKK6sDd8
-	 JcPczU+rs3voOQ7aKWCncMUdp29OTroGivmM7reZ1Lsmhj3fVwuJNO5L+AilDrUFcM
-	 r51SkB/x/qE6wDORfIJXalQCVOWs7DAVVhv2WP5I=
+	b=0naIEddTt3pFjKWEI/0R9s44CSarxBiNEcmjjCCbukswAcIEn8bbxD/ycVryn1P7i
+	 ebZKwKcfHuXnGbV7g8+o7FRF4RR1WkT5PFrDUMP6GbDNDpM4UcLPNcb1XjPcqY28xn
+	 IU9dzjl0CQhHQ/5jNJLhyu25z9cyqAR3zxG9wHFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastiano Miano <mianosebastiano@gmail.com>,
-	Samuel Dobron <sdobron@redhat.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 26/84] net/mlx5e: Reuse per-RQ XDP buffer to avoid stack zeroing overhead
-Date: Mon, 27 Oct 2025 19:36:15 +0100
-Message-ID: <20251027183439.514066548@linuxfoundation.org>
+	Renjun Wang <renjunw0@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 59/84] USB: serial: option: add UNISOC UIS7720
+Date: Mon, 27 Oct 2025 19:36:48 +0100
+Message-ID: <20251027183440.391663146@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -56,327 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Renjun Wang <renjunw0@foxmail.com>
 
-[ Upstream commit b66b76a82c8879d764ab89adc21ee855ffd292d5 ]
+commit 71c07570b918f000de5d0f7f1bf17a2887e303b5 upstream.
 
-CONFIG_INIT_STACK_ALL_ZERO introduces a performance cost by
-zero-initializing all stack variables on function entry. The mlx5 XDP
-RX path previously allocated a struct mlx5e_xdp_buff on the stack per
-received CQE, resulting in measurable performance degradation under
-this config.
+Add support for UNISOC (Spreadtrum) UIS7720 (A7720) module.
 
-This patch reuses a mlx5e_xdp_buff stored in the mlx5e_rq struct,
-avoiding per-CQE stack allocations and repeated zeroing.
+T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480 MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1782 ProdID=4064 Rev=04.04
+S:  Manufacturer=Unisoc-phone
+S:  Product=Unisoc-phone
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 9 Cfg#= 1 Atr=c0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-With this change, XDP_DROP and XDP_TX performance matches that of
-kernels built without CONFIG_INIT_STACK_ALL_ZERO.
+0&1: RNDIS, 2: LOG, 3: DIAG, 4&5: AT Ports, 6&7: AT2 Ports, 8: ADB
 
-Performance was measured on a ConnectX-6Dx using a single RX channel
-(1 CPU at 100% usage) at ~50 Mpps. The baseline results were taken from
-net-next-6.15.
-
-Stack zeroing disabled:
-- XDP_DROP:
-    * baseline:                     31.47 Mpps
-    * baseline + per-RQ allocation: 32.31 Mpps (+2.68%)
-
-- XDP_TX:
-    * baseline:                     12.41 Mpps
-    * baseline + per-RQ allocation: 12.95 Mpps (+4.30%)
-
-Stack zeroing enabled:
-- XDP_DROP:
-    * baseline:                     24.32 Mpps
-    * baseline + per-RQ allocation: 32.27 Mpps (+32.7%)
-
-- XDP_TX:
-    * baseline:                     11.80 Mpps
-    * baseline + per-RQ allocation: 12.24 Mpps (+3.72%)
-
-Reported-by: Sebastiano Miano <mianosebastiano@gmail.com>
-Reported-by: Samuel Dobron <sdobron@redhat.com>
-Link: https://lore.kernel.org/all/CAMENy5pb8ea+piKLg5q5yRTMZacQqYWAoVLE1FE9WhQPq92E0g@mail.gmail.com/
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/1747253032-663457-1-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: afd5ba577c10 ("net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Renjun Wang <renjunw0@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h  |  7 ++
- .../net/ethernet/mellanox/mlx5/core/en/xdp.h  |  6 --
- .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 81 ++++++++++---------
- 3 files changed, 51 insertions(+), 43 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 9cf33ae48c216..455d02b6500d0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -519,6 +519,12 @@ struct mlx5e_xdpsq {
- 	struct mlx5e_channel      *channel;
- } ____cacheline_aligned_in_smp;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -617,6 +617,7 @@ static void option_instat_callback(struc
+ #define UNISOC_VENDOR_ID			0x1782
+ /* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
+ #define TOZED_PRODUCT_LT70C			0x4055
++#define UNISOC_PRODUCT_UIS7720			0x4064
+ /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
+ #define LUAT_PRODUCT_AIR720U			0x4e00
  
-+struct mlx5e_xdp_buff {
-+	struct xdp_buff xdp;
-+	struct mlx5_cqe64 *cqe;
-+	struct mlx5e_rq *rq;
-+};
-+
- struct mlx5e_ktls_resync_resp;
- 
- struct mlx5e_icosq {
-@@ -717,6 +723,7 @@ struct mlx5e_rq {
- 	struct mlx5e_xdpsq    *xdpsq;
- 	DECLARE_BITMAP(flags, 8);
- 	struct page_pool      *page_pool;
-+	struct mlx5e_xdp_buff mxbuf;
- 
- 	/* AF_XDP zero-copy */
- 	struct xsk_buff_pool  *xsk_pool;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-index ecfe93a479da8..38e9ff6aa3aee 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-@@ -44,12 +44,6 @@
- 	(MLX5E_XDP_INLINE_WQE_MAX_DS_CNT * MLX5_SEND_WQE_DS - \
- 	 sizeof(struct mlx5_wqe_inline_seg))
- 
--struct mlx5e_xdp_buff {
--	struct xdp_buff xdp;
--	struct mlx5_cqe64 *cqe;
--	struct mlx5e_rq *rq;
--};
--
- /* XDP packets can be transmitted in different ways. On completion, we need to
-  * distinguish between them to clean up things in a proper way.
-  */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 8278395ee20a0..711c95074f05c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1697,17 +1697,17 @@ mlx5e_skb_from_cqe_linear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi,
- 
- 	prog = rcu_dereference(rq->xdp_prog);
- 	if (prog) {
--		struct mlx5e_xdp_buff mxbuf;
-+		struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
- 
- 		net_prefetchw(va); /* xdp_frame data area */
- 		mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
--				 cqe_bcnt, &mxbuf);
--		if (mlx5e_xdp_handle(rq, prog, &mxbuf))
-+				 cqe_bcnt, mxbuf);
-+		if (mlx5e_xdp_handle(rq, prog, mxbuf))
- 			return NULL; /* page/packet was consumed by XDP */
- 
--		rx_headroom = mxbuf.xdp.data - mxbuf.xdp.data_hard_start;
--		metasize = mxbuf.xdp.data - mxbuf.xdp.data_meta;
--		cqe_bcnt = mxbuf.xdp.data_end - mxbuf.xdp.data;
-+		rx_headroom = mxbuf->xdp.data - mxbuf->xdp.data_hard_start;
-+		metasize = mxbuf->xdp.data - mxbuf->xdp.data_meta;
-+		cqe_bcnt = mxbuf->xdp.data_end - mxbuf->xdp.data;
- 	}
- 	frag_size = MLX5_SKB_FRAG_SZ(rx_headroom + cqe_bcnt);
- 	skb = mlx5e_build_linear_skb(rq, va, frag_size, rx_headroom, cqe_bcnt, metasize);
-@@ -1726,11 +1726,11 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 			     struct mlx5_cqe64 *cqe, u32 cqe_bcnt)
- {
- 	struct mlx5e_rq_frag_info *frag_info = &rq->wqe.info.arr[0];
-+	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
- 	struct mlx5e_wqe_frag_info *head_wi = wi;
- 	u16 rx_headroom = rq->buff.headroom;
- 	struct mlx5e_frag_page *frag_page;
- 	struct skb_shared_info *sinfo;
--	struct mlx5e_xdp_buff mxbuf;
- 	u32 frag_consumed_bytes;
- 	struct bpf_prog *prog;
- 	struct sk_buff *skb;
-@@ -1750,8 +1750,8 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 	net_prefetch(va + rx_headroom);
- 
- 	mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
--			 frag_consumed_bytes, &mxbuf);
--	sinfo = xdp_get_shared_info_from_buff(&mxbuf.xdp);
-+			 frag_consumed_bytes, mxbuf);
-+	sinfo = xdp_get_shared_info_from_buff(&mxbuf->xdp);
- 	truesize = 0;
- 
- 	cqe_bcnt -= frag_consumed_bytes;
-@@ -1763,8 +1763,9 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 
- 		frag_consumed_bytes = min_t(u32, frag_info->frag_size, cqe_bcnt);
- 
--		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf.xdp, frag_page,
--					       wi->offset, frag_consumed_bytes);
-+		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf->xdp,
-+					       frag_page, wi->offset,
-+					       frag_consumed_bytes);
- 		truesize += frag_info->frag_stride;
- 
- 		cqe_bcnt -= frag_consumed_bytes;
-@@ -1773,7 +1774,7 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 	}
- 
- 	prog = rcu_dereference(rq->xdp_prog);
--	if (prog && mlx5e_xdp_handle(rq, prog, &mxbuf)) {
-+	if (prog && mlx5e_xdp_handle(rq, prog, mxbuf)) {
- 		if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
- 			struct mlx5e_wqe_frag_info *pwi;
- 
-@@ -1783,21 +1784,23 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 		return NULL; /* page/packet was consumed by XDP */
- 	}
- 
--	skb = mlx5e_build_linear_skb(rq, mxbuf.xdp.data_hard_start, rq->buff.frame0_sz,
--				     mxbuf.xdp.data - mxbuf.xdp.data_hard_start,
--				     mxbuf.xdp.data_end - mxbuf.xdp.data,
--				     mxbuf.xdp.data - mxbuf.xdp.data_meta);
-+	skb = mlx5e_build_linear_skb(
-+		rq, mxbuf->xdp.data_hard_start, rq->buff.frame0_sz,
-+		mxbuf->xdp.data - mxbuf->xdp.data_hard_start,
-+		mxbuf->xdp.data_end - mxbuf->xdp.data,
-+		mxbuf->xdp.data - mxbuf->xdp.data_meta);
- 	if (unlikely(!skb))
- 		return NULL;
- 
- 	skb_mark_for_recycle(skb);
- 	head_wi->frag_page->frags++;
- 
--	if (xdp_buff_has_frags(&mxbuf.xdp)) {
-+	if (xdp_buff_has_frags(&mxbuf->xdp)) {
- 		/* sinfo->nr_frags is reset by build_skb, calculate again. */
- 		xdp_update_skb_shared_info(skb, wi - head_wi - 1,
- 					   sinfo->xdp_frags_size, truesize,
--					   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
-+					   xdp_buff_is_frag_pfmemalloc(
-+						&mxbuf->xdp));
- 
- 		for (struct mlx5e_wqe_frag_info *pwi = head_wi + 1; pwi < wi; pwi++)
- 			pwi->frag_page->frags++;
-@@ -2003,10 +2006,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 	struct mlx5e_frag_page *frag_page = &wi->alloc_units.frag_pages[page_idx];
- 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
- 	struct mlx5e_frag_page *head_page = frag_page;
-+	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
- 	u32 frag_offset    = head_offset;
- 	u32 byte_cnt       = cqe_bcnt;
- 	struct skb_shared_info *sinfo;
--	struct mlx5e_xdp_buff mxbuf;
- 	unsigned int truesize = 0;
- 	struct bpf_prog *prog;
- 	struct sk_buff *skb;
-@@ -2052,9 +2055,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 		}
- 	}
- 
--	mlx5e_fill_mxbuf(rq, cqe, va, linear_hr, linear_frame_sz, linear_data_len, &mxbuf);
-+	mlx5e_fill_mxbuf(rq, cqe, va, linear_hr, linear_frame_sz,
-+			 linear_data_len, mxbuf);
- 
--	sinfo = xdp_get_shared_info_from_buff(&mxbuf.xdp);
-+	sinfo = xdp_get_shared_info_from_buff(&mxbuf->xdp);
- 
- 	while (byte_cnt) {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
-@@ -2065,7 +2069,8 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 		else
- 			truesize += ALIGN(pg_consumed_bytes, BIT(rq->mpwqe.log_stride_sz));
- 
--		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf.xdp, frag_page, frag_offset,
-+		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf->xdp,
-+					       frag_page, frag_offset,
- 					       pg_consumed_bytes);
- 		byte_cnt -= pg_consumed_bytes;
- 		frag_offset = 0;
-@@ -2073,7 +2078,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 	}
- 
- 	if (prog) {
--		if (mlx5e_xdp_handle(rq, prog, &mxbuf)) {
-+		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
- 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
- 				struct mlx5e_frag_page *pfp;
- 
-@@ -2086,10 +2091,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 			return NULL; /* page/packet was consumed by XDP */
- 		}
- 
--		skb = mlx5e_build_linear_skb(rq, mxbuf.xdp.data_hard_start,
--					     linear_frame_sz,
--					     mxbuf.xdp.data - mxbuf.xdp.data_hard_start, 0,
--					     mxbuf.xdp.data - mxbuf.xdp.data_meta);
-+		skb = mlx5e_build_linear_skb(
-+			rq, mxbuf->xdp.data_hard_start, linear_frame_sz,
-+			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, 0,
-+			mxbuf->xdp.data - mxbuf->xdp.data_meta);
- 		if (unlikely(!skb)) {
- 			mlx5e_page_release_fragmented(rq, &wi->linear_page);
- 			return NULL;
-@@ -2099,13 +2104,14 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 		wi->linear_page.frags++;
- 		mlx5e_page_release_fragmented(rq, &wi->linear_page);
- 
--		if (xdp_buff_has_frags(&mxbuf.xdp)) {
-+		if (xdp_buff_has_frags(&mxbuf->xdp)) {
- 			struct mlx5e_frag_page *pagep;
- 
- 			/* sinfo->nr_frags is reset by build_skb, calculate again. */
- 			xdp_update_skb_shared_info(skb, frag_page - head_page,
- 						   sinfo->xdp_frags_size, truesize,
--						   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
-+						   xdp_buff_is_frag_pfmemalloc(
-+							&mxbuf->xdp));
- 
- 			pagep = head_page;
- 			do
-@@ -2116,12 +2122,13 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 	} else {
- 		dma_addr_t addr;
- 
--		if (xdp_buff_has_frags(&mxbuf.xdp)) {
-+		if (xdp_buff_has_frags(&mxbuf->xdp)) {
- 			struct mlx5e_frag_page *pagep;
- 
- 			xdp_update_skb_shared_info(skb, sinfo->nr_frags,
- 						   sinfo->xdp_frags_size, truesize,
--						   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
-+						   xdp_buff_is_frag_pfmemalloc(
-+							&mxbuf->xdp));
- 
- 			pagep = frag_page - sinfo->nr_frags;
- 			do
-@@ -2171,20 +2178,20 @@ mlx5e_skb_from_cqe_mpwrq_linear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *wi,
- 
- 	prog = rcu_dereference(rq->xdp_prog);
- 	if (prog) {
--		struct mlx5e_xdp_buff mxbuf;
-+		struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
- 
- 		net_prefetchw(va); /* xdp_frame data area */
- 		mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
--				 cqe_bcnt, &mxbuf);
--		if (mlx5e_xdp_handle(rq, prog, &mxbuf)) {
-+				 cqe_bcnt, mxbuf);
-+		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
- 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags))
- 				frag_page->frags++;
- 			return NULL; /* page/packet was consumed by XDP */
- 		}
- 
--		rx_headroom = mxbuf.xdp.data - mxbuf.xdp.data_hard_start;
--		metasize = mxbuf.xdp.data - mxbuf.xdp.data_meta;
--		cqe_bcnt = mxbuf.xdp.data_end - mxbuf.xdp.data;
-+		rx_headroom = mxbuf->xdp.data - mxbuf->xdp.data_hard_start;
-+		metasize =  mxbuf->xdp.data -  mxbuf->xdp.data_meta;
-+		cqe_bcnt =  mxbuf->xdp.data_end -  mxbuf->xdp.data;
- 	}
- 	frag_size = MLX5_SKB_FRAG_SZ(rx_headroom + cqe_bcnt);
- 	skb = mlx5e_build_linear_skb(rq, va, frag_size, rx_headroom, cqe_bcnt, metasize);
--- 
-2.51.0
-
+@@ -2466,6 +2467,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, UNISOC_PRODUCT_UIS7720, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
+ 	  .driver_info = NCTRL(1) },
 
 
