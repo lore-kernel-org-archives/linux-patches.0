@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F3A1662E7;
-	Mon, 27 Oct 2025 19:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADB91662E7;
+	Mon, 27 Oct 2025 19:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592082; cv=none; b=L70JfE1ASv04zONFnMdG2jRHXOw7KfF4ubM3d572py9mVGZL36s/uBCfsyoK/l71D9D809qSSLMBZPdWQZlqCIeze+oXMN9njRzxoysJkON4tT9jfhUB+uBQG1X8nOTE+H2nD2+27VM3YtaA+S/r65iJW5zSm4J8GxAPtFyuvwU=
+	t=1761592085; cv=none; b=RM+TlOoHhHloSjWabCysNUw7ClSGIEtwOkMkp8Q+sHQSD11fzuBhXQwlWxvVesuZCWc6KwaH0Dbkh2BWk17Pr3UHiKGmuYHYjLRN5mEgjHOiZa/M6TcGspWiUs9M1Uv+6AfybmGH4f/GCw1uoxbVXCDigQQoh5Ugd3U4rWaovY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592082; c=relaxed/simple;
-	bh=u/E0OqAWtKgcnl1sh5RO7jvaD8pclSNqq+9K9L0hgqA=;
+	s=arc-20240116; t=1761592085; c=relaxed/simple;
+	bh=c/xeaimjgRBxtaQV7JSGjykukmnltdo2DfZPWv27czI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KzHwckSNPA/FsbjsDug+AqhIhzzZo72kF5UsbzmLhRUwfZm9HbrV7PE4HB1mLXECjojaYa5Xv4IyqBEvOJMkxyCbz+KGZ/qgXon0nHWS1YLfT8P40ayDodD3l84TJEtC2o2Tryn7VtzkBGordqciw0tNV4q8d+66KDCX9HlXN04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txkk2Y7H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyQUX66icWS6vEMTBEa55TzpuLHbCOaW271VY+Q5xlP0asa3Olu4coiF2pjkoATzVzVSHjUiylwa3RReMhouiiiOUbe1eYO91YvIVVQsHv0oT1JcodX6791l499tgvuoUiWFbCdAKyIoJQKfmqSk5omUxFlVgx7v+5VsNRUBRuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylG1bHgo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txkk2Y7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AFBC4CEF1;
-	Mon, 27 Oct 2025 19:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylG1bHgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFC0C4CEF1;
+	Mon, 27 Oct 2025 19:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592082;
-	bh=u/E0OqAWtKgcnl1sh5RO7jvaD8pclSNqq+9K9L0hgqA=;
+	s=korg; t=1761592085;
+	bh=c/xeaimjgRBxtaQV7JSGjykukmnltdo2DfZPWv27czI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txkk2Y7HJnh+qa0VKJe8C1x9i1EZX6LpduT6WY7dsx0fAYzXc5XjJw5ARz4R+ENjd
-	 6jH0eG3yyqD7Awolmh2khEJhusADZTbr68YKzqVAdgy9ijwMvEqet56ih1+xflgyTg
-	 dXvOSSr3LvTmXtwAvVUXPUFcqVMIJiJJUTjZ1Gxs=
+	b=ylG1bHgolZ4LUF0wk5degbbD8LAljbdXGUcmQZjJIcrQaVkruTkvNywY+1agAwsUy
+	 QW9NbrvcDFoxGDmMFIEEPjPdifygtq63HfY9Zj3aWfcHFRtzTgTd19tJOe9yr35vwm
+	 8+bEJvpeT6acsEYzB94+SFw5v6ZmFMW6aVg6oDOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Duy Nguyen <duy.nguyen.rh@renesas.com>,
+	Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Wolfram Sang <wsa@the-dreams.de>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	linux-renesas-soc@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/123] PCI: rcar: Finish transition to L1 state in rcar_pcie_config_access()
-Date: Mon, 27 Oct 2025 19:36:31 +0100
-Message-ID: <20251027183449.358690519@linuxfoundation.org>
+Subject: [PATCH 5.15 112/123] PCI: rcar-host: Drop PMSR spinlock
+Date: Mon, 27 Oct 2025 19:36:32 +0100
+Message-ID: <20251027183449.384818392@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,148 +48,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 84b576146294c2be702cfcd174eaa74167e276f9 ]
+[ Upstream commit 0a8f173d9dad13930d5888505dc4c4fd6a1d4262 ]
 
-In case the controller is transitioning to L1 in rcar_pcie_config_access(),
-any read/write access to PCIECDR triggers asynchronous external abort. This
-is because the transition to L1 link state must be manually finished by the
-driver. The PCIe IP can transition back from L1 state to L0 on its own.
+The pmsr_lock spinlock used to be necessary to synchronize access to the
+PMSR register, because that access could have been triggered from either
+config space access in rcar_pcie_config_access() or an exception handler
+rcar_pcie_aarch32_abort_handler().
 
-Avoid triggering the abort in rcar_pcie_config_access() by checking whether
-the controller is in the transition state, and if so, finish the transition
-right away. This prevents a lot of unnecessary exceptions, although not all
-of them.
+The rcar_pcie_aarch32_abort_handler() case is no longer applicable since
+commit 6e36203bc14c ("PCI: rcar: Use PCI_SET_ERROR_RESPONSE after read
+which triggered an exception"), which performs more accurate, controlled
+invocation of the exception, and a fixup.
 
-Link: https://lore.kernel.org/r/20220312212349.781799-1-marek.vasut@gmail.com
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@gmail.com>
-Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+This leaves rcar_pcie_config_access() as the only call site from which
+rcar_pcie_wakeup() is called. The rcar_pcie_config_access() can only be
+called from the controller struct pci_ops .read and .write callbacks,
+and those are serialized in drivers/pci/access.c using raw spinlock
+'pci_lock' . It should be noted that CONFIG_PCI_LOCKLESS_CONFIG is never
+set on this platform.
+
+Since the 'pci_lock' is a raw spinlock , and the 'pmsr_lock' is not a
+raw spinlock, this constellation triggers 'BUG: Invalid wait context'
+with CONFIG_PROVE_RAW_LOCK_NESTING=y .
+
+Remove the pmsr_lock to fix the locking.
+
+Fixes: a115b1bd3af0 ("PCI: rcar: Add L1 link state fix into data abort hook")
+Reported-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
+Reported-by: Thuan Nguyen <thuan.nguyen-hong@banvien.com.vn>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Krzysztof Wilczyński <kw@linux.com>
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc: Wolfram Sang <wsa@the-dreams.de>
-Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: linux-renesas-soc@vger.kernel.org
-Stable-dep-of: 0a8f173d9dad ("PCI: rcar-host: Drop PMSR spinlock")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250909162707.13927-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c |   76 ++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 31 deletions(-)
+ drivers/pci/controller/pcie-rcar-host.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
 --- a/drivers/pci/controller/pcie-rcar-host.c
 +++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -67,6 +67,42 @@ struct rcar_pcie_host {
+@@ -67,20 +67,13 @@ struct rcar_pcie_host {
  	int			(*phy_init_fn)(struct rcar_pcie_host *host);
  };
  
-+static DEFINE_SPINLOCK(pmsr_lock);
-+
-+static int rcar_pcie_wakeup(struct device *pcie_dev, void __iomem *pcie_base)
-+{
-+	unsigned long flags;
-+	u32 pmsr, val;
-+	int ret = 0;
-+
-+	spin_lock_irqsave(&pmsr_lock, flags);
-+
-+	if (!pcie_base || pm_runtime_suspended(pcie_dev)) {
-+		ret = -EINVAL;
-+		goto unlock_exit;
-+	}
-+
-+	pmsr = readl(pcie_base + PMSR);
-+
-+	/*
-+	 * Test if the PCIe controller received PM_ENTER_L1 DLLP and
-+	 * the PCIe controller is not in L1 link state. If true, apply
-+	 * fix, which will put the controller into L1 link state, from
-+	 * which it can return to L0s/L0 on its own.
-+	 */
-+	if ((pmsr & PMEL1RX) && ((pmsr & PMSTATE) != PMSTATE_L1)) {
-+		writel(L1IATN, pcie_base + PMCTLR);
-+		ret = readl_poll_timeout_atomic(pcie_base + PMSR, val,
-+						val & L1FAEG, 10, 1000);
-+		WARN(ret, "Timeout waiting for L1 link state, ret=%d\n", ret);
-+		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
-+	}
-+
-+unlock_exit:
-+	spin_unlock_irqrestore(&pmsr_lock, flags);
-+	return ret;
-+}
-+
- static struct rcar_pcie_host *msi_to_host(struct rcar_msi *msi)
- {
- 	return container_of(msi, struct rcar_pcie_host, msi);
-@@ -87,6 +123,14 @@ static int rcar_pcie_config_access(struc
- {
- 	struct rcar_pcie *pcie = &host->pcie;
- 	unsigned int dev, func, reg, index;
-+	int ret;
-+
-+	/* Wake the bus up in case it is in L1 state. */
-+	ret = rcar_pcie_wakeup(pcie->dev, pcie->base);
-+	if (ret) {
-+		PCI_SET_ERROR_RESPONSE(data);
-+		return PCIBIOS_SET_FAILED;
-+	}
- 
- 	dev = PCI_SLOT(devfn);
- 	func = PCI_FUNC(devfn);
-@@ -1054,40 +1098,10 @@ static struct platform_driver rcar_pcie_
- };
- 
- #ifdef CONFIG_ARM
 -static DEFINE_SPINLOCK(pmsr_lock);
- static int rcar_pcie_aarch32_abort_handler(unsigned long addr,
- 		unsigned int fsr, struct pt_regs *regs)
+-
+ static int rcar_pcie_wakeup(struct device *pcie_dev, void __iomem *pcie_base)
  {
 -	unsigned long flags;
--	u32 pmsr, val;
--	int ret = 0;
--
+ 	u32 pmsr, val;
+ 	int ret = 0;
+ 
 -	spin_lock_irqsave(&pmsr_lock, flags);
 -
 -	if (!pcie_base || pm_runtime_suspended(pcie_dev)) {
--		ret = 1;
+-		ret = -EINVAL;
 -		goto unlock_exit;
 -	}
--
--	pmsr = readl(pcie_base + PMSR);
--
--	/*
--	 * Test if the PCIe controller received PM_ENTER_L1 DLLP and
--	 * the PCIe controller is not in L1 link state. If true, apply
--	 * fix, which will put the controller into L1 link state, from
--	 * which it can return to L0s/L0 on its own.
--	 */
--	if ((pmsr & PMEL1RX) && ((pmsr & PMSTATE) != PMSTATE_L1)) {
--		writel(L1IATN, pcie_base + PMCTLR);
--		ret = readl_poll_timeout_atomic(pcie_base + PMSR, val,
--						val & L1FAEG, 10, 1000);
--		WARN(ret, "Timeout waiting for L1 link state, ret=%d\n", ret);
--		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
--	}
--
++	if (!pcie_base || pm_runtime_suspended(pcie_dev))
++		return -EINVAL;
+ 
+ 	pmsr = readl(pcie_base + PMSR);
+ 
+@@ -98,8 +91,6 @@ static int rcar_pcie_wakeup(struct devic
+ 		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
+ 	}
+ 
 -unlock_exit:
 -	spin_unlock_irqrestore(&pmsr_lock, flags);
--	return ret;
-+	return !!rcar_pcie_wakeup(pcie_dev, pcie_base);
+ 	return ret;
  }
  
- static const struct of_device_id rcar_pcie_abort_handler_of_match[] __initconst = {
 
 
