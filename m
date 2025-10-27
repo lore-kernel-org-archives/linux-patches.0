@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C62231BCBD;
-	Mon, 27 Oct 2025 18:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353D1326D76;
+	Mon, 27 Oct 2025 18:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590742; cv=none; b=kI3JezI82HcGAEr8Kng7HwbaKd3G895toTVBSmUEynazFGWR0JPqJiwIIQdGPywoM2McbfpNdmJsUCvByBXT7dcTCgnDAto6EpYVcwuW+x1IuIbCdXhxiwPu/9QoZIalBYriHv6b67ybqf1ebUHaglbwfl3Dgl9Y1PEpEfjIZX4=
+	t=1761590748; cv=none; b=jH9g8Anpt9XHuGYTFOspUJ+vXSwZjWf3QOcCHTsMlWBZgNs+YgPbbFnqVFl8iZQu1Gaf+qhghgNjE1s9LP5PYlTf7qOflzjbCljKPdglWxvd/Z/Jsu71AHfP84O9jnC4idUByrubJH9tYQTW2WmvlYipjg/6EJltjmNINno2Sb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590742; c=relaxed/simple;
-	bh=cApojhIrs3ndCoGggtYYsR0cEbQ08DGYtYfn4MjOFC8=;
+	s=arc-20240116; t=1761590748; c=relaxed/simple;
+	bh=TrvHRGhn97bKPk6furPIR+1tj/obIuJBqY7rGcfu46c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y241qVTfSDBOTz+vpglhX3QMXUidc4vm4lD9h2oTGU7t6oHHX+yKX72uqF1cXBd46Z0QGguO9gD8M7Us1JJuPLZ4vBbgER47Ud9I+da4XtEu+W/H9/JZ3G0amNu/2HRE03iKIGAUeDOb0Jwm8kZPvUTP0Ll/cP062kBKNjTCd40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cau4RAwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEs4A/Of8JTrBVcqegi0dna4TMHu6yrlflu+mo7qVw3TtHe26rD+LfBwM8KdjmEh+Kw+gppBuQO2w2O8TxPi+aAPWaEkCpIAlwg1+anYNX7v3FxDYHj0sRIjmhdHYLKrT5iYF796h4myYJrFfrp9ZVYUrYOcW+/mCzJm+8ddMHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mfycu4PL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cau4RAwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E8FC4CEFD;
-	Mon, 27 Oct 2025 18:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mfycu4PL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B799C113D0;
+	Mon, 27 Oct 2025 18:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590742;
-	bh=cApojhIrs3ndCoGggtYYsR0cEbQ08DGYtYfn4MjOFC8=;
+	s=korg; t=1761590745;
+	bh=TrvHRGhn97bKPk6furPIR+1tj/obIuJBqY7rGcfu46c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cau4RAwQPEGVEACldIJRlTfecxwv4kIOn8/7DPQzQLGGfpcikk1LGaCWxvBNMqbyl
-	 YnMU0FutSFCIloIGTLV6Le54zsW0pfj0Jx4LB9/xSPlUETQPb4F5SYf6HTxh/X4kOf
-	 GnYV4iglS9tM+TxlK7+JUIFd3O1wPsy2jKPQvRys=
+	b=Mfycu4PLqfDc0jTlcQHaI62MIjzIb/si9I7/IBaj7tb0DJGnhfS8HM5KSNwe+TsrI
+	 yQ7HG1wv1CeEdufQmrX4Yen3nhPOJPASLfAaDaFyB9omEWX6oZiCnBrj1XUEwojldQ
+	 h4l6r3THYZU2eZlOxoBYRMRPHEt/lfwR7E1mLTUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 158/224] net: dl2k: switch from pci_ to dma_ API
-Date: Mon, 27 Oct 2025 19:35:04 +0100
-Message-ID: <20251027183513.169963435@linuxfoundation.org>
+Subject: [PATCH 5.4 159/224] net: dlink: handle dma_map_single() failure properly
+Date: Mon, 27 Oct 2025 19:35:05 +0100
+Message-ID: <20251027183513.193340318@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,317 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit b49db89e9697ddfa7fbe7387e176072ee2feb2db ]
+[ Upstream commit 65946eac6d888d50ae527c4e5c237dbe5cc3a2f2 ]
 
-The wrappers in include/linux/pci-dma-compat.h should go away.
+There is no error handling for `dma_map_single()` failures.
 
-The patch has been generated with the coccinelle script below and has been
-hand modified to replace GFP_ with a correct flag.
-It has been compile tested.
+Add error handling by checking `dma_mapping_error()` and freeing
+the `skb` using `dev_kfree_skb()` (process context) when it fails.
 
-When memory is allocated in 'rio_probe1()' GFP_KERNEL can be used because
-it is a probe function and no lock is taken in the between.
-
-@@
-@@
--    PCI_DMA_BIDIRECTIONAL
-+    DMA_BIDIRECTIONAL
-
-@@
-@@
--    PCI_DMA_TODEVICE
-+    DMA_TO_DEVICE
-
-@@
-@@
--    PCI_DMA_FROMDEVICE
-+    DMA_FROM_DEVICE
-
-@@
-@@
--    PCI_DMA_NONE
-+    DMA_NONE
-
-@@
-expression e1, e2, e3;
-@@
--    pci_alloc_consistent(e1, e2, e3)
-+    dma_alloc_coherent(&e1->dev, e2, e3, GFP_)
-
-@@
-expression e1, e2, e3;
-@@
--    pci_zalloc_consistent(e1, e2, e3)
-+    dma_alloc_coherent(&e1->dev, e2, e3, GFP_)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_free_consistent(e1, e2, e3, e4)
-+    dma_free_coherent(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_map_single(e1, e2, e3, e4)
-+    dma_map_single(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_unmap_single(e1, e2, e3, e4)
-+    dma_unmap_single(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4, e5;
-@@
--    pci_map_page(e1, e2, e3, e4, e5)
-+    dma_map_page(&e1->dev, e2, e3, e4, e5)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_unmap_page(e1, e2, e3, e4)
-+    dma_unmap_page(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_map_sg(e1, e2, e3, e4)
-+    dma_map_sg(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_unmap_sg(e1, e2, e3, e4)
-+    dma_unmap_sg(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_dma_sync_single_for_cpu(e1, e2, e3, e4)
-+    dma_sync_single_for_cpu(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_dma_sync_single_for_device(e1, e2, e3, e4)
-+    dma_sync_single_for_device(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_dma_sync_sg_for_cpu(e1, e2, e3, e4)
-+    dma_sync_sg_for_cpu(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2, e3, e4;
-@@
--    pci_dma_sync_sg_for_device(e1, e2, e3, e4)
-+    dma_sync_sg_for_device(&e1->dev, e2, e3, e4)
-
-@@
-expression e1, e2;
-@@
--    pci_dma_mapping_error(e1, e2)
-+    dma_mapping_error(&e1->dev, e2)
-
-@@
-expression e1, e2;
-@@
--    pci_set_dma_mask(e1, e2)
-+    dma_set_mask(&e1->dev, e2)
-
-@@
-expression e1, e2;
-@@
--    pci_set_consistent_dma_mask(e1, e2)
-+    dma_set_coherent_mask(&e1->dev, e2)
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Tested-on: D-Link DGE-550T Rev-A3
+Suggested-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 65946eac6d88 ("net: dlink: handle dma_map_single() failure properly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 80 ++++++++++++++++---------------
- 1 file changed, 41 insertions(+), 39 deletions(-)
+ drivers/net/ethernet/dlink/dl2k.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index b4a8d4f12087a..8597648156635 100644
+index 8597648156635..855328ae6ea57 100644
 --- a/drivers/net/ethernet/dlink/dl2k.c
 +++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -233,13 +233,15 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	pci_set_drvdata (pdev, dev);
- 
--	ring_space = pci_alloc_consistent (pdev, TX_TOTAL_SIZE, &ring_dma);
-+	ring_space = dma_alloc_coherent(&pdev->dev, TX_TOTAL_SIZE, &ring_dma,
-+					GFP_KERNEL);
- 	if (!ring_space)
- 		goto err_out_iounmap;
- 	np->tx_ring = ring_space;
- 	np->tx_ring_dma = ring_dma;
- 
--	ring_space = pci_alloc_consistent (pdev, RX_TOTAL_SIZE, &ring_dma);
-+	ring_space = dma_alloc_coherent(&pdev->dev, RX_TOTAL_SIZE, &ring_dma,
-+					GFP_KERNEL);
- 	if (!ring_space)
- 		goto err_out_unmap_tx;
- 	np->rx_ring = ring_space;
-@@ -290,9 +292,11 @@ rio_probe1 (struct pci_dev *pdev, const struct pci_device_id *ent)
- 	return 0;
- 
- err_out_unmap_rx:
--	pci_free_consistent (pdev, RX_TOTAL_SIZE, np->rx_ring, np->rx_ring_dma);
-+	dma_free_coherent(&pdev->dev, RX_TOTAL_SIZE, np->rx_ring,
-+			  np->rx_ring_dma);
- err_out_unmap_tx:
--	pci_free_consistent (pdev, TX_TOTAL_SIZE, np->tx_ring, np->tx_ring_dma);
-+	dma_free_coherent(&pdev->dev, TX_TOTAL_SIZE, np->tx_ring,
-+			  np->tx_ring_dma);
- err_out_iounmap:
- #ifdef MEM_MAPPING
- 	pci_iounmap(pdev, np->ioaddr);
-@@ -446,8 +450,9 @@ static void free_list(struct net_device *dev)
+@@ -508,25 +508,34 @@ static int alloc_list(struct net_device *dev)
  	for (i = 0; i < RX_RING_SIZE; i++) {
- 		skb = np->rx_skbuff[i];
- 		if (skb) {
--			pci_unmap_single(np->pdev, desc_to_dma(&np->rx_ring[i]),
--					 skb->len, PCI_DMA_FROMDEVICE);
-+			dma_unmap_single(&np->pdev->dev,
-+					 desc_to_dma(&np->rx_ring[i]),
-+					 skb->len, DMA_FROM_DEVICE);
- 			dev_kfree_skb(skb);
- 			np->rx_skbuff[i] = NULL;
- 		}
-@@ -457,8 +462,9 @@ static void free_list(struct net_device *dev)
- 	for (i = 0; i < TX_RING_SIZE; i++) {
- 		skb = np->tx_skbuff[i];
- 		if (skb) {
--			pci_unmap_single(np->pdev, desc_to_dma(&np->tx_ring[i]),
--					 skb->len, PCI_DMA_TODEVICE);
-+			dma_unmap_single(&np->pdev->dev,
-+					 desc_to_dma(&np->tx_ring[i]),
-+					 skb->len, DMA_TO_DEVICE);
- 			dev_kfree_skb(skb);
- 			np->tx_skbuff[i] = NULL;
- 		}
-@@ -515,9 +521,8 @@ static int alloc_list(struct net_device *dev)
+ 		/* Allocated fixed size of skbuff */
+ 		struct sk_buff *skb;
++		dma_addr_t addr;
+ 
+ 		skb = netdev_alloc_skb_ip_align(dev, np->rx_buf_sz);
+ 		np->rx_skbuff[i] = skb;
+-		if (!skb) {
+-			free_list(dev);
+-			return -ENOMEM;
+-		}
++		if (!skb)
++			goto err_free_list;
++
++		addr = dma_map_single(&np->pdev->dev, skb->data,
++				      np->rx_buf_sz, DMA_FROM_DEVICE);
++		if (dma_mapping_error(&np->pdev->dev, addr))
++			goto err_kfree_skb;
+ 
+ 		np->rx_ring[i].next_desc = cpu_to_le64(np->rx_ring_dma +
+ 						((i + 1) % RX_RING_SIZE) *
  						sizeof(struct netdev_desc));
  		/* Rubicon now supports 40 bits of addressing space. */
- 		np->rx_ring[i].fraginfo =
--		    cpu_to_le64(pci_map_single(
--				  np->pdev, skb->data, np->rx_buf_sz,
--				  PCI_DMA_FROMDEVICE));
-+		    cpu_to_le64(dma_map_single(&np->pdev->dev, skb->data,
-+					       np->rx_buf_sz, DMA_FROM_DEVICE));
+-		np->rx_ring[i].fraginfo =
+-		    cpu_to_le64(dma_map_single(&np->pdev->dev, skb->data,
+-					       np->rx_buf_sz, DMA_FROM_DEVICE));
++		np->rx_ring[i].fraginfo = cpu_to_le64(addr);
  		np->rx_ring[i].fraginfo |= cpu_to_le64((u64)np->rx_buf_sz << 48);
  	}
  
-@@ -683,9 +688,8 @@ rio_timer (struct timer_list *t)
- 				}
- 				np->rx_skbuff[entry] = skb;
- 				np->rx_ring[entry].fraginfo =
--				    cpu_to_le64 (pci_map_single
--					 (np->pdev, skb->data, np->rx_buf_sz,
--					  PCI_DMA_FROMDEVICE));
-+				    cpu_to_le64 (dma_map_single(&np->pdev->dev, skb->data,
-+								np->rx_buf_sz, DMA_FROM_DEVICE));
- 			}
- 			np->rx_ring[entry].fraginfo |=
- 			    cpu_to_le64((u64)np->rx_buf_sz << 48);
-@@ -739,9 +743,8 @@ start_xmit (struct sk_buff *skb, struct net_device *dev)
- 		    ((u64)np->vlan << 32) |
- 		    ((u64)skb->priority << 45);
- 	}
--	txdesc->fraginfo = cpu_to_le64 (pci_map_single (np->pdev, skb->data,
--							skb->len,
--							PCI_DMA_TODEVICE));
-+	txdesc->fraginfo = cpu_to_le64 (dma_map_single(&np->pdev->dev, skb->data,
-+						       skb->len, DMA_TO_DEVICE));
- 	txdesc->fraginfo |= cpu_to_le64((u64)skb->len << 48);
+ 	return 0;
++
++err_kfree_skb:
++	dev_kfree_skb(np->rx_skbuff[i]);
++	np->rx_skbuff[i] = NULL;
++err_free_list:
++	free_list(dev);
++	return -ENOMEM;
+ }
  
- 	/* DL2K bug: DMA fails to get next descriptor ptr in 10Mbps mode
-@@ -838,9 +841,9 @@ rio_free_tx (struct net_device *dev, int irq)
- 		if (!(np->tx_ring[entry].status & cpu_to_le64(TFDDone)))
- 			break;
- 		skb = np->tx_skbuff[entry];
--		pci_unmap_single (np->pdev,
--				  desc_to_dma(&np->tx_ring[entry]),
--				  skb->len, PCI_DMA_TODEVICE);
-+		dma_unmap_single(&np->pdev->dev,
-+				 desc_to_dma(&np->tx_ring[entry]), skb->len,
-+				 DMA_TO_DEVICE);
- 		if (irq)
- 			dev_consume_skb_irq(skb);
- 		else
-@@ -965,25 +968,25 @@ receive_packet (struct net_device *dev)
- 
- 			/* Small skbuffs for short packets */
- 			if (pkt_len > copy_thresh) {
--				pci_unmap_single (np->pdev,
--						  desc_to_dma(desc),
--						  np->rx_buf_sz,
--						  PCI_DMA_FROMDEVICE);
-+				dma_unmap_single(&np->pdev->dev,
-+						 desc_to_dma(desc),
-+						 np->rx_buf_sz,
-+						 DMA_FROM_DEVICE);
- 				skb_put (skb = np->rx_skbuff[entry], pkt_len);
- 				np->rx_skbuff[entry] = NULL;
- 			} else if ((skb = netdev_alloc_skb_ip_align(dev, pkt_len))) {
--				pci_dma_sync_single_for_cpu(np->pdev,
--							    desc_to_dma(desc),
--							    np->rx_buf_sz,
--							    PCI_DMA_FROMDEVICE);
-+				dma_sync_single_for_cpu(&np->pdev->dev,
-+							desc_to_dma(desc),
-+							np->rx_buf_sz,
-+							DMA_FROM_DEVICE);
- 				skb_copy_to_linear_data (skb,
- 						  np->rx_skbuff[entry]->data,
- 						  pkt_len);
- 				skb_put (skb, pkt_len);
--				pci_dma_sync_single_for_device(np->pdev,
--							       desc_to_dma(desc),
--							       np->rx_buf_sz,
--							       PCI_DMA_FROMDEVICE);
-+				dma_sync_single_for_device(&np->pdev->dev,
-+							   desc_to_dma(desc),
-+							   np->rx_buf_sz,
-+							   DMA_FROM_DEVICE);
- 			}
- 			skb->protocol = eth_type_trans (skb, dev);
- #if 0
-@@ -1016,9 +1019,8 @@ receive_packet (struct net_device *dev)
- 			}
- 			np->rx_skbuff[entry] = skb;
- 			np->rx_ring[entry].fraginfo =
--			    cpu_to_le64 (pci_map_single
--					 (np->pdev, skb->data, np->rx_buf_sz,
--					  PCI_DMA_FROMDEVICE));
-+			    cpu_to_le64(dma_map_single(&np->pdev->dev, skb->data,
-+						       np->rx_buf_sz, DMA_FROM_DEVICE));
- 		}
- 		np->rx_ring[entry].fraginfo |=
- 		    cpu_to_le64((u64)np->rx_buf_sz << 48);
-@@ -1818,10 +1820,10 @@ rio_remove1 (struct pci_dev *pdev)
- 		struct netdev_private *np = netdev_priv(dev);
- 
- 		unregister_netdev (dev);
--		pci_free_consistent (pdev, RX_TOTAL_SIZE, np->rx_ring,
--				     np->rx_ring_dma);
--		pci_free_consistent (pdev, TX_TOTAL_SIZE, np->tx_ring,
--				     np->tx_ring_dma);
-+		dma_free_coherent(&pdev->dev, RX_TOTAL_SIZE, np->rx_ring,
-+				  np->rx_ring_dma);
-+		dma_free_coherent(&pdev->dev, TX_TOTAL_SIZE, np->tx_ring,
-+				  np->tx_ring_dma);
- #ifdef MEM_MAPPING
- 		pci_iounmap(pdev, np->ioaddr);
- #endif
+ static void rio_hw_init(struct net_device *dev)
 -- 
 2.51.0
 
