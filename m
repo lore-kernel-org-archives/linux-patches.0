@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD042BD033;
-	Mon, 27 Oct 2025 19:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0C32BD033;
+	Mon, 27 Oct 2025 19:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592922; cv=none; b=PSLkP7kxVsaGQmXN/r5VVVQXOcONT5KK788M+JFrETdpGcncHeDkTrZEERs12dKvak9a877xRxQbpGgMH9K/m8zKGagyBwRgx7IV0q4y20zqON63g90uz14ZCfEYTqdSzKH2p5I3eZqhEjVUL7CJJS/qjd84PI21VJ5Z12Qo4tY=
+	t=1761592924; cv=none; b=gZlye059G51Ec0jcQwoYLbPYD+gQ6sLWmnpU6NCMz68Hs4SgYsIWeasMRnS/dfjekexmTxxzzqDyRTppyS2kllZIKCIDKJ8cMAQZQHmRW6kkoIpJ2lMR8hS5tIELdxH0upVuyyjyiilksWlbWbnhnuOQWit4OTbS+19er2Kqc14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592922; c=relaxed/simple;
-	bh=0t27Mi8ggwc4q6IsxjpkZWXjUdnxw0lRL9MO/L6VcfE=;
+	s=arc-20240116; t=1761592924; c=relaxed/simple;
+	bh=WRaUeDH2Q5B8PoYyCJZarwqshhVR4u1cEHSzjdfZ7j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uxmu6gff9SNDCQGYpBHxMJQapUmISOp6r/llQvlV8vE37HgL5ojthTOUApMthu5Yw69NMx+YmXgDgWpBYd6ceYTTo4b56zWqUfZgEwN/tsAcZm07ErP5UILyevex9oaTJjqLA/D0IJFUJ6FTDl8fM7tuUftMEAEeHUanNeAp21E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRmBgdOF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L7BUNKPVqyppgNTe+6DyIQp9wxzdwnyxgf4zV0urx261I6jEnZWEQqtf+HmgSP0wlm2eTOs/FZjZlHfjOXOJoMmqVOjvbwSQEEi3d/8uoS93vxDLAUZjg4E2r0yp4EsOxTXCZ2LQ4429Olgu0uoglEXLc2Q1wrgbltGU0Czrr7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udGDTVka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRmBgdOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786DAC4CEF1;
-	Mon, 27 Oct 2025 19:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udGDTVka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17812C4CEF1;
+	Mon, 27 Oct 2025 19:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592921;
-	bh=0t27Mi8ggwc4q6IsxjpkZWXjUdnxw0lRL9MO/L6VcfE=;
+	s=korg; t=1761592924;
+	bh=WRaUeDH2Q5B8PoYyCJZarwqshhVR4u1cEHSzjdfZ7j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRmBgdOFEe5HSW0gUD9uhQMmPErAu6S11W2L0PzScsrS4rqZ5c5UTmspFDUqPJkqN
-	 nvCy46y9zrfmIXGmYh/7jWXVtu7/+zN6orlqv/KiHe4gMH+sMCE2QsjI8/tfC6GofN
-	 i3I6K8Vx070m1EvE0HE45qoqt6bD0Velw/HZyk2w=
+	b=udGDTVkar+oQT/G01Copscl8JAW9M5CMtfWW8aF5ZUbDFcLmHYdtGnkhtiIPRtQRr
+	 C58JDxuP8cN9ocvrVxAj29FnaPNUcO41bUHkEvONM2CJ4KskW2fF88X/LM4xa/yNuK
+	 G4B6DMYFVCBZNwPWdN3hNNa9GRXwaM8UlKm2ZrvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 062/117] net: usb: rtl8150: Fix frame padding
-Date: Mon, 27 Oct 2025 19:36:28 +0100
-Message-ID: <20251027183455.693928987@linuxfoundation.org>
+Subject: [PATCH 6.12 063/117] net: ravb: Enforce descriptor type ordering
+Date: Mon, 27 Oct 2025 19:36:29 +0100
+Message-ID: <20251027183455.718189226@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -45,60 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 75cea9860aa6b2350d90a8d78fed114d27c7eca2 upstream.
+commit 5370c31e84b0e0999c7b5ff949f4e104def35584 upstream.
 
-TX frames aren't padded and unknown memory is sent into the ether.
+Ensure the TX descriptor type fields are published in a safe order so the
+DMA engine never begins processing a descriptor chain before all descriptor
+fields are fully initialised.
 
-Theoretically, it isn't even guaranteed that the extra memory exists
-and can be sent out, which could cause further problems. In practice,
-I found that plenty of tailroom exists in the skb itself (in my test
-with ping at least) and skb_padto() easily succeeds, so use it here.
+For multi-descriptor transmits the driver writes DT_FEND into the last
+descriptor and DT_FSTART into the first. The DMA engine begins processing
+when it observes DT_FSTART. Move the dma_wmb() barrier so it executes
+immediately after DT_FEND and immediately before writing DT_FSTART
+(and before DT_FSINGLE in the single-descriptor case). This guarantees
+that all prior CPU writes to the descriptor memory are visible to the
+device before DT_FSTART is seen.
 
-In the event of -ENOMEM drop the frame like other drivers do.
+This avoids a situation where compiler/CPU reordering could publish
+DT_FSTART ahead of DT_FEND or other descriptor fields, allowing the DMA to
+start on a partially initialised chain and causing corrupted transmissions
+or TX timeouts. Such a failure was observed on RZ/G2L with an RT kernel as
+transmit queue timeouts and device resets.
 
-The use of one more padding byte instead of a USB zero-length packet
-is retained to avoid regression. I have a dodgy Etron xHCI controller
-which doesn't seem to support sending ZLPs at all.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2f45d1902acf ("ravb: minimize TX data copying")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251014203528.3f9783c4.michal.pecio@gmail.com
+Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://patch.msgid.link/20251017151830.171062-4-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rtl8150.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -685,9 +685,16 @@ static netdev_tx_t rtl8150_start_xmit(st
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	int count, res;
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2203,13 +2203,25 @@ static netdev_tx_t ravb_start_xmit(struc
  
-+	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
-+	count = max(skb->len, ETH_ZLEN);
-+	if (count % 64 == 0)
-+		count++;
-+	if (skb_padto(skb, count)) {
-+		netdev->stats.tx_dropped++;
-+		return NETDEV_TX_OK;
-+	}
+ 		skb_tx_timestamp(skb);
+ 	}
+-	/* Descriptor type must be set after all the above writes */
+-	dma_wmb();
 +
- 	netif_stop_queue(netdev);
--	count = (skb->len < 60) ? 60 : skb->len;
--	count = (count & 0x3f) ? count : count + 1;
- 	dev->tx_skb = skb;
- 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
- 		      skb->data, count, write_bulk_callback, dev);
+ 	if (num_tx_desc > 1) {
+ 		desc->die_dt = DT_FEND;
+ 		desc--;
++		/* When using multi-descriptors, DT_FEND needs to get written
++		 * before DT_FSTART, but the compiler may reorder the memory
++		 * writes in an attempt to optimize the code.
++		 * Use a dma_wmb() barrier to make sure DT_FEND and DT_FSTART
++		 * are written exactly in the order shown in the code.
++		 * This is particularly important for cases where the DMA engine
++		 * is already running when we are running this code. If the DMA
++		 * sees DT_FSTART without the corresponding DT_FEND it will enter
++		 * an error condition.
++		 */
++		dma_wmb();
+ 		desc->die_dt = DT_FSTART;
+ 	} else {
++		/* Descriptor type must be set after all the above writes */
++		dma_wmb();
+ 		desc->die_dt = DT_FSINGLE;
+ 	}
+ 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
 
 
