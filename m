@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FBD218EB1;
-	Mon, 27 Oct 2025 18:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB622D7806;
+	Mon, 27 Oct 2025 18:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590386; cv=none; b=AVoM8CO7AaDfbgt8caB2BzJ0w+991njcnDbk4mPmRhJ6TsFPBQ4AeLugMjkCDWo9Qefg2ZTAU7aODCG9xPBFOyoWwet13Go7KaBDtXM1E4poaG8JrTqlLRq3qAzLHSnmAWTI0DvZw/NqwlHVVGzMfughgkMRRihg60b+4NqLFNs=
+	t=1761590388; cv=none; b=kQYYYCY61JDT1jtogkd4t4hgVco6h3dmv0ruGCg8Xdy5g9qYDDbq6mpx27b3BOQK1IbY/eCtIVlyos61VQa1cDtU7kjDq0K1mbfQWcKpPK3j+L/rX+CYjk82ZPt+weuggaHS6d3AGfy4D4uD7l7vxTJkxwuYQiNV4dhEfiSYVYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590386; c=relaxed/simple;
-	bh=uYUBxInjEvs8zC5D+nm2QIO2quYjbJunDRpDRRtSY0Q=;
+	s=arc-20240116; t=1761590388; c=relaxed/simple;
+	bh=CDA1rKfSYCB48hFufW9nizl+UMU2DOuIZkvESUD3nto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWoO4YkD3PchiGEXYJzh38p7LSl8rS5CIGzKm7HpQmOf55fZZX/2HrOUs5m2cLRZwZI7tQwNx4DYfIFArd1LfQqT5I6tyLye2cKqgdrPPkl8i76eO9ib1/Aj+0c1YXAG5pA/R4G8xCooUeK6+KKKi2mPdor6dFcEs6U1EVhAa90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al3V/XvN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=omipyOSgIVAbaWH9mKVW5u/QoHJNBT+1iioDpWDxG4aExCItqpf/1j0eC30HZlrvgRGQQKIuP/5lkrzdps1nMI4g9IPk6bzsgoxFy2l6hrXbh3yts/8Vz7JfLZmhj13C2iJt5DwSxA9E3Mf9xbBmsH/XkkeNeuUO6prnL6sbeKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0S/O/e5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al3V/XvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF30C4CEF1;
-	Mon, 27 Oct 2025 18:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0S/O/e5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD2AC4CEF1;
+	Mon, 27 Oct 2025 18:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590386;
-	bh=uYUBxInjEvs8zC5D+nm2QIO2quYjbJunDRpDRRtSY0Q=;
+	s=korg; t=1761590388;
+	bh=CDA1rKfSYCB48hFufW9nizl+UMU2DOuIZkvESUD3nto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Al3V/XvNraDRDME9wYNvHk4n3gyCPhgJXQs0NjOLzKrnfMLgvpskRly2jBtnOahOV
-	 b8sp4GFKk1K1ckiquUlVsE+gpmty2M8KQT4SS9BHrTdKmhsYnDakYbGta3ia3lqnEi
-	 hzAemDg1DHZ7b7uGPXAx/PlZWb3XJCfs3pZiaiic=
+	b=0S/O/e5yfBNSaPb/qZMPE6+pDLRoMtEse1PQ87w5cflGZBzl6ilMJLFV6erGchKH7
+	 oi4kgN52dbbSJxLpcuTCFyHeKEMIEIlNmxP/wRaaYJ3z7HnivXD31SO7vfXRZOK0jM
+	 IfGU3fATjdvDbAPFnmeTumajxRoD42lUgiRKTJxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/224] block: use int to store blk_stack_limits() return value
-Date: Mon, 27 Oct 2025 19:32:51 +0100
-Message-ID: <20251027183509.679051278@linuxfoundation.org>
+Subject: [PATCH 5.4 026/224] pwm: tiehrpwm: Fix corner case in clock divisor calculation
+Date: Mon, 27 Oct 2025 19:32:52 +0100
+Message-ID: <20251027183509.706820008@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -47,52 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit b0b4518c992eb5f316c6e40ff186cbb7a5009518 ]
+[ Upstream commit 00f83f0e07e44e2f1fb94b223e77ab7b18ee2d7d ]
 
-Change the 'ret' variable in blk_stack_limits() from unsigned int to int,
-as it needs to store negative value -1.
+The function set_prescale_div() is responsible for calculating the clock
+divisor settings such that the input clock rate is divided down such that
+the required period length is at most 0x10000 clock ticks. If period_cycles
+is an integer multiple of 0x10000, the divisor period_cycles / 0x10000 is
+good enough. So round up in the calculation of the required divisor and
+compare it using >= instead of >.
 
-Storing the negative error codes in unsigned type, or performing equality
-comparisons (e.g., ret == -1), doesn't cause an issue at runtime [1] but
-can be confusing.  Additionally, assigning negative error codes to unsigned
-type may trigger a GCC warning when the -Wsign-conversion flag is enabled.
-
-No effect on runtime.
-
-Link: https://lore.kernel.org/all/x3wogjf6vgpkisdhg3abzrx7v7zktmdnfmqeih5kosszmagqfs@oh3qxrgzkikf/ #1
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Fixes: fe0b393f2c0a ("block: Correct handling of bottom device misaligment")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250902130930.68317-1-rongqianfeng@vivo.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 19891b20e7c2 ("pwm: pwm-tiehrpwm: PWM driver support for EHRPWM")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/85488616d7bfcd9c32717651d0be7e330e761b9c.1754927682.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-tiehrpwm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 13be635300a85..d4870441a38ac 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -505,7 +505,8 @@ static unsigned int blk_round_down_sectors(unsigned int sectors, unsigned int lb
- int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
- 		     sector_t start)
- {
--	unsigned int top, bottom, alignment, ret = 0;
-+	unsigned int top, bottom, alignment;
-+	int ret = 0;
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index 7b4c770ce9d67..7414daef81a35 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -167,7 +167,7 @@ static int set_prescale_div(unsigned long rqst_prescaler, u16 *prescale_div,
  
- 	t->max_sectors = min_not_zero(t->max_sectors, b->max_sectors);
- 	t->max_hw_sectors = min_not_zero(t->max_hw_sectors, b->max_hw_sectors);
+ 			*prescale_div = (1 << clkdiv) *
+ 					(hspclkdiv ? (hspclkdiv * 2) : 1);
+-			if (*prescale_div > rqst_prescaler) {
++			if (*prescale_div >= rqst_prescaler) {
+ 				*tb_clk_div = (clkdiv << TBCTL_CLKDIV_SHIFT) |
+ 					(hspclkdiv << TBCTL_HSPCLKDIV_SHIFT);
+ 				return 0;
+@@ -266,7 +266,7 @@ static int ehrpwm_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	pc->period_cycles[pwm->hwpwm] = period_cycles;
+ 
+ 	/* Configure clock prescaler to support Low frequency PWM wave */
+-	if (set_prescale_div(period_cycles/PERIOD_MAX, &ps_divval,
++	if (set_prescale_div(DIV_ROUND_UP(period_cycles, PERIOD_MAX), &ps_divval,
+ 			     &tb_divval)) {
+ 		dev_err(chip->dev, "Unsupported values\n");
+ 		return -EINVAL;
 -- 
 2.51.0
 
