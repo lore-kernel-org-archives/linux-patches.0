@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DB41F7586;
-	Mon, 27 Oct 2025 19:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD84202963;
+	Mon, 27 Oct 2025 19:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592865; cv=none; b=mSMgqKKtzrd6C7sfKcNnwytaTQfMScD1ei6VAyYvGGScYWCT6kRXrmPXGw57FFNGoJRWfKg0gXOekWwohxshdba0REJg6/f0Bm+is3QiqF0vMpRoeu1Fpo/9FZca81nzCvAIVPcOdXFk5xKaz/FNxJeUkiIItyQNw+PrAfTF2e4=
+	t=1761592865; cv=none; b=NvcZk8jU45aP+lj3azDzHPj/4yoM6rqyfMmablEFA3YbCWsEd+tMwbjB8awygya+trFUPMPwJWnc3WJ4fSH6b4imCFdKT8ja2diWZlZ9OmTuOnXDoU/95Zd+otkAyPcV8FcXP4CXgZTfReR7m/8EliOUBBR+VTVHWMtBphIo6jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761592865; c=relaxed/simple;
-	bh=djWDenqlJf3vVocsN7hqSnBISubWipTq9Tr3yFx+a8w=;
+	bh=v/JGEWkbkylg9YOCSaGx2tgozCZVY/aLQb7iUW5jcQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9yXcY/Qg7LToNIVih+XP2TuUjSpQEmfFQo1RoK0in9zd/RXKM9JaKq9Vd779ACGHobsoj6t9fc6iPCgpBcmFyNWNSpb/RukHndtbbYf1nZ3rUPdFnbNDcg2HgsNrx+xV18p/DjtRpfmOIDHRqDtARRBaVTgWzZHcxbZVGFhmRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tthyOqjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZUpjS+p4evMEoSZTuutdvrxEG/T0pZ2CUAvAaQEIn6QXOeejYianZJ7yLNCgGr2D1+HORB+uQReRxUpUvLs2qG5Ci6p54G73Ak26jfJpR7aPXF32noCehLJ8uAIIhcsbJV9oAV6tTIhx5vZ4mWm4ImRRUKtAPs0c013ThYLo7Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1ZfahUQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tthyOqjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EEBC4CEFD;
-	Mon, 27 Oct 2025 19:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1ZfahUQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88C6C4CEF1;
+	Mon, 27 Oct 2025 19:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592862;
-	bh=djWDenqlJf3vVocsN7hqSnBISubWipTq9Tr3yFx+a8w=;
+	s=korg; t=1761592865;
+	bh=v/JGEWkbkylg9YOCSaGx2tgozCZVY/aLQb7iUW5jcQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tthyOqjDfevxTLmUHUN68t6DEaxo3akTTspFnXyeRHG654PEZIJvbRK0tqv6fOSU9
-	 dD1Dz7f5R3fBNXjsCxZbxQVR3Hvkgt1Usy/pedwwf8LCiL/FWhdlifNVtkTyupKh1e
-	 5IVzkDz/o/OMmsESiKEGrLbEIrhTm+LHP6Hk70m8=
+	b=V1ZfahUQkwneasmIrg1IMrZzt/BFQyogvRCn5AXIzj0mv8Xdsp74lLb6vlO4D/mus
+	 OIlS7ZxCGIhm3DLuUHIjkgqzPQy8zWnvSLJYE+KRd3AsoG9wLW9XpLvRLsaz7rmvsP
+	 JTPGv0QKcoMGQPSagBBrbkUABk7SYDCa2t5BfjbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Simakov <bigalex934@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/117] sctp: avoid NULL dereference when chunk data buffer is missing
-Date: Mon, 27 Oct 2025 19:36:07 +0100
-Message-ID: <20251027183455.093665877@linuxfoundation.org>
+Subject: [PATCH 6.12 042/117] net: phy: micrel: always set shared->phydev for LAN8814
+Date: Mon, 27 Oct 2025 19:36:08 +0100
+Message-ID: <20251027183455.125403774@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,52 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit 441f0647f7673e0e64d4910ef61a5fb8f16bfb82 ]
+[ Upstream commit 399d10934740ae8cdaa4e3245f7c5f6c332da844 ]
 
-chunk->skb pointer is dereferenced in the if-block where it's supposed
-to be NULL only.
+Currently, during the LAN8814 PTP probe shared->phydev is only set if PTP
+clock gets actually set, otherwise the function will return before setting
+it.
 
-chunk->skb can only be NULL if chunk->head_skb is not. Check for frag_list
-instead and do it just before replacing chunk->skb. We're sure that
-otherwise chunk->skb is non-NULL because of outer if() condition.
+This is an issue as shared->phydev is unconditionally being used when IRQ
+is being handled, especially in lan8814_gpio_process_cap and since it was
+not set it will cause a NULL pointer exception and crash the kernel.
 
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/20251021130034.6333-1-bigalex934@gmail.com
+So, simply always set shared->phydev to avoid the NULL pointer exception.
+
+Fixes: b3f1a08fcf0d ("net: phy: micrel: Add support for PTP_PF_EXTTS for lan8814")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Tested-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251021132034.983936-1-robert.marko@sartura.hr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/inqueue.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/phy/micrel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
-index 5c16521818058..f5a7d5a387555 100644
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -169,13 +169,14 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
- 				chunk->head_skb = chunk->skb;
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index 92e9eb4146d9b..f60cf630bdb3d 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -3870,6 +3870,8 @@ static int lan8814_ptp_probe_once(struct phy_device *phydev)
+ {
+ 	struct lan8814_shared_priv *shared = phydev->shared->priv;
  
- 			/* skbs with "cover letter" */
--			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len)
-+			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len) {
-+				if (WARN_ON(!skb_shinfo(chunk->skb)->frag_list)) {
-+					__SCTP_INC_STATS(dev_net(chunk->skb->dev),
-+							 SCTP_MIB_IN_PKT_DISCARDS);
-+					sctp_chunk_free(chunk);
-+					goto next_chunk;
-+				}
- 				chunk->skb = skb_shinfo(chunk->skb)->frag_list;
++	shared->phydev = phydev;
++
+ 	/* Initialise shared lock for clock*/
+ 	mutex_init(&shared->shared_lock);
+ 
+@@ -3921,8 +3923,6 @@ static int lan8814_ptp_probe_once(struct phy_device *phydev)
+ 
+ 	phydev_dbg(phydev, "successfully registered ptp clock\n");
+ 
+-	shared->phydev = phydev;
 -
--			if (WARN_ON(!chunk->skb)) {
--				__SCTP_INC_STATS(dev_net(chunk->skb->dev), SCTP_MIB_IN_PKT_DISCARDS);
--				sctp_chunk_free(chunk);
--				goto next_chunk;
- 			}
- 		}
- 
+ 	/* The EP.4 is shared between all the PHYs in the package and also it
+ 	 * can be accessed by any of the PHYs
+ 	 */
 -- 
 2.51.0
 
