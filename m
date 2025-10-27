@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1851274FD0;
-	Mon, 27 Oct 2025 19:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE752C15BB;
+	Mon, 27 Oct 2025 19:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593143; cv=none; b=GM4rblzCmQCdWf+N04gVsxnJF1KkplD4spszdLUkCQguFc4/cbmY8KzcgoAdm8yuSaUYCpCmJbmbPd6lZA+hIyFBPzEHrV/qYvKg54cPq8qQtz/3AZte63mcH5wzISF2Qvdl5zhq/9zpL0ogl090WmP5ApWLIdRZceawpKxqOOU=
+	t=1761593146; cv=none; b=mop+jUOOEcYyPJC8/4X16aHp59EBGcq1uIhHx8hNzWS0S+cLaUL/HEZRByPdgx5yUrdxflTUpEekqtms+QSEgC5qDxPuBqL/QJ7ej+g0V+nX3nYt8hZxt6V/S2I/fy8q7+KhAjKt0fFdcaZtDEus6CaFJ42iLRMnXDMpkJlS6uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593143; c=relaxed/simple;
-	bh=pFtvzygCfMOCdUq7W5a23sIkJG7GbZfx7HvOq/5w6J8=;
+	s=arc-20240116; t=1761593146; c=relaxed/simple;
+	bh=sxr9ysepk7HQVkTcN0/Y3NPqXEWAf3CrsviekG3SBjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oo6drF7WrPLZZQ5MhLSAzw6voaFhYgo0VBqYeTegZCJW3TrQIWg16UhWdeJ0vebziU2uJihRxcvUWZ3Wy9iS/vb7tfoaiaeCrpmk7dixq07/Sis50J1Qya+b1qoGnU/RIuM/x2Eu2c4NGeN5CPEr8d7GHMCiYJQi0iTQZZ+qiBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13JCKVXk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkmhOl3dvcBVP0N4U4EyilotRDYy5cLiou3MrLsKa+DokIBGOnMF0jvimOHBffdhTu/LpNXXHDBXUptsw2G5L7APcx4ceX4MGkm/J/FRvejVP3ifvOsB2H7yrUj8wMx9yPH+TXl1MTH+k732EMmUqxAWCanTmfDb/vWuqP7u4VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPel1tEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13JCKVXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33085C4CEF1;
-	Mon, 27 Oct 2025 19:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPel1tEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72E1C4CEF1;
+	Mon, 27 Oct 2025 19:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593143;
-	bh=pFtvzygCfMOCdUq7W5a23sIkJG7GbZfx7HvOq/5w6J8=;
+	s=korg; t=1761593146;
+	bh=sxr9ysepk7HQVkTcN0/Y3NPqXEWAf3CrsviekG3SBjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13JCKVXkWxCVNDrHLLakrCGt9iBgZHLYCL31Gx6iA7cD6hMQwQ7pKCyExsvGvt01v
-	 HbiPou4vG3iELwUbbTL7XS/Zs9dVotcD0w2RKluanJZyJP/pbKsRrK4VpAeKGhOquU
-	 GOY/NuCn2ggBoe3jz57Gms/LR/uuOipK0YK1lk+g=
+	b=ZPel1tEVWvf5/oiL/icwquS6cq7XY6l5ufYSzQTGoEYkNx8QAcFlDiTjl1HXHKuDk
+	 rK/m+Osv3mg3rpstAaVI88I2VqqpeTFyL7JW44SHhX3DKTu+NgKhDdbkzLsIM/B0OZ
+	 7ixT5V2kp2oum4546RaauvxYOdv2IJB9H2Z8H/JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 003/184] expfs: Fix exportfs_can_encode_fh() for EXPORT_FH_FID
-Date: Mon, 27 Oct 2025 19:34:45 +0100
-Message-ID: <20251027183515.035091721@linuxfoundation.org>
+Subject: [PATCH 6.17 004/184] cgroup/misc: fix misc_res_type kernel-doc warning
+Date: Mon, 27 Oct 2025 19:34:46 +0100
+Message-ID: <20251027183515.059965797@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 48b77733d0dbaf8cd0a122712072f92b2d95d894 ]
+[ Upstream commit 0fbbcab7f9082cdc233da5e5e353f69830f11956 ]
 
-After commit 5402c4d4d200 ("exportfs: require ->fh_to_parent() to encode
-connectable file handles") we will fail to create non-decodable file
-handles for filesystems without export operations. Fix it.
+Format the kernel-doc for SCALE_HW_CALIB_INVALID correctly to
+avoid a kernel-doc warning:
 
-Fixes: 5402c4d4d200 ("exportfs: require ->fh_to_parent() to encode connectable file handles")
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Warning: include/linux/misc_cgroup.h:26 Enum value
+ 'MISC_CG_RES_TDX' not described in enum 'misc_res_type'
+
+Fixes: 7c035bea9407 ("KVM: TDX: Register TDX host key IDs to cgroup misc controller")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/exportfs.h | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/misc_cgroup.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
-index cfb0dd1ea49c7..b80286a73d0a9 100644
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -314,9 +314,6 @@ static inline bool exportfs_can_decode_fh(const struct export_operations *nop)
- static inline bool exportfs_can_encode_fh(const struct export_operations *nop,
- 					  int fh_flags)
- {
--	if (!nop)
--		return false;
--
- 	/*
- 	 * If a non-decodeable file handle was requested, we only need to make
- 	 * sure that filesystem did not opt-out of encoding fid.
-@@ -324,6 +321,10 @@ static inline bool exportfs_can_encode_fh(const struct export_operations *nop,
- 	if (fh_flags & EXPORT_FH_FID)
- 		return exportfs_can_encode_fid(nop);
- 
-+	/* Normal file handles cannot be created without export ops */
-+	if (!nop)
-+		return false;
-+
- 	/*
- 	 * If a connectable file handle was requested, we need to make sure that
- 	 * filesystem can also decode connected file handles.
+diff --git a/include/linux/misc_cgroup.h b/include/linux/misc_cgroup.h
+index 71cf5bfc6349d..0cb36a3ffc479 100644
+--- a/include/linux/misc_cgroup.h
++++ b/include/linux/misc_cgroup.h
+@@ -19,7 +19,7 @@ enum misc_res_type {
+ 	MISC_CG_RES_SEV_ES,
+ #endif
+ #ifdef CONFIG_INTEL_TDX_HOST
+-	/* Intel TDX HKIDs resource */
++	/** @MISC_CG_RES_TDX: Intel TDX HKIDs resource */
+ 	MISC_CG_RES_TDX,
+ #endif
+ 	/** @MISC_CG_RES_TYPES: count of enum misc_res_type constants */
 -- 
 2.51.0
 
