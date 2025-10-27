@@ -1,94 +1,133 @@
-Received: from smtp-out3.simply.com (smtp-out3.simply.com [94.231.106.210])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADD7221271;
-	Mon, 27 Oct 2025 08:15:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.231.106.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552FE2E7F39
+	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 09:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761552920; cv=none; b=aYA7DdlCdcONb9AxFAlybU609yo8v8+RE/AiyuN1gqnC3N1nxfyyq20dXEXU9MWC2b5L5mjQmLMMKemr3z4RkVwIGNd3pm8WNVVeHOE1kjE37Ar4vedFiJH51oVhEOmJaBDkHWePXMAW42LJ1biX3lA13hR/Hm7FgOGO/K7g/UM=
+	t=1761557039; cv=none; b=t9YNkE/kLXlaEpAX3tGd41tAPrJm9RbQvYWBS31LhMM7TUzAPKsOcOdXqyJER8/9vcNCtFVG/EVqXnOlIeNsKPwaQvzp35CtXIU030pjvgg/dRq2+MXcvPGyokY/WKAr1rtxSZ7bzcc0BNfr1imJmjzV6nGdjUECzwbwleQtCfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761552920; c=relaxed/simple;
-	bh=CzMWNYBpkVxjntctMxpyDnNqn3kObLOGDmZpfh4lBHc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MIrzKTYhPqpN3POCJg/wff4fqp/vYKOC5LLlzmne/+BH4OkGwZ4WiQoNjaB2eTGoWt74V010BaKe3oFlV1YVsSQyzXqrH3+cDa60TJWFr7u8nQlFVfqvyZ8E3+AVcY2pn6IIPg9XByCRs1754Eji09gFjadlHfdHhdNT/g3lhrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com; spf=pass smtp.mailfrom=gaisler.com; dkim=fail (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b=U7oPHaKg reason="key not found in DNS"; arc=none smtp.client-ip=94.231.106.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gaisler.com
+	s=arc-20240116; t=1761557039; c=relaxed/simple;
+	bh=ild+6kjhBiOIxvMM6KYGSeustSa2a73dmzZXVJgn+wI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nRXL1qqlS5AABwgN3g7Nq4N100mFD2UJ21QwzE2mjI/uRsEKh80TLjqRE4ZkY8iRwiNikZ3TQ5X3OCLEt8eJyysPz1pj31zHvlDE7eBSp3lvqBxhXtakIeRYTnDOzSD6bVqd58wxZp37QeXUosqg/swvWNzgjFVRFecUapYeWpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=sTKppKSK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xsoWpGpJ; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b="U7oPHaKg"
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.simply.com (Simply.com) with ESMTP id 4cw5kk1q7vz1DDSX;
-	Mon, 27 Oct 2025 09:09:18 +0100 (CET)
-Received: from [10.10.15.20] (h-98-128-223-123.NA.cust.bahnhof.se [98.128.223.123])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by smtp.simply.com (Simply.com) with ESMTPSA id 4cw5kj4mWhz1DDSD;
-	Mon, 27 Oct 2025 09:09:17 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaisler.com;
-	s=simplycom2; t=1761552558;
-	bh=ZLV2TZQ8o0UIo4kQoy81VsD/d+q0Y3BumdWGaXuUWFs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=U7oPHaKgL8ya1ryi1sQnGMtxdWqzLdImAv2+viSOEJzM9A6NZo5rYPOs3wkx8MITz
-	 VdI2cbRdHtPmbp8gd3Sp5i0ncY5AiNcCFhpq5hC6WoaGCPK+niW2y//67xXSzIobOB
-	 38t2HiXUfA4px479zvBd5RxN5gdPIqRc5rZ/bnKedw4p+y1ok8c7eA/ZFpE0AjnSVO
-	 75CWmLYcHCsJzCOY7RvpvQlAFRNuZl0X7SBpWRPTt4mhIt4uqstrwDLt+pRZYE70fS
-	 MVxuQZ3F9CaSnvhpYDbxUvnXYYJZviZ8PL7bo9M0p3Dc5PLgLDArCbqYW8RIs7eSoJ
-	 H9HnEuMPxDzxw==
-Message-ID: <62e049c9-cb92-4eaa-b069-e96ddafaad03@gaisler.com>
-Date: Mon, 27 Oct 2025 09:09:17 +0100
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="sTKppKSK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xsoWpGpJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 36B9B7A0254;
+	Mon, 27 Oct 2025 05:23:56 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Mon, 27 Oct 2025 05:23:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761557036;
+	 x=1761643436; bh=FsQSIKQ8ko6FOAPs4f5QODq86FBvj6wCYn0uamacVKA=; b=
+	sTKppKSKLn0IO5+CaKn4IGNnsADWQIa28VkBFIYIzzxkdIZeXaU8jrKQfWprMidd
+	H/Y3o+CzPDAupFsyCiktcU3fIU4MVjRHQrpTmL0WAB9qtx44VYhQsP95nwW182uN
+	znRQ+MY72wceEfQ/9XELTJms9F4JOY17LP/JpUrjWS9bJ2uoNsq4fDOX7fVA+wXa
+	xkN1NjlAXIy4xi8Trg7X+LAQ7+ly1ali9ajdo7UgBVCAlKN6K5NbN7ASP0Dld2yw
+	GEHQK0/k3928zegV7qlEgXZYTvYRVhuN9pWh2zrbwmoj+RHeGkMwyzRwY760PF0W
+	8K9lBlkZUv1C1IrWDFczUw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761557036; x=
+	1761643436; bh=FsQSIKQ8ko6FOAPs4f5QODq86FBvj6wCYn0uamacVKA=; b=x
+	soWpGpJTRLVsrkv21AmNkh37hc3Gkt+SFj/OGCyqYT2meN4r9BB1JhL2Nu1wPaWp
+	96PZ4tDDu/hMAyy4Zk/cqk/dyKy/BwCGVZdpiPhMqgxyppxxCatJ2Zcg7s5V3y2l
+	2N76VhGKw932dkosezxsM+G9BBlDoYVhudgk1YIaU3F2h8yhSgAKdvH3cuaf4xIB
+	aVltC0LBIWLfF59D0Vso6jxlJy/jz9g43M+ydmb7QVMFPmcg3OjpD1Kjop7FSroI
+	tlAfTGj/Q9lK96e/xx44UNA9mL0TlPLAC3aq4AGoLWwtOQN+JA7ImfmL+Lh/1wHs
+	Bl8XJv6YrOUkzP3wuIijg==
+X-ME-Sender: <xms:Kzr_aEPt9FilXlyftrVNXxNR6FxtsCWQaNCh8y9EQ56flfMLKVWJOA>
+    <xme:Kzr_aFwLxpzAvxBYb6WKjxd2fqRQNwSeMKXhP6MyNGsf2K1Td2jTA3Zp0MtJzQxDM
+    bBWR6bTZPR9I3JbHZvKMNhKbZ7efey3NrD6PEG99S1X2V_HGyICRBDt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhepvdfhvdekueduveffffetgfdvveefvdelhedvvdegjedvfeehtdeggeevheefleej
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepuddupdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopegsrhhglhessghguggvvhdrphhlpdhrtghpthhtoheprhhosggvrh
+    htrdhjrghriihmihhksehfrhgvvgdrfhhrpdhrtghpthhtohephhgrohhjihgrnhdriihh
+    uhgrnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepshgrshhhrghlsehkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehlihhnuhhsrdifrghllhgvihhjsehlihhnrghrohdrohhrghdprhgtphhtthhope
+    hlihhnuhigqdgrrhhmqdhkvghrnhgvlheslhhishhtshdrihhnfhhrrgguvggrugdrohhr
+    ghdprhgtphhtthhopehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtg
+    hpthhtoheplhhinhhugidqghhpihhosehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Kzr_aO2_DwtZf0NbBypm1eXjMtWMXNRtkKwEtaemqID6nIP32m5I_A>
+    <xmx:Kzr_aGk8KpcopPSGBBSZfoXvcCPoS3rwsJ4CiiM0jYE1fsLT0IHk3A>
+    <xmx:Kzr_aF_gDDk5UoVIoB95HTHQuKaJmoz84nAbeFEPc1orxhUBxWiplg>
+    <xmx:Kzr_aELwPd8QwMcMwSfnutWaBW_QPuwBm9qRSLLhxLC2Dw_Fc9PhZA>
+    <xmx:LDr_aOImeAidaajgoohjaFRY1UEvXhG8uhDUT_EsV14luDd_je7w6pBs>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4C01E700065; Mon, 27 Oct 2025 05:23:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.17-5.4] sparc: Replace __ASSEMBLY__ with
- __ASSEMBLER__ in uapi headers
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
+X-ThreadId: ARRIUa0zdPoF
+Date: Mon, 27 Oct 2025 10:23:35 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Sasha Levin" <sashal@kernel.org>, patches@lists.linux.dev,
  stable@vger.kernel.org
-Cc: Thomas Huth <thuth@redhat.com>, "David S. Miller" <davem@davemloft.net>,
- sparclinux@vger.kernel.org, nathan@kernel.org, alexandre.f.demers@gmail.com,
- alexander.deucher@amd.com, llvm@lists.linux.dev
+Cc: "Mark Brown" <broonie@kernel.org>, "Daniel Mack" <daniel@zonque.org>,
+ "Haojian Zhuang" <haojian.zhuang@gmail.com>,
+ "Robert Jarzmik" <robert.jarzmik@free.fr>,
+ "Linus Walleij" <linus.walleij@linaro.org>,
+ "Bartosz Golaszewski" <brgl@bgdev.pl>, linux-arm-kernel@lists.infradead.org,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Message-Id: <eeb6d1ab-e8ec-48dd-b8f0-0de3eaf545a6@app.fastmail.com>
+In-Reply-To: <20251025160905.3857885-71-sashal@kernel.org>
 References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-242-sashal@kernel.org>
-Content-Language: en-US
-From: Andreas Larsson <andreas@gaisler.com>
-In-Reply-To: <20251025160905.3857885-242-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20251025160905.3857885-71-sashal@kernel.org>
+Subject: Re: [PATCH AUTOSEL 6.17-5.4] ASoC: pxa: add GPIOLIB_LEGACY dependency
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2025-10-25 17:57, Sasha Levin wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> [ Upstream commit d6fb6511de74bd0d4cb4cabddae9b31d533af1c1 ]
-> 
-> __ASSEMBLY__ is only defined by the Makefile of the kernel, so
-> this is not really useful for uapi headers (unless the userspace
-> Makefile defines it, too). Let's switch to __ASSEMBLER__ which
-> gets set automatically by the compiler when compiling assembly
-> code.
-> 
-> This is a completely mechanical patch (done with a simple "sed -i"
-> statement).
-> 
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Andreas Larsson <andreas@gaisler.com>
-> Cc: sparclinux@vger.kernel.org
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-> Signed-off-by: Andreas Larsson <andreas@gaisler.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
+On Sat, Oct 25, 2025, at 17:55, Sasha Levin wrote:
+>
+> LLM Generated explanations, may be completely bogus:
+>
+> YES
 
-The upstream commit dc356bf3c173 ("sparc: Drop the "-ansi" from the asflags") is
-a prerequisite to d6fb6511de74 ("sparc: Replace __ASSEMBLY__ with __ASSEMBLER__
-in uapi headers") that here is planned to be picked up to stable branches. If
-this prerequisite is not picked up first the kernel will not compile [1].
+It is indeed bogus.
 
-[1] https://lore.kernel.org/all/810a8ec4-e416-42b6-97bf-8a56f41deea1@redhat.com/
+> Rationale
+> - Fixes a real build failure during COMPILE_TEST when legacy GPIO APIs
+>   are disabled. The failure stems from `gpio_request_one()` in the PXA
+>   AC97 support code: `sound/arm/pxa2xx-ac97-lib.c:374` uses legacy GPIO
+>   (gpio_request_one/`GPIOF_OUT_INIT_HIGH`). When `GPIOLIB_LEGACY` is n=
+ot
+>   enabled, these legacy interfaces are not available, leading to the
+>   implicit declaration error cited in the commit message.
 
-Cheers,
-Andreas
+The build error would only happen after we make GPIOLIB_LEGACY optional,
+but in 6.17 it is still always-enabled.
 
+>
+> Notes on applicability
+> - This backport is most relevant to stable series that already have the
+>   `GPIOLIB_LEGACY` split. Older stable trees that predate
+>   `GPIOLIB_LEGACY` either won=E2=80=99t need this change (no build bre=
+ak) or may
+>   require adjusting the dependency accordingly.
+
+On older kernels, this would actively break configurations that need
+the symbols.
+
+        Arnd
