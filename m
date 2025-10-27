@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC732328B44;
-	Mon, 27 Oct 2025 19:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D34431B83D;
+	Mon, 27 Oct 2025 19:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592042; cv=none; b=nWEmul+bPTbJf4OC28RxMWW7ym/ycbKTrgbuIY4N7OCr79Ak9ElQ4IO24i0bMbozqA9hXartFxKmHZCh1+sRaB1O1JupA21RmD8YUN1SPB2LV3OEsZMwL97bTYqif34xL+njv/lpHcS3V5Kqv+GzULdDogC54Gq9mXys3BhIbDE=
+	t=1761592044; cv=none; b=axBC8dD/pjNzUx4UhxU2Jmfs80/3QFMFMn7O2VMyyBXDLmLTsBkHTlSwDicp/Fm+kqHgQBViLHc7dFb0+WthAXJnEHClOuWgqDtGGRe/A8xu6GY6/Vk6UkbGIxnyrYhNxgYOgOpnKmqqsG8F6Jq+hDPA5cUdIEHHMTDW35eCAMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592042; c=relaxed/simple;
-	bh=mmgEdNaOwJ9cQ4O78nuUdEcN9cS+DEsPCLqfQbMm9Y0=;
+	s=arc-20240116; t=1761592044; c=relaxed/simple;
+	bh=hQScORWQNz4mGTpEnS5/mlCCQXr7KMWh4hSdxRGAFZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cC94SK3NF+Sc4P+9YXlos8SUdhLZ96h2iz9h6c0fEqYlnG2nnQx2O/HxbwNi3HwAn6sft9bkwdDxiK/wo/uGE/3SoKoE9RG1Yd/ejBl4mWHlLms5i82rUB1eM+8mvxsBhrmH0IcOAQuLJN3IUS5wh4zA7Z8UkMQhKkywQBrJJHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCJEz8nI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nxw3SHVRK49sKBZ7FpjvIHMgGcMyG6OdhcPzFpdX8DLxnHWtM9DaI2cIopnDfwdOn+4tiV7JB8rZ4i0b5/XGsU1QS0M2L5xcwhAQ7kuE75sTHIA+CFxGu2zxp3ebcGZ1bbtjXJDqOdZqwH0dy7BSeD1Q8CvwdW8Tla/5NBexaps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZcBp9kx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCJEz8nI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF8EC4CEF1;
-	Mon, 27 Oct 2025 19:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZcBp9kx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E45C4CEF1;
+	Mon, 27 Oct 2025 19:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592041;
-	bh=mmgEdNaOwJ9cQ4O78nuUdEcN9cS+DEsPCLqfQbMm9Y0=;
+	s=korg; t=1761592044;
+	bh=hQScORWQNz4mGTpEnS5/mlCCQXr7KMWh4hSdxRGAFZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCJEz8nIpNHjKc3ukk3bNtqepk6+DAWPUhnD2bBWuCBCHk2rhLX45z3gS9FEZz4Jy
-	 1CAP5NJHW2NpEz2qUrud11Qqeo0VkhVR3T95ERrdVzvEMJeqjLfhLqQcCug2ZLiqzQ
-	 AFCsUwrkhExlKj0ssQB8ckUBK6VauuDsT3/dcFlk=
+	b=CZcBp9kxno/Y/dwxeXOn4acX0tiRVgT9WHOVYPQxtWxsGmpR8fV4FswYQWwIQDlWX
+	 XmLd+KDlc87cM/r9JwLmNUSNEsECAj7k/QgbGTwQtVeQQ3ddnIWmDPZ7my79bUHGqV
+	 B4bQo7SbfeJFJKcCajfgIV1nVo7rPyGFqZXHgpsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/123] NFSD: Fix last write offset handling in layoutcommit
-Date: Mon, 27 Oct 2025 19:36:14 +0100
-Message-ID: <20251027183448.903900980@linuxfoundation.org>
+Subject: [PATCH 5.15 095/123] iio: imu: inv_icm42600: use = { } instead of memset()
+Date: Mon, 27 Oct 2025 19:36:15 +0100
+Message-ID: <20251027183448.930300746@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -48,117 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit d68886bae76a4b9b3484d23e5b7df086f940fa38 ]
+[ Upstream commit 352112e2d9aab6a156c2803ae14eb89a9fd93b7d ]
 
-The data type of loca_last_write_offset is newoffset4 and is switched
-on a boolean value, no_newoffset, that indicates if a previous write
-occurred or not. If no_newoffset is FALSE, an offset is not given.
-This means that client does not try to update the file size. Thus,
-server should not try to calculate new file size and check if it fits
-into the segment range. See RFC 8881, section 12.5.4.2.
+Use { } instead of memset() to zero-initialize stack memory to simplify
+the code.
 
-Sometimes the current incorrect logic may cause clients to hang when
-trying to sync an inode. If layoutcommit fails, the client marks the
-inode as dirty again.
-
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
-Cc: stable@vger.kernel.org
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ adapted for direct inode->i_mtime access and 2-parameter proc_layoutcommit callback ]
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250611-iio-zero-init-stack-with-instead-of-memset-v1-16-ebb2d0a24302@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 466f7a2fef2a ("iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    5 ++---
- fs/nfsd/nfs4proc.c    |   30 +++++++++++++++---------------
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    5 ++---
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -121,7 +121,6 @@ static __be32
- nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
- 		struct iomap *iomaps, int nr_iomaps)
- {
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct iattr iattr = { .ia_valid = 0 };
- 	int error;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -749,7 +749,8 @@ int inv_icm42600_accel_parse_fifo(struct
+ 	const int8_t *temp;
+ 	unsigned int odr;
+ 	int64_t ts_val;
+-	struct inv_icm42600_accel_buffer buffer;
++	/* buffer is copied to userspace, zeroing it to avoid any data leak */
++	struct inv_icm42600_accel_buffer buffer = { };
  
-@@ -131,9 +130,9 @@ nfsd4_block_commit_blocks(struct inode *
- 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
- 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
+ 	/* parse all fifo packets */
+ 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
+@@ -768,8 +769,6 @@ int inv_icm42600_accel_parse_fifo(struct
+ 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
+ 							 st->fifo.nb.total, no);
  
--	if (new_size > i_size_read(inode)) {
-+	if (lcp->lc_size_chg) {
- 		iattr.ia_valid |= ATTR_SIZE;
--		iattr.ia_size = new_size;
-+		iattr.ia_size = lcp->lc_newsize;
- 	}
+-		/* buffer is copied to userspace, zeroing it to avoid any data leak */
+-		memset(&buffer, 0, sizeof(buffer));
+ 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -761,7 +761,8 @@ int inv_icm42600_gyro_parse_fifo(struct
+ 	const int8_t *temp;
+ 	unsigned int odr;
+ 	int64_t ts_val;
+-	struct inv_icm42600_gyro_buffer buffer;
++	/* buffer is copied to userspace, zeroing it to avoid any data leak */
++	struct inv_icm42600_gyro_buffer buffer = { };
  
- 	error = inode->i_sb->s_export_op->commit_blocks(inode, iomaps,
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2262,7 +2262,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	const struct nfsd4_layout_seg *seg = &lcp->lc_seg;
- 	struct svc_fh *current_fh = &cstate->current_fh;
- 	const struct nfsd4_layout_ops *ops;
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct inode *inode;
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
-@@ -2277,13 +2276,21 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 		goto out;
- 	inode = d_inode(current_fh->fh_dentry);
+ 	/* parse all fifo packets */
+ 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
+@@ -780,8 +781,6 @@ int inv_icm42600_gyro_parse_fifo(struct
+ 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
+ 							 st->fifo.nb.total, no);
  
--	nfserr = nfserr_inval;
--	if (new_size <= seg->offset)
--		goto out;
--	if (new_size > seg->offset + seg->length)
--		goto out;
--	if (!lcp->lc_newoffset && new_size > i_size_read(inode))
--		goto out;
-+	lcp->lc_size_chg = false;
-+	if (lcp->lc_newoffset) {
-+		loff_t new_size = lcp->lc_last_wr + 1;
-+
-+		nfserr = nfserr_inval;
-+		if (new_size <= seg->offset)
-+			goto out;
-+		if (new_size > seg->offset + seg->length)
-+			goto out;
-+
-+		if (new_size > i_size_read(inode)) {
-+			lcp->lc_size_chg = true;
-+			lcp->lc_newsize = new_size;
-+		}
-+	}
- 
- 	nfserr = nfsd4_preprocess_layout_stateid(rqstp, cstate, &lcp->lc_sid,
- 						false, lcp->lc_layout_type,
-@@ -2299,13 +2306,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	/* LAYOUTCOMMIT does not require any serialization */
- 	mutex_unlock(&ls->ls_mutex);
- 
--	if (new_size > i_size_read(inode)) {
--		lcp->lc_size_chg = 1;
--		lcp->lc_newsize = new_size;
--	} else {
--		lcp->lc_size_chg = 0;
--	}
--
- 	nfserr = ops->proc_layoutcommit(inode, lcp);
- 	nfs4_put_stid(&ls->ls_stid);
- out:
+-		/* buffer is copied to userspace, zeroing it to avoid any data leak */
+-		memset(&buffer, 0, sizeof(buffer));
+ 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
 
 
