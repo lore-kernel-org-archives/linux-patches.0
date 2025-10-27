@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC7E328B7D;
-	Mon, 27 Oct 2025 18:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490FB31B81D;
+	Mon, 27 Oct 2025 18:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591078; cv=none; b=RnJat5k5Kg0Tq4nfz1RkVTQcdsVey1dWai93m69UrIiy7WixbAiqkXuXazDUOGogXU4kKhBcAKu+mqEjoCcaN4zDdGxxoumIPRZ0CKVggISEqywLXPYLo9TIzIu21V1SNJoiBDp365dPv5+dc/kPRGDHpiZ5iPIrXAK0og6N9VQ=
+	t=1761591081; cv=none; b=YZ3Rc8+lDrJiieyBrIJcoUEM58Z4UGXSy9fqO3rxecWK1XT4kKk9zkaES+oTwsknc8PZKpXcgKff/gBL/4rOxo3tSZ3SLBUal4Dr0fa9gFoxOKDjUC3zYsAGe6d1OHWlm2Y+yihhJJyCCnmzFBXsVJXM37NikgZRnZRmq84HnCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591078; c=relaxed/simple;
-	bh=sUrpIn9fvuezH/q3YRZTbNWd+GqqNQeEalSr/MgUOEo=;
+	s=arc-20240116; t=1761591081; c=relaxed/simple;
+	bh=hxC735n89VP89gk7LwbmpCVLzQl6tsb8X+K2ZmlX1Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rm0gLfv3OPRXgD72gQ7agcynFkMNBaJzw+1zE9U4fYZ/KGBsXokRQTiOLok7eQWRwBvjFvAvupVLXrKEglwZBkdRkWhGfjjl3j13yQfTUTFzsH6QPGyKQ6RGm6sLLFYH9JMolNZQt7mfFgGRItf9DNJekteB3K34FUGBG2E4loQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0G8CVoE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdiAG4YFGfPG4msdhviPp0Z6hanM3Wyvk8bh2o+X2TUHSxhXN3m4lGqhtsPZ+PnlQ6jcMDBjpt82kmDPjNrTGHDwqAf8Y2eRmt1spxiF33ijgaTLjE333WpPZ8TnJb0Cw8NqVrh/rpzGJdieoAQG9UWX2THRcK9EvAEHLnuuLnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zS2rXpXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0G8CVoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421E6C4CEF1;
-	Mon, 27 Oct 2025 18:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zS2rXpXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70CBC4CEF1;
+	Mon, 27 Oct 2025 18:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591078;
-	bh=sUrpIn9fvuezH/q3YRZTbNWd+GqqNQeEalSr/MgUOEo=;
+	s=korg; t=1761591081;
+	bh=hxC735n89VP89gk7LwbmpCVLzQl6tsb8X+K2ZmlX1Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0G8CVoEiKRfOF1brwHlUXHep+Zbh4MSthWS3QLS1KNWPT5mem8yXeaKs8IoCGXhn
-	 d2wkHt9obqzYXNmqLXX3BAprBjN3t7n9vOzPmYiapo2KC1fsYlfUzEyMkR4Txa7m6Z
-	 TXFcFO7aDlDnGi0+cTHDecFtRAjvb5D6aZ09/1eM=
+	b=zS2rXpXHlQZmIZ0ANxbufmVD3VSF268Q6pkonr4SxNncihwHtlvepDxULxI63RI5w
+	 h95EQT5R2NBnqk/G2YARFAXZ+S6CXrXbAuiROVktwavoJ+b5ka/unCwmn/iJouBgqv
+	 FDfwRHUZOHtA2FDZgeRn4NYHm2i4D/vatKPGzwdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Donet Tom <donettom@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/332] watchdog: mpc8xxx_wdt: Reload the watchdog timer when enabling the watchdog
-Date: Mon, 27 Oct 2025 19:31:52 +0100
-Message-ID: <20251027183526.179386666@linuxfoundation.org>
+Subject: [PATCH 5.10 060/332] drivers/base/node: handle error properly in register_one_node()
+Date: Mon, 27 Oct 2025 19:31:53 +0100
+Message-ID: <20251027183526.204862707@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,46 +61,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit 7dfd80f70ef00d871df5af7c391133f7ba61ad9b ]
+[ Upstream commit 786eb990cfb78aab94eb74fb32a030e14723a620 ]
 
-When the watchdog gets enabled with this driver, it leaves enough time
-for the core watchdog subsystem to start pinging it. But when the
-watchdog is already started by hardware or by the boot loader, little
-time remains before it fires and it happens that the core watchdog
-subsystem doesn't have time to start pinging it.
+If register_node() returns an error, it is not handled correctly.
+The function will proceed further and try to register CPUs under the
+node, which is not correct.
 
-Until commit 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker
-function") pinging was managed by the driver itself and the watchdog
-was immediately pinged by setting the timer expiry to 0.
+So, in this patch, if register_node() returns an error, we return
+immediately from the function.
 
-So restore similar behaviour by pinging it when enabling it so that
-if it was already enabled the watchdog timer counter is reloaded.
-
-Fixes: 19ce9490aa84 ("watchdog: mpc8xxx: use the core worker function")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Link: https://lkml.kernel.org/r/20250822084845.19219-1-donettom@linux.ibm.com
+Fixes: 76b67ed9dce6 ("[PATCH] node hotplug: register cpu: remove node struct")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Donet Tom <donettom@linux.ibm.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/mpc8xxx_wdt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/node.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/watchdog/mpc8xxx_wdt.c b/drivers/watchdog/mpc8xxx_wdt.c
-index 3fc457bc16db3..18349ec0c1010 100644
---- a/drivers/watchdog/mpc8xxx_wdt.c
-+++ b/drivers/watchdog/mpc8xxx_wdt.c
-@@ -100,6 +100,8 @@ static int mpc8xxx_wdt_start(struct watchdog_device *w)
- 	ddata->swtc = tmp >> 16;
- 	set_bit(WDOG_HW_RUNNING, &ddata->wdd.status);
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index 5f745c906c330..735527922a3d3 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -961,6 +961,11 @@ int __register_one_node(int nid)
+ 		return -ENOMEM;
  
-+	mpc8xxx_wdt_keepalive(ddata);
-+
- 	return 0;
- }
+ 	error = register_node(node_devices[nid], nid);
++	if (error) {
++		node_devices[nid] = NULL;
++		kfree(node);
++		return error;
++	}
  
+ 	/* link cpu under this node */
+ 	for_each_present_cpu(cpu) {
 -- 
 2.51.0
 
