@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8499322753;
-	Mon, 27 Oct 2025 18:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623142F6902;
+	Mon, 27 Oct 2025 18:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591158; cv=none; b=VwQdPhv3L1B1fEj9mCk1dNANPrHc6YNW/4xXAFiEwu8+wS1vdOyqHBgXUPBMDncv92Oj89h0tcEs/BNaOYrYWd67nVzgtXrAxiv8Qn19MGZPRZQRaYwtjhXNBP8I2qWOBIGQSsehm1UGfGKL8eFNXvg1ku+3yr5JusX+s5PIp2A=
+	t=1761591161; cv=none; b=eCakKU3G7XvYWSr22yXyqC3NH2h28sOasWGQLHTsvII+Y6DeaRDv33NsP9T9nbwh3PPybHbLOSx9dK/leKRh/LPfm3yhkc479I08F0h0zEHwQRzIZc6+FkujKthv9slgxaGC9B1+vG7ApAkYzZ7fThtf6xgQrb6o8utlPH24isI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591158; c=relaxed/simple;
-	bh=txJOu9zBCONZdVbrJh9BJsy0NvVieZVhrN9rx61j5+c=;
+	s=arc-20240116; t=1761591161; c=relaxed/simple;
+	bh=K0EembCDrq6XqGoB1eEfSBX7ITuGS7ZJch8Ui/H1vSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4XtqiK1+arP8w4qRDpPYxT4o9mwYrGpuNit5IRmmH3YlEk/k+07lKNKGRejhMfgd0x1MJMusd3koxN8QpasZdq9iFa8PFpUvyY+20hUXmJecPR+dKnvU9H4zk+asw4uCIdfTj25bYjUfJM/6H+6fL/xeXyHeSnbTGiRd8KsAqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zM2Zs0Vw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JrEPUrMR5uQouBw56hqBomG5DHc42HBL0BtBo74Wqi5XWX1OE7wiPL2YPOKY4vLU1CkPlnAcqZmkw3OvaUf7BAu0krxubHcrbTCXj63UOMF8pU9S5SPtHYWoR6phtUj8SR+tOlcoTmdqoGylvGYo7AdT2ZgiwfJgGLmeu5vYonQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3Il97P8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zM2Zs0Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330CDC4CEFD;
-	Mon, 27 Oct 2025 18:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3Il97P8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA669C113D0;
+	Mon, 27 Oct 2025 18:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591158;
-	bh=txJOu9zBCONZdVbrJh9BJsy0NvVieZVhrN9rx61j5+c=;
+	s=korg; t=1761591161;
+	bh=K0EembCDrq6XqGoB1eEfSBX7ITuGS7ZJch8Ui/H1vSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zM2Zs0VwJxUCy8+divL/EzGDjemHuxbNGIMFcO2EmNiLReP4sbVmONHAyN/CgnoOG
-	 1cBL3ld2MY+YTgPnJvIJ6o40y+In1M+jzOQoU/uLQAH7I4V+A7GFqIN3zez96VOUVe
-	 afOT09wYA/1R24hBiCAUHnZVQdItMbByRNUkb0os=
+	b=L3Il97P8Jl3PW1njjOfrVDVV4u1B6sPuyEZWkoZkp+a8vlZqwT7AsfO4i4VO/axAb
+	 X6gYsmEP7+9XuJsJEm+FlzvNvr+gML+ucZ1ur2QeiNBbWbY3uY2MGigJRoK2pGwVOn
+	 VWaJB9HpLAouy9pOui0tYB/RLmbVUeg86iTG7jKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 090/332] mfd: vexpress-sysreg: Check the return value of devm_gpiochip_add_data()
-Date: Mon, 27 Oct 2025 19:32:23 +0100
-Message-ID: <20251027183526.998825407@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 073/332] remoteproc: qcom: q6v5: Avoid disabling handover IRQ twice
+Date: Mon, 27 Oct 2025 19:32:06 +0100
+Message-ID: <20251027183526.551739119@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 1efbee6852f1ff698a9981bd731308dd027189fb upstream.
+[ Upstream commit 110be46f5afe27b66caa2d12473a84cd397b1925 ]
 
-Commit 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
-removed the return value check from the call to gpiochip_add_data() (or
-rather gpiochip_add() back then and later converted to devres) with no
-explanation. This function however can still fail, so check the return
-value and bail-out if it does.
+enable_irq() and disable_irq() are reference counted, so we must make sure
+that each enable_irq() is always paired with a single disable_irq(). If we
+call disable_irq() twice followed by just a single enable_irq(), the IRQ
+will remain disabled forever.
 
-Cc: stable@vger.kernel.org
-Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250811-gpio-mmio-mfd-conv-v1-1-68c5c958cf80@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For the error handling path in qcom_q6v5_wait_for_start(), disable_irq()
+will end up being called twice, because disable_irq() also happens in
+qcom_q6v5_unprepare() when rolling back the call to qcom_q6v5_prepare().
+
+Fix this by dropping disable_irq() in qcom_q6v5_wait_for_start(). Since
+qcom_q6v5_prepare() is the function that calls enable_irq(), it makes more
+sense to have the rollback handled always by qcom_q6v5_unprepare().
+
+Fixes: 3b415c8fb263 ("remoteproc: q6v5: Extract common resource handling")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-1-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/vexpress-sysreg.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/mfd/vexpress-sysreg.c
-+++ b/drivers/mfd/vexpress-sysreg.c
-@@ -98,6 +98,7 @@ static int vexpress_sysreg_probe(struct
- 	struct resource *mem;
- 	void __iomem *base;
- 	struct gpio_chip *mmc_gpio_chip;
-+	int ret;
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index fd6fd36268d93..f2080738ca05e 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -115,9 +115,6 @@ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout)
+ 	int ret;
  
- 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!mem)
-@@ -118,7 +119,10 @@ static int vexpress_sysreg_probe(struct
- 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
- 			NULL, NULL, NULL, NULL, 0);
- 	mmc_gpio_chip->ngpio = 2;
--	devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
-+
-+	ret = devm_gpiochip_add_data(&pdev->dev, mmc_gpio_chip, NULL);
-+	if (ret)
-+		return ret;
- 
- 	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
- 			vexpress_sysreg_cells,
+ 	ret = wait_for_completion_timeout(&q6v5->start_done, timeout);
+-	if (!ret)
+-		disable_irq(q6v5->handover_irq);
+-
+ 	return !ret ? -ETIMEDOUT : 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_q6v5_wait_for_start);
+-- 
+2.51.0
+
 
 
