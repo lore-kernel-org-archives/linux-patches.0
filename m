@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FE921576E;
-	Mon, 27 Oct 2025 19:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3912DC33D;
+	Mon, 27 Oct 2025 19:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592588; cv=none; b=cJNOOGOnzw88Q9hD3mHsJBhZtXfP4pae10bZVhOT63qbLBbGm58QvPObwqYmGuq+nv/yTXwWn1wFverARepsEp53i8MdHjgYTREJ7Gtz3rD2MzpN17f1zyAv2mGllrY20xmxtHKgmkxRoAv9Mj3z+92qExukxAPWe7LDYccbvj0=
+	t=1761592591; cv=none; b=Xg3L3osxxHx9vnZF9nhv2hsk4zJyxkCVyWjOaQxusvhTwTwW/f5ZZtfZAgwIMBJI42mxSJ7VeQG8Id1SgM9wC03sE75dzP3mAMVo+Lkk99/+v4kGBBumc0YZZ2yx5t1Y44K12f5U3cANZjVpiHGxQd/PxEhcU9iwZBwGuHnp/0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592588; c=relaxed/simple;
-	bh=Kr3hva3pd1vaqanO3yS5gs/OKbamIjnF84r7ZZejaJo=;
+	s=arc-20240116; t=1761592591; c=relaxed/simple;
+	bh=2awGQTVe6ylerQ3YKE+FEIeA0Q69e0cDEKRFW/Qzwgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qrvdm7zOtg6v8tHIZrQ4GX07bebaiLSiUUc2Co5decpuslX/8DAwVN4S9Du7obUcft5+t6ZCXXiQiKb5ZezikTz5zK3ylCv0FycKqNIQFNV2OptMivrf12X69LkQsx+TX97iond+VmSp1nXB3dkDG1BQhEww4uAS/bPPUIYKRcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyLgoNQe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dX/GXx0cRyDZ2oh8dDBhS+RQr549Cg9G4Jf9OQid/toUqnOZPKoTMd0/i7PY3fAN1ZPVoPrJgu7gJF00H2IbU6cNTA4ucFdVO1OlbtE8rzOgZqE3TffjBQxg64k7ipzyrXdB3X2l0CTLu8NsZX/Wh3ZaSC8D92RJrGwYzygvRlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/hwFuSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyLgoNQe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2007DC4CEFD;
-	Mon, 27 Oct 2025 19:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/hwFuSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3C4C4CEF1;
+	Mon, 27 Oct 2025 19:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592588;
-	bh=Kr3hva3pd1vaqanO3yS5gs/OKbamIjnF84r7ZZejaJo=;
+	s=korg; t=1761592591;
+	bh=2awGQTVe6ylerQ3YKE+FEIeA0Q69e0cDEKRFW/Qzwgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyLgoNQeP7i8WbeEaDyHqxQFDsAjYgyTQmyQmbl9bscu1tOXs6a/h+rgOdrfcIH6i
-	 TFSD2BNM0zj4PF2QRfjm+m33YYkG/O5Xk+/jBu/iJ5vYPauqyQWGpzpQ2A0hC7Rk3f
-	 j2IDrk4UYnnZ6DMIRvNnxHQezDiDJAg/WIgZ8JgA=
+	b=F/hwFuSPhy2xzNYOyzp6TRQxS8BIRAWFiP+4w2f9sRhnpuvmJpiyU6VMp/3o2FuMS
+	 w1T6UF4008l17fQYjMex4rfz9vXxZWfMYiycr2KvgCEGDrNMto5+Jgn2LeMOprDbuW
+	 2nXYr443xzx+mQkJ7ZKU2WIA/K5aK/fHGRJuKsG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
 	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/84] net: enetc: fix the deadlock of enetc_mdio_lock
-Date: Mon, 27 Oct 2025 19:36:09 +0100
-Message-ID: <20251027183439.359096896@linuxfoundation.org>
+Subject: [PATCH 6.6 21/84] net: enetc: correct the value of ENETC_RXB_TRUESIZE
+Date: Mon, 27 Oct 2025 19:36:10 +0100
+Message-ID: <20251027183439.385661697@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -52,156 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 50bd33f6b3922a6b760aa30d409cae891cec8fb5 ]
+[ Upstream commit e59bc32df2e989f034623a580e30a2a72af33b3f ]
 
-After applying the workaround for err050089, the LS1028A platform
-experiences RCU stalls on RT kernel. This issue is caused by the
-recursive acquisition of the read lock enetc_mdio_lock. Here list some
-of the call stacks identified under the enetc_poll path that may lead to
-a deadlock:
+The ENETC RX ring uses the page halves flipping mechanism, each page is
+split into two halves for the RX ring to use. And ENETC_RXB_TRUESIZE is
+defined to 2048 to indicate the size of half a page. However, the page
+size is configurable, for ARM64 platform, PAGE_SIZE is default to 4K,
+but it could be configured to 16K or 64K.
 
-enetc_poll
-  -> enetc_lock_mdio
-  -> enetc_clean_rx_ring OR napi_complete_done
-     -> napi_gro_receive
-        -> enetc_start_xmit
-           -> enetc_lock_mdio
-           -> enetc_map_tx_buffs
-           -> enetc_unlock_mdio
-  -> enetc_unlock_mdio
+When PAGE_SIZE is set to 16K or 64K, ENETC_RXB_TRUESIZE is not correct,
+and the RX ring will always use the first half of the page. This is not
+consistent with the description in the relevant kernel doc and commit
+messages.
 
-After enetc_poll acquires the read lock, a higher-priority writer attempts
-to acquire the lock, causing preemption. The writer detects that a
-read lock is already held and is scheduled out. However, readers under
-enetc_poll cannot acquire the read lock again because a writer is already
-waiting, leading to a thread hang.
+This issue is invisible in most cases, but if users want to increase
+PAGE_SIZE to receive a Jumbo frame with a single buffer for some use
+cases, it will not work as expected, because the buffer size of each
+RX BD is fixed to 2048 bytes.
 
-Currently, the deadlock is avoided by adjusting enetc_lock_mdio to prevent
-recursive lock acquisition.
+Based on the above two points, we expect to correct ENETC_RXB_TRUESIZE
+to (PAGE_SIZE >> 1), as described in the comment.
 
-Fixes: 6d36ecdbc441 ("net: enetc: take the MDIO lock only once per NAPI poll cycle")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Acked-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20251015021427.180757-1-jianpeng.chang.cn@windriver.com
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20251016080131.3127122-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 25 ++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 49c61aa920b02..7accf3a3e9f0d 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1246,6 +1246,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
- 	/* next descriptor to process */
- 	i = rx_ring->next_to_clean;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
+index 860ecee302f1a..dcf3e4b4e3f55 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.h
++++ b/drivers/net/ethernet/freescale/enetc/enetc.h
+@@ -41,7 +41,7 @@ struct enetc_tx_swbd {
+ };
  
-+	enetc_lock_mdio();
-+
- 	while (likely(rx_frm_cnt < work_limit)) {
- 		union enetc_rx_bd *rxbd;
- 		struct sk_buff *skb;
-@@ -1281,7 +1283,9 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
- 		rx_byte_cnt += skb->len + ETH_HLEN;
- 		rx_frm_cnt++;
- 
-+		enetc_unlock_mdio();
- 		napi_gro_receive(napi, skb);
-+		enetc_lock_mdio();
- 	}
- 
- 	rx_ring->next_to_clean = i;
-@@ -1289,6 +1293,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
- 	rx_ring->stats.packets += rx_frm_cnt;
- 	rx_ring->stats.bytes += rx_byte_cnt;
- 
-+	enetc_unlock_mdio();
-+
- 	return rx_frm_cnt;
- }
- 
-@@ -1598,6 +1604,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 	/* next descriptor to process */
- 	i = rx_ring->next_to_clean;
- 
-+	enetc_lock_mdio();
-+
- 	while (likely(rx_frm_cnt < work_limit)) {
- 		union enetc_rx_bd *rxbd, *orig_rxbd;
- 		int orig_i, orig_cleaned_cnt;
-@@ -1657,7 +1665,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 			if (unlikely(!skb))
- 				goto out;
- 
-+			enetc_unlock_mdio();
- 			napi_gro_receive(napi, skb);
-+			enetc_lock_mdio();
- 			break;
- 		case XDP_TX:
- 			tx_ring = priv->xdp_tx_ring[rx_ring->index];
-@@ -1692,7 +1702,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 			}
- 			break;
- 		case XDP_REDIRECT:
-+			enetc_unlock_mdio();
- 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
-+			enetc_lock_mdio();
- 			if (unlikely(err)) {
- 				enetc_xdp_drop(rx_ring, orig_i, i);
- 				rx_ring->stats.xdp_redirect_failures++;
-@@ -1712,8 +1724,11 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 	rx_ring->stats.packets += rx_frm_cnt;
- 	rx_ring->stats.bytes += rx_byte_cnt;
- 
--	if (xdp_redirect_frm_cnt)
-+	if (xdp_redirect_frm_cnt) {
-+		enetc_unlock_mdio();
- 		xdp_do_flush();
-+		enetc_lock_mdio();
-+	}
- 
- 	if (xdp_tx_frm_cnt)
- 		enetc_update_tx_ring_tail(tx_ring);
-@@ -1722,6 +1737,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 		enetc_refill_rx_ring(rx_ring, enetc_bd_unused(rx_ring) -
- 				     rx_ring->xdp.xdp_tx_in_flight);
- 
-+	enetc_unlock_mdio();
-+
- 	return rx_frm_cnt;
- }
- 
-@@ -1740,6 +1757,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
- 	for (i = 0; i < v->count_tx_rings; i++)
- 		if (!enetc_clean_tx_ring(&v->tx_ring[i], budget))
- 			complete = false;
-+	enetc_unlock_mdio();
- 
- 	prog = rx_ring->xdp.prog;
- 	if (prog)
-@@ -1751,10 +1769,8 @@ static int enetc_poll(struct napi_struct *napi, int budget)
- 	if (work_done)
- 		v->rx_napi_work = true;
- 
--	if (!complete) {
--		enetc_unlock_mdio();
-+	if (!complete)
- 		return budget;
--	}
- 
- 	napi_complete_done(napi, work_done);
- 
-@@ -1763,6 +1779,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
- 
- 	v->rx_napi_work = false;
- 
-+	enetc_lock_mdio();
- 	/* enable interrupts */
- 	enetc_wr_reg_hot(v->rbier, ENETC_RBIER_RXTIE);
- 
+ #define ENETC_RX_MAXFRM_SIZE	ENETC_MAC_MAXFRM_SIZE
+-#define ENETC_RXB_TRUESIZE	2048 /* PAGE_SIZE >> 1 */
++#define ENETC_RXB_TRUESIZE	(PAGE_SIZE >> 1)
+ #define ENETC_RXB_PAD		NET_SKB_PAD /* add extra space if needed */
+ #define ENETC_RXB_DMA_SIZE	\
+ 	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD)
 -- 
 2.51.0
 
