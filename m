@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AF1322C8A;
-	Mon, 27 Oct 2025 19:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D346A2EDD62;
+	Mon, 27 Oct 2025 19:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593317; cv=none; b=LBp3qsNC+zd/bfbgrHmZyu95qBMOp6OTNezeWnVy/jeSdHTRjAig9QXZD67LJLBYRXVYm0682Ww+qiYrM/4R3LFOo4HCba/LGGY3H0Re5Eky7rfT1P+vSD3GnzARtPW5NqqJOui2nNcOxTRfQ3dprAz/Hc52fEUxoTlvl841y+o=
+	t=1761593319; cv=none; b=VPuEU/2/YZJUnkqfePR39S2TtJDZIVFCR2/1E2sH6NkWeqAIwKPJ/eouhGNdrZX3okLqAaBmUAw+cVabAfq5DpoKZFbs2SiUN4GZ9d/h2cxlZkjAIYbBEPOqB7e2WYR2a7diqN6guk3vucurKVUXYK02iR8lT9zJFEG9bCQvLMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593317; c=relaxed/simple;
-	bh=gDArKzLF5qfyVkb15xL8ZgrV74YfZ8OXmg9dWjTvI0c=;
+	s=arc-20240116; t=1761593319; c=relaxed/simple;
+	bh=m8Rn3bo/CGI2Ucmlsy7AcInbtEXAWmOp6IKXZeNk968=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GW3zR9cWtCNhWMZZ5lI4E0sRg0MBk8Esq4DjlNbDaer9uspvnIznNiHJyaqT3V5mDnGPK7AfZG4tjq4SJ7MZ/ygvHq4xt1PDJ2QgFCDMfKIzIQ9FKqWUOywqxQSGsyW4nWzjBnwMCd3rSazAOM1L1sZm9phu7IM70ipc6VTdCyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlSk1eKJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHSaAmN9PMdtfabgDXpc0D28JiQJ7PdOGBrt7zLgBdyOS1CE2rfnBwz89Lp2WdjBQVzJ5V1gHJFETC0X4mVBqrHCDYTHDfkjZnQJBe4OqEFGh3LBJc9MVIFo9NV2QQI6apx8yxurjcZu38Ta2MdJUr7x1xxCiAB1y1n27GalW6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvOoTNbs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlSk1eKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953ABC4CEF1;
-	Mon, 27 Oct 2025 19:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvOoTNbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DEAC4CEF1;
+	Mon, 27 Oct 2025 19:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593316;
-	bh=gDArKzLF5qfyVkb15xL8ZgrV74YfZ8OXmg9dWjTvI0c=;
+	s=korg; t=1761593319;
+	bh=m8Rn3bo/CGI2Ucmlsy7AcInbtEXAWmOp6IKXZeNk968=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlSk1eKJAUy9VIbYL+6UZlAKhOL0klYcmsfyKe8zqylJmmrCTfhLreyj2ZzeiOkVN
-	 DhocU/t6SiJLTM1yuxNt9ASBvJTiuM/qHE7Easy27Otl7PF0J6//l/H6klgUQwpugS
-	 KrPFQrZ0MI1/treC7Qrjkux8pTL5pikCi8YN3PCE=
+	b=xvOoTNbsGueM/DtTaxHJ3wLO+DUZf3dwVhtogu3/nFXt04kxa8wPhFmXGUeuZSQp/
+	 0mskjoLuskU64n9F4xtsoVEJY6OlyO9t6nlHkN42znyUqvCfnGAVOiY06RIyYZd71i
+	 hH+MSE7FP/LOpwK1uAm+3m4qNTr9sqrQmyKE/MpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Simon Horman <horms@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Tonghao Zhang <tonghao@bamaicloud.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 096/184] net: bonding: update the slave array for broadcast mode
-Date: Mon, 27 Oct 2025 19:36:18 +0100
-Message-ID: <20251027183517.490461055@linuxfoundation.org>
+Subject: [PATCH 6.17 097/184] net: stmmac: dwmac-rk: Fix disabling set_clock_selection
+Date: Mon, 27 Oct 2025 19:36:19 +0100
+Message-ID: <20251027183517.519732916@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -57,56 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-commit e0caeb24f538c3c9c94f471882ceeb43d9dc2739 upstream.
+commit 7f864458e9a6d2000b726d14b3d3a706ac92a3b0 upstream.
 
-This patch fixes ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad").
-Before this commit, on the broadcast mode, all devices were traversed using the
-bond_for_each_slave_rcu. This patch supports traversing devices by using all_slaves.
-Therefore, we need to update the slave array when enslave or release slave.
+On all platforms set_clock_selection() writes to a GRF register. This
+requires certain clocks running and thus should happen before the
+clocks are disabled.
 
-Fixes: ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad")
-Cc: Simon Horman <horms@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: <stable@vger.kernel.org>
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/all/a97e6e1e-81bc-4a79-8352-9e4794b0d2ca@kernel.org/
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20251016125136.16568-1-tonghao@bamaicloud.com
+This has been noticed on RK3576 Sige5, which hangs during system suspend
+when trying to suspend the second network interface. Note, that
+suspending the first interface works, because the second device ensures
+that the necessary clocks for the GRF are enabled.
+
+Cc: stable@vger.kernel.org
+Fixes: 2f2b60a0ec28 ("net: ethernet: stmmac: dwmac-rk: Add gmac support for rk3588")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251014-rockchip-network-clock-fix-v1-1-c257b4afdf75@collabora.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2385,7 +2385,9 @@ skip_mac_set:
- 		unblock_netpoll_tx();
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1448,14 +1448,15 @@ static int gmac_clk_enable(struct rk_pri
+ 		}
+ 	} else {
+ 		if (bsp_priv->clk_enabled) {
++			if (bsp_priv->ops && bsp_priv->ops->set_clock_selection) {
++				bsp_priv->ops->set_clock_selection(bsp_priv,
++					      bsp_priv->clock_input, false);
++			}
++
+ 			clk_bulk_disable_unprepare(bsp_priv->num_clks,
+ 						   bsp_priv->clks);
+ 			clk_disable_unprepare(bsp_priv->clk_phy);
+ 
+-			if (bsp_priv->ops && bsp_priv->ops->set_clock_selection)
+-				bsp_priv->ops->set_clock_selection(bsp_priv,
+-					      bsp_priv->clock_input, false);
+-
+ 			bsp_priv->clk_enabled = false;
+ 		}
  	}
- 
--	if (bond_mode_can_use_xmit_hash(bond))
-+	/* broadcast mode uses the all_slaves to loop through slaves. */
-+	if (bond_mode_can_use_xmit_hash(bond) ||
-+	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
- 		bond_update_slave_arr(bond, NULL);
- 
- 	if (!slave_dev->netdev_ops->ndo_bpf ||
-@@ -2561,7 +2563,8 @@ static int __bond_release_one(struct net
- 
- 	bond_upper_dev_unlink(bond, slave);
- 
--	if (bond_mode_can_use_xmit_hash(bond))
-+	if (bond_mode_can_use_xmit_hash(bond) ||
-+	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
- 		bond_update_slave_arr(bond, slave);
- 
- 	slave_info(bond_dev, slave_dev, "Releasing %s interface\n",
 
 
