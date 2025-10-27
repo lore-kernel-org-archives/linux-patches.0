@@ -1,57 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D932ABC2;
-	Mon, 27 Oct 2025 18:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E69E3128C9;
+	Mon, 27 Oct 2025 18:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591185; cv=none; b=blDagKCojFRwuJTUbJf/Yy1X4PZ1TY/I5KgCiEGHWazkgqi78w4l+TOhyMkvtMmZsOYErvwJI60b1T3kNbI4cG8CDBEiBR//fa42crg2yXJlpZSkONyz1Fy4MuI2hPWx24ysRt/LFEV+VH1usKDXWFtCa++2j1r8wd3do9uhcZI=
+	t=1761591187; cv=none; b=qUn47jlvikcxyvlDknWpt22e4wOLTWj4HT3Dg+DovZrkARzNrDY8IsgNrP1NuJDJd8o9DfziF2SSft2urIHBTdA9qDhLmqBi1bu+GKM9XtRMsEUTJNqQKq4k1Kt9AmJLKGDX9xDgIGNKoFMYap/nPkN7wWRLSCX0+G0ij71LG4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591185; c=relaxed/simple;
-	bh=8qWg3GZJ9Cm44gHsdEiJ2OwZNo4e1Uxrvs3XY2o7dKM=;
+	s=arc-20240116; t=1761591187; c=relaxed/simple;
+	bh=871enaCyVnzKaAcIFoLCB0Uf8ny6DwoJqiyCyKAh048=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsbwMzQRYqlhqzqZLYyUWcL8JrXPvs9FRBpAIhHbZaR71FsI8w948Tmrq2digPVCGhg1kt8Wfs7yj4nM4EQCpiZlWfY0IgWZhPTN8cgKOu+C0C/58K7J4CQAGLQE/Qa+kRHk1a2473Bj42lx71Y1sbd3DXrx2vFj7/iHzKeZIqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKYDt3Tk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnR1G2rwy1HypgNlC3o5xIpknkVKkH6OP0bhgsgbkmxK+HRVQnmUT/mZ0icMyf4KDmlxju7tVukvGYQ5IwIorHNIq6bsTJFq2xbMA6WIAcEnU7FRiv1MJ+3FUrv/ver4ybhlH/Qg8mQOcaJzkocIA86oiMipha+aCRcZUhZoFOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8s73cVH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKYDt3Tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC2EC4CEF1;
-	Mon, 27 Oct 2025 18:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8s73cVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F09C4CEF1;
+	Mon, 27 Oct 2025 18:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591184;
-	bh=8qWg3GZJ9Cm44gHsdEiJ2OwZNo4e1Uxrvs3XY2o7dKM=;
+	s=korg; t=1761591187;
+	bh=871enaCyVnzKaAcIFoLCB0Uf8ny6DwoJqiyCyKAh048=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKYDt3TkSdKV/c6R0Ypb4CO0s2VDbFcBfhEwlHy0YyqkKdR4KHQc9h+tMMawVxurY
-	 Fuhq+lOHvSCK10paXjHqAEWLHnWWWEQbvyLjz/MrbKtgnh1wT+l1mkvkZ7CQwqIjdK
-	 ogERvKsHw1Di6dLRo5bGh3vaZVhmYxe9i1nBBul0=
+	b=Q8s73cVH6hyYnJILNqLSXhZRDpsJarUiktjhxhGLxHpeCL1akCVvJuvPJlAm4bM7e
+	 7LW8Y8xAIz5kCby+GAUlV37+znAtlmuRnHurisAWZQPQchZQ6qL4I1yIam+U+wylsV
+	 S28Ulqs2Qt1Enr91zjA7vL0YsHccWuj+Wh07PTUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Blake Jones <blakejones@google.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Li Huafei <lihuafei1@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Nam Cao <namcao@linutronix.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/332] libperf event: Ensure tracing data is multiple of 8 sized
-Date: Mon, 27 Oct 2025 19:32:32 +0100
-Message-ID: <20251027183527.233037096@linuxfoundation.org>
+Subject: [PATCH 5.10 100/332] clk: at91: peripheral: fix return value
+Date: Mon, 27 Oct 2025 19:32:33 +0100
+Message-ID: <20251027183527.260158743@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -70,57 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit b39c915a4f365cce6bdc0e538ed95d31823aea8f ]
+[ Upstream commit 47b13635dabc14f1c2fdcaa5468b47ddadbdd1b5 ]
 
-Perf's synthetic-events.c will ensure 8-byte alignment of tracing
-data, writing it after a perf_record_header_tracing_data event.
+determine_rate() is expected to return an error code, or 0 on success.
+clk_sam9x5_peripheral_determine_rate() has a branch that returns the
+parent rate on a certain case. This is the behavior of round_rate(),
+so let's go ahead and fix this by setting req->rate.
 
-Add padding to struct perf_record_header_tracing_data to make it 16-byte
-rather than 12-byte sized.
-
-Fixes: 055c67ed39887c55 ("perf tools: Move event synthesizing routines to separate .c file")
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Blake Jones <blakejones@google.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Collin Funk <collin.funk1@gmail.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Li Huafei <lihuafei1@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Nam Cao <namcao@linutronix.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250821163820.1132977-6-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b4c115c76184f ("clk: at91: clk-peripheral: add support for changeable parent rate")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/include/perf/event.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/at91/clk-peripheral.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/perf/include/perf/event.h b/tools/lib/perf/include/perf/event.h
-index 4a24b855d3ce2..4b0f576e1e6c0 100644
---- a/tools/lib/perf/include/perf/event.h
-+++ b/tools/lib/perf/include/perf/event.h
-@@ -201,6 +201,7 @@ struct perf_record_header_event_type {
- struct perf_record_header_tracing_data {
- 	struct perf_event_header header;
- 	__u32			 size;
-+	__u32			 pad;
- };
+diff --git a/drivers/clk/at91/clk-peripheral.c b/drivers/clk/at91/clk-peripheral.c
+index 7a27ba8e05779..7605ab23dc8ed 100644
+--- a/drivers/clk/at91/clk-peripheral.c
++++ b/drivers/clk/at91/clk-peripheral.c
+@@ -268,8 +268,11 @@ static int clk_sam9x5_peripheral_determine_rate(struct clk_hw *hw,
+ 	long best_diff = LONG_MIN;
+ 	u32 shift;
  
- #define PERF_RECORD_MISC_BUILD_ID_SIZE (1 << 15)
+-	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max)
+-		return parent_rate;
++	if (periph->id < PERIPHERAL_ID_MIN || !periph->range.max) {
++		req->rate = parent_rate;
++
++		return 0;
++	}
+ 
+ 	/* Fist step: check the available dividers. */
+ 	for (shift = 0; shift <= PERIPHERAL_MAX_SHIFT; shift++) {
 -- 
 2.51.0
 
