@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A51322547;
-	Mon, 27 Oct 2025 18:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D80A322C89;
+	Mon, 27 Oct 2025 18:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590664; cv=none; b=pdrOhEeJwCRRKlMr0L6zGdpBJVpL68dLkpJf7T7FceoYXIH/+4JmJocvpoOXtYxSo72PHsnUIA5+VmZi3xH/xeaIShXL8hmSEzRDy0Te0XlJTW5NPCj4qjsztQF2pykSj4PUvEC3IUL0Z+a0GE078tjh++F+qL5Y4p+ylF9Eg0A=
+	t=1761590667; cv=none; b=RIFvHmyv9GS3Yw6Zik1JCe30oVuetcRuxVBUpqXkNLulk0kobuNKRdZy5ELBPji9ihU9GdW11Jt4R/CYKndKQtWE96Ep9V8ilXgIMcFOmob5X/hvf6KmAxhRqX3iVCQ+egNHBfh+spCSrKtaLKS3OHSnRWK7fpRiJNs/8E6BZuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590664; c=relaxed/simple;
-	bh=Zs3aEbMU8xdFS+S6g1TKfawI1lA2C6q/kp8T/ygo6sc=;
+	s=arc-20240116; t=1761590667; c=relaxed/simple;
+	bh=cY461Zuaq191u+V6P+SpJdrWKZ4iEB+r2Xs5Zy0JsGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEOfJ2QpCt5RXnQH9fv9LIAMdVw9dr/L/LpyGN9PczJSr58ua+mZzJx7QaN/hEcEuX3AdDyMSIw1p4KHva7xany20SPjUTkrmIQXmf3v1WSNEtn7SdwN84/0u8fgzA7FCcoUGYgtK2QCZwNwYUEsnmI6VEhVBu+lJ2XewujlKZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVq5qjoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkAWN9S6tpmg5UsU0YjOZ/cpnSnR1xu6I1isKhuyM7Bp6nAAYMxQJPKuY6LduXuLrqmmfX84kIcFIq4m+dJRQz7yp/bDtK9bdM9WZMHc82SS2E4HL7KcGxOBWYrYcGtzy/+knk6mf0XIxGWAdm7ZsYMG3RwhEiz0jUrk0KdYv98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6GjK1jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVq5qjoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113D3C4CEF1;
-	Mon, 27 Oct 2025 18:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6GjK1jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D03C4CEF1;
+	Mon, 27 Oct 2025 18:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590664;
-	bh=Zs3aEbMU8xdFS+S6g1TKfawI1lA2C6q/kp8T/ygo6sc=;
+	s=korg; t=1761590666;
+	bh=cY461Zuaq191u+V6P+SpJdrWKZ4iEB+r2Xs5Zy0JsGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVq5qjoHlm1tRvKcZ8jaM/Vn7eaJem0wI87ddQ3Z6lAmR020wuCDhLtQQO7FHSihq
-	 kCuQxsvsaK5Ni0Rdr+xCOIitykLEV/7iitglU6XWrDhaRRRGELp+9rG3STt2AMeegk
-	 +/T96zD4q12L4BSgS8Xy2HwknDcslBiNgrzFOZUQ=
+	b=o6GjK1jdWPTL5f6X0lCtSm37dRMmQu0WhQ/fAFV1ak7URZ+nX2axJ2Fg9ywFB2myK
+	 aBDaWvT7bxs7CtPtnq/HtO2f3XvAewxq+4PVUGFfqh72oqSvtAOOpWHqdBZHPGafdm
+	 VeUOHv/29F+gmHut4qF8r6BikWKOYyTsELu/Xxec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.4 103/224] xen/manage: Fix suspend error path
-Date: Mon, 27 Oct 2025 19:34:09 +0100
-Message-ID: <20251027183511.745411436@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 130/224] ext4: correctly handle queries for metadata mappings
+Date: Mon, 27 Oct 2025 19:34:36 +0100
+Message-ID: <20251027183512.459987249@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,54 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit f770c3d858687252f1270265ba152d5c622e793f upstream.
+commit 46c22a8bb4cb03211da1100d7ee4a2005bf77c70 upstream.
 
-The device power management API has the following asymmetry:
-* dpm_suspend_start() does not clean up on failure
-  (it requires a call to dpm_resume_end())
-* dpm_suspend_end() does clean up on failure
-  (it does not require a call to dpm_resume_start())
+Currently, our handling of metadata is _ambiguous_ in some scenarios,
+that is, we end up returning unknown if the range only covers the
+mapping partially.
 
-The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
-patches for 2.6.27") in June 2008:  It removed a call to device_resume()
-from device_suspend() (which was later renamed to dpm_suspend_start()).
+For example, in the following case:
 
-When Xen began using the device power management API in May 2008 with
-commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
-not yet exist.  But since it was introduced, a call to dpm_resume_end()
-is missing in the error path of dpm_suspend_start().  Fix it.
+$ xfs_io -c fsmap -d
 
-Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v2.6.27
-Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
+  0: 254:16 [0..7]: static fs metadata 8
+  1: 254:16 [8..15]: special 102:1 8
+  2: 254:16 [16..5127]: special 102:2 5112
+  3: 254:16 [5128..5255]: special 102:3 128
+  4: 254:16 [5256..5383]: special 102:4 128
+  5: 254:16 [5384..70919]: inodes 65536
+  6: 254:16 [70920..70967]: unknown 48
+  ...
+
+$ xfs_io -c fsmap -d 24 33
+
+  0: 254:16 [24..39]: unknown 16  <--- incomplete reporting
+
+$ xfs_io -c fsmap -d 24 33  (With patch)
+
+    0: 254:16 [16..5127]: special 102:2 5112
+
+This is because earlier in ext4_getfsmap_meta_helper, we end up ignoring
+any extent that starts before our queried range, but overlaps it. While
+the man page [1] is a bit ambiguous on this, this fix makes the output
+make more sense since we are anyways returning an "unknown" extent. This
+is also consistent to how XFS does it:
+
+$ xfs_io -c fsmap -d
+
+  ...
+  6: 254:16 [104..127]: free space 24
+  7: 254:16 [128..191]: inodes 64
+  ...
+
+$ xfs_io -c fsmap -d 137 150
+
+  0: 254:16 [128..191]: inodes 64   <-- full extent returned
+
+ [1] https://man7.org/linux/man-pages/man2/ioctl_getfsmap.2.html
+
+Reported-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: stable@kernel.org
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Message-ID: <023f37e35ee280cd9baac0296cbadcbe10995cab.1757058211.git.ojaswin@linux.ibm.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/manage.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/fsmap.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/xen/manage.c
-+++ b/drivers/xen/manage.c
-@@ -116,7 +116,7 @@ static void do_suspend(void)
- 	err = dpm_suspend_start(PMSG_FREEZE);
- 	if (err) {
- 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
--		goto out_thaw;
-+		goto out_resume_end;
- 	}
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -74,7 +74,8 @@ static int ext4_getfsmap_dev_compare(con
+ static bool ext4_getfsmap_rec_before_low_key(struct ext4_getfsmap_info *info,
+ 					     struct ext4_fsmap *rec)
+ {
+-	return rec->fmr_physical < info->gfi_low.fmr_physical;
++	return rec->fmr_physical + rec->fmr_length <=
++	       info->gfi_low.fmr_physical;
+ }
  
- 	printk(KERN_DEBUG "suspending xenstore...\n");
-@@ -156,6 +156,7 @@ out_resume:
- 	else
- 		xs_suspend_cancel();
+ /*
+@@ -200,15 +201,18 @@ static int ext4_getfsmap_meta_helper(str
+ 			  ext4_group_first_block_no(sb, agno));
+ 	fs_end = fs_start + EXT4_C2B(sbi, len);
  
-+out_resume_end:
- 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
- 
- out_thaw:
+-	/* Return relevant extents from the meta_list */
++	/*
++	 * Return relevant extents from the meta_list. We emit all extents that
++	 * partially/fully overlap with the query range
++	 */
+ 	list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+-		if (p->fmr_physical < info->gfi_next_fsblk) {
++		if (p->fmr_physical + p->fmr_length <= info->gfi_next_fsblk) {
+ 			list_del(&p->fmr_list);
+ 			kfree(p);
+ 			continue;
+ 		}
+-		if (p->fmr_physical <= fs_start ||
+-		    p->fmr_physical + p->fmr_length <= fs_end) {
++		if (p->fmr_physical <= fs_end &&
++		    p->fmr_physical + p->fmr_length > fs_start) {
+ 			/* Emit the retained free extent record if present */
+ 			if (info->gfi_lastfree.fmr_owner) {
+ 				error = ext4_getfsmap_helper(sb, info,
 
 
