@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EC621576E;
-	Mon, 27 Oct 2025 19:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C133303CA2;
+	Mon, 27 Oct 2025 19:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592691; cv=none; b=mHve+UnIyD2g9De8KvAY1QV078NQdYQ/kEh68ubNuka0DnkAz0JFm5TZlYbcpRvEaXOU/Z1vFb2gZFz4gorElz3bZzkHNEo+8if+sbUfAG9fxX4bok2JAzFotk6u82EnGjZVMdAcQT1AwYv5HfvNb8zwwVxmPEIor1S1faYkGH8=
+	t=1761592694; cv=none; b=WjvQltiaGya5QERycpJlNHsNqViusCYYg21TEEcaqSAsqzvzLKWJa/leu6jCs0EBJWUjI9y9UUKfN23p4PjuS1zAtvzbx31HZeYONUhflCYm+2dAyBE6iKdSqfmhSuK+YNWTRm8Ww519eRHCWpharq64actwzUp//1VVxkfIPC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592691; c=relaxed/simple;
-	bh=unPXXErYCYVlXDbSozXfvzt7ZnMMNqhAUh/sVYhZYfM=;
+	s=arc-20240116; t=1761592694; c=relaxed/simple;
+	bh=1UAf3fMhRYwbL5wS25/x25pDiZxGhFKRZxxmfNUzKSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNAiI6u84USIUbSbRQFppDPFOYH2M+aIf4rKUqZzOkRQaN4RPPNO7ENGZBqaRUFmAkdUMUSBCM0Cog9ZQpsyP4heCjM8O/GNTF5oAXlzsFTw1TUAti0MkNydaSh4Qg6ydg767DdW5sLlL1Bhpb8+Udo7xgxxpmBZYQA371scGaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpqosT6s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pIxiN6MuBBU6w+mPl3TVy++opq97soGZ+OMOeNyIGyvEZrYfaF2hnqO3BvL7o+KKxkobAIy/EHSRFTLXIPsih3JvYZJNNGr47Bs4qnt8wVj5FR0ff4L3iYR7UQXQaaHALJvwHJfBCk8g3A/ExSVRLzUlLQaGFdIwGCX4XcEth3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkzLFxuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpqosT6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0B5C4CEF1;
-	Mon, 27 Oct 2025 19:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkzLFxuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3127C4CEF1;
+	Mon, 27 Oct 2025 19:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592691;
-	bh=unPXXErYCYVlXDbSozXfvzt7ZnMMNqhAUh/sVYhZYfM=;
+	s=korg; t=1761592694;
+	bh=1UAf3fMhRYwbL5wS25/x25pDiZxGhFKRZxxmfNUzKSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpqosT6sKDEc3g1Fx1XwRbIF+wie9JYoTkDDfyezZOLM4D259xFzqFtQcXJak0dG3
-	 upQlmEddALp9IMOlZ25XfiiRojsaGGDvLolFmV8g88yAOJrEoke0YWSK5zWOgC3w6U
-	 9Otm+xJp9hzJXUkA5NpLKJXVJ0DJ58w4Qs8KMn/Q=
+	b=LkzLFxuH6fW0q4Ad9q6hzxEeZfcyxy7Q2AcT2IA4/Ks+FiGpBraL7zX+4ln/sX57m
+	 NtDN+5LritTXlOE5KuHTUXfUwsF0rqXDQTCA+I9PqmYB/envnEw/k/Zw7WOVbZ4tzE
+	 4QzUc/C47E/vcidC0aR/AqYVXzfnt018uJ+BNZ6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Simakov <bigalex934@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 30/84] sctp: avoid NULL dereference when chunk data buffer is missing
-Date: Mon, 27 Oct 2025 19:36:19 +0100
-Message-ID: <20251027183439.620608332@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Vincent Bernat <vincent@bernat.ch>,
+	Tonghao Zhang <tonghao@bamaicloud.com>
+Subject: [PATCH 6.6 31/84] net: bonding: fix possible peer notify event loss or dup issue
+Date: Mon, 27 Oct 2025 19:36:20 +0100
+Message-ID: <20251027183439.649531124@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -52,54 +57,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Tonghao Zhang <tonghao@bamaicloud.com>
 
-[ Upstream commit 441f0647f7673e0e64d4910ef61a5fb8f16bfb82 ]
+commit 10843e1492e474c02b91314963161731fa92af91 upstream.
 
-chunk->skb pointer is dereferenced in the if-block where it's supposed
-to be NULL only.
+If the send_peer_notif counter and the peer event notify are not synchronized.
+It may cause problems such as the loss or dup of peer notify event.
 
-chunk->skb can only be NULL if chunk->head_skb is not. Check for frag_list
-instead and do it just before replacing chunk->skb. We're sure that
-otherwise chunk->skb is non-NULL because of outer if() condition.
+Before this patch:
+- If should_notify_peers is true and the lock for send_peer_notif-- fails, peer
+  event may be sent again in next mii_monitor loop, because should_notify_peers
+  is still true.
+- If should_notify_peers is true and the lock for send_peer_notif-- succeeded,
+  but the lock for peer event fails, the peer event will be lost.
 
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/20251021130034.6333-1-bigalex934@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch locks the RTNL for send_peer_notif, events, and commit simultaneously.
+
+Fixes: 07a4ddec3ce9 ("bonding: add an option to specify a delay between peer notifications")
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Hangbin Liu <liuhangbin@gmail.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Vincent Bernat <vincent@bernat.ch>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20251021050933.46412-1-tonghao@bamaicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/inqueue.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c |   40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
-index 5c16521818058..f5a7d5a387555 100644
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -169,13 +169,14 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
- 				chunk->head_skb = chunk->skb;
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2874,7 +2874,7 @@ static void bond_mii_monitor(struct work
+ {
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    mii_work.work);
+-	bool should_notify_peers = false;
++	bool should_notify_peers;
+ 	bool commit;
+ 	unsigned long delay;
+ 	struct slave *slave;
+@@ -2886,30 +2886,33 @@ static void bond_mii_monitor(struct work
+ 		goto re_arm;
  
- 			/* skbs with "cover letter" */
--			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len)
-+			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len) {
-+				if (WARN_ON(!skb_shinfo(chunk->skb)->frag_list)) {
-+					__SCTP_INC_STATS(dev_net(chunk->skb->dev),
-+							 SCTP_MIB_IN_PKT_DISCARDS);
-+					sctp_chunk_free(chunk);
-+					goto next_chunk;
-+				}
- 				chunk->skb = skb_shinfo(chunk->skb)->frag_list;
--
--			if (WARN_ON(!chunk->skb)) {
--				__SCTP_INC_STATS(dev_net(chunk->skb->dev), SCTP_MIB_IN_PKT_DISCARDS);
--				sctp_chunk_free(chunk);
--				goto next_chunk;
- 			}
+ 	rcu_read_lock();
++
+ 	should_notify_peers = bond_should_notify_peers(bond);
+ 	commit = !!bond_miimon_inspect(bond);
+-	if (bond->send_peer_notif) {
+-		rcu_read_unlock();
+-		if (rtnl_trylock()) {
+-			bond->send_peer_notif--;
+-			rtnl_unlock();
+-		}
+-	} else {
+-		rcu_read_unlock();
+-	}
+ 
+-	if (commit) {
++	rcu_read_unlock();
++
++	if (commit || bond->send_peer_notif) {
+ 		/* Race avoidance with bond_close cancel of workqueue */
+ 		if (!rtnl_trylock()) {
+ 			delay = 1;
+-			should_notify_peers = false;
+ 			goto re_arm;
  		}
  
--- 
-2.51.0
-
+-		bond_for_each_slave(bond, slave, iter) {
+-			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
++		if (commit) {
++			bond_for_each_slave(bond, slave, iter) {
++				bond_commit_link_state(slave,
++						       BOND_SLAVE_NOTIFY_LATER);
++			}
++			bond_miimon_commit(bond);
++		}
++
++		if (bond->send_peer_notif) {
++			bond->send_peer_notif--;
++			if (should_notify_peers)
++				call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
++							 bond->dev);
+ 		}
+-		bond_miimon_commit(bond);
+ 
+ 		rtnl_unlock();	/* might sleep, hold no other locks */
+ 	}
+@@ -2917,13 +2920,6 @@ static void bond_mii_monitor(struct work
+ re_arm:
+ 	if (bond->params.miimon)
+ 		queue_delayed_work(bond->wq, &bond->mii_work, delay);
+-
+-	if (should_notify_peers) {
+-		if (!rtnl_trylock())
+-			return;
+-		call_netdevice_notifiers(NETDEV_NOTIFY_PEERS, bond->dev);
+-		rtnl_unlock();
+-	}
+ }
+ 
+ static int bond_upper_dev_walk(struct net_device *upper,
 
 
