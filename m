@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DF22D5C95;
-	Mon, 27 Oct 2025 19:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F2F27FD62;
+	Mon, 27 Oct 2025 19:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593125; cv=none; b=jg43oqxg7EQazptvAKANWmgxzBxi7KsqZ120NWMYvpl01/aS6JMQ7S/97v0EplH1H1OTml0HoF5lk7cCO68ky7hHieiLuHu59fHSwNtn76x04j4AAJAHycxsYZZb+qc/T3s345d5iK+XYqF4iH/14/bEF2R9iWEA72HjDUBokFM=
+	t=1761593128; cv=none; b=WiL9Ja1qhoj9p4r2YGZ+bsCs0JFhB4UNtUXRJsAfHJeYCOqBasa+1/ZKr3Wg3FtpnbBBF1rnRazsaiQsNWVaTGM5G/bQgkIgcpADQ6MEUW9ddwHlmqZZjXOMcU7S6LxSGy8JckjUqAKGBMziveVihTJBbGdnnlfGgUV9yb3rQM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593125; c=relaxed/simple;
-	bh=CJPvugoE+JWmFtPfZ3ur3CDi+xxKja5ld1wcnoclPkg=;
+	s=arc-20240116; t=1761593128; c=relaxed/simple;
+	bh=o6kpFex0oGALyM6+jfs53DPbxdBkaT2y35j3umLqL9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdl6Pi4JucAw2Hc2ZeCa/iu3ut//KietDtE7Ywl2uWsnKhaxjXQ9VtCHffuZgSluqLu7MTgMO0dLCt0/HVaZ8JOHORfwT51AnxJtHRJ7mk32gsyiHq3RalEXRbIRJZ51Ki8AwYquUHLM4xK75o7XCI3/eBjwzfcnP6zvMZZboOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvF95wdw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cRYZQveouB7w8sQUjZxnFLtULNFC9QLdRcFuaqnykSwArJ/xl3yNaO2/mF8DzH1L5a0FixC8IQbnPxHnXEO9J4RNfYqoqioN5DGHG469Q6sYAvY8gHz6kt6+yjvDRmpLhA5FbFNn/hPyRoPxmeDKydv3en5c3R8Y36WpmOQoAMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4F1yJ1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvF95wdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A9EC4CEF1;
-	Mon, 27 Oct 2025 19:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4F1yJ1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77FBC4CEF1;
+	Mon, 27 Oct 2025 19:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593125;
-	bh=CJPvugoE+JWmFtPfZ3ur3CDi+xxKja5ld1wcnoclPkg=;
+	s=korg; t=1761593128;
+	bh=o6kpFex0oGALyM6+jfs53DPbxdBkaT2y35j3umLqL9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvF95wdwkA2Rx2ZCADRS/P/ry1bpB1VNgpH9HeloVSiqqPolnTFcd8H05FeZN6kgZ
-	 bCPFU/6XVAeDQ4trasZNvzFJzSAWmEWAZE0M+58XXoX433YhUzoqRF5SBIQMqwH+I6
-	 kSm7oV4Tf6CGZUUHsbR/+l41k0vGzZoLrXyqAvsw=
+	b=e4F1yJ1nzGaGdKXtm+C+N3up1n/9bFDMJfzTDXxmKFsfqPmCP3DCZfVy5eAXtZxkS
+	 wgvKm0n6E9yKBjDchwfsenAxnF9iqrq2QjFH7iOr9YlxJQRk/y28gpPPDwTRFEfEvm
+	 yQADVgV52wVc0tnJmyVMebaMlEF+CfAMI9LE7eVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 022/184] powerpc/32: Remove PAGE_KERNEL_TEXT to fix startup failure
-Date: Mon, 27 Oct 2025 19:35:04 +0100
-Message-ID: <20251027183515.526839740@linuxfoundation.org>
+Subject: [PATCH 6.17 023/184] riscv: mm: Return intended SATP mode for noXlvl options
+Date: Mon, 27 Oct 2025 19:35:05 +0100
+Message-ID: <20251027183515.553021041@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -53,105 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit 9316512b717f6f25c4649b3fdb0a905b6a318e9f ]
+[ Upstream commit f3243bed39c26ce0f13e6392a634f91d409b2d02 ]
 
-PAGE_KERNEL_TEXT is an old macro that is used to tell kernel whether
-kernel text has to be mapped read-only or read-write based on build
-time options.
+Change the return value of match_noXlvl() to return the SATP mode that
+will be used, rather than the mode being disabled. This enables unified
+logic for return value judgement with the function that obtains mmu-type
+from the fdt, avoiding extra conversion. This only changes the naming,
+with no functional impact.
 
-But nowadays, with functionnalities like jump_labels, static links,
-etc ... more only less all kernels need to be read-write at some
-point, and some combinations of configs failed to work due to
-innacurate setting of PAGE_KERNEL_TEXT. On the other hand, today
-we have CONFIG_STRICT_KERNEL_RWX which implements a more controlled
-access to kernel modifications.
-
-Instead of trying to keep PAGE_KERNEL_TEXT accurate with all
-possible options that may imply kernel text modification, always
-set kernel text read-write at startup and rely on
-CONFIG_STRICT_KERNEL_RWX to provide accurate protection.
-
-Do this by passing PAGE_KERNEL_X to map_kernel_page() in
-__maping_ram_chunk() instead of passing PAGE_KERNEL_TEXT. Once
-this is done, the only remaining user of PAGE_KERNEL_TEXT is
-mmu_mark_initmem_nx() which uses it in a call to setibat().
-As setibat() ignores the RW/RO, we can seamlessly replace
-PAGE_KERNEL_TEXT by PAGE_KERNEL_X here as well and get rid of
-PAGE_KERNEL_TEXT completely.
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/342b4120-911c-4723-82ec-d8c9b03a8aef@mailbox.org/
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8e2d793abf87ae3efb8f6dce10f974ac0eda61b8.1757412205.git.christophe.leroy@csgroup.eu
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Link: https://lore.kernel.org/r/20250722-satp-from-fdt-v1-1-5ba22218fa5f@pigmoral.tech
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/pgtable.h | 12 ------------
- arch/powerpc/mm/book3s32/mmu.c     |  4 ++--
- arch/powerpc/mm/pgtable_32.c       |  2 +-
- 3 files changed, 3 insertions(+), 15 deletions(-)
+ arch/riscv/kernel/pi/cmdline_early.c | 4 ++--
+ arch/riscv/mm/init.c                 | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/pgtable.h b/arch/powerpc/include/asm/pgtable.h
-index 93d77ad5a92fa..d8f944a5a0378 100644
---- a/arch/powerpc/include/asm/pgtable.h
-+++ b/arch/powerpc/include/asm/pgtable.h
-@@ -20,18 +20,6 @@ struct mm_struct;
- #include <asm/nohash/pgtable.h>
- #endif /* !CONFIG_PPC_BOOK3S */
+diff --git a/arch/riscv/kernel/pi/cmdline_early.c b/arch/riscv/kernel/pi/cmdline_early.c
+index fbcdc9e4e1432..389d086a07187 100644
+--- a/arch/riscv/kernel/pi/cmdline_early.c
++++ b/arch/riscv/kernel/pi/cmdline_early.c
+@@ -41,9 +41,9 @@ static char *get_early_cmdline(uintptr_t dtb_pa)
+ static u64 match_noXlvl(char *cmdline)
+ {
+ 	if (strstr(cmdline, "no4lvl"))
+-		return SATP_MODE_48;
++		return SATP_MODE_39;
+ 	else if (strstr(cmdline, "no5lvl"))
+-		return SATP_MODE_57;
++		return SATP_MODE_48;
  
--/*
-- * Protection used for kernel text. We want the debuggers to be able to
-- * set breakpoints anywhere, so don't write protect the kernel text
-- * on platforms where such control is possible.
-- */
--#if defined(CONFIG_KGDB) || defined(CONFIG_XMON) || defined(CONFIG_BDI_SWITCH) || \
--	defined(CONFIG_KPROBES) || defined(CONFIG_DYNAMIC_FTRACE)
--#define PAGE_KERNEL_TEXT	PAGE_KERNEL_X
--#else
--#define PAGE_KERNEL_TEXT	PAGE_KERNEL_ROX
--#endif
--
- /* Make modules code happy. We don't set RO yet */
- #define PAGE_KERNEL_EXEC	PAGE_KERNEL_X
+ 	return 0;
+ }
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 15683ae13fa5d..054265b3f2680 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -864,9 +864,9 @@ static __init void set_satp_mode(uintptr_t dtb_pa)
  
-diff --git a/arch/powerpc/mm/book3s32/mmu.c b/arch/powerpc/mm/book3s32/mmu.c
-index be9c4106e22f0..c42ecdf94e48c 100644
---- a/arch/powerpc/mm/book3s32/mmu.c
-+++ b/arch/powerpc/mm/book3s32/mmu.c
-@@ -204,7 +204,7 @@ int mmu_mark_initmem_nx(void)
+ 	kernel_map.page_offset = PAGE_OFFSET_L5;
  
- 	for (i = 0; i < nb - 1 && base < top;) {
- 		size = bat_block_size(base, top);
--		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
-+		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
- 		base += size;
- 	}
- 	if (base < top) {
-@@ -215,7 +215,7 @@ int mmu_mark_initmem_nx(void)
- 				pr_warn("Some RW data is getting mapped X. "
- 					"Adjust CONFIG_DATA_SHIFT to avoid that.\n");
- 		}
--		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
-+		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
- 		base += size;
- 	}
- 	for (; i < nb; i++)
-diff --git a/arch/powerpc/mm/pgtable_32.c b/arch/powerpc/mm/pgtable_32.c
-index 15276068f657d..0c9ef705803e9 100644
---- a/arch/powerpc/mm/pgtable_32.c
-+++ b/arch/powerpc/mm/pgtable_32.c
-@@ -104,7 +104,7 @@ static void __init __mapin_ram_chunk(unsigned long offset, unsigned long top)
- 	p = memstart_addr + s;
- 	for (; s < top; s += PAGE_SIZE) {
- 		ktext = core_kernel_text(v);
--		map_kernel_page(v, p, ktext ? PAGE_KERNEL_TEXT : PAGE_KERNEL);
-+		map_kernel_page(v, p, ktext ? PAGE_KERNEL_X : PAGE_KERNEL);
- 		v += PAGE_SIZE;
- 		p += PAGE_SIZE;
- 	}
+-	if (satp_mode_cmdline == SATP_MODE_57) {
++	if (satp_mode_cmdline == SATP_MODE_48) {
+ 		disable_pgtable_l5();
+-	} else if (satp_mode_cmdline == SATP_MODE_48) {
++	} else if (satp_mode_cmdline == SATP_MODE_39) {
+ 		disable_pgtable_l5();
+ 		disable_pgtable_l4();
+ 		return;
 -- 
 2.51.0
 
