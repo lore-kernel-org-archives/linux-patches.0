@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2392F5A1B;
-	Mon, 27 Oct 2025 19:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CC33090CC;
+	Mon, 27 Oct 2025 19:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593156; cv=none; b=mK6cYNAiFdXHM1qr/mjE3GNzPkgYM5aSLZpzw95RhONdnpvNEYT/5U5JSbhaRowBZtPADRxd2fKt8RtN62jnXAy6Pht8LTIWfUcwG5omhya2mhaV2hMUjyNMez+GcJGPMRTkQ1BIdr9BgVkF8McqhHVtxLNucdhHimwnmuWdW/w=
+	t=1761593159; cv=none; b=kaftolZ/JtQftodKQuekCITLBwYePsYy3BYegAeUO7qpLN6AkGxlOs8wpBew0su6JQEuBfoMQgUx4EKMolaDsuJVAmMrPrzH/uNYCFfNQEpV3Dcuo19QzfXqgomvBX9v4SsFy2Br8WNlWAm41stQGvR6SbXDApfpiaPFX6xode4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593156; c=relaxed/simple;
-	bh=iiskUz0AnLKbMCxmUBTetguHKV7XvzM9roT5R+7nu/M=;
+	s=arc-20240116; t=1761593159; c=relaxed/simple;
+	bh=bTlrUGWZ99/DbmxctI6dQ+iCnMJku/+pi3k2M5xE328=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwOOGmzcXQJ3fflYlRbkHp7sQrQhUCVnyHAznuG2P81CD4CKny0Zr/bEKG0s/A97sLWJOeZPQiXsKUJLHpPuYm0aBIK0qcrIJAnzPqX9O4x4pxvdeM+EUNAQVBlkLrwOwAisNzNHLrN7D9JvDkHJieykAXHVM1J365sQSR8oFKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOORuS7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Doq1nuVMreBN8uJwTgihpClBl6eh+LSdkbrk6D6gi2CbvPUx0NytEjHScI6Ha3OPgT53O1d82N8q89dtTQhtHJTVmZmqq5aveDW3ncM5WJceYAjJIBc5DnJpvSNYO/pHZzvQIzpG4jvlfKnBUMxKPe4e3avZBE9JB8OI8qzDjow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2BcPtww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOORuS7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49E6C4CEF1;
-	Mon, 27 Oct 2025 19:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2BcPtww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3926C4CEF1;
+	Mon, 27 Oct 2025 19:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593156;
-	bh=iiskUz0AnLKbMCxmUBTetguHKV7XvzM9roT5R+7nu/M=;
+	s=korg; t=1761593159;
+	bh=bTlrUGWZ99/DbmxctI6dQ+iCnMJku/+pi3k2M5xE328=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOORuS7t9x7+0/UBTEJxLGqXicX72g7k5tJNU/lTCSzsUthsFRzSsgth8O4YDzV6v
-	 IlwP+iBt7KgJWqbOH2fLzhh+SZKuU08yGMmNLFyR47th4DFFapf35b9/y996TYiWGn
-	 VB0BlpW30arYVgrgnsqJ4sQzoP9gtTngEc8GtoCs=
+	b=q2BcPtwwpWZuf8XFv7dqeE4/rr0oXaFGLOzTJQwB08NRd7ZRCJOFaWiZ1pU8+ghmT
+	 KrC5Hn7R90zIXEPlMLF+tMhMfUDRls8DHE6BakhMeRyxpdDgubW3j+FcamyzBeQmMM
+	 2eINuXpbX1VE2SPm2NG1nmR04gleF3gF4QAJKYHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 008/184] s390/pkey: Forward keygenflags to ep11_unwrapkey
-Date: Mon, 27 Oct 2025 19:34:50 +0100
-Message-ID: <20251027183515.162204780@linuxfoundation.org>
+Subject: [PATCH 6.17 009/184] hfs: clear offset and space out of valid records in b-tree node
+Date: Mon, 27 Oct 2025 19:34:51 +0100
+Message-ID: <20251027183515.187532408@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,47 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 11aa54ba4cfa5390ea47c9a1fc62502abce1f6b9 ]
+[ Upstream commit 18b07c44f245beb03588b00b212b38fce9af7cc9 ]
 
-The pkey ioctl PKEY_CLR2SECK2 describes in the pkey.h header file
-the parameter 'keygenflags' which is forwarded to the handler
-functions which actually deal with the clear key to secure key
-operation. The ep11 handler module function ep11_clr2keyblob()
-function receives this parameter but does not forward it to the
-underlying function ep11_unwrapkey() on invocation. So in the end
-the user of this ioctl could not forward additional key generation
-flags to the ep11 implementation and thus was unable to modify the
-key generation process in any way. So now call ep11_unwrapkey()
-with the real keygenflags instead of 0 and thus the user of this
-ioctl can for example via keygenflags provide valid combinations
-of XCP_BLOB_* flags.
+Currently, hfs_brec_remove() executes moving records
+towards the location of deleted record and it updates
+offsets of moved records. However, the hfs_brec_remove()
+logic ignores the "mess" of b-tree node's free space and
+it doesn't touch the offsets out of records number.
+Potentially, it could confuse fsck or driver logic or
+to be a reason of potential corruption cases.
 
-Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+This patch reworks the logic of hfs_brec_remove()
+by means of clearing freed space of b-tree node
+after the records moving. And it clear the last
+offset that keeping old location of free space
+because now the offset before this one is keeping
+the actual offset to the free space after the record
+deletion.
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250815194918.38165-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_ep11misc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/hfs/brec.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_ep11misc.c b/drivers/s390/crypto/zcrypt_ep11misc.c
-index 3bf09a89a0894..e92e2fd8ce5da 100644
---- a/drivers/s390/crypto/zcrypt_ep11misc.c
-+++ b/drivers/s390/crypto/zcrypt_ep11misc.c
-@@ -1405,7 +1405,9 @@ int ep11_clr2keyblob(u16 card, u16 domain, u32 keybitsize, u32 keygenflags,
- 	/* Step 3: import the encrypted key value as a new key */
- 	rc = ep11_unwrapkey(card, domain, kek, keklen,
- 			    encbuf, encbuflen, 0, def_iv,
--			    keybitsize, 0, keybuf, keybufsize, keytype, xflags);
-+			    keybitsize, keygenflags,
-+			    keybuf, keybufsize,
-+			    keytype, xflags);
- 	if (rc) {
- 		ZCRYPT_DBF_ERR("%s importing key value as new key failed, rc=%d\n",
- 			       __func__, rc);
+diff --git a/fs/hfs/brec.c b/fs/hfs/brec.c
+index 896396554bcc1..b01db1fae147c 100644
+--- a/fs/hfs/brec.c
++++ b/fs/hfs/brec.c
+@@ -179,6 +179,7 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	struct hfs_btree *tree;
+ 	struct hfs_bnode *node, *parent;
+ 	int end_off, rec_off, data_off, size;
++	int src, dst, len;
+ 
+ 	tree = fd->tree;
+ 	node = fd->bnode;
+@@ -208,10 +209,14 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	}
+ 	hfs_bnode_write_u16(node, offsetof(struct hfs_bnode_desc, num_recs), node->num_recs);
+ 
+-	if (rec_off == end_off)
+-		goto skip;
+ 	size = fd->keylength + fd->entrylength;
+ 
++	if (rec_off == end_off) {
++		src = fd->keyoffset;
++		hfs_bnode_clear(node, src, size);
++		goto skip;
++	}
++
+ 	do {
+ 		data_off = hfs_bnode_read_u16(node, rec_off);
+ 		hfs_bnode_write_u16(node, rec_off + 2, data_off - size);
+@@ -219,9 +224,23 @@ int hfs_brec_remove(struct hfs_find_data *fd)
+ 	} while (rec_off >= end_off);
+ 
+ 	/* fill hole */
+-	hfs_bnode_move(node, fd->keyoffset, fd->keyoffset + size,
+-		       data_off - fd->keyoffset - size);
++	dst = fd->keyoffset;
++	src = fd->keyoffset + size;
++	len = data_off - src;
++
++	hfs_bnode_move(node, dst, src, len);
++
++	src = dst + len;
++	len = data_off - src;
++
++	hfs_bnode_clear(node, src, len);
++
+ skip:
++	/*
++	 * Remove the obsolete offset to free space.
++	 */
++	hfs_bnode_write_u16(node, end_off, 0);
++
+ 	hfs_bnode_dump(node);
+ 	if (!fd->record)
+ 		hfs_brec_update_parent(fd);
 -- 
 2.51.0
 
