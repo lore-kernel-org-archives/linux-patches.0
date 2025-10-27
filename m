@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776622D8377;
-	Mon, 27 Oct 2025 19:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D09315D44;
+	Mon, 27 Oct 2025 19:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592870; cv=none; b=P0Ks3LL2mkeaE7kiraB4t7aFat2Zd0kvoRvRA6ILlAsTZf/iuNImbQQmrPV/8sg299uQsNGNPG5mhDvL7uX/GUulvlJFPSiuUipTp/a6xFP8+a0Hhzrp5/G4euX5MfM597drkYsIkkaG1dGc4brO7jb5Rzt31p1LVajamSwCCus=
+	t=1761592873; cv=none; b=UCc7CrYzxkzNlsoK/pHUpn726lTOrcYze8oS316VECYhhdPTxDqaLaVsxp2kWDDGeIEnEF0Pm1T+JIwspaDF8jY1/4CVX2OK2F2R6m2Wyb2tnA/EOdmYSpJj8r69tOMOqAz+ty4x6nN/ujlACKuZVobZ2RVy1g4EI7PpDXIv6bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592870; c=relaxed/simple;
-	bh=xeMObYoLgmoFSY4R0nHyIOsoq7aiRB2pRxIiALWll34=;
+	s=arc-20240116; t=1761592873; c=relaxed/simple;
+	bh=tozWThGsbSJn6ZkPMvPThlIwp0HIVOIOuQBHSSG/bOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmGuklKPVvEXl/9FixYfJrvHwe8d6cKPAo+2NuQygbqgLgZ5Q17Kq7uaWqOzXTMbwTL2xb4xinJAhBryByBMoqVdrLiIbyF7vzDMYzHZYQDv9Al58qL8brvFZJZYjVkuqad8M1iGeEWYoX+E+GdYzXnzD8+ZcfofSEQXDWd+miQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea0gW6JP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBcV1QLMpH2GZeaDOwSLOJU9/oMO+JapPQsdJFqzvAHyvJfrDAjfGF0flJqUj3J3UW9Hdu5GVfPEp/iYi0UNtsWvsypFOMSz9rQ3tINVyUXJmysnZwUvewSd8vgQPEutHrZHgIcW2ZwrYEM5cFe5py3nYc4TJziO+ztkgeSd6N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9XvR7S9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea0gW6JP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2B4C4CEFD;
-	Mon, 27 Oct 2025 19:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9XvR7S9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D355C4CEF1;
+	Mon, 27 Oct 2025 19:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592870;
-	bh=xeMObYoLgmoFSY4R0nHyIOsoq7aiRB2pRxIiALWll34=;
+	s=korg; t=1761592872;
+	bh=tozWThGsbSJn6ZkPMvPThlIwp0HIVOIOuQBHSSG/bOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ea0gW6JPy7jsbSnzpWdfB6KmS6xvNGKkkkTxqGxGsWBy9wV/QU5igZev7weMqgawK
-	 sVZoZX8gcifmsIg/LqR0/ya5A5HigD8NF1qmP/DfIZEwAfIhPS8uYg8+Zm9pnVuXaG
-	 LL1dJD0J4A1XNA/JnjxFr9aUySj7S5VzU6DXW88k=
+	b=P9XvR7S9ks/Y1AqSGh4lT7kh2LYUSE43OlJe51ILr9a9TpIQPCjzkFfyffBFDdniU
+	 AQOYbXY3mmZqIL0fJOdUMv4rM65ajrMBIWkvKh9mYRIrFi86l1FqIHY+ggpyP15uaq
+	 GXc1bUAu1pYbjDryyeXUtJAykuM/1J7XXeKlDecQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Acs <acsjakub@amazon.de>,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Christian Brauner <brauner@kernel.org>,
-	linux-unionfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.12 044/117] fs/notify: call exportfs_encode_fid with s_umount
-Date: Mon, 27 Oct 2025 19:36:10 +0100
-Message-ID: <20251027183455.182140414@linuxfoundation.org>
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Vincent Bernat <vincent@bernat.ch>,
+	Tonghao Zhang <tonghao@bamaicloud.com>
+Subject: [PATCH 6.12 045/117] net: bonding: fix possible peer notify event loss or dup issue
+Date: Mon, 27 Oct 2025 19:36:11 +0100
+Message-ID: <20251027183455.210234466@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -56,106 +57,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Acs <acsjakub@amazon.de>
+From: Tonghao Zhang <tonghao@bamaicloud.com>
 
-commit a7c4bb43bfdc2b9f06ee9d036028ed13a83df42a upstream.
+commit 10843e1492e474c02b91314963161731fa92af91 upstream.
 
-Calling intotify_show_fdinfo() on fd watching an overlayfs inode, while
-the overlayfs is being unmounted, can lead to dereferencing NULL ptr.
+If the send_peer_notif counter and the peer event notify are not synchronized.
+It may cause problems such as the loss or dup of peer notify event.
 
-This issue was found by syzkaller.
+Before this patch:
+- If should_notify_peers is true and the lock for send_peer_notif-- fails, peer
+  event may be sent again in next mii_monitor loop, because should_notify_peers
+  is still true.
+- If should_notify_peers is true and the lock for send_peer_notif-- succeeded,
+  but the lock for peer event fails, the peer event will be lost.
 
-Race Condition Diagram:
+This patch locks the RTNL for send_peer_notif, events, and commit simultaneously.
 
-Thread 1                           Thread 2
---------                           --------
-
-generic_shutdown_super()
- shrink_dcache_for_umount
-  sb->s_root = NULL
-
-                    |
-                    |             vfs_read()
-                    |              inotify_fdinfo()
-                    |               * inode get from mark *
-                    |               show_mark_fhandle(m, inode)
-                    |                exportfs_encode_fid(inode, ..)
-                    |                 ovl_encode_fh(inode, ..)
-                    |                  ovl_check_encode_origin(inode)
-                    |                   * deref i_sb->s_root *
-                    |
-                    |
-                    v
- fsnotify_sb_delete(sb)
-
-Which then leads to:
-
-[   32.133461] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-[   32.134438] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[   32.135032] CPU: 1 UID: 0 PID: 4468 Comm: systemd-coredum Not tainted 6.17.0-rc6 #22 PREEMPT(none)
-
-<snip registers, unreliable trace>
-
-[   32.143353] Call Trace:
-[   32.143732]  ovl_encode_fh+0xd5/0x170
-[   32.144031]  exportfs_encode_inode_fh+0x12f/0x300
-[   32.144425]  show_mark_fhandle+0xbe/0x1f0
-[   32.145805]  inotify_fdinfo+0x226/0x2d0
-[   32.146442]  inotify_show_fdinfo+0x1c5/0x350
-[   32.147168]  seq_show+0x530/0x6f0
-[   32.147449]  seq_read_iter+0x503/0x12a0
-[   32.148419]  seq_read+0x31f/0x410
-[   32.150714]  vfs_read+0x1f0/0x9e0
-[   32.152297]  ksys_read+0x125/0x240
-
-IOW ovl_check_encode_origin derefs inode->i_sb->s_root, after it was set
-to NULL in the unmount path.
-
-Fix it by protecting calling exportfs_encode_fid() from
-show_mark_fhandle() with s_umount lock.
-
-This form of fix was suggested by Amir in [1].
-
-[1]: https://lore.kernel.org/all/CAOQ4uxhbDwhb+2Brs1UdkoF0a3NSdBAOQPNfEHjahrgoKJpLEw@mail.gmail.com/
-
-Fixes: c45beebfde34 ("ovl: support encoding fid from inode with no alias")
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: linux-unionfs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 07a4ddec3ce9 ("bonding: add an option to specify a delay between peer notifications")
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Hangbin Liu <liuhangbin@gmail.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Vincent Bernat <vincent@bernat.ch>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20251021050933.46412-1-tonghao@bamaicloud.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fdinfo.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/bonding/bond_main.c |   40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
---- a/fs/notify/fdinfo.c
-+++ b/fs/notify/fdinfo.c
-@@ -17,6 +17,7 @@
- #include "fanotify/fanotify.h"
- #include "fdinfo.h"
- #include "fsnotify.h"
-+#include "../internal.h"
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2951,7 +2951,7 @@ static void bond_mii_monitor(struct work
+ {
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    mii_work.work);
+-	bool should_notify_peers = false;
++	bool should_notify_peers;
+ 	bool commit;
+ 	unsigned long delay;
+ 	struct slave *slave;
+@@ -2963,30 +2963,33 @@ static void bond_mii_monitor(struct work
+ 		goto re_arm;
  
- #if defined(CONFIG_PROC_FS)
- 
-@@ -46,7 +47,12 @@ static void show_mark_fhandle(struct seq
- 
- 	size = f->handle_bytes >> 2;
- 
-+	if (!super_trylock_shared(inode->i_sb))
-+		return;
+ 	rcu_read_lock();
 +
- 	ret = exportfs_encode_fid(inode, (struct fid *)f->f_handle, &size);
-+	up_read(&inode->i_sb->s_umount);
-+
- 	if ((ret == FILEID_INVALID) || (ret < 0))
- 		return;
+ 	should_notify_peers = bond_should_notify_peers(bond);
+ 	commit = !!bond_miimon_inspect(bond);
+-	if (bond->send_peer_notif) {
+-		rcu_read_unlock();
+-		if (rtnl_trylock()) {
+-			bond->send_peer_notif--;
+-			rtnl_unlock();
+-		}
+-	} else {
+-		rcu_read_unlock();
+-	}
  
+-	if (commit) {
++	rcu_read_unlock();
++
++	if (commit || bond->send_peer_notif) {
+ 		/* Race avoidance with bond_close cancel of workqueue */
+ 		if (!rtnl_trylock()) {
+ 			delay = 1;
+-			should_notify_peers = false;
+ 			goto re_arm;
+ 		}
+ 
+-		bond_for_each_slave(bond, slave, iter) {
+-			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
++		if (commit) {
++			bond_for_each_slave(bond, slave, iter) {
++				bond_commit_link_state(slave,
++						       BOND_SLAVE_NOTIFY_LATER);
++			}
++			bond_miimon_commit(bond);
++		}
++
++		if (bond->send_peer_notif) {
++			bond->send_peer_notif--;
++			if (should_notify_peers)
++				call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
++							 bond->dev);
+ 		}
+-		bond_miimon_commit(bond);
+ 
+ 		rtnl_unlock();	/* might sleep, hold no other locks */
+ 	}
+@@ -2994,13 +2997,6 @@ static void bond_mii_monitor(struct work
+ re_arm:
+ 	if (bond->params.miimon)
+ 		queue_delayed_work(bond->wq, &bond->mii_work, delay);
+-
+-	if (should_notify_peers) {
+-		if (!rtnl_trylock())
+-			return;
+-		call_netdevice_notifiers(NETDEV_NOTIFY_PEERS, bond->dev);
+-		rtnl_unlock();
+-	}
+ }
+ 
+ static int bond_upper_dev_walk(struct net_device *upper,
 
 
