@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE0E233735;
-	Mon, 27 Oct 2025 19:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB91209F43;
+	Mon, 27 Oct 2025 19:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593262; cv=none; b=jVjKITqV56ysQJ6BfiEJ//q2doH+J8SAUrZWLk+4OCc1eV0AM8lmUmA5hBBDoWHBAO8IG7qFXXHSOBxAzL67Sd8iaCGLaIJ3R2O0HJQ9gxU346v2hDYj6/D/UPeNupGm8fBRhdi6vDdGo2TjWtn+Jlm2yajFhe8/q4Bi2h6B5Xk=
+	t=1761593265; cv=none; b=gyy4pr9LcZWyZwyNFDDwmNOv9jp7kmBWwbfpXRRzvnvCboTfwmpwMH0UucABJRmTF4vERiUchJGQCfuZsFb31Tposv3GR6tvUJlxctpKxnISnBo113aPKIxO2Cm39HlibTnSYnDl54qalMerHdpQ2c+VMran/jaXwGDyt7kBPOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593262; c=relaxed/simple;
-	bh=ddhjY1xpn6azFvGZz2U+CICxCBn2xQPD1uVXN4dblMM=;
+	s=arc-20240116; t=1761593265; c=relaxed/simple;
+	bh=OV6B5HfVTcStatJmtK11W9Xl5k2g1uIKL72BV57hEAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/oaK85M2iglJKJ1eM1toF8NMaXr239f6BXfjRCzXV6VqpmltVfBJmqj1Wdz+W4YQSzvpG8/vz+DxVNeXfeG8UcMbWH49VJcfdfnyFZ2mfa0+Uq+fGddcH5OqUmSAj1aeEjS5jUVCQp8ValGp0XOaIBIDzZ7tyns3XC/kJ0vI+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5UaKRzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3/53w/SfVdrlB5uk12HzDmGSDrns6EE8OVrQdDEqAWt/gFt3EeOsvurRbZsfOWAQIhR74BQrNshHrQtOuBkUWDlN9+BTAuhIPmtUfTemBGZnjecxr/8moY9aP6YpOgxVbn+Lzw7DhLZfIvL6PrBhNhB73Ne3YKxeC/bigwZzGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wd7hJGiW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5UaKRzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC38CC4CEF1;
-	Mon, 27 Oct 2025 19:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wd7hJGiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B4EC113D0;
+	Mon, 27 Oct 2025 19:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593262;
-	bh=ddhjY1xpn6azFvGZz2U+CICxCBn2xQPD1uVXN4dblMM=;
+	s=korg; t=1761593264;
+	bh=OV6B5HfVTcStatJmtK11W9Xl5k2g1uIKL72BV57hEAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5UaKRzzB00ze6GB+TRI95nUFUYk6dkarrj77S3ijBJE2X/KGBnPVXiXVUNU+PKs0
-	 H5JzA3vAiD47zLu4wEbJ4sUyLv0UBsMjuShevTLHTLgm3hRKKUL8GxZvxYhwRcSjH/
-	 P+yJuDMSc8z/aQlSn3vdMxNedZfX6UYZ8mQQRLOU=
+	b=Wd7hJGiWUVDOc3qzrQBLNeFrW1DNUcc3+NYffuuyd4Manag8Y6QOjwy+IyDf+3xOK
+	 T6yjanF8zhZPwifsBhpMFgsokQIRixigD8mmtSLZFxmn0mLtu6o4yEGEONsqla8OTO
+	 YiuYBmTrsoBjhfCmLyVqVdVpIQXg7R2q8J1uiRTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 037/184] erofs: fix crafted invalid cases for encoded extents
-Date: Mon, 27 Oct 2025 19:35:19 +0100
-Message-ID: <20251027183515.912028168@linuxfoundation.org>
+Subject: [PATCH 6.17 038/184] net: enetc: fix the deadlock of enetc_mdio_lock
+Date: Mon, 27 Oct 2025 19:35:20 +0100
+Message-ID: <20251027183515.938213030@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,69 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
 
-[ Upstream commit a429b76114aaca3ef1aff4cd469dcf025431bd11 ]
+[ Upstream commit 50bd33f6b3922a6b760aa30d409cae891cec8fb5 ]
 
-Robert recently reported two corrupted images that can cause system
-crashes, which are related to the new encoded extents introduced
-in Linux 6.15:
+After applying the workaround for err050089, the LS1028A platform
+experiences RCU stalls on RT kernel. This issue is caused by the
+recursive acquisition of the read lock enetc_mdio_lock. Here list some
+of the call stacks identified under the enetc_poll path that may lead to
+a deadlock:
 
-  - The first one [1] has plen != 0 (e.g. plen == 0x2000000) but
-    (plen & Z_EROFS_EXTENT_PLEN_MASK) == 0. It is used to represent
-    special extents such as sparse extents (!EROFS_MAP_MAPPED), but
-    previously only plen == 0 was handled;
+enetc_poll
+  -> enetc_lock_mdio
+  -> enetc_clean_rx_ring OR napi_complete_done
+     -> napi_gro_receive
+        -> enetc_start_xmit
+           -> enetc_lock_mdio
+           -> enetc_map_tx_buffs
+           -> enetc_unlock_mdio
+  -> enetc_unlock_mdio
 
-  - The second one [2] has pa 0xffffffffffdcffed and plen 0xb4000,
-    then "cur [0xfffffffffffff000] += bvec.bv_len [0x1000]" in
-    "} while ((cur += bvec.bv_len) < end);" wraps around, causing an
-    out-of-bound access of pcl->compressed_bvecs[] in
-    z_erofs_submit_queue().  EROFS only supports 48-bit physical block
-    addresses (up to 1EiB for 4k blocks), so add a sanity check to
-    enforce this.
+After enetc_poll acquires the read lock, a higher-priority writer attempts
+to acquire the lock, causing preemption. The writer detects that a
+read lock is already held and is scheduled out. However, readers under
+enetc_poll cannot acquire the read lock again because a writer is already
+waiting, leading to a thread hang.
 
-Fixes: 1d191b4ca51d ("erofs: implement encoded extent metadata")
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Closes: https://lore.kernel.org/r/75022.1759355830@localhost  [1]
-Closes: https://lore.kernel.org/r/80524.1760131149@localhost  [2]
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Currently, the deadlock is avoided by adjusting enetc_lock_mdio to prevent
+recursive lock acquisition.
+
+Fixes: 6d36ecdbc441 ("net: enetc: take the MDIO lock only once per NAPI poll cycle")
+Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Acked-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251015021427.180757-1-jianpeng.chang.cn@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 25 ++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 798223e6da9ce..87032f90fe840 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -596,7 +596,7 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
- 			vi->z_fragmentoff = map->m_plen;
- 			if (recsz > offsetof(struct z_erofs_extent, pstart_lo))
- 				vi->z_fragmentoff |= map->m_pa << 32;
--		} else if (map->m_plen) {
-+		} else if (map->m_plen & Z_EROFS_EXTENT_PLEN_MASK) {
- 			map->m_flags |= EROFS_MAP_MAPPED |
- 				EROFS_MAP_FULL_MAPPED | EROFS_MAP_ENCODED;
- 			fmt = map->m_plen >> Z_EROFS_EXTENT_PLEN_FMT_BIT;
-@@ -715,6 +715,7 @@ static int z_erofs_map_sanity_check(struct inode *inode,
- 				    struct erofs_map_blocks *map)
- {
- 	struct erofs_sb_info *sbi = EROFS_I_SB(inode);
-+	u64 pend;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index e4287725832e0..5496b4cb2a64a 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1558,6 +1558,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 	/* next descriptor to process */
+ 	i = rx_ring->next_to_clean;
  
- 	if (!(map->m_flags & EROFS_MAP_ENCODED))
- 		return 0;
-@@ -732,6 +733,10 @@ static int z_erofs_map_sanity_check(struct inode *inode,
- 	if (unlikely(map->m_plen > Z_EROFS_PCLUSTER_MAX_SIZE ||
- 		     map->m_llen > Z_EROFS_PCLUSTER_MAX_DSIZE))
- 		return -EOPNOTSUPP;
-+	/* Filesystems beyond 48-bit physical block addresses are invalid */
-+	if (unlikely(check_add_overflow(map->m_pa, map->m_plen, &pend) ||
-+		     (pend >> sbi->blkszbits) >= BIT_ULL(48)))
-+		return -EFSCORRUPTED;
- 	return 0;
++	enetc_lock_mdio();
++
+ 	while (likely(rx_frm_cnt < work_limit)) {
+ 		union enetc_rx_bd *rxbd;
+ 		struct sk_buff *skb;
+@@ -1593,7 +1595,9 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 		rx_byte_cnt += skb->len + ETH_HLEN;
+ 		rx_frm_cnt++;
+ 
++		enetc_unlock_mdio();
+ 		napi_gro_receive(napi, skb);
++		enetc_lock_mdio();
+ 	}
+ 
+ 	rx_ring->next_to_clean = i;
+@@ -1601,6 +1605,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 	rx_ring->stats.packets += rx_frm_cnt;
+ 	rx_ring->stats.bytes += rx_byte_cnt;
+ 
++	enetc_unlock_mdio();
++
+ 	return rx_frm_cnt;
  }
+ 
+@@ -1910,6 +1916,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 	/* next descriptor to process */
+ 	i = rx_ring->next_to_clean;
+ 
++	enetc_lock_mdio();
++
+ 	while (likely(rx_frm_cnt < work_limit)) {
+ 		union enetc_rx_bd *rxbd, *orig_rxbd;
+ 		struct xdp_buff xdp_buff;
+@@ -1973,7 +1981,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 			 */
+ 			enetc_bulk_flip_buff(rx_ring, orig_i, i);
+ 
++			enetc_unlock_mdio();
+ 			napi_gro_receive(napi, skb);
++			enetc_lock_mdio();
+ 			break;
+ 		case XDP_TX:
+ 			tx_ring = priv->xdp_tx_ring[rx_ring->index];
+@@ -2008,7 +2018,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 			}
+ 			break;
+ 		case XDP_REDIRECT:
++			enetc_unlock_mdio();
+ 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
++			enetc_lock_mdio();
+ 			if (unlikely(err)) {
+ 				enetc_xdp_drop(rx_ring, orig_i, i);
+ 				rx_ring->stats.xdp_redirect_failures++;
+@@ -2028,8 +2040,11 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 	rx_ring->stats.packets += rx_frm_cnt;
+ 	rx_ring->stats.bytes += rx_byte_cnt;
+ 
+-	if (xdp_redirect_frm_cnt)
++	if (xdp_redirect_frm_cnt) {
++		enetc_unlock_mdio();
+ 		xdp_do_flush();
++		enetc_lock_mdio();
++	}
+ 
+ 	if (xdp_tx_frm_cnt)
+ 		enetc_update_tx_ring_tail(tx_ring);
+@@ -2038,6 +2053,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 		enetc_refill_rx_ring(rx_ring, enetc_bd_unused(rx_ring) -
+ 				     rx_ring->xdp.xdp_tx_in_flight);
+ 
++	enetc_unlock_mdio();
++
+ 	return rx_frm_cnt;
+ }
+ 
+@@ -2056,6 +2073,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 	for (i = 0; i < v->count_tx_rings; i++)
+ 		if (!enetc_clean_tx_ring(&v->tx_ring[i], budget))
+ 			complete = false;
++	enetc_unlock_mdio();
+ 
+ 	prog = rx_ring->xdp.prog;
+ 	if (prog)
+@@ -2067,10 +2085,8 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 	if (work_done)
+ 		v->rx_napi_work = true;
+ 
+-	if (!complete) {
+-		enetc_unlock_mdio();
++	if (!complete)
+ 		return budget;
+-	}
+ 
+ 	napi_complete_done(napi, work_done);
+ 
+@@ -2079,6 +2095,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 
+ 	v->rx_napi_work = false;
+ 
++	enetc_lock_mdio();
+ 	/* enable interrupts */
+ 	enetc_wr_reg_hot(v->rbier, ENETC_RBIER_RXTIE);
  
 -- 
 2.51.0
