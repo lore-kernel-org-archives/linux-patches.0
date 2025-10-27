@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D37832143D;
-	Mon, 27 Oct 2025 19:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA1A322C8A;
+	Mon, 27 Oct 2025 19:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593563; cv=none; b=ni1RaZdx3qHbQy5z+z1gifBVBL2I6prVm5X1jLHTMqQTj39ogCBIYDg594009f/tYY4lc1IGiwpWVbs5BBiyHBWzZAmp5Xg/q0rapLJEZT4FQxTMmA0VUxJqrQiK7ypQioSqrSnKSHkf1QIthY9crasqaztUMYVSMMr6gxLvc0g=
+	t=1761593566; cv=none; b=WtBpFtWXhLEXRT37Vc/MjBkCYeczWoKAFzpaVeqhI+TiokOMaED/9Qt84CDtto8OZLGjcsitymmVXtEAsS3teIYLuGxcSFdiAZGcdsy0YooO9uMs71L16oqCn2gDV9myHlWEfo2ILm6OpQMDauhLxrxj9KyQHbIO8C8kkPyspsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593563; c=relaxed/simple;
-	bh=pomrp2rdKfcKuK03fQroTvWiesRfHNhPwmwPVKB+lek=;
+	s=arc-20240116; t=1761593566; c=relaxed/simple;
+	bh=FfUqvul/ai3+8Ja9UatsOFA0kxOnSSWJf2YiKTgsYrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WM9NjB0b9HuMHn/+E7dry8FkwIWvl1KfjHFEOWxpOfbaTBFJtufpt8lxo27tMPe960ZK44cGRST4FBO5mi6DaBtlXYb72yrwHMlnIdTH3y1rR1/C/x5juEoG0yypifAV8i9XFXjfYruFg5p11DgTU+2hToadBkw8+e/dOeFahjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7XTLeMC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ij/q1WWIIS5eZf4X77Q0ue5mlhuKhj7yO1tdFXjZInSEwbQzauzGLLXeCq/aRWzi3i3Pc0uP0+WzbRySTjlzxIY83iarNaYaPgGdFe8OkgZQulbVyrsLMv/6GpBo0yOH2p6OwO5JOUqwWH8ZG20lsgMuEW9ECiqEgMuVeLMGGWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRHe6XQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7XTLeMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D125C4CEF1;
-	Mon, 27 Oct 2025 19:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRHe6XQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E60CC4CEF1;
+	Mon, 27 Oct 2025 19:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593563;
-	bh=pomrp2rdKfcKuK03fQroTvWiesRfHNhPwmwPVKB+lek=;
+	s=korg; t=1761593566;
+	bh=FfUqvul/ai3+8Ja9UatsOFA0kxOnSSWJf2YiKTgsYrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7XTLeMCMk+EDBjL6/37sWpQfYU78p1gdGxFIA4E+ntQ6srJbtWQ1m3O/YN8t1/Jd
-	 wDYdAx9l2crZfQcNjP/1Eguj6po38dbyDKolDH/OTXFXjYe1yH4ctPxKdr44Cll9EP
-	 NNYImboIcC7mgtwmOXNUjzdA5NMYU902ABNDg1/g=
+	b=lRHe6XQeESi5oO/Pqu0ibP9GaupkGTyDbgwNV1Ligik0uL+JRcixzfqSjp8YVEtRM
+	 Woz92PjFBUzawzcRrz1d9txKAe4lvzwXowTsXtna3xCkc1p0NscZgxGBM+0vrqaSxw
+	 LKlp1tidLiN5Bf28DO412TT0l4FLiH9mY2RABKCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.17 173/184] serial: sc16is7xx: remove useless enable of enhanced features
-Date: Mon, 27 Oct 2025 19:37:35 +0100
-Message-ID: <20251027183519.582336430@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.17 174/184] staging: gpib: Fix device reference leak in fmh_gpib driver
+Date: Mon, 27 Oct 2025 19:37:36 +0100
+Message-ID: <20251027183519.608077240@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -50,42 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 1c05bf6c0262f946571a37678250193e46b1ff0f upstream.
+commit b1aabb8ef09b4cf0cc0c92ca9dfd19482f3192c1 upstream.
 
-Commit 43c51bb573aa ("sc16is7xx: make sure device is in suspend once
-probed") permanently enabled access to the enhanced features in
-sc16is7xx_probe(), and it is never disabled after that.
+The fmh_gpib driver contains a device reference count leak in
+fmh_gpib_attach_impl() where driver_find_device() increases the
+reference count of the device by get_device() when matching but this
+reference is not properly decreased. Add put_device() in
+fmh_gpib_detach(), which ensures that the reference count of the
+device is correctly managed.
 
-Therefore, remove re-enable of enhanced features in
-sc16is7xx_set_baud(). This eliminates a potential useless read + write
-cycle each time the baud rate is reconfigured.
+Found by code review.
 
-Fixes: 43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251006142002.177475-1-hugo@hugovil.com
+Fixes: 8e4841a0888c ("staging: gpib: Add Frank Mori Hess FPGA PCI GPIB driver")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/staging/gpib/fmh_gpib/fmh_gpib.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -588,13 +588,6 @@ static int sc16is7xx_set_baud(struct uar
- 		div /= prescaler;
+--- a/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
++++ b/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
+@@ -1517,6 +1517,11 @@ void fmh_gpib_detach(struct gpib_board *
+ 					   resource_size(e_priv->gpib_iomem_res));
  	}
+ 	fmh_gpib_generic_detach(board);
++
++	if (board->dev) {
++		put_device(board->dev);
++		board->dev = NULL;
++	}
+ }
  
--	/* Enable enhanced features */
--	sc16is7xx_efr_lock(port);
--	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
--			      SC16IS7XX_EFR_ENABLE_BIT,
--			      SC16IS7XX_EFR_ENABLE_BIT);
--	sc16is7xx_efr_unlock(port);
--
- 	/* If bit MCR_CLKSEL is set, the divide by 4 prescaler is activated. */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_CLKSEL_BIT,
+ static int fmh_gpib_pci_attach_impl(struct gpib_board *board,
 
 
