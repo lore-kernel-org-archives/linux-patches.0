@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D5A31D72B;
-	Mon, 27 Oct 2025 19:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590CA31D72B;
+	Mon, 27 Oct 2025 19:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591831; cv=none; b=OYlBIIxGMsQ9x3aI6lRcMWds7+cbZipAWjkRR8N1zsrfTizAZAGZt4naOUvOgv0TlwnL+iQn5LbOnO8xB+t0Pq09UnHVGTeAO1N/CBegozQM3wm0fjL4bBjMLOiQD5KsAPouvZLEcYGbAssKr42GlepGyy/wyammBOeuNlYQMyA=
+	t=1761591834; cv=none; b=GBzG5n5sM0OBO+hjESpzQnIN7cazspphRBT9cXslgYbMega9BV4iRB/ZKhcWOQJXdWMX5Ou9pBnJWMJNTq6e415yDGT3IKAoRrVTHUfdGOoWEc/Q9lUG1X2iDSIF1kDRlZa7snU3Ynf9Ct2nRMAbqEpnFMbPQX/cjfKOl1E1eSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591831; c=relaxed/simple;
-	bh=1K86Bmu4wQb4e3dgD4R1L5m/aWuIgAetwyIEHB7OToA=;
+	s=arc-20240116; t=1761591834; c=relaxed/simple;
+	bh=cV2Ur5+gHWQgw36uWLsktvMT4dJJEx/6wbYXw18XB+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5vyn69qeI5Xjd96t3Hj+AZrPtFqz7bq9HCnwXyM1KbF+PgnvDPR6sTjxgbSu4k0bpWh7WHElZBLPcHFuQHFSGOnhzv/xQTEuifcL8ZhN3yxN/sW9Yaj8zcr+WslWoTpAlY/ZH8lVUu/FdBZbDcYI5iJs4VWlWrWn97lr8ETMoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjLMKbD1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5Lv07hfKiX08ILbGJU/t4z9bmjxO78FomLld4aMrBbcp+IsfGfxUPsj9rjbGIxiJMepz9ErxVDgmqk2Wick6VYbm1LZlJZwhNzC154YxCuN1U1B/v9rNCLJDWw4P/VS88c+QB7n5fPMPHAlVgl04IBpjpRnZC+NBCN++LhkwTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmyjDBbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjLMKbD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B589C4CEF1;
-	Mon, 27 Oct 2025 19:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmyjDBbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4D3C4CEF1;
+	Mon, 27 Oct 2025 19:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591831;
-	bh=1K86Bmu4wQb4e3dgD4R1L5m/aWuIgAetwyIEHB7OToA=;
+	s=korg; t=1761591834;
+	bh=cV2Ur5+gHWQgw36uWLsktvMT4dJJEx/6wbYXw18XB+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjLMKbD1l8/nhUP1WtTfybw3/FYPIYbJey4OPYL6ELICpkRZBt5/74WH54L6V9zMS
-	 g+QyfzFbcr1vQLSrvJYQlFPZdHfp1PPf2+6esMKDKcdNIBzJnVmJL1cquEB6vEvzMc
-	 qGM447wfKZdVyjLhYDuBxaYRxyiGOpW1idaoKHqY=
+	b=rmyjDBbhhfLjc5zVslwZU51uGMzHiZpm6elqdw4843CwmaGe76RcFzNfOYM8OYUKD
+	 u30a8Qcwy9G0suU78O1V24F5305qlDeHTsD7jOmjrvWwHFHuXungQs0ApdPoGzQ94U
+	 170vwaR9ZNNbaejpFVODADLWZdzEozqMJoAq7h+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Friendy Su <friendy.su@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Patrik Flykt <patrik.flykt@linux.intel.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/123] dax: skip read lock assertion for read-only filesystems
-Date: Mon, 27 Oct 2025 19:34:55 +0100
-Message-ID: <20251027183446.808113412@linuxfoundation.org>
+Subject: [PATCH 5.15 016/123] can: m_can: m_can_plat_remove(): add missing pm_runtime_disable()
+Date: Mon, 27 Oct 2025 19:34:56 +0100
+Message-ID: <20251027183446.833571643@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -54,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 154d1e7ad9e5ce4b2aaefd3862b3dba545ad978d ]
+[ Upstream commit ba569fb07a7e9e9b71e9282e27e993ba859295c2 ]
 
-The commit 168316db3583("dax: assert that i_rwsem is held
-exclusive for writes") added lock assertions to ensure proper
-locking in DAX operations. However, these assertions trigger
-false-positive lockdep warnings since read lock is unnecessary
-on read-only filesystems(e.g., erofs).
+Commit 227619c3ff7c ("can: m_can: move runtime PM enable/disable to
+m_can_platform") moved the PM runtime enable from the m_can core
+driver into the m_can_platform.
 
-This patch skips the read lock assertion for read-only filesystems,
-eliminating the spurious warnings while maintaining the integrity
-checks for writable filesystems.
+That patch forgot to move the pm_runtime_disable() to
+m_can_plat_remove(), so that unloading the m_can_platform driver
+causes an "Unbalanced pm_runtime_enable!" error message.
 
-Fixes: 168316db3583 ("dax: assert that i_rwsem is held exclusive for writes")
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Friendy Su <friendy.su@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Add the missing pm_runtime_disable() to m_can_plat_remove() to fix the
+problem.
+
+Cc: Patrik Flykt <patrik.flykt@linux.intel.com>
+Fixes: 227619c3ff7c ("can: m_can: move runtime PM enable/disable to m_can_platform")
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://patch.msgid.link/20250929-m_can-fix-state-handling-v4-1-682b49b49d9a@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 2 +-
+ drivers/net/can/m_can/m_can_platform.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 4ab1c493c73f1..504114394995c 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1285,7 +1285,7 @@ dax_iomap_rw(struct kiocb *iocb, struct iov_iter *iter,
- 	if (iov_iter_rw(iter) == WRITE) {
- 		lockdep_assert_held_write(&iomi.inode->i_rwsem);
- 		iomi.flags |= IOMAP_WRITE;
--	} else {
-+	} else if (!sb_rdonly(iomi.inode->i_sb)) {
- 		lockdep_assert_held(&iomi.inode->i_rwsem);
- 	}
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index de6d8e01bf2e8..71cf3662128a1 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -170,7 +170,7 @@ static int m_can_plat_remove(struct platform_device *pdev)
+ 	struct m_can_classdev *mcan_class = &priv->cdev;
  
+ 	m_can_class_unregister(mcan_class);
+-
++	pm_runtime_disable(mcan_class->dev);
+ 	m_can_class_free_dev(mcan_class->net);
+ 
+ 	return 0;
 -- 
 2.51.0
 
