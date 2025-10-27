@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9488031CA42;
-	Mon, 27 Oct 2025 19:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE26328B62;
+	Mon, 27 Oct 2025 19:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591744; cv=none; b=OqexhKAB0mVObKzyPdf4DyIeWOiUxM1XWIhCV57kchRQrG+42UncmS4mnHd5LmEWDGAupWsK78/b2LpKZdqmJQ4YXKE+6Wwuh/GAWS9HBXXwEVVukLoDjijQJZtCaJAoZ+V7W+YH6G/XAWaqddOw0wUtCvbUWglQ6w9Dda1sWt8=
+	t=1761591747; cv=none; b=EJUiQ1BOZF5LAK8Ku0QxuQ9GH/+/s/tV0ScJ+JHguOvAxI8tFgCp+0htT6LPQ+THCpDmeGFECWJJT1sFG1sTt5o1mn8PVu2wvjzUOWMpf8Pl1Dr2Ff4HBdo6wqtze+H09gdJ68CRGoqYJRavH5xMfRUvtyEwybuXI0XiFfOX31s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591744; c=relaxed/simple;
-	bh=BkdFrpAZygrlRbKIEbAFDY9JDtG5cgfPHMmAGr3fR1w=;
+	s=arc-20240116; t=1761591747; c=relaxed/simple;
+	bh=uz1bYlqcHNooSUEodX1K7vUoATpEUQc7OJIUJ2f1cP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vf1F7q8EwMKOEPdbxrFTf92n6AeBOLWhgjmOq++4lqSAI6sP1UIrrrslap4sPPGIuqX/6Nw67YCcFb06iG9y9aYOd6MDQpp8lgFlS9hRsYqaicHJxjeKfm9bjbQTXEThah5TTUNxx6BVW4IZ9Q0Q9amCEZwVXxX/+DVXedhAwXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjHaM3+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ITcbJXDbrqsT3lX9Q9pUY+MW/bLj4MCG3G2bLjHYAFjltAzz11GO29jDV7OK2Z5VuP5acbAt45uHgv5B09erJbvXbcYl1npgWHWU7hiWHf4Jc0iAwdea/D0jKW3xUVWK2xpLBjEgVKphKSHTTda5L8jjMdnxO4rPwNW2uQQHx88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwBgrx2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjHaM3+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763FC4CEF1;
-	Mon, 27 Oct 2025 19:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwBgrx2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7DCC4CEF1;
+	Mon, 27 Oct 2025 19:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591744;
-	bh=BkdFrpAZygrlRbKIEbAFDY9JDtG5cgfPHMmAGr3fR1w=;
+	s=korg; t=1761591747;
+	bh=uz1bYlqcHNooSUEodX1K7vUoATpEUQc7OJIUJ2f1cP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjHaM3+ByiQm4HR/BFNRw6wN1m+kK9hhNENWw1x0srYWKOjQVg8lh/ro35Hnd/qGT
-	 AIFgkVRVgYbY9NHKTCjKcutZupE2f9d8Gua0aiUOgUWcbFuYTCC9lQLL028Qgh1Dme
-	 45K6nHK2+ujcHsqh7Uzo8CVud0Ae+0gDFdHnIxN8=
+	b=MwBgrx2tGclFCtEVltUCnVCWxagaHxaKZdqFd9hY3+GaWZxq1KK1+JMelZe+tz67D
+	 dtRARpxu5szRo0aZe0BIFynARGf4xi/rWkRPbPhXePtAoVapvdkRh6RadtTJ7zpaMc
+	 3Qw+THBe0qY6G1Ea6g9rsDLzXxQTHihv7FdBZyjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 315/332] KEYS: trusted_tpm1: Compare HMAC values in constant time
-Date: Mon, 27 Oct 2025 19:36:08 +0100
-Message-ID: <20251027183533.178936248@linuxfoundation.org>
+Subject: [PATCH 5.10 316/332] crypto: rockchip - Fix dma_unmap_sg() nents value
+Date: Mon, 27 Oct 2025 19:36:09 +0100
+Message-ID: <20251027183533.203889873@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,65 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit eed0e3d305530066b4fc5370107cff8ef1a0d229 ]
+[ Upstream commit 21140e5caf019e4a24e1ceabcaaa16bd693b393f ]
 
-To prevent timing attacks, HMAC value comparison needs to be constant
-time.  Replace the memcmp() with the correct function, crypto_memneq().
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-[For the Fixes commit I used the commit that introduced the memcmp().
-It predates the introduction of crypto_memneq(), but it was still a bug
-at the time even though a helper function didn't exist yet.]
-
-Fixes: d00a1c72f7f4 ("keys: add new trusted key-type")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-[ replaced crypto/utils.h include with crypto/algapi.h ]
+Fixes: 57d67c6e8219 ("crypto: rockchip - rework by using crypto_engine")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ removed unused rctx variable declaration since device pointer already came from tctx->dev->dev instead of rctx->dev ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm1.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/security/keys/trusted-keys/trusted_tpm1.c
-+++ b/security/keys/trusted-keys/trusted_tpm1.c
-@@ -9,6 +9,7 @@
-  */
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -236,10 +236,9 @@ static int rk_hash_unprepare(struct cryp
+ {
+ 	struct ahash_request *areq = container_of(breq, struct ahash_request, base);
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+-	struct rk_ahash_rctx *rctx = ahash_request_ctx(areq);
+ 	struct rk_ahash_ctx *tctx = crypto_ahash_ctx(tfm);
  
- #include <crypto/hash_info.h>
-+#include <crypto/algapi.h>
- #include <linux/uaccess.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -248,7 +249,7 @@ int TSS_checkhmac1(unsigned char *buffer
- 	if (ret < 0)
- 		goto out;
+-	dma_unmap_sg(tctx->dev->dev, areq->src, rctx->nrsg, DMA_TO_DEVICE);
++	dma_unmap_sg(tctx->dev->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
+ 	return 0;
+ }
  
--	if (memcmp(testhmac, authdata, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac, authdata, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
-@@ -341,7 +342,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag1, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
-+	if (crypto_memneq(testhmac1, authdata1, SHA1_DIGEST_SIZE)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -350,7 +351,7 @@ static int TSS_checkhmac2(unsigned char
- 			  TPM_NONCE_SIZE, ononce, 1, continueflag2, 0, 0);
- 	if (ret < 0)
- 		goto out;
--	if (memcmp(testhmac2, authdata2, SHA1_DIGEST_SIZE))
-+	if (crypto_memneq(testhmac2, authdata2, SHA1_DIGEST_SIZE))
- 		ret = -EINVAL;
- out:
- 	kfree_sensitive(sdesc);
 
 
