@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65514246BB7;
-	Mon, 27 Oct 2025 19:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189FE31D36D;
+	Mon, 27 Oct 2025 19:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592653; cv=none; b=jHSm42tcoFs/owduaBkx4G+QIEEmBSpuV767UQRm8vk9V1uC1m/3pwFmhpbCu2SyjiP+DT7OVhTlI4S4yUCmhjODihpfwp3KRbxGjRO9GwCRAsuxtLbpJCriA0oTxOj3//m+Mza7D0Y3In/7LM92wMoPFWgVaZBJCCzNbVBlH18=
+	t=1761592656; cv=none; b=Z3Lq6OPX0TkMBBmAJg2KvCIUq+2H3sypG6SkN1WzQwow1Pb5ZAZo1+Fw6iIVgwLDT3LzgKX6VjQvQUYwZOrEzJQr5AIGTz0G439x8LpYL2t/qixx7gfgaRjKvVwYEQfwIysLBwq9dZfL1OzyTiN6atmOxE46gvpH5/GlJjkKSEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592653; c=relaxed/simple;
-	bh=1GUdrsX7R/Y71tuDBqeJT83Jl/dL3pM7zmFMBzEMHS4=;
+	s=arc-20240116; t=1761592656; c=relaxed/simple;
+	bh=Sq15tN5HQC/dLTqps06opOMhWbVeLu772auvMli6nOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Np2UKiys7xsyZlOpRi1n139nWWFUanP4SDR34TySHAbMSpUhtWLvnPIWDdiqXbDLtdNR02Gz4oS9AZEHtXM2sCkDMs+IdO4mN4+vv6M0/oIygLIiyqstpMOUrOfh1+8usPMM5rPYY3zke46AKFvCvywrGtPQ3nmsxEyMZ2whO1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sV0Vv2xJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bXdEw+BhiNqezyrdWy3rkE0pIfqLbDdk3o0yJflWLY24fth5YQMGf2iDBRh0WmzwHgXZvwQ/Zoa08Rtd3XcxlE1c1T41s+HtT6b2AfxyYovm0+nYYSZn/WxrLuefDk+rs2kf018NtPLdwZmQaWS/mA/3AP7ITPlR6iAQKP5byBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5ZrbLQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sV0Vv2xJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE64FC4CEF1;
-	Mon, 27 Oct 2025 19:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5ZrbLQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CD2C4CEF1;
+	Mon, 27 Oct 2025 19:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592653;
-	bh=1GUdrsX7R/Y71tuDBqeJT83Jl/dL3pM7zmFMBzEMHS4=;
+	s=korg; t=1761592656;
+	bh=Sq15tN5HQC/dLTqps06opOMhWbVeLu772auvMli6nOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sV0Vv2xJz/HNvm8lg4FKmlZuF9VRobeiN1aaZJZItMNHnWrP9arBdjT6ttmrqnYzB
-	 pg5+K0NaSHfqhbVuxgF8nx/f/kMsxQF8/1ycOVkk+dF3AUybYzTMZ9I91nkspHIKSR
-	 pCy2eOrTkBxdE9wn3LmWEC7bMZUhXs29y7XeUs10=
+	b=l5ZrbLQRQn8d807nBQ0arHhpyvytOoq3QbpML8imexjshy27mcZ+EiRdyCILTbuOE
+	 T11jra7fnoV+yRX/OUI5ujvfNB4ij4xGQjGswNeubu/5ijc3B1ldbqnwQJGv/ZNbKB
+	 F73+sQ3dfpQgLhyb0bmeyDBgJiJIgpxlT/rh7yi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 28/84] net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for striding RQ
-Date: Mon, 27 Oct 2025 19:36:17 +0100
-Message-ID: <20251027183439.568226732@linuxfoundation.org>
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 46/84] net: ravb: Ensure memory write completes before ringing TX doorbell
+Date: Mon, 27 Oct 2025 19:36:35 +0100
+Message-ID: <20251027183440.046111764@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -46,125 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 87bcef158ac1faca1bd7e0104588e8e2956d10be ]
+commit 706136c5723626fcde8dd8f598a4dcd251e24927 upstream.
 
-XDP programs can change the layout of an xdp_buff through
-bpf_xdp_adjust_tail() and bpf_xdp_adjust_head(). Therefore, the driver
-cannot assume the size of the linear data area nor fragments. Fix the
-bug in mlx5 by generating skb according to xdp_buff after XDP programs
-run.
+Add a final dma_wmb() barrier before triggering the transmit request
+(TCCR_TSRQ) to ensure all descriptor and buffer writes are visible to
+the DMA engine.
 
-Currently, when handling multi-buf XDP, the mlx5 driver assumes the
-layout of an xdp_buff to be unchanged. That is, the linear data area
-continues to be empty and fragments remain the same. This may cause
-the driver to generate erroneous skb or triggering a kernel
-warning. When an XDP program added linear data through
-bpf_xdp_adjust_head(), the linear data will be ignored as
-mlx5e_build_linear_skb() builds an skb without linear data and then
-pull data from fragments to fill the linear data area. When an XDP
-program has shrunk the non-linear data through bpf_xdp_adjust_tail(),
-the delta passed to __pskb_pull_tail() may exceed the actual nonlinear
-data size and trigger the BUG_ON in it.
+According to the hardware manual, a read-back operation is required
+before writing to the doorbell register to guarantee completion of
+previous writes. Instead of performing a dummy read, a dma_wmb() is
+used to both enforce the same ordering semantics on the CPU side and
+also to ensure completion of writes.
 
-To fix the issue, first record the original number of fragments. If the
-number of fragments changes after the XDP program runs, rewind the end
-fragment pointer by the difference and recalculate the truesize. Then,
-build the skb with the linear data area matching the xdp_buff. Finally,
-only pull data in if there is non-linear data and fill the linear part
-up to 256 bytes.
-
-Fixes: f52ac7028bec ("net/mlx5e: RX, Add XDP multi-buffer support in Striding RQ")
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1760644540-899148-3-git-send-email-tariqt@nvidia.com
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Cc: stable@vger.kernel.org
+Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://patch.msgid.link/20251017151830.171062-5-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 26 ++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 54268892148d4..fcf7437174e18 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2024,6 +2024,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 	u32 byte_cnt       = cqe_bcnt;
- 	struct skb_shared_info *sinfo;
- 	unsigned int truesize = 0;
-+	u32 pg_consumed_bytes;
- 	struct bpf_prog *prog;
- 	struct sk_buff *skb;
- 	u32 linear_frame_sz;
-@@ -2075,7 +2076,8 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 
- 	while (byte_cnt) {
- 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
--		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
-+		pg_consumed_bytes =
-+			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
- 
- 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
- 			truesize += pg_consumed_bytes;
-@@ -2091,10 +2093,15 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2059,6 +2059,14 @@ static netdev_tx_t ravb_start_xmit(struc
+ 		dma_wmb();
+ 		desc->die_dt = DT_FSINGLE;
  	}
- 
- 	if (prog) {
-+		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
-+		u32 len;
 +
- 		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
- 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
- 				struct mlx5e_frag_page *pfp;
++	/* Before ringing the doorbell we need to make sure that the latest
++	 * writes have been committed to memory, otherwise it could delay
++	 * things until the doorbell is rang again.
++	 * This is in replacement of the read operation mentioned in the HW
++	 * manuals.
++	 */
++	dma_wmb();
+ 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
  
-+				frag_page -= old_nr_frags - sinfo->nr_frags;
-+
- 				for (pfp = head_page; pfp < frag_page; pfp++)
- 					pfp->frags++;
- 
-@@ -2104,9 +2111,19 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 			return NULL; /* page/packet was consumed by XDP */
- 		}
- 
-+		nr_frags_free = old_nr_frags - sinfo->nr_frags;
-+		if (unlikely(nr_frags_free)) {
-+			frag_page -= nr_frags_free;
-+			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
-+				ALIGN(pg_consumed_bytes,
-+				      BIT(rq->mpwqe.log_stride_sz));
-+		}
-+
-+		len = mxbuf->xdp.data_end - mxbuf->xdp.data;
-+
- 		skb = mlx5e_build_linear_skb(
- 			rq, mxbuf->xdp.data_hard_start, linear_frame_sz,
--			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, 0,
-+			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, len,
- 			mxbuf->xdp.data - mxbuf->xdp.data_meta);
- 		if (unlikely(!skb)) {
- 			mlx5e_page_release_fragmented(rq, &wi->linear_page);
-@@ -2130,8 +2147,11 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
- 			do
- 				pagep->frags++;
- 			while (++pagep < frag_page);
-+
-+			headlen = min_t(u16, MLX5E_RX_MAX_HEAD - len,
-+					skb->data_len);
-+			__pskb_pull_tail(skb, headlen);
- 		}
--		__pskb_pull_tail(skb, headlen);
- 	} else {
- 		dma_addr_t addr;
- 
--- 
-2.51.0
-
+ 	priv->cur_tx[q] += num_tx_desc;
 
 
