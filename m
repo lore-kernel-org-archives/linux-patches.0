@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B6B31AF37;
-	Mon, 27 Oct 2025 18:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FC7320A0E;
+	Mon, 27 Oct 2025 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590566; cv=none; b=ooWn55B4n3WB7uazVeUtxgU8Dpb++8Z7CMRSbW8glg2uZ1yN3Ok6O8tTch57RdDP2zZSy3YjZHuCm2Edin5TPXuRbhe3Vw4i7eG2kykbLuP+PRvky6C1gxexyKO62UnpDN4NHEjs1SpHjKO+0AQDguCmseKQq/l/OytaC6AEQUQ=
+	t=1761590569; cv=none; b=jqBgUIj1QktqNR0fF8JzlMU7SpIkT0OjC76P9byVxOdhaWW7mwQTZUYTR1azDITVN8GBZuibIyyfuBKr8er20EophMl2mDMbhSD3YdviQDDad5Df2Vxwip/K7+RxVMAAddgv1amgOq5TC+deCr6zYmBiJC3zlsJCVudvSAr1AsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590566; c=relaxed/simple;
-	bh=Ch0Dc2/Vadb/ZpLuIg9+rwYAp8IjVN3kFkE/G6VRXD0=;
+	s=arc-20240116; t=1761590569; c=relaxed/simple;
+	bh=7G/g30N2ozZHXOeitc7GpoWI2HDhRKH7Km5wiY5eLcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nh+0R6zEa4bQpouLRxJbRtQpvhuJjd6SsKdhcPvOn9G1KdYXfF8SD2aVb1k+Y5eny5BICZOF4Mu/ilHnwjsz4AAFiU/IVvNtjsrclOIwz9pRIbe5HfwOqXbWapkeKZaSM65VMt+nTnDneur5sLbfaa9dEgeHL8jLKDwzXZXuIsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejllDqcD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjX2bry9qGq0lz+M5TgFFQ5xHo7bLY5Kp80Hcif4ArkcPKeV5TRmGzMk17Uy/QJdTVIwURVko1Rc8fezoHDBrIxINP/fLc+8fPlKGsa6Vi+a/cfanv8P30pTRspgH4Hh4lC+7789rs4uuiOzYKQCCFbxk8kziGuXCyFp8tObm18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKBI5r2V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejllDqcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA09C4CEF1;
-	Mon, 27 Oct 2025 18:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKBI5r2V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C77C116B1;
+	Mon, 27 Oct 2025 18:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590566;
-	bh=Ch0Dc2/Vadb/ZpLuIg9+rwYAp8IjVN3kFkE/G6VRXD0=;
+	s=korg; t=1761590569;
+	bh=7G/g30N2ozZHXOeitc7GpoWI2HDhRKH7Km5wiY5eLcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejllDqcDstL4hNKacPyGjJ5l8T1YaKe9ejU5KoeWVNCU/7Z+muUf0jY0m8txHoreI
-	 Gpx4pPlPTMvCphgnAsZPQ6YYR24aZZ6o7RhY9K2pbplLgUY6zl9/EQa2VzzLmDxKTM
-	 QvamqwPcDq7TprE/H4YDo9mj59SrUf3W0QgWjnkY=
+	b=oKBI5r2V8dLqDdEsOMWvXc8M0fW8GMnps8REpp9+9aRbDIVFPZc95FXtR4V6pCLix
+	 WOBa2fCewggGIfQw5/VWxi4EMOiYL1G9RxivrUNlkSnOcIENPyw14Asgqn9knAtluZ
+	 Nbryb+HvFKtALWV+5GeSpjiXtUztIDXg/26krj+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Erick Karanja <karanja99erick@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/224] tcp: Dont call reqsk_fastopen_remove() in tcp_conn_request().
-Date: Mon, 27 Oct 2025 19:33:58 +0100
-Message-ID: <20251027183511.453735287@linuxfoundation.org>
+Subject: [PATCH 5.4 093/224] net: fsl_pq_mdio: Fix device node reference leak in fsl_pq_mdio_probe
+Date: Mon, 27 Oct 2025 19:33:59 +0100
+Message-ID: <20251027183511.479886905@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,85 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Erick Karanja <karanja99erick@gmail.com>
 
-[ Upstream commit 2e7cbbbe3d61c63606994b7ff73c72537afe2e1c ]
+[ Upstream commit 521405cb54cd2812bbb6dedd5afc14bca1e7e98a ]
 
-syzbot reported the splat below in tcp_conn_request(). [0]
+Add missing of_node_put call to release device node tbi obtained
+via for_each_child_of_node.
 
-If a listener is close()d while a TFO socket is being processed in
-tcp_conn_request(), inet_csk_reqsk_queue_add() does not set reqsk->sk
-and calls inet_child_forget(), which calls tcp_disconnect() for the
-TFO socket.
-
-After the cited commit, tcp_disconnect() calls reqsk_fastopen_remove(),
-where reqsk_put() is called due to !reqsk->sk.
-
-Then, reqsk_fastopen_remove() in tcp_conn_request() decrements the
-last req->rsk_refcnt and frees reqsk, and __reqsk_free() at the
-drop_and_free label causes the refcount underflow for the listener
-and double-free of the reqsk.
-
-Let's remove reqsk_fastopen_remove() in tcp_conn_request().
-
-Note that other callers make sure tp->fastopen_rsk is not NULL.
-
-[0]:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 12 PID: 5563 at lib/refcount.c:28 refcount_warn_saturate (lib/refcount.c:28)
-Modules linked in:
-CPU: 12 UID: 0 PID: 5563 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:refcount_warn_saturate (lib/refcount.c:28)
-Code: ab e8 8e b4 98 ff 0f 0b c3 cc cc cc cc cc 80 3d a4 e4 d6 01 00 75 9c c6 05 9b e4 d6 01 01 48 c7 c7 e8 df fb ab e8 6a b4 98 ff <0f> 0b e9 03 5b 76 00 cc 80 3d 7d e4 d6 01 00 0f 85 74 ff ff ff c6
-RSP: 0018:ffffa79fc0304a98 EFLAGS: 00010246
-RAX: d83af4db1c6b3900 RBX: ffff9f65c7a69020 RCX: d83af4db1c6b3900
-RDX: 0000000000000000 RSI: 00000000ffff7fff RDI: ffffffffac78a280
-RBP: 000000009d781b60 R08: 0000000000007fff R09: ffffffffac6ca280
-R10: 0000000000017ffd R11: 0000000000000004 R12: ffff9f65c7b4f100
-R13: ffff9f65c7d23c00 R14: ffff9f65c7d26000 R15: ffff9f65c7a64ef8
-FS:  00007f9f962176c0(0000) GS:ffff9f65fcf00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000180 CR3: 000000000dbbe006 CR4: 0000000000372ef0
-Call Trace:
- <IRQ>
- tcp_conn_request (./include/linux/refcount.h:400 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/net/sock.h:1965 ./include/net/request_sock.h:131 net/ipv4/tcp_input.c:7301)
- tcp_rcv_state_process (net/ipv4/tcp_input.c:6708)
- tcp_v6_do_rcv (net/ipv6/tcp_ipv6.c:1670)
- tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1906)
- ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:438)
- ip6_input (net/ipv6/ip6_input.c:500)
- ipv6_rcv (net/ipv6/ip6_input.c:311)
- __netif_receive_skb (net/core/dev.c:6104)
- process_backlog (net/core/dev.c:6456)
- __napi_poll (net/core/dev.c:7506)
- net_rx_action (net/core/dev.c:7569 net/core/dev.c:7696)
- handle_softirqs (kernel/softirq.c:579)
- do_softirq (kernel/softirq.c:480)
- </IRQ>
-
-Fixes: 45c8a6cc2bcd ("tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251001233755.1340927-1-kuniyu@google.com
+Fixes: afae5ad78b342 ("net/fsl_pq_mdio: streamline probing of MDIO nodes")
+Signed-off-by: Erick Karanja <karanja99erick@gmail.com>
+Link: https://patch.msgid.link/20251002174617.960521-1-karanja99erick@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/freescale/fsl_pq_mdio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 9d65e684e626c..541f9a89b4902 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6800,7 +6800,6 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 				    &foc, TCP_SYNACK_FASTOPEN);
- 		/* Add the child socket directly into the accept queue */
- 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
--			reqsk_fastopen_remove(fastopen_sk, req, false);
- 			bh_unlock_sock(fastopen_sk);
- 			sock_put(fastopen_sk);
- 			goto drop_and_free;
+diff --git a/drivers/net/ethernet/freescale/fsl_pq_mdio.c b/drivers/net/ethernet/freescale/fsl_pq_mdio.c
+index c6481bd612390..565a8bfe5692a 100644
+--- a/drivers/net/ethernet/freescale/fsl_pq_mdio.c
++++ b/drivers/net/ethernet/freescale/fsl_pq_mdio.c
+@@ -482,10 +482,12 @@ static int fsl_pq_mdio_probe(struct platform_device *pdev)
+ 					"missing 'reg' property in node %pOF\n",
+ 					tbi);
+ 				err = -EBUSY;
++				of_node_put(tbi);
+ 				goto error;
+ 			}
+ 			set_tbipa(*prop, pdev,
+ 				  data->get_tbipa, priv->map, &res);
++			of_node_put(tbi);
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
