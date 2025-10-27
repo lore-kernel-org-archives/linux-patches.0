@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216DE23EA92;
-	Mon, 27 Oct 2025 19:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F723EA92;
+	Mon, 27 Oct 2025 19:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592629; cv=none; b=MViErMuG7EFArpKVN16p5S2fdiYxdwysdWW7U21GXXdihUn04VkxrFR+w6nHLc0vv4raDI3dVWttk9kHRu/wm5sTKTh9yJ3PJ6QdZgPaC9y9meor0Ybiq2UZBwMtbiOmwRx7+6jUIghsI0aymIwCIvCKlfrjis1R80RFnPL7EIk=
+	t=1761592630; cv=none; b=VU8OlA9glT57AjTXRIE1qxwbWwOsg/WNRFlx9haetvJxCGpHZBZIEvlOP/ZoT6chK0W/FOP+wo8GoLREN7+RuQH+y0YZWDWGhR/cLfszruhDed9OtH17rWKoQ9rTL6kIQU5LIpjlV+fLqb035IvyvBciF1ZsC0YHiPoQXgi7PF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592629; c=relaxed/simple;
-	bh=UhwdTEXKDhdGSjtJXPJWXwh/tBkDi3EP2wPjlrNC5Pc=;
+	s=arc-20240116; t=1761592630; c=relaxed/simple;
+	bh=c/sTJGSrtcFJg6TZx6qLNn5Utne08fwgXZix1ngylAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0L/v4aFPusyzbApS6V+asqdZLVxFF/JU7/2F7k/rFflzye8EprZRx44A1a1Q3J0ml+X6ngV3yWNy4t8ZOHmkQjXf3Y7UuqKQ9yMkJ0UhhZXTJxIjXZq1EdlluzJ30h/o/bxEkXgUme0jYh6SGLFAvDmfvie3VLbb19jLVmwHkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKRSMAph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CjhdiV/h36JuIZE8BBxzpxgFFHcFseW8Mj07jIkU2iOfzRzBr+1gOEBM9JpoGaoVOWEAmkGRbVEoURkPD9N7ZKuN9/bZyIng1acTc6duaGRMafurezj3A6Brmyjj3Vyk3vuCWslLQd647W9fSJI8NKcj2/3VcCDErVMTu5o2eaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uk1ap7gG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKRSMAph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301F5C4CEF1;
-	Mon, 27 Oct 2025 19:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uk1ap7gG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4094C4CEF1;
+	Mon, 27 Oct 2025 19:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592627;
-	bh=UhwdTEXKDhdGSjtJXPJWXwh/tBkDi3EP2wPjlrNC5Pc=;
+	s=korg; t=1761592630;
+	bh=c/sTJGSrtcFJg6TZx6qLNn5Utne08fwgXZix1ngylAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKRSMAphyWBkUnh5iCMPgIr2uo1zzUMvqsobolTd0oU7XHX96/gu2D0to3YPFsGyG
-	 OoW5pomZ/e2EjcszboGLqSKoBY1ul0BiMEbzPC9YQFwIey7ffukFN2D2vEWe5XTq7C
-	 /n2RJyXU5S/R2JNRVlSl6BC8S7SjgbxzPRYDdy/k=
+	b=uk1ap7gGJ61Wyg78o3g9fVOocqpsXnw/HJzuRHlrz7vSeVntLovw4/SEm0aDiEtSh
+	 cLMDu0Wf+FKyJ8jyWlfnjZUMlxylrqqEdFRGulAOyny8pD4NxpClXbghpjXQWSFW+u
+	 Fnznf151dM8q1DivhlrguUxJ7Bf3Co/dq7hZtbFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Saket Dumbre <saket.dumbre@intel.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 36/84] Revert "cpuidle: menu: Avoid discarding useful information"
-Date: Mon, 27 Oct 2025 19:36:25 +0100
-Message-ID: <20251027183439.781532327@linuxfoundation.org>
+Subject: [PATCH 6.6 37/84] ACPICA: Work around bogus -Wstringop-overread warning since GCC 11
+Date: Mon, 27 Oct 2025 19:36:26 +0100
+Message-ID: <20251027183439.809378232@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -50,78 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
+commit 6e3a4754717a74e931a9f00b5f953be708e07acb upstream.
 
-It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
-useful information") led to a performance regression on Intel Jasper Lake
-systems because it reduced the time spent by CPUs in idle state C7 which
-is correlated to the maximum frequency the CPUs can get to because of an
-average running power limit [1].
+When ACPI_MISALIGNMENT_NOT_SUPPORTED is set, GCC can produce a bogus
+-Wstringop-overread warning, see [1].
 
-Before that commit, get_typical_interval() would have returned UINT_MAX
-whenever it had been unable to make a high-confidence prediction which
-had led to selecting the deepest available idle state too often and
-both power and performance had been inadequate as a result of that on
-some systems.  However, this had not been a problem on systems with
-relatively aggressive average running power limits, like the Jasper Lake
-systems in question, because on those systems it was compensated by the
-ability to run CPUs faster.
+To me, it's very clear that we have a compiler bug here, thus just
+disable the warning.
 
-It was addressed by causing get_typical_interval() to return a number
-based on the recent idle duration information available to it even if it
-could not make a high-confidence prediction, but that clearly did not
-take the possible correlation between idle power and available CPU
-capacity into account.
-
-For this reason, revert most of the changes made by commit 85975daeaa4d,
-except for one cosmetic cleanup, and add a comment explaining the
-rationale for returning UINT_MAX from get_typical_interval() when it
-is unable to make a high-confidence prediction.
-
-Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
-Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
-Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Fixes: a9d13433fe17 ("LoongArch: Align ACPI structures if ARCH_STRICT_ALIGN enabled")
+Link: https://lore.kernel.org/all/899f2dec-e8b9-44f4-ab8d-001e160a2aed@roeck-us.net/
+Link: https://github.com/acpica/acpica/commit/abf5b573
+Link: https://gcc.gnu.org/PR122073 [1]
+Co-developed-by: Saket Dumbre <saket.dumbre@intel.com>
+Signed-off-by: Saket Dumbre <saket.dumbre@intel.com>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
 Cc: All applicable <stable@vger.kernel.org>
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20251021092825.822007-1-xry111@xry111.site
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/acpi/acpica/tbprint.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -230,20 +230,17 @@ again:
- 	 *
- 	 * This can deal with workloads that have long pauses interspersed
- 	 * with sporadic activity with a bunch of short pauses.
-+	 *
-+	 * However, if the number of remaining samples is too small to exclude
-+	 * any more outliers, allow the deepest available idle state to be
-+	 * selected because there are systems where the time spent by CPUs in
-+	 * deep idle states is correlated to the maximum frequency the CPUs
-+	 * can get to.  On those systems, shallow idle states should be avoided
-+	 * unless there is a clear indication that the given CPU is most likley
-+	 * going to be woken up shortly.
- 	 */
--	if (divisor * 4 <= INTERVALS * 3) {
--		/*
--		 * If there are sufficiently many data points still under
--		 * consideration after the outliers have been eliminated,
--		 * returning without a prediction would be a mistake because it
--		 * is likely that the next interval will not exceed the current
--		 * maximum, so return the latter in that case.
--		 */
--		if (divisor >= INTERVALS / 2)
--			return max;
--
-+	if (divisor * 4 <= INTERVALS * 3)
- 		return UINT_MAX;
--	}
+--- a/drivers/acpi/acpica/tbprint.c
++++ b/drivers/acpi/acpica/tbprint.c
+@@ -95,6 +95,11 @@ acpi_tb_print_table_header(acpi_physical
+ {
+ 	struct acpi_table_header local_header;
  
- 	thresh = max - 1;
- 	goto again;
++#pragma GCC diagnostic push
++#if defined(__GNUC__) && __GNUC__ >= 11
++#pragma GCC diagnostic ignored "-Wstringop-overread"
++#endif
++
+ 	if (ACPI_COMPARE_NAMESEG(header->signature, ACPI_SIG_FACS)) {
+ 
+ 		/* FACS only has signature and length fields */
+@@ -135,4 +140,5 @@ acpi_tb_print_table_header(acpi_physical
+ 			   local_header.asl_compiler_id,
+ 			   local_header.asl_compiler_revision));
+ 	}
++#pragma GCC diagnostic pop
+ }
 
 
