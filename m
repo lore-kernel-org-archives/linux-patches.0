@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420C323EA92;
-	Mon, 27 Oct 2025 19:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB70923EA92;
+	Mon, 27 Oct 2025 19:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593012; cv=none; b=dExbruJlef/EySdZwzjRynLhBZ8YdpJ+4hhfSjHCRNfnBku5gl4WG9H2Iqq2TWCxMiqo8VlVNDFzdz1BAfZzYCvOyZ+oHJzLpJ0V7Ih/EVFPICZLD7Z/LBi0JKeoQ1K53VP7gzfBRJHEapJ3AnXXmSar2wsZwujTV5VcV4Xifng=
+	t=1761593015; cv=none; b=uXB+H+mjQX7fWoLW994BFb2Bqir1W+P7Bpv5JocPIY3C1psx/orlLSajZuoIoThF0F2vN4AXB9l0a44sX8/4bkArPb8J5XCiip0DpmUbsy7qBFGt0GmKdeLaJLempVB/+JCKtu+65a9XipFi4UdzprQpk/LHT8cpBv2gEjXxdFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593012; c=relaxed/simple;
-	bh=W0+he7Qhmw4PoK8Sd479LUq3Y6xhoFJNPgh6fLSvaR0=;
+	s=arc-20240116; t=1761593015; c=relaxed/simple;
+	bh=keUInPnTrEsb+7VJJZggau9jqJvG13MyMjRmcvZ+JHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFtYGQfHvR4cD897hr8/oWy/03PkZEIA+mv53i/1jINIvQK7PlXvPd1rXZzrElt3fVYNNWmg2iS+Wu+ZbUtYfIu/mlFyxPFO+XFg9S3siL/xiBddf1jgRNVZrdw8Q69dzGgJuiGJlt6DWa+23K77HNAfADDJdCTAUcQltvN5m6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAfdAomX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tg3iBrasGBBAUJgsyOwn56+2jG+zwcNSmjOkI4znAvxCxSOqzyZfaBpFcaUbQzSmTRTNzY497Kdgf7f5HmYjGIoYFOPYS5weiWYtcCCyLsTNLF4Z/K3e3vZBAAjkqRZDiIafU0OhDx8eWgQyoj5YQrTdrD7bAnRKZ4Fva8+LsGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzmNNwUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAfdAomX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05EFC4CEF1;
-	Mon, 27 Oct 2025 19:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzmNNwUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CC6C4CEF1;
+	Mon, 27 Oct 2025 19:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593012;
-	bh=W0+he7Qhmw4PoK8Sd479LUq3Y6xhoFJNPgh6fLSvaR0=;
+	s=korg; t=1761593014;
+	bh=keUInPnTrEsb+7VJJZggau9jqJvG13MyMjRmcvZ+JHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAfdAomXwQ5o8Qmeiq7XVMweNk5vzHInrbNgpqOVXKAwq9ypNG+FCWpR5sNvYiyET
-	 UKN9L9/obm/8blzAe8l+jPK73csG8tXXG8j8LRK2J+O+Y2WJrW7MTJL0k3lV1Nyqsr
-	 P9iCwaSK2NqbHUA3wpwW6v/L/8dukLrIU4BeLczI=
+	b=vzmNNwUCsknf+Ytp1DZeQZbBjVPDpri9hktCpRrI4jPgQPhNuTTnp7MJl5iq99ZDg
+	 hhcAYxxmB55vmruvrwihfqlIS+V/bUnhMN1xg30AJCcHcv+FOABMaSd0m1+lPY2dt3
+	 OdrOB0mEDJUJcs9jzS3X0G5MKQxZ31XhcFC9qyHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/117] arm64: dts: broadcom: bcm2712: Add default GIC address cells
-Date: Mon, 27 Oct 2025 19:36:36 +0100
-Message-ID: <20251027183455.898569616@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>
+Subject: [PATCH 6.12 097/117] usb/core/quirks: Add Huawei ME906S to wakeup quirk
+Date: Mon, 27 Oct 2025 19:37:03 +0100
+Message-ID: <20251027183456.641633670@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -51,46 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
 
-[ Upstream commit 278b6cabf18bd804f956b98a2f1068717acdbfe3 ]
+commit dfc2cf4dcaa03601cd4ca0f7def88b2630fca6ab upstream.
 
-Add missing address-cells 0 to GIC interrupt node to silence W=1
-warning:
+The list of Huawei LTE modules needing the quirk fixing spurious wakeups
+was missing the IDs of the Huawei ME906S module, therefore suspend did not
+work.
 
-  bcm2712.dtsi:494.4-497.31: Warning (interrupt_map): /axi/pcie@1000110000:interrupt-map:
-    Missing property '#address-cells' in node /soc@107c000000/interrupt-controller@7fff9000, using 0 as fallback
-
-Value '0' is correct because:
-1. GIC interrupt controller does not have children,
-2. interrupt-map property (in PCI node) consists of five components and
-   the fourth component "parent unit address", which size is defined by
-   '#address-cells' of the node pointed to by the interrupt-parent
-   component, is not used (=0)
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250822133407.312505-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Stable-dep-of: aa960b597600 ("arm64: dts: broadcom: bcm2712: Define VGIC interrupt")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20251020134304.35079-1-wse@tuxedocomputers.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-index 447bfa060918c..0f38236501743 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-@@ -263,6 +263,7 @@
- 			      <0x7fffc000 0x2000>,
- 			      <0x7fffe000 0x2000>;
- 			interrupt-controller;
-+			#address-cells = <0>;
- 			#interrupt-cells = <3>;
- 		};
- 	};
--- 
-2.51.0
-
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -464,6 +464,8 @@ static const struct usb_device_id usb_qu
+ 	/* Huawei 4G LTE module */
+ 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
+ 			USB_QUIRK_DISCONNECT_SUSPEND },
++	{ USB_DEVICE(0x12d1, 0x15c1), .driver_info =
++			USB_QUIRK_DISCONNECT_SUSPEND },
+ 	{ USB_DEVICE(0x12d1, 0x15c3), .driver_info =
+ 			USB_QUIRK_DISCONNECT_SUSPEND },
+ 
 
 
