@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7C32D542A;
-	Mon, 27 Oct 2025 19:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2C132D0C0;
+	Mon, 27 Oct 2025 19:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592090; cv=none; b=TR5U1dKs6td4tgxbpuHBvij6Ms8UKJC4jB7iCl0LSEuE6wFx9csUgidn825x3MYiY+g9W0/2l6JilIXLMvWwAlTbY1dpvH1HQx6ZKOjbsaQsJIp01Czy0vVgoFXQVkOR6yWRjmGLRSYl2cfp1crAWZoupoiKIMo//h8mftW0eT0=
+	t=1761592094; cv=none; b=E4ayNcyNst09jT1vZgwWbVtKLBrCnxzm9IH3p/CZLFcPHAoRP9OEFdG+ha2AnEwRbl/66wXdMfiLPYul8ln+Kft1518q1IiM+tGocQDZLWiaxEmPdSXfQbi6roafT0FYx7VQeKIPR+CehL//Di/fhvIXnD4o2+FDR2RsD+I5xzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592090; c=relaxed/simple;
-	bh=jflKjM+q3ZKnQJgKmwXokm84Mq6UjgN5G0HimLleXhM=;
+	s=arc-20240116; t=1761592094; c=relaxed/simple;
+	bh=2BGDq72nEvaerL3K/q0XoQym4ThkDFpnYYyoLvzSEGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMBQh2Jwg2nuUnTfSjA6D+RsyI4vBWqK4Kp1beZztR/Z4tZoubTcNahPFdIohn9m0fIfqVDgJcNrDMQFtzelBzzEs9Dj2HtBoDjLCtsLZQOGLMY4GDhLMgQoNtfuPz8ACGMAvKOON5p/33t35ts10INv6sUDCbUiOAbf+5fJEGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPYWUnA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJRds3aYnr33doS9JvYYQcWa5RGIeyJEL52MUgeGigb0rb1U2yuvJARdsCtF8l9JZcuMGS7jp5c07Pzw3MUVHCFxatqgMB66cUQNcVfwiW+oGYphAsYGealQg3o8w3w0J1tnvRBe9KVzQtL9tv+DCx7LMz479Ep6HI7u8MlndAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOI0rI4Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPYWUnA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AAAC4CEF1;
-	Mon, 27 Oct 2025 19:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOI0rI4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86E3C4CEFD;
+	Mon, 27 Oct 2025 19:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592090;
-	bh=jflKjM+q3ZKnQJgKmwXokm84Mq6UjgN5G0HimLleXhM=;
+	s=korg; t=1761592093;
+	bh=2BGDq72nEvaerL3K/q0XoQym4ThkDFpnYYyoLvzSEGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPYWUnA8qImfuEPH4jYbRuC2aY/m1O4eQYvHXnJkMAO1wHM+FVoOu2zP4+8MupXTs
-	 NeXvGRAlMuNyd1T3B9zxTB/aTlUPyPOvgFApAfGQCukLBMPAIkf/AnHKhTSBr1dbOV
-	 8bIwQ5F7xccjp0uom3Cuq5zMzarbposIk+yKT5Y4=
+	b=iOI0rI4YqZO6t56Ba7XCWTc2iVMu1Kc0XXzI+fNxiLQ6PJ1LeB4ihJqP1kiZATGSQ
+	 M1UESm4NxfgRDiBrd9Yd1MxJvnnFyW3d8fs3RB5io/1KQ3g4N9kKmyVya3gJDptjG/
+	 B5XnhcFzxHSXkp5HwKudYXV2fJaPKmVFytMK+ze0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/123] devcoredump: Fix circular locking dependency with devcd->mutex.
-Date: Mon, 27 Oct 2025 19:36:34 +0100
-Message-ID: <20251027183449.436290514@linuxfoundation.org>
+Subject: [PATCH 5.15 115/123] xfs: always warn about deprecated mount options
+Date: Mon, 27 Oct 2025 19:36:35 +0100
+Message-ID: <20251027183449.463819408@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -57,386 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit a91c8096590bd7801a26454789f2992094fe36da ]
+[ Upstream commit 630785bfbe12c3ee3ebccd8b530a98d632b7e39d ]
 
-The original code causes a circular locking dependency found by lockdep.
+The deprecation of the 'attr2' mount option in 6.18 wasn't entirely
+successful because nobody noticed that the kernel never printed a
+warning about attr2 being set in fstab if the only xfs filesystem is the
+root fs; the initramfs mounts the root fs with no mount options; and the
+init scripts only conveyed the fstab options by remounting the root fs.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 Tainted: G S   U
-------------------------------------------------------
-xe_fault_inject/5091 is trying to acquire lock:
-ffff888156815688 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}, at: __flush_work+0x25d/0x660
+Fix this by making it complain all the time.
 
-but task is already holding lock:
-
-ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #2 (&devcd->mutex){+.+.}-{3:3}:
-       mutex_lock_nested+0x4e/0xc0
-       devcd_data_write+0x27/0x90
-       sysfs_kf_bin_write+0x80/0xf0
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
--> #1 (kn->active#236){++++}-{0:0}:
-       kernfs_drain+0x1e2/0x200
-       __kernfs_remove+0xae/0x400
-       kernfs_remove_by_name_ns+0x5d/0xc0
-       remove_files+0x54/0x70
-       sysfs_remove_group+0x3d/0xa0
-       sysfs_remove_groups+0x2e/0x60
-       device_remove_attrs+0xc7/0x100
-       device_del+0x15d/0x3b0
-       devcd_del+0x19/0x30
-       process_one_work+0x22b/0x6f0
-       worker_thread+0x1e8/0x3d0
-       kthread+0x11c/0x250
-       ret_from_fork+0x26c/0x2e0
-       ret_from_fork_asm+0x1a/0x30
--> #0 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}:
-       __lock_acquire+0x1661/0x2860
-       lock_acquire+0xc4/0x2f0
-       __flush_work+0x27a/0x660
-       flush_delayed_work+0x5d/0xa0
-       dev_coredump_put+0x63/0xa0
-       xe_driver_devcoredump_fini+0x12/0x20 [xe]
-       devm_action_release+0x12/0x30
-       release_nodes+0x3a/0x120
-       devres_release_all+0x8a/0xd0
-       device_unbind_cleanup+0x12/0x80
-       device_release_driver_internal+0x23a/0x280
-       device_driver_detach+0x14/0x20
-       unbind_store+0xaf/0xc0
-       drv_attr_store+0x21/0x50
-       sysfs_kf_write+0x4a/0x80
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-other info that might help us debug this:
-Chain exists of: (work_completion)(&(&devcd->del_wk)->work) --> kn->active#236 --> &devcd->mutex
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&devcd->mutex);
-                               lock(kn->active#236);
-                               lock(&devcd->mutex);
-  lock((work_completion)(&(&devcd->del_wk)->work));
- *** DEADLOCK ***
-5 locks held by xe_fault_inject/5091:
- #0: ffff8881129f9488 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x72/0xf0
- #1: ffff88810c755078 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x123/0x220
- #2: ffff8881054811a0 (&dev->mutex){....}-{3:3}, at: device_release_driver_internal+0x55/0x280
- #3: ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
- #4: ffffffff8359e020 (rcu_read_lock){....}-{1:2}, at: __flush_work+0x72/0x660
-stack backtrace:
-CPU: 14 UID: 0 PID: 5091 Comm: xe_fault_inject Tainted: G S   U              6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 PREEMPT_{RT,(lazy)}
-Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-Hardware name: Micro-Star International Co., Ltd. MS-7D25/PRO Z690-A DDR4(MS-7D25), BIOS 1.10 12/13/2021
-Call Trace:
- <TASK>
- dump_stack_lvl+0x91/0xf0
- dump_stack+0x10/0x20
- print_circular_bug+0x285/0x360
- check_noncircular+0x135/0x150
- ? register_lock_class+0x48/0x4a0
- __lock_acquire+0x1661/0x2860
- lock_acquire+0xc4/0x2f0
- ? __flush_work+0x25d/0x660
- ? mark_held_locks+0x46/0x90
- ? __flush_work+0x25d/0x660
- __flush_work+0x27a/0x660
- ? __flush_work+0x25d/0x660
- ? trace_hardirqs_on+0x1e/0xd0
- ? __pfx_wq_barrier_func+0x10/0x10
- flush_delayed_work+0x5d/0xa0
- dev_coredump_put+0x63/0xa0
- xe_driver_devcoredump_fini+0x12/0x20 [xe]
- devm_action_release+0x12/0x30
- release_nodes+0x3a/0x120
- devres_release_all+0x8a/0xd0
- device_unbind_cleanup+0x12/0x80
- device_release_driver_internal+0x23a/0x280
- ? bus_find_device+0xa8/0xe0
- device_driver_detach+0x14/0x20
- unbind_store+0xaf/0xc0
- drv_attr_store+0x21/0x50
- sysfs_kf_write+0x4a/0x80
- kernfs_fop_write_iter+0x169/0x220
- vfs_write+0x293/0x560
- ksys_write+0x72/0xf0
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x2bf/0x2660
- do_syscall_64+0x93/0xb60
- ? __f_unlock_pos+0x15/0x20
- ? __x64_sys_getdents64+0x9b/0x130
- ? __pfx_filldir64+0x10/0x10
- ? do_syscall_64+0x1a2/0xb60
- ? clear_bhb_loop+0x30/0x80
- ? clear_bhb_loop+0x30/0x80
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x76e292edd574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007fffe247a828 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000076e292edd574
-RDX: 000000000000000c RSI: 00006267f6306063 RDI: 000000000000000b
-RBP: 000000000000000c R08: 000076e292fc4b20 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00006267f6306063
-R13: 000000000000000b R14: 00006267e6859c00 R15: 000076e29322a000
- </TASK>
-xe 0000:03:00.0: [drm] Xe device coredump has been deleted.
-
-Fixes: 01daccf74832 ("devcoredump : Serialize devcd_del work")
-Cc: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250723142416.1020423-1-dev@lankhorst.se
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ replaced disable_delayed_work_sync() with cancel_delayed_work_sync() ]
+Cc: stable@vger.kernel.org # v5.13
+Fixes: 92cf7d36384b99 ("xfs: Skip repetitive warnings about mount options")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ Update existing xfs_fs_warn_deprecated() callers ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/devcoredump.c |  138 +++++++++++++++++++++++++++------------------
- 1 file changed, 84 insertions(+), 54 deletions(-)
+ fs/xfs/xfs_super.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -26,50 +26,46 @@ struct devcd_entry {
- 	void *data;
- 	size_t datalen;
- 	/*
--	 * Here, mutex is required to serialize the calls to del_wk work between
--	 * user/kernel space which happens when devcd is added with device_add()
--	 * and that sends uevent to user space. User space reads the uevents,
--	 * and calls to devcd_data_write() which try to modify the work which is
--	 * not even initialized/queued from devcoredump.
-+	 * There are 2 races for which mutex is required.
- 	 *
-+	 * The first race is between device creation and userspace writing to
-+	 * schedule immediately destruction.
- 	 *
-+	 * This race is handled by arming the timer before device creation, but
-+	 * when device creation fails the timer still exists.
- 	 *
--	 *        cpu0(X)                                 cpu1(Y)
-+	 * To solve this, hold the mutex during device_add(), and set
-+	 * init_completed on success before releasing the mutex.
- 	 *
--	 *        dev_coredump() uevent sent to user space
--	 *        device_add()  ======================> user space process Y reads the
--	 *                                              uevents writes to devcd fd
--	 *                                              which results into writes to
-+	 * That way the timer will never fire until device_add() is called,
-+	 * it will do nothing if init_completed is not set. The timer is also
-+	 * cancelled in that case.
- 	 *
--	 *                                             devcd_data_write()
--	 *                                               mod_delayed_work()
--	 *                                                 try_to_grab_pending()
--	 *                                                   del_timer()
--	 *                                                     debug_assert_init()
--	 *       INIT_DELAYED_WORK()
--	 *       schedule_delayed_work()
--	 *
--	 *
--	 * Also, mutex alone would not be enough to avoid scheduling of
--	 * del_wk work after it get flush from a call to devcd_free()
--	 * mentioned as below.
--	 *
--	 *	disabled_store()
--	 *        devcd_free()
--	 *          mutex_lock()             devcd_data_write()
--	 *          flush_delayed_work()
--	 *          mutex_unlock()
--	 *                                   mutex_lock()
--	 *                                   mod_delayed_work()
--	 *                                   mutex_unlock()
--	 * So, delete_work flag is required.
-+	 * The second race involves multiple parallel invocations of devcd_free(),
-+	 * add a deleted flag so only 1 can call the destructor.
+--- a/fs/xfs/xfs_super.c
++++ b/fs/xfs/xfs_super.c
+@@ -1178,16 +1178,25 @@ suffix_kstrtoint(
+ static inline void
+ xfs_fs_warn_deprecated(
+ 	struct fs_context	*fc,
+-	struct fs_parameter	*param,
+-	uint64_t		flag,
+-	bool			value)
++	struct fs_parameter	*param)
+ {
+-	/* Don't print the warning if reconfiguring and current mount point
+-	 * already had the flag set
++	/*
++	 * Always warn about someone passing in a deprecated mount option.
++	 * Previously we wouldn't print the warning if we were reconfiguring
++	 * and current mount point already had the flag set, but that was not
++	 * the right thing to do.
++	 *
++	 * Many distributions mount the root filesystem with no options in the
++	 * initramfs and rely on mount -a to remount the root fs with the
++	 * options in fstab.  However, the old behavior meant that there would
++	 * never be a warning about deprecated mount options for the root fs in
++	 * /etc/fstab.  On a single-fs system, that means no warning at all.
++	 *
++	 * Compounding this problem are distribution scripts that copy
++	 * /proc/mounts to fstab, which means that we can't remove mount
++	 * options unless we're 100% sure they have only ever been advertised
++	 * in /proc/mounts in response to explicitly provided mount options.
  	 */
- 	struct mutex mutex;
--	bool delete_work;
-+	bool init_completed, deleted;
- 	struct module *owner;
- 	ssize_t (*read)(char *buffer, loff_t offset, size_t count,
- 			void *data, size_t datalen);
- 	void (*free)(void *data);
-+	/*
-+	 * If nothing interferes and device_add() was returns success,
-+	 * del_wk will destroy the device after the timer fires.
-+	 *
-+	 * Multiple userspace processes can interfere in the working of the timer:
-+	 * - Writing to the coredump will reschedule the timer to run immediately,
-+	 *   if still armed.
-+	 *
-+	 *   This is handled by using "if (cancel_delayed_work()) {
-+	 *   schedule_delayed_work() }", to prevent re-arming after having
-+	 *   been previously fired.
-+	 * - Writing to /sys/class/devcoredump/disabled will destroy the
-+	 *   coredump synchronously.
-+	 *   This is handled by using disable_delayed_work_sync(), and then
-+	 *   checking if deleted flag is set with &devcd->mutex held.
-+	 */
- 	struct delayed_work del_wk;
- 	struct device *failing_dev;
- };
-@@ -98,14 +94,27 @@ static void devcd_dev_release(struct dev
- 	kfree(devcd);
+-	if ((fc->purpose & FS_CONTEXT_FOR_RECONFIGURE) &&
+-            !!(XFS_M(fc->root->d_sb)->m_features & flag) == value)
+-		return;
+ 	xfs_warn(fc->s_fs_info, "%s mount option is deprecated.", param->key);
  }
  
-+static void __devcd_del(struct devcd_entry *devcd)
-+{
-+	devcd->deleted = true;
-+	device_del(&devcd->devcd_dev);
-+	put_device(&devcd->devcd_dev);
-+}
-+
- static void devcd_del(struct work_struct *wk)
- {
- 	struct devcd_entry *devcd;
-+	bool init_completed;
- 
- 	devcd = container_of(wk, struct devcd_entry, del_wk.work);
- 
--	device_del(&devcd->devcd_dev);
--	put_device(&devcd->devcd_dev);
-+	/* devcd->mutex serializes against dev_coredumpm_timeout */
-+	mutex_lock(&devcd->mutex);
-+	init_completed = devcd->init_completed;
-+	mutex_unlock(&devcd->mutex);
-+
-+	if (init_completed)
-+		__devcd_del(devcd);
- }
- 
- static ssize_t devcd_data_read(struct file *filp, struct kobject *kobj,
-@@ -125,12 +134,12 @@ static ssize_t devcd_data_write(struct f
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
--	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work) {
--		devcd->delete_work = true;
--		mod_delayed_work(system_wq, &devcd->del_wk, 0);
--	}
--	mutex_unlock(&devcd->mutex);
-+	/*
-+	 * Although it's tempting to use mod_delayed work here,
-+	 * that will cause a reschedule if the timer already fired.
-+	 */
-+	if (cancel_delayed_work(&devcd->del_wk))
-+		schedule_delayed_work(&devcd->del_wk, 0);
- 
- 	return count;
- }
-@@ -158,11 +167,21 @@ static int devcd_free(struct device *dev
- {
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
-+	/*
-+	 * To prevent a race with devcd_data_write(), cancel work and
-+	 * complete manually instead.
-+	 *
-+	 * We cannot rely on the return value of
-+	 * cancel_delayed_work_sync() here, because it might be in the
-+	 * middle of a cancel_delayed_work + schedule_delayed_work pair.
-+	 *
-+	 * devcd->mutex here guards against multiple parallel invocations
-+	 * of devcd_free().
-+	 */
-+	cancel_delayed_work_sync(&devcd->del_wk);
- 	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work)
--		devcd->delete_work = true;
--
--	flush_delayed_work(&devcd->del_wk);
-+	if (!devcd->deleted)
-+		__devcd_del(devcd);
- 	mutex_unlock(&devcd->mutex);
- 	return 0;
- }
-@@ -186,12 +205,10 @@ static ssize_t disabled_show(struct clas
-  *                                                                 put_device() <- last reference
-  *             error = fn(dev, data)                           devcd_dev_release()
-  *             devcd_free(dev, data)                           kfree(devcd)
-- *             mutex_lock(&devcd->mutex);
-  *
-  *
-- * In the above diagram, It looks like disabled_store() would be racing with parallely
-- * running devcd_del() and result in memory abort while acquiring devcd->mutex which
-- * is called after kfree of devcd memory  after dropping its last reference with
-+ * In the above diagram, it looks like disabled_store() would be racing with parallelly
-+ * running devcd_del() and result in memory abort after dropping its last reference with
-  * put_device(). However, this will not happens as fn(dev, data) runs
-  * with its own reference to device via klist_node so it is not its last reference.
-  * so, above situation would not occur.
-@@ -353,7 +370,7 @@ void dev_coredumpm(struct device *dev, s
- 	devcd->read = read;
- 	devcd->free = free;
- 	devcd->failing_dev = get_device(dev);
--	devcd->delete_work = false;
-+	devcd->deleted = false;
- 
- 	mutex_init(&devcd->mutex);
- 	device_initialize(&devcd->devcd_dev);
-@@ -362,8 +379,14 @@ void dev_coredumpm(struct device *dev, s
- 		     atomic_inc_return(&devcd_count));
- 	devcd->devcd_dev.class = &devcd_class;
- 
--	mutex_lock(&devcd->mutex);
- 	dev_set_uevent_suppress(&devcd->devcd_dev, true);
-+
-+	/* devcd->mutex prevents devcd_del() completing until init finishes */
-+	mutex_lock(&devcd->mutex);
-+	devcd->init_completed = false;
-+	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
-+	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
-+
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
- 
-@@ -380,13 +403,20 @@ void dev_coredumpm(struct device *dev, s
- 
- 	dev_set_uevent_suppress(&devcd->devcd_dev, false);
- 	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
--	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
--	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
-+
-+	/*
-+	 * Safe to run devcd_del() now that we are done with devcd_dev.
-+	 * Alternatively we could have taken a ref on devcd_dev before
-+	 * dropping the lock.
-+	 */
-+	devcd->init_completed = true;
- 	mutex_unlock(&devcd->mutex);
- 	return;
-  put_device:
--	put_device(&devcd->devcd_dev);
- 	mutex_unlock(&devcd->mutex);
-+	cancel_delayed_work_sync(&devcd->del_wk);
-+	put_device(&devcd->devcd_dev);
-+
-  put_module:
- 	module_put(owner);
-  free:
+@@ -1326,19 +1335,19 @@ xfs_fs_parse_param(
+ #endif
+ 	/* Following mount options will be removed in September 2025 */
+ 	case Opt_ikeep:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_IKEEP;
+ 		return 0;
+ 	case Opt_noikeep:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, false);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features &= ~XFS_FEAT_IKEEP;
+ 		return 0;
+ 	case Opt_attr2:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_ATTR2, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_ATTR2;
+ 		return 0;
+ 	case Opt_noattr2:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_NOATTR2, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_NOATTR2;
+ 		return 0;
+ 	default:
 
 
