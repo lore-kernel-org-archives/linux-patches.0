@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A825F3203AE;
-	Mon, 27 Oct 2025 19:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C00232861A;
+	Mon, 27 Oct 2025 19:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592439; cv=none; b=Ah8BQ+dJlu8qz65fb2YNX7CtTt+vFfRsTz04mjyCWACeZ7mccnzBxZDTuUrhNE/upbyVZixp0PMAh2YbIAZNc7IM0XLzvugGjwe2g3mQGwBcUIdriYwBpkilMl0H9tCgD2BW9LUlmBo2gqJMq+vU+DeZyGWZJn1s8aSube3beZE=
+	t=1761592442; cv=none; b=bY3wLgls/LmFBf9zOGbEScFU0SqQkZVe0zLNVT9emjKqjsYalcIRnlr0Juxf6ZA+WqnRUQBrGMjxWIKSh0Xlbo0qoOwQUswrqcpzCmJ8Ca2rqjZup8ucgXVXjMH7JstA253heRU8FOBWyqM0WzTyPuAZvxqLNAL/+JATt1gi5sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592439; c=relaxed/simple;
-	bh=FGD7MREfCDnus3Uqo8YaVOEi2WxcnPmWVbYUVmgiMa8=;
+	s=arc-20240116; t=1761592442; c=relaxed/simple;
+	bh=Gcm0PAQGGJVN8mMcrz7d3BPi9oG3J+losR5b+ZmjZu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmUoqyiXy0JyZdkn2IzOhR4cZZR77ZboVI/G7+K/DHLiOKbLABqcOTQRc2BOuWUA0nPC12eCfuSfIO63VYgx8CDeamOs5OKSTxoHmZarP5MIQme+n3+6djZKVRAIJZzrg5x58O1/ai04gvTIp+gmHBnBYatl53Nm5RuOHbxKL4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlCmRzkm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QNk463Xr/LqNvgzGWiK380mq5tDHeLV9vg2eqU/gggt1n0ExAMAEF7fYZcFyeGmbMztBzFGjWRAVaOkILDCDQJBPSRsmWbskyYmsdX50/mghyiziKiNHMC1Q3uI1fdC96aHbOEikDN+1JEN8t1an/S5ngK6XyuWItjAhli86yWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyqbfYRG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlCmRzkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310B3C4CEF1;
-	Mon, 27 Oct 2025 19:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyqbfYRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD70C4CEF1;
+	Mon, 27 Oct 2025 19:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592439;
-	bh=FGD7MREfCDnus3Uqo8YaVOEi2WxcnPmWVbYUVmgiMa8=;
+	s=korg; t=1761592442;
+	bh=Gcm0PAQGGJVN8mMcrz7d3BPi9oG3J+losR5b+ZmjZu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlCmRzkm8x8369Dy5a2DT0Ohjl9ZvQSr1YAFfv+mCcl+0Cd48apTZweOR/Nc9xbwA
-	 KE+FKjx9dwBqsdw2TNs1pK65CjdEigPaaiEOFmseSwIextlV5ia5oz9gPh+nMWYmOB
-	 xvCpgGFS+9YPgOqx3WgrTcvfDpSQUHwcnEZlQCw8=
+	b=uyqbfYRGACCsdd8bE5P+IwDht17Z2s+UJP11ud0/sd3UiHPh+yPAM+4EKJI9WVDmw
+	 XfmM4wRObj93hOO4Sq6NQHQftES6ik+DtPpiORN5Pm5cw4IaDB6fG2gnLroeceTaiu
+	 jTLlHeud5t1cPOZAifAWjrCe1MaVh+VWywtuQqeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Subject: [PATCH 6.1 114/157] most: usb: hdm_probe: Fix calling put_device() before device initialization
-Date: Mon, 27 Oct 2025 19:36:15 +0100
-Message-ID: <20251027183504.306635493@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 123/157] iio: imu: inv_icm42600: use = { } instead of memset()
+Date: Mon, 27 Oct 2025 19:36:24 +0100
+Message-ID: <20251027183504.549196324@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -44,47 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit a8cc9e5fcb0e2eef21513a4fec888f5712cb8162 upstream.
+[ Upstream commit 352112e2d9aab6a156c2803ae14eb89a9fd93b7d ]
 
-The early error path in hdm_probe() can jump to err_free_mdev before
-&mdev->dev has been initialized with device_initialize(). Calling
-put_device(&mdev->dev) there triggers a device core WARN and ends up
-invoking kref_put(&kobj->kref, kobject_release) on an uninitialized
-kobject.
+Use { } instead of memset() to zero-initialize stack memory to simplify
+the code.
 
-In this path the private struct was only kmalloc'ed and the intended
-release is effectively kfree(mdev) anyway, so free it directly instead
-of calling put_device() on an uninitialized device.
-
-This removes the WARNING and fixes the pre-initialization error path.
-
-Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Link: https://patch.msgid.link/20251010105241.4087114-3-Victoria.Votokina@kaspersky.com
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250611-iio-zero-init-stack-with-instead-of-memset-v1-16-ebb2d0a24302@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 466f7a2fef2a ("iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/most/most_usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    5 ++---
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/most/most_usb.c
-+++ b/drivers/most/most_usb.c
-@@ -1097,7 +1097,7 @@ err_free_cap:
- err_free_conf:
- 	kfree(mdev->conf);
- err_free_mdev:
--	put_device(&mdev->dev);
-+	kfree(mdev);
- 	return ret;
- }
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -748,7 +748,8 @@ int inv_icm42600_accel_parse_fifo(struct
+ 	const int8_t *temp;
+ 	unsigned int odr;
+ 	int64_t ts_val;
+-	struct inv_icm42600_accel_buffer buffer;
++	/* buffer is copied to userspace, zeroing it to avoid any data leak */
++	struct inv_icm42600_accel_buffer buffer = { };
  
+ 	/* parse all fifo packets */
+ 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
+@@ -767,8 +768,6 @@ int inv_icm42600_accel_parse_fifo(struct
+ 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
+ 							 st->fifo.nb.total, no);
+ 
+-		/* buffer is copied to userspace, zeroing it to avoid any data leak */
+-		memset(&buffer, 0, sizeof(buffer));
+ 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -760,7 +760,8 @@ int inv_icm42600_gyro_parse_fifo(struct
+ 	const int8_t *temp;
+ 	unsigned int odr;
+ 	int64_t ts_val;
+-	struct inv_icm42600_gyro_buffer buffer;
++	/* buffer is copied to userspace, zeroing it to avoid any data leak */
++	struct inv_icm42600_gyro_buffer buffer = { };
+ 
+ 	/* parse all fifo packets */
+ 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
+@@ -779,8 +780,6 @@ int inv_icm42600_gyro_parse_fifo(struct
+ 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
+ 							 st->fifo.nb.total, no);
+ 
+-		/* buffer is copied to userspace, zeroing it to avoid any data leak */
+-		memset(&buffer, 0, sizeof(buffer));
+ 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
 
 
