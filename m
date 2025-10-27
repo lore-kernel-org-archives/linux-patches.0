@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1FC1FBC92;
-	Mon, 27 Oct 2025 19:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7216730506B;
+	Mon, 27 Oct 2025 19:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592219; cv=none; b=AYNohOLJQayc6ahBIOLL6L2tJyBZFsnFubX5zDNr4OyjOiGs6omSsu09UJJCelhPSc4rS2ot1dDh2KX+PTSMh5XNSh5ZXxhAV9ZnRBe5aW1IzwHhYekeVelrVXiSAUy5NgBN5MUcFqm1vvX74yxJhj2lhcyfwFYPQjVJw7S3TGk=
+	t=1761592221; cv=none; b=lf5rqm+apzsIj6Jr0oZ/kLlh/eX0SUGLzYucgl5Xm2cGRSEaCqo/ytR0q+SJcQcomohvMNbDrsAGxJHzeybhMg8QkghfUUREF2iWf/WutyYCCANm6+v0bSjejMQJDZb3O9zn2a0kgahMPSkoVIdXGchb4IN3tjTQ39mRn3tneec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592219; c=relaxed/simple;
-	bh=ivnM/VKTQxN+Ewwd3UmcGr04L77JMRXF9SEu/jKK+60=;
+	s=arc-20240116; t=1761592221; c=relaxed/simple;
+	bh=X5uueY2jVEPuwDDBjBH5hkoT2NwPULEw12pWUsyvX6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMV8JgbeEgXhN/Qy74h6vm6/npWLRy+8vdAY1Xay0ug2e/ZXLrM7qqbxbpULUkUF41QM/cbqAuL16a3cSU73XGf/9AA1+sGVMciX218HFJNXPq2YxFwmDlKkZ5hGZUHGBX3aGMwPK/8PDK0ngsTUHinhZm9Hvcdaij55LYxORB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7cLcbVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dqcD/3xexrEsH4hwd04QQjp5DIzJ/l3xmflsfmGmyd7ZVj6Z5IvlJ3SJkfNF2KGcw+BxR8Ba+lvReL7vHjRLjPGYuKVVdjUSMV46VoGLtwtpsKRtCV77LTjw1ONNCo5Zlqend4v1efVOkTPqsXWUPg24y4yblkDDpMhPQl97iJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3d7p7Om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7cLcbVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DEFC4CEF1;
-	Mon, 27 Oct 2025 19:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3d7p7Om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077FFC4CEF1;
+	Mon, 27 Oct 2025 19:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592218;
-	bh=ivnM/VKTQxN+Ewwd3UmcGr04L77JMRXF9SEu/jKK+60=;
+	s=korg; t=1761592221;
+	bh=X5uueY2jVEPuwDDBjBH5hkoT2NwPULEw12pWUsyvX6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7cLcbVC+x+WPPqmSJ5CuUvV9wko8m63YCOfslo6hRc0unRc24OeVzwGdw7Ov63of
-	 NLVDq3JuiCjM/EIBkv5XOI3s3Ra9lIOLKPok/c7bHDhkmCzO1b0bdZYddfp1HV1ndz
-	 DGNzVuN/2QFJzDXIN3k0d+z75V56a/ZhrYphBacg=
+	b=i3d7p7OmPuJ1OqWzhlsgTjXAb9PZJODi5rTnCgUBdZ8nMBfz24iregbefb4lNsGIp
+	 dqOQZSTyMqrWsBIdUyCFp+BoeOO9QZzrxBv8m1JyUzB49JvyurkHugrvzzX3DZcxJS
+	 qejZ4inhEoPI8krUiNLw2ecK4U6cxVQAkocImFvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeounsu Moon <yyyynoom@gmail.com>,
+	Philippe Guibert <philippe.guibert@6wind.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/157] net: dlink: handle dma_map_single() failure properly
-Date: Mon, 27 Oct 2025 19:34:59 +0100
-Message-ID: <20251027183502.319104188@linuxfoundation.org>
+Subject: [PATCH 6.1 039/157] doc: fix seg6_flowlabel path
+Date: Mon, 27 Oct 2025 19:35:00 +0100
+Message-ID: <20251027183502.346231773@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,72 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeounsu Moon <yyyynoom@gmail.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit 65946eac6d888d50ae527c4e5c237dbe5cc3a2f2 ]
+[ Upstream commit 0b4b77eff5f8cd9be062783a1c1e198d46d0a753 ]
 
-There is no error handling for `dma_map_single()` failures.
+This sysctl is not per interface; it's global per netns.
 
-Add error handling by checking `dma_mapping_error()` and freeing
-the `skb` using `dev_kfree_skb()` (process context) when it fails.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
-Tested-on: D-Link DGE-550T Rev-A3
-Suggested-by: Simon Horman <horms@kernel.org>
+Fixes: 292ecd9f5a94 ("doc: move seg6_flowlabel to seg6-sysctl.rst")
+Reported-by: Philippe Guibert <philippe.guibert@6wind.com>
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ Documentation/networking/seg6-sysctl.rst | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index bf58181589bf2..2221d5b7eeba9 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -498,25 +498,34 @@ static int alloc_list(struct net_device *dev)
- 	for (i = 0; i < RX_RING_SIZE; i++) {
- 		/* Allocated fixed size of skbuff */
- 		struct sk_buff *skb;
-+		dma_addr_t addr;
+diff --git a/Documentation/networking/seg6-sysctl.rst b/Documentation/networking/seg6-sysctl.rst
+index 07c20e470bafe..1b6af4779be11 100644
+--- a/Documentation/networking/seg6-sysctl.rst
++++ b/Documentation/networking/seg6-sysctl.rst
+@@ -25,6 +25,9 @@ seg6_require_hmac - INTEGER
  
- 		skb = netdev_alloc_skb_ip_align(dev, np->rx_buf_sz);
- 		np->rx_skbuff[i] = skb;
--		if (!skb) {
--			free_list(dev);
--			return -ENOMEM;
--		}
-+		if (!skb)
-+			goto err_free_list;
+ 	Default is 0.
+ 
++/proc/sys/net/ipv6/seg6_* variables:
++====================================
 +
-+		addr = dma_map_single(&np->pdev->dev, skb->data,
-+				      np->rx_buf_sz, DMA_FROM_DEVICE);
-+		if (dma_mapping_error(&np->pdev->dev, addr))
-+			goto err_kfree_skb;
- 
- 		np->rx_ring[i].next_desc = cpu_to_le64(np->rx_ring_dma +
- 						((i + 1) % RX_RING_SIZE) *
- 						sizeof(struct netdev_desc));
- 		/* Rubicon now supports 40 bits of addressing space. */
--		np->rx_ring[i].fraginfo =
--		    cpu_to_le64(dma_map_single(&np->pdev->dev, skb->data,
--					       np->rx_buf_sz, DMA_FROM_DEVICE));
-+		np->rx_ring[i].fraginfo = cpu_to_le64(addr);
- 		np->rx_ring[i].fraginfo |= cpu_to_le64((u64)np->rx_buf_sz << 48);
- 	}
- 
- 	return 0;
-+
-+err_kfree_skb:
-+	dev_kfree_skb(np->rx_skbuff[i]);
-+	np->rx_skbuff[i] = NULL;
-+err_free_list:
-+	free_list(dev);
-+	return -ENOMEM;
- }
- 
- static void rio_hw_init(struct net_device *dev)
+ seg6_flowlabel - INTEGER
+ 	Controls the behaviour of computing the flowlabel of outer
+ 	IPv6 header in case of SR T.encaps
 -- 
 2.51.0
 
