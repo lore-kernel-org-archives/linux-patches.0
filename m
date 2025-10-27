@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82D01BC4E;
-	Mon, 27 Oct 2025 19:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848DA32D0E1;
+	Mon, 27 Oct 2025 19:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593113; cv=none; b=GR2lH7MTJ+zTuZDx5AnQKuHNfQZu6Py3KoDlWXaJgGlzu8mq3FMxM60p2ZoJCC87mYK6o010+jO6UaaWugvsEMuzrABi/MFamm0XnZTyeSmnvcslZBWuIRc8ujyVDm99vu9PQsnNYEzv77r6NQSUSXl0sYpSzOP4tY0+tlCywHE=
+	t=1761593115; cv=none; b=i5t+o/D/htmP8xmngW7/x39sUENtcbMrOkLujnxjIo2ro3Ao86JeUh9MHCd69vTes+CJhMNvw5jcJw+xoH2xCt6MBZGMKlR0/66gvvNia+3lw15TdPHt71h3YUUAVchh27xuzjiMUAmPGwkNKDy5heJAOw9UdoCQvR8GwFtdmhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593113; c=relaxed/simple;
-	bh=UFji515DdRn7XtDgMWKDitQbmqJ6wgquUnXhiFHU/AA=;
+	s=arc-20240116; t=1761593115; c=relaxed/simple;
+	bh=SNC8REIofvflG6hTr98U4lid7nVq2eL01PPC7PIyNN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVwJL4xt69X0lH/P9Gqg+KvMLaisypB8gH2kWaWWMa+r2AwLqJqUgP28ZZrZsak8HI6bj9fdf5zT3h5942RV4PonKb/qhm/+OqY2bpzHgRCqcK8uQ3MpKTCzZKH8VzwBOHunfRBmhnRg8gzFg4Ng7NQyNrAkuhhqKMuxCfeKPzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMU2XV6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUuYRo5iYTant7ZS/7zQ48IJ8X2gCU53vv35GSuZEwcyvPRxEAC6Ev8YaFj7FYGpdcGB+Soe8JUm8sNh29/SmZUlyhLxEps3mFwzl+u9QL2gXrqjpEMOqdYZLlszbEoWSxQ72TX4jfnYCc2YHmVwi0SUrnUmu70gMeF/+LsVlRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dWIcsPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMU2XV6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7961CC4CEF1;
-	Mon, 27 Oct 2025 19:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dWIcsPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1779EC4CEF1;
+	Mon, 27 Oct 2025 19:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593112;
-	bh=UFji515DdRn7XtDgMWKDitQbmqJ6wgquUnXhiFHU/AA=;
+	s=korg; t=1761593115;
+	bh=SNC8REIofvflG6hTr98U4lid7nVq2eL01PPC7PIyNN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMU2XV6aeWhyy3Adg5vne7IRPUvoG/3NyDJ8rnH0f/nKozcuoA4N6HFAYp57aN2kz
-	 6pPRTT35ddr9tFQS1Jb4eA1J0naN0/yCVWLSTJ8ruBQoy19rXtIH/sz2AyvypS0/R9
-	 K530v3cVRtnAfUuShe7IviMAqE0etn6QPAVdzE0g=
+	b=1dWIcsPtdBZskKq2T1ak6dt1PhawgafGeWMUf0oA2uNhE1CVdWPeb6qRogR4YwxVV
+	 jcouqAq13do42m5kdhy269ll1W7KvnyuiaZcXGkXLvt+IItFe91Vtz+uYTRgjvF3FP
+	 pw2dPSCdyzwmoooIODfu8QAqBZLQ6gfcyaFW4wq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
-	Kees Cook <kees@kernel.org>,
+	Fuad Tabba <tabba@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 018/184] lkdtm: fortify: Fix potential NULL dereference on kmalloc failure
-Date: Mon, 27 Oct 2025 19:35:00 +0100
-Message-ID: <20251027183515.424436909@linuxfoundation.org>
+Subject: [PATCH 6.17 019/184] arm64: sysreg: Correct sign definitions for EIESB and DoubleLock
+Date: Mon, 27 Oct 2025 19:35:01 +0100
+Message-ID: <20251027183515.451121628@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,45 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 01c7344e21c2140e72282d9d16d79a61f840fc20 ]
+[ Upstream commit f4d4ebc84995178273740f3e601e97fdefc561d2 ]
 
-Add missing NULL pointer checks after kmalloc() calls in
-lkdtm_FORTIFY_STR_MEMBER() and lkdtm_FORTIFY_MEM_MEMBER() functions.
+The `ID_AA64MMFR4_EL1.EIESB` field, is an unsigned enumeration, but was
+incorrectly defined as a `SignedEnum` when introduced in commit
+cfc680bb04c5 ("arm64: sysreg: Add layout for ID_AA64MMFR4_EL1"). This is
+corrected to `UnsignedEnum`.
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://lore.kernel.org/r/20250814060605.5264-1-junjie.cao@intel.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Conversely, the `ID_AA64DFR0_EL1.DoubleLock` field, is a signed
+enumeration, but was incorrectly defined as an `UnsignedEnum`. This is
+corrected to `SignedEnum`, which wasn't correctly set when annotated as
+such in commit ad16d4cf0b4f ("arm64/sysreg: Initial unsigned annotations
+for ID registers").
+
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/lkdtm/fortify.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/tools/sysreg | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/lkdtm/fortify.c b/drivers/misc/lkdtm/fortify.c
-index 0159276656780..00ed2147113e6 100644
---- a/drivers/misc/lkdtm/fortify.c
-+++ b/drivers/misc/lkdtm/fortify.c
-@@ -44,6 +44,9 @@ static void lkdtm_FORTIFY_STR_MEMBER(void)
- 	char *src;
- 
- 	src = kmalloc(size, GFP_KERNEL);
-+	if (!src)
-+		return;
-+
- 	strscpy(src, "over ten bytes", size);
- 	size = strlen(src) + 1;
- 
-@@ -109,6 +112,9 @@ static void lkdtm_FORTIFY_MEM_MEMBER(void)
- 	char *src;
- 
- 	src = kmalloc(size, GFP_KERNEL);
-+	if (!src)
-+		return;
-+
- 	strscpy(src, "over ten bytes", size);
- 	size = strlen(src) + 1;
- 
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index 696ab1f32a674..2a37d4c26d870 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -1693,7 +1693,7 @@ UnsignedEnum	43:40	TraceFilt
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-UnsignedEnum	39:36	DoubleLock
++SignedEnum	39:36	DoubleLock
+ 	0b0000	IMP
+ 	0b1111	NI
+ EndEnum
+@@ -2409,7 +2409,7 @@ UnsignedEnum	11:8	ASID2
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-SignedEnum	7:4	EIESB
++UnsignedEnum	7:4	EIESB
+ 	0b0000	NI
+ 	0b0001	ToEL3
+ 	0b0010	ToELx
 -- 
 2.51.0
 
