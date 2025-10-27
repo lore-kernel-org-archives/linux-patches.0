@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D148732549E;
-	Mon, 27 Oct 2025 18:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEBE32549E;
+	Mon, 27 Oct 2025 18:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591236; cv=none; b=LrX/PP1MpgQlh458WHsx+oKPNFEnEWMVibcdhIGscLiAQUg4nPx1xvTTTQZJtKTXSUYsoX2clLKI9PXiwasO4PZuVDoZ+sCcLMQczWmTqWB1++socbZwpZMwheGhYFjHd7EeTskWxd8g5pXmuX7TmKxEZJUhLBhT9h/TE2hWu88=
+	t=1761591239; cv=none; b=EsNgngbYbHNHEcB5vPCjSrGbhf3F+nGgNlSHuWzHdf+Bi6wgRhaHdQZUKwzv3Az6moKd+O2mpimdnosSQyTk+t/zFv86D6M8SEftr21pw2l8Od7qcVH4B+XTO0+9Ux2OZsrfPzSRbmYRDNPN2+Iz0lf83TbXT9DLP22DdygqA9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591236; c=relaxed/simple;
-	bh=eAOGOu7+3WX8bo3hox2o2uBTfpdhNINy1yUEzAsCVoc=;
+	s=arc-20240116; t=1761591239; c=relaxed/simple;
+	bh=4tuD2x5naAkh7taQzCbw0Kt1LQ5MiU6W221ooXhVUNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cp9M58vTbIG2dUUNo5gBOf7+1cKuqZex48pV6iZk4EClU27Eq6fkftGk26d7uCiOxRwt/CwOBaPXpHb6G4wFvMzccavA3d+9CIockq4+zy1CqoY7d2SEmtyBImhYucbGkIV7lDNWfI6Anqn44qnc5j/4sTwFziR7IHP+LbzHmQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRQA8x6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQtst3Nk5GhngIN1DYc3LgHHpEc8rVR4AEiAubH0ndvtuJtL5VgyS54bYWZyItMV9JejejWJSdBtuFPoWC2bIQnKFpjPtR/8RF9dNbMAhqiooX0wEYsa9v/emT2J4XAc6bacPwV1Cgno4UhThpV+3XDmJNYh1N4zaQ9FS1YWDuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxSqIC+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRQA8x6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7EFC4CEF1;
-	Mon, 27 Oct 2025 18:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxSqIC+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04051C4CEF1;
+	Mon, 27 Oct 2025 18:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591236;
-	bh=eAOGOu7+3WX8bo3hox2o2uBTfpdhNINy1yUEzAsCVoc=;
+	s=korg; t=1761591239;
+	bh=4tuD2x5naAkh7taQzCbw0Kt1LQ5MiU6W221ooXhVUNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRQA8x6ANx4OcSSW6V9HVeDW1ib/w6KNSlH1/h5XfPPJkDVFCcHkyvnwSeiv6E3g7
-	 zHHOTCu5lNynuu82jeOHXDOTc19BuEwsGL+UMmsIFIQuEbQfc6OLVwJXAO94qWisQU
-	 hJPiwsrvGsPlYoCubVtjaD+tJFZqSouECgSrH2oE=
+	b=rxSqIC+enIi7099M29KtQCBEsrgTSiODyr4TpXgpIZooox1Izp/w1cM+GEIECL45j
+	 zKLiWm7H5RXBS7sIywImNzW0dTQdpitTKXRqqxA+cIP3gZVRXf/CWtqW1wRAAoapUr
+	 miLDK8FI7RCEjG/yW5lUI1Ws8Ase6tmn4a5HWvzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/332] Bluetooth: MGMT: Fix not exposing debug UUID on MGMT_OP_READ_EXP_FEATURES_INFO
-Date: Mon, 27 Oct 2025 19:32:13 +0100
-Message-ID: <20251027183526.733180960@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Subject: [PATCH 5.10 071/332] sparc: fix accurate exception reporting in copy_to_user for Niagara 4
+Date: Mon, 27 Oct 2025 19:32:04 +0100
+Message-ID: <20251027183526.497599119@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 79e562a52adea4afa0601a15964498fae66c823c ]
+[ Upstream commit 5a746c1a2c7980de6c888b6373299f751ad7790b ]
 
-The debug UUID was only getting set if MGMT_OP_READ_EXP_FEATURES_INFO
-was not called with a specific index which breaks the likes of
-bluetoothd since it only invokes MGMT_OP_READ_EXP_FEATURES_INFO when an
-adapter is plugged, so instead of depending hdev not to be set just
-enable the UUID on any index like it was done with iso_sock_uuid.
+The referenced commit introduced exception handlers on user-space memory
+references in copy_from_user and copy_to_user. These handlers return from
+the respective function and calculate the remaining bytes left to copy
+using the current register contents. This commit fixes a bad calculation.
+This will fix the return value of copy_to_user in a specific faulting case.
+The behaviour of memcpy stays unchanged.
 
-Fixes: e625e50ceee1 ("Bluetooth: Introduce debug feature when dynamic debug is disabled")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 957077048009 ("sparc64: Convert NG4copy_{from,to}_user to accurate exception reporting.")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on Oracle SPARC T4-1
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-4-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/sparc/lib/NG4memcpy.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 51b16c2a279f4..fda0bd990dcb7 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3801,13 +3801,11 @@ static int read_exp_features_info(struct sock *sk, struct hci_dev *hdev,
- 	memset(&buf, 0, sizeof(buf));
- 
- #ifdef CONFIG_BT_FEATURE_DEBUG
--	if (!hdev) {
--		flags = bt_dbg_get() ? BIT(0) : 0;
-+	flags = bt_dbg_get() ? BIT(0) : 0;
- 
--		memcpy(rp->features[idx].uuid, debug_uuid, 16);
--		rp->features[idx].flags = cpu_to_le32(flags);
--		idx++;
--	}
-+	memcpy(rp->features[idx].uuid, debug_uuid, 16);
-+	rp->features[idx].flags = cpu_to_le32(flags);
-+	idx++;
- #endif
- 
- 	if (hdev) {
+diff --git a/arch/sparc/lib/NG4memcpy.S b/arch/sparc/lib/NG4memcpy.S
+index 7ad58ebe0d009..df0ec1bd19489 100644
+--- a/arch/sparc/lib/NG4memcpy.S
++++ b/arch/sparc/lib/NG4memcpy.S
+@@ -281,7 +281,7 @@ FUNC_NAME:	/* %o0=dst, %o1=src, %o2=len */
+ 	subcc		%o5, 0x20, %o5
+ 	EX_ST(STORE(stx, %g1, %o0 + 0x00), memcpy_retl_o2_plus_o5_plus_32)
+ 	EX_ST(STORE(stx, %g2, %o0 + 0x08), memcpy_retl_o2_plus_o5_plus_24)
+-	EX_ST(STORE(stx, GLOBAL_SPARE, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_24)
++	EX_ST(STORE(stx, GLOBAL_SPARE, %o0 + 0x10), memcpy_retl_o2_plus_o5_plus_16)
+ 	EX_ST(STORE(stx, %o4, %o0 + 0x18), memcpy_retl_o2_plus_o5_plus_8)
+ 	bne,pt		%icc, 1b
+ 	 add		%o0, 0x20, %o0
 -- 
 2.51.0
 
