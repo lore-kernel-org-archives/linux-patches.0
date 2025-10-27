@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FFD246BB7;
-	Mon, 27 Oct 2025 19:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47D11BC4E;
+	Mon, 27 Oct 2025 19:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593382; cv=none; b=srgK8ChlO3joRwN89M/BCWJymMO/r25KfEE54JpA+ZVuHRos1JNt5WziCOSlHmk0+rQzhD14T5/6f15HigWi+YhJFtASQAk45K4Gc6y9+4M0t+GBoz56kUpgnv/gimRxTMc0stHSfPyBcRYOWZc3A27qhk8Asg8TLdzd992Xvzg=
+	t=1761593385; cv=none; b=S3Hs75GRBY6nhLCo+QF09NCJS4GPXH/APx/fH2N7lLqgw4G4N+BmGF2cQBdFAvx823Pcw3rnVn4xuBaUxWIqRkvynvz28D7LqSHcAqUgKeMuJNbpEYD9WZvESZvap5WQajs1aZ97810shUvboAEhY2W8VTVbIFUagTevxcXPNeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593382; c=relaxed/simple;
-	bh=jAB3PGpaqrQ6MwHTVOuC1VCpg+YIttKFlMimoXGvvB4=;
+	s=arc-20240116; t=1761593385; c=relaxed/simple;
+	bh=g7u7d1wZPwtoN/PtUzTvbxLpAbH8gsLgb++ccHxDSp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izDuxe168iOME9vNilWDH5XD2dSwApL20YRUWejV4EYW/swGRqht2bjcAbfSes1kObbuep+L4sEB4y/DyBLUBb7hR+/B5w6fd7EVTYtnJUskschtpiDxWSP5kNupKGJ2Ss0BfFdlp95tq/J7xHFVHpaSV/2t43VGWYibaMkLVeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YU+TOZDp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbRZc/OrfwsfYKFzO8+j7ZqD0S3mV6yL87yHwb5EgY+wDaKB93cUfm12txxISFL5w59aDYQ96ypO5uSZkV3g7AqyhOS/4OEKs2Bd3kXGPKIa7KLn1EoJwJURtbVsSVh50aARymT0x2f/hQN4sqG01IiL8jj/40ryvqAUXCsubrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p89BgTC1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YU+TOZDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3259EC4CEF1;
-	Mon, 27 Oct 2025 19:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p89BgTC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485CFC4CEFD;
+	Mon, 27 Oct 2025 19:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593382;
-	bh=jAB3PGpaqrQ6MwHTVOuC1VCpg+YIttKFlMimoXGvvB4=;
+	s=korg; t=1761593385;
+	bh=g7u7d1wZPwtoN/PtUzTvbxLpAbH8gsLgb++ccHxDSp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YU+TOZDp/k/w4wx9Fg7ZGlC/BLrkmmHlvEAvUxWsHdfwTky7pf3bQpnupEDApyMUa
-	 zKLSOei8Qi/53yYYIcuqkcHwhX+eCWHUZRitR+3yMiRJ1gWztEGVltY79T5HgdimCK
-	 yZxeMG7fe/3VRnkKvP1lQWAyvKNgVrwYebokbIKI=
+	b=p89BgTC1+Tm4JfbvES8lLewXT8tusRVKDuVn4a3Eot8gXTzi5oFK2JEbQn9Mf7MUU
+	 2O72qpWcX8KwX0elgURMG1GnRR6HyirKq/CXCTTHEPtLJkarpyGdKacfSGPd1UKUlw
+	 fpIUwH9y96iKGslwCEnczYpdf7fPsL0LBW8GzLhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fengnan Chang <changfengnan@bytedance.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.17 070/184] io_uring/sqpoll: be smarter on when to update the stime usage
-Date: Mon, 27 Oct 2025 19:35:52 +0100
-Message-ID: <20251027183516.777035744@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 110/184] mm/damon/core: fix list_add_tail() call on damon_call()
+Date: Mon, 27 Oct 2025 19:36:32 +0100
+Message-ID: <20251027183517.886255693@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -50,150 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: SeongJae Park <sj@kernel.org>
 
-commit a94e0657269c5b8e1a90b17aa2c048b3d276e16d upstream.
+commit c3fa5b1bfd8380d935fa961f2ac166bdf000f418 upstream.
 
-The current approach is a bit naive, and hence calls the time querying
-way too often. Only start the "doing work" timer when there's actual
-work to do, and then use that information to terminate (and account) the
-work time once done. This greatly reduces the frequency of these calls,
-when they cannot have changed anyway.
+Each damon_ctx maintains callback requests using a linked list
+(damon_ctx->call_controls).  When a new callback request is received via
+damon_call(), the new request should be added to the list.  However, the
+function is making a mistake at list_add_tail() invocation: putting the
+new item to add and the list head to add it before, in the opposite order.
+Because of the linked list manipulation implementation, the new request
+can still be reached from the context's list head.  But the list items
+that were added before the new request are dropped from the list.
 
-Running a basic random reader that is setup to use SQPOLL, a profile
-before this change shows these as the top cycle consumers:
+As a result, the callbacks are unexpectedly not invocated.  Worse yet, if
+the dropped callback requests were dynamically allocated, the memory is
+leaked.  Actually DAMON sysfs interface is using a dynamically allocated
+repeat-mode callback request for automatic essential stats update.  And
+because the online DAMON parameters commit is using a non-repeat-mode
+callback request, the issue can easily be reproduced, like below.
 
-+   32.60%  iou-sqp-1074  [kernel.kallsyms]  [k] thread_group_cputime_adjusted
-+   19.97%  iou-sqp-1074  [kernel.kallsyms]  [k] thread_group_cputime
-+   12.20%  io_uring      io_uring           [.] submitter_uring_fn
-+    4.13%  iou-sqp-1074  [kernel.kallsyms]  [k] getrusage
-+    2.45%  iou-sqp-1074  [kernel.kallsyms]  [k] io_submit_sqes
-+    2.18%  iou-sqp-1074  [kernel.kallsyms]  [k] __pi_memset_generic
-+    2.09%  iou-sqp-1074  [kernel.kallsyms]  [k] cputime_adjust
+    # damo start --damos_action stat --refresh_stat 1s
+    # damo tune --damos_action stat --refresh_stat 1s
 
-and after this change, top of profile looks as follows:
+The first command dynamically allocates the repeat-mode callback request
+for automatic essential stat update.  Users can see the essential stats
+are automatically updated for every second, using the sysfs interface.
 
-+   36.23%  io_uring     io_uring           [.] submitter_uring_fn
-+   23.26%  iou-sqp-819  [kernel.kallsyms]  [k] io_sq_thread
-+   10.14%  iou-sqp-819  [kernel.kallsyms]  [k] io_sq_tw
-+    6.52%  iou-sqp-819  [kernel.kallsyms]  [k] tctx_task_work_run
-+    4.82%  iou-sqp-819  [kernel.kallsyms]  [k] nvme_submit_cmds.part.0
-+    2.91%  iou-sqp-819  [kernel.kallsyms]  [k] io_submit_sqes
-[...]
-     0.02%  iou-sqp-819  [kernel.kallsyms]  [k] cputime_adjust
+The second command calls damon_commit() with a new callback request that
+was made for the commit.  As a result, the previously added repeat-mode
+callback request is dropped from the list.  The automatic stats refresh
+stops working, and the memory for the repeat-mode callback request is
+leaked.  It can be confirmed using kmemleak.
 
-where it's spending the cycles on things that actually matter.
+Fix the mistake on the list_add_tail() call.
 
-Reported-by: Fengnan Chang <changfengnan@bytedance.com>
-Cc: stable@vger.kernel.org
-Fixes: 3fcb9d17206e ("io_uring/sqpoll: statistics of the true utilization of sq threads")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lkml.kernel.org/r/20251014205939.1206-1-sj@kernel.org
+Fixes: 004ded6bee11 ("mm/damon: accept parallel damon_call() requests")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.17+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/sqpoll.c |   43 ++++++++++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ mm/damon/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -170,6 +170,11 @@ static inline bool io_sqd_events_pending
- 	return READ_ONCE(sqd->state);
- }
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1422,7 +1422,7 @@ int damon_call(struct damon_ctx *ctx, st
+ 	INIT_LIST_HEAD(&control->list);
  
-+struct io_sq_time {
-+	bool started;
-+	u64 usec;
-+};
-+
- u64 io_sq_cpu_usec(struct task_struct *tsk)
- {
- 	u64 utime, stime;
-@@ -179,12 +184,24 @@ u64 io_sq_cpu_usec(struct task_struct *t
- 	return stime;
- }
- 
--static void io_sq_update_worktime(struct io_sq_data *sqd, u64 usec)
-+static void io_sq_update_worktime(struct io_sq_data *sqd, struct io_sq_time *ist)
- {
--	sqd->work_time += io_sq_cpu_usec(current) - usec;
-+	if (!ist->started)
-+		return;
-+	ist->started = false;
-+	sqd->work_time += io_sq_cpu_usec(current) - ist->usec;
- }
- 
--static int __io_sq_thread(struct io_ring_ctx *ctx, bool cap_entries)
-+static void io_sq_start_worktime(struct io_sq_time *ist)
-+{
-+	if (ist->started)
-+		return;
-+	ist->started = true;
-+	ist->usec = io_sq_cpu_usec(current);
-+}
-+
-+static int __io_sq_thread(struct io_ring_ctx *ctx, struct io_sq_data *sqd,
-+			  bool cap_entries, struct io_sq_time *ist)
- {
- 	unsigned int to_submit;
- 	int ret = 0;
-@@ -197,6 +214,8 @@ static int __io_sq_thread(struct io_ring
- 	if (to_submit || !wq_list_empty(&ctx->iopoll_list)) {
- 		const struct cred *creds = NULL;
- 
-+		io_sq_start_worktime(ist);
-+
- 		if (ctx->sq_creds != current_cred())
- 			creds = override_creds(ctx->sq_creds);
- 
-@@ -278,7 +297,6 @@ static int io_sq_thread(void *data)
- 	unsigned long timeout = 0;
- 	char buf[TASK_COMM_LEN] = {};
- 	DEFINE_WAIT(wait);
--	u64 start;
- 
- 	/* offload context creation failed, just exit */
- 	if (!current->io_uring) {
-@@ -313,6 +331,7 @@ static int io_sq_thread(void *data)
- 	mutex_lock(&sqd->lock);
- 	while (1) {
- 		bool cap_entries, sqt_spin = false;
-+		struct io_sq_time ist = { };
- 
- 		if (io_sqd_events_pending(sqd) || signal_pending(current)) {
- 			if (io_sqd_handle_event(sqd))
-@@ -321,9 +340,8 @@ static int io_sq_thread(void *data)
- 		}
- 
- 		cap_entries = !list_is_singular(&sqd->ctx_list);
--		start = io_sq_cpu_usec(current);
- 		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list) {
--			int ret = __io_sq_thread(ctx, cap_entries);
-+			int ret = __io_sq_thread(ctx, sqd, cap_entries, &ist);
- 
- 			if (!sqt_spin && (ret > 0 || !wq_list_empty(&ctx->iopoll_list)))
- 				sqt_spin = true;
-@@ -331,15 +349,18 @@ static int io_sq_thread(void *data)
- 		if (io_sq_tw(&retry_list, IORING_TW_CAP_ENTRIES_VALUE))
- 			sqt_spin = true;
- 
--		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
--			if (io_napi(ctx))
-+		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list) {
-+			if (io_napi(ctx)) {
-+				io_sq_start_worktime(&ist);
- 				io_napi_sqpoll_busy_poll(ctx);
-+			}
-+		}
-+
-+		io_sq_update_worktime(sqd, &ist);
- 
- 		if (sqt_spin || !time_after(jiffies, timeout)) {
--			if (sqt_spin) {
--				io_sq_update_worktime(sqd, start);
-+			if (sqt_spin)
- 				timeout = jiffies + sqd->sq_thread_idle;
--			}
- 			if (unlikely(need_resched())) {
- 				mutex_unlock(&sqd->lock);
- 				cond_resched();
+ 	mutex_lock(&ctx->call_controls_lock);
+-	list_add_tail(&ctx->call_controls, &control->list);
++	list_add_tail(&control->list, &ctx->call_controls);
+ 	mutex_unlock(&ctx->call_controls_lock);
+ 	if (!damon_is_running(ctx))
+ 		return -EINVAL;
 
 
