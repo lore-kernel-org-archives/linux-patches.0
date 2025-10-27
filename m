@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732DC32548B;
-	Mon, 27 Oct 2025 18:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F01630F534;
+	Mon, 27 Oct 2025 18:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591006; cv=none; b=eySzC7KPS7dYHG2I4CjofUeCavHXsKgYGW8M0YOmPW5a8+LkDZC23uVCm/aUXXnqSVMHmXtpbRHQbLi/aBKU11NcENhIwNZ3kQc6ujvVIDH3ZstNlPt8RBfb7l9alXBc8Ubo2W5SqmUR33Fe3D8sxiLN+Klp0mbFAjrFrDkIYSU=
+	t=1761591007; cv=none; b=TiWUhAFrCz4ExasE68zErUcMBwDgCd13/Xlucp15P2W5IOAei+7oTdi+BW1jtrzVwsZ1NZAWxt2k+4HqZlS1Z/JAQY1pC7EJNiX4dsJAo/LpQn1xRXgjuv7HKFwfTMYmtId41Q0YMuX8oaqAr6WleFS+pHpsxjuCn91B3h5wa7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591006; c=relaxed/simple;
-	bh=2Z2k18Wxyzs1TS/x3JWsBQ7OrILcUHTJ4GPRpi4umz0=;
+	s=arc-20240116; t=1761591007; c=relaxed/simple;
+	bh=A0ds4LjdAUGJ6cOZIe0e6ESLj5ELzzgWE3t5/yRT23o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSY/QZvH6O3OHrJcshzdvcdrMjTvHGw1yI4DptI/fwUkM4eQeRpgw6W1vCRPgC3TTDuCNOBrQR30yrEU1NNwmuceUKyUWWaW5qCLJL9f+8N82ZyNLnSoURPqJ9LNYlmRiHvl1T6j9c2KIP295a5hSBumgBxvyu0d9sIUFLyGdIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX4GgcTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWY5zASkiNn2B7oViEfQKOw68NDGrdKWN+PDG+pNdfoeqBAZim4qL4w/FDnFboim35Ep1J9Fjx7ulLDdGaoKpkVNDRrFdyqK0BfTwjsbcObikY6VqBYjzsb8yD9b79/7TP8il4DGjAuGZLruQNRK+j4O9XT3uNR0O4hpW4IHspc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWY9H/6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX4GgcTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054E7C4CEFD;
-	Mon, 27 Oct 2025 18:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWY9H/6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5500FC4CEF1;
+	Mon, 27 Oct 2025 18:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591006;
-	bh=2Z2k18Wxyzs1TS/x3JWsBQ7OrILcUHTJ4GPRpi4umz0=;
+	s=korg; t=1761591003;
+	bh=A0ds4LjdAUGJ6cOZIe0e6ESLj5ELzzgWE3t5/yRT23o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX4GgcTEXq8W/rvvYIdkeOKRVQlynsPq07Fi/wP+B8fn4jU4y94bDGupRfXDkTYih
-	 1+yFZFFyzhKXhl+X5mX7KmH4c8deCCgmhDd0nh1gVgWToMlhycM9ygjNiqEHK2jvGy
-	 aBtPrtMrg1YzisZOZKRK0H0SLom9xJgBHC5/Fv5U=
+	b=QWY9H/6Zty99ICIXFgVEB1z60jZarNvV2sixdMAsiJNDzfydgAZbMNSgzk5xTQSyi
+	 kHpjt64DOpe/YXMW+uJ9JFPZ6pQrmvbX3Cgp3Zsxbxx6G6kboERwiuuVANf4k91DU+
+	 6I0vobSRPLMhuvguCZJw3k/0WYd6OLeN63igimBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/332] block: use int to store blk_stack_limits() return value
-Date: Mon, 27 Oct 2025 19:31:23 +0100
-Message-ID: <20251027183525.416715434@linuxfoundation.org>
+	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
+	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 003/332] media: rc: fix races with imon_disconnect()
+Date: Mon, 27 Oct 2025 19:30:56 +0100
+Message-ID: <20251027183524.707535933@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,48 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
 
-[ Upstream commit b0b4518c992eb5f316c6e40ff186cbb7a5009518 ]
+commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb upstream.
 
-Change the 'ret' variable in blk_stack_limits() from unsigned int to int,
-as it needs to store negative value -1.
+Syzbot reports a KASAN issue as below:
+BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
+BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
 
-Storing the negative error codes in unsigned type, or performing equality
-comparisons (e.g., ret == -1), doesn't cause an issue at runtime [1] but
-can be confusing.  Additionally, assigning negative error codes to unsigned
-type may trigger a GCC warning when the -Wsign-conversion flag is enabled.
+CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
+Call Trace:
+ <TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+print_address_description mm/kasan/report.c:317 [inline]
+print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
+kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
+__create_pipe include/linux/usb.h:1945 [inline]
+send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
+vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
+vfs_write+0x2d7/0xdd0 fs/read_write.c:576
+ksys_write+0x127/0x250 fs/read_write.c:631
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-No effect on runtime.
+The iMON driver improperly releases the usb_device reference in
+imon_disconnect without coordinating with active users of the
+device.
 
-Link: https://lore.kernel.org/all/x3wogjf6vgpkisdhg3abzrx7v7zktmdnfmqeih5kosszmagqfs@oh3qxrgzkikf/ #1
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Fixes: fe0b393f2c0a ("block: Correct handling of bottom device misaligment")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250902130930.68317-1-rongqianfeng@vivo.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
+protected by the users counter (ictx->users). During probe,
+imon_init_intf0 or imon_init_intf1 increments the usb_device
+reference count depending on the interface. However, during
+disconnect, usb_put_dev is called unconditionally, regardless of
+actual usage.
+
+As a result, if vfd_write or other operations are still in
+progress after disconnect, this can lead to a use-after-free of
+the usb_device pointer.
+
+Thread 1 vfd_write                      Thread 2 imon_disconnect
+                                        ...
+                                        if
+                                          usb_put_dev(ictx->usbdev_intf0)
+                                        else
+                                          usb_put_dev(ictx->usbdev_intf1)
+...
+while
+  send_packet
+    if
+      pipe = usb_sndintpipe(
+        ictx->usbdev_intf0) UAF
+    else
+      pipe = usb_sndctrlpipe(
+        ictx->usbdev_intf0, 0) UAF
+
+Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
+checking ictx->disconnected in all writer paths. Add early return
+with -ENODEV in send_packet(), vfd_write(), lcd_write() and
+display_open() if the device is no longer present.
+
+Set and read ictx->disconnected under ictx->lock to ensure memory
+synchronization. Acquire the lock in imon_disconnect() before setting
+the flag to synchronize with any ongoing operations.
+
+Ensure writers exit early and safely after disconnect before the USB
+core proceeds with cleanup.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Cc: stable@vger.kernel.org
+
+Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-settings.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index 18855d4bfda23..b2678e4dfa9e6 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -523,7 +523,8 @@ static unsigned int blk_round_down_sectors(unsigned int sectors, unsigned int lb
- int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
- 		     sector_t start)
- {
--	unsigned int top, bottom, alignment, ret = 0;
-+	unsigned int top, bottom, alignment;
-+	int ret = 0;
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -536,7 +536,9 @@ static int display_open(struct inode *in
  
- 	t->max_sectors = min_not_zero(t->max_sectors, b->max_sectors);
- 	t->max_hw_sectors = min_not_zero(t->max_hw_sectors, b->max_hw_sectors);
--- 
-2.51.0
-
+ 	mutex_lock(&ictx->lock);
+ 
+-	if (!ictx->display_supported) {
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++	} else if (!ictx->display_supported) {
+ 		pr_err("display not supported by device\n");
+ 		retval = -ENODEV;
+ 	} else if (ictx->display_isopen) {
+@@ -598,6 +600,9 @@ static int send_packet(struct imon_conte
+ 	int retval = 0;
+ 	struct usb_ctrlrequest *control_req = NULL;
+ 
++	if (ictx->disconnected)
++		return -ENODEV;
++
+ 	/* Check if we need to use control or interrupt urb */
+ 	if (!ictx->tx_control) {
+ 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
+@@ -954,12 +959,14 @@ static ssize_t vfd_write(struct file *fi
+ 	static const unsigned char vfd_packet6[] = {
+ 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	if (mutex_lock_interruptible(&ictx->lock))
+ 		return -ERESTARTSYS;
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
+ 		retval = -ENODEV;
+@@ -1034,11 +1041,13 @@ static ssize_t lcd_write(struct file *fi
+ 	int retval = 0;
+ 	struct imon_context *ictx = file->private_data;
+ 
+-	if (ictx->disconnected)
+-		return -ENODEV;
+-
+ 	mutex_lock(&ictx->lock);
+ 
++	if (ictx->disconnected) {
++		retval = -ENODEV;
++		goto exit;
++	}
++
+ 	if (!ictx->display_supported) {
+ 		pr_err_ratelimited("no iMON display present\n");
+ 		retval = -ENODEV;
+@@ -2502,7 +2511,11 @@ static void imon_disconnect(struct usb_i
+ 	int ifnum;
+ 
+ 	ictx = usb_get_intfdata(interface);
++
++	mutex_lock(&ictx->lock);
+ 	ictx->disconnected = true;
++	mutex_unlock(&ictx->lock);
++
+ 	dev = ictx->dev;
+ 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
+ 
 
 
