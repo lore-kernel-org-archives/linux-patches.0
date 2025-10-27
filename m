@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB0131D754;
-	Mon, 27 Oct 2025 19:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E0C18A6A5;
+	Mon, 27 Oct 2025 19:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592761; cv=none; b=WP2R2DlQHNE8PZUkHGtM1v9t1HkCK3z0+QlR8uuorYkIfHC4vLzwej0vPuW9Ow7rQjuIicvloj6QQVZLj0O9DO9kiYLKHuoFPqYvJPemggPtSvgy5BvTeu/lrxlkTJV0iNWljWTDmoqvry9AJ2bkzQA1XqEMFiH08M5IRvWV9hE=
+	t=1761592764; cv=none; b=hYftrXij9Mat7UPUfcWH16Qs7Tf/rRd/nBDNJNbZ1PjbDLfqK5Xpgq6xbzJEOxXKsC+SUEVg8oCNnzWz24TVtUkkrxp76R3aopYuvCmWmDv3lBhMThKQPVZN7227fppi1y25wigkaHELTWxmL7Q7kU9JUGJ6ovdtdtzFK+5ClQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592761; c=relaxed/simple;
-	bh=dFXkp0jU8j/VGHfga0XTsG6OlJfLfNs67+iVvX3iXA0=;
+	s=arc-20240116; t=1761592764; c=relaxed/simple;
+	bh=qzXg1hO3zoj9YFs2mY7Xk8zry7k3f16W5rEzTXBvZPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TB2Hpd7uX0Y0NDto+dNqJlPLVRk7HXsbxv05adu9pHRO8lgRo1a1qmKjPxQ6e9+JTe+ILHVWrNNZLLupbvHzER7nyFXtk96e+lpqhNk+CYtWaG5LEjc0KkYEjhnrem8vaTnid8U4Rxi6baLeL/twbdRFZc7LIaBvOh0eXNBln8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB7TC4rz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rH+yQ/z6/0B018Z16iK6epm72IMKlTXnrokN4Abgd2ZWsOiuT6X3EDyK87zjs1tfHOQPZIoWUT7VlPhm28ohww2Aep3MVsq53wEfBGzR/c65EtbTlSmICaXauLtWrssJZY59XkRAmI4wQW5cHU/QGTURVm1vaRqUXeptbTEZvEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1rXoFDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB7TC4rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE8CC4CEF1;
-	Mon, 27 Oct 2025 19:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1rXoFDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992E2C4CEF1;
+	Mon, 27 Oct 2025 19:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592761;
-	bh=dFXkp0jU8j/VGHfga0XTsG6OlJfLfNs67+iVvX3iXA0=;
+	s=korg; t=1761592763;
+	bh=qzXg1hO3zoj9YFs2mY7Xk8zry7k3f16W5rEzTXBvZPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZB7TC4rzFuyONoJSu6lHNOsg6pfrm6ZugFiJOSS1KCAJTm/QTBYKZ5PTrn1jqluU2
-	 IX3O4J1ipUkeT8mECeebxzREcuMVLVixtmF+mnK92gTso0tHlbFvw0XQdqYPEmKbMe
-	 ZTa5iOuLSU4Xt3sbcQiZBRW/jHIJr8ZKHCvI3v58=
+	b=W1rXoFDbAUuS7i2z1aMxCvdjaPTPFn4rx5tQl22B+hcGP05nSzd1Y9Rk2+XoLgPwJ
+	 alc/4w0W4SUxbQstCGj7mudZ+H8pXLQdfKLCA8f+ksiGY9kWzTQe4DlcFtN6lDL+fW
+	 a94Nozz30UbJSWifHg2qlkc7ZWUnSPn5jKCu49QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>
-Subject: [PATCH 6.6 62/84] usb/core/quirks: Add Huawei ME906S to wakeup quirk
-Date: Mon, 27 Oct 2025 19:36:51 +0100
-Message-ID: <20251027183440.469708381@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>
+Subject: [PATCH 6.6 63/84] usb: raw-gadget: do not limit transfer length
+Date: Mon, 27 Oct 2025 19:36:52 +0100
+Message-ID: <20251027183440.493497259@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -51,33 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-commit dfc2cf4dcaa03601cd4ca0f7def88b2630fca6ab upstream.
+commit 37b9dd0d114a0e38c502695e30f55a74fb0c37d0 upstream.
 
-The list of Huawei LTE modules needing the quirk fixing spurious wakeups
-was missing the IDs of the Huawei ME906S module, therefore suspend did not
-work.
+Drop the check on the maximum transfer length in Raw Gadget for both
+control and non-control transfers.
+
+Limiting the transfer length causes a problem with emulating USB devices
+whose full configuration descriptor exceeds PAGE_SIZE in length.
+
+Overall, there does not appear to be any reason to enforce any kind of
+transfer length limit on the Raw Gadget side for either control or
+non-control transfers, so let's just drop the related check.
 
 Cc: stable <stable@kernel.org>
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20251020134304.35079-1-wse@tuxedocomputers.com
+Fixes: f2c2e717642c ("usb: gadget: add raw-gadget interface")
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://patch.msgid.link/a6024e8eab679043e9b8a5defdb41c4bda62f02b.1761085528.git.andreyknvl@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/legacy/raw_gadget.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -464,6 +464,8 @@ static const struct usb_device_id usb_qu
- 	/* Huawei 4G LTE module */
- 	{ USB_DEVICE(0x12d1, 0x15bb), .driver_info =
- 			USB_QUIRK_DISCONNECT_SUSPEND },
-+	{ USB_DEVICE(0x12d1, 0x15c1), .driver_info =
-+			USB_QUIRK_DISCONNECT_SUSPEND },
- 	{ USB_DEVICE(0x12d1, 0x15c3), .driver_info =
- 			USB_QUIRK_DISCONNECT_SUSPEND },
- 
+--- a/drivers/usb/gadget/legacy/raw_gadget.c
++++ b/drivers/usb/gadget/legacy/raw_gadget.c
+@@ -620,8 +620,6 @@ static void *raw_alloc_io_data(struct us
+ 		return ERR_PTR(-EINVAL);
+ 	if (!usb_raw_io_flags_valid(io->flags))
+ 		return ERR_PTR(-EINVAL);
+-	if (io->length > PAGE_SIZE)
+-		return ERR_PTR(-EINVAL);
+ 	if (get_from_user)
+ 		data = memdup_user(ptr + sizeof(*io), io->length);
+ 	else {
 
 
