@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A72C33033C;
-	Mon, 27 Oct 2025 19:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034DD330D47;
+	Mon, 27 Oct 2025 19:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591886; cv=none; b=nrw1yn3BQNI1Xnz/F9T3AT0hMSMtAONZ/4s4UjztZzvWRsQ/hbEts0dBi9CAEtxNi2qit/jwUjJPg3Q06AzGNasdln+MuAHUPxN4KPU0+3BcljSE77IiaOK0RLn3uJsqTVd6pP/sVTQOS4fDEGSjNQFp0PY2hmQ3cpsSfxnhTr8=
+	t=1761591889; cv=none; b=VSMWwMXL7yP70+xYl/CCkJoOPbKOjE7W7hADkZPSGQhJVch8qq2eDNo2LOOCO+QbxFJiPI3OD4AfB8gcrURcDG0a/aNpcP68yhlTTXiKIzUdjg/lDUUPwLi1E396G/OkxivcEU2gG/AZUj74RWYVxAd2zAV08w8tizy67OX+17Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591886; c=relaxed/simple;
-	bh=ERRDpxtTHdihjT9BWNwuLs72jxIglDT0G51oLU2Velg=;
+	s=arc-20240116; t=1761591889; c=relaxed/simple;
+	bh=KRp+sjnQBJGiec2Pg+3B/Rlxct92N0s/bzVG+QQpI8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cc/yZCJ7Gw/xpFaA0w8ehRJutSVko2wC/IpqUH/NJR5WHReWHap4M4NgzP4AQH8gB4b8hyFS2tzaKu28POCOlFDwhAjVsT7/hdfSNJTlCt0m/Y8TwacetSC/ArHJImFV9MMCop7c+np6+TvaucYewAWtKRTbIVghV2bPG8lmvBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgZHsaEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eCcmrJskXo64nQRZucbPEHg4zhgO4UGTWuo0ZLxSS02OSuuGshVm95JUOLrZfp/2gfJ9BIets0w2v/udv1cou9uq0KGSuytI9IRFLWJkM+vP3hJpgCqx4XH6JtrOgP2QblOcb2R6U/8PyIaFTghqfUAS4DTNya7CoWCrI+Fmzsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQz7BATi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgZHsaEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B40C4CEF1;
-	Mon, 27 Oct 2025 19:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQz7BATi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCF0C4CEF1;
+	Mon, 27 Oct 2025 19:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591886;
-	bh=ERRDpxtTHdihjT9BWNwuLs72jxIglDT0G51oLU2Velg=;
+	s=korg; t=1761591888;
+	bh=KRp+sjnQBJGiec2Pg+3B/Rlxct92N0s/bzVG+QQpI8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgZHsaEf29v5GGxGF5pIO7xn2XcWhBJDkuvwgEQm8CYENgsGqJ3nuSY7GPpfQ0jpz
-	 /iSNJmWBaTNGSB5vc57pFHjJXOglpRV9R/Vucj+/hnLtKJ46lUqnHpVa1Cjlq6c4f7
-	 0OfFb0VlJAGJDvrySaGOQ2oBRXHd8hfJqn8vTJVc=
+	b=tQz7BATip2I1UkNUOCzbemUi4cuY7vquRckNWApQCTmOUa6jSmdvLgG5Rzi4cVBXI
+	 x/H19yhYgrdHVav0WtYu7Ii7GlwIgHTsgJ72TaL+sUuX57URqHCr2573XQHLOrceXZ
+	 Hb0u+jsd0VmXM0Oa4yAbRPVAAKgSAfAZB6AynF5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Jiaming Zhang <r772577952@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/123] ALSA: firewire: amdtp-stream: fix enum kernel-doc warnings
-Date: Mon, 27 Oct 2025 19:35:16 +0100
-Message-ID: <20251027183447.367767070@linuxfoundation.org>
+Subject: [PATCH 5.15 037/123] ALSA: usb-audio: Fix NULL pointer deference in try_to_register_card
+Date: Mon, 27 Oct 2025 19:35:17 +0100
+Message-ID: <20251027183447.394030296@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit d41f68dff783d181a8fd462e612bda0fbab7f735 ]
+[ Upstream commit 28412b489b088fb88dff488305fd4e56bd47f6e4 ]
 
-Fix spelling of CIP_NO_HEADER to prevent a kernel-doc warning.
+In try_to_register_card(), the return value of usb_ifnum_to_if() is
+passed directly to usb_interface_claimed() without a NULL check, which
+will lead to a NULL pointer dereference when creating an invalid
+USB audio device. Fix this by adding a check to ensure the interface
+pointer is valid before passing it to usb_interface_claimed().
 
-Warning: amdtp-stream.h:57 Enum value 'CIP_NO_HEADER' not described in enum 'cip_flags'
-Warning: amdtp-stream.h:57 Excess enum value '%CIP_NO_HEADERS' description in 'cip_flags'
-
-Fixes: 3b196c394dd9f ("ALSA: firewire-lib: add no-header packet processing")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: 39efc9c8a973 ("ALSA: usb-audio: Fix last interface check for registration")
+Closes: https://lore.kernel.org/all/CANypQFYtQxHL5ghREs-BujZG413RPJGnO5TH=xjFBKpPts33tA@mail.gmail.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/card.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/firewire/amdtp-stream.h b/sound/firewire/amdtp-stream.h
-index 011d0f0c39415..dc70256ca2203 100644
---- a/sound/firewire/amdtp-stream.h
-+++ b/sound/firewire/amdtp-stream.h
-@@ -32,7 +32,7 @@
-  *	allows 5 times as large as IEC 61883-6 defines.
-  * @CIP_HEADER_WITHOUT_EOH: Only for in-stream. CIP Header doesn't include
-  *	valid EOH.
-- * @CIP_NO_HEADERS: a lack of headers in packets
-+ * @CIP_NO_HEADER: a lack of headers in packets
-  * @CIP_UNALIGHED_DBC: Only for in-stream. The value of dbc is not alighed to
-  *	the value of current SYT_INTERVAL; e.g. initial value is not zero.
-  * @CIP_UNAWARE_SYT: For outgoing packet, the value in SYT field of CIP is 0xffff.
+diff --git a/sound/usb/card.c b/sound/usb/card.c
+index bec6d41a143d2..33ffa62032ab9 100644
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -753,10 +753,16 @@ get_alias_quirk(struct usb_device *dev, unsigned int id)
+  */
+ static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
+ {
++	struct usb_interface *iface;
++
+ 	if (check_delayed_register_option(chip) == ifnum ||
+-	    chip->last_iface == ifnum ||
+-	    usb_interface_claimed(usb_ifnum_to_if(chip->dev, chip->last_iface)))
++	    chip->last_iface == ifnum)
++		return snd_card_register(chip->card);
++
++	iface = usb_ifnum_to_if(chip->dev, chip->last_iface);
++	if (iface && usb_interface_claimed(iface))
+ 		return snd_card_register(chip->card);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
