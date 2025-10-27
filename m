@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E496A31D753;
-	Mon, 27 Oct 2025 19:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEBA32AAB1;
+	Mon, 27 Oct 2025 19:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592746; cv=none; b=pGoEU1oGkmDZy+xucmzS+g2w6QjNpPChLbvAc7dxH90Ko4uVTZLTQU/WahEL6DVWK7yXH5g3ktuA9VcqUJh4y+zLqJI85ANJfz48MQ19uRcCjcfUPvacWeG6MpcLSKL6QvGefwYeQd40cPghOEoUWQRqSTpFqDI74RmHRD1ljW0=
+	t=1761592748; cv=none; b=AxFBQRZZEq15XAfNDKuUPuGP4AVFU6GZH7xRj/kQCtlgbOG9F5fmzU3kTzcaSI2WF+sCiBJeEkqNhulTlYY5Ry2cavELMK4uW/JHTI+/HALOIvDX880fXuupN1IyRTlIiFzCUoy/kJM2qaltDvYxSRX9KZ2R4vXer8QM/cX7g+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592746; c=relaxed/simple;
-	bh=kbBuTj0nAgNSPQ06W94J1wf7dAI1TUIWx7hlShm/lB4=;
+	s=arc-20240116; t=1761592748; c=relaxed/simple;
+	bh=+jui8riLIJ63rnX8xzK/8qP9JlpfCH/xPIk5ab2OZZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rruiK0ViyXewz/sVtro/I3/kbiaiUcoHwmY4tpg5VFsFozK6pzlhjGop0Za/LiUrPhZsE6bbP3ElJAngoTy1v5UYu26kk0alTftLFQ5ehUdTd9dzrYyzwHSOnhO6ipOj89THCuu6AQ7UZNkvfd6sXYk9XwIXn9Vskb1urs4+ScA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViY4QA0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAUhCwhnPFDDQzSa1pKihAUkooMYCNWa8M3g1iDxTBkH545fwIWgHnfygu36OZRZGS8nCS/lp6I4cBCaJc7O7gJX8i1yP1YJY/g9erwDl+8D/vPQgM/IrZuVlcvGZYORCMBF+83KlqScLCoH6QmjvQuwYeoZ5julUKkyXF46FPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehfEtSAG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViY4QA0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA2CC4CEFD;
-	Mon, 27 Oct 2025 19:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehfEtSAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9B8C4CEF1;
+	Mon, 27 Oct 2025 19:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592745;
-	bh=kbBuTj0nAgNSPQ06W94J1wf7dAI1TUIWx7hlShm/lB4=;
+	s=korg; t=1761592748;
+	bh=+jui8riLIJ63rnX8xzK/8qP9JlpfCH/xPIk5ab2OZZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ViY4QA0S9Bn0XN9IE94Gmw6+mWXYmDgM+hA5EqcFpdd19rF5b7SJemUclnD7MZrp9
-	 3dTyBu0LmUqlRt2phnqC+4McsjMuoQGsmfK1uIMrTmogsFgl04NydFDwS2wyl7krKX
-	 TaAeudJ7luRmh8LnKgyYienlB108HEqhVGB8C808=
+	b=ehfEtSAGbZSi0Jyogyyp0jR0h/jxcXaz/43vIXEjgW/jqo+miZG9NwpVTacC9wcsf
+	 SYRdc7GYSke6/9BNdleCsw7nCATaJTB5WprhrUKeUQn0scSHMC6qeAvhpuuhzxeZsK
+	 cVelHBQX2M1wfaUASO8pST4BmY5pNBGfEdv1CsGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babu Moger <babu.moger@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.6 80/84] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
-Date: Mon, 27 Oct 2025 19:37:09 +0100
-Message-ID: <20251027183440.942556856@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.6 81/84] s390/cio: Update purge function to unregister the unused subchannels
+Date: Mon, 27 Oct 2025 19:37:10 +0100
+Message-ID: <20251027183440.969968207@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -51,133 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babu Moger <babu.moger@amd.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 upstream.
+commit 9daa5a8795865f9a3c93d8d1066785b07ded6073 upstream.
 
-Users can create as many monitoring groups as the number of RMIDs supported
-by the hardware. However, on AMD systems, only a limited number of RMIDs
-are guaranteed to be actively tracked by the hardware. RMIDs that exceed
-this limit are placed in an "Unavailable" state.
+Starting with 'commit 2297791c92d0 ("s390/cio: dont unregister
+subchannel from child-drivers")', cio no longer unregisters
+subchannels when the attached device is invalid or unavailable.
 
-When a bandwidth counter is read for such an RMID, the hardware sets
-MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
-again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
-remains set on first read after tracking re-starts and is clear on all
-subsequent reads as long as the RMID is tracked.
+As an unintended side-effect, the cio_ignore purge function no longer
+removes subchannels for devices on the cio_ignore list if no CCW device
+is attached. This situation occurs when a CCW device is non-operational
+or unavailable
 
-resctrl miscounts the bandwidth events after an RMID transitions from the
-"Unavailable" state back to being tracked. This happens because when the
-hardware starts counting again after resetting the counter to zero, resctrl
-in turn compares the new count against the counter value stored from the
-previous time the RMID was tracked.
+To ensure the same outcome of the purge function as when the
+current cio_ignore list had been active during boot, update the purge
+function to remove I/O subchannels without working CCW devices if the
+associated device number is found on the cio_ignore list.
 
-This results in resctrl computing an event value that is either undercounting
-(when new counter is more than stored counter) or a mistaken overflow (when
-new counter is less than stored counter).
-
-Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
-zero whenever the RMID is in the "Unavailable" state to ensure accurate
-counting after the RMID resets to zero when it starts to be tracked again.
-
-Example scenario that results in mistaken overflow
-==================================================
-1. The resctrl filesystem is mounted, and a task is assigned to a
-   monitoring group.
-
-   $mount -t resctrl resctrl /sys/fs/resctrl
-   $mkdir /sys/fs/resctrl/mon_groups/test1/
-   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   21323            <- Total bytes on domain 0
-   "Unavailable"    <- Total bytes on domain 1
-
-   Task is running on domain 0. Counter on domain 1 is "Unavailable".
-
-2. The task runs on domain 0 for a while and then moves to domain 1. The
-   counter starts incrementing on domain 1.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   7345357          <- Total bytes on domain 0
-   4545             <- Total bytes on domain 1
-
-3. At some point, the RMID in domain 0 transitions to the "Unavailable"
-   state because the task is no longer executing in that domain.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   "Unavailable"    <- Total bytes on domain 0
-   434341           <- Total bytes on domain 1
-
-4.  Since the task continues to migrate between domains, it may eventually
-    return to domain 0.
-
-    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-    17592178699059  <- Overflow on domain 0
-    3232332         <- Total bytes on domain 1
-
-In this case, the RMID on domain 0 transitions from "Unavailable" state to
-active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
-the counter is read and begins tracking the RMID counting from 0.
-
-Subsequent reads succeed but return a value smaller than the previously
-saved MSR value (7345357). Consequently, the resctrl's overflow logic is
-triggered, it compares the previous value (7345357) with the new, smaller
-value and incorrectly interprets this as a counter overflow, adding a large
-delta.
-
-In reality, this is a false positive: the counter did not overflow but was
-simply reset when the RMID transitioned from "Unavailable" back to active
-state.
-
-Here is the text from APM [1] available from [2].
-
-"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
-first QM_CTR read when it begins tracking an RMID that it was not
-previously tracking. The U bit will be zero for all subsequent reads from
-that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
-read with the U bit set when that RMID is in use by a processor can be
-considered 0 when calculating the difference with a subsequent read."
-
-[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
-    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
-    Bandwidth (MBM).
-
-  [ bp: Split commit message into smaller paragraph chunks for better
-    consumption. ]
-
-Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
-[babu.moger@amd.com: Fix conflict for v6.6 stable]
+Fixes: 2297791c92d0 ("s390/cio: dont unregister subchannel from child-drivers")
+Suggested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/s390/cio/device.c |   39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -241,11 +241,15 @@ int resctrl_arch_rmid_read(struct rdt_re
- 	if (!cpumask_test_cpu(smp_processor_id(), &d->cpu_mask))
- 		return -EINVAL;
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1318,23 +1318,34 @@ void ccw_device_schedule_recovery(void)
+ 	spin_unlock_irqrestore(&recovery_lock, flags);
+ }
  
-+	am = get_arch_mbm_state(hw_dom, rmid, eventid);
+-static int purge_fn(struct device *dev, void *data)
++static int purge_fn(struct subchannel *sch, void *data)
+ {
+-	struct ccw_device *cdev = to_ccwdev(dev);
+-	struct ccw_dev_id *id = &cdev->private->dev_id;
+-	struct subchannel *sch = to_subchannel(cdev->dev.parent);
+-
+-	spin_lock_irq(cdev->ccwlock);
+-	if (is_blacklisted(id->ssid, id->devno) &&
+-	    (cdev->private->state == DEV_STATE_OFFLINE) &&
+-	    (atomic_cmpxchg(&cdev->private->onoff, 0, 1) == 0)) {
+-		CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x\n", id->ssid,
+-			      id->devno);
++	struct ccw_device *cdev;
 +
- 	ret = __rmid_read(rmid, eventid, &msr_val);
--	if (ret)
-+	if (ret) {
-+		if (am && ret == -EINVAL)
-+			am->prev_msr = 0;
- 		return ret;
-+	}
++	spin_lock_irq(sch->lock);
++	if (sch->st != SUBCHANNEL_TYPE_IO || !sch->schib.pmcw.dnv)
++		goto unlock;
++
++	if (!is_blacklisted(sch->schid.ssid, sch->schib.pmcw.dev))
++		goto unlock;
++
++	cdev = sch_get_cdev(sch);
++	if (cdev) {
++		if (cdev->private->state != DEV_STATE_OFFLINE)
++			goto unlock;
++
++		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
++			goto unlock;
+ 		ccw_device_sched_todo(cdev, CDEV_TODO_UNREG);
+-		css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 		atomic_set(&cdev->private->onoff, 0);
+ 	}
+-	spin_unlock_irq(cdev->ccwlock);
++
++	css_sched_sch_todo(sch, SCH_TODO_UNREG);
++	CIO_MSG_EVENT(3, "ccw: purging 0.%x.%04x%s\n", sch->schid.ssid,
++		      sch->schib.pmcw.dev, cdev ? "" : " (no cdev)");
++
++unlock:
++	spin_unlock_irq(sch->lock);
+ 	/* Abort loop in case of pending signal. */
+ 	if (signal_pending(current))
+ 		return -EINTR;
+@@ -1350,7 +1361,7 @@ static int purge_fn(struct device *dev,
+ int ccw_purge_blacklisted(void)
+ {
+ 	CIO_MSG_EVENT(2, "ccw: purging blacklisted devices\n");
+-	bus_for_each_dev(&ccw_bus_type, NULL, NULL, purge_fn);
++	for_each_subchannel_staged(purge_fn, NULL, NULL);
+ 	return 0;
+ }
  
--	am = get_arch_mbm_state(hw_dom, rmid, eventid);
- 	if (am) {
- 		am->chunks += mbm_overflow_count(am->prev_msr, msr_val,
- 						 hw_res->mbm_width);
 
 
