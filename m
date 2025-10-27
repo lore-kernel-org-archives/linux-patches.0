@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E052D5A14;
-	Mon, 27 Oct 2025 19:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0274C3203AE;
+	Mon, 27 Oct 2025 19:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592712; cv=none; b=ouUQFdzeuYzRHN66nVLnXM3GfpMnHcqYYxFcsDO8GoC2DtGtEh0F9/ALCoz23WpQNjjnTTiUFydHcwuX8tGtC52OYp9watjsnJBSqUdyQqWwQM1nmWt5EOqZtULwO0WmI7HuFHYY5ANV+BfXBMdhgKvxjrKOwiaA0YEyOJrGZ2c=
+	t=1761592715; cv=none; b=WqR2lx4VZWmXHbd9yvlLMdUFqWWP/9rR6sHEpTGOl7ItjcLw/3QnLc9i7Hj0beyq0PJILKvSIMzpnlO6urzWA4tcV1H7PmoOpSWRntNf1GcyurnFPAT6mV01v/E//wsVvnCnPfowHOa684DmAuuBqF8SdPRyNtOD9QhIkTCW/lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592712; c=relaxed/simple;
-	bh=wMOm/c5wXMpBY0Sj+w2rXUhY/V3JS949OdYo2Mm00rM=;
+	s=arc-20240116; t=1761592715; c=relaxed/simple;
+	bh=B7pERt+kL/qiekL0FI8HagV23eDMVL6V8ly8l0jctB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYEiuDX8cUP3W89LxBSnPbrheG6jUmOq8kTvYjjlU+WsitpniNv0z6fs6DHq5pCtADNlrT5ZoRlkvpzsCOTOElwKQkX4iqfbhzDn04C72OmCq0Ql3BJTJMbqMsP83TfTUECCoSsuM6b3zMHmk2xgSsX5IZ6s9bmPzg1pFhl4uL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgLJh110; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgJeujDS36Jg1HqbUsk8aXNCWSJk9Xz83luMpjAXOcve9sLQYpmRnO/HWDk9qB4bCvK58eXzzZBlNE5lJ5ulocnJtvfzPWiGNf1g+vCqcQfM6+YcaQ5XZH19JnJXe/Ux0MoJbiKoFOWXs6w2p5DpUeWvcdD007UIvKNuI/Yp3Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LHWIp1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgLJh110"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA6CC4CEFD;
-	Mon, 27 Oct 2025 19:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LHWIp1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801A5C4CEF1;
+	Mon, 27 Oct 2025 19:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592712;
-	bh=wMOm/c5wXMpBY0Sj+w2rXUhY/V3JS949OdYo2Mm00rM=;
+	s=korg; t=1761592714;
+	bh=B7pERt+kL/qiekL0FI8HagV23eDMVL6V8ly8l0jctB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgLJh110YfZeDwOtwwu6krQyatPXfT3uBVLVqOB3GmJWDlj7AbKDpQ4Lag9R0VnMd
-	 b7HPcGMOXTVvSa6sE/ZiRaLZbJ2plfuvZUHYvevJdBAwXjKR1WYlLk1ySNbB7R7pLl
-	 lvCSOtx+7wmx5zmyzb8JvmUYHMN0sX5jbY6KkC/8=
+	b=0LHWIp1+o5jEQbNH75Q/Qk/kc7mNwbIFjCcTrZFMwdJL8GCl8EQz86BZp/NRN0qz8
+	 ilkvZZRK6VPQffNV0d3e9qLzyEBU3s3DCHlYrhxyqlNN0JSdBMLGA8yUlV6gaaFRvB
+	 ND9ZQYDPPtf/vEAPy3bSbDx1h+iblpI7Y7U//vcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.6 68/84] mei: me: add wildcat lake P DID
-Date: Mon, 27 Oct 2025 19:36:57 +0100
-Message-ID: <20251027183440.623436110@linuxfoundation.org>
+	stable@kernel.org,
+	Junhao Xie <bigfoot@radxa.com>,
+	Xilin Wu <sophon@radxa.com>
+Subject: [PATCH 6.6 69/84] misc: fastrpc: Fix dma_buf object leak in fastrpc_map_lookup
+Date: Mon, 27 Oct 2025 19:36:58 +0100
+Message-ID: <20251027183440.650509078@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -50,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Junhao Xie <bigfoot@radxa.com>
 
-commit 410d6c2ad4d1a88efa0acbb9966693725b564933 upstream.
+commit fff111bf45cbeeb659324316d68554e35d350092 upstream.
 
-Add Wildcat Lake P device id.
+In fastrpc_map_lookup, dma_buf_get is called to obtain a reference to
+the dma_buf for comparison purposes. However, this reference is never
+released when the function returns, leading to a dma_buf memory leak.
 
-Cc: stable@vger.kernel.org
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20251016125912.2146136-1-alexander.usyskin@intel.com
+Fix this by adding dma_buf_put before returning from the function,
+ensuring that the temporarily acquired reference is properly released
+regardless of whether a matching map is found.
+
+Fixes: 9031626ade38 ("misc: fastrpc: Fix fastrpc_map_lookup operation")
+Cc: stable@kernel.org
+Signed-off-by: Junhao Xie <bigfoot@radxa.com>
+Tested-by: Xilin Wu <sophon@radxa.com>
+Link: https://lore.kernel.org/stable/48B368FB4C7007A7%2B20251017083906.3259343-1-bigfoot%40radxa.com
+Link: https://patch.msgid.link/48B368FB4C7007A7+20251017083906.3259343-1-bigfoot@radxa.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/misc/fastrpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -120,6 +120,8 @@
- #define MEI_DEV_ID_PTL_H      0xE370  /* Panther Lake H */
- #define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -383,6 +383,8 @@ static int fastrpc_map_lookup(struct fas
+ 	}
+ 	spin_unlock(&fl->lock);
  
-+#define MEI_DEV_ID_WCL_P      0x4D70  /* Wildcat Lake P */
++	dma_buf_put(buf);
 +
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -127,6 +127,8 @@ static const struct pci_device_id mei_me
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_H, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
+ 	return ret;
+ }
  
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_WCL_P, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
 
 
