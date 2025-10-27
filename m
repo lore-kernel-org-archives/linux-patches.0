@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF24218EB1;
-	Mon, 27 Oct 2025 18:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78E6218EB1;
+	Mon, 27 Oct 2025 18:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590348; cv=none; b=Uqf/wtil3IX+yXgs7h6P38LbzR3PEhgBfYsNUBKFpn7xezwuLxa/AcqyOPTbU54cHwWTS585WV8ycfAalpwjG+LlfEJTG85EGyhV749jmNJ+KtKkwowP0FtzGJbmA7hI2sQlLY66111zyoIcr2wqcZjGTXEAEfkgtA+B+pRVByE=
+	t=1761590352; cv=none; b=KYhLp+jRVgetgY4u12hDsII3FypEqhMIImtCWumJPIprdjq0PI3YqUqx5/kLmjU62lqZ3SiHMGB6sGmnNIYql4sZR2f2gm2GIPoy10CNRvRN/A9EuoyMQe+qDKnNpGm6CpwRFhYXxJ5ue1YiZSjTeRnd/vMw09cpSd6C0cJYQN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590348; c=relaxed/simple;
-	bh=hIln6CbJu2jrHiC6fBvtxqD3Hl58vR+VQL2/KUVLtrI=;
+	s=arc-20240116; t=1761590352; c=relaxed/simple;
+	bh=7GJdxqCXbV/H8WoYKMC9HN/24c1IYFQ/5BhiK90x+ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUB1+mWR+YkQNVauhHdMMYo+YVH/k4Q1Kjjshea1Bcj/UuxgwpTEHbX9LO2sllDj3w1NMuLzJ7NtsNWTjR4HfQun8Hsu0EDQYqZ0Wem2RQG/QRpOIu9mRH0AHncSsc+ij7kP2DfyiHHBUe8a+LPKGS+du/pg17uhE2Jki+iq4Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cU4aNE9Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POZRDbqFW5LvFZlEn92+LcENgEmkCQvLfQ//Ofn82Ys/Fxl51wYr9o1bVzMPKGYjN1rvK9L/f/FH4D87ikobWvBJ/8TeYid/FV+/7bMijwUHgUbihFpmUjdSknR8Yls+RL7wSDn29LjyKfhY4v07Z864NxY41AMviY4GwwP/PHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFWKFDHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cU4aNE9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42745C4CEF1;
-	Mon, 27 Oct 2025 18:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFWKFDHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB65DC4CEF1;
+	Mon, 27 Oct 2025 18:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590348;
-	bh=hIln6CbJu2jrHiC6fBvtxqD3Hl58vR+VQL2/KUVLtrI=;
+	s=korg; t=1761590351;
+	bh=7GJdxqCXbV/H8WoYKMC9HN/24c1IYFQ/5BhiK90x+ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cU4aNE9YaMFQgohGyw1yB0e2MuS+FN/faaqeNwkfKIy6FluLs1gAy273Hlog/8FWY
-	 Kyw85hug2rNd2lKNzLh1ic+6n7TBVMvw6S/O6I/NbJ8hN9dcZcxB0lW+cZlL2adZri
-	 +mlG14oZJE/VcB02JdmQlqCDKIv9c3ZPAl+dLwNg=
+	b=ZFWKFDHS2D3QiuF9QFUtiqNlzFth7aWU4bl+4CdFsWK82DummMgVElhqDV0fe67Xf
+	 +XvaLV+0skCLnDiiaMyt2zj7EOCDIOQblau8t0mK+nQj4AQH6iFZlROr6tuhpLrBHN
+	 5DpgbtpP/4M2OqVVHy8FI2TThVUUZFBuCF4OtXBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.4 012/224] wifi: rtlwifi: rtl8192cu: Dont claim USB ID 07b8:8188
-Date: Mon, 27 Oct 2025 19:32:38 +0100
-Message-ID: <20251027183509.316878792@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 013/224] dm-integrity: limit MAX_TAG_SIZE to 255
+Date: Mon, 27 Oct 2025 19:32:39 +0100
+Message-ID: <20251027183509.344182097@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -50,33 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit e798f2ac6040f46a04795d7de977341fa9aeabae upstream.
+[ Upstream commit 77b8e6fbf9848d651f5cb7508f18ad0971f3ffdb ]
 
-This ID appears to be RTL8188SU, not RTL8188CU. This is the wrong driver
-for RTL8188SU. The r8712u driver from staging used to handle this ID.
+MAX_TAG_SIZE was 0x1a8 and it may be truncated in the "bi->metadata_size
+= ic->tag_size" assignment. We need to limit it to 255.
 
-Closes: https://lore.kernel.org/linux-wireless/ee0acfef-a753-4f90-87df-15f8eaa9c3a8@gmx.de/
-Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/2e5e2348-bdb3-44b2-92b2-0231dbf464b0@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192cu/sw.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/md/dm-integrity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/sw.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192cu/sw.c
-@@ -297,7 +297,6 @@ static const struct usb_device_id rtl819
- 	{RTL_USB_DEVICE(0x050d, 0x1102, rtl92cu_hal_cfg)}, /*Belkin - Edimax*/
- 	{RTL_USB_DEVICE(0x050d, 0x11f2, rtl92cu_hal_cfg)}, /*Belkin - ISY*/
- 	{RTL_USB_DEVICE(0x06f8, 0xe033, rtl92cu_hal_cfg)}, /*Hercules - Edimax*/
--	{RTL_USB_DEVICE(0x07b8, 0x8188, rtl92cu_hal_cfg)}, /*Abocom - Abocom*/
- 	{RTL_USB_DEVICE(0x07b8, 0x8189, rtl92cu_hal_cfg)}, /*Funai - Abocom*/
- 	{RTL_USB_DEVICE(0x0846, 0x9041, rtl92cu_hal_cfg)}, /*NetGear WNA1000M*/
- 	{RTL_USB_DEVICE(0x0846, 0x9043, rtl92cu_hal_cfg)}, /*NG WNA1000Mv2*/
+diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
+index 15580ba773e72..38791b7e59ba3 100644
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -116,7 +116,7 @@ struct journal_sector {
+ 	commit_id_t commit_id;
+ };
+ 
+-#define MAX_TAG_SIZE			(JOURNAL_SECTOR_DATA - JOURNAL_MAC_PER_SECTOR - offsetof(struct journal_entry, last_bytes[MAX_SECTORS_PER_BLOCK]))
++#define MAX_TAG_SIZE			255
+ 
+ #define METADATA_PADDING_SECTORS	8
+ 
+-- 
+2.51.0
+
 
 
