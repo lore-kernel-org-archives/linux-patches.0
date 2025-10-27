@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4979F2EDD62;
-	Mon, 27 Oct 2025 19:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFC33016F9;
+	Mon, 27 Oct 2025 19:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592808; cv=none; b=X4gVU5trDDi23CVX3ke0D0VO/Du+fGy8E7PgDSMpN4jY/FfEK1EyGexLdaSrcePXoi2V5oduUPVHEKr1GwRfvBT4OkFjJIoqHclXDl3RjG/A8cLvSIaFYphcP+clZlZPvefj9dOCNwDmRCB3I2qeazmGeHLAKC8zIxtg1mfbJGQ=
+	t=1761592811; cv=none; b=Lmt9b4L5bBubbqCp/RCTOWxotXzH3LsOONeAx4jvcAmEnyFELeWJbtmwEof8g/KUdTLT0eGf9fuOtA63+nB2DKzlhOXTUD19O7ysvJJl2GfQnl5v9m9gKZSwLkH9gwyJvXqcIlYNJLVjEE0vBEnycaw+o/1tLBerLBhtVppOI1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592808; c=relaxed/simple;
-	bh=PMe4Ub8qRZgVu94FE2TkMyBn2H+PoidHQgBnu8hU5VQ=;
+	s=arc-20240116; t=1761592811; c=relaxed/simple;
+	bh=2GVRt56IMnNCA6ZaSgfweKoQrj4yOErVnLpOUzaev6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG/rHJTZl/v8ROl7lPTrKyKa282PWQ7czb85yHcLxz8rAARy7VE62Z82JNkE2kIPGQpZ2aKQgj6ILaZx+hbpwhKro6CRhyIqrcSpMB9hk/9iboOwHSBufOdL9hewS/EXQAOLU9EX2kYuMT3fV1ZXqgXBoscwGjtAUF5kz0RMits=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpCIXU3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XdF4TCD1VUAtJskj2yB5DYwPB0p+0Qba4dUUWaES95DsWkQ2+fjoG1DLlHFqISYmQe3wQxpncNG6/iOGGoQJ4eSrQEbi9WqZYCBORJiVyNnyWju+MiyYsK2cA56q+ZnL1yf3svSoUi2Lb1qo9HPreZNynEFFyijLfp4CfiIeJr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGNSI2dC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpCIXU3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B14C4CEF1;
-	Mon, 27 Oct 2025 19:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGNSI2dC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72170C4CEF1;
+	Mon, 27 Oct 2025 19:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592808;
-	bh=PMe4Ub8qRZgVu94FE2TkMyBn2H+PoidHQgBnu8hU5VQ=;
+	s=korg; t=1761592810;
+	bh=2GVRt56IMnNCA6ZaSgfweKoQrj4yOErVnLpOUzaev6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpCIXU3GrUaeKjulIa7ZtJ0yh53MKAGuicGJ9iUc8Gku1Iu28eVOOhMojpBan9px7
-	 9rwiwC0UjADwooIFtUnfS0/CeFGepCjj2EU1LFKrvmH5qnBe5D1c8+Fq4yUfsX8csQ
-	 tJMZBaayfDeTWmMrWh9dmEomy9yuiqj12isxrHuo=
+	b=xGNSI2dCqbSACyzPWjJeMC2+R7YaX4VvKe+sg/BcdNDfik/UQ5f8q++g59+QkUm9/
+	 oZzPH7oOMQX2VYT/EDpe2+H9comD9UdslNpv3zf2lv+O1LNuIYG7PUe78ua0a6Ph2c
+	 6T2+1I2zLkurY4UdciTAoavKjU/8cipMYZnpqdzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	Andreas Oetken <andreas.oetken@siemens-energy.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/117] nios2: ensure that memblock.current_limit is set when setting pfn limits
-Date: Mon, 27 Oct 2025 19:35:28 +0100
-Message-ID: <20251027183453.993633300@linuxfoundation.org>
+Subject: [PATCH 6.12 020/117] Unbreak make tools/* for user-space targets
+Date: Mon, 27 Oct 2025 19:35:46 +0100
+Message-ID: <20251027183454.500247590@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,71 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
+[ Upstream commit ee916dccd4df6e2fd19c3606c4735282b72f1473 ]
 
-On nios2, with CONFIG_FLATMEM set, the kernel relies on
-memblock_get_current_limit() to determine the limits of mem_map, in
-particular for max_low_pfn.
-Unfortunately, memblock.current_limit is only default initialized to
-MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
-to situations where max_low_pfn can erroneously exceed the value of
-max_pfn and, thus, the valid range of available DRAM.
+This pattern isn't very documented, and apparently not used much outside
+of 'make tools/help', but it has existed for over a decade (since commit
+ea01fa9f63ae: "tools: Connect to the kernel build system").
 
-This can in turn cause kernel-level paging failures, e.g.:
+However, it doesn't work very well for most cases, particularly the
+useful "tools/all" target, because it overrides the LDFLAGS value with
+an empty one.
 
-[   76.900000] Unable to handle kernel paging request at virtual address 20303000
-[   76.900000] ea = c0080890, ra = c000462c, cause = 14
-[   76.900000] Kernel panic - not syncing: Oops
-[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
+And once overridden, 'make' will then not honor the tooling makefiles
+trying to change it - which then makes any LDFLAGS use in the tooling
+directory break, typically causing odd link errors.
 
-This patch fixes this by pre-calculating memblock.current_limit
-based on the upper limits of the available memory ranges via
-adjust_lowmem_bounds, a simplified version of the equivalent
-implementation within the arm architecture.
+Remove that LDFLAGS override, since it seems to be entirely historical.
+The core kernel makefiles no longer modify LDFLAGS as part of the build,
+and use kernel-specific link flags instead (eg 'KBUILD_LDFLAGS' and
+friends).
 
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+This allows more of the 'make tools/*' cases to work.  I say 'more',
+because some of the tooling build rules make various other assumptions
+or have other issues, so it's still a bit hit-or-miss.  But those issues
+tend to show up with the 'make -C tools xyz' pattern too, so now it's no
+longer an issue of this particular 'tools/*' build rule being special.
+
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/setup.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
-index da122a5fa43b2..8528ab1f222cd 100644
---- a/arch/nios2/kernel/setup.c
-+++ b/arch/nios2/kernel/setup.c
-@@ -142,6 +142,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
- 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
- }
+diff --git a/Makefile b/Makefile
+index d4c679b2d4bcf..0aa9fd3ab9a1c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1372,11 +1372,11 @@ endif
  
-+static void __init adjust_lowmem_bounds(void)
-+{
-+	phys_addr_t block_start, block_end;
-+	u64 i;
-+	phys_addr_t memblock_limit = 0;
-+
-+	for_each_mem_range(i, &block_start, &block_end) {
-+		if (block_end > memblock_limit)
-+			memblock_limit = block_end;
-+	}
-+
-+	memblock_set_current_limit(memblock_limit);
-+}
-+
- void __init setup_arch(char **cmdline_p)
- {
- 	console_verbose();
-@@ -155,6 +169,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Keep a copy of command line */
- 	*cmdline_p = boot_command_line;
+ tools/: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
++	$(Q)$(MAKE) O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
  
-+	adjust_lowmem_bounds();
- 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
- 	max_mapnr = max_low_pfn;
+ tools/%: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
++	$(Q)$(MAKE) O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
  
+ # ---------------------------------------------------------------------------
+ # Kernel selftest
 -- 
 2.51.0
 
