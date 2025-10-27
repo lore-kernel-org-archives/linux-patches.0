@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2F6328B77;
-	Mon, 27 Oct 2025 19:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF492324B09;
+	Mon, 27 Oct 2025 19:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592821; cv=none; b=NDz6twjT7iJ123FnfmSLrgpLZcgpo5+BgRKxnptP+/aiuzzuSBf/aNIkH1NDDeoCDJkz5IT4FgJUE9iJ3RX25F8Cbv2fdSMxfE7Ayjxh0J5xArtr2LCe5cyBnEwMsmcyh8PJ8p37M09jX9D4P3fpluIn7DjCAW6ofltUZIwGVV0=
+	t=1761592824; cv=none; b=PBYGkgUQpn9Qe/MqGhax3QCfqb0EvpxCrPDop/1dafP86Q4SaDZeneas+jZTwxkEmK7hnhSmwikZno0xtaTw2lBdc69mTVB2ZWw+JdopLCUQWxcRKYo254+ts1D38X9hqpLDnl06iG9KYyaPyfaO4JRhIS9bD/zRhW/Scv8lQR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592821; c=relaxed/simple;
-	bh=WAQ/zXruu2dh4HPozWe16gIZ/iEFmzYUM5YBm1GJemo=;
+	s=arc-20240116; t=1761592824; c=relaxed/simple;
+	bh=O8MlZ7Ec64tQ0psY3JZ7+Smo6bdZDGnV6MJg1ZILHT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVQsUMdj2VYfzr4GokcQxUA/cQbmnH6bjw1iwxOue8r5hU90P3vTx+lPQvEC5linTpw+mAx2gU13U5CzmhZXyqQCJlYUQ1RyJA/02Z34XSfR2jJOakXO5bXWXzQY7YaHJZHt74Dh083R4F0az30vhKw73ujKmTdPhBkS+EHQScc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuQGenbX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQRgR6JWPLXKBNwVlRlWZqb1gEfKYqk1WYeBjkRl9wm3WyFSjEZyLgTb97Z0LcIC2h3PiBgzM6nvUDgV7/YSWPfYpoGF/BbxK91ilp+n/vhbbxpSyPFFUzsjj8LPWavivtbqfgr5cBUW171SPGIiQeFnNGUe8oG5dE4Rs8ej/TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyZj3bYl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuQGenbX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC23C4CEF1;
-	Mon, 27 Oct 2025 19:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyZj3bYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB3BC4CEF1;
+	Mon, 27 Oct 2025 19:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592821;
-	bh=WAQ/zXruu2dh4HPozWe16gIZ/iEFmzYUM5YBm1GJemo=;
+	s=korg; t=1761592823;
+	bh=O8MlZ7Ec64tQ0psY3JZ7+Smo6bdZDGnV6MJg1ZILHT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XuQGenbXPE3my9x+cSFcs15rJP58WaTeguRh2xd6CqoevvTwvH6fIAc0W3wwLNZOo
-	 oY5Y0zQeEJO1dqC2x0PNdOGCun5EPA0FvQTGJW4yENOUVu3DtAekuBU84Dn8ZcWC1A
-	 VWfQU6QOv4gIBUW9F2SdC/PceQYIA+Sou6zxBkco=
+	b=TyZj3bYlFiL7xGRYC7is8zNrMRJW0u1TA6ylUTRa9fqo9ur+jlDHAwwW78w0xdtlh
+	 jrx0VBse9l8udcQyFuFNY3a++rtStz1LM3GinHIw81nBehg3LaKX2oSwryw85UkIUI
+	 99m1AERWPi5Q7WICLZ1S3WL/vd9AaiR5KbcDD5K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Crudup <kenneth.crudup@gmail.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/117] PM: EM: Fix late boot with holes in CPU topology
-Date: Mon, 27 Oct 2025 19:35:50 +0100
-Message-ID: <20251027183454.618014172@linuxfoundation.org>
+Subject: [PATCH 6.12 025/117] net/mlx5e: Return 1 instead of 0 in invalid case in mlx5e_mpwrq_umr_entry_size()
+Date: Mon, 27 Oct 2025 19:35:51 +0100
+Message-ID: <20251027183454.646568899@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,69 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1ebe8f7e782523e62cd1fa8237f7afba5d1dae83 ]
+[ Upstream commit aaf043a5688114703ae2c1482b92e7e0754d684e ]
 
-Commit e3f1164fc9ee ("PM: EM: Support late CPUs booting and capacity
-adjustment") added a mechanism to handle CPUs that come up late by
-retrying when any of the `cpufreq_cpu_get()` call fails.
+When building with Clang 20 or newer, there are some objtool warnings
+from unexpected fallthroughs to other functions:
 
-However, if there are holes in the CPU topology (offline CPUs, e.g.
-nosmt), the first missing CPU causes the loop to break, preventing
-subsequent online CPUs from being updated.
+  vmlinux.o: warning: objtool: mlx5e_mpwrq_mtts_per_wqe() falls through to next function mlx5e_mpwrq_max_num_entries()
+  vmlinux.o: warning: objtool: mlx5e_mpwrq_max_log_rq_size() falls through to next function mlx5e_get_linear_rq_headroom()
 
-Instead of aborting on the first missing CPU policy, loop through all
-and retry if any were missing.
+LLVM 20 contains an (admittedly problematic [1]) optimization [2] to
+convert divide by zero into the equivalent of __builtin_unreachable(),
+which invokes undefined behavior and destroys code generation when it is
+encountered in a control flow graph.
 
-Fixes: e3f1164fc9ee ("PM: EM: Support late CPUs booting and capacity adjustment")
-Suggested-by: Kenneth Crudup <kenneth.crudup@gmail.com>
-Reported-by: Kenneth Crudup <kenneth.crudup@gmail.com>
-Link: https://lore.kernel.org/linux-pm/40212796-734c-4140-8a85-854f72b8144d@panix.com/
-Cc: 6.9+ <stable@vger.kernel.org> # 6.9+
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20250831214357.2020076-1-christian.loehle@arm.com
-[ rjw: Drop the new pr_debug() message which is not very useful ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+mlx5e_mpwrq_umr_entry_size() returns 0 in the default case of an
+unrecognized mlx5e_mpwrq_umr_mode value. mlx5e_mpwrq_mtts_per_wqe(),
+which is inlined into mlx5e_mpwrq_max_log_rq_size(), uses the result of
+mlx5e_mpwrq_umr_entry_size() in a divide operation without checking for
+zero, so LLVM is able to infer there will be a divide by zero in this
+case and invokes undefined behavior. While there is some proposed work
+to isolate this undefined behavior and avoid the destructive code
+generation that results in these objtool warnings, code should still be
+defensive against divide by zero.
+
+As the WARN_ONCE() implies that an invalid value should be handled
+gracefully, return 1 instead of 0 in the default case so that the
+results of this division operation is always valid.
+
+Fixes: 168723c1f8d6 ("net/mlx5e: xsk: Use umr_mode to calculate striding RQ parameters")
+Link: https://lore.kernel.org/CAGG=3QUk8-Ak7YKnRziO4=0z=1C_7+4jF+6ZeDQ9yF+kuTOHOQ@mail.gmail.com/ [1]
+Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [2]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2131
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2132
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-v1-1-dc186b8819ef@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/energy_model.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -755,7 +755,7 @@ static void em_adjust_new_capacity(unsig
- static void em_check_capacity_update(void)
- {
- 	cpumask_var_t cpu_done_mask;
--	int cpu;
-+	int cpu, failed_cpus = 0;
- 
- 	if (!zalloc_cpumask_var(&cpu_done_mask, GFP_KERNEL)) {
- 		pr_warn("no free memory\n");
-@@ -773,10 +773,8 @@ static void em_check_capacity_update(voi
- 
- 		policy = cpufreq_cpu_get(cpu);
- 		if (!policy) {
--			pr_debug("Accessing cpu%d policy failed\n", cpu);
--			schedule_delayed_work(&em_update_work,
--					      msecs_to_jiffies(1000));
--			break;
-+			failed_cpus++;
-+			continue;
- 		}
- 		cpufreq_cpu_put(policy);
- 
-@@ -791,6 +789,9 @@ static void em_check_capacity_update(voi
- 		em_adjust_new_capacity(cpu, dev, pd);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+index 58ec5e44aa7ad..3dac708c0d75a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+@@ -99,7 +99,7 @@ u8 mlx5e_mpwrq_umr_entry_size(enum mlx5e_mpwrq_umr_mode mode)
+ 		return sizeof(struct mlx5_ksm) * 4;
  	}
- 
-+	if (failed_cpus)
-+		schedule_delayed_work(&em_update_work, msecs_to_jiffies(1000));
-+
- 	free_cpumask_var(cpu_done_mask);
+ 	WARN_ONCE(1, "MPWRQ UMR mode %d is not known\n", mode);
+-	return 0;
++	return 1;
  }
  
+ u8 mlx5e_mpwrq_log_wqe_sz(struct mlx5_core_dev *mdev, u8 page_shift,
+-- 
+2.51.0
+
 
 
