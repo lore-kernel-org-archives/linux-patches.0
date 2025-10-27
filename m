@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C6A32D0F7;
-	Mon, 27 Oct 2025 19:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A6B32D0F2;
+	Mon, 27 Oct 2025 19:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592994; cv=none; b=kirCjFHcnmhs7ySWq9RPXWURHsIxZMV6zNlY+SU3K2JesYFkMdkEFsSfLZMKZ/mn7pj9vgSn3q3iL8EyoHnJCj9qSoK5fEIMBU+Jzvllobc7HGB6VVYJUJ26h4lqvUxMdnVYElEtp1WKh9lZ/XaL/hkpzIvRoYDeP6wqg+6wsXo=
+	t=1761592996; cv=none; b=N2ayW67GEyLD9IWkY8My/VboNKM2yej0AvT71P2/THiYuiI8hKo4aUjhNqwmxJpDG/nR7FN//IL99hzJfst/HVLF3p8u9i3AOOAeUwUYCXK0aCH1QcYkZu7LsWGARfO4KZsPPmj1i5CY84X+206DbAGCgilrcws7GAx56plPj9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592994; c=relaxed/simple;
-	bh=Y8fdf9uwZgoOJjFBsX7IM97N3K+71wiw+F0PM9Ig5Pc=;
+	s=arc-20240116; t=1761592996; c=relaxed/simple;
+	bh=8lW9eiyuHVLLAABraT6ljhcgZSoLOyAKqSMGJee0fQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iRClSh7X+agYd/K6NL0lze2GkzbDa9LkNOSxlhOE7zg+PdjNl/JtIi2cvzgjee0K8/ex3L3DnLa2tEJDpHGxgDIRWnZJTr3ZhAkLcJF+OcOyLbLUo51O6DH7WY+0tNxPIPWrtXkkXp0TP5D0sJGUrTZyJo4GdflXsTgYf6ng7io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNcCYJSa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkSyKu/ceDe3ebiYv1nTXmjwdQz2VaLPjp8SmXiDZ4j8NA+V5dHUw+7Spzxc6BjkHbmQTO9vgbOIvD8RTfRjC5LOTRoEwV+SecK1jOiVcU0brFwafzf1+/POmVbq8lHM+E30ozC9WSDr3jfmewJf+7Q6jcm7pp3LAoTw0nokm5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEpfrGtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNcCYJSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCEEC4CEF1;
-	Mon, 27 Oct 2025 19:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEpfrGtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A7EC116B1;
+	Mon, 27 Oct 2025 19:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592993;
-	bh=Y8fdf9uwZgoOJjFBsX7IM97N3K+71wiw+F0PM9Ig5Pc=;
+	s=korg; t=1761592996;
+	bh=8lW9eiyuHVLLAABraT6ljhcgZSoLOyAKqSMGJee0fQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNcCYJSa0FXkcfqhtPLSxc+bl5cQMDMs8ooysoz5FniviJ3kKmMDh+3VLiWmgGc5Y
-	 pRuwXFubFff7j1a/+CnO+xoyLz6EbgZjC/RUygiDwtJFph2XQOC+meVNwCf5NwZ77F
-	 WkYQ9hMbkefCTrnjXVsytLrHhoOD0buHGxYetcgU=
+	b=uEpfrGtSmq9RizMYE6WTlvhItKmR+NMzweiasPim9uTPoM894+zpzhYpWs90vmMxJ
+	 Z28JB+MKbxGbALREXBcQF6rFXuQh06caXjXpX0GaBxA/zr5mrDB4/T89KBhusdFQOw
+	 ARou3+8F2FarxdsV55odIy4z60zAJBGh2oVwAKws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Fengnan Chang <changfengnan@bytedance.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 090/117] io_uring/sqpoll: switch away from getrusage() for CPU accounting
-Date: Mon, 27 Oct 2025 19:36:56 +0100
-Message-ID: <20251027183456.457453898@linuxfoundation.org>
+Subject: [PATCH 6.12 091/117] io_uring/sqpoll: be smarter on when to update the stime usage
+Date: Mon, 27 Oct 2025 19:36:57 +0100
+Message-ID: <20251027183456.483325312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,138 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit 8ac9b0d33e5c0a995338ee5f25fe1b6ff7d97f65 upstream.
+Commit a94e0657269c5b8e1a90b17aa2c048b3d276e16d upstream.
 
-getrusage() does a lot more than what the SQPOLL accounting needs, the
-latter only cares about (and uses) the stime. Rather than do a full
-RUSAGE_SELF summation, just query the used stime instead.
+The current approach is a bit naive, and hence calls the time querying
+way too often. Only start the "doing work" timer when there's actual
+work to do, and then use that information to terminate (and account) the
+work time once done. This greatly reduces the frequency of these calls,
+when they cannot have changed anyway.
 
+Running a basic random reader that is setup to use SQPOLL, a profile
+before this change shows these as the top cycle consumers:
+
++   32.60%  iou-sqp-1074  [kernel.kallsyms]  [k] thread_group_cputime_adjusted
++   19.97%  iou-sqp-1074  [kernel.kallsyms]  [k] thread_group_cputime
++   12.20%  io_uring      io_uring           [.] submitter_uring_fn
++    4.13%  iou-sqp-1074  [kernel.kallsyms]  [k] getrusage
++    2.45%  iou-sqp-1074  [kernel.kallsyms]  [k] io_submit_sqes
++    2.18%  iou-sqp-1074  [kernel.kallsyms]  [k] __pi_memset_generic
++    2.09%  iou-sqp-1074  [kernel.kallsyms]  [k] cputime_adjust
+
+and after this change, top of profile looks as follows:
+
++   36.23%  io_uring     io_uring           [.] submitter_uring_fn
++   23.26%  iou-sqp-819  [kernel.kallsyms]  [k] io_sq_thread
++   10.14%  iou-sqp-819  [kernel.kallsyms]  [k] io_sq_tw
++    6.52%  iou-sqp-819  [kernel.kallsyms]  [k] tctx_task_work_run
++    4.82%  iou-sqp-819  [kernel.kallsyms]  [k] nvme_submit_cmds.part.0
++    2.91%  iou-sqp-819  [kernel.kallsyms]  [k] io_submit_sqes
+[...]
+     0.02%  iou-sqp-819  [kernel.kallsyms]  [k] cputime_adjust
+
+where it's spending the cycles on things that actually matter.
+
+Reported-by: Fengnan Chang <changfengnan@bytedance.com>
 Cc: stable@vger.kernel.org
 Fixes: 3fcb9d17206e ("io_uring/sqpoll: statistics of the true utilization of sq threads")
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/fdinfo.c |    8 ++++----
- io_uring/sqpoll.c |   32 ++++++++++++++++++--------------
- io_uring/sqpoll.h |    1 +
- 3 files changed, 23 insertions(+), 18 deletions(-)
+ io_uring/sqpoll.c |   43 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -55,7 +55,6 @@ __cold void io_uring_show_fdinfo(struct
- 	struct io_ring_ctx *ctx = file->private_data;
- 	struct io_overflow_cqe *ocqe;
- 	struct io_rings *r = ctx->rings;
--	struct rusage sq_usage;
- 	unsigned int sq_mask = ctx->sq_entries - 1, cq_mask = ctx->cq_entries - 1;
- 	unsigned int sq_head = READ_ONCE(r->sq.head);
- 	unsigned int sq_tail = READ_ONCE(r->sq.tail);
-@@ -155,14 +154,15 @@ __cold void io_uring_show_fdinfo(struct
- 		 * thread termination.
- 		 */
- 		if (tsk) {
-+			u64 usec;
-+
- 			get_task_struct(tsk);
- 			rcu_read_unlock();
--			getrusage(tsk, RUSAGE_SELF, &sq_usage);
-+			usec = io_sq_cpu_usec(tsk);
- 			put_task_struct(tsk);
- 			sq_pid = sq->task_pid;
- 			sq_cpu = sq->sq_cpu;
--			sq_total_time = (sq_usage.ru_stime.tv_sec * 1000000
--					 + sq_usage.ru_stime.tv_usec);
-+			sq_total_time = usec;
- 			sq_work_time = sq->work_time;
- 		} else {
- 			rcu_read_unlock();
 --- a/io_uring/sqpoll.c
 +++ b/io_uring/sqpoll.c
-@@ -11,6 +11,7 @@
- #include <linux/audit.h>
- #include <linux/security.h>
- #include <linux/cpuset.h>
-+#include <linux/sched/cputime.h>
- #include <linux/io_uring.h>
- 
- #include <uapi/linux/io_uring.h>
-@@ -175,6 +176,20 @@ static inline bool io_sqd_events_pending
+@@ -176,6 +176,11 @@ static inline bool io_sqd_events_pending
  	return READ_ONCE(sqd->state);
  }
  
-+u64 io_sq_cpu_usec(struct task_struct *tsk)
-+{
-+	u64 utime, stime;
++struct io_sq_time {
++	bool started;
++	u64 usec;
++};
 +
-+	task_cputime_adjusted(tsk, &utime, &stime);
-+	do_div(stime, 1000);
-+	return stime;
-+}
-+
-+static void io_sq_update_worktime(struct io_sq_data *sqd, u64 usec)
-+{
-+	sqd->work_time += io_sq_cpu_usec(current) - usec;
-+}
-+
- static int __io_sq_thread(struct io_ring_ctx *ctx, bool cap_entries)
+ u64 io_sq_cpu_usec(struct task_struct *tsk)
  {
- 	unsigned int to_submit;
-@@ -261,26 +276,15 @@ static bool io_sq_tw_pending(struct llis
- 	return retry_list || !llist_empty(&tctx->task_list);
+ 	u64 utime, stime;
+@@ -185,12 +190,24 @@ u64 io_sq_cpu_usec(struct task_struct *t
+ 	return stime;
  }
  
--static void io_sq_update_worktime(struct io_sq_data *sqd, struct rusage *start)
--{
--	struct rusage end;
--
--	getrusage(current, RUSAGE_SELF, &end);
--	end.ru_stime.tv_sec -= start->ru_stime.tv_sec;
--	end.ru_stime.tv_usec -= start->ru_stime.tv_usec;
--
--	sqd->work_time += end.ru_stime.tv_usec + end.ru_stime.tv_sec * 1000000;
--}
--
- static int io_sq_thread(void *data)
+-static void io_sq_update_worktime(struct io_sq_data *sqd, u64 usec)
++static void io_sq_update_worktime(struct io_sq_data *sqd, struct io_sq_time *ist)
  {
- 	struct llist_node *retry_list = NULL;
- 	struct io_sq_data *sqd = data;
- 	struct io_ring_ctx *ctx;
--	struct rusage start;
+-	sqd->work_time += io_sq_cpu_usec(current) - usec;
++	if (!ist->started)
++		return;
++	ist->started = false;
++	sqd->work_time += io_sq_cpu_usec(current) - ist->usec;
+ }
+ 
+-static int __io_sq_thread(struct io_ring_ctx *ctx, bool cap_entries)
++static void io_sq_start_worktime(struct io_sq_time *ist)
++{
++	if (ist->started)
++		return;
++	ist->started = true;
++	ist->usec = io_sq_cpu_usec(current);
++}
++
++static int __io_sq_thread(struct io_ring_ctx *ctx, struct io_sq_data *sqd,
++			  bool cap_entries, struct io_sq_time *ist)
+ {
+ 	unsigned int to_submit;
+ 	int ret = 0;
+@@ -203,6 +220,8 @@ static int __io_sq_thread(struct io_ring
+ 	if (to_submit || !wq_list_empty(&ctx->iopoll_list)) {
+ 		const struct cred *creds = NULL;
+ 
++		io_sq_start_worktime(ist);
++
+ 		if (ctx->sq_creds != current_cred())
+ 			creds = override_creds(ctx->sq_creds);
+ 
+@@ -284,7 +303,6 @@ static int io_sq_thread(void *data)
  	unsigned long timeout = 0;
  	char buf[TASK_COMM_LEN];
  	DEFINE_WAIT(wait);
-+	u64 start;
+-	u64 start;
  
  	/* offload context creation failed, just exit */
  	if (!current->io_uring) {
-@@ -323,7 +327,7 @@ static int io_sq_thread(void *data)
+@@ -319,6 +337,7 @@ static int io_sq_thread(void *data)
+ 	mutex_lock(&sqd->lock);
+ 	while (1) {
+ 		bool cap_entries, sqt_spin = false;
++		struct io_sq_time ist = { };
+ 
+ 		if (io_sqd_events_pending(sqd) || signal_pending(current)) {
+ 			if (io_sqd_handle_event(sqd))
+@@ -327,9 +346,8 @@ static int io_sq_thread(void *data)
  		}
  
  		cap_entries = !list_is_singular(&sqd->ctx_list);
--		getrusage(current, RUSAGE_SELF, &start);
-+		start = io_sq_cpu_usec(current);
+-		start = io_sq_cpu_usec(current);
  		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list) {
- 			int ret = __io_sq_thread(ctx, cap_entries);
+-			int ret = __io_sq_thread(ctx, cap_entries);
++			int ret = __io_sq_thread(ctx, sqd, cap_entries, &ist);
  
-@@ -339,7 +343,7 @@ static int io_sq_thread(void *data)
+ 			if (!sqt_spin && (ret > 0 || !wq_list_empty(&ctx->iopoll_list)))
+ 				sqt_spin = true;
+@@ -337,15 +355,18 @@ static int io_sq_thread(void *data)
+ 		if (io_sq_tw(&retry_list, IORING_TW_CAP_ENTRIES_VALUE))
+ 			sqt_spin = true;
+ 
+-		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
+-			if (io_napi(ctx))
++		list_for_each_entry(ctx, &sqd->ctx_list, sqd_list) {
++			if (io_napi(ctx)) {
++				io_sq_start_worktime(&ist);
+ 				io_napi_sqpoll_busy_poll(ctx);
++			}
++		}
++
++		io_sq_update_worktime(sqd, &ist);
  
  		if (sqt_spin || !time_after(jiffies, timeout)) {
- 			if (sqt_spin) {
--				io_sq_update_worktime(sqd, &start);
-+				io_sq_update_worktime(sqd, start);
+-			if (sqt_spin) {
+-				io_sq_update_worktime(sqd, start);
++			if (sqt_spin)
  				timeout = jiffies + sqd->sq_thread_idle;
- 			}
+-			}
  			if (unlikely(need_resched())) {
---- a/io_uring/sqpoll.h
-+++ b/io_uring/sqpoll.h
-@@ -29,6 +29,7 @@ void io_sq_thread_unpark(struct io_sq_da
- void io_put_sq_data(struct io_sq_data *sqd);
- void io_sqpoll_wait_sq(struct io_ring_ctx *ctx);
- int io_sqpoll_wq_cpu_affinity(struct io_ring_ctx *ctx, cpumask_var_t mask);
-+u64 io_sq_cpu_usec(struct task_struct *tsk);
- 
- static inline struct task_struct *sqpoll_task_locked(struct io_sq_data *sqd)
- {
+ 				mutex_unlock(&sqd->lock);
+ 				cond_resched();
 
 
