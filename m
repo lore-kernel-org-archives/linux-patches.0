@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16EC330B11;
-	Mon, 27 Oct 2025 18:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7F4330B18;
+	Mon, 27 Oct 2025 18:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591297; cv=none; b=QMCPZ1zj6WJt5PsC4koPmLfbK3EBzYEz2LqHSPxUfPd+UKuW4DqMo7uQuHxr8OQO02hIsp2vzyZYgaLAOLYJ2oDNtbr/Kj7PqCgTkO1UNUxpj6jnB9MnlbG0ryMpwjAFzUXv/sPzNfqgvoPDcBbvW7DHUCgvneUMk2dXXxi+zr4=
+	t=1761591299; cv=none; b=ZNygTcZsSul9ABGV5SUlqwjsx0wFh8XddejYcgxY2/tnp+XiTzcZpnA1L3tw8RDG+ICPmO5FMQkRQFH/4N2xGwU3aKjRp+9CC6flQ8E6ULsR3F5gFNdKzmkIRLTzxLp52j4wy4WPv/ltEnK3ByqA7UN9kSB5zTPY+TcLkVBHJ0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591297; c=relaxed/simple;
-	bh=PLYfFKLYntIxWUE+COWlvRpvUDxOlZkz2H5G85L/sUA=;
+	s=arc-20240116; t=1761591299; c=relaxed/simple;
+	bh=pWgBKTFk11Sd39JeTLbf+P7mUWlu1Nlx++QR/v7PAEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIOXFIWwkKsGgLcdNEGAOgydMyGePgYlHhxJFZ5zcPwzO7mvbrQDtEK7raIFSP6Hd2J/zQo7+d695wn/k48fHf1/pnfqM/W9htWNGR5p9aRLxYInGM3Dmlb2Ij4rdAmBVc5UEYBQBJ2rhZKU5+Umg5HCBGID/dHtqqcNmrzrPRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ls+sVTPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6GhC0U24+C1vNvU/0xOjGkysVHJfZZre8xE9aS/FdrlxWooc2OXZtxl6Xq2bfVSHthfqReIrU7fSUiXdyN1CHsEKLscW1F4o8aMah1MMZDXoFGx9WISbWt7EWWWE1Olb7Y0n8IddWsaqpxWEpLMxh52o1QqLFp4L2vKQfI9MbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ic+Ml6YY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ls+sVTPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67298C4CEF1;
-	Mon, 27 Oct 2025 18:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ic+Ml6YY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1488C116C6;
+	Mon, 27 Oct 2025 18:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591296;
-	bh=PLYfFKLYntIxWUE+COWlvRpvUDxOlZkz2H5G85L/sUA=;
+	s=korg; t=1761591299;
+	bh=pWgBKTFk11Sd39JeTLbf+P7mUWlu1Nlx++QR/v7PAEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ls+sVTPuXbgBWev3r3yRGDRk0JYcTF/z4JbNGGdL4LqP3/pvEeP5x8RG32+RCoIYT
-	 kzr1x2Ap+ZfDtL5aLN6uM6b4GGQUk8hiqZOydmq+LO7D3sTDlcWZEuU8ZCyBQbLPZg
-	 LHAx67n4/gZyc9TJzHXR2zGmtQwSSd4xoIBKpwOg=
+	b=Ic+Ml6YYace9em6jqXXSCcVLE3Zj2vPr1dSrz96MuNJeSu8vKSWPDTR+D2PbghoFJ
+	 EwQcf5has9jl9g4LuJ0dp1FPP9He3Nmu3JESgWShlvI89QRKtjUF+YLSlAFsQVqgWq
+	 AndX+mKXM9pmVYYmK5PxMDos7lhET7CPG9jblB6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 142/332] init: handle bootloader identifier in kernel parameters
-Date: Mon, 27 Oct 2025 19:33:15 +0100
-Message-ID: <20251027183528.382974539@linuxfoundation.org>
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 116/332] mailbox: zynqmp-ipi: Remove redundant mbox_controller_unregister() call
+Date: Mon, 27 Oct 2025 19:32:49 +0100
+Message-ID: <20251027183527.679240027@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,72 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Harini T <harini.t@amd.com>
 
-commit e416f0ed3c500c05c55fb62ee62662717b1c7f71 upstream.
+[ Upstream commit 341867f730d3d3bb54491ee64e8b1a0c446656e7 ]
 
-BootLoaders (Grub, LILO, etc) may pass an identifier such as "BOOT_IMAGE=
-/boot/vmlinuz-x.y.z" to kernel parameters.  But these identifiers are not
-recognized by the kernel itself so will be passed to userspace.  However
-user space init program also don't recognize it.
+The controller is registered using the device-managed function
+'devm_mbox_controller_register()'. As documented in mailbox.c, this
+ensures the devres framework automatically calls
+mbox_controller_unregister() when device_unregister() is invoked, making
+the explicit call unnecessary.
 
-KEXEC/KDUMP (kexec-tools) may also pass an identifier such as "kexec" on
-some architectures.
+Remove redundant mbox_controller_unregister() call as
+device_unregister() handles controller cleanup.
 
-We cannot change BootLoader's behavior, because this behavior exists for
-many years, and there are already user space programs search BOOT_IMAGE=
-in /proc/cmdline to obtain the kernel image locations:
-
-https://github.com/linuxdeepin/deepin-ab-recovery/blob/master/util.go
-(search getBootOptions)
-https://github.com/linuxdeepin/deepin-ab-recovery/blob/master/main.go
-(search getKernelReleaseWithBootOption) So the the best way is handle
-(ignore) it by the kernel itself, which can avoid such boot warnings (if
-we use something like init=/bin/bash, bootloader identifier can even cause
-a crash):
-
-Kernel command line: BOOT_IMAGE=(hd0,1)/vmlinuz-6.x root=/dev/sda3 ro console=tty
-Unknown kernel command line parameters "BOOT_IMAGE=(hd0,1)/vmlinuz-6.x", will be passed to user space.
-
-[chenhuacai@loongson.cn: use strstarts()]
-  Link: https://lkml.kernel.org/r/20250815090120.1569947-1-chenhuacai@loongson.cn
-Link: https://lkml.kernel.org/r/20250721101343.3283480-1-chenhuacai@loongson.cn
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/init/main.c
-+++ b/init/main.c
-@@ -531,9 +531,23 @@ static int __init unknown_bootoption(cha
- 				     const char *unused, void *arg)
- {
- 	size_t len = strlen(param);
-+	int i;
-+
-+	/*
-+	 * Well-known bootloader identifiers:
-+	 * 1. LILO/Grub pass "BOOT_IMAGE=...";
-+	 * 2. kexec/kdump (kexec-tools) pass "kexec".
-+	 */
-+	const char *bootloader[] = { "BOOT_IMAGE=", "kexec", NULL };
- 
- 	repair_env_string(param, val);
- 
-+	/* Handle bootloader identifier */
-+	for (i = 0; bootloader[i]; i++) {
-+		if (strstarts(param, bootloader[i]))
-+			return 0;
-+	}
-+
- 	/* Handle obsolete-style parameters */
- 	if (obsolete_checksetup(param))
- 		return 0;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index be06de791c544..136c1f67dd223 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -619,7 +619,6 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+-			mbox_controller_unregister(&ipi_mbox->mbox);
+ 			if (device_is_registered(&ipi_mbox->dev))
+ 				device_unregister(&ipi_mbox->dev);
+ 		}
+-- 
+2.51.0
+
 
 
