@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919BF31197B;
-	Mon, 27 Oct 2025 18:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3946B332918;
+	Mon, 27 Oct 2025 18:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591304; cv=none; b=dFWO9qdzvDu7Wr8ggFaBIo+KFmYF0XtNqgIyVs7EUx3SDq1dKyaQISh6EkmjLsWgz7x0YCgcfMJLzJihlyjPtsQJ1vxMoVnuWbXu7qMEmQgMGipMxbsKX2ZiHtrlYORI9RBnTHeEUTLrsGmcSOh+TJ1nyeLEq0Iupr3ggS/YhCA=
+	t=1761591307; cv=none; b=QTaHXr3QC1lMTurcam4PaDKrZif9XTzxpRh6DMAg0pnPshD9Dj4zBsWQJDsu0PprDLfjtUi5vbPWVyC8BkFz2arpQ8OzDv7wQDCgBbgtfl8jcbTd/8k9I4J9XGSZnH0jYJp7cYwJvch7MH2beNCizMDebjdeJsyS8vCBo1wupck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591304; c=relaxed/simple;
-	bh=2q4s/km++UTkV/qTxzoK8Q4AtmS5gWelv47bn9tck2I=;
+	s=arc-20240116; t=1761591307; c=relaxed/simple;
+	bh=7jp+8KHpElyAaWkdZBGHr69xJXZvKYcOB5sgILeMzuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+L1NizZQhcYv/zJmE4sP0ejmPhPnIzT+u3UudtVHfTWhtfR4XDd5gGEu82oAcJd91sydNOeKUYBowsBjd4XlQjcUiK6Dz7U5IECJErJZ4C9ygPqRaYRK3U1J3yODoo3YIMiq5ekynTlqoaJAwGYycQLmGGzFGOH9CdNBE6A4dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCL8GQW6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ke1WlP3dDvQPdkCjT/XtyKKJU1FZ4645L7FvJSTw9MbfD6MhzZUBLcR1nWD0Jg919gBs4zEihm9AN0rb76C3+kFQ2H4MOe7hGU5rHNLdKOT5izJf1d52RGnZF9ZlT+kxs7B5bkoaB8UjEqzSEOPqZN/a1+9lbLgD9JsTm2eKWzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrImAeSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCL8GQW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223E1C116C6;
-	Mon, 27 Oct 2025 18:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrImAeSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB33C4CEF1;
+	Mon, 27 Oct 2025 18:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591304;
-	bh=2q4s/km++UTkV/qTxzoK8Q4AtmS5gWelv47bn9tck2I=;
+	s=korg; t=1761591307;
+	bh=7jp+8KHpElyAaWkdZBGHr69xJXZvKYcOB5sgILeMzuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCL8GQW6NEwt7BqKJQGGAb9Rqnsl3lC4mhjjLYRnC3n5DWSp+eKq5g1PHtPu29GwG
-	 5//rCbCcizwdkBL6MPrxcBXeGYeUTIxPP8HLetJNcJ597DfpuH5i4UFSNgY5rVbb0L
-	 WotMSw9RiMWL9YaFWkiElO0QKvDcXvaE3W7JvsjA=
+	b=QrImAeShXUF7NvCoujc/PSZOkVw2LRzdaI5gJsfYDJMjtvHLwVCmVE+CueyssDmhN
+	 WgM8EuJq5yFCEQ5lNy3ligtCntpY+/BaTu51gJg1lYd5u1jynKv9YmqrYxWAfTb9M+
+	 9DdxDRijoBSZavsvXRUXD8wguGC1mSuedbHWjFIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 144/332] lib/genalloc: fix device leak in of_gen_pool_get()
-Date: Mon, 27 Oct 2025 19:33:17 +0100
-Message-ID: <20251027183528.436146884@linuxfoundation.org>
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Askar Safin <safinaskar@zohomail.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 145/332] openat2: dont trigger automounts with RESOLVE_NO_XDEV
+Date: Mon, 27 Oct 2025 19:33:18 +0100
+Message-ID: <20251027183528.461810519@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,43 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Askar Safin <safinaskar@zohomail.com>
 
-commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
+commit 042a60680de43175eb4df0977ff04a4eba9da082 upstream.
 
-Make sure to drop the reference taken when looking up the genpool platform
-device in of_gen_pool_get() before returning the pool.
+openat2 had a bug: if we pass RESOLVE_NO_XDEV, then openat2
+doesn't traverse through automounts, but may still trigger them.
+(See the link for full bug report with reproducer.)
 
-Note that holding a reference to a device does typically not prevent its
-devres managed resources from being released so there is no point in
-keeping the reference.
+This commit fixes this bug.
 
-Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
-Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: <stable@vger.kernel.org>	[3.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-fsdevel/20250817075252.4137628-1-safinaskar@zohomail.com/
+Fixes: fddb5d430ad9fa91b49b1 ("open: introduce openat2(2) syscall")
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Askar Safin <safinaskar@zohomail.com>
+Link: https://lore.kernel.org/20250825181233.2464822-5-safinaskar@zohomail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/genalloc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/namei.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/lib/genalloc.c
-+++ b/lib/genalloc.c
-@@ -893,8 +893,11 @@ struct gen_pool *of_gen_pool_get(struct
- 		if (!name)
- 			name = np_pool->name;
- 	}
--	if (pdev)
-+	if (pdev) {
- 		pool = gen_pool_get(&pdev->dev, name);
-+		put_device(&pdev->dev);
-+	}
-+
- 	of_node_put(np_pool);
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -1202,6 +1202,10 @@ static int follow_automount(struct path
+ 	    dentry->d_inode)
+ 		return -EISDIR;
  
- 	return pool;
++	/* No need to trigger automounts if mountpoint crossing is disabled. */
++	if (lookup_flags & LOOKUP_NO_XDEV)
++		return -EXDEV;
++
+ 	if (count && (*count)++ >= MAXSYMLINKS)
+ 		return -ELOOP;
+ 
+@@ -1225,6 +1229,10 @@ static int __traverse_mounts(struct path
+ 		/* Allow the filesystem to manage the transit without i_mutex
+ 		 * being held. */
+ 		if (flags & DCACHE_MANAGE_TRANSIT) {
++			if (lookup_flags & LOOKUP_NO_XDEV) {
++				ret = -EXDEV;
++				break;
++			}
+ 			ret = path->dentry->d_op->d_manage(path, false);
+ 			flags = smp_load_acquire(&path->dentry->d_flags);
+ 			if (ret < 0)
 
 
