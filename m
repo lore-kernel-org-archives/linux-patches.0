@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2773314DD;
-	Mon, 27 Oct 2025 19:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98947331A46;
+	Mon, 27 Oct 2025 19:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591897; cv=none; b=jBeYcr1N8x7/gugK1U2XjkaEJuogmcX2l3GIlz/+hyhPx62Ts9Kv/lqOI9MWquY7EDesr+WyMvuvyFVBhyKsKmir5GQ2fjtT87XHzaSmGYvq78sNyFDB39cpGAODLx3BFzcK+/XFFuS8M118R9VxjZRptomuJdqjP9wm1aov4GM=
+	t=1761591899; cv=none; b=JmrJ2FlHXMyaEj6dIai4cNHvo5ynzwulS9oVWir636qAPtyTE4gvG9ibV6yb6rdnU0qdnVW7lgcNzvNG+Sukk2Oax4wREAiWjZTrAec1PUbI5q1INCezNlGZcJpx1pW8gUtY0pP83ic1oIyPOuIKdpRYDOL7+RVoPR5N96sOrM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591897; c=relaxed/simple;
-	bh=wPWJHZAsKoJGdU60vaEyogDl8J3YZ5riSLb9bAqPdN0=;
+	s=arc-20240116; t=1761591899; c=relaxed/simple;
+	bh=XV/UpHdbAgVqXmkk3I9/L62REeZLtckzgRKD/rjn/eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuSNbIfVBknjwOvhIYXHjvmC/Z+CqrdVJBjVQXbPcrc81s72NXY7mzkCCCWSV3EtdztEws3uyv9hA/kSYeOp+VW3DXWezMpK5NfNsFGHZ7uf4yisIXKSew4YZkrmkjPwRlTGVzIqQ2CXstCdH3+0JAlh1K7wkldQF0BK5N/u7H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPHyO7iz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqWRHmOIMbcIJQnSBQl0sZMgrWvR0dYN0qYyna3vj3V19UOunIMdBmxRSBAsdzICPHOiw1vj9gVJnwvSaNOA1F3bLGcZz1V0OZMHDMoOIbaSjIyxNiMtYnqPPA/DkxlZpSu7CQeWK5BakJC4qpr0jfXmRZPJBNhtjTaKHOWAG/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNsbrCs6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPHyO7iz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450D5C4CEF1;
-	Mon, 27 Oct 2025 19:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNsbrCs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D909AC113D0;
+	Mon, 27 Oct 2025 19:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591896;
-	bh=wPWJHZAsKoJGdU60vaEyogDl8J3YZ5riSLb9bAqPdN0=;
+	s=korg; t=1761591899;
+	bh=XV/UpHdbAgVqXmkk3I9/L62REeZLtckzgRKD/rjn/eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPHyO7izeKiUtCAqrHXS1V2V8Ix+rfqiMBpaaaddDl4+yQ+v8v4/PQEAalDJLXle2
-	 HNTZnEPjgiMBRkQATtKr1pg5SelwP6pYvY7BVThCG2D6HHH1f62RljAa00V0P8gx2b
-	 bCM355lv/W4dsC/zOq5bSoh0UsA42JFAsQRQShBA=
+	b=cNsbrCs6klm7cLQ4vP+20jjTxCim4lAlQPdOlT/5e9S2sSAfHCwnntH120wQTLlhR
+	 LcsSokeBtSGYA1u95pdoZYw0/838xjsZ2rjqO2Luv37N63NjI3CqS90LM7vB+Yllg/
+	 BVh1rpHm3KNYJPPLo6xDZYpsm3nmLglb/jWKITPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"peterz@infradead.org, mingo@redhat.com, acme@kernel.org, mark.rutland@arm.com, alexander.shishkin@linux.intel.com, jolsa@redhat.com, namhyung@kernel.org, irogers@google.com, sashal@kernel.org, Niko Mauno" <niko.mauno@vaisala.com>,
-	Niko Mauno <niko.mauno@vaisala.com>
-Subject: [PATCH 5.15 040/123] Revert "perf test: Dont leak workload gopipe in PERF_RECORD_*"
-Date: Mon, 27 Oct 2025 19:35:20 +0100
-Message-ID: <20251027183447.474391966@linuxfoundation.org>
+	Xichao Zhao <zhao.xichao@vivo.com>,
+	Jan Kara <jack@suse.cz>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 041/123] exec: Fix incorrect type for ret
+Date: Mon, 27 Oct 2025 19:35:21 +0100
+Message-ID: <20251027183447.503242332@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -50,61 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niko Mauno <niko.mauno@vaisala.com>
+From: Xichao Zhao <zhao.xichao@vivo.com>
 
-This reverts commit b7e5c59f3b0971f56ebbceb9d42cc45e9ac1cd94 which is
-commit 48918cacefd226af44373e914e63304927c0e7dc upstream.
+[ Upstream commit 5e088248375d171b80c643051e77ade6b97bc386 ]
 
-Commit in question broke building perf followingly with v5.15.195:
+In the setup_arg_pages(), ret is declared as an unsigned long.
+The ret might take a negative value. Therefore, its type should
+be changed to int.
 
-  | ld: perf-in.o: in function `test__PERF_RECORD':
-  | tools/perf/tests/perf-record.c:142: undefined reference to `evlist__cancel_workload'
-
-The 'evlist__cancel_workload' seems to be introduced in
-commit e880a70f8046 ("perf stat: Close cork_fd when create_perf_stat_counter() failed")
-which is currently not included in the 5.15 stable series.
-
-Fixes: b7e5c59f3b09 ("perf test: Don't leak workload gopipe in PERF_RECORD_*")
-Cc: stable@vger.kernel.org # 5.15
-Signed-off-by: Niko Mauno <niko.mauno@vaisala.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20250825073609.219855-1-zhao.xichao@vivo.com
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/perf-record.c |    4 ----
- 1 file changed, 4 deletions(-)
+ fs/exec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/perf/tests/perf-record.c
-+++ b/tools/perf/tests/perf-record.c
-@@ -115,7 +115,6 @@ int test__PERF_RECORD(struct test *test
- 	if (err < 0) {
- 		pr_debug("sched__get_first_possible_cpu: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
--		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
-@@ -127,7 +126,6 @@ int test__PERF_RECORD(struct test *test
- 	if (sched_setaffinity(evlist->workload.pid, cpu_mask_size, &cpu_mask) < 0) {
- 		pr_debug("sched_setaffinity: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
--		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
-@@ -139,7 +137,6 @@ int test__PERF_RECORD(struct test *test
- 	if (err < 0) {
- 		pr_debug("perf_evlist__open: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
--		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
-@@ -152,7 +149,6 @@ int test__PERF_RECORD(struct test *test
- 	if (err < 0) {
- 		pr_debug("evlist__mmap: %s\n",
- 			 str_error_r(errno, sbuf, sizeof(sbuf)));
--		evlist__cancel_workload(evlist);
- 		goto out_delete_evlist;
- 	}
- 
+diff --git a/fs/exec.c b/fs/exec.c
+index 8395e7ff7b940..4d5defc2966bd 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -746,7 +746,7 @@ int setup_arg_pages(struct linux_binprm *bprm,
+ 		    unsigned long stack_top,
+ 		    int executable_stack)
+ {
+-	unsigned long ret;
++	int ret;
+ 	unsigned long stack_shift;
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma = bprm->vma;
+-- 
+2.51.0
+
 
 
