@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372CA326D6D;
-	Mon, 27 Oct 2025 19:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAEE30DEB8;
+	Mon, 27 Oct 2025 19:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591772; cv=none; b=aCgHAFVcDgyrHKqOk940MeytA1bcrCW0eE1ghQ9DiwnqoK17VD9spTgcjiIUiU4eNHlGc4XHqfamTrY7LPacLodXblaRPSKlP3K4FexcRtzOnMvHKZMvFaYe9plnUPW0ZIEDavDcSouzhkau1FN3qKQQThDgA1vrhGgnaaS36LE=
+	t=1761591774; cv=none; b=u9SF328N4ikUBMuWS1Gpj61vFT56bKOixijMHfDF3zveHe7fi6PPkD5BotvpeX5QTSneQPtR9FA3ZXhpBTSE1QANhGbuETSugzcwCcmoorf/ToJlkx1udJqGd7hbz6UdfLQNMG44tbpXM918KS7lLoW6q8X4fxYG1ywuemLMufg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591772; c=relaxed/simple;
-	bh=w9MxumZhcMvYTkgpgUF6qvMZyYGmhulj17biXQKiPjY=;
+	s=arc-20240116; t=1761591774; c=relaxed/simple;
+	bh=Za4LY3ysf441Np4yXDpVI93p7yDvNIi66gUkEa0SOp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1bPPDO83o1RDXa02/+/h29zJh7My8kHoJJPyxkrVLtqNzvBlv/HPwUqsLr4oNiOwQoVAp/Vj0f4Qck6y1wGSvUKMbKlkNfDQMm1X0NaawrIOtTxME+xVCPlpOpWWzQFyvBu8L/dePzeZNYegs4e3/iXuzJhjwB9QKjcBsQBQmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qd/zD1OJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvCNPH8Vxj/0kIzSy7FAgZd8jZUU60hFOoZWKJCMsW+U/jICd+gM8c1qFzw9y32U2MV2sokw7dkjmhDMAtuhyTh6QjbwmU3N2hWhyMNh6yo/TJWeDQQxMBJI1woAATsdV/KJrRg8dyRMmoLB7wXwdJW05XoL8AsYZQDpC+pfiQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjCDtQ4b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qd/zD1OJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE367C4CEF1;
-	Mon, 27 Oct 2025 19:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjCDtQ4b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586C2C4CEF1;
+	Mon, 27 Oct 2025 19:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591772;
-	bh=w9MxumZhcMvYTkgpgUF6qvMZyYGmhulj17biXQKiPjY=;
+	s=korg; t=1761591774;
+	bh=Za4LY3ysf441Np4yXDpVI93p7yDvNIi66gUkEa0SOp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qd/zD1OJIKETXGPIlbPImqlPwRASO90vkzQOTzcbzDtbbfFKEBNQazyReF5pDd9uX
-	 unWM2FaL3CHyvWLl9wcUVmfmTSo0lEz7f2ktCjElrDQPaXbdRolqN9VnAI4qcxNBX7
-	 xstyViL1o7fBqNPInKwdvi3VCSyzdkVC6cNnZJ1M=
+	b=jjCDtQ4b0IeQOBLSTuE9IwySD7g6uyNEkOLAcZ4h6AVKCVxWMU5SaevTDmozgRMRQ
+	 WCQEJvJGCT5sQrFbOlVKvmKjS3LAgPW/uUPdzITt6kCy0Z5orbItCn8BnFo8Tnjj7C
+	 t768+V+4OHOAaU+lmRLpoRwfY2rvPr4cMTUi4+/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Santhosh Kumar K <s-k6@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 324/332] spi: cadence-quadspi: Flush posted register writes before DAC access
-Date: Mon, 27 Oct 2025 19:36:17 +0100
-Message-ID: <20251027183533.430287896@linuxfoundation.org>
+Subject: [PATCH 5.10 325/332] drm/amdgpu: use atomic functions with memory barriers for vm fault info
+Date: Mon, 27 Oct 2025 19:36:18 +0100
+Message-ID: <20251027183533.463048063@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,54 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <pratyush@kernel.org>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 1ad55767e77a853c98752ed1e33b68049a243bd7 ]
+[ Upstream commit 6df8e84aa6b5b1812cc2cacd6b3f5ccbb18cda2b ]
 
-cqspi_read_setup() and cqspi_write_setup() program the address width as
-the last step in the setup. This is likely to be immediately followed by
-a DAC region read/write. On TI K3 SoCs the DAC region is on a different
-endpoint from the register region. This means that the order of the two
-operations is not guaranteed, and they might be reordered at the
-interconnect level. It is possible that the DAC read/write goes through
-before the address width update goes through. In this situation if the
-previous command used a different address width the OSPI command is sent
-with the wrong number of address bytes, resulting in an invalid command
-and undefined behavior.
+The atomic variable vm_fault_info_updated is used to synchronize access to
+adev->gmc.vm_fault_info between the interrupt handler and
+get_vm_fault_info().
 
-Read back the size register to make sure the write gets flushed before
-accessing the DAC region.
+The default atomic functions like atomic_set() and atomic_read() do not
+provide memory barriers. This allows for CPU instruction reordering,
+meaning the memory accesses to vm_fault_info and the vm_fault_info_updated
+flag are not guaranteed to occur in the intended order. This creates a
+race condition that can lead to inconsistent or stale data being used.
 
-Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
-CC: stable@vger.kernel.org
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
-Message-ID: <20250905185958.3575037-3-s-k6@ti.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The previous implementation, which used an explicit mb(), was incomplete
+and inefficient. It failed to account for all potential CPU reorderings,
+such as the access of vm_fault_info being reordered before the atomic_read
+of the flag. This approach is also more verbose and less performant than
+using the proper atomic functions with acquire/release semantics.
+
+Fix this by switching to atomic_set_release() and atomic_read_acquire().
+These functions provide the necessary acquire and release semantics,
+which act as memory barriers to ensure the correct order of operations.
+It is also more efficient and idiomatic than using explicit full memory
+barriers.
+
+Fixes: b97dfa27ef3a ("drm/amdgpu: save vm fault information for amdkfd")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ kept kgd_dev parameter and adev cast in amdgpu_amdkfd_gpuvm_get_vm_fault_info ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    5 ++---
+ drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c            |    7 +++----
+ drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c            |    7 +++----
+ 3 files changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -474,6 +474,7 @@ static int cqspi_read_setup(struct cqspi
- 	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
- 	reg |= (op->addr.nbytes - 1);
- 	writel(reg, reg_base + CQSPI_REG_SIZE);
-+	readl(reg_base + CQSPI_REG_SIZE); /* Flush posted write. */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1640,10 +1640,9 @@ int amdgpu_amdkfd_gpuvm_get_vm_fault_inf
+ 	struct amdgpu_device *adev;
+ 
+ 	adev = (struct amdgpu_device *)kgd;
+-	if (atomic_read(&adev->gmc.vm_fault_info_updated) == 1) {
++	if (atomic_read_acquire(&adev->gmc.vm_fault_info_updated) == 1) {
+ 		*mem = *adev->gmc.vm_fault_info;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
+ 	}
  	return 0;
  }
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
+@@ -1067,7 +1067,7 @@ static int gmc_v7_0_sw_init(void *handle
+ 					GFP_KERNEL);
+ 	if (!adev->gmc.vm_fault_info)
+ 		return -ENOMEM;
+-	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
  
-@@ -587,6 +588,7 @@ static int cqspi_write_setup(struct cqsp
- 	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
- 	reg |= (op->addr.nbytes - 1);
- 	writel(reg, reg_base + CQSPI_REG_SIZE);
-+	readl(reg_base + CQSPI_REG_SIZE); /* Flush posted write. */
  	return 0;
  }
+@@ -1297,7 +1297,7 @@ static int gmc_v7_0_process_interrupt(st
+ 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+ 			     VMID);
+ 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
+-		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
++		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
+ 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
+ 		u32 protections = REG_GET_FIELD(status,
+ 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+@@ -1313,8 +1313,7 @@ static int gmc_v7_0_process_interrupt(st
+ 		info->prot_read = protections & 0x8 ? true : false;
+ 		info->prot_write = protections & 0x10 ? true : false;
+ 		info->prot_exec = protections & 0x20 ? true : false;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
+ 	}
  
+ 	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
+@@ -1199,7 +1199,7 @@ static int gmc_v8_0_sw_init(void *handle
+ 					GFP_KERNEL);
+ 	if (!adev->gmc.vm_fault_info)
+ 		return -ENOMEM;
+-	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
+ 
+ 	return 0;
+ }
+@@ -1488,7 +1488,7 @@ static int gmc_v8_0_process_interrupt(st
+ 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+ 			     VMID);
+ 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
+-		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
++		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
+ 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
+ 		u32 protections = REG_GET_FIELD(status,
+ 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+@@ -1504,8 +1504,7 @@ static int gmc_v8_0_process_interrupt(st
+ 		info->prot_read = protections & 0x8 ? true : false;
+ 		info->prot_write = protections & 0x10 ? true : false;
+ 		info->prot_exec = protections & 0x20 ? true : false;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
+ 	}
+ 
+ 	return 0;
 
 
