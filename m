@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4848431DD87;
-	Mon, 27 Oct 2025 19:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF9B3218B2;
+	Mon, 27 Oct 2025 19:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593275; cv=none; b=G1HpLq0v0X093ZfQq1zq6/MTWEQCnIfLMAhxABYiELzVwO1kiJiQ90/+rg+VDMzvDN+QNNzzK1wlw1g1O9bniU1kTttEGAzUpS71r76TNAFWyXOI2o48+RZ9TaZiOlK8GYZ7BLmP26OwJpQAsitF2L+cIO+iUYwsWghvDu2k44c=
+	t=1761593278; cv=none; b=Z+276kEwrbTEwTSgsKUOyVIRiUpFAkxC9wftoQVe3iOz8zidsTp8bmzRahh8KDmzLnm9LmhZIn1m8wNGWzTTeWLAe2pWk4tcnlglpuq1wGB3EAUQ4Ns6ffnC9Mfe23dD7G65ilPC8OZl5Og+5WQjMa118T6gDdYSp4bmqG3+mxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593275; c=relaxed/simple;
-	bh=TJhbXW/9flhXoPpjAtqprR7Bg/GBkP0i3T3otEiG6iY=;
+	s=arc-20240116; t=1761593278; c=relaxed/simple;
+	bh=QytsNCxqG5uNu8l39xYibnu1QbZ0s70S7FW1hi67cMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3yrGJao/xPiW4sneSupsbBitxvjCQjrYdPsTS5YAsKXriWilmkV1WQRb89h4rLtM3o+Pr6WnjHYgWtf+3Mgb9YA8fW/q9gGaVCQGoOwuJbiu4li+wWLj+ze/Dz+kjJQT9KHEs/EgpW8lCPOfh3X36O2e5A2hgSD6ubGTnTQzak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIQfbFPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIwGWN9u/gC868Kddl6u0j6Qj/0UAW/ll62aIMlKw2y9r5ILFrNoJseYDIgalcKhtQ9zgoHz5C180MMfuvEnq4Z9O9b50c9JPOO8XX9oE6P3xp2QSJ7a96NYHQVIU+bCVp4+VeUIzroLQiQER+MKzDmnYZVSaDSDibbSJKwfhPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6177fm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIQfbFPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D0CC4CEF1;
-	Mon, 27 Oct 2025 19:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6177fm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F6AC4CEF1;
+	Mon, 27 Oct 2025 19:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593275;
-	bh=TJhbXW/9flhXoPpjAtqprR7Bg/GBkP0i3T3otEiG6iY=;
+	s=korg; t=1761593277;
+	bh=QytsNCxqG5uNu8l39xYibnu1QbZ0s70S7FW1hi67cMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIQfbFPEkK2E96hVTwA5kxAaMBarnDX5PyyPlA0jOpVrJpONfm56oGgRS8GXlMrAP
-	 wbbtHIEAoUvkFMJbH/3yshuFqJVgVimNgxo9v7kTLyGVPD4e0vMKE7w28BVx0U7FkT
-	 omKMGaOQEjPpWp4vxG7XOzoRqrrQ0veXiAN4ghtA=
+	b=U6177fm4IPQFbrvmRJcdj58i7MLsCavJgRlw/2S528kKNv5DmrlCAEXA+LWb6hXb1
+	 nb0e1RO+dPVeQ4vY8TFbMaI5rXV0rPAqzJKMuINPVt4TZ0H/Tikz4uzBJqAcStXrBj
+	 M5ECNe8/Xdpa3c0B0LaO9/0w1G/RX3vutZ1LtAZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.17 081/184] rust: device: fix device context of Device::parent()
-Date: Mon, 27 Oct 2025 19:36:03 +0100
-Message-ID: <20251027183517.082200884@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Hao Ge <gehao@kylinos.cn>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.17 082/184] slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts
+Date: Mon, 27 Oct 2025 19:36:04 +0100
+Message-ID: <20251027183517.107241183@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,76 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit cfec502b3d091ff7c24df6ccf8079470584315a0 upstream.
+commit 6ed8bfd24ce1cb31742b09a3eb557cd008533eec upstream.
 
-Regardless of the DeviceContext of a device, we can't give any
-guarantees about the DeviceContext of its parent device.
+If two competing threads enter alloc_slab_obj_exts() and one of them
+fails to allocate the object extension vector, it might override the
+valid slab->obj_exts allocated by the other thread with
+OBJEXTS_ALLOC_FAIL. This will cause the thread that lost this race and
+expects a valid pointer to dereference a NULL pointer later on.
 
-This is very subtle, since it's only caused by a simple typo, i.e.
+Update slab->obj_exts atomically using cmpxchg() to avoid
+slab->obj_exts overrides by racing threads.
 
-	 Self::from_raw(parent)
+Thanks for Vlastimil and Suren's help with debugging.
 
-which preserves the DeviceContext in this case, vs.
-
-	 Device::from_raw(parent)
-
-which discards the DeviceContext.
-
-(I should have noticed it doing the correct thing in auxiliary::Device
-subsequently, but somehow missed it.)
-
-Hence, fix both Device::parent() and auxiliary::Device::parent().
-
-Cc: stable@vger.kernel.org
-Fixes: a4c9f71e3440 ("rust: device: implement Device::parent()")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: f7381b911640 ("slab: mark slab->obj_exts allocation failures unconditionally")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20251021010353.1187193-1-hao.ge@linux.dev
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/auxiliary.rs |    8 +-------
- rust/kernel/device.rs    |    4 ++--
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ mm/slub.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/rust/kernel/auxiliary.rs
-+++ b/rust/kernel/auxiliary.rs
-@@ -217,13 +217,7 @@ impl<Ctx: device::DeviceContext> Device<
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1978,7 +1978,7 @@ static inline void mark_objexts_empty(st
  
-     /// Returns a reference to the parent [`device::Device`], if any.
-     pub fn parent(&self) -> Option<&device::Device> {
--        let ptr: *const Self = self;
--        // CAST: `Device<Ctx: DeviceContext>` types are transparent to each other.
--        let ptr: *const Device = ptr.cast();
--        // SAFETY: `ptr` was derived from `&self`.
--        let this = unsafe { &*ptr };
--
--        this.as_ref().parent()
-+        self.as_ref().parent()
-     }
+ static inline void mark_failed_objexts_alloc(struct slab *slab)
+ {
+-	slab->obj_exts = OBJEXTS_ALLOC_FAIL;
++	cmpxchg(&slab->obj_exts, 0, OBJEXTS_ALLOC_FAIL);
  }
  
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -250,7 +250,7 @@ impl<Ctx: DeviceContext> Device<Ctx> {
+ static inline void handle_failed_objexts_alloc(unsigned long obj_exts,
+@@ -2043,6 +2043,7 @@ int alloc_slab_obj_exts(struct slab *sla
+ #ifdef CONFIG_MEMCG
+ 	new_exts |= MEMCG_DATA_OBJEXTS;
+ #endif
++retry:
+ 	old_exts = READ_ONCE(slab->obj_exts);
+ 	handle_failed_objexts_alloc(old_exts, vec, objects);
+ 	if (new_slab) {
+@@ -2052,8 +2053,7 @@ int alloc_slab_obj_exts(struct slab *sla
+ 		 * be simply assigned.
+ 		 */
+ 		slab->obj_exts = new_exts;
+-	} else if ((old_exts & ~OBJEXTS_FLAGS_MASK) ||
+-		   cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
++	} else if (old_exts & ~OBJEXTS_FLAGS_MASK) {
+ 		/*
+ 		 * If the slab is already in use, somebody can allocate and
+ 		 * assign slabobj_exts in parallel. In this case the existing
+@@ -2062,6 +2062,9 @@ int alloc_slab_obj_exts(struct slab *sla
+ 		mark_objexts_empty(vec);
+ 		kfree(vec);
+ 		return 0;
++	} else if (cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
++		/* Retry if a racing thread changed slab->obj_exts from under us. */
++		goto retry;
+ 	}
  
-     /// Returns a reference to the parent device, if any.
-     #[cfg_attr(not(CONFIG_AUXILIARY_BUS), expect(dead_code))]
--    pub(crate) fn parent(&self) -> Option<&Self> {
-+    pub(crate) fn parent(&self) -> Option<&Device> {
-         // SAFETY:
-         // - By the type invariant `self.as_raw()` is always valid.
-         // - The parent device is only ever set at device creation.
-@@ -263,7 +263,7 @@ impl<Ctx: DeviceContext> Device<Ctx> {
-             // - Since `parent` is not NULL, it must be a valid pointer to a `struct device`.
-             // - `parent` is valid for the lifetime of `self`, since a `struct device` holds a
-             //   reference count of its parent.
--            Some(unsafe { Self::from_raw(parent) })
-+            Some(unsafe { Device::from_raw(parent) })
-         }
-     }
- 
+ 	kmemleak_not_leak(vec);
 
 
