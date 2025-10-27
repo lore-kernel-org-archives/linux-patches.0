@@ -1,71 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7500618A6A5;
-	Mon, 27 Oct 2025 19:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB0E21576E;
+	Mon, 27 Oct 2025 19:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592583; cv=none; b=f3NBOwjj7IYGvGukJWH3RwWUQBTp93xC4pcHVODXFzHHOSDQzT8QMuV7ZXURwEcqYqdQJ+shy/QJen3Mqvz3L+7mbHKbTKDLqUbSyS72H3LD3Qv8Xto5X0mBj351DwXq0pSu1itK3FIfN7RUaG3UkCkFHLKhTMIaC+YbRWnqmrQ=
+	t=1761592586; cv=none; b=nKZeMKBdbXz5ywPgMwVA2SJycn9odXT4ePPt5lWU4lJu5vm/aZHgfePdCFvHTuB4iYH9//luFN3OkRYRIqEMxhlMUP43zHlbpiVYoN8LiAZ4n3cYBKru0+c/fQ36voWbFlhCKENwflr+17Wt55Zhg7QJDHDw2dry7qHYEobScic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592583; c=relaxed/simple;
-	bh=IwE0NNlieIewa0z+/oMYa0dVXzfFav+7lhp0/DSDKyQ=;
+	s=arc-20240116; t=1761592586; c=relaxed/simple;
+	bh=6bS/9IDZvQ59383AOb0msmKKbW8ZtcyRT1PiyFLvQ3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FP+a2Gd7VRjvM2zwZej2xKM87aXy2vBgI4eR3c2jBGyk2OEoB0FZx/IE0nm+L77gIPPnCGxwd94WOjeoDdHBkaoNAT76pLwMLV4JjvAntMWrod1xAldBGnR+z5+K9+dmG1ci0xK9iQJjIIfxO1sDKmTRbiusZ0KS7zhlgdNj5RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gm9Mm1BQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhiJJb43UcUwWu3QYh9NqznDWXzOtE2vzvaFui+wNxi7uUg7WWQyrTadprgiaDQeaU6br8OibrzNkodi7I+8x84ysu1IW+X6x5HKYlM2NPYiel7xp02YsCqHUcmmSiJO2jN7kz4GIJv0Tl5fDnafIFhjqX7qXaX5nmYDu0dlc/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoAF7NOa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gm9Mm1BQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D212DC4CEF1;
-	Mon, 27 Oct 2025 19:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoAF7NOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E21CC4CEF1;
+	Mon, 27 Oct 2025 19:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592583;
-	bh=IwE0NNlieIewa0z+/oMYa0dVXzfFav+7lhp0/DSDKyQ=;
+	s=korg; t=1761592585;
+	bh=6bS/9IDZvQ59383AOb0msmKKbW8ZtcyRT1PiyFLvQ3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gm9Mm1BQAmiN6F04Yj/SpjQagJKnr4725s9FV9h/3nxOgFmTvz6c83IAebg2ucgy3
-	 rHVE6Rl6vEhb9VRF4dNTfstP5EgndRpmy7sBaazF+gHcI4DJHoyCdKYQzVMr3ZYiSH
-	 3uSuSYX0JTV5izkol9DevlodWttbcTm89Qc+0p7U=
+	b=HoAF7NOaovOKyLPksTIbPR/kKHnyNbbNMwEUuEk1Vqj7dT4g5qZ/ZqNdM0xqoYKzX
+	 bODj7G552qXHaRUa298XfM6G/Ql5hKklf0YFHlZlujTzMK/xLX+nbEXoPrKYpfHV3Y
+	 zXNdI8ytne9kFroRo8ysxgLwkak2wq8lWyvdC1Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	Grygorii Strashko <grygorii.strashko@ti.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	John Crispin <john@phrozen.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Louis Peens <louis.peens@corigine.com>,
-	Marcin Wojtas <mw@semihalf.com>,
-	Mark Lee <Mark-MC.Lee@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Noam Dagan <ndagan@amazon.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Saeed Bishara <saeedb@amazon.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Shay Agroskin <shayagr@amazon.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	Andreas Oetken <andreas.oetken@siemens-energy.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 19/84] net: Tree wide: Replace xdp_do_flush_map() with xdp_do_flush().
-Date: Mon, 27 Oct 2025 19:36:08 +0100
-Message-ID: <20251027183439.329650501@linuxfoundation.org>
+Subject: [PATCH 6.6 02/84] nios2: ensure that memblock.current_limit is set when setting pfn limits
+Date: Mon, 27 Oct 2025 19:35:51 +0100
+Message-ID: <20251027183438.884074461@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -78,287 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Simon Schuster <schuster.simon@siemens-energy.com>
 
-[ Upstream commit 7f04bd109d4c358a12b125bc79a6f0eac2e915ec ]
+[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
 
-xdp_do_flush_map() is deprecated and new code should use xdp_do_flush()
-instead.
+On nios2, with CONFIG_FLATMEM set, the kernel relies on
+memblock_get_current_limit() to determine the limits of mem_map, in
+particular for max_low_pfn.
+Unfortunately, memblock.current_limit is only default initialized to
+MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
+to situations where max_low_pfn can erroneously exceed the value of
+max_pfn and, thus, the valid range of available DRAM.
 
-Replace xdp_do_flush_map() with xdp_do_flush().
+This can in turn cause kernel-level paging failures, e.g.:
 
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Clark Wang <xiaoning.wang@nxp.com>
-Cc: Claudiu Manoil <claudiu.manoil@nxp.com>
-Cc: David Arinzon <darinzon@amazon.com>
-Cc: Edward Cree <ecree.xilinx@gmail.com>
-Cc: Felix Fietkau <nbd@nbd.name>
-Cc: Grygorii Strashko <grygorii.strashko@ti.com>
-Cc: Jassi Brar <jaswinder.singh@linaro.org>
-Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Cc: John Crispin <john@phrozen.org>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: Louis Peens <louis.peens@corigine.com>
-Cc: Marcin Wojtas <mw@semihalf.com>
-Cc: Mark Lee <Mark-MC.Lee@mediatek.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Noam Dagan <ndagan@amazon.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Saeed Bishara <saeedb@amazon.com>
-Cc: Saeed Mahameed <saeedm@nvidia.com>
-Cc: Sean Wang <sean.wang@mediatek.com>
-Cc: Shay Agroskin <shayagr@amazon.com>
-Cc: Shenwei Wang <shenwei.wang@nxp.com>
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: Wei Fang <wei.fang@nxp.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Arthur Kiyanovski <akiyano@amazon.com>
-Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://lore.kernel.org/r/20230908143215.869913-2-bigeasy@linutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 50bd33f6b392 ("net: enetc: fix the deadlock of enetc_mdio_lock")
+[   76.900000] Unable to handle kernel paging request at virtual address 20303000
+[   76.900000] ea = c0080890, ra = c000462c, cause = 14
+[   76.900000] Kernel panic - not syncing: Oops
+[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
+
+This patch fixes this by pre-calculating memblock.current_limit
+based on the upper limits of the available memory ranges via
+adjust_lowmem_bounds, a simplified version of the equivalent
+implementation within the arm architecture.
+
+Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
+Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c     | 2 +-
- drivers/net/ethernet/freescale/enetc/enetc.c     | 2 +-
- drivers/net/ethernet/freescale/fec_main.c        | 2 +-
- drivers/net/ethernet/intel/i40e/i40e_txrx.c      | 2 +-
- drivers/net/ethernet/intel/ice/ice_txrx_lib.c    | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c    | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c     | 2 +-
- drivers/net/ethernet/marvell/mvneta.c            | 2 +-
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c  | 2 +-
- drivers/net/ethernet/mediatek/mtk_eth_soc.c      | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 2 +-
- drivers/net/ethernet/netronome/nfp/nfd3/xsk.c    | 2 +-
- drivers/net/ethernet/sfc/efx_channels.c          | 2 +-
- drivers/net/ethernet/sfc/siena/efx_channels.c    | 2 +-
- drivers/net/ethernet/socionext/netsec.c          | 2 +-
- drivers/net/ethernet/ti/cpsw_priv.c              | 2 +-
- 16 files changed, 16 insertions(+), 16 deletions(-)
+ arch/nios2/kernel/setup.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 0d201a57d7e29..dd9c50d3ec0f0 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1310,7 +1310,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 	}
- 
- 	if (xdp_flags & ENA_XDP_REDIRECT)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	return work_done;
- 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 0c09d82dbf00d..49c61aa920b02 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1713,7 +1713,7 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 	rx_ring->stats.bytes += rx_byte_cnt;
- 
- 	if (xdp_redirect_frm_cnt)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (xdp_tx_frm_cnt)
- 		enetc_update_tx_ring_tail(tx_ring);
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 8352d9b6469f2..64cd72c194783 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -1904,7 +1904,7 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
- 	rxq->bd.cur = bdp;
- 
- 	if (xdp_result & FEC_ENET_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	return pkt_received;
+diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
+index 8582ed9658447..5308c76122817 100644
+--- a/arch/nios2/kernel/setup.c
++++ b/arch/nios2/kernel/setup.c
+@@ -147,6 +147,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
+ 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
  }
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index 6a9b47b005d29..99604379c87b6 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -2398,7 +2398,7 @@ void i40e_update_rx_stats(struct i40e_ring *rx_ring,
- void i40e_finalize_xdp_rx(struct i40e_ring *rx_ring, unsigned int xdp_res)
+ 
++static void __init adjust_lowmem_bounds(void)
++{
++	phys_addr_t block_start, block_end;
++	u64 i;
++	phys_addr_t memblock_limit = 0;
++
++	for_each_mem_range(i, &block_start, &block_end) {
++		if (block_end > memblock_limit)
++			memblock_limit = block_end;
++	}
++
++	memblock_set_current_limit(memblock_limit);
++}
++
+ void __init setup_arch(char **cmdline_p)
  {
- 	if (xdp_res & I40E_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
+ 	console_verbose();
+@@ -160,6 +174,7 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Keep a copy of command line */
+ 	*cmdline_p = boot_command_line;
  
- 	if (xdp_res & I40E_XDP_TX) {
- 		struct i40e_ring *xdp_ring =
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx_lib.c b/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
-index c8322fb6f2b37..7e06373e14d98 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
-@@ -450,7 +450,7 @@ void ice_finalize_xdp_rx(struct ice_tx_ring *xdp_ring, unsigned int xdp_res,
- 	struct ice_tx_buf *tx_buf = &xdp_ring->tx_buf[first_idx];
++	adjust_lowmem_bounds();
+ 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
+ 	max_mapnr = max_low_pfn;
  
- 	if (xdp_res & ICE_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (xdp_res & ICE_XDP_TX) {
- 		if (static_branch_unlikely(&ice_xdp_locking_key))
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index f245f3df40fca..99876b765b08b 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -2421,7 +2421,7 @@ static int ixgbe_clean_rx_irq(struct ixgbe_q_vector *q_vector,
- 	}
- 
- 	if (xdp_xmit & IXGBE_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (xdp_xmit & IXGBE_XDP_TX) {
- 		struct ixgbe_ring *ring = ixgbe_determine_xdp_ring(adapter);
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-index 7ef82c30e8571..9fdd19acf2242 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-@@ -351,7 +351,7 @@ int ixgbe_clean_rx_irq_zc(struct ixgbe_q_vector *q_vector,
- 	}
- 
- 	if (xdp_xmit & IXGBE_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (xdp_xmit & IXGBE_XDP_TX) {
- 		struct ixgbe_ring *ring = ixgbe_determine_xdp_ring(adapter);
-diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
-index 165f76d1231c1..2941721b65152 100644
---- a/drivers/net/ethernet/marvell/mvneta.c
-+++ b/drivers/net/ethernet/marvell/mvneta.c
-@@ -2520,7 +2520,7 @@ static int mvneta_rx_swbm(struct napi_struct *napi,
- 		mvneta_xdp_put_buff(pp, rxq, &xdp_buf, -1);
- 
- 	if (ps.xdp_redirect)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (ps.rx_packets)
- 		mvneta_update_stats(pp, &ps);
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index fce57faf345ce..aabc39f7690f8 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -4055,7 +4055,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 	}
- 
- 	if (xdp_ret & MVPP2_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (ps.rx_packets) {
- 		struct mvpp2_pcpu_stats *stats = this_cpu_ptr(port->stats);
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index aefe2af6f01d4..c843e6531449b 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -2221,7 +2221,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
- 	net_dim(&eth->rx_dim, dim_sample);
- 
- 	if (xdp_flush)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	return done;
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index b723ff5e5249c..13c7ed1bb37e9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -895,7 +895,7 @@ void mlx5e_xdp_rx_poll_complete(struct mlx5e_rq *rq)
- 	mlx5e_xmit_xdp_doorbell(xdpsq);
- 
- 	if (test_bit(MLX5E_RQ_FLAG_XDP_REDIRECT, rq->flags)) {
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 		__clear_bit(MLX5E_RQ_FLAG_XDP_REDIRECT, rq->flags);
- 	}
- }
-diff --git a/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c b/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
-index 5d9db8c2a5b43..45be6954d5aae 100644
---- a/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
-@@ -256,7 +256,7 @@ nfp_nfd3_xsk_rx(struct nfp_net_rx_ring *rx_ring, int budget,
- 	nfp_net_xsk_rx_ring_fill_freelist(r_vec->rx_ring);
- 
- 	if (xdp_redir)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (tx_ring->wr_ptr_add)
- 		nfp_net_tx_xmit_more_flush(tx_ring);
-diff --git a/drivers/net/ethernet/sfc/efx_channels.c b/drivers/net/ethernet/sfc/efx_channels.c
-index 8d2d7ea2ebefc..c9e17a8208a90 100644
---- a/drivers/net/ethernet/sfc/efx_channels.c
-+++ b/drivers/net/ethernet/sfc/efx_channels.c
-@@ -1260,7 +1260,7 @@ static int efx_poll(struct napi_struct *napi, int budget)
- 
- 	spent = efx_process_channel(channel, budget);
- 
--	xdp_do_flush_map();
-+	xdp_do_flush();
- 
- 	if (spent < budget) {
- 		if (efx_channel_has_rx_queue(channel) &&
-diff --git a/drivers/net/ethernet/sfc/siena/efx_channels.c b/drivers/net/ethernet/sfc/siena/efx_channels.c
-index 1776f7f8a7a90..a7346e965bfe7 100644
---- a/drivers/net/ethernet/sfc/siena/efx_channels.c
-+++ b/drivers/net/ethernet/sfc/siena/efx_channels.c
-@@ -1285,7 +1285,7 @@ static int efx_poll(struct napi_struct *napi, int budget)
- 
- 	spent = efx_process_channel(channel, budget);
- 
--	xdp_do_flush_map();
-+	xdp_do_flush();
- 
- 	if (spent < budget) {
- 		if (efx_channel_has_rx_queue(channel) &&
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index f358ea0031936..b834b129639f0 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -780,7 +780,7 @@ static void netsec_finalize_xdp_rx(struct netsec_priv *priv, u32 xdp_res,
- 				   u16 pkts)
- {
- 	if (xdp_res & NETSEC_XDP_REDIR)
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 
- 	if (xdp_res & NETSEC_XDP_TX)
- 		netsec_xdp_ring_tx_db(priv, pkts);
-diff --git a/drivers/net/ethernet/ti/cpsw_priv.c b/drivers/net/ethernet/ti/cpsw_priv.c
-index 0ec85635dfd60..764ed298b5708 100644
---- a/drivers/net/ethernet/ti/cpsw_priv.c
-+++ b/drivers/net/ethernet/ti/cpsw_priv.c
-@@ -1360,7 +1360,7 @@ int cpsw_run_xdp(struct cpsw_priv *priv, int ch, struct xdp_buff *xdp,
- 		 *  particular hardware is sharing a common queue, so the
- 		 *  incoming device might change per packet.
- 		 */
--		xdp_do_flush_map();
-+		xdp_do_flush();
- 		break;
- 	default:
- 		bpf_warn_invalid_xdp_action(ndev, prog, act);
 -- 
 2.51.0
 
