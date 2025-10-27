@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83421328618;
-	Mon, 27 Oct 2025 18:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAB432862B;
+	Mon, 27 Oct 2025 18:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590615; cv=none; b=CPEBEULF7q6RHzn8W4SURm0zWjzOYa1AFvMLGY+qelJjFLbJBE/XsOoc8wBJ5E3jW0BFr4jwduqv1osbEwi7Ua85V+sLJ4dGjs0SFOlkL0w8MBXqVvFYfDY9+hZ9d+cVGr58ZHPzdxtc0/yJxLrdoo+hJFR8Q9hYG4vBZmEay30=
+	t=1761590618; cv=none; b=l0T8p+hjyW9l25IolWywJbUcDC5K60zMqf2xzZlxHgvXFv4NIvpW5QEohJkPTdf/OfTBe/fx1fT6btxZQ1r3IQVDY0orcsnVlWRgSnZggQNu+jZXVnyIMxNXPHXF8rOk4p5jQwYH3yv7a3/HH8d8r0d4hHYSYngw6j2SiycA8KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590615; c=relaxed/simple;
-	bh=A8uM+fZJ25I2gyiASiDxvGqFTvr3eyt/dqouW+V9CYY=;
+	s=arc-20240116; t=1761590618; c=relaxed/simple;
+	bh=T/U/GI8Mxn3qJ/hrsLcOEcLCZLdxR1todWwV0ik0Qcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ny/0zjmk40n+zClWVMI1JW0YJle9k5wEHS4qkRYTY8C5nJPZRfuvO0IwZucjmdZ5A9cxmPvQOzDRodqVKvu5doTW8Hqmy/vH2jmLLIYZR2ATVkFImYPrX9yQA9Kuco7hEjhnhF/Mu+qqjvFciwhCXUj71cqWjcjuCtYxK9l7TvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4lgQg8O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUmqkZVMsaBRMP7rE8LIbNSL11UKTZgKLPz0zwG7GNas+fzimz270viFaHPGn/ahj/yQcySJqq2h0YvaC8h6zXcbFsg/y3bBnlTAF8f61TzGQI/BAPp4mLDemhOpfK2136zeQFwDOaFw6QIb3FrHObLVUmZshX4xcJ21CDWPnks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISbYXTxA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4lgQg8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1714AC4CEFD;
-	Mon, 27 Oct 2025 18:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISbYXTxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CCDC4CEF1;
+	Mon, 27 Oct 2025 18:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590615;
-	bh=A8uM+fZJ25I2gyiASiDxvGqFTvr3eyt/dqouW+V9CYY=;
+	s=korg; t=1761590618;
+	bh=T/U/GI8Mxn3qJ/hrsLcOEcLCZLdxR1todWwV0ik0Qcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4lgQg8OMoINCI5mbfO5JKKfwtO/0dG8XjYWohMiHSUC5iPmbfTQJWwpuXzYnmZgl
-	 +U/6pKUjSPnbqeEyJW5oH62BXfQw3xTT5j5VvnbIy6uzImbLWSGSKCzXuzxkNtVoBy
-	 kVuYDhaG8e98fGsOCrfBN445YfPljCstFfoxy0HM=
+	b=ISbYXTxAdkW3R10pdEo3tEyTWX0Rqfdsm8cOSppJgOekca5TXx4nIiRV6MeWxqa2O
+	 EbnMlGF/8MxQhVcGw7GXWFMAeE/GghJP6uqj650T8fcLhFnOsS/KB/gWbJHTAktMFM
+	 0ndkRrTpLHnXJ+xLnJBfNhelIqZQY6kkJ/2CzBmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 112/224] lib/genalloc: fix device leak in of_gen_pool_get()
-Date: Mon, 27 Oct 2025 19:34:18 +0100
-Message-ID: <20251027183511.987724119@linuxfoundation.org>
+	Sam James <sam@gentoo.org>,
+	Helge Deller <deller@gmx.de>,
+	Stian Halseth <stian@itx.no>
+Subject: [PATCH 5.4 113/224] parisc: dont reference obsolete termio struct for TC* constants
+Date: Mon, 27 Oct 2025 19:34:19 +0100
+Message-ID: <20251027183512.013865052@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sam James <sam@gentoo.org>
 
-commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
+commit 8ec5a066f88f89bd52094ba18792b34c49dcd55a upstream.
 
-Make sure to drop the reference taken when looking up the genpool platform
-device in of_gen_pool_get() before returning the pool.
+Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
+drops the legacy termio struct, but the ioctls.h header still defines some
+TC* constants in terms of termio (via sizeof). Hardcode the values instead.
 
-Note that holding a reference to a device does typically not prevent its
-devres managed resources from being released so there is no point in
-keeping the reference.
+This fixes building Python for example, which falls over like:
+  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
 
-Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
-Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Vladimir Zapolskiy <vz@mleia.com>
-Cc: <stable@vger.kernel.org>	[3.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugs.gentoo.org/961769
+Link: https://bugs.gentoo.org/962600
+Co-authored-by: Stian Halseth <stian@itx.no>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sam James <sam@gentoo.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/genalloc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/parisc/include/uapi/asm/ioctls.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/lib/genalloc.c
-+++ b/lib/genalloc.c
-@@ -892,8 +892,11 @@ struct gen_pool *of_gen_pool_get(struct
- 		if (!name)
- 			name = np_pool->name;
- 	}
--	if (pdev)
-+	if (pdev) {
- 		pool = gen_pool_get(&pdev->dev, name);
-+		put_device(&pdev->dev);
-+	}
-+
- 	of_node_put(np_pool);
- 
- 	return pool;
+--- a/arch/parisc/include/uapi/asm/ioctls.h
++++ b/arch/parisc/include/uapi/asm/ioctls.h
+@@ -10,10 +10,10 @@
+ #define TCSETS		_IOW('T', 17, struct termios) /* TCSETATTR */
+ #define TCSETSW		_IOW('T', 18, struct termios) /* TCSETATTRD */
+ #define TCSETSF		_IOW('T', 19, struct termios) /* TCSETATTRF */
+-#define TCGETA		_IOR('T', 1, struct termio)
+-#define TCSETA		_IOW('T', 2, struct termio)
+-#define TCSETAW		_IOW('T', 3, struct termio)
+-#define TCSETAF		_IOW('T', 4, struct termio)
++#define TCGETA          0x40125401
++#define TCSETA          0x80125402
++#define TCSETAW         0x80125403
++#define TCSETAF         0x80125404
+ #define TCSBRK		_IO('T', 5)
+ #define TCXONC		_IO('T', 6)
+ #define TCFLSH		_IO('T', 7)
 
 
