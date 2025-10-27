@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646142C3745;
-	Mon, 27 Oct 2025 19:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B4831D393;
+	Mon, 27 Oct 2025 19:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593046; cv=none; b=uUNd6KaHOoE67J8grWx/8k8WBc10msqke8OOpqPhw6OQwDvueVpzgzkrHgOPdjpiJftIb77C54Dg1uGS+SVbBYdqXqWTe7lQDlj7HzGUZXyHamfWaI3d4fvAiKzlwj1dkcQlFe3y5vncZ3ZCdnSpXSNfp+s7l0pI3y+haNDST28=
+	t=1761593049; cv=none; b=KMEUJ2PQUBnNt23/iiYL1e/4jdn0e44syEMwxPvg0ZcDG1n0A7vsgvBvVePSOQ8iot9TjKH524rwQFLRkGmxegjTZeHE1RvHMqpgKwM9dmWZVYgU80mqgGMjqKKNPXHHtg7Zhei9W26WytgnP4B7VNyvZX1dO0ypmYlIeD6GErg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593046; c=relaxed/simple;
-	bh=xxug9ayMhVrSxtbF64iNXZvFyMho6P2bw/5D/RutrCA=;
+	s=arc-20240116; t=1761593049; c=relaxed/simple;
+	bh=aM0X1KNH2o0EWzqPSU54DSK2pI6IbdITJZ+4Wygze/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqPa5kZMdV9NSnndHzjQRMp72ratmEzwBIKY2fWoSwduGXSImF3ndCP1QGmjvY6phMuVJabVOCq+y3gnMn5VCkT09UX3Dnn0GOEyS7u8xsR4SXFJctju+QD4BiHQ7fHYCXFCWVRUdrubSpY19TBNc26ovzIDnHWh8EQCR1fkXVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk84sbrf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLKQ3n06dcKkQj48UMDc4voI5UdPvmsRXdTtHJlLN/P7hAt0/Z5jSOIy0VgL53703TVqJtKL0NyBZaINHaJVS4P7y8yBjCjsy8E06zpj7r3LWPkTJxK1ekdKzvQR+3ULWP1q4uCjn2J4Zh/gEOguN/SUxCrXZ9B7YOsy8mmeaTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=appxXfeo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk84sbrf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB48EC4CEF1;
-	Mon, 27 Oct 2025 19:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="appxXfeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85986C4CEF1;
+	Mon, 27 Oct 2025 19:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593046;
-	bh=xxug9ayMhVrSxtbF64iNXZvFyMho6P2bw/5D/RutrCA=;
+	s=korg; t=1761593048;
+	bh=aM0X1KNH2o0EWzqPSU54DSK2pI6IbdITJZ+4Wygze/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pk84sbrftLb/CorPNfHSThb882GtNPAfgUGvweGaw8I3AW2dLqRUmYBPYH5UHvtzs
-	 mmumHn7gsATK55zq/FVN+SiczunxRI4GEa43aDrSXIupMeZ6Cb/br3/p2esMo0B7Jx
-	 MRmBcn34x4QTJR4dM1tYiafU7FmcsD2ohVTQMPhU=
+	b=appxXfeorbypJwrK91AjUcQAS+H7r0lB+V8OEIwUgMlHdVPXLMXajL/chD8jAogvc
+	 +HBVA9oaq6I8BkhxkusK9V6pAe/e5nL6jKpNCCXwVsBq4tstH6DoxMT0dRrVe1WpB/
+	 qYKm9ROh5EvSupbd9CZXkCbV1+zFVbwJHRkM/cgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/117] spi: airoha: return an error for continuous mode dirmap creation cases
-Date: Mon, 27 Oct 2025 19:36:40 +0100
-Message-ID: <20251027183456.030048403@linuxfoundation.org>
+Subject: [PATCH 6.12 075/117] spi: airoha: add support of dual/quad wires spi modes to exec_op() handler
+Date: Mon, 27 Oct 2025 19:36:41 +0100
+Message-ID: <20251027183456.058357358@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -55,41 +54,216 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit 4314ffce4eb81a6c18700af1b6e29b6e0c6b9e37 ]
+[ Upstream commit edd2e261b1babb92213089b5feadca12e3459322 ]
 
-This driver can accelerate single page operations only, thus
-continuous reading mode should not be used.
+Booting without this patch and disabled dirmap support results in
 
-Continuous reading will use sizes up to the size of one erase block.
-This size is much larger than the size of single flash page. Use this
-difference to identify continuous reading and return an error.
+[    2.980719] spi-nand spi0.0: Micron SPI NAND was found.
+[    2.986040] spi-nand spi0.0: 256 MiB, block size: 128 KiB, page size: 2048, OOB size: 128
+[    2.994709] 2 fixed-partitions partitions found on MTD device spi0.0
+[    3.001075] Creating 2 MTD partitions on "spi0.0":
+[    3.005862] 0x000000000000-0x000000020000 : "bl2"
+[    3.011272] 0x000000020000-0x000010000000 : "ubi"
+...
+[    6.195594] ubi0: attaching mtd1
+[   13.338398] ubi0: scanning is finished
+[   13.342188] ubi0 error: ubi_read_volume_table: the layout volume was not found
+[   13.349784] ubi0 error: ubi_attach_mtd_dev: failed to attach mtd1, error -22
+[   13.356897] UBI error: cannot attach mtd1
 
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+If dirmap is disabled or not supported in the spi driver, the dirmap requests
+will be executed via exec_op() handler. Thus, if the hardware supports
+dual/quad spi modes, then corresponding requests will be sent to exec_op()
+handler. Current driver does not support such requests, so error is arrised.
+As result the flash can't be read/write.
+
+This patch adds support of dual and quad wires spi modes to exec_op() handler.
+
 Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
-Link: https://patch.msgid.link/20251012121707.2296160-2-mikhail.kshevetskiy@iopsys.eu
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251012121707.2296160-4-mikhail.kshevetskiy@iopsys.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-airoha-snfi.c | 108 ++++++++++++++++++++++++++--------
+ 1 file changed, 82 insertions(+), 26 deletions(-)
 
 diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 1369691a997bf..6930dea48f330 100644
+index 6930dea48f330..a3f766e04202f 100644
 --- a/drivers/spi/spi-airoha-snfi.c
 +++ b/drivers/spi/spi-airoha-snfi.c
-@@ -625,6 +625,10 @@ static int airoha_snand_dirmap_create(struct spi_mem_dirmap_desc *desc)
- 	if (desc->info.offset + desc->info.length > U32_MAX)
- 		return -EINVAL;
+@@ -192,6 +192,14 @@
+ #define SPI_NAND_OP_RESET			0xff
+ #define SPI_NAND_OP_DIE_SELECT			0xc2
  
-+	/* continuous reading is not supported */
-+	if (desc->info.length > SPI_NAND_CACHE_SIZE)
-+		return -E2BIG;
++/* SNAND FIFO commands */
++#define SNAND_FIFO_TX_BUSWIDTH_SINGLE		0x08
++#define SNAND_FIFO_TX_BUSWIDTH_DUAL		0x09
++#define SNAND_FIFO_TX_BUSWIDTH_QUAD		0x0a
++#define SNAND_FIFO_RX_BUSWIDTH_SINGLE		0x0c
++#define SNAND_FIFO_RX_BUSWIDTH_DUAL		0x0e
++#define SNAND_FIFO_RX_BUSWIDTH_QUAD		0x0f
 +
- 	if (!airoha_snand_supports_op(desc->mem, &desc->info.op_tmpl))
- 		return -EOPNOTSUPP;
+ #define SPI_NAND_CACHE_SIZE			(SZ_4K + SZ_256)
+ #define SPI_MAX_TRANSFER_SIZE			511
  
+@@ -394,10 +402,26 @@ static int airoha_snand_set_mode(struct airoha_snand_ctrl *as_ctrl,
+ 	return regmap_write(as_ctrl->regmap_ctrl, REG_SPI_CTRL_DUMMY, 0);
+ }
+ 
+-static int airoha_snand_write_data(struct airoha_snand_ctrl *as_ctrl, u8 cmd,
+-				   const u8 *data, int len)
++static int airoha_snand_write_data(struct airoha_snand_ctrl *as_ctrl,
++				   const u8 *data, int len, int buswidth)
+ {
+ 	int i, data_len;
++	u8 cmd;
++
++	switch (buswidth) {
++	case 0:
++	case 1:
++		cmd = SNAND_FIFO_TX_BUSWIDTH_SINGLE;
++		break;
++	case 2:
++		cmd = SNAND_FIFO_TX_BUSWIDTH_DUAL;
++		break;
++	case 4:
++		cmd = SNAND_FIFO_TX_BUSWIDTH_QUAD;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < len; i += data_len) {
+ 		int err;
+@@ -416,16 +440,32 @@ static int airoha_snand_write_data(struct airoha_snand_ctrl *as_ctrl, u8 cmd,
+ 	return 0;
+ }
+ 
+-static int airoha_snand_read_data(struct airoha_snand_ctrl *as_ctrl, u8 *data,
+-				  int len)
++static int airoha_snand_read_data(struct airoha_snand_ctrl *as_ctrl,
++				  u8 *data, int len, int buswidth)
+ {
+ 	int i, data_len;
++	u8 cmd;
++
++	switch (buswidth) {
++	case 0:
++	case 1:
++		cmd = SNAND_FIFO_RX_BUSWIDTH_SINGLE;
++		break;
++	case 2:
++		cmd = SNAND_FIFO_RX_BUSWIDTH_DUAL;
++		break;
++	case 4:
++		cmd = SNAND_FIFO_RX_BUSWIDTH_QUAD;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < len; i += data_len) {
+ 		int err;
+ 
+ 		data_len = min(len - i, SPI_MAX_TRANSFER_SIZE);
+-		err = airoha_snand_set_fifo_op(as_ctrl, 0xc, data_len);
++		err = airoha_snand_set_fifo_op(as_ctrl, cmd, data_len);
+ 		if (err)
+ 			return err;
+ 
+@@ -891,12 +931,28 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
+ static int airoha_snand_exec_op(struct spi_mem *mem,
+ 				const struct spi_mem_op *op)
+ {
+-	u8 data[8], cmd, opcode = op->cmd.opcode;
+ 	struct airoha_snand_ctrl *as_ctrl;
++	int op_len, addr_len, dummy_len;
++	u8 buf[20], *data;
+ 	int i, err;
+ 
+ 	as_ctrl = spi_controller_get_devdata(mem->spi->controller);
+ 
++	op_len = op->cmd.nbytes;
++	addr_len = op->addr.nbytes;
++	dummy_len = op->dummy.nbytes;
++
++	if (op_len + dummy_len + addr_len > sizeof(buf))
++		return -EIO;
++
++	data = buf;
++	for (i = 0; i < op_len; i++)
++		*data++ = op->cmd.opcode >> (8 * (op_len - i - 1));
++	for (i = 0; i < addr_len; i++)
++		*data++ = op->addr.val >> (8 * (addr_len - i - 1));
++	for (i = 0; i < dummy_len; i++)
++		*data++ = 0xff;
++
+ 	/* switch to manual mode */
+ 	err = airoha_snand_set_mode(as_ctrl, SPI_MODE_MANUAL);
+ 	if (err < 0)
+@@ -907,40 +963,40 @@ static int airoha_snand_exec_op(struct spi_mem *mem,
+ 		return err;
+ 
+ 	/* opcode */
+-	err = airoha_snand_write_data(as_ctrl, 0x8, &opcode, sizeof(opcode));
++	data = buf;
++	err = airoha_snand_write_data(as_ctrl, data, op_len,
++				      op->cmd.buswidth);
+ 	if (err)
+ 		return err;
+ 
+ 	/* addr part */
+-	cmd = opcode == SPI_NAND_OP_GET_FEATURE ? 0x11 : 0x8;
+-	put_unaligned_be64(op->addr.val, data);
+-
+-	for (i = ARRAY_SIZE(data) - op->addr.nbytes;
+-	     i < ARRAY_SIZE(data); i++) {
+-		err = airoha_snand_write_data(as_ctrl, cmd, &data[i],
+-					      sizeof(data[0]));
++	data += op_len;
++	if (addr_len) {
++		err = airoha_snand_write_data(as_ctrl, data, addr_len,
++					      op->addr.buswidth);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+ 	/* dummy */
+-	data[0] = 0xff;
+-	for (i = 0; i < op->dummy.nbytes; i++) {
+-		err = airoha_snand_write_data(as_ctrl, 0x8, &data[0],
+-					      sizeof(data[0]));
++	data += addr_len;
++	if (dummy_len) {
++		err = airoha_snand_write_data(as_ctrl, data, dummy_len,
++					      op->dummy.buswidth);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+ 	/* data */
+-	if (op->data.dir == SPI_MEM_DATA_IN) {
+-		err = airoha_snand_read_data(as_ctrl, op->data.buf.in,
+-					     op->data.nbytes);
+-		if (err)
+-			return err;
+-	} else {
+-		err = airoha_snand_write_data(as_ctrl, 0x8, op->data.buf.out,
+-					      op->data.nbytes);
++	if (op->data.nbytes) {
++		if (op->data.dir == SPI_MEM_DATA_IN)
++			err = airoha_snand_read_data(as_ctrl, op->data.buf.in,
++						     op->data.nbytes,
++						     op->data.buswidth);
++		else
++			err = airoha_snand_write_data(as_ctrl, op->data.buf.out,
++						      op->data.nbytes,
++						      op->data.buswidth);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.51.0
 
