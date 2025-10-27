@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D76731D72A;
-	Mon, 27 Oct 2025 18:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7F131D72A;
+	Mon, 27 Oct 2025 18:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591221; cv=none; b=Xgs1igK4g++/KYDwqcTafmKCpB7yQBgTEV/UbFsAWHI3BkYZ4MOCI1eTuc0FN3XFWYfqDJqN5yxpacPbzWqgKgbSBsFeEuFBvMNZTGFyqs8yKe5XT5jG7dd6i6tJ8ym9+Rz4h0gQBMlOBPKTHI9di3rRa9oT4pBzIeIFi3mCuMo=
+	t=1761591223; cv=none; b=VLmfmWufPugIn7SzpHpQZGz2ESnEfkkRV6r7U1PfYyZicG/Yi1VCVLs9tJLm8/Q854cCNg1L40blR8Cxzz54Qi3D2GmfNQxJOOa85RaT8CXFamRUy4SR/RVoo2qGQL+qCG9yNU7AzHDGAEQ1Go0zqO2mUAa2JQ9EA+Vnc0Ft2oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591221; c=relaxed/simple;
-	bh=GA2I6VCuALDTsYwuWA8lWVLAcYwaRJ8YnGtgQcE99oI=;
+	s=arc-20240116; t=1761591223; c=relaxed/simple;
+	bh=kzgHcrKEpucPk5gmXon3peMseWnnns5OPlR8m3HRRaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tbg8Do0NvjJEMdavwD1CvmrYdW9kYPG05mnVVdyvUxN5E/LjLMvmsqcrphrt3p+jv0vTWTsPax8Nigz0SLtoOmoEHYTa+sLW1GdR8fL+i0PbV8/FpkI9ZaTDhtKsNexuRxuHNrYPmHlNZb2ZlbYjFbmnwveocY28wIi4kF3yvT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrdIejgq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3XTO8/8m5uaVplKWyad3OBbIz0OHbJrqt1bk3Ruqe4iXR4wQY6q0bhPExRaZDI2W8jP7kW4D3GnzmDy0MObUdhhrgoe24YHy5SUeomD23ooCLTkfGVOY/60uRDFXeb08IiLNf3dmByyRpoLv6qXqmbH8vwWWjGtzRgVQpM3SAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxdjKq/N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrdIejgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93FFC4CEF1;
-	Mon, 27 Oct 2025 18:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxdjKq/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4954EC4CEF1;
+	Mon, 27 Oct 2025 18:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591221;
-	bh=GA2I6VCuALDTsYwuWA8lWVLAcYwaRJ8YnGtgQcE99oI=;
+	s=korg; t=1761591223;
+	bh=kzgHcrKEpucPk5gmXon3peMseWnnns5OPlR8m3HRRaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrdIejgqEUL+mEPo5RAZO9WQOkk6/XFNVf2d8DKOw9UaohCYKZenxFlr8IXvnxRlK
-	 eKabN6XflTvkL3V1Zbynie4mEviG0iDFWRwU7jklFD59UOFMgk189y1rXvG8pzC6d7
-	 HWmpvKg8Nrl0Qz0Bkt24hoYVTstFaLzcbK9lS9xg=
+	b=XxdjKq/NDmSAC0JQEjWeicN33zXfWCNA5GwZbtqU9np4QA/ARDRd2hoqsJDb4kzbB
+	 QitqsmapKIj9vGl9JcVOCSAXzzIKxjjDvfGW1rd2Qi/3StwdxrAe/AyP206m+sfOgd
+	 CDiTydbqhA8cYuNLFgUVw2GSRsd7CzazLnr1DA7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Alexandr Sapozhnikov <alsp705@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/332] drm/vmwgfx: Fix Use-after-free in validation
-Date: Mon, 27 Oct 2025 19:32:44 +0100
-Message-ID: <20251027183527.547561774@linuxfoundation.org>
+Subject: [PATCH 5.10 112/332] net/sctp: fix a null dereference in sctp_disposition sctp_sf_do_5_1D_ce()
+Date: Mon, 27 Oct 2025 19:32:45 +0100
+Message-ID: <20251027183527.574442398@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Alexandr Sapozhnikov <alsp705@gmail.com>
 
-[ Upstream commit dfe1323ab3c8a4dd5625ebfdba44dc47df84512a ]
+[ Upstream commit 2f3119686ef50319490ccaec81a575973da98815 ]
 
-Nodes stored in the validation duplicates hashtable come from an arena
-allocator that is cleared at the end of vmw_execbuf_process. All nodes
-are expected to be cleared in vmw_validation_drop_ht but this node escaped
-because its resource was destroyed prematurely.
+If new_asoc->peer.adaptation_ind=0 and sctp_ulpevent_make_authkey=0
+and sctp_ulpevent_make_authkey() returns 0, then the variable
+ai_ev remains zero and the zero will be dereferenced
+in the sctp_ulpevent_free() function.
 
-Fixes: 64ad2abfe9a6 ("drm/vmwgfx: Adapt validation code for reference-free lookups")
-Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://lore.kernel.org/r/20250926195427.1405237-1-ian.forbes@broadcom.com
+Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Fixes: 30f6ebf65bc4 ("sctp: add SCTP_AUTH_NO_AUTH type for AUTHENTICATION_EVENT")
+Link: https://patch.msgid.link/20251002091448.11-1-alsp705@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_validation.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sctp/sm_statefuns.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-index cc1cfc827bb9a..44bb3ccc31574 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_validation.c
-@@ -342,8 +342,10 @@ int vmw_validation_add_resource(struct vmw_validation_context *ctx,
- 		}
- 	}
- 	node->res = vmw_resource_reference_unless_doomed(res);
--	if (!node->res)
-+	if (!node->res) {
-+		hash_del_rcu(&node->hash.head);
- 		return -ESRCH;
-+	}
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 93ebd14b48ed7..2832af34216d5 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -873,7 +873,8 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
+ 	return SCTP_DISPOSITION_CONSUME;
  
- 	node->first_usage = 1;
- 	if (!res->dev_priv->has_mob) {
+ nomem_authev:
+-	sctp_ulpevent_free(ai_ev);
++	if (ai_ev)
++		sctp_ulpevent_free(ai_ev);
+ nomem_aiev:
+ 	sctp_ulpevent_free(ev);
+ nomem_ev:
 -- 
 2.51.0
 
