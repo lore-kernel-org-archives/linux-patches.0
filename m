@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500C03016F9;
-	Mon, 27 Oct 2025 19:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E590324B37;
+	Mon, 27 Oct 2025 19:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592910; cv=none; b=iRfaD0duJ4+bwT1pjxueazj07NoAdxgrDNqWbuwnNnDF0ULFucjlTEQR9upSx9myCaKn1+UBbhdQgd2vBIR5hXAAXQ5AekZ+YbpC0vY0ffdiBLTl2dm0Yzc7ot1yVG7JU1ttx04a9EjeY1I7yoJmaDxx2pFP/yl91+x4tWgyzuA=
+	t=1761592911; cv=none; b=IKM1YBs1tngRSWJwut87nvvogAVfv214AZ1Erf0mctrZHhXf6jWxmHz4iJkrbbWI2LvYyFw+aFkOSDux0RApH1RHZnJyZYp+wZfaBRMXCsO/trNzyXXiuBYkVpNI1hqUDXBgJC6AA6QRqN+YNOt7cjZtG/5Vhnb7rx1LC79L8Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592910; c=relaxed/simple;
-	bh=EUDYKZTxXkgT+Uq6GG+tuExma4xLzfKyNiRC+xoVX/M=;
+	s=arc-20240116; t=1761592911; c=relaxed/simple;
+	bh=qSoahRxM8yQ4V5slepN8JtBWGoLjfqRpUQZdCTxb0k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcRVz7KCjDonolSWiq+ymfGu65u/0fXSwlRlXtVdo1mER9XI6pnaMQFqDYd8jFJHBjq+cszu3kLTODOKHqSCc9M/bUKj8DrWnpVDxFwn836S5lvZDBIkpd1SiSaov777ENkGBV5jqT0omuQQ7z1DNhJ+rMWcZy0PGZ1FJ/Wf294=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BALGj2g6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BR14w+Bc9Ue2rVCmMBBRHMEBVMIq5U/w8hE4sqUE8I8a0tLnLjIcRHFPe7ihjvq842tAclcjgCOQbhx+i+xdn5tugY74hFyu7H+QByIC+W8poG2d3ubiLIvBBeYMZibsfihxR1lWRnTWapXd0pZ8GCin6JxO4ZZTzILlJJJ0JS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZv85/4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BALGj2g6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A92C4CEF1;
-	Mon, 27 Oct 2025 19:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZv85/4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226D9C4CEF1;
+	Mon, 27 Oct 2025 19:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592908;
-	bh=EUDYKZTxXkgT+Uq6GG+tuExma4xLzfKyNiRC+xoVX/M=;
+	s=korg; t=1761592911;
+	bh=qSoahRxM8yQ4V5slepN8JtBWGoLjfqRpUQZdCTxb0k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BALGj2g6C+cqq+csOZUQeFZLFr9yM2+PIEqy26ukb5v6K4LQGulaktsx3pMLfLg8o
-	 U8jJarBP8zbHrU+DMQNXAtLxSfAxQhosiDrNhHCxk/MPYlsmuaedSP4jweMW9Q+1D0
-	 Zbw8yrqx7dH7qLOPp5oFzuShBBhR56hWJZR4G11k=
+	b=aZv85/4tg8vbYp5lH/bNLCLcg1Di9w60cLsHnB+i/Bqm4g5bwTZ8LxM61zR4iDCLb
+	 VMlo3IRe4rLepCzh3xUxX9MKlX1tEySgI6uiUCMTvoPCw+rI7lPBmf2Xs8BYiGbFvr
+	 WS4HJXYC0Z7zfSTz/4H+7PlyfFzIlMem0FiaYhbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/117] can: esd: acc_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
-Date: Mon, 27 Oct 2025 19:35:57 +0100
-Message-ID: <20251027183454.810792419@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 058/117] MIPS: Malta: Fix keyboard resource preventing i8042 driver from registering
+Date: Mon, 27 Oct 2025 19:36:24 +0100
+Message-ID: <20251027183455.586909906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -44,48 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 0bee15a5caf36fe513fdeee07fd4f0331e61c064 ]
+commit bf5570590a981d0659d0808d2d4bcda21b27a2a5 upstream.
 
-In addition to can_dropped_invalid_skb(), the helper function
-can_dev_dropped_skb() checks whether the device is in listen-only mode and
-discards the skb accordingly.
+MIPS Malta platform code registers the PCI southbridge legacy port I/O
+PS/2 keyboard range as a standard resource marked as busy.  It prevents
+the i8042 driver from registering as it fails to claim the resource in
+a call to i8042_platform_init().  Consequently PS/2 keyboard and mouse
+devices cannot be used with this platform.
 
-Replace can_dropped_invalid_skb() by can_dev_dropped_skb() to also drop
-skbs in for listen-only mode.
+Fix the issue by removing the busy marker from the standard reservation,
+making the driver register successfully:
 
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/all/20251017-bizarre-enchanted-quokka-f3c704-mkl@pengutronix.de/
-Fixes: 9721866f07e1 ("can: esd: add support for esd GmbH PCIe/402 CAN interface family")
-Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-2-556665793fa4@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  serio: i8042 KBD port at 0x60,0x64 irq 1
+  serio: i8042 AUX port at 0x60,0x64 irq 12
+
+and the resource show up as expected among the legacy devices:
+
+  00000000-00ffffff : MSC PCI I/O
+    00000000-0000001f : dma1
+    00000020-00000021 : pic1
+    00000040-0000005f : timer
+    00000060-0000006f : keyboard
+      00000060-0000006f : i8042
+    00000070-00000077 : rtc0
+    00000080-0000008f : dma page reg
+    000000a0-000000a1 : pic2
+    000000c0-000000df : dma2
+    [...]
+
+If the i8042 driver has not been configured, then the standard resource
+will remain there preventing any conflicting dynamic assignment of this
+PCI port I/O address range.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/alpine.DEB.2.21.2510211919240.8377@angie.orcam.me.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/esd/esdacc.c | 2 +-
+ arch/mips/mti-malta/malta-setup.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/esd/esdacc.c b/drivers/net/can/esd/esdacc.c
-index c80032bc1a521..73e66f9a3781c 100644
---- a/drivers/net/can/esd/esdacc.c
-+++ b/drivers/net/can/esd/esdacc.c
-@@ -254,7 +254,7 @@ netdev_tx_t acc_start_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	u32 acc_id;
- 	u32 acc_dlc;
- 
--	if (can_dropped_invalid_skb(netdev, skb))
-+	if (can_dev_dropped_skb(netdev, skb))
- 		return NETDEV_TX_OK;
- 
- 	/* Access core->tx_fifo_tail only once because it may be changed
--- 
-2.51.0
-
+--- a/arch/mips/mti-malta/malta-setup.c
++++ b/arch/mips/mti-malta/malta-setup.c
+@@ -47,7 +47,7 @@ static struct resource standard_io_resou
+ 		.name = "keyboard",
+ 		.start = 0x60,
+ 		.end = 0x6f,
+-		.flags = IORESOURCE_IO | IORESOURCE_BUSY
++		.flags = IORESOURCE_IO
+ 	},
+ 	{
+ 		.name = "dma page reg",
 
 
