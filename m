@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4B0326D6E;
-	Mon, 27 Oct 2025 19:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1CA32D440;
+	Mon, 27 Oct 2025 19:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593296; cv=none; b=S/0hkqD2VRNNq1kj77wII+C6M4MMqGQREWuQw3030QExdqna++MzUL+UtE3hF5wq3mK6nwqBbY+GB2fJlkmz00MDUSql+pCB20MrojuPfn1SeeERIhbRGndTyBqZXeoMWoxidqHxDb/kUL9pUFee5UyXSUsBMAFNFxekOYRPd14=
+	t=1761593299; cv=none; b=haS+X0yUIKpt9Yn2Sv/7ql0h3Vc92sMRK7M6qqdqjkHPe1EV45Q5txb/qgRp9o3Q5r9vbAv+DD5WrE8mgg5mjbtFDdOQGdrfNgwUnknwZw6UFBEnBqxjfhVQSp0PYu6RMmOyeLEcNRVnNf+FKl6Os/qEn+XbPzopD5/gkMoV2M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593296; c=relaxed/simple;
-	bh=EwB79JLxmO7Zm+IGz97r3BQlOZvB+s7WLxUQ6qd6ga0=;
+	s=arc-20240116; t=1761593299; c=relaxed/simple;
+	bh=EfbbByxmdnfhrsECSHo36lYmE6aPWNzjPFwItyE6Vtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMTiMSEZfYAGNbK46/yuTW+ChXITlCPJTOT32gESdWJLIiclqFgP5zmJfFr/+sGZk1YEdFXvWxbrHECC8tZpK6FNkqB6RjOOZwi5M3H7LahmcZVQpB6bWFHj1cz5CaZbKhgASB4o6SQipQ45o4pLpPF46A+8BgyWawdYvvVrAA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbwSX1t9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jz2hvLzkkVGaghaXM3jNVE4U/m2ddJKKWxI3EDvxL8g6uZz0uLU+3ZFY1UPM+9oVhtaItoFdiCN2BZAxvQm+1FGLsvj5sQP9hE1i+F8fjqq8YaY5sWiXf8lBC24V7UqixZgvf0GqJfRVPqXBoCYDv7Vy42HcY/JZqJ3Oj36XShk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvhExuMM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbwSX1t9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C7EC4CEF1;
-	Mon, 27 Oct 2025 19:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvhExuMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8E2C4CEF1;
+	Mon, 27 Oct 2025 19:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593296;
-	bh=EwB79JLxmO7Zm+IGz97r3BQlOZvB+s7WLxUQ6qd6ga0=;
+	s=korg; t=1761593298;
+	bh=EfbbByxmdnfhrsECSHo36lYmE6aPWNzjPFwItyE6Vtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbwSX1t9q1TmXjXZ3ekI/rBRZg7emF2vknQwi/6QkSJIXiOZKxiz6ag4CDgf4abdr
-	 7jVo3xYuaPLi24tXaSwZ2PJNpETbRQNy3lVwjR0uo6LQTwGJYO9HvKfVhRZVA9YBrr
-	 10FWbAcLP68dNtdh3fc1JBJC/kJPMyK7PS7L/kL4=
+	b=YvhExuMM6Xp8V4t9u2sVewVL1leZr/B1lEFdC8IYqmfsUQhUr5qPDsw+ytNIZKGh4
+	 q7PtSBuHAASlDG4J+u32E3Jb2D9FimOBssX6XoS++52JUNKHBm5yw5+GZy2iP4J4Cu
+	 rrKap+JQrJMhoOZ9NR45XQzh3V6tAMhexUBUUp24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Subject: [PATCH 6.17 089/184] devcoredump: Fix circular locking dependency with devcd->mutex.
-Date: Mon, 27 Oct 2025 19:36:11 +0100
-Message-ID: <20251027183517.293342016@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Ting-Chang Hou <tchou@synology.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.17 072/184] btrfs: send: fix duplicated rmdir operations when using extrefs
+Date: Mon, 27 Oct 2025 19:35:54 +0100
+Message-ID: <20251027183516.833443499@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -56,383 +51,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Ting-Chang Hou <tchou@synology.com>
 
-commit a91c8096590bd7801a26454789f2992094fe36da upstream.
+commit 1fabe43b4e1a97597ec5d5ffcd2b7cf96e654b8f upstream.
 
-The original code causes a circular locking dependency found by lockdep.
+Commit 29d6d30f5c8a ("Btrfs: send, don't send rmdir for same target
+multiple times") has fixed an issue that a send stream contained a rmdir
+operation for the same directory multiple times. After that fix we keep
+track of the last directory for which we sent a rmdir operation and
+compare with it before sending a rmdir for the parent inode of a deleted
+hardlink we are processing. But there is still a corner case that in
+between rmdir dir operations for the same inode we find deleted hardlinks
+for other parent inodes, so tracking just the last inode for which we sent
+a rmdir operation is not enough.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 Tainted: G S   U
-------------------------------------------------------
-xe_fault_inject/5091 is trying to acquire lock:
-ffff888156815688 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}, at: __flush_work+0x25d/0x660
+Hardlinks of a file in the same directory are stored in the same INODE_REF
+item, but if the number of hardlinks is too large and can not fit in a
+leaf, we use INODE_EXTREF items to store them. The key of an INODE_EXTREF
+item is (inode_id, INODE_EXTREF, hash[name, parent ino]), so between two
+hardlinks for the same parent directory, we can find others for other
+parent directories. For example for the reproducer below we get the
+following (from a btrfs inspect-internal dump-tree output):
 
-but task is already holding lock:
+    item 0 key (259 INODE_EXTREF 2309449) itemoff 16257 itemsize 26
+            index 6925 parent 257 namelen 8 name: foo.6923
+    item 1 key (259 INODE_EXTREF 2311350) itemoff 16231 itemsize 26
+            index 6588 parent 258 namelen 8 name: foo.6587
+    item 2 key (259 INODE_EXTREF 2457395) itemoff 16205 itemsize 26
+            index 6611 parent 257 namelen 8 name: foo.6609
+    (...)
 
-ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #2 (&devcd->mutex){+.+.}-{3:3}:
-       mutex_lock_nested+0x4e/0xc0
-       devcd_data_write+0x27/0x90
-       sysfs_kf_bin_write+0x80/0xf0
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
--> #1 (kn->active#236){++++}-{0:0}:
-       kernfs_drain+0x1e2/0x200
-       __kernfs_remove+0xae/0x400
-       kernfs_remove_by_name_ns+0x5d/0xc0
-       remove_files+0x54/0x70
-       sysfs_remove_group+0x3d/0xa0
-       sysfs_remove_groups+0x2e/0x60
-       device_remove_attrs+0xc7/0x100
-       device_del+0x15d/0x3b0
-       devcd_del+0x19/0x30
-       process_one_work+0x22b/0x6f0
-       worker_thread+0x1e8/0x3d0
-       kthread+0x11c/0x250
-       ret_from_fork+0x26c/0x2e0
-       ret_from_fork_asm+0x1a/0x30
--> #0 ((work_completion)(&(&devcd->del_wk)->work)){+.+.}-{0:0}:
-       __lock_acquire+0x1661/0x2860
-       lock_acquire+0xc4/0x2f0
-       __flush_work+0x27a/0x660
-       flush_delayed_work+0x5d/0xa0
-       dev_coredump_put+0x63/0xa0
-       xe_driver_devcoredump_fini+0x12/0x20 [xe]
-       devm_action_release+0x12/0x30
-       release_nodes+0x3a/0x120
-       devres_release_all+0x8a/0xd0
-       device_unbind_cleanup+0x12/0x80
-       device_release_driver_internal+0x23a/0x280
-       device_driver_detach+0x14/0x20
-       unbind_store+0xaf/0xc0
-       drv_attr_store+0x21/0x50
-       sysfs_kf_write+0x4a/0x80
-       kernfs_fop_write_iter+0x169/0x220
-       vfs_write+0x293/0x560
-       ksys_write+0x72/0xf0
-       __x64_sys_write+0x19/0x30
-       x64_sys_call+0x2bf/0x2660
-       do_syscall_64+0x93/0xb60
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-other info that might help us debug this:
-Chain exists of: (work_completion)(&(&devcd->del_wk)->work) --> kn->active#236 --> &devcd->mutex
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&devcd->mutex);
-                               lock(kn->active#236);
-                               lock(&devcd->mutex);
-  lock((work_completion)(&(&devcd->del_wk)->work));
- *** DEADLOCK ***
-5 locks held by xe_fault_inject/5091:
- #0: ffff8881129f9488 (sb_writers#5){.+.+}-{0:0}, at: ksys_write+0x72/0xf0
- #1: ffff88810c755078 (&of->mutex#2){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x123/0x220
- #2: ffff8881054811a0 (&dev->mutex){....}-{3:3}, at: device_release_driver_internal+0x55/0x280
- #3: ffff888156815620 (&devcd->mutex){+.+.}-{3:3}, at: dev_coredump_put+0x3f/0xa0
- #4: ffffffff8359e020 (rcu_read_lock){....}-{1:2}, at: __flush_work+0x72/0x660
-stack backtrace:
-CPU: 14 UID: 0 PID: 5091 Comm: xe_fault_inject Tainted: G S   U              6.16.0-rc6-lgci-xe-xe-pw-151626v3+ #1 PREEMPT_{RT,(lazy)}
-Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-Hardware name: Micro-Star International Co., Ltd. MS-7D25/PRO Z690-A DDR4(MS-7D25), BIOS 1.10 12/13/2021
-Call Trace:
- <TASK>
- dump_stack_lvl+0x91/0xf0
- dump_stack+0x10/0x20
- print_circular_bug+0x285/0x360
- check_noncircular+0x135/0x150
- ? register_lock_class+0x48/0x4a0
- __lock_acquire+0x1661/0x2860
- lock_acquire+0xc4/0x2f0
- ? __flush_work+0x25d/0x660
- ? mark_held_locks+0x46/0x90
- ? __flush_work+0x25d/0x660
- __flush_work+0x27a/0x660
- ? __flush_work+0x25d/0x660
- ? trace_hardirqs_on+0x1e/0xd0
- ? __pfx_wq_barrier_func+0x10/0x10
- flush_delayed_work+0x5d/0xa0
- dev_coredump_put+0x63/0xa0
- xe_driver_devcoredump_fini+0x12/0x20 [xe]
- devm_action_release+0x12/0x30
- release_nodes+0x3a/0x120
- devres_release_all+0x8a/0xd0
- device_unbind_cleanup+0x12/0x80
- device_release_driver_internal+0x23a/0x280
- ? bus_find_device+0xa8/0xe0
- device_driver_detach+0x14/0x20
- unbind_store+0xaf/0xc0
- drv_attr_store+0x21/0x50
- sysfs_kf_write+0x4a/0x80
- kernfs_fop_write_iter+0x169/0x220
- vfs_write+0x293/0x560
- ksys_write+0x72/0xf0
- __x64_sys_write+0x19/0x30
- x64_sys_call+0x2bf/0x2660
- do_syscall_64+0x93/0xb60
- ? __f_unlock_pos+0x15/0x20
- ? __x64_sys_getdents64+0x9b/0x130
- ? __pfx_filldir64+0x10/0x10
- ? do_syscall_64+0x1a2/0xb60
- ? clear_bhb_loop+0x30/0x80
- ? clear_bhb_loop+0x30/0x80
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x76e292edd574
-Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d d5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-RSP: 002b:00007fffe247a828 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000076e292edd574
-RDX: 000000000000000c RSI: 00006267f6306063 RDI: 000000000000000b
-RBP: 000000000000000c R08: 000076e292fc4b20 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000202 R12: 00006267f6306063
-R13: 000000000000000b R14: 00006267e6859c00 R15: 000076e29322a000
- </TASK>
-xe 0000:03:00.0: [drm] Xe device coredump has been deleted.
+So tracking the last directory's inode number does not work in this case
+since we process a link for parent inode 257, then for 258 and then back
+again for 257, and that second time we process a deleted link for 257 we
+think we have not yet sent a rmdir operation.
 
-Fixes: 01daccf74832 ("devcoredump : Serialize devcd_del work")
-Cc: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Acked-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250723142416.1020423-1-dev@lankhorst.se
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by using a rbtree to keep track of all the directories for which
+we have already sent rmdir operations, and add those directories to the
+'check_dirs' ref list in process_recorded_refs() only if the directory is
+not yet in the rbtree, otherwise skip it since it means we have already
+sent a rmdir operation for that directory.
+
+The following test script reproduces the problem:
+
+  $ cat test.sh
+  #!/bin/bash
+
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
+
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
+
+  mkdir $MNT/a $MNT/b
+
+  echo 123 > $MNT/a/foo
+  for ((i = 1; i <= 1000; i++)); do
+     ln $MNT/a/foo $MNT/a/foo.$i
+     ln $MNT/a/foo $MNT/b/foo.$i
+  done
+
+  btrfs subvolume snapshot -r $MNT $MNT/snap1
+  btrfs send $MNT/snap1 -f /tmp/base.send
+
+  rm -r $MNT/a $MNT/b
+
+  btrfs subvolume snapshot -r $MNT $MNT/snap2
+  btrfs send -p $MNT/snap1 $MNT/snap2 -f /tmp/incremental.send
+
+  umount $MNT
+  mkfs.btrfs -f $DEV
+  mount $DEV $MNT
+
+  btrfs receive $MNT -f /tmp/base.send
+  btrfs receive $MNT -f /tmp/incremental.send
+
+  rm -f /tmp/base.send /tmp/incremental.send
+
+  umount $MNT
+
+When running it, it fails like this:
+
+  $ ./test.sh
+  (...)
+  At subvol snap1
+  At snapshot snap2
+  ERROR: rmdir o257-9-0 failed: No such file or directory
+
+CC: <stable@vger.kernel.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Ting-Chang Hou <tchou@synology.com>
+[ Updated changelog ]
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/devcoredump.c |  136 +++++++++++++++++++++++++++------------------
- 1 file changed, 83 insertions(+), 53 deletions(-)
+ fs/btrfs/send.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 48 insertions(+), 8 deletions(-)
 
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -23,50 +23,46 @@ struct devcd_entry {
- 	void *data;
- 	size_t datalen;
- 	/*
--	 * Here, mutex is required to serialize the calls to del_wk work between
--	 * user/kernel space which happens when devcd is added with device_add()
--	 * and that sends uevent to user space. User space reads the uevents,
--	 * and calls to devcd_data_write() which try to modify the work which is
--	 * not even initialized/queued from devcoredump.
-+	 * There are 2 races for which mutex is required.
- 	 *
-+	 * The first race is between device creation and userspace writing to
-+	 * schedule immediately destruction.
- 	 *
-+	 * This race is handled by arming the timer before device creation, but
-+	 * when device creation fails the timer still exists.
- 	 *
--	 *        cpu0(X)                                 cpu1(Y)
-+	 * To solve this, hold the mutex during device_add(), and set
-+	 * init_completed on success before releasing the mutex.
- 	 *
--	 *        dev_coredump() uevent sent to user space
--	 *        device_add()  ======================> user space process Y reads the
--	 *                                              uevents writes to devcd fd
--	 *                                              which results into writes to
-+	 * That way the timer will never fire until device_add() is called,
-+	 * it will do nothing if init_completed is not set. The timer is also
-+	 * cancelled in that case.
- 	 *
--	 *                                             devcd_data_write()
--	 *                                               mod_delayed_work()
--	 *                                                 try_to_grab_pending()
--	 *                                                   timer_delete()
--	 *                                                     debug_assert_init()
--	 *       INIT_DELAYED_WORK()
--	 *       schedule_delayed_work()
--	 *
--	 *
--	 * Also, mutex alone would not be enough to avoid scheduling of
--	 * del_wk work after it get flush from a call to devcd_free()
--	 * mentioned as below.
--	 *
--	 *	disabled_store()
--	 *        devcd_free()
--	 *          mutex_lock()             devcd_data_write()
--	 *          flush_delayed_work()
--	 *          mutex_unlock()
--	 *                                   mutex_lock()
--	 *                                   mod_delayed_work()
--	 *                                   mutex_unlock()
--	 * So, delete_work flag is required.
-+	 * The second race involves multiple parallel invocations of devcd_free(),
-+	 * add a deleted flag so only 1 can call the destructor.
- 	 */
- 	struct mutex mutex;
--	bool delete_work;
-+	bool init_completed, deleted;
- 	struct module *owner;
- 	ssize_t (*read)(char *buffer, loff_t offset, size_t count,
- 			void *data, size_t datalen);
- 	void (*free)(void *data);
-+	/*
-+	 * If nothing interferes and device_add() was returns success,
-+	 * del_wk will destroy the device after the timer fires.
-+	 *
-+	 * Multiple userspace processes can interfere in the working of the timer:
-+	 * - Writing to the coredump will reschedule the timer to run immediately,
-+	 *   if still armed.
-+	 *
-+	 *   This is handled by using "if (cancel_delayed_work()) {
-+	 *   schedule_delayed_work() }", to prevent re-arming after having
-+	 *   been previously fired.
-+	 * - Writing to /sys/class/devcoredump/disabled will destroy the
-+	 *   coredump synchronously.
-+	 *   This is handled by using disable_delayed_work_sync(), and then
-+	 *   checking if deleted flag is set with &devcd->mutex held.
-+	 */
- 	struct delayed_work del_wk;
- 	struct device *failing_dev;
- };
-@@ -95,14 +91,27 @@ static void devcd_dev_release(struct dev
- 	kfree(devcd);
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -4148,6 +4148,48 @@ out:
+ 	return ret;
  }
  
-+static void __devcd_del(struct devcd_entry *devcd)
++static int rbtree_check_dir_ref_comp(const void *k, const struct rb_node *node)
 +{
-+	devcd->deleted = true;
-+	device_del(&devcd->devcd_dev);
-+	put_device(&devcd->devcd_dev);
++	const struct recorded_ref *data = k;
++	const struct recorded_ref *ref = rb_entry(node, struct recorded_ref, node);
++
++	if (data->dir > ref->dir)
++		return 1;
++	if (data->dir < ref->dir)
++		return -1;
++	if (data->dir_gen > ref->dir_gen)
++		return 1;
++	if (data->dir_gen < ref->dir_gen)
++		return -1;
++	return 0;
 +}
 +
- static void devcd_del(struct work_struct *wk)
- {
- 	struct devcd_entry *devcd;
-+	bool init_completed;
- 
- 	devcd = container_of(wk, struct devcd_entry, del_wk.work);
- 
--	device_del(&devcd->devcd_dev);
--	put_device(&devcd->devcd_dev);
-+	/* devcd->mutex serializes against dev_coredumpm_timeout */
-+	mutex_lock(&devcd->mutex);
-+	init_completed = devcd->init_completed;
-+	mutex_unlock(&devcd->mutex);
++static bool rbtree_check_dir_ref_less(struct rb_node *node, const struct rb_node *parent)
++{
++	const struct recorded_ref *entry = rb_entry(node, struct recorded_ref, node);
 +
-+	if (init_completed)
-+		__devcd_del(devcd);
- }
- 
- static ssize_t devcd_data_read(struct file *filp, struct kobject *kobj,
-@@ -122,12 +131,12 @@ static ssize_t devcd_data_write(struct f
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
--	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work) {
--		devcd->delete_work = true;
--		mod_delayed_work(system_wq, &devcd->del_wk, 0);
--	}
--	mutex_unlock(&devcd->mutex);
-+	/*
-+	 * Although it's tempting to use mod_delayed work here,
-+	 * that will cause a reschedule if the timer already fired.
-+	 */
-+	if (cancel_delayed_work(&devcd->del_wk))
-+		schedule_delayed_work(&devcd->del_wk, 0);
- 
- 	return count;
- }
-@@ -151,11 +160,21 @@ static int devcd_free(struct device *dev
- {
- 	struct devcd_entry *devcd = dev_to_devcd(dev);
- 
-+	/*
-+	 * To prevent a race with devcd_data_write(), disable work and
-+	 * complete manually instead.
-+	 *
-+	 * We cannot rely on the return value of
-+	 * disable_delayed_work_sync() here, because it might be in the
-+	 * middle of a cancel_delayed_work + schedule_delayed_work pair.
-+	 *
-+	 * devcd->mutex here guards against multiple parallel invocations
-+	 * of devcd_free().
-+	 */
-+	disable_delayed_work_sync(&devcd->del_wk);
- 	mutex_lock(&devcd->mutex);
--	if (!devcd->delete_work)
--		devcd->delete_work = true;
--
--	flush_delayed_work(&devcd->del_wk);
-+	if (!devcd->deleted)
-+		__devcd_del(devcd);
- 	mutex_unlock(&devcd->mutex);
- 	return 0;
- }
-@@ -179,12 +198,10 @@ static ssize_t disabled_show(const struc
-  *                                                                 put_device() <- last reference
-  *             error = fn(dev, data)                           devcd_dev_release()
-  *             devcd_free(dev, data)                           kfree(devcd)
-- *             mutex_lock(&devcd->mutex);
-  *
-  *
-  * In the above diagram, it looks like disabled_store() would be racing with parallelly
-- * running devcd_del() and result in memory abort while acquiring devcd->mutex which
-- * is called after kfree of devcd memory after dropping its last reference with
-+ * running devcd_del() and result in memory abort after dropping its last reference with
-  * put_device(). However, this will not happens as fn(dev, data) runs
-  * with its own reference to device via klist_node so it is not its last reference.
-  * so, above situation would not occur.
-@@ -374,7 +391,7 @@ void dev_coredumpm_timeout(struct device
- 	devcd->read = read;
- 	devcd->free = free;
- 	devcd->failing_dev = get_device(dev);
--	devcd->delete_work = false;
-+	devcd->deleted = false;
- 
- 	mutex_init(&devcd->mutex);
- 	device_initialize(&devcd->devcd_dev);
-@@ -383,8 +400,14 @@ void dev_coredumpm_timeout(struct device
- 		     atomic_inc_return(&devcd_count));
- 	devcd->devcd_dev.class = &devcd_class;
- 
--	mutex_lock(&devcd->mutex);
- 	dev_set_uevent_suppress(&devcd->devcd_dev, true);
++	return rbtree_check_dir_ref_comp(entry, parent) < 0;
++}
 +
-+	/* devcd->mutex prevents devcd_del() completing until init finishes */
-+	mutex_lock(&devcd->mutex);
-+	devcd->init_completed = false;
-+	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
-+	schedule_delayed_work(&devcd->del_wk, timeout);
++static int record_check_dir_ref_in_tree(struct rb_root *root,
++			struct recorded_ref *ref, struct list_head *list)
++{
++	struct recorded_ref *tmp_ref;
++	int ret;
 +
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
++	if (rb_find(ref, root, rbtree_check_dir_ref_comp))
++		return 0;
++
++	ret = dup_ref(ref, list);
++	if (ret < 0)
++		return ret;
++
++	tmp_ref = list_last_entry(list, struct recorded_ref, list);
++	rb_add(&tmp_ref->node, root, rbtree_check_dir_ref_less);
++	tmp_ref->root = root;
++	return 0;
++}
++
+ static int rename_current_inode(struct send_ctx *sctx,
+ 				struct fs_path *current_path,
+ 				struct fs_path *new_path)
+@@ -4175,11 +4217,11 @@ static int process_recorded_refs(struct
+ 	struct recorded_ref *cur;
+ 	struct recorded_ref *cur2;
+ 	LIST_HEAD(check_dirs);
++	struct rb_root rbtree_check_dirs = RB_ROOT;
+ 	struct fs_path *valid_path = NULL;
+ 	u64 ow_inode = 0;
+ 	u64 ow_gen;
+ 	u64 ow_mode;
+-	u64 last_dir_ino_rm = 0;
+ 	bool did_overwrite = false;
+ 	bool is_orphan = false;
+ 	bool can_rename = true;
+@@ -4483,7 +4525,7 @@ static int process_recorded_refs(struct
+ 					goto out;
+ 			}
+ 		}
+-		ret = dup_ref(cur, &check_dirs);
++		ret = record_check_dir_ref_in_tree(&rbtree_check_dirs, cur, &check_dirs);
+ 		if (ret < 0)
+ 			goto out;
+ 	}
+@@ -4511,7 +4553,7 @@ static int process_recorded_refs(struct
+ 		}
  
-@@ -401,13 +424,20 @@ void dev_coredumpm_timeout(struct device
- 
- 	dev_set_uevent_suppress(&devcd->devcd_dev, false);
- 	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
--	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
--	schedule_delayed_work(&devcd->del_wk, timeout);
-+
-+	/*
-+	 * Safe to run devcd_del() now that we are done with devcd_dev.
-+	 * Alternatively we could have taken a ref on devcd_dev before
-+	 * dropping the lock.
-+	 */
-+	devcd->init_completed = true;
- 	mutex_unlock(&devcd->mutex);
- 	return;
-  put_device:
--	put_device(&devcd->devcd_dev);
- 	mutex_unlock(&devcd->mutex);
-+	cancel_delayed_work_sync(&devcd->del_wk);
-+	put_device(&devcd->devcd_dev);
-+
-  put_module:
- 	module_put(owner);
-  free:
+ 		list_for_each_entry(cur, &sctx->deleted_refs, list) {
+-			ret = dup_ref(cur, &check_dirs);
++			ret = record_check_dir_ref_in_tree(&rbtree_check_dirs, cur, &check_dirs);
+ 			if (ret < 0)
+ 				goto out;
+ 		}
+@@ -4521,7 +4563,7 @@ static int process_recorded_refs(struct
+ 		 * We have a moved dir. Add the old parent to check_dirs
+ 		 */
+ 		cur = list_first_entry(&sctx->deleted_refs, struct recorded_ref, list);
+-		ret = dup_ref(cur, &check_dirs);
++		ret = record_check_dir_ref_in_tree(&rbtree_check_dirs, cur, &check_dirs);
+ 		if (ret < 0)
+ 			goto out;
+ 	} else if (!S_ISDIR(sctx->cur_inode_mode)) {
+@@ -4555,7 +4597,7 @@ static int process_recorded_refs(struct
+ 				if (is_current_inode_path(sctx, cur->full_path))
+ 					fs_path_reset(&sctx->cur_inode_path);
+ 			}
+-			ret = dup_ref(cur, &check_dirs);
++			ret = record_check_dir_ref_in_tree(&rbtree_check_dirs, cur, &check_dirs);
+ 			if (ret < 0)
+ 				goto out;
+ 		}
+@@ -4598,8 +4640,7 @@ static int process_recorded_refs(struct
+ 			ret = cache_dir_utimes(sctx, cur->dir, cur->dir_gen);
+ 			if (ret < 0)
+ 				goto out;
+-		} else if (ret == inode_state_did_delete &&
+-			   cur->dir != last_dir_ino_rm) {
++		} else if (ret == inode_state_did_delete) {
+ 			ret = can_rmdir(sctx, cur->dir, cur->dir_gen);
+ 			if (ret < 0)
+ 				goto out;
+@@ -4611,7 +4652,6 @@ static int process_recorded_refs(struct
+ 				ret = send_rmdir(sctx, valid_path);
+ 				if (ret < 0)
+ 					goto out;
+-				last_dir_ino_rm = cur->dir;
+ 			}
+ 		}
+ 	}
 
 
