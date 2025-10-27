@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213EC2C11DF;
-	Mon, 27 Oct 2025 19:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EFC2D6E70;
+	Mon, 27 Oct 2025 19:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592124; cv=none; b=m9nhhKYiJcHMgEMbGzTMLqTd6qIxZViOIBa4KkK+7mOkEVWgdrElj7F72hY0WYMA+nK7vHBTv5JnQNfzEVNXT/im+/C5gqe9CHTjTXrVIiRo6dbGtzbR+OlBT9JGlIHj28ucDvUlLdMbs5hgh+mJKeQcrqcuYt8uarCgP3AK2us=
+	t=1761592128; cv=none; b=NovoUF5c9N6F8HM1CW5IaX0Mf4PPqNzdZxMuw18BzE/bkQYBmifxx1AKJw/nK0qJb/wJqvmOQMkiZAiQRUodGCiAbyqrBVp6mKiHhMTe5dHjd2gZNLl5mO9Yq3WLvZ1XvkHKHhOg3BhBbW1zOqqIrg8pNZ6r6TvyJMLKtviZgQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592124; c=relaxed/simple;
-	bh=XvJzYmZGYdcI0ZJ1xCtlbZjW5UBTWxM1CENUEOla+Q0=;
+	s=arc-20240116; t=1761592128; c=relaxed/simple;
+	bh=1TsHgw3UBX/dEKgE+fRb+VdrVraqadrdYwstlUJ//ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4w4resBNHQeeQHQ9u6XEwwwsRRF6+0K344Yt4CNDqvz8T7Hzxis1KHJOP5RMaw/JUY8Ji75fngXaRpoa+1SE0edpRh9U5Izqjxbfwx/TUb12ABm4yyZukI2YjhvSAJQXlrm/Q+PAMCnIbUJfaBsrIGGDLjYXm1N69VOsitjv4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flgd6gW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JikScMkWG9rGYXZqs3IYsF72VxQMDuwC2YtU5aqGHG6Ugj7xIwOMUjF8jDpl3tg/1CCKFiuEjFMABxABkVPBmsghpA+/WtZGQy4DDRnz1f3aC7PmUu41dUwI/JFZWsJuKGyar29vF7F7xhmHLcCqIDNGqOFC/Gbka4HPrGE8vvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOJ+QtrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flgd6gW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6419C4CEF1;
-	Mon, 27 Oct 2025 19:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOJ+QtrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD0AC4CEF1;
+	Mon, 27 Oct 2025 19:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592124;
-	bh=XvJzYmZGYdcI0ZJ1xCtlbZjW5UBTWxM1CENUEOla+Q0=;
+	s=korg; t=1761592127;
+	bh=1TsHgw3UBX/dEKgE+fRb+VdrVraqadrdYwstlUJ//ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flgd6gW+cp5Nb1/6jGyrJxV7NXqksfHKuGXtaPk34L2rrWoV2P2FK6hoRSP/8/k39
-	 R5a7y8BWNHiFeLqYZImeX+bIiAmUSGbOqi1tZHK3xwiy4ueD8ZoyZV6JiaOxvDdocZ
-	 Z2hHALlkwPBrI28n271HHJpExzZZeq3o1X09TgrA=
+	b=EOJ+QtrWr7ih1HYTS5MoEhdZNyeUtlQWq3iE1G+o+vLNV4KyEv9fCEW0qaBeJw5EP
+	 89KRAb+38aohIhBNTFGtfYpE9Q7TMyRT3PTY80V1gn892vBu/CafisOGC9ftHPijkF
+	 /cJ6iKcOgCB0JoPQJFQ7UFGVkzooq4jF9dI+L4o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 101/123] fuse: fix livelock in synchronous file put from fuseblk workers
-Date: Mon, 27 Oct 2025 19:36:21 +0100
-Message-ID: <20251027183449.093613602@linuxfoundation.org>
+Subject: [PATCH 5.15 102/123] PCI: j721e: Enable ACSPCIE Refclk if "ti,syscon-acspcie-proxy-ctrl" exists
+Date: Mon, 27 Oct 2025 19:36:22 +0100
+Message-ID: <20251027183449.118782130@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -45,97 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 26e5c67deb2e1f42a951f022fdf5b9f7eb747b01 ]
+[ Upstream commit 82c4be4168e26a5593aaa1002b5678128a638824 ]
 
-I observed a hang when running generic/323 against a fuseblk server.
-This test opens a file, initiates a lot of AIO writes to that file
-descriptor, and closes the file descriptor before the writes complete.
-Unsurprisingly, the AIO exerciser threads are mostly stuck waiting for
-responses from the fuseblk server:
+The ACSPCIE module is capable of driving the reference clock required by
+the PCIe Endpoint device. It is an alternative to on-board and external
+reference clock generators. Enabling the output from the ACSPCIE module's
+PAD IO Buffers requires clearing the "PAD IO disable" bits of the
+ACSPCIE_PROXY_CTRL register in the CTRL_MMR register space.
 
-# cat /proc/372265/task/372313/stack
-[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
-[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
-[<0>] fuse_do_getattr+0xfc/0x1f0 [fuse]
-[<0>] fuse_file_read_iter+0xbe/0x1c0 [fuse]
-[<0>] aio_read+0x130/0x1e0
-[<0>] io_submit_one+0x542/0x860
-[<0>] __x64_sys_io_submit+0x98/0x1a0
-[<0>] do_syscall_64+0x37/0xf0
-[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Add support to enable the ACSPCIE reference clock output using the optional
+device-tree property "ti,syscon-acspcie-proxy-ctrl".
 
-But the /weird/ part is that the fuseblk server threads are waiting for
-responses from itself:
-
-# cat /proc/372210/task/372232/stack
-[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
-[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
-[<0>] fuse_file_put+0x9a/0xd0 [fuse]
-[<0>] fuse_release+0x36/0x50 [fuse]
-[<0>] __fput+0xec/0x2b0
-[<0>] task_work_run+0x55/0x90
-[<0>] syscall_exit_to_user_mode+0xe9/0x100
-[<0>] do_syscall_64+0x43/0xf0
-[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-The fuseblk server is fuse2fs so there's nothing all that exciting in
-the server itself.  So why is the fuse server calling fuse_file_put?
-The commit message for the fstest sheds some light on that:
-
-"By closing the file descriptor before calling io_destroy, you pretty
-much guarantee that the last put on the ioctx will be done in interrupt
-context (during I/O completion).
-
-Aha.  AIO fgets a new struct file from the fd when it queues the ioctx.
-The completion of the FUSE_WRITE command from userspace causes the fuse
-server to call the AIO completion function.  The completion puts the
-struct file, queuing a delayed fput to the fuse server task.  When the
-fuse server task returns to userspace, it has to run the delayed fput,
-which in the case of a fuseblk server, it does synchronously.
-
-Sending the FUSE_RELEASE command sychronously from fuse server threads
-is a bad idea because a client program can initiate enough simultaneous
-AIOs such that all the fuse server threads end up in delayed_fput, and
-now there aren't any threads left to handle the queued fuse commands.
-
-Fix this by only using asynchronous fputs when closing files, and leave
-a comment explaining why.
-
-Cc: stable@vger.kernel.org # v2.6.38
-Fixes: 5a18ec176c934c ("fuse: fix hang of single threaded fuseblk filesystem")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://lore.kernel.org/linux-pci/20240829105316.1483684-3-s-vadapalli@ti.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Stable-dep-of: f842d3313ba1 ("PCI: j721e: Fix programming sequence of "strap" settings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pci/controller/cadence/pci-j721e.c |   39 ++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -340,8 +340,14 @@ void fuse_file_release(struct inode *ino
- 	 * Make the release synchronous if this is a fuseblk mount,
- 	 * synchronous RELEASE is allowed (and desirable) in this case
- 	 * because the server can be trusted not to screw up.
-+	 *
-+	 * Always use the asynchronous file put because the current thread
-+	 * might be the fuse server.  This can happen if a process starts some
-+	 * aio and closes the fd before the aio completes.  Since aio takes its
-+	 * own ref to the file, the IO completion has to drop the ref, which is
-+	 * how the fuse server can end up closing its clients' files.
- 	 */
--	fuse_file_put(ff, ff->fm->fc->destroy);
-+	fuse_file_put(ff, false);
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -46,6 +46,7 @@ enum link_status {
+ #define LANE_COUNT_MASK			BIT(8)
+ #define LANE_COUNT(n)			((n) << 8)
+ 
++#define ACSPCIE_PAD_DISABLE_MASK	GENMASK(1, 0)
+ #define GENERATION_SEL_MASK		GENMASK(1, 0)
+ 
+ #define MAX_LANES			2
+@@ -218,6 +219,36 @@ static int j721e_pcie_set_lane_count(str
+ 	return ret;
  }
  
- void fuse_release_common(struct file *file, bool isdir)
++static int j721e_enable_acspcie_refclk(struct j721e_pcie *pcie,
++				       struct regmap *syscon)
++{
++	struct device *dev = pcie->cdns_pcie->dev;
++	struct device_node *node = dev->of_node;
++	u32 mask = ACSPCIE_PAD_DISABLE_MASK;
++	struct of_phandle_args args;
++	u32 val;
++	int ret;
++
++	ret = of_parse_phandle_with_fixed_args(node,
++					       "ti,syscon-acspcie-proxy-ctrl",
++					       1, 0, &args);
++	if (ret) {
++		dev_err(dev,
++			"ti,syscon-acspcie-proxy-ctrl has invalid arguments\n");
++		return ret;
++	}
++
++	/* Clear PAD IO disable bits to enable refclk output */
++	val = ~(args.args[0]);
++	ret = regmap_update_bits(syscon, 0, mask, val);
++	if (ret) {
++		dev_err(dev, "failed to enable ACSPCIE refclk: %d\n", ret);
++		return ret;
++	}
++
++	return 0;
++}
++
+ static int j721e_pcie_ctrl_init(struct j721e_pcie *pcie)
+ {
+ 	struct device *dev = pcie->dev;
+@@ -257,7 +288,13 @@ static int j721e_pcie_ctrl_init(struct j
+ 		return ret;
+ 	}
+ 
+-	return 0;
++	/* Enable ACSPCIE refclk output if the optional property exists */
++	syscon = syscon_regmap_lookup_by_phandle_optional(node,
++						"ti,syscon-acspcie-proxy-ctrl");
++	if (!syscon)
++		return 0;
++
++	return j721e_enable_acspcie_refclk(pcie, syscon);
+ }
+ 
+ static int cdns_ti_pcie_config_read(struct pci_bus *bus, unsigned int devfn,
 
 
