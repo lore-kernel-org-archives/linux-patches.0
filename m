@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68FE31D37A;
-	Mon, 27 Oct 2025 18:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9927320A02;
+	Mon, 27 Oct 2025 18:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591387; cv=none; b=kHrVU2OB4f0mGoOrWUc7FoH6s9mTKjesCKIGJZmRLZhHCVWVT/MeW2bV6PGFVqaIt/kMOWoi5zyuzc5UiAo2R7q3WxgJp09zgTFZEffrI12gTJ7KrLJXE0IGJniunxMLBkAM0A8Zhnb0DysuuMVSwLNFoCsrQb+ux7u4bAUjG5g=
+	t=1761591390; cv=none; b=RDRTaGvroRnyW0MdDVGdodhTycfsbTlYyQqWuEEhCz1SH/Yxgle5dhzZe+9lQUHhPnmLysnzT3KEj2CGKwFcIynG4QKePQ6xpj4e+9Oq7jWWdSB5amvZnGa2yNdh+MzH1/Yfgjq3D2X/sOjeXvGeLTEAtHVszQkMIyV+Nl9aL8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591387; c=relaxed/simple;
-	bh=DTOJh9+Au/RfRgETdTDiXYwnIgw97mbplF+JI4Cq908=;
+	s=arc-20240116; t=1761591390; c=relaxed/simple;
+	bh=fRF1hyMzmA/02wz83tcAzczg8Dv0PrmPg4SOJSPjXd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KB8ltSNgraikl3QXzH/g+dLx9VQ2tJQutvsbq7+mbxzT5DtnORELdpQMMInKR7Sm+wPk3V9YoShJnLs1Jx2X8KGPSWX+RMq5WpjdoOtC9JUecjSViZqdqy8KIVxxMzPy0aYfQd9vJOlduwReNHuhfP6+G4M0u+np9ovzLmJ1prA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPnFPhLW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pAHuOsYt6tqp8nI6GL52eazyoXFHFFuMwraEQxTzZg/JSosAXhjvv9Dax0h74jlq86T1Av5qgXBpAC4Qqs1+j848OglMb/ddne5TzsMzUzQVPr8cNCTLoRnwov5919/U6nZV/Cg8HosSkejyE/qptbQZK2bo7rbij61+hRwg+io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZPaYnJ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPnFPhLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F2BC4CEF1;
-	Mon, 27 Oct 2025 18:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZPaYnJ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D51FC4CEF1;
+	Mon, 27 Oct 2025 18:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591387;
-	bh=DTOJh9+Au/RfRgETdTDiXYwnIgw97mbplF+JI4Cq908=;
+	s=korg; t=1761591389;
+	bh=fRF1hyMzmA/02wz83tcAzczg8Dv0PrmPg4SOJSPjXd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPnFPhLWm4rzkzqtMffUobUkRlRVlg93kv1cn3jGxKQY+wqUZOIO+jBSZoIvnnal5
-	 P7qj6qsPl22ao1xoAo4PwwSYbDejmwmxsnvdhjpLNxj4/ZDbgWpNkNJ4wqgc5NwDNo
-	 NiVgf53rLLIn3bgcT/glchGm3NxDM1vZjfkbe2I4=
+	b=JZPaYnJ2HbWKV0IGmSxxlmnbyI2ZjQS0t6Hq8Ib6jY5aisbhz2nZj9KI28tR7S0Ht
+	 7ioCoDbUl9PJr7+Er1QHxhODkediKRi6Z58fa8yS+R3NgYGbAwaY/pP6TebNyh+fwo
+	 /hQ7UP9WfrDTN0yvNeVGrl0CsusE+sltBQ+lWkp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/332] mfd: intel_soc_pmic_chtdc_ti: Set use_single_read regmap_config flag
-Date: Mon, 27 Oct 2025 19:33:50 +0100
-Message-ID: <20251027183529.321642622@linuxfoundation.org>
+Subject: [PATCH 5.10 178/332] media: mc: Clear minor number before put device
+Date: Mon, 27 Oct 2025 19:33:51 +0100
+Message-ID: <20251027183529.351761032@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,40 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 64e0d839c589f4f2ecd2e3e5bdb5cee6ba6bade9 ]
+[ Upstream commit 8cfc8cec1b4da88a47c243a11f384baefd092a50 ]
 
-Testing has shown that reading multiple registers at once (for 10-bit
-ADC values) does not work. Set the use_single_read regmap_config flag
-to make regmap split these for us.
+The device minor should not be cleared after the device is released.
 
-This should fix temperature opregion accesses done by
-drivers/acpi/pmic/intel_pmic_chtdc_ti.c and is also necessary for
-the upcoming drivers for the ADC and battery MFD cells.
-
-Fixes: 6bac0606fdba ("mfd: Add support for Cherry Trail Dollar Cove TI PMIC")
+Fixes: 9e14868dc952 ("media: mc: Clear minor number reservation at unregistration time")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250804133240.312383-1-hansg@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Reported-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=031d0cfd7c362817963f
+Tested-by: syzbot+031d0cfd7c362817963f@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ moved clear_bit from media_devnode_release callback to media_devnode_unregister before put_device ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/intel_soc_pmic_chtdc_ti.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/mc/mc-devnode.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/mfd/intel_soc_pmic_chtdc_ti.c
-+++ b/drivers/mfd/intel_soc_pmic_chtdc_ti.c
-@@ -82,6 +82,8 @@ static const struct regmap_config chtdc_
- 	.reg_bits = 8,
- 	.val_bits = 8,
- 	.max_register = 0xff,
-+	/* The hardware does not support reading multiple registers at once */
-+	.use_single_read = true,
- };
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -50,11 +50,6 @@ static void media_devnode_release(struct
+ {
+ 	struct media_devnode *devnode = to_media_devnode(cd);
  
- static const struct regmap_irq chtdc_ti_irqs[] = {
+-	mutex_lock(&media_devnode_lock);
+-	/* Mark device node number as free */
+-	clear_bit(devnode->minor, media_devnode_nums);
+-	mutex_unlock(&media_devnode_lock);
+-
+ 	/* Release media_devnode and perform other cleanups as needed. */
+ 	if (devnode->release)
+ 		devnode->release(devnode);
+@@ -283,6 +278,7 @@ void media_devnode_unregister(struct med
+ 	/* Delete the cdev on this minor as well */
+ 	cdev_device_del(&devnode->cdev, &devnode->dev);
+ 	devnode->media_dev = NULL;
++	clear_bit(devnode->minor, media_devnode_nums);
+ 	mutex_unlock(&media_devnode_lock);
+ 
+ 	put_device(&devnode->dev);
 
 
