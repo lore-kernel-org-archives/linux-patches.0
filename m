@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B6F32143D;
-	Mon, 27 Oct 2025 19:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5B032ABF1;
+	Mon, 27 Oct 2025 19:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592966; cv=none; b=RbIdyjzMi0mu+l0W0mu4fIBHvzyww8sdU/tcJVdI9pFPeLkfusDk0M5W7+Q/iZpx5cFwwfhvRM2FDNlZhoTOilkGuh83z/cPApwFIpMAAyoU6YHSS8JPmKF+dfHuUHV0QGEpdjsCEb58ewAIoUnwNFXcO6JmSqgAVS3hcohh1dQ=
+	t=1761592968; cv=none; b=EdP7pX/BH1Vr82i/RMO4JuaCFd/3htfsVsfc471HpKdBtfrDMwlEAJUFv7CxO6ktUb56Zs/cQ/X/zCtmh6nlzaHtedZmpQwBOkBy2V+UVj6ucpMvzgqM+i8WNo7jG/G3FuG1tEc5ppaOe8aJDautTlXsCEMBPSqjJrA8aP9QKMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592966; c=relaxed/simple;
-	bh=ejFlTbyRsr7w/BBrsJwNZjFnSOOtfcFe/8VKWJK1G/s=;
+	s=arc-20240116; t=1761592968; c=relaxed/simple;
+	bh=RhDqRnqvT62pZSzrZEW3oHqkQmEAQO5X1MBzYgcIzH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxia/rMtD6x1RwhpEHrfog2lAJ1MsHO+waVATZ17rwJzrIHFACOrskItEN8R43g/VitSlCRhYJ0GOoj4zogAqlrfr+1eqmaBEJchAEQqfYD9rwb+X8y7Gcp5A+hqm9/gEv9sWMCmhRYe75NIalwFWK0gzNc6mJbZXf+iUXsRck4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ys6181wg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nThrcV/3x+X6Vc1eY6xsavDtVqkUl/XwV9Lef6rMpillknAYNp4/jyFQtKVWIDWcld1Qp8g4pwTOTocIxGu9SXqkHqaCLOquzHV3K6XBToW/yNhwWiZhvdP7ZDyV55tjBLaEbdhM05cO3TuM239PKXElhOELSxx75GrFvvrgK1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCsppFYI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ys6181wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA6BC4CEF1;
-	Mon, 27 Oct 2025 19:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCsppFYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F7FC4CEF1;
+	Mon, 27 Oct 2025 19:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592965;
-	bh=ejFlTbyRsr7w/BBrsJwNZjFnSOOtfcFe/8VKWJK1G/s=;
+	s=korg; t=1761592968;
+	bh=RhDqRnqvT62pZSzrZEW3oHqkQmEAQO5X1MBzYgcIzH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ys6181wgnv7l9iOF9lu1qUKGB/ccGB+1RULJDlZw5o2Ao3bU3+JzN7AtjrklASf4w
-	 TJyxqFBwkQ1FDFK+QTxu26WQS/Kd3CU1BPh9F/VYTQQFMOx2gaihzS84DNN91gu50V
-	 7YQUrTii8ArHOnfBwxyKv+ctBbIu1Ap0w78FCdiI=
+	b=tCsppFYIPHjFXcRVa0iO5xX9FO+OgrJRMR7hD7shOrq7OjgixYUq7lsfndbaMQRC9
+	 uDgdUcKl3HciW/GLnfWe9ePl2YfMYW7Mc4OKLA0gQdUYSA1P/ozf1i4noqJ8dXPZZ1
+	 9pb4R1C7mXgFGhj6VLogTT+Rz8NJ/uOA+yvMZfac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Evan Green <evan@rivosinc.com>,
 	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/117] RISC-V: Dont print details of CPUs disabled in DT
-Date: Mon, 27 Oct 2025 19:36:47 +0100
-Message-ID: <20251027183456.217068212@linuxfoundation.org>
+Subject: [PATCH 6.12 082/117] riscv: hwprobe: avoid uninitialized variable use in hwprobe_arch_id()
+Date: Mon, 27 Oct 2025 19:36:48 +0100
+Message-ID: <20251027183456.246080053@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -53,44 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Paul Walmsley <pjw@kernel.org>
 
-[ Upstream commit d2721bb165b3ee00dd23525885381af07fec852a ]
+[ Upstream commit b7776a802f2f80139f96530a489dd00fd7089eda ]
 
-Early boot stages may disable CPU DT nodes for unavailable
-CPUs based on SKU, pinstraps, eFuse, etc. Currently, the
-riscv_early_of_processor_hartid() prints details of a CPU
-if it is disabled in DT which has no value and gives a
-false impression to the users that there some issue with
-the CPU.
+Resolve this smatch warning:
 
-Fixes: e3d794d555cd ("riscv: treat cpu devicetree nodes without status as enabled")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20251014163009.182381-1-apatel@ventanamicro.com
+  arch/riscv/kernel/sys_hwprobe.c:50 hwprobe_arch_id() error: uninitialized symbol 'cpu_id'.
+
+This could happen if hwprobe_arch_id() was called with a key ID of
+something other than MVENDORID, MIMPID, and MARCHID.  This does not
+happen in the current codebase.  The only caller of hwprobe_arch_id()
+is a function that only passes one of those three key IDs.
+
+For the sake of reducing static analyzer warning noise, and in the
+unlikely event that hwprobe_arch_id() is someday called with some
+other key ID, validate hwprobe_arch_id()'s input to ensure that
+'cpu_id' is always initialized before use.
+
+Fixes: ea3de9ce8aa280 ("RISC-V: Add a syscall for HW probing")
+Cc: Evan Green <evan@rivosinc.com>
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Link: https://lore.kernel.org/r/cf5a13ec-19d0-9862-059b-943f36107bf3@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/riscv/kernel/sys_hwprobe.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
-index f6b13e9f5e6cb..3dbc8cc557dd1 100644
---- a/arch/riscv/kernel/cpu.c
-+++ b/arch/riscv/kernel/cpu.c
-@@ -62,10 +62,8 @@ int __init riscv_early_of_processor_hartid(struct device_node *node, unsigned lo
- 		return -ENODEV;
+diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+index cea0ca2bf2a25..fc62548888c58 100644
+--- a/arch/riscv/kernel/sys_hwprobe.c
++++ b/arch/riscv/kernel/sys_hwprobe.c
+@@ -25,6 +25,11 @@ static void hwprobe_arch_id(struct riscv_hwprobe *pair,
+ 	bool first = true;
+ 	int cpu;
+ 
++	if (pair->key != RISCV_HWPROBE_KEY_MVENDORID &&
++	    pair->key != RISCV_HWPROBE_KEY_MIMPID &&
++	    pair->key != RISCV_HWPROBE_KEY_MARCHID)
++		goto out;
++
+ 	for_each_cpu(cpu, cpus) {
+ 		u64 cpu_id;
+ 
+@@ -55,6 +60,7 @@ static void hwprobe_arch_id(struct riscv_hwprobe *pair,
+ 		}
  	}
  
--	if (!of_device_is_available(node)) {
--		pr_info("CPU with hartid=%lu is not available\n", *hart);
-+	if (!of_device_is_available(node))
- 		return -ENODEV;
--	}
++out:
+ 	pair->value = id;
+ }
  
- 	if (of_property_read_string(node, "riscv,isa-base", &isa))
- 		goto old_interface;
 -- 
 2.51.0
 
