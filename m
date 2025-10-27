@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A3A2C11CA;
-	Mon, 27 Oct 2025 18:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3585330D26;
+	Mon, 27 Oct 2025 18:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591515; cv=none; b=ucK+NG7O2cx60ZYVjZot+ROzJ75mAGAAM4NbAnWoTxxGm+5bLYjMX/2IsLycOJ2qdLrnwPDCz0iD3ECcgn6Ls2YEzy8yXQzkgHvKxarUz9WI0KNrsBXi8VtT5KayNj6M1jn6xOu/vwM7ydIQMyce4E51nWEvAcnDPc36XarNHPk=
+	t=1761591518; cv=none; b=qZoF7qF38hcYlH/sTxxNmFM+lAcBXvTvegbRRMvnKZ58VjZMovg/UkHjXuNaacldZapCSLcjRdkmL6HwSIyWZ89y0Ls1CPte+56HlUdPOeJbtqpo0fZoO5dPSdpQ4AiPMJYLtcFvjQKf7bs7d33pHiOKEEW4yapQHcTlAvh7a+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591515; c=relaxed/simple;
-	bh=L6OsFns+yq9obaLc4PQ/lZ25EFtMvvy5YLUi1sTa+2I=;
+	s=arc-20240116; t=1761591518; c=relaxed/simple;
+	bh=QMLhcPB/YNPGPxykFAN6Rqss7CIQzB44IeAWsIxQ9Bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b24DE4lBGGZ/88YyCXFJg6JnvMyoQnO7CG2h9biGGdzPfAN1BQqLUkkbgV929ehtbRMzRzl5yQc7X4zi2NqzmAb5gNB/8OFZzwpmadpL9lB0o8s/3mmZV6MLg9FXHtluPUjIMqJpwP59Muez/zE4wl2Uv0+7nrM14YToAe0pSiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tu8ePO/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceAA4rHZgTwerO29VC8jkZl7rmgdnIRgtk+t5/yJTdfPpjfGrv/zSFUzr3kNJ+0wKtOOJmC6r9eWJMVevcF0Xf9oYH57viQInmYIsVR8BG9/YKn3/x7hqPcZ17yJpnYe1XFHZXrHyO5BV8od9N+NgHexI2vG15G7bAqXVRrYvaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXx+rSYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tu8ePO/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C0CC4CEFD;
-	Mon, 27 Oct 2025 18:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXx+rSYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85406C4CEFD;
+	Mon, 27 Oct 2025 18:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591515;
-	bh=L6OsFns+yq9obaLc4PQ/lZ25EFtMvvy5YLUi1sTa+2I=;
+	s=korg; t=1761591517;
+	bh=QMLhcPB/YNPGPxykFAN6Rqss7CIQzB44IeAWsIxQ9Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tu8ePO/L7KB53zqtiTHst1LxoRZhL7jM0bqD+wyH8LqW0D34GNmHT3b+BRyV2i8p0
-	 xqX78eLhxakL8CLGMDDq+duuCxoop7MQ0KBlVFUqK/w5bJBPOigdGNEqelPcicUDgN
-	 a1d+ugL/q9PtNQHqw6h+rjlrSZQaQwzU9PViqX84=
+	b=rXx+rSYMXaFd6ZOnMPIVMbvepss02eaDaLdqZtiT+rZXiUHh3+Ygc0L25SmWc+APs
+	 4gnXwd1kzGSZL+QsAqKfGqPlP/KQEEWyAKgGHclJ+LZ7eoG/SQceXnqgUM7d/guaIO
+	 I+NTiyO64IDreHT6gktouE9uHcLxT97AidboKMU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lichen Liu <lichliu@redhat.com>,
-	Rob Landley <rob@landley.net>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/332] fs: Add initramfs_options to set initramfs mount options
-Date: Mon, 27 Oct 2025 19:34:02 +0100
-Message-ID: <20251027183529.671779379@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Rientjes <rientjes@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 5.10 225/332] mm/slab: make __free(kfree) accept error pointers
+Date: Mon, 27 Oct 2025 19:34:38 +0100
+Message-ID: <20251027183530.737104595@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -46,120 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lichen Liu <lichliu@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 278033a225e13ec21900f0a92b8351658f5377f2 ]
+commit cd7eb8f83fcf258f71e293f7fc52a70be8ed0128 upstream.
 
-When CONFIG_TMPFS is enabled, the initial root filesystem is a tmpfs.
-By default, a tmpfs mount is limited to using 50% of the available RAM
-for its content. This can be problematic in memory-constrained
-environments, particularly during a kdump capture.
+Currently, if an automatically freed allocation is an error pointer that
+will lead to a crash.  An example of this is in wm831x_gpio_dbg_show().
 
-In a kdump scenario, the capture kernel boots with a limited amount of
-memory specified by the 'crashkernel' parameter. If the initramfs is
-large, it may fail to unpack into the tmpfs rootfs due to insufficient
-space. This is because to get X MB of usable space in tmpfs, 2*X MB of
-memory must be available for the mount. This leads to an OOM failure
-during the early boot process, preventing a successful crash dump.
+   171	char *label __free(kfree) = gpiochip_dup_line_label(chip, i);
+   172	if (IS_ERR(label)) {
+   173		dev_err(wm831x->dev, "Failed to duplicate label\n");
+   174		continue;
+   175  }
 
-This patch introduces a new kernel command-line parameter,
-initramfs_options, which allows passing specific mount options directly
-to the rootfs when it is first mounted. This gives users control over
-the rootfs behavior.
+The auto clean up function should check for error pointers as well,
+otherwise we're going to keep hitting issues like this.
 
-For example, a user can now specify initramfs_options=size=75% to allow
-the tmpfs to use up to 75% of the available memory. This can
-significantly reduce the memory pressure for kdump.
-
-Consider a practical example:
-
-To unpack a 48MB initramfs, the tmpfs needs 48MB of usable space. With
-the default 50% limit, this requires a memory pool of 96MB to be
-available for the tmpfs mount. The total memory requirement is therefore
-approximately: 16MB (vmlinuz) + 48MB (loaded initramfs) + 48MB (unpacked
-kernel) + 96MB (for tmpfs) + 12MB (runtime overhead) ≈ 220MB.
-
-By using initramfs_options=size=75%, the memory pool required for the
-48MB tmpfs is reduced to 48MB / 0.75 = 64MB. This reduces the total
-memory requirement by 32MB (96MB - 64MB), allowing the kdump to succeed
-with a smaller crashkernel size, such as 192MB.
-
-An alternative approach of reusing the existing rootflags parameter was
-considered. However, a new, dedicated initramfs_options parameter was
-chosen to avoid altering the current behavior of rootflags (which
-applies to the final root filesystem) and to prevent any potential
-regressions.
-
-Also add documentation for the new kernel parameter "initramfs_options"
-
-This approach is inspired by prior discussions and patches on the topic.
-Ref: https://www.lightofdawn.org/blog/?viewDetailed=00128
-Ref: https://landley.net/notes-2015.html#01-01-2015
-Ref: https://lkml.org/lkml/2021/6/29/783
-Ref: https://www.kernel.org/doc/html/latest/filesystems/ramfs-rootfs-initramfs.html#what-is-rootfs
-
-Signed-off-by: Lichen Liu <lichliu@redhat.com>
-Link: https://lore.kernel.org/20250815121459.3391223-1-lichliu@redhat.com
-Tested-by: Rob Landley <rob@landley.net>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 54da6a092431 ("locking: Introduce __cleanup() based infrastructure")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  3 +++
- fs/namespace.c                                  | 11 ++++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ include/linux/slab.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index bac4b1493222a..0f1605d78e83d 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4846,6 +4846,9 @@
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -188,7 +188,7 @@ void kfree_sensitive(const void *);
+ size_t __ksize(const void *);
+ size_t ksize(const void *);
  
- 	rootflags=	[KNL] Set root filesystem mount option string
+-DEFINE_FREE(kfree, void *, if (_T) kfree(_T))
++DEFINE_FREE(kfree, void *, if (!IS_ERR_OR_NULL(_T)) kfree(_T))
  
-+	initramfs_options= [KNL]
-+                        Specify mount options for for the initramfs mount.
-+
- 	rootfstype=	[KNL] Set root filesystem type
- 
- 	rootwait	[KNL] Wait (indefinitely) for root device to show up.
-diff --git a/fs/namespace.c b/fs/namespace.c
-index d1751f9b6f1ce..e9b8d516f1919 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -62,6 +62,15 @@ static int __init set_mphash_entries(char *str)
- }
- __setup("mphash_entries=", set_mphash_entries);
- 
-+static char * __initdata initramfs_options;
-+static int __init initramfs_options_setup(char *str)
-+{
-+	initramfs_options = str;
-+	return 1;
-+}
-+
-+__setup("initramfs_options=", initramfs_options_setup);
-+
- static u64 event;
- static DEFINE_IDA(mnt_id_ida);
- static DEFINE_IDA(mnt_group_ida);
-@@ -3913,7 +3922,7 @@ static void __init init_mount_tree(void)
- 	struct mnt_namespace *ns;
- 	struct path root;
- 
--	mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", NULL);
-+	mnt = vfs_kern_mount(&rootfs_fs_type, 0, "rootfs", initramfs_options);
- 	if (IS_ERR(mnt))
- 		panic("Can't create rootfs");
- 
--- 
-2.51.0
-
+ #ifdef CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR
+ void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
 
 
