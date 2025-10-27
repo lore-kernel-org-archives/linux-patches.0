@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD3132E159;
-	Mon, 27 Oct 2025 18:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CB330B00;
+	Mon, 27 Oct 2025 18:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591037; cv=none; b=lVoZhh5fXfinT80Dwk2neCb/5CKmlwZaxKr7O5jEcka4IITG0e3o/EzeRn0gqtjQWFBF0icHh8P6s/a8qDYA/xsfo3IMWeSocX3Bh4QZr3eDQXTAptchC/BpFBHlez6io2LTiCjYzDAkNDk9wJgdqHBspgsCu+QtAL5IL3QTkto=
+	t=1761591040; cv=none; b=bWqAAkLaQhDnSuVtUbaKuN7OH/6tET6+XaGdocaVJV1mHcHpWR7DbpfR2dFPnPFHz+XUZJnP722hWvPeyJAo/HvgPwNqfQEbsd7VQaeYUcLaNzEWmTKTr/9SxVbvhiIfFgmKUydLhPSS3vw3i/8sESRD4rNxUAhuZtS2Th1ivwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591037; c=relaxed/simple;
-	bh=8aTXnQh659jOiRYBGs+ZPJA55Kmfyw46HJy3c6BWfcY=;
+	s=arc-20240116; t=1761591040; c=relaxed/simple;
+	bh=WPD4GUoGI6IJix7l8AvXrBPmyfWsBi/S1YnACYKz+XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtUVkb1DvF8Sqd+76XXsdvApppD5SdKPiaqT0NmaD/rdtcTDOhivhOsTBoi2sajYLVPPfETpqzsf9cToj7sE+p79dEDcbGObgWmh/gY/NPYouW5eeYr/qOumk91YdaqlpO0H7sbNsQNacjHbZjP5gWUR1prxpmaYajoIrNRUoJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAdkFt/4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2dV0e9OlzCZRFj4qgT5tkgHPabf52oJf468dvrWuBkz7r8s3FFZhY7l1Ffv+/e/K4BQFc/z58adg9SOCDc6ZssHzDgcpwzcnbygcbdYLLjqSzpBef4wvlqbcDE/5XZtF7NMOo9IhBOvoGMuzML6qwoPa9nNmC8PaQTOY0HwaOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kxpxeu+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAdkFt/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260C1C4CEF1;
-	Mon, 27 Oct 2025 18:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kxpxeu+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBA4C4CEF1;
+	Mon, 27 Oct 2025 18:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591037;
-	bh=8aTXnQh659jOiRYBGs+ZPJA55Kmfyw46HJy3c6BWfcY=;
+	s=korg; t=1761591040;
+	bh=WPD4GUoGI6IJix7l8AvXrBPmyfWsBi/S1YnACYKz+XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAdkFt/4r19sU1csUFvE95mMl9uJ5cTJLtFzwUrFbNslp4mTXqDsAgPjuYrEVx5+9
-	 0mG9FJ8C291nSMqmmh2SbKt12Objn2304gaPKjhL7CVmSaJ0x5z1ssEhnzaySU2woc
-	 UBtCWgXgzsT9afM/y3JS75VVUJJS8rTMu2J9FRxg=
+	b=Kxpxeu+Xtc7MNGdnI2RbmJSPw8OdZj+h1EMxyBFtCbMl1M/oFoLvVfbysum058OKH
+	 jnLfO2ZH6Uq2F5FXXyUKzrSlEMFoOsNbb9wNohKbsKn+fhVOuajfQUzLfOBJZbHUlV
+	 VdVviZ4loHdM0W+IftbEBIoGZ+lYQmIl354VOpwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/332] media: rj54n1cb0c: Fix memleak in rj54n1_probe()
-Date: Mon, 27 Oct 2025 19:31:37 +0100
-Message-ID: <20251027183525.784963368@linuxfoundation.org>
+Subject: [PATCH 5.10 045/332] ALSA: lx_core: use int type to store negative error codes
+Date: Mon, 27 Oct 2025 19:31:38 +0100
+Message-ID: <20251027183525.809925305@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,45 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit fda55673ecdabf25f5ecc61b5ab17239257ac252 ]
+[ Upstream commit 4ef353d546cda466fc39b7daca558d7bcec21c09 ]
 
-rj54n1_probe() won't clean all the allocated resources in fail
-path, which may causes the memleaks. Add v4l2_ctrl_handler_free() to
-prevent memleak.
+Change the 'ret' variable from u16 to int to store negative error codes or
+zero returned by lx_message_send_atomic().
 
-Fixes: f187352dcd45 ("media: i2c: Copy rj54n1cb0c soc_camera sensor driver")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Storing the negative error codes in unsigned type, doesn't cause an issue
+at runtime but it's ugly as pants. Additionally, assigning negative error
+codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
+flag is enabled.
+
+No effect on runtime.
+
+Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Link: https://patch.msgid.link/20250828081312.393148-1-rongqianfeng@vivo.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/rj54n1cb0c.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/pci/lx6464es/lx_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/rj54n1cb0c.c b/drivers/media/i2c/rj54n1cb0c.c
-index 4cc51e0018744..b35b3e4286861 100644
---- a/drivers/media/i2c/rj54n1cb0c.c
-+++ b/drivers/media/i2c/rj54n1cb0c.c
-@@ -1332,10 +1332,13 @@ static int rj54n1_probe(struct i2c_client *client,
- 			V4L2_CID_GAIN, 0, 127, 1, 66);
- 	v4l2_ctrl_new_std(&rj54n1->hdl, &rj54n1_ctrl_ops,
- 			V4L2_CID_AUTO_WHITE_BALANCE, 0, 1, 1, 1);
--	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
--	if (rj54n1->hdl.error)
--		return rj54n1->hdl.error;
+diff --git a/sound/pci/lx6464es/lx_core.c b/sound/pci/lx6464es/lx_core.c
+index a49a3254f9677..7b387886c0efd 100644
+--- a/sound/pci/lx6464es/lx_core.c
++++ b/sound/pci/lx6464es/lx_core.c
+@@ -316,7 +316,7 @@ static int lx_message_send_atomic(struct lx6464es *chip, struct lx_rmh *rmh)
+ /* low-level dsp access */
+ int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+ {
+-	u16 ret;
++	int ret;
  
-+	if (rj54n1->hdl.error) {
-+		ret = rj54n1->hdl.error;
-+		goto err_free_ctrl;
-+	}
-+
-+	rj54n1->subdev.ctrl_handler = &rj54n1->hdl;
- 	rj54n1->clk_div		= clk_div;
- 	rj54n1->rect.left	= RJ54N1_COLUMN_SKIP;
- 	rj54n1->rect.top	= RJ54N1_ROW_SKIP;
+ 	mutex_lock(&chip->msg_lock);
+ 
+@@ -330,10 +330,10 @@ int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+ 
+ int lx_dsp_get_clock_frequency(struct lx6464es *chip, u32 *rfreq)
+ {
+-	u16 ret = 0;
+ 	u32 freq_raw = 0;
+ 	u32 freq = 0;
+ 	u32 frequency = 0;
++	int ret;
+ 
+ 	mutex_lock(&chip->msg_lock);
+ 
 -- 
 2.51.0
 
