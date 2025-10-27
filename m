@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B105330D43;
-	Mon, 27 Oct 2025 18:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20D328619;
+	Mon, 27 Oct 2025 18:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590753; cv=none; b=htHZr503Xk9ZQqszzmAp3JvXqw1DbBnY01GWj/hjtZjUXih88yo/p6FoFeZoQFjTGyNJIj+mVjol1b0N9Ty6DN4DlusWx/AOel68FR+broXFritKQeWpbEnswFciQmtumvsNgFOcMlhP7v8K9z/2w4FZePozB1ewbpD18kkSUFc=
+	t=1761590755; cv=none; b=Op0P2u3zw5YoGbrP0rhUiSPCY+38fXnVUuEryxW0dAmSabi5daDDSiaO3mFoZAzVzYW/UUE17EOjjO8VDOMDKHJBtlv+8qmEro0PIylaXOyLKeQ/Jna7yg0iHBu31aDGRX/p0xW0WRxaGl6p0I7TVZ2NszV8lxWPs3mxyf8TlTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590753; c=relaxed/simple;
-	bh=Qh5Mb/WRR1dOTK8PvTcx5HsrAYDydjZ4M9qUmkz6Hbw=;
+	s=arc-20240116; t=1761590755; c=relaxed/simple;
+	bh=O8HEWM5Xq4KTRz9q5rMLn+yZYSrmPSbAlbNWIcAnDUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1FobGzPtfSnDeIQxP8OLizKtU23oHKxzFsNZZqCppoY8Fv5NaVqKVMoGn7u65oHRmKrc4gepO/wUUXZWgV4dDzB+GFPNjMfXeh84uc4rJeKiV3McrGtpkGH4wij81JQR6cfKpqS4llIAs6RubS8L8zF7xTiXOGS2Vxtn9oc0tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arPTDYPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TvrDXVmFD94jB5SpH9X3jvptC8HB2TKvQ/5nW97aUrfZP1ezJz0wmmKxpGrai+1zXD9ZHBY9anNniClAViuI+cF/odR9Dj8IR67Twp2zi8WkCVDEG8+VUHcWuFA5EQGqVSzp04Vhe14+ksnuLd6Zg3Clm078Zly1+DuAUZovM4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqLkPE/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arPTDYPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D20C4CEFD;
-	Mon, 27 Oct 2025 18:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqLkPE/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDC4C4CEF1;
+	Mon, 27 Oct 2025 18:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590752;
-	bh=Qh5Mb/WRR1dOTK8PvTcx5HsrAYDydjZ4M9qUmkz6Hbw=;
+	s=korg; t=1761590755;
+	bh=O8HEWM5Xq4KTRz9q5rMLn+yZYSrmPSbAlbNWIcAnDUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arPTDYPwbZf2dG/BuKQ6VeLNiw0nOYj61f7oepvfdq5yU3k9SU5PRWLZzB77mhAvb
-	 IairX/OtyKt5Lmk1PWYN/2nrjYUzL9ZIaLezETbWFJI7kd2qMtAZzMkEa8zfSZ/Wsz
-	 eQEymcEHibBkhXseJ2jCL+plnpm8M890N8x7neW8=
+	b=FqLkPE/OksM8T0R7eY8G9Olubcc8xTz+9eRaIloewlMSwMqp1aFeSpxk8K0Q71hs7
+	 hUYF1HZZiWvlS/02FbMCWVxu1GEG8OLY4nOZxpLQTIdj1xEDDPa9JOSAI0dq/WWuf0
+	 jEVetsZVCtH7FndCzkvvoet6i7jXnScAEtnzNFa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 161/224] amd-xgbe: Avoid spurious link down messages during interface toggle
-Date: Mon, 27 Oct 2025 19:35:07 +0100
-Message-ID: <20251027183513.240802904@linuxfoundation.org>
+Subject: [PATCH 5.4 135/224] mfd: vexpress-sysreg: Check the return value of devm_gpiochip_add_data()
+Date: Mon, 27 Oct 2025 19:34:41 +0100
+Message-ID: <20251027183512.588681801@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,56 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 2616222e423398bb374ffcb5d23dea4ba2c3e524 ]
+[ Upstream commit 1efbee6852f1ff698a9981bd731308dd027189fb ]
 
-During interface toggle operations (ifdown/ifup), the driver currently
-resets the local helper variable 'phy_link' to -1. This causes the link
-state machine to incorrectly interpret the state as a link change event,
-resulting in spurious "Link is down" messages being logged when the
-interface is brought back up.
+Commit 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+removed the return value check from the call to gpiochip_add_data() (or
+rather gpiochip_add() back then and later converted to devres) with no
+explanation. This function however can still fail, so check the return
+value and bail-out if it does.
 
-Preserve the phy_link state across interface toggles to avoid treating
-the -1 sentinel value as a legitimate link state transition.
-
-Fixes: 88131a812b16 ("amd-xgbe: Perform phy connect/disconnect at dev open/stop")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Link: https://patch.msgid.link/20251010065142.1189310-1-Raju.Rangoju@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250811-gpio-mmio-mfd-conv-v1-1-68c5c958cf80@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+[ Use non-devm variants ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 1 -
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/vexpress-sysreg.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index de10e7e3a68d0..1fa7eb75d1a39 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1247,7 +1247,6 @@ static void xgbe_free_rx_data(struct xgbe_prv_data *pdata)
+--- a/drivers/mfd/vexpress-sysreg.c
++++ b/drivers/mfd/vexpress-sysreg.c
+@@ -160,6 +160,7 @@ static int vexpress_sysreg_probe(struct
+ 	struct gpio_chip *mmc_gpio_chip;
+ 	int master;
+ 	u32 dt_hbi;
++	int ret;
  
- static int xgbe_phy_reset(struct xgbe_prv_data *pdata)
- {
--	pdata->phy_link = -1;
- 	pdata->phy_speed = SPEED_UNKNOWN;
+ 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!mem)
+@@ -195,7 +196,10 @@ static int vexpress_sysreg_probe(struct
+ 	bgpio_init(mmc_gpio_chip, &pdev->dev, 0x4, base + SYS_MCI,
+ 			NULL, NULL, NULL, NULL, 0);
+ 	mmc_gpio_chip->ngpio = 2;
+-	gpiochip_add_data(mmc_gpio_chip, NULL);
++
++	ret = gpiochip_add_data(mmc_gpio_chip, NULL);
++	if (ret)
++		return ret;
  
- 	return pdata->phy_if.phy_reset(pdata);
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 3819b23c927d5..6dd95e7d81e41 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1637,6 +1637,7 @@ static int xgbe_phy_init(struct xgbe_prv_data *pdata)
- 		pdata->phy.duplex = DUPLEX_FULL;
- 	}
- 
-+	pdata->phy_link = 0;
- 	pdata->phy.link = 0;
- 
- 	pdata->phy.pause_autoneg = pdata->pause_autoneg;
--- 
-2.51.0
-
+ 	return mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
+ 			vexpress_sysreg_cells,
 
 
