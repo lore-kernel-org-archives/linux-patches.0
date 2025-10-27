@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C30D3218B2;
-	Mon, 27 Oct 2025 18:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D5B32143F;
+	Mon, 27 Oct 2025 18:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590851; cv=none; b=NO5+TGpU/zleLKOXqOs3G05VpOyv6o5wQMJjhib9MRFEEky4Fxyjq/Bc0BfGF0q7IuCGztmyxvge4RyfZv0uTga9cM07tz9ivwQH0cqNoOCBC0JuYmiV04l1T6jeIgoBKMP5zVvrwiOZ99JdVv8nkXIxSGeE9R3hsSuMiQtDbRk=
+	t=1761590854; cv=none; b=Dy/jJrGMhbsg0YyY3nPRN0gH4PR0MRkzIBoONVuJtg0xS1qnW1iLAPnQK1i41k00sej2Z+47P1a4WBc9ZFvzlEZMx+wO9KckVKuLF1YpVUr9NAWCvJWmubqULY175kC7QE8o8YWHCEaxlOjgFa/iKvsu/mnh+8BskYy78zfRMJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590851; c=relaxed/simple;
-	bh=UW5RhnSY3w5CyT+fRn3VcN2ucxNWLCtCvKSA2XzQIHg=;
+	s=arc-20240116; t=1761590854; c=relaxed/simple;
+	bh=tZEyQ7skKNfEVgSpdiMWta9LmUJyJXME9GgMvZxL0zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XOM4rt3WQuw/cRGvhvgRWUSEC3kIJPrK/NhW3TGZFoNKmwdvlq7j/srV/hCdLCZFlBCvRBNT2F9tvd9pDjKHd8PCawuhkricmrm8nq2OCx5yAR9ghq6mTjuP8BUKfjnjknbIaadrrGwQidpyMiRXvoOPkJwXidLFElWqYoshBm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKhwMpFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p5cE8HPWAzKrYY1QjeKIZFvYhMvh5Z16AuAGlro9rxRKawaYEEsDzjddJpEypcqcQt92+jJA1PxMXP4qrekQDS6YgCEPqkpW6NXgisgZk7bp7ycb9/8qywx5l9U+Y5Sbr0jxIRXfgSIBUaoGLHno/YeQGUVcL/tym6eVJp8Xebk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNVkdHR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKhwMpFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B5DC4CEF1;
-	Mon, 27 Oct 2025 18:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNVkdHR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36013C4CEF1;
+	Mon, 27 Oct 2025 18:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590851;
-	bh=UW5RhnSY3w5CyT+fRn3VcN2ucxNWLCtCvKSA2XzQIHg=;
+	s=korg; t=1761590853;
+	bh=tZEyQ7skKNfEVgSpdiMWta9LmUJyJXME9GgMvZxL0zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKhwMpFCEHGLIx5nkF98ncttBf5uyYx0xOMKEQZKaF6igRnrEnYPyGw/Gb8CSaegY
-	 YKTedNu8N82VWEthLrd72WSnmRsXOBhzhjFPrLB5o6iEUZonJ/IbGYQoOJNZlJvZVR
-	 C3P26Z19zv0QYMFORqQAildA9nNFga/JwZh4XQXA=
+	b=CNVkdHR7Hi3Fn7IQfD9jRiB5EY34Bgz2lBjfpMyxXw58zYZM0fQlLxY2TF2zL20sm
+	 q4zUV9qogBjC6A19ozc70zKysrBfWs47G8dXs8+ux2WVwLRdNxTTjUpwz18bdntZOT
+	 skNeC7SZlw/SQn9Pj4RUW/AWQpid1FBSVx8Kh5cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com,
-	Mark Fasheh <mark@fasheh.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 197/224] ocfs2: clear extent cache after moving/defragmenting extents
-Date: Mon, 27 Oct 2025 19:35:43 +0100
-Message-ID: <20251027183514.082921582@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 168/224] sched/balancing: Rename newidle_balance() => sched_balance_newidle()
+Date: Mon, 27 Oct 2025 19:35:14 +0100
+Message-ID: <20251027183513.403158790@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -57,62 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Ingo Molnar <mingo@kernel.org>
 
-commit 78a63493f8e352296dbc7cb7b3f4973105e8679e upstream.
+[ Upstream commit 7d058285cd77cc1411c91efd1b1673530bb1bee8 ]
 
-The extent map cache can become stale when extents are moved or
-defragmented, causing subsequent operations to see outdated extent flags.
-This triggers a BUG_ON in ocfs2_refcount_cal_cow_clusters().
+Standardize scheduler load-balancing function names on the
+sched_balance_() prefix.
 
-The problem occurs when:
-1. copy_file_range() creates a reflinked extent with OCFS2_EXT_REFCOUNTED
-2. ioctl(FITRIM) triggers ocfs2_move_extents()
-3. __ocfs2_move_extents_range() reads and caches the extent (flags=0x2)
-4. ocfs2_move_extent()/ocfs2_defrag_extent() calls __ocfs2_move_extent()
-   which clears OCFS2_EXT_REFCOUNTED flag on disk (flags=0x0)
-5. The extent map cache is not invalidated after the move
-6. Later write() operations read stale cached flags (0x2) but disk has
-   updated flags (0x0), causing a mismatch
-7. BUG_ON(!(rec->e_flags & OCFS2_EXT_REFCOUNTED)) triggers
-
-Fix by clearing the extent map cache after each extent move/defrag
-operation in __ocfs2_move_extents_range().  This ensures subsequent
-operations read fresh extent data from disk.
-
-Link: https://lore.kernel.org/all/20251009142917.517229-1-kartikey406@gmail.com/T/
-Link: https://lkml.kernel.org/r/20251009154903.522339-1-kartikey406@gmail.com
-Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
-Tested-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?id=2959889e1f6e216585ce522f7e8bc002b46ad9e7
-Reviewed-by: Mark Fasheh <mark@fasheh.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240308111819.1101550-11-mingo@kernel.org
+Stable-dep-of: 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/move_extents.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/sched/fair.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -870,6 +870,11 @@ static int __ocfs2_move_extents_range(st
- 			mlog_errno(ret);
- 			goto out;
- 		}
-+		/*
-+		 * Invalidate extent cache after moving/defragging to prevent
-+		 * stale cached data with outdated extent flags.
-+		 */
-+		ocfs2_extent_map_trunc(inode, cpos);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 1d82b9cc9eb77..62c0348ef556a 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3690,7 +3690,7 @@ static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq)
+ 	return cfs_rq->avg.load_avg;
+ }
  
- 		context->clusters_moved += alloc_size;
- next:
+-static int newidle_balance(struct rq *this_rq, struct rq_flags *rf);
++static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf);
+ 
+ static inline unsigned long task_util(struct task_struct *p)
+ {
+@@ -3851,7 +3851,7 @@ attach_entity_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags
+ static inline void
+ detach_entity_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se) {}
+ 
+-static inline int newidle_balance(struct rq *rq, struct rq_flags *rf)
++static inline int sched_balance_newidle(struct rq *rq, struct rq_flags *rf)
+ {
+ 	return 0;
+ }
+@@ -6690,7 +6690,7 @@ balance_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
+ 	if (rq->nr_running)
+ 		return 1;
+ 
+-	return newidle_balance(rq, rf) != 0;
++	return sched_balance_newidle(rq, rf) != 0;
+ }
+ #endif /* CONFIG_SMP */
+ 
+@@ -6981,10 +6981,10 @@ done: __maybe_unused;
+ 	if (!rf)
+ 		return NULL;
+ 
+-	new_tasks = newidle_balance(rq, rf);
++	new_tasks = sched_balance_newidle(rq, rf);
+ 
+ 	/*
+-	 * Because newidle_balance() releases (and re-acquires) rq->lock, it is
++	 * Because sched_balance_newidle() releases (and re-acquires) rq->lock, it is
+ 	 * possible for any higher priority task to appear. In that case we
+ 	 * must re-start the pick_next_entity() loop.
+ 	 */
+@@ -9182,7 +9182,7 @@ static int load_balance(int this_cpu, struct rq *this_rq,
+ 	ld_moved = 0;
+ 
+ 	/*
+-	 * newidle_balance() disregards balance intervals, so we could
++	 * sched_balance_newidle() disregards balance intervals, so we could
+ 	 * repeatedly reach this code, which would lead to balance_interval
+ 	 * skyrocketting in a short amount of time. Skip the balance_interval
+ 	 * increase logic to avoid that.
+@@ -9897,10 +9897,10 @@ static inline void nohz_newidle_balance(struct rq *this_rq) { }
+ #endif /* CONFIG_NO_HZ_COMMON */
+ 
+ /*
+- * newidle_balance is called by schedule() if this_cpu is about to become
++ * sched_balance_newidle is called by schedule() if this_cpu is about to become
+  * idle. Attempts to pull tasks from other CPUs.
+  */
+-static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
++static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
+ {
+ 	unsigned long next_balance = jiffies + HZ;
+ 	int this_cpu = this_rq->cpu;
+-- 
+2.51.0
+
 
 
