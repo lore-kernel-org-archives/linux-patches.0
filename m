@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778CD27FD62;
-	Mon, 27 Oct 2025 19:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C447B2C15BB;
+	Mon, 27 Oct 2025 19:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593257; cv=none; b=uYq7z8QGOF/aFIwoXGrYcKrKL/crnm1/LZg9+oHz1TbCjQGqHS1zQr3B3lOSuC+wRAqlMAnRigJvWNv4uq++KTITMoZ0BLLqQEkhrb1vY92JWZ8MT0oqcJTioClUPXhyK1cUwNNFigGs5Nr3tyLycVzhv6XAfOFktTuk+xoOJsM=
+	t=1761593259; cv=none; b=fZjACWNtP7cjjfx0HXjasYu4zcTNwVM3HQs5O+BOSt62INsV7SN57twe8rR0aMvsTeVQifhxMPw00tTz/t2yj5BjT1b+qxQrKfDXMyi+HR6mFAG/ed142PqI/C8D7tns0bKsSpJU/9HAxiuBqtbuhaNAsLcEVZ6t+W16huADeS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593257; c=relaxed/simple;
-	bh=vRwFxBETmDPaBz21f7L8X4JaCCieBeH+xC80hhTEqL4=;
+	s=arc-20240116; t=1761593259; c=relaxed/simple;
+	bh=EzpN67yZuYaAv5eXZXm0AHRBBsfgJUrXkeJR975vcQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmQZ4Kuo0xsJi/pgcjppmSxtTrAXo/t5MQky2bzgadcFGc85LHxtkBlBRoqIO1Lthw7Shtc9i5cIop8MQmkt0Tbl9afFTISiY1hqNTbbeB0wADaSJOXXQ/Rgj8z+QdNQZ0OsAB8VrrCH71wCl4pbSQvv6NUvziSTcO0RdiM4Yl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6Ytauxt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p92hMXBGoYTuT/JllgI4LHfiLLx6aFEWWIsXlFcyPWVJ7UYTZeGpPkTe7Yro64hBgC/wLC/KljYNc4V1KN2pNDqiooAekoXsEtQZvBkMOLsUfo/1D+P6VMBTnVBwlLyGAqOa6kCHNPJ1WvjownVu/PbUGfTCW3Ym5IlC8BhoEBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdkEN1F/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6Ytauxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB727C4CEF1;
-	Mon, 27 Oct 2025 19:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdkEN1F/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAC6C4CEF1;
+	Mon, 27 Oct 2025 19:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593257;
-	bh=vRwFxBETmDPaBz21f7L8X4JaCCieBeH+xC80hhTEqL4=;
+	s=korg; t=1761593259;
+	bh=EzpN67yZuYaAv5eXZXm0AHRBBsfgJUrXkeJR975vcQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6YtauxtrXZta/r5Rpf3FKOsE16i8GJdwsZ41QcBywo6hgRObal80xNSt7pIZbOM6
-	 7Ku71QsSpvmlghXw/ozo3xKKL12WScUhKj9dQXGBDxmMYlvfY/l/8bJMGx+acZTmAx
-	 1B73opyNIhbxhZuOtZaHFKweQteZGao8x1aNVe2c=
+	b=rdkEN1F/0Nzdw9gQihmklKqAWcWHuAQvoeOMfhu0SlGR5YkzMapLUSDguvfnQGZ1x
+	 8YSXmnurnT/ybBRWIgx75erkK2Xyr7ge3WaognWkIJxRGmCDPQOBjj4WNfrL2mx8G0
+	 vi4GGAD+H/hd21nNXZ+rrsYjIVlfZhEiQVUOC19k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	=?UTF-8?q?Michael=20Wei=C3=9F?= <michael.weiss@aisec.fraunhofer.de>,
+	Harshal Gohel <hg@simonwunderlich.de>,
+	=?UTF-8?q?Johannes=20Wiesb=C3=B6ck?= <johannes.wiesboeck@aisec.fraunhofer.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 035/184] net/mlx5e: Return 1 instead of 0 in invalid case in mlx5e_mpwrq_umr_entry_size()
-Date: Mon, 27 Oct 2025 19:35:17 +0100
-Message-ID: <20251027183515.861679238@linuxfoundation.org>
+Subject: [PATCH 6.17 036/184] rtnetlink: Allow deleting FDB entries in user namespace
+Date: Mon, 27 Oct 2025 19:35:18 +0100
+Message-ID: <20251027183515.887771491@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -46,68 +49,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
 
-[ Upstream commit aaf043a5688114703ae2c1482b92e7e0754d684e ]
+[ Upstream commit bf29555f5bdc017bac22ca66fcb6c9f46ec8788f ]
 
-When building with Clang 20 or newer, there are some objtool warnings
-from unexpected fallthroughs to other functions:
+Creating FDB entries is possible from a non-initial user namespace when
+having CAP_NET_ADMIN, yet, when deleting FDB entries, processes receive
+an EPERM because the capability is always checked against the initial
+user namespace. This restricts the FDB management from unprivileged
+containers.
 
-  vmlinux.o: warning: objtool: mlx5e_mpwrq_mtts_per_wqe() falls through to next function mlx5e_mpwrq_max_num_entries()
-  vmlinux.o: warning: objtool: mlx5e_mpwrq_max_log_rq_size() falls through to next function mlx5e_get_linear_rq_headroom()
+Drop the netlink_capable check in rtnl_fdb_del as it was originally
+dropped in c5c351088ae7 and reintroduced in 1690be63a27b without
+intention.
 
-LLVM 20 contains an (admittedly problematic [1]) optimization [2] to
-convert divide by zero into the equivalent of __builtin_unreachable(),
-which invokes undefined behavior and destroys code generation when it is
-encountered in a control flow graph.
+This patch was tested using a container on GyroidOS, where it was
+possible to delete FDB entries from an unprivileged user namespace and
+private network namespace.
 
-mlx5e_mpwrq_umr_entry_size() returns 0 in the default case of an
-unrecognized mlx5e_mpwrq_umr_mode value. mlx5e_mpwrq_mtts_per_wqe(),
-which is inlined into mlx5e_mpwrq_max_log_rq_size(), uses the result of
-mlx5e_mpwrq_umr_entry_size() in a divide operation without checking for
-zero, so LLVM is able to infer there will be a divide by zero in this
-case and invokes undefined behavior. While there is some proposed work
-to isolate this undefined behavior and avoid the destructive code
-generation that results in these objtool warnings, code should still be
-defensive against divide by zero.
-
-As the WARN_ONCE() implies that an invalid value should be handled
-gracefully, return 1 instead of 0 in the default case so that the
-results of this division operation is always valid.
-
-Fixes: 168723c1f8d6 ("net/mlx5e: xsk: Use umr_mode to calculate striding RQ parameters")
-Link: https://lore.kernel.org/CAGG=3QUk8-Ak7YKnRziO4=0z=1C_7+4jF+6ZeDQ9yF+kuTOHOQ@mail.gmail.com/ [1]
-Link: https://github.com/llvm/llvm-project/commit/37932643abab699e8bb1def08b7eb4eae7ff1448 [2]
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2131
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2132
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20251014-mlx5e-avoid-zero-div-from-mlx5e_mpwrq_umr_entry_size-v1-1-dc186b8819ef@kernel.org
+Fixes: 1690be63a27b ("bridge: Add vlan support to static neighbors")
+Reviewed-by: Michael Weiß <michael.weiss@aisec.fraunhofer.de>
+Tested-by: Harshal Gohel <hg@simonwunderlich.de>
+Signed-off-by: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20251015201548.319871-1-johannes.wiesboeck@aisec.fraunhofer.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/rtnetlink.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index 3cca06a74cf94..06e1a04e693f3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -99,7 +99,7 @@ u8 mlx5e_mpwrq_umr_entry_size(enum mlx5e_mpwrq_umr_mode mode)
- 		return sizeof(struct mlx5_ksm) * 4;
- 	}
- 	WARN_ONCE(1, "MPWRQ UMR mode %d is not known\n", mode);
--	return 0;
-+	return 1;
- }
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 094b085cff206..8f3fd52f089d2 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -4707,9 +4707,6 @@ static int rtnl_fdb_del(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	int err;
+ 	u16 vid;
  
- u8 mlx5e_mpwrq_log_wqe_sz(struct mlx5_core_dev *mdev, u8 page_shift,
+-	if (!netlink_capable(skb, CAP_NET_ADMIN))
+-		return -EPERM;
+-
+ 	if (!del_bulk) {
+ 		err = nlmsg_parse_deprecated(nlh, sizeof(*ndm), tb, NDA_MAX,
+ 					     NULL, extack);
 -- 
 2.51.0
 
