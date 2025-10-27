@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F396331B83D;
-	Mon, 27 Oct 2025 19:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFB431C58E;
+	Mon, 27 Oct 2025 19:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591780; cv=none; b=CuE5Qjctwz0MAYH5QOAljMUxC2I+h6yGj+MJ5HGcVXxK17F1RGOvOYdewn/CeSBr762q63NZyDRBUPLxh9llDZMX+S0qRrFKD1vZkCZ5s2cxKazNYtaliB7RBTgdLCdvXSAjhRvDH9YbOlM+dUk79uzxwRdb2SER9sofdxQPBRw=
+	t=1761591782; cv=none; b=J1Qgo+4yLMNQanWNzBCR+3c9TjHOGoaSpvbi47MQdegBL7UC7kJhxMwFZovwBpJRmAa2G0/vgXjpmDohieEC0sOlcWGuI+pcYKBOV8m0+WQJtK5Mj2gTQYTbCUVswCAjdzL7nZoMuoCuq5hXYzFazVnseOsNJDzEcXEHezY2zm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591780; c=relaxed/simple;
-	bh=sIfbvCCA2rBBHnCmr9heA1/8pserYi0YMYm8gdakBMI=;
+	s=arc-20240116; t=1761591782; c=relaxed/simple;
+	bh=L+/UopaIXicfAXzc52303AbdNr6GxM96lzcDMmssako=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3ER1PUZiHZNpG6bZxfeqzSWejJ3SYopS6Ffk3PUg5f03CHVsuoaP/ZJ5y/snlmO2+y/t7w4Y4IgekqEZSLzCLlbBEwdIBHRo8w3g/e5frTlhNNjMZf4fex6sJr08Lqr+4P/GuvZbLB1Tzyfxl43woWw6HSQ/s+WQlGvEpVIM3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cclfSUkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNVeAP07N5lL4kfw9ac1P4uqTDxfVqNBv9EH32mj1HkuzDvihwZYDQ2ig46dadeQy58gTOFu40a3f6IHqk/zVhBGFhz0vhsI+o8LoY71mbjyPpImDlbl85PfxUQhf7MVmxYy7p2wUijUCqZgRjdAMsfc71KrEDYxsmg7PCAaV5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIqx13jT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cclfSUkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB54C4CEF1;
-	Mon, 27 Oct 2025 19:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIqx13jT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A78C4CEF1;
+	Mon, 27 Oct 2025 19:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591779;
-	bh=sIfbvCCA2rBBHnCmr9heA1/8pserYi0YMYm8gdakBMI=;
+	s=korg; t=1761591782;
+	bh=L+/UopaIXicfAXzc52303AbdNr6GxM96lzcDMmssako=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cclfSUkEnkFyXGgss1At1VktKTcEYps38Jdgy9GKpUAAYPAKFngTlSjm0s7WpbIgp
-	 FYLmooGUJPAlrB6FyoBeySzvmHSiuOUuC/eNbQ2/rLLeybpyk5y0Il4IfacA0EFZX9
-	 F3DH0WDxwduR9xcAXZVFK3tRi5+zX9/X5vx686T4=
+	b=aIqx13jTlT/+O/Gshqb+xFdqokK+8SGYmqUb1x3HqVWg+NZ3cXVfycK+zps4NRWyz
+	 VdDqXQo1EQuPl7SdkMCBAnZ11PjoiC81ycr7MtBgJlh1kkwBajhsumQ9aH9jyqb5xn
+	 e75Ooz/PjFkGpI1GRDzWL+ucLS1iuW7k3il/nPps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Thomas Haynes <loghyr@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 327/332] NFSD: Define a proc_layoutcommit for the FlexFiles layout type
-Date: Mon, 27 Oct 2025 19:36:20 +0100
-Message-ID: <20251027183533.521426748@linuxfoundation.org>
+Subject: [PATCH 5.10 328/332] fuse: fix livelock in synchronous file put from fuseblk workers
+Date: Mon, 27 Oct 2025 19:36:21 +0100
+Message-ID: <20251027183533.550284238@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,47 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 4b47a8601b71ad98833b447d465592d847b4dc77 ]
+[ Upstream commit 26e5c67deb2e1f42a951f022fdf5b9f7eb747b01 ]
 
-Avoid a crash if a pNFS client should happen to send a LAYOUTCOMMIT
-operation on a FlexFiles layout.
+I observed a hang when running generic/323 against a fuseblk server.
+This test opens a file, initiates a lot of AIO writes to that file
+descriptor, and closes the file descriptor before the writes complete.
+Unsurprisingly, the AIO exerciser threads are mostly stuck waiting for
+responses from the fuseblk server:
 
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Closes: https://lore.kernel.org/linux-nfs/152f99b2-ba35-4dec-93a9-4690e625dccd@oracle.com/T/#t
-Cc: Thomas Haynes <loghyr@hammerspace.com>
-Cc: stable@vger.kernel.org
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ removed struct svc_rqst parameter from nfsd4_ff_proc_layoutcommit ]
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_do_getattr+0xfc/0x1f0 [fuse]
+[<0>] fuse_file_read_iter+0xbe/0x1c0 [fuse]
+[<0>] aio_read+0x130/0x1e0
+[<0>] io_submit_one+0x542/0x860
+[<0>] __x64_sys_io_submit+0x98/0x1a0
+[<0>] do_syscall_64+0x37/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+But the /weird/ part is that the fuseblk server threads are waiting for
+responses from itself:
+
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_file_put+0x9a/0xd0 [fuse]
+[<0>] fuse_release+0x36/0x50 [fuse]
+[<0>] __fput+0xec/0x2b0
+[<0>] task_work_run+0x55/0x90
+[<0>] syscall_exit_to_user_mode+0xe9/0x100
+[<0>] do_syscall_64+0x43/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+The fuseblk server is fuse2fs so there's nothing all that exciting in
+the server itself.  So why is the fuse server calling fuse_file_put?
+The commit message for the fstest sheds some light on that:
+
+"By closing the file descriptor before calling io_destroy, you pretty
+much guarantee that the last put on the ioctx will be done in interrupt
+context (during I/O completion).
+
+Aha.  AIO fgets a new struct file from the fd when it queues the ioctx.
+The completion of the FUSE_WRITE command from userspace causes the fuse
+server to call the AIO completion function.  The completion puts the
+struct file, queuing a delayed fput to the fuse server task.  When the
+fuse server task returns to userspace, it has to run the delayed fput,
+which in the case of a fuseblk server, it does synchronously.
+
+Sending the FUSE_RELEASE command sychronously from fuse server threads
+is a bad idea because a client program can initiate enough simultaneous
+AIOs such that all the fuse server threads end up in delayed_fput, and
+now there aren't any threads left to handle the queued fuse commands.
+
+Fix this by only using asynchronous fputs when closing files, and leave
+a comment explaining why.
+
+Cc: stable@vger.kernel.org # v2.6.38
+Fixes: 5a18ec176c934c ("fuse: fix hang of single threaded fuseblk filesystem")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ added isdir parameter to fuse_file_put() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/flexfilelayout.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/fuse/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/flexfilelayout.c
-+++ b/fs/nfsd/flexfilelayout.c
-@@ -125,6 +125,13 @@ nfsd4_ff_proc_getdeviceinfo(struct super
- 	return 0;
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -324,8 +324,14 @@ void fuse_release_common(struct file *fi
+ 	 * Make the release synchronous if this is a fuseblk mount,
+ 	 * synchronous RELEASE is allowed (and desirable) in this case
+ 	 * because the server can be trusted not to screw up.
++	 *
++	 * Always use the asynchronous file put because the current thread
++	 * might be the fuse server.  This can happen if a process starts some
++	 * aio and closes the fd before the aio completes.  Since aio takes its
++	 * own ref to the file, the IO completion has to drop the ref, which is
++	 * how the fuse server can end up closing its clients' files.
+ 	 */
+-	fuse_file_put(ff, ff->fm->fc->destroy, isdir);
++	fuse_file_put(ff, false, isdir);
  }
  
-+static __be32
-+nfsd4_ff_proc_layoutcommit(struct inode *inode,
-+		struct nfsd4_layoutcommit *lcp)
-+{
-+	return nfs_ok;
-+}
-+
- const struct nfsd4_layout_ops ff_layout_ops = {
- 	.notify_types		=
- 			NOTIFY_DEVICEID4_DELETE | NOTIFY_DEVICEID4_CHANGE,
-@@ -133,4 +140,5 @@ const struct nfsd4_layout_ops ff_layout_
- 	.encode_getdeviceinfo	= nfsd4_ff_encode_getdeviceinfo,
- 	.proc_layoutget		= nfsd4_ff_proc_layoutget,
- 	.encode_layoutget	= nfsd4_ff_encode_layoutget,
-+	.proc_layoutcommit	= nfsd4_ff_proc_layoutcommit,
- };
+ static int fuse_open(struct inode *inode, struct file *file)
 
 
