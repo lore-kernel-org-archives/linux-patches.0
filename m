@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51986319611;
-	Mon, 27 Oct 2025 18:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D134831B836;
+	Mon, 27 Oct 2025 18:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590548; cv=none; b=PbYglUBPzLeNDcJvwKSeCa6RKLFFMbm7Hh0NoHfOJVX11ihOYJ8xT8b5Jl619UCZ5cl5CTBfu0GT9jkl4BnUWN0bqy9IfJsadXiDwDpM30N1q3Nq2C/rPCTi61kX5srjkPh71scLX1ue2bh5DvscYQkTTUUrBh4tb/MPcL1Ivow=
+	t=1761590550; cv=none; b=k3KGD9HKejtG1YbFZiky/6iEc2262g2QDjrX2LtHxRTNB4dfzktrXZsGfQpr8ThbraIwui4hErtyjIUdjojhpdLDMfSTqwizMH8gqUk1XN/6NwTDJ73PJVlCPffjn4JDHj0rdOMNU+5eUUEluZW7/MfGtc/dBcfaHni7eo5Q9rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590548; c=relaxed/simple;
-	bh=7y3/5efzZ5nUpj0BeTP2lDy26q1uGEAK2pMbX6ZK0bg=;
+	s=arc-20240116; t=1761590550; c=relaxed/simple;
+	bh=SnK4DSKuSCYmKcLSg7MCNaW3jfdt2VlUG2GttH/mQ54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UrmU9ShlItNCOENgnO/5J6oq5LvJgJYneuv44wucDfNGteixTWlT4W2IQelCzyrxSMHyqwPX3pR3N52hiwqbOMmnAohif2VKCKM8hqV0eiSgDBxARJkB4c8Q/V2zZzZiHr2u73pzh0bhweyebJIdTksVJaGhSyoU8fN2D5nQf6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iK0Fbcii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=axK8r+/l2baZ7jgdUePqEzgxy/KGEwCz3uINMcSZjaXGQEaHVhZquxXaijyi0ObgU2BUOVMF2risHJJxC3o6uOQZZ5ZuCUVIqxKk88S+aulJ9TYPASjkV8RnHH7qvXxgP5z+qK7EY8FBviIciTyr8Lgf113CXmN6bmNq/aIWKnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcGfT09/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iK0Fbcii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2CEC4CEF1;
-	Mon, 27 Oct 2025 18:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcGfT09/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E1DC116B1;
+	Mon, 27 Oct 2025 18:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590548;
-	bh=7y3/5efzZ5nUpj0BeTP2lDy26q1uGEAK2pMbX6ZK0bg=;
+	s=korg; t=1761590550;
+	bh=SnK4DSKuSCYmKcLSg7MCNaW3jfdt2VlUG2GttH/mQ54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iK0FbciiZDt/QZwhbsWdRo/qrmWUlGQOZlOrbVTI5St8MAGe9J216LNQM1C+yw2P+
-	 fYjj/gzQLdxXmozHAGELrDIPqE147y3abn6UWXeOJIInOJi9f+7a1pWCRRhvhDBdoz
-	 nO/ZBsA7mRTdaJe++j6d7dnORYg8ovUscfnxWZ0Q=
+	b=GcGfT09/TZkRq70a5CeKmTO7VxiLeiXKnBmT3bt8g7Q8OKnMZRpnxSRYN0U5eovst
+	 +q4QCq1rr7ltgcOSTpV44XmbCHlTe6cSvnGWtYSzV88J3BnKMpuseCZtiM+R0DrwTS
+	 H2nGQjgTuUQ2qsfkuMFMuzAh9LCZ2EXf1s563TfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Chris Mason <clm@meta.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 086/224] scsi: mvsas: Delete mvs_tag_init()
-Date: Mon, 27 Oct 2025 19:33:52 +0100
-Message-ID: <20251027183511.295353317@linuxfoundation.org>
+Subject: [PATCH 5.4 069/224] drivers/base/node: fix double free in register_one_node()
+Date: Mon, 27 Oct 2025 19:33:35 +0100
+Message-ID: <20251027183510.851533308@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,70 +62,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit ffc9f9bf3f14876d019f67ef17d41138802529a8 ]
+[ Upstream commit 0efdedfa537eb534c251a5b4794caaf72cc55869 ]
 
-All mvs_tag_init() does is zero the tag bitmap, but this is already done
-with the kzalloc() call to alloc the tags, so delete this unneeded
-function.
+When device_register() fails in register_node(), it calls
+put_device(&node->dev).  This triggers node_device_release(), which calls
+kfree(to_node(dev)), thereby freeing the entire node structure.
 
-Signed-off-by: John Garry <john.garry@huawei.com>
-Link: https://lore.kernel.org/r/1666091763-11023-7-git-send-email-john.garry@huawei.com
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 60cd16a3b743 ("scsi: mvsas: Fix use-after-free bugs in mvs_work_queue")
+As a result, when register_node() returns an error, the node memory has
+already been freed.  Calling kfree(node) again in register_one_node()
+leads to a double free.
+
+This patch removes the redundant kfree(node) from register_one_node() to
+prevent the double free.
+
+Link: https://lkml.kernel.org/r/20250918054144.58980-1-donettom@linux.ibm.com
+Fixes: 786eb990cfb7 ("drivers/base/node: handle error properly in register_one_node()")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Chris Mason <clm@meta.com>
+Cc: Danilo Krummrich <dakr@kernel.org>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mvsas/mv_init.c | 2 --
- drivers/scsi/mvsas/mv_sas.c  | 7 -------
- drivers/scsi/mvsas/mv_sas.h  | 1 -
- 3 files changed, 10 deletions(-)
+ drivers/base/node.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index 0c5e2c6105867..7622de9d7d8ba 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -286,8 +286,6 @@ static int mvs_alloc(struct mvs_info *mvi, struct Scsi_Host *shost)
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index cb1bbe3068ab6..83b13a295bbe6 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -940,7 +940,6 @@ int __register_one_node(int nid)
+ 	error = register_node(node_devices[nid], nid);
+ 	if (error) {
+ 		node_devices[nid] = NULL;
+-		kfree(node);
+ 		return error;
  	}
- 	mvi->tags_num = slot_nr;
  
--	/* Initialize tags */
--	mvs_tag_init(mvi);
- 	return 0;
- err_out:
- 	return 1;
-diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
-index 68caeaf9e6369..377b931f46dcf 100644
---- a/drivers/scsi/mvsas/mv_sas.c
-+++ b/drivers/scsi/mvsas/mv_sas.c
-@@ -51,13 +51,6 @@ inline int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out)
- 	return 0;
- }
- 
--void mvs_tag_init(struct mvs_info *mvi)
--{
--	int i;
--	for (i = 0; i < mvi->tags_num; ++i)
--		mvs_tag_clear(mvi, i);
--}
--
- static struct mvs_info *mvs_find_dev_mvi(struct domain_device *dev)
- {
- 	unsigned long i = 0, j = 0, hi = 0;
-diff --git a/drivers/scsi/mvsas/mv_sas.h b/drivers/scsi/mvsas/mv_sas.h
-index 519edc796691a..6689481779343 100644
---- a/drivers/scsi/mvsas/mv_sas.h
-+++ b/drivers/scsi/mvsas/mv_sas.h
-@@ -428,7 +428,6 @@ void mvs_tag_clear(struct mvs_info *mvi, u32 tag);
- void mvs_tag_free(struct mvs_info *mvi, u32 tag);
- void mvs_tag_set(struct mvs_info *mvi, unsigned int tag);
- int mvs_tag_alloc(struct mvs_info *mvi, u32 *tag_out);
--void mvs_tag_init(struct mvs_info *mvi);
- void mvs_iounmap(void __iomem *regs);
- int mvs_ioremap(struct mvs_info *mvi, int bar, int bar_ex);
- void mvs_phys_reset(struct mvs_info *mvi, u32 phy_mask, int hard);
 -- 
 2.51.0
 
