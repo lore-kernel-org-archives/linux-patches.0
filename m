@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79AE2D5A14;
-	Mon, 27 Oct 2025 19:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFFE3016F9;
+	Mon, 27 Oct 2025 19:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592705; cv=none; b=n3hWhtIzI1dsGA0XwEkf4VfxraqqNKaUt51Ll0hUhIUJrHKm4fvqInf2V70RtEg6Ax2nn+m4k7tCAiFpRmhCRtviPz9f2cHL9YTcLL0z1pCxjRusk5dAUlOh8JXj0+xmpRXQ8WYUdTmyiN4sXGxvOUZZBXqmVqG5++zZhLH3bdc=
+	t=1761592707; cv=none; b=UeV59k69BAYX09DMfaO/jdM5bpstYiOolV0VaLHKAWsc75MzLtXyI1Clwjs+5gpDvzWMw2iCtqVIF1PyncBTMMoMRVVylsqwGnuQr3vIu37MCKffegDspBcEYLp8CKEI1o7u4mM0lJ5cZjqtyEvfs5QyRUTAmoo2gx7qGfViLVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592705; c=relaxed/simple;
-	bh=FVCficxlZM4mxxaM8zqDqidTxFbUSMKV8V22IcXdzCA=;
+	s=arc-20240116; t=1761592707; c=relaxed/simple;
+	bh=e//OSrnJc/nklL9tu0RMbiSh7hYeT2KMfjpv1FCAHHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3GVjDf9+6cRu7DwFInjrRSa/ZA0GMhnVJvmBFr10aMzj8nH42fE3UhVWHBcxQ2NvRP4onApiqKi6ki+UqzqAku7vQ4y9Yv5H/hia7qrJ0SNwfJmjTNF0yKR5Fv2jylinMWJi6FH87C3yqFPfFlt7WjrYg2vKfnhlTsj/3eREu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2EHZnj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAFaPWsMEizSabXzvpUm+2HxvR7xtUm1NZqQxt5MDXR2h3GZGHSYnwe/0qPb8TmKI9wC6jvgfGh8emqkalbZsNHspOZMYOmzfvmolS5j0M/eZGoo8IrhtZ9YGchltUnOzLqz/MPk8SMI2N2cHqL0WIGjTFtrQeizT+xTAdEKlJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8aLgx9G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2EHZnj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31774C4CEF1;
-	Mon, 27 Oct 2025 19:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8aLgx9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6578C4CEF1;
+	Mon, 27 Oct 2025 19:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592704;
-	bh=FVCficxlZM4mxxaM8zqDqidTxFbUSMKV8V22IcXdzCA=;
+	s=korg; t=1761592707;
+	bh=e//OSrnJc/nklL9tu0RMbiSh7hYeT2KMfjpv1FCAHHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2EHZnj4Ftzd1cFjPf0S72qzmF1jCYxhNmVJjYPcJyocEmrx3zP3sp43OkX7Bpf9G
-	 1ZSWbEp6k25ax6tBoHI2iHXNH4Sv1bdzhjYBxWrqtFOfOR5aqqtR2PJs8l8MQqccly
-	 TGJw8psLJW/ws/IGiUhHhoS5F4pgy24o1cWCA3Bo=
+	b=T8aLgx9GGbJ5CBgP/RSChXiTnYVJb4BZcU2OvOyCExbWDQMLSLacLqCptpKK6sDd8
+	 JcPczU+rs3voOQ7aKWCncMUdp29OTroGivmM7reZ1Lsmhj3fVwuJNO5L+AilDrUFcM
+	 r51SkB/x/qE6wDORfIJXalQCVOWs7DAVVhv2WP5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Cave-Ayland <mark.caveayland@nutanix.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	William Breathitt Gray <wbg@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 35/84] gpio: 104-idio-16: Define maximum valid register address offset
-Date: Mon, 27 Oct 2025 19:36:24 +0100
-Message-ID: <20251027183439.755351026@linuxfoundation.org>
+	Sebastiano Miano <mianosebastiano@gmail.com>,
+	Samuel Dobron <sdobron@redhat.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 26/84] net/mlx5e: Reuse per-RQ XDP buffer to avoid stack zeroing overhead
+Date: Mon, 27 Oct 2025 19:36:15 +0100
+Message-ID: <20251027183439.514066548@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -53,44 +56,327 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Breathitt Gray <wbg@kernel.org>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-commit c4d35e635f3a65aec291a6045cae8c99cede5bba upstream.
+[ Upstream commit b66b76a82c8879d764ab89adc21ee855ffd292d5 ]
 
-Attempting to load the 104-idio-16 module fails during regmap
-initialization with a return error -EINVAL. This is a result of the
-regmap cache failing initialization. Set the idio_16_regmap_config
-max_register member to fix this failure.
+CONFIG_INIT_STACK_ALL_ZERO introduces a performance cost by
+zero-initializing all stack variables on function entry. The mlx5 XDP
+RX path previously allocated a struct mlx5e_xdp_buff on the stack per
+received CQE, resulting in measurable performance degradation under
+this config.
 
-Fixes: 2c210c9a34a3 ("gpio: 104-idio-16: Migrate to the regmap API")
-Reported-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Closes: https://lore.kernel.org/r/9b0375fd-235f-4ee1-a7fa-daca296ef6bf@nutanix.com
-Suggested-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20251020-fix-gpio-idio-16-regmap-v2-1-ebeb50e93c33@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch reuses a mlx5e_xdp_buff stored in the mlx5e_rq struct,
+avoiding per-CQE stack allocations and repeated zeroing.
+
+With this change, XDP_DROP and XDP_TX performance matches that of
+kernels built without CONFIG_INIT_STACK_ALL_ZERO.
+
+Performance was measured on a ConnectX-6Dx using a single RX channel
+(1 CPU at 100% usage) at ~50 Mpps. The baseline results were taken from
+net-next-6.15.
+
+Stack zeroing disabled:
+- XDP_DROP:
+    * baseline:                     31.47 Mpps
+    * baseline + per-RQ allocation: 32.31 Mpps (+2.68%)
+
+- XDP_TX:
+    * baseline:                     12.41 Mpps
+    * baseline + per-RQ allocation: 12.95 Mpps (+4.30%)
+
+Stack zeroing enabled:
+- XDP_DROP:
+    * baseline:                     24.32 Mpps
+    * baseline + per-RQ allocation: 32.27 Mpps (+32.7%)
+
+- XDP_TX:
+    * baseline:                     11.80 Mpps
+    * baseline + per-RQ allocation: 12.24 Mpps (+3.72%)
+
+Reported-by: Sebastiano Miano <mianosebastiano@gmail.com>
+Reported-by: Samuel Dobron <sdobron@redhat.com>
+Link: https://lore.kernel.org/all/CAMENy5pb8ea+piKLg5q5yRTMZacQqYWAoVLE1FE9WhQPq92E0g@mail.gmail.com/
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/1747253032-663457-1-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: afd5ba577c10 ("net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-104-idio-16.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h  |  7 ++
+ .../net/ethernet/mellanox/mlx5/core/en/xdp.h  |  6 --
+ .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 81 ++++++++++---------
+ 3 files changed, 51 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/gpio/gpio-104-idio-16.c b/drivers/gpio/gpio-104-idio-16.c
-index ffe7e1cb6b23..fe5c10cd5c32 100644
---- a/drivers/gpio/gpio-104-idio-16.c
-+++ b/drivers/gpio/gpio-104-idio-16.c
-@@ -59,6 +59,7 @@ static const struct regmap_config idio_16_regmap_config = {
- 	.reg_stride = 1,
- 	.val_bits = 8,
- 	.io_port = true,
-+	.max_register = 0x5,
- 	.wr_table = &idio_16_wr_table,
- 	.rd_table = &idio_16_rd_table,
- 	.volatile_table = &idio_16_rd_table,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index 9cf33ae48c216..455d02b6500d0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -519,6 +519,12 @@ struct mlx5e_xdpsq {
+ 	struct mlx5e_channel      *channel;
+ } ____cacheline_aligned_in_smp;
+ 
++struct mlx5e_xdp_buff {
++	struct xdp_buff xdp;
++	struct mlx5_cqe64 *cqe;
++	struct mlx5e_rq *rq;
++};
++
+ struct mlx5e_ktls_resync_resp;
+ 
+ struct mlx5e_icosq {
+@@ -717,6 +723,7 @@ struct mlx5e_rq {
+ 	struct mlx5e_xdpsq    *xdpsq;
+ 	DECLARE_BITMAP(flags, 8);
+ 	struct page_pool      *page_pool;
++	struct mlx5e_xdp_buff mxbuf;
+ 
+ 	/* AF_XDP zero-copy */
+ 	struct xsk_buff_pool  *xsk_pool;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
+index ecfe93a479da8..38e9ff6aa3aee 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
+@@ -44,12 +44,6 @@
+ 	(MLX5E_XDP_INLINE_WQE_MAX_DS_CNT * MLX5_SEND_WQE_DS - \
+ 	 sizeof(struct mlx5_wqe_inline_seg))
+ 
+-struct mlx5e_xdp_buff {
+-	struct xdp_buff xdp;
+-	struct mlx5_cqe64 *cqe;
+-	struct mlx5e_rq *rq;
+-};
+-
+ /* XDP packets can be transmitted in different ways. On completion, we need to
+  * distinguish between them to clean up things in a proper way.
+  */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 8278395ee20a0..711c95074f05c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -1697,17 +1697,17 @@ mlx5e_skb_from_cqe_linear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi,
+ 
+ 	prog = rcu_dereference(rq->xdp_prog);
+ 	if (prog) {
+-		struct mlx5e_xdp_buff mxbuf;
++		struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
+ 
+ 		net_prefetchw(va); /* xdp_frame data area */
+ 		mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
+-				 cqe_bcnt, &mxbuf);
+-		if (mlx5e_xdp_handle(rq, prog, &mxbuf))
++				 cqe_bcnt, mxbuf);
++		if (mlx5e_xdp_handle(rq, prog, mxbuf))
+ 			return NULL; /* page/packet was consumed by XDP */
+ 
+-		rx_headroom = mxbuf.xdp.data - mxbuf.xdp.data_hard_start;
+-		metasize = mxbuf.xdp.data - mxbuf.xdp.data_meta;
+-		cqe_bcnt = mxbuf.xdp.data_end - mxbuf.xdp.data;
++		rx_headroom = mxbuf->xdp.data - mxbuf->xdp.data_hard_start;
++		metasize = mxbuf->xdp.data - mxbuf->xdp.data_meta;
++		cqe_bcnt = mxbuf->xdp.data_end - mxbuf->xdp.data;
+ 	}
+ 	frag_size = MLX5_SKB_FRAG_SZ(rx_headroom + cqe_bcnt);
+ 	skb = mlx5e_build_linear_skb(rq, va, frag_size, rx_headroom, cqe_bcnt, metasize);
+@@ -1726,11 +1726,11 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 			     struct mlx5_cqe64 *cqe, u32 cqe_bcnt)
+ {
+ 	struct mlx5e_rq_frag_info *frag_info = &rq->wqe.info.arr[0];
++	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
+ 	struct mlx5e_wqe_frag_info *head_wi = wi;
+ 	u16 rx_headroom = rq->buff.headroom;
+ 	struct mlx5e_frag_page *frag_page;
+ 	struct skb_shared_info *sinfo;
+-	struct mlx5e_xdp_buff mxbuf;
+ 	u32 frag_consumed_bytes;
+ 	struct bpf_prog *prog;
+ 	struct sk_buff *skb;
+@@ -1750,8 +1750,8 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 	net_prefetch(va + rx_headroom);
+ 
+ 	mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
+-			 frag_consumed_bytes, &mxbuf);
+-	sinfo = xdp_get_shared_info_from_buff(&mxbuf.xdp);
++			 frag_consumed_bytes, mxbuf);
++	sinfo = xdp_get_shared_info_from_buff(&mxbuf->xdp);
+ 	truesize = 0;
+ 
+ 	cqe_bcnt -= frag_consumed_bytes;
+@@ -1763,8 +1763,9 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 
+ 		frag_consumed_bytes = min_t(u32, frag_info->frag_size, cqe_bcnt);
+ 
+-		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf.xdp, frag_page,
+-					       wi->offset, frag_consumed_bytes);
++		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf->xdp,
++					       frag_page, wi->offset,
++					       frag_consumed_bytes);
+ 		truesize += frag_info->frag_stride;
+ 
+ 		cqe_bcnt -= frag_consumed_bytes;
+@@ -1773,7 +1774,7 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 	}
+ 
+ 	prog = rcu_dereference(rq->xdp_prog);
+-	if (prog && mlx5e_xdp_handle(rq, prog, &mxbuf)) {
++	if (prog && mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 		if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
+ 			struct mlx5e_wqe_frag_info *pwi;
+ 
+@@ -1783,21 +1784,23 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+ 		return NULL; /* page/packet was consumed by XDP */
+ 	}
+ 
+-	skb = mlx5e_build_linear_skb(rq, mxbuf.xdp.data_hard_start, rq->buff.frame0_sz,
+-				     mxbuf.xdp.data - mxbuf.xdp.data_hard_start,
+-				     mxbuf.xdp.data_end - mxbuf.xdp.data,
+-				     mxbuf.xdp.data - mxbuf.xdp.data_meta);
++	skb = mlx5e_build_linear_skb(
++		rq, mxbuf->xdp.data_hard_start, rq->buff.frame0_sz,
++		mxbuf->xdp.data - mxbuf->xdp.data_hard_start,
++		mxbuf->xdp.data_end - mxbuf->xdp.data,
++		mxbuf->xdp.data - mxbuf->xdp.data_meta);
+ 	if (unlikely(!skb))
+ 		return NULL;
+ 
+ 	skb_mark_for_recycle(skb);
+ 	head_wi->frag_page->frags++;
+ 
+-	if (xdp_buff_has_frags(&mxbuf.xdp)) {
++	if (xdp_buff_has_frags(&mxbuf->xdp)) {
+ 		/* sinfo->nr_frags is reset by build_skb, calculate again. */
+ 		xdp_update_skb_shared_info(skb, wi - head_wi - 1,
+ 					   sinfo->xdp_frags_size, truesize,
+-					   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
++					   xdp_buff_is_frag_pfmemalloc(
++						&mxbuf->xdp));
+ 
+ 		for (struct mlx5e_wqe_frag_info *pwi = head_wi + 1; pwi < wi; pwi++)
+ 			pwi->frag_page->frags++;
+@@ -2003,10 +2006,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 	struct mlx5e_frag_page *frag_page = &wi->alloc_units.frag_pages[page_idx];
+ 	u16 headlen = min_t(u16, MLX5E_RX_MAX_HEAD, cqe_bcnt);
+ 	struct mlx5e_frag_page *head_page = frag_page;
++	struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
+ 	u32 frag_offset    = head_offset;
+ 	u32 byte_cnt       = cqe_bcnt;
+ 	struct skb_shared_info *sinfo;
+-	struct mlx5e_xdp_buff mxbuf;
+ 	unsigned int truesize = 0;
+ 	struct bpf_prog *prog;
+ 	struct sk_buff *skb;
+@@ -2052,9 +2055,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 		}
+ 	}
+ 
+-	mlx5e_fill_mxbuf(rq, cqe, va, linear_hr, linear_frame_sz, linear_data_len, &mxbuf);
++	mlx5e_fill_mxbuf(rq, cqe, va, linear_hr, linear_frame_sz,
++			 linear_data_len, mxbuf);
+ 
+-	sinfo = xdp_get_shared_info_from_buff(&mxbuf.xdp);
++	sinfo = xdp_get_shared_info_from_buff(&mxbuf->xdp);
+ 
+ 	while (byte_cnt) {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+@@ -2065,7 +2069,8 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 		else
+ 			truesize += ALIGN(pg_consumed_bytes, BIT(rq->mpwqe.log_stride_sz));
+ 
+-		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf.xdp, frag_page, frag_offset,
++		mlx5e_add_skb_shared_info_frag(rq, sinfo, &mxbuf->xdp,
++					       frag_page, frag_offset,
+ 					       pg_consumed_bytes);
+ 		byte_cnt -= pg_consumed_bytes;
+ 		frag_offset = 0;
+@@ -2073,7 +2078,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 	}
+ 
+ 	if (prog) {
+-		if (mlx5e_xdp_handle(rq, prog, &mxbuf)) {
++		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
+ 				struct mlx5e_frag_page *pfp;
+ 
+@@ -2086,10 +2091,10 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 			return NULL; /* page/packet was consumed by XDP */
+ 		}
+ 
+-		skb = mlx5e_build_linear_skb(rq, mxbuf.xdp.data_hard_start,
+-					     linear_frame_sz,
+-					     mxbuf.xdp.data - mxbuf.xdp.data_hard_start, 0,
+-					     mxbuf.xdp.data - mxbuf.xdp.data_meta);
++		skb = mlx5e_build_linear_skb(
++			rq, mxbuf->xdp.data_hard_start, linear_frame_sz,
++			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, 0,
++			mxbuf->xdp.data - mxbuf->xdp.data_meta);
+ 		if (unlikely(!skb)) {
+ 			mlx5e_page_release_fragmented(rq, &wi->linear_page);
+ 			return NULL;
+@@ -2099,13 +2104,14 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 		wi->linear_page.frags++;
+ 		mlx5e_page_release_fragmented(rq, &wi->linear_page);
+ 
+-		if (xdp_buff_has_frags(&mxbuf.xdp)) {
++		if (xdp_buff_has_frags(&mxbuf->xdp)) {
+ 			struct mlx5e_frag_page *pagep;
+ 
+ 			/* sinfo->nr_frags is reset by build_skb, calculate again. */
+ 			xdp_update_skb_shared_info(skb, frag_page - head_page,
+ 						   sinfo->xdp_frags_size, truesize,
+-						   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
++						   xdp_buff_is_frag_pfmemalloc(
++							&mxbuf->xdp));
+ 
+ 			pagep = head_page;
+ 			do
+@@ -2116,12 +2122,13 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 	} else {
+ 		dma_addr_t addr;
+ 
+-		if (xdp_buff_has_frags(&mxbuf.xdp)) {
++		if (xdp_buff_has_frags(&mxbuf->xdp)) {
+ 			struct mlx5e_frag_page *pagep;
+ 
+ 			xdp_update_skb_shared_info(skb, sinfo->nr_frags,
+ 						   sinfo->xdp_frags_size, truesize,
+-						   xdp_buff_is_frag_pfmemalloc(&mxbuf.xdp));
++						   xdp_buff_is_frag_pfmemalloc(
++							&mxbuf->xdp));
+ 
+ 			pagep = frag_page - sinfo->nr_frags;
+ 			do
+@@ -2171,20 +2178,20 @@ mlx5e_skb_from_cqe_mpwrq_linear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *wi,
+ 
+ 	prog = rcu_dereference(rq->xdp_prog);
+ 	if (prog) {
+-		struct mlx5e_xdp_buff mxbuf;
++		struct mlx5e_xdp_buff *mxbuf = &rq->mxbuf;
+ 
+ 		net_prefetchw(va); /* xdp_frame data area */
+ 		mlx5e_fill_mxbuf(rq, cqe, va, rx_headroom, rq->buff.frame0_sz,
+-				 cqe_bcnt, &mxbuf);
+-		if (mlx5e_xdp_handle(rq, prog, &mxbuf)) {
++				 cqe_bcnt, mxbuf);
++		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags))
+ 				frag_page->frags++;
+ 			return NULL; /* page/packet was consumed by XDP */
+ 		}
+ 
+-		rx_headroom = mxbuf.xdp.data - mxbuf.xdp.data_hard_start;
+-		metasize = mxbuf.xdp.data - mxbuf.xdp.data_meta;
+-		cqe_bcnt = mxbuf.xdp.data_end - mxbuf.xdp.data;
++		rx_headroom = mxbuf->xdp.data - mxbuf->xdp.data_hard_start;
++		metasize =  mxbuf->xdp.data -  mxbuf->xdp.data_meta;
++		cqe_bcnt =  mxbuf->xdp.data_end -  mxbuf->xdp.data;
+ 	}
+ 	frag_size = MLX5_SKB_FRAG_SZ(rx_headroom + cqe_bcnt);
+ 	skb = mlx5e_build_linear_skb(rq, va, frag_size, rx_headroom, cqe_bcnt, metasize);
 -- 
-2.51.1
+2.51.0
 
 
 
