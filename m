@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF4632A3C1;
-	Mon, 27 Oct 2025 18:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61580325493;
+	Mon, 27 Oct 2025 18:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591428; cv=none; b=uoAvqd0fIyM0+Z+KGo+XObFCbS/l5SciQ6h3bPGICGMhSRn1vHjtWT/NwVlsR73VRSzwZVknfnD2322tKZA7Ef/unTJSn4Hf4JLBvka+dy0Nn7OfHBLT55KemYgCRBVqHcf8JyxGhVi7yWBr0MokMiFaiU02gpUk8C2kUYce6xk=
+	t=1761591431; cv=none; b=XVKaqf9FaBZvbQ4BIJTOL8oT91hWARMHP3qugxaa0MS8rFk/9j77RnfKbmnnkyLqffmsui8vMnkXGhRosZ+G3cSQnJ6FUNo2Ph4b4U/ZLY24dYrD5DV/WXZE/uz6YuR/4QEu/OXdObx14vC8TFPYtriOJI/6FHTZkNVavKTE6jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591428; c=relaxed/simple;
-	bh=OGUFgTfIHGbF/sLvCeJQ7e4BdSUVhnE4KydiK0zD0J4=;
+	s=arc-20240116; t=1761591431; c=relaxed/simple;
+	bh=cGRvibBMuBCOSCjPrC6I++jhvhwFiKfZ6U70QuD29M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6Oh+FBSvvX4iG8bx7nrU/WTw46UpE7jphr+sJujLP/aX7kEUuKTnjdKOXqqSwrtMN4Vl7BUWsri7RhvEHCUwOj34LTS8uro3ryghvYiefhUsz3ug+bQGEBK3q3j51khpozh6s1o8u3wykJ5LVhtxwypdWpacmB2oYc5SnkL1gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlwGiGU7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZLIAOaK9aL4gs5CFhKe+T2l0wzHkGp0eN63gz2hg8fG1kjdSIYowESqwc4oNVtkyqvNQ5CvTq02ruSu3hIvsmS8Acc9ZkuVZxbtwya0mjqE3Mcip7lNs6CZ/K8A6xiB6jBhTkFN91aJtNz7xufowlpdTrw17hCqP3gpODnrgM8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgf0Bl8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlwGiGU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513AEC4CEF1;
-	Mon, 27 Oct 2025 18:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgf0Bl8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9E2C4CEF1;
+	Mon, 27 Oct 2025 18:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591428;
-	bh=OGUFgTfIHGbF/sLvCeJQ7e4BdSUVhnE4KydiK0zD0J4=;
+	s=korg; t=1761591431;
+	bh=cGRvibBMuBCOSCjPrC6I++jhvhwFiKfZ6U70QuD29M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlwGiGU7rogJgZEoEVeFmPKx7NrlzsndjFd2G7twaql6+a+aJLhtfvBmyzif0XoW0
-	 /XTEmQ/F3vlwu0B+jRosnuOeUB3uTbLGBhKu2XITYlHz2XoOoC7WdC26zfLJ71Aqw/
-	 TZMGr9EJBqHv1udlk+XGOenRwT3VLtV9Bw4NI0og=
+	b=rgf0Bl8uY2oA1+QKBh9xU/VUwKKP0KxuVdL7aWOI3gXoiMFcrM7qzLCYlI7awUVM2
+	 yGJwci+s20witFg1bH9W+3W2FvcyApK+/Di+KW49vMz9v+FBL4R/DUejKm9InvDJDx
+	 3jPXehVwCqGtOpMjuwVgoIoYW9Ud1aN5Ox/r0LeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 186/332] net/9p: fix double req put in p9_fd_cancelled
-Date: Mon, 27 Oct 2025 19:33:59 +0100
-Message-ID: <20251027183529.584582385@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 5.10 195/332] btrfs: remove duplicated in_range() macro
+Date: Mon, 27 Oct 2025 19:34:08 +0100
+Message-ID: <20251027183529.850039237@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,123 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 674b56aa57f9379854cb6798c3bbcef7e7b51ab7 ]
+[ Upstream commit cea628008fc8c6c9c7b53902f6659e040f33c790 ]
 
-Syzkaller reports a KASAN issue as below:
+The in_range() macro is defined twice in btrfs' source, once in ctree.h
+and once in misc.h.
 
-general protection fault, probably for non-canonical address 0xfbd59c0000000021: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: maybe wild-memory-access in range [0xdead000000000108-0xdead00000000010f]
-CPU: 0 PID: 5083 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00037-g855bd1d7d838 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:__list_del include/linux/list.h:114 [inline]
-RIP: 0010:__list_del_entry include/linux/list.h:137 [inline]
-RIP: 0010:list_del include/linux/list.h:148 [inline]
-RIP: 0010:p9_fd_cancelled+0xe9/0x200 net/9p/trans_fd.c:734
+Remove the definition in ctree.h and include misc.h in the files depending
+on it.
 
-Call Trace:
- <TASK>
- p9_client_flush+0x351/0x440 net/9p/client.c:614
- p9_client_rpc+0xb6b/0xc70 net/9p/client.c:734
- p9_client_version net/9p/client.c:920 [inline]
- p9_client_create+0xb51/0x1240 net/9p/client.c:1027
- v9fs_session_init+0x1f0/0x18f0 fs/9p/v9fs.c:408
- v9fs_mount+0xba/0xcb0 fs/9p/vfs_super.c:126
- legacy_get_tree+0x108/0x220 fs/fs_context.c:632
- vfs_get_tree+0x8e/0x300 fs/super.c:1573
- do_new_mount fs/namespace.c:3056 [inline]
- path_mount+0x6a6/0x1e90 fs/namespace.c:3386
- do_mount fs/namespace.c:3399 [inline]
- __do_sys_mount fs/namespace.c:3607 [inline]
- __se_sys_mount fs/namespace.c:3584 [inline]
- __x64_sys_mount+0x283/0x300 fs/namespace.c:3584
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-This happens because of a race condition between:
-
-- The 9p client sending an invalid flush request and later cleaning it up;
-- The 9p client in p9_read_work() canceled all pending requests.
-
-      Thread 1                              Thread 2
-    ...
-    p9_client_create()
-    ...
-    p9_fd_create()
-    ...
-    p9_conn_create()
-    ...
-    // start Thread 2
-    INIT_WORK(&m->rq, p9_read_work);
-                                        p9_read_work()
-    ...
-    p9_client_rpc()
-    ...
-                                        ...
-                                        p9_conn_cancel()
-                                        ...
-                                        spin_lock(&m->req_lock);
-    ...
-    p9_fd_cancelled()
-    ...
-                                        ...
-                                        spin_unlock(&m->req_lock);
-                                        // status rewrite
-                                        p9_client_cb(m->client, req, REQ_STATUS_ERROR)
-                                        // first remove
-                                        list_del(&req->req_list);
-                                        ...
-
-    spin_lock(&m->req_lock)
-    ...
-    // second remove
-    list_del(&req->req_list);
-    spin_unlock(&m->req_lock)
-  ...
-
-Commit 74d6a5d56629 ("9p/trans_fd: Fix concurrency del of req_list in
-p9_fd_cancelled/p9_read_work") fixes a concurrency issue in the 9p filesystem
-client where the req_list could be deleted simultaneously by both
-p9_read_work and p9_fd_cancelled functions, but for the case where req->status
-equals REQ_STATUS_RCVD.
-
-Update the check for req->status in p9_fd_cancelled to skip processing not
-just received requests, but anything that is not SENT, as whatever
-changed the state from SENT also removed the request from its list.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: afd8d6541155 ("9P: Add cancelled() to the transport functions.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
-Message-ID: <20250715154815.3501030-1-Sergey.Nalivayko@kaspersky.com>
-[updated the check from status == RECV || status == ERROR to status != SENT]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-[ replaced m->req_lock with client->lock ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/ctree.h     |    2 --
+ fs/btrfs/extent_io.c |    1 +
+ fs/btrfs/file-item.c |    1 +
+ fs/btrfs/raid56.c    |    1 +
+ 4 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -711,10 +711,10 @@ static int p9_fd_cancelled(struct p9_cli
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -3597,8 +3597,6 @@ static inline int btrfs_defrag_cancelled
+ 	return signal_pending(current);
+ }
  
- 	spin_lock(&client->lock);
--	/* Ignore cancelled request if message has been received
--	 * before lock.
--	 */
--	if (req->status == REQ_STATUS_RCVD) {
-+	/* Ignore cancelled request if status changed since the request was
-+	 * processed in p9_client_flush()
-+	*/
-+	if (req->status != REQ_STATUS_SENT) {
- 		spin_unlock(&client->lock);
- 		return 0;
- 	}
+-#define in_range(b, first, len) ((b) >= (first) && (b) < (first) + (len))
+-
+ /* Sanity test specific functions */
+ #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
+ void btrfs_test_destroy_inode(struct inode *inode);
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -13,6 +13,7 @@
+ #include <linux/pagevec.h>
+ #include <linux/prefetch.h>
+ #include <linux/cleancache.h>
++#include "misc.h"
+ #include "extent_io.h"
+ #include "extent-io-tree.h"
+ #include "extent_map.h"
+--- a/fs/btrfs/file-item.c
++++ b/fs/btrfs/file-item.c
+@@ -9,6 +9,7 @@
+ #include <linux/highmem.h>
+ #include <linux/sched/mm.h>
+ #include <crypto/hash.h>
++#include "misc.h"
+ #include "ctree.h"
+ #include "disk-io.h"
+ #include "transaction.h"
+--- a/fs/btrfs/raid56.c
++++ b/fs/btrfs/raid56.c
+@@ -13,6 +13,7 @@
+ #include <linux/list_sort.h>
+ #include <linux/raid/xor.h>
+ #include <linux/mm.h>
++#include "misc.h"
+ #include "ctree.h"
+ #include "disk-io.h"
+ #include "volumes.h"
 
 
