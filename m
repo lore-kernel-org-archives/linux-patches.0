@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89146325493;
-	Mon, 27 Oct 2025 19:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21193324B19;
+	Mon, 27 Oct 2025 19:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592174; cv=none; b=sVIq6Sed/DLe82CSwQp7BkuETNkb3bbYIuA1Ce46xA7I05idw/YpoNyCVBXsHqNs/4nDpE7lA0LcugH+3LNkoS9hQt+kc3nTILfTgaEDcAzbY/BWsv70sSCXyRtjYx0MvtnHSIKsEzwvYwhK5Q/06zibFshUCW5OXTc9CwAKbcc=
+	t=1761592177; cv=none; b=bdiWkIYmOLf8mDxJsps6qQIUL1fiiM6eihfrmhDAwIB97ScDbE4usDBhci8FtSnFTCkvhDK3+Ya5GuQN9mq8MRD4AkyJ9P/1YOSAPbAqrTIDr9/xJeW3ijRGzQmgzgJlbwGNniu8UlMPI1KjnS1mAsRGu3kzxZk855kcNLzPqkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592174; c=relaxed/simple;
-	bh=Ynz7DALu/6NnyvvbC2VCc35G+Bq43BIwGqr6cy4Hf9k=;
+	s=arc-20240116; t=1761592177; c=relaxed/simple;
+	bh=rtH/JOvCAw40Gnd9t1M6VtSo+LiVQHB2PX9I6lWcpck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+beJIbMJMYDQaedScoxaxBbIWARWDF5tyH+G+zfxpyO+JLpimqyrzW4acnaOETKZh0ZGg/skBAth+mnKhtEB+byx/DnUl0gXT285zhvsymJjkDGlmF2SV5D8D1QZXZ/H8qVNm0eY8dp4CSjkEV7z+3ESNjm0JHbz3xcu+AlOmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8dyfAPD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZZv82xCehqXIdgcjLMFc3HFbxVhaRP+aBS4QU03Jw9swuTCUeeKXwKWfhQu53XZJ+NcRLRQA7AvG1GTAUConuCUhG4ZMXfQqrUpJ9xwiiK/8ijcuPz+nJ5RkE1oJccp3AL42h9AenTOu3keIzwOLxG5qrkBcZxr+rnjHotn1veY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itecbKJq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8dyfAPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120E7C4CEF1;
-	Mon, 27 Oct 2025 19:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itecbKJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60C6C4CEF1;
+	Mon, 27 Oct 2025 19:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592174;
-	bh=Ynz7DALu/6NnyvvbC2VCc35G+Bq43BIwGqr6cy4Hf9k=;
+	s=korg; t=1761592177;
+	bh=rtH/JOvCAw40Gnd9t1M6VtSo+LiVQHB2PX9I6lWcpck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8dyfAPD/hxx5SvBmomf81VyOaU6xQ95IWDrZPxnMsvg2bmZBjjwGQ6WPXRE6TLaH
-	 Cylcs3wkrgl6sb8hqdUkRlGqwgqsbUMGFRI47q/X5Wumq3MTTTbjehSw9FSn7HelYM
-	 qhDo8DBTERH7ZXm1hpqwxKcysByc5+wEBycS51R8=
+	b=itecbKJqThoJzLfz+b6HHiGKBM+ZiSyxL9QBSqgUsYmrLRow1UYvFP1dhFoQfcerp
+	 XcvBwDNBoqrhq7D7eEJ+OQ4hj+fDPKo5zAe+6z6Z8CbiUZEcFM7A4C0fwOqJQE3RGh
+	 FeAiOoPPREWLum1KlRoL/fbpdB8UEco195i5MWi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/157] usb: gadget: f_ncm: Refactor bind path to use __free()
-Date: Mon, 27 Oct 2025 19:34:43 +0100
-Message-ID: <20251027183501.870134829@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.1 023/157] Documentation: Remove bogus claim about del_timer_sync()
+Date: Mon, 27 Oct 2025 19:34:44 +0100
+Message-ID: <20251027183501.899001817@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -45,234 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 75a5b8d4ddd4eb6b16cb0b475d14ff4ae64295ef ]
+[ Upstream commit b0b0aa5d858d4d2fe39a5e4486e0550e858108f6 ]
 
-After an bind/unbind cycle, the ncm->notify_req is left stale. If a
-subsequent bind fails, the unified error label attempts to free this
-stale request, leading to a NULL pointer dereference when accessing
-ep->ops->free_request.
+del_timer_sync() does not return the number of times it tried to delete the
+timer which rearms itself. It's clearly documented:
 
-Refactor the error handling in the bind path to use the __free()
-automatic cleanup mechanism.
+ The function returns whether it has deactivated a pending timer or not.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-Call trace:
- usb_ep_free_request+0x2c/0xec
- ncm_bind+0x39c/0x3dc
- usb_add_function+0xcc/0x1f0
- configfs_composite_bind+0x468/0x588
- gadget_bind_driver+0x104/0x270
- really_probe+0x190/0x374
- __driver_probe_device+0xa0/0x12c
- driver_probe_device+0x3c/0x218
- __device_attach_driver+0x14c/0x188
- bus_for_each_drv+0x10c/0x168
- __device_attach+0xfc/0x198
- device_initial_probe+0x14/0x24
- bus_probe_device+0x94/0x11c
- device_add+0x268/0x48c
- usb_add_gadget+0x198/0x28c
- dwc3_gadget_init+0x700/0x858
- __dwc3_set_mode+0x3cc/0x664
- process_scheduled_works+0x1d8/0x488
- worker_thread+0x244/0x334
- kthread+0x114/0x1bc
- ret_from_fork+0x10/0x20
+This part of the documentation is from 2003 where del_timer_sync() really
+returned the number of deletion attempts for unknown reasons. The code
+was rewritten in 2005, but the documentation was not updated.
 
-Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
-Cc: stable@kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/r/20221123201624.452282769@linutronix.de
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   78 +++++++++++++++---------------------
- 1 file changed, 33 insertions(+), 45 deletions(-)
+ Documentation/kernel-hacking/locking.rst                    |    3 +--
+ Documentation/translations/it_IT/kernel-hacking/locking.rst |    4 +---
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -11,6 +11,7 @@
-  * Copyright (C) 2008 Nokia Corporation
-  */
+--- a/Documentation/kernel-hacking/locking.rst
++++ b/Documentation/kernel-hacking/locking.rst
+@@ -1006,8 +1006,7 @@ Another common problem is deleting timer
+ calling add_timer() at the end of their timer function).
+ Because this is a fairly common case which is prone to races, you should
+ use del_timer_sync() (``include/linux/timer.h``) to
+-handle this case. It returns the number of times the timer had to be
+-deleted before we finally stopped it from adding itself back in.
++handle this case.
  
-+#include <linux/cleanup.h>
- #include <linux/kernel.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
-@@ -19,6 +20,7 @@
- #include <linux/crc32.h>
+ Locking Speed
+ =============
+--- a/Documentation/translations/it_IT/kernel-hacking/locking.rst
++++ b/Documentation/translations/it_IT/kernel-hacking/locking.rst
+@@ -1027,9 +1027,7 @@ Un altro problema è l'eliminazione dei
+ da soli (chiamando add_timer() alla fine della loro esecuzione).
+ Dato che questo è un problema abbastanza comune con una propensione
+ alle corse critiche, dovreste usare del_timer_sync()
+-(``include/linux/timer.h``) per gestire questo caso. Questa ritorna il
+-numero di volte che il temporizzatore è stato interrotto prima che
+-fosse in grado di fermarlo senza che si riavviasse.
++(``include/linux/timer.h``) per gestire questo caso.
  
- #include <linux/usb/cdc.h>
-+#include <linux/usb/gadget.h>
- 
- #include "u_ether.h"
- #include "u_ether_configfs.h"
-@@ -1437,18 +1439,18 @@ static int ncm_bind(struct usb_configura
- 	struct usb_ep		*ep;
- 	struct f_ncm_opts	*ncm_opts;
- 
-+	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
-+	struct usb_request		*request __free(free_usb_request) = NULL;
-+
- 	if (!can_support_ecm(cdev->gadget))
- 		return -EINVAL;
- 
- 	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
- 
- 	if (cdev->use_os_string) {
--		f->os_desc_table = kzalloc(sizeof(*f->os_desc_table),
--					   GFP_KERNEL);
--		if (!f->os_desc_table)
-+		os_desc_table = kzalloc(sizeof(*os_desc_table), GFP_KERNEL);
-+		if (!os_desc_table)
- 			return -ENOMEM;
--		f->os_desc_n = 1;
--		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
- 	}
- 
- 	mutex_lock(&ncm_opts->lock);
-@@ -1458,16 +1460,15 @@ static int ncm_bind(struct usb_configura
- 	mutex_unlock(&ncm_opts->lock);
- 
- 	if (status)
--		goto fail;
-+		return status;
- 
- 	ncm_opts->bound = true;
- 
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
--	if (IS_ERR(us)) {
--		status = PTR_ERR(us);
--		goto fail;
--	}
-+	if (IS_ERR(us))
-+		return PTR_ERR(us);
-+
- 	ncm_control_intf.iInterface = us[STRING_CTRL_IDX].id;
- 	ncm_data_nop_intf.iInterface = us[STRING_DATA_IDX].id;
- 	ncm_data_intf.iInterface = us[STRING_DATA_IDX].id;
-@@ -1477,55 +1478,47 @@ static int ncm_bind(struct usb_configura
- 	/* allocate instance-specific interface IDs */
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	ncm->ctrl_id = status;
- 	ncm_iad_desc.bFirstInterface = status;
- 
- 	ncm_control_intf.bInterfaceNumber = status;
- 	ncm_union_desc.bMasterInterface0 = status;
- 
--	if (cdev->use_os_string)
--		f->os_desc_table[0].if_id =
--			ncm_iad_desc.bFirstInterface;
--
- 	status = usb_interface_id(c, f);
- 	if (status < 0)
--		goto fail;
-+		return status;
- 	ncm->data_id = status;
- 
- 	ncm_data_nop_intf.bInterfaceNumber = status;
- 	ncm_data_intf.bInterfaceNumber = status;
- 	ncm_union_desc.bSlaveInterface0 = status;
- 
--	status = -ENODEV;
--
- 	/* allocate instance-specific endpoints */
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_in_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->port.in_ep = ep;
- 
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_out_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->port.out_ep = ep;
- 
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_notify_desc);
- 	if (!ep)
--		goto fail;
-+		return -ENODEV;
- 	ncm->notify = ep;
- 
--	status = -ENOMEM;
--
- 	/* allocate notification request and buffer */
--	ncm->notify_req = usb_ep_alloc_request(ep, GFP_KERNEL);
--	if (!ncm->notify_req)
--		goto fail;
--	ncm->notify_req->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
--	if (!ncm->notify_req->buf)
--		goto fail;
--	ncm->notify_req->context = ncm;
--	ncm->notify_req->complete = ncm_notify_complete;
-+	request = usb_ep_alloc_request(ep, GFP_KERNEL);
-+	if (!request)
-+		return -ENOMEM;
-+	request->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
-+	if (!request->buf)
-+		return -ENOMEM;
-+	request->context = ncm;
-+	request->complete = ncm_notify_complete;
- 
- 	/*
- 	 * support all relevant hardware speeds... we expect that when
-@@ -1545,7 +1538,7 @@ static int ncm_bind(struct usb_configura
- 	status = usb_assign_descriptors(f, ncm_fs_function, ncm_hs_function,
- 			ncm_ss_function, ncm_ss_function);
- 	if (status)
--		goto fail;
-+		return status;
- 
- 	/*
- 	 * NOTE:  all that is done without knowing or caring about
-@@ -1559,25 +1552,20 @@ static int ncm_bind(struct usb_configura
- 	hrtimer_init(&ncm->task_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	ncm->task_timer.function = ncm_tx_timeout;
- 
-+	if (cdev->use_os_string) {
-+		os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
-+		os_desc_table[0].if_id = ncm_iad_desc.bFirstInterface;
-+		f->os_desc_table = no_free_ptr(os_desc_table);
-+		f->os_desc_n = 1;
-+	}
-+        ncm->notify_req = no_free_ptr(request);
-+
- 	DBG(cdev, "CDC Network: %s speed IN/%s OUT/%s NOTIFY/%s\n",
- 			gadget_is_superspeed(c->cdev->gadget) ? "super" :
- 			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
- 			ncm->notify->name);
- 	return 0;
--
--fail:
--	kfree(f->os_desc_table);
--	f->os_desc_n = 0;
--
--	if (ncm->notify_req) {
--		kfree(ncm->notify_req->buf);
--		usb_ep_free_request(ncm->notify, ncm->notify_req);
--	}
--
--	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
--
--	return status;
- }
- 
- static inline struct f_ncm_opts *to_f_ncm_opts(struct config_item *item)
+ Velocità della sincronizzazione
+ ===============================
 
 
