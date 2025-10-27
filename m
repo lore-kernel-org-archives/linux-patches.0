@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF9B3218B2;
-	Mon, 27 Oct 2025 19:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730F331DD87;
+	Mon, 27 Oct 2025 19:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593278; cv=none; b=Z+276kEwrbTEwTSgsKUOyVIRiUpFAkxC9wftoQVe3iOz8zidsTp8bmzRahh8KDmzLnm9LmhZIn1m8wNGWzTTeWLAe2pWk4tcnlglpuq1wGB3EAUQ4Ns6ffnC9Mfe23dD7G65ilPC8OZl5Og+5WQjMa118T6gDdYSp4bmqG3+mxw=
+	t=1761593280; cv=none; b=rzOdTqGVtXs/KFlz2wiWKTWhkWbeZNH5L3z1koAJhrSUKTKKBa5QG7LXUaJlw7QrLZtlsjbf29foPYxDBenZuyDGO+J/62cbfrTDXF8uyxAh31cwc4iEcGVffNsyNaK7lSTZjo5oaXWrWHzQAqzzwCgEs9RmQPucqpSQZzREi88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593278; c=relaxed/simple;
-	bh=QytsNCxqG5uNu8l39xYibnu1QbZ0s70S7FW1hi67cMY=;
+	s=arc-20240116; t=1761593280; c=relaxed/simple;
+	bh=ZNNc/L2eU4VtD8q0pYPB7A/bMPJ/XSB5w1coDUcW25Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIwGWN9u/gC868Kddl6u0j6Qj/0UAW/ll62aIMlKw2y9r5ILFrNoJseYDIgalcKhtQ9zgoHz5C180MMfuvEnq4Z9O9b50c9JPOO8XX9oE6P3xp2QSJ7a96NYHQVIU+bCVp4+VeUIzroLQiQER+MKzDmnYZVSaDSDibbSJKwfhPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6177fm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TH8E0nJeq7jAO7IS62RzDN4NbCPWljutNe4yeJ3pw8AZs4DtJZxfpIcN4ScVk+nep9E2fNuuV/kSikhvjrVm7eJSqEnQpA2JY0tL0APLWOA94is2JiVuK0YSgI7pC9iFNRKi4TAyyf2FETYS4N4cvbL3Le0V5Ydske11/laY/6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2Ij4kO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6177fm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F6AC4CEF1;
-	Mon, 27 Oct 2025 19:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2Ij4kO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC2EC4CEF1;
+	Mon, 27 Oct 2025 19:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593277;
-	bh=QytsNCxqG5uNu8l39xYibnu1QbZ0s70S7FW1hi67cMY=;
+	s=korg; t=1761593280;
+	bh=ZNNc/L2eU4VtD8q0pYPB7A/bMPJ/XSB5w1coDUcW25Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6177fm4IPQFbrvmRJcdj58i7MLsCavJgRlw/2S528kKNv5DmrlCAEXA+LWb6hXb1
-	 nb0e1RO+dPVeQ4vY8TFbMaI5rXV0rPAqzJKMuINPVt4TZ0H/Tikz4uzBJqAcStXrBj
-	 M5ECNe8/Xdpa3c0B0LaO9/0w1G/RX3vutZ1LtAZw=
+	b=I2Ij4kO5l/Z5C6jlCHXb25gBYiblNfpZ3F0M5WZnxSmIZvKR902vd9dR/QKqAGDHf
+	 qxTTca5QVmWdVvMVEkmxU0gJqQLrKi24DJ5Du/nA67TIhfJsTDU55WpsajjmyklpM+
+	 EEy9AsV5aDoV2rs64f2zKEv7bIB4v3U4oGS6YIHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	Hao Ge <gehao@kylinos.cn>,
 	Harry Yoo <harry.yoo@oracle.com>,
+	Hao Ge <gehao@kylinos.cn>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.17 082/184] slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts
-Date: Mon, 27 Oct 2025 19:36:04 +0100
-Message-ID: <20251027183517.107241183@linuxfoundation.org>
+Subject: [PATCH 6.17 083/184] slab: Fix obj_ext mistakenly considered NULL due to race condition
+Date: Mon, 27 Oct 2025 19:36:05 +0100
+Message-ID: <20251027183517.133576834@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -54,70 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Hao Ge <gehao@kylinos.cn>
 
-commit 6ed8bfd24ce1cb31742b09a3eb557cd008533eec upstream.
+commit 7f434e1d9a17ca5f567c9796c9c105a65c18db9a upstream.
 
-If two competing threads enter alloc_slab_obj_exts() and one of them
-fails to allocate the object extension vector, it might override the
-valid slab->obj_exts allocated by the other thread with
-OBJEXTS_ALLOC_FAIL. This will cause the thread that lost this race and
-expects a valid pointer to dereference a NULL pointer later on.
+If two competing threads enter alloc_slab_obj_exts(), and the one that
+allocates the vector wins the cmpxchg(), the other thread that failed
+allocation mistakenly assumes that slab->obj_exts is still empty due to
+its own allocation failure. This will then trigger warnings with
+CONFIG_MEM_ALLOC_PROFILING_DEBUG checks in the subsequent free path.
 
-Update slab->obj_exts atomically using cmpxchg() to avoid
-slab->obj_exts overrides by racing threads.
+Therefore, let's check the result of cmpxchg() to see if marking the
+allocation as failed was successful. If it wasn't, check whether the
+winning side has succeeded its allocation (it might have been also
+marking it as failed) and if yes, return success.
 
-Thanks for Vlastimil and Suren's help with debugging.
-
+Suggested-by: Harry Yoo <harry.yoo@oracle.com>
 Fixes: f7381b911640 ("slab: mark slab->obj_exts allocation failures unconditionally")
 Cc: <stable@vger.kernel.org>
-Suggested-by: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20251023143313.1327968-1-hao.ge@linux.dev
 Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Link: https://patch.msgid.link/20251021010353.1187193-1-hao.ge@linux.dev
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ mm/slub.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -1978,7 +1978,7 @@ static inline void mark_objexts_empty(st
+@@ -1976,9 +1976,9 @@ static inline void mark_objexts_empty(st
+ 	}
+ }
  
- static inline void mark_failed_objexts_alloc(struct slab *slab)
+-static inline void mark_failed_objexts_alloc(struct slab *slab)
++static inline bool mark_failed_objexts_alloc(struct slab *slab)
  {
--	slab->obj_exts = OBJEXTS_ALLOC_FAIL;
-+	cmpxchg(&slab->obj_exts, 0, OBJEXTS_ALLOC_FAIL);
+-	cmpxchg(&slab->obj_exts, 0, OBJEXTS_ALLOC_FAIL);
++	return cmpxchg(&slab->obj_exts, 0, OBJEXTS_ALLOC_FAIL) == 0;
  }
  
  static inline void handle_failed_objexts_alloc(unsigned long obj_exts,
-@@ -2043,6 +2043,7 @@ int alloc_slab_obj_exts(struct slab *sla
- #ifdef CONFIG_MEMCG
- 	new_exts |= MEMCG_DATA_OBJEXTS;
- #endif
-+retry:
- 	old_exts = READ_ONCE(slab->obj_exts);
- 	handle_failed_objexts_alloc(old_exts, vec, objects);
- 	if (new_slab) {
-@@ -2052,8 +2053,7 @@ int alloc_slab_obj_exts(struct slab *sla
- 		 * be simply assigned.
- 		 */
- 		slab->obj_exts = new_exts;
--	} else if ((old_exts & ~OBJEXTS_FLAGS_MASK) ||
--		   cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
-+	} else if (old_exts & ~OBJEXTS_FLAGS_MASK) {
- 		/*
- 		 * If the slab is already in use, somebody can allocate and
- 		 * assign slabobj_exts in parallel. In this case the existing
-@@ -2062,6 +2062,9 @@ int alloc_slab_obj_exts(struct slab *sla
- 		mark_objexts_empty(vec);
- 		kfree(vec);
- 		return 0;
-+	} else if (cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
-+		/* Retry if a racing thread changed slab->obj_exts from under us. */
-+		goto retry;
- 	}
+@@ -2000,7 +2000,7 @@ static inline void handle_failed_objexts
+ #else /* CONFIG_MEM_ALLOC_PROFILING_DEBUG */
  
- 	kmemleak_not_leak(vec);
+ static inline void mark_objexts_empty(struct slabobj_ext *obj_exts) {}
+-static inline void mark_failed_objexts_alloc(struct slab *slab) {}
++static inline bool mark_failed_objexts_alloc(struct slab *slab) { return false; }
+ static inline void handle_failed_objexts_alloc(unsigned long obj_exts,
+ 			struct slabobj_ext *vec, unsigned int objects) {}
+ 
+@@ -2033,8 +2033,14 @@ int alloc_slab_obj_exts(struct slab *sla
+ 	vec = kcalloc_node(objects, sizeof(struct slabobj_ext), gfp,
+ 			   slab_nid(slab));
+ 	if (!vec) {
+-		/* Mark vectors which failed to allocate */
+-		mark_failed_objexts_alloc(slab);
++		/*
++		 * Try to mark vectors which failed to allocate.
++		 * If this operation fails, there may be a racing process
++		 * that has already completed the allocation.
++		 */
++		if (!mark_failed_objexts_alloc(slab) &&
++		    slab_obj_exts(slab))
++			return 0;
+ 
+ 		return -ENOMEM;
+ 	}
 
 
