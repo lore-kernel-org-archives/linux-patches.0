@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE650322DCB;
-	Mon, 27 Oct 2025 18:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3EE31E0E4;
+	Mon, 27 Oct 2025 18:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591102; cv=none; b=DDHJdVTrK6bol6sgsTqxErd56HHTAuay7j8P8uBtAjiLNI3Z3SbhxPTb5kzt6CsNVexF12L7Y9yVhjfoHy4t+cqYhC9l7+PiDKvItfx+YsiG/2HMx3g78Ve3TiGfjgJR1TGDvGY1aSMVystwyQLxJqi8uckb03+wIV7nud5cLpI=
+	t=1761591104; cv=none; b=D89MuMa4Hh2jU9be6Pyh7NLT68Fq5su84XrwjSYcWgHG2C2/QRFj9ACtTdMj5ZFA2ROD/RRawxLeaJy6veV/qbvJN/1Cyqvrgt/AE/otLrq1EIuL+/n+MgYLbvFFxypeYsoqKnWwgyazNlvb4cxefTqR60mX+7RzV4NBjFbiOKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591102; c=relaxed/simple;
-	bh=5wBbmID2lIdmJQlPh73BS6zhvk0k7r0rDbDG/KK2ucU=;
+	s=arc-20240116; t=1761591104; c=relaxed/simple;
+	bh=uG3B+w1wrubvPyhFD7/lZvx5pvwDV7mHCwBejWiH3oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVUkp6JMO4uQ9wgNjZVZZjIV5D0zzeboiuw15+P5GvOtzHApVTAzeZ14Leyf/Ph+QKUr+87P1zYRPbdmz6zqEA7GPTzCjt+mQ0Yo3pgOVoj2J7reZn9PTqexKEUWFBRULMkjNbKAFwXjka9POD4BjmgBMeVHJLKXT45umjQE1U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBB0CV4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bhN9nHyhllZsGCOBxr1KF8bihLFcSrkYv0TYPX0s7bp68SxTHfzj9v1kRB/RFcZvIsTEScP4UNZWnFmEddFESUUWlm1IbnFqgIXwYcTdeS5Pr4OaHn/YNlSoGolpvv9zdd7ORXu3qvaccFxUWpoINBXObDeAsyj/qpfyWXTDkVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiC0eoUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBB0CV4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D86C4CEF1;
-	Mon, 27 Oct 2025 18:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiC0eoUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2121EC4CEF1;
+	Mon, 27 Oct 2025 18:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591101;
-	bh=5wBbmID2lIdmJQlPh73BS6zhvk0k7r0rDbDG/KK2ucU=;
+	s=korg; t=1761591104;
+	bh=uG3B+w1wrubvPyhFD7/lZvx5pvwDV7mHCwBejWiH3oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBB0CV4NE5q714NOlIQSTaq5ujxhBCicZ6v9DzwAw5oEt8zzuuY9I3MBiBIbh7Yeg
-	 eknTJ3OwLGekotNJFSi4Yhe0PZOgnzXgoZJmmaNZWuFJCeSiYqooR/XxadAds8Z3H1
-	 rbqieBShXUSKfELB3Whe/I4zSCKkuE3OTGy7fLm8=
+	b=jiC0eoUR354JmPXcAYXkHWKQVkqi6Q3rrH62cwlFh0DAVvhoKjv2Pwzbvjq0TtKyO
+	 eaUpZGolNlPwRxQMemzpbs7Fkrq/jM7O760/COYY56bgbM0dIbmieVnXb9hi9HB84l
+	 mpKz7bjQ9b6GR8iPmdF1XnGsHbc5U9JhS9wJjmY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/332] wifi: ath10k: avoid unnecessary wait for service ready message
-Date: Mon, 27 Oct 2025 19:32:00 +0100
-Message-ID: <20251027183526.385879492@linuxfoundation.org>
+	Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactcode.com>,
+	Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk>
+Subject: [PATCH 5.10 068/332] sparc: fix accurate exception reporting in copy_{from_to}_user for UltraSPARC
+Date: Mon, 27 Oct 2025 19:32:01 +0100
+Message-ID: <20251027183526.411661857@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -47,97 +48,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
 
-[ Upstream commit 51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a ]
+[ Upstream commit 4fba1713001195e59cfc001ff1f2837dab877efb ]
 
-Commit e57b7d62a1b2 ("wifi: ath10k: poll service ready message before
-failing") works around the failure in waiting for the service ready
-message by active polling. Note the polling is triggered after initial
-wait timeout, which means that the wait-till-timeout can not be avoided
-even the message is ready.
+The referenced commit introduced exception handlers on user-space memory
+references in copy_from_user and copy_to_user. These handlers return from
+the respective function and calculate the remaining bytes left to copy
+using the current register contents. This commit fixes a couple of bad
+calculations. This will fix the return value of copy_from_user and
+copy_to_user in the faulting case. The behaviour of memcpy stays unchanged.
 
-A possible fix is to do polling once before wait as well, however this
-can not handle the race that the message arrives right after polling.
-So the solution is to do periodic polling until timeout.
-
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
-
-Fixes: e57b7d62a1b2 ("wifi: ath10k: poll service ready message before failing")
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Closes: https://lore.kernel.org/all/97a15967-5518-4731-a8ff-d43ff7f437b0@molgen.mpg.de
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250811-ath10k-avoid-unnecessary-wait-v1-1-db2deb87c39b@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: cb736fdbb208 ("sparc64: Convert U1copy_{from,to}_user to accurate exception reporting.")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de> # on QEMU 10.0.3
+Tested-by: René Rebe <rene@exactcode.com> # on Ultra 5 UltraSparc IIi
+Tested-by: Jonathan 'theJPster' Pallant <kernel@thejpster.org.uk> # on Sun Netra T1
+Signed-off-by: Michael Karcher <kernel@mkarcher.dialup.fu-berlin.de>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250905-memcpy_series-v4-1-1ca72dda195b@mkarcher.dialup.fu-berlin.de
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c | 39 +++++++++++++--------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ arch/sparc/lib/U1memcpy.S | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index c9a74f3e2e601..858db97ecfed9 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1762,33 +1762,32 @@ void ath10k_wmi_put_wmi_channel(struct ath10k *ar, struct wmi_channel *ch,
+diff --git a/arch/sparc/lib/U1memcpy.S b/arch/sparc/lib/U1memcpy.S
+index a6f4ee3918977..021b94a383d13 100644
+--- a/arch/sparc/lib/U1memcpy.S
++++ b/arch/sparc/lib/U1memcpy.S
+@@ -164,17 +164,18 @@ ENTRY(U1_gs_40_fp)
+ 	retl
+ 	 add		%o0, %o2, %o0
+ ENDPROC(U1_gs_40_fp)
+-ENTRY(U1_g3_0_fp)
+-	VISExitHalf
+-	retl
+-	 add		%g3, %o2, %o0
+-ENDPROC(U1_g3_0_fp)
+ ENTRY(U1_g3_8_fp)
+ 	VISExitHalf
+ 	add		%g3, 8, %g3
+ 	retl
+ 	 add		%g3, %o2, %o0
+ ENDPROC(U1_g3_8_fp)
++ENTRY(U1_g3_16_fp)
++	VISExitHalf
++	add		%g3, 16, %g3
++	retl
++	 add		%g3, %o2, %o0
++ENDPROC(U1_g3_16_fp)
+ ENTRY(U1_o2_0_fp)
+ 	VISExitHalf
+ 	retl
+@@ -547,18 +548,18 @@ FUNC_NAME:		/* %o0=dst, %o1=src, %o2=len */
+ 62:	FINISH_VISCHUNK(o0, f44, f46)
+ 63:	UNEVEN_VISCHUNK_LAST(o0, f46, f0)
  
- int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
- {
-+	unsigned long timeout = jiffies + WMI_SERVICE_READY_TIMEOUT_HZ;
- 	unsigned long time_left, i;
+-93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_0_fp)
++93:	EX_LD_FP(LOAD(ldd, %o1, %f2), U1_g3_8_fp)
+ 	add		%o1, 8, %o1
+ 	subcc		%g3, 8, %g3
+ 	faligndata	%f0, %f2, %f8
+-	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
++	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
+ 	bl,pn		%xcc, 95f
+ 	 add		%o0, 8, %o0
+-	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_0_fp)
++	EX_LD_FP(LOAD(ldd, %o1, %f0), U1_g3_8_fp)
+ 	add		%o1, 8, %o1
+ 	subcc		%g3, 8, %g3
+ 	faligndata	%f2, %f0, %f8
+-	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_8_fp)
++	EX_ST_FP(STORE(std, %f8, %o0), U1_g3_16_fp)
+ 	bge,pt		%xcc, 93b
+ 	 add		%o0, 8, %o0
  
--	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--						WMI_SERVICE_READY_TIMEOUT_HZ);
--	if (!time_left) {
--		/* Sometimes the PCI HIF doesn't receive interrupt
--		 * for the service ready message even if the buffer
--		 * was completed. PCIe sniffer shows that it's
--		 * because the corresponding CE ring doesn't fires
--		 * it. Workaround here by polling CE rings once.
--		 */
--		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
--
-+	/* Sometimes the PCI HIF doesn't receive interrupt
-+	 * for the service ready message even if the buffer
-+	 * was completed. PCIe sniffer shows that it's
-+	 * because the corresponding CE ring doesn't fires
-+	 * it. Workaround here by polling CE rings. Since
-+	 * the message could arrive at any time, continue
-+	 * polling until timeout.
-+	 */
-+	do {
- 		for (i = 0; i < CE_COUNT; i++)
- 			ath10k_hif_send_complete_check(ar, i, 1);
- 
-+		/* The 100 ms granularity is a tradeoff considering scheduler
-+		 * overhead and response latency
-+		 */
- 		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--							WMI_SERVICE_READY_TIMEOUT_HZ);
--		if (!time_left) {
--			ath10k_warn(ar, "polling timed out\n");
--			return -ETIMEDOUT;
--		}
--
--		ath10k_warn(ar, "service ready completion received, continuing normally\n");
--	}
-+							msecs_to_jiffies(100));
-+		if (time_left)
-+			return 0;
-+	} while (time_before(jiffies, timeout));
- 
--	return 0;
-+	ath10k_warn(ar, "failed to receive service ready completion\n");
-+	return -ETIMEDOUT;
- }
- 
- int ath10k_wmi_wait_for_unified_ready(struct ath10k *ar)
 -- 
 2.51.0
 
