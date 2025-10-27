@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD1F326D50;
-	Mon, 27 Oct 2025 19:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1893277AF;
+	Mon, 27 Oct 2025 19:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593172; cv=none; b=j0J3Db/nrUEFd3C/zJLXr2N3rfQUyuftuxV/PRa2Kkua+n/MyiNz/XuuPYEsSET8gHs5rYYflvecL13aNKIGKjI1gKLTbj/wrchpLj7ooWtXYk1IetBc7MLurgK6cBnOmqoLxG+3oqxJ0w6MNsH11SGZX/zcrp71p8BUJrO/grs=
+	t=1761593174; cv=none; b=BKQ5Pxpbc8xMLcWjTpVqaE3420HYgMzsLrIsCmx3ej7rrkdXFVepmOfokGvckKbY27WS1TQaKaiZ2bterGWm8OGt9FhTZrE1v7d6NXgdg5yO+e7yJJ7ZR25RaSNPLO4V2miTyXs7tGsYqIffH088fuqVmPqyIrXoROeowuUSZ9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593172; c=relaxed/simple;
-	bh=/cEb3bfA0eXRFUBzA3L1wJl3ByzIhBF2hPuBowR5DK0=;
+	s=arc-20240116; t=1761593174; c=relaxed/simple;
+	bh=KOpsgQw9aw4uCEkT9m3yTCDeOWnR2V7Igq2354zLl+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0Xqf6UVS/1PctWnwFoTfhDEZbK2mShY6xkrZvsXEbTnuUU5crJCEAcFBtE62u6nlwXEnq/bxIk/mlakIdYW5OOeSezNppA/V1KHZb2nC9eEX0cxtbGd+yzOYmD/aoWtzG+Qms97IHXZCvT81U+oXvCXBPr8Kl4WbCqlZCblFl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nj8zL54E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErpsD5805g/0IfOg8IpHe6LJdSZwFiz0ozPKY08aDgKQ38NLQQeBqmuMU3m6SIvHt0EIB8kCzPJ6SW63uxFswGHrT2EwoxfXSDA3LWejQzZFjy2heYrF53t+Xrkq788QqVPt401DkBegNMvHOt5ecBsLYE78UAP3U+8APciqwYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un7intwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nj8zL54E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C234EC4CEF1;
-	Mon, 27 Oct 2025 19:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un7intwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D72CC4CEF1;
+	Mon, 27 Oct 2025 19:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593172;
-	bh=/cEb3bfA0eXRFUBzA3L1wJl3ByzIhBF2hPuBowR5DK0=;
+	s=korg; t=1761593174;
+	bh=KOpsgQw9aw4uCEkT9m3yTCDeOWnR2V7Igq2354zLl+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nj8zL54EzZQadVtAxJEYpSSBpnAldJKzq933py5MvxD2KEGWeooBvmT1+RcQSY9dQ
-	 gk7/0KNt+LaNVzaW5R++Zzwc8a66Pp6oLbybFxF6qN1YM4krCHN3pWjGFqgH4ZvC83
-	 4OjdmFkE/tFa1iIMueZbe5CAOqtmnklkNMzDgRgM=
+	b=Un7intwH6WzOfpUIXQgu1a4AG59yg5JLFGCgGZgmaVQ96CoQckCFvgxu6ikSk7B//
+	 rDFoootBZVQedxg4sP3wvVBgPF0ivHVNB7glaOLFygyTHWEkfVLsoBm0DSJKXqEc0y
+	 ZLA8tpNT/o8vCb/AZLlCRmFo2fq1DhFqJIAlPm7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 041/184] net: phy: realtek: fix rtl8221b-vm-cg name
-Date: Mon, 27 Oct 2025 19:35:23 +0100
-Message-ID: <20251027183516.015427150@linuxfoundation.org>
+Subject: [PATCH 6.17 042/184] can: bxcan: bxcan_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
+Date: Mon, 27 Oct 2025 19:35:24 +0100
+Message-ID: <20251027183516.041636946@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,78 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit ffff5c8fc2af2218a3332b3d5b97654599d50cde ]
+[ Upstream commit 3a20c444cd123e820e10ae22eeaf00e189315aa1 ]
 
-When splitting the RTL8221B-VM-CG into C22 and C45 variants, the name was
-accidentally changed to RTL8221B-VN-CG. This patch brings back the previous
-part number.
+In addition to can_dropped_invalid_skb(), the helper function
+can_dev_dropped_skb() checks whether the device is in listen-only mode and
+discards the skb accordingly.
 
-Fixes: ad5ce743a6b0 ("net: phy: realtek: Add driver instances for rtl8221b via Clause 45")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251016192325.2306757-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Replace can_dropped_invalid_skb() by can_dev_dropped_skb() to also drop
+skbs in for listen-only mode.
+
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/all/20251017-bizarre-enchanted-quokka-f3c704-mkl@pengutronix.de/
+Fixes: f00647d8127b ("can: bxcan: add support for ST bxCAN controller")
+Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-1-556665793fa4@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/can/bxcan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 64af3b96f0288..62ef87ecc5587 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -156,7 +156,7 @@
- #define RTL_8211FVD_PHYID			0x001cc878
- #define RTL_8221B				0x001cc840
- #define RTL_8221B_VB_CG				0x001cc849
--#define RTL_8221B_VN_CG				0x001cc84a
-+#define RTL_8221B_VM_CG				0x001cc84a
- #define RTL_8251B				0x001cc862
- #define RTL_8261C				0x001cc890
+diff --git a/drivers/net/can/bxcan.c b/drivers/net/can/bxcan.c
+index bfc60eb33dc37..333ad42ea73bc 100644
+--- a/drivers/net/can/bxcan.c
++++ b/drivers/net/can/bxcan.c
+@@ -842,7 +842,7 @@ static netdev_tx_t bxcan_start_xmit(struct sk_buff *skb,
+ 	u32 id;
+ 	int i, j;
  
-@@ -1362,16 +1362,16 @@ static int rtl8221b_vb_cg_c45_match_phy_device(struct phy_device *phydev,
- 	return rtlgen_is_c45_match(phydev, RTL_8221B_VB_CG, true);
- }
+-	if (can_dropped_invalid_skb(ndev, skb))
++	if (can_dev_dropped_skb(ndev, skb))
+ 		return NETDEV_TX_OK;
  
--static int rtl8221b_vn_cg_c22_match_phy_device(struct phy_device *phydev,
-+static int rtl8221b_vm_cg_c22_match_phy_device(struct phy_device *phydev,
- 					       const struct phy_driver *phydrv)
- {
--	return rtlgen_is_c45_match(phydev, RTL_8221B_VN_CG, false);
-+	return rtlgen_is_c45_match(phydev, RTL_8221B_VM_CG, false);
- }
- 
--static int rtl8221b_vn_cg_c45_match_phy_device(struct phy_device *phydev,
-+static int rtl8221b_vm_cg_c45_match_phy_device(struct phy_device *phydev,
- 					       const struct phy_driver *phydrv)
- {
--	return rtlgen_is_c45_match(phydev, RTL_8221B_VN_CG, true);
-+	return rtlgen_is_c45_match(phydev, RTL_8221B_VM_CG, true);
- }
- 
- static int rtl_internal_nbaset_match_phy_device(struct phy_device *phydev,
-@@ -1718,7 +1718,7 @@ static struct phy_driver realtek_drvs[] = {
- 		.suspend        = genphy_c45_pma_suspend,
- 		.resume         = rtlgen_c45_resume,
- 	}, {
--		.match_phy_device = rtl8221b_vn_cg_c22_match_phy_device,
-+		.match_phy_device = rtl8221b_vm_cg_c22_match_phy_device,
- 		.name           = "RTL8221B-VM-CG 2.5Gbps PHY (C22)",
- 		.probe		= rtl822x_probe,
- 		.get_features   = rtl822x_get_features,
-@@ -1731,8 +1731,8 @@ static struct phy_driver realtek_drvs[] = {
- 		.read_page      = rtl821x_read_page,
- 		.write_page     = rtl821x_write_page,
- 	}, {
--		.match_phy_device = rtl8221b_vn_cg_c45_match_phy_device,
--		.name           = "RTL8221B-VN-CG 2.5Gbps PHY (C45)",
-+		.match_phy_device = rtl8221b_vm_cg_c45_match_phy_device,
-+		.name           = "RTL8221B-VM-CG 2.5Gbps PHY (C45)",
- 		.probe		= rtl822x_probe,
- 		.config_init    = rtl822xb_config_init,
- 		.get_rate_matching = rtl822xb_get_rate_matching,
+ 	if (bxcan_tx_busy(priv))
 -- 
 2.51.0
 
