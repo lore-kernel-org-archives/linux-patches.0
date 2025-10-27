@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FC0218EB1;
-	Mon, 27 Oct 2025 18:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD8B218EB1;
+	Mon, 27 Oct 2025 18:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590367; cv=none; b=uumdwa+oYwpt91A2tCNLlLqk4OSW0Gs04Grh46sVEEWt1MsBc4FLHKhzRlQ8dMBjZl88akX5XrGOVc9CsHybvtxhlIOzyZCjWBI13e7ILMkWgCz6Vx88hE535hiiTiw690xuTwsxnk94mcFGtxeBywVnuKHiWrxJaU8UVOpqZXM=
+	t=1761590370; cv=none; b=gF/CkSVf3i2ac5qg2j85ap3+D/xrZCdbd/gfRqikCG6OrfjqfyX04BCzZWseYtlB+sK9APQmcLEd5V78DwLzcvo+uWzzKXaeoS6ZoEZvsxQtPMXUzoxKrw48GmqaHdAevYUpgP82lLgsosHEaEXEmodaN4DYXeKZo3Sqvugo07w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590367; c=relaxed/simple;
-	bh=JSvkol3gAs72usPwiR2tXW7O4vDK3E6LZlXvIXx3uIY=;
+	s=arc-20240116; t=1761590370; c=relaxed/simple;
+	bh=OSnUwXFW446t4WeiMwWZFEzQRSRPY9Pt8XVmc2FcRuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAVt4tEkvFn3y03HVZtNSzbP1QvsRGH/mPqAb7znTJXs9DIrJ13/pRy5ffkM2gxHFltwJ2AyfkN3/8pa7Y5Emnt7U5WKRgwQqJp6+OVrZf7uzfs330mwoAYDAHryfXVBounfmkXF2xLwwlWlC4VphrNi5pLt6TvBtYmBQzPYi7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=popxEbDE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oi18UJEum822t/kgjL2RFnRXJOZoLDzGt5hypwrf/bmPec635dWN3LXmMPNn4jU613HER3RuNCJGGIG05vC5i/xELxf8UHEcpFn4mJiOpCXGpyFquVZe4PtzCmH0ZIjS3+bDwdp+Fx1/o8W1geajcwpvv5t5kSFutiWeXFWsnOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLFw8MTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="popxEbDE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D166C4CEF1;
-	Mon, 27 Oct 2025 18:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLFw8MTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E240AC4CEF1;
+	Mon, 27 Oct 2025 18:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590367;
-	bh=JSvkol3gAs72usPwiR2tXW7O4vDK3E6LZlXvIXx3uIY=;
+	s=korg; t=1761590370;
+	bh=OSnUwXFW446t4WeiMwWZFEzQRSRPY9Pt8XVmc2FcRuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=popxEbDEafAcGtXmTuGM4nZYTlII7tnuK1tTCbbdp7V8CFUIgf3K1VdmLxMWwcgQ8
-	 NQh4m6aqcx4ZX0CelmCiSV1Crc8Jyq1mcxAiHCk0gtRDOhRGqJ1LqpCpRCBJtiEJzm
-	 Ck5S5AOTgwzKivrbpw3m9PRhVgrp3ANNxukL/DjM=
+	b=QLFw8MTiqwKbAF7sB5BnJfeh7KFqoOy7Vz/vwA0RxMbgzMYRqUMxey6QRZy3Ki56R
+	 ddr8HJF8Gx+TMrDoba628Z5qlemXq62eMYMFlRjtr0yFmaHIT76LlBjPacW1WUBpyx
+	 xkWUTLpIpgbDHAZ6zuH2EMKIqKLJDg/dBOTfK+A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/224] x86/vdso: Fix output operand size of RDPID
-Date: Mon, 27 Oct 2025 19:32:45 +0100
-Message-ID: <20251027183509.510260190@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.4 002/224] media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
+Date: Mon, 27 Oct 2025 19:32:28 +0100
+Message-ID: <20251027183509.037074523@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,59 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit ac9c408ed19d535289ca59200dd6a44a6a2d6036 ]
+commit 01e03fb7db419d39e18d6090d4873c1bff103914 upstream.
 
-RDPID instruction outputs to a word-sized register (64-bit on x86_64 and
-32-bit on x86_32). Use an unsigned long variable to store the correct size.
+The original code uses cancel_delayed_work() in flexcop_pci_remove(), which
+does not guarantee that the delayed work item irq_check_work has fully
+completed if it was already running. This leads to use-after-free scenarios
+where flexcop_pci_remove() may free the flexcop_device while irq_check_work
+is still active and attempts to dereference the device.
 
-LSL outputs to 32-bit register, use %k operand prefix to always print the
-32-bit name of the register.
+A typical race condition is illustrated below:
 
-Use RDPID insn mnemonic while at it as the minimum binutils version of
-2.30 supports it.
+CPU 0 (remove)                         | CPU 1 (delayed work callback)
+flexcop_pci_remove()                   | flexcop_pci_irq_check_work()
+  cancel_delayed_work()                |
+  flexcop_device_kfree(fc_pci->fc_dev) |
+                                       |   fc = fc_pci->fc_dev; // UAF
 
-  [ bp: Merge two patches touching the same function into a single one. ]
+This is confirmed by a KASAN report:
 
-Fixes: ffebbaedc861 ("x86/vdso: Introduce helper functions for CPU and node number")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250616095315.230620-1-ubizjak@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+==================================================================
+BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
+Write of size 8 at addr ffff8880093aa8c8 by task bash/135
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_report+0xcf/0x610
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ kasan_report+0xb8/0xf0
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ __run_timer_base.part.0+0x7d7/0x8c0
+ ? __pfx___run_timer_base.part.0+0x10/0x10
+ ? __pfx_read_tsc+0x10/0x10
+ ? ktime_get+0x60/0x140
+ ? lapic_next_event+0x11/0x20
+ ? clockevents_program_event+0x1d4/0x2a0
+ run_timer_softirq+0xd1/0x190
+ handle_softirqs+0x16a/0x550
+ irq_exit_rcu+0xaf/0xe0
+ sysvec_apic_timer_interrupt+0x70/0x80
+ </IRQ>
+...
+
+Allocated by task 1:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x7f/0x90
+ __kmalloc_noprof+0x1be/0x460
+ flexcop_device_kmalloc+0x54/0xe0
+ flexcop_pci_probe+0x1f/0x9d0
+ local_pci_probe+0xdc/0x190
+ pci_device_probe+0x2fe/0x470
+ really_probe+0x1ca/0x5c0
+ __driver_probe_device+0x248/0x310
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xd2/0x310
+ bus_for_each_dev+0xed/0x170
+ bus_add_driver+0x208/0x500
+ driver_register+0x132/0x460
+ do_one_initcall+0x89/0x300
+ kernel_init_freeable+0x40d/0x720
+ kernel_init+0x1a/0x150
+ ret_from_fork+0x10c/0x1a0
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 135:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3a/0x60
+ __kasan_slab_free+0x3f/0x50
+ kfree+0x137/0x370
+ flexcop_device_kfree+0x32/0x50
+ pci_device_remove+0xa6/0x1d0
+ device_release_driver_internal+0xf8/0x210
+ pci_stop_bus_device+0x105/0x150
+ pci_stop_and_remove_bus_device_locked+0x15/0x30
+ remove_store+0xcc/0xe0
+ kernfs_fop_write_iter+0x2c3/0x440
+ vfs_write+0x871/0xd70
+ ksys_write+0xee/0x1c0
+ do_syscall_64+0xac/0x280
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+
+Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
+that the delayed work item is properly canceled and any executing delayed
+work has finished before the device memory is deallocated.
+
+This bug was initially identified through static analysis. To reproduce
+and test it, I simulated the B2C2 FlexCop PCI device in QEMU and introduced
+artificial delays within the flexcop_pci_irq_check_work() function to
+increase the likelihood of triggering the bug.
+
+Fixes: 382c5546d618 ("V4L/DVB (10694): [PATCH] software IRQ watchdog for Flexcop B2C2 DVB PCI cards")
+Cc: stable@vger.kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/segment.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/pci/b2c2/flexcop-pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/segment.h b/arch/x86/include/asm/segment.h
-index 6669164abadcb..531a0cb93b47b 100644
---- a/arch/x86/include/asm/segment.h
-+++ b/arch/x86/include/asm/segment.h
-@@ -253,7 +253,7 @@ static inline unsigned long vdso_encode_cpunode(int cpu, unsigned long node)
+--- a/drivers/media/pci/b2c2/flexcop-pci.c
++++ b/drivers/media/pci/b2c2/flexcop-pci.c
+@@ -411,7 +411,7 @@ static void flexcop_pci_remove(struct pc
+ 	struct flexcop_pci *fc_pci = pci_get_drvdata(pdev);
  
- static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
- {
--	unsigned int p;
-+	unsigned long p;
+ 	if (irq_chk_intv > 0)
+-		cancel_delayed_work(&fc_pci->irq_check_work);
++		cancel_delayed_work_sync(&fc_pci->irq_check_work);
  
- 	/*
- 	 * Load CPU and node number from the GDT.  LSL is faster than RDTSCP
-@@ -263,10 +263,10 @@ static inline void vdso_read_cpunode(unsigned *cpu, unsigned *node)
- 	 *
- 	 * If RDPID is available, use it.
- 	 */
--	alternative_io ("lsl %[seg],%[p]",
--			".byte 0xf3,0x0f,0xc7,0xf8", /* RDPID %eax/rax */
-+	alternative_io ("lsl %[seg],%k[p]",
-+			"rdpid %[p]",
- 			X86_FEATURE_RDPID,
--			[p] "=a" (p), [seg] "r" (__CPUNODE_SEG));
-+			[p] "=r" (p), [seg] "r" (__CPUNODE_SEG));
- 
- 	if (cpu)
- 		*cpu = (p & VDSO_CPUNODE_MASK);
--- 
-2.51.0
-
+ 	flexcop_pci_dma_exit(fc_pci);
+ 	flexcop_device_exit(fc_pci->fc_dev);
 
 
