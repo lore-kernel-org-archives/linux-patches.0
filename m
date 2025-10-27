@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678522D7DDA;
-	Mon, 27 Oct 2025 19:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB472D7DDA;
+	Mon, 27 Oct 2025 19:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592536; cv=none; b=H3t50lxoMxmrdDQ6bnb5wCm/Ut1iQKUr7YvoVuqNtGm2DGuv7ikWjoLXTvIEprTwS2X/DK5BFjK1uESHG7TPNn5QeUCvYpw/wxePOR6s8cLrzYVM3aewbZbTuphKLJsiZtJIXtM5YHlYlbYVZHbjkiPOSVPygv+ajHvSJ0NClts=
+	t=1761592539; cv=none; b=Ce9vyfJz4Jbbh16NeF3xGthHxqKXupbs1VF0MnIoEcCTCjZoePehSs5iM17DKNNRnYI0bP5MH2g3f4ajcyvZlrSZUDTe6N9oEl8tzC3Hi4wa+WIFRU4hyR6IIvq1lTj72Pi234eW1qiu07PIj42XTp0vreqRkiZezzzQlWk5Sgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592536; c=relaxed/simple;
-	bh=GZOLv90Z205qYfQvLdzeKByGLLhJ/2lvwKv+hpbVntI=;
+	s=arc-20240116; t=1761592539; c=relaxed/simple;
+	bh=TGkRWxxSSHl9scq5lAjnBxahVQQ1ULanb0VTecItDIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLj8Igmg4Cp65ts0bheNtNBfGVvc51xN6JLpNFsuvlcKVwkKEYqlSpKoP8GVC9IIlYRj81EOmujRNP+HXqXAT8FaB/3mLwcoE+UUBRiVyh+oaln2p5MAq22MM/DjQPOCXGcQZrnxiO09XNpos1jCPdlkQ00WEayMKjYYwaLbfH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNTcOj2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkr4zdlnlfXmk4Re2USzCRHy5LeTGZu97YMtMBHcengTE7UW0vrnRJk1i8CqXJJDgm5jIlXVmFpkFfbDYxyi8Pzt2iMoftHWr3WHihHI3gGBHPIbBH5Al8LXTQV9ZMwbrjqf0GygDHcYl5vYKEWjky/WQ8zAsehMF8T7CanTwZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl7kw4tM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNTcOj2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CB4C4CEF1;
-	Mon, 27 Oct 2025 19:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl7kw4tM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB86EC4CEF1;
+	Mon, 27 Oct 2025 19:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592536;
-	bh=GZOLv90Z205qYfQvLdzeKByGLLhJ/2lvwKv+hpbVntI=;
+	s=korg; t=1761592539;
+	bh=TGkRWxxSSHl9scq5lAjnBxahVQQ1ULanb0VTecItDIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNTcOj2Pls38UomEiTLY+Kv1b9DZp4RSrdpzJRHIp5Xsou4NCze1O6pTwbXjUunaK
-	 na9rywvzPTOrrnoZ5MQMk4yqLcQB3xInBMd/No7nEzVfQcPFRF3redY7FBEhLUdhPZ
-	 4TXwqlwHElESt+wEuvmx6txPfJHTp50L6rGDc0RE=
+	b=bl7kw4tMoqc0zArLAlF8jDV5v1IKquOuHqdzY1ZJk2N9EyoISNTNhp/7l15Er7/Be
+	 dpYunzM5QF5ZDNR30WbVLAiIwWQvXqIiBeEVnS8GF+EDd6/c2XkbaN2K58DfiB0paU
+	 Yibqfcub2qlJtp8JCyzzJTGGTtTWnN2eS3jHshQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/157] iio: imu: inv_icm42600: Simplify pm_runtime setup
-Date: Mon, 27 Oct 2025 19:36:23 +0100
-Message-ID: <20251027183504.520271158@linuxfoundation.org>
+	syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Subject: [PATCH 6.1 113/157] most: usb: Fix use-after-free in hdm_disconnect
+Date: Mon, 27 Oct 2025 19:36:14 +0100
+Message-ID: <20251027183504.280932677@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,83 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
 
-[ Upstream commit 0792c1984a45ccd7a296d6b8cb78088bc99a212e ]
+commit 4b1270902609ef0d935ed2faa2ea6d122bd148f5 upstream.
 
-Rework the power management in inv_icm42600_core_probe() to use
-devm_pm_runtime_set_active_enabled(), which simplifies the runtime PM
-setup by handling activation and enabling in one step.
-Remove the separate inv_icm42600_disable_pm callback, as it's no longer
-needed with the devm-managed approach.
-Using devm_pm_runtime_enable() also fixes the missing disable of
-autosuspend.
-Update inv_icm42600_disable_vddio_reg() to only disable the regulator if
-the device is not suspended i.e. powered-down, preventing unbalanced
-disables.
-Also remove redundant error msg on regulator_disable(), the regulator
-framework already emits an error message when regulator_disable() fails.
+hdm_disconnect() calls most_deregister_interface(), which eventually
+unregisters the MOST interface device with device_unregister(iface->dev).
+If that drops the last reference, the device core may call release_mdev()
+immediately while hdm_disconnect() is still executing.
 
-This simplifies the PM setup and avoids manipulating the usage counter
-unnecessarily.
+The old code also freed several mdev-owned allocations in
+hdm_disconnect() and then performed additional put_device() calls.
+Depending on refcount order, this could lead to use-after-free or
+double-free when release_mdev() ran (or when unregister paths also
+performed puts).
 
-Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250901-icm42pmreg-v3-1-ef1336246960@geanix.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by moving the frees of mdev-owned allocations into release_mdev(),
+so they happen exactly once when the device is truly released, and by
+dropping the extra put_device() calls in hdm_disconnect() that are
+redundant after device_unregister() and most_deregister_interface().
+
+This addresses the KASAN slab-use-after-free reported by syzbot in
+hdm_disconnect(). See report and stack traces in the bug link below.
+
+Reported-by: syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=916742d5d24f6c254761
+Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
+Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Link: https://patch.msgid.link/20251010105241.4087114-2-Victoria.Votokina@kaspersky.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   24 ++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ drivers/most/most_usb.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -550,20 +550,12 @@ static void inv_icm42600_disable_vdd_reg
- static void inv_icm42600_disable_vddio_reg(void *_data)
+--- a/drivers/most/most_usb.c
++++ b/drivers/most/most_usb.c
+@@ -929,6 +929,10 @@ static void release_mdev(struct device *
  {
- 	struct inv_icm42600_state *st = _data;
--	const struct device *dev = regmap_get_device(st->map);
--	int ret;
+ 	struct most_dev *mdev = to_mdev_from_dev(dev);
+ 
++	kfree(mdev->busy_urbs);
++	kfree(mdev->cap);
++	kfree(mdev->conf);
++	kfree(mdev->ep_address);
+ 	kfree(mdev);
+ }
+ /**
+@@ -1121,13 +1125,6 @@ static void hdm_disconnect(struct usb_in
+ 	if (mdev->dci)
+ 		device_unregister(&mdev->dci->dev);
+ 	most_deregister_interface(&mdev->iface);
 -
--	ret = regulator_disable(st->vddio_supply);
--	if (ret)
--		dev_err(dev, "failed to disable vddio error %d\n", ret);
--}
-+	struct device *dev = regmap_get_device(st->map);
- 
--static void inv_icm42600_disable_pm(void *_data)
--{
--	struct device *dev = _data;
-+	if (pm_runtime_status_suspended(dev))
-+		return;
- 
--	pm_runtime_put_sync(dev);
--	pm_runtime_disable(dev);
-+	regulator_disable(st->vddio_supply);
+-	kfree(mdev->busy_urbs);
+-	kfree(mdev->cap);
+-	kfree(mdev->conf);
+-	kfree(mdev->ep_address);
+-	put_device(&mdev->dci->dev);
+-	put_device(&mdev->dev);
  }
  
- int inv_icm42600_core_probe(struct regmap *regmap, int chip, int irq,
-@@ -660,16 +652,14 @@ int inv_icm42600_core_probe(struct regma
- 		return ret;
- 
- 	/* setup runtime power management */
--	ret = pm_runtime_set_active(dev);
-+	ret = devm_pm_runtime_set_active_enabled(dev);
- 	if (ret)
- 		return ret;
--	pm_runtime_get_noresume(dev);
--	pm_runtime_enable(dev);
-+
- 	pm_runtime_set_autosuspend_delay(dev, INV_ICM42600_SUSPEND_DELAY_MS);
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_put(dev);
- 
--	return devm_add_action_or_reset(dev, inv_icm42600_disable_pm, dev);
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(inv_icm42600_core_probe);
- 
+ static int hdm_suspend(struct usb_interface *interface, pm_message_t message)
 
 
