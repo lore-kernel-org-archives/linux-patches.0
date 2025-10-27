@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586AB274FD0;
-	Mon, 27 Oct 2025 19:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA033164A8;
+	Mon, 27 Oct 2025 19:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592484; cv=none; b=TwPhp5pe0ltTr6xYdL1kphydsGL5hn7xzYcmmce5VfC4I4S4gpk6wFTYslaAFKI07qmi3iATTkQlANGKY0XVoPE3f0gSt/GN9FEhWBIlMDX81n5u6jcUObMo18BDO69o4hOn+jXrrcCYhclcwVQ+dznXOXKotv6tjzQDw+P0FRg=
+	t=1761592486; cv=none; b=jZgFiz2e5tZUZdX/Z1kWDNJWJbHZmrw9d5KDtxWysXQBngnzLLKXQjsW93VJUWsCcNsBOYEWJy2P2Ai39pp4VIOznx0tAKJPcXBVVnbygv83RN6DZ2Egmyf1po8tTKQOOew+8lQfL+Rm2J/4A+UQMJO2TpkKtGY38SE0R0w22G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592484; c=relaxed/simple;
-	bh=BfK/Ki23uds8rmQ/y7jfKTFLpfpLRBxna4+YOC9eZoU=;
+	s=arc-20240116; t=1761592486; c=relaxed/simple;
+	bh=sBpB+aqHvqY5EDPYMi9PTahWlPZuQPoMWyeUBLxj/hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tF0Cs6zQL2Kz3anIVEt1mJ1cmN4UX1rEjfhVlg8z2pO0LaeFZPfQ/onybZNFbSqXYdXr+Lkqejousenq7Lr5fk4/CFhuQMy3E98jJvMu3q4NPihebRv7thLNvcLa02N5yT55g/03cfTKDaybByt5BufUmp3BoGV7xFexQWt2IgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phtzY5jW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5j5txooA1AG6m+7KBl8SvWxtJGXmQ1mTw/rWYXgSkPSSNC9jQF1ttaWv/tGP3eL5AFDmd8XbTHCGGnKi0o1CHCCZHOHMkrg5aLyaPOTFs9rqcrbLvMPAqJeyAZHgRPDwdszjDLq2BR2xyDrXvgaj66gGiBHcIOeZywxLIN0Isk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK/vYsE9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phtzY5jW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9419BC4CEF1;
-	Mon, 27 Oct 2025 19:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK/vYsE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27480C113D0;
+	Mon, 27 Oct 2025 19:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592483;
-	bh=BfK/Ki23uds8rmQ/y7jfKTFLpfpLRBxna4+YOC9eZoU=;
+	s=korg; t=1761592486;
+	bh=sBpB+aqHvqY5EDPYMi9PTahWlPZuQPoMWyeUBLxj/hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phtzY5jWOX+65Mh5kPO3SDfs0ko+HEdyJPsmD61SZOjTpuXBZ3CO1phTv1fs+y5OV
-	 PhKMJ9AjQEnJesVUYriWRXEeCGHGkI+zRElRe8HnuO04ahLyqtesZZtjyGQwPJ6FGm
-	 5XPpgJ/4+o0BLggy/Ro4glO5ZR/tUGSsfoYGY2aw=
+	b=XK/vYsE9laYjqhKE+APpy+nJth7EnOCY/bTarsUCtjIhCAbymrwqRGxWutwn8YyRg
+	 I81L3I8nxqHkkpHl0+0SHbD6rMZA4TuteRku5pOFvj+o58cchNjH3VecYEPcyugOjh
+	 n4ZHL4TqL49jg4NCNrw9LkFA5DxoWwJUl/UpLa0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/157] PCI: tegra194: Reset BARs when running in PCIe endpoint mode
-Date: Mon, 27 Oct 2025 19:36:39 +0100
-Message-ID: <20251027183504.965515936@linuxfoundation.org>
+Subject: [PATCH 6.1 139/157] f2fs: add a f2fs_get_block_locked helper
+Date: Mon, 27 Oct 2025 19:36:40 +0100
+Message-ID: <20251027183504.998990862@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -52,72 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 42f9c66a6d0cc45758dab77233c5460e1cf003df ]
+[ Upstream commit cf342d3beda000b4c60990755ca7800de5038785 ]
 
-Tegra already defines all BARs except BAR0 as BAR_RESERVED.  This is
-sufficient for pci-epf-test to not allocate backing memory and to not call
-set_bar() for those BARs. However, marking a BAR as BAR_RESERVED does not
-mean that the BAR gets disabled.
+This allows to keep the f2fs_do_map_lock based locking scheme
+private to data.c.
 
-The host side driver, pci_endpoint_test, simply does an ioremap for all
-enabled BARs and will run tests against all enabled BARs, so it will run
-tests against the BARs marked as BAR_RESERVED.
-
-After running the BAR tests (which will write to all enabled BARs), the
-inbound address translation is broken. This is because the tegra controller
-exposes the ATU Port Logic Structure in BAR4, so when BAR4 is written, the
-inbound address translation settings get overwritten.
-
-To avoid this, implement the dw_pcie_ep_ops .init() callback and start off
-by disabling all BARs (pci-epf-test will later enable/configure BARs that
-are not defined as BAR_RESERVED).
-
-This matches the behavior of other PCIe endpoint drivers: dra7xx, imx6,
-layerscape-ep, artpec6, dw-rockchip, qcom-ep, rcar-gen4, and uniphier-ep.
-
-With this, the PCI endpoint kselftest test case CONSECUTIVE_BAR_TEST (which
-was specifically made to detect address translation issues) passes.
-
-Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250922140822.519796-7-cassel@kernel.org
-[ changed .init field to .ep_init in pcie_ep_ops struct ]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 9d5c4f5c7a2c ("f2fs: fix wrong block mapping for multi-devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/data.c |   16 ++++++++++++++--
+ fs/f2fs/f2fs.h |    3 +--
+ fs/f2fs/file.c |    4 +---
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1949,6 +1949,15 @@ static irqreturn_t tegra_pcie_ep_pex_rst
- 	return IRQ_HANDLED;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1192,7 +1192,7 @@ int f2fs_reserve_block(struct dnode_of_d
+ 	return err;
  }
  
-+static void tegra_pcie_ep_init(struct dw_pcie_ep *ep)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-+	enum pci_barno bar;
-+
-+	for (bar = 0; bar < PCI_STD_NUM_BARS; bar++)
-+		dw_pcie_ep_reset_bar(pci, bar);
-+};
-+
- static int tegra_pcie_ep_raise_legacy_irq(struct tegra_pcie_dw *pcie, u16 irq)
+-int f2fs_get_block(struct dnode_of_data *dn, pgoff_t index)
++static int f2fs_get_block(struct dnode_of_data *dn, pgoff_t index)
  {
- 	/* Tegra194 supports only INTA */
-@@ -2022,6 +2031,7 @@ tegra_pcie_ep_get_features(struct dw_pci
+ 	struct extent_info ei = {0, };
+ 	struct inode *inode = dn->inode;
+@@ -1432,7 +1432,7 @@ static int __allocate_data_block(struct
+ 	return 0;
  }
  
- static const struct dw_pcie_ep_ops pcie_ep_ops = {
-+	.ep_init = tegra_pcie_ep_init,
- 	.raise_irq = tegra_pcie_ep_raise_irq,
- 	.get_features = tegra_pcie_ep_get_features,
- };
+-void f2fs_do_map_lock(struct f2fs_sb_info *sbi, int flag, bool lock)
++static void f2fs_do_map_lock(struct f2fs_sb_info *sbi, int flag, bool lock)
+ {
+ 	if (flag == F2FS_GET_BLOCK_PRE_AIO) {
+ 		if (lock)
+@@ -1447,6 +1447,18 @@ void f2fs_do_map_lock(struct f2fs_sb_inf
+ 	}
+ }
+ 
++int f2fs_get_block_locked(struct dnode_of_data *dn, pgoff_t index)
++{
++	struct f2fs_sb_info *sbi = F2FS_I_SB(dn->inode);
++	int err;
++
++	f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, true);
++	err = f2fs_get_block(dn, index);
++	f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, false);
++
++	return err;
++}
++
+ /*
+  * f2fs_map_blocks() tries to find or build mapping relationship which
+  * maps continuous logical blocks to physical blocks, and return such
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3783,7 +3783,7 @@ void f2fs_set_data_blkaddr(struct dnode_
+ void f2fs_update_data_blkaddr(struct dnode_of_data *dn, block_t blkaddr);
+ int f2fs_reserve_new_blocks(struct dnode_of_data *dn, blkcnt_t count);
+ int f2fs_reserve_new_block(struct dnode_of_data *dn);
+-int f2fs_get_block(struct dnode_of_data *dn, pgoff_t index);
++int f2fs_get_block_locked(struct dnode_of_data *dn, pgoff_t index);
+ int f2fs_reserve_block(struct dnode_of_data *dn, pgoff_t index);
+ struct page *f2fs_get_read_data_page(struct inode *inode, pgoff_t index,
+ 			blk_opf_t op_flags, bool for_write, pgoff_t *next_pgofs);
+@@ -3794,7 +3794,6 @@ struct page *f2fs_get_lock_data_page(str
+ struct page *f2fs_get_new_data_page(struct inode *inode,
+ 			struct page *ipage, pgoff_t index, bool new_i_size);
+ int f2fs_do_write_data_page(struct f2fs_io_info *fio);
+-void f2fs_do_map_lock(struct f2fs_sb_info *sbi, int flag, bool lock);
+ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map,
+ 			int create, int flag);
+ int f2fs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -113,10 +113,8 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
+ 
+ 	if (need_alloc) {
+ 		/* block allocation */
+-		f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, true);
+ 		set_new_dnode(&dn, inode, NULL, NULL, 0);
+-		err = f2fs_get_block(&dn, page->index);
+-		f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, false);
++		err = f2fs_get_block_locked(&dn, page->index);
+ 	}
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
 
 
