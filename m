@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C00232861A;
-	Mon, 27 Oct 2025 19:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ECF328604;
+	Mon, 27 Oct 2025 19:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592442; cv=none; b=bY3wLgls/LmFBf9zOGbEScFU0SqQkZVe0zLNVT9emjKqjsYalcIRnlr0Juxf6ZA+WqnRUQBrGMjxWIKSh0Xlbo0qoOwQUswrqcpzCmJ8Ca2rqjZup8ucgXVXjMH7JstA253heRU8FOBWyqM0WzTyPuAZvxqLNAL/+JATt1gi5sY=
+	t=1761592447; cv=none; b=ollS8LVTIF6MSNlU90C57XXueNMXflSkdhrb+TIhTe7Gr3koS9kzX7G0ZQk9SdnLjuRtBEVspn0nGwd2rPAN5STN9HH2Nao299UOHldeay5iNVMS5+IxAZB3WJnGfWM6cjshrEd7iMjYhWlFaYidkQW0J8WFnH+wTgKLQKm6chE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592442; c=relaxed/simple;
-	bh=Gcm0PAQGGJVN8mMcrz7d3BPi9oG3J+losR5b+ZmjZu8=;
+	s=arc-20240116; t=1761592447; c=relaxed/simple;
+	bh=RAChbIuzvPMtqjiRwf62ZOX48tpgL1/flaeo2W3neSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QNk463Xr/LqNvgzGWiK380mq5tDHeLV9vg2eqU/gggt1n0ExAMAEF7fYZcFyeGmbMztBzFGjWRAVaOkILDCDQJBPSRsmWbskyYmsdX50/mghyiziKiNHMC1Q3uI1fdC96aHbOEikDN+1JEN8t1an/S5ngK6XyuWItjAhli86yWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyqbfYRG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qorgck+W3y/Cslt4HydhDA76husiJSpc4zTsdVurrfMyDY788BGmHkFiTR9+GDgm6TSJdHqqc15H/dqaOu2Ra/doOt5VOr5Lq5/sU3Gbv5JGUudkdqTITTH/jt1Wn2ygEhVul2auHfhfvGG4xn/IAxLlEhwY72rk12GTxah3vsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWS8s8D4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyqbfYRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD70C4CEF1;
-	Mon, 27 Oct 2025 19:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWS8s8D4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F696C4CEF1;
+	Mon, 27 Oct 2025 19:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592442;
-	bh=Gcm0PAQGGJVN8mMcrz7d3BPi9oG3J+losR5b+ZmjZu8=;
+	s=korg; t=1761592444;
+	bh=RAChbIuzvPMtqjiRwf62ZOX48tpgL1/flaeo2W3neSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uyqbfYRGACCsdd8bE5P+IwDht17Z2s+UJP11ud0/sd3UiHPh+yPAM+4EKJI9WVDmw
-	 XfmM4wRObj93hOO4Sq6NQHQftES6ik+DtPpiORN5Pm5cw4IaDB6fG2gnLroeceTaiu
-	 jTLlHeud5t1cPOZAifAWjrCe1MaVh+VWywtuQqeE=
+	b=bWS8s8D40C9EnOyqsaodJ8EFc6g+HJIpeNTyAk48hsxqe6ehPWZvHtnXF0VMQ+tuA
+	 VXfc04T4rXH5qvSH22UBXcRPi0dyLI9Kihjk+ZFRugai8Ql46mlne8ULQD22C9dr1c
+	 WTT22i0PS5bxgENIQNMcoW0eFFWQf+Zxmh3Qqa+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/157] iio: imu: inv_icm42600: use = { } instead of memset()
-Date: Mon, 27 Oct 2025 19:36:24 +0100
-Message-ID: <20251027183504.549196324@linuxfoundation.org>
+Subject: [PATCH 6.1 124/157] iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended
+Date: Mon, 27 Oct 2025 19:36:25 +0100
+Message-ID: <20251027183504.576585116@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -47,74 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-[ Upstream commit 352112e2d9aab6a156c2803ae14eb89a9fd93b7d ]
+[ Upstream commit 466f7a2fef2a4e426f809f79845a1ec1aeb558f4 ]
 
-Use { } instead of memset() to zero-initialize stack memory to simplify
-the code.
+Do as in suspend, skip resume configuration steps if the device is already
+pm_runtime suspended. This avoids reconfiguring a device that is already
+in the correct low-power state and ensures that pm_runtime handles the
+power state transitions properly.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20250611-iio-zero-init-stack-with-instead-of-memset-v1-16-ebb2d0a24302@baylibre.com
+Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250901-icm42pmreg-v3-3-ef1336246960@geanix.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 466f7a2fef2a ("iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended")
+[ adjusted context for suspend/resume functions lacking APEX/wakeup support ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    5 ++---
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -748,7 +748,8 @@ int inv_icm42600_accel_parse_fifo(struct
- 	const int8_t *temp;
- 	unsigned int odr;
- 	int64_t ts_val;
--	struct inv_icm42600_accel_buffer buffer;
-+	/* buffer is copied to userspace, zeroing it to avoid any data leak */
-+	struct inv_icm42600_accel_buffer buffer = { };
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -670,17 +670,15 @@ EXPORT_SYMBOL_GPL(inv_icm42600_core_prob
+ static int __maybe_unused inv_icm42600_suspend(struct device *dev)
+ {
+ 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
+-	int ret;
++	int ret = 0;
  
- 	/* parse all fifo packets */
- 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
-@@ -767,8 +768,6 @@ int inv_icm42600_accel_parse_fifo(struct
- 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
- 							 st->fifo.nb.total, no);
+ 	mutex_lock(&st->lock);
  
--		/* buffer is copied to userspace, zeroing it to avoid any data leak */
--		memset(&buffer, 0, sizeof(buffer));
- 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -760,7 +760,8 @@ int inv_icm42600_gyro_parse_fifo(struct
- 	const int8_t *temp;
- 	unsigned int odr;
- 	int64_t ts_val;
--	struct inv_icm42600_gyro_buffer buffer;
-+	/* buffer is copied to userspace, zeroing it to avoid any data leak */
-+	struct inv_icm42600_gyro_buffer buffer = { };
+ 	st->suspended.gyro = st->conf.gyro.mode;
+ 	st->suspended.accel = st->conf.accel.mode;
+ 	st->suspended.temp = st->conf.temp_en;
+-	if (pm_runtime_suspended(dev)) {
+-		ret = 0;
++	if (pm_runtime_suspended(dev))
+ 		goto out_unlock;
+-	}
  
- 	/* parse all fifo packets */
- 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
-@@ -779,8 +780,6 @@ int inv_icm42600_gyro_parse_fifo(struct
- 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
- 							 st->fifo.nb.total, no);
+ 	/* disable FIFO data streaming */
+ 	if (st->fifo.on) {
+@@ -712,10 +710,13 @@ static int __maybe_unused inv_icm42600_r
+ 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
+ 	struct inv_icm42600_timestamp *gyro_ts = iio_priv(st->indio_gyro);
+ 	struct inv_icm42600_timestamp *accel_ts = iio_priv(st->indio_accel);
+-	int ret;
++	int ret = 0;
  
--		/* buffer is copied to userspace, zeroing it to avoid any data leak */
--		memset(&buffer, 0, sizeof(buffer));
- 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
+ 	mutex_lock(&st->lock);
+ 
++	if (pm_runtime_suspended(dev))
++		goto out_unlock;
++
+ 	ret = inv_icm42600_enable_regulator_vddio(st);
+ 	if (ret)
+ 		goto out_unlock;
 
 
