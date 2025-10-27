@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752AB32BF21;
-	Mon, 27 Oct 2025 19:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F218B32B9B0;
+	Mon, 27 Oct 2025 19:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591811; cv=none; b=Z7WXmW9/N6xovxPtLxlUOS7CFxdpFaDig55Vozl851vd0meQ76FKHwslWTVBYyMQlVOFoLg5JhMpP5j9r7lJIjBmGhV+XbGJ5J9+0gWb87kU1hpmqShvmRqdDd0JS4qXlPhgLD0RAxcz8MAM4txvzaahbDynruUhWrGJDdMJwF8=
+	t=1761591814; cv=none; b=KB0O3oWHZl2gMEkefeWp0CU5i00Um0oADs7Z6si+N5lCNNBT8D7Ifgwg1hZ/Nc82fl2zrtG5jWILBHbSgrROikr0LtzpCbqjrbVA4dYW9DsxhqpRoE2T/PLCx31puPscJwNtc4vVCCu1zqbZ6hV/Pvmu7EzZ1hL3xb9fe/IKA74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591811; c=relaxed/simple;
-	bh=++nuKB42dTEdVNuKdyXIVBBooKgRgaFV1BbgCPZ9GO0=;
+	s=arc-20240116; t=1761591814; c=relaxed/simple;
+	bh=BXANrjEvWZk4tOL3T326Utlpe3PLJ+ws53e80MKXHKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JCgFHj0sH5vGRtKiiN0HmnysFTzcNUjkpr0ihWxDEIQCJF8M0kzPeI2ZXgCmCcYJrPbV7lrBdqptMpiFqnPobJGiiEg9YAoeHZSuyC5KNb7StIGZpZX9nfudN3DC3zNBMgNgXSVUMF6fNOOdo7FYN6HJQsHdVYxTVPpnOKZqF8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7acO6VO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCWfSGtb5hFAU9rh5a8k36rKQadJ/csXvpQxOMNDBW7L9DoRzN9Ae22yFuqwex9kMhhr5Ndzd/1anEMHfexLtF2fE7bSjlqWXxf0GCzIcKVzmndqLbtxDvQUEJ9i9kLiKcrEVSYKXnXkBa6SS+BfWGSbtPU+CtJS4KZiYYS1XYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2LKwAvP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7acO6VO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AE2C4CEF1;
-	Mon, 27 Oct 2025 19:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2LKwAvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CE5C4CEFD;
+	Mon, 27 Oct 2025 19:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591811;
-	bh=++nuKB42dTEdVNuKdyXIVBBooKgRgaFV1BbgCPZ9GO0=;
+	s=korg; t=1761591813;
+	bh=BXANrjEvWZk4tOL3T326Utlpe3PLJ+ws53e80MKXHKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7acO6VOo7NjwIWbJRZAChRP6LKwxywFH/zc63+r4+0GbMSqdpzhobnlBeEVCRLb9
-	 XjMU4tm3KIE4XYokivb076ewDTTvMEtarP37LQwApTr9dm04L1wr2++gg5Uv4yfOWw
-	 l3azXfOsLJR2CnfG7/ZKAywwBaXAsQaE3cecL8Qo=
+	b=E2LKwAvP4poNAowdwyXZI9HzdpPoTnwK3DgJ2r6GJQjX0occ4WKYUodu/5CKMB3Ks
+	 UZTLmb7QI/qTI7e38nwFJ95ZsbXD8JcnLKvdtgfzTIVVratHEdwH37k5uHDAvUi1JU
+	 Msu4GhzGJGyKFyTd4UikTAYh46DxS+q6P5+llDY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 310/332] PM: runtime: Add new devm functions
-Date: Mon, 27 Oct 2025 19:36:03 +0100
-Message-ID: <20251027183533.042543199@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Subject: [PATCH 5.10 301/332] most: usb: hdm_probe: Fix calling put_device() before device initialization
+Date: Mon, 27 Oct 2025 19:35:54 +0100
+Message-ID: <20251027183532.798032812@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -45,113 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
 
-[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
+commit a8cc9e5fcb0e2eef21513a4fec888f5712cb8162 upstream.
 
-Add `devm_pm_runtime_set_active_enabled()` and
-`devm_pm_runtime_get_noresume()` for simplifying
-common cases in drivers.
+The early error path in hdm_probe() can jump to err_free_mdev before
+&mdev->dev has been initialized with device_initialize(). Calling
+put_device(&mdev->dev) there triggers a device core WARN and ends up
+invoking kref_put(&kobj->kref, kobject_release) on an uninitialized
+kobject.
 
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In this path the private struct was only kmalloc'ed and the intended
+release is effectively kfree(mdev) anyway, so free it directly instead
+of calling put_device() on an uninitialized device.
+
+This removes the WARNING and fixes the pre-initialization error path.
+
+Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Link: https://patch.msgid.link/20251010105241.4087114-3-Victoria.Votokina@kaspersky.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
- include/linux/pm_runtime.h   |    4 +++
- 2 files changed, 48 insertions(+)
+ drivers/most/most_usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1479,6 +1479,32 @@ void pm_runtime_enable(struct device *de
+--- a/drivers/most/most_usb.c
++++ b/drivers/most/most_usb.c
+@@ -1097,7 +1097,7 @@ err_free_cap:
+ err_free_conf:
+ 	kfree(mdev->conf);
+ err_free_mdev:
+-	put_device(&mdev->dev);
++	kfree(mdev);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(pm_runtime_enable);
  
-+static void pm_runtime_set_suspended_action(void *data)
-+{
-+	pm_runtime_set_suspended(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_set_active_enabled(struct device *dev)
-+{
-+	int err;
-+
-+	err = pm_runtime_set_active(dev);
-+	if (err)
-+		return err;
-+
-+	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
-+	if (err)
-+		return err;
-+
-+	return devm_pm_runtime_enable(dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
-+
- static void pm_runtime_disable_action(void *data)
- {
- 	pm_runtime_dont_use_autosuspend(data);
-@@ -1501,6 +1527,24 @@ int devm_pm_runtime_enable(struct device
- }
- EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
- 
-+static void pm_runtime_put_noidle_action(void *data)
-+{
-+	pm_runtime_put_noidle(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_get_noresume(struct device *dev)
-+{
-+	pm_runtime_get_noresume(dev);
-+
-+	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
-+
- /**
-  * pm_runtime_forbid - Block runtime PM of a device.
-  * @dev: Device to handle.
---- a/include/linux/pm_runtime.h
-+++ b/include/linux/pm_runtime.h
-@@ -61,7 +61,9 @@ extern void pm_runtime_new_link(struct d
- extern void pm_runtime_drop_link(struct device_link *link);
- extern void pm_runtime_release_supplier(struct device_link *link);
- 
-+int devm_pm_runtime_set_active_enabled(struct device *dev);
- extern int devm_pm_runtime_enable(struct device *dev);
-+int devm_pm_runtime_get_noresume(struct device *dev);
- 
- /**
-  * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
-@@ -258,7 +260,9 @@ static inline void __pm_runtime_disable(
- static inline void pm_runtime_allow(struct device *dev) {}
- static inline void pm_runtime_forbid(struct device *dev) {}
- 
-+static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
- static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-+static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
- 
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
- static inline void pm_runtime_get_noresume(struct device *dev) {}
 
 
