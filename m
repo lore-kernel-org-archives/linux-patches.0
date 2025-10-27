@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2FB32ED43;
-	Mon, 27 Oct 2025 19:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88723081AE;
+	Mon, 27 Oct 2025 19:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592143; cv=none; b=rL/DyQigd4EGM7LfGpQ66GLWrskYJPKz+QLnk6YdZIMR+bPE4+41HTQIYOIP3KpdTdu2/2f93ecMf+yJZzTR29x8RbFSTTEgA9Ij5aJ4Alg/Z5/V7WoeUujMsKEKB3p9bcZJ2FErFEPfh16MlD71dcro0S/G4lA4FIBimkT8/3s=
+	t=1761592146; cv=none; b=WO7Ya9Qtab4WuFfanusVAsaAkD4Z3GTFTMHCerBW8kMicrwHA4AysfR+KJ6/22EiGhhgSt+NWlDGk/7DiRlazk56mf+2M5JqPX7/EIsKRgSdBaEXwk5UsbAg8Xt1iKG2oYoGCNwPAgflm+kVymRwIZsTOOPGMTQ6t93cCjcl7lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592143; c=relaxed/simple;
-	bh=Lsi1CPVmEiLkcpmlUDqZkkZEtjxoyPbMdcW4YTMXNYE=;
+	s=arc-20240116; t=1761592146; c=relaxed/simple;
+	bh=hHdWOxDxdPgH52yK4db30ns1fBb9JYXXgWW2DNuEiEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hV5HYqpitZzHgGOuk435XTxFnPmcrkQ0kkBKmhfFfcVD1c/ApzV4/2ktBMN4+f3DC1udp2i+YApXG/zlKJr2GcY/RC3KldB5XSyJR2IoyCoOjbRjog5YwBOPhLb3rtzrFiarRui1fSAUjqfX9zMS5xJOTy5G/W51L8duqoR/GXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOJqxq6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hj83jACEm+srM97mbQbgSV03uiWEcYfuzEZlanT8ZDSnVZELnR74uNNsA5lGDLhVC31jdXyDrVm1ymMDLtWjOnS602KsrH07LTFooCMt4agjHH5JCiZL+3lvfzLaUQhSrTh1UgGuhrce2cNlxCl7X9/DVGhBTX8L2uCfYhk2OzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKMFcORk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOJqxq6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F41EC4CEFD;
-	Mon, 27 Oct 2025 19:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKMFcORk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360E5C4CEFD;
+	Mon, 27 Oct 2025 19:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592143;
-	bh=Lsi1CPVmEiLkcpmlUDqZkkZEtjxoyPbMdcW4YTMXNYE=;
+	s=korg; t=1761592145;
+	bh=hHdWOxDxdPgH52yK4db30ns1fBb9JYXXgWW2DNuEiEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOJqxq6ALh53ZEKl9CSgzrOeo72ox7fY17qqIXZ7f33ZrF10wezDqOzdzYtL8yxQL
-	 lKzjN7E5sxhVHpbtgY37QTr6HxON5AHg6lxI6EkSY5JMCFkoI/RKZMnPLGgR5mhaz/
-	 FWWeKkm3NtKrUXNl4IwI8PwRiqIa6V8t7DwNhpm4=
+	b=PKMFcORkhvTeY27S6YRUMFCnbXkmh2hlpfo7ae2ZssDtUcuTJQ6HSVQIuVlbMDSfm
+	 ZwTgEQRbtOe0kIGUeiHp9tGiwvZePf7o3WDoy7WfUs9K6Ri3oXyxBut7Xzs5pparK3
+	 gNXfifTXhGhCnea9zRQKHIZP9LsGybQI8S4OWBPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Cong <yicong@kylinos.cn>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 002/157] r8152: add error handling in rtl8152_driver_init
-Date: Mon, 27 Oct 2025 19:34:23 +0100
-Message-ID: <20251027183501.299078278@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 003/157] jbd2: ensure that all ongoing I/O complete before freeing blocks
+Date: Mon, 27 Oct 2025 19:34:24 +0100
+Message-ID: <20251027183501.326248606@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -51,41 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Cong <yicong@kylinos.cn>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 75527d61d60d493d1eb064f335071a20ca581f54 upstream.
+commit 3c652c3a71de1d30d72dc82c3bead8deb48eb749 upstream.
 
-rtl8152_driver_init() is missing the error handling.
-When rtl8152_driver registration fails, rtl8152_cfgselector_driver
-should be deregistered.
+When releasing file system metadata blocks in jbd2_journal_forget(), if
+this buffer has not yet been checkpointed, it may have already been
+written back, currently be in the process of being written back, or has
+not yet written back.  jbd2_journal_forget() calls
+jbd2_journal_try_remove_checkpoint() to check the buffer's status and
+add it to the current transaction if it has not been written back. This
+buffer can only be reallocated after the transaction is committed.
 
-Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yi Cong <yicong@kylinos.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251011082415.580740-1-yicongsrfy@163.com
-[pabeni@redhat.com: clarified the commit message]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+jbd2_journal_try_remove_checkpoint() attempts to lock the buffer and
+check its dirty status while holding the buffer lock. If the buffer has
+already been written back, everything proceeds normally. However, there
+are two issues. First, the function returns immediately if the buffer is
+locked by the write-back process. It does not wait for the write-back to
+complete. Consequently, until the current transaction is committed and
+the block is reallocated, there is no guarantee that the I/O will
+complete. This means that ongoing I/O could write stale metadata to the
+newly allocated block, potentially corrupting data. Second, the function
+unlocks the buffer as soon as it detects that the buffer is still dirty.
+If a concurrent write-back occurs immediately after this unlocking and
+before clear_buffer_dirty() is called in jbd2_journal_forget(), data
+corruption can theoretically still occur.
+
+Although these two issues are unlikely to occur in practice since the
+undergoing metadata writeback I/O does not take this long to complete,
+it's better to explicitly ensure that all ongoing I/O operations are
+completed.
+
+Fixes: 597599268e3b ("jbd2: discard dirty data when forgetting an un-journalled buffer")
+Cc: stable@kernel.org
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250916093337.3161016-2-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/r8152.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/jbd2/transaction.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -9952,7 +9952,12 @@ static int __init rtl8152_driver_init(vo
- 	ret = usb_register_device_driver(&rtl8152_cfgselector_driver, THIS_MODULE);
- 	if (ret)
- 		return ret;
--	return usb_register(&rtl8152_driver);
-+
-+	ret = usb_register(&rtl8152_driver);
-+	if (ret)
-+		usb_deregister_device_driver(&rtl8152_cfgselector_driver);
-+
-+	return ret;
- }
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1668,6 +1668,7 @@ int jbd2_journal_forget(handle_t *handle
+ 	int drop_reserve = 0;
+ 	int err = 0;
+ 	int was_modified = 0;
++	int wait_for_writeback = 0;
  
- static void __exit rtl8152_driver_exit(void)
+ 	if (is_handle_aborted(handle))
+ 		return -EROFS;
+@@ -1791,18 +1792,22 @@ int jbd2_journal_forget(handle_t *handle
+ 		}
+ 
+ 		/*
+-		 * The buffer is still not written to disk, we should
+-		 * attach this buffer to current transaction so that the
+-		 * buffer can be checkpointed only after the current
+-		 * transaction commits.
++		 * The buffer has not yet been written to disk. We should
++		 * either clear the buffer or ensure that the ongoing I/O
++		 * is completed, and attach this buffer to current
++		 * transaction so that the buffer can be checkpointed only
++		 * after the current transaction commits.
+ 		 */
+ 		clear_buffer_dirty(bh);
++		wait_for_writeback = 1;
+ 		__jbd2_journal_file_buffer(jh, transaction, BJ_Forget);
+ 		spin_unlock(&journal->j_list_lock);
+ 	}
+ drop:
+ 	__brelse(bh);
+ 	spin_unlock(&jh->b_state_lock);
++	if (wait_for_writeback)
++		wait_on_buffer(bh);
+ 	jbd2_journal_put_journal_head(jh);
+ 	if (drop_reserve) {
+ 		/* no need to reserve log space for this block -bzzz */
 
 
