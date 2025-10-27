@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDA0330D35;
-	Mon, 27 Oct 2025 18:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA7330B3E;
+	Mon, 27 Oct 2025 18:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591053; cv=none; b=r/A5XE8KD0sPYzqGHPJyu1tYJINwEl5vUtwn00jxuzpOEEbkuk0mlejynManebp8Ofp8tw7pOLYCmYRBPAq78jHi42HAnTRTDDV+PYnl7CcohDJDLlh4aCyxvsgFauu13qGTTZNZsUIk7wkbzazdaYRNTvGkm/yMKF/AlptnHwE=
+	t=1761591055; cv=none; b=AWQjF8MhAGWW729SeLNJu1oGiK1UaEzNfz5JfJMBtnqs2mOxiGVTuC0s6YZIn4Js8FFasuRt57g7e5wbmoRNBcvXbKCuO1lu/cLPO3PRBVwn3bP0oBnnQ1eOY4enxCzF2WezPE6TvYB2yGp4iAVxHrc3g5fqV1TicfFwD7OXzAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591053; c=relaxed/simple;
-	bh=b+nQ1I+nNsccYsJSXT2wqOZnbHWof6cBf9xdT74X/fw=;
+	s=arc-20240116; t=1761591055; c=relaxed/simple;
+	bh=jqKO5wy40qphAaI4EBgtPcCmqwpFFGiBI7LXlMur64U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHf25yrDto6XqRijIUs9gzXSOj3TjbBB6M269NL6mXJbkTvd+YifhVJTFZHyIZof3j1TVPzTksU0dsiQCsFQqFHe9hAMVs9vdvUji+lr/ZVNB1J5GjdlRJtbN4VlkBfIPiyYrMCyTaTrkSQLyIKTSbf+yB4LVqYwMRLotUVcxi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Udr7EHIv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJx8Ej3rlm4xci7X2eyAH7YmyjEMRfpRHBefGbiidPdiD6INDld56hU9Pfxn08g25/xUwJpJem6eHxr+FEhZXmBSMGjZobvfcUH3ECF6J3+DE5+CGc/wXQBGV2NtTaD5H+g7x/2BgMebJjjggFFlBkwex6FfKU2YXgW1zhpgL7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGObLa/w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Udr7EHIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CFBC4CEF1;
-	Mon, 27 Oct 2025 18:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGObLa/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FEC4CEF1;
+	Mon, 27 Oct 2025 18:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591052;
-	bh=b+nQ1I+nNsccYsJSXT2wqOZnbHWof6cBf9xdT74X/fw=;
+	s=korg; t=1761591055;
+	bh=jqKO5wy40qphAaI4EBgtPcCmqwpFFGiBI7LXlMur64U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Udr7EHIvldlwG44vVJuzwMZ+sml+4OdA5Ms6/fRbj8/cw890ZHgNpLpEtdGBHVTqm
-	 TEr8XYbM6jit9iLPKljQA4J+027f8TtlEF/B812zDA1cqDA3V8TyVpkgfk2svefsV+
-	 2vZhydzWa6MUSbGP8gjRieFVyGAbS3kt8vvb0Irw=
+	b=aGObLa/wUfQrDtaLgOrkXUUkSXfV7uhDpYVARjZYTamcqLuLhjKVssfqY5DzumpQ3
+	 o+eKCyAy+eBNOFC0sOzKsZKwQIqtdr26arjWP7yQjBeoVLLvsLIW74pieVL4B/IY6I
+	 bVeZ+IYzDubMQbSJRNBPd0C6TT5GQ9OM7WRyIPdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xichao Zhao <zhao.xichao@vivo.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fei Shao <fshao@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/332] usb: phy: twl6030: Fix incorrect type for ret
-Date: Mon, 27 Oct 2025 19:31:43 +0100
-Message-ID: <20251027183525.942600896@linuxfoundation.org>
+Subject: [PATCH 5.10 033/332] arm64: dts: mediatek: mt8516-pumpkin: Fix machine compatible
+Date: Mon, 27 Oct 2025 19:31:26 +0100
+Message-ID: <20251027183525.495361445@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,39 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xichao Zhao <zhao.xichao@vivo.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b570b346ddd727c4b41743a6a2f49e7217c5317f ]
+[ Upstream commit ffe6a5d1dd4d4d8af0779526cf4e40522647b25f ]
 
-In the twl6030_usb_probe(), the variable ret is declared as
-a u32 type. However, since ret may receive -ENODEV when accepting
-the return value of omap_usb2_set_comparator().Therefore, its type
-should be changed to int.
+This devicetree contained only the SoC compatible but lacked the
+machine specific one: add a "mediatek,mt8516-pumpkin" compatible
+to the list to fix dtbs_check warnings.
 
-Fixes: 0e98de67bacba ("usb: otg: make twl6030_usb as a comparator driver to omap_usb2")
-Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
-Link: https://lore.kernel.org/r/20250822092224.30645-1-zhao.xichao@vivo.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20250724083914.61351-39-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/phy/phy-twl6030-usb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/phy/phy-twl6030-usb.c b/drivers/usb/phy/phy-twl6030-usb.c
-index ab3c38a7d8ac0..a73604af8960e 100644
---- a/drivers/usb/phy/phy-twl6030-usb.c
-+++ b/drivers/usb/phy/phy-twl6030-usb.c
-@@ -328,9 +328,8 @@ static int twl6030_set_vbus(struct phy_companion *comparator, bool enabled)
+diff --git a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
+index cce642c538128..3d3db33a64dc6 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8516-pumpkin.dts
+@@ -11,7 +11,7 @@
  
- static int twl6030_usb_probe(struct platform_device *pdev)
- {
--	u32 ret;
- 	struct twl6030_usb	*twl;
--	int			status, err;
-+	int			status, err, ret;
- 	struct device_node	*np = pdev->dev.of_node;
- 	struct device		*dev = &pdev->dev;
+ / {
+ 	model = "Pumpkin MT8516";
+-	compatible = "mediatek,mt8516";
++	compatible = "mediatek,mt8516-pumpkin", "mediatek,mt8516";
  
+ 	memory@40000000 {
+ 		device_type = "memory";
 -- 
 2.51.0
 
