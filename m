@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283FC202963;
-	Mon, 27 Oct 2025 19:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F24132D0E6;
+	Mon, 27 Oct 2025 19:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593239; cv=none; b=UnFf5zZn7FvEC8swGLCoBYBjdRuok6u2CkZWchm9XULaehKwS8R070j1QRwx/zoLz73kY/t9gvbdELXO8m7NwyD0FHjlrC2RdBxl7SdSxxOy5DdOtoi8BmxEhuF4bFjUkb90Leu+M5Ir8qZBy/7MIN1p92y1n+S8pWTDxa8skhg=
+	t=1761593242; cv=none; b=J/9buA1muuJzUj5wnsDB1PkBeZoMSyJMU42V89o++tZGI1fdaBlOlSjwWdTDHhnC1K/hKG0EUBhIBRTQ1M0tjDMgT4nJtp+a2SEon10cDsmTTanRaUagGrjjwTiUfRKZmI47StaTrHJY4Nd3hTfvFGExkBIASi0kJALMhC1T5Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593239; c=relaxed/simple;
-	bh=Q7ZYnV4XwCsD1ZYTUHyyYkVboR579iof9wzHNOIPNnY=;
+	s=arc-20240116; t=1761593242; c=relaxed/simple;
+	bh=iFt+z6H8FD2Vy6nz2Nb5JCZ0MA3zIXXNbcWVQ1vFwgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLOktADhB3WdqwrZzeEdDg8XLP9v6stLAWlGW29ZqegWJjaCDoTp3m2UWzll98DZO+LxEcz9fBMDXIC1BVGCajTN0Y+M/M1ieTT8wD4DsXXeSa6+ZVxMZ0JICqO1S/Id47HMDaU8D/QVjjcEsnYF/zY94M1YWSLObMfzPEuBu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJUQzknP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEwTykg/4DYCYKqDdxjJh0CEQUnVv3oBQxi6MQipa4QNimQXEaujX4RoTRiI6r4liioYGtwPQUoQsMfCAt1L7s+VWrHVB4N7XieBIvd6foPMBpUBCR1S2T1twGpsUWbdiEaWsGfEQRx1TkkgNBCc62jKInQVY10MdfSEJniq6oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1PWnsgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJUQzknP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF137C4CEF1;
-	Mon, 27 Oct 2025 19:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1PWnsgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E7DC4CEF1;
+	Mon, 27 Oct 2025 19:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593239;
-	bh=Q7ZYnV4XwCsD1ZYTUHyyYkVboR579iof9wzHNOIPNnY=;
+	s=korg; t=1761593241;
+	bh=iFt+z6H8FD2Vy6nz2Nb5JCZ0MA3zIXXNbcWVQ1vFwgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJUQzknPp9DF2lJel+o3264XopAaNqU5vROIVp0bMJs3Thgw1lIEWaq5Cr+OM8yZ2
-	 GjxoUA3nQpnSyIwFR52nReDeowuKA7AjZwp1OIn4XiShZJpoeDGYh/wyGhwfam2GaV
-	 cLYGBR2UrfjYyaofqxY1UYYtPGPdtfFg5+GmaFUY=
+	b=E1PWnsgvaZyuB3u2/0Wkh30pQJhj6B1qb1T3zDzAxXzYyEBmCl4gT0SKlINrYORoO
+	 ZgH0A6mKO/CYZlft2Ao45FdxFGG6lE8ffztxLDoOWUIY8ClhTYt1E11W2SusXivKld
+	 6kZ4SWHqWK1x1msw252jBS/6w3VPTqhjIDF+aYPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Robin Murohy <robin.murphy@arm.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 065/184] dma-debug: dont report false positives with DMA_BOUNCE_UNALIGNED_KMALLOC
-Date: Mon, 27 Oct 2025 19:35:47 +0100
-Message-ID: <20251027183516.642365477@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 066/184] virtio-net: zero unused hash fields
+Date: Mon, 27 Oct 2025 19:35:48 +0100
+Message-ID: <20251027183516.668844792@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -54,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Jason Wang <jasowang@redhat.com>
 
-commit 03521c892bb8d0712c23e158ae9bdf8705897df8 upstream.
+commit b2284768c6b32aa224ca7d0ef0741beb434f03aa upstream.
 
-Commit 370645f41e6e ("dma-mapping: force bouncing if the kmalloc() size is
-not cache-line-aligned") introduced DMA_BOUNCE_UNALIGNED_KMALLOC feature
-and permitted architecture specific code configure kmalloc slabs with
-sizes smaller than the value of dma_get_cache_alignment().
+When GSO tunnel is negotiated virtio_net_hdr_tnl_from_skb() tries to
+initialize the tunnel metadata but forget to zero unused rxhash
+fields. This may leak information to another side. Fixing this by
+zeroing the unused hash fields.
 
-When that feature is enabled, the physical address of some small
-kmalloc()-ed buffers might be not aligned to the CPU cachelines, thus not
-really suitable for typical DMA.  To properly handle that case a SWIOTLB
-buffer bouncing is used, so no CPU cache corruption occurs.  When that
-happens, there is no point reporting a false-positive DMA-API warning that
-the buffer is not properly aligned, as this is not a client driver fault.
-
-[m.szyprowski@samsung.com: replace is_swiotlb_allocated() with is_swiotlb_active(), per Catalin]
-  Link: https://lkml.kernel.org/r/20251010173009.3916215-1-m.szyprowski@samsung.com
-Link: https://lkml.kernel.org/r/20251009141508.2342138-1-m.szyprowski@samsung.com
-Fixes: 370645f41e6e ("dma-mapping: force bouncing if the kmalloc() size is not cache-line-aligned")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Inki Dae <m.szyprowski@samsung.com>
-Cc: Robin Murohy <robin.murphy@arm.com>
-Cc: "Isaac J. Manjarres" <isaacmanjarres@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: a2fb4bc4e2a6a ("net: implement virtio helpers to handle UDP GSO tunneling")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://patch.msgid.link/20251022034421.70244-1-jasowang@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/debug.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/virtio_net.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -23,6 +23,7 @@
- #include <linux/ctype.h>
- #include <linux/list.h>
- #include <linux/slab.h>
-+#include <linux/swiotlb.h>
- #include <asm/sections.h>
- #include "debug.h"
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index 20e0584db1dd..4d1780848d0e 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -401,6 +401,10 @@ virtio_net_hdr_tnl_from_skb(const struct sk_buff *skb,
+ 	if (!tnl_hdr_negotiated)
+ 		return -EINVAL;
  
-@@ -594,7 +595,9 @@ static void add_dma_entry(struct dma_deb
- 	if (rc == -ENOMEM) {
- 		pr_err_once("cacheline tracking ENOMEM, dma-debug disabled\n");
- 		global_disable = true;
--	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC)) {
-+	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
-+		   !(IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) &&
-+		     is_swiotlb_active(entry->dev))) {
- 		err_printk(entry->dev, entry,
- 			"cacheline tracking EEXIST, overlapping mappings aren't supported\n");
- 	}
++        vhdr->hash_hdr.hash_value = 0;
++        vhdr->hash_hdr.hash_report = 0;
++        vhdr->hash_hdr.padding = 0;
++
+ 	/* Let the basic parsing deal with plain GSO features. */
+ 	skb_shinfo(skb)->gso_type &= ~tnl_gso_type;
+ 	ret = virtio_net_hdr_from_skb(skb, hdr, true, false, vlan_hlen);
+-- 
+2.51.1
+
 
 
