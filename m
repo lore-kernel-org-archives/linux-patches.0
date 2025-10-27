@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F22732C305;
-	Mon, 27 Oct 2025 19:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1329130DEA2;
+	Mon, 27 Oct 2025 19:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591793; cv=none; b=pCvjBfoSqxdoB4ARaSv7nTns/yJM9ERffUK1uSIeNBKzuT40NDQfYehgEMESPuzuQWSxNtdwHYRlAd8sLBDFhjkrI+/HhS9nrC2Wf3rovbryv99TCUTuu7ixTcnWuyiR3KfKwjsuJ6OAQErTNUwNcaNDmcUCd+TnKlPsEqyOKPg=
+	t=1761591796; cv=none; b=N+vs+pHmrOk5+djx3sk9ZHOtFd+0+KmHbbBqMiCYgisSqj6QgJbRLa8iN+D+voizCgPGx4NJpKzULX25yBQ8JpXvhM1YBI1v9qPoYVseryoS+8NkxHD8UEVg9JGVf4sp53bxq1RoRLAPGI/N/Z7NXqQyt/OMFJJogJvhP5UT4tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591793; c=relaxed/simple;
-	bh=h/J5+xCQvfw+kJNm3jbrgMoPcum8nuk1YTawjZh/1aE=;
+	s=arc-20240116; t=1761591796; c=relaxed/simple;
+	bh=1rrQ7DEFPe/Hp7sMlEKxEx6u6bcJCpHhkZrLHJejV4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpNCfkeM3OHI5mUgOoc8zQLBsuj3fi/PTCAC/YuYCHCKw9nRJfqHDs6aBBfEZJaBju/7j2mjRukdexpUgLX2KA+971ICb7XWFDtCjOPKO912bbK44HD0vuzaJDMXG8I9KmAQDGxrYeQjJeXMtQu3M355wuSyVoHD0kPrZcy1/0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvXD5MjX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFUyVzyOWHZj+4XvwJk678T8jVhsyE/h2kB9zIKyddwCe9hG8SaeWyE25a5lRqpdoBQj0M0WkQqTIRZB/YPFzFFsfAs1BlF+6yGDSwahK7PTXuJmHjCkTQFnzCSoK73VRqNkCzK/Dyym15YWf8txok5Rc+4OicvT1s7c+PjZowI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQY2n7tP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvXD5MjX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98829C4CEF1;
-	Mon, 27 Oct 2025 19:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQY2n7tP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F84EC4CEF1;
+	Mon, 27 Oct 2025 19:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591792;
-	bh=h/J5+xCQvfw+kJNm3jbrgMoPcum8nuk1YTawjZh/1aE=;
+	s=korg; t=1761591795;
+	bh=1rrQ7DEFPe/Hp7sMlEKxEx6u6bcJCpHhkZrLHJejV4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YvXD5MjXK1/mgwHrPR6hgHPR1V9gvZRglPrbLR+9Yzpgw93N5FDsB88qtGumOniR1
-	 eE5VTa8/DfOcJfHQ3lyBUqQ/gZQvgDsE+qnbtYN5YDKCt4la4EMsLhYlEw4CftRZgB
-	 0u+DwUnADkCw0UkuojazkOnpy6wkCR18/rD8Ui5A=
+	b=gQY2n7tPN3kEedQ02VCeGp4jJNrvajWbDaItyaJd4s6xbV5j6OgWUkZwhkjZq7/3z
+	 mrIAKMn3icUusMv4Shp7SZkAVJUmxte8TJXw7tB9zswJIvd/nttCUjXF7J92phFdWZ
+	 IB89XTERpsp/nIKk/Lim6nrgQfLB3o1NB660T/Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 331/332] RISC-V: Dont fail in riscv_of_parent_hartid() for disabled HARTs
-Date: Mon, 27 Oct 2025 19:36:24 +0100
-Message-ID: <20251027183533.637015808@linuxfoundation.org>
+	Li Jinlin <lijinlin3@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 5.10 332/332] fsdax: Fix infinite loop in dax_iomap_rw()
+Date: Mon, 27 Oct 2025 19:36:25 +0100
+Message-ID: <20251027183533.663068880@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,51 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Li Jinlin <lijinlin3@huawei.com>
 
-commit c4676f8dc1e12e68d6511f9ed89707fdad4c962c upstream.
+commit 17d9c15c9b9e7fb285f7ac5367dfb5f00ff575e3 upstream.
 
-The riscv_of_processor_hartid() used by riscv_of_parent_hartid() fails
-for HARTs disabled in the DT. This results in the following warning
-thrown by the RISC-V INTC driver for the E-core on SiFive boards:
+I got an infinite loop and a WARNING report when executing a tail command
+in virtiofs.
 
-[    0.000000] riscv-intc: unable to find hart id for /cpus/cpu@0/interrupt-controller
+  WARNING: CPU: 10 PID: 964 at fs/iomap/iter.c:34 iomap_iter+0x3a2/0x3d0
+  Modules linked in:
+  CPU: 10 PID: 964 Comm: tail Not tainted 5.19.0-rc7
+  Call Trace:
+  <TASK>
+  dax_iomap_rw+0xea/0x620
+  ? __this_cpu_preempt_check+0x13/0x20
+  fuse_dax_read_iter+0x47/0x80
+  fuse_file_read_iter+0xae/0xd0
+  new_sync_read+0xfe/0x180
+  ? 0xffffffff81000000
+  vfs_read+0x14d/0x1a0
+  ksys_read+0x6d/0xf0
+  __x64_sys_read+0x1a/0x20
+  do_syscall_64+0x3b/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The riscv_of_parent_hartid() is only expected to read the hartid
-from the DT so we directly call of_get_cpu_hwid() instead of calling
-riscv_of_processor_hartid().
+The tail command will call read() with a count of 0. In this case,
+iomap_iter() will report this WARNING, and always return 1 which casuing
+the infinite loop in dax_iomap_rw().
 
-Fixes: ad635e723e17 ("riscv: cpu: Add 64bit hartid support on RV64")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20231027154254.355853-2-apatel@ventanamicro.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixing by checking count whether is 0 in dax_iomap_rw().
+
+Fixes: ca289e0b95af ("fsdax: switch dax_iomap_rw to use iomap_iter")
+Signed-off-by: Li Jinlin <lijinlin3@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20220725032050.3873372-1-lijinlin3@huawei.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cpu.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/dax.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/riscv/kernel/cpu.c
-+++ b/arch/riscv/kernel/cpu.c
-@@ -50,13 +50,14 @@ int riscv_of_processor_hartid(struct dev
-  */
- int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
- {
--	int rc;
--
- 	for (; node; node = node->parent) {
- 		if (of_device_is_compatible(node, "riscv")) {
--			rc = riscv_of_processor_hartid(node, hartid);
--			if (!rc)
--				return 0;
-+			*hartid = (unsigned long)of_get_cpu_hwid(node, 0);
-+			if (*hartid == ~0UL) {
-+				pr_warn("Found CPU without hart ID\n");
-+				return -ENODEV;
-+			}
-+			return 0;
- 		}
- 	}
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -1219,6 +1219,9 @@ dax_iomap_rw(struct kiocb *iocb, struct
+ 	loff_t done = 0;
+ 	int ret;
  
++	if (!iomi.len)
++		return 0;
++
+ 	if (iov_iter_rw(iter) == WRITE) {
+ 		lockdep_assert_held_write(&iomi.inode->i_rwsem);
+ 		iomi.flags |= IOMAP_WRITE;
 
 
