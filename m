@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E590324B37;
-	Mon, 27 Oct 2025 19:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F1A3254B1;
+	Mon, 27 Oct 2025 19:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592911; cv=none; b=IKM1YBs1tngRSWJwut87nvvogAVfv214AZ1Erf0mctrZHhXf6jWxmHz4iJkrbbWI2LvYyFw+aFkOSDux0RApH1RHZnJyZYp+wZfaBRMXCsO/trNzyXXiuBYkVpNI1hqUDXBgJC6AA6QRqN+YNOt7cjZtG/5Vhnb7rx1LC79L8Cw=
+	t=1761592914; cv=none; b=uavfaB7BUaeVl33u68GMpyY1VXR8f5tyH9ghBKvYar18+0TyGnuI4nKbzhLep+pHczlR07WBluFf3kaMd5LRg+PxWqWTj8okJ+QKtoDWpJawT+08Ku4z1KqRPyY1dNcfHSZz5r3ShTJwn0secIRi1PXCnMX15wzynOJPOGFz2xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592911; c=relaxed/simple;
-	bh=qSoahRxM8yQ4V5slepN8JtBWGoLjfqRpUQZdCTxb0k0=;
+	s=arc-20240116; t=1761592914; c=relaxed/simple;
+	bh=1jSsnyNekrQq5RKlh8BPaJF+Np8OToPdSs4BxSoQGk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BR14w+Bc9Ue2rVCmMBBRHMEBVMIq5U/w8hE4sqUE8I8a0tLnLjIcRHFPe7ihjvq842tAclcjgCOQbhx+i+xdn5tugY74hFyu7H+QByIC+W8poG2d3ubiLIvBBeYMZibsfihxR1lWRnTWapXd0pZ8GCin6JxO4ZZTzILlJJJ0JS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZv85/4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUAUYFClz5k1r5eBHIpK2REJkxn7BzxEdeL88OhxQTlQ9Qpo9uk+hfbR9YVt0rdVoVmHC6kS0T2D0JL/dnhKTPpwehgDyCoI7vgiROieyaZlQDa0UEQSy329LQcy7ZeZbt6w6/spOancowU2IA6ZEmFvdt5sj550q86oE5j/tWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2m29eNOF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZv85/4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226D9C4CEF1;
-	Mon, 27 Oct 2025 19:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2m29eNOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834A2C4CEFD;
+	Mon, 27 Oct 2025 19:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592911;
-	bh=qSoahRxM8yQ4V5slepN8JtBWGoLjfqRpUQZdCTxb0k0=;
+	s=korg; t=1761592914;
+	bh=1jSsnyNekrQq5RKlh8BPaJF+Np8OToPdSs4BxSoQGk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZv85/4tg8vbYp5lH/bNLCLcg1Di9w60cLsHnB+i/Bqm4g5bwTZ8LxM61zR4iDCLb
-	 VMlo3IRe4rLepCzh3xUxX9MKlX1tEySgI6uiUCMTvoPCw+rI7lPBmf2Xs8BYiGbFvr
-	 WS4HJXYC0Z7zfSTz/4H+7PlyfFzIlMem0FiaYhbs=
+	b=2m29eNOFMVWfeKmWj1RG9orbsqQ+q5OOHUqufWS297HKI8EMlNwFxDlK9WUs5O54O
+	 xyQo/0F3vau90VGFSMieU3Q/nM8ot0/Bozhsl4Q4Q7oKas2TRHC8uBXpjfZf/vRHZZ
+	 0N6ar3dkQVutfNpCXuJU1s8beFUY4VojvIcorLDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 058/117] MIPS: Malta: Fix keyboard resource preventing i8042 driver from registering
-Date: Mon, 27 Oct 2025 19:36:24 +0100
-Message-ID: <20251027183455.586909906@linuxfoundation.org>
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com,
+	Mark Fasheh <mark@fasheh.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 059/117] ocfs2: clear extent cache after moving/defragmenting extents
+Date: Mon, 27 Oct 2025 19:36:25 +0100
+Message-ID: <20251027183455.614780745@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -46,69 +51,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit bf5570590a981d0659d0808d2d4bcda21b27a2a5 upstream.
+commit 78a63493f8e352296dbc7cb7b3f4973105e8679e upstream.
 
-MIPS Malta platform code registers the PCI southbridge legacy port I/O
-PS/2 keyboard range as a standard resource marked as busy.  It prevents
-the i8042 driver from registering as it fails to claim the resource in
-a call to i8042_platform_init().  Consequently PS/2 keyboard and mouse
-devices cannot be used with this platform.
+The extent map cache can become stale when extents are moved or
+defragmented, causing subsequent operations to see outdated extent flags.
+This triggers a BUG_ON in ocfs2_refcount_cal_cow_clusters().
 
-Fix the issue by removing the busy marker from the standard reservation,
-making the driver register successfully:
+The problem occurs when:
+1. copy_file_range() creates a reflinked extent with OCFS2_EXT_REFCOUNTED
+2. ioctl(FITRIM) triggers ocfs2_move_extents()
+3. __ocfs2_move_extents_range() reads and caches the extent (flags=0x2)
+4. ocfs2_move_extent()/ocfs2_defrag_extent() calls __ocfs2_move_extent()
+   which clears OCFS2_EXT_REFCOUNTED flag on disk (flags=0x0)
+5. The extent map cache is not invalidated after the move
+6. Later write() operations read stale cached flags (0x2) but disk has
+   updated flags (0x0), causing a mismatch
+7. BUG_ON(!(rec->e_flags & OCFS2_EXT_REFCOUNTED)) triggers
 
-  serio: i8042 KBD port at 0x60,0x64 irq 1
-  serio: i8042 AUX port at 0x60,0x64 irq 12
+Fix by clearing the extent map cache after each extent move/defrag
+operation in __ocfs2_move_extents_range().  This ensures subsequent
+operations read fresh extent data from disk.
 
-and the resource show up as expected among the legacy devices:
-
-  00000000-00ffffff : MSC PCI I/O
-    00000000-0000001f : dma1
-    00000020-00000021 : pic1
-    00000040-0000005f : timer
-    00000060-0000006f : keyboard
-      00000060-0000006f : i8042
-    00000070-00000077 : rtc0
-    00000080-0000008f : dma page reg
-    000000a0-000000a1 : pic2
-    000000c0-000000df : dma2
-    [...]
-
-If the i8042 driver has not been configured, then the standard resource
-will remain there preventing any conflicting dynamic assignment of this
-PCI port I/O address range.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/alpine.DEB.2.21.2510211919240.8377@angie.orcam.me.uk
+Link: https://lore.kernel.org/all/20251009142917.517229-1-kartikey406@gmail.com/T/
+Link: https://lkml.kernel.org/r/20251009154903.522339-1-kartikey406@gmail.com
+Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reported-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
+Tested-by: syzbot+6fdd8fa3380730a4b22c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=2959889e1f6e216585ce522f7e8bc002b46ad9e7
+Reviewed-by: Mark Fasheh <mark@fasheh.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mti-malta/malta-setup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/move_extents.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/mti-malta/malta-setup.c
-+++ b/arch/mips/mti-malta/malta-setup.c
-@@ -47,7 +47,7 @@ static struct resource standard_io_resou
- 		.name = "keyboard",
- 		.start = 0x60,
- 		.end = 0x6f,
--		.flags = IORESOURCE_IO | IORESOURCE_BUSY
-+		.flags = IORESOURCE_IO
- 	},
- 	{
- 		.name = "dma page reg",
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -868,6 +868,11 @@ static int __ocfs2_move_extents_range(st
+ 			mlog_errno(ret);
+ 			goto out;
+ 		}
++		/*
++		 * Invalidate extent cache after moving/defragging to prevent
++		 * stale cached data with outdated extent flags.
++		 */
++		ocfs2_extent_map_trunc(inode, cpos);
+ 
+ 		context->clusters_moved += alloc_size;
+ next:
 
 
