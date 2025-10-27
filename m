@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861273074AC;
-	Mon, 27 Oct 2025 18:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3F8324B24;
+	Mon, 27 Oct 2025 18:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590938; cv=none; b=UsmT2ZsS/tdbMzf5VRDUbd1YaJw/nX1QZR+LZd32ribwMB9s1RL9hBPW4jQ7ki4rPfB7Yd3RxdUGPS7lF8+bH6znTCl0j3E33wFUoTHNtyDPOqIEqBr/w9r54oTrg+x4LdEwqOZNf+IgAWJOHgPx6dAqwZx+Xwk63itDqwtCs3w=
+	t=1761590941; cv=none; b=mniO+WlERdEogYCqqo9zGti+sjEmkxtAm3j0y+jlq98/4fnwiauZA/KFLlsQIkMh+2SMjk8xtSNDQpYPcY5daKdtqN9+aEcz+ZzRmMtlcIR5aT7TRYHAWBYkniwT1aqVN0BQT9KwmD9rKsd4b0arbnEiyDozoQi+KdLleb2KO2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590938; c=relaxed/simple;
-	bh=tD26AhonlKVBMpceCuY6p07KsFtRPeIw7AkMOOBVnx4=;
+	s=arc-20240116; t=1761590941; c=relaxed/simple;
+	bh=bG9a4tWe2v0mNmHSW4H+CaE4AIUCmK3mEy5s2adXmM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKQCV1HPj1+hH+sGWxh9LlbpPnShRooBoM7S+I8G6Vbj1hyQmgtbvUkOdp4Aiy384f3kQiMIbeZjyW9ht9qX4UO/SDnwZTinzS3WlpDsdfWHlBRKZvezkBcYd7fcWXXv7yA5RMRST6UA3M8y66qghV72v3dNxDWDOYpV+CmZZF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHxD3CCL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6d22oPu5mocBovmCZ9YiAQ5Nx3o4ZMX2M0T2Kc7qa3knwL2U25yG1jVYTKbmC4WxqH+UYHuBwmyvL2UqKIqxamw37UFPTfSLbllVJV9Yx8tXYWHkqVe7vZNhk8gIKGbq1xmE6aLdo0o6w3Lkp+yGJPMsjR0EK98Tp2R0ZEYGmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfIOy0UH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHxD3CCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F2CC4CEF1;
-	Mon, 27 Oct 2025 18:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfIOy0UH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEA9C4CEFD;
+	Mon, 27 Oct 2025 18:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590938;
-	bh=tD26AhonlKVBMpceCuY6p07KsFtRPeIw7AkMOOBVnx4=;
+	s=korg; t=1761590941;
+	bh=bG9a4tWe2v0mNmHSW4H+CaE4AIUCmK3mEy5s2adXmM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHxD3CCLK+l47VR/1BOAghEqWkJTr7nFQmc5d8hKhGiAanpqfEvSPfdoVMb2RHG1e
-	 /8hGklEo6EDOtEsIea5Eg0wZblR18Y+SkZTZDbX5NkfKOG2dlYNvPOBjYNY8qKWL9S
-	 ThwTib3Ie/KSTToMVOIlZw9/+tFIpJ97X/0Evpno=
+	b=tfIOy0UHl8PjIoR92YUY2B+WE+JEuluyRob709tojgQlKLBDkyea7DqTLOqG2d7WT
+	 D4fJPBo4Jb2dzwsKu8ThddKX+IyXLlpZjIkpB9z2Rz1bSOTnQO6K7CuebGXchub5Vq
+	 O8NLb3vUmRCavKzMs5a5N4kNOKz6xfaKh6EYppUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6c3c066162d2c43a66c@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.4 206/224] comedi: fix divide-by-zero in comedi_buf_munge()
-Date: Mon, 27 Oct 2025 19:35:52 +0100
-Message-ID: <20251027183514.290061490@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: [PATCH 5.4 207/224] arm64: cputype: Add Neoverse-V3AE definitions
+Date: Mon, 27 Oct 2025 19:35:53 +0100
+Message-ID: <20251027183514.313070308@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,45 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 87b318ba81dda2ee7b603f4f6c55e78ec3e95974 upstream.
+commit 3bbf004c4808e2c3241e5c1ad6cc102f38a03c39 upstream.
 
-The comedi_buf_munge() function performs a modulo operation
-`async->munge_chan %= async->cmd.chanlist_len` without first
-checking if chanlist_len is zero. If a user program submits a command with
-chanlist_len set to zero, this causes a divide-by-zero error when the device
-processes data in the interrupt handler path.
+Add cputype definitions for Neoverse-V3AE. These will be used for errata
+detection in subsequent patches.
 
-Add a check for zero chanlist_len at the beginning of the
-function, similar to the existing checks for !map and
-CMDF_RAWDATA flag. When chanlist_len is zero, update
-munge_count and return early, indicating the data was
-handled without munging.
+These values can be found in the Neoverse-V3AE TRM:
 
-This prevents potential kernel panics from malformed user commands.
+  https://developer.arm.com/documentation/SDEN-2615521/9-0/
 
-Reported-by: syzbot+f6c3c066162d2c43a66c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f6c3c066162d2c43a66c
-Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20250924102639.1256191-1-kartikey406@gmail.com
+... in section A.6.1 ("MIDR_EL1, Main ID Register").
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Ryan: Trivial backport ]
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/comedi_buf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/staging/comedi/comedi_buf.c
-+++ b/drivers/staging/comedi/comedi_buf.c
-@@ -369,7 +369,7 @@ static unsigned int comedi_buf_munge(str
- 	unsigned int count = 0;
- 	const unsigned int num_sample_bytes = comedi_bytes_per_sample(s);
- 
--	if (!s->munge || (async->cmd.flags & CMDF_RAWDATA)) {
-+	if (!s->munge || (async->cmd.flags & CMDF_RAWDATA) || async->cmd.chanlist_len == 0) {
- 		async->munge_count += num_bytes;
- 		count = num_bytes;
- 	} else {
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -87,6 +87,7 @@
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
++#define ARM_CPU_PART_NEOVERSE_V3AE	0xD83
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
+ #define ARM_CPU_PART_CORTEX_A725	0xD87
+@@ -139,6 +140,7 @@
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
++#define MIDR_NEOVERSE_V3AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3AE)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
 
 
