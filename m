@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FF9324B1B;
-	Mon, 27 Oct 2025 18:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A1231B830;
+	Mon, 27 Oct 2025 18:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590695; cv=none; b=Y38Bsf/teLxS5f4QRUnY4SXr8BuH3Clj1MCvS9TpIwkORwYPHAd74/3du9nbfnt8hiCQdO4OYPquhuRecErrnc5ES72F1AFqwlcEreNzYprcHd2KfZhacP9x8TVYhtd+Rik+2TJ01+ibmeXjNzR676wq70n7mC8cTtONDk2g5iI=
+	t=1761590698; cv=none; b=sq7YZupLLuYgPFLTrlE0+ibJ2k/taBGLQn2mBqTwF+/jwYOc17cCtOguByb7YgHhFNZry+71/xAOaoFqCdCjQexrqlycBiRr3u334FFuqLSJBa7Jehn5wyIsOhA431iwxf4KS6VE6/r1Z7aqg4uoxvl4SFolbx5BEl7BDywfuSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590695; c=relaxed/simple;
-	bh=AkWwzyiFSkMHRoTnwpOzqQbS/OonyWNq38koEX+9F7A=;
+	s=arc-20240116; t=1761590698; c=relaxed/simple;
+	bh=MjWh/77c/Gct4xQxjjEcsR/a45oJNm6hiXaHknByXIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UkSQxOZky+DAtqJKwUfs9fQ8kQ0Fd5C8S+45FbL2Cyneqf3C4DFt4u/SXT4WKAxY3Hu0TuWu4kxMAO3ZIwhu/2AMNH7caTm5cOkkNYAry5J4iY6FKcWCq2mxbkton2Feryud9dlueKy7aPRhWhg3buC8yKDKf7FrNTIctr7c26c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzLQTUpS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnZyupgO34W0Sv5j5qz0NmFsQ4nUj8LdFsiSvKB+4GJiph414TkjCsqCjjpbiidYfE1WRUDbWdccqquKgD0NqOXzYEP3tMhK+93a3+7C+WguSbSJzQwAi+VRDkanlMZuF0e3roZ4fk/YjAGveLPh0ySpnkecoSLeir2TiiM/mC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpCVpCUh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzLQTUpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A2FC4CEF1;
-	Mon, 27 Oct 2025 18:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpCVpCUh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA7CC4CEF1;
+	Mon, 27 Oct 2025 18:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590695;
-	bh=AkWwzyiFSkMHRoTnwpOzqQbS/OonyWNq38koEX+9F7A=;
+	s=korg; t=1761590697;
+	bh=MjWh/77c/Gct4xQxjjEcsR/a45oJNm6hiXaHknByXIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzLQTUpSOSGHiq2b6VwlQNlLVnmDMOnMqCfN7qoB0TXVBtj+OuEf5xmkv36LmTw9j
-	 APXmskhAKq9Uq65PApI0BK9eiemrMAEH0RadzIn7JcUag37d/MVNBY8Fj2I1ZFgymt
-	 BTniwbl0j8wM94tHdnJEoGAGlrbTmUjLDOjLu9OY=
+	b=lpCVpCUhslrF9HmsGnLzUy/Qc/wLola3EgPZICVxctYtr52QbREjlejhgwLq4qI/I
+	 L+rSL30b+z877gF3RRVC90qizRESmVu0zjyFzKoScAPuxlJy25yREGh6CCfiAjacof
+	 a75ntosZHYBKz1ni/RfCgss1e2W3v6pPCyT3H8cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 143/224] tracing: Fix race condition in kprobe initialization causing NULL pointer dereference
-Date: Mon, 27 Oct 2025 19:34:49 +0100
-Message-ID: <20251027183512.801250076@linuxfoundation.org>
+Subject: [PATCH 5.4 144/224] minixfs: Verify inode mode when loading from disk
+Date: Mon, 27 Oct 2025 19:34:50 +0100
+Message-ID: <20251027183512.826423354@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -45,239 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 9cf9aa7b0acfde7545c1a1d912576e9bab28dc6f ]
+[ Upstream commit 73861970938ad1323eb02bbbc87f6fbd1e5bacca ]
 
-There is a critical race condition in kprobe initialization that can lead to
-NULL pointer dereference and kernel crash.
+The inode mode loaded from corrupted disk can be invalid. Do like what
+commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
+does.
 
-[1135630.084782] Unable to handle kernel paging request at virtual address 0000710a04630000
-...
-[1135630.260314] pstate: 404003c9 (nZcv DAIF +PAN -UAO)
-[1135630.269239] pc : kprobe_perf_func+0x30/0x260
-[1135630.277643] lr : kprobe_dispatcher+0x44/0x60
-[1135630.286041] sp : ffffaeff4977fa40
-[1135630.293441] x29: ffffaeff4977fa40 x28: ffffaf015340e400
-[1135630.302837] x27: 0000000000000000 x26: 0000000000000000
-[1135630.312257] x25: ffffaf029ed108a8 x24: ffffaf015340e528
-[1135630.321705] x23: ffffaeff4977fc50 x22: ffffaeff4977fc50
-[1135630.331154] x21: 0000000000000000 x20: ffffaeff4977fc50
-[1135630.340586] x19: ffffaf015340e400 x18: 0000000000000000
-[1135630.349985] x17: 0000000000000000 x16: 0000000000000000
-[1135630.359285] x15: 0000000000000000 x14: 0000000000000000
-[1135630.368445] x13: 0000000000000000 x12: 0000000000000000
-[1135630.377473] x11: 0000000000000000 x10: 0000000000000000
-[1135630.386411] x9 : 0000000000000000 x8 : 0000000000000000
-[1135630.395252] x7 : 0000000000000000 x6 : 0000000000000000
-[1135630.403963] x5 : 0000000000000000 x4 : 0000000000000000
-[1135630.412545] x3 : 0000710a04630000 x2 : 0000000000000006
-[1135630.421021] x1 : ffffaeff4977fc50 x0 : 0000710a04630000
-[1135630.429410] Call trace:
-[1135630.434828]  kprobe_perf_func+0x30/0x260
-[1135630.441661]  kprobe_dispatcher+0x44/0x60
-[1135630.448396]  aggr_pre_handler+0x70/0xc8
-[1135630.454959]  kprobe_breakpoint_handler+0x140/0x1e0
-[1135630.462435]  brk_handler+0xbc/0xd8
-[1135630.468437]  do_debug_exception+0x84/0x138
-[1135630.475074]  el1_dbg+0x18/0x8c
-[1135630.480582]  security_file_permission+0x0/0xd0
-[1135630.487426]  vfs_write+0x70/0x1c0
-[1135630.493059]  ksys_write+0x5c/0xc8
-[1135630.498638]  __arm64_sys_write+0x24/0x30
-[1135630.504821]  el0_svc_common+0x78/0x130
-[1135630.510838]  el0_svc_handler+0x38/0x78
-[1135630.516834]  el0_svc+0x8/0x1b0
-
-kernel/trace/trace_kprobe.c: 1308
-0xffff3df8995039ec <kprobe_perf_func+0x2c>:     ldr     x21, [x24,#120]
-include/linux/compiler.h: 294
-0xffff3df8995039f0 <kprobe_perf_func+0x30>:     ldr     x1, [x21,x0]
-
-kernel/trace/trace_kprobe.c
-1308: head = this_cpu_ptr(call->perf_events);
-1309: if (hlist_empty(head))
-1310: 	return 0;
-
-crash> struct trace_event_call -o
-struct trace_event_call {
-  ...
-  [120] struct hlist_head *perf_events;  //(call->perf_event)
-  ...
-}
-
-crash> struct trace_event_call ffffaf015340e528
-struct trace_event_call {
-  ...
-  perf_events = 0xffff0ad5fa89f088, //this value is correct, but x21 = 0
-  ...
-}
-
-Race Condition Analysis:
-
-The race occurs between kprobe activation and perf_events initialization:
-
-  CPU0                                    CPU1
-  ====                                    ====
-  perf_kprobe_init
-    perf_trace_event_init
-      tp_event->perf_events = list;(1)
-      tp_event->class->reg (2)← KPROBE ACTIVE
-                                          Debug exception triggers
-                                          ...
-                                          kprobe_dispatcher
-                                            kprobe_perf_func (tk->tp.flags & TP_FLAG_PROFILE)
-                                              head = this_cpu_ptr(call->perf_events)(3)
-                                              (perf_events is still NULL)
-
-Problem:
-1. CPU0 executes (1) assigning tp_event->perf_events = list
-2. CPU0 executes (2) enabling kprobe functionality via class->reg()
-3. CPU1 triggers and reaches kprobe_dispatcher
-4. CPU1 checks TP_FLAG_PROFILE - condition passes (step 2 completed)
-5. CPU1 calls kprobe_perf_func() and crashes at (3) because
-   call->perf_events is still NULL
-
-CPU1 sees that kprobe functionality is enabled but does not see that
-perf_events has been assigned.
-
-Add pairing read and write memory barriers to guarantee that if CPU1
-sees that kprobe functionality is enabled, it must also see that
-perf_events has been assigned.
-
-Link: https://lore.kernel.org/all/20251001022025.44626-1-chenyuan_fl@163.com/
-
-Fixes: 50d780560785 ("tracing/kprobes: Add probe handler dispatcher to support perf and ftrace concurrent use")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-[ Dropped ftrace changes + context ]
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://lore.kernel.org/ec982681-84b8-4624-94fa-8af15b77cbd2@I-love.SAKURA.ne.jp
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_kprobe.c |   11 +++++++----
- kernel/trace/trace_probe.h  |    9 +++++++--
- kernel/trace/trace_uprobe.c |   12 ++++++++----
- 3 files changed, 22 insertions(+), 10 deletions(-)
+ fs/minix/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -1585,14 +1585,15 @@ static int kprobe_register(struct trace_
- static int kprobe_dispatcher(struct kprobe *kp, struct pt_regs *regs)
- {
- 	struct trace_kprobe *tk = container_of(kp, struct trace_kprobe, rp.kp);
-+	unsigned int flags = trace_probe_load_flag(&tk->tp);
- 	int ret = 0;
- 
- 	raw_cpu_inc(*tk->nhit);
- 
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	if (flags & TP_FLAG_TRACE)
- 		kprobe_trace_func(tk, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret = kprobe_perf_func(tk, regs);
- #endif
- 	return ret;
-@@ -1603,13 +1604,15 @@ static int
- kretprobe_dispatcher(struct kretprobe_instance *ri, struct pt_regs *regs)
- {
- 	struct trace_kprobe *tk = container_of(ri->rp, struct trace_kprobe, rp);
-+	unsigned int flags;
- 
- 	raw_cpu_inc(*tk->nhit);
- 
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tk->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		kretprobe_trace_func(tk, ri, regs);
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tk->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		kretprobe_perf_func(tk, ri, regs);
- #endif
- 	return 0;	/* We don't tweek kernel, so just return 0 */
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -252,16 +252,21 @@ struct event_file_link {
- 	struct list_head		list;
- };
- 
-+static inline unsigned int trace_probe_load_flag(struct trace_probe *tp)
-+{
-+	return smp_load_acquire(&tp->event->flags);
-+}
-+
- static inline bool trace_probe_test_flag(struct trace_probe *tp,
- 					 unsigned int flag)
- {
--	return !!(tp->event->flags & flag);
-+	return !!(trace_probe_load_flag(tp) & flag);
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index 3fffc709afd43..c026706aec0cc 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -470,8 +470,14 @@ void minix_set_inode(struct inode *inode, dev_t rdev)
+ 		inode->i_op = &minix_symlink_inode_operations;
+ 		inode_nohighmem(inode);
+ 		inode->i_mapping->a_ops = &minix_aops;
+-	} else
++	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
++		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
+ 		init_special_inode(inode, inode->i_mode, rdev);
++	} else {
++		printk(KERN_DEBUG "MINIX-fs: Invalid file type 0%04o for inode %lu.\n",
++		       inode->i_mode, inode->i_ino);
++		make_bad_inode(inode);
++	}
  }
  
- static inline void trace_probe_set_flag(struct trace_probe *tp,
- 					unsigned int flag)
- {
--	tp->event->flags |= flag;
-+	smp_store_release(&tp->event->flags, tp->event->flags | flag);
- }
- 
- static inline void trace_probe_clear_flag(struct trace_probe *tp,
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1465,6 +1465,7 @@ static int uprobe_dispatcher(struct upro
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
- 	int dsize, esize;
-+	unsigned int flags;
- 	int ret = 0;
- 
- 
-@@ -1485,11 +1486,12 @@ static int uprobe_dispatcher(struct upro
- 	ucb = uprobe_buffer_get();
- 	store_trace_args(ucb->buf, &tu->tp, regs, esize, dsize);
- 
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		ret |= uprobe_trace_func(tu, regs, ucb, dsize);
- 
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		ret |= uprobe_perf_func(tu, regs, ucb, dsize);
- #endif
- 	uprobe_buffer_put(ucb);
-@@ -1503,6 +1505,7 @@ static int uretprobe_dispatcher(struct u
- 	struct uprobe_dispatch_data udd;
- 	struct uprobe_cpu_buffer *ucb;
- 	int dsize, esize;
-+	unsigned int flags;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
- 
-@@ -1520,11 +1523,12 @@ static int uretprobe_dispatcher(struct u
- 	ucb = uprobe_buffer_get();
- 	store_trace_args(ucb->buf, &tu->tp, regs, esize, dsize);
- 
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
-+	flags = trace_probe_load_flag(&tu->tp);
-+	if (flags & TP_FLAG_TRACE)
- 		uretprobe_trace_func(tu, func, regs, ucb, dsize);
- 
- #ifdef CONFIG_PERF_EVENTS
--	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
-+	if (flags & TP_FLAG_PROFILE)
- 		uretprobe_perf_func(tu, func, regs, ucb, dsize);
- #endif
- 	uprobe_buffer_put(ucb);
+ /*
+-- 
+2.51.0
+
 
 
