@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C832145E;
-	Mon, 27 Oct 2025 18:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2961832B9A5;
+	Mon, 27 Oct 2025 18:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590871; cv=none; b=lBX7DvTRpNxebsWqW2c4iIDMwI7HrYBEGxMOxYPqBpNf3/FZ5kuDnjuYLgim8WQzH+qtooiAY7ChjzgvgIrtFnw+mfN85NCdvaIgw3NB39B2+yByyxgppNMydy76P89RDrUIzLA4L/oTF7AmqVIDu9ENvXoE/B08t7vPAmdqBVg=
+	t=1761590872; cv=none; b=PHXckI6izJzJ2SlboUq/wRjtimi4rBoI2OFHLu9i6SM9XPuRX6RX0SAFKH+UW4G4GXOa+EG9lEj5DUCw/OPlHgu/asrlsBUgHqo8jchqXORtu9r3H9VFngpPuToO+IqKLcsPC+bWxXFTsyI3qo79csRPe+hDru+pZ9vDuTwthqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590871; c=relaxed/simple;
-	bh=cuwrgm7WqlpXUd6Fhax92IoOxSDoljtFBUApCFH77vE=;
+	s=arc-20240116; t=1761590872; c=relaxed/simple;
+	bh=/0n0zhCqVx2lZj8ZXK2DG7NERu0YIFRqkxNhAwSlPV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mo3rmb4MfBBUKRSJdM2IZhDqfQNFPWnglnnVTeLHi+lsFHzIBb0dpl+ZF0syw8G+Ccrd2pRJXWyoGDU8LSh+AfzD70qhF3xosEJJtEx7Wr1hEKkW8QxiKdN4H75hCzqIBnWD2rZ400pjcloy1YAfwCxCZgh4DOUoJvNtws61N40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtXKsyfn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=onPVaIOdeB5EqcsIHshyx0rtmh4K7A8yxs61lfN8HY6wKwNOeG7uq1xbm218oKEGc+7oIusAeeeSTlBKuO2lPumovt6Cii1ym3qtSab1FZES58U0LUvE/JuFJe7cUX2dT31RO06yJAKJ+6MIO25sEMSpmGJTtrclh5Oaf+5vOIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GypGU9y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtXKsyfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3389C4CEFD;
-	Mon, 27 Oct 2025 18:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GypGU9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B21DC4CEF1;
+	Mon, 27 Oct 2025 18:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590869;
-	bh=cuwrgm7WqlpXUd6Fhax92IoOxSDoljtFBUApCFH77vE=;
+	s=korg; t=1761590871;
+	bh=/0n0zhCqVx2lZj8ZXK2DG7NERu0YIFRqkxNhAwSlPV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtXKsyfnwVYqyHqOUDbo+rRMNYvl4TBpj6Vm7fn+7CbT9T7f8KVFioDHovlmc74lV
-	 i09ni1rnjUtGw7enoGZ6WlCueF4ROMHztPHfPx6I2tS8jDUoTgYUvDe5IOzX7QID5B
-	 MipqjjOReCtYHVR2W2xshJncLRngLByavRtQ830o=
+	b=0GypGU9y2INCP8Tyxxarf+ZmuNVyaj1fOo9x0EbWUo22lYkgS23jNKUrzVBiWUMD5
+	 m5ozkY3uKFWbxfX1tS98R2J4dUSBGegSqbQFa6xGDPAJXjXEahhh1nKtrfe+nCCRjR
+	 IAVvgW9BRr1WUY9k9PTV3oJBRvjNCuzSfgVBPfHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 164/224] tls: always set record_type in tls_process_cmsg
-Date: Mon, 27 Oct 2025 19:35:10 +0100
-Message-ID: <20251027183513.310818383@linuxfoundation.org>
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 199/224] net: ravb: Ensure memory write completes before ringing TX doorbell
+Date: Mon, 27 Oct 2025 19:35:45 +0100
+Message-ID: <20251027183514.129652788@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -46,64 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit b6fe4c29bb51cf239ecf48eacf72b924565cb619 ]
+commit 706136c5723626fcde8dd8f598a4dcd251e24927 upstream.
 
-When userspace wants to send a non-DATA record (via the
-TLS_SET_RECORD_TYPE cmsg), we need to send any pending data from a
-previous MSG_MORE send() as a separate DATA record. If that DATA record
-is encrypted asynchronously, tls_handle_open_record will return
--EINPROGRESS. This is currently treated as an error by
-tls_process_cmsg, and it will skip setting record_type to the correct
-value, but the caller (tls_sw_sendmsg_locked) handles that return
-value correctly and proceeds with sending the new message with an
-incorrect record_type (DATA instead of whatever was requested in the
-cmsg).
+Add a final dma_wmb() barrier before triggering the transmit request
+(TCCR_TSRQ) to ensure all descriptor and buffer writes are visible to
+the DMA engine.
 
-Always set record_type before handling the open record. If
-tls_handle_open_record returns an error, record_type will be
-ignored. If it succeeds, whether with synchronous crypto (returning 0)
-or asynchronous (returning -EINPROGRESS), the caller will proceed
-correctly.
+According to the hardware manual, a read-back operation is required
+before writing to the doorbell register to guarantee completion of
+previous writes. Instead of performing a dummy read, a dma_wmb() is
+used to both enforce the same ordering semantics on the CPU side and
+also to ensure completion of writes.
 
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/0457252e578a10a94e40c72ba6288b3a64f31662.1760432043.git.sd@queasysnail.net
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Cc: stable@vger.kernel.org
+Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://patch.msgid.link/20251017151830.171062-5-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index cb51a2f46b11d..5bf809b090342 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -181,12 +181,9 @@ int tls_proccess_cmsg(struct sock *sk, struct msghdr *msg,
- 			if (msg->msg_flags & MSG_MORE)
- 				return -EINVAL;
- 
--			rc = tls_handle_open_record(sk, msg->msg_flags);
--			if (rc)
--				return rc;
--
- 			*record_type = *(unsigned char *)CMSG_DATA(cmsg);
--			rc = 0;
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1602,6 +1602,14 @@ static netdev_tx_t ravb_start_xmit(struc
+ 	} else {
+ 		desc->die_dt = DT_FSINGLE;
+ 	}
 +
-+			rc = tls_handle_open_record(sk, msg->msg_flags);
- 			break;
- 		default:
- 			return -EINVAL;
--- 
-2.51.0
-
++	/* Before ringing the doorbell we need to make sure that the latest
++	 * writes have been committed to memory, otherwise it could delay
++	 * things until the doorbell is rang again.
++	 * This is in replacement of the read operation mentioned in the HW
++	 * manuals.
++	 */
++	dma_wmb();
+ 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
+ 
+ 	priv->cur_tx[q] += num_tx_desc;
 
 
