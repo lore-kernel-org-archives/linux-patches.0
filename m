@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1936D31B804;
-	Mon, 27 Oct 2025 18:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D15C31B116;
+	Mon, 27 Oct 2025 18:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590582; cv=none; b=cbNZP5/wSwcirLg6DnAaRmgHKI6NGnVUAUvpd+5PNQjxt6Ew7blALI7yBYuiIvkCtaMeno6TzPR9sBTxkIdFp2Nl5vL5o9DbCY4IsEsp+9exIOlUXMRgqpmqH12tAJZq9bRgYv8QdgvggWDgRA46yBVKWICK+vYJxeNflptyoWI=
+	t=1761590584; cv=none; b=lHQFPxHoSbzXZalNykkDSJ9vRnubSvIS9QmDAhD6CQFbjcKSlP1MV+/itW1tSuurlKH9ybyUkLsyedkn7fn1gUeQyZ8UDjULFrOFgqM9KZ/NwIBZlo/a7gWBdxUw1WOjtqpfSQcYiFDDpwTavkT3qZfXeCXuRwvlJyXcQgEnPgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590582; c=relaxed/simple;
-	bh=D868krfLupialNXXDllh6FXu4FAkib0cHZTiAiH7ek4=;
+	s=arc-20240116; t=1761590584; c=relaxed/simple;
+	bh=/NgEGm/crFftReVjSK/hrwOk5jp3/3C2BLNuOW9+s/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3Of73/a3ZdLh63L2RvHABsBefyi/HNDsIHU0vaAu2fHxOI6tu5VBZjURskGtQRdQ7wVX7vftAWHYsYGBV94arkzPjPs0k4WderbfWNycjgYrkxx8eKlyCZSmudRSYBQV4R+IYwdva56AGM0PZ5Z6KP3pVFgefWv5XhEqC+PxKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxZm0bUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHB1j0KBzvQRyOGPEFAiRic78aEXjNxPtiGMF+0Q+AsOhQpSYrc7c8W6kVYlz5GVuDn0F5QHgs72FvzpcLiI7rxRFKlR/fEkphw67BDQcDKnr2MNQTFZhcQ96QWeEgTR4cLNl+aQnMN2881sop6KIsaUtyS86KF/IxtSrehjkbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eua8Z3YX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxZm0bUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1633C4CEFD;
-	Mon, 27 Oct 2025 18:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eua8Z3YX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F310C4CEF1;
+	Mon, 27 Oct 2025 18:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590582;
-	bh=D868krfLupialNXXDllh6FXu4FAkib0cHZTiAiH7ek4=;
+	s=korg; t=1761590584;
+	bh=/NgEGm/crFftReVjSK/hrwOk5jp3/3C2BLNuOW9+s/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxZm0bUlg7qpoAPtYyEB5RMFESoEO/ALKn5e5nAs6KdSKF6kRXuAthVOdlPVPntOH
-	 XeHmcOC/566JXWkHa7idCWTOE8hzeDVzaRGFRwoagY2giFLhVGqF217gS2uI0piHiE
-	 XNeHFSMXUEopJ7j9j3WvMIX8Z4HxhupYQ1+0GvNA=
+	b=Eua8Z3YXTKAjJPbQIGV5cCYyQT5XnzTAVtBn5lt6eQmsxquLZPTzZnHZTsW/3hDqL
+	 hVajDKzDXmVbY6i9+r/dy4NMyYYVnBnwiJyRH9gVEZC7JJz0qf0TjNlG2jKjOvq8t1
+	 uM3/yIwXDfoV86E85DjhgzVna/Y1+XmO1H31mJnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/224] crypto: essiv - Check ssize for decryption and in-place encryption
-Date: Mon, 27 Oct 2025 19:34:03 +0100
-Message-ID: <20251027183511.587118514@linuxfoundation.org>
+Subject: [PATCH 5.4 098/224] tpm, tpm_tis: Claim locality before writing interrupt registers
+Date: Mon, 27 Oct 2025 19:34:04 +0100
+Message-ID: <20251027183511.612449703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,61 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 6bb73db6948c2de23e407fe1b7ef94bf02b7529f ]
+[ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
 
-Move the ssize check to the start in essiv_aead_crypt so that
-it's also checked for decryption and in-place encryption.
+In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+Currently these modifications are done without holding a locality thus they
+have no effect. Fix this by claiming the (default) locality before the
+registers are written.
 
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Since now tpm_tis_gen_interrupt() is called with the locality already
+claimed remove locality request and release from this function.
+
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 8a81236f2cb0 ("tpm_tis: Fix incorrect arguments in tpm_tis_probe_irq_single")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/essiv.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/crypto/essiv.c b/crypto/essiv.c
-index aa6b89e91ac80..8a74cc34ac50a 100644
---- a/crypto/essiv.c
-+++ b/crypto/essiv.c
-@@ -203,9 +203,14 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	const struct essiv_tfm_ctx *tctx = crypto_aead_ctx(tfm);
- 	struct essiv_aead_request_ctx *rctx = aead_request_ctx(req);
- 	struct aead_request *subreq = &rctx->aead_req;
-+	int ivsize = crypto_aead_ivsize(tfm);
-+	int ssize = req->assoclen - ivsize;
- 	struct scatterlist *src = req->src;
- 	int err;
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index a084f732c1804..60f4b8b9c6f14 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -633,16 +633,10 @@ static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
+ 	cap_t cap;
+ 	int ret;
  
-+	if (ssize < 0)
-+		return -EINVAL;
-+
- 	crypto_cipher_encrypt_one(tctx->essiv_cipher, req->iv, req->iv);
- 
- 	/*
-@@ -215,19 +220,12 @@ static int essiv_aead_crypt(struct aead_request *req, bool enc)
- 	 */
- 	rctx->assoc = NULL;
- 	if (req->src == req->dst || !enc) {
--		scatterwalk_map_and_copy(req->iv, req->dst,
--					 req->assoclen - crypto_aead_ivsize(tfm),
--					 crypto_aead_ivsize(tfm), 1);
-+		scatterwalk_map_and_copy(req->iv, req->dst, ssize, ivsize, 1);
- 	} else {
- 		u8 *iv = (u8 *)aead_request_ctx(req) + tctx->ivoffset;
--		int ivsize = crypto_aead_ivsize(tfm);
--		int ssize = req->assoclen - ivsize;
- 		struct scatterlist *sg;
- 		int nents;
- 
--		if (ssize < 0)
--			return -EINVAL;
+-	ret = request_locality(chip, 0);
+-	if (ret < 0)
+-		return;
 -
- 		nents = sg_nents_for_len(req->src, ssize);
- 		if (nents < 0)
- 			return -EINVAL;
+ 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
+ 	else
+ 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
+-
+-	release_locality(chip, 0);
+ }
+ 
+ /* Register the IRQ and issue a command that will cause an interrupt. If an
+@@ -665,10 +659,16 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	}
+ 	priv->irq = irq;
+ 
++	rc = request_locality(chip, 0);
++	if (rc < 0)
++		return rc;
++
+ 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
+ 			   &original_int_vec);
+-	if (rc < 0)
++	if (rc < 0) {
++		release_locality(chip, priv->locality);
+ 		return rc;
++	}
+ 
+ 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
+ 	if (rc < 0)
+@@ -702,10 +702,12 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+ 		tpm_tis_write8(priv, original_int_vec,
+ 			       TPM_INT_VECTOR(priv->locality));
+-		return -1;
++		rc = -1;
+ 	}
+ 
+-	return 0;
++	release_locality(chip, priv->locality);
++
++	return rc;
+ }
+ 
+ /* Try to find the IRQ the TPM is using. This is for legacy x86 systems that
 -- 
 2.51.0
 
