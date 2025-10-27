@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531E12C326C;
-	Mon, 27 Oct 2025 19:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7625241663;
+	Mon, 27 Oct 2025 19:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592106; cv=none; b=HTjfV9Aj0SFRw1scOvghWON5AGxK7glEvm+0gRqMm1FceAd2ToaOSusy/sp+lHRAkFWUloRwyvAhjx/6icyWE+/nsjRLO+Oh8BbXb19FsE9eXRZGzdUtA2lVxbn/77AR1mK+eczNv1NBD6Kg95C/PSMeTx82keYKnpIqVwRQLcs=
+	t=1761592108; cv=none; b=cvswyj7I5+RuMGyTHE+rF99d/fg2cLTQQXTctRBi/GChwG4n3+gWSZ6ko5u2i9K2awdMXkTQ57WNW+VDU8blnQU5j09cwCa6X5G2+3zdKofT4GqIbUephhlRqm1Vj4QCmT6u0gRAfUnZS1rKgbt1Yjmnc9EOOisHPHSjNSpeZjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592106; c=relaxed/simple;
-	bh=cq4rQeOWYYB61fP0iXNDz/fu7ylH3P0yEqzw2txm3G8=;
+	s=arc-20240116; t=1761592108; c=relaxed/simple;
+	bh=X9m3Yb0uLG1YsU4wn2iYWwv2fi32m2sKCIYrCd7tBPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNE/+j+JRTw1Z+eBNqq6Ju7yq7B/3bXFlfkKeRfs9p37Z+zv2tKxTjqOR2+UCcopKfzhj9qvaTHWv2/AZ3KQeP87LtjBAkrlgm+MiKx5i6NKvx+j4bxxDio0hpC3/ICnWa7DU7txEOT+GNs5izjxWo44J0gXgHvxPvUfVVsZHYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hr5WXXcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pIyAhLLo1LVQf/nj2m+3luCnHcLoL4l7RSKkHlSuTIRK89O6BmE+y9vT+mbfFF2p6T42kqW7qZXfuoponPSxWFJx0t++8aE9qM7+sn+3ZV2zmGWUOw+5LtHlIdriuc2Aagn1aZphwmtLQ73gXhq6QCobzCkrxPIEoOoZBtxN1+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I74Noapj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hr5WXXcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A53FC113D0;
-	Mon, 27 Oct 2025 19:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I74Noapj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2018EC4CEF1;
+	Mon, 27 Oct 2025 19:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592105;
-	bh=cq4rQeOWYYB61fP0iXNDz/fu7ylH3P0yEqzw2txm3G8=;
+	s=korg; t=1761592108;
+	bh=X9m3Yb0uLG1YsU4wn2iYWwv2fi32m2sKCIYrCd7tBPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hr5WXXcE47cGTMP+aNGw24aCeSfVbJmwe1slIko1t6c2HEJyLcH2S03joojPN/QvE
-	 R6d22WI+opohhptf4TC7Irk3AhLGUDbLgtzTaADnNLZdJhhnFbZDLKRi+ThBM2NcF+
-	 aGfO7V1JICvJ8GVCh+EnrbswUIig3jY8zA5Mgo8M=
+	b=I74NoapjR4/FnxDbpcEHUf5gTNA1Lbhc1saxY1F1KjnXhgxUF6VuWAt/SKJ7cSRGj
+	 zDa9TnF+8C87svZ6wPLWtVSboqaj0jgnYwfMU4tBpMf+sESbr8SUHHHV7qrevqr4dV
+	 VLRMNMq54oIfb0JTk3R9EaP5GVjTBtXpPjIAbk30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/123] usb: gadget: f_ncm: Refactor bind path to use __free()
-Date: Mon, 27 Oct 2025 19:36:39 +0100
-Message-ID: <20251027183449.568769013@linuxfoundation.org>
+Subject: [PATCH 5.15 120/123] usb: gadget: f_acm: Refactor bind path to use __free()
+Date: Mon, 27 Oct 2025 19:36:40 +0100
+Message-ID: <20251027183449.594487265@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 75a5b8d4ddd4eb6b16cb0b475d14ff4ae64295ef ]
+[ Upstream commit 47b2116e54b4a854600341487e8b55249e926324 ]
 
-After an bind/unbind cycle, the ncm->notify_req is left stale. If a
+After an bind/unbind cycle, the acm->notify_req is left stale. If a
 subsequent bind fails, the unified error label attempts to free this
 stale request, leading to a NULL pointer dereference when accessing
 ep->ops->free_request.
@@ -66,7 +66,8 @@ automatic cleanup mechanism.
 Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
 Call trace:
  usb_ep_free_request+0x2c/0xec
- ncm_bind+0x39c/0x3dc
+ gs_free_req+0x30/0x44
+ acm_bind+0x1b8/0x1f4
  usb_add_function+0xcc/0x1f0
  configfs_composite_bind+0x468/0x588
  gadget_bind_driver+0x104/0x270
@@ -87,192 +88,130 @@ Call trace:
  kthread+0x114/0x1bc
  ret_from_fork+0x10/0x20
 
-Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
+Fixes: 1f1ba11b6494 ("usb gadget: issue notifications from ACM function")
 Cc: stable@kernel.org
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
+Link: https://lore.kernel.org/r/20250916-ready-v1-4-4997bf277548@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20250916-ready-v1-3-4997bf277548@google.com
+Link: https://lore.kernel.org/r/20250916-ready-v1-4-4997bf277548@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   78 +++++++++++++++---------------------
- 1 file changed, 33 insertions(+), 45 deletions(-)
+ drivers/usb/gadget/function/f_acm.c |   42 ++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -11,6 +11,7 @@
-  * Copyright (C) 2008 Nokia Corporation
-  */
+--- a/drivers/usb/gadget/function/f_acm.c
++++ b/drivers/usb/gadget/function/f_acm.c
+@@ -11,12 +11,15 @@
+ 
+ /* #define VERBOSE_DEBUG */
  
 +#include <linux/cleanup.h>
+ #include <linux/slab.h>
  #include <linux/kernel.h>
- #include <linux/interrupt.h>
  #include <linux/module.h>
-@@ -19,6 +20,7 @@
- #include <linux/crc32.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
  
- #include <linux/usb/cdc.h>
 +#include <linux/usb/gadget.h>
++
+ #include "u_serial.h"
  
- #include "u_ether.h"
- #include "u_ether_configfs.h"
-@@ -1441,18 +1443,18 @@ static int ncm_bind(struct usb_configura
+ 
+@@ -612,6 +615,7 @@ acm_bind(struct usb_configuration *c, st
+ 	struct usb_string	*us;
+ 	int			status;
  	struct usb_ep		*ep;
- 	struct f_ncm_opts	*ncm_opts;
++	struct usb_request	*request __free(free_usb_request) = NULL;
  
-+	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
-+	struct usb_request		*request __free(free_usb_request) = NULL;
-+
- 	if (!can_support_ecm(cdev->gadget))
- 		return -EINVAL;
- 
- 	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
- 
- 	if (cdev->use_os_string) {
--		f->os_desc_table = kzalloc(sizeof(*f->os_desc_table),
--					   GFP_KERNEL);
--		if (!f->os_desc_table)
-+		os_desc_table = kzalloc(sizeof(*os_desc_table), GFP_KERNEL);
-+		if (!os_desc_table)
- 			return -ENOMEM;
--		f->os_desc_n = 1;
--		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
- 	}
- 
- 	mutex_lock(&ncm_opts->lock);
-@@ -1462,16 +1464,15 @@ static int ncm_bind(struct usb_configura
- 	mutex_unlock(&ncm_opts->lock);
- 
- 	if (status)
--		goto fail;
-+		return status;
- 
- 	ncm_opts->bound = true;
- 
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
--	if (IS_ERR(us)) {
--		status = PTR_ERR(us);
--		goto fail;
--	}
-+	if (IS_ERR(us))
-+		return PTR_ERR(us);
-+
- 	ncm_control_intf.iInterface = us[STRING_CTRL_IDX].id;
- 	ncm_data_nop_intf.iInterface = us[STRING_DATA_IDX].id;
- 	ncm_data_intf.iInterface = us[STRING_DATA_IDX].id;
-@@ -1481,55 +1482,47 @@ static int ncm_bind(struct usb_configura
- 	/* allocate instance-specific interface IDs */
+ 	/* REVISIT might want instance-specific strings to help
+ 	 * distinguish instances ...
+@@ -629,7 +633,7 @@ acm_bind(struct usb_configuration *c, st
+ 	/* allocate instance-specific interface IDs, and patch descriptors */
  	status = usb_interface_id(c, f);
  	if (status < 0)
 -		goto fail;
 +		return status;
- 	ncm->ctrl_id = status;
- 	ncm_iad_desc.bFirstInterface = status;
+ 	acm->ctrl_id = status;
+ 	acm_iad_descriptor.bFirstInterface = status;
  
- 	ncm_control_intf.bInterfaceNumber = status;
- 	ncm_union_desc.bMasterInterface0 = status;
+@@ -638,40 +642,38 @@ acm_bind(struct usb_configuration *c, st
  
--	if (cdev->use_os_string)
--		f->os_desc_table[0].if_id =
--			ncm_iad_desc.bFirstInterface;
--
  	status = usb_interface_id(c, f);
  	if (status < 0)
 -		goto fail;
 +		return status;
- 	ncm->data_id = status;
+ 	acm->data_id = status;
  
- 	ncm_data_nop_intf.bInterfaceNumber = status;
- 	ncm_data_intf.bInterfaceNumber = status;
- 	ncm_union_desc.bSlaveInterface0 = status;
+ 	acm_data_interface_desc.bInterfaceNumber = status;
+ 	acm_union_desc.bSlaveInterface0 = status;
+ 	acm_call_mgmt_descriptor.bDataInterface = status;
  
 -	status = -ENODEV;
 -
  	/* allocate instance-specific endpoints */
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_in_desc);
+ 	ep = usb_ep_autoconfig(cdev->gadget, &acm_fs_in_desc);
  	if (!ep)
 -		goto fail;
 +		return -ENODEV;
- 	ncm->port.in_ep = ep;
+ 	acm->port.in = ep;
  
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_out_desc);
+ 	ep = usb_ep_autoconfig(cdev->gadget, &acm_fs_out_desc);
  	if (!ep)
 -		goto fail;
 +		return -ENODEV;
- 	ncm->port.out_ep = ep;
+ 	acm->port.out = ep;
  
- 	ep = usb_ep_autoconfig(cdev->gadget, &fs_ncm_notify_desc);
+ 	ep = usb_ep_autoconfig(cdev->gadget, &acm_fs_notify_desc);
  	if (!ep)
 -		goto fail;
 +		return -ENODEV;
- 	ncm->notify = ep;
+ 	acm->notify = ep;
  
--	status = -ENOMEM;
--
- 	/* allocate notification request and buffer */
--	ncm->notify_req = usb_ep_alloc_request(ep, GFP_KERNEL);
--	if (!ncm->notify_req)
+ 	/* allocate notification */
+-	acm->notify_req = gs_alloc_req(ep,
+-			sizeof(struct usb_cdc_notification) + 2,
+-			GFP_KERNEL);
+-	if (!acm->notify_req)
 -		goto fail;
--	ncm->notify_req->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
--	if (!ncm->notify_req->buf)
--		goto fail;
--	ncm->notify_req->context = ncm;
--	ncm->notify_req->complete = ncm_notify_complete;
-+	request = usb_ep_alloc_request(ep, GFP_KERNEL);
++	request = gs_alloc_req(ep,
++			       sizeof(struct usb_cdc_notification) + 2,
++			       GFP_KERNEL);
 +	if (!request)
-+		return -ENOMEM;
-+	request->buf = kmalloc(NCM_STATUS_BYTECOUNT, GFP_KERNEL);
-+	if (!request->buf)
-+		return -ENOMEM;
-+	request->context = ncm;
-+	request->complete = ncm_notify_complete;
++		return -ENODEV;
  
- 	/*
- 	 * support all relevant hardware speeds... we expect that when
-@@ -1549,7 +1542,7 @@ static int ncm_bind(struct usb_configura
- 	status = usb_assign_descriptors(f, ncm_fs_function, ncm_hs_function,
- 			ncm_ss_function, ncm_ss_function);
+-	acm->notify_req->complete = acm_cdc_notify_complete;
+-	acm->notify_req->context = acm;
++	request->complete = acm_cdc_notify_complete;
++	request->context = acm;
+ 
+ 	/* support all relevant hardware speeds... we expect that when
+ 	 * hardware is dual speed, all bulk-capable endpoints work at
+@@ -688,7 +690,9 @@ acm_bind(struct usb_configuration *c, st
+ 	status = usb_assign_descriptors(f, acm_fs_function, acm_hs_function,
+ 			acm_ss_function, acm_ss_function);
  	if (status)
 -		goto fail;
 +		return status;
- 
- 	/*
- 	 * NOTE:  all that is done without knowing or caring about
-@@ -1563,25 +1556,20 @@ static int ncm_bind(struct usb_configura
- 	hrtimer_init(&ncm->task_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	ncm->task_timer.function = ncm_tx_timeout;
- 
-+	if (cdev->use_os_string) {
-+		os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
-+		os_desc_table[0].if_id = ncm_iad_desc.bFirstInterface;
-+		f->os_desc_table = no_free_ptr(os_desc_table);
-+		f->os_desc_n = 1;
-+	}
-+        ncm->notify_req = no_free_ptr(request);
 +
- 	DBG(cdev, "CDC Network: %s speed IN/%s OUT/%s NOTIFY/%s\n",
- 			gadget_is_superspeed(c->cdev->gadget) ? "super" :
- 			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
- 			ncm->notify->name);
++	acm->notify_req = no_free_ptr(request);
+ 
+ 	dev_dbg(&cdev->gadget->dev,
+ 		"acm ttyGS%d: %s speed IN/%s OUT/%s NOTIFY/%s\n",
+@@ -698,14 +702,6 @@ acm_bind(struct usb_configuration *c, st
+ 		acm->port.in->name, acm->port.out->name,
+ 		acm->notify->name);
  	return 0;
 -
 -fail:
--	kfree(f->os_desc_table);
--	f->os_desc_n = 0;
+-	if (acm->notify_req)
+-		gs_free_req(acm->notify, acm->notify_req);
 -
--	if (ncm->notify_req) {
--		kfree(ncm->notify_req->buf);
--		usb_ep_free_request(ncm->notify, ncm->notify_req);
--	}
--
--	ERROR(cdev, "%s: can't bind, err %d\n", f->name, status);
+-	ERROR(cdev, "%s/%p: can't bind, err %d\n", f->name, f, status);
 -
 -	return status;
  }
  
- static inline struct f_ncm_opts *to_f_ncm_opts(struct config_item *item)
+ static void acm_unbind(struct usb_configuration *c, struct usb_function *f)
 
 
