@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E78B32E12B;
-	Mon, 27 Oct 2025 18:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF9A32E142;
+	Mon, 27 Oct 2025 18:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590977; cv=none; b=GHI8K/15NscvMjdhpAyT/xjMeG4CDT3jpa4Bjvl5//HB3TLv0eHJemMvtY2T8iYKycBn7jUx47GmvJA+besRF7oJxANa3dpJSM2Azw5v2S680/ynNc7q5tPXsncassRJ3MWlcfjvx5lMQl+fhz4j4IPVrtIw2C2y6JRRF4KxBFg=
+	t=1761590980; cv=none; b=jVR7ixIabKBe+S9uv7nX6XB7/69zmWRRTiuC9/ArbIfXkjbhpqyzSN/Al9R/JQpPHNsc1EKHfACbbTOFb/VQcTDY8JtjFQULZxET3tSOs+zLph/QsIFfwGcUFMIrKMqeKE/mgfu7JPAWv7HUcZ3rf4NeJhgIQZqAWUpFUJ+zWj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590977; c=relaxed/simple;
-	bh=0iAqKSffxW1P4sY+9hxbycT495DvPA4bt8QbSm5hw/s=;
+	s=arc-20240116; t=1761590980; c=relaxed/simple;
+	bh=hEGXR8O2KDLvJLTiMUsYitjCZlfXbxIP23PAOs7TFLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRa6T5AQY+Tli1roHzHbjuX06nxLBHKNiol00uPn2x1lsEWF097NcyrDrWnMgfZRvJ1RDiDZeAHIsXCf0GHqTOhKIH34NRp9SDKYyyhTyE5CDhvluvXgSy/zSIb7eqn07zCwA22GRF0enQV4qaYrua2uDc8H57o1kSVg2jr3rAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+Bm4z04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TtMoli/OPUPBTAoSvpFAioQEDEAP4y0r0uyHbyQdE3+twOYx3Po681HTJbwZekLzSd/rXaL4KYbXVGaYAIzS3kqapOelo/+xHFjDJXKMoKj3N/l160+zFK4qbuGcWL4OSqwofF2fupcNJo6moUhBKxKTdWWPbgPcUgyztKplyys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUsROXfK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+Bm4z04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6082C4CEF1;
-	Mon, 27 Oct 2025 18:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUsROXfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AF0C4CEF1;
+	Mon, 27 Oct 2025 18:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590977;
-	bh=0iAqKSffxW1P4sY+9hxbycT495DvPA4bt8QbSm5hw/s=;
+	s=korg; t=1761590979;
+	bh=hEGXR8O2KDLvJLTiMUsYitjCZlfXbxIP23PAOs7TFLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+Bm4z04GQIswRnIzYkA2MSo/aTzGSLISigJUiUcl/9cCwxNNpzyO6k8v5YqIhOSk
-	 ITxfvqY19BFMQmGYLa0rgRtaJjqlRVNI0LfSbFIaccDot3Yhxa4MOePb+qY3Wmd4eT
-	 JCrG+RmVUdtTKZJOBGm+P/WYWL7iRgyMr5WAMgC4=
+	b=VUsROXfKQtmex3yqXBO+/p/Omi9g4hVhbagBiEIqFx88wrjtxAOne690QhbDD/4V1
+	 MpHNfykyP1pyTKSsSlV/N5/dI7SGLH4ViMFHSarsrdyM0dV9cESYSSs3IJUrRQps0X
+	 TB5su8TUndrdea/ytHurZpadWAsdWA5fDS/fk1ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/332] filelock: add FL_RECLAIM to show_fl_flags() macro
-Date: Mon, 27 Oct 2025 19:31:13 +0100
-Message-ID: <20251027183525.154920235@linuxfoundation.org>
+Subject: [PATCH 5.10 021/332] selftests: arm64: Check fread return value in exec_target
+Date: Mon, 27 Oct 2025 19:31:14 +0100
+Message-ID: <20251027183525.180734659@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,35 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
 
-[ Upstream commit c593b9d6c446510684da400833f9d632651942f0 ]
+[ Upstream commit a679e5683d3eef22ca12514ff8784b2b914ebedc ]
 
-Show the FL_RECLAIM flag symbolically in tracepoints.
+Fix -Wunused-result warning generated when compiled with gcc 13.3.0,
+by checking fread's return value and handling errors, preventing
+potential failures when reading from stdin.
 
-Fixes: bb0a55bb7148 ("nfs: don't allow reexport reclaims")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/20250903-filelock-v1-1-f2926902962d@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes compiler warning:
+warning: ignoring return value of 'fread' declared with attribute
+'warn_unused_result' [-Wunused-result]
+
+Fixes: 806a15b2545e ("kselftests/arm64: add PAuth test for whether exec() changes keys")
+
+Signed-off-by: Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/filelock.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/arm64/pauth/exec_target.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/filelock.h b/include/trace/events/filelock.h
-index 1646dadd7f37c..3b1c8d93b2654 100644
---- a/include/trace/events/filelock.h
-+++ b/include/trace/events/filelock.h
-@@ -27,7 +27,8 @@
- 		{ FL_SLEEP,		"FL_SLEEP" },			\
- 		{ FL_DOWNGRADE_PENDING,	"FL_DOWNGRADE_PENDING" },	\
- 		{ FL_UNLOCK_PENDING,	"FL_UNLOCK_PENDING" },		\
--		{ FL_OFDLCK,		"FL_OFDLCK" })
-+		{ FL_OFDLCK,		"FL_OFDLCK" },			\
-+		{ FL_RECLAIM,		"FL_RECLAIM"})
+diff --git a/tools/testing/selftests/arm64/pauth/exec_target.c b/tools/testing/selftests/arm64/pauth/exec_target.c
+index 4435600ca400d..e597861b26d6b 100644
+--- a/tools/testing/selftests/arm64/pauth/exec_target.c
++++ b/tools/testing/selftests/arm64/pauth/exec_target.c
+@@ -13,7 +13,12 @@ int main(void)
+ 	unsigned long hwcaps;
+ 	size_t val;
  
- #define show_fl_type(val)				\
- 	__print_symbolic(val,				\
+-	fread(&val, sizeof(size_t), 1, stdin);
++	size_t size = fread(&val, sizeof(size_t), 1, stdin);
++
++	if (size != 1) {
++		fprintf(stderr, "Could not read input from stdin\n");
++		return EXIT_FAILURE;
++	}
+ 
+ 	/* don't try to execute illegal (unimplemented) instructions) caller
+ 	 * should have checked this and keep worker simple
 -- 
 2.51.0
 
