@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D34431B83D;
-	Mon, 27 Oct 2025 19:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0981F320A00;
+	Mon, 27 Oct 2025 19:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592044; cv=none; b=axBC8dD/pjNzUx4UhxU2Jmfs80/3QFMFMn7O2VMyyBXDLmLTsBkHTlSwDicp/Fm+kqHgQBViLHc7dFb0+WthAXJnEHClOuWgqDtGGRe/A8xu6GY6/Vk6UkbGIxnyrYhNxgYOgOpnKmqqsG8F6Jq+hDPA5cUdIEHHMTDW35eCAMU=
+	t=1761592047; cv=none; b=ldRbMu6nO+BnSS0G00tyP8JZWIIjIcPhLLj71jUvhLUgdMq5+WBCBTVN/yDvvejQIhsxGill/IO1dzaiNr5hxPWw7Hg3CPBcINTpFOw85Jev75xFbE7SgrWoA7HG5dnwYRrsX8shiotOcN9ZRSG/v3xdYVttk8DN3gQ6ELNg07c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592044; c=relaxed/simple;
-	bh=hQScORWQNz4mGTpEnS5/mlCCQXr7KMWh4hSdxRGAFZo=;
+	s=arc-20240116; t=1761592047; c=relaxed/simple;
+	bh=dHcZWf6qD12NuGpC29iz+XEzxkztlIbJ2n0X66CU1PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nxw3SHVRK49sKBZ7FpjvIHMgGcMyG6OdhcPzFpdX8DLxnHWtM9DaI2cIopnDfwdOn+4tiV7JB8rZ4i0b5/XGsU1QS0M2L5xcwhAQ7kuE75sTHIA+CFxGu2zxp3ebcGZ1bbtjXJDqOdZqwH0dy7BSeD1Q8CvwdW8Tla/5NBexaps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZcBp9kx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WncvUNsGlxKnWDHrD7z3SRJ9CERSf0a2nFxwwbZC25IcObHEMlPRT8bXZcRzYhs+IoyCcfyXZljO0emCgB1wfgZOm0PDF8dCMlGGlipI6blhQ3U2skR99WilLCz9iwn4HnWRD4RGX2cisnQ0Kp2Iqt5zlwZryRStblHQ9DLkK9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8VBMdlb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZcBp9kx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E45C4CEF1;
-	Mon, 27 Oct 2025 19:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8VBMdlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927D1C4CEF1;
+	Mon, 27 Oct 2025 19:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592044;
-	bh=hQScORWQNz4mGTpEnS5/mlCCQXr7KMWh4hSdxRGAFZo=;
+	s=korg; t=1761592046;
+	bh=dHcZWf6qD12NuGpC29iz+XEzxkztlIbJ2n0X66CU1PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZcBp9kxno/Y/dwxeXOn4acX0tiRVgT9WHOVYPQxtWxsGmpR8fV4FswYQWwIQDlWX
-	 XmLd+KDlc87cM/r9JwLmNUSNEsECAj7k/QgbGTwQtVeQQ3ddnIWmDPZ7my79bUHGqV
-	 B4bQo7SbfeJFJKcCajfgIV1nVo7rPyGFqZXHgpsg=
+	b=S8VBMdlbjZdKYr1X+53hKAA+20xwe9CXTqBoiKei3o00DXVpbUhY4IUQn0c3nBPsb
+	 1NTneZ16VtbhVrVuAF32A9wTSDf9ueg/qUW4Q3YtdGhdwB2EtWKGeAtZOs2ZdunH5J
+	 bCvAspAOxzKrH3vXyoJZ06+3AAMYzXRpKOnTd9VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/123] iio: imu: inv_icm42600: use = { } instead of memset()
-Date: Mon, 27 Oct 2025 19:36:15 +0100
-Message-ID: <20251027183448.930300746@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 068/123] net: usb: rtl8150: Fix frame padding
+Date: Mon, 27 Oct 2025 19:35:48 +0100
+Message-ID: <20251027183448.217290986@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -47,74 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 352112e2d9aab6a156c2803ae14eb89a9fd93b7d ]
+commit 75cea9860aa6b2350d90a8d78fed114d27c7eca2 upstream.
 
-Use { } instead of memset() to zero-initialize stack memory to simplify
-the code.
+TX frames aren't padded and unknown memory is sent into the ether.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20250611-iio-zero-init-stack-with-instead-of-memset-v1-16-ebb2d0a24302@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 466f7a2fef2a ("iio: imu: inv_icm42600: Avoid configuring if already pm_runtime suspended")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Theoretically, it isn't even guaranteed that the extra memory exists
+and can be sent out, which could cause further problems. In practice,
+I found that plenty of tailroom exists in the skb itself (in my test
+with ping at least) and skb_padto() easily succeeds, so use it here.
+
+In the event of -ENOMEM drop the frame like other drivers do.
+
+The use of one more padding byte instead of a USB zero-length packet
+is retained to avoid regression. I have a dodgy Etron xHCI controller
+which doesn't seem to support sending ZLPs at all.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251014203528.3f9783c4.michal.pecio@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    5 ++---
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/usb/rtl8150.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -749,7 +749,8 @@ int inv_icm42600_accel_parse_fifo(struct
- 	const int8_t *temp;
- 	unsigned int odr;
- 	int64_t ts_val;
--	struct inv_icm42600_accel_buffer buffer;
-+	/* buffer is copied to userspace, zeroing it to avoid any data leak */
-+	struct inv_icm42600_accel_buffer buffer = { };
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -685,9 +685,16 @@ static netdev_tx_t rtl8150_start_xmit(st
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	int count, res;
  
- 	/* parse all fifo packets */
- 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
-@@ -768,8 +769,6 @@ int inv_icm42600_accel_parse_fifo(struct
- 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
- 							 st->fifo.nb.total, no);
- 
--		/* buffer is copied to userspace, zeroing it to avoid any data leak */
--		memset(&buffer, 0, sizeof(buffer));
- 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -761,7 +761,8 @@ int inv_icm42600_gyro_parse_fifo(struct
- 	const int8_t *temp;
- 	unsigned int odr;
- 	int64_t ts_val;
--	struct inv_icm42600_gyro_buffer buffer;
-+	/* buffer is copied to userspace, zeroing it to avoid any data leak */
-+	struct inv_icm42600_gyro_buffer buffer = { };
- 
- 	/* parse all fifo packets */
- 	for (i = 0, no = 0; i < st->fifo.count; i += size, ++no) {
-@@ -780,8 +781,6 @@ int inv_icm42600_gyro_parse_fifo(struct
- 			inv_icm42600_timestamp_apply_odr(ts, st->fifo.period,
- 							 st->fifo.nb.total, no);
- 
--		/* buffer is copied to userspace, zeroing it to avoid any data leak */
--		memset(&buffer, 0, sizeof(buffer));
- 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
- 		/* convert 8 bits FIFO temperature in high resolution format */
- 		buffer.temp = temp ? (*temp * 64) : 0;
++	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
++	count = max(skb->len, ETH_ZLEN);
++	if (count % 64 == 0)
++		count++;
++	if (skb_padto(skb, count)) {
++		netdev->stats.tx_dropped++;
++		return NETDEV_TX_OK;
++	}
++
+ 	netif_stop_queue(netdev);
+-	count = (skb->len < 60) ? 60 : skb->len;
+-	count = (count & 0x3f) ? count : count + 1;
+ 	dev->tx_skb = skb;
+ 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
+ 		      skb->data, count, write_bulk_callback, dev);
 
 
