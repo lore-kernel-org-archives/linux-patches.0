@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1591132D7DA;
-	Mon, 27 Oct 2025 18:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC2F32E6A7;
+	Mon, 27 Oct 2025 18:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591487; cv=none; b=XWypP+30JzRnVvH4kmBhky1V1cOxbGiUs/NjGe+NJDRuUBDoqovLYeSK8njplBHVMKcH6HghSXNR3b67tIshNzu+7GkWIrhgrBszaaTKKFXKOQ+AH0UZF+1CBgfFbjCAttUqVV3XBIch3zYC1jYwr2v8j5fXg7+DFkhGEgbf7DM=
+	t=1761591489; cv=none; b=VYwIgnTH+fYUOLz+7ygM5omfgylukz1Hb9pldHR7GF4hnvEBZCN9WlLytqQGptH5XGFLr8OUwv3FCtZ52ydLi+eErPQ1CcgZytq3MKya46VAlnITcfPQ7Ci9a1ZFvn0/ARAvo2TfGPXz2m9ozUH362S2nPnAXG3Z/TjlMOWPXqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591487; c=relaxed/simple;
-	bh=DjdXHwBOVWfdORz/xRCK/6XUKneDNAQyUbbBvi8fvGk=;
+	s=arc-20240116; t=1761591489; c=relaxed/simple;
+	bh=ejIf3NoXRqZr+yllcUZpmWwUVYHZMGts/Srt2969Ht8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DX2KPCOYj6UtdWm+15HNn04AA/1cV9bV5CN+X2LGWxAHD7bbtcapEHORjybe0Q24SPhm99IbUWPnfNYJChsVYZbuKCkfyeDlXThD4r2jV0WgFVb1FNedd6kDN2GACWhy7ff9vu9NvX/IYQvv9xp1GT4AszjZ170PSCreHRHyha8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXS2erXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nICNil9Uf31/EEuIh681Y7xJOUsii//j/kW8CPL1IT21ZK9rkoTDE92AWaLWnsqvINdv2VZjfBbaYKk2fTUPWRAyH8QXu/xE0iSj6cruDuoO+KBRU/bsmnpRI7e5b32a5Q8Kp7xIFRiPT3XVsF2rrVtE5aLdOC1+oJ/92bqe7AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGLZOJRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXS2erXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9786EC4CEF1;
-	Mon, 27 Oct 2025 18:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGLZOJRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C1CC4CEF1;
+	Mon, 27 Oct 2025 18:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591486;
-	bh=DjdXHwBOVWfdORz/xRCK/6XUKneDNAQyUbbBvi8fvGk=;
+	s=korg; t=1761591489;
+	bh=ejIf3NoXRqZr+yllcUZpmWwUVYHZMGts/Srt2969Ht8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXS2erXYo6xB06nov6rkbkyVkWhWb4ONlvrQDx/IU14EGCj5uddtX0wYAGY8UJ+wA
-	 8Z1SHcLRyMRQRcXE/OE6eQiNoMfAFjmicC+Y55jVOy+CXkkKOg/malSSn9IjI/VDgs
-	 pOjeFTANxkBlDYspTnCgMcfqrsumpbtlnioWG08k=
+	b=aGLZOJRp1L8uRDgShiES6ivQyEoJOKzkd2UGmABKs/EZkcznss+/U8owuLQ8UBAXM
+	 GmLyNItYjAgf8fIUbYehSCCOIU0wMVekFhgzSFb7uZs7ZULleRZJZp7+vsFTYox8fy
+	 SELvJLWqqUIpu/YWv1gqaPn7mPg8hdlrwUmbgpc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gaoxiang17 <gaoxiang17@xiaomi.com>,
-	Baoquan He <bhe@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/332] pid: Add a judgment for ns null in pid_nr_ns
-Date: Mon, 27 Oct 2025 19:34:01 +0100
-Message-ID: <20251027183529.643485859@linuxfoundation.org>
+	David Laight <david.laight@aculab.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 5.10 215/332] minmax.h: update some comments
+Date: Mon, 27 Oct 2025 19:34:28 +0100
+Message-ID: <20251027183530.433938880@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,95 +61,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: gaoxiang17 <gaoxiang17@xiaomi.com>
+From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 006568ab4c5ca2309ceb36fa553e390b4aa9c0c7 ]
+[ Upstream commit 10666e99204818ef45c702469488353b5bb09ec7 ]
 
-__task_pid_nr_ns
-        ns = task_active_pid_ns(current);
-        pid_nr_ns(rcu_dereference(*task_pid_ptr(task, type)), ns);
-                if (pid && ns->level <= pid->level) {
+- Change three to several.
+- Remove the comment about retaining constant expressions, no longer true.
+- Realign to nearer 80 columns and break on major punctiation.
+- Add a leading comment to the block before __signed_type() and __is_nonneg()
+  Otherwise the block explaining the cast is a bit 'floating'.
+  Reword the rest of that comment to improve readability.
 
-Sometimes null is returned for task_active_pid_ns. Then it will trigger kernel panic in pid_nr_ns.
-
-For example:
-	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000058
-	Mem abort info:
-	ESR = 0x0000000096000007
-	EC = 0x25: DABT (current EL), IL = 32 bits
-	SET = 0, FnV = 0
-	EA = 0, S1PTW = 0
-	FSC = 0x07: level 3 translation fault
-	Data abort info:
-	ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
-	CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-	GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-	user pgtable: 4k pages, 39-bit VAs, pgdp=00000002175aa000
-	[0000000000000058] pgd=08000002175ab003, p4d=08000002175ab003, pud=08000002175ab003, pmd=08000002175be003, pte=0000000000000000
-	pstate: 834000c5 (Nzcv daIF +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-	pc : __task_pid_nr_ns+0x74/0xd0
-	lr : __task_pid_nr_ns+0x24/0xd0
-	sp : ffffffc08001bd10
-	x29: ffffffc08001bd10 x28: ffffffd4422b2000 x27: 0000000000000001
-	x26: ffffffd442821168 x25: ffffffd442821000 x24: 00000f89492eab31
-	x23: 00000000000000c0 x22: ffffff806f5693c0 x21: ffffff806f5693c0
-	x20: 0000000000000001 x19: 0000000000000000 x18: 0000000000000000
-	x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 00000000023a1adc
-	x14: 0000000000000003 x13: 00000000007ef6d8 x12: 001167c391c78800
-	x11: 00ffffffffffffff x10: 0000000000000000 x9 : 0000000000000001
-	x8 : ffffff80816fa3c0 x7 : 0000000000000000 x6 : 49534d702d535449
-	x5 : ffffffc080c4c2c0 x4 : ffffffd43ee128c8 x3 : ffffffd43ee124dc
-	x2 : 0000000000000000 x1 : 0000000000000001 x0 : ffffff806f5693c0
-	Call trace:
-	__task_pid_nr_ns+0x74/0xd0
-	...
-	__handle_irq_event_percpu+0xd4/0x284
-	handle_irq_event+0x48/0xb0
-	handle_fasteoi_irq+0x160/0x2d8
-	generic_handle_domain_irq+0x44/0x60
-	gic_handle_irq+0x4c/0x114
-	call_on_irq_stack+0x3c/0x74
-	do_interrupt_handler+0x4c/0x84
-	el1_interrupt+0x34/0x58
-	el1h_64_irq_handler+0x18/0x24
-	el1h_64_irq+0x68/0x6c
-	account_kernel_stack+0x60/0x144
-	exit_task_stack_account+0x1c/0x80
-	do_exit+0x7e4/0xaf8
-	...
-	get_signal+0x7bc/0x8d8
-	do_notify_resume+0x128/0x828
-	el0_svc+0x6c/0x70
-	el0t_64_sync_handler+0x68/0xbc
-	el0t_64_sync+0x1a8/0x1ac
-	Code: 35fffe54 911a02a8 f9400108 b4000128 (b9405a69)
-	---[ end trace 0000000000000000 ]---
-	Kernel panic - not syncing: Oops: Fatal exception in interrupt
-
-Signed-off-by: gaoxiang17 <gaoxiang17@xiaomi.com>
-Link: https://lore.kernel.org/20250802022123.3536934-1-gxxa03070307@gmail.com
-Reviewed-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/85b050c81c1d4076aeb91a6cded45fee@AcuMS.aculab.com
+Signed-off-by: David Laight <david.laight@aculab.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Arnd Bergmann <arnd@kernel.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Pedro Falcato <pedro.falcato@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/minmax.h |   61 ++++++++++++++++++++++---------------------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
 
-diff --git a/kernel/pid.c b/kernel/pid.c
-index 0820f2c50bb0c..a5a08476f3756 100644
---- a/kernel/pid.c
-+++ b/kernel/pid.c
-@@ -474,7 +474,7 @@ pid_t pid_nr_ns(struct pid *pid, struct pid_namespace *ns)
- 	struct upid *upid;
- 	pid_t nr = 0;
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -8,13 +8,10 @@
+ #include <linux/types.h>
  
--	if (pid && ns->level <= pid->level) {
-+	if (pid && ns && ns->level <= pid->level) {
- 		upid = &pid->numbers[ns->level];
- 		if (upid->ns == ns)
- 			nr = upid->nr;
--- 
-2.51.0
-
+ /*
+- * min()/max()/clamp() macros must accomplish three things:
++ * min()/max()/clamp() macros must accomplish several things:
+  *
+  * - Avoid multiple evaluations of the arguments (so side-effects like
+  *   "x++" happen only once) when non-constant.
+- * - Retain result as a constant expressions when called with only
+- *   constant expressions (to avoid tripping VLA warnings in stack
+- *   allocation usage).
+  * - Perform signed v unsigned type-checking (to generate compile
+  *   errors instead of nasty runtime surprises).
+  * - Unsigned char/short are always promoted to signed int and can be
+@@ -31,25 +28,23 @@
+  *   bit #0 set if ok for unsigned comparisons
+  *   bit #1 set if ok for signed comparisons
+  *
+- * In particular, statically non-negative signed integer
+- * expressions are ok for both.
++ * In particular, statically non-negative signed integer expressions
++ * are ok for both.
+  *
+- * NOTE! Unsigned types smaller than 'int' are implicitly
+- * converted to 'int' in expressions, and are accepted for
+- * signed conversions for now. This is debatable.
+- *
+- * Note that 'x' is the original expression, and 'ux' is
+- * the unique variable that contains the value.
+- *
+- * We use 'ux' for pure type checking, and 'x' for when
+- * we need to look at the value (but without evaluating
+- * it for side effects! Careful to only ever evaluate it
+- * with sizeof() or __builtin_constant_p() etc).
+- *
+- * Pointers end up being checked by the normal C type
+- * rules at the actual comparison, and these expressions
+- * only need to be careful to not cause warnings for
+- * pointer use.
++ * NOTE! Unsigned types smaller than 'int' are implicitly converted to 'int'
++ * in expressions, and are accepted for signed conversions for now.
++ * This is debatable.
++ *
++ * Note that 'x' is the original expression, and 'ux' is the unique variable
++ * that contains the value.
++ *
++ * We use 'ux' for pure type checking, and 'x' for when we need to look at the
++ * value (but without evaluating it for side effects!
++ * Careful to only ever evaluate it with sizeof() or __builtin_constant_p() etc).
++ *
++ * Pointers end up being checked by the normal C type rules at the actual
++ * comparison, and these expressions only need to be careful to not cause
++ * warnings for pointer use.
+  */
+ #define __signed_type_use(x, ux) (2 + __is_nonneg(x, ux))
+ #define __unsigned_type_use(x, ux) (1 + 2 * (sizeof(ux) < 4))
+@@ -57,19 +52,19 @@
+ 	__signed_type_use(x, ux) : __unsigned_type_use(x, ux))
+ 
+ /*
+- * To avoid warnings about casting pointers to integers
+- * of different sizes, we need that special sign type.
++ * Check whether a signed value is always non-negative.
+  *
+- * On 64-bit we can just always use 'long', since any
+- * integer or pointer type can just be cast to that.
++ * A cast is needed to avoid any warnings from values that aren't signed
++ * integer types (in which case the result doesn't matter).
+  *
+- * This does not work for 128-bit signed integers since
+- * the cast would truncate them, but we do not use s128
+- * types in the kernel (we do use 'u128', but they will
+- * be handled by the !is_signed_type() case).
+- *
+- * NOTE! The cast is there only to avoid any warnings
+- * from when values that aren't signed integer types.
++ * On 64-bit any integer or pointer type can safely be cast to 'long'.
++ * But on 32-bit we need to avoid warnings about casting pointers to integers
++ * of different sizes without truncating 64-bit values so 'long' or 'long long'
++ * must be used depending on the size of the value.
++ *
++ * This does not work for 128-bit signed integers since the cast would truncate
++ * them, but we do not use s128 types in the kernel (we do use 'u128',
++ * but they are handled by the !is_signed_type() case).
+  */
+ #ifdef CONFIG_64BIT
+   #define __signed_type(ux) long
 
 
