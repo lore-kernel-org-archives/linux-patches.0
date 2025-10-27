@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1D122A4DB;
-	Mon, 27 Oct 2025 19:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E17622A4DB;
+	Mon, 27 Oct 2025 19:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593490; cv=none; b=juMXesHIgnUb56JleHjcw4d5VNYW9SoqzH762c83QUyt+WXUOaso/nWQWgMOjbCfPjtgvxzPMLQ4k3onLviDgfomI53PSTkMbUDGu4gAZ+yU5MJu1ZZsQfJ6XV2OB0azehlmrFEfa5oF8I6fhekHFEr+fPQsQDlWqX57QqiWogg=
+	t=1761593493; cv=none; b=duBGDPLhA5mEzqVBZZjK3yicJQG1E0rkV30sozsLtiiHU/7c37cSre+9P8JZwCR2zZtHUCnS9QVuF/XEHcjzHcZkESDP04qu/MKJx0X/1VQ0d0GIcjViQLNnjHyLrUOxKkiP765eXJmoA+hnLGWgRPe05/5Y/1k1Luc+nEswNog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593490; c=relaxed/simple;
-	bh=/iSkV3TvS8bjZJgJ0q+KXfOD1RP3NiwAwaK7ChUyWuQ=;
+	s=arc-20240116; t=1761593493; c=relaxed/simple;
+	bh=2f33C60ptrgwAH7T5mDWJTrQjuYb5H3KDmL4TDozJB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIxuLReXvNeBl8QuOipw+CNxhPPhCzoIhmpkbdxZO+64wBEAUJDFkELPbI9Q0Tg3ELGHDUv5nsRLvhWzNTRiDNIBfrtV8uLiXKjqqGSFP6HelCfaEYZQBrQzfPgDVxR+tDToLwr/TV60h04zpdVTnlMsMQjohsU2eRIRpNPEA5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgz1zYuD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzVCCzoH5khqcMIPQJ4RxJtHNOqviCDiioex4jvTNWBnsWkUGC2xJxgTwvtHbCsQt4sPan54NMLd/edd3jjjuUnE5oLkRo6X5577K5dsOs5Ii89zGowJbwksDli8dB/weW6xaKu8RO+qc/91jHjoDY21n+Xh61J/Ii10Hnj3ZuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMA+Ct0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgz1zYuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F68C4CEF1;
-	Mon, 27 Oct 2025 19:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMA+Ct0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3853C4CEF1;
+	Mon, 27 Oct 2025 19:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593490;
-	bh=/iSkV3TvS8bjZJgJ0q+KXfOD1RP3NiwAwaK7ChUyWuQ=;
+	s=korg; t=1761593493;
+	bh=2f33C60ptrgwAH7T5mDWJTrQjuYb5H3KDmL4TDozJB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgz1zYuD26LDBlcdJBMDevfyhtGLsoRHzoO/3cteoaivSMALJwzY0fyslDFQUfSJl
-	 LV6cFFyVmgkxjb/OUnJ/1Wdz6uvGQjvl1cusPGtJLHUjKKxs649MH488iD9ugdOJGj
-	 KjcGh7CRX79r9IUais32XnF/z53znBSDDE9ryhPA=
+	b=JMA+Ct0GpwCoE/NL9fEnLjEUoZdLHgGjE7ltc2hpomTxSbV1TxM2bnAGhT4GJWlAn
+	 f3XXCdJbORyQWDoJTVTLvxr6dVJ2Oe3bmyeVlNCWOclZ3OHxv+ZGfNyULm/T+R8esU
+	 VpLTOS2Sb217vQy4vqfHY8PuMxUk+sdRZiw3MYXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 113/184] mm/damon/sysfs: dealloc commit test ctx always
-Date: Mon, 27 Oct 2025 19:36:35 +0100
-Message-ID: <20251027183517.975133914@linuxfoundation.org>
+	Renjun Wang <renjunw0@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.17 149/184] USB: serial: option: add UNISOC UIS7720
+Date: Mon, 27 Oct 2025 19:37:11 +0100
+Message-ID: <20251027183518.948702881@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -50,41 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Renjun Wang <renjunw0@foxmail.com>
 
-commit 139e7a572af0b45f558b5e502121a768dc328ba8 upstream.
+commit 71c07570b918f000de5d0f7f1bf17a2887e303b5 upstream.
 
-The damon_ctx for testing online DAMON parameters commit inputs is
-deallocated only when the test fails.  This means memory is leaked for
-every successful online DAMON parameters commit.  Fix the leak by always
-deallocating it.
+Add support for UNISOC (Spreadtrum) UIS7720 (A7720) module.
 
-Link: https://lkml.kernel.org/r/20251003201455.41448-3-sj@kernel.org
-Fixes: 4c9ea539ad59 ("mm/damon/sysfs: validate user inputs from damon_sysfs_commit_input()")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480 MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1782 ProdID=4064 Rev=04.04
+S:  Manufacturer=Unisoc-phone
+S:  Product=Unisoc-phone
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 9 Cfg#= 1 Atr=c0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0&1: RNDIS, 2: LOG, 3: DIAG, 4&5: AT Ports, 6&7: AT2 Ports, 8: ADB
+
+Signed-off-by: Renjun Wang <renjunw0@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1438,12 +1438,11 @@ static int damon_sysfs_commit_input(void
- 	if (!test_ctx)
- 		return -ENOMEM;
- 	err = damon_commit_ctx(test_ctx, param_ctx);
--	if (err) {
--		damon_destroy_ctx(test_ctx);
-+	if (err)
- 		goto out;
--	}
- 	err = damon_commit_ctx(kdamond->damon_ctx, param_ctx);
- out:
-+	damon_destroy_ctx(test_ctx);
- 	damon_destroy_ctx(param_ctx);
- 	return err;
- }
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -617,6 +617,7 @@ static void option_instat_callback(struc
+ #define UNISOC_VENDOR_ID			0x1782
+ /* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
+ #define TOZED_PRODUCT_LT70C			0x4055
++#define UNISOC_PRODUCT_UIS7720			0x4064
+ /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
+ #define LUAT_PRODUCT_AIR720U			0x4e00
+ 
+@@ -2466,6 +2467,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, UNISOC_PRODUCT_UIS7720, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
+ 	  .driver_info = NCTRL(1) },
 
 
