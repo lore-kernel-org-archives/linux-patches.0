@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEFD2F4A14;
-	Mon, 27 Oct 2025 19:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF722C3749;
+	Mon, 27 Oct 2025 19:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592725; cv=none; b=ZiWZdkRbQ/JTu/A9jDn5CrGiG7pFAOUVCJGu+HlKAHYi2OZxNP2nNx+2dOBKwI0+OHCD0HkE2uqmdDXkvq7uxEWaJvuQAwWlFRnL7ZHKc6DiFWhoN8jMmTZccq0EHu/IgP7HlmAWA9I4a7ri4cob29oWYwgc6QnmOAOsHP8gfss=
+	t=1761592728; cv=none; b=cjzxwlSQ8rL+G5+YG6iEQZn+G5Ems2SZQScffNfjxdRteL6oqZjDeeptDjGkFMeTPcOoO3g80UJ/o1JKsKS8Fvts5K4jddof+TKoxOJwfxnZEuwPW0TG2qRD20zFRwKsL3rDSBTg3zCO4nMV+QkyGkR68OieDkizGJTnZoimmMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592725; c=relaxed/simple;
-	bh=ys6Fwt6P3woWA9Dpi5WVs1s9ZH4xtA5ngEOPdOLDpV4=;
+	s=arc-20240116; t=1761592728; c=relaxed/simple;
+	bh=7l2S9W0Cxy9E1RAppVvvzOwYZ2psOGsL7PKMunfOOZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uv7RMKfTBwDyRMn4O1p4MZpMHFHEMWRsbTt1oaMxeV3NHYgbp66g14nJuh247PSQ15o5X9hqxWgzL/Yg7V9bBKZrj8rTs4p4OiIOUBN0lIBhrV70ADHxgvlywkhjRDL8YV4bKlerHtGb4drUdTeyY+ENYFo5l55Z1cquOy2eppQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKL/+WlQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9ujChaFD8IOw1RbvGPm8uGwk5wcFX+KbhqTSL99DJLo8bXZ9HvGtE/5ZevGLBeOuY8TkZnS9O4PhmGWOaSNLcsRSys1wrzlHuxt268YYqZD0hF2joE7N0vxEP5piu8xQ3KJZFbk//hrJFCYvK+6cRzXqMJLQIoYuWojrotr6Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYsRQ3hC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKL/+WlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF826C4CEF1;
-	Mon, 27 Oct 2025 19:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYsRQ3hC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54785C4CEF1;
+	Mon, 27 Oct 2025 19:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592725;
-	bh=ys6Fwt6P3woWA9Dpi5WVs1s9ZH4xtA5ngEOPdOLDpV4=;
+	s=korg; t=1761592727;
+	bh=7l2S9W0Cxy9E1RAppVvvzOwYZ2psOGsL7PKMunfOOZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKL/+WlQerMjQ26+j7VosnzdTsYcwJdtXFHO48qD2bdsr300FXGMsuIalLPtZ7YpZ
-	 IWPQhc/hZYf08v+j7GbjvL4sVLifyCaqYd4alN0MyhtmvLX3FEBsM1JnCjJfEzWohF
-	 w64IgXCRogNe/gNB2Ua7xaaqjXuQunV1Rzx0NoS0=
+	b=JYsRQ3hCXQH82Up4QGG0/VSIN8af/ApCt/UUs0QbM9fNN6MeU7pnoMMsaVwaTcECR
+	 0MK/Nzj3kWQrc+WD5zJ8DqMmjKUMzWT0fq2/qnQA57EDhZ7RCZ9m+6v90bZbVBo+AA
+	 sTejuPJu0AHTI8+/mv+0tyjs35PRGSdmtfDIGoSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jun Li <jun.li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.6 73/84] dt-bindings: usb: dwc3-imx8mp: dma-range is required only for imx8mp
-Date: Mon, 27 Oct 2025 19:37:02 +0100
-Message-ID: <20251027183440.752903600@linuxfoundation.org>
+	Artem Shimko <a.shimko.dev@gmail.com>
+Subject: [PATCH 6.6 74/84] serial: 8250_dw: handle reset control deassert error
+Date: Mon, 27 Oct 2025 19:37:03 +0100
+Message-ID: <20251027183440.779523017@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -53,48 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Artem Shimko <a.shimko.dev@gmail.com>
 
-commit 268eb6fb908bc82ce479e4dba9a2cad11f536c9c upstream.
+commit daeb4037adf7d3349b4a1fb792f4bc9824686a4b upstream.
 
-Only i.MX8MP need dma-range property to let USB controller work properly.
-Remove dma-range from required list and add limitation for imx8mp.
+Check the return value of reset_control_deassert() in the probe
+function to prevent continuing probe when reset deassertion fails.
 
-Fixes: d2a704e29711 ("dt-bindings: usb: dwc3-imx8mp: add imx8mp dwc3 glue bindings")
+Previously, reset_control_deassert() was called without checking its
+return value, which could lead to probe continuing even when the
+device reset wasn't properly deasserted.
+
+The fix checks the return value and returns an error with dev_err_probe()
+if reset deassertion fails, providing better error handling and
+diagnostics.
+
+Fixes: acbdad8dd1ab ("serial: 8250_dw: simplify optional reset handling")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Jun Li <jun.li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
+Link: https://patch.msgid.link/20251019095131.252848-1-a.shimko.dev@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/usb/fsl,imx8mp-dwc3.yaml |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_dw.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/Documentation/devicetree/bindings/usb/fsl,imx8mp-dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/fsl,imx8mp-dwc3.yaml
-@@ -85,13 +85,21 @@ required:
-   - reg
-   - "#address-cells"
-   - "#size-cells"
--  - dma-ranges
-   - ranges
-   - clocks
-   - clock-names
-   - interrupts
-   - power-domains
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -653,7 +653,9 @@ static int dw8250_probe(struct platform_
+ 	if (IS_ERR(data->rst))
+ 		return PTR_ERR(data->rst);
  
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          const: fsl,imx8mp-dwc3
-+    then:
-+      required:
-+        - dma-ranges
-+
- additionalProperties: false
+-	reset_control_deassert(data->rst);
++	err = reset_control_deassert(data->rst);
++	if (err)
++		return dev_err_probe(dev, err, "failed to deassert resets\n");
  
- examples:
+ 	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
+ 	if (err)
 
 
