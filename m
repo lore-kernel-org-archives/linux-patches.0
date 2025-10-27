@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954B935965;
-	Mon, 27 Oct 2025 19:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFC4322A04;
+	Mon, 27 Oct 2025 19:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592281; cv=none; b=FYM4ck89DNqUiM9rghG8n4zcWa8AsNsvdP1PhpdCxDUAe0+611LJx2rWTzoOLO/p37Hkt6fLBIpJC7zON8G4k/dDhSYDYm2w1SFi5hEHZL7OKQAZvjkj0v6WnYjUOA9gEKNTn+giijYt1BvaBaB9WpBLgCkIpFlPKZI1ZttWijI=
+	t=1761592284; cv=none; b=aokVT6EscC0hZHegOmOMrBIBKcZhQ5eqv55QBoeLmtRXBwnyL+0IbiDZ4xQvsBrQ0Se/yxTWVcFY5FzxTs+BPMxgAiu3XexI0+riNKDuXeFDizVjaM6KMnz4cj35H59vuHFG7LJj4bQCFEHOX5l49DmNrpxLt4T5WtV5vTDeu30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592281; c=relaxed/simple;
-	bh=D6DPpPviPX+tSCYrGURb8flm0sD1YSwhNhe+3vwecr4=;
+	s=arc-20240116; t=1761592284; c=relaxed/simple;
+	bh=0OvO9qS5/6qPvLopLynUSRKfHV+iZ0lZyAyBXs/ymMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qrxg4N2zWfYkyaKR3BARpdRuMB3Ra2eAQy2Sc1SjlIkVZVQZ1H4JdDTBIeUg7Xs5xVB3kIIRoQHBxZvnP/Ngs9A6Q62+17Z1iSoLVg3ZxVxaNRBST6VhfY46AIRXxkfuNpJLnuDMbEuHXCxAWVgIJ12XFLmah6/nwRxTV3CXTnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YihzqGEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MB9SYlEpAtvY/9M7d/LSBKhtbcagDf+oFcr6OIz9Vr5Kk/unD4zXnASb4WtJFRlyHqjnD0o2XEmss48JEy559wzxmMgfxZoTecE5CbZRH2g/KTfHezwSmlDBCRdbUGvV6aEp3gsDdP1vRi4Cr0oZxASA/pUieYflvZrdQeLqbbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjkTjJNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YihzqGEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27572C4CEF1;
-	Mon, 27 Oct 2025 19:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjkTjJNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7920C4CEF1;
+	Mon, 27 Oct 2025 19:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592281;
-	bh=D6DPpPviPX+tSCYrGURb8flm0sD1YSwhNhe+3vwecr4=;
+	s=korg; t=1761592284;
+	bh=0OvO9qS5/6qPvLopLynUSRKfHV+iZ0lZyAyBXs/ymMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YihzqGEO+79fY7IiyeD4728QIQ1hWiKoCpH2J9Je17zCwJdjTa9d/4YkT9cMhMlot
-	 7U6pVVjOTcHGDjJbcT0NnXpGmJPeb+PiGkGWXX2l598Y5Jq/XFmGTL9AEf20WdKo7U
-	 Zu5zem7l2C1bL+Imx2pGFXARVG+fbjmRX+j4FL8A=
+	b=SjkTjJNNpXDUUMz95K8lRHwW+4fNjKSI/Es4Gn+PO93+ZZjcW3vrwZhgv4BspcytN
+	 uTeR+svlATvnLooKWfCOfDmVNsn+SGzwfnkf2FkMG1ymBUmbuKXv/c8EgQzZYqwezW
+	 pXSMpSv11FqUCunwY8pKvPAw+SGtCP6xSoy8ut6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?=E5=8D=A2=E5=9B=BD=E5=AE=8F?= <luguohong@xiaomi.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/157] ALSA: usb-audio: Fix NULL pointer deference in try_to_register_card
-Date: Mon, 27 Oct 2025 19:35:23 +0100
-Message-ID: <20251027183502.947970704@linuxfoundation.org>
+Subject: [PATCH 6.1 063/157] HID: hid-input: only ignore 0 battery events for digitizers
+Date: Mon, 27 Oct 2025 19:35:24 +0100
+Message-ID: <20251027183502.973431309@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -45,54 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 28412b489b088fb88dff488305fd4e56bd47f6e4 ]
+[ Upstream commit 0187c08058da3e7f11b356ac27e0c427d36f33f2 ]
 
-In try_to_register_card(), the return value of usb_ifnum_to_if() is
-passed directly to usb_interface_claimed() without a NULL check, which
-will lead to a NULL pointer dereference when creating an invalid
-USB audio device. Fix this by adding a check to ensure the interface
-pointer is valid before passing it to usb_interface_claimed().
+Commit 581c4484769e ("HID: input: map digitizer battery usage") added
+handling of battery events for digitizers (typically for batteries
+presented in stylii). Digitizers typically report correct battery levels
+only when stylus is actively touching the surface, and in other cases
+they may report battery level of 0. To avoid confusing consumers of the
+battery information the code was added to filer out reports with 0
+battery levels.
 
-Fixes: 39efc9c8a973 ("ALSA: usb-audio: Fix last interface check for registration")
-Closes: https://lore.kernel.org/all/CANypQFYtQxHL5ghREs-BujZG413RPJGnO5TH=xjFBKpPts33tA@mail.gmail.com/
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However there exist other kinds of devices that may legitimately report
+0 battery levels. Fix this by filtering out 0-level reports only for
+digitizer usages, and continue reporting them for other kinds of devices
+(Smart Batteries, etc).
+
+Reported-by: 卢国宏 <luguohong@xiaomi.com>
+Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/hid/hid-input.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index 5f539a1baef3d..d7fe1c22a48bb 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -753,10 +753,16 @@ get_alias_quirk(struct usb_device *dev, unsigned int id)
-  */
- static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
- {
-+	struct usb_interface *iface;
-+
- 	if (check_delayed_register_option(chip) == ifnum ||
--	    chip->last_iface == ifnum ||
--	    usb_interface_claimed(usb_ifnum_to_if(chip->dev, chip->last_iface)))
-+	    chip->last_iface == ifnum)
-+		return snd_card_register(chip->card);
-+
-+	iface = usb_ifnum_to_if(chip->dev, chip->last_iface);
-+	if (iface && usb_interface_claimed(iface))
- 		return snd_card_register(chip->card);
-+
- 	return 0;
- }
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index cd9d031858438..59ec205421753 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -636,7 +636,10 @@ static void hidinput_update_battery(struct hid_device *dev, unsigned int usage,
+ 		return;
+ 	}
  
+-	if (value == 0 || value < dev->battery_min || value > dev->battery_max)
++	if ((usage & HID_USAGE_PAGE) == HID_UP_DIGITIZER && value == 0)
++		return;
++
++	if (value < dev->battery_min || value > dev->battery_max)
+ 		return;
+ 
+ 	capacity = hidinput_scale_battery_capacity(dev, value);
 -- 
 2.51.0
 
