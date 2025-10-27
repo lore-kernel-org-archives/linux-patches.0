@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87FD31D389;
-	Mon, 27 Oct 2025 19:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E14731D389;
+	Mon, 27 Oct 2025 19:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592153; cv=none; b=RLl600Ga/EsObdzMRC+p7tamo1w8v51u+yQDxPODMKkfJT64DedzuxjY0YHfQy0Nx2x5z3LkbdcTcKy9gWt3l3AUKi98VeSiETH+rZ53/LYq8oKAjM5qvu2t8CyMK9Fk/xAWzVF/oMWerfBdBdhC/GNQ2CVXs1hZ4jnPFAIn/5E=
+	t=1761592156; cv=none; b=IRswHfG8B8iL1QjJ68VC/wzBwxxH3EVLuER3XERMRuGyOYMaZ/93iiTFMew+KdQTtt7PgH6Azk7KGcs4Yj62iA9QZIwwViHoGg39bBR6lx9QKPy82rauHeq02onVKR/TfrrEC6RCcViG8IOIhIvwRVy74xXVYjN+EOA5jeudCxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592153; c=relaxed/simple;
-	bh=x3O3Z1SHf5YXLseKcXA5uVtVB0jXbDe9jH8KRkfRDUg=;
+	s=arc-20240116; t=1761592156; c=relaxed/simple;
+	bh=tDe20rda0BM6Uzumsuxk23M2iPMLf+NPUMmURdy+ckI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEeFq0J8j7p6QtZt4vOVD9cR2sj2JAh81DreEBimjNSr2h6phaVFZMle5y3Uy3ae6gBhFnxUx6JfkW1CJn4nWATPSNJZ/EKyHA0rycsOXVlqRteXCIfC95NAr9+VZwTZhaUsKm1S5eM2UeMX7yCh2Pwa57ab8zPaj/r2f80STIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps0+72fx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AILjkRXNmdUV472RPdsLGEZ6fOd0r4vvvsG3OdP6qDlfN8bnSJj+FimZyYKKa4L26BGUj4ranFSipyaoit8AtUMt1BHB3cO75gvxX1ScP4ORpE85HQImlfpE1ccqa/+wzjPY2PxUWW/jHzNJQ3QU0/tJ6Q16dPeqYXQ0wLD1J1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9cdTXNF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps0+72fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AB6C113D0;
-	Mon, 27 Oct 2025 19:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9cdTXNF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AEDC4CEFD;
+	Mon, 27 Oct 2025 19:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592153;
-	bh=x3O3Z1SHf5YXLseKcXA5uVtVB0jXbDe9jH8KRkfRDUg=;
+	s=korg; t=1761592155;
+	bh=tDe20rda0BM6Uzumsuxk23M2iPMLf+NPUMmURdy+ckI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ps0+72fxydTFw2E/+3Mt5whqrs/XxNWBiTd/H2is4S23++jFZXar8pewTAkcK1SYH
-	 +soIkrrb5zCZAkB5k+1WwFAVTPtd245j6kxvfZ/JTZR061XVssp0SJOYOsUK3MgY92
-	 m0y2nClOCKXuASFu3jVTIe6O4JRpMM3SlaEvm95U=
+	b=m9cdTXNF2bdQdMDtUuwnWf2jZeXaY6rlnHnNndg/hCPYEpf0JY60SCbW0E25c83Ft
+	 yRdLb0RE6xXvls97iX2wossDG6tnjuDlVEqMducVSVghNew8QxVKRLwnzReQU5MG+a
+	 UNrVi/wTYExrFst6f/FFVyyvmaijuNAamknEBZVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	syzbot+884dc4621377ba579a6f@syzkaller.appspotmail.com,
 	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 006/157] btrfs: fix clearing of BTRFS_FS_RELOC_RUNNING if relocation already running
-Date: Mon, 27 Oct 2025 19:34:27 +0100
-Message-ID: <20251027183501.411791682@linuxfoundation.org>
+Subject: [PATCH 6.1 007/157] btrfs: do not assert we found block group item when creating free space tree
+Date: Mon, 27 Oct 2025 19:34:28 +0100
+Message-ID: <20251027183501.438969133@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -55,91 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit 7e5a5983edda664e8e4bb20af17b80f5135c655c upstream.
+commit a5a51bf4e9b7354ce7cd697e610d72c1b33fd949 upstream.
 
-When starting relocation, at reloc_chunk_start(), if we happen to find
-the flag BTRFS_FS_RELOC_RUNNING is already set we return an error
-(-EINPROGRESS) to the callers, however the callers call reloc_chunk_end()
-which will clear the flag BTRFS_FS_RELOC_RUNNING, which is wrong since
-relocation was started by another task and still running.
+Currently, when building a free space tree at populate_free_space_tree(),
+if we are not using the block group tree feature, we always expect to find
+block group items (either extent items or a block group item with key type
+BTRFS_BLOCK_GROUP_ITEM_KEY) when we search the extent tree with
+btrfs_search_slot_for_read(), so we assert that we found an item. However
+this expectation is wrong since we can have a new block group created in
+the current transaction which is still empty and for which we still have
+not added the block group's item to the extent tree, in which case we do
+not have any items in the extent tree associated to the block group.
 
-Finding the BTRFS_FS_RELOC_RUNNING flag already set is an unexpected
-scenario, but still our current behaviour is not correct.
+The insertion of a new block group's block group item in the extent tree
+happens at btrfs_create_pending_block_groups() when it calls the helper
+insert_block_group_item(). This typically is done when a transaction
+handle is released, committed or when running delayed refs (either as
+part of a transaction commit or when serving tickets for space reservation
+if we are low on free space).
 
-Fix this by never calling reloc_chunk_end() if reloc_chunk_start() has
-returned an error, which is what logically makes sense, since the general
-widespread pattern is to have end functions called only if the counterpart
-start functions succeeded. This requires changing reloc_chunk_start() to
-clear BTRFS_FS_RELOC_RUNNING if there's a pending cancel request.
+So remove the assertion at populate_free_space_tree() even when the block
+group tree feature is not enabled and update the comment to mention this
+case.
 
-Fixes: 907d2710d727 ("btrfs: add cancellable chunk relocation support")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Syzbot reported this with the following stack trace:
+
+  BTRFS info (device loop3 state M): rebuilding free space tree
+  assertion failed: ret == 0 :: 0, in fs/btrfs/free-space-tree.c:1115
+  ------------[ cut here ]------------
+  kernel BUG at fs/btrfs/free-space-tree.c:1115!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+  CPU: 1 UID: 0 PID: 6352 Comm: syz.3.25 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
+  RIP: 0010:populate_free_space_tree+0x700/0x710 fs/btrfs/free-space-tree.c:1115
+  Code: ff ff e8 d3 (...)
+  RSP: 0018:ffffc9000430f780 EFLAGS: 00010246
+  RAX: 0000000000000043 RBX: ffff88805b709630 RCX: fea61d0e2e79d000
+  RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
+  RBP: ffffc9000430f8b0 R08: ffffc9000430f4a7 R09: 1ffff92000861e94
+  R10: dffffc0000000000 R11: fffff52000861e95 R12: 0000000000000001
+  R13: 1ffff92000861f00 R14: dffffc0000000000 R15: 0000000000000000
+  FS:  00007f424d9fe6c0(0000) GS:ffff888125afc000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fd78ad212c0 CR3: 0000000076d68000 CR4: 00000000003526f0
+  Call Trace:
+   <TASK>
+   btrfs_rebuild_free_space_tree+0x1ba/0x6d0 fs/btrfs/free-space-tree.c:1364
+   btrfs_start_pre_rw_mount+0x128f/0x1bf0 fs/btrfs/disk-io.c:3062
+   btrfs_remount_rw fs/btrfs/super.c:1334 [inline]
+   btrfs_reconfigure+0xaed/0x2160 fs/btrfs/super.c:1559
+   reconfigure_super+0x227/0x890 fs/super.c:1076
+   do_remount fs/namespace.c:3279 [inline]
+   path_mount+0xd1a/0xfe0 fs/namespace.c:4027
+   do_mount fs/namespace.c:4048 [inline]
+   __do_sys_mount fs/namespace.c:4236 [inline]
+   __se_sys_mount+0x313/0x410 fs/namespace.c:4213
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   RIP: 0033:0x7f424e39066a
+  Code: d8 64 89 02 (...)
+  RSP: 002b:00007f424d9fde68 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+  RAX: ffffffffffffffda RBX: 00007f424d9fdef0 RCX: 00007f424e39066a
+  RDX: 0000200000000180 RSI: 0000200000000380 RDI: 0000000000000000
+  RBP: 0000200000000180 R08: 00007f424d9fdef0 R09: 0000000000000020
+  R10: 0000000000000020 R11: 0000000000000246 R12: 0000200000000380
+  R13: 00007f424d9fdeb0 R14: 0000000000000000 R15: 00002000000002c0
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+
+Reported-by: syzbot+884dc4621377ba579a6f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/68dc3dab.a00a0220.102ee.004e.GAE@google.com/
+Fixes: a5ed91828518 ("Btrfs: implement the free space B-tree")
+CC: <stable@vger.kernel.org> # 6.1.x: 1961d20f6fa8: btrfs: fix assertion when building free space tree
+CC: <stable@vger.kernel.org> # 6.1.x
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/btrfs/free-space-tree.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -3915,6 +3915,7 @@ out:
- /*
-  * Mark start of chunk relocation that is cancellable. Check if the cancellation
-  * has been requested meanwhile and don't start in that case.
-+ * NOTE: if this returns an error, reloc_chunk_end() must not be called.
-  *
-  * Return:
-  *   0             success
-@@ -3931,10 +3932,8 @@ static int reloc_chunk_start(struct btrf
- 
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0) {
- 		btrfs_info(fs_info, "chunk relocation canceled on start");
--		/*
--		 * On cancel, clear all requests but let the caller mark
--		 * the end after cleanup operations.
--		 */
-+		/* On cancel, clear all requests. */
-+		clear_and_wake_up_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags);
- 		atomic_set(&fs_info->reloc_cancel_req, 0);
- 		return -ECANCELED;
- 	}
-@@ -3943,9 +3942,11 @@ static int reloc_chunk_start(struct btrf
- 
- /*
-  * Mark end of chunk relocation that is cancellable and wake any waiters.
-+ * NOTE: call only if a previous call to reloc_chunk_start() succeeded.
-  */
- static void reloc_chunk_end(struct btrfs_fs_info *fs_info)
- {
-+	ASSERT(test_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags));
- 	/* Requested after start, clear bit first so any waiters can continue */
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0)
- 		btrfs_info(fs_info, "chunk relocation canceled during operation");
-@@ -4158,9 +4159,9 @@ out:
- 	if (err && rw)
- 		btrfs_dec_block_group_ro(rc->block_group);
- 	iput(rc->data_inode);
-+	reloc_chunk_end(fs_info);
- out_put_bg:
- 	btrfs_put_block_group(bg);
--	reloc_chunk_end(fs_info);
- 	free_reloc_control(rc);
- 	return err;
- }
-@@ -4350,8 +4351,8 @@ out_clean:
- 		err = ret;
- out_unset:
- 	unset_reloc_control(rc);
--out_end:
- 	reloc_chunk_end(fs_info);
-+out_end:
- 	free_reloc_control(rc);
- out:
- 	free_reloc_roots(&reloc_roots);
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1102,14 +1102,15 @@ static int populate_free_space_tree(stru
+ 	 * If ret is 1 (no key found), it means this is an empty block group,
+ 	 * without any extents allocated from it and there's no block group
+ 	 * item (key BTRFS_BLOCK_GROUP_ITEM_KEY) located in the extent tree
+-	 * because we are using the block group tree feature, so block group
+-	 * items are stored in the block group tree. It also means there are no
+-	 * extents allocated for block groups with a start offset beyond this
+-	 * block group's end offset (this is the last, highest, block group).
++	 * because we are using the block group tree feature (so block group
++	 * items are stored in the block group tree) or this is a new block
++	 * group created in the current transaction and its block group item
++	 * was not yet inserted in the extent tree (that happens in
++	 * btrfs_create_pending_block_groups() -> insert_block_group_item()).
++	 * It also means there are no extents allocated for block groups with a
++	 * start offset beyond this block group's end offset (this is the last,
++	 * highest, block group).
+ 	 */
+-	if (!btrfs_fs_compat_ro(trans->fs_info, BLOCK_GROUP_TREE))
+-		ASSERT(ret == 0);
+-
+ 	start = block_group->start;
+ 	end = block_group->start + block_group->length;
+ 	while (ret == 0) {
 
 
