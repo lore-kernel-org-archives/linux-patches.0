@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA1A322C8A;
-	Mon, 27 Oct 2025 19:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D06328638;
+	Mon, 27 Oct 2025 19:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593566; cv=none; b=WtBpFtWXhLEXRT37Vc/MjBkCYeczWoKAFzpaVeqhI+TiokOMaED/9Qt84CDtto8OZLGjcsitymmVXtEAsS3teIYLuGxcSFdiAZGcdsy0YooO9uMs71L16oqCn2gDV9myHlWEfo2ILm6OpQMDauhLxrxj9KyQHbIO8C8kkPyspsk=
+	t=1761593569; cv=none; b=oWXI47gYNye5bf5kcAdxMsNA7NbDCvHksRLzPJEcK1HQacFMBzXkRoPGmLIqSJDtFE0DfUlH0Tx99cVVBbUszGdfeg6Pd6AsTSeKNyZJu4jW2/hD8Xl68YMMtBVRXIEvuUVmwVQxqr6bwz6aplMLKyuy6K8pacnLwOgNqIzYcEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593566; c=relaxed/simple;
-	bh=FfUqvul/ai3+8Ja9UatsOFA0kxOnSSWJf2YiKTgsYrM=;
+	s=arc-20240116; t=1761593569; c=relaxed/simple;
+	bh=JYbh0CtVPELSQ8y7VV9/QpbR6Z40OrAu3Pr290RVIV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ij/q1WWIIS5eZf4X77Q0ue5mlhuKhj7yO1tdFXjZInSEwbQzauzGLLXeCq/aRWzi3i3Pc0uP0+WzbRySTjlzxIY83iarNaYaPgGdFe8OkgZQulbVyrsLMv/6GpBo0yOH2p6OwO5JOUqwWH8ZG20lsgMuEW9ECiqEgMuVeLMGGWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRHe6XQe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rBYmxW/idu7sEl8CsX34WM+oDHx6R8NoE/qzCSAsy4Ex1x3p/D0ldeBM/ZXvMZ1Yid4755N9GYKdv5j5RxTF4sXAMsIF9lgXpFCsere+pmo9yIj2s6Su3YZXu/fwn5LUOKnb1ARXu0Ak23YkA80JeF5ETIIwV1DM2CGEOvTVf4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zw/MB+WN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRHe6XQe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E60CC4CEF1;
-	Mon, 27 Oct 2025 19:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zw/MB+WN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3888EC4CEF1;
+	Mon, 27 Oct 2025 19:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593566;
-	bh=FfUqvul/ai3+8Ja9UatsOFA0kxOnSSWJf2YiKTgsYrM=;
+	s=korg; t=1761593569;
+	bh=JYbh0CtVPELSQ8y7VV9/QpbR6Z40OrAu3Pr290RVIV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRHe6XQeESi5oO/Pqu0ibP9GaupkGTyDbgwNV1Ligik0uL+JRcixzfqSjp8YVEtRM
-	 Woz92PjFBUzawzcRrz1d9txKAe4lvzwXowTsXtna3xCkc1p0NscZgxGBM+0vrqaSxw
-	 LKlp1tidLiN5Bf28DO412TT0l4FLiH9mY2RABKCk=
+	b=Zw/MB+WNJeZx5QEeH/LJmPH7Nu57KjarFCWmhDp7qiKwg26qzlqStvFmoD1WYBz35
+	 T8UTKgCRal7DgRtRWwGDkDfuHxurNTfJyWfOv70dI2xz4U6IUogUe0NZ19CaYZGXAD
+	 MW7ByUXJV7WPjHtYv27ne4c/cvtJyu3iloS5vE0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.17 174/184] staging: gpib: Fix device reference leak in fmh_gpib driver
-Date: Mon, 27 Oct 2025 19:37:36 +0100
-Message-ID: <20251027183519.608077240@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.17 175/184] staging: gpib: Fix no EOI on 1 and 2 byte writes
+Date: Mon, 27 Oct 2025 19:37:37 +0100
+Message-ID: <20251027183519.634235982@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,41 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit b1aabb8ef09b4cf0cc0c92ca9dfd19482f3192c1 upstream.
+commit d3c4c1f29aadccf2f43530bfa1e60a6d8030fd4a upstream.
 
-The fmh_gpib driver contains a device reference count leak in
-fmh_gpib_attach_impl() where driver_find_device() increases the
-reference count of the device by get_device() when matching but this
-reference is not properly decreased. Add put_device() in
-fmh_gpib_detach(), which ensures that the reference count of the
-device is correctly managed.
+EOI (End Or Identify) is a hardware line on the GPIB bus that can be
+asserted with the last byte of a message to indicate the end of the
+transfer to the receiving device.
 
-Found by code review.
+In this driver, a write with send_eoi true is done in 3 parts:
+  Send first byte directly
+  Send remaining but 1 bytes using the fifo
+  Send the last byte directly with EOI asserted
 
+The first byte in a write is always sent by writing to the tms9914
+chip directly to setup for the subsequent fifo transfer.  We were not
+checking for a 1 byte write with send_eoi true resulting in EOI not
+being asserted. Since the fifo transfer was not executed
+(fifotransfersize == 0) the retval in the test after the fifo transfer
+code was still 1 from the preceding direct write. This caused it to
+return without executing the final direct write which would have sent
+an unsollicited extra byte.
+
+For a 2 byte message the first byte was sent directly. But since the
+fifo transfer was not executed (fifotransfersize == 1) and the retval
+in the test after the fifo transfer code was still 1 from the
+preceding first byte write it returned before the final direct byte
+write with send_eoi true. The second byte was then sent as a separate
+1 byte write to complete the 2 byte write count again without EOI
+being asserted as above.
+
+Only send the first byte directly if more than 1 byte is to be
+transferred with send_eoi true.
+
+Also check for retval < 0 for the error return in case the fifo code
+is not used (1 or 2 byte message with send_eoi true).
+
+Fixes: 09a4655ee1eb ("staging: gpib: Add HP/Agilent/Keysight 8235xx PCI GPIB driver")
 Cc: stable <stable@kernel.org>
-Fixes: 8e4841a0888c ("staging: gpib: Add Frank Mori Hess FPGA PCI GPIB driver")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Tested-by: Dave Penkler <dpenkler@gmail.com>
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/gpib/fmh_gpib/fmh_gpib.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/staging/gpib/agilent_82350b/agilent_82350b.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
-+++ b/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
-@@ -1517,6 +1517,11 @@ void fmh_gpib_detach(struct gpib_board *
- 					   resource_size(e_priv->gpib_iomem_res));
- 	}
- 	fmh_gpib_generic_detach(board);
-+
-+	if (board->dev) {
-+		put_device(board->dev);
-+		board->dev = NULL;
-+	}
- }
+--- a/drivers/staging/gpib/agilent_82350b/agilent_82350b.c
++++ b/drivers/staging/gpib/agilent_82350b/agilent_82350b.c
+@@ -182,10 +182,12 @@ static int agilent_82350b_accel_write(st
+ 		return retval;
+ #endif
  
- static int fmh_gpib_pci_attach_impl(struct gpib_board *board,
+-	retval = agilent_82350b_write(board, buffer, 1, 0, &num_bytes);
+-	*bytes_written += num_bytes;
+-	if (retval < 0)
+-		return retval;
++	if (fifotransferlength > 0) {
++		retval = agilent_82350b_write(board, buffer, 1, 0, &num_bytes);
++		*bytes_written += num_bytes;
++		if (retval < 0)
++			return retval;
++	}
+ 
+ 	write_byte(tms_priv, tms_priv->imr0_bits & ~HR_BOIE, IMR0);
+ 	for (i = 1; i < fifotransferlength;) {
+@@ -217,7 +219,7 @@ static int agilent_82350b_accel_write(st
+ 			break;
+ 	}
+ 	write_byte(tms_priv, tms_priv->imr0_bits, IMR0);
+-	if (retval)
++	if (retval < 0)
+ 		return retval;
+ 
+ 	if (send_eoi) {
 
 
