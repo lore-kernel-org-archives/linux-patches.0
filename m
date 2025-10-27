@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768D62D8DB9;
-	Mon, 27 Oct 2025 18:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1E52D7806;
+	Mon, 27 Oct 2025 18:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590423; cv=none; b=YVyKcPzzUaIHsi4QTceFvc/fJx9nKWx3/b2iniuFPoeX91CXFR0LavH7sAdBck9JN37QI7cfnJXu/6ix66pNanHyYrvXGovWvtzSH5nhd258BIwURWpx/BXTgj2IkkmpYAT0bAAGqE+ZQFF+Tdn+/x+jn0jq9JNi4ZhjtWXi+hs=
+	t=1761590425; cv=none; b=hwQOty3aN9v0DukGmxaIy6GX/3eREugC9Ks7voQ/89lhj+jTlGk+AajNFHH/bOhrgBHzE+tmauDS8GF4sipTGD2Bk8u73wdpSN312ivKxXBn+1JMzdAOcfK/vPC1jhurv0VKzBm5G1VqdgFik+tn6GZMXkqL6kPkHTWPPuMbbSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590423; c=relaxed/simple;
-	bh=qv3KqFWUE8YsvdANCtb4lPe1BF9MUY34PL7Od3K3n5E=;
+	s=arc-20240116; t=1761590425; c=relaxed/simple;
+	bh=ebf3MB5qIF9gc/1xM3qabKVIvasHvqZ50ZkdErpLq6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZubFzfjQQ9y9L4uEiZUoi3X+ZbHMGXabomIQ0Qp/gdZc9RVwmpxV5YzoVeN4wQCS4xH9dKg3qeAJojnoTaicxX0MrJdO51OXUQN+lSuMwGskwygJx2f+9u3o2GcEm4Qr8e53HoSQst3WuN+Qa+u+CKEEeCWvpaGpyyPhHOBNG+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpc/ETmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MK3QTuLWeBLLYh5ErrLwr7aEJbosJJ1IhfPazPj/v+ctQie/EFgf2Y0iz9cLuT+pUSe6fj0RBt8BftVtmENORup58ayF7bCZV6eJDuh84R2dMJLgv72seudE9GoAwo5g2pCTyJaWeYIouGMeR8Z1vSLKgqlsxRAPkPNO86ewp24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ST5GZ9iQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpc/ETmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58CDC4CEF1;
-	Mon, 27 Oct 2025 18:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ST5GZ9iQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E9BC4CEF1;
+	Mon, 27 Oct 2025 18:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590423;
-	bh=qv3KqFWUE8YsvdANCtb4lPe1BF9MUY34PL7Od3K3n5E=;
+	s=korg; t=1761590425;
+	bh=ebf3MB5qIF9gc/1xM3qabKVIvasHvqZ50ZkdErpLq6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpc/ETmH89sVJMLrvj1c9EK0UyxamWtfMZQZt/ukXLXax09FpJ9RfKNE/B87c4Rmm
-	 iehsBNPRWN6mp6saRfop1hs3kru09fxmrwtMV/QcFTRjZCi0LgHzg4zJtgru3S9puA
-	 4Tg8v1Zjlr1JmYcthsaYMcfxx3t7FhwC05eoKFHM=
+	b=ST5GZ9iQKRNynfpczMgVZTvThgJtDHIRI6v29Z3WtuP3uxmdVosRPhcTE0ftkddJI
+	 GD9MsOalrIEC5cKmOTp0HbM6pUwQJ14kjCwsLCl9MctJ32pEiyWnjp7Qij4g3RG1oO
+	 MS0k9Mzs+tkhBMLcR3T2eQCBUxynE89MDHOznJ0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Flavius Georgescu <pretoriano.mp@gmail.com>,
-	Chris Vandomelen <chris@sightworks.com>,
+	syzbot <syzbot+c558267ad910fc494497@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/224] media: rc: Add support for another iMON 0xffdc device
-Date: Mon, 27 Oct 2025 19:32:33 +0100
-Message-ID: <20251027183509.176655491@linuxfoundation.org>
+Subject: [PATCH 5.4 008/224] media: imon: reorganize serialization
+Date: Mon, 27 Oct 2025 19:32:34 +0100
+Message-ID: <20251027183509.204975131@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,154 +54,340 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Flavius Georgescu <pretoriano.mp@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit cf330691668a3bee37b8ac8212709b3ccdd87997 ]
+[ Upstream commit db264d4c66c0fe007b5d19fd007707cd0697603d ]
 
-The device it's an iMON UltraBay (0x98 in config byte) with LCD,
-IR and dual-knobs front panel.
+Since usb_register_dev() from imon_init_display() from imon_probe() holds
+minor_rwsem while display_open() which holds driver_lock and ictx->lock is
+called with minor_rwsem held from usb_open(), holding driver_lock or
+ictx->lock when calling usb_register_dev() causes circular locking
+dependency problem.
 
-To work properly the device also require its own key table,
-and repeat suppression for all buttons.
+Since usb_deregister_dev() from imon_disconnect() holds minor_rwsem while
+display_open() which holds driver_lock is called with minor_rwsem held,
+holding driver_lock when calling usb_deregister_dev() also causes circular
+locking dependency problem.
 
-Signed-off-by: Flavius Georgescu <pretoriano.mp@gmail.com>
-Co-developed-by: Chris Vandomelen <chris@sightworks.com>
-Signed-off-by: Chris Vandomelen <chris@sightworks.com>
+Sean Young explained that the problem is there are imon devices which have
+two usb interfaces, even though it is one device. The probe and disconnect
+function of both usb interfaces can run concurrently.
+
+Alan Stern responded that the driver and USB cores guarantee that when an
+interface is probed, both the interface and its USB device are locked.
+Ditto for when the disconnect callback gets run. So concurrent probing/
+disconnection of multiple interfaces on the same device is not possible.
+
+Therefore, we don't need locks for handling race between imon_probe() and
+imon_disconnect(). But we still need to handle race between display_open()
+/vfd_write()/lcd_write()/display_close() and imon_disconnect(), for
+disconnect event can happen while file descriptors are in use.
+
+Since "struct file"->private_data is set by display_open(), vfd_write()/
+lcd_write()/display_close() can assume that "struct file"->private_data
+is not NULL even after usb_set_intfdata(interface, NULL) was called.
+
+Replace insufficiently held driver_lock with refcount_t based management.
+Add a boolean flag for recording whether imon_disconnect() was already
+called. Use RCU for accessing this boolean flag and refcount_t.
+
+Since the boolean flag for imon_disconnect() is shared, disconnect event
+on either intf0 or intf1 affects both interfaces. But I assume that this
+change does not matter, for usually disconnect event would not happen
+while interfaces are in use.
+
+Link: https://syzkaller.appspot.com/bug?extid=c558267ad910fc494497
+
+Reported-by: syzbot <syzbot+c558267ad910fc494497@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot <syzbot+c558267ad910fc494497@syzkaller.appspotmail.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
 Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Stable-dep-of: fa0f61cc1d82 ("media: rc: fix races with imon_disconnect()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |   61 ++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 51 insertions(+), 10 deletions(-)
+ drivers/media/rc/imon.c |   99 ++++++++++++++++++++++--------------------------
+ 1 file changed, 47 insertions(+), 52 deletions(-)
 
 --- a/drivers/media/rc/imon.c
 +++ b/drivers/media/rc/imon.c
-@@ -83,6 +83,7 @@ struct imon_usb_dev_descr {
- 	__u16 flags;
- #define IMON_NO_FLAGS 0
- #define IMON_NEED_20MS_PKT_DELAY 1
-+#define IMON_SUPPRESS_REPEATED_KEYS 2
- 	struct imon_panel_key_table key_table[];
- };
- 
-@@ -149,8 +150,9 @@ struct imon_context {
- 	struct timer_list ttimer;	/* touch screen timer */
- 	int touch_x;			/* x coordinate on touchscreen */
- 	int touch_y;			/* y coordinate on touchscreen */
--	struct imon_usb_dev_descr *dev_descr; /* device description with key
--						 table for front panels */
-+	const struct imon_usb_dev_descr *dev_descr;
-+					/* device description with key */
-+					/* table for front panels */
+@@ -153,6 +153,24 @@ struct imon_context {
+ 	const struct imon_usb_dev_descr *dev_descr;
+ 					/* device description with key */
+ 					/* table for front panels */
++	/*
++	 * Fields for deferring free_imon_context().
++	 *
++	 * Since reference to "struct imon_context" is stored into
++	 * "struct file"->private_data, we need to remember
++	 * how many file descriptors might access this "struct imon_context".
++	 */
++	refcount_t users;
++	/*
++	 * Use a flag for telling display_open()/vfd_write()/lcd_write() that
++	 * imon_disconnect() was already called.
++	 */
++	bool disconnected;
++	/*
++	 * We need to wait for RCU grace period in order to allow
++	 * display_open() to safely check ->disconnected and increment ->users.
++	 */
++	struct rcu_head rcu;
  };
  
  #define TOUCH_TIMEOUT	(HZ/30)
-@@ -315,6 +317,32 @@ static const struct imon_usb_dev_descr i
- 	}
+@@ -160,18 +178,18 @@ struct imon_context {
+ /* vfd character device file operations */
+ static const struct file_operations vfd_fops = {
+ 	.owner		= THIS_MODULE,
+-	.open		= &display_open,
+-	.write		= &vfd_write,
+-	.release	= &display_close,
++	.open		= display_open,
++	.write		= vfd_write,
++	.release	= display_close,
+ 	.llseek		= noop_llseek,
  };
  
-+/* imon ultrabay front panel key table */
-+static const struct imon_usb_dev_descr ultrabay_table = {
-+	.flags = IMON_SUPPRESS_REPEATED_KEYS,
-+	.key_table = {
-+		{ 0x0000000f0000ffeell, KEY_MEDIA },      /* Go */
-+		{ 0x000000000100ffeell, KEY_UP },
-+		{ 0x000000000001ffeell, KEY_DOWN },
-+		{ 0x000000160000ffeell, KEY_ENTER },
-+		{ 0x0000001f0000ffeell, KEY_AUDIO },      /* Music */
-+		{ 0x000000200000ffeell, KEY_VIDEO },      /* Movie */
-+		{ 0x000000210000ffeell, KEY_CAMERA },     /* Photo */
-+		{ 0x000000270000ffeell, KEY_DVD },        /* DVD */
-+		{ 0x000000230000ffeell, KEY_TV },         /* TV */
-+		{ 0x000000050000ffeell, KEY_PREVIOUS },   /* Previous */
-+		{ 0x000000070000ffeell, KEY_REWIND },
-+		{ 0x000000040000ffeell, KEY_STOP },
-+		{ 0x000000020000ffeell, KEY_PLAYPAUSE },
-+		{ 0x000000080000ffeell, KEY_FASTFORWARD },
-+		{ 0x000000060000ffeell, KEY_NEXT },       /* Next */
-+		{ 0x000100000000ffeell, KEY_VOLUMEUP },
-+		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
-+		{ 0x000000010000ffeell, KEY_MUTE },
-+		{ 0, KEY_RESERVED },
-+	}
-+};
-+
- /*
-  * USB Device ID for iMON USB Control Boards
-  *
-@@ -1261,9 +1289,11 @@ static u32 imon_mce_key_lookup(struct im
+ /* lcd character device file operations */
+ static const struct file_operations lcd_fops = {
+ 	.owner		= THIS_MODULE,
+-	.open		= &display_open,
+-	.write		= &lcd_write,
+-	.release	= &display_close,
++	.open		= display_open,
++	.write		= lcd_write,
++	.release	= display_close,
+ 	.llseek		= noop_llseek,
+ };
  
- static u32 imon_panel_key_lookup(struct imon_context *ictx, u64 code)
+@@ -439,9 +457,6 @@ static struct usb_driver imon_driver = {
+ 	.id_table	= imon_usb_id_table,
+ };
+ 
+-/* to prevent races between open() and disconnect(), probing, etc */
+-static DEFINE_MUTEX(driver_lock);
+-
+ /* Module bookkeeping bits */
+ MODULE_AUTHOR(MOD_AUTHOR);
+ MODULE_DESCRIPTION(MOD_DESC);
+@@ -481,9 +496,11 @@ static void free_imon_context(struct imo
+ 	struct device *dev = ictx->dev;
+ 
+ 	usb_free_urb(ictx->tx_urb);
++	WARN_ON(ictx->dev_present_intf0);
+ 	usb_free_urb(ictx->rx_urb_intf0);
++	WARN_ON(ictx->dev_present_intf1);
+ 	usb_free_urb(ictx->rx_urb_intf1);
+-	kfree(ictx);
++	kfree_rcu(ictx, rcu);
+ 
+ 	dev_dbg(dev, "%s: iMON context freed\n", __func__);
+ }
+@@ -499,9 +516,6 @@ static int display_open(struct inode *in
+ 	int subminor;
+ 	int retval = 0;
+ 
+-	/* prevent races with disconnect */
+-	mutex_lock(&driver_lock);
+-
+ 	subminor = iminor(inode);
+ 	interface = usb_find_interface(&imon_driver, subminor);
+ 	if (!interface) {
+@@ -509,13 +523,16 @@ static int display_open(struct inode *in
+ 		retval = -ENODEV;
+ 		goto exit;
+ 	}
+-	ictx = usb_get_intfdata(interface);
+ 
+-	if (!ictx) {
++	rcu_read_lock();
++	ictx = usb_get_intfdata(interface);
++	if (!ictx || ictx->disconnected || !refcount_inc_not_zero(&ictx->users)) {
++		rcu_read_unlock();
+ 		pr_err("no context found for minor %d\n", subminor);
+ 		retval = -ENODEV;
+ 		goto exit;
+ 	}
++	rcu_read_unlock();
+ 
+ 	mutex_lock(&ictx->lock);
+ 
+@@ -533,8 +550,10 @@ static int display_open(struct inode *in
+ 
+ 	mutex_unlock(&ictx->lock);
+ 
++	if (retval && refcount_dec_and_test(&ictx->users))
++		free_imon_context(ictx);
++
+ exit:
+-	mutex_unlock(&driver_lock);
+ 	return retval;
+ }
+ 
+@@ -544,16 +563,9 @@ exit:
+  */
+ static int display_close(struct inode *inode, struct file *file)
  {
--	int i;
-+	const struct imon_panel_key_table *key_table;
- 	u32 keycode = KEY_RESERVED;
--	struct imon_panel_key_table *key_table = ictx->dev_descr->key_table;
-+	int i;
-+
-+	key_table = ictx->dev_descr->key_table;
+-	struct imon_context *ictx = NULL;
++	struct imon_context *ictx = file->private_data;
+ 	int retval = 0;
  
- 	for (i = 0; key_table[i].hw_code != 0; i++) {
- 		if (key_table[i].hw_code == (code | 0xffee)) {
-@@ -1547,7 +1577,6 @@ static void imon_incoming_packet(struct
- 	u32 kc;
- 	u64 scancode;
- 	int press_type = 0;
--	long msec;
- 	ktime_t t;
- 	static ktime_t prev_time;
- 	u8 ktype;
-@@ -1649,14 +1678,16 @@ static void imon_incoming_packet(struct
- 	spin_lock_irqsave(&ictx->kc_lock, flags);
+-	ictx = file->private_data;
+-
+-	if (!ictx) {
+-		pr_err("no context for device\n");
+-		return -ENODEV;
+-	}
+-
+ 	mutex_lock(&ictx->lock);
  
- 	t = ktime_get();
--	/* KEY_MUTE repeats from knob need to be suppressed */
--	if (ictx->kc == KEY_MUTE && ictx->kc == ictx->last_keycode) {
--		msec = ktime_ms_delta(t, prev_time);
--		if (msec < ictx->idev->rep[REP_DELAY]) {
-+	/* KEY repeats from knob and panel that need to be suppressed */
-+	if (ictx->kc == KEY_MUTE ||
-+	    ictx->dev_descr->flags & IMON_SUPPRESS_REPEATED_KEYS) {
-+		if (ictx->kc == ictx->last_keycode &&
-+		    ktime_ms_delta(t, prev_time) < ictx->idev->rep[REP_DELAY]) {
- 			spin_unlock_irqrestore(&ictx->kc_lock, flags);
- 			return;
+ 	if (!ictx->display_supported) {
+@@ -568,6 +580,8 @@ static int display_close(struct inode *i
+ 	}
+ 
+ 	mutex_unlock(&ictx->lock);
++	if (refcount_dec_and_test(&ictx->users))
++		free_imon_context(ictx);
+ 	return retval;
+ }
+ 
+@@ -936,15 +950,12 @@ static ssize_t vfd_write(struct file *fi
+ 	int offset;
+ 	int seq;
+ 	int retval = 0;
+-	struct imon_context *ictx;
++	struct imon_context *ictx = file->private_data;
+ 	static const unsigned char vfd_packet6[] = {
+ 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
+ 
+-	ictx = file->private_data;
+-	if (!ictx) {
+-		pr_err_ratelimited("no context for device\n");
++	if (ictx->disconnected)
+ 		return -ENODEV;
+-	}
+ 
+ 	if (mutex_lock_interruptible(&ictx->lock))
+ 		return -ERESTARTSYS;
+@@ -1021,13 +1032,10 @@ static ssize_t lcd_write(struct file *fi
+ 			 size_t n_bytes, loff_t *pos)
+ {
+ 	int retval = 0;
+-	struct imon_context *ictx;
++	struct imon_context *ictx = file->private_data;
+ 
+-	ictx = file->private_data;
+-	if (!ictx) {
+-		pr_err_ratelimited("no context for device\n");
++	if (ictx->disconnected)
+ 		return -ENODEV;
+-	}
+ 
+ 	mutex_lock(&ictx->lock);
+ 
+@@ -2402,7 +2410,6 @@ static int imon_probe(struct usb_interfa
+ 	int ifnum, sysfs_err;
+ 	int ret = 0;
+ 	struct imon_context *ictx = NULL;
+-	struct imon_context *first_if_ctx = NULL;
+ 	u16 vendor, product;
+ 
+ 	usbdev     = usb_get_dev(interface_to_usbdev(interface));
+@@ -2414,17 +2421,12 @@ static int imon_probe(struct usb_interfa
+ 	dev_dbg(dev, "%s: found iMON device (%04x:%04x, intf%d)\n",
+ 		__func__, vendor, product, ifnum);
+ 
+-	/* prevent races probing devices w/multiple interfaces */
+-	mutex_lock(&driver_lock);
+-
+ 	first_if = usb_ifnum_to_if(usbdev, 0);
+ 	if (!first_if) {
+ 		ret = -ENODEV;
+ 		goto fail;
+ 	}
+ 
+-	first_if_ctx = usb_get_intfdata(first_if);
+-
+ 	if (ifnum == 0) {
+ 		ictx = imon_init_intf0(interface, id);
+ 		if (!ictx) {
+@@ -2432,9 +2434,11 @@ static int imon_probe(struct usb_interfa
+ 			ret = -ENODEV;
+ 			goto fail;
+ 		}
++		refcount_set(&ictx->users, 1);
+ 
+ 	} else {
+ 		/* this is the secondary interface on the device */
++		struct imon_context *first_if_ctx = usb_get_intfdata(first_if);
+ 
+ 		/* fail early if first intf failed to register */
+ 		if (!first_if_ctx) {
+@@ -2448,14 +2452,13 @@ static int imon_probe(struct usb_interfa
+ 			ret = -ENODEV;
+ 			goto fail;
+ 		}
++		refcount_inc(&ictx->users);
+ 
+ 	}
+ 
+ 	usb_set_intfdata(interface, ictx);
+ 
+ 	if (ifnum == 0) {
+-		mutex_lock(&ictx->lock);
+-
+ 		if (product == 0xffdc && ictx->rf_device) {
+ 			sysfs_err = sysfs_create_group(&interface->dev.kobj,
+ 						       &imon_rf_attr_group);
+@@ -2466,21 +2469,17 @@ static int imon_probe(struct usb_interfa
+ 
+ 		if (ictx->display_supported)
+ 			imon_init_display(ictx, interface);
+-
+-		mutex_unlock(&ictx->lock);
+ 	}
+ 
+ 	dev_info(dev, "iMON device (%04x:%04x, intf%d) on usb<%d:%d> initialized\n",
+ 		 vendor, product, ifnum,
+ 		 usbdev->bus->busnum, usbdev->devnum);
+ 
+-	mutex_unlock(&driver_lock);
+ 	usb_put_dev(usbdev);
+ 
+ 	return 0;
+ 
+ fail:
+-	mutex_unlock(&driver_lock);
+ 	usb_put_dev(usbdev);
+ 	dev_err(dev, "unable to register, err %d\n", ret);
+ 
+@@ -2496,10 +2495,8 @@ static void imon_disconnect(struct usb_i
+ 	struct device *dev;
+ 	int ifnum;
+ 
+-	/* prevent races with multi-interface device probing and display_open */
+-	mutex_lock(&driver_lock);
+-
+ 	ictx = usb_get_intfdata(interface);
++	ictx->disconnected = true;
+ 	dev = ictx->dev;
+ 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
+ 
+@@ -2540,11 +2537,9 @@ static void imon_disconnect(struct usb_i
  		}
  	}
-+
- 	prev_time = t;
- 	kc = ictx->kc;
  
-@@ -1844,6 +1875,14 @@ static void imon_get_ffdc_type(struct im
- 		dev_info(ictx->dev, "0xffdc iMON Inside, iMON IR");
- 		ictx->display_supported = false;
- 		break;
-+	/* Soundgraph iMON UltraBay */
-+	case 0x98:
-+		dev_info(ictx->dev, "0xffdc iMON UltraBay, LCD + IR");
-+		detected_display_type = IMON_DISPLAY_TYPE_LCD;
-+		allowed_protos = RC_PROTO_BIT_IMON | RC_PROTO_BIT_RC6_MCE;
-+		ictx->dev_descr = &ultrabay_table;
-+		break;
-+
- 	default:
- 		dev_info(ictx->dev, "Unknown 0xffdc device, defaulting to VFD and iMON IR");
- 		detected_display_type = IMON_DISPLAY_TYPE_VFD;
-@@ -1975,10 +2014,12 @@ out:
+-	if (!ictx->dev_present_intf0 && !ictx->dev_present_intf1)
++	if (refcount_dec_and_test(&ictx->users))
+ 		free_imon_context(ictx);
  
- static struct input_dev *imon_init_idev(struct imon_context *ictx)
- {
--	struct imon_panel_key_table *key_table = ictx->dev_descr->key_table;
-+	const struct imon_panel_key_table *key_table;
- 	struct input_dev *idev;
- 	int ret, i;
- 
-+	key_table = ictx->dev_descr->key_table;
-+
- 	idev = input_allocate_device();
- 	if (!idev)
- 		goto out;
+-	mutex_unlock(&driver_lock);
+-
+ 	dev_dbg(dev, "%s: iMON device (intf%d) disconnected\n",
+ 		__func__, ifnum);
+ }
 
 
