@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771E6322DCB;
-	Mon, 27 Oct 2025 18:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE650322DCB;
+	Mon, 27 Oct 2025 18:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591099; cv=none; b=YOwCVV475+slhBHL2307f6Ikc7nGJDd6NOFIisLGaGEZoPRXG1jWlXtE8QeEddcOV6YTCzoC9Czwsc5LCWe5eGP2kjFQiUpbpC5eD2qG1QpY78wA9tqsHnLjd/F3pVhO4WZPQNa7Gyn0qP/sN0952xwYjDufCnC/8qhz4bhmS7E=
+	t=1761591102; cv=none; b=DDHJdVTrK6bol6sgsTqxErd56HHTAuay7j8P8uBtAjiLNI3Z3SbhxPTb5kzt6CsNVexF12L7Y9yVhjfoHy4t+cqYhC9l7+PiDKvItfx+YsiG/2HMx3g78Ve3TiGfjgJR1TGDvGY1aSMVystwyQLxJqi8uckb03+wIV7nud5cLpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591099; c=relaxed/simple;
-	bh=djqmfSqphhVgWHkKh3JA3XrDQ9Oqy+Z3N4VR5jj9TZ8=;
+	s=arc-20240116; t=1761591102; c=relaxed/simple;
+	bh=5wBbmID2lIdmJQlPh73BS6zhvk0k7r0rDbDG/KK2ucU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdptnYNpewiOMh7ZPTYXn+U3BHs9EukGlc9Fm9ZHNtc3UJem525U9L89Gk8cOhj5Ws0fyCe+xzhScC5zXDx2bffF8As4ovo7TzqjD6faEa/WQBIQ1uzpxAftrfv2f+r8fsCj7ncpV/gYoguMHLQM9ogQxPjbxJe7zjAlQo+neqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7o2B2RW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVUkp6JMO4uQ9wgNjZVZZjIV5D0zzeboiuw15+P5GvOtzHApVTAzeZ14Leyf/Ph+QKUr+87P1zYRPbdmz6zqEA7GPTzCjt+mQ0Yo3pgOVoj2J7reZn9PTqexKEUWFBRULMkjNbKAFwXjka9POD4BjmgBMeVHJLKXT45umjQE1U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBB0CV4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7o2B2RW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9DAC4CEF1;
-	Mon, 27 Oct 2025 18:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBB0CV4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D86C4CEF1;
+	Mon, 27 Oct 2025 18:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591099;
-	bh=djqmfSqphhVgWHkKh3JA3XrDQ9Oqy+Z3N4VR5jj9TZ8=;
+	s=korg; t=1761591101;
+	bh=5wBbmID2lIdmJQlPh73BS6zhvk0k7r0rDbDG/KK2ucU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7o2B2RWyCPGRf+ajKiJO1h3YK4s2k8eJedfNZe1v8lJRzoJCr9/s29wpmLCKovn3
-	 dKg679ztr4zmVwNPKnuFu/AFiKOSGCRyCkXFh+buxW2DgyOdOAa0/UoDSW8bABEmJa
-	 z5YF8iCXPnVeU4HHueHRSDJkRcRUrG4lKTndYSfE=
+	b=yBB0CV4NE5q714NOlIQSTaq5ujxhBCicZ6v9DzwAw5oEt8zzuuY9I3MBiBIbh7Yeg
+	 eknTJ3OwLGekotNJFSi4Yhe0PZOgnzXgoZJmmaNZWuFJCeSiYqooR/XxadAds8Z3H1
+	 rbqieBShXUSKfELB3Whe/I4zSCKkuE3OTGy7fLm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/332] Documentation: trace: historgram-design: Separate sched_waking histogram section heading and the following diagram
-Date: Mon, 27 Oct 2025 19:31:59 +0100
-Message-ID: <20251027183526.361041035@linuxfoundation.org>
+Subject: [PATCH 5.10 067/332] wifi: ath10k: avoid unnecessary wait for service ready message
+Date: Mon, 27 Oct 2025 19:32:00 +0100
+Message-ID: <20251027183526.385879492@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -54,41 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 8c716e87ea33519920811338100d6d8a7fb32456 ]
+[ Upstream commit 51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a ]
 
-Section heading for sched_waking histogram is shown as normal paragraph
-instead due to codeblock marker for the following diagram being in the
-same line as the section underline. Separate them.
+Commit e57b7d62a1b2 ("wifi: ath10k: poll service ready message before
+failing") works around the failure in waiting for the service ready
+message by active polling. Note the polling is triggered after initial
+wait timeout, which means that the wait-till-timeout can not be avoided
+even the message is ready.
 
-Fixes: daceabf1b494 ("tracing/doc: Fix ascii-art in histogram-design.rst")
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20250916054202.582074-5-bagasdotme@gmail.com>
+A possible fix is to do polling once before wait as well, however this
+can not handle the race that the message arrives right after polling.
+So the solution is to do periodic polling until timeout.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
+
+Fixes: e57b7d62a1b2 ("wifi: ath10k: poll service ready message before failing")
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/all/97a15967-5518-4731-a8ff-d43ff7f437b0@molgen.mpg.de
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250811-ath10k-avoid-unnecessary-wait-v1-1-db2deb87c39b@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/histogram-design.rst | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/wmi.c | 39 +++++++++++++--------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/trace/histogram-design.rst b/Documentation/trace/histogram-design.rst
-index 088c8cce738ba..6e0d1a48bd505 100644
---- a/Documentation/trace/histogram-design.rst
-+++ b/Documentation/trace/histogram-design.rst
-@@ -380,7 +380,9 @@ entry, ts0, corresponding to the ts0 variable in the sched_waking
- trigger above.
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index c9a74f3e2e601..858db97ecfed9 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -1762,33 +1762,32 @@ void ath10k_wmi_put_wmi_channel(struct ath10k *ar, struct wmi_channel *ch,
  
- sched_waking histogram
------------------------::
-+----------------------
-+
-+.. code-block::
+ int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
+ {
++	unsigned long timeout = jiffies + WMI_SERVICE_READY_TIMEOUT_HZ;
+ 	unsigned long time_left, i;
  
-   +------------------+
-   | hist_data        |<-------------------------------------------------------+
+-	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
+-						WMI_SERVICE_READY_TIMEOUT_HZ);
+-	if (!time_left) {
+-		/* Sometimes the PCI HIF doesn't receive interrupt
+-		 * for the service ready message even if the buffer
+-		 * was completed. PCIe sniffer shows that it's
+-		 * because the corresponding CE ring doesn't fires
+-		 * it. Workaround here by polling CE rings once.
+-		 */
+-		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
+-
++	/* Sometimes the PCI HIF doesn't receive interrupt
++	 * for the service ready message even if the buffer
++	 * was completed. PCIe sniffer shows that it's
++	 * because the corresponding CE ring doesn't fires
++	 * it. Workaround here by polling CE rings. Since
++	 * the message could arrive at any time, continue
++	 * polling until timeout.
++	 */
++	do {
+ 		for (i = 0; i < CE_COUNT; i++)
+ 			ath10k_hif_send_complete_check(ar, i, 1);
+ 
++		/* The 100 ms granularity is a tradeoff considering scheduler
++		 * overhead and response latency
++		 */
+ 		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
+-							WMI_SERVICE_READY_TIMEOUT_HZ);
+-		if (!time_left) {
+-			ath10k_warn(ar, "polling timed out\n");
+-			return -ETIMEDOUT;
+-		}
+-
+-		ath10k_warn(ar, "service ready completion received, continuing normally\n");
+-	}
++							msecs_to_jiffies(100));
++		if (time_left)
++			return 0;
++	} while (time_before(jiffies, timeout));
+ 
+-	return 0;
++	ath10k_warn(ar, "failed to receive service ready completion\n");
++	return -ETIMEDOUT;
+ }
+ 
+ int ath10k_wmi_wait_for_unified_ready(struct ath10k *ar)
 -- 
 2.51.0
 
