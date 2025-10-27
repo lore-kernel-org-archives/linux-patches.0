@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9882D6E70;
-	Mon, 27 Oct 2025 19:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56B92D6E70;
+	Mon, 27 Oct 2025 19:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591643; cv=none; b=lIWrUHBPnBPnGMuaKlMd3T+bXSiy28mtINvxFnQ0sB2xPIJ4poMswTHNqW/gXLfcuG2Bsbh3xJ0SDPCu04WlodI3aByjFohNCDTHSn9HrpW1RZKhJVApwanZSHQe7bkHbYU/1/ye3KLf81/HA7hc5VNfAWiikB8EwPPEuyAHAeI=
+	t=1761591645; cv=none; b=ltInWmVt5OoD8z6eTRdcdTIFka1KLzu6yHAdOWj/i8H1WNoKx/xbABBv9k6VqWAxqt/3jEiTeBMPz5gBfeuEgbuliQ0RZj6tuY+JSCSWu1K48yQP/BIlLGzVhXbkBD4LkE0udaHedo04X2TaYn/Prt+RgBx4AFZRoJhhwSthSSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591643; c=relaxed/simple;
-	bh=oaarkrgkskL9BWUJtyabSnfTzjFjQmhCxe8DrxmeHQo=;
+	s=arc-20240116; t=1761591645; c=relaxed/simple;
+	bh=lb5zP4ucTMTSY/rnJ2FuyOsfw3WO/rdALY/i74Vcjaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRAqzcYlseG7Hr7600rce4FdOCYQfIyZ1cmqfJ2T7tfv5OH6NiY7dwmfDArIzXtpiGCehauu3rp4D9XSwD1EEgPFPTbwP7FPz0IVfyqwNvx16ymGiwjLlVwR20PQ42jjbOG5Mev87zfA9tzH80EKFFov/dBfqUL7qO+ZHrmypLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jq0fVK3s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CQBK/LkzFarP7MU/F61DUyxKCo68YrNdy4OXomKDjXCTAPrVD93celX6pvuk2pnvojBz8PcYzJJ2yqDB9XUiAH1oab3ve2LVd+c9PWVl+wHROgZZsP1tWhUWTuxq2nxuqlea49TQAGt+Mja5S+m7yEXI4Kb6OOlanOooiZNRsXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBqcsc06; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jq0fVK3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EB2C4CEF1;
-	Mon, 27 Oct 2025 19:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBqcsc06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6728AC4CEF1;
+	Mon, 27 Oct 2025 19:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591643;
-	bh=oaarkrgkskL9BWUJtyabSnfTzjFjQmhCxe8DrxmeHQo=;
+	s=korg; t=1761591645;
+	bh=lb5zP4ucTMTSY/rnJ2FuyOsfw3WO/rdALY/i74Vcjaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jq0fVK3styEgNiQDBR2EtPjpJXU4aUlw1I7M3bsjucfdhfYrWEe3D0t3Eg1bWEDGe
-	 7MeZpE8nZWXkLqGKpoDFnZceta8SWKIavmhQTQntS4Rw7yuEaxJF/FVDhy+KrIFR8L
-	 gbp9uSlIe4eIwQXj3SML0LBvUwMb/5uWDWA8BHFc=
+	b=qBqcsc06YbIoQ+s9NbO3yWc6w/zbbNyHv0+43Zxp5Vo3j6W2dCMFyyfb1jWC6kt98
+	 IDIOX8q2g50NsTUZvG05ctbUgTG1C8U6jz3p9bTfUvm1H5zN6atJ1fuIdD6bhfcZYe
+	 A9dir03vjj67T+lu1rsfTZzL70M8oV1og2eqfWAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Mathew McBride <matt@traverse.com.au>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/332] net: enetc: correct the value of ENETC_RXB_TRUESIZE
-Date: Mon, 27 Oct 2025 19:35:29 +0100
-Message-ID: <20251027183532.150288125@linuxfoundation.org>
+Subject: [PATCH 5.10 277/332] dpaa2-eth: fix the pointer passed to PTR_ALIGN on Tx path
+Date: Mon, 27 Oct 2025 19:35:30 +0100
+Message-ID: <20251027183532.175136080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,52 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit e59bc32df2e989f034623a580e30a2a72af33b3f ]
+[ Upstream commit 902e81e679d86846a2404630d349709ad9372d0d ]
 
-The ENETC RX ring uses the page halves flipping mechanism, each page is
-split into two halves for the RX ring to use. And ENETC_RXB_TRUESIZE is
-defined to 2048 to indicate the size of half a page. However, the page
-size is configurable, for ARM64 platform, PAGE_SIZE is default to 4K,
-but it could be configured to 16K or 64K.
+The blamed commit increased the needed headroom to account for
+alignment. This means that the size required to always align a Tx buffer
+was added inside the dpaa2_eth_needed_headroom() function. By doing
+that, a manual adjustment of the pointer passed to PTR_ALIGN() was no
+longer correct since the 'buffer_start' variable was already pointing
+to the start of the skb's memory.
 
-When PAGE_SIZE is set to 16K or 64K, ENETC_RXB_TRUESIZE is not correct,
-and the RX ring will always use the first half of the page. This is not
-consistent with the description in the relevant kernel doc and commit
-messages.
+The behavior of the dpaa2-eth driver without this patch was to drop
+frames on Tx even when the headroom was matching the 128 bytes
+necessary. Fix this by removing the manual adjust of 'buffer_start' from
+the PTR_MODE call.
 
-This issue is invisible in most cases, but if users want to increase
-PAGE_SIZE to receive a Jumbo frame with a single buffer for some use
-cases, it will not work as expected, because the buffer size of each
-RX BD is fixed to 2048 bytes.
-
-Based on the above two points, we expect to correct ENETC_RXB_TRUESIZE
-to (PAGE_SIZE >> 1), as described in the comment.
-
-Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20251016080131.3127122-1-wei.fang@nxp.com
+Closes: https://lore.kernel.org/netdev/70f0dcd9-1906-4d13-82df-7bbbbe7194c6@app.fastmail.com/T/#u
+Fixes: f422abe3f23d ("dpaa2-eth: increase the needed headroom to account for alignment")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Tested-by: Mathew McBride <matt@traverse.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251016135807.360978-1-ioana.ciornei@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
-index 725c3d1cbb198..f58cca219a1e7 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -28,7 +28,7 @@ struct enetc_tx_swbd {
- };
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 0a1a7d94583b4..d27f5a8e59dcd 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -994,8 +994,7 @@ static int dpaa2_eth_build_single_fd(struct dpaa2_eth_priv *priv,
+ 	dma_addr_t addr;
  
- #define ENETC_RX_MAXFRM_SIZE	ENETC_MAC_MAXFRM_SIZE
--#define ENETC_RXB_TRUESIZE	2048 /* PAGE_SIZE >> 1 */
-+#define ENETC_RXB_TRUESIZE	(PAGE_SIZE >> 1)
- #define ENETC_RXB_PAD		NET_SKB_PAD /* add extra space if needed */
- #define ENETC_RXB_DMA_SIZE	\
- 	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD)
+ 	buffer_start = skb->data - dpaa2_eth_needed_headroom(skb);
+-	aligned_start = PTR_ALIGN(buffer_start - DPAA2_ETH_TX_BUF_ALIGN,
+-				  DPAA2_ETH_TX_BUF_ALIGN);
++	aligned_start = PTR_ALIGN(buffer_start, DPAA2_ETH_TX_BUF_ALIGN);
+ 	if (aligned_start >= skb->head)
+ 		buffer_start = aligned_start;
+ 	else
 -- 
 2.51.0
 
