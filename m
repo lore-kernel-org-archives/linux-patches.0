@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943D530E825;
-	Mon, 27 Oct 2025 19:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2226D320CBE;
+	Mon, 27 Oct 2025 19:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592195; cv=none; b=BR7rPtMYJrKO5wynCPJmDBhdMMI86Hed0c3GP3Fu3fCzHnfLDc60uDIu77D03qXpNN4XYbRHGJDul9DB/JJ+d+W/7TrXLM5SArdiVOXlR6GrTlrDCkXL1hFX49t8X0fQ1RMIIhZeREn0Xod1Z0baMiTbulNkF8u+g5lQWEytuws=
+	t=1761592198; cv=none; b=Wg8ZOFqhjDGWiNhFtqeWjQXKlEtqkCwBsAvMDnArv8TGTWaIOEr/9zWu8oL9uPczufOBUpGTz+CiNdlC6/82lAnuu8QWlh6AO7m7uM+vaEqDJ64aOa2KgORUewTNHgI82GINkZxf8zLlMuXUKELNb7stAaS27zrcfKOMAQJ/4yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592195; c=relaxed/simple;
-	bh=xCajF9tTosMf3kLfODvyLpeLApWHpgDy1HH9HRMC4fM=;
+	s=arc-20240116; t=1761592198; c=relaxed/simple;
+	bh=BIbVmpUp75dlcMdLy5q4qX4kVD0RNVLfIy3G3CsPRGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHsCZzSGoWUWCG3va1nTuZtSqDcxlrRpsiH/zDbsJmeFKVjTG3v3GTviJOvcXr4+ytmh8VCOB5aPeaHBXnVwCst7fN4/2UWzVBUqJ7FVlJaZLYrWKoZVJj8dX4FQR+vCDIiOrD0blh6k+MeIy0bHFFIwiWv2jWjcp7vw7ILHYJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGsWmesk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PR3tDx22hOsa3vy7qe70As8i+mk0iy3QqC+R0VBDLnb0Oe6QWDQi4MT75Nm6UY1ZwQwyoHdV2lS5zhWlPleAuiEsPTLBh1YsCSy5znx6FxIPv4bUY6Jl9zI2OWd85oUDXAvb2AmkcSyLsRQIk2JlhPrx5lQFknmZ3Cndhpshl/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE64KaC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGsWmesk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CB8C4CEF1;
-	Mon, 27 Oct 2025 19:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE64KaC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD26AC4CEF1;
+	Mon, 27 Oct 2025 19:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592195;
-	bh=xCajF9tTosMf3kLfODvyLpeLApWHpgDy1HH9HRMC4fM=;
+	s=korg; t=1761592198;
+	bh=BIbVmpUp75dlcMdLy5q4qX4kVD0RNVLfIy3G3CsPRGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGsWmeskwUaXRmL8ziCovQZnCljrWIN0ZPW8rWxqSC49fE5oPUSp1txVdDGEjnZje
-	 jRUZ6HPhvXsk4SIUTyvQ/x7+eb/mnCBY0JCtsDtXPmWT11h/vuEXssHasKyg0Wb2Gs
-	 LZgGvVa1Iw9NZ9l7RPOO0ydSmsZRUBoo+YsVf27s=
+	b=tE64KaC+UQgJx15WP2271mRixGfe55+mg/xlbnPThzY4+XxSUbLVQOty4FNKeTRX+
+	 2Q8xmIcgKcDY7lOa7bZQvZXg5RqtWMYhxH/5Wxz5cHwZZtAUVAwJZhlvlgEQsBy8jB
+	 tSVwM+cXE6/fR3Hm9oCXCYDosHybxcLLWTdL/yfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/157] cpufreq: CPPC: Avoid using CPUFREQ_ETERNAL as transition delay
-Date: Mon, 27 Oct 2025 19:34:33 +0100
-Message-ID: <20251027183501.585371179@linuxfoundation.org>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.1 030/157] timers: Split [try_to_]del_timer[_sync]() to prepare for shutdown mode
+Date: Mon, 27 Oct 2025 19:34:51 +0100
+Message-ID: <20251027183502.096576784@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -54,80 +54,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit f965d111e68f4a993cc44d487d416e3d954eea11 ]
+[ Upstream commit 8553b5f2774a66b1f293b7d783934210afb8f23c ]
 
-If cppc_get_transition_latency() returns CPUFREQ_ETERNAL to indicate a
-failure to retrieve the transition latency value from the platform
-firmware, the CPPC cpufreq driver will use that value (converted to
-microseconds) as the policy transition delay, but it is way too large
-for any practical use.
+Tearing down timers which have circular dependencies to other
+functionality, e.g. workqueues, where the timer can schedule work and work
+can arm timers, is not trivial.
 
-Address this by making the driver use the cpufreq's default
-transition latency value (in microseconds) as the transition delay
-if CPUFREQ_ETERNAL is returned by cppc_get_transition_latency().
+In those cases it is desired to shutdown the timer in a way which prevents
+rearming of the timer. The mechanism to do so is to set timer->function to
+NULL and use this as an indicator for the timer arming functions to ignore
+the (re)arm request.
 
-Fixes: d4f3388afd48 ("cpufreq / CPPC: Set platform specific transition_delay_us")
-Cc: 5.19+ <stable@vger.kernel.org> # 5.19
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-[ added CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS definition to include/linux/cpufreq.h ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Split the inner workings of try_do_del_timer_sync(), del_timer_sync() and
+del_timer() into helper functions to prepare for implementing the shutdown
+functionality.
+
+No functional change.
+
+Co-developed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/all/20220407161745.7d6754b3@gandalf.local.home
+Link: https://lore.kernel.org/all/20221110064101.429013735@goodmis.org
+Link: https://lore.kernel.org/r/20221123201625.195147423@linutronix.de
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c |   14 ++++++++++++--
- include/linux/cpufreq.h        |    3 +++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ kernel/time/timer.c |  143 +++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 92 insertions(+), 51 deletions(-)
 
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -338,6 +338,16 @@ static int cppc_verify_policy(struct cpu
- 	return 0;
- }
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1298,20 +1298,14 @@ out_unlock:
+ EXPORT_SYMBOL_GPL(add_timer_on);
  
-+static unsigned int __cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
-+{
-+	unsigned int transition_latency_ns = cppc_get_transition_latency(cpu);
-+
-+	if (transition_latency_ns == CPUFREQ_ETERNAL)
-+		return CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS / NSEC_PER_USEC;
-+
-+	return transition_latency_ns / NSEC_PER_USEC;
-+}
-+
- /*
-  * The PCC subspace describes the rate at which platform can accept commands
-  * on the shared PCC channel (including READs which do not count towards freq
-@@ -360,12 +370,12 @@ static unsigned int cppc_cpufreq_get_tra
- 			return 10000;
- 		}
- 	}
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
- }
- #else
- static unsigned int cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
+ /**
+- * timer_delete - Deactivate a timer
++ * __timer_delete - Internal function: Deactivate a timer
+  * @timer:	The timer to be deactivated
+  *
+- * The function only deactivates a pending timer, but contrary to
+- * timer_delete_sync() it does not take into account whether the timer's
+- * callback function is concurrently executed on a different CPU or not.
+- * It neither prevents rearming of the timer. If @timer can be rearmed
+- * concurrently then the return value of this function is meaningless.
+- *
+  * Return:
+  * * %0 - The timer was not pending
+  * * %1 - The timer was pending and deactivated
+  */
+-int timer_delete(struct timer_list *timer)
++static int __timer_delete(struct timer_list *timer)
  {
--	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
-+	return __cppc_cpufreq_get_transition_delay_us(cpu);
+ 	struct timer_base *base;
+ 	unsigned long flags;
+@@ -1327,25 +1321,37 @@ int timer_delete(struct timer_list *time
+ 
+ 	return ret;
  }
+-EXPORT_SYMBOL(timer_delete);
+ 
+ /**
+- * try_to_del_timer_sync - Try to deactivate a timer
+- * @timer:	Timer to deactivate
++ * timer_delete - Deactivate a timer
++ * @timer:	The timer to be deactivated
+  *
+- * This function tries to deactivate a timer. On success the timer is not
+- * queued and the timer callback function is not running on any CPU.
++ * The function only deactivates a pending timer, but contrary to
++ * timer_delete_sync() it does not take into account whether the timer's
++ * callback function is concurrently executed on a different CPU or not.
++ * It neither prevents rearming of the timer.  If @timer can be rearmed
++ * concurrently then the return value of this function is meaningless.
+  *
+- * This function does not guarantee that the timer cannot be rearmed right
+- * after dropping the base lock. That needs to be prevented by the calling
+- * code if necessary.
++ * Return:
++ * * %0 - The timer was not pending
++ * * %1 - The timer was pending and deactivated
++ */
++int timer_delete(struct timer_list *timer)
++{
++	return __timer_delete(timer);
++}
++EXPORT_SYMBOL(timer_delete);
++
++/**
++ * __try_to_del_timer_sync - Internal function: Try to deactivate a timer
++ * @timer:	Timer to deactivate
+  *
+  * Return:
+  * * %0  - The timer was not pending
+  * * %1  - The timer was pending and deactivated
+  * * %-1 - The timer callback function is running on a different CPU
+  */
+-int try_to_del_timer_sync(struct timer_list *timer)
++static int __try_to_del_timer_sync(struct timer_list *timer)
+ {
+ 	struct timer_base *base;
+ 	unsigned long flags;
+@@ -1362,6 +1368,27 @@ int try_to_del_timer_sync(struct timer_l
+ 
+ 	return ret;
+ }
++
++/**
++ * try_to_del_timer_sync - Try to deactivate a timer
++ * @timer:	Timer to deactivate
++ *
++ * This function tries to deactivate a timer. On success the timer is not
++ * queued and the timer callback function is not running on any CPU.
++ *
++ * This function does not guarantee that the timer cannot be rearmed right
++ * after dropping the base lock. That needs to be prevented by the calling
++ * code if necessary.
++ *
++ * Return:
++ * * %0  - The timer was not pending
++ * * %1  - The timer was pending and deactivated
++ * * %-1 - The timer callback function is running on a different CPU
++ */
++int try_to_del_timer_sync(struct timer_list *timer)
++{
++	return __try_to_del_timer_sync(timer);
++}
+ EXPORT_SYMBOL(try_to_del_timer_sync);
+ 
+ #ifdef CONFIG_PREEMPT_RT
+@@ -1438,45 +1465,15 @@ static inline void del_timer_wait_runnin
  #endif
  
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -32,6 +32,9 @@
+ /**
+- * timer_delete_sync - Deactivate a timer and wait for the handler to finish.
++ * __timer_delete_sync - Internal function: Deactivate a timer and wait
++ *			 for the handler to finish.
+  * @timer:	The timer to be deactivated
+  *
+- * Synchronization rules: Callers must prevent restarting of the timer,
+- * otherwise this function is meaningless. It must not be called from
+- * interrupt contexts unless the timer is an irqsafe one. The caller must
+- * not hold locks which would prevent completion of the timer's callback
+- * function. The timer's handler must not call add_timer_on(). Upon exit
+- * the timer is not queued and the handler is not running on any CPU.
+- *
+- * For !irqsafe timers, the caller must not hold locks that are held in
+- * interrupt context. Even if the lock has nothing to do with the timer in
+- * question.  Here's why::
+- *
+- *    CPU0                             CPU1
+- *    ----                             ----
+- *                                     <SOFTIRQ>
+- *                                       call_timer_fn();
+- *                                       base->running_timer = mytimer;
+- *    spin_lock_irq(somelock);
+- *                                     <IRQ>
+- *                                        spin_lock(somelock);
+- *    timer_delete_sync(mytimer);
+- *    while (base->running_timer == mytimer);
+- *
+- * Now timer_delete_sync() will never return and never release somelock.
+- * The interrupt on the other CPU is waiting to grab somelock but it has
+- * interrupted the softirq that CPU0 is waiting to finish.
+- *
+- * This function cannot guarantee that the timer is not rearmed again by
+- * some concurrent or preempting code, right after it dropped the base
+- * lock. If there is the possibility of a concurrent rearm then the return
+- * value of the function is meaningless.
+- *
+  * Return:
+  * * %0	- The timer was not pending
+  * * %1	- The timer was pending and deactivated
   */
+-int timer_delete_sync(struct timer_list *timer)
++static int __timer_delete_sync(struct timer_list *timer)
+ {
+ 	int ret;
  
- #define CPUFREQ_ETERNAL			(-1)
+@@ -1506,7 +1503,7 @@ int timer_delete_sync(struct timer_list
+ 		lockdep_assert_preemption_enabled();
+ 
+ 	do {
+-		ret = try_to_del_timer_sync(timer);
++		ret = __try_to_del_timer_sync(timer);
+ 
+ 		if (unlikely(ret < 0)) {
+ 			del_timer_wait_running(timer);
+@@ -1516,6 +1513,50 @@ int timer_delete_sync(struct timer_list
+ 
+ 	return ret;
+ }
 +
-+#define CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS	NSEC_PER_MSEC
-+
- #define CPUFREQ_NAME_LEN		16
- /* Print length for names. Extra 1 space for accommodating '\n' in prints */
- #define CPUFREQ_NAME_PLEN		(CPUFREQ_NAME_LEN + 1)
++/**
++ * timer_delete_sync - Deactivate a timer and wait for the handler to finish.
++ * @timer:	The timer to be deactivated
++ *
++ * Synchronization rules: Callers must prevent restarting of the timer,
++ * otherwise this function is meaningless. It must not be called from
++ * interrupt contexts unless the timer is an irqsafe one. The caller must
++ * not hold locks which would prevent completion of the timer's callback
++ * function. The timer's handler must not call add_timer_on(). Upon exit
++ * the timer is not queued and the handler is not running on any CPU.
++ *
++ * For !irqsafe timers, the caller must not hold locks that are held in
++ * interrupt context. Even if the lock has nothing to do with the timer in
++ * question.  Here's why::
++ *
++ *    CPU0                             CPU1
++ *    ----                             ----
++ *                                     <SOFTIRQ>
++ *                                       call_timer_fn();
++ *                                       base->running_timer = mytimer;
++ *    spin_lock_irq(somelock);
++ *                                     <IRQ>
++ *                                        spin_lock(somelock);
++ *    timer_delete_sync(mytimer);
++ *    while (base->running_timer == mytimer);
++ *
++ * Now timer_delete_sync() will never return and never release somelock.
++ * The interrupt on the other CPU is waiting to grab somelock but it has
++ * interrupted the softirq that CPU0 is waiting to finish.
++ *
++ * This function cannot guarantee that the timer is not rearmed again by
++ * some concurrent or preempting code, right after it dropped the base
++ * lock. If there is the possibility of a concurrent rearm then the return
++ * value of the function is meaningless.
++ *
++ * Return:
++ * * %0	- The timer was not pending
++ * * %1	- The timer was pending and deactivated
++ */
++int timer_delete_sync(struct timer_list *timer)
++{
++	return __timer_delete_sync(timer);
++}
+ EXPORT_SYMBOL(timer_delete_sync);
+ 
+ static void call_timer_fn(struct timer_list *timer,
 
 
