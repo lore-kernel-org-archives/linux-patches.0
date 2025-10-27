@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A4C218EB1;
-	Mon, 27 Oct 2025 19:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D81323403;
+	Mon, 27 Oct 2025 19:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591732; cv=none; b=mSr6ABnx6gX0lnXvQKXvocTRJDNtDSf41KtSaleeEVNM1VWEqj9z6K1f1mCe1EeI8foRseyXilYSoRNrfWqaucqFJWLA1EDDZ8VbOCshOB4kehTBSCdZvgUtVeAXzQ3y/3Cr100IBR7jpISVLpqKJzo/4WETIw9elOKAqwWK3t8=
+	t=1761591734; cv=none; b=bYOl2yIlOy/YOoJU/CDeBubdCdTgJSGIMAp2MjnSSIjnKXbiP/bleIq/ILSVGpSw/DMWg/6Fb46LRPJqJzwnNQc0929lzsHRTlSGEzZyNVGgoEiMszw9mvJAnZxVI75XfDA0y0mQjTvm7eYuFEeFyuKUmEq9cA8/FqVR2DMguzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591732; c=relaxed/simple;
-	bh=VAT7dD48i+6zlEv53XTfRVCivKZ/9TtELMXvoWhQ/mM=;
+	s=arc-20240116; t=1761591734; c=relaxed/simple;
+	bh=FestsKe9v980sm3QxrPiq91PEK0rD1OTry/yFfFlggE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpPvtBpCjPXc1TAsLaoXWgQ4zL25QhP0kif0T+jp2cA0U7sJIkquYskeIb1ST5TxRlB98plTPEINLqD8L2pHCbm8TrB5HVbjHvt2VIG6ujjf0nqUaTEsuLGXgS5dUUOLMOFsMDmdZ1s+REtrcNDaAlihkXGwLHmr9rwai2LSrJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCPw0/b3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UA7TP59q/f2i5H14TcKrUOFTa8C22GOBH1qCXJjxNVo6TJA8GJCydj2WqUVNUM9MYUqYwRsXR7BkSGSwOYoGl+rInaGSA4KYpMLBTFtT+QEGi9KpY6JxOD70deU4daRJdmVxbIv37fKq4tqKxXfl+VlLsB4xmwVz+YLf1NNcl1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+vnVW7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCPw0/b3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197B1C4CEF1;
-	Mon, 27 Oct 2025 19:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+vnVW7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0401C4CEFD;
+	Mon, 27 Oct 2025 19:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591731;
-	bh=VAT7dD48i+6zlEv53XTfRVCivKZ/9TtELMXvoWhQ/mM=;
+	s=korg; t=1761591734;
+	bh=FestsKe9v980sm3QxrPiq91PEK0rD1OTry/yFfFlggE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCPw0/b3apQnwNI+Ur0/fliAWDkof9z3elhJmD4kkjg7SoMl5+woGdxKoFQmA6Xni
-	 G1GCDc6Q3IFGNk839rtBAhQDe+YudKT8h9Sp3vGJKqUBfmA7scxuviL+mC4F+GXK4L
-	 8DAP+4rjHOYcoQ9LyZG7+tXOiCALWjLroJHphGjs=
+	b=i+vnVW7HMFjeEOaoqXCnOOQ/urhi9bZyl/N94cUjkBsgVM+PuFAp53JPdwJPsbr7s
+	 MI9+/LenfXnjjY4nyUpJMqJ/oTJ1Bp1+l6Mn0NcSl4YNtp7S8eGk8J10iiur7FDkDN
+	 FMpakPlDkikRNqFcMXnNOJywj+my7MAByzgrPsqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 302/332] serial: 8250_exar: add support for Advantech 2 port card with Device ID 0x0018
-Date: Mon, 27 Oct 2025 19:35:55 +0100
-Message-ID: <20251027183532.825547458@linuxfoundation.org>
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 311/332] iio: imu: inv_icm42600: Simplify pm_runtime setup
+Date: Mon, 27 Oct 2025 19:36:04 +0100
+Message-ID: <20251027183533.069379893@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,56 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit e7cbce761fe3fcbcb49bcf30d4f8ca5e1a9ee2a0 upstream.
+[ Upstream commit 0792c1984a45ccd7a296d6b8cb78088bc99a212e ]
 
-The Advantech 2-port serial card with PCI vendor=0x13fe and device=0x0018
-has a 'XR17V35X' chip installed on the circuit board. Therefore, this
-driver can be used instead of theu outdated out-of-tree driver from the
-manufacturer.
+Rework the power management in inv_icm42600_core_probe() to use
+devm_pm_runtime_set_active_enabled(), which simplifies the runtime PM
+setup by handling activation and enabling in one step.
+Remove the separate inv_icm42600_disable_pm callback, as it's no longer
+needed with the devm-managed approach.
+Using devm_pm_runtime_enable() also fixes the missing disable of
+autosuspend.
+Update inv_icm42600_disable_vddio_reg() to only disable the regulator if
+the device is not suspended i.e. powered-down, preventing unbalanced
+disables.
+Also remove redundant error msg on regulator_disable(), the regulator
+framework already emits an error message when regulator_disable() fails.
 
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20250924134115.2667650-1-fe@dev.tdt.de
+This simplifies the PM setup and avoids manipulating the usage counter
+unnecessarily.
+
+Fixes: 31c24c1e93c3 ("iio: imu: inv_icm42600: add core of new inv_icm42600 driver")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20250901-icm42pmreg-v3-1-ef1336246960@geanix.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   24 ++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -33,6 +33,8 @@
- #define PCI_DEVICE_ID_ACCESSIO_COM_4SM		0x10db
- #define PCI_DEVICE_ID_ACCESSIO_COM_8SM		0x10ea
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -550,20 +550,12 @@ static void inv_icm42600_disable_vdd_reg
+ static void inv_icm42600_disable_vddio_reg(void *_data)
+ {
+ 	struct inv_icm42600_state *st = _data;
+-	const struct device *dev = regmap_get_device(st->map);
+-	int ret;
+-
+-	ret = regulator_disable(st->vddio_supply);
+-	if (ret)
+-		dev_err(dev, "failed to disable vddio error %d\n", ret);
+-}
++	struct device *dev = regmap_get_device(st->map);
  
-+#define PCI_DEVICE_ID_ADVANTECH_XR17V352	0x0018
-+
- #define PCI_DEVICE_ID_COMMTECH_4224PCI335	0x0002
- #define PCI_DEVICE_ID_COMMTECH_4222PCI335	0x0004
- #define PCI_DEVICE_ID_COMMTECH_2324PCI335	0x000a
-@@ -815,6 +817,12 @@ static const struct exar8250_board pbn_f
- 	.exit		= pci_xr17v35x_exit,
- };
+-static void inv_icm42600_disable_pm(void *_data)
+-{
+-	struct device *dev = _data;
++	if (pm_runtime_status_suspended(dev))
++		return;
  
-+static const struct exar8250_board pbn_adv_XR17V352 = {
-+	.num_ports	= 2,
-+	.setup		= pci_xr17v35x_setup,
-+	.exit		= pci_xr17v35x_exit,
-+};
-+
- static const struct exar8250_board pbn_exar_XR17V4358 = {
- 	.num_ports	= 12,
- 	.setup		= pci_xr17v35x_setup,
-@@ -884,6 +892,9 @@ static const struct pci_device_id exar_p
- 	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
- 	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
+-	pm_runtime_put_sync(dev);
+-	pm_runtime_disable(dev);
++	regulator_disable(st->vddio_supply);
+ }
  
-+	/* ADVANTECH devices */
-+	EXAR_DEVICE(ADVANTECH, XR17V352, pbn_adv_XR17V352),
+ int inv_icm42600_core_probe(struct regmap *regmap, int chip, int irq,
+@@ -660,16 +652,14 @@ int inv_icm42600_core_probe(struct regma
+ 		return ret;
+ 
+ 	/* setup runtime power management */
+-	ret = pm_runtime_set_active(dev);
++	ret = devm_pm_runtime_set_active_enabled(dev);
+ 	if (ret)
+ 		return ret;
+-	pm_runtime_get_noresume(dev);
+-	pm_runtime_enable(dev);
 +
- 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
- 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
+ 	pm_runtime_set_autosuspend_delay(dev, INV_ICM42600_SUSPEND_DELAY_MS);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_put(dev);
+ 
+-	return devm_add_action_or_reset(dev, inv_icm42600_disable_pm, dev);
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(inv_icm42600_core_probe);
+ 
 
 
