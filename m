@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA6918A6A5;
-	Mon, 27 Oct 2025 19:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD05F21576E;
+	Mon, 27 Oct 2025 19:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592599; cv=none; b=iaq/m348hBmW9qoExJLUmyMx6b00o14bapjhrZzFJARBH7FCbK31qJ5mRTWrOkvduda2FsXr6rTBGL6zdDIpc04nkoPgmcBiWhy7gBmYrvEOOVEDMy85dL0Dq/TsPctZj0JamRL0Q/hXue4YJ/GI6uEfAo3jYmI7Yv4CYd0lerA=
+	t=1761592602; cv=none; b=ArxxOBz5u0N3mjOLLQ73DGgCGXhXsGb9CRWY5GjW1+4LmWgYf4NG8AWOuQAy9Z6gMPnagqjIxrpqGJKJOPtMDJ0dUtvU0d0The1shTzbx1QsTSfWJqqD8l8yqm7VKVFNNv8B22kGc0E+Hqq1yqKqs+8TDQiC0r3X43q16cHipMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592599; c=relaxed/simple;
-	bh=g3PeYtwzhIMzo5vKLKmhPK3dEM7jiX17HUlOWkJM7Gc=;
+	s=arc-20240116; t=1761592602; c=relaxed/simple;
+	bh=ln81J1Zah144bWXRYLXDIDYS9Z7LaETCSwCCFsRJPYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRaiOMbRpNkaRcLPNKSwxkkdMtq9QKOpqG5VWgOe+oCng6cZUYuY/WP93Vt0+sF0yABWwq3Gm5oefdjxSEVFphYzQnltCA7R+oZvohSAs6+GHHKX+x3QKIfUx21AfTTg7W+F2/REsHjwAbU8F41ZyvzQu3YsFS6UdIXbbuES52w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/jCTcJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pREYu1Z7uKD11+VNMjdqaNOwTRpa4F8IedDbBw/3Gg2tc55vfLtYbxMxSMm2sm9/VIlT3BBwpNNHz5/cWpr9ahvvXSyFPoPWP9LEYWRhWQWRN16hhdCBZ/c53ywqmbuqDNFuJrPudtK/ol+j/nn2VWIjPMZjWu1/2nihNyxNKxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0qGBfQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/jCTcJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95262C4CEF1;
-	Mon, 27 Oct 2025 19:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0qGBfQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2324CC4CEF1;
+	Mon, 27 Oct 2025 19:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592598;
-	bh=g3PeYtwzhIMzo5vKLKmhPK3dEM7jiX17HUlOWkJM7Gc=;
+	s=korg; t=1761592601;
+	bh=ln81J1Zah144bWXRYLXDIDYS9Z7LaETCSwCCFsRJPYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/jCTcJG3dvquu5o4ZNq/+lhNqlUb0eej15drT48xNGrmGknQrb0AEFuHsGFZ3EeV
-	 O+4etwl58VCwynMXNM4NyDml2bTpJlX/tbaLfGP0LDVe+h6QxgfcXJClt5hVCFlCwH
-	 NGey2GQ7Fj8H+gaDWfm6pIhY1iJxo7DtaLAys1UQ=
+	b=R0qGBfQt3FPZUXqfMgAhnsahf1Bb986CEswfcVmmv7upzcHveBRLTakOggdcvSIet
+	 lQjSwmUUJHu2wv7LoU0seD2EPPJ55oXCyj1ULzhhHOn1twMKGu1NOS03lK2qEWsjiP
+	 AKNax9tN2obRI46dbu5HsUITt2WyiCLc+M3xNb5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
 	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 24/84] selftests/net: convert sctp_vrf.sh to run it in unique namespace
-Date: Mon, 27 Oct 2025 19:36:13 +0100
-Message-ID: <20251027183439.463974076@linuxfoundation.org>
+Subject: [PATCH 6.6 25/84] selftests: net: fix server bind failure in sctp_vrf.sh
+Date: Mon, 27 Oct 2025 19:36:14 +0100
+Message-ID: <20251027183439.488629688@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -47,76 +46,243 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 90e271f65ee428ae5a75e783f5ba50a10dece09d ]
+[ Upstream commit a73ca0449bcb7c238097cc6a1bf3fd82a78374df ]
 
-Here is the test result after conversion.
+sctp_vrf.sh could fail:
 
-]# ./sctp_vrf.sh
-Testing For SCTP VRF:
-TEST 01: nobind, connect from client 1, l3mdev_accept=1, Y [PASS]
-...
-TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, N [PASS]
-***v6 Tests Done***
+  TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, N [FAIL]
+  not ok 1 selftests: net: sctp_vrf.sh # exit=3
 
-Acked-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: a73ca0449bcb ("selftests: net: fix server bind failure in sctp_vrf.sh")
+The failure happens when the server bind in a new run conflicts with an
+existing association from the previous run:
+
+[1] ip netns exec $SERVER_NS ./sctp_hello server ...
+[2] ip netns exec $CLIENT_NS ./sctp_hello client ...
+[3] ip netns exec $SERVER_NS pkill sctp_hello ...
+[4] ip netns exec $SERVER_NS ./sctp_hello server ...
+
+It occurs if the client in [2] sends a message and closes immediately.
+With the message unacked, no SHUTDOWN is sent. Killing the server in [3]
+triggers a SHUTDOWN the client also ignores due to the unacked message,
+leaving the old association alive. This causes the bind at [4] to fail
+until the message is acked and the client responds to a second SHUTDOWN
+after the server’s T2 timer expires (3s).
+
+This patch fixes the issue by preventing the client from sending data.
+Instead, the client blocks on recv() and waits for the server to close.
+It also waits until both the server and the client sockets are fully
+released in stop_server and wait_client before restarting.
+
+Additionally, replace 2>&1 >/dev/null with -q in sysctl and grep, and
+drop other redundant 2>&1 >/dev/null redirections, and fix a typo from
+N to Y (connect successfully) in the description of the last test.
+
+Fixes: a61bd7b9fef3 ("selftests: add a selftest for sctp vrf")
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/be2dacf52d0917c4ba5e2e8c5a9cb640740ad2b6.1760731574.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/sctp_vrf.sh | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ tools/testing/selftests/net/sctp_hello.c | 17 +-----
+ tools/testing/selftests/net/sctp_vrf.sh  | 73 +++++++++++++++---------
+ 2 files changed, 47 insertions(+), 43 deletions(-)
 
+diff --git a/tools/testing/selftests/net/sctp_hello.c b/tools/testing/selftests/net/sctp_hello.c
+index f02f1f95d2275..a04dac0b8027d 100644
+--- a/tools/testing/selftests/net/sctp_hello.c
++++ b/tools/testing/selftests/net/sctp_hello.c
+@@ -29,7 +29,6 @@ static void set_addr(struct sockaddr_storage *ss, char *ip, char *port, int *len
+ static int do_client(int argc, char *argv[])
+ {
+ 	struct sockaddr_storage ss;
+-	char buf[] = "hello";
+ 	int csk, ret, len;
+ 
+ 	if (argc < 5) {
+@@ -56,16 +55,10 @@ static int do_client(int argc, char *argv[])
+ 
+ 	set_addr(&ss, argv[3], argv[4], &len);
+ 	ret = connect(csk, (struct sockaddr *)&ss, len);
+-	if (ret < 0) {
+-		printf("failed to connect to peer\n");
++	if (ret < 0)
+ 		return -1;
+-	}
+ 
+-	ret = send(csk, buf, strlen(buf) + 1, 0);
+-	if (ret < 0) {
+-		printf("failed to send msg %d\n", ret);
+-		return -1;
+-	}
++	recv(csk, NULL, 0, 0);
+ 	close(csk);
+ 
+ 	return 0;
+@@ -75,7 +68,6 @@ int main(int argc, char *argv[])
+ {
+ 	struct sockaddr_storage ss;
+ 	int lsk, csk, ret, len;
+-	char buf[20];
+ 
+ 	if (argc < 2 || (strcmp(argv[1], "server") && strcmp(argv[1], "client"))) {
+ 		printf("%s server|client ...\n", argv[0]);
+@@ -125,11 +117,6 @@ int main(int argc, char *argv[])
+ 		return -1;
+ 	}
+ 
+-	ret = recv(csk, buf, sizeof(buf), 0);
+-	if (ret <= 0) {
+-		printf("failed to recv msg %d\n", ret);
+-		return -1;
+-	}
+ 	close(csk);
+ 	close(lsk);
+ 
 diff --git a/tools/testing/selftests/net/sctp_vrf.sh b/tools/testing/selftests/net/sctp_vrf.sh
-index c721e952e5f30..c854034b6aa16 100755
+index c854034b6aa16..667b211aa8a11 100755
 --- a/tools/testing/selftests/net/sctp_vrf.sh
 +++ b/tools/testing/selftests/net/sctp_vrf.sh
-@@ -6,13 +6,11 @@
- #                                                  SERVER_NS
- #       CLIENT_NS2 (veth1) <---> (veth2) -> vrf_s2
- 
--CLIENT_NS1="client-ns1"
--CLIENT_NS2="client-ns2"
-+source lib.sh
- CLIENT_IP4="10.0.0.1"
- CLIENT_IP6="2000::1"
- CLIENT_PORT=1234
- 
--SERVER_NS="server-ns"
- SERVER_IP4="10.0.0.2"
- SERVER_IP6="2000::2"
- SERVER_PORT=1234
-@@ -20,9 +18,7 @@ SERVER_PORT=1234
- setup() {
- 	modprobe sctp
+@@ -20,9 +20,9 @@ setup() {
  	modprobe sctp_diag
--	ip netns add $CLIENT_NS1
--	ip netns add $CLIENT_NS2
--	ip netns add $SERVER_NS
-+	setup_ns CLIENT_NS1 CLIENT_NS2 SERVER_NS
+ 	setup_ns CLIENT_NS1 CLIENT_NS2 SERVER_NS
  
- 	ip net exec $CLIENT_NS1 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
- 	ip net exec $CLIENT_NS2 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
-@@ -67,9 +63,7 @@ setup() {
+-	ip net exec $CLIENT_NS1 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
+-	ip net exec $CLIENT_NS2 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
+-	ip net exec $SERVER_NS sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
++	ip net exec $CLIENT_NS1 sysctl -wq net.ipv6.conf.default.accept_dad=0
++	ip net exec $CLIENT_NS2 sysctl -wq net.ipv6.conf.default.accept_dad=0
++	ip net exec $SERVER_NS sysctl -wq net.ipv6.conf.default.accept_dad=0
  
- cleanup() {
- 	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
--	ip netns del "$CLIENT_NS1"
--	ip netns del "$CLIENT_NS2"
--	ip netns del "$SERVER_NS"
-+	cleanup_ns $CLIENT_NS1 $CLIENT_NS2 $SERVER_NS
+ 	ip -n $SERVER_NS link add veth1 type veth peer name veth1 netns $CLIENT_NS1
+ 	ip -n $SERVER_NS link add veth2 type veth peer name veth1 netns $CLIENT_NS2
+@@ -62,17 +62,40 @@ setup() {
  }
  
- wait_server() {
+ cleanup() {
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
++	wait_client $CLIENT_NS1
++	wait_client $CLIENT_NS2
++	stop_server
+ 	cleanup_ns $CLIENT_NS1 $CLIENT_NS2 $SERVER_NS
+ }
+ 
+-wait_server() {
++start_server() {
+ 	local IFACE=$1
+ 	local CNT=0
+ 
+-	until ip netns exec $SERVER_NS ss -lS src $SERVER_IP:$SERVER_PORT | \
+-		grep LISTEN | grep "$IFACE" 2>&1 >/dev/null; do
+-		[ $((CNT++)) = "20" ] && { RET=3; return $RET; }
++	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP $SERVER_PORT $IFACE &
++	disown
++	until ip netns exec $SERVER_NS ss -SlH | grep -q "$IFACE"; do
++		[ $((CNT++)) -eq 30 ] && { RET=3; return $RET; }
++		sleep 0.1
++	done
++}
++
++stop_server() {
++	local CNT=0
++
++	ip netns exec $SERVER_NS pkill sctp_hello
++	while ip netns exec $SERVER_NS ss -SaH | grep -q .; do
++		[ $((CNT++)) -eq 30 ] && break
++		sleep 0.1
++	done
++}
++
++wait_client() {
++	local CLIENT_NS=$1
++	local CNT=0
++
++	while ip netns exec $CLIENT_NS ss -SaH | grep -q .; do
++		[ $((CNT++)) -eq 30 ] && break
+ 		sleep 0.1
+ 	done
+ }
+@@ -81,14 +104,12 @@ do_test() {
+ 	local CLIENT_NS=$1
+ 	local IFACE=$2
+ 
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE || return $RET
++	start_server $IFACE || return $RET
+ 	timeout 3 ip netns exec $CLIENT_NS ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT
+ 	RET=$?
++	wait_client $CLIENT_NS
++	stop_server
+ 	return $RET
+ }
+ 
+@@ -96,25 +117,21 @@ do_testx() {
+ 	local IFACE1=$1
+ 	local IFACE2=$2
+ 
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE1 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE1 || return $RET
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE2 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE2 || return $RET
++	start_server $IFACE1 || return $RET
++	start_server $IFACE2 || return $RET
+ 	timeout 3 ip netns exec $CLIENT_NS1 ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null && \
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT && \
+ 	timeout 3 ip netns exec $CLIENT_NS2 ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT
+ 	RET=$?
++	wait_client $CLIENT_NS1
++	wait_client $CLIENT_NS2
++	stop_server
+ 	return $RET
+ }
+ 
+ testup() {
+-	ip netns exec $SERVER_NS sysctl -w net.sctp.l3mdev_accept=1 2>&1 >/dev/null
++	ip netns exec $SERVER_NS sysctl -wq net.sctp.l3mdev_accept=1
+ 	echo -n "TEST 01: nobind, connect from client 1, l3mdev_accept=1, Y "
+ 	do_test $CLIENT_NS1 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+@@ -123,7 +140,7 @@ testup() {
+ 	do_test $CLIENT_NS2 && { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ 
+-	ip netns exec $SERVER_NS sysctl -w net.sctp.l3mdev_accept=0 2>&1 >/dev/null
++	ip netns exec $SERVER_NS sysctl -wq net.sctp.l3mdev_accept=0
+ 	echo -n "TEST 03: nobind, connect from client 1, l3mdev_accept=0, N "
+ 	do_test $CLIENT_NS1 && { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+@@ -160,7 +177,7 @@ testup() {
+ 	do_testx vrf-1 vrf-2 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ 
+-	echo -n "TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, N "
++	echo -n "TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, Y "
+ 	do_testx vrf-2 vrf-1 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ }
 -- 
 2.51.0
 
