@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC0E218EB1;
-	Mon, 27 Oct 2025 18:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5612D7806;
+	Mon, 27 Oct 2025 18:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590401; cv=none; b=NdEuL23YmW1c4smZfdvVgC/whNwyWS70OE2cukrDJnGdte/YytXVcBWdBWbCXdspEb2lu6+eZCC4NSMdbsyvlokwuAwsNV2ENaLauxIS3eiLsnwG1r/GXOC4HRG89TwG2bin/N0+2Bq+yJn0kHvO/aEgclF+72XRVFIdpQHaW6M=
+	t=1761590404; cv=none; b=IyZr4nq+ZAm3oeWT4Z1J+F1x1TN/YZXQ0Dh7+woDRn+s+zpAY3q4R++zFw9z/v1kUaenD8PetvhvbZsY1B6jTQk55Kkb2R8HGhwQ0ryQCj4uGU3wBI4/hNu0s/N8igEb2UKp6Et3j4Cfg5QXWhkDQCZGLHNvnTkJ5wNA/oSQyIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590401; c=relaxed/simple;
-	bh=lgnaPq9Cyz2rTUASZfjHT8J9ulVM7b7itUYLADg126Q=;
+	s=arc-20240116; t=1761590404; c=relaxed/simple;
+	bh=Q92jqN9vbUUHKv+wVNObyz7mKUqB9vljAfIDvejwvfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNulDuUcJ1nQiOsNp3m2iQChMyK0B+IbJ7WdX28kZwHpdOLGtfeRaqg6b9AeQ1LpRTk8dxsv6JrwB9/9jLZr1t8LQ5uZOGteAendHaaWff6sIfjo4//QUceogudNaRw15n91k7H5tCh4ct1tgE0CRNi0fIzaPhFcqzsQtEDjkug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4Db4IN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K6LpacHqEovdCgry1g9I+KdSZKoK9s5kKXxJ+4F4/HmEFWpT/N4WkOlnjoFFGmGoarzsuYwpuz6H0KWOFXy5xhTsu7YggFdgL85dZbSu2JzkySWu+cgtBk5A624HHOLBIJE+h67X8chRT716ViRrCyRjpbbBU4c+ii9z/aHj+Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1yf3pQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4Db4IN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FB6C4CEF1;
-	Mon, 27 Oct 2025 18:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1yf3pQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EC0C4CEF1;
+	Mon, 27 Oct 2025 18:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590401;
-	bh=lgnaPq9Cyz2rTUASZfjHT8J9ulVM7b7itUYLADg126Q=;
+	s=korg; t=1761590404;
+	bh=Q92jqN9vbUUHKv+wVNObyz7mKUqB9vljAfIDvejwvfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4Db4IN/fYXWJS7yBYa/Zd9aquvbSex7G6wzmV2MgsBYjE9VBkN2JUsxkWH9t9Y7G
-	 13qEgKaWms9YmN41/xvRvrZVWr8pVUrVrMla/JvULlPP5goMW4H+zBHk9UAdR9HlnZ
-	 3bEi65xG4h+wF5GuE6L1rHkK5CGvLjPtP3PvyBq8=
+	b=y1yf3pQX0Tq5AFrNVJyIyLYg+dAkWJtzgXx6EiaX9Egs8d771cLQ5/qJEBNmB7BXM
+	 BAwKSCIYr8+8F7VnI0JUKUHRd/tM0fY8ZwYQtgfwEPrvC9iIpADiyJrg3VqmUOWxG3
+	 ouVTz30mZOHhhyZBkzzIYAPjjpbODZ6DHteiZA28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Ito <ito.kohei@socionext.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Brahmajit Das <listout@listout.xyz>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/224] i2c: designware: Add disabling clocks when probe fails
-Date: Mon, 27 Oct 2025 19:32:56 +0100
-Message-ID: <20251027183509.811101159@linuxfoundation.org>
+Subject: [PATCH 5.4 031/224] drm/radeon/r600_cs: clean up of dead code in r600_cs
+Date: Mon, 27 Oct 2025 19:32:57 +0100
+Message-ID: <20251027183509.838843769@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -47,43 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit c149841b069ccc6e480b00e11f35a57b5d88c7bb ]
+[ Upstream commit 260dcf5b06d519bcf27a5dfdb5c626821a55c170 ]
 
-After an error occurs during probing state, dw_i2c_plat_pm_cleanup() is
-called. However, this function doesn't disable clocks and the clock-enable
-count keeps increasing. Should disable these clocks explicitly.
+GCC 16 enables -Werror=unused-but-set-variable= which results in build
+error with the following message.
 
-Fixes: 7272194ed391f ("i2c-designware: add minimal support for runtime PM")
-Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+drivers/gpu/drm/radeon/r600_cs.c: In function ‘r600_texture_size’:
+drivers/gpu/drm/radeon/r600_cs.c:1411:29: error: variable ‘level’ set but not used [-Werror=unused-but-set-variable=]
+ 1411 |         unsigned offset, i, level;
+      |                             ^~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:287: drivers/gpu/drm/radeon/r600_cs.o] Error 1
+
+level although is set, but in never used in the function
+r600_texture_size. Thus resulting in dead code and this error getting
+triggered.
+
+Fixes: 60b212f8ddcd ("drm/radeon: overhaul texture checking. (v3)")
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-platdrv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/radeon/r600_cs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index 75313c80f132f..fd5ffe13c7033 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -414,6 +414,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
+index a85470213b27f..637a4f2a30af9 100644
+--- a/drivers/gpu/drm/radeon/r600_cs.c
++++ b/drivers/gpu/drm/radeon/r600_cs.c
+@@ -1411,7 +1411,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
+ 			      unsigned block_align, unsigned height_align, unsigned base_align,
+ 			      unsigned *l0_size, unsigned *mipmap_size)
+ {
+-	unsigned offset, i, level;
++	unsigned offset, i;
+ 	unsigned width, height, depth, size;
+ 	unsigned blocksize;
+ 	unsigned nbx, nby;
+@@ -1423,7 +1423,7 @@ static void r600_texture_size(unsigned nfaces, unsigned blevel, unsigned llevel,
+ 	w0 = r600_mip_minify(w0, 0);
+ 	h0 = r600_mip_minify(h0, 0);
+ 	d0 = r600_mip_minify(d0, 0);
+-	for(i = 0, offset = 0, level = blevel; i < nlevels; i++, level++) {
++	for (i = 0, offset = 0; i < nlevels; i++) {
+ 		width = r600_mip_minify(w0, i);
+ 		nbx = r600_fmt_get_nblocksx(format, width);
  
- exit_probe:
- 	dw_i2c_plat_pm_cleanup(dev);
-+	i2c_dw_prepare_clk(dev, false);
- exit_reset:
- 	reset_control_assert(dev->rst);
- 	return ret;
 -- 
 2.51.0
 
