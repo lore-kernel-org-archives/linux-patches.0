@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BF7328B5B;
-	Mon, 27 Oct 2025 19:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386AD32A3D7;
+	Mon, 27 Oct 2025 19:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593440; cv=none; b=bhvT2gKEGM/OvKi4KR2fa5vLLF7IecqJ4OAZIooH1G5HgN1LmJlAC69DxUITbIVVLEXdiYqiJgO0skckEWJthT2U087y39wZd645Yu+vEAPhQS9pHM7w2JWNco7s4fH4k9MVM4e4tUZhatRDypqeK5fCv9Bm4TIjULLnZJ1a/Ps=
+	t=1761593443; cv=none; b=DawCbdzUENFukrzcxM6t/nBFJ7Vb1xjoTftks0S43uPqJ0RFCfkfnyufYIrbEFP08jnaeM1IRiz/oJjzk3cc35yXfWT1sxuV4yD55tTpxwWx+m1LOHBfeG3Cqk923K9jX8hXo0DZoHkItRJMbvgH429Ka1aNqJr62VqJqdMTZog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593440; c=relaxed/simple;
-	bh=F1xB4zLolSJpz0vInRl67igN0TJ18GtUCfVFn4AKdj8=;
+	s=arc-20240116; t=1761593443; c=relaxed/simple;
+	bh=QPGFrIvuj+WlZN8A1i0ODoWlczDJ8hBmxowwqPAChL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7HtXorhOxBEsULzrVp2RbJL3+8z/qm2DDtnYXoqxd4IeRHtrBCM+PPf719oImdcaSrKb3uFioAftlPSW4Qs/Tg3JYs7/ced59eNi+WJSMFeS9y1Vk2poOHwJRkiT3hjJQ/Go7Eewz0lYTKhYiPUdQwg6gxci0aFGf1YCL1iiQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLT1gdhT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lsVEoD4EHZswxWmR42cJJK34cCjT6Xrpwrikml+WBl8P0IDQ7jHnYPpLmF9AdTxIVTJyIND29zF51OcuPMJRS7s7p03OcuijDwmqzZziOOBoinb7AeqwOtlIiSa/lpqRaBqrYD3bOL3uUj1o1wXWs3oyrleqo6QuAv1S6Ji2lNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEue1QG+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLT1gdhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E63C4CEF1;
-	Mon, 27 Oct 2025 19:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEue1QG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC3CC113D0;
+	Mon, 27 Oct 2025 19:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593440;
-	bh=F1xB4zLolSJpz0vInRl67igN0TJ18GtUCfVFn4AKdj8=;
+	s=korg; t=1761593443;
+	bh=QPGFrIvuj+WlZN8A1i0ODoWlczDJ8hBmxowwqPAChL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLT1gdhT+E7GuYgn74o/NkWC6xkp++iEQ/CYrnyaAF2/X8jcHH+M96mP19sh0ZMq8
-	 jVklghoWa5rHeITO21flk/WqnBzkhYdovfgAutgRyCvafwxwIOj5EFElckdLWzmnQ5
-	 tRzD48KKsKIWdibMfDOs1dEMhn+2cjfTpGJPDvC4=
+	b=ZEue1QG+OAe5RUOY2ojfJ5FiiATy566bRe0yO+rNOKV4OGrWLMMtrZaJ7iYpix6SH
+	 dGSj/7DTdUJ+C/FLQZDNZl42nko1mVGCU5JLQm1nkIKQzdrrn0vyapihaH8mHIM/o/
+	 0ND1UU1nquWlQaA+GaWaoFl5y1xQwAmTv22jyDSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Green <evan@rivosinc.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Erick Karanja <karanja99erick@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 134/184] riscv: hwprobe: avoid uninitialized variable use in hwprobe_arch_id()
-Date: Mon, 27 Oct 2025 19:36:56 +0100
-Message-ID: <20251027183518.555230615@linuxfoundation.org>
+Subject: [PATCH 6.17 135/184] hwmon: (pmbus/isl68137) Fix child node reference leak on early return
+Date: Mon, 27 Oct 2025 19:36:57 +0100
+Message-ID: <20251027183518.581183953@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,54 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Walmsley <pjw@kernel.org>
+From: Erick Karanja <karanja99erick@gmail.com>
 
-[ Upstream commit b7776a802f2f80139f96530a489dd00fd7089eda ]
+[ Upstream commit 57f6f47920ef2f598c46d0a04bd9c8984c98e6df ]
 
-Resolve this smatch warning:
+In the case of an early return, the reference to the child node needs
+to be released.
 
-  arch/riscv/kernel/sys_hwprobe.c:50 hwprobe_arch_id() error: uninitialized symbol 'cpu_id'.
+Use for_each_child_of_node_scoped to fix the issue.
 
-This could happen if hwprobe_arch_id() was called with a key ID of
-something other than MVENDORID, MIMPID, and MARCHID.  This does not
-happen in the current codebase.  The only caller of hwprobe_arch_id()
-is a function that only passes one of those three key IDs.
-
-For the sake of reducing static analyzer warning noise, and in the
-unlikely event that hwprobe_arch_id() is someday called with some
-other key ID, validate hwprobe_arch_id()'s input to ensure that
-'cpu_id' is always initialized before use.
-
-Fixes: ea3de9ce8aa280 ("RISC-V: Add a syscall for HW probing")
-Cc: Evan Green <evan@rivosinc.com>
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Link: https://lore.kernel.org/r/cf5a13ec-19d0-9862-059b-943f36107bf3@kernel.org
+Fixes: 3996187f80a0e ("hwmon: (pmbus/isl68137) add support for voltage divider on Vout")
+Signed-off-by: Erick Karanja <karanja99erick@gmail.com>
+Link: https://lore.kernel.org/r/20251012181249.359401-1-karanja99erick@gmail.com
+[groeck: Updated subject/description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/sys_hwprobe.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwmon/pmbus/isl68137.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/riscv/kernel/sys_hwprobe.c
-+++ b/arch/riscv/kernel/sys_hwprobe.c
-@@ -30,6 +30,11 @@ static void hwprobe_arch_id(struct riscv
- 	bool first = true;
- 	int cpu;
+diff --git a/drivers/hwmon/pmbus/isl68137.c b/drivers/hwmon/pmbus/isl68137.c
+index c52c55d2e7f48..0c6b31ee755b9 100644
+--- a/drivers/hwmon/pmbus/isl68137.c
++++ b/drivers/hwmon/pmbus/isl68137.c
+@@ -334,10 +334,9 @@ static int isl68137_probe_from_dt(struct device *dev,
+ 				  struct isl68137_data *data)
+ {
+ 	const struct device_node *np = dev->of_node;
+-	struct device_node *child;
+ 	int err;
  
-+	if (pair->key != RISCV_HWPROBE_KEY_MVENDORID &&
-+	    pair->key != RISCV_HWPROBE_KEY_MIMPID &&
-+	    pair->key != RISCV_HWPROBE_KEY_MARCHID)
-+		goto out;
-+
- 	for_each_cpu(cpu, cpus) {
- 		u64 cpu_id;
+-	for_each_child_of_node(np, child) {
++	for_each_child_of_node_scoped(np, child) {
+ 		if (strcmp(child->name, "channel"))
+ 			continue;
  
-@@ -60,6 +65,7 @@ static void hwprobe_arch_id(struct riscv
- 		}
- 	}
- 
-+out:
- 	pair->value = id;
- }
- 
+-- 
+2.51.0
+
 
 
