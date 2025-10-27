@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411DA32F755;
-	Mon, 27 Oct 2025 18:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88D532142A;
+	Mon, 27 Oct 2025 18:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591508; cv=none; b=FcggFtiW2EbJ8WafD296nxkiIRJVMjpjQEfJRT+YpSEFIxH87waB51kYeA8We/B3XIIOIypVIpOel159Z4R1kT5HY+11EMBEuMC6qzseKYgs5bTe/d30XAYh9wz9njkBWUTIuUelTQqadYZKefHEiVq/U4C4bP5d1Wwq00Cqyn4=
+	t=1761591510; cv=none; b=S0GX1TXI1+/vyePeiAF/wjp6cIHg/mS1DqWf7YbgahrI2V7x28eiHRiaV3Oqc1TyYLfzWZQnjlDcRGpU3aPNbTmynluBSSFwyWul+9ciiNyXuV6ujx6gpENqvWIotEp5FE26CrPYrQejps3GTab6c1KAYCfbEQcEFoei1bbxAzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591508; c=relaxed/simple;
-	bh=NSZFZ54EuHKWXob4yMWUpJ9EmO82aQfyYPjdoiczVTs=;
+	s=arc-20240116; t=1761591510; c=relaxed/simple;
+	bh=loUFQSd7MEXbTzcGDYEk4+zZZeYLpOUYhxJ/lOAqrvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5n08wuhMm6e/rJoyB1a8nAhXG7gvkdr10jjVFUC0KJ3Io3R48idaNtH8/sSKYUPWFqrKD+828bATb6+rHDjKbXCsy8JNdO2HCae0avL5VpGf/p4L+LpB+aQgIRlvaJnzZhhO0phP3F+GImyymEpmEivE++xnsbuFCwIjZTAPKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdRsXTvJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NLqTkCPwHF6KgZQ6aTrIZbqFWrbk9oThx/TvySXuVTR+RC2+WSjeSi2P4T0+2W++FLwPqTwURHw99NIY/lahdxfof8ouoTDDA+9dd/fbBPJgkW2i/g2/SDoAzfyfKQpYH7iETHluAfhiGcE1hG0M0UnAwdXMd09s8VPFOumsgnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KnN8kPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdRsXTvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341E4C4CEF1;
-	Mon, 27 Oct 2025 18:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KnN8kPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28F8C4CEF1;
+	Mon, 27 Oct 2025 18:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591507;
-	bh=NSZFZ54EuHKWXob4yMWUpJ9EmO82aQfyYPjdoiczVTs=;
+	s=korg; t=1761591510;
+	bh=loUFQSd7MEXbTzcGDYEk4+zZZeYLpOUYhxJ/lOAqrvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TdRsXTvJlnUnu9LfAe1f5IEfYRaWjlDj0ZZBg07858xn5zRBfk8V2JEGp7bAmoukv
-	 62/I+EZaizgZ8BX5xeqB1fJ85oB/+kG94PJWHiIb+fJG8+CrDG+59r7QaTm3OxfAGS
-	 +YS6RFanL4/Pk71H84BbBD9C4da3kalYQb4eHZrI=
+	b=1KnN8kPd1yj6Z8uSWrWxGnkDfof/sHo4q3XvMbM1VO9lgYuW1hWFt4qNoq16Ifdxv
+	 T16V4N9LFb3DdXeP6UedVNedYg2Xq5rmP/g+3XUq4C/iHUrEoVUNHzYwxMLSGxHuW6
+	 ygoRlqTQbThFAEPHLrAcczuxBEUJC+CkPTpn6g00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/332] media: pci: ivtv: Add missing check after DMA map
-Date: Mon, 27 Oct 2025 19:34:35 +0100
-Message-ID: <20251027183530.649736628@linuxfoundation.org>
+Subject: [PATCH 5.10 223/332] media: cx18: Add missing check after DMA map
+Date: Mon, 27 Oct 2025 19:34:36 +0100
+Message-ID: <20251027183530.678481325@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,58 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 1069a4fe637d0e3e4c163e3f8df9be306cc299b4 ]
+[ Upstream commit 23b53639a793477326fd57ed103823a8ab63084f ]
 
 The DMA map functions can fail and should be tested for errors.
-If the mapping fails, free blanking_ptr and set it to 0.  As 0 is a
-valid DMA address, use blanking_ptr to test if the DMA address
-is set.
+If the mapping fails, dealloc buffers, and return.
 
-Fixes: 1a0adaf37c30 ("V4L/DVB (5345): ivtv driver for Conexant cx23416/cx23415 MPEG encoder/decoder")
+Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ removed pci_map_single() replaced by dma_map_single() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/ivtv/ivtv-irq.c |    2 +-
- drivers/media/pci/ivtv/ivtv-yuv.c |    8 +++++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/pci/cx18/cx18-queue.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/ivtv/ivtv-irq.c
-+++ b/drivers/media/pci/ivtv/ivtv-irq.c
-@@ -351,7 +351,7 @@ void ivtv_dma_stream_dec_prepare(struct
+--- a/drivers/media/pci/cx18/cx18-queue.c
++++ b/drivers/media/pci/cx18/cx18-queue.c
+@@ -379,14 +379,22 @@ int cx18_stream_alloc(struct cx18_stream
+ 			break;
+ 		}
  
- 	/* Insert buffer block for YUV if needed */
- 	if (s->type == IVTV_DEC_STREAM_TYPE_YUV && f->offset_y) {
--		if (yi->blanking_dmaptr) {
-+		if (yi->blanking_ptr) {
- 			s->sg_pending[idx].src = yi->blanking_dmaptr;
- 			s->sg_pending[idx].dst = offset;
- 			s->sg_pending[idx].size = 720 * 16;
---- a/drivers/media/pci/ivtv/ivtv-yuv.c
-+++ b/drivers/media/pci/ivtv/ivtv-yuv.c
-@@ -120,7 +120,7 @@ static int ivtv_yuv_prep_user_dma(struct
- 	ivtv_udma_fill_sg_array(dma, y_buffer_offset, uv_buffer_offset, y_size);
- 
- 	/* If we've offset the y plane, ensure top area is blanked */
--	if (f->offset_y && yi->blanking_dmaptr) {
-+	if (f->offset_y && yi->blanking_ptr) {
- 		dma->SGarray[dma->SG_length].size = cpu_to_le32(720*16);
- 		dma->SGarray[dma->SG_length].src = cpu_to_le32(yi->blanking_dmaptr);
- 		dma->SGarray[dma->SG_length].dst = cpu_to_le32(IVTV_DECODER_OFFSET + yuv_offset[frame]);
-@@ -924,6 +924,12 @@ static void ivtv_yuv_init(struct ivtv *i
- 		yi->blanking_dmaptr = dma_map_single(&itv->pdev->dev,
- 						     yi->blanking_ptr,
- 						     720 * 16, DMA_TO_DEVICE);
-+		if (dma_mapping_error(&itv->pdev->dev, yi->blanking_dmaptr)) {
-+			kfree(yi->blanking_ptr);
-+			yi->blanking_ptr = NULL;
-+			yi->blanking_dmaptr = 0;
-+			IVTV_DEBUG_WARN("Failed to dma_map yuv blanking buffer\n");
++		buf->dma_handle = dma_map_single(&s->cx->pci_dev->dev,
++						 buf->buf, s->buf_size,
++						 s->dma);
++		if (dma_mapping_error(&s->cx->pci_dev->dev, buf->dma_handle)) {
++			kfree(buf->buf);
++			kfree(mdl);
++			kfree(buf);
++			break;
 +		}
- 	} else {
- 		yi->blanking_dmaptr = 0;
- 		IVTV_DEBUG_WARN("Failed to allocate yuv blanking buffer\n");
++
+ 		INIT_LIST_HEAD(&mdl->list);
+ 		INIT_LIST_HEAD(&mdl->buf_list);
+ 		mdl->id = s->mdl_base_idx; /* a somewhat safe value */
+ 		cx18_enqueue(s, mdl, &s->q_idle);
+ 
+ 		INIT_LIST_HEAD(&buf->list);
+-		buf->dma_handle = pci_map_single(s->cx->pci_dev,
+-				buf->buf, s->buf_size, s->dma);
+ 		cx18_buf_sync_for_cpu(s, buf);
+ 		list_add_tail(&buf->list, &s->buf_pool);
+ 	}
 
 
