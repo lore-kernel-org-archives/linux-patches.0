@@ -1,42 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DC72C15BB;
-	Mon, 27 Oct 2025 19:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7500618A6A5;
+	Mon, 27 Oct 2025 19:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592581; cv=none; b=QxBRCuyPw+/wXnLnTYIX7O07wluH/fr96KmPHwjZ91qOK7w8yDxJDl4hF+Iva3kDIIDzUfLhtLt9Gy6KswBS+eTkdaN3zb6d53JNg9p/98KOZnc1m4B9XT0hHVpmhiF+TAcRi8kHMRbWa9dZybu2NxtvfT1MRUuwHVrmsf6ySGo=
+	t=1761592583; cv=none; b=f3NBOwjj7IYGvGukJWH3RwWUQBTp93xC4pcHVODXFzHHOSDQzT8QMuV7ZXURwEcqYqdQJ+shy/QJen3Mqvz3L+7mbHKbTKDLqUbSyS72H3LD3Qv8Xto5X0mBj351DwXq0pSu1itK3FIfN7RUaG3UkCkFHLKhTMIaC+YbRWnqmrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592581; c=relaxed/simple;
-	bh=RqATXAHazVmAr/SMcRx9SlejlzBS9NXwg+TRuoyLoDU=;
+	s=arc-20240116; t=1761592583; c=relaxed/simple;
+	bh=IwE0NNlieIewa0z+/oMYa0dVXzfFav+7lhp0/DSDKyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Imu6VHFQOWX8y4AQFKf9YYifrcFT5hqN9m1ediFT7V4YMEU874j9nfuIj55nrDh9nASSEqlrlQRKqEA37jnlmN5PFHqBfuHCWKgAUCV4yWjWcADJ75Yy7JSttGI5HYcxKMHSNFw/EeM2+FqOFZDwANSxBucRdd1S5dS7oGFQznc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngW4R1uK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FP+a2Gd7VRjvM2zwZej2xKM87aXy2vBgI4eR3c2jBGyk2OEoB0FZx/IE0nm+L77gIPPnCGxwd94WOjeoDdHBkaoNAT76pLwMLV4JjvAntMWrod1xAldBGnR+z5+K9+dmG1ci0xK9iQJjIIfxO1sDKmTRbiusZ0KS7zhlgdNj5RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gm9Mm1BQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngW4R1uK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2CEC4CEF1;
-	Mon, 27 Oct 2025 19:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gm9Mm1BQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D212DC4CEF1;
+	Mon, 27 Oct 2025 19:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592580;
-	bh=RqATXAHazVmAr/SMcRx9SlejlzBS9NXwg+TRuoyLoDU=;
+	s=korg; t=1761592583;
+	bh=IwE0NNlieIewa0z+/oMYa0dVXzfFav+7lhp0/DSDKyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngW4R1uK+tVlTR2sa7llOcSyajl7n12im5wj/ChHap2aZTFfyzmg228xss5W41ovc
-	 FKoQHsjUpP1BtRMzbzo8bv5cJjKMthIizGKn510AdJ/6IMquVZk3gq1Y+dBfazy2YR
-	 PthW0ROUH1Txr8EJ1MCEawgrYy4zFIQqvzeurMZQ=
+	b=gm9Mm1BQAmiN6F04Yj/SpjQagJKnr4725s9FV9h/3nxOgFmTvz6c83IAebg2ucgy3
+	 rHVE6Rl6vEhb9VRF4dNTfstP5EgndRpmy7sBaazF+gHcI4DJHoyCdKYQzVMr3ZYiSH
+	 3uSuSYX0JTV5izkol9DevlodWttbcTm89Qc+0p7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michael=20Wei=C3=9F?= <michael.weiss@aisec.fraunhofer.de>,
-	Harshal Gohel <hg@simonwunderlich.de>,
-	=?UTF-8?q?Johannes=20Wiesb=C3=B6ck?= <johannes.wiesboeck@aisec.fraunhofer.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Grygorii Strashko <grygorii.strashko@ti.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	John Crispin <john@phrozen.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Louis Peens <louis.peens@corigine.com>,
+	Marcin Wojtas <mw@semihalf.com>,
+	Mark Lee <Mark-MC.Lee@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Noam Dagan <ndagan@amazon.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Saeed Bishara <saeedb@amazon.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 18/84] rtnetlink: Allow deleting FDB entries in user namespace
-Date: Mon, 27 Oct 2025 19:36:07 +0100
-Message-ID: <20251027183439.302896918@linuxfoundation.org>
+Subject: [PATCH 6.6 19/84] net: Tree wide: Replace xdp_do_flush_map() with xdp_do_flush().
+Date: Mon, 27 Oct 2025 19:36:08 +0100
+Message-ID: <20251027183439.329650501@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -56,51 +85,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit bf29555f5bdc017bac22ca66fcb6c9f46ec8788f ]
+[ Upstream commit 7f04bd109d4c358a12b125bc79a6f0eac2e915ec ]
 
-Creating FDB entries is possible from a non-initial user namespace when
-having CAP_NET_ADMIN, yet, when deleting FDB entries, processes receive
-an EPERM because the capability is always checked against the initial
-user namespace. This restricts the FDB management from unprivileged
-containers.
+xdp_do_flush_map() is deprecated and new code should use xdp_do_flush()
+instead.
 
-Drop the netlink_capable check in rtnl_fdb_del as it was originally
-dropped in c5c351088ae7 and reintroduced in 1690be63a27b without
-intention.
+Replace xdp_do_flush_map() with xdp_do_flush().
 
-This patch was tested using a container on GyroidOS, where it was
-possible to delete FDB entries from an unprivileged user namespace and
-private network namespace.
-
-Fixes: 1690be63a27b ("bridge: Add vlan support to static neighbors")
-Reviewed-by: Michael Weiß <michael.weiss@aisec.fraunhofer.de>
-Tested-by: Harshal Gohel <hg@simonwunderlich.de>
-Signed-off-by: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20251015201548.319871-1-johannes.wiesboeck@aisec.fraunhofer.de
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Clark Wang <xiaoning.wang@nxp.com>
+Cc: Claudiu Manoil <claudiu.manoil@nxp.com>
+Cc: David Arinzon <darinzon@amazon.com>
+Cc: Edward Cree <ecree.xilinx@gmail.com>
+Cc: Felix Fietkau <nbd@nbd.name>
+Cc: Grygorii Strashko <grygorii.strashko@ti.com>
+Cc: Jassi Brar <jaswinder.singh@linaro.org>
+Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Cc: John Crispin <john@phrozen.org>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: Louis Peens <louis.peens@corigine.com>
+Cc: Marcin Wojtas <mw@semihalf.com>
+Cc: Mark Lee <Mark-MC.Lee@mediatek.com>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Noam Dagan <ndagan@amazon.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Saeed Bishara <saeedb@amazon.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Sean Wang <sean.wang@mediatek.com>
+Cc: Shay Agroskin <shayagr@amazon.com>
+Cc: Shenwei Wang <shenwei.wang@nxp.com>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: Wei Fang <wei.fang@nxp.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Arthur Kiyanovski <akiyano@amazon.com>
+Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://lore.kernel.org/r/20230908143215.869913-2-bigeasy@linutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 50bd33f6b392 ("net: enetc: fix the deadlock of enetc_mdio_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c     | 2 +-
+ drivers/net/ethernet/freescale/enetc/enetc.c     | 2 +-
+ drivers/net/ethernet/freescale/fec_main.c        | 2 +-
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c      | 2 +-
+ drivers/net/ethernet/intel/ice/ice_txrx_lib.c    | 2 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c    | 2 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c     | 2 +-
+ drivers/net/ethernet/marvell/mvneta.c            | 2 +-
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c  | 2 +-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c      | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 2 +-
+ drivers/net/ethernet/netronome/nfp/nfd3/xsk.c    | 2 +-
+ drivers/net/ethernet/sfc/efx_channels.c          | 2 +-
+ drivers/net/ethernet/sfc/siena/efx_channels.c    | 2 +-
+ drivers/net/ethernet/socionext/netsec.c          | 2 +-
+ drivers/net/ethernet/ti/cpsw_priv.c              | 2 +-
+ 16 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 26c520d1af6e6..1613563132035 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4383,9 +4383,6 @@ static int rtnl_fdb_del(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	int err;
- 	u16 vid;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 0d201a57d7e29..dd9c50d3ec0f0 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1310,7 +1310,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 	}
  
--	if (!netlink_capable(skb, CAP_NET_ADMIN))
--		return -EPERM;
--
- 	if (!del_bulk) {
- 		err = nlmsg_parse_deprecated(nlh, sizeof(*ndm), tb, NDA_MAX,
- 					     NULL, extack);
+ 	if (xdp_flags & ENA_XDP_REDIRECT)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	return work_done;
+ 
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 0c09d82dbf00d..49c61aa920b02 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1713,7 +1713,7 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 	rx_ring->stats.bytes += rx_byte_cnt;
+ 
+ 	if (xdp_redirect_frm_cnt)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_tx_frm_cnt)
+ 		enetc_update_tx_ring_tail(tx_ring);
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 8352d9b6469f2..64cd72c194783 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1904,7 +1904,7 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
+ 	rxq->bd.cur = bdp;
+ 
+ 	if (xdp_result & FEC_ENET_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	return pkt_received;
+ }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index 6a9b47b005d29..99604379c87b6 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -2398,7 +2398,7 @@ void i40e_update_rx_stats(struct i40e_ring *rx_ring,
+ void i40e_finalize_xdp_rx(struct i40e_ring *rx_ring, unsigned int xdp_res)
+ {
+ 	if (xdp_res & I40E_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_res & I40E_XDP_TX) {
+ 		struct i40e_ring *xdp_ring =
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx_lib.c b/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
+index c8322fb6f2b37..7e06373e14d98 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx_lib.c
+@@ -450,7 +450,7 @@ void ice_finalize_xdp_rx(struct ice_tx_ring *xdp_ring, unsigned int xdp_res,
+ 	struct ice_tx_buf *tx_buf = &xdp_ring->tx_buf[first_idx];
+ 
+ 	if (xdp_res & ICE_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_res & ICE_XDP_TX) {
+ 		if (static_branch_unlikely(&ice_xdp_locking_key))
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index f245f3df40fca..99876b765b08b 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -2421,7 +2421,7 @@ static int ixgbe_clean_rx_irq(struct ixgbe_q_vector *q_vector,
+ 	}
+ 
+ 	if (xdp_xmit & IXGBE_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_xmit & IXGBE_XDP_TX) {
+ 		struct ixgbe_ring *ring = ixgbe_determine_xdp_ring(adapter);
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+index 7ef82c30e8571..9fdd19acf2242 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+@@ -351,7 +351,7 @@ int ixgbe_clean_rx_irq_zc(struct ixgbe_q_vector *q_vector,
+ 	}
+ 
+ 	if (xdp_xmit & IXGBE_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_xmit & IXGBE_XDP_TX) {
+ 		struct ixgbe_ring *ring = ixgbe_determine_xdp_ring(adapter);
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index 165f76d1231c1..2941721b65152 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -2520,7 +2520,7 @@ static int mvneta_rx_swbm(struct napi_struct *napi,
+ 		mvneta_xdp_put_buff(pp, rxq, &xdp_buf, -1);
+ 
+ 	if (ps.xdp_redirect)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (ps.rx_packets)
+ 		mvneta_update_stats(pp, &ps);
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index fce57faf345ce..aabc39f7690f8 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -4055,7 +4055,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 	}
+ 
+ 	if (xdp_ret & MVPP2_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (ps.rx_packets) {
+ 		struct mvpp2_pcpu_stats *stats = this_cpu_ptr(port->stats);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index aefe2af6f01d4..c843e6531449b 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -2221,7 +2221,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
+ 	net_dim(&eth->rx_dim, dim_sample);
+ 
+ 	if (xdp_flush)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	return done;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+index b723ff5e5249c..13c7ed1bb37e9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+@@ -895,7 +895,7 @@ void mlx5e_xdp_rx_poll_complete(struct mlx5e_rq *rq)
+ 	mlx5e_xmit_xdp_doorbell(xdpsq);
+ 
+ 	if (test_bit(MLX5E_RQ_FLAG_XDP_REDIRECT, rq->flags)) {
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 		__clear_bit(MLX5E_RQ_FLAG_XDP_REDIRECT, rq->flags);
+ 	}
+ }
+diff --git a/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c b/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
+index 5d9db8c2a5b43..45be6954d5aae 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
++++ b/drivers/net/ethernet/netronome/nfp/nfd3/xsk.c
+@@ -256,7 +256,7 @@ nfp_nfd3_xsk_rx(struct nfp_net_rx_ring *rx_ring, int budget,
+ 	nfp_net_xsk_rx_ring_fill_freelist(r_vec->rx_ring);
+ 
+ 	if (xdp_redir)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (tx_ring->wr_ptr_add)
+ 		nfp_net_tx_xmit_more_flush(tx_ring);
+diff --git a/drivers/net/ethernet/sfc/efx_channels.c b/drivers/net/ethernet/sfc/efx_channels.c
+index 8d2d7ea2ebefc..c9e17a8208a90 100644
+--- a/drivers/net/ethernet/sfc/efx_channels.c
++++ b/drivers/net/ethernet/sfc/efx_channels.c
+@@ -1260,7 +1260,7 @@ static int efx_poll(struct napi_struct *napi, int budget)
+ 
+ 	spent = efx_process_channel(channel, budget);
+ 
+-	xdp_do_flush_map();
++	xdp_do_flush();
+ 
+ 	if (spent < budget) {
+ 		if (efx_channel_has_rx_queue(channel) &&
+diff --git a/drivers/net/ethernet/sfc/siena/efx_channels.c b/drivers/net/ethernet/sfc/siena/efx_channels.c
+index 1776f7f8a7a90..a7346e965bfe7 100644
+--- a/drivers/net/ethernet/sfc/siena/efx_channels.c
++++ b/drivers/net/ethernet/sfc/siena/efx_channels.c
+@@ -1285,7 +1285,7 @@ static int efx_poll(struct napi_struct *napi, int budget)
+ 
+ 	spent = efx_process_channel(channel, budget);
+ 
+-	xdp_do_flush_map();
++	xdp_do_flush();
+ 
+ 	if (spent < budget) {
+ 		if (efx_channel_has_rx_queue(channel) &&
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index f358ea0031936..b834b129639f0 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -780,7 +780,7 @@ static void netsec_finalize_xdp_rx(struct netsec_priv *priv, u32 xdp_res,
+ 				   u16 pkts)
+ {
+ 	if (xdp_res & NETSEC_XDP_REDIR)
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 
+ 	if (xdp_res & NETSEC_XDP_TX)
+ 		netsec_xdp_ring_tx_db(priv, pkts);
+diff --git a/drivers/net/ethernet/ti/cpsw_priv.c b/drivers/net/ethernet/ti/cpsw_priv.c
+index 0ec85635dfd60..764ed298b5708 100644
+--- a/drivers/net/ethernet/ti/cpsw_priv.c
++++ b/drivers/net/ethernet/ti/cpsw_priv.c
+@@ -1360,7 +1360,7 @@ int cpsw_run_xdp(struct cpsw_priv *priv, int ch, struct xdp_buff *xdp,
+ 		 *  particular hardware is sharing a common queue, so the
+ 		 *  incoming device might change per packet.
+ 		 */
+-		xdp_do_flush_map();
++		xdp_do_flush();
+ 		break;
+ 	default:
+ 		bpf_warn_invalid_xdp_action(ndev, prog, act);
 -- 
 2.51.0
 
