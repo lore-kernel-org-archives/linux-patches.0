@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FE131E107;
-	Mon, 27 Oct 2025 19:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D7831E107;
+	Mon, 27 Oct 2025 19:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592893; cv=none; b=elKIJVWtOkE9xeZ3xXJpKAbm2UnxB1dVDaRkpwLWb/ugNAv7IVtbtnFePhkX2chsxKW0o0TIZ6yrjHuO5hjCgFAHPClKlu/R/Wk5/R3mqU6XWqqh6La+5DK9jzvSfITVfxOsj6T4qkU67DwqtJZ9iQLywtkwjXcban2Io2MuWUI=
+	t=1761592896; cv=none; b=r0LeDuwnd/vx+BPB+jEss80f/Phl7QlUdwv9aCqLvklWptbipt0bu1hr/YIAy7VYKMrqEp1w6+EaZNL84SR3aDCJg7DdlZ47H5lAk3BFExkZWwoLKDx7Jdi5/yXdW19fyPSP+MvKHaYJHp74j7AghWvUxjmgGkY1yFGzwuTVXzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592893; c=relaxed/simple;
-	bh=FBTt/RY6MyGUCttokx96deFBvFrPhxbKX6PAKKWoO4s=;
+	s=arc-20240116; t=1761592896; c=relaxed/simple;
+	bh=UdUUICPW08+421B06NX5nQk2HphcQsCkfAg29zvECOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVBUxJeL4EgdVmvWQknozaISDyrS/zub1VVEWY1BxJfOZHcy7rLRdtPTdRkxwxMaT8SUsAyB87RORG1asDMvJuPLd3MgZJB65yhsFcQsX/lY8yRw91/VJvMiiET9xq9RbwMAo24UgHkTbUS4NCGj8gnLqoONe6IFnrSKTIxbZDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyDaEbpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2IEoeyIK9gj43N49lVpCwPv+TcY06htLx11Hx318U8OB2TEkrRpuLUv1omDIgHYptF0AqxwrHYoVPlv28p3150uU/zcfZM4xRWpgt6KKaDPXZmsC8Fo+KUsGKVrlvrLiPkMFFERBYkGBhPaFerLD9gW4aSi66wkYZ2x84kXxNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmE43Ket; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyDaEbpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E673C4CEF1;
-	Mon, 27 Oct 2025 19:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmE43Ket"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8B8C4CEF1;
+	Mon, 27 Oct 2025 19:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592893;
-	bh=FBTt/RY6MyGUCttokx96deFBvFrPhxbKX6PAKKWoO4s=;
+	s=korg; t=1761592896;
+	bh=UdUUICPW08+421B06NX5nQk2HphcQsCkfAg29zvECOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyDaEbpxbVTUGl/Uw6xH9zytmJaNdL1jebTw8u0Qd/zKM4+C8syNM1V5+Eeh76E/B
-	 y6z21HotT8gQznFyb0cHkqPxyCaDxlyQMcYXwpCgiaLFXJ2JtoGSEfrPz5/Ok5NTQf
-	 wdLpHRsMvDmUkfpHKcR+G5Oeuh+hvOKqleSL3gko=
+	b=qmE43KetMbfXhv6u19m4zcmum4BYPmZytUmSKFd/T63dgo1HXFXvdmFygk78MmmiV
+	 eeAN1guHj18OaujB20O5QOsOpW29s7qEASPaZmf7iHgEkgXXh8CfJ6nm1HjNzYlC1C
+	 GHO/+FEuOFEqzJAbCwSy9Wtzeq4ZCzMnIUYkEAeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 052/117] Revert "cpuidle: menu: Avoid discarding useful information"
-Date: Mon, 27 Oct 2025 19:36:18 +0100
-Message-ID: <20251027183455.416267806@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Hao Ge <gehao@kylinos.cn>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.12 053/117] slab: Avoid race on slab->obj_exts in alloc_slab_obj_exts
+Date: Mon, 27 Oct 2025 19:36:19 +0100
+Message-ID: <20251027183455.445639400@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -50,78 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
+commit 6ed8bfd24ce1cb31742b09a3eb557cd008533eec upstream.
 
-It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
-useful information") led to a performance regression on Intel Jasper Lake
-systems because it reduced the time spent by CPUs in idle state C7 which
-is correlated to the maximum frequency the CPUs can get to because of an
-average running power limit [1].
+If two competing threads enter alloc_slab_obj_exts() and one of them
+fails to allocate the object extension vector, it might override the
+valid slab->obj_exts allocated by the other thread with
+OBJEXTS_ALLOC_FAIL. This will cause the thread that lost this race and
+expects a valid pointer to dereference a NULL pointer later on.
 
-Before that commit, get_typical_interval() would have returned UINT_MAX
-whenever it had been unable to make a high-confidence prediction which
-had led to selecting the deepest available idle state too often and
-both power and performance had been inadequate as a result of that on
-some systems.  However, this had not been a problem on systems with
-relatively aggressive average running power limits, like the Jasper Lake
-systems in question, because on those systems it was compensated by the
-ability to run CPUs faster.
+Update slab->obj_exts atomically using cmpxchg() to avoid
+slab->obj_exts overrides by racing threads.
 
-It was addressed by causing get_typical_interval() to return a number
-based on the recent idle duration information available to it even if it
-could not make a high-confidence prediction, but that clearly did not
-take the possible correlation between idle power and available CPU
-capacity into account.
+Thanks for Vlastimil and Suren's help with debugging.
 
-For this reason, revert most of the changes made by commit 85975daeaa4d,
-except for one cosmetic cleanup, and add a comment explaining the
-rationale for returning UINT_MAX from get_typical_interval() when it
-is unable to make a high-confidence prediction.
-
-Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
-Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
-Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
+Fixes: f7381b911640 ("slab: mark slab->obj_exts allocation failures unconditionally")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20251021010353.1187193-1-hao.ge@linux.dev
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ mm/slub.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -199,20 +199,17 @@ again:
- 	 *
- 	 * This can deal with workloads that have long pauses interspersed
- 	 * with sporadic activity with a bunch of short pauses.
-+	 *
-+	 * However, if the number of remaining samples is too small to exclude
-+	 * any more outliers, allow the deepest available idle state to be
-+	 * selected because there are systems where the time spent by CPUs in
-+	 * deep idle states is correlated to the maximum frequency the CPUs
-+	 * can get to.  On those systems, shallow idle states should be avoided
-+	 * unless there is a clear indication that the given CPU is most likley
-+	 * going to be woken up shortly.
- 	 */
--	if (divisor * 4 <= INTERVALS * 3) {
--		/*
--		 * If there are sufficiently many data points still under
--		 * consideration after the outliers have been eliminated,
--		 * returning without a prediction would be a mistake because it
--		 * is likely that the next interval will not exceed the current
--		 * maximum, so return the latter in that case.
--		 */
--		if (divisor >= INTERVALS / 2)
--			return max;
--
-+	if (divisor * 4 <= INTERVALS * 3)
- 		return UINT_MAX;
--	}
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1943,7 +1943,7 @@ static inline void mark_objexts_empty(st
  
- 	thresh = max - 1;
- 	goto again;
+ static inline void mark_failed_objexts_alloc(struct slab *slab)
+ {
+-	slab->obj_exts = OBJEXTS_ALLOC_FAIL;
++	cmpxchg(&slab->obj_exts, 0, OBJEXTS_ALLOC_FAIL);
+ }
+ 
+ static inline void handle_failed_objexts_alloc(unsigned long obj_exts,
+@@ -2008,6 +2008,7 @@ int alloc_slab_obj_exts(struct slab *sla
+ #ifdef CONFIG_MEMCG
+ 	new_exts |= MEMCG_DATA_OBJEXTS;
+ #endif
++retry:
+ 	old_exts = READ_ONCE(slab->obj_exts);
+ 	handle_failed_objexts_alloc(old_exts, vec, objects);
+ 	if (new_slab) {
+@@ -2017,8 +2018,7 @@ int alloc_slab_obj_exts(struct slab *sla
+ 		 * be simply assigned.
+ 		 */
+ 		slab->obj_exts = new_exts;
+-	} else if ((old_exts & ~OBJEXTS_FLAGS_MASK) ||
+-		   cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
++	} else if (old_exts & ~OBJEXTS_FLAGS_MASK) {
+ 		/*
+ 		 * If the slab is already in use, somebody can allocate and
+ 		 * assign slabobj_exts in parallel. In this case the existing
+@@ -2027,6 +2027,9 @@ int alloc_slab_obj_exts(struct slab *sla
+ 		mark_objexts_empty(vec);
+ 		kfree(vec);
+ 		return 0;
++	} else if (cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
++		/* Retry if a racing thread changed slab->obj_exts from under us. */
++		goto retry;
+ 	}
+ 
+ 	kmemleak_not_leak(vec);
 
 
