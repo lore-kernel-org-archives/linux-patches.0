@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CD0328B7A;
-	Mon, 27 Oct 2025 18:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B17332EB1;
+	Mon, 27 Oct 2025 18:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591580; cv=none; b=gTFLdsVleMIOFWc6Pt9GznZaCGbJguUNN8e8vzDk6bJHYO9jmEouqzXjcjhWVg7d25ZAc8Jg5iPVoxzCCpm5l9bRDfW58J9VA2R7u+4zskKmMpridhDERgas0ac9FQ3nnHQBBWE6TX1x4wpklcACHZ7MHv3QJFY7OS8QWyEehoU=
+	t=1761591582; cv=none; b=WFJK5IxnIgyJ4RsccnpEEauH/ytGhX/WFzRR+AdFmndDdUSpyVivXG0irSopq9J6bGIcg4iggjrYhLA8Vt7un9pfNRLzpwxE5T7vQLIpxypXjMGdB7qD1D2PmMRN8RHn+KEr2thL8QIFZ6nchqdUutXzT1UhLPCrIywksCPWqaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591580; c=relaxed/simple;
-	bh=/xmKzb9SnHLHQix9Vyi94XN5FxYsnuBF9+2FTbWZRT4=;
+	s=arc-20240116; t=1761591582; c=relaxed/simple;
+	bh=tUYJWDXToLCQhHqBrXrbXZ9ZLcAbyxvDP8Xr0R6lqBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9cTOEIm6NrfOpu6qh6hfhpbjWGsJrrnBMZiqyYBiDO8Vz33E0vwzOBwfNkT0oykwofOc/fFZKm03c2BqG9BnG6gURn4KP+zUHVnEQiCAD48OPN+HoX94pssvoTVZCSFSmfcFo52SDjMdNaPGiBnHlP5STKOePcYY0I2QQq8FeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6izRlPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rZKbhR3dQUdZ3r3UGXy2ExsLJsQgIk/mETarJUD5K9k0RCfmDJvEf1GXWT30NC5D9VYbh3KhkojCoTP2TYzs8X1X4wgLSypOdvdz6X/C/ALqIl3FrrueyDf5WihdP7ZmMi8bfJ7KZ6CQXWMsZy3umajkb271MmzKaoJHEy8fK4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHy7gnbu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6izRlPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C21C4CEF1;
-	Mon, 27 Oct 2025 18:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHy7gnbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B420C4CEF1;
+	Mon, 27 Oct 2025 18:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591580;
-	bh=/xmKzb9SnHLHQix9Vyi94XN5FxYsnuBF9+2FTbWZRT4=;
+	s=korg; t=1761591582;
+	bh=tUYJWDXToLCQhHqBrXrbXZ9ZLcAbyxvDP8Xr0R6lqBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6izRlPEdByu+1Nm67DVichI7SOFA9+2Dd+4ISbs6E2vt6bnMadRVo8kuxvqQNhdY
-	 059Mg6VZ5j7UDhRFaY/+TZEFLNf0Xgl6/cjXSHJ05n0mvHwxyNyzMvRoh5GTNmyKmr
-	 JTgcT7LEt3TEvTWkzf+0fDSQ5ZJ/mzBK9AyU+2A4=
+	b=OHy7gnbuB/wn01DSahCD1Lz7XewvZhTc3Bk4JDdS3LjASu/cPWEYVvBLZIzB5uaVE
+	 PD/FcS6Ko92iaqcaTmq0DeGUhPqy959C70LRgwlVufrtYHt+lxgLSdCFvfscuoV4Vx
+	 2449pirZgD/cnLvFCTaQF1/bbPotXqmsIFkZdP94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	I Viswanath <viswanathiyyappan@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Khalid Aziz <khalid@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 251/332] net: usb: lan78xx: fix use of improperly initialized dev->chipid in lan78xx_reset
-Date: Mon, 27 Oct 2025 19:35:04 +0100
-Message-ID: <20251027183531.467963128@linuxfoundation.org>
+Subject: [PATCH 5.10 252/332] drm/amd/powerplay: Fix CIK shutdown temperature
+Date: Mon, 27 Oct 2025 19:35:05 +0100
+Message-ID: <20251027183531.496724447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -47,66 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: I Viswanath <viswanathiyyappan@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 8d93ff40d49d70e05c82a74beae31f883fe0eaf8 ]
+[ Upstream commit 6917112af2ba36c5f19075eb9f2933ffd07e55bf ]
 
-dev->chipid is used in lan78xx_init_mac_address before it's initialized:
+Remove extra multiplication.
 
-lan78xx_reset() {
-    lan78xx_init_mac_address()
-        lan78xx_read_eeprom()
-            lan78xx_read_raw_eeprom() <- dev->chipid is used here
+CIK GPUs such as Hawaii appear to use PP_TABLE_V0 in which case
+the shutdown temperature is hardcoded in smu7_init_dpm_defaults
+and is already multiplied by 1000. The value was mistakenly
+multiplied another time by smu7_get_thermal_temperature_range.
 
-    dev->chipid = ... <- dev->chipid is initialized correctly here
-}
-
-Reorder initialization so that dev->chipid is set before calling
-lan78xx_init_mac_address().
-
-Fixes: a0db7d10b76e ("lan78xx: Add to handle mux control per chip id")
-Signed-off-by: I Viswanath <viswanathiyyappan@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Link: https://patch.msgid.link/20251013181648.35153-1-viswanathiyyappan@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4ba082572a42 ("drm/amd/powerplay: export the thermal ranges of VI asics (V2)")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1676
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index c3aa3f75ab914..fd5fa64cbe932 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -2673,10 +2673,6 @@ static int lan78xx_reset(struct lan78xx_net *dev)
- 		}
- 	} while (buf & HW_CFG_LRST_);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+index 3673a9e7ba449..e2816c88cfe52 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
+@@ -4982,8 +4982,7 @@ static int smu7_get_thermal_temperature_range(struct pp_hwmgr *hwmgr,
+ 		thermal_data->max = table_info->cac_dtp_table->usSoftwareShutdownTemp *
+ 			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
+ 	else if (hwmgr->pp_table_version == PP_TABLE_V0)
+-		thermal_data->max = data->thermal_temp_setting.temperature_shutdown *
+-			PP_TEMPERATURE_UNITS_PER_CENTIGRADES;
++		thermal_data->max = data->thermal_temp_setting.temperature_shutdown;
  
--	ret = lan78xx_init_mac_address(dev);
--	if (ret < 0)
--		return ret;
--
- 	/* save DEVID for later usage */
- 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
- 	if (ret < 0)
-@@ -2685,6 +2681,10 @@ static int lan78xx_reset(struct lan78xx_net *dev)
- 	dev->chipid = (buf & ID_REV_CHIP_ID_MASK_) >> 16;
- 	dev->chiprev = buf & ID_REV_CHIP_REV_MASK_;
- 
-+	ret = lan78xx_init_mac_address(dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	/* Respond to the IN token with a NAK */
- 	ret = lan78xx_read_reg(dev, USB_CFG0, &buf);
- 	if (ret < 0)
+ 	return 0;
+ }
 -- 
 2.51.0
 
