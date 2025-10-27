@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1D0302CB9;
-	Mon, 27 Oct 2025 18:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACCB3128D0;
+	Mon, 27 Oct 2025 18:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591533; cv=none; b=TfozYl+3kxyOcYseCcqyR1qdhro1HghqP55KVxzUVk66FmeF0qRSUxkKY5nvUZmqFKJI2yFDzG6rZhh32Xe2c5DNP1nl7NutEDjh6wj7FxhTHoJYmrpeWuOPllqcwUIPwY82b11LZrig/GD+eBqH0x7Lw5f/Y6BoWR3pIu7aWM4=
+	t=1761591536; cv=none; b=Em5REj5xzt606qiD/LHE0sM+i6DkHC795BbgeGI3IELMlf+VnbSRII6qiJuA7I3sOHmAOB8stuOzqtL+Rxjs269GvTVdS0Sj9agiYVz9XL3lsKMiTt70/frIuzUXIP4dSOh+6zTDTRK3OpOqaXCoyzo2g6cvGfc/Jpg4FL7JBNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591533; c=relaxed/simple;
-	bh=wSxgOr+pVV6j10tj7KxKvxGbNy+rvAABnLFB7D3XYzY=;
+	s=arc-20240116; t=1761591536; c=relaxed/simple;
+	bh=xXgbunHq1dE3GmsRYIlVaDQMrlJr7WKXn0dXCAu/vdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIXzjkkFMFktxsOG4iPnJQc9HPb2GyJxZqzqJ8R/YcLZazy0a+x2mlkUKAcoBrL9N1YB9tM3MFsBcYb4HzM1K5MglJN3+a2zZb3babYjH9lR0dm9xAVZJb0JVSqHjeUb0CrjYG21nJC+PfMreL9Ph6DtwJHr9wQkBFOwHIkNpxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jnOSP1W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLK3joxpaqV/q4ENJu4i2dRoZtX6t2H9Hq2KiYgo1E1CdjR2qOYDbDuAzsgge2dNTGrWEFCyqZtWzQ5OaLDwt89QVPLinLpop0kwqe5LrtzxssKla5MY8WRsF3imYjxbGF14E6pPAAK1rT7kPl2hxbxcn1wNG8W5fTTwNPIk8xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpthWa6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jnOSP1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5DEC4CEF1;
-	Mon, 27 Oct 2025 18:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpthWa6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949D1C4CEF1;
+	Mon, 27 Oct 2025 18:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591533;
-	bh=wSxgOr+pVV6j10tj7KxKvxGbNy+rvAABnLFB7D3XYzY=;
+	s=korg; t=1761591535;
+	bh=xXgbunHq1dE3GmsRYIlVaDQMrlJr7WKXn0dXCAu/vdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jnOSP1WeEyzEN1nb22Nwn6nP1CyzWb/mOohQJx5CICYypzqQIGnYyOgltC2EeNmi
-	 KufbXx62aawLt+jvPlEOF0CscnRkCzboV3NWwWaTJCQpfw3Rql88i6PgbZyecUS6IZ
-	 2wXUHvK/2dy4Lo6Cg3d2VrilEzpW1Vz8iLbXbOHM=
+	b=mpthWa6AiyaeVng9GxHaBTkRlla8aDk0pEkREvPbdlfABcK+e49jAW/qY9q8eg/kW
+	 TjRdM0+dq5d6d0V2i4rnllgZF7Jy4YHgcIlu0ODYaGGzJVusigN+YLBh756edD86aT
+	 3C8UOTedGRh++v22VEs+CL/d1LsvGy9JcRha+eB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 185/332] KVM: x86: Dont (re)check L1 intercepts when completing userspace I/O
-Date: Mon, 27 Oct 2025 19:33:58 +0100
-Message-ID: <20251027183529.555227413@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 227/332] jbd2: ensure that all ongoing I/O complete before freeing blocks
+Date: Mon, 27 Oct 2025 19:34:40 +0100
+Message-ID: <20251027183530.790685373@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,142 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit e750f85391286a4c8100275516973324b621a269 ]
+commit 3c652c3a71de1d30d72dc82c3bead8deb48eb749 upstream.
 
-When completing emulation of instruction that generated a userspace exit
-for I/O, don't recheck L1 intercepts as KVM has already finished that
-phase of instruction execution, i.e. has already committed to allowing L2
-to perform I/O.  If L1 (or host userspace) modifies the I/O permission
-bitmaps during the exit to userspace,  KVM will treat the access as being
-intercepted despite already having emulated the I/O access.
+When releasing file system metadata blocks in jbd2_journal_forget(), if
+this buffer has not yet been checkpointed, it may have already been
+written back, currently be in the process of being written back, or has
+not yet written back.  jbd2_journal_forget() calls
+jbd2_journal_try_remove_checkpoint() to check the buffer's status and
+add it to the current transaction if it has not been written back. This
+buffer can only be reallocated after the transaction is committed.
 
-Pivot on EMULTYPE_NO_DECODE to detect that KVM is completing emulation.
-Of the three users of EMULTYPE_NO_DECODE, only complete_emulated_io() (the
-intended "recipient") can reach the code in question.  gp_interception()'s
-use is mutually exclusive with is_guest_mode(), and
-complete_emulated_insn_gp() unconditionally pairs EMULTYPE_NO_DECODE with
-EMULTYPE_SKIP.
+jbd2_journal_try_remove_checkpoint() attempts to lock the buffer and
+check its dirty status while holding the buffer lock. If the buffer has
+already been written back, everything proceeds normally. However, there
+are two issues. First, the function returns immediately if the buffer is
+locked by the write-back process. It does not wait for the write-back to
+complete. Consequently, until the current transaction is committed and
+the block is reallocated, there is no guarantee that the I/O will
+complete. This means that ongoing I/O could write stale metadata to the
+newly allocated block, potentially corrupting data. Second, the function
+unlocks the buffer as soon as it detects that the buffer is still dirty.
+If a concurrent write-back occurs immediately after this unlocking and
+before clear_buffer_dirty() is called in jbd2_journal_forget(), data
+corruption can theoretically still occur.
 
-The bad behavior was detected by a syzkaller program that toggles port I/O
-interception during the userspace I/O exit, ultimately resulting in a WARN
-on vcpu->arch.pio.count being non-zero due to KVM no completing emulation
-of the I/O instruction.
+Although these two issues are unlikely to occur in practice since the
+undergoing metadata writeback I/O does not take this long to complete,
+it's better to explicitly ensure that all ongoing I/O operations are
+completed.
 
-  WARNING: CPU: 23 PID: 1083 at arch/x86/kvm/x86.c:8039 emulator_pio_in_out+0x154/0x170 [kvm]
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 23 UID: 1000 PID: 1083 Comm: repro Not tainted 6.16.0-rc5-c1610d2d66b1-next-vm #74 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:emulator_pio_in_out+0x154/0x170 [kvm]
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   kvm_fast_pio+0xd6/0x1d0 [kvm]
-   vmx_handle_exit+0x149/0x610 [kvm_intel]
-   kvm_arch_vcpu_ioctl_run+0xda8/0x1ac0 [kvm]
-   kvm_vcpu_ioctl+0x244/0x8c0 [kvm]
-   __x64_sys_ioctl+0x8a/0xd0
-   do_syscall_64+0x5d/0xc60
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-
-Reported-by: syzbot+cc2032ba16cc2018ca25@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68790db4.a00a0220.3af5df.0020.GAE@google.com
-Fixes: 8a76d7f25f8f ("KVM: x86: Add x86 callback for intercept check")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20250715190638.1899116-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ is_guest_mode() was open coded ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 597599268e3b ("jbd2: discard dirty data when forgetting an un-journalled buffer")
+Cc: stable@kernel.org
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250916093337.3161016-2-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c     |   11 ++++-------
- arch/x86/kvm/kvm_emulate.h |    2 +-
- arch/x86/kvm/x86.c         |    9 ++++++++-
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ fs/jbd2/transaction.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -5544,12 +5544,11 @@ void init_decode_cache(struct x86_emulat
- 	ctxt->mem_read.end = 0;
- }
+--- a/fs/jbd2/transaction.c
++++ b/fs/jbd2/transaction.c
+@@ -1642,6 +1642,7 @@ int jbd2_journal_forget(handle_t *handle
+ 	int drop_reserve = 0;
+ 	int err = 0;
+ 	int was_modified = 0;
++	int wait_for_writeback = 0;
  
--int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
-+int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts)
- {
- 	const struct x86_emulate_ops *ops = ctxt->ops;
- 	int rc = X86EMUL_CONTINUE;
- 	int saved_dst_type = ctxt->dst.type;
--	unsigned emul_flags;
- 
- 	ctxt->mem_read.pos = 0;
- 
-@@ -5563,8 +5562,6 @@ int x86_emulate_insn(struct x86_emulate_
- 		rc = emulate_ud(ctxt);
- 		goto done;
- 	}
--
--	emul_flags = ctxt->ops->get_hflags(ctxt);
- 	if (unlikely(ctxt->d &
- 		     (No64|Undefined|Sse|Mmx|Intercept|CheckPerm|Priv|Prot|String))) {
- 		if ((ctxt->mode == X86EMUL_MODE_PROT64 && (ctxt->d & No64)) ||
-@@ -5598,7 +5595,7 @@ int x86_emulate_insn(struct x86_emulate_
- 				fetch_possible_mmx_operand(&ctxt->dst);
+ 	if (is_handle_aborted(handle))
+ 		return -EROFS;
+@@ -1766,18 +1767,22 @@ int jbd2_journal_forget(handle_t *handle
  		}
  
--		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && ctxt->intercept) {
-+		if (unlikely(check_intercepts) && ctxt->intercept) {
- 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 						      X86_ICPT_PRE_EXCEPT);
- 			if (rc != X86EMUL_CONTINUE)
-@@ -5627,7 +5624,7 @@ int x86_emulate_insn(struct x86_emulate_
- 				goto done;
- 		}
- 
--		if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
-+		if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
- 			rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 						      X86_ICPT_POST_EXCEPT);
- 			if (rc != X86EMUL_CONTINUE)
-@@ -5681,7 +5678,7 @@ int x86_emulate_insn(struct x86_emulate_
- 
- special_insn:
- 
--	if (unlikely(emul_flags & X86EMUL_GUEST_MASK) && (ctxt->d & Intercept)) {
-+	if (unlikely(check_intercepts) && (ctxt->d & Intercept)) {
- 		rc = emulator_check_intercept(ctxt, ctxt->intercept,
- 					      X86_ICPT_POST_MEMACCESS);
- 		if (rc != X86EMUL_CONTINUE)
---- a/arch/x86/kvm/kvm_emulate.h
-+++ b/arch/x86/kvm/kvm_emulate.h
-@@ -499,7 +499,7 @@ bool x86_page_table_writing_insn(struct
- #define EMULATION_RESTART 1
- #define EMULATION_INTERCEPTED 2
- void init_decode_cache(struct x86_emulate_ctxt *ctxt);
--int x86_emulate_insn(struct x86_emulate_ctxt *ctxt);
-+int x86_emulate_insn(struct x86_emulate_ctxt *ctxt, bool check_intercepts);
- int emulator_task_switch(struct x86_emulate_ctxt *ctxt,
- 			 u16 tss_selector, int idt_index, int reason,
- 			 bool has_error_code, u32 error_code);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -7668,7 +7668,14 @@ restart:
- 		ctxt->exception.address = 0;
+ 		/*
+-		 * The buffer is still not written to disk, we should
+-		 * attach this buffer to current transaction so that the
+-		 * buffer can be checkpointed only after the current
+-		 * transaction commits.
++		 * The buffer has not yet been written to disk. We should
++		 * either clear the buffer or ensure that the ongoing I/O
++		 * is completed, and attach this buffer to current
++		 * transaction so that the buffer can be checkpointed only
++		 * after the current transaction commits.
+ 		 */
+ 		clear_buffer_dirty(bh);
++		wait_for_writeback = 1;
+ 		__jbd2_journal_file_buffer(jh, transaction, BJ_Forget);
+ 		spin_unlock(&journal->j_list_lock);
  	}
- 
--	r = x86_emulate_insn(ctxt);
-+	/*
-+	 * Check L1's instruction intercepts when emulating instructions for
-+	 * L2, unless KVM is re-emulating a previously decoded instruction,
-+	 * e.g. to complete userspace I/O, in which case KVM has already
-+	 * checked the intercepts.
-+	 */
-+	r = x86_emulate_insn(ctxt, is_guest_mode(vcpu) &&
-+				   !(emulation_type & EMULTYPE_NO_DECODE));
- 
- 	if (r == EMULATION_INTERCEPTED)
- 		return 1;
+ drop:
+ 	__brelse(bh);
+ 	spin_unlock(&jh->b_state_lock);
++	if (wait_for_writeback)
++		wait_on_buffer(bh);
+ 	jbd2_journal_put_journal_head(jh);
+ 	if (drop_reserve) {
+ 		/* no need to reserve log space for this block -bzzz */
 
 
