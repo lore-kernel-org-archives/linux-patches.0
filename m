@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AC927FD62;
-	Mon, 27 Oct 2025 19:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11782D5C95;
+	Mon, 27 Oct 2025 19:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592999; cv=none; b=GcMLgMihHXuOX4USc5QaHK81vK5CSsOud3W4hGYMUI4/PS2R+vnYk1Rc/tcAuxaCjse+lj8n6/Fhk1XapqJYmEdTDouHZAvQGk60niuJS+GyhHiOEQOVm8TFS9L6tuk6ICITyHBiN5+d6ak1OAbNbVpdzCpUZDzWyaySXh91JRc=
+	t=1761593002; cv=none; b=gJQygjVDpzgy+ns/Do590PZT+lTbMkeLIRPiwqtka+eUdJZ2cd/6hGJ7XrDTB/b4PXmAKm6OqGasM9DpGP7uDDiN5HgIFA6+KHpAoZW3WnDunZIXzH6VbyiNAYSTLhf5yedddaqoljttMRZojOnAjpbMQv6mQzWK1JOWybvtPgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592999; c=relaxed/simple;
-	bh=efV2isxBffESxRyiJAP3FMGnhHIf4ks4vDMLPsaYuyk=;
+	s=arc-20240116; t=1761593002; c=relaxed/simple;
+	bh=t2j33ZKLQnfqdgSAsj2+IRWAXm60GJf94JqR85E8jus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQL0B6ve4OPNGW1iZnWP0Tuj4FVHVHMHba78OlQJVXVPi5bnbdgJIO7LFh1xAqXQJrUBVu3I6g1sluZQJjs6pyGyhxGP0Kf9zenrld/UsF9aUnUSKk2nmxn9gLGof316ccU37aQgYLfwCKH9g5I8lXNJx47t6+qIsQAexXQpwFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3wtiwZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=isSbcoI9xuA0UFF8d8BeWE6WW9PsE3T7dz39iQw6LHQQQnm8cLjwd8fCqHN+rYn7c3vC0Pxfq34dSxhgCsEAvTV9VzPtdKf+H5eaozDklaH1uJUo35zGwB25rZCIDF2/1Vz9JPCePOL1NC6CAyDulAPWfoOCH0HbQ5uQAE4jV/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUiI27Xn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3wtiwZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC3EC4CEF1;
-	Mon, 27 Oct 2025 19:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUiI27Xn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8014EC4CEF1;
+	Mon, 27 Oct 2025 19:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592999;
-	bh=efV2isxBffESxRyiJAP3FMGnhHIf4ks4vDMLPsaYuyk=;
+	s=korg; t=1761593001;
+	bh=t2j33ZKLQnfqdgSAsj2+IRWAXm60GJf94JqR85E8jus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3wtiwZLX2Al6iz+V8zq+odG9MzxjsQ5zR6VzSjiNDlSzHQigquzFRaGp0LRduEDM
-	 Yqc+zS9E4RkM8vYiaiwDsmN/M7232Q0mzfF58TXpfUW0psm/OOKIyYRBVzHvynkkOy
-	 gJyCfituU2qkya/hicGEJRT5a+8/D8FFfGSYffXo=
+	b=zUiI27XnwvRS9D+HG1PIdc5e4r4gAOc6DKnzvt5aTHftTAZ36q1gFGlIpBnfrC+Nr
+	 JbDovU2Fu7dcjk4cayu/kMrdAiHnfDbWKMvDTS2cUwQ5H3Zrcxg+60/tNVT8NWgt0o
+	 ERTIuulR+QqiFU2aIFqV74QlR8tA43Pnay63muo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Guido Berhoerster <guido+debian@berhoerster.name>
-Subject: [PATCH 6.12 092/117] Bluetooth: btintel: Add DSBR support for BlazarIW, BlazarU and GaP
-Date: Mon, 27 Oct 2025 19:36:58 +0100
-Message-ID: <20251027183456.508886839@linuxfoundation.org>
+	Suma Hegde <suma.hegde@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 093/117] platform/x86/amd/hsmp: Ensure sock->metric_tbl_addr is non-NULL
+Date: Mon, 27 Oct 2025 19:36:59 +0100
+Message-ID: <20251027183456.535590555@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -46,85 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Suma Hegde <suma.hegde@amd.com>
 
-commit d88a8bb8bbbec9d57b84232a2d6f8dab84221959 upstream.
+commit 2c78fb287e1f430b929f2e49786518350d15605c upstream.
 
-Add DSBR support for BlazarIW, BlazarU and Gale Peak2 cores.
+If metric table address is not allocated, accessing metrics_bin will
+result in a NULL pointer dereference, so add a check.
 
-Refer commit eb9e749c0182 ("Bluetooth: btintel: Allow configuring drive
-strength of BRI") for details about DSBR.
-
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Salvatore Bonaccorso <carnil@debian.org>
-Cc: Guido Berhoerster <guido+debian@berhoerster.name>
+Fixes: 5150542b8ec5 ("platform/x86/amd/hsmp: add support for metrics tbl")
+Signed-off-by: Suma Hegde <suma.hegde@amd.com>
+Link: https://lore.kernel.org/r/20250807100637.952729-1-suma.hegde@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ Minor context change fixed. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel.c |   28 ++++++++++++++++++++--------
- drivers/bluetooth/btintel.h |    3 +++
- 2 files changed, 23 insertions(+), 8 deletions(-)
+ drivers/platform/x86/amd/hsmp.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -2734,20 +2734,32 @@ static int btintel_set_dsbr(struct hci_d
+--- a/drivers/platform/x86/amd/hsmp.c
++++ b/drivers/platform/x86/amd/hsmp.c
+@@ -569,6 +569,11 @@ static ssize_t hsmp_metric_tbl_read(stru
+ 	if (!sock)
+ 		return -EINVAL;
  
- 	struct btintel_dsbr_cmd cmd;
- 	struct sk_buff *skb;
-+	u32 dsbr, cnvi;
- 	u8 status;
--	u32 dsbr;
--	bool apply_dsbr;
- 	int err;
- 
--	/* DSBR command needs to be sent for BlazarI + B0 step product after
--	 * downloading IML image.
-+	cnvi = ver->cnvi_top & 0xfff;
-+	/* DSBR command needs to be sent for,
-+	 * 1. BlazarI or BlazarIW + B0 step product in IML image.
-+	 * 2. Gale Peak2 or BlazarU in OP image.
- 	 */
--	apply_dsbr = (ver->img_type == BTINTEL_IMG_IML &&
--		((ver->cnvi_top & 0xfff) == BTINTEL_CNVI_BLAZARI) &&
--		INTEL_CNVX_TOP_STEP(ver->cnvi_top) == 0x01);
- 
--	if (!apply_dsbr)
-+	switch (cnvi) {
-+	case BTINTEL_CNVI_BLAZARI:
-+	case BTINTEL_CNVI_BLAZARIW:
-+		if (ver->img_type == BTINTEL_IMG_IML &&
-+		    INTEL_CNVX_TOP_STEP(ver->cnvi_top) == 0x01)
-+			break;
- 		return 0;
-+	case BTINTEL_CNVI_GAP:
-+	case BTINTEL_CNVI_BLAZARU:
-+		if (ver->img_type == BTINTEL_IMG_OP &&
-+		    hdev->bus == HCI_USB)
-+			break;
-+		return 0;
-+	default:
-+		return 0;
++	if (!sock->metric_tbl_addr) {
++		dev_err(sock->dev, "Metrics table address not available\n");
++		return -ENOMEM;
 +	}
- 
- 	dsbr = 0;
- 	err = btintel_uefi_get_dsbr(&dsbr);
---- a/drivers/bluetooth/btintel.h
-+++ b/drivers/bluetooth/btintel.h
-@@ -53,6 +53,9 @@ struct intel_tlv {
- } __packed;
- 
- #define BTINTEL_CNVI_BLAZARI		0x900
-+#define BTINTEL_CNVI_BLAZARIW		0x901
-+#define BTINTEL_CNVI_GAP		0x910
-+#define BTINTEL_CNVI_BLAZARU		0x930
- 
- #define BTINTEL_IMG_BOOTLOADER		0x01	/* Bootloader image */
- #define BTINTEL_IMG_IML			0x02	/* Intermediate image */
++
+ 	/* Do not support lseek(), reads entire metric table */
+ 	if (count < bin_attr->size) {
+ 		dev_err(sock->dev, "Wrong buffer size\n");
 
 
