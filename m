@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1D5308F3A;
-	Mon, 27 Oct 2025 18:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD852D8DB9;
+	Mon, 27 Oct 2025 18:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590490; cv=none; b=nreW6n3thrlp/QL/uYLAmCSz8XqXVrIxyapQ2sV7Sd57jScv7Pw6xz8oQCDwIBHwptBbKckTCHvKu1AWjvUpGz6gQmC+6uhycIq0s2Xi2NtWMj6lzXcnwS0dUO4KKUVhiYMXMxb6vvOg6GTa0WbHCxvXdIeB+5aH3ie7hjX1CgQ=
+	t=1761590493; cv=none; b=GzgBp5bwe84K23OtQ7padeOZI9X4/vTpktEWj/tWrGiLcsul5/VHRD2w/BJCW+UMSXzgy1wi9m68h0sncctp4WkaDtP7HAeRA2PuLOrwk9eMLYZpnDZml+CCp5OB3i+5rqHUjXKGG/egkD50A1bpt3ILlTP/ZfF1b1/yT4J0c8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590490; c=relaxed/simple;
-	bh=fzLDV6wtIJBrgN66Y/tF6PaDTCdUZcHZH16aoRlQbI8=;
+	s=arc-20240116; t=1761590493; c=relaxed/simple;
+	bh=seFFerxcoom0Y6KfdtmHPoQI5GPMEyMOtgOc94sGdhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JELcb7kEwrUDuVkx9c6zVQKNQwRAkmMdNzzkzmhJXX4e+E6yTA5Xb3+8THc4LS30abB/S+waNQi3EUnPs0EVYUCOj3YAU/URd7NxuTTScIefpAacc6pFOEzRnYfgrybmxUAdOHp/W94NadSyAuY1HPb4AeYc2Jto2qa/JO3LwkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuJ1IOWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vDfvNZJKuc9LRoh38TPzzlaQ/Jrc09YWLbUMkAPQivArIByb4ehjYWIvWeQpdefB/oqhEst0AY6ftqhxakagfEFNVoDNDENfA3FEu0wdezbUef56GYMzFwYk2DlmEaXSwAKPgSgFAAF8RCwv8k+cspFktVYGIErcnAg5xyus+OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei9ukHuU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuJ1IOWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010D5C4CEF1;
-	Mon, 27 Oct 2025 18:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei9ukHuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BF8C4CEF1;
+	Mon, 27 Oct 2025 18:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590490;
-	bh=fzLDV6wtIJBrgN66Y/tF6PaDTCdUZcHZH16aoRlQbI8=;
+	s=korg; t=1761590493;
+	bh=seFFerxcoom0Y6KfdtmHPoQI5GPMEyMOtgOc94sGdhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuJ1IOWqDx20wLq4V5wyeV1hp4AcYcMv2K2pm1UqNhf90SVZ02BCRTMSuGLrPqyG8
-	 9bS5/yuS6wvMhlCEtgZ51Gv8zrGygofMILl/xqps5BxdygI2AoaKKcbPjgKBqUHgoe
-	 abgxvKcoZj7lyyZzH+QHgBEY9YPGyCVM0iuAihvs=
+	b=ei9ukHuUY29LZKnT3r/Si4XBh5Jvynqke/qpzngYjePpF66qq0zN9RtCSNWfzWFfR
+	 tRtod3C+Rtn/g3tRAj5BLP33xs4EECbMlxrd+P+NtaU8HZdf7mgsFchEOzDfIzIAoj
+	 CIpF4abHS3yxG7MslkT7Nph2iZmAAKGH27ELt4+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
+	Jeff Chen <jeff.chen_1@nxp.con>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/224] scsi: mpt3sas: Fix crash in transport port remove by using ioc_info()
-Date: Mon, 27 Oct 2025 19:33:30 +0100
-Message-ID: <20251027183510.719242403@linuxfoundation.org>
+Subject: [PATCH 5.4 038/224] wifi: mwifiex: send world regulatory domain to driver
+Date: Mon, 27 Oct 2025 19:33:04 +0100
+Message-ID: <20251027183510.024601470@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,88 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Stefan Kerkmann <s.kerkmann@pengutronix.de>
 
-[ Upstream commit 1703fe4f8ae50d1fb6449854e1fcaed1053e3a14 ]
+[ Upstream commit 56819d00bc2ebaa6308913c28680da5d896852b8 ]
 
-During mpt3sas_transport_port_remove(), messages were logged with
-dev_printk() against &mpt3sas_port->port->dev. At this point the SAS
-transport device may already be partially unregistered or freed, leading
-to a crash when accessing its struct device.
+The world regulatory domain is a restrictive subset of channel
+configurations which allows legal operation of the adapter all over the
+world. Changing to this domain should not be prevented.
 
-Using ioc_info(), which logs via the PCI device (ioc->pdev->dev),
-guaranteed to remain valid until driver removal.
-
-[83428.295776] Oops: general protection fault, probably for non-canonical address 0x6f702f323a33312d: 0000 [#1] SMP NOPTI
-[83428.295785] CPU: 145 UID: 0 PID: 113296 Comm: rmmod Kdump: loaded Tainted: G           OE       6.16.0-rc1+ #1 PREEMPT(voluntary)
-[83428.295792] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[83428.295795] Hardware name: Dell Inc. Precision 7875 Tower/, BIOS 89.1.67 02/23/2024
-[83428.295799] RIP: 0010:__dev_printk+0x1f/0x70
-[83428.295805] Code: 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 49 89 d1 48 85 f6 74 52 4c 8b 46 50 4d 85 c0 74 1f 48 8b 46 68 48 85 c0 74 22 <48> 8b 08 0f b6 7f 01 48 c7 c2 db e8 42 ad 83 ef 30 e9 7b f8 ff ff
-[83428.295813] RSP: 0018:ff85aeafc3137bb0 EFLAGS: 00010206
-[83428.295817] RAX: 6f702f323a33312d RBX: ff4290ee81292860 RCX: 5000cca25103be32
-[83428.295820] RDX: ff85aeafc3137bb8 RSI: ff4290eeb1966c00 RDI: ffffffffc1560845
-[83428.295823] RBP: ff85aeafc3137c18 R08: 74726f702f303a33 R09: ff85aeafc3137bb8
-[83428.295826] R10: ff85aeafc3137b18 R11: ff4290f5bd60fe68 R12: ff4290ee81290000
-[83428.295830] R13: ff4290ee6e345de0 R14: ff4290ee81290000 R15: ff4290ee6e345e30
-[83428.295833] FS:  00007fd9472a6740(0000) GS:ff4290f5ce96b000(0000) knlGS:0000000000000000
-[83428.295837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[83428.295840] CR2: 00007f242b4db238 CR3: 00000002372b8006 CR4: 0000000000771ef0
-[83428.295844] PKRU: 55555554
-[83428.295846] Call Trace:
-[83428.295848]  <TASK>
-[83428.295850]  _dev_printk+0x5c/0x80
-[83428.295857]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.295863]  mpt3sas_transport_port_remove+0x1c7/0x420 [mpt3sas]
-[83428.295882]  _scsih_remove_device+0x21b/0x280 [mpt3sas]
-[83428.295894]  ? _scsih_expander_node_remove+0x108/0x140 [mpt3sas]
-[83428.295906]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.295910]  mpt3sas_device_remove_by_sas_address.part.0+0x8f/0x110 [mpt3sas]
-[83428.295921]  _scsih_expander_node_remove+0x129/0x140 [mpt3sas]
-[83428.295933]  _scsih_expander_node_remove+0x6a/0x140 [mpt3sas]
-[83428.295944]  scsih_remove+0x3f0/0x4a0 [mpt3sas]
-[83428.295957]  pci_device_remove+0x3b/0xb0
-[83428.295962]  device_release_driver_internal+0x193/0x200
-[83428.295968]  driver_detach+0x44/0x90
-[83428.295971]  bus_remove_driver+0x69/0xf0
-[83428.295975]  pci_unregister_driver+0x2a/0xb0
-[83428.295979]  _mpt3sas_exit+0x1f/0x300 [mpt3sas]
-[83428.295991]  __do_sys_delete_module.constprop.0+0x174/0x310
-[83428.295997]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296000]  ? __x64_sys_getdents64+0x9a/0x110
-[83428.296005]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296009]  ? syscall_trace_enter+0xf6/0x1b0
-[83428.296014]  do_syscall_64+0x7b/0x2c0
-[83428.296019]  ? srso_alias_return_thunk+0x5/0xfbef5
-[83428.296023]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: dd4a9ac05c8e1 ("mwifiex: send regulatory domain info to firmware only if alpha2 changed") changed
+Signed-off-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.con>
+Link: https://patch.msgid.link/20250804-fix-mwifiex-regulatory-domain-v1-1-e4715c770c4d@pengutronix.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index ebe78ec42da8b..a355471cf079b 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -812,11 +812,9 @@ mpt3sas_transport_port_remove(struct MPT3SAS_ADAPTER *ioc, u64 sas_address,
- 	list_for_each_entry_safe(mpt3sas_phy, next_phy,
- 	    &mpt3sas_port->phy_list, port_siblings) {
- 		if ((ioc->logging_level & MPT_DEBUG_TRANSPORT))
--			dev_printk(KERN_INFO, &mpt3sas_port->port->dev,
--			    "remove: sas_addr(0x%016llx), phy(%d)\n",
--			    (unsigned long long)
--			    mpt3sas_port->remote_identify.sas_address,
--			    mpt3sas_phy->phy_id);
-+			ioc_info(ioc, "remove: sas_addr(0x%016llx), phy(%d)\n",
-+				(unsigned long long) mpt3sas_port->remote_identify.sas_address,
-+					mpt3sas_phy->phy_id);
- 		mpt3sas_phy->phy_belongs_to_port = 0;
- 		if (!ioc->remove_host)
- 			sas_port_delete_phy(mpt3sas_port->port,
+diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+index 40e10f6e3dbf8..9f9826b94ad40 100644
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -667,10 +667,9 @@ static void mwifiex_reg_notifier(struct wiphy *wiphy,
+ 		return;
+ 	}
+ 
+-	/* Don't send world or same regdom info to firmware */
+-	if (strncmp(request->alpha2, "00", 2) &&
+-	    strncmp(request->alpha2, adapter->country_code,
+-		    sizeof(request->alpha2))) {
++	/* Don't send same regdom info to firmware */
++	if (strncmp(request->alpha2, adapter->country_code,
++		    sizeof(request->alpha2)) != 0) {
+ 		memcpy(adapter->country_code, request->alpha2,
+ 		       sizeof(request->alpha2));
+ 		mwifiex_send_domain_info_cmd_fw(wiphy);
 -- 
 2.51.0
 
