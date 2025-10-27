@@ -1,38 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3371931B819;
-	Mon, 27 Oct 2025 18:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF4631B83D;
+	Mon, 27 Oct 2025 18:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591268; cv=none; b=uiCn+2QGJpzPOb5gqGGQ1U5YYmzXmKM0U5WTm1vtqR1AVe1LseKh2DskCYDDc+ogEua2D3t4w7SxFkY9lLjG6gsDyFrJL/Lvy4IyxikbJSLMt6n04azeTusbIkh5/l4a9cM4dLT9cV5+anf748KRP3Yj9i+B5+b5XEYHYBlapy0=
+	t=1761591271; cv=none; b=nDOF7c3OhPuy9ktQxXF1zGU7952CgeaGWKp/SWIMIlH6CtwtokVqbzz9SCzGn5em2MXdEyKud5biBX3nrQupFv6ArzmPw+KRkm2rSyvEoQO8yFcC6XLFNB5nAxzqJFsZ2MkbGI+9aSSyq02qWdtCH1rR1ikPbTx8MDpYvnQFuoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591268; c=relaxed/simple;
-	bh=EkGITUN8jU8mTOBbR2V/qK8qFYRlkOzvwlBNcSbCuVc=;
+	s=arc-20240116; t=1761591271; c=relaxed/simple;
+	bh=6cZMDV+BjGQnoIwQOHca0ck+cTfgmR37j/0hHNPGaDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iag8O6JaO/IHU89/puph6DBXayg6zChvZGsK1Ipg6quLrqd/jEe78hhSQEfY0fVtdHmJ82OL8USnnYaMAVtoQ9vmbx0dC7DuJpNvT202O5oDf5EqsDPaisgaSBxy/h06s/o7kkfKWoi5uDp3iObmiyQnS1ZzW3NbPFtCDQnO2MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EpuI01K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WBR3G6JQKG6EFiucxnKRIFzuAqRDWZCi7loqVarV3EOhqaW3/sZvNxmDm+ik++Td6MTOSZBf3/VmmLTQjhgA7SM8OSPc6GAq5cOMEs9rVJvKu6SW2iHpfNo8AH7LlQxv9N6ZZb1zdv++WqGgZ/Nfv1y+TFvt9Ztx3xbnjHXkhvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHca9hQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EpuI01K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45A2C4CEF1;
-	Mon, 27 Oct 2025 18:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHca9hQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE0FC4CEF1;
+	Mon, 27 Oct 2025 18:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591268;
-	bh=EkGITUN8jU8mTOBbR2V/qK8qFYRlkOzvwlBNcSbCuVc=;
+	s=korg; t=1761591270;
+	bh=6cZMDV+BjGQnoIwQOHca0ck+cTfgmR37j/0hHNPGaDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EpuI01KB/mB+5iTQXTCtxjyQc9tcDeOch7xPlTp3rEK5x0lbNVBDWAxDDFLevVxa
-	 TE/a21WXwZ9hqk8NPmXMk6+quYM4i8NvMJqWPPVBBWt+MTjESH7w1Om41jkHmJtDqi
-	 BJmlByLIOsVKoenrZwC1G1h2VHtVfYFa2eA9f2o0=
+	b=ZHca9hQJemGz4u1J/ZGJuJ+o/3cvMHrtd/QZK2FIvPIClJgJP/XE8ZrB52gK0yrf6
+	 YJqWfad27XcV6xH/NW0sKp/RWb30yBrme7YfWjR50b0R1p9QsGa3Gyby5v3ORjFt7T
+	 s/in6SLsIDCRWfLYh4phvObeEVTG/9bty4nOKRKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.10 132/332] xen/manage: Fix suspend error path
-Date: Mon, 27 Oct 2025 19:33:05 +0100
-Message-ID: <20251027183528.115309296@linuxfoundation.org>
+	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	linux-riscv@lists.infradead.org,
+	llvm@lists.linux.dev,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	linux-kernel@vger.kernel.org,
+	linux-perf-users@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 115/332] tools build: Align warning options with perf
+Date: Mon, 27 Oct 2025 19:32:48 +0100
+Message-ID: <20251027183527.652011522@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,54 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Leo Yan <leo.yan@arm.com>
 
-commit f770c3d858687252f1270265ba152d5c622e793f upstream.
+[ Upstream commit 53d067feb8c4f16d1f24ce3f4df4450bb18c555f ]
 
-The device power management API has the following asymmetry:
-* dpm_suspend_start() does not clean up on failure
-  (it requires a call to dpm_resume_end())
-* dpm_suspend_end() does clean up on failure
-  (it does not require a call to dpm_resume_start())
+The feature test programs are built without enabling '-Wall -Werror'
+options. As a result, a feature may appear to be available, but later
+building in perf can fail with stricter checks.
 
-The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
-patches for 2.6.27") in June 2008:  It removed a call to device_resume()
-from device_suspend() (which was later renamed to dpm_suspend_start()).
+Make the feature test program use the same warning options as perf.
 
-When Xen began using the device power management API in May 2008 with
-commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
-not yet exist.  But since it was introduced, a call to dpm_resume_end()
-is missing in the error path of dpm_suspend_start().  Fix it.
-
-Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v2.6.27
-Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1925459b4d92 ("tools build: Fix feature Makefile issues with 'O='")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20251006-perf_build_android_ndk-v3-1-4305590795b2@arm.com
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: linux-riscv@lists.infradead.org
+Cc: llvm@lists.linux.dev
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-perf-users@vger.kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/manage.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/build/feature/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/xen/manage.c
-+++ b/drivers/xen/manage.c
-@@ -116,7 +116,7 @@ static void do_suspend(void)
- 	err = dpm_suspend_start(PMSG_FREEZE);
- 	if (err) {
- 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
--		goto out_thaw;
-+		goto out_resume_end;
- 	}
+diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
+index 221250973d078..432a35bb5e90a 100644
+--- a/tools/build/feature/Makefile
++++ b/tools/build/feature/Makefile
+@@ -263,10 +263,10 @@ $(OUTPUT)test-sync-compare-and-swap.bin:
+ 	$(BUILD)
  
- 	printk(KERN_DEBUG "suspending xenstore...\n");
-@@ -156,6 +156,7 @@ out_resume:
- 	else
- 		xs_suspend_cancel();
+ $(OUTPUT)test-compile-32.bin:
+-	$(CC) -m32 -o $@ test-compile.c
++	$(CC) -m32 -Wall -Werror -o $@ test-compile.c
  
-+out_resume_end:
- 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
+ $(OUTPUT)test-compile-x32.bin:
+-	$(CC) -mx32 -o $@ test-compile.c
++	$(CC) -mx32 -Wall -Werror -o $@ test-compile.c
  
- out_thaw:
+ $(OUTPUT)test-zlib.bin:
+ 	$(BUILD) -lz
+-- 
+2.51.0
+
 
 
