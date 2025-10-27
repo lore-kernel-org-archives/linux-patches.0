@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF34322C8A;
-	Mon, 27 Oct 2025 19:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AF1322C8A;
+	Mon, 27 Oct 2025 19:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593314; cv=none; b=c9K+S8ViMtc1cf0KQ9+9vezAakAg2H4ZsiTdH5D+8vc/8YVQmke6ldLIxP5Cx1WRqosLWDOR56/l2iPjBTGEko++xmXm/kZl7NDSCMmWJ9nZB3jFgUcH4WVjSPc2I0f7qiLC1oaNrBnMdCRi63lftcwMbfdHcuvXaK00AXWP1Bw=
+	t=1761593317; cv=none; b=LBp3qsNC+zd/bfbgrHmZyu95qBMOp6OTNezeWnVy/jeSdHTRjAig9QXZD67LJLBYRXVYm0682Ww+qiYrM/4R3LFOo4HCba/LGGY3H0Re5Eky7rfT1P+vSD3GnzARtPW5NqqJOui2nNcOxTRfQ3dprAz/Hc52fEUxoTlvl841y+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593314; c=relaxed/simple;
-	bh=0afZk4QLeL0xsOLwE4NNL/68Hepwcvgk1D1lDvMhea4=;
+	s=arc-20240116; t=1761593317; c=relaxed/simple;
+	bh=gDArKzLF5qfyVkb15xL8ZgrV74YfZ8OXmg9dWjTvI0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARnPMsiqoJ8zA1Y82rTHU+d/L+S/ZtXM6pg1mi5KyQyoVR+SQC7WwxMQJ6jhb1YnT+GFfbl8whkDtpD5zTWF0iwuw5194fy28WHi53MPpw8GR+PAURrQeV30XjmQjuhw2fyZ/4lMCzyiU87zEq21K2zu7GOHEQWuKLNSnByZIJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+cflgKa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GW3zR9cWtCNhWMZZ5lI4E0sRg0MBk8Esq4DjlNbDaer9uspvnIznNiHJyaqT3V5mDnGPK7AfZG4tjq4SJ7MZ/ygvHq4xt1PDJ2QgFCDMfKIzIQ9FKqWUOywqxQSGsyW4nWzjBnwMCd3rSazAOM1L1sZm9phu7IM70ipc6VTdCyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlSk1eKJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+cflgKa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CC9C4CEF1;
-	Mon, 27 Oct 2025 19:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlSk1eKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953ABC4CEF1;
+	Mon, 27 Oct 2025 19:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593314;
-	bh=0afZk4QLeL0xsOLwE4NNL/68Hepwcvgk1D1lDvMhea4=;
+	s=korg; t=1761593316;
+	bh=gDArKzLF5qfyVkb15xL8ZgrV74YfZ8OXmg9dWjTvI0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+cflgKatv+K7sE1ChqGidn6vQTbucuWeMoG9ZNMhnF/nupSSuhpQgxM+wCCgZrAK
-	 R5nZq/Ok8rqfEVDoQGe3Vy7U5y9p8SbGehfAM2UovglnnccVi/aGO5JnksJ/bwN76a
-	 NiP2KSx+am7l5ibZcN0DqVbaa35Ry8yKIu5/npmA=
+	b=zlSk1eKJAUy9VIbYL+6UZlAKhOL0klYcmsfyKe8zqylJmmrCTfhLreyj2ZzeiOkVN
+	 DhocU/t6SiJLTM1yuxNt9ASBvJTiuM/qHE7Easy27Otl7PF0J6//l/H6klgUQwpugS
+	 KrPFQrZ0MI1/treC7Qrjkux8pTL5pikCi8YN3PCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10e35716f8e4929681fa@syzkaller.appspotmail.com,
-	mhal@rbox.co,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.17 095/184] vsock: fix lock inversion in vsock_assign_transport()
-Date: Mon, 27 Oct 2025 19:36:17 +0100
-Message-ID: <20251027183517.462263707@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Tonghao Zhang <tonghao@bamaicloud.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 096/184] net: bonding: update the slave array for broadcast mode
+Date: Mon, 27 Oct 2025 19:36:18 +0100
+Message-ID: <20251027183517.490461055@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,95 +57,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Tonghao Zhang <tonghao@bamaicloud.com>
 
-commit f7c877e7535260cc7a21484c994e8ce7e8cb6780 upstream.
+commit e0caeb24f538c3c9c94f471882ceeb43d9dc2739 upstream.
 
-Syzbot reported a potential lock inversion deadlock between
-vsock_register_mutex and sk_lock-AF_VSOCK when vsock_linger() is called.
+This patch fixes ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad").
+Before this commit, on the broadcast mode, all devices were traversed using the
+bond_for_each_slave_rcu. This patch supports traversing devices by using all_slaves.
+Therefore, we need to update the slave array when enslave or release slave.
 
-The issue was introduced by commit 687aa0c5581b ("vsock: Fix
-transport_* TOCTOU") which added vsock_register_mutex locking in
-vsock_assign_transport() around the transport->release() call, that can
-call vsock_linger(). vsock_assign_transport() can be called with sk_lock
-held. vsock_linger() calls sk_wait_event() that temporarily releases and
-re-acquires sk_lock. During this window, if another thread hold
-vsock_register_mutex while trying to acquire sk_lock, a circular
-dependency is created.
-
-Fix this by releasing vsock_register_mutex before calling
-transport->release() and vsock_deassign_transport(). This is safe
-because we don't need to hold vsock_register_mutex while releasing the
-old transport, and we ensure the new transport won't disappear by
-obtaining a module reference first via try_module_get().
-
-Reported-by: syzbot+10e35716f8e4929681fa@syzkaller.appspotmail.com
-Tested-by: syzbot+10e35716f8e4929681fa@syzkaller.appspotmail.com
-Fixes: 687aa0c5581b ("vsock: Fix transport_* TOCTOU")
-Cc: mhal@rbox.co
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20251021121718.137668-1-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ce7a381697cb ("net: bonding: add broadcast_neighbor option for 802.3ad")
+Cc: Simon Horman <horms@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: <stable@vger.kernel.org>
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Tested-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/all/a97e6e1e-81bc-4a79-8352-9e4794b0d2ca@kernel.org/
+Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20251016125136.16568-1-tonghao@bamaicloud.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/net/bonding/bond_main.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -487,12 +487,26 @@ int vsock_assign_transport(struct vsock_
- 		goto err;
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2385,7 +2385,9 @@ skip_mac_set:
+ 		unblock_netpoll_tx();
  	}
  
--	if (vsk->transport) {
--		if (vsk->transport == new_transport) {
--			ret = 0;
--			goto err;
--		}
-+	if (vsk->transport && vsk->transport == new_transport) {
-+		ret = 0;
-+		goto err;
-+	}
-+
-+	/* We increase the module refcnt to prevent the transport unloading
-+	 * while there are open sockets assigned to it.
-+	 */
-+	if (!new_transport || !try_module_get(new_transport->module)) {
-+		ret = -ENODEV;
-+		goto err;
-+	}
-+
-+	/* It's safe to release the mutex after a successful try_module_get().
-+	 * Whichever transport `new_transport` points at, it won't go away until
-+	 * the last module_put() below or in vsock_deassign_transport().
-+	 */
-+	mutex_unlock(&vsock_register_mutex);
+-	if (bond_mode_can_use_xmit_hash(bond))
++	/* broadcast mode uses the all_slaves to loop through slaves. */
++	if (bond_mode_can_use_xmit_hash(bond) ||
++	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
+ 		bond_update_slave_arr(bond, NULL);
  
-+	if (vsk->transport) {
- 		/* transport->release() must be called with sock lock acquired.
- 		 * This path can only be taken during vsock_connect(), where we
- 		 * have already held the sock lock. In the other cases, this
-@@ -512,20 +526,6 @@ int vsock_assign_transport(struct vsock_
- 		vsk->peer_shutdown = 0;
- 	}
+ 	if (!slave_dev->netdev_ops->ndo_bpf ||
+@@ -2561,7 +2563,8 @@ static int __bond_release_one(struct net
  
--	/* We increase the module refcnt to prevent the transport unloading
--	 * while there are open sockets assigned to it.
--	 */
--	if (!new_transport || !try_module_get(new_transport->module)) {
--		ret = -ENODEV;
--		goto err;
--	}
--
--	/* It's safe to release the mutex after a successful try_module_get().
--	 * Whichever transport `new_transport` points at, it won't go away until
--	 * the last module_put() below or in vsock_deassign_transport().
--	 */
--	mutex_unlock(&vsock_register_mutex);
--
- 	if (sk->sk_type == SOCK_SEQPACKET) {
- 		if (!new_transport->seqpacket_allow ||
- 		    !new_transport->seqpacket_allow(remote_cid)) {
+ 	bond_upper_dev_unlink(bond, slave);
+ 
+-	if (bond_mode_can_use_xmit_hash(bond))
++	if (bond_mode_can_use_xmit_hash(bond) ||
++	    BOND_MODE(bond) == BOND_MODE_BROADCAST)
+ 		bond_update_slave_arr(bond, slave);
+ 
+ 	slave_info(bond_dev, slave_dev, "Releasing %s interface\n",
 
 
