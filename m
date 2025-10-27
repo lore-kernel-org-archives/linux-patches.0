@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE6B27978C;
-	Mon, 27 Oct 2025 18:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F91E47CA;
+	Mon, 27 Oct 2025 18:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591354; cv=none; b=b1Cin3eM7qaswyuUu0MNgOxXjpT23x3tKpYyJw1zcguDk/DfcM5O3mU2Oe5m0AWq+mDXy8uLOdSwsnStdIx1tqczWd4y8M30JcBEiYfRykvWG6cgmSvcV8PxaoBqTFQaDIHcTRBKRU0or7G6PAlPsYlWH5PkkIYiP7faSWWTapA=
+	t=1761591356; cv=none; b=Eu68cMdODGwZ4WRkU1i9ajX2ejQGBD6YAgW8e7QbMWn+WkKsKxcM60onapLnRMDAnpr4TQZoXWGSNR7ShQVr59lv6qDW0cSD9mDAns/52jtPqRntFkHWKV1Ic2pe+PhViOvZp8yNNEicjZ1oM/Iiy7fd5BrLeL9ZeCJ9JoYAhis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591354; c=relaxed/simple;
-	bh=32xISfZiuIauxgjB43U4/YKrOcAymFXWfsNsuBk7V3Y=;
+	s=arc-20240116; t=1761591356; c=relaxed/simple;
+	bh=YeMgKh/EPKB9F9x0sszjmWNb9zyu38h539y6cQrvTkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ja3j+/8RAQ4T+Hxb0FbwMAA7/HcsurG47R26O6iG6uSYIjdDAmGr0gy9FaIJmSoG69R92RVrXG2Whkz1fkz3XmsFTqc7dRuF3hzaa3KH7FfWwsn0bVva6LC/Df1uSBmz6juytBUiBj0dhjPgpQxUy+wiLgmy7NQVfwt88XmOfEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6H6zwgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hTBKWaV+copTCcBTSwWprN38JmIaAhjAzJ0V3Y8fG0cFh5KEA4GYCCpGf5Me/oEqcTplqkaxeTuj0mcKrHdYf+OoG7iPDjI+Re3cquX14NKUzZR9S8BVAW8CabZ2IhbMxrob2UiOm0qMstkM6MzgBURNV7xsztJn9ibr6U6z9X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4g++KL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6H6zwgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFDCC4CEF1;
-	Mon, 27 Oct 2025 18:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4g++KL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F73C4CEF1;
+	Mon, 27 Oct 2025 18:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591353;
-	bh=32xISfZiuIauxgjB43U4/YKrOcAymFXWfsNsuBk7V3Y=;
+	s=korg; t=1761591356;
+	bh=YeMgKh/EPKB9F9x0sszjmWNb9zyu38h539y6cQrvTkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6H6zwgFIj493Nvv/9eLAatlt1oCAdhumYsg8+HhCdqQdrjS5XQ5uatOTKsdTqpS1
-	 Yt8KyJqeXpAnKEKLZz/1CLcVPt1BFUlIwLaV/f88IXzyEJ2TaYEKefvoFzr7Q/EQZe
-	 BHrYC2ZMC/hGQdQACIAqAkOW/2DB306/seNq7Jn8=
+	b=j4g++KL4o+RdUMTDjiylQeQx5vHgmGg2EJM6Qx8wkOo5r3IXORFjmUQAyIvj/fObv
+	 WqAtLWEp+6tAxV3DEBz7Imq3yBiOSxv3ptd1JaHZm+b/Bv79Yz30GBsQOOs8EE07Ms
+	 Qinh/ENssADPEywlzk7Qln9DPswxGiuXBOgZ+Bg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.10 165/332] x86/umip: Fix decoding of register forms of 0F 01 (SGDT and SIDT aliases)
-Date: Mon, 27 Oct 2025 19:33:38 +0100
-Message-ID: <20251027183528.984041451@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 166/332] NFSD: Fix destination buffer size in nfsd4_ssc_setup_dul()
+Date: Mon, 27 Oct 2025 19:33:39 +0100
+Message-ID: <20251027183529.008162774@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,48 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 27b1fd62012dfe9d3eb8ecde344d7aa673695ecf upstream.
+commit ab1c282c010c4f327bd7addc3c0035fd8e3c1721 upstream.
 
-Filter out the register forms of 0F 01 when determining whether or not to
-emulate in response to a potential UMIP violation #GP, as SGDT and SIDT only
-accept memory operands.  The register variants of 0F 01 are used to encode
-instructions for things like VMX and SGX, i.e. not checking the Mod field
-would cause the kernel to incorrectly emulate on #GP, e.g. due to a CPL
-violation on VMLAUNCH.
+Commit 5304877936c0 ("NFSD: Fix strncpy() fortify warning") replaced
+strncpy(,, sizeof(..)) with strlcpy(,, sizeof(..) - 1), but strlcpy()
+already guaranteed NUL-termination of the destination buffer and
+subtracting one byte potentially truncated the source string.
 
-Fixes: 1e5db223696a ("x86/umip: Add emulation code for UMIP instructions")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+The incorrect size was then carried over in commit 72f78ae00a8e ("NFSD:
+move from strlcpy with unused retval to strscpy") when switching from
+strlcpy() to strscpy().
+
+Fix this off-by-one error by using the full size of the destination
+buffer again.
+
 Cc: stable@vger.kernel.org
+Fixes: 5304877936c0 ("NFSD: Fix strncpy() fortify warning")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/umip.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/nfsd/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/umip.c
-+++ b/arch/x86/kernel/umip.c
-@@ -163,8 +163,19 @@ static int identify_insn(struct insn *in
- 	if (insn->opcode.bytes[1] == 0x1) {
- 		switch (X86_MODRM_REG(insn->modrm.value)) {
- 		case 0:
-+			/* The reg form of 0F 01 /0 encodes VMX instructions. */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
-+
- 			return UMIP_INST_SGDT;
- 		case 1:
-+			/*
-+			 * The reg form of 0F 01 /1 encodes MONITOR/MWAIT,
-+			 * STAC/CLAC, and ENCLS.
-+			 */
-+			if (X86_MODRM_MOD(insn->modrm.value) == 3)
-+				return -EINVAL;
-+
- 			return UMIP_INST_SIDT;
- 		case 4:
- 			return UMIP_INST_SMSW;
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1335,7 +1335,7 @@ try_again:
+ 		return 0;
+ 	}
+ 	if (work) {
+-		strscpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr) - 1);
++		strscpy(work->nsui_ipaddr, ipaddr, sizeof(work->nsui_ipaddr));
+ 		refcount_set(&work->nsui_refcnt, 2);
+ 		work->nsui_busy = true;
+ 		list_add_tail(&work->nsui_list, &nn->nfsd_ssc_mount_list);
 
 
