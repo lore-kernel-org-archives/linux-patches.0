@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5D11E47CA;
-	Mon, 27 Oct 2025 19:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E496A31D753;
+	Mon, 27 Oct 2025 19:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592743; cv=none; b=UhdLISIFXO/rdR42/0HsMaxfoRvsa6LKaBxOpFl4o8fRbgFcl3e1ZibqpMjczeZld3XcHr20ErSaPjkcAR1tIeoKvZFhFp2aLjc2RwMdtl1UDIedgoK9iKgp4FtOhwe0JPqqxs9EZTgVTV0pJLHxzepOu8FRkCbecYjhlDu0pLg=
+	t=1761592746; cv=none; b=pGoEU1oGkmDZy+xucmzS+g2w6QjNpPChLbvAc7dxH90Ko4uVTZLTQU/WahEL6DVWK7yXH5g3ktuA9VcqUJh4y+zLqJI85ANJfz48MQ19uRcCjcfUPvacWeG6MpcLSKL6QvGefwYeQd40cPghOEoUWQRqSTpFqDI74RmHRD1ljW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592743; c=relaxed/simple;
-	bh=y4pka1w29PC/VgsouxsFLMaNNFTMzKtWMoz4Zr3Jqxo=;
+	s=arc-20240116; t=1761592746; c=relaxed/simple;
+	bh=kbBuTj0nAgNSPQ06W94J1wf7dAI1TUIWx7hlShm/lB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9nSDq7SIqRfMPAH9sXbAcdiazRCUONl1mURacuEh8pB1ynH22j63Bfn/LeyWzlPH3aPXMSZxAtgUy9gpuncidQPLnJjMp6ahPrAL+SWwBPEtxGW0+WiJSeRi17dydcRGUzBFLI7bWoLFdEhrD3MFqzUxekO450tuRlAED1k54k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1G4dBAT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rruiK0ViyXewz/sVtro/I3/kbiaiUcoHwmY4tpg5VFsFozK6pzlhjGop0Za/LiUrPhZsE6bbP3ElJAngoTy1v5UYu26kk0alTftLFQ5ehUdTd9dzrYyzwHSOnhO6ipOj89THCuu6AQ7UZNkvfd6sXYk9XwIXn9Vskb1urs4+ScA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViY4QA0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1G4dBAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8CAC4CEFD;
-	Mon, 27 Oct 2025 19:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViY4QA0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA2CC4CEFD;
+	Mon, 27 Oct 2025 19:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592743;
-	bh=y4pka1w29PC/VgsouxsFLMaNNFTMzKtWMoz4Zr3Jqxo=;
+	s=korg; t=1761592745;
+	bh=kbBuTj0nAgNSPQ06W94J1wf7dAI1TUIWx7hlShm/lB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1G4dBATTGfJrDh7mJpehGV8jJNGGUJWyuwTouE2nvyrfcUyNwqjjFcAtaMZeh6j2
-	 KF6CwVv/lZGhx17vn0BaoCk0RsIewnTKCi4VMYtIgzKWmwZRZC3I6FYRAJGL+Qn7RJ
-	 kaMA1Y3IG7IvqTJkgBB6kT21Hr7XE1UoaddRa2Vw=
+	b=ViY4QA0S9Bn0XN9IE94Gmw6+mWXYmDgM+hA5EqcFpdd19rF5b7SJemUclnD7MZrp9
+	 3dTyBu0LmUqlRt2phnqC+4McsjMuoQGsmfK1uIMrTmogsFgl04NydFDwS2wyl7krKX
+	 TaAeudJ7luRmh8LnKgyYienlB108HEqhVGB8C808=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Acs <acsjakub@amazon.de>,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Christian Brauner <brauner@kernel.org>,
-	linux-unionfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 79/84] fs/notify: call exportfs_encode_fid with s_umount
-Date: Mon, 27 Oct 2025 19:37:08 +0100
-Message-ID: <20251027183440.915948125@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 6.6 80/84] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
+Date: Mon, 27 Oct 2025 19:37:09 +0100
+Message-ID: <20251027183440.942556856@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -57,108 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Acs <acsjakub@amazon.de>
+From: Babu Moger <babu.moger@amd.com>
 
-[ Upstream commit a7c4bb43bfdc2b9f06ee9d036028ed13a83df42a ]
+commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 upstream.
 
-Calling intotify_show_fdinfo() on fd watching an overlayfs inode, while
-the overlayfs is being unmounted, can lead to dereferencing NULL ptr.
+Users can create as many monitoring groups as the number of RMIDs supported
+by the hardware. However, on AMD systems, only a limited number of RMIDs
+are guaranteed to be actively tracked by the hardware. RMIDs that exceed
+this limit are placed in an "Unavailable" state.
 
-This issue was found by syzkaller.
+When a bandwidth counter is read for such an RMID, the hardware sets
+MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
+again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
+remains set on first read after tracking re-starts and is clear on all
+subsequent reads as long as the RMID is tracked.
 
-Race Condition Diagram:
+resctrl miscounts the bandwidth events after an RMID transitions from the
+"Unavailable" state back to being tracked. This happens because when the
+hardware starts counting again after resetting the counter to zero, resctrl
+in turn compares the new count against the counter value stored from the
+previous time the RMID was tracked.
 
-Thread 1                           Thread 2
---------                           --------
+This results in resctrl computing an event value that is either undercounting
+(when new counter is more than stored counter) or a mistaken overflow (when
+new counter is less than stored counter).
 
-generic_shutdown_super()
- shrink_dcache_for_umount
-  sb->s_root = NULL
+Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
+zero whenever the RMID is in the "Unavailable" state to ensure accurate
+counting after the RMID resets to zero when it starts to be tracked again.
 
-                    |
-                    |             vfs_read()
-                    |              inotify_fdinfo()
-                    |               * inode get from mark *
-                    |               show_mark_fhandle(m, inode)
-                    |                exportfs_encode_fid(inode, ..)
-                    |                 ovl_encode_fh(inode, ..)
-                    |                  ovl_check_encode_origin(inode)
-                    |                   * deref i_sb->s_root *
-                    |
-                    |
-                    v
- fsnotify_sb_delete(sb)
+Example scenario that results in mistaken overflow
+==================================================
+1. The resctrl filesystem is mounted, and a task is assigned to a
+   monitoring group.
 
-Which then leads to:
+   $mount -t resctrl resctrl /sys/fs/resctrl
+   $mkdir /sys/fs/resctrl/mon_groups/test1/
+   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
 
-[   32.133461] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-[   32.134438] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[   32.135032] CPU: 1 UID: 0 PID: 4468 Comm: systemd-coredum Not tainted 6.17.0-rc6 #22 PREEMPT(none)
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   21323            <- Total bytes on domain 0
+   "Unavailable"    <- Total bytes on domain 1
 
-<snip registers, unreliable trace>
+   Task is running on domain 0. Counter on domain 1 is "Unavailable".
 
-[   32.143353] Call Trace:
-[   32.143732]  ovl_encode_fh+0xd5/0x170
-[   32.144031]  exportfs_encode_inode_fh+0x12f/0x300
-[   32.144425]  show_mark_fhandle+0xbe/0x1f0
-[   32.145805]  inotify_fdinfo+0x226/0x2d0
-[   32.146442]  inotify_show_fdinfo+0x1c5/0x350
-[   32.147168]  seq_show+0x530/0x6f0
-[   32.147449]  seq_read_iter+0x503/0x12a0
-[   32.148419]  seq_read+0x31f/0x410
-[   32.150714]  vfs_read+0x1f0/0x9e0
-[   32.152297]  ksys_read+0x125/0x240
+2. The task runs on domain 0 for a while and then moves to domain 1. The
+   counter starts incrementing on domain 1.
 
-IOW ovl_check_encode_origin derefs inode->i_sb->s_root, after it was set
-to NULL in the unmount path.
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   7345357          <- Total bytes on domain 0
+   4545             <- Total bytes on domain 1
 
-Fix it by protecting calling exportfs_encode_fid() from
-show_mark_fhandle() with s_umount lock.
+3. At some point, the RMID in domain 0 transitions to the "Unavailable"
+   state because the task is no longer executing in that domain.
 
-This form of fix was suggested by Amir in [1].
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   "Unavailable"    <- Total bytes on domain 0
+   434341           <- Total bytes on domain 1
 
-[1]: https://lore.kernel.org/all/CAOQ4uxhbDwhb+2Brs1UdkoF0a3NSdBAOQPNfEHjahrgoKJpLEw@mail.gmail.com/
+4.  Since the task continues to migrate between domains, it may eventually
+    return to domain 0.
 
-Fixes: c45beebfde34 ("ovl: support encoding fid from inode with no alias")
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: linux-unionfs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+    17592178699059  <- Overflow on domain 0
+    3232332         <- Total bytes on domain 1
+
+In this case, the RMID on domain 0 transitions from "Unavailable" state to
+active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
+the counter is read and begins tracking the RMID counting from 0.
+
+Subsequent reads succeed but return a value smaller than the previously
+saved MSR value (7345357). Consequently, the resctrl's overflow logic is
+triggered, it compares the previous value (7345357) with the new, smaller
+value and incorrectly interprets this as a counter overflow, adding a large
+delta.
+
+In reality, this is a false positive: the counter did not overflow but was
+simply reset when the RMID transitioned from "Unavailable" back to active
+state.
+
+Here is the text from APM [1] available from [2].
+
+"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
+first QM_CTR read when it begins tracking an RMID that it was not
+previously tracking. The U bit will be zero for all subsequent reads from
+that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
+read with the U bit set when that RMID is in use by a processor can be
+considered 0 when calculating the difference with a subsequent read."
+
+[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
+    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
+    Bandwidth (MBM).
+
+  [ bp: Split commit message into smaller paragraph chunks for better
+    consumption. ]
+
+Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
+[babu.moger@amd.com: Fix conflict for v6.6 stable]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fdinfo.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kernel/cpu/resctrl/monitor.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/notify/fdinfo.c
-+++ b/fs/notify/fdinfo.c
-@@ -17,6 +17,7 @@
- #include "fanotify/fanotify.h"
- #include "fdinfo.h"
- #include "fsnotify.h"
-+#include "../internal.h"
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -241,11 +241,15 @@ int resctrl_arch_rmid_read(struct rdt_re
+ 	if (!cpumask_test_cpu(smp_processor_id(), &d->cpu_mask))
+ 		return -EINVAL;
  
- #if defined(CONFIG_PROC_FS)
- 
-@@ -50,7 +51,12 @@ static void show_mark_fhandle(struct seq
- 	f.handle.handle_bytes = sizeof(f.pad);
- 	size = f.handle.handle_bytes >> 2;
- 
-+	if (!super_trylock_shared(inode->i_sb))
-+		return;
++	am = get_arch_mbm_state(hw_dom, rmid, eventid);
 +
- 	ret = exportfs_encode_fid(inode, (struct fid *)f.handle.f_handle, &size);
-+	up_read(&inode->i_sb->s_umount);
-+
- 	if ((ret == FILEID_INVALID) || (ret < 0))
- 		return;
+ 	ret = __rmid_read(rmid, eventid, &msr_val);
+-	if (ret)
++	if (ret) {
++		if (am && ret == -EINVAL)
++			am->prev_msr = 0;
+ 		return ret;
++	}
  
+-	am = get_arch_mbm_state(hw_dom, rmid, eventid);
+ 	if (am) {
+ 		am->chunks += mbm_overflow_count(am->prev_msr, msr_val,
+ 						 hw_res->mbm_width);
 
 
