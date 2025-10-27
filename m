@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245F4325492;
-	Mon, 27 Oct 2025 18:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EF431BC91;
+	Mon, 27 Oct 2025 18:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590600; cv=none; b=UC4q8682ymvzEYSIipbrQG3FqcEA+GBEu1BqH02pEDUaDxf2VqCF8pY7jMFRaB++tIMNHNTKqh6DkUeKgoGgR1IZzl960bnz/Z+C0728c+qbVyzaIOYX2mjVx5gt3hF1JB4ybtZVTox3MwyCPH1GdoKNGjSmtHcZWHISBpqN+co=
+	t=1761590602; cv=none; b=oWdrl26kJvVsAbzp3FchXqg2ImQqkm/C13uWQRySt2pF9RqMbEIoIzY+jlYVfZ/u6Pp7BWbYJh1rSvyRCe0BehepfIQ7UCAvAi1niSzMOsayYnVY//uuZ70KWVwXxaJaU0SH5QpV6hizgaOdfvjtYzFjP25yCiBr30vTPSxTFhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590600; c=relaxed/simple;
-	bh=TgbK3+j3JnmqGHsTam4uCCRlFZ190gU4zZazS2EfGMM=;
+	s=arc-20240116; t=1761590602; c=relaxed/simple;
+	bh=vNLKUsFt+t3SWg0rb5WLCQPdZ+HL1CRkUQZG+6KdQyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FkdMloV8mYDE++JrZ8MUc+LgXDVtNhbHanlYWkQTPJK9A/Ax/sTMmpM4Eg2JiUS9bdzSihJx2DZWF/2cX5/0Tv5dNSv46oI8boyp4vIJSk7QNYUJoGE7OtkAjrggIFD0BC0Y4Mdl5QlR/aG8+49JDiZqUsb7xOSABijnSyf2TJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3Mg5ikT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dg/0Y9oDuMITXuZcMDIPmiGr5R78+EVgIeE2ar3PlQ3kLqjeIpashfALQjpl4/JlXaztK7tvpo7uJnd6IPSAPIPeK08vI25Cr0DeyoFJIpNDqraVOnBUmbbkpwzOwpAOjDFbire6vXwxQCYUjfzupdgFsVmokc0d1tcDkkWs3rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByWBP+te; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3Mg5ikT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DF5C4CEF1;
-	Mon, 27 Oct 2025 18:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByWBP+te"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF80C113D0;
+	Mon, 27 Oct 2025 18:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590600;
-	bh=TgbK3+j3JnmqGHsTam4uCCRlFZ190gU4zZazS2EfGMM=;
+	s=korg; t=1761590602;
+	bh=vNLKUsFt+t3SWg0rb5WLCQPdZ+HL1CRkUQZG+6KdQyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3Mg5ikTbta2gZL3LbwSvtfYyiQl706s/sKis52LmM3TA2bbZG5ePpaFMtcXok8G5
-	 8vPL5q5UxkQqLp+5se5+FQspBUemv+lxMBh1l8ghwjUmvdCbuqbxYQq8T6rgTJ9oue
-	 AkJes80pOPb0W9KnWmzRezdWDPxv8TIBJCigf+Zs=
+	b=ByWBP+teDzM65ThK7JWe2jl3dPMpr0ZFR5TBNBjeedU0TQ5/3dtMagDIoq1sIuA1n
+	 ivU8OKK5mEJdeo1rmaoRM4EF0hfjbRQc2Nb7egThOZ/W9I8CtEPCYti18c0v7ZIj/8
+	 u/xnqqsBHpwmP63j4zeIY2oJ1OWgQ/t8pSvB+f6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Carl Worth <carl@os.amperecomputing.com>,
-	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 075/224] mm: hugetlb: avoid soft lockup when mprotect to large memory area
-Date: Mon, 27 Oct 2025 19:33:41 +0100
-Message-ID: <20251027183511.005059193@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 076/224] Input: uinput - zero-initialize uinput_ff_upload_compat to avoid info leak
+Date: Mon, 27 Oct 2025 19:33:42 +0100
+Message-ID: <20251027183511.032691383@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,92 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit f52ce0ea90c83a28904c7cc203a70e6434adfecb upstream.
+commit d3366a04770eea807f2826cbdb96934dd8c9bf79 upstream.
 
-When calling mprotect() to a large hugetlb memory area in our customer's
-workload (~300GB hugetlb memory), soft lockup was observed:
+Struct ff_effect_compat is embedded twice inside
+uinput_ff_upload_compat, contains internal padding. In particular, there
+is a hole after struct ff_replay to satisfy alignment requirements for
+the following union member. Without clearing the structure,
+copy_to_user() may leak stack data to userspace.
 
-watchdog: BUG: soft lockup - CPU#98 stuck for 23s! [t2_new_sysv:126916]
+Initialize ff_up_compat to zero before filling valid fields.
 
-CPU: 98 PID: 126916 Comm: t2_new_sysv Kdump: loaded Not tainted 6.17-rc7
-Hardware name: GIGACOMPUTING R2A3-T40-AAV1/Jefferson CIO, BIOS 5.4.4.1 07/15/2025
-pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mte_clear_page_tags+0x14/0x24
-lr : mte_sync_tags+0x1c0/0x240
-sp : ffff80003150bb80
-x29: ffff80003150bb80 x28: ffff00739e9705a8 x27: 0000ffd2d6a00000
-x26: 0000ff8e4bc00000 x25: 00e80046cde00f45 x24: 0000000000022458
-x23: 0000000000000000 x22: 0000000000000004 x21: 000000011b380000
-x20: ffff000000000000 x19: 000000011b379f40 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : ffffc875e0aa5e2c
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : fffffc01ce7a5c00 x4 : 00000000046cde00 x3 : fffffc0000000000
-x2 : 0000000000000004 x1 : 0000000000000040 x0 : ffff0046cde7c000
-
-Call trace:
-  mte_clear_page_tags+0x14/0x24
-  set_huge_pte_at+0x25c/0x280
-  hugetlb_change_protection+0x220/0x430
-  change_protection+0x5c/0x8c
-  mprotect_fixup+0x10c/0x294
-  do_mprotect_pkey.constprop.0+0x2e0/0x3d4
-  __arm64_sys_mprotect+0x24/0x44
-  invoke_syscall+0x50/0x160
-  el0_svc_common+0x48/0x144
-  do_el0_svc+0x30/0xe0
-  el0_svc+0x30/0xf0
-  el0t_64_sync_handler+0xc4/0x148
-  el0t_64_sync+0x1a4/0x1a8
-
-Soft lockup is not triggered with THP or base page because there is
-cond_resched() called for each PMD size.
-
-Although the soft lockup was triggered by MTE, it should be not MTE
-specific.  The other processing which takes long time in the loop may
-trigger soft lockup too.
-
-So add cond_resched() for hugetlb to avoid soft lockup.
-
-Link: https://lkml.kernel.org/r/20250929202402.1663290-1-yang@os.amperecomputing.com
-Fixes: 8f860591ffb2 ("[PATCH] Enable mprotect on huge pages")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Tested-by: Carl Worth <carl@os.amperecomputing.com>
-Reviewed-by: Christoph Lameter (Ampere) <cl@gentwo.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 2d56f3a32c0e ("Input: refactor evdev 32bit compat to be shareable with uinput")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250928063737.74590-1-zhen.ni@easystack.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/misc/uinput.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4703,6 +4703,8 @@ unsigned long hugetlb_change_protection(
- 			pages++;
- 		}
- 		spin_unlock(ptl);
-+
-+		cond_resched();
- 	}
- 	/*
- 	 * Must flush TLB before releasing i_mmap_rwsem: x86's huge_pmd_unshare
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -740,6 +740,7 @@ static int uinput_ff_upload_to_user(char
+ 	if (in_compat_syscall()) {
+ 		struct uinput_ff_upload_compat ff_up_compat;
+ 
++		memset(&ff_up_compat, 0, sizeof(ff_up_compat));
+ 		ff_up_compat.request_id = ff_up->request_id;
+ 		ff_up_compat.retval = ff_up->retval;
+ 		/*
 
 
