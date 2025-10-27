@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D93320A32;
-	Mon, 27 Oct 2025 19:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4FD328B53;
+	Mon, 27 Oct 2025 19:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593554; cv=none; b=OirGnpSSjh3XdgRLmVyEPh3EFSrkaXTzy8YhlBBc1GeWb3y9PivudPcLueVU3fzf+yjfTz9s35g6XOJRAfpZow51uPZJ86SW9qELz4PxDb0PW+zjeGRKnBwhUibXPpzXQHJcmtIf8HrHt6VItkuX0DnaP1PJwWgN4RjW9L27LkE=
+	t=1761593557; cv=none; b=RJ+aCoV2AZxPkoPmwX/BrvMlZ52szyNJHRC+Wyhv25eS8TqEgFUCbRD0Ca1SGJqtK+E0Waighw7eWfDZgfE9psHuYh8pOyvDMB0u/5evEo6z2is45kF8WWUeaSzIXv6C2Xe6JeiLgS3u48lvpFEg6GIsaxpmfijprT97V/NhngI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593554; c=relaxed/simple;
-	bh=MxFCO2eJLiQZPKQIPAHAVqDSxZEJDEr8rqI0QmxqNao=;
+	s=arc-20240116; t=1761593557; c=relaxed/simple;
+	bh=YZqBmUQmknPBFRgSExfH5IwtbVNK/nSsJfRvXrvUN3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6xx4Eyw3owJWKOMOfsNAAx6R/AqSSCzCp+9mL59poAsxjUSkYTn2dypofp0uI9FV8df0GwuSAKJA92U2zgUrZA8YNdwEONyR7RWrjCJxE/G7iYjjojTqJgASv5PeqCnkTSBA0i5JeLLCEWjtFXwmqdPSlOEzrN34EAmag9WdJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZecYQGgp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzY+0/NYAYN8+9V84GfO9ZX6nRgQowBmm/4zhfYqwpM4G5FqdzewPBAWk8E772IbEJWkQWIyjx+bkRNIye0qD9gkT8cwaxk/rBRSuTaMTeDHY7u/IHTxzAk1ayqhwiCEVgAOSXX8B2eEDpoc01A46f1Zd4eNXDIka5u9/293t0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iykFzqEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZecYQGgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E705C4CEF1;
-	Mon, 27 Oct 2025 19:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iykFzqEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DF5C4CEF1;
+	Mon, 27 Oct 2025 19:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593554;
-	bh=MxFCO2eJLiQZPKQIPAHAVqDSxZEJDEr8rqI0QmxqNao=;
+	s=korg; t=1761593557;
+	bh=YZqBmUQmknPBFRgSExfH5IwtbVNK/nSsJfRvXrvUN3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZecYQGgpiKRJSoRxgPKlvquUb7GyqSG/QIyiU6Yxoru4OnKSm6QRS9H4ppbyUBVvf
-	 Xdm0ffgWqW56nLpOe7gQJbJfLx8SeOyW4rQ0Xc3XIyHNvGY2qepsJtstNSH0yCC98Z
-	 hlWZWGHDEyI8ODmz7J1l/W6n+fKvb+P3qmXO5RiI=
+	b=iykFzqEBRwqKOWHMISvWdlKXUD1D3Y7cATbShFWELTh+5niAbxcpnSIHo3DzoJyKE
+	 qYp9Sh9jfGXdyfMqST7ehyQdppHff6s7sOk0hSKKJTUfLfBMOkF2xHC6SODQLgn5jJ
+	 quEVdlR4/MJfDkaTKNk3KPPmvqKJXUjQ3VAMXGO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.17 171/184] serial: 8250_exar: add support for Advantech 2 port card with Device ID 0x0018
-Date: Mon, 27 Oct 2025 19:37:33 +0100
-Message-ID: <20251027183519.527991026@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Golle <daniel@makrotopia.org>
+Subject: [PATCH 6.17 172/184] serial: 8250_mtk: Enable baud clock and manage in runtime PM
+Date: Mon, 27 Oct 2025 19:37:34 +0100
+Message-ID: <20251027183519.556624115@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -50,56 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: Daniel Golle <daniel@makrotopia.org>
 
-commit e7cbce761fe3fcbcb49bcf30d4f8ca5e1a9ee2a0 upstream.
+commit d518314a1fa4e980a227d1b2bda1badf433cb932 upstream.
 
-The Advantech 2-port serial card with PCI vendor=0x13fe and device=0x0018
-has a 'XR17V35X' chip installed on the circuit board. Therefore, this
-driver can be used instead of theu outdated out-of-tree driver from the
-manufacturer.
+Some MediaTek SoCs got a gated UART baud clock, which currently gets
+disabled as the clk subsystem believes it would be unused. This results in
+the uart freezing right after "clk: Disabling unused clocks" on those
+platforms.
 
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
+Request the baud clock to be prepared and enabled during probe, and to
+restore run-time power management capabilities to what it was before commit
+e32a83c70cf9 ("serial: 8250-mtk: modify mtk uart power and clock
+management") disable and unprepare the baud clock when suspending the UART,
+prepare and enable it again when resuming it.
+
+Fixes: e32a83c70cf9 ("serial: 8250-mtk: modify mtk uart power and clock management")
+Fixes: b6c7ff2693ddc ("serial: 8250_mtk: Simplify clock sequencing and runtime PM")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20250924134115.2667650-1-fe@dev.tdt.de
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/de5197ccc31e1dab0965cabcc11ca92e67246cf6.1758058441.git.daniel@makrotopia.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/tty/serial/8250/8250_mtk.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -40,6 +40,8 @@
- #define PCI_DEVICE_ID_ACCESSIO_COM_4SM		0x10db
- #define PCI_DEVICE_ID_ACCESSIO_COM_8SM		0x10ea
+--- a/drivers/tty/serial/8250/8250_mtk.c
++++ b/drivers/tty/serial/8250/8250_mtk.c
+@@ -435,6 +435,7 @@ static int __maybe_unused mtk8250_runtim
+ 	while
+ 		(serial_in(up, MTK_UART_DEBUG0));
  
-+#define PCI_DEVICE_ID_ADVANTECH_XR17V352	0x0018
-+
- #define PCI_DEVICE_ID_COMMTECH_4224PCI335	0x0002
- #define PCI_DEVICE_ID_COMMTECH_4222PCI335	0x0004
- #define PCI_DEVICE_ID_COMMTECH_2324PCI335	0x000a
-@@ -1622,6 +1624,12 @@ static const struct exar8250_board pbn_f
- 	.exit		= pci_xr17v35x_exit,
- };
++	clk_disable_unprepare(data->uart_clk);
+ 	clk_disable_unprepare(data->bus_clk);
  
-+static const struct exar8250_board pbn_adv_XR17V352 = {
-+	.num_ports	= 2,
-+	.setup		= pci_xr17v35x_setup,
-+	.exit		= pci_xr17v35x_exit,
-+};
-+
- static const struct exar8250_board pbn_exar_XR17V4358 = {
- 	.num_ports	= 12,
- 	.setup		= pci_xr17v35x_setup,
-@@ -1696,6 +1704,9 @@ static const struct pci_device_id exar_p
- 	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
- 	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
+ 	return 0;
+@@ -445,6 +446,7 @@ static int __maybe_unused mtk8250_runtim
+ 	struct mtk8250_data *data = dev_get_drvdata(dev);
  
-+	/* ADVANTECH devices */
-+	EXAR_DEVICE(ADVANTECH, XR17V352, pbn_adv_XR17V352),
-+
- 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
- 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
+ 	clk_prepare_enable(data->bus_clk);
++	clk_prepare_enable(data->uart_clk);
+ 
+ 	return 0;
+ }
+@@ -475,13 +477,13 @@ static int mtk8250_probe_of(struct platf
+ 	int dmacnt;
+ #endif
+ 
+-	data->uart_clk = devm_clk_get(&pdev->dev, "baud");
++	data->uart_clk = devm_clk_get_enabled(&pdev->dev, "baud");
+ 	if (IS_ERR(data->uart_clk)) {
+ 		/*
+ 		 * For compatibility with older device trees try unnamed
+ 		 * clk when no baud clk can be found.
+ 		 */
+-		data->uart_clk = devm_clk_get(&pdev->dev, NULL);
++		data->uart_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 		if (IS_ERR(data->uart_clk)) {
+ 			dev_warn(&pdev->dev, "Can't get uart clock\n");
+ 			return PTR_ERR(data->uart_clk);
 
 
