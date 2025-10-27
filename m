@@ -1,44 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B32E32E120;
-	Mon, 27 Oct 2025 19:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1191B202963;
+	Mon, 27 Oct 2025 19:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593231; cv=none; b=CcotqXNsy4GYU7K2FSjilqQD+uXimRS3rOfu5dj2bX5sSbdY6Blq/eZuOBseVdnWz9SvnWAOOreyCg8SJJid0XDxiGqzB6Cl4f8KhQO6cfAJk60ZiaLIQjVnJLA7FF4zmWcI+jLrTvnpQITpAV4FDcS+v2nokJaXtUdq/iZQbUk=
+	t=1761593234; cv=none; b=XjzmalykfKiWld7Gl5EMwxmUhD7IQs3um+wqqKSmoaUoeT+zNK/Rbq79LjvWUoHFOfkmOH9+plHgo6kKlXlNjClfDjFDCB+wZiUQR/7lnYn0OUm+Xc7dT+pYp7qns5E5wBq/HxkeCNxpJP6xwM03nABJd79hg1wC7Exc2+l35+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593231; c=relaxed/simple;
-	bh=EiNChk5VopurWxTmP3Zi/B6ju78+vz29cBI4bWjW6bE=;
+	s=arc-20240116; t=1761593234; c=relaxed/simple;
+	bh=934bB7yTD5RWvHouy1T4/k1lxTm5Sw9TFeBuvcpBjbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1bgyEw4NzIUyNwscWsT7QjFLTdhFixX+HCy4hHPkrVllIRpdk10FyISWkyTdUVxqmsxYulNIHqshQARbWbapg7C5e3uUIsKeeJVW+ft0Z8tf2cNm4AohI3hsBCX1HBIPdo+SMoHuQv7Sz6j1ZAoI2prC0atv65XxlIK2qLAxC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFYJDCOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qPEJ930Nb4I7oHooIxGudyrTzjH0khSbviLUIH8BsnHVFZ3FG9/M8Oi13d766jjpcKa6sLUIMt9qZBxGW3c2vrOmZnQR6hcxlTmUE+EAWAoHDB6sXe1VlQr9R9/0ot8e5wmYOS1lJMacPxFeCWeLuOL7pBENs544KgdNyBftTRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNTKSsmH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFYJDCOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD99C4CEF1;
-	Mon, 27 Oct 2025 19:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNTKSsmH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0ACC4CEF1;
+	Mon, 27 Oct 2025 19:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593231;
-	bh=EiNChk5VopurWxTmP3Zi/B6ju78+vz29cBI4bWjW6bE=;
+	s=korg; t=1761593233;
+	bh=934bB7yTD5RWvHouy1T4/k1lxTm5Sw9TFeBuvcpBjbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFYJDCOZyHt3yd3XzAUt+oZCGeBUZNWm1zf2LPKfYJtKGNYaF3i4nkZE1BlGqtnSV
-	 eXkOc1EtIzSkB0MKu1ZJhubp1Nus2Fm1dtwgUzkUxSn8lM2BYfD7FuBUxsBQyq9pFS
-	 5mwKWvrQsveLbpdbyCKKz4scbK+HnPbN0ELrxj4Q=
+	b=qNTKSsmHOPs5z4T08bzZgpV9XtIiA+XfZT/iFwFT4AoDMyG0Tkdh3QE5IcDGTcaWA
+	 06HGtiQSbFGiEP4qX73551R5Wst8oSWSplT2eJ6hIhqbMrTvzArkXO0gNR9LKTR9fk
+	 WfhDIbUygckLyBEzls0cnZNChUeyUiqxXcBWK8UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Vincent Bernat <vincent@bernat.ch>,
-	Tonghao Zhang <tonghao@bamaicloud.com>
-Subject: [PATCH 6.17 062/184] net: bonding: fix possible peer notify event loss or dup issue
-Date: Mon, 27 Oct 2025 19:35:44 +0100
-Message-ID: <20251027183516.559606635@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	Eero Tamminen <oak@helsinkinet.fi>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Joel Granados <joel.granados@kernel.org>,
+	John Stultz <jstultz@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Mingzhe Yang <mingzhe.yang@ly.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Waiman Long <longman@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Yongliang Gao <leonylgao@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 063/184] hung_task: fix warnings caused by unaligned lock pointers
+Date: Mon, 27 Oct 2025 19:35:45 +0100
+Message-ID: <20251027183516.586562060@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -57,113 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tonghao Zhang <tonghao@bamaicloud.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-commit 10843e1492e474c02b91314963161731fa92af91 upstream.
+commit c97513cddcfc235f2522617980838e500af21d01 upstream.
 
-If the send_peer_notif counter and the peer event notify are not synchronized.
-It may cause problems such as the loss or dup of peer notify event.
+The blocker tracking mechanism assumes that lock pointers are at least
+4-byte aligned to use their lower bits for type encoding.
 
-Before this patch:
-- If should_notify_peers is true and the lock for send_peer_notif-- fails, peer
-  event may be sent again in next mii_monitor loop, because should_notify_peers
-  is still true.
-- If should_notify_peers is true and the lock for send_peer_notif-- succeeded,
-  but the lock for peer event fails, the peer event will be lost.
+However, as reported by Eero Tamminen, some architectures like m68k
+only guarantee 2-byte alignment of 32-bit values. This breaks the
+assumption and causes two related WARN_ON_ONCE checks to trigger.
 
-This patch locks the RTNL for send_peer_notif, events, and commit simultaneously.
+To fix this, the runtime checks are adjusted to silently ignore any lock
+that is not 4-byte aligned, effectively disabling the feature in such
+cases and avoiding the related warnings.
 
-Fixes: 07a4ddec3ce9 ("bonding: add an option to specify a delay between peer notifications")
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Vincent Bernat <vincent@bernat.ch>
+Thanks to Geert Uytterhoeven for bisecting!
+
+Link: https://lkml.kernel.org/r/20250909145243.17119-1-lance.yang@linux.dev
+Fixes: e711faaafbe5 ("hung_task: replace blocker_mutex with encoded blocker")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Reported-by: Eero Tamminen <oak@helsinkinet.fi>
+Closes: https://lore.kernel.org/lkml/CAMuHMdW7Ab13DdGs2acMQcix5ObJK0O2dG_Fxzr8_g58Rc1_0g@mail.gmail.com
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Anna Schumaker <anna.schumaker@oracle.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Finn Thain <fthain@linux-m68k.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: John Stultz <jstultz@google.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Mingzhe Yang <mingzhe.yang@ly.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Tomasz Figa <tfiga@chromium.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yongliang Gao <leonylgao@tencent.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Tonghao Zhang <tonghao@bamaicloud.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20251021050933.46412-1-tonghao@bamaicloud.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |   40 ++++++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 22 deletions(-)
+ include/linux/hung_task.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2969,7 +2969,7 @@ static void bond_mii_monitor(struct work
+diff --git a/include/linux/hung_task.h b/include/linux/hung_task.h
+index 34e615c76ca5..c4403eeb7144 100644
+--- a/include/linux/hung_task.h
++++ b/include/linux/hung_task.h
+@@ -20,6 +20,10 @@
+  * always zero. So we can use these bits to encode the specific blocking
+  * type.
+  *
++ * Note that on architectures where this is not guaranteed, or for any
++ * unaligned lock, this tracking mechanism is silently skipped for that
++ * lock.
++ *
+  * Type encoding:
+  * 00 - Blocked on mutex			(BLOCKER_TYPE_MUTEX)
+  * 01 - Blocked on semaphore			(BLOCKER_TYPE_SEM)
+@@ -45,7 +49,7 @@ static inline void hung_task_set_blocker(void *lock, unsigned long type)
+ 	 * If the lock pointer matches the BLOCKER_TYPE_MASK, return
+ 	 * without writing anything.
+ 	 */
+-	if (WARN_ON_ONCE(lock_ptr & BLOCKER_TYPE_MASK))
++	if (lock_ptr & BLOCKER_TYPE_MASK)
+ 		return;
+ 
+ 	WRITE_ONCE(current->blocker, lock_ptr | type);
+@@ -53,8 +57,6 @@ static inline void hung_task_set_blocker(void *lock, unsigned long type)
+ 
+ static inline void hung_task_clear_blocker(void)
  {
- 	struct bonding *bond = container_of(work, struct bonding,
- 					    mii_work.work);
--	bool should_notify_peers = false;
-+	bool should_notify_peers;
- 	bool commit;
- 	unsigned long delay;
- 	struct slave *slave;
-@@ -2981,30 +2981,33 @@ static void bond_mii_monitor(struct work
- 		goto re_arm;
- 
- 	rcu_read_lock();
-+
- 	should_notify_peers = bond_should_notify_peers(bond);
- 	commit = !!bond_miimon_inspect(bond);
--	if (bond->send_peer_notif) {
--		rcu_read_unlock();
--		if (rtnl_trylock()) {
--			bond->send_peer_notif--;
--			rtnl_unlock();
--		}
--	} else {
--		rcu_read_unlock();
--	}
- 
--	if (commit) {
-+	rcu_read_unlock();
-+
-+	if (commit || bond->send_peer_notif) {
- 		/* Race avoidance with bond_close cancel of workqueue */
- 		if (!rtnl_trylock()) {
- 			delay = 1;
--			should_notify_peers = false;
- 			goto re_arm;
- 		}
- 
--		bond_for_each_slave(bond, slave, iter) {
--			bond_commit_link_state(slave, BOND_SLAVE_NOTIFY_LATER);
-+		if (commit) {
-+			bond_for_each_slave(bond, slave, iter) {
-+				bond_commit_link_state(slave,
-+						       BOND_SLAVE_NOTIFY_LATER);
-+			}
-+			bond_miimon_commit(bond);
-+		}
-+
-+		if (bond->send_peer_notif) {
-+			bond->send_peer_notif--;
-+			if (should_notify_peers)
-+				call_netdevice_notifiers(NETDEV_NOTIFY_PEERS,
-+							 bond->dev);
- 		}
--		bond_miimon_commit(bond);
- 
- 		rtnl_unlock();	/* might sleep, hold no other locks */
- 	}
-@@ -3012,13 +3015,6 @@ static void bond_mii_monitor(struct work
- re_arm:
- 	if (bond->params.miimon)
- 		queue_delayed_work(bond->wq, &bond->mii_work, delay);
+-	WARN_ON_ONCE(!READ_ONCE(current->blocker));
 -
--	if (should_notify_peers) {
--		if (!rtnl_trylock())
--			return;
--		call_netdevice_notifiers(NETDEV_NOTIFY_PEERS, bond->dev);
--		rtnl_unlock();
--	}
+ 	WRITE_ONCE(current->blocker, 0UL);
  }
  
- static int bond_upper_dev_walk(struct net_device *upper,
+-- 
+2.51.1
+
 
 
