@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BA032143F;
-	Mon, 27 Oct 2025 19:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3859432548B;
+	Mon, 27 Oct 2025 19:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593185; cv=none; b=V1eTE6oQ9a13Y1htUpjFyQVfgPFJq/0tb3wkweoEX/rhjrtxH79HM0T6JCyI7yoTvX5e38uSlEoxy3Qj1TLhfMV3DwE2Y64ypnHe2cFbtBZGdpDPFh3OuZr4Bzv+o4h7edH0kN225acz5LL5th2Xo2Wk6axlKAoE7RaLPa3LS6Q=
+	t=1761593188; cv=none; b=TLAlzPL71Rhyp1bNzauyunj3LjDqJ5hAuTvdIlX2s+nrJMwBFLz+/fBQSxarCjIUsVnd6NfMQw9AdxqhVrtfPDWdIAtiWdpYk1FYKe8oEXIo63oqlcsAmuVGNYzqNRqJy/yD91Vr6YVOulpjFv+E302dtbRwYd1ZGroyMcaW9GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593185; c=relaxed/simple;
-	bh=5j1XGXYNcLjsvCpUPTe6RB0m02qeJrSgb4mLttW0ofA=;
+	s=arc-20240116; t=1761593188; c=relaxed/simple;
+	bh=GMsw9QEfr88PeYdIy7CCHxuO653XSdDtRsVd76HNd20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jajBqczPy/dNTKJ6ofnsv9XkdOhLNgHfQKQHlEcZhuxAT3aDtD6z96gNXTNz/0kzhFRp4XcC162bvgNkfgj6KH1een1K6Q9eaSQIs7Sl5bUQfppAGPsCojeh9XZ2Gr5hl3en08eFPq0SpBs1M6eQhSr/vAypzJe5lV/8DJY4pAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMGx0/LW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOSVBT0SUX7mrFRoz1KG9yGJSlqnIGG2XomxzkUmFpSpi4kRwI4vsDnWZ7EWgfrGle51M8Hox/HjYYNAG5H/RZpDWENVVsJ4B8ZrCsMkS4+LgZzY7CzhxyqNVhDWb5Md12bfHWwnLvOdECGaXjujnU0J81ZyylA63rLsKJybf14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRNXLeyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMGx0/LW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974FDC4CEF1;
-	Mon, 27 Oct 2025 19:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRNXLeyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE3EC4CEF1;
+	Mon, 27 Oct 2025 19:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593184;
-	bh=5j1XGXYNcLjsvCpUPTe6RB0m02qeJrSgb4mLttW0ofA=;
+	s=korg; t=1761593187;
+	bh=GMsw9QEfr88PeYdIy7CCHxuO653XSdDtRsVd76HNd20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMGx0/LWl3ikPiQVFCnSs3n84riPPNGPeljUsQXjhdn3pFe59oKUOgCEa2gw4HaON
-	 9kMO/Dhwd4F9hw5SpapKH1Q+22253hnrJMIFxvSbTHzCwPTsRipb0zvWbBatR5KRrj
-	 IC8RLbgLqaydwN4bVPPc8X2pQucrHd4ohw3m21vo=
+	b=yRNXLeyYXxW5Lnh5ti7izSiWc8ZNJfMAckzyqL/yGomn6v03Csis/Da5LkOEQ5S61
+	 INyUn/0rqMzxvNK5zRcgYeze3tBdHspUiUehgucF8YiML+2zpXWcx6YNWqRF5eFzr5
+	 o8bf2OnapLI1TkERorurivbxFmX2aMzB91nrGECM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
 	Amery Hung <ameryhung@gmail.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 046/184] net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ
-Date: Mon, 27 Oct 2025 19:35:28 +0100
-Message-ID: <20251027183516.145243707@linuxfoundation.org>
+Subject: [PATCH 6.17 047/184] net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for striding RQ
+Date: Mon, 27 Oct 2025 19:35:29 +0100
+Message-ID: <20251027183516.170446667@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -55,63 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Amery Hung <ameryhung@gmail.com>
 
-[ Upstream commit afd5ba577c10639f62e8120df67dc70ea4b61176 ]
+[ Upstream commit 87bcef158ac1faca1bd7e0104588e8e2956d10be ]
 
-XDP programs can release xdp_buff fragments when calling
-bpf_xdp_adjust_tail(). The driver currently assumes the number of
-fragments to be unchanged and may generate skb with wrong truesize or
-containing invalid frags. Fix the bug by generating skb according to
-xdp_buff after the XDP program runs.
+XDP programs can change the layout of an xdp_buff through
+bpf_xdp_adjust_tail() and bpf_xdp_adjust_head(). Therefore, the driver
+cannot assume the size of the linear data area nor fragments. Fix the
+bug in mlx5 by generating skb according to xdp_buff after XDP programs
+run.
 
-Fixes: ea5d49bdae8b ("net/mlx5e: Add XDP multi buffer support to the non-linear legacy RQ")
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Currently, when handling multi-buf XDP, the mlx5 driver assumes the
+layout of an xdp_buff to be unchanged. That is, the linear data area
+continues to be empty and fragments remain the same. This may cause
+the driver to generate erroneous skb or triggering a kernel
+warning. When an XDP program added linear data through
+bpf_xdp_adjust_head(), the linear data will be ignored as
+mlx5e_build_linear_skb() builds an skb without linear data and then
+pull data from fragments to fill the linear data area. When an XDP
+program has shrunk the non-linear data through bpf_xdp_adjust_tail(),
+the delta passed to __pskb_pull_tail() may exceed the actual nonlinear
+data size and trigger the BUG_ON in it.
+
+To fix the issue, first record the original number of fragments. If the
+number of fragments changes after the XDP program runs, rewind the end
+fragment pointer by the difference and recalculate the truesize. Then,
+build the skb with the linear data area matching the xdp_buff. Finally,
+only pull data in if there is non-linear data and fill the linear part
+up to 256 bytes.
+
+Fixes: f52ac7028bec ("net/mlx5e: RX, Add XDP multi-buffer support in Striding RQ")
 Signed-off-by: Amery Hung <ameryhung@gmail.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1760644540-899148-2-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1760644540-899148-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 25 ++++++++++++++-----
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 26 ++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index b8c609d91d11b..25d993ded314a 100644
+index 25d993ded314a..5dbf48da2f4f1 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1773,14 +1773,27 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
+@@ -2017,6 +2017,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 	u32 byte_cnt       = cqe_bcnt;
+ 	struct skb_shared_info *sinfo;
+ 	unsigned int truesize = 0;
++	u32 pg_consumed_bytes;
+ 	struct bpf_prog *prog;
+ 	struct sk_buff *skb;
+ 	u32 linear_frame_sz;
+@@ -2070,7 +2071,8 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 
+ 	while (byte_cnt) {
+ 		/* Non-linear mode, hence non-XSK, which always uses PAGE_SIZE. */
+-		u32 pg_consumed_bytes = min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
++		pg_consumed_bytes =
++			min_t(u32, PAGE_SIZE - frag_offset, byte_cnt);
+ 
+ 		if (test_bit(MLX5E_RQ_STATE_SHAMPO, &rq->state))
+ 			truesize += pg_consumed_bytes;
+@@ -2086,10 +2088,15 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
  	}
  
- 	prog = rcu_dereference(rq->xdp_prog);
--	if (prog && mlx5e_xdp_handle(rq, prog, mxbuf)) {
--		if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
--			struct mlx5e_wqe_frag_info *pwi;
-+	if (prog) {
+ 	if (prog) {
 +		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
++		u32 len;
 +
-+		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
-+			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT,
-+						 rq->flags)) {
-+				struct mlx5e_wqe_frag_info *pwi;
-+
-+				wi -= old_nr_frags - sinfo->nr_frags;
-+
-+				for (pwi = head_wi; pwi < wi; pwi++)
-+					pwi->frag_page->frags++;
-+			}
-+			return NULL; /* page/packet was consumed by XDP */
-+		}
+ 		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
+ 				struct mlx5e_frag_page *pfp;
  
--			for (pwi = head_wi; pwi < wi; pwi++)
--				pwi->frag_page->frags++;
++				frag_page -= old_nr_frags - sinfo->nr_frags;
++
+ 				for (pfp = head_page; pfp < frag_page; pfp++)
+ 					pfp->frags++;
+ 
+@@ -2100,9 +2107,19 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 			return NULL; /* page/packet was consumed by XDP */
+ 		}
+ 
 +		nr_frags_free = old_nr_frags - sinfo->nr_frags;
 +		if (unlikely(nr_frags_free)) {
-+			wi -= nr_frags_free;
-+			truesize -= nr_frags_free * frag_info->frag_stride;
++			frag_page -= nr_frags_free;
++			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
++				ALIGN(pg_consumed_bytes,
++				      BIT(rq->mpwqe.log_stride_sz));
++		}
++
++		len = mxbuf->xdp.data_end - mxbuf->xdp.data;
++
+ 		skb = mlx5e_build_linear_skb(
+ 			rq, mxbuf->xdp.data_hard_start, linear_frame_sz,
+-			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, 0,
++			mxbuf->xdp.data - mxbuf->xdp.data_hard_start, len,
+ 			mxbuf->xdp.data - mxbuf->xdp.data_meta);
+ 		if (unlikely(!skb)) {
+ 			mlx5e_page_release_fragmented(rq->page_pool,
+@@ -2127,8 +2144,11 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 			do
+ 				pagep->frags++;
+ 			while (++pagep < frag_page);
++
++			headlen = min_t(u16, MLX5E_RX_MAX_HEAD - len,
++					skb->data_len);
++			__pskb_pull_tail(skb, headlen);
  		}
--		return NULL; /* page/packet was consumed by XDP */
- 	}
+-		__pskb_pull_tail(skb, headlen);
+ 	} else {
+ 		dma_addr_t addr;
  
- 	skb = mlx5e_build_linear_skb(
 -- 
 2.51.0
 
