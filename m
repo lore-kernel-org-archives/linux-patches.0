@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A60732A3F2;
-	Mon, 27 Oct 2025 19:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD130313546;
+	Mon, 27 Oct 2025 19:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593309; cv=none; b=NCTUlP52cjgwtdgSnYNX12+1NFY2v6YasiuoSiGYKMjutw/G7Q02kh/xsvdKVC5DIs9AGKvIbbQBJiPpns+cPlRr8IUTzezPlrhsn+PvnSbmQmCZ26yI5m5uU9td+ndO8D/eqD6TDnQ00tyJU5N4ZyHPLRBtDXzpBsdVILlQlhQ=
+	t=1761593312; cv=none; b=H0UbfZWW/aGoFbvrX0xA3EYIBnM/G5xNUP18quKV9LSw8YKEcOOMo+l/Ae5Q2YLYtvqXotAtIKkc/LjvCQOEj6hQMHVIQXqcEBGJQh1+rtMqxmz0w1H+Y/GzH3EOyn6r5d3YjsY7MBMSoQOC067SOqAGFyWm3BWTdg7Hv8Q6K60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593309; c=relaxed/simple;
-	bh=7cb4UbzG1S4Tk5KBbms/mtmfK57bgyRzYYcu2SMK9PM=;
+	s=arc-20240116; t=1761593312; c=relaxed/simple;
+	bh=8rO9UwtA+mdgzqrMvr17LaoWatG9kO8T0wzswi6CwPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uz+j073llB0jKHFJjD7Pi4jLIjWh7+dJ9XI/f1xrfVS48fXYjnueOUvLiO2fjT3e7vrMqswQm+xE58R2vhOAGGuc3TexwL86WQ6CDJ9g/u8BIecqwoTdlFPPAnrnR27fc1WTKeUBjnyDO2Jjl6NuycZWJMhgDUL17yo5UNhsucc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta1w11Uj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTEFFpJiSv1vvAZlikR1jhoeJixi9Zt4JmtZI3+LxRMksq2Z4JstxZriiMRcOYQnBsQR+sQksZ/hoayvpydjrWlT6qHxk73XxG1/nDqTJCnQn7vwho2iMALTWwCGjzAeOGcdhH1e0QqWzTj+uNVai9Wphf1lrftDuHAr3aul1lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVlv37en; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta1w11Uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2404C4CEF1;
-	Mon, 27 Oct 2025 19:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVlv37en"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F3FC4CEF1;
+	Mon, 27 Oct 2025 19:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593309;
-	bh=7cb4UbzG1S4Tk5KBbms/mtmfK57bgyRzYYcu2SMK9PM=;
+	s=korg; t=1761593311;
+	bh=8rO9UwtA+mdgzqrMvr17LaoWatG9kO8T0wzswi6CwPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ta1w11UjEpNJrTpJL1HHBouFF2R8R+EeMsMnFTlfCEifihkmAmODqDCmLSQbXtQ8e
-	 F+tzjbs0PGR0jIOCnaLLi4lV2tuNfyx/6cD/6X4qj7FQC8PGc+V7AM77RZpEVDKdFk
-	 YAcBIpNgxIVW4QtQ2DyWwQ9C+A27fZCvebm7rVBY=
+	b=LVlv37enSJb5OwS1rRMDnWFMo6/VgLURBnvM2ko4zmj8Fa9IRGFII1mm7HDPyaXMk
+	 KurEGVn8g3BQqJG+qSpGfPYzCyehmDHDrxIbFt+yH3Dgv/oEYOFsIiCPaY9tgJmxRC
+	 ZTACVtKtkh+6wz5isQYTTV8FXVogBeLTiAPYEyuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
 	Nam Cao <namcao@linutronix.de>,
+	kernel test robot <lkp@intel.com>,
 	Gabriele Monaco <gmonaco@redhat.com>
-Subject: [PATCH 6.17 093/184] rv: Fully convert enabled_monitors to use list_head as iterator
-Date: Mon, 27 Oct 2025 19:36:15 +0100
-Message-ID: <20251027183517.404836055@linuxfoundation.org>
+Subject: [PATCH 6.17 094/184] rv: Make rtapp/pagefault monitor depends on CONFIG_MMU
+Date: Mon, 27 Oct 2025 19:36:16 +0100
+Message-ID: <20251027183517.433890638@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -53,72 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Nam Cao <namcao@linutronix.de>
 
-commit 103541e6a5854b08a25e4caa61e990af1009a52e upstream.
+commit 3d62f95bd8450cebb4a4741bf83949cd54edd4a3 upstream.
 
-The callbacks in enabled_monitors_seq_ops are inconsistent. Some treat the
-iterator as struct rv_monitor *, while others treat the iterator as struct
-list_head *.
+There is no page fault without MMU. Compiling the rtapp/pagefault monitor
+without CONFIG_MMU fails as page fault tracepoints' definitions are not
+available.
 
-This causes a wrong type cast and crashes the system as reported by Nathan.
+Make rtapp/pagefault monitor depends on CONFIG_MMU.
 
-Convert everything to use struct list_head * as iterator. This also makes
-enabled_monitors consistent with available_monitors.
-
-Fixes: de090d1ccae1 ("rv: Fix wrong type cast in enabled_monitors_next()")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/linux-trace-kernel/20250923002004.GA2836051@ax162/
+Fixes: 9162620eb604 ("rv: Add rtapp_pagefault monitor")
 Signed-off-by: Nam Cao <namcao@linutronix.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202509260455.6Z9Vkty4-lkp@intel.com/
 Cc: stable@vger.kernel.org
 Reviewed-by: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/r/20251002082235.973099-1-namcao@linutronix.de
+Link: https://lore.kernel.org/r/20251002082317.973839-1-namcao@linutronix.de
 Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/rv/rv.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/rv/monitors/pagefault/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/rv/rv.c b/kernel/trace/rv/rv.c
-index 48338520376f..43e9ea473cda 100644
---- a/kernel/trace/rv/rv.c
-+++ b/kernel/trace/rv/rv.c
-@@ -501,7 +501,7 @@ static void *enabled_monitors_next(struct seq_file *m, void *p, loff_t *pos)
- 
- 	list_for_each_entry_continue(mon, &rv_monitors_list, list) {
- 		if (mon->enabled)
--			return mon;
-+			return &mon->list;
- 	}
- 
- 	return NULL;
-@@ -509,7 +509,7 @@ static void *enabled_monitors_next(struct seq_file *m, void *p, loff_t *pos)
- 
- static void *enabled_monitors_start(struct seq_file *m, loff_t *pos)
- {
--	struct rv_monitor *mon;
-+	struct list_head *head;
- 	loff_t l;
- 
- 	mutex_lock(&rv_interface_lock);
-@@ -517,15 +517,15 @@ static void *enabled_monitors_start(struct seq_file *m, loff_t *pos)
- 	if (list_empty(&rv_monitors_list))
- 		return NULL;
- 
--	mon = list_entry(&rv_monitors_list, struct rv_monitor, list);
-+	head = &rv_monitors_list;
- 
- 	for (l = 0; l <= *pos; ) {
--		mon = enabled_monitors_next(m, mon, &l);
--		if (!mon)
-+		head = enabled_monitors_next(m, head, &l);
-+		if (!head)
- 			break;
- 	}
- 
--	return mon;
-+	return head;
- }
- 
- /*
+diff --git a/kernel/trace/rv/monitors/pagefault/Kconfig b/kernel/trace/rv/monitors/pagefault/Kconfig
+index 5e16625f1653..0e013f00c33b 100644
+--- a/kernel/trace/rv/monitors/pagefault/Kconfig
++++ b/kernel/trace/rv/monitors/pagefault/Kconfig
+@@ -5,6 +5,7 @@ config RV_MON_PAGEFAULT
+ 	select RV_LTL_MONITOR
+ 	depends on RV_MON_RTAPP
+ 	depends on X86 || RISCV
++	depends on MMU
+ 	default y
+ 	select LTL_MON_EVENTS_ID
+ 	bool "pagefault monitor"
 -- 
 2.51.1
 
