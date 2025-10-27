@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639B130147E;
-	Mon, 27 Oct 2025 19:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F278332548B;
+	Mon, 27 Oct 2025 19:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591979; cv=none; b=VYWURwC54Jnn2uGAJFCfjoUlWmeau/z0iTFKhsXpd403jlY+aiRZSnTYiBHNDGY81Vl59S9kfkPrberf3SlUeDlssrunzO8Q+5eF2HpAxxkw2RXP6peZlDNMh4SYvzl1oRZ0UI7EcTmm3vzO6A6xZQapMCpphQK6pn6Zcoy9aFM=
+	t=1761591982; cv=none; b=Hq2mCVawdXPCiOisqOcPWkibCuDdMsyU9owAeFGlmXFSkhO8txxR1tQ54EfoJjwF9VwNK++sk6kFniS7cUROvIx6xB1t7p4BwO2i2X1D3TIMUCBKCqIYGWSavl9uhestU3djgLPKkW9GmhfvJ1kwFgf7GSnLRmVhbV2qorXwFqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591979; c=relaxed/simple;
-	bh=DPa4Zxp9nXruOS85KvFrdV7qScWSLMCeqvF1B0CrTfc=;
+	s=arc-20240116; t=1761591982; c=relaxed/simple;
+	bh=MY5FrsxEHayHmaghgFmLYSHGgzDPf+Rca355hsb+bbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfFffzjYW+mbyXSX/Bk/hpy9XAF9kjjOP+LH01oDYAj0dVNR5ndQk226FmhF+ZhZKGFrCN7z/oDIyGrX+dIuiqQe09huZO44nZAcJF2IkR7eIIeIWwT+O9bIFFJXe94+tV8pDfIOIWQu2Wa7AY025PO92Pk8s5DCecDHu276+Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t10uhfUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KmDACjReppFXtQlI82yHxAcKe/HXKjKf4OaTHsfk8UZF1nHlxyDfgj1ToKEUc7XncHoB96AkwyEp46wv+2UHuUzpi+aSjV+i0M6malJofjQHe9bP5pgsBdbb+wuphZr+8SBObT1lKYAND+HMxazjkmH9dweYMhwxC9AGKoFHQCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WmXoNZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t10uhfUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF5EC113D0;
-	Mon, 27 Oct 2025 19:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WmXoNZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DBFC4CEF1;
+	Mon, 27 Oct 2025 19:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591979;
-	bh=DPa4Zxp9nXruOS85KvFrdV7qScWSLMCeqvF1B0CrTfc=;
+	s=korg; t=1761591981;
+	bh=MY5FrsxEHayHmaghgFmLYSHGgzDPf+Rca355hsb+bbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t10uhfUPTNjrRM03m1WC8rO9/Vhb8kcUvEzHgcEGrbx+Svp3b2/AQp39I/UViCUwW
-	 Dbhx+deLsICYgx/2IIXx8m+M7/W0DOU46N10Q5N9WGP9UBZx3ApDwS5N92hmXlDmqT
-	 jKGFp3xu+e8F/maD05kBY9Mt+N1nrKKKSLR0PlBc=
+	b=0WmXoNZazZi+pAyal90h7XKDXR5jxIs0LTastjkEVno60AVijGtA41ww9GQZmbY5L
+	 qlbQEjUipiX4ywOqR5Gkr4/x0Tt14y2gID/MO/PWXvEkcpY0qXGIFfz6zqWMOz6AUX
+	 MFj2VeuYzJ7ksF+58BoyZUTVXzSzR2gH0nly6G1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/123] net: tls: wait for async completion on last message
-Date: Mon, 27 Oct 2025 19:35:05 +0100
-Message-ID: <20251027183447.072214363@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.15 065/123] MIPS: Malta: Fix keyboard resource preventing i8042 driver from registering
+Date: Mon, 27 Oct 2025 19:35:45 +0100
+Message-ID: <20251027183448.131485514@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -45,58 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 54001d0f2fdbc7852136a00f3e6fc395a9547ae5 ]
+commit bf5570590a981d0659d0808d2d4bcda21b27a2a5 upstream.
 
-When asynchronous encryption is used KTLS sends out the final data at
-proto->close time. This becomes problematic when the task calling
-close() receives a signal. In this case it can happen that
-tcp_sendmsg_locked() called at close time returns -ERESTARTSYS and the
-final data is not sent.
+MIPS Malta platform code registers the PCI southbridge legacy port I/O
+PS/2 keyboard range as a standard resource marked as busy.  It prevents
+the i8042 driver from registering as it fails to claim the resource in
+a call to i8042_platform_init().  Consequently PS/2 keyboard and mouse
+devices cannot be used with this platform.
 
-The described situation happens when KTLS is used in conjunction with
-io_uring, as io_uring uses task_work_add() to add work to the current
-userspace task. A discussion of the problem along with a reproducer can
-be found in [1] and [2]
+Fix the issue by removing the busy marker from the standard reservation,
+making the driver register successfully:
 
-Fix this by waiting for the asynchronous encryption to be completed on
-the final message. With this there is no data left to be sent at close
-time.
+  serio: i8042 KBD port at 0x60,0x64 irq 1
+  serio: i8042 AUX port at 0x60,0x64 irq 12
 
-[1] https://lore.kernel.org/all/20231010141932.GD3114228@pengutronix.de/
-[2] https://lore.kernel.org/all/20240315100159.3898944-1-s.hauer@pengutronix.de/
+and the resource show up as expected among the legacy devices:
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20240904-ktls-wait-async-v1-1-a62892833110@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b014a4e066c5 ("tls: wait for async encrypt in case of error during latter iterations of sendmsg")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  00000000-00ffffff : MSC PCI I/O
+    00000000-0000001f : dma1
+    00000020-00000021 : pic1
+    00000040-0000005f : timer
+    00000060-0000006f : keyboard
+      00000060-0000006f : i8042
+    00000070-00000077 : rtc0
+    00000080-0000008f : dma page reg
+    000000a0-000000a1 : pic2
+    000000c0-000000df : dma2
+    [...]
+
+If the i8042 driver has not been configured, then the standard resource
+will remain there preventing any conflicting dynamic assignment of this
+PCI port I/O address range.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/alpine.DEB.2.21.2510211919240.8377@angie.orcam.me.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 2 +-
+ arch/mips/mti-malta/malta-setup.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 6b0fd0e5fc880..d2cb19f5cb8bc 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1164,7 +1164,7 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 
- 	if (!num_async) {
- 		goto send_end;
--	} else if (num_zc) {
-+	} else if (num_zc || eor) {
- 		int err;
- 
- 		/* Wait for pending encryptions to get completed */
--- 
-2.51.0
-
+--- a/arch/mips/mti-malta/malta-setup.c
++++ b/arch/mips/mti-malta/malta-setup.c
+@@ -47,7 +47,7 @@ static struct resource standard_io_resou
+ 		.name = "keyboard",
+ 		.start = 0x60,
+ 		.end = 0x6f,
+-		.flags = IORESOURCE_IO | IORESOURCE_BUSY
++		.flags = IORESOURCE_IO
+ 	},
+ 	{
+ 		.name = "dma page reg",
 
 
