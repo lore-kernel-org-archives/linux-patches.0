@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56B92D6E70;
-	Mon, 27 Oct 2025 19:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DC62D6E70;
+	Mon, 27 Oct 2025 19:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591645; cv=none; b=ltInWmVt5OoD8z6eTRdcdTIFka1KLzu6yHAdOWj/i8H1WNoKx/xbABBv9k6VqWAxqt/3jEiTeBMPz5gBfeuEgbuliQ0RZj6tuY+JSCSWu1K48yQP/BIlLGzVhXbkBD4LkE0udaHedo04X2TaYn/Prt+RgBx4AFZRoJhhwSthSSU=
+	t=1761591648; cv=none; b=ULrlw3g4SoaSoCEOUWZbtpfS3nu5/iG3vxk4PdGrsH30cmLTf0rPA0rb84Xk8nL0oa/QGyeTtKmPTmMlz+gK+mEYIHGwcY40NpMkU9wz1xoV6tB1/waHtArmgpCq2QGUs+IyTXTBM+wAl9PY9r763/1ngFDcV5qX/YISQYkD2oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591645; c=relaxed/simple;
-	bh=lb5zP4ucTMTSY/rnJ2FuyOsfw3WO/rdALY/i74Vcjaw=;
+	s=arc-20240116; t=1761591648; c=relaxed/simple;
+	bh=2MgWbbVb5aDl8bRA839SpCk+J0ErVtNyqLPVEkQ2B+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQBK/LkzFarP7MU/F61DUyxKCo68YrNdy4OXomKDjXCTAPrVD93celX6pvuk2pnvojBz8PcYzJJ2yqDB9XUiAH1oab3ve2LVd+c9PWVl+wHROgZZsP1tWhUWTuxq2nxuqlea49TQAGt+Mja5S+m7yEXI4Kb6OOlanOooiZNRsXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBqcsc06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgEMSifBdr6Hi2UUliyV7DpJR6ZZ535LVlLaGs5dsL5qE4w8zzU1f59D+VzFRnTz6Mqm01g2VP4apI/xAN6j7V0HpCJrxggz4b2ctYwjcnTU/efVJGMyElyZVaI4dJTd47JCYtS3VLtmo5+hvcnGT3V4SI+9iKvLB3pIwxFhSsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycZJwmex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBqcsc06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6728AC4CEF1;
-	Mon, 27 Oct 2025 19:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycZJwmex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71AEC4CEF1;
+	Mon, 27 Oct 2025 19:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591645;
-	bh=lb5zP4ucTMTSY/rnJ2FuyOsfw3WO/rdALY/i74Vcjaw=;
+	s=korg; t=1761591648;
+	bh=2MgWbbVb5aDl8bRA839SpCk+J0ErVtNyqLPVEkQ2B+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBqcsc06YbIoQ+s9NbO3yWc6w/zbbNyHv0+43Zxp5Vo3j6W2dCMFyyfb1jWC6kt98
-	 IDIOX8q2g50NsTUZvG05ctbUgTG1C8U6jz3p9bTfUvm1H5zN6atJ1fuIdD6bhfcZYe
-	 A9dir03vjj67T+lu1rsfTZzL70M8oV1og2eqfWAI=
+	b=ycZJwmexmasLupMFLd5RbEAJqDYLPwewNs75sMA4UwJ/zJ4flzOlg3LtZhXKkf4f6
+	 lpTpeBRxSyVmf+P49QOV2W2/YoDQUwdGjVIUHIWJB8/WKXUSyMVs/JqlpxgU3mAcNB
+	 uWMsABb39Rm8bAVj7sLQNoxpYt8aawq/D/1iYYH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Mathew McBride <matt@traverse.com.au>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Huang Ying <ying.huang@linux.alibaba.com>,
+	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/332] dpaa2-eth: fix the pointer passed to PTR_ALIGN on Tx path
-Date: Mon, 27 Oct 2025 19:35:30 +0100
-Message-ID: <20251027183532.175136080@linuxfoundation.org>
+Subject: [PATCH 5.10 278/332] arm64, mm: avoid always making PTE dirty in pte_mkwrite()
+Date: Mon, 27 Oct 2025 19:35:31 +0100
+Message-ID: <20251027183532.201383870@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,48 +60,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Huang Ying <ying.huang@linux.alibaba.com>
 
-[ Upstream commit 902e81e679d86846a2404630d349709ad9372d0d ]
+[ Upstream commit 143937ca51cc6ae2fccc61a1cb916abb24cd34f5 ]
 
-The blamed commit increased the needed headroom to account for
-alignment. This means that the size required to always align a Tx buffer
-was added inside the dpaa2_eth_needed_headroom() function. By doing
-that, a manual adjustment of the pointer passed to PTR_ALIGN() was no
-longer correct since the 'buffer_start' variable was already pointing
-to the start of the skb's memory.
+Current pte_mkwrite_novma() makes PTE dirty unconditionally.  This may
+mark some pages that are never written dirty wrongly.  For example,
+do_swap_page() may map the exclusive pages with writable and clean PTEs
+if the VMA is writable and the page fault is for read access.
+However, current pte_mkwrite_novma() implementation always dirties the
+PTE.  This may cause unnecessary disk writing if the pages are
+never written before being reclaimed.
 
-The behavior of the dpaa2-eth driver without this patch was to drop
-frames on Tx even when the headroom was matching the 128 bytes
-necessary. Fix this by removing the manual adjust of 'buffer_start' from
-the PTR_MODE call.
+So, change pte_mkwrite_novma() to clear the PTE_RDONLY bit only if the
+PTE_DIRTY bit is set to make it possible to make the PTE writable and
+clean.
 
-Closes: https://lore.kernel.org/netdev/70f0dcd9-1906-4d13-82df-7bbbbe7194c6@app.fastmail.com/T/#u
-Fixes: f422abe3f23d ("dpaa2-eth: increase the needed headroom to account for alignment")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Tested-by: Mathew McBride <matt@traverse.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251016135807.360978-1-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The current behavior was introduced in commit 73e86cb03cf2 ("arm64:
+Move PTE_RDONLY bit handling out of set_pte_at()").  Before that,
+pte_mkwrite() only sets the PTE_WRITE bit, while set_pte_at() only
+clears the PTE_RDONLY bit if both the PTE_WRITE and the PTE_DIRTY bits
+are set.
+
+To test the performance impact of the patch, on an arm64 server
+machine, run 16 redis-server processes on socket 1 and 16
+memtier_benchmark processes on socket 0 with mostly get
+transactions (that is, redis-server will mostly read memory only).
+The memory footprint of redis-server is larger than the available
+memory, so swap out/in will be triggered.  Test results show that the
+patch can avoid most swapping out because the pages are mostly clean.
+And the benchmark throughput improves ~23.9% in the test.
+
+Fixes: 73e86cb03cf2 ("arm64: Move PTE_RDONLY bit handling out of set_pte_at()")
+Signed-off-by: Huang Ying <ying.huang@linux.alibaba.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/include/asm/pgtable.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 0a1a7d94583b4..d27f5a8e59dcd 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -994,8 +994,7 @@ static int dpaa2_eth_build_single_fd(struct dpaa2_eth_priv *priv,
- 	dma_addr_t addr;
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index d92b5aed354e9..9bf40864b6e4f 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -174,7 +174,8 @@ static inline pmd_t set_pmd_bit(pmd_t pmd, pgprot_t prot)
+ static inline pte_t pte_mkwrite(pte_t pte)
+ {
+ 	pte = set_pte_bit(pte, __pgprot(PTE_WRITE));
+-	pte = clear_pte_bit(pte, __pgprot(PTE_RDONLY));
++	if (pte_sw_dirty(pte))
++		pte = clear_pte_bit(pte, __pgprot(PTE_RDONLY));
+ 	return pte;
+ }
  
- 	buffer_start = skb->data - dpaa2_eth_needed_headroom(skb);
--	aligned_start = PTR_ALIGN(buffer_start - DPAA2_ETH_TX_BUF_ALIGN,
--				  DPAA2_ETH_TX_BUF_ALIGN);
-+	aligned_start = PTR_ALIGN(buffer_start, DPAA2_ETH_TX_BUF_ALIGN);
- 	if (aligned_start >= skb->head)
- 		buffer_start = aligned_start;
- 	else
 -- 
 2.51.0
 
