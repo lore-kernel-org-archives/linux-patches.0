@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065C531BCAE;
-	Mon, 27 Oct 2025 19:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216DE23EA92;
+	Mon, 27 Oct 2025 19:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592625; cv=none; b=k8pf/8F/Kbz88sU0gMkHPSrd1sLw6t7IGlWrs3lzJc35IYbBP574/npGk7zTZpU8RJkB3J0fZIieFDlJt94deiTuLrfP5WFg5TKcDFdH+ABAH1ebB1m7cvZO9R53GVowJQ9AN4L2fmB4Ev7mhqZdkjzWnYXGRkWN3IQB/twmo+8=
+	t=1761592629; cv=none; b=MViErMuG7EFArpKVN16p5S2fdiYxdwysdWW7U21GXXdihUn04VkxrFR+w6nHLc0vv4raDI3dVWttk9kHRu/wm5sTKTh9yJ3PJ6QdZgPaC9y9meor0Ybiq2UZBwMtbiOmwRx7+6jUIghsI0aymIwCIvCKlfrjis1R80RFnPL7EIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592625; c=relaxed/simple;
-	bh=BvNCNgxacphl/op/Ua5jzLqRaJl2eXpyxck1FpRkz+A=;
+	s=arc-20240116; t=1761592629; c=relaxed/simple;
+	bh=UhwdTEXKDhdGSjtJXPJWXwh/tBkDi3EP2wPjlrNC5Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAen6DPlv+v9xgSe6nv0S9KnTM7MekQ7GuOZWLuYZ0yl5usgKt+9/wL2dOLz1BRwS3l3cdRGYhEIOJiVwYwxo+bNkr6UwDw6VqEJ4b4iFTGt0a7SKoEYvO5jnV35DaEF3oS/1OD9fh0eGOAmbxfYPTwmz+wrBYmjrmjpp6DaEwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVtkcKLF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I0L/v4aFPusyzbApS6V+asqdZLVxFF/JU7/2F7k/rFflzye8EprZRx44A1a1Q3J0ml+X6ngV3yWNy4t8ZOHmkQjXf3Y7UuqKQ9yMkJ0UhhZXTJxIjXZq1EdlluzJ30h/o/bxEkXgUme0jYh6SGLFAvDmfvie3VLbb19jLVmwHkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKRSMAph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVtkcKLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C042C4CEFD;
-	Mon, 27 Oct 2025 19:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKRSMAph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301F5C4CEF1;
+	Mon, 27 Oct 2025 19:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592624;
-	bh=BvNCNgxacphl/op/Ua5jzLqRaJl2eXpyxck1FpRkz+A=;
+	s=korg; t=1761592627;
+	bh=UhwdTEXKDhdGSjtJXPJWXwh/tBkDi3EP2wPjlrNC5Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVtkcKLFb1NjHixNix49sA9cuZvyYck76RHuFI54j7awhfggGEcvgRHL6JdzA1YUm
-	 0A6E9Aoo5LOSOYDbK1VBbi/6kK24VU9N3RX/HjfW2hLMTUEXG2Gbav0gHudj+KupQE
-	 KTtzEM+le80ggtpUMuiQisUo/e8iuaJ4mfFr6CiU=
+	b=MKRSMAphyWBkUnh5iCMPgIr2uo1zzUMvqsobolTd0oU7XHX96/gu2D0to3YPFsGyG
+	 OoW5pomZ/e2EjcszboGLqSKoBY1ul0BiMEbzPC9YQFwIey7ffukFN2D2vEWe5XTq7C
+	 /n2RJyXU5S/R2JNRVlSl6BC8S7SjgbxzPRYDdy/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Amery Hung <ameryhung@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 27/84] net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for legacy RQ
-Date: Mon, 27 Oct 2025 19:36:16 +0100
-Message-ID: <20251027183439.540943611@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 36/84] Revert "cpuidle: menu: Avoid discarding useful information"
+Date: Mon, 27 Oct 2025 19:36:25 +0100
+Message-ID: <20251027183439.781532327@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -53,67 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit afd5ba577c10639f62e8120df67dc70ea4b61176 ]
+commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
 
-XDP programs can release xdp_buff fragments when calling
-bpf_xdp_adjust_tail(). The driver currently assumes the number of
-fragments to be unchanged and may generate skb with wrong truesize or
-containing invalid frags. Fix the bug by generating skb according to
-xdp_buff after the XDP program runs.
+It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
+useful information") led to a performance regression on Intel Jasper Lake
+systems because it reduced the time spent by CPUs in idle state C7 which
+is correlated to the maximum frequency the CPUs can get to because of an
+average running power limit [1].
 
-Fixes: ea5d49bdae8b ("net/mlx5e: Add XDP multi buffer support to the non-linear legacy RQ")
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1760644540-899148-2-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Before that commit, get_typical_interval() would have returned UINT_MAX
+whenever it had been unable to make a high-confidence prediction which
+had led to selecting the deepest available idle state too often and
+both power and performance had been inadequate as a result of that on
+some systems.  However, this had not been a problem on systems with
+relatively aggressive average running power limits, like the Jasper Lake
+systems in question, because on those systems it was compensated by the
+ability to run CPUs faster.
+
+It was addressed by causing get_typical_interval() to return a number
+based on the recent idle duration information available to it even if it
+could not make a high-confidence prediction, but that clearly did not
+take the possible correlation between idle power and available CPU
+capacity into account.
+
+For this reason, revert most of the changes made by commit 85975daeaa4d,
+except for one cosmetic cleanup, and add a comment explaining the
+rationale for returning UINT_MAX from get_typical_interval() when it
+is unable to make a high-confidence prediction.
+
+Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
+Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
+Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 25 ++++++++++++++-----
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/cpuidle/governors/menu.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 711c95074f05c..54268892148d4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1774,14 +1774,27 @@ mlx5e_skb_from_cqe_nonlinear(struct mlx5e_rq *rq, struct mlx5e_wqe_frag_info *wi
- 	}
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -230,20 +230,17 @@ again:
+ 	 *
+ 	 * This can deal with workloads that have long pauses interspersed
+ 	 * with sporadic activity with a bunch of short pauses.
++	 *
++	 * However, if the number of remaining samples is too small to exclude
++	 * any more outliers, allow the deepest available idle state to be
++	 * selected because there are systems where the time spent by CPUs in
++	 * deep idle states is correlated to the maximum frequency the CPUs
++	 * can get to.  On those systems, shallow idle states should be avoided
++	 * unless there is a clear indication that the given CPU is most likley
++	 * going to be woken up shortly.
+ 	 */
+-	if (divisor * 4 <= INTERVALS * 3) {
+-		/*
+-		 * If there are sufficiently many data points still under
+-		 * consideration after the outliers have been eliminated,
+-		 * returning without a prediction would be a mistake because it
+-		 * is likely that the next interval will not exceed the current
+-		 * maximum, so return the latter in that case.
+-		 */
+-		if (divisor >= INTERVALS / 2)
+-			return max;
+-
++	if (divisor * 4 <= INTERVALS * 3)
+ 		return UINT_MAX;
+-	}
  
- 	prog = rcu_dereference(rq->xdp_prog);
--	if (prog && mlx5e_xdp_handle(rq, prog, mxbuf)) {
--		if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
--			struct mlx5e_wqe_frag_info *pwi;
-+	if (prog) {
-+		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
-+
-+		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
-+			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT,
-+						 rq->flags)) {
-+				struct mlx5e_wqe_frag_info *pwi;
-+
-+				wi -= old_nr_frags - sinfo->nr_frags;
-+
-+				for (pwi = head_wi; pwi < wi; pwi++)
-+					pwi->frag_page->frags++;
-+			}
-+			return NULL; /* page/packet was consumed by XDP */
-+		}
- 
--			for (pwi = head_wi; pwi < wi; pwi++)
--				pwi->frag_page->frags++;
-+		nr_frags_free = old_nr_frags - sinfo->nr_frags;
-+		if (unlikely(nr_frags_free)) {
-+			wi -= nr_frags_free;
-+			truesize -= nr_frags_free * frag_info->frag_stride;
- 		}
--		return NULL; /* page/packet was consumed by XDP */
- 	}
- 
- 	skb = mlx5e_build_linear_skb(
--- 
-2.51.0
-
+ 	thresh = max - 1;
+ 	goto again;
 
 
