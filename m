@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861C02D6612;
-	Mon, 27 Oct 2025 18:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258A6326D65;
+	Mon, 27 Oct 2025 18:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590726; cv=none; b=WvSsAiwpx7xHVVBWSSGWUSf1h86T6If8yhHF7cHKy/k9O1yqgM4NFeXYRgZnDQXGG4jMj0ViSMLZh32qCdqUXcwGB14Qk8xPEy5FE3OQQptBeSrBXrt7zcRY4w9ricapLGAOHYhVNVTPMS1rJsJ3A4EEqANeoB9kyp9RN1SUHPw=
+	t=1761590729; cv=none; b=cPTdoNOfPNO00S8JWYC34XTuX7k4bkctOtmh6OuamB9yJbZuhNTS4saOQi7wQboVhCEovuhfA7iGX2zq0r0Kv5DRw3FrJD3Hbm6ML5qv76WY7mrhSxHR/5IVnGwpK5tq5r3EXrDXjPom2fV2MJfs/YT+eYGUiU2laAXoCWaAHN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590726; c=relaxed/simple;
-	bh=oggotWLO8yDqXE28MWuF4eXv6Rca7MK6f0yiC7ExPlM=;
+	s=arc-20240116; t=1761590729; c=relaxed/simple;
+	bh=ieXtQDxbE79KanrqA63jtXQd6EWaXNkhVyk3Hvy1DaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGy8ttma2th0WPfHE1aE4ly1RxYEKHnz/zELlxT1CUSMfOaQFvXhmekjEAX4yGe8nhqtG8IbucI5XZCENl6aBt5l/hM9hRuD3aR+0KrqRsdheU0FBe1aRCcQvaO0NF0UorglzfvXUdJUrM1ceQ32eVht/+WmBpskPsRrvaeied8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XJSe9Pq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qcm7o8CcTg5EDNmnOYZ+DZIWoY0WDJd0eH0xZ9Wv+oAappdBHu+EG6LPTkgn2Kq5v8XPMy+Eh5Y6dbPOOFnnLXbcqrPllwbTcpuayrQbeNdeHOnGsvqPhHYHh0jmvohvQSQZGou0gr570dUQl24ZaywMGe7SwM/rMQwMFN0t2MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHBTf67u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XJSe9Pq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAB0C4CEFD;
-	Mon, 27 Oct 2025 18:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHBTf67u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B2AC4CEF1;
+	Mon, 27 Oct 2025 18:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590726;
-	bh=oggotWLO8yDqXE28MWuF4eXv6Rca7MK6f0yiC7ExPlM=;
+	s=korg; t=1761590729;
+	bh=ieXtQDxbE79KanrqA63jtXQd6EWaXNkhVyk3Hvy1DaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XJSe9PqmgZ4VKqjMMnTv4w/omV/I7unM0v9sLRDcX+rpNDpSLB1qvpk8Qj38jdcD
-	 S1g1aew+TNfKcTZkvCRcxWpfKw42rf0o3rSmdiBZUGqARBV+Se1d6IVwmUMb+U6od9
-	 rk419HCL+NQgkgA4lO5FM+smweBZ4VOuQFdj6wMc=
+	b=VHBTf67uSl2sh0+m2Bxr0Aeb4/PVPSJL3RWaZUt7yRCKhitWysExVK/5nTCBhto41
+	 ysao0xehKWTXbPRj4GG5GMzoupqGylfvIpjIcIBOC8j2PjPaZe6Jo1XMSWOAQwFBdT
+	 Caq8hx8LwWQJF4h7pCWnqaZuv+mGJaD/YWiTBx00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 154/224] media: lirc: Fix error handling in lirc_register()
-Date: Mon, 27 Oct 2025 19:35:00 +0100
-Message-ID: <20251027183513.074246328@linuxfoundation.org>
+Subject: [PATCH 5.4 155/224] xen/events: Update virq_to_irq on migration
+Date: Mon, 27 Oct 2025 19:35:01 +0100
+Message-ID: <20251027183513.097540099@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,53 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit 4f4098c57e139ad972154077fb45c3e3141555dd ]
+[ Upstream commit 3fcc8e146935415d69ffabb5df40ecf50e106131 ]
 
-When cdev_device_add() failed, calling put_device() to explicitly
-release dev->lirc_dev. Otherwise, it could cause the fault of the
-reference count.
+VIRQs come in 3 flavors, per-VPU, per-domain, and global, and the VIRQs
+are tracked in per-cpu virq_to_irq arrays.
 
-Found by code review.
+Per-domain and global VIRQs must be bound on CPU 0, and
+bind_virq_to_irq() sets the per_cpu virq_to_irq at registration time
+Later, the interrupt can migrate, and info->cpu is updated.  When
+calling __unbind_from_irq(), the per-cpu virq_to_irq is cleared for a
+different cpu.  If bind_virq_to_irq() is called again with CPU 0, the
+stale irq is returned.  There won't be any irq_info for the irq, so
+things break.
 
+Make xen_rebind_evtchn_to_cpu() update the per_cpu virq_to_irq mappings
+to keep them update to date with the current cpu.  This ensures the
+correct virq_to_irq is cleared in __unbind_from_irq().
+
+Fixes: e46cdb66c8fc ("xen: event channels")
 Cc: stable@vger.kernel.org
-Fixes: a6ddd4fecbb0 ("media: lirc: remove last remnants of lirc kapi")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250828003604.8949-4-jason.andryuk@amd.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/lirc_dev.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/xen/events/events_base.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -762,11 +762,11 @@ int ir_lirc_register(struct rc_dev *dev)
- 
- 	cdev_init(&dev->lirc_cdev, &lirc_fops);
- 
-+	get_device(&dev->dev);
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1717,9 +1717,20 @@ static int xen_rebind_evtchn_to_cpu(stru
+ 	 * virq or IPI channel, which don't actually need to be rebound. Ignore
+ 	 * it, but don't do the xenlinux-level rebind in that case.
+ 	 */
+-	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0)
++	if (HYPERVISOR_event_channel_op(EVTCHNOP_bind_vcpu, &bind_vcpu) >= 0) {
++		int old_cpu = info->cpu;
 +
- 	err = cdev_device_add(&dev->lirc_cdev, &dev->lirc_dev);
- 	if (err)
--		goto out_ida;
--
--	get_device(&dev->dev);
-+		goto out_put_device;
+ 		bind_evtchn_to_cpu(evtchn, tcpu);
  
- 	switch (dev->driver_type) {
- 	case RC_DRIVER_SCANCODE:
-@@ -790,7 +790,8 @@ int ir_lirc_register(struct rc_dev *dev)
++		if (info->type == IRQT_VIRQ) {
++			int virq = info->u.virq;
++			int irq = per_cpu(virq_to_irq, old_cpu)[virq];
++
++			per_cpu(virq_to_irq, old_cpu)[virq] = -1;
++			per_cpu(virq_to_irq, tcpu)[virq] = irq;
++		}
++	}
++
+ 	do_unmask(info, EVT_MASK_REASON_TEMPORARY);
  
  	return 0;
- 
--out_ida:
-+out_put_device:
-+	put_device(&dev->lirc_dev);
- 	ida_free(&lirc_ida, minor);
- 	return err;
- }
 
 
