@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369F12D542A;
-	Mon, 27 Oct 2025 19:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DC72D542A;
+	Mon, 27 Oct 2025 19:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592098; cv=none; b=oK6cAL3YUScYEoHfzvkxsBCLTX3KdRSukzCwnjKLrCYwMi0muuRCfFXqaydvoRIHxijLMK5URdlI05u4fmQIqRKgsBrh7oRLSvQD0i6wUOeGaNuYMo17v3OCKC4UNBRLaTin5KPQd269v4SNhDOOJdv6aSzQeAhDfEZpF1bsCgE=
+	t=1761592101; cv=none; b=mJeqQq87UblhL9TwuTbJtKe2IOeENlFxNZQPjEnZDzGa0QfFXXKH/By1Tas7BjbK5DR1u4WvOWZGapEJvS8L2RtW42cUAbOE4ucR6Lb6REVelHDzpmg3tof8IfoTLoPfxd8XkotjOUycIpW0k4FR9CzSGB5uVJt+99gpnhS+1i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592098; c=relaxed/simple;
-	bh=jUhMoANh0l03YKhknf5DpDU3GrYHKp9TllH4an6OTNk=;
+	s=arc-20240116; t=1761592101; c=relaxed/simple;
+	bh=Q89GGbakGKsXFnNqmaVXtC3SFZ+X2LHIQ7QgXbaS4P0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpSJ8dZ0yUiqPu5hKoZ1j6w9y/hmB3F41g/UHAG0Vcfh0uYeBcHOjIAB3ECo7SDgZ+u+IqKKkNxLWt6oZTpQULILCgidPNRZYivbgJL+tV9ZPrdHHf+IuKiYC1S9IcMoJi6ae9TedhxImPGNb98YgLRgvPj/KpHM0+emNi57ryk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eajf2cgY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvEHoYba9AXV1r9I/HAnB2NPjLDwlsaH6+KUHLAjUe0QGRmD2F06GpzzwhoEIKnJRUXZSj2C4r7bOkxBbF2UqvV1NA7xV6EZzRLL9YglRaRb3j4IB0dZaPTLNOk42E049Ypmd8UltV1z+et+VePd06NZIj9VHB24cfkcIfcmkvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHVwV7P/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eajf2cgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA92C4CEF1;
-	Mon, 27 Oct 2025 19:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHVwV7P/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E87C4CEF1;
+	Mon, 27 Oct 2025 19:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592098;
-	bh=jUhMoANh0l03YKhknf5DpDU3GrYHKp9TllH4an6OTNk=;
+	s=korg; t=1761592100;
+	bh=Q89GGbakGKsXFnNqmaVXtC3SFZ+X2LHIQ7QgXbaS4P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eajf2cgYkV4zBIzSXI360U3uixZ/s9oFeUQzoGizrwpx/XtYrO2JOiYacRh8gEbt3
-	 GT4sG4HuHMpEi0arycKC8gGuDdPNPGqR8d1YHOEZOC36Z21E+vy/2/YMk1pAgzpPvB
-	 /zMUGRrvRzdlqxnsy3CNuKc/xILvJbzsbCr7KR9s=
+	b=bHVwV7P/52TzpCIa1GpYhRAEimlcuwLDhRUELdFi0BaRQOHah7A4JmFPpGct6igah
+	 XThFh9XIMyEZ+z2l0Z+7qDENzmuGXyeOFE1yWfHbTu6X15bSrETHix38X/eTcHXpzR
+	 XITANWqkZpGWL0rAJ4uLq+M6nBpb+lp7xw2rkWLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/123] arch_topology: Fix incorrect error check in topology_parse_cpu_capacity()
-Date: Mon, 27 Oct 2025 19:36:36 +0100
-Message-ID: <20251027183449.491500278@linuxfoundation.org>
+Subject: [PATCH 5.15 117/123] usb: gadget: Store endpoint pointer in usb_request
+Date: Mon, 27 Oct 2025 19:36:37 +0100
+Message-ID: <20251027183449.518612427@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,50 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 2eead19334516c8e9927c11b448fbe512b1f18a1 ]
+[ Upstream commit bfb1d99d969fe3b892db30848aeebfa19d21f57f ]
 
-Fix incorrect use of PTR_ERR_OR_ZERO() in topology_parse_cpu_capacity()
-which causes the code to proceed with NULL clock pointers. The current
-logic uses !PTR_ERR_OR_ZERO(cpu_clk) which evaluates to true for both
-valid pointers and NULL, leading to potential NULL pointer dereference
-in clk_get_rate().
+Gadget function drivers often have goto-based error handling in their
+bind paths, which can be bug-prone. Refactoring these paths to use
+__free() scope-based cleanup is desirable, but currently blocked.
 
-Per include/linux/err.h documentation, PTR_ERR_OR_ZERO(ptr) returns:
-"The error code within @ptr if it is an error pointer; 0 otherwise."
+The blocker is that usb_ep_free_request(ep, req) requires two
+parameters, while the __free() mechanism can only pass a pointer to the
+request itself.
 
-This means PTR_ERR_OR_ZERO() returns 0 for both valid pointers AND NULL
-pointers. Therefore !PTR_ERR_OR_ZERO(cpu_clk) evaluates to true (proceed)
-when cpu_clk is either valid or NULL, causing clk_get_rate(NULL) to be
-called when of_clk_get() returns NULL.
+Store an endpoint pointer in the struct usb_request. The pointer is
+populated centrally in usb_ep_alloc_request() on every successful
+allocation, making the request object self-contained.
 
-Replace with !IS_ERR_OR_NULL(cpu_clk) which only proceeds for valid
-pointers, preventing potential NULL pointer dereference in clk_get_rate().
-
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Fixes: b8fe128dad8f ("arch_topology: Adjust initial CPU capacities with current freq")
-Link: https://patch.msgid.link/20250923174308.1771906-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://lore.kernel.org/r/20250916-ready-v1-1-4997bf277548@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Adjust context ]
+Link: https://lore.kernel.org/r/20250916-ready-v1-1-4997bf277548@google.com
+Stable-dep-of: 75a5b8d4ddd4 ("usb: gadget: f_ncm: Refactor bind path to use __free()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/arch_topology.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/core.c |    3 +++
+ include/linux/usb/gadget.h    |    2 ++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -290,7 +290,7 @@ bool __init topology_parse_cpu_capacity(
- 		 * frequency (by keeping the initial freq_factor value).
- 		 */
- 		cpu_clk = of_clk_get(cpu_node, 0);
--		if (!PTR_ERR_OR_ZERO(cpu_clk)) {
-+		if (!IS_ERR_OR_NULL(cpu_clk)) {
- 			per_cpu(freq_factor, cpu) =
- 				clk_get_rate(cpu_clk) / 1000;
- 			clk_put(cpu_clk);
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -177,6 +177,9 @@ struct usb_request *usb_ep_alloc_request
+ 
+ 	req = ep->ops->alloc_request(ep, gfp_flags);
+ 
++	if (req)
++		req->ep = ep;
++
+ 	trace_usb_ep_alloc_request(ep, req, req ? 0 : -ENOMEM);
+ 
+ 	return req;
+--- a/include/linux/usb/gadget.h
++++ b/include/linux/usb/gadget.h
+@@ -33,6 +33,7 @@ struct usb_ep;
+ 
+ /**
+  * struct usb_request - describes one i/o request
++ * @ep: The associated endpoint set by usb_ep_alloc_request().
+  * @buf: Buffer used for data.  Always provide this; some controllers
+  *	only use PIO, or don't use DMA for some endpoints.
+  * @dma: DMA address corresponding to 'buf'.  If you don't set this
+@@ -98,6 +99,7 @@ struct usb_ep;
+  */
+ 
+ struct usb_request {
++	struct usb_ep		*ep;
+ 	void			*buf;
+ 	unsigned		length;
+ 	dma_addr_t		dma;
 
 
