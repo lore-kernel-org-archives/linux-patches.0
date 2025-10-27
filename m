@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD84202963;
-	Mon, 27 Oct 2025 19:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3E1F7586;
+	Mon, 27 Oct 2025 19:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592865; cv=none; b=NvcZk8jU45aP+lj3azDzHPj/4yoM6rqyfMmablEFA3YbCWsEd+tMwbjB8awygya+trFUPMPwJWnc3WJ4fSH6b4imCFdKT8ja2diWZlZ9OmTuOnXDoU/95Zd+otkAyPcV8FcXP4CXgZTfReR7m/8EliOUBBR+VTVHWMtBphIo6jo=
+	t=1761592870; cv=none; b=I+nkpxRjjZuUZ8iZm6iPfP6hgOuDLVWxrPubs9Aw271/ptQHAfWK16ncb3TLzraapCUU2UeKfKvb2PpSXy+JnWJIGV7CBU9MLT2n8jwdFLIAx7FZwd/8pwZc+mweGQLU2B2L0M+h43yyRJG+8IFAH4JXWFAN0Y1iTRQVSjOaOAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592865; c=relaxed/simple;
-	bh=v/JGEWkbkylg9YOCSaGx2tgozCZVY/aLQb7iUW5jcQU=;
+	s=arc-20240116; t=1761592870; c=relaxed/simple;
+	bh=uOY033g2OPRFBv111L8P7xNuNjwQqX4IWJTTnEWOUFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUpjS+p4evMEoSZTuutdvrxEG/T0pZ2CUAvAaQEIn6QXOeejYianZJ7yLNCgGr2D1+HORB+uQReRxUpUvLs2qG5Ci6p54G73Ak26jfJpR7aPXF32noCehLJ8uAIIhcsbJV9oAV6tTIhx5vZ4mWm4ImRRUKtAPs0c013ThYLo7Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1ZfahUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lbhFPbKMjDw/NvphRGzJ43rBlRxhT9UDeLmqNSn/ARW0GDXcZPFSApfY1Rj7mM1NaG1t/Sf8XLwRu8P/yif/8HxvPxyE77SAkqQIvyud+swYidmPAkHsN4VrtGMLmRx21RKf86rFYkjkCBKi55YkPMxdHqvNNmWjPIHkkcOAN1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ozm4NwvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1ZfahUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88C6C4CEF1;
-	Mon, 27 Oct 2025 19:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ozm4NwvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C42BC4CEF1;
+	Mon, 27 Oct 2025 19:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592865;
-	bh=v/JGEWkbkylg9YOCSaGx2tgozCZVY/aLQb7iUW5jcQU=;
+	s=korg; t=1761592867;
+	bh=uOY033g2OPRFBv111L8P7xNuNjwQqX4IWJTTnEWOUFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1ZfahUQkwneasmIrg1IMrZzt/BFQyogvRCn5AXIzj0mv8Xdsp74lLb6vlO4D/mus
-	 OIlS7ZxCGIhm3DLuUHIjkgqzPQy8zWnvSLJYE+KRd3AsoG9wLW9XpLvRLsaz7rmvsP
-	 JTPGv0QKcoMGQPSagBBrbkUABk7SYDCa2t5BfjbU=
+	b=Ozm4NwvHm/nFUhX3dsnAKFNC6iCmO9DyfjGL/fkRSfW9xAa7jAZT1UH34s6gxTNxN
+	 y77kVLThIblg9w8ufMNn1X/A6qzLD3xrBOiJlDjoN1xt3FF6nvf8lkKcBuNpCCqTEc
+	 sRz8+WBkAbdUF0X95b20u4CkhQTxXKBMImx2bZE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/117] net: phy: micrel: always set shared->phydev for LAN8814
-Date: Mon, 27 Oct 2025 19:36:08 +0100
-Message-ID: <20251027183455.125403774@linuxfoundation.org>
+Subject: [PATCH 6.12 043/117] net/mlx5: Fix IPsec cleanup over MPV device
+Date: Mon, 27 Oct 2025 19:36:09 +0100
+Message-ID: <20251027183455.154141346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,52 +53,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 399d10934740ae8cdaa4e3245f7c5f6c332da844 ]
+[ Upstream commit 664f76be38a18c61151d0ef248c7e2f3afb4f3c7 ]
 
-Currently, during the LAN8814 PTP probe shared->phydev is only set if PTP
-clock gets actually set, otherwise the function will return before setting
-it.
+When we do mlx5e_detach_netdev() we eventually disable blocking events
+notifier, among those events are IPsec MPV events from IB to core.
 
-This is an issue as shared->phydev is unconditionally being used when IRQ
-is being handled, especially in lan8814_gpio_process_cap and since it was
-not set it will cause a NULL pointer exception and crash the kernel.
+So before disabling those blocking events, make sure to also unregister
+the devcom device and mark all this device operations as complete,
+in order to prevent the other device from using invalid netdev
+during future devcom events which could cause the trace below.
 
-So, simply always set shared->phydev to avoid the NULL pointer exception.
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+PGD 146427067 P4D 146427067 PUD 146488067 PMD 0
+Oops: Oops: 0000 [#1] SMP
+CPU: 1 UID: 0 PID: 7735 Comm: devlink Tainted: GW 6.12.0-rc6_for_upstream_min_debug_2024_11_08_00_46 #1
+Tainted: [W]=WARN
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:mlx5_devcom_comp_set_ready+0x5/0x40 [mlx5_core]
+Code: 00 01 48 83 05 23 32 1e 00 01 41 b8 ed ff ff ff e9 60 ff ff ff 48 83 05 00 32 1e 00 01 eb e3 66 0f 1f 44 00 00 0f 1f 44 00 00 <48> 8b 47 10 48 83 05 5f 32 1e 00 01 48 8b 50 40 48 85 d2 74 05 40
+RSP: 0018:ffff88811a5c35f8 EFLAGS: 00010206
+RAX: ffff888106e8ab80 RBX: ffff888107d7e200 RCX: ffff88810d6f0a00
+RDX: ffff88810d6f0a00 RSI: 0000000000000001 RDI: 0000000000000000
+RBP: ffff88811a17e620 R08: 0000000000000040 R09: 0000000000000000
+R10: ffff88811a5c3618 R11: 0000000de85d51bd R12: ffff88811a17e600
+R13: ffff88810d6f0a00 R14: 0000000000000000 R15: ffff8881034bda80
+FS:  00007f27bdf89180(0000) GS:ffff88852c880000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000010 CR3: 000000010f159005 CR4: 0000000000372eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? __die+0x20/0x60
+ ? page_fault_oops+0x150/0x3e0
+ ? exc_page_fault+0x74/0x130
+ ? asm_exc_page_fault+0x22/0x30
+ ? mlx5_devcom_comp_set_ready+0x5/0x40 [mlx5_core]
+ mlx5e_devcom_event_mpv+0x42/0x60 [mlx5_core]
+ mlx5_devcom_send_event+0x8c/0x170 [mlx5_core]
+ blocking_event+0x17b/0x230 [mlx5_core]
+ notifier_call_chain+0x35/0xa0
+ blocking_notifier_call_chain+0x3d/0x60
+ mlx5_blocking_notifier_call_chain+0x22/0x30 [mlx5_core]
+ mlx5_core_mp_event_replay+0x12/0x20 [mlx5_core]
+ mlx5_ib_bind_slave_port+0x228/0x2c0 [mlx5_ib]
+ mlx5_ib_stage_init_init+0x664/0x9d0 [mlx5_ib]
+ ? idr_alloc_cyclic+0x50/0xb0
+ ? __kmalloc_cache_noprof+0x167/0x340
+ ? __kmalloc_noprof+0x1a7/0x430
+ __mlx5_ib_add+0x34/0xd0 [mlx5_ib]
+ mlx5r_probe+0xe9/0x310 [mlx5_ib]
+ ? kernfs_add_one+0x107/0x150
+ ? __mlx5_ib_add+0xd0/0xd0 [mlx5_ib]
+ auxiliary_bus_probe+0x3e/0x90
+ really_probe+0xc5/0x3a0
+ ? driver_probe_device+0x90/0x90
+ __driver_probe_device+0x80/0x160
+ driver_probe_device+0x1e/0x90
+ __device_attach_driver+0x7d/0x100
+ bus_for_each_drv+0x80/0xd0
+ __device_attach+0xbc/0x1f0
+ bus_probe_device+0x86/0xa0
+ device_add+0x62d/0x830
+ __auxiliary_device_add+0x3b/0xa0
+ ? auxiliary_device_init+0x41/0x90
+ add_adev+0xd1/0x150 [mlx5_core]
+ mlx5_rescan_drivers_locked+0x21c/0x300 [mlx5_core]
+ esw_mode_change+0x6c/0xc0 [mlx5_core]
+ mlx5_devlink_eswitch_mode_set+0x21e/0x640 [mlx5_core]
+ devlink_nl_eswitch_set_doit+0x60/0xe0
+ genl_family_rcv_msg_doit+0xd0/0x120
+ genl_rcv_msg+0x180/0x2b0
+ ? devlink_get_from_attrs_lock+0x170/0x170
+ ? devlink_nl_eswitch_get_doit+0x290/0x290
+ ? devlink_nl_pre_doit_port_optional+0x50/0x50
+ ? genl_family_rcv_msg_dumpit+0xf0/0xf0
+ netlink_rcv_skb+0x54/0x100
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x1fc/0x2d0
+ netlink_sendmsg+0x1e4/0x410
+ __sock_sendmsg+0x38/0x60
+ ? sockfd_lookup_light+0x12/0x60
+ __sys_sendto+0x105/0x160
+ ? __sys_recvmsg+0x4e/0x90
+ __x64_sys_sendto+0x20/0x30
+ do_syscall_64+0x4c/0x100
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7f27bc91b13a
+Code: bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 8b 05 fa 96 2c 00 45 89 c9 4c 63 d1 48 63 ff 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 76 f3 c3 0f 1f 40 00 41 55 41 54 4d 89 c5 55
+RSP: 002b:00007fff369557e8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 0000000009c54b10 RCX: 00007f27bc91b13a
+RDX: 0000000000000038 RSI: 0000000009c54b10 RDI: 0000000000000006
+RBP: 0000000009c54920 R08: 00007f27bd0030e0 R09: 000000000000000c
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000001
+ </TASK>
+Modules linked in: mlx5_vdpa vringh vhost_iotlb vdpa xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat xt_addrtype xt_conntrack nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_iser libiscsi ib_umad scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_fwctl mlx5_ib ib_uverbs ib_core mlx5_core
+CR2: 0000000000000010
 
-Fixes: b3f1a08fcf0d ("net: phy: micrel: Add support for PTP_PF_EXTTS for lan8814")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Tested-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20251021132034.983936-1-robert.marko@sartura.hr
+Fixes: 82f9378c443c ("net/mlx5: Handle IPsec steering upon master unbind/bind")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1761136182-918470-5-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../mellanox/mlx5/core/en_accel/ipsec.h       |  5 ++++
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c    | 25 +++++++++++++++++--
+ .../net/ethernet/mellanox/mlx5/core/en_main.c |  2 ++
+ 3 files changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 92e9eb4146d9b..f60cf630bdb3d 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -3870,6 +3870,8 @@ static int lan8814_ptp_probe_once(struct phy_device *phydev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+index 9aff779c77c89..78e78b6f81467 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
+@@ -337,6 +337,7 @@ void mlx5e_ipsec_build_accel_xfrm_attrs(struct mlx5e_ipsec_sa_entry *sa_entry,
+ void mlx5e_ipsec_handle_mpv_event(int event, struct mlx5e_priv *slave_priv,
+ 				  struct mlx5e_priv *master_priv);
+ void mlx5e_ipsec_send_event(struct mlx5e_priv *priv, int event);
++void mlx5e_ipsec_disable_events(struct mlx5e_priv *priv);
+ 
+ static inline struct mlx5_core_dev *
+ mlx5e_ipsec_sa2dev(struct mlx5e_ipsec_sa_entry *sa_entry)
+@@ -382,6 +383,10 @@ static inline void mlx5e_ipsec_handle_mpv_event(int event, struct mlx5e_priv *sl
+ static inline void mlx5e_ipsec_send_event(struct mlx5e_priv *priv, int event)
  {
- 	struct lan8814_shared_priv *shared = phydev->shared->priv;
- 
-+	shared->phydev = phydev;
+ }
 +
- 	/* Initialise shared lock for clock*/
- 	mutex_init(&shared->shared_lock);
++static inline void mlx5e_ipsec_disable_events(struct mlx5e_priv *priv)
++{
++}
+ #endif
  
-@@ -3921,8 +3923,6 @@ static int lan8814_ptp_probe_once(struct phy_device *phydev)
+ #endif	/* __MLX5E_IPSEC_H__ */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index 59b9653f573c8..131eb9b4eba65 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -2421,9 +2421,30 @@ void mlx5e_ipsec_handle_mpv_event(int event, struct mlx5e_priv *slave_priv,
  
- 	phydev_dbg(phydev, "successfully registered ptp clock\n");
+ void mlx5e_ipsec_send_event(struct mlx5e_priv *priv, int event)
+ {
+-	if (!priv->ipsec)
+-		return; /* IPsec not supported */
++	if (!priv->ipsec || mlx5_devcom_comp_get_size(priv->devcom) < 2)
++		return; /* IPsec not supported or no peers */
  
--	shared->phydev = phydev;
--
- 	/* The EP.4 is shared between all the PHYs in the package and also it
- 	 * can be accessed by any of the PHYs
- 	 */
+ 	mlx5_devcom_send_event(priv->devcom, event, event, priv);
+ 	wait_for_completion(&priv->ipsec->comp);
+ }
++
++void mlx5e_ipsec_disable_events(struct mlx5e_priv *priv)
++{
++	struct mlx5_devcom_comp_dev *tmp = NULL;
++	struct mlx5e_priv *peer_priv;
++
++	if (!priv->devcom)
++		return;
++
++	if (!mlx5_devcom_for_each_peer_begin(priv->devcom))
++		goto out;
++
++	peer_priv = mlx5_devcom_get_next_peer_data(priv->devcom, &tmp);
++	if (peer_priv)
++		complete_all(&peer_priv->ipsec->comp);
++
++	mlx5_devcom_for_each_peer_end(priv->devcom);
++out:
++	mlx5_devcom_unregister_component(priv->devcom);
++	priv->devcom = NULL;
++}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 4a2f58a9d7066..7e04a17fa3b82 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -257,6 +257,7 @@ static void mlx5e_devcom_cleanup_mpv(struct mlx5e_priv *priv)
+ 	}
+ 
+ 	mlx5_devcom_unregister_component(priv->devcom);
++	priv->devcom = NULL;
+ }
+ 
+ static int blocking_event(struct notifier_block *nb, unsigned long event, void *data)
+@@ -5830,6 +5831,7 @@ static void mlx5e_nic_disable(struct mlx5e_priv *priv)
+ 	if (mlx5e_monitor_counter_supported(priv))
+ 		mlx5e_monitor_counter_cleanup(priv);
+ 
++	mlx5e_ipsec_disable_events(priv);
+ 	mlx5e_disable_blocking_events(priv);
+ 	if (priv->en_trap) {
+ 		mlx5e_deactivate_trap(priv);
 -- 
 2.51.0
 
