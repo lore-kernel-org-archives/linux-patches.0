@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5D2329C42;
-	Mon, 27 Oct 2025 19:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312F632ABF6;
+	Mon, 27 Oct 2025 19:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593087; cv=none; b=OHEHGQrG3Lixt0tva1UYiMQ32HSZSt/xx/vP3vxAlR/xP9n+t1fI7nV0eI3jUUrnOP78aHTNHLocDyYbRHIzym7NgYufymyo9UF2JCduJ4xzI/ayVXBmOcuJNZSb1WzTVZj4pYpQCdOzzLK8L0Qcl5cJX0eNzaXdqORD7fKsacE=
+	t=1761593092; cv=none; b=uEmx2QvMpCV2/GO5cG6S+kC5onMlrcqfpA51mu5hAHuZku54zp1tUpXohoFQkv3aJfvvk3leK5AarA7WEAoiPb6y72qSOK3PfVjP94tUwDuWY+XThILGDOWChlIQSWfzJKh1hD3wHUxg6osVczJjFjlw/uGR8IfzWmmykSjDWoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593087; c=relaxed/simple;
-	bh=2yuQJv/3oOXGTQHQriOfXh3ijHOwidr2jSMuVAwAZLk=;
+	s=arc-20240116; t=1761593092; c=relaxed/simple;
+	bh=Ak3EeL3oRmeJY4w8QsiZoDqPdJ9xBxZ64rCSUQOCOLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8+ooLQ5mq2zI0zwcQSR0azkmKEIknJwP4dNN/HXEMsek0xuDFKbM31DmKaZ6hMamgDZX92Sdxm7pGFwzlKgiRfF28PaleDmzIfd+4UGxzHGVcd0V5fimobEXqCxBfBlQDW6qLamINPdTUO6521YxDItkxbKpELuZoKGYH//MAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUYiK8HJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJ4/3QSeY6Ob9RKYefMJRgAyOkz/5Gbw8YoopbaFdDRZAbYITfDvsEx7Ay4u8FYKSFmZCRtLuRacSWbsBiRBKV6GMszjEQPx+4yPe4Cc2B+R1dNpjl1o1a0bmy7ZfEIttp4yfadfXm++SRcpb9acqugXLrw27rI5T7lqGlPSHgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFpbWlXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUYiK8HJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E660AC4CEFD;
-	Mon, 27 Oct 2025 19:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFpbWlXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73753C113D0;
+	Mon, 27 Oct 2025 19:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593087;
-	bh=2yuQJv/3oOXGTQHQriOfXh3ijHOwidr2jSMuVAwAZLk=;
+	s=korg; t=1761593089;
+	bh=Ak3EeL3oRmeJY4w8QsiZoDqPdJ9xBxZ64rCSUQOCOLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUYiK8HJalT441IvgrUxgs2INby1g7Mj2KeLdt/DOoUWcpMLNNdgBoU0TOZOqtLoO
-	 fzkiEtHuVTVwOq+RxMTQQOdCOw1P4gJO6oZuvxCckZvTSBtvsLgcTA6GtxWsYa6Cux
-	 Ft48odi9/8YMfVfGhI3v6PakikreVNVQQIq1lQ0s=
+	b=JFpbWlXVVW6JjH+F+1GT+zY7iuCm/qgsjZ4RJag6e8SZ/3/ZXf8gi29QKXRms3ouj
+	 lpLpopCit8RIBaxA5zn9lqaG6Wob3HKlhuskp4P+dQL7KTjuyhZ1SGycnJ4B9rmS1+
+	 0jjmLDoqa3xGp9A6+0TrCfRF3LfaHY4hqhv4QT0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 6.12 105/117] objtool/rust: add one more `noreturn` Rust function
-Date: Mon, 27 Oct 2025 19:37:11 +0100
-Message-ID: <20251027183456.863829816@linuxfoundation.org>
+	Matt Fleming <matt@readmodwrite.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>
+Subject: [PATCH 6.17 001/184] sched/fair: Block delayed tasks on throttled hierarchy during dequeue
+Date: Mon, 27 Oct 2025 19:34:43 +0100
+Message-ID: <20251027183514.979610064@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
-References: <20251027183453.919157109@linuxfoundation.org>
+In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
+References: <20251027183514.934710872@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-commit dbdf2a7feb422f9bacfd12774e624cf26f503eb0 upstream.
+Dequeuing a fair task on a throttled hierarchy returns early on
+encountering a throttled cfs_rq since the throttle path has already
+dequeued the hierarchy above and has adjusted the h_nr_* accounting till
+the root cfs_rq.
 
-Between Rust 1.79 and 1.86, under `CONFIG_RUST_KERNEL_DOCTESTS=y`,
-`objtool` may report:
+dequeue_entities() crucially misses calling __block_task() for delayed
+tasks being dequeued on the throttled hierarchies, but this was mostly
+harmless until commit b7ca5743a260 ("sched/core: Tweak
+wait_task_inactive() to force dequeue sched_delayed tasks") since all
+existing cases would re-enqueue the task if task_on_rq_queued() returned
+true and the task would eventually be blocked at pick after the
+hierarchy was unthrottled.
 
-    rust/doctests_kernel_generated.o: warning: objtool:
-    rust_doctest_kernel_alloc_kbox_rs_13() falls through to next
-    function rust_doctest_kernel_alloc_kvec_rs_0()
+wait_task_inactive() is special as it expects the delayed task on
+throttled hierarchy to reach the blocked state on dequeue but since
+__block_task() is never called, task_on_rq_queued() continues to return
+true. Furthermore, since the task is now off the hierarchy, the pick
+never reaches it to fully block the task even after unthrottle leading
+to wait_task_inactive() looping endlessly.
 
-(as well as in rust_doctest_kernel_alloc_kvec_rs_0) due to calls to the
-`noreturn` symbol:
+Remedy this by calling __block_task() if a delayed task is being
+dequeued on a throttled hierarchy.
 
-    core::option::expect_failed
+This fix is only required for stabled kernels implementing delay dequeue
+(>= v6.12) before v6.18 since upstream commit e1fad12dcb66 ("sched/fair:
+Switch to task based throttle model") indirectly fixes this by removing
+the early return conditions in dequeue_entities() as part of the per-task
+throttle feature.
 
-from code added in commits 779db37373a3 ("rust: alloc: kvec: implement
-AsPageIter for VVec") and 671618432f46 ("rust: alloc: kbox: implement
-AsPageIter for VBox").
-
-Thus add the mangled one to the list so that `objtool` knows it is
-actually `noreturn`.
-
-This can be reproduced as well in other versions by tweaking the code,
-such as the latest stable Rust (1.90.0).
-
-Stable does not have code that triggers this, but it could have it in
-the future. Downstream forks could too. Thus tag it for backport.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
-Link: https://patch.msgid.link/20251020020714.2511718-1-ojeda@kernel.org
+Cc: stable@vger.kernel.org
+Reported-by: Matt Fleming <matt@readmodwrite.com>
+Closes: https://lore.kernel.org/all/20250925133310.1843863-1-matt@readmodwrite.com/
+Fixes: b7ca5743a260 ("sched/core: Tweak wait_task_inactive() to force dequeue sched_delayed tasks")
+Tested-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/fair.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -209,6 +209,7 @@ static bool is_rust_noreturn(const struc
- 	 * these come from the Rust standard library).
- 	 */
- 	return str_ends_with(func->name, "_4core5sliceSp15copy_from_slice17len_mismatch_fail")		||
-+	       str_ends_with(func->name, "_4core6option13expect_failed")				||
- 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
- 	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
- 	       str_ends_with(func->name, "_4core9panicking5panic")					||
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 8ce56a8d507f..f0a4d9d7424d 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6969,6 +6969,7 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 	int h_nr_runnable = 0;
+ 	struct cfs_rq *cfs_rq;
+ 	u64 slice = 0;
++	int ret = 0;
+ 
+ 	if (entity_is_task(se)) {
+ 		p = task_of(se);
+@@ -6998,7 +6999,7 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 
+ 		/* end evaluation on encountering a throttled cfs_rq */
+ 		if (cfs_rq_throttled(cfs_rq))
+-			return 0;
++			goto out;
+ 
+ 		/* Don't dequeue parent if it has other entities besides us */
+ 		if (cfs_rq->load.weight) {
+@@ -7039,7 +7040,7 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 
+ 		/* end evaluation on encountering a throttled cfs_rq */
+ 		if (cfs_rq_throttled(cfs_rq))
+-			return 0;
++			goto out;
+ 	}
+ 
+ 	sub_nr_running(rq, h_nr_queued);
+@@ -7048,6 +7049,8 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 	if (unlikely(!was_sched_idle && sched_idle_rq(rq)))
+ 		rq->next_balance = jiffies;
+ 
++	ret = 1;
++out:
+ 	if (p && task_delayed) {
+ 		WARN_ON_ONCE(!task_sleep);
+ 		WARN_ON_ONCE(p->on_rq != 1);
+@@ -7063,7 +7066,7 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags)
+ 		__block_task(rq, p);
+ 	}
+ 
+-	return 1;
++	return ret;
+ }
+ 
+ /*
+
+base-commit: 6c7871823908a4330e145d635371582f76ce1407
+-- 
+2.34.1
+
 
 
