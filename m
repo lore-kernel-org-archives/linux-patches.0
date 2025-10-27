@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7DE31D72E;
-	Mon, 27 Oct 2025 19:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C9231D740;
+	Mon, 27 Oct 2025 19:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593392; cv=none; b=EQhv5ZvgsqcqlMWha97rwbexYCtlHM9TBSTFeymheskhzoxYVmiDGDBH7t4yEwU4uXn7hfhtexUGY7wJagNW2IQE/cyKrPCQP1KvA9GT0DyBYx79kzGad2T3fLFR9RWYtlZ7IyxEZqc0XoczAcXoFuDvyCVupB4JW5IcOnmO1OM=
+	t=1761593395; cv=none; b=XeKU/HSL55+AfER308H8KAL2JJpZuGxsM6DcF0VJHZylZKKJPQG7qKPv1b2vTY+FhsNOuEoy9AqlPBmBIHweLOJ+spqMDWUpQDQQQ85x7XGH4YcDxVGrX82yOhBtlSYS4y4EJLSgtyMVaKNVUNJm4SjjE8j7VppDML0h11M8qYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593392; c=relaxed/simple;
-	bh=fqWM4/7Gy/kFL/sQT4BxVWsyKB9hcrfhgspQRi8D8Uc=;
+	s=arc-20240116; t=1761593395; c=relaxed/simple;
+	bh=Dwr0VNQ5vWgRynBEPBqvcVJDUsCdWsFIJop3pC7h/aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIjrEiUp4Gh0oifJVE/297XsH1aTQaYJQ2wwbfAzRQchldHsw9x5081VLRarcFNkPmvjOPA3iRyMTlGoJTNwgJ6F5UF+TgSNriL7AFuH/8dcOdge6SVJdeTNVc583nnb4PEo+jLiBb3Y45BU67cIoBSVp53pNeU9/T5XBEllYmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXXwWSFO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3YeWnoGZuVdkq77TQj8huhNbc1G68S6OJTl82f0NKGvVkVtto+gPeyAZK2w2fQ1MSL/pfgkpCQhKz8yrRp+Ee54np0e8kXIxDEwkDM7MBpdUkIz55rtNYpfIJaKUvqtWsr987zqk+++Z9PC6jyc5rVRFgMcUCBH5QzG4CXr8ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGw77gr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXXwWSFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2B7C4CEF1;
-	Mon, 27 Oct 2025 19:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGw77gr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96B5C4CEF1;
+	Mon, 27 Oct 2025 19:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593391;
-	bh=fqWM4/7Gy/kFL/sQT4BxVWsyKB9hcrfhgspQRi8D8Uc=;
+	s=korg; t=1761593395;
+	bh=Dwr0VNQ5vWgRynBEPBqvcVJDUsCdWsFIJop3pC7h/aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXXwWSFOJgabAjoMG6hUyQZsIyQJmQM7oW2/cbFx0O3jlhudqv/BouIh55P4ANVr3
-	 7lVzEe3/HDZTLT7uHqo8lc6k8mV++U2AiY/VD+53WR7X/dKiG6mqgsexN9a1BBraW5
-	 Go3JPE+Gfubq637nUhtk5LeXOu7uw6zZwa/PlnyU=
+	b=mGw77gr0+QWvOKOT2cdjtJ+hfh05OmhmJa3OC61YzVTsSKxdHpQPzXkrn18bj5anP
+	 bzeQJ3XxljQFPIP2AyBrIQHxRf3IAJZ9SNBAFvJfDIHT9alIHvXaQSfrjqgaq+t584
+	 3Pn4B4w2f6fsIcfUynOHICOAfGKLwFBlfyJEPcYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattijs Korpershoek <mkorpershoek@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 120/184] spi: cadence-quadspi: Fix pm_runtime unbalance on dma EPROBE_DEFER
-Date: Mon, 27 Oct 2025 19:36:42 +0100
-Message-ID: <20251027183518.174963575@linuxfoundation.org>
+Subject: [PATCH 6.17 121/184] arm64: dts: broadcom: bcm2712: Add default GIC address cells
+Date: Mon, 27 Oct 2025 19:36:43 +0100
+Message-ID: <20251027183518.202386798@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,59 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattijs Korpershoek <mkorpershoek@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 8735696acea24ac1f9d4490992418c71941ca68c ]
+[ Upstream commit 278b6cabf18bd804f956b98a2f1068717acdbfe3 ]
 
-In csqspi_probe(), when cqspi_request_mmap_dma() returns -EPROBE_DEFER,
-we handle the error by jumping to probe_setup_failed.
-In that label, we call pm_runtime_disable(), even if we never called
-pm_runtime_enable() before.
+Add missing address-cells 0 to GIC interrupt node to silence W=1
+warning:
 
-Because of this, the driver cannot probe:
+  bcm2712.dtsi:494.4-497.31: Warning (interrupt_map): /axi/pcie@1000110000:interrupt-map:
+    Missing property '#address-cells' in node /soc@107c000000/interrupt-controller@7fff9000, using 0 as fallback
 
-[    2.690018] cadence-qspi 47040000.spi: No Rx DMA available
-[    2.699735] spi-nor spi0.0: resume failed with -13
-[    2.699741] spi-nor: probe of spi0.0 failed with error -13
+Value '0' is correct because:
+1. GIC interrupt controller does not have children,
+2. interrupt-map property (in PCI node) consists of five components and
+   the fourth component "parent unit address", which size is defined by
+   '#address-cells' of the node pointed to by the interrupt-parent
+   component, is not used (=0)
 
-Only call pm_runtime_disable() if it was enabled by adding a new
-label to handle cqspi_request_mmap_dma() failures.
-
-Fixes: b07f349d1864 ("spi: spi-cadence-quadspi: Fix pm runtime unbalance")
-Signed-off-by: Mattijs Korpershoek <mkorpershoek@kernel.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20251009-cadence-quadspi-fix-pm-runtime-v2-1-8bdfefc43902@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250822133407.312505-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Stable-dep-of: aa960b597600 ("arm64: dts: broadcom: bcm2712: Define VGIC interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index d1a59120d3845..ce0f605ab688b 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1995,7 +1995,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 	if (cqspi->use_direct_mode) {
- 		ret = cqspi_request_mmap_dma(cqspi);
- 		if (ret == -EPROBE_DEFER)
--			goto probe_setup_failed;
-+			goto probe_dma_failed;
- 	}
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+index 0a9212d3106f1..940f1c4831988 100644
+--- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
++++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+@@ -270,6 +270,7 @@
+ 			      <0x7fffc000 0x2000>,
+ 			      <0x7fffe000 0x2000>;
+ 			interrupt-controller;
++			#address-cells = <0>;
+ 			#interrupt-cells = <3>;
+ 		};
  
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
-@@ -2019,9 +2019,10 @@ static int cqspi_probe(struct platform_device *pdev)
- 
- 	return 0;
- probe_setup_failed:
--	cqspi_controller_enable(cqspi, 0);
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
- 		pm_runtime_disable(dev);
-+probe_dma_failed:
-+	cqspi_controller_enable(cqspi, 0);
- probe_reset_failed:
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
 -- 
 2.51.0
 
