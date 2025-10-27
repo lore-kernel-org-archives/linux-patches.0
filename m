@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6DD324B2A;
-	Mon, 27 Oct 2025 18:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8101E31D754;
+	Mon, 27 Oct 2025 18:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590589; cv=none; b=Iw+87f5T2wA/zDPCZFohHveX2Vr41ct8cxDtBXIOQHSkJA399+LXskTiVC1LfQqnYqOua1cL7OVKZh20xibh6oeLGA2ROzT3/Fb+Pk3haNipDVsvwl/8Ej5Nmia7V0GqrfxzrtFiq3i80urIpJkIVCtELLiE8nGA7j1Ek+PgjX0=
+	t=1761590592; cv=none; b=K7WbErI51lPUOKV1NVfw3iJHR1PJiQo5ONdPBTTmgqYxVfk3MFKUVtb80dcof8Ip4C4wRzwKlpQnsDkGmOVfWJ0TVsgaw96bGtnJGbvpTPaB/prq4bIUXWQqOkCLnp6RRzkFuW64Eric/dzh1iRwiklWDMQf6+YtWuZGh28Vn9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590589; c=relaxed/simple;
-	bh=FlwamHSVFEmxQO6ExBGZQfAUt4QNn56abfOPZq/WDcc=;
+	s=arc-20240116; t=1761590592; c=relaxed/simple;
+	bh=0qN57YqXUYpk42FMDdQNdJMTKaoR+kjIZqPWLBKIC74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LapCd3iw6RR4kdabC8TsfUjUwFHXyM62HX0W8X/xsOgct+UeRQWBJwSAqxhWQUrZNBd+HNTzhUrdU7M1/8tXrYB7ac5hw8UnGnbHKoPHBLe20Wm76KuvXqRE6+7lgWNoXSBur23en4F8rS/8uTsAxJ2d0DTvCCw3jmOUXdxjuig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ8rPOoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hgvivdo2bt4+lnYIXm7aGj/ul6ne0tUT0uyzfQUqTtOShpAdpgCTIWevbeY4fVOAlOtb8s5PLa9FacBNUxRe8Ph28ae3zUlhIUapAY7hMLZ/fuQweDOEPgTPqhLsetrdPSoNfHufCxzgJxk5I+A4xE/W2Dsv19h166E8DSeusl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR0mFSVY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ8rPOoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A956C113D0;
-	Mon, 27 Oct 2025 18:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR0mFSVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E551AC4CEF1;
+	Mon, 27 Oct 2025 18:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590589;
-	bh=FlwamHSVFEmxQO6ExBGZQfAUt4QNn56abfOPZq/WDcc=;
+	s=korg; t=1761590592;
+	bh=0qN57YqXUYpk42FMDdQNdJMTKaoR+kjIZqPWLBKIC74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJ8rPOoVZURXXmbTtkQaeiSXpF8u/pfbz4wdCnvukYMzDini5gN2hrV7DY8wuEVAb
-	 sPACvi6n24BxJq0lrC4iVrdH14Y94fN3X0fnwthK+RFGIvfHZ2qO99MLnzqkFsosWe
-	 THp61Q3el+JZpxGLJaPv32Hm3IIY9Jb2EF1i/EIQ=
+	b=JR0mFSVYWvmY7cYZxI/yIbCnFYIQV7lLp5DnlOS/NG4aBKsO3J0J0kbZkt8a3FVyn
+	 kVZAV4VIqjLGNLr/o7eq7ZSdcMhzUCFD+faW8RIdtJTaCiMFOiweafIB2+OtdP7qe1
+	 ndhPJ0jQLHi2g6vlnP8bWenqErhSG5bfjEkVqQNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enjuk@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/224] net: ena: return 0 in ena_get_rxfh_key_size() when RSS hash key is not configurable
-Date: Mon, 27 Oct 2025 19:33:37 +0100
-Message-ID: <20251027183510.904672408@linuxfoundation.org>
+Subject: [PATCH 5.4 072/224] Revert "net/mlx5e: Update and set Xon/Xoff upon MTU set"
+Date: Mon, 27 Oct 2025 19:33:38 +0100
+Message-ID: <20251027183510.929345830@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,60 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f017156aea60db8720e47591ed1e041993381ad2 ]
+[ Upstream commit 6f5dacf88a32b3fd8b52c8ea781bf188c42aaa95 ]
 
-In EC2 instances where the RSS hash key is not configurable, ethtool
-shows bogus RSS hash key since ena_get_rxfh_key_size() unconditionally
-returns ENA_HASH_KEY_SIZE.
+This reverts commit ceddedc969f0532b7c62ca971ee50d519d2bc0cb.
 
-Commit 6a4f7dc82d1e ("net: ena: rss: do not allocate key when not
-supported") added proper handling for devices that don't support RSS
-hash key configuration, but ena_get_rxfh_key_size() has been unchanged.
+Commit in question breaks the mapping of PGs to pools for some SKUs.
+Specifically multi-host NICs seem to be shipped with a custom buffer
+configuration which maps the lossy PG to pool 4. But the bad commit
+overrides this with pool 0 which does not have sufficient buffer space
+reserved. Resulting in ~40% packet loss. The commit also breaks BMC /
+OOB connection completely (100% packet loss).
 
-When the RSS hash key is not configurable, return 0 instead of
-ENA_HASH_KEY_SIZE to clarify getting the value is not supported.
+Revert, similarly to commit 3fbfe251cc9f ("Revert "net/mlx5e: Update and
+set Xon/Xoff upon port speed set""). The breakage is exactly the same,
+the only difference is that quoted commit would break the NIC immediately
+on boot, and the currently reverted commit only when MTU is changed.
 
-Tested on m5 instance families.
+Note: "good" kernels do not restore the configuration, so downgrade isn't
+enough to recover machines. A NIC power cycle seems to be necessary to
+return to a healthy state (or overriding the relevant registers using
+a custom patch).
 
-Without patch:
- # ethtool -x ens5 | grep -A 1 "RSS hash key"
- RSS hash key:
- 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
-
-With patch:
- # ethtool -x ens5 | grep -A 1 "RSS hash key"
- RSS hash key:
- Operation not supported
-
-Fixes: 6a4f7dc82d1e ("net: ena: rss: do not allocate key when not supported")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
-Link: https://patch.msgid.link/20250929050247.51680-1-enjuk@amazon.com
+Fixes: ceddedc969f0 ("net/mlx5e: Update and set Xon/Xoff upon MTU set")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250929181529.1848157-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_ethtool.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h |   12 ----------
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c        |   17 ---------------
+ 2 files changed, 1 insertion(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_ethtool.c b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-index ae631b8770fc1..5f037e9db023a 100644
---- a/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-@@ -633,7 +633,10 @@ static u32 ena_get_rxfh_indir_size(struct net_device *netdev)
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+@@ -64,23 +64,11 @@ struct mlx5e_port_buffer {
+ 	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_BUFFER];
+ };
  
- static u32 ena_get_rxfh_key_size(struct net_device *netdev)
- {
--	return ENA_HASH_KEY_SIZE;
-+	struct ena_adapter *adapter = netdev_priv(netdev);
-+	struct ena_rss *rss = &adapter->ena_dev->rss;
-+
-+	return rss->hash_key ? ENA_HASH_KEY_SIZE : 0;
+-#ifdef CONFIG_MLX5_CORE_EN_DCB
+ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 				    u32 change, unsigned int mtu,
+ 				    struct ieee_pfc *pfc,
+ 				    u32 *buffer_size,
+ 				    u8 *prio2buffer);
+-#else
+-static inline int
+-mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+-				u32 change, unsigned int mtu,
+-				void *pfc,
+-				u32 *buffer_size,
+-				u8 *prio2buffer)
+-{
+-	return 0;
+-}
+-#endif
+ 
+ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 			    struct mlx5e_port_buffer *port_buffer);
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -42,7 +42,6 @@
+ #include "eswitch.h"
+ #include "en.h"
+ #include "en/txrx.h"
+-#include "en/port_buffer.h"
+ #include "en_tc.h"
+ #include "en_rep.h"
+ #include "en_accel/ipsec.h"
+@@ -2895,11 +2894,9 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_
+ 	struct mlx5e_params *params = &priv->channels.params;
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+-	u16 mtu, prev_mtu;
++	u16 mtu;
+ 	int err;
+ 
+-	mlx5e_query_mtu(mdev, params, &prev_mtu);
+-
+ 	err = mlx5e_set_mtu(mdev, params, params->sw_mtu);
+ 	if (err)
+ 		return err;
+@@ -2909,18 +2906,6 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_
+ 		netdev_warn(netdev, "%s: VPort MTU %d is different than netdev mtu %d\n",
+ 			    __func__, mtu, params->sw_mtu);
+ 
+-	if (mtu != prev_mtu && MLX5_BUFFER_SUPPORTED(mdev)) {
+-		err = mlx5e_port_manual_buffer_config(priv, 0, mtu,
+-						      NULL, NULL, NULL);
+-		if (err) {
+-			netdev_warn(netdev, "%s: Failed to set Xon/Xoff values with MTU %d (err %d), setting back to previous MTU %d\n",
+-				    __func__, mtu, err, prev_mtu);
+-
+-			mlx5e_set_mtu(mdev, params, prev_mtu);
+-			return err;
+-		}
+-	}
+-
+ 	params->sw_mtu = mtu;
+ 	return 0;
  }
- 
- static int ena_indirection_table_get(struct ena_adapter *adapter, u32 *indir)
--- 
-2.51.0
-
 
 
