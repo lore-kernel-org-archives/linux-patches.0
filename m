@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3604C31BC91;
-	Mon, 27 Oct 2025 19:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC87317711;
+	Mon, 27 Oct 2025 19:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591987; cv=none; b=EA/e4nZ+/mBzSvx0wOwfxsnUsFjE6hKTW6xuFhHXhbLJlhv0HjIHCVf5W2tvfl5NF2tIBlMltZUe95u+wI20R1SaDeD7mmSZoARxrbSP+tHOxgdtoz79dt31uJ1DM6TISkMZGQerXHp1nfWA0k3/tf2IRwokNzYZ6SoetkKz9mc=
+	t=1761591989; cv=none; b=pTnimEZV/MKx0NVmh/63NT6Oeq7TXdjoxue9Xi1kVbzjfZ/5MbJooT7RX7htRjqlDAyVMbJckPpInxqGzQHsCw2MAlI3sRRbYVBI4VIAd82SacDY+4HxZM2lh1HBCo4dziPyf/v+G113HO/AGMNbxbJEukkROHSE5/vEcBW00rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591987; c=relaxed/simple;
-	bh=BqB6ZBsvgk7a0GOH/wieDYFNfWmxnMMPwsBWPXvdeks=;
+	s=arc-20240116; t=1761591989; c=relaxed/simple;
+	bh=umf+fkyEITvO/0TcDpbB1XIRsSazWerpiTkSp6bBhts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Igt/oxyfyo0RUaM4eG5GPjQxwpUMb5qpaq1dJ2sNPfSePTcqIEaLCHSh7nRV8o4ERThfDKKWayYbwAKIMCFmg/0eGvOhrC0T4oEzm7EjLx8T1aGbiObTKAKAbnLykdqtmgYj/N50Y2gsH9b49WS7J+xhVxsIWAccJi33ac4LcOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyjjkFNH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xd74zqluZoyVoIuxgZWEm+c9w32AP0XPfqm/jXCVlZYBGXSnP2Bt8V2Dnjx2QnKmApfJ3G8iO257nIGi1RxapqVfWv+ATnpw+7rFtrsfENP05ZBAciBNWQnOwLYzPuwP/Ig/Wt2LgTndS3Pz0qKYOp0kERPCnz7IQFK2iVhjhwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kqs/GB7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyjjkFNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA92C4CEF1;
-	Mon, 27 Oct 2025 19:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kqs/GB7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60798C4CEF1;
+	Mon, 27 Oct 2025 19:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591987;
-	bh=BqB6ZBsvgk7a0GOH/wieDYFNfWmxnMMPwsBWPXvdeks=;
+	s=korg; t=1761591989;
+	bh=umf+fkyEITvO/0TcDpbB1XIRsSazWerpiTkSp6bBhts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyjjkFNHmeeGkzKczvt5OJOhfqfcCvuMdCNLDCOGED7Mk/I+q4R8MA3LDczagYSDi
-	 F/Ta1W2NQHRelysGW+d91c8CRzJsga663tbjM11fhCFZyJ2hHh18szc9Bd5Ij9gEHL
-	 6Kl3zqf2IAheNOsjEtxF6HCv3VxEVVj2xyXqulN4=
+	b=Kqs/GB7BzAYyNmgIpNGiPIwnB6Uoaju7oYpIgg5VTWwZonoKSj6JUBUqrlZK7Yto6
+	 7a0k+RmQzFP5GGPY1EEVPl48heHiuxnkAjXwGk/IxXZt5LplIGL8gNThqQARnKSK8z
+	 Zv8YOuD1HKmvOUthpVXpwKdC/VEdrb0qbbuMM+Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjun Wang <renjunw0@foxmail.com>,
+	Reinhard Speyerer <rspmn@arcor.de>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 075/123] USB: serial: option: add UNISOC UIS7720
-Date: Mon, 27 Oct 2025 19:35:55 +0100
-Message-ID: <20251027183448.406290036@linuxfoundation.org>
+Subject: [PATCH 5.15 076/123] USB: serial: option: add Quectel RG255C
+Date: Mon, 27 Oct 2025 19:35:56 +0100
+Message-ID: <20251027183448.430797235@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -50,73 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjun Wang <renjunw0@foxmail.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit 71c07570b918f000de5d0f7f1bf17a2887e303b5 upstream.
+commit 89205c60c0fc96b73567a2e9fe27ee3f59d01193 upstream.
 
-Add support for UNISOC (Spreadtrum) UIS7720 (A7720) module.
+Add support for Quectel RG255C devices to complement commit 5c964c8a97c1
+("net: usb: qmi_wwan: add Quectel RG255C").
+The composition is DM / NMEA / AT / QMI.
 
-T:  Bus=05 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  5 Spd=480 MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1782 ProdID=4064 Rev=04.04
-S:  Manufacturer=Unisoc-phone
-S:  Product=Unisoc-phone
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 9 Cfg#= 1 Atr=c0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+T:  Bus=01 Lev=02 Prnt=99 Port=01 Cnt=02 Dev#=110 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0316 Rev= 5.15
+S:  Manufacturer=Quectel
+S:  Product=RG255C-GL
+S:  SerialNumber=xxxxxxxx
+C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
 E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
 E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
 E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-0&1: RNDIS, 2: LOG, 3: DIAG, 4&5: AT Ports, 6&7: AT2 Ports, 8: ADB
-
-Signed-off-by: Renjun Wang <renjunw0@foxmail.com>
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -617,6 +617,7 @@ static void option_instat_callback(struc
- #define UNISOC_VENDOR_ID			0x1782
- /* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
- #define TOZED_PRODUCT_LT70C			0x4055
-+#define UNISOC_PRODUCT_UIS7720			0x4064
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+@@ -273,6 +273,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM05CN			0x0312
+ #define QUECTEL_PRODUCT_EM05G_GR		0x0313
+ #define QUECTEL_PRODUCT_EM05G_RS		0x0314
++#define QUECTEL_PRODUCT_RG255C			0x0316
+ #define QUECTEL_PRODUCT_EM12			0x0512
+ #define QUECTEL_PRODUCT_RM500Q			0x0800
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+@@ -1271,6 +1272,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x40) },
  
-@@ -2466,6 +2467,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9291, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, UNISOC_PRODUCT_UIS7720, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
- 	  .driver_info = NCTRL(1) },
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
 
 
