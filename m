@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAD42D7806;
-	Mon, 27 Oct 2025 18:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B28218EB1;
+	Mon, 27 Oct 2025 18:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590412; cv=none; b=jQcoslyGyq2U2KUChjzFwXaA40m6IgBW45gP0n2FJdnELsPjA4Q6VzVYcx5VUQtXrlWGAjea7Gg8CWnbA22ldKiEHiVolMbn7nGlRlL9zIc/Bj0AmhjnqS2Kas/22K3aHcK/fG6utxDJ42B/NUkFlxOelcj91bo5CGODWHtpS2Q=
+	t=1761590415; cv=none; b=qJlbD/FWN2KMjIPoaPobE1cKpn7lMb2sBkK29KhA/6ctesMgTZkYzwubZJ8zjzvmlHRzOK7q5YMpXKSyqllhkMMGFUNVmto76upz0gu++jrXuh0LX0zeZBtYaoK8lXhb4LqpA8tbkgsffD6FNPv3NpVXdJLsldgtqWwV1gl0oGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590412; c=relaxed/simple;
-	bh=K1ngfzWmPz6qPvwx9Z7znmOtO0KSqVEQ0fq9G9Go+y4=;
+	s=arc-20240116; t=1761590415; c=relaxed/simple;
+	bh=U/qulTnUMuz2lg5WagdztsmteSIEG/PMYoMTuc526+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vECf40sFVjq3FGLxI5Q88vM1WnsjZq5TRV4OwunzBckELD1LjlQoGN/GwrDJZs+tHLZecha5Uc0zDPRoMth2jSrnW0NkTANZhm2J2Zvf1sumB3AFn5dgZLHdUyOYzGEHjOcTqdUTqy+zgoiq+RMC1eeN9e914SRV/eGfcss4cZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cI25ZaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gqmg9TXdIelMOTTJuUka6x0gRvZ6ZxTTDRmKlLqRPnagoFcJm+4RhiSFm2luGRCoCktjK9AVK0wk2NJRbmHmeeaX1nN/vy8DXs5RC6IYVCchnzQNWFuO5C9Pno6tsEwSw2ahUvcBB+90OG8HVzDz+vN7YnH9hC0s8Ga9rbo2tdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ei0kQ3uS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cI25ZaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B02C4CEF1;
-	Mon, 27 Oct 2025 18:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ei0kQ3uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80584C4CEF1;
+	Mon, 27 Oct 2025 18:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590412;
-	bh=K1ngfzWmPz6qPvwx9Z7znmOtO0KSqVEQ0fq9G9Go+y4=;
+	s=korg; t=1761590414;
+	bh=U/qulTnUMuz2lg5WagdztsmteSIEG/PMYoMTuc526+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cI25ZaOYZRqVhcfdhHTTErftFhfPDqnD/SZYlx6jSpdUQtEUZutDxpEpBRVmv9Lj
-	 DFZ8VbjbvU4Evq+qJXB9EXYNHET7ruRdIfNrhh1jZ21Q6z/7kl2ZMZMTTzq5DAsjZq
-	 zXd4MY/9TxfGrx9KS6w3l2CPPJmdLXzFniZDalek=
+	b=Ei0kQ3uSOkfVXjnWb3+f+ysaXDu/1NOdSPbndrHluru8d6ScUvw/FxEh9dq1wN6ZY
+	 PecBrH6E+Veo41x0ToXuAZRp20GENZYxUWxb7FZ85onDd/F/mr6HX0eZSe1Gml2PHf
+	 YD/qmFkFo5dBWq6wUqhIflqD/9o4yiCSPLmv/juw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Shuah Khan <shuah.kh@samsung.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/224] scsi: pm80xx: Fix array-index-out-of-of-bounds on rmmod
-Date: Mon, 27 Oct 2025 19:33:00 +0100
-Message-ID: <20251027183509.919843022@linuxfoundation.org>
+Subject: [PATCH 5.4 004/224] media: tunner: xc5000: Refactor firmware load
+Date: Mon, 27 Oct 2025 19:32:30 +0100
+Message-ID: <20251027183509.093152208@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,79 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 251be2f6037fb7ab399f68cd7428ff274133d693 ]
+[ Upstream commit 8e1f5da59dd4a1966f859639860b803a7e8b8bfb ]
 
-Since commit f7b705c238d1 ("scsi: pm80xx: Set phy_attached to zero when
-device is gone") UBSAN reports:
+Make sure the firmware is released when we leave
+xc_load_fw_and_init_tuner()
 
-  UBSAN: array-index-out-of-bounds in drivers/scsi/pm8001/pm8001_sas.c:786:17
-  index 28 is out of range for type 'pm8001_phy [16]'
+This change makes smatch happy:
+drivers/media/tuners/xc5000.c:1213 xc_load_fw_and_init_tuner() warn: 'fw' from request_firmware() not released on lines: 1213.
 
-on rmmod when using an expander.
-
-For a direct attached device, attached_phy contains the local phy id.
-For a device behind an expander, attached_phy contains the remote phy
-id, not the local phy id.
-
-I.e. while pm8001_ha will have pm8001_ha->chip->n_phy local phys, for a
-device behind an expander, attached_phy can be much larger than
-pm8001_ha->chip->n_phy (depending on the amount of phys of the
-expander).
-
-E.g. on my system pm8001_ha has 8 phys with phy ids 0-7.  One of the
-ports has an expander connected.  The expander has 31 phys with phy ids
-0-30.
-
-The pm8001_ha->phy array only contains the phys of the HBA.  It does not
-contain the phys of the expander.  Thus, it is wrong to use attached_phy
-to index the pm8001_ha->phy array for a device behind an expander.
-
-Thus, we can only clear phy_attached for devices that are directly
-attached.
-
-Fixes: f7b705c238d1 ("scsi: pm80xx: Set phy_attached to zero when device is gone")
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20250814173215.1765055-14-cassel@kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Shuah Khan <shuah.kh@samsung.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 40b7a19f321e ("media: tuner: xc5000: Fix use-after-free in xc5000_release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/tuners/xc5000.c |   41 ++++++++++++++++++-----------------------
+ 1 file changed, 18 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index 1215fc36862da..45b1af5a8d748 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -875,6 +875,7 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 	unsigned long flags = 0;
- 	struct pm8001_hba_info *pm8001_ha;
- 	struct pm8001_device *pm8001_dev = dev->lldd_dev;
-+	struct domain_device *parent_dev = dev->parent;
+--- a/drivers/media/tuners/xc5000.c
++++ b/drivers/media/tuners/xc5000.c
+@@ -58,7 +58,7 @@ struct xc5000_priv {
+ 	struct dvb_frontend *fe;
+ 	struct delayed_work timer_sleep;
  
- 	pm8001_ha = pm8001_find_ha_by_dev(dev);
- 	spin_lock_irqsave(&pm8001_ha->lock, flags);
-@@ -893,7 +894,13 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 			spin_lock_irqsave(&pm8001_ha->lock, flags);
- 		}
- 		PM8001_CHIP_DISP->dereg_dev_req(pm8001_ha, device_id);
--		pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
+-	const struct firmware   *firmware;
++	bool inited;
+ };
+ 
+ /* Misc Defines */
+@@ -1110,23 +1110,19 @@ static int xc_load_fw_and_init_tuner(str
+ 	if (!force && xc5000_is_firmware_loaded(fe) == 0)
+ 		return 0;
+ 
+-	if (!priv->firmware) {
+-		ret = request_firmware(&fw, desired_fw->name,
+-					priv->i2c_props.adap->dev.parent);
+-		if (ret) {
+-			pr_err("xc5000: Upload failed. rc %d\n", ret);
+-			return ret;
+-		}
+-		dprintk(1, "firmware read %zu bytes.\n", fw->size);
+-
+-		if (fw->size != desired_fw->size) {
+-			pr_err("xc5000: Firmware file with incorrect size\n");
+-			release_firmware(fw);
+-			return -EINVAL;
+-		}
+-		priv->firmware = fw;
+-	} else
+-		fw = priv->firmware;
++	ret = request_firmware(&fw, desired_fw->name,
++			       priv->i2c_props.adap->dev.parent);
++	if (ret) {
++		pr_err("xc5000: Upload failed. rc %d\n", ret);
++		return ret;
++	}
++	dprintk(1, "firmware read %zu bytes.\n", fw->size);
 +
-+		/*
-+		 * The phy array only contains local phys. Thus, we cannot clear
-+		 * phy_attached for a device behind an expander.
-+		 */
-+		if (!(parent_dev && dev_is_expander(parent_dev->dev_type)))
-+			pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
- 		pm8001_free_dev(pm8001_dev);
- 	} else {
- 		PM8001_DISC_DBG(pm8001_ha,
--- 
-2.51.0
-
++	if (fw->size != desired_fw->size) {
++		pr_err("xc5000: Firmware file with incorrect size\n");
++		release_firmware(fw);
++		return -EINVAL;
++	}
+ 
+ 	/* Try up to 5 times to load firmware */
+ 	for (i = 0; i < 5; i++) {
+@@ -1204,6 +1200,7 @@ static int xc_load_fw_and_init_tuner(str
+ 	}
+ 
+ err:
++	release_firmware(fw);
+ 	if (!ret)
+ 		printk(KERN_INFO "xc5000: Firmware %s loaded and running.\n",
+ 		       desired_fw->name);
+@@ -1274,7 +1271,7 @@ static int xc5000_resume(struct dvb_fron
+ 
+ 	/* suspended before firmware is loaded.
+ 	   Avoid firmware load in resume path. */
+-	if (!priv->firmware)
++	if (!priv->inited)
+ 		return 0;
+ 
+ 	return xc5000_set_params(fe);
+@@ -1293,6 +1290,8 @@ static int xc5000_init(struct dvb_fronte
+ 	if (debug)
+ 		xc_debug_dump(priv);
+ 
++	priv->inited = true;
++
+ 	return 0;
+ }
+ 
+@@ -1306,10 +1305,6 @@ static void xc5000_release(struct dvb_fr
+ 
+ 	if (priv) {
+ 		cancel_delayed_work(&priv->timer_sleep);
+-		if (priv->firmware) {
+-			release_firmware(priv->firmware);
+-			priv->firmware = NULL;
+-		}
+ 		hybrid_tuner_release_state(priv);
+ 	}
+ 
 
 
