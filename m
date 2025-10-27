@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0981F320A00;
-	Mon, 27 Oct 2025 19:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5D7329C57;
+	Mon, 27 Oct 2025 19:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592047; cv=none; b=ldRbMu6nO+BnSS0G00tyP8JZWIIjIcPhLLj71jUvhLUgdMq5+WBCBTVN/yDvvejQIhsxGill/IO1dzaiNr5hxPWw7Hg3CPBcINTpFOw85Jev75xFbE7SgrWoA7HG5dnwYRrsX8shiotOcN9ZRSG/v3xdYVttk8DN3gQ6ELNg07c=
+	t=1761592049; cv=none; b=q17r/TkAmA1CgEj5hVoGLWzbhbBmqOkdA73u7jWTKisG5aT2aSUjUg86xc5DfT8OM2w+VmjOfsX/FoqnHGHo9t0+759yqpB6BzDgeDDJ7Udu2aqaZqlwqMd2p3xZReJZfabrP7LEfqbqxx+ImJFs80QAhST9ZBhpcV7hVEw/dOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592047; c=relaxed/simple;
-	bh=dHcZWf6qD12NuGpC29iz+XEzxkztlIbJ2n0X66CU1PA=;
+	s=arc-20240116; t=1761592049; c=relaxed/simple;
+	bh=bfi4XgdljuuilD54HMwTBJlMsmDXGJan51+G/gNBQ1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WncvUNsGlxKnWDHrD7z3SRJ9CERSf0a2nFxwwbZC25IcObHEMlPRT8bXZcRzYhs+IoyCcfyXZljO0emCgB1wfgZOm0PDF8dCMlGGlipI6blhQ3U2skR99WilLCz9iwn4HnWRD4RGX2cisnQ0Kp2Iqt5zlwZryRStblHQ9DLkK9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8VBMdlb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UToBy9sbfRlXIqr+DiJ8JHRS9mCv/6Ipb/iqID6s2hFZf4VmTLV6eUHyTWX3zlXFFrbjtKRGL64GPqH7mwfn9BF4wdwWhpWk4VnHIj6izMtM41grY40GStz+xzEe+GVyGmCX9WMfoQaJL4v8J3vgO+tkekVZplj8pA1iEyi65DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7VgZ8JR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8VBMdlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927D1C4CEF1;
-	Mon, 27 Oct 2025 19:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7VgZ8JR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B22C4CEF1;
+	Mon, 27 Oct 2025 19:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592046;
-	bh=dHcZWf6qD12NuGpC29iz+XEzxkztlIbJ2n0X66CU1PA=;
+	s=korg; t=1761592049;
+	bh=bfi4XgdljuuilD54HMwTBJlMsmDXGJan51+G/gNBQ1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8VBMdlbjZdKYr1X+53hKAA+20xwe9CXTqBoiKei3o00DXVpbUhY4IUQn0c3nBPsb
-	 1NTneZ16VtbhVrVuAF32A9wTSDf9ueg/qUW4Q3YtdGhdwB2EtWKGeAtZOs2ZdunH5J
-	 bCvAspAOxzKrH3vXyoJZ06+3AAMYzXRpKOnTd9VQ=
+	b=f7VgZ8JRQEGKS6e4Ws7Fo1wBK6/jup5QO6C73CwzvFs3n9yfQSWEDbHnmEuu4l+rb
+	 yp7k4vLvw/4Uh1DK8+mNmkb0qXDKdfc9f8m810a5taQnB5GMuU/acQd2t+OOZyWAGM
+	 tj039czDEKYtu8ja66toNm1W4DIlXoBFTesS+EtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 068/123] net: usb: rtl8150: Fix frame padding
-Date: Mon, 27 Oct 2025 19:35:48 +0100
-Message-ID: <20251027183448.217290986@linuxfoundation.org>
+Subject: [PATCH 5.15 069/123] net: ravb: Ensure memory write completes before ringing TX doorbell
+Date: Mon, 27 Oct 2025 19:35:49 +0100
+Message-ID: <20251027183448.244542050@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -45,60 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 75cea9860aa6b2350d90a8d78fed114d27c7eca2 upstream.
+commit 706136c5723626fcde8dd8f598a4dcd251e24927 upstream.
 
-TX frames aren't padded and unknown memory is sent into the ether.
+Add a final dma_wmb() barrier before triggering the transmit request
+(TCCR_TSRQ) to ensure all descriptor and buffer writes are visible to
+the DMA engine.
 
-Theoretically, it isn't even guaranteed that the extra memory exists
-and can be sent out, which could cause further problems. In practice,
-I found that plenty of tailroom exists in the skb itself (in my test
-with ping at least) and skb_padto() easily succeeds, so use it here.
+According to the hardware manual, a read-back operation is required
+before writing to the doorbell register to guarantee completion of
+previous writes. Instead of performing a dummy read, a dma_wmb() is
+used to both enforce the same ordering semantics on the CPU side and
+also to ensure completion of writes.
 
-In the event of -ENOMEM drop the frame like other drivers do.
-
-The use of one more padding byte instead of a USB zero-length packet
-is retained to avoid regression. I have a dodgy Etron xHCI controller
-which doesn't seem to support sending ZLPs at all.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251014203528.3f9783c4.michal.pecio@gmail.com
+Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://patch.msgid.link/20251017151830.171062-5-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rtl8150.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -685,9 +685,16 @@ static netdev_tx_t rtl8150_start_xmit(st
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	int count, res;
- 
-+	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
-+	count = max(skb->len, ETH_ZLEN);
-+	if (count % 64 == 0)
-+		count++;
-+	if (skb_padto(skb, count)) {
-+		netdev->stats.tx_dropped++;
-+		return NETDEV_TX_OK;
-+	}
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1672,6 +1672,14 @@ static netdev_tx_t ravb_start_xmit(struc
+ 	} else {
+ 		desc->die_dt = DT_FSINGLE;
+ 	}
 +
- 	netif_stop_queue(netdev);
--	count = (skb->len < 60) ? 60 : skb->len;
--	count = (count & 0x3f) ? count : count + 1;
- 	dev->tx_skb = skb;
- 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
- 		      skb->data, count, write_bulk_callback, dev);
++	/* Before ringing the doorbell we need to make sure that the latest
++	 * writes have been committed to memory, otherwise it could delay
++	 * things until the doorbell is rang again.
++	 * This is in replacement of the read operation mentioned in the HW
++	 * manuals.
++	 */
++	dma_wmb();
+ 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
+ 
+ 	priv->cur_tx[q] += num_tx_desc;
 
 
