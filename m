@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA69A1FBC92;
-	Mon, 27 Oct 2025 19:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E5321576E;
+	Mon, 27 Oct 2025 19:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593592; cv=none; b=QZ+QZ+ESIM0dyoCPvyWGL0ONLBTD57Vo8tufU1PHAEi+XnPNc1nwCiox1/NpBmSBE7zvcvCv/OtunWhgPg+RDyd/zNAUBHKQnmff0merNRTyjQ1QmqKDQBglurbHhAP8VVrtX3JxDgjbSsvtlE68OJQjqS6YTmFb1swS5IlwpFc=
+	t=1761593595; cv=none; b=ec4oUx+1eFL+hCTfOB+bhQnz+/q/lJ9YU8mxth3s7QVUzq2YoZ/lKpN6e1D4O/ISIP7y4KElBEAtQ1T1jete9QCxzsNIsJbCIU3GwvbFxdoECuDGws+ooMl7F2vg+hglR/4ieclLDZWbdJR2nAcm4EWA4XP/LUG4n2ksvQCuWTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593592; c=relaxed/simple;
-	bh=ZJq0QQsgfAbv0cIQLUtCQypDhT89r0Sow35HXDEGYco=;
+	s=arc-20240116; t=1761593595; c=relaxed/simple;
+	bh=fhx0lFr5NRj1aGpOjFKjca+rOJSVFg3ZgqRCe7lTkNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=perJlefInG8qrZA9vtdFoO+mlueHK3CUT+Biw+fPiFzn8IU68mVT0ZUC3j6ngWmc8lWHh3WHxMTOb+W8t7NjyX2SLfmq8si/waxllQtY/B5iOLuDvtystqVPOFNLoyUaKhZled7mVHlfG5vzLHXcg0oD6mLKTKlHgneJXKxkZSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUZ3xudp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KE6i42XLStdHp2G/ccuOjB6g3XhxlMIDBrWZlFgLxNmUoI/RftJRHh8muqBj1NF9Nhtr+ED6x/9Epqi2gsHhLpDU1tc7L/FrmLoK2MvI5BNMiF7ilHJ0vqcPmpAlJ+UzisXKr0jqxOtrcLRsKiqYL865e5ieoPZ3G0+hl0kb1/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veUurOsE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUZ3xudp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50910C4CEF1;
-	Mon, 27 Oct 2025 19:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veUurOsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61879C4CEF1;
+	Mon, 27 Oct 2025 19:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593592;
-	bh=ZJq0QQsgfAbv0cIQLUtCQypDhT89r0Sow35HXDEGYco=;
+	s=korg; t=1761593595;
+	bh=fhx0lFr5NRj1aGpOjFKjca+rOJSVFg3ZgqRCe7lTkNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUZ3xudpfs3g9D/6wNb1nMqwD1TChuxkXy3HpyiAYZ7tFygvO9amq2so6CIyH+V7H
-	 n3DE90dcXr+vAgo6VYESB96akLmTNcDcrDQvKt24HRhLA6XVuIleoCKdXbJ9jdyTsq
-	 MtPlBoOvKzfjbhpvj8F48+iybzi8ltsflEhoc8Xg=
+	b=veUurOsEqT6ljQOXchOjWQS8MfTeYr5K/Ut9HSkDe8E57VLAU3Px8WZmZ3K2jmC1A
+	 4l5lykJ9E642ALE0+YxkRMj4ufRr71GUIaFH9DleGrIOfvQ/0nsWcOHM83MVLxDoDD
+	 gYfuqhHAlYatrIUspMnHBoCbAUykFlLYrDyUIatY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 182/184] gpio: regmap: Allow to allocate regmap-irq device
-Date: Mon, 27 Oct 2025 19:37:44 +0100
-Message-ID: <20251027183519.825936154@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.17 156/184] x86/microcode: Fix Entrysign revision check for Zen1/Naples
+Date: Mon, 27 Oct 2025 19:37:18 +0100
+Message-ID: <20251027183519.127003109@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -53,111 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit 553b75d4bfe9264f631d459fe9996744e0672b0e ]
+commit 876f0d43af78639790bee0e57b39d498ae35adcf upstream.
 
-GPIO controller often have support for IRQ: allow to easily allocate
-both gpio-regmap and regmap-irq in one operation.
+... to match AMD's statement here:
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
-Link: https://lore.kernel.org/r/20250824-mdb-max7360-support-v14-5-435cfda2b1ea@bootlin.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 2ba5772e530f ("gpio: idio-16: Define fixed direction of the GPIO lines")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7033.html
+
+Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20251020144124.2930784-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-regmap.c  |   29 +++++++++++++++++++++++++++--
- include/linux/gpio/regmap.h |   11 +++++++++++
- 2 files changed, 38 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-regmap.c
-+++ b/drivers/gpio/gpio-regmap.c
-@@ -32,6 +32,11 @@ struct gpio_regmap {
- 	unsigned int reg_dir_in_base;
- 	unsigned int reg_dir_out_base;
- 
-+#ifdef CONFIG_REGMAP_IRQ
-+	int regmap_irq_line;
-+	struct regmap_irq_chip_data *irq_chip_data;
-+#endif
-+
- 	int (*reg_mask_xlate)(struct gpio_regmap *gpio, unsigned int base,
- 			      unsigned int offset, unsigned int *reg,
- 			      unsigned int *mask);
-@@ -215,6 +220,7 @@ EXPORT_SYMBOL_GPL(gpio_regmap_get_drvdat
-  */
- struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config)
- {
-+	struct irq_domain *irq_domain;
- 	struct gpio_regmap *gpio;
- 	struct gpio_chip *chip;
- 	int ret;
-@@ -295,8 +301,22 @@ struct gpio_regmap *gpio_regmap_register
- 	if (ret < 0)
- 		goto err_free_gpio;
- 
--	if (config->irq_domain) {
--		ret = gpiochip_irqchip_add_domain(chip, config->irq_domain);
-+#ifdef CONFIG_REGMAP_IRQ
-+	if (config->regmap_irq_chip) {
-+		gpio->regmap_irq_line = config->regmap_irq_line;
-+		ret = regmap_add_irq_chip_fwnode(dev_fwnode(config->parent), config->regmap,
-+						 config->regmap_irq_line, config->regmap_irq_flags,
-+						 0, config->regmap_irq_chip, &gpio->irq_chip_data);
-+		if (ret)
-+			goto err_free_gpio;
-+
-+		irq_domain = regmap_irq_get_domain(gpio->irq_chip_data);
-+	} else
-+#endif
-+	irq_domain = config->irq_domain;
-+
-+	if (irq_domain) {
-+		ret = gpiochip_irqchip_add_domain(chip, irq_domain);
- 		if (ret)
- 			goto err_remove_gpiochip;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -194,7 +194,7 @@ static bool need_sha_check(u32 cur_rev)
  	}
-@@ -317,6 +337,11 @@ EXPORT_SYMBOL_GPL(gpio_regmap_register);
-  */
- void gpio_regmap_unregister(struct gpio_regmap *gpio)
- {
-+#ifdef CONFIG_REGMAP_IRQ
-+	if (gpio->irq_chip_data)
-+		regmap_del_irq_chip(gpio->regmap_irq_line, gpio->irq_chip_data);
-+#endif
-+
- 	gpiochip_remove(&gpio->gpio_chip);
- 	kfree(gpio);
- }
---- a/include/linux/gpio/regmap.h
-+++ b/include/linux/gpio/regmap.h
-@@ -40,6 +40,11 @@ struct regmap;
-  * @drvdata:		(Optional) Pointer to driver specific data which is
-  *			not used by gpio-remap but is provided "as is" to the
-  *			driver callback(s).
-+ * @regmap_irq_chip:	(Optional) Pointer on an regmap_irq_chip structure. If
-+ *			set, a regmap-irq device will be created and the IRQ
-+ *			domain will be set accordingly.
-+ * @regmap_irq_line	(Optional) The IRQ the device uses to signal interrupts.
-+ * @regmap_irq_flags	(Optional) The IRQF_ flags to use for the interrupt.
-  *
-  * The ->reg_mask_xlate translates a given base address and GPIO offset to
-  * register and mask pair. The base address is one of the given register
-@@ -78,6 +83,12 @@ struct gpio_regmap_config {
- 	int ngpio_per_reg;
- 	struct irq_domain *irq_domain;
  
-+#ifdef CONFIG_REGMAP_IRQ
-+	struct regmap_irq_chip *regmap_irq_chip;
-+	int regmap_irq_line;
-+	unsigned long regmap_irq_flags;
-+#endif
-+
- 	int (*reg_mask_xlate)(struct gpio_regmap *gpio, unsigned int base,
- 			      unsigned int offset, unsigned int *reg,
- 			      unsigned int *mask);
+ 	switch (cur_rev >> 8) {
+-	case 0x80012: return cur_rev <= 0x800126f; break;
++	case 0x80012: return cur_rev <= 0x8001277; break;
+ 	case 0x80082: return cur_rev <= 0x800820f; break;
+ 	case 0x83010: return cur_rev <= 0x830107c; break;
+ 	case 0x86001: return cur_rev <= 0x860010e; break;
 
 
