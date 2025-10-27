@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFB431C58E;
-	Mon, 27 Oct 2025 19:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF82F8BD1;
+	Mon, 27 Oct 2025 19:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591782; cv=none; b=J1Qgo+4yLMNQanWNzBCR+3c9TjHOGoaSpvbi47MQdegBL7UC7kJhxMwFZovwBpJRmAa2G0/vgXjpmDohieEC0sOlcWGuI+pcYKBOV8m0+WQJtK5Mj2gTQYTbCUVswCAjdzL7nZoMuoCuq5hXYzFazVnseOsNJDzEcXEHezY2zm4=
+	t=1761591785; cv=none; b=u6s5RYh0EDHFSy8U5CoLeFQtfaX9O0pKbduEHN2iTGD/wSpIzZnGb7Gl8xZP/tAtzoquhg4EbHCnz+9K+cFPVgGRNgs/2QtOO2KjV2q8WfW0Asin3qjQRBxvQXU2PI7AWSkjSir0+a2NdUFtcLLj3HXbmPcu2iTs6nSjPxnFO1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591782; c=relaxed/simple;
-	bh=L+/UopaIXicfAXzc52303AbdNr6GxM96lzcDMmssako=;
+	s=arc-20240116; t=1761591785; c=relaxed/simple;
+	bh=1b9thl9ghh5YWJz4rKdfbM6pAfaWY3jhCh40zr4kdAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNVeAP07N5lL4kfw9ac1P4uqTDxfVqNBv9EH32mj1HkuzDvihwZYDQ2ig46dadeQy58gTOFu40a3f6IHqk/zVhBGFhz0vhsI+o8LoY71mbjyPpImDlbl85PfxUQhf7MVmxYy7p2wUijUCqZgRjdAMsfc71KrEDYxsmg7PCAaV5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIqx13jT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=as4aGNG5mdUSIwz0FrGEuHh4toTEIpKAMGNh1zoJrg7JmfOf1Gnaj/zdxKwh5uJHqbjabP3+42CnrCi6j2JJhJZHhqKuK+pIXaq2LaSnoCukmNkp8uthiB3PWHNK12SRPCFwJbpcEZTOUVOfEUgiMVEb0830QMX5dmgf/Pp+wt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuu+/Zwl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIqx13jT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A78C4CEF1;
-	Mon, 27 Oct 2025 19:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuu+/Zwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70D6C4CEF1;
+	Mon, 27 Oct 2025 19:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591782;
-	bh=L+/UopaIXicfAXzc52303AbdNr6GxM96lzcDMmssako=;
+	s=korg; t=1761591785;
+	bh=1b9thl9ghh5YWJz4rKdfbM6pAfaWY3jhCh40zr4kdAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIqx13jTlT/+O/Gshqb+xFdqokK+8SGYmqUb1x3HqVWg+NZ3cXVfycK+zps4NRWyz
-	 VdDqXQo1EQuPl7SdkMCBAnZ11PjoiC81ycr7MtBgJlh1kkwBajhsumQ9aH9jyqb5xn
-	 e75Ooz/PjFkGpI1GRDzWL+ucLS1iuW7k3il/nPps=
+	b=iuu+/ZwlR9RsQep7M9IXfL5oZsmNEOOjIgHXZ+swiP8nGL5J7/7w5KIkttItD5dld
+	 5BdRqykv8e30o8MVHWCZAUeZ9/iOiDO67uq2JwpyUS2CNTaOlF2yuXNFuSVWmolXY/
+	 GwfsTYo06RfQgpcoT9/bKrGW2Mdv5sRkMHxOSN7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	stable <stable@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 328/332] fuse: fix livelock in synchronous file put from fuseblk workers
-Date: Mon, 27 Oct 2025 19:36:21 +0100
-Message-ID: <20251027183533.550284238@linuxfoundation.org>
+Subject: [PATCH 5.10 329/332] arch_topology: Fix incorrect error check in topology_parse_cpu_capacity()
+Date: Mon, 27 Oct 2025 19:36:22 +0100
+Message-ID: <20251027183533.579869547@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,90 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 26e5c67deb2e1f42a951f022fdf5b9f7eb747b01 ]
+[ Upstream commit 2eead19334516c8e9927c11b448fbe512b1f18a1 ]
 
-I observed a hang when running generic/323 against a fuseblk server.
-This test opens a file, initiates a lot of AIO writes to that file
-descriptor, and closes the file descriptor before the writes complete.
-Unsurprisingly, the AIO exerciser threads are mostly stuck waiting for
-responses from the fuseblk server:
+Fix incorrect use of PTR_ERR_OR_ZERO() in topology_parse_cpu_capacity()
+which causes the code to proceed with NULL clock pointers. The current
+logic uses !PTR_ERR_OR_ZERO(cpu_clk) which evaluates to true for both
+valid pointers and NULL, leading to potential NULL pointer dereference
+in clk_get_rate().
 
-[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
-[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
-[<0>] fuse_do_getattr+0xfc/0x1f0 [fuse]
-[<0>] fuse_file_read_iter+0xbe/0x1c0 [fuse]
-[<0>] aio_read+0x130/0x1e0
-[<0>] io_submit_one+0x542/0x860
-[<0>] __x64_sys_io_submit+0x98/0x1a0
-[<0>] do_syscall_64+0x37/0xf0
-[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Per include/linux/err.h documentation, PTR_ERR_OR_ZERO(ptr) returns:
+"The error code within @ptr if it is an error pointer; 0 otherwise."
 
-But the /weird/ part is that the fuseblk server threads are waiting for
-responses from itself:
+This means PTR_ERR_OR_ZERO() returns 0 for both valid pointers AND NULL
+pointers. Therefore !PTR_ERR_OR_ZERO(cpu_clk) evaluates to true (proceed)
+when cpu_clk is either valid or NULL, causing clk_get_rate(NULL) to be
+called when of_clk_get() returns NULL.
 
-[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
-[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
-[<0>] fuse_file_put+0x9a/0xd0 [fuse]
-[<0>] fuse_release+0x36/0x50 [fuse]
-[<0>] __fput+0xec/0x2b0
-[<0>] task_work_run+0x55/0x90
-[<0>] syscall_exit_to_user_mode+0xe9/0x100
-[<0>] do_syscall_64+0x43/0xf0
-[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Replace with !IS_ERR_OR_NULL(cpu_clk) which only proceeds for valid
+pointers, preventing potential NULL pointer dereference in clk_get_rate().
 
-The fuseblk server is fuse2fs so there's nothing all that exciting in
-the server itself.  So why is the fuse server calling fuse_file_put?
-The commit message for the fstest sheds some light on that:
-
-"By closing the file descriptor before calling io_destroy, you pretty
-much guarantee that the last put on the ioctx will be done in interrupt
-context (during I/O completion).
-
-Aha.  AIO fgets a new struct file from the fd when it queues the ioctx.
-The completion of the FUSE_WRITE command from userspace causes the fuse
-server to call the AIO completion function.  The completion puts the
-struct file, queuing a delayed fput to the fuse server task.  When the
-fuse server task returns to userspace, it has to run the delayed fput,
-which in the case of a fuseblk server, it does synchronously.
-
-Sending the FUSE_RELEASE command sychronously from fuse server threads
-is a bad idea because a client program can initiate enough simultaneous
-AIOs such that all the fuse server threads end up in delayed_fput, and
-now there aren't any threads left to handle the queued fuse commands.
-
-Fix this by only using asynchronous fputs when closing files, and leave
-a comment explaining why.
-
-Cc: stable@vger.kernel.org # v2.6.38
-Fixes: 5a18ec176c934c ("fuse: fix hang of single threaded fuseblk filesystem")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ added isdir parameter to fuse_file_put() call ]
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: b8fe128dad8f ("arch_topology: Adjust initial CPU capacities with current freq")
+Link: https://patch.msgid.link/20250923174308.1771906-1-kaushlendra.kumar@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/base/arch_topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -324,8 +324,14 @@ void fuse_release_common(struct file *fi
- 	 * Make the release synchronous if this is a fuseblk mount,
- 	 * synchronous RELEASE is allowed (and desirable) in this case
- 	 * because the server can be trusted not to screw up.
-+	 *
-+	 * Always use the asynchronous file put because the current thread
-+	 * might be the fuse server.  This can happen if a process starts some
-+	 * aio and closes the fd before the aio completes.  Since aio takes its
-+	 * own ref to the file, the IO completion has to drop the ref, which is
-+	 * how the fuse server can end up closing its clients' files.
- 	 */
--	fuse_file_put(ff, ff->fm->fc->destroy, isdir);
-+	fuse_file_put(ff, false, isdir);
- }
- 
- static int fuse_open(struct inode *inode, struct file *file)
+--- a/drivers/base/arch_topology.c
++++ b/drivers/base/arch_topology.c
+@@ -196,7 +196,7 @@ bool __init topology_parse_cpu_capacity(
+ 		 * frequency (by keeping the initial freq_factor value).
+ 		 */
+ 		cpu_clk = of_clk_get(cpu_node, 0);
+-		if (!PTR_ERR_OR_ZERO(cpu_clk)) {
++		if (!IS_ERR_OR_NULL(cpu_clk)) {
+ 			per_cpu(freq_factor, cpu) =
+ 				clk_get_rate(cpu_clk) / 1000;
+ 			clk_put(cpu_clk);
 
 
