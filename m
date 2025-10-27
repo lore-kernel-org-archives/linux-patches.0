@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3917C32E72F;
-	Mon, 27 Oct 2025 19:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94E731E0E0;
+	Mon, 27 Oct 2025 19:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591863; cv=none; b=ujmWXIWN5AW39zCRtzXb19KUvLnUaiaOe5Iv4N4xuP7Pv5ZPrvMeVg2qBdgvyhx6nyGQOK27S7JdqCadc1neFwIBeY8PcP5C+VBfoWH1a1DG5CAL8zCNWTfrDaXS6937LL/NeT3sZMnt8J8LB5IbL7S0QcJSghBY9IHLKPzTH4o=
+	t=1761591865; cv=none; b=KaHwP395HEuVNxWrVn2L0Iv88NcLrrHIifbu5CWjzuMypneoGtzCLE+w8WxLc046XJDTX8zAtruJTxdXlMBWvg0rYCgxmwMdPGDfn2Tuv5Z75s0C0dVm3QsqJ+jorjiTAFosdtjnWxQT7L9TrOlzG4CJNmx305/xTBO2xWOgCQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591863; c=relaxed/simple;
-	bh=eRnOXPbwLGgsjLxpnm/jl61Qp0IgIdd2AMrlImhl2zw=;
+	s=arc-20240116; t=1761591865; c=relaxed/simple;
+	bh=5u63r7Zhs78f822HpnqQVxF233e+mIHLA5tTfuOvOKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJmfjV74FReGPfwYSvJhEH1LEYZH4PfHFn3M9nAGci6YFDf5U3XjMp0t1d5OH/O2TRKSBq7VnGb9MbL7thnJp3IfEL5GRzohPpcZV7jMGGp3qNFeH2EpCpcUFBMY8XJH/5MImAIR1AcFcFKfMFCy6INYcxqNgrNFT/oDgzVpyDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4gMekmZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lTBJC7gpvMUpyj2lDG+LVtx8aJyAxHZqLWwjFqYpZ6mbTU369UiVnXNVwS/6K99FZu1tY4wUpOT7QtiP7WYTyUKurmRSkKvyFLnX2TJXhYsG15eYF5CzQwx3a5xhzGiQqNJ1zQKsakyzK5ygp2aUCao7/Klrn5q7pSrxicxe1rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyQbCYkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4gMekmZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA70C4CEF1;
-	Mon, 27 Oct 2025 19:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyQbCYkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C2EC113D0;
+	Mon, 27 Oct 2025 19:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591862;
-	bh=eRnOXPbwLGgsjLxpnm/jl61Qp0IgIdd2AMrlImhl2zw=;
+	s=korg; t=1761591865;
+	bh=5u63r7Zhs78f822HpnqQVxF233e+mIHLA5tTfuOvOKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4gMekmZcduNMl3B5ureJuFnZ/D3KB6tvjPIChSFg3SZ/28OpE9EYOU6OtqyC8Xc9
-	 9XwTdePRMFEDd2rGpNUxVtsj0uhxsm5mzHlmIW8HyDtmeeJdU+8qhm3zLq4MslxgLI
-	 PkYUmCCJRwPXSORv2lE6Auopy0B2mi4DKxDcHaIU=
+	b=SyQbCYkGWyVO8TGtJJ0SbaKaNvi0u7ZxnF6OsLqodQZ19CLkURcNNIxs3F+maYEmf
+	 ClZU2rOQ8YlMn8tn0+fP3q8hBoNe4rhmhPGfzWv+I9hU8L0IqQt3tcY0lKxZPt+zjN
+	 7gYHQZqq5athooktXww2fuWIi9ovvQ3jPtr61Q74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 004/123] btrfs: fix clearing of BTRFS_FS_RELOC_RUNNING if relocation already running
-Date: Mon, 27 Oct 2025 19:34:44 +0100
-Message-ID: <20251027183446.507216637@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 005/123] media: s5p-mfc: remove an unused/uninitialized variable
+Date: Mon, 27 Oct 2025 19:34:45 +0100
+Message-ID: <20251027183446.533732758@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -53,93 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 7e5a5983edda664e8e4bb20af17b80f5135c655c upstream.
+[ Upstream commit 7fa37ba25a1dfc084e24ea9acc14bf1fad8af14c ]
 
-When starting relocation, at reloc_chunk_start(), if we happen to find
-the flag BTRFS_FS_RELOC_RUNNING is already set we return an error
-(-EINPROGRESS) to the callers, however the callers call reloc_chunk_end()
-which will clear the flag BTRFS_FS_RELOC_RUNNING, which is wrong since
-relocation was started by another task and still running.
+The s5p_mfc_cmd_args structure in the v6 driver is never used, not
+initialized to anything other than zero, but as of clang-21 this
+causes a warning:
 
-Finding the BTRFS_FS_RELOC_RUNNING flag already set is an unexpected
-scenario, but still our current behaviour is not correct.
+drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:45:7: error: variable 'h2r_args' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   45 |                                         &h2r_args);
+      |                                          ^~~~~~~~
 
-Fix this by never calling reloc_chunk_end() if reloc_chunk_start() has
-returned an error, which is what logically makes sense, since the general
-widespread pattern is to have end functions called only if the counterpart
-start functions succeeded. This requires changing reloc_chunk_start() to
-clear BTRFS_FS_RELOC_RUNNING if there's a pending cancel request.
+Just remove this for simplicity. Since the function is also called
+through a callback, this does require adding a trivial wrapper with
+the correct prototype.
 
-Fixes: 907d2710d727 ("btrfs: add cancellable chunk relocation support")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f96f3cfa0bb8 ("[media] s5p-mfc: Update MFC v4l2 driver to support MFC6.x")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c |   35 ++++++++----------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -3915,6 +3915,7 @@ out:
- /*
-  * Mark start of chunk relocation that is cancellable. Check if the cancellation
-  * has been requested meanwhile and don't start in that case.
-+ * NOTE: if this returns an error, reloc_chunk_end() must not be called.
-  *
-  * Return:
-  *   0             success
-@@ -3931,10 +3932,8 @@ static int reloc_chunk_start(struct btrf
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c
+@@ -14,8 +14,7 @@
+ #include "s5p_mfc_opr.h"
+ #include "s5p_mfc_cmd_v6.h"
  
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0) {
- 		btrfs_info(fs_info, "chunk relocation canceled on start");
--		/*
--		 * On cancel, clear all requests but let the caller mark
--		 * the end after cleanup operations.
--		 */
-+		/* On cancel, clear all requests. */
-+		clear_and_wake_up_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags);
- 		atomic_set(&fs_info->reloc_cancel_req, 0);
- 		return -ECANCELED;
- 	}
-@@ -3943,9 +3942,11 @@ static int reloc_chunk_start(struct btrf
- 
- /*
-  * Mark end of chunk relocation that is cancellable and wake any waiters.
-+ * NOTE: call only if a previous call to reloc_chunk_start() succeeded.
-  */
- static void reloc_chunk_end(struct btrfs_fs_info *fs_info)
+-static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd,
+-				struct s5p_mfc_cmd_args *args)
++static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd)
  {
-+	ASSERT(test_bit(BTRFS_FS_RELOC_RUNNING, &fs_info->flags));
- 	/* Requested after start, clear bit first so any waiters can continue */
- 	if (atomic_read(&fs_info->reloc_cancel_req) > 0)
- 		btrfs_info(fs_info, "chunk relocation canceled during operation");
-@@ -4144,9 +4145,9 @@ out:
- 	if (err && rw)
- 		btrfs_dec_block_group_ro(rc->block_group);
- 	iput(rc->data_inode);
-+	reloc_chunk_end(fs_info);
- out_put_bg:
- 	btrfs_put_block_group(bg);
--	reloc_chunk_end(fs_info);
- 	free_reloc_control(rc);
- 	return err;
+ 	mfc_debug(2, "Issue the command: %d\n", cmd);
+ 
+@@ -31,7 +30,6 @@ static int s5p_mfc_cmd_host2risc_v6(stru
+ 
+ static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	struct s5p_mfc_buf_size_v6 *buf_size = dev->variant->buf_size->priv;
+ 	int ret;
+ 
+@@ -41,33 +39,23 @@ static int s5p_mfc_sys_init_cmd_v6(struc
+ 
+ 	mfc_write(dev, dev->ctx_buf.dma, S5P_FIMV_CONTEXT_MEM_ADDR_V6);
+ 	mfc_write(dev, buf_size->dev_ctx, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6);
  }
-@@ -4337,8 +4338,8 @@ out_clean:
- 		err = ret;
- out_unset:
- 	unset_reloc_control(rc);
--out_end:
- 	reloc_chunk_end(fs_info);
-+out_end:
- 	free_reloc_control(rc);
- out:
- 	free_reloc_roots(&reloc_roots);
+ 
+ static int s5p_mfc_sleep_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
+-
+-	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6,
+-			&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6);
+ }
+ 
+ static int s5p_mfc_wakeup_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
+-
+-	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6);
+ }
+ 
+ /* Open a new instance and get its number */
+ static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+ {
+ 	struct s5p_mfc_dev *dev = ctx->dev;
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	int codec_type;
+ 
+ 	mfc_debug(2, "Requested codec mode: %d\n", ctx->codec_mode);
+@@ -129,23 +117,20 @@ static int s5p_mfc_open_inst_cmd_v6(stru
+ 	mfc_write(dev, ctx->ctx.size, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
+ 	mfc_write(dev, 0, S5P_FIMV_D_CRC_CTRL_V6); /* no crc */
+ 
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6);
+ }
+ 
+ /* Close instance */
+ static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+ {
+ 	struct s5p_mfc_dev *dev = ctx->dev;
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	int ret = 0;
+ 
+ 	dev->curr_ctx = ctx->num;
+ 	if (ctx->state != MFCINST_FREE) {
+ 		mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
+ 		ret = s5p_mfc_cmd_host2risc_v6(dev,
+-					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6,
+-					&h2r_args);
++					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6);
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
+@@ -153,9 +138,15 @@ static int s5p_mfc_close_inst_cmd_v6(str
+ 	return ret;
+ }
+ 
++static int s5p_mfc_cmd_host2risc_v6_args(struct s5p_mfc_dev *dev, int cmd,
++				    struct s5p_mfc_cmd_args *ignored)
++{
++	return s5p_mfc_cmd_host2risc_v6(dev, cmd);
++}
++
+ /* Initialize cmd function pointers for MFC v6 */
+ static struct s5p_mfc_hw_cmds s5p_mfc_cmds_v6 = {
+-	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6,
++	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6_args,
+ 	.sys_init_cmd = s5p_mfc_sys_init_cmd_v6,
+ 	.sleep_cmd = s5p_mfc_sleep_cmd_v6,
+ 	.wakeup_cmd = s5p_mfc_wakeup_cmd_v6,
 
 
