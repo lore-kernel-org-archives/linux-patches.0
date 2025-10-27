@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419A931CA4E;
-	Mon, 27 Oct 2025 18:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1F531CA50;
+	Mon, 27 Oct 2025 18:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591066; cv=none; b=snoC74vI68FdLYjNJVDDOIPAfDs9l329xJ0vS7iLVLlEK7OxL6lRC+DtKaAjm0sFG00PqJFQiTdVAolY71IE3WXiTe4uTE+AjyXzoZ2Tq4QzSlT3HtzbVuJTTVHvYhERDF2+y4ZAw4zNb4aQWGqz5F8mGBj5nBPLyuo29lzKM3c=
+	t=1761591068; cv=none; b=L8Y81UTZdhQPmDIcttz67JvRKeQPHBTGkdQ4wHVonVLBtjP8imqn5rgUAhkFCKz8kueBjbBbDuaexf4Ap2YHn6BaU7/svDFjM3LiQTFaLfLXlWnHXVjq6TaMf7Zp/shMmhWUEoKDFgmV4jfFi/3KFidLrSeYt5tukJriLlIDaHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591066; c=relaxed/simple;
-	bh=tb56DB0y3OfJE3dbY20Nqe+E0Hb3eJEfK59UZzkM3oc=;
+	s=arc-20240116; t=1761591068; c=relaxed/simple;
+	bh=jrwEi71QmX4Dj/6yw2nZYHPj1AVqHKPKw3Jzs3iJUxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALqiPwkpRdijJiKajUrQWYIeqPwGE5wMGh58r9oAKzU1qRmzY5noJv7l4TOJ6mAOoMs9g4kzVclLRK95PhZ1J16pAM2nUnS2anCAJUkAaXu2+OXS+WVct8kDSLOf6xCdm/zmpc+RA4dotzPkAB/mqVikodsKrLNJeiEZ6CHm2tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ox7ACGaQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqK0P9a6jkeoO6HxqosP7bNCF54VKnYm0+gNkmZ/xELQofEgm27vrdYMCnYnlJwXkAn8dgjJjNZAaGJFXYbdNbhfVsxv1FhQ2DoYfxyj57bvNlksQZJHGyCP52XgptafLB+EncjkWoyo8HEl1m2sycteU+R+etey9b7429B1ktk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbXIQeJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ox7ACGaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6441FC4CEF1;
-	Mon, 27 Oct 2025 18:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbXIQeJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31D3C4CEF1;
+	Mon, 27 Oct 2025 18:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591065;
-	bh=tb56DB0y3OfJE3dbY20Nqe+E0Hb3eJEfK59UZzkM3oc=;
+	s=korg; t=1761591068;
+	bh=jrwEi71QmX4Dj/6yw2nZYHPj1AVqHKPKw3Jzs3iJUxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ox7ACGaQXrJ+WvWVBT9dqoQCtdv0l+VBCHxadbDi5SqHrgzvBwGO+ZgLblDsc6uGo
-	 aClArtvfrJXQvpNRWVqMf7oEpnPkCGThKHxCo1YmlvuUcfjOINedkyJN/0MWvYfVYl
-	 aK2RTWkK2eBSu9lT88lMSD98zVcAXoxkLNjcU5Ek=
+	b=BbXIQeJ0tjd1K74exqaRhRok4LXLWti0zuGf2Sy5h/t1XPMk1ZA0IdSRtL9DV0NvH
+	 wnBEyAhQaWTG7IB9BVhRnsNG0zdJHBJwRImaWRWLyxSYKxufD1Ug1bV82K8ZDufzgE
+	 PNzApqL297G+rscXl64e0eUgCe1L7j6/D6olvtMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/332] ASoC: Intel: bytcht_es8316: Fix invalid quirk input mapping
-Date: Mon, 27 Oct 2025 19:31:47 +0100
-Message-ID: <20251027183526.047692977@linuxfoundation.org>
+Subject: [PATCH 5.10 055/332] ASoC: Intel: bytcr_rt5640: Fix invalid quirk input mapping
+Date: Mon, 27 Oct 2025 19:31:48 +0100
+Message-ID: <20251027183526.071689634@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,64 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b20eb0e8de383116f1e1470d74da2a3c83c4e345 ]
+[ Upstream commit fba404e4b4af4f4f747bb0e41e9fff7d03c7bcc0 ]
 
 When an invalid value is passed via quirk option, currently
-bytcht_es8316 driver just ignores and leaves as is, which may lead to
-unepxected results like OOB access.
+bytcr_rt5640 driver only shows an error message but leaves as is.
+This may lead to unepxected results like OOB access.
 
-This patch adds the sanity check and corrects the input mapping to the
-certain default value if an invalid value is passed.
+This patch corrects the input mapping to the certain default value if
+an invalid value is passed.
 
-Fixes: 249d2fc9e55c ("ASoC: Intel: bytcht_es8316: Set card long_name based on quirks")
+Fixes: 063422ca2a9d ("ASoC: Intel: bytcr_rt5640: Set card long_name based on quirks")
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20250902171826.27329-2-tiwai@suse.de>
+Message-ID: <20250902171826.27329-3-tiwai@suse.de>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 03b9cdbd3170f..a258a410dd8df 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -46,7 +46,8 @@ enum {
- 	BYT_CHT_ES8316_INTMIC_IN2_MAP,
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index b4b2781ad22e8..381b525db2b14 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -59,7 +59,8 @@ enum {
+ 	BYT_RT5640_OVCD_SF_1P5		= (RT5640_OVCD_SF_1P5 << 13),
  };
  
--#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & GENMASK(3, 0))
-+#define BYT_CHT_ES8316_MAP_MASK			GENMASK(3, 0)
-+#define BYT_CHT_ES8316_MAP(quirk)		((quirk) & BYT_CHT_ES8316_MAP_MASK)
- #define BYT_CHT_ES8316_SSP0			BIT(16)
- #define BYT_CHT_ES8316_MONO_SPEAKER		BIT(17)
- #define BYT_CHT_ES8316_JD_INVERTED		BIT(18)
-@@ -59,10 +60,23 @@ MODULE_PARM_DESC(quirk, "Board-specific quirk override");
- 
- static void log_quirks(struct device *dev)
- {
--	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN1_MAP)
-+	int map;
-+
-+	map = BYT_CHT_ES8316_MAP(quirk);
-+	switch (map) {
-+	case BYT_CHT_ES8316_INTMIC_IN1_MAP:
- 		dev_info(dev, "quirk IN1_MAP enabled");
--	if (BYT_CHT_ES8316_MAP(quirk) == BYT_CHT_ES8316_INTMIC_IN2_MAP)
-+		break;
-+	case BYT_CHT_ES8316_INTMIC_IN2_MAP:
- 		dev_info(dev, "quirk IN2_MAP enabled");
-+		break;
-+	default:
-+		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to INTMIC_IN1_MAP\n", map);
-+		quirk &= ~BYT_CHT_ES8316_MAP_MASK;
-+		quirk |= BYT_CHT_ES8316_INTMIC_IN1_MAP;
-+		break;
-+	}
-+
- 	if (quirk & BYT_CHT_ES8316_SSP0)
- 		dev_info(dev, "quirk SSP0 enabled");
- 	if (quirk & BYT_CHT_ES8316_MONO_SPEAKER)
+-#define BYT_RT5640_MAP(quirk)		((quirk) &  GENMASK(3, 0))
++#define BYT_RT5640_MAP_MASK		GENMASK(3, 0)
++#define BYT_RT5640_MAP(quirk)		((quirk) & BYT_RT5640_MAP_MASK)
+ #define BYT_RT5640_JDSRC(quirk)		(((quirk) & GENMASK(7, 4)) >> 4)
+ #define BYT_RT5640_OVCD_TH(quirk)	(((quirk) & GENMASK(12, 8)) >> 8)
+ #define BYT_RT5640_OVCD_SF(quirk)	(((quirk) & GENMASK(14, 13)) >> 13)
+@@ -119,7 +120,9 @@ static void log_quirks(struct device *dev)
+ 		dev_info(dev, "quirk IN3_MAP enabled\n");
+ 		break;
+ 	default:
+-		dev_err(dev, "quirk map 0x%x is not supported, microphone input will not work\n", map);
++		dev_warn_once(dev, "quirk sets invalid input map: 0x%x, default to DMIC1_MAP\n", map);
++		byt_rt5640_quirk &= ~BYT_RT5640_MAP_MASK;
++		byt_rt5640_quirk |= BYT_RT5640_DMIC1_MAP;
+ 		break;
+ 	}
+ 	if (BYT_RT5640_JDSRC(byt_rt5640_quirk)) {
 -- 
 2.51.0
 
