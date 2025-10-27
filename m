@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88723081AE;
-	Mon, 27 Oct 2025 19:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AD432E69A;
+	Mon, 27 Oct 2025 19:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592146; cv=none; b=WO7Ya9Qtab4WuFfanusVAsaAkD4Z3GTFTMHCerBW8kMicrwHA4AysfR+KJ6/22EiGhhgSt+NWlDGk/7DiRlazk56mf+2M5JqPX7/EIsKRgSdBaEXwk5UsbAg8Xt1iKG2oYoGCNwPAgflm+kVymRwIZsTOOPGMTQ6t93cCjcl7lY=
+	t=1761592148; cv=none; b=EdW89Xx5Xv/eEsHTPyIqv0ZM69xaJU0bR/7f2Ba6E0CJaX9JEb0XtAlaxDbPwrGOL4Aq0O0drOXUbRxSKM1ZVFG0WzNRUwWkjK+HZA++SbVl8bYfpapwa4FhlKpVGUFQtS0fpOJ+OEnZEMTXnkJRj67T5bFM6yMc/LG75WzmFA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592146; c=relaxed/simple;
-	bh=hHdWOxDxdPgH52yK4db30ns1fBb9JYXXgWW2DNuEiEI=;
+	s=arc-20240116; t=1761592148; c=relaxed/simple;
+	bh=mvfr6ccZh++PV5tQIENLzUY7AaF8PFKkqr78Wlqxa/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hj83jACEm+srM97mbQbgSV03uiWEcYfuzEZlanT8ZDSnVZELnR74uNNsA5lGDLhVC31jdXyDrVm1ymMDLtWjOnS602KsrH07LTFooCMt4agjHH5JCiZL+3lvfzLaUQhSrTh1UgGuhrce2cNlxCl7X9/DVGhBTX8L2uCfYhk2OzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKMFcORk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTz4C6mgYmHDH7494G4BCmVULuLt6SeHqjWxDJYwRagn1SQjhG54FefgSvFhpcfhB7EedjrD34ipWHp93XoLBPuVkllmqG0WQAKsx+2lIewsSctNRCagR6LL2R7au3HslvRI7lQC5K3p8lKrYYGiPhNKAh9XfP/IgQFroSgeyQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00E+gFfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKMFcORk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360E5C4CEFD;
-	Mon, 27 Oct 2025 19:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00E+gFfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4DBC4CEF1;
+	Mon, 27 Oct 2025 19:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592145;
-	bh=hHdWOxDxdPgH52yK4db30ns1fBb9JYXXgWW2DNuEiEI=;
+	s=korg; t=1761592148;
+	bh=mvfr6ccZh++PV5tQIENLzUY7AaF8PFKkqr78Wlqxa/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKMFcORkhvTeY27S6YRUMFCnbXkmh2hlpfo7ae2ZssDtUcuTJQ6HSVQIuVlbMDSfm
-	 ZwTgEQRbtOe0kIGUeiHp9tGiwvZePf7o3WDoy7WfUs9K6Ri3oXyxBut7Xzs5pparK3
-	 gNXfifTXhGhCnea9zRQKHIZP9LsGybQI8S4OWBPQ=
+	b=00E+gFfFCn0ADxQspNh2ueWGoQ1xSSUX/GbwsxPJvNWnLujsNEtE5Su4buxG6p9j3
+	 wPR8k2Ia1XN4Sl+d6cTRQqM6mk1o47wTOMBjDqN7OWWHCG9wK5mgaIysDls7Z5JM9F
+	 mndEfgLD/oQUbCp0/vklrjD4q3iRqdrNpYhc4D3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 003/157] jbd2: ensure that all ongoing I/O complete before freeing blocks
-Date: Mon, 27 Oct 2025 19:34:24 +0100
-Message-ID: <20251027183501.326248606@linuxfoundation.org>
+Subject: [PATCH 6.1 004/157] ext4: wait for ongoing I/O to complete before freeing blocks
+Date: Mon, 27 Oct 2025 19:34:25 +0100
+Message-ID: <20251027183501.354486322@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -54,83 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 3c652c3a71de1d30d72dc82c3bead8deb48eb749 upstream.
+commit 328a782cb138029182e521c08f50eb1587db955d upstream.
 
-When releasing file system metadata blocks in jbd2_journal_forget(), if
-this buffer has not yet been checkpointed, it may have already been
-written back, currently be in the process of being written back, or has
-not yet written back.  jbd2_journal_forget() calls
-jbd2_journal_try_remove_checkpoint() to check the buffer's status and
-add it to the current transaction if it has not been written back. This
-buffer can only be reallocated after the transaction is committed.
+When freeing metadata blocks in nojournal mode, ext4_forget() calls
+bforget() to clear the dirty flag on the buffer_head and remvoe
+associated mappings. This is acceptable if the metadata has not yet
+begun to be written back. However, if the write-back has already started
+but is not yet completed, ext4_forget() will have no effect.
+Subsequently, ext4_mb_clear_bb() will immediately return the block to
+the mb allocator. This block can then be reallocated immediately,
+potentially causing an data corruption issue.
 
-jbd2_journal_try_remove_checkpoint() attempts to lock the buffer and
-check its dirty status while holding the buffer lock. If the buffer has
-already been written back, everything proceeds normally. However, there
-are two issues. First, the function returns immediately if the buffer is
-locked by the write-back process. It does not wait for the write-back to
-complete. Consequently, until the current transaction is committed and
-the block is reallocated, there is no guarantee that the I/O will
-complete. This means that ongoing I/O could write stale metadata to the
-newly allocated block, potentially corrupting data. Second, the function
-unlocks the buffer as soon as it detects that the buffer is still dirty.
-If a concurrent write-back occurs immediately after this unlocking and
-before clear_buffer_dirty() is called in jbd2_journal_forget(), data
-corruption can theoretically still occur.
+Fix this by clearing the buffer's dirty flag and waiting for the ongoing
+I/O to complete, ensuring that no further writes to stale data will
+occur.
 
-Although these two issues are unlikely to occur in practice since the
-undergoing metadata writeback I/O does not take this long to complete,
-it's better to explicitly ensure that all ongoing I/O operations are
-completed.
-
-Fixes: 597599268e3b ("jbd2: discard dirty data when forgetting an un-journalled buffer")
+Fixes: 16e08b14a455 ("ext4: cleanup clean_bdev_aliases() calls")
 Cc: stable@kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
+Reported-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Closes: https://lore.kernel.org/linux-ext4/a9417096-9549-4441-9878-b1955b899b4e@huaweicloud.com/
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20250916093337.3161016-2-yi.zhang@huaweicloud.com>
+Message-ID: <20250916093337.3161016-3-yi.zhang@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/transaction.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/ext4/ext4_jbd2.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -1668,6 +1668,7 @@ int jbd2_journal_forget(handle_t *handle
- 	int drop_reserve = 0;
- 	int err = 0;
- 	int was_modified = 0;
-+	int wait_for_writeback = 0;
+--- a/fs/ext4/ext4_jbd2.c
++++ b/fs/ext4/ext4_jbd2.c
+@@ -271,9 +271,16 @@ int __ext4_forget(const char *where, uns
+ 		  bh, is_metadata, inode->i_mode,
+ 		  test_opt(inode->i_sb, DATA_FLAGS));
  
- 	if (is_handle_aborted(handle))
- 		return -EROFS;
-@@ -1791,18 +1792,22 @@ int jbd2_journal_forget(handle_t *handle
- 		}
- 
- 		/*
--		 * The buffer is still not written to disk, we should
--		 * attach this buffer to current transaction so that the
--		 * buffer can be checkpointed only after the current
--		 * transaction commits.
-+		 * The buffer has not yet been written to disk. We should
-+		 * either clear the buffer or ensure that the ongoing I/O
-+		 * is completed, and attach this buffer to current
-+		 * transaction so that the buffer can be checkpointed only
-+		 * after the current transaction commits.
- 		 */
- 		clear_buffer_dirty(bh);
-+		wait_for_writeback = 1;
- 		__jbd2_journal_file_buffer(jh, transaction, BJ_Forget);
- 		spin_unlock(&journal->j_list_lock);
+-	/* In the no journal case, we can just do a bforget and return */
++	/*
++	 * In the no journal case, we should wait for the ongoing buffer
++	 * to complete and do a forget.
++	 */
+ 	if (!ext4_handle_valid(handle)) {
+-		bforget(bh);
++		if (bh) {
++			clear_buffer_dirty(bh);
++			wait_on_buffer(bh);
++			__bforget(bh);
++		}
+ 		return 0;
  	}
- drop:
- 	__brelse(bh);
- 	spin_unlock(&jh->b_state_lock);
-+	if (wait_for_writeback)
-+		wait_on_buffer(bh);
- 	jbd2_journal_put_journal_head(jh);
- 	if (drop_reserve) {
- 		/* no need to reserve log space for this block -bzzz */
+ 
 
 
