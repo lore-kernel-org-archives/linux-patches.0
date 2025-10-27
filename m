@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B51B2C15BB;
-	Mon, 27 Oct 2025 19:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE2F32862C;
+	Mon, 27 Oct 2025 19:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592738; cv=none; b=lDAPASP27YfhSUokFNyqeY1uFIXN+/iqj5+SFERxpJXZwu4WgMg2IcGmU9cHwdq/GLU6VjewX8bo8WYmP5mvRCIm+t3txi6Nwt9GXSzxqTewyzfUR3+sEeFNC24fqiPRnQBFZkgI7y0QhZtxxPrICINwb03LWUqX3tLuwtT2oNE=
+	t=1761592740; cv=none; b=R/p0CYlcX2eBFCwP04qZEhlLED0wkoGSmpZRnAKBil56dbB8wDnkFEEZATB38MYmwaDEOsoBvSBoSUyGX9EyQUP6In6tHUAha+8UByD9q/eEKuMVXGHNTVwS6kjh35d0TDbQnRpuHTXO5QiQWd+rTl1WJNeF832k/AiBWunoS2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592738; c=relaxed/simple;
-	bh=evyuboJfcHilWpps1lo6j6zp+8ZNO1OPeHRc+GjKxG4=;
+	s=arc-20240116; t=1761592740; c=relaxed/simple;
+	bh=QTmLdx+IUnr1NZLvbLMjK+zca1FBcfLVrAdOI6XhUJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guuBleg4tIF7uQR3v+BaDR2MoCd8v4XR0ITfSOBbKqJ7bD3rxPkZG0JaVVVYcGevRSWqeHt+XnqXn9xiaBH8/CVJDCgxB+tQJIXZDWLRq/DziEV+8eJVOnsttcgDefWTqd4NP7enoVN8ve/y7eDAtYryMaO8/U4vHPI+l5KJ2xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyQ3K0Eq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m0rcuEnsK1EnLcFW4OPkSalqj10bs90d+gKX8b7G/ZO8gZ/EoEIHQCgQngmo+izUmb7ERZXftPBH8TFqPjaqes0LTxuwq8kUIMCxgwmqLvYfsKZp3x6/BSYJoenTKXstUUm7G7yH4aNhWHmxwvfwm/zAvOFErMiU8oV4yVAYPF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7OgQ5an; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyQ3K0Eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919A0C4CEF1;
-	Mon, 27 Oct 2025 19:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7OgQ5an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6E0C4CEF1;
+	Mon, 27 Oct 2025 19:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592737;
-	bh=evyuboJfcHilWpps1lo6j6zp+8ZNO1OPeHRc+GjKxG4=;
+	s=korg; t=1761592740;
+	bh=QTmLdx+IUnr1NZLvbLMjK+zca1FBcfLVrAdOI6XhUJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyQ3K0EqsXtKDnPoVpQaCjV6dqQoWe3y68AjIG8xhVhjBD5RTQy+o+laQglJHP178
-	 Cl9c1SZmMr3V1BGnsJXNfkBamYtQVXvVUtre4EmmztWm7/XCobLCxuJxz3Hc5fgo3X
-	 qRXupPAZsPTS5c39Qnr4Ab6Usnl7fwM2pChUW2To=
+	b=c7OgQ5anvYBFXDQpTXd8e2DefTSRBplTlRVu2OTLz1hs+16qI19A14ji26jLbp4Lu
+	 P7MtpFnLVDb+0RTNoKqqOw2sB7D4F/Px1ciADCLjelmeu7O8YouiNjCqUe5dAYthm4
+	 I4sFq/9wqinVCQ8Sd6qC0pfc7ckUfGiJpsSZ8cjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 60/84] USB: serial: option: add Quectel RG255C
-Date: Mon, 27 Oct 2025 19:36:49 +0100
-Message-ID: <20251027183440.418991385@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 78/84] xfs: always warn about deprecated mount options
+Date: Mon, 27 Oct 2025 19:37:07 +0100
+Message-ID: <20251027183440.888400234@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -50,63 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-commit 89205c60c0fc96b73567a2e9fe27ee3f59d01193 upstream.
+[ Upstream commit 630785bfbe12c3ee3ebccd8b530a98d632b7e39d ]
 
-Add support for Quectel RG255C devices to complement commit 5c964c8a97c1
-("net: usb: qmi_wwan: add Quectel RG255C").
-The composition is DM / NMEA / AT / QMI.
+The deprecation of the 'attr2' mount option in 6.18 wasn't entirely
+successful because nobody noticed that the kernel never printed a
+warning about attr2 being set in fstab if the only xfs filesystem is the
+root fs; the initramfs mounts the root fs with no mount options; and the
+init scripts only conveyed the fstab options by remounting the root fs.
 
-T:  Bus=01 Lev=02 Prnt=99 Port=01 Cnt=02 Dev#=110 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0316 Rev= 5.15
-S:  Manufacturer=Quectel
-S:  Product=RG255C-GL
-S:  SerialNumber=xxxxxxxx
-C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Fix this by making it complain all the time.
 
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable@vger.kernel.org # v5.13
+Fixes: 92cf7d36384b99 ("xfs: Skip repetitive warnings about mount options")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ Update existing xfs_fs_warn_deprecated() callers ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/xfs/xfs_super.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -273,6 +273,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM05CN			0x0312
- #define QUECTEL_PRODUCT_EM05G_GR		0x0313
- #define QUECTEL_PRODUCT_EM05G_RS		0x0314
-+#define QUECTEL_PRODUCT_RG255C			0x0316
- #define QUECTEL_PRODUCT_EM12			0x0512
- #define QUECTEL_PRODUCT_RM500Q			0x0800
- #define QUECTEL_PRODUCT_RM520N			0x0801
-@@ -1271,6 +1272,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x40) },
+--- a/fs/xfs/xfs_super.c
++++ b/fs/xfs/xfs_super.c
+@@ -1230,16 +1230,25 @@ suffix_kstrtoint(
+ static inline void
+ xfs_fs_warn_deprecated(
+ 	struct fs_context	*fc,
+-	struct fs_parameter	*param,
+-	uint64_t		flag,
+-	bool			value)
++	struct fs_parameter	*param)
+ {
+-	/* Don't print the warning if reconfiguring and current mount point
+-	 * already had the flag set
++	/*
++	 * Always warn about someone passing in a deprecated mount option.
++	 * Previously we wouldn't print the warning if we were reconfiguring
++	 * and current mount point already had the flag set, but that was not
++	 * the right thing to do.
++	 *
++	 * Many distributions mount the root filesystem with no options in the
++	 * initramfs and rely on mount -a to remount the root fs with the
++	 * options in fstab.  However, the old behavior meant that there would
++	 * never be a warning about deprecated mount options for the root fs in
++	 * /etc/fstab.  On a single-fs system, that means no warning at all.
++	 *
++	 * Compounding this problem are distribution scripts that copy
++	 * /proc/mounts to fstab, which means that we can't remove mount
++	 * options unless we're 100% sure they have only ever been advertised
++	 * in /proc/mounts in response to explicitly provided mount options.
+ 	 */
+-	if ((fc->purpose & FS_CONTEXT_FOR_RECONFIGURE) &&
+-            !!(XFS_M(fc->root->d_sb)->m_features & flag) == value)
+-		return;
+ 	xfs_warn(fc->s_fs_info, "%s mount option is deprecated.", param->key);
+ }
  
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
+@@ -1378,19 +1387,19 @@ xfs_fs_parse_param(
+ #endif
+ 	/* Following mount options will be removed in September 2025 */
+ 	case Opt_ikeep:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_IKEEP;
+ 		return 0;
+ 	case Opt_noikeep:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, false);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features &= ~XFS_FEAT_IKEEP;
+ 		return 0;
+ 	case Opt_attr2:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_ATTR2, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_ATTR2;
+ 		return 0;
+ 	case Opt_noattr2:
+-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_NOATTR2, true);
++		xfs_fs_warn_deprecated(fc, param);
+ 		parsing_mp->m_features |= XFS_FEAT_NOATTR2;
+ 		return 0;
+ 	default:
 
 
