@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B4932B9B2;
-	Mon, 27 Oct 2025 19:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4D831D75F;
+	Mon, 27 Oct 2025 19:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593211; cv=none; b=tldXlf0h36eVfSyFQpmBXihriVCxYpv1mr+unj1oVHSwtIdJ7tPTQNr6V7GiY1zLGPpUJq25qnmaIhtzKue+WDAbgNQAeOwwaiZnFDc7QhI8980XYVPmIohtT+HnAWkSF5lePN9/yGaqJOV6gi3E1IZeOTvDwQgPnoaNEexWb7c=
+	t=1761593213; cv=none; b=ZrTjJ7ZQzqG/kiKOoLIl6qNyRn0PShfCG/lllFWZeVXxV7M8xu5o4IBpquJJNkFTxKLUwDIXjpOqug9IZCooHx4/vzuwl2YrunmJVEnTQ2iPyT85kWVAT7pFBzkTdzjoy8JFLi/xbC5vMHAMH003S5oImN312m8mC7yGf1S+0yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593211; c=relaxed/simple;
-	bh=Vs5rJc/YYAC1zS9DMvQrbqOxMEO9M55f1CwRDEgNt/I=;
+	s=arc-20240116; t=1761593213; c=relaxed/simple;
+	bh=WVO2szA3Yq+6SqR8XJIISuS/4b7ufSal/1OiM4p9aqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOjKm8tftZRjNL9cry373a+PGBIFhMF7KDnydGZUf1lsLWCp6eOddeVKSwmq3Wqes1sIU6Qnh/eFKjSUHnTdiaHxO2Bb5ORf/aNL8FCEqtwI9zeRS1VToHXeoHhHV4G17tqYwUMSDNxOv46S5+eILTiL5yzNBLplj4/naoCUP8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2n/Zfc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=twCssl1O+67gxF0Z+ugv50CmB+3w1RnNwkHvt7qzLAyuDcb15h5AD+xoitebs4zei1A5Urr62fQzI4iPuZt8MUqEdkasbhaqhHS4XXL2r01lt/Cn38HS/48q58fCxP98gIg2YG1AE1u/1Lp40sqtrfkSzyF7HWXVbV53mGdBY6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5t3PNIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2n/Zfc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FF5C4CEF1;
-	Mon, 27 Oct 2025 19:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5t3PNIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FA1C4CEF1;
+	Mon, 27 Oct 2025 19:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593210;
-	bh=Vs5rJc/YYAC1zS9DMvQrbqOxMEO9M55f1CwRDEgNt/I=;
+	s=korg; t=1761593213;
+	bh=WVO2szA3Yq+6SqR8XJIISuS/4b7ufSal/1OiM4p9aqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2n/Zfc5SlI7JUZvQCo28Xti4aLj87Yq+D8bnI4apWeXwDT4BgLRohhM1UO17Sjsu
-	 zP2tIxv3N3Csr4/YPGOh54ZXz8+9P6RS7PeGzME/Qra2bTNxNr/d8Yj5RrIBsaeqfu
-	 w+K49Ryj0pmRrMOni+MK9cdkUCur/sot8gQsq6/s=
+	b=q5t3PNICVcNZEH5rotvbxmmw2wzRpHXKIYVDjiALBJR9L5iQ7N+QmQVWqahVcXqMc
+	 uBVV39/QKDYI11FHtFWA1QhCMmks4RBYXMFePR840PRpr+4LjhP4QoGdz5bb6gvV9U
+	 rAjjZOQekGEF8P+36NPxARO2lLVvQHD5gvFCkI6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 055/184] net: hsr: prevent creation of HSR device with slaves from another netns
-Date: Mon, 27 Oct 2025 19:35:37 +0100
-Message-ID: <20251027183516.381140184@linuxfoundation.org>
+Subject: [PATCH 6.17 056/184] espintcp: use datagram_poll_queue for socket readiness
+Date: Mon, 27 Oct 2025 19:35:38 +0100
+Message-ID: <20251027183516.409515628@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -51,57 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit c0178eec8884231a5ae0592b9fce827bccb77e86 ]
+[ Upstream commit 0fc3e32c2c069f541f2724d91f5e98480b640326 ]
 
-HSR/PRP driver does not handle correctly having slaves/interlink devices
-in a different net namespace. Currently, it is possible to create a HSR
-link in a different net namespace than the slaves/interlink with the
-following command:
+espintcp uses a custom queue (ike_queue) to deliver packets to
+userspace. The polling logic relies on datagram_poll, which checks
+sk_receive_queue, which can lead to false readiness signals when that
+queue contains non-userspace packets.
 
- ip link add hsr0 netns hsr-ns type hsr slave1 eth1 slave2 eth2
+Switch espintcp_poll to use datagram_poll_queue with ike_queue, ensuring
+poll only signals readiness when userspace data is actually available.
 
-As there is no use-case on supporting this scenario, enforce that HSR
-device link matches netns defined by IFLA_LINK_NETNSID.
-
-The iproute2 command mentioned above will throw the following error:
-
- Error: hsr: HSR slaves/interlink must be on the same net namespace than HSR link.
-
-Fixes: f421436a591d ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20251020135533.9373-1-fmancera@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20251021100942.195010-3-ralf@mandelbit.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_netlink.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/xfrm/espintcp.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/hsr/hsr_netlink.c b/net/hsr/hsr_netlink.c
-index b120470246cc5..c96b63adf96ff 100644
---- a/net/hsr/hsr_netlink.c
-+++ b/net/hsr/hsr_netlink.c
-@@ -34,12 +34,18 @@ static int hsr_newlink(struct net_device *dev,
- 		       struct netlink_ext_ack *extack)
+diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
+index fc7a603b04f13..bf744ac9d5a73 100644
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -555,14 +555,10 @@ static void espintcp_close(struct sock *sk, long timeout)
+ static __poll_t espintcp_poll(struct file *file, struct socket *sock,
+ 			      poll_table *wait)
  {
- 	struct net *link_net = rtnl_newlink_link_net(params);
-+	struct net_device *link[2], *interlink = NULL;
- 	struct nlattr **data = params->data;
- 	enum hsr_version proto_version;
- 	unsigned char multicast_spec;
- 	u8 proto = HSR_PROTOCOL_HSR;
+-	__poll_t mask = datagram_poll(file, sock, wait);
+ 	struct sock *sk = sock->sk;
+ 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
  
--	struct net_device *link[2], *interlink = NULL;
-+	if (!net_eq(link_net, dev_net(dev))) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "HSR slaves/interlink must be on the same net namespace than HSR link");
-+		return -EINVAL;
-+	}
-+
- 	if (!data) {
- 		NL_SET_ERR_MSG_MOD(extack, "No slave devices specified");
- 		return -EINVAL;
+-	if (!skb_queue_empty(&ctx->ike_queue))
+-		mask |= EPOLLIN | EPOLLRDNORM;
+-
+-	return mask;
++	return datagram_poll_queue(file, sock, wait, &ctx->ike_queue);
+ }
+ 
+ static void build_protos(struct proto *espintcp_prot,
 -- 
 2.51.0
 
