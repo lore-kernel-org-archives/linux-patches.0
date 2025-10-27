@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B36313277;
-	Mon, 27 Oct 2025 18:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE8232D438;
+	Mon, 27 Oct 2025 18:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591466; cv=none; b=a5NaDec/qP9L3HuPJm5q/HiN/J/QAEuXoxM3b9qtRVo0DOhoSnrjV2byQNucJ4qYLGWtxIf2QT6G6E26L/lHyO+HoZ1uMLUqOtv7Qg6wVrueB08DEFoFGi7BF+3Cw4mHUSwZxmcr4fec/PH1hGyAOlbqYFZay3YQcGw3SjJrr2Y=
+	t=1761591470; cv=none; b=tsR/UVz9rTab0ygriz4v1iCuUeJBC6jlu9uFRa8P3mum2BRFq1dA116ztT11sOSTlr+X/zd1XOKmdb44y0+4gDqMqG4P1IKeLs4hrIpiwcBj/MrHZoJV9uyTTXRrn26QNt9p9whQ5e/u4FaAJPAxy+E13ReyCHnfKqkPMwyZuAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591466; c=relaxed/simple;
-	bh=J0GJ3x9wQftm3YUOsoIxl6xdZ6wvPHV0cowR/YbYTLo=;
+	s=arc-20240116; t=1761591470; c=relaxed/simple;
+	bh=P17O9kio7XFOlopTIvooq0IqoXhk6yl5CgMqQti5500=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtBDtZ4sUWc/Cc8egc2WCei3sL7C4YJN2CXDaMYK6fIPLy/H3Og6ZAcJ+5Rh1ojk5BIaFlMNjlYrBtaCRfjAevmyUxdxDhSbXDQZJ0tg69Rk6CZDnyjLQ0R7cVTkNTzrI0bAth57fftzeRjy+FeUm0+Zih0OLA6PFKapuDlcLSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2zpQvDl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PurgITWJUqc/GvZ9k/TQdnJChMty+zhMW0U+aiyCdrP0IgVEf6RjQI1vhRZ7nZVuJXs3hbKyL07ka6TuSrC0zJmj9JJXONhKXI0L+ky2dOWCbfZ+bChasNbQYlEuVjHbik7r74jXOxWoK71J20qjCgFSl3Atjkc6uW+EwM5JAiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kC1431rx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2zpQvDl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197EDC4CEF1;
-	Mon, 27 Oct 2025 18:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kC1431rx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965A4C4CEF1;
+	Mon, 27 Oct 2025 18:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591466;
-	bh=J0GJ3x9wQftm3YUOsoIxl6xdZ6wvPHV0cowR/YbYTLo=;
+	s=korg; t=1761591468;
+	bh=P17O9kio7XFOlopTIvooq0IqoXhk6yl5CgMqQti5500=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2zpQvDlYYcr5CEoU6sHgCbsMkjSwYNnbRhW8IOOS/IsyI/gG1xOsHDhLKg8WDdCa
-	 Mry1nP0B6ATr4MpXGvka3OwT9zu9zkK8MFiNMDlutKB2C/Odkuw8tTMED+SRxrum0w
-	 E3s/T/aw0vNHhQ22rxJpgFqFL54ngRr1KCf/Ctj0=
+	b=kC1431rxaYWIb7ImY4kj1N4ltzDULhJso9wR1FIluhBLLXtT46GgD8gV6iYfKTzhh
+	 Vy3vFUrxHls/FCnED0PL270wHuDmRF7gQwNYw4hX3KGCao4dFAZ6sF0uPG3YnNj110
+	 D/ezfCH3jJhmHc4AtSzELo9O4a93/kDKF1dowS6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 207/332] minmax: add a few more MIN_T/MAX_T users
-Date: Mon, 27 Oct 2025 19:34:20 +0100
-Message-ID: <20251027183530.200294724@linuxfoundation.org>
+Subject: [PATCH 5.10 208/332] minmax: simplify and clarify min_t()/max_t() implementation
+Date: Mon, 27 Oct 2025 19:34:21 +0100
+Message-ID: <20251027183530.230199419@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -54,149 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 4477b39c32fdc03363affef4b11d48391e6dc9ff ]
+[ Upstream commit 017fa3e89187848fd056af757769c9e66ac3e93d ]
 
-Commit 3a7e02c040b1 ("minmax: avoid overly complicated constant
-expressions in VM code") added the simpler MIN_T/MAX_T macros in order
-to avoid some excessive expansion from the rather complicated regular
-min/max macros.
+This simplifies the min_t() and max_t() macros by no longer making them
+work in the context of a C constant expression.
 
-The complexity of those macros stems from two issues:
+That means that you can no longer use them for static initializers or
+for array sizes in type definitions, but there were only a couple of
+such uses, and all of them were converted (famous last words) to use
+MIN_T/MAX_T instead.
 
- (a) trying to use them in situations that require a C constant
-     expression (in static initializers and for array sizes)
-
- (b) the type sanity checking
-
-and MIN_T/MAX_T avoids both of these issues.
-
-Now, in the whole (long) discussion about all this, it was pointed out
-that the whole type sanity checking is entirely unnecessary for
-min_t/max_t which get a fixed type that the comparison is done in.
-
-But that still leaves min_t/max_t unnecessarily complicated due to
-worries about the C constant expression case.
-
-However, it turns out that there really aren't very many cases that use
-min_t/max_t for this, and we can just force-convert those.
-
-This does exactly that.
-
-Which in turn will then allow for much simpler implementations of
-min_t()/max_t().  All the usual "macros in all upper case will evaluate
-the arguments multiple times" rules apply.
-
-We should do all the same things for the regular min/max() vs MIN/MAX()
-cases, but that has the added complexity of various drivers defining
-their own local versions of MIN/MAX, so that needs another level of
-fixes first.
-
-Link: https://lore.kernel.org/all/b47fad1d0cf8449886ad148f8c013dae@AcuMS.aculab.com/
 Cc: David Laight <David.Laight@aculab.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pgtable.c                             |    2 +-
- drivers/edac/sb_edac.c                            |    4 ++--
- drivers/gpu/drm/drm_color_mgmt.c                  |    2 +-
- drivers/md/dm-integrity.c                         |    2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 +-
- fs/erofs/zdata.h                                  |    2 +-
- net/ipv4/proc.c                                   |    2 +-
- net/ipv6/proc.c                                   |    2 +-
- 8 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/minmax.h |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -107,7 +107,7 @@ static inline void pgd_list_del(pgd_t *p
- #define UNSHARED_PTRS_PER_PGD				\
- 	(SHARED_KERNEL_PMD ? KERNEL_PGD_BOUNDARY : PTRS_PER_PGD)
- #define MAX_UNSHARED_PTRS_PER_PGD			\
--	max_t(size_t, KERNEL_PGD_BOUNDARY, PTRS_PER_PGD)
-+	MAX_T(size_t, KERNEL_PGD_BOUNDARY, PTRS_PER_PGD)
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -45,17 +45,20 @@
  
+ #define __cmp(op, x, y)	((x) __cmp_op_##op (y) ? (x) : (y))
  
- static void pgd_set_mm(pgd_t *pgd, struct mm_struct *mm)
---- a/drivers/edac/sb_edac.c
-+++ b/drivers/edac/sb_edac.c
-@@ -109,8 +109,8 @@ static const u32 knl_interleave_list[] =
- 	0x104, 0x10c, 0x114, 0x11c,   /* 20-23 */
- };
- #define MAX_INTERLEAVE							\
--	(max_t(unsigned int, ARRAY_SIZE(sbridge_interleave_list),	\
--	       max_t(unsigned int, ARRAY_SIZE(ibridge_interleave_list),	\
-+	(MAX_T(unsigned int, ARRAY_SIZE(sbridge_interleave_list),	\
-+	       MAX_T(unsigned int, ARRAY_SIZE(ibridge_interleave_list),	\
- 		     ARRAY_SIZE(knl_interleave_list))))
+-#define __cmp_once(op, x, y, unique_x, unique_y) ({	\
+-	typeof(x) unique_x = (x);			\
+-	typeof(y) unique_y = (y);			\
++#define __cmp_once_unique(op, type, x, y, ux, uy) \
++	({ type ux = (x); type uy = (y); __cmp(op, ux, uy); })
++
++#define __cmp_once(op, type, x, y) \
++	__cmp_once_unique(op, type, x, y, __UNIQUE_ID(x_), __UNIQUE_ID(y_))
++
++#define __careful_cmp_once(op, x, y) ({			\
+ 	static_assert(__types_ok(x, y),			\
+ 		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
+-	__cmp(op, unique_x, unique_y); })
++	__cmp_once(op, __auto_type, x, y); })
  
- struct interleave_pkg {
---- a/drivers/gpu/drm/drm_color_mgmt.c
-+++ b/drivers/gpu/drm/drm_color_mgmt.c
-@@ -421,7 +421,7 @@ int drm_plane_create_color_properties(st
- {
- 	struct drm_device *dev = plane->dev;
- 	struct drm_property *prop;
--	struct drm_prop_enum_list enum_list[max_t(int, DRM_COLOR_ENCODING_MAX,
-+	struct drm_prop_enum_list enum_list[MAX_T(int, DRM_COLOR_ENCODING_MAX,
- 						       DRM_COLOR_RANGE_MAX)];
- 	int i, len;
+ #define __careful_cmp(op, x, y)					\
+ 	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
+-		__cmp(op, x, y),				\
+-		__cmp_once(op, x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y)))
++		__cmp(op, x, y), __careful_cmp_once(op, x, y))
  
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -2431,7 +2431,7 @@ static void do_journal_write(struct dm_i
- 				    unlikely(from_replay) &&
- #endif
- 				    ic->internal_hash) {
--					char test_tag[max_t(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
-+					char test_tag[MAX_T(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
+ #define __clamp(val, lo, hi)	\
+ 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+@@ -158,7 +161,7 @@
+  * @x: first value
+  * @y: second value
+  */
+-#define min_t(type, x, y)	__careful_cmp(min, (type)(x), (type)(y))
++#define min_t(type, x, y) __cmp_once(min, type, x, y)
  
- 					integrity_sector_checksum(ic, sec + ((l - j) << ic->sb->log2_sectors_per_block),
- 								  (char *)access_journal_data(ic, i, l), test_tag);
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2267,7 +2267,7 @@ static void stmmac_dma_interrupt(struct
- 	u32 channels_to_check = tx_channel_count > rx_channel_count ?
- 				tx_channel_count : rx_channel_count;
- 	u32 chan;
--	int status[max_t(u32, MTL_MAX_TX_QUEUES, MTL_MAX_RX_QUEUES)];
-+	int status[MAX_T(u32, MTL_MAX_TX_QUEUES, MTL_MAX_RX_QUEUES)];
- 
- 	/* Make sure we never check beyond our status buffer. */
- 	if (WARN_ON_ONCE(channels_to_check > ARRAY_SIZE(status)))
---- a/fs/erofs/zdata.h
-+++ b/fs/erofs/zdata.h
-@@ -182,7 +182,7 @@ static inline void z_erofs_onlinepage_en
- }
- 
- #define Z_EROFS_VMAP_ONSTACK_PAGES	\
--	min_t(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
-+	MIN_T(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
- #define Z_EROFS_VMAP_GLOBAL_PAGES	2048
- 
- #endif
---- a/net/ipv4/proc.c
-+++ b/net/ipv4/proc.c
-@@ -43,7 +43,7 @@
- #include <net/sock.h>
- #include <net/raw.h>
- 
--#define TCPUDP_MIB_MAX max_t(u32, UDP_MIB_MAX, TCP_MIB_MAX)
-+#define TCPUDP_MIB_MAX MAX_T(u32, UDP_MIB_MAX, TCP_MIB_MAX)
+ /**
+  * max_t - return maximum of two values, using the specified type
+@@ -166,7 +169,7 @@
+  * @x: first value
+  * @y: second value
+  */
+-#define max_t(type, x, y)	__careful_cmp(max, (type)(x), (type)(y))
++#define max_t(type, x, y) __cmp_once(max, type, x, y)
  
  /*
-  *	Report socket allocation statistics [mea@utu.fi]
---- a/net/ipv6/proc.c
-+++ b/net/ipv6/proc.c
-@@ -27,7 +27,7 @@
- #include <net/ipv6.h>
- 
- #define MAX4(a, b, c, d) \
--	max_t(u32, max_t(u32, a, b), max_t(u32, c, d))
-+	MAX_T(u32, MAX_T(u32, a, b), MAX_T(u32, c, d))
- #define SNMP_MIB_MAX MAX4(UDP_MIB_MAX, TCP_MIB_MAX, \
- 			IPSTATS_MIB_MAX, ICMP_MIB_MAX)
- 
+  * Do not check the array parameter using __must_be_array().
 
 
