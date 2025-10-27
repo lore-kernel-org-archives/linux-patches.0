@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2191E47CA;
-	Mon, 27 Oct 2025 19:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928D6320A32;
+	Mon, 27 Oct 2025 19:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593417; cv=none; b=C7tZi81jbUnKvZVXiKxNyvuR/4MsIx+GiG6dagGnxno6NqRUUlnpKOTQCF1XVCwsCDQYginp7/fqOgjJTjmGKdTrlCYrWfdQYleLGieH8ZuvSQWuzb6YgJf/fhwYWrfJp+XcNtHhlT2hNHUrwae2szwX2QmjnhLEvGrby/GmI30=
+	t=1761593420; cv=none; b=V778zJJGg7c5r79b/gxgijLjE7TgqodbzYOmg6IiNTucE46V8e4ejjxaFard3Qt5PPAg9/TwkOBQ8m+4lZGhNQM8nfLtXA+4FqSyzO6R4wzb/ifryOWkojqB0KPrCBAlckbzysQKo+35rqQU7Q/GFXuSIY50bbNX3txhc5Y+WGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593417; c=relaxed/simple;
-	bh=U1ZcUaYaROAb0GZ85pA95PVlM7pPOq+B3W9ZxCxP1Jw=;
+	s=arc-20240116; t=1761593420; c=relaxed/simple;
+	bh=LNIftH30L7BDeZcAhu8og8X8hX/vRDGIn2ysU2GjeHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2MnZY/wiU7GrxyhaxeRZYA8aDoNV0VO13smFloVKNUb5LYBSvz52uXeJMiGLZhgdpNwAIz5ZZE2u4JYOc6JP1k5NPioovKwpQQTJFYnv/gEaw5JcdouKoPs9ktCIWLGRFSuNyCSFB1wHuyxKx/gr/s0xEl+IR0S2e45h0fUVwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEa1QaXe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BaH/J3rLspBL4CrFu5/1e2kzocPCaUKLTJX+w69KCJrYJTMWUhUsLbJPx8t5a/K+Q6wmWR3W51Hu5NNTZpfvGfQYtyEZr/HGL/+NWkpSG5y70SHWzgVag99HY01NxMTxPvJffh0jDkL0GXFaCyoVzX0oEad3UeXcO0s7MahUBiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL5EjXdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEa1QaXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA41C113D0;
-	Mon, 27 Oct 2025 19:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL5EjXdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B771C4CEF1;
+	Mon, 27 Oct 2025 19:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593417;
-	bh=U1ZcUaYaROAb0GZ85pA95PVlM7pPOq+B3W9ZxCxP1Jw=;
+	s=korg; t=1761593420;
+	bh=LNIftH30L7BDeZcAhu8og8X8hX/vRDGIn2ysU2GjeHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEa1QaXegg/bCSGdW/+H0vKa8UN/fHoyxzPLakUtOPx7dYLrfQf2vE757hBFKj0FI
-	 ZIfWk+bqu7BhNBHQUyBSONeY4zklKeLynz6qZlRYpPd6YSnHUkU1GNmTKph2aZ48xt
-	 3Ntz3fiRnzhgH2KklOTcQAPmvyp8p5cwumplUwK4=
+	b=tL5EjXdUgmyjnlLcmEWUsUUwEFNPLBShWFMrVaqg6NVgZmX/aWOWadHGVGxk8idbG
+	 cpbuWsmXYu/pZWNybqXZKozstC8lMoumakTwDaDYO7L6wn4g/SOylUYFIZBOIHICdy
+	 TgKfvt0EcSn53UUmUw2ezVcO0KL9f+lz5yh/lYxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 128/184] spi: airoha: switch back to non-dma mode in the case of error
-Date: Mon, 27 Oct 2025 19:36:50 +0100
-Message-ID: <20251027183518.391104455@linuxfoundation.org>
+	Enze Li <lienze@kylinos.cn>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 111/184] mm/damon/core: fix potential memory leak by cleaning ops_filter in damon_destroy_scheme
+Date: Mon, 27 Oct 2025 19:36:33 +0100
+Message-ID: <20251027183517.917382127@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -53,65 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Enze Li <lienze@kylinos.cn>
 
-[ Upstream commit 20d7b236b78c7ec685a22db5689b9c829975e0c3 ]
+commit 7071537159be845a5c4ed5fb7d3db25aa4bd04a3 upstream.
 
-Current dirmap code does not switch back to non-dma mode in the case of
-error. This is wrong.
+Currently, damon_destroy_scheme() only cleans up the filter list but
+leaves ops_filter untouched, which could lead to memory leaks when a
+scheme is destroyed.
 
-This patch fixes dirmap read/write error path.
+This patch ensures both filter and ops_filter are properly freed in
+damon_destroy_scheme(), preventing potential memory leaks.
 
-Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251012121707.2296160-6-mikhail.kshevetskiy@iopsys.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20251014084225.313313-1-lienze@kylinos.cn
+Fixes: ab82e57981d0 ("mm/damon/core: introduce damos->ops_filters")
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Tested-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/damon/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 0b89dc42545b1..8143fbb0cf4e6 100644
---- a/drivers/spi/spi-airoha-snfi.c
-+++ b/drivers/spi/spi-airoha-snfi.c
-@@ -698,13 +698,13 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -451,6 +451,9 @@ void damon_destroy_scheme(struct damos *
+ 	damos_for_each_filter_safe(f, next, s)
+ 		damos_destroy_filter(f);
  
- 	err = airoha_snand_nfi_config(as_ctrl);
- 	if (err)
--		return err;
-+		goto error_dma_mode_off;
- 
- 	dma_addr = dma_map_single(as_ctrl->dev, txrx_buf, SPI_NAND_CACHE_SIZE,
- 				  DMA_FROM_DEVICE);
- 	err = dma_mapping_error(as_ctrl->dev, dma_addr);
- 	if (err)
--		return err;
-+		goto error_dma_mode_off;
- 
- 	/* set dma addr */
- 	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_STRADDR,
-@@ -804,6 +804,8 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
- error_dma_unmap:
- 	dma_unmap_single(as_ctrl->dev, dma_addr, SPI_NAND_CACHE_SIZE,
- 			 DMA_FROM_DEVICE);
-+error_dma_mode_off:
-+	airoha_snand_set_mode(as_ctrl, SPI_MODE_MANUAL);
- 	return err;
- }
- 
-@@ -936,6 +938,7 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
- error_dma_unmap:
- 	dma_unmap_single(as_ctrl->dev, dma_addr, SPI_NAND_CACHE_SIZE,
- 			 DMA_TO_DEVICE);
-+	airoha_snand_set_mode(as_ctrl, SPI_MODE_MANUAL);
- 	return err;
- }
- 
--- 
-2.51.0
-
++	damos_for_each_ops_filter_safe(f, next, s)
++		damos_destroy_filter(f);
++
+ 	kfree(s->migrate_dests.node_id_arr);
+ 	kfree(s->migrate_dests.weight_arr);
+ 	damon_del_scheme(s);
 
 
