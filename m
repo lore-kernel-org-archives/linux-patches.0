@@ -1,138 +1,187 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8182C326C
-	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 19:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3109D322A3F;
+	Mon, 27 Oct 2025 19:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593510; cv=none; b=Co4kewXH5ZOTvXWPezI/7Nwqpqx416xGClOUhoIvpvCwxMV2Z27LgzZdW/sr4Ea0bvShGHhjNZVGkMAeMvmrncDs4cgZ+U8JYHY6FncqTWdtoJhM2AUGweLNqbmXyTBdGwk02KHeozSpD7IlK9JEVaKv3jgmQytqyGG+p2IAvTA=
+	t=1761593513; cv=none; b=DYdSr+hcEuVV/FZyhpcU/hst+z0JVAoeKuYp/gUN4w1pjtniHTrSCH4LQjKNionP2oV/dbz7MxAjgibprOjup2hgkluZi+gpkbjcK0bRO7ixXc48sDkjjFawaTt12Yv0BFQuKmqDDCtKq0PcuS9x4woXZZQ8VW51YIPSBsEUIHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593510; c=relaxed/simple;
-	bh=Wfw586FZsQVYuyKx2zTL0/KlV8MshdPbK8gyqOvNcfM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nlutPiXYHHxiO/4lH29w5h+0jCNRc04e/jkMcsAMYNUIZJjYKFIxL3x91v5G5OXxpkQjL2lz4yMR+ylsHMcaULzLRQOL4ePBpUv1/YyvDIRs6WwFvNcP87GCJiekUeJjMkSwhe+KxCeDwZkT1Q/8VWyCOXblSWThRipTdJjj7H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DiDaicFX; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761593513; c=relaxed/simple;
+	bh=5TD2Lvu8cJW8nsu2NJXa9daM3nzr4DmSk3bohcKzcf0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IuiiXw8vJBk5D87x1lpCSuCgsB+F7Z7N3BTEAbqB4lUnS9gKUaPGrzAwhVihz46XBo02s0Of7ymCLB6L5eFUAribfNkpH19SvlueGpPNJzZPayOUeH3Qv9s9gUxwJdssB+r1Xjei36WXoYnr6AIhwfPGu8uH7hwt7Zwt4rYjm8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaOs3ckt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DiDaicFX"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7a26ea3bf76so6751970b3a.2
-        for <patches@lists.linux.dev>; Mon, 27 Oct 2025 12:31:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761593508; x=1762198308; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aQIEre2ri1pN3eJbczeUY9nkqkn0UVxrRDPMJROpfpI=;
-        b=DiDaicFX15TmtdqUkKv6A1IMNt0TO5Ow7ckkGunM89VgOiP4+GftGbmn3dbdAvaMmI
-         2qIYoO2KA7w8mdA/nteHTTobVgVIh6Hk/2uspYbyTm8g/74GplaqpqH27U9ej2mblRhp
-         AakoaGCNP5LS4p5T7ZrmjIyfFZa3igOvjoyTzVLLY9BxdL+dfR8hao9qznFN0FHb+Vs7
-         FpYn4JgKjFxFxfxIJedeUULASMA+HoDgvP9SuUxvcFW5nZL7isz+FZf5cD04BrKNGujU
-         XwRZxdkVXZlSJIp9aZ6Qzny0Rflo/3Xv1nCSKlLYtUyi3OuTiGc0e/cneVLZI+cOQUb7
-         FkbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761593508; x=1762198308;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aQIEre2ri1pN3eJbczeUY9nkqkn0UVxrRDPMJROpfpI=;
-        b=m6Bkbe7q1HeoEFfYuMmqi5Si48JnGgZOe2/ZjaaqcuuP9gydMq/763DAc6MctZUJlm
-         Y5eOnwcZLWi0lr0reFhJUGrLMNh2JOCnXksPksd8QpyeiCCOMllA0pXJy2F9wQzcAtrj
-         DfBHI+aGTuqvHAdRaSWp4v7qp50y1viSz5eI2zIJ1IuQEImMtFwHOpKxdODiFBSGiKGo
-         kwRJxP5RL45moU4IX5LcVOMkEtfU6iPCh6RcqELZ6o0JvAUG7440iXJc+zEMxS+mpmmk
-         m/9DBkqB5acCy0ow3+7sjtwTIF1Sfp3ZeqfYOo9Fa31jhZgZChZczQukuwbQXQPw/oIu
-         ZB6A==
-X-Gm-Message-State: AOJu0YzJtvUt8suGRkD2A0R5CvDc0PQYARKzR+KimdX5ODRyPre/cV0V
-	Q2naON/6Km+C+W3UR90K2epQS53dLnROhyzYguqxlcieZK9ptm67rW9k
-X-Gm-Gg: ASbGnctM7U6nFnBETwlJNbc/ubDTpAfcCAYOMnWSWJZPyvY5X97qEpgXNmgisF9zNvs
-	izNnijpnuwiLG4yJ5PzfnskkOIB/jBwuUO8YP122S2iOIFqeXL25p4tnOesQKG0CNNgaSQ9DbKU
-	6isT4q3XVOm/Ll0yMgzHNpozF+05Hb5XhtXWUP/CyJOpuxS+fW+FZpI+igBmy6tSfjTq7icVHHS
-	1ZEUdhqEv59xWJlDAMCJsKYB18gObUJ6g5NrwsASIa7QHBtIJDjegv3uy1zEMHQTDb6G979uu3r
-	Ajz8BaxVOkOHUaaBtqtEtT/kIu6ns/JMzCeXF1AHpzJ80RI0BVqOjFyVbu9oLX0poWiN7FHQ2z3
-	R4qB91/GPmTzRRLBGWkJ6lwHXqjyV15OPkJX8DSJGuag5jvVrkziQ4u/bDCB5N9YHCPqpM6NQiQ
-	i4yr9yTPT8Hp4LaBoTx6wXtbl99MTxgiF9HYOPQA==
-X-Google-Smtp-Source: AGHT+IEkosWML/wG8WDCCZZJB7OEe7Pbs33Ch34uBEMhw66C9EPkEPTbWzwlAuneyQFI3gppfP9HKQ==
-X-Received: by 2002:a05:6a20:914f:b0:334:a72c:806e with SMTP id adf61e73a8af0-344d441f72fmr848282637.43.1761593507941;
-        Mon, 27 Oct 2025 12:31:47 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b712f0c0b1asm8203659a12.32.2025.10.27.12.31.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Oct 2025 12:31:47 -0700 (PDT)
-Message-ID: <eb241eee-2b51-410a-b13b-9511202a68f7@gmail.com>
-Date: Mon, 27 Oct 2025 12:31:45 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaOs3ckt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3C1C4CEF1;
+	Mon, 27 Oct 2025 19:31:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1761593512;
+	bh=5TD2Lvu8cJW8nsu2NJXa9daM3nzr4DmSk3bohcKzcf0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OaOs3cktTiiDKgrusNYwrVdm+Q+OCy2i9pAQvKMUB6DpslDdsDVpG7X6pUL7ljIHp
+	 AalbgPmYEAYJq/T1LWk+bbrgOdYRWw9eULg4L0jU6kOfR9G17LQvkMbxBfSqNel20V
+	 dAL6Ee+QzJRB84unzAacj79IWtlk4Kx4sXJbsLuc=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 116/184] spi: spi-nxp-fspi: add the support for sample data from DQS pad
+Date: Mon, 27 Oct 2025 19:36:38 +0100
+Message-ID: <20251027183518.063570456@linuxfoundation.org>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
+References: <20251027183514.934710872@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/224] 5.4.301-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20251027183508.963233542@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/27/25 11:32, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.301 release.
-> There are 224 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 29 Oct 2025 18:34:15 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.301-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+------------------
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-There is a new warning showing up with 
-b27e16c9e625465fe9ea9955bd8ab095498de9e3 ("tcp: fix 
-tcp_tso_should_defer() vs large RTT") , but since 5.4 does not have the 
-full minmax backports this is expected:
+[ Upstream commit c07f270323175b83779c2c2b80b360ed476baec5 ]
 
-In file included from ./include/linux/list.h:9,
-                  from ./include/net/tcp.h:19,
-                  from net/ipv4/tcp_output.c:40:
-net/ipv4/tcp_output.c: In function 'tcp_tso_should_defer':
-./include/linux/kernel.h:843:43: warning: comparison of distinct pointer 
-types lacks a cast
-   843 |                 (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-       |                                           ^~
-./include/linux/kernel.h:857:18: note: in expansion of macro '__typecheck'
-   857 |                 (__typecheck(x, y) && __no_side_effects(x, y))
-       |                  ^~~~~~~~~~~
-./include/linux/kernel.h:867:31: note: in expansion of macro '__safe_cmp'
-   867 |         __builtin_choose_expr(__safe_cmp(x, y), \
-       |                               ^~~~~~~~~~
-./include/linux/kernel.h:876:25: note: in expansion of macro '__careful_cmp'
-   876 | #define min(x, y)       __careful_cmp(x, y, <)
-       |                         ^~~~~~~~~~~~~
-net/ipv4/tcp_output.c:2028:21: note: in expansion of macro 'min'
-  2028 |         threshold = min(srtt_in_ns >> 1, NSEC_PER_MSEC);
-       |                     ^~~
+flexspi define four mode for sample clock source selection.
+Here is the list of modes:
+mode 0: Dummy Read strobe generated by FlexSPI Controller and loopback
+        internally
+mode 1: Dummy Read strobe generated by FlexSPI Controller and loopback
+        from DQS pad
+mode 2: Reserved
+mode 3: Flash provided Read strobe and input from DQS pad
 
-I don't think this should hold off the release though.
+In default, flexspi use mode 0 after reset. And for DTR mode, flexspi
+only support 8D-8D-8D mode. For 8D-8D-8D mode, IC suggest to use mode 3,
+otherwise read always get incorrect data.
+
+For DTR mode, flexspi will automatically div 2 of the root clock
+and output to device. the formula is:
+    device_clock = root_clock / (is_dtr ? 2 : 1)
+So correct the clock rate setting for DTR mode to get the max
+performance.
+
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250917-flexspi-ddr-v2-4-bb9fe2a01889@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: a89103f67112 ("spi: spi-nxp-fspi: re-config the clock rate when operation require new clock rate")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/spi/spi-nxp-fspi.c | 56 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 53 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index b92bfef47371f..7cbe774f1f39b 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -399,7 +399,8 @@ struct nxp_fspi {
+ 	struct mutex lock;
+ 	struct pm_qos_request pm_qos_req;
+ 	int selected;
+-#define FSPI_NEED_INIT		(1 << 0)
++#define FSPI_NEED_INIT		BIT(0)
++#define FSPI_DTR_MODE		BIT(1)
+ 	int flags;
+ };
+ 
+@@ -645,6 +646,40 @@ static void nxp_fspi_clk_disable_unprep(struct nxp_fspi *f)
+ 	return;
+ }
+ 
++/*
++ * Sample Clock source selection for Flash Reading
++ * Four modes defined by fspi:
++ * mode 0: Dummy Read strobe generated by FlexSPI Controller
++ *         and loopback internally
++ * mode 1: Dummy Read strobe generated by FlexSPI Controller
++ *         and loopback from DQS pad
++ * mode 2: Reserved
++ * mode 3: Flash provided Read strobe and input from DQS pad
++ *
++ * fspi default use mode 0 after reset
++ */
++static void nxp_fspi_select_rx_sample_clk_source(struct nxp_fspi *f,
++						 bool op_is_dtr)
++{
++	u32 reg;
++
++	/*
++	 * For 8D-8D-8D mode, need to use mode 3 (Flash provided Read
++	 * strobe and input from DQS pad), otherwise read operaton may
++	 * meet issue.
++	 * This mode require flash device connect the DQS pad on board.
++	 * For other modes, still use mode 0, keep align with before.
++	 * spi_nor_suspend will disable 8D-8D-8D mode, also need to
++	 * change the mode back to mode 0.
++	 */
++	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
++	if (op_is_dtr)
++		reg |= FSPI_MCR0_RXCLKSRC(3);
++	else	/*select mode 0 */
++		reg &= ~FSPI_MCR0_RXCLKSRC(3);
++	fspi_writel(f, reg, f->iobase + FSPI_MCR0);
++}
++
+ static void nxp_fspi_dll_calibration(struct nxp_fspi *f)
+ {
+ 	int ret;
+@@ -715,15 +750,18 @@ static void nxp_fspi_dll_calibration(struct nxp_fspi *f)
+ static void nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+ 				const struct spi_mem_op *op)
+ {
++	/* flexspi only support one DTR mode: 8D-8D-8D */
++	bool op_is_dtr = op->cmd.dtr && op->addr.dtr && op->dummy.dtr && op->data.dtr;
+ 	unsigned long rate = op->max_freq;
+ 	int ret;
+ 	uint64_t size_kb;
+ 
+ 	/*
+ 	 * Return, if previously selected target device is same as current
+-	 * requested target device.
++	 * requested target device. Also the DTR or STR mode do not change.
+ 	 */
+-	if (f->selected == spi_get_chipselect(spi, 0))
++	if ((f->selected == spi_get_chipselect(spi, 0)) &&
++	    (!!(f->flags & FSPI_DTR_MODE) == op_is_dtr))
+ 		return;
+ 
+ 	/* Reset FLSHxxCR0 registers */
+@@ -740,6 +778,18 @@ static void nxp_fspi_select_mem(struct nxp_fspi *f, struct spi_device *spi,
+ 
+ 	dev_dbg(f->dev, "Target device [CS:%x] selected\n", spi_get_chipselect(spi, 0));
+ 
++	nxp_fspi_select_rx_sample_clk_source(f, op_is_dtr);
++
++	if (op_is_dtr) {
++		f->flags |= FSPI_DTR_MODE;
++		/* For DTR mode, flexspi will default div 2 and output to device.
++		 * so here to config the root clock to 2 * device rate.
++		 */
++		rate = rate * 2;
++	} else {
++		f->flags &= ~FSPI_DTR_MODE;
++	}
++
+ 	nxp_fspi_clk_disable_unprep(f);
+ 
+ 	ret = clk_set_rate(f->clk, rate);
 -- 
-Florian
+2.51.0
+
+
+
