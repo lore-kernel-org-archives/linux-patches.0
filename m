@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7772EDD62;
-	Mon, 27 Oct 2025 18:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE367218EB1;
+	Mon, 27 Oct 2025 18:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590391; cv=none; b=KQYV2bMqQA3N5bhTKJv92IsexiNC/t+LNrW/8upm8m627g7w9Q7lGpdwXu9FepApN8fZ/Zs4YwzXZC9XLkWem5kuQwn9JNaeM8p9bOWcBFNhqsEnWAHS2/QSIbWKOpLnO26ykCoisJLw+TYxth+c4NRxymYYvt3+LNHRBThO2aw=
+	t=1761590394; cv=none; b=f/3nXjeG8KQ0XQN823jREir6xpbfG8FOaO4mtZ+EnH7OefioxpvtdZygfAaDZRaRff2/UTmRIXK1pu9pXkCnFFH9QEs3L0YDmsJzmNPsHPYX9t2fQNirWWURytRThOluVXzI72j0bDusxTlcfsL2K2SwzELjbLvSPeSXGlQW5WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590391; c=relaxed/simple;
-	bh=G2/1SOUx/QFTHNsB1+W8NeLaBanos3bLWAbfeyfu7JQ=;
+	s=arc-20240116; t=1761590394; c=relaxed/simple;
+	bh=SQUzB8EoNnmeweFdYTvktuG2DdDAcG0rNCQ0q/Gdi5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXh1VuHHpDUDJ7L5NA0GjYAYUaCLfoG4R5UpKlcPQsWMhkRpkYZz7e68EhXlWNJAf/t3XFXkkgTTKA895pDY6L7HAk+uXLi7BBZmmRtLvtKvk1T/4B2kEWgbEiUXTNr/yCeNgkOWec3AwQoXfG3M19fJY6mW6pVGaqHsftCkAzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6PnISe9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzVgw+36B9eQuFPG69xM76UeIhFerqBq2VpYyyP+dPY8Q9oMPU0EXIL6LUj8aGnCkurGGpxol7Eet9XwJO4viiJJBhiZUMb/exRAPAUPc2uuziL3rli4yGeeF5PxoZxuEszUczJxxZyGJ/XZ6kGnr+V7UmupVzMwO4TtJpPt3mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+ooWAHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6PnISe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDC9C4CEF1;
-	Mon, 27 Oct 2025 18:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+ooWAHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC68C4CEF1;
+	Mon, 27 Oct 2025 18:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590391;
-	bh=G2/1SOUx/QFTHNsB1+W8NeLaBanos3bLWAbfeyfu7JQ=;
+	s=korg; t=1761590393;
+	bh=SQUzB8EoNnmeweFdYTvktuG2DdDAcG0rNCQ0q/Gdi5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6PnISe9n+4f+jkxFTmJBR+FTRRAP1PkPtFFScclzt24btkEesJh+XvknRPMdep4L
-	 iJh9s7AApplIq/FD3x7KItFTyD23WiiTuPSJk25jKtkY9txaXWAsKAR+5yHZxxt/TO
-	 qE4YkHxnreGVGxRCFNEBFcz27+GkKCwDkzCOhsYI=
+	b=Y+ooWAHKqzxPGrXgc7q3dSC41J6wRIXMCOgS+NlrpUaAWi32pnawSyFeCEQbiVtcG
+	 PSlx7O3Yeg/25kAF783y7ZrtZ5mr18QILbkr1YqVoP5vyqkkNlXHVSUAsz3RLNjB7x
+	 3vbxftORq1W+DDoV84Ml/w10MtNP0+4aDlsCmm/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhilesh Patil <akhilesh@ee.iitb.ac.in>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	syzbot+136ca59d411f92e821b7@syzkaller.appspotmail.com,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 027/224] selftests: watchdog: skip ping loop if WDIOF_KEEPALIVEPING not supported
-Date: Mon, 27 Oct 2025 19:32:53 +0100
-Message-ID: <20251027183509.732084708@linuxfoundation.org>
+Subject: [PATCH 5.4 028/224] bpf: Explicitly check accesses to bpf_sock_addr
+Date: Mon, 27 Oct 2025 19:32:54 +0100
+Message-ID: <20251027183509.759350020@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,64 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit e8cfc524eaf3c0ed88106177edb6961e202e6716 ]
+[ Upstream commit 6fabca2fc94d33cdf7ec102058983b086293395f ]
 
-Check if watchdog device supports WDIOF_KEEPALIVEPING option before
-entering keep_alive() ping test loop. Fix watchdog-test silently looping
-if ioctl based ping is not supported by the device. Exit from test in
-such case instead of getting stuck in loop executing failing keep_alive()
+Syzkaller found a kernel warning on the following sock_addr program:
 
-watchdog_info:
- identity:              m41t93 rtc Watchdog
- firmware_version:      0
-Support/Status: Set timeout (in seconds)
-Support/Status: Watchdog triggers a management or other external alarm not a reboot
+    0: r0 = 0
+    1: r2 = *(u32 *)(r1 +60)
+    2: exit
 
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-WDIOC_KEEPALIVE not supported by this device
+which triggers:
 
-without this change
-Watchdog card disabled.
-Watchdog timeout set to 5 seconds.
-Watchdog ping rate set to 2 seconds.
-Watchdog card enabled.
-Watchdog Ticking Away!
-(Where test stuck here forver silently)
+    verifier bug: error during ctx access conversion (0)
 
-Updated change log at commit time:
-Shuah Khan <skhan@linuxfoundation.org>
+This is happening because offset 60 in bpf_sock_addr corresponds to an
+implicit padding of 4 bytes, right after msg_src_ip4. Access to this
+padding isn't rejected in sock_addr_is_valid_access and it thus later
+fails to convert the access.
 
-Link: https://lore.kernel.org/r/20250914152840.GA3047348@bhairav-test.ee.iitb.ac.in
-Fixes: d89d08ffd2c5 ("selftests: watchdog: Fix ioctl SET* error paths to take oneshot exit path")
-Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+This patch fixes it by explicitly checking the various fields of
+bpf_sock_addr in sock_addr_is_valid_access.
+
+I checked the other ctx structures and is_valid_access functions and
+didn't find any other similar cases. Other cases of (properly handled)
+padding are covered in new tests in a subsequent patch.
+
+Fixes: 1cedee13d25a ("bpf: Hooks for sys_sendmsg")
+Reported-by: syzbot+136ca59d411f92e821b7@syzkaller.appspotmail.com
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://syzkaller.appspot.com/bug?extid=136ca59d411f92e821b7
+Link: https://lore.kernel.org/bpf/b58609d9490649e76e584b0361da0abd3c2c1779.1758094761.git.paul.chaignon@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/watchdog/watchdog-test.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/filter.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/watchdog/watchdog-test.c b/tools/testing/selftests/watchdog/watchdog-test.c
-index 09773695d219f..4056706d63f7e 100644
---- a/tools/testing/selftests/watchdog/watchdog-test.c
-+++ b/tools/testing/selftests/watchdog/watchdog-test.c
-@@ -240,6 +240,12 @@ int main(int argc, char *argv[])
- 	if (oneshot)
- 		goto end;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index fd18497977bdf..2c56c910a0c13 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7132,13 +7132,17 @@ static bool sock_addr_is_valid_access(int off, int size,
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCKET;
+ 		break;
+-	default:
+-		if (type == BPF_READ) {
+-			if (size != size_default)
+-				return false;
+-		} else {
++	case bpf_ctx_range(struct bpf_sock_addr, user_family):
++	case bpf_ctx_range(struct bpf_sock_addr, family):
++	case bpf_ctx_range(struct bpf_sock_addr, type):
++	case bpf_ctx_range(struct bpf_sock_addr, protocol):
++		if (type != BPF_READ)
+ 			return false;
+-		}
++		if (size != size_default)
++			return false;
++		break;
++	default:
++		return false;
+ 	}
  
-+	/* Check if WDIOF_KEEPALIVEPING is supported */
-+	if (!(info.options & WDIOF_KEEPALIVEPING)) {
-+		printf("WDIOC_KEEPALIVE not supported by this device\n");
-+		goto end;
-+	}
-+
- 	printf("Watchdog Ticking Away!\n");
- 
- 	/*
+ 	return true;
 -- 
 2.51.0
 
