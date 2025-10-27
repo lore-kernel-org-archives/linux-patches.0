@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC3320CCE;
-	Mon, 27 Oct 2025 18:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B822A32142E;
+	Mon, 27 Oct 2025 18:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591341; cv=none; b=pt2/aABM4LSIqMolNgky+QKa3pUM/pcjGlbnVGk4XPPalOU13pr19vtMdc7wm5wdLQUobilKx2ir2etcOmHFkdT0NjMjHRVB8Kd39CRpFXgR8+tDIUlonUGgu6UWIm6aqj4DcCqy3elY32f3qpXdvAyI2jv0UvyqyC8zeDf5TiY=
+	t=1761591343; cv=none; b=Zt1IycBFF+q1L8JLc9IJnTr81ZyyY9dK6CMepWqoYBos5EvYtwf2rQH4DrkrRV95mnRXivHli234wtciRiA8SjQye0Vdmz+pTuMn3B4ldC7jvTnODM6dunj7zr05xIBzmyZiOO0De9NSYNJ2pq9ny7J86AoHaMcQ66bNQO2xjXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591341; c=relaxed/simple;
-	bh=4swgux+ajW7VafFN516i1MPARhYv8F5Hn2qHurGm4qY=;
+	s=arc-20240116; t=1761591343; c=relaxed/simple;
+	bh=gHN4dv+OzzV4ha0Xp7/WkDOMjJj8iNlRRZ1WksJ3QK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHB8XX7ZPcMoGVDqY6+fhWcOuqnpPI6EphCJr7EMWPlB7O1r7hM1e2/juZoaM+YmLuzseeZ43mFZjGNANyCRfrBHWf6/IAA5/YwGPs60qyOY5DwdbmBuUcBd1Xk67kDF8h/FZrNNp9Uh+d0/akCibpr3GoUVbkXes8/OtJ6khqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXpzfgdh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bX2IDa5w/yn07+2/UyT9jFZiGdI+CnUZWPnmkVgWDbs+SrKhSE//Hi2k0MFwc8NrKT0QXalaH2SGq3k3vz1V7zYvo+agu/GTVlUZrYi2ZlxpmaAfsLBC1MVnYOEGBpHjZRiicyqxBtcaN4eMYyu4zLwTggtvWK5NBy9O0rR6CR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsioIU3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXpzfgdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51032C4CEF1;
-	Mon, 27 Oct 2025 18:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsioIU3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD97BC4CEF1;
+	Mon, 27 Oct 2025 18:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591340;
-	bh=4swgux+ajW7VafFN516i1MPARhYv8F5Hn2qHurGm4qY=;
+	s=korg; t=1761591343;
+	bh=gHN4dv+OzzV4ha0Xp7/WkDOMjJj8iNlRRZ1WksJ3QK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXpzfgdhhC9sHqoEpZ5w1uVUIE3fPo7aEb0xSCz7Jy1bMq+i8rLxyDISy0OJuO14h
-	 aJKCiT9U2I3ZXkwcjpQYQNlasXE8ESAb6iOIBNlDa6vYH4IncitK3PQwsnXhVy3LuZ
-	 +67IEPPyK1bG/ysp6V7iGA1r0Xzn8ZiyTQmKZUNc=
+	b=lsioIU3x3Ap4iKSGmC6u8J0ttRJlx4LfOs3ATY/Avzq06/dSs9lQrThzT4RbhPWAC
+	 0X+4/eAHYccKlNXmB9klp4RuECVbrmfZO8yXDklqqzMbkKLVl0uvOy1DCJCL4ohY4p
+	 wOx3OnTFYxGIV6oX809EcevlmzGGGx2L2LeO82bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/332] tcp: Dont call reqsk_fastopen_remove() in tcp_conn_request().
-Date: Mon, 27 Oct 2025 19:32:46 +0100
-Message-ID: <20251027183527.599259484@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.10 153/332] memory: samsung: exynos-srom: Fix of_iomap leak in exynos_srom_probe
+Date: Mon, 27 Oct 2025 19:33:26 +0100
+Message-ID: <20251027183528.671782154@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,87 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-[ Upstream commit 2e7cbbbe3d61c63606994b7ff73c72537afe2e1c ]
+commit 6744085079e785dae5f7a2239456135407c58b25 upstream.
 
-syzbot reported the splat below in tcp_conn_request(). [0]
+The of_platform_populate() call at the end of the function has a
+possible failure path, causing a resource leak.
 
-If a listener is close()d while a TFO socket is being processed in
-tcp_conn_request(), inet_csk_reqsk_queue_add() does not set reqsk->sk
-and calls inet_child_forget(), which calls tcp_disconnect() for the
-TFO socket.
+Replace of_iomap() with devm_platform_ioremap_resource() to ensure
+automatic cleanup of srom->reg_base.
 
-After the cited commit, tcp_disconnect() calls reqsk_fastopen_remove(),
-where reqsk_put() is called due to !reqsk->sk.
+This issue was detected by smatch static analysis:
+drivers/memory/samsung/exynos-srom.c:155 exynos_srom_probe()warn:
+'srom->reg_base' from of_iomap() not released on lines: 155.
 
-Then, reqsk_fastopen_remove() in tcp_conn_request() decrements the
-last req->rsk_refcnt and frees reqsk, and __reqsk_free() at the
-drop_and_free label causes the refcount underflow for the listener
-and double-free of the reqsk.
-
-Let's remove reqsk_fastopen_remove() in tcp_conn_request().
-
-Note that other callers make sure tp->fastopen_rsk is not NULL.
-
-[0]:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 12 PID: 5563 at lib/refcount.c:28 refcount_warn_saturate (lib/refcount.c:28)
-Modules linked in:
-CPU: 12 UID: 0 PID: 5563 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:refcount_warn_saturate (lib/refcount.c:28)
-Code: ab e8 8e b4 98 ff 0f 0b c3 cc cc cc cc cc 80 3d a4 e4 d6 01 00 75 9c c6 05 9b e4 d6 01 01 48 c7 c7 e8 df fb ab e8 6a b4 98 ff <0f> 0b e9 03 5b 76 00 cc 80 3d 7d e4 d6 01 00 0f 85 74 ff ff ff c6
-RSP: 0018:ffffa79fc0304a98 EFLAGS: 00010246
-RAX: d83af4db1c6b3900 RBX: ffff9f65c7a69020 RCX: d83af4db1c6b3900
-RDX: 0000000000000000 RSI: 00000000ffff7fff RDI: ffffffffac78a280
-RBP: 000000009d781b60 R08: 0000000000007fff R09: ffffffffac6ca280
-R10: 0000000000017ffd R11: 0000000000000004 R12: ffff9f65c7b4f100
-R13: ffff9f65c7d23c00 R14: ffff9f65c7d26000 R15: ffff9f65c7a64ef8
-FS:  00007f9f962176c0(0000) GS:ffff9f65fcf00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000180 CR3: 000000000dbbe006 CR4: 0000000000372ef0
-Call Trace:
- <IRQ>
- tcp_conn_request (./include/linux/refcount.h:400 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/net/sock.h:1965 ./include/net/request_sock.h:131 net/ipv4/tcp_input.c:7301)
- tcp_rcv_state_process (net/ipv4/tcp_input.c:6708)
- tcp_v6_do_rcv (net/ipv6/tcp_ipv6.c:1670)
- tcp_v6_rcv (net/ipv6/tcp_ipv6.c:1906)
- ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:438)
- ip6_input (net/ipv6/ip6_input.c:500)
- ipv6_rcv (net/ipv6/ip6_input.c:311)
- __netif_receive_skb (net/core/dev.c:6104)
- process_backlog (net/core/dev.c:6456)
- __napi_poll (net/core/dev.c:7506)
- net_rx_action (net/core/dev.c:7569 net/core/dev.c:7696)
- handle_softirqs (kernel/softirq.c:579)
- do_softirq (kernel/softirq.c:480)
- </IRQ>
-
-Fixes: 45c8a6cc2bcd ("tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251001233755.1340927-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8ac2266d8831 ("memory: samsung: exynos-srom: Add support for bank configuration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250806025538.306593-1-zhen.ni@easystack.cn
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_input.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/memory/samsung/exynos-srom.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 64a87a39287a1..50af55778617c 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7000,7 +7000,6 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 				    &foc, TCP_SYNACK_FASTOPEN, skb);
- 		/* Add the child socket directly into the accept queue */
- 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
--			reqsk_fastopen_remove(fastopen_sk, req, false);
- 			bh_unlock_sock(fastopen_sk);
- 			sock_put(fastopen_sk);
- 			goto drop_and_free;
--- 
-2.51.0
-
+--- a/drivers/memory/samsung/exynos-srom.c
++++ b/drivers/memory/samsung/exynos-srom.c
+@@ -121,20 +121,18 @@ static int exynos_srom_probe(struct plat
+ 		return -ENOMEM;
+ 
+ 	srom->dev = dev;
+-	srom->reg_base = of_iomap(np, 0);
+-	if (!srom->reg_base) {
++	srom->reg_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(srom->reg_base)) {
+ 		dev_err(&pdev->dev, "iomap of exynos srom controller failed\n");
+-		return -ENOMEM;
++		return PTR_ERR(srom->reg_base);
+ 	}
+ 
+ 	platform_set_drvdata(pdev, srom);
+ 
+ 	srom->reg_offset = exynos_srom_alloc_reg_dump(exynos_srom_offsets,
+ 						      ARRAY_SIZE(exynos_srom_offsets));
+-	if (!srom->reg_offset) {
+-		iounmap(srom->reg_base);
++	if (!srom->reg_offset)
+ 		return -ENOMEM;
+-	}
+ 
+ 	for_each_child_of_node(np, child) {
+ 		if (exynos_srom_configure_bank(srom, child)) {
 
 
