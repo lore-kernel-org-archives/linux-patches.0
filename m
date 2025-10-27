@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE99B2C3749;
-	Mon, 27 Oct 2025 19:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6371E35965;
+	Mon, 27 Oct 2025 19:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592291; cv=none; b=Oy01VU33UJtaYIXkE1WZIMri8tpT6uiIoPZDbw7hoSDJBsrlU8MhM3tAkLVw0S+HY/eZu1zPX5aKMdPKHWW96hLLlhJ4KzRVVUBAzh3GEmIeYN0DE4dZ+zkOZy/FhxW1cUkRGX1SHbU6Q+51pFfPBNfrEs2MWLuKpw5edFhkHkQ=
+	t=1761592294; cv=none; b=m9Wb1OXxAVLv+BPDUECutw9JCvm1QIO+twJ7RcUsZAkzt8IalVrn8tYvAZVGoeBETO7jSdbf5cor5A/lCF+Y+dvMLWMFVuUvR0NXLEFJlYYo8M9LRbiIDc/vKYo3LNLFG1gNZoq5lOrkh32+vTo4ELGvQLe+T2g2LI+BlnEYS/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592291; c=relaxed/simple;
-	bh=bKDvjB/LHpfcMx1hntdz+BhPqiT5mU7ojW1wh3QmjcE=;
+	s=arc-20240116; t=1761592294; c=relaxed/simple;
+	bh=nasmbJJ+xH0FJk8aNZnqKRemcool/c0fRIX1u/ie+fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYihO91O7yxD+Wjw9XvnZuRK6iH4Wws5ehdeGStME9OPHPKMSA4FE1pzcX30HUXXWVPt7KjcVS8ulTvsfZq169Uvq3nJV/1GIcVfnZxBs0WtBb/JdadmWGyXM/sV8EkJhoirmRsyB1nElS6smgjQSW9UzParO/KQpzE7/g4yh0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpTMb6Pw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBNlsZkYHYDCcfSENqGkI9E/9GcEhX3+KkWkUttlC8SUwqR8QIRmbCli17ZbJTFxHHIHOgCf8E4hZkaAF+MC4yGI87H1cT/4hD3OWN6ap2vvKaURBM9n/H9XPffg6yltSqTnG81m/sKPE6EJqoIrgBPzBY8whcA8+tH4AU05Kcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iN+/fmyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpTMb6Pw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC5FC4CEF1;
-	Mon, 27 Oct 2025 19:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iN+/fmyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E9BC4CEF1;
+	Mon, 27 Oct 2025 19:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592291;
-	bh=bKDvjB/LHpfcMx1hntdz+BhPqiT5mU7ojW1wh3QmjcE=;
+	s=korg; t=1761592294;
+	bh=nasmbJJ+xH0FJk8aNZnqKRemcool/c0fRIX1u/ie+fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpTMb6PwkAJtG8XB+XL3x+fOH73tpobnycY2fX/6R0iJ6XzMYckMTAa+gY9XPcSg9
-	 l0TvItSC1tz0DVdwXTEjvwS0WDxulpQ0gBOJYqIwzk7N0dATBQNA0oBK6P2ANclz4I
-	 vQzPg6e/XKRUDSfv0ggTbU5foSyCsC47RqBgUwdM=
+	b=iN+/fmydIFdi45NMxXovHzgOdmOUI5Qlwn2DqS2LXyzFnGbxWyLgprlcImdedarxj
+	 JmPGwUTTmtOYjYO5DQieic2lLzQG7EWoll139Pq4xIr1WVdC6W3nC3SgSbmp1cv/Ge
+	 CBLPKX+9z/adb8mTCNLAIEAeHzO7uTgBlwmDPA/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	syzkaller@googlegroups.com
-Subject: [PATCH 6.1 065/157] hfsplus: fix slab-out-of-bounds read in hfsplus_strcasecmp()
-Date: Mon, 27 Oct 2025 19:35:26 +0100
-Message-ID: <20251027183503.027408649@linuxfoundation.org>
+	Brian Norris <briannorris@google.com>,
+	Brian Norris <briannorris@chromium.org>
+Subject: [PATCH 6.1 066/157] PCI/sysfs: Ensure devices are powered for config reads (part 2)
+Date: Mon, 27 Oct 2025 19:35:27 +0100
+Message-ID: <20251027183503.053244443@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -54,223 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Brian Norris <briannorris@google.com>
 
-commit 42520df65bf67189541a425f7d36b0b3e7bd7844 upstream.
+Commit 48991e493507 ("PCI/sysfs: Ensure devices are powered for config
+reads") was applied to various linux-stable trees. However, prior to
+6.12.y, we do not have commit d2bd39c0456b ("PCI: Store all PCIe
+Supported Link Speeds"). Therefore, we also need to apply the change to
+max_link_speed_show().
 
-The hfsplus_strcasecmp() logic can trigger the issue:
+This was pointed out here:
 
-[  117.317703][ T9855] ==================================================================
-[  117.318353][ T9855] BUG: KASAN: slab-out-of-bounds in hfsplus_strcasecmp+0x1bc/0x490
-[  117.318991][ T9855] Read of size 2 at addr ffff88802160f40c by task repro/9855
-[  117.319577][ T9855]
-[  117.319773][ T9855] CPU: 0 UID: 0 PID: 9855 Comm: repro Not tainted 6.17.0-rc6 #33 PREEMPT(full)
-[  117.319780][ T9855] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  117.319783][ T9855] Call Trace:
-[  117.319785][ T9855]  <TASK>
-[  117.319788][ T9855]  dump_stack_lvl+0x1c1/0x2a0
-[  117.319795][ T9855]  ? __virt_addr_valid+0x1c8/0x5c0
-[  117.319803][ T9855]  ? __pfx_dump_stack_lvl+0x10/0x10
-[  117.319808][ T9855]  ? rcu_is_watching+0x15/0xb0
-[  117.319816][ T9855]  ? lock_release+0x4b/0x3e0
-[  117.319821][ T9855]  ? __kasan_check_byte+0x12/0x40
-[  117.319828][ T9855]  ? __virt_addr_valid+0x1c8/0x5c0
-[  117.319835][ T9855]  ? __virt_addr_valid+0x4a5/0x5c0
-[  117.319842][ T9855]  print_report+0x17e/0x7e0
-[  117.319848][ T9855]  ? __virt_addr_valid+0x1c8/0x5c0
-[  117.319855][ T9855]  ? __virt_addr_valid+0x4a5/0x5c0
-[  117.319862][ T9855]  ? __phys_addr+0xd3/0x180
-[  117.319869][ T9855]  ? hfsplus_strcasecmp+0x1bc/0x490
-[  117.319876][ T9855]  kasan_report+0x147/0x180
-[  117.319882][ T9855]  ? hfsplus_strcasecmp+0x1bc/0x490
-[  117.319891][ T9855]  hfsplus_strcasecmp+0x1bc/0x490
-[  117.319900][ T9855]  ? __pfx_hfsplus_cat_case_cmp_key+0x10/0x10
-[  117.319906][ T9855]  hfs_find_rec_by_key+0xa9/0x1e0
-[  117.319913][ T9855]  __hfsplus_brec_find+0x18e/0x470
-[  117.319920][ T9855]  ? __pfx_hfsplus_bnode_find+0x10/0x10
-[  117.319926][ T9855]  ? __pfx_hfs_find_rec_by_key+0x10/0x10
-[  117.319933][ T9855]  ? __pfx___hfsplus_brec_find+0x10/0x10
-[  117.319942][ T9855]  hfsplus_brec_find+0x28f/0x510
-[  117.319949][ T9855]  ? __pfx_hfs_find_rec_by_key+0x10/0x10
-[  117.319956][ T9855]  ? __pfx_hfsplus_brec_find+0x10/0x10
-[  117.319963][ T9855]  ? __kmalloc_noprof+0x2a9/0x510
-[  117.319969][ T9855]  ? hfsplus_find_init+0x8c/0x1d0
-[  117.319976][ T9855]  hfsplus_brec_read+0x2b/0x120
-[  117.319983][ T9855]  hfsplus_lookup+0x2aa/0x890
-[  117.319990][ T9855]  ? __pfx_hfsplus_lookup+0x10/0x10
-[  117.320003][ T9855]  ? d_alloc_parallel+0x2f0/0x15e0
-[  117.320008][ T9855]  ? __lock_acquire+0xaec/0xd80
-[  117.320013][ T9855]  ? __pfx_d_alloc_parallel+0x10/0x10
-[  117.320019][ T9855]  ? __raw_spin_lock_init+0x45/0x100
-[  117.320026][ T9855]  ? __init_waitqueue_head+0xa9/0x150
-[  117.320034][ T9855]  __lookup_slow+0x297/0x3d0
-[  117.320039][ T9855]  ? __pfx___lookup_slow+0x10/0x10
-[  117.320045][ T9855]  ? down_read+0x1ad/0x2e0
-[  117.320055][ T9855]  lookup_slow+0x53/0x70
-[  117.320065][ T9855]  walk_component+0x2f0/0x430
-[  117.320073][ T9855]  path_lookupat+0x169/0x440
-[  117.320081][ T9855]  filename_lookup+0x212/0x590
-[  117.320089][ T9855]  ? __pfx_filename_lookup+0x10/0x10
-[  117.320098][ T9855]  ? strncpy_from_user+0x150/0x290
-[  117.320105][ T9855]  ? getname_flags+0x1e5/0x540
-[  117.320112][ T9855]  user_path_at+0x3a/0x60
-[  117.320117][ T9855]  __x64_sys_umount+0xee/0x160
-[  117.320123][ T9855]  ? __pfx___x64_sys_umount+0x10/0x10
-[  117.320129][ T9855]  ? do_syscall_64+0xb7/0x3a0
-[  117.320135][ T9855]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  117.320141][ T9855]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  117.320145][ T9855]  do_syscall_64+0xf3/0x3a0
-[  117.320150][ T9855]  ? exc_page_fault+0x9f/0xf0
-[  117.320154][ T9855]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  117.320158][ T9855] RIP: 0033:0x7f7dd7908b07
-[  117.320163][ T9855] Code: 23 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 31 f6 e9 09 00 00 00 66 0f 1f 84 00 00 08
-[  117.320167][ T9855] RSP: 002b:00007ffd5ebd9698 EFLAGS: 00000202 ORIG_RAX: 00000000000000a6
-[  117.320172][ T9855] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f7dd7908b07
-[  117.320176][ T9855] RDX: 0000000000000009 RSI: 0000000000000009 RDI: 00007ffd5ebd9740
-[  117.320179][ T9855] RBP: 00007ffd5ebda780 R08: 0000000000000005 R09: 00007ffd5ebd9530
-[  117.320181][ T9855] R10: 00007f7dd799bfc0 R11: 0000000000000202 R12: 000055e2008b32d0
-[  117.320184][ T9855] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-[  117.320189][ T9855]  </TASK>
-[  117.320190][ T9855]
-[  117.351311][ T9855] Allocated by task 9855:
-[  117.351683][ T9855]  kasan_save_track+0x3e/0x80
-[  117.352093][ T9855]  __kasan_kmalloc+0x8d/0xa0
-[  117.352490][ T9855]  __kmalloc_noprof+0x288/0x510
-[  117.352914][ T9855]  hfsplus_find_init+0x8c/0x1d0
-[  117.353342][ T9855]  hfsplus_lookup+0x19c/0x890
-[  117.353747][ T9855]  __lookup_slow+0x297/0x3d0
-[  117.354148][ T9855]  lookup_slow+0x53/0x70
-[  117.354514][ T9855]  walk_component+0x2f0/0x430
-[  117.354921][ T9855]  path_lookupat+0x169/0x440
-[  117.355325][ T9855]  filename_lookup+0x212/0x590
-[  117.355740][ T9855]  user_path_at+0x3a/0x60
-[  117.356115][ T9855]  __x64_sys_umount+0xee/0x160
-[  117.356529][ T9855]  do_syscall_64+0xf3/0x3a0
-[  117.356920][ T9855]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  117.357429][ T9855]
-[  117.357636][ T9855] The buggy address belongs to the object at ffff88802160f000
-[  117.357636][ T9855]  which belongs to the cache kmalloc-2k of size 2048
-[  117.358827][ T9855] The buggy address is located 0 bytes to the right of
-[  117.358827][ T9855]  allocated 1036-byte region [ffff88802160f000, ffff88802160f40c)
-[  117.360061][ T9855]
-[  117.360266][ T9855] The buggy address belongs to the physical page:
-[  117.360813][ T9855] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x21608
-[  117.361562][ T9855] head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[  117.362285][ T9855] flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
-[  117.362929][ T9855] page_type: f5(slab)
-[  117.363282][ T9855] raw: 00fff00000000040 ffff88801a842f00 ffffea0000932000 dead000000000002
-[  117.364015][ T9855] raw: 0000000000000000 0000000080080008 00000000f5000000 0000000000000000
-[  117.364750][ T9855] head: 00fff00000000040 ffff88801a842f00 ffffea0000932000 dead000000000002
-[  117.365491][ T9855] head: 0000000000000000 0000000080080008 00000000f5000000 0000000000000000
-[  117.366232][ T9855] head: 00fff00000000003 ffffea0000858201 00000000ffffffff 00000000ffffffff
-[  117.366968][ T9855] head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-[  117.367711][ T9855] page dumped because: kasan: bad access detected
-[  117.368259][ T9855] page_owner tracks the page as allocated
-[  117.368745][ T9855] page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN1
-[  117.370541][ T9855]  post_alloc_hook+0x240/0x2a0
-[  117.370954][ T9855]  get_page_from_freelist+0x2101/0x21e0
-[  117.371435][ T9855]  __alloc_frozen_pages_noprof+0x274/0x380
-[  117.371935][ T9855]  alloc_pages_mpol+0x241/0x4b0
-[  117.372360][ T9855]  allocate_slab+0x8d/0x380
-[  117.372752][ T9855]  ___slab_alloc+0xbe3/0x1400
-[  117.373159][ T9855]  __kmalloc_cache_noprof+0x296/0x3d0
-[  117.373621][ T9855]  nexthop_net_init+0x75/0x100
-[  117.374038][ T9855]  ops_init+0x35c/0x5c0
-[  117.374400][ T9855]  setup_net+0x10c/0x320
-[  117.374768][ T9855]  copy_net_ns+0x31b/0x4d0
-[  117.375156][ T9855]  create_new_namespaces+0x3f3/0x720
-[  117.375613][ T9855]  unshare_nsproxy_namespaces+0x11c/0x170
-[  117.376094][ T9855]  ksys_unshare+0x4ca/0x8d0
-[  117.376477][ T9855]  __x64_sys_unshare+0x38/0x50
-[  117.376879][ T9855]  do_syscall_64+0xf3/0x3a0
-[  117.377265][ T9855] page last free pid 9110 tgid 9110 stack trace:
-[  117.377795][ T9855]  __free_frozen_pages+0xbeb/0xd50
-[  117.378229][ T9855]  __put_partials+0x152/0x1a0
-[  117.378625][ T9855]  put_cpu_partial+0x17c/0x250
-[  117.379026][ T9855]  __slab_free+0x2d4/0x3c0
-[  117.379404][ T9855]  qlist_free_all+0x97/0x140
-[  117.379790][ T9855]  kasan_quarantine_reduce+0x148/0x160
-[  117.380250][ T9855]  __kasan_slab_alloc+0x22/0x80
-[  117.380662][ T9855]  __kmalloc_noprof+0x232/0x510
-[  117.381074][ T9855]  tomoyo_supervisor+0xc0a/0x1360
-[  117.381498][ T9855]  tomoyo_env_perm+0x149/0x1e0
-[  117.381903][ T9855]  tomoyo_find_next_domain+0x15ad/0x1b90
-[  117.382378][ T9855]  tomoyo_bprm_check_security+0x11c/0x180
-[  117.382859][ T9855]  security_bprm_check+0x89/0x280
-[  117.383289][ T9855]  bprm_execve+0x8f1/0x14a0
-[  117.383673][ T9855]  do_execveat_common+0x528/0x6b0
-[  117.384103][ T9855]  __x64_sys_execve+0x94/0xb0
-[  117.384500][ T9855]
-[  117.384706][ T9855] Memory state around the buggy address:
-[  117.385179][ T9855]  ffff88802160f300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  117.385854][ T9855]  ffff88802160f380: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  117.386534][ T9855] >ffff88802160f400: 00 04 fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  117.387204][ T9855]                       ^
-[  117.387566][ T9855]  ffff88802160f480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  117.388243][ T9855]  ffff88802160f500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  117.388918][ T9855] ==================================================================
+  Re: Patch "PCI/sysfs: Ensure devices are powered for config reads" has been added to the 6.6-stable tree
+  https://lore.kernel.org/all/aPEMIreBYZ7yk3cm@google.com/
 
-The issue takes place if the length field of struct hfsplus_unistr
-is bigger than HFSPLUS_MAX_STRLEN. The patch simply checks
-the length of comparing strings. And if the strings' length
-is bigger than HFSPLUS_MAX_STRLEN, then it is corrected
-to this value.
+Original change description follows:
 
-v2
-The string length correction has been added for hfsplus_strcmp().
+    The "max_link_width", "current_link_speed", "current_link_width",
+    "secondary_bus_number", and "subordinate_bus_number" sysfs files all access
+    config registers, but they don't check the runtime PM state. If the device
+    is in D3cold or a parent bridge is suspended, we may see -EINVAL, bogus
+    values, or worse, depending on implementation details.
 
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-cc: syzkaller@googlegroups.com
-Link: https://lore.kernel.org/r/20250919191243.1370388-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+    Wrap these access in pci_config_pm_runtime_{get,put}() like most of the
+    rest of the similar sysfs attributes.
+
+    Notably, "max_link_speed" does not access config registers; it returns a
+    cached value since d2bd39c0456b ("PCI: Store all PCIe Supported Link
+    Speeds").
+
+Fixes: 56c1af4606f0 ("PCI: Add sysfs max_link_speed/width, current_link_speed/width, etc")
+Link: https://lore.kernel.org/all/aPEMIreBYZ7yk3cm@google.com/
+Signed-off-by: Brian Norris <briannorris@google.com>
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/unicode.c |   24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/pci/pci-sysfs.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/hfsplus/unicode.c
-+++ b/fs/hfsplus/unicode.c
-@@ -40,6 +40,18 @@ int hfsplus_strcasecmp(const struct hfsp
- 	p1 = s1->unicode;
- 	p2 = s2->unicode;
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -186,9 +186,15 @@ static ssize_t max_link_speed_show(struc
+ 				   struct device_attribute *attr, char *buf)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
++	ssize_t ret;
  
-+	if (len1 > HFSPLUS_MAX_STRLEN) {
-+		len1 = HFSPLUS_MAX_STRLEN;
-+		pr_err("invalid length %u has been corrected to %d\n",
-+			be16_to_cpu(s1->length), len1);
-+	}
+-	return sysfs_emit(buf, "%s\n",
+-			  pci_speed_string(pcie_get_speed_cap(pdev)));
++	/* We read PCI_EXP_LNKCAP, so we need the device to be accessible. */
++	pci_config_pm_runtime_get(pdev);
++	ret = sysfs_emit(buf, "%s\n",
++			 pci_speed_string(pcie_get_speed_cap(pdev)));
++	pci_config_pm_runtime_put(pdev);
 +
-+	if (len2 > HFSPLUS_MAX_STRLEN) {
-+		len2 = HFSPLUS_MAX_STRLEN;
-+		pr_err("invalid length %u has been corrected to %d\n",
-+			be16_to_cpu(s2->length), len2);
-+	}
-+
- 	while (1) {
- 		c1 = c2 = 0;
++	return ret;
+ }
+ static DEVICE_ATTR_RO(max_link_speed);
  
-@@ -74,6 +86,18 @@ int hfsplus_strcmp(const struct hfsplus_
- 	p1 = s1->unicode;
- 	p2 = s2->unicode;
- 
-+	if (len1 > HFSPLUS_MAX_STRLEN) {
-+		len1 = HFSPLUS_MAX_STRLEN;
-+		pr_err("invalid length %u has been corrected to %d\n",
-+			be16_to_cpu(s1->length), len1);
-+	}
-+
-+	if (len2 > HFSPLUS_MAX_STRLEN) {
-+		len2 = HFSPLUS_MAX_STRLEN;
-+		pr_err("invalid length %u has been corrected to %d\n",
-+			be16_to_cpu(s2->length), len2);
-+	}
-+
- 	for (len = min(len1, len2); len > 0; len--) {
- 		c1 = be16_to_cpu(*p1);
- 		c2 = be16_to_cpu(*p2);
 
 
