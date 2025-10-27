@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC6F31DDBC;
-	Mon, 27 Oct 2025 19:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28652BE037;
+	Mon, 27 Oct 2025 19:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592661; cv=none; b=LkUY5OQZSkXgnSmQ8qgeZKq53GWvqZ9ns1mvYAEXrVRqrx+nmCkDzgan44QkuIVBxu+oziuflIbqxoI0W2w4MC6H2m6VPR7uljvAva9rzQgDHqNGJO5Z7eZIxxONFK2Bma2yMZhbuACOQQYn+h40gRYW986ewUqewWBXQOi6EJc=
+	t=1761592663; cv=none; b=kPlhzg1M/P8dMB9BqJIbe86ZSUmU5n6k1WeLeBoXe11SFpiH8gTmbCV1mLhTFxgidn37wp9xE18Vm0uKk16ppivlmvsers1qHPutEruIfhCIvIms6DH/k7OM3kalSl2nJAv9vAhKP1htriPS8DRWKXpY0amtnsfe79HFL/Jb3Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592661; c=relaxed/simple;
-	bh=soSpHTcRDAJaxTxiCf2a6n7UU0ZjMG2CGhtVqhop03k=;
+	s=arc-20240116; t=1761592663; c=relaxed/simple;
+	bh=/wkQIwWRHIjnO+qfR781hZq5MqQXkBm2nh4tTrTOjVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJvbs9fFVjIoZHKmsOmMe2WwUSzoOpAR83xUDfI7zLVCFMfi/KIS5dpxJRUaK/QDiHBOtz2JhTTdYEN+I6RitA5me1FQm+7P3lKqapWopCdClzZnK+JXDHFG/0JaFvZfKu+hjPUOwOZ+iPw7lcJJt+ps8ALQpvKlmndcEGp4u+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUNWb1nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSy/cLWz2rbcW515BPfsumH0xGkJpXN6e5vkRqVjuWTMDPTWUIYyYQEj8tOZAMLx/OsyGO63nNYhp3tGnqQajQQIxti1j5QO1KytFYd0OTsf4mLZ0/xCfi3OMq/XdzSHsP9pxldTRzCQY1VgBi829NQEGDPU6qD4bbJhaRi7OyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHYhXdc8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUNWb1nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB220C4CEFD;
-	Mon, 27 Oct 2025 19:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHYhXdc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF80C4CEF1;
+	Mon, 27 Oct 2025 19:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592661;
-	bh=soSpHTcRDAJaxTxiCf2a6n7UU0ZjMG2CGhtVqhop03k=;
+	s=korg; t=1761592663;
+	bh=/wkQIwWRHIjnO+qfR781hZq5MqQXkBm2nh4tTrTOjVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUNWb1nxZL8pIYOIjYfHcjkdegKVAycb2QOOiM0klhMB9jcwz6H1EXG5CSaH9rLBr
-	 VL8wcrexV8ouh0MwwaYLSGP+Q8jIyjKDfKw/ZhLze4rslUosg0AkDJ7YvanwnzNVQu
-	 LRfRzNs/dIUkWzrFPeRVwGO+3jk7bt6nZc/f8cWU=
+	b=gHYhXdc8n4ebn4gYR9KhZk4kFteWpTDdTG3MqUayioRmDKNQk/TyOyDC22et+6j90
+	 TLKPhMnCcP8E2xQN8DFzq72LJE+WekTh7XDvdYrfuCe7uIMg6gv5pBwWU02vbZvzI1
+	 3RLHShjqplU3N9VWk32EA3dWTi3dsMZ74Qh14MEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 48/84] selftests: mptcp: join: mark implicit tests as skipped if not supported
-Date: Mon, 27 Oct 2025 19:36:37 +0100
-Message-ID: <20251027183440.098020815@linuxfoundation.org>
+	Han Xu <han.xu@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 49/84] spi: spi-nxp-fspi: add extra delay after dll locked
+Date: Mon, 27 Oct 2025 19:36:38 +0100
+Message-ID: <20251027183440.126292963@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -51,45 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Han Xu <han.xu@nxp.com>
 
-commit 973f80d715bd2504b4db6e049f292e694145cd79 upstream.
+[ Upstream commit b93b4269791fdebbac2a9ad26f324dc2abb9e60f ]
 
-The call to 'continue_if' was missing: it properly marks a subtest as
-'skipped' if the attached condition is not valid.
+Due to the erratum ERR050272, the DLL lock status register STS2
+[xREFLOCK, xSLVLOCK] bit may indicate DLL is locked before DLL is
+actually locked. Add an extra 4us delay as a workaround.
 
-Without that, the test is wrongly marked as passed on older kernels.
+refer to ERR050272, on Page 20.
+https://www.nxp.com/docs/en/errata/IMX8_1N94W.pdf
 
-Fixes: 36c4127ae8dd ("selftests: mptcp: join: skip implicit tests if not supported")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-3-8207030cb0e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 99d822b3adc4 ("spi: spi-nxp-fspi: use DLL calibration when clock rate > 100MHz")
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://patch.msgid.link/20250922-fspi-fix-v1-2-ff4315359d31@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3737,7 +3737,7 @@ endpoint_tests()
- 	# subflow_rebuild_header is needed to support the implicit flag
- 	# userspace pm type prevents add_addr
- 	if reset "implicit EP" &&
--	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		pm_nl_set_limits $ns1 2 2
- 		pm_nl_set_limits $ns2 2 2
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-@@ -3762,7 +3762,7 @@ endpoint_tests()
- 	fi
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index bc6c086ddd43f..731504ec7ef8b 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -665,6 +665,12 @@ static void nxp_fspi_dll_calibration(struct nxp_fspi *f)
+ 				   0, POLL_TOUT, true);
+ 	if (ret)
+ 		dev_warn(f->dev, "DLL lock failed, please fix it!\n");
++
++	/*
++	 * For ERR050272, DLL lock status bit is not accurate,
++	 * wait for 4us more as a workaround.
++	 */
++	udelay(4);
+ }
  
- 	if reset_with_tcp_filter "delete and re-add" ns2 10.0.3.2 REJECT OUTPUT &&
--	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		start_events
- 		pm_nl_set_limits $ns1 0 3
- 		pm_nl_set_limits $ns2 0 3
+ /*
+-- 
+2.51.0
+
 
 
