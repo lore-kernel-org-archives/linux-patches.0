@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E7A328634;
-	Mon, 27 Oct 2025 19:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E73932143D;
+	Mon, 27 Oct 2025 19:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593190; cv=none; b=YdCukC20qtaVyUtfkJ6m+mtofUMTQrQwjtt3XOk+8N5HtkOW1809yqOMNkOH8z3itErvu8JjrbUMdm+QneldsHVZzd34cOR3kS2WXRCIPxlptjJ8WSb/KjKkFip1bvkb6jmkenyWbBIH5V4+Ho6Lrmcy7ZmlXSbR18Dcnme2N3w=
+	t=1761593194; cv=none; b=Wibq6UWVtkn22XzyPp7tUhlRDIaU16tFLetDTNSIR+Ft8I3jUWN0ABtiWkt8437oQKNupjP3UTxyWX7HbymRuLninBi62S/yXqxAzCdNpk3+i/P+ooZaLnPFHRnjZO79ZorcoGAVJYZWZjieXywaps0p0t1vbXhD7zIUtMOXM1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593190; c=relaxed/simple;
-	bh=4mHsvjyvLUmXYAr0PQNz3n6TDgCPhnv5kf9uYXOmu20=;
+	s=arc-20240116; t=1761593194; c=relaxed/simple;
+	bh=OKlPKqp1BIEa+XjInYQjJpoUxifXIOS9UESkayeucug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stJ9EiW/BAwsN/x0sRAaWlAlN62icNFVk/JjQAb7EED6Gt4JYArp7xT3S1MIJ3ou1Sk4Y7MDRwCQqYCcj2llA6EASQaK9veyJ7vqKCaCIVd2cxMg4BS1Y221mkoynHCKPO1drv/CHyHdWWZwzWph8f/rcpBWI8VB6dBZKht8dBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i67B30hz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZsBX7nNrleMeNUxXoeAT/f1CcpMGsBXXO59dlfNkkxtfjkvz/q2+hSCczwS+55HJSq5kVSB//Y7FpNmqmVIq0HBl7Kg927VBHHgH6ea8fhM0drDr9n+487d0aZqqSutFcKurWkhrxhA/WGORGtkDIPZ502SSHY51HDZ5ziH3V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JprYiCnh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i67B30hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF713C4CEF1;
-	Mon, 27 Oct 2025 19:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JprYiCnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699B2C4CEF1;
+	Mon, 27 Oct 2025 19:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593190;
-	bh=4mHsvjyvLUmXYAr0PQNz3n6TDgCPhnv5kf9uYXOmu20=;
+	s=korg; t=1761593192;
+	bh=OKlPKqp1BIEa+XjInYQjJpoUxifXIOS9UESkayeucug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i67B30hzgAdsBUOCS9mIOQ+tlWw15/8e7aqay4nd3X2MhWZE4CaCzKqO3cqQX5GG5
-	 9dS2E27EunsP2iXEM8gvnQIR12VWUkb6Hm7U/fo+24kSUiuZSMqXeMczx867kE4yml
-	 LS7Kb20tH9Gobh3uXiX0+/9dMrXEOfAgG/Rt0fGU=
+	b=JprYiCnhPOgJP371M/AQ8EKjaJo9LemvKTAm4tYv3T7ke56TdZ85n0pYVptMWKGUr
+	 elE+GxZqv2McUdW9YHC3g5q+QD21ic6zZK5AuzobQaYJOGEqsZpp/3WfSg8xvl9ahO
+	 siEDULA/+3l37XrlhIpLW2MzDEuMtyVrRogal/e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f775be4458668f7d220e@syzkaller.appspotmail.com,
-	Wang Liang <wangliang74@huawei.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 048/184] net/smc: fix general protection fault in __smc_diag_dump
-Date: Mon, 27 Oct 2025 19:35:30 +0100
-Message-ID: <20251027183516.195038164@linuxfoundation.org>
+Subject: [PATCH 6.17 031/184] smb: server: let smb_direct_flush_send_list() invalidate a remote key first
+Date: Mon, 27 Oct 2025 19:35:13 +0100
+Message-ID: <20251027183515.761319761@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -55,129 +56,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit f584239a9ed25057496bf397c370cc5163dde419 ]
+[ Upstream commit 1b53426334c3c942db47e0959a2527a4f815af50 ]
 
-The syzbot report a crash:
+If we want to invalidate a remote key we should do that as soon as
+possible, so do it in the first send work request.
 
-  Oops: general protection fault, probably for non-canonical address 0xfbd5a5d5a0000003: 0000 [#1] SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0xdead4ead00000018-0xdead4ead0000001f]
-  CPU: 1 UID: 0 PID: 6949 Comm: syz.0.335 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 08/18/2025
-  RIP: 0010:smc_diag_msg_common_fill net/smc/smc_diag.c:44 [inline]
-  RIP: 0010:__smc_diag_dump.constprop.0+0x3ca/0x2550 net/smc/smc_diag.c:89
-  Call Trace:
-   <TASK>
-   smc_diag_dump_proto+0x26d/0x420 net/smc/smc_diag.c:217
-   smc_diag_dump+0x27/0x90 net/smc/smc_diag.c:234
-   netlink_dump+0x539/0xd30 net/netlink/af_netlink.c:2327
-   __netlink_dump_start+0x6d6/0x990 net/netlink/af_netlink.c:2442
-   netlink_dump_start include/linux/netlink.h:341 [inline]
-   smc_diag_handler_dump+0x1f9/0x240 net/smc/smc_diag.c:251
-   __sock_diag_cmd net/core/sock_diag.c:249 [inline]
-   sock_diag_rcv_msg+0x438/0x790 net/core/sock_diag.c:285
-   netlink_rcv_skb+0x158/0x420 net/netlink/af_netlink.c:2552
-   netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
-   netlink_unicast+0x5a7/0x870 net/netlink/af_netlink.c:1346
-   netlink_sendmsg+0x8d1/0xdd0 net/netlink/af_netlink.c:1896
-   sock_sendmsg_nosec net/socket.c:714 [inline]
-   __sock_sendmsg net/socket.c:729 [inline]
-   ____sys_sendmsg+0xa95/0xc70 net/socket.c:2614
-   ___sys_sendmsg+0x134/0x1d0 net/socket.c:2668
-   __sys_sendmsg+0x16d/0x220 net/socket.c:2700
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xcd/0x4e0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-The process like this:
-
-               (CPU1)              |             (CPU2)
-  ---------------------------------|-------------------------------
-  inet_create()                    |
-    // init clcsock to NULL        |
-    sk = sk_alloc()                |
-                                   |
-    // unexpectedly change clcsock |
-    inet_init_csk_locks()          |
-                                   |
-    // add sk to hash table        |
-    smc_inet_init_sock()           |
-      smc_sk_init()                |
-        smc_hash_sk()              |
-                                   | // traverse the hash table
-                                   | smc_diag_dump_proto
-                                   |   __smc_diag_dump()
-                                   |     // visit wrong clcsock
-                                   |     smc_diag_msg_common_fill()
-    // alloc clcsock               |
-    smc_create_clcsk               |
-      sock_create_kern             |
-
-With CONFIG_DEBUG_LOCK_ALLOC=y, the smc->clcsock is unexpectedly changed
-in inet_init_csk_locks(). The INET_PROTOSW_ICSK flag is no need by smc,
-just remove it.
-
-After removing the INET_PROTOSW_ICSK flag, this patch alse revert
-commit 6fd27ea183c2 ("net/smc: fix lacks of icsk_syn_mss with IPPROTO_SMC")
-to avoid casting smc_sock to inet_connection_sock.
-
-Reported-by: syzbot+f775be4458668f7d220e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f775be4458668f7d220e
-Tested-by: syzbot+f775be4458668f7d220e@syzkaller.appspotmail.com
-Fixes: d25a92ccae6b ("net/smc: Introduce IPPROTO_SMC")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://patch.msgid.link/20251017024827.3137512-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_inet.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ fs/smb/server/transport_rdma.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_inet.c b/net/smc/smc_inet.c
-index a944e7dcb8b96..a94084b4a498e 100644
---- a/net/smc/smc_inet.c
-+++ b/net/smc/smc_inet.c
-@@ -56,7 +56,6 @@ static struct inet_protosw smc_inet_protosw = {
- 	.protocol	= IPPROTO_SMC,
- 	.prot		= &smc_inet_prot,
- 	.ops		= &smc_inet_stream_ops,
--	.flags		= INET_PROTOSW_ICSK,
- };
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index e1f659d3b4cf5..2363244ff5f75 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -939,12 +939,15 @@ static int smb_direct_flush_send_list(struct smb_direct_transport *t,
+ 			       struct smb_direct_sendmsg,
+ 			       list);
  
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -104,27 +103,15 @@ static struct inet_protosw smc_inet6_protosw = {
- 	.protocol	= IPPROTO_SMC,
- 	.prot		= &smc_inet6_prot,
- 	.ops		= &smc_inet6_stream_ops,
--	.flags		= INET_PROTOSW_ICSK,
- };
- #endif /* CONFIG_IPV6 */
++	if (send_ctx->need_invalidate_rkey) {
++		first->wr.opcode = IB_WR_SEND_WITH_INV;
++		first->wr.ex.invalidate_rkey = send_ctx->remote_key;
++		send_ctx->need_invalidate_rkey = false;
++		send_ctx->remote_key = 0;
++	}
++
+ 	last->wr.send_flags = IB_SEND_SIGNALED;
+ 	last->wr.wr_cqe = &last->cqe;
+-	if (is_last && send_ctx->need_invalidate_rkey) {
+-		last->wr.opcode = IB_WR_SEND_WITH_INV;
+-		last->wr.ex.invalidate_rkey = send_ctx->remote_key;
+-	}
  
--static unsigned int smc_sync_mss(struct sock *sk, u32 pmtu)
--{
--	/* No need pass it through to clcsock, mss can always be set by
--	 * sock_create_kern or smc_setsockopt.
--	 */
--	return 0;
--}
--
- static int smc_inet_init_sock(struct sock *sk)
- {
- 	struct net *net = sock_net(sk);
- 
- 	/* init common smc sock */
- 	smc_sk_init(net, sk, IPPROTO_SMC);
--
--	inet_csk(sk)->icsk_sync_mss = smc_sync_mss;
--
- 	/* create clcsock */
- 	return smc_create_clcsk(net, sk, sk->sk_family);
- }
+ 	ret = smb_direct_post_send(t, &first->wr);
+ 	if (!ret) {
 -- 
 2.51.0
 
