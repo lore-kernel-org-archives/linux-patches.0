@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA929E110;
-	Mon, 27 Oct 2025 19:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D49221DAC;
+	Mon, 27 Oct 2025 19:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592408; cv=none; b=kfJzCGMy21tGaYMDcz/SRtEQimIL6hOgantk68/31zAFQEG/fjqNWjD78bDYEIphDl7ALFDysqws2YgGPE12QgD6pclVRBI4amGLGfekxBvZiYFatcRwSBt8nOdquxFq0Pam+fELfjGYGBiLotW3i1WINPJ1TFwlTeWudOMkCs0=
+	t=1761592410; cv=none; b=Es3U/qgRLA0+UenMTm8W08VcITl45iVMq+uf2TLm3FkipirQuil58cbGrG8/X21Mmi+JdK4z4PdVS0bG84evQWSz62VUAs9IJUIOFt/MDZ/PJ8UvJ+zdRc/sqMrNrkBDQfSydPHuyx9OK6GWRjOmbe8874xD2UqhpJY5ym7oIIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592408; c=relaxed/simple;
-	bh=7faWb5DsOnN3P6VqiJhFY9o+SrMkJM+zMmMgrSoJdHs=;
+	s=arc-20240116; t=1761592410; c=relaxed/simple;
+	bh=GT0XK8Hku8JXHMFO7+Zqm1DyvoyqxNROojfCpYt3WWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T/z7vdEQyNoSWi8vieCCi6801yP64VXA5IyzezvZI7aE+KQbrHxvKmXkLV8MLIARANGRWNqU5ZQQ9XVvW7KDVtbycg841pWTv8u7a6PEoClfVTzNJMTq8vlOoYxWiQYIBpqqgLTPBrXXitFnsjsl6Z4olXHrZ7FFJ1B+8u02WUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ILjO1hn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0up+OyLptzlUxW4+/y87q+FO6L4ZmZ3zUvZwFfA+N5/HpPeOsQWNdTuqgtv2AooV9nEhZhNWCJ5/s7HzM0rrkkAMsv2rVa/9ZYOtGP/kuf5hiGNjhVSpcRMXJY27aSmC4T04+O4ku6cfSv3zLlou59ykwu1pKW5c3pCtu/lGEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnsHZLqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ILjO1hn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2A1C4CEF1;
-	Mon, 27 Oct 2025 19:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnsHZLqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445CAC4CEF1;
+	Mon, 27 Oct 2025 19:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592408;
-	bh=7faWb5DsOnN3P6VqiJhFY9o+SrMkJM+zMmMgrSoJdHs=;
+	s=korg; t=1761592410;
+	bh=GT0XK8Hku8JXHMFO7+Zqm1DyvoyqxNROojfCpYt3WWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ILjO1hnR5elkttDZHKRqhTb2GCfqiZFozDrJnggW+Fe4mZN7W+Z2XNG1PrMN3aU0
-	 OEXcEVSWoa9LvyFdd8gzHMwrlw/lBToAU1rBiz6I7AaySFyKR7VgSo6Sfmwpye/ag6
-	 eDwyaDFKvNBNVXfhoQLJBwL38hSTxhwmaE5tfl+4=
+	b=XnsHZLqtz6NcHOu9zvsLFWEVza7lzqrXUlQMwGEqHvPlcb4npyM+NwdYaFBDpwjFW
+	 uvXEaxHKj/8HKm6m53UNt0w4aujRhMxCda4FR5jCn71SJhYQMgdUFEt8ms27az2TAZ
+	 3aH7opOXKis4wAsbdoYpc55lxX7TMPSyEjTOpoII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 108/157] xhci: dbc: enable back DbC in resume if it was enabled before suspend
-Date: Mon, 27 Oct 2025 19:36:09 +0100
-Message-ID: <20251027183504.151424819@linuxfoundation.org>
+	Yu-Ting Tseng <yutingtseng@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.1 109/157] binder: remove "invalid inc weak" check
+Date: Mon, 27 Oct 2025 19:36:10 +0100
+Message-ID: <20251027183504.177173941@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -45,54 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 2bbd38fcd29670e46c0fdb9cd0e90507a8a1bf6a upstream.
+commit d90eeb8ecd227c204ab6c34a17b372bd950b7aa2 upstream.
 
-DbC is currently only enabled back if it's in configured state during
-suspend.
+There are no scenarios where a weak increment is invalid on binder_node.
+The only possible case where it could be invalid is if the kernel
+delivers BR_DECREFS to the process that owns the node, and then
+increments the weak refcount again, effectively "reviving" a dead node.
 
-If system is suspended after DbC is enabled, but before the device is
-properly enumerated by the host, then DbC would not be enabled back in
-resume.
+However, that is not possible: when the BR_DECREFS command is delivered,
+the kernel removes and frees the binder_node. The fact that you were
+able to call binder_inc_node_nilocked() implies that the node is not yet
+destroyed, which implies that BR_DECREFS has not been delivered to
+userspace, so incrementing the weak refcount is valid.
 
-Always enable DbC back in resume if it's suspended in enabled,
-connected, or configured state
+Note that it's currently possible to trigger this condition if the owner
+calls BINDER_THREAD_EXIT while node->has_weak_ref is true. This causes
+BC_INCREFS on binder_ref instances to fail when they should not.
 
-Cc: stable <stable@kernel.org>
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
+Reported-by: Yu-Ting Tseng <yutingtseng@google.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20251015-binder-weak-inc-v1-1-7914b092c371@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/android/binder.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -1136,8 +1136,15 @@ int xhci_dbc_suspend(struct xhci_hcd *xh
- 	if (!dbc)
- 		return 0;
- 
--	if (dbc->state == DS_CONFIGURED)
-+	switch (dbc->state) {
-+	case DS_ENABLED:
-+	case DS_CONNECTED:
-+	case DS_CONFIGURED:
- 		dbc->resume_required = 1;
-+		break;
-+	default:
-+		break;
-+	}
- 
- 	xhci_dbc_stop(dbc);
- 
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -845,17 +845,8 @@ static int binder_inc_node_nilocked(stru
+ 	} else {
+ 		if (!internal)
+ 			node->local_weak_refs++;
+-		if (!node->has_weak_ref && list_empty(&node->work.entry)) {
+-			if (target_list == NULL) {
+-				pr_err("invalid inc weak node for %d\n",
+-					node->debug_id);
+-				return -EINVAL;
+-			}
+-			/*
+-			 * See comment above
+-			 */
++		if (!node->has_weak_ref && target_list && list_empty(&node->work.entry))
+ 			binder_enqueue_work_ilocked(&node->work, target_list);
+-		}
+ 	}
+ 	return 0;
+ }
 
 
