@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1893277AF;
-	Mon, 27 Oct 2025 19:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C137632143E;
+	Mon, 27 Oct 2025 19:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593174; cv=none; b=BKQ5Pxpbc8xMLcWjTpVqaE3420HYgMzsLrIsCmx3ej7rrkdXFVepmOfokGvckKbY27WS1TQaKaiZ2bterGWm8OGt9FhTZrE1v7d6NXgdg5yO+e7yJJ7ZR25RaSNPLO4V2miTyXs7tGsYqIffH088fuqVmPqyIrXoROeowuUSZ9s=
+	t=1761593177; cv=none; b=UPY7wZD+7ATfrsDHD26X1rYCRDCx4Z4nnLBMdmzrtoWf5uA/uQ4XEKZiuNMRk0KscLXwoTIHLqO9EYQ8sXkRwTCNpZjQ+cI9GFFrLHzZvGzRso4x4z6LzE8OsvAq61oaf3gI2unDnvL9j7jYBHswoQDZJNXgbW1h8j9PaQX7ydQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593174; c=relaxed/simple;
-	bh=KOpsgQw9aw4uCEkT9m3yTCDeOWnR2V7Igq2354zLl+0=;
+	s=arc-20240116; t=1761593177; c=relaxed/simple;
+	bh=+z1CAQeIpH2kPNgtlx5t/4tF+W2q4/STWEm9o5lN9iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ErpsD5805g/0IfOg8IpHe6LJdSZwFiz0ozPKY08aDgKQ38NLQQeBqmuMU3m6SIvHt0EIB8kCzPJ6SW63uxFswGHrT2EwoxfXSDA3LWejQzZFjy2heYrF53t+Xrkq788QqVPt401DkBegNMvHOt5ecBsLYE78UAP3U+8APciqwYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un7intwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzQANrwLec+jGHuW7PCgM5Fk6VlDWgXDH2rgbVNgBMMsEu+7ctMxdcTmsXI2F0PG+Q3rzsf7iBv6wu5+JES3Dv2JIuy5lXut6jKUD1j9WA1O31Yn7Jyh83n26sq18dR3a516tNguzRufb/Vf0ZB0mZH4WLOlqY/2clSXlbq09TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX9eKvXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un7intwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D72CC4CEF1;
-	Mon, 27 Oct 2025 19:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX9eKvXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC189C4CEF1;
+	Mon, 27 Oct 2025 19:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593174;
-	bh=KOpsgQw9aw4uCEkT9m3yTCDeOWnR2V7Igq2354zLl+0=;
+	s=korg; t=1761593177;
+	bh=+z1CAQeIpH2kPNgtlx5t/4tF+W2q4/STWEm9o5lN9iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un7intwH6WzOfpUIXQgu1a4AG59yg5JLFGCgGZgmaVQ96CoQckCFvgxu6ikSk7B//
-	 rDFoootBZVQedxg4sP3wvVBgPF0ivHVNB7glaOLFygyTHWEkfVLsoBm0DSJKXqEc0y
-	 ZLA8tpNT/o8vCb/AZLlCRmFo2fq1DhFqJIAlPm7w=
+	b=xX9eKvXPl6+n0jGTloU0jxOQkJsrPWA3qydn89z0GBZQBo6nY+15t3XVOiQqwyehW
+	 n9H/JwagKDbVtvGXOW+nMB1oMDiHdKQvaSYh5nNKNGBD02OuBAE3xCvutpNcyzbPz0
+	 I0ys6F3eKdm5Q6RTqwNl7EiD650f1COn873794yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 042/184] can: bxcan: bxcan_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
-Date: Mon, 27 Oct 2025 19:35:24 +0100
-Message-ID: <20251027183516.041636946@linuxfoundation.org>
+Subject: [PATCH 6.17 043/184] can: esd: acc_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
+Date: Mon, 27 Oct 2025 19:35:25 +0100
+Message-ID: <20251027183516.066788852@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 3a20c444cd123e820e10ae22eeaf00e189315aa1 ]
+[ Upstream commit 0bee15a5caf36fe513fdeee07fd4f0331e61c064 ]
 
 In addition to can_dropped_invalid_skb(), the helper function
 can_dev_dropped_skb() checks whether the device is in listen-only mode and
@@ -63,27 +63,27 @@ skbs in for listen-only mode.
 
 Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Closes: https://lore.kernel.org/all/20251017-bizarre-enchanted-quokka-f3c704-mkl@pengutronix.de/
-Fixes: f00647d8127b ("can: bxcan: add support for ST bxCAN controller")
-Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-1-556665793fa4@pengutronix.de
+Fixes: 9721866f07e1 ("can: esd: add support for esd GmbH PCIe/402 CAN interface family")
+Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-2-556665793fa4@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/bxcan.c | 2 +-
+ drivers/net/can/esd/esdacc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/bxcan.c b/drivers/net/can/bxcan.c
-index bfc60eb33dc37..333ad42ea73bc 100644
---- a/drivers/net/can/bxcan.c
-+++ b/drivers/net/can/bxcan.c
-@@ -842,7 +842,7 @@ static netdev_tx_t bxcan_start_xmit(struct sk_buff *skb,
- 	u32 id;
- 	int i, j;
+diff --git a/drivers/net/can/esd/esdacc.c b/drivers/net/can/esd/esdacc.c
+index c80032bc1a521..73e66f9a3781c 100644
+--- a/drivers/net/can/esd/esdacc.c
++++ b/drivers/net/can/esd/esdacc.c
+@@ -254,7 +254,7 @@ netdev_tx_t acc_start_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	u32 acc_id;
+ 	u32 acc_dlc;
  
--	if (can_dropped_invalid_skb(ndev, skb))
-+	if (can_dev_dropped_skb(ndev, skb))
+-	if (can_dropped_invalid_skb(netdev, skb))
++	if (can_dev_dropped_skb(netdev, skb))
  		return NETDEV_TX_OK;
  
- 	if (bxcan_tx_busy(priv))
+ 	/* Access core->tx_fifo_tail only once because it may be changed
 -- 
 2.51.0
 
