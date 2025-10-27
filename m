@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7DE32B988;
-	Mon, 27 Oct 2025 19:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B496C30F526;
+	Mon, 27 Oct 2025 19:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592067; cv=none; b=JKqnJEB9PVywhlp9sE3dM2htcxXyIgr0muB9VRv9cn1IJAdCgvoH+cVxHdpxX0aYMll92rUraXRZed7RLxW3HgTMtcKqVVQzICcN/RZoViLNOBXE56ZZP/syHoG98MA/o+HpszChW6uGduIQSYY9EIKz75SNtrRuUfHU8QeVMXc=
+	t=1761592069; cv=none; b=PV73zraoqNkMKZo9XkgOBOp04N8yWv2QqfAumGOu32UY99gqg62Gzb8vM/AmzINf8w+Z6wEzkDZrgEm3ZL5JQ1H9bPqUZNr2yshlGCmTBYeWWvV4zW5ESFDg5MTCjVlflC2GCM7iPEXYGhOsYxKJWK6V2ePl7d5iZcCiVGAQr28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592067; c=relaxed/simple;
-	bh=3CWPqzeqBEFW54f3cNj3kf+Ew0fO8hW2v8tO76ofFfY=;
+	s=arc-20240116; t=1761592069; c=relaxed/simple;
+	bh=5DZk8LmxPM82EP7NHliP4s1lvEvo7gEEi3BKdxbQf78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ar6XAoWmQacVzuPhwbB1Gbl2f5MdY6qZo1jTfWLR/fOJDarMCpsSQT04fvmT/B352qw6n0JApozPekGYPZKXbQvjGMqjCqFBL+Ds5cSbbYT2IIqGzxMy4IJk9jAzGNyfFRxQytXnygKBX8WzpH7o33EMmfqiJZjq3Ie2DIYV9FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+3mEo8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LA/XiKnWoqwqSpT6oGJVVWcmnoAnPBJjFdmDA84Jl6uBcoolz+cTrC1ZkKp2q2Kj94/w8wJxrBasW8wXkzPEQzmhuFMctRgkeH9KuxKWs8i/SKihu/yU6hdJAuktcLxEZg5Hp/SvV6RgXdK9st7K0wriZK256mfBfm5sR94xlic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSrrgAEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+3mEo8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C14BC116B1;
-	Mon, 27 Oct 2025 19:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSrrgAEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BC6C4CEF1;
+	Mon, 27 Oct 2025 19:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592067;
-	bh=3CWPqzeqBEFW54f3cNj3kf+Ew0fO8hW2v8tO76ofFfY=;
+	s=korg; t=1761592069;
+	bh=5DZk8LmxPM82EP7NHliP4s1lvEvo7gEEi3BKdxbQf78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+3mEo8vTDWH22MPiWNEIQVF79R9wvlzVqT4m983xsyjLHRpdmNV8L7/gC0deXm0t
-	 ILj1CXhdWCf4x2pq2vSXLyW3xIjSBuViTiuQeEMTJKpjKWDtNKIj2QcXk0KZnAzP11
-	 z15SWZ0oDOoOOODVANL3l11ovDbCPB4hhdhlD3PE=
+	b=kSrrgAEBItf+fS3sElk5T6NTF2SdWtQJ/vdtc8F7wZBIWgIhTGrNsrF2sNR+QNwfg
+	 VZL4GghNJ+vLLgWPArcYWNORi1z0Im1JDgrZjn2pWo7PwcnDQFFSbAHA//md8x4sg1
+	 Po8Augz1ewuQBK8VtjSojI6Nh2VmGKysBQRvk1uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/123] PM: runtime: Add new devm functions
-Date: Mon, 27 Oct 2025 19:36:17 +0100
-Message-ID: <20251027183448.986564838@linuxfoundation.org>
+Subject: [PATCH 5.15 106/123] drm/amdgpu: use atomic functions with memory barriers for vm fault info
+Date: Mon, 27 Oct 2025 19:36:26 +0100
+Message-ID: <20251027183449.228141393@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -45,113 +46,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
+[ Upstream commit 6df8e84aa6b5b1812cc2cacd6b3f5ccbb18cda2b ]
 
-Add `devm_pm_runtime_set_active_enabled()` and
-`devm_pm_runtime_get_noresume()` for simplifying
-common cases in drivers.
+The atomic variable vm_fault_info_updated is used to synchronize access to
+adev->gmc.vm_fault_info between the interrupt handler and
+get_vm_fault_info().
 
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
+The default atomic functions like atomic_set() and atomic_read() do not
+provide memory barriers. This allows for CPU instruction reordering,
+meaning the memory accesses to vm_fault_info and the vm_fault_info_updated
+flag are not guaranteed to occur in the intended order. This creates a
+race condition that can lead to inconsistent or stale data being used.
+
+The previous implementation, which used an explicit mb(), was incomplete
+and inefficient. It failed to account for all potential CPU reorderings,
+such as the access of vm_fault_info being reordered before the atomic_read
+of the flag. This approach is also more verbose and less performant than
+using the proper atomic functions with acquire/release semantics.
+
+Fix this by switching to atomic_set_release() and atomic_read_acquire().
+These functions provide the necessary acquire and release semantics,
+which act as memory barriers to ensure the correct order of operations.
+It is also more efficient and idiomatic than using explicit full memory
+barriers.
+
+Fixes: b97dfa27ef3a ("drm/amdgpu: save vm fault information for amdkfd")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ kept kgd_dev parameter and adev cast in amdgpu_amdkfd_gpuvm_get_vm_fault_info ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
- include/linux/pm_runtime.h   |    4 +++
- 2 files changed, 48 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    5 ++---
+ drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c            |    7 +++----
+ drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c            |    7 +++----
+ 3 files changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1477,6 +1477,32 @@ void pm_runtime_enable(struct device *de
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1870,10 +1870,9 @@ int amdgpu_amdkfd_gpuvm_get_vm_fault_inf
+ 	struct amdgpu_device *adev;
+ 
+ 	adev = (struct amdgpu_device *)kgd;
+-	if (atomic_read(&adev->gmc.vm_fault_info_updated) == 1) {
++	if (atomic_read_acquire(&adev->gmc.vm_fault_info_updated) == 1) {
+ 		*mem = *adev->gmc.vm_fault_info;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
+ 	}
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(pm_runtime_enable);
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c
+@@ -1072,7 +1072,7 @@ static int gmc_v7_0_sw_init(void *handle
+ 					GFP_KERNEL);
+ 	if (!adev->gmc.vm_fault_info)
+ 		return -ENOMEM;
+-	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
  
-+static void pm_runtime_set_suspended_action(void *data)
-+{
-+	pm_runtime_set_suspended(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_set_active_enabled(struct device *dev)
-+{
-+	int err;
-+
-+	err = pm_runtime_set_active(dev);
-+	if (err)
-+		return err;
-+
-+	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
-+	if (err)
-+		return err;
-+
-+	return devm_pm_runtime_enable(dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
-+
- static void pm_runtime_disable_action(void *data)
- {
- 	pm_runtime_dont_use_autosuspend(data);
-@@ -1499,6 +1525,24 @@ int devm_pm_runtime_enable(struct device
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+@@ -1301,7 +1301,7 @@ static int gmc_v7_0_process_interrupt(st
+ 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+ 			     VMID);
+ 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
+-		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
++		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
+ 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
+ 		u32 protections = REG_GET_FIELD(status,
+ 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+@@ -1317,8 +1317,7 @@ static int gmc_v7_0_process_interrupt(st
+ 		info->prot_read = protections & 0x8 ? true : false;
+ 		info->prot_write = protections & 0x10 ? true : false;
+ 		info->prot_exec = protections & 0x20 ? true : false;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
+ 	}
  
-+static void pm_runtime_put_noidle_action(void *data)
-+{
-+	pm_runtime_put_noidle(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
-+ *
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_get_noresume(struct device *dev)
-+{
-+	pm_runtime_get_noresume(dev);
-+
-+	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
-+
- /**
-  * pm_runtime_forbid - Block runtime PM of a device.
-  * @dev: Device to handle.
---- a/include/linux/pm_runtime.h
-+++ b/include/linux/pm_runtime.h
-@@ -75,7 +75,9 @@ extern void pm_runtime_new_link(struct d
- extern void pm_runtime_drop_link(struct device_link *link);
- extern void pm_runtime_release_supplier(struct device_link *link);
+ 	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c
+@@ -1194,7 +1194,7 @@ static int gmc_v8_0_sw_init(void *handle
+ 					GFP_KERNEL);
+ 	if (!adev->gmc.vm_fault_info)
+ 		return -ENOMEM;
+-	atomic_set(&adev->gmc.vm_fault_info_updated, 0);
++	atomic_set_release(&adev->gmc.vm_fault_info_updated, 0);
  
-+int devm_pm_runtime_set_active_enabled(struct device *dev);
- extern int devm_pm_runtime_enable(struct device *dev);
-+int devm_pm_runtime_get_noresume(struct device *dev);
+ 	return 0;
+ }
+@@ -1482,7 +1482,7 @@ static int gmc_v8_0_process_interrupt(st
+ 	vmid = REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+ 			     VMID);
+ 	if (amdgpu_amdkfd_is_kfd_vmid(adev, vmid)
+-		&& !atomic_read(&adev->gmc.vm_fault_info_updated)) {
++		&& !atomic_read_acquire(&adev->gmc.vm_fault_info_updated)) {
+ 		struct kfd_vm_fault_info *info = adev->gmc.vm_fault_info;
+ 		u32 protections = REG_GET_FIELD(status,
+ 					VM_CONTEXT1_PROTECTION_FAULT_STATUS,
+@@ -1498,8 +1498,7 @@ static int gmc_v8_0_process_interrupt(st
+ 		info->prot_read = protections & 0x8 ? true : false;
+ 		info->prot_write = protections & 0x10 ? true : false;
+ 		info->prot_exec = protections & 0x20 ? true : false;
+-		mb();
+-		atomic_set(&adev->gmc.vm_fault_info_updated, 1);
++		atomic_set_release(&adev->gmc.vm_fault_info_updated, 1);
+ 	}
  
- /**
-  * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
-@@ -272,7 +274,9 @@ static inline void __pm_runtime_disable(
- static inline void pm_runtime_allow(struct device *dev) {}
- static inline void pm_runtime_forbid(struct device *dev) {}
- 
-+static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
- static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-+static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
- 
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
- static inline void pm_runtime_get_noresume(struct device *dev) {}
+ 	return 0;
 
 
