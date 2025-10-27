@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB0E21576E;
-	Mon, 27 Oct 2025 19:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FE921576E;
+	Mon, 27 Oct 2025 19:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592586; cv=none; b=nKZeMKBdbXz5ywPgMwVA2SJycn9odXT4ePPt5lWU4lJu5vm/aZHgfePdCFvHTuB4iYH9//luFN3OkRYRIqEMxhlMUP43zHlbpiVYoN8LiAZ4n3cYBKru0+c/fQ36voWbFlhCKENwflr+17Wt55Zhg7QJDHDw2dry7qHYEobScic=
+	t=1761592588; cv=none; b=cJNOOGOnzw88Q9hD3mHsJBhZtXfP4pae10bZVhOT63qbLBbGm58QvPObwqYmGuq+nv/yTXwWn1wFverARepsEp53i8MdHjgYTREJ7Gtz3rD2MzpN17f1zyAv2mGllrY20xmxtHKgmkxRoAv9Mj3z+92qExukxAPWe7LDYccbvj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592586; c=relaxed/simple;
-	bh=6bS/9IDZvQ59383AOb0msmKKbW8ZtcyRT1PiyFLvQ3g=;
+	s=arc-20240116; t=1761592588; c=relaxed/simple;
+	bh=Kr3hva3pd1vaqanO3yS5gs/OKbamIjnF84r7ZZejaJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhiJJb43UcUwWu3QYh9NqznDWXzOtE2vzvaFui+wNxi7uUg7WWQyrTadprgiaDQeaU6br8OibrzNkodi7I+8x84ysu1IW+X6x5HKYlM2NPYiel7xp02YsCqHUcmmSiJO2jN7kz4GIJv0Tl5fDnafIFhjqX7qXaX5nmYDu0dlc/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoAF7NOa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qrvdm7zOtg6v8tHIZrQ4GX07bebaiLSiUUc2Co5decpuslX/8DAwVN4S9Du7obUcft5+t6ZCXXiQiKb5ZezikTz5zK3ylCv0FycKqNIQFNV2OptMivrf12X69LkQsx+TX97iond+VmSp1nXB3dkDG1BQhEww4uAS/bPPUIYKRcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyLgoNQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoAF7NOa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E21CC4CEF1;
-	Mon, 27 Oct 2025 19:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyLgoNQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2007DC4CEFD;
+	Mon, 27 Oct 2025 19:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592585;
-	bh=6bS/9IDZvQ59383AOb0msmKKbW8ZtcyRT1PiyFLvQ3g=;
+	s=korg; t=1761592588;
+	bh=Kr3hva3pd1vaqanO3yS5gs/OKbamIjnF84r7ZZejaJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoAF7NOaovOKyLPksTIbPR/kKHnyNbbNMwEUuEk1Vqj7dT4g5qZ/ZqNdM0xqoYKzX
-	 bODj7G552qXHaRUa298XfM6G/Ql5hKklf0YFHlZlujTzMK/xLX+nbEXoPrKYpfHV3Y
-	 zXNdI8ytne9kFroRo8ysxgLwkak2wq8lWyvdC1Es=
+	b=tyLgoNQeP7i8WbeEaDyHqxQFDsAjYgyTQmyQmbl9bscu1tOXs6a/h+rgOdrfcIH6i
+	 TFSD2BNM0zj4PF2QRfjm+m33YYkG/O5Xk+/jBu/iJ5vYPauqyQWGpzpQ2A0hC7Rk3f
+	 j2IDrk4UYnnZ6DMIRvNnxHQezDiDJAg/WIgZ8JgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	Andreas Oetken <andreas.oetken@siemens-energy.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 02/84] nios2: ensure that memblock.current_limit is set when setting pfn limits
-Date: Mon, 27 Oct 2025 19:35:51 +0100
-Message-ID: <20251027183438.884074461@linuxfoundation.org>
+Subject: [PATCH 6.6 20/84] net: enetc: fix the deadlock of enetc_mdio_lock
+Date: Mon, 27 Oct 2025 19:36:09 +0100
+Message-ID: <20251027183439.359096896@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -52,70 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Schuster <schuster.simon@siemens-energy.com>
+From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
 
-[ Upstream commit a20b83cf45be2057f3d073506779e52c7fa17f94 ]
+[ Upstream commit 50bd33f6b3922a6b760aa30d409cae891cec8fb5 ]
 
-On nios2, with CONFIG_FLATMEM set, the kernel relies on
-memblock_get_current_limit() to determine the limits of mem_map, in
-particular for max_low_pfn.
-Unfortunately, memblock.current_limit is only default initialized to
-MEMBLOCK_ALLOC_ANYWHERE at this point of the bootup, potentially leading
-to situations where max_low_pfn can erroneously exceed the value of
-max_pfn and, thus, the valid range of available DRAM.
+After applying the workaround for err050089, the LS1028A platform
+experiences RCU stalls on RT kernel. This issue is caused by the
+recursive acquisition of the read lock enetc_mdio_lock. Here list some
+of the call stacks identified under the enetc_poll path that may lead to
+a deadlock:
 
-This can in turn cause kernel-level paging failures, e.g.:
+enetc_poll
+  -> enetc_lock_mdio
+  -> enetc_clean_rx_ring OR napi_complete_done
+     -> napi_gro_receive
+        -> enetc_start_xmit
+           -> enetc_lock_mdio
+           -> enetc_map_tx_buffs
+           -> enetc_unlock_mdio
+  -> enetc_unlock_mdio
 
-[   76.900000] Unable to handle kernel paging request at virtual address 20303000
-[   76.900000] ea = c0080890, ra = c000462c, cause = 14
-[   76.900000] Kernel panic - not syncing: Oops
-[   76.900000] ---[ end Kernel panic - not syncing: Oops ]---
+After enetc_poll acquires the read lock, a higher-priority writer attempts
+to acquire the lock, causing preemption. The writer detects that a
+read lock is already held and is scheduled out. However, readers under
+enetc_poll cannot acquire the read lock again because a writer is already
+waiting, leading to a thread hang.
 
-This patch fixes this by pre-calculating memblock.current_limit
-based on the upper limits of the available memory ranges via
-adjust_lowmem_bounds, a simplified version of the equivalent
-implementation within the arm architecture.
+Currently, the deadlock is avoided by adjusting enetc_lock_mdio to prevent
+recursive lock acquisition.
 
-Signed-off-by: Simon Schuster <schuster.simon@siemens-energy.com>
-Signed-off-by: Andreas Oetken <andreas.oetken@siemens-energy.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Fixes: 6d36ecdbc441 ("net: enetc: take the MDIO lock only once per NAPI poll cycle")
+Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Acked-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251015021427.180757-1-jianpeng.chang.cn@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/setup.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 25 ++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/arch/nios2/kernel/setup.c b/arch/nios2/kernel/setup.c
-index 8582ed9658447..5308c76122817 100644
---- a/arch/nios2/kernel/setup.c
-+++ b/arch/nios2/kernel/setup.c
-@@ -147,6 +147,20 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
- 	*max_high = PFN_DOWN(memblock_end_of_DRAM());
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 49c61aa920b02..7accf3a3e9f0d 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1246,6 +1246,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 	/* next descriptor to process */
+ 	i = rx_ring->next_to_clean;
+ 
++	enetc_lock_mdio();
++
+ 	while (likely(rx_frm_cnt < work_limit)) {
+ 		union enetc_rx_bd *rxbd;
+ 		struct sk_buff *skb;
+@@ -1281,7 +1283,9 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 		rx_byte_cnt += skb->len + ETH_HLEN;
+ 		rx_frm_cnt++;
+ 
++		enetc_unlock_mdio();
+ 		napi_gro_receive(napi, skb);
++		enetc_lock_mdio();
+ 	}
+ 
+ 	rx_ring->next_to_clean = i;
+@@ -1289,6 +1293,8 @@ static int enetc_clean_rx_ring(struct enetc_bdr *rx_ring,
+ 	rx_ring->stats.packets += rx_frm_cnt;
+ 	rx_ring->stats.bytes += rx_byte_cnt;
+ 
++	enetc_unlock_mdio();
++
+ 	return rx_frm_cnt;
  }
  
-+static void __init adjust_lowmem_bounds(void)
-+{
-+	phys_addr_t block_start, block_end;
-+	u64 i;
-+	phys_addr_t memblock_limit = 0;
-+
-+	for_each_mem_range(i, &block_start, &block_end) {
-+		if (block_end > memblock_limit)
-+			memblock_limit = block_end;
-+	}
-+
-+	memblock_set_current_limit(memblock_limit);
-+}
-+
- void __init setup_arch(char **cmdline_p)
- {
- 	console_verbose();
-@@ -160,6 +174,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Keep a copy of command line */
- 	*cmdline_p = boot_command_line;
+@@ -1598,6 +1604,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 	/* next descriptor to process */
+ 	i = rx_ring->next_to_clean;
  
-+	adjust_lowmem_bounds();
- 	find_limits(&min_low_pfn, &max_low_pfn, &max_pfn);
- 	max_mapnr = max_low_pfn;
++	enetc_lock_mdio();
++
+ 	while (likely(rx_frm_cnt < work_limit)) {
+ 		union enetc_rx_bd *rxbd, *orig_rxbd;
+ 		int orig_i, orig_cleaned_cnt;
+@@ -1657,7 +1665,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 			if (unlikely(!skb))
+ 				goto out;
+ 
++			enetc_unlock_mdio();
+ 			napi_gro_receive(napi, skb);
++			enetc_lock_mdio();
+ 			break;
+ 		case XDP_TX:
+ 			tx_ring = priv->xdp_tx_ring[rx_ring->index];
+@@ -1692,7 +1702,9 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 			}
+ 			break;
+ 		case XDP_REDIRECT:
++			enetc_unlock_mdio();
+ 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
++			enetc_lock_mdio();
+ 			if (unlikely(err)) {
+ 				enetc_xdp_drop(rx_ring, orig_i, i);
+ 				rx_ring->stats.xdp_redirect_failures++;
+@@ -1712,8 +1724,11 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 	rx_ring->stats.packets += rx_frm_cnt;
+ 	rx_ring->stats.bytes += rx_byte_cnt;
+ 
+-	if (xdp_redirect_frm_cnt)
++	if (xdp_redirect_frm_cnt) {
++		enetc_unlock_mdio();
+ 		xdp_do_flush();
++		enetc_lock_mdio();
++	}
+ 
+ 	if (xdp_tx_frm_cnt)
+ 		enetc_update_tx_ring_tail(tx_ring);
+@@ -1722,6 +1737,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 		enetc_refill_rx_ring(rx_ring, enetc_bd_unused(rx_ring) -
+ 				     rx_ring->xdp.xdp_tx_in_flight);
+ 
++	enetc_unlock_mdio();
++
+ 	return rx_frm_cnt;
+ }
+ 
+@@ -1740,6 +1757,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 	for (i = 0; i < v->count_tx_rings; i++)
+ 		if (!enetc_clean_tx_ring(&v->tx_ring[i], budget))
+ 			complete = false;
++	enetc_unlock_mdio();
+ 
+ 	prog = rx_ring->xdp.prog;
+ 	if (prog)
+@@ -1751,10 +1769,8 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 	if (work_done)
+ 		v->rx_napi_work = true;
+ 
+-	if (!complete) {
+-		enetc_unlock_mdio();
++	if (!complete)
+ 		return budget;
+-	}
+ 
+ 	napi_complete_done(napi, work_done);
+ 
+@@ -1763,6 +1779,7 @@ static int enetc_poll(struct napi_struct *napi, int budget)
+ 
+ 	v->rx_napi_work = false;
+ 
++	enetc_lock_mdio();
+ 	/* enable interrupts */
+ 	enetc_wr_reg_hot(v->rbier, ENETC_RBIER_RXTIE);
  
 -- 
 2.51.0
