@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CB330B00;
-	Mon, 27 Oct 2025 18:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058FF31E0E6;
+	Mon, 27 Oct 2025 18:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591040; cv=none; b=bWqAAkLaQhDnSuVtUbaKuN7OH/6tET6+XaGdocaVJV1mHcHpWR7DbpfR2dFPnPFHz+XUZJnP722hWvPeyJAo/HvgPwNqfQEbsd7VQaeYUcLaNzEWmTKTr/9SxVbvhiIfFgmKUydLhPSS3vw3i/8sESRD4rNxUAhuZtS2Th1ivwc=
+	t=1761591043; cv=none; b=Wxvt1gCB8Ibn3EOo1isZKtjwelKb+7kJq1QJx2MVwgUu1NzWWpixoYASfwWeqL4GbAUWAovIcaHuuZmtpdk+DqMx4OHo7LG8uEKIR+ypGn2SCo2EPyEKbsuOdLbJQIJTV98kWjmOMR2lbFqk6BP+SX4/uujttgVUgWbf+iclH2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591040; c=relaxed/simple;
-	bh=WPD4GUoGI6IJix7l8AvXrBPmyfWsBi/S1YnACYKz+XY=;
+	s=arc-20240116; t=1761591043; c=relaxed/simple;
+	bh=WN1IRvwGqyWm2HwyWuh5+ERVsAof6MumAbY0b8gVEks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2dV0e9OlzCZRFj4qgT5tkgHPabf52oJf468dvrWuBkz7r8s3FFZhY7l1Ffv+/e/K4BQFc/z58adg9SOCDc6ZssHzDgcpwzcnbygcbdYLLjqSzpBef4wvlqbcDE/5XZtF7NMOo9IhBOvoGMuzML6qwoPa9nNmC8PaQTOY0HwaOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kxpxeu+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nwPwooXG+uquszT7+9KbZpgB3fY3euChYHQ32aVfYM6YavSjW5p/TLedns1YBZO2i7fuRYD7G9i/SDZo93r3FyopC8WqvF+Rhmfb82RV9vNyUu0X9iM67cZnSh5UVti6FtW2FkIzQbpoJxIxA7cESv82AYjflRxaaRoBkrdB7qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LfmwI1zz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kxpxeu+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBA4C4CEF1;
-	Mon, 27 Oct 2025 18:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfmwI1zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B16AC4CEF1;
+	Mon, 27 Oct 2025 18:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591040;
-	bh=WPD4GUoGI6IJix7l8AvXrBPmyfWsBi/S1YnACYKz+XY=;
+	s=korg; t=1761591042;
+	bh=WN1IRvwGqyWm2HwyWuh5+ERVsAof6MumAbY0b8gVEks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kxpxeu+Xtc7MNGdnI2RbmJSPw8OdZj+h1EMxyBFtCbMl1M/oFoLvVfbysum058OKH
-	 jnLfO2ZH6Uq2F5FXXyUKzrSlEMFoOsNbb9wNohKbsKn+fhVOuajfQUzLfOBJZbHUlV
-	 VdVviZ4loHdM0W+IftbEBIoGZ+lYQmIl354VOpwg=
+	b=LfmwI1zzxhRci6tq7I0l+bmS9iRiuwoPUlduwWzodo9AweFJLZdFeMmO+pP1w9JII
+	 ae/Cu4AKmexIJ2VN+76Vb+f1Obk6q0l9vPw4VKS7qPAU5k5Xg02p9U41tP6Efy/ZlZ
+	 QZHiw6ffjH0xBVapOF1BqWIZjAYM7HdgMXKbCk8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/332] ALSA: lx_core: use int type to store negative error codes
-Date: Mon, 27 Oct 2025 19:31:38 +0100
-Message-ID: <20251027183525.809925305@linuxfoundation.org>
+Subject: [PATCH 5.10 046/332] drm/amdgpu: Power up UVD 3 for FW validation (v2)
+Date: Mon, 27 Oct 2025 19:31:39 +0100
+Message-ID: <20251027183525.835913075@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -45,60 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 4ef353d546cda466fc39b7daca558d7bcec21c09 ]
+[ Upstream commit c661219cd7be75bb5599b525f16a455a058eb516 ]
 
-Change the 'ret' variable from u16 to int to store negative error codes or
-zero returned by lx_message_send_atomic().
+Unlike later versions, UVD 3 has firmware validation.
+For this to work, the UVD should be powered up correctly.
 
-Storing the negative error codes in unsigned type, doesn't cause an issue
-at runtime but it's ugly as pants. Additionally, assigning negative error
-codes to unsigned type may trigger a GCC warning when the -Wsign-conversion
-flag is enabled.
+When DPM is enabled and the display clock is off,
+the SMU may choose a power state which doesn't power
+the UVD, which can result in failure to initialize UVD.
 
-No effect on runtime.
+v2:
+Add code comments to explain about the UVD power state
+and how UVD clock is turned on/off.
 
-Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Link: https://patch.msgid.link/20250828081312.393148-1-rongqianfeng@vivo.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b38f3e80ecec ("drm amdgpu: SI UVD v3_1 (v2)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/lx6464es/lx_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 29 +++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/lx6464es/lx_core.c b/sound/pci/lx6464es/lx_core.c
-index a49a3254f9677..7b387886c0efd 100644
---- a/sound/pci/lx6464es/lx_core.c
-+++ b/sound/pci/lx6464es/lx_core.c
-@@ -316,7 +316,7 @@ static int lx_message_send_atomic(struct lx6464es *chip, struct lx_rmh *rmh)
- /* low-level dsp access */
- int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+index 41800fcad4102..32f93bfb84752 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+@@ -621,7 +621,22 @@ static void uvd_v3_1_enable_mgcg(struct amdgpu_device *adev,
+  *
+  * @adev: amdgpu_device pointer
+  *
+- * Initialize the hardware, boot up the VCPU and do some testing
++ * Initialize the hardware, boot up the VCPU and do some testing.
++ *
++ * On SI, the UVD is meant to be used in a specific power state,
++ * or alternatively the driver can manually enable its clock.
++ * In amdgpu we use the dedicated UVD power state when DPM is enabled.
++ * Calling amdgpu_dpm_enable_uvd makes DPM select the UVD power state
++ * for the SMU and afterwards enables the UVD clock.
++ * This is automatically done by amdgpu_uvd_ring_begin_use when work
++ * is submitted to the UVD ring. Here, we have to call it manually
++ * in order to power up UVD before firmware validation.
++ *
++ * Note that we must not disable the UVD clock here, as that would
++ * cause the ring test to fail. However, UVD is powered off
++ * automatically after the ring test: amdgpu_uvd_ring_end_use calls
++ * the UVD idle work handler which will disable the UVD clock when
++ * all fences are signalled.
+  */
+ static int uvd_v3_1_hw_init(void *handle)
  {
--	u16 ret;
-+	int ret;
+@@ -631,6 +646,15 @@ static int uvd_v3_1_hw_init(void *handle)
+ 	int r;
  
- 	mutex_lock(&chip->msg_lock);
+ 	uvd_v3_1_mc_resume(adev);
++	uvd_v3_1_enable_mgcg(adev, true);
++
++	/* Make sure UVD is powered during FW validation.
++	 * It's going to be automatically powered off after the ring test.
++	 */
++	if (adev->pm.dpm_enabled)
++		amdgpu_dpm_enable_uvd(adev, true);
++	else
++		amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
  
-@@ -330,10 +330,10 @@ int lx_dsp_get_version(struct lx6464es *chip, u32 *rdsp_version)
+ 	r = uvd_v3_1_fw_validate(adev);
+ 	if (r) {
+@@ -638,9 +662,6 @@ static int uvd_v3_1_hw_init(void *handle)
+ 		return r;
+ 	}
  
- int lx_dsp_get_clock_frequency(struct lx6464es *chip, u32 *rfreq)
- {
--	u16 ret = 0;
- 	u32 freq_raw = 0;
- 	u32 freq = 0;
- 	u32 frequency = 0;
-+	int ret;
+-	uvd_v3_1_enable_mgcg(adev, true);
+-	amdgpu_asic_set_uvd_clocks(adev, 53300, 40000);
+-
+ 	uvd_v3_1_start(adev);
  
- 	mutex_lock(&chip->msg_lock);
- 
+ 	r = amdgpu_ring_test_helper(ring);
 -- 
 2.51.0
 
