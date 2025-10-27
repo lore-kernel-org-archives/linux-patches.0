@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CF3203BB;
-	Mon, 27 Oct 2025 19:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818AB31D72B;
+	Mon, 27 Oct 2025 19:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591824; cv=none; b=o5EUbZ70YHzDrCrWN3x9NNCngh5MtvUX+oAv31K7Xo6jXnR58rQl2vDUhVWkVARcREqDE8WFZQr3E1hJzQsBfFlzMzFhJjI+5GrlzIL/UKigt1afLmCgCabdsLClCYRByK7PrFow3vjlG1G6cZ05a5vSQ8Hz7s8/JoVpB0vPZPg=
+	t=1761591826; cv=none; b=ii2t0pklPftpUIcgrUryWjkpQ77ig7ymbfDSQEPT+ibkTEzIFkfOvYgcTgZYl5MtTeJfDhmeID5zxWehOremPJP87R3ApMfh+rUkksNXKUqbxpPoFT+hw3TZfpZhC048m0j/Lc3/ksmti4/PW2E8zGL7BjCYEkZP/R/R65cMdDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591824; c=relaxed/simple;
-	bh=VcYyikyA3eddBmokcL67c9GFs2YR4tZLWycKBwWpFtU=;
+	s=arc-20240116; t=1761591826; c=relaxed/simple;
+	bh=zZ0r5wv0Rs8i1Bl3qpPOZrma+5LivPApxenmLtO5hgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/CT491oPyPQzdTFn+xt6/x+sPlvcTPKznoZKRZxI43TV/qebJutm3PoIalfeKIhgFovdiRPHIQlXfCvR6TQvLuMgxMJE0onwlUbRI7g+meQ/gan67c1WLmeAsi3A1DCTrk5AjQw9Ll4tsby/gEM/bVhbSBnvZmuG1Xy8E5q4lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaXwr+Ge; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwMgVJ078w/COJSSmJ+VZVuqHfUSiGdGi+6NCVDT0cG46m22UwIpRTwi/CWt4+9PQQ89EOUJUhVWqOPMjRkz7xrYZ9Whqtf/3L7h3MYOn+xp7mmtjNJIRDHvNWAXqq25kxI0NSZLOTVrqrcCIspSdB2UJiA16Iuj9a4bzntZGNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJf902B2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaXwr+Ge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8991DC4CEF1;
-	Mon, 27 Oct 2025 19:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJf902B2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C1FC4CEF1;
+	Mon, 27 Oct 2025 19:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591823;
-	bh=VcYyikyA3eddBmokcL67c9GFs2YR4tZLWycKBwWpFtU=;
+	s=korg; t=1761591826;
+	bh=zZ0r5wv0Rs8i1Bl3qpPOZrma+5LivPApxenmLtO5hgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaXwr+GenV76+sb8fYO4en+FUUb13bmfUciTciI+pKXliBcLySUujpDVhSIlYx/Zt
-	 4o+U2p0GHk1JqTkWFI7lkTTn/ybFbFvWRAPbcfo7VVbSwY6jjxWym1wpcrF2cot+d7
-	 ie/i9Jh/D03hVxYNoqaBWiC9ytGE508JkcKExiqc=
+	b=bJf902B2ZhTnm6t/tSrAEzWwH4omiU+DJRBp901VIbv4c6Fq8JCDVtN4fXecPJRx0
+	 hI2J6ErMxroafDUKXUYNbA6c/IrAlyiNXJ5f6m8umpaSfuUNP7yZ9+8TGghX80/UgJ
+	 dxNXNfLGd9uxOpnkHVcWXWcWb3UGf3VRVFrzAEF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Qais Yousef <qyousef@layalina.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/123] crypto: rockchip - Fix dma_unmap_sg() nents value
-Date: Mon, 27 Oct 2025 19:34:52 +0100
-Message-ID: <20251027183446.726882633@linuxfoundation.org>
+Subject: [PATCH 5.15 013/123] cpufreq: CPPC: Avoid using CPUFREQ_ETERNAL as transition delay
+Date: Mon, 27 Oct 2025 19:34:53 +0100
+Message-ID: <20251027183446.754152694@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -51,37 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 21140e5caf019e4a24e1ceabcaaa16bd693b393f ]
+[ Upstream commit f965d111e68f4a993cc44d487d416e3d954eea11 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+If cppc_get_transition_latency() returns CPUFREQ_ETERNAL to indicate a
+failure to retrieve the transition latency value from the platform
+firmware, the CPPC cpufreq driver will use that value (converted to
+microseconds) as the policy transition delay, but it is way too large
+for any practical use.
 
-Fixes: 57d67c6e8219 ("crypto: rockchip - rework by using crypto_engine")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ removed unused rctx variable declaration since device pointer already came from tctx->dev->dev instead of rctx->dev ]
+Address this by making the driver use the cpufreq's default
+transition latency value (in microseconds) as the transition delay
+if CPUFREQ_ETERNAL is returned by cppc_get_transition_latency().
+
+Fixes: d4f3388afd48 ("cpufreq / CPPC: Set platform specific transition_delay_us")
+Cc: 5.19+ <stable@vger.kernel.org> # 5.19
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+[ added CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS definition to include/linux/cpufreq.h ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto_ahash.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/cppc_cpufreq.c |   14 ++++++++++++--
+ include/linux/cpufreq.h        |    3 +++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-@@ -236,10 +236,9 @@ static int rk_hash_unprepare(struct cryp
- {
- 	struct ahash_request *areq = container_of(breq, struct ahash_request, base);
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
--	struct rk_ahash_rctx *rctx = ahash_request_ctx(areq);
- 	struct rk_ahash_ctx *tctx = crypto_ahash_ctx(tfm);
- 
--	dma_unmap_sg(tctx->dev->dev, areq->src, rctx->nrsg, DMA_TO_DEVICE);
-+	dma_unmap_sg(tctx->dev->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -395,6 +395,16 @@ static int cppc_verify_policy(struct cpu
  	return 0;
  }
  
++static unsigned int __cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
++{
++	unsigned int transition_latency_ns = cppc_get_transition_latency(cpu);
++
++	if (transition_latency_ns == CPUFREQ_ETERNAL)
++		return CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS / NSEC_PER_USEC;
++
++	return transition_latency_ns / NSEC_PER_USEC;
++}
++
+ /*
+  * The PCC subspace describes the rate at which platform can accept commands
+  * on the shared PCC channel (including READs which do not count towards freq
+@@ -417,14 +427,14 @@ static unsigned int cppc_cpufreq_get_tra
+ 			return 10000;
+ 		}
+ 	}
+-	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
++	return __cppc_cpufreq_get_transition_delay_us(cpu);
+ }
+ 
+ #else
+ 
+ static unsigned int cppc_cpufreq_get_transition_delay_us(unsigned int cpu)
+ {
+-	return cppc_get_transition_latency(cpu) / NSEC_PER_USEC;
++	return __cppc_cpufreq_get_transition_delay_us(cpu);
+ }
+ #endif
+ 
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -32,6 +32,9 @@
+  */
+ 
+ #define CPUFREQ_ETERNAL			(-1)
++
++#define CPUFREQ_DEFAULT_TRANSITION_LATENCY_NS	NSEC_PER_MSEC
++
+ #define CPUFREQ_NAME_LEN		16
+ /* Print length for names. Extra 1 space for accommodating '\n' in prints */
+ #define CPUFREQ_NAME_PLEN		(CPUFREQ_NAME_LEN + 1)
 
 
