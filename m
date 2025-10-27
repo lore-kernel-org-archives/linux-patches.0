@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7F131D72A;
-	Mon, 27 Oct 2025 18:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521F23BB48;
+	Mon, 27 Oct 2025 18:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591223; cv=none; b=VLmfmWufPugIn7SzpHpQZGz2ESnEfkkRV6r7U1PfYyZicG/Yi1VCVLs9tJLm8/Q854cCNg1L40blR8Cxzz54Qi3D2GmfNQxJOOa85RaT8CXFamRUy4SR/RVoo2qGQL+qCG9yNU7AzHDGAEQ1Go0zqO2mUAa2JQ9EA+Vnc0Ft2oo=
+	t=1761591226; cv=none; b=IDdnghN6DpiS1LbLXp/iXMUM4FXL6bv6U7hXAIWtrp3Hj/gwQhl4dHR395WzqpOk1an0OjPGCVN8szAKFU63VInkTK/h9cIYGFkwxMq8uqHa03UGICl/J8l0j8HNxwpcfVH82v32XVLhERvFGZlBOBXafbFtHTFQG1/i8MYjLVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591223; c=relaxed/simple;
-	bh=kzgHcrKEpucPk5gmXon3peMseWnnns5OPlR8m3HRRaQ=;
+	s=arc-20240116; t=1761591226; c=relaxed/simple;
+	bh=MRJ0HZyv1WSNqXcLsBSvdYxQ0u1k2dd4JksCYGUu5vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3XTO8/8m5uaVplKWyad3OBbIz0OHbJrqt1bk3Ruqe4iXR4wQY6q0bhPExRaZDI2W8jP7kW4D3GnzmDy0MObUdhhrgoe24YHy5SUeomD23ooCLTkfGVOY/60uRDFXeb08IiLNf3dmByyRpoLv6qXqmbH8vwWWjGtzRgVQpM3SAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxdjKq/N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lfllo1NGswUIRMw3hja9lC8WzYEPv9o0Vpq2r88QnEE0xDaSrEuQ6B6D9GYtMiQa9wEsxA6Vrs5vgbCE1QG2geAdKlqq8frL4/8XNvXrLvh9Is3U1LMZuNmc3nBcIGO1ecBri9XUnLF/3eRhvYER+ZI4ySiQRnnDKVbpaz7XgFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blfofN1w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxdjKq/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4954EC4CEF1;
-	Mon, 27 Oct 2025 18:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blfofN1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82AAC4CEF1;
+	Mon, 27 Oct 2025 18:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591223;
-	bh=kzgHcrKEpucPk5gmXon3peMseWnnns5OPlR8m3HRRaQ=;
+	s=korg; t=1761591226;
+	bh=MRJ0HZyv1WSNqXcLsBSvdYxQ0u1k2dd4JksCYGUu5vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxdjKq/NDmSAC0JQEjWeicN33zXfWCNA5GwZbtqU9np4QA/ARDRd2hoqsJDb4kzbB
-	 QitqsmapKIj9vGl9JcVOCSAXzzIKxjjDvfGW1rd2Qi/3StwdxrAe/AyP206m+sfOgd
-	 CDiTydbqhA8cYuNLFgUVw2GSRsd7CzazLnr1DA7A=
+	b=blfofN1wIRVbbbqYa0Qr/+7c3d03xT64L8pCqpWwPbl5LqQflbvvBAAnw4w7l6YOM
+	 r5A/WUWrlPAA2EWtE+UrKCim4SA4IwCXQrw6uQy/pJiCRd7xDUGa5b5AUiulqhKxgw
+	 mMyFq77D2jCWlpy1sulgwYw75itwxxrLbhe8yzAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/332] net/sctp: fix a null dereference in sctp_disposition sctp_sf_do_5_1D_ce()
-Date: Mon, 27 Oct 2025 19:32:45 +0100
-Message-ID: <20251027183527.574442398@linuxfoundation.org>
+Subject: [PATCH 5.10 076/332] scsi: mpt3sas: Fix crash in transport port remove by using ioc_info()
+Date: Mon, 27 Oct 2025 19:32:09 +0100
+Message-ID: <20251027183526.628632665@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,39 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandr Sapozhnikov <alsp705@gmail.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 2f3119686ef50319490ccaec81a575973da98815 ]
+[ Upstream commit 1703fe4f8ae50d1fb6449854e1fcaed1053e3a14 ]
 
-If new_asoc->peer.adaptation_ind=0 and sctp_ulpevent_make_authkey=0
-and sctp_ulpevent_make_authkey() returns 0, then the variable
-ai_ev remains zero and the zero will be dereferenced
-in the sctp_ulpevent_free() function.
+During mpt3sas_transport_port_remove(), messages were logged with
+dev_printk() against &mpt3sas_port->port->dev. At this point the SAS
+transport device may already be partially unregistered or freed, leading
+to a crash when accessing its struct device.
 
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Fixes: 30f6ebf65bc4 ("sctp: add SCTP_AUTH_NO_AUTH type for AUTHENTICATION_EVENT")
-Link: https://patch.msgid.link/20251002091448.11-1-alsp705@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Using ioc_info(), which logs via the PCI device (ioc->pdev->dev),
+guaranteed to remain valid until driver removal.
+
+[83428.295776] Oops: general protection fault, probably for non-canonical address 0x6f702f323a33312d: 0000 [#1] SMP NOPTI
+[83428.295785] CPU: 145 UID: 0 PID: 113296 Comm: rmmod Kdump: loaded Tainted: G           OE       6.16.0-rc1+ #1 PREEMPT(voluntary)
+[83428.295792] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[83428.295795] Hardware name: Dell Inc. Precision 7875 Tower/, BIOS 89.1.67 02/23/2024
+[83428.295799] RIP: 0010:__dev_printk+0x1f/0x70
+[83428.295805] Code: 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 49 89 d1 48 85 f6 74 52 4c 8b 46 50 4d 85 c0 74 1f 48 8b 46 68 48 85 c0 74 22 <48> 8b 08 0f b6 7f 01 48 c7 c2 db e8 42 ad 83 ef 30 e9 7b f8 ff ff
+[83428.295813] RSP: 0018:ff85aeafc3137bb0 EFLAGS: 00010206
+[83428.295817] RAX: 6f702f323a33312d RBX: ff4290ee81292860 RCX: 5000cca25103be32
+[83428.295820] RDX: ff85aeafc3137bb8 RSI: ff4290eeb1966c00 RDI: ffffffffc1560845
+[83428.295823] RBP: ff85aeafc3137c18 R08: 74726f702f303a33 R09: ff85aeafc3137bb8
+[83428.295826] R10: ff85aeafc3137b18 R11: ff4290f5bd60fe68 R12: ff4290ee81290000
+[83428.295830] R13: ff4290ee6e345de0 R14: ff4290ee81290000 R15: ff4290ee6e345e30
+[83428.295833] FS:  00007fd9472a6740(0000) GS:ff4290f5ce96b000(0000) knlGS:0000000000000000
+[83428.295837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[83428.295840] CR2: 00007f242b4db238 CR3: 00000002372b8006 CR4: 0000000000771ef0
+[83428.295844] PKRU: 55555554
+[83428.295846] Call Trace:
+[83428.295848]  <TASK>
+[83428.295850]  _dev_printk+0x5c/0x80
+[83428.295857]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.295863]  mpt3sas_transport_port_remove+0x1c7/0x420 [mpt3sas]
+[83428.295882]  _scsih_remove_device+0x21b/0x280 [mpt3sas]
+[83428.295894]  ? _scsih_expander_node_remove+0x108/0x140 [mpt3sas]
+[83428.295906]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.295910]  mpt3sas_device_remove_by_sas_address.part.0+0x8f/0x110 [mpt3sas]
+[83428.295921]  _scsih_expander_node_remove+0x129/0x140 [mpt3sas]
+[83428.295933]  _scsih_expander_node_remove+0x6a/0x140 [mpt3sas]
+[83428.295944]  scsih_remove+0x3f0/0x4a0 [mpt3sas]
+[83428.295957]  pci_device_remove+0x3b/0xb0
+[83428.295962]  device_release_driver_internal+0x193/0x200
+[83428.295968]  driver_detach+0x44/0x90
+[83428.295971]  bus_remove_driver+0x69/0xf0
+[83428.295975]  pci_unregister_driver+0x2a/0xb0
+[83428.295979]  _mpt3sas_exit+0x1f/0x300 [mpt3sas]
+[83428.295991]  __do_sys_delete_module.constprop.0+0x174/0x310
+[83428.295997]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296000]  ? __x64_sys_getdents64+0x9a/0x110
+[83428.296005]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296009]  ? syscall_trace_enter+0xf6/0x1b0
+[83428.296014]  do_syscall_64+0x7b/0x2c0
+[83428.296019]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296023]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 93ebd14b48ed7..2832af34216d5 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -873,7 +873,8 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 	return SCTP_DISPOSITION_CONSUME;
- 
- nomem_authev:
--	sctp_ulpevent_free(ai_ev);
-+	if (ai_ev)
-+		sctp_ulpevent_free(ai_ev);
- nomem_aiev:
- 	sctp_ulpevent_free(ev);
- nomem_ev:
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index 326265fd7f91a..caf887364567b 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -811,11 +811,9 @@ mpt3sas_transport_port_remove(struct MPT3SAS_ADAPTER *ioc, u64 sas_address,
+ 	list_for_each_entry_safe(mpt3sas_phy, next_phy,
+ 	    &mpt3sas_port->phy_list, port_siblings) {
+ 		if ((ioc->logging_level & MPT_DEBUG_TRANSPORT))
+-			dev_printk(KERN_INFO, &mpt3sas_port->port->dev,
+-			    "remove: sas_addr(0x%016llx), phy(%d)\n",
+-			    (unsigned long long)
+-			    mpt3sas_port->remote_identify.sas_address,
+-			    mpt3sas_phy->phy_id);
++			ioc_info(ioc, "remove: sas_addr(0x%016llx), phy(%d)\n",
++				(unsigned long long) mpt3sas_port->remote_identify.sas_address,
++					mpt3sas_phy->phy_id);
+ 		mpt3sas_phy->phy_belongs_to_port = 0;
+ 		if (!ioc->remove_host)
+ 			sas_port_delete_phy(mpt3sas_port->port,
 -- 
 2.51.0
 
