@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D043324B3E;
-	Mon, 27 Oct 2025 18:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5561EA7DF;
+	Mon, 27 Oct 2025 18:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590708; cv=none; b=blz1xJ13HAOv2Ui7eYvb/WpKv+0gPma3/+WaUwgjImLRGP5SVp7wL5pd+dW0SYZP+bxmWQ4kEfShEQd+Atku/Mzssokn8CEaOp3eeRwjmTLX4JJn0SM3ABInVIbENXfCXURaCsoNRy1hV8GKYhG5YUqQSO2aj/MH6oWjQNL9OpE=
+	t=1761590708; cv=none; b=cbujhR+zmG3l+8l0SI1/usP39vNqMvnDph6EHaYxEHF3ScKwQ/Zptl7n68x+yKobsVaLg/UFTJtHSLGVyM2byakMrDEuAQkoQgeSiVT4sd2DpRc0wJQhga0p8xzQKCVk3vRV5CPS5St+Nm0k4QMHEt32cA1ESMOltifA+0X7bOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761590708; c=relaxed/simple;
-	bh=bVASHqVP1tj+GTGHxqHzdPdb+VfVIPQwquhKKeh6WBk=;
+	bh=GxzU/N1HDmHka/MuZrB6l9qqD6Kfpyj4JMxpV8Bej/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6KPY3DxbKMNtw9UB6dNFKv0X4zf624Q/aZTjishWFoAzD4gXNxVHIMEMVNam5H+MqrZeI6mcQ14kP5snKFmaDY6gH5hFJy26MqLHGxi7evW329d8/euAikwJTVJcUfB+ooFum5B2n6gyQGJZfvzRaAVkcBT9W58NrqBUAjRwSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnB9asSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eaFkQGFys+GNxpZeAWKHZCSnU3MXkE0wR1kPLGOXBQFPsl/bvnrJD8ZTjEYsaSpQPkxL2YaHGcTI5WdxGPG7ey3KWlVFxlgZVa34HEsoHOXe3jvouFWKwJPgXx1OVqK+IrLN9Dnk2GGeTCSVpG6R7tQtFsVApv+e5WiBC5M4+ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0AZn2ou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnB9asSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76699C113D0;
-	Mon, 27 Oct 2025 18:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0AZn2ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094FEC4CEF1;
+	Mon, 27 Oct 2025 18:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590705;
-	bh=bVASHqVP1tj+GTGHxqHzdPdb+VfVIPQwquhKKeh6WBk=;
+	s=korg; t=1761590708;
+	bh=GxzU/N1HDmHka/MuZrB6l9qqD6Kfpyj4JMxpV8Bej/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnB9asSXWxfaiZhC/aSurjj/dXEGMPCVnP9yl+IbsIkIH7Y9rY44nFeVKDR0HcNFS
-	 fEdMsUMP4XsRrrxtEFog1T8uqfLOi5Hd7DrorX3VgubPOxLU2gLFAJhOaao6HQF6yX
-	 8NtflhSbHg3qW/PR9DbBDyJKVJM85dTyoEMXfohc=
+	b=x0AZn2ouk2CZ+VqWVais93Eo/xNTS/FEufX4VbD/A9IOf9ctcWf49f+28hA0y8Vji
+	 d5rDMAZp+wNMSIn+6fGw9+RlhrlMWhxDCQMaT094qAWSf4txhy6C+4JwEBLmlMamZy
+	 dUKgg+a3rtm6a/3byWJmDDEZUMHHR/6t7GSWPkuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Christian Brauner <brauner@kernel.org>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 147/224] cramfs: Verify inode mode when loading from disk
-Date: Mon, 27 Oct 2025 19:34:53 +0100
-Message-ID: <20251027183512.904888894@linuxfoundation.org>
+Subject: [PATCH 5.4 148/224] xen/events: Cleanup find_virq() return codes
+Date: Mon, 27 Oct 2025 19:34:54 +0100
+Message-ID: <20251027183512.929635929@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,51 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit 7f9d34b0a7cb93d678ee7207f0634dbf79e47fe5 ]
+[ Upstream commit 08df2d7dd4ab2db8a172d824cda7872d5eca460a ]
 
-The inode mode loaded from corrupted disk can be invalid. Do like what
-commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
-does.
+rc is overwritten by the evtchn_status hypercall in each iteration, so
+the return value will be whatever the last iteration is.  This could
+incorrectly return success even if the event channel was not found.
+Change to an explicit -ENOENT for an un-found virq and return 0 on a
+successful match.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://lore.kernel.org/429b3ef1-13de-4310-9a8e-c2dc9a36234a@I-love.SAKURA.ne.jp
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 62cc5fc7b2e0 ("xen/pv-on-hvm kexec: rebind virqs to existing eventchannel ports")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250828003604.8949-2-jason.andryuk@amd.com>
+[ converted evtchn pointer output parameter to direct port return value ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cramfs/inode.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/xen/events/events_base.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/cramfs/inode.c b/fs/cramfs/inode.c
-index 2f04024c3588e..82c45ca453216 100644
---- a/fs/cramfs/inode.c
-+++ b/fs/cramfs/inode.c
-@@ -117,9 +117,18 @@ static struct inode *get_cramfs_inode(struct super_block *sb,
- 		inode_nohighmem(inode);
- 		inode->i_data.a_ops = &cramfs_aops;
- 		break;
--	default:
-+	case S_IFCHR:
-+	case S_IFBLK:
-+	case S_IFIFO:
-+	case S_IFSOCK:
- 		init_special_inode(inode, cramfs_inode->mode,
- 				old_decode_dev(cramfs_inode->size));
-+		break;
-+	default:
-+		printk(KERN_DEBUG "CRAMFS: Invalid file type 0%04o for inode %lu.\n",
-+		       inode->i_mode, inode->i_ino);
-+		iget_failed(inode);
-+		return ERR_PTR(-EIO);
- 	}
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1210,10 +1210,12 @@ EXPORT_SYMBOL_GPL(bind_interdomain_evtch
+ static int find_virq(unsigned int virq, unsigned int cpu)
+ {
+ 	struct evtchn_status status;
+-	int port, rc = -ENOENT;
++	int port;
  
- 	inode->i_mode = cramfs_inode->mode;
--- 
-2.51.0
-
+ 	memset(&status, 0, sizeof(status));
+ 	for (port = 0; port < xen_evtchn_max_channels(); port++) {
++		int rc;
++
+ 		status.dom = DOMID_SELF;
+ 		status.port = port;
+ 		rc = HYPERVISOR_event_channel_op(EVTCHNOP_status, &status);
+@@ -1221,12 +1223,10 @@ static int find_virq(unsigned int virq,
+ 			continue;
+ 		if (status.status != EVTCHNSTAT_virq)
+ 			continue;
+-		if (status.u.virq == virq && status.vcpu == xen_vcpu_nr(cpu)) {
+-			rc = port;
+-			break;
+-		}
++		if (status.u.virq == virq && status.vcpu == xen_vcpu_nr(cpu))
++			return port;
+ 	}
+-	return rc;
++	return -ENOENT;
+ }
+ 
+ /**
 
 
