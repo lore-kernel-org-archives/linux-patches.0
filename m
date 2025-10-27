@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89A730FC0F;
-	Mon, 27 Oct 2025 18:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4B231B815;
+	Mon, 27 Oct 2025 18:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590529; cv=none; b=U0QoxaRUOVhbqX8mDKXcJO8JJdn4FgC9AgcIrgeJat82H8EADjjLuJXFNWYEQqyLtRXLvKV6BkqTRR+DZQEzxHUfUOEFlkWXpFYTjn5RXUGDjhlO45/gVqukWCZb6btKCeS1OXlwrgiQjQk6x6AntHitKBI4aFAtT443ou0Ed/E=
+	t=1761590532; cv=none; b=RZPByYgerLPMZsAi9Wg549gnwhi3ymx6EIQ3pDoqclqLyxW5eImh2j/HPFnprLhNfRC60Ca6utw+DhO0jrgUG3JrWFio5VRS73fbrLLpZWUa3xb5UqezUUwGKUl8xWL17LN+SqaMQA46IMY9PBu6JmocuQdOg5n5wUMRbnPP4ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590529; c=relaxed/simple;
-	bh=dTCi8+OTWHjz4PG6ehDCu0feHgoNfBlp+nzQS1KNGec=;
+	s=arc-20240116; t=1761590532; c=relaxed/simple;
+	bh=W7/z5W8Z5lSIRrrC1XANbDnRdN5eQR+7eAIg2z/S+qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RZzcAAdJHWV6IyTj85MPgpCDGd8sfeL3nvrZECZ+2BgO6mBAZ+Wt/L1HBLxvdIc2hF/lptUm2U4r7sB/zCZKjJxeI2h37faSFfGvo9vZUqG0oB836oQ2cohhwi27KAX1cU/aVDY/ziuG0VO4k9SN1zKn0F8+J5SimjKOE1NBs50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhIX1+ne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3fWUWeTY06pZ4r+OtaIU+tIGt+R+h+ldXEVf/k01bIXExXikrOOGfRufAyeN6AWuvFWC9tyvDFzwTi5xKP8uFNl8Wh+ermKYkK+QPxxSjM6IFxSyi0cmzX9IP8Wc2kEdgzRVvM1PTNVnVvI7bNqAjAb2RwQGGZ6raq8GM6jB1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSEoxWtF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhIX1+ne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E44C4CEFD;
-	Mon, 27 Oct 2025 18:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSEoxWtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD18CC113D0;
+	Mon, 27 Oct 2025 18:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590529;
-	bh=dTCi8+OTWHjz4PG6ehDCu0feHgoNfBlp+nzQS1KNGec=;
+	s=korg; t=1761590532;
+	bh=W7/z5W8Z5lSIRrrC1XANbDnRdN5eQR+7eAIg2z/S+qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhIX1+nevEdqLIYucPWQqG6z+kBWv5jDw+ohq6WpwKWs7S/4snjbJQoVxkk2TOH1E
-	 sbIEYOU6r8sfn/4K0vxcPR8+cE5+98qns3pGTDDqKebFfU8LrRznPvCQsGtxFyomtn
-	 sZJVXpL7xL65hB2ZImNTqWe2WsFncqMCiyNAGabc=
+	b=nSEoxWtFNH3FHIGgtmQncoHVXgCeYQXXQdxwTNdmeOaAq0kJAVfRoKecMFuTv5M/9
+	 mM6fvT26Rdatc/DUUZCgAZvHcXUCTC6aAty52WIOG4xtAmiatgpy/jpJKnaHwkTk6Y
+	 J1325jNNucOi/ztgKy/y1lZ9ypR6V+Gt8Nxbi/50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 079/224] iio: frequency: adf4350: Fix ADF4350_REG3_12BIT_CLKDIV_MODE
-Date: Mon, 27 Oct 2025 19:33:45 +0100
-Message-ID: <20251027183511.112698048@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Yunseong Kim <ysk@kzalloc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 080/224] perf util: Fix compression checks returning -1 as bool
+Date: Mon, 27 Oct 2025 19:33:46 +0100
+Message-ID: <20251027183511.138633576@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -46,41 +52,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Yunseong Kim <ysk@kzalloc.com>
 
-commit 1d8fdabe19267338f29b58f968499e5b55e6a3b6 upstream.
+[ Upstream commit 43fa1141e2c1af79c91aaa4df03e436c415a6fc3 ]
 
-The clk div bits (2 bits wide) do not start in bit 16 but in bit 15. Fix it
-accordingly.
+The lzma_is_compressed and gzip_is_compressed functions are declared
+to return a "bool" type, but in case of an error (e.g., file open
+failure), they incorrectly returned -1.
 
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-2-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A bool type is a boolean value that is either true or false.
+Returning -1 for a bool return type can lead to unexpected behavior
+and may violate strict type-checking in some compilers.
+
+Fix the return value to be false in error cases, ensuring the function
+adheres to its declared return type improves for preventing potential
+bugs related to type mismatch.
+
+Fixes: 4b57fd44b61beb51 ("perf tools: Add lzma_is_compressed function")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
+Link: https://lore.kernel.org/r/20250822162506.316844-3-ysk@kzalloc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iio/frequency/adf4350.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/lzma.c | 2 +-
+ tools/perf/util/zlib.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/iio/frequency/adf4350.h
-+++ b/include/linux/iio/frequency/adf4350.h
-@@ -51,7 +51,7 @@
+diff --git a/tools/perf/util/lzma.c b/tools/perf/util/lzma.c
+index 51424cdc3b682..aa9a0ebc1f937 100644
+--- a/tools/perf/util/lzma.c
++++ b/tools/perf/util/lzma.c
+@@ -115,7 +115,7 @@ bool lzma_is_compressed(const char *input)
+ 	ssize_t rc;
  
- /* REG3 Bit Definitions */
- #define ADF4350_REG3_12BIT_CLKDIV(x)		((x) << 3)
--#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 16)
-+#define ADF4350_REG3_12BIT_CLKDIV_MODE(x)	((x) << 15)
- #define ADF4350_REG3_12BIT_CSR_EN		(1 << 18)
- #define ADF4351_REG3_CHARGE_CANCELLATION_EN	(1 << 21)
- #define ADF4351_REG3_ANTI_BACKLASH_3ns_EN	(1 << 22)
+ 	if (fd < 0)
+-		return -1;
++		return false;
+ 
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
+diff --git a/tools/perf/util/zlib.c b/tools/perf/util/zlib.c
+index 78d2297c1b674..1f7c065230599 100644
+--- a/tools/perf/util/zlib.c
++++ b/tools/perf/util/zlib.c
+@@ -88,7 +88,7 @@ bool gzip_is_compressed(const char *input)
+ 	ssize_t rc;
+ 
+ 	if (fd < 0)
+-		return -1;
++		return false;
+ 
+ 	rc = read(fd, buf, sizeof(buf));
+ 	close(fd);
+-- 
+2.51.0
+
 
 
