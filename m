@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2312D839A;
-	Mon, 27 Oct 2025 18:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A922D47ED;
+	Mon, 27 Oct 2025 18:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591379; cv=none; b=P03JDXaSN8AtxScI3y2p9JLMiR2bO8BITqbzlRnVW0vlMD0jQl8ySEiwms3wmiqVMgdE3lr+7W41RPFSJEynDqsnnQb/X8VyYHgVY0Vi9bSfys1fLwybTDeh8FcaqEV7UjQkyx3xNM3wEyaPFQjysnP4EDERtrDVvQfmmHLcLhQ=
+	t=1761591383; cv=none; b=IYWdQN5aDfFSCUm8GkuUsLkDhje10i6dQC1+xe2xnnqVrzD3CpU2LZDaBcADDET6ljjLpnsbIfU5Snhjup9xT9JnymVtLyv7Lf2PK9YiTltmTJ70xk9oPFdABVDOM1Wkakq4+C468NBzfGwpMu6Pn35cq2H5aX3KneOygT0Ii/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591379; c=relaxed/simple;
-	bh=mOwGkdqF8xXOweahBnws4egJl5lDgJ+YsWzS24RTFDI=;
+	s=arc-20240116; t=1761591383; c=relaxed/simple;
+	bh=YZVdypD4g64VmCucfQU7zn2u6PWb6ePeIkp3EFcJ3tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/gY3d2agbRALKvvvOEwtATixi4/0OXkCXKGfWaIZp0civb0cd69/WR15c/YgeQ/XZL1xcVpftJABZx+iJtkvFIbu+1v29rZK3qXWlWg4KDMCat9WNek7u0RUL/w3j8ZKEWXJ1MWISgbCPYo04Rkq1Bsi23riegj/plEYDPsBIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb8zePB+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSIczv1pXI/1vSfhubTvopiE3DxqlQ9kwthJnkhcyaEICjE4QQN/yleIj3z7WuigKHofPwrrPePKpHqA+BJDJFQ+mXFztgpypQ37IkHO9LE/HE8nYtggAUwqw7Aiv+9JuKxcDPyzTVc8DuFDrvnZmGPQK5jzS5MhtRhfBA+lj7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5Wgz0mF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb8zePB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15126C4CEF1;
-	Mon, 27 Oct 2025 18:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5Wgz0mF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2411C4CEF1;
+	Mon, 27 Oct 2025 18:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591379;
-	bh=mOwGkdqF8xXOweahBnws4egJl5lDgJ+YsWzS24RTFDI=;
+	s=korg; t=1761591382;
+	bh=YZVdypD4g64VmCucfQU7zn2u6PWb6ePeIkp3EFcJ3tM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hb8zePB+iBYdB2ya4RxJ/q0CKS/qWuirL0ii0dEu1gNPbIiLg9e2Al6UwtkdfN1n8
-	 dm7YPUlGEl3u8NlWfosKgdQDNHNQ/mU3E9pfbIna8AmuzbhKhC+zNX44vIqjPdPl6n
-	 Pq3yIC4CUUFzw2gfecwTaQu6Vg1i4aKndNDbsiPo=
+	b=v5Wgz0mFBQKtAPzH0cI0PjlyUZk1ClDlLo0Hw9M50iOWF42PHuaiXnxiwdUBNQt8N
+	 0Mm+6h8soaWGbKtUk0GPFujIcwUM4z9n57oByd/gLkpEirwOfgvnhT9Cm+GELEFq97
+	 5NzIsgUpPOTP1Hk9oKxWkN4LM2D1uzgirRYLUyJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/332] dm: fix NULL pointer dereference in __dm_suspend()
-Date: Mon, 27 Oct 2025 19:33:47 +0100
-Message-ID: <20251027183529.230649809@linuxfoundation.org>
+Subject: [PATCH 5.10 175/332] mfd: intel_soc_pmic_chtdc_ti: Fix invalid regmap-config max_register value
+Date: Mon, 27 Oct 2025 19:33:48 +0100
+Message-ID: <20251027183529.260404903@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,95 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8d33a030c566e1f105cd5bf27f37940b6367f3be ]
+[ Upstream commit 70e997e0107e5ed85c1a3ef2adfccbe351c29d71 ]
 
-There is a race condition between dm device suspend and table load that
-can lead to null pointer dereference. The issue occurs when suspend is
-invoked before table load completes:
+The max_register = 128 setting in the regmap config is not valid.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000054
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 6 PID: 6798 Comm: dmsetup Not tainted 6.6.0-g7e52f5f0ca9b #62
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.1-2.fc37 04/01/2014
-RIP: 0010:blk_mq_wait_quiesce_done+0x0/0x50
-Call Trace:
-  <TASK>
-  blk_mq_quiesce_queue+0x2c/0x50
-  dm_stop_queue+0xd/0x20
-  __dm_suspend+0x130/0x330
-  dm_suspend+0x11a/0x180
-  dev_suspend+0x27e/0x560
-  ctl_ioctl+0x4cf/0x850
-  dm_ctl_ioctl+0xd/0x20
-  vfs_ioctl+0x1d/0x50
-  __se_sys_ioctl+0x9b/0xc0
-  __x64_sys_ioctl+0x19/0x30
-  x64_sys_call+0x2c4a/0x4620
-  do_syscall_64+0x9e/0x1b0
+The Intel Dollar Cove TI PMIC has an eeprom unlock register at address 0x88
+and a number of EEPROM registers at 0xF?. Increase max_register to 0xff so
+that these registers can be accessed.
 
-The issue can be triggered as below:
-
-T1 						T2
-dm_suspend					table_load
-__dm_suspend					dm_setup_md_queue
-						dm_mq_init_request_queue
-						blk_mq_init_allocated_queue
-						=> q->mq_ops = set->ops; (1)
-dm_stop_queue / dm_wait_for_completion
-=> q->tag_set NULL pointer!	(2)
-						=> q->tag_set = set; (3)
-
-Fix this by checking if a valid table (map) exists before performing
-request-based suspend and waiting for target I/O. When map is NULL,
-skip these table-dependent suspend steps.
-
-Even when map is NULL, no I/O can reach any target because there is
-no table loaded; I/O submitted in this state will fail early in the
-DM layer. Skipping the table-dependent suspend logic in this case
-is safe and avoids NULL pointer dereferences.
-
-Fixes: c4576aed8d85 ("dm: fix request-based dm's use of dm_wait_for_completion")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-[ omitted DMF_QUEUE_STOPPED flag setting and braces absent in 5.15 ]
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/20241208150028.325349-1-hdegoede@redhat.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 64e0d839c589 ("mfd: intel_soc_pmic_chtdc_ti: Set use_single_read regmap_config flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mfd/intel_soc_pmic_chtdc_ti.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2457,7 +2457,7 @@ static int __dm_suspend(struct mapped_de
- {
- 	bool do_lockfs = suspend_flags & DM_SUSPEND_LOCKFS_FLAG;
- 	bool noflush = suspend_flags & DM_SUSPEND_NOFLUSH_FLAG;
--	int r;
-+	int r = 0;
- 
- 	lockdep_assert_held(&md->suspend_lock);
- 
-@@ -2509,7 +2509,7 @@ static int __dm_suspend(struct mapped_de
- 	 * Stop md->queue before flushing md->wq in case request-based
- 	 * dm defers requests to md->wq from md->queue.
- 	 */
--	if (dm_request_based(md))
-+	if (map && dm_request_based(md))
- 		dm_stop_queue(md->queue);
- 
- 	flush_workqueue(md->wq);
-@@ -2519,7 +2519,8 @@ static int __dm_suspend(struct mapped_de
- 	 * We call dm_wait_for_completion to wait for all existing requests
- 	 * to finish.
- 	 */
--	r = dm_wait_for_completion(md, task_state);
-+	if (map)
-+		r = dm_wait_for_completion(md, task_state);
- 	if (!r)
- 		set_bit(dmf_suspended_flag, &md->flags);
+--- a/drivers/mfd/intel_soc_pmic_chtdc_ti.c
++++ b/drivers/mfd/intel_soc_pmic_chtdc_ti.c
+@@ -81,7 +81,7 @@ static struct mfd_cell chtdc_ti_dev[] =
+ static const struct regmap_config chtdc_ti_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+-	.max_register = 128,
++	.max_register = 0xff,
+ 	.cache_type = REGCACHE_NONE,
+ };
  
 
 
