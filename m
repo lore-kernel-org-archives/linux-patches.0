@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D7830BF4B;
-	Mon, 27 Oct 2025 18:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B5C2EDD62;
+	Mon, 27 Oct 2025 18:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591047; cv=none; b=VP8yHpUsCMORkaBm1A4p61ZsjhTKUUjA8MMeamG5TbIJK6jJ2Ngw6/FFzHgs3OOxQ0u7SKlsKiVpXym+m/Bl9dZGWWxBUN/Jut0eN0IyqL+rbagHoY5SD2ciJVZyxwd4Q6vNQwdLm7jDF8s1HWtwCSUdMXIbuNRSGLmmkrhNBBk=
+	t=1761591050; cv=none; b=arvt1n1t3I4BF0DnvKiY9HPf9SL8rZTZGfJyoYQymV0J55elpZaDGpbnfvhBuuM/c9uM+EBr0ZNsDBhT2+ZGV5vG7HV8YDs7sS7GvK+/VQt96LtlTtEaTK5sMGT8DpmZvZ6qMErxRgoktrZTH9YCNMsXMKPiNrN08u/4Fbrz9fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591047; c=relaxed/simple;
-	bh=9XC359+9F1BYOjpCyYQ9CuYGVMD6g2uAnXKSAjgUVuk=;
+	s=arc-20240116; t=1761591050; c=relaxed/simple;
+	bh=SePf0uPVbNzqoaAL0WxaghpFE8zOw4KmeqZhJTexxhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZxiJkaDY2WLEmAc7uu8udFyyj2bbOHqCfSK86Q4NcvslkFfp1vD7fo76npMDRhI0s3FQVBZ5XAF3ziIOwDONhCi5nS5MEHnHzCop4zLKSLjZvoX65ECRtityyePqGwakOOVUbluKr4jm0RD3dku5G1rnaMIEJfeOxRfiLuW358=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOAZWppp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNmbsr67lH2LghJmF4g9jRa91jumIq46AwWP1hfmyMEHlnS0eS4fWGgwPnJgXvCQvy2uBgkJ8/h5jK+WmkQWfl1H6Fmk8U3pKzJSCmwLoY1qjV53RT2eirqaXA/QvxXjEbisCf9FnbW5QPtA0pzYk7cRBfs0EFR8jDbfrVVrKLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZCgfbG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOAZWppp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629D0C4CEF1;
-	Mon, 27 Oct 2025 18:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZCgfbG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB212C4CEF1;
+	Mon, 27 Oct 2025 18:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591047;
-	bh=9XC359+9F1BYOjpCyYQ9CuYGVMD6g2uAnXKSAjgUVuk=;
+	s=korg; t=1761591050;
+	bh=SePf0uPVbNzqoaAL0WxaghpFE8zOw4KmeqZhJTexxhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOAZWppplPgOKeUutY3Hu2kClrxb6ZbVrssdgemMZoYi+OgegKwFSzzTZheFRuvo0
-	 UMarhQpL7NDnoVcK5OC+Rev7giB2oIxFAtlxplRztfKiTwqkdAizN9vCS1vZfdOswl
-	 yVF8AHOou7WHL+hvQtT9a3UCHplNqfvrIV1wNnVQ=
+	b=sZCgfbG85jTGx5U5RlXyoAwP5Dsj2JmATo/XlGBdj2+mm/L7xYbzXjDE5qtUSewNb
+	 V9GAK8QLMa4Nh44mykzEDA0jr50vr/Lgdxib32ijHzGUr546fh3yUls9mc4zewfXnk
+	 sC/wSI1vuylLQRSWQjZ2QREAEmZdrwHhhByxMeQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/332] PCI: tegra: Fix devm_kcalloc() argument order for port->phys allocation
-Date: Mon, 27 Oct 2025 19:31:41 +0100
-Message-ID: <20251027183525.889328817@linuxfoundation.org>
+Subject: [PATCH 5.10 049/332] tcp: fix __tcp_close() to only send RST when required
+Date: Mon, 27 Oct 2025 19:31:42 +0100
+Message-ID: <20251027183525.916037283@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,39 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e1a8805e5d263453ad76a4f50ab3b1c18ea07560 ]
+[ Upstream commit 5f9238530970f2993b23dd67fdaffc552a2d2e98 ]
 
-Fix incorrect argument order in devm_kcalloc() when allocating port->phys.
-The original call used sizeof(phy) as the number of elements and
-port->lanes as the element size, which is reversed.  While this happens to
-produce the correct total allocation size with current pointer size and
-lane counts, the argument order is wrong.
+If the receive queue contains payload that was already
+received, __tcp_close() can send an unexpected RST.
 
-Fixes: 6fe7c187e026 ("PCI: tegra: Support per-lane PHYs")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-[mani: added Fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20250819150436.3105973-1-alok.a.tiwari@oracle.com
+Refine the code to take tp->copied_seq into account,
+as we already do in tcp recvmsg().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20250903084720.1168904-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-tegra.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-tegra.c b/drivers/pci/controller/pci-tegra.c
-index b4eb75f25906e..e712841ccaa3e 100644
---- a/drivers/pci/controller/pci-tegra.c
-+++ b/drivers/pci/controller/pci-tegra.c
-@@ -1365,7 +1365,7 @@ static int tegra_pcie_port_get_phys(struct tegra_pcie_port *port)
- 	unsigned int i;
- 	int err;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index afc31f1def760..6ffda70e7e58e 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2536,8 +2536,8 @@ bool tcp_check_oom(struct sock *sk, int shift)
  
--	port->phys = devm_kcalloc(dev, sizeof(phy), port->lanes, GFP_KERNEL);
-+	port->phys = devm_kcalloc(dev, port->lanes, sizeof(phy), GFP_KERNEL);
- 	if (!port->phys)
- 		return -ENOMEM;
+ void __tcp_close(struct sock *sk, long timeout)
+ {
++	bool data_was_unread = false;
+ 	struct sk_buff *skb;
+-	int data_was_unread = 0;
+ 	int state;
+ 
+ 	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+@@ -2556,11 +2556,12 @@ void __tcp_close(struct sock *sk, long timeout)
+ 	 *  reader process may not have drained the data yet!
+ 	 */
+ 	while ((skb = __skb_dequeue(&sk->sk_receive_queue)) != NULL) {
+-		u32 len = TCP_SKB_CB(skb)->end_seq - TCP_SKB_CB(skb)->seq;
++		u32 end_seq = TCP_SKB_CB(skb)->end_seq;
+ 
+ 		if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN)
+-			len--;
+-		data_was_unread += len;
++			end_seq--;
++		if (after(end_seq, tcp_sk(sk)->copied_seq))
++			data_was_unread = true;
+ 		__kfree_skb(skb);
+ 	}
  
 -- 
 2.51.0
