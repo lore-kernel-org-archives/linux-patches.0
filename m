@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AD2306D37;
-	Mon, 27 Oct 2025 19:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A204B31B127;
+	Mon, 27 Oct 2025 19:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591713; cv=none; b=d/7rxYUdylmtScczLy2LnqdCLlCRxcifhLcyaF4ZdouMO0muJr5iSOi7SusK2QAyQqEm01xfTBtLlFQchFF9eENspxvrc44/5GeSWzr7ssN/QZLtyZERe6SpIKQMj1e8rWHjWgTrYVhQN22+6Oo4K/1EMVJijRNFGXg3xDMEzF0=
+	t=1761591715; cv=none; b=t+ZILmWE2h7Lgdac8uypX7KIysveaXhll2zlEAxGNS4b70RS0daLdLMoWmHHlosN7o61jtU8EO+ltK4zUkiAPBV1RQaeVW8jZPRDDO2aVa6HjYIWcRwPp34aUSC2rHiEI8P/1yMa6GO/laZ6rIU4ZhJr8LhvvvFqQ4aNhL/OriE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591713; c=relaxed/simple;
-	bh=2QWlfQRajhCv1vCO3n5Og0UvG7ZNDXVGVBAZndbVb4s=;
+	s=arc-20240116; t=1761591715; c=relaxed/simple;
+	bh=Tw/fcgQj4/SBAiBls7zm3ANrZCu/fK+JkB8KM0t4V7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KR7Ujt0ihO+/Fpfq3pSSXUhV4MwrpLXNvQFbOd2QObMjy9rOd4cBtUTqirBv7hdCOW1d+4nXLZW6QhvxIVydqjK5yJdjEqxER8g0RakqbgX/NFHkp0EHReRXd93Qz7Yh+lqAFuQGk97qeERSLCW9KE4po1jf+CYAQEGnM6jd100=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9pdZ+nj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=riE0Cgg/w16QevWhWDwC5ZOkQ7a3zHuhBcMgmRrsJSswjDy8U2gWD9TRrRuJU7XHVAxL7O2YH/FU65rnfMhb20Am5KhnRnltZyRgYzo6dkwxHz0PSNnl9ghzOK6El7XP8XP9rXsQtbcL3qlhytU6v+wYVJXvvBrr4bvaGtpsV1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPmPifLc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9pdZ+nj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F64C4CEF1;
-	Mon, 27 Oct 2025 19:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPmPifLc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D1EC4CEF1;
+	Mon, 27 Oct 2025 19:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591713;
-	bh=2QWlfQRajhCv1vCO3n5Og0UvG7ZNDXVGVBAZndbVb4s=;
+	s=korg; t=1761591715;
+	bh=Tw/fcgQj4/SBAiBls7zm3ANrZCu/fK+JkB8KM0t4V7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9pdZ+njeelLpYZ3vTyKtMoD16aVH2F8ZhayxlxZA8S0KGUlCsc6AaR9B4jkF1gXI
-	 l4OCtLMveROA7mBXK9nCpAttJ7rLOEwQkHjjcG0nttC28H+a5EHfM2ko1lUyBB/rNi
-	 ifxVJktwBOaoo1Dn03Fz7XBBxkzBcxYgr9PLTv8c=
+	b=zPmPifLcqeI+q/LNQi9+juw4XutFdtPiVGDuT7HcuCKl3p/54N5OaX8asDAXiMbLs
+	 r4qeEDH8wJqW/ds+afPi4lctvmAQp/X5lNgPZYYJVABYV0rd2+Et/XG4yFxg7bpkwK
+	 A+Yc9TLGi9i/Vc5pkqv6NPpQmAzZ0y+IaR6YLKL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Subject: [PATCH 5.10 300/332] most: usb: Fix use-after-free in hdm_disconnect
-Date: Mon, 27 Oct 2025 19:35:53 +0100
-Message-ID: <20251027183532.772280129@linuxfoundation.org>
+	syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 265/332] hfs: fix KMSAN uninit-value issue in hfs_find_set_zero_bits()
+Date: Mon, 27 Oct 2025 19:35:18 +0100
+Message-ID: <20251027183531.851224555@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -51,66 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-commit 4b1270902609ef0d935ed2faa2ea6d122bd148f5 upstream.
+[ Upstream commit 2048ec5b98dbdfe0b929d2e42dc7a54c389c53dd ]
 
-hdm_disconnect() calls most_deregister_interface(), which eventually
-unregisters the MOST interface device with device_unregister(iface->dev).
-If that drops the last reference, the device core may call release_mdev()
-immediately while hdm_disconnect() is still executing.
+The syzbot reported issue in hfs_find_set_zero_bits():
 
-The old code also freed several mdev-owned allocations in
-hdm_disconnect() and then performed additional put_device() calls.
-Depending on refcount order, this could lead to use-after-free or
-double-free when release_mdev() ran (or when unregister paths also
-performed puts).
+=====================================================
+BUG: KMSAN: uninit-value in hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
+ hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
+ hfs_vbm_search_free+0x13c/0x5b0 fs/hfs/bitmap.c:151
+ hfs_extend_file+0x6a5/0x1b00 fs/hfs/extent.c:408
+ hfs_get_block+0x435/0x1150 fs/hfs/extent.c:353
+ __block_write_begin_int+0xa76/0x3030 fs/buffer.c:2151
+ block_write_begin fs/buffer.c:2262 [inline]
+ cont_write_begin+0x10e1/0x1bc0 fs/buffer.c:2601
+ hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
+ cont_expand_zero fs/buffer.c:2528 [inline]
+ cont_write_begin+0x35a/0x1bc0 fs/buffer.c:2591
+ hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
+ hfs_file_truncate+0x1d6/0xe60 fs/hfs/extent.c:494
+ hfs_inode_setattr+0x964/0xaa0 fs/hfs/inode.c:654
+ notify_change+0x1993/0x1aa0 fs/attr.c:552
+ do_truncate+0x28f/0x310 fs/open.c:68
+ do_ftruncate+0x698/0x730 fs/open.c:195
+ do_sys_ftruncate fs/open.c:210 [inline]
+ __do_sys_ftruncate fs/open.c:215 [inline]
+ __se_sys_ftruncate fs/open.c:213 [inline]
+ __x64_sys_ftruncate+0x11b/0x250 fs/open.c:213
+ x64_sys_call+0xfe3/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:78
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fix by moving the frees of mdev-owned allocations into release_mdev(),
-so they happen exactly once when the device is truly released, and by
-dropping the extra put_device() calls in hdm_disconnect() that are
-redundant after device_unregister() and most_deregister_interface().
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4154 [inline]
+ slab_alloc_node mm/slub.c:4197 [inline]
+ __kmalloc_cache_noprof+0x7f7/0xed0 mm/slub.c:4354
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ hfs_mdb_get+0x1cc8/0x2a90 fs/hfs/mdb.c:175
+ hfs_fill_super+0x3d0/0xb80 fs/hfs/super.c:337
+ get_tree_bdev_flags+0x6e3/0x920 fs/super.c:1681
+ get_tree_bdev+0x38/0x50 fs/super.c:1704
+ hfs_get_tree+0x35/0x40 fs/hfs/super.c:388
+ vfs_get_tree+0xb0/0x5c0 fs/super.c:1804
+ do_new_mount+0x738/0x1610 fs/namespace.c:3902
+ path_mount+0x6db/0x1e90 fs/namespace.c:4226
+ do_mount fs/namespace.c:4239 [inline]
+ __do_sys_mount fs/namespace.c:4450 [inline]
+ __se_sys_mount+0x6eb/0x7d0 fs/namespace.c:4427
+ __x64_sys_mount+0xe4/0x150 fs/namespace.c:4427
+ x64_sys_call+0xfa7/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:166
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-This addresses the KASAN slab-use-after-free reported by syzbot in
-hdm_disconnect(). See report and stack traces in the bug link below.
+CPU: 1 UID: 0 PID: 12609 Comm: syz.1.2692 Not tainted 6.16.0-syzkaller #0 PREEMPT(none)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+=====================================================
 
-Reported-by: syzbot+916742d5d24f6c254761@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=916742d5d24f6c254761
-Fixes: 97a6f772f36b ("drivers: most: add USB adapter driver")
-Signed-off-by: Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Link: https://patch.msgid.link/20251010105241.4087114-2-Victoria.Votokina@kaspersky.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The HFS_SB(sb)->bitmap buffer is allocated in hfs_mdb_get():
+
+HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
+
+Finally, it can trigger the reported issue because kmalloc()
+doesn't clear the allocated memory. If allocated memory contains
+only zeros, then everything will work pretty fine.
+But if the allocated memory contains the "garbage", then
+it can affect the bitmap operations and it triggers
+the reported issue.
+
+This patch simply exchanges the kmalloc() on kzalloc()
+with the goal to guarantee the correctness of bitmap operations.
+Because, newly created allocation bitmap should have all
+available blocks free. Potentially, initialization bitmap's read
+operation could not fill the whole allocated memory and
+"garbage" in the not initialized memory will be the reason of
+volume coruptions and file system driver bugs.
+
+Reported-by: syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=773fa9d79b29bd8b6831
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250820230636.179085-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/most/most_usb.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ fs/hfs/mdb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/most/most_usb.c
-+++ b/drivers/most/most_usb.c
-@@ -929,6 +929,10 @@ static void release_mdev(struct device *
- {
- 	struct most_dev *mdev = to_mdev_from_dev(dev);
+diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
+index cdf0edeeb2781..f8f976afcc740 100644
+--- a/fs/hfs/mdb.c
++++ b/fs/hfs/mdb.c
+@@ -172,7 +172,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		pr_warn("continuing without an alternate MDB\n");
+ 	}
  
-+	kfree(mdev->busy_urbs);
-+	kfree(mdev->cap);
-+	kfree(mdev->conf);
-+	kfree(mdev->ep_address);
- 	kfree(mdev);
- }
- /**
-@@ -1121,13 +1125,6 @@ static void hdm_disconnect(struct usb_in
- 	if (mdev->dci)
- 		device_unregister(&mdev->dci->dev);
- 	most_deregister_interface(&mdev->iface);
--
--	kfree(mdev->busy_urbs);
--	kfree(mdev->cap);
--	kfree(mdev->conf);
--	kfree(mdev->ep_address);
--	put_device(&mdev->dci->dev);
--	put_device(&mdev->dev);
- }
+-	HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
++	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
+ 	if (!HFS_SB(sb)->bitmap)
+ 		goto out;
  
- static int hdm_suspend(struct usb_interface *interface, pm_message_t message)
+-- 
+2.51.0
+
 
 
