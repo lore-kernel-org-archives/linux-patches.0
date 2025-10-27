@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AA1323406;
-	Mon, 27 Oct 2025 18:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08CB32548A;
+	Mon, 27 Oct 2025 18:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590974; cv=none; b=j4bqFX9zfieMr49d4FeKJgjYfdCxChPbEUGX0egRSZXZ4YSCCjWePVjetg6C2Mc0nAI7Pj7Re3SZJSox7nUAtQdhfnKYYR1/BIhHDZ2wQQleQaJXT5OzgC2y56Q5Oa7ExLjbU3YnX2djxk3WHNFniLUEgylRxQHJgLs6QXx/p50=
+	t=1761590974; cv=none; b=joLn6T8MW2iUONgAvW1Wc59p6iUAZykXiaawsawgtMRPKTVct+3fVEuRWHqEmunzBDhjr7wGvaFL6HHPwA0Ro46sFosLVl/JinVzjtiTi8jt2OzgZBGs4Ez0qEHpHp8UBwtD1l033R/nZlIQ97eghK8phtEbo+aPLyDn3W8JwOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761590974; c=relaxed/simple;
-	bh=wjccWS/jl69O7aU/DwxylxJJ8rXH0lFIRcSe+oEzTxI=;
+	bh=oU+K+Agv8A/9cySIo9TIN1xk5CJ7VihwwuEeBeqwt3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kqsf5PCI7I7KiPPq3uzRlRfYaYyUjJZEGERXeJOBXz44eGVcRvNv9V33OJxltU/SpHhv84nx5M6d48IMNYcQKTvPh1PPmUPl3IZIOQbPt9/5cI+axGeZwaB54FjcnKkqpyi8okx8iHL6CsVCjoMKm97nVane9v6iIwEI3rymsms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8bCXFfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjoTFq8ExsnEMRMyRAa235vo0QaHrbDbC/MdVqsOZdZYAr8u3nTdmJfOvOypM3r7yL+wd+YlqZ9fwsCNjT53QeXTY6bHufs3A1GySfYqME+eC7RFM/RLBNJxcj94EsxWDvLzNtunCBFzXQHQ2fl5lZrHZGPxavGl7x9lPYghEIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PdzG7b/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8bCXFfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9A0C4CEF1;
-	Mon, 27 Oct 2025 18:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PdzG7b/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433EBC4CEFD;
+	Mon, 27 Oct 2025 18:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590972;
-	bh=wjccWS/jl69O7aU/DwxylxJJ8rXH0lFIRcSe+oEzTxI=;
+	s=korg; t=1761590974;
+	bh=oU+K+Agv8A/9cySIo9TIN1xk5CJ7VihwwuEeBeqwt3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8bCXFfzZbAyW1d4QOESStX+whenmhEx7J3gXsLiP6bCHiEhbs2gehOei78ApcG+9
-	 YWbb85hzwuN5wgiC85AGAJxENxDzOyXkTNJ6DaT9h5Tjrrm/8PDdKr/70f1dOKIn9/
-	 9qJP7oKwO19seUkNKHrjVLOFYqUiZHYdO+8msnmU=
+	b=1PdzG7b/oshMn/v5K8OBA4xC7ji/F7VNZiVTeRU9teg8d0RWPLNplyGYIbiqXd07I
+	 omj5vcMD9PAfCx/Nx7zb918cTCg6wI3st6/PyN0f45jfmkxv89HIHns7777w1N1+9a
+	 /UxUWpa8UJ0W7QwyI4cXc/zLfa2yZyQ1QNUPMRZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiqi Sun <sunyiqixm@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.10 019/332] crypto: rng - Ensure set_ent is always present
-Date: Mon, 27 Oct 2025 19:31:12 +0100
-Message-ID: <20251027183525.129742209@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 002/332] media: b2c2: Fix use-after-free causing by irq_check_work in flexcop_pci_remove
+Date: Mon, 27 Oct 2025 19:30:55 +0100
+Message-ID: <20251027183524.681637211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,43 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit c0d36727bf39bb16ef0a67ed608e279535ebf0da upstream.
+commit 01e03fb7db419d39e18d6090d4873c1bff103914 upstream.
 
-Ensure that set_ent is always set since only drbg provides it.
+The original code uses cancel_delayed_work() in flexcop_pci_remove(), which
+does not guarantee that the delayed work item irq_check_work has fully
+completed if it was already running. This leads to use-after-free scenarios
+where flexcop_pci_remove() may free the flexcop_device while irq_check_work
+is still active and attempts to dereference the device.
 
-Fixes: 77ebdabe8de7 ("crypto: af_alg - add extra parameters for DRBG interface")
-Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+A typical race condition is illustrated below:
+
+CPU 0 (remove)                         | CPU 1 (delayed work callback)
+flexcop_pci_remove()                   | flexcop_pci_irq_check_work()
+  cancel_delayed_work()                |
+  flexcop_device_kfree(fc_pci->fc_dev) |
+                                       |   fc = fc_pci->fc_dev; // UAF
+
+This is confirmed by a KASAN report:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
+Write of size 8 at addr ffff8880093aa8c8 by task bash/135
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_report+0xcf/0x610
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ kasan_report+0xb8/0xf0
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ __run_timer_base.part.0+0x7d7/0x8c0
+ ? __pfx___run_timer_base.part.0+0x10/0x10
+ ? __pfx_read_tsc+0x10/0x10
+ ? ktime_get+0x60/0x140
+ ? lapic_next_event+0x11/0x20
+ ? clockevents_program_event+0x1d4/0x2a0
+ run_timer_softirq+0xd1/0x190
+ handle_softirqs+0x16a/0x550
+ irq_exit_rcu+0xaf/0xe0
+ sysvec_apic_timer_interrupt+0x70/0x80
+ </IRQ>
+...
+
+Allocated by task 1:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x7f/0x90
+ __kmalloc_noprof+0x1be/0x460
+ flexcop_device_kmalloc+0x54/0xe0
+ flexcop_pci_probe+0x1f/0x9d0
+ local_pci_probe+0xdc/0x190
+ pci_device_probe+0x2fe/0x470
+ really_probe+0x1ca/0x5c0
+ __driver_probe_device+0x248/0x310
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xd2/0x310
+ bus_for_each_dev+0xed/0x170
+ bus_add_driver+0x208/0x500
+ driver_register+0x132/0x460
+ do_one_initcall+0x89/0x300
+ kernel_init_freeable+0x40d/0x720
+ kernel_init+0x1a/0x150
+ ret_from_fork+0x10c/0x1a0
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 135:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3a/0x60
+ __kasan_slab_free+0x3f/0x50
+ kfree+0x137/0x370
+ flexcop_device_kfree+0x32/0x50
+ pci_device_remove+0xa6/0x1d0
+ device_release_driver_internal+0xf8/0x210
+ pci_stop_bus_device+0x105/0x150
+ pci_stop_and_remove_bus_device_locked+0x15/0x30
+ remove_store+0xcc/0xe0
+ kernfs_fop_write_iter+0x2c3/0x440
+ vfs_write+0x871/0xd70
+ ksys_write+0xee/0x1c0
+ do_syscall_64+0xac/0x280
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+
+Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
+that the delayed work item is properly canceled and any executing delayed
+work has finished before the device memory is deallocated.
+
+This bug was initially identified through static analysis. To reproduce
+and test it, I simulated the B2C2 FlexCop PCI device in QEMU and introduced
+artificial delays within the flexcop_pci_irq_check_work() function to
+increase the likelihood of triggering the bug.
+
+Fixes: 382c5546d618 ("V4L/DVB (10694): [PATCH] software IRQ watchdog for Flexcop B2C2 DVB PCI cards")
+Cc: stable@vger.kernel.org
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/rng.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/pci/b2c2/flexcop-pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/crypto/rng.c
-+++ b/crypto/rng.c
-@@ -174,6 +174,11 @@ out:
- EXPORT_SYMBOL_GPL(crypto_del_default_rng);
- #endif
+--- a/drivers/media/pci/b2c2/flexcop-pci.c
++++ b/drivers/media/pci/b2c2/flexcop-pci.c
+@@ -411,7 +411,7 @@ static void flexcop_pci_remove(struct pc
+ 	struct flexcop_pci *fc_pci = pci_get_drvdata(pdev);
  
-+static void rng_default_set_ent(struct crypto_rng *tfm, const u8 *data,
-+				unsigned int len)
-+{
-+}
-+
- int crypto_register_rng(struct rng_alg *alg)
- {
- 	struct crypto_alg *base = &alg->base;
-@@ -185,6 +190,9 @@ int crypto_register_rng(struct rng_alg *
- 	base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
- 	base->cra_flags |= CRYPTO_ALG_TYPE_RNG;
+ 	if (irq_chk_intv > 0)
+-		cancel_delayed_work(&fc_pci->irq_check_work);
++		cancel_delayed_work_sync(&fc_pci->irq_check_work);
  
-+	if (!alg->set_ent)
-+		alg->set_ent = rng_default_set_ent;
-+
- 	return crypto_register_alg(base);
- }
- EXPORT_SYMBOL_GPL(crypto_register_rng);
+ 	flexcop_pci_dma_exit(fc_pci);
+ 	flexcop_device_exit(fc_pci->fc_dev);
 
 
