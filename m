@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1A31FBC92;
-	Mon, 27 Oct 2025 19:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571A721576E;
+	Mon, 27 Oct 2025 19:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592678; cv=none; b=adn5WwWQrUQyKxGvEnECH2cxUKTFlomuFhv/EsJhk2qBgmuvSOPGdN0JCCmAMYBsKsxuZgdJ1Otgh/YKkodBcHnt0hBE7tUR4AbOnWMboL8Tz0FNGMOdSTb6xm7oR5+g39MLEHmORFECehpw4q3vgr47Vlk84oXNNfWwrPxcctQ=
+	t=1761592681; cv=none; b=VGmH2JrJouGDjYJ2JBbZS2dRv02tmyoFuOA1NYuZcdG8DCu2FXosK1XmFWXDDX66bnkv3PDp9LROSk3//CKm5NqT8OdKgej23UWPQGfUfuMfL2GeXGqEv8NA3RzVJE14LDsAa+3GFxK4dyofruxWCB78IkN69EK3ZNmqPVqGqU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592678; c=relaxed/simple;
-	bh=lEKXf4Mn8USC/i2sSvwwr5H2GAY1eQliG9IvlHhzs60=;
+	s=arc-20240116; t=1761592681; c=relaxed/simple;
+	bh=kVYvmvf6ouvyxKzo4bV14ph3nMUwBNYu8lNaOMqMWTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWC5AiUZ9eCzIBjc/BJXh7m/9zs0mAyEg8WKDeoagMszgpTQBrj3+at0x5AkcfJhyIB4CPgcncw4c1x6byFyFa/lnbsDacWcnrQvsLnmvJUufhRrq/ei+TlgKcM3h5AlaonquPX/bcK+xvrtgHYwTgbK4wmEKWlVvokm/7pmT/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1tKuFbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=An4Ewc2w8gZZK1jljNAHl1JRL527gcaTDzzGVruM4eVHcriZxq+bwwSJFolO7oeG9HBna6d/UVXYV3iBpC83AfiI0Jmly5rLogfba7aPaIoxiPYzLYg7yKH3nBOQ65352bVLJieIkr6RFAlD/zO4VGCoplqlhgqyDvtx/Js7wAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChxoUYIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1tKuFbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5416BC4CEF1;
-	Mon, 27 Oct 2025 19:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChxoUYIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1ADDC4CEF1;
+	Mon, 27 Oct 2025 19:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592678;
-	bh=lEKXf4Mn8USC/i2sSvwwr5H2GAY1eQliG9IvlHhzs60=;
+	s=korg; t=1761592681;
+	bh=kVYvmvf6ouvyxKzo4bV14ph3nMUwBNYu8lNaOMqMWTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1tKuFbt9Zq8dAnuWxMQUogd1k+DBn12P7lHzEqALv4mTtJ3YNqtaCAT7YfkaE85m
-	 KrvuZv6QVbVcgEYx/mgeiTtfa5In6Hw8T5E7QlPDX21Pg3uC17PpoxO2nbsw8WxiRu
-	 8HGaT+ahxzErZYtTKFvCx1kZYxSlY4LGq610FB/8=
+	b=ChxoUYIllKaPeiN2PdGfAKFlvC69MOKR8+Kxap1TpKeQ63rHPI8Ao2QRTp6GmG+Bx
+	 sirvoH3uDFmK4HjP6b8dgt69O7BAjpealvMe1Ar7pYO01er5/FBjtxyv5VM56pG76v
+	 YhZBuehEo5t84xRtaADg4FxaLgYsgbLnz1w21TSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	JuenKit Yip <JuenKit_Yip@hotmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Wentong Wu <wentong.wu@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 54/84] hwmon: (sht3x) Fix error handling
-Date: Mon, 27 Oct 2025 19:36:43 +0100
-Message-ID: <20251027183440.259677378@linuxfoundation.org>
+Subject: [PATCH 6.6 55/84] gpio: update Intel LJCA USB GPIO driver
+Date: Mon, 27 Oct 2025 19:36:44 +0100
+Message-ID: <20251027183440.286149570@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -51,97 +54,537 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Wentong Wu <wentong.wu@intel.com>
 
-[ Upstream commit 8dcc66ad379ec0642fb281c45ccfd7d2d366e53f ]
+[ Upstream commit 1034cc423f1b4a7a9a56d310ca980fcd2753e11d ]
 
-Handling of errors when reading status, temperature, and humidity returns
-the error number as negative attribute value. Fix it up by returning
-the error as return value.
+This driver communicate with LJCA GPIO module with specific
+protocol through interfaces exported by LJCA USB driver.
+Update the driver according to LJCA USB driver's changes.
 
-Fixes: a0ac418c6007c ("hwmon: (sht3x) convert some of sysfs interface to hwmon")
-Cc: JuenKit Yip <JuenKit_Yip@hotmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wentong Wu <wentong.wu@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/1696833205-16716-5-git-send-email-wentong.wu@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4c4e6ea4a120 ("gpio: ljca: Fix duplicated IRQ mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/gpio/Kconfig     |   4 +-
+ drivers/gpio/gpio-ljca.c | 246 +++++++++++++++++++++++----------------
+ 2 files changed, 145 insertions(+), 105 deletions(-)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index 79657910b79e6..d8a86e60cf8c1 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -288,24 +288,26 @@ static struct sht3x_data *sht3x_update_client(struct device *dev)
- 	return data;
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index ebd4e113dc265..de051a085e63f 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -1313,9 +1313,9 @@ config GPIO_KEMPLD
+ 
+ config GPIO_LJCA
+ 	tristate "INTEL La Jolla Cove Adapter GPIO support"
+-	depends on MFD_LJCA
++	depends on USB_LJCA
+ 	select GPIOLIB_IRQCHIP
+-	default MFD_LJCA
++	default USB_LJCA
+ 	help
+ 	  Select this option to enable GPIO driver for the INTEL
+ 	  La Jolla Cove Adapter (LJCA) board.
+diff --git a/drivers/gpio/gpio-ljca.c b/drivers/gpio/gpio-ljca.c
+index 87863f0230f5c..dfec9fbfc7a9b 100644
+--- a/drivers/gpio/gpio-ljca.c
++++ b/drivers/gpio/gpio-ljca.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/acpi.h>
++#include <linux/auxiliary_bus.h>
+ #include <linux/bitfield.h>
+ #include <linux/bitops.h>
+ #include <linux/dev_printk.h>
+@@ -13,19 +14,18 @@
+ #include <linux/irq.h>
+ #include <linux/kernel.h>
+ #include <linux/kref.h>
+-#include <linux/mfd/ljca.h>
+ #include <linux/module.h>
+-#include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
++#include <linux/usb/ljca.h>
+ 
+ /* GPIO commands */
+-#define LJCA_GPIO_CONFIG	1
+-#define LJCA_GPIO_READ		2
+-#define LJCA_GPIO_WRITE		3
+-#define LJCA_GPIO_INT_EVENT	4
+-#define LJCA_GPIO_INT_MASK	5
+-#define LJCA_GPIO_INT_UNMASK	6
++#define LJCA_GPIO_CONFIG		1
++#define LJCA_GPIO_READ			2
++#define LJCA_GPIO_WRITE			3
++#define LJCA_GPIO_INT_EVENT		4
++#define LJCA_GPIO_INT_MASK		5
++#define LJCA_GPIO_INT_UNMASK		6
+ 
+ #define LJCA_GPIO_CONF_DISABLE		BIT(0)
+ #define LJCA_GPIO_CONF_INPUT		BIT(1)
+@@ -36,45 +36,49 @@
+ #define LJCA_GPIO_CONF_INTERRUPT	BIT(6)
+ #define LJCA_GPIO_INT_TYPE		BIT(7)
+ 
+-#define LJCA_GPIO_CONF_EDGE	FIELD_PREP(LJCA_GPIO_INT_TYPE, 1)
+-#define LJCA_GPIO_CONF_LEVEL	FIELD_PREP(LJCA_GPIO_INT_TYPE, 0)
++#define LJCA_GPIO_CONF_EDGE		FIELD_PREP(LJCA_GPIO_INT_TYPE, 1)
++#define LJCA_GPIO_CONF_LEVEL		FIELD_PREP(LJCA_GPIO_INT_TYPE, 0)
+ 
+ /* Intentional overlap with PULLUP / PULLDOWN */
+-#define LJCA_GPIO_CONF_SET	BIT(3)
+-#define LJCA_GPIO_CONF_CLR	BIT(4)
++#define LJCA_GPIO_CONF_SET		BIT(3)
++#define LJCA_GPIO_CONF_CLR		BIT(4)
+ 
+-struct gpio_op {
++#define LJCA_GPIO_BUF_SIZE		60u
++
++struct ljca_gpio_op {
+ 	u8 index;
+ 	u8 value;
+ } __packed;
+ 
+-struct gpio_packet {
++struct ljca_gpio_packet {
+ 	u8 num;
+-	struct gpio_op item[];
++	struct ljca_gpio_op item[] __counted_by(num);
+ } __packed;
+ 
+-#define LJCA_GPIO_BUF_SIZE 60
+ struct ljca_gpio_dev {
+-	struct platform_device *pdev;
++	struct ljca_client *ljca;
+ 	struct gpio_chip gc;
+ 	struct ljca_gpio_info *gpio_info;
+ 	DECLARE_BITMAP(unmasked_irqs, LJCA_MAX_GPIO_NUM);
+ 	DECLARE_BITMAP(enabled_irqs, LJCA_MAX_GPIO_NUM);
+ 	DECLARE_BITMAP(reenable_irqs, LJCA_MAX_GPIO_NUM);
++	DECLARE_BITMAP(output_enabled, LJCA_MAX_GPIO_NUM);
+ 	u8 *connect_mode;
+-	/* mutex to protect irq bus */
++	/* protect irq bus */
+ 	struct mutex irq_lock;
+ 	struct work_struct work;
+-	/* lock to protect package transfer to Hardware */
++	/* protect package transfer to hardware */
+ 	struct mutex trans_lock;
+ 
+ 	u8 obuf[LJCA_GPIO_BUF_SIZE];
+ 	u8 ibuf[LJCA_GPIO_BUF_SIZE];
+ };
+ 
+-static int gpio_config(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id, u8 config)
++static int ljca_gpio_config(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id,
++			    u8 config)
+ {
+-	struct gpio_packet *packet = (struct gpio_packet *)ljca_gpio->obuf;
++	struct ljca_gpio_packet *packet =
++				(struct ljca_gpio_packet *)ljca_gpio->obuf;
+ 	int ret;
+ 
+ 	mutex_lock(&ljca_gpio->trans_lock);
+@@ -82,43 +86,43 @@ static int gpio_config(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id, u8 config)
+ 	packet->item[0].value = config | ljca_gpio->connect_mode[gpio_id];
+ 	packet->num = 1;
+ 
+-	ret = ljca_transfer(ljca_gpio->gpio_info->ljca, LJCA_GPIO_CONFIG, packet,
+-			    struct_size(packet, item, packet->num), NULL, NULL);
++	ret = ljca_transfer(ljca_gpio->ljca, LJCA_GPIO_CONFIG, (u8 *)packet,
++			    struct_size(packet, item, packet->num), NULL, 0);
+ 	mutex_unlock(&ljca_gpio->trans_lock);
+-	return ret;
++
++	return ret < 0 ? ret : 0;
  }
  
--static int temp1_input_read(struct device *dev)
-+static int temp1_input_read(struct device *dev, long *temp)
+ static int ljca_gpio_read(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id)
  {
- 	struct sht3x_data *data = sht3x_update_client(dev);
+-	struct gpio_packet *packet = (struct gpio_packet *)ljca_gpio->obuf;
+-	struct gpio_packet *ack_packet = (struct gpio_packet *)ljca_gpio->ibuf;
+-	unsigned int ibuf_len = LJCA_GPIO_BUF_SIZE;
++	struct ljca_gpio_packet *ack_packet =
++				(struct ljca_gpio_packet *)ljca_gpio->ibuf;
++	struct ljca_gpio_packet *packet =
++				(struct ljca_gpio_packet *)ljca_gpio->obuf;
+ 	int ret;
  
- 	if (IS_ERR(data))
- 		return PTR_ERR(data);
- 
--	return data->temperature;
-+	*temp = data->temperature;
-+	return 0;
+ 	mutex_lock(&ljca_gpio->trans_lock);
+ 	packet->num = 1;
+ 	packet->item[0].index = gpio_id;
+-	ret = ljca_transfer(ljca_gpio->gpio_info->ljca, LJCA_GPIO_READ, packet,
+-			    struct_size(packet, item, packet->num), ljca_gpio->ibuf, &ibuf_len);
+-	if (ret)
+-		goto out_unlock;
+-
+-	if (!ibuf_len || ack_packet->num != packet->num) {
+-		dev_err(&ljca_gpio->pdev->dev, "failed gpio_id:%u %u", gpio_id, ack_packet->num);
+-		ret = -EIO;
++	ret = ljca_transfer(ljca_gpio->ljca, LJCA_GPIO_READ, (u8 *)packet,
++			    struct_size(packet, item, packet->num),
++			    ljca_gpio->ibuf, LJCA_GPIO_BUF_SIZE);
++
++	if (ret <= 0 || ack_packet->num != packet->num) {
++		dev_err(&ljca_gpio->ljca->auxdev.dev,
++			"read package error, gpio_id: %u num: %u ret: %d\n",
++			gpio_id, ack_packet->num, ret);
++		ret = ret < 0 ? ret : -EIO;
+ 	}
+-
+-out_unlock:
+ 	mutex_unlock(&ljca_gpio->trans_lock);
+-	if (ret)
+-		return ret;
+-	return ack_packet->item[0].value > 0;
++
++	return ret < 0 ? ret : ack_packet->item[0].value > 0;
  }
  
--static int humidity1_input_read(struct device *dev)
-+static int humidity1_input_read(struct device *dev, long *humidity)
+-static int ljca_gpio_write(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id,
+-			   int value)
++static int ljca_gpio_write(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id, int value)
  {
- 	struct sht3x_data *data = sht3x_update_client(dev);
+-	struct gpio_packet *packet = (struct gpio_packet *)ljca_gpio->obuf;
++	struct ljca_gpio_packet *packet =
++			(struct ljca_gpio_packet *)ljca_gpio->obuf;
+ 	int ret;
  
- 	if (IS_ERR(data))
- 		return PTR_ERR(data);
+ 	mutex_lock(&ljca_gpio->trans_lock);
+@@ -126,10 +130,11 @@ static int ljca_gpio_write(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id,
+ 	packet->item[0].index = gpio_id;
+ 	packet->item[0].value = value & 1;
  
--	return data->humidity;
-+	*humidity = data->humidity;
-+	return 0;
+-	ret = ljca_transfer(ljca_gpio->gpio_info->ljca, LJCA_GPIO_WRITE, packet,
+-			    struct_size(packet, item, packet->num), NULL, NULL);
++	ret = ljca_transfer(ljca_gpio->ljca, LJCA_GPIO_WRITE, (u8 *)packet,
++			    struct_size(packet, item, packet->num), NULL, 0);
+ 	mutex_unlock(&ljca_gpio->trans_lock);
+-	return ret;
++
++	return ret < 0 ? ret : 0;
  }
  
- /*
-@@ -703,6 +705,7 @@ static int sht3x_read(struct device *dev, enum hwmon_sensor_types type,
- 		      u32 attr, int channel, long *val)
+ static int ljca_gpio_get_value(struct gpio_chip *chip, unsigned int offset)
+@@ -147,16 +152,24 @@ static void ljca_gpio_set_value(struct gpio_chip *chip, unsigned int offset,
+ 
+ 	ret = ljca_gpio_write(ljca_gpio, offset, val);
+ 	if (ret)
+-		dev_err(chip->parent, "offset:%u val:%d set value failed %d\n", offset, val, ret);
++		dev_err(chip->parent,
++			"set value failed offset: %u val: %d ret: %d\n",
++			offset, val, ret);
+ }
+ 
+-static int ljca_gpio_direction_input(struct gpio_chip *chip,
+-				     unsigned int offset)
++static int ljca_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
  {
- 	enum sht3x_limits index;
+ 	struct ljca_gpio_dev *ljca_gpio = gpiochip_get_data(chip);
+ 	u8 config = LJCA_GPIO_CONF_INPUT | LJCA_GPIO_CONF_CLR;
 +	int ret;
  
+-	return gpio_config(ljca_gpio, offset, config);
++	ret = ljca_gpio_config(ljca_gpio, offset, config);
++	if (ret)
++		return ret;
++
++	clear_bit(offset, ljca_gpio->output_enabled);
++
++	return 0;
+ }
+ 
+ static int ljca_gpio_direction_output(struct gpio_chip *chip,
+@@ -166,14 +179,26 @@ static int ljca_gpio_direction_output(struct gpio_chip *chip,
+ 	u8 config = LJCA_GPIO_CONF_OUTPUT | LJCA_GPIO_CONF_CLR;
+ 	int ret;
+ 
+-	ret = gpio_config(ljca_gpio, offset, config);
++	ret = ljca_gpio_config(ljca_gpio, offset, config);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ljca_gpio_set_value(chip, offset, val);
++	set_bit(offset, ljca_gpio->output_enabled);
++
+ 	return 0;
+ }
+ 
++static int ljca_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
++{
++	struct ljca_gpio_dev *ljca_gpio = gpiochip_get_data(chip);
++
++	if (test_bit(offset, ljca_gpio->output_enabled))
++		return GPIO_LINE_DIRECTION_OUT;
++
++	return GPIO_LINE_DIRECTION_IN;
++}
++
+ static int ljca_gpio_set_config(struct gpio_chip *chip, unsigned int offset,
+ 				unsigned long config)
+ {
+@@ -197,7 +222,8 @@ static int ljca_gpio_set_config(struct gpio_chip *chip, unsigned int offset,
+ 	return 0;
+ }
+ 
+-static int ljca_gpio_init_valid_mask(struct gpio_chip *chip, unsigned long *valid_mask,
++static int ljca_gpio_init_valid_mask(struct gpio_chip *chip,
++				     unsigned long *valid_mask,
+ 				     unsigned int ngpios)
+ {
+ 	struct ljca_gpio_dev *ljca_gpio = gpiochip_get_data(chip);
+@@ -208,15 +234,18 @@ static int ljca_gpio_init_valid_mask(struct gpio_chip *chip, unsigned long *vali
+ 	return 0;
+ }
+ 
+-static void ljca_gpio_irq_init_valid_mask(struct gpio_chip *chip, unsigned long *valid_mask,
++static void ljca_gpio_irq_init_valid_mask(struct gpio_chip *chip,
++					  unsigned long *valid_mask,
+ 					  unsigned int ngpios)
+ {
+ 	ljca_gpio_init_valid_mask(chip, valid_mask, ngpios);
+ }
+ 
+-static int ljca_enable_irq(struct ljca_gpio_dev *ljca_gpio, int gpio_id, bool enable)
++static int ljca_enable_irq(struct ljca_gpio_dev *ljca_gpio, int gpio_id,
++			   bool enable)
+ {
+-	struct gpio_packet *packet = (struct gpio_packet *)ljca_gpio->obuf;
++	struct ljca_gpio_packet *packet =
++			(struct ljca_gpio_packet *)ljca_gpio->obuf;
+ 	int ret;
+ 
+ 	mutex_lock(&ljca_gpio->trans_lock);
+@@ -224,18 +253,20 @@ static int ljca_enable_irq(struct ljca_gpio_dev *ljca_gpio, int gpio_id, bool en
+ 	packet->item[0].index = gpio_id;
+ 	packet->item[0].value = 0;
+ 
+-	ret = ljca_transfer(ljca_gpio->gpio_info->ljca,
+-			    enable ? LJCA_GPIO_INT_UNMASK : LJCA_GPIO_INT_MASK, packet,
+-			    struct_size(packet, item, packet->num), NULL, NULL);
++	ret = ljca_transfer(ljca_gpio->ljca,
++			    enable ? LJCA_GPIO_INT_UNMASK : LJCA_GPIO_INT_MASK,
++			    (u8 *)packet, struct_size(packet, item, packet->num),
++			    NULL, 0);
+ 	mutex_unlock(&ljca_gpio->trans_lock);
+-	return ret;
++
++	return ret < 0 ? ret : 0;
+ }
+ 
+ static void ljca_gpio_async(struct work_struct *work)
+ {
+-	struct ljca_gpio_dev *ljca_gpio = container_of(work, struct ljca_gpio_dev, work);
+-	int gpio_id;
+-	int unmasked;
++	struct ljca_gpio_dev *ljca_gpio =
++			container_of(work, struct ljca_gpio_dev, work);
++	int gpio_id, unmasked;
+ 
+ 	for_each_set_bit(gpio_id, ljca_gpio->reenable_irqs, ljca_gpio->gc.ngpio) {
+ 		clear_bit(gpio_id, ljca_gpio->reenable_irqs);
+@@ -245,20 +276,22 @@ static void ljca_gpio_async(struct work_struct *work)
+ 	}
+ }
+ 
+-static void ljca_gpio_event_cb(void *context, u8 cmd, const void *evt_data, int len)
++static void ljca_gpio_event_cb(void *context, u8 cmd, const void *evt_data,
++			       int len)
+ {
+-	const struct gpio_packet *packet = evt_data;
++	const struct ljca_gpio_packet *packet = evt_data;
+ 	struct ljca_gpio_dev *ljca_gpio = context;
+-	int i;
+-	int irq;
++	int i, irq;
+ 
+ 	if (cmd != LJCA_GPIO_INT_EVENT)
+ 		return;
+ 
+ 	for (i = 0; i < packet->num; i++) {
+-		irq = irq_find_mapping(ljca_gpio->gc.irq.domain, packet->item[i].index);
++		irq = irq_find_mapping(ljca_gpio->gc.irq.domain,
++				       packet->item[i].index);
+ 		if (!irq) {
+-			dev_err(ljca_gpio->gc.parent, "gpio_id %u does not mapped to IRQ yet\n",
++			dev_err(ljca_gpio->gc.parent,
++				"gpio_id %u does not mapped to IRQ yet\n",
+ 				packet->item[i].index);
+ 			return;
+ 		}
+@@ -299,18 +332,22 @@ static int ljca_irq_set_type(struct irq_data *irqd, unsigned int type)
+ 	ljca_gpio->connect_mode[gpio_id] = LJCA_GPIO_CONF_INTERRUPT;
  	switch (type) {
- 	case hwmon_chip:
-@@ -717,10 +720,12 @@ static int sht3x_read(struct device *dev, enum hwmon_sensor_types type,
- 	case hwmon_temp:
- 		switch (attr) {
- 		case hwmon_temp_input:
--			*val = temp1_input_read(dev);
--			break;
-+			return temp1_input_read(dev, val);
- 		case hwmon_temp_alarm:
--			*val = temp1_alarm_read(dev);
-+			ret = temp1_alarm_read(dev);
-+			if (ret < 0)
-+				return ret;
-+			*val = ret;
- 			break;
- 		case hwmon_temp_max:
- 			index = limit_max;
-@@ -745,10 +750,12 @@ static int sht3x_read(struct device *dev, enum hwmon_sensor_types type,
- 	case hwmon_humidity:
- 		switch (attr) {
- 		case hwmon_humidity_input:
--			*val = humidity1_input_read(dev);
--			break;
-+			return humidity1_input_read(dev, val);
- 		case hwmon_humidity_alarm:
--			*val = humidity1_alarm_read(dev);
-+			ret = humidity1_alarm_read(dev);
-+			if (ret < 0)
-+				return ret;
-+			*val = ret;
- 			break;
- 		case hwmon_humidity_max:
- 			index = limit_max;
+ 	case IRQ_TYPE_LEVEL_HIGH:
+-		ljca_gpio->connect_mode[gpio_id] |= (LJCA_GPIO_CONF_LEVEL | LJCA_GPIO_CONF_PULLUP);
++		ljca_gpio->connect_mode[gpio_id] |=
++			(LJCA_GPIO_CONF_LEVEL | LJCA_GPIO_CONF_PULLUP);
+ 		break;
+ 	case IRQ_TYPE_LEVEL_LOW:
+-		ljca_gpio->connect_mode[gpio_id] |= (LJCA_GPIO_CONF_LEVEL | LJCA_GPIO_CONF_PULLDOWN);
++		ljca_gpio->connect_mode[gpio_id] |=
++			(LJCA_GPIO_CONF_LEVEL | LJCA_GPIO_CONF_PULLDOWN);
+ 		break;
+ 	case IRQ_TYPE_EDGE_BOTH:
+ 		break;
+ 	case IRQ_TYPE_EDGE_RISING:
+-		ljca_gpio->connect_mode[gpio_id] |= (LJCA_GPIO_CONF_EDGE | LJCA_GPIO_CONF_PULLUP);
++		ljca_gpio->connect_mode[gpio_id] |=
++			(LJCA_GPIO_CONF_EDGE | LJCA_GPIO_CONF_PULLUP);
+ 		break;
+ 	case IRQ_TYPE_EDGE_FALLING:
+-		ljca_gpio->connect_mode[gpio_id] |= (LJCA_GPIO_CONF_EDGE | LJCA_GPIO_CONF_PULLDOWN);
++		ljca_gpio->connect_mode[gpio_id] |=
++			(LJCA_GPIO_CONF_EDGE | LJCA_GPIO_CONF_PULLDOWN);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -332,15 +369,14 @@ static void ljca_irq_bus_unlock(struct irq_data *irqd)
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(irqd);
+ 	struct ljca_gpio_dev *ljca_gpio = gpiochip_get_data(gc);
+ 	int gpio_id = irqd_to_hwirq(irqd);
+-	int enabled;
+-	int unmasked;
++	int enabled, unmasked;
+ 
+ 	enabled = test_bit(gpio_id, ljca_gpio->enabled_irqs);
+ 	unmasked = test_bit(gpio_id, ljca_gpio->unmasked_irqs);
+ 
+ 	if (enabled != unmasked) {
+ 		if (unmasked) {
+-			gpio_config(ljca_gpio, gpio_id, 0);
++			ljca_gpio_config(ljca_gpio, gpio_id, 0);
+ 			ljca_enable_irq(ljca_gpio, gpio_id, true);
+ 			set_bit(gpio_id, ljca_gpio->enabled_irqs);
+ 		} else {
+@@ -363,43 +399,48 @@ static const struct irq_chip ljca_gpio_irqchip = {
+ 	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ };
+ 
+-static int ljca_gpio_probe(struct platform_device *pdev)
++static int ljca_gpio_probe(struct auxiliary_device *auxdev,
++			   const struct auxiliary_device_id *aux_dev_id)
+ {
++	struct ljca_client *ljca = auxiliary_dev_to_ljca_client(auxdev);
+ 	struct ljca_gpio_dev *ljca_gpio;
+ 	struct gpio_irq_chip *girq;
+ 	int ret;
+ 
+-	ljca_gpio = devm_kzalloc(&pdev->dev, sizeof(*ljca_gpio), GFP_KERNEL);
++	ljca_gpio = devm_kzalloc(&auxdev->dev, sizeof(*ljca_gpio), GFP_KERNEL);
+ 	if (!ljca_gpio)
+ 		return -ENOMEM;
+ 
+-	ljca_gpio->gpio_info = dev_get_platdata(&pdev->dev);
+-	ljca_gpio->connect_mode = devm_kcalloc(&pdev->dev, ljca_gpio->gpio_info->num,
+-					       sizeof(*ljca_gpio->connect_mode), GFP_KERNEL);
++	ljca_gpio->ljca = ljca;
++	ljca_gpio->gpio_info = dev_get_platdata(&auxdev->dev);
++	ljca_gpio->connect_mode = devm_kcalloc(&auxdev->dev,
++					       ljca_gpio->gpio_info->num,
++					       sizeof(*ljca_gpio->connect_mode),
++					       GFP_KERNEL);
+ 	if (!ljca_gpio->connect_mode)
+ 		return -ENOMEM;
+ 
+ 	mutex_init(&ljca_gpio->irq_lock);
+ 	mutex_init(&ljca_gpio->trans_lock);
+-	ljca_gpio->pdev = pdev;
+ 	ljca_gpio->gc.direction_input = ljca_gpio_direction_input;
+ 	ljca_gpio->gc.direction_output = ljca_gpio_direction_output;
++	ljca_gpio->gc.get_direction = ljca_gpio_get_direction;
+ 	ljca_gpio->gc.get = ljca_gpio_get_value;
+ 	ljca_gpio->gc.set = ljca_gpio_set_value;
+ 	ljca_gpio->gc.set_config = ljca_gpio_set_config;
+ 	ljca_gpio->gc.init_valid_mask = ljca_gpio_init_valid_mask;
+ 	ljca_gpio->gc.can_sleep = true;
+-	ljca_gpio->gc.parent = &pdev->dev;
++	ljca_gpio->gc.parent = &auxdev->dev;
+ 
+ 	ljca_gpio->gc.base = -1;
+ 	ljca_gpio->gc.ngpio = ljca_gpio->gpio_info->num;
+-	ljca_gpio->gc.label = ACPI_COMPANION(&pdev->dev) ?
+-			      acpi_dev_name(ACPI_COMPANION(&pdev->dev)) :
+-			      dev_name(&pdev->dev);
++	ljca_gpio->gc.label = ACPI_COMPANION(&auxdev->dev) ?
++			      acpi_dev_name(ACPI_COMPANION(&auxdev->dev)) :
++			      dev_name(&auxdev->dev);
+ 	ljca_gpio->gc.owner = THIS_MODULE;
+ 
+-	platform_set_drvdata(pdev, ljca_gpio);
+-	ljca_register_event_cb(ljca_gpio->gpio_info->ljca, ljca_gpio_event_cb, ljca_gpio);
++	auxiliary_set_drvdata(auxdev, ljca_gpio);
++	ljca_register_event_cb(ljca, ljca_gpio_event_cb, ljca_gpio);
+ 
+ 	girq = &ljca_gpio->gc.irq;
+ 	gpio_irq_chip_set_chip(girq, &ljca_gpio_irqchip);
+@@ -413,7 +454,7 @@ static int ljca_gpio_probe(struct platform_device *pdev)
+ 	INIT_WORK(&ljca_gpio->work, ljca_gpio_async);
+ 	ret = gpiochip_add_data(&ljca_gpio->gc, ljca_gpio);
+ 	if (ret) {
+-		ljca_unregister_event_cb(ljca_gpio->gpio_info->ljca);
++		ljca_unregister_event_cb(ljca);
+ 		mutex_destroy(&ljca_gpio->irq_lock);
+ 		mutex_destroy(&ljca_gpio->trans_lock);
+ 	}
+@@ -421,34 +462,33 @@ static int ljca_gpio_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int ljca_gpio_remove(struct platform_device *pdev)
++static void ljca_gpio_remove(struct auxiliary_device *auxdev)
+ {
+-	struct ljca_gpio_dev *ljca_gpio = platform_get_drvdata(pdev);
++	struct ljca_gpio_dev *ljca_gpio = auxiliary_get_drvdata(auxdev);
+ 
+ 	gpiochip_remove(&ljca_gpio->gc);
+-	ljca_unregister_event_cb(ljca_gpio->gpio_info->ljca);
++	ljca_unregister_event_cb(ljca_gpio->ljca);
++	cancel_work_sync(&ljca_gpio->work);
+ 	mutex_destroy(&ljca_gpio->irq_lock);
+ 	mutex_destroy(&ljca_gpio->trans_lock);
+-	return 0;
+ }
+ 
+-#define LJCA_GPIO_DRV_NAME "ljca-gpio"
+-static const struct platform_device_id ljca_gpio_id[] = {
+-	{ LJCA_GPIO_DRV_NAME, 0 },
+-	{ /* sentinel */ }
++static const struct auxiliary_device_id ljca_gpio_id_table[] = {
++	{ "usb_ljca.ljca-gpio", 0 },
++	{ /* sentinel */ },
+ };
+-MODULE_DEVICE_TABLE(platform, ljca_gpio_id);
++MODULE_DEVICE_TABLE(auxiliary, ljca_gpio_id_table);
+ 
+-static struct platform_driver ljca_gpio_driver = {
+-	.driver.name = LJCA_GPIO_DRV_NAME,
++static struct auxiliary_driver ljca_gpio_driver = {
+ 	.probe = ljca_gpio_probe,
+ 	.remove = ljca_gpio_remove,
++	.id_table = ljca_gpio_id_table,
+ };
+-module_platform_driver(ljca_gpio_driver);
++module_auxiliary_driver(ljca_gpio_driver);
+ 
+-MODULE_AUTHOR("Ye Xiang <xiang.ye@intel.com>");
+-MODULE_AUTHOR("Wang Zhifeng <zhifeng.wang@intel.com>");
+-MODULE_AUTHOR("Zhang Lixu <lixu.zhang@intel.com>");
++MODULE_AUTHOR("Wentong Wu <wentong.wu@intel.com>");
++MODULE_AUTHOR("Zhifeng Wang <zhifeng.wang@intel.com>");
++MODULE_AUTHOR("Lixu Zhang <lixu.zhang@intel.com>");
+ MODULE_DESCRIPTION("Intel La Jolla Cove Adapter USB-GPIO driver");
+ MODULE_LICENSE("GPL");
+ MODULE_IMPORT_NS(LJCA);
 -- 
 2.51.0
 
