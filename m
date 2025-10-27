@@ -1,71 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6637B30CDA0;
-	Mon, 27 Oct 2025 14:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACF72FF679
+	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 15:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573999; cv=none; b=G1zobqkK8e48apuq7EFVmma7nloVQycO6ql0j9Nd1OgVG/QdsOTIvIJUZVjzbobtwJmO9ebf6Z2QpXBVMo0SlPuMPkg6ji3PUk2xpLLyyRAGqJMoLZ8uC9KcEQbo9KIzCMDrnjUjzJOg69N36ErgIAT79LxSCU2Isx4J6Dt+Y+c=
+	t=1761577432; cv=none; b=PHiOMUDREIIogZ52Nmwn1Pyb8Itj2IPKLlUSTwtHaMZ3/A8oU9We55ThC23Yt0VrZHDyAflgdTRQq3nw8Mysnr0zptUJL7pHns2Gk+DutfHREI/sf/bwiWAYifZpIlplwHGjSuDggJRBBpie4wHAG8GlHVTsjqjWaw+VPNuEx/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761573999; c=relaxed/simple;
-	bh=b/eAFThjMpzWZeJJoAe5hP8+7S7Q7G4nzKJj3iBtVNI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lrNEE9eiyTmwasnr5ykSNsccUmWSvwTU/Efn2AryphVcsJDbBRHQrxz7WQUpT+sflElE4Aq147r5r27c/6dZEq54mOEN+70NcyD2CBahZy9SC1fKqzMEagzxURpEH235cBxTkR48CuKx4QHK4/U8eLTTcryTI4EGPyqPvc833WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qew9c9jJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761577432; c=relaxed/simple;
+	bh=DApS4hcsGD3zyYGWIsdcOdWVaOZg+1nVqfikxiXnXSk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uirCYDTxK8KpY9nxdsKXbl/1tYl1/cyZj10FuDm14dnaCG8jJDIEWI/NnzlPvabahetXfp1xHvC4VCHriw1S7IY5IWdjbvb1pYtmOpV1RSuJKJdMF0fOXhMRivbr/L3CSHFIzNy5i+tU4XeRFq+kwT3f70pVRm48qjtOcE32Jmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HvKAo1ad; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qew9c9jJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5F7C116C6;
-	Mon, 27 Oct 2025 14:06:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761573999;
-	bh=b/eAFThjMpzWZeJJoAe5hP8+7S7Q7G4nzKJj3iBtVNI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qew9c9jJ7L+FLFBJMi97WLJPncTHOd2nMeIUkXid8gPeQPX10+yJWWsE37O63zDQl
-	 a80q04U2MKNTDIVZZex6ZfVwHJ2ul/AZAV122L/J2mTuFsiLi+vqwrzuDMjX0FNt89
-	 uGFaLaNPU0gfTTzjjbVMd9ANMLt14DoECvJXhRNcvvOesbKIu08RLQjwG5bqFPN0zk
-	 Dp7dsANW9fSSPMsR6HGP+98NHtLUd0iI1T7Xmr+1lkyRBxU1S4FPQ82nMQjf/wlLLP
-	 HJXt41sdCFidNCbi0KrkQdTAyMiPqzyn8RE0m3WJcEOpSlf8DHzuODy1emCBwTtKc8
-	 MOI7+sce8nXlA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 0/2] Kconfig fixes for QCOM clk drivers when targeting ARCH=arm
-Date: Mon, 27 Oct 2025 09:09:13 -0500
-Message-ID: <176157405453.8818.5432788260760736209.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250930-clk-qcom-kconfig-fixes-arm-v1-0-15ae1ae9ec9f@kernel.org>
-References: <20250930-clk-qcom-kconfig-fixes-arm-v1-0-15ae1ae9ec9f@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvKAo1ad"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-26987b80720so8366825ad.2
+        for <patches@lists.linux.dev>; Mon, 27 Oct 2025 08:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761577430; x=1762182230; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DApS4hcsGD3zyYGWIsdcOdWVaOZg+1nVqfikxiXnXSk=;
+        b=HvKAo1ad7TFIM9wDg3HYeunuIqwaaEQfFsaUnESgudf0dbkAyBoP6tds8buPIaDF7Z
+         GQ84EJH7CARZ8h359FsFikurS9b5UewsOSudEWxP6F+M0L9Tn7gc7l7zaoBikjHxyTr1
+         gihmzTbDZE3HiZiemkCAzIjDWNHfnz5tMXTl59sp1I4q/uu8/wgsNDpFmRxO4kWAxuet
+         652qBDBJ54AIO2J1QIg0fDz0L2nAku8VBPdQ7Bnfem4SFVWfFGqw0mLGlk/U9QbWkdZk
+         Ze/CoGEYPXGlVceY9FAxQ432RxFRY7vEuGOouFTgLjc6BjdGJzuLuMCSiPjM7KVuBGUN
+         FYkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761577431; x=1762182231;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DApS4hcsGD3zyYGWIsdcOdWVaOZg+1nVqfikxiXnXSk=;
+        b=Ufr+DkyufYNducdd58yQwkwCnWWISB3dhh+8gQFpEaKbJxLmcaaUfw/lVS/lBe1OpO
+         ucNDOSoU8rhKIe6QfHicsMVZW/ws62gJf1GDgBWKRsZtWcHRL8raHbIaEbo736uze+tB
+         ozJLpCwrHOTmmnDNb6mqGBIaCvZX2XJmjlw+Icd3dd4XZ1Hpf4Rhf8lf9W2JJuPpIjTn
+         gQwysbMSC0PWu4CYMRzui/jWjAXYjnt/8Q1vllEXY9lvvda9byAuQx6oiyoCzy+5rc3t
+         I408MrZXgGaMBH/eAtp9hDO4s9RIMQQKjreRSnnIazzm8z4BTug2fPFzXc7yjkpmZtCV
+         EzCw==
+X-Forwarded-Encrypted: i=1; AJvYcCUgCi6bEemExk6WdpvwxRbTIoBhtSmedkjAIt0B3Mn1eOW1mvlM397ZUeeTzceFmHYjKO2JXZcB@lists.linux.dev
+X-Gm-Message-State: AOJu0YxC8FU5v3lYS1DNoCB2Fav5uqKtB2OGLtAqe6tLwFn6eKLaG2cc
+	hA1o0TNDKCzM4du9hpnXSXYG8EKdOgzyGKN7G+R/Sc3NejCYmF/BGRV7Hxs6JRXrlGjbXsQAdcQ
+	ajz+WlYXKOShmBHWtVCGWN+bKN1Cfkh0=
+X-Gm-Gg: ASbGnctjbHxOFdY/Ih0ZxqP9U9cQwEvcmkid/Atq6sxddoP9OI6p95+Qoci0WKvfJAp
+	LzM9/nfoPCD7RDmvLu7k8pXH35N0uUlRee7gI2uLC+rXmLi8vFttugrYo1BJzRK27E5+i7G8IFW
+	5JiDSbsPatsfgecMrfe4kN1fjuNsIwQfQkN+Y8An2h4YXJoaAOzy54GIx8/vSS64eo3kfG+bLvr
+	zdq2cZlBc6azao3Ry5fH9C/um7ExgVN/DeyeAzYlXCotvbLpie4HcR1+3CpXNTwat+1uBzenOCt
+	TidYcSwsprSUkloNZh27TSse/+oGN/xjFtfu0IVIBsVKk84sx253fjJbPpwDFOI1jcHwKxS9CnP
+	JyWI=
+X-Google-Smtp-Source: AGHT+IHZ0l03J1yw11Ees0ZvURyj2fdVG9g7KrsSHbaLFL6bHoHKGgLcoCtIOomRh9t9yoDHMruQdA66vlTUVakQCeM=
+X-Received: by 2002:a17:903:15c7:b0:272:2bf1:6a1f with SMTP id
+ d9443c01a7336-294cb38dad8mr1426145ad.4.1761577430243; Mon, 27 Oct 2025
+ 08:03:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20251016231350.1418501-1-ojeda@kernel.org> <2025101758-mystified-prideful-8016@gregkh>
+ <CANiq72nXw4+HesrgNqJjTy6Ji=pVqUMzx7GDO+6U9VYWezTt6Q@mail.gmail.com>
+In-Reply-To: <CANiq72nXw4+HesrgNqJjTy6Ji=pVqUMzx7GDO+6U9VYWezTt6Q@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 27 Oct 2025 16:03:37 +0100
+X-Gm-Features: AWmQ_bn7EsgCH1WfjYQWlmM5ETWJvrKP7qcsX_xSwmLv67g4Qr7Fxq14134xbNs
+Message-ID: <CANiq72kn9HZy2kYaGHM9yj2nR+SAQ=J=Oh8k2doPFMDCRy1wBA@mail.gmail.com>
+Subject: Re: [PATCH] rust: usb: fix formatting
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, linux-usb@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Oct 19, 2025 at 8:59=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> They landed in mainline, so Linus' tree is again `rustfmt`-clean.
 
-On Tue, 30 Sep 2025 11:56:07 -0700, Nathan Chancellor wrote:
-> This series resolves two new Kconfig warnings that I see in my test
-> framework from an ARM configuration getting bumped to 6.17 and enabling
-> these configurations in the process.
-> 
+Pinging about this one so that it is not forgotten. It is the only
+missing thing so that linux-next is clean again like Linus'.
 
-Applied, thanks!
+Thanks!
 
-[1/2] clk: qcom: Fix SM_VIDEOCC_6350 dependencies
-      commit: f0691a3f7558d33b5b4a900e8312613fbe4afb9d
-[2/2] clk: qcom: Fix dependencies of QCS_{DISP,GPU,VIDEO}CC_615
-      commit: 7ec1ba01ae37897f0ecf6ab0c980378cb8a2f388
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Cheers,
+Miguel
