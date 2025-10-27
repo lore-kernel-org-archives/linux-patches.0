@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A19A322541;
-	Mon, 27 Oct 2025 18:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A51322547;
+	Mon, 27 Oct 2025 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590662; cv=none; b=kee1UjonxH1ef4XxrqZFA7NdVeBiQnIHh3NBSeTnXutqWeI723mGAI+aanuvjnK5yDvslxEsfp9QpdI3OX8e8ogtOgCvcV9JmVbtw4c8v+UgeX/mnBHamNS4Php8Ky2gwdm74M23sUhNiNeRI3bTgBX2dfcJc2MdMnwki3X2Tyk=
+	t=1761590664; cv=none; b=pdrOhEeJwCRRKlMr0L6zGdpBJVpL68dLkpJf7T7FceoYXIH/+4JmJocvpoOXtYxSo72PHsnUIA5+VmZi3xH/xeaIShXL8hmSEzRDy0Te0XlJTW5NPCj4qjsztQF2pykSj4PUvEC3IUL0Z+a0GE078tjh++F+qL5Y4p+ylF9Eg0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590662; c=relaxed/simple;
-	bh=rZw6DCpiMworBpWa2MmLkasFpI7ZM8Z/ErNE1RAKD+4=;
+	s=arc-20240116; t=1761590664; c=relaxed/simple;
+	bh=Zs3aEbMU8xdFS+S6g1TKfawI1lA2C6q/kp8T/ygo6sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=psPLJE0jR55Pe5Fj8GNOdO9j/o76ix/p7iMG9fQYzokFlqy+a2CMnfXUKJzpVoU51tHOfAGErvqxPVu1914H+iUapWdyJvcs07Uz7aW5u1I/8vWqnuop5/TOF4ir6l4KlQZXek2GmTNbpfsIEuMJXOd1Tt2YE3QfPVV4/X47gqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmIDdIlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sEOfJ2QpCt5RXnQH9fv9LIAMdVw9dr/L/LpyGN9PczJSr58ua+mZzJx7QaN/hEcEuX3AdDyMSIw1p4KHva7xany20SPjUTkrmIQXmf3v1WSNEtn7SdwN84/0u8fgzA7FCcoUGYgtK2QCZwNwYUEsnmI6VEhVBu+lJ2XewujlKZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVq5qjoH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmIDdIlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B43C4CEF1;
-	Mon, 27 Oct 2025 18:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVq5qjoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113D3C4CEF1;
+	Mon, 27 Oct 2025 18:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590661;
-	bh=rZw6DCpiMworBpWa2MmLkasFpI7ZM8Z/ErNE1RAKD+4=;
+	s=korg; t=1761590664;
+	bh=Zs3aEbMU8xdFS+S6g1TKfawI1lA2C6q/kp8T/ygo6sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmIDdIljTWzayzDJ6AT08dRopru8sI10aYzcLXJ5vu3GOaheQyccE5V0zbA2nDJhh
-	 jvR/B8cXpmLYLW0pUBpgy5himOvohPuD+ZRiasqzy63dU7kfdVq0aDe5BH5fgd8qMI
-	 YJkISypTSu2jERqVBdxQCdPAsE3hGwrhFC6EF5eY=
+	b=VVq5qjoHlm1tRvKcZ8jaM/Vn7eaJem0wI87ddQ3Z6lAmR020wuCDhLtQQO7FHSihq
+	 kCuQxsvsaK5Ni0Rdr+xCOIitykLEV/7iitglU6XWrDhaRRRGELp+9rG3STt2AMeegk
+	 +/T96zD4q12L4BSgS8Xy2HwknDcslBiNgrzFOZUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 129/224] ext4: increase i_disksize to offset + len in ext4_update_disksize_before_punch()
-Date: Mon, 27 Oct 2025 19:34:35 +0100
-Message-ID: <20251027183512.434494586@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.4 103/224] xen/manage: Fix suspend error path
+Date: Mon, 27 Oct 2025 19:34:09 +0100
+Message-ID: <20251027183511.745411436@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -48,95 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 9d80eaa1a1d37539224982b76c9ceeee736510b9 upstream.
+commit f770c3d858687252f1270265ba152d5c622e793f upstream.
 
-After running a stress test combined with fault injection,
-we performed fsck -a followed by fsck -fn on the filesystem
-image. During the second pass, fsck -fn reported:
+The device power management API has the following asymmetry:
+* dpm_suspend_start() does not clean up on failure
+  (it requires a call to dpm_resume_end())
+* dpm_suspend_end() does clean up on failure
+  (it does not require a call to dpm_resume_start())
 
-Inode 131512, end of extent exceeds allowed value
-	(logical block 405, physical block 1180540, len 2)
+The asymmetry was introduced by commit d8f3de0d2412 ("Suspend-related
+patches for 2.6.27") in June 2008:  It removed a call to device_resume()
+from device_suspend() (which was later renamed to dpm_suspend_start()).
 
-This inode was not in the orphan list. Analysis revealed the
-following call chain that leads to the inconsistency:
+When Xen began using the device power management API in May 2008 with
+commit 0e91398f2a5d ("xen: implement save/restore"), the asymmetry did
+not yet exist.  But since it was introduced, a call to dpm_resume_end()
+is missing in the error path of dpm_suspend_start().  Fix it.
 
-                             ext4_da_write_end()
-                              //does not update i_disksize
-                             ext4_punch_hole()
-                              //truncate folio, keep size
-ext4_page_mkwrite()
- ext4_block_page_mkwrite()
-  ext4_block_write_begin()
-    ext4_get_block()
-     //insert written extent without update i_disksize
-journal commit
-echo 1 > /sys/block/xxx/device/delete
-
-da-write path updates i_size but does not update i_disksize. Then
-ext4_punch_hole truncates the da-folio yet still leaves i_disksize
-unchanged(in the ext4_update_disksize_before_punch function, the
-condition offset + len < size is met). Then ext4_page_mkwrite sees
-ext4_nonda_switch return 1 and takes the nodioread_nolock path, the
-folio about to be written has just been punched out, and it’s offset
-sits beyond the current i_disksize. This may result in a written
-extent being inserted, but again does not update i_disksize. If the
-journal gets committed and then the block device is yanked, we might
-run into this. It should be noted that replacing ext4_punch_hole with
-ext4_zero_range in the call sequence may also trigger this issue, as
-neither will update i_disksize under these circumstances.
-
-To fix this, we can modify ext4_update_disksize_before_punch to
-increase i_disksize to min(i_size, offset + len) when both i_size and
-(offset + len) are greater than i_disksize.
-
-Cc: stable@kernel.org
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Message-ID: <20250911133024.1841027-1-sunyongjian@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: d8f3de0d2412 ("Suspend-related patches for 2.6.27")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org  # v2.6.27
+Reviewed-by: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <22453676d1ddcebbe81641bb68ddf587fee7e21e.1756990799.git.lukas@wunner.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/xen/manage.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4247,7 +4247,11 @@ int ext4_can_truncate(struct inode *inod
-  * We have to make sure i_disksize gets properly updated before we truncate
-  * page cache due to hole punching or zero range. Otherwise i_disksize update
-  * can get lost as it may have been postponed to submission of writeback but
-- * that will never happen after we truncate page cache.
-+ * that will never happen if we remove the folio containing i_size from the
-+ * page cache. Also if we punch hole within i_size but above i_disksize,
-+ * following ext4_page_mkwrite() may mistakenly allocate written blocks over
-+ * the hole and thus introduce allocated blocks beyond i_disksize which is
-+ * not allowed (e2fsck would complain in case of crash).
-  */
- int ext4_update_disksize_before_punch(struct inode *inode, loff_t offset,
- 				      loff_t len)
-@@ -4256,9 +4260,11 @@ int ext4_update_disksize_before_punch(st
- 	loff_t size = i_size_read(inode);
+--- a/drivers/xen/manage.c
++++ b/drivers/xen/manage.c
+@@ -116,7 +116,7 @@ static void do_suspend(void)
+ 	err = dpm_suspend_start(PMSG_FREEZE);
+ 	if (err) {
+ 		pr_err("%s: dpm_suspend_start %d\n", __func__, err);
+-		goto out_thaw;
++		goto out_resume_end;
+ 	}
  
- 	WARN_ON(!inode_is_locked(inode));
--	if (offset > size || offset + len < size)
-+	if (offset > size)
- 		return 0;
+ 	printk(KERN_DEBUG "suspending xenstore...\n");
+@@ -156,6 +156,7 @@ out_resume:
+ 	else
+ 		xs_suspend_cancel();
  
-+	if (offset + len < size)
-+		size = offset + len;
- 	if (EXT4_I(inode)->i_disksize >= size)
- 		return 0;
++out_resume_end:
+ 	dpm_resume_end(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
  
+ out_thaw:
 
 
