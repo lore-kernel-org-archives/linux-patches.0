@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96597326D6D;
-	Mon, 27 Oct 2025 19:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFCD30E825;
+	Mon, 27 Oct 2025 19:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592371; cv=none; b=qqyDAXzpd8VqQD/+UJFI/LRuPtu5lNNFEw669GZWeymPZZH0CrZZhl5r8OKmVqNtcwwuqtHuWmd759XBj54lpzNrPqs0tmYPMFKnkNs0edxP9u6lmq/gnQ/qeduCkUk4tUAT3FrcrQ7Vg3wq4PLWtgLLtwkF0HizaMPq9lkVdcw=
+	t=1761592374; cv=none; b=r+00NIk3+SP84akMXBx9et/X9tT8sKKnEIXBjeoJGTggmAbgpNiMmDJvzcyDmpR8AoilRfSWTAupiKuONCXaRNoMRpQRUCh6j8Pj80Su4WgoI420IH8r/ECcAZFPx3oze9DqGLt4d6jzJ0ApC6n6AjlDZnnrrWG1SgClg01Hm9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592371; c=relaxed/simple;
-	bh=YkfATgtGCwCTHmXsJ8DKQ8g7uBxnour4gzDjKHPAOag=;
+	s=arc-20240116; t=1761592374; c=relaxed/simple;
+	bh=pNrlniriYBYt+ylJQjItnXspf5JzsZb5Mx0X/zrU3IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VjLZv8P6M0yl5NtPIo9tzBM/b2woi5G6+4tKLK5SaoVrAZJ5HVS/3+dmVMvJbohHteBTwD4LHnEUdVMpQbpkAys+JZ5j4ifleX0ZckUj5ILHAZiE0x1Cs2NWe+lrtG1VqqWUbfcnfFQ8uLmNKqjKeTEp9G4dIaTXqUnTDGYNZ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQAfntKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liiH4atTziwFt9DdJE5o39jgS1x2KQBud7BspuYuKP2JrMRcPwGi6nOMh/R1PzFdKOyDZeXiwtgge7xqw24/pUib2lafYE2byR43trMit8MCeK5dsxUPfUTVoTv0cWTpe9WO4Z8yhmNLrscIAKTOiFPl2j0hB0dZeVAy3FnlC/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APL6eO48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQAfntKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28599C4CEF1;
-	Mon, 27 Oct 2025 19:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APL6eO48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76B0C4CEF1;
+	Mon, 27 Oct 2025 19:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592371;
-	bh=YkfATgtGCwCTHmXsJ8DKQ8g7uBxnour4gzDjKHPAOag=;
+	s=korg; t=1761592374;
+	bh=pNrlniriYBYt+ylJQjItnXspf5JzsZb5Mx0X/zrU3IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQAfntKqmXbVyJkEsDsbp5ikJ7IKfKGTbRJDjVmpkHzA/ISHd+nEX/pwPHKhMS3ta
-	 h9/ZJ3yohr3RCJQJm/hbSb/QoRNMsC/+UEv/M2OQaTGPK6cWYdqW0hKllA8FZ7/nrk
-	 x1jwV11CtDpgdRaaxM9U/2vYKX03IWPqm208cUt8=
+	b=APL6eO48Hote8sch93WGvFUJXdjAwXDBD/RhPBgGlGwK6qajDSj4cByPw1MfCAvgl
+	 m7fk8iOhJ8LEVKciWJDu41vHsXKdjfux90t+7f6foNBnpohDjeQw+6b8V+FdO6ZSrW
+	 60B4sjcLRQPuVP0arMseEAdoXUQzItQlkfIvKDJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 096/157] net: ravb: Enforce descriptor type ordering
-Date: Mon, 27 Oct 2025 19:35:57 +0100
-Message-ID: <20251027183503.842710818@linuxfoundation.org>
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 079/157] powerpc/32: Remove PAGE_KERNEL_TEXT to fix startup failure
+Date: Mon, 27 Oct 2025 19:35:40 +0100
+Message-ID: <20251027183503.395411999@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -46,77 +47,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 5370c31e84b0e0999c7b5ff949f4e104def35584 upstream.
+[ Upstream commit 9316512b717f6f25c4649b3fdb0a905b6a318e9f ]
 
-Ensure the TX descriptor type fields are published in a safe order so the
-DMA engine never begins processing a descriptor chain before all descriptor
-fields are fully initialised.
+PAGE_KERNEL_TEXT is an old macro that is used to tell kernel whether
+kernel text has to be mapped read-only or read-write based on build
+time options.
 
-For multi-descriptor transmits the driver writes DT_FEND into the last
-descriptor and DT_FSTART into the first. The DMA engine begins processing
-when it observes DT_FSTART. Move the dma_wmb() barrier so it executes
-immediately after DT_FEND and immediately before writing DT_FSTART
-(and before DT_FSINGLE in the single-descriptor case). This guarantees
-that all prior CPU writes to the descriptor memory are visible to the
-device before DT_FSTART is seen.
+But nowadays, with functionnalities like jump_labels, static links,
+etc ... more only less all kernels need to be read-write at some
+point, and some combinations of configs failed to work due to
+innacurate setting of PAGE_KERNEL_TEXT. On the other hand, today
+we have CONFIG_STRICT_KERNEL_RWX which implements a more controlled
+access to kernel modifications.
 
-This avoids a situation where compiler/CPU reordering could publish
-DT_FSTART ahead of DT_FEND or other descriptor fields, allowing the DMA to
-start on a partially initialised chain and causing corrupted transmissions
-or TX timeouts. Such a failure was observed on RZ/G2L with an RT kernel as
-transmit queue timeouts and device resets.
+Instead of trying to keep PAGE_KERNEL_TEXT accurate with all
+possible options that may imply kernel text modification, always
+set kernel text read-write at startup and rely on
+CONFIG_STRICT_KERNEL_RWX to provide accurate protection.
 
-Fixes: 2f45d1902acf ("ravb: minimize TX data copying")
-Cc: stable@vger.kernel.org
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20251017151830.171062-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Do this by passing PAGE_KERNEL_X to map_kernel_page() in
+__maping_ram_chunk() instead of passing PAGE_KERNEL_TEXT. Once
+this is done, the only remaining user of PAGE_KERNEL_TEXT is
+mmu_mark_initmem_nx() which uses it in a call to setibat().
+As setibat() ignores the RW/RO, we can seamlessly replace
+PAGE_KERNEL_TEXT by PAGE_KERNEL_X here as well and get rid of
+PAGE_KERNEL_TEXT completely.
+
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/all/342b4120-911c-4723-82ec-d8c9b03a8aef@mailbox.org/
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Tested-by: Andrew Donnellan <ajd@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/8e2d793abf87ae3efb8f6dce10f974ac0eda61b8.1757412205.git.christophe.leroy@csgroup.eu
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/pgtable.h | 12 ------------
+ arch/powerpc/mm/book3s32/mmu.c     |  4 ++--
+ arch/powerpc/mm/pgtable_32.c       |  2 +-
+ 3 files changed, 3 insertions(+), 15 deletions(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2054,13 +2054,25 @@ static netdev_tx_t ravb_start_xmit(struc
+diff --git a/arch/powerpc/include/asm/pgtable.h b/arch/powerpc/include/asm/pgtable.h
+index 9972626ddaf68..eda12ceacb55a 100644
+--- a/arch/powerpc/include/asm/pgtable.h
++++ b/arch/powerpc/include/asm/pgtable.h
+@@ -20,18 +20,6 @@ struct mm_struct;
+ #include <asm/nohash/pgtable.h>
+ #endif /* !CONFIG_PPC_BOOK3S */
  
- 		skb_tx_timestamp(skb);
+-/*
+- * Protection used for kernel text. We want the debuggers to be able to
+- * set breakpoints anywhere, so don't write protect the kernel text
+- * on platforms where such control is possible.
+- */
+-#if defined(CONFIG_KGDB) || defined(CONFIG_XMON) || defined(CONFIG_BDI_SWITCH) || \
+-	defined(CONFIG_KPROBES) || defined(CONFIG_DYNAMIC_FTRACE)
+-#define PAGE_KERNEL_TEXT	PAGE_KERNEL_X
+-#else
+-#define PAGE_KERNEL_TEXT	PAGE_KERNEL_ROX
+-#endif
+-
+ /* Make modules code happy. We don't set RO yet */
+ #define PAGE_KERNEL_EXEC	PAGE_KERNEL_X
+ 
+diff --git a/arch/powerpc/mm/book3s32/mmu.c b/arch/powerpc/mm/book3s32/mmu.c
+index 850783cfa9c73..1b1848761a000 100644
+--- a/arch/powerpc/mm/book3s32/mmu.c
++++ b/arch/powerpc/mm/book3s32/mmu.c
+@@ -204,7 +204,7 @@ void mmu_mark_initmem_nx(void)
+ 
+ 	for (i = 0; i < nb - 1 && base < top;) {
+ 		size = bat_block_size(base, top);
+-		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
++		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
+ 		base += size;
  	}
--	/* Descriptor type must be set after all the above writes */
--	dma_wmb();
-+
- 	if (num_tx_desc > 1) {
- 		desc->die_dt = DT_FEND;
- 		desc--;
-+		/* When using multi-descriptors, DT_FEND needs to get written
-+		 * before DT_FSTART, but the compiler may reorder the memory
-+		 * writes in an attempt to optimize the code.
-+		 * Use a dma_wmb() barrier to make sure DT_FEND and DT_FSTART
-+		 * are written exactly in the order shown in the code.
-+		 * This is particularly important for cases where the DMA engine
-+		 * is already running when we are running this code. If the DMA
-+		 * sees DT_FSTART without the corresponding DT_FEND it will enter
-+		 * an error condition.
-+		 */
-+		dma_wmb();
- 		desc->die_dt = DT_FSTART;
- 	} else {
-+		/* Descriptor type must be set after all the above writes */
-+		dma_wmb();
- 		desc->die_dt = DT_FSINGLE;
+ 	if (base < top) {
+@@ -215,7 +215,7 @@ void mmu_mark_initmem_nx(void)
+ 				pr_warn("Some RW data is getting mapped X. "
+ 					"Adjust CONFIG_DATA_SHIFT to avoid that.\n");
+ 		}
+-		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_TEXT);
++		setibat(i++, PAGE_OFFSET + base, base, size, PAGE_KERNEL_X);
+ 		base += size;
  	}
- 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
+ 	for (; i < nb; i++)
+diff --git a/arch/powerpc/mm/pgtable_32.c b/arch/powerpc/mm/pgtable_32.c
+index 5c02fd08d61ef..69fac96c2dcd1 100644
+--- a/arch/powerpc/mm/pgtable_32.c
++++ b/arch/powerpc/mm/pgtable_32.c
+@@ -109,7 +109,7 @@ static void __init __mapin_ram_chunk(unsigned long offset, unsigned long top)
+ 	p = memstart_addr + s;
+ 	for (; s < top; s += PAGE_SIZE) {
+ 		ktext = core_kernel_text(v);
+-		map_kernel_page(v, p, ktext ? PAGE_KERNEL_TEXT : PAGE_KERNEL);
++		map_kernel_page(v, p, ktext ? PAGE_KERNEL_X : PAGE_KERNEL);
+ 		v += PAGE_SIZE;
+ 		p += PAGE_SIZE;
+ 	}
+-- 
+2.51.0
+
 
 
