@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C447B2C15BB;
-	Mon, 27 Oct 2025 19:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE0E233735;
+	Mon, 27 Oct 2025 19:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593259; cv=none; b=fZjACWNtP7cjjfx0HXjasYu4zcTNwVM3HQs5O+BOSt62INsV7SN57twe8rR0aMvsTeVQifhxMPw00tTz/t2yj5BjT1b+qxQrKfDXMyi+HR6mFAG/ed142PqI/C8D7tns0bKsSpJU/9HAxiuBqtbuhaNAsLcEVZ6t+W16huADeS0=
+	t=1761593262; cv=none; b=jVjKITqV56ysQJ6BfiEJ//q2doH+J8SAUrZWLk+4OCc1eV0AM8lmUmA5hBBDoWHBAO8IG7qFXXHSOBxAzL67Sd8iaCGLaIJ3R2O0HJQ9gxU346v2hDYj6/D/UPeNupGm8fBRhdi6vDdGo2TjWtn+Jlm2yajFhe8/q4Bi2h6B5Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593259; c=relaxed/simple;
-	bh=EzpN67yZuYaAv5eXZXm0AHRBBsfgJUrXkeJR975vcQ0=;
+	s=arc-20240116; t=1761593262; c=relaxed/simple;
+	bh=ddhjY1xpn6azFvGZz2U+CICxCBn2xQPD1uVXN4dblMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p92hMXBGoYTuT/JllgI4LHfiLLx6aFEWWIsXlFcyPWVJ7UYTZeGpPkTe7Yro64hBgC/wLC/KljYNc4V1KN2pNDqiooAekoXsEtQZvBkMOLsUfo/1D+P6VMBTnVBwlLyGAqOa6kCHNPJ1WvjownVu/PbUGfTCW3Ym5IlC8BhoEBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdkEN1F/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j/oaK85M2iglJKJ1eM1toF8NMaXr239f6BXfjRCzXV6VqpmltVfBJmqj1Wdz+W4YQSzvpG8/vz+DxVNeXfeG8UcMbWH49VJcfdfnyFZ2mfa0+Uq+fGddcH5OqUmSAj1aeEjS5jUVCQp8ValGp0XOaIBIDzZ7tyns3XC/kJ0vI+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5UaKRzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdkEN1F/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAC6C4CEF1;
-	Mon, 27 Oct 2025 19:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5UaKRzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC38CC4CEF1;
+	Mon, 27 Oct 2025 19:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593259;
-	bh=EzpN67yZuYaAv5eXZXm0AHRBBsfgJUrXkeJR975vcQ0=;
+	s=korg; t=1761593262;
+	bh=ddhjY1xpn6azFvGZz2U+CICxCBn2xQPD1uVXN4dblMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdkEN1F/0Nzdw9gQihmklKqAWcWHuAQvoeOMfhu0SlGR5YkzMapLUSDguvfnQGZ1x
-	 8YSXmnurnT/ybBRWIgx75erkK2Xyr7ge3WaognWkIJxRGmCDPQOBjj4WNfrL2mx8G0
-	 vi4GGAD+H/hd21nNXZ+rrsYjIVlfZhEiQVUOC19k=
+	b=A5UaKRzzB00ze6GB+TRI95nUFUYk6dkarrj77S3ijBJE2X/KGBnPVXiXVUNU+PKs0
+	 H5JzA3vAiD47zLu4wEbJ4sUyLv0UBsMjuShevTLHTLgm3hRKKUL8GxZvxYhwRcSjH/
+	 P+yJuDMSc8z/aQlSn3vdMxNedZfX6UYZ8mQQRLOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michael=20Wei=C3=9F?= <michael.weiss@aisec.fraunhofer.de>,
-	Harshal Gohel <hg@simonwunderlich.de>,
-	=?UTF-8?q?Johannes=20Wiesb=C3=B6ck?= <johannes.wiesboeck@aisec.fraunhofer.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 036/184] rtnetlink: Allow deleting FDB entries in user namespace
-Date: Mon, 27 Oct 2025 19:35:18 +0100
-Message-ID: <20251027183515.887771491@linuxfoundation.org>
+Subject: [PATCH 6.17 037/184] erofs: fix crafted invalid cases for encoded extents
+Date: Mon, 27 Oct 2025 19:35:19 +0100
+Message-ID: <20251027183515.912028168@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -49,58 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit bf29555f5bdc017bac22ca66fcb6c9f46ec8788f ]
+[ Upstream commit a429b76114aaca3ef1aff4cd469dcf025431bd11 ]
 
-Creating FDB entries is possible from a non-initial user namespace when
-having CAP_NET_ADMIN, yet, when deleting FDB entries, processes receive
-an EPERM because the capability is always checked against the initial
-user namespace. This restricts the FDB management from unprivileged
-containers.
+Robert recently reported two corrupted images that can cause system
+crashes, which are related to the new encoded extents introduced
+in Linux 6.15:
 
-Drop the netlink_capable check in rtnl_fdb_del as it was originally
-dropped in c5c351088ae7 and reintroduced in 1690be63a27b without
-intention.
+  - The first one [1] has plen != 0 (e.g. plen == 0x2000000) but
+    (plen & Z_EROFS_EXTENT_PLEN_MASK) == 0. It is used to represent
+    special extents such as sparse extents (!EROFS_MAP_MAPPED), but
+    previously only plen == 0 was handled;
 
-This patch was tested using a container on GyroidOS, where it was
-possible to delete FDB entries from an unprivileged user namespace and
-private network namespace.
+  - The second one [2] has pa 0xffffffffffdcffed and plen 0xb4000,
+    then "cur [0xfffffffffffff000] += bvec.bv_len [0x1000]" in
+    "} while ((cur += bvec.bv_len) < end);" wraps around, causing an
+    out-of-bound access of pcl->compressed_bvecs[] in
+    z_erofs_submit_queue().  EROFS only supports 48-bit physical block
+    addresses (up to 1EiB for 4k blocks), so add a sanity check to
+    enforce this.
 
-Fixes: 1690be63a27b ("bridge: Add vlan support to static neighbors")
-Reviewed-by: Michael Weiß <michael.weiss@aisec.fraunhofer.de>
-Tested-by: Harshal Gohel <hg@simonwunderlich.de>
-Signed-off-by: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20251015201548.319871-1-johannes.wiesboeck@aisec.fraunhofer.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1d191b4ca51d ("erofs: implement encoded extent metadata")
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/r/75022.1759355830@localhost  [1]
+Closes: https://lore.kernel.org/r/80524.1760131149@localhost  [2]
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/erofs/zmap.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 094b085cff206..8f3fd52f089d2 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4707,9 +4707,6 @@ static int rtnl_fdb_del(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	int err;
- 	u16 vid;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 798223e6da9ce..87032f90fe840 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -596,7 +596,7 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
+ 			vi->z_fragmentoff = map->m_plen;
+ 			if (recsz > offsetof(struct z_erofs_extent, pstart_lo))
+ 				vi->z_fragmentoff |= map->m_pa << 32;
+-		} else if (map->m_plen) {
++		} else if (map->m_plen & Z_EROFS_EXTENT_PLEN_MASK) {
+ 			map->m_flags |= EROFS_MAP_MAPPED |
+ 				EROFS_MAP_FULL_MAPPED | EROFS_MAP_ENCODED;
+ 			fmt = map->m_plen >> Z_EROFS_EXTENT_PLEN_FMT_BIT;
+@@ -715,6 +715,7 @@ static int z_erofs_map_sanity_check(struct inode *inode,
+ 				    struct erofs_map_blocks *map)
+ {
+ 	struct erofs_sb_info *sbi = EROFS_I_SB(inode);
++	u64 pend;
  
--	if (!netlink_capable(skb, CAP_NET_ADMIN))
--		return -EPERM;
--
- 	if (!del_bulk) {
- 		err = nlmsg_parse_deprecated(nlh, sizeof(*ndm), tb, NDA_MAX,
- 					     NULL, extack);
+ 	if (!(map->m_flags & EROFS_MAP_ENCODED))
+ 		return 0;
+@@ -732,6 +733,10 @@ static int z_erofs_map_sanity_check(struct inode *inode,
+ 	if (unlikely(map->m_plen > Z_EROFS_PCLUSTER_MAX_SIZE ||
+ 		     map->m_llen > Z_EROFS_PCLUSTER_MAX_DSIZE))
+ 		return -EOPNOTSUPP;
++	/* Filesystems beyond 48-bit physical block addresses are invalid */
++	if (unlikely(check_add_overflow(map->m_pa, map->m_plen, &pend) ||
++		     (pend >> sbi->blkszbits) >= BIT_ULL(48)))
++		return -EFSCORRUPTED;
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
