@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428662BD033;
-	Mon, 27 Oct 2025 18:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C6831CA72;
+	Mon, 27 Oct 2025 18:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590623; cv=none; b=Re73OOKIoU9LQouWAyMxdD4VMhJvnV5VFiUf7UQGe87K7as3p2Tkh/F+nfRZRuq1VoJ3I7foTftBrxj7zIswig53suQmDgMpRYcCWgKQ2N/kMOaBBZa0fCO3c3wYKpRyKRlUeK5ZvQXHAaXR9TfznePBe1m6jTUu8Cjvg+a+dXc=
+	t=1761590626; cv=none; b=SzY62NKKCz+GY/31E6pp0K19IYhkIVPdbpfITs8Ua7vIaBnsflOWU7SMp3RGqDHv4v+FKtrs+q6fXFf+sIcwepUve74uL0id9JDPEchfXlzEFffWgviwsMHiSi7U/A+rb1ZGG8UgXdnl0ro4CzGmWyL90loyEPs142jxtheFiNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590623; c=relaxed/simple;
-	bh=KIjP9TVSk5j/ST7sYoNtfQH+2AmXJoXZe3O7Z/Keggc=;
+	s=arc-20240116; t=1761590626; c=relaxed/simple;
+	bh=fkIExbeuE5D2O1TkLpvLDwiPPbZySnlDzo8gJttMoUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgZomSs8YyoZJySigUiZaB/bYYIUVTaYdK4hj9PVLIdWuiuZVw1qKzNkiFbBvPhZCuZSyCFx0a3EuWR4yXDNFLl3a+uCGLqK64CdaWo7X6PqKDAyp+KBXth3pDTBLXShkpM5bOYuwIWH5QN2mZmZfrObFhVjIaYlZHwtRNBI6Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InzkjAo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvTJAT5vSPEBMwahDrXeCBTy2F2UckAKEhQLSzHW9X+AXfBlhFzJaQkkGHMtDUtepvOb8DpBR/Hyekjex9EO4vTjHeF92C0zikee4RoDzrMTDbhR5DNQ9VkKUSNaHN8cc/VHfnk0XQEoQ7aW6Tyxu4krP5h1JB19DuWM477u8vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzFitbY1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InzkjAo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EDEC4CEFD;
-	Mon, 27 Oct 2025 18:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzFitbY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5460BC4CEF1;
+	Mon, 27 Oct 2025 18:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590623;
-	bh=KIjP9TVSk5j/ST7sYoNtfQH+2AmXJoXZe3O7Z/Keggc=;
+	s=korg; t=1761590625;
+	bh=fkIExbeuE5D2O1TkLpvLDwiPPbZySnlDzo8gJttMoUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InzkjAo0AgSscCfaHoxdzV2rqOwoeAt2yLZt5tGohCq5KBlLprIKGqrAubYFl6vF7
-	 3d6Vpi392j72ZqHw/6QmpgprKfhUDOViT85CTnSvcv5FNyfKUn3UMSgrWEzOzJal+2
-	 /ONlocoyknPBc6ZwOZPFoRDUQJL1QQ27rN8tXOFA=
+	b=dzFitbY18fXtTGH/4flehsP8YEVgS1aJ40eQuWXLZCfdDzT/f0UoG7fbHmkoue3u+
+	 MR5PpKMeY/DmMVYuUm/UoVTAVG9Ohk9dpTf1+1cTly//H2ARb67NxW2r7vkq4c2dbJ
+	 GYBu92QPjanV7UUqrkrFcUlLmcI6Lulm8mVGKWXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 115/224] sctp: Fix MAC comparison to be constant-time
-Date: Mon, 27 Oct 2025 19:34:21 +0100
-Message-ID: <20251027183512.065687429@linuxfoundation.org>
+	Anthony Yznaga <anthony.yznaga@oracle.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Andreas Larsson <andreas@gaisler.com>
+Subject: [PATCH 5.4 116/224] sparc64: fix hugetlb for sun4u
+Date: Mon, 27 Oct 2025 19:34:22 +0100
+Message-ID: <20251027183512.091199089@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -50,62 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Anthony Yznaga <anthony.yznaga@oracle.com>
 
-commit dd91c79e4f58fbe2898dac84858033700e0e99fb upstream.
+commit 6fd44a481b3c6111e4801cec964627791d0f3ec5 upstream.
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+An attempt to exercise sparc hugetlb code in a sun4u-based guest
+running under qemu results in the guest hanging due to being stuck
+in a trap loop. This is due to invalid hugetlb TTEs being installed
+that do not have the expected _PAGE_PMD_HUGE and page size bits set.
+Although the breakage has gone apparently unnoticed for several years,
+fix it now so there is the option to exercise sparc hugetlb code under
+qemu. This can be useful because sun4v support in qemu does not support
+linux guests currently and sun4v-based hardware resources may not be
+readily available.
 
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fix tested with a 6.15.2 and 6.16-rc6 kernels by running libhugetlbfs
+tests on a qemu guest running Debian 13.
+
+Fixes: c7d9f77d33a7 ("sparc64: Multi-page size support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/20250818205426.30222-3-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Anthony Yznaga <anthony.yznaga@oracle.com>
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20250716012446.10357-1-anthony.yznaga@oracle.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    3 ++-
- net/sctp/sm_statefuns.c  |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/sparc/mm/hugetlbpage.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -31,6 +31,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+--- a/arch/sparc/mm/hugetlbpage.c
++++ b/arch/sparc/mm/hugetlbpage.c
+@@ -134,6 +134,26 @@ hugetlb_get_unmapped_area(struct file *f
  
- #include <crypto/hash.h>
-+#include <crypto/algapi.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -1758,7 +1759,7 @@ struct sctp_association *sctp_unpack_coo
- 		}
- 	}
+ static pte_t sun4u_hugepage_shift_to_tte(pte_t entry, unsigned int shift)
+ {
++	unsigned long hugepage_size = _PAGE_SZ4MB_4U;
++
++	pte_val(entry) = pte_val(entry) & ~_PAGE_SZALL_4U;
++
++	switch (shift) {
++	case HPAGE_256MB_SHIFT:
++		hugepage_size = _PAGE_SZ256MB_4U;
++		pte_val(entry) |= _PAGE_PMD_HUGE;
++		break;
++	case HPAGE_SHIFT:
++		pte_val(entry) |= _PAGE_PMD_HUGE;
++		break;
++	case HPAGE_64K_SHIFT:
++		hugepage_size = _PAGE_SZ64K_4U;
++		break;
++	default:
++		WARN_ONCE(1, "unsupported hugepage shift=%u\n", shift);
++	}
++
++	pte_val(entry) = pte_val(entry) | hugepage_size;
+ 	return entry;
+ }
  
--	if (memcmp(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
- 		*error = -SCTP_IERROR_BAD_SIG;
- 		goto fail;
- 	}
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -30,6 +30,7 @@
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
-+#include <crypto/algapi.h>
- #include <linux/types.h>
- #include <linux/kernel.h>
- #include <linux/ip.h>
-@@ -4303,7 +4304,7 @@ static enum sctp_ierror sctp_sf_authenti
- 				 sh_key, GFP_ATOMIC);
- 
- 	/* Discard the packet if the digests do not match */
--	if (memcmp(save_digest, digest, sig_len)) {
-+	if (crypto_memneq(save_digest, digest, sig_len)) {
- 		kfree(save_digest);
- 		return SCTP_IERROR_BAD_SIG;
- 	}
 
 
