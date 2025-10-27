@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCF7322745;
-	Mon, 27 Oct 2025 19:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646142C3745;
+	Mon, 27 Oct 2025 19:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593043; cv=none; b=QTktwFGGktrCwbVgAyyb5J2dIzrcoDU7ssmeTb2TY2QV6tVYXIIHWzfAh4geSjXN6Uf8Ovh8BW/EuSJaF/dB4spTEzf9JRBSW5/hbkNUmY7VSUs2YPfWFRM76W1CMj7gu5YitqX2qXU4lnJle7vAnMZq2MZ6ViRsItiEHM13zSY=
+	t=1761593046; cv=none; b=uUNd6KaHOoE67J8grWx/8k8WBc10msqke8OOpqPhw6OQwDvueVpzgzkrHgOPdjpiJftIb77C54Dg1uGS+SVbBYdqXqWTe7lQDlj7HzGUZXyHamfWaI3d4fvAiKzlwj1dkcQlFe3y5vncZ3ZCdnSpXSNfp+s7l0pI3y+haNDST28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593043; c=relaxed/simple;
-	bh=S/YEs79iBkTOh00p5nfHf0U90MHlDSQ3XqYZb8U74iM=;
+	s=arc-20240116; t=1761593046; c=relaxed/simple;
+	bh=xxug9ayMhVrSxtbF64iNXZvFyMho6P2bw/5D/RutrCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htlaNOi3ip6zNT8naVhTED6VCwxai2WmRyhXZJBpZBG1U5Nl+Fbg+9y+wQ+0y69o7VQA8lAOjAcInbNuJzanpsQZ52X67r7edp3g1hwjOIj0wMCEHmcJIPW9YYuknc0lngpvsP8JrE8739bfGowdtz6lS/OkUJXIHjTHygfFacw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ+OEfL0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nqPa5kZMdV9NSnndHzjQRMp72ratmEzwBIKY2fWoSwduGXSImF3ndCP1QGmjvY6phMuVJabVOCq+y3gnMn5VCkT09UX3Dnn0GOEyS7u8xsR4SXFJctju+QD4BiHQ7fHYCXFCWVRUdrubSpY19TBNc26ovzIDnHWh8EQCR1fkXVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk84sbrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ+OEfL0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603B1C4CEF1;
-	Mon, 27 Oct 2025 19:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk84sbrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB48EC4CEF1;
+	Mon, 27 Oct 2025 19:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593043;
-	bh=S/YEs79iBkTOh00p5nfHf0U90MHlDSQ3XqYZb8U74iM=;
+	s=korg; t=1761593046;
+	bh=xxug9ayMhVrSxtbF64iNXZvFyMho6P2bw/5D/RutrCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZ+OEfL0t6xhtMVf3Usiwk2EU6FEn99UH7mGKjGFe3Y7kW88lMMlenQ96EdPPgLht
-	 3dmOKUhipfxvHp43gt057ff6OCAO++skKYdrXfhU/gYhziX++QamzYiL7tC+sBXpwt
-	 gltb9AWKfFQZyGjzDp4R5tskfOb4aUqIupR5ghNo=
+	b=Pk84sbrftLb/CorPNfHSThb882GtNPAfgUGvweGaw8I3AW2dLqRUmYBPYH5UHvtzs
+	 mmumHn7gsATK55zq/FVN+SiczunxRI4GEa43aDrSXIupMeZ6Cb/br3/p2esMo0B7Jx
+	 MRmBcn34x4QTJR4dM1tYiafU7FmcsD2ohVTQMPhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Artem Shimko <a.shimko.dev@gmail.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/117] firmware: arm_scmi: Fix premature SCMI_XFER_FLAG_IS_RAW clearing in raw mode
-Date: Mon, 27 Oct 2025 19:36:39 +0100
-Message-ID: <20251027183455.995269814@linuxfoundation.org>
+Subject: [PATCH 6.12 074/117] spi: airoha: return an error for continuous mode dirmap creation cases
+Date: Mon, 27 Oct 2025 19:36:40 +0100
+Message-ID: <20251027183456.030048403@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,50 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Shimko <a.shimko.dev@gmail.com>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit 20b93a0088a595bceed4a026d527cbbac4e876c5 ]
+[ Upstream commit 4314ffce4eb81a6c18700af1b6e29b6e0c6b9e37 ]
 
-The SCMI_XFER_FLAG_IS_RAW flag was being cleared prematurely in
-scmi_xfer_raw_put() before the transfer completion was properly
-acknowledged by the raw message handlers.
+This driver can accelerate single page operations only, thus
+continuous reading mode should not be used.
 
-Move the clearing of SCMI_XFER_FLAG_IS_RAW and SCMI_XFER_FLAG_CHAN_SET
-from scmi_xfer_raw_put() to __scmi_xfer_put() to ensure the flags remain
-set throughout the entire raw message processing pipeline until the
-transfer is returned to the free pool.
+Continuous reading will use sizes up to the size of one erase block.
+This size is much larger than the size of single flash page. Use this
+difference to identify continuous reading and return an error.
 
-Fixes: 3095a3e25d8f ("firmware: arm_scmi: Add xfer helpers to provide raw access")
-Suggested-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Message-Id: <20251008091057.1969260-1-a.shimko.dev@gmail.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
+Link: https://patch.msgid.link/20251012121707.2296160-2-mikhail.kshevetskiy@iopsys.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-airoha-snfi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 5b4df0a27e22f..79866f3b6b3e7 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -771,6 +771,7 @@ __scmi_xfer_put(struct scmi_xfers_info *minfo, struct scmi_xfer *xfer)
- 			hash_del(&xfer->node);
- 			xfer->pending = false;
- 		}
-+		xfer->flags = 0;
- 		hlist_add_head(&xfer->node, &minfo->free_xfers);
- 	}
- 	spin_unlock_irqrestore(&minfo->xfer_lock, flags);
-@@ -789,8 +790,6 @@ void scmi_xfer_raw_put(const struct scmi_handle *handle, struct scmi_xfer *xfer)
- {
- 	struct scmi_info *info = handle_to_scmi_info(handle);
+diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
+index 1369691a997bf..6930dea48f330 100644
+--- a/drivers/spi/spi-airoha-snfi.c
++++ b/drivers/spi/spi-airoha-snfi.c
+@@ -625,6 +625,10 @@ static int airoha_snand_dirmap_create(struct spi_mem_dirmap_desc *desc)
+ 	if (desc->info.offset + desc->info.length > U32_MAX)
+ 		return -EINVAL;
  
--	xfer->flags &= ~SCMI_XFER_FLAG_IS_RAW;
--	xfer->flags &= ~SCMI_XFER_FLAG_CHAN_SET;
- 	return __scmi_xfer_put(&info->tx_minfo, xfer);
- }
++	/* continuous reading is not supported */
++	if (desc->info.length > SPI_NAND_CACHE_SIZE)
++		return -E2BIG;
++
+ 	if (!airoha_snand_supports_op(desc->mem, &desc->info.op_tmpl))
+ 		return -EOPNOTSUPP;
  
 -- 
 2.51.0
