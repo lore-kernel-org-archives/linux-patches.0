@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43538328634;
-	Mon, 27 Oct 2025 19:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357F02BD033;
+	Mon, 27 Oct 2025 19:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592932; cv=none; b=DZGS/kbu9gBb8DyuUbAj66/7Fli5V9vcekq914TbBmqnNIGyB8+bKZUjhBYn4Wtci5VJ5/cg2UdPT/RcuiUMcfoIJVd5O/Ew+8+wfH7cFkC3Ubcy6V40mnJ48lhMQXjQ+dyPQlEkMbJWGzHlNVrBNVtKeLmmaq5H/okrNYhTtcE=
+	t=1761592935; cv=none; b=DekRG41UGExRy+J+kjXTANZQ4YdOkyfEZS/4OJunbpdBULSX8z1gd87xuDqdw/vTJKELSN2n0SYLqlzTo/FW7qs0eYb2Kdirx7zIi5Woox/OdAH9EkzN0X3Cdbfd9BDUJgMmrW17yBRc4uPwdhgcsJ2MPphy8UIJL3QL2Mqyl2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592932; c=relaxed/simple;
-	bh=nvCt6M2rsKUeQZSvc/4ud2Ud0LOqqThP6Adb4Hvo0xQ=;
+	s=arc-20240116; t=1761592935; c=relaxed/simple;
+	bh=maKULD8YfwwbLq4VAhd4m+ROS8mGrLCtI1nNuwvQyF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVu6tbeJPEF9vDcDToLq3Sgfsfdj4rUTZJ4vqTVKQR6eVifexMKy1wdkLSSLkQr6PojlYe5F1+C8zoPJtPAILhBsfthCZIW2DjT39VEs1C90keC4hObuvryCoc9HPAEPVGpjyAKcffshjbT7VBE4OlFQ46bov3UGuRTe0ySh7b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3PUItHx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNjJKZHV5IWEWHt2P9aLPZhN8CPDV73PeuOZ2l0KPx9dH95b9Y1O6JI+VXIJNtBR0hd4c/SjhbdGvx3ETDK42VtwCGhH48Irc749zYc0Ts4lvA+QFeIoxodU/F7nP6h4gkQk2m/DryxcvjJmXTeY8vzSDh4UJDFjDtVzSGn0y8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQjAMkYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3PUItHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0861C4CEF1;
-	Mon, 27 Oct 2025 19:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQjAMkYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2F0C4CEF1;
+	Mon, 27 Oct 2025 19:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592932;
-	bh=nvCt6M2rsKUeQZSvc/4ud2Ud0LOqqThP6Adb4Hvo0xQ=;
+	s=korg; t=1761592935;
+	bh=maKULD8YfwwbLq4VAhd4m+ROS8mGrLCtI1nNuwvQyF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3PUItHxaCOIGsFRpFAT4yQi3E55gFHcuA42uJWgbkmTqwpkeIPEAJZiyGeWZv1AJ
-	 kNOdQv3b03pnAU2A+B4xqd0mNa2+f9PzUxgmFMvlhzd8Fmd6uQKCHYImpP6bbgq5Ae
-	 1s8YmETmT8s6MNSAaOoaeHB80Lo4xXtPVHXqCEc4=
+	b=HQjAMkYZ2NOQJYRpfuabZCo1AXosKm7TaQNosmwXEhFhgQeVnP6QwbmB9zueRDCvE
+	 0X3Jtqy2pb7YeZQrp1OYuRQ0V5AqK6XEwio6+FXngI0MUf8JR0e3hSe4pn6qluIRWp
+	 KKCJQ30eZ+xt8O7a7jXJtELB9A87k4rVe8qrb6m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 066/117] selftests: mptcp: join: mark implicit tests as skipped if not supported
-Date: Mon, 27 Oct 2025 19:36:32 +0100
-Message-ID: <20251027183455.793554709@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 032/117] can: rockchip-canfd: rkcanfd_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
+Date: Mon, 27 Oct 2025 19:35:58 +0100
+Message-ID: <20251027183454.838229891@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -51,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 973f80d715bd2504b4db6e049f292e694145cd79 upstream.
+[ Upstream commit 3a3bc9bbb3a0287164a595787df0c70d91e77cfd ]
 
-The call to 'continue_if' was missing: it properly marks a subtest as
-'skipped' if the attached condition is not valid.
+In addition to can_dropped_invalid_skb(), the helper function
+can_dev_dropped_skb() checks whether the device is in listen-only mode and
+discards the skb accordingly.
 
-Without that, the test is wrongly marked as passed on older kernels.
+Replace can_dropped_invalid_skb() by can_dev_dropped_skb() to also drop
+skbs in for listen-only mode.
 
-Fixes: 36c4127ae8dd ("selftests: mptcp: join: skip implicit tests if not supported")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-3-8207030cb0e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/all/20251017-bizarre-enchanted-quokka-f3c704-mkl@pengutronix.de/
+Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
+Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-3-556665793fa4@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/rockchip/rockchip_canfd-tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3722,7 +3722,7 @@ endpoint_tests()
- 	# subflow_rebuild_header is needed to support the implicit flag
- 	# userspace pm type prevents add_addr
- 	if reset "implicit EP" &&
--	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		pm_nl_set_limits $ns1 2 2
- 		pm_nl_set_limits $ns2 2 2
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
-@@ -3747,7 +3747,7 @@ endpoint_tests()
- 	fi
+diff --git a/drivers/net/can/rockchip/rockchip_canfd-tx.c b/drivers/net/can/rockchip/rockchip_canfd-tx.c
+index 865a15e033a9e..12200dcfd3389 100644
+--- a/drivers/net/can/rockchip/rockchip_canfd-tx.c
++++ b/drivers/net/can/rockchip/rockchip_canfd-tx.c
+@@ -72,7 +72,7 @@ netdev_tx_t rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 	int err;
+ 	u8 i;
  
- 	if reset_with_tcp_filter "delete and re-add" ns2 10.0.3.2 REJECT OUTPUT &&
--	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		start_events
- 		pm_nl_set_limits $ns1 0 3
- 		pm_nl_set_limits $ns2 0 3
+-	if (can_dropped_invalid_skb(ndev, skb))
++	if (can_dev_dropped_skb(ndev, skb))
+ 		return NETDEV_TX_OK;
+ 
+ 	if (!netif_subqueue_maybe_stop(priv->ndev, 0,
+-- 
+2.51.0
+
 
 
