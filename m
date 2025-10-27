@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B6231D75B;
-	Mon, 27 Oct 2025 18:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AA332D7C7;
+	Mon, 27 Oct 2025 18:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591474; cv=none; b=rNY3+OZ1dJ7aDeFQ8uwAxcJRi9I5F8HfA3sPIc8jl1wR6zQxsZSKQV2EqhzA4NFkoEuyMNholhOGkpSAay87URKJ4odZ0kwqTr8hW+i8SD+3imsIMdNO2ovA1u/x7/xBEoWsVQbZiN2ZJdIlao/eAU/AbyXz7vfJf6AZ25ysRCY=
+	t=1761591477; cv=none; b=TgPx7kDsBaGVcLBpI2WyHXJBHoeK5AtllWZvX1JJ7IAOcGTOdGexc5UQkfl/rWzNnC+91cBFBQQWK4uCSgOHcyM0MATdG1oac7+GwXluZF6lANM+9Aic+zLS4ubUOjW2pS2xzqCq//tHKrCPKdyFYSSKvmZb828HqTJQWkU7quw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591474; c=relaxed/simple;
-	bh=9nEHs1ylJmbVjefIfxJv87JmBiJ6m0BPD/+NRyHjOVw=;
+	s=arc-20240116; t=1761591477; c=relaxed/simple;
+	bh=iiIzCiWb5Nb8uTgO1yf6u5UidUsNuP7hh4L4bbz3x24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoJTaEaREKd1e2O1ENTGZoBHyWnDYQGYJXbtKZP7Y1SbuaUGQoHEWD02WlRzIolwBnsbIa9CfTxSJPWqv67vvQYXNC7cJ6bbncguRu35Xd8mV8IJhG6eJam090oXHJsNV5KhtIEqVVDkqIhsqa9UjxJiKBPnCy3CN10f57o41Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3VsG6C2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DV+/mgBk3Wm1wWHWrCO+g/mXjmUb9Gn0QidzkeZG0dl89BQtLvkIdOUg9bL9faeFkPTCwfDIYIHd5Khk8NW0Ha/1hKeUw06zt0Nlc4f77vXW1anV1xZPWYReaIQx/OPzZ1yeGiXCOA031pWd5hPACdqCM0rr+ftZgoWVsid7GIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uk7sNeL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3VsG6C2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DF8C4CEF1;
-	Mon, 27 Oct 2025 18:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uk7sNeL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAFBC4CEF1;
+	Mon, 27 Oct 2025 18:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591474;
-	bh=9nEHs1ylJmbVjefIfxJv87JmBiJ6m0BPD/+NRyHjOVw=;
+	s=korg; t=1761591476;
+	bh=iiIzCiWb5Nb8uTgO1yf6u5UidUsNuP7hh4L4bbz3x24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3VsG6C253B+eGKy7zEkC6bfj2EVMhpAT29dpq2Ud4o+WgXwxTKizUwzp556xKk97
-	 +kp8d1M1UWxrNKYJBArWsF2tUEpK1pFzfYRPLoLrPOAyLpC1eElnzqnZVyewJGZIeV
-	 9n2DeAuCX8WSW1OcYFJAlJ54RhS0X8OPrv2Ho3pw=
+	b=uk7sNeL578LOuPKH6R5oA9KuKd+RGn8DJznNEm7KmUTiyJz+lY0LSyOxdAsi9oSPq
+	 8RanxmHvgyfHRdkEvEMz8zl0qj8pBfcSrETZQKftbIcGKBESGufjXgd3827s+kgPnA
+	 mSQG1BOsN5a35hSq+jE1k9J/W2HW3L/KpnxOwudI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 210/332] minmax: dont use max() in situations that want a C constant expression
-Date: Mon, 27 Oct 2025 19:34:23 +0100
-Message-ID: <20251027183530.290011183@linuxfoundation.org>
+Subject: [PATCH 5.10 211/332] minmax: simplify min()/max()/clamp() implementation
+Date: Mon, 27 Oct 2025 19:34:24 +0100
+Message-ID: <20251027183530.318578970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -54,14 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit cb04e8b1d2f24c4c2c92f7b7529031fc35a16fed ]
+[ Upstream commit dc1c8034e31b14a2e5e212104ec508aec44ce1b9 ]
 
-We only had a couple of array[] declarations, and changing them to just
-use 'MAX()' instead of 'max()' fixes the issue.
+Now that we no longer have any C constant expression contexts (ie array
+size declarations or static initializers) that use min() or max(), we
+can simpify the implementation by not having to worry about the result
+staying as a C constant expression.
 
-This will allow us to simplify our min/max macros enormously, since they
-can now unconditionally use temporary variables to avoid using the
-argument values multiple times.
+So now we can unconditionally just use temporary variables of the right
+type, and get rid of the excessive expansion that used to come from the
+use of
+
+   __builtin_choose_expr(__is_constexpr(...), ..
+
+to pick the specialized code for constant expressions.
+
+Another expansion simplification is to pass the temporary variables (in
+addition to the original expression) to our __types_ok() macro.  That
+may superficially look like it complicates the macro, but when we only
+want the type of the expression, expanding the temporary variable names
+is much simpler and smaller than expanding the potentially complicated
+original expression.
+
+As a result, on my machine, doing a
+
+  $ time make drivers/staging/media/atomisp/pci/isp/kernels/ynr/ynr_1.0/ia_css_ynr.host.i
+
+goes from
+
+	real	0m16.621s
+	user	0m15.360s
+	sys	0m1.221s
+
+to
+
+	real	0m2.532s
+	user	0m2.091s
+	sys	0m0.452s
+
+because the token expansion goes down dramatically.
+
+In particular, the longest line expansion (which was line 71 of that
+'ia_css_ynr.host.c' file) shrinks from 23,338kB (yes, 23MB for one
+single line) to "just" 1,444kB (now "only" 1.4MB).
+
+And yes, that line is still the line from hell, because it's doing
+multiple levels of "min()/max()" expansion thanks to some of them being
+hidden inside the uDIGIT_FITTING() macro.
+
+Lorenzo has a nice cleanup patch that makes that driver use inline
+functions instead of macros for sDIGIT_FITTING() and uDIGIT_FITTING(),
+which will fix that line once and for all, but the 16-fold reduction in
+this case does show why we need to simplify these helpers.
 
 Cc: David Laight <David.Laight@aculab.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
@@ -69,64 +113,76 @@ Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/cyttsp4_core.c |    2 +-
- drivers/md/dm-integrity.c                |    4 ++--
- fs/btrfs/tree-checker.c                  |    2 +-
- lib/vsprintf.c                           |    2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ include/linux/minmax.h |   43 ++++++++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
 
---- a/drivers/input/touchscreen/cyttsp4_core.c
-+++ b/drivers/input/touchscreen/cyttsp4_core.c
-@@ -857,7 +857,7 @@ static void cyttsp4_get_mt_touches(struc
- 	struct cyttsp4_touch tch;
- 	int sig;
- 	int i, j, t = 0;
--	int ids[max(CY_TMA1036_MAX_TCH, CY_TMA4XX_MAX_TCH)];
-+	int ids[MAX(CY_TMA1036_MAX_TCH, CY_TMA4XX_MAX_TCH)];
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -35,10 +35,10 @@
+ #define __is_noneg_int(x)	\
+ 	(__builtin_choose_expr(__is_constexpr(x) && __is_signed(x), x, -1) >= 0)
  
- 	memset(ids, 0, si->si_ofs.tch_abs[CY_TCH_T].max * sizeof(int));
- 	for (i = 0; i < num_cur_tch; i++) {
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1600,7 +1600,7 @@ static void integrity_metadata(struct wo
- 		struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
- 		char *checksums;
- 		unsigned extra_space = unlikely(digest_size > ic->tag_size) ? digest_size - ic->tag_size : 0;
--		char checksums_onstack[max((size_t)HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
-+		char checksums_onstack[MAX(HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
- 		sector_t sector;
- 		unsigned sectors_to_process;
+-#define __types_ok(x, y) 					\
+-	(__is_signed(x) == __is_signed(y) ||			\
+-		__is_signed((x) + 0) == __is_signed((y) + 0) ||	\
+-		__is_noneg_int(x) || __is_noneg_int(y))
++#define __types_ok(x, y, ux, uy) 				\
++	(__is_signed(ux) == __is_signed(uy) ||			\
++	 __is_signed((ux) + 0) == __is_signed((uy) + 0) ||	\
++	 __is_noneg_int(x) || __is_noneg_int(y))
  
-@@ -1882,7 +1882,7 @@ retry_kmap:
- 				} while (++s < ic->sectors_per_block);
- #ifdef INTERNAL_VERIFY
- 				if (ic->internal_hash) {
--					char checksums_onstack[max((size_t)HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
-+					char checksums_onstack[MAX(HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
+ #define __cmp_op_min <
+ #define __cmp_op_max >
+@@ -51,34 +51,31 @@
+ #define __cmp_once(op, type, x, y) \
+ 	__cmp_once_unique(op, type, x, y, __UNIQUE_ID(x_), __UNIQUE_ID(y_))
  
- 					integrity_sector_checksum(ic, logical_sector, mem + bv.bv_offset, checksums_onstack);
- 					if (unlikely(memcmp(checksums_onstack, journal_entry_tag(ic, je), ic->tag_size))) {
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -587,7 +587,7 @@ static int check_dir_item(struct extent_
- 		 */
- 		if (key->type == BTRFS_DIR_ITEM_KEY ||
- 		    key->type == BTRFS_XATTR_ITEM_KEY) {
--			char namebuf[max(BTRFS_NAME_LEN, XATTR_NAME_MAX)];
-+			char namebuf[MAX(BTRFS_NAME_LEN, XATTR_NAME_MAX)];
+-#define __careful_cmp_once(op, x, y) ({			\
+-	static_assert(__types_ok(x, y),			\
++#define __careful_cmp_once(op, x, y, ux, uy) ({		\
++	__auto_type ux = (x); __auto_type uy = (y);	\
++	static_assert(__types_ok(x, y, ux, uy),		\
+ 		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
+-	__cmp_once(op, __auto_type, x, y); })
++	__cmp(op, ux, uy); })
  
- 			read_extent_buffer(leaf, namebuf,
- 					(unsigned long)(di + 1), name_len);
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -1078,7 +1078,7 @@ char *resource_string(char *buf, char *e
- #define FLAG_BUF_SIZE		(2 * sizeof(res->flags))
- #define DECODED_BUF_SIZE	sizeof("[mem - 64bit pref window disabled]")
- #define RAW_BUF_SIZE		sizeof("[mem - flags 0x]")
--	char sym[max(2*RSRC_BUF_SIZE + DECODED_BUF_SIZE,
-+	char sym[MAX(2*RSRC_BUF_SIZE + DECODED_BUF_SIZE,
- 		     2*RSRC_BUF_SIZE + FLAG_BUF_SIZE + RAW_BUF_SIZE)];
+-#define __careful_cmp(op, x, y)					\
+-	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
+-		__cmp(op, x, y), __careful_cmp_once(op, x, y))
++#define __careful_cmp(op, x, y) \
++	__careful_cmp_once(op, x, y, __UNIQUE_ID(x_), __UNIQUE_ID(y_))
  
- 	char *p = sym, *pend = sym + sizeof(sym);
+ #define __clamp(val, lo, hi)	\
+ 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+ 
+-#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({		\
+-	typeof(val) unique_val = (val);						\
+-	typeof(lo) unique_lo = (lo);						\
+-	typeof(hi) unique_hi = (hi);						\
++#define __clamp_once(val, lo, hi, uval, ulo, uhi) ({				\
++	__auto_type uval = (val);						\
++	__auto_type ulo = (lo);							\
++	__auto_type uhi = (hi);							\
+ 	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
+ 			(lo) <= (hi), true),					\
+ 		"clamp() low limit " #lo " greater than high limit " #hi);	\
+-	static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
+-	static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
+-	__clamp(unique_val, unique_lo, unique_hi); })
+-
+-#define __careful_clamp(val, lo, hi) ({					\
+-	__builtin_choose_expr(__is_constexpr((val) - (lo) + (hi)),	\
+-		__clamp(val, lo, hi),					\
+-		__clamp_once(val, lo, hi, __UNIQUE_ID(__val),		\
+-			     __UNIQUE_ID(__lo), __UNIQUE_ID(__hi))); })
++	static_assert(__types_ok(uval, lo, uval, ulo), "clamp() 'lo' signedness error");	\
++	static_assert(__types_ok(uval, hi, uval, uhi), "clamp() 'hi' signedness error");	\
++	__clamp(uval, ulo, uhi); })
++
++#define __careful_clamp(val, lo, hi) \
++	__clamp_once(val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+ 
+ /**
+  * min - return minimum of two values of the same or compatible types
 
 
