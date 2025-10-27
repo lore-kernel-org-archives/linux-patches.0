@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D11330C62D;
-	Mon, 27 Oct 2025 19:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05A6246BB7;
+	Mon, 27 Oct 2025 19:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593376; cv=none; b=YgKfs0htAdv443P1oEwOrnxnNrfitRqR4yDXG9Zs2BB3XdtBjdxoX0OfuFM4X+BcgE/+UbLSK62x/KoDRGIesSrq44MyZNdHMltP3s+3QBeHy9h3vHS8an/qcnssEEphiIn2S9FzgfOx5kIo4BLMfrbZgeC099enJaWp4o7M4Wg=
+	t=1761593379; cv=none; b=UDY/ScPFcNf3LoeDrkSAxjD+APTe78ybgXLrc0//2hta8H6S+yWCIO3gf3Q1xGylH8NS57KBLZR+SO+rloTpZdqMisjVaj56e6a2vceGfM8LjLA9tXxp0wPd5FgkEkWQKUAyu+v4p7/nrnonaRIshQkqK8qYOi+KIRCg6HO2p+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593376; c=relaxed/simple;
-	bh=m4a0Oabl5TsXAZJT54G9r2Gfl3nIPVu44+g+30v8rhw=;
+	s=arc-20240116; t=1761593379; c=relaxed/simple;
+	bh=rSwwX66oD4ypEXps7OCkLVf0lBeuBGBI5XI04jMSAaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tRBu2+PTU2XohS/kwz3EBVSlPbPG62puhzEEeLSgD5bzQw6xNJREBiGgLY79DEAbyeQbP+4IYy19d9mOo5CmtHZb8A/P+d8nCRNoub21YJBeVIr4QG4zFH1JP9OLTfN0NN5xY0VPt7YTM4i8XGPAAGUvdqILP3/38zN0UNBAXqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGiG/BAX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AnjMjuazJsWxc9GvC4lnkYyjaAOy7/3BMlAsyA/HUgcWy/MO+E2jFobP342kURooWfex4AX3mrPNUlqcQRWn+ejTJLxwjPCEL/KER5URbzQfXDXqqgkpTstKvAeXiGnUCuFBBRQORS/wKfA6deU4+QvIlUM1RD/f2Ka4IqmvSwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGOg6sZC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGiG/BAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C920C4CEF1;
-	Mon, 27 Oct 2025 19:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGOg6sZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20084C4CEF1;
+	Mon, 27 Oct 2025 19:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593376;
-	bh=m4a0Oabl5TsXAZJT54G9r2Gfl3nIPVu44+g+30v8rhw=;
+	s=korg; t=1761593379;
+	bh=rSwwX66oD4ypEXps7OCkLVf0lBeuBGBI5XI04jMSAaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGiG/BAXba/ixn4umn/NOKcHO3DxY5cFwxFAERx2PI0xL2kHokFA32nlg1ft1mFjy
-	 2f+4Yr4OvTnhGLU6mYIGFY2+hh0nflEShgqhKavvpjglrtK16G22tC+ENO0MJVHN4D
-	 YkWTBaDCO0LhCxufaRYbDeNItl2tG4Ccm6ptAW58=
+	b=xGOg6sZC1IjkSdgwV7erM1iAq32YScGwgMaV++C63r4j5TbB7+vYL5ZBJiDhrTTOz
+	 AYKscynPMpeMdoJ4L0vKKOE3m9ikMS+fGUtXVlw0bLYILvWcE1eeyloKaJQw3E2geh
+	 usqapT/YMBOZzEvhJcmDA3ctIjM5l7CV1X5/9780=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Hammer <galhammer@gmail.com>,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.17 078/184] platform/x86: alienware-wmi-wmax: Fix NULL pointer dereference in sleep handlers
-Date: Mon, 27 Oct 2025 19:36:00 +0100
-Message-ID: <20251027183517.003000400@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.17 079/184] Revert "cpuidle: menu: Avoid discarding useful information"
+Date: Mon, 27 Oct 2025 19:36:01 +0100
+Message-ID: <20251027183517.030814248@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -45,52 +44,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit a49c4d48c3b60926e6a8cec217bf95aa65388ecc upstream.
+commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
 
-Devices without the AWCC interface don't initialize `awcc`. Add a check
-before dereferencing it in sleep handlers.
+It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
+useful information") led to a performance regression on Intel Jasper Lake
+systems because it reduced the time spent by CPUs in idle state C7 which
+is correlated to the maximum frequency the CPUs can get to because of an
+average running power limit [1].
 
-Cc: stable@vger.kernel.org
-Reported-by: Gal Hammer <galhammer@gmail.com>
-Tested-by: Gal Hammer <galhammer@gmail.com>
-Fixes: 07ac275981b1 ("platform/x86: alienware-wmi-wmax: Add support for manual fan control")
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://patch.msgid.link/20251014-sleep-fix-v3-1-b5cb58da4638@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Before that commit, get_typical_interval() would have returned UINT_MAX
+whenever it had been unable to make a high-confidence prediction which
+had led to selecting the deepest available idle state too often and
+both power and performance had been inadequate as a result of that on
+some systems.  However, this had not been a problem on systems with
+relatively aggressive average running power limits, like the Jasper Lake
+systems in question, because on those systems it was compensated by the
+ability to run CPUs faster.
+
+It was addressed by causing get_typical_interval() to return a number
+based on the recent idle duration information available to it even if it
+could not make a high-confidence prediction, but that clearly did not
+take the possible correlation between idle power and available CPU
+capacity into account.
+
+For this reason, revert most of the changes made by commit 85975daeaa4d,
+except for one cosmetic cleanup, and add a comment explaining the
+rationale for returning UINT_MAX from get_typical_interval() when it
+is unable to make a high-confidence prediction.
+
+Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
+Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
+Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/alienware-wmi-wmax.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpuidle/governors/menu.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
---- a/drivers/platform/x86/dell/alienware-wmi-wmax.c
-+++ b/drivers/platform/x86/dell/alienware-wmi-wmax.c
-@@ -1647,7 +1647,7 @@ static int wmax_wmi_probe(struct wmi_dev
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -188,20 +188,17 @@ again:
+ 	 *
+ 	 * This can deal with workloads that have long pauses interspersed
+ 	 * with sporadic activity with a bunch of short pauses.
++	 *
++	 * However, if the number of remaining samples is too small to exclude
++	 * any more outliers, allow the deepest available idle state to be
++	 * selected because there are systems where the time spent by CPUs in
++	 * deep idle states is correlated to the maximum frequency the CPUs
++	 * can get to.  On those systems, shallow idle states should be avoided
++	 * unless there is a clear indication that the given CPU is most likley
++	 * going to be woken up shortly.
+ 	 */
+-	if (divisor * 4 <= INTERVALS * 3) {
+-		/*
+-		 * If there are sufficiently many data points still under
+-		 * consideration after the outliers have been eliminated,
+-		 * returning without a prediction would be a mistake because it
+-		 * is likely that the next interval will not exceed the current
+-		 * maximum, so return the latter in that case.
+-		 */
+-		if (divisor >= INTERVALS / 2)
+-			return max;
+-
++	if (divisor * 4 <= INTERVALS * 3)
+ 		return UINT_MAX;
+-	}
  
- static int wmax_wmi_suspend(struct device *dev)
- {
--	if (awcc->hwmon)
-+	if (awcc && awcc->hwmon)
- 		awcc_hwmon_suspend(dev);
- 
- 	return 0;
-@@ -1655,7 +1655,7 @@ static int wmax_wmi_suspend(struct devic
- 
- static int wmax_wmi_resume(struct device *dev)
- {
--	if (awcc->hwmon)
-+	if (awcc && awcc->hwmon)
- 		awcc_hwmon_resume(dev);
- 
- 	return 0;
+ 	/* Update the thresholds for the next round. */
+ 	if (avg - min > max - avg)
 
 
