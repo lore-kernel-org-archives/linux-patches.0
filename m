@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357F02BD033;
-	Mon, 27 Oct 2025 19:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C537A328639;
+	Mon, 27 Oct 2025 19:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592935; cv=none; b=DekRG41UGExRy+J+kjXTANZQ4YdOkyfEZS/4OJunbpdBULSX8z1gd87xuDqdw/vTJKELSN2n0SYLqlzTo/FW7qs0eYb2Kdirx7zIi5Woox/OdAH9EkzN0X3Cdbfd9BDUJgMmrW17yBRc4uPwdhgcsJ2MPphy8UIJL3QL2Mqyl2E=
+	t=1761592937; cv=none; b=NWa6PUfKvc9QW0OJHR4S+Ex6GO2OCGiqD1Gkn/ZoVeojm3Ug4gh4jJhAC7gN+WJBzAhWMd4gOzWE1yeHN6ekJ0EyG5R9mfKmSUXzkbpfHX/KJycOsP5nI7bwCqKfuSYuUwIPN5gS4CU44QaCrxkTljIQgTc7Y+JY2dMn/xbC4t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592935; c=relaxed/simple;
-	bh=maKULD8YfwwbLq4VAhd4m+ROS8mGrLCtI1nNuwvQyF0=;
+	s=arc-20240116; t=1761592937; c=relaxed/simple;
+	bh=Fi90z7ChSKEbjSVMm2bZfCQKeJy5+jAv5osNFvO7S2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNjJKZHV5IWEWHt2P9aLPZhN8CPDV73PeuOZ2l0KPx9dH95b9Y1O6JI+VXIJNtBR0hd4c/SjhbdGvx3ETDK42VtwCGhH48Irc749zYc0Ts4lvA+QFeIoxodU/F7nP6h4gkQk2m/DryxcvjJmXTeY8vzSDh4UJDFjDtVzSGn0y8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQjAMkYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h5MhPcPSY12fiGonFfX7W8jRG5mAq6bG5/9c6R7pDfz9fMX+fEYcfesGUVk+LS4Z0UpE7GYy4p26Mruc/0JCrbPkXtrrk82x05xnhbN7eD4aMUkDNg4+Ns8kWp0rkJpsA3q3BSV+nx/y+kkdsndB/LLOlTrHWffmIean6oWpXZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZDCxn8W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQjAMkYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2F0C4CEF1;
-	Mon, 27 Oct 2025 19:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZDCxn8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6EBC4CEF1;
+	Mon, 27 Oct 2025 19:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592935;
-	bh=maKULD8YfwwbLq4VAhd4m+ROS8mGrLCtI1nNuwvQyF0=;
+	s=korg; t=1761592937;
+	bh=Fi90z7ChSKEbjSVMm2bZfCQKeJy5+jAv5osNFvO7S2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQjAMkYZ2NOQJYRpfuabZCo1AXosKm7TaQNosmwXEhFhgQeVnP6QwbmB9zueRDCvE
-	 0X3Jtqy2pb7YeZQrp1OYuRQ0V5AqK6XEwio6+FXngI0MUf8JR0e3hSe4pn6qluIRWp
-	 KKCJQ30eZ+xt8O7a7jXJtELB9A87k4rVe8qrb6m0=
+	b=oZDCxn8WY4F8IbuqoiTaUt7Bh+dolftbjgQR5NcwbZvlULi9rVwumNFkkxUO21HDC
+	 Wlc/y1I68vvc2VLfG0vpYXA61iDbrdw5BHKJHX1aBgKiquJl9YszRyKEyHFqkjlVL4
+	 BXpSwg5gygI22euSaJSWjBIj/+Ruev9k7CqKYUwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/117] can: rockchip-canfd: rkcanfd_start_xmit(): use can_dev_dropped_skb() instead of can_dropped_invalid_skb()
-Date: Mon, 27 Oct 2025 19:35:58 +0100
-Message-ID: <20251027183454.838229891@linuxfoundation.org>
+Subject: [PATCH 6.12 033/117] selftests: net: fix server bind failure in sctp_vrf.sh
+Date: Mon, 27 Oct 2025 19:35:59 +0100
+Message-ID: <20251027183454.868341177@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -44,46 +46,243 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 3a3bc9bbb3a0287164a595787df0c70d91e77cfd ]
+[ Upstream commit a73ca0449bcb7c238097cc6a1bf3fd82a78374df ]
 
-In addition to can_dropped_invalid_skb(), the helper function
-can_dev_dropped_skb() checks whether the device is in listen-only mode and
-discards the skb accordingly.
+sctp_vrf.sh could fail:
 
-Replace can_dropped_invalid_skb() by can_dev_dropped_skb() to also drop
-skbs in for listen-only mode.
+  TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, N [FAIL]
+  not ok 1 selftests: net: sctp_vrf.sh # exit=3
 
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/all/20251017-bizarre-enchanted-quokka-f3c704-mkl@pengutronix.de/
-Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
-Link: https://patch.msgid.link/20251017-fix-skb-drop-check-v1-3-556665793fa4@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The failure happens when the server bind in a new run conflicts with an
+existing association from the previous run:
+
+[1] ip netns exec $SERVER_NS ./sctp_hello server ...
+[2] ip netns exec $CLIENT_NS ./sctp_hello client ...
+[3] ip netns exec $SERVER_NS pkill sctp_hello ...
+[4] ip netns exec $SERVER_NS ./sctp_hello server ...
+
+It occurs if the client in [2] sends a message and closes immediately.
+With the message unacked, no SHUTDOWN is sent. Killing the server in [3]
+triggers a SHUTDOWN the client also ignores due to the unacked message,
+leaving the old association alive. This causes the bind at [4] to fail
+until the message is acked and the client responds to a second SHUTDOWN
+after the server’s T2 timer expires (3s).
+
+This patch fixes the issue by preventing the client from sending data.
+Instead, the client blocks on recv() and waits for the server to close.
+It also waits until both the server and the client sockets are fully
+released in stop_server and wait_client before restarting.
+
+Additionally, replace 2>&1 >/dev/null with -q in sysctl and grep, and
+drop other redundant 2>&1 >/dev/null redirections, and fix a typo from
+N to Y (connect successfully) in the description of the last test.
+
+Fixes: a61bd7b9fef3 ("selftests: add a selftest for sctp vrf")
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/be2dacf52d0917c4ba5e2e8c5a9cb640740ad2b6.1760731574.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rockchip/rockchip_canfd-tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/sctp_hello.c | 17 +-----
+ tools/testing/selftests/net/sctp_vrf.sh  | 73 +++++++++++++++---------
+ 2 files changed, 47 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/can/rockchip/rockchip_canfd-tx.c b/drivers/net/can/rockchip/rockchip_canfd-tx.c
-index 865a15e033a9e..12200dcfd3389 100644
---- a/drivers/net/can/rockchip/rockchip_canfd-tx.c
-+++ b/drivers/net/can/rockchip/rockchip_canfd-tx.c
-@@ -72,7 +72,7 @@ netdev_tx_t rkcanfd_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- 	int err;
- 	u8 i;
+diff --git a/tools/testing/selftests/net/sctp_hello.c b/tools/testing/selftests/net/sctp_hello.c
+index f02f1f95d2275..a04dac0b8027d 100644
+--- a/tools/testing/selftests/net/sctp_hello.c
++++ b/tools/testing/selftests/net/sctp_hello.c
+@@ -29,7 +29,6 @@ static void set_addr(struct sockaddr_storage *ss, char *ip, char *port, int *len
+ static int do_client(int argc, char *argv[])
+ {
+ 	struct sockaddr_storage ss;
+-	char buf[] = "hello";
+ 	int csk, ret, len;
  
--	if (can_dropped_invalid_skb(ndev, skb))
-+	if (can_dev_dropped_skb(ndev, skb))
- 		return NETDEV_TX_OK;
+ 	if (argc < 5) {
+@@ -56,16 +55,10 @@ static int do_client(int argc, char *argv[])
  
- 	if (!netif_subqueue_maybe_stop(priv->ndev, 0,
+ 	set_addr(&ss, argv[3], argv[4], &len);
+ 	ret = connect(csk, (struct sockaddr *)&ss, len);
+-	if (ret < 0) {
+-		printf("failed to connect to peer\n");
++	if (ret < 0)
+ 		return -1;
+-	}
+ 
+-	ret = send(csk, buf, strlen(buf) + 1, 0);
+-	if (ret < 0) {
+-		printf("failed to send msg %d\n", ret);
+-		return -1;
+-	}
++	recv(csk, NULL, 0, 0);
+ 	close(csk);
+ 
+ 	return 0;
+@@ -75,7 +68,6 @@ int main(int argc, char *argv[])
+ {
+ 	struct sockaddr_storage ss;
+ 	int lsk, csk, ret, len;
+-	char buf[20];
+ 
+ 	if (argc < 2 || (strcmp(argv[1], "server") && strcmp(argv[1], "client"))) {
+ 		printf("%s server|client ...\n", argv[0]);
+@@ -125,11 +117,6 @@ int main(int argc, char *argv[])
+ 		return -1;
+ 	}
+ 
+-	ret = recv(csk, buf, sizeof(buf), 0);
+-	if (ret <= 0) {
+-		printf("failed to recv msg %d\n", ret);
+-		return -1;
+-	}
+ 	close(csk);
+ 	close(lsk);
+ 
+diff --git a/tools/testing/selftests/net/sctp_vrf.sh b/tools/testing/selftests/net/sctp_vrf.sh
+index c854034b6aa16..667b211aa8a11 100755
+--- a/tools/testing/selftests/net/sctp_vrf.sh
++++ b/tools/testing/selftests/net/sctp_vrf.sh
+@@ -20,9 +20,9 @@ setup() {
+ 	modprobe sctp_diag
+ 	setup_ns CLIENT_NS1 CLIENT_NS2 SERVER_NS
+ 
+-	ip net exec $CLIENT_NS1 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
+-	ip net exec $CLIENT_NS2 sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
+-	ip net exec $SERVER_NS sysctl -w net.ipv6.conf.default.accept_dad=0 2>&1 >/dev/null
++	ip net exec $CLIENT_NS1 sysctl -wq net.ipv6.conf.default.accept_dad=0
++	ip net exec $CLIENT_NS2 sysctl -wq net.ipv6.conf.default.accept_dad=0
++	ip net exec $SERVER_NS sysctl -wq net.ipv6.conf.default.accept_dad=0
+ 
+ 	ip -n $SERVER_NS link add veth1 type veth peer name veth1 netns $CLIENT_NS1
+ 	ip -n $SERVER_NS link add veth2 type veth peer name veth1 netns $CLIENT_NS2
+@@ -62,17 +62,40 @@ setup() {
+ }
+ 
+ cleanup() {
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
++	wait_client $CLIENT_NS1
++	wait_client $CLIENT_NS2
++	stop_server
+ 	cleanup_ns $CLIENT_NS1 $CLIENT_NS2 $SERVER_NS
+ }
+ 
+-wait_server() {
++start_server() {
+ 	local IFACE=$1
+ 	local CNT=0
+ 
+-	until ip netns exec $SERVER_NS ss -lS src $SERVER_IP:$SERVER_PORT | \
+-		grep LISTEN | grep "$IFACE" 2>&1 >/dev/null; do
+-		[ $((CNT++)) = "20" ] && { RET=3; return $RET; }
++	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP $SERVER_PORT $IFACE &
++	disown
++	until ip netns exec $SERVER_NS ss -SlH | grep -q "$IFACE"; do
++		[ $((CNT++)) -eq 30 ] && { RET=3; return $RET; }
++		sleep 0.1
++	done
++}
++
++stop_server() {
++	local CNT=0
++
++	ip netns exec $SERVER_NS pkill sctp_hello
++	while ip netns exec $SERVER_NS ss -SaH | grep -q .; do
++		[ $((CNT++)) -eq 30 ] && break
++		sleep 0.1
++	done
++}
++
++wait_client() {
++	local CLIENT_NS=$1
++	local CNT=0
++
++	while ip netns exec $CLIENT_NS ss -SaH | grep -q .; do
++		[ $((CNT++)) -eq 30 ] && break
+ 		sleep 0.1
+ 	done
+ }
+@@ -81,14 +104,12 @@ do_test() {
+ 	local CLIENT_NS=$1
+ 	local IFACE=$2
+ 
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE || return $RET
++	start_server $IFACE || return $RET
+ 	timeout 3 ip netns exec $CLIENT_NS ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT
+ 	RET=$?
++	wait_client $CLIENT_NS
++	stop_server
+ 	return $RET
+ }
+ 
+@@ -96,25 +117,21 @@ do_testx() {
+ 	local IFACE1=$1
+ 	local IFACE2=$2
+ 
+-	ip netns exec $SERVER_NS pkill sctp_hello 2>&1 >/dev/null
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE1 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE1 || return $RET
+-	ip netns exec $SERVER_NS ./sctp_hello server $AF $SERVER_IP \
+-		$SERVER_PORT $IFACE2 2>&1 >/dev/null &
+-	disown
+-	wait_server $IFACE2 || return $RET
++	start_server $IFACE1 || return $RET
++	start_server $IFACE2 || return $RET
+ 	timeout 3 ip netns exec $CLIENT_NS1 ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null && \
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT && \
+ 	timeout 3 ip netns exec $CLIENT_NS2 ./sctp_hello client $AF \
+-		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT 2>&1 >/dev/null
++		$SERVER_IP $SERVER_PORT $CLIENT_IP $CLIENT_PORT
+ 	RET=$?
++	wait_client $CLIENT_NS1
++	wait_client $CLIENT_NS2
++	stop_server
+ 	return $RET
+ }
+ 
+ testup() {
+-	ip netns exec $SERVER_NS sysctl -w net.sctp.l3mdev_accept=1 2>&1 >/dev/null
++	ip netns exec $SERVER_NS sysctl -wq net.sctp.l3mdev_accept=1
+ 	echo -n "TEST 01: nobind, connect from client 1, l3mdev_accept=1, Y "
+ 	do_test $CLIENT_NS1 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+@@ -123,7 +140,7 @@ testup() {
+ 	do_test $CLIENT_NS2 && { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ 
+-	ip netns exec $SERVER_NS sysctl -w net.sctp.l3mdev_accept=0 2>&1 >/dev/null
++	ip netns exec $SERVER_NS sysctl -wq net.sctp.l3mdev_accept=0
+ 	echo -n "TEST 03: nobind, connect from client 1, l3mdev_accept=0, N "
+ 	do_test $CLIENT_NS1 && { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+@@ -160,7 +177,7 @@ testup() {
+ 	do_testx vrf-1 vrf-2 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ 
+-	echo -n "TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, N "
++	echo -n "TEST 12: bind vrf-2 & 1 in server, connect from client 1 & 2, Y "
+ 	do_testx vrf-2 vrf-1 || { echo "[FAIL]"; return $RET; }
+ 	echo "[PASS]"
+ }
 -- 
 2.51.0
 
