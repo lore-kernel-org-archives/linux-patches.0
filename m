@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10179302158;
-	Mon, 27 Oct 2025 19:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108252D9EEC;
+	Mon, 27 Oct 2025 19:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592978; cv=none; b=oKgCd+D+RfoSt5vKfROhR9DhuCaUbzNV0oowYEEAGNIkw3g3BcYFRjQGhHkol9YvUOkjH0pLeN4NW2N1Cok3+xeBp62fYyZHTdbkITOhU6k6gBQo95zIDFZn3LHrnlmc0vyJfKImJKSTqiI2B1jvwiZRPlpnzJieRS4PRtdNn6I=
+	t=1761592981; cv=none; b=tsVBBQtIDGFdMfiu/r3l2zxPoACe83KsQKeKUk7Hv0jGP/mIUXAAXi8opeYpHdreL4LCpg01dEk45I7ker8ZBgIMAwCJ6mS7sLFs9Ca2CwY5Fd14TeYtlIvWv5ubRqgLqrE27PcZnrD4DbwAasOgC8mO+TKSTLSry2mUboSylqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592978; c=relaxed/simple;
-	bh=KdFX6NIIbNrEjnFf+NrvYRYuKfK8kKidJ/L7rmaLw0g=;
+	s=arc-20240116; t=1761592981; c=relaxed/simple;
+	bh=qX8Lm0a35NixAd/SE3vt+3nXRIqHlfQCcaB9ux39fBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmaqerlDv4ReqlbZOzCSNdEcGTJ992+vr1kHpHsFdz2S4NI+qabM7faRLRTjqBcM/It3PZjIDSJliy4ymPmmeF+rTK2IZu41hK1knrdbyzasCsgYrsy1xUbh7jmrSm0XQOnYerM8XBtyOWZzBdHMyWozlasgT59ae4vP1pikhso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRhvKB7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iV8HRdUeURKMIjAjgaOLNAz37m5VxqyhU3veGd+jlDeKM+26FG5m2NPjoV7+vBcIeEGkJzI1IBlk/Mn3BiS6C8/WpVCRoPHu6Tn5E7IA6QSyVUQjFXiyFrDBi0HQTtZjCrmpiL3bjJULEm8vEXpYdwlyKVyBSVQjckZBL8Ucf1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyJQet3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRhvKB7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B98C4CEF1;
-	Mon, 27 Oct 2025 19:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyJQet3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99355C4CEF1;
+	Mon, 27 Oct 2025 19:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592977;
-	bh=KdFX6NIIbNrEjnFf+NrvYRYuKfK8kKidJ/L7rmaLw0g=;
+	s=korg; t=1761592980;
+	bh=qX8Lm0a35NixAd/SE3vt+3nXRIqHlfQCcaB9ux39fBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRhvKB7mhopiyZZcvP1RZw0sRRmcgltkBMPBALwEgw5X9+wcpiU3xOLMOWhwnGWdw
-	 Z3kA7vomG8SshXFr/se2hspYCJFmuKt4WnZKsDQXBKONbI8iToSyVIRaf7jnfGSYOG
-	 +gGnIxHvDI90+F90zd6B4AM9Cyn/PVX7uI6hiDms=
+	b=XyJQet3AzJAMMGoiEJthSfcY2B7oyQS/YF+UZE/C+1M/hxoX4/+0xc0Hh9/axEy0r
+	 0HUhIDpq/ZlfQq1x0Sdw8bGYBwrXGBqeGNAbIOiSNDm5xp23fXuZtINhbuL8FaBuVf
+	 n4ct3/FxbvvH9/Mv5dK8BzW6mhFiAua84imtAvl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Javier Martinez Canillas <javierm@redhat.com>,
 	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/117] drm/panic: Fix drawing the logo on a small narrow screen
-Date: Mon, 27 Oct 2025 19:36:51 +0100
-Message-ID: <20251027183456.325931181@linuxfoundation.org>
+Subject: [PATCH 6.12 086/117] drm/panic: Fix qr_code, ensure vmargin is positive
+Date: Mon, 27 Oct 2025 19:36:52 +0100
+Message-ID: <20251027183456.352169472@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -53,36 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jocelyn Falempe <jfalempe@redhat.com>
 
-[ Upstream commit 179753aa5b7890b311968c033d08f558f0a7be21 ]
+[ Upstream commit 4fcffb5e5c8c0c8e2ad9c99a22305a0afbecc294 ]
 
-If the logo width is bigger than the framebuffer width, and the
-height is big enough to hold the logo and the message, it will draw
-at x coordinate that are higher than the width, and ends up in a
-corrupted image.
+Depending on qr_code size and screen size, the vertical margin can
+be negative, that means there is not enough room to draw the qr_code.
 
-Fixes: 4b570ac2eb54 ("drm/rect: Add drm_rect_overlap()")
+So abort early, to avoid a segfault by trying to draw at negative
+coordinates.
+
+Fixes: cb5164ac43d0f ("drm/panic: Add a QR code panic screen")
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20251009122955.562888-2-jfalempe@redhat.com
+Link: https://lore.kernel.org/r/20251009122955.562888-4-jfalempe@redhat.com
 Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/drm_panic.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-index f128d345b16df..932a54b674794 100644
+index 932a54b674794..0aa87eafdacd5 100644
 --- a/drivers/gpu/drm/drm_panic.c
 +++ b/drivers/gpu/drm/drm_panic.c
-@@ -306,6 +306,9 @@ static void drm_panic_logo_rect(struct drm_rect *rect, const struct font_desc *f
- static void drm_panic_logo_draw(struct drm_scanout_buffer *sb, struct drm_rect *rect,
- 				const struct font_desc *font, u32 fg_color)
- {
-+	if (rect->x2 > sb->width || rect->y2 > sb->height)
-+		return;
-+
- 	if (logo_mono)
- 		drm_panic_blit(sb, rect, logo_mono->data,
- 			       DIV_ROUND_UP(drm_rect_width(rect), 8), 1, fg_color);
+@@ -618,7 +618,10 @@ static int _draw_panic_static_qr_code(struct drm_scanout_buffer *sb)
+ 	pr_debug("QR width %d and scale %d\n", qr_width, scale);
+ 	r_qr_canvas = DRM_RECT_INIT(0, 0, qr_canvas_width * scale, qr_canvas_width * scale);
+ 
+-	v_margin = (sb->height - drm_rect_height(&r_qr_canvas) - drm_rect_height(&r_msg)) / 5;
++	v_margin = sb->height - drm_rect_height(&r_qr_canvas) - drm_rect_height(&r_msg);
++	if (v_margin < 0)
++		return -ENOSPC;
++	v_margin /= 5;
+ 
+ 	drm_rect_translate(&r_qr_canvas, (sb->width - r_qr_canvas.x2) / 2, 2 * v_margin);
+ 	r_qr = DRM_RECT_INIT(r_qr_canvas.x1 + QR_MARGIN * scale, r_qr_canvas.y1 + QR_MARGIN * scale,
 -- 
 2.51.0
 
