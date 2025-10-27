@@ -1,104 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892DE32E14F;
-	Mon, 27 Oct 2025 19:01:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B8329C5D
+	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 19:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591666; cv=none; b=CkRubz82dTQzehq5cZHpAEYwcX0Liiq6SdJ+V3nZXIwDkP6Cq0luJXy+8qlgOcF20EFIHdeLefdr+xv0xT69/ZLoKO/0TicICzkkeXu+zMBKifXw5Im3k+AtlGEA0VbwhR6aVlGuMNUpPa2HpSuOMkcsav8+nsKGk/59Hi45eBM=
+	t=1761591667; cv=none; b=lRz8XYUwbRXInUsBa8qNtH7DXRhIMQSxlhRn5EBuRrz639AOziPCI+RuEc0iJiD4YhCXE1wLJKyTigUUHvXQR4u+paPMG6mDkMu5BGUzXxyu/1qkUS+PoEXdRYqK9itxznKDYwdbF/CCMBr1RD9WMQy3/WGzLrJ0lfiaBpFrUCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591666; c=relaxed/simple;
-	bh=7CNT23NA28eD1F5dor+KXE7DTt6RD15Mw2UfKPwnW2A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suy91X9sCiqROhyidOs9V7oCU4b3ldZKNUApINhHbOc3XX+uRB2iegtZwIt3A8uwITvXLcjDbab+Q2trcjikUXRrD0a8RxwQQM8DA6zigsvdubALpN6y2qyh7OJqWAoWf1J/GHAL+J1G/Y6UOKXasPaO43/mrqDgcd09quswlXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuyP2Fbt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761591667; c=relaxed/simple;
+	bh=Mz7YuFINXQdC8PQ/VfexV55itQAo7KBzkvth7iSvNrc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U0l1EkAxDINeQk66h2q3+lYKMEQXuTaoxWNEp/fnrF+93/Q6Qg2t02HR6kXVHQ7epNAy+Lp9n11ywHD40QZ9dz5jqx/KVe4jis2XuRj/8FdlOZdUOxkKikxl/V0/QL0f0n8qh8xLIoc6QF94dWq+a9PdQVTcjdHTe8Z/u8KhzbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BjzegyG6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuyP2Fbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1DEC4CEF1;
-	Mon, 27 Oct 2025 19:01:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591666;
-	bh=7CNT23NA28eD1F5dor+KXE7DTt6RD15Mw2UfKPwnW2A=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuyP2FbtvBilULa/yrwL7n0/kICLcug7zt1P8BSSraxRu80roqurAOqfBJiJZ6F0R
-	 bAZZdbOa6kS+jSDfPty8JIZE+ER8N+rvnSilffK3b/Rn71fngEDVrVcE3riGQmsBVe
-	 9YaY7SwI18g2bu9Aj56F0S2ajvL9NoCKW+NacLUA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 284/332] net: usb: rtl8150: Fix frame padding
-Date: Mon, 27 Oct 2025 19:35:37 +0100
-Message-ID: <20251027183532.357974193@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
-References: <20251027183524.611456697@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BjzegyG6"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59RCTtrx2752236
+	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 19:01:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KmMsFA2jU2VzFA+RPyDjMpvUmFS+NJmtomscpMRHH4Y=; b=BjzegyG6B4d99ikO
+	FG0IQn7Rz/gN3Qp/83Wt79hAbI1OvCMzNFnmW0d14ZzgtzcVTQWoZ6SPg8UuFYbP
+	1k7umAqOHxuF04tYXikaTsuV1p9ReW+cXQeAgmtKPdwUZqERmxgpyQdSZ0UIMk5P
+	ABbB0DjA1XGQGCVb8enB79lQZ3UqkIcntZGIt8wNLQz8UvqI60cObZs0MUVCS1pW
+	9w4xm/pFgO0YegFK0JnXCAnSZxSVdXbBXy0r3bY9zlrKVxg7eo12gH+wC2799nkq
+	MwnjZXna1gDCtUwsBr1birZ2HtJq0lqERyxP8b9HneH7GxWqZXBKliNvcj4+ovWJ
+	DmPRbw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a28swhaaq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <patches@lists.linux.dev>; Mon, 27 Oct 2025 19:01:04 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-290e4fade70so40906215ad.2
+        for <patches@lists.linux.dev>; Mon, 27 Oct 2025 12:01:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761591663; x=1762196463;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KmMsFA2jU2VzFA+RPyDjMpvUmFS+NJmtomscpMRHH4Y=;
+        b=IMPLzXUxmOxNyOUyvIQCPKltA8i3d22sGb5ofRrd5uOnnyc3a3A5kM0IY37t0zgxpy
+         2okR6m/MGYI+6AX6qULFvjOPnWOuLHDd0cOngrkXhmcKDqPKthr1csenHgDkuRXfDKpR
+         A3mrucNkYtqMj0o2em3WFdSDIim6Qj3zSYx77N4U++bhXAZ8odkIW5R6dRbMICbRX9jZ
+         bovZpGG389YhS3nEbi0LnzxXj5A6/XCeDjx1QSg1mxhQ6C3eYzk0Wd0rd2AA/IDoJ2+8
+         sRSW/f5OR5385W7ZvJfJEHF5IS2Jmk/4P0HsSLLjwL06FJwZVqnNz1mxinPuhdd0+0Bu
+         ILNg==
+X-Gm-Message-State: AOJu0Yzk2Qui3DMTRJmkKR1XOfOutXfkYiZ3h55eHs86Rb0M4Nin6pB3
+	K+YbHKqLwOiOU5BrXWWxtoSjCvzS50gytf4LhkW7Kp+mpyLODeV4fXFIJrofB9YR5t+iQey1Tuy
+	5Em8mm3B/O62aG3yLgM5GfnzSxn/3J9/Gb/2jN+j98+IvPO58tIB+kqvqWkyw
+X-Gm-Gg: ASbGncti0W+6rxWL5vsAE7O1lnrPVyvp9bd2noo1gQADlxBaxIyNJC9O34GdLPYmOPk
+	cjTER6l8SgKCxDUckBaw0/78/RaQjBjXPHg6ejIQJcYtoefsy97qJESxpduBQg9V0sJHrnd75Vj
+	RSYGr9uNZ+T3MAEYjjMV0EXqizrgL0Ht2sZYE5u52ZTKYFZjqliXxgnLXIoZkyyxXiZtGSJcjMf
+	u9sISIHoeBGlpa0E71cliKi1CSjODhcdXhjvSURXpA/bRpoHC7Ak5Pkt6H/hImfZqzubhA3Rq8I
+	eSbgtsVEAobM03CPA8nRnVkOdBmOfTyqUAJJg2wt7NC+D/smeWMi1cUxdwr4YnzE9LEWKkCMFkP
+	MG+qgOYB4QM22cFXV4TVYcfcyLiysfe45x1hatGGfsmTQfFLsX1WyVHNyrXG2LqTGq8S69r8=
+X-Received: by 2002:a17:902:d482:b0:290:6b30:fb3 with SMTP id d9443c01a7336-294cb3b2ab2mr9467565ad.16.1761591663070;
+        Mon, 27 Oct 2025 12:01:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHa0PkB75QxFvEfsC7xYqy7x0qo8EfT8w0TreDLE2SS3cxu+kF6KGO6YQnwKLzSUX3UTKUvDA==
+X-Received: by 2002:a17:902:d482:b0:290:6b30:fb3 with SMTP id d9443c01a7336-294cb3b2ab2mr9466685ad.16.1761591662097;
+        Mon, 27 Oct 2025 12:01:02 -0700 (PDT)
+Received: from [192.168.1.111] (c-73-202-227-126.hsd1.ca.comcast.net. [73.202.227.126])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf3381sm89694065ad.16.2025.10.27.12.01.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 12:01:01 -0700 (PDT)
+Message-ID: <7f021277-2925-4fd1-a191-c7034d526e37@oss.qualcomm.com>
+Date: Mon, 27 Oct 2025 12:01:00 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 067/332] wifi: ath10k: avoid unnecessary wait for
+ service ready message
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Paul Menzel <pmenzel@molgen.mpg.de>,
+        Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+        Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+        Sasha Levin <sashal@kernel.org>
+References: <20251027183524.611456697@linuxfoundation.org>
+ <20251027183526.385879492@linuxfoundation.org>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20251027183526.385879492@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: MujyKLzXZOb4pvmJDUbauSINkR4g9ZPx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDE3NCBTYWx0ZWRfXxZySbBvZMvrV
+ C6BV0jtZjc+r8fEDqHjNBEcWBxaJOowfwtBhGu//gp1SjJdkfsHY7s7kKXpJY43dawJxmciVdgC
+ WXa05BUeQAFFbal32EdJLZBqStbF5qCTU44+nh9ICk5Kg6KwFRdF0dDn+7PvvR2k6qxdXJQ9SXc
+ fXAamvGYWSMH/rSaCcWwKqk/cL0NOTY+qewXfldg6E6mc0/exseg0uHajTgNtB/mbGS6R4fXPap
+ n7pBHX+ZwxkGSDWCVw+dHt9pmqAPdq+0xKIFJGKdn7tr4yFYw01HeyLpZIHWrZgqtgdtHkStwnk
+ Z5svJ1j1wOsM8ueNLzoGdixYFcDZWJNEP4JF6PBY9oBsq9F8ie3jFs87JTEfB+35zqgMLiK1n1t
+ FdSBtXm66lpMg/bYS9rLzEbr3MF13g==
+X-Proofpoint-GUID: MujyKLzXZOb4pvmJDUbauSINkR4g9ZPx
+X-Authority-Analysis: v=2.4 cv=fL40HJae c=1 sm=1 tr=0 ts=68ffc170 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=e70TP3dOR9hTogukJ0528Q==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=faGc5X2Oct-Rl-nflR4A:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_07,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270174
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On 10/27/2025 11:32 AM, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me know.
 
-------------------
+Same comments as 5.4
+Please do not propagate this. This had adverse effects on some platforms and a
+revert is already in the pipeline:
 
-From: Michal Pecio <michal.pecio@gmail.com>
+https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/commit/?h=ath-current&id=2469bb6a6af944755a7d7daf66be90f3b8decbf9
 
-commit 75cea9860aa6b2350d90a8d78fed114d27c7eca2 upstream.
+The revert should hopefully land in v6.18-rc4.
 
-TX frames aren't padded and unknown memory is sent into the ether.
-
-Theoretically, it isn't even guaranteed that the extra memory exists
-and can be sent out, which could cause further problems. In practice,
-I found that plenty of tailroom exists in the skb itself (in my test
-with ping at least) and skb_padto() easily succeeds, so use it here.
-
-In the event of -ENOMEM drop the frame like other drivers do.
-
-The use of one more padding byte instead of a USB zero-length packet
-is retained to avoid regression. I have a dodgy Etron xHCI controller
-which doesn't seem to support sending ZLPs at all.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251014203528.3f9783c4.michal.pecio@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/usb/rtl8150.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -685,9 +685,16 @@ static netdev_tx_t rtl8150_start_xmit(st
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	int count, res;
- 
-+	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
-+	count = max(skb->len, ETH_ZLEN);
-+	if (count % 64 == 0)
-+		count++;
-+	if (skb_padto(skb, count)) {
-+		netdev->stats.tx_dropped++;
-+		return NETDEV_TX_OK;
-+	}
-+
- 	netif_stop_queue(netdev);
--	count = (skb->len < 60) ? 60 : skb->len;
--	count = (count & 0x3f) ? count : count + 1;
- 	dev->tx_skb = skb;
- 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
- 		      skb->data, count, write_bulk_callback, dev);
-
+/jeff
 
