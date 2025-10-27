@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D683254A8;
-	Mon, 27 Oct 2025 18:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16EC330B11;
+	Mon, 27 Oct 2025 18:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591294; cv=none; b=Z+NX71gjY6B9MX+FMz611mZjvaGOGxc01GA5W/UANhF6tBZ1ucQGfo7nJVfpN+OWl1ND4OuCxonj6hgugCCiYhyOrp+yosgeF9oFpfPwmuejOsL3zDvKPwyNCki/f+9iuzl6rZWN6Ld8vIgBVCNRHq4m8QZAC0Yefo6++OkrNfE=
+	t=1761591297; cv=none; b=QMCPZ1zj6WJt5PsC4koPmLfbK3EBzYEz2LqHSPxUfPd+UKuW4DqMo7uQuHxr8OQO02hIsp2vzyZYgaLAOLYJ2oDNtbr/Kj7PqCgTkO1UNUxpj6jnB9MnlbG0ryMpwjAFzUXv/sPzNfqgvoPDcBbvW7DHUCgvneUMk2dXXxi+zr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591294; c=relaxed/simple;
-	bh=J+IG4f447A1L9tB7CdxjnWYdtNRETrH1uMfKWqJJoIA=;
+	s=arc-20240116; t=1761591297; c=relaxed/simple;
+	bh=PLYfFKLYntIxWUE+COWlvRpvUDxOlZkz2H5G85L/sUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PFuVSCTAol2YUs6CzHZR86NRg3wQA1LvZRz74VQYeZPUTx37A94pTVb5CVynteSibqV94FkCE2fNhOClCHiTnUqjEMqbgmbzFT0qSY/YjRXUA0DMO6XC7JjmUHh4xGVMqCUf8Fudf6W1SrbsNrVTFxudAup8vuP3FM+2NzPEHOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7T+elXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IIOXFIWwkKsGgLcdNEGAOgydMyGePgYlHhxJFZ5zcPwzO7mvbrQDtEK7raIFSP6Hd2J/zQo7+d695wn/k48fHf1/pnfqM/W9htWNGR5p9aRLxYInGM3Dmlb2Ij4rdAmBVc5UEYBQBJ2rhZKU5+Umg5HCBGID/dHtqqcNmrzrPRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ls+sVTPu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7T+elXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE220C4CEF1;
-	Mon, 27 Oct 2025 18:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ls+sVTPu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67298C4CEF1;
+	Mon, 27 Oct 2025 18:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591294;
-	bh=J+IG4f447A1L9tB7CdxjnWYdtNRETrH1uMfKWqJJoIA=;
+	s=korg; t=1761591296;
+	bh=PLYfFKLYntIxWUE+COWlvRpvUDxOlZkz2H5G85L/sUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7T+elXYIciO+/Gx4xeBdNiV5MMboFVc9BCcjKOUPJUgyj1uxTEq4VGF5u9AbQn9X
-	 JumIidUMBy1YgyRq6b1+auIiUxkK37CY5J7Lutby0KH0yWgIjWKm3106ksITq52rbi
-	 6bGUmv6aEHc1o2Dec2V4iw0NMUxAyLFnEv6Llfi0=
+	b=ls+sVTPuXbgBWev3r3yRGDRk0JYcTF/z4JbNGGdL4LqP3/pvEeP5x8RG32+RCoIYT
+	 kzr1x2Ap+ZfDtL5aLN6uM6b4GGQUk8hiqZOydmq+LO7D3sTDlcWZEuU8ZCyBQbLPZg
+	 LHAx67n4/gZyc9TJzHXR2zGmtQwSSd4xoIBKpwOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 141/332] iio: frequency: adf4350: Fix prescaler usage.
-Date: Mon, 27 Oct 2025 19:33:14 +0100
-Message-ID: <20251027183528.358007853@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 142/332] init: handle bootloader identifier in kernel parameters
+Date: Mon, 27 Oct 2025 19:33:15 +0100
+Message-ID: <20251027183528.382974539@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -47,76 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 33d7ecbf69aa7dd4145e3b77962bcb8759eede3d upstream.
+commit e416f0ed3c500c05c55fb62ee62662717b1c7f71 upstream.
 
-The ADF4350/1 features a programmable dual-modulus prescaler of 4/5 or 8/9.
-When set to 4/5, the maximum RF frequency allowed is 3 GHz.
-Therefore, when operating the ADF4351 above 3 GHz, this must be set to 8/9.
-In this context not the RF output frequency is meant
-- it's the VCO frequency.
+BootLoaders (Grub, LILO, etc) may pass an identifier such as "BOOT_IMAGE=
+/boot/vmlinuz-x.y.z" to kernel parameters.  But these identifiers are not
+recognized by the kernel itself so will be passed to userspace.  However
+user space init program also don't recognize it.
 
-Therefore move the prescaler selection after we derived the VCO frequency
-from the desired RF output frequency.
+KEXEC/KDUMP (kexec-tools) may also pass an identifier such as "kexec" on
+some architectures.
 
-This BUG may have caused PLL lock instabilities when operating the VCO at
-the very high range close to 4.4 GHz.
+We cannot change BootLoader's behavior, because this behavior exists for
+many years, and there are already user space programs search BOOT_IMAGE=
+in /proc/cmdline to obtain the kernel image locations:
 
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-1-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+https://github.com/linuxdeepin/deepin-ab-recovery/blob/master/util.go
+(search getBootOptions)
+https://github.com/linuxdeepin/deepin-ab-recovery/blob/master/main.go
+(search getKernelReleaseWithBootOption) So the the best way is handle
+(ignore) it by the kernel itself, which can avoid such boot warnings (if
+we use something like init=/bin/bash, bootloader identifier can even cause
+a crash):
+
+Kernel command line: BOOT_IMAGE=(hd0,1)/vmlinuz-6.x root=/dev/sda3 ro console=tty
+Unknown kernel command line parameters "BOOT_IMAGE=(hd0,1)/vmlinuz-6.x", will be passed to user space.
+
+[chenhuacai@loongson.cn: use strstarts()]
+  Link: https://lkml.kernel.org/r/20250815090120.1569947-1-chenhuacai@loongson.cn
+Link: https://lkml.kernel.org/r/20250721101343.3283480-1-chenhuacai@loongson.cn
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/adf4350.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ init/main.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/iio/frequency/adf4350.c
-+++ b/drivers/iio/frequency/adf4350.c
-@@ -143,6 +143,19 @@ static int adf4350_set_freq(struct adf43
- 	if (freq > ADF4350_MAX_OUT_FREQ || freq < st->min_out_freq)
- 		return -EINVAL;
- 
-+	st->r4_rf_div_sel = 0;
+--- a/init/main.c
++++ b/init/main.c
+@@ -531,9 +531,23 @@ static int __init unknown_bootoption(cha
+ 				     const char *unused, void *arg)
+ {
+ 	size_t len = strlen(param);
++	int i;
 +
 +	/*
-+	 * !\TODO: The below computation is making sure we get a power of 2
-+	 * shift (st->r4_rf_div_sel) so that freq becomes higher or equal to
-+	 * ADF4350_MIN_VCO_FREQ. This might be simplified with fls()/fls_long()
-+	 * and friends.
++	 * Well-known bootloader identifiers:
++	 * 1. LILO/Grub pass "BOOT_IMAGE=...";
++	 * 2. kexec/kdump (kexec-tools) pass "kexec".
 +	 */
-+	while (freq < ADF4350_MIN_VCO_FREQ) {
-+		freq <<= 1;
-+		st->r4_rf_div_sel++;
++	const char *bootloader[] = { "BOOT_IMAGE=", "kexec", NULL };
+ 
+ 	repair_env_string(param, val);
+ 
++	/* Handle bootloader identifier */
++	for (i = 0; bootloader[i]; i++) {
++		if (strstarts(param, bootloader[i]))
++			return 0;
 +	}
 +
- 	if (freq > ADF4350_MAX_FREQ_45_PRESC) {
- 		prescaler = ADF4350_REG1_PRESCALER;
- 		mdiv = 75;
-@@ -151,13 +164,6 @@ static int adf4350_set_freq(struct adf43
- 		mdiv = 23;
- 	}
- 
--	st->r4_rf_div_sel = 0;
--
--	while (freq < ADF4350_MIN_VCO_FREQ) {
--		freq <<= 1;
--		st->r4_rf_div_sel++;
--	}
--
- 	/*
- 	 * Allow a predefined reference division factor
- 	 * if not set, compute our own
+ 	/* Handle obsolete-style parameters */
+ 	if (obsolete_checksetup(param))
+ 		return 0;
 
 
