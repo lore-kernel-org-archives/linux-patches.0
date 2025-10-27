@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230F631E0F4;
-	Mon, 27 Oct 2025 18:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EFA3328F3;
+	Mon, 27 Oct 2025 18:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591567; cv=none; b=nfZwfeBwo8/svKzkmKYDkJ8Me6Spcuoapxrr2hb2GTerdHEcgXaQ885ziiW76/U/nCNGX4ZtFbfyjXS00X+t/3YKZTeJyQaDHJcrRaegbgXo9Ry2bL/IG2zzNJncOGWzn8NknulTA62EIMp7N7x1K5gawPpwNBTd/Q4S2c+HPMo=
+	t=1761591570; cv=none; b=OBMPedjk9k8LDlac0YxH77aE2wzRU5V4O30sG5wfMni7PYc/bRCQ0msUUNWF37VDnGvBr8SAvRuz245AioVE5o+EtvupUBzX1TQ0M0S5UBkTtJ/hKseV8pYsDEko6cu+xO+CetdtdlIXHpqOkr2i75iiVB2vKD+JU0qeLHSZHMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591567; c=relaxed/simple;
-	bh=tKCU4D8eL7yqFnhVdVfU5zPTLG+POf2x0EzEEYAmNpQ=;
+	s=arc-20240116; t=1761591570; c=relaxed/simple;
+	bh=g6nFd/P2qZA9lf+/hQc+oV6FtMN3AsQWYpFzwwT9ymA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mm/Rt3gEQACQcnja0+2v3Ue6rA5q5UccZSnUqjVAKUfRyfgqgUdlF+nljnnQKw7akvHpLK80hlELXlR6srsuIooeGa76RsnVkN1ojbIu9NUwvR7a5rVhDdL4QMK+GlaUGOvZORwP0xDGLRFJyXD9e6b68QbeYzrw2n+IKn1Axww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4mFnlJq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWUOL6Hb9tiHURaHruWVLyPIGIU9bjng0aDYKlkRVOOb1Vyx69pPaXleDX4XYpjQi1nqqCmBoAelTbKvMXEChkTZCpOYDc2b/qw2fZBflde+wOK3BqEMS54aWVkhFlwpFR8AkBjwDVPq5oeEiVMLCCSk6/j3QGOoeG+YotZpzSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaXszIKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4mFnlJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97C2C4CEF1;
-	Mon, 27 Oct 2025 18:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaXszIKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CFBC4CEFD;
+	Mon, 27 Oct 2025 18:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591567;
-	bh=tKCU4D8eL7yqFnhVdVfU5zPTLG+POf2x0EzEEYAmNpQ=;
+	s=korg; t=1761591569;
+	bh=g6nFd/P2qZA9lf+/hQc+oV6FtMN3AsQWYpFzwwT9ymA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4mFnlJqs1KgV0cV3G0ba+2MATuqGulVRRS8/0/o4SY/RpFTdVTXiabg7WoeEuKf5
-	 XlpoVB4WXK0t3mfTcRk4gNgiOBKHjwfFyk2RD7iUyNqcGgyg4ylOI+GFEtc38NhAOD
-	 oGqlQPtpZH8t6nGBdOpnOuG9Mlt2iqhMXtcyoF4M=
+	b=PaXszIKkR7Fdex1Epi+oCXkAhL0xKlYzRHpp6mrEAy/5RKpiYPdvbwF72biz6/JfO
+	 F5zTPwfnb83mIaEv2cWwJqEJW3uBlFdqbiOWQUOHkeXjsODAZENyjqQcUQojUyNmRS
+	 K2vfgJlyAiYZYQJbYQgsfbz5ADV8F7HOWjX4ivlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandr Sapozhnikov <alsp705@gmail.com>,
-	Alexey Simakov <bigalex934@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jann Horn <jannh@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/332] tg3: prevent use of uninitialized remote_adv and local_adv variables
-Date: Mon, 27 Oct 2025 19:34:59 +0100
-Message-ID: <20251027183531.332835749@linuxfoundation.org>
+Subject: [PATCH 5.10 247/332] tls: always set record_type in tls_process_cmsg
+Date: Mon, 27 Oct 2025 19:35:00 +0100
+Message-ID: <20251027183531.360065442@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,51 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Simakov <bigalex934@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 0c3f2e62815a43628e748b1e4ad97a1c46cce703 ]
+[ Upstream commit b6fe4c29bb51cf239ecf48eacf72b924565cb619 ]
 
-Some execution paths that jump to the fiber_setup_done label
-could leave the remote_adv and local_adv variables uninitialized
-and then use it.
+When userspace wants to send a non-DATA record (via the
+TLS_SET_RECORD_TYPE cmsg), we need to send any pending data from a
+previous MSG_MORE send() as a separate DATA record. If that DATA record
+is encrypted asynchronously, tls_handle_open_record will return
+-EINPROGRESS. This is currently treated as an error by
+tls_process_cmsg, and it will skip setting record_type to the correct
+value, but the caller (tls_sw_sendmsg_locked) handles that return
+value correctly and proceeds with sending the new message with an
+incorrect record_type (DATA instead of whatever was requested in the
+cmsg).
 
-Initialize this variables at the point of definition to avoid this.
+Always set record_type before handling the open record. If
+tls_handle_open_record returns an error, record_type will be
+ignored. If it succeeds, whether with synchronous crypto (returning 0)
+or asynchronous (returning -EINPROGRESS), the caller will proceed
+correctly.
 
-Fixes: 85730a631f0c ("tg3: Add SGMII phy support for 5719/5718 serdes")
-Co-developed-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Signed-off-by: Alexandr Sapozhnikov <alsp705@gmail.com>
-Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20251014164736.5890-1-bigalex934@gmail.com
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/0457252e578a10a94e40c72ba6288b3a64f31662.1760432043.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/tls/tls_main.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index a7e8f13bb9761..e8be9e5a244fd 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -5821,7 +5821,7 @@ static int tg3_setup_fiber_mii_phy(struct tg3 *tp, bool force_reset)
- 	u32 current_speed = SPEED_UNKNOWN;
- 	u8 current_duplex = DUPLEX_UNKNOWN;
- 	bool current_link_up = false;
--	u32 local_adv, remote_adv, sgsr;
-+	u32 local_adv = 0, remote_adv = 0, sgsr;
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 63517995c692a..f22b32b4c8022 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -185,12 +185,9 @@ int tls_proccess_cmsg(struct sock *sk, struct msghdr *msg,
+ 			if (msg->msg_flags & MSG_MORE)
+ 				return -EINVAL;
  
- 	if ((tg3_asic_rev(tp) == ASIC_REV_5719 ||
- 	     tg3_asic_rev(tp) == ASIC_REV_5720) &&
-@@ -5962,9 +5962,6 @@ static int tg3_setup_fiber_mii_phy(struct tg3 *tp, bool force_reset)
- 		else
- 			current_duplex = DUPLEX_HALF;
- 
--		local_adv = 0;
--		remote_adv = 0;
+-			rc = tls_handle_open_record(sk, msg->msg_flags);
+-			if (rc)
+-				return rc;
 -
- 		if (bmcr & BMCR_ANENABLE) {
- 			u32 common;
- 
+ 			*record_type = *(unsigned char *)CMSG_DATA(cmsg);
+-			rc = 0;
++
++			rc = tls_handle_open_record(sk, msg->msg_flags);
+ 			break;
+ 		default:
+ 			return -EINVAL;
 -- 
 2.51.0
 
