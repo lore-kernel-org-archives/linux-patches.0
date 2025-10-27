@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A302218EB1;
-	Mon, 27 Oct 2025 18:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0DE2EDD62;
+	Mon, 27 Oct 2025 18:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590343; cv=none; b=QuSQAi8cGNqHHST8A+umIpPIIL3u8DP4uBueASNssqAG3sy2PfNBElyaH78YkyG4YlOQ9yIW+yN7dfp6LNiZyIKwgMZgP44/6JT8Znu2iuQol2zUmPN0WKSHFAH0wMKCZr7TFzxoeLhDwlJnDE6EzZDgPf+ZqCt+pPdMaJBlg34=
+	t=1761590347; cv=none; b=PJq6TmEF7I9CVHh4qo5uCa8TO4KdBTDJrMZUtGOUT3LsFvNXYbnJdoDy44408ZHnPwxIs+hkyyFYU/DKXUHUvlmv5Vap8CDqJH+gYGYLTCiR0MY56HaeK2ySLnsnJKQB6NjbZwDZWTaL2TqvhaPyvry1WcV8bXZW+UiNnldZrgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590343; c=relaxed/simple;
-	bh=s2gmq8dKBdTAilCYAoW4dD0atRkqtdrathisU+v7zrI=;
+	s=arc-20240116; t=1761590347; c=relaxed/simple;
+	bh=dLW48edCYqtU264i8xVPwMbBL6cSfF58NlMl6/aUFyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCP4Pmz+M6MCDqvY9iKF+WGVZc88fEwA/xMh2S3moSdW+ksMeqRGr18xNvK3TdXwqDD2Vsn/I9Pn/8km87aZelV8yzPI4ZItYbka06AKVyE2yza+GWlPL3mFr3jKJrieiOo+uS1AwaJjNqr46h++k55fBahwZVhAEpPHaPIv2jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNAOZQBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZKcgEFROiNdMj93KciwccMxv1A7FFCWHYIS8gnsUhtQc3tQf+K/N1CN8CK5Djln9vo4UDBU0FN2t3ea0Izj7C1yJrYPb57gE5rdXtjB+m9eoQYn1TPx0Y0C8FSr9Mn1eqToGl2fjQfkx1pNo0MYw6bdyRtVOR+eYfQ8aD74UTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Au6d39nn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNAOZQBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76753C4CEF1;
-	Mon, 27 Oct 2025 18:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Au6d39nn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D84AC4CEF1;
+	Mon, 27 Oct 2025 18:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590342;
-	bh=s2gmq8dKBdTAilCYAoW4dD0atRkqtdrathisU+v7zrI=;
+	s=korg; t=1761590345;
+	bh=dLW48edCYqtU264i8xVPwMbBL6cSfF58NlMl6/aUFyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNAOZQBOHXyoth3tieXAdRgIBp7ynLJskfYJbKqCxfmbm6jojAzhiVcdlgJwtk+/r
-	 DQL+U/+RZUphxm1DlIxTjTuJ1sKEpgiYd7GTjB6o1K9FbWAYy8lJhXCgr5swgbL+Jd
-	 7RV8uc7zwQtCkhl8Cf22QAdP49W1AeojMid1jQoo=
+	b=Au6d39nnnTv5ZksSmcqLBC17BcTrfplRLmcjtPYaWX4ZhsMLqEfr9q/mLePFlGZs+
+	 DAEYikN3ZB5aVZQC1hCoc0T6jHyfaAG5mxZINPKAxSOlBDdWq0XIfz4rXdrdWYglEJ
+	 om5JSj1Wvl3OnVMJsg65B/n0G88AwDGxY1fOfJdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com,
-	Larshin Sergey <Sergey.Larshin@kaspersky.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 010/224] media: rc: fix races with imon_disconnect()
-Date: Mon, 27 Oct 2025 19:32:36 +0100
-Message-ID: <20251027183509.262278116@linuxfoundation.org>
+	Xiaowei Li <xiaowei.li@simcom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 011/224] USB: serial: option: add SIMCom 8230C compositions
+Date: Mon, 27 Oct 2025 19:32:37 +0100
+Message-ID: <20251027183509.290134707@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,161 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larshin Sergey <Sergey.Larshin@kaspersky.com>
+From: Xiaowei Li <xiaowei.li@simcom.com>
 
-[ Upstream commit fa0f61cc1d828178aa921475a9b786e7fbb65ccb ]
+commit 0e0ba0ecec3d6e819e0c2348331ff99afe2eb5d5 upstream.
 
-Syzbot reports a KASAN issue as below:
-BUG: KASAN: use-after-free in __create_pipe include/linux/usb.h:1945 [inline]
-BUG: KASAN: use-after-free in send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-Read of size 4 at addr ffff8880256fb000 by task syz-executor314/4465
+Add support for SIMCom 8230C which is based on Qualcomm SDX35 chip.
 
-CPU: 2 PID: 4465 Comm: syz-executor314 Not tainted 6.0.0-rc1-syzkaller #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.14.0-2 04/01/2014
-Call Trace:
- <TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x6e9 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-__create_pipe include/linux/usb.h:1945 [inline]
-send_packet+0xa2d/0xbc0 drivers/media/rc/imon.c:627
-vfd_write+0x2d9/0x550 drivers/media/rc/imon.c:991
-vfs_write+0x2d7/0xdd0 fs/read_write.c:576
-ksys_write+0x127/0x250 fs/read_write.c:631
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+USB Device Listings:
 
-The iMON driver improperly releases the usb_device reference in
-imon_disconnect without coordinating with active users of the
-device.
+0x9071: tty (DM) + tty (NMEA) + tty (AT) + rmnet (QMI mode) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#= 10 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9071 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Specifically, the fields usbdev_intf0 and usbdev_intf1 are not
-protected by the users counter (ictx->users). During probe,
-imon_init_intf0 or imon_init_intf1 increments the usb_device
-reference count depending on the interface. However, during
-disconnect, usb_put_dev is called unconditionally, regardless of
-actual usage.
+0x9078: tty (DM) + tty (NMEA) + tty (AT) + ECM + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=9078 Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-As a result, if vfd_write or other operations are still in
-progress after disconnect, this can lead to a use-after-free of
-the usb_device pointer.
+0x907b: RNDIS + tty (DM) + tty (NMEA) + tty (AT) + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=05 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1e0e ProdID=907b Rev= 5.15
+S:  Manufacturer=SIMCOM
+S:  Product=SDXBAAGHA-IDP _SN:D744C4C5
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=ef(misc ) Sub=04 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=ef(misc ) Sub=04 Prot=01 Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Thread 1 vfd_write                      Thread 2 imon_disconnect
-                                        ...
-                                        if
-                                          usb_put_dev(ictx->usbdev_intf0)
-                                        else
-                                          usb_put_dev(ictx->usbdev_intf1)
-...
-while
-  send_packet
-    if
-      pipe = usb_sndintpipe(
-        ictx->usbdev_intf0) UAF
-    else
-      pipe = usb_sndctrlpipe(
-        ictx->usbdev_intf0, 0) UAF
-
-Guard access to usbdev_intf0 and usbdev_intf1 after disconnect by
-checking ictx->disconnected in all writer paths. Add early return
-with -ENODEV in send_packet(), vfd_write(), lcd_write() and
-display_open() if the device is no longer present.
-
-Set and read ictx->disconnected under ictx->lock to ensure memory
-synchronization. Acquire the lock in imon_disconnect() before setting
-the flag to synchronize with any ongoing operations.
-
-Ensure writers exit early and safely after disconnect before the USB
-core proceeds with cleanup.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Reported-by: syzbot+f1a69784f6efe748c3bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1a69784f6efe748c3bf
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Signed-off-by: Xiaowei Li <xiaowei.li@simcom.com>
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Larshin Sergey <Sergey.Larshin@kaspersky.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -536,7 +536,9 @@ static int display_open(struct inode *in
- 
- 	mutex_lock(&ictx->lock);
- 
--	if (!ictx->display_supported) {
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+	} else if (!ictx->display_supported) {
- 		pr_err("display not supported by device\n");
- 		retval = -ENODEV;
- 	} else if (ictx->display_isopen) {
-@@ -600,6 +602,9 @@ static int send_packet(struct imon_conte
- 
- 	lockdep_assert_held(&ictx->lock);
- 
-+	if (ictx->disconnected)
-+		return -ENODEV;
-+
- 	/* Check if we need to use control or interrupt urb */
- 	if (!ictx->tx_control) {
- 		pipe = usb_sndintpipe(ictx->usbdev_intf0,
-@@ -956,12 +961,14 @@ static ssize_t vfd_write(struct file *fi
- 	static const unsigned char vfd_packet6[] = {
- 		0x01, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF };
- 
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	if (mutex_lock_interruptible(&ictx->lock))
- 		return -ERESTARTSYS;
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
- 		retval = -ENODEV;
-@@ -1036,11 +1043,13 @@ static ssize_t lcd_write(struct file *fi
- 	int retval = 0;
- 	struct imon_context *ictx = file->private_data;
- 
--	if (ictx->disconnected)
--		return -ENODEV;
--
- 	mutex_lock(&ictx->lock);
- 
-+	if (ictx->disconnected) {
-+		retval = -ENODEV;
-+		goto exit;
-+	}
-+
- 	if (!ictx->display_supported) {
- 		pr_err_ratelimited("no iMON display present\n");
- 		retval = -ENODEV;
-@@ -2496,7 +2505,11 @@ static void imon_disconnect(struct usb_i
- 	int ifnum;
- 
- 	ictx = usb_get_intfdata(interface);
-+
-+	mutex_lock(&ictx->lock);
- 	ictx->disconnected = true;
-+	mutex_unlock(&ictx->lock);
-+
- 	dev = ictx->dev;
- 	ifnum = interface->cur_altsetting->desc.bInterfaceNumber;
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2114,6 +2114,12 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9003, 0xff) },	/* Simcom SIM7500/SIM7600 MBIM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9011, 0xff),	/* Simcom SIM7500/SIM7600 RNDIS mode */
+ 	  .driver_info = RSVD(7) },
++	{ USB_DEVICE(0x1e0e, 0x9071),				/* Simcom SIM8230 RMNET mode */
++	  .driver_info = RSVD(3) | RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9078, 0xff),	/* Simcom SIM8230 ECM mode */
++	  .driver_info = RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x907b, 0xff),	/* Simcom SIM8230 RNDIS mode */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9205, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT+ECM mode */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1e0e, 0x9206, 0xff) },	/* Simcom SIM7070/SIM7080/SIM7090 AT-only mode */
+ 	{ USB_DEVICE(ALCATEL_VENDOR_ID, ALCATEL_PRODUCT_X060S_X200),
 
 
