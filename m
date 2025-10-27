@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3479831D754;
-	Mon, 27 Oct 2025 19:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD1931D753;
+	Mon, 27 Oct 2025 19:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592953; cv=none; b=JE1VzdmEG6Ier+ePww3wg0TmlGSMCrBWhEFHGwr9n4YBxmdYIUa/8DrXUv4FZ6z5pxjrFSxdxavaBiKB3I+cpKPlOOu6Cvnmy8DA8vmo6ttPMUB6mBP55QfvqIIWCmhDTvlY/aHQBLfsJkpPjc0KMw2TS+kpUiwEoe76vJe098c=
+	t=1761592955; cv=none; b=mdMhotWTrYPlO4ElSyfmTFCA1krJjzjN6f5u0uDsSLSnhSSPXJe7vgY5/O23cuSLiMq/8CC5+djXAFUJsaVDsUg/9m6xfeI5a+g+NVNB6iIWNU70Iwg3MhS6tNiuniF3iwPR/TsYUsF5iB2VVX+d1nBT3Xx/yRuPtorB/N7HQqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592953; c=relaxed/simple;
-	bh=5+sUDh3QIYa0/wBm4gt3EqSXXGYqs8+wTjdJHrKkrl4=;
+	s=arc-20240116; t=1761592955; c=relaxed/simple;
+	bh=vBuHsqY2snZe4YtbT2uv1f8DGotOcO3fOLQddhlOmB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/D+ji6pNusK14csxq2V+DrabntdZnGbPDo73YvAT2fZUePvNqqj6xPx2XkT50EGxnWGJC324EMXot/EkPNv4EwwO2r5LSQDBJzyukdfgJswHj9s2Kj0VtQI+RBNXXoFnj9DmWUuTxihwqBVCJcngEzogoFAKP/5l2Lpv9VDKqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO1bPRw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tPY2Z9/NEDd9KF9XrWId2xJRgpFSPaawMO2EIkH+qNgR6SOZTYt0uN2Q2kVSibiZgG+GYKpd3zBOkRB2BORrYOJ940AVC7jyh284Z4cD+776xDM0Y58pvzOlV3XjgnfWOsoB06FHnY/bszHGRi75FIEK3RDFx6Lp5bBHy4unrlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBBoMziv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO1bPRw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC871C4CEF1;
-	Mon, 27 Oct 2025 19:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBBoMziv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50647C4CEF1;
+	Mon, 27 Oct 2025 19:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592953;
-	bh=5+sUDh3QIYa0/wBm4gt3EqSXXGYqs8+wTjdJHrKkrl4=;
+	s=korg; t=1761592955;
+	bh=vBuHsqY2snZe4YtbT2uv1f8DGotOcO3fOLQddhlOmB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO1bPRw8BszsSzysaTFNHi5SYuYaxKJWJztYaA9PL8pcQd8sEf/tuYr7LfOAN+xG9
-	 KNATiZgqPxio6EiNLh33OBs0xusUgN/GdYOQqFoXEUxS6Su4dcTA2YEPCPJLFOZ1d2
-	 WLAmjQzrEV2D0pJQIW+GDCy6JZ7UtyoUfXJtcWQY=
+	b=mBBoMziv3w0RgIP4oL+Gj3W9hKWT3A7/4WOlQMfguH89zjTyaReAeL2xV4wY081/5
+	 GbKLPODdCsaP684eCNw0bIcM3/s/+7XBBPi/wfti29xNfJ5A+82em6RD2z34medm/D
+	 mmzPBMlQuAvO4wULLlQ4NHsTvk5CzIgy+Mq1XR/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Chris Park <chris.park@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>
-Subject: [PATCH 6.12 068/117] drm/amd/display: increase max link count and fix link->enc NULL pointer access
-Date: Mon, 27 Oct 2025 19:36:34 +0100
-Message-ID: <20251027183455.847656715@linuxfoundation.org>
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 077/117] spi: airoha: switch back to non-dma mode in the case of error
+Date: Mon, 27 Oct 2025 19:36:43 +0100
+Message-ID: <20251027183456.113131380@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -54,60 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-commit bec947cbe9a65783adb475a5fb47980d7b4f4796 upstream.
+[ Upstream commit 20d7b236b78c7ec685a22db5689b9c829975e0c3 ]
 
-[why]
-1.) dc->links[MAX_LINKS] array size smaller than actual requested.
-max_connector + max_dpia + 4 virtual = 14.
-increase from 12 to 14.
+Current dirmap code does not switch back to non-dma mode in the case of
+error. This is wrong.
 
-2.) hw_init() access null LINK_ENC for dpia non display_endpoint.
+This patch fixes dirmap read/write error path.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d7f5a61e1b04ed87b008c8d327649d184dc5bb45)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251012121707.2296160-6-mikhail.kshevetskiy@iopsys.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    3 +++
- drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h         |    8 +++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/spi/spi-airoha-snfi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -287,6 +287,9 @@ void dcn401_init_hw(struct dc *dc)
- 		 */
- 		struct dc_link *link = dc->links[i];
+diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
+index 0b89dc42545b1..8143fbb0cf4e6 100644
+--- a/drivers/spi/spi-airoha-snfi.c
++++ b/drivers/spi/spi-airoha-snfi.c
+@@ -698,13 +698,13 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
  
-+		if (link->ep_type != DISPLAY_ENDPOINT_PHY)
-+			continue;
-+
- 		link->link_enc->funcs->hw_init(link->link_enc);
+ 	err = airoha_snand_nfi_config(as_ctrl);
+ 	if (err)
+-		return err;
++		goto error_dma_mode_off;
  
- 		/* Check for enabled DIG to identify enabled display */
---- a/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/hw/hw_shared.h
-@@ -44,7 +44,13 @@
-  */
- #define MAX_PIPES 6
- #define MAX_PHANTOM_PIPES (MAX_PIPES / 2)
--#define MAX_LINKS (MAX_PIPES * 2 +2)
-+
-+#define MAX_DPIA 6
-+#define MAX_CONNECTOR 6
-+#define MAX_VIRTUAL_LINKS 4
-+
-+#define MAX_LINKS (MAX_DPIA + MAX_CONNECTOR + MAX_VIRTUAL_LINKS)
-+
- #define MAX_DIG_LINK_ENCODERS 7
- #define MAX_DWB_PIPES	1
- #define MAX_HPO_DP2_ENCODERS	4
+ 	dma_addr = dma_map_single(as_ctrl->dev, txrx_buf, SPI_NAND_CACHE_SIZE,
+ 				  DMA_FROM_DEVICE);
+ 	err = dma_mapping_error(as_ctrl->dev, dma_addr);
+ 	if (err)
+-		return err;
++		goto error_dma_mode_off;
+ 
+ 	/* set dma addr */
+ 	err = regmap_write(as_ctrl->regmap_nfi, REG_SPI_NFI_STRADDR,
+@@ -804,6 +804,8 @@ static ssize_t airoha_snand_dirmap_read(struct spi_mem_dirmap_desc *desc,
+ error_dma_unmap:
+ 	dma_unmap_single(as_ctrl->dev, dma_addr, SPI_NAND_CACHE_SIZE,
+ 			 DMA_FROM_DEVICE);
++error_dma_mode_off:
++	airoha_snand_set_mode(as_ctrl, SPI_MODE_MANUAL);
+ 	return err;
+ }
+ 
+@@ -936,6 +938,7 @@ static ssize_t airoha_snand_dirmap_write(struct spi_mem_dirmap_desc *desc,
+ error_dma_unmap:
+ 	dma_unmap_single(as_ctrl->dev, dma_addr, SPI_NAND_CACHE_SIZE,
+ 			 DMA_TO_DEVICE);
++	airoha_snand_set_mode(as_ctrl, SPI_MODE_MANUAL);
+ 	return err;
+ }
+ 
+-- 
+2.51.0
+
 
 
