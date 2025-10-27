@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646BE2BE037;
-	Mon, 27 Oct 2025 19:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6A82BE037;
+	Mon, 27 Oct 2025 19:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592670; cv=none; b=RqKqyc9Y6zYyQOZkWhzkk8CJgPHrmNdLQw6NJpiqnKqD8CPyYnLWtSW2JgYsr7lWWT9wsaFfvx4HvAiB3svdy8thpXJ5Z6sKHwwjaH5Jxn1aTyL6GqfdSrG/WRvGJitd+syKUxF0NkZmkZcPEoqSjqAScLviCIl8pISrmvExrc8=
+	t=1761592675; cv=none; b=SCC52hgF9eng8ASTyKfpQKcWVXuGRMe5uVvHQJDis0B8Xi1fLsrPcqjZkqcBAwHOpJIs9HQ5mwCF8GyHJm84wQ79H6AShmTR5hF7ISjLBd6lGt03TNu5KPM7pdctI1+2rFs3uBypvUgnrFoP7ljy8P0e+RcNvdeOnE2aVdaNg8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592670; c=relaxed/simple;
-	bh=m3IDyyHGSFhYQOH31ClQPnkRURtXris0umCAJzx5T54=;
+	s=arc-20240116; t=1761592675; c=relaxed/simple;
+	bh=PuKchAanZrFYkQDOOCczFg3gnbvcmm1Lj7BvKZLCQic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pltTZMoNGpZpw/1v2WWbZQ5dBOeTrueR5NE0WllEoPRbhezMhkEHMUhhlMFK9AxEJ6TBwQqRI3w40PC8EctWSqwqttvg3Uq6Nqh1O8tjtye4AP0sIi49A5vRtDOps0SJlADx01H4GkJN39yFaoUCAwJ0+4o7b2QMypg0z6PPp7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD06/VWR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ui9pZESimyqpxd8Qf3ItwVv4mcQAzVSSnyUURgspG+7k2GJwOyu9flxSbk/adnQHeLnQRaZuYtZGb8xsdOChC6PL5i5uujdxJpFM0p5l79etNfC1Ge+psbRsI/MYl9xsv6sLxNDA+TQQe7EfiWB2S3qzdWG+gFP77G5RzoS0Ulg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOXZcDpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD06/VWR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B30C4CEF1;
-	Mon, 27 Oct 2025 19:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOXZcDpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA2EC4CEF1;
+	Mon, 27 Oct 2025 19:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592670;
-	bh=m3IDyyHGSFhYQOH31ClQPnkRURtXris0umCAJzx5T54=;
+	s=korg; t=1761592673;
+	bh=PuKchAanZrFYkQDOOCczFg3gnbvcmm1Lj7BvKZLCQic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gD06/VWRrKaJFHYMQQUBf7Rfsf4y8liFhihAPmfflUIOdwmUoWq8bW8RVDheTBSfV
-	 X+erSxi1+cBNBInZJ0/FmUOVmBBMyKnYL+IoXVaS6Q3QrKQ5njvDemXv09HNpkPTqT
-	 KQgEltEmCMB/RLaAOBo7moaq9Z6E2wCyGz8K7cB4=
+	b=EOXZcDpfseIrc90Ou1p1dyDaggqh3ag4NgVaW7OU9LPbfzexJvanmyNH1AExD9HSW
+	 jaE9CsKbS6GRJYtrXGXTQQd03p3wHM9QGXH6fNMEd+p7q7oopE6jKbwUyCamQcdJaW
+	 pfnKZjLZnmwoG9Neyjw7XTrv++kbY11UCDHP98pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Artem Shimko <a.shimko.dev@gmail.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Han Gao <rabenda.cn@gmail.com>,
+	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 51/84] firmware: arm_scmi: Fix premature SCMI_XFER_FLAG_IS_RAW clearing in raw mode
-Date: Mon, 27 Oct 2025 19:36:40 +0100
-Message-ID: <20251027183440.177890940@linuxfoundation.org>
+Subject: [PATCH 6.6 52/84] RISC-V: Define pgprot_dmacoherent() for non-coherent devices
+Date: Mon, 27 Oct 2025 19:36:41 +0100
+Message-ID: <20251027183440.204886734@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183438.817309828@linuxfoundation.org>
 References: <20251027183438.817309828@linuxfoundation.org>
@@ -52,51 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Shimko <a.shimko.dev@gmail.com>
+From: Anup Patel <apatel@ventanamicro.com>
 
-[ Upstream commit 20b93a0088a595bceed4a026d527cbbac4e876c5 ]
+[ Upstream commit ca525d53f994d45c8140968b571372c45f555ac1 ]
 
-The SCMI_XFER_FLAG_IS_RAW flag was being cleared prematurely in
-scmi_xfer_raw_put() before the transfer completion was properly
-acknowledged by the raw message handlers.
+The pgprot_dmacoherent() is used when allocating memory for
+non-coherent devices and by default pgprot_dmacoherent() is
+same as pgprot_noncached() unless architecture overrides it.
 
-Move the clearing of SCMI_XFER_FLAG_IS_RAW and SCMI_XFER_FLAG_CHAN_SET
-from scmi_xfer_raw_put() to __scmi_xfer_put() to ensure the flags remain
-set throughout the entire raw message processing pipeline until the
-transfer is returned to the free pool.
+Currently, there is no pgprot_dmacoherent() definition for
+RISC-V hence non-coherent device memory is being mapped as
+IO thereby making CPU access to such memory slow.
 
-Fixes: 3095a3e25d8f ("firmware: arm_scmi: Add xfer helpers to provide raw access")
-Suggested-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Message-Id: <20251008091057.1969260-1-a.shimko.dev@gmail.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Define pgprot_dmacoherent() to be same as pgprot_writecombine()
+for RISC-V so that CPU access non-coherent device memory as
+NOCACHE which is better than accessing it as IO.
+
+Fixes: ff689fd21cb1 ("riscv: add RISC-V Svpbmt extension support")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Tested-by: Han Gao <rabenda.cn@gmail.com>
+Tested-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20250820152316.1012757-1-apatel@ventanamicro.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/include/asm/pgtable.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 9d4c983a27547..fbe893734411c 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -627,6 +627,7 @@ __scmi_xfer_put(struct scmi_xfers_info *minfo, struct scmi_xfer *xfer)
- 			hash_del(&xfer->node);
- 			xfer->pending = false;
- 		}
-+		xfer->flags = 0;
- 		hlist_add_head(&xfer->node, &minfo->free_xfers);
- 	}
- 	spin_unlock_irqrestore(&minfo->xfer_lock, flags);
-@@ -645,8 +646,6 @@ void scmi_xfer_raw_put(const struct scmi_handle *handle, struct scmi_xfer *xfer)
- {
- 	struct scmi_info *info = handle_to_scmi_info(handle);
- 
--	xfer->flags &= ~SCMI_XFER_FLAG_IS_RAW;
--	xfer->flags &= ~SCMI_XFER_FLAG_CHAN_SET;
- 	return __scmi_xfer_put(&info->tx_minfo, xfer);
+diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
+index 332a6bf72b1d5..987cfe87e7825 100644
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -618,6 +618,8 @@ static inline pgprot_t pgprot_writecombine(pgprot_t _prot)
+ 	return __pgprot(prot);
  }
  
++#define pgprot_dmacoherent pgprot_writecombine
++
+ /*
+  * THP functions
+  */
 -- 
 2.51.0
 
