@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9CF3233ED;
-	Mon, 27 Oct 2025 19:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38C1332900;
+	Mon, 27 Oct 2025 19:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591669; cv=none; b=mPX2QaZNK2PsTmiZq2+cvInAiWRiPD5kYARkaeXgNkY7B0R0leUnwLevt3Pyh/IqPn7xIYp+/fB0Lyqj5VIPTP9hcjckife07HkHUoZ24aIB930iEEnbHA/96o8Es5uaDqswXaZdlpuzV1LxZyVRki2Sxz46VkawHEJsfIob+0Y=
+	t=1761591671; cv=none; b=khAA+yKc3LcX1Fzj95bZeM8zfC+MbmTKqdfe+OPTwKVLq1LiLnyRAs2JbY0+WE7jXF16krIzR2MviuNEPEPnQfyocD9ZBWrZEhxXbDQt5oN22sVu/geX5ZyXilU9QfBwOkVy0y2BuRZUC0yJpLv31SgFdiWS5T6m1p8GbABnbtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591669; c=relaxed/simple;
-	bh=o/HKvfedrIkhKnrXaubNvLMVB3XD9MOXcrxL6asBlJA=;
+	s=arc-20240116; t=1761591671; c=relaxed/simple;
+	bh=icM7Q1j8GLqLmcpszjolm1Y/md1kJGQpU7Zw15cxzdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pmaNL7cbyACtvx09jTjwNKY9AmkTvJsPMTg70v2Xwf8eeDgBngAmrxAwpamrAX+jklovXIAErv2py5fidVmM135WnqjJTIt3w9B6Yrm1WYIGVaVD3MX1CRYkK3xOGrn2HsomTnIxO6MSu88lwljQyeBJPUGBaEpU0+EmyjuX26E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPORpJLc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTyNjOirbejE5iR3p11+Viqht/plqMF8aDxAmjUA1gQIgWwdSxe4rC8qXucIx2MyY3sGz/mRNLSPl5BgM40xgkw+WAYoaUVIAw/crzdN/QZKJd3WH4D7ExBfS369sgJ5v2TxsCsIgxQLLeK2psrCUj9fegxyJzKboivaAoKEFiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5GzwWb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPORpJLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B215CC4CEFD;
-	Mon, 27 Oct 2025 19:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5GzwWb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FB5C19422;
+	Mon, 27 Oct 2025 19:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591669;
-	bh=o/HKvfedrIkhKnrXaubNvLMVB3XD9MOXcrxL6asBlJA=;
+	s=korg; t=1761591671;
+	bh=icM7Q1j8GLqLmcpszjolm1Y/md1kJGQpU7Zw15cxzdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPORpJLcSVTNp0ICHKBwc8WWkc6Bx6yRZ9TLopp85qPHT4t8JFcnQTZB2VcClGZn1
-	 m0hoUACzRCZAArGz1MEnJj2K+k61zAMCAL9xAJrx5s77I2o/LlmSRMwN7jfXruqvdp
-	 1sqBLkySPKGxovRxjgMYxNSVex1ztzAQjVwMLUqA=
+	b=a5GzwWb/YZxefV4KerrrNK8KPOnz9S2bv8RwDVDc69CT4CyycfclAzUFjZf052keC
+	 2/2x7ygF1BLVMgovjFOUgjSsDe+TcVvQDFR6pDsTCudOupdHX14QZDmLqG034KIkGN
+	 uvT7ATvvhSglnDMEf1biDBlhFcT84DIrOVPCeKQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 285/332] net: ravb: Ensure memory write completes before ringing TX doorbell
-Date: Mon, 27 Oct 2025 19:35:38 +0100
-Message-ID: <20251027183532.382806714@linuxfoundation.org>
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	linux-riscv@lists.infradead.org,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 286/332] riscv: Use of_get_cpu_hwid()
+Date: Mon, 27 Oct 2025 19:35:39 +0100
+Message-ID: <20251027183532.408988014@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -46,56 +48,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 706136c5723626fcde8dd8f598a4dcd251e24927 upstream.
+[ Upstream commit bd2259ee458e299ec14061da7faddcfb0d54d154 ]
 
-Add a final dma_wmb() barrier before triggering the transmit request
-(TCCR_TSRQ) to ensure all descriptor and buffer writes are visible to
-the DMA engine.
+Replace open coded parsing of CPU nodes' 'reg' property with
+of_get_cpu_hwid().
 
-According to the hardware manual, a read-back operation is required
-before writing to the doorbell register to guarantee completion of
-previous writes. Instead of performing a dummy read, a dma_wmb() is
-used to both enforce the same ordering semantics on the CPU side and
-also to ensure completion of writes.
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Cc: stable@vger.kernel.org
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20251017151830.171062-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: linux-riscv@lists.infradead.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20211006164332.1981454-9-robh@kernel.org
+Stable-dep-of: d2721bb165b3 ("RISC-V: Don't print details of CPUs disabled in DT")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/riscv/kernel/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1605,6 +1605,14 @@ static netdev_tx_t ravb_start_xmit(struc
- 	} else {
- 		desc->die_dt = DT_FSINGLE;
+diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
+index 6d59e6906fddf..f13b2c9ea912d 100644
+--- a/arch/riscv/kernel/cpu.c
++++ b/arch/riscv/kernel/cpu.c
+@@ -22,7 +22,8 @@ int riscv_of_processor_hartid(struct device_node *node)
+ 		return -ENODEV;
  	}
-+
-+	/* Before ringing the doorbell we need to make sure that the latest
-+	 * writes have been committed to memory, otherwise it could delay
-+	 * things until the doorbell is rang again.
-+	 * This is in replacement of the read operation mentioned in the HW
-+	 * manuals.
-+	 */
-+	dma_wmb();
- 	ravb_modify(ndev, TCCR, TCCR_TSRQ0 << q, TCCR_TSRQ0 << q);
  
- 	priv->cur_tx[q] += num_tx_desc;
+-	if (of_property_read_u32(node, "reg", &hart)) {
++	hart = of_get_cpu_hwid(node, 0);
++	if (hart == ~0U) {
+ 		pr_warn("Found CPU without hart ID\n");
+ 		return -ENODEV;
+ 	}
+-- 
+2.51.0
+
 
 
