@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E0F32862B;
-	Mon, 27 Oct 2025 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7C625784E;
+	Mon, 27 Oct 2025 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590779; cv=none; b=O7Se8/c1y58/ySL5gRJAVK4QYdrQrGShpJm5sl34jXF20H46YhzFlIZNJlaioMMyTOUYiS/O416+JrqEhtxACiI2PNcsR0Nu8PFHao/YTWitZ/+t7oElDx7AMDNCVDjizeOzFC4v4KPLOqd0VE350Qv8s5Ki4kCMs8Z80xkgMeI=
+	t=1761590782; cv=none; b=H3iIqQBj53XoRF+ndJHgpdNa1E/ZAFKPbcoAr8reHJvUSOC1J6CAlAfQ1kqsvXAomSkv3kzntSuPybe5g55VbpmYYvYzvvLEmD5VdfATFOHE84BYDDpNw9piapOFX2ZFuLTgV3lWxImfRDZXvqxc1A/gDdEu7Q1t/M79953rr30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590779; c=relaxed/simple;
-	bh=YpqYEvnxI9A8T44XQfLHtO+CrCnXGAX78BVTGQXN/+I=;
+	s=arc-20240116; t=1761590782; c=relaxed/simple;
+	bh=VO049xwA7GKA7xCNlm0aul/jF6zu32ssD9eI1CRrbek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WV/1hRDv/kXp6UqKyAjvowoy2Mm2xs7nFfYeUJXHzM+ygAQAqm3SiPrfjetpklub1BkTPcjT2fG5z5Z8iMJIEFyzV/nV75n/noizyr42cQn3pnvNUOUk+vrDwbu+f4VEJCY0UHrfZ2CwMzkrNWEaFNu8W6U+/Uhvr1C3h336XiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4BOfbQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgzzndgBOc7jqIpcYXEOQCw06CF2uI/fORpVbVdqD3r3W338yQ/Vgktk3DEoQCG9gIxm0NHe2B+8XO0einI3QhQoGLDiR4haKSzOGm66ZMCgQTcu94bxNXwzOrCeaupCSfPGMnwi80TYB95ptvsXAOKBnUpLR7ZOwpk632GTHQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVXwhC5Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4BOfbQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9A2C4CEF1;
-	Mon, 27 Oct 2025 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVXwhC5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C44C4CEF1;
+	Mon, 27 Oct 2025 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590779;
-	bh=YpqYEvnxI9A8T44XQfLHtO+CrCnXGAX78BVTGQXN/+I=;
+	s=korg; t=1761590781;
+	bh=VO049xwA7GKA7xCNlm0aul/jF6zu32ssD9eI1CRrbek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4BOfbQ4FSMOF+51evqoB6B1fwEDT9pVaebNr0/ZeQdmSlUNGZ21mDjaRy3huKAyv
-	 hXSPwURV/xf8nu8iDvRHrASTbpMgty2GL5iN+WPTE9gat4cO+ybC6msrid7/sqFfPm
-	 //8pKvRHmjj4ZYMsrRFIq43zA3XJt+WVnsawOzDQ=
+	b=aVXwhC5Yl2Kd+SsMq1YkYTW/vFi1OPA0kmf4Mz8Oo6iQxjJOT82L8A9UM8r8VQxp9
+	 EaEXOYWpuhIDiPhABZik0K6nLveUNeD/AEFnK1O9AYqB0ys0cdxsCXWK7rwyyBXXkC
+	 80fIrC9sftk0+kwlNQjPc65jwJ9ajd5Qc1CYypuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Jann Horn <jannh@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 132/224] net/9p: fix double req put in p9_fd_cancelled
-Date: Mon, 27 Oct 2025 19:34:38 +0100
-Message-ID: <20251027183512.511185103@linuxfoundation.org>
+Subject: [PATCH 5.4 165/224] tls: dont rely on tx_work during send()
+Date: Mon, 27 Oct 2025 19:35:11 +0100
+Message-ID: <20251027183513.333976801@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,123 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 674b56aa57f9379854cb6798c3bbcef7e7b51ab7 ]
+[ Upstream commit 7f846c65ca11e63d2409868ff039081f80e42ae4 ]
 
-Syzkaller reports a KASAN issue as below:
+With async crypto, we rely on tx_work to actually transmit records
+once encryption completes. But while send() is running, both the
+tx_lock and socket lock are held, so tx_work_handler cannot process
+the queue of encrypted records, and simply reschedules itself. During
+a large send(), this could last a long time, and use a lot of memory.
 
-general protection fault, probably for non-canonical address 0xfbd59c0000000021: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: maybe wild-memory-access in range [0xdead000000000108-0xdead00000000010f]
-CPU: 0 PID: 5083 Comm: syz-executor.2 Not tainted 6.1.134-syzkaller-00037-g855bd1d7d838 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:__list_del include/linux/list.h:114 [inline]
-RIP: 0010:__list_del_entry include/linux/list.h:137 [inline]
-RIP: 0010:list_del include/linux/list.h:148 [inline]
-RIP: 0010:p9_fd_cancelled+0xe9/0x200 net/9p/trans_fd.c:734
+Transmit any pending encrypted records before restarting the main
+loop of tls_sw_sendmsg_locked.
 
-Call Trace:
- <TASK>
- p9_client_flush+0x351/0x440 net/9p/client.c:614
- p9_client_rpc+0xb6b/0xc70 net/9p/client.c:734
- p9_client_version net/9p/client.c:920 [inline]
- p9_client_create+0xb51/0x1240 net/9p/client.c:1027
- v9fs_session_init+0x1f0/0x18f0 fs/9p/v9fs.c:408
- v9fs_mount+0xba/0xcb0 fs/9p/vfs_super.c:126
- legacy_get_tree+0x108/0x220 fs/fs_context.c:632
- vfs_get_tree+0x8e/0x300 fs/super.c:1573
- do_new_mount fs/namespace.c:3056 [inline]
- path_mount+0x6a6/0x1e90 fs/namespace.c:3386
- do_mount fs/namespace.c:3399 [inline]
- __do_sys_mount fs/namespace.c:3607 [inline]
- __se_sys_mount fs/namespace.c:3584 [inline]
- __x64_sys_mount+0x283/0x300 fs/namespace.c:3584
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-This happens because of a race condition between:
-
-- The 9p client sending an invalid flush request and later cleaning it up;
-- The 9p client in p9_read_work() canceled all pending requests.
-
-      Thread 1                              Thread 2
-    ...
-    p9_client_create()
-    ...
-    p9_fd_create()
-    ...
-    p9_conn_create()
-    ...
-    // start Thread 2
-    INIT_WORK(&m->rq, p9_read_work);
-                                        p9_read_work()
-    ...
-    p9_client_rpc()
-    ...
-                                        ...
-                                        p9_conn_cancel()
-                                        ...
-                                        spin_lock(&m->req_lock);
-    ...
-    p9_fd_cancelled()
-    ...
-                                        ...
-                                        spin_unlock(&m->req_lock);
-                                        // status rewrite
-                                        p9_client_cb(m->client, req, REQ_STATUS_ERROR)
-                                        // first remove
-                                        list_del(&req->req_list);
-                                        ...
-
-    spin_lock(&m->req_lock)
-    ...
-    // second remove
-    list_del(&req->req_list);
-    spin_unlock(&m->req_lock)
-  ...
-
-Commit 74d6a5d56629 ("9p/trans_fd: Fix concurrency del of req_list in
-p9_fd_cancelled/p9_read_work") fixes a concurrency issue in the 9p filesystem
-client where the req_list could be deleted simultaneously by both
-p9_read_work and p9_fd_cancelled functions, but for the case where req->status
-equals REQ_STATUS_RCVD.
-
-Update the check for req->status in p9_fd_cancelled to skip processing not
-just received requests, but anything that is not SENT, as whatever
-changed the state from SENT also removed the request from its list.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: afd8d6541155 ("9P: Add cancelled() to the transport functions.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nalivayko Sergey <Sergey.Nalivayko@kaspersky.com>
-Message-ID: <20250715154815.3501030-1-Sergey.Nalivayko@kaspersky.com>
-[updated the check from status == RECV || status == ERROR to status != SENT]
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-[ replaced m->req_lock with client->lock ]
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/8396631478f70454b44afb98352237d33f48d34d.1760432043.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/tls/tls_sw.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -711,10 +711,10 @@ static int p9_fd_cancelled(struct p9_cli
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 8dabbbf521688..b175f0595a478 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1052,6 +1052,13 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
+ 				else if (ret != -EAGAIN)
+ 					goto send_end;
+ 			}
++
++			/* Transmit if any encryptions have completed */
++			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++				cancel_delayed_work(&ctx->tx_work.work);
++				tls_tx_records(sk, msg->msg_flags);
++			}
++
+ 			continue;
+ rollback_iter:
+ 			copied -= try_to_copy;
+@@ -1106,6 +1113,12 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
+ 					goto send_end;
+ 				}
+ 			}
++
++			/* Transmit if any encryptions have completed */
++			if (test_and_clear_bit(BIT_TX_SCHEDULED, &ctx->tx_bitmask)) {
++				cancel_delayed_work(&ctx->tx_work.work);
++				tls_tx_records(sk, msg->msg_flags);
++			}
+ 		}
  
- 	spin_lock(&client->lock);
--	/* Ignore cancelled request if message has been received
--	 * before lock.
--	 */
--	if (req->status == REQ_STATUS_RCVD) {
-+	/* Ignore cancelled request if status changed since the request was
-+	 * processed in p9_client_flush()
-+	*/
-+	if (req->status != REQ_STATUS_SENT) {
- 		spin_unlock(&client->lock);
- 		return 0;
- 	}
+ 		continue;
+-- 
+2.51.0
+
 
 
