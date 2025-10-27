@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D753074AC;
-	Mon, 27 Oct 2025 19:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBA63074AC;
+	Mon, 27 Oct 2025 19:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592206; cv=none; b=MzJ6I5M3CUQnhaF1f6W7FHr1bAqU6GiASkeR4X1TzeKJVZTX1Z2ktaC42OQ11GMUznmYmUHLaaecAW83KfMi47lMr1tjiAp3ca9WiKX0UKZwuK08eduXiR3nks9SxPmBc/rH/Ua7X9kCCfg6IcpHR9UwPeHT/YN9bRHC0w376f8=
+	t=1761592208; cv=none; b=szOxDVJ8FaudK+64gSYQi95dbF7vCNwp4i4c7CPueJ8tcJERWwopuzCLSDiehT7lgxjyXlFdT+kjubaBS/ktrIm68wW7130nPdH019Xm6oJ/XHg15iKCrByvgwk47yGpmNaRHL7T38EAv5miB+1HazFsxZOVt+jtOoFrYvYZcOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592206; c=relaxed/simple;
-	bh=O0wCLIIhrKe6gzNvyeZU6Jl5T+5tvl033kbwrhONB/8=;
+	s=arc-20240116; t=1761592208; c=relaxed/simple;
+	bh=4HuM35JKgOLbZNSiVnP34JhCsGpMmKG13gMlKSYRp7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KAkn3uWHNPn5gAbV7vTsefRXx7vl7/PVWiH/libSTetZRPzSqunZ2iXMmHvPFmEqPpuE3tMMQ0iYXD3Bcy0cmS3GV9TL0Lf+E+3Wgwl+xhyWETgd0mU32q4oEgOzyhIwikpvZRE9oDOUDkDg24UXBlwv5izchd6FNi7iKfgxnwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnXkdjiL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JvaLAlZbOcrEzlUvD5mtgm+MpGrQZch3zNeGGj9c31e65YT+zdPIe2hD7/Nqv2Ze6VcvuRXWzIqTDLGmIHczrT7twuc3fFbjhTunD7n4tsL7QYnUH0BNqfJ4NlLl5nUHR2V3fR4p9t9DbJjiEHWWaw3qP8vBKvyW1JO+JEsPT+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCjkrJ7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnXkdjiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7624AC4CEF1;
-	Mon, 27 Oct 2025 19:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCjkrJ7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13848C4CEF1;
+	Mon, 27 Oct 2025 19:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592205;
-	bh=O0wCLIIhrKe6gzNvyeZU6Jl5T+5tvl033kbwrhONB/8=;
+	s=korg; t=1761592208;
+	bh=4HuM35JKgOLbZNSiVnP34JhCsGpMmKG13gMlKSYRp7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnXkdjiL0qIml7G1objS4OG+zOzoWzr9D5wBYKY5Jb6xFXo/LTck3UuhHP4dQoO3l
-	 gLiGyQ77aycjMVsIggFl6O2e6UIHA4HEdEvTG7ewuh6NT4OfmNJEaqAVQflWt9718u
-	 O9kcIOzzVN8xLJBnSArW1f/ofRvlTLzpJdy4ioSg=
+	b=CCjkrJ7JjrajwtCEXq0NRTg9BOCKjPrCkQogBTFhalAV4WHQJsnQwRpcQqQvu9O5H
+	 dfpcGhXjiaJSg92xj4z6d9zrm8l0SvGfpqPewk9jBgtkwE1ueyS0/0FUH+oXDcxAgj
+	 uiIn7/Qi6DxNJozvgpfKSy4oSjn7nj3BoQ2OsBuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
 	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 6.1 033/157] timers: Update the documentation to reflect on the new timer_shutdown() API
-Date: Mon, 27 Oct 2025 19:34:54 +0100
-Message-ID: <20251027183502.181276872@linuxfoundation.org>
+Subject: [PATCH 6.1 034/157] Bluetooth: hci_qca: Fix the teardown problem for real
+Date: Mon, 27 Oct 2025 19:34:55 +0100
+Message-ID: <20251027183502.211470083@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -48,88 +48,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a31323bef2b66455920d054b160c17d4240f8fd4 ]
+[ Upstream commit e0d3da982c96aeddc1bbf1cf9469dbb9ebdca657 ]
 
-In order to make sure that a timer is not re-armed after it is stopped
-before freeing, a new shutdown state is added to the timer code. The API
-timer_shutdown_sync() and timer_shutdown() must be called before the
-object that holds the timer can be freed.
+While discussing solutions for the teardown problem which results from
+circular dependencies between timers and workqueues, where timers schedule
+work from their timer callback and workqueues arm the timers from work
+items, it was discovered that the recent fix to the QCA code is incorrect.
 
-Update the documentation to reflect this new workflow.
+That commit fixes the obvious problem of using del_timer() instead of
+del_timer_sync() and reorders the teardown calls to
 
-[ tglx: Updated to the new semantics and updated the zh_CN version ]
+   destroy_workqueue(wq);
+   del_timer_sync(t);
 
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+This makes it less likely to explode, but it's still broken:
+
+   destroy_workqueue(wq);
+   /* After this point @wq cannot be touched anymore */
+
+   ---> timer expires
+         queue_work(wq) <---- Results in a NULL pointer dereference
+			      deep in the work queue core code.
+   del_timer_sync(t);
+
+Use the new timer_shutdown_sync() function to ensure that the timers are
+disarmed, no timer callbacks are running and the timers cannot be armed
+again. This restores the original teardown sequence:
+
+   timer_shutdown_sync(t);
+   destroy_workqueue(wq);
+
+which is now correct because the timer core silently ignores potential
+rearming attempts which can happen when destroy_workqueue() drains pending
+work before mopping up the workqueue.
+
+Fixes: 72ef98445aca ("Bluetooth: hci_qca: Use del_timer_sync() before freeing")
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Link: https://lore.kernel.org/r/20221110064147.712934793@goodmis.org
-Link: https://lore.kernel.org/r/20221123201625.375284489@linutronix.de
+Acked-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Link: https://lore.kernel.org/all/87iljhsftt.ffs@tglx
+Link: https://lore.kernel.org/r/20221123201625.435907114@linutronix.de
 Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/RCU/Design/Requirements/Requirements.rst  |    2 +-
- Documentation/core-api/local_ops.rst                    |    2 +-
- Documentation/kernel-hacking/locking.rst                |    5 +++++
- Documentation/translations/zh_CN/core-api/local_ops.rst |    2 +-
- 4 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/Documentation/RCU/Design/Requirements/Requirements.rst
-+++ b/Documentation/RCU/Design/Requirements/Requirements.rst
-@@ -1858,7 +1858,7 @@ unloaded. After a given module has been
- one of its functions results in a segmentation fault. The module-unload
- functions must therefore cancel any delayed calls to loadable-module
- functions, for example, any outstanding mod_timer() must be dealt
--with via timer_delete_sync() or similar.
-+with via timer_shutdown_sync() or similar.
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -710,9 +710,15 @@ static int qca_close(struct hci_uart *hu
+ 	skb_queue_purge(&qca->tx_wait_q);
+ 	skb_queue_purge(&qca->txq);
+ 	skb_queue_purge(&qca->rx_memdump_q);
++	/*
++	 * Shut the timers down so they can't be rearmed when
++	 * destroy_workqueue() drains pending work which in turn might try
++	 * to arm a timer.  After shutdown rearm attempts are silently
++	 * ignored by the timer core code.
++	 */
++	timer_shutdown_sync(&qca->tx_idle_timer);
++	timer_shutdown_sync(&qca->wake_retrans_timer);
+ 	destroy_workqueue(qca->workqueue);
+-	del_timer_sync(&qca->tx_idle_timer);
+-	del_timer_sync(&qca->wake_retrans_timer);
+ 	qca->hu = NULL;
  
- Unfortunately, there is no way to cancel an RCU callback; once you
- invoke call_rcu(), the callback function is eventually going to be
---- a/Documentation/core-api/local_ops.rst
-+++ b/Documentation/core-api/local_ops.rst
-@@ -191,7 +191,7 @@ Here is a sample module which implements
- 
-     static void __exit test_exit(void)
-     {
--            timer_delete_sync(&test_timer);
-+            timer_shutdown_sync(&test_timer);
-     }
- 
-     module_init(test_init);
---- a/Documentation/kernel-hacking/locking.rst
-+++ b/Documentation/kernel-hacking/locking.rst
-@@ -1007,6 +1007,11 @@ calling add_timer() at the end of their
- Because this is a fairly common case which is prone to races, you should
- use timer_delete_sync() (``include/linux/timer.h``) to
- 
-+Before freeing a timer, timer_shutdown() or timer_shutdown_sync() should be
-+called which will keep it from being rearmed. Any subsequent attempt to
-+rearm the timer will be silently ignored by the core code.
-+
-+
- Locking Speed
- =============
- 
---- a/Documentation/translations/zh_CN/core-api/local_ops.rst
-+++ b/Documentation/translations/zh_CN/core-api/local_ops.rst
-@@ -185,7 +185,7 @@ UP之间没有不同的行为，在你�
- 
-     static void __exit test_exit(void)
-     {
--            timer_delete_sync(&test_timer);
-+            timer_shutdown_sync(&test_timer);
-     }
- 
-     module_init(test_init);
+ 	kfree_skb(qca->rx_skb);
 
 
