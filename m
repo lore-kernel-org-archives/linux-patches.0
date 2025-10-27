@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2187C23EA92;
-	Mon, 27 Oct 2025 19:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEA123EA92;
+	Mon, 27 Oct 2025 19:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593519; cv=none; b=nekLjDkjpqN1IqQZMo2BxnqIeZkH5SQFodw69tcxt0ghuCIc49oOJYAwKDaI/WL0gbkb8vI4VWOV3njlKtOgYIAKlbD90hOLs5BW9Y2DSMOQi+Bu9V9rddltwiuH4PCZLq962wdO6Rl+tJsqHIklaZiGbcqkvqJxR284T1zoLSk=
+	t=1761593522; cv=none; b=ne7lwTMQISdfTyLLRmJ/pCMJdrUDZZpLSmhzwWbu93wtuIo6s72BGc+XB7zXWklcqXPl79Zp18YZ1/nI8f+Hzv3mvcAHWqIDPnqX9X6pziaExaQGCgfuHuiVcl/1+s+JspJn8ngFzm3LhoS3jjsn8WDmNrUPZ0DuEZGin9bX1uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593519; c=relaxed/simple;
-	bh=BsnHBZBHWuFlFMudWx+tLrJXzqzz7yigVXyh/GkkhA0=;
+	s=arc-20240116; t=1761593522; c=relaxed/simple;
+	bh=ocHmNAMGYSZR+Vd6lMKdggo8W9ieo4dqVfUbbiCB4Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOmCVPpCYwWhrE6rvNRK0NuXD0ROC/PoCsFqhioN1YC2TL0GKseOK8+XsN4/o77yqEHj6xrjBjS79wMIX1+d7QjkVCgmSdZwMlHFRfx5aiVHzsh5rmGmgGX06Jq32Dqbj1P00cznA1HHIqASDpUt46qNq2vtKEJsnMj1cGjtu+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDxKtsr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRJYpCGNiKbnfU8eTBV5YMRMV+jxiV+DuCMxYJG31NaBsCVWg7VNzTNxhgQbUbV84Y4KnO95QamO1/45Hzkk6xLbb7VdZ8JDa/f+6SlD26UQMWK6L1s85FzaQ7bL7dXfstzCAZdLXnsQxXIgFT2yOSFAQMqzNzNX4HOONlnTV50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ixi9kzS6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDxKtsr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5E4C4CEF1;
-	Mon, 27 Oct 2025 19:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ixi9kzS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78C9C4CEF1;
+	Mon, 27 Oct 2025 19:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593519;
-	bh=BsnHBZBHWuFlFMudWx+tLrJXzqzz7yigVXyh/GkkhA0=;
+	s=korg; t=1761593522;
+	bh=ocHmNAMGYSZR+Vd6lMKdggo8W9ieo4dqVfUbbiCB4Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yDxKtsr4g/B0RoTqZn0/ZTWFp1+pfb5ZYfhsQ6iHdq848tZWEFpXo5t+J1Dt6vzhc
-	 5AFoE8w/8/vacT/yJQ450ah9Cf+0PsZW8nI+lq8qROTQ/5XZQe7/t4CinAYTWaaX6k
-	 zmGnjvIvlz+hea27ut+6e7kOLZPGPdUyLbWlLljI=
+	b=Ixi9kzS6xzExpVbeiX+UuEFVEWoDDHPQVF8fVzOBUB8cD0mC7Epfpq2Boy3wCkV+3
+	 DqBs4jpgrb4Zszupe/KXpX6bBmrMPu1gPZkBLOFMirPbWMefGXBP4YQyCe+UT+vbyL
+	 47SlPHAvlOq5p4QUgs8guNQsbSEkaPiFTJYWCKww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Xu <han.xu@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 118/184] spi: spi-nxp-fspi: add extra delay after dll locked
-Date: Mon, 27 Oct 2025 19:36:40 +0100
-Message-ID: <20251027183518.120808140@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 109/184] mm/damon/core: use damos_commit_quota_goal() for new goal commit
+Date: Mon, 27 Oct 2025 19:36:31 +0100
+Message-ID: <20251027183517.857332901@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -52,46 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Xu <han.xu@nxp.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit b93b4269791fdebbac2a9ad26f324dc2abb9e60f ]
+commit 7eca961dd7188f20fdf8ce9ed5018280f79b2438 upstream.
 
-Due to the erratum ERR050272, the DLL lock status register STS2
-[xREFLOCK, xSLVLOCK] bit may indicate DLL is locked before DLL is
-actually locked. Add an extra 4us delay as a workaround.
+When damos_commit_quota_goals() is called for adding new DAMOS quota goals
+of DAMOS_QUOTA_USER_INPUT metric, current_value fields of the new goals
+should be also set as requested.
 
-refer to ERR050272, on Page 20.
-https://www.nxp.com/docs/en/errata/IMX8_1N94W.pdf
+However, damos_commit_quota_goals() is not updating the field for the
+case, since it is setting only metrics and target values using
+damos_new_quota_goal(), and metric-optional union fields using
+damos_commit_quota_goal_union().  As a result, users could see the first
+current_value parameter that committed online with a new quota goal is
+ignored.  Users are assumed to commit the current_value for
+DAMOS_QUOTA_USER_INPUT quota goals, since it is being used as a feedback.
+Hence the real impact would be subtle.  That said, this is obviously not
+intended behavior.
 
-Fixes: 99d822b3adc4 ("spi: spi-nxp-fspi: use DLL calibration when clock rate > 100MHz")
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20250922-fspi-fix-v1-2-ff4315359d31@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the issue by using damos_commit_quota_goal() which sets all quota goal
+parameters, instead of damos_commit_quota_goal_union(), which sets only
+the union fields.
+
+Link: https://lkml.kernel.org/r/20251014001846.279282-1-sj@kernel.org
+Fixes: 1aef9df0ee90 ("mm/damon/core: commit damos_quota_goal->nid")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.16+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-nxp-fspi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 542d6f57c1aef..bde6d131ab8b7 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -709,6 +709,12 @@ static void nxp_fspi_dll_calibration(struct nxp_fspi *f)
- 				   0, POLL_TOUT, true);
- 	if (ret)
- 		dev_warn(f->dev, "DLL lock failed, please fix it!\n");
-+
-+	/*
-+	 * For ERR050272, DLL lock status bit is not accurate,
-+	 * wait for 4us more as a workaround.
-+	 */
-+	udelay(4);
- }
- 
- /*
--- 
-2.51.0
-
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -811,7 +811,7 @@ int damos_commit_quota_goals(struct damo
+ 				src_goal->metric, src_goal->target_value);
+ 		if (!new_goal)
+ 			return -ENOMEM;
+-		damos_commit_quota_goal_union(new_goal, src_goal);
++		damos_commit_quota_goal(new_goal, src_goal);
+ 		damos_add_quota_goal(dst, new_goal);
+ 	}
+ 	return 0;
 
 
