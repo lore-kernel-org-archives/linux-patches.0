@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A053531E0F7;
-	Mon, 27 Oct 2025 19:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E6A32D45C;
+	Mon, 27 Oct 2025 19:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592857; cv=none; b=GeW9Cvj7R7lO+T8fjJDB28L741eKFrMEzF2ybTr3jHF+S/Hu4sj4iyy2Vu2v+8rkQ3FVCYfA4E+N6YXfoQWLqoAWWMHnL01UzkXwI1VjqWsIOlRiCMWxzRHH6Z/3FDjnRXypkUxYHRxYLCEmhCJCZjdpsKEE8x0q1LG7SjM3uxo=
+	t=1761592860; cv=none; b=bjgR5ICcbRgnSoZxPx6pI30hksdf00NflFPWF6bJ3/jcKn00A1Kl9mr1Dk5ynlEUpU8O7N0I6YYyMLjKR4Wz+3r90imjg0umaMr1SZ/rHZwe7iqsdzxqWBY3APhO+Yy/RxjTe59yZeWV2afShZ8Wf45mPfoJDgtnrnL3sYruCm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592857; c=relaxed/simple;
-	bh=hFZ2YxO2FwCJ/yNw/yePU/d5E2uzQtsh4Z8bFlW8z5Q=;
+	s=arc-20240116; t=1761592860; c=relaxed/simple;
+	bh=s00QPazGtlnxOLEQaVPTQPev2OpK+paZmnbCYgBHoyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=up0GA6O3oPz/J+d+954bemeUPVksjTEurnErD1OguA/Ex4fdeqW+H1rcnUKIxoWRVBNoRdbtn3h6GxObacvc2GBKcUwvysKc9hmqTwJT89YzaMkBmfWC5OuVNLDvhTk0PlZ3lu/BJWOUOwNAdIUqVWaRul725wjSnnxhM5wzyqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jp1KCuia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WD3hcoRVHDIW/SowKrjgKv2TEdwZAY4ltxvYP2dGns3Y6sSivv/g0q9eC5dTeHQrPzius1btn1PqCdzwGCtAya0ifktRyV6kMjCp48S9i7Kpr2FM6FCxRiTTG4nOlHeBngRJEA3UFd1RM/QSzTJ1B6uCUKEs+82iu4UkcTUjgMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXOHafHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jp1KCuia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B91C4CEF1;
-	Mon, 27 Oct 2025 19:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXOHafHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE720C4CEF1;
+	Mon, 27 Oct 2025 19:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592857;
-	bh=hFZ2YxO2FwCJ/yNw/yePU/d5E2uzQtsh4Z8bFlW8z5Q=;
+	s=korg; t=1761592860;
+	bh=s00QPazGtlnxOLEQaVPTQPev2OpK+paZmnbCYgBHoyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jp1KCuiaFdYzzNbbK6siNzjxNtix2DrgBMHxmLPbE3M224XVpIyns7UzdonR/Y/xj
-	 oWBAhYb6ja2eY/6fcA0spZ/n2ro2Fo5ppOHqwgZ0plxgQ+uxC6+n9gztZQ31UcEUVO
-	 QLUH01QZx5b51ksn73G4949VQkVipmEYmF8uEcyE=
+	b=DXOHafHhpX3ZIBiLHQH2nsF8SSORLOAI0F3NHj+Gg1awoiuWwRz8fq3ooQ2jrY28Q
+	 zGVx/C+u8FUQDFy5UET4ARUX05GRP00KnZw2Ng1n/XYl0Y0gmCcm/oT4sqm3cS75k8
+	 6VN3NXxZBy4nUylvqoyJ1f24igG2mMnhMMa9q9Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huang Ying <ying.huang@linux.alibaba.com>,
-	Will Deacon <will@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/117] arm64, mm: avoid always making PTE dirty in pte_mkwrite()
-Date: Mon, 27 Oct 2025 19:36:05 +0100
-Message-ID: <20251027183455.039186307@linuxfoundation.org>
+Subject: [PATCH 6.12 040/117] ptp: ocp: Fix typo using index 1 instead of i in SMA initialization loop
+Date: Mon, 27 Oct 2025 19:36:06 +0100
+Message-ID: <20251027183455.067165190@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -60,69 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Ying <ying.huang@linux.alibaba.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 143937ca51cc6ae2fccc61a1cb916abb24cd34f5 ]
+[ Upstream commit a767957e7a83f9e742be196aa52a48de8ac5a7e4 ]
 
-Current pte_mkwrite_novma() makes PTE dirty unconditionally.  This may
-mark some pages that are never written dirty wrongly.  For example,
-do_swap_page() may map the exclusive pages with writable and clean PTEs
-if the VMA is writable and the page fault is for read access.
-However, current pte_mkwrite_novma() implementation always dirties the
-PTE.  This may cause unnecessary disk writing if the pages are
-never written before being reclaimed.
+In ptp_ocp_sma_fb_init(), the code mistakenly used bp->sma[1]
+instead of bp->sma[i] inside a for-loop, which caused only SMA[1]
+to have its DIRECTION_CAN_CHANGE capability cleared. This led to
+inconsistent capability flags across SMA pins.
 
-So, change pte_mkwrite_novma() to clear the PTE_RDONLY bit only if the
-PTE_DIRTY bit is set to make it possible to make the PTE writable and
-clean.
-
-The current behavior was introduced in commit 73e86cb03cf2 ("arm64:
-Move PTE_RDONLY bit handling out of set_pte_at()").  Before that,
-pte_mkwrite() only sets the PTE_WRITE bit, while set_pte_at() only
-clears the PTE_RDONLY bit if both the PTE_WRITE and the PTE_DIRTY bits
-are set.
-
-To test the performance impact of the patch, on an arm64 server
-machine, run 16 redis-server processes on socket 1 and 16
-memtier_benchmark processes on socket 0 with mostly get
-transactions (that is, redis-server will mostly read memory only).
-The memory footprint of redis-server is larger than the available
-memory, so swap out/in will be triggered.  Test results show that the
-patch can avoid most swapping out because the pages are mostly clean.
-And the benchmark throughput improves ~23.9% in the test.
-
-Fixes: 73e86cb03cf2 ("arm64: Move PTE_RDONLY bit handling out of set_pte_at()")
-Signed-off-by: Huang Ying <ying.huang@linux.alibaba.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Gavin Shan <gshan@redhat.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 09eeb3aecc6c ("ptp_ocp: implement DPLL ops")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20251021182456.9729-1-jiashengjiangcool@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/pgtable.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_ocp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index 5ba8376735cb0..eb57ddb5ecc53 100644
---- a/arch/arm64/include/asm/pgtable.h
-+++ b/arch/arm64/include/asm/pgtable.h
-@@ -212,7 +212,8 @@ static inline pmd_t set_pmd_bit(pmd_t pmd, pgprot_t prot)
- static inline pte_t pte_mkwrite_novma(pte_t pte)
- {
- 	pte = set_pte_bit(pte, __pgprot(PTE_WRITE));
--	pte = clear_pte_bit(pte, __pgprot(PTE_RDONLY));
-+	if (pte_sw_dirty(pte))
-+		pte = clear_pte_bit(pte, __pgprot(PTE_RDONLY));
- 	return pte;
- }
- 
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index efbd80db778d6..bd9919c01e502 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -2546,7 +2546,7 @@ ptp_ocp_sma_fb_init(struct ptp_ocp *bp)
+ 		for (i = 0; i < OCP_SMA_NUM; i++) {
+ 			bp->sma[i].fixed_fcn = true;
+ 			bp->sma[i].fixed_dir = true;
+-			bp->sma[1].dpll_prop.capabilities &=
++			bp->sma[i].dpll_prop.capabilities &=
+ 				~DPLL_PIN_CAPABILITIES_DIRECTION_CAN_CHANGE;
+ 		}
+ 		return;
 -- 
 2.51.0
 
