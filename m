@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91407313546;
-	Mon, 27 Oct 2025 18:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578CF314D21;
+	Mon, 27 Oct 2025 18:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591166; cv=none; b=njceYeNp67TV4NR74o/eCAcXCL0QE7chML+ImMFdqp/z9O7il4fGZGvAu0iLShh1HX/R2vP10Jr96hGhAbCY5FazAZyoS8V1DOueYUfjxu+0nU1qp/JqjPlTkiVKAhSgjF5lCMd79+Z30gI/viSMybC7VHmNE7fpGEDpg3W/5HU=
+	t=1761591169; cv=none; b=QANEfUfA8J4qTOSgvCZ5u2IJq9rCeZlcugmh5C16a/erRFGiiAeYSbmTXyrER/ip+y0VUWNH28BE5Czj5v7YIepZ0q9/dc7E2Op87HHvqRqB35GCHxU+QARqpxQ4SiIImCbtDgYa9niV43ZUHK9WxxEWv8F0kPF4VrqSzeG7uL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591166; c=relaxed/simple;
-	bh=wBuioW48iQplw+cYj1k2wFo5Pi6n3fTNcnhyNGzL7kU=;
+	s=arc-20240116; t=1761591169; c=relaxed/simple;
+	bh=FzKQMoepavOTdBmiRKocKa5h+FnrFgBSpAUHUr0OH2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuUTaLPpqvpkHyKdiYVzi/W/ZR1DnlAXfYIN6B1eIIfSmdnp6e0txwIbIe3yv9fL05sFL6o9tEvfvSPNelGHXA2S0ImkSnrjQYaWXVjRLCahdv78hZ9m2jw4ZaWicglK7TGZZOKPDtiWYchiFTiM7t6RXv3K+9Q3VyPXOM51/AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzAMIgNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNlYOq1oXgyIqhX3AnAdNMb8Hie0PQ+IX8jzBK2ovS4mzMaaVtIIHmPiMp1QRZ9OpLPhJITsPa0M2l0i6ODjinsZuZ/ayRK05P8ez27v5CfNk4/+DIN1mjLiJ27uRs5G++Dc9LWPSiJ6vxAE+KaDyO2G8bJFFMr7RH7BceOWcPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJI+K7ze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzAMIgNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBF2C4CEF1;
-	Mon, 27 Oct 2025 18:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJI+K7ze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFDBC4CEF1;
+	Mon, 27 Oct 2025 18:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591166;
-	bh=wBuioW48iQplw+cYj1k2wFo5Pi6n3fTNcnhyNGzL7kU=;
+	s=korg; t=1761591169;
+	bh=FzKQMoepavOTdBmiRKocKa5h+FnrFgBSpAUHUr0OH2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzAMIgNYhiuSXiuQjF3WXyoF9SJhgBj21k1y4ndgDvf7vgk19F0ZuCPkQlPeAww5l
-	 f36mlqpP8UY9XjBx8niI2Cgq17VEHFo3cqfX+qvocsilGxtyip8nQAfqk5fLGK/jIe
-	 uEV6ms8a6GZy/aX/w02v4vt8U8Y4Sl6AxGdFxQbk=
+	b=NJI+K7ze5ebTeTIgspJfQa3g3k+zme2kN5by+LkGLoTpunAMx+m7wbF9Z0F3yI4E/
+	 V/deVWwolbJHXGq3zzDTNwguTd9T+69j+gjOIxYafIQhhaBJeTE/QdMs7C/ra49+mp
+	 wlBWdgg1hz3gbTLuVgXa297NEToGN++P3JqphVJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
+	Zhen Ni <zhen.ni@easystack.cn>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 092/332] Input: atmel_mxt_ts - allow reset GPIO to sleep
-Date: Mon, 27 Oct 2025 19:32:25 +0100
-Message-ID: <20251027183527.050937487@linuxfoundation.org>
+Subject: [PATCH 5.10 093/332] Input: uinput - zero-initialize uinput_ff_upload_compat to avoid info leak
+Date: Mon, 27 Oct 2025 19:32:26 +0100
+Message-ID: <20251027183527.077148470@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,33 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit c7866ee0a9ddd9789faadf58cdac6abd7aabf045 upstream.
+commit d3366a04770eea807f2826cbdb96934dd8c9bf79 upstream.
 
-The reset GPIO is not toggled in any critical section where it couldn't
-sleep, allow the reset GPIO to sleep. This allows the driver to operate
-reset GPIOs connected to I2C GPIO expanders.
+Struct ff_effect_compat is embedded twice inside
+uinput_ff_upload_compat, contains internal padding. In particular, there
+is a hole after struct ff_replay to satisfy alignment requirements for
+the following union member. Without clearing the structure,
+copy_to_user() may leak stack data to userspace.
 
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Link: https://lore.kernel.org/r/20251005023335.166483-1-marek.vasut@mailbox.org
+Initialize ff_up_compat to zero before filling valid fields.
+
+Fixes: 2d56f3a32c0e ("Input: refactor evdev 32bit compat to be shareable with uinput")
 Cc: stable@vger.kernel.org
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://lore.kernel.org/r/20250928063737.74590-1-zhen.ni@easystack.cn
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/uinput.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/touchscreen/atmel_mxt_ts.c
-+++ b/drivers/input/touchscreen/atmel_mxt_ts.c
-@@ -3156,7 +3156,7 @@ static int mxt_probe(struct i2c_client *
- 	if (data->reset_gpio) {
- 		/* Wait a while and then de-assert the RESET GPIO line */
- 		msleep(MXT_RESET_GPIO_TIME);
--		gpiod_set_value(data->reset_gpio, 0);
-+		gpiod_set_value_cansleep(data->reset_gpio, 0);
- 		msleep(MXT_RESET_INVALID_CHG);
- 	}
+--- a/drivers/input/misc/uinput.c
++++ b/drivers/input/misc/uinput.c
+@@ -741,6 +741,7 @@ static int uinput_ff_upload_to_user(char
+ 	if (in_compat_syscall()) {
+ 		struct uinput_ff_upload_compat ff_up_compat;
  
++		memset(&ff_up_compat, 0, sizeof(ff_up_compat));
+ 		ff_up_compat.request_id = ff_up->request_id;
+ 		ff_up_compat.retval = ff_up->retval;
+ 		/*
 
 
