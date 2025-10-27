@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F56330324;
-	Mon, 27 Oct 2025 18:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322E5320A31;
+	Mon, 27 Oct 2025 18:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590811; cv=none; b=R1dZmQ5cBETLowVmbXLQGGfrycBBVtwCzBbND8CrDFsqwenp9CpinYUckPb/8ufVkx8/wgjYWj8aNHodnb0Jj22SszjbsZKFrLc3i5nN2SJ0neWKvCLp6LeD5vqui6PJvs3QR+NjBFRFd0bTvJXIvemIAgqYGhX8DLZM73kuHH4=
+	t=1761590813; cv=none; b=BN239BQg67WRec3T+Ja2KYlBg4O+97xo7i7tROnChGWSxIUUpd0snINDyTTai6myqfBuybbwHCp6r+e4tpEZFR7/7beQ/55w8Ga0BK/gR5pdBKB8cGbeixAgwgOF3duckdMlgYWas4rm8Q0vhsg3o6MoXB3g3tlfj/zvmHq3yIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590811; c=relaxed/simple;
-	bh=tAdgH8Vtcf/xsGYfQ6/zGduMAWCoAYKJ9cFZgHzmEVo=;
+	s=arc-20240116; t=1761590813; c=relaxed/simple;
+	bh=jrJDP1i0pZKMrM3tJ3Ev3zY+sPGjFVKx32dBs8qP2ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQOU8OPJAVNEQ3S1yBnAMP2hb6bmposxWEkbfGBhfK9ucpxPUbAq+/5wKsLYBFVOmlHpoDJv42tX8MsQaZdWi+HcyYftq2wj//uolE/TUg4iNcKNuzHftNIWq9BwUh9iDepIPdwk29BAKGhrrvquA7b4kNnbPDTfcPzMKZPv/qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f78lZS75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5Y80XouFpABcz1iTFsNAKRCR+uH0IOWTBR2DL+2YXOL6+jR79yzByhAWKSuWL5BIaOYDyYzY+BpGXqKqjgrzsTgPVQ/rwACydiEGwp/N55V0au306nQ769pd+fKvaY6bwCAs+1jU/AYi2UYTWRm+Bh/A0XOAR96b2xfxhArnPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGA7EEVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f78lZS75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4D1C4CEFD;
-	Mon, 27 Oct 2025 18:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGA7EEVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1ACC4CEF1;
+	Mon, 27 Oct 2025 18:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590810;
-	bh=tAdgH8Vtcf/xsGYfQ6/zGduMAWCoAYKJ9cFZgHzmEVo=;
+	s=korg; t=1761590812;
+	bh=jrJDP1i0pZKMrM3tJ3Ev3zY+sPGjFVKx32dBs8qP2ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f78lZS75jdhI7qbbMCoX+l02MfoknOdQsAvrDlJrDlg+yuxdB+L8d7ryiGBPV/MkI
-	 DFg0i3fShUgExuYkR65/URnlnkdFXlPuhZbMV2Hilpe+LQuvcTfQZm2iW71SjNz17N
-	 c5jhtdPSzNHL2/YQ59qJF8MmaG5L8JybtThTQPiY=
+	b=gGA7EEVDkzCl6m2KZCXcHyugogQHy1UWZ5jDECS3OM4dcbOmYW+UBBYzf/4Hi3dGK
+	 9wDkrgEB63ThCwnhtnvAmdgzLWb/wySCjrnMuS3t4EGyUaHhxXzmvu+g6Kix1mOvlw
+	 LgnEO47FNWCyBeJavT7MiZeG2NAy7yvthBXnFpwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kbuild test robot <lkp@intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Chen Yu <yu.c.chen@intel.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 166/224] sched: Make newidle_balance() static again
-Date: Mon, 27 Oct 2025 19:35:12 +0100
-Message-ID: <20251027183513.357882035@linuxfoundation.org>
+Subject: [PATCH 5.4 184/224] net: rtnetlink: add helper to extract msg types kind
+Date: Mon, 27 Oct 2025 19:35:30 +0100
+Message-ID: <20251027183513.773001278@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,78 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit d91cecc156620ec75d94c55369509c807c3d07e6 ]
+[ Upstream commit 2e9ea3e30f696fd438319c07836422bb0bbb4608 ]
 
-After Commit 6e2df0581f56 ("sched: Fix pick_next_task() vs 'change'
-pattern race"), there is no need to expose newidle_balance() as it
-is only used within fair.c file. Change this function back to static again.
+Add a helper which extracts the msg type's kind using the kind mask (0x3).
 
-No functional change.
-
-Reported-by: kbuild test robot <lkp@intel.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/83cd3030b031ca5d646cd5e225be10e7a0fdd8f5.1587464698.git.yu.c.chen@intel.com
-Stable-dep-of: 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: bf29555f5bdc ("rtnetlink: Allow deleting FDB entries in user namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c  | 6 ++++--
- kernel/sched/sched.h | 4 ----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ include/net/rtnetlink.h | 6 ++++++
+ net/core/rtnetlink.c    | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 2680216234ff2..db4a1da522e42 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3690,6 +3690,8 @@ static inline unsigned long cfs_rq_load_avg(struct cfs_rq *cfs_rq)
- 	return cfs_rq->avg.load_avg;
- }
- 
-+static int newidle_balance(struct rq *this_rq, struct rq_flags *rf);
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 74eff5259b361..02b0636a4523d 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -19,6 +19,12 @@ enum rtnl_kinds {
+ 	RTNL_KIND_GET,
+ 	RTNL_KIND_SET
+ };
++#define RTNL_KIND_MASK 0x3
 +
- static inline unsigned long task_util(struct task_struct *p)
- {
- 	return READ_ONCE(p->se.avg.util_avg);
-@@ -3849,7 +3851,7 @@ attach_entity_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags
- static inline void
- detach_entity_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se) {}
++static inline enum rtnl_kinds rtnl_msgtype_kind(int msgtype)
++{
++	return msgtype & RTNL_KIND_MASK;
++}
  
--static inline int idle_balance(struct rq *rq, struct rq_flags *rf)
-+static inline int newidle_balance(struct rq *rq, struct rq_flags *rf)
- {
- 	return 0;
- }
-@@ -9898,7 +9900,7 @@ static inline void nohz_newidle_balance(struct rq *this_rq) { }
-  * idle_balance is called by schedule() if this_cpu is about to become
-  * idle. Attempts to pull tasks from other CPUs.
-  */
--int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
-+static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
- {
- 	unsigned long next_balance = jiffies + HZ;
- 	int this_cpu = this_rq->cpu;
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index b8a3db59e3267..46e6f4e905dd6 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1464,14 +1464,10 @@ static inline void unregister_sched_domain_sysctl(void)
- }
- #endif
+ void rtnl_register(int protocol, int msgtype,
+ 		   rtnl_doit_func, rtnl_dumpit_func, unsigned int flags);
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 2cdb07dd263bd..b41f31a09a7cd 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -5212,7 +5212,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		return 0;
  
--extern int newidle_balance(struct rq *this_rq, struct rq_flags *rf);
--
- #else
+ 	family = ((struct rtgenmsg *)nlmsg_data(nlh))->rtgen_family;
+-	kind = type&3;
++	kind = rtnl_msgtype_kind(type);
  
- static inline void sched_ttwu_pending(void) { }
- 
--static inline int newidle_balance(struct rq *this_rq, struct rq_flags *rf) { return 0; }
--
- #endif /* CONFIG_SMP */
- 
- #include "stats.h"
+ 	if (kind != RTNL_KIND_GET && !netlink_net_capable(skb, CAP_NET_ADMIN))
+ 		return -EPERM;
 -- 
 2.51.0
 
