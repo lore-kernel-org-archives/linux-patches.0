@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3403231E0E0;
-	Mon, 27 Oct 2025 19:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3E12222AA;
+	Mon, 27 Oct 2025 19:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592455; cv=none; b=VkdZqLPXhYNYsofMks1mz07U5xH9HbCzMQlIc5xY5QPI7TxOOku5k1HIp/gXw4LFbwIZaG+ATWsIVWykt5eKwczP19dRnZKJ+53IhtLOxn4l0u2JyQH47VAJoAwdWtSs6nssljJwZ3Derl6dkMa5/rj6bl1e1hD1IJV5lx+ForU=
+	t=1761592458; cv=none; b=rwjayMplhiW9uvEqSV5fnX3BDaNQFpl/ifsKu6qy08EoY0P7lMwZblHdQz3LJ1z3Kb5evveuxc2tZfabvWoiKRpUe9UPpzq8ZB1e+N0CJCyBNtbjPnmnqCIWnU+GxF+G2HCX6cL49ypySjjzeFyeosdPj+VkAcM0CkmzfK3iIQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592455; c=relaxed/simple;
-	bh=Bx+HNuSbdXxJnaEX5YIH/+j0sFoRZCF/pFZ8inKGrVM=;
+	s=arc-20240116; t=1761592458; c=relaxed/simple;
+	bh=soYbDVs6zqMxXi5Ftepl2PHWkGZy1CdR2Kw84vzuevo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cl2oJMnHdTRTALX8zM5Zv/jf7dnKpBAq+MVbYLW2VwzLUjBvlc3kwIlVGSZmCe3OmAgkwwPS1ms07jTX/cDmUV9GNwpDirbyBH4jZpAKK5LZpgdjJXrFkKnYj33hcmxeHXx15i8nuiwjHjWM8gmBu4HilLuoEg1iQrpiNySGxPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lg+yegza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ia7kIaTxdlkx2s9OeOGHin9yarRPMNcHLnHfE5YDtmLuYdZ64CWMsTts52DPYli9gdqN1E89vcW3AoNaoB2SRB5Y3rb+G4XMoxRkJquKj6mitPP4jJ5nu+ORS29HzUnz9ejTgtPK7FpL/9liTlSyxd/RdC6krElEKvt6hXpWBS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMVc+VyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lg+yegza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8A9C4CEF1;
-	Mon, 27 Oct 2025 19:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMVc+VyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DEFC4CEF1;
+	Mon, 27 Oct 2025 19:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592455;
-	bh=Bx+HNuSbdXxJnaEX5YIH/+j0sFoRZCF/pFZ8inKGrVM=;
+	s=korg; t=1761592457;
+	bh=soYbDVs6zqMxXi5Ftepl2PHWkGZy1CdR2Kw84vzuevo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lg+yegza7HZGnJYVml6+JUqI20H514e/e6Evm80A/3NbrGbGJcF+rWTZnzSvmU014
-	 KasCRvx3Uaj2z5iR4ezCHyWSpy6Xnu+LJQw1Y+UKjojnzv1iyIuFj0ZEIpWZ3tPANS
-	 E3E05HeziZWqkrNtJmPS4ulifv30WMET75Ef/ERM=
+	b=CMVc+VyCi6cROSmbj+XaXc2iGotuOHDvT/k4xvIExSs+F8kUAQyoMlQWF6KUy2uH4
+	 gozGiZeLaf6TfnIuKNYTrnuY5u51p8UHh9nYa3zRjrp/q6fjG7IDqKyY18HRN0LkmL
+	 /JHVy/6U4yvUls650/sw/4ZpnmfJoYdAcMw34MmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Gergely Kovacs <Gergely.Kovacs2@arm.com>,
-	Will Deacon <will@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lance Yang <lance.yang@linux.dev>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/157] arm64: mte: Do not flag the zero page as PG_mte_tagged
-Date: Mon, 27 Oct 2025 19:36:29 +0100
-Message-ID: <20251027183504.685131074@linuxfoundation.org>
+Subject: [PATCH 6.1 129/157] PCI: j721e: Enable ACSPCIE Refclk if "ti,syscon-acspcie-proxy-ctrl" exists
+Date: Mon, 27 Oct 2025 19:36:30 +0100
+Message-ID: <20251027183504.713047030@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -48,93 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit f620d66af3165838bfa845dcf9f5f9b4089bf508 ]
+[ Upstream commit 82c4be4168e26a5593aaa1002b5678128a638824 ]
 
-Commit 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the
-zero page") attempted to fix ptrace() reading of tags from the zero page
-by marking it as PG_mte_tagged during cpu_enable_mte(). The same commit
-also changed the ptrace() tag access permission check to the VM_MTE vma
-flag while turning the page flag test into a WARN_ON_ONCE().
+The ACSPCIE module is capable of driving the reference clock required by
+the PCIe Endpoint device. It is an alternative to on-board and external
+reference clock generators. Enabling the output from the ACSPCIE module's
+PAD IO Buffers requires clearing the "PAD IO disable" bits of the
+ACSPCIE_PROXY_CTRL register in the CTRL_MMR register space.
 
-Attempting to set the PG_mte_tagged flag early with
-CONFIG_DEFERRED_STRUCT_PAGE_INIT enabled may either hang (after commit
-d77e59a8fccd "arm64: mte: Lock a page for MTE tag initialisation") or
-have the flags cleared later during page_alloc_init_late(). In addition,
-pages_identical() -> memcmp_pages() will reject any comparison with the
-zero page as it is marked as tagged.
+Add support to enable the ACSPCIE reference clock output using the optional
+device-tree property "ti,syscon-acspcie-proxy-ctrl".
 
-Partially revert the above commit to avoid setting PG_mte_tagged on the
-zero page. Update the __access_remote_tags() warning on untagged pages
-to ignore the zero page since it is known to have the tags initialised.
-
-Note that all user mapping of the zero page are marked as pte_special().
-The arm64 set_pte_at() will not call mte_sync_tags() on such pages, so
-PG_mte_tagged will remain cleared.
-
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Fixes: 68d54ceeec0e ("arm64: mte: Allow PTRACE_PEEKMTETAGS access to the zero page")
-Reported-by: Gergely Kovacs <Gergely.Kovacs2@arm.com>
-Cc: stable@vger.kernel.org # 5.10.x
-Cc: Will Deacon <will@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Acked-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ removed folio-based hugetlb MTE checks ]
+Link: https://lore.kernel.org/linux-pci/20240829105316.1483684-3-s-vadapalli@ti.com
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Stable-dep-of: f842d3313ba1 ("PCI: j721e: Fix programming sequence of "strap" settings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/cpufeature.c |   10 +++++++---
- arch/arm64/kernel/mte.c        |    2 +-
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c |   39 ++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2068,17 +2068,21 @@ static void bti_enable(const struct arm6
- #ifdef CONFIG_ARM64_MTE
- static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
- {
-+	static bool cleared_zero_page = false;
+--- a/drivers/pci/controller/cadence/pci-j721e.c
++++ b/drivers/pci/controller/cadence/pci-j721e.c
+@@ -46,6 +46,7 @@ enum link_status {
+ #define LANE_COUNT_MASK			BIT(8)
+ #define LANE_COUNT(n)			((n) << 8)
+ 
++#define ACSPCIE_PAD_DISABLE_MASK	GENMASK(1, 0)
+ #define GENERATION_SEL_MASK		GENMASK(1, 0)
+ 
+ #define MAX_LANES			2
+@@ -218,6 +219,36 @@ static int j721e_pcie_set_lane_count(str
+ 	return ret;
+ }
+ 
++static int j721e_enable_acspcie_refclk(struct j721e_pcie *pcie,
++				       struct regmap *syscon)
++{
++	struct device *dev = pcie->cdns_pcie->dev;
++	struct device_node *node = dev->of_node;
++	u32 mask = ACSPCIE_PAD_DISABLE_MASK;
++	struct of_phandle_args args;
++	u32 val;
++	int ret;
 +
- 	sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_ATA | SCTLR_EL1_ATA0);
- 
- 	mte_cpu_setup();
- 
- 	/*
- 	 * Clear the tags in the zero page. This needs to be done via the
--	 * linear map which has the Tagged attribute.
-+	 * linear map which has the Tagged attribute. Since this page is
-+	 * always mapped as pte_special(), set_pte_at() will not attempt to
-+	 * clear the tags or set PG_mte_tagged.
- 	 */
--	if (!page_mte_tagged(ZERO_PAGE(0))) {
-+	if (!cleared_zero_page) {
-+		cleared_zero_page = true;
- 		mte_clear_page_tags(lm_alias(empty_zero_page));
--		set_page_mte_tagged(ZERO_PAGE(0));
++	ret = of_parse_phandle_with_fixed_args(node,
++					       "ti,syscon-acspcie-proxy-ctrl",
++					       1, 0, &args);
++	if (ret) {
++		dev_err(dev,
++			"ti,syscon-acspcie-proxy-ctrl has invalid arguments\n");
++		return ret;
++	}
++
++	/* Clear PAD IO disable bits to enable refclk output */
++	val = ~(args.args[0]);
++	ret = regmap_update_bits(syscon, 0, mask, val);
++	if (ret) {
++		dev_err(dev, "failed to enable ACSPCIE refclk: %d\n", ret);
++		return ret;
++	}
++
++	return 0;
++}
++
+ static int j721e_pcie_ctrl_init(struct j721e_pcie *pcie)
+ {
+ 	struct device *dev = pcie->cdns_pcie->dev;
+@@ -257,7 +288,13 @@ static int j721e_pcie_ctrl_init(struct j
+ 		return ret;
  	}
  
- 	kasan_init_hw_tags_cpu();
---- a/arch/arm64/kernel/mte.c
-+++ b/arch/arm64/kernel/mte.c
-@@ -456,7 +456,7 @@ static int __access_remote_tags(struct m
- 			put_page(page);
- 			break;
- 		}
--		WARN_ON_ONCE(!page_mte_tagged(page));
-+		WARN_ON_ONCE(!page_mte_tagged(page) && !is_zero_page(page));
+-	return 0;
++	/* Enable ACSPCIE refclk output if the optional property exists */
++	syscon = syscon_regmap_lookup_by_phandle_optional(node,
++						"ti,syscon-acspcie-proxy-ctrl");
++	if (!syscon)
++		return 0;
++
++	return j721e_enable_acspcie_refclk(pcie, syscon);
+ }
  
- 		/* limit access to the end of the page */
- 		offset = offset_in_page(addr);
+ static int cdns_ti_pcie_config_read(struct pci_bus *bus, unsigned int devfn,
 
 
