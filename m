@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBE931CA50;
-	Mon, 27 Oct 2025 18:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A512D6401;
+	Mon, 27 Oct 2025 18:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591086; cv=none; b=DNADAHu9ZOWTlLXq+1Amoz8cri+IXZY567LHmpGl7p3irZRtEj8XhwxARtIvp+Y3Zc/nP0QdqNntdBDm84SqplpUJA7ab46OfA1mPxRYy/qm73AxPhjCsCmyWZJNFjUNxQwrGZn5ltn1nBhErWhaxMla+Erk5LdOygxAW+83ETE=
+	t=1761591089; cv=none; b=rwJfGFTlmS5ydNoudPQz2Cn9kmIJzdNCJ/9LbwMLfbMBMHVJlUsdkf1lDgYnJEXt9QrdTF9hQOaIoSfiBseRwK7c/tNDCXvJxf2faT9lVRff7kM83c6AwJK013F59PS4tPE21PfFeX4z+63Mx2NDdpNIzTaYu9X1z2bGFthMYnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591086; c=relaxed/simple;
-	bh=icjcqnE0KwC1EGobTeNgWI+g/zma+qMRp9uoQKXUsXo=;
+	s=arc-20240116; t=1761591089; c=relaxed/simple;
+	bh=fzGQF3Ms0qzIlN7WbwcfXgugvRCLsPzeRqV5yaIcp1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h8ybYSyrGsIMvd8uDEnEExsU9yndeBPCp8z33VqeOAuCObNJl68Q8533K5KCkSkfCtw+7dkvBoaO8Miw6KIn1U55xQX6y66Wa+dm/dzqN1bGHxg8zFeajIryZ7vly3az8banbgQKbUp7VA436rzFfgPuF03EFT5GJn0E2fJjhMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lf/LYBkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AsbUF6HpPoWW7cnolslTtcY+bWBD0Imc4me1tnr9DKvDbU05Tx6r6QmPKCt6vop/sHLU4Qj3eyaPtga9LufZj16+gVb9ENRTSZxAAi0608z5BHq8wVxgoWTaPY9lZ+KWrvlyCyM46akNW654zQevR+iB1ThoVlyLO+8/o+AMbTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+HV1tBH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lf/LYBkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00448C4CEF1;
-	Mon, 27 Oct 2025 18:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+HV1tBH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D2DC4CEF1;
+	Mon, 27 Oct 2025 18:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591086;
-	bh=icjcqnE0KwC1EGobTeNgWI+g/zma+qMRp9uoQKXUsXo=;
+	s=korg; t=1761591088;
+	bh=fzGQF3Ms0qzIlN7WbwcfXgugvRCLsPzeRqV5yaIcp1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf/LYBkkA7NfkLENFfDEhuxylrWfKBW4yXPYsy6duxOQf0VEEkHxcHPNCC7m3xy8g
-	 V/nNrh/Yl5sONE99c3LPwkuSDIG8RLxcOE6/1I740RzHs+kSIKCAzQz8kDNIq9/Cl+
-	 ihHtOAfJtOcB4rAFCKqTqNbnV7zEMwPE5mOjr2Sc=
+	b=Y+HV1tBHTQqDnYWkI5nvqWoVJiOHHpNW04eDNmpvXWOCH5KlkP3GMNbj0LEgwOXVu
+	 rNWH29gCl/C0ubp61csXiESYDemfNQoekYZwUsfyv+warW0Dlj5od5o6c/as5HWLBY
+	 UIV0cj7268YxSW285KtZs/k+wD+203f5u8vSd81E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/332] RDMA/cm: Rate limit destroy CM ID timeout error message
-Date: Mon, 27 Oct 2025 19:31:54 +0100
-Message-ID: <20251027183526.230845727@linuxfoundation.org>
+Subject: [PATCH 5.10 062/332] wifi: mt76: fix potential memory leak in mt76_wmac_probe()
+Date: Mon, 27 Oct 2025 19:31:55 +0100
+Message-ID: <20251027183526.256879802@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -46,46 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 2bbe1255fcf19c5eb300efb6cb5ad98d66fdae2e ]
+[ Upstream commit 42754b7de2b1a2cf116c5e3f1e8e78392f4ed700 ]
 
-When the destroy CM ID timeout kicks in, you typically get a storm of
-them which creates a log flooding. Hence, change pr_err() to
-pr_err_ratelimited() in cm_destroy_id_wait_timeout().
+In mt76_wmac_probe(), when the mt76_alloc_device() call succeeds, memory
+is allocated for both struct ieee80211_hw and a workqueue. However, on
+the error path, the workqueue is not freed. Fix that by calling
+mt76_free_device() on the error path.
 
-Fixes: 96d9cbe2f2ff ("RDMA/cm: add timeout to cm_destroy_id wait")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Link: https://patch.msgid.link/20250912100525.531102-1-haakon.bugge@oracle.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://patch.msgid.link/20250709145532.41246-1-abdun.nihaal@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7603/soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 26c66685a43dd..a9c5852f52165 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -1063,8 +1063,8 @@ static noinline void cm_destroy_id_wait_timeout(struct ib_cm_id *cm_id,
- 	struct cm_id_private *cm_id_priv;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
+index ba927033bbe8c..1206769cdc7fd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/soc.c
+@@ -48,7 +48,7 @@ mt76_wmac_probe(struct platform_device *pdev)
  
- 	cm_id_priv = container_of(cm_id, struct cm_id_private, id);
--	pr_err("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
--	       cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
-+	pr_err_ratelimited("%s: cm_id=%p timed out. state %d -> %d, refcnt=%d\n", __func__,
-+			   cm_id, old_state, cm_id->state, refcount_read(&cm_id_priv->refcount));
+ 	return 0;
+ error:
+-	ieee80211_free_hw(mt76_hw(dev));
++	mt76_free_device(mdev);
+ 	return ret;
  }
  
- static void cm_destroy_id(struct ib_cm_id *cm_id, int err)
 -- 
 2.51.0
 
