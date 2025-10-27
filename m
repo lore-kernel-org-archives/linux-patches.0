@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E7631E0FA;
-	Mon, 27 Oct 2025 18:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83421328618;
+	Mon, 27 Oct 2025 18:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590613; cv=none; b=WoxA6rIhGJYs3HkWr+dI1ie2JGzMgC4ypbjhJj9TTsNmEt8XpYBaOT8Z0I5nyrNeGoqb7xx1Rvk1B+kCpbgJXDsjnDuWFiINdAKk+hi2bBINoo9RYUv4HCDoEqoNBuMUncfT09pf7s8mc7fQGeuOzM8ACqBspzG7c3y1exxeWxs=
+	t=1761590615; cv=none; b=CPEBEULF7q6RHzn8W4SURm0zWjzOYa1AFvMLGY+qelJjFLbJBE/XsOoc8wBJ5E3jW0BFr4jwduqv1osbEwi7Ua85V+sLJ4dGjs0SFOlkL0w8MBXqVvFYfDY9+hZ9d+cVGr58ZHPzdxtc0/yJxLrdoo+hJFR8Q9hYG4vBZmEay30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590613; c=relaxed/simple;
-	bh=20Z7yl2iRpRBqn7pEEtQ4vMs6aCxfxOKsGCPI6fAWtk=;
+	s=arc-20240116; t=1761590615; c=relaxed/simple;
+	bh=A8uM+fZJ25I2gyiASiDxvGqFTvr3eyt/dqouW+V9CYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LORb4lEU2vJKcvib6gDDEa6dV6NO8pCbCeAZMq0DCq7yntVANu1cdAGFniElwInaZxLfhiuwFtK/IbvDBK25uA4isv0WTJgsShcdOK1Ai6GMGsI9t6w4MiZCXx/p02f02uEBb6ZCbu/ICGPUeOu6YEp2ibfzRdt/zP52vRExdxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKJA9U2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ny/0zjmk40n+zClWVMI1JW0YJle9k5wEHS4qkRYTY8C5nJPZRfuvO0IwZucjmdZ5A9cxmPvQOzDRodqVKvu5doTW8Hqmy/vH2jmLLIYZR2ATVkFImYPrX9yQA9Kuco7hEjhnhF/Mu+qqjvFciwhCXUj71cqWjcjuCtYxK9l7TvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4lgQg8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKJA9U2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D417C4CEF1;
-	Mon, 27 Oct 2025 18:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4lgQg8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1714AC4CEFD;
+	Mon, 27 Oct 2025 18:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590612;
-	bh=20Z7yl2iRpRBqn7pEEtQ4vMs6aCxfxOKsGCPI6fAWtk=;
+	s=korg; t=1761590615;
+	bh=A8uM+fZJ25I2gyiASiDxvGqFTvr3eyt/dqouW+V9CYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKJA9U2S80zBtO/iAGw0xJYGssCeZxTY9iaRS8oi+I4sLT8Yfn9GPMswQrcgSPadR
-	 udsze3DusH7szZQdDZ1vbmPYhFmZDtc9CCOZOdxjNDgy3BxL3cO6YHBlzlnCeS3Q9l
-	 c3GGXvvbgRkFaMg5Er0vyBXEO11Fec56NQ8Y3C/Y=
+	b=G4lgQg8OMoINCI5mbfO5JKKfwtO/0dG8XjYWohMiHSUC5iPmbfTQJWwpuXzYnmZgl
+	 +U/6pKUjSPnbqeEyJW5oH62BXfQw3xTT5j5VvnbIy6uzImbLWSGSKCzXuzxkNtVoBy
+	 kVuYDhaG8e98fGsOCrfBN445YfPljCstFfoxy0HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 111/224] iio: frequency: adf4350: Fix prescaler usage.
-Date: Mon, 27 Oct 2025 19:34:17 +0100
-Message-ID: <20251027183511.962087792@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 112/224] lib/genalloc: fix device leak in of_gen_pool_get()
+Date: Mon, 27 Oct 2025 19:34:18 +0100
+Message-ID: <20251027183511.987724119@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -47,76 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Hennerich <michael.hennerich@analog.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 33d7ecbf69aa7dd4145e3b77962bcb8759eede3d upstream.
+commit 1260cbcffa608219fc9188a6cbe9c45a300ef8b5 upstream.
 
-The ADF4350/1 features a programmable dual-modulus prescaler of 4/5 or 8/9.
-When set to 4/5, the maximum RF frequency allowed is 3 GHz.
-Therefore, when operating the ADF4351 above 3 GHz, this must be set to 8/9.
-In this context not the RF output frequency is meant
-- it's the VCO frequency.
+Make sure to drop the reference taken when looking up the genpool platform
+device in of_gen_pool_get() before returning the pool.
 
-Therefore move the prescaler selection after we derived the VCO frequency
-from the desired RF output frequency.
+Note that holding a reference to a device does typically not prevent its
+devres managed resources from being released so there is no point in
+keeping the reference.
 
-This BUG may have caused PLL lock instabilities when operating the VCO at
-the very high range close to 4.4 GHz.
-
-Fixes: e31166f0fd48 ("iio: frequency: New driver for Analog Devices ADF4350/ADF4351 Wideband Synthesizers")
-Signed-off-by: Michael Hennerich <michael.hennerich@analog.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20250829-adf4350-fix-v2-1-0bf543ba797d@analog.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lkml.kernel.org/r/20250924080207.18006-1-johan@kernel.org
+Fixes: 9375db07adea ("genalloc: add devres support, allow to find a managed pool by device")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Vladimir Zapolskiy <vz@mleia.com>
+Cc: <stable@vger.kernel.org>	[3.10+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/adf4350.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ lib/genalloc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/frequency/adf4350.c
-+++ b/drivers/iio/frequency/adf4350.c
-@@ -137,6 +137,19 @@ static int adf4350_set_freq(struct adf43
- 	if (freq > ADF4350_MAX_OUT_FREQ || freq < st->min_out_freq)
- 		return -EINVAL;
- 
-+	st->r4_rf_div_sel = 0;
-+
-+	/*
-+	 * !\TODO: The below computation is making sure we get a power of 2
-+	 * shift (st->r4_rf_div_sel) so that freq becomes higher or equal to
-+	 * ADF4350_MIN_VCO_FREQ. This might be simplified with fls()/fls_long()
-+	 * and friends.
-+	 */
-+	while (freq < ADF4350_MIN_VCO_FREQ) {
-+		freq <<= 1;
-+		st->r4_rf_div_sel++;
+--- a/lib/genalloc.c
++++ b/lib/genalloc.c
+@@ -892,8 +892,11 @@ struct gen_pool *of_gen_pool_get(struct
+ 		if (!name)
+ 			name = np_pool->name;
+ 	}
+-	if (pdev)
++	if (pdev) {
+ 		pool = gen_pool_get(&pdev->dev, name);
++		put_device(&pdev->dev);
 +	}
 +
- 	if (freq > ADF4350_MAX_FREQ_45_PRESC) {
- 		prescaler = ADF4350_REG1_PRESCALER;
- 		mdiv = 75;
-@@ -145,13 +158,6 @@ static int adf4350_set_freq(struct adf43
- 		mdiv = 23;
- 	}
+ 	of_node_put(np_pool);
  
--	st->r4_rf_div_sel = 0;
--
--	while (freq < ADF4350_MIN_VCO_FREQ) {
--		freq <<= 1;
--		st->r4_rf_div_sel++;
--	}
--
- 	/*
- 	 * Allow a predefined reference division factor
- 	 * if not set, compute our own
+ 	return pool;
 
 
