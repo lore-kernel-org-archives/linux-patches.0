@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EA632D0EE;
-	Mon, 27 Oct 2025 18:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C02323406;
+	Mon, 27 Oct 2025 18:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590685; cv=none; b=WfXH+57NDS5uCPFNL6ZC5INLi6U9ma+f8IgTZqxlJl9Xrlcic6BhuUHX9nIRnAl77awiGH/kF0siZUtzc7n7i+uYoCAtFZoa2Oa5+Se1UYwVGS8aBubRj2zvBvBfJf6d093Yq9OfMSLSU46CqQ28dazDpE9xxmJ5RrwyiO4uq5I=
+	t=1761590687; cv=none; b=ai/SnI0IyGHB9MZNBp3RIy+ChxOHVoCywb/ruxdrNfFU7gQ+P7pLmK4AvbqWlVwAjFy4juG6BHlSTAMA1usHGg3wjppjcBgv0Qx1wuBNNQP9oVGUkJJH2YCHCZmcaeIXH5w3IdHoB2/qXT5MfkJJDhnJoHV2JW9ZNoFBZQ28UZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590685; c=relaxed/simple;
-	bh=IddfhD1aMjzt7NJjJe654+NZD+XPW7LyAYUqKEJkX/Y=;
+	s=arc-20240116; t=1761590687; c=relaxed/simple;
+	bh=nJeozG1QgEgDkCJCxEC791D79IGYKK5dPGsFCGUAw6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDH0c81JDekdHfN4GFlE3Ce0VMeygaRUUhUmGrHONztwhG1r9eZ0woepZK66kSglIlgEPeTMIN0lWB2BOrJNnvyYlbYDVSmsBy4LVMeW4KFrg6Zai75Jpm9ik8fq502vQRoraDGwBj8kosmRzMR/fpSoi0+ccMg4AitavN0Me08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn8M+Ico; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhAPY90zA2+OK/LhczzUPw9uALop/ArYV3VXeutWQj3KFvjjF4RqGUw5QSV9FpIFF2fKcN19WGjg+WYDp0TCv7IyFQSc5reF9D+wuvQXI/YGRml53jCIsMkKy+QpChu9roILRNiG/wqkKdcXmX0W9r3qBPer/Qw5ShpoHb1AKOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rhu24PS6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn8M+Ico"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44E2C4CEFD;
-	Mon, 27 Oct 2025 18:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rhu24PS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F85FC4CEFD;
+	Mon, 27 Oct 2025 18:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590685;
-	bh=IddfhD1aMjzt7NJjJe654+NZD+XPW7LyAYUqKEJkX/Y=;
+	s=korg; t=1761590687;
+	bh=nJeozG1QgEgDkCJCxEC791D79IGYKK5dPGsFCGUAw6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hn8M+IcoqwlAPeXlSZSPhJ12MdbYoQVzm6JrDGQreLnQ2SDhnm7NsYjMSYxtp3S0o
-	 Z0Z2f4Gnd9TU4QDzorfNX0NNysjYcW6idImm8snlCIkW2rJ7I/atl7fMRY8eFQmI+y
-	 6rjR3+7YkIyMdP7miwpDtWvw/33jBN+tFBoOhZGw=
+	b=Rhu24PS6VRmmu6eVroki451PMORhA7I6MEZ3wJPJKZRWK0DnyyJ3rmedvObLZawxX
+	 6pOLCEBXDJrzkYDDv/sBA27JeIOvzxrTKkxetKnfMgbSfmFWB1FQ5b3ashdx3m1LTa
+	 B3zLvvj2t37u4HdCNtQXD+2nKKKmp9KEDQzW8q8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 109/224] iio: dac: ad5360: use int type to store negative error codes
-Date: Mon, 27 Oct 2025 19:34:15 +0100
-Message-ID: <20251027183511.910908935@linuxfoundation.org>
+	Daniel Tang <danielzgtg.opensource@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 100/224] ACPI: TAD: Add missing sysfs_remove_group() for ACPI_TAD_RT
+Date: Mon, 27 Oct 2025 19:34:06 +0100
+Message-ID: <20251027183511.664919163@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,35 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Daniel Tang <danielzgtg.opensource@gmail.com>
 
-commit f9381ece76de999a2065d5b4fdd87fa17883978c upstream.
+commit 4aac453deca0d9c61df18d968f8864c3ae7d3d8d upstream.
 
-Change the 'ret' variable in ad5360_update_ctrl() from unsigned int to
-int, as it needs to store either negative error codes or zero returned
-by ad5360_write_unlocked().
+Previously, after `rmmod acpi_tad`, `modprobe acpi_tad` would fail
+with this dmesg:
 
-Fixes: a3e2940c24d3 ("staging:iio:dac: Add AD5360 driver")
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20250901135726.17601-2-rongqianfeng@vivo.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+sysfs: cannot create duplicate filename '/devices/platform/ACPI000E:00/time'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6c/0x90
+ dump_stack+0x10/0x20
+ sysfs_warn_dup+0x8b/0xa0
+ sysfs_add_file_mode_ns+0x122/0x130
+ internal_create_group+0x1dd/0x4c0
+ sysfs_create_group+0x13/0x20
+ acpi_tad_probe+0x147/0x1f0 [acpi_tad]
+ platform_probe+0x42/0xb0
+ </TASK>
+acpi-tad ACPI000E:00: probe with driver acpi-tad failed with error -17
+
+Fixes: 3230b2b3c1ab ("ACPI: TAD: Add low-level support for real time capability")
+Signed-off-by: Daniel Tang <danielzgtg.opensource@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/2881298.hMirdbgypa@daniel-desktop3
+Cc: 5.2+ <stable@vger.kernel.org> # 5.2+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5360.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_tad.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/dac/ad5360.c
-+++ b/drivers/iio/dac/ad5360.c
-@@ -259,7 +259,7 @@ static int ad5360_update_ctrl(struct iio
- 	unsigned int clr)
- {
- 	struct ad5360_state *st = iio_priv(indio_dev);
--	unsigned int ret;
-+	int ret;
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -563,6 +563,9 @@ static int acpi_tad_remove(struct platfo
  
- 	mutex_lock(&indio_dev->mlock);
+ 	pm_runtime_get_sync(dev);
+ 
++	if (dd->capabilities & ACPI_TAD_RT)
++		sysfs_remove_group(&dev->kobj, &acpi_tad_time_attr_group);
++
+ 	if (dd->capabilities & ACPI_TAD_DC_WAKE)
+ 		sysfs_remove_group(&dev->kobj, &acpi_tad_dc_attr_group);
  
 
 
