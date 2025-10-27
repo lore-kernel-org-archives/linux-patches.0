@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771CB27978C;
-	Mon, 27 Oct 2025 19:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7683195E4;
+	Mon, 27 Oct 2025 19:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591679; cv=none; b=GHmby58rLokwIvSN716WieUIPp1LnLT3A/FM0c/gQQAptkuUIABI92UzjzGasoEOQyPrivzjkb8iirOBMNyZFsa8wvv/UYHoOZmjV1+fa6i3tYJXcNiMtnt8Ae2siGn0tKu1zBg+67iyYMMGUlFQe6gQpFhfn1EE3OJ3RQnuUc8=
+	t=1761591682; cv=none; b=KCp3Vur2YFBDRNTWGGREIqlOktEro19DmiWpOG3B6HKWtuCwCgqnklLIPWUaQYtKAg7HtmwUxmbn2o+zuVLN9rOI8r30BWTObd2lXM7LRNNabs16xxftpZMh+mQVT3ig/cKxzCe/7VrRbpQ/Pgt2ao//n5NP5cSYCooZ3BvXYl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591679; c=relaxed/simple;
-	bh=QFL6x9NCX5Aom62c6jC196CjU5wCaewaA8Lc6SGY/qo=;
+	s=arc-20240116; t=1761591682; c=relaxed/simple;
+	bh=wECKzMJc8IqFdvg1rkLoE8Elk/9Qfj/sJhs/RahnuB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoCe1lvbusdYyCliDC4CSIdCTDLU71K7CR8+ZKjz1n2EwtBoiZ0jQkzXLwQ/Yj/RnuKBr3uugAPKJqFng9GDLbkuBHNhN8lLp9+CDepizWf3Wm8VBqILDfuG59tACw3Ktm0wq8zrUVzqT1pqw2TtnRHFxI1W8+ull0WMiLzE7B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZgNcAdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIrlExEfGpm8UAUACTdnoSDhSE8w/kqBBfXEIP9IWjdNG+EGt7yA4/2p1SNjpCGmOTe+hoRa/w82vIZiDT0UG3TzDiCCGK53rYUMYFqDDGm5o7vHl3EqnQI/Z7qlcOfQXhwc7uGUby02EXYcC3aSZ+ChAatO7I+4USydqfe5/vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/Mfi1vo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZgNcAdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD3FC4CEF1;
-	Mon, 27 Oct 2025 19:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/Mfi1vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933DFC4CEF1;
+	Mon, 27 Oct 2025 19:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591679;
-	bh=QFL6x9NCX5Aom62c6jC196CjU5wCaewaA8Lc6SGY/qo=;
+	s=korg; t=1761591681;
+	bh=wECKzMJc8IqFdvg1rkLoE8Elk/9Qfj/sJhs/RahnuB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZgNcAdbkqZsJV5Xjn7ok4YDlpt1RZH9HnbZqyxSULldUdI90CNFV6md1GbAZskKC
-	 30lkLF4xCwoXXwADHXbmLjOWVc08FQ6KpgBcY/RSZOdDPpnIaFvRvt93p/H0wtBow7
-	 VhDDy6nwWIRB8Mu5hxnd1f7+bCFKA/8Iu93TXH0M=
+	b=o/Mfi1vomp7/WZ7V8v5qgbjnP4vVf1jJ+XUDyCkxWURaCokzcCBcHnEszpgCQosA6
+	 +ANARQ/oXyYtEk1348oww3aUzDDRZpyrZyaAWefYv1gF6rik9cfklqIo6ZF4nbVSi1
+	 a+ct+DiYxdQ3IpjFcbVZuY6rVk60g2joy5CmCjqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	syzbot <syzbot+fdedff847a0e5e84c39f@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 289/332] riscv: cpu: Add 64bit hartid support on RV64
-Date: Mon, 27 Oct 2025 19:35:42 +0100
-Message-ID: <20251027183532.488170688@linuxfoundation.org>
+Subject: [PATCH 5.10 263/332] hfsplus: fix KMSAN uninit-value issue in hfsplus_delete_cat()
+Date: Mon, 27 Oct 2025 19:35:16 +0100
+Message-ID: <20251027183531.796684433@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -52,258 +54,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit ad635e723e17379b192a5ba9c182e3eedfc24d16 ]
+[ Upstream commit 9b3d15a758910bb98ba8feb4109d99cc67450ee4 ]
 
-The hartid can be a 64bit value on RV64 platforms.
+The syzbot reported issue in hfsplus_delete_cat():
 
-Add support for 64bit hartid in riscv_of_processor_hartid() and
-update its callers.
+[   70.682285][ T9333] =====================================================
+[   70.682943][ T9333] BUG: KMSAN: uninit-value in hfsplus_subfolders_dec+0x1d7/0x220
+[   70.683640][ T9333]  hfsplus_subfolders_dec+0x1d7/0x220
+[   70.684141][ T9333]  hfsplus_delete_cat+0x105d/0x12b0
+[   70.684621][ T9333]  hfsplus_rmdir+0x13d/0x310
+[   70.685048][ T9333]  vfs_rmdir+0x5ba/0x810
+[   70.685447][ T9333]  do_rmdir+0x964/0xea0
+[   70.685833][ T9333]  __x64_sys_rmdir+0x71/0xb0
+[   70.686260][ T9333]  x64_sys_call+0xcd8/0x3cf0
+[   70.686695][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.687119][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.687646][ T9333]
+[   70.687856][ T9333] Uninit was stored to memory at:
+[   70.688311][ T9333]  hfsplus_subfolders_inc+0x1c2/0x1d0
+[   70.688779][ T9333]  hfsplus_create_cat+0x148e/0x1800
+[   70.689231][ T9333]  hfsplus_mknod+0x27f/0x600
+[   70.689730][ T9333]  hfsplus_mkdir+0x5a/0x70
+[   70.690146][ T9333]  vfs_mkdir+0x483/0x7a0
+[   70.690545][ T9333]  do_mkdirat+0x3f2/0xd30
+[   70.690944][ T9333]  __x64_sys_mkdir+0x9a/0xf0
+[   70.691380][ T9333]  x64_sys_call+0x2f89/0x3cf0
+[   70.691816][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.692229][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.692773][ T9333]
+[   70.692990][ T9333] Uninit was stored to memory at:
+[   70.693469][ T9333]  hfsplus_subfolders_inc+0x1c2/0x1d0
+[   70.693960][ T9333]  hfsplus_create_cat+0x148e/0x1800
+[   70.694438][ T9333]  hfsplus_fill_super+0x21c1/0x2700
+[   70.694911][ T9333]  mount_bdev+0x37b/0x530
+[   70.695320][ T9333]  hfsplus_mount+0x4d/0x60
+[   70.695729][ T9333]  legacy_get_tree+0x113/0x2c0
+[   70.696167][ T9333]  vfs_get_tree+0xb3/0x5c0
+[   70.696588][ T9333]  do_new_mount+0x73e/0x1630
+[   70.697013][ T9333]  path_mount+0x6e3/0x1eb0
+[   70.697425][ T9333]  __se_sys_mount+0x733/0x830
+[   70.697857][ T9333]  __x64_sys_mount+0xe4/0x150
+[   70.698269][ T9333]  x64_sys_call+0x2691/0x3cf0
+[   70.698704][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.699117][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.699730][ T9333]
+[   70.699946][ T9333] Uninit was created at:
+[   70.700378][ T9333]  __alloc_pages_noprof+0x714/0xe60
+[   70.700843][ T9333]  alloc_pages_mpol_noprof+0x2a2/0x9b0
+[   70.701331][ T9333]  alloc_pages_noprof+0xf8/0x1f0
+[   70.701774][ T9333]  allocate_slab+0x30e/0x1390
+[   70.702194][ T9333]  ___slab_alloc+0x1049/0x33a0
+[   70.702635][ T9333]  kmem_cache_alloc_lru_noprof+0x5ce/0xb20
+[   70.703153][ T9333]  hfsplus_alloc_inode+0x5a/0xd0
+[   70.703598][ T9333]  alloc_inode+0x82/0x490
+[   70.703984][ T9333]  iget_locked+0x22e/0x1320
+[   70.704428][ T9333]  hfsplus_iget+0x5c/0xba0
+[   70.704827][ T9333]  hfsplus_btree_open+0x135/0x1dd0
+[   70.705291][ T9333]  hfsplus_fill_super+0x1132/0x2700
+[   70.705776][ T9333]  mount_bdev+0x37b/0x530
+[   70.706171][ T9333]  hfsplus_mount+0x4d/0x60
+[   70.706579][ T9333]  legacy_get_tree+0x113/0x2c0
+[   70.707019][ T9333]  vfs_get_tree+0xb3/0x5c0
+[   70.707444][ T9333]  do_new_mount+0x73e/0x1630
+[   70.707865][ T9333]  path_mount+0x6e3/0x1eb0
+[   70.708270][ T9333]  __se_sys_mount+0x733/0x830
+[   70.708711][ T9333]  __x64_sys_mount+0xe4/0x150
+[   70.709158][ T9333]  x64_sys_call+0x2691/0x3cf0
+[   70.709630][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.710053][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.710611][ T9333]
+[   70.710842][ T9333] CPU: 3 UID: 0 PID: 9333 Comm: repro Not tainted 6.12.0-rc6-dirty #17
+[   70.711568][ T9333] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.712490][ T9333] =====================================================
+[   70.713085][ T9333] Disabling lock debugging due to kernel taint
+[   70.713618][ T9333] Kernel panic - not syncing: kmsan.panic set ...
+[   70.714159][ T9333] CPU: 3 UID: 0 PID: 9333 Comm: repro Tainted: G    B              6.12.0-rc6-dirty #17
+[   70.715007][ T9333] Tainted: [B]=BAD_PAGE
+[   70.715365][ T9333] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.716311][ T9333] Call Trace:
+[   70.716621][ T9333]  <TASK>
+[   70.716899][ T9333]  dump_stack_lvl+0x1fd/0x2b0
+[   70.717350][ T9333]  dump_stack+0x1e/0x30
+[   70.717743][ T9333]  panic+0x502/0xca0
+[   70.718116][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.718611][ T9333]  kmsan_report+0x296/0x2a0
+[   70.719038][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.719859][ T9333]  ? __msan_warning+0x96/0x120
+[   70.720345][ T9333]  ? hfsplus_subfolders_dec+0x1d7/0x220
+[   70.720881][ T9333]  ? hfsplus_delete_cat+0x105d/0x12b0
+[   70.721412][ T9333]  ? hfsplus_rmdir+0x13d/0x310
+[   70.721880][ T9333]  ? vfs_rmdir+0x5ba/0x810
+[   70.722458][ T9333]  ? do_rmdir+0x964/0xea0
+[   70.722883][ T9333]  ? __x64_sys_rmdir+0x71/0xb0
+[   70.723397][ T9333]  ? x64_sys_call+0xcd8/0x3cf0
+[   70.723915][ T9333]  ? do_syscall_64+0xd9/0x1d0
+[   70.724454][ T9333]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.725110][ T9333]  ? vprintk_emit+0xd1f/0xe60
+[   70.725616][ T9333]  ? vprintk_default+0x3f/0x50
+[   70.726175][ T9333]  ? vprintk+0xce/0xd0
+[   70.726628][ T9333]  ? _printk+0x17e/0x1b0
+[   70.727129][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.727739][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.728324][ T9333]  __msan_warning+0x96/0x120
+[   70.728854][ T9333]  hfsplus_subfolders_dec+0x1d7/0x220
+[   70.729479][ T9333]  hfsplus_delete_cat+0x105d/0x12b0
+[   70.729984][ T9333]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.730646][ T9333]  ? __msan_metadata_ptr_for_load_4+0x24/0x40
+[   70.731296][ T9333]  ? kmsan_get_metadata+0x13e/0x1c0
+[   70.731863][ T9333]  hfsplus_rmdir+0x13d/0x310
+[   70.732390][ T9333]  ? __pfx_hfsplus_rmdir+0x10/0x10
+[   70.732919][ T9333]  vfs_rmdir+0x5ba/0x810
+[   70.733416][ T9333]  ? kmsan_get_shadow_origin_ptr+0x4a/0xb0
+[   70.734044][ T9333]  do_rmdir+0x964/0xea0
+[   70.734537][ T9333]  __x64_sys_rmdir+0x71/0xb0
+[   70.735032][ T9333]  x64_sys_call+0xcd8/0x3cf0
+[   70.735579][ T9333]  do_syscall_64+0xd9/0x1d0
+[   70.736092][ T9333]  ? irqentry_exit+0x16/0x60
+[   70.736637][ T9333]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   70.737269][ T9333] RIP: 0033:0x7fa9424eafc9
+[   70.737775][ T9333] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 48
+[   70.739844][ T9333] RSP: 002b:00007fff099cd8d8 EFLAGS: 00000202 ORIG_RAX: 0000000000000054
+[   70.740760][ T9333] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fa9424eafc9
+[   70.741642][ T9333] RDX: 006c6f72746e6f63 RSI: 000000000000000a RDI: 0000000020000100
+[   70.742543][ T9333] RBP: 00007fff099cd8e0 R08: 00007fff099cd910 R09: 00007fff099cd910
+[   70.743376][ T9333] R10: 0000000000000000 R11: 0000000000000202 R12: 0000565430642260
+[   70.744247][ T9333] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[   70.745082][ T9333]  </TASK>
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20220527051743.2829940-5-sunilvl@ventanamicro.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Stable-dep-of: d2721bb165b3 ("RISC-V: Don't print details of CPUs disabled in DT")
+The main reason of the issue that struct hfsplus_inode_info
+has not been properly initialized for the case of root folder.
+In the case of root folder, hfsplus_fill_super() calls
+the hfsplus_iget() that implements only partial initialization of
+struct hfsplus_inode_info and subfolders field is not
+initialized by hfsplus_iget() logic.
+
+This patch implements complete initialization of
+struct hfsplus_inode_info in the hfsplus_iget() logic with
+the goal to prevent likewise issues for the case of
+root folder.
+
+Reported-by: syzbot <syzbot+fdedff847a0e5e84c39f@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=fdedff847a0e5e84c39f
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250825225103.326401-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/processor.h |  4 ++--
- arch/riscv/kernel/cpu.c            | 26 +++++++++++++++-----------
- arch/riscv/kernel/cpufeature.c     |  6 ++++--
- arch/riscv/kernel/smpboot.c        |  9 +++++----
- drivers/clocksource/timer-riscv.c  | 15 ++++++++-------
- drivers/irqchip/irq-riscv-intc.c   |  7 ++++---
- drivers/irqchip/irq-sifive-plic.c  |  7 ++++---
- 7 files changed, 42 insertions(+), 32 deletions(-)
+ fs/hfsplus/super.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/include/asm/processor.h b/arch/riscv/include/asm/processor.h
-index bdddcd5c1b71d..b5295806643b1 100644
---- a/arch/riscv/include/asm/processor.h
-+++ b/arch/riscv/include/asm/processor.h
-@@ -66,8 +66,8 @@ static inline void wait_for_interrupt(void)
- }
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index 7648f64a17a82..65c63c7a00b12 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -67,13 +67,26 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
+ 	if (!(inode->i_state & I_NEW))
+ 		return inode;
  
- struct device_node;
--int riscv_of_processor_hartid(struct device_node *node);
--int riscv_of_parent_hartid(struct device_node *node);
-+int riscv_of_processor_hartid(struct device_node *node, unsigned long *hartid);
-+int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid);
+-	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
+-	mutex_init(&HFSPLUS_I(inode)->extents_lock);
+-	HFSPLUS_I(inode)->flags = 0;
++	atomic_set(&HFSPLUS_I(inode)->opencnt, 0);
++	HFSPLUS_I(inode)->first_blocks = 0;
++	HFSPLUS_I(inode)->clump_blocks = 0;
++	HFSPLUS_I(inode)->alloc_blocks = 0;
++	HFSPLUS_I(inode)->cached_start = U32_MAX;
++	HFSPLUS_I(inode)->cached_blocks = 0;
++	memset(HFSPLUS_I(inode)->first_extents, 0, sizeof(hfsplus_extent_rec));
++	memset(HFSPLUS_I(inode)->cached_extents, 0, sizeof(hfsplus_extent_rec));
+ 	HFSPLUS_I(inode)->extent_state = 0;
++	mutex_init(&HFSPLUS_I(inode)->extents_lock);
+ 	HFSPLUS_I(inode)->rsrc_inode = NULL;
+-	atomic_set(&HFSPLUS_I(inode)->opencnt, 0);
++	HFSPLUS_I(inode)->create_date = 0;
++	HFSPLUS_I(inode)->linkid = 0;
++	HFSPLUS_I(inode)->flags = 0;
++	HFSPLUS_I(inode)->fs_blocks = 0;
++	HFSPLUS_I(inode)->userflags = 0;
++	HFSPLUS_I(inode)->subfolders = 0;
++	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
++	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
++	HFSPLUS_I(inode)->phys_size = 0;
  
- extern void riscv_fill_hwcap(void);
- 
-diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
-index f13b2c9ea912d..11d6d6cc61d51 100644
---- a/arch/riscv/kernel/cpu.c
-+++ b/arch/riscv/kernel/cpu.c
-@@ -12,37 +12,36 @@
-  * Returns the hart ID of the given device tree node, or -ENODEV if the node
-  * isn't an enabled and valid RISC-V hart node.
-  */
--int riscv_of_processor_hartid(struct device_node *node)
-+int riscv_of_processor_hartid(struct device_node *node, unsigned long *hart)
- {
- 	const char *isa;
--	u32 hart;
- 
- 	if (!of_device_is_compatible(node, "riscv")) {
- 		pr_warn("Found incompatible CPU\n");
- 		return -ENODEV;
- 	}
- 
--	hart = of_get_cpu_hwid(node, 0);
--	if (hart == ~0U) {
-+	*hart = (unsigned long) of_get_cpu_hwid(node, 0);
-+	if (*hart == ~0UL) {
- 		pr_warn("Found CPU without hart ID\n");
- 		return -ENODEV;
- 	}
- 
- 	if (!of_device_is_available(node)) {
--		pr_info("CPU with hartid=%d is not available\n", hart);
-+		pr_info("CPU with hartid=%lu is not available\n", *hart);
- 		return -ENODEV;
- 	}
- 
- 	if (of_property_read_string(node, "riscv,isa", &isa)) {
--		pr_warn("CPU with hartid=%d has no \"riscv,isa\" property\n", hart);
-+		pr_warn("CPU with hartid=%lu has no \"riscv,isa\" property\n", *hart);
- 		return -ENODEV;
- 	}
- 	if (isa[0] != 'r' || isa[1] != 'v') {
--		pr_warn("CPU with hartid=%d has an invalid ISA of \"%s\"\n", hart, isa);
-+		pr_warn("CPU with hartid=%lu has an invalid ISA of \"%s\"\n", *hart, isa);
- 		return -ENODEV;
- 	}
- 
--	return hart;
-+	return 0;
- }
- 
- /*
-@@ -51,11 +50,16 @@ int riscv_of_processor_hartid(struct device_node *node)
-  * To achieve this, we walk up the DT tree until we find an active
-  * RISC-V core (HART) node and extract the cpuid from it.
-  */
--int riscv_of_parent_hartid(struct device_node *node)
-+int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
- {
-+	int rc;
-+
- 	for (; node; node = node->parent) {
--		if (of_device_is_compatible(node, "riscv"))
--			return riscv_of_processor_hartid(node);
-+		if (of_device_is_compatible(node, "riscv")) {
-+			rc = riscv_of_processor_hartid(node, hartid);
-+			if (!rc)
-+				return 0;
-+		}
- 	}
- 
- 	return -1;
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index 54d230bdaf976..f46efff26e3dc 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -67,8 +67,9 @@ void riscv_fill_hwcap(void)
- 	struct device_node *node;
- 	const char *isa;
- 	char print_str[NUM_ALPHA_EXTS + 1];
--	int i, j;
-+	int i, j, rc;
- 	static unsigned long isa2hwcap[256] = {0};
-+	unsigned long hartid;
- 
- 	isa2hwcap['i'] = isa2hwcap['I'] = COMPAT_HWCAP_ISA_I;
- 	isa2hwcap['m'] = isa2hwcap['M'] = COMPAT_HWCAP_ISA_M;
-@@ -85,7 +86,8 @@ void riscv_fill_hwcap(void)
- 		unsigned long this_hwcap = 0;
- 		unsigned long this_isa = 0;
- 
--		if (riscv_of_processor_hartid(node) < 0)
-+		rc = riscv_of_processor_hartid(node, &hartid);
-+		if (rc < 0)
- 			continue;
- 
- 		if (of_property_read_string(node, "riscv,isa", &isa)) {
-diff --git a/arch/riscv/kernel/smpboot.c b/arch/riscv/kernel/smpboot.c
-index 0e0aed380e281..9df6413771923 100644
---- a/arch/riscv/kernel/smpboot.c
-+++ b/arch/riscv/kernel/smpboot.c
-@@ -67,15 +67,16 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
- void __init setup_smp(void)
- {
- 	struct device_node *dn;
--	int hart;
-+	unsigned long hart;
- 	bool found_boot_cpu = false;
- 	int cpuid = 1;
-+	int rc;
- 
- 	cpu_set_ops(0);
- 
- 	for_each_of_cpu_node(dn) {
--		hart = riscv_of_processor_hartid(dn);
--		if (hart < 0)
-+		rc = riscv_of_processor_hartid(dn, &hart);
-+		if (rc < 0)
- 			continue;
- 
- 		if (hart == cpuid_to_hartid_map(0)) {
-@@ -84,7 +85,7 @@ void __init setup_smp(void)
- 			continue;
- 		}
- 		if (cpuid >= NR_CPUS) {
--			pr_warn("Invalid cpuid [%d] for hartid [%d]\n",
-+			pr_warn("Invalid cpuid [%d] for hartid [%lu]\n",
- 				cpuid, hart);
- 			break;
- 		}
-diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
-index c51c5ed15aa75..4930d08c9374a 100644
---- a/drivers/clocksource/timer-riscv.c
-+++ b/drivers/clocksource/timer-riscv.c
-@@ -92,20 +92,21 @@ static irqreturn_t riscv_timer_interrupt(int irq, void *dev_id)
- 
- static int __init riscv_timer_init_dt(struct device_node *n)
- {
--	int cpuid, hartid, error;
-+	int cpuid, error;
-+	unsigned long hartid;
- 	struct device_node *child;
- 	struct irq_domain *domain;
- 
--	hartid = riscv_of_processor_hartid(n);
--	if (hartid < 0) {
--		pr_warn("Not valid hartid for node [%pOF] error = [%d]\n",
-+	error = riscv_of_processor_hartid(n, &hartid);
-+	if (error < 0) {
-+		pr_warn("Not valid hartid for node [%pOF] error = [%lu]\n",
- 			n, hartid);
--		return hartid;
-+		return error;
- 	}
- 
- 	cpuid = riscv_hartid_to_cpuid(hartid);
- 	if (cpuid < 0) {
--		pr_warn("Invalid cpuid for hartid [%d]\n", hartid);
-+		pr_warn("Invalid cpuid for hartid [%lu]\n", hartid);
- 		return cpuid;
- 	}
- 
-@@ -131,7 +132,7 @@ static int __init riscv_timer_init_dt(struct device_node *n)
- 		return -ENODEV;
- 	}
- 
--	pr_info("%s: Registering clocksource cpuid [%d] hartid [%d]\n",
-+	pr_info("%s: Registering clocksource cpuid [%d] hartid [%lu]\n",
- 	       __func__, cpuid, hartid);
- 	error = clocksource_register_hz(&riscv_clocksource, riscv_timebase);
- 	if (error) {
-diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
-index 8017f6d32d52b..edbf90a7565f6 100644
---- a/drivers/irqchip/irq-riscv-intc.c
-+++ b/drivers/irqchip/irq-riscv-intc.c
-@@ -95,10 +95,11 @@ static const struct irq_domain_ops riscv_intc_domain_ops = {
- static int __init riscv_intc_init(struct device_node *node,
- 				  struct device_node *parent)
- {
--	int rc, hartid;
-+	int rc;
-+	unsigned long hartid;
- 
--	hartid = riscv_of_parent_hartid(node);
--	if (hartid < 0) {
-+	rc = riscv_of_parent_hartid(node, &hartid);
-+	if (rc < 0) {
- 		pr_warn("unable to find hart id for %pOF\n", node);
- 		return 0;
- 	}
-diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
-index bd99ee0ae433d..5fdf0eae48f7d 100644
---- a/drivers/irqchip/irq-sifive-plic.c
-+++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -315,7 +315,8 @@ static int __init plic_init(struct device_node *node,
- 	for (i = 0; i < nr_contexts; i++) {
- 		struct of_phandle_args parent;
- 		irq_hw_number_t hwirq;
--		int cpu, hartid;
-+		int cpu;
-+		unsigned long hartid;
- 
- 		if (of_irq_parse_one(node, i, &parent)) {
- 			pr_err("failed to parse parent for context %d.\n", i);
-@@ -329,8 +330,8 @@ static int __init plic_init(struct device_node *node,
- 		if (parent.args[0] != RV_IRQ_EXT)
- 			continue;
- 
--		hartid = riscv_of_parent_hartid(parent.np);
--		if (hartid < 0) {
-+		error = riscv_of_parent_hartid(parent.np, &hartid);
-+		if (error < 0) {
- 			pr_warn("failed to parse hart ID for context %d.\n", i);
- 			continue;
- 		}
+ 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
+ 	    inode->i_ino == HFSPLUS_ROOT_CNID) {
 -- 
 2.51.0
 
