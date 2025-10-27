@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6BD32AAD4;
-	Mon, 27 Oct 2025 19:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB8731D389;
+	Mon, 27 Oct 2025 19:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592471; cv=none; b=Hjo21CWbjqUlRmL0N9YiNUztQP6Ak1Sa45vgrWSvth5fX+bN5s+LkSZ9MNK6RAjCpYzSnOWJz/VikA2Mb/ZYXeuhgxj4B1DxVVqkzuqkZc4uaZGY5zqn/aTYnOiCCcnigVQ3mfPdVmGMWEMXFRD6MWUzP1FGjzQujUS8GORflwM=
+	t=1761592473; cv=none; b=NeN/jRqz/x89q3MNl1PxqGXWqLZp/GTvtivg3iriH48rGPYfr+4Bk7q6FQ+7LxK18lGxFrdLSa4n3MmNTCK3GgdRvZLznyikQ5h/zPd3e7A8QdIktmgxDOHZ+gbKPKrdVTYuwh++e+6RyKhA1vPJQRzDHG4E//UdYicleLjvLiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592471; c=relaxed/simple;
-	bh=Z/9klJzHRx68ZosWATdMMcHiXzPaWhNeJU9G8Wgwv9s=;
+	s=arc-20240116; t=1761592473; c=relaxed/simple;
+	bh=MNt6Zmg17xRY0rzjh0eq5nyXhuDIh3ZEDAt9S0oSKp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+zSA6zlpfoHZOdm4hlkvH9WFapyfgtAQfV7Ego5K21e6p3wCJJ2n5jD4BL9qTA8bhWSIwL+3kytL5z+aCZDVQpghVEK9fjD3/YrdJVKRQjEiu5TRC/ihwcLlTcym6nyIMt2FuhHcjMdYhnhsdhTG2wiTnO6e9Z7J5vkViA9log=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOkoFUd7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JFYnuOom9ckPuKKlekGzrQVZzjFw6NViN8j1d8Nz4aKvfT4c/nLjaw4kEDlkn8CQPZG856KSSrCGE/GPZmy/nfet0RHob1II00piSGdp2XU2iPdBGFg1V06agcK1KiIuqpgYkn+4V8tHI5L/jsvhk/FvLowZawFfzS1J5yQFSTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdN3f3Zh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOkoFUd7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DEE9C4CEFD;
-	Mon, 27 Oct 2025 19:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdN3f3Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40C4C4CEF1;
+	Mon, 27 Oct 2025 19:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592470;
-	bh=Z/9klJzHRx68ZosWATdMMcHiXzPaWhNeJU9G8Wgwv9s=;
+	s=korg; t=1761592473;
+	bh=MNt6Zmg17xRY0rzjh0eq5nyXhuDIh3ZEDAt9S0oSKp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOkoFUd7GM4rF5f56D2Vo2FIlbq7jTJxT4M+L7dDT0OaHaccUUZHEf/2tvQIkeN6I
-	 XOIvWkz3WEO8cK4JsYA1KvxsKKPqDmpml+KyPvWS/GjwbdoPW3MZ97kLJ1mof4Aqu0
-	 JXyL776vtqaN+5ebCmpHtPE//OvOA992TCc405rs=
+	b=RdN3f3ZhJeo7iy47xxj+hlWyf2yXAFvnOa5yXMm/CzLZbCE+WYnauNR3NBvgij7Ko
+	 mLc0GZiP1KHT38F1DjYYz4AqztsM8LxUx9x7dF7tpRZ/I1bCN5jeeL9lU4l4OPr36f
+	 8W4r4q/MK6tOOY81WhqMv+/Yi752EQXgvoBzEdwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	syzbot+1d79ebe5383fc016cf07@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/157] NFSD: Fix last write offset handling in layoutcommit
-Date: Mon, 27 Oct 2025 19:36:34 +0100
-Message-ID: <20251027183504.821455259@linuxfoundation.org>
+Subject: [PATCH 6.1 134/157] vfs: Dont leak disconnected dentries on umount
+Date: Mon, 27 Oct 2025 19:36:35 +0100
+Message-ID: <20251027183504.848886794@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -54,111 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit d68886bae76a4b9b3484d23e5b7df086f940fa38 ]
+[ Upstream commit 56094ad3eaa21e6621396cc33811d8f72847a834 ]
 
-The data type of loca_last_write_offset is newoffset4 and is switched
-on a boolean value, no_newoffset, that indicates if a previous write
-occurred or not. If no_newoffset is FALSE, an offset is not given.
-This means that client does not try to update the file size. Thus,
-server should not try to calculate new file size and check if it fits
-into the segment range. See RFC 8881, section 12.5.4.2.
+When user calls open_by_handle_at() on some inode that is not cached, we
+will create disconnected dentry for it. If such dentry is a directory,
+exportfs_decode_fh_raw() will then try to connect this dentry to the
+dentry tree through reconnect_path(). It may happen for various reasons
+(such as corrupted fs or race with rename) that the call to
+lookup_one_unlocked() in reconnect_one() will fail to find the dentry we
+are trying to reconnect and instead create a new dentry under the
+parent. Now this dentry will not be marked as disconnected although the
+parent still may well be disconnected (at least in case this
+inconsistency happened because the fs is corrupted and .. doesn't point
+to the real parent directory). This creates inconsistency in
+disconnected flags but AFAICS it was mostly harmless. At least until
+commit f1ee616214cb ("VFS: don't keep disconnected dentries on d_anon")
+which removed adding of most disconnected dentries to sb->s_anon list.
+Thus after this commit cleanup of disconnected dentries implicitely
+relies on the fact that dput() will immediately reclaim such dentries.
+However when some leaf dentry isn't marked as disconnected, as in the
+scenario described above, the reclaim doesn't happen and the dentries
+are "leaked". Memory reclaim can eventually reclaim them but otherwise
+they stay in memory and if umount comes first, we hit infamous "Busy
+inodes after unmount" bug. Make sure all dentries created under a
+disconnected parent are marked as disconnected as well.
 
-Sometimes the current incorrect logic may cause clients to hang when
-trying to sync an inode. If layoutcommit fails, the client marks the
-inode as dirty again.
-
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
-Cc: stable@vger.kernel.org
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ removed rqstp parameter from proc_layoutcommit ]
+Reported-by: syzbot+1d79ebe5383fc016cf07@syzkaller.appspotmail.com
+Fixes: f1ee616214cb ("VFS: don't keep disconnected dentries on d_anon")
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ relocated DCACHE_DISCONNECTED propagation from d_alloc_parallel() to d_alloc() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    5 ++---
- fs/nfsd/nfs4proc.c    |   30 +++++++++++++++---------------
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ fs/dcache.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -117,7 +117,6 @@ static __be32
- nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
- 		struct iomap *iomaps, int nr_iomaps)
- {
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct iattr iattr = { .ia_valid = 0 };
- 	int error;
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -1862,6 +1862,8 @@ struct dentry *d_alloc(struct dentry * p
+ 	__dget_dlock(parent);
+ 	dentry->d_parent = parent;
+ 	list_add(&dentry->d_child, &parent->d_subdirs);
++	if (parent->d_flags & DCACHE_DISCONNECTED)
++		dentry->d_flags |= DCACHE_DISCONNECTED;
+ 	spin_unlock(&parent->d_lock);
  
-@@ -127,9 +126,9 @@ nfsd4_block_commit_blocks(struct inode *
- 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
- 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
- 
--	if (new_size > i_size_read(inode)) {
-+	if (lcp->lc_size_chg) {
- 		iattr.ia_valid |= ATTR_SIZE;
--		iattr.ia_size = new_size;
-+		iattr.ia_size = lcp->lc_newsize;
- 	}
- 
- 	error = inode->i_sb->s_export_op->commit_blocks(inode, iomaps,
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2261,7 +2261,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	const struct nfsd4_layout_seg *seg = &lcp->lc_seg;
- 	struct svc_fh *current_fh = &cstate->current_fh;
- 	const struct nfsd4_layout_ops *ops;
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct inode *inode;
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
-@@ -2276,13 +2275,21 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 		goto out;
- 	inode = d_inode(current_fh->fh_dentry);
- 
--	nfserr = nfserr_inval;
--	if (new_size <= seg->offset)
--		goto out;
--	if (new_size > seg->offset + seg->length)
--		goto out;
--	if (!lcp->lc_newoffset && new_size > i_size_read(inode))
--		goto out;
-+	lcp->lc_size_chg = false;
-+	if (lcp->lc_newoffset) {
-+		loff_t new_size = lcp->lc_last_wr + 1;
-+
-+		nfserr = nfserr_inval;
-+		if (new_size <= seg->offset)
-+			goto out;
-+		if (new_size > seg->offset + seg->length)
-+			goto out;
-+
-+		if (new_size > i_size_read(inode)) {
-+			lcp->lc_size_chg = true;
-+			lcp->lc_newsize = new_size;
-+		}
-+	}
- 
- 	nfserr = nfsd4_preprocess_layout_stateid(rqstp, cstate, &lcp->lc_sid,
- 						false, lcp->lc_layout_type,
-@@ -2298,13 +2305,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	/* LAYOUTCOMMIT does not require any serialization */
- 	mutex_unlock(&ls->ls_mutex);
- 
--	if (new_size > i_size_read(inode)) {
--		lcp->lc_size_chg = 1;
--		lcp->lc_newsize = new_size;
--	} else {
--		lcp->lc_size_chg = 0;
--	}
--
- 	nfserr = ops->proc_layoutcommit(inode, lcp);
- 	nfs4_put_stid(&ls->ls_stid);
- out:
+ 	return dentry;
 
 
