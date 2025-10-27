@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696F61F7586;
-	Mon, 27 Oct 2025 19:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7DE32B988;
+	Mon, 27 Oct 2025 19:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592064; cv=none; b=P7ZIgUXbAuzcZ5jGSgn1hfL5/nC/Ml/O3EgugS+9gT0QBBYqcsvmUBU5NuXLaJpOet+wEp98g66/c+uNcbxjPh+bppEs2eb25NYQvC7+mWmMbqexjGh/FX1S5rwNxzbD3UDAwapVxCMVq9n1A3LKw0aZmuApkDlQPvZdE5QdetE=
+	t=1761592067; cv=none; b=JKqnJEB9PVywhlp9sE3dM2htcxXyIgr0muB9VRv9cn1IJAdCgvoH+cVxHdpxX0aYMll92rUraXRZed7RLxW3HgTMtcKqVVQzICcN/RZoViLNOBXE56ZZP/syHoG98MA/o+HpszChW6uGduIQSYY9EIKz75SNtrRuUfHU8QeVMXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592064; c=relaxed/simple;
-	bh=OboGRTKoOJAnwrjDxVOJLOnjjwaTW4/obSJra5X99oA=;
+	s=arc-20240116; t=1761592067; c=relaxed/simple;
+	bh=3CWPqzeqBEFW54f3cNj3kf+Ew0fO8hW2v8tO76ofFfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmEbQJny9bTnXlwV8rk8FsvBUCXT9QXdwZxkorAcGK+wa8wj7pQ3dE8HqMQ21Ro38mtWOUPX0AfbJj69anyC3ZaKER8ow7hdX7zdPAybBVVes+06oeW2q8r6WtXkO49wxjkIvFlSZSYcCkaOPWkaiIatbjUQiT3MYD5HRvqdThI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a21K2d78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ar6XAoWmQacVzuPhwbB1Gbl2f5MdY6qZo1jTfWLR/fOJDarMCpsSQT04fvmT/B352qw6n0JApozPekGYPZKXbQvjGMqjCqFBL+Ds5cSbbYT2IIqGzxMy4IJk9jAzGNyfFRxQytXnygKBX8WzpH7o33EMmfqiJZjq3Ie2DIYV9FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+3mEo8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a21K2d78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF34AC4CEFD;
-	Mon, 27 Oct 2025 19:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+3mEo8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C14BC116B1;
+	Mon, 27 Oct 2025 19:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592064;
-	bh=OboGRTKoOJAnwrjDxVOJLOnjjwaTW4/obSJra5X99oA=;
+	s=korg; t=1761592067;
+	bh=3CWPqzeqBEFW54f3cNj3kf+Ew0fO8hW2v8tO76ofFfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a21K2d7801IbJa+hLi2bONpOCdT5j++zXha68GFh9jyi3rY2niTVNWnTGSzHMer/U
-	 ZYdGGmSbPbfSd00ooHbBATXU133gJD4nD+MvsJgJ5CvdvnS038PJK4xRKzYOXUdEXG
-	 zy6dZY2+MiefVgW2znCXf4Zbmbpho6HJE2X9WuWQ=
+	b=h+3mEo8vTDWH22MPiWNEIQVF79R9wvlzVqT4m983xsyjLHRpdmNV8L7/gC0deXm0t
+	 ILj1CXhdWCf4x2pq2vSXLyW3xIjSBuViTiuQeEMTJKpjKWDtNKIj2QcXk0KZnAzP11
+	 z15SWZ0oDOoOOODVANL3l11ovDbCPB4hhdhlD3PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 064/123] Revert "cpuidle: menu: Avoid discarding useful information"
-Date: Mon, 27 Oct 2025 19:35:44 +0100
-Message-ID: <20251027183448.105973854@linuxfoundation.org>
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 097/123] PM: runtime: Add new devm functions
+Date: Mon, 27 Oct 2025 19:36:17 +0100
+Message-ID: <20251027183448.986564838@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -44,84 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-commit 10fad4012234a7dea621ae17c0c9486824f645a0 upstream.
+[ Upstream commit 73db799bf5efc5a04654bb3ff6c9bf63a0dfa473 ]
 
-It is reported that commit 85975daeaa4d ("cpuidle: menu: Avoid discarding
-useful information") led to a performance regression on Intel Jasper Lake
-systems because it reduced the time spent by CPUs in idle state C7 which
-is correlated to the maximum frequency the CPUs can get to because of an
-average running power limit [1].
+Add `devm_pm_runtime_set_active_enabled()` and
+`devm_pm_runtime_get_noresume()` for simplifying
+common cases in drivers.
 
-Before that commit, get_typical_interval() would have returned UINT_MAX
-whenever it had been unable to make a high-confidence prediction which
-had led to selecting the deepest available idle state too often and
-both power and performance had been inadequate as a result of that on
-some systems.  However, this had not been a problem on systems with
-relatively aggressive average running power limits, like the Jasper Lake
-systems in question, because on those systems it was compensated by the
-ability to run CPUs faster.
-
-It was addressed by causing get_typical_interval() to return a number
-based on the recent idle duration information available to it even if it
-could not make a high-confidence prediction, but that clearly did not
-take the possible correlation between idle power and available CPU
-capacity into account.
-
-For this reason, revert most of the changes made by commit 85975daeaa4d,
-except for one cosmetic cleanup, and add a comment explaining the
-rationale for returning UINT_MAX from get_typical_interval() when it
-is unable to make a high-confidence prediction.
-
-Fixes: 85975daeaa4d ("cpuidle: menu: Avoid discarding useful information")
-Closes: https://lore.kernel.org/linux-pm/36iykr223vmcfsoysexug6s274nq2oimcu55ybn6ww4il3g3cv@cohflgdbpnq7/ [1]
-Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://patch.msgid.link/20250327195928.680771-3-csokas.bence@prolan.hu
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3663603.iIbC2pHGDl@rafael.j.wysocki
+Stable-dep-of: 0792c1984a45 ("iio: imu: inv_icm42600: Simplify pm_runtime setup")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/base/power/runtime.c |   44 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/pm_runtime.h   |    4 +++
+ 2 files changed, 48 insertions(+)
 
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -256,20 +256,17 @@ again:
- 	 *
- 	 * This can deal with workloads that have long pauses interspersed
- 	 * with sporadic activity with a bunch of short pauses.
-+	 *
-+	 * However, if the number of remaining samples is too small to exclude
-+	 * any more outliers, allow the deepest available idle state to be
-+	 * selected because there are systems where the time spent by CPUs in
-+	 * deep idle states is correlated to the maximum frequency the CPUs
-+	 * can get to.  On those systems, shallow idle states should be avoided
-+	 * unless there is a clear indication that the given CPU is most likley
-+	 * going to be woken up shortly.
- 	 */
--	if (divisor * 4 <= INTERVALS * 3) {
--		/*
--		 * If there are sufficiently many data points still under
--		 * consideration after the outliers have been eliminated,
--		 * returning without a prediction would be a mistake because it
--		 * is likely that the next interval will not exceed the current
--		 * maximum, so return the latter in that case.
--		 */
--		if (divisor >= INTERVALS / 2)
--			return max;
--
-+	if (divisor * 4 <= INTERVALS * 3)
- 		return UINT_MAX;
--	}
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1477,6 +1477,32 @@ void pm_runtime_enable(struct device *de
+ }
+ EXPORT_SYMBOL_GPL(pm_runtime_enable);
  
- 	thresh = max - 1;
- 	goto again;
++static void pm_runtime_set_suspended_action(void *data)
++{
++	pm_runtime_set_suspended(data);
++}
++
++/**
++ * devm_pm_runtime_set_active_enabled - set_active version of devm_pm_runtime_enable.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_set_active_enabled(struct device *dev)
++{
++	int err;
++
++	err = pm_runtime_set_active(dev);
++	if (err)
++		return err;
++
++	err = devm_add_action_or_reset(dev, pm_runtime_set_suspended_action, dev);
++	if (err)
++		return err;
++
++	return devm_pm_runtime_enable(dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_set_active_enabled);
++
+ static void pm_runtime_disable_action(void *data)
+ {
+ 	pm_runtime_dont_use_autosuspend(data);
+@@ -1499,6 +1525,24 @@ int devm_pm_runtime_enable(struct device
+ }
+ EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+ 
++static void pm_runtime_put_noidle_action(void *data)
++{
++	pm_runtime_put_noidle(data);
++}
++
++/**
++ * devm_pm_runtime_get_noresume - devres-enabled version of pm_runtime_get_noresume.
++ *
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_get_noresume(struct device *dev)
++{
++	pm_runtime_get_noresume(dev);
++
++	return devm_add_action_or_reset(dev, pm_runtime_put_noidle_action, dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_get_noresume);
++
+ /**
+  * pm_runtime_forbid - Block runtime PM of a device.
+  * @dev: Device to handle.
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -75,7 +75,9 @@ extern void pm_runtime_new_link(struct d
+ extern void pm_runtime_drop_link(struct device_link *link);
+ extern void pm_runtime_release_supplier(struct device_link *link);
+ 
++int devm_pm_runtime_set_active_enabled(struct device *dev);
+ extern int devm_pm_runtime_enable(struct device *dev);
++int devm_pm_runtime_get_noresume(struct device *dev);
+ 
+ /**
+  * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
+@@ -272,7 +274,9 @@ static inline void __pm_runtime_disable(
+ static inline void pm_runtime_allow(struct device *dev) {}
+ static inline void pm_runtime_forbid(struct device *dev) {}
+ 
++static inline int devm_pm_runtime_set_active_enabled(struct device *dev) { return 0; }
+ static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
++static inline int devm_pm_runtime_get_noresume(struct device *dev) { return 0; }
+ 
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+ static inline void pm_runtime_get_noresume(struct device *dev) {}
 
 
