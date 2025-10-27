@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7FC320CA8;
-	Mon, 27 Oct 2025 18:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FC9329C73;
+	Mon, 27 Oct 2025 18:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591323; cv=none; b=QnYTraz+TIDyi7//59+wQeYdgRmqVL2Ku/1xCI58aTaZkYqcS0fBFssL1z/Sxr0hq+IKt80YYr94Xj7TUlwKcgfMknYlzxiSGdWtGOxPfZJeTtb2NSLQJzpY23BCW++4PnloQ2wLdUjjJvmloblq/pvzsI4w7tRQPITzdx9Hy84=
+	t=1761591325; cv=none; b=git6YOd9KCwEcsgbru5OAboiLZGGEFBlPrcQx2O3r10chckK/l5BdHHFl1Mw9fOP131Kx0cY2K1e6rmLxWoL7nYPe7s1HumHdgOW82gkTih7R0ugprjoma325DSMMz1s+5IV2wIwPqopaEHHEy4YvXtrBErjws9LhNrg1BcaeLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591323; c=relaxed/simple;
-	bh=gHPxN0TQvu+sPhRKTvLg0AvvNLgnZViglOz+I/gYfgw=;
+	s=arc-20240116; t=1761591325; c=relaxed/simple;
+	bh=G4HG2SCMgr6tcWa5fHtGJK+nB6qdaH10lJUk4xwtjKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEsm0+oJTM/rQzNEqCryMys1rzUOPhBpy7WskhUkn4CdhAyK5wGDe37QySXjCIJmipAQNlhft8izKqZzeEYCZnzEwFOEfS5kcAvlDN0kSEUFHZ3OR1hnkSsjBLOqwtWdT05xkjR7eKFTpYTcYo1gCxXBeVpO1fYJJ8xw8WwaMjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe1WCQy7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqAOguO++BE3U2jV2irujHCty3LD/WoVjpsv8URdNgsLhEXy1FliLfL6Bv3GsYrX0TJFNl6ox+5PQV9mOncIvUTVYtmBtFNAlm+ge8BGAftqkSb5XV4djz8Nfh5BXqJHXb8lWOvb5D1kqyKjE2GvVJhRll5T9kmX3QAB4JYl51I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMqvnvED; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe1WCQy7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19904C4CEF1;
-	Mon, 27 Oct 2025 18:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMqvnvED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA684C116B1;
+	Mon, 27 Oct 2025 18:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591322;
-	bh=gHPxN0TQvu+sPhRKTvLg0AvvNLgnZViglOz+I/gYfgw=;
+	s=korg; t=1761591325;
+	bh=G4HG2SCMgr6tcWa5fHtGJK+nB6qdaH10lJUk4xwtjKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qe1WCQy7lz5obWIu2bbeCxebPU7FFJCskmQ87IbQ/dkYkNCwrdqmutgaS7J+t8/Ez
-	 /cMoh+gFEjgxZyIH0c5Ujnwtl7pjm/CNP8fgqZpmxSBGGsCyEuFJv6iljyOCrJtkI9
-	 PCkjCWQ8D2P2kMgd7SE1RCGONNsigA0ohkeXkkDg=
+	b=FMqvnvEDlTq8+nodgqfN3dw6/1QdLaFcFnrvDvpWWJwWZxr32VPhUINyp/U0tGgha
+	 LUJVo79UTNmgZMe/RhLUUgC2fo6h0kKAOcME6QRgIFvL+InHmEnTikVITIwJVu21qr
+	 AWcrB21snbuB1P4dbR6iYzLAxwUbZyOo817ZFNlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 151/332] mtd: rawnand: fsmc: Default to autodetect buswidth
-Date: Mon, 27 Oct 2025 19:33:24 +0100
-Message-ID: <20251027183528.620440636@linuxfoundation.org>
+	Harini T <harini.t@amd.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 117/332] mailbox: zynqmp-ipi: Remove dev.parent check in zynqmp_ipi_free_mboxes
+Date: Mon, 27 Oct 2025 19:32:50 +0100
+Message-ID: <20251027183527.704410930@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -50,61 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Harini T <harini.t@amd.com>
 
-commit b8df622cf7f6808c85764e681847150ed6d85f3d upstream.
+[ Upstream commit 019e3f4550fc7d319a7fd03eff487255f8e8aecd ]
 
-If you don't specify buswidth 2 (16 bits) in the device
-tree, FSMC doesn't even probe anymore:
+The ipi_mbox->dev.parent check is unreliable proxy for registration
+status as it fails to protect against probe failures that occur after
+the parent is assigned but before device_register() completes.
 
-fsmc-nand 10100000.flash: FSMC device partno 090,
-  manufacturer 80, revision 00, config 00
-nand: device found, Manufacturer ID: 0x20, Chip ID: 0xb1
-nand: ST Micro 10100000.flash
-nand: bus width 8 instead of 16 bits
-nand: No NAND device found
-fsmc-nand 10100000.flash: probe with driver fsmc-nand failed
-  with error -22
+device_is_registered() is the canonical and robust method to verify the
+registration status.
 
-With this patch to use autodetection unless buswidth is
-specified, the device is properly detected again:
+Remove ipi_mbox->dev.parent check in zynqmp_ipi_free_mboxes().
 
-fsmc-nand 10100000.flash: FSMC device partno 090,
-  manufacturer 80, revision 00, config 00
-nand: device found, Manufacturer ID: 0x20, Chip ID: 0xb1
-nand: ST Micro NAND 128MiB 1,8V 16-bit
-nand: 128 MiB, SLC, erase size: 128 KiB, page size: 2048, OOB size: 64
-fsmc-nand 10100000.flash: Using 1-bit HW ECC scheme
-Scanning device for bad blocks
-
-I don't know where or how this happened, I think some change
-in the nand core.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Harini T <harini.t@amd.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/fsmc_nand.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/nand/raw/fsmc_nand.c
-+++ b/drivers/mtd/nand/raw/fsmc_nand.c
-@@ -865,10 +865,14 @@ static int fsmc_nand_probe_config_dt(str
- 	if (!of_property_read_u32(np, "bank-width", &val)) {
- 		if (val == 2) {
- 			nand->options |= NAND_BUSWIDTH_16;
--		} else if (val != 1) {
-+		} else if (val == 1) {
-+			nand->options |= NAND_BUSWIDTH_AUTO;
-+		} else {
- 			dev_err(&pdev->dev, "invalid bank-width %u\n", val);
- 			return -EINVAL;
- 		}
-+	} else {
-+		nand->options |= NAND_BUSWIDTH_AUTO;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 136c1f67dd223..e64f7157f065f 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -618,10 +618,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 	i = pdata->num_mboxes;
+ 	for (; i >= 0; i--) {
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+-		if (ipi_mbox->dev.parent) {
+-			if (device_is_registered(&ipi_mbox->dev))
+-				device_unregister(&ipi_mbox->dev);
+-		}
++		if (device_is_registered(&ipi_mbox->dev))
++			device_unregister(&ipi_mbox->dev);
  	}
+ }
  
- 	if (of_get_property(np, "nand-skip-bbtscan", NULL))
+-- 
+2.51.0
+
 
 
