@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFC9324B06;
-	Mon, 27 Oct 2025 18:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E414531DD94;
+	Mon, 27 Oct 2025 18:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591442; cv=none; b=Fhsg28PwuxC15IAABFkBWxeSXAnUC18oxyk/DZKYTg+7QqNLag19U7aFfsY9oN2BNKkPAVcFiyjSYmxN0o7CBMfYAa6kkjW3MInvCCQHZzD9PSbtaW9ZRQMDOzj99vXR620J0fRh8LpQONVp7BVEWLGGSb6spfAMu3ArmPh967g=
+	t=1761591446; cv=none; b=GRuATP7g7GYJG9IFFgqYA1IIoDMHGZpKMX9b16vOVjte//rZ8o5oEqT6y1V3lyHjVXck27E9kH61bcDZn80wTeKbadBH0nn+hXb4Q8UOlantkrhFYTAAEf8gDze0wtrHV8t04KsA4y1hOGXvWmtetFpgaxiDAITostLSs6A0Kfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591442; c=relaxed/simple;
-	bh=OAxXj7IZiNN4arw3pa24yHWhf1vCA7JXKAZocIeoy8I=;
+	s=arc-20240116; t=1761591446; c=relaxed/simple;
+	bh=tVe21HEoEzLwctJQHd4KHfHRNPtf3+NacS83JuZqMts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3OunLf15ZeBQwY2PFfTEFKoEdWS1nmvlDasbTChCXlzMM3lroPwAo32XW9XM5pJIU4SM2WkyNuobzWOesQ28EdAwhtVwxhmWx+z+nVcm3SsCdgDQ9mnpnva5g3dMgVeTa/UXtYuhk2WzazfACl4oLdUhHbMIgNgmU2rFfu+ank=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ju1AkwVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgRtJ9uvAEIYroCox2QznAGRtKKEsqBzt9KzIfqAJ9KQTUcJ+Dcrnx99EGiOhSkuUXjAHAVIPBLK+c0301V0g+7IQqKKvQqKl9JVxx+NYMa33DZzLA+Xp+t55z8YrXw77kbTxG0Uc4f4pWi+8/lA6U0mrw44KWtxGt1y1zQwFI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUYVbtno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ju1AkwVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB088C4CEF1;
-	Mon, 27 Oct 2025 18:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUYVbtno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60279C4CEF1;
+	Mon, 27 Oct 2025 18:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591442;
-	bh=OAxXj7IZiNN4arw3pa24yHWhf1vCA7JXKAZocIeoy8I=;
+	s=korg; t=1761591445;
+	bh=tVe21HEoEzLwctJQHd4KHfHRNPtf3+NacS83JuZqMts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ju1AkwVXb7rNh0mic5waMdxE869uhEuj8yEzNSTfWztf0mqgLVblJdkCvWc/XOyJG
-	 cE4lteBnYuRqSSoR1RCaxdpy6UHqgoHVvo92KAQ99CPL8RWTUTfJHd9FKMyXGSi8v5
-	 spigboZEn3lQooH8enxIE0ODwm4gW9mvVD6zBwbA=
+	b=MUYVbtnom3uE0FYQXfjsg58c/PEfLD0PPvmPFg2H/OEf8JOEBKIz/nMYc2mXeEq4u
+	 npyg4jImFJPC0N7J1OEuhcJL5ePKEKaFLG2rqqMfqbzttn0gPj84kLmKId8XrFPB2o
+	 NoWE5+qkXMfxS9wffS0x+7yb+/JuQ3owN4z/g08Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Herve Codina <herve.codina@bootlin.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Mark Brown <broonie@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 199/332] minmax: Introduce {min,max}_array()
-Date: Mon, 27 Oct 2025 19:34:12 +0100
-Message-ID: <20251027183529.959956533@linuxfoundation.org>
+Subject: [PATCH 5.10 200/332] minmax: deduplicate __unconst_integer_typeof()
+Date: Mon, 27 Oct 2025 19:34:13 +0100
+Message-ID: <20251027183529.991592321@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -53,96 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit c952c748c7a983a8bda9112984e6f2c1f6e441a5 ]
+[ Upstream commit 5e57418a2031cd5e1863efdf3d7447a16a368172 ]
 
-Introduce min_array() (resp max_array()) in order to get the
-minimal (resp maximum) of values present in an array.
+It appears that compiler_types.h already have an implementation of the
+__unconst_integer_typeof() called __unqual_scalar_typeof().  Use it
+instead of the copy.
 
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/20230623085830.749991-8-herve.codina@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20230911154913.4176033-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   64 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ include/linux/minmax.h |   26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -151,6 +151,70 @@
-  */
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_MINMAX_H
+ #define _LINUX_MINMAX_H
+ 
++#include <linux/compiler_types.h>
+ #include <linux/const.h>
+ #include <linux/types.h>
+ 
+@@ -152,27 +153,6 @@
  #define max_t(type, x, y)	__careful_cmp((type)(x), (type)(y), >)
  
-+/*
-+ * Remove a const qualifier from integer types
-+ * _Generic(foo, type-name: association, ..., default: association) performs a
-+ * comparison against the foo type (not the qualified type).
-+ * Do not use the const keyword in the type-name as it will not match the
-+ * unqualified type of foo.
-+ */
-+#define __unconst_integer_type_cases(type)	\
-+	unsigned type:  (unsigned type)0,	\
-+	signed type:    (signed type)0
-+
-+#define __unconst_integer_typeof(x) typeof(			\
-+	_Generic((x),						\
-+		char: (char)0,					\
-+		__unconst_integer_type_cases(char),		\
-+		__unconst_integer_type_cases(short),		\
-+		__unconst_integer_type_cases(int),		\
-+		__unconst_integer_type_cases(long),		\
-+		__unconst_integer_type_cases(long long),	\
-+		default: (x)))
-+
-+/*
-+ * Do not check the array parameter using __must_be_array().
-+ * In the following legit use-case where the "array" passed is a simple pointer,
-+ * __must_be_array() will return a failure.
-+ * --- 8< ---
-+ * int *buff
-+ * ...
-+ * min = min_array(buff, nb_items);
-+ * --- 8< ---
-+ *
-+ * The first typeof(&(array)[0]) is needed in order to support arrays of both
-+ * 'int *buff' and 'int buff[N]' types.
-+ *
-+ * The array can be an array of const items.
-+ * typeof() keeps the const qualifier. Use __unconst_integer_typeof() in order
-+ * to discard the const qualifier for the __element variable.
-+ */
-+#define __minmax_array(op, array, len) ({				\
-+	typeof(&(array)[0]) __array = (array);				\
-+	typeof(len) __len = (len);					\
-+	__unconst_integer_typeof(__array[0]) __element = __array[--__len]; \
-+	while (__len--)							\
-+		__element = op(__element, __array[__len]);		\
-+	__element; })
-+
-+/**
-+ * min_array - return minimum of values present in an array
-+ * @array: array
-+ * @len: array length
-+ *
-+ * Note that @len must not be zero (empty array).
-+ */
-+#define min_array(array, len) __minmax_array(min, array, len)
-+
-+/**
-+ * max_array - return maximum of values present in an array
-+ * @array: array
-+ * @len: array length
-+ *
-+ * Note that @len must not be zero (empty array).
-+ */
-+#define max_array(array, len) __minmax_array(max, array, len)
-+
- /**
-  * clamp_t - return a value clamped to a given range using a given type
-  * @type: the type of variable to use
+ /*
+- * Remove a const qualifier from integer types
+- * _Generic(foo, type-name: association, ..., default: association) performs a
+- * comparison against the foo type (not the qualified type).
+- * Do not use the const keyword in the type-name as it will not match the
+- * unqualified type of foo.
+- */
+-#define __unconst_integer_type_cases(type)	\
+-	unsigned type:  (unsigned type)0,	\
+-	signed type:    (signed type)0
+-
+-#define __unconst_integer_typeof(x) typeof(			\
+-	_Generic((x),						\
+-		char: (char)0,					\
+-		__unconst_integer_type_cases(char),		\
+-		__unconst_integer_type_cases(short),		\
+-		__unconst_integer_type_cases(int),		\
+-		__unconst_integer_type_cases(long),		\
+-		__unconst_integer_type_cases(long long),	\
+-		default: (x)))
+-
+-/*
+  * Do not check the array parameter using __must_be_array().
+  * In the following legit use-case where the "array" passed is a simple pointer,
+  * __must_be_array() will return a failure.
+@@ -186,13 +166,13 @@
+  * 'int *buff' and 'int buff[N]' types.
+  *
+  * The array can be an array of const items.
+- * typeof() keeps the const qualifier. Use __unconst_integer_typeof() in order
++ * typeof() keeps the const qualifier. Use __unqual_scalar_typeof() in order
+  * to discard the const qualifier for the __element variable.
+  */
+ #define __minmax_array(op, array, len) ({				\
+ 	typeof(&(array)[0]) __array = (array);				\
+ 	typeof(len) __len = (len);					\
+-	__unconst_integer_typeof(__array[0]) __element = __array[--__len]; \
++	__unqual_scalar_typeof(__array[0]) __element = __array[--__len];\
+ 	while (__len--)							\
+ 		__element = op(__element, __array[__len]);		\
+ 	__element; })
 
 
