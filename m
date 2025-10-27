@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993D1322DCB;
-	Mon, 27 Oct 2025 19:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A5331E0E4;
+	Mon, 27 Oct 2025 19:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591922; cv=none; b=LL6XeJL4VXnjTFbhWWkTlAIXvsGnaO3RnnuxYobUsLePmv7ga34iRs4H+jdcEtTjWnIhTXPMVSUWeLpjtNLeXynwLboJnMjauXAUe4GT94MZfXECvB/4sCWe8j/D27VsCc/e0We5ajbLjZGS2cF1NMLbQgTk3SIfWshCpu3NQzs=
+	t=1761591925; cv=none; b=A2ZXMF6aEIMNelml1cYvftDRYVIcF+V7R6CGLkjaIUSg3E9e9vbCvkPsrza3O/I2vdcJVozroQmeWPiPusnL4AUu/L9KCkTXw25I6SNBcFXfc1zqtHoC8Cnhz2EhEJW3a5mrdyOtH+d0acTC/6Cr1BZwG6Tp8LS3LAFeUaIxYog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591922; c=relaxed/simple;
-	bh=rNAFOXYP84UXaVGrJr8JXTd/YzbGRPiP5FlTLBIuywE=;
+	s=arc-20240116; t=1761591925; c=relaxed/simple;
+	bh=/xkbRKydNp41DxbUB4gljWk8za+XN1vUpS8W3Z+QmBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWQmXnMWRwE5RJivinGNvBRvlMfb3MA8lo7uapZ012qYiMG2f/5UV3kvRDH7vufZOPyxoqeXAE1B9U97E07bJauvFsDkah83BnFgcCym88EpOzWy4VXGkoTDjdoCduaJP5ntQU6Yv3zl1o+S46y9Vwp0Iu+yS5uRMARyUgJMaYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xImm4EuY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJ1IU0G5b/xrfYKuwnygrOsPC/jbyYhebPukVg4txNzPIP8ovST8XAVj4h7+Svm0xvyCe6VlIyh3r2npm4Mk5Z/+x0BNb5m8SvAUz/XgJ9BhRXzgZ5emfPd0ezhkn0Fc9jMpZ7iuaHwnMsQ86nLIOcYGcqF0/6Ci1rdSnTh1HrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4imuZUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xImm4EuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BE6C4CEF1;
-	Mon, 27 Oct 2025 19:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4imuZUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB515C4CEF1;
+	Mon, 27 Oct 2025 19:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591922;
-	bh=rNAFOXYP84UXaVGrJr8JXTd/YzbGRPiP5FlTLBIuywE=;
+	s=korg; t=1761591925;
+	bh=/xkbRKydNp41DxbUB4gljWk8za+XN1vUpS8W3Z+QmBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xImm4EuY3Ebiqkq24Tzpuib2THPft/rhsPqYBAjIxsQLhRMf6jZky0EzgTC2ya+iQ
-	 0py+uMjq992gWaFERKS7QyBDNwMEtAAXkaYrfAQUzGFKczbV5HAhVKfDuSFv1FwQoM
-	 GmOqdmm4w5eJQ25NWPPjcL7w/Qdix35pjApcATEk=
+	b=X4imuZUFx93sQa1wdwqU7b3dki9INFMiqGVRATvY/PblS6tZifPBHYkEYDAc/Qlsz
+	 zAlraBlLmVP9ALtvhxDdHhlYF1U9WxB/8rVurUMGO/bKPTmKo1rtz+HTUktd4B9NQz
+	 +FPAwhIDFidA1Cw/FDajaCG2n6g15baqO0gO160A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/123] hfs: fix KMSAN uninit-value issue in hfs_find_set_zero_bits()
-Date: Mon, 27 Oct 2025 19:35:29 +0100
-Message-ID: <20251027183447.709819459@linuxfoundation.org>
+Subject: [PATCH 5.15 050/123] hfsplus: return EIO when type of hidden directory mismatch in hfsplus_fill_super()
+Date: Mon, 27 Oct 2025 19:35:30 +0100
+Message-ID: <20251027183447.737321045@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -54,110 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 2048ec5b98dbdfe0b929d2e42dc7a54c389c53dd ]
+[ Upstream commit 9282bc905f0949fab8cf86c0f620ca988761254c ]
 
-The syzbot reported issue in hfs_find_set_zero_bits():
+If Catalog File contains corrupted record for the case of
+hidden directory's type, regard it as I/O error instead of
+Invalid argument.
 
-=====================================================
-BUG: KMSAN: uninit-value in hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
- hfs_find_set_zero_bits+0x74d/0xb60 fs/hfs/bitmap.c:45
- hfs_vbm_search_free+0x13c/0x5b0 fs/hfs/bitmap.c:151
- hfs_extend_file+0x6a5/0x1b00 fs/hfs/extent.c:408
- hfs_get_block+0x435/0x1150 fs/hfs/extent.c:353
- __block_write_begin_int+0xa76/0x3030 fs/buffer.c:2151
- block_write_begin fs/buffer.c:2262 [inline]
- cont_write_begin+0x10e1/0x1bc0 fs/buffer.c:2601
- hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
- cont_expand_zero fs/buffer.c:2528 [inline]
- cont_write_begin+0x35a/0x1bc0 fs/buffer.c:2591
- hfs_write_begin+0x85/0x130 fs/hfs/inode.c:52
- hfs_file_truncate+0x1d6/0xe60 fs/hfs/extent.c:494
- hfs_inode_setattr+0x964/0xaa0 fs/hfs/inode.c:654
- notify_change+0x1993/0x1aa0 fs/attr.c:552
- do_truncate+0x28f/0x310 fs/open.c:68
- do_ftruncate+0x698/0x730 fs/open.c:195
- do_sys_ftruncate fs/open.c:210 [inline]
- __do_sys_ftruncate fs/open.c:215 [inline]
- __se_sys_ftruncate fs/open.c:213 [inline]
- __x64_sys_ftruncate+0x11b/0x250 fs/open.c:213
- x64_sys_call+0xfe3/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:78
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4154 [inline]
- slab_alloc_node mm/slub.c:4197 [inline]
- __kmalloc_cache_noprof+0x7f7/0xed0 mm/slub.c:4354
- kmalloc_noprof include/linux/slab.h:905 [inline]
- hfs_mdb_get+0x1cc8/0x2a90 fs/hfs/mdb.c:175
- hfs_fill_super+0x3d0/0xb80 fs/hfs/super.c:337
- get_tree_bdev_flags+0x6e3/0x920 fs/super.c:1681
- get_tree_bdev+0x38/0x50 fs/super.c:1704
- hfs_get_tree+0x35/0x40 fs/hfs/super.c:388
- vfs_get_tree+0xb0/0x5c0 fs/super.c:1804
- do_new_mount+0x738/0x1610 fs/namespace.c:3902
- path_mount+0x6db/0x1e90 fs/namespace.c:4226
- do_mount fs/namespace.c:4239 [inline]
- __do_sys_mount fs/namespace.c:4450 [inline]
- __se_sys_mount+0x6eb/0x7d0 fs/namespace.c:4427
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:4427
- x64_sys_call+0xfa7/0x3db0 arch/x86/include/generated/asm/syscalls_64.h:166
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 1 UID: 0 PID: 12609 Comm: syz.1.2692 Not tainted 6.16.0-syzkaller #0 PREEMPT(none)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-=====================================================
-
-The HFS_SB(sb)->bitmap buffer is allocated in hfs_mdb_get():
-
-HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
-
-Finally, it can trigger the reported issue because kmalloc()
-doesn't clear the allocated memory. If allocated memory contains
-only zeros, then everything will work pretty fine.
-But if the allocated memory contains the "garbage", then
-it can affect the bitmap operations and it triggers
-the reported issue.
-
-This patch simply exchanges the kmalloc() on kzalloc()
-with the goal to guarantee the correctness of bitmap operations.
-Because, newly created allocation bitmap should have all
-available blocks free. Potentially, initialization bitmap's read
-operation could not fill the whole allocated memory and
-"garbage" in the not initialized memory will be the reason of
-volume coruptions and file system driver bugs.
-
-Reported-by: syzbot <syzbot+773fa9d79b29bd8b6831@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=773fa9d79b29bd8b6831
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20250820230636.179085-1-slava@dubeyko.com
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250805165905.3390154-1-frank.li@vivo.com
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/mdb.c | 2 +-
+ fs/hfsplus/super.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
-index cdf0edeeb2781..f8f976afcc740 100644
---- a/fs/hfs/mdb.c
-+++ b/fs/hfs/mdb.c
-@@ -172,7 +172,7 @@ int hfs_mdb_get(struct super_block *sb)
- 		pr_warn("continuing without an alternate MDB\n");
- 	}
- 
--	HFS_SB(sb)->bitmap = kmalloc(8192, GFP_KERNEL);
-+	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
- 	if (!HFS_SB(sb)->bitmap)
- 		goto out;
- 
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index 16cf5e1c685bf..cb703b3e99fc2 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -538,7 +538,7 @@ static int hfsplus_fill_super(struct super_block *sb, void *data, int silent)
+ 	if (!hfs_brec_read(&fd, &entry, sizeof(entry))) {
+ 		hfs_find_exit(&fd);
+ 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
+-			err = -EINVAL;
++			err = -EIO;
+ 			goto out_put_root;
+ 		}
+ 		inode = hfsplus_iget(sb, be32_to_cpu(entry.folder.id));
 -- 
 2.51.0
 
