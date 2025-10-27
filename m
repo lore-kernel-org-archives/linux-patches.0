@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB7131B823;
-	Mon, 27 Oct 2025 18:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7067832C329;
+	Mon, 27 Oct 2025 18:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590923; cv=none; b=YGC2a7J5KoKnBBEc2HOJ6JNu8lXytpFR9CDbx17GySrbOx8GHa7N24WcR1IJYVC1L1TaIXZW3kVlpcmCZaHPI6c6HZHSJR+7X3ihIf2Ye7/d+Rh9mR8023WMprEPXpwyzB22NMgLfKL7yUHR31UvrqB8L7WV8OzOaX20AdmkXy0=
+	t=1761590925; cv=none; b=XGOkTtucVbhlS65P+gM7gV5ecRL7xwgA9m/C7meKiXrGy64dr7/SN2Ew5lLEqVx2x7kEL/H5I3FreWEvCI91rY+VOlj5Fu/GJG6NA6Pli2rJG+pjBloIYQ+YOBB455ibY/bWjfEOxMRyKP8rDUCxQjzH0R1zISpP1Hp0qMHOA/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590923; c=relaxed/simple;
-	bh=HP7ldfafJ1WdHn3lmXYBr15DlninjqnKnJaE09l+/O4=;
+	s=arc-20240116; t=1761590925; c=relaxed/simple;
+	bh=YbKyjmNLcc0oHpMNUKf3Mc9jVZZDEzLsu8bIwipHKTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ge5MeqnPFwDqaGf0u5jDfCAAbdbgx8yJKWvqkGL2uC0sqw/8715HQ5ok3SeAH4MWcW4mdeqdNQZF78lIBUvwr3z5rH1iJA3OOdZVzfLUSgvBhZIWlbAQKXFLMe5E7ax+6TQOtDd9pBYj8mfIZX5WSlaLt5nZ0y+Zk9IahvBwhOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFGsn7pb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyI362SmerRTifFCEq7lcip1lOODGZ8IeqrvNB95p8kdWpXkx9ewlxA7lQEz7ZAowijQA/Z5oYDzQTmCYF62xMRtGuJbGt34dpdSHeWAmT4T4emSq7XbFikrgxOU/0k0KHdTj6gLBxt+u4RjZzjs1Y2vUgIHf+ylpXeHPN0okk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TC9u0Gd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFGsn7pb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C4DC4CEF1;
-	Mon, 27 Oct 2025 18:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC9u0Gd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAA4C4CEF1;
+	Mon, 27 Oct 2025 18:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590922;
-	bh=HP7ldfafJ1WdHn3lmXYBr15DlninjqnKnJaE09l+/O4=;
+	s=korg; t=1761590925;
+	bh=YbKyjmNLcc0oHpMNUKf3Mc9jVZZDEzLsu8bIwipHKTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFGsn7pbV7gVA84hIeiBCkN2fKXrgEAL5Tzgqw1Q6aVYMcpQ0j2efyq9my+jgzF2Y
-	 ViHbsGbzV3/nKFtSqp6x2lGqM3KOOhIiWAT3B8TplUEkiH3NAnrgx22fMnyMzIdLnx
-	 sZ6doQsJc7GNv1dxuigucFiBZmfZ4jtJ+LvDkv7w=
+	b=TC9u0Gd4SVEJDFkNCaKKPvkhBsnLY4R3yTh84daqczJr+QdvNH3XMn61WY0kMsEvh
+	 +smzL0qDwZ3RuxOMEI4Wd5QR9DGd0tjsjsdTXu4/b+aD7L8mCQyiBLGHNlhZzvYyHc
+	 0c4FWJn0CpwClfyvrcny3xpYlyLAXPq/9bekps/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 224/224] net: rtnetlink: fix module reference count leak issue in rtnetlink_rcv_msg
-Date: Mon, 27 Oct 2025 19:36:10 +0100
-Message-ID: <20251027183514.716722542@linuxfoundation.org>
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 201/224] USB: serial: option: add Quectel RG255C
+Date: Mon, 27 Oct 2025 19:35:47 +0100
+Message-ID: <20251027183514.176249828@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,33 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit 5b22f62724a0a09e00d301abf5b57b0c12be8a16 upstream.
+commit 89205c60c0fc96b73567a2e9fe27ee3f59d01193 upstream.
 
-When bulk delete command is received in the rtnetlink_rcv_msg function,
-if bulk delete is not supported, module_put is not called to release
-the reference counting. As a result, module reference count is leaked.
+Add support for Quectel RG255C devices to complement commit 5c964c8a97c1
+("net: usb: qmi_wwan: add Quectel RG255C").
+The composition is DM / NMEA / AT / QMI.
 
-Fixes: a6cec0bcd342 ("net: rtnetlink: add bulk delete support flag")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20220815024629.240367-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+T:  Bus=01 Lev=02 Prnt=99 Port=01 Cnt=02 Dev#=110 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0316 Rev= 5.15
+S:  Manufacturer=Quectel
+S:  Product=RG255C-GL
+S:  SerialNumber=xxxxxxxx
+C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -5304,6 +5304,7 @@ static int rtnetlink_rcv_msg(struct sk_b
- 	if (kind == RTNL_KIND_DEL && (nlh->nlmsg_flags & NLM_F_BULK) &&
- 	    !(flags & RTNL_FLAG_BULK_DEL_SUPPORTED)) {
- 		NL_SET_ERR_MSG(extack, "Bulk delete is not supported");
-+		module_put(owner);
- 		goto err_unlock;
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -273,6 +273,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM05CN			0x0312
+ #define QUECTEL_PRODUCT_EM05G_GR		0x0313
+ #define QUECTEL_PRODUCT_EM05G_RS		0x0314
++#define QUECTEL_PRODUCT_RG255C			0x0316
+ #define QUECTEL_PRODUCT_EM12			0x0512
+ #define QUECTEL_PRODUCT_RM500Q			0x0800
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+@@ -1271,6 +1272,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG255C, 0xff, 0xff, 0x40) },
  
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
 
 
