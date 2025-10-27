@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7216730506B;
-	Mon, 27 Oct 2025 19:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D26C3074AC;
+	Mon, 27 Oct 2025 19:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592221; cv=none; b=lf5rqm+apzsIj6Jr0oZ/kLlh/eX0SUGLzYucgl5Xm2cGRSEaCqo/ytR0q+SJcQcomohvMNbDrsAGxJHzeybhMg8QkghfUUREF2iWf/WutyYCCANm6+v0bSjejMQJDZb3O9zn2a0kgahMPSkoVIdXGchb4IN3tjTQ39mRn3tneec=
+	t=1761592224; cv=none; b=V5kUpes5ugSzD2F6qQ3cQJJdKtPPO5gzVUSno6rMrALVTalPaKt5gNLgpB4JY1v0essRFtJ+tdeJvoV9PFE6Ytnm8SuFSTwnokMrxRtC9N3K7FoM4qhIgStlpWeS0yeaUoQkUlmXlZxrFkmyE/0QOdnHgBbquF7ocRikeI8tG5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592221; c=relaxed/simple;
-	bh=X5uueY2jVEPuwDDBjBH5hkoT2NwPULEw12pWUsyvX6s=;
+	s=arc-20240116; t=1761592224; c=relaxed/simple;
+	bh=ekoUouQrSXfk6PtrO8yri/XpxKR7Fz4Nea5GwB9u26s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqcD/3xexrEsH4hwd04QQjp5DIzJ/l3xmflsfmGmyd7ZVj6Z5IvlJ3SJkfNF2KGcw+BxR8Ba+lvReL7vHjRLjPGYuKVVdjUSMV46VoGLtwtpsKRtCV77LTjw1ONNCo5Zlqend4v1efVOkTPqsXWUPg24y4yblkDDpMhPQl97iJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3d7p7Om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vELo+h4t728l8WzVCIos11oSX89BgfEFY6/ejueQ/2S53xVcatCCtDSvl+my3IMl2GbAIyihVMwSGAm1JKbCgyvYi6FE/UZUZKxtDSRcq8LO9ILlKa3IqMZRHLuH+MGiIqXMW7wiCnzds8Hm28alMHD5OK7JGaCTAfgbLnZGXkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef36oAks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3d7p7Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077FFC4CEF1;
-	Mon, 27 Oct 2025 19:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef36oAks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AFBC4CEF1;
+	Mon, 27 Oct 2025 19:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592221;
-	bh=X5uueY2jVEPuwDDBjBH5hkoT2NwPULEw12pWUsyvX6s=;
+	s=korg; t=1761592223;
+	bh=ekoUouQrSXfk6PtrO8yri/XpxKR7Fz4Nea5GwB9u26s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3d7p7OmPuJ1OqWzhlsgTjXAb9PZJODi5rTnCgUBdZ8nMBfz24iregbefb4lNsGIp
-	 dqOQZSTyMqrWsBIdUyCFp+BoeOO9QZzrxBv8m1JyUzB49JvyurkHugrvzzX3DZcxJS
-	 qejZ4inhEoPI8krUiNLw2ecK4U6cxVQAkocImFvU=
+	b=Ef36oAkstqB9imORAarZqRULIQscePz+jj+V9/GwKp3vmp0VBiniy1AFnm8n9cd1W
+	 fk7HBSavL1eNg4jpryORiLwmpsyb3cE3HAvZUzeDxVAvqxVmuLxQ/zvDo87nYQCLlX
+	 sWe6i4anPZdGRjZoVEZbJ0yGY7VoUpcIz7qpXyZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Guibert <philippe.guibert@6wind.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/157] doc: fix seg6_flowlabel path
-Date: Mon, 27 Oct 2025 19:35:00 +0100
-Message-ID: <20251027183502.346231773@linuxfoundation.org>
+Subject: [PATCH 6.1 013/157] drm/rcar-du: dsi: Fix 1/2/3 lane support
+Date: Mon, 27 Oct 2025 19:34:34 +0100
+Message-ID: <20251027183501.616522546@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -53,38 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 0b4b77eff5f8cd9be062783a1c1e198d46d0a753 ]
+[ Upstream commit d83f1d19c898ac1b54ae64d1c950f5beff801982 ]
 
-This sysctl is not per interface; it's global per netns.
+Remove fixed PPI lane count setup. The R-Car DSI host is capable
+of operating in 1..4 DSI lane mode. Remove the hard-coded 4-lane
+configuration from PPI register settings and instead configure
+the PPI lane count according to lane count information already
+obtained by this driver instance.
 
-Fixes: 292ecd9f5a94 ("doc: move seg6_flowlabel to seg6-sysctl.rst")
-Reported-by: Philippe Guibert <philippe.guibert@6wind.com>
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Configure TXSETR register to match PPI lane count. The R-Car V4H
+Reference Manual R19UH0186EJ0121 Rev.1.21 section 67.2.2.3 Tx Set
+Register (TXSETR), field LANECNT description indicates that the
+TXSETR register LANECNT bitfield lane count must be configured
+such, that it matches lane count configuration in PPISETR register
+DLEN bitfield. Make sure the LANECNT and DLEN bitfields are
+configured to match.
+
+Fixes: 155358310f01 ("drm: rcar-du: Add R-Car DSI driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250813210840.97621-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+[ adjusted file paths to remove renesas/ subdirectory ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/seg6-sysctl.rst | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/rcar-du/rcar_mipi_dsi.c      |    5 ++++-
+ drivers/gpu/drm/rcar-du/rcar_mipi_dsi_regs.h |    8 ++++----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/networking/seg6-sysctl.rst b/Documentation/networking/seg6-sysctl.rst
-index 07c20e470bafe..1b6af4779be11 100644
---- a/Documentation/networking/seg6-sysctl.rst
-+++ b/Documentation/networking/seg6-sysctl.rst
-@@ -25,6 +25,9 @@ seg6_require_hmac - INTEGER
+--- a/drivers/gpu/drm/rcar-du/rcar_mipi_dsi.c
++++ b/drivers/gpu/drm/rcar-du/rcar_mipi_dsi.c
+@@ -385,7 +385,10 @@ static int rcar_mipi_dsi_startup(struct
+ 	udelay(10);
+ 	rcar_mipi_dsi_clr(dsi, CLOCKSET1, CLOCKSET1_UPDATEPLL);
  
- 	Default is 0.
- 
-+/proc/sys/net/ipv6/seg6_* variables:
-+====================================
+-	ppisetr = PPISETR_DLEN_3 | PPISETR_CLEN;
++	rcar_mipi_dsi_clr(dsi, TXSETR, TXSETR_LANECNT_MASK);
++	rcar_mipi_dsi_set(dsi, TXSETR, dsi->lanes - 1);
 +
- seg6_flowlabel - INTEGER
- 	Controls the behaviour of computing the flowlabel of outer
- 	IPv6 header in case of SR T.encaps
--- 
-2.51.0
-
++	ppisetr = ((BIT(dsi->lanes) - 1) & PPISETR_DLEN_MASK) | PPISETR_CLEN;
+ 	rcar_mipi_dsi_write(dsi, PPISETR, ppisetr);
+ 
+ 	rcar_mipi_dsi_set(dsi, PHYSETUP, PHYSETUP_SHUTDOWNZ);
+--- a/drivers/gpu/drm/rcar-du/rcar_mipi_dsi_regs.h
++++ b/drivers/gpu/drm/rcar-du/rcar_mipi_dsi_regs.h
+@@ -12,6 +12,9 @@
+ #define LINKSR_LPBUSY			(1 << 1)
+ #define LINKSR_HSBUSY			(1 << 0)
+ 
++#define TXSETR				0x100
++#define TXSETR_LANECNT_MASK		(0x3 << 0)
++
+ /*
+  * Video Mode Register
+  */
+@@ -80,10 +83,7 @@
+  * PHY-Protocol Interface (PPI) Registers
+  */
+ #define PPISETR				0x700
+-#define PPISETR_DLEN_0			(0x1 << 0)
+-#define PPISETR_DLEN_1			(0x3 << 0)
+-#define PPISETR_DLEN_2			(0x7 << 0)
+-#define PPISETR_DLEN_3			(0xf << 0)
++#define PPISETR_DLEN_MASK		(0xf << 0)
+ #define PPISETR_CLEN			(1 << 8)
+ 
+ #define PPICLCR				0x710
 
 
