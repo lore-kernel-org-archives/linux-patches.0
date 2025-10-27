@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4D831D75F;
-	Mon, 27 Oct 2025 19:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B02BE037;
+	Mon, 27 Oct 2025 19:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761593213; cv=none; b=ZrTjJ7ZQzqG/kiKOoLIl6qNyRn0PShfCG/lllFWZeVXxV7M8xu5o4IBpquJJNkFTxKLUwDIXjpOqug9IZCooHx4/vzuwl2YrunmJVEnTQ2iPyT85kWVAT7pFBzkTdzjoy8JFLi/xbC5vMHAMH003S5oImN312m8mC7yGf1S+0yY=
+	t=1761593216; cv=none; b=S9X2ewwe5um3NCF4Fl9tamppU/Q1BDjknhHF9kx34E1L7IFRM4mdzeh82YYygBW0Xl6R7sYysuim5jlctVslaxLrjgM1NL774r4HONad7xtLA0iWGgVbdmW8pscL41VAEUTsZ5MEjpsNMDoRJTEfF1ieCjVzdFMWTPpzyLsbPG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761593213; c=relaxed/simple;
-	bh=WVO2szA3Yq+6SqR8XJIISuS/4b7ufSal/1OiM4p9aqA=;
+	s=arc-20240116; t=1761593216; c=relaxed/simple;
+	bh=4mW79P0JqVxhGfGpf4Pq/moKTBVTPGWexmw5C0vB+u4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twCssl1O+67gxF0Z+ugv50CmB+3w1RnNwkHvt7qzLAyuDcb15h5AD+xoitebs4zei1A5Urr62fQzI4iPuZt8MUqEdkasbhaqhHS4XXL2r01lt/Cn38HS/48q58fCxP98gIg2YG1AE1u/1Lp40sqtrfkSzyF7HWXVbV53mGdBY6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5t3PNIC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zf5X7b2lKihydEs/m1d7lgY/KG+4fN22ZxyN0ht7gcGaptTwyGFLrHIdOBt5lVDAbFBvNHAyZ5FiLvcYcsA70i+6Bf+mDS1UU0OqA1Om06hlW53nPZ9EY9AqJm9zQ2fJ4ULqLnaOF2fbg97HW0laFDjfUQk52C6dGlNdvpDsAkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILhUSzHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5t3PNIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FA1C4CEF1;
-	Mon, 27 Oct 2025 19:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILhUSzHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B16C4CEF1;
+	Mon, 27 Oct 2025 19:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761593213;
-	bh=WVO2szA3Yq+6SqR8XJIISuS/4b7ufSal/1OiM4p9aqA=;
+	s=korg; t=1761593215;
+	bh=4mW79P0JqVxhGfGpf4Pq/moKTBVTPGWexmw5C0vB+u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5t3PNICVcNZEH5rotvbxmmw2wzRpHXKIYVDjiALBJR9L5iQ7N+QmQVWqahVcXqMc
-	 uBVV39/QKDYI11FHtFWA1QhCMmks4RBYXMFePR840PRpr+4LjhP4QoGdz5bb6gvV9U
-	 rAjjZOQekGEF8P+36NPxARO2lLVvQHD5gvFCkI6Y=
+	b=ILhUSzHJmCRUoTS/tY+iuBnv6sMTFCRDM5Ri1qFOWZX94N7aDoTucCsN7sOAhiScH
+	 MtBWkuq3+ttT1DfCi/mnLtDY8n9+232aJLmYqvElMisobDxyktBd/LloqRkNoLOG2A
+	 mqgIUL5qQaYP8Sa5x4BfSyqKP4p6h41huNJx8YFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
+	Antonio Quartulli <antonio@openvpn.net>,
+	Ralf Lici <ralf@mandelbit.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 056/184] espintcp: use datagram_poll_queue for socket readiness
-Date: Mon, 27 Oct 2025 19:35:38 +0100
-Message-ID: <20251027183516.409515628@linuxfoundation.org>
+Subject: [PATCH 6.17 057/184] net: datagram: introduce datagram_poll_queue for custom receive queues
+Date: Mon, 27 Oct 2025 19:35:39 +0100
+Message-ID: <20251027183516.434301844@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 References: <20251027183514.934710872@linuxfoundation.org>
@@ -54,46 +55,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 0fc3e32c2c069f541f2724d91f5e98480b640326 ]
+[ Upstream commit f6ceec6434b5efff62cecbaa2ff74fc29b96c0c6 ]
 
-espintcp uses a custom queue (ike_queue) to deliver packets to
-userspace. The polling logic relies on datagram_poll, which checks
-sk_receive_queue, which can lead to false readiness signals when that
-queue contains non-userspace packets.
+Some protocols using TCP encapsulation (e.g., espintcp, openvpn) deliver
+userspace-bound packets through a custom skb queue rather than the
+standard sk_receive_queue.
 
-Switch espintcp_poll to use datagram_poll_queue with ike_queue, ensuring
-poll only signals readiness when userspace data is actually available.
+Introduce datagram_poll_queue that accepts an explicit receive queue,
+and convert datagram_poll into a wrapper around datagram_poll_queue.
+This allows protocols with custom skb queues to reuse the core polling
+logic without relying on sk_receive_queue.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Cc: Sabrina Dubroca <sd@queasysnail.net>
+Cc: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20251021100942.195010-3-ralf@mandelbit.com
+Reviewed-by: Antonio Quartulli <antonio@openvpn.net>
+Link: https://patch.msgid.link/20251021100942.195010-2-ralf@mandelbit.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: efd729408bc7 ("ovpn: use datagram_poll_queue for socket readiness in TCP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/espintcp.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/skbuff.h |  3 +++
+ net/core/datagram.c    | 44 ++++++++++++++++++++++++++++++++----------
+ 2 files changed, 37 insertions(+), 10 deletions(-)
 
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index fc7a603b04f13..bf744ac9d5a73 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -555,14 +555,10 @@ static void espintcp_close(struct sock *sk, long timeout)
- static __poll_t espintcp_poll(struct file *file, struct socket *sock,
- 			      poll_table *wait)
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index fa633657e4c06..ad66110b43cca 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4157,6 +4157,9 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk,
+ 				    struct sk_buff_head *sk_queue,
+ 				    unsigned int flags, int *off, int *err);
+ struct sk_buff *skb_recv_datagram(struct sock *sk, unsigned int flags, int *err);
++__poll_t datagram_poll_queue(struct file *file, struct socket *sock,
++			     struct poll_table_struct *wait,
++			     struct sk_buff_head *rcv_queue);
+ __poll_t datagram_poll(struct file *file, struct socket *sock,
+ 			   struct poll_table_struct *wait);
+ int skb_copy_datagram_iter(const struct sk_buff *from, int offset,
+diff --git a/net/core/datagram.c b/net/core/datagram.c
+index f474b9b120f98..8b328879f8d25 100644
+--- a/net/core/datagram.c
++++ b/net/core/datagram.c
+@@ -920,21 +920,22 @@ int skb_copy_and_csum_datagram_msg(struct sk_buff *skb,
+ EXPORT_SYMBOL(skb_copy_and_csum_datagram_msg);
+ 
+ /**
+- * 	datagram_poll - generic datagram poll
++ *	datagram_poll_queue - same as datagram_poll, but on a specific receive
++ *		queue
+  *	@file: file struct
+  *	@sock: socket
+  *	@wait: poll table
++ *	@rcv_queue: receive queue to poll
+  *
+- *	Datagram poll: Again totally generic. This also handles
+- *	sequenced packet sockets providing the socket receive queue
+- *	is only ever holding data ready to receive.
++ *	Performs polling on the given receive queue, handling shutdown, error,
++ *	and connection state. This is useful for protocols that deliver
++ *	userspace-bound packets through a custom queue instead of
++ *	sk->sk_receive_queue.
+  *
+- *	Note: when you *don't* use this routine for this protocol,
+- *	and you use a different write policy from sock_writeable()
+- *	then please supply your own write_space callback.
++ *	Return: poll bitmask indicating the socket's current state
+  */
+-__poll_t datagram_poll(struct file *file, struct socket *sock,
+-			   poll_table *wait)
++__poll_t datagram_poll_queue(struct file *file, struct socket *sock,
++			     poll_table *wait, struct sk_buff_head *rcv_queue)
  {
--	__poll_t mask = datagram_poll(file, sock, wait);
  	struct sock *sk = sock->sk;
- 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
+ 	__poll_t mask;
+@@ -956,7 +957,7 @@ __poll_t datagram_poll(struct file *file, struct socket *sock,
+ 		mask |= EPOLLHUP;
  
--	if (!skb_queue_empty(&ctx->ike_queue))
--		mask |= EPOLLIN | EPOLLRDNORM;
--
--	return mask;
-+	return datagram_poll_queue(file, sock, wait, &ctx->ike_queue);
+ 	/* readable? */
+-	if (!skb_queue_empty_lockless(&sk->sk_receive_queue))
++	if (!skb_queue_empty_lockless(rcv_queue))
+ 		mask |= EPOLLIN | EPOLLRDNORM;
+ 
+ 	/* Connection-based need to check for termination and startup */
+@@ -978,4 +979,27 @@ __poll_t datagram_poll(struct file *file, struct socket *sock,
+ 
+ 	return mask;
  }
- 
- static void build_protos(struct proto *espintcp_prot,
++EXPORT_SYMBOL(datagram_poll_queue);
++
++/**
++ *	datagram_poll - generic datagram poll
++ *	@file: file struct
++ *	@sock: socket
++ *	@wait: poll table
++ *
++ *	Datagram poll: Again totally generic. This also handles
++ *	sequenced packet sockets providing the socket receive queue
++ *	is only ever holding data ready to receive.
++ *
++ *	Note: when you *don't* use this routine for this protocol,
++ *	and you use a different write policy from sock_writeable()
++ *	then please supply your own write_space callback.
++ *
++ *	Return: poll bitmask indicating the socket's current state
++ */
++__poll_t datagram_poll(struct file *file, struct socket *sock, poll_table *wait)
++{
++	return datagram_poll_queue(file, sock, wait,
++				   &sock->sk->sk_receive_queue);
++}
+ EXPORT_SYMBOL(datagram_poll);
 -- 
 2.51.0
 
