@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9142D218EB1;
-	Mon, 27 Oct 2025 18:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7CB3328EE;
+	Mon, 27 Oct 2025 18:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590818; cv=none; b=b7i+p8gTn6MsCCbB8o8GIFOKrM/GoSfxGKHjl1CfUoPCOzSuWqlJgjIMOu46WP14CQaNBQAri9ekpur1l+I+Za19pnodE8sARs6rODXcaQl9Nzc70J8d2w1nLAI/1JPcBVRRLBnxHJpOAW9Px31LbkVE2ZTSgOd9LnN1Q0al/nY=
+	t=1761590821; cv=none; b=l+WiYmoA5R7pJKJodMy7PE9Ji8WLbwv7gXRT1aTEBo7XP0808D/RBV+77T21kQ2L3VvE37DcJHHt1bXQjUhzJnEEkUynuAht8KGGM9XKGTLreuk4UTjBoihAMWKBSCikoF7fZSvevKBDdL4QYXVY72vXuudGQmAvmGdOZx8ATic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590818; c=relaxed/simple;
-	bh=ruWjBdzuagaGirM9C6g0N/clfsaT89ub+b7Yh3IN52o=;
+	s=arc-20240116; t=1761590821; c=relaxed/simple;
+	bh=q2h4023/K7r1eLH6zZ7qIaZnAxW7Ug+6nwBWsPoQfus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBzdb0+O0dPALl0x0A8YrAEuxgbfN62mlOhlVakrBvpOWw/87/mBl/gaxd8p7cAsoj4W7SVJTPJsA/FEuTlmCrjhlaU/mlJ+4R46QfeVoqnIxf2ALU9mwLVJAlDthgF4tI9uxiF0zIyPDASgEsqDL1k4r6v/BwsvwgeG+Kxf71I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scP0WJdc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1cbj7k2Wnli/9LhcHNrS/CDjQJ5L31ATksJVlMIBaepDM47YTqRakZyGLDkFRwUXHGyBZ5LR+o7aSBdMxd6rxwFKcRtvK7tVzpWm9F/1EsYgupkpFaSSq+W4Nw1rX5kf2FWcIGltH9/qtV5PeVgM7JYDiGqXILXkfe0yOLmR1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYBcJAuZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scP0WJdc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901DBC4CEF1;
-	Mon, 27 Oct 2025 18:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYBcJAuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A87CC4CEF1;
+	Mon, 27 Oct 2025 18:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590817;
-	bh=ruWjBdzuagaGirM9C6g0N/clfsaT89ub+b7Yh3IN52o=;
+	s=korg; t=1761590820;
+	bh=q2h4023/K7r1eLH6zZ7qIaZnAxW7Ug+6nwBWsPoQfus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scP0WJdc++xx5GL48trTKNQ6oF7HuDms6xtzWU7F8ZmcMMeeMQOrPWk848cwcVEqq
-	 7fzcjTqIV9WEJ7pqiG+B7NZBF2yOJPDMON5DTymEDrtSyp1k0UDeiTOds1Gboh9bXE
-	 yHFteLG8SnBHITIMl3wU9T8vrMtl2a/jXX4L59GE=
+	b=pYBcJAuZn7ARzk0RnlEves7d8AKcDASWhyn5u/FYv/9ASE7twUiAO2h3YHW9/Jt/9
+	 h703Cb2Gzew1bSXQ/nU0qye2RSRtLnpjBVkI/dkb6EWGFDQ1q+i3JWaf/e/ra6euqH
+	 Ydc4ArHqVmtqwUlgdZMP47PkXv+KdzlHJ9YsiS+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Ahern <dsahern@kernel.org>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 186/224] net: netlink: add NLM_F_BULK delete request modifier
-Date: Mon, 27 Oct 2025 19:35:32 +0100
-Message-ID: <20251027183513.821134693@linuxfoundation.org>
+Subject: [PATCH 5.4 187/224] net: rtnetlink: add bulk delete support flag
+Date: Mon, 27 Oct 2025 19:35:33 +0100
+Message-ID: <20251027183513.843367012@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -53,39 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 545528d788556c724eeb5400757f828ef27782a8 ]
+[ Upstream commit a6cec0bcd34264be8887791594be793b3f12719f ]
 
-Add a new delete request modifier called NLM_F_BULK which, when
-supported, would cause the request to delete multiple objects. The flag
-is a convenient way to signal that a multiple delete operation is
-requested which can be gradually added to different delete requests. In
-order to make sure older kernels will error out if the operation is not
-supported instead of doing something unintended we have to break a
-required condition when implementing support for this flag, f.e. for
-neighbors we will omit the mandatory mac address attribute.
-Initially it will be used to add flush with filtering support for bridge
-fdbs, but it also opens the door to add similar support to others.
+Add a new rtnl flag (RTNL_FLAG_BULK_DEL_SUPPORTED) which is used to
+verify that the delete operation allows bulk object deletion. Also emit
+a warning if anyone tries to set it for non-delete kind.
 
+Suggested-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: bf29555f5bdc ("rtnetlink: Allow deleting FDB entries in user namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netlink.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/rtnetlink.h | 3 ++-
+ net/core/rtnetlink.c    | 8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/netlink.h b/include/uapi/linux/netlink.h
-index cf4e4836338f6..9ad4c47dea844 100644
---- a/include/uapi/linux/netlink.h
-+++ b/include/uapi/linux/netlink.h
-@@ -72,6 +72,7 @@ struct nlmsghdr {
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index 030fc7eef7401..e893b1f21913e 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -10,7 +10,8 @@ typedef int (*rtnl_doit_func)(struct sk_buff *, struct nlmsghdr *,
+ typedef int (*rtnl_dumpit_func)(struct sk_buff *, struct netlink_callback *);
  
- /* Modifiers to DELETE request */
- #define NLM_F_NONREC	0x100	/* Do not delete recursively	*/
-+#define NLM_F_BULK	0x200	/* Delete multiple objects	*/
+ enum rtnl_link_flags {
+-	RTNL_FLAG_DOIT_UNLOCKED = BIT(0),
++	RTNL_FLAG_DOIT_UNLOCKED		= BIT(0),
++	RTNL_FLAG_BULK_DEL_SUPPORTED	= BIT(1),
+ };
  
- /* Flags for ACK message */
- #define NLM_F_CAPPED	0x100	/* request was capped */
+ enum rtnl_kinds {
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index b41f31a09a7cd..c4b33a2ecac26 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -214,6 +214,8 @@ static int rtnl_register_internal(struct module *owner,
+ 	if (dumpit)
+ 		link->dumpit = dumpit;
+ 
++	WARN_ON(rtnl_msgtype_kind(msgtype) != RTNL_KIND_DEL &&
++		(flags & RTNL_FLAG_BULK_DEL_SUPPORTED));
+ 	link->flags |= flags;
+ 
+ 	/* publish protocol:msgtype */
+@@ -5274,6 +5276,12 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	}
+ 
+ 	flags = link->flags;
++	if (kind == RTNL_KIND_DEL && (nlh->nlmsg_flags & NLM_F_BULK) &&
++	    !(flags & RTNL_FLAG_BULK_DEL_SUPPORTED)) {
++		NL_SET_ERR_MSG(extack, "Bulk delete is not supported");
++		goto err_unlock;
++	}
++
+ 	if (flags & RTNL_FLAG_DOIT_UNLOCKED) {
+ 		doit = link->doit;
+ 		rcu_read_unlock();
 -- 
 2.51.0
 
