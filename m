@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF862F25F1;
-	Mon, 27 Oct 2025 19:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455DA2F25F1;
+	Mon, 27 Oct 2025 19:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591948; cv=none; b=hd6v74wF8w1UdmjgzNLAY6fquS5jjiGEOVJPYH/rOiB0FaM2IqK7qdAIggjZPruiY2W3fwAn1+xba57xAcTINbkT06UPkZb8nC94agKG+ar4Vfhp6i1bkfD6J9qoAUQtKw7bOVR+7zvWzm1KmhjO5C10fMWCdY47edHf2p0HTD8=
+	t=1761591951; cv=none; b=klUKVZproWQ3EZm8SY14+CCBvawn2eKAsoIRGvLOyAlXaxTpOp6DcPAoar3Zj1WcZMm62PPVNadRoP3Y+/UBTaWi2/6d/6G2ul/IUYLAyprTyIqNtEtIRSu8SktV5TxkeXppjSxM+lY/0VKGVgMt0YFoLdPjZMitc9k8OHith7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591948; c=relaxed/simple;
-	bh=YsAhsp21yEca7QwnU2pbFkg47ym52eLib9zvoxiyCE0=;
+	s=arc-20240116; t=1761591951; c=relaxed/simple;
+	bh=+i9Js+d13Tke/MQmLp9vkzsTwIO9bSaBScQ1+u8IJpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dRvBVeZOSFfXxE1sq7A4zx3RpvPHZhOTNJ9nqIdJLJyE0Wn7awOGxBkk7KntwdJn+Hm+zC9XfAtf0K03djpcEKyR59Deo5J5uUNiABM7gvZiJBQ/kSERU941Y2Uw7Nm38OQTXEssyyL3+EODSE1UpYoUk9ElAQVP3bXr6Ql9eIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSa0mlDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IJb0ULCXpeS5FDBBHj0s6OjA7qALZGdVKd3HzE/TeZ/8eKYBgImKnnF9TpSf8A+wkUygRBUEoLpEsbeo8+9uSJCx3zY20DU9PcVwbiWnygH4G7bg2VtbytoFi9O80BkgeKs70U2ZEOi6F6Rb9g7URAPNx1nwsw0nZ0/wMpahzMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g66Hz5sf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSa0mlDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5276C4CEF1;
-	Mon, 27 Oct 2025 19:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g66Hz5sf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7916AC4CEF1;
+	Mon, 27 Oct 2025 19:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591948;
-	bh=YsAhsp21yEca7QwnU2pbFkg47ym52eLib9zvoxiyCE0=;
+	s=korg; t=1761591950;
+	bh=+i9Js+d13Tke/MQmLp9vkzsTwIO9bSaBScQ1+u8IJpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSa0mlDjy/ShxK+dYThcmJkO77YrCnSmB5rrD3P2+Pils7vjmMrKo7z8kmpzxXoiR
-	 W5j7vd3fnmV5LY0lhNJSBIdM1vdAbyAoz12X3B7y+SIm8Tl4hqscQZH+1b/EGDxWey
-	 mXjXJYs/ZjN3eB2phvZaJdLf9vOgUqRBZKSqshbc=
+	b=g66Hz5sfCLarkkk8IEw26JQIakzSy4+di4xd/s/7AeeufU6r6k2qyDbsOenUtqGrL
+	 l1K3GqQQcLH60rZ4tR0F9gCVbL1R6SMNBlWF7QS0pS2lpuzkJL5KjRp8eXHUCNbOqT
+	 zaM5ey/ggZBqoqP53WeXtRtO5o3ThdlkBnyY1bEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michael=20Wei=C3=9F?= <michael.weiss@aisec.fraunhofer.de>,
-	Harshal Gohel <hg@simonwunderlich.de>,
-	=?UTF-8?q?Johannes=20Wiesb=C3=B6ck?= <johannes.wiesboeck@aisec.fraunhofer.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/123] rtnetlink: Allow deleting FDB entries in user namespace
-Date: Mon, 27 Oct 2025 19:35:38 +0100
-Message-ID: <20251027183447.946500748@linuxfoundation.org>
+Subject: [PATCH 5.15 059/123] net: enetc: correct the value of ENETC_RXB_TRUESIZE
+Date: Mon, 27 Oct 2025 19:35:39 +0100
+Message-ID: <20251027183447.973831362@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -49,58 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit bf29555f5bdc017bac22ca66fcb6c9f46ec8788f ]
+[ Upstream commit e59bc32df2e989f034623a580e30a2a72af33b3f ]
 
-Creating FDB entries is possible from a non-initial user namespace when
-having CAP_NET_ADMIN, yet, when deleting FDB entries, processes receive
-an EPERM because the capability is always checked against the initial
-user namespace. This restricts the FDB management from unprivileged
-containers.
+The ENETC RX ring uses the page halves flipping mechanism, each page is
+split into two halves for the RX ring to use. And ENETC_RXB_TRUESIZE is
+defined to 2048 to indicate the size of half a page. However, the page
+size is configurable, for ARM64 platform, PAGE_SIZE is default to 4K,
+but it could be configured to 16K or 64K.
 
-Drop the netlink_capable check in rtnl_fdb_del as it was originally
-dropped in c5c351088ae7 and reintroduced in 1690be63a27b without
-intention.
+When PAGE_SIZE is set to 16K or 64K, ENETC_RXB_TRUESIZE is not correct,
+and the RX ring will always use the first half of the page. This is not
+consistent with the description in the relevant kernel doc and commit
+messages.
 
-This patch was tested using a container on GyroidOS, where it was
-possible to delete FDB entries from an unprivileged user namespace and
-private network namespace.
+This issue is invisible in most cases, but if users want to increase
+PAGE_SIZE to receive a Jumbo frame with a single buffer for some use
+cases, it will not work as expected, because the buffer size of each
+RX BD is fixed to 2048 bytes.
 
-Fixes: 1690be63a27b ("bridge: Add vlan support to static neighbors")
-Reviewed-by: Michael Weiß <michael.weiss@aisec.fraunhofer.de>
-Tested-by: Harshal Gohel <hg@simonwunderlich.de>
-Signed-off-by: Johannes Wiesböck <johannes.wiesboeck@aisec.fraunhofer.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20251015201548.319871-1-johannes.wiesboeck@aisec.fraunhofer.de
+Based on the above two points, we expect to correct ENETC_RXB_TRUESIZE
+to (PAGE_SIZE >> 1), as described in the comment.
+
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20251016080131.3127122-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 08bb8e09994db..c44ab3b71f3e7 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4192,9 +4192,6 @@ static int rtnl_fdb_del(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	int err;
- 	u16 vid;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.h b/drivers/net/ethernet/freescale/enetc/enetc.h
+index a3b936375c561..40c8f0f026a5b 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.h
++++ b/drivers/net/ethernet/freescale/enetc/enetc.h
+@@ -37,7 +37,7 @@ struct enetc_tx_swbd {
+ };
  
--	if (!netlink_capable(skb, CAP_NET_ADMIN))
--		return -EPERM;
--
- 	if (!del_bulk) {
- 		err = nlmsg_parse_deprecated(nlh, sizeof(*ndm), tb, NDA_MAX,
- 					     NULL, extack);
+ #define ENETC_RX_MAXFRM_SIZE	ENETC_MAC_MAXFRM_SIZE
+-#define ENETC_RXB_TRUESIZE	2048 /* PAGE_SIZE >> 1 */
++#define ENETC_RXB_TRUESIZE	(PAGE_SIZE >> 1)
+ #define ENETC_RXB_PAD		NET_SKB_PAD /* add extra space if needed */
+ #define ENETC_RXB_DMA_SIZE	\
+ 	(SKB_WITH_OVERHEAD(ENETC_RXB_TRUESIZE) - ENETC_RXB_PAD)
 -- 
 2.51.0
 
