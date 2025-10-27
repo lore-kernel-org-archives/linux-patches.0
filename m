@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E6A32D45C;
-	Mon, 27 Oct 2025 19:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DB41F7586;
+	Mon, 27 Oct 2025 19:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592860; cv=none; b=bjgR5ICcbRgnSoZxPx6pI30hksdf00NflFPWF6bJ3/jcKn00A1Kl9mr1Dk5ynlEUpU8O7N0I6YYyMLjKR4Wz+3r90imjg0umaMr1SZ/rHZwe7iqsdzxqWBY3APhO+Yy/RxjTe59yZeWV2afShZ8Wf45mPfoJDgtnrnL3sYruCm8=
+	t=1761592865; cv=none; b=mSMgqKKtzrd6C7sfKcNnwytaTQfMScD1ei6VAyYvGGScYWCT6kRXrmPXGw57FFNGoJRWfKg0gXOekWwohxshdba0REJg6/f0Bm+is3QiqF0vMpRoeu1Fpo/9FZca81nzCvAIVPcOdXFk5xKaz/FNxJeUkiIItyQNw+PrAfTF2e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592860; c=relaxed/simple;
-	bh=s00QPazGtlnxOLEQaVPTQPev2OpK+paZmnbCYgBHoyQ=;
+	s=arc-20240116; t=1761592865; c=relaxed/simple;
+	bh=djWDenqlJf3vVocsN7hqSnBISubWipTq9Tr3yFx+a8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WD3hcoRVHDIW/SowKrjgKv2TEdwZAY4ltxvYP2dGns3Y6sSivv/g0q9eC5dTeHQrPzius1btn1PqCdzwGCtAya0ifktRyV6kMjCp48S9i7Kpr2FM6FCxRiTTG4nOlHeBngRJEA3UFd1RM/QSzTJ1B6uCUKEs+82iu4UkcTUjgMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXOHafHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9yXcY/Qg7LToNIVih+XP2TuUjSpQEmfFQo1RoK0in9zd/RXKM9JaKq9Vd779ACGHobsoj6t9fc6iPCgpBcmFyNWNSpb/RukHndtbbYf1nZ3rUPdFnbNDcg2HgsNrx+xV18p/DjtRpfmOIDHRqDtARRBaVTgWzZHcxbZVGFhmRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tthyOqjD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXOHafHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE720C4CEF1;
-	Mon, 27 Oct 2025 19:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tthyOqjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EEBC4CEFD;
+	Mon, 27 Oct 2025 19:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592860;
-	bh=s00QPazGtlnxOLEQaVPTQPev2OpK+paZmnbCYgBHoyQ=;
+	s=korg; t=1761592862;
+	bh=djWDenqlJf3vVocsN7hqSnBISubWipTq9Tr3yFx+a8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXOHafHhpX3ZIBiLHQH2nsF8SSORLOAI0F3NHj+Gg1awoiuWwRz8fq3ooQ2jrY28Q
-	 zGVx/C+u8FUQDFy5UET4ARUX05GRP00KnZw2Ng1n/XYl0Y0gmCcm/oT4sqm3cS75k8
-	 6VN3NXxZBy4nUylvqoyJ1f24igG2mMnhMMa9q9Xs=
+	b=tthyOqjDfevxTLmUHUN68t6DEaxo3akTTspFnXyeRHG654PEZIJvbRK0tqv6fOSU9
+	 dD1Dz7f5R3fBNXjsCxZbxQVR3Hvkgt1Usy/pedwwf8LCiL/FWhdlifNVtkTyupKh1e
+	 5IVzkDz/o/OMmsESiKEGrLbEIrhTm+LHP6Hk70m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/117] ptp: ocp: Fix typo using index 1 instead of i in SMA initialization loop
-Date: Mon, 27 Oct 2025 19:36:06 +0100
-Message-ID: <20251027183455.067165190@linuxfoundation.org>
+Subject: [PATCH 6.12 041/117] sctp: avoid NULL dereference when chunk data buffer is missing
+Date: Mon, 27 Oct 2025 19:36:07 +0100
+Message-ID: <20251027183455.093665877@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
 References: <20251027183453.919157109@linuxfoundation.org>
@@ -52,38 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit a767957e7a83f9e742be196aa52a48de8ac5a7e4 ]
+[ Upstream commit 441f0647f7673e0e64d4910ef61a5fb8f16bfb82 ]
 
-In ptp_ocp_sma_fb_init(), the code mistakenly used bp->sma[1]
-instead of bp->sma[i] inside a for-loop, which caused only SMA[1]
-to have its DIRECTION_CAN_CHANGE capability cleared. This led to
-inconsistent capability flags across SMA pins.
+chunk->skb pointer is dereferenced in the if-block where it's supposed
+to be NULL only.
 
-Fixes: 09eeb3aecc6c ("ptp_ocp: implement DPLL ops")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20251021182456.9729-1-jiashengjiangcool@gmail.com
+chunk->skb can only be NULL if chunk->head_skb is not. Check for frag_list
+instead and do it just before replacing chunk->skb. We're sure that
+otherwise chunk->skb is non-NULL because of outer if() condition.
+
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/20251021130034.6333-1-bigalex934@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/inqueue.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index efbd80db778d6..bd9919c01e502 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -2546,7 +2546,7 @@ ptp_ocp_sma_fb_init(struct ptp_ocp *bp)
- 		for (i = 0; i < OCP_SMA_NUM; i++) {
- 			bp->sma[i].fixed_fcn = true;
- 			bp->sma[i].fixed_dir = true;
--			bp->sma[1].dpll_prop.capabilities &=
-+			bp->sma[i].dpll_prop.capabilities &=
- 				~DPLL_PIN_CAPABILITIES_DIRECTION_CAN_CHANGE;
+diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
+index 5c16521818058..f5a7d5a387555 100644
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -169,13 +169,14 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
+ 				chunk->head_skb = chunk->skb;
+ 
+ 			/* skbs with "cover letter" */
+-			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len)
++			if (chunk->head_skb && chunk->skb->data_len == chunk->skb->len) {
++				if (WARN_ON(!skb_shinfo(chunk->skb)->frag_list)) {
++					__SCTP_INC_STATS(dev_net(chunk->skb->dev),
++							 SCTP_MIB_IN_PKT_DISCARDS);
++					sctp_chunk_free(chunk);
++					goto next_chunk;
++				}
+ 				chunk->skb = skb_shinfo(chunk->skb)->frag_list;
+-
+-			if (WARN_ON(!chunk->skb)) {
+-				__SCTP_INC_STATS(dev_net(chunk->skb->dev), SCTP_MIB_IN_PKT_DISCARDS);
+-				sctp_chunk_free(chunk);
+-				goto next_chunk;
+ 			}
  		}
- 		return;
+ 
 -- 
 2.51.0
 
