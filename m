@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1702D8DB9;
-	Mon, 27 Oct 2025 18:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD13218EB1;
+	Mon, 27 Oct 2025 18:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590362; cv=none; b=SW+6Lp0vDsyVvO4bZlodr7dPiQXflgXWn+7JfpBUzvjx5CXWR7T+QSmQINW8OzxtH+Wf5I7nvVMz52NB2Jboz0bXtvgR2Jlor9h8zW7oYI+wXdcbxnWYiuufenxwUTOk3Y1OjyvyaMgwbg6b1Kt8zBcO8G1r8Wi7Fkk+giQloS0=
+	t=1761590364; cv=none; b=CqxASKIYHecrEs+q8rtVwgQoPecAMBwKRofyb/RCFq3xL0XsdWwkZXpHcOc25JfnDG+ovFZw1LLMe2UAscNR6AvXCZanIonNF4B2YsujeYGHi7zF6h2WzkKEAdT8Ez5HipVqgE1nLQM4+XLRPvfUy6ZsuryofasbWwp4xQ+cBQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590362; c=relaxed/simple;
-	bh=SkQ5xBuZ9mRJD+mprRNCS1v+XwZxSPPRlYQ7MeS52V4=;
+	s=arc-20240116; t=1761590364; c=relaxed/simple;
+	bh=5hwQQJ20oYszOFB+gJWk10vzl2YcFldq1JR4QPk4Zxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQ7E10IOZMjv4zR5LGQw6vq4wQfRyapcyOXwpWjmyUsqslACt0LpnmxQszR+E5Nxbk2126sH8u8p5kQtnSBxb1MoEBEFznZDEYfbeLxxyczgYbCiN+SPX2aBCLbsSbm4B7SmaQpflAK3+hcykKQy3LYFl86ZM9y0mrOII0OtAIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVLgw6OJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7j/p77zcQCZOVjjwjib3hIe/d3T3B+o4bBv0QuCkK3v/a17+Z7W3BzkfGlje12XEJ2Wr3OfgrMHKacFwYOYUPn4vYLVOBV0iz6QQVedx0iXrx4DyNk1CptWdOD2b1OxXJBDQQmP9hetu0cgMCiIIUuv5aJyMGh1dRjOb2qc3Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+oF7ohn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVLgw6OJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6F8C4CEF1;
-	Mon, 27 Oct 2025 18:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+oF7ohn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E16C4CEF1;
+	Mon, 27 Oct 2025 18:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590362;
-	bh=SkQ5xBuZ9mRJD+mprRNCS1v+XwZxSPPRlYQ7MeS52V4=;
+	s=korg; t=1761590364;
+	bh=5hwQQJ20oYszOFB+gJWk10vzl2YcFldq1JR4QPk4Zxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVLgw6OJn7fqy+wfOLH1Wb2vNzhvzAmuH6BuUOesDLRPpgnoF/8J1H7xxfD6RqwYa
-	 rPtzjzoJVYCubY5Hnp5xqQSv5p/iXvUX5izAxRaadDBiIuqeHu/iFLhZJnu+K4xt63
-	 f7HUnmloTMp4m46TAnagIfQzujXeZJLnPf/+dBO8=
+	b=Y+oF7ohnrIp7y5vARgXkdIKlyqTOFwvoUtgsBvnBEqGp6WootcLrfPmKPvPCd+Ahg
+	 PEXvkugIXY5+Wqdeapd77q2Oh+xC5U37rFzR/Vc4hhTcpgL/WFkzZ/nUpWxkIe6TMb
+	 a6TlTuQyT49Gqpk4BGO0xwgLLWVr1NGoa0ISXyVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	stable <stable@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 5.4 017/224] driver core/PM: Set power.no_callbacks along with power.no_pm
-Date: Mon, 27 Oct 2025 19:32:43 +0100
-Message-ID: <20251027183509.457073597@linuxfoundation.org>
+	Leo Yan <leo.yan@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 018/224] perf: arm_spe: Prevent overflow in PERF_IDX2OFF()
+Date: Mon, 27 Oct 2025 19:32:44 +0100
+Message-ID: <20251027183509.483678767@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,41 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Leo Yan <leo.yan@arm.com>
 
-commit c2ce2453413d429e302659abc5ace634e873f6f5 upstream.
+[ Upstream commit a29fea30dd93da16652930162b177941abd8c75e ]
 
-Devices with power.no_pm set are not expected to need any power
-management at all, so modify device_set_pm_not_required() to set
-power.no_callbacks for them too in case runtime PM will be enabled
-for any of them (which in principle may be done for convenience if
-such a device participates in a dependency chain).
+Cast nr_pages to unsigned long to avoid overflow when handling large
+AUX buffer sizes (>= 2 GiB).
 
-Since device_set_pm_not_required() must be called before device_add()
-or it would not have any effect, it can update power.no_callbacks
-without locking, unlike pm_runtime_no_callbacks() that can be called
-after registering the target device.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/1950054.tdWV9SEqCh@rafael.j.wysocki
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/device.h |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/perf/arm_spe_pmu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1441,6 +1441,9 @@ static inline bool device_pm_not_require
- static inline void device_set_pm_not_required(struct device *dev)
- {
- 	dev->power.no_pm = true;
-+#ifdef CONFIG_PM
-+	dev->power.no_callbacks = true;
-+#endif
- }
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index 079701e8de186..91a6631af5567 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -75,7 +75,8 @@ struct arm_spe_pmu {
+ #define to_spe_pmu(p) (container_of(p, struct arm_spe_pmu, pmu))
  
- static inline void dev_pm_syscore_device(struct device *dev, bool val)
+ /* Convert a free-running index from perf into an SPE buffer offset */
+-#define PERF_IDX2OFF(idx, buf)	((idx) % ((buf)->nr_pages << PAGE_SHIFT))
++#define PERF_IDX2OFF(idx, buf) \
++	((idx) % ((unsigned long)(buf)->nr_pages << PAGE_SHIFT))
+ 
+ /* Keep track of our dynamic hotplug state */
+ static enum cpuhp_state arm_spe_pmu_online;
+-- 
+2.51.0
+
 
 
