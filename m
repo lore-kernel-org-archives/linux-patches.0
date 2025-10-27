@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C243254B1;
-	Mon, 27 Oct 2025 19:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B16F2D5C95;
+	Mon, 27 Oct 2025 19:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761592450; cv=none; b=SnOqmAgaWNXwFsNAgAzf7cxeUIMwnrfkb3zbHbdD3ADjdWme7S5LYrx8ZrCABrSh2izwkFQCV5TUnWuPlLU1OHN8LyaoydLkchheV5vGRCgsZk0qqb5ogLyQPSN+ey3I9A/L90fCyExKfpuLTNTU25IzY1vrwu1zT71xKLV/1Bs=
+	t=1761592452; cv=none; b=HUc9knfHh4AuQ/A4KY+2XFlYNINVXAVMogsu9EuvbRUkvT0kyei6ZgCZMKoWmg1zC5LBmvJCQOojvGJMq4Xh/XEUllrehTIDntTwKsUsmyB0uO9TQwZeSVHYctsGMIIEjaRb4RGEbbtJY6myban5IUOohJBUnRMYbra/wqD8yzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761592450; c=relaxed/simple;
-	bh=e2uFfYMQaHrcq6Jkl9b3c8eZMqCsVBTKSjjFhqFMQvI=;
+	s=arc-20240116; t=1761592452; c=relaxed/simple;
+	bh=doTUYEzuIzI8x7CaTdsaVkGiy7lsAd7pumJV8ob2LFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMZjavEQgBKBmtYv4mWCkNIc0yHQv9xZL3SceQlfkUpm8B5cIxrUNk3/iS4fgVtL4QOawUD9ATCtEfdLD2w1dFEp9bc+qu9UsL3CQItuM4d6DRbB9dN582sVSAMroZsxf8jcAZssXKCZm6wyta49/H7Os93jqlbxZ2OoVh6STwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQinwap0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqyQkiwX4nPnlpN440Xi5QIa9CA1E/DdjxRtRDYzK5GAcDJFnQpT9F+PrcTQeRHYiECxF3d6C/KZBgr/Nx+tJsLzjnviUtt53akJ749n4RoTIumnwTFW5OdbF/0nUXDdczLW74aI4rAyR08M7g1mAB1EMahzKe88qOz+B+6MfVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZFaYj5H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQinwap0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31FEC4CEF1;
-	Mon, 27 Oct 2025 19:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZFaYj5H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3014BC4CEF1;
+	Mon, 27 Oct 2025 19:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761592450;
-	bh=e2uFfYMQaHrcq6Jkl9b3c8eZMqCsVBTKSjjFhqFMQvI=;
+	s=korg; t=1761592452;
+	bh=doTUYEzuIzI8x7CaTdsaVkGiy7lsAd7pumJV8ob2LFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQinwap00/6UCmAJDYUvta7ooZLMBuPjzlAog2A/+RRF0dT9lJI4rjw1wM59hTdwY
-	 /e6Jgk94agab/oRlqG9JMByCaWeJwnxS4/WJYvHD/i50oxaIkWUR0SAB2TqT0dY+mV
-	 boOaJcVONOMFKW8XyUKNDgBe3TpWAT6jzvQN4xCs=
+	b=bZFaYj5HuoA6EpLMhlC0Vy6ukisutzSyYbSe+6pBzP9Sns89TUd2podsqL4OI0+y8
+	 wYhy3w2hOZUJStIWvfxlO7GVqFCyelyM/VqZTiKtpQv7vtDXLCPzHarcB8wlabW3fq
+	 Vog6qDYYmeZMG7ESN3IIkoDxOhGAd8hCGguqjmjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/157] fuse: allocate ff->release_args only if release is needed
-Date: Mon, 27 Oct 2025 19:36:27 +0100
-Message-ID: <20251027183504.630545833@linuxfoundation.org>
+Subject: [PATCH 6.1 127/157] fuse: fix livelock in synchronous file put from fuseblk workers
+Date: Mon, 27 Oct 2025 19:36:28 +0100
+Message-ID: <20251027183504.658479599@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
 References: <20251027183501.227243846@linuxfoundation.org>
@@ -51,238 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit e26ee4efbc79610b20e7abe9d96c87f33dacc1ff ]
+[ Upstream commit 26e5c67deb2e1f42a951f022fdf5b9f7eb747b01 ]
 
-This removed the need to pass isdir argument to fuse_put_file().
+I observed a hang when running generic/323 against a fuseblk server.
+This test opens a file, initiates a lot of AIO writes to that file
+descriptor, and closes the file descriptor before the writes complete.
+Unsurprisingly, the AIO exerciser threads are mostly stuck waiting for
+responses from the fuseblk server:
 
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+# cat /proc/372265/task/372313/stack
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_do_getattr+0xfc/0x1f0 [fuse]
+[<0>] fuse_file_read_iter+0xbe/0x1c0 [fuse]
+[<0>] aio_read+0x130/0x1e0
+[<0>] io_submit_one+0x542/0x860
+[<0>] __x64_sys_io_submit+0x98/0x1a0
+[<0>] do_syscall_64+0x37/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+But the /weird/ part is that the fuseblk server threads are waiting for
+responses from itself:
+
+# cat /proc/372210/task/372232/stack
+[<0>] request_wait_answer+0x1fe/0x2a0 [fuse]
+[<0>] __fuse_simple_request+0xd3/0x2b0 [fuse]
+[<0>] fuse_file_put+0x9a/0xd0 [fuse]
+[<0>] fuse_release+0x36/0x50 [fuse]
+[<0>] __fput+0xec/0x2b0
+[<0>] task_work_run+0x55/0x90
+[<0>] syscall_exit_to_user_mode+0xe9/0x100
+[<0>] do_syscall_64+0x43/0xf0
+[<0>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+The fuseblk server is fuse2fs so there's nothing all that exciting in
+the server itself.  So why is the fuse server calling fuse_file_put?
+The commit message for the fstest sheds some light on that:
+
+"By closing the file descriptor before calling io_destroy, you pretty
+much guarantee that the last put on the ioctx will be done in interrupt
+context (during I/O completion).
+
+Aha.  AIO fgets a new struct file from the fd when it queues the ioctx.
+The completion of the FUSE_WRITE command from userspace causes the fuse
+server to call the AIO completion function.  The completion puts the
+struct file, queuing a delayed fput to the fuse server task.  When the
+fuse server task returns to userspace, it has to run the delayed fput,
+which in the case of a fuseblk server, it does synchronously.
+
+Sending the FUSE_RELEASE command sychronously from fuse server threads
+is a bad idea because a client program can initiate enough simultaneous
+AIOs such that all the fuse server threads end up in delayed_fput, and
+now there aren't any threads left to handle the queued fuse commands.
+
+Fix this by only using asynchronous fputs when closing files, and leave
+a comment explaining why.
+
+Cc: stable@vger.kernel.org # v2.6.38
+Fixes: 5a18ec176c934c ("fuse: fix hang of single threaded fuseblk filesystem")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 26e5c67deb2e ("fuse: fix livelock in synchronous file put from fuseblk workers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dir.c    |    2 -
- fs/fuse/file.c   |   69 +++++++++++++++++++++++++++++++------------------------
- fs/fuse/fuse_i.h |    2 -
- 3 files changed, 41 insertions(+), 32 deletions(-)
+ fs/fuse/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -584,7 +584,7 @@ static int fuse_create_open(struct inode
- 		goto out_err;
- 
- 	err = -ENOMEM;
--	ff = fuse_file_alloc(fm);
-+	ff = fuse_file_alloc(fm, true);
- 	if (!ff)
- 		goto out_put_forget_req;
- 
 --- a/fs/fuse/file.c
 +++ b/fs/fuse/file.c
-@@ -54,7 +54,7 @@ struct fuse_release_args {
- 	struct inode *inode;
- };
- 
--struct fuse_file *fuse_file_alloc(struct fuse_mount *fm)
-+struct fuse_file *fuse_file_alloc(struct fuse_mount *fm, bool release)
- {
- 	struct fuse_file *ff;
- 
-@@ -63,11 +63,13 @@ struct fuse_file *fuse_file_alloc(struct
- 		return NULL;
- 
- 	ff->fm = fm;
--	ff->release_args = kzalloc(sizeof(*ff->release_args),
--				   GFP_KERNEL_ACCOUNT);
--	if (!ff->release_args) {
--		kfree(ff);
--		return NULL;
-+	if (release) {
-+		ff->release_args = kzalloc(sizeof(*ff->release_args),
-+					   GFP_KERNEL_ACCOUNT);
-+		if (!ff->release_args) {
-+			kfree(ff);
-+			return NULL;
-+		}
- 	}
- 
- 	INIT_LIST_HEAD(&ff->write_entry);
-@@ -103,14 +105,14 @@ static void fuse_release_end(struct fuse
- 	kfree(ra);
- }
- 
--static void fuse_file_put(struct fuse_file *ff, bool sync, bool isdir)
-+static void fuse_file_put(struct fuse_file *ff, bool sync)
- {
- 	if (refcount_dec_and_test(&ff->count)) {
--		struct fuse_args *args = &ff->release_args->args;
-+		struct fuse_release_args *ra = ff->release_args;
-+		struct fuse_args *args = (ra ? &ra->args : NULL);
- 
--		if (isdir ? ff->fm->fc->no_opendir : ff->fm->fc->no_open) {
--			/* Do nothing when client does not implement 'open' */
--			fuse_release_end(ff->fm, args, 0);
-+		if (!args) {
-+			/* Do nothing when server does not implement 'open' */
- 		} else if (sync) {
- 			fuse_simple_request(ff->fm, args);
- 			fuse_release_end(ff->fm, args, 0);
-@@ -130,15 +132,16 @@ struct fuse_file *fuse_file_open(struct
- 	struct fuse_conn *fc = fm->fc;
- 	struct fuse_file *ff;
- 	int opcode = isdir ? FUSE_OPENDIR : FUSE_OPEN;
-+	bool open = isdir ? !fc->no_opendir : !fc->no_open;
- 
--	ff = fuse_file_alloc(fm);
-+	ff = fuse_file_alloc(fm, open);
- 	if (!ff)
- 		return ERR_PTR(-ENOMEM);
- 
- 	ff->fh = 0;
- 	/* Default for no-open */
- 	ff->open_flags = FOPEN_KEEP_CACHE | (isdir ? FOPEN_CACHE_DIR : 0);
--	if (isdir ? !fc->no_opendir : !fc->no_open) {
-+	if (open) {
- 		struct fuse_open_out outarg;
- 		int err;
- 
-@@ -146,11 +149,13 @@ struct fuse_file *fuse_file_open(struct
- 		if (!err) {
- 			ff->fh = outarg.fh;
- 			ff->open_flags = outarg.open_flags;
--
- 		} else if (err != -ENOSYS) {
- 			fuse_file_free(ff);
- 			return ERR_PTR(err);
- 		} else {
-+			/* No release needed */
-+			kfree(ff->release_args);
-+			ff->release_args = NULL;
- 			if (isdir)
- 				fc->no_opendir = 1;
- 			else
-@@ -272,7 +277,7 @@ out_inode_unlock:
- }
- 
- static void fuse_prepare_release(struct fuse_inode *fi, struct fuse_file *ff,
--				 unsigned int flags, int opcode)
-+				 unsigned int flags, int opcode, bool sync)
- {
- 	struct fuse_conn *fc = ff->fm->fc;
- 	struct fuse_release_args *ra = ff->release_args;
-@@ -290,6 +295,9 @@ static void fuse_prepare_release(struct
- 
- 	wake_up_interruptible_all(&ff->poll_wait);
- 
-+	if (!ra)
-+		return;
-+
- 	ra->inarg.fh = ff->fh;
- 	ra->inarg.flags = flags;
- 	ra->args.in_numargs = 1;
-@@ -299,6 +307,13 @@ static void fuse_prepare_release(struct
- 	ra->args.nodeid = ff->nodeid;
- 	ra->args.force = true;
- 	ra->args.nocreds = true;
-+
-+	/*
-+	 * Hold inode until release is finished.
-+	 * From fuse_sync_release() the refcount is 1 and everything's
-+	 * synchronous, so we are fine with not doing igrab() here.
-+	 */
-+	ra->inode = sync ? NULL : igrab(&fi->inode);
- }
- 
- void fuse_file_release(struct inode *inode, struct fuse_file *ff,
-@@ -308,14 +323,12 @@ void fuse_file_release(struct inode *ino
- 	struct fuse_release_args *ra = ff->release_args;
- 	int opcode = isdir ? FUSE_RELEASEDIR : FUSE_RELEASE;
- 
--	fuse_prepare_release(fi, ff, open_flags, opcode);
-+	fuse_prepare_release(fi, ff, open_flags, opcode, false);
- 
--	if (ff->flock) {
-+	if (ra && ff->flock) {
- 		ra->inarg.release_flags |= FUSE_RELEASE_FLOCK_UNLOCK;
- 		ra->inarg.lock_owner = fuse_lock_owner_id(ff->fm->fc, id);
- 	}
--	/* Hold inode until release is finished */
--	ra->inode = igrab(inode);
- 
- 	/*
- 	 * Normally this will send the RELEASE request, however if
-@@ -326,7 +339,7 @@ void fuse_file_release(struct inode *ino
+@@ -338,8 +338,14 @@ void fuse_file_release(struct inode *ino
+ 	 * Make the release synchronous if this is a fuseblk mount,
  	 * synchronous RELEASE is allowed (and desirable) in this case
  	 * because the server can be trusted not to screw up.
++	 *
++	 * Always use the asynchronous file put because the current thread
++	 * might be the fuse server.  This can happen if a process starts some
++	 * aio and closes the fd before the aio completes.  Since aio takes its
++	 * own ref to the file, the IO completion has to drop the ref, which is
++	 * how the fuse server can end up closing its clients' files.
  	 */
--	fuse_file_put(ff, ff->fm->fc->destroy, isdir);
-+	fuse_file_put(ff, ff->fm->fc->destroy);
+-	fuse_file_put(ff, ff->fm->fc->destroy);
++	fuse_file_put(ff, false);
  }
  
  void fuse_release_common(struct file *file, bool isdir)
-@@ -361,12 +374,8 @@ void fuse_sync_release(struct fuse_inode
- 		       unsigned int flags)
- {
- 	WARN_ON(refcount_read(&ff->count) > 1);
--	fuse_prepare_release(fi, ff, flags, FUSE_RELEASE);
--	/*
--	 * iput(NULL) is a no-op and since the refcount is 1 and everything's
--	 * synchronous, we are fine with not doing igrab() here"
--	 */
--	fuse_file_put(ff, true, false);
-+	fuse_prepare_release(fi, ff, flags, FUSE_RELEASE, true);
-+	fuse_file_put(ff, true);
- }
- EXPORT_SYMBOL_GPL(fuse_sync_release);
- 
-@@ -923,7 +932,7 @@ static void fuse_readpages_end(struct fu
- 		put_page(page);
- 	}
- 	if (ia->ff)
--		fuse_file_put(ia->ff, false, false);
-+		fuse_file_put(ia->ff, false);
- 
- 	fuse_io_free(ia);
- }
-@@ -1670,7 +1679,7 @@ static void fuse_writepage_free(struct f
- 		__free_page(ap->pages[i]);
- 
- 	if (wpa->ia.ff)
--		fuse_file_put(wpa->ia.ff, false, false);
-+		fuse_file_put(wpa->ia.ff, false);
- 
- 	kfree(ap->pages);
- 	kfree(wpa);
-@@ -1918,7 +1927,7 @@ int fuse_write_inode(struct inode *inode
- 	ff = __fuse_write_file_get(fi);
- 	err = fuse_flush_times(inode, ff);
- 	if (ff)
--		fuse_file_put(ff, false, false);
-+		fuse_file_put(ff, false);
- 
- 	return err;
- }
-@@ -2316,7 +2325,7 @@ static int fuse_writepages(struct addres
- 		fuse_writepages_send(&data);
- 	}
- 	if (data.ff)
--		fuse_file_put(data.ff, false, false);
-+		fuse_file_put(data.ff, false);
- 
- 	kfree(data.orig_pages);
- out:
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -1022,7 +1022,7 @@ void fuse_read_args_fill(struct fuse_io_
-  */
- int fuse_open_common(struct inode *inode, struct file *file, bool isdir);
- 
--struct fuse_file *fuse_file_alloc(struct fuse_mount *fm);
-+struct fuse_file *fuse_file_alloc(struct fuse_mount *fm, bool release);
- void fuse_file_free(struct fuse_file *ff);
- void fuse_finish_open(struct inode *inode, struct file *file);
- 
 
 
