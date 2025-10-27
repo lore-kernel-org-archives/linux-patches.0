@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B174C308F3A;
-	Mon, 27 Oct 2025 18:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1D5308F3A;
+	Mon, 27 Oct 2025 18:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590487; cv=none; b=rFDMKUkKQQkbtI5RIZX5fdyvRcQhwSD3Q7yadPkNtHMm0ipsh9Wie+JCqls8v/NjpewSzvbo8/8GKQUQ8Kb1uFuwzrmY/3a452KHdCFjtxXt1I9yHfW2J4qf58nnIKPnQiAmdkc2e2gclSM2w6BlHUu2IrVPCLxfkO8S26iuOM0=
+	t=1761590490; cv=none; b=nreW6n3thrlp/QL/uYLAmCSz8XqXVrIxyapQ2sV7Sd57jScv7Pw6xz8oQCDwIBHwptBbKckTCHvKu1AWjvUpGz6gQmC+6uhycIq0s2Xi2NtWMj6lzXcnwS0dUO4KKUVhiYMXMxb6vvOg6GTa0WbHCxvXdIeB+5aH3ie7hjX1CgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590487; c=relaxed/simple;
-	bh=kJDDPXX0NpFm9Kwo9RCQlNd+zMDN3n+eXJkfPTUkiIE=;
+	s=arc-20240116; t=1761590490; c=relaxed/simple;
+	bh=fzLDV6wtIJBrgN66Y/tF6PaDTCdUZcHZH16aoRlQbI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+xV15PvrkLfZWZj3u/xF2gB7sqWedRpCgRuEMdMle03g6HvkMY+JGc+GNUIKWy1YLDRPjtDLI5YxHre1EMzo39y7QcTT2OvOEz/Y8RJNwVVTKK/3g8nHqsBAdPPGTR/qIVq9u16hqgwSmAfWkt482pEiVeV672OMhCi0eYV5MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY7MP22U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JELcb7kEwrUDuVkx9c6zVQKNQwRAkmMdNzzkzmhJXX4e+E6yTA5Xb3+8THc4LS30abB/S+waNQi3EUnPs0EVYUCOj3YAU/URd7NxuTTScIefpAacc6pFOEzRnYfgrybmxUAdOHp/W94NadSyAuY1HPb4AeYc2Jto2qa/JO3LwkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuJ1IOWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY7MP22U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AA0C4CEF1;
-	Mon, 27 Oct 2025 18:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuJ1IOWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010D5C4CEF1;
+	Mon, 27 Oct 2025 18:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590487;
-	bh=kJDDPXX0NpFm9Kwo9RCQlNd+zMDN3n+eXJkfPTUkiIE=;
+	s=korg; t=1761590490;
+	bh=fzLDV6wtIJBrgN66Y/tF6PaDTCdUZcHZH16aoRlQbI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qY7MP22U0TDagkrVRUS/wehJcryCA3kggOhntbQYUsHDS20FuequQOPJNMNu6PGH+
-	 gFz8/Tgf6X8DT4ltrVze4iHawkENlkgUUDVoVzHOTBJa+0/bFvAXQUC9qgI1hB/HZN
-	 /2yFZmXX5XFkuFt2hG+xRpIP60xfSa+s4kxAvO4o=
+	b=iuJ1IOWqDx20wLq4V5wyeV1hp4AcYcMv2K2pm1UqNhf90SVZ02BCRTMSuGLrPqyG8
+	 9bS5/yuS6wvMhlCEtgZ51Gv8zrGygofMILl/xqps5BxdygI2AoaKKcbPjgKBqUHgoe
+	 abgxvKcoZj7lyyZzH+QHgBEY9YPGyCVM0iuAihvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Slavin Liu <slavin452@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 063/224] ipvs: Defer ip_vs_ftp unregister during netns cleanup
-Date: Mon, 27 Oct 2025 19:33:29 +0100
-Message-ID: <20251027183510.692917438@linuxfoundation.org>
+Subject: [PATCH 5.4 064/224] scsi: mpt3sas: Fix crash in transport port remove by using ioc_info()
+Date: Mon, 27 Oct 2025 19:33:30 +0100
+Message-ID: <20251027183510.719242403@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -52,61 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <slavin452@gmail.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 134121bfd99a06d44ef5ba15a9beb075297c0821 ]
+[ Upstream commit 1703fe4f8ae50d1fb6449854e1fcaed1053e3a14 ]
 
-On the netns cleanup path, __ip_vs_ftp_exit() may unregister ip_vs_ftp
-before connections with valid cp->app pointers are flushed, leading to a
-use-after-free.
+During mpt3sas_transport_port_remove(), messages were logged with
+dev_printk() against &mpt3sas_port->port->dev. At this point the SAS
+transport device may already be partially unregistered or freed, leading
+to a crash when accessing its struct device.
 
-Fix this by introducing a global `exiting_module` flag, set to true in
-ip_vs_ftp_exit() before unregistering the pernet subsystem. In
-__ip_vs_ftp_exit(), skip ip_vs_ftp unregister if called during netns
-cleanup (when exiting_module is false) and defer it to
-__ip_vs_cleanup_batch(), which unregisters all apps after all connections
-are flushed. If called during module exit, unregister ip_vs_ftp
-immediately.
+Using ioc_info(), which logs via the PCI device (ioc->pdev->dev),
+guaranteed to remain valid until driver removal.
 
-Fixes: 61b1ab4583e2 ("IPVS: netns, add basic init per netns.")
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Slavin Liu <slavin452@gmail.com>
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+[83428.295776] Oops: general protection fault, probably for non-canonical address 0x6f702f323a33312d: 0000 [#1] SMP NOPTI
+[83428.295785] CPU: 145 UID: 0 PID: 113296 Comm: rmmod Kdump: loaded Tainted: G           OE       6.16.0-rc1+ #1 PREEMPT(voluntary)
+[83428.295792] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[83428.295795] Hardware name: Dell Inc. Precision 7875 Tower/, BIOS 89.1.67 02/23/2024
+[83428.295799] RIP: 0010:__dev_printk+0x1f/0x70
+[83428.295805] Code: 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 49 89 d1 48 85 f6 74 52 4c 8b 46 50 4d 85 c0 74 1f 48 8b 46 68 48 85 c0 74 22 <48> 8b 08 0f b6 7f 01 48 c7 c2 db e8 42 ad 83 ef 30 e9 7b f8 ff ff
+[83428.295813] RSP: 0018:ff85aeafc3137bb0 EFLAGS: 00010206
+[83428.295817] RAX: 6f702f323a33312d RBX: ff4290ee81292860 RCX: 5000cca25103be32
+[83428.295820] RDX: ff85aeafc3137bb8 RSI: ff4290eeb1966c00 RDI: ffffffffc1560845
+[83428.295823] RBP: ff85aeafc3137c18 R08: 74726f702f303a33 R09: ff85aeafc3137bb8
+[83428.295826] R10: ff85aeafc3137b18 R11: ff4290f5bd60fe68 R12: ff4290ee81290000
+[83428.295830] R13: ff4290ee6e345de0 R14: ff4290ee81290000 R15: ff4290ee6e345e30
+[83428.295833] FS:  00007fd9472a6740(0000) GS:ff4290f5ce96b000(0000) knlGS:0000000000000000
+[83428.295837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[83428.295840] CR2: 00007f242b4db238 CR3: 00000002372b8006 CR4: 0000000000771ef0
+[83428.295844] PKRU: 55555554
+[83428.295846] Call Trace:
+[83428.295848]  <TASK>
+[83428.295850]  _dev_printk+0x5c/0x80
+[83428.295857]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.295863]  mpt3sas_transport_port_remove+0x1c7/0x420 [mpt3sas]
+[83428.295882]  _scsih_remove_device+0x21b/0x280 [mpt3sas]
+[83428.295894]  ? _scsih_expander_node_remove+0x108/0x140 [mpt3sas]
+[83428.295906]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.295910]  mpt3sas_device_remove_by_sas_address.part.0+0x8f/0x110 [mpt3sas]
+[83428.295921]  _scsih_expander_node_remove+0x129/0x140 [mpt3sas]
+[83428.295933]  _scsih_expander_node_remove+0x6a/0x140 [mpt3sas]
+[83428.295944]  scsih_remove+0x3f0/0x4a0 [mpt3sas]
+[83428.295957]  pci_device_remove+0x3b/0xb0
+[83428.295962]  device_release_driver_internal+0x193/0x200
+[83428.295968]  driver_detach+0x44/0x90
+[83428.295971]  bus_remove_driver+0x69/0xf0
+[83428.295975]  pci_unregister_driver+0x2a/0xb0
+[83428.295979]  _mpt3sas_exit+0x1f/0x300 [mpt3sas]
+[83428.295991]  __do_sys_delete_module.constprop.0+0x174/0x310
+[83428.295997]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296000]  ? __x64_sys_getdents64+0x9a/0x110
+[83428.296005]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296009]  ? syscall_trace_enter+0xf6/0x1b0
+[83428.296014]  do_syscall_64+0x7b/0x2c0
+[83428.296019]  ? srso_alias_return_thunk+0x5/0xfbef5
+[83428.296023]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ftp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
-index cf925906f59b6..67d0d4f1f0db1 100644
---- a/net/netfilter/ipvs/ip_vs_ftp.c
-+++ b/net/netfilter/ipvs/ip_vs_ftp.c
-@@ -53,6 +53,7 @@ enum {
- 	IP_VS_FTP_EPSV,
- };
- 
-+static bool exiting_module;
- /*
-  * List of ports (up to IP_VS_APP_MAX_PORTS) to be handled by helper
-  * First port is set to the default port.
-@@ -607,7 +608,7 @@ static void __ip_vs_ftp_exit(struct net *net)
- {
- 	struct netns_ipvs *ipvs = net_ipvs(net);
- 
--	if (!ipvs)
-+	if (!ipvs || !exiting_module)
- 		return;
- 
- 	unregister_ip_vs_app(ipvs, &ip_vs_ftp);
-@@ -629,6 +630,7 @@ static int __init ip_vs_ftp_init(void)
-  */
- static void __exit ip_vs_ftp_exit(void)
- {
-+	exiting_module = true;
- 	unregister_pernet_subsys(&ip_vs_ftp_ops);
- 	/* rcu_barrier() is called by netns */
- }
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index ebe78ec42da8b..a355471cf079b 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -812,11 +812,9 @@ mpt3sas_transport_port_remove(struct MPT3SAS_ADAPTER *ioc, u64 sas_address,
+ 	list_for_each_entry_safe(mpt3sas_phy, next_phy,
+ 	    &mpt3sas_port->phy_list, port_siblings) {
+ 		if ((ioc->logging_level & MPT_DEBUG_TRANSPORT))
+-			dev_printk(KERN_INFO, &mpt3sas_port->port->dev,
+-			    "remove: sas_addr(0x%016llx), phy(%d)\n",
+-			    (unsigned long long)
+-			    mpt3sas_port->remote_identify.sas_address,
+-			    mpt3sas_phy->phy_id);
++			ioc_info(ioc, "remove: sas_addr(0x%016llx), phy(%d)\n",
++				(unsigned long long) mpt3sas_port->remote_identify.sas_address,
++					mpt3sas_phy->phy_id);
+ 		mpt3sas_phy->phy_belongs_to_port = 0;
+ 		if (!ioc->remove_host)
+ 			sas_port_delete_phy(mpt3sas_port->port,
 -- 
 2.51.0
 
