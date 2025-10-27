@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E354331A68;
-	Mon, 27 Oct 2025 18:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07399332EB1;
+	Mon, 27 Oct 2025 18:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590917; cv=none; b=CPlrFHEIj5epniK+MT727JLtrwkrkvrxYCGvbh2ZwZ59/JxveCJf1BNTTZHb0eSO8XdeqS5QFLCso1dV5j1pFaaGP4qDVNQlBOaOeFx4dHkzx/lxSVTxnfhfiLJUl3Ke339LLD6+TG+Fc22VVTN+TFAf1Unk73e2ZVnhwpv6BWs=
+	t=1761590920; cv=none; b=HEiJ4yuDie18M2CGY9Nm8u4EWstbneQoO7bdeUgdFhrXt9F8gAtdpMo8MeyRGNd85qVJdXWTEGAlCXgJuuSJsYfrJP3ADcIYsIkOuBAimNJfOmU0oZUQ1Cy2KWNkXIWB9485y3/X8m6wTpFT9CpEOgxn3GO92+hpG/RDCQBIpaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590917; c=relaxed/simple;
-	bh=AsZv0047e03XXlzPXKnmOalI3A13YUuKH9+u3jmthtc=;
+	s=arc-20240116; t=1761590920; c=relaxed/simple;
+	bh=IM0SAqXtICiL3pSjfJBild873ri18VfJVcA5uENYSfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwORI65/LAHXlzUaI2Ja6jjgaWKliBN3RF97fluIE12dTdMEalTk46J1tUyJN+3g/RN4qCqBhzBdET9HT4aSGQQVw/A2nbUHsOZcFRjfpE1EZAOkzl5svTePbiit/yLEApw6+PZ7lK2OhfTQ2utuWqBTJE+GDKljpqwym/6Rh8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uE3i2top; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVJU6riMPI0zfhAOmwWEfsznQ9NRj3RQ3oc0l681ou3I3Xb39dDiO4vtBz/jvDctBEcSCo11PdGhb2JT9eRGG4HWcP4Rpr0vMptuP0eD/TqKUIZEMyYtCvKD7zNzAuCLrk3CfLIQEMih0HYHwt0QORD1Jq9/geiml3Wfp1PMzvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVmdtGZj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uE3i2top"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04E8C16AAE;
-	Mon, 27 Oct 2025 18:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVmdtGZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6C1C4CEF1;
+	Mon, 27 Oct 2025 18:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590917;
-	bh=AsZv0047e03XXlzPXKnmOalI3A13YUuKH9+u3jmthtc=;
+	s=korg; t=1761590919;
+	bh=IM0SAqXtICiL3pSjfJBild873ri18VfJVcA5uENYSfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uE3i2toprGNIeM7JuegkgstTJpKnOgMUx0CSv4Lb1RiKSoLCvftm54UUQWivVK6pO
-	 lY7foggyFm32WK5H5Y0b+4tiSgoqnXyOljXX8uokO/c0pcq6LxW4v5RIon+3uVeUlk
-	 RKifwajT0/uiLYwUOxB5ixeogcKN9G9EPJNNeQGg=
+	b=iVmdtGZj1WZDrQqx8RxpYSZ3JpEZaCQOUlBMY0K5fvgtVUGZGmOMCa65hJBxBpHLV
+	 lhPy1POfH+Sbz47HdrZm8Soa4bJO5zVTwCpUKnpu+FE9ONs74cHkH1n50e4ufdYyOY
+	 wxc088iQeSApCBXEZo+KV0aRMAPHIMaC5dbS2k3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 222/224] NFSD: Fix last write offset handling in layoutcommit
-Date: Mon, 27 Oct 2025 19:36:08 +0100
-Message-ID: <20251027183514.666719119@linuxfoundation.org>
+Subject: [PATCH 5.4 223/224] media: s5p-mfc: remove an unused/uninitialized variable
+Date: Mon, 27 Oct 2025 19:36:09 +0100
+Message-ID: <20251027183514.693169938@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -54,111 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d68886bae76a4b9b3484d23e5b7df086f940fa38 ]
+[ Upstream commit 7fa37ba25a1dfc084e24ea9acc14bf1fad8af14c ]
 
-The data type of loca_last_write_offset is newoffset4 and is switched
-on a boolean value, no_newoffset, that indicates if a previous write
-occurred or not. If no_newoffset is FALSE, an offset is not given.
-This means that client does not try to update the file size. Thus,
-server should not try to calculate new file size and check if it fits
-into the segment range. See RFC 8881, section 12.5.4.2.
+The s5p_mfc_cmd_args structure in the v6 driver is never used, not
+initialized to anything other than zero, but as of clang-21 this
+causes a warning:
 
-Sometimes the current incorrect logic may cause clients to hang when
-trying to sync an inode. If layoutcommit fails, the client marks the
-inode as dirty again.
+drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:45:7: error: variable 'h2r_args' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   45 |                                         &h2r_args);
+      |                                          ^~~~~~~~
 
-Fixes: 9cf514ccfacb ("nfsd: implement pNFS operations")
+Just remove this for simplicity. Since the function is also called
+through a callback, this does require adding a trivial wrapper with
+the correct prototype.
+
+Fixes: f96f3cfa0bb8 ("[media] s5p-mfc: Update MFC v4l2 driver to support MFC6.x")
 Cc: stable@vger.kernel.org
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ replaced inode_get_mtime() with inode->i_mtime and removed rqstp parameter from proc_layoutcommit() ]
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/blocklayout.c |    5 ++---
- fs/nfsd/nfs4proc.c    |   30 +++++++++++++++---------------
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c |   35 ++++++++----------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -120,7 +120,6 @@ static __be32
- nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
- 		struct iomap *iomaps, int nr_iomaps)
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_cmd_v6.c
+@@ -14,8 +14,7 @@
+ #include "s5p_mfc_opr.h"
+ #include "s5p_mfc_cmd_v6.h"
+ 
+-static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd,
+-				struct s5p_mfc_cmd_args *args)
++static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev *dev, int cmd)
  {
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct iattr iattr = { .ia_valid = 0 };
- 	int error;
+ 	mfc_debug(2, "Issue the command: %d\n", cmd);
  
-@@ -130,9 +129,9 @@ nfsd4_block_commit_blocks(struct inode *
- 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
- 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
+@@ -31,7 +30,6 @@ static int s5p_mfc_cmd_host2risc_v6(stru
  
--	if (new_size > i_size_read(inode)) {
-+	if (lcp->lc_size_chg) {
- 		iattr.ia_valid |= ATTR_SIZE;
--		iattr.ia_size = new_size;
-+		iattr.ia_size = lcp->lc_newsize;
- 	}
+ static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	struct s5p_mfc_buf_size_v6 *buf_size = dev->variant->buf_size->priv;
+ 	int ret;
  
- 	error = inode->i_sb->s_export_op->commit_blocks(inode, iomaps,
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1701,7 +1701,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	const struct nfsd4_layout_seg *seg = &lcp->lc_seg;
- 	struct svc_fh *current_fh = &cstate->current_fh;
- 	const struct nfsd4_layout_ops *ops;
--	loff_t new_size = lcp->lc_last_wr + 1;
- 	struct inode *inode;
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
-@@ -1716,13 +1715,21 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 		goto out;
- 	inode = d_inode(current_fh->fh_dentry);
+@@ -41,33 +39,23 @@ static int s5p_mfc_sys_init_cmd_v6(struc
  
--	nfserr = nfserr_inval;
--	if (new_size <= seg->offset)
--		goto out;
--	if (new_size > seg->offset + seg->length)
--		goto out;
--	if (!lcp->lc_newoffset && new_size > i_size_read(inode))
--		goto out;
-+	lcp->lc_size_chg = false;
-+	if (lcp->lc_newoffset) {
-+		loff_t new_size = lcp->lc_last_wr + 1;
-+
-+		nfserr = nfserr_inval;
-+		if (new_size <= seg->offset)
-+			goto out;
-+		if (new_size > seg->offset + seg->length)
-+			goto out;
-+
-+		if (new_size > i_size_read(inode)) {
-+			lcp->lc_size_chg = true;
-+			lcp->lc_newsize = new_size;
-+		}
-+	}
+ 	mfc_write(dev, dev->ctx_buf.dma, S5P_FIMV_CONTEXT_MEM_ADDR_V6);
+ 	mfc_write(dev, buf_size->dev_ctx, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6);
+ }
  
- 	nfserr = nfsd4_preprocess_layout_stateid(rqstp, cstate, &lcp->lc_sid,
- 						false, lcp->lc_layout_type,
-@@ -1738,13 +1745,6 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	/* LAYOUTCOMMIT does not require any serialization */
- 	mutex_unlock(&ls->ls_mutex);
- 
--	if (new_size > i_size_read(inode)) {
--		lcp->lc_size_chg = 1;
--		lcp->lc_newsize = new_size;
--	} else {
--		lcp->lc_size_chg = 0;
--	}
+ static int s5p_mfc_sleep_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
 -
- 	nfserr = ops->proc_layoutcommit(inode, lcp);
- 	nfs4_put_stid(&ls->ls_stid);
- out:
+-	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6,
+-			&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6);
+ }
+ 
+ static int s5p_mfc_wakeup_cmd_v6(struct s5p_mfc_dev *dev)
+ {
+-	struct s5p_mfc_cmd_args h2r_args;
+-
+-	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6);
+ }
+ 
+ /* Open a new instance and get its number */
+ static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+ {
+ 	struct s5p_mfc_dev *dev = ctx->dev;
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	int codec_type;
+ 
+ 	mfc_debug(2, "Requested codec mode: %d\n", ctx->codec_mode);
+@@ -129,23 +117,20 @@ static int s5p_mfc_open_inst_cmd_v6(stru
+ 	mfc_write(dev, ctx->ctx.size, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
+ 	mfc_write(dev, 0, S5P_FIMV_D_CRC_CTRL_V6); /* no crc */
+ 
+-	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6,
+-					&h2r_args);
++	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANCE_V6);
+ }
+ 
+ /* Close instance */
+ static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+ {
+ 	struct s5p_mfc_dev *dev = ctx->dev;
+-	struct s5p_mfc_cmd_args h2r_args;
+ 	int ret = 0;
+ 
+ 	dev->curr_ctx = ctx->num;
+ 	if (ctx->state != MFCINST_FREE) {
+ 		mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
+ 		ret = s5p_mfc_cmd_host2risc_v6(dev,
+-					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6,
+-					&h2r_args);
++					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6);
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
+@@ -153,9 +138,15 @@ static int s5p_mfc_close_inst_cmd_v6(str
+ 	return ret;
+ }
+ 
++static int s5p_mfc_cmd_host2risc_v6_args(struct s5p_mfc_dev *dev, int cmd,
++				    struct s5p_mfc_cmd_args *ignored)
++{
++	return s5p_mfc_cmd_host2risc_v6(dev, cmd);
++}
++
+ /* Initialize cmd function pointers for MFC v6 */
+ static struct s5p_mfc_hw_cmds s5p_mfc_cmds_v6 = {
+-	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6,
++	.cmd_host2risc = s5p_mfc_cmd_host2risc_v6_args,
+ 	.sys_init_cmd = s5p_mfc_sys_init_cmd_v6,
+ 	.sleep_cmd = s5p_mfc_sleep_cmd_v6,
+ 	.wakeup_cmd = s5p_mfc_wakeup_cmd_v6,
 
 
