@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A276E32E124;
-	Mon, 27 Oct 2025 18:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8B031D723;
+	Mon, 27 Oct 2025 18:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590956; cv=none; b=V2Q/55PLfgrFaVgi7ZWGYqRv1OX9aT+JtJ50jGfHtKcQSFqIanV6FCprKmKFODVBAbFYQa3jLJcqxGU4dspAkgZTdkMRqbCeDYV3L6zmqrP/9XH4D2TK0KnI+elrqNce5ltM45GsQpPkK715O4S/9pYIyiGZbNFJsrhFibAv84M=
+	t=1761590959; cv=none; b=mZNm9Th9p6NbVadzXiW2cDuWm3nrymadY4YyreADg5SNtz88h/BGnsWmm+T03kmlaOo8dBx67FC12AF3BSFI8/F7MhxrPKWW/QsDRcdbPnXAkERmJ9yFaajZfj5zbExoErth/1DQtQkXdLDUgh09lwFhYulwD+FEfcCrXXnWURY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590956; c=relaxed/simple;
-	bh=URFfdFewBFf9l1XU6GLcS4g1u31cFt6mAP2PDqtRP6M=;
+	s=arc-20240116; t=1761590959; c=relaxed/simple;
+	bh=SG8XfZvMLHnK0FdLrFka9kKOzjgbdzkP9jK1Gh8+w2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiezppzOSnYyoTioBwmWN9PN/dmu/YZNjHh0M9X1f2ahJjmQ4I+XIYac42xnpsV6HGj5kFn6NaX6fAs+YzA1Icgznu1qL1HlE8qFJRJgxNmVgh5cgOA7KkPmT1k+pJMh23lU7Hw3Hk3Q7zqfWZOaxgh8zeHeq18uZCjWmpSVrGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COZ99ikh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aLuqEnBoil/dW3q3RSud22ss+WjL5//nJL4GX6Wn/wiqmgVg/gnOlbS+2MUagxsTMmEjMZbW1WJrWPoDs51E5pMdh70K4BHt9RP45i6ZUWJ4uzar4WtCLjHaDnz9Gr5CT+Mmzmw+x5ATRBasQC7zlxVEy0oNf6vutsg/YLCVCuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/cPEr85; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COZ99ikh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E057C4CEF1;
-	Mon, 27 Oct 2025 18:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/cPEr85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7036C4CEF1;
+	Mon, 27 Oct 2025 18:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590956;
-	bh=URFfdFewBFf9l1XU6GLcS4g1u31cFt6mAP2PDqtRP6M=;
+	s=korg; t=1761590959;
+	bh=SG8XfZvMLHnK0FdLrFka9kKOzjgbdzkP9jK1Gh8+w2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COZ99ikhFGzet8uOSTYHarKCL5atZcf8n67+GoiYiVLxIHQcI4eYKBA9n51lPYlj4
-	 HyF26z94+8ofEb/jLahbSUjBVgzMS78XrUZluPDThP2DqdZ5b7c5tOjN0lWtzwn+pV
-	 RAGnXJzEdagBQbI1rWAPS6ZuPz0C4LYphVbv5uko=
+	b=H/cPEr85/77xqQZdJiLNockgAOsEtFNy8KQUNXdu4ZXN6qoRP8srqlRLgdsNqyjwu
+	 OZQgpo2+wbvCAXiZhJN/ScJ7mPYA2kHxacr+xUo3HavDi5SLN+PqA9JwB/EyYUY862
+	 W7PjQRVXdkkk9E6MS+RzDlv7PPsfN8dQFNENVnoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 5.10 013/332] serial: stm32: allow selecting console when the driver is module
-Date: Mon, 27 Oct 2025 19:31:06 +0100
-Message-ID: <20251027183524.970694160@linuxfoundation.org>
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Subject: [PATCH 5.10 014/332] staging: axis-fifo: fix maximum TX packet length check
+Date: Mon, 27 Oct 2025 19:31:07 +0100
+Message-ID: <20251027183524.999753493@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -43,38 +43,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-commit cc4d900d0d6d8dd5c41832a93ff3cfa629a78f9a upstream.
+commit 52ff2b840bc723f3be1f096f8017c78e0515858c upstream.
 
-Console can be enabled on the UART compile as module.
-Change dependency to allow console mode when the driver is built as module.
+Since commit 2ca34b508774 ("staging: axis-fifo: Correct handling of
+tx_fifo_depth for size validation"), write() operations with packets
+larger than 'tx_fifo_depth - 4' words are no longer rejected with -EINVAL.
 
-Fixes: 48a6092fb41fa ("serial: stm32-usart: Add STM32 USART Driver")
+Fortunately, the packets are not actually getting transmitted to hardware,
+otherwise they would be raising a 'Transmit Packet Overrun Error'
+interrupt, which requires a reset of the TX circuit to recover from.
+
+Instead, the request times out inside wait_event_interruptible_timeout()
+and always returns -EAGAIN, since the wake up condition can never be true
+for these packets. But still, they unnecessarily block other tasks from
+writing to the FIFO and the EAGAIN return code signals userspace to retry
+the write() call, even though it will always fail and time out.
+
+According to the AXI4-Stream FIFO reference manual (PG080), the maximum
+valid packet length is 'tx_fifo_depth - 4' words, so attempting to send
+larger packets is invalid and should not be happening in the first place:
+
+> The maximum packet that can be transmitted is limited by the size of
+> the FIFO, which is (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
+
+Therefore, bring back the old behavior and outright reject packets larger
+than 'tx_fifo_depth - 4' with -EINVAL. Add a comment to explain why the
+check is necessary. The dev_err() message was removed to avoid cluttering
+the dmesg log if an invalid packet is received from userspace.
+
+Fixes: 2ca34b508774 ("staging: axis-fifo: Correct handling of tx_fifo_depth for size validation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Link: https://lore.kernel.org/r/20250822141923.61133-1-raphael.gallais-pou@foss.st.com
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Link: https://lore.kernel.org/r/20250817171350.872105-1-ovidiu.panait.oss@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/axis-fifo/axis-fifo.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/Kconfig
-+++ b/drivers/tty/serial/Kconfig
-@@ -1494,7 +1494,7 @@ config SERIAL_STM32
+--- a/drivers/staging/axis-fifo/axis-fifo.c
++++ b/drivers/staging/axis-fifo/axis-fifo.c
+@@ -494,11 +494,17 @@ static ssize_t axis_fifo_write(struct fi
+ 		return -EINVAL;
+ 	}
  
- config SERIAL_STM32_CONSOLE
- 	bool "Support for console on STM32"
--	depends on SERIAL_STM32=y
-+	depends on SERIAL_STM32
- 	select SERIAL_CORE_CONSOLE
+-	if (words_to_write > fifo->tx_fifo_depth) {
+-		dev_err(fifo->dt_device, "tried to write more words [%u] than slots in the fifo buffer [%u]\n",
+-			words_to_write, fifo->tx_fifo_depth);
++	/*
++	 * In 'Store-and-Forward' mode, the maximum packet that can be
++	 * transmitted is limited by the size of the FIFO, which is
++	 * (C_TX_FIFO_DEPTH–4)*(data interface width/8) bytes.
++	 *
++	 * Do not attempt to send a packet larger than 'tx_fifo_depth - 4',
++	 * otherwise a 'Transmit Packet Overrun Error' interrupt will be
++	 * raised, which requires a reset of the TX circuit to recover.
++	 */
++	if (words_to_write > (fifo->tx_fifo_depth - 4))
+ 		return -EINVAL;
+-	}
  
- config SERIAL_MVEBU_UART
+ 	if (fifo->write_flags & O_NONBLOCK) {
+ 		/*
 
 
