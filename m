@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B732132F777;
-	Mon, 27 Oct 2025 19:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B2D327783;
+	Mon, 27 Oct 2025 19:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591870; cv=none; b=t1ODuDkyT4XDuFaiM25ek2X8TA8XQgEmUWs2vFKdVeyuSfHHQH12JGCtTO4Q3NI/D96uit/SiaRICUThg27E4dQqC4YnE4Ly43gKtZzZ2kRd40UzJnKGcfq3yqzKRnk0cBipe3C5fPE1jaZsri6YQ+QTmBRr3mPh9QD+j3z3G20=
+	t=1761591873; cv=none; b=sSaM5JyeZgFkSQ6FuN49qs/zKTV1LxoPSr4zlYBB6Zj9Psmtzo8rkt2Tqy+PXWdjQ59UJ5KZNWvdGm2zihXT+M649tae2iHhTxSjxwPUVZfHYJjcTRN9JW3s1O3fEk+JqdoaGtwsqaWssk9EiAmJYixNwoiDWqcWg/krBO4KPHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591870; c=relaxed/simple;
-	bh=BAAWqqgCrDBK+qQUxYOI8BdzCD7V0rkoHdhSHDd6BxU=;
+	s=arc-20240116; t=1761591873; c=relaxed/simple;
+	bh=En8yRtAgrJJDhG+lJWpi91gQqwDOtOqyfkQRyiozwGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tdqa2mkRlbCVhvPWEOsm+xumbuZoOiBPxcuTUl2QhsHMhiJkMU/c3zvQpgiXMG8X2lXmRENDvV+FBqnALyhYIzQR7+E5XWop8dZHbLHGkJBBcMiXFoJ6ZIOBFAtqZQzC8fgsAtTq1GGxqehtBwNwqp/q6dez6S+l1/lTSADl3mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJwP3rEG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkxY0FCrPD5DuH0MX1ML+btb1kagpQUyagl+IQqYNp9tDfUJWTEmvN68eTbK8LEPELb1/WQD70G1E493v9nj79r9KGyZJrAMH5zfLY3/1jAglQmpXrRRAE3uVkHHt8/CKmjbjyq5kTcTMleq7RL/AES6Y4FFobXpnA0GLHhZya4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJZY2Mw3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJwP3rEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CADCC4CEF1;
-	Mon, 27 Oct 2025 19:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJZY2Mw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D165DC4CEF1;
+	Mon, 27 Oct 2025 19:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591870;
-	bh=BAAWqqgCrDBK+qQUxYOI8BdzCD7V0rkoHdhSHDd6BxU=;
+	s=korg; t=1761591873;
+	bh=En8yRtAgrJJDhG+lJWpi91gQqwDOtOqyfkQRyiozwGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJwP3rEGvkw0vmN26z5uMijNfKGLyvjr0qOgkXplrSwBU1/MPbGwyUrkzTv6bWUFz
-	 qQC03Fu7PoaysjDZ09q9bjvTHPCjbH1YD/fM5hLpW/D1lvIF3oowbiJNterAuEpawH
-	 FUjd4lLLakyqpTGXGKvwxzywL/hrwZ2Ml6nYnktU=
+	b=JJZY2Mw3DyrR5geenyztVEIu3jUxupxZpdPgELZ5rXiu3t5kdJ2MuDVosM/ZTw1ko
+	 sUlr5ZWf/FXavpqYAUxyWwGK888iopcRRpg6Yfo96W1h6m9vHMe8ukZ8zeOBcQFWqh
+	 0XJlIPZT9Qt2BC/mWkXyo1djnZg+kBeALS5b/NKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/123] media: lirc: Fix error handling in lirc_register()
-Date: Mon, 27 Oct 2025 19:34:47 +0100
-Message-ID: <20251027183446.589949358@linuxfoundation.org>
+Subject: [PATCH 5.15 008/123] blk-crypto: fix missing blktrace bio split events
+Date: Mon, 27 Oct 2025 19:34:48 +0100
+Message-ID: <20251027183446.618591946@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
 References: <20251027183446.381986645@linuxfoundation.org>
@@ -52,53 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 4f4098c57e139ad972154077fb45c3e3141555dd ]
+[ Upstream commit 06d712d297649f48ebf1381d19bd24e942813b37 ]
 
-When cdev_device_add() failed, calling put_device() to explicitly
-release dev->lirc_dev. Otherwise, it could cause the fault of the
-reference count.
-
-Found by code review.
+trace_block_split() is missing, resulting in blktrace inability to catch
+BIO split events and making it harder to analyze the BIO sequence.
 
 Cc: stable@vger.kernel.org
-Fixes: a6ddd4fecbb0 ("media: lirc: remove last remnants of lirc kapi")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 488f6682c832 ("block: blk-crypto-fallback for Inline Encryption")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ changed blk_crypto_fallback_split_bio_if_needed() to blk_crypto_split_bio_if_needed() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/lirc_dev.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ block/blk-crypto-fallback.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -748,11 +748,11 @@ int lirc_register(struct rc_dev *dev)
+--- a/block/blk-crypto-fallback.c
++++ b/block/blk-crypto-fallback.c
+@@ -18,6 +18,7 @@
+ #include <linux/mempool.h>
+ #include <linux/module.h>
+ #include <linux/random.h>
++#include <trace/events/block.h>
  
- 	cdev_init(&dev->lirc_cdev, &lirc_fops);
+ #include "blk-crypto-internal.h"
  
-+	get_device(&dev->dev);
+@@ -231,7 +232,9 @@ static bool blk_crypto_split_bio_if_need
+ 			bio->bi_status = BLK_STS_RESOURCE;
+ 			return false;
+ 		}
 +
- 	err = cdev_device_add(&dev->lirc_cdev, &dev->lirc_dev);
- 	if (err)
--		goto out_ida;
--
--	get_device(&dev->dev);
-+		goto out_put_device;
- 
- 	switch (dev->driver_type) {
- 	case RC_DRIVER_SCANCODE:
-@@ -776,7 +776,8 @@ int lirc_register(struct rc_dev *dev)
- 
- 	return 0;
- 
--out_ida:
-+out_put_device:
-+	put_device(&dev->lirc_dev);
- 	ida_free(&lirc_ida, minor);
- 	return err;
- }
+ 		bio_chain(split_bio, bio);
++		trace_block_split(split_bio, bio->bi_iter.bi_sector);
+ 		submit_bio_noacct(bio);
+ 		*bio_ptr = split_bio;
+ 	}
 
 
