@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82A332BF52;
-	Mon, 27 Oct 2025 18:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BD0317711;
+	Mon, 27 Oct 2025 18:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761591454; cv=none; b=oF1sb+fYNlv1RxxzRhxGZZSrb48ghPoxwX00YAYxJesKIDMKxCYRNesUliIy8MZXKqvycB2duTNJHoNjguaEWYG+JojVL+p+0rFDhGQ5lXKP9radk+yG5CkUDDfUq4eg+a+CG31P/9NOEiP3IfbyX+Yt+nhaI+pe+Tt4KNsGv+U=
+	t=1761591456; cv=none; b=J3EcwwcUzhC06LGBU3AezfSCQ7UsYxCjqS/a22dlNTUajzTY1pT4J3au9TeShbO8Bp8hcTMcir/7EcjqXucJuHNa0ruTIxoEtJQfl1fSvGAmgR9zhgNEse7JC5Vp7qplrY0mFhMw2f+6S+g3+AK7WpPT9BWPXVmm/teGtL9SVtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761591454; c=relaxed/simple;
-	bh=l4ze4R1nEhTaaxrZ6AoQq3bLoM8vhqIByukZSP4180w=;
+	s=arc-20240116; t=1761591456; c=relaxed/simple;
+	bh=iEUOzPONXz4AljFDjP39+eow2miuUQ7YHMPC8QVz3u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBnkytkNisXdp8RlwhSZIi0scLRMSAIKXC9pw0SEle+17rpH/RC5rB3JvRoL0zf5zNLKn49eyBOwPvHurJRI4d9gQD8kQjWncAk07GUgTc8f+Y1xbnxx9SqFWZJVQUCb0JDW+jFv3hAE42w21yyFr0+3yStGJgUHqGzbaH/V8KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wraGPX/y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UiJ9x0rS3YYH/rLfr03R8efwe152wBLjDtG2IFP92/H505U6zrohIgPEehnc3ZreXofS7wxbaKO6HE080+hSLTt8/I610Vi9ZcqOricYg8dWruMk4hmKa3GHvXNfO4oIzrCbNeKa83SX1d4ta1tdfoZ1aBfs1CMsApeOD9659ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seGv3J9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wraGPX/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3404DC4CEF1;
-	Mon, 27 Oct 2025 18:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seGv3J9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D41C4CEF1;
+	Mon, 27 Oct 2025 18:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761591453;
-	bh=l4ze4R1nEhTaaxrZ6AoQq3bLoM8vhqIByukZSP4180w=;
+	s=korg; t=1761591456;
+	bh=iEUOzPONXz4AljFDjP39+eow2miuUQ7YHMPC8QVz3u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wraGPX/yQdOqwljcJYZpWu/OEMaa1BBejlgSwuq3tRkZYE979f3mDAn/gAjXOE/ZI
-	 IyMMQC0Fczx2G/24E54LElnwpyzM0Sz8Q9B2IK59Fx/aw47dwBDoSqetNnlHuxvNuv
-	 UADbUW4gmT2/XWWtRcngAatClDYPg91jHOkcG584=
+	b=seGv3J9pmVuxnktqrgbE5MWSRPZTRiSGVx6XCAgiTMHGXTELl0yMAE5UMoinUM46T
+	 Gbp+wJSNaeDXpSJxmHYsKs/85V1OrBevSYzJOphDRy+Fw6kK9HzWbyQd7z9PfYXIdN
+	 1vsjiZXjIJacw3jTCgb31f1fCxJDzlmHDQckIJLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 5.10 203/332] minmax: fix indentation of __cmp_once() and __clamp_once()
-Date: Mon, 27 Oct 2025 19:34:16 +0100
-Message-ID: <20251027183530.078067432@linuxfoundation.org>
+Subject: [PATCH 5.10 204/332] minmax: allow comparisons of int against unsigned char/short
+Date: Mon, 27 Oct 2025 19:34:17 +0100
+Message-ID: <20251027183530.108982525@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183524.611456697@linuxfoundation.org>
 References: <20251027183524.611456697@linuxfoundation.org>
@@ -58,11 +58,12 @@ Content-Transfer-Encoding: 8bit
 
 From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit f4b84b2ff851f01d0fac619eadef47eb41648534 ]
+[ Upstream commit 4ead534fba42fc4fd41163297528d2aa731cd121 ]
 
-Remove the extra indentation and align continuation markers.
+Since 'unsigned char/short' get promoted to 'signed int' it is safe to
+compare them against an 'int' value.
 
-Link: https://lkml.kernel.org/r/bed41317a05c498ea0209eafbcab45a5@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/8732ef5f809c47c28a7be47c938b28d4@AcuMS.aculab.com
 Signed-off-by: David Laight <david.laight@aculab.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Christoph Hellwig <hch@infradead.org>
@@ -73,54 +74,22 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ include/linux/minmax.h |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -35,11 +35,11 @@
- #define __cmp(op, x, y)	((x) __cmp_op_##op (y) ? (x) : (y))
+@@ -26,8 +26,9 @@
+ 	__builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),	\
+ 		is_signed_type(typeof(x)), 0)
  
- #define __cmp_once(op, x, y, unique_x, unique_y) ({	\
--		typeof(x) unique_x = (x);		\
--		typeof(y) unique_y = (y);		\
--		static_assert(__types_ok(x, y),		\
--			#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
--		__cmp(op, unique_x, unique_y); })
-+	typeof(x) unique_x = (x);			\
-+	typeof(y) unique_y = (y);			\
-+	static_assert(__types_ok(x, y),			\
-+		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
-+	__cmp(op, unique_x, unique_y); })
+-#define __types_ok(x, y) \
+-	(__is_signed(x) == __is_signed(y))
++#define __types_ok(x, y) 			\
++	(__is_signed(x) == __is_signed(y) ||	\
++		__is_signed((x) + 0) == __is_signed((y) + 0))
  
- #define __careful_cmp(op, x, y)					\
- 	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
-@@ -49,16 +49,16 @@
- #define __clamp(val, lo, hi)	\
- 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
- 
--#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
--		typeof(val) unique_val = (val);				\
--		typeof(lo) unique_lo = (lo);				\
--		typeof(hi) unique_hi = (hi);				\
--		static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
--				(lo) <= (hi), true),					\
--			"clamp() low limit " #lo " greater than high limit " #hi);	\
--		static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
--		static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
--		__clamp(unique_val, unique_lo, unique_hi); })
-+#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({		\
-+	typeof(val) unique_val = (val);						\
-+	typeof(lo) unique_lo = (lo);						\
-+	typeof(hi) unique_hi = (hi);						\
-+	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
-+			(lo) <= (hi), true),					\
-+		"clamp() low limit " #lo " greater than high limit " #hi);	\
-+	static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
-+	static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
-+	__clamp(unique_val, unique_lo, unique_hi); })
- 
- #define __careful_clamp(val, lo, hi) ({					\
- 	__builtin_choose_expr(__is_constexpr((val) - (lo) + (hi)),	\
+ #define __cmp_op_min <
+ #define __cmp_op_max >
 
 
