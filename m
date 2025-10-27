@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AA431C584;
-	Mon, 27 Oct 2025 18:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428662BD033;
+	Mon, 27 Oct 2025 18:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761590620; cv=none; b=f2H4qBWkwAsdsDbwkpuj76FT8ITF5vGWNHxFe/X7vC/b6TvZjARkfgun3dC6APpA18stBpIty1Qx0Hc9Kcm+tc9wTezAnO2JIRsr1M5CQK4iM1QKQR2ulak7F7In6l2ynuUzBUZQYIc8eUO+/Swzf/oX+FTkrJai/emRMiquHI8=
+	t=1761590623; cv=none; b=Re73OOKIoU9LQouWAyMxdD4VMhJvnV5VFiUf7UQGe87K7as3p2Tkh/F+nfRZRuq1VoJ3I7foTftBrxj7zIswig53suQmDgMpRYcCWgKQ2N/kMOaBBZa0fCO3c3wYKpRyKRlUeK5ZvQXHAaXR9TfznePBe1m6jTUu8Cjvg+a+dXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761590620; c=relaxed/simple;
-	bh=J8jzeiN2ByA4VXXwle2Jk1ViGZUYr3ehdTZ7/Pflwb8=;
+	s=arc-20240116; t=1761590623; c=relaxed/simple;
+	bh=KIjP9TVSk5j/ST7sYoNtfQH+2AmXJoXZe3O7Z/Keggc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gc5gaamNQ5+YOw/jS71ZkffebgXCzXWE8ZW5HlBWyLoIYtNGi6yCobgYfOVmLRAdjDEQYPcEQX57BGkhNJW5Ww2wWvjUb7u+f9KuEnoycUWK5TLNXjj3WFNGhlMBQhgCUbIL6Uw5KTy1XVHLSkk23etRPm8QWcv/7cJdt+Mc/Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3pkprr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgZomSs8YyoZJySigUiZaB/bYYIUVTaYdK4hj9PVLIdWuiuZVw1qKzNkiFbBvPhZCuZSyCFx0a3EuWR4yXDNFLl3a+uCGLqK64CdaWo7X6PqKDAyp+KBXth3pDTBLXShkpM5bOYuwIWH5QN2mZmZfrObFhVjIaYlZHwtRNBI6Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InzkjAo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3pkprr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430B0C4CEF1;
-	Mon, 27 Oct 2025 18:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InzkjAo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EDEC4CEFD;
+	Mon, 27 Oct 2025 18:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761590620;
-	bh=J8jzeiN2ByA4VXXwle2Jk1ViGZUYr3ehdTZ7/Pflwb8=;
+	s=korg; t=1761590623;
+	bh=KIjP9TVSk5j/ST7sYoNtfQH+2AmXJoXZe3O7Z/Keggc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3pkprr3ywxgnhNmsLJfElwimf2vsjjVqdCWjLC9fQlfSpKubhmXMwXVgS5Enew6u
-	 IYCXtAF6Fvr2iBwTxT0PX0eHp6QhgVuCYiQi0QRWCKO1m+kou3bi8lgV/YNG971t8D
-	 WVjm50WAaIQZGWrpdoEP7Vr5CGVhlO0QURr87fzI=
+	b=InzkjAo0AgSscCfaHoxdzV2rqOwoeAt2yLZt5tGohCq5KBlLprIKGqrAubYFl6vF7
+	 3d6Vpi392j72ZqHw/6QmpgprKfhUDOViT85CTnSvcv5FNyfKUn3UMSgrWEzOzJal+2
+	 /ONlocoyknPBc6ZwOZPFoRDUQJL1QQ27rN8tXOFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 114/224] scsi: hpsa: Fix potential memory leak in hpsa_big_passthru_ioctl()
-Date: Mon, 27 Oct 2025 19:34:20 +0100
-Message-ID: <20251027183512.039324470@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 115/224] sctp: Fix MAC comparison to be constant-time
+Date: Mon, 27 Oct 2025 19:34:21 +0100
+Message-ID: <20251027183512.065687429@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
 References: <20251027183508.963233542@linuxfoundation.org>
@@ -51,60 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit b81296591c567b12d3873b05a37b975707959b94 upstream.
+commit dd91c79e4f58fbe2898dac84858033700e0e99fb upstream.
 
-Replace kmalloc() followed by copy_from_user() with memdup_user() to fix
-a memory leak that occurs when copy_from_user(buff[sg_used],,) fails and
-the 'cleanup1:' path does not free the memory for 'buff[sg_used]'. Using
-memdup_user() avoids this by freeing the memory internally.
+To prevent timing attacks, MACs need to be compared in constant time.
+Use the appropriate helper function for this.
 
-Since memdup_user() already allocates memory, use kzalloc() in the else
-branch instead of manually zeroing 'buff[sg_used]' using memset(0).
-
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: edd163687ea5 ("[SCSI] hpsa: add driver for HP Smart Array controllers.")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20250818205426.30222-3-ebiggers@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ net/sctp/sm_make_chunk.c |    3 ++-
+ net/sctp/sm_statefuns.c  |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -6508,18 +6508,21 @@ static int hpsa_big_passthru_ioctl(struc
- 	while (left) {
- 		sz = (left > ioc->malloc_size) ? ioc->malloc_size : left;
- 		buff_size[sg_used] = sz;
--		buff[sg_used] = kmalloc(sz, GFP_KERNEL);
--		if (buff[sg_used] == NULL) {
--			status = -ENOMEM;
--			goto cleanup1;
--		}
-+
- 		if (ioc->Request.Type.Direction & XFER_WRITE) {
--			if (copy_from_user(buff[sg_used], data_ptr, sz)) {
--				status = -EFAULT;
-+			buff[sg_used] = memdup_user(data_ptr, sz);
-+			if (IS_ERR(buff[sg_used])) {
-+				status = PTR_ERR(buff[sg_used]);
-+				goto cleanup1;
-+			}
-+		} else {
-+			buff[sg_used] = kzalloc(sz, GFP_KERNEL);
-+			if (!buff[sg_used]) {
-+				status = -ENOMEM;
- 				goto cleanup1;
- 			}
--		} else
--			memset(buff[sg_used], 0, sz);
-+		}
-+
- 		left -= sz;
- 		data_ptr += sz;
- 		sg_used++;
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -31,6 +31,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <crypto/hash.h>
++#include <crypto/algapi.h>
+ #include <linux/types.h>
+ #include <linux/kernel.h>
+ #include <linux/ip.h>
+@@ -1758,7 +1759,7 @@ struct sctp_association *sctp_unpack_coo
+ 		}
+ 	}
+ 
+-	if (memcmp(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
++	if (crypto_memneq(digest, cookie->signature, SCTP_SIGNATURE_SIZE)) {
+ 		*error = -SCTP_IERROR_BAD_SIG;
+ 		goto fail;
+ 	}
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -30,6 +30,7 @@
+ 
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <crypto/algapi.h>
+ #include <linux/types.h>
+ #include <linux/kernel.h>
+ #include <linux/ip.h>
+@@ -4303,7 +4304,7 @@ static enum sctp_ierror sctp_sf_authenti
+ 				 sh_key, GFP_ATOMIC);
+ 
+ 	/* Discard the packet if the digests do not match */
+-	if (memcmp(save_digest, digest, sig_len)) {
++	if (crypto_memneq(save_digest, digest, sig_len)) {
+ 		kfree(save_digest);
+ 		return SCTP_IERROR_BAD_SIG;
+ 	}
 
 
