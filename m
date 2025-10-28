@@ -1,224 +1,173 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11022099.outbound.protection.outlook.com [40.93.195.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2C6330300;
-	Tue, 28 Oct 2025 12:48:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761655713; cv=none; b=QmEM24n3cdJFFy49Qki49AgGeAYVtE4P0UZsVuSlkbor1HnCB5kAcvELTtbAX1eKXuFaMJOkkj8c4vO57j4Qd/A9YSSxP9wo5Gsf9q0+mqz0OrkUq6k7XKQwJBMS3KBswiqR+zaPCnvoH2Qaoa69jwh6ebXYI0X0umZvraqhaMI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761655713; c=relaxed/simple;
-	bh=avd0F83+zxE6J+9blLWXYv/bBGe3sqPsSFHEyIZLGhw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nJpFXjTe21jyiIJMOEjjZ027s3WUo2kRugXaTKmNP7gXpji5/oNMk1P3qq9UceEgVITRFspEcC2WJ8m+/+QIlIiJvwMBjVn6PxPVlBXYhJAnwZ9sgb6fnUU9+eAasvl38xwGPeCVgXVbZeAZyr6LgGiP1u9mVLy2Gvc2ZbJywL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h35QI2uU; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1375332AAAF
+	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 12:53:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.99
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761656021; cv=fail; b=smXUywYLnAoA2Q5TtVZ0pFCq0sVQv4RoXjypkNE7xzJ35lvNTlKqSauLq3wNx+zCmANKMCJHqtbTtZIggmUa1XJ+QmVbEzV2HTb9j53ZPzRzcJnuWx6dKu85SKt4pROS5ic+9ZK64T7cvj5sD13DY+gdYYUUZr3Swp5YBtOOl7I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761656021; c=relaxed/simple;
+	bh=FTHPgbaZw53aib07+fW1v04o1XEUHG4GbnLLYNgO6yY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lrfZGYfiGaD34hc1xdku1Ke+FgyCHAfdaUXfeX2v8IahzAZ7tOVY4ek9AZ4uatX1LLHlWGg2bwtNubOaKrIU8JR8oOP+s+RMULpL24IDy7KVxffm8wy+2cOQrzzbzfeCC8ihN8JCy94a9XIhw+b8n1hvdcbRZT2eqnN+8tOVgX4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=in-advantage.com; spf=pass smtp.mailfrom=in-advantage.com; dkim=pass (1024-bit key) header.d=inadvantage.onmicrosoft.com header.i=@inadvantage.onmicrosoft.com header.b=F3lm6K+M; arc=fail smtp.client-ip=40.93.195.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=in-advantage.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=in-advantage.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h35QI2uU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AED9C116B1;
-	Tue, 28 Oct 2025 12:48:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761655713;
-	bh=avd0F83+zxE6J+9blLWXYv/bBGe3sqPsSFHEyIZLGhw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h35QI2uUmLOP27G6T1p/yAwMZnwUULhJSlVovt9ZWrgd/A1Ku3Vh4a8ab1TxB5+wm
-	 F5byYxJnmzeZTFHB8+ZEMsV27XLLk6lFk6kh7UkFyE7vCyLTNwUc+fEuqZ8HYHULXg
-	 zmSN39C8D3QYgyqn73/bZzzt8/JI/ikskDfRtm6YybNY2uhk0HHh0LlAQN2n7XcV1n
-	 Fx9ERua4edF57oexcU2y8HWImQlWTqDBQrGiGgEdmoD7HqrMugo/5drk4ZhJ7A7Izd
-	 KtaO7ONjQBPAuh0Zbce42rMSegZLuy/Iz//nGIYlBHvpJm1cFdzetXw/77bcDjxNgf
-	 yv/sX6xz6BOjg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/panic: Fix divide by 0 if the screen width < font width
-Date: Tue, 28 Oct 2025 08:48:09 -0400
-Message-ID: <20251028124815.1058740-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028124815.1058740-1-sashal@kernel.org>
-References: <20251028124815.1058740-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=inadvantage.onmicrosoft.com header.i=@inadvantage.onmicrosoft.com header.b="F3lm6K+M"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ye34hWvkKencMwLwy/xXDW7DUW35rUl6vdaJgzBG0/mdIR1pUC3g8AVV9dnF5fpIlpIccF++wfRS43HdYxMv4ysHTCOV0RqFkj0Pf2DmuWVCxskQ4I93jcrHbsi5hkKPpkmI0igsxIQddbhj7vFY6hGYx4btEbs9uIkIitPn1G7aWqvWq887jPx4uMWT2XVwdPzvJEbE2uQZKHy/POao+g2oa7oaQfsXgPMOENBlvXEh4YFlztKrge3LpHtt4iuKDq7f+xyAx5xQkGPkIEXxTG4LyV11xmAOrpS3ZfgCMdQwJ06rxOAVX+O2MFvstf67DiUm9BOt3uT1C9vquxEaqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DMRWU9MoDe0Y5iOeJXU8sovb9RGM4Ct2GslJ5HdBFZ8=;
+ b=Ee8NWBxjHe5ES3YDtk6Ydmml6DPmTiu8YmdqJfNiwyLwCwL/RuS2Kd8j1CXVcTxm45qduKTj/J9FYvqCLEePObz/L2CrAVyUTVnqJZJCVIpz0nXCHKHgJ8pEg1OwnWqU7yefhZTpoT13TCkZ65rBxi3d4kkWndRhnWjCooH/suYBzMAJnTYsmPuEX8h3xZTmreaOPvAKyY0L6rMh1bhdKT1m6RXrIdBh7Ue0TCGAVCh7otZfq6SibWxmDWt5PNbuZouuIPSuo9o01OPe8zsNBqrdnXcF3By4OsHy4M2pwugwaccU8+bpTIn3yEgV8rooJMk4aTwlLDnSX8x4smljEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=in-advantage.com; dmarc=pass action=none
+ header.from=in-advantage.com; dkim=pass header.d=in-advantage.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=inadvantage.onmicrosoft.com; s=selector2-inadvantage-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DMRWU9MoDe0Y5iOeJXU8sovb9RGM4Ct2GslJ5HdBFZ8=;
+ b=F3lm6K+MwQ975/LhAywf5hFSmR1Eq2OptxXp7pf6u4x92sUZY9Eatev1Ek/awYlYc8EzJ6HKVLCpbttXHmLTrzPrjbIIpudSLCoU1FSXefIDK/4hkWN4ijSTrwbNUmkGR0z+0rjX9mDfQ8bKG406Kdpv+tV+q2vQjqgLxP7uxTA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=in-advantage.com;
+Received: from DS4PPF3984739DB.namprd10.prod.outlook.com
+ (2603:10b6:f:fc00::d15) by SJ0PR10MB6423.namprd10.prod.outlook.com
+ (2603:10b6:a03:44d::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Tue, 28 Oct
+ 2025 12:53:35 +0000
+Received: from DS4PPF3984739DB.namprd10.prod.outlook.com
+ ([fe80::ba61:8a1f:3eb5:a710]) by DS4PPF3984739DB.namprd10.prod.outlook.com
+ ([fe80::ba61:8a1f:3eb5:a710%5]) with mapi id 15.20.9275.011; Tue, 28 Oct 2025
+ 12:53:35 +0000
+Date: Tue, 28 Oct 2025 07:53:31 -0500
+From: Colin Foster <colin.foster@in-advantage.com>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Jakub Kicinski <kuba@kernel.org>, steve.glendinning@shawell.net,
+	netdev@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.17-6.1] smsc911x: add second read of EEPROM mac
+ when possible corruption seen
+Message-ID: <aQC8y_aM6wtcbnDh@colin-ia-desktop>
+References: <20251025160905.3857885-1-sashal@kernel.org>
+ <20251025160905.3857885-103-sashal@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251025160905.3857885-103-sashal@kernel.org>
+X-ClientProxiedBy: BN9PR03CA0060.namprd03.prod.outlook.com
+ (2603:10b6:408:fb::35) To DS4PPF3984739DB.namprd10.prod.outlook.com
+ (2603:10b6:f:fc00::d15)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF3984739DB:EE_|SJ0PR10MB6423:EE_
+X-MS-Office365-Filtering-Correlation-Id: b080b4b8-4d9a-4b06-3656-08de16210173
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?46/KV5WL3wWWKeFH9if6NYvzo80tVxRNco6WJeuzfE+lo+F/1XYTmsoRgix0?=
+ =?us-ascii?Q?QxIP7zdBFl+4MFfTWR/MzBRKw26EmGw/XbbrQKxFLdP0rH0PpOybXU4SZJNY?=
+ =?us-ascii?Q?ZZqG76r3dAqqBIoXsJqLOivV64Yrek9DvgSCGqVr5BW8ll7ORwwE6rNNaMP8?=
+ =?us-ascii?Q?v6aJG+1erDIubg+Sa0GVWktmWs/GzSan3klTW/fJM0BOTB5Q7IRjqKbTfLlh?=
+ =?us-ascii?Q?re1s1xuzuWAoRns/hXTlhRwHcH/gIyfxmSD8WWVGtrjcZs8M0T3Hd7FTfmAV?=
+ =?us-ascii?Q?9Rp9DZKAOMr77hVEtqbawvs9b1yb8iHHUDmdWJGUZS9fuJwOkbTU29RZrVbu?=
+ =?us-ascii?Q?FKo6gVKBfD++tRFlnJa8b5I41Tyf+nweQx42LLrfI9dpvDzRy8OKGm3PcaCE?=
+ =?us-ascii?Q?EJiXqitILIUE6hEFPflp7q3W0MJB2tgnZDfL5YG9FS7jzpvcYzt1S4Tv+hdE?=
+ =?us-ascii?Q?cXeyjCzteW+y2nF03iysLnRh6WRR9+Sq+REr7smibcDgeQ3bmoOnaRpxkBXl?=
+ =?us-ascii?Q?pZ4DT7u8SLMzcldYzps8cYQ0qh5o6y2npD/H/AkK3X0U1/aWxE5mzW+DIdbj?=
+ =?us-ascii?Q?DW12RSckuC+Q2kAS8gfa5+8embCEY0ek/PT8ElEmP3arB8efCxGmIYv04rpi?=
+ =?us-ascii?Q?ZANX9jWGLaNQBnvZ0GCmTle5D5ecERA9kcRzA1l8pmSVs+PdpThyRA1k5akY?=
+ =?us-ascii?Q?rcXYHUxszCJpwO8gHJ8GMsJkcbFOr0jM3MDoERpHhaq+lNJnF/PKHmc9y+/+?=
+ =?us-ascii?Q?5i+It2U0OJM9vUClFt7n055NYxtW/ZjPx5ywDZ16hSdQVg0SK9b+wXkDkcNp?=
+ =?us-ascii?Q?2sYLiLhYo0iHmboHqF4OmexbB2lQOoKWUxPQfS1KcOnGhrHYc9q2++tNk8S7?=
+ =?us-ascii?Q?90khIUYyRmVaOyAcO/BZrIOoVKiIyGUr1POS5rfVe26a1H5UZ9Gp5OQFM9co?=
+ =?us-ascii?Q?nxbntKlHTKTZ1ElsU2tTiWHHSqTa3qrPgYdZ/B4csJmqimxFK2r4NETrm7OV?=
+ =?us-ascii?Q?45Om8ynQ1/LSZ1QMFPPGLxYwxKRlTgpuF0Qe2EPUml3cxBwbRUTdqso+LVm+?=
+ =?us-ascii?Q?Hw/DnInF1cOoLa+2uio0o+AcQ1iVWPYO2jX4gsI9nu87uH5SW/RsIv1+NhvE?=
+ =?us-ascii?Q?jp7KiKn7zMyV38TZ3pZEIjmH4z1CFxFbcBnUuFnkuAYjSNwGUuHZhdtFyPD4?=
+ =?us-ascii?Q?IuNqBy2y3ePiglXgaVdtkbBIZ2MR16cYQk3Boby911uzdxcCKlb5wYILUn94?=
+ =?us-ascii?Q?GX8Sti2LrrFaM1ul3E6UmbyiHY3YiYwvrtJAdtD3ivlVj21jPtLSbNTFySKS?=
+ =?us-ascii?Q?Vewl/yedQFh/ki9tG7l1hOIM5nrWgSNP3Dr48sGQ6jqjQfWLEnXlelSqL4n7?=
+ =?us-ascii?Q?iu1ztWVrYK19mnLypTLUjdult1t1kY4prGo3zOk7jxafPHbS7A=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF3984739DB.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?v6fKyYz+Rq8tJOhBw1L+nmXD4FlW2SPW9mpXTUjz5L3UWgD0CMS6o2s3btzE?=
+ =?us-ascii?Q?P+07YigHxA6ZK8ZzhXWmfD77eaz69WBmGEfcCGtVY5NDAfSEbyYqZA81lwDR?=
+ =?us-ascii?Q?jiQxVCi6kZuY+DgtfrZOR3O1tuk5jPHcYNwIKC268ssGfMpSutCYgwq+gL4e?=
+ =?us-ascii?Q?gMp0vj/ZhBofzFNOiH5B2PO8zS194o7BrkVZVtfFQbaxkSOF9hF5SszupiDc?=
+ =?us-ascii?Q?TXKfDhy39HQtWCazkqMI0ODthOkx+XqT7MGkBAaLEFV1oqyGX2OE36jTgzYz?=
+ =?us-ascii?Q?YGwMhG3WgUJDTUXrGBfF2pBvA+do0zj3CZJewbq7tucewo6DQSFw1WuhjPHw?=
+ =?us-ascii?Q?fFrUV2dhj/jlX1pufl54WtXbt3KgrgYgfnmSk0e7fUw0GOUQE+myxxf6Bken?=
+ =?us-ascii?Q?/jjt3Pxwuj9sNe0owYY3rgKXR5MaBcd2bLhQAU1ocWmCtyJpATLcwzXQ68rQ?=
+ =?us-ascii?Q?SzMkZZXBCPTlGQrDWZg65PsAwWIp0kcZBGt98W8akzZ3VIVaZzLSBjvo9ru/?=
+ =?us-ascii?Q?1VIYpTq5TAMnGXx1yXNa31zIh0kgH+Q+wBgZ7gFyb22RHMOkmE0FL1UJtTGR?=
+ =?us-ascii?Q?V1O/i9xb67KpNAd0cjT4wrxrBtND4eUeof+pukoyaae/c6mPYDEuLJOqFuHb?=
+ =?us-ascii?Q?+ZL4U5dPfemm0cMXW5zQiv3iAT5fl58XSrCuUUk0fSGXJRjqXfkOClnCia7s?=
+ =?us-ascii?Q?PHigrQYijAg6HWnYr49oCo7FiVWpaGLTjlgsowJMoGyw1MYMHbigi6xkPhhx?=
+ =?us-ascii?Q?phAAapO6ATVN8n8G5OEE4NcEwOAUqfcmBcLyJ5LvIMXvGS4XjtWt1slfs3Pp?=
+ =?us-ascii?Q?m5DKb3ttMZ/nGvCY43Lxw8bISjDkVBrFexWTqxX1ZYCjzM6daIJjWCAZf72m?=
+ =?us-ascii?Q?nnlkXE0YEx8ZTpvPKnwwd2x3W+5TtmtY7SWwZYRXLkcFQaBHMlg2BRsL0msI?=
+ =?us-ascii?Q?RGMDtCBGtTk2t5HZvbzNZBMPd2sf3KFocu2ndrrT21VoqTKBbmV22R5wL3bl?=
+ =?us-ascii?Q?vgFv90ne/cdrXV2PKtbMVCoNv18hzq4llMEWQPipL2/zHiWzhP2oqJFfRZz/?=
+ =?us-ascii?Q?ivj607wDl6La2DFxnsTvYrfQBpZ1BeagX2FJNgNFrNOhkoNv1EVChGtPWrQU?=
+ =?us-ascii?Q?5PjJ+pIN439vHMU9aDC0DBkw4xSUEGacbglcF3AMOmZeIol5bR1sg+i58yXh?=
+ =?us-ascii?Q?hjY75efJLFekTJRCxlDkl4V/yn9dPkZ7s6ThyYB40LBAyPzlTpurTaW09bpG?=
+ =?us-ascii?Q?4oYG8z1xdF8qGsaVATTiDUGFoc5NwdNXcTbCX1CjZNQFfOGy56z99tgMJGjK?=
+ =?us-ascii?Q?vmO+4rTJe1MSYSZ0/ajGSeihTtkN/iYtWxehQqn+Obekzs/vqzaO8hTuvhPc?=
+ =?us-ascii?Q?y4IkcO7cUAOiqsG/hycjqpnkixj5ja4vykIpi81ThiHJPoEzojUODJ2svbHa?=
+ =?us-ascii?Q?fj9MYHOIH1WZMpogOZY1dEdpIsLJTTbHiJ4KDrUz45LvXGHTnl2gr6F6Rtib?=
+ =?us-ascii?Q?+m1pXDGvrV5mHUvlOs+9UahNiWu85RhWI1sGb2yKYDsptfyICcM8znN+XSlY?=
+ =?us-ascii?Q?xrbr40jH8zfTAt/VcbC+KnUMPXqiLmmNOcursU7RlqywUo+UQ195Isux7F9T?=
+ =?us-ascii?Q?ndwwuQ/dDsQY9eWMzv1PKhg=3D?=
+Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: in-advantage.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b080b4b8-4d9a-4b06-3656-08de16210173
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF3984739DB.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2025 12:53:34.9450
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 48e842ca-fbd8-4633-a79d-0c955a7d3aae
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UmHSJnxmCnAgyMKR8vQBoXw8+728GujLOMjH4Zj/0zqY3mJ5tbQrQ493LavP7QANoPLYy1F2BxGeVobrpEi4Fj3vUClgJdGkHJNQrUAdpcg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB6423
 
-From: Jocelyn Falempe <jfalempe@redhat.com>
+Hi Sasha,
 
-[ Upstream commit 2e337dd278c6c38982b520c309f36e0f88696e6e ]
+On Sat, Oct 25, 2025 at 11:55:34AM -0400, Sasha Levin wrote:
+> From: Colin Foster <colin.foster@in-advantage.com>
+> 
+> [ Upstream commit 69777753a8919b0b8313c856e707e1d1fe5ced85 ]
+> 
+> When the EEPROM MAC is read by way of ADDRH, it can return all 0s the
+> first time. Subsequent reads succeed.
+> 
+> This is fully reproduceable on the Phytec PCM049 SOM.
+> 
+> Re-read the ADDRH when this behaviour is observed, in an attempt to
+> correctly apply the EEPROM MAC address.
+> 
+> Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
+> Link: https://patch.msgid.link/20250903132610.966787-1-colin.foster@in-advantage.com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> 
+> LLM Generated explanations, may be completely bogus:
+> 
+> YES
+> 
 
-In the unlikely case that the screen is tiny, and smaller than the
-font width, it leads to a divide by 0:
+I agree this should be back-ported. Do you need any action from me?
 
-draw_line_with_wrap()
-chars_per_row = sb->width / font->width = 0
-line_wrap.len = line->len % chars_per_row;
-
-This will trigger a divide by 0
-
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20251009122955.562888-6-jfalempe@redhat.com
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-Based on my comprehensive analysis of the Linux kernel repository using
-multiple tools, here is my assessment:
-
-## **Backport Status: YES**
-
-### Analysis Summary
-
-I used the following tools and methods to analyze this commit:
-1. **git log/show**: To examine commit history, dates, and affected
-   versions
-2. **Read tool**: To examine the actual code and understand the bug
-   context
-3. **Grep tool**: To trace function calls and usage patterns
-4. **git tag analysis**: To determine version impact (v6.11 through
-   v6.17 affected)
-
-### Detailed Findings
-
-#### 1. **Bug Severity - HIGH PRIORITY**
-- **Type**: Divide-by-zero crash in kernel panic handler
-- **Location**: `drivers/gpu/drm/drm_panic.c:479` and `484`
-- **Call chain discovered**:
-  - `drm_panic()` (panic callback) →
-  - `draw_panic_plane()` →
-  - `draw_panic_dispatch()` →
-  - `draw_panic_static_kmsg()` →
-  - `draw_line_with_wrap()` (where crash occurs at lines 479 and 484)
-
-**Critical Impact**: When a kernel panic occurs, the system attempts to
-display panic information on screen. If `sb->width < font->width`, then
-`chars_per_row = sb->width / font->width = 0`, leading to `line_wrap.len
-= line->len % 0` which triggers a divide-by-zero exception **during
-panic handling**. This prevents users from seeing any panic information.
-
-#### 2. **Scope Analysis - SMALL AND CONTAINED**
-- **Files changed**: 1 file (`drivers/gpu/drm/drm_panic.c`)
-- **Lines changed**: 1 line (adding condition `|| font->width >
-  sb->width`)
-- **Change type**: Defensive check only, no behavioral changes to normal
-  path
-- **Fix location**: Line 523, adding early return condition
-
-#### 3. **Version Impact - SIGNIFICANT RANGE**
-- **Introduced in**: v6.11 (commit `54034bebb22fd`, June 2024 -
-  "drm/panic: Add a kmsg panic screen")
-- **Affected versions**: v6.11, v6.12, v6.13, v6.14, v6.15, v6.16, v6.17
-- **Fixed in**: v6.18-rc3 (October 2025)
-- **Backport target**: All stable trees from v6.11 onwards
-
-#### 4. **Risk Assessment - MINIMAL**
-- **Risk of regression**: Very low - only adds a safety check
-- **Side effects**: None - function returns early if condition met
-- **Testing**: The fix prevents a crash path; no valid use case affected
-- **Font width range**: 4-16 pixels (from my analysis of `lib/fonts/`)
-- **Trigger condition**: Screen width < 4 pixels (extremely rare but
-  possible with embedded/weird displays)
-
-#### 5. **Subsystem Context - MATURING FEATURE**
-My analysis revealed:
-- **drm/panic introduced**: v6.10 (April 2024) - relatively new
-  subsystem
-- **Bug count**: Found 23 "drm/panic: Fix" commits since June 2024
-- **Pattern**: This is part of ongoing stabilization of a new feature
-- **Similar fixes**: Multiple other drawing/bounds checking fixes in
-  same timeframe
-
-#### 6. **Stable Tree Compliance - MEETS ALL CRITERIA**
-✅ **Fixes a real bug**: Divide-by-zero crash
-✅ **Small change**: 1-line modification
-✅ **Low regression risk**: Only adds defensive check
-✅ **No new features**: Pure bug fix
-✅ **No architectural changes**: Localized to one function
-✅ **Already reviewed**: Has Reviewed-by tag from Javier Martinez
-Canillas
-❌ **Missing stable tag**: No "Cc: stable@vger.kernel.org" (but this
-doesn't disqualify it)
-
-### Code-Specific Analysis
-
-**Original vulnerable code** (line 479):
-```c
-int chars_per_row = sb->width / font->width;  // Can be 0!
-```
-
-**Crash trigger** (line 484):
-```c
-line_wrap.len = line->len % chars_per_row;  // Divide by 0 if
-chars_per_row == 0
-```
-
-**Fix applied** (line 523):
-```c
-- if (!font)
-+       if (!font || font->width > sb->width)
-                return;
-```
-
-This simple check prevents entering the drawing code path when the
-screen is too narrow, avoiding the divide-by-zero entirely.
-
-### Recommendation Rationale
-
-Despite the "unlikely" scenario mentioned in the commit message, this
-should be backported because:
-
-1. **Critical code path**: Occurs during panic handling when system
-   stability is already compromised
-2. **Clean fix**: Minimal, obvious, and safe change
-3. **Subsystem maturity**: drm/panic is new and actively being
-   stabilized with multiple fixes
-4. **No downsides**: Zero risk of breaking working configurations
-5. **Completeness**: Part of a series of drawing boundary fixes that
-   should all be backported together
-
-The commit follows the stable kernel rule: "It must fix a real bug that
-bothers people" - while rare, a crash during panic display is a serious
-issue that prevents debugging.
-
-### Similar Commits for Reference
-Other drm/panic fixes from same timeframe that should also be
-considered:
-- `a119caf6af5ed`: "Fix 24bit pixel crossing page boundaries"
-- `16ded1e690422`: "Fix drawing the logo on a small narrow screen"
-- `e9b36fe063004`: "Fix kmsg text drawing rectangle"
-
-**CONCLUSION**: This commit should be backported to all stable trees
-containing the drm/panic kmsg screen feature (v6.11+).
-
- drivers/gpu/drm/drm_panic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-index ea6a64e5ddd76..4c994656ea1ab 100644
---- a/drivers/gpu/drm/drm_panic.c
-+++ b/drivers/gpu/drm/drm_panic.c
-@@ -520,7 +520,7 @@ static void draw_panic_static_kmsg(struct drm_scanout_buffer *sb)
- 	struct drm_panic_line line;
- 	int yoffset;
- 
--	if (!font)
-+	if (!font || font->width > sb->width)
- 		return;
- 
- 	yoffset = sb->height - font->height - (sb->height % font->height) / 2;
--- 
-2.51.0
-
+Colin Foster
