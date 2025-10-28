@@ -1,236 +1,234 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037857405A;
-	Tue, 28 Oct 2025 00:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612047; cv=none; b=HezJegbTCsNMPkRO2x5PYAkMhc6KBdt7w64uDaJyo2epUvrtZz/yPdmE69wKNs3VNZcL1Tcpo0HiUDVKjgdWiPquEO8oS6rTa+QrJmVbrIwGlx+wB5pwaCNqiMgTG4T6TLYyemxVWBK1ZFhgxjCtC+7t/z9LA3Wv6QU6e5nv2L4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612047; c=relaxed/simple;
-	bh=MfewUPwIchICHzHVhM3/Fb3siT4W43mGj775mjeZtk8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RMI2ilESM1KsV6K/nmVHvMw4lz8tqT6x1tYjmC7NdIIgz2vetEJBtdRydtyKiVQlp4uC4o5E8ZWGpnuj4m8DnXhre+HmNQ9Tk8aZq+50amgxqQzDniNW7AeAY4Bj+eQ+yZB8UiMK70s7eUl3deXL1iW7bOC8r2/ge7KYY3C56Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noSuBgdq; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2EF21B9F5;
+	Tue, 28 Oct 2025 01:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761614183; cv=fail; b=PlFsFe3NjQG3DEKr/CoWpKKe8dtBU9L//0Wc0c388eQ7wEHJkIotf+oTzBGWuGBp8NQ1nneI8763un0pnmsdWepwtSp2hpD5SPkoqa10wK1Yyunq3jwQsMXF51K+P76uJQsrgpiJmR352TALQievU00Dasm46JPmx90avkO4lKQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761614183; c=relaxed/simple;
+	bh=kb6/kORm7Bwf8XXOmQXYlVYV4/bgcv3/xSFehETDk6I=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Vo4w4373nVRHN7YO5VjkGjv3YBILfxkfNCRfaiEYabWURussq+VeRIZG3T78OqZQCAiTC0eYNWf8gC4H5sIBpBU3pIfA32d6AEo8dcWjRZzTWKffftFS8yCN6iGD90LHaxE+NQv/SkNeuCZhmI7M6vghQrsW2iGj489I3Wi74+8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=C1aEWdKr; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noSuBgdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8036CC4CEF1;
-	Tue, 28 Oct 2025 00:40:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612045;
-	bh=MfewUPwIchICHzHVhM3/Fb3siT4W43mGj775mjeZtk8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=noSuBgdqgZ8UgmrMsMInS3pV/l+Alfvo38OdmY4CJk3mW2KvmxNen9a45SeWwi+0J
-	 RiLoHw6x6skb5c1zavd2pfBUyS8NPjK8B4e/JdiHpMkNGkS06oZO0F2zG+YQdGiFT4
-	 NnMHfukYot9IolMidJtlD+GFlXQppx4CoRTFJabB49KzT0IU2pB4cMBIHyqszDxkTl
-	 p/z8Uv+xUX88gkQncSkIjDJRb0v5RtsSeVWgbJuW7NK2V3ZCsxE69xl1NDJETaeb2p
-	 65vVNaYf2IXFx5o99dqCwcov7InXr55z81lERsHBPYkUXRdCtCFZoKdIh6y4qVEu3y
-	 4CVQTSxUZGfcg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-6.1] smb/server: fix possible refcount leak in smb2_sess_setup()
-Date: Mon, 27 Oct 2025 20:39:10 -0400
-Message-ID: <20251028003940.884625-26-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
-References: <20251028003940.884625-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="C1aEWdKr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761614181; x=1793150181;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=kb6/kORm7Bwf8XXOmQXYlVYV4/bgcv3/xSFehETDk6I=;
+  b=C1aEWdKr/hHUcoU3PGKGeIlI5uTW3vPKRS0E0ql0wgLLF6E47VGpqtM9
+   Y2YfX3SeKZ611h9uNSgtLqYI/BvbLQUnyIcnHSrQkFg/F/VLi1xIpWlkY
+   JHgFZYEqRhubCqDBwI5ghMGK8VZGb4HP96+xiYnrwu+i6PBBjiq5tMVRR
+   iatFmiNht3sefIl0G6U2hH4ivQA5egsx8oXz96aXs5ev0EdkHbCYUC0Do
+   cgU+vNj0YQDVN9eO5S1z37PLPcmflgkoSB8XQUS8ehbLdUfWnWayGeJDb
+   UowQQqXkmVEPv5ZnJD+QCKlJyEPd0zO/jMzI09KhzbS64xpcf7P0ZpoBT
+   g==;
+X-CSE-ConnectionGUID: 9tOrs12HQMikpYRYmOfEhw==
+X-CSE-MsgGUID: 7BbdElaLRqeAtxuN1SwlBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="51280986"
+X-IronPort-AV: E=Sophos;i="6.19,260,1754982000"; 
+   d="scan'208";a="51280986"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 18:16:21 -0700
+X-CSE-ConnectionGUID: PKhJ73hXQeCNQ/m3IxdCUQ==
+X-CSE-MsgGUID: WZlyWw78QuOiLHnRfJRADQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,260,1754982000"; 
+   d="scan'208";a="185663022"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2025 18:16:20 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Mon, 27 Oct 2025 18:16:19 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Mon, 27 Oct 2025 18:16:19 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.8) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Mon, 27 Oct 2025 18:16:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cgeRxSQelDjyfogj7lHhsATdQhWQJnK14vR6ujh9LgxWfRalyo0bzTOjCwD1NY+97yT+XmrU1jzrVBQ6CQTsUpZvhM7uTPH9h4xo2xkl7MQPrTiBl4xquKm3yMtYkJh3stgmzgRBwPNnHEb1Oy40jcc3wQrv4PPKQ56l2ZNls3phVjgc4LF0nqaf5sbZJvbmzbfsusPfPtmbwObIsBXQX5sjwXkebTgRLYgYA9Ja80XCqXwHDTWp9sRpU+me+0DD8v/d1dx6QhMhDOWZqtDc+a+2Fgv61n3sFvtonHt+ks37MpcwjhRfXiQD+gP768EL0vzaMnYYue58WWkDuaLbeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VrbhTJ0r4PO83vR/0raUGTVlVlaAwRq2EDzHSPqsPe8=;
+ b=XS4eCy7aLBbc4pMhMpdOpYPNU9gqxloFCDqnZaJPoHjkFgscLFCFlmisfgkurziy05e4EKF+F8y4hO3Q1UUGt7J7qLuHHjOeUfWGDglGtEWz2YpYvWbONTH5BnQtycX/gb5sMk7YIZqrZ5uLBilmcildxARPHLuC3PhWcmCQvdjjsmihNBmgJvESpqU3s1v0Joh7Rgd/LsQ4vSAZW7sDez82+P5kEv25RorOfiLmEdC813oQV2/MdjgEaBD2nupo1s0lDzBlo3ZNMjxw/NnGdrVxeBGlZDKLRI+rzgrpW/xeB941RCSkWe4APrSLMsRjRveGYXGDj8f9TBXkXEEIgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by DM4PR11MB6456.namprd11.prod.outlook.com (2603:10b6:8:bc::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.17; Tue, 28 Oct
+ 2025 01:16:15 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%5]) with mapi id 15.20.9253.018; Tue, 28 Oct 2025
+ 01:16:15 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Alexandre Ghiti <alex@ghiti.fr>, "Anup
+ Patel" <anup@brainfault.org>, Albert Ou <aou@eecs.berkeley.edu>, "Jonathan
+ Corbet" <corbet@lwn.net>, "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, Bill Wendling
+	<morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
+	<nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, "Palmer
+ Dabbelt" <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, Robin Murphy
+	<robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Suravee Suthikulpanit
+	<suravee.suthikulpanit@amd.com>, Will Deacon <will@kernel.org>
+CC: Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
+	<alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>, "Michael
+ Roth" <michael.roth@amd.com>, Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v7 07/15] iommupt: Add map_pages op
+Thread-Topic: [PATCH v7 07/15] iommupt: Add map_pages op
+Thread-Index: AQHcREnZveRzU+0FVE2mIi5+sC2lDLTWyCug
+Date: Tue, 28 Oct 2025 01:16:15 +0000
+Message-ID: <BN9PR11MB52764CD5E4E461D36FFD2B668CFDA@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
+ <7-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
+In-Reply-To: <7-v7-ab019a8791e2+175b8-iommu_pt_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|DM4PR11MB6456:EE_
+x-ms-office365-filtering-correlation-id: c2f9317e-b979-429a-2c3f-08de15bf9788
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016|38070700021|921020;
+x-microsoft-antispam-message-info: =?us-ascii?Q?NfTBZBHf6S4vVrbT1xYykNcsY1p8ksYZCrWKGebXOUl5eq6IGmPHyA2JOkm1?=
+ =?us-ascii?Q?t4azf0W0bc7ekZlnCEKsMZTWcFklmdNuXE2drhQZ+F/OhKxaqN5wtcTuXx/v?=
+ =?us-ascii?Q?Oyk4zE04wbHS9+rjJuHn71vGzLTacEKQddcRkC8STv0AQ4dw0ZYiB5mx0v8e?=
+ =?us-ascii?Q?4p93jrCReL38582C2Cj1/dDeTixycOn+DeIilkR/vmDKRuOrgtTVFwSpJdtF?=
+ =?us-ascii?Q?QKhlwfbAgxgVO4y4CnEKvv0/tk4TsjVOcGSV0TEHmq7r/zkvjTg/6PaYi2tV?=
+ =?us-ascii?Q?D3pYpK6b0z+FNs7dLHuHzly5gUnspuI5mSw9KQPRB4N058pRRaTzEL34pLkk?=
+ =?us-ascii?Q?kBlwAv78o/ZmRMUjGwqsj+2KIxEkCaPD0JEAwK54K/Q1tEz9LwH0GAPK6zJW?=
+ =?us-ascii?Q?mkToXbW1GgTGT6EjlESR+INoFRBk/oLh9617aMxeVygPZTNl2hfrXVHdC/M2?=
+ =?us-ascii?Q?56/bhX2p1zsJHoiPimexc7M+a68zy2kAxueFLeI44Er92iVgsBCYvtaJzOYG?=
+ =?us-ascii?Q?YFJr8gEvcXHA8IS6BF+ds6XfjaVX8wGsC/8igPsZkUjnedZ2FAhvtinZIqeL?=
+ =?us-ascii?Q?LNMo6YlA1ElSFe09YmWiIXwhc6Fx59IZ6U+ySsD7z4/2S8v+gU+00cTnfE9M?=
+ =?us-ascii?Q?gEsXijyohifd3NrWYS/qSetlTvXlZXQmcn/zIsLwchNLjWfY47eY/Mdpy6j3?=
+ =?us-ascii?Q?Nnv1Fvn22ImDmI3zQM4JATzO6iLLLtKrOhcSpbhVwfa9USaDLx/BHA+8USRB?=
+ =?us-ascii?Q?HxxjMFhxcfb58+UNIXzfj54FbjnOG50O1YHjb+hMUo4r7eA+DLAUc3sybrvV?=
+ =?us-ascii?Q?t/hgpcebWRdI06A1+b6wpQg19uMkkiYUPlrqfaO5jFQkich5vLhB86/ISHEY?=
+ =?us-ascii?Q?4MLGg4oprSQjGRj48XTbUxhN4H401Zfi2sf/YYaI7AFwb+3vpGWBuXCRSWP4?=
+ =?us-ascii?Q?1iltYK4wwOC3F+f1uBGDp8HGN8259AgsOtYZIhmyxJF3RVEGGRDyeDoUM0qL?=
+ =?us-ascii?Q?hpIdU5oHTTsanvRUjHEY+StuFl+xTtZkDW1m1AcjMCOIQ1tAkVMprhJtFti8?=
+ =?us-ascii?Q?AampHtsm7IJiYirL6XX7PZTT5No/aL1arvezs0GqwgHOJjTfoDcNoYOQjYo3?=
+ =?us-ascii?Q?cAtK1qWExX6iymhIaZtv68d5WV2brc8syTr/D09nh2CG0xyxj5gDWrLrV1fr?=
+ =?us-ascii?Q?DOD+IN078FgBFygjlaFjarML00reDHoKj7sRJRrgqTf8Vj71h8TSIAsr5Mmj?=
+ =?us-ascii?Q?Ni4mnTULaL1vHSmj5HCjyWENhpMQLneMDmxfeoMvJvxAl4nVHHUM4T3Cpmey?=
+ =?us-ascii?Q?l/lcZWGk+yiqgppzF/vSWVHnt2VPtk8MMN2NR3PWqgntBMwk/tyi9vuyi6pN?=
+ =?us-ascii?Q?y+eCEja8EHKJZNKeodg3tiaCGxJeC0iR3ZYxFrN35gAaGkX5EbPLEWjeAtkl?=
+ =?us-ascii?Q?WesKgullCKwyvuyUc1LDtSMY10FjlqdJJ2A+wymVkuUvcnErg8cUKCp15fG6?=
+ =?us-ascii?Q?a8oTRRpo7LhyD0lNV3Dl2QG4mpInguIY4OivZSu/MXz3G23VBKuhPlJQgQ?=
+ =?us-ascii?Q?=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021)(921020);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?stYO6gC+aOlPLz8CbzJb2+OPIqMLgRdVt7/tQWHZh6YmdU/EWQ8zpaIMNV5H?=
+ =?us-ascii?Q?cv0kfisVkSI3VPTshGZXv+uUpbisIbJ/LDEr6jDeZdY+5+yCy5ZkeoToJdWS?=
+ =?us-ascii?Q?3tR1dFVWNnfjx1L87Q2kuhJe6Vrxmpuxr++M58emoSPAQdIgPI0Ia7r8VDp4?=
+ =?us-ascii?Q?hYs2Pc5wVA7EohK+wZZivwc5KcsI3PaNhGucKuNi/oBQI2kZuErvHr8/pILx?=
+ =?us-ascii?Q?XXRCu3PT7CQ1PSZYU1fTmOPtdhxQYe315VpUvpPrTTI1LLLotMQSAEYzhVIE?=
+ =?us-ascii?Q?uY6XB7SJFaZIeynGfjIrQerjueP/ZnEpi0WD4qZ3YwT52rn9Dzf0eYZrh/al?=
+ =?us-ascii?Q?sEemoYQL/JFJXLiSiWqrYQIsITmrUBgoCnvtOEMdkZlIIuU3xiXlyfzhBhVQ?=
+ =?us-ascii?Q?q99atXo2fyPxp/LrtlqQlSI7BFUf3dOPH7LyW2xp+6s7NQC0y1E7F1ZQsDKJ?=
+ =?us-ascii?Q?0Qfm5jwH/zKv5KjX8Q0niNtOrnRklC5G4UBxqpnPYvLq0z/IXWDlb+jMjRsG?=
+ =?us-ascii?Q?RH99s7glr+bb++/3hmLnhkqIlzgTDnaYmbLKYyX7N7gqxSwycghlc/Ljb6XX?=
+ =?us-ascii?Q?sGlw6jQ4P6dmj2STtESXIcckCuLbR3XH6tCuMoWvNXYV54PKVcBDjxUTlGVw?=
+ =?us-ascii?Q?YKrENBMKsijiENCsvi7OPJTzczhcSi0bgBZjDbsDtonvkXPg7ss/R5wbvAGy?=
+ =?us-ascii?Q?PyEXREplRgsR9YkvU1NRJAgk1+cGPx/09elqn19ODkJdSIswkNVkALFYkqD9?=
+ =?us-ascii?Q?nneQiUKduihqYXItyShfb+gxKvZJDMjnrTQO2sTR8hRyZGRZadPP+TJJu6wZ?=
+ =?us-ascii?Q?G87NEQQREhX1o5k6LekL0+xD4bFJOeHk5UPAYrvUvbcM4/7jouzj6scOfCJW?=
+ =?us-ascii?Q?mFfFx8Wwiz6OOiteOVWzfszhKk3vk26l1OzP4vN/iwKNZlfMknN7x28Plxt4?=
+ =?us-ascii?Q?fD/+E5R+/mZfITKjlI68wQFZVPJiI8RNEObhBH+Ffi+hxx9ko8e7dbJESTin?=
+ =?us-ascii?Q?g8X92JIr2KRuquO6FBUMtg1AIRXwTbcfK6fPzjzvG86se59NVE+VqQrBKSNA?=
+ =?us-ascii?Q?1aB4rbABipNHTwOXozLK1Sh2Ud3qBfYfmr6BN/F7ldB3Xs49eygzgcDSJXVp?=
+ =?us-ascii?Q?+FC6UVfwb3cAT1BJyea8olxd1vavs4KD46xEBLvyeqaJTNjAhHZgHMJna1eP?=
+ =?us-ascii?Q?EKhidvgXF6QhrKHsJ8VO9YR94gkprYOOINeOH03q+TlAVNa3qa9dOjKzedTl?=
+ =?us-ascii?Q?fbMqD+S1Ri3v3y3xkJmlZ+A4EsN78PHQMXUgBGXoQ3nio94H6b83xhsw6OUX?=
+ =?us-ascii?Q?UkiHJtJmVlhNr09BtnAqP/5qAOP9/SaB/hlMQ76uxC3GlXpRBp/cTk7bjknR?=
+ =?us-ascii?Q?Z7Qocga8m0ZBRP+BWWmvznw8mwl8NbNHQjbZ3mXoi0eWX2gn/JkOQARpKrI4?=
+ =?us-ascii?Q?sVD9XGLVf5vEKqyPysEasOnAv1u16TzlSavWVJWdIODYXU6FEqdFocuLbK+P?=
+ =?us-ascii?Q?fJEbKEMzdU14fp9CWZpCQJEpgPY9MSJt5zOem0PSGt2jKbtbYoTTgAGySvVJ?=
+ =?us-ascii?Q?4od5AsK4BrpxIkYsDibc2vTs8PsoGJbNAUunw6Wn?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c2f9317e-b979-429a-2c3f-08de15bf9788
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2025 01:16:15.8216
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8Dc7vwM5K2Gu/7iy0W08Nr+OTwPAvDI11oGg7wCfh4ngob7SagRbF/3gyzhQde9iLOO8fykd8NS0OCzYxaKxww==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6456
+X-OriginatorOrg: intel.com
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Friday, October 24, 2025 2:21 AM
+>=20
+> map is slightly complicated because it has to handle a number of special
+> edge cases:
+>  - Overmapping a previously shared, but now empty, table level with an OA=
+.
+>    Requries validating and freeing the possibly empty tables
+>  - Doing the above across an entire to-be-created contiguous entry
+>  - Installing a new shared table level concurrently with another thread
+>  - Expanding the table by adding more top levels
+>=20
+> Table expansion is a unique feature of AMDv1, this version is quite
+> similar except we handle racing concurrent lockless map. The table top
+> pointer and starting level are encoded in a single uintptr_t which ensure=
+s
+> we can READ_ONCE() without tearing. Any op will do the READ_ONCE() and
+> use
+> that fixed point as its starting point. Concurrent expansion is handled
+> with a table global spinlock.
+>=20
+> When inserting a new table entry map checks that the entire portion of th=
+e
+> table is empty. This includes freeing any empty lower tables that will be
+> overwritten by an OA. A separate free list is used while checking and
+> collecting all the empty lower tables so that writing the new entry is
+> uninterrupted, either the new entry fully writes or nothing changes.
+>=20
+> A special fast path for PAGE_SIZE is implemented that does a direct walk
+> to the leaf level and installs a single entry. This gives ~15% improvemen=
+t
+> for iommu_map() when mapping lists of single pages.
+>=20
+> This version sits under the iommu_domain_ops as map_pages() but does not
+> require the external page size calculation. The implementation is actuall=
+y
+> map_range() and can do arbitrary ranges, internally handling all the
+> validation and supporting any arrangment of page sizes. A future series
+> can optimize iommu_map() to take advantage of this.
+>=20
+> Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 379510a815cb2e64eb0a379cb62295d6ade65df0 ]
-
-Reference count of ksmbd_session will leak when session need reconnect.
-Fix this by adding the missing ksmbd_user_session_put().
-
-Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-## BACKPORT RECOMMENDATION: **YES**
-
-## COMPREHENSIVE ANALYSIS
-
-### 1. SEMANTIC CODE ANALYSIS PERFORMED
-
-I used the following semantic code analysis tools to thoroughly
-investigate this commit:
-
-- **mcp__semcode__find_function**: Located `smb2_sess_setup`,
-  `ksmbd_session_lookup`, `ksmbd_user_session_put`,
-  `ksmbd_session_lookup_slowpath`, and related functions
-- **mcp__semcode__find_callers**: Analyzed the call graph to determine
-  impact scope and exposure
-- **mcp__semcode__find_callchain**: Traced the execution path from user-
-  space to the affected code
-- **git blame and git log**: Identified when the bug was introduced and
-  its history
-
-### 2. BUG ANALYSIS - REFERENCE COUNT LEAK
-
-**The Bug:**
-The commit fixes a classic reference count leak in
-`fs/smb/server/smb2pdu.c:1806-1809`. Here's the problematic flow:
-
-1. **Line 1794-1795**: `ksmbd_session_lookup()` is called, which
-   **increments** the session reference count via
-   `ksmbd_user_session_get(sess)` (verified in user_session.c:298)
-
-2. **Line 1806-1809**: When `ksmbd_conn_need_reconnect(conn)` returns
-   true:
-  ```c
-  if (ksmbd_conn_need_reconnect(conn)) {
-  rc = -EFAULT;
-  sess = NULL;  // BUG: sess pointer lost without decrementing refcount
-  goto out_err;
-  }
-  ```
-
-3. **Line 1924-1938 (out_err handler)**: The error handler checks `if
-   (sess)` but since `sess` was set to NULL, it never calls
-   `ksmbd_user_session_put(sess)`, causing the leaked reference.
-
-**The Fix:**
-The commit adds `ksmbd_user_session_put(sess);` before setting `sess =
-NULL`, properly releasing the reference before discarding the pointer.
-This matches the pattern already correctly implemented in the binding
-path at lines 1769-1773.
-
-### 3. USER-SPACE REACHABILITY - CONFIRMED EXPLOITABLE
-
-**Call Path Analysis:**
-- `smb2_sess_setup()` is registered in the SMB command dispatch table at
-  `fs/smb/server/smb2ops.c:173`
-- It's invoked via `__process_request() → cmds->proc(work)` in
-  `server.c:147`
-- **This is directly triggered by SMB2_SESSION_SETUP requests from any
-  SMB client**
-
-**Attack Scenario:**
-An attacker (authenticated or during authentication) can:
-1. Send SMB2_SESSION_SETUP requests with an existing session ID
-2. Trigger the connection reconnect state condition
-3. Repeatedly leak session references
-4. Eventually exhaust kernel memory, leading to DoS
-
-### 4. IMPACT SCOPE - HIGH SEVERITY
-
-**Affected Versions:**
-- Bug introduced in commit `f5c779b7ddbda3` (May 2023) which fixed
-  security issues ZDI-CAN-20481, ZDI-CAN-20590, ZDI-CAN-20596
-- Present in kernel versions **6.4+** through **6.17.x** (bug exists in
-  current working directory v6.17.2)
-- Fixed in **6.18-rc2** by commit `379510a815cb2`
-- The buggy commit was marked `Cc: stable@vger.kernel.org`, so it **was
-  backported to stable trees**, spreading the bug
-
-**Severity Factors:**
-- ✅ **User-triggerable**: Any SMB client can trigger this
-- ✅ **Resource exhaustion**: Repeated triggers lead to memory leak and
-  potential DoS
-- ✅ **Present in stable kernels**: Affects LTS kernels 6.4.x, 6.6.x
-- ✅ **Small, safe fix**: Single line addition with clear purpose
-
-### 5. SEMANTIC CHANGE ANALYSIS
-
-Using `mcp__semcode__find_function` analysis:
-- **Type of change**: Pure bug fix (resource leak correction)
-- **Behavioral impact**: No functional behavior change, only proper
-  cleanup
-- **Scope**: Confined to one error path in one function
-- **Dependencies**: No new dependencies introduced
-- **Side effects**: None - only ensures proper reference counting
-
-### 6. ARCHITECTURAL IMPACT - MINIMAL
-
-- ✅ No data structure changes (verified with code inspection)
-- ✅ No API modifications
-- ✅ No new features introduced
-- ✅ Change is localized to one error path
-- ✅ Pattern matches existing correct code in the same function
-
-### 7. STABLE TREE COMPLIANCE - EXCELLENT FIT
-
-**Why this MUST be backported:**
-
-1. **Critical Bug Fix**: Fixes a memory leak that can be exploited for
-   DoS
-2. **Minimal Risk**: Single line fix with clear semantics and no side
-   effects
-3. **Matches Stable Rules**: Pure bug fix, no new features, minimal
-   scope
-4. **Security Impact**: Prevents resource exhaustion attacks on SMB
-   server
-5. **Already in Mainline**: Present in v6.18-rc2, stable trees need this
-   fix
-6. **Widespread Exposure**: Bug exists in all stable 6.4+ kernels
-   currently deployed
-
-**Missing Stable Tags:**
-The upstream commit lacks `Cc: stable@vger.kernel.org` and `Fixes:`
-tags. It should have:
-```
-Fixes: f5c779b7ddbda3 ("ksmbd: fix racy issue from session setup and
-logoff")
-Cc: stable@vger.kernel.org # v6.4+
-```
-
-### 8. RECOMMENDATION DETAILS
-
-**Backport to:** All active stable kernel trees 6.4 through 6.17
-**Priority:** HIGH
-**Risk Level:** LOW
-**Testing:** Standard ksmbd functionality tests with session reconnect
-scenarios
-
-**Code Reference:**
-- Buggy code: `fs/smb/server/smb2pdu.c:1806-1809`
-- Fix location: `fs/smb/server/smb2pdu.c:1808` (add
-  `ksmbd_user_session_put(sess);`)
-
-This is a textbook example of a commit that should be backported to
-stable trees: it fixes a real bug with security implications, has
-minimal risk, and follows stable tree guidelines perfectly.
-
- fs/smb/server/smb2pdu.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 409b85af82e1c..acb06d7118571 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1805,6 +1805,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 
- 		if (ksmbd_conn_need_reconnect(conn)) {
- 			rc = -EFAULT;
-+			ksmbd_user_session_put(sess);
- 			sess = NULL;
- 			goto out_err;
- 		}
--- 
-2.51.0
-
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
