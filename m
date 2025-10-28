@@ -1,52 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90231BBBE5;
-	Tue, 28 Oct 2025 00:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238591D88B4;
+	Tue, 28 Oct 2025 00:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612016; cv=none; b=Q/ovxtDxFpHktuHU5Uy5wl87UsEyGIyzPDk4hED6Yx6Tx5VGEuMyBn5JJ6Gx4KUefj5gZdOhmskn59LojVe7oFymDmVPGs1aDQyew6YixAY2L/ezEHMDO3kbK6uxMcmgKKFa5Sjbj4HuJ+9idVq2LrPTlGpq5hlkrtl/CrHrgoM=
+	t=1761612019; cv=none; b=P4tfrPAsdvwGVnhkbCQIfwdBdxDlts/XI4cPZAV21n0hZlJPnMu947qGmxQ9Rhe7NCtdwOqAxqj4UamnLA5N4P4NLOu+fV5zUKB4N6izUxk/jSn/HrS82KLB900so+beCaVIWUJWwQV58KoGa92ZviVW2Ng+7cPmEU5MLXDxo1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612016; c=relaxed/simple;
-	bh=BodBvqDB7jhvZgAQ9ASDmDnRWRvu6gw3TrHXIPrOYKs=;
+	s=arc-20240116; t=1761612019; c=relaxed/simple;
+	bh=r2wXvo+P2AZeV+AzYgn8dHYZZMwWtNXLLHu+tj14hEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sw4hWd8foS8OAOPzbiKdhEO8mGrZ/qqCg8BI1jAPOVNr0FWCXQ/S3bYWcQfwDK1cEDZQaSPcTjqkcHQ5lnh7IALrmGHaJrTwVqFoKy6zti7+MU2rgW/21aj1uwb8ThnXNeQWo+0sXUvGZ/ws+eTqqb2Ax+CJQlNqdrc0OBxnzJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPbxyGBF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WSspvPa6IwFofXLYq2+iu+bS3EVc72HN1z/n8jrzDoSDF08KaSa94bwhh8hPSbzeIvNeZDKbzYwKSRTfrMw4t33/zW0IkYL+J8TV/hL/53KZ/aoVE8xCiDTEq7tmUOOQ3pUJTHsEaBW0073Wt8am7i08oBldFWkVu9l3DfPtGYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNprggB/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPbxyGBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCAAC113D0;
-	Tue, 28 Oct 2025 00:40:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNprggB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784B2C4CEF1;
+	Tue, 28 Oct 2025 00:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612015;
-	bh=BodBvqDB7jhvZgAQ9ASDmDnRWRvu6gw3TrHXIPrOYKs=;
+	s=k20201202; t=1761612018;
+	bh=r2wXvo+P2AZeV+AzYgn8dHYZZMwWtNXLLHu+tj14hEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPbxyGBFHyxnOSlNgRB3eEM1lzqqXbcmj6OeNn7HgeqnOWP1EAO0sVMWNgislF+gP
-	 qkGm5qvYUnZkcVWqOLn+ndN5YGCG80lR7owYr2newfjesSAIWZPiTMfxckNecj2/1o
-	 izXpg2DQKaIacchELUJtFAeR1zhVeeLUky4gZx0blH5MOimy7uKC0u9hOBo0kXw3eR
-	 /kALh2JZ5eeOd1XSFkjtW43ST05Y77z6OwAuSeLGQ1Mm8GnGw0qph0fQmXntCzSr4P
-	 ZAWHzECkyRhrmHFX4mWW6UpI9dQFgjIXPguiAg8JtOVPllhan5oS+tli75AvGsqNgt
-	 Voq46WW7IG1cA==
+	b=nNprggB/AaFI7/4ktjQjMGh1iKeZZK3XOlquhyj0y0LmqMeDuluO2W8xTKTyKXm01
+	 P1lU0Q5/sppv/5dnHRrykX/pHPw6c8SAZw949YmH6XAQcM7yhgQ2S2Hi2AQHlpLB6k
+	 HP+KTS6HiXQkLsOCggWdU+WV76wrIsS7kLISfzNkFtJAxoVH0sLBqXELrXWI4uItHZ
+	 PAIuob8QP8BzGKbFctDH7iwWYOo83KZGkw75V+wzdlQZYbZilKcYNUNpROZyF74M80
+	 5IHfcrQ0CSd6taxfa5xqmWmUu4FWrIp8ZFbIhLgXS/6iw4GLQGCwYP8Opkj66Onj2y
+	 HFTkqQ4HoTARA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Han Gao <rabenda.cn@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alexghiti@rivosinc.com,
-	bjorn@rivosinc.com,
-	akpm@linux-foundation.org,
-	agordeev@linux.ibm.com,
-	visitorckw@gmail.com,
+	sunil.khatri@amd.com,
+	lijo.lazar@amd.com,
 	alexandre.f.demers@gmail.com,
-	pulehui@huawei.com,
-	guoweikang.kernel@gmail.com,
-	sycamoremoon376@gmail.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] riscv: acpi: avoid errors caused by probing DT devices when ACPI is used
-Date: Mon, 27 Oct 2025 20:38:59 -0400
-Message-ID: <20251028003940.884625-15-sashal@kernel.org>
+	chris@rudorff.com,
+	boyuan.zhang@amd.com,
+	mario.limonciello@amd.com
+Subject: [PATCH AUTOSEL 6.17-6.1] drm/amd/pm: Disable MCLK switching on SI at high pixel clocks
+Date: Mon, 27 Oct 2025 20:39:00 -0400
+Message-ID: <20251028003940.884625-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
 References: <20251028003940.884625-1-sashal@kernel.org>
@@ -56,119 +50,177 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Han Gao <rabenda.cn@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 69a8b62a7aa1e54ff7623064f6507fa29c1d0d4e ]
+[ Upstream commit 5c05bcf6ae7732da1bd4dc1958d527b5f07f216a ]
 
-Similar to the ARM64 commit 3505f30fb6a9s ("ARM64 / ACPI: If we chose
-to boot from acpi then disable FDT"), let's not do DT hardware probing
-if ACPI is enabled in early boot.  This avoids errors caused by
-repeated driver probing.
+On various SI GPUs, a flickering can be observed near the bottom
+edge of the screen when using a single 4K 60Hz monitor over DP.
+Disabling MCLK switching works around this problem.
 
-Signed-off-by: Han Gao <rabenda.cn@gmail.com>
-Link: https://lore.kernel.org/r/20250910112401.552987-1-rabenda.cn@gmail.com
-[pjw@kernel.org: cleaned up patch description and subject]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my semantic code analysis and repository examination, here is
-my determination:
+Based on my comprehensive analysis using semantic code analysis tools
+and examining the kernel repository, here is my assessment:
 
-**YES** - This commit should be backported to stable kernel trees.
+## **BACKPORT RECOMMENDATION: YES**
 
 ## Detailed Analysis:
 
-### 1. Semantic Tools Used:
-- **mcp__semcode__find_function**: Located the `setup_arch`,
-  `unflatten_device_tree`, and `unflatten_and_copy_device_tree`
-  functions
-- **mcp__semcode__find_callers**: Identified all callers of the device
-  tree initialization functions across architectures
-- **Git log analysis**: Traced the history of RISC-V ACPI support and
-  similar fixes in other architectures
-- **Code repository examination**: Verified the commit context and
-  impact scope
+### 1. **Semantic Code Analysis Findings:**
 
-### 2. Bug Description:
-The commit fixes a correctness bug where both ACPI and Device Tree (DT)
-are initialized during boot on RISC-V systems when ACPI is enabled. This
-causes "repeated driver probing" errors because hardware devices get
-enumerated from both sources, leading to conflicts and initialization
-failures.
+**Tool: mcp__semcode__find_function**
+- Located function `si_apply_state_adjust_rules` in
+  drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+- Function is part of AMD SI GPU power management infrastructure
+- Called by `si_dpm_pre_set_power_state` which is registered as a power
+  management callback
 
-### 3. Key Code Change:
-The fix wraps the device tree initialization calls in an `if
-(acpi_disabled)` conditional block at arch/riscv/kernel/setup.c:333-340,
-ensuring device tree is only processed when ACPI is not being used.
+**Tool: mcp__semcode__find_callers**
+- `si_apply_state_adjust_rules` has only 2 callers (appears to be
+  duplicate entries)
+- Call path: Power management system → `si_dpm_pre_set_power_state` →
+  `si_apply_state_adjust_rules`
+- The function is part of the standard DRM/power management callback
+  chain
 
-### 4. Impact Scope Analysis:
-- **Affected kernel versions**: All versions from 6.5 onwards (where
-  RISC-V ACPI support was introduced in commit 724f4c0df7665)
-- **Affected systems**: RISC-V systems booting with ACPI enabled
-- **Severity**: Medium - causes driver initialization errors on ACPI-
-  enabled RISC-V systems
-- **Call graph analysis**: The change only affects the RISC-V
-  architecture-specific boot path; no cross-architecture impact
+**Tool: mcp__semcode__grep_functions**
+- Found that `disable_mclk_switching` already exists as a local variable
+  in the function
+- The change modifies existing logic flow rather than introducing new
+  infrastructure
+- There's an identical function in the legacy radeon driver
+  (drivers/gpu/drm/radeon/)
 
-### 5. Precedent:
-This follows the exact same pattern established by ARM64 in commit
-3505f30fb6a98 (March 2015), which has been stable for nearly 10 years.
-ARM64 faced the identical issue and resolved it the same way.
+**Tool: mcp__semcode__find_calls**
+- Function calls standard helper functions:
+  `btc_adjust_clock_combinations`, `btc_apply_voltage_dependency_rules`,
+  etc.
+- No new dependencies introduced
+- Uses existing `high_pixelclock_count` variable that was already
+  present
 
-### 6. Backport Suitability Indicators:
-✅ **Bug fix**: Corrects driver probing errors
-✅ **Small and contained**: Only 7 lines changed in one file
-✅ **No new features**: Pure bug fix
-✅ **No architectural changes**: Simple conditional logic
-✅ **Low regression risk**: Established pattern from ARM64
-✅ **Clean apply**: No complex dependencies
-✅ **Stable kernel compliant**: Fits all stable kernel rules
+### 2. **Critical Context Discovery:**
 
-### 7. Dependencies Check:
-Using semantic analysis, I verified that the only dependency is
-`acpi_disabled`, which has been available in RISC-V since ACPI support
-was added in v6.5. The fix is self-contained and requires no additional
-changes.
+Through git log examination, I discovered a **related commit
+(63499c7ed46f9)** that was **already backported** by the autosel
+process. This commit:
+- Added the `high_pixelclock_count` infrastructure and detection logic
+- Fixed flickering when **TWO** 4K 60Hz displays are connected to
+  **Oland specifically**
+- Has "Fixes: 841686df9f7d" tag and was signed off by Sasha Levin
+- Commit message includes "[ Upstream commit
+  7009e3af0474aca5f64262b3c72fb6e23b232f9b ]"
 
-### 8. Recommendation:
-Backport to **all stable trees from 6.6.x onwards** (6.6.x, 6.12.x, and
-any LTS versions), as these include RISC-V ACPI support and are affected
-by this bug. The fix prevents real errors on production RISC-V ACPI
-systems and has minimal risk of regression.
+The current commit (5c05bcf6ae773) is a **companion fix** that:
+- Uses the **same infrastructure** already backported
+- Fixes flickering for **ANY SINGLE** high-resolution display on **all
+  SI GPUs**
+- Addresses a **more common scenario** than the previously backported
+  fix
 
- arch/riscv/kernel/setup.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+### 3. **Code Changes Analysis:**
 
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index f90cce7a3acea..d7ee62837aa4f 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -330,11 +330,14 @@ void __init setup_arch(char **cmdline_p)
- 	/* Parse the ACPI tables for possible boot-time configuration */
- 	acpi_boot_table_init();
- 
-+	if (acpi_disabled) {
- #if IS_ENABLED(CONFIG_BUILTIN_DTB)
--	unflatten_and_copy_device_tree();
-+		unflatten_and_copy_device_tree();
- #else
--	unflatten_device_tree();
-+		unflatten_device_tree();
- #endif
-+	}
+The change adds only **5 lines** in one location:
+```c
+if (high_pixelclock_count) {
+    /* Work around flickering lines at the bottom edge
+     - of the screen when using a single 4K 60Hz monitor.
+     */
+    disable_mclk_switching = true;  // <-- NEW LINE
+
+    /* On Oland, we observe some flickering when two 4K 60Hz... */
+    if (high_pixelclock_count > 1 && adev->asic_type == CHIP_OLAND)
+        disable_sclk_switching = true;
+}
+```
+
+This is extremely localized and low-risk.
+
+### 4. **Impact Assessment:**
+
+- **User Impact**: HIGH - Fixes visible display corruption (flickering
+  at bottom of screen)
+- **Hardware Scope**: SI generation AMD GPUs (Tahiti, Pitcairn, Cape
+  Verde, Oland, Hainan ~2012-2013)
+- **Risk Level**: LOW - Conservative workaround that disables a power-
+  saving feature
+- **Side Effect**: Slightly higher power consumption with high pixel
+  clock displays, but fixes critical visual bug
+- **Regression Risk**: MINIMAL - Only affects power state selection
+  logic, doesn't change core GPU functionality
+
+### 5. **Backport Justification:**
+
+✅ **Bug Fix**: Fixes user-visible display corruption
+✅ **Small & Contained**: 5 lines added to one function
+✅ **No New Features**: Pure bug fix workaround
+✅ **No Architectural Changes**: Uses existing infrastructure
+✅ **Completes a Series**: Related fix already backported
+✅ **Common Scenario**: Single 4K 60Hz monitor more common than dual
+monitors
+✅ **Low Risk**: Conservative change that disables a feature to fix a bug
+✅ **Reviewed**: Reviewed-by Alex Deucher (AMD maintainer)
+✅ **Hardware Specific**: Only affects legacy SI GPUs, isolated impact
+
+### 6. **Notable Points:**
+
+- **Missing Stable Tags**: The commit lacks "Cc: stable@vger.kernel.org"
+  or "Fixes:" tags, likely an oversight
+- **Part of Fix Series**: This completes the SI DPM flickering
+  workaround series
+- **Infrastructure Already Backported**: The `high_pixelclock_count`
+  detection logic is already in stable trees
+- **Active Maintenance**: Author has made multiple fixes to SI DPM code
+  recently
+- **Broader Applicability**: Previous fix was Oland-specific, this helps
+  **all SI GPUs**
+
+### 7. **Conclusion:**
+
+This commit should **definitely be backported** to stable kernel trees.
+It fixes a user-visible bug (display flickering) affecting users with 4K
+60Hz monitors on SI generation AMD GPUs. The fix is small, safe, and
+complements a related fix that was already backported. The lack of
+explicit stable tags appears to be an oversight rather than an
+intentional exclusion. Users who received the previous backport
+(63499c7ed46f9) may still experience flickering with a single 4K
+monitor—this commit addresses that scenario.
+
+**Backport Status: YES** - High priority for stable trees to complete
+the SI DPM flickering workaround series.
+
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index 4236700fc1ad1..9281aca0e64af 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -3504,6 +3504,11 @@ static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
+ 	 * for these GPUs to calculate bandwidth requirements.
+ 	 */
+ 	if (high_pixelclock_count) {
++		/* Work around flickering lines at the bottom edge
++		 * of the screen when using a single 4K 60Hz monitor.
++		 */
++		disable_mclk_switching = true;
 +
- 	misc_mem_init();
- 
- 	init_resources();
+ 		/* On Oland, we observe some flickering when two 4K 60Hz
+ 		 * displays are connected, possibly because voltage is too low.
+ 		 * Raise the voltage by requiring a higher SCLK.
 -- 
 2.51.0
 
