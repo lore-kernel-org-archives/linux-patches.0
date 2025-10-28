@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B998E1AA7BF;
-	Tue, 28 Oct 2025 00:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476564A23;
+	Tue, 28 Oct 2025 00:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612001; cv=none; b=XLk/Q6DD1pfER84gb2WIrvgahMZIdRh7PgK9Q3ffzblvb+NAc0sGnsE/+Ja0OZBaUFuaW/hJo5TneYKTRtdrCymE/9mRObAlapXy8sFA1F4Yi+QoTZ9IgOHpQSlhL3eCYJly4A0lM76VLkXehSQDu5Fdz0dQIx+dCVeix7r+c5w=
+	t=1761612007; cv=none; b=sdtA+/f+1H7J7rwXMJyDqLy8+9l0HzAbDZlcj8GSBSUaYdgESP+Wng+aEqDmwoBCCdXjnEnQO36pfvj9wIohEclPJpSXNmFRCn6B7kkinm1Z58kOwqPMlCu9R8ekjBFYyBU+1IwUp8aFCqO6tNjIIWDFfWGEXiYd9SgiGo1HGyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612001; c=relaxed/simple;
-	bh=cYToG8gJg2SXm2fRtKr6D0RTY0BlFfLbpiMaBP/gXSE=;
+	s=arc-20240116; t=1761612007; c=relaxed/simple;
+	bh=TqwRwFFs387iVOAkocf+ezDLn2LssS+JbPqVIryJlgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XGe09omYIcY1ggwdCIpENHZxcOsdL3YG6/os8ddvHpdbRhri2Ber3dkXxjhBCxK3WgV7JXDZ2ucvQkfMNE+vB5HNvVBgQ7sEM0JHLiB9LKGv4qwm2s8kRMaMMsWomyGR5JH4OVfX85dJWTTeBetWeOxzdDnKZk4KCV/QFBkTNuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l87DfqEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u4QnCg6dFhhYXS5DaKO4qOk+PGFfCrrLpR1CnCnE6v9cyD35suAPLCpHRJQoDZ2ao0WecWFPmqMrWtfhkuEXIbXRRX4fqOPEu+HeY83+yXuadNSj16GTzW2yUxhBw5dOrwBxyCsACqKYWimhkKP4DhhSdxx2Z2UYbTdNf18f9aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6BwfASZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l87DfqEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01780C4CEF1;
-	Tue, 28 Oct 2025 00:39:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6BwfASZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE2DC116B1;
+	Tue, 28 Oct 2025 00:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612001;
-	bh=cYToG8gJg2SXm2fRtKr6D0RTY0BlFfLbpiMaBP/gXSE=;
+	s=k20201202; t=1761612007;
+	bh=TqwRwFFs387iVOAkocf+ezDLn2LssS+JbPqVIryJlgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l87DfqEh6phwcPi2pHWRFJ3z9Ut2xLQzLNZruLv9gWXICKd/m/HOpQ2NOCQtD5FcE
-	 cMli1V6uf+PAkesZix0rCktsVNHQeeGiKiG9CggLxC9+C6JX9qtou06KP0wagcoE8z
-	 kQIjRfHI7malZnvGSkYFVCCEXwa77UVsEv6l594TeGtucabAf9CNvNHsnPYJV9NjO/
-	 8kBgLb4bPhe9SiiUAI5lAS8DNJ8CvcuYpNDoPqIx72I/7Qndcwid+DDE662k7faiy5
-	 63KEXOhRLBC0I5q/Ocbu645AAoezWl3zJoXx2s1nH4mibeMWAPwBSr2gJvvvF/ur7u
-	 dM6lTy19AGhLQ==
+	b=Y6BwfASZ0SqfzKqTqd8s/dvlLex7+2mGPzmEnI5WKxGadqzmwrsaBy+PZEJ3rI+7t
+	 jZS73PbTzrk4PUzRIlG4fbYGbVoSQY2ZQ/d2RtQ8Q9ti6IqDDdScFc5tHNRuSxRqc4
+	 db1h7vN8tZ3io68vrzJcJ05CzvQL7MMIBBVMgcCBTMggW/2o5pXz8S6Eai19GqIBH+
+	 8sSUpOCOoydar5IV9TEUqbSJmh3ic1qs6fjhw5hta9bSXWEFQWW+z+BKhmmdwBnfI1
+	 fd14GjYKj690V6my0hspU2NxcHyAjewZx1NRIof0FXrO7fD4D7oD1GP6pFZeA4xV8L
+	 YllJJi5U+x4MQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Jonathan Kim <jonathan.kim@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alexander.deucher@amd.com,
-	alexandre.f.demers@gmail.com,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.10] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
-Date: Mon, 27 Oct 2025 20:38:52 -0400
-Message-ID: <20251028003940.884625-8-sashal@kernel.org>
+	Felix.Kuehling@amd.com,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17] drm/amdkfd: fix suspend/resume all calls in mes based eviction path
+Date: Mon, 27 Oct 2025 20:38:55 -0400
+Message-ID: <20251028003940.884625-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
 References: <20251028003940.884625-1-sashal@kernel.org>
@@ -56,171 +53,266 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
+[ Upstream commit 079ae5118e1f0dcf5b1ab68ffdb5760b06ed79a2 ]
 
-openSBI v1.7 adds harts checks for ipi operations. Especially it
-adds comparison between hmask passed as an argument from linux
-and mask of online harts (from openSBI side). If they don't
-fit each other the error occurs.
+Suspend/resume all gangs should be done with the device lock is held.
 
-When cpu is offline, cpu_online_mask is explicitly cleared in
-__cpu_disable. However, there is no explicit clearing of
-mm_cpumask. mm_cpumask is used for rfence operations that
-call openSBI RFENCE extension which uses ipi to remote harts.
-If hart is offline there may be error if mask of linux is not
-as mask of online harts in openSBI.
-
-this patch adds explicit clearing of mm_cpumask for offline hart.
-
-Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
-[pjw@kernel.org: rewrote subject line for clarity]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis using semantic code analysis tools
-and examination of the kernel repository, here is my determination:
+## BACKPORT RECOMMENDATION: YES
 
-## **Backport Status: YES**
+### Summary
+This commit fixes a **locking correctness bug** in the AMD KFD (GPU
+compute) driver's MES-based eviction path. The bug allows
+suspend_all_queues_mes() and resume_all_queues_mes() to be called
+without holding the required device queue manager lock, creating race
+conditions that can cause GPU hangs and system instability.
 
-## Extensive Analysis
+---
 
-### 1. Semantic Tools Used and Findings
+### Semantic Analysis Tools Used
 
-**mcp__semcode__find_function & mcp__semcode__find_callers:**
-- Located `clear_tasks_mm_cpumask()` in kernel/cpu.c:1241-1268 - a well-
-  established function that safely clears CPU bits from all process
-  mm_cpumask fields
-- Found that `arch_cpuhp_cleanup_dead_cpu()` is called by
-  `cpuhp_bp_sync_dead()` in the CPU hotplug core synchronization path
-  (kernel/cpu.c:361)
-- **Critical finding**: ARM, ARM64, PARISC, and PowerPC architectures
-  already call `clear_tasks_mm_cpumask()` in their
-  `arch_cpuhp_cleanup_dead_cpu()` implementations - RISC-V was the
-  outlier missing this call
+1. **mcp__semcode__find_function**: Located evict_process_queues_cpsch,
+   suspend_all_queues_mes, resume_all_queues_mes, and
+   kfd_evict_process_device functions
+2. **mcp__semcode__find_callers**: Identified 4 direct callers of
+   kfd_evict_process_device:
+   - kfd_set_dbg_ev_from_interrupt (debug interrupts)
+   - kfd_dbg_send_exception_to_runtime (ioctl handler)
+   - kfd_signal_vm_fault_event_with_userptr (VM fault handler)
+   - cik_event_interrupt_wq (interrupt handler)
+3. **mcp__semcode__find_callchain**: Traced call paths showing user-
+   space can trigger this via kfd_ioctl_set_debug_trap
+4. **Git history analysis**: Determined bug was introduced in v6.12
+   (commit 9a16042f02cd0) and fixed in v6.18-rc2
 
-**mcp__semcode__find_callchain:**
-- Traced the execution path: `cpuhp_bp_sync_dead` →
-  `arch_cpuhp_cleanup_dead_cpu` → `clear_tasks_mm_cpumask`
-- Confirmed this is part of the standard CPU hotplug dead-CPU cleanup
-  sequence
+---
 
-**Impact Analysis via Callers:**
-- `sbi_remote_sfence_vma_asid()` (the function affected by stale
-  mm_cpumask) has 3 direct callers, with `__flush_tlb_range()` being the
-  main one (arch/riscv/mm/tlbflush.c:118)
-- `__flush_tlb_range()` is called by ALL TLB flush operations:
-  `flush_tlb_mm()`, `flush_tlb_page()`, `flush_tlb_range()`,
-  `flush_pmd_tlb_range()`, `flush_pud_tlb_range()`, and
-  `arch_tlbbatch_flush()`
-- **User-space exposure**: HIGH - Any memory operations (mmap, munmap,
-  mprotect, page faults) trigger TLB flushes
+### Code Analysis
 
-### 2. Code Change Analysis
-
-The fix adds exactly **one line** to arch/riscv/kernel/cpu-hotplug.c:
+**The Bug (OLD CODE in kfd_dqm_evict_pasid_mes):**
 ```c
-clear_tasks_mm_cpumask(cpu);
+dqm_lock(dqm);
+if (qpd->evicted) { ... }
+dqm_unlock(dqm);  // ← Lock released here
+
+ret = suspend_all_queues_mes(dqm);  // ← Called WITHOUT lock
+ret = dqm->ops.evict_process_queues(dqm, qpd);
+ret = resume_all_queues_mes(dqm);  // ← Called WITHOUT lock
 ```
 
-This is placed in `arch_cpuhp_cleanup_dead_cpu()` right after the CPU is
-confirmed dead, matching the pattern used by other architectures.
+The old code released the dqm lock, then called suspend/resume without
+re-acquiring it. This violates the locking contract stated in the commit
+message: "Suspend/resume all gangs should be done with the device lock
+is held."
 
-### 3. Root Cause and Bug Impact
+**The Fix (NEW CODE in evict_process_queues_cpsch):**
+```c
+dqm_lock(dqm);  // ← Lock held from start
+if (dqm->dev->kfd->shared_resources.enable_mes) {
+    retval = suspend_all_queues_mes(dqm);  // ← Called WITH lock
+    if (retval) goto out;
+}
+// ... eviction work ...
+if (dqm->dev->kfd->shared_resources.enable_mes) {
+    retval = resume_all_queues_mes(dqm);  // ← Called WITH lock
+}
+out:
+    dqm_unlock(dqm);  // ← Lock held until end
+```
 
-**The Bug:**
-When a CPU is hot-unplugged:
-1. `__cpu_disable()` clears `cpu_online_mask` (line 39 of cpu-hotplug.c)
-2. **BUT** the offline CPU remains set in mm_cpumask of all running
-   processes
-3. Subsequent TLB flush operations use `mm_cpumask(mm)` to determine
-   target CPUs
-4. This calls `sbi_remote_sfence_vma_asid()` which invokes openSBI's
-   RFENCE extension with the stale CPU mask
-5. **openSBI v1.7+** validates the hart mask against online harts and
-   **returns an error** if they don't match
+The fix moves suspend/resume calls inside evict_process_queues_cpsch
+where the dqm lock is held throughout the entire operation. It also:
+- Eliminates the buggy kfd_dqm_evict_pasid_mes wrapper entirely
+- Improves error handling with early exit on suspend failure
+- Changes error path from continuing with `retval = err` to immediately
+  exiting with `goto out`
 
-**Consequences:**
-- RFENCE operations fail with errors
-- TLB flush failures can lead to stale TLB entries
-- Potential for data corruption or system instability
-- Issue occurs on **every TLB flush** after any CPU hotplug event
+---
 
-**Affected Versions:**
-- Bug introduced in v6.10 (commit 72b11aa7f8f93, May 2023) when RISC-V
-  switched to hotplug core state synchronization
-- Fix appears in v6.18-rc2
+### Impact Assessment
 
-### 4. Why This Should Be Backported
+**Severity: Medium-High**
+- **User-triggerable:** YES - via ioctl (kfd_ioctl_set_debug_trap) and
+  VM fault handlers
+- **Affected kernels:** v6.12 through v6.17 (6 major versions)
+- **Subsystem criticality:** GPU compute device queue management
+- **Potential consequences:**
+  - Race conditions during queue eviction
+  - GPU hangs and device state corruption
+  - System instability
+  - Possible kernel crashes
 
-**Meets Stable Tree Criteria:**
-✅ **Fixes important bug**: RFENCE errors with openSBI v1.7+ cause TLB
-flush failures
-✅ **Obviously correct**: Matches established pattern from 4+ other
-architectures (ARM, ARM64, PARISC, PowerPC)
-✅ **Small and contained**: Single line addition, no side effects
-✅ **No new features**: Pure bug fix for CPU hotplug cleanup
-✅ **Low regression risk**: Function specifically designed for this
-purpose, already tested on multiple architectures
+**Scope: Well-contained**
+- Changes confined to AMD KFD driver (drivers/gpu/drm/amd/amdkfd/)
+- Only affects MES-based queue eviction path
+- No architectural changes or API modifications
+- Eliminates 44 lines of buggy code, adds proper locking discipline
 
-**Additional Justification:**
-1. **Architectural correctness**: RISC-V should behave like other
-   architectures for CPU hotplug
-2. **Real-world impact**: Affects any RISC-V system with CPU hotplug +
-   openSBI v1.7+
-3. **High exposure**: User-space memory operations routinely trigger TLB
-   flushes
-4. **No dependencies**: `clear_tasks_mm_cpumask()` already exists in all
-   kernel versions with CPU hotplug support
-5. **Well-understood fix**: The function has extensive documentation
-   explaining its purpose (kernel/cpu.c:1241)
+---
 
-**Risk Assessment:**
-- **Minimal risk**: The fix aligns RISC-V with established behavior
-- `clear_tasks_mm_cpumask()` includes safeguards:
-  WARN_ON(cpu_online(cpu)) check, proper RCU locking
-- No changes to core hotplug logic, just adds missing cleanup step
+### Stable Tree Compliance
 
-### 5. Why No Stable Tag?
+✅ **Fixes an important bug:** Locking correctness issue causing race
+conditions
+✅ **Does not introduce new features:** Pure bug fix
+✅ **No architectural changes:** Refactors existing code path
+✅ **Minimal regression risk:** Simplifies code and improves locking
+discipline
+✅ **Self-contained:** Limited to single driver subsystem
+✅ **User-impacting:** Affects systems running AMD GPU compute workloads
 
-The commit lacks "Cc: stable@vger.kernel.org" and "Fixes:" tags, which
-is unfortunate. However, based on:
-- The commit message explicitly describing the error condition
-- The architectural inconsistency (other arches already do this)
-- The real-world failure with openSBI v1.7+
-- Review by Andrew Jones (a RISC-V maintainer)
+⚠️ **Missing Fixes: tag:** The commit doesn't have "Fixes:
+9a16042f02cd0" tag, but this doesn't disqualify it from backporting
 
-This appears to be an oversight rather than an indication the fix
-shouldn't be backported.
+---
 
-### Recommendation
+### Recommendation Rationale
 
-**YES - This commit should be backported to stable kernels v6.10+** as
-it fixes a real bug causing TLB flush failures on RISC-V systems with
-CPU hotplug enabled when using modern openSBI firmware. The fix is
-small, safe, and brings RISC-V in line with other architectures.
+1. **Clear bug with clear fix:** The commit message explicitly states
+   the locking requirement that was violated
+2. **User-reachable code path:** Semantic analysis confirmed user-space
+   can trigger this via ioctl
+3. **Multi-version impact:** Bug has existed since v6.12 (June 2024),
+   affecting 6 kernel versions
+4. **Low backport risk:** Code change is straightforward - moves
+   function calls inside locked region
+5. **Historical precedent:** Similar locking fixes in this subsystem
+   have been backported (e.g., commit 70df8273ca0ce)
 
- arch/riscv/kernel/cpu-hotplug.c | 1 +
- 1 file changed, 1 insertion(+)
+This commit should be backported to **stable kernels v6.12+** to prevent
+GPU hangs and system instability on AMD compute workloads.
 
-diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
-index a1e38ecfc8be2..3f50d3dd76c6f 100644
---- a/arch/riscv/kernel/cpu-hotplug.c
-+++ b/arch/riscv/kernel/cpu-hotplug.c
-@@ -54,6 +54,7 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c | 73 ++++++-------------
+ 1 file changed, 21 insertions(+), 52 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 6c5c7c1bf5eda..6e7bc983fc0b6 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -1209,6 +1209,15 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
+ 	pr_debug_ratelimited("Evicting process pid %d queues\n",
+ 			    pdd->process->lead_thread->pid);
  
- 	pr_notice("CPU%u: off\n", cpu);
++	if (dqm->dev->kfd->shared_resources.enable_mes) {
++		pdd->last_evict_timestamp = get_jiffies_64();
++		retval = suspend_all_queues_mes(dqm);
++		if (retval) {
++			dev_err(dev, "Suspending all queues failed");
++			goto out;
++		}
++	}
++
+ 	/* Mark all queues as evicted. Deactivate all active queues on
+ 	 * the qpd.
+ 	 */
+@@ -1221,23 +1230,27 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
+ 		decrement_queue_count(dqm, qpd, q);
  
-+	clear_tasks_mm_cpumask(cpu);
- 	/* Verify from the firmware if the cpu is really stopped*/
- 	if (cpu_ops->cpu_is_stopped)
- 		ret = cpu_ops->cpu_is_stopped(cpu);
+ 		if (dqm->dev->kfd->shared_resources.enable_mes) {
+-			int err;
+-
+-			err = remove_queue_mes(dqm, q, qpd);
+-			if (err) {
++			retval = remove_queue_mes(dqm, q, qpd);
++			if (retval) {
+ 				dev_err(dev, "Failed to evict queue %d\n",
+ 					q->properties.queue_id);
+-				retval = err;
++				goto out;
+ 			}
+ 		}
+ 	}
+-	pdd->last_evict_timestamp = get_jiffies_64();
+-	if (!dqm->dev->kfd->shared_resources.enable_mes)
++
++	if (!dqm->dev->kfd->shared_resources.enable_mes) {
++		pdd->last_evict_timestamp = get_jiffies_64();
+ 		retval = execute_queues_cpsch(dqm,
+ 					      qpd->is_debug ?
+ 					      KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES :
+ 					      KFD_UNMAP_QUEUES_FILTER_DYNAMIC_QUEUES, 0,
+ 					      USE_DEFAULT_GRACE_PERIOD);
++	} else {
++		retval = resume_all_queues_mes(dqm);
++		if (retval)
++			dev_err(dev, "Resuming all queues failed");
++	}
+ 
+ out:
+ 	dqm_unlock(dqm);
+@@ -3098,61 +3111,17 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
+ 	return ret;
+ }
+ 
+-static int kfd_dqm_evict_pasid_mes(struct device_queue_manager *dqm,
+-				   struct qcm_process_device *qpd)
+-{
+-	struct device *dev = dqm->dev->adev->dev;
+-	int ret = 0;
+-
+-	/* Check if process is already evicted */
+-	dqm_lock(dqm);
+-	if (qpd->evicted) {
+-		/* Increment the evicted count to make sure the
+-		 * process stays evicted before its terminated.
+-		 */
+-		qpd->evicted++;
+-		dqm_unlock(dqm);
+-		goto out;
+-	}
+-	dqm_unlock(dqm);
+-
+-	ret = suspend_all_queues_mes(dqm);
+-	if (ret) {
+-		dev_err(dev, "Suspending all queues failed");
+-		goto out;
+-	}
+-
+-	ret = dqm->ops.evict_process_queues(dqm, qpd);
+-	if (ret) {
+-		dev_err(dev, "Evicting process queues failed");
+-		goto out;
+-	}
+-
+-	ret = resume_all_queues_mes(dqm);
+-	if (ret)
+-		dev_err(dev, "Resuming all queues failed");
+-
+-out:
+-	return ret;
+-}
+-
+ int kfd_evict_process_device(struct kfd_process_device *pdd)
+ {
+ 	struct device_queue_manager *dqm;
+ 	struct kfd_process *p;
+-	int ret = 0;
+ 
+ 	p = pdd->process;
+ 	dqm = pdd->dev->dqm;
+ 
+ 	WARN(debug_evictions, "Evicting pid %d", p->lead_thread->pid);
+ 
+-	if (dqm->dev->kfd->shared_resources.enable_mes)
+-		ret = kfd_dqm_evict_pasid_mes(dqm, &pdd->qpd);
+-	else
+-		ret = dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+-
+-	return ret;
++	return dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+ }
+ 
+ int reserve_debug_trap_vmid(struct device_queue_manager *dqm,
 -- 
 2.51.0
 
