@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623682E717C;
-	Tue, 28 Oct 2025 12:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D3D2E717C;
+	Tue, 28 Oct 2025 12:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761655699; cv=none; b=FZobyOCkw1HYzTLl+r1VGuIb0GT+vNFj0n6+Hog69VLNXMucZM8zqUOdUMu2r+z4X+KG6CN6Pa/WfTCxO4z6AbGHNiYqJagH+3x1lTXr26p0FVcKP9GDZOr1FTUvkfX03frRXH+posG314LUwpYE+Chtcit6XfveBYxJfcmEFtw=
+	t=1761655700; cv=none; b=DJIihbhZ/W4Swo/Ynw33TuQWJDRdfoCxUJK3+p67uTV50c5vxG/ZaLOhUO/0sQx8LWCAV6vpiMvYhF72Kh4LWaoz/zKwbdU4zuv4HRBigq6SnX2KmxRDyufdWYu9lQOiu8bqphm/diK8hQkLFzUpmUWTrPWPCojr6Qj6yE9Rjtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761655699; c=relaxed/simple;
-	bh=8l3k7nzIzD5IAzRMsVP1ElNUo3/BBc1y6iqkR5WulOo=;
+	s=arc-20240116; t=1761655700; c=relaxed/simple;
+	bh=/h2drVqO1InF96B9qDaDz4yv3OkbMe5ocrXajxyCvCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F6R8+mJu8/AwRaNK9rwW4KqQjArgGXfGAC7rNrH6LGn6l1Z5rPcqfwiZ2brTkMMqaPcNpST3Vc4QxYAXvnML1Mhqo4LhoBYec1SzGtxpAQhUvq8DNg4ha172+LKOcSIZKEjXs6MIVaWW2/lfHwxQh3++w7yn6x7L9aKK3eVcYUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sXvWC6YC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EtK443e2y4JixDIYsA6F9F3bAqYeDCAqGScC9wouXllIOF9c/GXNxUoeStnJnO/4p9BfiJuPYr/91RZG3PG2RoUNABSnvK/vpTlju5ms4vGVD3wkkMpfstm2by4vjiGALkoM4BlV0xKpaY4/FHU3z0HQ78IEXrr8+jld8Nk/4Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gh8C1Nss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sXvWC6YC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D135C4CEFD;
-	Tue, 28 Oct 2025 12:48:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gh8C1Nss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DE4C4CEF7;
+	Tue, 28 Oct 2025 12:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761655698;
-	bh=8l3k7nzIzD5IAzRMsVP1ElNUo3/BBc1y6iqkR5WulOo=;
+	s=k20201202; t=1761655700;
+	bh=/h2drVqO1InF96B9qDaDz4yv3OkbMe5ocrXajxyCvCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXvWC6YChUnkvDLzrJ2/xJTOg38Cgnrq9z+7qL5fvQQkDzPSStYub4q12W/XSRseP
-	 DM3TnI1TZnhJ9TdVx7d0ozwxtC61eMofAmfIuZJVjhhhVzawiB+L6vVs2iis5/90KB
-	 Rzmo3sBXZ48LzfOy66O8XyJMB3kUdw/rd3VuuNbT7O2CoKtUmX6WxKSd8m7BMmUl6h
-	 zkWfxZ0eaEfChUiRZFaARnzFaYBbMqKH+WyKbd/SC5ZVeaiuAyvsb5gsMMCQpy5HpK
-	 3M1VIfACvHuioQCWul+O4dU5jY53PM7AZlzvBllRycN5Uf6JJWQw8cwmDttrGp2W0i
-	 o397EjSJzkhnw==
+	b=gh8C1NssEqtzYfLhxQq7CXUuGTBQ15t03R4w7cBvkorwvE0n8JTPtxsZpaqhJ4cxx
+	 GlpD+5FRryJRXPvB2v84kWayhaH4cdFJ+L+9oGOWq1XkQ5PRA7X61rhXAx2JGrcIVg
+	 m7fAUUQLl0HmuacbWiO0QpTKVqRKNsSwOPHd8P5eizXGk0zlWHF07qySbZLRAmCoc+
+	 CskreMOR/DAi/McxaiuHEguSvYG0d3pSkkwbu5LsNM5gT+i/ZfLJ+8ZTPObLuDQx1F
+	 W9CIKwrvu8o4FkwubJ+FJ/7DCUXZJLN1e5iIit78vkTF6C0UtlIriEZQbSuNXIac2C
+	 BlyI9ncqw50ZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gao Xiang <hsiangkao@linux.alibaba.com>,
+Cc: Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xiang@kernel.org,
-	chao@kernel.org,
-	linux-erofs@lists.ozlabs.org
-Subject: [PATCH AUTOSEL 6.17] erofs: consolidate z_erofs_extent_lookback()
-Date: Tue, 28 Oct 2025 08:48:02 -0400
-Message-ID: <20251028124815.1058740-2-sashal@kernel.org>
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/panic: Fix overlap between qr code and logo
+Date: Tue, 28 Oct 2025 08:48:03 -0400
+Message-ID: <20251028124815.1058740-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028124815.1058740-1-sashal@kernel.org>
 References: <20251028124815.1058740-1-sashal@kernel.org>
@@ -52,221 +54,154 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-[ Upstream commit 2a13fc417f493e28bdd368785320dd4c2b3d732e ]
+[ Upstream commit cfa56e0a0e9b259077b0cb88b431e37dc9a67dee ]
 
-The initial m.delta[0] also needs to be checked against zero.
+The borders of the qr code was not taken into account to check if it
+overlap with the logo, leading to the logo being partially covered.
 
-In addition, also drop the redundant logic that errors out for
-lcn == 0 / m.delta[0] == 1 case.
-
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://lore.kernel.org/r/20251009122955.562888-3-jfalempe@redhat.com
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the Linux kernel repository, I can now provide a
+comprehensive assessment.
+
 ## BACKPORT RECOMMENDATION: **YES**
 
-## EXTENSIVE ANALYSIS
+## DETAILED ANALYSIS:
 
-### 1. Code Changes Analysis
+### 1. COMMIT CONTEXT & HISTORY
+Using git history examination, I found:
+- The QR code feature was introduced in commit **cb5164ac43d0f**
+  (2024-08-22) and first appeared in **v6.12**
+- The bug was present from the initial QR code implementation
+- This fix is currently only in **v6.18-rc3** and has NOT been
+  backported to any stable kernel (v6.12.x, v6.16.x, v6.17.x)
+- The commit is part of a patch series (patch 3/3, Link:
+  20251009122955.562888-3) alongside other panic screen fixes
 
-The commit makes two specific changes to `fs/erofs/zmap.c`:
+### 2. CODE ANALYSIS
 
-**Change 1 - In `z_erofs_extent_lookback()` function
-(fs/erofs/zmap.c:272):**
-- **BEFORE**: The check `if (!lookback_distance)` occurred AFTER calling
-  `z_erofs_load_lcluster_from_disk()` and only within the
-  `Z_EROFS_LCLUSTER_TYPE_NONHEAD` branch
-- **AFTER**: The check `if (!lookback_distance)` is moved to the
-  beginning of the while loop, BEFORE calling
-  `z_erofs_load_lcluster_from_disk()`
-- **Impact**: This prevents unnecessary disk I/O when
-  `lookback_distance` is 0, and ensures the initial `m.delta[0]` value
-  is validated before use
+**The Bug (drivers/gpu/drm/drm_panic.c:749):**
+```c
+- if (!drm_rect_overlap(&r_logo, &r_msg) && !drm_rect_overlap(&r_logo,
+  &r_qr))
++       if (!drm_rect_overlap(&r_logo, &r_msg) &&
+!drm_rect_overlap(&r_logo, &r_qr_canvas))
+```
 
-**Change 2 - In `z_erofs_map_blocks_fo()` function
-(fs/erofs/zmap.c:435-440):**
-- **BEFORE**: Code rejected `lcn == 0` as corrupted filesystem with
-  `EFSCORRUPTED` error
-- **AFTER**: This check is completely removed
-- **Impact**: Allows valid `lcn == 0` cases to proceed instead of
-  incorrectly treating them as corruption
+**Context Understanding:**
+- Line 727: `qr_canvas_width = qr_width + QR_MARGIN * 2` (canvas
+  includes margins)
+- Line 734: `r_qr_canvas` = full QR area including **4-module margins**
+  (QR_MARGIN=4)
+- Line 739: `r_qr` = actual QR code area **excluding margins**
+- Lines 756-758: The margin is intentionally drawn with foreground color
+  for visual contrast
 
-### 2. Semantic Analysis Tools Used
+**Impact:** The incorrect overlap check allows the logo to be drawn over
+the QR code's margin area, causing visual corruption of the panic
+screen.
 
-I used the following tools to analyze the commit:
+### 3. SCOPE & IMPACT ASSESSMENT
 
-- **git log/show**: To examine commit history, related fixes, and code
-  changes
-- **Read tool**: To examine the current state of `fs/erofs/zmap.c`
-  (lines 260-290, 400-450)
-- **Grep tool**: To find all callers of `z_erofs_extent_lookback` and
-  `z_erofs_map_blocks_fo`
-- **Bash**: To examine commit context, tags, and related fixes
+**Affected Code Paths:**
+- `draw_panic_static_qr_code()` (line 762) → called when user selects
+  "qr_code" panic screen (line 796)
+- Only affects systems using the QR code panic screen option
+- No security implications, no data corruption, no crashes
 
-### 3. Key Findings from Analysis
+**User Visibility:**
+- Medium impact: Visible corruption on panic screens that use QR codes
+  with logos
+- QR code readability may be reduced if logo overlaps the margin
+- Affects user experience during critical system failures
 
-**Caller Analysis:**
-- `z_erofs_extent_lookback()` is called from `z_erofs_map_blocks_fo()`
-  at line 446
-- `z_erofs_map_blocks_fo()` is called from:
-  - `z_erofs_map_blocks_iter()` at lines 699 and 756
-  - `z_erofs_map_blocks_iter()` is the main entry point for EROFS block
-    mapping
-  - Called from `z_erofs_iomap_begin_report()` (fiemap operations) and
-    `zdata.c` (read operations)
+### 4. BACKPORT SUITABILITY ANALYSIS
 
-**Impact Scope:**
-- Affects ALL compressed file reads in EROFS filesystems
-- EROFS is widely used in Android and embedded systems
-- The bug path is user-triggerable through normal file read operations
+**Positive Indicators:**
+- ✅ **Bug fix**: Corrects incorrect overlap detection logic introduced
+  in v6.12
+- ✅ **Minimal change**: Single-line fix, extremely low regression risk
+- ✅ **Self-contained**: No dependencies, no API changes
+- ✅ **Stable kernel affected**: v6.12.x series is actively maintained
+  (currently at v6.12.55)
+- ✅ **Related fixes exist**: Sibling commit 179753aa5b789 "Fix drawing
+  the logo on a small narrow screen" has `Fixes: 4b570ac2eb54` tag and
+  addresses similar issues
+- ✅ **Active subsystem**: 50+ drm/panic commits since QR feature
+  introduction shows active maintenance
 
-**Related Context:**
-I discovered that this commit came immediately after TWO critical bug
-fixes by the same author:
+**Negative Indicators:**
+- ⚠️ **No stable tag**: Missing `Cc: stable@vger.kernel.org` (likely
+  oversight)
+- ⚠️ **No Fixes tag**: Should have `Fixes: cb5164ac43d0f ("drm/panic:
+  Add a QR code panic screen")`
+- ⚠️ **Cosmetic bug**: Visual-only issue, not a critical functional or
+  security bug
 
-1. **e13d315ae077b** (2025-10-17): "erofs: avoid infinite loops due to
-   corrupted subpage compact indexes"
-   - Has `Fixes:` tags, `Reported-by: Robert Morris`, bug report link
-   - Fixes infinite loops from crafted images
-   - **Already backported to stable** as commit a3a04e4d968b0
+### 5. STABLE KERNEL RULES COMPLIANCE
 
-2. **a429b76114aac** (2025-10-12): "erofs: fix crafted invalid cases for
-   encoded extents"
-   - Has `Fixes:` tags, `Reported-by: Robert Morris`, bug report links
-   - Fixes system crashes from crafted images
-   - **Being backported to stable**
+According to stable kernel rules (Documentation/process/stable-kernel-
+rules.rst):
+- ✅ Must fix a real bug that affects users (visual corruption affects
+  usability)
+- ✅ Must be obviously correct (trivial rectangle variable substitution)
+- ✅ Must be small and self-contained (1 line changed)
+- ✅ Must not introduce new features (pure bug fix)
+- ✅ Should already exist in mainline (exists in v6.18-rc3)
 
-### 4. Bug Severity Assessment
+### 6. TOOLS USED IN ANALYSIS
+- **git log/show**: Commit history, patch series identification
+- **git tag --contains**: Version tracking (feature introduction, fix
+  propagation)
+- **git diff**: Code change examination
+- **Grep**: Function and pattern location
+- **Read**: Contextual code analysis around the bug
 
-**Bug #1: Missing initial lookback_distance check**
-- **Severity**: Medium (Correctness + Performance)
-- **Symptom**: If initial `m.delta[0]` is 0, code performs unnecessary
-  disk I/O
-- **Consequence**: Performance degradation, potential confusion in error
-  paths
-- **Exploitability**: Low - requires specific filesystem state
+### 7. RECOMMENDATION RATIONALE
 
-**Bug #2: False positive corruption error**
-- **Severity**: Medium (Functionality)
-- **Symptom**: Valid filesystems with `lcn == 0` are rejected as
-  corrupted
-- **Consequence**: Unable to read certain valid compressed files
-- **User Impact**: File read failures with `EFSCORRUPTED` errors
+This commit **should be backported** to stable trees (v6.12.x, v6.16.x,
+v6.17.x) because:
 
-### 5. Backport Justification
+1. **Fixes a real user-visible bug** in the panic screen QR code display
+2. **Extremely low risk**: One-line variable substitution with no side
+   effects
+3. **Consistent with kernel practices**: Similar logo fixes
+   (179753aa5b789) were deemed worthy of Fixes: tags
+4. **Affects stable kernels**: The QR feature exists in all kernels ≥
+   v6.12
+5. **Missing tags likely oversight**: The commit should have had `Fixes:
+   cb5164ac43d0f` tag based on pattern of similar fixes
+6. **Improves panic screen quality**: Better visual presentation during
+   critical system failures aids debugging
 
-**Arguments FOR backporting:**
+The lack of explicit stable tags appears to be an oversight rather than
+intentional exclusion, especially given that the closely related commit
+in the same patch series (179753aa5b789) includes proper Fixes: tags.
 
-1. **Fixes real bugs**: This is not just a cleanup - it fixes two actual
-   bugs:
-   - Unnecessary disk I/O (performance regression)
-   - False positive corruption errors (functionality regression)
+ drivers/gpu/drm/drm_panic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-2. **Related to critical fixes**: Comes in a series with two other
-   critical bug fixes that ARE being backported. Having partial fixes
-   backported creates inconsistency.
-
-3. **Low risk**:
-   - Small, focused change (6 insertions, 14 deletions)
-   - Simplifies code (removes unnecessary branches)
-   - No new features or architectural changes
-
-4. **Production impact**: EROFS is actively used in Android and embedded
-   systems. Users could encounter:
-   - Performance issues from unnecessary I/O
-   - Mount/read failures from false positive errors
-
-5. **Author expertise**: Gao Xiang is the EROFS maintainer and clearly
-   understands the correct behavior. The removed check was indeed
-   "redundant logic" as stated.
-
-**Arguments AGAINST backporting:**
-
-1. **No explicit stable marking**: Author didn't add `Cc:
-   stable@vger.kernel.org` or `Fixes:` tag
-
-2. **No reported issues**: Unlike the surrounding commits, no bug
-   reports or CVEs mentioned
-
-3. **Title suggests cleanup**: "consolidate" could imply refactoring
-   rather than bug fixing
-
-### 6. Final Recommendation Reasoning
-
-Despite the lack of explicit stable marking, I recommend **YES for
-backporting** because:
-
-- The commit message explicitly states a bug: "The initial m.delta[0]
-  also needs to be checked against zero"
-- It fixes user-visible issues (false corruption errors)
-- It's part of a series addressing EROFS robustness with
-  crafted/corrupted filesystems
-- The surrounding critical fixes ARE being backported
-- Small size and low regression risk
-- Improves correctness and performance with no downsides
-
-The commit follows the stable kernel rules:
-- ✅ Fixes important bugs (performance + false positives)
-- ✅ Small and contained change
-- ✅ No new features
-- ✅ Low regression risk
-- ✅ Affects production systems (Android/embedded)
-
-**Recommendation: Backport to all stable trees that contain the affected
-code (likely 6.15+ where encoded extents were introduced).**
-
- fs/erofs/zmap.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
-
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 798223e6da9ce..7a14902af5d38 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -268,20 +268,19 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 		unsigned long lcn = m->lcn - lookback_distance;
- 		int err;
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index 1d6312fa14293..ea6a64e5ddd76 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -746,7 +746,7 @@ static int _draw_panic_static_qr_code(struct drm_scanout_buffer *sb)
+ 	/* Fill with the background color, and draw text on top */
+ 	drm_panic_fill(sb, &r_screen, bg_color);
  
-+		if (!lookback_distance)
-+			break;
-+
- 		err = z_erofs_load_lcluster_from_disk(m, lcn, false);
- 		if (err)
- 			return err;
--
- 		if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
- 			lookback_distance = m->delta[0];
--			if (!lookback_distance)
--				break;
- 			continue;
--		} else {
--			m->headtype = m->type;
--			m->map->m_la = (lcn << lclusterbits) | m->clusterofs;
--			return 0;
- 		}
-+		m->headtype = m->type;
-+		m->map->m_la = (lcn << lclusterbits) | m->clusterofs;
-+		return 0;
- 	}
- 	erofs_err(sb, "bogus lookback distance %u @ lcn %lu of nid %llu",
- 		  lookback_distance, m->lcn, vi->nid);
-@@ -431,13 +430,6 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
- 			end = inode->i_size;
- 	} else {
- 		if (m.type != Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
--			/* m.lcn should be >= 1 if endoff < m.clusterofs */
--			if (!m.lcn) {
--				erofs_err(sb, "invalid logical cluster 0 at nid %llu",
--					  vi->nid);
--				err = -EFSCORRUPTED;
--				goto unmap_out;
--			}
- 			end = (m.lcn << lclusterbits) | m.clusterofs;
- 			map->m_flags |= EROFS_MAP_FULL_MAPPED;
- 			m.delta[0] = 1;
+-	if (!drm_rect_overlap(&r_logo, &r_msg) && !drm_rect_overlap(&r_logo, &r_qr))
++	if (!drm_rect_overlap(&r_logo, &r_msg) && !drm_rect_overlap(&r_logo, &r_qr_canvas))
+ 		drm_panic_logo_draw(sb, &r_logo, font, fg_color);
+ 
+ 	draw_txt_rectangle(sb, font, panic_msg, panic_msg_lines, true, &r_msg, fg_color);
 -- 
 2.51.0
 
