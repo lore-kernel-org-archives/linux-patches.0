@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C8632D7D8;
-	Tue, 28 Oct 2025 12:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341B932ED52;
+	Tue, 28 Oct 2025 12:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761655710; cv=none; b=I1ZxnZBHrQgLIGRjTUerm8hmdO2QsPzRhfEEuBNg2+Dh0lWKBlxdX7C2DHdQpgqD/JmxCz3ePDGFfYE32mSGGEB0Nllt/So13S0X4LYMSjL3TxOCw4UHt6U7JSjRa/bhUSCCc5rFzUsY0VI7pUbIB4JDYopXNj5WsX796wrhcNI=
+	t=1761655713; cv=none; b=mrJ1tA64oCBi4nSyok00wfCkNbB3NaWfzm/efjRnEW7iZWq/qqfprBfBEhfF3oeEfTuN3aTYzeWKlL/iLiyVIMWUvruBvRbH1xUkbXClLqRsiWtD3A+rUGo7g/j7OX7ZtWxKq1V7D+OJVxvUAz3HmFyRRxVKq6ufnddv8skuBD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761655710; c=relaxed/simple;
-	bh=up6DAN6s+RjU+k6yEjhEfBrjGGkOEgvJ0auo3biralU=;
+	s=arc-20240116; t=1761655713; c=relaxed/simple;
+	bh=IsSiLtjjKrn57XWnq/ZtclrFpBaVV4MFEOdQtDmlEKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UY6W2Qa5314BvSLIQSwTaM3YVg1ofV7FPH10Qd3iIoce0T5Spm2Wikm/Ne/S66PneRJeJLXCDJR97UM1gnPdqzSwn6N0FcIx6jflP07ZmT3k7z1Vzt5m3a7BA/DDzNYwSYxMvyb/UF4btDKVll2fVyF4Lt4+27xKwtOhj9z+rB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rUW6kJLs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WthOouQqzqXy7qBlTUz3GVRJjb0/tRqHFacQh65o1jzNuiDbQqWRdVXrhbDInFrzieLSJHSJe2gkJUp9Y8nR1lVMCRVEH00/VYPi6jWP+lsVzV0MGwfJcF9N0hC/vaQqRkDCnZ3dlCfcnlTYTzr12v7Bjyvs/qw8X5n7GHF+WRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PREr+dBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rUW6kJLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE876C16AAE;
-	Tue, 28 Oct 2025 12:48:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PREr+dBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063A4C4CEE7;
+	Tue, 28 Oct 2025 12:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761655710;
-	bh=up6DAN6s+RjU+k6yEjhEfBrjGGkOEgvJ0auo3biralU=;
+	s=k20201202; t=1761655711;
+	bh=IsSiLtjjKrn57XWnq/ZtclrFpBaVV4MFEOdQtDmlEKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUW6kJLstv3SGwHz/k9YO+feDrrQj1grLwSzR9gLYt1r6sG6fLFUBWvGjYdVoqpXv
-	 JotjWGYCb95CfQs3j/lZLgjpwdThMauoVUX6hFwbSAR3xyc6ll+j+IO4v6PJcx2pNe
-	 JBhVDFoao8YzLpJpxYUCimcuceQSX37n7O9agh+rNRRn0wLwG5ExhD2XkDiHYNCON0
-	 bngFzug1K1BhX5xiBqhj7q0sw7425A4m6wnD9C9HFfEDOanqR1JvDOWmvyOne4GKoi
-	 g7lyZRfuqC8O7s+6uimaoMS8lxEGhVCn+Y9EQGUCekiLzLHC5omLL6A6YlB521Lv+w
-	 m8ghh4E4P7THA==
+	b=PREr+dBgL1t7+RMy/TivRYw9OL39nez4quLnCltbLPG01ozww8UZmKThJS8YPRkk/
+	 wjubkkQycgg7VILM1kl9Dt0kx9SgcuZJ4J9giIoLTNxhxB4gWk1zpDyDGx0atnu9mp
+	 QSBh4GNdNvHExTBatR+h/9B/4pKYPu+E1KzsLqjaz97zPzoyGpgF05N5FxQ65P63fJ
+	 /1S/n6mAmmwffP3jqEN3YvQ04/hxdX36G8/S/TVSSoul+Oq7/W+99RA/lbzyMnacgr
+	 ATHOCyn0k9Mu+WRY8AcTBj91y0qu4nfNh0RfZ/5pEQWtOdbZAa2J3giQuiUMk3ftID
+	 IjRzww19Q3prw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.6] firmware: arm_scmi: Skip RAW initialization on failure
-Date: Tue, 28 Oct 2025 08:48:07 -0400
-Message-ID: <20251028124815.1058740-7-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] spi: intel-pci: Add support for Arrow Lake-H SPI serial flash
+Date: Tue, 28 Oct 2025 08:48:08 -0400
+Message-ID: <20251028124815.1058740-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028124815.1058740-1-sashal@kernel.org>
 References: <20251028124815.1058740-1-sashal@kernel.org>
@@ -52,257 +51,158 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 092b9e2ce6dd63d2f36822751a51957412706986 ]
+[ Upstream commit bc25c6e0a4880b5ad70c31fe1466f30c9e4c8f52 ]
 
-Avoid attempting to initialize RAW mode when the debug subsystem itself
-has failed to initialize, since doing so is pointless and emits
-misleading error messages.
+Add Intel Arrow Lake-H PCI ID to the driver list of supported devices.
+This is the same controller found in previous generations.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Message-Id: <20251014115346.2391418-3-cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20251020145415.3377022-3-mika.westerberg@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to make my determination. Let me create a
-comprehensive analysis:
+Based on my comprehensive analysis of both the commit and the kernel
+repository context, here is my assessment:
 
-## BACKPORT ANALYSIS DECISION
-
-**Backport Status: YES**
+## **Backport Status: YES**
 
 ---
 
-## COMPREHENSIVE ANALYSIS
+## **Analysis Details**
 
-### 1. CODE CHANGE ANALYSIS
-
-The commit makes two related changes:
-
-**Change 1** (drivers/firmware/arm_scmi/driver.c:3047-3048):
+### **1. Code Changes Analysis**
+The commit adds a single line to `drivers/spi/spi-intel-pci.c`:
 ```c
-- if (!info->dbg)
-- return -EINVAL;
-```
-Removes the NULL check from inside `scmi_debugfs_raw_mode_setup()`.
-
-**Change 2** (drivers/firmware/arm_scmi/driver.c:3221):
-```c
-- if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
-+               if (info->dbg &&
-IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
-```
-Adds guard condition to prevent calling the function when `info->dbg` is
-NULL.
-
-### 2. SEMANTIC ANALYSIS PERFORMED
-
-**Tools Used:**
-- `git log` and `git show` for commit history analysis
-- `Grep` for code pattern searches across SCMI subsystem
-- `Read` for examining driver code and Kconfig
-- Task agent (Explore) for understanding SCMI ecosystem context
-- Git blame and tag analysis for version tracking
-
-**Key Findings from Analysis:**
-
-**Impact Scope (from code examination):**
-- Function `scmi_debugfs_raw_mode_setup()` is called from only ONE
-  location: `scmi_probe()` at line 3222
-- Function accesses `info->dbg->top_dentry` at line 3068, which would be
-  a **NULL pointer dereference** if the removed check wasn't there
-- The calling site now has proper guard, so function is never called
-  with NULL dbg
-
-**Caller Analysis:**
-- `scmi_probe()` is the driver probe function - called during device
-  initialization
-- Prior commits in series (2290ab43b9d8e, 289ce7e9a5e1a) fixed NULL
-  handling in debug helpers
-- This commit completes the debug failure handling by preventing
-  pointless RAW init attempt
-
-**Dependency Analysis:**
-- RAW mode requires debugfs (CONFIG dependency in Kconfig line 35)
-- `scmi_raw_mode_init()` expects valid `top_dentry` parameter (line
-  3068)
-- If debug setup fails, `info->dbg` is NULL, making RAW mode init
-  impossible
-
-### 3. BUG IMPACT ANALYSIS
-
-**Affected Kernel Versions:**
-- Introduced: v6.3-rc1 (commit 7063887b53860, January 2023)
-- Fixed: v6.18-rc3 (commit 092b9e2ce6dd6, October 2025)
-- **Affected range: v6.3 through v6.17**
-
-**Failure Scenario:**
-```c
-// Before fix - in scmi_probe():
-if (scmi_top_dentry) {
-    info->dbg = scmi_debugfs_common_setup(info);  // Returns NULL on
-failure
-    if (!info->dbg)
-        dev_warn(dev, "Failed to setup SCMI debugfs.\n");
-
-    if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
-        ret = scmi_debugfs_raw_mode_setup(info);  // Called with NULL
-dbg!
-        if (!coex) {  // Default config
-            if (ret)  // ret = -EINVAL
-                goto clear_dev_req_notifier;  // PROBE FAILS!
-            return 0;
-        }
-    }
-}
+{ PCI_VDEVICE(INTEL, 0x7723), (unsigned long)&cnl_info },
 ```
 
-**Real-World Impact:**
-- **Who is affected**: Development/testing systems with
-  CONFIG_ARM_SCMI_RAW_MODE_SUPPORT=y
-- **When it triggers**: When debugfs initialization fails (no debugfs
-  support, memory failure, mount issues)
-- **What breaks**: **Entire SCMI driver probe fails** → system may not
-  boot
-- **Criticality**: SCMI manages power domains, clocks, DVFS, thermal
-  sensors - critical for ARM platforms
+This adds PCI device ID `0x7723` (Intel Arrow Lake-H SPI controller) to
+the supported devices table, using the existing `cnl_info` board
+configuration that's already proven and tested on numerous other Intel
+platforms.
 
-From Explore agent findings:
-- SCMI is used on STM32MP, ARM Juno, NXP i.MX95 platforms
-- Controls essential services: CPU frequency, power states, system
-  shutdown/reboot
-- Kconfig notes it "may be needed early in boot" for power control
+**Change statistics:** 1 file changed, 1 insertion (+)
 
-**Severity Assessment:**
-- **Medium-High for affected configurations**
-- Not production issue (RAW mode is debug/testing feature per Kconfig
-  line 42)
-- But complete driver failure is **unacceptable** for development
-  systems
-- Misleading error messages make debugging difficult
+### **2. Stable Kernel Rules Compliance**
 
-### 4. ARCHITECTURAL & SIDE EFFECTS
+I examined `/home/sasha/linux/Documentation/process/stable-kernel-
+rules.rst` and found **explicit authorization** for this type of commit:
 
-**Architectural Impact:** None
-- No data structure changes
-- No API modifications
-- No changes to core SCMI protocol handling
+**Line 15 states:** *"It must either fix a real bug that bothers people
+or just add a device ID."*
 
-**Side Effects:** Positive only
-- Prevents probe failure when debugfs fails
-- Eliminates misleading error messages
-- Improves graceful degradation
-- No functional changes to success path
+This commit satisfies the stable tree requirements:
+- ✅ **Adds a device ID** (explicitly allowed per line 15)
+- ✅ **Already in mainline** (commit bc25c6e0a4880)
+- ✅ **Size: 1 line** (well under the 100-line limit)
+- ✅ **Obviously correct** (simple table entry addition)
+- ✅ **Enables hardware support** for Arrow Lake-H users
 
-### 5. STABLE TREE COMPLIANCE
+### **3. Historical Precedent - Similar Commits Backported**
 
-**Compliance Check:**
-✅ **Bug fix**: Yes - fixes probe failure
-✅ **Small and contained**: 2 simple changes in 1 file
-✅ **Obviously correct**: Guard check before function call
-✅ **No new features**: Pure bug fix
-✅ **No architectural changes**: Minimal scope
-✅ **Low regression risk**: Only affects error path
+I verified that similar PCI ID additions to this driver have been
+**consistently backported** to stable trees:
 
-**Stable Tree Rules Alignment:**
-- Fixes important bug (probe failure)
-- Self-contained change
-- Easy to review and verify
-- Part of coordinated fix series (related commits already backported)
+**Evidence from repository analysis:**
+```bash
+# Lunar Lake-M commit (8f44e3808200c)
+Backported to: stable/linux-6.8.y, 6.10.y, 6.11.y, 6.12.y, 6.13.y,
+6.14.y, 6.15.y, 6.16.y, 6.17.y
 
-### 6. BACKPORT INDICATORS
+# Arrow Lake non-H commit (8afe3c7fcaf72)
+Backported to: stable/linux-6.8.y, 6.10.y, 6.11.y, 6.12.y, 6.13.y,
+6.14.y, 6.15.y, 6.16.y, 6.17.y
+```
 
-**Evidence for backporting:**
-- **Related commits already backported**: Commit 2290ab43b9d8e (with
-  Fixes tag) has been backported to multiple stable trees
-  (7056e61a28a83, 4c0f9a50f2e98, fae8405cfddb0, 58d3e2680bea9,
-  30c89140a4ddc, 75446183128d2)
-- **Part of fix series**: This is patch 3/3 in a coordinated series
-  addressing debug initialization failures
-- **Fixes merged in mainline**: Present in v6.18-rc3, merged via
-  arm/fixes tree (71a5970259c3f)
-- **No Cc: stable tag**: But related patches were backported, suggesting
-  subsystem maintainers want the series in stable
+**Pattern:** Device ID additions for Intel SPI controllers are routinely
+backported, even without explicit "Cc: stable" tags, because they're
+explicitly permitted by stable rules.
 
-**Evidence against backporting:**
-- No explicit "Fixes:" tag (but commit message clearly states it fixes a
-  problem)
-- No "Cc: stable@vger.kernel.org" tag
-- Only affects debug/testing configuration
+### **4. Cross-Subsystem Context**
 
-### 7. DEPENDENCY CHECK
+Arrow Lake-H is a **real, shipping platform**. I found multiple Arrow
+Lake-H device ID additions across the kernel, many already backported:
 
-**Depends on:**
-- None - independent fix
-- Works better with commits 2290ab43b9d8e and 289ce7e9a5e1a (already
-  backported)
+- `i2c: i801: Add support for Intel Arrow Lake-H` (f0eda4ddb2146) →
+  **backported to 6.11.y - 6.14.y**
+- `usb: dwc3: pci: add support for the Intel Arrow Lake-H`
+  (2fff7bb8f1c26) → **backported to 6.7.y**
+- `mfd: intel-lpss: Add Intel Arrow Lake-H LPSS PCI IDs` (1523d8ea99d28,
+  6112597f5ba84)
+- `pinctrl: meteorlake: Add Arrow Lake-H/U ACPI ID` (080c3068715df,
+  a366e46da10d7)
 
-**Required by:**
-- None identified
+This demonstrates that Arrow Lake-H support is being actively backported
+across subsystems.
+
+### **5. Risk Assessment**
+
+**Risk: MINIMAL**
+
+- **No code behavior changes** - only adds a PCI ID entry
+- **Uses existing, proven code path** - references `cnl_info` used by
+  20+ other device IDs
+- **Isolated impact** - only affects systems with Arrow Lake-H hardware
+  (PCI ID 0x7723)
+- **No dependencies** - standalone change requiring no prerequisites
+- **No architectural changes** - no API modifications, no data structure
+  changes
+
+### **6. User Impact**
+
+**Without this patch:** Users with Arrow Lake-H systems cannot access
+their SPI flash controller, preventing firmware access and critical
+hardware functionality.
+
+**With this patch:** Arrow Lake-H hardware works identically to other
+supported Intel platforms (Lunar Lake, Meteor Lake, Granite Rapids,
+etc.)
+
+### **7. Author & Maintainer Context**
+
+- **Author:** Mika Westerberg (original driver author and maintainer)
+- **Commit history:** 16 out of 23 recent commits to this file are by
+  Mika, primarily adding new Intel platform PCI IDs
+- **Pattern:** Consistent, incremental hardware enablement for new Intel
+  platforms
 
 ---
 
-## FINAL RECOMMENDATION
+## **Conclusion**
 
-**YES - This commit SHOULD be backported to stable kernel trees.**
+This commit is a **textbook example** of what should be backported to
+stable trees:
+1. Explicitly permitted by stable kernel rules (device ID addition)
+2. Minimal size (1 line) and zero risk
+3. Consistent with historical backporting patterns
+4. Enables real hardware that users have
+5. No behavior changes to existing code
+6. Part of broader Arrow Lake-H enablement across kernel subsystems
 
-**Justification:**
+**Recommendation:** Backport to all active stable trees (6.12.y, 6.11.y,
+6.10.y, etc.) following the same pattern as previous Intel SPI
+controller device additions.
 
-1. **Fixes probe failure**: When debugfs fails + RAW mode enabled
-   (without coex), entire SCMI driver fails to load, breaking critical
-   platform services
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-2. **Completes backported series**: Related fixes (2290ab43b9d8e,
-   289ce7e9a5e1a) already backported to stable. This commit completes
-   the debug failure handling
-
-3. **Low risk, high correctness**: Minimal change, obviously correct
-   logic (guard before function call)
-
-4. **Stable tree compliant**: Small, contained, bug-fix-only change with
-   no architectural impact
-
-5. **Affects supported feature**: CONFIG_ARM_SCMI_RAW_MODE_SUPPORT
-   exists in stable kernels since v6.3
-
-6. **Graceful degradation**: Enables proper fallback behavior when debug
-   subsystem fails
-
-**Target stable trees:** v6.3+ (where RAW mode was introduced)
-
-**Priority:** Medium - affects development/testing systems, not
-production, but fixes complete driver failure
-
- drivers/firmware/arm_scmi/driver.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index bd56a877fdfc8..85392228d1739 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -3044,9 +3044,6 @@ static int scmi_debugfs_raw_mode_setup(struct scmi_info *info)
- 	u8 channels[SCMI_MAX_CHANNELS] = {};
- 	DECLARE_BITMAP(protos, SCMI_MAX_CHANNELS) = {};
- 
--	if (!info->dbg)
--		return -EINVAL;
--
- 	/* Enumerate all channels to collect their ids */
- 	idr_for_each_entry(&info->tx_idr, cinfo, id) {
- 		/*
-@@ -3218,7 +3215,7 @@ static int scmi_probe(struct platform_device *pdev)
- 		if (!info->dbg)
- 			dev_warn(dev, "Failed to setup SCMI debugfs.\n");
- 
--		if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
-+		if (info->dbg && IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
- 			ret = scmi_debugfs_raw_mode_setup(info);
- 			if (!coex) {
- 				if (ret)
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index 4bb158a23349e..7765fb27c37c3 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -80,6 +80,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x51a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x54a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5794), (unsigned long)&cnl_info },
++	{ PCI_VDEVICE(INTEL, 0x7723), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7a24), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7aa4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7e23), (unsigned long)&cnl_info },
 -- 
 2.51.0
 
