@@ -1,46 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D155F1D88B4;
-	Tue, 28 Oct 2025 00:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90231BBBE5;
+	Tue, 28 Oct 2025 00:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612012; cv=none; b=MZjneHz+yYXiTPNvgCQHC6b18kMxdz5qpIpdApW9OJYAmt5ID+T4sxiECh4SOpIAyLMYysw5yRxn5liBfh+X0O8uSSywr5byWpjq1b4dWimXfJpkM+N3oAV0s0KiMbd5pD2OuX0UybkRlmwsQNP+3LZQRG7TEmYie4kQH9j2+OA=
+	t=1761612016; cv=none; b=Q/ovxtDxFpHktuHU5Uy5wl87UsEyGIyzPDk4hED6Yx6Tx5VGEuMyBn5JJ6Gx4KUefj5gZdOhmskn59LojVe7oFymDmVPGs1aDQyew6YixAY2L/ezEHMDO3kbK6uxMcmgKKFa5Sjbj4HuJ+9idVq2LrPTlGpq5hlkrtl/CrHrgoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612012; c=relaxed/simple;
-	bh=CzG6Uymt0CzEfY0VhQZt0JwAL4Jxm9yelE9yo5V7xX0=;
+	s=arc-20240116; t=1761612016; c=relaxed/simple;
+	bh=BodBvqDB7jhvZgAQ9ASDmDnRWRvu6gw3TrHXIPrOYKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eYIfBIlRHA3TsvTMFiqqmHhW9v14dofghKqbWmZIr8S3PnH6w9JQZYNvYFhiMetXOQiJjRI0f0kkQClzeNFI4l3QRnrUqgGE/v6WnOojRXJVcRHN5mpoJbE24vzAhjsGkZAhzO7dk9i4gWGPiYbnW5VbznZ7+ekh500HulGUX9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOD65IuX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sw4hWd8foS8OAOPzbiKdhEO8mGrZ/qqCg8BI1jAPOVNr0FWCXQ/S3bYWcQfwDK1cEDZQaSPcTjqkcHQ5lnh7IALrmGHaJrTwVqFoKy6zti7+MU2rgW/21aj1uwb8ThnXNeQWo+0sXUvGZ/ws+eTqqb2Ax+CJQlNqdrc0OBxnzJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPbxyGBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOD65IuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85268C4CEF1;
-	Tue, 28 Oct 2025 00:40:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPbxyGBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCAAC113D0;
+	Tue, 28 Oct 2025 00:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612012;
-	bh=CzG6Uymt0CzEfY0VhQZt0JwAL4Jxm9yelE9yo5V7xX0=;
+	s=k20201202; t=1761612015;
+	bh=BodBvqDB7jhvZgAQ9ASDmDnRWRvu6gw3TrHXIPrOYKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOD65IuXNomiDSWIKiQe3gsc9IfjZb59eqUh7YzHxJMj0es0SeW7gXxX4BDh/S8qo
-	 4B03t55MqnvLV4y4VVE/HbQJqjsBGUSXf+SjaruR7NX1kstSCKOsOG90rl+p+kGGCJ
-	 ynErY11kXvdBVN3HWS4n2QqhC++5VA4LMt+2pqQD6NXGwjkZPcvSU/AEtwHLT0//ht
-	 WnaKjFUE9gABPPlXpWdZJYEZRClRObSyuNdmDWFQoTTkw7Y092P+zDkyf14mmfpvhk
-	 zbkNMrhEg2IEiGwme9GZ1jzCvst5uNoCbqL42HIZKH61ZPIiBGLU7f2gvxekMlkN5t
-	 W6MPInw03UsYg==
+	b=iPbxyGBFHyxnOSlNgRB3eEM1lzqqXbcmj6OeNn7HgeqnOWP1EAO0sVMWNgislF+gP
+	 qkGm5qvYUnZkcVWqOLn+ndN5YGCG80lR7owYr2newfjesSAIWZPiTMfxckNecj2/1o
+	 izXpg2DQKaIacchELUJtFAeR1zhVeeLUky4gZx0blH5MOimy7uKC0u9hOBo0kXw3eR
+	 /kALh2JZ5eeOd1XSFkjtW43ST05Y77z6OwAuSeLGQ1Mm8GnGw0qph0fQmXntCzSr4P
+	 ZAWHzECkyRhrmHFX4mWW6UpI9dQFgjIXPguiAg8JtOVPllhan5oS+tli75AvGsqNgt
+	 Voq46WW7IG1cA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Han Gao <rabenda.cn@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lijo.lazar@amd.com,
-	christian.koenig@amd.com,
-	Hawking.Zhang@amd.com,
-	mario.limonciello@amd.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alexghiti@rivosinc.com,
+	bjorn@rivosinc.com,
+	akpm@linux-foundation.org,
+	agordeev@linux.ibm.com,
+	visitorckw@gmail.com,
 	alexandre.f.demers@gmail.com,
-	cesun102@amd.com
-Subject: [PATCH AUTOSEL 6.17] drm/amd: Disable ASPM on SI
-Date: Mon, 27 Oct 2025 20:38:58 -0400
-Message-ID: <20251028003940.884625-14-sashal@kernel.org>
+	pulehui@huawei.com,
+	guoweikang.kernel@gmail.com,
+	sycamoremoon376@gmail.com,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.6] riscv: acpi: avoid errors caused by probing DT devices when ACPI is used
+Date: Mon, 27 Oct 2025 20:38:59 -0400
+Message-ID: <20251028003940.884625-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
 References: <20251028003940.884625-1-sashal@kernel.org>
@@ -50,217 +56,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Han Gao <rabenda.cn@gmail.com>
 
-[ Upstream commit 7bdd91abf0cb3ea78160e2e78fb58b12f6a38d55 ]
+[ Upstream commit 69a8b62a7aa1e54ff7623064f6507fa29c1d0d4e ]
 
-Enabling ASPM causes randoms hangs on Tahiti and Oland on Zen4.
-It's unclear if this is a platform-specific or GPU-specific issue.
-Disable ASPM on SI for the time being.
+Similar to the ARM64 commit 3505f30fb6a9s ("ARM64 / ACPI: If we chose
+to boot from acpi then disable FDT"), let's not do DT hardware probing
+if ACPI is enabled in early boot.  This avoids errors caused by
+repeated driver probing.
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+Link: https://lore.kernel.org/r/20250910112401.552987-1-rabenda.cn@gmail.com
+[pjw@kernel.org: cleaned up patch description and subject]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive semantic analysis of this commit, here is my
-assessment:
+Based on my semantic code analysis and repository examination, here is
+my determination:
 
-## **RECOMMENDATION: YES**
+**YES** - This commit should be backported to stable kernel trees.
 
-This commit should be backported to stable kernel trees.
+## Detailed Analysis:
 
----
+### 1. Semantic Tools Used:
+- **mcp__semcode__find_function**: Located the `setup_arch`,
+  `unflatten_device_tree`, and `unflatten_and_copy_device_tree`
+  functions
+- **mcp__semcode__find_callers**: Identified all callers of the device
+  tree initialization functions across architectures
+- **Git log analysis**: Traced the history of RISC-V ACPI support and
+  similar fixes in other architectures
+- **Code repository examination**: Verified the commit context and
+  impact scope
 
-## **DETAILED ANALYSIS**
+### 2. Bug Description:
+The commit fixes a correctness bug where both ACPI and Device Tree (DT)
+are initialized during boot on RISC-V systems when ACPI is enabled. This
+causes "repeated driver probing" errors because hardware devices get
+enumerated from both sources, leading to conflicts and initialization
+failures.
 
-### **1. Semantic Code Analysis Performed**
+### 3. Key Code Change:
+The fix wraps the device tree initialization calls in an `if
+(acpi_disabled)` conditional block at arch/riscv/kernel/setup.c:333-340,
+ensuring device tree is only processed when ACPI is not being used.
 
-**Tools Used:**
-- `mcp__semcode__find_function`: Located the modified
-  `amdgpu_device_aspm_support_quirk()` function
-- `mcp__semcode__find_callers`: Traced the impact scope through the call
-  graph
-- `mcp__semcode__find_callchain`: Analyzed complete call chains to
-  understand initialization paths
-- Git history analysis: Examined related ASPM commits and patterns
+### 4. Impact Scope Analysis:
+- **Affected kernel versions**: All versions from 6.5 onwards (where
+  RISC-V ACPI support was introduced in commit 724f4c0df7665)
+- **Affected systems**: RISC-V systems booting with ACPI enabled
+- **Severity**: Medium - causes driver initialization errors on ACPI-
+  enabled RISC-V systems
+- **Call graph analysis**: The change only affects the RISC-V
+  architecture-specific boot path; no cross-architecture impact
 
-**Key Findings:**
+### 5. Precedent:
+This follows the exact same pattern established by ARM64 in commit
+3505f30fb6a98 (March 2015), which has been stable for nearly 10 years.
+ARM64 faced the identical issue and resolved it the same way.
 
-**Call Graph Analysis:**
-```
-amdgpu_device_aspm_support_quirk() [MODIFIED]
-  ↓ called by
-amdgpu_device_should_use_aspm() [1 caller]
-  ↓ called by (9 callers across multiple GPU generations)
-  ├─ si_program_aspm() [SI generation - directly affected]
-  ├─ vi_program_aspm() [VI generation]
-  ├─ cik_program_aspm() [CIK generation]
-  ├─ nv_program_aspm() [Navi generation]
-  ├─ soc15_program_aspm() [SoC15 generation]
-  └─ ... and 4 more hardware initialization functions
-```
+### 6. Backport Suitability Indicators:
+✅ **Bug fix**: Corrects driver probing errors
+✅ **Small and contained**: Only 7 lines changed in one file
+✅ **No new features**: Pure bug fix
+✅ **No architectural changes**: Simple conditional logic
+✅ **Low regression risk**: Established pattern from ARM64
+✅ **Clean apply**: No complex dependencies
+✅ **Stable kernel compliant**: Fits all stable kernel rules
 
-The change adds an early return when `adev->family == AMDGPU_FAMILY_SI`,
-which specifically targets Southern Islands GPUs (Tahiti, Oland, Verde,
-Pitcairn, Hainan from ~2012).
+### 7. Dependencies Check:
+Using semantic analysis, I verified that the only dependency is
+`acpi_disabled`, which has been available in RISC-V since ACPI support
+was added in v6.5. The fix is self-contained and requires no additional
+changes.
 
-### **2. Code Changes Analysis**
+### 8. Recommendation:
+Backport to **all stable trees from 6.6.x onwards** (6.6.x, 6.12.x, and
+any LTS versions), as these include RISC-V ACPI support and are affected
+by this bug. The fix prevents real errors on production RISC-V ACPI
+systems and has minimal risk of regression.
 
-**Change Size:** Minimal - only 7 lines added (6 code + 1 blank)
-- Lines added: `+6`
-- Lines removed: `0`
-- Files modified: `1`
-  (drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1883-1889)
+ arch/riscv/kernel/setup.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-**Change Type:** Conservative quirk addition
-- Uses existing quirk infrastructure (function already handles Intel
-  Alder Lake/Raptor Lake quirks)
-- No refactoring or architectural changes
-- Simply adds hardware-specific condition at function entry
-
-### **3. Bug Impact Assessment**
-
-**Severity:** **CRITICAL** - Random system hangs
-- Symptom: Random hangs on Tahiti and Oland GPUs
-- Platform: Zen4 (AMD Ryzen 7000 series)
-- Affected Hardware: SI family GPUs (AMDGPU_FAMILY_SI)
-
-**User Exposure:**
-From call chain analysis, the code path is triggered during:
-- Hardware initialization (`si_common_hw_init` at
-  drivers/gpu/drm/amd/amdgpu/si.c:2640)
-- Executed automatically when SI GPU is present in system
-- No special user action required to trigger the bug
-
-**Impact Scope:**
-- **Narrow hardware scope**: Only SI family GPUs (12+ year old hardware,
-  but still in use)
-- **Platform-specific trigger**: Issues observed on Zen4 platforms
-- **Well-contained fix**: Isolated to ASPM quirk handling code
-
-### **4. Backport Suitability - Positive Indicators**
-
-✅ **Fixes Critical Stability Bug**: Random system hangs are severe
-issues affecting system usability
-
-✅ **Minimal Change Size**: Only 7 lines added, zero lines removed -
-extremely low complexity
-
-✅ **No Dependencies**: Uses existing code infrastructure
-(`AMDGPU_FAMILY_SI` constant, quirk pattern)
-
-✅ **Conservative Fix**: Disables problematic feature rather than
-attempting complex behavior changes
-
-✅ **Low Regression Risk**:
-- Only affects SI generation GPUs
-- Disabling ASPM is safe (may slightly increase power consumption but
-  prevents hangs)
-- No code path changes for other GPU families
-
-✅ **Follows Established Pattern**:
-From git history analysis, found similar ASPM quirk commits:
-- `c770ef19673fb` - "disable ASPM in some situations"
-- `d9b3a066dfcd3` - "Exclude dGPUs in eGPU enclosures from DPM quirks"
-- `2757a848cb0f1` - "Explicitly disable ASPM when dynamic switching
-  disabled"
-
-✅ **Clear Hardware Scope**: Specifically targets well-defined hardware
-(SI family)
-
-✅ **Stable Tree Compliant**:
-- Pure bug fix, not a feature addition
-- No architectural changes
-- Fixes user-visible problem
-
-### **5. Backport Suitability - Considerations**
-
-⚠️ **No Explicit Cc: stable Tag**: Commit lacks `Cc:
-stable@vger.kernel.org` tag
-- This may be intentional (let it bake in mainline first)
-- Or could be an oversight given the severity
-
-⚠️ **Root Cause Uncertainty**: Comment states "unclear if platform-
-specific or GPU-specific issue"
-- However, the conservative fix (disable ASPM) is appropriate regardless
-- This uncertainty doesn't affect fix correctness
-
-⚠️ **Affects Legacy Hardware**: SI GPUs from 2012
-- But users still run this hardware on modern Zen4 platforms
-- Hangs make systems unusable, so fix is valuable
-
-### **6. Technical Correctness**
-
-**Function Behavior:**
-- `amdgpu_device_aspm_support_quirk()` returns `true` when ASPM should
-  be **disabled** (quirk detected)
-- Adding SI family check causes function to return `true` early
-- This propagates through `amdgpu_device_should_use_aspm()` which
-  returns `false` when quirk detected
-- Result: `si_program_aspm()` exits early without programming ASPM
-  registers
-
-**Semantic Verification:**
-Checked the function at commit `7a899fb4de29c` (before this change) - it
-only handled Intel Alder Lake/Raptor Lake quirks. The new SI quirk
-follows identical pattern.
-
-### **7. Historical Context**
-
-From git log analysis:
-- First appeared in v6.18-rc2 (October 2025)
-- Part of ongoing ASPM quirk management in AMD GPU driver
-- Follows 2+ year history of ASPM-related fixes in this subsystem
-- Reviewed by Alex Deucher (AMD maintainer)
-
-### **8. Final Assessment**
-
-**BACKPORT: YES**
-
-**Justification:**
-1. **Critical stability fix** resolving random system hangs
-2. **Minimal risk** due to small, contained change
-3. **Clear benefit** for users with SI GPUs on Zen4 platforms
-4. **Proper technical approach** using established quirk infrastructure
-5. **No side effects** on other hardware generations
-6. **Conservative solution** that safely disables problematic feature
-
-**Recommendation:** This commit should be backported to all active
-stable kernel trees that support SI generation AMD GPUs (likely 5.x and
-6.x stable series). The fix is low-risk and provides significant
-stability improvements for affected users.
-
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index c8459337fcb89..e01264d644701 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1879,6 +1879,13 @@ static bool amdgpu_device_pcie_dynamic_switching_supported(struct amdgpu_device
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index f90cce7a3acea..d7ee62837aa4f 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -330,11 +330,14 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Parse the ACPI tables for possible boot-time configuration */
+ 	acpi_boot_table_init();
  
- static bool amdgpu_device_aspm_support_quirk(struct amdgpu_device *adev)
- {
-+	/* Enabling ASPM causes randoms hangs on Tahiti and Oland on Zen4.
-+	 * It's unclear if this is a platform-specific or GPU-specific issue.
-+	 * Disable ASPM on SI for the time being.
-+	 */
-+	if (adev->family == AMDGPU_FAMILY_SI)
-+		return true;
++	if (acpi_disabled) {
+ #if IS_ENABLED(CONFIG_BUILTIN_DTB)
+-	unflatten_and_copy_device_tree();
++		unflatten_and_copy_device_tree();
+ #else
+-	unflatten_device_tree();
++		unflatten_device_tree();
+ #endif
++	}
 +
- #if IS_ENABLED(CONFIG_X86)
- 	struct cpuinfo_x86 *c = &cpu_data(0);
+ 	misc_mem_init();
  
+ 	init_resources();
 -- 
 2.51.0
 
