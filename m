@@ -1,108 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235A12E7BB4;
-	Tue, 28 Oct 2025 09:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B842E7BC0;
+	Tue, 28 Oct 2025 09:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761642315; cv=none; b=o7LEZWyF5U654uzMqGqCqLkaRVRBysfoqbC3IUthQ+bqf074zZJ7KRHVvpDcIFHT+q0NTg+x2XN7+Qm1J/Sbt7GGSrEGn/AEToeIdy/1DKQ92Xggs/t2zQtihGe3bFXHFh2eWX9KCr4wQUchrHL/x3BGycHxJfwUvmDCjU//+AE=
+	t=1761642320; cv=none; b=sbNrYxX6XHKDRDJKAPUnnm6Jn3R4ibHedpVsQPICyzPHBupWNGlK4u2eM5oPZjaocqwtuzVv1T08lTYBDwo0QQjEhBuSeONBx5cvzVzDgV+4EwhuyU6eRgVz6JXu0soHrYRM4bksj0kQyUDebatbCST+y1o/yRrkdxgTaqUuwmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761642315; c=relaxed/simple;
-	bh=V0eGMEDYNjmZcItSuYC29g2UnX0Z2vl5cwdDrIsClsE=;
+	s=arc-20240116; t=1761642320; c=relaxed/simple;
+	bh=2bDfEv9vTN9I+ahzcVMdIRFkrUamd0EmwFSbHJjVcdg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VSMTefbTJ8shqGhQQ/pl0WqKppMcqht7oaws/Mdo8yUKYvIEFVHfm0Ui1qOMlay9h2dk+Z9aupzKNBNeXlSFY4H7rwkvN0ZCrvUNalnAvvmwa2j5qtdLcE4maOfM97noAaX4ZZm7qWv8wrDOt836n1oY/m28KjoUFqjV1VrCwU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMyvYEnz; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=aSy37DoTb9kxankjC1Dtpaj7t8mpU/MMLN49jOtmRbwYoxANu6ABIQXXgIgUVMUEwFf3iABLAGmslcF22w+D3VakajAhNr888+kP59tUBuotXRXKJnRI2DmV2SKp2wdsoL8x7sZCkV9eXgmQ9uajUuJas+kZigW33FG34ojTrzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9DNLOeO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMyvYEnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C599AC4CEE7;
-	Tue, 28 Oct 2025 09:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9DNLOeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F36C4CEE7;
+	Tue, 28 Oct 2025 09:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761642314;
-	bh=V0eGMEDYNjmZcItSuYC29g2UnX0Z2vl5cwdDrIsClsE=;
+	s=korg; t=1761642319;
+	bh=2bDfEv9vTN9I+ahzcVMdIRFkrUamd0EmwFSbHJjVcdg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=yMyvYEnzpTp2MOjVQmTfUVy9NkK+HpZw70+IgxZWHgaUIJ/ZPNs23ySvUKz8Vw0ds
-	 McHxCRsFiSGzvztrmF88bKzDtyqYM1kU5NfT9Lu9kAaRLo1g6xbwOJ+6nxOfEycS3u
-	 17bq2xXT2unZREUCwBJASVyJnSeR3vE4vC1iQnMI=
-Date: Tue, 28 Oct 2025 09:33:17 +0100
+	b=d9DNLOeO2Ohz76Tw/OAyU7LOYZfTAuxCT1Wydo2gA7z+8zYFieyk0sXuwx34s8kSV
+	 4DyUS5eHBqL2qCAXgs4LxaLWd4l9S53bf09uXXbUJsuWW2Gp7ZPAc1JlvpNBfLn6Mu
+	 kUGF8lZU038Y90W6QUG2XN4AASAfPImrlvW+zjqg=
+Date: Tue, 28 Oct 2025 09:38:28 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/123] 5.15.196-rc1 review
-Message-ID: <2025102850-obedience-filter-efca@gregkh>
-References: <20251027183446.381986645@linuxfoundation.org>
- <d61b75c9-a6a1-452c-a2be-34959d354739@w6rz.net>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 067/332] wifi: ath10k: avoid unnecessary wait for
+ service ready message
+Message-ID: <2025102817-appraiser-unshackle-bf06@gregkh>
+References: <20251027183524.611456697@linuxfoundation.org>
+ <20251027183526.385879492@linuxfoundation.org>
+ <7f021277-2925-4fd1-a191-c7034d526e37@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d61b75c9-a6a1-452c-a2be-34959d354739@w6rz.net>
+In-Reply-To: <7f021277-2925-4fd1-a191-c7034d526e37@oss.qualcomm.com>
 
-On Mon, Oct 27, 2025 at 09:49:59PM -0700, Ron Economos wrote:
-> On 10/27/25 11:34, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.196 release.
-> > There are 123 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 29 Oct 2025 18:34:15 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.196-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
+On Mon, Oct 27, 2025 at 12:01:00PM -0700, Jeff Johnson wrote:
+> On 10/27/2025 11:32 AM, Greg Kroah-Hartman wrote:
+> > 5.10-stable review patch.  If anyone has any objections, please let me know.
 > 
-> The RISC-V build fails with:
+> Same comments as 5.4
+> Please do not propagate this. This had adverse effects on some platforms and a
+> revert is already in the pipeline:
 > 
-> arch/riscv/kernel/cpu.c: In function 'riscv_of_processor_hartid':
-> arch/riscv/kernel/cpu.c:24:33: error: implicit declaration of function
-> 'of_get_cpu_hwid'; did you mean 'of_get_cpu_node'?
-> [-Werror=implicit-function-declaration]
->    24 |         *hart = (unsigned long) of_get_cpu_hwid(node, 0);
->       |                                 ^~~~~~~~~~~~~~~
->       |                                 of_get_cpu_node
-> cc1: some warnings being treated as errors
+> https://git.kernel.org/pub/scm/linux/kernel/git/ath/ath.git/commit/?h=ath-current&id=2469bb6a6af944755a7d7daf66be90f3b8decbf9
 > 
-> The function of_get_cpu_hwid() doesn't exist in Linux 5.15.x. It was
-> introduced in 5.16-rc1. The following patches should be reverted:
-> 
-> 87b94f8227b3b654ea6e7670cefb32dab0e570ed RISC-V: Don't fail in
-> riscv_of_parent_hartid() for disabled HARTs
-> 
-> 568d34c6aafa066bbdb5e7b6aed9c492d81964e8 RISC-V: Don't print details of CPUs
-> disabled in DT
-> 
-> And the stable-dep-of patches for the above should also be reverted since
-> they cause warnings:
-> 
-> 989694ece94da2bbae6c6f3f044994302f923cc8 riscv: cpu: Add 64bit hartid
-> support on RV64
-> 
-> 8c2544fd913bb7b29ee3af79e0b302036689fe7a RISC-V: Minimal parser for "riscv,
-> isa" strings
-> 
-> e0cc917db8fb7b4881ad3e8feb76cefa06f04fe6 RISC-V: Correctly print supported
-> extensions
-> 
-> c616540d6b67830bb4345130e8fa3d8e217249a0 iscv: Use of_get_cpu_hwid()
+> The revert should hopefully land in v6.18-rc4.
 
-Thanks, I'll go drop all of these and push out a -rc2
+Thanks, will go drop this from 5.4.y and 5.10.y
 
 greg k-h
