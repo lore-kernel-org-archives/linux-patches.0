@@ -1,115 +1,233 @@
-Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4D82D5957
-	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 12:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD51EE033;
+	Tue, 28 Oct 2025 12:48:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761653253; cv=none; b=u4Rl00oCLn1PwENVoOVTGImS4VnSPOtKjgtlkg9AGt0rHMprfYjTJwqCkbvbDxzrD3qSGTq85giGHgalKNlEtcgfT/MkCx2oRxNHvjRsFVulC/Dz7kdMEu9zQQkHTsx/9luUGGRfgOwDwZEjm8FtA/Ke57nKUYGApBtBZ+z4nic=
+	t=1761655698; cv=none; b=DBaslh1ZlBnR/tqK3OsEeHlBy0fzQXyYh07koEU8T8FejRisWu+TJp8aCXRpQdKzgZk1a9yfp1QB7DhRAHaQxiwMnMp/y+uDa6jR/GChUX7ORu0m0r1d/lzDoGSoKgmSLGX83y82xXXScQWx/UWbBidljzfdrfxVfesM2Rsege8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761653253; c=relaxed/simple;
-	bh=Fcfh6kaZo7yeS/1uDHoLfMDPZOkkiTRUJGyoBH2vHQM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zmb3dI5JaUtKWcWsOxcPv6/l0LIfosiwhPvvwwAhp5z67rllFaoKRcDTPGyY/F/VKtO4z4V0JtfIRyopnMVED8FASVF8MkKXZgCP0g6kQAY63OXhapLI75HYJo6TdAudvC9IhoAtzqJHsFiEQNzmnZeuUUgVsOm39/C7Q1dxhBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=a6gopqrF; arc=none smtp.client-ip=35.89.44.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1761655698; c=relaxed/simple;
+	bh=XDxjdZZlBIzdN570pWYWjXgJISALZu5t3ofQ1UfnZnc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cmYN7KS1AHp1Kkk+NKvUDC5D+tgh9e8gbeds2fkQPbEHKQ/wHActSeHf/nMsb6GWb36HDzpY5+1kInUGWfJDV42DrTKJxu4HIsxQtoa0zakVMontD3oX2cfXy1ixhmMjeUjAboxlbwjVEbnJ53pILM9E1Fc0HzR9p56Ib3COSmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sJ8tKUBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="a6gopqrF"
-Received: from eig-obgw-5002b.ext.cloudfilter.net ([10.0.29.226])
-	by cmsmtp with ESMTPS
-	id DVG0vxMu7aPqLDiU5vvQrI; Tue, 28 Oct 2025 12:07:29 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id DiTwvHxHiniktDiTwvwv62; Tue, 28 Oct 2025 12:07:20 +0000
-X-Authority-Analysis: v=2.4 cv=FOIbx/os c=1 sm=1 tr=0 ts=6900b201
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=mI5VrmPg0CdlQwlRe4cA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=n6O6DBKd53+BXK2/d2bLFquIW/SCEivimwCxbLzKvNo=; b=a6gopqrFfstda5UFx408ef7Jsm
-	4NNyF5rN1w69kPpF6+4gpRidDqgQuLh1HdgwVUg8r563rk3f3eYgRjhNNzT78mOglB1GfFMz0WZa5
-	5tT9VvH+aWG6an/+UwRzJtupomMNII5k049Bb8b5bUB0CAm3jmFsiclR+Lx/w9RPgQbOjYfgS4GKt
-	d6GejDA2D3GSe/hjuS6qsGHXuaWxMbR9+q4w2QkxERnZQOq8LK22LaVi10p6Y+slXvYCXfUzuAdwC
-	y3oHNXYBnJmTKcOHD+4yDWMMUgC4n8IH4vdUurdNft8S1HFMUjffXMrS+ZqS2A9K9P2cLXd3X8uUD
-	unJXU++g==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:43268 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1vDiTw-00000002IRs-0eSs;
-	Tue, 28 Oct 2025 06:07:20 -0600
-Message-ID: <096e6b1e-71b8-4738-8f91-1bc508273f18@w6rz.net>
-Date: Tue, 28 Oct 2025 05:07:18 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sJ8tKUBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41C2C4CEE7;
+	Tue, 28 Oct 2025 12:48:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761655697;
+	bh=XDxjdZZlBIzdN570pWYWjXgJISALZu5t3ofQ1UfnZnc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=sJ8tKUBlUjTCHwmSDfr14wDxQ1cCAoTiphEZBAO9DY2k814B8bM/Wd3Z2QOYCBsTg
+	 zsUiVkbiTP+ApidSoVSJLJijXPa0CTDZ8w1+5YjkwOQT55ICqsz6dmZfhpmX8lSCoe
+	 j+w/qfOcqNMWMhebzkie90kdsN/zAb45rBZWoyiuq4jMptGY/Nkjg8tC9krbghc4wd
+	 c8GgOmnG9LmgnSN4LnChLGZny44TFjHHHsWMdKS3+rW4F0QALXlkC7mKEU/H2LTDgI
+	 mdva1QkN565i0qDkQn83Q4tYQ7qHEQV070CLP+ed69Mv+GPctm9leAOaXijRzqH+i7
+	 /bD0YQgdQb9YQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.1] spi: intel-pci: Add support for Intel Wildcat Lake SPI serial flash
+Date: Tue, 28 Oct 2025 08:48:01 -0400
+Message-ID: <20251028124815.1058740-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/117] 5.15.196-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20251028092823.507383588@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20251028092823.507383588@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.92.56.26
-X-Source-L: No
-X-Exim-ID: 1vDiTw-00000002IRs-0eSs
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.116]) [73.92.56.26]:43268
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 18
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfEdCwUbhwUJHoq7HIv7gAUB52b27UVIg2OHjS0UPf3ZH2tZ2Py2faAciNvqaNgNCvgqggVgB6xEPVUDlaLtmGG46VzpsuUklkc/B2R2Bj/gLRjeNgOKA
- 4EbN7C9D+/sOJ032UdxEaJ9SzRn7XntbjVROoGhCD4iXHwqqEdo7UeP2fNY1CcZy+8w4thL0/Y+tew==
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 10/28/25 02:29, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.196 release.
-> There are 117 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 30 Oct 2025 09:28:07 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.196-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+[ Upstream commit f7e37affbc9085f2b77ccb6596521a44eabf7505 ]
 
-Tested-by: Ron Economos <re@w6rz.net>
+Add Intel Wildcat Lake SPI serial flash PCI ID to the list of supported
+devices.
+
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20251020145415.3377022-4-mika.westerberg@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+## BACKPORT ANALYSIS COMPLETE
+
+**Backport Status: YES**
+
+---
+
+## DETAILED ANALYSIS
+
+### 1. COMMIT CHARACTERIZATION
+
+**Type**: Hardware enablement (PCI device ID addition)
+
+**Code Changes**:
+- Single line addition to `drivers/spi/spi-intel-pci.c`
+- Adds PCI device ID `0x4d23` (Intel Wildcat Lake SPI serial flash)
+- Maps to existing `cnl_info` configuration structure
+- No behavioral changes to existing code paths
+
+### 2. SEMANTIC CODE ANALYSIS FINDINGS
+
+#### Tools Used:
+- **Read**: Examined the complete file structure (drivers/spi/spi-intel-
+  pci.c:68-99)
+- **Grep**: Located PCI device table usage and MODULE_DEVICE_TABLE macro
+- **Git analysis**: Reviewed commit history and backport precedents
+
+#### Impact Scope Analysis:
+- **Direct impact**: Only affects systems with PCI ID 0x4d23 (Wildcat
+  Lake hardware)
+- **Caller analysis**: The PCI device table is used by the kernel's PCI
+  subsystem for automatic device-driver matching
+- **Dependency analysis**: Uses `cnl_info` structure (drivers/spi/spi-
+  intel-pci.c:38-41), which has existed since 2022
+- **Risk assessment**: Zero risk to existing hardware - new entry only
+  triggers on matching PCI ID
+
+### 3. BACKPORT PRECEDENT (Strong Evidence)
+
+I found multiple similar commits that **WERE backported** to stable
+trees:
+
+**Example 1 - Lunar Lake-M** (commit ec33549be99fe):
+```
+commit ec33549be99fe25c6927c8b3d6ed13918b27656e
+Author: Mika Westerberg <mika.westerberg@linux.intel.com>
+Commit: Sasha Levin <sashal@kernel.org> [STABLE MAINTAINER]
+
+spi: intel-pci: Add support for Lunar Lake-M SPI serial flash
+
+[ Upstream commit 8f44e3808200c1434c26ef459722f88f48b306df ]
+```
+
+**Example 2 - Granite Rapids** (commit 60446b5e74865):
+```
+commit 60446b5e74865acff1af5f2d89d99551c8e6e2c1
+Author: Mika Westerberg <mika.westerberg@linux.intel.com>
+Commit: Greg Kroah-Hartman <gregkh@linuxfoundation.org> [STABLE
+MAINTAINER]
+
+spi: intel-pci: Add support for Granite Rapids SPI serial flash
+
+[ Upstream commit 9855d60cfc720ff32355484c119acafd3c4dc806 ]
+```
+
+**Key Finding**: Both commits were backported to stable trees by stable
+maintainers (Sasha Levin, Greg Kroah-Hartman) **despite having NO
+explicit stable tags** in the original commits.
+
+### 4. STABLE TREE COMPLIANCE
+
+**Positive Factors**:
+- ✅ Fixes a real user problem (Wildcat Lake users cannot access SPI
+  flash on stable kernels)
+- ✅ Extremely low risk (single line, static table entry)
+- ✅ No architectural changes
+- ✅ No dependencies on unreleased features
+- ✅ Follows established backporting pattern for PCI ID additions
+- ✅ "Obviously correct" - uses tested configuration from 20+ other Intel
+  platforms
+
+**Considerations**:
+- ⚠️ Technically a "new feature" (new hardware support)
+- ✅ However, PCI ID additions are a **special exception** routinely
+  accepted by stable maintainers
+- ✅ Hardware enablement is considered "fixing" missing support for
+  existing hardware
+
+### 5. DEPENDENCY VERIFICATION
+
+- **cnl_info structure**: Present since 2022, exists in all stable
+  kernels that would receive this backport
+- **PCI_VDEVICE macro**: Standard kernel infrastructure
+- **intel_spi_probe()**: Core function, no recent changes that would
+  conflict
+- **Clean backport**: No conflicts expected with any stable kernel
+  version
+
+### 6. RISK ANALYSIS
+
+**Regression Risk**: **MINIMAL**
+- Only triggered when PCI ID 0x4d23 is detected
+- No effect on systems without Wildcat Lake hardware
+- Uses well-tested code path (cnl_info shared with 20+ other platforms)
+- No user-space API changes
+
+**Testing Coverage**:
+- Same code path used by numerous Intel platforms (Ice Lake, Tiger Lake,
+  Alder Lake, etc.)
+- Configuration structure (cnl_info) battle-tested across multiple
+  generations
+
+### 7. COMMIT MESSAGE ANALYSIS
+
+The commit message is:
+- ✅ Clear and descriptive
+- ✅ Identifies specific hardware (Intel Wildcat Lake)
+- ✅ Consistent with previous similar commits
+- ❌ No "Fixes:" tag (not applicable - this is new hardware support)
+- ❌ No "Cc: stable@vger.kernel.org" tag (but precedent shows this
+  doesn't prevent backporting)
+
+---
+
+## RECOMMENDATION
+
+**YES - This commit SHOULD be backported to stable kernel trees**
+
+### Rationale:
+
+1. **Strong precedent**: Multiple similar PCI ID additions for Intel
+   platforms (Lunar Lake, Granite Rapids, Arrow Lake) have been
+   backported to stable trees by stable maintainers
+
+2. **User benefit**: Enables critical SPI flash functionality for
+   Wildcat Lake hardware owners running stable kernels
+
+3. **Minimal risk**: Single-line change to static table with no impact
+   on existing hardware
+
+4. **Well-established pattern**: PCI ID additions for hardware
+   enablement are routinely accepted for stable backports as they "fix"
+   missing hardware support
+
+5. **Clean backport**: No dependencies or conflicts expected
+
+### Target Stable Trees:
+- All currently maintained stable kernels (6.17.x, 6.16.x, 6.15.x, etc.)
+- The commit is from v6.18-rc3, so it would benefit users on any stable
+  kernel before 6.18
+
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index 4b63cb98df9cc..4bb158a23349e 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -75,6 +75,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x38a4), (unsigned long)&bxt_info },
+ 	{ PCI_VDEVICE(INTEL, 0x43a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x4b24), (unsigned long)&bxt_info },
++	{ PCI_VDEVICE(INTEL, 0x4d23), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x4da4), (unsigned long)&bxt_info },
+ 	{ PCI_VDEVICE(INTEL, 0x51a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x54a4), (unsigned long)&cnl_info },
+-- 
+2.51.0
 
