@@ -1,62 +1,48 @@
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1948033C521
-	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 19:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1A227B353
+	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 19:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761679671; cv=none; b=my8Nda0t+SAba5XxWp98RkdYc00lsSO1Mvu3rXKDcWEQ0O6swnupp0/0O1zfrO36x+2pEcJZJENx/y+GUBilDB4/TnBHe4G+Pth4m1wC1Q4Ox6HcdXQaotwhwrdOwkTA2pX8WgNL/tcpDOZJv5ev7ZNk2Nx/qsC6x418utAA/08=
+	t=1761681473; cv=none; b=Nw99QFje+nniJ7azhJe4XVBcBnvdCrqY4sO9j7UOJqk2HBA7zcDKGaomleKKHaNzAxSpsishWUMZccc+ThRqiGTUEuAVvWtuOZu+3AKPkvVJP4FjjF73YEGur6PJYQtMJcmqTJ7XxikNIHIyyBTV38jgSuQBxx6S3gE2FJW9v/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761679671; c=relaxed/simple;
-	bh=e7za67gpaMzXAAnduU0aQ85fcHm086VfI4xydx3Us9c=;
+	s=arc-20240116; t=1761681473; c=relaxed/simple;
+	bh=TSgFYeDSS0YK7V6PQBHcpeI98WDKiTRD7/ymTbRindk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T6KmfHjV/Sby4jdYKoKzcK3kx0F9z+GvCczbIBxtuM9MoGQWJ9a233kw2+GAVNTwIkf9b2hXGwSlUTF/DhgEzuU21Su+nx6/hiORwHYISkbb+ZrSvgxUSzXSPAI1g2BojMaz6LBzgRx1B9fAx3Jj2hkcSuXIrvb31FdgpS2Qn7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUVumNsN; arc=none smtp.client-ip=209.85.166.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	 In-Reply-To:Content-Type; b=tSgi7mSriu/U5O3bhu5EsEsUa/ZHR8qAd0SpHEFp+Z2qSuU/MP0/6ThRtstis91znBQ3vACXQ/uWYEZERXkXVd4U+7GoonKExHYXjSli/tYIhgJILSBH3LV2xO7qBoQeM4Ks1vyo9ij9FlLLNBwmFxKYZUd5jmlSdgFy9uYYsRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HiYH4lcj; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUVumNsN"
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-430bf3b7608so67532865ab.3
-        for <patches@lists.linux.dev>; Tue, 28 Oct 2025 12:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1761679669; x=1762284469; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PV1bENIf0l3RXjjkTJnnKUbQWBjIIJGeXOMl9S4eqCQ=;
-        b=XUVumNsNgBWpQfXQeq35qHnzZCaBFmgqjQC+dm6AN+KhAMXe4+815PUdzQT4JzN59E
-         hbI8nh9NGNIxEFjKCLSn1eyRwlef69zQBmfY9sRcLaAeEcTQ7TsGPNKhDmh1/eGtiYmR
-         YK5OjZ4sbPQRgFJUfT2KeWwF7TtKTFVkgl4N4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761679669; x=1762284469;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PV1bENIf0l3RXjjkTJnnKUbQWBjIIJGeXOMl9S4eqCQ=;
-        b=jDk1v5kqJZtD1PQCLxlYDM+m0sf6HGLsAq2T278u79uBx+l77Ixx4TbwRTaeVDmFHu
-         kA7mXQbPN6HeqawzysYs/q2qFtBckIwbt4YuG2ctGDEh5mk5UlQXnnjCO2iCizTgC9n2
-         qeE9ecaYeoTnt1ondWm71/H2OUYd1AU8/xCMpk636ydejfryAm8HBHbp1Z/MUZ1hXob/
-         YOLIE8S2nkhTK8CoQM+KSK3CrRd3FYegNsvqG4o1aQwi6CBpt76F7YXs25Leikwu/ia1
-         6o7F8y0vVycUd1UExzPhcNaG3E0TkTre9anW21qGBdyNgjZiSk6kXvUuGo8bQ4BzvOEo
-         ZMww==
-X-Gm-Message-State: AOJu0YyL13A9fB5TbD/9/t07IqoVhxAiBwBCLGkrhua/tG+dDxgUg3SZ
-	uIazaThOZigk7baLaaxPQ9mKe9/BDREvTZ1NB2RngnXXxJFUUdsoxtwZZowWf+s5wQ4=
-X-Gm-Gg: ASbGncut6GotZVaCgGyCrqlpIhCWa6+11Ri3A+ThwxMN4cpPtId+ZxAUrLTRAxC+AQD
-	NnosSSg4AeHjkVq7CAJKu/B+TlqvtMF/+0VS137E1s0cS97tqnvjmYXRSRYwJSZ+fUMbtmDjA3W
-	IqVh5WbH0L72DckTUfMNEnHpBprSMsILbnEIvKlDLys8gJXh3rubVebuhiMOS7HcbeKgVvFQdzl
-	6y1szUw1ON99iIjRV8G1a/6VjBNaSaSjIC7DDfCxfIyk+idzhj5p+lA1SY6sQy80eEvnVsZbRJ2
-	odrHBM0I3fBKxbS66CMCexQyZn2UEsq+FQDgyueJIc0WCgJAgKa7sbxVCHtkbjhfSVzUwfsE+EU
-	EOSnFLsSNWKK56DtOmYBRzgoExw9jmNnwtkjzJpXVMIw8VRTqSeMp2hhVxWwT6xWbv76PG3SO0E
-	bHTUAMJXoKwruM
-X-Google-Smtp-Source: AGHT+IGCnaJwEiI5H45X8uH7EHHZvYqawVyeXkrh+JuUvou4c5LieEIEgsLjfsVja/uVxA+aAgX1bA==
-X-Received: by 2002:a92:cd8c:0:b0:430:ab98:7b27 with SMTP id e9e14a558f8ab-432f9064bd6mr5104435ab.20.1761679669136;
-        Tue, 28 Oct 2025 12:27:49 -0700 (PDT)
-Received: from [192.168.1.14] ([38.175.187.108])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5aea73dc10bsm4734334173.7.2025.10.28.12.27.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 12:27:48 -0700 (PDT)
-Message-ID: <cafe791c-5f00-43f2-85eb-f083c499f978@linuxfoundation.org>
-Date: Tue, 28 Oct 2025 13:27:47 -0600
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HiYH4lcj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761681472; x=1793217472;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TSgFYeDSS0YK7V6PQBHcpeI98WDKiTRD7/ymTbRindk=;
+  b=HiYH4lcjTYQDY3+QDbB6slDaXK56WcaN9kabSS21W+kSJAFzvQuTgFvj
+   PGMlCjZ5Pzxwto3MEtqv308dZXly2b3V4/p3RFsD330QxerA83Uhqkb2o
+   nQDs0UUk7osLEVxc8mowEJyeAM/cRPtmuV7lKh1PJ1+LqpxavoxhtHnTe
+   ZNym+JQAno/ju3RVUYueowyrw5thHWWYY4uko5UfCYaha96+9NQPoYS5h
+   THmbELHHaMhEb6ibsbLHqVaH+nP3Cubmlmq4yVxEmTst68Yp8XXzPnz9e
+   rfi72EAYRr2L+4gBL6b4/ieHrt3LqGSbh1g0oULn+XghuWIysu1w7VN6q
+   g==;
+X-CSE-ConnectionGUID: KZ6u3bbkTzCqooiUfPW/Qg==
+X-CSE-MsgGUID: XtWSnpxlSoGGcoujBkASJg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="86422410"
+X-IronPort-AV: E=Sophos;i="6.19,261,1754982000"; 
+   d="scan'208";a="86422410"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2025 12:57:52 -0700
+X-CSE-ConnectionGUID: KFpKF4PSS+iMMlzI8N2cWg==
+X-CSE-MsgGUID: 5VqxFRi8SSWo1pISuTJKCw==
+X-ExtLoop1: 1
+Received: from ray2.jf.intel.com (HELO [10.24.80.156]) ([10.24.80.156])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2025 12:57:51 -0700
+Message-ID: <704189df-908d-469a-b719-4d18ce0bcdf2@intel.com>
+Date: Tue, 28 Oct 2025 12:57:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,46 +50,65 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/224] 5.4.301-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20251027183508.963233542@linuxfoundation.org>
+Subject: Re: [PATCH] x86/cpu: Add/fix core comments for {Panther,Nova} Lake
+To: Tony Luck <tony.luck@intel.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20251028172948.6721-1-tony.luck@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
 Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20251027183508.963233542@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+In-Reply-To: <20251028172948.6721-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/27/25 12:32, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.301 release.
-> There are 224 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 29 Oct 2025 18:34:15 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.301-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+On 10/28/25 10:29, Tony Luck wrote:
+> -#define INTEL_NOVALAKE			IFM(18, 0x01)
+> -#define INTEL_NOVALAKE_L		IFM(18, 0x03)
+> +#define INTEL_NOVALAKE			IFM(18, 0x01) /* Coyote Cove / Arctic Wolf */
+> +#define INTEL_NOVALAKE_L		IFM(18, 0x03) /* Coyote Cove / Arctic Wolf */
 
-Compiled and booted on my test system. No dmesg regressions.
-
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
+Is it even worth keeping the core names in there? This is an example
+where they're causing churn. If nobody cares, maybe we should just
+zap them, or at least stop putting them in there for new CPUs.
