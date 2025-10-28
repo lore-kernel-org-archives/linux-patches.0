@@ -1,176 +1,108 @@
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D574267B92;
-	Tue, 28 Oct 2025 01:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E70023DEB6
+	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 03:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761616561; cv=none; b=WV3n2P37qniu/rJvfRvnadZKWzQ6idF8PexhmuEk0N5chUJzEHWhlvqfXCpSd4o9iZz7DCX3lZvBm8jJCD5U/NYsqApChBOjHy5L42XbajOxHYDvDoB7cgL2a+yuAVwyXMrmA4CnKRFePHKIrw67Y7+j7PM8LBImJ2P9JBMDJwU=
+	t=1761620551; cv=none; b=gHihYqsQx0G9oImGoxREeDgj6Oftere9lwcs8g/2XFWeyaWOKC4gxp12w7HRh+hJWq6DltBQqICEFsSIyfS3ob7KhJ/ysYJTd2t9AR7UiPLVLjA2M7qprHjzMHmaVpXdYssziYm7+bUNfGzHStOKsD1WtlVnCVdOghaOLpIwfF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761616561; c=relaxed/simple;
-	bh=g74ehNzQ4v8Wqn+SYtkPbtmeDJYuvNfjoY14YvEL5G0=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=dhjzdl8RHCEctaZ6jk/JdUfpheIKsmpDbZbliP18kQY5GsDykP99NSGdCsuWI3CSIPPcXtyW4u6DTHhA9x9ra/5r0AJISBdBMb0Y8ZmqOSCMWGiqAp58q2y/jLeBdtBUb7Op4X1xtuWZR1vFNdVAP5P0ynsMx1UUeNllLJ+denI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=A7gT8hbq; arc=none smtp.client-ip=113.46.200.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1761620551; c=relaxed/simple;
+	bh=Cpfl+PBLgm9fkdwrdc+sEthpeoG4zd9OLtEpq+UJjVo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FvV1UgyoeE6fRzjMv3sXXk6B0jHC5qSJlGvcHlSekhKmFBYVXlsrFNQX62R/TJqeNtzOY4D2YlKVSNiD02iOfjoo3hlxNdfkZEkZ4v6OJCGuVSO1WW6iLdXsEu+9OeJw0W1eWstTp7mnLw9+3D1QLI4V5wY7+kM/E5+f2DnEha8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Pzsopg/x; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="A7gT8hbq"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=KtvB1oS5JczByJ2TXJbSMekROy5U9Mx/XYWBZ+fYkHA=;
-	b=A7gT8hbqcf1aNZZeClcqtU4HxgyLOxf+3xdLrC8jUe8vHKhZ1LQNE8l8SKUtwaXK9LQz7rCyl
-	lk9MkCiBuwNYVYuwRKropa5IUssDfu9mJHKsffJQzdjrpvVV6aaeXCfQ//mhWQ7v3JnOpgSoyxp
-	oDXln4mSG91mIVyZjIf8s2U=
-Received: from mail.maildlp.com (unknown [172.19.163.48])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4cwYMt0r7lzpStg;
-	Tue, 28 Oct 2025 09:54:34 +0800 (CST)
-Received: from dggpemf500015.china.huawei.com (unknown [7.185.36.143])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2A5C71800B4;
-	Tue, 28 Oct 2025 09:55:50 +0800 (CST)
-Received: from [10.67.121.110] (10.67.121.110) by
- dggpemf500015.china.huawei.com (7.185.36.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 28 Oct 2025 09:55:48 +0800
-Subject: Re: [PATCH 02/22] vfio/hisi: Convert to the get_region_info op
-To: Jason Gunthorpe <jgg@nvidia.com>, Alexander Gordeev
-	<agordeev@linux.ibm.com>, David Airlie <airlied@gmail.com>, Alex Williamson
-	<alex.williamson@redhat.com>, Ankit Agrawal <ankita@nvidia.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Brett Creeley
-	<brett.creeley@amd.com>, <dri-devel@lists.freedesktop.org>, Eric Auger
-	<eric.auger@redhat.com>, Eric Farman <farman@linux.ibm.com>, Giovanni Cabiddu
-	<giovanni.cabiddu@intel.com>, Vasily Gorbik <gor@linux.ibm.com>, Heiko
- Carstens <hca@linux.ibm.com>, <intel-gfx@lists.freedesktop.org>, Jani Nikula
-	<jani.nikula@linux.intel.com>, Joonas Lahtinen
-	<joonas.lahtinen@linux.intel.com>, Kevin Tian <kevin.tian@intel.com>,
-	<kvm@vger.kernel.org>, Kirti Wankhede <kwankhede@nvidia.com>,
-	<linux-s390@vger.kernel.org>, Matthew Rosato <mjrosato@linux.ibm.com>, Nikhil
- Agarwal <nikhil.agarwal@amd.com>, Nipun Gupta <nipun.gupta@amd.com>, Peter
- Oberparleiter <oberpar@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
-	Pranjal Shrivastava <praan@google.com>, <qat-linux@intel.com>, Rodrigo Vivi
-	<rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>, Shameer Kolothum
-	<skolothumtho@nvidia.com>, Mostafa Saleh <smostafa@google.com>, Sven Schnelle
-	<svens@linux.ibm.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
-	<virtualization@lists.linux.dev>, Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Yishai Hadas <yishaih@nvidia.com>, Zhenyu Wang <zhenyuw.linux@gmail.com>, Zhi
- Wang <zhi.wang.linux@gmail.com>
-CC: <patches@lists.linux.dev>
-References: <2-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
-From: liulongfang <liulongfang@huawei.com>
-Message-ID: <bdb90638-3439-be4e-8722-6e8f9564b7b4@huawei.com>
-Date: Tue, 28 Oct 2025 09:55:47 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Pzsopg/x"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-63d6ee383bdso11704479a12.2
+        for <patches@lists.linux.dev>; Mon, 27 Oct 2025 20:02:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1761620548; x=1762225348; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0qNkBOdLmm1kj4SMMo8wWk+UdIPzxQ3y5CFJL8sjPwM=;
+        b=Pzsopg/xmSLk2G1zJr7ZBmxOwxWD8wY0pW7WtJ0W6T4aQNRNYvVixm55TDGsZ7R8Gj
+         ImkrN9AvzVg+hmwiD7mAic1JAeB4CKV/+dHrtndB7ctd1GlmTH359CzWfAYImFi7Vk8z
+         Uvg7+Sot4ogX7saBQn5TfJm95jz8X6mkeQmwohoqA5kZQlFnN3EL2oM481KhX7xSC42p
+         tkROJNO/acw49QfffJAgCcmeFBz2NvfKES4gQZpXCRvTiX7u+GuetUrwFbAXEsxH8oLa
+         f46mR42PuGgtdJB7ydUB4/TfsVx5t43UNrPYOJ2kwcn1Nz7yv3Ip3g6cOoGRgNhhUt4N
+         Wc+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761620548; x=1762225348;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0qNkBOdLmm1kj4SMMo8wWk+UdIPzxQ3y5CFJL8sjPwM=;
+        b=Szjb6Wj8nbkNATJvQbdYJYLLbZCgZxhtJr8tj160z84A2T1hL0TRbDEvjyLufxsaUt
+         HQh9KyT5zpY493Z65Wrgn6HD3N4Xut4GzUj+RF0sa8VwXEBrh/PTDeGWD0SrzQlaAaKm
+         En3jRHIYNSmTcA+UqTUbH9o09MKWKMfrbJDFB+kma9x02hoSdAYL4bYGxCCu0agirn0S
+         7rTnVvKCgc9iRkyqcV9PgcN3D/tF2kme8LGPvHR6DxZVt72nxASAyPRTa/m4uaYdiPV+
+         mExQPsWukMAoOLTl8m482UF0ggPduJr3dADDcieB065DW4n3+7WT47VzwIkxxUKXYD6G
+         2s1w==
+X-Gm-Message-State: AOJu0YytP7AjhdnIsVMtG8X5k1PkpAbLukkkM1JuTT8x/bXq1eEztM2v
+	rmHH8bEZ8Y4MDIShtm3xM/F6KGgccL3QEDRpfykIy3MDJJjwHMt05xw=
+X-Gm-Gg: ASbGncssQXYHOmtfUPwZBxNLiTX8emCZxAU6SlDsDnbF5m4hF3Er92SMvynmM9j5PbR
+	7gxZVyZdt42+xdknNeJYYksNbEI1fd6RCghYz3BVLeiax4Q/qUnnfGLuXD0mhSM/JZTK1nBu/LH
+	qctvE1SIz/OynF03RzYVwYH3qmbZ/BAtGVjTYfa5Qi+NyjCSELvp0HDc7yS7TEPD95KWZwjhKeW
+	6b6j0ab+iM9VP2wcIjjZ/dfxI9mkRL0s7aYuTyiCllf/5bH9fVROybzOvOZXGGfMqj3ADI8YfLv
+	p7ZGGiHDm8iPn4KZqSsFu2HVkZrWWKbhzRuI0MVv6SFdxz/Br+U7d2gg59i3adYqPSGGF+L9OTQ
+	Op/jDmduAgbc46q1zXl1IMEZAebWDxnaDvi46HNGQCA6YBM24UwcCN7Qd2MS4Dt2rFwujTdGSgG
+	iTqviKmmZ0WcwkjngzvtJLXi+6C6ZQibQC9i289n14xXOGIuixub+pdEwI9YOJ6A==
+X-Google-Smtp-Source: AGHT+IHxBrrkSgnPojKFk8DgeU17os4fisUtn00kUYf+BNJ8a3sIYGRtzo5x/Ym39RIAZ6PoQzKXCQ==
+X-Received: by 2002:a17:907:9482:b0:b3d:73e1:d809 with SMTP id a640c23a62f3a-b6dba5a566cmr262777566b.48.1761620548327;
+        Mon, 27 Oct 2025 20:02:28 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057a53.dip0.t-ipconnect.de. [91.5.122.83])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d853386d8sm936725566b.18.2025.10.27.20.02.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 20:02:27 -0700 (PDT)
+Message-ID: <4589b95b-5eca-40f6-b014-6e90db486b17@googlemail.com>
+Date: Tue, 28 Oct 2025 04:02:26 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <2-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
-Content-Type: text/plain; charset="gbk"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- dggpemf500015.china.huawei.com (7.185.36.143)
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/157] 6.1.158-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20251027183501.227243846@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251027183501.227243846@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 2025/10/24 7:09, Jason Gunthorpe wrote:
-> Change the function signature of hisi_acc_vfio_pci_ioctl()
-> and re-indent it.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 57 +++++++++----------
->  1 file changed, 27 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> index fde33f54e99ec5..f06dcfcf09599f 100644
-> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> @@ -1324,43 +1324,39 @@ static ssize_t hisi_acc_vfio_pci_read(struct vfio_device *core_vdev,
->  	return vfio_pci_core_read(core_vdev, buf, new_count, ppos);
->  }
->  
-> -static long hisi_acc_vfio_pci_ioctl(struct vfio_device *core_vdev, unsigned int cmd,
-> -				    unsigned long arg)
-> +static int hisi_acc_vfio_get_region(struct vfio_device *core_vdev,
-> +				    struct vfio_region_info __user *arg)
->  {
-> -	if (cmd == VFIO_DEVICE_GET_REGION_INFO) {
-> -		struct vfio_pci_core_device *vdev =
-> -			container_of(core_vdev, struct vfio_pci_core_device, vdev);
-> -		struct pci_dev *pdev = vdev->pdev;
-> -		struct vfio_region_info info;
-> -		unsigned long minsz;
-> +	struct vfio_pci_core_device *vdev =
-> +		container_of(core_vdev, struct vfio_pci_core_device, vdev);
-> +	struct pci_dev *pdev = vdev->pdev;
-> +	struct vfio_region_info info;
-> +	unsigned long minsz;
->  
-> -		minsz = offsetofend(struct vfio_region_info, offset);
-> +	minsz = offsetofend(struct vfio_region_info, offset);
->  
-> -		if (copy_from_user(&info, (void __user *)arg, minsz))
-> -			return -EFAULT;
-> +	if (copy_from_user(&info, arg, minsz))
-> +		return -EFAULT;
->  
-> -		if (info.argsz < minsz)
-> -			return -EINVAL;
-> +	if (info.argsz < minsz)
-> +		return -EINVAL;
->  
-> -		if (info.index == VFIO_PCI_BAR2_REGION_INDEX) {
-> -			info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
-> +	if (info.index != VFIO_PCI_BAR2_REGION_INDEX)
-> +		return vfio_pci_ioctl_get_region_info(core_vdev, arg);
+Am 27.10.2025 um 19:34 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.158 release.
+> There are 157 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Looking at your first patch from my driver implementation code, the vfio_pci_ioctl_get_region_info
-function doesn't need to modify the first parameter; it can directly use vdev.
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-Thanks.
-Longfang.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
->  
-> -			/*
-> -			 * ACC VF dev BAR2 region consists of both functional
-> -			 * register space and migration control register space.
-> -			 * Report only the functional region to Guest.
-> -			 */
-> -			info.size = pci_resource_len(pdev, info.index) / 2;
-> +	info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
->  
-> -			info.flags = VFIO_REGION_INFO_FLAG_READ |
-> -					VFIO_REGION_INFO_FLAG_WRITE |
-> -					VFIO_REGION_INFO_FLAG_MMAP;
-> +	/*
-> +	 * ACC VF dev BAR2 region consists of both functional
-> +	 * register space and migration control register space.
-> +	 * Report only the functional region to Guest.
-> +	 */
-> +	info.size = pci_resource_len(pdev, info.index) / 2;
->  
-> -			return copy_to_user((void __user *)arg, &info, minsz) ?
-> -					    -EFAULT : 0;
-> -		}
-> -	}
-> -	return vfio_pci_core_ioctl(core_vdev, cmd, arg);
-> +	info.flags = VFIO_REGION_INFO_FLAG_READ | VFIO_REGION_INFO_FLAG_WRITE |
-> +		     VFIO_REGION_INFO_FLAG_MMAP;
-> +
-> +	return copy_to_user(arg, &info, minsz) ? -EFAULT : 0;
->  }
->  
->  static int hisi_acc_vf_debug_check(struct seq_file *seq, struct vfio_device *vdev)
-> @@ -1557,7 +1553,8 @@ static const struct vfio_device_ops hisi_acc_vfio_pci_migrn_ops = {
->  	.release = vfio_pci_core_release_dev,
->  	.open_device = hisi_acc_vfio_pci_open_device,
->  	.close_device = hisi_acc_vfio_pci_close_device,
-> -	.ioctl = hisi_acc_vfio_pci_ioctl,
-> +	.ioctl = vfio_pci_core_ioctl,
-> +	.get_region_info = hisi_acc_vfio_get_region,
->  	.device_feature = vfio_pci_core_ioctl_feature,
->  	.read = hisi_acc_vfio_pci_read,
->  	.write = hisi_acc_vfio_pci_write,
-> 
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
