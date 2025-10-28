@@ -1,60 +1,74 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A54220F21
-	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 04:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEB813AA2F
+	for <patches@lists.linux.dev>; Tue, 28 Oct 2025 05:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761627011; cv=none; b=XiM8c1jbQDl3JMpaps4p/iQvE4ftMA/DbTyNgpZAeyEeMHsG4P2i5nEaRR1RzYZUYoy+rtN/FvJ1o+6MA+P3KTu5jfaEj5q3BQQ3ZebEfWNry3Lers5/0PnpOTxOaPP9SfeNT/PFtO8i4p2iAx8xz7kPHRgJpbT6MJTTWDRerB4=
+	t=1761627906; cv=none; b=hKDoulD3GBjXr39Ulv9+MXROGjVHgsu/s/UIDSgqcidIFCjoacx2oljTfQIgOCw8IHV958Eyl10RloQuSt6Ll8L4RSyP+0R7wwK1yFi7R/nFsq8+L0Hz1rkpAuByLDaHH5+VQBr/YQ9V1NPIdr8/0FADGBWmDO9F6gfBKyU37Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761627011; c=relaxed/simple;
-	bh=HczQKsoTq9bG91ZgMaU1ONGlCVa9s98TDf0X1YkuKFI=;
+	s=arc-20240116; t=1761627906; c=relaxed/simple;
+	bh=tPEtRdgT5AFqfrjmOByK1BhhX0vqZEFiVdNegX8W91c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OADuL+/8cMgCVsnLphNV/YPzCE+oJaQpqRPRVECY8bh2AHV8XbEDjCgAg1QtzqGp+frG/OSkC0RD4o4DX6P4IeMx17+GkivMf6NLrpHtr6g0gQEjBTXxabTDvZaBsNwy5dITdc5HvOiw8zwxsodUDTJ/K3ri7aQfjxS9clhtRiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=X1HAw4Xa; arc=none smtp.client-ip=44.202.169.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=eOWO6DHhCagDunfpv9lTmZ/RElN1HLae3ai4qNuOEb+TncAtzIu2L+ct6b5p5K4Pt+6EmC6/gpGO3VzxSTEvXKNaV7c7BhM5SAa7uTwenDrL4paP2J23kNjy/B3fAIrLtaoolRb/xK6Ouih9yafBvFn22I/g7fO7WWcyq7zs/B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=d9yoxhMX; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="X1HAw4Xa"
-Received: from eig-obgw-6003b.ext.cloudfilter.net ([10.0.30.175])
-	by cmsmtp with ESMTPS
-	id DY4Cvi1TtKXDJDbejvWfQt; Tue, 28 Oct 2025 04:50:02 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id DbeivPqBeE0qRDbejvd1h5; Tue, 28 Oct 2025 04:50:01 +0000
-X-Authority-Analysis: v=2.4 cv=Q+3S452a c=1 sm=1 tr=0 ts=69004b79
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=LJ9ngj4a5Ur-kbwn2PoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=xGFJqws/sjdhw2gBoS/JsBvsWK0Eluys8JTz/11lTe4=; b=X1HAw4XaeTnhac8AWa4eQoKBcU
-	oYjr29lBFN5f2kOAskUOq7q8MWAqUftHyfF8mHJ7v3pDp9Vp8sf98tZ2AHhM6QHUobeET2EZ+ztPb
-	8rZPSt54K7bAz+d7S5svpFpLE8d19VD/A+EDp0uhyeH65Kp91FMI5+Bdcfx9r6ngginnGWcEwnvFh
-	3MDNoRIMF6xh7C3RePK7pKKz0+H396Uro6u9fUb7+htK4k5tKa/EAlYmIrxH/nAPsXFiZhmQ0fLAY
-	SjQtPuwZihY0xhjWBSNG/+xhvfc+MybFx2hj00Dl7ok638U2Elsuyn02ccQVUfwyn23RK7akhISoQ
-	XEWLrk8g==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:53180 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1vDbei-00000003rHk-2MEQ;
-	Mon, 27 Oct 2025 22:50:00 -0600
-Message-ID: <d61b75c9-a6a1-452c-a2be-34959d354739@w6rz.net>
-Date: Mon, 27 Oct 2025 21:49:59 -0700
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="d9yoxhMX"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-63c4b41b38cso11853233a12.3
+        for <patches@lists.linux.dev>; Mon, 27 Oct 2025 22:05:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1761627903; x=1762232703; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AerQ8anahxAVq796epN6eN0GZqxQd097rK/3M9J0Tyc=;
+        b=d9yoxhMXrvht+ff1MnleqP4vNpzmQKnW9t0ZFBupy0k33PZHrU12Mzg3U+RXTqC1qi
+         SUYbDPHpWbB3QPdy+aoj7dSpTOV8Kw7hnFrlWgM6bh8HBwMh6pt/cJoVXG3xsTesyTQN
+         4KgspF0UvI7UOmud0Yjl9hfw+R6+kzSB/6nj1RWcSI3RcxlafKlB1uyWEWBwKzb76Ufo
+         REMdzSINikMzhy0j0PKU+tbcPEYAV6TfHKp8D/VHMeprVUcfWuZDpsPa9d4DQHC9C0AI
+         uoNSftVbB1hoWBXaCdTKbwnLO9Tuhml4Wyww5BhJpDjVWzaT/aAVTxzrspqsmenEK98L
+         zX5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761627903; x=1762232703;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AerQ8anahxAVq796epN6eN0GZqxQd097rK/3M9J0Tyc=;
+        b=v6AcxX+rf/MBVDexesxAH7tguLs6Yjvv5szBtT92ZUQe3nAd+Sjg7csmDPVu/L9y48
+         Bl2tWZqA4nGPR2JY6840RagFjiiYXLszJKvTJxW4cny5y9OgeUpPMl5EvmTaA0XQhyH/
+         Ym0Hxr10mM3O1evYT9DXOc/06ZjO7C9wtx6DT5UmXJOLKacBmPJWQq+C7UAoaxFF1vw7
+         YicfE4TM/PXIBTIpgB/T+WK8/P5Zb4JEJXq4kS1Xl8qRvQcSKYeNo6oWqHJF3Kcvd1jV
+         kXSidg3oMtCO/LroO9JsR0x170GL+7r9oQfhVyUfAk4VEx6NaLjJnihTLV/LgFwo9aAv
+         Z54A==
+X-Gm-Message-State: AOJu0YwgCP7MwQNfntkofRuFSy/krAGBKA4XCYTm5IO0MB/9LJmQpxcZ
+	yWB1lZkZF4ZaepPwszqd2glpS/NN9EQyVfjriV1LB/l5d54X+VOc6SA=
+X-Gm-Gg: ASbGncv52PSncSetNzlUnuM24ZlkNH5KM22ti6dPrz3B0ZADOB21EznV018vSrdtp4n
+	jj08rb2Dp4Qvb4Gim+EYRjVSu8TK4uXzrqL/JigeIE9yqjdGsmHxGtx5MJRk7Pyg2hN8pl7z2tb
+	uXOpxTn2v2GhuMtWMpqgACWxCQc4RI6GcNd/Xk2ow3hCOLbmmNG34tKpLNcGlNUaiW66LB7LG3N
+	W8ZUvCWBQFfGjC6QoWDbRQi81uv6SSu3Jy7HESWjVRu9T2rLVzoLoLji62oMquMLcF1zI0P0QyN
+	WXioBJE4KBa0dA77s3LtHNyb6qt7kFRQRPMritUwMQeHLKMr+ZU7/xzmmk+Zi0d+RxQEkZbgmSp
+	R6Q8lbQCGiZ/tymYnL8UAVbxj7vFtfsX3m3VGIFKqumxJcxlJUF51se7TVNu1sz1eLZUaBZ6Tkq
+	fcLF73PD2kqr9w0YCHi0bsce2gH2+20NMKlKbZ6ylTOuTmHc3pZeI=
+X-Google-Smtp-Source: AGHT+IG98gaKXDDq10+P2yRvMTbMWPbW2KU883vT9OMUrK2f2QHIOlAdmmMdyx3BlHiKzEtfl9tNlA==
+X-Received: by 2002:a17:907:1c94:b0:b6d:505e:3d99 with SMTP id a640c23a62f3a-b6dba462958mr271070766b.12.1761627902710;
+        Mon, 27 Oct 2025 22:05:02 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057a53.dip0.t-ipconnect.de. [91.5.122.83])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6dad195456sm424001266b.72.2025.10.27.22.05.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Oct 2025 22:05:02 -0700 (PDT)
+Message-ID: <bd62fdc3-03a1-4125-808a-4b4ce839e0e9@googlemail.com>
+Date: Tue, 28 Oct 2025 06:05:01 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/123] 5.15.196-rc1 review
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.17 000/184] 6.17.6-rc1 review
+Content-Language: de-DE
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -63,83 +77,32 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20251027183446.381986645@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20251027183446.381986645@linuxfoundation.org>
+References: <20251027183514.934710872@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251027183514.934710872@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.92.56.26
-X-Source-L: No
-X-Exim-ID: 1vDbei-00000003rHk-2MEQ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.116]) [73.92.56.26]:53180
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 18
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfHADl+gawybuczYVfVbmJhEtlF2x2so8Dcdwpunh4OpNxeg3h8O/HmFfKhIW6mgwD/Yr0p00oc/I/fqfi61R4jZiPHNx3u//nwMU4C1VB23qd3UN14GC
- VWeQLaNGgQNbWhXCJaH+/c5JNfFzeLOWf64LotEKhpG8BCQK0rhtx3Ip5mHIQpilx5z9MJDaHiXSzA==
 
-On 10/27/25 11:34, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.196 release.
-> There are 123 patches in this series, all will be posted as a response
+Am 27.10.2025 um 19:34 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.17.6 release.
+> There are 184 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Wed, 29 Oct 2025 18:34:15 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.196-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-The RISC-V build fails with:
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-arch/riscv/kernel/cpu.c: In function 'riscv_of_processor_hartid':
-arch/riscv/kernel/cpu.c:24:33: error: implicit declaration of function 
-'of_get_cpu_hwid'; did you mean 'of_get_cpu_node'? 
-[-Werror=implicit-function-declaration]
-    24 |         *hart = (unsigned long) of_get_cpu_hwid(node, 0);
-       |                                 ^~~~~~~~~~~~~~~
-       |                                 of_get_cpu_node
-cc1: some warnings being treated as errors
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-The function of_get_cpu_hwid() doesn't exist in Linux 5.15.x. It was 
-introduced in 5.16-rc1. The following patches should be reverted:
 
-87b94f8227b3b654ea6e7670cefb32dab0e570ed RISC-V: Don't fail in 
-riscv_of_parent_hartid() for disabled HARTs
+Beste Grüße,
+Peter Schneider
 
-568d34c6aafa066bbdb5e7b6aed9c492d81964e8 RISC-V: Don't print details of 
-CPUs disabled in DT
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-And the stable-dep-of patches for the above should also be reverted 
-since they cause warnings:
-
-989694ece94da2bbae6c6f3f044994302f923cc8 riscv: cpu: Add 64bit hartid 
-support on RV64
-
-8c2544fd913bb7b29ee3af79e0b302036689fe7a RISC-V: Minimal parser for 
-"riscv, isa" strings
-
-e0cc917db8fb7b4881ad3e8feb76cefa06f04fe6 RISC-V: Correctly print 
-supported extensions
-
-c616540d6b67830bb4345130e8fa3d8e217249a0 iscv: Use of_get_cpu_hwid()
-
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
