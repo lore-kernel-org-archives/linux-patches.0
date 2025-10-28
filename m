@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59CF32D7D8;
-	Tue, 28 Oct 2025 12:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C8632D7D8;
+	Tue, 28 Oct 2025 12:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761655709; cv=none; b=edvYVIfPXSCp/ecf6rkA9RR+XqhjnwH5zdbcwj1xS/DsuUazHuAAQq3hl4ma7W6f+mHCz7LZTThBPsYSA+AWW9f1PkaG+T9m+RJ8qmtW2p8LbxpkyUNGL//fNDJ5kurbLEuSmWTEhtUdc2lQaD/d0cECYwO5l1o4E3McyQ/LZrM=
+	t=1761655710; cv=none; b=I1ZxnZBHrQgLIGRjTUerm8hmdO2QsPzRhfEEuBNg2+Dh0lWKBlxdX7C2DHdQpgqD/JmxCz3ePDGFfYE32mSGGEB0Nllt/So13S0X4LYMSjL3TxOCw4UHt6U7JSjRa/bhUSCCc5rFzUsY0VI7pUbIB4JDYopXNj5WsX796wrhcNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761655709; c=relaxed/simple;
-	bh=mBs6zOvlj94/t/tcRzA9U+nJJWpO9GMLA7jnyPrzwMs=;
+	s=arc-20240116; t=1761655710; c=relaxed/simple;
+	bh=up6DAN6s+RjU+k6yEjhEfBrjGGkOEgvJ0auo3biralU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViO1FVeZqaYIBMNhAczHRQnF24yVDtQMSGn76o1mlptvy52sAeXnf0c8tEsJxbeA70bUesWpacr8M4mCUHtOwOfjD5rFBDZmVsIOprJRd+GYcbBYxNd0ZVavesHCqdIDmCx1q+dFFtx20CQHTqO7iZZJ3pvKpcMfDKTQJTdizF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=beLtwKfk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UY6W2Qa5314BvSLIQSwTaM3YVg1ofV7FPH10Qd3iIoce0T5Spm2Wikm/Ne/S66PneRJeJLXCDJR97UM1gnPdqzSwn6N0FcIx6jflP07ZmT3k7z1Vzt5m3a7BA/DDzNYwSYxMvyb/UF4btDKVll2fVyF4Lt4+27xKwtOhj9z+rB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rUW6kJLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="beLtwKfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BEFC4CEF7;
-	Tue, 28 Oct 2025 12:48:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rUW6kJLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE876C16AAE;
+	Tue, 28 Oct 2025 12:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761655709;
-	bh=mBs6zOvlj94/t/tcRzA9U+nJJWpO9GMLA7jnyPrzwMs=;
+	s=k20201202; t=1761655710;
+	bh=up6DAN6s+RjU+k6yEjhEfBrjGGkOEgvJ0auo3biralU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beLtwKfkHuArdJ093VKDaQyW5I77Lx9WOTXN184qFghOTo6/Tdh2mUvvtTH+jRL2S
-	 4cygiFZP7DMx9PsOIwy1/u+DYquQyts+p2E1uAYY7ztuWaQwWzWQh4RcCRGIh3vlIV
-	 WRxFToVynHiHiPYkbcrBPFvbFEvXb9aIf20ebCQeUGjEu4eVNmQTU3ynfL3vl9jhf5
-	 BK2XPYyxVuE65pAQd6m4XDplUFIKr8L0KPtWB5OUjQsdiFoKbzoSImm/rw9X8ZF0Tg
-	 tKOktKXmzdGKg0CWYMMY9tnh55nN9ABkDZRMduKMYLwMYVG4Z5tRJV6JZqJkOEhpJ1
-	 E2O1QgHXh0gVA==
+	b=rUW6kJLstv3SGwHz/k9YO+feDrrQj1grLwSzR9gLYt1r6sG6fLFUBWvGjYdVoqpXv
+	 JotjWGYCb95CfQs3j/lZLgjpwdThMauoVUX6hFwbSAR3xyc6ll+j+IO4v6PJcx2pNe
+	 JBhVDFoao8YzLpJpxYUCimcuceQSX37n7O9agh+rNRRn0wLwG5ExhD2XkDiHYNCON0
+	 bngFzug1K1BhX5xiBqhj7q0sw7425A4m6wnD9C9HFfEDOanqR1JvDOWmvyOne4GKoi
+	 g7lyZRfuqC8O7s+6uimaoMS8lxEGhVCn+Y9EQGUCekiLzLHC5omLL6A6YlB521Lv+w
+	 m8ghh4E4P7THA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Samuel Holland <samuel.holland@sifive.com>,
-	Paul Walmsley <pjw@kernel.org>,
+Cc: Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	akpm@linux-foundation.org,
-	david@redhat.com,
-	apopple@nvidia.com,
-	alexandre.f.demers@gmail.com,
-	alexghiti@rivosinc.com,
-	willy@infradead.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-6.1] riscv: mm: Define MAX_POSSIBLE_PHYSMEM_BITS for zsmalloc
-Date: Tue, 28 Oct 2025 08:48:06 -0400
-Message-ID: <20251028124815.1058740-6-sashal@kernel.org>
+	arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-6.6] firmware: arm_scmi: Skip RAW initialization on failure
+Date: Tue, 28 Oct 2025 08:48:07 -0400
+Message-ID: <20251028124815.1058740-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028124815.1058740-1-sashal@kernel.org>
 References: <20251028124815.1058740-1-sashal@kernel.org>
@@ -56,171 +49,260 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 5898fc01ff344075e4332aa9abeb0841c85e7e51 ]
+[ Upstream commit 092b9e2ce6dd63d2f36822751a51957412706986 ]
 
-This definition is used by zsmalloc to optimize memory allocation. On
-riscv64, it is the same as MAX_PHYSMEM_BITS from asm/sparsemem.h, but
-that definition depends on CONFIG_SPARSEMEM. The correct definition is
-already provided for riscv32.
+Avoid attempting to initialize RAW mode when the debug subsystem itself
+has failed to initialize, since doing so is pointless and emits
+misleading error messages.
 
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20251015233327.3885003-1-samuel.holland@sifive.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Message-Id: <20251014115346.2391418-3-cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit using repository
-examination and code analysis, here is my assessment:
+Now I have enough information to make my determination. Let me create a
+comprehensive analysis:
 
-## **Backport Status: YES**
+## BACKPORT ANALYSIS DECISION
 
-## Detailed Analysis
+**Backport Status: YES**
 
-### 1. Code Change Analysis
+---
 
-The commit adds a single line to `arch/riscv/include/asm/pgtable-64.h`:
+## COMPREHENSIVE ANALYSIS
+
+### 1. CODE CHANGE ANALYSIS
+
+The commit makes two related changes:
+
+**Change 1** (drivers/firmware/arm_scmi/driver.c:3047-3048):
 ```c
-#define MAX_POSSIBLE_PHYSMEM_BITS 56
+- if (!info->dbg)
+- return -EINVAL;
+```
+Removes the NULL check from inside `scmi_debugfs_raw_mode_setup()`.
+
+**Change 2** (drivers/firmware/arm_scmi/driver.c:3221):
+```c
+- if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
++               if (info->dbg &&
+IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
+```
+Adds guard condition to prevent calling the function when `info->dbg` is
+NULL.
+
+### 2. SEMANTIC ANALYSIS PERFORMED
+
+**Tools Used:**
+- `git log` and `git show` for commit history analysis
+- `Grep` for code pattern searches across SCMI subsystem
+- `Read` for examining driver code and Kconfig
+- Task agent (Explore) for understanding SCMI ecosystem context
+- Git blame and tag analysis for version tracking
+
+**Key Findings from Analysis:**
+
+**Impact Scope (from code examination):**
+- Function `scmi_debugfs_raw_mode_setup()` is called from only ONE
+  location: `scmi_probe()` at line 3222
+- Function accesses `info->dbg->top_dentry` at line 3068, which would be
+  a **NULL pointer dereference** if the removed check wasn't there
+- The calling site now has proper guard, so function is never called
+  with NULL dbg
+
+**Caller Analysis:**
+- `scmi_probe()` is the driver probe function - called during device
+  initialization
+- Prior commits in series (2290ab43b9d8e, 289ce7e9a5e1a) fixed NULL
+  handling in debug helpers
+- This commit completes the debug failure handling by preventing
+  pointless RAW init attempt
+
+**Dependency Analysis:**
+- RAW mode requires debugfs (CONFIG dependency in Kconfig line 35)
+- `scmi_raw_mode_init()` expects valid `top_dentry` parameter (line
+  3068)
+- If debug setup fails, `info->dbg` is NULL, making RAW mode init
+  impossible
+
+### 3. BUG IMPACT ANALYSIS
+
+**Affected Kernel Versions:**
+- Introduced: v6.3-rc1 (commit 7063887b53860, January 2023)
+- Fixed: v6.18-rc3 (commit 092b9e2ce6dd6, October 2025)
+- **Affected range: v6.3 through v6.17**
+
+**Failure Scenario:**
+```c
+// Before fix - in scmi_probe():
+if (scmi_top_dentry) {
+    info->dbg = scmi_debugfs_common_setup(info);  // Returns NULL on
+failure
+    if (!info->dbg)
+        dev_warn(dev, "Failed to setup SCMI debugfs.\n");
+
+    if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
+        ret = scmi_debugfs_raw_mode_setup(info);  // Called with NULL
+dbg!
+        if (!coex) {  // Default config
+            if (ret)  // ret = -EINVAL
+                goto clear_dev_req_notifier;  // PROBE FAILS!
+            return 0;
+        }
+    }
+}
 ```
 
-This definition is required by zsmalloc (used by ZRAM/ZSWAP) for correct
-memory allocation calculations.
+**Real-World Impact:**
+- **Who is affected**: Development/testing systems with
+  CONFIG_ARM_SCMI_RAW_MODE_SUPPORT=y
+- **When it triggers**: When debugfs initialization fails (no debugfs
+  support, memory failure, mount issues)
+- **What breaks**: **Entire SCMI driver probe fails** → system may not
+  boot
+- **Criticality**: SCMI manages power domains, clocks, DVFS, thermal
+  sensors - critical for ARM platforms
 
-### 2. Tools Used and Findings
+From Explore agent findings:
+- SCMI is used on STM32MP, ARM Juno, NXP i.MX95 platforms
+- Controls essential services: CPU frequency, power states, system
+  shutdown/reboot
+- Kconfig notes it "may be needed early in boot" for power control
 
-**Repository Investigation:**
-- **Grep searches** revealed that MAX_POSSIBLE_PHYSMEM_BITS is:
-  - Already defined for riscv32 (34 bits)
-  - Defined for all other major architectures (x86, arm64, powerpc,
-    mips, arc, arm)
-  - Missing for riscv64 (this is the bug being fixed)
+**Severity Assessment:**
+- **Medium-High for affected configurations**
+- Not production issue (RAW mode is debug/testing feature per Kconfig
+  line 42)
+- But complete driver failure is **unacceptable** for development
+  systems
+- Misleading error messages make debugging difficult
 
-- **Code analysis of mm/zsmalloc.c** (lines 65-77, 91-92) shows:
-  - zsmalloc uses `_PFN_BITS = (MAX_POSSIBLE_PHYSMEM_BITS - PAGE_SHIFT)`
-  - OBJ_INDEX_BITS = (BITS_PER_LONG - _PFN_BITS)
-  - Without MAX_POSSIBLE_PHYSMEM_BITS, it falls back to MAX_PHYSMEM_BITS
-    or BITS_PER_LONG
+### 4. ARCHITECTURAL & SIDE EFFECTS
 
-- **Examined arch/riscv/include/asm/sparsemem.h** which defines
-  MAX_PHYSMEM_BITS as 56, but only when `CONFIG_SPARSEMEM` is enabled
+**Architectural Impact:** None
+- No data structure changes
+- No API modifications
+- No changes to core SCMI protocol handling
 
-**Impact Analysis:**
-Without this fix on riscv64 systems where CONFIG_SPARSEMEM is disabled:
-- Incorrect: _PFN_BITS = 64 - 12 = **52 bits** (using BITS_PER_LONG
-  fallback)
-- Correct: _PFN_BITS = 56 - 12 = **44 bits**
-- This causes OBJ_INDEX_BITS to be 12 bits instead of 20 bits
-- Affects ZS_MIN_ALLOC_SIZE calculations and entire zsmalloc size class
-  system
+**Side Effects:** Positive only
+- Prevents probe failure when debugfs fails
+- Eliminates misleading error messages
+- Improves graceful degradation
+- No functional changes to success path
 
-### 3. Historical Context Investigation
+### 5. STABLE TREE COMPLIANCE
 
-**Git history analysis** revealed critical information:
-- Commit **f0bbc41760557** (2021) fixed this exact issue for ARM, MIPS,
-  PowerPC, and other architectures
-- That 2021 commit:
-  - Was triggered by actual kernel crashes (NULL pointer dereference in
-    zs_map_object)
-  - Had "Fixes:" tags pointing to zsmalloc
-  - Was backported to stable kernels (signed-off by Sasha Levin)
-  - Documented real-world bug report: "Unable to handle kernel NULL
-    pointer dereference"
-- riscv was NOT included in that 2021 fix (likely because riscv64
-  support was incomplete then)
-- The current commit (5898fc01ff344) completes that 2021 work for
-  riscv64
+**Compliance Check:**
+✅ **Bug fix**: Yes - fixes probe failure
+✅ **Small and contained**: 2 simple changes in 1 file
+✅ **Obviously correct**: Guard check before function call
+✅ **No new features**: Pure bug fix
+✅ **No architectural changes**: Minimal scope
+✅ **Low regression risk**: Only affects error path
 
-### 4. Configuration Analysis
+**Stable Tree Rules Alignment:**
+- Fixes important bug (probe failure)
+- Self-contained change
+- Easy to review and verify
+- Part of coordinated fix series (related commits already backported)
 
-**Examined arch/riscv/Kconfig**:
-- ARCH_SPARSEMEM_ENABLE is optional (`def_bool y` depends on MMU)
-- Users CAN choose FLATMEM instead of SPARSEMEM
-- Default config has `CONFIG_SPARSEMEM_MANUAL=y`, but this is not
-  mandatory
-- Without CONFIG_SPARSEMEM, MAX_PHYSMEM_BITS is undefined, triggering
-  the bug
+### 6. BACKPORT INDICATORS
 
-### 5. Subsystem Criticality
+**Evidence for backporting:**
+- **Related commits already backported**: Commit 2290ab43b9d8e (with
+  Fixes tag) has been backported to multiple stable trees
+  (7056e61a28a83, 4c0f9a50f2e98, fae8405cfddb0, 58d3e2680bea9,
+  30c89140a4ddc, 75446183128d2)
+- **Part of fix series**: This is patch 3/3 in a coordinated series
+  addressing debug initialization failures
+- **Fixes merged in mainline**: Present in v6.18-rc3, merged via
+  arm/fixes tree (71a5970259c3f)
+- **No Cc: stable tag**: But related patches were backported, suggesting
+  subsystem maintainers want the series in stable
 
-**Memory Management Impact:**
-- zsmalloc is used by ZRAM (compressed RAM) and ZSWAP (compressed swap)
-- These are important for memory-constrained systems
-- Incorrect calculations could lead to:
-  - Memory corruption
-  - Kernel crashes
-  - Data loss
-
-### 6. Backport Indicators
-
-**Against backporting:**
+**Evidence against backporting:**
+- No explicit "Fixes:" tag (but commit message clearly states it fixes a
+  problem)
 - No "Cc: stable@vger.kernel.org" tag
-- No "Fixes:" tag
-- Limited scope (only affects specific config combinations)
+- Only affects debug/testing configuration
 
-**For backporting:**
-- **Critical**: Identical bug was backported for other architectures in
-  2021
-- **Precedent**: This is completing a known stable-backport pattern
-- **Safety**: Minimal change (single line), no side effects
-- **Correctness**: Fixes mathematically incorrect value that can cause
-  crashes
-- **Stable Rules Compliance**: Pure bug fix, no new features, no
-  architectural changes
+### 7. DEPENDENCY CHECK
 
-### 7. Risk Assessment
+**Depends on:**
+- None - independent fix
+- Works better with commits 2290ab43b9d8e and 289ce7e9a5e1a (already
+  backported)
 
-**Regression Risk: VERY LOW**
-- Single constant definition
-- No behavioral changes
-- Only affects riscv64
-- Mirrors existing definitions for other architectures
-- Value (56) matches the PFN_MASK in the same file (GENMASK(53, 10))
+**Required by:**
+- None identified
 
-**Impact if NOT backported:**
-- Users building riscv64 kernels without CONFIG_SPARSEMEM will have
-  broken zsmalloc
-- Potential for kernel crashes similar to the 2021 ARM bug report
-- Data corruption in ZRAM/ZSWAP scenarios
+---
 
-## Conclusion
+## FINAL RECOMMENDATION
 
-This commit SHOULD be backported because:
+**YES - This commit SHOULD be backported to stable kernel trees.**
 
-1. **It fixes the same bug that was considered serious enough to
-   backport for other architectures in 2021**
-2. **The 2021 fix caused real kernel crashes that were documented**
-3. **It's a minimal, safe change with no regression risk**
-4. **It follows stable kernel rules: fixes bug, no new features, no
-   architectural changes**
-5. **riscv64 was simply missed in the 2021 fix, and this commit
-   completes that work**
+**Justification:**
 
-The lack of explicit stable tags is likely an oversight, as this is
-clearly a bug fix following the pattern of previous stable-backported
-commits for the same issue on other architectures.
+1. **Fixes probe failure**: When debugfs fails + RAW mode enabled
+   (without coex), entire SCMI driver fails to load, breaking critical
+   platform services
 
- arch/riscv/include/asm/pgtable-64.h | 2 ++
- 1 file changed, 2 insertions(+)
+2. **Completes backported series**: Related fixes (2290ab43b9d8e,
+   289ce7e9a5e1a) already backported to stable. This commit completes
+   the debug failure handling
 
-diff --git a/arch/riscv/include/asm/pgtable-64.h b/arch/riscv/include/asm/pgtable-64.h
-index 1018d22169013..6e789fa58514c 100644
---- a/arch/riscv/include/asm/pgtable-64.h
-+++ b/arch/riscv/include/asm/pgtable-64.h
-@@ -69,6 +69,8 @@ typedef struct {
+3. **Low risk, high correctness**: Minimal change, obviously correct
+   logic (guard before function call)
+
+4. **Stable tree compliant**: Small, contained, bug-fix-only change with
+   no architectural impact
+
+5. **Affects supported feature**: CONFIG_ARM_SCMI_RAW_MODE_SUPPORT
+   exists in stable kernels since v6.3
+
+6. **Graceful degradation**: Enables proper fallback behavior when debug
+   subsystem fails
+
+**Target stable trees:** v6.3+ (where RAW mode was introduced)
+
+**Priority:** Medium - affects development/testing systems, not
+production, but fixes complete driver failure
+
+ drivers/firmware/arm_scmi/driver.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index bd56a877fdfc8..85392228d1739 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -3044,9 +3044,6 @@ static int scmi_debugfs_raw_mode_setup(struct scmi_info *info)
+ 	u8 channels[SCMI_MAX_CHANNELS] = {};
+ 	DECLARE_BITMAP(protos, SCMI_MAX_CHANNELS) = {};
  
- #define PTRS_PER_PMD    (PAGE_SIZE / sizeof(pmd_t))
+-	if (!info->dbg)
+-		return -EINVAL;
+-
+ 	/* Enumerate all channels to collect their ids */
+ 	idr_for_each_entry(&info->tx_idr, cinfo, id) {
+ 		/*
+@@ -3218,7 +3215,7 @@ static int scmi_probe(struct platform_device *pdev)
+ 		if (!info->dbg)
+ 			dev_warn(dev, "Failed to setup SCMI debugfs.\n");
  
-+#define MAX_POSSIBLE_PHYSMEM_BITS 56
-+
- /*
-  * rv64 PTE format:
-  * | 63 | 62 61 | 60 54 | 53  10 | 9             8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0
+-		if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
++		if (info->dbg && IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
+ 			ret = scmi_debugfs_raw_mode_setup(info);
+ 			if (!coex) {
+ 				if (ret)
 -- 
 2.51.0
 
