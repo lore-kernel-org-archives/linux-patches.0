@@ -1,59 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522CF1D88B4;
-	Tue, 28 Oct 2025 00:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414F21BBBE5;
+	Tue, 28 Oct 2025 00:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612031; cv=none; b=k77rgU7lGjNXYomUJrsmKfpKkfx4+LYRAjRIRyZJgWYnX6YBjhSt/Cym8LDS8iSvfnQD3XCBpqhoWIfkjOaUyhZYfyjXdIMA78bsOwiE4zv9+g2G/7a0ZIAyRbijJG4PoRAlW//V2snzr3Q/SkZPIVFY8cd5d2LKL2nJa1PhcGg=
+	t=1761612034; cv=none; b=UPhH4+6Y21EDZArHR+Rm8zQa/V9E5LI0A0FASTZfKYogcrUvWZxIV53e4YgZ4ZDEycaAAuwa7hjIjpWX24wDKiA7K2UrLef/PWh0dwYcuHTr/z/ayvhqalGqo1tJGRBwuIyD8kpHTd0/i5wHhRwKdYTug9tnwqgzm57w+yL2w1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612031; c=relaxed/simple;
-	bh=lpgXbS9MZIaqsP8tjC0zw1dQwPEtQ1E6gyoovqakvdI=;
+	s=arc-20240116; t=1761612034; c=relaxed/simple;
+	bh=UJKFm6DeAyrm/IsSUNZOhEv2EhKtfpq09FKwf6UXzPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HfBVN7UBjrNfUVN179D58vldytMRa6PZNbxrsKrmfjJ0Icd2OpPLPXjo3EYde+S+CGe8fIfeclEI785u+MyWGZRwM/DAlg8Qn69Ub5ffC/3YJiR8CEGVJrA2EhPJiXBlICZVxS76NjoF4ru3AY5fMd/PE/UXm1SMQUk9wpXw6tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgpX6nLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mHM3fG80cIWLWiDujANe1I9jg6IC/ILMgVcEmCD001BNnqEB+UuWrsWxmFT4xfgWIrhr84T2sJsVP89+rUoxt0ap1hi5Fk14Mpj6sNSFtnfDKOmHkGrszOGIDz8NlMaU2pXOWhZcD5K5laltMu2d27kgHRJfSJSLIU/Df0CyA9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gu5+WR92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgpX6nLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C600C4CEF1;
-	Tue, 28 Oct 2025 00:40:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gu5+WR92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624DEC113D0;
+	Tue, 28 Oct 2025 00:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612030;
-	bh=lpgXbS9MZIaqsP8tjC0zw1dQwPEtQ1E6gyoovqakvdI=;
+	s=k20201202; t=1761612032;
+	bh=UJKFm6DeAyrm/IsSUNZOhEv2EhKtfpq09FKwf6UXzPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgpX6nLM5DjtQzN4SKfchZhWpCEBjTOq0rzlhUvFhUj/aOwQPeDKYQUrGvTG+MvRf
-	 qwr8mXxemvdCppkP9cgx7SmR+NpyH/V5owMMxK5BOISyyLX99ZUfa/iUyTSZ+OfUa5
-	 A1FsHaVkCF6H1ASsve68wzU28ELfw3vG3uOkuiJjyXqLRhhvis0BmJaJFdeYf5vEzu
-	 Gs2Gwg+AbaeKSQlzM3WgJ1SQqkDwmlLhQjzqStsK7b8GgF80psvbhkWOhrg30cXak9
-	 yVXdotnui/bgWENtknTkmulNSX1RiVnym5TA+pT1Op6MTQE/8W6CWWEDci9TvgYl5F
-	 zI4Kg/sZeCTFQ==
+	b=Gu5+WR92SSwnkBLtn0m0aFk6XVFSiw3ffROYVYbsuDSUZmjM3UxoRrMtbOJVzdaZy
+	 FkdQq5pZuJb8Q66moCs6LNzN6MU0EQimyWrTWQMYeBeK28TPSsaVX9kvL4t5vq66Mw
+	 9b9yexPeCj4dbt5YZbWhMGrcd1pcQjq0GrXvsqyR38+7zAYbPg4paY9SOte80CuwWF
+	 sQYIgyL4d0LbGNBkWUSFsBO3ZcSZ53XTTScbqKmVL6ldRFtf1311O7FDjMxHrLWBbT
+	 jbmGEzBqkBT3HBvXIDryc0W9k6/TfCCBbLYUVr3v5xtWAVCrvLI0/jRZVfo8I9XB2l
+	 BNDT3WLYMei4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	srinivasan.shanmugam@amd.com,
-	sunil.khatri@amd.com,
-	Arunpravin.PaneerSelvam@amd.com,
-	Tong.Liu01@amd.com,
-	tvrtko.ursulin@igalia.com,
-	alexandre.f.demers@gmail.com,
-	mario.limonciello@amd.com,
-	Prike.Liang@amd.com,
-	shashank.sharma@amd.com,
-	vitaly.prosyak@amd.com,
-	Victor.Skvortsov@amd.com,
-	Hawking.Zhang@amd.com,
-	Shravankumar.Gande@amd.com,
-	mtodorovac69@gmail.com,
-	xiang.liu@amd.com,
-	shaoyun.liu@amd.com,
-	Tony.Yi@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.1] drm/amdgpu: Fix NULL pointer dereference in VRAM logic for APU devices
-Date: Mon, 27 Oct 2025 20:39:04 -0400
-Message-ID: <20251028003940.884625-20-sashal@kernel.org>
+	anthony.l.nguyen@intel.com,
+	sln@onemain.com,
+	radoslawx.tyl@intel.com,
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 6.17] ixgbe: handle IXGBE_VF_FEATURES_NEGOTIATE mbox cmd
+Date: Mon, 27 Oct 2025 20:39:05 -0400
+Message-ID: <20251028003940.884625-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
 References: <20251028003940.884625-1-sashal@kernel.org>
@@ -63,302 +52,291 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.5
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
+From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 
-[ Upstream commit 883f309add55060233bf11c1ea6947140372920f ]
+[ Upstream commit 823be089f9c8ab136ba382b516aedd3f7ac854bd ]
 
-Previously, APU platforms (and other scenarios with uninitialized VRAM managers)
-triggered a NULL pointer dereference in `ttm_resource_manager_usage()`. The root
-cause is not that the `struct ttm_resource_manager *man` pointer itself is NULL,
-but that `man->bdev` (the backing device pointer within the manager) remains
-uninitialized (NULL) on APUs—since APUs lack dedicated VRAM and do not fully
-set up VRAM manager structures. When `ttm_resource_manager_usage()` attempts to
-acquire `man->bdev->lru_lock`, it dereferences the NULL `man->bdev`, leading to
-a kernel OOPS.
+Send to VF information about features supported by the PF driver.
 
-1. **amdgpu_cs.c**: Extend the existing bandwidth control check in
-   `amdgpu_cs_get_threshold_for_moves()` to include a check for
-   `ttm_resource_manager_used()`. If the manager is not used (uninitialized
-   `bdev`), return 0 for migration thresholds immediately—skipping VRAM-specific
-   logic that would trigger the NULL dereference.
+Increase API version to 1.7.
 
-2. **amdgpu_kms.c**: Update the `AMDGPU_INFO_VRAM_USAGE` ioctl and memory info
-   reporting to use a conditional: if the manager is used, return the real VRAM
-   usage; otherwise, return 0. This avoids accessing `man->bdev` when it is
-   NULL.
-
-3. **amdgpu_virt.c**: Modify the vf2pf (virtual function to physical function)
-   data write path. Use `ttm_resource_manager_used()` to check validity: if the
-   manager is usable, calculate `fb_usage` from VRAM usage; otherwise, set
-   `fb_usage` to 0 (APUs have no discrete framebuffer to report).
-
-This approach is more robust than APU-specific checks because it:
-- Works for all scenarios where the VRAM manager is uninitialized (not just APUs),
-- Aligns with TTM's design by using its native helper function,
-- Preserves correct behavior for discrete GPUs (which have fully initialized
-  `man->bdev` and pass the `ttm_resource_manager_used()` check).
-
-v4: use ttm_resource_manager_used(&adev->mman.vram_mgr.manager) instead of checking the adev->gmc.is_app_apu flag (Christian)
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20251009-jk-iwl-net-2025-10-01-v3-5-ef32a425b92a@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: **YES**
+Based on my analysis using semantic code analysis tools and git history
+examination, here is my determination:
 
-### Analysis Summary
+**Answer: YES**
 
-I performed comprehensive semantic code analysis using the available MCP
-tools to evaluate this NULL pointer dereference fix for APU devices.
+**Extensive Explanation:**
 
----
+## 1. Analysis Performed Using Semantic Tools
 
-### 1. SEMANTIC TOOLS USED
+I used the following semantic code analysis tools to examine this
+commit:
 
-**Function Analysis:**
-- `mcp__semcode__find_function`: Located all 3 affected functions and
-  `ttm_resource_manager_usage()`
-- `mcp__semcode__find_callers`: Traced call graphs to determine user-
-  space exposure
-- `mcp__semcode__find_type`: Examined `ttm_resource_manager` structure
-  to understand the root cause
+- **mcp__semcode__find_function**: Located `ixgbe_rcv_msg_from_vf()`,
+  `ixgbe_negotiate_vf_api()`, and `ixgbe_msg_task()` to understand the
+  mailbox message handling flow
+- **mcp__semcode__find_callers**: Traced the call chain:
+  `ixgbe_msix_other()` (IRQ handler) → `ixgbe_msg_task()` →
+  `ixgbe_rcv_msg_from_vf()`, confirming this code is triggered by VF
+  interrupts
+- **Git tools**: Examined commit history, found companion VF-side fix
+  (a7075f501bd33), and traced the problematic commits back to v4.20
 
-**Call Graph Analysis Results:**
-- `amdgpu_info_ioctl`: **0 callers** (it's a top-level ioctl handler) →
-  **DIRECTLY USER-SPACE EXPOSED**
-  (drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c:613)
-- `amdgpu_cs_get_threshold_for_moves`: Called by `amdgpu_cs_parser_bos`
-  → called by `amdgpu_cs_ioctl` → **USER-SPACE EXPOSED** via command
-  submission ioctl (drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c:702)
-- `amdgpu_virt_write_vf2pf_data`: Called by SRIOV virtualization code →
-  potentially **USER-SPACE TRIGGERABLE** in virtualized environments
-  (drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c:576)
-- `ttm_resource_manager_usage`: **18 callers across multiple drivers**
-  (amdgpu, radeon, nouveau, xe)
+## 2. Code Changes Analysis
 
----
+The commit adds:
+- **New API version**: `ixgbe_mbox_api_17` (line 56 in ixgbe_mbx.h)
+- **New mailbox command**: `IXGBE_VF_FEATURES_NEGOTIATE` (0x12) for VF-
+  to-PF feature negotiation
+- **Feature flags**: `IXGBEVF_PF_SUP_IPSEC` and `IXGBEVF_PF_SUP_ESX_MBX`
+  to indicate PF capabilities
+- **New handler function**: `ixgbe_negotiate_vf_features()` at
+  drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c:1268
+- **Case statement addition**: Adds handling for the new mailbox command
+  in `ixgbe_rcv_msg_from_vf()`
+- **API version updates**: Adds `ixgbe_mbox_api_17` cases to 8 existing
+  switch statements for backward compatibility
 
-### 2. ROOT CAUSE ANALYSIS
+## 3. Impact Scope (from semantic analysis)
 
-The bug occurs in `ttm_resource_manager_usage()` at
-drivers/gpu/drm/ttm/ttm_resource.c:586-594:
+**Call graph analysis** shows:
+- 1 direct caller of `ixgbe_rcv_msg_from_vf()`: the `ixgbe_msg_task()`
+  function
+- User-space can trigger this code path through SR-IOV VF operations
+- The code runs in interrupt context (from MSI-X handler)
+- Affects all SR-IOV deployments using ixgbe PF with ixgbevf VF drivers
 
-```c
-uint64_t ttm_resource_manager_usage(struct ttm_resource_manager *man)
-{
-    uint64_t usage;
-    spin_lock(&man->bdev->lru_lock);  // ← NULL DEREFERENCE HERE
-    usage = man->usage;
-    spin_unlock(&man->bdev->lru_lock);
-    return usage;
-}
+## 4. This Is a Bug Fix, Not a New Feature
+
+The companion VF-side commit (a7075f501bd33) clearly indicates this is a
+**critical bug fix**:
+
+```
+Fixes: 0062e7cc955e ("ixgbevf: add VF IPsec offload code")
+Fixes: 339f28964147 ("ixgbevf: Add support for new mailbox communication
+between PF and VF")
+Cc: stable@vger.kernel.org
 ```
 
-**Why it happens:** On APU devices, the VRAM manager structure exists
-but `man->bdev` (backing device pointer) is **NULL** because APUs don't
-have dedicated VRAM and don't fully initialize VRAM manager structures.
-The `ttm_resource_manager_used()` check returns false when
-`man->use_type` is false, indicating the manager is not actually in use.
+The VF commit message explains:
+- "API 1.6 cannot be supported for Linux ixgbe driver as it causes
+  **crashes**"
+- Backward compatibility was broken since API 1.4 (introduced in v4.20,
+  August 2018)
+- VF drivers attempting to use IPsec or ESX mailbox features crash when
+  PF doesn't support them
+- No negotiation mechanism existed, causing interoperability failures
+  between Linux/ESX/FreeBSD drivers
 
----
+## 5. Why This Must Be Backported
 
-### 3. USER-SPACE EXPOSURE & IMPACT SCOPE
+**Critical reasons:**
+1. **Fixes crashes**: VFs crash when attempting to use features not
+   supported by the PF
+   (drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c:1268-1282)
+2. **Paired fix**: The VF-side fix (a7075f501bd33) has explicit "Cc:
+   stable@vger.kernel.org" tag and is already being backported (as
+   evidenced by commit a376e29b1b196 showing "commit a7075f501bd33
+   upstream")
+3. **Incomplete without both sides**: The VF asks "what features do you
+   support?" but the PF needs this commit to answer. Without the PF
+   handler, VF gets -EOPNOTSUPP, defeating the fix
+4. **Affects all kernels ≥ v4.20**: The problematic commits exist in all
+   kernels from v4.20 onwards (confirmed via `git tag --contains
+   0062e7cc955e`)
+5. **Small, contained change**: Only adds 47 lines across 2 files,
+   focused on one specific mailbox command
 
-**CRITICAL FINDING:** All three affected code paths are user-space
-triggerable:
+## 6. Compliance with Stable Tree Rules
 
-1. **amdgpu_kms.c:760** (`AMDGPU_INFO_VRAM_USAGE` ioctl case):
-   - Any userspace program can call this ioctl to query VRAM usage
-   - On APUs, this triggers NULL deref → **KERNEL CRASH**
+**Passes all stable tree criteria:**
+- ✅ Fixes important bug (crashes in SR-IOV scenarios)
+- ✅ Small and obviously correct (adds one mailbox handler)
+- ✅ No architectural changes (extends existing switch/case pattern)
+- ✅ Minimal regression risk (only affects new API 1.7, old APIs
+  unchanged)
+- ✅ Companion to explicit stable-tagged commit (a7075f501bd33)
+- ✅ Already tested (Tested-by: Rafal Romanowski tag)
 
-2. **amdgpu_cs.c:711** (command submission path):
-   - Called during GPU command buffer submission
-   - Normal GPU applications (games, compute workloads) trigger this
-   - On APUs, attempting to use GPU triggers NULL deref → **KERNEL
-     CRASH**
+## 7. Dependency Check
 
-3. **amdgpu_virt.c:601** (SRIOV path):
-   - Affects virtualized APU environments
-   - Less common but still user-triggerable
+The commit depends on:
+- `ixgbe_send_vf_link_status()` function (added in f7f97cbc03a47, which
+  immediately precedes this commit in the series)
+- Standard ixgbe mailbox infrastructure (present in all affected
+  kernels)
 
-**Affected Platforms:** All AMD APU devices (Ryzen with integrated
-graphics, etc.) - **widely deployed hardware**
+**Recommendation**: Backport as part of the series with its VF
+counterpart and the link status fix.
 
----
+ drivers/net/ethernet/intel/ixgbe/ixgbe_mbx.h  | 10 +++++
+ .../net/ethernet/intel/ixgbe/ixgbe_sriov.c    | 37 +++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
-### 4. FIX COMPLEXITY & DEPENDENCIES
-
-**Fix Complexity:** **VERY SIMPLE**
-- Only adds conditional checks:
-  `ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ? ... : 0`
-- No behavioral changes for discrete GPUs
-- No new functions or data structures
-- Changes span only 3 files, 3 locations
-
-**Dependency Analysis:**
-```c
-static inline bool ttm_resource_manager_used(struct ttm_resource_manager
-*man)
-{
-    return man->use_type;
-}
-```
-This function has existed since **August 2020** (commit b2458726b38cb)
-when TTM resource management was refactored. It's available in all
-stable kernels that would be backport candidates.
-
----
-
-### 5. SEMANTIC CHANGE ASSESSMENT
-
-**Code Changes Analysis:**
-
-1. **amdgpu_cs.c:711** - Extends existing early-return check:
-  ```c
-   - if (!adev->mm_stats.log2_max_MBps) {
-   + if ((!adev->mm_stats.log2_max_MBps) ||
-!ttm_resource_manager_used(&adev->mman.vram_mgr.manager)) {
-   ```
-   **Effect:** Returns 0 for migration thresholds on APUs (correct
-behavior - no VRAM to migrate)
-
-2. **amdgpu_kms.c:760 & 807** - Conditional usage query:
-  ```c
-   - ui64 = ttm_resource_manager_usage(&adev->mman.vram_mgr.manager);
-   + ui64 = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-   +     ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) : 0;
-   ```
-   **Effect:** Reports 0 VRAM usage for APUs (correct - APUs have no
-dedicated VRAM)
-
-3. **amdgpu_virt.c:601** - Similar conditional for fb_usage reporting
-
-**Side Effects:** NONE for discrete GPUs. APUs now correctly report 0
-instead of crashing.
-
----
-
-### 6. BACKPORT SUITABILITY CRITERIA
-
-✅ **Fixes important bug:** NULL pointer dereference → kernel crash
-✅ **Affects users:** All AMD APU users (widespread hardware)
-✅ **User-space triggerable:** Via standard ioctl calls
-✅ **Small and contained:** 3 files, simple conditional checks
-✅ **No architectural changes:** Uses existing TTM infrastructure
-✅ **Low regression risk:** Only affects APUs, changes are defensive
-✅ **No new features:** Pure bug fix
-✅ **Dependencies satisfied:** Helper function available since 2020
-✅ **Confined to subsystem:** Only affects amdgpu driver
-
----
-
-### 7. STABLE TREE COMPLIANCE
-
-**Bug Fix:** ✅ YES - Fixes NULL pointer dereference
-**New Feature:** ❌ NO - Only defensive checks
-**Security Fix:** ⚠️ POTENTIAL - DoS via user-triggerable kernel crash
-**Performance Optimization:** ❌ NO
-**Architectural Change:** ❌ NO
-
----
-
-### 8. MISSING TAGS OBSERVATION
-
-**Notable:** This commit lacks standard stable tree indicators:
-- No `Fixes:` tag (should reference when the bug was introduced)
-- No `Cc: stable@vger.kernel.org` tag
-
-However, the commit message clearly describes a NULL pointer dereference
-fix, which is a critical bug that warrants backporting regardless of
-missing tags.
-
----
-
-### FINAL RECOMMENDATION
-
-**BACKPORT: YES** - This is a **HIGH PRIORITY** backport candidate
-because:
-
-1. **Severity:** Kernel crash (NULL pointer dereference) affecting all
-   APU users
-2. **Exposure:** User-space triggerable via common ioctl paths
-3. **Risk:** Low - simple defensive checks with no behavioral changes
-   for working systems
-4. **Scope:** Affects widely-deployed AMD APU hardware
-5. **Fix Quality:** Clean, minimal, uses existing TTM infrastructure
-
-The fix should be backported to all active stable kernel trees
-supporting AMD APU devices (likely 5.10+).
-
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c   | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c  | 7 ++++---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 4 ++--
- 3 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index d3f220be2ef9a..2a142e9e97384 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -714,7 +714,7 @@ static void amdgpu_cs_get_threshold_for_moves(struct amdgpu_device *adev,
- 	 */
- 	const s64 us_upper_bound = 200000;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_mbx.h b/drivers/net/ethernet/intel/ixgbe/ixgbe_mbx.h
+index f7256a339c99b..0334ed4b8fa39 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_mbx.h
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_mbx.h
+@@ -52,6 +52,7 @@ enum ixgbe_pfvf_api_rev {
+ 	ixgbe_mbox_api_14,	/* API version 1.4, linux/freebsd VF driver */
+ 	ixgbe_mbox_api_15,	/* API version 1.5, linux/freebsd VF driver */
+ 	ixgbe_mbox_api_16,	/* API version 1.6, linux/freebsd VF driver */
++	ixgbe_mbox_api_17,	/* API version 1.7, linux/freebsd VF driver */
+ 	/* This value should always be last */
+ 	ixgbe_mbox_api_unknown,	/* indicates that API version is not known */
+ };
+@@ -91,6 +92,9 @@ enum ixgbe_pfvf_api_rev {
+ /* mailbox API, version 1.6 VF requests */
+ #define IXGBE_VF_GET_PF_LINK_STATE	0x11 /* request PF to send link info */
  
--	if (!adev->mm_stats.log2_max_MBps) {
-+	if ((!adev->mm_stats.log2_max_MBps) || !ttm_resource_manager_used(&adev->mman.vram_mgr.manager)) {
- 		*max_bytes = 0;
- 		*max_vis_bytes = 0;
- 		return;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 8a76960803c65..8162f7f625a86 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -758,7 +758,8 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		ui64 = atomic64_read(&adev->num_vram_cpu_page_faults);
- 		return copy_to_user(out, &ui64, min(size, 8u)) ? -EFAULT : 0;
- 	case AMDGPU_INFO_VRAM_USAGE:
--		ui64 = ttm_resource_manager_usage(&adev->mman.vram_mgr.manager);
-+		ui64 = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+			ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) : 0;
- 		return copy_to_user(out, &ui64, min(size, 8u)) ? -EFAULT : 0;
- 	case AMDGPU_INFO_VIS_VRAM_USAGE:
- 		ui64 = amdgpu_vram_mgr_vis_usage(&adev->mman.vram_mgr);
-@@ -804,8 +805,8 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		mem.vram.usable_heap_size = adev->gmc.real_vram_size -
- 			atomic64_read(&adev->vram_pin_size) -
- 			AMDGPU_VM_RESERVED_VRAM;
--		mem.vram.heap_usage =
--			ttm_resource_manager_usage(vram_man);
-+		mem.vram.heap_usage = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+				ttm_resource_manager_usage(vram_man) : 0;
- 		mem.vram.max_allocation = mem.vram.usable_heap_size * 3 / 4;
++/* mailbox API, version 1.7 VF requests */
++#define IXGBE_VF_FEATURES_NEGOTIATE	0x12 /* get features supported by PF */
++
+ /* length of permanent address message returned from PF */
+ #define IXGBE_VF_PERMADDR_MSG_LEN 4
+ /* word in permanent address message with the current multicast type */
+@@ -101,6 +105,12 @@ enum ixgbe_pfvf_api_rev {
+ #define IXGBE_VF_MBX_INIT_TIMEOUT 2000 /* number of retries on mailbox */
+ #define IXGBE_VF_MBX_INIT_DELAY   500  /* microseconds between retries */
  
- 		mem.cpu_accessible_vram.total_heap_size =
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 13f0cdeb59c46..e13bf2345ef5c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -598,8 +598,8 @@ static int amdgpu_virt_write_vf2pf_data(struct amdgpu_device *adev)
- 	vf2pf_info->driver_cert = 0;
- 	vf2pf_info->os_info.all = 0;
++/* features negotiated between PF/VF */
++#define IXGBEVF_PF_SUP_IPSEC		BIT(0)
++#define IXGBEVF_PF_SUP_ESX_MBX		BIT(1)
++
++#define IXGBE_SUPPORTED_FEATURES	IXGBEVF_PF_SUP_IPSEC
++
+ struct ixgbe_hw;
  
--	vf2pf_info->fb_usage =
--		ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) >> 20;
-+	vf2pf_info->fb_usage = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+		 ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) >> 20 : 0;
- 	vf2pf_info->fb_vis_usage =
- 		amdgpu_vram_mgr_vis_usage(&adev->mman.vram_mgr) >> 20;
- 	vf2pf_info->fb_size = adev->gmc.real_vram_size >> 20;
+ int ixgbe_read_mbx(struct ixgbe_hw *, u32 *, u16, u16);
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
+index b09271d61a4ef..ee133d6749b37 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_sriov.c
+@@ -511,6 +511,7 @@ static int ixgbe_set_vf_lpe(struct ixgbe_adapter *adapter, u32 max_frame, u32 vf
+ 		case ixgbe_mbox_api_13:
+ 		case ixgbe_mbox_api_14:
+ 		case ixgbe_mbox_api_16:
++		case ixgbe_mbox_api_17:
+ 			/* Version 1.1 supports jumbo frames on VFs if PF has
+ 			 * jumbo frames enabled which means legacy VFs are
+ 			 * disabled
+@@ -1048,6 +1049,7 @@ static int ixgbe_negotiate_vf_api(struct ixgbe_adapter *adapter,
+ 	case ixgbe_mbox_api_13:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_16:
++	case ixgbe_mbox_api_17:
+ 		adapter->vfinfo[vf].vf_api = api;
+ 		return 0;
+ 	default:
+@@ -1075,6 +1077,7 @@ static int ixgbe_get_vf_queues(struct ixgbe_adapter *adapter,
+ 	case ixgbe_mbox_api_13:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_16:
++	case ixgbe_mbox_api_17:
+ 		break;
+ 	default:
+ 		return -1;
+@@ -1115,6 +1118,7 @@ static int ixgbe_get_vf_reta(struct ixgbe_adapter *adapter, u32 *msgbuf, u32 vf)
+ 
+ 	/* verify the PF is supporting the correct API */
+ 	switch (adapter->vfinfo[vf].vf_api) {
++	case ixgbe_mbox_api_17:
+ 	case ixgbe_mbox_api_16:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_13:
+@@ -1149,6 +1153,7 @@ static int ixgbe_get_vf_rss_key(struct ixgbe_adapter *adapter,
+ 
+ 	/* verify the PF is supporting the correct API */
+ 	switch (adapter->vfinfo[vf].vf_api) {
++	case ixgbe_mbox_api_17:
+ 	case ixgbe_mbox_api_16:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_13:
+@@ -1180,6 +1185,7 @@ static int ixgbe_update_vf_xcast_mode(struct ixgbe_adapter *adapter,
+ 	case ixgbe_mbox_api_13:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_16:
++	case ixgbe_mbox_api_17:
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -1251,6 +1257,7 @@ static int ixgbe_get_vf_link_state(struct ixgbe_adapter *adapter,
+ 	case ixgbe_mbox_api_13:
+ 	case ixgbe_mbox_api_14:
+ 	case ixgbe_mbox_api_16:
++	case ixgbe_mbox_api_17:
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -1278,6 +1285,7 @@ static int ixgbe_send_vf_link_status(struct ixgbe_adapter *adapter,
+ 
+ 	switch (adapter->vfinfo[vf].vf_api) {
+ 	case ixgbe_mbox_api_16:
++	case ixgbe_mbox_api_17:
+ 		if (hw->mac.type != ixgbe_mac_e610)
+ 			return -EOPNOTSUPP;
+ 		break;
+@@ -1293,6 +1301,32 @@ static int ixgbe_send_vf_link_status(struct ixgbe_adapter *adapter,
+ 	return 0;
+ }
+ 
++/**
++ * ixgbe_negotiate_vf_features -  negotiate supported features with VF driver
++ * @adapter: pointer to adapter struct
++ * @msgbuf: pointer to message buffers
++ * @vf: VF identifier
++ *
++ * Return: 0 on success or -EOPNOTSUPP when operation is not supported.
++ */
++static int ixgbe_negotiate_vf_features(struct ixgbe_adapter *adapter,
++				       u32 *msgbuf, u32 vf)
++{
++	u32 features = msgbuf[1];
++
++	switch (adapter->vfinfo[vf].vf_api) {
++	case ixgbe_mbox_api_17:
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
++
++	features &= IXGBE_SUPPORTED_FEATURES;
++	msgbuf[1] = features;
++
++	return 0;
++}
++
+ static int ixgbe_rcv_msg_from_vf(struct ixgbe_adapter *adapter, u32 vf)
+ {
+ 	u32 mbx_size = IXGBE_VFMAILBOX_SIZE;
+@@ -1370,6 +1404,9 @@ static int ixgbe_rcv_msg_from_vf(struct ixgbe_adapter *adapter, u32 vf)
+ 	case IXGBE_VF_GET_PF_LINK_STATE:
+ 		retval = ixgbe_send_vf_link_status(adapter, msgbuf, vf);
+ 		break;
++	case IXGBE_VF_FEATURES_NEGOTIATE:
++		retval = ixgbe_negotiate_vf_features(adapter, msgbuf, vf);
++		break;
+ 	default:
+ 		e_err(drv, "Unhandled Msg %8.8x\n", msgbuf[0]);
+ 		retval = -EIO;
 -- 
 2.51.0
 
