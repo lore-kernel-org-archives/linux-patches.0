@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476564A23;
-	Tue, 28 Oct 2025 00:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0119A1E9B35;
+	Tue, 28 Oct 2025 00:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761612007; cv=none; b=sdtA+/f+1H7J7rwXMJyDqLy8+9l0HzAbDZlcj8GSBSUaYdgESP+Wng+aEqDmwoBCCdXjnEnQO36pfvj9wIohEclPJpSXNmFRCn6B7kkinm1Z58kOwqPMlCu9R8ekjBFYyBU+1IwUp8aFCqO6tNjIIWDFfWGEXiYd9SgiGo1HGyI=
+	t=1761612008; cv=none; b=Nm2U2ynpzc40NnZ7ywDpCV1PjO+087AnOQEpdr4XZ4xPUaOXuVobnSWySrnrgROsbhmG7n1dPfL3bWg/M6TjEUPKqqGdaJZTEhwgD23uC+K+28uFK1GDAmQj7UHm1hgZfxo/HKK3jFuuQURyOD1HiI8RUXrpIvHD/f8hnHY0cFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761612007; c=relaxed/simple;
-	bh=TqwRwFFs387iVOAkocf+ezDLn2LssS+JbPqVIryJlgg=;
+	s=arc-20240116; t=1761612008; c=relaxed/simple;
+	bh=iFwyVq5eteXLFrsbWhqM4Wqoxgu8Kh5yVdtBebZ0cgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u4QnCg6dFhhYXS5DaKO4qOk+PGFfCrrLpR1CnCnE6v9cyD35suAPLCpHRJQoDZ2ao0WecWFPmqMrWtfhkuEXIbXRRX4fqOPEu+HeY83+yXuadNSj16GTzW2yUxhBw5dOrwBxyCsACqKYWimhkKP4DhhSdxx2Z2UYbTdNf18f9aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6BwfASZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pAKUrtrphU6Sm7Yvti2Uay49mafHcCFmWCm75dUzKv2rqA9VcoiBfxsBS+goCL3ZuXPcvsyp51OiP9LCxbjFFv4mLDqldS2IzNC1wgEOmkTJAOwKDNKr1HJ54K1pWIADoZvzU4/09KdHquQufYdTgr5G0ifFw/Hb5Wjv7wt9KaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TSaXvF10; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6BwfASZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE2DC116B1;
-	Tue, 28 Oct 2025 00:40:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TSaXvF10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A062C4CEFB;
+	Tue, 28 Oct 2025 00:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761612007;
-	bh=TqwRwFFs387iVOAkocf+ezDLn2LssS+JbPqVIryJlgg=;
+	s=k20201202; t=1761612004;
+	bh=iFwyVq5eteXLFrsbWhqM4Wqoxgu8Kh5yVdtBebZ0cgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6BwfASZ0SqfzKqTqd8s/dvlLex7+2mGPzmEnI5WKxGadqzmwrsaBy+PZEJ3rI+7t
-	 jZS73PbTzrk4PUzRIlG4fbYGbVoSQY2ZQ/d2RtQ8Q9ti6IqDDdScFc5tHNRuSxRqc4
-	 db1h7vN8tZ3io68vrzJcJ05CzvQL7MMIBBVMgcCBTMggW/2o5pXz8S6Eai19GqIBH+
-	 8sSUpOCOoydar5IV9TEUqbSJmh3ic1qs6fjhw5hta9bSXWEFQWW+z+BKhmmdwBnfI1
-	 fd14GjYKj690V6my0hspU2NxcHyAjewZx1NRIof0FXrO7fD4D7oD1GP6pFZeA4xV8L
-	 YllJJi5U+x4MQ==
+	b=TSaXvF10DsXoxVRq8CVuCsICSj1xCDZ3OdmX1p2D++7zgbx+1CkdDIV2ojHfcJfPG
+	 L3rqvg7kRJq3B2aluJ7Ke+o4IqI0S+71U2ntSIN6HhXDGEPUJKqKwLnsG+sBhif+wp
+	 +ZCbxdd70kLOWiGiFTuNpiO26XGg7tz+in5WWp2Iw0agf1LBGqgJzB2i2WRWBPQv7I
+	 wa0krQfMz6iNaHEvyu6kcAGYMcVS34jtDmZwTntUMysTjNYYaF/VG63S3ZAp+63GeD
+	 Mm/oBc9yMxmbbJmJ/uD4RKpFbzpieng6uhhHbQGCiYoo0TXQkNSaY2un7Ai9pAl44K
+	 TwIdTTutvyJlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Kim <jonathan.kim@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
+Cc: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	amd-gfx@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17] drm/amdkfd: fix suspend/resume all calls in mes based eviction path
-Date: Mon, 27 Oct 2025 20:38:55 -0400
-Message-ID: <20251028003940.884625-11-sashal@kernel.org>
+	alexander.deucher@amd.com,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17] ASoC: nau8821: Avoid unnecessary blocking in IRQ handler
+Date: Mon, 27 Oct 2025 20:38:53 -0400
+Message-ID: <20251028003940.884625-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251028003940.884625-1-sashal@kernel.org>
 References: <20251028003940.884625-1-sashal@kernel.org>
@@ -53,266 +52,233 @@ X-stable-base: Linux 6.17.5
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Kim <jonathan.kim@amd.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 079ae5118e1f0dcf5b1ab68ffdb5760b06ed79a2 ]
+[ Upstream commit ee70bacef1c6050e4836409927294d744dbcfa72 ]
 
-Suspend/resume all gangs should be done with the device lock is held.
+The interrupt handler offloads the microphone detection logic to
+nau8821_jdet_work(), which implies a sleep operation.  However, before
+being able to process any subsequent hotplug event, the interrupt
+handler needs to wait for any prior scheduled work to complete.
 
-Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Move the sleep out of jdet_work by converting it to a delayed work.
+This eliminates the undesired blocking in the interrupt handler when
+attempting to cancel a recently scheduled work item and should help
+reducing transient input reports that might confuse user-space.
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20251003-nau8821-jdet-fixes-v1-5-f7b0e2543f09@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## BACKPORT RECOMMENDATION: YES
+Based on my analysis using semantic code analysis tools and repository
+examination, here is my assessment:
 
-### Summary
-This commit fixes a **locking correctness bug** in the AMD KFD (GPU
-compute) driver's MES-based eviction path. The bug allows
-suspend_all_queues_mes() and resume_all_queues_mes() to be called
-without holding the required device queue manager lock, creating race
-conditions that can cause GPU hangs and system instability.
+## **Backport Status: YES**
 
----
+## Detailed Analysis:
 
-### Semantic Analysis Tools Used
+### 1. Semantic Analysis Tools Used:
 
-1. **mcp__semcode__find_function**: Located evict_process_queues_cpsch,
-   suspend_all_queues_mes, resume_all_queues_mes, and
-   kfd_evict_process_device functions
-2. **mcp__semcode__find_callers**: Identified 4 direct callers of
-   kfd_evict_process_device:
-   - kfd_set_dbg_ev_from_interrupt (debug interrupts)
-   - kfd_dbg_send_exception_to_runtime (ioctl handler)
-   - kfd_signal_vm_fault_event_with_userptr (VM fault handler)
-   - cik_event_interrupt_wq (interrupt handler)
-3. **mcp__semcode__find_callchain**: Traced call paths showing user-
-   space can trigger this via kfd_ioctl_set_debug_trap
-4. **Git history analysis**: Determined bug was introduced in v6.12
-   (commit 9a16042f02cd0) and fixed in v6.18-rc2
+- **mcp__semcode__find_function**: Located the three affected functions
+  (`nau8821_jdet_work`, `nau8821_interrupt`,
+  `nau8821_enable_jack_detect`)
+- **mcp__semcode__find_callers**: Identified that
+  `nau8821_enable_jack_detect` is called by 2 AMD machine drivers
+  (acp5x_8821_init, acp_8821_init)
+- **mcp__semcode__find_type**: Examined the `struct nau8821` definition
+  to understand the data structure change
+- **Grep**: Analyzed all `cancel_work_sync` calls and `msleep` usage
+  patterns in the driver
+- **Git analysis**: Verified no follow-up fixes or reverts exist for
+  this commit
 
----
+### 2. Code Analysis - What Changed:
 
-### Code Analysis
+The commit addresses a **kernel programming anti-pattern: blocking in an
+interrupt handler**.
 
-**The Bug (OLD CODE in kfd_dqm_evict_pasid_mes):**
-```c
-dqm_lock(dqm);
-if (qpd->evicted) { ... }
-dqm_unlock(dqm);  // ← Lock released here
+**Before (problematic code):**
+- `nau8821_jdet_work` (work handler) contains `msleep(20)` at
+  sound/soc/codecs/nau8821.c:1115
+- IRQ handler calls `cancel_work_sync()` at lines 1208 and 1222, which
+  blocks waiting for work completion
+- If work is sleeping, IRQ handler blocks for 20ms+ (unacceptable
+  latency)
 
-ret = suspend_all_queues_mes(dqm);  // ← Called WITHOUT lock
-ret = dqm->ops.evict_process_queues(dqm, qpd);
-ret = resume_all_queues_mes(dqm);  // ← Called WITHOUT lock
-```
+**After (fixed code):**
+- Converted `struct work_struct` → `struct delayed_work`
+- Removed `msleep(20)` from work handler
+- Moved MICBIAS enable to IRQ handler, schedule delayed work with
+  `msecs_to_jiffies(20)`
+- Changed to `cancel_delayed_work_sync()` - won't block on sleeping work
 
-The old code released the dqm lock, then called suspend/resume without
-re-acquiring it. This violates the locking contract stated in the commit
-message: "Suspend/resume all gangs should be done with the device lock
-is held."
+### 3. Impact Scope Assessment:
 
-**The Fix (NEW CODE in evict_process_queues_cpsch):**
-```c
-dqm_lock(dqm);  // ← Lock held from start
-if (dqm->dev->kfd->shared_resources.enable_mes) {
-    retval = suspend_all_queues_mes(dqm);  // ← Called WITH lock
-    if (retval) goto out;
-}
-// ... eviction work ...
-if (dqm->dev->kfd->shared_resources.enable_mes) {
-    retval = resume_all_queues_mes(dqm);  // ← Called WITH lock
-}
-out:
-    dqm_unlock(dqm);  // ← Lock held until end
-```
+**Call Graph Analysis:**
+- Affects NAU8821 audio codec driver (used on AMD Vangogh platforms)
+- 2 machine drivers call this code (AMD ACP platforms)
+- User-triggerable via hardware jack insertion/ejection events
+- Affects real consumer hardware (likely Steam Deck and similar AMD
+  devices)
 
-The fix moves suspend/resume calls inside evict_process_queues_cpsch
-where the dqm lock is held throughout the entire operation. It also:
-- Eliminates the buggy kfd_dqm_evict_pasid_mes wrapper entirely
-- Improves error handling with early exit on suspend failure
-- Changes error path from continuing with `retval = err` to immediately
-  exiting with `goto out`
+**Exposure:**
+- Hardware interrupt path → directly user-facing
+- Bug causes measurable interrupt latency (20ms blocking)
+- Commit message states it helps "reducing transient input reports that
+  might confuse user-space"
 
----
+### 4. Complexity and Risk Analysis:
 
-### Impact Assessment
+**Change Complexity: LOW**
+- Only 2 files modified: nau8821.c (22 lines) and nau8821.h (2 lines)
+- Simple type conversion: `work_struct` → `delayed_work`
+- No API changes, no new dependencies
+- Logic remains functionally equivalent (same 20ms delay, just
+  implemented differently)
 
-**Severity: Medium-High**
-- **User-triggerable:** YES - via ioctl (kfd_ioctl_set_debug_trap) and
-  VM fault handlers
-- **Affected kernels:** v6.12 through v6.17 (6 major versions)
-- **Subsystem criticality:** GPU compute device queue management
-- **Potential consequences:**
-  - Race conditions during queue eviction
-  - GPU hangs and device state corruption
-  - System instability
-  - Possible kernel crashes
+**Regression Risk: VERY LOW**
+- Standard kernel pattern (delayed_work is designed exactly for this use
+  case)
+- Similar fix exists in WM8350 codec: "Use delayed work to debounce
+  WM8350 jack IRQs"
+- No follow-up fixes found in git history (ee70bacef1c60..HEAD shows no
+  corrections)
+- 4 subsequent commits to driver are unrelated (DMI quirks, interrupt
+  clearing)
 
-**Scope: Well-contained**
-- Changes confined to AMD KFD driver (drivers/gpu/drm/amd/amdkfd/)
-- Only affects MES-based queue eviction path
-- No architectural changes or API modifications
-- Eliminates 44 lines of buggy code, adds proper locking discipline
+### 5. Backport Suitability Criteria:
 
----
+| Criterion | Assessment | Details |
+|-----------|------------|---------|
+| Fixes important bug? | ✅ YES | Blocking in IRQ handler violates kernel
+design |
+| Small and contained? | ✅ YES | 24 lines changed, single subsystem |
+| No new features? | ✅ YES | Pure bug fix |
+| No architectural changes? | ✅ YES | Just work→delayed_work conversion
+|
+| Low regression risk? | ✅ YES | Standard pattern, no follow-up fixes |
+| User impact? | ✅ YES | Improves latency, reduces spurious events |
+| Has stable tag? | ❌ NO | No "Cc: stable" or "Fixes:" tag |
 
-### Stable Tree Compliance
+### 6. Why Backport Despite No Stable Tag:
 
-✅ **Fixes an important bug:** Locking correctness issue causing race
-conditions
-✅ **Does not introduce new features:** Pure bug fix
-✅ **No architectural changes:** Refactors existing code path
-✅ **Minimal regression risk:** Simplifies code and improves locking
-discipline
-✅ **Self-contained:** Limited to single driver subsystem
-✅ **User-impacting:** Affects systems running AMD GPU compute workloads
+1. **Correctness Issue**: Blocking in IRQ handlers is a documented
+   kernel anti-pattern that can cause system-wide latency issues
+2. **Real Hardware Impact**: Affects consumer devices with NAU8821 codec
+   (AMD platforms)
+3. **Safe Fix**: Uses standard kernel pattern (delayed_work), minimal
+   code change
+4. **Proven Stable**: Already in v6.18-rc2 with no reported issues or
+   fixes
+5. **User-Visible Benefit**: Reduces interrupt latency and spurious jack
+   detection events
 
-⚠️ **Missing Fixes: tag:** The commit doesn't have "Fixes:
-9a16042f02cd0" tag, but this doesn't disqualify it from backporting
+### Recommendation:
 
----
+**This commit should be backported** to stable kernels that support the
+affected hardware. It fixes a legitimate kernel programming bug
+(blocking in IRQ context) with a small, safe, well-tested change. The
+absence of an explicit stable tag appears to be an oversight rather than
+intentional exclusion, given that the fix addresses a clear correctness
+issue following established kernel patterns.
 
-### Recommendation Rationale
+ sound/soc/codecs/nau8821.c | 22 ++++++++++++----------
+ sound/soc/codecs/nau8821.h |  2 +-
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
-1. **Clear bug with clear fix:** The commit message explicitly states
-   the locking requirement that was violated
-2. **User-reachable code path:** Semantic analysis confirmed user-space
-   can trigger this via ioctl
-3. **Multi-version impact:** Bug has existed since v6.12 (June 2024),
-   affecting 6 kernel versions
-4. **Low backport risk:** Code change is straightforward - moves
-   function calls inside locked region
-5. **Historical precedent:** Similar locking fixes in this subsystem
-   have been backported (e.g., commit 70df8273ca0ce)
-
-This commit should be backported to **stable kernels v6.12+** to prevent
-GPU hangs and system instability on AMD compute workloads.
-
- .../drm/amd/amdkfd/kfd_device_queue_manager.c | 73 ++++++-------------
- 1 file changed, 21 insertions(+), 52 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 6c5c7c1bf5eda..6e7bc983fc0b6 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -1209,6 +1209,15 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
- 	pr_debug_ratelimited("Evicting process pid %d queues\n",
- 			    pdd->process->lead_thread->pid);
- 
-+	if (dqm->dev->kfd->shared_resources.enable_mes) {
-+		pdd->last_evict_timestamp = get_jiffies_64();
-+		retval = suspend_all_queues_mes(dqm);
-+		if (retval) {
-+			dev_err(dev, "Suspending all queues failed");
-+			goto out;
-+		}
-+	}
-+
- 	/* Mark all queues as evicted. Deactivate all active queues on
- 	 * the qpd.
- 	 */
-@@ -1221,23 +1230,27 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
- 		decrement_queue_count(dqm, qpd, q);
- 
- 		if (dqm->dev->kfd->shared_resources.enable_mes) {
--			int err;
--
--			err = remove_queue_mes(dqm, q, qpd);
--			if (err) {
-+			retval = remove_queue_mes(dqm, q, qpd);
-+			if (retval) {
- 				dev_err(dev, "Failed to evict queue %d\n",
- 					q->properties.queue_id);
--				retval = err;
-+				goto out;
- 			}
- 		}
- 	}
--	pdd->last_evict_timestamp = get_jiffies_64();
--	if (!dqm->dev->kfd->shared_resources.enable_mes)
-+
-+	if (!dqm->dev->kfd->shared_resources.enable_mes) {
-+		pdd->last_evict_timestamp = get_jiffies_64();
- 		retval = execute_queues_cpsch(dqm,
- 					      qpd->is_debug ?
- 					      KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES :
- 					      KFD_UNMAP_QUEUES_FILTER_DYNAMIC_QUEUES, 0,
- 					      USE_DEFAULT_GRACE_PERIOD);
-+	} else {
-+		retval = resume_all_queues_mes(dqm);
-+		if (retval)
-+			dev_err(dev, "Resuming all queues failed");
-+	}
- 
- out:
- 	dqm_unlock(dqm);
-@@ -3098,61 +3111,17 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
- 	return ret;
- }
- 
--static int kfd_dqm_evict_pasid_mes(struct device_queue_manager *dqm,
--				   struct qcm_process_device *qpd)
--{
--	struct device *dev = dqm->dev->adev->dev;
--	int ret = 0;
--
--	/* Check if process is already evicted */
--	dqm_lock(dqm);
--	if (qpd->evicted) {
--		/* Increment the evicted count to make sure the
--		 * process stays evicted before its terminated.
--		 */
--		qpd->evicted++;
--		dqm_unlock(dqm);
--		goto out;
--	}
--	dqm_unlock(dqm);
--
--	ret = suspend_all_queues_mes(dqm);
--	if (ret) {
--		dev_err(dev, "Suspending all queues failed");
--		goto out;
--	}
--
--	ret = dqm->ops.evict_process_queues(dqm, qpd);
--	if (ret) {
--		dev_err(dev, "Evicting process queues failed");
--		goto out;
--	}
--
--	ret = resume_all_queues_mes(dqm);
--	if (ret)
--		dev_err(dev, "Resuming all queues failed");
--
--out:
--	return ret;
--}
--
- int kfd_evict_process_device(struct kfd_process_device *pdd)
+diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
+index a8ff2ce70be9a..4fa9a785513e5 100644
+--- a/sound/soc/codecs/nau8821.c
++++ b/sound/soc/codecs/nau8821.c
+@@ -1104,16 +1104,12 @@ static void nau8821_eject_jack(struct nau8821 *nau8821)
+ static void nau8821_jdet_work(struct work_struct *work)
  {
- 	struct device_queue_manager *dqm;
- 	struct kfd_process *p;
--	int ret = 0;
+ 	struct nau8821 *nau8821 =
+-		container_of(work, struct nau8821, jdet_work);
++		container_of(work, struct nau8821, jdet_work.work);
+ 	struct snd_soc_dapm_context *dapm = nau8821->dapm;
+ 	struct snd_soc_component *component = snd_soc_dapm_to_component(dapm);
+ 	struct regmap *regmap = nau8821->regmap;
+ 	int jack_status_reg, mic_detected, event = 0, event_mask = 0;
  
- 	p = pdd->process;
- 	dqm = pdd->dev->dqm;
- 
- 	WARN(debug_evictions, "Evicting pid %d", p->lead_thread->pid);
- 
--	if (dqm->dev->kfd->shared_resources.enable_mes)
--		ret = kfd_dqm_evict_pasid_mes(dqm, &pdd->qpd);
--	else
--		ret = dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+-	snd_soc_component_force_enable_pin(component, "MICBIAS");
+-	snd_soc_dapm_sync(dapm);
+-	msleep(20);
 -
--	return ret;
-+	return dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+ 	regmap_read(regmap, NAU8821_R58_I2C_DEVICE_ID, &jack_status_reg);
+ 	mic_detected = !(jack_status_reg & NAU8821_KEYDET);
+ 	if (mic_detected) {
+@@ -1146,6 +1142,7 @@ static void nau8821_jdet_work(struct work_struct *work)
+ 		snd_soc_component_disable_pin(component, "MICBIAS");
+ 		snd_soc_dapm_sync(dapm);
+ 	}
++
+ 	event_mask |= SND_JACK_HEADSET;
+ 	snd_soc_jack_report(nau8821->jack, event, event_mask);
  }
+@@ -1194,6 +1191,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ {
+ 	struct nau8821 *nau8821 = (struct nau8821 *)data;
+ 	struct regmap *regmap = nau8821->regmap;
++	struct snd_soc_component *component;
+ 	int active_irq, event = 0, event_mask = 0;
  
- int reserve_debug_trap_vmid(struct device_queue_manager *dqm,
+ 	if (regmap_read(regmap, NAU8821_R10_IRQ_STATUS, &active_irq)) {
+@@ -1205,7 +1203,7 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 
+ 	if ((active_irq & NAU8821_JACK_EJECT_IRQ_MASK) ==
+ 		NAU8821_JACK_EJECT_DETECTED) {
+-		cancel_work_sync(&nau8821->jdet_work);
++		cancel_delayed_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_DIS);
+ 		nau8821_eject_jack(nau8821);
+@@ -1219,12 +1217,15 @@ static irqreturn_t nau8821_interrupt(int irq, void *data)
+ 		nau8821_irq_status_clear(regmap, NAU8821_KEY_RELEASE_IRQ);
+ 	} else if ((active_irq & NAU8821_JACK_INSERT_IRQ_MASK) ==
+ 		NAU8821_JACK_INSERT_DETECTED) {
+-		cancel_work_sync(&nau8821->jdet_work);
++		cancel_delayed_work_sync(&nau8821->jdet_work);
+ 		regmap_update_bits(regmap, NAU8821_R71_ANALOG_ADC_1,
+ 			NAU8821_MICDET_MASK, NAU8821_MICDET_EN);
+ 		if (nau8821_is_jack_inserted(regmap)) {
+-			/* detect microphone and jack type */
+-			schedule_work(&nau8821->jdet_work);
++			/* Detect microphone and jack type */
++			component = snd_soc_dapm_to_component(nau8821->dapm);
++			snd_soc_component_force_enable_pin(component, "MICBIAS");
++			snd_soc_dapm_sync(nau8821->dapm);
++			schedule_delayed_work(&nau8821->jdet_work, msecs_to_jiffies(20));
+ 			/* Turn off insertion interruption at manual mode */
+ 			nau8821_setup_inserted_irq(nau8821);
+ 		} else {
+@@ -1661,7 +1662,8 @@ int nau8821_enable_jack_detect(struct snd_soc_component *component,
+ 
+ 	nau8821->jack = jack;
+ 	/* Initiate jack detection work queue */
+-	INIT_WORK(&nau8821->jdet_work, nau8821_jdet_work);
++	INIT_DELAYED_WORK(&nau8821->jdet_work, nau8821_jdet_work);
++
+ 	ret = devm_request_threaded_irq(nau8821->dev, nau8821->irq, NULL,
+ 		nau8821_interrupt, IRQF_TRIGGER_LOW | IRQF_ONESHOT,
+ 		"nau8821", nau8821);
+diff --git a/sound/soc/codecs/nau8821.h b/sound/soc/codecs/nau8821.h
+index f0935ffafcbec..88602923780d8 100644
+--- a/sound/soc/codecs/nau8821.h
++++ b/sound/soc/codecs/nau8821.h
+@@ -561,7 +561,7 @@ struct nau8821 {
+ 	struct regmap *regmap;
+ 	struct snd_soc_dapm_context *dapm;
+ 	struct snd_soc_jack *jack;
+-	struct work_struct jdet_work;
++	struct delayed_work jdet_work;
+ 	int irq;
+ 	int clk_id;
+ 	int micbias_voltage;
 -- 
 2.51.0
 
