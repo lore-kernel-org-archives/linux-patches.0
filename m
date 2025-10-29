@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A0434F46F
-	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1842135029F
+	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761754897; cv=none; b=VjXDr1ksQ8KICU9RbHNiHoWb7wSavs1yQizTan1Io6WlNE9UO4E/UEbwGyY5XQG5iMfocZA099m0GBYLk+4XwQjnJCzTmy24vU+swC2woICNHiIgtTJmgPRL9QQ1g8EdGaFxXtYY70XdOIyjrft23IKQlYhUzC4zfPCsLHRUjdk=
+	t=1761754898; cv=none; b=WZYHbHB79QuuI9bK5CvwAd1ZKFuD35Z+PbAQUpj7Pu5ryX2OJPft/rSWkuu/AUVLDnhl4QVXQEF/TdkJyPM3Sq+3/lEGykbCdKq7Qwz94E2BEu0qsutRfzsUhWVE1Lu2+fbz62CexiVkywv+4FIJOohD4Cna2A+S0R8LhyxzkaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761754897; c=relaxed/simple;
-	bh=BFzzBcBsNPwLmYYPqw9ZqCaQ1hYVrnpLzhorJovMWCk=;
+	s=arc-20240116; t=1761754898; c=relaxed/simple;
+	bh=besaz890jtzjVt0kgHuI7dQ4aUz9CByTrzOdg471i0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7OOKU8jBqRgFy+pwSg/xgHcEqSEY710k0+NAK4euYt68+acUzFDJUv5Jy01dP3lPSsTFcR3qCi94KChjn+Ro7rZRJsG35DjmxTjr6wn+SrfbCR+z9B2lWuUXXo/K3Fa2m65HVaXgz3EO/pZgrRqsDeCqsbRO48ZLZfa8TmyJ4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Y1EQKN+I; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=O1RaoQRBU98YILKhPSxrzUrIYJTACwMHpMrMGjBPBnTzyW4sut2Mn0y194zHAoT/ocUsO0A3z2H9xRZjFRB1oIQeUPONDVArrqyipQDsYay8fbqX6yCa+2RXEo6stQK+LaIGUkLOJQ8NoB8NXi6qeyNSz7sDRa1lSE33VsjfWcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e8P9dZoq; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Y1EQKN+I"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e8P9dZoq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761754895; x=1793290895;
+  t=1761754896; x=1793290896;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=BFzzBcBsNPwLmYYPqw9ZqCaQ1hYVrnpLzhorJovMWCk=;
-  b=Y1EQKN+I73aaV9wnBbGHedFD1tUkWr8HzhWPiKLn80Ae/FMr94CZzYQ4
-   9Z9nXi7T3PaKGye2nOc/iVow5XiWuLGvYzome0h0ZJOZVTqWEyQgg61QJ
-   9x4yN8MnEHbzbClAyMc7UZVCP64sSDSVMwUEa9xIoELW0l3GwiXo2jYEu
-   6evn9rySzekjLjIlTCaqFbwb5imnYGnF4qB+SaRjPQbUpPMEdgDQsa7IF
-   x27DgcwMvrgq9T+oOdRXEcaHUZq0Nw5ieAYrxYiE0gpz9LpqjZrKuuMQE
-   5dPFA8AFwIXVJHOhNALvPXn1pCAj7N5bPRNCF3v7s8W6YSCwuxsOlJU9M
+  bh=besaz890jtzjVt0kgHuI7dQ4aUz9CByTrzOdg471i0M=;
+  b=e8P9dZoqZLZUfb2YmuYhj0/G/YGpGM+K2/F0nxuGt5TsenlhsveM8dN4
+   yhgROQ3CMogf8DgKqTKnxcSmpp8Pya3+d81HX3Cx7wf1tdkfWQCgN4PVo
+   /dDZpstIjWYunKU4XvQMCurege2nG/kBwJV8/Loy/QMm21WbCtVQ6+rVg
+   6GGN06zsr02CiKSmbHhNGWOd+9kBlPYtBx1oOklC/4xDiFnx5452kGrmZ
+   2MBf91Aisa9N3b7V3FhKu20+zzZsZDi7aWiLQk0uwxGC5vdafQSWjrMO8
+   +BRDayn0ua/vhwjR03geHKAvOmN1r2tlTdspiw+CE9F5EHRxW9zs9N6QD
    A==;
-X-CSE-ConnectionGUID: jE/agj2/QyyBD5hH6CvV9Q==
-X-CSE-MsgGUID: t7JS/237R2ej8jaxP9Unkg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481321"
+X-CSE-ConnectionGUID: q0PEBB28TVW8qDDS6we6Qw==
+X-CSE-MsgGUID: FkIErpU6TEGluoXnkO3b+g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481323"
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="74481321"
+   d="scan'208";a="74481323"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:29 -0700
-X-CSE-ConnectionGUID: kb8MrSkNSxWdcacoutcFwQ==
-X-CSE-MsgGUID: I8MprbcvRkqk3WO/Pk9a4A==
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:30 -0700
+X-CSE-ConnectionGUID: UFhYpRuOSPaqsSKZMM0nRA==
+X-CSE-MsgGUID: mPmxVy7NSqaIy6b4Dw50oQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="184901334"
+   d="scan'208";a="184901341"
 Received: from mgerlach-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.146])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:28 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:29 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v13 11/32] x86,fs/resctrl: Handle events that can be read from any CPU
-Date: Wed, 29 Oct 2025 09:20:54 -0700
-Message-ID: <20251029162118.40604-12-tony.luck@intel.com>
+Subject: [PATCH v13 13/32] x86,fs/resctrl: Add an architectural hook called for each mount
+Date: Wed, 29 Oct 2025 09:20:56 -0700
+Message-ID: <20251029162118.40604-14-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251029162118.40604-1-tony.luck@intel.com>
 References: <20251029162118.40604-1-tony.luck@intel.com>
@@ -71,124 +71,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl assumes that monitor events can only be read from a CPU in the
-cpumask_t set of each domain.  This is true for x86 events accessed
-with an MSR interface, but may not be true for other access methods such
-as MMIO.
+Enumeration of Intel telemetry events is an asynchronous process involving
+several mutually dependent drivers added as auxiliary devices during
+the device_initcall() phase of Linux boot. The process finishes after
+the probe functions of these drivers completes. But this happens after
+resctrl_arch_late_init() is executed.
 
-Introduce and use flag mon_evt::any_cpu, settable by architecture, that
-indicates there are no restrictions on which CPU can read that event.
+Tracing the enumeration process shows that it does complete a full seven
+seconds before the earliest possible mount of the resctrl file system
+(when included in /etc/fstab for automatic mount by systemd).
+
+Add a hook at the beginning of the mount code that will be used
+to check for telemetry events and initialize if any are found.
+
+Call the hook on every attempted mount. Expectations are that
+most actions (like enumeration) will only need to be performed
+on the first call.
+
+resctrl filesystem calls the hook with no locks held. Architecture code
+is responsible for any required locking.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- include/linux/resctrl.h            | 2 +-
- fs/resctrl/internal.h              | 2 ++
- arch/x86/kernel/cpu/resctrl/core.c | 6 +++---
- fs/resctrl/ctrlmondata.c           | 6 ++++++
- fs/resctrl/monitor.c               | 3 ++-
- 5 files changed, 14 insertions(+), 5 deletions(-)
+ include/linux/resctrl.h            | 6 ++++++
+ arch/x86/kernel/cpu/resctrl/core.c | 9 +++++++++
+ fs/resctrl/rdtgroup.c              | 2 ++
+ 3 files changed, 17 insertions(+)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index a07542957e5a..702205505dc9 100644
+index a7e5a546152d..1634db6176c3 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -409,7 +409,7 @@ u32 resctrl_arch_get_num_closid(struct rdt_resource *r);
- u32 resctrl_arch_system_num_rmid_idx(void);
- int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
+@@ -511,6 +511,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ void resctrl_online_cpu(unsigned int cpu);
+ void resctrl_offline_cpu(unsigned int cpu);
  
--void resctrl_enable_mon_event(enum resctrl_event_id eventid);
-+void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu);
- 
- bool resctrl_is_mon_event_enabled(enum resctrl_event_id eventid);
- 
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 12a2ab7e3c9b..40b76eaa33d0 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -61,6 +61,7 @@ static inline struct rdt_fs_context *rdt_fc2context(struct fs_context *fc)
-  *			READS_TO_REMOTE_MEM) being tracked by @evtid.
-  *			Only valid if @evtid is an MBM event.
-  * @configurable:	true if the event is configurable
-+ * @any_cpu:		true if the event can be read from any CPU
-  * @enabled:		true if the event is enabled
-  */
- struct mon_evt {
-@@ -69,6 +70,7 @@ struct mon_evt {
- 	char			*name;
- 	u32			evt_cfg;
- 	bool			configurable;
-+	bool			any_cpu;
- 	bool			enabled;
- };
- 
++/*
++ * Architecture hook called at beginning of each file system mount attempt.
++ * No locks are held.
++ */
++void resctrl_arch_pre_mount(void);
++
+ /**
+  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
+  *			      for this resource and domain.
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 99d1048d29d1..78ad493dcc01 100644
+index c435319552be..980a4d9e5267 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -893,15 +893,15 @@ static __init bool get_rdt_mon_resources(void)
- 	bool ret = false;
+@@ -721,6 +721,15 @@ static int resctrl_arch_offline_cpu(unsigned int cpu)
+ 	return 0;
+ }
  
- 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
--		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID);
-+		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
--		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID);
-+		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
--		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID);
-+		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_ABMC))
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index c3656812848b..883be6f0810f 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -574,6 +574,11 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		}
- 	}
- 
-+	if (evt->any_cpu) {
-+		mon_event_count(rr);
-+		goto out_ctx_free;
-+	}
++void resctrl_arch_pre_mount(void)
++{
++	static atomic_t only_once = ATOMIC_INIT(0);
++	int old = 0;
 +
- 	cpu = cpumask_any_housekeeping(cpumask, RESCTRL_PICK_ANY_CPU);
++	if (!atomic_try_cmpxchg(&only_once, &old, 1))
++		return;
++}
++
+ enum {
+ 	RDT_FLAG_CMT,
+ 	RDT_FLAG_MBM_TOTAL,
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index e0eb766c5cf4..a4d4d4080e87 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -2720,6 +2720,8 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	struct rdt_resource *r;
+ 	int ret;
  
++	resctrl_arch_pre_mount();
++
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
  	/*
-@@ -587,6 +592,7 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 	else
- 		smp_call_on_cpu(cpu, smp_mon_event_count, rr, false);
- 
-+out_ctx_free:
- 	if (rr->arch_mon_ctx)
- 		resctrl_arch_mon_ctx_free(r, evt->evtid, rr->arch_mon_ctx);
- }
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 5cf928e10eaf..6eab98b47816 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -975,7 +975,7 @@ struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
- 	},
- };
- 
--void resctrl_enable_mon_event(enum resctrl_event_id eventid)
-+void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu)
- {
- 	if (WARN_ON_ONCE(eventid < QOS_FIRST_EVENT || eventid >= QOS_NUM_EVENTS))
- 		return;
-@@ -984,6 +984,7 @@ void resctrl_enable_mon_event(enum resctrl_event_id eventid)
- 		return;
- 	}
- 
-+	mon_event_all[eventid].any_cpu = any_cpu;
- 	mon_event_all[eventid].enabled = true;
- }
- 
 -- 
 2.51.0
 
