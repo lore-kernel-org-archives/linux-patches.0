@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F7033C520
-	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7F351FD6
+	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761754899; cv=none; b=CbLmXh3eqVocRoR7TviaBTM/Tna56ksEZElkPk5moyYjIpRrD2nnSCR2qYl8dQXzSO0QfBcryr4xfinTVGDv1iciN55tI97ufn+P/Jp3evm3+aGsZr4cU4ikK8QPvUqYkT0ewwbcAm5sVKjBT9bxG2NKaJkSrPRn8OLF1U2mQ44=
+	t=1761754900; cv=none; b=uJBpDuyy516bhB6xnjE7TJGkTiMEQZ/6ErNm2oX7Bdm4x7emraHVm8wqizkVRRNn5doL1iKKxXsqK1ogMtCfgDkGxxTYKibt13atb1oZjf250FXa8QDcpZehON2c+gCuqpqJsutyV8n71WRFwEndK9SLSleIK2m4H94Hez8rO1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761754899; c=relaxed/simple;
-	bh=s2zdXPkf13ijZs2d4buZOE2qMfzjJns3mV7fq2x2DPE=;
+	s=arc-20240116; t=1761754900; c=relaxed/simple;
+	bh=qUv+3py18EutDM4Fk4emsZD6QoK2hmxOkiwYzdDC7/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsFhEyiKEkevsd36OVdEGdesPJAlG5WH1+nXd/DFCYFk6ihphSISLUxUz0Xy6yWaNNSD+8EHhZ1VKLxcLPRgiTOFsGh93ujlq/WHrLlUImu+SSyLq4hXjE1QOMsXs7WAPxT/RM58JFnsE/F13IZG0l2Ai+nOmJtfjej3jrnJ8bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MXM7sIBG; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=SI/qto2sPkGyUfzsXR+dRbZ8kAGZ2M3prNErHsAmk9M+wkZgmKo75nxOemQasNsKwX2eA+Tu3wHhGBgCogiSMUexJzs6/dVH4kT1XCXzhgny9ay5osmWTIVKIU5YeELK5pCJ0GMrBosKY6h3lo3YtWBJnnwouhiSI1hGxDKecCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UF+jItv6; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MXM7sIBG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UF+jItv6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761754897; x=1793290897;
+  t=1761754898; x=1793290898;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=s2zdXPkf13ijZs2d4buZOE2qMfzjJns3mV7fq2x2DPE=;
-  b=MXM7sIBG5eMj7EOOLlA70yBPNoUXYzAAhd1dGllMrvHhHty/SFZDfsqQ
-   344YbaxnpCnDB8Pc8/RrB7xbEPqNDsrUzoVurIktkfhK9Fo4GHh+xoA8X
-   B3qCYYOyWnLHCKAR2sm827D2zgrErzqp6eX97/JPPtFdSFSItiryVVJMw
-   BXUo/ax0MyT66okMMCBjE8C3E3X3nSSY1hAuPwT/CUHPZzibDJuxKo+fm
-   5g10x84DykpE7gFFCfnGk2FkiXSntSePLpzuXAig4gJCSeAF6+O7j956V
-   hABc65vY/m4I4sV1V4L0lISTLexZxmj/6/o/OTWCmgnIzXDtncQzpH9qc
-   w==;
-X-CSE-ConnectionGUID: LLidL4tdR/aLwizHKpWQCQ==
-X-CSE-MsgGUID: Zz8mSl3LTM2qfTOoBtIZuw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481324"
+  bh=qUv+3py18EutDM4Fk4emsZD6QoK2hmxOkiwYzdDC7/U=;
+  b=UF+jItv6AM53CRNFLkqjLukyjwuttqFQYxXKs8tqbe5sAvK6yh5V+3/H
+   Ciju3wzRZm/mRIaLj0C122Re9twCeLFq6XAVKddB5QTM/+MBFY+zuIukY
+   a8T4cpZUfuL6JsKwIascv3V8cqHi+4CbR5xtK2UB2bJpdqVP62Fzcwxai
+   1LixZd4WNCniM0NtzOJS7pCCgsdr0/jlO4qH6cibEAYOEatSsIe9513XV
+   vfOIYXx07sQd3cfGqD72J6wdjem0UZdUYcl4qcbPtcKmvBMg+uZ8VKJlH
+   7VR6X4OYvv+6PELSCvs1Fnw8eR2zAuukcdlkyTWJgc5P39g78zJQqaI92
+   g==;
+X-CSE-ConnectionGUID: g4tMopVwTpicq6SPJPzB8Q==
+X-CSE-MsgGUID: FTOMFVr9QE+oO6ZGfxdDSw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481327"
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="74481324"
+   d="scan'208";a="74481327"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:30 -0700
-X-CSE-ConnectionGUID: +idACTJmTKy55vp4bSyo0g==
-X-CSE-MsgGUID: YzZ/H8LKT+ifM2DkD69b3Q==
+X-CSE-ConnectionGUID: G3Vz45NdTHyZL0qfURY8Gg==
+X-CSE-MsgGUID: OYhtcUwZQhWT3lEJWlJ7zQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="184901354"
+   d="scan'208";a="184901362"
 Received: from mgerlach-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.146])
   by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:30 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v13 14/32] x86,fs/resctrl: Add and initialize rdt_resource for package scope monitor
-Date: Wed, 29 Oct 2025 09:20:57 -0700
-Message-ID: <20251029162118.40604-15-tony.luck@intel.com>
+Subject: [PATCH v13 15/32] fs/resctrl: Cleanup as L3 is no longer the only monitor resource
+Date: Wed, 29 Oct 2025 09:20:58 -0700
+Message-ID: <20251029162118.40604-16-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251029162118.40604-1-tony.luck@intel.com>
 References: <20251029162118.40604-1-tony.luck@intel.com>
@@ -71,98 +71,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new PERF_PKG resource and introduce package level scope for
-monitoring telemetry events so that CPU hot plug notifiers can build
-domains at the package granularity.
+The feature to sum event data across multiple domains supports systems
+with Sub-NUMA Cluster (SNC) mode enabled. The top-level monitoring files
+in each "mon_L3_XX" directory provide the sum of data across all SNC
+nodes sharing an L3 cache instance while the "mon_sub_L3_YY" sub-directories
+provide the event data of the individual nodes.
 
-Use the physical package ID available via topology_physical_package_id()
-to identify the monitoring domains with package level scope. This enables
-user space to use:
- /sys/devices/system/cpu/cpuX/topology/physical_package_id
-to identify the monitoring domain a CPU is associated with.
+SNC is only associated with the L3 resource and domains and as a result
+the flow handling the sum of event data implicitly assumes it is
+working with the L3 resource and domains.
 
+Reading of telemetry events do not require to sum event data so this
+feature can remain dedicated to SNC and keep the implicit assumption
+of working with the L3 resource and domains.
+
+Add a WARN to where the implicit assumption of working with the L3 resource
+is made and add comments on how the structure controlling the event sum
+feature is used.
+
+Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h            |  2 ++
- fs/resctrl/internal.h              |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c | 10 ++++++++++
- fs/resctrl/rdtgroup.c              |  2 ++
- 4 files changed, 16 insertions(+)
+ fs/resctrl/internal.h    | 4 ++--
+ fs/resctrl/ctrlmondata.c | 8 +++++++-
+ fs/resctrl/rdtgroup.c    | 3 ++-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 1634db6176c3..9fe6205743b7 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -53,6 +53,7 @@ enum resctrl_res_level {
- 	RDT_RESOURCE_L2,
- 	RDT_RESOURCE_MBA,
- 	RDT_RESOURCE_SMBA,
-+	RDT_RESOURCE_PERF_PKG,
- 
- 	/* Must be the last */
- 	RDT_NUM_RESOURCES,
-@@ -267,6 +268,7 @@ enum resctrl_scope {
- 	RESCTRL_L2_CACHE = 2,
- 	RESCTRL_L3_CACHE = 3,
- 	RESCTRL_L3_NODE,
-+	RESCTRL_PACKAGE,
- };
- 
- /**
 diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index f5189b6771a0..96d97f4ff957 100644
+index 96d97f4ff957..39bdaf45fa2a 100644
 --- a/fs/resctrl/internal.h
 +++ b/fs/resctrl/internal.h
-@@ -255,6 +255,8 @@ struct rdtgroup {
+@@ -92,8 +92,8 @@ extern struct mon_evt mon_event_all[QOS_NUM_EVENTS];
+  * @list:            Member of the global @mon_data_kn_priv_list list.
+  * @rid:             Resource id associated with the event file.
+  * @evt:             Event structure associated with the event file.
+- * @sum:             Set when event must be summed across multiple
+- *                   domains.
++ * @sum:             Set for RDT_RESOURCE_L3 when event must be summed
++ *                   across multiple domains.
+  * @domid:           When @sum is zero this is the domain to which
+  *                   the event file belongs. When @sum is one this
+  *                   is the id of the L3 cache that all domains to be
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 290a959776de..f7fbfc4d258d 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -683,7 +683,6 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+ {
+ 	struct kernfs_open_file *of = m->private;
+ 	enum resctrl_res_level resid;
+-	struct rdt_l3_mon_domain *d;
+ 	struct rdt_domain_hdr *hdr;
+ 	struct rmid_read rr = {0};
+ 	struct rdtgroup *rdtgrp;
+@@ -711,6 +710,13 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+ 	r = resctrl_arch_get_resource(resid);
  
- #define RFTYPE_ASSIGN_CONFIG		BIT(11)
- 
-+#define RFTYPE_RES_PERF_PKG		BIT(11)
+ 	if (md->sum) {
++		struct rdt_l3_mon_domain *d;
 +
- #define RFTYPE_CTRL_INFO		(RFTYPE_INFO | RFTYPE_CTRL)
- 
- #define RFTYPE_MON_INFO			(RFTYPE_INFO | RFTYPE_MON)
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 980a4d9e5267..af555dadf024 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -100,6 +100,14 @@ struct rdt_hw_resource rdt_resources_all[RDT_NUM_RESOURCES] = {
- 			.schema_fmt		= RESCTRL_SCHEMA_RANGE,
- 		},
- 	},
-+	[RDT_RESOURCE_PERF_PKG] =
-+	{
-+		.r_resctrl = {
-+			.name			= "PERF_PKG",
-+			.mon_scope		= RESCTRL_PACKAGE,
-+			.mon_domains		= mon_domain_init(RDT_RESOURCE_PERF_PKG),
-+		},
-+	},
- };
- 
- u32 resctrl_arch_system_num_rmid_idx(void)
-@@ -435,6 +443,8 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
- 		return get_cpu_cacheinfo_id(cpu, scope);
- 	case RESCTRL_L3_NODE:
- 		return cpu_to_node(cpu);
-+	case RESCTRL_PACKAGE:
-+		return topology_physical_package_id(cpu);
- 	default:
- 		break;
- 	}
++		if (WARN_ON_ONCE(resid != RDT_RESOURCE_L3)) {
++			ret = -EINVAL;
++			goto out;
++		}
++
+ 		/*
+ 		 * This file requires summing across all domains that share
+ 		 * the L3 cache id that was provided in the "domid" field of the
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index a4d4d4080e87..26f0d1f93da2 100644
+index 26f0d1f93da2..fa1398787e83 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2330,6 +2330,8 @@ static unsigned long fflags_from_resource(struct rdt_resource *r)
- 	case RDT_RESOURCE_MBA:
- 	case RDT_RESOURCE_SMBA:
- 		return RFTYPE_RES_MB;
-+	case RDT_RESOURCE_PERF_PKG:
-+		return RFTYPE_RES_PERF_PKG;
- 	}
- 
- 	return WARN_ON_ONCE(1);
+@@ -3030,7 +3030,8 @@ static void rmdir_all_sub(void)
+  * @rid:    The resource id for the event file being created.
+  * @domid:  The domain id for the event file being created.
+  * @mevt:   The type of event file being created.
+- * @do_sum: Whether SNC summing monitors are being created.
++ * @do_sum: Whether SNC summing monitors are being created. Only set
++ *	    when @rid == RDT_RESOURCE_L3.
+  */
+ static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+ 					struct mon_evt *mevt,
 -- 
 2.51.0
 
