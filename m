@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F245935580A
-	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A8934BA33
+	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 16:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761754906; cv=none; b=mCWcQntwdJOkNze+GkQDeUdxaJv9OGgZa+wQ6GabcnsMnn/BYS9ytsSI0HDLqmP8733SgjuCQdTJV0bwXZ08LhZ08kjjYo50GKLyiOL1VUAi0AvMQYerOcgfpF1tUMqhPsvRqqZt88+YYtyaNvfAR/4V8w3NbTFSTuV26Se0K8E=
+	t=1761754906; cv=none; b=Hcc2Ad/WQoBrkm1eEQTvWmql4hI6QMm3+aLR50fJbjy4m0+AycFyPQyKBi7qyEZED7knuiG0regpm/JmRbDkTVqmAXKB+3R8BVjQGKaLGVO7E5XOSnKQNWjrEmlNEvlBWjOoH3KvNV1yEccK0O+Q810lVIHLk1SUq/97Fbnr8rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761754906; c=relaxed/simple;
-	bh=UcATRO+KaWKYG+P9B4suPyIWNDBkWNvb2zpOAvyverw=;
+	bh=S04DLKChqtxVIfbayGN7vRQzulAjFbTzMk1BBDVs9H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QD8x4ExYdF7e3bXZyKQD5iszXynlcsuaqkTAcfQeIgT9YXM9SGtpaBa5AAzlypa+i8FoEEzra8TZ67C/GxZ6fPQliD2n44ubgJ4iGt3b7s62AfCeif4z4jZDJGJ9AAHwB6l5hfxvhAQT3jb0F4DyFmllU/nhwXUAaz/ZUG/uAx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fLDczH7R; arc=none smtp.client-ip=192.198.163.11
+	 MIME-Version; b=WCHcnn7ypQEX124tnYPrQ3OBcVFNq2sm0wLA6wkIuRETa6r2iU7avO4jLBzP6BeW9ddN4gD4vDchBmhk0l2iZ407S+TF3XGUwvCOJgu/hHbVlrumNgWmSVB7msMv400xnlvAEjrqhOd8EqxPrrab0Fco69I6hUm+PYtAQ+LFdDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G7Xc+vl3; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fLDczH7R"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G7Xc+vl3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761754904; x=1793290904;
+  t=1761754905; x=1793290905;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=UcATRO+KaWKYG+P9B4suPyIWNDBkWNvb2zpOAvyverw=;
-  b=fLDczH7RxIRj75JzBM8Mw3KQqTXx7uRBJOMiZ5XzUW5U6YTHWZU200Ky
-   I9dVRf3q1doYg0rROAR+uv84wXJbOpoYlwt4LSGairRU71EqqxOac65nM
-   PZo8gMMYSrMm1oKLkS7kxkW/rNt9Sw3mK0jSCzaoi5tmRD3khalaN2jKc
-   I+3tWjCl93M+GVMROxjHzTuIWFUYb0NPHdXrtDMsvTX13UzJRPeaEdall
-   jZ80gNeyGoT0uYNt5gjD7Rg/TVrvIIIFYkb1NXXP6+DQjwFF4F5+ujq3o
-   PxVfGqH6wvgNZdXRd1q+6w1zRC4zsJGsE672RT6PIMHV3VpxLNVqVVNM4
-   Q==;
-X-CSE-ConnectionGUID: uw99JqfOQfya3OhhTUrcqg==
-X-CSE-MsgGUID: XEEuUv46ScGelYoZb5Zzog==
-X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481333"
+  bh=S04DLKChqtxVIfbayGN7vRQzulAjFbTzMk1BBDVs9H4=;
+  b=G7Xc+vl3/rVkZKEXz+NnPoTklVanYLVGzWxqA3xM+Gf+FYKOVYWvh8Vz
+   1hFsh/1P8OngIR1bjcFZPoqO5rBe1igAYudhgITJS1ZujWBaxgUpbOR7Y
+   izEQ1j/bRF83h2+qszZNLRDv/+Bql5tgnS8UHsvKSInic7oRErcea+hhd
+   ICX+cWSIZfoP0koLh8eR7ytdP/vBQ6wmourGwgOTa0CVZqVN6RyURkuUe
+   +ixfuYQGlVgbGn9aFEEHrK+P0fWtA8Otj1K7bphlGJfWwXE5IuuZTjSOP
+   mBg5NWyPDpfC+bRBMIIBwAoLaL6o4/ZEYuCzBFPCF12dJcStGYcRwKnaY
+   w==;
+X-CSE-ConnectionGUID: Ava3Y42qSNakFYW3LVP0eg==
+X-CSE-MsgGUID: NEdRzuC3Taql5gq4CV2mLQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11597"; a="74481337"
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="74481333"
+   d="scan'208";a="74481337"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:33 -0700
-X-CSE-ConnectionGUID: LP1P5fk4TF+bDvcofNRhSQ==
-X-CSE-MsgGUID: 7SN3r5gRTXCN7uzfZQEvAQ==
+X-CSE-ConnectionGUID: NUgfyV/+RRunMeXsmFfWmA==
+X-CSE-MsgGUID: /T5OW1BBRliYjUuJw9JTQg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
-   d="scan'208";a="184901382"
+   d="scan'208";a="184901385"
 Received: from mgerlach-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.146])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:32 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 09:21:33 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v13 21/32] fs/resctrl: Refactor mkdir_mondata_subdir()
-Date: Wed, 29 Oct 2025 09:21:04 -0700
-Message-ID: <20251029162118.40604-22-tony.luck@intel.com>
+Subject: [PATCH v13 22/32] fs/resctrl: Refactor rmdir_mondata_subdir_allrdtgrp()
+Date: Wed, 29 Oct 2025 09:21:05 -0700
+Message-ID: <20251029162118.40604-23-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251029162118.40604-1-tony.luck@intel.com>
 References: <20251029162118.40604-1-tony.luck@intel.com>
@@ -71,183 +71,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Population of a monitor group's mon_data directory is unreasonably complicated
-because of the support for Sub-NUMA Cluster (SNC) mode.
+Clearing a monitor group's mon_data directory is complicated because of the
+support for Sub-NUMA Cluster (SNC) mode.
 
-Split out the SNC code into a helper function to make it easier to add support
+Refactor the SNC case into a helper function to make it easier to add support
 for a new telemetry resource.
-
-Move all the duplicated code to make and set owner of domain directories
-into the mon_add_all_files() helper and rename to _mkdir_mondata_subdir().
 
 Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- fs/resctrl/rdtgroup.c | 108 +++++++++++++++++++++++-------------------
- 1 file changed, 58 insertions(+), 50 deletions(-)
+ fs/resctrl/rdtgroup.c | 42 +++++++++++++++++++++++++++++++-----------
+ 1 file changed, 31 insertions(+), 11 deletions(-)
 
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index fa1398787e83..bcb76dc818c0 100644
+index bcb76dc818c0..4f461ec773d6 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -3194,57 +3194,65 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
- 	}
+@@ -3163,28 +3163,24 @@ static void mon_rmdir_one_subdir(struct kernfs_node *pkn, char *name, char *subn
  }
  
--static int mon_add_all_files(struct kernfs_node *kn, struct rdt_domain_hdr *hdr,
--			     struct rdt_resource *r, struct rdtgroup *prgrp,
--			     bool do_sum)
-+/*
-+ * Create a directory for a domain and populate it with monitor files. Create
-+ * summing monitors when @hdr is NULL. No need to initialize summing monitors.
-+ */
-+static struct kernfs_node *_mkdir_mondata_subdir(struct kernfs_node *parent_kn, char *name,
-+						 struct rdt_domain_hdr *hdr,
-+						 struct rdt_resource *r,
-+						 struct rdtgroup *prgrp, int domid)
+ /*
+- * Remove all subdirectories of mon_data of ctrl_mon groups
+- * and monitor groups for the given domain.
+- * Remove files and directories containing "sum" of domain data
+- * when last domain being summed is removed.
++ * Remove files and directories for one SNC node. If it is the last node
++ * sharing an L3 cache, then remove the upper level directory containing
++ * the "sum" files too.
+  */
+-static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+-					   struct rdt_domain_hdr *hdr)
++static void rmdir_mondata_subdir_allrdtgrp_snc(struct rdt_resource *r,
++					       struct rdt_domain_hdr *hdr)
  {
--	struct rdt_l3_mon_domain *d;
- 	struct rmid_read rr = {0};
-+	struct kernfs_node *kn;
- 	struct mon_data *priv;
- 	struct mon_evt *mevt;
--	int ret, domid;
-+	int ret;
- 
--	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
--		return -EINVAL;
-+	kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
-+	if (IS_ERR(kn))
-+		return kn;
-+
-+	ret = rdtgroup_kn_set_ugid(kn);
-+	if (ret)
-+		goto out_destroy;
- 
--	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
- 	for_each_mon_event(mevt) {
- 		if (mevt->rid != r->rid || !mevt->enabled)
- 			continue;
--		domid = do_sum ? d->ci_id : d->hdr.id;
--		priv = mon_get_kn_priv(r->rid, domid, mevt, do_sum);
--		if (WARN_ON_ONCE(!priv))
--			return -EINVAL;
-+		priv = mon_get_kn_priv(r->rid, domid, mevt, !hdr);
-+		if (WARN_ON_ONCE(!priv)) {
-+			ret = -EINVAL;
-+			goto out_destroy;
-+		}
- 
- 		ret = mon_addfile(kn, mevt->name, priv);
- 		if (ret)
--			return ret;
-+			goto out_destroy;
- 
--		if (!do_sum && resctrl_is_mbm_event(mevt->evtid))
-+		if (hdr && resctrl_is_mbm_event(mevt->evtid))
- 			mon_event_read(&rr, r, hdr, prgrp, &hdr->cpu_mask, mevt, true);
- 	}
- 
--	return 0;
-+	return kn;
-+out_destroy:
-+	kernfs_remove(kn);
-+	return ERR_PTR(ret);
- }
- 
--static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
--				struct rdt_domain_hdr *hdr,
--				struct rdt_resource *r, struct rdtgroup *prgrp)
-+static int mkdir_mondata_subdir_snc(struct kernfs_node *parent_kn,
-+				    struct rdt_domain_hdr *hdr,
-+				    struct rdt_resource *r, struct rdtgroup *prgrp)
- {
--	struct kernfs_node *kn, *ckn;
-+	struct kernfs_node *ckn, *kn;
+ 	struct rdtgroup *prgrp, *crgrp;
  	struct rdt_l3_mon_domain *d;
- 	char name[32];
+ 	char subname[32];
 -	bool snc_mode;
--	int ret = 0;
--
--	lockdep_assert_held(&rdtgroup_mutex);
+ 	char name[32];
  
  	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
- 		return -EINVAL;
+ 		return;
  
  	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
 -	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
 -	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci_id : d->hdr.id);
+-	if (snc_mode)
+-		sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
 +	sprintf(name, "mon_%s_%02d", r->name, d->ci_id);
- 	kn = kernfs_find_and_get(parent_kn, name);
- 	if (kn) {
- 		/*
-@@ -3253,41 +3261,41 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 		 */
- 		kernfs_put(kn);
- 	} else {
--		kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
-+		kn = _mkdir_mondata_subdir(parent_kn, name, NULL, r, prgrp, d->ci_id);
- 		if (IS_ERR(kn))
- 			return PTR_ERR(kn);
-+	}
++	sprintf(subname, "mon_sub_%s_%02d", r->name, hdr->id);
  
--		ret = rdtgroup_kn_set_ugid(kn);
--		if (ret)
--			goto out_destroy;
--		ret = mon_add_all_files(kn, hdr, r, prgrp, snc_mode);
--		if (ret)
--			goto out_destroy;
-+	sprintf(name, "mon_sub_%s_%02d", r->name, hdr->id);
-+	ckn = _mkdir_mondata_subdir(kn, name, hdr, r, prgrp, hdr->id);
-+	if (IS_ERR(ckn)) {
-+		kernfs_remove(kn);
-+		return PTR_ERR(ckn);
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+ 		mon_rmdir_one_subdir(prgrp->mon.mon_data_kn, name, subname);
+@@ -3194,6 +3190,30 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
  	}
- 
--	if (snc_mode) {
--		sprintf(name, "mon_sub_%s_%02d", r->name, hdr->id);
--		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
--		if (IS_ERR(ckn)) {
--			ret = -EINVAL;
--			goto out_destroy;
--		}
-+	kernfs_activate(kn);
-+	return 0;
-+}
- 
--		ret = rdtgroup_kn_set_ugid(ckn);
--		if (ret)
--			goto out_destroy;
-+static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-+				struct rdt_domain_hdr *hdr,
-+				struct rdt_resource *r, struct rdtgroup *prgrp)
-+{
-+	struct kernfs_node *kn;
-+	char name[32];
- 
--		ret = mon_add_all_files(ckn, hdr, r, prgrp, false);
--		if (ret)
--			goto out_destroy;
--	}
-+	lockdep_assert_held(&rdtgroup_mutex);
-+
-+	if (r->rid == RDT_RESOURCE_L3 && r->mon_scope == RESCTRL_L3_NODE)
-+		return mkdir_mondata_subdir_snc(parent_kn, hdr, r, prgrp);
-+
-+	sprintf(name, "mon_%s_%02d", r->name, hdr->id);
-+	kn = _mkdir_mondata_subdir(parent_kn, name, hdr, r, prgrp, hdr->id);
-+	if (IS_ERR(kn))
-+		return PTR_ERR(kn);
- 
- 	kernfs_activate(kn);
- 	return 0;
--
--out_destroy:
--	kernfs_remove(kn);
--	return ret;
  }
  
++/*
++ * Remove all subdirectories of mon_data of ctrl_mon groups
++ * and monitor groups for the given domain.
++ */
++static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
++					   struct rdt_domain_hdr *hdr)
++{
++	struct rdtgroup *prgrp, *crgrp;
++	char name[32];
++
++	if (r->rid == RDT_RESOURCE_L3 && r->mon_scope == RESCTRL_L3_NODE) {
++		rmdir_mondata_subdir_allrdtgrp_snc(r, hdr);
++		return;
++	}
++
++	sprintf(name, "mon_%s_%02d", r->name, hdr->id);
++	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
++		kernfs_remove_by_name(prgrp->mon.mon_data_kn, name);
++
++		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list)
++			kernfs_remove_by_name(crgrp->mon.mon_data_kn, name);
++	}
++}
++
  /*
+  * Create a directory for a domain and populate it with monitor files. Create
+  * summing monitors when @hdr is NULL. No need to initialize summing monitors.
 -- 
 2.51.0
 
