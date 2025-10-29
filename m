@@ -1,98 +1,215 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E79E30E0FB;
-	Wed, 29 Oct 2025 07:15:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF6730F818
+	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 07:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761722122; cv=none; b=r+4dxegOFvNGEcB/Mj7M1C69ojNuDW1b+tR9H8xnkQ9yNf4eKoEeRnUOEh+ujcGgbmxUN9z96ndOtijcNF1Q2Nal+kO5NsCv8b/VYgXW8Zjbugq4FtB/95Muqzrl1E9G+O6AInUt5FPhcO/q9ygXibPz1XqOUQqIUchR7uGTolQ=
+	t=1761722274; cv=none; b=L9SkbrfJcHiu5PiCkfZBZkCda0hjEQhczMemGiEZpk9wkVAmXCIcSoRzCs4+pXSEYARtWijXkLe3QTdaApmsx7oheFiqm2lMjW+/40bh/v8onWky/4YVZ5ha7EnRMvrb2p71KdTmrkQXj/taES5sdwbhNGHpP7uklVbnplDV5IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761722122; c=relaxed/simple;
-	bh=lIrPM0N7zIwNN6WRFHZH6G1QJC9tIU5IIMYHxkifpD0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pM+9IaQgNjTYdCkUR7uBTRBcNtWEXMBq36JOluORjHw58JgQmQXewX3Q4sbdyUBlwuMvfg1GUj+XsvZyQI+L4nswMUUfROz0mrO6TGuPpPKwpij8D7s8BzjGoac6avO8TnwsbHzDwy/YnawKAfy+TjDKRNjAsvSPQ6yHGh9lHuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utJJElwM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761722274; c=relaxed/simple;
+	bh=ykaaT6YbiADc9d9+kOXprtiOstIf3n6+rKFwjMr8+qw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mDwxhFCC5sxD1205uZANmt7dNsZnP5TmLYWKJNnNYBMfZ/t0MGak0txhuoeRliWanBCmCWdO8mYXiJUNCk1M8Ky9epSzOwLcK1E++Tlaz7mZLluojE3n6UKMvkifQCXX8B8U+BNo4jvXOuZG+vfPKlpWIOZyHxPBJ4bA9VVSDiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=airUCa+9; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utJJElwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B18C4CEFB;
-	Wed, 29 Oct 2025 07:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761722121;
-	bh=lIrPM0N7zIwNN6WRFHZH6G1QJC9tIU5IIMYHxkifpD0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=utJJElwMOzBWTy/R/tI3Uf71LOa024LJWKDvBZEEsm+tr2K+WGQA1OdVJ4bpulLCA
-	 8s0pVuG5mFtj8KhW5sc7KiPzmkth9uV8BLMT51CjNytSGcYKaE4VZD7bDvIdjbP9Lh
-	 45pOvXH+/+PA7W5pvOLRojTtYGDgp8qCP+eeAoXh3txCR4KpnFUysX7FKUX+cj/yX5
-	 61xbPjCZeKkwR2Y9zwyCjwZhuSircWKQmUuEmx/JRW54kpGUYFzEc8rUf/4yz471dQ
-	 bQQJRcacSuI0ielkBLOfysSe7nzZtxPS4t0ojPZVwDmK1aL/NnJLQveCrq1YZxqtT0
-	 YQ2Nx+EaR+gzQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: [PATCH] rust: devres: fix private intra-doc link
-Date: Wed, 29 Oct 2025 08:14:06 +0100
-Message-ID: <20251029071406.324511-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="airUCa+9"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b6cea7c527bso6768110a12.3
+        for <patches@lists.linux.dev>; Wed, 29 Oct 2025 00:17:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1761722271; x=1762327071; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EuUZCRhhNRXWt6XeO4ZvYFEtD1drRmJ0SlQlWn1fteY=;
+        b=airUCa+989c26Jluq+LOT1ozffYAKnytrWgVxoIjSqLLWsRKx+is5efRnnU1BASygX
+         pKNAIqkelSJr7Nliqe+F66uuzMCx59Fb5UwOVNK+AEHmxu0pXJDJ2urvlxHcmRu5/Pj8
+         KMDDYYn3tXMgN+FvTkCOUHOUoPv9mR0yYlRb1qsMb189qgMajiibarb3dVutLTGoE6x3
+         W+MCLN5CS7RPiDKYwvgJQV42pdNSQCdF+yWqnEUZ/72BKLuJ5tBgYDStjMhmAUHRf5eV
+         YhwPq6wy9mVk9c/rQqggKzS+HrVetoM0kXeowUJ0YhJ2ggH3E2HvYR5JHY5yjDdTGvp3
+         L65g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761722271; x=1762327071;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EuUZCRhhNRXWt6XeO4ZvYFEtD1drRmJ0SlQlWn1fteY=;
+        b=hrTDARwEYV0BoCHytBozwJYb1SWvLENp+6Bujt71NXOW6eHjOStaiua1T05+IoeEoH
+         sfHGjBc7AC0/VjMWcPow1zrlNO+DyTxm2UhRfPeWPxlF3jBj1QCFdXbp084XOUR7gQv2
+         ab6Hoqdr6VXcigf3pKHoY8UmqL5EWIYP6n3tKtuMo59XpCtmy4lj//XgFUXJTCTWZ8F5
+         LoxKaLN76fs8OA8DZC4qMWa5Iff+uADhihSpAPPgCcPrPA13R4Lhr/7aaOQka+z8fdqe
+         zG5fTbvEt4vbGcspPpGH+ZFHrVvM2fYTbRxdDcrcXHAZrxln37g8Z4Zzx03j/slCisMi
+         t7KQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUkVZEezZSkvNINaKytsazDecFwgNoXCRzu6pZBGPS9jgzjJOGaMn9Z3U1ULbicah8iGTKB1E+z@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzzw2m9R3XDxDmuE2hbuQYz6w0CiG/7nzPURkci9oVHO+JMLL+y
+	AtETgUvHI8/10GRqMiJrj14OOPUwyUn9voh0bNAU7fMiBU/Tvyt8AytF7J3fF1mmnHghXaihddi
+	6sYF5CZjW+OJEH6jB4iJNDPzt4juTZGrrzeLD9pw0OA==
+X-Gm-Gg: ASbGncviusjHWwSTHsVPBnubnpBpL1Z9tdx47S26HfZRISVZARVsqt4NY2evcWcXVhz
+	WH9A2vLImkSm57p/lBwTk8Ee/WEMZKu2iTeFLSe+lMO2y7faMPZlT9TlaUF9PwRkMsX66FwIUml
+	lwSleDqfIVUTFycSvQHjGHMTynjFmU9oMWxw+COI5ykPHzh4dEshAzV+ZxXHLstckVTs6Z9evCB
+	UoPv3cgd6/7RnnJAJ/ZWRFjTbyYGfD5jeFvP5OXjkNkSpX0Uy1N1fzyZZqSYAcYRTmlhhFLkheh
+	5PMa0bq85Ou6jvxwDr1d7ljjXfYE1+WPYnrPBkxbQAcfojvrMQ==
+X-Google-Smtp-Source: AGHT+IEvVzT4l6WFVgzJ3FSYoGb6uLgtVt2W5+fZOIl+K9OXMvI8F6nvkIt0kMi83P4QMS0RYXvro6p5vHwDzAUVI2I=
+X-Received: by 2002:a17:903:18d:b0:293:623:3262 with SMTP id
+ d9443c01a7336-294deec517fmr29410295ad.36.1761722271261; Wed, 29 Oct 2025
+ 00:17:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251028092823.507383588@linuxfoundation.org>
+In-Reply-To: <20251028092823.507383588@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 29 Oct 2025 12:47:38 +0530
+X-Gm-Features: AWmQ_bkhsv_CfXE6-NmxcSUE1G28maRQK_zSuM7gYEAFQhEmOG1vtJliOgdNvmk
+Message-ID: <CA+G9fYvNF1b+5u_ppt+9K4wDD_hNLNfDn9x5V+KnuR1BXDzG_A@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/117] 5.15.196-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The future move of pin-init to `syn` uncovers the following private
-intra-doc link:
+On Tue, 28 Oct 2025 at 14:59, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.196 release.
+> There are 117 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 30 Oct 2025 09:28:07 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.196-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-    error: public documentation for `Devres` links to private item `Self::inner`
-       --> rust/kernel/devres.rs:106:7
-        |
-    106 | /// [`Self::inner`] is guaranteed to be initialized and is always accessed read-only.
-        |       ^^^^^^^^^^^ this item is private
-        |
-        = note: this link will resolve properly if you pass `--document-private-items`
-        = note: `-D rustdoc::private-intra-doc-links` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(rustdoc::private_intra_doc_links)]`
 
-Currently, when rendered, the link points to "nowhere" (an inexistent
-anchor for a "method").
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Thus fix it.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Cc: stable@vger.kernel.org
-Fixes: f5d3ef25d238 ("rust: devres: get rid of Devres' inner Arc")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/devres.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+## Build
+* kernel: 5.15.196-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 59a59821e6b5c0c51b329271616457c39cccc07e
+* git describe: v5.15.195-118-g59a59821e6b5
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.195-118-g59a59821e6b5
 
-diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
-index 10a6a1789854..2392c281459e 100644
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -103,7 +103,7 @@ struct Inner<T: Send> {
- ///
- /// # Invariants
- ///
--/// [`Self::inner`] is guaranteed to be initialized and is always accessed read-only.
-+/// `Self::inner` is guaranteed to be initialized and is always accessed read-only.
- #[pin_data(PinnedDrop)]
- pub struct Devres<T: Send> {
-     dev: ARef<Device>,
+## Test Regressions (compared to v5.15.194-277-g06cf22cc87e0)
 
-base-commit: dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa
--- 
-2.51.0
+## Metric Regressions (compared to v5.15.194-277-g06cf22cc87e0)
 
+## Test Fixes (compared to v5.15.194-277-g06cf22cc87e0)
+
+## Metric Fixes (compared to v5.15.194-277-g06cf22cc87e0)
+
+## Test result summary
+total: 62494, pass: 51282, fail: 2472, skip: 8394, xfail: 346
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 101 total, 101 passed, 0 failed
+* arm64: 28 total, 27 passed, 1 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 22 total, 22 passed, 0 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 24 total, 24 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-exec
+* kselftest-fpu
+* kselftest-futex
+* kselftest-intel_pstate
+* kselftest-kcmp
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
