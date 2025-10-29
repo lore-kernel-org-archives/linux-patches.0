@@ -1,263 +1,185 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FE2321448;
-	Wed, 29 Oct 2025 18:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761762311; cv=none; b=H2AtLfsYIuPm4+ITJT4qcGUjGWgvdm9A0eQr5P7PS2LN+SG12SFqPkDTG4n/nncPyFw0gxxoT36ruRctG+EzEBB4vpqqJUNyb5vvMEDsrXlIgPXWUz8aqj1WdOiDiuKrbKR3VfjY1Jr/z92Gu8J5/FPNC0TnuUUyKJxaRJcK2c4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761762311; c=relaxed/simple;
-	bh=ZDpgqAv5yGg5ct10kxn/9ozpUWLNUyHj0klednkQQDc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XKvYIQKy/4nzJUG9wj1FZi4BpgjSYi3FvMUY/La6fHoG6nkhBHhQyNbOAKEiBkbGwuTNIC4l4H8f5SmegpQM+LbyRsOwTZwKTjmUCEY5/PfInec+j8knlGo5x1+AOJDxdoDmVjPgIE32hFHjsxQ0elACdNyq4MsfR9eBY+hHUVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IL6pdHvE; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E80357A4E
+	for <patches@lists.linux.dev>; Wed, 29 Oct 2025 18:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761764394; cv=fail; b=V4R4gYpI/3W+Bo5LLkwTT9eRLvEEdIwuDCBwIbu5ShjpPwC4XE58O8TyelmIY9kJ8exWKKPhx16pIce6Oj83PNnvSODjkJXJnsV9EFW8S0ZIjQFcYO6BkSDSl40cCvuji5eqNOoUeXyPEhNQN5ku3nY21xS78DsYgoFOV6wfSuY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761764394; c=relaxed/simple;
+	bh=MF7+6BXgpxZg8s68V8kHC6JshGwfbb8tHl3PQNnbLGs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=LwxrCQ+wYs9hRrCinMUC45MSUG+XDyp1Kce7nDWna/RuMU+OtAM/9hs7lOmiuY3nIyiVJzDCpOEGEUCyb7uAPaeqNyvoPpJ2wIOuSA4Ud1GHhVzw2vU0QHqSLpiBG6kZZs6J/yY5VI3Lhm5Nyl++C7MH2/4btDTbvzlKth37+zo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EewXO4Gg; arc=fail smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IL6pdHvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DDEC4CEF7;
-	Wed, 29 Oct 2025 18:25:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761762311;
-	bh=ZDpgqAv5yGg5ct10kxn/9ozpUWLNUyHj0klednkQQDc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=IL6pdHvELB/75bqQUu0T53ib9e/PEklT/6IZxrWW0raX4ZmSpdJbC29MCSjLm0pJ+
-	 uu3Xk5TTJIeRfEKgz462c6UpWx1+9KZdW4CNzpZ8aamRkFbell2yeWc7SSb/Xo9NFG
-	 hqKyQUqaTbnJQGXD4yjoPshktPuLw8eLCwb9bCFoXJgntMkhsX7DYo2Wi+iYVrAXNd
-	 4W3X+e813bqTM0kn7Gxeq/IcTC+5+9SL74ry7psikma2iLy07ppPZqxNSEaDgzq7me
-	 dfQID+KEt6V6tox5/UEyY+OzpiIxCzT79z/BDAxzjRXr4POrwPDuww3phbOLZNOa34
-	 xWx5R5nyxHy2Q==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Michal Wilczynski <m.wilczynski@samsung.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: linux-pwm@vger.kernel.org,
-	rust-for-linux@vger.kernel.org,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] pwm: fix Rust formatting
-Date: Wed, 29 Oct 2025 19:25:02 +0100
-Message-ID: <20251029182502.783392-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EewXO4Gg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1761764393; x=1793300393;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=MF7+6BXgpxZg8s68V8kHC6JshGwfbb8tHl3PQNnbLGs=;
+  b=EewXO4GgjL4vWyE+NyWicSJyTvDjeFp9A3f/Yq/MflVqTw2jb2eTG3jE
+   RGjKHZ0ZCE5KawLBchWUyO/0x86bpjOQH/tPF0sjcmcAHC7VCkDxJvFRO
+   6YXUkI9VtJpa5lcBfKd4CzEf4xu9Tmy4lhiJN7GX2/qn3ckZHjVlAiloJ
+   AsxjgWEj3LxA8z1I4zfzer+FSucf+7xcC9bnjd05imsPLEbw0JNOgDQTX
+   ORzBW5p1KbYXZCQYMxm+Pyo4f9Dx4UJaleUXFA7mKe+mPliI6DocBwC4V
+   W19pnkxwJKvkAFFkSsuQ9O4sN6QZtp7aRh/JYmdF7Y2lC2Yz1HbqB6VVZ
+   A==;
+X-CSE-ConnectionGUID: bDxn6s0TSAmCs/rR2EbOMg==
+X-CSE-MsgGUID: xGLVb2uUSyutP1I5ViBvsA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63801276"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="63801276"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 11:59:52 -0700
+X-CSE-ConnectionGUID: 0YG2hcBNSLycN4NDsM5juw==
+X-CSE-MsgGUID: JMGkiqwTRFWijVVZIP4pTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,264,1754982000"; 
+   d="scan'208";a="185674992"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2025 11:59:52 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 29 Oct 2025 11:59:51 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Wed, 29 Oct 2025 11:59:51 -0700
+Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.21) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 29 Oct 2025 11:59:51 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yZLfIXY4WqAlE8vmEnXEb7Rj1piKsV+15beNAfJ/SKsxNMG1R5w42c29mXZhow1UDdAL/g1LNaZ1zGeJTPzh/hggb1T2Edzihu1vDb0YD/HTloFPAny/2ajD8AhcEl9toCrpifsUhakigTJkRxLAUOCdGKNoE30x3uliX8rc/ZEuC7EMJ9Z7X5gP+54rJ2GNxnQg1GhP64uE5UKQHY2fVk4MSHT1Y/5xagfCE+sw6TTu4CxsF+pN29YWdUsJOxaLtoORQ6LLujnDE+azzL30kK7QUy0Wwx9PhH9NPJHnBSsh3fDIY1ixE7zkiQGusPkfbe5mZhSjCUjhU8+VEegw2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MF7+6BXgpxZg8s68V8kHC6JshGwfbb8tHl3PQNnbLGs=;
+ b=D3zSgkmTBrXqpfOOYi2qBPGgas3h8yRWavKllQYrfBqTzLj6rf7B77Hm/Jc9B4m6h5CvKQWcxGOlwRE2WVpd/havaz9lGsZmnhSpeI3B63fFVvRkqcpDdf4AKPD01G8ioTtVezI6pS9J1p79rreyqpnzKOkA5YKR+aIHDFmSbnxoqaOjydccq2t6bNSO7/7/1FaBT1AGFs9/300hAh2412GZm8LyzEdwsAY7IRf/Oo0FQextGogturvlDb4xisGm6ejqEDjEmELcZHeniX5dCttgrXTwksH+MopvwZ5+eqT8i0R0MjM/+7sjWCoN8eXChJo7BwaY004x7LAPTNIGyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by IA1PR11MB8247.namprd11.prod.outlook.com (2603:10b6:208:449::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.19; Wed, 29 Oct
+ 2025 18:59:48 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::acfd:b7e:b73b:9361]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::acfd:b7e:b73b:9361%7]) with mapi id 15.20.9253.017; Wed, 29 Oct 2025
+ 18:59:48 +0000
+Date: Wed, 29 Oct 2025 11:59:46 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>, Reinette Chatre
+	<reinette.chatre@intel.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>
+CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>
+Subject: Re: [PATCH v13 00/32] x86,fs/resctrl telemetry monitoring
+Message-ID: <aQJkIqj--nHzUzUb@agluck-desk3>
+References: <20251029162118.40604-1-tony.luck@intel.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251029162118.40604-1-tony.luck@intel.com>
+X-ClientProxiedBy: BYAPR06CA0031.namprd06.prod.outlook.com
+ (2603:10b6:a03:d4::44) To SJ1PR11MB6083.namprd11.prod.outlook.com
+ (2603:10b6:a03:48a::9)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PR11MB6083:EE_|IA1PR11MB8247:EE_
+X-MS-Office365-Filtering-Correlation-Id: 338bfe90-763c-4cff-5be9-08de171d5529
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Oi8jFPu9o1gNWFV9JGU+bv863qqY4Me1ao8R2IsUQI2HlXqk/7qsl/xtOjfc?=
+ =?us-ascii?Q?m9194b9JS8P4Ms9OSmXLyRuyCImdkCgxjJL2y4z6f/v/jfByT2096t1e7Qrl?=
+ =?us-ascii?Q?Cv0fvLKzi4KIR7fGDQbQkxgLsjhkVV0ZPx9jdUkBFkpfl4yZVcavRDxKHjfj?=
+ =?us-ascii?Q?15n7vO4gJQUmAx81nW4brnj3N68+TFr9BgTFc3JCQiXGnCahujXPFc20y0h6?=
+ =?us-ascii?Q?OGJD87ZAotMlFwH4at4Ef5UirlbumyT0/CDW5jfTKge9zmnEy+CvX7KOjPRm?=
+ =?us-ascii?Q?wuLm6n0DJ+1coV8UvNBsAjniCbn9IaVias2XEqcn/tk2cY+9iR7x4YacWIpt?=
+ =?us-ascii?Q?2jeOX9Ie3UxB63fj4QJx8uv/awxLmbr+6WEzlaWr9RBrH2KV/uHBWAveTicv?=
+ =?us-ascii?Q?nrRQFTMUgYNOR+IV/SqQ6wktCemQVGv4okCezWwkrW15G29XEXr0tXH6dFKs?=
+ =?us-ascii?Q?TTiKeV3ngiAe8y6+UpVaeyGp669Bw5dvWq4mqrfWIZKMrZoc9Ypj1Ev1gnFP?=
+ =?us-ascii?Q?WrcMDp0C6XzL8WVudo7wapSJNQw0ImboxC5tyIIkR9kNgzwI+AMXVrnh8e9a?=
+ =?us-ascii?Q?9McGq8Et1b16AO5CI8h1AvNNrh4MJpzjKApwHweaE78CKi7GHDolulbtb7lJ?=
+ =?us-ascii?Q?RVsUYEAFK+/N6apkD3WRTCQFFqSYZiB79QtWGkmIKS7FXzl2oNrhMi+I3HWA?=
+ =?us-ascii?Q?gWIVR1YnChyApcEUrbZhJERBXifjI2ORWNYPL6vR/QZ5dRIyVgK/aMgqFqMI?=
+ =?us-ascii?Q?vilW355bry+8pi6SiwwyES4ArkYycaVn8+mcgQRjJq5zlgSXxAUDVQZUqB9k?=
+ =?us-ascii?Q?n46wuezLMU57s1eNstZUUnPoFpuBXasKmbXukCH+IpRJTm22L8C1pWpi7H3M?=
+ =?us-ascii?Q?IsWehlPI0EHxd2iUNQD0Zt4ED6QFQyAZ+1AaLM7tY2JYFGcRMQIG5DYJtl95?=
+ =?us-ascii?Q?PVZn5Oda2LEY8mBklX0sX+rNWWTaye6E3E3rD6tt1w2Z5isGjlF1u35NEPiF?=
+ =?us-ascii?Q?FcbGJ7fv20CJP12EyqhJkB5mdXe1Cm/YidK3W/OLs6PniqmP6fbpQwe35UNI?=
+ =?us-ascii?Q?T5YbRwgql1l9GdT+t4l+cK9/5VQ7IBNCgoNA9RocT64m1n8iL+VP6YIUxyrs?=
+ =?us-ascii?Q?3gA0evqcM/vnUjYWMM7I0M3DnF7ykjA0voAb09UZ1Wu/2YQZxtR4/Haivm/B?=
+ =?us-ascii?Q?P64WEaL+/7txqwmZmDYPOQLfvnZoQbEZmtQR2paR+wjGgmEXGhtS4jNJSedQ?=
+ =?us-ascii?Q?HptX0SmPMEGDlhcc80KLR+k79JcIAlXyTKA4WJ/fKuQQ+kF0HOevqOQMrihy?=
+ =?us-ascii?Q?27lbmfgC+DQvmlRAgRW0hIx8CruxrW31XO59gLkQ6e14NlHkDICItYWSaJzV?=
+ =?us-ascii?Q?56W5js0LZKIXpnPlkhCRsGRH3I2TjIwwUysTYUwT0DuzRX/pfLlvUU9h+m+f?=
+ =?us-ascii?Q?s8Nx/6srPMvJ1F/sKd8S7A+rzNjgtj+TLuTaL99sk64q313WL9T44Q=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Xj+E2RAURG/fqfPtgscIhCTnR73Ef94q4rTsfPOpjkEERCVjwqCs1vCh48nr?=
+ =?us-ascii?Q?VXW/x4N5/wbz65EYpoUSPdkAMncYCfWMUU3LD0NG67PIJW6T9hQrGyWTdYlU?=
+ =?us-ascii?Q?oy1noT5tWvYPPoGoMD5nDH9NVpV2ptxpXO8mopNB7f/lx3aLvzO0+3fq3h8d?=
+ =?us-ascii?Q?5XTeOpFMSkt38R3kveIJIs4zRXSrpYoOKzBdEb3dLq3p+BYKKJI5KithXMPK?=
+ =?us-ascii?Q?WI5znY+MZN3BsPmWPuwpHq1Hu+M1jfZx98HyR/cK+wAYPOwyKSORIwxFMC6R?=
+ =?us-ascii?Q?JkOqqpd5FhYhNXLoY2e0e85zUp6Jt4k9gb/6QICZaBB0/vZoBbMijU1xcjkC?=
+ =?us-ascii?Q?LypJPnvqxEypzOQwluA4vWl6afa4Ps5BH8g25jGEXkTA7Lfe3YKNDwngKfPg?=
+ =?us-ascii?Q?UqmsBSgeeT6GmXLpXjvlJJChCwfJ77U7ssOn5DTkMXdrLfoQRAnZ3hb5U3kc?=
+ =?us-ascii?Q?26OAvDaIw3fd/m4eFiE1rt97yEVYU0D3fZE7gfpbg3iOcBUeLxXrH5CwJIWe?=
+ =?us-ascii?Q?/BkebI8xBA03a9ZWsrbnqZTRRZ4wNGwLIfvRUbbhYBpPIYM5PGDCXiZZsk5x?=
+ =?us-ascii?Q?+tZRE/FlczoT/fwNOEbl2RjVuQa6DrPPU+aWIZu48SySs/ZEYmONhgBiNJsO?=
+ =?us-ascii?Q?u8jW9XWZ8GyCDgUnUMAoIFMOacFQXFwT3SOjmNFYPyZzQiQMZm0SdSzYSAYh?=
+ =?us-ascii?Q?uqxxYs/3pNFTNB/3wae+PApAIrWpDqDtEnqWg50tWzLKfbTozWOBz+61SOZd?=
+ =?us-ascii?Q?Jt5fyU4f5nd4eHZaG66v42YQlnRZu9thnn4anWi8euI1cXhfDWfKFruupt4M?=
+ =?us-ascii?Q?CmFBzASW5PexH4Tq70SV4dKyZBJOiJqqL+okinTm1YX90CXIhIUy+y3HZ23L?=
+ =?us-ascii?Q?2Gtj6z1O0+UPXpx3SMDiI1XcBSMzwkPoCX+++NHq7sYaZViiyqjzYW5xl76R?=
+ =?us-ascii?Q?0X0SXE2/LYOCWh2rSDCN8ahjHELU4n1rD9dZSyu6WGk70upvoDktne7uakgl?=
+ =?us-ascii?Q?l/E1570SYdda5srIwHbDyzBs0YpmijM1Tb0m/PB/ledlRoMXSD1ehRG7D6qD?=
+ =?us-ascii?Q?DMqhmaOsCsVh6Wlvg/HJP1BEEv5dWZZoq0JX2k67iDUqudZasPjn3rj1vdSf?=
+ =?us-ascii?Q?VB/BTFSejU3C+TjUWYelEXGxCuH/PmCXL7QRM51eX0i5JlmV6lF2g65V9WHo?=
+ =?us-ascii?Q?VkeJZyQp0Jgx5/cg0sO59mk61ESEumqE3IPSlb3tzfMT6BmXYGfO8kn1ogy1?=
+ =?us-ascii?Q?cstAZno1fPRWAnsnR7vjbponIeVvye5NGI7Y3hDwO349s+mqEiLKi9cYHQub?=
+ =?us-ascii?Q?NbP+sZI3uvlvCxVu61BqLe1L1v2kprQFM4iDsjoANW76WjWSzObc5W8WpqDW?=
+ =?us-ascii?Q?88Vb9VWLdVsdi6TxUF8BZ31WB47D45qaio20fRK37AiYF3fZ81QvjlU0jQdj?=
+ =?us-ascii?Q?dlBNWDrFAE0yL+g7FyDCqjV7FWixLco/GQScGL+FhHChlDffvqWNa8/hII7p?=
+ =?us-ascii?Q?qkWFEdHT5uk3pcq2uNYckGza2hrC6digwS38g4OZ/MScBrznfM/MJhyQ8WkI?=
+ =?us-ascii?Q?U3KChjtkUo788fpkNm2bRrhizJVMjra61G5EB3Us?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 338bfe90-763c-4cff-5be9-08de171d5529
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2025 18:59:48.5166
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3u5DvL30XCs9kIIwZ5m02+Lv/lcLJdjtrHfa2ZhipFCf/YrRaWH0uqRwzutsJbjdsHN92k91lD6VrlElPH4JGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8247
+X-OriginatorOrg: intel.com
 
-We do our best to keep the repository `rustfmt`-clean [1], thus run the
-tool to fix the formatting issue.
+I took a stab at applying the AET patches on tob of Babu's v10
+SDCIAE series https://lore.kernel.org/all/cover.1761090859.git.babu.moger@amd.com/
 
-A trailing empty comment [2] is added in order to preserve the wanted
-style for imports (otherwise the tool will compact the first two items).
+There are only a couple of easy to resolve conflicts.
 
-Link: https://rust-for-linux.com/contributing#submit-checklist-addendum [1]
-Link: https://docs.kernel.org/rust/coding-guidelines.html#style-formatting [2]
-Fixes: a3d5a2b8da94 ("rust: pwm: Add complete abstraction layer")
-Fixes: 121931a7b4dc ("rust: pwm: Add Kconfig and basic data structures")
-Fixes: fb3957af9ec6 ("pwm: Add Rust driver for T-HEAD TH1520 SoC")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-If you usually rebase your tree, please feel free to do so instead. Thanks!
+I pushed a branch with v6.18-rc3 + SDCIAE + AET here:
 
- drivers/pwm/pwm_th1520.rs | 15 ++++++++++---
- rust/kernel/lib.rs        |  4 ++--
- rust/kernel/pwm.rs        | 46 +++++++++++++++++++++------------------
- 3 files changed, 39 insertions(+), 26 deletions(-)
+git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git sdciae-aet
 
-diff --git a/drivers/pwm/pwm_th1520.rs b/drivers/pwm/pwm_th1520.rs
-index 0ad38b78be85..ee2a6d573bc2 100644
---- a/drivers/pwm/pwm_th1520.rs
-+++ b/drivers/pwm/pwm_th1520.rs
-@@ -200,7 +200,10 @@ fn round_waveform_fromhw(
-         let rate_hz = data.clk.rate().as_hz() as u64;
-
-         if wfhw.period_cycles == 0 {
--            dev_dbg!(chip.device(), "HW state has zero period, reporting as disabled.\n");
-+            dev_dbg!(
-+                chip.device(),
-+                "HW state has zero period, reporting as disabled.\n"
-+            );
-             *wf = pwm::Waveform::default();
-             return Ok(());
-         }
-@@ -277,7 +280,10 @@ fn write_waveform(
-             if was_enabled {
-                 iomap.try_write32(wfhw.ctrl_val, th1520_pwm_ctrl(hwpwm))?;
-                 iomap.try_write32(0, th1520_pwm_fp(hwpwm))?;
--                iomap.try_write32(wfhw.ctrl_val | TH1520_PWM_CFG_UPDATE, th1520_pwm_ctrl(hwpwm))?;
-+                iomap.try_write32(
-+                    wfhw.ctrl_val | TH1520_PWM_CFG_UPDATE,
-+                    th1520_pwm_ctrl(hwpwm),
-+                )?;
-             }
-             return Ok(());
-         }
-@@ -285,7 +291,10 @@ fn write_waveform(
-         iomap.try_write32(wfhw.ctrl_val, th1520_pwm_ctrl(hwpwm))?;
-         iomap.try_write32(wfhw.period_cycles, th1520_pwm_per(hwpwm))?;
-         iomap.try_write32(wfhw.duty_cycles, th1520_pwm_fp(hwpwm))?;
--        iomap.try_write32(wfhw.ctrl_val | TH1520_PWM_CFG_UPDATE, th1520_pwm_ctrl(hwpwm))?;
-+        iomap.try_write32(
-+            wfhw.ctrl_val | TH1520_PWM_CFG_UPDATE,
-+            th1520_pwm_ctrl(hwpwm),
-+        )?;
-
-         // The `TH1520_PWM_START` bit must be written in a separate, final transaction, and
-         // only when enabling the channel from a disabled state.
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index 68c71d888fdb..584aa3282029 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -121,6 +121,8 @@
- pub mod print;
- pub mod processor;
- pub mod ptr;
-+#[cfg(CONFIG_RUST_PWM_ABSTRACTIONS)]
-+pub mod pwm;
- pub mod rbtree;
- pub mod regulator;
- pub mod revocable;
-@@ -129,8 +131,6 @@
- pub mod seq_file;
- pub mod sizes;
- mod static_assert;
--#[cfg(CONFIG_RUST_PWM_ABSTRACTIONS)]
--pub mod pwm;
- #[doc(hidden)]
- pub mod std_vendor;
- pub mod str;
-diff --git a/rust/kernel/pwm.rs b/rust/kernel/pwm.rs
-index 79fbb13cd47f..9149161e6253 100644
---- a/rust/kernel/pwm.rs
-+++ b/rust/kernel/pwm.rs
-@@ -13,7 +13,7 @@
-     devres,
-     error::{self, to_result},
-     prelude::*,
--    types::{ARef, AlwaysRefCounted, Opaque},
-+    types::{ARef, AlwaysRefCounted, Opaque}, //
- };
- use core::{convert::TryFrom, marker::PhantomData, ptr::NonNull};
-
-@@ -156,7 +156,7 @@ pub fn label(&self) -> Option<&CStr> {
-         // SAFETY: self.as_raw() provides a valid pointer.
-         let label_ptr = unsafe { (*self.as_raw()).label };
-         if label_ptr.is_null() {
--            return None
-+            return None;
-         }
-
-         // SAFETY: label_ptr is non-null and points to a C string
-@@ -234,11 +234,7 @@ pub trait PwmOps: 'static + Sized {
-     type WfHw: Copy + Default;
-
-     /// Optional hook for when a PWM device is requested.
--    fn request(
--        _chip: &Chip<Self>,
--        _pwm: &Device,
--        _parent_dev: &device::Device<Bound>,
--    ) -> Result {
-+    fn request(_chip: &Chip<Self>, _pwm: &Device, _parent_dev: &device::Device<Bound>) -> Result {
-         Ok(())
-     }
-
-@@ -364,7 +360,9 @@ unsafe fn deserialize_wfhw(wfhw_ptr: *const c_void) -> Result<T::WfHw> {
-         // Now, call the original release function to free the `pwm_chip` itself.
-         // SAFETY: `dev` is the valid pointer passed into this callback, which is
-         // the expected argument for `pwmchip_release`.
--        unsafe { bindings::pwmchip_release(dev); }
-+        unsafe {
-+            bindings::pwmchip_release(dev);
-+        }
-     }
-
-     /// # Safety
-@@ -647,9 +645,8 @@ pub fn new(
-     ) -> Result<ARef<Self>> {
-         let sizeof_priv = core::mem::size_of::<T>();
-         // SAFETY: `pwmchip_alloc` allocates memory for the C struct and our private data.
--        let c_chip_ptr_raw = unsafe {
--            bindings::pwmchip_alloc(parent_dev.as_raw(), num_channels, sizeof_priv)
--        };
-+        let c_chip_ptr_raw =
-+            unsafe { bindings::pwmchip_alloc(parent_dev.as_raw(), num_channels, sizeof_priv) };
-
-         let c_chip_ptr: *mut bindings::pwm_chip = error::from_err_ptr(c_chip_ptr_raw)?;
-
-@@ -661,12 +658,16 @@ pub fn new(
-         unsafe { data.__pinned_init(drvdata_ptr.cast())? };
-
-         // SAFETY: `c_chip_ptr` points to a valid chip.
--        unsafe { (*c_chip_ptr).dev.release = Some(Adapter::<T>::release_callback); }
-+        unsafe {
-+            (*c_chip_ptr).dev.release = Some(Adapter::<T>::release_callback);
-+        }
-
-         // SAFETY: `c_chip_ptr` points to a valid chip.
-         // The `Adapter`'s `VTABLE` has a 'static lifetime, so the pointer
-         // returned by `as_raw()` is always valid.
--        unsafe { (*c_chip_ptr).ops = Adapter::<T>::VTABLE.as_raw(); }
-+        unsafe {
-+            (*c_chip_ptr).ops = Adapter::<T>::VTABLE.as_raw();
-+        }
-
-         // Cast the `*mut bindings::pwm_chip` to `*mut Chip`. This is valid because
-         // `Chip` is `repr(transparent)` over `Opaque<bindings::pwm_chip>`, and
-@@ -686,7 +687,9 @@ unsafe impl<T: PwmOps> AlwaysRefCounted for Chip<T> {
-     fn inc_ref(&self) {
-         // SAFETY: `self.0.get()` points to a valid `pwm_chip` because `self` exists.
-         // The embedded `dev` is valid. `get_device` increments its refcount.
--        unsafe { bindings::get_device(&raw mut (*self.0.get()).dev); }
-+        unsafe {
-+            bindings::get_device(&raw mut (*self.0.get()).dev);
-+        }
-     }
-
-     #[inline]
-@@ -695,7 +698,9 @@ unsafe fn dec_ref(obj: NonNull<Chip<T>>) {
-
-         // SAFETY: `obj` is a valid pointer to a `Chip` (and thus `bindings::pwm_chip`)
-         // with a non-zero refcount. `put_device` handles decrement and final release.
--        unsafe { bindings::put_device(&raw mut (*c_chip_ptr).dev); }
-+        unsafe {
-+            bindings::put_device(&raw mut (*c_chip_ptr).dev);
-+        }
-     }
- }
-
-@@ -727,11 +732,8 @@ impl<T: 'static + PwmOps + Send + Sync> Registration<T> {
-     /// to the parent device.
-     /// On unbind of the parent device, the `devres` entry will be dropped, automatically
-     /// calling `pwmchip_remove`. This function should be called from the driver's `probe`.
--    pub fn register(
--        dev: &device::Device<Bound>,
--        chip: ARef<Chip<T>>,
--    ) -> Result {
--	let chip_parent = chip.device().parent().ok_or(EINVAL)?;
-+    pub fn register(dev: &device::Device<Bound>, chip: ARef<Chip<T>>) -> Result {
-+        let chip_parent = chip.device().parent().ok_or(EINVAL)?;
-         if dev.as_raw() != chip_parent.as_raw() {
-             return Err(EINVAL);
-         }
-@@ -757,6 +759,8 @@ fn drop(&mut self) {
-         // SAFETY: `chip_raw` points to a chip that was successfully registered.
-         // `bindings::pwmchip_remove` is the correct C function to unregister it.
-         // This `drop` implementation is called automatically by `devres` on driver unbind.
--        unsafe { bindings::pwmchip_remove(chip_raw); }
-+        unsafe {
-+            bindings::pwmchip_remove(chip_raw);
-+        }
-     }
- }
-
-base-commit: 04a698c800c25149f9aa379250e78f737adeb3f1
---
-2.51.2
+-Tony
