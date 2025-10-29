@@ -1,82 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD41D32E13F;
-	Wed, 29 Oct 2025 11:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EB932F777;
+	Wed, 29 Oct 2025 11:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761737786; cv=none; b=jNxga+skiSIoDTVXSSkV4y9bW+gp+Hbsvw9BgGSWtAVzHS8UrQh9IlGN1SE+NCxF51NCljx2pFV8RrYSCqguJYvaZcYQtUOw1Cm4f8FENEhgfd78s/IbB53HzPzBt84fYHoiMB3hVCYBouNwWrEEmacKOQ0nEOFro0oXih+/BXQ=
+	t=1761737973; cv=none; b=NphbFO2xpLzRioLndofvlQ9ZKwVVtpUuNc/gPM+51Ix5OZYibTGE7TEYXVMu6HKb+MiCyf7eivITH/yPOagwvnw84KWlriVLXinYCWJdK3lO8ueFcnN5pVKSBCHJdlRSfqcj/4xeTat3uJBPkgoOr8IY2ZH55h0LFX2eIaxbYy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761737786; c=relaxed/simple;
-	bh=2jx+TIh8gvU1T7h86kUnIS1+C65cSUbjzUvdLnx9Bdo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/FyMWatgtLRFD+0jkRohV3xJrbsOnpq8Z5/7RSPy8RIWBnZ2ciliwQLZel7pqJBZ6JgqKeFKVKX+D/cDxjCZYsW1iWYQXuArIAQopyQ0PSFXY9PForHlIPlPDZRIPN8SIC0CUaZwO7QqzH09Vkb13znac6MiUxkfWr7ODpNCY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orre+9VH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761737973; c=relaxed/simple;
+	bh=6C8y/bWWAanzKHpDtdX8MPRYbKkBqoosD3tQWkhEzOM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=TQOUbPzSw5aHyh2Z/qmtnqAYVvPVZFUleEpB4H6Zv58bmVGfu98nC46qYuUTOTsNyh+fT+TWegI4RDCy2FBN7ClCrMqUHqUVoP5rtvbMwVCchUhYMwe9To7DIqxiHtdV/WVfKx2EPrrU79/y3p0qrwAgyUyORxMuO19RMIGYiB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtLvVY4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orre+9VH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687B7C4CEF7;
-	Wed, 29 Oct 2025 11:36:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtLvVY4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB2BC4CEF7;
+	Wed, 29 Oct 2025 11:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761737786;
-	bh=2jx+TIh8gvU1T7h86kUnIS1+C65cSUbjzUvdLnx9Bdo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=orre+9VHQMaNwuV2EKOVk1igoUDc8lFLeD/uZYx+n0pjYWut69ePF7C7DQjMb6DcR
-	 Mfh275K5DGCIgRsCy4y4v/A2doF6BNe5HZSB5Lr3KsvUE16JVVNDdYR8k5ZvdbXMkj
-	 FIm7XvTU//CO1F06z+mqWtaKHA4RSq2nas3C+6rNCA+mkQbRRNJvnK+txIBaaVwKNm
-	 rIKlqu5oLacq35wfK11wYfxd5tN/i592pBjGwYdvLoSkqjxaYnTE2TPYeCF39ZQDyT
-	 1lDIyfKvDeJ3JGPhFVlhJYAFXgBOy8/FHDQ7O8eBfUPjpm4IRDTvVz7U6ec0pFiI94
-	 FK+vaTUKdJCKQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.12 000/117] 6.12.56-rc1 review
-Date: Wed, 29 Oct 2025 12:36:15 +0100
-Message-ID: <20251029113615.697924-1-ojeda@kernel.org>
-In-Reply-To: <20251027183453.919157109@linuxfoundation.org>
-References: <20251027183453.919157109@linuxfoundation.org>
+	s=k20201202; t=1761737972;
+	bh=6C8y/bWWAanzKHpDtdX8MPRYbKkBqoosD3tQWkhEzOM=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
+	b=XtLvVY4NrO4Snv5JasMT2k+z/PdaOcXUjcoUmWrTxmdrDpWofIKPDwwtynyjWQgzX
+	 bR8hF8vD7adXlDXCaVX4wljrP55Bu4etdRZOf6+F6Z4vHtnYfK+xKO2F/pL6vCjfm6
+	 Nsl/vVxIFzZ/2Id1k3l7NSyRTO3ufWqbKc0heVyDBqZGcPDvYQ9ZCRcCr84H6+pm1J
+	 SnUbsH6IXUzPw8hBIMiK3y359DL+7gtgqzqu0rlzyYtrLtDwmJ3K6pbtyRbIt1ihJi
+	 hE8P3MxWRC6mehCXd9GFzzGDY09+7nJW+Z+mNWpIf/yJwUq6OaKClKEUllYvDQvb1l
+	 3IyLmon3hZR6Q==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 29 Oct 2025 12:39:27 +0100
+Message-Id: <DDURZLGB2VRJ.28Y4AP92FNFPS@kernel.org>
+Subject: Re: [PATCH] rust: devres: fix private intra-doc link
+Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Boqun Feng"
+ <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alice
+ Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
+ <rust-for-linux@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <patches@lists.linux.dev>, <stable@vger.kernel.org>
+To: "Miguel Ojeda" <ojeda@kernel.org>
+From: "Danilo Krummrich" <dakr@kernel.org>
+References: <20251029071406.324511-1-ojeda@kernel.org>
+In-Reply-To: <20251029071406.324511-1-ojeda@kernel.org>
 
-On Mon, 27 Oct 2025 19:35:26 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.56 release.
-> There are 117 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 29 Oct 2025 18:34:15 +0000.
-> Anything received after that time might be too late.
+On Wed Oct 29, 2025 at 8:14 AM CET, Miguel Ojeda wrote:
+> The future move of pin-init to `syn` uncovers the following private
+> intra-doc link:
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+Given that, do you want to take this one through your tree? If so, please d=
+o,
+otherwise please let me know.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-Thanks!
-
-Cheers,
-Miguel
+Acked-by: Danilo Krummrich <dakr@kernel.org>
