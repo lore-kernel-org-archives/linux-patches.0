@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127D019DFA2;
-	Fri, 31 Oct 2025 14:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122A7205E3B;
+	Fri, 31 Oct 2025 14:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919320; cv=none; b=uPrAAbBpz9CJkjJibaEItzFOhVfecmS4v2t/Xi+iOKjV1YSGZLh0V5/bQ/+omPRUm4KlYnt4n4JosZiPjZiLBFiZ+MIBMsHP7I+0/i/ajGJGNflAC8qXYaDWR+bSmqH/1uWDfMjiSdGQglhqp3joHdNmmGI4pEDXxSs2QQltrsM=
+	t=1761919323; cv=none; b=gJP+4QSJMTYmWkmz9h5DZJlwIsY4QV0SAfxVPoik1veJcy2c1pK3DRdYJfaI+0SLlee6xYmWOvxZxDp2aPbS1Ik3qw3hbujUe+SMrEW3w7wwB8chRXUhVKhhbrP1VAyuU4V6165hAGPNGnsBw3pO0R/3ikZpirQi8vR94ddpZ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919320; c=relaxed/simple;
-	bh=8TJ8xFqIE8B2nuAW2/qgrOOnMBbpeADTgFSkiyqKg0o=;
+	s=arc-20240116; t=1761919323; c=relaxed/simple;
+	bh=A5E/QjiASGwXRgkMRYgzEvvhs5WyGzad+a4CEXvLsw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXh/a8C6cDIsVqG3tumPz9YD+OBXL0yyKbGyjOpGTysrMqdycDhi2oZMHL5tDPzwZcMBxgOSX698B9r+FwoX2pfFUBHjCH117ftpIie0Qg85da2BY+MJ84OMWsgq3tWv8N/vybn7w9kXHRIHGtFCGiXG2yjg/ztgfBBxwGc0HgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFJtlKPm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrkAD7R5zQ0dPFq6RUBBMm9hSAqSNwFGo0mnxtgubG26wQJiKJwRYWH2CLAs1wwHc2K1/hBjW8Yux9THOd7V3Mw2tp6YQenu3h7m+GfW3Op71dGe2/yhIXmwbj45qT85PcLvRpJlNpsHrAtBQAtPVri2hkMhL96ia4ch5LPkWG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XO8F79VQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFJtlKPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2D9C4CEE7;
-	Fri, 31 Oct 2025 14:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XO8F79VQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08459C4CEE7;
+	Fri, 31 Oct 2025 14:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919319;
-	bh=8TJ8xFqIE8B2nuAW2/qgrOOnMBbpeADTgFSkiyqKg0o=;
+	s=korg; t=1761919322;
+	bh=A5E/QjiASGwXRgkMRYgzEvvhs5WyGzad+a4CEXvLsw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFJtlKPmhlPSsQ8V9ebZbXR0iTEZQIjxDVfWGAPLvvOdDwXn+1KGHBS+5Q9SXWj4N
-	 yj0g0BJtXkTS33vOdn43/GpZTiCJtllk5kVJ6nQ9hl80RrrpJAMvkia1UlHd+IRnfQ
-	 QYZRvTd6eMpEz64q94ixaQgt/uDaUUAwaEeJIrzo=
+	b=XO8F79VQOXPo5hz+KY+vgGyC/+EQSei8xLseyvuTSySL+iM4+FtSZt5KXaL2zSf/7
+	 A+x7oOoTwX1MK6HdtSfjrSWYLQC/Ke3nnVT2QeLx40l59nWudAsFZvulSw4/W7AZVc
+	 gSqi6fB012BKKCUh0Fv+/sXBVaZqlqRjvjwsRtfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 11/32] btrfs: scrub: replace max_t()/min_t() with clamp() in scrub_throttle_dev_io()
-Date: Fri, 31 Oct 2025 15:01:05 +0100
-Message-ID: <20251031140042.687885773@linuxfoundation.org>
+Subject: [PATCH 6.6 12/32] btrfs: always drop log root tree reference in btrfs_replay_log()
+Date: Fri, 31 Oct 2025 15:01:06 +0100
+Message-ID: <20251031140042.714780590@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -51,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a7f3dfb8293c4cee99743132d69863a92e8f4875 ]
+[ Upstream commit 2f5b8095ea47b142c56c09755a8b1e14145a2d30 ]
 
-Replace max_t() followed by min_t() with a single clamp().
+Currently we have this odd behaviour:
 
-As was pointed by David Laight in
-https://lore.kernel.org/linux-btrfs/20250906122458.75dfc8f0@pumpkin/
-the calculation may overflow u32 when the input value is too large, so
-clamp_t() is not used.  In practice the expected values are in range of
-megabytes to gigabytes (throughput limit) so the bug would not happen.
+1) At btrfs_replay_log() we drop the reference of the log root tree if
+   the call to btrfs_recover_log_trees() failed;
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+2) But if the call to btrfs_recover_log_trees() did not fail, we don't
+   drop the reference in btrfs_replay_log() - we expect that
+   btrfs_recover_log_trees() does it in case it returns success.
+
+Let's simplify this and make btrfs_replay_log() always drop the reference
+on the log root tree, not only this simplifies code as it's what makes
+sense since it's btrfs_replay_log() who grabbed the reference in the first
+place.
+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
-[ Use clamp() and add explanation. ]
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/disk-io.c  | 2 +-
+ fs/btrfs/tree-log.c | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 7632d652a1257..4a5a5ee360e57 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1271,8 +1271,7 @@ static void scrub_throttle_dev_io(struct scrub_ctx *sctx, struct btrfs_device *d
- 	 * Slice is divided into intervals when the IO is submitted, adjust by
- 	 * bwlimit and maximum of 64 intervals.
- 	 */
--	div = max_t(u32, 1, (u32)(bwlimit / (16 * 1024 * 1024)));
--	div = min_t(u32, 64, div);
-+	div = clamp(bwlimit / (16 * 1024 * 1024), 1, 64);
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index bb5f7911d473c..7ad1734cbbfc9 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2080,10 +2080,10 @@ static int btrfs_replay_log(struct btrfs_fs_info *fs_info,
  
- 	/* Start new epoch, set deadline */
- 	now = ktime_get();
+ 	/* returns with log_tree_root freed on success */
+ 	ret = btrfs_recover_log_trees(log_tree_root);
++	btrfs_put_root(log_tree_root);
+ 	if (ret) {
+ 		btrfs_handle_fs_error(fs_info, ret,
+ 				      "Failed to recover log tree");
+-		btrfs_put_root(log_tree_root);
+ 		return ret;
+ 	}
+ 
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 4b53e19f7520f..e00298c6c30a1 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -7422,7 +7422,6 @@ int btrfs_recover_log_trees(struct btrfs_root *log_root_tree)
+ 
+ 	log_root_tree->log_root = NULL;
+ 	clear_bit(BTRFS_FS_LOG_RECOVERING, &fs_info->flags);
+-	btrfs_put_root(log_root_tree);
+ 
+ 	return 0;
+ error:
 -- 
 2.51.0
 
