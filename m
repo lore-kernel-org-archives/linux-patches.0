@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DAE23FC54;
-	Fri, 31 Oct 2025 14:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D809C22A4D6;
+	Fri, 31 Oct 2025 14:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919523; cv=none; b=slgvDfKu6qUnC5Qhdea5kG+Ac5TbXJHTZWiN9p3FsB4KdhkPUT2+Lfb208QqfZzBM4AQL07IfxtdGJPJDDJSngQ4TS4PCvuiIdh0h+CQW1Ks64IyiAbsiruFeSRPEPCpNWx+GDTTa37BQHRkv7d0Z7wFk06TfZH/NxmDiiElbU4=
+	t=1761919525; cv=none; b=QlIt/K457piDdhGomcrnHWJstmb1N4QdTqDqzjTi4QMNg8rsRCdUgmFwuRQ71XGy0iy3Nkt9e7T8ZsIGuR/nfPau8kBg5tEydMaAKwScxAdKgtIpmNY76iYI+/xFzEU7NRBq7XWJ8zADHvUiMTQ58DapEXcmWuhY8R8Pnf/VFeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919523; c=relaxed/simple;
-	bh=XKoaNGqqoLQYN5pPqlI6Kyw52tCfz8zf3VXtJjBhZ9A=;
+	s=arc-20240116; t=1761919525; c=relaxed/simple;
+	bh=ww2wUT+U5QC1f8i3e3c2G8JPHbIYc8kkseA4OXP2Vmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKCNwp6A+XP5wNYQIkH13tRzgMafE7+XeVez4GGkEu56AtlLztSfVXkyTebG67u/8a/gzSJU3VKa1KNlZ8L4CW5Q6YI0gxz0i4+AWVCQVgyg031z1vaXxGu22tkxi2OLjFO8VmhO9OLEPw6T4HirzeWK3MgKX28i5t/JAEjgM08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnL/43KG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3kvv/IR9uGXuU7ESPwwfoRuMc3/VjbFcMhZZaDwgvTN7E9vaAPPZf+HPQcM4WnzPhaTCE0PZhfZHxSQxSOXYoPH6oaZ5BvobjHfZJiH0HBIU4uFLCUIMElK9rthkcSsY90pleRoLh5fwdGTFjPO2ojd1VDpjouhaUKRx9xPPiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxoUlVQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnL/43KG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9908CC4CEE7;
-	Fri, 31 Oct 2025 14:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxoUlVQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66052C4CEE7;
+	Fri, 31 Oct 2025 14:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919523;
-	bh=XKoaNGqqoLQYN5pPqlI6Kyw52tCfz8zf3VXtJjBhZ9A=;
+	s=korg; t=1761919525;
+	bh=ww2wUT+U5QC1f8i3e3c2G8JPHbIYc8kkseA4OXP2Vmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnL/43KGaC6sc65o8hoxev65T7QLvVmI4zjmH3Z+O+CYOMvukqQ6i+KGU5i4b6/EW
-	 ese42idb9BVdIM3G7qMTeNCPeOoTMVChw4wfIWSQX/NeYVVZLsqppomtCRhl6m91le
-	 u9QJHGJ9CyWa5i1Vcj5LaKa5u2Y3m9IpL//1/nsQ=
+	b=vxoUlVQHDUXnZZa9djVA439+lXXAu37cMm0IYqyERCRJgLzLTmDYhrP/idIkgd+Nq
+	 S9k6m8rv0B1kCB9/FfuPy15k4S/SwvgVeepYB30KSf5ISPlVLg8mGxW5r8L+klndn8
+	 RjBfgLCAnRQ/eRN5lKY7N+vs/MMPNsfpL6kQETkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	David Kaplan <david.kaplan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 18/40] btrfs: use level argument in log tree walk callback replay_one_buffer()
-Date: Fri, 31 Oct 2025 15:01:11 +0100
-Message-ID: <20251031140044.451625442@linuxfoundation.org>
+Subject: [PATCH 6.12 09/40] x86/bugs: Fix reporting of LFENCE retpoline
+Date: Fri, 31 Oct 2025 15:01:02 +0100
+Message-ID: <20251031140044.169929185@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -51,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: David Kaplan <david.kaplan@amd.com>
 
-[ Upstream commit 6cb7f0b8c9b0d6a35682335fea88bd26f089306f ]
+[ Upstream commit d1cc1baef67ac6c09b74629ca053bf3fb812f7dc ]
 
-We already have the extent buffer's level in an argument, there's no need
-to first ensure the extent buffer's data is loaded (by calling
-btrfs_read_extent_buffer()) and then call btrfs_header_level() to check
-the level. So use the level argument and do the check before calling
-btrfs_read_extent_buffer().
+The LFENCE retpoline mitigation is not secure but the kernel prints
+inconsistent messages about this fact.  The dmesg log says 'Mitigation:
+LFENCE', implying the system is mitigated.  But sysfs reports 'Vulnerable:
+LFENCE' implying the system (correctly) is not mitigated.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this by printing a consistent 'Vulnerable: LFENCE' string everywhere
+when this mitigation is selected.
+
+Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250915134706.3201818-1-david.kaplan@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 63b14005f5066..b43a7c0c7cb7a 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -2443,15 +2443,13 @@ static int replay_one_buffer(struct btrfs_root *log, struct extent_buffer *eb,
- 	int i;
- 	int ret;
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 0c16457e06543..939401b5d2ef0 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1598,7 +1598,7 @@ spectre_v2_user_select_mitigation(void)
+ static const char * const spectre_v2_strings[] = {
+ 	[SPECTRE_V2_NONE]			= "Vulnerable",
+ 	[SPECTRE_V2_RETPOLINE]			= "Mitigation: Retpolines",
+-	[SPECTRE_V2_LFENCE]			= "Mitigation: LFENCE",
++	[SPECTRE_V2_LFENCE]			= "Vulnerable: LFENCE",
+ 	[SPECTRE_V2_EIBRS]			= "Mitigation: Enhanced / Automatic IBRS",
+ 	[SPECTRE_V2_EIBRS_LFENCE]		= "Mitigation: Enhanced / Automatic IBRS + LFENCE",
+ 	[SPECTRE_V2_EIBRS_RETPOLINE]		= "Mitigation: Enhanced / Automatic IBRS + Retpolines",
+@@ -3251,9 +3251,6 @@ static const char *spectre_bhi_state(void)
  
-+	if (level != 0)
-+		return 0;
-+
- 	ret = btrfs_read_extent_buffer(eb, &check);
- 	if (ret)
- 		return ret;
+ static ssize_t spectre_v2_show_state(char *buf)
+ {
+-	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
+-		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+-
+ 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
+ 		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
  
--	level = btrfs_header_level(eb);
--
--	if (level != 0)
--		return 0;
--
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
 -- 
 2.51.0
 
