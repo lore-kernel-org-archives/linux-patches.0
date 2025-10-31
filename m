@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2760834B432;
-	Fri, 31 Oct 2025 14:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E22210F59;
+	Fri, 31 Oct 2025 14:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919483; cv=none; b=j4zQuUyk9MOaauYU149j5fDtnJU4wrRcE8J+p/2JprMjzNukdoGawIlN4v5/LCqHz14zWzUDlEJ6OcPA7iKsrZ9uKrBFY+EHtt9xSAz+r/QOPeAABUM133UMc3NpwF4nlrJ1AucEkaFjOjrNUSaosQ3DpyKOhlxYgTzmy5lw6HQ=
+	t=1761919486; cv=none; b=CvDSWX70KeLfN3gFZyafJzbhXicHfUjL9mh/XALsqrBuKvGmlTYC1QDw0t/AtjYsMsRnrmyvQhgqlo3aPtvta+Nn2q8ybx8Gs91V2kdJ77NN1zFjNFr4BY5UbewrE5J0MlxCuZ/hf6pJi8A0AwHBu3kIjj2sloANzJt5x/6ZsZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919483; c=relaxed/simple;
-	bh=fR7DLU3RGw7g42y6pE3apmPEMnnVTJ55i4MwkwktBTI=;
+	s=arc-20240116; t=1761919486; c=relaxed/simple;
+	bh=XHT6ZCVBJwMq36f5vlYtM/sPmvXcpd797W+lyHyJfaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1uhpl91vEUtUXrOCK0kyo8RZQCAq+p8EpJ0ysBpTkOOWWrkG2vN8iH6JOYkf7SJifYu0XeKj7Zj8Vb8cS6jeePTLjBnfRlN/5jeeyUZ6m/SE0jebHwburm6B8pERjzBm1Kj1MJvGA54XHCljuPPKT59q/maEbJ2cgZxJ0U0IPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9aYy8QA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g43UCN1zPBDhyVWyFTl58SRlk33iD6CVqphGqCee74xgJWvTKD6WWYBvcZTZE0yBbxrhvxzzpy1mihGEBdhkYWOUXWI3IDKkFZclCDp2VOe6aAQ6C2AqXrhzbBy2lD/cGdLq3gP9LM4vK/66nPXjs1wF3RQfxrOOh5hNKf0ZMT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROGxX3PY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9aYy8QA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50427C4CEE7;
-	Fri, 31 Oct 2025 14:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROGxX3PY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304C8C4CEE7;
+	Fri, 31 Oct 2025 14:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919482;
-	bh=fR7DLU3RGw7g42y6pE3apmPEMnnVTJ55i4MwkwktBTI=;
+	s=korg; t=1761919485;
+	bh=XHT6ZCVBJwMq36f5vlYtM/sPmvXcpd797W+lyHyJfaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9aYy8QAOmslgHkEKEa5e/UcSQUFe3vzyXhmRQPvUexO2U6snu5m8vYxnkHyBmvCi
-	 smFl8RxCGtJip9dSGmTdMmtC2Ue8JPJJMxuafwtNgifW+XufBl1qHJuyu0QLom7i48
-	 qg5HzHhtLdqteieLr5nU4szKf3hzPBfg7nERxTPk=
+	b=ROGxX3PYkE4g4YIJR2d5vTq4bw21HrckvJvYk8r524Xtkia/OdD1A06XBUAnWmwWH
+	 T77X3VSbTchz0RsMBog/rfUMYWTcIx/ra/nE95peVzSyTm2c92P0qH0Gm3JU4efck1
+	 JxHrNIOY5FxUy8BH4dZcECb3Y+gNBIPep4zzVtyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Yury Norov <yury.norov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Lee Jones <lee@kernel.org>,
 	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.12 33/40] bits: introduce fixed-type GENMASK_U*()
-Date: Fri, 31 Oct 2025 15:01:26 +0100
-Message-ID: <20251031140044.823398130@linuxfoundation.org>
+Subject: [PATCH 6.12 34/40] gpio: regmap: Allow to allocate regmap-irq device
+Date: Fri, 31 Oct 2025 15:01:27 +0100
+Message-ID: <20251031140044.848686310@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -54,114 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 
-[ Upstream commit 19408200c094858d952a90bf4977733dc89a4df5 ]
+[ Upstream commit 553b75d4bfe9264f631d459fe9996744e0672b0e ]
 
-Add GENMASK_TYPE() which generalizes __GENMASK() to support different
-types, and implement fixed-types versions of GENMASK() based on it.
-The fixed-type version allows more strict checks to the min/max values
-accepted, which is useful for defining registers like implemented by
-i915 and xe drivers with their REG_GENMASK*() macros.
+GPIO controller often have support for IRQ: allow to easily allocate
+both gpio-regmap and regmap-irq in one operation.
 
-The strict checks rely on shift-count-overflow compiler check to fail
-the build if a number outside of the range allowed is passed.
-Example:
-
-  #define FOO_MASK GENMASK_U32(33, 4)
-
-will generate a warning like:
-
-  include/linux/bits.h:51:27: error: right shift count >= width of type [-Werror=shift-count-overflow]
-     51 |               type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-        |                           ^~
-
-The result is casted to the corresponding fixed width type. For
-example, GENMASK_U8() returns an u8. Note that because of the C
-promotion rules, GENMASK_U8() and GENMASK_U16() will immediately be
-promoted to int if used in an expression. Regardless, the main goal is
-not to get the correct type, but rather to enforce more checks at
-compile time.
-
-While GENMASK_TYPE() is crafted to cover all variants, including the
-already existing GENMASK(), GENMASK_ULL() and GENMASK_U128(), for the
-moment, only use it for the newly introduced GENMASK_U*(). The
-consolidation will be done in a separate change.
-
-Co-developed-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Link: https://lore.kernel.org/r/20250824-mdb-max7360-support-v14-5-435cfda2b1ea@bootlin.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Stable-dep-of: 2ba5772e530f ("gpio: idio-16: Define fixed direction of the GPIO lines")
 Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bitops.h |    1 -
- include/linux/bits.h   |   30 ++++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-regmap.c  |   29 +++++++++++++++++++++++++++--
+ include/linux/gpio/regmap.h |   11 +++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
---- a/include/linux/bitops.h
-+++ b/include/linux/bitops.h
-@@ -8,7 +8,6 @@
+--- a/drivers/gpio/gpio-regmap.c
++++ b/drivers/gpio/gpio-regmap.c
+@@ -30,6 +30,11 @@ struct gpio_regmap {
+ 	unsigned int reg_dir_in_base;
+ 	unsigned int reg_dir_out_base;
  
- #include <uapi/linux/kernel.h>
- 
--#define BITS_PER_TYPE(type)	(sizeof(type) * BITS_PER_BYTE)
- #define BITS_TO_LONGS(nr)	__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(long))
- #define BITS_TO_U64(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u64))
- #define BITS_TO_U32(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
---- a/include/linux/bits.h
-+++ b/include/linux/bits.h
-@@ -12,6 +12,7 @@
- #define BIT_ULL_MASK(nr)	(ULL(1) << ((nr) % BITS_PER_LONG_LONG))
- #define BIT_ULL_WORD(nr)	((nr) / BITS_PER_LONG_LONG)
- #define BITS_PER_BYTE		8
-+#define BITS_PER_TYPE(type)	(sizeof(type) * BITS_PER_BYTE)
- 
- /*
-  * Create a contiguous bitmask starting at bit position @l and ending at
-@@ -20,11 +21,40 @@
++#ifdef CONFIG_REGMAP_IRQ
++	int regmap_irq_line;
++	struct regmap_irq_chip_data *irq_chip_data;
++#endif
++
+ 	int (*reg_mask_xlate)(struct gpio_regmap *gpio, unsigned int base,
+ 			      unsigned int offset, unsigned int *reg,
+ 			      unsigned int *mask);
+@@ -203,6 +208,7 @@ EXPORT_SYMBOL_GPL(gpio_regmap_get_drvdat
   */
- #if !defined(__ASSEMBLY__)
+ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config)
+ {
++	struct irq_domain *irq_domain;
+ 	struct gpio_regmap *gpio;
+ 	struct gpio_chip *chip;
+ 	int ret;
+@@ -278,8 +284,22 @@ struct gpio_regmap *gpio_regmap_register
+ 	if (ret < 0)
+ 		goto err_free_gpio;
  
-+/*
-+ * Missing asm support
-+ *
-+ * GENMASK_U*() depend on BITS_PER_TYPE() which relies on sizeof(),
-+ * something not available in asm. Nevertheless, fixed width integers is a C
-+ * concept. Assembly code can rely on the long and long long versions instead.
-+ */
+-	if (config->irq_domain) {
+-		ret = gpiochip_irqchip_add_domain(chip, config->irq_domain);
++#ifdef CONFIG_REGMAP_IRQ
++	if (config->regmap_irq_chip) {
++		gpio->regmap_irq_line = config->regmap_irq_line;
++		ret = regmap_add_irq_chip_fwnode(dev_fwnode(config->parent), config->regmap,
++						 config->regmap_irq_line, config->regmap_irq_flags,
++						 0, config->regmap_irq_chip, &gpio->irq_chip_data);
++		if (ret)
++			goto err_free_gpio;
 +
- #include <linux/build_bug.h>
-+#include <linux/overflow.h>
- #define GENMASK_INPUT_CHECK(h, l) \
- 	(BUILD_BUG_ON_ZERO(__builtin_choose_expr( \
- 		__is_constexpr((l) > (h)), (l) > (h), 0)))
++		irq_domain = regmap_irq_get_domain(gpio->irq_chip_data);
++	} else
++#endif
++	irq_domain = config->irq_domain;
++
++	if (irq_domain) {
++		ret = gpiochip_irqchip_add_domain(chip, irq_domain);
+ 		if (ret)
+ 			goto err_remove_gpiochip;
+ 	}
+@@ -300,6 +320,11 @@ EXPORT_SYMBOL_GPL(gpio_regmap_register);
+  */
+ void gpio_regmap_unregister(struct gpio_regmap *gpio)
+ {
++#ifdef CONFIG_REGMAP_IRQ
++	if (gpio->irq_chip_data)
++		regmap_del_irq_chip(gpio->regmap_irq_line, gpio->irq_chip_data);
++#endif
++
+ 	gpiochip_remove(&gpio->gpio_chip);
+ 	kfree(gpio);
+ }
+--- a/include/linux/gpio/regmap.h
++++ b/include/linux/gpio/regmap.h
+@@ -40,6 +40,11 @@ struct regmap;
+  * @drvdata:		(Optional) Pointer to driver specific data which is
+  *			not used by gpio-remap but is provided "as is" to the
+  *			driver callback(s).
++ * @regmap_irq_chip:	(Optional) Pointer on an regmap_irq_chip structure. If
++ *			set, a regmap-irq device will be created and the IRQ
++ *			domain will be set accordingly.
++ * @regmap_irq_line	(Optional) The IRQ the device uses to signal interrupts.
++ * @regmap_irq_flags	(Optional) The IRQF_ flags to use for the interrupt.
+  *
+  * The ->reg_mask_xlate translates a given base address and GPIO offset to
+  * register and mask pair. The base address is one of the given register
+@@ -78,6 +83,12 @@ struct gpio_regmap_config {
+ 	int ngpio_per_reg;
+ 	struct irq_domain *irq_domain;
  
-+/*
-+ * Generate a mask for the specified type @t. Additional checks are made to
-+ * guarantee the value returned fits in that type, relying on
-+ * -Wshift-count-overflow compiler check to detect incompatible arguments.
-+ * For example, all these create build errors or warnings:
-+ *
-+ * - GENMASK(15, 20): wrong argument order
-+ * - GENMASK(72, 15): doesn't fit unsigned long
-+ * - GENMASK_U32(33, 15): doesn't fit in a u32
-+ */
-+#define GENMASK_TYPE(t, h, l)					\
-+	((t)(GENMASK_INPUT_CHECK(h, l) +			\
-+	     (type_max(t) << (l) &				\
-+	      type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
++#ifdef CONFIG_REGMAP_IRQ
++	struct regmap_irq_chip *regmap_irq_chip;
++	int regmap_irq_line;
++	unsigned long regmap_irq_flags;
++#endif
 +
-+#define GENMASK_U8(h, l)	GENMASK_TYPE(u8, h, l)
-+#define GENMASK_U16(h, l)	GENMASK_TYPE(u16, h, l)
-+#define GENMASK_U32(h, l)	GENMASK_TYPE(u32, h, l)
-+#define GENMASK_U64(h, l)	GENMASK_TYPE(u64, h, l)
-+
- #else /* defined(__ASSEMBLY__) */
- 
- /*
+ 	int (*reg_mask_xlate)(struct gpio_regmap *gpio, unsigned int base,
+ 			      unsigned int offset, unsigned int *reg,
+ 			      unsigned int *mask);
 
 
