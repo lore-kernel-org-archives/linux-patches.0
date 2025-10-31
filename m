@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA9FAD4B;
-	Fri, 31 Oct 2025 14:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D783C17;
+	Fri, 31 Oct 2025 14:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919357; cv=none; b=CyvE+zT3HqQQguIAsNStKo07XIB8hAG+ffLxJBE2oF8sqrwMecL9SBGVDy493CF0gURwA24AvIoTwFF2c5EyHUadSWSxSn0wCjHZXhkedRksN0PQ5PYKd1dn2C4wrONu/vIH4+n9bmgjtMZ6K1vgat+dTisLB1NihOmLlnKKGl0=
+	t=1761919360; cv=none; b=hSpN+ICtGq0bbxHs72o0DaspZuRDHUdG7kbqB5e/ALuSRzsalDu1gNPB9R8cMBXgEkzTQELcmwbIHTE1zf/zz1y1u9E6IB3XuCKNd0nRgOTcOALrPNmJqOQ2nJWvg0t0nj/ynFcHyPhe0xONWeIBOZPVpPABiBivIBSBw9YQXPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919357; c=relaxed/simple;
-	bh=Y0/7nXZk8HCedvtPbCjNdczEKhOCDNVm/YBDmXtwytc=;
+	s=arc-20240116; t=1761919360; c=relaxed/simple;
+	bh=3x62oLXxN77cIZsFPRRMtDBrs4udYaOcTZFgbyO66q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXRE/OvbpS17TTJRoonmyuGCteXswBSppvMU/Y3XJ77FuZ5e+Ozw1OkxbihR5hWCWm6jyThHTncX7WS9/NeX0YrCmjNqcTqUCEmRDA9hRkwn2loUoqmBwfPd0xGY7JhLrzPZ9adY21O/z+2CYExSENGBAiBCD9u36FoznWtiKaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz5Fvtfr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YErGp7GB0IqjnXaHspE4BAVuKBUP9wXRzy2LY64fxq1gpVsZvk19XTmAw/sNmf4VYdUyGvZEWLq74mye1hZuB8vP57YSqZFC+Yrxe24GSzT0WV9o31sT93S+6wS1WNItI4TDTUle1nHyJUWJHEptCfs/w2dyVFYx7LGwvAvQ5tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciVg5NXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz5Fvtfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56D2C4CEE7;
-	Fri, 31 Oct 2025 14:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciVg5NXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B87C4CEE7;
+	Fri, 31 Oct 2025 14:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919357;
-	bh=Y0/7nXZk8HCedvtPbCjNdczEKhOCDNVm/YBDmXtwytc=;
+	s=korg; t=1761919360;
+	bh=3x62oLXxN77cIZsFPRRMtDBrs4udYaOcTZFgbyO66q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pz5FvtfrGdkXYHzSy2O9LkvE+LRPkoPrZZ/pq9v4Y6CQ51cYAZGbcuzu7IXmN+Exr
-	 cc2tF6qpyYCpZo+W15zSULDMchJJgAIU4de/uWeh52ncBIyKgYspX3K5XzH0ZBLSDu
-	 sPOsQNYx5LtBGq2SKv8+Bm+KhipMatl128AEGV2k=
+	b=ciVg5NXMrtJWqS/YfdTaAbsTuq9vOsEs1pJEn0KK75cgA7t1O9XOoEHCWgp/z/lnK
+	 PghU+4b10qGZnKOszDaB3v43ozJoMuy5jo2RZk4qsL+fpCoDjBUQnwtRVyR40zBv/I
+	 9225NkViSuKojDHoORtm1EAjT9f/fXpQ3tIWuzxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Kaplan <david.kaplan@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 06/32] x86/bugs: Report correct retbleed mitigation status
-Date: Fri, 31 Oct 2025 15:01:00 +0100
-Message-ID: <20251031140042.556712162@linuxfoundation.org>
+Subject: [PATCH 6.6 07/32] x86/bugs: Fix reporting of LFENCE retpoline
+Date: Fri, 31 Oct 2025 15:01:01 +0100
+Message-ID: <20251031140042.586975686@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -53,41 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: David Kaplan <david.kaplan@amd.com>
 
-[ Upstream commit 930f2361fe542a00de9ce6070b1b6edb976f1165 ]
+[ Upstream commit d1cc1baef67ac6c09b74629ca053bf3fb812f7dc ]
 
-On Intel CPUs, the default retbleed mitigation is IBRS/eIBRS but this
-requires that a similar spectre_v2 mitigation is applied.  If the user
-selects a different spectre_v2 mitigation (like spectre_v2=retpoline) a
-warning is printed but sysfs will still report 'Mitigation: IBRS' or
-'Mitigation: Enhanced IBRS'.  This is incorrect because retbleed is not
-mitigated, and IBRS is not actually set.
+The LFENCE retpoline mitigation is not secure but the kernel prints
+inconsistent messages about this fact.  The dmesg log says 'Mitigation:
+LFENCE', implying the system is mitigated.  But sysfs reports 'Vulnerable:
+LFENCE' implying the system (correctly) is not mitigated.
 
-Fix this by choosing RETBLEED_MITIGATION_NONE in this scenario so the
-kernel correctly reports the system as vulnerable to retbleed.
+Fix this by printing a consistent 'Vulnerable: LFENCE' string everywhere
+when this mitigation is selected.
 
 Signed-off-by: David Kaplan <david.kaplan@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Link: https://lore.kernel.org/20250915134706.3201818-1-david.kaplan@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 315926ccea0fa..f66e0e5b49eb1 100644
+index f66e0e5b49eb1..ef1d3a5024ed4 100644
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1185,8 +1185,10 @@ static void __init retbleed_select_mitigation(void)
- 			retbleed_mitigation = RETBLEED_MITIGATION_EIBRS;
- 			break;
- 		default:
--			if (retbleed_mitigation != RETBLEED_MITIGATION_STUFF)
-+			if (retbleed_mitigation != RETBLEED_MITIGATION_STUFF) {
- 				pr_err(RETBLEED_INTEL_MSG);
-+				retbleed_mitigation = RETBLEED_MITIGATION_NONE;
-+			}
- 		}
- 	}
+@@ -1594,7 +1594,7 @@ spectre_v2_user_select_mitigation(void)
+ static const char * const spectre_v2_strings[] = {
+ 	[SPECTRE_V2_NONE]			= "Vulnerable",
+ 	[SPECTRE_V2_RETPOLINE]			= "Mitigation: Retpolines",
+-	[SPECTRE_V2_LFENCE]			= "Mitigation: LFENCE",
++	[SPECTRE_V2_LFENCE]			= "Vulnerable: LFENCE",
+ 	[SPECTRE_V2_EIBRS]			= "Mitigation: Enhanced / Automatic IBRS",
+ 	[SPECTRE_V2_EIBRS_LFENCE]		= "Mitigation: Enhanced / Automatic IBRS + LFENCE",
+ 	[SPECTRE_V2_EIBRS_RETPOLINE]		= "Mitigation: Enhanced / Automatic IBRS + Retpolines",
+@@ -3222,9 +3222,6 @@ static const char *spectre_bhi_state(void)
+ 
+ static ssize_t spectre_v2_show_state(char *buf)
+ {
+-	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
+-		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+-
+ 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
+ 		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
  
 -- 
 2.51.0
