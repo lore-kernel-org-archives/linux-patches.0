@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784983C17;
-	Fri, 31 Oct 2025 14:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD073F9D2;
+	Fri, 31 Oct 2025 14:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919336; cv=none; b=WdNbf7a/HboFRXAt0TppnwF4VMzUVnp5YTmjhhUJMgZkWB6uR6gcuW1DF4Qxz53wAMzavzPNlAxBUjHs68lWVzR1pCBp9jw5UGhMIT/dt2xVbJou6RGZQtLvg7ecPxlqxcpJVv5CTIvVxHG0LwG60twjW5VTGaW0k+gFMLywEvc=
+	t=1761919337; cv=none; b=ZBqKSqz6EkBuHPkvFEDuWoFhxfUSnWXLeT5OF/o7jRvciOqwOLZLsvgaRTFxVIAdpSIHq7rU7URbHLyDRZUMvLuMg4h19TrOMy9y09/pblzwrjzkSpEt7IiLCMkrSFyfoPnb0aZw8ALfVikBt+8PLNQ02bfPDyVzqb7i1isrtWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919336; c=relaxed/simple;
-	bh=c35Dr+s4m9Ch6l9OcRR1Z/hjeEUfSyvC/u3X7UaSD6g=;
+	s=arc-20240116; t=1761919337; c=relaxed/simple;
+	bh=1KcX+RO4mewV9PFwav/yt441+jYjJABw1KeXrbtIJOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OP8c3bAaN42ETQyVVy67sh3uP2izp8M9iVlqbaNUkiZaaQE36LBpaLVVjIuJOU5GkMF14x51bIap7FmVzHcu7ll8VlFZwH+ACYQqvZNxh82FxrbdUtnMWBlRvMwo7q2/8TirgVhtV9SbxzQCD6RSKHxqC81TnILRZTHbJR3uuqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqcMBGv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdNUX+D+Dk10qj66NUOuTOxOVHsrgdWXeZRp0C9s65ozdo0cQwbJXUAp+c+XXQY+ur99qguztAqibZRMKO5LkkkQzhpuLtLzLIZIb3+b9ciOVXC+ZvR9T4/AYP0R6J/x25ptHD8p7ROf4ZzUBBdPmh6Cgphdm5iemBNrkwNmwqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU8xqtYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqcMBGv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97939C4CEE7;
-	Fri, 31 Oct 2025 14:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU8xqtYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67770C4CEF8;
+	Fri, 31 Oct 2025 14:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919334;
-	bh=c35Dr+s4m9Ch6l9OcRR1Z/hjeEUfSyvC/u3X7UaSD6g=;
+	s=korg; t=1761919336;
+	bh=1KcX+RO4mewV9PFwav/yt441+jYjJABw1KeXrbtIJOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqcMBGv6eCRfSsZ2j+h5RdrQuw0/ZWPPBdqavl9JgHv9ovr25pJwIQlJM4ftnESby
-	 cVIn67prImzGPr/1Kuwa2OhXLn2fYIV7fr2RLVUaGtA3mzS9wUgegy1PzDCMpkGkiM
-	 J1jbCypfWj4mAzAScSYS6UAfyCZOj3X0rxgvPFDc=
+	b=KU8xqtYrfO/3naZ7cWMlOuEl3OqjCyle6EDMSbpcEK5XoIoDyqip8YyDH0Wye+fSX
+	 hydG7KuORxjEbSh+S1OiOqoqh5SFCttqlJl1iK86FI+zOUX5PGkk/QV0/thvo6O6Ri
+	 2SPWYiFr7rl9291OvphfeYY0l/Xwka/2gzygh0nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/32] mptcp: pm: in-kernel: C-flag: handle late ADD_ADDR
-Date: Fri, 31 Oct 2025 15:01:10 +0100
-Message-ID: <20251031140042.816030019@linuxfoundation.org>
+Subject: [PATCH 6.6 17/32] selftests: mptcp: disable add_addr retrans in endpoint_tests
+Date: Fri, 31 Oct 2025 15:01:11 +0100
+Message-ID: <20251031140042.843586968@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -52,83 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit e84cb860ac3ce67ec6ecc364433fd5b412c448bc ]
+[ Upstream commit f92199f551e617fae028c5c5905ddd63e3616e18 ]
 
-The special C-flag case expects the ADD_ADDR to be received when
-switching to 'fully-established'. But for various reasons, the ADD_ADDR
-could be sent after the "4th ACK", and the special case doesn't work.
+To prevent test instability in the "delete re-add signal" test caused by
+ADD_ADDR retransmissions, disable retransmissions for this test by setting
+net.mptcp.add_addr_timeout to 0.
 
-On NIPA, the new test validating this special case for the C-flag failed
-a few times, e.g.
-
-  102 default limits, server deny join id 0
-        syn rx                 [FAIL] got 0 JOIN[s] syn rx expected 2
-
-  Server ns stats
-  (...)
-  MPTcpExtAddAddrTx  1
-  MPTcpExtEchoAdd    1
-
-  Client ns stats
-  (...)
-  MPTcpExtAddAddr    1
-  MPTcpExtEchoAddTx  1
-
-        synack rx              [FAIL] got 0 JOIN[s] synack rx expected 2
-        ack rx                 [FAIL] got 0 JOIN[s] ack rx expected 2
-        join Rx                [FAIL] see above
-        syn tx                 [FAIL] got 0 JOIN[s] syn tx expected 2
-        join Tx                [FAIL] see above
-
-I had a suspicion about what the issue could be: the ADD_ADDR might have
-been received after the switch to the 'fully-established' state. The
-issue was not easy to reproduce. The packet capture shown that the
-ADD_ADDR can indeed be sent with a delay, and the client would not try
-to establish subflows to it as expected.
-
-A simple fix is not to mark the endpoints as 'used' in the C-flag case,
-when looking at creating subflows to the remote initial IP address and
-port. In this case, there is no need to try.
-
-Note: newly added fullmesh endpoints will still continue to be used as
-expected, thanks to the conditions behind mptcp_pm_add_addr_c_flag_case.
-
-Fixes: 4b1ff850e0c1 ("mptcp: pm: in-kernel: usable client side with C-flag")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
+Suggested-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-1-8207030cb0e8@kernel.org
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-6-521fe9957892@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied to pm_netlink.c instead of pm_kernel.c ]
+Stable-dep-of: c3496c052ac3 ("selftests: mptcp: join: mark 'delete re-add signal' as skipped if not supported")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -619,6 +619,10 @@ static void mptcp_pm_create_subflow_or_s
- 	}
- 
- subflow:
-+	/* No need to try establishing subflows to remote id0 if not allowed */
-+	if (mptcp_pm_add_addr_c_flag_case(msk))
-+		goto exit;
-+
- 	/* check if should create a new subflow */
- 	while (msk->pm.local_addr_used < local_addr_max &&
- 	       msk->pm.subflows < subflows_max) {
-@@ -650,6 +654,8 @@ subflow:
- 			__mptcp_subflow_connect(sk, &local.addr, &addrs[i]);
- 		spin_lock_bh(&msk->pm.lock);
- 	}
-+
-+exit:
- 	mptcp_pm_nl_check_work_pending(msk);
- }
- 
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3838,6 +3838,7 @@ endpoint_tests()
+ 	# remove and re-add
+ 	if reset_with_events "delete re-add signal" &&
+ 	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=0
+ 		pm_nl_set_limits $ns1 0 3
+ 		pm_nl_set_limits $ns2 3 3
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
 
 
