@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73D32459F8;
-	Fri, 31 Oct 2025 14:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CDC21FF25;
+	Fri, 31 Oct 2025 14:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919410; cv=none; b=jXfQLElFlizp5yoWWjf1gszO5Cw8j7tchd+k+EkjYN/Z6ubYb7g8cpkTeB+Zv4jSO7N0C6wX1ON3plem8Sg+kF4u7YotD8ylIOP7dqLyi2G9mmIgsIM/RCNyzs5uUye6LdeyUFPRIu3FYlf0sjewKMQhcQWREVjgU/H+bQeHNw4=
+	t=1761919412; cv=none; b=jcTv37JxIn5rxI2h/l5Ascg6jcLnhQwRsjCGb3K6VWdHxLh00wk67LbLK5pKueHIuN2+9j9k8dleaY4FemUk9BLF4wYr8inajfLfFR+/djwtYUmVNGJe9IZPym0obVukAD8ZcgLvsTKWm9uO0gLb6zmHl3AFdklW1G4iop9zj+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919410; c=relaxed/simple;
-	bh=amPorH9HU/rYncgYvhdhzhhumF/W4YfBHxjpmVmh6hA=;
+	s=arc-20240116; t=1761919412; c=relaxed/simple;
+	bh=Bb/a+fmVqlWfkX4lzAVc5+c45RObKvifNukXdgZfEN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQkpD64MX/5Qao24OmCW1mjOea0AvjIvTGEho3MH29xJoL9LaNDZk0+ciRiksI+umb//BNqcz3VkCNlUOwCzBo0c2QJWlWu3eea1aQ5966H3i0S6FtSUF7S/WgRBv8v76+wAa+fWzC5v+6eivwhMcUIfd9m0pFg5n0kpiN/ipQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8nUt+OY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqU+wf424oVHRVEhA5EG6tW1V1nUZ3qtUC2BrHPIEEZwYp1V7jxLZEsr5Edz6bNudO7wQ1HmT+Infitv8IAaGln2yrxufnXxP1ycTVEHN8LTz/uKf4gcsHwUKInjZt68uq+rFXMN2Aw/VV3y3StEj16DOLtzU1o1KFOuVnXNsMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ucbpbd+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8nUt+OY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6967CC4CEE7;
-	Fri, 31 Oct 2025 14:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ucbpbd+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA37C4CEE7;
+	Fri, 31 Oct 2025 14:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919409;
-	bh=amPorH9HU/rYncgYvhdhzhhumF/W4YfBHxjpmVmh6hA=;
+	s=korg; t=1761919412;
+	bh=Bb/a+fmVqlWfkX4lzAVc5+c45RObKvifNukXdgZfEN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8nUt+OYRbbcRcKooZdCx3z+0ubAUpVBjRunC+uZTbk+tDympc13TjDuo7EMAtmEf
-	 j9bwEVHenDRWeSE2hBO3jF3d7igoHdR5KA30mEGzkwAuewvztB86ZV9VYClawnwAQM
-	 8hJjI/SxKYbWLLhxpdAOpZE6iQISuMOR0bpjbco8=
+	b=Ucbpbd+9NgJy3oM1iCVCacvO5MVdtOqQK/JKBvwzFmWSrcJA9iNLVPEn1fXmofz7Y
+	 aUkEe4g9MZne0cipDq6izrQHEne0odl6Xq8vngfynr0A0SQ7Tk5wENDZsHgBctn+5X
+	 9jKLyfvsEr845pyXrH65sK+JfIZKLjP9pTDv3oEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 01/40] net/sched: sch_qfq: Fix null-deref in agg_dequeue
-Date: Fri, 31 Oct 2025 15:00:54 +0100
-Message-ID: <20251031140043.977260604@linuxfoundation.org>
+	Richard Guy Briggs <rgb@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 02/40] audit: record fanotify event regardless of presence of rules
+Date: Fri, 31 Oct 2025 15:00:55 +0100
+Message-ID: <20251031140044.002039161@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -51,129 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Richard Guy Briggs <rgb@redhat.com>
 
-commit dd831ac8221e691e9e918585b1003c7071df0379 upstream.
+[ Upstream commit ce8370e2e62a903e18be7dd0e0be2eee079501e1 ]
 
-To prevent a potential crash in agg_dequeue (net/sched/sch_qfq.c)
-when cl->qdisc->ops->peek(cl->qdisc) returns NULL, we check the return
-value before using it, similar to the existing approach in sch_hfsc.c.
+When no audit rules are in place, fanotify event results are
+unconditionally dropped due to an explicit check for the existence of
+any audit rules.  Given this is a report from another security
+sub-system, allow it to be recorded regardless of the existence of any
+audit rules.
 
-To avoid code duplication, the following changes are made:
+To test, install and run the fapolicyd daemon with default config.  Then
+as an unprivileged user, create and run a very simple binary that should
+be denied.  Then check for an event with
+	ausearch -m FANOTIFY -ts recent
 
-1. Changed qdisc_warn_nonwc(include/net/pkt_sched.h) into a static
-inline function.
-
-2. Moved qdisc_peek_len from net/sched/sch_hfsc.c to
-include/net/pkt_sched.h so that sch_qfq can reuse it.
-
-3. Applied qdisc_peek_len in agg_dequeue to avoid crashing.
-
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250705212143.3982664-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://issues.redhat.com/browse/RHEL-9065
+Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_sched.h |   25 ++++++++++++++++++++++++-
- net/sched/sch_api.c     |   10 ----------
- net/sched/sch_hfsc.c    |   16 ----------------
- net/sched/sch_qfq.c     |    2 +-
- 4 files changed, 25 insertions(+), 28 deletions(-)
+ include/linux/audit.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -114,7 +114,6 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 					struct netlink_ext_ack *extack);
- void qdisc_put_rtab(struct qdisc_rate_table *tab);
- void qdisc_put_stab(struct qdisc_size_table *tab);
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc);
- bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
- 		     struct net_device *dev, struct netdev_queue *txq,
- 		     spinlock_t *root_lock, bool validate);
-@@ -290,4 +289,28 @@ static inline bool tc_qdisc_stats_dump(s
- 	return true;
- }
+diff --git a/include/linux/audit.h b/include/linux/audit.h
+index a394614ccd0b8..e3f06eba9c6e6 100644
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -527,7 +527,7 @@ static inline void audit_log_kern_module(const char *name)
  
-+static inline void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
-+{
-+	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
-+		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
-+			txt, qdisc->ops->id, qdisc->handle >> 16);
-+		qdisc->flags |= TCQ_F_WARN_NONWC;
-+	}
-+}
-+
-+static inline unsigned int qdisc_peek_len(struct Qdisc *sch)
-+{
-+	struct sk_buff *skb;
-+	unsigned int len;
-+
-+	skb = sch->ops->peek(sch);
-+	if (unlikely(skb == NULL)) {
-+		qdisc_warn_nonwc("qdisc_peek_len", sch);
-+		return 0;
-+	}
-+	len = qdisc_pkt_len(skb);
-+
-+	return len;
-+}
-+
- #endif
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -599,16 +599,6 @@ out:
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
- 
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
--{
--	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
--		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
--			txt, qdisc->ops->id, qdisc->handle >> 16);
--		qdisc->flags |= TCQ_F_WARN_NONWC;
--	}
--}
--EXPORT_SYMBOL(qdisc_warn_nonwc);
--
- static enum hrtimer_restart qdisc_watchdog(struct hrtimer *timer)
+ static inline void audit_fanotify(u32 response, struct fanotify_response_info_audit_rule *friar)
  {
- 	struct qdisc_watchdog *wd = container_of(timer, struct qdisc_watchdog,
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -835,22 +835,6 @@ update_vf(struct hfsc_class *cl, unsigne
- 	}
+-	if (!audit_dummy_context())
++	if (audit_enabled)
+ 		__audit_fanotify(response, friar);
  }
  
--static unsigned int
--qdisc_peek_len(struct Qdisc *sch)
--{
--	struct sk_buff *skb;
--	unsigned int len;
--
--	skb = sch->ops->peek(sch);
--	if (unlikely(skb == NULL)) {
--		qdisc_warn_nonwc("qdisc_peek_len", sch);
--		return 0;
--	}
--	len = qdisc_pkt_len(skb);
--
--	return len;
--}
--
- static void
- hfsc_adjust_levels(struct hfsc_class *cl)
- {
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -1002,7 +1002,7 @@ static struct sk_buff *agg_dequeue(struc
- 
- 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
- 		list_del_init(&cl->alist);
--	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
-+	else if (cl->deficit < qdisc_peek_len(cl->qdisc)) {
- 		cl->deficit += agg->lmax;
- 		list_move_tail(&cl->alist, &agg->active);
- 	}
+-- 
+2.51.0
+
 
 
