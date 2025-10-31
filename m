@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515AB3C17;
-	Fri, 31 Oct 2025 14:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2D91D5CC9;
+	Fri, 31 Oct 2025 14:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919404; cv=none; b=Z4playlJJSQyK5wPPAtjeK945XMZGuDtKL80lpcHI5WfTPrhgtJemJMMW+TipU4y9oRfsuHSdlYufrhjf7KLvyddj03/8+6WRKu9zR4o1RTVIowQkgNQhCVodhoR8jU2rBt1AG0+4F6OpSxb/4YTU1O6QXMAeLwhNvWVVLNe1VE=
+	t=1761919407; cv=none; b=iS796MMV0AF2pfEphJakcuIZPfuslqHtRQZBkD+tjv9pWP+edZj2G/METQLtr6cQs9kY3Ce0/NWHxEr/01FZGm66nmJKnYWxajBNAE3wA5gpO5w6g2xHiSONI9a5wvbpwYFxrMwBhMfRiukZPdpL9JaKSd2egzklx5Lp613EZm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919404; c=relaxed/simple;
-	bh=cnC0ZgFqPwBJ+vQaKuFKHT9m0exukPeRvmx6yyIZ49Y=;
+	s=arc-20240116; t=1761919407; c=relaxed/simple;
+	bh=7394YLpO3vI2xUpVdljSG1lr6BGthST5/2N5aOnQM6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJddnPDDdfLuJDVdZ2zUpH9im361psyseG3ZcLJR//yQTLVeZn8osjXH67TME6sJ+nVlHzanGHhFk5AuPAyD67kym49FLdjk12VAkiMNEXrsoz6kkwAdz66V6kScuo4HEFvv/B3VKYUqwZUw5GPhKD0+xZfJJgRmQZpECJFZkFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJHW13IM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEPB43AZQgKlQNRS/WNj2UVjmCnSDlpqDeLmiXPNxVXHJb3S5GwDw3L9aWzn2agADnLzuTUZeuPwV/Co6sendmaEZYIKs8FCsvrGteQ2ia9uxjnqrTxfgdadRHe+vBWEqEEqr4gem209dr4wvHm/Iq0MXiR+E8bkWy8ZeIAu67E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WueRW1mW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJHW13IM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8FBC4CEFD;
-	Fri, 31 Oct 2025 14:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WueRW1mW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3682C4CEE7;
+	Fri, 31 Oct 2025 14:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919404;
-	bh=cnC0ZgFqPwBJ+vQaKuFKHT9m0exukPeRvmx6yyIZ49Y=;
+	s=korg; t=1761919407;
+	bh=7394YLpO3vI2xUpVdljSG1lr6BGthST5/2N5aOnQM6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJHW13IMQ6Jw7bcTiJhw9Vct+HfiwfFVPs4VyCe99kGsFMIahMa8rkksHUbTyoZU1
-	 d6IFQD4jfcxVXvkqSyhyFfQ1UgmBKtk5Cy27Svs6UkVdsTuS59/kz2mRe0yD49KGy5
-	 wxl1MyPRMU+7Ya77cWtvIGMpdw3fKSUd41c68pIA=
+	b=WueRW1mWEdOEXE0l5pW5hxdgdY8Mch7fTLeygIGHIwmUbXXZFbMY8JDfeUp6HJdU4
+	 zOstJxo6k334oyYmDkKB842mYF53yMun5ey3ChXN87iewi8iJqBp3YtyhIpdXhQu5Y
+	 yqxktlYL/9IlCc6hdFCS2oSpHTbjV6aHSO7slrCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Yury Norov <yury.norov@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.6 29/32] bits: introduce fixed-type GENMASK_U*()
-Date: Fri, 31 Oct 2025 15:01:23 +0100
-Message-ID: <20251031140043.154280085@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 20/32] serial: sc16is7xx: reorder code to remove prototype declarations
+Date: Fri, 31 Oct 2025 15:01:14 +0100
+Message-ID: <20251031140042.925969560@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -54,114 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 19408200c094858d952a90bf4977733dc89a4df5 ]
+[ Upstream commit 2de8a1b46756b5a79d8447f99afdfe49e914225a ]
 
-Add GENMASK_TYPE() which generalizes __GENMASK() to support different
-types, and implement fixed-types versions of GENMASK() based on it.
-The fixed-type version allows more strict checks to the min/max values
-accepted, which is useful for defining registers like implemented by
-i915 and xe drivers with their REG_GENMASK*() macros.
+Move/reorder some functions to remove sc16is7xx_ier_set() and
+sc16is7xx_stop_tx() prototypes declarations.
 
-The strict checks rely on shift-count-overflow compiler check to fail
-the build if a number outside of the range allowed is passed.
-Example:
+No functional change.
 
-  #define FOO_MASK GENMASK_U32(33, 4)
+sc16is7xx_ier_set() was introduced in
+commit cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop").
 
-will generate a warning like:
-
-  include/linux/bits.h:51:27: error: right shift count >= width of type [-Werror=shift-count-overflow]
-     51 |               type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-        |                           ^~
-
-The result is casted to the corresponding fixed width type. For
-example, GENMASK_U8() returns an u8. Note that because of the C
-promotion rules, GENMASK_U8() and GENMASK_U16() will immediately be
-promoted to int if used in an expression. Regardless, the main goal is
-not to get the correct type, but rather to enforce more checks at
-compile time.
-
-While GENMASK_TYPE() is crafted to cover all variants, including the
-already existing GENMASK(), GENMASK_ULL() and GENMASK_U128(), for the
-moment, only use it for the newly introduced GENMASK_U*(). The
-consolidation will be done in a separate change.
-
-Co-developed-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Stable-dep-of: 2ba5772e530f ("gpio: idio-16: Define fixed direction of the GPIO lines")
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-16-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1c05bf6c0262 ("serial: sc16is7xx: remove useless enable of enhanced features")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bitops.h |    1 -
- include/linux/bits.h   |   30 ++++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c |   75 +++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 39 deletions(-)
 
---- a/include/linux/bitops.h
-+++ b/include/linux/bitops.h
-@@ -15,7 +15,6 @@
- #  define aligned_byte_mask(n) (~0xffUL << (BITS_PER_LONG - 8 - 8*(n)))
- #endif
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -355,9 +355,6 @@ static struct uart_driver sc16is7xx_uart
+ 	.nr		= SC16IS7XX_MAX_DEVS,
+ };
  
--#define BITS_PER_TYPE(type)	(sizeof(type) * BITS_PER_BYTE)
- #define BITS_TO_LONGS(nr)	__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(long))
- #define BITS_TO_U64(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u64))
- #define BITS_TO_U32(nr)		__KERNEL_DIV_ROUND_UP(nr, BITS_PER_TYPE(u32))
---- a/include/linux/bits.h
-+++ b/include/linux/bits.h
-@@ -11,6 +11,7 @@
- #define BIT_ULL_MASK(nr)	(ULL(1) << ((nr) % BITS_PER_LONG_LONG))
- #define BIT_ULL_WORD(nr)	((nr) / BITS_PER_LONG_LONG)
- #define BITS_PER_BYTE		8
-+#define BITS_PER_TYPE(type)	(sizeof(type) * BITS_PER_BYTE)
+-static void sc16is7xx_ier_set(struct uart_port *port, u8 bit);
+-static void sc16is7xx_stop_tx(struct uart_port *port);
+-
+ #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
  
- /*
-  * Create a contiguous bitmask starting at bit position @l and ending at
-@@ -19,11 +20,40 @@
-  */
- #if !defined(__ASSEMBLY__)
+ static u8 sc16is7xx_port_read(struct uart_port *port, u8 reg)
+@@ -415,6 +412,42 @@ static void sc16is7xx_power(struct uart_
+ 			      on ? 0 : SC16IS7XX_IER_SLEEP_BIT);
+ }
  
-+/*
-+ * Missing asm support
-+ *
-+ * GENMASK_U*() depend on BITS_PER_TYPE() which relies on sizeof(),
-+ * something not available in asm. Nevertheless, fixed width integers is a C
-+ * concept. Assembly code can rely on the long and long long versions instead.
-+ */
++static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
++{
++	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
 +
- #include <linux/build_bug.h>
-+#include <linux/overflow.h>
- #define GENMASK_INPUT_CHECK(h, l) \
- 	(BUILD_BUG_ON_ZERO(__builtin_choose_expr( \
- 		__is_constexpr((l) > (h)), (l) > (h), 0)))
- 
-+/*
-+ * Generate a mask for the specified type @t. Additional checks are made to
-+ * guarantee the value returned fits in that type, relying on
-+ * -Wshift-count-overflow compiler check to detect incompatible arguments.
-+ * For example, all these create build errors or warnings:
-+ *
-+ * - GENMASK(15, 20): wrong argument order
-+ * - GENMASK(72, 15): doesn't fit unsigned long
-+ * - GENMASK_U32(33, 15): doesn't fit in a u32
-+ */
-+#define GENMASK_TYPE(t, h, l)					\
-+	((t)(GENMASK_INPUT_CHECK(h, l) +			\
-+	     (type_max(t) << (l) &				\
-+	      type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
++	lockdep_assert_held_once(&port->lock);
 +
-+#define GENMASK_U8(h, l)	GENMASK_TYPE(u8, h, l)
-+#define GENMASK_U16(h, l)	GENMASK_TYPE(u16, h, l)
-+#define GENMASK_U32(h, l)	GENMASK_TYPE(u32, h, l)
-+#define GENMASK_U64(h, l)	GENMASK_TYPE(u64, h, l)
++	one->config.flags |= SC16IS7XX_RECONF_IER;
++	one->config.ier_mask |= bit;
++	one->config.ier_val &= ~bit;
++	kthread_queue_work(&s->kworker, &one->reg_work);
++}
 +
- #else /* defined(__ASSEMBLY__) */
++static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
++{
++	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
++
++	lockdep_assert_held_once(&port->lock);
++
++	one->config.flags |= SC16IS7XX_RECONF_IER;
++	one->config.ier_mask |= bit;
++	one->config.ier_val |= bit;
++	kthread_queue_work(&s->kworker, &one->reg_work);
++}
++
++static void sc16is7xx_stop_tx(struct uart_port *port)
++{
++	sc16is7xx_ier_clear(port, SC16IS7XX_IER_THRI_BIT);
++}
++
++static void sc16is7xx_stop_rx(struct uart_port *port)
++{
++	sc16is7xx_ier_clear(port, SC16IS7XX_IER_RDI_BIT);
++}
++
+ static const struct sc16is7xx_devtype sc16is74x_devtype = {
+ 	.name		= "SC16IS74X",
+ 	.nr_gpio	= 0,
+@@ -888,42 +921,6 @@ static void sc16is7xx_reg_proc(struct kt
+ 		sc16is7xx_reconf_rs485(&one->port);
+ }
  
- /*
+-static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
+-{
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+-
+-	lockdep_assert_held_once(&port->lock);
+-
+-	one->config.flags |= SC16IS7XX_RECONF_IER;
+-	one->config.ier_mask |= bit;
+-	one->config.ier_val &= ~bit;
+-	kthread_queue_work(&s->kworker, &one->reg_work);
+-}
+-
+-static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
+-{
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+-
+-	lockdep_assert_held_once(&port->lock);
+-
+-	one->config.flags |= SC16IS7XX_RECONF_IER;
+-	one->config.ier_mask |= bit;
+-	one->config.ier_val |= bit;
+-	kthread_queue_work(&s->kworker, &one->reg_work);
+-}
+-
+-static void sc16is7xx_stop_tx(struct uart_port *port)
+-{
+-	sc16is7xx_ier_clear(port, SC16IS7XX_IER_THRI_BIT);
+-}
+-
+-static void sc16is7xx_stop_rx(struct uart_port *port)
+-{
+-	sc16is7xx_ier_clear(port, SC16IS7XX_IER_RDI_BIT);
+-}
+-
+ static void sc16is7xx_ms_proc(struct kthread_work *ws)
+ {
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(ws, ms_work.work);
 
 
