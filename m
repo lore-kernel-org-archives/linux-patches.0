@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4693F34D387;
-	Fri, 31 Oct 2025 14:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460F334D387;
+	Fri, 31 Oct 2025 14:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919363; cv=none; b=UfoqtGIwQKJKpMQdYeM5fPYMB7aGvQSBZsRUoOLchCS+rtrAeQD5+4ovsuzSdhXm48J/AMlU9hDfB8mluwlOH1BN5sBCxuLZ4ebaDnxolKB70BOLCSA6ydIGVtPEUjHl5/8Pc2jNinXDfyNmLB2UtLSmNvrUxDCEoDp6hmDFxp0=
+	t=1761919366; cv=none; b=fU5s8tc46GIumHW0HgD0vNtrIRqwfJGaL3Bj7oHfg37rWFyejxbw4absrM8khvYvTo4C5LvR7NsXC4livq1sXLHm6m6DzGjJCHacEkVlVvBcvwQO46mGvdRnHXNUlD+1NknEr9C1Og4UuRjX2s/ITqZ2PO+LvFnyZCo3a/ymYy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919363; c=relaxed/simple;
-	bh=f+OUm0PDgDMWshYKAQMQoRLl3Y3XYlzfeVqdRNzGFvU=;
+	s=arc-20240116; t=1761919366; c=relaxed/simple;
+	bh=hfUsFQbJTK8m9W1rAKzDMhespLacA2bH8UP197yOQrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hf6aMmvwPMO+B+T0dRvuZh82rzr8BHoirICD8FgmqZLBC/Aq90U3saUPOZUPfX5m7Ww0XwxQVbNzYjzy+Tih0H72rRL5wNYDhvIk2xP7sIe5g8bmNCad77AahwXXEUj6r8LdigDhYwsAe0t2Rsm/Sa2lPTOFwzCIc0DgSHKGjnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMenpVke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WfvrAhcdzOgZFiv52p0KkTLFoIOqmCDs8igVGTaWymc3mT6uj2IK8f9jTDDMICHHgMZ4p8TnkH1jqyPUw0ZhpKnc/MXPQEdKIlUhLAW+lQ0U0qOvkaZeRzxg0C3ABNkCW3+HN21dJh+c5QJDFtGJXVhdHc4S6SYGG3ut5R1ZmQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbd/FQIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMenpVke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E55C4CEE7;
-	Fri, 31 Oct 2025 14:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbd/FQIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B88C4CEFB;
+	Fri, 31 Oct 2025 14:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919363;
-	bh=f+OUm0PDgDMWshYKAQMQoRLl3Y3XYlzfeVqdRNzGFvU=;
+	s=korg; t=1761919366;
+	bh=hfUsFQbJTK8m9W1rAKzDMhespLacA2bH8UP197yOQrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMenpVkeWnWx4G/b2GXj7LxbHEOIfCXdLRHj2XW4u1XddKpmyRX3//F+j1jm/CbgS
-	 94Z2MUerTrAT3kV/Pxw8P3FcUDGTmRcwOLfJPq3bb0VZOZe45leryBgrwAbi3gsGKO
-	 sxOAfEReVqNRV8UymmzJtwR744owaKczWT8apGx8=
+	b=Jbd/FQIr8/F9Ddidfy5TswyurzVwqextNlFBxRRwwPPAGnCBiyyF6zp0AA167m5jN
+	 URku7VeSAyGKfNRAqb7uxtC/cbM8rdCKClGU1FuryUj+MiNCDd6BWt2dgabROY/VPQ
+	 Jw1Uqxfglxr7ke3ioSA7xzGWDxuLODhQ9XWlzGU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 08/32] EDAC/mc_sysfs: Increase legacy channel support to 16
-Date: Fri, 31 Oct 2025 15:01:02 +0100
-Message-ID: <20251031140042.612942981@linuxfoundation.org>
+Subject: [PATCH 6.6 09/32] btrfs: zoned: return error from btrfs_zone_finish_endio()
+Date: Fri, 31 Oct 2025 15:01:03 +0100
+Message-ID: <20251031140042.638359394@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -51,87 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avadhut Naik <avadhut.naik@amd.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 6e1c2c6c2c40ce99e0d2633b212f43c702c1a002 ]
+[ Upstream commit 3c44cd3c79fcb38a86836dea6ff8fec322a9e68c ]
 
-Newer AMD systems can support up to 16 channels per EDAC "mc" device.
-These are detected by the EDAC module running on the device, and the
-current EDAC interface is appropriately enumerated.
+Now that btrfs_zone_finish_endio_workfn() is directly calling
+do_zone_finish() the only caller of btrfs_zone_finish_endio() is
+btrfs_finish_one_ordered().
 
-The legacy EDAC sysfs interface however, provides device attributes for
-channels 0 through 11 only. Consequently, the last four channels, 12
-through 15, will not be enumerated and will not be visible through the
-legacy sysfs interface.
+btrfs_finish_one_ordered() already has error handling in-place so
+btrfs_zone_finish_endio() can return an error if the block group lookup
+fails.
 
-Add additional device attributes to ensure that all 16 channels, if
-present, are enumerated by and visible through the legacy EDAC sysfs
-interface.
+Also as btrfs_zone_finish_endio() already checks for zoned filesystems and
+returns early, there's no need to do this in the caller.
 
-Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250916203242.1281036-1-avadhut.naik@amd.com
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_mc_sysfs.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ fs/btrfs/inode.c | 7 ++++---
+ fs/btrfs/zoned.c | 8 +++++---
+ fs/btrfs/zoned.h | 9 ++++++---
+ 3 files changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/edac/edac_mc_sysfs.c b/drivers/edac/edac_mc_sysfs.c
-index 15f63452a9bec..b01436d9ddaed 100644
---- a/drivers/edac/edac_mc_sysfs.c
-+++ b/drivers/edac/edac_mc_sysfs.c
-@@ -306,6 +306,14 @@ DEVICE_CHANNEL(ch10_dimm_label, S_IRUGO | S_IWUSR,
- 	channel_dimm_label_show, channel_dimm_label_store, 10);
- DEVICE_CHANNEL(ch11_dimm_label, S_IRUGO | S_IWUSR,
- 	channel_dimm_label_show, channel_dimm_label_store, 11);
-+DEVICE_CHANNEL(ch12_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 12);
-+DEVICE_CHANNEL(ch13_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 13);
-+DEVICE_CHANNEL(ch14_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 14);
-+DEVICE_CHANNEL(ch15_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 15);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index ee5ffeab85bb7..b1be3e0fe7282 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3051,9 +3051,10 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
+ 		goto out;
+ 	}
  
- /* Total possible dynamic DIMM Label attribute file table */
- static struct attribute *dynamic_csrow_dimm_attr[] = {
-@@ -321,6 +329,10 @@ static struct attribute *dynamic_csrow_dimm_attr[] = {
- 	&dev_attr_legacy_ch9_dimm_label.attr.attr,
- 	&dev_attr_legacy_ch10_dimm_label.attr.attr,
- 	&dev_attr_legacy_ch11_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch12_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch13_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch14_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch15_dimm_label.attr.attr,
- 	NULL
- };
+-	if (btrfs_is_zoned(fs_info))
+-		btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
+-					ordered_extent->disk_num_bytes);
++	ret = btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
++				      ordered_extent->disk_num_bytes);
++	if (ret)
++		goto out;
  
-@@ -349,6 +361,14 @@ DEVICE_CHANNEL(ch10_ce_count, S_IRUGO,
- 		   channel_ce_count_show, NULL, 10);
- DEVICE_CHANNEL(ch11_ce_count, S_IRUGO,
- 		   channel_ce_count_show, NULL, 11);
-+DEVICE_CHANNEL(ch12_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 12);
-+DEVICE_CHANNEL(ch13_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 13);
-+DEVICE_CHANNEL(ch14_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 14);
-+DEVICE_CHANNEL(ch15_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 15);
+ 	if (test_bit(BTRFS_ORDERED_TRUNCATED, &ordered_extent->flags)) {
+ 		truncated = true;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 3622ba1d8e09f..6e8b8c46ba18f 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2263,16 +2263,17 @@ bool btrfs_can_activate_zone(struct btrfs_fs_devices *fs_devices, u64 flags)
+ 	return ret;
+ }
  
- /* Total possible dynamic ce_count attribute file table */
- static struct attribute *dynamic_csrow_ce_count_attr[] = {
-@@ -364,6 +384,10 @@ static struct attribute *dynamic_csrow_ce_count_attr[] = {
- 	&dev_attr_legacy_ch9_ce_count.attr.attr,
- 	&dev_attr_legacy_ch10_ce_count.attr.attr,
- 	&dev_attr_legacy_ch11_ce_count.attr.attr,
-+	&dev_attr_legacy_ch12_ce_count.attr.attr,
-+	&dev_attr_legacy_ch13_ce_count.attr.attr,
-+	&dev_attr_legacy_ch14_ce_count.attr.attr,
-+	&dev_attr_legacy_ch15_ce_count.attr.attr,
- 	NULL
- };
+-void btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info, u64 logical, u64 length)
++int btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info, u64 logical, u64 length)
+ {
+ 	struct btrfs_block_group *block_group;
+ 	u64 min_alloc_bytes;
  
+ 	if (!btrfs_is_zoned(fs_info))
+-		return;
++		return 0;
+ 
+ 	block_group = btrfs_lookup_block_group(fs_info, logical);
+-	ASSERT(block_group);
++	if (WARN_ON_ONCE(!block_group))
++		return -ENOENT;
+ 
+ 	/* No MIXED_BG on zoned btrfs. */
+ 	if (block_group->flags & BTRFS_BLOCK_GROUP_DATA)
+@@ -2289,6 +2290,7 @@ void btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info, u64 logical, u64 len
+ 
+ out:
+ 	btrfs_put_block_group(block_group);
++	return 0;
+ }
+ 
+ static void btrfs_zone_finish_endio_workfn(struct work_struct *work)
+diff --git a/fs/btrfs/zoned.h b/fs/btrfs/zoned.h
+index 448955641d114..c18f31d3dc25f 100644
+--- a/fs/btrfs/zoned.h
++++ b/fs/btrfs/zoned.h
+@@ -71,7 +71,7 @@ int btrfs_sync_zone_write_pointer(struct btrfs_device *tgt_dev, u64 logical,
+ bool btrfs_zone_activate(struct btrfs_block_group *block_group);
+ int btrfs_zone_finish(struct btrfs_block_group *block_group);
+ bool btrfs_can_activate_zone(struct btrfs_fs_devices *fs_devices, u64 flags);
+-void btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info, u64 logical,
++int btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info, u64 logical,
+ 			     u64 length);
+ void btrfs_schedule_zone_finish_bg(struct btrfs_block_group *bg,
+ 				   struct extent_buffer *eb);
+@@ -227,8 +227,11 @@ static inline bool btrfs_can_activate_zone(struct btrfs_fs_devices *fs_devices,
+ 	return true;
+ }
+ 
+-static inline void btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info,
+-					   u64 logical, u64 length) { }
++static inline int btrfs_zone_finish_endio(struct btrfs_fs_info *fs_info,
++					   u64 logical, u64 length)
++{
++	return 0;
++}
+ 
+ static inline void btrfs_schedule_zone_finish_bg(struct btrfs_block_group *bg,
+ 						 struct extent_buffer *eb) { }
 -- 
 2.51.0
 
