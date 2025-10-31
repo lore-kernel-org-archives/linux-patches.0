@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BA8258ED1;
-	Fri, 31 Oct 2025 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD3721FF25;
+	Fri, 31 Oct 2025 14:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919445; cv=none; b=DRC8Y2UNwAftsSl0iPH8OXV5CvOgL0af0fgja4KXNPJ5Qo/wqZt7SuEBqFn+yB1j5WJHbHR7aqx8EQzmcT9w03f1pJZBro4q5+WrEe2VooIX7bBnTPJbftC0eTmpbjySrbohhHkHHmJNB3NCLiCwwxXOM9cr6+MsLuQVEM7Y51w=
+	t=1761919448; cv=none; b=MYJhFaSIuNcjgRA7VGOpeZwJoPe7GfFLKXxvfQbtCNMWFkqiPrrzY3vp85iCH2XMgl8ksLg+OZ6YeF19/+O9itL7slwaWeEpbSWoxTt2p9WuBaC98GAnMF0c3tS1uUQjYkNC9WJWX3cOI74+PZng4sWnGGMpF/3GAYKfu1xn57A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919445; c=relaxed/simple;
-	bh=r3T2/+xOsxyTEypA2Pw9Clw3x3Hda/tU0JuXkGGspBs=;
+	s=arc-20240116; t=1761919448; c=relaxed/simple;
+	bh=e/UGmq2FYKEPDx1hYGZdFZxJmYDnNp4hY7DbXGET4zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEc1PDOJQ+ZGKMe8lmWAMnkx7WCg/Qj/i8tHPXTl5DYREUT7FGv74Kf12rurElIWjC+yrpXQWHkIWfN3aYvsA4v67/hyqIuXeM5q23JN3PI/6+grLv76jBYQ46bk5K1hKls1x04BdrXXImUTRvJtAxZqiuNnxHwH8Qkh6UMhhpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+E7K81C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MM6zXAR0Z+ajo7jVjV3n5mO/7+Bn83eLhQbWLJz+2YyCohdZgK0ft7ngDFtMtFWWdvdXW/APBLvcYxERRbKFEzpG1Rr/2V8+C7YRoh/msSj0EYaARivUrQ2krpYqT9ZZw1M+xnDlEb5VGn90h1ggzMLLzuDiTdVx1ww22SumqUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtfzJLLi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+E7K81C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D0EC4CEE7;
-	Fri, 31 Oct 2025 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtfzJLLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CADF9C4CEF8;
+	Fri, 31 Oct 2025 14:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919445;
-	bh=r3T2/+xOsxyTEypA2Pw9Clw3x3Hda/tU0JuXkGGspBs=;
+	s=korg; t=1761919448;
+	bh=e/UGmq2FYKEPDx1hYGZdFZxJmYDnNp4hY7DbXGET4zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+E7K81C0BiUhI1Ca8qkv7xGoUeWHXdZByOcWFZ0X1u9/o2hupJAHhAHuAHoPr2ic
-	 p0C5FoXfDe2YLB76G5r7vVggmx/Q44p7bMsBtpgdt1TjGoKj1aWKmPagZ9kNmRoDAj
-	 xEk4hURm4NJMzr1WGuRaa/VAwgjdBjYSFM7Onhjg=
+	b=KtfzJLLiliuwAoUUaBCc78eBANibN0eCfdFc2viRcYf0bA8PJxbPMHGVkdCeWyzim
+	 xgmPQhr8h3gIIZt3QkBE9LCgIjmpfHmMtK1OAbB6maGNMweXxq64i8UJXDVRzil82Q
+	 5CjSRfbqKx7KbfSAlHno040OOpprgaYYLUqcy0EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 21/40] btrfs: use smp_mb__after_atomic() when forcing COW in create_pending_snapshot()
-Date: Fri, 31 Oct 2025 15:01:14 +0100
-Message-ID: <20251031140044.519956056@linuxfoundation.org>
+Subject: [PATCH 6.12 22/40] sched_ext: Make qmap dump operation non-destructive
+Date: Fri, 31 Oct 2025 15:01:15 +0100
+Message-ID: <20251031140044.547031513@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -51,55 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 45c222468d33202c07c41c113301a4b9c8451b8f ]
+[ Upstream commit d452972858e5cfa4262320ab74fe8f016460b96f ]
 
-After setting the BTRFS_ROOT_FORCE_COW flag on the root we are doing a
-full write barrier, smp_wmb(), but we don't need to, all we need is a
-smp_mb__after_atomic().  The use of the smp_wmb() is from the old days
-when we didn't use a bit and used instead an int field in the root to
-signal if cow is forced. After the int field was changed to a bit in
-the root's state (flags field), we forgot to update the memory barrier
-in create_pending_snapshot() to smp_mb__after_atomic(), but we did the
-change in commit_fs_roots() after clearing BTRFS_ROOT_FORCE_COW. That
-happened in commit 27cdeb7096b8 ("Btrfs: use bitfield instead of integer
-data type for the some variants in btrfs_root"). On the reader side, in
-should_cow_block(), we also use the counterpart smp_mb__before_atomic()
-which generates further confusion.
+The qmap dump operation was destructively consuming queue entries while
+displaying them. As dump can be triggered anytime, this can easily lead to
+stalls. Add a temporary dump_store queue and modify the dump logic to pop
+entries, display them, and then restore them back to the original queue.
+This allows dump operations to be performed without affecting the
+scheduler's queue state.
 
-So change the smp_wmb() to smp_mb__after_atomic(). In fact we don't
-even need any barrier at all since create_pending_snapshot() is called
-in the critical section of a transaction commit and therefore no one
-can concurrently join/attach the transaction, or start a new one, until
-the transaction is unblocked. By the time someone starts a new transaction
-and enters should_cow_block(), a lot of implicit memory barriers already
-took place by having acquired several locks such as fs_info->trans_lock
-and extent buffer locks on the root node at least. Nevertlheless, for
-consistency use smp_mb__after_atomic() after setting the force cow bit
-in create_pending_snapshot().
+Note that if racing against new enqueues during dump, ordering can get
+mixed up, but this is acceptable for debugging purposes.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/transaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/sched_ext/scx_qmap.bpf.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 1a029392eac52..f4dda72491feb 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1810,7 +1810,7 @@ static noinline int create_pending_snapshot(struct btrfs_trans_handle *trans,
- 	}
- 	/* see comments in should_cow_block() */
- 	set_bit(BTRFS_ROOT_FORCE_COW, &root->state);
--	smp_wmb();
-+	smp_mb__after_atomic();
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 5d1f880d1149e..e952f525599bd 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -56,7 +56,8 @@ struct qmap {
+   queue1 SEC(".maps"),
+   queue2 SEC(".maps"),
+   queue3 SEC(".maps"),
+-  queue4 SEC(".maps");
++  queue4 SEC(".maps"),
++  dump_store SEC(".maps");
  
- 	btrfs_set_root_node(new_root_item, tmp);
- 	/* record when the snapshot was created in key.offset */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
+@@ -578,11 +579,26 @@ void BPF_STRUCT_OPS(qmap_dump, struct scx_dump_ctx *dctx)
+ 			return;
+ 
+ 		scx_bpf_dump("QMAP FIFO[%d]:", i);
++
++		/*
++		 * Dump can be invoked anytime and there is no way to iterate in
++		 * a non-destructive way. Pop and store in dump_store and then
++		 * restore afterwards. If racing against new enqueues, ordering
++		 * can get mixed up.
++		 */
+ 		bpf_repeat(4096) {
+ 			if (bpf_map_pop_elem(fifo, &pid))
+ 				break;
++			bpf_map_push_elem(&dump_store, &pid, 0);
+ 			scx_bpf_dump(" %d", pid);
+ 		}
++
++		bpf_repeat(4096) {
++			if (bpf_map_pop_elem(&dump_store, &pid))
++				break;
++			bpf_map_push_elem(fifo, &pid, 0);
++		}
++
+ 		scx_bpf_dump("\n");
+ 	}
+ }
 -- 
 2.51.0
 
