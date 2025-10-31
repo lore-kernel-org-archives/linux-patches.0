@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC6725DAEA;
-	Fri, 31 Oct 2025 14:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6376621FF25;
+	Fri, 31 Oct 2025 14:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919468; cv=none; b=VZFzDd6Rb8oIVS2kgX+WjF22QFe0EoR51jM8q5F3SFzzej+BBpLpB6eYYa4faQ0OKJRUAUQU9jca1ovoUC24neY9BLqNDsqYlGf4RXrvp4R1jmeX13wz0RDXmkM+DA3EatcVuZw6NLLF0f5jEhN9a30F97G4AkM+Eg+s7lITXgk=
+	t=1761919471; cv=none; b=qmFJQseCKvcnNRhpU9uaKiJ9qnJZsdIw90sCY/3ECu3AgRiEvtUKc4HkLosF6mUExX9qhZ3h/+PS9R/HSgeFVskWHGmBqDsxysYKqFBUE+3DkPV9SLzLpnaL44CJuwMQXxLSEicHYp/wl/J183U/p8xF1OQkCGIIVHfqNNgIZoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919468; c=relaxed/simple;
-	bh=GODqVgLhNSKYcSLUpOUpl/v8rHUq7Cwx2aMtofoOC64=;
+	s=arc-20240116; t=1761919471; c=relaxed/simple;
+	bh=vIr4F+QjOzmgH5Om6mHmqYP+qFPGwJKNzSQ2c/il2xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXZQj5aJkNNH4Vji+7+tXF3TL5caQhiUM3CU86Uhx9DOrUE4pMkfegpsCCJqL7w7Ra/6HM2W0QwQKh61zfyASF967PaDzZWVTFt27XRUlc1y8MjjlkRnC89AbBYSv5XJwpL1xZFg7BJB9YCfiaHOFYqVBRU0k5+AiuEkDqag2jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuF2Bk1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VhRfw3QIC0+Aal7qN0lDBTLzXc+rcjr6ctbK1sNGYvPnX3zvVJdNXQw/rsTYmbycHYztV2wHW9smquNxGf46Dh5XTUUVUbdc70pTFpsdC+I4snwN97Aw2LZG2Mg8UB3/5S86AMlvHXs6+PsD6hFDqOHVbAdm5V00SeO/cL0kagI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PglCGvKx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuF2Bk1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21EEC4CEE7;
-	Fri, 31 Oct 2025 14:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PglCGvKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6FDC4CEE7;
+	Fri, 31 Oct 2025 14:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919468;
-	bh=GODqVgLhNSKYcSLUpOUpl/v8rHUq7Cwx2aMtofoOC64=;
+	s=korg; t=1761919471;
+	bh=vIr4F+QjOzmgH5Om6mHmqYP+qFPGwJKNzSQ2c/il2xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuF2Bk1YTHE4wqb0ZS06IY8+iaybIS0hlvqNUYPxXrsdBxKClyUidruvpamjP9Fvi
-	 f8sxiMPSq8iwty4byHDFCN+JQir5t0YkG0+yw1V2mY5IUzPrxwMfbji5n127iYqO58
-	 0wMkWyxw3XAZhoTE9dgc9L4wU3CNv40b9Gg5HRpA=
+	b=PglCGvKxjicKFFtOGerqk+bCmVxP4JYeoj3sadn+STjnhs6UgQkxzEzMDuzYaGL05
+	 NxRn0L4VQTV4bdNyTXRjm+peca+lSlFk07xcaiuOnBcYSRcur6MkDMZXOLRRLKVm2N
+	 IL1Z6P0Ugo9BjiwJkAHT/3qcso1CI0aXARGSwmnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 11/40] cpuset: Use new excpus for nocpu error check when enabling root partition
-Date: Fri, 31 Oct 2025 15:01:04 +0100
-Message-ID: <20251031140044.218130016@linuxfoundation.org>
+	Alexander Wetzel <Alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 29/40] wifi: cfg80211: Add missing lock in cfg80211_check_and_end_cac()
+Date: Fri, 31 Oct 2025 15:01:22 +0100
+Message-ID: <20251031140044.724987109@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -52,46 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Alexander Wetzel <Alexander@wetzel-home.de>
 
-[ Upstream commit 59d5de3655698679ad8fd2cc82228de4679c4263 ]
+[ Upstream commit 2c5dee15239f3f3e31aa5c8808f18996c039e2c1 ]
 
-A previous patch fixed a bug where new_prs should be assigned before
-checking housekeeping conflicts. This patch addresses another potential
-issue: the nocpu error check currently uses the xcpus which is not updated.
-Although no issue has been observed so far, the check should be performed
-using the new effective exclusive cpus.
+Callers of wdev_chandef() must hold the wiphy mutex.
 
-The comment has been removed because the function returns an error if
-nocpu checking fails, which is unrelated to the parent.
+But the worker cfg80211_propagate_cac_done_wk() never takes the lock.
+Which triggers the warning below with the mesh_peer_connected_dfs
+test from hostapd and not (yet) released mac80211 code changes:
 
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+WARNING: CPU: 0 PID: 495 at net/wireless/chan.c:1552 wdev_chandef+0x60/0x165
+Modules linked in:
+CPU: 0 UID: 0 PID: 495 Comm: kworker/u4:2 Not tainted 6.14.0-rc5-wt-g03960e6f9d47 #33 13c287eeabfe1efea01c0bcc863723ab082e17cf
+Workqueue: cfg80211 cfg80211_propagate_cac_done_wk
+Stack:
+ 00000000 00000001 ffffff00 6093267c
+ 00000000 6002ec30 6d577c50 60037608
+ 00000000 67e8d108 6063717b 00000000
+Call Trace:
+ [<6002ec30>] ? _printk+0x0/0x98
+ [<6003c2b3>] show_stack+0x10e/0x11a
+ [<6002ec30>] ? _printk+0x0/0x98
+ [<60037608>] dump_stack_lvl+0x71/0xb8
+ [<6063717b>] ? wdev_chandef+0x60/0x165
+ [<6003766d>] dump_stack+0x1e/0x20
+ [<6005d1b7>] __warn+0x101/0x20f
+ [<6005d3a8>] warn_slowpath_fmt+0xe3/0x15d
+ [<600b0c5c>] ? mark_lock.part.0+0x0/0x4ec
+ [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
+ [<600b11a2>] ? mark_held_locks+0x5a/0x6e
+ [<6005d2c5>] ? warn_slowpath_fmt+0x0/0x15d
+ [<60052e53>] ? unblock_signals+0x3a/0xe7
+ [<60052f2d>] ? um_set_signals+0x2d/0x43
+ [<60751191>] ? __this_cpu_preempt_check+0x0/0x16
+ [<607508b2>] ? lock_is_held_type+0x207/0x21f
+ [<6063717b>] wdev_chandef+0x60/0x165
+ [<605f89b4>] regulatory_propagate_dfs_state+0x247/0x43f
+ [<60052f00>] ? um_set_signals+0x0/0x43
+ [<605e6bfd>] cfg80211_propagate_cac_done_wk+0x3a/0x4a
+ [<6007e460>] process_scheduled_works+0x3bc/0x60e
+ [<6007d0ec>] ? move_linked_works+0x4d/0x81
+ [<6007d120>] ? assign_work+0x0/0xaa
+ [<6007f81f>] worker_thread+0x220/0x2dc
+ [<600786ef>] ? set_pf_worker+0x0/0x57
+ [<60087c96>] ? to_kthread+0x0/0x43
+ [<6008ab3c>] kthread+0x2d3/0x2e2
+ [<6007f5ff>] ? worker_thread+0x0/0x2dc
+ [<6006c05b>] ? calculate_sigpending+0x0/0x56
+ [<6003b37d>] new_thread_handler+0x4a/0x64
+irq event stamp: 614611
+hardirqs last  enabled at (614621): [<00000000600bc96b>] __up_console_sem+0x82/0xaf
+hardirqs last disabled at (614630): [<00000000600bc92c>] __up_console_sem+0x43/0xaf
+softirqs last  enabled at (614268): [<00000000606c55c6>] __ieee80211_wake_queue+0x933/0x985
+softirqs last disabled at (614266): [<00000000606c52d6>] __ieee80211_wake_queue+0x643/0x985
+
+Fixes: 26ec17a1dc5e ("cfg80211: Fix radar event during another phy CAC")
+Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
+Link: https://patch.msgid.link/20250717162547.94582-1-Alexander@wetzel-home.de
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ The author recommends that when porting to older kernels, we should use wiphy_lock()
+and wiphy_unlock() instead of guard(). This tip is mentioned in the link:
+https://patch.msgid.link/20250717162547.94582-1-Alexander@wetzel-home.de. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/wireless/reg.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 25f9565f798d4..13eb986172499 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1679,11 +1679,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		if (prstate_housekeeping_conflict(new_prs, xcpus))
- 			return PERR_HKEEPING;
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -4234,6 +4234,8 @@ static void cfg80211_check_and_end_cac(s
+ 	struct wireless_dev *wdev;
+ 	unsigned int link_id;
  
--		/*
--		 * A parent can be left with no CPU as long as there is no
--		 * task directly associated with the parent partition.
--		 */
--		if (nocpu)
-+		if (tasks_nocpu_error(parent, cs, xcpus))
- 			return PERR_NOCPUS;
++	wiphy_lock(&rdev->wiphy);
++
+ 	/* If we finished CAC or received radar, we should end any
+ 	 * CAC running on the same channels.
+ 	 * the check !cfg80211_chandef_dfs_usable contain 2 options:
+@@ -4258,6 +4260,8 @@ static void cfg80211_check_and_end_cac(s
+ 				rdev_end_cac(rdev, wdev->netdev, link_id);
+ 		}
+ 	}
++
++	wiphy_unlock(&rdev->wiphy);
+ }
  
- 		deleting = cpumask_and(tmp->delmask, xcpus, parent->effective_xcpus);
--- 
-2.51.0
-
+ void regulatory_propagate_dfs_state(struct wiphy *wiphy,
 
 
