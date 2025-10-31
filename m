@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9013126AC;
-	Fri, 31 Oct 2025 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E8F32C936;
+	Fri, 31 Oct 2025 14:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919454; cv=none; b=iTnTI9Q/9KXayXokpr4Sr4VhHIusP9FXrTgmt50m2V6LZJXdHugY+SXimPlskfAfvnEgmaZ2LbBcnPWQFvBfwqlTZYOjrT1wsm9Yrwdj7lYKMnvv3QH/lP5vW/Fy1kCQsxAfzNaxUSTNC6SEx60tKWtKpRTxCQmz8Zux3BRKgIQ=
+	t=1761919457; cv=none; b=QzupwiJnjLmxcg7iJXOTzhY6AeeumW7sANJxKwJCEIdkpORmwuE3GJLPjwb3Qcbppq9hNxx30Fr6C/CTyGby/PibPyNnnA051rRnv/r96oyhdZ7hcw0QowwM6mjwvMcx8Mg08AmLV9MxdYRCkOmTkJRNkFxFpK1WAOsPK32WH+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919454; c=relaxed/simple;
-	bh=uGngxyuA+e3YwxSd4Z6MPXf47/0UQGl2/qK/Vz9m+do=;
+	s=arc-20240116; t=1761919457; c=relaxed/simple;
+	bh=d3t1QroaTh8CJ4LRpPgRqdcrcQ9vf4d5r8tjPp9WjV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bp1p0ve9jISjutTqANE8jFGVipyvEqgPmZyxHLH7P4v3ke+AKuPgOsm+Ngnf3uCnPcB4OGuLTPjgPEGceMILYEG9atojfcqy1SrIgiSkAxGTLtfnluRb7lGJh/sAcLY7vfwuCK6Zi0EkXEG5QjicDhYSjHFAKEzgPvDrDCbAkbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSbeq9vm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoAFl/ByppBO24UQmV1ETvRZdyBnycOH9xMl70jwpy3yyid1QaSHdTdlDt8UZ8mt+K0QBboUfl7lLARv34qOkcNuceYOk/PC8gfk9YsvY6AwDGae5m8MJfq9RcEbamulYwPihNZh4GT8Nb081Kd51WWSX2khwmUN5Utpn+XzOHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tv1K6I4s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSbeq9vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A502C4CEE7;
-	Fri, 31 Oct 2025 14:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tv1K6I4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7F5C4CEE7;
+	Fri, 31 Oct 2025 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919454;
-	bh=uGngxyuA+e3YwxSd4Z6MPXf47/0UQGl2/qK/Vz9m+do=;
+	s=korg; t=1761919456;
+	bh=d3t1QroaTh8CJ4LRpPgRqdcrcQ9vf4d5r8tjPp9WjV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZSbeq9vmhA/X708YmdImZcwj/X7pNlgFGBVIyXZYFmYfEj9UANaR22yOKFLVShLvt
-	 hxEzGU3uUOkUpi8jHZOUg5zZDhzRWWZIvaHVlNYHa6Mk9epGJl6qdlSRD79d8fcc0r
-	 5vZSh2rZ4GhlGt2XOwd2cO5R//9VEN2KOX+PGUoM=
+	b=Tv1K6I4suyp/+8/8zryiYmiGCKLmDGODrZ9h1yVKvAx0r6Kr0hCgJ4eY4YCJdnpd6
+	 ACcNMUyCWBu11MC56n3GEwfFEz1Qi3GXu6FIWL8p7XtwHF9/99faejw5bu1YI8JSIX
+	 rV9IJ3w1rQSt9OjPSza5unYpMCSCDpGiuo5KEXnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixu Liu <zhixu.liu@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andreas Radke <andreas.radke@mailbox.org>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 6.12 24/40] docs: kdoc: handle the obsolescensce of docutils.ErrorString()
-Date: Fri, 31 Oct 2025 15:01:17 +0100
-Message-ID: <20251031140044.596816599@linuxfoundation.org>
+	Matthieu Baerts <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 25/40] selftests: mptcp: disable add_addr retrans in endpoint_tests
+Date: Fri, 31 Oct 2025 15:01:18 +0100
+Message-ID: <20251031140044.623816103@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -52,110 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Corbet <corbet@lwn.net>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-commit 00d95fcc4dee66dfb6980de6f2973b32f973a1eb upstream.
+[ Upstream commit f92199f551e617fae028c5c5905ddd63e3616e18 ]
 
-The ErrorString() and SafeString() docutils functions were helpers meant to
-ease the handling of encodings during the Python 3 transition.  There is no
-real need for them after Python 3.6, and docutils 0.22 removes them,
-breaking the docs build
+To prevent test instability in the "delete re-add signal" test caused by
+ADD_ADDR retransmissions, disable retransmissions for this test by setting
+net.mptcp.add_addr_timeout to 0.
 
-Handle this by just injecting our own one-liner version of ErrorString(),
-and removing the sole SafeString() call entirely.
-
-Reported-by: Zhixu Liu <zhixu.liu@gmail.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <87ldmnv2pi.fsf@trenco.lwn.net>
-[ Salvatore Bonaccorso: Backport to v6.17.y for context changes in
-  Documentation/sphinx/kernel_include.py with major refactorings for the v6.18
-  development cycle. Backport ErrorString definition as well to
-  Documentation/sphinx/kernel_abi.py file for 6.12.y where it is imported
-  from docutils before the faccc0ec64e1 ("docs: sphinx/kernel_abi: adjust
-  coding style") change. ]
-Suggested-by: Andreas Radke <andreas.radke@mailbox.org>
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Suggested-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-6-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c3496c052ac3 ("selftests: mptcp: join: mark 'delete re-add signal' as skipped if not supported")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sphinx/kernel_abi.py          |    4 +++-
- Documentation/sphinx/kernel_feat.py         |    4 +++-
- Documentation/sphinx/kernel_include.py      |    6 ++++--
- Documentation/sphinx/maintainers_include.py |    4 +++-
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/sphinx/kernel_abi.py
-+++ b/Documentation/sphinx/kernel_abi.py
-@@ -42,9 +42,11 @@ import kernellog
- from docutils import nodes, statemachine
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
--from docutils.utils.error_reporting import ErrorString
- from sphinx.util.docutils import switch_source_input
- 
-+def ErrorString(exc):  # Shamelessly stolen from docutils
-+    return f'{exc.__class__.__name}: {exc}'
-+
- __version__  = '1.0'
- 
- def setup(app):
---- a/Documentation/sphinx/kernel_feat.py
-+++ b/Documentation/sphinx/kernel_feat.py
-@@ -40,9 +40,11 @@ import sys
- from docutils import nodes, statemachine
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
--from docutils.utils.error_reporting import ErrorString
- from sphinx.util.docutils import switch_source_input
- 
-+def ErrorString(exc):  # Shamelessly stolen from docutils
-+    return f'{exc.__class__.__name}: {exc}'
-+
- __version__  = '1.0'
- 
- def setup(app):
---- a/Documentation/sphinx/kernel_include.py
-+++ b/Documentation/sphinx/kernel_include.py
-@@ -34,13 +34,15 @@ u"""
- import os.path
- 
- from docutils import io, nodes, statemachine
--from docutils.utils.error_reporting import SafeString, ErrorString
- from docutils.parsers.rst import directives
- from docutils.parsers.rst.directives.body import CodeBlock, NumberLines
- from docutils.parsers.rst.directives.misc import Include
- 
- __version__  = '1.0'
- 
-+def ErrorString(exc):  # Shamelessly stolen from docutils
-+    return f'{exc.__class__.__name}: {exc}'
-+
- # ==============================================================================
- def setup(app):
- # ==============================================================================
-@@ -111,7 +113,7 @@ class KernelInclude(Include):
-             raise self.severe('Problems with "%s" directive path:\n'
-                               'Cannot encode input file path "%s" '
-                               '(wrong locale?).' %
--                              (self.name, SafeString(path)))
-+                              (self.name, path))
-         except IOError as error:
-             raise self.severe('Problems with "%s" directive path:\n%s.' %
-                       (self.name, ErrorString(error)))
---- a/Documentation/sphinx/maintainers_include.py
-+++ b/Documentation/sphinx/maintainers_include.py
-@@ -22,10 +22,12 @@ import re
- import os.path
- 
- from docutils import statemachine
--from docutils.utils.error_reporting import ErrorString
- from docutils.parsers.rst import Directive
- from docutils.parsers.rst.directives.misc import Include
- 
-+def ErrorString(exc):  # Shamelessly stolen from docutils
-+    return f'{exc.__class__.__name}: {exc}'
-+
- __version__  = '1.0'
- 
- def setup(app):
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3824,6 +3824,7 @@ endpoint_tests()
+ 	# remove and re-add
+ 	if reset_with_events "delete re-add signal" &&
+ 	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=0
+ 		pm_nl_set_limits $ns1 0 3
+ 		pm_nl_set_limits $ns2 3 3
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 id 1 flags signal
 
 
