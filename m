@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E43F2459F8;
-	Fri, 31 Oct 2025 14:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C4D34B43A;
+	Fri, 31 Oct 2025 14:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919532; cv=none; b=W5Vymr/OH4PUydVFeyx4dBp6sU2A1RcQk60lOXWstxEv9YhFP/8h8uuceCS9pEfY2UD6mCjY0qD1i9HBVwjJw1FYYmjHTgT5JwMNuC5aFYNv4BPwV5a1Jm6OWOO+TRn8ZucJ+UCVeAeRqyRLILIBRVH7LTZYOe1pGX+7t/mugj0=
+	t=1761919535; cv=none; b=hupiV5R7J1H12oq/4eim9JqWfaCqJ06EUTa1OSNyWs1h3/f5MEg0TJxFNqSkrLTv0g1PQim93YxhMLxj/FbXRJeEGasIJhVtroO40C4xKQ0+QkF01BK+UKedkoDTE+QH8W+wXYZEgHNTEsmY9sAXTIP7FfZgSdF9NTNKxPn6pf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919532; c=relaxed/simple;
-	bh=xxRoeE8YJSVVBrwa0V9+t6L1gDqt2nNklx0OY1/uIxQ=;
+	s=arc-20240116; t=1761919535; c=relaxed/simple;
+	bh=g7n11iNOClODfrqU6IrBuI2wYTwKpcwJC8SmAlQH6x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RarOJDfvbo22MvBhGCpOL5xpGkhBPbIulRZZcx3OCsa44y07OZ0g27hRYjx5DzCOWZeA7Tb7sIlANu5yqSQUkhvTo+uNsn7adLH7C3g1xRLUq6Jd8YXuG3KKWEr2DSiU3Keq9OezUZaoWJkapdTKCuin3+15i08ljSXkiJg6KvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiDz0VJY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZtrTK45npM01G1dg+7Hn+nbhrFOdeSw6uiyqzszyXKoHYHasRaxaruWJg2Jk7rPajqJeyoQRZ+P/M9yhKauI7novM8vXtPIh5DVAEgdTuhTp0G0SDMTxBpV+3ofVjS8Mx0GySC+hK/blZjI7OIVI3QNgNGP+KsFxQnIiUdNzc0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OA0UgyO3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiDz0VJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4658C4CEFB;
-	Fri, 31 Oct 2025 14:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OA0UgyO3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE22C4CEFD;
+	Fri, 31 Oct 2025 14:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919532;
-	bh=xxRoeE8YJSVVBrwa0V9+t6L1gDqt2nNklx0OY1/uIxQ=;
+	s=korg; t=1761919535;
+	bh=g7n11iNOClODfrqU6IrBuI2wYTwKpcwJC8SmAlQH6x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiDz0VJY+x2ZXBGuJZn2QnGpI7BV+L90S0FqPfvutBdzp74n3evQ0jIO9mp2yUNGH
-	 BF7W6N12kLSwRH2PlFrjVn5f91vKXgo6hsEp82HaLol0oi/KzNIpmwNNmgp5kOtlKE
-	 sOMp/ebi5DrpqJ/bFQGnGpgVjdLXfYeWz7X/WB+I=
+	b=OA0UgyO3bsXcuaEwCm8pvYVBAWaJWApWx2dQiEgXwdfNnPrDQTfrPpkotLpnUOUyb
+	 bjysCgD/uirkBisBQy5u0Nb1gjEERC+2jUhTEu7zekHzxtO6gP2ULjLSpiHyLirgB5
+	 n6ay5gQF97fvIRJuhZ42XuTCb4n9UnESwkBofRCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Kyle Manna <kyle@kylemanna.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 10/35] audit: record fanotify event regardless of presence of rules
-Date: Fri, 31 Oct 2025 15:01:18 +0100
-Message-ID: <20251031140043.804680603@linuxfoundation.org>
+Subject: [PATCH 6.17 11/35] EDAC/ie31200: Add two more Intel Alder Lake-S SoCs for EDAC support
+Date: Fri, 31 Oct 2025 15:01:19 +0100
+Message-ID: <20251031140043.827540695@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
 References: <20251031140043.564670400@linuxfoundation.org>
@@ -45,48 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Guy Briggs <rgb@redhat.com>
+From: Kyle Manna <kyle@kylemanna.com>
 
-[ Upstream commit ce8370e2e62a903e18be7dd0e0be2eee079501e1 ]
+[ Upstream commit 71b69f817e91b588030d7d47ddbdc4857a92eb4e ]
 
-When no audit rules are in place, fanotify event results are
-unconditionally dropped due to an explicit check for the existence of
-any audit rules.  Given this is a report from another security
-sub-system, allow it to be recorded regardless of the existence of any
-audit rules.
+Host Device IDs (DID0) correspond to:
+* Intel Core i7-12700K
+* Intel Core i5-12600K
 
-To test, install and run the fapolicyd daemon with default config.  Then
-as an unprivileged user, create and run a very simple binary that should
-be denied.  Then check for an event with
-	ausearch -m FANOTIFY -ts recent
+See documentation:
+* 12th Generation Intel® Core™ Processors Datasheet
+    * Volume 1 of 2, Doc. No.: 655258, Rev.: 011
+    * https://edc.intel.com/output/DownloadPdfDocument?id=8297 (PDF)
 
-Link: https://issues.redhat.com/browse/RHEL-9065
-Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Kyle Manna <kyle@kylemanna.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Link: https://lore.kernel.org/r/20250819161739.3241152-1-kyle@kylemanna.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/audit.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/ie31200_edac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/audit.h b/include/linux/audit.h
-index a394614ccd0b8..e3f06eba9c6e6 100644
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -527,7 +527,7 @@ static inline void audit_log_kern_module(const char *name)
+diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
+index 5c1fa1c0d12e3..5a080ab65476d 100644
+--- a/drivers/edac/ie31200_edac.c
++++ b/drivers/edac/ie31200_edac.c
+@@ -99,6 +99,8 @@
  
- static inline void audit_fanotify(u32 response, struct fanotify_response_info_audit_rule *friar)
- {
--	if (!audit_dummy_context())
-+	if (audit_enabled)
- 		__audit_fanotify(response, friar);
- }
+ /* Alder Lake-S */
+ #define PCI_DEVICE_ID_INTEL_IE31200_ADL_S_1	0x4660
++#define PCI_DEVICE_ID_INTEL_IE31200_ADL_S_2	0x4668	/* 8P+4E, e.g. i7-12700K */
++#define PCI_DEVICE_ID_INTEL_IE31200_ADL_S_3	0x4648	/* 6P+4E, e.g. i5-12600K */
  
+ /* Bartlett Lake-S */
+ #define PCI_DEVICE_ID_INTEL_IE31200_BTL_S_1	0x4639
+@@ -761,6 +763,8 @@ static const struct pci_device_id ie31200_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_6), (kernel_ulong_t)&rpl_s_cfg},
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_HX_1), (kernel_ulong_t)&rpl_s_cfg},
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_ADL_S_1), (kernel_ulong_t)&rpl_s_cfg},
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_ADL_S_2), (kernel_ulong_t)&rpl_s_cfg},
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_ADL_S_3), (kernel_ulong_t)&rpl_s_cfg},
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_BTL_S_1), (kernel_ulong_t)&rpl_s_cfg},
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_BTL_S_2), (kernel_ulong_t)&rpl_s_cfg},
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_BTL_S_3), (kernel_ulong_t)&rpl_s_cfg},
 -- 
 2.51.0
 
