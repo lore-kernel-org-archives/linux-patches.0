@@ -1,91 +1,109 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6A3254BC
-	for <patches@lists.linux.dev>; Fri, 31 Oct 2025 20:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D49B2D9496
+	for <patches@lists.linux.dev>; Fri, 31 Oct 2025 22:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761943185; cv=none; b=FpXEl/oPFYLA62RtjIeL/mY21qmSwqns2nsmjMnLGijK/yksbGwCCDT08hq7+dW2xt0U69ejSyTtBR/8WTDnBjP/Dd8EgOBFRnTLLdiiVuKgTmi2Mdo5I2Vlaw9NWKBb/U/0E74jng/bTX/2uO5wxxNEslzPVKS3N82IADOwMF4=
+	t=1761950132; cv=none; b=OR4LXvqT4EzfngbjJOg457cu8TeNgV+KqAW5ar+WqH4/9ODuTnzTpHoPsmKM2h0COANSJiwyrwrIpHU9g+8dpXRKXM/ZPvR7UbPScDGfC85ZfOOrTReQ8FsQpdqJr7djD9G+2JbV6Y6xO4szeaaGOKUzIP+NSBxSYLMUofWyOdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761943185; c=relaxed/simple;
-	bh=cCWvpJPh66sBhL330VO5yFtZu+spzsUcQx0tPkziLWI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k3S24ElxB3vewtLq2JBG4qYkyy2fwShzrkg3ZzFzDyUYcaUOniGCFAvwJpobs4c2edWMA7iqefr4Gy8Bl9Vp9BXjAf4sHmJgmCTgh8hgpdrjoeQUhe2UeHQc84qrn6MxFrE05qn4FHe8fUck0HANfMQ0Bw+hXd8R4UYjtgAZYRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=B9jE9Yvg; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1761950132; c=relaxed/simple;
+	bh=iYck55bahX1dqxP2BL3n7cuT8Xbz8u0rKuNJzAfwsLo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nlhLpnhlbPBOXGpz0E41P6YLRTIQIwgIcOX8RCLMlPb5v2XO5qYYKduTZM+Jou3cNg1UsVC+QMk5386kKpQqDpYJanyo6denpCnwJj3tsKSA6GfostpugJ5UlhAn11+/cI5OPumiIgKx/75JvML0rubpJ7hFtvNDkMxWoBFKIOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnFnvbyT; arc=none smtp.client-ip=209.85.166.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="B9jE9Yvg"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 514621183782E;
-	Fri, 31 Oct 2025 21:39:39 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1761943181; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=AVSa4OKKOV04Gmh4qAbUtZ9hqd0rk4TLqFOyh16EgmQ=;
-	b=B9jE9YvgEDkUpL5Q6QgQXfBsvwSVeaQwrtMzJSvZYhh/UJst3aYEQGA09vNNKbdnt2dHIM
-	wrxFMuDN4SoDCjWaakqJzjRTielM9C7CyjaEELgp2glO4Rhy66UArse7t1cPPxRpZHxBhv
-	8KMug4TNN+2HDop44KPY15vFpk0RKWCPQqru4n4IATJ82IvY/+Yi4CEYK2nv2INQjxwqBj
-	uc8TmT2cfSEed1NFYWQV14pCzOFOuq2UT1aeGYo7aLEgxgMjP0Y0m94iJ8IrwFJpM9Fr7p
-	VD7yAxlKUxgRminbh5fMR7gp2CYO53CfMoDD5YAaeZ2wY/LYAiBmDACFrfReOA==
-Date: Fri, 31 Oct 2025 21:39:37 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.17 00/35] 6.17.7-rc1 review
-Message-ID: <aQUeiXesnmZoUuLD@duo.ucw.cz>
-References: <20251031140043.564670400@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnFnvbyT"
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-431da4fa224so23447415ab.2
+        for <patches@lists.linux.dev>; Fri, 31 Oct 2025 15:35:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1761950129; x=1762554929; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZnbrNksRBh1bg9JZSC/QDuCw6CE4G/JQOW3nf+SPy4I=;
+        b=SnFnvbyTLcHDvSAaeRq8WKoGS0TlxGg+52+EIKsXRU+FFw5iOFt6pGqaUzRorDNM6b
+         OsB2VPGNvw/PmZQptMsePH3rWH4MY3AIGZQWd3f35HqnHq2H+NIrIfpYI+JU6P9Sx5zo
+         J44kj1EqR/X1loto39aW5Exn7xP7X2xyYXQ6M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761950129; x=1762554929;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZnbrNksRBh1bg9JZSC/QDuCw6CE4G/JQOW3nf+SPy4I=;
+        b=MQyMg2/wGuZJDiAkuq08qIrpUEE1kvtdp5FUHjzq0TbGYN97vTJwJPz0wwFAuV0bHT
+         nu9GQlotdMAsFfUpvhXKCBwd7DViQBWXWaGkPyfxX7tC4IgJi0WX3vfdxZogjgD23LA1
+         vW8LQqVU00Mj5La5WEn9uOjaq47ipWEBs7JA8OjyI6fSE06bBNbweGBsImxKiQ+LrmDk
+         Y6TqLxaJvF8/MhS607+h6RpHULtTIWOudQDfk/znvRdjqyn0hP6pyUbkRd8RgfFRlpiK
+         h0hkuq2KQ8bocGTKra8Gp/zAHILMJGNHATZZd714k4x4ofuYTuC+vNrzQCGrO23/pZwn
+         x7fA==
+X-Gm-Message-State: AOJu0Yzz/I/4EF+Mma9Df7WPpDJw2Sz8hyuhvNPReY0wP4AgCoSnFfVW
+	1tuyjLWOipSVvK3ZPNSbytZGshEdh6hpcW6mYRMvsFxbycRG+wFo71QRWlMzBgHgooE=
+X-Gm-Gg: ASbGncuww6AURiQ0pUp03pz/Ovu1pnOFITuFT12oHfGeTygtBFDc0Q663C8P+YLx8EH
+	3yG80yeaBF1gwpOK3ek//0RM/NO0NpFE9vROOYNsF5eilNJzAJaRYX0aZ6eg3VesoJavrtVpGpP
+	i16pWiQEERuNKl7N73zYuGZXgapQYHzReKYHOSv+SkcXMFwOfoxMm49oCzwuId7vRu3z1kr40mM
+	zsc8ZEDDYCwWCUhplSggr0g8cJRfiSKk7NIv+z6tC1vvpzTxmDND1rukN5SxGeSXWH0bG8Cz4b+
+	hVLrHkE2yqiPi5nPoDE4p5iJFKaXh+le+vuG+XU8fpuYtIi0SMKo/IUTPe3hy1G1bh7AJFdjyTp
+	iMyk6HpdpLKdMVEH59c64mQ1ckUgN3EwQG2NRzBLTNYgtMgJ58u8GkDJaV8+CyzX70Rg+5gJ/FD
+	yRoca7+1Ph54L/MzJFCesb3h+8ofu7p836Hg==
+X-Google-Smtp-Source: AGHT+IGjVrSQAMNqNAnv/gM9bi4zfu2mobXw57w95CoY0VCC2MJGIb3snv4VN/yENZWB73vMHzXC2Q==
+X-Received: by 2002:a05:6e02:741:b0:430:9f96:23bb with SMTP id e9e14a558f8ab-4330d1315a8mr76043315ab.8.1761950129290;
+        Fri, 31 Oct 2025 15:35:29 -0700 (PDT)
+Received: from [192.168.1.14] ([38.175.187.108])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b6a55b1b27sm1151546173.41.2025.10.31.15.35.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Oct 2025 15:35:28 -0700 (PDT)
+Message-ID: <23807f00-6b2a-42a6-9ab6-620ae5dcc661@linuxfoundation.org>
+Date: Fri, 31 Oct 2025 16:35:25 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6Im6d3rSDemiUuXa"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.17 00/35] 6.17.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20251031140043.564670400@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---6Im6d3rSDemiUuXa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
+On 10/31/25 08:01, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.17.7 release.
 > There are 35 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Sun, 02 Nov 2025 14:00:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-CIP testing did not find any problems here:
+Compiled and booted on my test system. No dmesg regressions.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.17.y
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---6Im6d3rSDemiUuXa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaQUeiQAKCRAw5/Bqldv6
-8hGpAKDE4pfxpiVbjHq89z1GuxtlXxAlAACfdK4opcdTwHvinTVkH7aoGBCXnzA=
-=XtwT
------END PGP SIGNATURE-----
-
---6Im6d3rSDemiUuXa--
+thanks,
+-- Shuah
