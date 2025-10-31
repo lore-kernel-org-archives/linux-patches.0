@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2D91D5CC9;
-	Fri, 31 Oct 2025 14:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73D32459F8;
+	Fri, 31 Oct 2025 14:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919407; cv=none; b=iS796MMV0AF2pfEphJakcuIZPfuslqHtRQZBkD+tjv9pWP+edZj2G/METQLtr6cQs9kY3Ce0/NWHxEr/01FZGm66nmJKnYWxajBNAE3wA5gpO5w6g2xHiSONI9a5wvbpwYFxrMwBhMfRiukZPdpL9JaKSd2egzklx5Lp613EZm0=
+	t=1761919410; cv=none; b=jXfQLElFlizp5yoWWjf1gszO5Cw8j7tchd+k+EkjYN/Z6ubYb7g8cpkTeB+Zv4jSO7N0C6wX1ON3plem8Sg+kF4u7YotD8ylIOP7dqLyi2G9mmIgsIM/RCNyzs5uUye6LdeyUFPRIu3FYlf0sjewKMQhcQWREVjgU/H+bQeHNw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919407; c=relaxed/simple;
-	bh=7394YLpO3vI2xUpVdljSG1lr6BGthST5/2N5aOnQM6A=;
+	s=arc-20240116; t=1761919410; c=relaxed/simple;
+	bh=amPorH9HU/rYncgYvhdhzhhumF/W4YfBHxjpmVmh6hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEPB43AZQgKlQNRS/WNj2UVjmCnSDlpqDeLmiXPNxVXHJb3S5GwDw3L9aWzn2agADnLzuTUZeuPwV/Co6sendmaEZYIKs8FCsvrGteQ2ia9uxjnqrTxfgdadRHe+vBWEqEEqr4gem209dr4wvHm/Iq0MXiR+E8bkWy8ZeIAu67E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WueRW1mW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQkpD64MX/5Qao24OmCW1mjOea0AvjIvTGEho3MH29xJoL9LaNDZk0+ciRiksI+umb//BNqcz3VkCNlUOwCzBo0c2QJWlWu3eea1aQ5966H3i0S6FtSUF7S/WgRBv8v76+wAa+fWzC5v+6eivwhMcUIfd9m0pFg5n0kpiN/ipQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8nUt+OY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WueRW1mW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3682C4CEE7;
-	Fri, 31 Oct 2025 14:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8nUt+OY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6967CC4CEE7;
+	Fri, 31 Oct 2025 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919407;
-	bh=7394YLpO3vI2xUpVdljSG1lr6BGthST5/2N5aOnQM6A=;
+	s=korg; t=1761919409;
+	bh=amPorH9HU/rYncgYvhdhzhhumF/W4YfBHxjpmVmh6hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WueRW1mWEdOEXE0l5pW5hxdgdY8Mch7fTLeygIGHIwmUbXXZFbMY8JDfeUp6HJdU4
-	 zOstJxo6k334oyYmDkKB842mYF53yMun5ey3ChXN87iewi8iJqBp3YtyhIpdXhQu5Y
-	 yqxktlYL/9IlCc6hdFCS2oSpHTbjV6aHSO7slrCU=
+	b=W8nUt+OYRbbcRcKooZdCx3z+0ubAUpVBjRunC+uZTbk+tDympc13TjDuo7EMAtmEf
+	 j9bwEVHenDRWeSE2hBO3jF3d7igoHdR5KA30mEGzkwAuewvztB86ZV9VYClawnwAQM
+	 8hJjI/SxKYbWLLhxpdAOpZE6iQISuMOR0bpjbco8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/32] serial: sc16is7xx: reorder code to remove prototype declarations
-Date: Fri, 31 Oct 2025 15:01:14 +0100
-Message-ID: <20251031140042.925969560@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 01/40] net/sched: sch_qfq: Fix null-deref in agg_dequeue
+Date: Fri, 31 Oct 2025 15:00:54 +0100
+Message-ID: <20251031140043.977260604@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
-References: <20251031140042.387255981@linuxfoundation.org>
+In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
+References: <20251031140043.939381518@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,130 +47,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 2de8a1b46756b5a79d8447f99afdfe49e914225a ]
+commit dd831ac8221e691e9e918585b1003c7071df0379 upstream.
 
-Move/reorder some functions to remove sc16is7xx_ier_set() and
-sc16is7xx_stop_tx() prototypes declarations.
+To prevent a potential crash in agg_dequeue (net/sched/sch_qfq.c)
+when cl->qdisc->ops->peek(cl->qdisc) returns NULL, we check the return
+value before using it, similar to the existing approach in sch_hfsc.c.
 
-No functional change.
+To avoid code duplication, the following changes are made:
 
-sc16is7xx_ier_set() was introduced in
-commit cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop").
+1. Changed qdisc_warn_nonwc(include/net/pkt_sched.h) into a static
+inline function.
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-16-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1c05bf6c0262 ("serial: sc16is7xx: remove useless enable of enhanced features")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+2. Moved qdisc_peek_len from net/sched/sch_hfsc.c to
+include/net/pkt_sched.h so that sch_qfq can reuse it.
+
+3. Applied qdisc_peek_len in agg_dequeue to avoid crashing.
+
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Link: https://patch.msgid.link/20250705212143.3982664-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   75 +++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 39 deletions(-)
+ include/net/pkt_sched.h |   25 ++++++++++++++++++++++++-
+ net/sched/sch_api.c     |   10 ----------
+ net/sched/sch_hfsc.c    |   16 ----------------
+ net/sched/sch_qfq.c     |    2 +-
+ 4 files changed, 25 insertions(+), 28 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -355,9 +355,6 @@ static struct uart_driver sc16is7xx_uart
- 	.nr		= SC16IS7XX_MAX_DEVS,
- };
- 
--static void sc16is7xx_ier_set(struct uart_port *port, u8 bit);
--static void sc16is7xx_stop_tx(struct uart_port *port);
--
- #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
- 
- static u8 sc16is7xx_port_read(struct uart_port *port, u8 reg)
-@@ -415,6 +412,42 @@ static void sc16is7xx_power(struct uart_
- 			      on ? 0 : SC16IS7XX_IER_SLEEP_BIT);
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -114,7 +114,6 @@ struct qdisc_rate_table *qdisc_get_rtab(
+ 					struct netlink_ext_ack *extack);
+ void qdisc_put_rtab(struct qdisc_rate_table *tab);
+ void qdisc_put_stab(struct qdisc_size_table *tab);
+-void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc);
+ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
+ 		     struct net_device *dev, struct netdev_queue *txq,
+ 		     spinlock_t *root_lock, bool validate);
+@@ -290,4 +289,28 @@ static inline bool tc_qdisc_stats_dump(s
+ 	return true;
  }
  
-+static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
++static inline void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
 +{
-+	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
-+
-+	lockdep_assert_held_once(&port->lock);
-+
-+	one->config.flags |= SC16IS7XX_RECONF_IER;
-+	one->config.ier_mask |= bit;
-+	one->config.ier_val &= ~bit;
-+	kthread_queue_work(&s->kworker, &one->reg_work);
++	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
++		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
++			txt, qdisc->ops->id, qdisc->handle >> 16);
++		qdisc->flags |= TCQ_F_WARN_NONWC;
++	}
 +}
 +
-+static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
++static inline unsigned int qdisc_peek_len(struct Qdisc *sch)
 +{
-+	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
++	struct sk_buff *skb;
++	unsigned int len;
 +
-+	lockdep_assert_held_once(&port->lock);
++	skb = sch->ops->peek(sch);
++	if (unlikely(skb == NULL)) {
++		qdisc_warn_nonwc("qdisc_peek_len", sch);
++		return 0;
++	}
++	len = qdisc_pkt_len(skb);
 +
-+	one->config.flags |= SC16IS7XX_RECONF_IER;
-+	one->config.ier_mask |= bit;
-+	one->config.ier_val |= bit;
-+	kthread_queue_work(&s->kworker, &one->reg_work);
++	return len;
 +}
 +
-+static void sc16is7xx_stop_tx(struct uart_port *port)
-+{
-+	sc16is7xx_ier_clear(port, SC16IS7XX_IER_THRI_BIT);
-+}
-+
-+static void sc16is7xx_stop_rx(struct uart_port *port)
-+{
-+	sc16is7xx_ier_clear(port, SC16IS7XX_IER_RDI_BIT);
-+}
-+
- static const struct sc16is7xx_devtype sc16is74x_devtype = {
- 	.name		= "SC16IS74X",
- 	.nr_gpio	= 0,
-@@ -888,42 +921,6 @@ static void sc16is7xx_reg_proc(struct kt
- 		sc16is7xx_reconf_rs485(&one->port);
+ #endif
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -599,16 +599,6 @@ out:
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
  }
  
--static void sc16is7xx_ier_clear(struct uart_port *port, u8 bit)
+-void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
 -{
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--
--	lockdep_assert_held_once(&port->lock);
--
--	one->config.flags |= SC16IS7XX_RECONF_IER;
--	one->config.ier_mask |= bit;
--	one->config.ier_val &= ~bit;
--	kthread_queue_work(&s->kworker, &one->reg_work);
+-	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
+-		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
+-			txt, qdisc->ops->id, qdisc->handle >> 16);
+-		qdisc->flags |= TCQ_F_WARN_NONWC;
+-	}
 -}
+-EXPORT_SYMBOL(qdisc_warn_nonwc);
 -
--static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
--{
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--
--	lockdep_assert_held_once(&port->lock);
--
--	one->config.flags |= SC16IS7XX_RECONF_IER;
--	one->config.ier_mask |= bit;
--	one->config.ier_val |= bit;
--	kthread_queue_work(&s->kworker, &one->reg_work);
--}
--
--static void sc16is7xx_stop_tx(struct uart_port *port)
--{
--	sc16is7xx_ier_clear(port, SC16IS7XX_IER_THRI_BIT);
--}
--
--static void sc16is7xx_stop_rx(struct uart_port *port)
--{
--	sc16is7xx_ier_clear(port, SC16IS7XX_IER_RDI_BIT);
--}
--
- static void sc16is7xx_ms_proc(struct kthread_work *ws)
+ static enum hrtimer_restart qdisc_watchdog(struct hrtimer *timer)
  {
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(ws, ms_work.work);
+ 	struct qdisc_watchdog *wd = container_of(timer, struct qdisc_watchdog,
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -835,22 +835,6 @@ update_vf(struct hfsc_class *cl, unsigne
+ 	}
+ }
+ 
+-static unsigned int
+-qdisc_peek_len(struct Qdisc *sch)
+-{
+-	struct sk_buff *skb;
+-	unsigned int len;
+-
+-	skb = sch->ops->peek(sch);
+-	if (unlikely(skb == NULL)) {
+-		qdisc_warn_nonwc("qdisc_peek_len", sch);
+-		return 0;
+-	}
+-	len = qdisc_pkt_len(skb);
+-
+-	return len;
+-}
+-
+ static void
+ hfsc_adjust_levels(struct hfsc_class *cl)
+ {
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -1002,7 +1002,7 @@ static struct sk_buff *agg_dequeue(struc
+ 
+ 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
+ 		list_del_init(&cl->alist);
+-	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
++	else if (cl->deficit < qdisc_peek_len(cl->qdisc)) {
+ 		cl->deficit += agg->lmax;
+ 		list_move_tail(&cl->alist, &agg->active);
+ 	}
 
 
