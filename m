@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B23625784B;
-	Fri, 31 Oct 2025 14:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1681D5CC9;
+	Fri, 31 Oct 2025 14:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919381; cv=none; b=iUubKP6RLy3dccF7LupZ2mjsCt/h+1eqdD6by+hP2Ek2oU8F96zuQKA6+nOxsw1qPzwMLS/+Tk33gGZMxn8y6urCOzyXIn9t0qyR6J9T16pFfVlRc2ADM7wsNFOrfxmR7ur5VcbkIZnidR2ZOM9+49VNveE81JCwje8/ojuUbm0=
+	t=1761919385; cv=none; b=lFoA7z7IUUAub3uYuP9CX1Yjn1fRll+jXFfsfhlLH7IqfPVzhHH182TJy3wzJ/L4yU4YXpijROGQz4iHoikRwlvMAdcs2wgte4jBRGPL4WKVEYPRnxZISi/zDO6+M9fGrQUMFH7lIo2+qKMzEqACxHhccMdgtUgIEu8QBvEmtkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919381; c=relaxed/simple;
-	bh=wtbxyg8++28R66zmRizI8udEZ+oQogiCVqry5RIIYA0=;
+	s=arc-20240116; t=1761919385; c=relaxed/simple;
+	bh=S/1qEFXxp5elShJ88sHvqlNvH0jRmY9sCRlJCl/xGtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgNLgePPV8ZpSC3G9k/Q+RJS/FC2FzQH2GlDTYcTEWbGQjFUcHfR/aomHFB6rhZJ+Luk1SMjzGy1AK0YVe02D+19Kp5i78Jk6eJEg68JFT8WSG98PBivAkdPPGt6hOJTtvZBsZCDbEwACUhO4MF+efNM2zpLgwNYz+MBAbh1NI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNyQVAOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vup4OT/JjUgSa+LDbFf4k/VWMZTL+5u2UYH1ZQFRO23KV/e03IIqKd1qViVcc5oXcTgmhR35/xNd/CSR7XoHXvgN3tAlqFswI9v9eY5y/9bzFjWT9vWWNeWsEthKnIanK9+Qgy5lqZGjlTINsRWlT/tC7zDhmVlHeRW/AOm4K04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMPXuTty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNyQVAOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92567C4CEE7;
-	Fri, 31 Oct 2025 14:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMPXuTty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D35DC4CEE7;
+	Fri, 31 Oct 2025 14:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919381;
-	bh=wtbxyg8++28R66zmRizI8udEZ+oQogiCVqry5RIIYA0=;
+	s=korg; t=1761919384;
+	bh=S/1qEFXxp5elShJ88sHvqlNvH0jRmY9sCRlJCl/xGtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNyQVAOIeHfp++uDHjPNcGYBHhzQeXB7XAYICmGZOUMKrQg7MH+PcXp3HauafvMPD
-	 Oy6ckHmpEog73EUNKRCyOIfuy8NWJrVcgIvrmMGcxRZjPXPradU+jeLgCYbb6b2KR9
-	 v1/YeRs6tr0VOBkgzAYr/MCUXcIzE+DpNUkxZFJg=
+	b=WMPXuTty+5WwFzejc2r8VlJJmcULaxe7Av5vFG9WYI/xW1iQb70grRIl0suwmifp/
+	 xGt20eQHeHuRNqrPqKM6UdHQdOIbN4zlbldEsBbDgYLDreF03WG6qDHr8/oZJ+exgA
+	 xLWIIAAXdlaetc5t5/0WZBStM/2lrgR67RnqeeFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Cave-Ayland <mark.caveayland@nutanix.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	William Breathitt Gray <wbg@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 32/32] gpio: idio-16: Define fixed direction of the GPIO lines
-Date: Fri, 31 Oct 2025 15:01:26 +0100
-Message-ID: <20251031140043.229196074@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 22/32] serial: sc16is7xx: remove useless enable of enhanced features
+Date: Fri, 31 Oct 2025 15:01:16 +0100
+Message-ID: <20251031140042.978837354@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -54,59 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Breathitt Gray <wbg@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 2ba5772e530f73eb847fb96ce6c4017894869552 ]
+[ Upstream commit 1c05bf6c0262f946571a37678250193e46b1ff0f ]
 
-The direction of the IDIO-16 GPIO lines is fixed with the first 16 lines
-as output and the remaining 16 lines as input. Set the gpio_config
-fixed_direction_output member to represent the fixed direction of the
-GPIO lines.
+Commit 43c51bb573aa ("sc16is7xx: make sure device is in suspend once
+probed") permanently enabled access to the enhanced features in
+sc16is7xx_probe(), and it is never disabled after that.
 
-Fixes: db02247827ef ("gpio: idio-16: Migrate to the regmap API")
-Reported-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Closes: https://lore.kernel.org/r/9b0375fd-235f-4ee1-a7fa-daca296ef6bf@nutanix.com
-Suggested-by: Michael Walle <mwalle@kernel.org>
-Cc: stable@vger.kernel.org # ae495810cffe: gpio: regmap: add the .fixed_direction_output configuration parameter
-Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20251020-fix-gpio-idio-16-regmap-v2-3-ebeb50e93c33@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Therefore, remove re-enable of enhanced features in
+sc16is7xx_set_baud(). This eliminates a potential useless read + write
+cycle each time the baud rate is reconfigured.
+
+Fixes: 43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://patch.msgid.link/20251006142002.177475-1-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-idio-16.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/drivers/gpio/gpio-idio-16.c
-+++ b/drivers/gpio/gpio-idio-16.c
-@@ -3,6 +3,7 @@
-  * GPIO library for the ACCES IDIO-16 family
-  * Copyright (C) 2022 William Breathitt Gray
-  */
-+#include <linux/bitmap.h>
- #include <linux/bits.h>
- #include <linux/device.h>
- #include <linux/err.h>
-@@ -106,6 +107,7 @@ int devm_idio_16_regmap_register(struct
- 	struct idio_16_data *data;
- 	struct regmap_irq_chip *chip;
- 	struct regmap_irq_chip_data *chip_data;
-+	DECLARE_BITMAP(fixed_direction_output, IDIO_16_NGPIO);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -582,13 +582,6 @@ static int sc16is7xx_set_baud(struct uar
+ 		div /= prescaler;
+ 	}
  
- 	if (!config->parent)
- 		return -EINVAL;
-@@ -163,6 +165,9 @@ int devm_idio_16_regmap_register(struct
- 	gpio_config.irq_domain = regmap_irq_get_domain(chip_data);
- 	gpio_config.reg_mask_xlate = idio_16_reg_mask_xlate;
- 
-+	bitmap_from_u64(fixed_direction_output, GENMASK_U64(15, 0));
-+	gpio_config.fixed_direction_output = fixed_direction_output;
-+
- 	return PTR_ERR_OR_ZERO(devm_gpio_regmap_register(dev, &gpio_config));
- }
- EXPORT_SYMBOL_GPL(devm_idio_16_regmap_register);
+-	/* Enable enhanced features */
+-	sc16is7xx_efr_lock(port);
+-	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
+-			      SC16IS7XX_EFR_ENABLE_BIT,
+-			      SC16IS7XX_EFR_ENABLE_BIT);
+-	sc16is7xx_efr_unlock(port);
+-
+ 	/* If bit MCR_CLKSEL is set, the divide by 4 prescaler is activated. */
+ 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
+ 			      SC16IS7XX_MCR_CLKSEL_BIT,
 
 
