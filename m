@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0EB210F59;
-	Fri, 31 Oct 2025 14:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08618210F59;
+	Fri, 31 Oct 2025 14:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919416; cv=none; b=jtNSqQoCG7n58rerPqZ6mxW37RtTJPCLYOnUujriY0LH7m1ozyzwxFNHwmSOI68lQb5PAK/KHnYjD6tWLUy82tP7gmAgZW9zgMlyNze3J6YKaLjmek6trDdxXCcFpOrNpFVObwnpH1JjyIqEPAePB/BlPUay2+DiShQntAX1PEQ=
+	t=1761919420; cv=none; b=bnPxtmIiNEouexaae95Rj63BbqLMICXMal5QPXHZpFiDZki1AVgkuCBYK1OzWy+jO1omvwhC/ZIv6qME2N4LvWM8NOdqUsFVUf+EyiB2elog/DmSWDaVmmRXM7n2oyRde6f2NktYK55V+JeQq31MoQ0RK7UVHItmkTJK4ksMHLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919416; c=relaxed/simple;
-	bh=B/9syWr6Unb8BNrVxQebEOs+mfzToPpJiI2JQNcyD9g=;
+	s=arc-20240116; t=1761919420; c=relaxed/simple;
+	bh=vOVC5KEK2PLlaSupxjzzWbwual4jveKrLbIVlmgz710=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNVINaPfIrCw2e6hp1dQKcMUn1W2MRZVOJ90asfWAPtLH4Eboi0YCipczTqhSi+iKiCKtPZWzMxUBepS/bwFE1nU1iJejWHwGyUtAlMXJybmpwmYZadVv3jFELjhUZL7Et5ElFaygzU56VsSjifknwxR8RqTj+4NA2blzdKtcMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsDFN1Hq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WAfFLIK8cRJy00VNOODcQV9/ekRZbXAbv0bZ9iN9IJ8QMFcK/HttROvNnV+8eihyxj911qYR6dHGaQnYK+7X4sBZZjk2+OLQa3TKiGlMU+9geBNHhbxepVKLUdvIDalp0ACXSa7WqOLP4Algyipj52Uq8vBR41zdl6LsiL2MRLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFehfMB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsDFN1Hq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00D9C4CEE7;
-	Fri, 31 Oct 2025 14:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFehfMB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380B2C4CEE7;
+	Fri, 31 Oct 2025 14:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919416;
-	bh=B/9syWr6Unb8BNrVxQebEOs+mfzToPpJiI2JQNcyD9g=;
+	s=korg; t=1761919419;
+	bh=vOVC5KEK2PLlaSupxjzzWbwual4jveKrLbIVlmgz710=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsDFN1Hq9vkwxRTjwnuJVhr9R0mkFVPAdC6lwTPvVKsXAE2fpe+o4GOt5EzzdPv17
-	 pU1l84xmkW83StJrwrHIo7jT7nr2n7uWMBlQGg/7hc+hCCNa9JkqAK6zSaUA2AC7TT
-	 2wZzdvaiJAKAyUdFbo8gw5iFs+4iX+bQFh0zK6cU=
+	b=eFehfMB2d43kRCKHg2B9YocAyLE2gzOvMzumuuf1xu8ag64ll9xIdXV+/Ldyzd17w
+	 rLQAcaQBA8Y6Ki024neCaSnMWhanyuAafkVmLIgusdGszAVIX1jmeEHgtLf5Tqc/k5
+	 pKcr5Okm7Uf0w7vEvVfOZHOLy1emLSX7acbgsekM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Yi Lai <yi1.lai@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 03/40] perf/x86/intel: Add ICL_FIXED_0_ADAPTIVE bit into INTEL_FIXED_BITS_MASK
-Date: Fri, 31 Oct 2025 15:00:56 +0100
-Message-ID: <20251031140044.025133806@linuxfoundation.org>
+Subject: [PATCH 6.12 04/40] perf: Use current->flags & PF_KTHREAD|PF_USER_WORKER instead of current->mm == NULL
+Date: Fri, 31 Oct 2025 15:00:57 +0100
+Message-ID: <20251031140044.050062176@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.939381518@linuxfoundation.org>
 References: <20251031140043.939381518@linuxfoundation.org>
@@ -53,98 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 2676dbf9f4fb7f6739d1207c0f1deaf63124642a ]
+[ Upstream commit 90942f9fac05702065ff82ed0bade0d08168d4ea ]
 
-ICL_FIXED_0_ADAPTIVE is missed to be added into INTEL_FIXED_BITS_MASK,
-add it.
+To determine if a task is a kernel thread or not, it is more reliable to
+use (current->flags & (PF_KTHREAD|PF_USER_WORKERi)) than to rely on
+current->mm being NULL.  That is because some kernel tasks (io_uring
+helpers) may have a mm field.
 
-With help of this new INTEL_FIXED_BITS_MASK, intel_pmu_enable_fixed() can
-be optimized. The old fixed counter control bits can be unconditionally
-cleared with INTEL_FIXED_BITS_MASK and then set new control bits base on
-new configuration.
-
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Link: https://lore.kernel.org/r/20250820023032.17128-7-dapeng1.mi@linux.intel.com
+Link: https://lore.kernel.org/r/20250820180428.592367294@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c      | 10 +++-------
- arch/x86/include/asm/perf_event.h |  6 +++++-
- arch/x86/kvm/pmu.h                |  2 +-
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ kernel/events/callchain.c | 6 +++---
+ kernel/events/core.c      | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 36d8404f406de..acc0774519ce2 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2812,8 +2812,8 @@ static void intel_pmu_enable_fixed(struct perf_event *event)
- {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
- 	struct hw_perf_event *hwc = &event->hw;
--	u64 mask, bits = 0;
- 	int idx = hwc->idx;
-+	u64 bits = 0;
+diff --git a/kernel/events/callchain.c b/kernel/events/callchain.c
+index 8a47e52a454f4..d1a09e6f514c9 100644
+--- a/kernel/events/callchain.c
++++ b/kernel/events/callchain.c
+@@ -241,10 +241,10 @@ get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
  
- 	if (is_topdown_idx(idx)) {
- 		struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-@@ -2849,14 +2849,10 @@ static void intel_pmu_enable_fixed(struct perf_event *event)
+ 	if (user) {
+ 		if (!user_mode(regs)) {
+-			if  (current->mm)
+-				regs = task_pt_regs(current);
+-			else
++			if (current->flags & (PF_KTHREAD | PF_USER_WORKER))
+ 				regs = NULL;
++			else
++				regs = task_pt_regs(current);
+ 		}
  
- 	idx -= INTEL_PMC_IDX_FIXED;
- 	bits = intel_fixed_bits_by_idx(idx, bits);
--	mask = intel_fixed_bits_by_idx(idx, INTEL_FIXED_BITS_MASK);
--
--	if (x86_pmu.intel_cap.pebs_baseline && event->attr.precise_ip) {
-+	if (x86_pmu.intel_cap.pebs_baseline && event->attr.precise_ip)
- 		bits |= intel_fixed_bits_by_idx(idx, ICL_FIXED_0_ADAPTIVE);
--		mask |= intel_fixed_bits_by_idx(idx, ICL_FIXED_0_ADAPTIVE);
--	}
+ 		if (regs) {
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d60d48d482b01..0339f60e34981 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7095,7 +7095,7 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
+ 	if (user_mode(regs)) {
+ 		regs_user->abi = perf_reg_abi(current);
+ 		regs_user->regs = regs;
+-	} else if (!(current->flags & PF_KTHREAD)) {
++	} else if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 		perf_get_regs_user(regs_user, regs);
+ 	} else {
+ 		regs_user->abi = PERF_SAMPLE_REGS_ABI_NONE;
+@@ -7735,7 +7735,7 @@ static u64 perf_virt_to_phys(u64 virt)
+ 		 * Try IRQ-safe get_user_page_fast_only first.
+ 		 * If failed, leave phys_addr as 0.
+ 		 */
+-		if (current->mm != NULL) {
++		if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 			struct page *p;
  
--	cpuc->fixed_ctrl_val &= ~mask;
-+	cpuc->fixed_ctrl_val &= ~intel_fixed_bits_by_idx(idx, INTEL_FIXED_BITS_MASK);
- 	cpuc->fixed_ctrl_val |= bits;
- }
- 
-diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
-index aa351c4a20eee..c69b6498f6eaa 100644
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -35,7 +35,6 @@
- #define ARCH_PERFMON_EVENTSEL_EQ			(1ULL << 36)
- #define ARCH_PERFMON_EVENTSEL_UMASK2			(0xFFULL << 40)
- 
--#define INTEL_FIXED_BITS_MASK				0xFULL
- #define INTEL_FIXED_BITS_STRIDE			4
- #define INTEL_FIXED_0_KERNEL				(1ULL << 0)
- #define INTEL_FIXED_0_USER				(1ULL << 1)
-@@ -47,6 +46,11 @@
- #define ICL_EVENTSEL_ADAPTIVE				(1ULL << 34)
- #define ICL_FIXED_0_ADAPTIVE				(1ULL << 32)
- 
-+#define INTEL_FIXED_BITS_MASK					\
-+	(INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER |		\
-+	 INTEL_FIXED_0_ANYTHREAD | INTEL_FIXED_0_ENABLE_PMI |	\
-+	 ICL_FIXED_0_ADAPTIVE)
-+
- #define intel_fixed_bits_by_idx(_idx, _bits)			\
- 	((_bits) << ((_idx) * INTEL_FIXED_BITS_STRIDE))
- 
-diff --git a/arch/x86/kvm/pmu.h b/arch/x86/kvm/pmu.h
-index ad89d0bd60058..103604c4b33b5 100644
---- a/arch/x86/kvm/pmu.h
-+++ b/arch/x86/kvm/pmu.h
-@@ -13,7 +13,7 @@
- #define MSR_IA32_MISC_ENABLE_PMU_RO_MASK (MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL |	\
- 					  MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
- 
--/* retrieve the 4 bits for EN and PMI out of IA32_FIXED_CTR_CTRL */
-+/* retrieve a fixed counter bits out of IA32_FIXED_CTR_CTRL */
- #define fixed_ctrl_field(ctrl_reg, idx) \
- 	(((ctrl_reg) >> ((idx) * INTEL_FIXED_BITS_STRIDE)) & INTEL_FIXED_BITS_MASK)
- 
+ 			pagefault_disable();
 -- 
 2.51.0
 
