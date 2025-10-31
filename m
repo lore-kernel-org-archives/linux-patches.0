@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1522376E4;
-	Fri, 31 Oct 2025 14:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9710234B432;
+	Fri, 31 Oct 2025 14:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919585; cv=none; b=dWqB5kWtPt/0/fG0YJQoFw0TFjQTaaiGHLc1N6E64e6nf7lwkHtc+IIdZ93qf7fKmoK6P8rkng3yl3j0kpPRDSJKaIVxDAS9k1FDfSUG3tp9eHh78B+rJC6ypY0Mc27azgSwDHk/HLQQIAsbU0m9JYjq0Es97l1O+6jhM+wQWMw=
+	t=1761919588; cv=none; b=pt+BIT1vF6p2TVsZ0nGuiaCOpqmi00Cm1K7vqyms7UEZF8vxZI7UxKlTUtgT2cUWw5MFqGoGNw8EaLnnT9NEkm+Uncv3btXtNXYBPQZXQRrjLTHoD+vjOBAXcVWcpZXPtvLvANFpZ+ExU4iDcw8ll9pEj9hRPWTiOVZgq+FIi8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919585; c=relaxed/simple;
-	bh=mqHDIC14tdGX6B5h3VE/ms39LQGKt/5aYoR/WcUwJY8=;
+	s=arc-20240116; t=1761919588; c=relaxed/simple;
+	bh=J2qz8mQDJ99uST/efg7kNYXpKpd7MApw3zCKbn416W8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5Jm+NOT7QhJwhpo7A5xCdNYVr69Vn85ugcTvtWQnPbu2juiCaCSHLtUiPmBYLA2oa+exrLVLz3GOWejvGJ3CbNsyaht4uXzhG5yYq9RRgPjjTswi5JouwVuBVgRaeKZfnbUuORvCld4NHfsFhwr4MuTfnqDq1AKatTIjQvNTUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peu+63di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClPZeLX/m9HChTU78zjXSLb2CGWSulgtAIegr+/4Nt+9WNOm/vpw9z0N4WAacRfeVj5YhNZoP4BBCwmYG8woJpCtDRvZnPRBPI6OeQihsZst7g+7eQ0UDWwPA/ei8+wF8ctN+HXKAW17lvPWnrS/f0TDHrnDNAk1+JPJpobofRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bahYHHxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peu+63di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2913EC4CEE7;
-	Fri, 31 Oct 2025 14:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bahYHHxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D7BC4CEE7;
+	Fri, 31 Oct 2025 14:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919585;
-	bh=mqHDIC14tdGX6B5h3VE/ms39LQGKt/5aYoR/WcUwJY8=;
+	s=korg; t=1761919588;
+	bh=J2qz8mQDJ99uST/efg7kNYXpKpd7MApw3zCKbn416W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peu+63diXemvMa5j/PrWwTpqvFl7cbCrBWOztJwEIP89f8GjtryIe8rqKXXhKCQQy
-	 5JfHCs1yYSJg3h8758KxlZ9I8nTvoaeRbMdw1EjwDmO2ztu8/96gywhDvDUc767AEE
-	 V00C7MQvLTL6LQYTDNK4twWY4wsbSNkzKNPUC2l0=
+	b=bahYHHxXdM1E4/qP87aoUXXXOdQ7wqVTnQeeL/ic5u7LkCybjyYy/VOB2jXv4rREZ
+	 bHTTeb585K3VzC2ZOhWDJJo3FFM1TdN7Tdl3ZVahdxx1dye5mWafSs8fzv7/vJVaFZ
+	 bGw+GwZuPKciFMGQO2O87eAB6Vnf3xh2xzUrIvqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 27/35] btrfs: zoned: refine extent allocator hint selection
-Date: Fri, 31 Oct 2025 15:01:35 +0100
-Message-ID: <20251031140044.219685145@linuxfoundation.org>
+Subject: [PATCH 6.17 28/35] btrfs: scrub: replace max_t()/min_t() with clamp() in scrub_throttle_dev_io()
+Date: Fri, 31 Oct 2025 15:01:36 +0100
+Message-ID: <20251031140044.319624262@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
 References: <20251031140043.564670400@linuxfoundation.org>
@@ -52,57 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 0d703963d297964451783e1a0688ebdf74cd6151 ]
+[ Upstream commit a7f3dfb8293c4cee99743132d69863a92e8f4875 ]
 
-The hint block group selection in the extent allocator is wrong in the
-first place, as it can select the dedicated data relocation block group for
-the normal data allocation.
+Replace max_t() followed by min_t() with a single clamp().
 
-Since we separated the normal data space_info and the data relocation
-space_info, we can easily identify a block group is for data relocation or
-not. Do not choose it for the normal data allocation.
+As was pointed by David Laight in
+https://lore.kernel.org/linux-btrfs/20250906122458.75dfc8f0@pumpkin/
+the calculation may overflow u32 when the input value is too large, so
+clamp_t() is not used.  In practice the expected values are in range of
+megabytes to gigabytes (throughput limit) so the bug would not happen.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ Use clamp() and add explanation. ]
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/scrub.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 97d517cdf2df7..682d21a73a67a 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -4297,7 +4297,8 @@ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
- }
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 6776e6ab8d108..fd4c1ca34b5e4 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1369,8 +1369,7 @@ static void scrub_throttle_dev_io(struct scrub_ctx *sctx, struct btrfs_device *d
+ 	 * Slice is divided into intervals when the IO is submitted, adjust by
+ 	 * bwlimit and maximum of 64 intervals.
+ 	 */
+-	div = max_t(u32, 1, (u32)(bwlimit / (16 * 1024 * 1024)));
+-	div = min_t(u32, 64, div);
++	div = clamp(bwlimit / (16 * 1024 * 1024), 1, 64);
  
- static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
--				    struct find_free_extent_ctl *ffe_ctl)
-+				    struct find_free_extent_ctl *ffe_ctl,
-+				    struct btrfs_space_info *space_info)
- {
- 	if (ffe_ctl->for_treelog) {
- 		spin_lock(&fs_info->treelog_bg_lock);
-@@ -4321,6 +4322,7 @@ static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
- 			u64 avail = block_group->zone_capacity - block_group->alloc_offset;
- 
- 			if (block_group_bits(block_group, ffe_ctl->flags) &&
-+			    block_group->space_info == space_info &&
- 			    avail >= ffe_ctl->num_bytes) {
- 				ffe_ctl->hint_byte = block_group->start;
- 				break;
-@@ -4342,7 +4344,7 @@ static int prepare_allocation(struct btrfs_fs_info *fs_info,
- 		return prepare_allocation_clustered(fs_info, ffe_ctl,
- 						    space_info, ins);
- 	case BTRFS_EXTENT_ALLOC_ZONED:
--		return prepare_allocation_zoned(fs_info, ffe_ctl);
-+		return prepare_allocation_zoned(fs_info, ffe_ctl, space_info);
- 	default:
- 		BUG();
- 	}
+ 	/* Start new epoch, set deadline */
+ 	now = ktime_get();
 -- 
 2.51.0
 
