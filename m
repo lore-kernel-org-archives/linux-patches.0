@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1681D5CC9;
-	Fri, 31 Oct 2025 14:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE7822579E;
+	Fri, 31 Oct 2025 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919385; cv=none; b=lFoA7z7IUUAub3uYuP9CX1Yjn1fRll+jXFfsfhlLH7IqfPVzhHH182TJy3wzJ/L4yU4YXpijROGQz4iHoikRwlvMAdcs2wgte4jBRGPL4WKVEYPRnxZISi/zDO6+M9fGrQUMFH7lIo2+qKMzEqACxHhccMdgtUgIEu8QBvEmtkY=
+	t=1761919387; cv=none; b=TsTV5XIPbPYmeRCdgNaQOyW9QuhmV/jTv+Ah1oA0SW94okDxILnuBw0vuxM60Mn2SIMOO2rGkVJq06Vunb9A172gaRUthOKagns7J+ogknaE4ClESusXk+nC9aSHlUBqto2Ou5JIsXtVMb51z+JcCE/PC9E7TX2XkEUxgHo9K54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919385; c=relaxed/simple;
-	bh=S/1qEFXxp5elShJ88sHvqlNvH0jRmY9sCRlJCl/xGtU=;
+	s=arc-20240116; t=1761919387; c=relaxed/simple;
+	bh=46FFnr9WLF9i9H0srZJRWF7kyywIMd+cnzId3IhG+1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vup4OT/JjUgSa+LDbFf4k/VWMZTL+5u2UYH1ZQFRO23KV/e03IIqKd1qViVcc5oXcTgmhR35/xNd/CSR7XoHXvgN3tAlqFswI9v9eY5y/9bzFjWT9vWWNeWsEthKnIanK9+Qgy5lqZGjlTINsRWlT/tC7zDhmVlHeRW/AOm4K04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMPXuTty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cq31Ftb/dc6FvNW7q8lFbOUr4gFh44XFOlrStJdA6WO8vvHZcHfFyOMECNk6DdLZ56WPD/aRQanV7TjuRLewO6RtxD4qSC76+NgjL7yxN96wUIYewQkfnTmBvKkTps4ZS9Nh7/W3HZBl1uI7snGpj4ePCeL2EnA29u8oAmQAHMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyJAKxRc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMPXuTty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D35DC4CEE7;
-	Fri, 31 Oct 2025 14:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyJAKxRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF1AC4CEE7;
+	Fri, 31 Oct 2025 14:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919384;
-	bh=S/1qEFXxp5elShJ88sHvqlNvH0jRmY9sCRlJCl/xGtU=;
+	s=korg; t=1761919386;
+	bh=46FFnr9WLF9i9H0srZJRWF7kyywIMd+cnzId3IhG+1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMPXuTty+5WwFzejc2r8VlJJmcULaxe7Av5vFG9WYI/xW1iQb70grRIl0suwmifp/
-	 xGt20eQHeHuRNqrPqKM6UdHQdOIbN4zlbldEsBbDgYLDreF03WG6qDHr8/oZJ+exgA
-	 xLWIIAAXdlaetc5t5/0WZBStM/2lrgR67RnqeeFc=
+	b=MyJAKxRcMDF7KxI7KS5alVN5JxeZT30QHsoL0+MZQyZnLUvZ2Ul8BHDWbyFERWn5w
+	 /UExs/wr2aFNbDU2pNzyQu7AbCz/FvK2BXMHEgzvOYbpbM21XbaCXqvFeTuPvnCMd7
+	 DZy3VrIhxro7xcG4M8gwe5I8VxCv2850bmLxSdts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Uday M Bhat <uday.m.bhat@intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 22/32] serial: sc16is7xx: remove useless enable of enhanced features
-Date: Fri, 31 Oct 2025 15:01:16 +0100
-Message-ID: <20251031140042.978837354@linuxfoundation.org>
+Subject: [PATCH 6.6 23/32] xhci: dbc: poll at different rate depending on data transfer activity
+Date: Fri, 31 Oct 2025 15:01:17 +0100
+Message-ID: <20251031140043.003030045@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -51,44 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 1c05bf6c0262f946571a37678250193e46b1ff0f ]
+[ Upstream commit fb18e5bb96603cc79d97f03e4c05f3992cf28624 ]
 
-Commit 43c51bb573aa ("sc16is7xx: make sure device is in suspend once
-probed") permanently enabled access to the enhanced features in
-sc16is7xx_probe(), and it is never disabled after that.
+DbC driver starts polling for events immediately when DbC is enabled.
+The current polling interval is 1ms, which keeps the CPU busy, impacting
+power management even when there are no active data transfers.
 
-Therefore, remove re-enable of enhanced features in
-sc16is7xx_set_baud(). This eliminates a potential useless read + write
-cycle each time the baud rate is reconfigured.
+Solve this by polling at a slower rate, with a 64ms interval as default
+until a transfer request is queued, or if there are still are pending
+unhandled transfers at event completion.
 
-Fixes: 43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251006142002.177475-1-hugo@hugovil.com
+Tested-by: Uday M Bhat <uday.m.bhat@intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240229141438.619372-9-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f3d12ec847b9 ("xhci: dbc: fix bogus 1024 byte prefix if ttyDBC read races with stall event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/usb/host/xhci-dbgcap.c |   13 +++++++++++--
+ drivers/usb/host/xhci-dbgcap.h |    2 ++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -582,13 +582,6 @@ static int sc16is7xx_set_baud(struct uar
- 		div /= prescaler;
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -665,7 +665,8 @@ static int xhci_dbc_start(struct xhci_db
+ 		return ret;
  	}
  
--	/* Enable enhanced features */
--	sc16is7xx_efr_lock(port);
--	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
--			      SC16IS7XX_EFR_ENABLE_BIT,
--			      SC16IS7XX_EFR_ENABLE_BIT);
--	sc16is7xx_efr_unlock(port);
--
- 	/* If bit MCR_CLKSEL is set, the divide by 4 prescaler is activated. */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_CLKSEL_BIT,
+-	return mod_delayed_work(system_wq, &dbc->event_work, 1);
++	return mod_delayed_work(system_wq, &dbc->event_work,
++				msecs_to_jiffies(dbc->poll_interval));
+ }
+ 
+ static void xhci_dbc_stop(struct xhci_dbc *dbc)
+@@ -964,8 +965,10 @@ static void xhci_dbc_handle_events(struc
+ 	enum evtreturn		evtr;
+ 	struct xhci_dbc		*dbc;
+ 	unsigned long		flags;
++	unsigned int		poll_interval;
+ 
+ 	dbc = container_of(to_delayed_work(work), struct xhci_dbc, event_work);
++	poll_interval = dbc->poll_interval;
+ 
+ 	spin_lock_irqsave(&dbc->lock, flags);
+ 	evtr = xhci_dbc_do_handle_events(dbc);
+@@ -981,13 +984,18 @@ static void xhci_dbc_handle_events(struc
+ 			dbc->driver->disconnect(dbc);
+ 		break;
+ 	case EVT_DONE:
++		/* set fast poll rate if there are pending data transfers */
++		if (!list_empty(&dbc->eps[BULK_OUT].list_pending) ||
++		    !list_empty(&dbc->eps[BULK_IN].list_pending))
++			poll_interval = 1;
+ 		break;
+ 	default:
+ 		dev_info(dbc->dev, "stop handling dbc events\n");
+ 		return;
+ 	}
+ 
+-	mod_delayed_work(system_wq, &dbc->event_work, 1);
++	mod_delayed_work(system_wq, &dbc->event_work,
++			 msecs_to_jiffies(poll_interval));
+ }
+ 
+ static ssize_t dbc_show(struct device *dev,
+@@ -1242,6 +1250,7 @@ xhci_alloc_dbc(struct device *dev, void
+ 	dbc->idVendor = DBC_VENDOR_ID;
+ 	dbc->bcdDevice = DBC_DEVICE_REV;
+ 	dbc->bInterfaceProtocol = DBC_PROTOCOL;
++	dbc->poll_interval = DBC_POLL_INTERVAL_DEFAULT;
+ 
+ 	if (readl(&dbc->regs->control) & DBC_CTRL_DBC_ENABLE)
+ 		goto err;
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -93,6 +93,7 @@ struct dbc_ep {
+ 
+ #define DBC_QUEUE_SIZE			16
+ #define DBC_WRITE_BUF_SIZE		8192
++#define DBC_POLL_INTERVAL_DEFAULT	64	/* milliseconds */
+ 
+ /*
+  * Private structure for DbC hardware state:
+@@ -139,6 +140,7 @@ struct xhci_dbc {
+ 
+ 	enum dbc_state			state;
+ 	struct delayed_work		event_work;
++	unsigned int			poll_interval;	/* ms */
+ 	unsigned			resume_required:1;
+ 	struct dbc_ep			eps[2];
+ 
 
 
