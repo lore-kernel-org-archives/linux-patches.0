@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1609623F417;
-	Fri, 31 Oct 2025 14:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA0330B03;
+	Fri, 31 Oct 2025 14:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919547; cv=none; b=YI2FR9pkufm+1VyCnwkj8lmyCWk0HZzS6+WOg3BkMCnIisfzGL88hAhRS9tQtUpsEwe3jyOrdJiZe9C1uUAsgDnmOXUKBlXVCPIUY46vhZ4gdgy8GF71DqERpimUsd8l598bZW025NnM72GuBz01EErxP4seb41n+/BVXARFM+0=
+	t=1761919550; cv=none; b=qnfFv12tI1Kezf+oOcpYi+3f6WZpmd7NZlAbMup9ZmSACg/9G5XQ+XBT5GoT1cLhnc3cmTgZobPYCoLf/Dp2LY2udXHsBbnjz7neXwcTZM3DlifO1KxQs+PrS2o166lRxcwjw0LW5qdNrNbW/wB+rBjfYHHqxWB/qE5d4YlwGWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919547; c=relaxed/simple;
-	bh=c/eSBskDaW9/xGd3jpPtsmUdxiagTiuye/FLSVptZFc=;
+	s=arc-20240116; t=1761919550; c=relaxed/simple;
+	bh=ziB1K4ioLHJD92mj1XqwqmBgXedF3fEVpp41cysf+j4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0cZMt/by3lbCfx5et0yMJzfUAQAhl1iG+4tlaJ+mmvsszEYYKGbMeFCYKXxvxQ1l07qgihFS5UCdPIYaG2EfGnuRGG+vWdIQH7jxHSqaSoEkd6VReaclZ4Re2y6JQngSEWOgrM5slj5LtFLia8gbkDzUhIAgyN6NsO8moMlhHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEuRXeuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEWXsVk7O2T9uqSukEHrkU2vT7HotWtpS3cBSS3vA0o6kYM20BiYZFEdHTXoAGBYhyXAl7FkNw6XAmgg7WO+59Bb7kckdlfaZXyglbFvxwF286Hq2XFACTfIO62VYdeXOnLkDHokeKzo9oUV1/hwBop2BNvSfIveSw1MBxB9EcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBwowGdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEuRXeuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860A1C4CEE7;
-	Fri, 31 Oct 2025 14:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBwowGdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A00EC4CEE7;
+	Fri, 31 Oct 2025 14:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919546;
-	bh=c/eSBskDaW9/xGd3jpPtsmUdxiagTiuye/FLSVptZFc=;
+	s=korg; t=1761919549;
+	bh=ziB1K4ioLHJD92mj1XqwqmBgXedF3fEVpp41cysf+j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEuRXeuz4KI8J0UF90XFvvc3fNLW8BxaLP4qLKrPBru/rTTOWdf/IqHWGiIY+WAxu
-	 VyxZIUAI7pED1kqoqoofEC0YNLJV9dPlJAzky3Xap44k1sg/D208FkOAjsFTY9sb+B
-	 EpZFtULdh1AYTAP1KMbK4OBtCKbZKuICNbYn5y0s=
+	b=dBwowGdMn3q3HWBa+9N1NUw9lnHiMqWzvOpWh6ok8VpD3hCw5HDObE8PbEusxvCPa
+	 /Xf18viJ0+PYG38v1B+lfIqu51ifGa3BiXWrNXJDsgp5tXo1vAJ2KMd8yeqUDKMQ0q
+	 FDykkpqGaJL27fUbkaTtTdoHajTnkuJhp4cJCv9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 15/35] perf: Skip user unwind if the task is a kernel thread
-Date: Fri, 31 Oct 2025 15:01:23 +0100
-Message-ID: <20251031140043.925804178@linuxfoundation.org>
+Subject: [PATCH 6.17 16/35] EDAC: Fix wrong executable file modes for C source files
+Date: Fri, 31 Oct 2025 15:01:24 +0100
+Message-ID: <20251031140043.950320962@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
 References: <20251031140043.564670400@linuxfoundation.org>
@@ -52,35 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 16ed389227651330879e17bd83d43bd234006722 ]
+[ Upstream commit 71965cae7db394ff5ba3b2d2befe4e136ceec268 ]
 
-If the task is not a user thread, there's no user stack to unwind.
+Three EDAC source files were mistakenly marked as executable when adding the
+EDAC scrub controls.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250820180428.930791978@kernel.org
+These are plain C source files and should not carry the executable bit.
+Correcting their modes follows the principle of least privilege and avoids
+unnecessary execute permissions in the repository.
+
+  [ bp: Massage commit message. ]
+
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250828191954.903125-1-visitorckw@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/edac/ecs.c        | 0
+ drivers/edac/mem_repair.c | 0
+ drivers/edac/scrub.c      | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100755 => 100644 drivers/edac/ecs.c
+ mode change 100755 => 100644 drivers/edac/mem_repair.c
+ mode change 100755 => 100644 drivers/edac/scrub.c
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index a3dc79ec6f879..c0e938d28758f 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -8192,7 +8192,8 @@ struct perf_callchain_entry *
- perf_callchain(struct perf_event *event, struct pt_regs *regs)
- {
- 	bool kernel = !event->attr.exclude_callchain_kernel;
--	bool user   = !event->attr.exclude_callchain_user;
-+	bool user   = !event->attr.exclude_callchain_user &&
-+		!(current->flags & (PF_KTHREAD | PF_USER_WORKER));
- 	/* Disallow cross-task user callchains. */
- 	bool crosstask = event->ctx->task && event->ctx->task != current;
- 	const u32 max_stack = event->attr.sample_max_stack;
+diff --git a/drivers/edac/ecs.c b/drivers/edac/ecs.c
+old mode 100755
+new mode 100644
+diff --git a/drivers/edac/mem_repair.c b/drivers/edac/mem_repair.c
+old mode 100755
+new mode 100644
+diff --git a/drivers/edac/scrub.c b/drivers/edac/scrub.c
+old mode 100755
+new mode 100644
 -- 
 2.51.0
 
