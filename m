@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27BAAD4B;
-	Fri, 31 Oct 2025 14:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7CC34D387;
+	Fri, 31 Oct 2025 14:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919346; cv=none; b=eteawYSUrToeKFVTabdbJRbtuGmzjQFnZQMhTf0z8RpKoVIf1xcEg96EXZfCseXGPR71rlr0gUVf0SubvkdE+ONu7aVSIkKMYokMbj0hd1aGciwLsbxC/i9YOd2aTrMQC8PPEfDYl0tA8IdgGAYCBVm7I5NQNWSdLMWYt8vyl1w=
+	t=1761919348; cv=none; b=AJmYFHScWiko9tTXILY8zHBgSDHlXrofd8Gzo6O2VmfLhezHf4iwyS/beCxcW7R04LSAOj9vM+v7QlJIeTxws2SmaKvTKvC346dad8XsNTz+VWamPMCLHyHtcsbc6KoOt6Lla47IN/UWr16YkKQwxaK7bOlXbBoTK9EtI7GlW/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919346; c=relaxed/simple;
-	bh=UM030BhM0sPajPATCN4W5B+Gz7sCXfNOmyRec8gf2vU=;
+	s=arc-20240116; t=1761919348; c=relaxed/simple;
+	bh=xzEBATsw5oAtI/jmTRdY04ojLvJMZzltWEQaG0jG8pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iozXDdAzn/mwMao0EWrWY5mtQnomWu+A0AUypsRoadqB81Syh14UnqZYtoJtn+3fJhetgiw6byFSrc4p+sGInjnZQICLq/20JRTbq4L15atVqSOiHj9yO72Gk2KpB6nJ9GXXs44h3khfQSBsiQBUBEVd1cC8++UwjibVm3rNyIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3AhVbCm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/qHxD3RG/bl0ms9zQoysLdrZ+k/dgzyRSXVh32wL6kmv5Hgett3n3IwvDhGuUM24RFnozNhYW1sJ+3HCGwslNm8dz0OnS/XK26exDoCNmfmex0/lr2PsS6egjiguAAi8B79nBCrU9kZJ7dFbp+9nBmE07EJGDS9YVyLnvsuOXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PL4xwCmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3AhVbCm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359BBC4CEE7;
-	Fri, 31 Oct 2025 14:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PL4xwCmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37157C4CEE7;
+	Fri, 31 Oct 2025 14:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919345;
-	bh=UM030BhM0sPajPATCN4W5B+Gz7sCXfNOmyRec8gf2vU=;
+	s=korg; t=1761919348;
+	bh=xzEBATsw5oAtI/jmTRdY04ojLvJMZzltWEQaG0jG8pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3AhVbCmYttN0dT7t4VIXe5aZKYTA8GN8iP5RtykL9miYfrSxykkFtowyW6UAS+7/
-	 RTfe3JfaJ43r3bbkHD4OLI0qXpM/nfT/h8QSlWZ+7VR28b7Oz9lEodML6jkyagkyia
-	 AbpMCqbz/pNio8MdVnlsih7QnTe4WIJZzyQbOoj8=
+	b=PL4xwCmdQKMpwGgR9ZAOTtM7C44j3KfHiZfxpX+AcVAvXYiJBsIwKJDoa89CYAtQb
+	 dMyuUBpR7WVLrn1EBIHD3cuYQFu5VKYMFKjefcGczfhoMblqU4EQ1pjsiOPmIexOVB
+	 g4ImL3YnH6CcgV3zK51qSMAQflI8uXDYawen1wl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 02/32] audit: record fanotify event regardless of presence of rules
-Date: Fri, 31 Oct 2025 15:00:56 +0100
-Message-ID: <20251031140042.450183807@linuxfoundation.org>
+Subject: [PATCH 6.6 03/32] perf: Use current->flags & PF_KTHREAD|PF_USER_WORKER instead of current->mm == NULL
+Date: Fri, 31 Oct 2025 15:00:57 +0100
+Message-ID: <20251031140042.475708285@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140042.387255981@linuxfoundation.org>
 References: <20251031140042.387255981@linuxfoundation.org>
@@ -51,42 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Guy Briggs <rgb@redhat.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit ce8370e2e62a903e18be7dd0e0be2eee079501e1 ]
+[ Upstream commit 90942f9fac05702065ff82ed0bade0d08168d4ea ]
 
-When no audit rules are in place, fanotify event results are
-unconditionally dropped due to an explicit check for the existence of
-any audit rules.  Given this is a report from another security
-sub-system, allow it to be recorded regardless of the existence of any
-audit rules.
+To determine if a task is a kernel thread or not, it is more reliable to
+use (current->flags & (PF_KTHREAD|PF_USER_WORKERi)) than to rely on
+current->mm being NULL.  That is because some kernel tasks (io_uring
+helpers) may have a mm field.
 
-To test, install and run the fapolicyd daemon with default config.  Then
-as an unprivileged user, create and run a very simple binary that should
-be denied.  Then check for an event with
-	ausearch -m FANOTIFY -ts recent
-
-Link: https://issues.redhat.com/browse/RHEL-9065
-Signed-off-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250820180428.592367294@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/audit.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/callchain.c | 6 +++---
+ kernel/events/core.c      | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/audit.h b/include/linux/audit.h
-index 335e1ba5a2327..7ca75f8873799 100644
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -526,7 +526,7 @@ static inline void audit_log_kern_module(const char *name)
+diff --git a/kernel/events/callchain.c b/kernel/events/callchain.c
+index 1273be84392cf..65fea424874c5 100644
+--- a/kernel/events/callchain.c
++++ b/kernel/events/callchain.c
+@@ -202,10 +202,10 @@ get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
  
- static inline void audit_fanotify(u32 response, struct fanotify_response_info_audit_rule *friar)
- {
--	if (!audit_dummy_context())
-+	if (audit_enabled)
- 		__audit_fanotify(response, friar);
- }
+ 	if (user) {
+ 		if (!user_mode(regs)) {
+-			if  (current->mm)
+-				regs = task_pt_regs(current);
+-			else
++			if (current->flags & (PF_KTHREAD | PF_USER_WORKER))
+ 				regs = NULL;
++			else
++				regs = task_pt_regs(current);
+ 		}
  
+ 		if (regs) {
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index b73f5c44113d6..3eb9125431b43 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6985,7 +6985,7 @@ static void perf_sample_regs_user(struct perf_regs *regs_user,
+ 	if (user_mode(regs)) {
+ 		regs_user->abi = perf_reg_abi(current);
+ 		regs_user->regs = regs;
+-	} else if (!(current->flags & PF_KTHREAD)) {
++	} else if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 		perf_get_regs_user(regs_user, regs);
+ 	} else {
+ 		regs_user->abi = PERF_SAMPLE_REGS_ABI_NONE;
+@@ -7612,7 +7612,7 @@ static u64 perf_virt_to_phys(u64 virt)
+ 		 * Try IRQ-safe get_user_page_fast_only first.
+ 		 * If failed, leave phys_addr as 0.
+ 		 */
+-		if (current->mm != NULL) {
++		if (!(current->flags & (PF_KTHREAD | PF_USER_WORKER))) {
+ 			struct page *p;
+ 
+ 			pagefault_disable();
 -- 
 2.51.0
 
