@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA0330B03;
-	Fri, 31 Oct 2025 14:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF46534404F;
+	Fri, 31 Oct 2025 14:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761919550; cv=none; b=qnfFv12tI1Kezf+oOcpYi+3f6WZpmd7NZlAbMup9ZmSACg/9G5XQ+XBT5GoT1cLhnc3cmTgZobPYCoLf/Dp2LY2udXHsBbnjz7neXwcTZM3DlifO1KxQs+PrS2o166lRxcwjw0LW5qdNrNbW/wB+rBjfYHHqxWB/qE5d4YlwGWo=
+	t=1761919553; cv=none; b=h9+c5Ki+srJuRvq13asnkAaO3cc3FmOP7FMBtSBLlMy/1Vn5IjDzWzZF/Tzz79f/08EQmS8p9s56fWgRfNJ6Pi57yc4ml5vjRvEY7vB+aj+l9beGpqAGtTo2AY3sjcts40BgNDuBRroeX7NeRiYSmMyaqxLHrjUXhLR983gQRMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761919550; c=relaxed/simple;
-	bh=ziB1K4ioLHJD92mj1XqwqmBgXedF3fEVpp41cysf+j4=;
+	s=arc-20240116; t=1761919553; c=relaxed/simple;
+	bh=pYS4XJyVKLWHpftU8NW/ZZzxUvyAUv1f3MmjmHkqnSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEWXsVk7O2T9uqSukEHrkU2vT7HotWtpS3cBSS3vA0o6kYM20BiYZFEdHTXoAGBYhyXAl7FkNw6XAmgg7WO+59Bb7kckdlfaZXyglbFvxwF286Hq2XFACTfIO62VYdeXOnLkDHokeKzo9oUV1/hwBop2BNvSfIveSw1MBxB9EcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBwowGdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXjP0BY0R/mLefaK6xun+GJz8/B5rQs6/h2w3+rib1zKbNtTZi2nGRZQnsDMHuW5SI2sYcqPfmPqdk2cKcSjU60EO/yK2t8aJazQSHJMSrzF2MDqKi3+o1HaTgapZ6vWb4+JAakq7q1pPrDqLX2hb+tldIp3kYvMq6XZwJ4vv4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbeYUbst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBwowGdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A00EC4CEE7;
-	Fri, 31 Oct 2025 14:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbeYUbst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A0BC4CEE7;
+	Fri, 31 Oct 2025 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1761919549;
-	bh=ziB1K4ioLHJD92mj1XqwqmBgXedF3fEVpp41cysf+j4=;
+	s=korg; t=1761919552;
+	bh=pYS4XJyVKLWHpftU8NW/ZZzxUvyAUv1f3MmjmHkqnSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBwowGdMn3q3HWBa+9N1NUw9lnHiMqWzvOpWh6ok8VpD3hCw5HDObE8PbEusxvCPa
-	 /Xf18viJ0+PYG38v1B+lfIqu51ifGa3BiXWrNXJDsgp5tXo1vAJ2KMd8yeqUDKMQ0q
-	 FDykkpqGaJL27fUbkaTtTdoHajTnkuJhp4cJCv9I=
+	b=qbeYUbstU4TEEcpJwQ5CxaLfnWE3e9lpQLDWkJJA8uTc6JHJjcpAPTF/l+hLzY2Dq
+	 IQ+R4lBaWAcP1skXcD0r461rg+NxZ6VUK40IubmRRjku4WMDIyaonY4r/vunkIM3PL
+	 /nPy8G2kSz1GOY1t0rY5H1HB3x1BP7UC6nj8SiCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 16/35] EDAC: Fix wrong executable file modes for C source files
-Date: Fri, 31 Oct 2025 15:01:24 +0100
-Message-ID: <20251031140043.950320962@linuxfoundation.org>
+Subject: [PATCH 6.17 17/35] seccomp: passthrough uprobe systemcall without filtering
+Date: Fri, 31 Oct 2025 15:01:25 +0100
+Message-ID: <20251031140043.974667333@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
 References: <20251031140043.564670400@linuxfoundation.org>
@@ -51,41 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 71965cae7db394ff5ba3b2d2befe4e136ceec268 ]
+[ Upstream commit 89d1d8434d246c96309a6068dfcf9e36dc61227b ]
 
-Three EDAC source files were mistakenly marked as executable when adding the
-EDAC scrub controls.
+Adding uprobe as another exception to the seccomp filter alongside
+with the uretprobe syscall.
 
-These are plain C source files and should not carry the executable bit.
-Correcting their modes follows the principle of least privilege and avoids
-unnecessary execute permissions in the repository.
+Same as the uretprobe the uprobe syscall is installed by kernel as
+replacement for the breakpoint exception and is limited to x86_64
+arch and isn't expected to ever be supported in i386.
 
-  [ bp: Massage commit message. ]
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250828191954.903125-1-visitorckw@gmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250720112133.244369-21-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/ecs.c        | 0
- drivers/edac/mem_repair.c | 0
- drivers/edac/scrub.c      | 0
- 3 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100755 => 100644 drivers/edac/ecs.c
- mode change 100755 => 100644 drivers/edac/mem_repair.c
- mode change 100755 => 100644 drivers/edac/scrub.c
+ kernel/seccomp.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/edac/ecs.c b/drivers/edac/ecs.c
-old mode 100755
-new mode 100644
-diff --git a/drivers/edac/mem_repair.c b/drivers/edac/mem_repair.c
-old mode 100755
-new mode 100644
-diff --git a/drivers/edac/scrub.c b/drivers/edac/scrub.c
-old mode 100755
-new mode 100644
+diff --git a/kernel/seccomp.c b/kernel/seccomp.c
+index 3bbfba30a777a..25f62867a16d9 100644
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -741,6 +741,26 @@ seccomp_prepare_user_filter(const char __user *user_filter)
+ }
+ 
+ #ifdef SECCOMP_ARCH_NATIVE
++static bool seccomp_uprobe_exception(struct seccomp_data *sd)
++{
++#if defined __NR_uretprobe || defined __NR_uprobe
++#ifdef SECCOMP_ARCH_COMPAT
++	if (sd->arch == SECCOMP_ARCH_NATIVE)
++#endif
++	{
++#ifdef __NR_uretprobe
++		if (sd->nr == __NR_uretprobe)
++			return true;
++#endif
++#ifdef __NR_uprobe
++		if (sd->nr == __NR_uprobe)
++			return true;
++#endif
++	}
++#endif
++	return false;
++}
++
+ /**
+  * seccomp_is_const_allow - check if filter is constant allow with given data
+  * @fprog: The BPF programs
+@@ -758,13 +778,8 @@ static bool seccomp_is_const_allow(struct sock_fprog_kern *fprog,
+ 		return false;
+ 
+ 	/* Our single exception to filtering. */
+-#ifdef __NR_uretprobe
+-#ifdef SECCOMP_ARCH_COMPAT
+-	if (sd->arch == SECCOMP_ARCH_NATIVE)
+-#endif
+-		if (sd->nr == __NR_uretprobe)
+-			return true;
+-#endif
++	if (seccomp_uprobe_exception(sd))
++		return true;
+ 
+ 	for (pc = 0; pc < fprog->len; pc++) {
+ 		struct sock_filter *insn = &fprog->filter[pc];
+@@ -1042,6 +1057,9 @@ static const int mode1_syscalls[] = {
+ 	__NR_seccomp_read, __NR_seccomp_write, __NR_seccomp_exit, __NR_seccomp_sigreturn,
+ #ifdef __NR_uretprobe
+ 	__NR_uretprobe,
++#endif
++#ifdef __NR_uprobe
++	__NR_uprobe,
+ #endif
+ 	-1, /* negative terminated */
+ };
 -- 
 2.51.0
 
