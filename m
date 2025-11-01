@@ -1,124 +1,102 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E3F1B142D
-	for <patches@lists.linux.dev>; Sat,  1 Nov 2025 05:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339003A1B5
+	for <patches@lists.linux.dev>; Sat,  1 Nov 2025 09:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761973848; cv=none; b=d8aoefTBfxVPSZJx+p7BscBerjotMJLDLrS0yXrewiwtCitPMab4TNNEltpXrhV4+fhSKr21P6DugQScI5A1TDO1kwc05MpVVLPhYHQc+A3IoTq41Xm/Aca6nsiUAhTTEowpQSuaGg+0dI+J6/qK+HgEdjHVU3ccDTFwOlxa8uo=
+	t=1761987694; cv=none; b=Gd271Aj6/IxXS1JT5PX2ndMUioHpCmpXnyhwpsRA9oosvBSGbazIdeHW0TF/ByMcXePK7smHZWLnMOfSQ8lcG6LUxWnRc35NVNML4b7pn908fwxc+uNUiYvIAkoKFaKTJPUCOIDsArdUH6+zjr6Zd491NWSd4wged/BQKAJZ+a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761973848; c=relaxed/simple;
-	bh=eOlM1uFeuGo4OskzqCGnrLnEeqaOGDwuYrRt8MXSqLM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gJe0dXwMImF2rp4UZAI5HTZrWFqOt5mzoyeB11+vubuQxa2dY/1CUadiuZw80W2hILu92TDNpPJazHCmEnDl+PKFEa7jK0YoDU3PV+uof/dNAG92k5x6lq8UXq0nz1UGsBupaZogOauux7Q3T2+wnuf9ceBHYTvaGkeAY1JUVo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Brh52bxZ; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761987694; c=relaxed/simple;
+	bh=OkmXDH+8s6o7nmZLFLfbxEPfQIoBqLBaQVRkKTvwLKQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
+	 References:In-Reply-To; b=PYnNoaxDRjtXPH/w/N7/CJzNll9GzK+6RywSDbK+IeK98sggn9Wf4NfbcQQTl7R50OMTZDBNs0QgFvraOuddlJ2vGFouap0PhjVerd1cCrH05v/T/IZ70gkR9gCmEkEIx33DOnGQ9NWRyzlscov8ckubpUoC2mcqZ/zFJd7IJgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GONH59AQ; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Brh52bxZ"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-378ccb8f84aso32454111fa.3
-        for <patches@lists.linux.dev>; Fri, 31 Oct 2025 22:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761973845; x=1762578645; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cDBf0EPKFSh2QRdvgUh08qctzAfCvCuzR3NbXNNUNTg=;
-        b=Brh52bxZsHO4262ZmI5gcwv8n51PdEms7CAFr1hN6XfBahv//5AtfRcB2524N3tMaM
-         NVI6+DGVHbR/TyDlLOV5/Mt+drJsBkNiGaEeI++Pr3PPqqNm6nm/8UZvGriIA83HMeF0
-         5ToC+3u5FMAvcZhY7JZj7DgaLnViJwUzedJ3d45BAKk45OIrgfJR6nw5GE3HqSWo83eF
-         q4jOwGxezEEF0OrxY5Wbqq2j3dH7mMPAJOro42qNeBecYYv3qTCsFYmoq/4Nv2RvyD3y
-         3GP+KuDT80pM2hM/Qjh74yTJNxSjXh273fcVhzkcahPuGwRUSsdx0tjIVsS0WUtF7DVR
-         uW8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761973845; x=1762578645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cDBf0EPKFSh2QRdvgUh08qctzAfCvCuzR3NbXNNUNTg=;
-        b=KiF70FsXdrV8V7xxwadoOgnWqU2lvEphJUA+O0Fp2HABhf1CDpIQgSqF71YRN2755E
-         XNX1FNSXTRycYPFSrt2fJ5P+0VPY0BsaJuhXU+ScmihpXwl47IS0Ts/SwBAB916yXcFi
-         +z2++bRAw6EBOfV0kTalUiukm0TNM9mOmm1CHH4c6chsz5m+0gKuKqat0n32OGtAA2rn
-         pwsaV6yJf30k7chz9f/62H2qvNwYLPs4lwFczoB8uy1AWl7U8baDc5fpt+iy040jGJ6Y
-         FOIyqpSXLfTW0eBVFPECrfyTo0LUSV0MO4zsp53iDWd1tUuQa8IG9HjjN6ReurTQf6Zn
-         EqlQ==
-X-Gm-Message-State: AOJu0Yw4vaud61xfbQOzVCwIHsJKq/mBmwiddWKM5+CVIGO3uoXilsr1
-	abLzdZ4Cc4i6oku5qIcIkNuv7UvvId/zZNESvUvxthJBPKmVCJiONSrCBg8x0UDrFpJfGCfFlM8
-	wTvxyXHkYziz8LFAHEQA3VVw5E3/g3kw=
-X-Gm-Gg: ASbGncuZuKX+Xg07LTFCZ/IstvfNKQR5vxa1yMTJOYNucqrfjB4emcXE8O7t9MmmjDe
-	Ti2Ru4BxSUqXQnZm+UKXoJVQoP0lM/plUImPvzRLk90rishJ2uOR/8FLNqhdB0lk6Jhq8OOOgQO
-	NDa8oBYH2nFnmHcHZ8hONHdeDCikMcIYu86rZoLGT5SU3fBiDK5RFDvGJvqqiorJ0nrAes73a8a
-	f7kjOJ+XLrVOwhLcNah9EHbnRUttEMqpKGX3ZS9o9rrjV93kIPp5+PbFn5p9Qw4IaG6Hq+I60O8
-	un7K5zAK5qp8ADm/LA==
-X-Google-Smtp-Source: AGHT+IEgcVh16NBSlAcq0VebB5Gm+0g5P4XcZHFf7Hd8YhrkSByvbyzY03uBh9X6qmIXljQ+9mmdAKbfTpWuA4Lurqw=
-X-Received: by 2002:a05:651c:2049:b0:376:4320:e33b with SMTP id
- 38308e7fff4ca-37a18dee5f8mr15061341fa.47.1761973844866; Fri, 31 Oct 2025
- 22:10:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GONH59AQ"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 88CC84E4142A;
+	Sat,  1 Nov 2025 09:01:30 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 41FE36070B;
+	Sat,  1 Nov 2025 09:01:30 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id AA66611818085;
+	Sat,  1 Nov 2025 10:01:27 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1761987689; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=/UrAtR9rvQYKTngRXxxUvdWSHmw552fuZKvvT/tBqRQ=;
+	b=GONH59AQL9jg/3O0Ac/lBXUZSQvQkmUSwXYoEfljuoGCyNeDxW0NjhAwevfsfmP+3bUAUD
+	Zm7cOWjtHnu1isTTJyHHRC7DlRdGU4YJIsMjywl5JjIYFUFMJjcCI4B+gGFZu288INfJE3
+	epFERrayODOEEhFnBS/XLBD/Hbgkj9mLZeQQPxydZkL2pJhp8HCoJnbCKDqOs3dmxnQtNU
+	PxYbg4naK4j7BvskbnVvb9VvRNkYEwJxseeuIl5mMX26pEGE3gu6TOVYwzCQy9ETImJMM9
+	1wh6OTYkpCyrAZo/K2rpYdfhzBfts0MwVaZKbPP/TdPG4VJsEgRJs7TOht+VGA==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20251031140043.939381518@linuxfoundation.org> <19689e2c-5dd1-4c3f-a243-84b69a552f91@googlemail.com>
-In-Reply-To: <19689e2c-5dd1-4c3f-a243-84b69a552f91@googlemail.com>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Sat, 1 Nov 2025 10:40:32 +0530
-X-Gm-Features: AWmQ_bl-6-f_3Ztgk64RenjMy1dM7NuNxp6tpcUL91fjp2wWmf8Gqa3cmQnHIAQ
-Message-ID: <CAC-m1rqVAbQ4HUQibgheOZ6HJf57wmC-MAApAyuuQ63oeDGRHw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 00/40] 6.12.57-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
-	sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 01 Nov 2025 10:01:27 +0100
+Message-Id: <DDX8I8XRC06M.2BIY9ACNMI9ZT@bootlin.com>
+From: =?utf-8?q?Th=C3=A9o_Lebrun?= <theo.lebrun@bootlin.com>
+Subject: Re: [PATCH AUTOSEL 6.17-5.4] net: macb: avoid dealing with
+ endianness in macb_set_hwaddr()
+Cc: =?utf-8?q?Th=C3=A9o_Lebrun?= <theo.lebrun@bootlin.com>, "Sean Anderson"
+ <sean.anderson@linux.dev>, "Simon Horman" <horms@kernel.org>, "Jakub
+ Kicinski" <kuba@kernel.org>, <nicolas.ferre@microchip.com>,
+ <claudiu.beznea@tuxon.dev>
+To: "Sasha Levin" <sashal@kernel.org>, <patches@lists.linux.dev>,
+ <stable@vger.kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251025160905.3857885-1-sashal@kernel.org>
+ <20251025160905.3857885-63-sashal@kernel.org>
+In-Reply-To: <20251025160905.3857885-63-sashal@kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Fri, Oct 31, 2025 at 10:04=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+Hello Sasha & other stable maintainers,
+
+On Sat Oct 25, 2025 at 5:54 PM CEST, Sasha Levin wrote:
+> From: Th=C3=A9o Lebrun <theo.lebrun@bootlin.com>
 >
-> This is the start of the stable review cycle for the 6.12.57 release.
-> There are 40 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> [ Upstream commit 70a5ce8bc94545ba0fb47b2498bfb12de2132f4d ]
 >
-> Responses should be made by Sun, 02 Nov 2025 14:00:34 +0000.
-> Anything received after that time might be too late.
+> bp->dev->dev_addr is of type `unsigned char *`. Casting it to a u32
+> pointer and dereferencing implies dealing manually with endianness,
+> which is error-prone.
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.57-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
+> Replace by calls to get_unaligned_le32|le16() helpers.
 >
-> thanks,
+> This was found using sparse:
+>    =E2=9F=A9 make C=3D2 drivers/net/ethernet/cadence/macb_main.o
+>    warning: incorrect type in assignment (different base types)
+>       expected unsigned int [usertype] bottom
+>       got restricted __le32 [usertype]
+>    warning: incorrect type in assignment (different base types)
+>       expected unsigned short [usertype] top
+>       got restricted __le16 [usertype]
+>    ...
 >
-> greg k-h
+> Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+> Signed-off-by: Th=C3=A9o Lebrun <theo.lebrun@bootlin.com>
+> Reviewed-by: Simon Horman <horms@kernel.org>
+> Link: https://patch.msgid.link/20250923-macb-fixes-v6-5-772d655cdeb6@boot=
+lin.com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
+I know about the Fixes trailer and therefore include it whenever I know
+my patch is stable-worthy. Are there any trailers to mention that a
+given patch isn't stable material? If not, would you consider adding it?
 
-Build and Boot Report for 6.12.57-rc1
+Thanks,
 
-The kernel version 6.12.57-rc1 was built and boot-tested using qemu-x86_64
-and qemu-arm64 with the default configuration (defconfig). The build and bo=
-ot
-processes completed successfully, and the kernel operated as expected
-in the virtualized environments without any issues.
+--
+Th=C3=A9o Lebrun, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
-Build Details :
-Builds : arm64, x86_64
-Kernel Version: 6.12.57-rc1
-Configuration : defconfig
-Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git
-Commit : c3010c2f692bb27dc44fd2318888446944f5846e
-
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
-
-Best regards,
-Dileep Malepu
