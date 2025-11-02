@@ -1,138 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B1E1F37D4;
-	Sun,  2 Nov 2025 21:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6C41A9FB5
+	for <patches@lists.linux.dev>; Sun,  2 Nov 2025 22:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762119008; cv=none; b=n81yNzALCJC1bnHz1BvW7TGPD8KJvLsHPzUNfk+7s21VauvAg2ozuMxs2cbrnskEP3/UMskG2r4vYLKGy5sLyH0x0HnwPEcocH/2DojBhaizdrEtAg5QWZP4Pqv3D7OPD5w1woCPUm/Fd04muqdOyuADmTmbVOvbMnyjS3cvmEw=
+	t=1762122044; cv=none; b=XNZP0KLwWwlTVdUgiy7no2W4IXUiNmw4HscVl7nuW7ybWvvP+aNBEBPUMkoELyurhbHfGmXRHw8RXHwGEYBJHsVNDAuX4RmLe4VB+rmCwh9Why+OeEma8cgictK+XpG+pYFwXNf2vG2gM1FnyF8nZRKTnDTsL1MV8RSI4goewNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762119008; c=relaxed/simple;
-	bh=CMt3hSc6+1N7XcmiQfEo1ARISxV/1YKl1tb5rGl5dzs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhCKr2pZ5N/iknJNHcboHf48fj6NcmtCzk4wiNwSq3cxTn2eRmRcZCXdcAELM3QoAB2o0GhMsGnwWPIVowJRAY7nu5+lPwQGqsfka803lbP/QBfs/BFhYqIzpztPXlVvGgaLitMfaRwOSanOLPLQUrTYh4G0lElmyix2mWr2A8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WNK58TLC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762122044; c=relaxed/simple;
+	bh=vZO3PHgqOIKSLpT1XNcnJgC5AHDehu62cqI6I9Q+irs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RdaXcytPr/vrRAupr7oKBl9tq5NcxUCfobM5l9xZdeuJQ0fX3M+iOFXnskzTXEj8Lk0nAo+gmVS4jbssJprWMawkFtCHtvFfkDmZ+qyV5W1EgaUPo3Std5IC8UwaZIseMjPMrSPlIZFoh/2GjFEuFg4FHMs+gNmogUdOvW/e864=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rb9I45dM; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WNK58TLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6F8C4CEF7;
-	Sun,  2 Nov 2025 21:30:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762119005;
-	bh=CMt3hSc6+1N7XcmiQfEo1ARISxV/1YKl1tb5rGl5dzs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNK58TLCLVVgs2Y6/dXmejeCtwjSc7J6bYXdG09ehTGfHxrJQNLUVtNRX3KdWIUy7
-	 pJFK5FU3sj8csv2FFPJwRav1Vw+mYjqZbHHJciQpjLLJKuvCP26DyQWeraZ8CHk88A
-	 NUgsZjrRb+HY3X521YN5LxsveUu1IFO1AOcSmleKf68dhyw2gw8uEb5PKAGvd1KJ05
-	 EPmNYOTf0CntKpp6v2UGPhAf1Msl1UMhavd3g2msCWXQVBydI/M9v5uVzkKJT69JWj
-	 gxWqYCRpK4Fpw+cdk4BjH2GhXr8cYkdN0oTnf2ERF7pRRcw6LZ6lNKqur3ESwg0Qgj
-	 xvpq4aRRcCvcw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: [PATCH 2/2] rust: kbuild: workaround `rustdoc` doctests modifier bug
-Date: Sun,  2 Nov 2025 22:28:53 +0100
-Message-ID: <20251102212853.1505384-2-ojeda@kernel.org>
-In-Reply-To: <20251102212853.1505384-1-ojeda@kernel.org>
-References: <20251102212853.1505384-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rb9I45dM"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-340bb45e37cso494579a91.3
+        for <patches@lists.linux.dev>; Sun, 02 Nov 2025 14:20:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762122043; x=1762726843; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EyIK1ilUw35FUA5u8sORs0QLERPXEburx1e7TliwGA0=;
+        b=Rb9I45dMuZbgV2o1FpXoLMY5bOM9lnOFbwALJfxd2saWDxSAHBE/2KD8PpAhs4V/Nq
+         iW38M7huGi0K94hNUzr9H7EmTC6VivojShOscnFtQWDiYVkkxuuYNPkqXgpQmWF2/PHj
+         /GTvlqxLEjQqMEZKgQzYuaNmbbAFKHgOjyzBnf37BIbSUHuEeSjZjXTeZksq3/8f3skg
+         iAK7JVrQPLWuG17SrU3go8jI9kq1Zu1IwYcVrGwm5tEa9Xhrc+rIaNrEh+UBvoUfATAr
+         qJsvnavdTSDLBeWHFTvcxCXj8LzWOam1Y6Af13TT3gyGeYDpfxfdR8sk6/cYfUUVl9DO
+         cGLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762122043; x=1762726843;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EyIK1ilUw35FUA5u8sORs0QLERPXEburx1e7TliwGA0=;
+        b=tQG+GF3PhJbV13QRybSWcyXhW7OxqRH5Q3mSZvKLQdB+F2TrPO5ZqBYrS4KV8ppSQO
+         NcB4rCoBOjtUuxT5to6DCttiB/RKz4U3Dl0qiYv+S17hH154FT69cZQFF+ckRk5DXa4K
+         mREEgm3QSNizEFxjuMujGV5oXyw4YHndNvclNjAqlyrtHuWqo3dnN8YbJGE99kakN7Fz
+         RxxHFvVjcDr+nHwpkB2Z8fp1PO/Rdh4gWqhmddq8fBXajqdUOC+RQq/gU+1HPRQ8/OkH
+         yrdOLLQBrAMAg2hYi7Q0bf6I0zQAzodl9LgRIHzJk3pd9HQp8dclBczrXDjyWNQVMzGq
+         F5MA==
+X-Forwarded-Encrypted: i=1; AJvYcCUUQ9+tqqEr/Me9/bc8evGo1zcqgDqDJDM5qMgiTlNSqSoGjg7t0WJ/9Erhv1XdQRVBUgdvN3Qf@lists.linux.dev
+X-Gm-Message-State: AOJu0YxMqHG6s+gIq8e+7R9EtH0TQrJMHPlhlCXg7LKDt3nTTYB48ICn
+	iqY/UIOvNTAnP7T0N5nhGx2QKFd1we+ba75DpYvQMxL/UlL1NS5kPPTFGGvbO1IZ/xvcolYXG8L
+	djQ7/MUS0DuHjYRW5X33hBHVzparepSU=
+X-Gm-Gg: ASbGncsA19x76dEeVdVlAB1iZd+0Yei+3qkHQHk7xOSi9uur50YAeohw8aeIq8SisA5
+	P3mlcyIZ+4VGifbQ4NVoMb9qBJ6N9uaOwbZzhsuZ9ODiA1nC7Q5GEsfZXgkmYQzUgW4uiHxp/Gw
+	5KethDTclb6PUfM+gKWDlmp9tUwmvKTkzyxgfmDEV9MwNzJGJAAh/fcIYbguo44VU4IApEQxfxl
+	v1d0RcnqfkK6A8jPjvhMPTB99LTIO/JrWtWNG4F3V65JMBMjHRDlrV3XkiGUkn5JujEPTK2Obpb
+	18gdSqIsni/gbT7M5lvhtsTxDBT3a9ABKUecJf2bx+w61azHHeiXF3is8CpZgdtDWeyDVA7aDPh
+	49tU=
+X-Google-Smtp-Source: AGHT+IG0gQL4wpqk/N4eVevZ6EiRRAV29O6T0xOWLIHtqG3MysFxyrTz0rHu6gvrEfX+GEpHUZmKMf3I7Bn4K3wt4cg=
+X-Received: by 2002:a17:903:2346:b0:295:586a:7644 with SMTP id
+ d9443c01a7336-295586a77ecmr35979015ad.9.1762122042760; Sun, 02 Nov 2025
+ 14:20:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251029073344.349341-1-ojeda@kernel.org>
+In-Reply-To: <20251029073344.349341-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 2 Nov 2025 23:20:29 +0100
+X-Gm-Features: AWmQ_bl3OkSjDsxEokBQbHWG2tBRxHmsdbaPCFuCFuWjjrdm7lQYLIM3Vzk9M-g
+Message-ID: <CANiq72mKjZfR5jfzra-EEDx1BVJ23iwJgRHuFf+3wJh+iE=T1A@mail.gmail.com>
+Subject: Re: [PATCH] rust: condvar: fix broken intra-doc link
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `rustdoc` modifiers bug [1] was fixed in Rust 1.90.0 [2], for which
-we added a workaround in commit abbf9a449441 ("rust: workaround `rustdoc`
-target modifiers bug").
+On Wed, Oct 29, 2025 at 8:34=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> The future move of pin-init to `syn` uncovers the following broken
+> intra-doc link:
+>
+>     error: unresolved link to `crate::pin_init`
+>       --> rust/kernel/sync/condvar.rs:39:40
+>        |
+>     39 | /// instances is with the [`pin_init`](crate::pin_init!) and [`n=
+ew_condvar`] macros.
+>        |                                        ^^^^^^^^^^^^^^^^ no item =
+named `pin_init` in module `kernel`
+>        |
+>        =3D note: `-D rustdoc::broken-intra-doc-links` implied by `-D warn=
+ings`
+>        =3D help: to override `-D warnings` add `#[allow(rustdoc::broken_i=
+ntra_doc_links)]`
+>
+> Currently, when rendered, the link points to a literal `crate::pin_init!`
+> URL.
+>
+> Thus fix it.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 129e97be8e28 ("rust: pin-init: fix documentation links")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-However, `rustdoc`'s doctest generation still has a similar issue [3],
-being fixed at [4], which does not affect us because we apply the
-workaround to both, and now, starting with Rust 1.91.0 (released
-2025-10-30), `-Zsanitizer` is a target modifier too [5], which means we
-fail with:
+Applied to `rust-fixes` -- thanks!
 
-      RUSTDOC TK rust/kernel/lib.rs
-    error: mixing `-Zsanitizer` will cause an ABI mismatch in crate `kernel`
-     --> rust/kernel/lib.rs:3:1
-      |
-    3 | //! The `kernel` crate.
-      | ^
-      |
-      = help: the `-Zsanitizer` flag modifies the ABI so Rust crates compiled with different values of this flag cannot be used together safely
-      = note: unset `-Zsanitizer` in this crate is incompatible with `-Zsanitizer=kernel-address` in dependency `core`
-      = help: set `-Zsanitizer=kernel-address` in this crate or unset `-Zsanitizer` in `core`
-      = help: if you are sure this will not cause problems, you may use `-Cunsafe-allow-abi-mismatch=sanitizer` to silence this error
-
-A simple way around is to add the sanitizer to the list in the existing
-workaround (especially if we had not started to pass the sanitizer
-flags in the previous commit, since in that case that would not be
-necessary). However, that still applies the workaround in more cases
-than necessary.
-
-Instead, only modify the doctests flags to ignore the check for
-sanitizers, so that it is more local (and thus the compiler keeps checking
-it for us in the normal `rustdoc` calls). Since the previous commit
-already treated the `rustdoc` calls as kernel objects, this should allow
-us in the future to easily remove this workaround when the time comes.
-
-By the way, the `-Cunsafe-allow-abi-mismatch` flag overwrites previous
-ones rather than appending, so it needs to be all done in the same flag.
-Moreover, unknown modifiers are rejected, and thus we have to gate based
-on the version too.
-
-Finally, `-Zsanitizer-cfi-normalize-integers` is not affected, so it is
-not needed in the workaround.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/issues/144521 [1]
-Link: https://github.com/rust-lang/rust/pull/144523 [2]
-Link: https://github.com/rust-lang/rust/issues/146465 [3]
-Link: https://github.com/rust-lang/rust/pull/148068 [4]
-Link: https://github.com/rust-lang/rust/pull/138736 [5]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/Makefile | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/rust/Makefile b/rust/Makefile
-index 5de103e20841..ce6d9c9d9727 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -69,6 +69,9 @@ core-edition := $(if $(call rustc-min-version,108700),2024,2021)
- # the time being (https://github.com/rust-lang/rust/issues/144521).
- rustdoc_modifiers_workaround := $(if $(call rustc-min-version,108800),-Cunsafe-allow-abi-mismatch=fixed-x18)
- 
-+# Similarly, for doctests (https://github.com/rust-lang/rust/issues/146465).
-+doctests_modifiers_workaround := $(rustdoc_modifiers_workaround)$(if $(call rustc-min-version,109100),$(comma)sanitizer)
-+
- # `rustc` recognizes `--remap-path-prefix` since 1.26.0, but `rustdoc` only
- # since Rust 1.81.0. Moreover, `rustdoc` ICEs on out-of-tree builds since Rust
- # 1.82.0 (https://github.com/rust-lang/rust/issues/138520). Thus workaround both
-@@ -236,7 +239,7 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
- 		--extern bindings --extern uapi \
- 		--no-run --crate-name kernel -Zunstable-options \
- 		--sysroot=/dev/null \
--		$(rustdoc_modifiers_workaround) \
-+		$(doctests_modifiers_workaround) \
- 		--test-builder $(objtree)/scripts/rustdoc_test_builder \
- 		$< $(rustdoc_test_kernel_quiet); \
- 	$(objtree)/scripts/rustdoc_test_gen
--- 
-2.51.2
-
+Cheers,
+Miguel
