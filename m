@@ -1,110 +1,113 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6C41A9FB5
-	for <patches@lists.linux.dev>; Sun,  2 Nov 2025 22:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B6B1A9FB5
+	for <patches@lists.linux.dev>; Sun,  2 Nov 2025 22:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762122044; cv=none; b=XNZP0KLwWwlTVdUgiy7no2W4IXUiNmw4HscVl7nuW7ybWvvP+aNBEBPUMkoELyurhbHfGmXRHw8RXHwGEYBJHsVNDAuX4RmLe4VB+rmCwh9Why+OeEma8cgictK+XpG+pYFwXNf2vG2gM1FnyF8nZRKTnDTsL1MV8RSI4goewNM=
+	t=1762122053; cv=none; b=NeyiaPGOzzdUqDPzOLrRhftux6PMgbzA36JF6Mn0rUpOvPUPJyAme16g9S5IqRbEoudIrmA01BJFccMHlMluxnxbUJh7jEOY8gp+hsOZq5BhUzUwBEkFifmvzvvxISuk0ZgStuPaps4/FK2JMvjSxRHsjIrCuTalHS2cas1RIXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762122044; c=relaxed/simple;
-	bh=vZO3PHgqOIKSLpT1XNcnJgC5AHDehu62cqI6I9Q+irs=;
+	s=arc-20240116; t=1762122053; c=relaxed/simple;
+	bh=WT7V+mIh7biSb9hoQQKTPcN5LrBBwROnmw3huldzWHY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RdaXcytPr/vrRAupr7oKBl9tq5NcxUCfobM5l9xZdeuJQ0fX3M+iOFXnskzTXEj8Lk0nAo+gmVS4jbssJprWMawkFtCHtvFfkDmZ+qyV5W1EgaUPo3Std5IC8UwaZIseMjPMrSPlIZFoh/2GjFEuFg4FHMs+gNmogUdOvW/e864=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rb9I45dM; arc=none smtp.client-ip=209.85.216.44
+	 To:Cc:Content-Type; b=rfdLrnhkx/Hsa1OOSAiHJuvJgtYpMRn3IU0Jp82da6jiyGqiFbUOAuSwJ4MNJs/ZCg7qjeN895yAERwzmeJjClm0S182apNZI++qu2ZJIany8Nql+4Cdbsr/tgsAJM2quvZLPS+n/9idH53h1OTlhd2oDZBdKBDGsabl4wYy5cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ccTigMac; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rb9I45dM"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-340bb45e37cso494579a91.3
-        for <patches@lists.linux.dev>; Sun, 02 Nov 2025 14:20:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccTigMac"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-340ad724ea4so298904a91.0
+        for <patches@lists.linux.dev>; Sun, 02 Nov 2025 14:20:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762122043; x=1762726843; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1762122051; x=1762726851; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EyIK1ilUw35FUA5u8sORs0QLERPXEburx1e7TliwGA0=;
-        b=Rb9I45dMuZbgV2o1FpXoLMY5bOM9lnOFbwALJfxd2saWDxSAHBE/2KD8PpAhs4V/Nq
-         iW38M7huGi0K94hNUzr9H7EmTC6VivojShOscnFtQWDiYVkkxuuYNPkqXgpQmWF2/PHj
-         /GTvlqxLEjQqMEZKgQzYuaNmbbAFKHgOjyzBnf37BIbSUHuEeSjZjXTeZksq3/8f3skg
-         iAK7JVrQPLWuG17SrU3go8jI9kq1Zu1IwYcVrGwm5tEa9Xhrc+rIaNrEh+UBvoUfATAr
-         qJsvnavdTSDLBeWHFTvcxCXj8LzWOam1Y6Af13TT3gyGeYDpfxfdR8sk6/cYfUUVl9DO
-         cGLQ==
+        bh=ldh/rrZAKoIw8nkk3grHKnCTpuj+wVkO9BtM8FlPSJs=;
+        b=ccTigMacnXYDS3TysLVGMK2lUWrSk9h4qSc8pVUxYtwXEZLS3FCpw4NXnEp5BAB3c9
+         OXQZEQ1WJAX+wXVOYl1MQeaZWXA88Gr7tJ0Pc1QYoSsPhWEoRQR1VV0orUc1TbBZLKyF
+         WKXtqW31bDD4RGy4BEBLUsC5vgMVbDEAMYxmkfbW4u1BJJz6Y0D03ljNQCneNfHzR5EN
+         6dk11HxpLeTIRZV3b7mw0FXoaGKG35/wA/At3wRlFcrT5k9fHvIPI9iMRXT1Knplf0Nv
+         z4wgzaOqoUiq95LXNcwnjz3YTrWCZwwDVsoTogygdyf2ndQ1K/+em26YxZ1SpDkENLMF
+         OQBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762122043; x=1762726843;
+        d=1e100.net; s=20230601; t=1762122051; x=1762726851;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EyIK1ilUw35FUA5u8sORs0QLERPXEburx1e7TliwGA0=;
-        b=tQG+GF3PhJbV13QRybSWcyXhW7OxqRH5Q3mSZvKLQdB+F2TrPO5ZqBYrS4KV8ppSQO
-         NcB4rCoBOjtUuxT5to6DCttiB/RKz4U3Dl0qiYv+S17hH154FT69cZQFF+ckRk5DXa4K
-         mREEgm3QSNizEFxjuMujGV5oXyw4YHndNvclNjAqlyrtHuWqo3dnN8YbJGE99kakN7Fz
-         RxxHFvVjcDr+nHwpkB2Z8fp1PO/Rdh4gWqhmddq8fBXajqdUOC+RQq/gU+1HPRQ8/OkH
-         yrdOLLQBrAMAg2hYi7Q0bf6I0zQAzodl9LgRIHzJk3pd9HQp8dclBczrXDjyWNQVMzGq
-         F5MA==
-X-Forwarded-Encrypted: i=1; AJvYcCUUQ9+tqqEr/Me9/bc8evGo1zcqgDqDJDM5qMgiTlNSqSoGjg7t0WJ/9Erhv1XdQRVBUgdvN3Qf@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMqHG6s+gIq8e+7R9EtH0TQrJMHPlhlCXg7LKDt3nTTYB48ICn
-	iqY/UIOvNTAnP7T0N5nhGx2QKFd1we+ba75DpYvQMxL/UlL1NS5kPPTFGGvbO1IZ/xvcolYXG8L
-	djQ7/MUS0DuHjYRW5X33hBHVzparepSU=
-X-Gm-Gg: ASbGncsA19x76dEeVdVlAB1iZd+0Yei+3qkHQHk7xOSi9uur50YAeohw8aeIq8SisA5
-	P3mlcyIZ+4VGifbQ4NVoMb9qBJ6N9uaOwbZzhsuZ9ODiA1nC7Q5GEsfZXgkmYQzUgW4uiHxp/Gw
-	5KethDTclb6PUfM+gKWDlmp9tUwmvKTkzyxgfmDEV9MwNzJGJAAh/fcIYbguo44VU4IApEQxfxl
-	v1d0RcnqfkK6A8jPjvhMPTB99LTIO/JrWtWNG4F3V65JMBMjHRDlrV3XkiGUkn5JujEPTK2Obpb
-	18gdSqIsni/gbT7M5lvhtsTxDBT3a9ABKUecJf2bx+w61azHHeiXF3is8CpZgdtDWeyDVA7aDPh
-	49tU=
-X-Google-Smtp-Source: AGHT+IG0gQL4wpqk/N4eVevZ6EiRRAV29O6T0xOWLIHtqG3MysFxyrTz0rHu6gvrEfX+GEpHUZmKMf3I7Bn4K3wt4cg=
-X-Received: by 2002:a17:903:2346:b0:295:586a:7644 with SMTP id
- d9443c01a7336-295586a77ecmr35979015ad.9.1762122042760; Sun, 02 Nov 2025
- 14:20:42 -0800 (PST)
+        bh=ldh/rrZAKoIw8nkk3grHKnCTpuj+wVkO9BtM8FlPSJs=;
+        b=ghtu9uHNeJpr4Gs5eS61sBwPboRgqSEnsDYc/kgp98LzKVKOOPjprSN+Hnk9If4YPk
+         KGo3XK49kPmRqDm8JQRf5oehOOc/TR/6krDqn0xEV7US4+0bex/R/Rm6Y1qlkVFQx4/x
+         QSqH4ljShX23cbC7kJ8nWotjhTsNkViRCySZjqnIAADYo5xGTj+AeyspNjo196B+oXPT
+         GlKBo0nc+StfE3F6saBYa3RnMDU3XpGZgBWV/bMmn1JNQoqWO6AfKyArdo5x4et1iPP+
+         UGzF+nL5aWGDD2b7LLZSPkO/pVrqFnK0gE+RKumW7a4dWbmD/SIZ7hrwPFnrkN0VdY8C
+         BQ9w==
+X-Forwarded-Encrypted: i=1; AJvYcCWsNowFX6TBZdfUf2mi2h59rr8CajlTP8t2qQMZEiV4hHhdmt2Qu7MLNCG2MXnz7hcupe+PORds@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVZ2hyq7SzFxCwvPl8E4R5F+g6JjTHiUvH3/DvwR+KbzyLEcRE
+	osb/vOKN6tKyAldGNAeDPJCc2hRZ7kDcSL3PEQj5WfEQzsQaONpJT5r8jcRefgZAgZK67BJWdSF
+	fk4OnrQtrPDUqY19xoo5lLFtzxHUWFjM=
+X-Gm-Gg: ASbGnctrs7yBZq5uMHnfV4YaIfyiy/IczBEA2zI38mrMo1QvfrGDetTYDc10/mi1jLN
+	e8Zqh8C3xqyWtVSBoG1/Gou/WeFegNqSfSUIiUTXGEYhhYLzXPfwx5k3Bqduv0inbjBnuFHrXB3
+	usTR4Be4VY0L6ElAd1B17acbQkSbw/0ib9ha50jHLoFjSfTyyNheXFI7OGdMfvLqlAXhQRiWe70
+	eftVx5Fqv8qI3eoJwoL64H6UuKHP/h+azVQJAWsuq7z9PN/YZwfRz3/t7IyeRKau1Dm+06WHs+1
+	M0xz9ii3fv+RDaNa3KHUokd6FcE5qPi8mdJEoSDLNxLOWvpW0fmT3dFlEtbDNi09G0brHgn03an
+	w/kM=
+X-Google-Smtp-Source: AGHT+IHryhoTOrFuU+nX2/XXVf7kh67HIj6pJAwGZM07cNYk4Ch5KXgJowgB3YhvDy4LBmrqXMtVIjcCmU0HL6FeUno=
+X-Received: by 2002:a17:903:188f:b0:27a:186f:53ec with SMTP id
+ d9443c01a7336-2951a4da98fmr50067215ad.9.1762122050659; Sun, 02 Nov 2025
+ 14:20:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251029073344.349341-1-ojeda@kernel.org>
-In-Reply-To: <20251029073344.349341-1-ojeda@kernel.org>
+References: <20251029071406.324511-1-ojeda@kernel.org>
+In-Reply-To: <20251029071406.324511-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 2 Nov 2025 23:20:29 +0100
-X-Gm-Features: AWmQ_bl3OkSjDsxEokBQbHWG2tBRxHmsdbaPCFuCFuWjjrdm7lQYLIM3Vzk9M-g
-Message-ID: <CANiq72mKjZfR5jfzra-EEDx1BVJ23iwJgRHuFf+3wJh+iE=T1A@mail.gmail.com>
-Subject: Re: [PATCH] rust: condvar: fix broken intra-doc link
+Date: Sun, 2 Nov 2025 23:20:38 +0100
+X-Gm-Features: AWmQ_bmo-1G4gStAz5BNMs8sUlqk3doCuOqq-d5OyHMqc8oaNkX_-Dz-ZcwIf5I
+Message-ID: <CANiq72k-7f91kNrAAnwFoRYyFYjRB+mo3PCRFzTkn7E-7xrCNw@mail.gmail.com>
+Subject: Re: [PATCH] rust: devres: fix private intra-doc link
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 29, 2025 at 8:34=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+On Wed, Oct 29, 2025 at 8:15=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> The future move of pin-init to `syn` uncovers the following broken
+> The future move of pin-init to `syn` uncovers the following private
 > intra-doc link:
 >
->     error: unresolved link to `crate::pin_init`
->       --> rust/kernel/sync/condvar.rs:39:40
->        |
->     39 | /// instances is with the [`pin_init`](crate::pin_init!) and [`n=
-ew_condvar`] macros.
->        |                                        ^^^^^^^^^^^^^^^^ no item =
-named `pin_init` in module `kernel`
->        |
->        =3D note: `-D rustdoc::broken-intra-doc-links` implied by `-D warn=
-ings`
->        =3D help: to override `-D warnings` add `#[allow(rustdoc::broken_i=
-ntra_doc_links)]`
+>     error: public documentation for `Devres` links to private item `Self:=
+:inner`
+>        --> rust/kernel/devres.rs:106:7
+>         |
+>     106 | /// [`Self::inner`] is guaranteed to be initialized and is alwa=
+ys accessed read-only.
+>         |       ^^^^^^^^^^^ this item is private
+>         |
+>         =3D note: this link will resolve properly if you pass `--document=
+-private-items`
+>         =3D note: `-D rustdoc::private-intra-doc-links` implied by `-D wa=
+rnings`
+>         =3D help: to override `-D warnings` add `#[allow(rustdoc::private=
+_intra_doc_links)]`
 >
-> Currently, when rendered, the link points to a literal `crate::pin_init!`
-> URL.
+> Currently, when rendered, the link points to "nowhere" (an inexistent
+> anchor for a "method").
 >
 > Thus fix it.
 >
 > Cc: stable@vger.kernel.org
-> Fixes: 129e97be8e28 ("rust: pin-init: fix documentation links")
+> Fixes: f5d3ef25d238 ("rust: devres: get rid of Devres' inner Arc")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Applied to `rust-fixes` -- thanks!
