@@ -1,71 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DFD24886A;
-	Sun,  2 Nov 2025 12:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DDE225791;
+	Sun,  2 Nov 2025 21:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762086073; cv=none; b=RGCI1mqJySE7EQm4SC61C6+rR7v8esEYdvw7u8ZUJo5DY/JgKZ7jGJmYoJpNGV2MC8flUBVKyr/qAnziU0dKzQ2j05Nms7TiAbPwU43ez3motjiBBD9+8hNaLipXrQcuWr3hdvpjIYilVQaIjCps9vP9UyTSPsh1A3pH6tlfx38=
+	t=1762119002; cv=none; b=BfThHVq+jHzjHvh7NCR7IYnCUREJZ2ldKA8m5pMiNAiadRufMEHrsy4JSKYExFYgCeGsAjuJvPs+RZ1Znxv12PJ1gOFiOg6uwka1dDfnyH5i8iwzPCZcK9/I2+8ojIyGmFmFvZnrRrR+HpZZwWZSdcZ7gL6FJ2afuaKLcX06/yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762086073; c=relaxed/simple;
-	bh=O7jIUxQNCbvO8uMB8WV9okSTULm1ZnN06xbAr5KvNU8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i5M62W0cMMvqhgKgvi9ujAU7aVlkXF4RJaPQSQx9aIN/7910r4k/Y6zna5LyqaLehNjC+e+3zkzmfNfgajGq4fp1lkGHHjxyX90KtLVdg0G9+2DrGLwtxHaB3SOfbkjZ7q8+5tixdp0W16aO74N5EMSrfZBhfg5+rQ1/S9wS1u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsrSEB22; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762119002; c=relaxed/simple;
+	bh=Iw13zHgZThn7lQVt8FQ6YD6tJgqTn5cgsMoeYx1qZVg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mG4w4VWQQpPzmcfYcVd1g083pQfy7GArhd9O42NkEJohIQCC7K3oZnNT+B9eQkrxEeaFeprfHG90hRwZvvGqMhGlHgzc6Xwnms37Y2HMvpulP0snCiqknAysfePAaIIbvU27Mfh0HPbYjK02/nlRlWc7gjKzjX7DWCTHJDlAg/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mnhr2b3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsrSEB22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67681C4CEF7;
-	Sun,  2 Nov 2025 12:21:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762086072;
-	bh=O7jIUxQNCbvO8uMB8WV9okSTULm1ZnN06xbAr5KvNU8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HsrSEB22YfZzHhr3+cfriEPEmZQ+yyUjtn59jtGqyKZ4dxGaqyWOrN41yXvJO4pjF
-	 SnMpCDH8PWhgY6yL5IJFse5Wvo01/ARW9zoQdGRBHY8oePoSQwDPw3h54IdNAFP1xl
-	 Jdaa3gvVfmD2YB4fExqvjyBC2vsNUHNksec8tu9k=
-Date: Sun, 2 Nov 2025 21:21:09 +0900
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Aaron Lu <ziqianlu@bytedance.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.17 20/35] sched/fair: update_cfs_group() for throttled
- cfs_rqs
-Message-ID: <2025110201-trapezoid-swiftly-486c@gregkh>
-References: <20251031140043.564670400@linuxfoundation.org>
- <20251031140044.050079148@linuxfoundation.org>
- <CANCG0GdKaxR4_0=O_nRUBj1LA2i=91bNj7M7N_k5P0F=ChGa3Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mnhr2b3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77954C116D0;
+	Sun,  2 Nov 2025 21:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762119000;
+	bh=Iw13zHgZThn7lQVt8FQ6YD6tJgqTn5cgsMoeYx1qZVg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Mnhr2b3eRrWFT9heoUctNj5wRsVdIi50eAjQlk3qeByU5MXcM0GOmDaUDlaq4CZCC
+	 JbLHBHwp5wOkKae5Bx5OxD4MsFTsMw+m4hsU7D93VrkIhRXuYMSDsiTxClzvwxA662
+	 JTjkYDMlbOQ7aDyugcYAXcrZI72CaSHN5fPwK8iN0u5LbzxMQSLX5KrZpVuLC5+d+B
+	 f6VD2P8hA7EGMuFZIyajOaPldHrKauOt7MkFvgMXd9X2P28UkbrrhflBZSMXPmeo6i
+	 3mzTNVNJKbMs3UPHDxzYU8tBIHfAqPx6fqavieo/xLjxu/A4XQb7dKwXcuGCs7Tvf3
+	 XG0Mb5JZAfdGQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: [PATCH 1/2] rust: kbuild: treat `build_error` and `rustdoc` as kernel objects
+Date: Sun,  2 Nov 2025 22:28:52 +0100
+Message-ID: <20251102212853.1505384-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANCG0GdKaxR4_0=O_nRUBj1LA2i=91bNj7M7N_k5P0F=ChGa3Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Nov 02, 2025 at 12:07:54PM +0100, Aaron Lu wrote:
-> Hello,
-> 
-> On Fri, Oct 31, 2025 at 03:01:28PM +0100, Greg Kroah-Hartman wrote:
-> > 6.17-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: Aaron Lu <ziqianlu@bytedance.com>
-> >
-> > [ Upstream commit fcd394866e3db344cbe0bb485d7e3f741ac07245 ]
-> >
-> > With task based throttle model, tasks in a throttled hierarchy are
-> > allowed to continue to run if they are running in kernel mode. For this
-> > reason, PELT clock is not stopped for these cfs_rqs in throttled
-> > hierarchy when they still have tasks running or queued.
-> 
-> This commit is needed only when the "task based throttle model" is used
-> and that "task based throttle model" feature is merged in v6.18 kernel,
-> so I don't think we need this commit for 6.17 based kernels.
+Even if normally `build_error` isn't a kernel object, it should still
+be treated as such so that we pass the same flags. Similarly, `rustdoc`
+targets are never kernel objects, but we need to treat them as such.
 
-Now dropped, thanks.
+Otherwise, starting with Rust 1.91.0 (released 2025-10-30), `rustc`
+will complain about missing sanitizer flags since `-Zsanitizer` is a
+target modifier too [1]:
 
-greg k-h
+    error: mixing `-Zsanitizer` will cause an ABI mismatch in crate `build_error`
+     --> rust/build_error.rs:3:1
+      |
+    3 | //! Build-time error.
+      | ^
+      |
+      = help: the `-Zsanitizer` flag modifies the ABI so Rust crates compiled with different values of this flag cannot be used together safely
+      = note: unset `-Zsanitizer` in this crate is incompatible with `-Zsanitizer=kernel-address` in dependency `core`
+      = help: set `-Zsanitizer=kernel-address` in this crate or unset `-Zsanitizer` in `core`
+      = help: if you are sure this will not cause problems, you may use `-Cunsafe-allow-abi-mismatch=sanitizer` to silence this error
+
+Thus explicitly mark them as kernel objects.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust/pull/138736 [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/Makefile | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/rust/Makefile b/rust/Makefile
+index 23c7ae905bd2..5de103e20841 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -127,9 +127,14 @@ rustdoc-core: private rustc_target_flags = --edition=$(core-edition) $(core-cfgs
+ rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs rustdoc-clean FORCE
+ 	+$(call if_changed,rustdoc)
+ 
++# Even if `rustdoc` targets are not kernel objects, they should still be
++# treated as such so that we pass the same flags. Otherwise, for instance,
++# `rustc` will complain about missing sanitizer flags causing an ABI mismatch.
++rustdoc-compiler_builtins: private is-kernel-object := y
+ rustdoc-compiler_builtins: $(src)/compiler_builtins.rs rustdoc-core FORCE
+ 	+$(call if_changed,rustdoc)
+ 
++rustdoc-ffi: private is-kernel-object := y
+ rustdoc-ffi: $(src)/ffi.rs rustdoc-core FORCE
+ 	+$(call if_changed,rustdoc)
+ 
+@@ -147,6 +152,7 @@ rustdoc-pin_init: $(src)/pin-init/src/lib.rs rustdoc-pin_init_internal \
+     rustdoc-macros FORCE
+ 	+$(call if_changed,rustdoc)
+ 
++rustdoc-kernel: private is-kernel-object := y
+ rustdoc-kernel: private rustc_target_flags = --extern ffi --extern pin_init \
+     --extern build_error --extern macros \
+     --extern bindings --extern uapi
+@@ -522,6 +528,10 @@ $(obj)/pin_init.o: $(src)/pin-init/src/lib.rs $(obj)/compiler_builtins.o \
+     $(obj)/$(libpin_init_internal_name) $(obj)/$(libmacros_name) FORCE
+ 	+$(call if_changed_rule,rustc_library)
+ 
++# Even if normally `build_error` is not a kernel object, it should still be
++# treated as such so that we pass the same flags. Otherwise, for instance,
++# `rustc` will complain about missing sanitizer flags causing an ABI mismatch.
++$(obj)/build_error.o: private is-kernel-object := y
+ $(obj)/build_error.o: private skip_gendwarfksyms = 1
+ $(obj)/build_error.o: $(src)/build_error.rs $(obj)/compiler_builtins.o FORCE
+ 	+$(call if_changed_rule,rustc_library)
+-- 
+2.51.2
+
