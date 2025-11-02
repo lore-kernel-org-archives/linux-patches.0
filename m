@@ -1,124 +1,126 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from inert-arianrhow.relay-egress.a.mail.umich.edu (relay-egress-host.us-east-2.a.mail.umich.edu [18.216.144.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE37238176
-	for <patches@lists.linux.dev>; Sun,  2 Nov 2025 02:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2559224AE6;
+	Sun,  2 Nov 2025 08:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.216.144.57
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762052347; cv=none; b=cxUuKeQXshsS+qtLfyJ4Ea5LiTpJvm23SmiimQbozjoqNUyYffbFWPHxx+Qc1O89zAaP73FHRCkKxtfW+BuF7seRz6yWB1/mVUO8W3VJleaY+xMPoJHvFKgKQye9KX/vNvClSAJRT9PI1FZ+7L4Ve4IwNvEZAYd0YFIOk2eQUWk=
+	t=1762070605; cv=none; b=Srz3jCiqh3bs0ofv4Yvsl4XPAljjxBfDCnXBIgmFqSWOKLXB4Xnd9H8Ig/fXDcBKH5392+Daj1b7AH6jZuYeiHW6g8leWcmku3y2BKePgiQvVjknHT2wNDHcHg3YqxtwSf4MHkyzNkbADQ7NDbQ7bUb4iPlQWTNA+g2IzuigsXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762052347; c=relaxed/simple;
-	bh=obt3aM36cVJabIYjFO5PbdxBdgxz9xRXrzbYELuVAn0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DleBe0bMt/Tcj8n0edMAVsqrrIo6x4bdapG/9JJBHT+katMg/Xga8nKHDYgv8qsx13aYOEi4OO9qS9c6EmOkAPPOxXaBFHfOLDJxgA54Lm0AyQuw3QecYLrS9JQWMie1A1gqNk4uTbmBVIWOg/MBhPOG/nlU5CLWakLgXq6gyRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=hG7oNUcN; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1762070605; c=relaxed/simple;
+	bh=GnZVaprzaUNXLrszhG+AfitqnH/3NOGgJ9lds690guY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=iSt/PtW5Yx/IS6E6jJrVEbs+l313lpGR7RbyhbhQg0JRD9qY56mUbcVB6g3sCaG0YFYeoTvRP+B8MlVD1eVICqkCWZD2pENBSVfkkWOmRUr5jl0Qe8hj7Eql+meCINcJXtcB7+V9YmzhKcb83PIvhdHViFXjK9FdABKrXzUszAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=mSQt7UJy; arc=none smtp.client-ip=18.216.144.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="hG7oNUcN"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2953ad5517dso16440715ad.0
-        for <patches@lists.linux.dev>; Sat, 01 Nov 2025 19:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1762052345; x=1762657145; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rLumh3cNsj4A5S7s0QtpZk3S8e1GvxVj+uYG/2PIV6M=;
-        b=hG7oNUcNS9vrExlrlYRMmPuZ7/vbk9EXHrC/QUIYsQD9FFEkrtevf8a0TT5dHxu+VK
-         pkUrvAYkfkomoKGC6dwhiOt9nomvnGVfg6Ar17Zqs/z1No0fN9i/A+TmgQGTGQIphZnQ
-         pq3so046CRU1H55cq7f1Tns7gwD09PXVo+e5BDIM74X7MRisip/skIt1r7p4cprCnzQW
-         qBDUHnN0foV+ntI/h0DiU9ZJX8sf11bfNeq5XcrSPpgIj4I+ONnHGelZGkjB0ZTKLa3Z
-         gvA+SHpq2MWR5dzCK2RD5Tk5iIFU+SibsY+Bllj5Wfqc47p7WjPRtv+wxfdH2ckQFn3B
-         AErg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762052345; x=1762657145;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rLumh3cNsj4A5S7s0QtpZk3S8e1GvxVj+uYG/2PIV6M=;
-        b=OsSkoN83Ced67e5sNLL0Hx1fufRtOXitqOTa6eKDIFzKndKQOlt8s0dHc4IJekWuB0
-         +wTRWDlYDkjGCPnmLUD+9adx3ToW6tDNAoKDiyzTlk8CV2CBSDqDy+tnVey4esB2QszK
-         B02aHGo7qkleeJEdr9VT5G0jD4SP837v49J2gRFGYnNOWwsmdB3ztAaunaAVi9q6qi4Y
-         ZMY/VKGctyEvnSJJv+kLqxgrSztdeMD2MJ0iQZJIIiVwpxp93FIQYyQF55re+qmtU0Mn
-         zvAv6A7+puNCyxqqy2ykcj3HZpRAOT5nZ1vbQiHSzP+4etUFSqf+suPZFsmohuvcLDBM
-         YWbg==
-X-Forwarded-Encrypted: i=1; AJvYcCUuRUYi9Dxn/iwgbGrCfgNRDB0WA3dOzrKlY2LeF4Wf1PR6F3hEjn6jCGb3cJhGlW4yq6z2+f6p@lists.linux.dev
-X-Gm-Message-State: AOJu0YxO2NFoNVTaMYi97DMCfBj03YYDbhe8sd23KxAQwR8JpKTFx+M5
-	H98H+BJajvcKAlb+ypr0SA5cNPEgtA61t+aBHO9h8M4TL+70rwPpta7YhmLo2iLWjlysU8gv15b
-	f8qarRWgcjtb8noSdVuNP2+TnDw79kwy3+6IfLK86aA==
-X-Gm-Gg: ASbGnctJpHVRz6nodS8dsHiqXI/c0Kw4QkrCADKwh6VnWDk0oHf7UDgl+JA/cUA+8U9
-	z1h60lgsUOg/m1htG6DwnKtHOrph2zlmTzqJpIm9dNsYZISB2L3+Jelt5tvH6oIbSGeAzYklM/k
-	L2gNME5TZX04UseseWtzbfGOkrtYJuPuDj90YEJBoLtOczFUx6hb54L0/gkWZT3ZX2Z3a7UD1GO
-	00XoX1krOACTynhbss3FDDJlbJf0kstpwS3DXMSWefJyEwzPq6A++4JJ34F1j2JtJwQJcbXfdvl
-	fJY2pVgUvF3Xp6RKsAWeGeqYrq1c
-X-Google-Smtp-Source: AGHT+IH7KUMAuAewCAP00Q6zBbvodvUMs+s5nG+cFcTWFTo/5afr/24R9eJSZ4skcRLpRH3OqFtHPtQDMzOEOkj5qXc=
-X-Received: by 2002:a17:902:d511:b0:295:64f8:d9cd with SMTP id
- d9443c01a7336-29564f8dcf4mr34382905ad.15.1762052345170; Sat, 01 Nov 2025
- 19:59:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="mSQt7UJy"
+Received: from fond-ellyllon.authn-relay.a.mail.umich.edu (ip-10-0-74-91.us-east-2.compute.internal [10.0.74.91])
+	by inert-arianrhow.relay-egress.a.mail.umich.edu with ESMTPS
+	id 69070F05.2B98C4AA.5C5DB4D5.974104;
+	Sun, 02 Nov 2025 02:57:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=umich.edu;
+	s=relay-2; t=1762070274;
+	bh=JOCHX5StUrYQWAzbdTyea3OJMkuVyGm3IZMtYYvHQ5s=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=mSQt7UJysnXvFKKXtAnGgrl2JQEi0272axO6sMubWvJ4yV12qGYdhWJmwWnTl3BgJ
+	 p3G+Z8eaz6ymweRctxWkxYSUI+YNiogXWcZdi+t16S7uI7Q1ELmHfM7Ktu0p/SaYh7
+	 fdGcQF5UU+F6ADFDyPzFgpzgsy4vREG76fNIK+gwyzno+MafApTBCiHyMGu1TYkYPt
+	 5m+2vtf9E8BRpmUcnwI+wrdPVVUuLMHIGqLZdMHVOmZZkW2UlQZTIt8GUUrkiuk6xG
+	 TUqt5mg0LWxTSVxjyZcUt9oqysgcZxEgpBL0bpp0/CZTA+zMP7w5PTEMW92yMq968W
+	 4jfVzaqv5op0Q==
+Authentication-Results: fond-ellyllon.authn-relay.a.mail.umich.edu; 
+	iprev=fail policy.iprev=73.110.187.65 (Mismatch);
+	auth=pass smtp.auth=tmgross
+Received: from localhost (Mismatch [73.110.187.65])
+	by fond-ellyllon.authn-relay.a.mail.umich.edu with ESMTPSA
+	id 69070F01.33BAC196.2EB97120.90244;
+	Sun, 02 Nov 2025 02:57:54 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20251031140043.564670400@linuxfoundation.org>
-In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Sun, 2 Nov 2025 11:58:49 +0900
-X-Gm-Features: AWmQ_blFwNNxtlVAJhO9Sw2HMPpAD5tSqM9C6mgS06bG4B6-NzncKglA43uu1qk
-Message-ID: <CAKL4bV5rU0eSF_MsKV1aW9A+FHquRi327fvakT5Hy6ATzN24Xg@mail.gmail.com>
-Subject: Re: [PATCH 6.17 00/35] 6.17.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 02 Nov 2025 01:57:52 -0600
+Message-Id: <DDY1S4C4NY54.1S5RB5BI48AEJ@umich.edu>
+Subject: Re: [PATCH] rust: kbuild: support `-Cjump-tables=n` for Rust 1.93.0
+From: "Trevor Gross" <tmgross@umich.edu>
+To: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Nathan Chancellor" <nathan@kernel.org>, "Nicolas
+ Schier" <nicolas@fjasle.eu>, "Huacai Chen" <chenhuacai@kernel.org>, "Thomas
+ Gleixner" <tglx@linutronix.de>, "Ingo Molnar" <mingo@redhat.com>, "Borislav
+ Petkov" <bp@alien8.de>, "Dave Hansen" <dave.hansen@linux.intel.com>,
+ <x86@kernel.org>
+Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alice
+ Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>, "Danilo
+ Krummrich" <dakr@kernel.org>, <rust-for-linux@vger.kernel.org>,
+ <linux-kbuild@vger.kernel.org>, "WANG Xuerui" <kernel@xen0n.name>,
+ <loongarch@lists.linux.dev>, "H. Peter Anvin" <hpa@zytor.com>,
+ <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+X-Mailer: aerc 0.21.0
+References: <20251101094011.1024534-1-ojeda@kernel.org>
+In-Reply-To: <20251101094011.1024534-1-ojeda@kernel.org>
 
-Hi Greg
-
-On Fri, Oct 31, 2025 at 11:14=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Sat Nov 1, 2025 at 4:40 AM CDT, Miguel Ojeda wrote:
+> Rust 1.93.0 (expected 2026-01-22) is stabilizing `-Zno-jump-tables`
+> [1][2] as `-Cjump-tables=3Dn` [3].
 >
-> This is the start of the stable review cycle for the 6.17.7 release.
-> There are 35 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> Without this change, one would eventually see:
 >
-> Responses should be made by Sun, 02 Nov 2025 14:00:34 +0000.
-> Anything received after that time might be too late.
+>       RUSTC L rust/core.o
+>     error: unknown unstable option: `no-jump-tables`
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.17.7-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.17.y
-> and the diffstat can be found below.
+> Thus support the upcoming version.
 >
-> thanks,
+> Link: https://github.com/rust-lang/rust/issues/116592 [1]
+> Link: https://github.com/rust-lang/rust/pull/105812 [2]
+> Link: https://github.com/rust-lang/rust/pull/145974 [3]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+
+> ---
+>  arch/loongarch/Makefile | 2 +-
+>  arch/x86/Makefile       | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> greg k-h
+> diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
+> index dc5bd3f1b8d2..96ca1a688984 100644
+> --- a/arch/loongarch/Makefile
+> +++ b/arch/loongarch/Makefile
+> @@ -109,7 +109,7 @@ endif
+>  ifdef CONFIG_RUSTC_HAS_ANNOTATE_TABLEJUMP
+>  KBUILD_RUSTFLAGS		+=3D -Cllvm-args=3D--loongarch-annotate-tablejump
+>  else
+> -KBUILD_RUSTFLAGS		+=3D -Zno-jump-tables # keep compatibility with older =
+compilers
+> +KBUILD_RUSTFLAGS		+=3D $(if $(call rustc-min-version,109300),-Cjump-tabl=
+es=3Dn,-Zno-jump-tables) # keep compatibility with older compilers
+>  endif
+>  ifdef CONFIG_LTO_CLANG
+>  # The annotate-tablejump option can not be passed to LLVM backend when L=
+TO is enabled.
+> diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+> index 4db7e4bf69f5..c60371db49d9 100644
+> --- a/arch/x86/Makefile
+> +++ b/arch/x86/Makefile
+> @@ -98,7 +98,7 @@ ifeq ($(CONFIG_X86_KERNEL_IBT),y)
+>  #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D104816
+>  #
+>  KBUILD_CFLAGS +=3D $(call cc-option,-fcf-protection=3Dbranch -fno-jump-t=
+ables)
+> -KBUILD_RUSTFLAGS +=3D -Zcf-protection=3Dbranch -Zno-jump-tables
+> +KBUILD_RUSTFLAGS +=3D -Zcf-protection=3Dbranch $(if $(call rustc-min-ver=
+sion,109300),-Cjump-tables=3Dn,-Zno-jump-tables)
+>  else
+>  KBUILD_CFLAGS +=3D $(call cc-option,-fcf-protection=3Dnone)
+>  endif
 >
+> base-commit: dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa
 
-6.17.7-rc1 tested.
-
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.17.7-rc1rv-g7914a8bbc909
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20250813, GNU ld (GNU
-Binutils) 2.45.0) #1 SMP PREEMPT_DYNAMIC Sun Nov  2 11:13:09 JST 2025
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
