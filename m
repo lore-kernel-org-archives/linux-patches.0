@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC9D199230;
-	Mon,  3 Nov 2025 18:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DFF31DD82;
+	Mon,  3 Nov 2025 18:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762193007; cv=none; b=s/OM39JZeGotEKjW84/RySIYOu987sUsTNapVjukp4xrq6BjLDpHUOODQS7bBTOI2sMnWdJfTTYFhXRP8keVdIfBOuwI72nv0KKafh0MeZIeu5VGde610h3m/trvB0lUnMN7yu9VNu1zl+D83SvfmFDcfngj8Bt/AR+P5nIRbLg=
+	t=1762193008; cv=none; b=pLgRkpMa+6IJPabLNdBEJndrduA363IVighpBSaRNshudSWuCOkEB3IuaqDxMrl9oKrJhRTMTjXbk4hvyS7ZS5W6zMuMD8dJFc/LAVThqS82YrfWkiQy4pZBoSfvj0R5pHCeSttx7WSkrFsqEEued1bvMns8nqdTIlxoKSW9B/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762193007; c=relaxed/simple;
-	bh=UL8Js49huRx7aT4gp/I4Ht+cvGv/co458eSlIZFYkRA=;
+	s=arc-20240116; t=1762193008; c=relaxed/simple;
+	bh=YOjQBkrOvTLYl9O3qPNqMbiCs0u056QzurwCIfKrTaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZX4hvYeKdQ/8jsZDaVvxdLV9YR5WpuCIgC5KGgw/+soODbRRzh5klxPCct7PeteMr5seU79QPEbndKSPKVRBCbIhpt1XShQfp4YyTyImWyuqsDzS5gofv4+XAfESjuW8hBhKkiA0IgeQSYhDF8c1YIy1C476oUmow8AOLpeIPuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkFyHOqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=defltxglzNvUPv+7ZITqB94jWwi7tfj+O7TtqKxKwqdmtxia9BIiK/f3wDkSxGf8akc8N9MXjb/yFeBDlAS8xI+ChmaMNOuq1uekVhX3uifhmUgT8s3pDqeNl+c4afqdASY6vs8PPBCR6MGjOO0rA8H9PXJTHTOHkk5vk4N/r0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F736mNZ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkFyHOqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B18C4CEE7;
-	Mon,  3 Nov 2025 18:03:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F736mNZ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55759C4CEE7;
+	Mon,  3 Nov 2025 18:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762193006;
-	bh=UL8Js49huRx7aT4gp/I4Ht+cvGv/co458eSlIZFYkRA=;
+	s=k20201202; t=1762193008;
+	bh=YOjQBkrOvTLYl9O3qPNqMbiCs0u056QzurwCIfKrTaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkFyHOqZdOj/xDaP5JCI6P6etqjVHMZetVPPbr27e9XRl4yATkgTiE3YiyN2ZqnKG
-	 6MeHT0/dJTAkdEOdJV/cLCDUDIIa20lePqd2TfaNJEr5LSHVDKUiFcxg7DfEqLH+L5
-	 SS34xFBYR/nxw8sH74I6jY9CJOnqePrg2ii91JlnV4vBKF590ls5Fi0tWwUzB+RZ1q
-	 Ys395tNcVrKA3mxAQFsDkUiZ1iTfV3fa1JCyZesRik4f9oVv8LQI2Tcm9nXWQZNgXz
-	 rXdgJyT3pQupdTUWu18Y/66B9+yBQ3dVSdUJSaeKRYy2FNS5Pw/tcghH3tUxSYi8ay
-	 bZX+G+EINiooA==
+	b=F736mNZ4enqmL1CdoNBgCseU/Rb6cT+mn8V/+4DdA2zn6krYSoi32FImyJgsY5Mmq
+	 eS2xkqfvGanND5uHf/4K0l6HgNDFKrt4Sbq9QDK/9qsyASgGQw2/8EueQUJO3CX4Ct
+	 O17hWlY4l5npThOxsCldovbc/heH0Hyk4cI+99epdadY7F9qiIfbjZaO8G20UxmoUm
+	 q17JewytWt5tlGPBlWk7Lb1m6NwqICEprcRCI+iX8K4JL9jIyTysjFiYpTfDK+3x0H
+	 7Ot70mZ4DBIZUgtcZs7HmW79Rv5vJw8SwQSHsr/WCaOnt7/j7tk9LvenVG+2pGDdtu
+	 kznpX5MOOcY3A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
-	Nathan Chancellor <nathan@kernel.org>,
+Cc: Sidharth Seela <sidharthseela@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	wang lian <lianux.mm@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	nsc@kernel.org,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com,
-	linux-kbuild@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] kconfig/mconf: Initialize the default locale at startup
-Date: Mon,  3 Nov 2025 13:02:32 -0500
-Message-ID: <20251103180246.4097432-19-sashal@kernel.org>
+	hannes@cmpxchg.org,
+	nathan@kernel.org,
+	linux-mm@kvack.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17] selftests: cachestat: Fix warning on declaration under label
+Date: Mon,  3 Nov 2025 13:02:33 -0500
+Message-ID: <20251103180246.4097432-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251103180246.4097432-1-sashal@kernel.org>
 References: <20251103180246.4097432-1-sashal@kernel.org>
@@ -48,152 +52,167 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.7
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Horký <jakub.git@horky.net>
+From: Sidharth Seela <sidharthseela@gmail.com>
 
-[ Upstream commit 3927c4a1084c48ef97f11281a0a43ecb2cb4d6f1 ]
+[ Upstream commit 920aa3a7705a061cb3004572d8b7932b54463dbf ]
 
-Fix bug where make menuconfig doesn't initialize the default locale, which
-causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
-UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
+Fix warning caused from declaration under a case label. The proper way
+is to declare variable at the beginning of the function. The warning
+came from running clang using LLVM=1; and is as follows:
 
-Signed-off-by: Jakub Horký <jakub.git@horky.net>
-Link: https://patch.msgid.link/20251014154933.3990990-1-jakub.git@horky.net
-[nathan: Alphabetize locale.h include]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+-test_cachestat.c:260:3: warning: label followed by a declaration is a C23 extension [-Wc23-extensions]
+  260 |                 char *map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
+      |
+
+Link: https://lore.kernel.org/r/20250929115405.25695-2-sidharthseela@gmail.com
+Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: wang lian <lianux.mm@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Nhat Pham <nphamcs@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of this commit and the kernel
-repository, here is my determination:
+Now let me compile my comprehensive analysis based on all the data
+gathered:
 
-## **Backport Status: YES**
+## Analysis Summary
 
-### Analysis Summary
+**ANSWER: YES**
 
-**Tools Used:**
-- Git history analysis (git log, git show, git branch)
-- File examination (Read tool on mconf.c and nconf.c)
-- Web search for ncurses locale initialization patterns
-- Repository comparison across branches
+This commit should be backported to stable kernel trees (specifically
+6.17.y and any newer stable branches that contain the buggy code).
 
-**Key Findings:**
+### Detailed Analysis
 
-### 1. **Code Change Analysis**
-The commit adds just 2 lines of code:
-- `setlocale(LC_ALL, "");` in the main() function before init_dialog()
-- `#include <locale.h>` header (alphabetically ordered)
+#### 1. **Code Context and Bug Identification**
 
-This is placed at scripts/kconfig/mconf.c:932, immediately after signal
-handler setup and before any ncurses initialization.
+Using semantic code analysis tools and git history examination, I
+identified:
 
-### 2. **Bug Impact Assessment**
-- **Scope**: Affects `make menuconfig` display in UTF-8 terminals
-  (PuTTY, and others that don't support VT100 ACS by default)
-- **Symptom**: Menu borders appear as "lqqqqk" instead of proper box-
-  drawing characters
-- **User Impact**: Degrades usability for kernel developers/users
-  configuring kernels in affected terminals
-- **Severity**: Non-critical but user-visible cosmetic/usability issue
+- **Function analyzed**: `run_cachestat_test()` in
+  tools/testing/selftests/cachestat/test_cachestat.c (lines 222-295)
+- **Bug introduced**: Commit d6a511dea45ce (July 2025) - "selftests:
+  cachestat: add tests for mmap"
+- **Affected versions**: v6.17 and later (confirmed via `git tag
+  --contains d6a511dea45ce`)
+- **Bug confirmed in v6.17.7**: Using `git show
+  v6.17.7:tools/testing/selftests/cachestat/test_cachestat.c`, I
+  verified the problematic code exists:
+  ```c
+  case FILE_MMAP:
+  char *map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,  //
+  VIOLATION: declaration after label
+  ```
 
-### 3. **Risk Analysis**
-**Extremely Low Risk:**
-- This is build-time tooling only - does NOT affect kernel runtime
-  behavior
-- Standard ncurses programming pattern (documented in ncurses best
-  practices)
-- No dependencies on other kernel subsystems
-- setlocale() is a standard POSIX C library function with well-defined
-  behavior
-- Change is isolated to menuconfig tool's main() function
+#### 2. **Semantic Analysis Used**
 
-### 4. **Companion Commit Evidence**
-Critical finding: The companion fix for nconfig (commit 43c2931a95e6b)
-**has already been backported** to 6.17 stable as commit 707f0e1262828,
-signed-off by Sasha Levin on Nov 2, 2025. Both fixes address the
-**identical issue** in parallel tools (mconf vs nconf).
+- **mcp__semcode__find_function**: Located `run_cachestat_test()`
+  function and confirmed the bug exists at line 260
+- **mcp__semcode__find_callers**: Identified that this is a test
+  function called from main
+- **Git history analysis**: Traced bug introduction and verified no
+  prior fix exists
 
-**Inconsistency**: Having nconf fixed but not mconf creates an asymmetry
-where `make nconfig` displays correctly but `make menuconfig` still has
-broken borders.
+#### 3. **Nature of the Fix**
 
-### 5. **Backport Precedent**
-Found evidence of similar kconfig/scripts fixes being backported:
-- "kconfig: nconf: Ensure null termination where strncpy is used"
-  (multiple stable backports)
-- Other build system fixes when they affect user-visible behavior
+The fix is **minimal and safe**:
+- **Changed**: Variable `char *map` declaration moved from line 260
+  (under case label) to line 229 (with other variable declarations)
+- **Lines modified**: Only 2 lines changed (declaration location)
+- **Risk level**: Zero - pure code style fix with no behavioral changes
+- **Compiler warning**: `-Wc23-extensions` when building with clang
+  LLVM=1
 
-### 6. **Stable Tree Compliance**
-Checking against stable kernel rules:
-- ✅ **Bug fix**: Yes - fixes incorrect display behavior
-- ✅ **Important**: Yes - affects common developer workflow
-- ✅ **Small change**: Yes - only 2 lines + include
-- ✅ **Low risk**: Yes - build tooling only, standard pattern
-- ✅ **Self-contained**: Yes - no dependencies
-- ❌ **Security fix**: No
-- ❌ **Regression fix**: No - longstanding bug
-- ⚠️ **Stable tag**: No explicit "Cc: stable@vger.kernel.org" in
-  original commit
+#### 4. **Backporting Precedent**
 
-### 7. **Backport Status**
-The mconf fix has already been **prepared for backport** as commit
-9ee168ca1754b (signed-off by Sasha Levin) and exists in
-remotes/build/linus-next, but has not yet been merged into the 6.17
-stable HEAD (7660ce69123ea).
+I found strong precedent for backporting selftest build fixes:
+- **Commit 90c1ffd1347f3** (bc4d5f5d2debf upstream): "selftests:
+  cachestat: Fix build warnings on ppc64"
+  - Similar warning fix for the same test file
+  - **WAS backported to stable** (shows "Signed-off-by: Sasha Levin"
+    indicating automated stable backport)
+  - Establishes that cachestat selftest build fixes ARE appropriate for
+    stable trees
 
-### Recommendation Rationale:
+#### 5. **Impact Assessment**
 
-**YES - This commit should be backported because:**
+- **Scope**: Affects only userspace selftest code, not kernel runtime
+- **User Impact**: Developers building selftests with clang will get
+  warnings without this fix
+- **Build Impact**: Does NOT break builds (warning, not error), but
+  reduces noise and follows best practices
+- **Testing Impact**: Enables cleaner CI/CD pipelines that treat
+  warnings as errors
 
-1. **Consistency**: The nconf companion fix is already backported; not
-   backporting mconf creates an inconsistent user experience
-2. **User Impact**: Improves usability for developers configuring
-   kernels in common terminal emulators
-3. **Zero Risk**: Build-time only, standard locale initialization, no
-   runtime kernel impact
-4. **Clean Application**: Should apply cleanly to all stable trees
-   (verified against 6.17)
-5. **Precedent**: Already prepared by stable maintainer (Sasha Levin
-   signed-off 9ee168ca1754b)
-6. **Simplicity**: Minimal 2-line change following best practices
+#### 6. **Stable Tree Compliance**
 
-**Stable kernel rule alignment:** This is a straightforward bug fix that
-improves user-visible behavior with minimal code change and zero risk to
-kernel runtime. While not critical, it meets the stable tree criteria of
-being "important enough" to fix a common usability issue affecting
-kernel developers.
+✅ **Fixes a real issue**: Violates C language standards (pre-C23)
+✅ **Small and contained**: 2-line change, single file
+✅ **No architectural changes**: Pure variable declaration movement
+✅ **No new features**: Maintains existing functionality
+✅ **Well-reviewed**: Multiple Reviewed-by, Acked-by tags from
+maintainers
+✅ **Precedent exists**: Similar fixes were backported before
 
- scripts/kconfig/mconf.c | 3 +++
- 1 file changed, 3 insertions(+)
+#### 7. **Commit Quality**
 
-diff --git a/scripts/kconfig/mconf.c b/scripts/kconfig/mconf.c
-index 84ea9215c0a7e..b8b7bba84a651 100644
---- a/scripts/kconfig/mconf.c
-+++ b/scripts/kconfig/mconf.c
-@@ -12,6 +12,7 @@
- #include <errno.h>
- #include <fcntl.h>
- #include <limits.h>
-+#include <locale.h>
- #include <stdarg.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -931,6 +932,8 @@ int main(int ac, char **av)
+The commit has proper maintainer approval:
+- Signed-off-by: Shuah Khan (selftest maintainer)
+- Reviewed-by: SeongJae Park
+- Reviewed-by: wang lian
+- Reviewed-by: Dev Jain
+- Acked-by: Shuah Khan
+- Acked-by: Nhat Pham
+
+### Conclusion
+
+This is a **low-risk, high-value** backport candidate that:
+1. Fixes legitimate C standards compliance issue
+2. Improves developer experience when building with clang
+3. Has precedent for similar backports in the same file
+4. Contains zero functional changes
+5. Has strong maintainer approval
+
+The commit follows all stable kernel rules and should be backported to
+6.17.y and any other stable trees containing the buggy code introduced
+in d6a511dea45ce.
+
+ tools/testing/selftests/cachestat/test_cachestat.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/cachestat/test_cachestat.c b/tools/testing/selftests/cachestat/test_cachestat.c
+index c952640f163b5..ab838bcb9ec55 100644
+--- a/tools/testing/selftests/cachestat/test_cachestat.c
++++ b/tools/testing/selftests/cachestat/test_cachestat.c
+@@ -226,7 +226,7 @@ bool run_cachestat_test(enum file_type type)
+ 	int syscall_ret;
+ 	size_t compute_len = PS * 512;
+ 	struct cachestat_range cs_range = { PS, compute_len };
+-	char *filename = "tmpshmcstat";
++	char *filename = "tmpshmcstat", *map;
+ 	struct cachestat cs;
+ 	bool ret = true;
+ 	int fd;
+@@ -257,7 +257,7 @@ bool run_cachestat_test(enum file_type type)
+ 		}
+ 		break;
+ 	case FILE_MMAP:
+-		char *map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
++		map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
+ 				 MAP_SHARED, fd, 0);
  
- 	signal(SIGINT, sig_handler);
- 
-+	setlocale(LC_ALL, "");
-+
- 	if (ac > 1 && strcmp(av[1], "-s") == 0) {
- 		silent = 1;
- 		/* Silence conf_read() until the real callback is set up */
+ 		if (map == MAP_FAILED) {
 -- 
 2.51.0
 
