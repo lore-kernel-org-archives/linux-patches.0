@@ -1,64 +1,64 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E78153BED
-	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 07:18:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4BD2D9EE3
+	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 07:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762154323; cv=none; b=gKwV7RkDxBgaaafisfJfsBdOtxgeF4SoqCarFbYkomx58ymGaISqs5RXIZmetezj3+D556znHNuGFzNHh9ZHc8ky0MmDTnIXJdd+dVFroFCSiHzGinb1S72uQN73iKjp1ceXd/FgWmIP+gzjr3MjTIJauUkOE+XSinyuuxnqGDs=
+	t=1762154366; cv=none; b=Xgq0xmujZ7XcRU8bXZAUbyRomG+DJwl+c+XQW4XSKCMCgJfohvp6VzDLov+bVRQiDoou09IEb03J8i0BLEilnUcvMYgcUUGXbePKCdxJGdKxmgtIK5bfXHhMOkuDu5WHTUDenYYpm8A6y9H/tSF8suvcNTRSCoSqpt+V4mNot98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762154323; c=relaxed/simple;
-	bh=Vm2BtOrr7/4guLkxjFZFHOZoayeqUbBXepUyeDwPM+g=;
+	s=arc-20240116; t=1762154366; c=relaxed/simple;
+	bh=bTu+sl9W2Jx7okIIkeQnTAXEp3nqEUfmyMval1/FNXk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DnopVCX2NwcfBlCWTM1NmfFc+J2SrCr9Yy1smDehwDQhqEKk8UOpOZSjlkEJ9KRGTaJDBz01pPBySpNUS1dNTCEwPFk4bgfrjAoXQSoD8dT6Gosdc03DSb14cH1J6bkI2ZvPTR6E7qJtIAL5whLXbrM2IjSxFp0ZQ9QaY13XlwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oSM+VBUN; arc=none smtp.client-ip=209.85.214.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=VCqiIOVVGq0P8mY/nOhbDJlT7J5+5snjtaSVyhCf6fmGg5JPK2WB20nZPg3xVJP8sYL2yt38sPo/qtUzRLYpTfJMHKJHNPi9wr3tkOlOB8ZcVmAOntcHA6pCI3fZBFYWVBd6X2Go8lD7grl7HGD7517dOWbDyiC3+UyLdnIeKDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Uf1Z1AMx; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oSM+VBUN"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-295c64cb951so84815ad.0
-        for <patches@lists.linux.dev>; Sun, 02 Nov 2025 23:18:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Uf1Z1AMx"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2959197b68eso194025ad.1
+        for <patches@lists.linux.dev>; Sun, 02 Nov 2025 23:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762154321; x=1762759121; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1762154364; x=1762759164; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y22k5ngiq32o4MbKE/s0CLErP3q9IoFtmfwfCLBHatI=;
-        b=oSM+VBUNSop6YNaxcEI6m+472U8sxfYz8xkpLsWw8hGh/nUpBw7GRs0VUHQi8FtZjA
-         xQGFHzyVj0t+Zp1dkp7rSK4NMbvH7fPDiBuqb8XXoZ+BbmRZvmsn02zsSV/TBWQ+Kn1W
-         KoOsV5Yopl1PPtx/DcIv2jgvHlUHMtghgRYfjnkegXv+tj0ehrVWVo8wNbXl6Lcp19db
-         6TawpRDZ7plNIbQg/wfw7H/dju/U0PAs87644ziuekiQVnVgYAz9X2ddzjdJbaPih0za
-         bB6FbWOm4jDSrcUZ+VvEpCMzNIAad0Fr03j4DXsgnLFYTC9tm5k37V8mxWAabLQ3+pEl
-         Meww==
+        bh=o0HFTQsa219SiFwfMSsmBPJDLvHU+B5q0B3I9fdpwts=;
+        b=Uf1Z1AMxGvwvEyhc6k2ha2xRgpsNikztS0w1k5Ra7ENJRcI/0FxLRH+bNQqdyyJRw4
+         1Urk7sAlsMgtpVvil5V5JDxpleD+mtAzhuNSfOvE/wOlhgqwQtKSgxka8MdFGduyp6HD
+         A9Kl2pB37RufLjdvudy5S5xlfDPP6HvNRilJaWKcag7qyr1ItlUgBELGFQILrP8QrzJ9
+         veD+5s+9nICeFDR06wxzj6ZWaO9F+z/nWeXYIYV7ZeTBP5bbL3tm3Dr5QNa8ZmbkBHuE
+         rTZRDnM0kEZuRzqyqtr5KnTdXtCnrfW+CYadAjCdy5TeUhe94BXkN0iVmfitJEEjU6bD
+         L5zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762154321; x=1762759121;
+        d=1e100.net; s=20230601; t=1762154364; x=1762759164;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y22k5ngiq32o4MbKE/s0CLErP3q9IoFtmfwfCLBHatI=;
-        b=YV3r3b5L33bnQYduvHDzqBtaGGWN7urD+W3/ePZ9QMblM4UB9jATxr7hrEVFpK7FLi
-         /xasg76OVVKVuXLLbKu91uaPxfitv72+BHXVWKNZI/ibAV70GTZdNf4JvVVuKMy3xrn+
-         j7Gru7anNvFqio0SxqCISGHFpupBx9QfH07WsF/U/ZUbw5Qyz9Ch8MByiMVvg2HpNnLA
-         BPphM9JOfQVjPmetuAWICrH3PHWfL7VeA3Sws51BL5qxnruA2G1RTBSliulbA8IPnuws
-         /EaG3r9Q4G10J88RsuBhsJuRDl27S7ddHIN9CzLk5l6XFP46KibOjNDDvabZFehcSfsj
-         pjog==
-X-Forwarded-Encrypted: i=1; AJvYcCW0NCi9UpnAnudbGmPF3xY1lYniibRlGn+WHCFp0wlrbufliAPguKZJf1fhWYxxFunT+suAPkH9@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxhr7sQrwILySy41/cfxG8V7Y/bzjNM1QPPyHdZBnjQPdayfaCp
-	Pc29aPKPvnVaeEbUYDknmrT/OpjOo+Sy6kOkftsMpsv3nWe3UxjqbDtYefyeSncqVQ==
-X-Gm-Gg: ASbGncsBQloG+pOS6todR6587HbvrxiSHE11MIcUNshQiFqLQ4gnTDElYZHrTnWo+zk
-	rDaH6v3ky/Oyk/ObzaHDWxxdzva1iMEFJnS6/3vZs4lK+inJtk2Fyi+p0/KG3NQLtpbLxRcmkxQ
-	tVxyv112yrnOS38WyzWT8fVAGKnJvQVKZuGq7BWsJpjZ+WEIORBqdoLk9H7MC8bZUodOPm4rx7j
-	MmSJMpivLGlpwGNp7LzetVB+6BT4ReJrL8DRLYmSYYSEnlgs6qHjSD1RJQ9/vm30k6eJUu9Zlum
-	frOh760KuPgqv6obG3tpTBsZUli4wqBNGfQquxUUy1u1xAyCzYUxyzBN1d8J9ruMHVix0SOzC9n
-	SgIV/I57MiKxzklX7fPq2qrRcIqxE9CiVNwRnrLYFt/xbdRJeBVYRlXS5dJZ7kVJ/eP5RFbsEdi
-	hQvWrRVUs0zW+xtXv2c8RvqhU1juUbs4z0LLPfVA==
-X-Google-Smtp-Source: AGHT+IHz7vQ0cm4SGWCD8qu7hNB41Aed4i8aC1NkscOeFOjchnLwW8gMwvqn5xaYYumt7DzVtDnmgQ==
-X-Received: by 2002:a17:902:d2d0:b0:295:30bc:458e with SMTP id d9443c01a7336-29556477728mr5855785ad.3.1762154320729;
-        Sun, 02 Nov 2025 23:18:40 -0800 (PST)
+        bh=o0HFTQsa219SiFwfMSsmBPJDLvHU+B5q0B3I9fdpwts=;
+        b=uWczOCRikmuN0cjGUleoVq+TbPO5MCxIBP4iCnR4x8zQpFXTbyG5rTcdroq+TkX4vw
+         qHl/xjDK1SMZglipMvrZG46DiD3wCeQQEy843fDfrvLe3UuGeZ/DeBgfad1GLXdS1GKe
+         HHSf2vUyd+PIny/XzORm52VlwKZ5QA5qHG6AhCpKdM+SmNss/PbCyEQEpNnseFQzGFVA
+         qHRRIjVXFp8WYPAJ5Q1oYrcDyfotwEm6+jvoqHdIxYG15BeMnqoYUdQWYOPryG54THZv
+         uKDz4pvAIwUCPrzqrEeK7AxtlFpP7ioh2YX0VJE9u3bE7HyA22NzMdDM4HRR1SVqrHBS
+         /H5A==
+X-Forwarded-Encrypted: i=1; AJvYcCVluIERKlOzKt/F8ed+SNd+keWTTSDq4//WNctEgahd3omtleaT+0e5KgjYpcF599CgHnks3JcF@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkryknLO6Yp1dEKBa3CivK/VgODhgkTmDZOi6kHmQN/ttAHj5O
+	LzvORF0mXiFpaiq3okrg9AsSlZ9PZL6ctTkK/UlBRkX4nwKk7061YoWoltWxgGfRFA==
+X-Gm-Gg: ASbGncujbR9VBTORodHFU5N2SM3h4PsGUTPQkIpkJw/jp/W/Guhs3UizEAAJ2ojnor8
+	kzL5af/VKIVJaWtZbzXztTmdOApb/puGx/yR4fg7TpnqJLn2pjb0iRn8ydxQ4KtfLIGp3I6S38z
+	XyXfj4GnUe9qjQUU37tOqMpCiQew56PUAyd34mshsfVtsoQo8vbiUpyHM8btF+k7H5oNQd+v7bY
+	nxIkLptbxSm5cuUb3errAihS0duZk5aTwf95+D/rSg3U+qVCgPdi0s38/RroJIEWk1eDl8lZAH+
+	wh14BQc2eXbIZPcFw22tN9uBKXhEerNxBo7uRA2SMquf565Tvx6YLP/hMiH7rn+Qm+6PF01vVvY
+	Clr2ZZdUbnUUpKpBnNJBz5W+QNEJgju/jAjoN1yuSxotpEw3+l7SJJNJ6+ggVkkSQ7DoaKVE+gv
+	+1DACLTAZ04KLtV7OMKQqmxwmTD2URRHVApcRbsanYfuHYEuXZ
+X-Google-Smtp-Source: AGHT+IHBQG+HPW97p+DH7DuUW/9lAGzWwwSGGkvrgXSHhhLN9zwUvIOn1ehyN1vXIvTruEG3QceI6g==
+X-Received: by 2002:a17:903:228e:b0:295:1351:f63e with SMTP id d9443c01a7336-29554b86336mr7219425ad.10.1762154363599;
+        Sun, 02 Nov 2025 23:19:23 -0800 (PST)
 Received: from google.com (164.210.142.34.bc.googleusercontent.com. [34.142.210.164])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a7db197340sm10108242b3a.44.2025.11.02.23.18.33
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34050992e91sm13497150a91.7.2025.11.02.23.19.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Nov 2025 23:18:40 -0800 (PST)
-Date: Mon, 3 Nov 2025 07:18:31 +0000
+        Sun, 02 Nov 2025 23:19:23 -0800 (PST)
+Date: Mon, 3 Nov 2025 07:19:13 +0000
 From: Pranjal Shrivastava <praan@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
@@ -93,10 +93,10 @@ Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
 	Yishai Hadas <yishaih@nvidia.com>,
 	Zhenyu Wang <zhenyuw.linux@gmail.com>,
 	Zhi Wang <zhi.wang.linux@gmail.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 07/22] vfio/mdpy: Provide a get_region_info op
-Message-ID: <aQhXR2M6riHmufl7@google.com>
+Subject: Re: [PATCH 08/22] vfio/mbochs: Provide a get_region_info op
+Message-ID: <aQhXcaRDSXkmPuCb@google.com>
 References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <7-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+ <8-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -105,18 +105,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+In-Reply-To: <8-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
 
-On Thu, Oct 23, 2025 at 08:09:21PM -0300, Jason Gunthorpe wrote:
-> Move it out of mdpy_ioctl() and re-indent it.
+On Thu, Oct 23, 2025 at 08:09:22PM -0300, Jason Gunthorpe wrote:
+> Move it out of mbochs_ioctl() and re-indent it.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  samples/vfio-mdev/mdpy.c | 53 ++++++++++++++++++++++------------------
->  1 file changed, 29 insertions(+), 24 deletions(-)
+>  samples/vfio-mdev/mbochs.c | 56 +++++++++++++++++++++-----------------
+>  1 file changed, 31 insertions(+), 25 deletions(-)
 > 
 
 Acked-by: Pranjal Shrivastava <praan@google.com>
 
 - Praan
-
