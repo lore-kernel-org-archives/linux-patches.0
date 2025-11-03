@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDFE31B124;
-	Mon,  3 Nov 2025 18:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511F031B130;
+	Mon,  3 Nov 2025 18:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762192984; cv=none; b=Kdp7COi1WNeim8zai44mJiOQsX42zbZe/W9AK6mqQGrLxNWR4GSaVixSVgOcPL4c94+asTtTecoQY81uf4IywFIkhTmEJXTcwJ3i9tPT4SqFvdyqWKkyfySZDC+enByPO3L6F0F16wgdyCB+iKDZ7JyQf/KfgXFfa8A6P49/KkA=
+	t=1762192988; cv=none; b=PuNDgkiyoLADpbz+axey8/7GikUUH9GgiHTbAyj43yJgMUydIpR7NPqqGYTIlTPokSFYkDj5x2E3mpi1RwWbxaDt4q6vb5mf0ZtTd75F4d0/AUCYx45aw3xyMIzJ82enTQvPgiWP3iszHKD4l6RTy5nBZhzPjlnrjn2OTbK4b2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762192984; c=relaxed/simple;
-	bh=Njq/1qLAbtH8R/dzeKXP7dU7/EFrK1vhp5gxPGGb244=;
+	s=arc-20240116; t=1762192988; c=relaxed/simple;
+	bh=XZg6tEDLa16EMaR5NtjP4niGslvahlCrI31g+m9bbfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQ6Fsr13dWS2tOE6EL9OtQdUTKQMVgBJyWhrGfgBEA87ng96z8Ykbq51nKdaHrssCRwRK1JrlKTqT4usz9xN54DJ37bciRrDi7kIlb3UmJyKfDFc5FyL2l+Blron5UxsYMcWyqub+57obldZASLihNM34O0HMiBlciZISPZMsjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1CtuWKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=er9OBpWnDdYx2e472QTAcZRl5NnMl4LUM2LiL5bpubipTn/y1L1Wcf9wdJOektXMfmspykgF85mI6MPANF3FBtppYIFhwsURI+6S6GN35NiChc1PoeEm8AGgfzS7OfNXn03g0db607BkK5cE58TW0ki21N9ksBWPvBuqCZ2NBzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PwRXhMqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1CtuWKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81647C113D0;
-	Mon,  3 Nov 2025 18:03:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PwRXhMqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F9EC116D0;
+	Mon,  3 Nov 2025 18:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762192984;
-	bh=Njq/1qLAbtH8R/dzeKXP7dU7/EFrK1vhp5gxPGGb244=;
+	s=k20201202; t=1762192985;
+	bh=XZg6tEDLa16EMaR5NtjP4niGslvahlCrI31g+m9bbfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1CtuWKZ7u5YSQxQRTfigPt6O1DheFwEI/Z0o9jXOXQPc5rEx6Lu/tFiq4gTa6A4g
-	 yGjMVfChfH7sv0tksvlKGKVeatrC5iY0vy+RVzJJcf43tyMQFC3//vCjBLKNwuCr92
-	 RIPuNlam3F5g+FZwJSPKU8s1BzYX/zW6JlcCmZPJMLcYwgEnnRHC4XqelEqnd6uTZe
-	 BJSCFhaz3f8lmeRADweNiq0px0tacA2YptNhfz3jthGqxh5u8IeIIs8aIwsPzUM1Gl
-	 uJf95SPjz4u2Twr8TOfQMMvKW1x6nx36uK8VUk0CGIRrqdyQjrT3O4ZL/T5vDAFHXF
-	 yBWCXA8COhzgw==
+	b=PwRXhMqUrveCPLxX23Tqn0XFYZBQP/bFlWVIrvCYZoDW1vUnDgk9ig4QWYtQjMf5W
+	 HL/j/GtVipBeK3opVX8sflhDAN7mthu+4iZdhncBesO9aBF1F9lmgUvw1wObvDpVCO
+	 BpL39onooH6nXba/ddDpVYNlp4BvSafN/UBzO1c7v9cWSckYIiqPttI9/3GC3KAw9t
+	 LjMP1kuttGc/lhsnbNLe45GS3/8+n6s5c4rU0VLE9C2QH2SmNT4f9E4V1X4g8rLPyh
+	 yYmgb4wARVVX7DYdWaFnE9RB3hbgHJRlv/QxkI51ttGnzw3Q9gQiFiRa4yX/1se5O3
+	 fd1vAoxfF4uTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: J-Donald Tournier <jdtournier@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Steve French <stfrench@microsoft.com>,
+	Thomas Spear <speeddymon@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kailang@realtek.com,
-	sbinding@opensource.cirrus.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: Add quirk for Lenovo Yoga 7 2-in-1 14AKP10
-Date: Mon,  3 Nov 2025 13:02:21 -0500
-Message-ID: <20251103180246.4097432-8-sashal@kernel.org>
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.17-6.1] cifs: fix typo in enable_gcm_256 module parameter
+Date: Mon,  3 Nov 2025 13:02:22 -0500
+Message-ID: <20251103180246.4097432-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251103180246.4097432-1-sashal@kernel.org>
 References: <20251103180246.4097432-1-sashal@kernel.org>
@@ -51,150 +50,118 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.7
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: J-Donald Tournier <jdtournier@gmail.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 1386d16761c0b569efedb998f56c1ae048a086e2 ]
+[ Upstream commit f765fdfcd8b5bce92c6aa1a517ff549529ddf590 ]
 
-This laptop requires the same quirk as Lenovo Yoga9 14IAP7 for
-fixing the bass speaker problems.
+Fix typo in description of enable_gcm_256 module parameter
 
-Use HDA_CODEC_QUIRK to match on the codec SSID to avoid conflict with
-the Lenovo Legion Slim 7 16IRH8, which has the same PCI SSID.
-
-Signed-off-by: J-Donald Tournier <jdtournier@gmail.com>
-Link: https://patch.msgid.link/20251018145322.39119-1-jdournier@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Thomas Spear <speeddymon@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis using semantic code tools and
-repository examination, here is my assessment:
+Based on my comprehensive analysis using semantic code analysis tools
+and git history examination, here is my determination:
 
 ## **Backport Status: YES**
 
-## Detailed Analysis
+### Analysis Summary
 
-### Semantic Tools Used:
-1. **mcp__semcode__find_function**: Located the fixup function
-   `alc287_fixup_yoga9_14iap7_bass_spk_pin`
-   (sound/hda/codecs/realtek/alc269.c:3166-3204)
-2. **mcp__semcode__find_callers**: Confirmed no direct function callers
-   (invoked via quirk table framework)
-3. **mcp__semcode__find_calls**: Identified 4 function calls within the
-   fixup (hda_fixup_ideapad_acpi, snd_hda_apply_pincfgs,
-   snd_hda_override_conn_list, ARRAY_SIZE)
-4. **Read/Grep**: Examined quirk table structure and HDA_CODEC_QUIRK
-   macro definition
-5. **Git analysis**: Compared with similar commits and backport patterns
+**1. Semantic Code Analysis Findings:**
 
-### Key Findings:
+Using `mcp__semcode__grep_functions` and `mcp__semcode__find_function`,
+I identified that `enable_gcm_256` is used in the `build_encrypt_ctxt`
+function (fs/smb/client/smb2pdu.c:643), which controls SMB encryption
+cipher negotiation. Using `mcp__semcode__find_callers`, I found this
+function is called by `assemble_neg_contexts`, which is part of the SMB2
+protocol negotiation path.
 
-#### 1. **IMPACT ANALYSIS** (High Priority)
-- **Affected users**: Owners of Lenovo Yoga 7 2-in-1 14AKP10 laptop with
-  non-working bass speakers
-- **User exposure**: Hardware-specific bug fix - bass speakers
-  completely non-functional without this quirk
-- **Scope**: Isolated to single laptop model via codec SSID matching
-  (0x17aa:0x391c)
-- **Similar issues**: Found commit 8d70503068510e6 fixing identical
-  issue on Yoga Pro 7 14ASP10 - that commit **had "Cc:
-  stable@vger.kernel.org" and was backported**
+**2. Historical Context (Critical Finding):**
 
-#### 2. **CODE CHANGE ANALYSIS** (Minimal Risk)
-- **Size**: Single line addition to quirk table
-  (sound/hda/codecs/realtek/alc269.c:7073)
-- **Type**: Data-only change - adds `HDA_CODEC_QUIRK(0x17aa, 0x391c,
-  "Lenovo Yoga 7 2-in-1 14AKP10",
-  ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN)`
-- **No new code**: Reuses existing, well-tested fixup function used by 6
-  other Yoga models (lines 7031, 7051, 7064, 7067, 7102, 7379)
-- **Semantic impact**: None - purely extends quirk matching table
+Through git history analysis, I discovered this is actually the **second
+fix** for this documentation bug:
 
-#### 3. **TECHNICAL CORRECTNESS**
-- **Uses HDA_CODEC_QUIRK**: Matches on codec SSID instead of PCI SSID to
-  avoid conflict with Legion Slim 7 16IRH8 (line 7073) which shares the
-  same PCI SSID
-- **Proper placement**: Inserted at line 7073+ to ensure correct
-  matching priority
-- **Macro definition** (sound/hda/common/hda_local.h:314-320): Sets
-  `.match_codec_ssid = true` for precise hardware identification
+- **April 2021** (commit fee742b50289): Changed `enable_gcm_256` default
+  from `false` to `true`, but **forgot to update documentation** (left
+  as "Default: n/N/0")
 
-#### 4. **REGRESSION RISK** (Minimal)
-- **Hardware isolation**: Only affects devices with exact codec SSID
-  match
-- **No behavioral changes**: Existing code paths unchanged
-- **Dependencies**: All 4 called functions already present (verified via
-  mcp__semcode__find_calls)
-- **Call graph**: No callers to the fixup function (invoked by
-  framework, not directly)
+- **June 2024** (commit 8bf0287528da1): **Partial fix** - changed
+  documentation from "n/N/0" to "y/Y/0"
+  - This commit was **explicitly tagged with `Cc:
+    stable@vger.kernel.org`**
+  - Included `Fixes: fee742b50289` tag
+  - **Was successfully backported to multiple stable trees**
 
-#### 5. **BACKPORT PATTERN EVIDENCE**
-Found nearly identical commit that **was backported to stable**:
-```
-commit 8d70503068510e6080c2c649cccb154f16de26c9
-ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14ASP10
-[...] need quirk ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to enable bass
-Cc: <stable@vger.kernel.org>  ← Explicitly tagged for stable
-```
+- **October 2025** (commit f765fdfcd8b5b - the commit being analyzed):
+  **Completes the fix** - changes "y/Y/0" to "y/Y/1"
+  - Fixes the remaining typo left by the partial June 2024 fix
+  - Already appears to be in backporting pipeline (commit 66b5c330b9223)
 
-Historical pattern: 38 commits to this file since 2024-01-01, many are
-Lenovo quirks that get backported.
+**3. Why This Should Be Backported:**
 
-#### 6. **STABLE TREE COMPLIANCE**
-✅ **Bug fix**: YES - fixes broken bass speakers (user-visible hardware
-malfunction)
-✅ **No new features**: NO - only enables existing hardware correctly
-✅ **Architectural changes**: NO - single quirk table entry
-✅ **Minimal risk**: YES - 1 line, hardware-specific, isolated
-✅ **Well-tested code**: YES - fixup function used by 6 other models
+1. **Precedent**: The June 2024 partial fix was deemed important enough
+   for stable backporting by maintainers, even though it was "just
+   documentation"
 
-**Only concern**: Missing explicit "Cc: stable@vger.kernel.org" tag, but
-this appears to be an oversight given that an identical fix pattern for
-a different Yoga model was tagged for stable.
+2. **Incomplete Fix in Stable Trees**: Stable trees that received the
+   June 2024 backport currently have **contradictory documentation**
+   stating "Default: y/Y/0" where "y/Y" suggests true but "0" suggests
+   false
 
-### Recommendation Justification:
+3. **Security Context**: This affects user understanding of encryption
+   settings for CIFS/SMB mounts. The variable controls whether 256-bit
+   GCM encryption is offered during protocol negotiation
+   (fs/smb/client/smb2pdu.c:643-648)
 
-This commit **should be backported** because:
+4. **User Impact**: Users running `modinfo cifs` on stable kernels with
+   the partial fix see confusing/incorrect information about security-
+   related defaults
 
-1. **Fixes real user bug**: Bass speakers don't work without it -
-   verifiable hardware malfunction
-2. **Extremely safe**: 1-line quirk table addition with zero code
-   changes
-3. **Proven pattern**: Identical commit type (same fixup, similar
-   hardware) was backported successfully
-4. **Perfect isolation**: Codec SSID matching ensures only target
-   hardware affected
-5. **No regression risk**: Reuses stable, tested fixup code used by
-   multiple laptop models
-6. **Follows stable rules**: Pure bug fix, no features, no architectural
-   changes
-7. **High benefit/risk ratio**: Fixes broken hardware with negligible
-   risk
+5. **Zero Risk**: Single character change in a MODULE_PARM_DESC string -
+   cannot cause regressions
 
-The absence of an explicit stable tag appears inconsistent with the
-established pattern for this type of fix and likely represents an
-oversight rather than intentional exclusion.
+6. **Completes Backported Work**: This is a continuation of fix
+   8bf0287528da1 that was already backported to stable
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+**4. Code Impact Analysis:**
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 8fb1a5c6ff6df..a3764d71b5fcc 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7071,6 +7071,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
-+	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+- **Files Changed**: 1 (fs/smb/client/cifsfs.c)
+- **Lines Changed**: 1 (documentation string only)
+- **Functional Changes**: None (pure documentation)
+- **Actual Code Default**: `bool enable_gcm_256 = true;` (line 68) -
+  unchanged since April 2021
+
+### Recommendation
+
+**YES - This commit should be backported** because it completes a
+documentation fix that was already deemed worthy of stable backporting.
+Stable trees currently have misleading documentation ("y/Y/0") that
+contradicts itself, and this trivial, zero-risk change corrects user-
+visible information about security-related module parameters. The
+precedent for backporting documentation fixes for this specific
+parameter was already established in June 2024.
+
+ fs/smb/client/cifsfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index e1848276bab41..984545cfe30b7 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -133,7 +133,7 @@ module_param(enable_oplocks, bool, 0644);
+ MODULE_PARM_DESC(enable_oplocks, "Enable or disable oplocks. Default: y/Y/1");
+ 
+ module_param(enable_gcm_256, bool, 0644);
+-MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/0");
++MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/1");
+ 
+ module_param(require_gcm_256, bool, 0644);
+ MODULE_PARM_DESC(require_gcm_256, "Require strongest (256 bit) GCM encryption. Default: n/N/0");
 -- 
 2.51.0
 
