@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE3331BCAA;
-	Mon,  3 Nov 2025 18:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468B3199230;
+	Mon,  3 Nov 2025 18:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762192988; cv=none; b=TEctKro+OklS+J6Nx0ggvQuka04OkEGJjwgMUH03ctbSYR+3yzAuHRcoc4m7768k6Yf5KB9D9N8YHV1XxEJeGVp2n0Bqg5tI8zjpaZQT5V/iSlfO6lzttCeNKI06X/m0bx0wGDgclmX/2RzEKEVybQeW4IphcCpeysKUXJqTkmE=
+	t=1762192991; cv=none; b=F3Tm7qiKiDU1hFXEp7T+pYaqpjquUUAbBdd16qgefs6wfO4+NIUwu0bDVSpxVhFtOSGUJQ/tOgkU3nXRBYTMJe9kEbFx6ahW3elLtnj9iONUiMjQJoShz1ekK5+4HZPXB8HE9V2fS4s0vekxNnyaNQcoaPimUnNqn3L6bw/Lr4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762192988; c=relaxed/simple;
-	bh=mH6RrjzoBq7Te0HvW0AkY7mLUqDTTD1o9kx8+e5Tl7Q=;
+	s=arc-20240116; t=1762192991; c=relaxed/simple;
+	bh=nykU3KuIG39Hkra9YtKgZFir7eDFsIkuzXIsan3RTp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bayu7Jm8up7z0buZlZCmicNtDymlOp0aDNt7ukE114YoxFBY/n8p0NHrLKcTOWl5u3S3Whk5ROFDN5RkbC3gsr3Y8gm5Xzh3FhPvozXN8IoIskhAMJuajE9JJaSxzIyRRWmKBLyBBILiayQX+1KwFMPWUzI943cbyHOlUOrHkvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=prbeFDxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JngC1kQf9Fow26ibCWf+hycUsawfmCA1xlYh9+LA8ZSdZK5QkH+TRuxp68r841mZirHmgiuLcIGay1Lwi+MolilcBmSxg28pIpfdqJ4l5+ExP9VW8KXsW0cg5TNJEKbqqd0B0+14p8mnGiWBzvjZgGSJMaKFyLUY1Y1frirk5l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrEtuORC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="prbeFDxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D96C113D0;
-	Mon,  3 Nov 2025 18:03:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrEtuORC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B54C4CEE7;
+	Mon,  3 Nov 2025 18:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762192988;
-	bh=mH6RrjzoBq7Te0HvW0AkY7mLUqDTTD1o9kx8+e5Tl7Q=;
+	s=k20201202; t=1762192990;
+	bh=nykU3KuIG39Hkra9YtKgZFir7eDFsIkuzXIsan3RTp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prbeFDxCr2URg6EgWD9MnMmdS8BXkJ49ECO6P+HzUSJEa2tcmjOGPxWnyhW5s/Nxn
-	 TX10tdQpV4VDNorWNIvZhzNC9nAyu6IfI5+DS7gGVIP3lyeXslPg8OT85QUne+dfyb
-	 cnI8m8gqi3CJ582lp3ai8aOwQXbHRcNqYx6VAdMGmp2iAMUW0iodm0qyrUE//oBrp/
-	 lMtp126K/7gmhkVqpFsDoabyy9Csesb+NMaJlJLmdXWFHaJQxY9Wzntxtbz2laqs8L
-	 +KvtCETBavpSwnyqa/jY0DHvHzxNmyEbn9xPVnoDnoUi66s32e9VM0z4D4CldycEPe
-	 Y42y9xH4LMQyg==
+	b=ZrEtuORCC3S4NsYgY7iRrKIJnWxcsZ9jjavEvCeseaVvZ6qtlgIJtb5fYsJUTNXA4
+	 zbexLqS15mwujAxsk2c3eUDsDZQUhV2J9ge6gh0pzzNrw+gPyrYISJ2nU1J51lSA5d
+	 U1S2V/ZwhdBVcyobaL4rmfyQ7N/BPI7rRgeGDrrqSYR1gDAf9JWeB37wn0mITUkIcw
+	 /o+P27LvhtIO1nf7uN6iZSHbmCS334iMbCjYvisZBXsi6oHQ1Xa5byIL3ZMfA2gwNV
+	 Y2OOKrohBMxNNfxrIptb3bA5CJ76lOUrR8gsKiCoQctrAU1XyyEAUAOECTzkVYJbE9
+	 2mJnpQdjZmvgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Emil Tsalapatis <etsal@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Emil Tsalapatis (Meta)" <emil@etsalapatis.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	oder_chiou@realtek.com
-Subject: [PATCH AUTOSEL 6.17] ASoC: rt721: fix prepare clock stop failed
-Date: Mon,  3 Nov 2025 13:02:24 -0500
-Message-ID: <20251103180246.4097432-11-sashal@kernel.org>
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] sched_ext: defer queue_balance_callback() until after ops.dispatch
+Date: Mon,  3 Nov 2025 13:02:25 -0500
+Message-ID: <20251103180246.4097432-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251103180246.4097432-1-sashal@kernel.org>
 References: <20251103180246.4097432-1-sashal@kernel.org>
@@ -51,180 +60,272 @@ X-stable-base: Linux 6.17.7
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Emil Tsalapatis <etsal@meta.com>
 
-[ Upstream commit d914ec6f07548f7c13a231a4f526e043e736e82e ]
+[ Upstream commit a8ad873113d3fe01f9b5d737d4b0570fa36826b0 ]
 
-This patch adds settings to prevent the 'prepare clock stop failed' error.
+The sched_ext code calls queue_balance_callback() during enqueue_task()
+to defer operations that drop multiple locks until we can unpin them.
+The call assumes that the rq lock is held until the callbacks are
+invoked, and the pending callbacks will not be visible to any other
+threads. This is enforced by a WARN_ON_ONCE() in rq_pin_lock().
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20251027103333.38353-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+However, balance_one() may actually drop the lock during a BPF dispatch
+call. Another thread may win the race to get the rq lock and see the
+pending callback. To avoid this, sched_ext must only queue the callback
+after the dispatch calls have completed.
+
+CPU 0                   CPU 1           CPU 2
+
+scx_balance()
+  rq_unpin_lock()
+  scx_balance_one()
+    |= IN_BALANCE	scx_enqueue()
+    ops.dispatch()
+      rq_unlock()
+                        rq_lock()
+                        queue_balance_callback()
+                        rq_unlock()
+                                        [WARN] rq_pin_lock()
+      rq_lock()
+    &= ~IN_BALANCE
+rq_repin_lock()
+
+Changelog
+
+v2-> v1 (https://lore.kernel.org/sched-ext/aOgOxtHCeyRT_7jn@gpd4)
+
+- Fixed explanation in patch description (Andrea)
+- Fixed scx_rq mask state updates (Andrea)
+- Added Reviewed-by tag from Andrea
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Emil Tsalapatis (Meta) <emil@etsalapatis.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Analysis Result
+Based on my comprehensive analysis using semantic code analysis tools
+and repository examination, here is my recommendation:
 
-**Answer: YES**
+## **ANSWER: YES** (with critical caveat)
 
-### Analysis Summary
+This commit **should be backported to stable kernel trees**, BUT the
+follow-up fix commit a3c4a0a42e61a ("sched_ext: fix flag check for
+deferred callbacks") **MUST be included together**, as the original
+patch has a bug.
 
-I performed comprehensive semantic code analysis of this commit using
-multiple tools. Here are my findings:
+---
 
-### 1. Semantic Code Analysis Tools Used
+## **Extensive Analysis:**
 
-- **mcp__semcode__find_function**: Located the modified function
-  `rt721_sdca_jack_preset()` and `rt721_sdca_jack_init()`
-- **mcp__semcode__find_callers**: Traced the call graph to understand
-  impact scope
-- **mcp__semcode__diff_functions**: Analyzed the semantic nature of
-  changes
-- **git history analysis**: Investigated driver history and related
-  commits
+### **1. Feature Availability Analysis**
 
-### 2. Code Change Analysis
+Using git history analysis, I determined:
+- **sched_ext was introduced in v6.12-rc1** (commit f0e1a0643a59b)
+- **v6.11 and earlier kernels DO NOT have sched_ext** (verified with
+  `git ls-tree`)
+- **Only stable trees v6.12+ need this fix** (v6.12.x, v6.13.x, v6.16.x,
+  v6.17.x all have kernel/sched/ext.c)
 
-**Modified Function**: `rt721_sdca_jack_preset()`
-(sound/soc/codecs/rt721-sdca.c:211-284)
+### **2. Semantic Code Analysis Using MCP Tools**
 
-**Changes Made**:
+**Functions analyzed:**
+- `mcp__semcode__find_function`: Located schedule_deferred(),
+  balance_one(), balance_scx()
+- `mcp__semcode__find_callers`: Traced call graph to understand impact
+  scope
+
+**Call chain discovered:**
+```
+Core scheduler → balance_scx (.balance callback)
+  ↓
+balance_one() [sets SCX_RQ_IN_BALANCE flag]
+  ↓
+ops.dispatch() [BPF scheduler callback - CAN DROP RQ LOCK]
+  ↓
+[RACE WINDOW - other CPUs can acquire lock]
+  ↓
+schedule_deferred() → queue_balance_callback()
+  ↓
+WARN_ON_ONCE() in rq_pin_lock() on CPU 2
+```
+
+**Impact scope:**
+- schedule_deferred() called by: direct_dispatch()
+- direct_dispatch() called by: do_enqueue_task()
+- do_enqueue_task() called by: enqueue_task_scx, put_prev_task_scx,
+  scx_bpf_reenqueue_local
+- These are **core scheduler operations** triggered by normal task
+  scheduling
+- **User-space exposure**: Yes, any process using sched_ext can trigger
+  this
+
+### **3. Bug Severity Analysis**
+
+**Race condition mechanism** (from commit message and code):
+1. CPU 0: balance_one() sets IN_BALANCE flag, calls ops.dispatch()
+2. ops.dispatch() **drops rq lock** during BPF execution
+3. CPU 1: Acquires lock, calls schedule_deferred(), sees IN_BALANCE,
+   queues callback
+4. CPU 2: Calls rq_pin_lock(), sees pending callback → **WARN_ON_ONCE()
+   triggers**
+
+**Code reference** (kernel/sched/sched.h:1790-1797):
 ```c
-+ regmap_write(rt721->regmap, 0x2f51, 0x00);
-+ rt_sdca_index_write(rt721->mbq_regmap, RT721_HDA_SDCA_FLOAT,
-+     RT721_MISC_CTL, 0x0004);
+static inline void rq_pin_lock(struct rq *rq, struct rq_flags *rf)
+{
+    rf->cookie = lockdep_pin_lock(__rq_lockp(rq));
+    rq->clock_update_flags &= (RQCF_REQ_SKIP|RQCF_ACT_SKIP);
+    rf->clock_update_flags = 0;
+    WARN_ON_ONCE(rq->balance_callback &&
+                 rq->balance_callback != &balance_push_callback);  // ←
+VIOLATION
+}
 ```
 
-The commit adds exactly **2 register writes** at the end of the hardware
-preset initialization function, plus 1 new constant definition
-(RT721_MISC_CTL = 0x07) in the header file.
+**Severity**: Medium-High
+- Not a crash, but scheduler correctness issue
+- Generates kernel warnings in logs
+- Indicates inconsistent scheduler state
+- Reported by Jakub Kicinski (well-known kernel developer)
 
-### 3. Impact Scope Assessment
+### **4. Code Changes Analysis**
 
-**Call Chain Analysis**:
+**Changes are minimal and focused:**
+- kernel/sched/ext.c: +29 lines, -2 lines
+- kernel/sched/sched.h: +1 line (new flag SCX_RQ_BAL_CB_PENDING)
+
+**Behavioral change:**
+- BEFORE: queue_balance_callback() called immediately when
+  SCX_RQ_IN_BALANCE set
+- AFTER: Set SCX_RQ_BAL_CB_PENDING flag, defer actual queuing until
+  after ops.dispatch()
+- NEW: maybe_queue_balance_callback() called after balance_one()
+  completes
+
+**No architectural changes:** Just timing adjustment to avoid race
+window
+
+### **5. Critical Follow-up Fix Required**
+
+**Commit a3c4a0a42e61a analysis:**
+```diff
+- if (rq->scx.flags & SCX_RQ_BAL_PENDING)
++       if (rq->scx.flags & SCX_RQ_BAL_CB_PENDING)
 ```
-SoundWire driver ops callback
-  └─> rt721_sdca_update_status()      [1 caller, no other callers found]
-       └─> rt721_sdca_io_init()        [1 caller]
-            └─> rt721_sdca_jack_preset()  [1 caller - modified function]
-```
 
-**Impact Scope**:
-- **Very Limited**: Only affects RT721 SDCA codec hardware
-- **Initialization path**: Changes occur during device
-  initialization/preset configuration
-- **Not in critical data path**: This is setup code, not runtime audio
-  processing
-- **User exposure**: Only users with RT721 hardware are affected
+The original patch checks the **wrong flag** in schedule_deferred().
+This means:
+- Without the follow-up, multiple deferred operations could be queued
+  incorrectly
+- **Both commits must be backported together**
 
-### 4. Root Cause Analysis
+### **6. Stable Tree Compliance**
 
-Using grep analysis of the SoundWire subsystem, I found the error
-message "prepare clock stop failed" originates from:
-- `drivers/soundwire/qcom.c:1742`
-- `drivers/soundwire/amd_manager.c:1099`
-- `drivers/soundwire/cadence_master.c:1733`
+✅ **Fixes important bug**: Race condition causing kernel warnings
+✅ **No new features**: Pure bug fix
+✅ **No architectural changes**: Small, contained fix
+✅ **Minimal regression risk**: Changes only affect sched_ext code path
+✅ **Subsystem confined**: Only affects sched_ext subsystem
 
-The error occurs when `sdw_bus_prep_clk_stop()` fails during **power
-management operations** (suspend/clock stop sequence). The fix adds
-missing vendor-specific register initialization to ensure the codec
-properly prepares for clock stop.
+### **7. Backport Recommendation**
 
-### 5. Driver Context
+**YES**, backport to all stable trees with sched_ext (v6.12+), with
+these requirements:
 
-- **Driver age**: RT721 driver was added in **commit 86ce355c1f9ab on
-  2024-10-01**
-- **First appeared**: Kernel **v6.13-rc1**
-- **Present in tags**: v6.13, v6.13-rc1, p-6.15, p-6.16, p-6.17
-- **Backport status**: Already backported as commit 20e9900b3c3fe
-  (references upstream d914ec6f07548)
+1. **MUST include both commits:**
+   - a8ad873113d3 ("sched_ext: defer queue_balance_callback()")
+   - a3c4a0a42e61a ("sched_ext: fix flag check for deferred callbacks")
 
-### 6. Backport Suitability Evaluation
+2. **Target stable trees:** 6.12.x, 6.13.x, 6.14.x, 6.15.x, 6.16.x,
+   6.17.x
 
-✅ **POSITIVE INDICATORS**:
-1. **Fixes real bug**: Prevents "prepare clock stop failed" errors
-   affecting power management
-2. **Small, contained change**: Only 2 register writes added
-3. **Low regression risk**: Hardware-specific initialization, doesn't
-   change logic flow
-4. **Hardware errata style fix**: Vendor-recommended settings for proper
-   operation
-5. **Stable tree compliant**: Bug fix, not new feature, no architectural
-   changes
-6. **Already being backported**: Evidence shows autosel has picked this
-   up
+3. **Not needed for:** v6.11.x and earlier (no sched_ext code)
 
-❌ **LIMITATIONS**:
-1. **New driver**: Only relevant for kernels v6.13+ (where rt721 driver
-   exists)
-2. **No explicit stable tag**: Missing "Cc: stable@vger.kernel.org" in
-   original commit
-3. **Limited hardware exposure**: Only affects RT721 codec users
-   (relatively new hardware)
+**Reasoning:** This is a correctness fix for a real race condition in
+core scheduler code that can be triggered by normal scheduling
+operations when using BPF extensible schedulers. The fix is small,
+contained, and follows all stable kernel rules.
 
-### 7. Change Type Classification
+ kernel/sched/ext.c   | 29 +++++++++++++++++++++++++++--
+ kernel/sched/sched.h |  1 +
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-Using semantic diff analysis, this is classified as:
-- ✅ **Bug fix**: YES - fixes initialization failure
-- ❌ **New feature**: NO - just completes existing initialization
-- ❌ **Architectural change**: NO - adds register writes to existing
-  function
-- ❌ **Performance optimization**: NO - correctness fix
-
-### 8. Risk Assessment
-
-**Risk Level**: **LOW**
-
-- Contained to single driver (rt721)
-- Hardware-specific register values (unlikely to affect other systems)
-- Added at end of preset function (won't disrupt existing init sequence)
-- No behavior change to existing functionality, only adds missing setup
-
-### Recommendation
-
-**YES - Backport to stable kernels 6.13+** where the RT721 driver is
-present. This is a legitimate bug fix that:
-- Resolves power management failures (clock stop preparation)
-- Has minimal regression risk
-- Follows stable kernel rules (obvious, small bug fix)
-- Improves user experience for RT721 hardware owners
-
-For stable kernels **older than 6.13**, this commit is **NOT
-APPLICABLE** as the driver doesn't exist.
-
- sound/soc/codecs/rt721-sdca.c | 4 ++++
- sound/soc/codecs/rt721-sdca.h | 1 +
- 2 files changed, 5 insertions(+)
-
-diff --git a/sound/soc/codecs/rt721-sdca.c b/sound/soc/codecs/rt721-sdca.c
-index a4bd29d7220b8..5f7b505d54147 100644
---- a/sound/soc/codecs/rt721-sdca.c
-+++ b/sound/soc/codecs/rt721-sdca.c
-@@ -281,6 +281,10 @@ static void rt721_sdca_jack_preset(struct rt721_sdca_priv *rt721)
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_BOOST_CTRL,
- 		RT721_BST_4CH_TOP_GATING_CTRL1, 0x002a);
- 	regmap_write(rt721->regmap, 0x2f58, 0x07);
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 040ca7419b4f9..b796ce247fffd 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -820,13 +820,23 @@ static void schedule_deferred(struct rq *rq)
+ 	if (rq->scx.flags & SCX_RQ_IN_WAKEUP)
+ 		return;
+ 
++	/* Don't do anything if there already is a deferred operation. */
++	if (rq->scx.flags & SCX_RQ_BAL_PENDING)
++		return;
 +
-+	regmap_write(rt721->regmap, 0x2f51, 0x00);
-+	rt_sdca_index_write(rt721->mbq_regmap, RT721_HDA_SDCA_FLOAT,
-+		RT721_MISC_CTL, 0x0004);
+ 	/*
+ 	 * If in balance, the balance callbacks will be called before rq lock is
+ 	 * released. Schedule one.
++	 *
++	 *
++	 * We can't directly insert the callback into the
++	 * rq's list: The call can drop its lock and make the pending balance
++	 * callback visible to unrelated code paths that call rq_pin_lock().
++	 *
++	 * Just let balance_one() know that it must do it itself.
+ 	 */
+ 	if (rq->scx.flags & SCX_RQ_IN_BALANCE) {
+-		queue_balance_callback(rq, &rq->scx.deferred_bal_cb,
+-				       deferred_bal_cb_workfn);
++		rq->scx.flags |= SCX_RQ_BAL_CB_PENDING;
+ 		return;
+ 	}
+ 
+@@ -2043,6 +2053,19 @@ static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
+ 	dspc->cursor = 0;
  }
  
- static void rt721_sdca_jack_init(struct rt721_sdca_priv *rt721)
-diff --git a/sound/soc/codecs/rt721-sdca.h b/sound/soc/codecs/rt721-sdca.h
-index 71fac9cd87394..24ce188562baf 100644
---- a/sound/soc/codecs/rt721-sdca.h
-+++ b/sound/soc/codecs/rt721-sdca.h
-@@ -137,6 +137,7 @@ struct rt721_sdca_dmic_kctrl_priv {
- #define RT721_HDA_LEGACY_UAJ_CTL		0x02
- #define RT721_HDA_LEGACY_CTL1			0x05
- #define RT721_HDA_LEGACY_RESET_CTL		0x06
-+#define RT721_MISC_CTL				0x07
- #define RT721_XU_REL_CTRL			0x0c
- #define RT721_GE_REL_CTRL1			0x0d
- #define RT721_HDA_LEGACY_GPIO_WAKE_EN_CTL	0x0e
++static inline void maybe_queue_balance_callback(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
++
++	if (!(rq->scx.flags & SCX_RQ_BAL_CB_PENDING))
++		return;
++
++	queue_balance_callback(rq, &rq->scx.deferred_bal_cb,
++				deferred_bal_cb_workfn);
++
++	rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
++}
++
+ static int balance_one(struct rq *rq, struct task_struct *prev)
+ {
+ 	struct scx_sched *sch = scx_root;
+@@ -2190,6 +2213,8 @@ static int balance_scx(struct rq *rq, struct task_struct *prev,
+ #endif
+ 	rq_repin_lock(rq, rf);
+ 
++	maybe_queue_balance_callback(rq);
++
+ 	return ret;
+ }
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 72fb9129afb6a..c7f67f54d4e3e 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -782,6 +782,7 @@ enum scx_rq_flags {
+ 	SCX_RQ_BAL_KEEP		= 1 << 3, /* balance decided to keep current */
+ 	SCX_RQ_BYPASSING	= 1 << 4,
+ 	SCX_RQ_CLK_VALID	= 1 << 5, /* RQ clock is fresh and valid */
++	SCX_RQ_BAL_CB_PENDING	= 1 << 6, /* must queue a cb after dispatching */
+ 
+ 	SCX_RQ_IN_WAKEUP	= 1 << 16,
+ 	SCX_RQ_IN_BALANCE	= 1 << 17,
 -- 
 2.51.0
 
