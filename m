@@ -1,66 +1,50 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011019.outbound.protection.outlook.com [52.101.52.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B361221DB5
-	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 11:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762167829; cv=none; b=UruHOonyipZRBDgCpgHrfNv8xk106zQjBEcPubXduMp967fUA3xn4FIyUB2DpYo8WxYZ6OON9InZAW/9rreNWQi5rmFVsYxahX4MC+FDc2JLn3FvypvNmEzwNgiMLfj1ibKcPe4l5mq1vzciGAkmdVEGo3AKfpSLK2mYjJ/v1yA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762167829; c=relaxed/simple;
-	bh=oQx/ydTW/nop4AcGUNLqHSf/CC+CTlJRuLVJVH3L6VA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fvOuVgphN+zzjl16PrGbkoonSDfGrWDbhN6OEO68vFMDSFpuwF4q8f82XA1ItFpb3fdW5GtcjAgJxSkM6/7Ka4nDV2QO5qcJPF4n8ca19z+tDkFmWQgT+cCK3e73sKJ+KFt0r3UqKLVTkE2KI+kQag46SqxvqnCDTiyBw+nrLJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cD3D3B9P; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0152F9DA1;
+	Mon,  3 Nov 2025 13:31:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762176716; cv=fail; b=HOMDSVZDsKJBhjraApGU9WDp9OyguK0ntBBKzyfguhAwCWDGM7YyTFLcbQauOzEXg621VYhsWc9LyrNEw9TbpQ7ZQMTqyr30+lyUBvFcQAmSEJiS9ue3mc7MmYg9eW2xzukucM93b2kv0QnotOBsOkYxzz5mxBANMmG9VqjTtzM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762176716; c=relaxed/simple;
+	bh=xvUb/FBoQvkpXo29+aAHmx+SmyQpPkr+AIx7q+KWcmA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Brp7A5MAUTEuJ2ise0pOsCrd85GUeX+ugfrtP4P1ZG/Lh65+Lk0TpYvL5rxfWdE51NJTX0VzpEyaNRrGCyL9H+/Tgp6n0ZZUqDSy/xG4/aEfiqc2HdQEsL1j2wXvJoVC9s5cX+5EpDQIII2tx83ZLioejmeuJTqD0uR5Co37JRY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qOJnxsWR; arc=fail smtp.client-ip=52.101.52.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cD3D3B9P"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-295c64cb951so131685ad.0
-        for <patches@lists.linux.dev>; Mon, 03 Nov 2025 03:03:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762167827; x=1762772627; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JG+etGO4DCF1PIFwJUo34O2NHRXv7sGubVRA4h3tffk=;
-        b=cD3D3B9PJRBgh6i0YbktcU/+59LW62oHKq6rlAg8aCkIGS2GDUI21fEzTgG0Xck+gQ
-         qvvj974VDQE9z+xEhA6bs9BqDIvcm3k4NyiPJ0+zdS1mDWmCggyIUwGuyGlihtKXWy8/
-         HhsYlGCRYnRTDy5ZNxOlwC7B4DAsf2H5yNo3LR2Y3w0KJ6K8QGytsBD0wwF5VSOeeigF
-         vMMcQC262gUtLxK3SemrTS37ayLD9IMuGmTsBRiUU9j8S2TjG7AcdAkceJ1qiw4s9/88
-         /OgQt8fQCEdApQAJ9qt/Kgtp3PoizCPbSu+PuhDUC65izXKgvTYxJMk9Z0WxfqQ+8ymi
-         EDMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762167827; x=1762772627;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JG+etGO4DCF1PIFwJUo34O2NHRXv7sGubVRA4h3tffk=;
-        b=I7XQSfQt1wXoZi0IJVjGApsNLA5/KndhHMSgk6qxjPSfXQiKQAeaoHjYFM1JfE1X+x
-         Hqrn9krc3jPYly2Ltl0PivcfEtUXjnBLP6IRYnEiHqgmg95kTnO/SOSY0slQ8UfdVnMH
-         mj43Qa/jGJutClnC5GlX4VMFnKlR2T3tKbvvgThReKF9Tly7Ka+7/n3jWE3q5rNbXRjs
-         fkv5bD7knrrm2aScc+eb7DSeyIuNoEvKiAkiopSuwR3FPk7mNQrhRgSB8SqevDbTJ9V9
-         Gg1jSV/EYrN04ibH8ngZ/Ud95NeqTkTP7UPJl3S4iKdZSPKEdCT7GMS5uQkPgk6dmVmJ
-         nG3g==
-X-Forwarded-Encrypted: i=1; AJvYcCUT+Ofje6atrr0y5L/Xbagg2zNZbLK5bYxgClvsyJnEbqt1qFwmAA/l/YQe3iQWTb+ygtDEyqGh@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw3o7xXAK6eE83Eu4+3AsT0ruOHaX5S6eILRd2fUeORLThWxWgi
-	4Iulylbc/Czkjn2ai3gbiaLiAtLE36yodEhXaVxdF3WByAPo508nKy5/Ko72WcTUYQ==
-X-Gm-Gg: ASbGncuvwyf9CSLYnYnezX9/HpwMSa/tLtLQR8AP41h43H0rEJtRKj0l+swAsccOGD5
-	EVJJNqTElCQ0k5wUYcKWtQXXaSTOA63dhi/8TrV5bhLpde/FjtI+3DFRVZDTRmPWoYKi6js57FZ
-	/0kCQLlpH1r58Q6H4z3fWVu/0QqaVAL32/JhZDs1R+YlL4FOpi5iJwZYU6dCFMycvgbMqtUyqcm
-	6C7hqiirRrlvE8iYUoa3KsldBhkDBDK7rEA3HzgHGjkIn30J/cw+tpYSn9WzONdHw7LDLVtQtXh
-	wxx68n2Who/dF9IuRENkB2rM4YWG/dpsFuxiYT1+zE13eJG6fpS+A3JurJx/9HMvBG4OyFkrV41
-	fnwZUpfuHzel4ZDf+4ETuYkff/35DZp9RjrchJyuhuN1eJ5073rbVBe0a2wmfppEEtH0h5il8zP
-	K9tMNlcuXLINOOEpGiX5mIPAV2c7CP0WjMYf2tsQ==
-X-Google-Smtp-Source: AGHT+IGcDUbk6qqLdQjGL3Yxey3X8mTSWxpSXkjqaoDl6gxo10SeAyfD2HQnpWNy1nfGBwMDtJcUBw==
-X-Received: by 2002:a17:903:228c:b0:271:9873:80d9 with SMTP id d9443c01a7336-29556476bd0mr5742325ad.7.1762167826744;
-        Mon, 03 Nov 2025 03:03:46 -0800 (PST)
-Received: from google.com (164.210.142.34.bc.googleusercontent.com. [34.142.210.164])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29537cccdecsm102934645ad.19.2025.11.03.03.03.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 03:03:46 -0800 (PST)
-Date: Mon, 3 Nov 2025 11:03:36 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qOJnxsWR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f50R3ShpXmFL+bgO4VYkNLtppL3aJ+ZifSEw5FlZsZP3rApkqskAEXrBcXkbfEaweQxe06UzUaWYFBXNo97oLx092MmwRqQ4fEzHOJBSmJzaWFKN5ytuSLLKBtERKP2h/6emduF408d7hQz54gOkHw0+NDc+rrLcvtOY8NlXFSCNXtaU+lImjgqVqBlRd5q0S1h3QXXORWRiN3y9zRlDH6JzZu0n/GQ74uj1z6pPAoku5xFWeLbmyJYRbPqjPQysuEJozM3zX15t5XbQyx3AyrMV9wOa7TMnpZNfwRmyR/s+FaOWb/dA9rdlINuJi4ELQj+ZieMJHY+fwpJJl0rSEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pDRUkQP6itvYT6R0MdaudwV2NeGoRfVzAo4DqV2Xkic=;
+ b=Qoqt6TTXkyfnJWyTM8ruChqIMCHYo6iAe5wECGHJZzfAw/L0J1o7GW7itQDO9zMMzrG1sovA6PF6EvzBlbnV+Cfbdqbk6Fk4/dTXecb6oKRnXuiYlbiff8st9/EqfFQV0d+FiXWF7A+fqPp62RsqParaqGFefyjW5RWYGXnlBffSd9il3zZMJoVMYugOr8HUOg5ck4kMEv7cNSLl6qe3Fki0D/T8G3nZ55NYw7CSGC62nlh7LLhfzn2SmH70ntGySTd83+j1g1R0wr9zwf48wy8L3253Pqu5idUnsR5V/NQfKgqJiMhkCrEDslekUFg/XwI/lvw0lkdQNhbdteXQVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pDRUkQP6itvYT6R0MdaudwV2NeGoRfVzAo4DqV2Xkic=;
+ b=qOJnxsWRLsTCI5/zMWGiXFNkC58cwvce8k70KVaUDLLqOYyt6rkPBQrFac18q4+TykKRDRF9TNUetE0PoSPksWCpR4Bq3VQyT7U2ZHWjSxQLsGsM3KMxAS8BaFgKADe+58mxGKhTtrKlL+Nvz47AWMJ7kngIiFysljNiifUfex1OG9o/KQm1KKak0ubO28ggYPZ6NSOuZK0rAbcyIn/etjFitk7LVxQ+OE50wyAV7FaUSRxjlOisWGafcyFcxUPk+YtoJXHjZPMjmwyAIvB5pAZCNuPOsc97eAcJafveFg1w0JqOER2Cz8j5rgJ1r0Re/vnpNtJEFxmdKgi2/gO1EQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by PH7PR12MB6612.namprd12.prod.outlook.com (2603:10b6:510:210::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Mon, 3 Nov
+ 2025 13:31:50 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9275.015; Mon, 3 Nov 2025
+ 13:31:50 +0000
+Date: Mon, 3 Nov 2025 09:31:47 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Pranjal Shrivastava <praan@google.com>
 Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
 	David Airlie <airlied@gmail.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
@@ -93,104 +77,108 @@ Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
 	Yishai Hadas <yishaih@nvidia.com>,
 	Zhenyu Wang <zhenyuw.linux@gmail.com>,
 	Zhi Wang <zhi.wang.linux@gmail.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 15/22] vfio: Add get_region_info_caps op
-Message-ID: <aQiMCKszFCvDDHhH@google.com>
+Subject: Re: [PATCH 02/22] vfio/hisi: Convert to the get_region_info op
+Message-ID: <20251103133147.GQ1235738@nvidia.com>
 References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <15-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <aQiBGEgQ3vCpCvXM@google.com>
+ <2-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+ <aQhGTwg4kpuP8pgF@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQhGTwg4kpuP8pgF@google.com>
+X-ClientProxiedBy: MN0PR03CA0012.namprd03.prod.outlook.com
+ (2603:10b6:208:52f::25) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aQiBGEgQ3vCpCvXM@google.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|PH7PR12MB6612:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2ec0ae4f-f573-4dca-a609-08de1add5725
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?mR97/4nOmDSpYsKYuUT+ATaErIQZz9QIu76wVr5k8N2Je1USV7rIiZQ7IZSh?=
+ =?us-ascii?Q?lHZ4O6c6PLH2zYWSexklCzIZoNYfWseGQ0BB4E51HyCjualJIdsJyEW2/rFQ?=
+ =?us-ascii?Q?8oC/lGtpeJfu0lc6qP2nz68wO09qnTFINxf/K7CSBIaOeBy2bZBK3NaI+/bg?=
+ =?us-ascii?Q?LtpUZpLtkx7Xp8AmiP8+zYLur73dBqPaUEZ665vEQHgBNwjrusYxawrJ1xl7?=
+ =?us-ascii?Q?BNGGV7iBmPXXkRaDPObZkCOiZJtqgt7hrG693QP8OSVfW+v+JBrIjlJFDk4L?=
+ =?us-ascii?Q?YWkp3wkLUSixBetmIJCYFMLc/jaPn45OGIzPWSZphZ3fXqGO9cB+0fa6RYiv?=
+ =?us-ascii?Q?0Yd/pP0u9GcausPFtSKMFeQ4700ECTjCsZWVeILLIV1UOsoFlNIJk3l0MNrC?=
+ =?us-ascii?Q?xo41UCS9bqesLeE5oCohRqU90I9j1mkv/Da1OnrTouPU78XGz53Ky63LWwp0?=
+ =?us-ascii?Q?7y397BwbCpbGSwSdDCUxbhyMVTbBJracnarZGujGQmpEFlxbGXoy3djTzeTX?=
+ =?us-ascii?Q?OD6GOElQiq1E5JLfnDf3OplHdKALw+c+Bc7WHR54upUJJdXkf42GeKExhESM?=
+ =?us-ascii?Q?Mv4w7KuDFZSVPCojy4FUYGEAgNjaSE0CEXYVMO+iO4G8uOBdXohW3Ijcxsju?=
+ =?us-ascii?Q?H8srJrlcbsN8hihUhUd8iRa0+oe/CDfRAmR6+7NzqE1i9cwkceuO5s2Y+uAZ?=
+ =?us-ascii?Q?hZCybu9Ea0OC/185ukXO8dj5K2JiFJ8Na8T4T6lry1f0FeTmdstTYUMW3a3b?=
+ =?us-ascii?Q?jlxw80Oli3OkP26JmDCa5VkiugdBV1s85O2BFYX9z5mtQAufwtfduvNm1eHZ?=
+ =?us-ascii?Q?1NzYSYnI42ZC1pUeap2/EhCfQ3Yba+jGa1W+h9Bie1+aGGCcwrfBw6sEH4WH?=
+ =?us-ascii?Q?yipBV9iaxKaKJObdmiGPJjRd0T9XYNzTfR+aY/D3nRGVHoghzRKPEphjkIeO?=
+ =?us-ascii?Q?h3mk2gEAP81srv+dmPObxm302MGovh0ajj84QZ1Ndx5qqPSDxtUgAWPQPaFw?=
+ =?us-ascii?Q?s78vB0D4kP/uWbkGOIIY7JaW7oFa4UydV5dqJvD5GYGeMyJRLxPdw+lZ8K6N?=
+ =?us-ascii?Q?UEG5CcFFPTwJe7cQS7VbxAnGBa4Ln+peBrEPu+EKoTdWbPodAGBN4p3rxbTI?=
+ =?us-ascii?Q?+OSImK8k8aUWG79kzi/WhWEpPaqSNl0ES+j64RBwE3m6XnuNd+AU/WB+jIDm?=
+ =?us-ascii?Q?Y0vgBqmiqSU1HNb8Paorl9KB0lAg6tO+flCGGJuobX55bBZkjkdWotZhwesD?=
+ =?us-ascii?Q?Lej5GGV0YQMJiXWR0n4rLFi9kwAjMqqT6QNcAzs2aubuUHALhbj5qyS1bNBL?=
+ =?us-ascii?Q?RFk6Db1/o8hhMjuIj17kBbOdt/PrkuUqMPDY9vEFkCxtPHYoLMZjmznBvDPH?=
+ =?us-ascii?Q?GEy39O8C9zq2E2uSHN0KpU3ei/d/nDROb0EYLfy/D89sA50Rpr1+O+qK9N9J?=
+ =?us-ascii?Q?YBCTW+l6sR8kPF0ihJIrP+LmzYWXgBl0?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?+SqBSm0oWdieetGJ3JXzVaZ/VYn3Bnzy0GpAvOKpH6jXTkQ3fk9S2rzzDBXx?=
+ =?us-ascii?Q?vl1i1R6izxyHD7cDROClnom8UsHqbdl+vvEYi2RNzFhupt5yFbNxwi2k7W5D?=
+ =?us-ascii?Q?T/4lGYQu8DwkkFFfU50Rk5gOPWvtBrFDOLkPLnB0Ohl9J+mylmqEpSzJ63kL?=
+ =?us-ascii?Q?lzMd9WYCj6gmIm4xT46AiDIcsBTzVsfB7NWBFdtrkKuqpY0rn7Edk+4X81vA?=
+ =?us-ascii?Q?oDCWaWSn3/jyDYTle7dEiOrraV1xkFxSz7HuYxdsHplozVwGmcuwqpzJuGb7?=
+ =?us-ascii?Q?x1KeUdnlEqNgGNcBIcVQ9+ua2fP5W/+cq4G/3/1dH5954vM1MCt+lJoloXAy?=
+ =?us-ascii?Q?cAqSEDrLDgQJ4MaQEXDUhDoTHLcSidNJTMom0LdF95ykZF3hyF3x0bEGBZcT?=
+ =?us-ascii?Q?uHQ+T/5aXssDztvIyrW9ilSZCCAj5STVtQKn4vDv6hdOr3uEg74/ou2WSlMq?=
+ =?us-ascii?Q?uTp1/NX6C2X/Yaa3tpMrJWPM6hCVA3WmFE1F9q0yUD4zh6+IahlNhCPpES46?=
+ =?us-ascii?Q?CrRpbL8fcxXH+oR7GZkA512FYYlYlSecek6gIaGtqlBDFI2Hng84L+HlJbq1?=
+ =?us-ascii?Q?P823VChRboOrCxPCNfn4IE5uDNy1y4GckCog6HJFzGd6C4yXjYVesQXDfZy+?=
+ =?us-ascii?Q?GsiFB3XUYcUm3eOS+5YeUt+Jlnyigi6giwvlRv+fI6h6+cCokJPb+eau8fGz?=
+ =?us-ascii?Q?7GKXy58JfwPmw8FQXmOnnDyExI0cTJ8ySOzCuofUfN4auV8qgHFCmfd+SE8I?=
+ =?us-ascii?Q?UIJFbL87ZSCAG/nunb35BGdaWP2SHkenoFlCc7MgiF8jMVm9MshZSvmbO6VQ?=
+ =?us-ascii?Q?hms+jgTdgVQnno0qzMJ0lBmX3X+nS9Mpg38udMZPS5Kony2CjYe76doMqwQo?=
+ =?us-ascii?Q?3b/Zs5+TTcPwCRPgC+Vz6dsF3i8fHpclUgD26TC3jyjc0N6iW4RdW/0muUTQ?=
+ =?us-ascii?Q?A2flAMWXRy3DZv146iM9wpE9ffM/7Xlcss9LuighzEQmvuGNoqmtByBqolBI?=
+ =?us-ascii?Q?1QAbPU2f0o4YVWonmi6TmhsmCIFpVbtw8VkAXhD1G3tbi+pk9fxH+6J0AVxz?=
+ =?us-ascii?Q?1k6j5T6hfJ/zGU4RaiztmDqbjaiRKp45jbNAdmEv4vFWiXZePIsGB8W8KgjP?=
+ =?us-ascii?Q?602izsPWtbCXZsB1S93X5wJHxUZNIxsvXx8ldkefgQuipE5uTUUY39EmQq37?=
+ =?us-ascii?Q?8FMx+XiAURkCeola74TLzAtcKP4LCdcb18yB43t/K2AbTewAfb8z+pUA4x1+?=
+ =?us-ascii?Q?K3Swc2yVC6i4ynUN8kSJXvreb00p85/5HIkGHWU1AX5jV5RDpG+GKZxa3AhE?=
+ =?us-ascii?Q?yrVZY/f/UtWmlNBWyW/2yd/Bgtt65qehGU8Fdk1O6PvL2BI3XimPCvx3C20m?=
+ =?us-ascii?Q?oiQImdkQSOV1GBF7D1dCTPXdpbu2yCidKOXQwolL7IJ50cy0tEKEScj0uaK8?=
+ =?us-ascii?Q?Ux79JiIPP9HcYA0YIo2VGYB9qEvll/vB762LLh+X6AMxvmBsHnTBXNThPlfM?=
+ =?us-ascii?Q?Mp+saf8VL0tDtDHH1TzaCOvXvmiVbvPyF/9u27vY/CsiPFPLhetEyJNlliPE?=
+ =?us-ascii?Q?i3n5umggv9/8mJhBiag=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2ec0ae4f-f573-4dca-a609-08de1add5725
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2025 13:31:50.0826
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ciyX4LdT7D3nF7+QCH5miP6ZIz5G4I1WCk82a57Xu2P9krBB5MKV/FoRS+4A0hSW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6612
 
-On Mon, Nov 03, 2025 at 10:16:56AM +0000, Pranjal Shrivastava wrote:
-> On Thu, Oct 23, 2025 at 08:09:29PM -0300, Jason Gunthorpe wrote:
-> > This op does the copy to/from user for the info and can return back
-> > a cap chain through a vfio_info_cap * result.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >  drivers/vfio/vfio_main.c | 54 +++++++++++++++++++++++++++++++++++++---
-> >  include/linux/vfio.h     |  4 +++
-> >  2 files changed, 54 insertions(+), 4 deletions(-)
+On Mon, Nov 03, 2025 at 06:06:07AM +0000, Pranjal Shrivastava wrote:
+> > -		if (info.index == VFIO_PCI_BAR2_REGION_INDEX) {
+> > -			info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
+> > +	if (info.index != VFIO_PCI_BAR2_REGION_INDEX)
+> > +		return vfio_pci_ioctl_get_region_info(core_vdev, arg);
+> >  
 > 
-> The newly added vfio_get_region_info seems to pull-in common boilerplate
-> code (like copy_from_user, arg size validation) into the core code,
-> removing redundancy across all other vfio drivers. LGTM.
+> I'm curious to learn the reason for flipping polarity here? (apart from
+> readability).
 
-I missed one thing in this patch (luckily caught it in patch 22):
+Yeah, readability
 
-> diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
-> index f056e82ba35075..82e7d79b1f9fe2 100644
-> --- a/drivers/vfio/vfio_main.c
-> +++ b/drivers/vfio/vfio_main.c
-> @@ -1259,6 +1259,55 @@ static int vfio_ioctl_device_feature(struct vfio_device *device,
->  	}
->  }
->  
-> +static long vfio_get_region_info(struct vfio_device *device,
-> +				 struct vfio_region_info __user *arg)
-> +{
-> +	unsigned long minsz = offsetofend(struct vfio_region_info, offset);
-> +	struct vfio_region_info info = {};
-> +	int ret;
-> +
-> +	if (copy_from_user(&info, arg, minsz))
-> +		return -EFAULT;
-> +	if (info.argsz < minsz)
-> +		return -EINVAL;
-> +
-> +	if (device->ops->get_region_info_caps) {
-> +		struct vfio_info_cap caps = { .buf = NULL, .size = 0 };
-> +
-> +		ret = device->ops->get_region_info_caps(device, &info, &caps);
-> +		if (ret)
-> +			return ret;
-
-device->ops->get_region_info_caps (via vfio_info_add_capability) can
-allocate caps.buf and then return an error for a different reason. The
-if (ret) check returns early and the kfree(caps.buf) on the success path
-is never reached.
-
-Should we add kfree(caps.buf) to the error path here?
-This keeps the allocation and cleanup logic centralized in the core code
-
-Let's either write comment saying that the get_region_info_caps op is required
-to free caps.buf before returning error OR add a kfree(caps.buf) here.
-
-> +
-> +		if (caps.size) {
-> +			info.flags |= VFIO_REGION_INFO_FLAG_CAPS;
-> +			if (info.argsz < sizeof(info) + caps.size) {
-> +				info.argsz = sizeof(info) + caps.size;
-> +				info.cap_offset = 0;
-> +			} else {
-> +				vfio_info_cap_shift(&caps, sizeof(info));
-> +				if (copy_to_user(arg + 1, caps.buf,
-> +						 caps.size)) {
-> +					kfree(caps.buf);
-> +					return -EFAULT;
-> +				}
-> +				info.cap_offset = sizeof(info);
-> +			}
-> +			kfree(caps.buf);
-> +		}
-> +
-> +		if (copy_to_user(arg, &info, minsz))
-> +			return -EFAULT;
-> +	} else if (device->ops->get_region_info) {
-> +		ret = device->ops->get_region_info(device, arg);
-> +		if (ret)
-> +			return ret;
-
-With the above comment addressed,
-
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-
-Thanks,
-Praan
+Jason
