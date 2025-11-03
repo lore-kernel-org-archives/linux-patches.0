@@ -1,110 +1,118 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1F431A559
-	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 16:50:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2938621A457
+	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 17:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762188651; cv=none; b=lcojpd5xaLVqe7X0veGRZDrcthOUnnPSmiDg+qGxD4kEW8qL9FBYDs33aleqWzVe3JB6SJpVq/1hqdE/tFklo1PAz2wYbyGilWg6D4T+sGZrj/BbCyRJVapx016kqRCnXv2+h2CGvsie0jQ6oqRKZ9/gBuwPf3GFTSrH6tCP2hg=
+	t=1762192078; cv=none; b=mMGIaF3japOjgVOvRWFY710BcEVHxGBavzAs+FAwtNzwhFXUbMTgPfGYzozkY6jm8s225DPCBHcIY+tMLCp8jEm53gRBqNbxHbUTacqqwO1ItWxi+DJDCufBiCX+jyaJ9Jfr5tOFU6ibpokTD10ve/+Aw2m+Ma3DVC7ZZlB8hbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762188651; c=relaxed/simple;
-	bh=r+grU7PC+G6N92zehaPAAv5rPvbu0LMva4wOUJ4SsF8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NIIF946GuKZBXAmgXC+ymYl2tOnsUEw6mX05iuirARbfHn01azwGgFWUOc7n42L0AsQWnl02dd9BXSiju+w4MDArrVkbQVUgUTFVVVaIKN3OpB9rPWoNZqgp1lkIN+sZFqVaCYIZuixpNtIuQRVyFo7htbfxNWhciadpvajPUJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gSHakS51; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762192078; c=relaxed/simple;
+	bh=SgKh3F2MqSvY/+atnwKQbzqTAv1ZnedXCRhqmQOnc24=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nfbz0JmPjF8RM1VwNUVL8uGtpKHCSEpIeHr68pNLSHMFNxzhg447gsYaW2TTQ9fUbwK1I515g2cq1iFmmafgLQRbt2Vz4NXmIhDUX2pEa/v+ZhIVPLXb9s9bnfcJU10/449Ed3Yq1+WVoxYG1rZHNDkPi7xRorKu3kc0hpqNyIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linuxtx.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=BWoXjnh+; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linuxtx.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gSHakS51"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4ecee585f23so29880031cf.0
-        for <patches@lists.linux.dev>; Mon, 03 Nov 2025 08:50:49 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="BWoXjnh+"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-431d65ad973so18911415ab.3
+        for <patches@lists.linux.dev>; Mon, 03 Nov 2025 09:47:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762188648; x=1762793448; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dtnw78k2roy5z/99UbrJhP9TDpGnLB7iULXtjAYqrvo=;
-        b=gSHakS51rdjglXljIhmTVPxO2402y3VGXA0NSpKe9zvRu/gmafhx7/YlMJ1QVbSQRl
-         rhz/boiDbKTyO1G2ptXMm/dDW0pfSgvbfvofo25oXHE8vxIPwT00ZLdajbPBtwX5zZ9R
-         4woQwJKBZiAA7igMOkMIzT6PxqQ8pc9fS9SP37LKUDtLRpzEevV36S1XrowXY+SHHsvs
-         e3Yt7HWfO6axKBSYd9Ur0PqsdqYsqif9xtmhKOH7WIS5Mrgr/3IlzPloqjghwV4rzyYj
-         JVp1MU8j4fI4XkC9R9OfMGCT3TdewrRVtpvU/hq9kP/Rntg4NaV60gJY/dd0ZNT2WHaM
-         LA6g==
+        d=linuxtx.org; s=google; t=1762192075; x=1762796875; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FjAKDCwmdTaGo3dsotYYIlyzJDEkmULXfXj+ZPIjvrU=;
+        b=BWoXjnh+eLPMMgFLLqdfAMvgb5KqgaGlj02btYiUmDpRbHuJS8oT7QXpOKVVHrLqNJ
+         7uz9aRH9uJHKkAR3JGI5y2cXHaTlfKEomZztCGnQU2GRm0lILbRT4xHbf/gI3jMJtdgW
+         l6sjN7vO4wzF3ipqcJ2T//KGhYMSgkCefU49M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762188648; x=1762793448;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dtnw78k2roy5z/99UbrJhP9TDpGnLB7iULXtjAYqrvo=;
-        b=YkaXDefDJ6c6WlX8AlBmOqyMk9oyHWBKb2jBHOsqEtS4awodlVOENsLIEiAcyokVMB
-         mL+X0+Cw+mVjjLceQvO/+oLbFzUxQNbvYw+8kXYddNVODQOGy5n95o7+u40zbP5bopg6
-         SijGIBl84fyKqZw5M7P324RXaoNSHDn2lC6cTd0tcUJeOmjzPIOXPmiEsqBBenR1k8UU
-         TaY0Jh9CQQHNjDxl+Esiw9JPeQDW9NDcgAwl0JQgUAXbKdvMYhWnA+5RZ/cLZDfBXyN9
-         akr1Yy7dnmb3yPm9AFe+LuOdBTW8c8uGu7UZTiBodCbt51OLetyAgN3GSUXReJ7slX1p
-         XJNQ==
-X-Gm-Message-State: AOJu0YzJzR7NZ4XR49X1pN0I0bnc7sA13JvsqMVfVFIFRnKr/ORL92Hd
-	Eopu+UuKzScMuvYToCVenaF6y63qA5VHvCLGUqGXdh7xwOLbSlAQypOE0zDmbLc7
-X-Gm-Gg: ASbGnctReHw+dMoNobpN0PE/rv4gSGTqEUKFQVq0kGtRHoYke/8af6FUMn+dWCJFI/G
-	iwe6p6ZBmf7rYPyQCM1jFFhIYu4Ig1d6NqwlQTBCoSRItx7tKuryUV2yCxVSSEvqu2bc+gqEo/0
-	KWLBb5Tj9iUTdseYgw3QvOsAaIthAHSnNTN80pWhehIa0DPGMTL+XujclLj/d1QD4+fTxu89yUL
-	gwE1QZSx5qmU706lHJXl8FCsRtHu6SAMwnXk/rnr+80pJPbHcDIyN9bBv2PvlXKPdi317u1bAKs
-	8mF7BdGsgnNO/qb/LCa5NNLhPK8Q8uVXG3jtfkp3doDqeMaSNu2hSrJ2bl6uRXtNLxcrZ0Ks1Q+
-	mdoJdcFhqw9WQPVK6g5hUL6UtNY2txcXGgZ/Fcct0crlNJ90qXNI6nRKv8IcswfULMUh0DUKicr
-	2c3Xh2OCE3sIkb5MtFcRJeA39LUyM=
-X-Google-Smtp-Source: AGHT+IGaidtdD1Dp1nbq6fggrdpMGwWINS1Q04b+SNwTiL6KnHfGQj14i1rEtQip7/fmniLspjP4Ig==
-X-Received: by 2002:ac8:5fd0:0:b0:4ed:2fde:d0b3 with SMTP id d75a77b69052e-4ed30d91bbbmr155504711cf.6.1762188648327;
-        Mon, 03 Nov 2025 08:50:48 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ed5fbdf2b1sm1644631cf.17.2025.11.03.08.50.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Nov 2025 08:50:45 -0800 (PST)
-Message-ID: <65b0f959-7f5b-49ec-8e9a-3be884af0cbd@gmail.com>
-Date: Mon, 3 Nov 2025 08:50:40 -0800
+        d=1e100.net; s=20230601; t=1762192075; x=1762796875;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FjAKDCwmdTaGo3dsotYYIlyzJDEkmULXfXj+ZPIjvrU=;
+        b=WsL3/vKlg35CiHU8omIT6qVc1ShMJEEwdVg36GNjVCZreWo6r1l7lOBdlTeEhvlDMG
+         VP5p8IQesgHFI6fEM08f/PCXMI0UuDFQDbfOs0TF4M6EqmV90buJzZKgBVK7Cum8RweX
+         ZkMWPenbOnLAeY1artYCF7NF2EFw8MMzacvRNPXTWWMimQGzP2ubmZYNcUj+4dOF4RUH
+         Hp23eS3cjBDOquNjqeTxtIe7p0LkztKWu+OX61qGniXOHA3/YzfpT/Ug2c8raDWeVOG8
+         SANHRVrXJt/vBwmZTgpQdXRnQgYtpbd7JytiebcM2kNKR0wWhPSqtqZnpDs+iMBS3BwA
+         HOvg==
+X-Forwarded-Encrypted: i=1; AJvYcCWu1fk8zoiq68x3w7hOjhY6XUD6T14t6bge6+4RvEAhgIu1L1HXEeGB1cAeemVInVM9jTcecbFn@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzty/g7hDksZZDNUfqgJlLMGOT3lhcM76GXBLJd+M7dThc7vmFQ
+	bSdZC45aH4KgL98MIZ47qL0Gb7HPwoZIVVNKISuV/pXN7BUwfs1WmBBp22CYYDL8QxFlnr3ghai
+	sn5L+nI82Bq3e+bA8lHx4fF0wBJlP78XXygye0akU
+X-Gm-Gg: ASbGncuFNjeF4WQoW31QTzq7FWnZa4UrKFfnvgCMxauAoMKH6m22sd/ijxJsJvS03y8
+	QZEVhi+gQtpWvVR0M642LFPC2p/JJtTAs9Ef08SQ20h33N6ZbpuD1NLp0wPKl5lkQB9ISMMFift
+	kvszlidMHMNWGmO1Kkc3C5c7v5gVm3wT+8WJraLXC0uNB5BmBO7TdNU4gYz3rItjdsKpIOrjWrg
+	uHqzdl6fcIlkFfR4JmrW0HlRC/Aeeb1hTeZgozF0qTdJYOUU4+svw0vZ5dqgJlKchmyEz95
+X-Google-Smtp-Source: AGHT+IEoZVeUMOUD21Jwvlvqg2DuQudLZFKN+F2ECw8IcJFa2Y5MP2DG+/93iqFN9rXQ8x3ei5N8FSQ+NKgZ+YBpzNA=
+X-Received: by 2002:a05:6e02:12c1:b0:42e:d74:7260 with SMTP id
+ e9e14a558f8ab-4330d217155mr180383195ab.29.1762192075132; Mon, 03 Nov 2025
+ 09:47:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.17 00/35] 6.17.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20251031140043.564670400@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20251031140043.564670400@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251102212853.1505384-1-ojeda@kernel.org> <aQiDjuHK0qpgmj1J@google.com>
+In-Reply-To: <aQiDjuHK0qpgmj1J@google.com>
+From: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 3 Nov 2025 10:47:43 -0700
+X-Gm-Features: AWmQ_bnqgY3TD7_cPq8iTJOPSR5fRhrV4vLHy7AAe5o1XlAgXCBBQw2b5bBW9MI
+Message-ID: <CAFxkdAqxuFDMraNBNrOXPDpRzQTQftmc+QQMh_PVMgmLkuv=Tw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust: kbuild: treat `build_error` and `rustdoc` as
+ kernel objects
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/31/25 07:01, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.17.7 release.
-> There are 35 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 02 Nov 2025 14:00:34 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Mon, Nov 3, 2025 at 3:29=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> wr=
+ote:
+>
+> On Sun, Nov 02, 2025 at 10:28:52PM +0100, Miguel Ojeda wrote:
+> > Even if normally `build_error` isn't a kernel object, it should still
+> > be treated as such so that we pass the same flags. Similarly, `rustdoc`
+> > targets are never kernel objects, but we need to treat them as such.
+> >
+> > Otherwise, starting with Rust 1.91.0 (released 2025-10-30), `rustc`
+> > will complain about missing sanitizer flags since `-Zsanitizer` is a
+> > target modifier too [1]:
+> >
+> >     error: mixing `-Zsanitizer` will cause an ABI mismatch in crate `bu=
+ild_error`
+> >      --> rust/build_error.rs:3:1
+> >       |
+> >     3 | //! Build-time error.
+> >       | ^
+> >       |
+> >       =3D help: the `-Zsanitizer` flag modifies the ABI so Rust crates =
+compiled with different values of this flag cannot be used together safely
+> >       =3D note: unset `-Zsanitizer` in this crate is incompatible with =
+`-Zsanitizer=3Dkernel-address` in dependency `core`
+> >       =3D help: set `-Zsanitizer=3Dkernel-address` in this crate or uns=
+et `-Zsanitizer` in `core`
+> >       =3D help: if you are sure this will not cause problems, you may u=
+se `-Cunsafe-allow-abi-mismatch=3Dsanitizer` to silence this error
+> >
+> > Thus explicitly mark them as kernel objects.
+> >
+> > Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned=
+ in older LTSs).
+> > Link: https://github.com/rust-lang/rust/pull/138736 [1]
+> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+>
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+I can verify that this fixes kernel builds with rust 1.91 in Fedora.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
