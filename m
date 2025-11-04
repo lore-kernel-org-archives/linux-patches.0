@@ -1,88 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5BE2A1BB;
-	Tue,  4 Nov 2025 00:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206862A1BB;
+	Tue,  4 Nov 2025 00:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762215758; cv=none; b=Hl+jFrK/e1lmqe+ex7ErBmioUHhaOcT+YCynznl4FEArYizE//x5cE6z97ooHjsFX6O86Ih16x5jvt+LaXCTd9cbSUgw82mTTR7m1E/fSEUxCHltIzjONGqaOq8RI9GgQyNEjvui+uiNkbCy5s9twFMyxliQv4ulKnh7imOqOuo=
+	t=1762215970; cv=none; b=WhjIDlcmTdR1zJiOj89wLjaY8RVgmIMrS6+HHJnZ9KbeItlTlFLNuVQYxa5g5F6jRLe5vJHuoy610MQ5dg2Uopq4dU3T1lUFGMYlHEtw5mMKQqG9APp3wCUObmcjXx/dA/d8l9EilHGmYjAXNTMaNbsmtmIcRZ+ReKVPpQhIJng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762215758; c=relaxed/simple;
-	bh=b9CZ+VB3UXS0C3cTQaC/sdKRLZE5rzAOC3vy3hu5KMY=;
+	s=arc-20240116; t=1762215970; c=relaxed/simple;
+	bh=Bs1E/iPbvREfZ+wf8shPmjiAN3iesDcEtsodNw/AwWU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o3x6U8BxvNXy2imV8TRGoYmTKdw+ZigPFC1/NbNuabOLAIS7vINt+ARITiPDiH6P3i4xsDzgxFmJnYsXp2wA8lD99X7VymqqYBUTda1+Yp9Rq8HplSvOJqKhMDZrkc84nt15nPlLqjiiDBwCWiuuQf4vaQNGL1OjU6PknloIKEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ttY1tiFm; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=S4Z+VLKK4/HB7SdvOa7quLGQKS05jCxXcgvkDc7SEP5d96s5rvSOi2viPFpuNeRYmJj24GQqrMCPfplHoJ2WuL6bVtwPzd3hgkZ/lxzclRcIr9jWWLktls0swJg/zkcoDBh59Bvgw7NkSmFjb2s9ZBCXVPhqGPn4BMwJmxynipE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j4/kFgYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ttY1tiFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E086C4CEE7;
-	Tue,  4 Nov 2025 00:22:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j4/kFgYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFC8C4CEE7;
+	Tue,  4 Nov 2025 00:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762215757;
-	bh=b9CZ+VB3UXS0C3cTQaC/sdKRLZE5rzAOC3vy3hu5KMY=;
+	s=k20201202; t=1762215970;
+	bh=Bs1E/iPbvREfZ+wf8shPmjiAN3iesDcEtsodNw/AwWU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ttY1tiFm8W5I8B4z2PfG5pKGVRZCrl8YOIScu4Oo4kjqWGBQzmACXgACg0wXn/2Gs
-	 XyVn+O9bMNwCga05VqO0nSGhlBxyl3Oaz6612cCJxERCWYo4Puzav9k2ViiI+Vxh3T
-	 TxeLVu8qy8ZdMzEXxVpU6W8Hw+4rTr/9iGeykOYNiIB1FY4m9su6DG2cyh940falxh
-	 1XybPt1Kfx0SrzyaJn8481kjiFrzr099MqooQxcBRuWvfbxXHg/QqmYllwEp9vZq09
-	 8Pp6OT/p84QAna3LFcRepcRCtFtH2vI4CmboqYfvLZQkuWXYQeyVoKaey9bmY5kPEE
-	 Mt+Y+HHrZpG2Q==
-Date: Mon, 3 Nov 2025 19:22:36 -0500
+	b=j4/kFgYQyFL8sTyk7xpOQp2z2YsNUBecgSfSylcMCi/3dUT+HDBIST6uVMU23TWlX
+	 KxhfKD1lYoMVfrdmHHRIg0sERPGSHaj1Zuz2v0RRxrOs0o+InX9nf0fjsrzIWRr6DG
+	 5tuCNY1sPvfKKz+uvIKhYw7lyPLAc0bnyREwKnFnkWgxf+a3HynnM/pcOdxqJelxLN
+	 RPsw/XqHAqk6qpyzih/jksClk8Ug2nqG30G0D5Vk5agdprcGUmIpVC3KwjqfOCNyEg
+	 YADl0S+ZFC/3XkEvujfmmuqMIwGyW3kXajUxXzp9O+4rszoU6yevB2my+/a8/4r20o
+	 Q/AVSaeVUCgVQ==
+Date: Mon, 3 Nov 2025 19:26:08 -0500
 From: Sasha Levin <sashal@kernel.org>
-To: Andre Przywara <andre.przywara@arm.com>
+To: Daniel Wagner <dwagner@suse.de>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>, samuel@sholland.org,
-	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH AUTOSEL 6.17-6.12] soc: sunxi: sram: add entry for a523
-Message-ID: <aQlHTCB-UyA7JrFo@laps>
+	Daniel Wagner <wagi@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Hannes Reinecke <hare@suse.de>, Keith Busch <kbusch@kernel.org>,
+	justin.tee@broadcom.com, nareshgottumukkala83@gmail.com,
+	paul.ely@broadcom.com, sagi@grimberg.me, kch@nvidia.com,
+	linux-nvme@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.17-5.15] nvmet-fc: avoid scheduling association
+ deletion twice
+Message-ID: <aQlIII1UWi6FcYOz@laps>
 References: <20251009155752.773732-1-sashal@kernel.org>
- <20251009155752.773732-11-sashal@kernel.org>
- <20251009173801.13c133a4@donnerap.manchester.arm.com>
+ <20251009155752.773732-15-sashal@kernel.org>
+ <8bed9f7a-ad84-40e8-a275-09b19a917155@flourine.local>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251009173801.13c133a4@donnerap.manchester.arm.com>
+In-Reply-To: <8bed9f7a-ad84-40e8-a275-09b19a917155@flourine.local>
 
-On Thu, Oct 09, 2025 at 05:38:01PM +0100, Andre Przywara wrote:
->On Thu,  9 Oct 2025 11:54:37 -0400
->Sasha Levin <sashal@kernel.org> wrote:
+On Fri, Oct 10, 2025 at 09:39:05AM +0200, Daniel Wagner wrote:
+>Hi Sasha,
 >
->Hi,
->
->> From: Chen-Yu Tsai <wens@csie.org>
+>On Thu, Oct 09, 2025 at 11:54:41AM -0400, Sasha Levin wrote:
+>> From: Daniel Wagner <wagi@kernel.org>
 >>
->> [ Upstream commit 30849ab484f7397c9902082c7567ca4cd4eb03d3 ]
+>> [ Upstream commit f2537be4f8421f6495edfa0bc284d722f253841d ]
 >>
->> The A523 has two Ethernet controllers. So in the system controller
->> address space, there are two registers for Ethernet clock delays,
->> one for each controller.
+>> When forcefully shutting down a port via the configfs interface,
+>> nvmet_port_subsys_drop_link() first calls nvmet_port_del_ctrls() and
+>> then nvmet_disable_port(). Both functions will eventually schedule all
+>> remaining associations for deletion.
 >>
->> Add a new entry for the A523 system controller that allows access to
->> the second register.
+>> The current implementation checks whether an association is about to be
+>> removed, but only after the work item has already been scheduled. As a
+>> result, it is possible for the first scheduled work item to free all
+>> resources, and then for the same work item to be scheduled again for
+>> deletion.
 >>
->> Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
->> Link: https://patch.msgid.link/20250908181059.1785605-4-wens@kernel.org
->> Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+>> Because the association list is an RCU list, it is not possible to take
+>> a lock and remove the list entry directly, so it cannot be looked up
+>> again. Instead, a flag (terminating) must be used to determine whether
+>> the association is already in the process of being deleted.
+>>
+>> Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+>> Closes: https://lore.kernel.org/all/rsdinhafrtlguauhesmrrzkybpnvwantwmyfq2ih5aregghax5@mhr7v3eryci3/
+>> Reviewed-by: Hannes Reinecke <hare@suse.de>
+>> Signed-off-by: Daniel Wagner <wagi@kernel.org>
+>> Signed-off-by: Keith Busch <kbusch@kernel.org>
 >> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>
->> LLM Generated explanations, may be completely bogus:
->>
->> YES – this should go to stable; without it the second GMAC on A523
->> cannot program its clock-delay register.
 >
->It's pointless, any kernel before v6.15 will not boot on any A523 device,
->so support for any kind of A523 MAC is irrelevant.
->For newer kernels, this would be tied to the GMAC1 enablement, which is
->also a new feature, so not a candidate for stable.
+>This patch is part of a whole series:
+>
+>https://lore.kernel.org/all/20250902-fix-nvmet-fc-v3-0-1ae1ecb798d8@kernel.org/
+>
+>IMO, all should all be backported:
+>
+>db5a5406fb7e nvmet-fc: move lsop put work to nvmet_fc_ls_req_op
+>f2537be4f842 nvmet-fc: avoid scheduling association deletion twice
+>10c165af35d2 nvmet-fcloop: call done callback even when remote port is gone
+>891cdbb162cc nvme-fc: use lock accessing port_state and rport state
 
-Dropped, thanks!
+Ack, thanks!
 
 -- 
 Thanks,
