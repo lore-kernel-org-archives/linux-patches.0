@@ -1,73 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E222BDC09;
-	Tue,  4 Nov 2025 13:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F9E31B822;
+	Tue,  4 Nov 2025 13:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762264307; cv=none; b=j6+GVD216QAZSwich4+49p/IxuKa4o9djgmuPxMhtH/RckD8km8IwQOCqHHQeA+gs/ja5n8LBXsgSUIMaODNYWGV8C+Hc72cnYe4HQWLyq5+hJMP8E8IHGRvOoU+itPHc5kEvDxEOs6uGXWVCheGV9I80U8wqSNPboUYt0JQAH0=
+	t=1762264328; cv=none; b=Jmb6bOJZu5b0eDC9qLl0k1ayfhpbL3Se3PwFp5u9oB2SLh5x+p1w64E1N5eRC/1UuNVElGAtN02PIG6jaGGvKYyrEx8kC4tU8IkYdu5OHpGCHNZBRiG7t+F3z2gNXRUYqdY3HK3jyO+Z15kxcNDIK6+N0Ql8KJF46savbVF+pXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762264307; c=relaxed/simple;
-	bh=XmIivvsEE1ElTiYOq+o0LhnD2SE5CRozSm+NJdh/Xpk=;
+	s=arc-20240116; t=1762264328; c=relaxed/simple;
+	bh=mbfY2Aj5w6JYGO9ivAENnFh7/FZ0WRwLCEozi5mq2Gk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DQb+BVC/0XkKWOjZQ7rLiBQK1F340U4Za+U4gUXMtIDRPk8Jgu0yV07gbwIMzqWx8I9jJ6A8z1HAo725bnb3rc2qQZyMS9MVC8wYvmAi2LTNlWHuaPkUBZf80ISO4MypTDFXByXFq4m0A0m+P/AodFRe3/IwBbY30aWv4Wr5Sfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NrJDpdPr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=rpmdLDOF7kfHE5yQ1Jg/HDnNtWDkWL4XMTEJjBQw+AZIQVVZLbpbvU5OdP6r4lNnJj10c5fmvwnjjx9dzuhad7Jw8d0ZLxWY2twHDgDibohbLkJXm6lUuXNFuzZ/7TZaarp4paXWCCA0Cprg+Xkp2d4z3sBZVmF+4lipMuOfWsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SnJx1Xs+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NrJDpdPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D1CC4CEF7;
-	Tue,  4 Nov 2025 13:51:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SnJx1Xs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98580C4CEF7;
+	Tue,  4 Nov 2025 13:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762264307;
-	bh=XmIivvsEE1ElTiYOq+o0LhnD2SE5CRozSm+NJdh/Xpk=;
+	s=k20201202; t=1762264325;
+	bh=mbfY2Aj5w6JYGO9ivAENnFh7/FZ0WRwLCEozi5mq2Gk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NrJDpdPrTAu2w5YGjc1yuRNmhhjyhtu0uhGAqNFetWy3WnsGEcRL02J6z3QYqrK8I
-	 wl3ryjH/pp0eFqZbo4aAq+WPFw7Kam158iRR9I7uUqmJBQqK1JOnAKAFfy31ruVbrW
-	 NXcjenwn7+2ip5dTEA8yj6zi1Y6tzEt83otWnAanIrBMZt4YI0wQ8KYfyld8nYtVLf
-	 uSEIl6Pr7PrT9IJ42HGane1NWpOC6PqUD84XAb5uH9Quaywnq8uphg8WrWCtC84inE
-	 TkTZ9JATHAOEmp0MUURN+ORuy+zoURaqBAH31IfYnBHBC9853PxCQFoibxViP7F1uk
-	 VN1tkovRxcr2w==
-Date: Tue, 4 Nov 2025 08:51:46 -0500
+	b=SnJx1Xs+T4cCznIotMtrHqB0c2H7+yjjU3kpWBmv0NL9UVUPQ4cp1PEy2AzG5W3f4
+	 b2gQJ+MGghDrJ4xHKdmpy56Q3h2aX1/3+m4zmiVjqeJMwTfxymIXM/JFXVZNlDjohq
+	 V8Hi551mMu9ZwVzDWYs0I7OQtq1dn78WVrAHws+rCk0qpmD/Hfclrn4MioNseGYKWE
+	 fQzqkZTvvBZARsfyut7S/j+GxtWmjltBgGGuPCfatwUhpJULFLnf2p0s8SqAxX/t/o
+	 5odnpDTg6pjStjLjDZQ6Ps2ukjrmMCog1jfOK7j3WE8f9movVDq7NnjbKklc79G9qF
+	 sL/cYUlkX+rMQ==
+Date: Tue, 4 Nov 2025 08:52:04 -0500
 From: Sasha Levin <sashal@kernel.org>
-To: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.17-6.12] PCI: Set up bridge resources earlier
-Message-ID: <aQoE8hB29pu1WMbh@laps>
+To: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>, patches@lists.linux.dev,
+	stable@vger.kernel.org, Arien Judge <arien.judge@morsemicro.com>,
+	chunkeey@googlemail.com, pkshih@realtek.com,
+	alexander.deucher@amd.com, alexandre.f.demers@gmail.com,
+	tglx@linutronix.de, namcao@linutronix.de, bhelgaas@google.com,
+	linux-wireless@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.17-6.12] wifi: mac80211: support parsing S1G
+ TIM PVB
+Message-ID: <aQoFBCjATfTapZDj@laps>
 References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-86-sashal@kernel.org>
- <4b5020d1-51c1-a556-175b-a4c4e1995c61@linux.intel.com>
+ <20251025160905.3857885-99-sashal@kernel.org>
+ <72966d6ccecfcf51f741ca8243e446a0aaa9b5c1.camel@sipsolutions.net>
+ <ipjmlu4muicsgnm7kbkmp5pbcvjyjobne4zo4p4cjxv45la6cy@clmzwkjamyi7>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4b5020d1-51c1-a556-175b-a4c4e1995c61@linux.intel.com>
+In-Reply-To: <ipjmlu4muicsgnm7kbkmp5pbcvjyjobne4zo4p4cjxv45la6cy@clmzwkjamyi7>
 
-On Mon, Oct 27, 2025 at 02:39:27PM +0200, Ilpo Järvinen wrote:
->On Sat, 25 Oct 2025, Sasha Levin wrote:
+On Sun, Oct 26, 2025 at 02:23:56PM +1100, Lachlan Hodges wrote:
+>On Sat, Oct 25, 2025 at 08:36:04PM +0200, Johannes Berg wrote:
+>> On Sat, 2025-10-25 at 11:55 -0400, Sasha Levin wrote:
+>> >
+>> > LLM Generated explanations, may be completely bogus:
+>> >
+>> > YES
+>> >
+>> > - Fixes a real functional gap for S1G (802.11ah):
+>>
+>> I guess, but ... there's no real driver for this, only hwsim, so there
+>> isn't really all that much point.
 >
->> From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->>
->> [ Upstream commit a43ac325c7cbbfe72bdf9178059b3ee9f5a2c7dd ]
->>
->> Bridge windows are read twice from PCI Config Space, the first time from
->> pci_read_bridge_windows(), which does not set up the device's resources.
->> This causes problems down the road as child resources of the bridge cannot
->> check whether they reside within the bridge window or not.
->>
->> Set up the bridge windows already in pci_read_bridge_windows().
->>
->> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
->> Link: https://patch.msgid.link/20250924134228.1663-2-ilpo.jarvinen@linux.intel.com
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->
->This change was reverted by the commit 469276c06aff ("PCI: Revert early
->bridge resource set up").
+>This also only includes the decoding side.. so mac80211 would be able to
+>decode the S1G TIM but not encode it ? Additionally there's _many_ functional
+>gaps pre 6.17 so I agree that this probably isn't a good candidate.
 
 Dropped, thanks!
 
