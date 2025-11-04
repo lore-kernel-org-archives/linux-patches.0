@@ -1,202 +1,87 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAD12FC86C
-	for <patches@lists.linux.dev>; Mon,  3 Nov 2025 23:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2089B35898;
+	Tue,  4 Nov 2025 00:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762211161; cv=none; b=Z4O9xxkHuJl9lZwP7zThx/JHteYPI52hxP9/9WAj+u2jLFMrOBg3F78sXmgdTJvqfy2lP7IeuZ2GbKo4uhdCcTip1kOPjDauUOm3Hjo5yYJclH+xa01HmIxsY7UoWEV3hhv4+bwE+eEanJCRgoBEfrbRstKOKW+0dkzSIoXoxyI=
+	t=1762215737; cv=none; b=SovtMsDEcvAPW0cil+q0TLIK2r+PjWSvqOgiI8nnWgBrMqOTuoGDO4F1GSZbhDK2qV0Z6T47LkQMcejQVGgW8L2bkLXY1Vz/7sPX8xHS/23X4FAFrg9OdSOQyI+H8O9A2U6tSNcABn0cBn7oyl3ZFfGRCjfED9c4dCch11jKw54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762211161; c=relaxed/simple;
-	bh=yqb+lQ7fKBLnHXkoJuuGAgVYHvCIKuQEhXrNGYrB9IQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jGQHOAhxDQIpo2vVWsmVsMr+d9QJPgC0AA8nmrSOtcZRMRs2IVsir1Ty2iMJNXliAMdrOIrXEg/zRBOsRU18p+rZpq+akQKEONQrGcAVxJB+bc9PoJs5TEvkQIe86Q7zt9SDi9zcgFXCBAHklw1sao1QBKPJvfDotaByVb+ImMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LVTAqsao; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1762215737; c=relaxed/simple;
+	bh=umMkQ/I1GqBqTCSFshRO2Q3ySgL6SDeXavuMjayIeOo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ntIQQY0fGrSg+7ObxnHUmkb9rTC4+G03MUktuuyzGB852Pe9oU3p1nj5lSA7cGTmRRpDqVbJqrn2hCpyGCPYq6dGNvbYQGrPGWiPAlf/mvKtkFmXyUMfuaAzOK0D9wqnX5aMekpwc/M5cHoyubyofmwiG7svRak17GzkX3/gZnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gs0d4vQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LVTAqsao"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762211160; x=1793747160;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=yqb+lQ7fKBLnHXkoJuuGAgVYHvCIKuQEhXrNGYrB9IQ=;
-  b=LVTAqsao9ajKVVNZ7dcg2fy4Uiq9pbAHUyIEFtyvDw82M4SgjdT+zyj9
-   6ZbYCvAE2gz0oK8DtjGPZyvlyRQ5QiaLOjSUaqhjSKreXWUcy3VkNlLW1
-   Ra/vmr6cBdVIfFmhsLFN2gKgiJk25Uab4GrmI45PH3M9atSH/LmBIAaZw
-   hMXELlSgosO8N4qAscj+fq+TGN8akslzw30VH5sLmvbO02FUy2sZd7bXv
-   J7X2dcfzRKRCtp+e/DblML2SFkkQEGopjIjuIfm/6mSVVvtvKx8v4+Srq
-   gDrMNj3CESqMXaHOn8NR20eXE9riFjCq+d3AA9otY8xgDvle/F6V/ff9/
-   A==;
-X-CSE-ConnectionGUID: iVvn86gOSUyx/XoxoYE4FQ==
-X-CSE-MsgGUID: fDb+W+LzTMyhx30jGXAupg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11602"; a="64335740"
-X-IronPort-AV: E=Sophos;i="6.19,277,1754982000"; 
-   d="scan'208";a="64335740"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2025 15:06:00 -0800
-X-CSE-ConnectionGUID: 337uyCQTSwC3PM+2sEsCjQ==
-X-CSE-MsgGUID: zykQcdenQZibtJp7SI+qFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,277,1754982000"; 
-   d="scan'208";a="191340930"
-Received: from sramkris-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.2])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2025 15:05:59 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Hanjun Guo <guohanjun@huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Andi Kleen <andi.kleen@intel.com>
-Subject: [PATCH] ACPI: APEI: GHES: Improve ghes_notify_nmi() status check
-Date: Mon,  3 Nov 2025 15:05:47 -0800
-Message-ID: <20251103230547.8715-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gs0d4vQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BBFC113D0;
+	Tue,  4 Nov 2025 00:22:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762215736;
+	bh=umMkQ/I1GqBqTCSFshRO2Q3ySgL6SDeXavuMjayIeOo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gs0d4vQdyC9kPDBtTXowXOfaJUt6XgcIM1HB1t1GAQ48bwekhthaz0mOB9jATQP0+
+	 7XvXMQKGAnc4NgF1K3meZdHZEBWWFTQZ6c+ZFqVvSxZqIkgy1JyMJtivkN2wdAJgnu
+	 e6MPj8lXU31D7NsVj7N6fOnyo1Ynp+xbD2HBQSRRB4bZF1+dVwGFaHmPGPtLRZWibw
+	 //NfMdjvfctJQKSWJlLWndI81dFWqmCt+XmNQSoaETZ8xHBrmjOdUHM9U1GuQYHVuc
+	 WRjbw7TDtOXwgzUXoY8ZVuENWd/EpuePKo3OJcqNswzLz733CpRC9IzmGLM1k9N2ei
+	 AutSUuxE0WT5g==
+Date: Mon, 3 Nov 2025 19:22:15 -0500
+From: Sasha Levin <sashal@kernel.org>
+To: Nick Chan <towinchenmi@gmail.com>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Sven Peter <sven@kernel.org>, j@jannau.net, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.17-6.12] soc: apple: mailbox: Add Apple A11 and
+ T2 mailbox support
+Message-ID: <aQlHN7Nu-1aAyrXp@laps>
+References: <20251009155752.773732-1-sashal@kernel.org>
+ <20251009155752.773732-9-sashal@kernel.org>
+ <28f4950a-e3eb-4a54-b867-67bd269b8407@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <28f4950a-e3eb-4a54-b867-67bd269b8407@gmail.com>
 
-ghes_notify_nmi() is called for every NMI and must check whether the NMI was
-generated because an error was signalled by platform firmware.
+On Fri, Oct 10, 2025 at 10:22:18AM +0800, Nick Chan wrote:
+>
+>Sasha Levin 於 2025/10/9 晚上11:54 寫道:
+>> From: Nick Chan <towinchenmi@gmail.com>
+>>
+>> [ Upstream commit fee2e558b4884df08fad8dd0e5e12466dce89996 ]
+>>
+>> Add ASC mailbox support for Apple A11 and T2 SoCs, which is used for
+>> coprocessors in the system.
+>>
+>> Reviewed-by: Sven Peter <sven@kernel.org>
+>> Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+>> Link: https://lore.kernel.org/r/20250821-t8015-nvme-v3-2-14a4178adf68@gmail.com
+>> Signed-off-by: Sven Peter <sven@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>
+>> LLM Generated explanations, may be completely bogus:
+>>
+>> ## Backport Analysis: Apple A11 and T2 Mailbox Support
+>>
+>> **ANSWER: YES**
+>>
+>> This commit should be backported to stable kernel trees (and has already
+>> been backported as commit 37b630a26d235).
+>>
+>> ---
+>This patch adds support for new hardware which is not just a device ID
+>addition. None of the hardware that depends on this mailbox is supported
+>in stable either. Please drop.
 
-This check is very expensive as for each registered GHES NMI source it reads
-from the acpi generic address attached to this error source to get the physical
-address of the acpi_hest_generic_status block.  It then checks the "block_status"
-to see if an error was logged.
+Dropped, thanks!
 
-The ACPI/APEI code must create virtual mappings for each of those physical
-addresses, and tear them down afterwards. On an Icelake system this takes around
-15,000 TSC cycles. Enough to disturb efforts to profile system performance.
-
-If that were not bad enough, there are some atomic accesses in the code path
-that will cause cache line bounces between CPUs. A problem that gets worse as
-the core count increases.
-
-But BIOS changes neither the acpi generic address nor the physical address of
-the acpi_hest_generic_status block. So this walk can be done once when the NMI is
-registered to save the virtual address (unmapping if the NMI is ever unregistered).
-The "block_status" can be checked directly in the NMI handler. This can be done
-without any atomic accesses.
-
-Resulting time to check that there is not an error record is around 900 cycles.
-
-Reported-by: Andi Kleen <andi.kleen@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-
----
-N.B. I only talked to an Intel BIOS expert about this. GHES code is shared by
-other architectures, so it would be wise to get confirmation on whether this
-assumption applies to all, or is Intel (or X86) specific.
----
- include/acpi/ghes.h      |  1 +
- drivers/acpi/apei/ghes.c | 39 ++++++++++++++++++++++++++++++++++++---
- 2 files changed, 37 insertions(+), 3 deletions(-)
-
-diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
-index ebd21b05fe6e..58655d313a1f 100644
---- a/include/acpi/ghes.h
-+++ b/include/acpi/ghes.h
-@@ -29,6 +29,7 @@ struct ghes {
- 	};
- 	struct device *dev;
- 	struct list_head elist;
-+	void __iomem *error_status_vaddr;
- };
- 
- struct ghes_estatus_node {
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 97ee19f2cae0..62713b612865 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1425,7 +1425,21 @@ static LIST_HEAD(ghes_nmi);
- static int ghes_notify_nmi(unsigned int cmd, struct pt_regs *regs)
- {
- 	static DEFINE_RAW_SPINLOCK(ghes_notify_lock_nmi);
-+	bool active_error = false;
- 	int ret = NMI_DONE;
-+	struct ghes *ghes;
-+
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(ghes, &ghes_nmi, list) {
-+		if (ghes->error_status_vaddr && readl(ghes->error_status_vaddr)) {
-+			active_error = true;
-+			break;
-+		}
-+	}
-+	rcu_read_unlock();
-+
-+	if (!active_error)
-+		return ret;
- 
- 	if (!atomic_add_unless(&ghes_in_nmi, 1, 1))
- 		return ret;
-@@ -1439,13 +1453,26 @@ static int ghes_notify_nmi(unsigned int cmd, struct pt_regs *regs)
- 	return ret;
- }
- 
--static void ghes_nmi_add(struct ghes *ghes)
-+static int ghes_nmi_add(struct ghes *ghes)
- {
-+	struct acpi_hest_generic *g = ghes->generic;
-+	u64 paddr;
-+	int rc;
-+
-+	rc = apei_read(&paddr, &g->error_status_address);
-+	if (rc)
-+		return rc;
-+	ghes->error_status_vaddr = acpi_os_ioremap(paddr, sizeof(ghes->estatus->block_status));
-+	if (!ghes->error_status_vaddr)
-+		return AE_BAD_ADDRESS;
-+
- 	mutex_lock(&ghes_list_mutex);
- 	if (list_empty(&ghes_nmi))
- 		register_nmi_handler(NMI_LOCAL, ghes_notify_nmi, 0, "ghes");
- 	list_add_rcu(&ghes->list, &ghes_nmi);
- 	mutex_unlock(&ghes_list_mutex);
-+
-+	return 0;
- }
- 
- static void ghes_nmi_remove(struct ghes *ghes)
-@@ -1455,6 +1482,10 @@ static void ghes_nmi_remove(struct ghes *ghes)
- 	if (list_empty(&ghes_nmi))
- 		unregister_nmi_handler(NMI_LOCAL, "ghes");
- 	mutex_unlock(&ghes_list_mutex);
-+
-+	if (ghes->error_status_vaddr)
-+		iounmap(ghes->error_status_vaddr);
-+
- 	/*
- 	 * To synchronize with NMI handler, ghes can only be
- 	 * freed after NMI handler finishes.
-@@ -1462,7 +1493,7 @@ static void ghes_nmi_remove(struct ghes *ghes)
- 	synchronize_rcu();
- }
- #else /* CONFIG_HAVE_ACPI_APEI_NMI */
--static inline void ghes_nmi_add(struct ghes *ghes) { }
-+static inline int ghes_nmi_add(struct ghes *ghes) { return -EINVAL; }
- static inline void ghes_nmi_remove(struct ghes *ghes) { }
- #endif /* CONFIG_HAVE_ACPI_APEI_NMI */
- 
-@@ -1630,7 +1661,9 @@ static int ghes_probe(struct platform_device *ghes_dev)
- 		ghes_sea_add(ghes);
- 		break;
- 	case ACPI_HEST_NOTIFY_NMI:
--		ghes_nmi_add(ghes);
-+		rc = ghes_nmi_add(ghes);
-+		if (rc)
-+			goto err;
- 		break;
- 	case ACPI_HEST_NOTIFY_SOFTWARE_DELEGATED:
- 		rc = apei_sdei_register_ghes(ghes);
 -- 
-2.51.0
-
+Thanks,
+Sasha
