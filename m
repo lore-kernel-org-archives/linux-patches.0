@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970B42ECEA3;
-	Tue,  4 Nov 2025 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233B329E4A;
+	Tue,  4 Nov 2025 14:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762265598; cv=none; b=QMsIXt7J5q+X0Z4AU8ptTEGhVn9ZapPihyn/rJSXgoIcWIw2Vp198dab9vfwNcnXzYH1tGwg9yK0QOd7ZdwSoARsBxsoiT571rkjEZzug0hI2jYTPVoLx5nDqN0Gzuwej4QYsJbrctiuoi7qNuGt+Dp7ZM01jdJ4NPejhzv2P/g=
+	t=1762265647; cv=none; b=J3S/XOOKefBHs71LrJtyzaKcj887tMIKJWfuXRkJcWdgfO1aZZrWH6kX997F8tmzOQzMMYixaWPKPyASO7GcpkOTltWYYAmGq5Sv/wU7s3u5EFSEBo2tlSBersHXdbBaVBGrLilf6DJKXlM2nmZ6CnMT/+XUNUxs7bGUGKyUJaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762265598; c=relaxed/simple;
-	bh=NzB5eDDk92AtjiCiTD1GrcBWlbNtGgxHHeoWvnyYlD0=;
+	s=arc-20240116; t=1762265647; c=relaxed/simple;
+	bh=fhRV6SiDDHrj+0y4XOWQ8pGXcJICoob019BId1MLMqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pEvIEDhM85HS41ROUhUVaEVLAitSdvY7UCzAax2lqIGyzjZtHxm5G+cqr7R4K/g93YHb49erdmrLGYes+CV4P0c8xsuLwSDfiTp4yKeGfgyF/ghCQimWgGeL4gNaCZCFyAzZQ7DEsraACdzaJNtQFRYyKjPi1piMrAg4T3vdhXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YKI/XikR; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=OJKjrbpFoA3lz89GpE9IqEbcsOVTCRnbAFHVq2d6635umLjE5HXjXfX1rr+NcJ3EvRg5/qtj9fD6YfvotAdlx6cm3w4dpoX/bQM9YXqNBdAH7ZTGkf3EMmKU5TaAfvJaCech4ZsJSGdlZNAYFaRy+UOtqc9M/i0Cyi1JvI67x7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8UkgO69; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YKI/XikR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AC1C4CEF7;
-	Tue,  4 Nov 2025 14:13:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8UkgO69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14667C4CEF7;
+	Tue,  4 Nov 2025 14:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762265597;
-	bh=NzB5eDDk92AtjiCiTD1GrcBWlbNtGgxHHeoWvnyYlD0=;
+	s=k20201202; t=1762265645;
+	bh=fhRV6SiDDHrj+0y4XOWQ8pGXcJICoob019BId1MLMqM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YKI/XikRPYw9nsmm2awIMLjjWfJa6xOnrS5Yp49H17U4P3iF/A+n0mXu4xW9BC19g
-	 /YTwnKvC46IyzsyH7ENbvCpTy8+vGCtgetzHQN6YMX2rwCGdsW5ynYFmewm++kUL8K
-	 c+TiYr5SEAqQBmU0IM12dOid6YwqBDG/tcKBuM7qEM563P9egBRyxGGIKIF4Q+5Itv
-	 ww0mt9O366kvPzN/0TfL2tovB0BWm2cnXpGSAS6l3fYvm/SnVqDiWSQVTgKwHjQfqM
-	 Xa7wOCFScmFf6ELtezyx9svzaI/2NLHOVhPuAe1JGrcbLHwpvWulu+5bEPpcBEbYem
-	 oxOgPSTGx70QA==
-Date: Tue, 4 Nov 2025 09:13:15 -0500
+	b=h8UkgO69XjQPlI/Ri/G7eg0jaIWIsIkVQ5DQx9g8ABDEWxZSSyNHbSbufk61xFCp4
+	 Z0s+BTIrMQ3y084OLyrUswYk+oHUKJxjl8QPK2E5mEKFl7wLsk/BIz/Z8SUg0EDAGS
+	 n3qbaEypG50ThZLlpBCo+iJlkSKZ9svsT/jd/uN0pO/CCa+duAD4ydWg1MkCWbb5XV
+	 +kgTsSCYHJBBgR7P7PxQclNA9fdqrZZusGOW+XGfbTv+rK1zDAlkQQmEpfHreqBCjP
+	 eOdkUpmeYQBmVNkkirkay48iPhOxOIXWwFmv/YyLolvKF1hB7sy8k3GH8lWIN6tlc1
+	 iovEnOgffrHvQ==
+Date: Tue, 4 Nov 2025 09:14:03 -0500
 From: Sasha Levin <sashal@kernel.org>
-To: Mario Limonciello <superm1@kernel.org>
+To: Andreas Larsson <andreas@gaisler.com>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Mario Limonciello <Mario.Limonciello@amd.com>,
-	Mauri Carvalho <mcarvalho3@lenovo.com>,
-	Wayne Lin <wayne.lin@amd.com>, Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>, alex.hung@amd.com,
-	aurabindo.pillai@amd.com, chiahsuan.chung@amd.com,
-	alexandre.f.demers@gmail.com
-Subject: Re: [PATCH AUTOSEL 6.17-6.1] drm/amd/display: Set up pixel encoding
- for YCBCR422
-Message-ID: <aQoJ-w6keVUWz7BD@laps>
+	Thomas Huth <thuth@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org,
+	nathan@kernel.org, alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com, llvm@lists.linux.dev
+Subject: Re: [PATCH AUTOSEL 6.17-5.4] sparc: Replace __ASSEMBLY__ with
+ __ASSEMBLER__ in uapi headers
+Message-ID: <aQoKKyDTfD0Sn6qz@laps>
 References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-163-sashal@kernel.org>
- <a1426a8b-85fb-4428-8d6b-540d3e0b1e33@kernel.org>
+ <20251025160905.3857885-242-sashal@kernel.org>
+ <62e049c9-cb92-4eaa-b069-e96ddafaad03@gaisler.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,40 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <a1426a8b-85fb-4428-8d6b-540d3e0b1e33@kernel.org>
+In-Reply-To: <62e049c9-cb92-4eaa-b069-e96ddafaad03@gaisler.com>
 
-On Sat, Oct 25, 2025 at 01:24:48PM -0500, Mario Limonciello wrote:
->
->
->On 10/25/25 10:56 AM, Sasha Levin wrote:
->>From: Mario Limonciello <Mario.Limonciello@amd.com>
+On Mon, Oct 27, 2025 at 09:09:17AM +0100, Andreas Larsson wrote:
+>On 2025-10-25 17:57, Sasha Levin wrote:
+>> From: Thomas Huth <thuth@redhat.com>
 >>
->>[ Upstream commit 5e76bc677cb7c92b37d8bc66bb67a18922895be2 ]
+>> [ Upstream commit d6fb6511de74bd0d4cb4cabddae9b31d533af1c1 ]
 >>
->>[Why]
->>fill_stream_properties_from_drm_display_mode() will not configure pixel
->>encoding to YCBCR422 when the DRM color format supports YCBCR422 but not
->>YCBCR420 or YCBCR4444.  Instead it will fallback to RGB.
+>> __ASSEMBLY__ is only defined by the Makefile of the kernel, so
+>> this is not really useful for uapi headers (unless the userspace
+>> Makefile defines it, too). Let's switch to __ASSEMBLER__ which
+>> gets set automatically by the compiler when compiling assembly
+>> code.
 >>
->>[How]
->>Add support for YCBCR422 in pixel encoding mapping.
+>> This is a completely mechanical patch (done with a simple "sed -i"
+>> statement).
 >>
->>Suggested-by: Mauri Carvalho <mcarvalho3@lenovo.com>
->>Reviewed-by: Wayne Lin <wayne.lin@amd.com>
->>Signed-off-by: Mario Limonciello <Mario.Limonciello@amd.com>
->>Signed-off-by: Ray Wu <ray.wu@amd.com>
->>Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
->>Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
->>Signed-off-by: Sasha Levin <sashal@kernel.org>
->>---
+>> Cc: David S. Miller <davem@davemloft.net>
+>> Cc: Andreas Larsson <andreas@gaisler.com>
+>> Cc: sparclinux@vger.kernel.org
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+>> Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
 >
->Hi,
->
->I don't have a problem with this commit being backported, but if 
->you're going to backport it please also backport the other one that 
->came with it: db291ed1732e02e79dca431838713bbf602bda1c
+>The upstream commit dc356bf3c173 ("sparc: Drop the "-ansi" from the asflags") is
+>a prerequisite to d6fb6511de74 ("sparc: Replace __ASSEMBLY__ with __ASSEMBLER__
+>in uapi headers") that here is planned to be picked up to stable branches. If
+>this prerequisite is not picked up first the kernel will not compile [1].
 
-Sure, I'll take it too.
+I'll drop this commit. Thanks!
 
 -- 
 Thanks,
