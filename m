@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2BB2FB97F;
-	Tue,  4 Nov 2025 13:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99E22FB97F;
+	Tue,  4 Nov 2025 13:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762264502; cv=none; b=DGyvY154TwpTDoaM1euafwHGF/+2XnIKltrYlbifXYt2oyTwZ+OWVYakR0ItsSHYlTeK3Z6IvLTLWD8tKZSp0cUllOCLj4ZVkYcyNWqcteOUx5nN9PRLw5uuVSBrFRfceCMWjudxdYhl66Q7xDDv27uxFtIoXWwN1i2J+YIC7ZE=
+	t=1762264519; cv=none; b=uAVZmrOb5M9WxrwkXaPlQ6NqopUMRTTa4ukc2MDzQdr9Gk64e6CEGiMiao8SuZJr6Zrq7Qd6aXSd0Q2jMbubCHPTWw+hS+kt5xPwkZreP3SjQ/ONcz9MmHo9XRPZKy7Itco6Jp3PBPb7oFqAYGlyPkH+zX/Y/KMjbLxUskb2d7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762264502; c=relaxed/simple;
-	bh=O+N3sj/CoWnUzXo8xcYnlkd3hswiu99QHXdJNd/gJvw=;
+	s=arc-20240116; t=1762264519; c=relaxed/simple;
+	bh=5Osg+3PtpysyfGfQ66SX7Qtk71vZvS2ovW93DWIR9fY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VEXvKbOtfbyMdX3ytW2AW1pQ7AHt6hkQRXPZdZ8+FGWGuIXw6LOdWG9PA6/suw9fTZ4P7NzPC83nA7Ov5IHnXepLuicrXs3lz6UImpW+2ummWGo9lDKG7DRAUwdsnhgG7EwdzyTQ1Mkg6FIXvfkkruEjS9wvC3H5UId1BvI2/b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTMhzVQT; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=M5lKf3sA0y5ZPfcmJ5eqw7rjYPgd+zlkNvXRJiuk/Abt2dbvOfGp7YCBuycYCCbNN84M/nhKqXmP1lcqQX515mij393DMqSAb2S6GDPcuZel6AdRSLP2rJFxdngV6kDbXwVVsgGKViZSXE3rK53oLM0llEYELNoyFPm7/7Vp404=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cyh0w/j9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTMhzVQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A22C116B1;
-	Tue,  4 Nov 2025 13:55:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cyh0w/j9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD00CC4AF0D;
+	Tue,  4 Nov 2025 13:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762264501;
-	bh=O+N3sj/CoWnUzXo8xcYnlkd3hswiu99QHXdJNd/gJvw=;
+	s=k20201202; t=1762264518;
+	bh=5Osg+3PtpysyfGfQ66SX7Qtk71vZvS2ovW93DWIR9fY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XTMhzVQTJj9tp5NvdMB3oTxShB64IJqinB/WXs9xe7Ubc9MmrB5L4NB5dfusE+1sm
-	 i1uKInZy5GZL7sSPdGSzmpZrS88/tkO+lKPwV52RP0PWEvVyAjDs5u99I/XI+u6iad
-	 Wlz4gE3qLmamIeLj5X36MIUMQp4x1U3B8LsgfqFJZocJOJ4NbviWhq7ymC6sLSdCiB
-	 u5DC0D+H4Rg0C4+4S5i/RSCtxzYxr9BLdQ+j8sHZHLLsg/eS8K/pkpGaVnQJHIMUIA
-	 mdfAeW48Gh1TG+z8Nl0tthiHAJoH9t6TopJFyAsIfOJWMfWuYS8IK0zkbJ3rrC2ViR
-	 9J6++pVkta4dA==
-Date: Tue, 4 Nov 2025 08:55:00 -0500
+	b=cyh0w/j9LfsRSyHmcvunHRg2C6DudChft4TNkk+4c/nKKyaErOXr2A0wMiDfhvIoy
+	 eraLw+97jLee3odg5/JMVOghEWzqLhmzs4y6VThOiw+wdvVvJ0moinx5r9OSdZBoEa
+	 hCPcD1uecDEIKfAnwT7CCcX0F8wJaqT40KbcWFBYnUoRDSTdEFhmOU/zCIEgROPVxS
+	 5s8lbDAjvoZS0hRzFFdt6IagNdGB/1PEzD5qfJcE6M53AZRMoDur9ZNpw6OBTfVzxT
+	 2pchh4AiI4D2DAgK21GW+Bl9AGNnDNx/qX7NVBgIqEKS6BOxLKuTAXcPsSG9yP8+nO
+	 1jlUj2OojgZnw==
+Date: Tue, 4 Nov 2025 08:55:16 -0500
 From: Sasha Levin <sashal@kernel.org>
-To: Colin Foster <colin.foster@in-advantage.com>
+To: Arnd Bergmann <arnd@arndb.de>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Jakub Kicinski <kuba@kernel.org>, steve.glendinning@shawell.net,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.17-6.1] smsc911x: add second read of EEPROM mac
- when possible corruption seen
-Message-ID: <aQoFtH9_z5Q4cD9c@laps>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>, linux-media@vger.kernel.org,
+	"open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH AUTOSEL 6.17-5.15] media: em28xx: add special case for
+ legacy gpiolib interface
+Message-ID: <aQoFxNFkvGOzOAH6@laps>
 References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-103-sashal@kernel.org>
- <aQC8y_aM6wtcbnDh@colin-ia-desktop>
+ <20251025160905.3857885-118-sashal@kernel.org>
+ <d08ad8bb-d94a-41c7-8bfd-9c4e8c054785@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,27 +49,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <aQC8y_aM6wtcbnDh@colin-ia-desktop>
+In-Reply-To: <d08ad8bb-d94a-41c7-8bfd-9c4e8c054785@app.fastmail.com>
 
-On Tue, Oct 28, 2025 at 07:53:31AM -0500, Colin Foster wrote:
->Hi Sasha,
->
->On Sat, Oct 25, 2025 at 11:55:34AM -0400, Sasha Levin wrote:
->> From: Colin Foster <colin.foster@in-advantage.com>
+On Mon, Oct 27, 2025 at 10:24:47AM +0100, Arnd Bergmann wrote:
+>On Sat, Oct 25, 2025, at 17:55, Sasha Levin wrote:
+>> From: Arnd Bergmann <arnd@arndb.de>
 >>
->> [ Upstream commit 69777753a8919b0b8313c856e707e1d1fe5ced85 ]
+>> [ Upstream commit d5d299e7e7f6b4ead31383d4abffca34e4296df0 ]
 >>
->> When the EEPROM MAC is read by way of ADDRH, it can return all 0s the
->> first time. Subsequent reads succeed.
+>> The em28xx driver uses the old-style gpio_request_one() interface to
+>> switch the lna on the PCTV 290E card.
 >>
->> This is fully reproduceable on the Phytec PCM049 SOM.
+>> This interface is becoming optional and should no longer be called by
+>> portable drivers. As I could not figure out an obvious replacement,
+>> select the new GPIOLIB_LEGACY symbol as a workaround.
 >>
->> Re-read the ADDRH when this behaviour is observed, in an attempt to
->> correctly apply the EEPROM MAC address.
->>
->> Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
->> Link: https://patch.msgid.link/20250903132610.966787-1-colin.foster@in-advantage.com
->> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+>> Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 >> Signed-off-by: Sasha Levin <sashal@kernel.org>
 >> ---
 >>
@@ -74,10 +73,16 @@ On Tue, Oct 28, 2025 at 07:53:31AM -0500, Colin Foster wrote:
 >>
 >> YES
 >>
+>> - What it fixes: Prevents build breakage when `GPIOLIB=y` but the legacy
+>>   GPIO consumer API is disabled. `gpio_request_one()` is only declared
+>>   when `CONFIG_GPIOLIB_LEGACY` is enabled (see
+>>   `include/linux/gpio.h:88`), so compiling code guarded only by
+>>   `CONFIG_GPIOLIB` fails if legacy support is off.
 >
->I agree this should be back-ported. Do you need any action from me?
+>It's not needed for stable and has no effect in 6.17. This is
+>only a preparation for a later change.
 
-Nope! Thanks for the review.
+Dropped, thanks!
 
 -- 
 Thanks,
