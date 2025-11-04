@@ -1,107 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A12E33030C;
-	Tue,  4 Nov 2025 14:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA1E242D88
+	for <patches@lists.linux.dev>; Tue,  4 Nov 2025 17:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762267614; cv=none; b=dLuhmDqYwYEt0ni9OBrfFmwUCqXuHr0B7xIbaISvmYAckvxfvs2wg2//AHjT+hdlNjO/cGI8x/Sha7aTk7ZbYEarmkfqc59sWScyCjEgwG823ivCDOM/bQeqWcFFp4yj9LMWTJ6MYwaFY7zCoCeIzUWlfn+b2C3dUSR2kDP1Ktc=
+	t=1762275669; cv=none; b=ueSuN/AN2ZBy/2SLbh9rqa7xAHpQ7QjZWAewHWuCk+RWUaQnJMgU9Lnn7ndorY96Uu7vNNUyyqBkZQY4O+DqgmchsNs0ISKEZBOtoamspJlqAWugDNFr7qdIgXe3ICH2JIV89Jn/PvwvVrSOuu72mpahsD11yFNhmFTpYFx3rgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762267614; c=relaxed/simple;
-	bh=p5hPIDaRZCzt92kFfvg6R3vu6oORTHx9zKqVYsgt6JI=;
+	s=arc-20240116; t=1762275669; c=relaxed/simple;
+	bh=A5hVs65aVEjMq28wLqSGze1IxyHY/ziAOGAuCp034rU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JCfXGKVBPE5WvG6+pBCmxM3/PllHuUDJkPd3EpeXa1Z7GL59SpoeQb56CQJD+BPghjEsFHMLbzaN7Raaf2hQTtu77ukg0gggWpxLW6ssC4wvLNYf1jdakH18gTHRijhiQDj1C+PaNnP5kJsOEzl3WYWjPJtonA+ULppBLrHTLQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BR6iMq/o; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=pU2Li4Kc0MiGoX1Ae0MuD6gjdfnX2FzcjXNZ+nD8oHTJ9Xs/irFC6n1ycCZQGXFNovwYg++BTAYjZVYXBO3ggIjYzmfy1JGn9A1l/VTVnjb8oYE81JRf4Kf3/1kRaIr3f47SB4ByIGe9Gl0ZK27+V2sgGJoQosrSGF43w2QCXy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HUOSlfUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BR6iMq/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB10EC4CEF7;
-	Tue,  4 Nov 2025 14:46:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HUOSlfUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D304CC4CEF7;
+	Tue,  4 Nov 2025 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762267614;
-	bh=p5hPIDaRZCzt92kFfvg6R3vu6oORTHx9zKqVYsgt6JI=;
+	s=k20201202; t=1762275669;
+	bh=A5hVs65aVEjMq28wLqSGze1IxyHY/ziAOGAuCp034rU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BR6iMq/oPyikLtPw6az2lrms+Ge4xlCbIe4fTtTyY4tHC2n45aUuCaBWJvcHF/A2p
-	 KG+L13PEc2RsLTe2Mk23kete59d+Q1weoVYh9oZ41Lcj9tYM2y+3AgeUK0+VINu39M
-	 +JpI0LM2k4BtTsZKgmnBxnJEAXybPeg27TbBNKLF9yugOPhB0NVxSo6HVchUeXfVAF
-	 qRNmKshZFjj0DiPJkSKfZkszZJmfsbrYupU4l4zs45YfAOANDcda1F7Ts/8j3ypxQY
-	 +7Cw7rjtPK5Q40NkqYq8PGtP20CMcQreJOx9l0FiifHdkN4FehAdO4R06gT/JgzvpB
-	 p/l0PIqbrDxMw==
-Date: Tue, 4 Nov 2025 09:46:51 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: "Huang, Kai" <kai.huang@intel.com>
-Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"alexandre.f.demers@gmail.com" <alexandre.f.demers@gmail.com>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	"mingo@kernel.org" <mingo@kernel.org>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
-	"kas@kernel.org" <kas@kernel.org>, "bp@alien8.de" <bp@alien8.de>,
-	"coxu@redhat.com" <coxu@redhat.com>,
-	"Chen, Farrah" <farrah.chen@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	"pbonzini@redhat.com" <pbonzini@redhat.com>,
-	"dwmw@amazon.co.uk" <dwmw@amazon.co.uk>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
-	"peterz@infradead.org" <peterz@infradead.org>
-Subject: Re: [PATCH AUTOSEL 6.17] x86/kexec: Disable kexec/kdump on platforms
- with TDX partial write erratum
-Message-ID: <aQoR27GYadapWwhy@laps>
-References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-288-sashal@kernel.org>
- <834a33d34c5c3bf659c94cefc374b0b7a52ee1a6.camel@intel.com>
- <e15710b10ff4a5ddb62b4c2124700b1ab1c6763d.camel@intel.com>
+	b=HUOSlfUNGPF0XIHP239Y3KM2928OhCG/CMcUKqlFDLASvpETQEkQyq/5IIazW/w0S
+	 wInfDwWPBMyjRGsWLjHji+VtSUmxr28A4Syxr1a8f6JDcmbgHgYXhzvxBehospKbPY
+	 SycxH1UXRaCXTqPoV3f5LW00sD3+9313yA8FXb24FCOLAX7zrPwzO9DpiRLboBc+q8
+	 XvqilpF5OoYQu2ZINL4nfSnnxZw+7XzH/WHKCq/ul1vcOF+zJPWHp36JIkyRwa+XAl
+	 xJNKMGlLBKmIYLfr7tlTyGKkieEXhikFDwc0DjZu8FvZx7ckV+dqpodmIY69IEzor7
+	 J4gJgJaSqDntQ==
+Date: Tue, 4 Nov 2025 10:01:04 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	linuxppc-dev@lists.ozlabs.org, patches@lists.linux.dev
+Subject: Re: [PATCH 2/2] macintosh/via-pmu-backlight: Include linux/of.h and
+ uapi/linux/fb.h
+Message-ID: <20251104170104.GA1416336@ax162>
+References: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-0-d256858d86a6@kernel.org>
+ <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-2-d256858d86a6@kernel.org>
+ <c1aecfba-fa12-4572-885d-925e9afa1494@suse.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e15710b10ff4a5ddb62b4c2124700b1ab1c6763d.camel@intel.com>
+In-Reply-To: <c1aecfba-fa12-4572-885d-925e9afa1494@suse.de>
 
-On Mon, Nov 03, 2025 at 09:26:38AM +0000, Huang, Kai wrote:
->On Sun, 2025-10-26 at 22:24 +0000, Huang, Kai wrote:
->> On Sat, 2025-10-25 at 11:58 -0400, Sasha Levin wrote:
->> > From: Kai Huang <kai.huang@intel.com>
->> >
->> > [ Upstream commit b18651f70ce0e45d52b9e66d9065b831b3f30784 ]
->> >
->> >
->>
->> [...]
->>
->> > ---
->> >
->> > LLM Generated explanations, may be completely bogus:
->> >
->> > YES
->> >
->> > **Why This Fix Matters**
->> > - Prevents machine checks during kexec/kdump on early TDX-capable
->> >   platforms with the â€œpartial write to TDX private memoryâ€ erratum.
->> >   Without this, the new kernel may hit an MCE after the old kernel
->> >   jumps, which is a hard failure affecting users.
->>
->> Hi,
->>
->> I don't think we should backport this for 6.17 stable.  Kexec/kdump and
->> TDX are mutually exclusive in Kconfig in 6.17, therefore it's not possible
->> for TDX to impact kexec/kdump.
->>
->> This patch is part of the series which enables kexec/kdump together with
->> TDX in Kconfig (which landed in 6.18) and should not be backported alone.
->
->Hi Sasha,
->
->Just a reminder that this patch should be dropped from stable kernel too
->(just in case you missed, since I didn't get any further notice).
+On Tue, Nov 04, 2025 at 01:43:26PM +0100, Thomas Zimmermann wrote:
+> Hi
+> 
+> Am 26.09.25 um 01:46 schrieb Nathan Chancellor:
+> > After the recent removal of the fb.h include from backlight.h, which
+> > transitively included of.h, there are several errors from
+> > via-pmu-backlight.c (errors from bl_curve not being properly defined
+> > omitted):
+> > 
+> >    drivers/macintosh/via-pmu-backlight.c:22:20: error: 'FB_BACKLIGHT_LEVELS' undeclared here (not in a function)
+> >       22 | static u8 bl_curve[FB_BACKLIGHT_LEVELS];
+> >          |                    ^~~~~~~~~~~~~~~~~~~
+> >    drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_get_level_brightness':
+> >    drivers/macintosh/via-pmu-backlight.c:63:38: error: 'FB_BACKLIGHT_MAX' undeclared (first use in this function); did you mean 'BACKLIGHT_RAW'?
+> >       63 |         pmulevel = bl_curve[level] * FB_BACKLIGHT_MAX / MAX_PMU_LEVEL;
+> >          |                                      ^~~~~~~~~~~~~~~~
+> >          |                                      BACKLIGHT_RAW
+> >    drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_init':
+> >    drivers/macintosh/via-pmu-backlight.c:144:17: error: implicit declaration of function 'of_machine_is_compatible' [-Wimplicit-function-declaration]
+> >      144 |                 of_machine_is_compatible("AAPL,3400/2400") ||
+> >          |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+> > 
+> > FB_BACKLIGHT_{LEVELS,MAX} are available from the userspace API fb.h so
+> > just include that avoid dragging in the full fb.h header unnecessarily.
+> > Include linux/of.h for of_machine_is_compatible().
+> > 
+> > Fixes: 9f218f9bb9d2 ("backlight: Do not include <linux/fb.h> in header file")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >   drivers/macintosh/via-pmu-backlight.c | 2 ++
+> >   1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/drivers/macintosh/via-pmu-backlight.c b/drivers/macintosh/via-pmu-backlight.c
+> > index 26bd9ed5e664..f7b7853b3802 100644
+> > --- a/drivers/macintosh/via-pmu-backlight.c
+> > +++ b/drivers/macintosh/via-pmu-backlight.c
+> > @@ -11,7 +11,9 @@
+> >   #include <asm/ptrace.h>
+> >   #include <linux/adb.h>
+> >   #include <linux/backlight.h>
+> > +#include <linux/of.h>
+> >   #include <linux/pmu.h>
+> > +#include <uapi/linux/fb.h>
+> 
+> Should this not be <linux/fb.h> ?
 
-Now dropped, thanks!
+It could be but as I mention above, this file only needs the UAPI
+FB_BACKLIGHT_LEVELS and FB_BACKLIGHT_MAX constants so I did not really
+feel like it was worth it to drag in the whole fb.h header.
 
--- 
-Thanks,
-Sasha
+> >   #include <asm/backlight.h>
+> >   #define MAX_PMU_LEVEL 0xFF
+> > 
+> 
+> -- 
+> --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+> 
+> 
