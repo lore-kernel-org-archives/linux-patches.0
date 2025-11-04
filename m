@@ -1,85 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233B329E4A;
-	Tue,  4 Nov 2025 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A12E33030C;
+	Tue,  4 Nov 2025 14:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762265647; cv=none; b=J3S/XOOKefBHs71LrJtyzaKcj887tMIKJWfuXRkJcWdgfO1aZZrWH6kX997F8tmzOQzMMYixaWPKPyASO7GcpkOTltWYYAmGq5Sv/wU7s3u5EFSEBo2tlSBersHXdbBaVBGrLilf6DJKXlM2nmZ6CnMT/+XUNUxs7bGUGKyUJaQ=
+	t=1762267614; cv=none; b=dLuhmDqYwYEt0ni9OBrfFmwUCqXuHr0B7xIbaISvmYAckvxfvs2wg2//AHjT+hdlNjO/cGI8x/Sha7aTk7ZbYEarmkfqc59sWScyCjEgwG823ivCDOM/bQeqWcFFp4yj9LMWTJ6MYwaFY7zCoCeIzUWlfn+b2C3dUSR2kDP1Ktc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762265647; c=relaxed/simple;
-	bh=fhRV6SiDDHrj+0y4XOWQ8pGXcJICoob019BId1MLMqM=;
+	s=arc-20240116; t=1762267614; c=relaxed/simple;
+	bh=p5hPIDaRZCzt92kFfvg6R3vu6oORTHx9zKqVYsgt6JI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OJKjrbpFoA3lz89GpE9IqEbcsOVTCRnbAFHVq2d6635umLjE5HXjXfX1rr+NcJ3EvRg5/qtj9fD6YfvotAdlx6cm3w4dpoX/bQM9YXqNBdAH7ZTGkf3EMmKU5TaAfvJaCech4ZsJSGdlZNAYFaRy+UOtqc9M/i0Cyi1JvI67x7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8UkgO69; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=JCfXGKVBPE5WvG6+pBCmxM3/PllHuUDJkPd3EpeXa1Z7GL59SpoeQb56CQJD+BPghjEsFHMLbzaN7Raaf2hQTtu77ukg0gggWpxLW6ssC4wvLNYf1jdakH18gTHRijhiQDj1C+PaNnP5kJsOEzl3WYWjPJtonA+ULppBLrHTLQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BR6iMq/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8UkgO69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14667C4CEF7;
-	Tue,  4 Nov 2025 14:14:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BR6iMq/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB10EC4CEF7;
+	Tue,  4 Nov 2025 14:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762265645;
-	bh=fhRV6SiDDHrj+0y4XOWQ8pGXcJICoob019BId1MLMqM=;
+	s=k20201202; t=1762267614;
+	bh=p5hPIDaRZCzt92kFfvg6R3vu6oORTHx9zKqVYsgt6JI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h8UkgO69XjQPlI/Ri/G7eg0jaIWIsIkVQ5DQx9g8ABDEWxZSSyNHbSbufk61xFCp4
-	 Z0s+BTIrMQ3y084OLyrUswYk+oHUKJxjl8QPK2E5mEKFl7wLsk/BIz/Z8SUg0EDAGS
-	 n3qbaEypG50ThZLlpBCo+iJlkSKZ9svsT/jd/uN0pO/CCa+duAD4ydWg1MkCWbb5XV
-	 +kgTsSCYHJBBgR7P7PxQclNA9fdqrZZusGOW+XGfbTv+rK1zDAlkQQmEpfHreqBCjP
-	 eOdkUpmeYQBmVNkkirkay48iPhOxOIXWwFmv/YyLolvKF1hB7sy8k3GH8lWIN6tlc1
-	 iovEnOgffrHvQ==
-Date: Tue, 4 Nov 2025 09:14:03 -0500
+	b=BR6iMq/oPyikLtPw6az2lrms+Ge4xlCbIe4fTtTyY4tHC2n45aUuCaBWJvcHF/A2p
+	 KG+L13PEc2RsLTe2Mk23kete59d+Q1weoVYh9oZ41Lcj9tYM2y+3AgeUK0+VINu39M
+	 +JpI0LM2k4BtTsZKgmnBxnJEAXybPeg27TbBNKLF9yugOPhB0NVxSo6HVchUeXfVAF
+	 qRNmKshZFjj0DiPJkSKfZkszZJmfsbrYupU4l4zs45YfAOANDcda1F7Ts/8j3ypxQY
+	 +7Cw7rjtPK5Q40NkqYq8PGtP20CMcQreJOx9l0FiifHdkN4FehAdO4R06gT/JgzvpB
+	 p/l0PIqbrDxMw==
+Date: Tue, 4 Nov 2025 09:46:51 -0500
 From: Sasha Levin <sashal@kernel.org>
-To: Andreas Larsson <andreas@gaisler.com>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Thomas Huth <thuth@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>, sparclinux@vger.kernel.org,
-	nathan@kernel.org, alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com, llvm@lists.linux.dev
-Subject: Re: [PATCH AUTOSEL 6.17-5.4] sparc: Replace __ASSEMBLY__ with
- __ASSEMBLER__ in uapi headers
-Message-ID: <aQoKKyDTfD0Sn6qz@laps>
+To: "Huang, Kai" <kai.huang@intel.com>
+Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"alexandre.f.demers@gmail.com" <alexandre.f.demers@gmail.com>,
+	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+	"mingo@kernel.org" <mingo@kernel.org>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
+	"kas@kernel.org" <kas@kernel.org>, "bp@alien8.de" <bp@alien8.de>,
+	"coxu@redhat.com" <coxu@redhat.com>,
+	"Chen, Farrah" <farrah.chen@intel.com>,
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+	"pbonzini@redhat.com" <pbonzini@redhat.com>,
+	"dwmw@amazon.co.uk" <dwmw@amazon.co.uk>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	"peterz@infradead.org" <peterz@infradead.org>
+Subject: Re: [PATCH AUTOSEL 6.17] x86/kexec: Disable kexec/kdump on platforms
+ with TDX partial write erratum
+Message-ID: <aQoR27GYadapWwhy@laps>
 References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-242-sashal@kernel.org>
- <62e049c9-cb92-4eaa-b069-e96ddafaad03@gaisler.com>
+ <20251025160905.3857885-288-sashal@kernel.org>
+ <834a33d34c5c3bf659c94cefc374b0b7a52ee1a6.camel@intel.com>
+ <e15710b10ff4a5ddb62b4c2124700b1ab1c6763d.camel@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <62e049c9-cb92-4eaa-b069-e96ddafaad03@gaisler.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e15710b10ff4a5ddb62b4c2124700b1ab1c6763d.camel@intel.com>
 
-On Mon, Oct 27, 2025 at 09:09:17AM +0100, Andreas Larsson wrote:
->On 2025-10-25 17:57, Sasha Levin wrote:
->> From: Thomas Huth <thuth@redhat.com>
+On Mon, Nov 03, 2025 at 09:26:38AM +0000, Huang, Kai wrote:
+>On Sun, 2025-10-26 at 22:24 +0000, Huang, Kai wrote:
+>> On Sat, 2025-10-25 at 11:58 -0400, Sasha Levin wrote:
+>> > From: Kai Huang <kai.huang@intel.com>
+>> >
+>> > [ Upstream commit b18651f70ce0e45d52b9e66d9065b831b3f30784 ]
+>> >
+>> >
 >>
->> [ Upstream commit d6fb6511de74bd0d4cb4cabddae9b31d533af1c1 ]
+>> [...]
 >>
->> __ASSEMBLY__ is only defined by the Makefile of the kernel, so
->> this is not really useful for uapi headers (unless the userspace
->> Makefile defines it, too). Let's switch to __ASSEMBLER__ which
->> gets set automatically by the compiler when compiling assembly
->> code.
+>> > ---
+>> >
+>> > LLM Generated explanations, may be completely bogus:
+>> >
+>> > YES
+>> >
+>> > **Why This Fix Matters**
+>> > - Prevents machine checks during kexec/kdump on early TDX-capable
+>> >   platforms with the “partial write to TDX private memory” erratum.
+>> >   Without this, the new kernel may hit an MCE after the old kernel
+>> >   jumps, which is a hard failure affecting users.
 >>
->> This is a completely mechanical patch (done with a simple "sed -i"
->> statement).
+>> Hi,
 >>
->> Cc: David S. Miller <davem@davemloft.net>
->> Cc: Andreas Larsson <andreas@gaisler.com>
->> Cc: sparclinux@vger.kernel.org
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> Reviewed-by: Andreas Larsson <andreas@gaisler.com>
->> Signed-off-by: Andreas Larsson <andreas@gaisler.com>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
+>> I don't think we should backport this for 6.17 stable.  Kexec/kdump and
+>> TDX are mutually exclusive in Kconfig in 6.17, therefore it's not possible
+>> for TDX to impact kexec/kdump.
+>>
+>> This patch is part of the series which enables kexec/kdump together with
+>> TDX in Kconfig (which landed in 6.18) and should not be backported alone.
 >
->The upstream commit dc356bf3c173 ("sparc: Drop the "-ansi" from the asflags") is
->a prerequisite to d6fb6511de74 ("sparc: Replace __ASSEMBLY__ with __ASSEMBLER__
->in uapi headers") that here is planned to be picked up to stable branches. If
->this prerequisite is not picked up first the kernel will not compile [1].
+>Hi Sasha,
+>
+>Just a reminder that this patch should be dropped from stable kernel too
+>(just in case you missed, since I didn't get any further notice).
 
-I'll drop this commit. Thanks!
+Now dropped, thanks!
 
 -- 
 Thanks,
