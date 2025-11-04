@@ -1,118 +1,231 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA1E242D88
-	for <patches@lists.linux.dev>; Tue,  4 Nov 2025 17:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EDB33E356
+	for <patches@lists.linux.dev>; Tue,  4 Nov 2025 18:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762275669; cv=none; b=ueSuN/AN2ZBy/2SLbh9rqa7xAHpQ7QjZWAewHWuCk+RWUaQnJMgU9Lnn7ndorY96Uu7vNNUyyqBkZQY4O+DqgmchsNs0ISKEZBOtoamspJlqAWugDNFr7qdIgXe3ICH2JIV89Jn/PvwvVrSOuu72mpahsD11yFNhmFTpYFx3rgI=
+	t=1762279877; cv=none; b=F0RIC44dSPfETtCq/vkgjiAxDfc8hOAYzJj6rUwaB61+TSa43CMqlUEEe/Py9W2hTOWF2Kxz0LRvjaUEbS0KEdFjw3uSrX1/KpCBF1RgAvWWlBJfteMrnS+AROXRpiSpNS4+ijeLEpZY5ugJDE5LvTMgfIVz8lsYLftpyRYod4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762275669; c=relaxed/simple;
-	bh=A5hVs65aVEjMq28wLqSGze1IxyHY/ziAOGAuCp034rU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pU2Li4Kc0MiGoX1Ae0MuD6gjdfnX2FzcjXNZ+nD8oHTJ9Xs/irFC6n1ycCZQGXFNovwYg++BTAYjZVYXBO3ggIjYzmfy1JGn9A1l/VTVnjb8oYE81JRf4Kf3/1kRaIr3f47SB4ByIGe9Gl0ZK27+V2sgGJoQosrSGF43w2QCXy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HUOSlfUN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762279877; c=relaxed/simple;
+	bh=/GK73ihkOahwyuQYu/lK5j0/0SawS3KdbuW16UUpt/M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cmORYpY0yJQubw+KtxyywwGY8OowP5voVbVKv79QEXy1fvS5tJYnlL20cUTVZKlT78ZMEB4O+sbT4/f0m/5PP7fNltQfuze+XYbnn7ozoQCsY9jEHcTRA1W2kwrWvyb1QZNPl04+jYLpVD3pIVxpCI5VWTOQdBwhIZBjG1ig4gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=e5BBAaOF; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+PwCGwPf; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=e5BBAaOF; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=+PwCGwPf; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HUOSlfUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D304CC4CEF7;
-	Tue,  4 Nov 2025 17:01:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762275669;
-	bh=A5hVs65aVEjMq28wLqSGze1IxyHY/ziAOGAuCp034rU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HUOSlfUNGPF0XIHP239Y3KM2928OhCG/CMcUKqlFDLASvpETQEkQyq/5IIazW/w0S
-	 wInfDwWPBMyjRGsWLjHji+VtSUmxr28A4Syxr1a8f6JDcmbgHgYXhzvxBehospKbPY
-	 SycxH1UXRaCXTqPoV3f5LW00sD3+9313yA8FXb24FCOLAX7zrPwzO9DpiRLboBc+q8
-	 XvqilpF5OoYQu2ZINL4nfSnnxZw+7XzH/WHKCq/ul1vcOF+zJPWHp36JIkyRwa+XAl
-	 xJNKMGlLBKmIYLfr7tlTyGKkieEXhikFDwc0DjZu8FvZx7ckV+dqpodmIY69IEzor7
-	 J4gJgJaSqDntQ==
-Date: Tue, 4 Nov 2025 10:01:04 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	linuxppc-dev@lists.ozlabs.org, patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] macintosh/via-pmu-backlight: Include linux/of.h and
- uapi/linux/fb.h
-Message-ID: <20251104170104.GA1416336@ax162>
-References: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-0-d256858d86a6@kernel.org>
- <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-2-d256858d86a6@kernel.org>
- <c1aecfba-fa12-4572-885d-925e9afa1494@suse.de>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="e5BBAaOF";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+PwCGwPf";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="e5BBAaOF";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="+PwCGwPf"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8D04021194;
+	Tue,  4 Nov 2025 18:11:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1762279873; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=yvJofQ7zgV2S0QGyZ+jnZqrgNYVRXLa+r1OXEPMLaDg=;
+	b=e5BBAaOF6TUFVfPxOLW5CvpFxRjKpayJ7yuP7atu6Mw0f1ig8Xl2n3YoBH6HCcEfO90yp+
+	60CnWX6A7VBWkXbqGM4f6K/s+c5dde/+IaPWd84vuJQUVz7AVw+oQXfsGQs69rTSrEgUcp
+	j15hKrtWHXCMl//guCyl93M5OuXgU6k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1762279873;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=yvJofQ7zgV2S0QGyZ+jnZqrgNYVRXLa+r1OXEPMLaDg=;
+	b=+PwCGwPfdwsQNfczEFtL0L9EQV+qxV5QnXvrQXNXB+0Qhl7PwpJ8Ra4NZ9+WdfRgoob1Ws
+	fbY5nyTd2OgYpYAQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1762279873; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=yvJofQ7zgV2S0QGyZ+jnZqrgNYVRXLa+r1OXEPMLaDg=;
+	b=e5BBAaOF6TUFVfPxOLW5CvpFxRjKpayJ7yuP7atu6Mw0f1ig8Xl2n3YoBH6HCcEfO90yp+
+	60CnWX6A7VBWkXbqGM4f6K/s+c5dde/+IaPWd84vuJQUVz7AVw+oQXfsGQs69rTSrEgUcp
+	j15hKrtWHXCMl//guCyl93M5OuXgU6k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1762279873;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=yvJofQ7zgV2S0QGyZ+jnZqrgNYVRXLa+r1OXEPMLaDg=;
+	b=+PwCGwPfdwsQNfczEFtL0L9EQV+qxV5QnXvrQXNXB+0Qhl7PwpJ8Ra4NZ9+WdfRgoob1Ws
+	fbY5nyTd2OgYpYAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37BC0136D1;
+	Tue,  4 Nov 2025 18:11:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id G/hUC8FBCmmwLQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Tue, 04 Nov 2025 18:11:13 +0000
+Message-ID: <0827d0ea-9831-4839-989f-13e33d8d6729@suse.de>
+Date: Tue, 4 Nov 2025 19:11:12 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] macintosh/via-pmu-backlight: Include linux/of.h and
+ uapi/linux/fb.h
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Simona Vetter <simona.vetter@ffwll.ch>, linuxppc-dev@lists.ozlabs.org,
+ patches@lists.linux.dev
+References: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-0-d256858d86a6@kernel.org>
+ <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-2-d256858d86a6@kernel.org>
+ <c1aecfba-fa12-4572-885d-925e9afa1494@suse.de>
+ <20251104170104.GA1416336@ax162>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20251104170104.GA1416336@ax162>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c1aecfba-fa12-4572-885d-925e9afa1494@suse.de>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.995];
+	MIME_GOOD(-0.10)[text/plain];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,linux.ibm.com,ellerman.id.au,gmail.com,csgroup.eu,ffwll.ch,lists.ozlabs.org,lists.linux.dev];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCVD_TLS_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:mid]
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
 
-On Tue, Nov 04, 2025 at 01:43:26PM +0100, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 26.09.25 um 01:46 schrieb Nathan Chancellor:
-> > After the recent removal of the fb.h include from backlight.h, which
-> > transitively included of.h, there are several errors from
-> > via-pmu-backlight.c (errors from bl_curve not being properly defined
-> > omitted):
-> > 
-> >    drivers/macintosh/via-pmu-backlight.c:22:20: error: 'FB_BACKLIGHT_LEVELS' undeclared here (not in a function)
-> >       22 | static u8 bl_curve[FB_BACKLIGHT_LEVELS];
-> >          |                    ^~~~~~~~~~~~~~~~~~~
-> >    drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_get_level_brightness':
-> >    drivers/macintosh/via-pmu-backlight.c:63:38: error: 'FB_BACKLIGHT_MAX' undeclared (first use in this function); did you mean 'BACKLIGHT_RAW'?
-> >       63 |         pmulevel = bl_curve[level] * FB_BACKLIGHT_MAX / MAX_PMU_LEVEL;
-> >          |                                      ^~~~~~~~~~~~~~~~
-> >          |                                      BACKLIGHT_RAW
-> >    drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_init':
-> >    drivers/macintosh/via-pmu-backlight.c:144:17: error: implicit declaration of function 'of_machine_is_compatible' [-Wimplicit-function-declaration]
-> >      144 |                 of_machine_is_compatible("AAPL,3400/2400") ||
-> >          |                 ^~~~~~~~~~~~~~~~~~~~~~~~
-> > 
-> > FB_BACKLIGHT_{LEVELS,MAX} are available from the userspace API fb.h so
-> > just include that avoid dragging in the full fb.h header unnecessarily.
-> > Include linux/of.h for of_machine_is_compatible().
-> > 
-> > Fixes: 9f218f9bb9d2 ("backlight: Do not include <linux/fb.h> in header file")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >   drivers/macintosh/via-pmu-backlight.c | 2 ++
-> >   1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/drivers/macintosh/via-pmu-backlight.c b/drivers/macintosh/via-pmu-backlight.c
-> > index 26bd9ed5e664..f7b7853b3802 100644
-> > --- a/drivers/macintosh/via-pmu-backlight.c
-> > +++ b/drivers/macintosh/via-pmu-backlight.c
-> > @@ -11,7 +11,9 @@
-> >   #include <asm/ptrace.h>
-> >   #include <linux/adb.h>
-> >   #include <linux/backlight.h>
-> > +#include <linux/of.h>
-> >   #include <linux/pmu.h>
-> > +#include <uapi/linux/fb.h>
-> 
-> Should this not be <linux/fb.h> ?
+Hi
 
-It could be but as I mention above, this file only needs the UAPI
-FB_BACKLIGHT_LEVELS and FB_BACKLIGHT_MAX constants so I did not really
-feel like it was worth it to drag in the whole fb.h header.
+Am 04.11.25 um 18:01 schrieb Nathan Chancellor:
+> On Tue, Nov 04, 2025 at 01:43:26PM +0100, Thomas Zimmermann wrote:
+>> Hi
+>>
+>> Am 26.09.25 um 01:46 schrieb Nathan Chancellor:
+>>> After the recent removal of the fb.h include from backlight.h, which
+>>> transitively included of.h, there are several errors from
+>>> via-pmu-backlight.c (errors from bl_curve not being properly defined
+>>> omitted):
+>>>
+>>>     drivers/macintosh/via-pmu-backlight.c:22:20: error: 'FB_BACKLIGHT_LEVELS' undeclared here (not in a function)
+>>>        22 | static u8 bl_curve[FB_BACKLIGHT_LEVELS];
+>>>           |                    ^~~~~~~~~~~~~~~~~~~
+>>>     drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_get_level_brightness':
+>>>     drivers/macintosh/via-pmu-backlight.c:63:38: error: 'FB_BACKLIGHT_MAX' undeclared (first use in this function); did you mean 'BACKLIGHT_RAW'?
+>>>        63 |         pmulevel = bl_curve[level] * FB_BACKLIGHT_MAX / MAX_PMU_LEVEL;
+>>>           |                                      ^~~~~~~~~~~~~~~~
+>>>           |                                      BACKLIGHT_RAW
+>>>     drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_init':
+>>>     drivers/macintosh/via-pmu-backlight.c:144:17: error: implicit declaration of function 'of_machine_is_compatible' [-Wimplicit-function-declaration]
+>>>       144 |                 of_machine_is_compatible("AAPL,3400/2400") ||
+>>>           |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+>>>
+>>> FB_BACKLIGHT_{LEVELS,MAX} are available from the userspace API fb.h so
+>>> just include that avoid dragging in the full fb.h header unnecessarily.
+>>> Include linux/of.h for of_machine_is_compatible().
+>>>
+>>> Fixes: 9f218f9bb9d2 ("backlight: Do not include <linux/fb.h> in header file")
+>>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>>> ---
+>>>    drivers/macintosh/via-pmu-backlight.c | 2 ++
+>>>    1 file changed, 2 insertions(+)
+>>>
+>>> diff --git a/drivers/macintosh/via-pmu-backlight.c b/drivers/macintosh/via-pmu-backlight.c
+>>> index 26bd9ed5e664..f7b7853b3802 100644
+>>> --- a/drivers/macintosh/via-pmu-backlight.c
+>>> +++ b/drivers/macintosh/via-pmu-backlight.c
+>>> @@ -11,7 +11,9 @@
+>>>    #include <asm/ptrace.h>
+>>>    #include <linux/adb.h>
+>>>    #include <linux/backlight.h>
+>>> +#include <linux/of.h>
+>>>    #include <linux/pmu.h>
+>>> +#include <uapi/linux/fb.h>
+>> Should this not be <linux/fb.h> ?
+> It could be but as I mention above, this file only needs the UAPI
+> FB_BACKLIGHT_LEVELS and FB_BACKLIGHT_MAX constants so I did not really
+> feel like it was worth it to drag in the whole fb.h header.
 
-> >   #include <asm/backlight.h>
-> >   #define MAX_PMU_LEVEL 0xFF
-> > 
-> 
-> -- 
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstr. 146, 90461 N�rnberg, Germany, www.suse.com
-> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG N�rnberg)
-> 
-> 
+I mean that I thought that the internal header would be preferred over 
+the UAPI header if both exist. But maybe I misremember.
+
+Best regards
+Thomas
+
+>
+>>>    #include <asm/backlight.h>
+>>>    #define MAX_PMU_LEVEL 0xFF
+>>>
+>> -- 
+>> --
+>> Thomas Zimmermann
+>> Graphics Driver Developer
+>> SUSE Software Solutions Germany GmbH
+>> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+>> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+>>
+>>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
