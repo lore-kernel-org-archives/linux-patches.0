@@ -1,172 +1,342 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013067.outbound.protection.outlook.com [40.93.196.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4662E92DA;
-	Wed,  5 Nov 2025 12:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.67
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762346604; cv=fail; b=XkdFpmojWkkKtPvlnW2Cc+EP4RJxGPEkP6ssqBgCY2t6D9tBl2JwBBJs2YNMpJdnqhrpGXYFgE1VbP0rLl7URzoeglHYlDjURRSHREgHsySkRp2epGD018WLEj6VFyg9Hono90OQis9fteGttm/YBBH+Z+lW0D42CsutVilp9no=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762346604; c=relaxed/simple;
-	bh=M6qfK0XiPIooT5v1KKM/sCZy+vI57yuMJj4TSolNO/k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=aCUQ+vdmDA3afv6wFXIEYS34zdFzTGN+XvB3UwkuXx5p71+IcrJayCf4t0yHkky8J5LBeN1TxpyXEUm8VC9dpuDnGW7qqVcIVn0TDXsKY+9nWsWVaEti1RVCprjkXB8nf+6LOb4OW0iAxnEfSLyPoPedulU1Vc7BlxzDbNXwjuw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aF3OhD/F; arc=fail smtp.client-ip=40.93.196.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aF3OhD/F"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zUHvcjMJpMGQMAbPbh8ZALI5G/owmEULAdc/ykIn9GTLjtGJjhcTkvYAzm1wOcFlk9fJv/g8A9zHr5Rd2hcqgrW91iJQh0Om0Bhx9nABNSxyDL71MtgQ5TiOgaZp54VHpMvC58dOdKjGph1afG/rw31TEjnZEx+sM7J9RA5kr31wNCRv6h4BvhTNsrBO80zRqUXKhoX2D0N//oCUEmn0JBTvfRxFM9XDYGYtDRSbfe7FY1+i9BueRUdyIHbkxB/3D2Q5/N3sLovJAnbd9oprN4mhFoCKsxmkkj/V3AGPTqlaT3FTYTedYHp8Q5sMihCFliG8OX+Yq1N2SpO3n8HuPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h5HFSFUQhfWDx1HUyLnS1/MGOTc9ltmCc0b2AFZf8uc=;
- b=NKeh90VIQvq9Gyq9LID5NI3K2z6/4zcrCr42+I2Yt1v9zNDskHo1WGvQ4o/6zhhE6ujyy0/uSLA2TjisBRNsZDoM6RgdDBJzLUYk3oX9Tr/dRVYeTY1MLP5vR0wIgarJuqi6MWwJMD8QLy4NnX99wEvufC8E4TKHp6e6eIb/s21bqgYPQqUA0QK4a30koiyWuAebAoAN7H13eSCUmvJcmhCs5o/F+AIzxBeSA3qeyJH+Q20oAAlAbXVtNgoivVvkPvn5uYbEA13yZ+neJaOgqpREWRRFKfHUJFswzAhX6G4iYPiWhnXp8Y5kvQt5JnHA3HA2HetJZ55At/3E7EzVYQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h5HFSFUQhfWDx1HUyLnS1/MGOTc9ltmCc0b2AFZf8uc=;
- b=aF3OhD/FXzVL0AyfgWEUGdFkmuOdc/qzY4Xz++6JN/PX5tCqaLEjSFd4QzdcvmFNbbi3Gk2c4SCsRJ4pAGcjCbV0H78fijN6Gnc3t2pJP1HsCzkjiTQCrHUmEJm8DPfGMYU0mucCn1zx1zweKk69T2FfsbCHL35M4ZKP+889VzfD84zP+0/ZA0MJI3Nkxmt+j4dn2ne8RnK3SpRdXVOx9mrZk8yF92nxm/MV/pJV0+FBMu2c33PNBjE0edGXY6uvdWiAJL2lNmRkp+L3OJORvwmbgLLyK1gNcrk3jUyzZrvxoNuOHN7MiX8DxAX8P5o5Mz7VLOfv2zpDYHimvMtqLQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
- by MN6PR12MB8567.namprd12.prod.outlook.com (2603:10b6:208:478::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.8; Wed, 5 Nov
- 2025 12:43:20 +0000
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9298.006; Wed, 5 Nov 2025
- 12:43:20 +0000
-Date: Wed, 5 Nov 2025 08:43:18 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Joerg Roedel <joro@8bytes.org>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>,
-	Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>,
-	iommu@lists.linux.dev, Justin Stitt <justinstitt@google.com>,
-	linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
-	Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	James Gowans <jgowans@amazon.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Vasant Hegde <vasant.hegde@amd.com>
-Subject: Re: [PATCH v8 00/15] Consolidate iommu page table implementations
- (AMD)
-Message-ID: <20251105124318.GO1537560@nvidia.com>
-References: <0-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
- <3wwyr2kqhaj5icznsizcu372uzhygubkytko3vueamwnf6vzr2@hlas3nx53tps>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3wwyr2kqhaj5icznsizcu372uzhygubkytko3vueamwnf6vzr2@hlas3nx53tps>
-X-ClientProxiedBy: MN0PR03CA0006.namprd03.prod.outlook.com
- (2603:10b6:208:52f::26) To MN2PR12MB3613.namprd12.prod.outlook.com
- (2603:10b6:208:c1::17)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 033C826F2A1
+	for <patches@lists.linux.dev>; Wed,  5 Nov 2025 14:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762353873; cv=none; b=BgO9PkWBdOI3F0jg6vhBnKZ6vttDGr2F100Pw6+HCBFpAlpWQ0A23bjGT7LbDt4Hl+hOqGNOwgO3W27JKKS8NnqC9Yl+ZePl/kc0GBHnd1iYV+1knTRoXftwFpRMv7UNUhJjzGN9i804D403F6A4MKKX91ZvbOo9WYnEkD9TsvQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762353873; c=relaxed/simple;
+	bh=aloNZC+lYx0sTvaPm2rmlqf6ESr4WRivTHN4sJh+6lY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XH/wnWEZ4HGqd82OtHpjBPGGwlJXvS4oRME1NYLCmvsFtGVCNGZBl3sGHFzYHGzUATfypQwSByLDtQZrEZgJe+qcGObNxYtUWGLsvuTiFvwye6fV6+ZpsoVj/okP7wOoa6U8oV5lnzDLgcs0LoYrd4FdMH5GtPEOV20z93lSj6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6A1562B;
+	Wed,  5 Nov 2025 06:44:17 -0800 (PST)
+Received: from e133380.arm.com (e133380.arm.com [10.1.197.68])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 36C4B3F694;
+	Wed,  5 Nov 2025 06:44:23 -0800 (PST)
+Date: Wed, 5 Nov 2025 14:42:18 +0000
+From: Dave Martin <Dave.Martin@arm.com>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>, Chen Yu <yu.c.chen@intel.com>,
+	x86@kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v13 12/32] x86,fs/resctrl: Support binary fixed point
+ event counters
+Message-ID: <aQtiSmZ14b+U/J4U@e133380.arm.com>
+References: <20251029162118.40604-1-tony.luck@intel.com>
+ <20251029162118.40604-13-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|MN6PR12MB8567:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8ede946-52c5-40dd-6ef7-08de1c68e63b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?7/exktVM18gLlDhXZ/+RuqtaAPIHmsaCdTa7gzYmZ8t5D0ZChWKoLPBTdD6Z?=
- =?us-ascii?Q?fblQdzsVF+FL90YDFcklnicHBo3L9mPduDrUEzox0wdYzNdUbJ7k22/G66RQ?=
- =?us-ascii?Q?0cqHbTp7G+/2YtXbOuBwPBBey2LHemWkRVD/e8OFBBcKOVIdPBCuHxwIJ7Mo?=
- =?us-ascii?Q?jhAxfC5D9j5pn6BtUfXXz1tXVhLdfx7wWFLbFSGFBxxjHMif6w5v1BhW4iK5?=
- =?us-ascii?Q?barqkpXGwzAL9USrfRY50ynJBhTuL7W1202+k6lST24zj3jvZbgiDzF0ZJWi?=
- =?us-ascii?Q?pBij/hXr68qfyza61OikfpYyG38532EG7gck3obBc0VkmUrvNpwlVkgJqVIz?=
- =?us-ascii?Q?bzcJ3hKm1a1wG3oI6fMMco7SCiGmXLAPAcQ+3W5kgQtUasC0mSr2Ec7AWQWy?=
- =?us-ascii?Q?wGZ8mmBvIdYfBn4uRNftODdzMRt9RtLCFDmenONL+4FtZLE4iPuX9lrirNab?=
- =?us-ascii?Q?u8+DR0PEb7b9gZc87nTJhFSVYOIM6Cgvv5iWcrs2b4EG031bpJJ5veBnxxVY?=
- =?us-ascii?Q?6oVLTYa59V4THuqsTOHeL8oZEFRqgCke7QiE8iRLxJJhR0HwuqOIY905xNzg?=
- =?us-ascii?Q?kI3XFrWL3mR05Wyx/lHjTHgZLnEUTsUOqI+/i0VVmwDOaXFrUbofv6ROp8pH?=
- =?us-ascii?Q?/tAWcks8vz8OcUj6islEwVc6c7A9qMjliv4ycIEqV8M4NkC1r2c/VbPvmXhX?=
- =?us-ascii?Q?EZCYE29T3ewWWIIUghgZQggTVng8CqAUqGnjqPGpo4dKOWgdnlSZV7LDgH31?=
- =?us-ascii?Q?6XyUbm3/muT9Dz5cx3WfLRgJWdAWfC3C3Plm+NVZGGsJ1SAD03EuFxb6It7s?=
- =?us-ascii?Q?00cAnEq+wFoCMZhrmDvYsQ+x1xajft2GXC8mk7xb65TqFNev9LvwOT6XY674?=
- =?us-ascii?Q?JJcVxLaVgicgzrnsHzrUzIAK9JCUIch6q/HuDt+cwMxI747gcDeiiWJmWTPp?=
- =?us-ascii?Q?3ZzMuapYe/QFvetf/auug9Azezr1DnCOg93icHkzzWPSxYnHFSmgxiAQ1Ia0?=
- =?us-ascii?Q?zuT5TWygqSes2MK4Kq4KPUIsblPzH6OQeLVQT08+hZKX77/ZK2kYcjtEh4pC?=
- =?us-ascii?Q?mv21HfwraA/NdmR8GRbAgAF6isNp6mDPmiI3/TmsYt02WFzNQpYnxyG9kf8j?=
- =?us-ascii?Q?gAp3VsSWKStbL5afs6ffDWLW0wNgfidaS8rnj5Ee9WMNWYy89owAWBJfo725?=
- =?us-ascii?Q?25CgkgwOZijA/73yAppKQrKg5NP00CY8P9oqo/ZHR/2TyDf4aoENzlYtmljd?=
- =?us-ascii?Q?oq2GhA/Kb0FAMGxqpxVc4AGgGdY92R2seMtF2IfCPrXBDnYdXZmVcup1040w?=
- =?us-ascii?Q?7IBPkVB2kGX7jl/E8afkAj13FZDCnlneSjAtw2CdnvI14Wq8u4SmLwfQXWpJ?=
- =?us-ascii?Q?mp3/NBfQfCOOf5CBFYdPGewQdE/j422KZE+HjtoXgFCgxJlCDFlUW+a4+bCX?=
- =?us-ascii?Q?wvIwT6aBmEBmq0hRO+lnE/6l+E5egzrU?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?e+V23VLZJI8zapsv/NJfHLlMugByNvhlPHMOiYa4+BtHOEtDx/trgU+eEXCZ?=
- =?us-ascii?Q?vQ36QqpSdcGROEIno6WObqCrEm6Af1rCyMR1xFd3r6GqmgtV5ENSBtsSclTj?=
- =?us-ascii?Q?FDxPwUd18krj67DKn1K5StSsg9I9zzOOxX3OsXTGkoA5nDsVcjS/zIdKpbca?=
- =?us-ascii?Q?lKNR6OFfvtPpMjN0Mx1/SvKmalzUOUq1ZihWdylgjtSgJegu8ijhxOuqpE6g?=
- =?us-ascii?Q?rr/p0Lbi0qFAJp0Eo6w0DbypTFx/02UMLLOCCVI2zfL8CpNawvUbq2Kh1FYr?=
- =?us-ascii?Q?oSCofOtSuOPvMvtvcDnoVKyLMIFFTDiYlBiCJOw9R0JvA1i2ZAM9hJd9NWKP?=
- =?us-ascii?Q?985DWZMUBJkT+VvhthZ/wvn8KILkVvjHkpok7sGvX1mFJUkXjies8wiQ2PR+?=
- =?us-ascii?Q?0FDHR/f/LINIpJpjNx0Ro+hUph8R9pqd6SVSzrg69b8JfiyOz2z/3YB9Uugb?=
- =?us-ascii?Q?j7XfRjLzQ1qrYR6MMe4kstRDqd70KM8UHw4Ija8ZdkorMHnuqhnfIUs0lR+S?=
- =?us-ascii?Q?jn4gR0k9uAmefO8PFWCYSe5y/SdPV0TON+HeJqF6V4wygruOvNzYyjXRXH1/?=
- =?us-ascii?Q?u7pFoiS49dlNExbMkRprtkeiBvluovxDwe1w7qbXBGP0D5xabswj974bHZwV?=
- =?us-ascii?Q?wwB7mqpqfsWgtyzSKTjrNfIyL+mw1shri1f0y9ihI//ZFJTPweLdVRaU9JYI?=
- =?us-ascii?Q?JfH/T2Q4yRi3NbWzH1Xxsw4S8LDR3qYjVqp8ZniyP76JWnSf99ywcpmv2IKY?=
- =?us-ascii?Q?ZiYjTKE0tEDSeSQ9eeBU48og9jwsk1tgEUHW40hrekRRs3OrEvPtNpVtWo51?=
- =?us-ascii?Q?oWEbGca1zzP5EHFEea2LE1vXGeGSyCiKFgReDBDaTkxg/rmTzsfrVw1tVhF0?=
- =?us-ascii?Q?xClfahBRptk17fSogZK2yxAvEuop5z0fal3lInhSxDzxFeBs7KDcSPnTBtvT?=
- =?us-ascii?Q?mYa5PX85IL91ZvlttaEOjEBFZ/uAlefOCNYbNbqFKIeoGluyLi4bp3PTRI8i?=
- =?us-ascii?Q?IyDbPUCWvDnnfNh1Oh7qfM3WI/1nPJv3z8pUP/kuDtHFPPTamQ5FXcc4LcPu?=
- =?us-ascii?Q?VngFIv0Z1yNgTzXIakCTH0n8l+WNg3PJsqatCTy69jsoTiVkH9gkD25R2bzj?=
- =?us-ascii?Q?mvzYBUme7ACiOZqmmI1B44HHnKxwM1ZLnDg3F46tI0VIercwe8XK5Swj3HZX?=
- =?us-ascii?Q?znhkzCrYyMUGpFUCWGVOe3oSnS0dhqJatxTNYzM2pG+HiKif0Dy4+P02r75C?=
- =?us-ascii?Q?giHgG3ykazWUvn0VAeklfhSr/a2K4TlUoxbm03x12SZefTkuLVTTm2jJAyBK?=
- =?us-ascii?Q?nzhURJhS/f+5tvoaqHlPmXXtsHX9ObZFr0j5xh6pzoC4k/BAlJwHVZfx8wfs?=
- =?us-ascii?Q?CapnU8mYupdrRH8edv2I1dMDnVzC+DqgYXwRm2klGWZnIu2EVeRR+cjU2jAK?=
- =?us-ascii?Q?InGAk6+11jXNEhdxZh38pMoHgzxS6ZtZB/3TsoCvK38MPDOqiCijp0GC7zif?=
- =?us-ascii?Q?R+aaj+0GyuYXHIdknhSjwVly2bmucd/tKfxp5Hb0LixLwR/7pT0KUnjwr9/X?=
- =?us-ascii?Q?ekuGbvDXvamY4nw9JiU=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8ede946-52c5-40dd-6ef7-08de1c68e63b
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2025 12:43:20.0933
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: msIoZuP/859XL72lGZw2QXn6aaa20H/p7Ka5A9gE/aqZ00YvQrQ0z1+kYGK2PybQ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8567
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251029162118.40604-13-tony.luck@intel.com>
 
-On Wed, Nov 05, 2025 at 09:45:07AM +0100, Joerg Roedel wrote:
-> On Tue, Nov 04, 2025 at 02:29:58PM -0400, Jason Gunthorpe wrote:
-> > [Joerg, can you put this and vtd in linux-next please. The vtd series is still
-> > good at v3 thanks]
+Hi Tony,
+
+A few drive-by nits from me -- apologies, I hadn't looked at this in a
+while.
+
+On Wed, Oct 29, 2025 at 09:20:55AM -0700, Tony Luck wrote:
+> resctrl assumes that all monitor events can be displayed as unsigned
+> decimal integers.
 > 
-> Applied, thanks Jason. Please send the kdoc fixes which address Randys review
-> on-top.
+> Hardware architecture counters may provide some telemetry events with
+> greater precision where the event is not a simple count, but is a
+> measurement of some sort (e.g. Joules for energy consumed).
+> 
+> Add a new argument to resctrl_enable_mon_event() for architecture code
+> to inform the file system that the value for a counter is a fixed-point
+> value with a specific number of binary places.
+> Only allow architecture to use floating point format on events that the
+> file system has marked with mon_evt::is_floating_point.
+> 
+> Display fixed point values with values rounded to an appropriate number
+> of decimal places for the precision of the number of binary places
+> provided. Add one extra decimal place for every three additional binary
 
-Will do. Please take the VTD series this cycle also, though maybe it
-is easier to let this one sit in -next for a bit first.
+(Is this just informal wording?  If not, it's wrong...)
 
-Thanks,
-Jason
+> places, except for low precision binary values where exact representation
+> is possible:
+> 
+>   1 binary place is 0.0 or 0.5			=> 1 decimal place
+>   2 binary places is 0.0, 0.25, 0.5, 0.75	=> 2 decimal places
+>   3 binary places is 0.0, 0.125, etc.		=> 3 decimal places
+
+What's the rationale for this special treatment?  I don't see any
+previous discussion (apologies if I missed it).
+
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+> ---
+>  include/linux/resctrl.h            |  3 +-
+>  fs/resctrl/internal.h              |  8 +++
+>  arch/x86/kernel/cpu/resctrl/core.c |  6 +--
+>  fs/resctrl/ctrlmondata.c           | 84 ++++++++++++++++++++++++++++++
+>  fs/resctrl/monitor.c               | 10 +++-
+>  5 files changed, 105 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 702205505dc9..a7e5a546152d 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -409,7 +409,8 @@ u32 resctrl_arch_get_num_closid(struct rdt_resource *r);
+>  u32 resctrl_arch_system_num_rmid_idx(void);
+>  int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
+>  
+> -void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu);
+> +void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
+> +			      unsigned int binary_bits);
+>  
+>  bool resctrl_is_mon_event_enabled(enum resctrl_event_id eventid);
+>  
+> diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
+> index 40b76eaa33d0..f5189b6771a0 100644
+> --- a/fs/resctrl/internal.h
+> +++ b/fs/resctrl/internal.h
+> @@ -62,6 +62,9 @@ static inline struct rdt_fs_context *rdt_fc2context(struct fs_context *fc)
+>   *			Only valid if @evtid is an MBM event.
+>   * @configurable:	true if the event is configurable
+>   * @any_cpu:		true if the event can be read from any CPU
+> + * @is_floating_point:	event values are displayed in floating point format
+
+Nit: Maybe rebrand this as is_fixed_point, or is_fractional, or similar?
+
+The print syntax is just a decimal fraction, and the hardware
+representation is fixed-point.  Nothing floats.
+
+> + * @binary_bits:	number of fixed-point binary bits from architecture,
+> + *			only valid if @is_floating_point is true
+>   * @enabled:		true if the event is enabled
+>   */
+>  struct mon_evt {
+> @@ -71,6 +74,8 @@ struct mon_evt {
+>  	u32			evt_cfg;
+>  	bool			configurable;
+>  	bool			any_cpu;
+> +	bool			is_floating_point;
+> +	unsigned int		binary_bits;
+>  	bool			enabled;
+>  };
+>  
+> @@ -79,6 +84,9 @@ extern struct mon_evt mon_event_all[QOS_NUM_EVENTS];
+>  #define for_each_mon_event(mevt) for (mevt = &mon_event_all[QOS_FIRST_EVENT];	\
+>  				      mevt < &mon_event_all[QOS_NUM_EVENTS]; mevt++)
+>  
+> +/* Limit for mon_evt::binary_bits */
+> +#define MAX_BINARY_BITS	27
+> +
+
+Could this be up to 30?
+
+(The formatting code relies on the the product of the maximum fraction
+value with 10^decplaces[] not exceeding a u64, so I think 30 bits
+fits?  But this only has to be as large as the largest value required
+by some supported piece of hardware... I didn't go check on that.)
+
+>  /**
+>   * struct mon_data - Monitoring details for each event file.
+>   * @list:            Member of the global @mon_data_kn_priv_list list.
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> index 78ad493dcc01..c435319552be 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -893,15 +893,15 @@ static __init bool get_rdt_mon_resources(void)
+>  	bool ret = false;
+>  
+>  	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+> -		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false);
+> +		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0);
+>  		ret = true;
+>  	}
+>  	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+> -		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false);
+> +		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0);
+>  		ret = true;
+>  	}
+>  	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+> -		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false);
+> +		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0);
+>  		ret = true;
+>  	}
+>  	if (rdt_cpu_has(X86_FEATURE_ABMC))
+> diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+> index 883be6f0810f..290a959776de 100644
+> --- a/fs/resctrl/ctrlmondata.c
+> +++ b/fs/resctrl/ctrlmondata.c
+> @@ -17,6 +17,7 @@
+>  
+>  #include <linux/cpu.h>
+>  #include <linux/kernfs.h>
+> +#include <linux/math.h>
+>  #include <linux/seq_file.h>
+>  #include <linux/slab.h>
+>  #include <linux/tick.h>
+> @@ -597,6 +598,87 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
+>  		resctrl_arch_mon_ctx_free(r, evt->evtid, rr->arch_mon_ctx);
+>  }
+>  
+> +/*
+> + * Decimal place precision to use for each number of fixed-point
+> + * binary bits.
+> + */
+> +static unsigned int decplaces[MAX_BINARY_BITS + 1] = {
+
+^ const
+
+
+Also, maybe explicitly initialise
+
+	[0]  =	1,
+
+here?  (See print_event_value().)
+		
+> +	[1]  =  1,
+> +	[2]  =  2,
+> +	[3]  =  3,
+> +	[4]  =  3,
+> +	[5]  =  3,
+> +	[6]  =  3,
+> +	[7]  =  3,
+> +	[8]  =  3,
+> +	[9]  =  3,
+> +	[10] =  4,
+
+Why these specific values?
+
+ceil(binary_bits * log10(2)) makes sense if we want to expose all
+available hardware precision with as few digits as possible.
+
+floor(binary_bits * log10(2)) makes sense if we want expose as many
+digits as possible without advertising spurious precision.
+
+Disregarding the special-casing for binary_bits <= 3, still neither
+option quite seems to match this list.
+
+
+Rounding up means that the hardware value can be reconstructed, but
+only if userspace knows the value of binary_bits.  Should that be
+exposed?
+
+> +	[11] =  4,
+> +	[12] =  4,
+> +	[13] =  5,
+> +	[14] =  5,
+> +	[15] =  5,
+> +	[16] =  6,
+> +	[17] =  6,
+> +	[18] =  6,
+> +	[19] =  7,
+> +	[20] =  7,
+> +	[21] =  7,
+> +	[22] =  8,
+> +	[23] =  8,
+> +	[24] =  8,
+> +	[25] =  9,
+> +	[26] =  9,
+> +	[27] =  9
+
+Documenting the rule for generating these may be a good idea unless we
+are sure that no more entries will never be added.
+
+> +};
+> +
+> +static void print_event_value(struct seq_file *m, unsigned int binary_bits, u64 val)
+> +{
+> +	unsigned long long frac;
+> +	char buf[10];
+
+In place of the magic number 10, how about
+decplaces[MAX_BINARY_BITS] + 1 ?
+
+(I think the compiler should accept that as an initialiser if the array
+is const.)
+
+> +
+> +	if (!binary_bits) {
+> +		seq_printf(m, "%llu.0\n", val);
+> +		return;
+> +	}
+
+Can an initialiser for decplaces[0] reduce the special-casing for
+binary_bits == 0?
+
+> +
+> +	/* Mask off the integer part of the fixed-point value. */
+> +	frac = val & GENMASK_ULL(binary_bits, 0);
+
+Should this be GENMASK_ULL(binary_bits - 1, 0)?
+
+Should we be telling userspace the binary_bits value?  It is not
+(exactly) deducible from the number of decimal places printed.
+
+It depends on the use cases and what the code is trying to achieve, but
+this does not seem to be described in detail, unless I've missed it
+somewhere.
+
+> +
+> +	/*
+> +	 * Multiply by 10^{desired decimal places}. The integer part of
+> +	 * the fixed point value is now almost what is needed.
+> +	 */
+> +	frac *= int_pow(10ull, decplaces[binary_bits]);
+> +
+> +	/*
+> +	 * Round to nearest by adding a value that would be a "1" in the
+> +	 * binary_bits + 1 place.  Integer part of fixed point value is
+> +	 * now the needed value.
+> +	 */
+> +	frac += 1ull << (binary_bits - 1);
+> +
+> +	/*
+> +	 * Extract the integer part of the value. This is the decimal
+> +	 * representation of the original fixed-point fractional value.
+> +	 */
+> +	frac >>= binary_bits;
+> +
+> +	/*
+> +	 * "frac" is now in the range [0 .. 10^decplaces).  I.e. string
+> +	 * representation will fit into chosen number of decimal places.
+> +	 */
+> +	snprintf(buf, sizeof(buf), "%0*llu", decplaces[binary_bits], frac);
+> +
+> +	/* Trim trailing zeroes */
+
+Why?
+
+Would it be better to present the values with consistent precision?
+
+There's no reason why a telemetry counter should settle for any length
+of time at a tidy value, so the precision represented by the trailing
+zeros is always significant.
+
+The hardware precision doesn't go up and down depending on the precise
+value of the counter...
+
+> +	for (int i = decplaces[binary_bits] - 1; i > 0; i--) {
+> +		if (buf[i] != '0')
+> +			break;
+> +		buf[i] = '\0';
+> +	}
+> +	seq_printf(m, "%llu.%s\n", val >> binary_bits, buf);
+> +}
+> +
+
+[...]
+
+Cheers
+---Dave
