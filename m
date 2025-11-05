@@ -1,177 +1,183 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011018.outbound.protection.outlook.com [40.107.208.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3F22DC34D
-	for <patches@lists.linux.dev>; Wed,  5 Nov 2025 21:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762377566; cv=none; b=pRcjjKi9Q7nQvlpHBuBIm5WzNOUCDJ6uJk8gL4o2+Tn8rnCGasFQe5Uj9OzF8MfgvqQELdBdYZY9e3ql4haRIMsba4q/i7mdX4mdTzTBW9d7APnmdsZZLhqQUeFvnUAgq0OO+9bmGlBzw3uCWkpt5xA4wmpSap3Mnhzqf2mvFRY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762377566; c=relaxed/simple;
-	bh=qCj0HkjcLlvzURF6w77QHtU0WP9/ZsapXnXVQY35VDE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ij9Hu5tSp4KnwwceuAMXrox1vid/cl/J05KYJmzv9umWgJAKTQ/CYg1Ms6C9xq4PiyBsxWZivf98VDpYW5Dg0L2oPVNCbudiRO84kQ+f9FlU1diRuk/HKa1G/fB+bXZi7cBdFzokbEhccIf2RbqYVwxhpSl2c/FRkyZ3iIsU1Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2wfO7mSo; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B0B2DECCB
+	for <patches@lists.linux.dev>; Wed,  5 Nov 2025 21:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762377584; cv=fail; b=W4pXR58H6UgIIubPU+5uyUXOzeuGdTkHwY1YlDqXWOYyAo0ZJuRN2fXy4ZbJhkpVaNaNGVX2zwFzLDYJZufbGh9br2oVggsfzz2nh9GK/bfKQ309Dnr86iTjbkE25S9a1fxL0/TudOWbyuQnsoRp4BdAAwoCQ8cP7gdmnP8ZTsg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762377584; c=relaxed/simple;
+	bh=dakl426/UoMP/1WAr4hltoMftA4Lmu8wjBHyCBhWOOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Yhn1GaxnbnZAUARgcYGDd6EoTO5QAE4lpJ/OirSm1b8xdtGcrVBEfPM9GfYLXyrhliAf3qHGssIFsaep3YEd8ltFsgbFpJK3yA87hTdEtcGMatMgkVkDuhXx5Uthci4Kw1cMfbx/cq2lA8UjowC4kb+grRw3IG5MZYUXcWADtIg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=DO+8g1we; arc=fail smtp.client-ip=40.107.208.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2wfO7mSo"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2959197b68eso11105ad.1
-        for <patches@lists.linux.dev>; Wed, 05 Nov 2025 13:19:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762377565; x=1762982365; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wsPKARLgoDbiEbqdjmx1yQIPjPrrWc4YFZC2utX6iXU=;
-        b=2wfO7mSoaVuOvGu3v8M2X73oY0Pan62oi//+FK3/9E3zsASyTMqNIWAhxfFj8lcYOO
-         PQ9BWK/1+5MWmzQY4KUulz3t6C15qFbO5ZO66hZhVrcK4VsYWKMX3YCFpeqzagi07b9f
-         rud0sk0IiHg0V1fNdwDCd9qvkITNuijSSmovOrSzN2LSvtm90h6cediNz783TPmaxQu2
-         X0GG4vz61wDJ/m4ZYG22u6WTNPL0hzTpYrfgntJRiN8pv+ERQm4gsAmA+HWXEeb1tbR1
-         0NPB243U9I/Ss7IUI8X0j5/+tyZIN9Hb3XtgmyX1KNjQ9DTk6wyo1zgmcag+elY0hxNH
-         9U/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762377565; x=1762982365;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wsPKARLgoDbiEbqdjmx1yQIPjPrrWc4YFZC2utX6iXU=;
-        b=Vz4oEs2xFYqmiskWOWl38AmKi8pFci3/EpT8jTJ+Hy+Jnz+XPYGL1LVZkaCqNcGIUu
-         t41oQE+/F6KL6Mhg+Ex6InKh1jb42r5GXPZ9FQOF6PMeY5KkhGVGyURyKbL7fztxIMNp
-         /xb3FtKxISkx8SB5X717phdbqUJ9oRZ8zGPgD9tKDTz5wzIuwgw3/28u+O7c2EmyhRfr
-         SJDY671MlwHYnXud16yylAVKvcPAvbckVMNreVGQfowF1GQ8HC3Qbp7QXfL2lxsFYUo0
-         Q+7E2wOOk3dACV0OD0owQxJKpwDbmChIyo06BTNUr+KOyrIRL4uBq6vn9dGejYnCs+9f
-         zv8w==
-X-Forwarded-Encrypted: i=1; AJvYcCXshh8tArRYjMOV48sfAqNsrAbjrIQvCaXIwy5uS7+8zAsPf0mP8pdV/fz96hk/pRPNw0MiAYe8@lists.linux.dev
-X-Gm-Message-State: AOJu0YyvDESNqb3Tb3/tcG+VgTzWaloKnQZ0slw7evxMBHb6Ceak6yqf
-	8fJlm6ryezwg+R7l1Hd8dDupJ6QIT5K8zcodi67CObMQz9HUrHagAHzYYQ2M3ZwRTQ==
-X-Gm-Gg: ASbGnculVu1mSKnds6WAUN9jmtq2Xsj5gJml0d8xfCNUF7fk7Tfr+hewRwBhxA9cb0G
-	wsj6ZD+qo6cd54dl8l92LAb00tmvOeWrZS/P6qhEqxZPydK2d4yZygPK41DG+YQVCErYEP0xs1G
-	4qg4dUFaHqa08EhN5kFOV3vgnfxbg6xf8AYWWvSBV0c4OuKm2HQjWiPJ8ZrMflPULKTtRo9Rd7B
-	nxE/rw8fIYV6VrZ8XN0pc908sUIWcvTbSD0uZ8t16iHzJ09jFmYXwPIMpdA64SPUeOW3Do0A2+u
-	L5EZ1/q6FaDwgG7FDB4vRXraDqEGnE+lNTfUm/FjCX/tSP+/+/cUnRBYfE6Xo7/Nu4HirkTIAo1
-	+Vjn5xn9iCgEsZfpo1BYyjCEZz9qMjWqq3Ue5bO912Nigc5cbY6sGwGf+ElNBDK/8rCo/fyNNS7
-	G79vt6ux8PGr3HohsDlwyWkGMSxpvwW686IGIjIA==
-X-Google-Smtp-Source: AGHT+IEIIO35cH2PrBkhqYMd/E+xZSf3lgI2yKX1DyfVtbO2pYBYeKyrnA3lBD1BQHg2AJrJT8JqeQ==
-X-Received: by 2002:a17:902:d505:b0:266:b8a2:f5d8 with SMTP id d9443c01a7336-29655c7a119mr1205695ad.14.1762377564053;
-        Wed, 05 Nov 2025 13:19:24 -0800 (PST)
-Received: from google.com (164.210.142.34.bc.googleusercontent.com. [34.142.210.164])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7af82bf14d6sm365224b3a.66.2025.11.05.13.19.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Nov 2025 13:19:23 -0800 (PST)
-Date: Wed, 5 Nov 2025 21:19:13 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	David Airlie <airlied@gmail.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Ankit Agrawal <ankita@nvidia.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	dri-devel@lists.freedesktop.org, Eric Auger <eric.auger@redhat.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>, intel-gfx@lists.freedesktop.org,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Kirti Wankhede <kwankhede@nvidia.com>, linux-s390@vger.kernel.org,
-	Longfang Liu <liulongfang@huawei.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Nikhil Agarwal <nikhil.agarwal@amd.com>,
-	Nipun Gupta <nipun.gupta@amd.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>, qat-linux@intel.com,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	virtualization@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Zhenyu Wang <zhenyuw.linux@gmail.com>,
-	Zhi Wang <zhi.wang.linux@gmail.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 14/22] vfio: Require drivers to implement get_region_info
-Message-ID: <aQu_Uc_ZmBJUgw0_@google.com>
-References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <14-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <aQhcOYVbY-LqOjW5@google.com>
- <20251105134829.333243dd.alex@shazbot.org>
- <20251105205600.GX1537560@nvidia.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="DO+8g1we"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=C4moWwMDeq7+VZIKq1P7zp1PsXi50HLtvw3DNJk2kipHwDXbK9n3tgo+cwENSzIyr3/0Mch8Jc5iM4cWDNYso54Ub6yYzpmxx2EHy5/kQusw1C1sHJJDxCov2DQEW26vOQsh8VlKrDOEhwguzZ5FhR04tomMWC2UfJjHJRolQ35PerKFrXKiMEIsG6uWHaShaIaucHFgbo7q9WAq2KjY6Zcd2eY2TXzeWq5ddYJtOw1R/bOZncP4ulteBEoFFoe2zZA2+4mXyw4EyNeDgdTuhejm6wVdOYVG6rdEQ4uIHMetxNlmk+7hnD1jlV9dwhDeCCDxn85Qvfm7+wrMMxXhZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sZFd/EJVCjrzEjhWYuI8VXtLezj/79/v6q7Z80Z3JG4=;
+ b=SkAKe+9RVhk4LO3ZxMoAgfIUiXfPVUrxGIQ3l4hoxxIU6ZMk3jqtOOawNzEWBkRhLX54p1YAz3+qVRw3UgQSOKV5L/psw7CuzlGQk9lz5Yv8KKS8V8hp92UF/cD5N6RVpmnP4x26i9oEeRocbjrpxoirGSl9EuQWJT3VacfmGc4rrBF183BdYZ15qplp568Jkw5hGWYcSPBF0ZiOJTsbXpGOLt1xBc+pzbp6zEUlHjnKpqWr0lNLpoLq8Rjq1ENmoSQWNsU59u0j37WUj3/xUD6hC27vm4OZuO/TNJDUHQeKh+VftEA4erOSt6424pyHmSgbD3kHX0OcSw2s4Nev5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sZFd/EJVCjrzEjhWYuI8VXtLezj/79/v6q7Z80Z3JG4=;
+ b=DO+8g1wedQrj62OCDS9zUmW7JTAtUQSpPsOZtsF1gT27L47S5gFZwk17jQuI5Zn1rwZlJE7Kbd5J3w5Zu4NGKVrL/cMuxqFiNhs+rKAPQgFvPwTzFFMKnCl4S9qiNjZ5JElHxYp9jzWA6mzz9wWnB5dP6MZNgVf5WZRQ6vtF4OE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM4PR12MB6373.namprd12.prod.outlook.com (2603:10b6:8:a4::7) by
+ DS5PPF482CFEB7D.namprd12.prod.outlook.com (2603:10b6:f:fc00::64a) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Wed, 5 Nov
+ 2025 21:19:34 +0000
+Received: from DM4PR12MB6373.namprd12.prod.outlook.com
+ ([fe80::12f7:eff:380b:589f]) by DM4PR12MB6373.namprd12.prod.outlook.com
+ ([fe80::12f7:eff:380b:589f%6]) with mapi id 15.20.9298.007; Wed, 5 Nov 2025
+ 21:19:33 +0000
+Date: Wed, 5 Nov 2025 16:19:24 -0500
+From: Yazen Ghannam <yazen.ghannam@amd.com>
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Borislav Petkov <bp@alien8.de>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Andi Kleen <andi.kleen@intel.com>
+Subject: Re: [PATCH] ACPI: APEI: GHES: Improve ghes_notify_nmi() status check
+Message-ID: <20251105211924.GA1264471@yaz-khff2.amd.com>
+References: <20251103230547.8715-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251103230547.8715-1-tony.luck@intel.com>
+X-ClientProxiedBy: BN9PR03CA0421.namprd03.prod.outlook.com
+ (2603:10b6:408:113::6) To DM4PR12MB6373.namprd12.prod.outlook.com
+ (2603:10b6:8:a4::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251105205600.GX1537560@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB6373:EE_|DS5PPF482CFEB7D:EE_
+X-MS-Office365-Filtering-Correlation-Id: 672a576b-2bd5-4410-1338-08de1cb10394
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?+HYMXVUc96f+AMtNPgR8FnJ8dpWGpAsQVMHlaqD9zo8SumrH/VqpMy3tS9Bu?=
+ =?us-ascii?Q?/FHF+0wxZvnIoPovoqALMHcQv4mGJVABt7FcNLshZVoMXsU9g8MbrtdM3WU3?=
+ =?us-ascii?Q?IMGWyZEHjteU5ZTVr6YzjUeUDVmKzC3e+yKvqvzG01zlQmT4o53uF/jnfCh6?=
+ =?us-ascii?Q?CNFHwxhtBC+a9t4inY/jZgGVGInT3LxxucMLdSuIdrc7T6ihK1/VDADDGW8N?=
+ =?us-ascii?Q?U5Cap3syyfU7YcNbtQKgpn60Kq1YOnBbctKuEcQE3xWhQzezYjnVMPjtSIuz?=
+ =?us-ascii?Q?dc1oDE1qMB+CkHxrMfVVwAyNg7fP+Imge0f0F1PwhcDQ3W3yQTRV2r0F9HQY?=
+ =?us-ascii?Q?Qgis37w3ouyNYWesROGUNgIdVG0n//P5jVAoUVALCYXDgBdAaShXbyUV7ufh?=
+ =?us-ascii?Q?YpAidkXRdZmQRiBD6zQW3Og5SWZvYrJnKlJYyFzuc99kks89Zp3tgS8peh2L?=
+ =?us-ascii?Q?oyrPJZjmhO1UFvjDeMgE1ICCLIcNp43Q//a71ruGHWkm5O0QaX/OMa3X35Sd?=
+ =?us-ascii?Q?MAM05D0FeHkQ684D2OHR+cGY9/keZ8Ct5feQW6ErFAidg+2VJ4Booz0Jo5lO?=
+ =?us-ascii?Q?0YRwKYn6+7qz4lRsHCv841rCq/w4Wg929/5rNDwLPech/OqW6yLFFXMCDQmH?=
+ =?us-ascii?Q?9xMVjm5fV9zQkaB4+6mgDbYmatnhu+TwN9g0qk9NnAQViAxaoZbH52dYhkYO?=
+ =?us-ascii?Q?p5DM4otF2CLna3hA5Xv8W5/fILkpHGBF4dUcjzjNVLscHuCTUW6c3gAqKIzr?=
+ =?us-ascii?Q?LHftexdTAfWbiQN5kNr4tDF4xobQLHR0nTU0v5U92c1CM2Rj49zqCA5Jdtgi?=
+ =?us-ascii?Q?4fEFpEI0Zmya/DF/KNwi2jk9s0f+6zbxMco7v+gjVgF6OLb4jRabgSyNEN4G?=
+ =?us-ascii?Q?ii4kA18bLKAVxg5U12+nVip5+7Fz9ZDMEILlPuFETM69AvcDWxJnWvKBqCjl?=
+ =?us-ascii?Q?0AvON4EcHeXe/T0H5zOF+Bx5jGzJw9njjzdXzqv4Tj2mhYR3aZew1N6W1t4q?=
+ =?us-ascii?Q?wsaBHzx8zNnkJ5CgJUcPkNyeKW/ff2QvANxqvXD4y7o1lPR9rgSCpgeHnRif?=
+ =?us-ascii?Q?ICZXoM2JxK7DrbLhEKbZU129vx1YiZ+aOCAw/SuDuUMvz6DQcSW8Tw8nupBD?=
+ =?us-ascii?Q?zLBBwC8JSOygU3zB8957ZtnKvRCzOcIkMrufx53RZN6GUd1KHdkLvUVGT40a?=
+ =?us-ascii?Q?GmAFtQVNPTFfFpuz6KYUtryycuvFRwW6nwYh2i7QUTn+E+PQVDMtSogVMPcm?=
+ =?us-ascii?Q?5z9jqG1gmd0wInXXbkwZA86uwrj7h+8M4n/HAE29Z5nojRma3+X9om8tLV/D?=
+ =?us-ascii?Q?YkN1ZjIhldge+FMAES7b2EGJ9gRrji2pemwhSwGb1aXtyMpFhqxYdVvip7zf?=
+ =?us-ascii?Q?6DSlYC61WCcCjOYqOqP1+/YCI5hyirzYQx2e9+p5fzJWzaxxG8+v+JecGw/A?=
+ =?us-ascii?Q?xaDF07olfhIuR8TvRwYsORSPtjC8/dZSmKedCuRPO2stQKkX7tyZyg=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR12MB6373.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Sccz8IBLrDnaBoFmlAjAtYA1i6lIcBV/ymfZ3pbnQctJWpR6q379FJNePd6k?=
+ =?us-ascii?Q?QVFQlk30KcPipr6Hg6H0FL6Yimo6Bb1CowuuvLYhO8wE1zGV2T4DwpZ0oZPe?=
+ =?us-ascii?Q?BIZ6usKCYy9PzqiPYJj04yxZnNOQp2qRN0DJc6nihH+i8fQ8gQrodxglLmWo?=
+ =?us-ascii?Q?dH7wCT3C0AJUfT8SSObTQ+i7BW5xbHqVLAiEY4IOXiYTVDBJeCpihs+njLDd?=
+ =?us-ascii?Q?ukRLUnwf6ag8FsoDF2ERrPob85UTZAIiQ3oPHDII3sm9egkCUnoX1xxjTqP2?=
+ =?us-ascii?Q?8YQrjTTZsK2LwNupZF86pSalEhNPQ+5CzQWplCcbGGammysSAntYS5cjTRhq?=
+ =?us-ascii?Q?JabWBdKKY8Fv1I7JaofXlOsA77zkKCCVNRVBmNP1TXDnA/c9Sv+q/fmGnqhR?=
+ =?us-ascii?Q?oNiOd6Ub+0iD1SyEZIURotjM97YMpEBeE6p6pK7wHHbeht7ZbbWyL6WRgVxu?=
+ =?us-ascii?Q?4NDzkSse8VuHnrn1FyxATfRMkCdlVMAZ/EExkASGyS9r+3Y5OqQSIoEXDOGG?=
+ =?us-ascii?Q?M+fsmmlToLZj9IXvMGxn47QVaqIQ9hgm/rN66q0yv/wouZbknz1Go9rVy8lS?=
+ =?us-ascii?Q?nMoX4jStcHfpCD3fKrz//Xj6WNRrmH6It6EdPILpspEcmapgMgM3twiiTr3x?=
+ =?us-ascii?Q?of5bn4Rv1LalQeSEICaZHR3nmianWj6CENhnekxt7yEZ5vCsep+Wpkf3vJg1?=
+ =?us-ascii?Q?LcCybURHUWzoLq8TDsRn8r6ySwneNDjAiOKG6A8aaJ6P2jN/5fpN+I41skiQ?=
+ =?us-ascii?Q?vNTFYxFKF5/YLwd60fSgtTWH3MYL5dBnrP+cM96HrTDmHBd6bRvcPAUy9McB?=
+ =?us-ascii?Q?XXF/qnX1WafDYQSsNJrW7EH3xrZjuN3GZbmtvguPGXmmWJHcUb3yBL51Jac3?=
+ =?us-ascii?Q?skBF/SKZRV4hZjD+PcRkuvs3IND2rRm8fnEWUdHUP0rsisMbT9jzs9oyLP2c?=
+ =?us-ascii?Q?DwAgNnTg0jw8kNf7pag7Q2xlwH0KYPeHv1rznLuIcv2pSOHdBDAn6OeNNrt9?=
+ =?us-ascii?Q?wTm3JRz/xzv84w8FTZ7Z/iYaVGwh4kjOhdLMaSl8P/uWqE7EVU37bKZPWIIr?=
+ =?us-ascii?Q?/8g+ci7DRJ4/PQsHNNsLc3ubxFcyCfqcx5KqVhRkGPXDq5LMYKE47KswrSeo?=
+ =?us-ascii?Q?gkmb/YoaTVH7uMCyQihdl04gXQbFpvqzFkTGrC6AUmWJApcRJaZqpHDbDEaS?=
+ =?us-ascii?Q?TatM6dLjn51qO3WZGL+DPTGWhP8HfP2vP3k8uYfRkrTBaT7EHYQu9tyBVR6N?=
+ =?us-ascii?Q?5qmrMrwsLAI7TWtH3E0n0/onkz/5j9kKk56ftoApLiHSR4x8cgvW7V7JmPkV?=
+ =?us-ascii?Q?00cXHNqHfxgwpSP/n5ZyEn8J1AIuQJx3y4egCXZb1A4rG19iySzwBcSlUfb3?=
+ =?us-ascii?Q?n003kdp9jfMqksIOaOKI2LYAPt33909CVcZWuSpS8YOc96ywRTULEwST7IAS?=
+ =?us-ascii?Q?5cwQ29KPqn1uZCdfNZH6140KTfvPRrGx3wEk/RvbgkGLL5nH+AQkb8Fo+CWH?=
+ =?us-ascii?Q?iyB+r6qmm2fVKieeo8j5IOqrAgqj0QikY1L+J2nBWYI0s3c6OSloH3CYPvwX?=
+ =?us-ascii?Q?oAb84qpTMr5DMoOIiYyu8h6DjsD11L2SnEh6ixCr?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 672a576b-2bd5-4410-1338-08de1cb10394
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB6373.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2025 21:19:33.0922
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LoAD4Wreo5hQkYIAmbaSdG58ic4vt1OtZEFD7hIKSrn/jLKRYjhiSu9lt1/stq9oK8dB5aeirc/inwhfQE96zw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPF482CFEB7D
 
-On Wed, Nov 05, 2025 at 04:56:00PM -0400, Jason Gunthorpe wrote:
-> On Wed, Nov 05, 2025 at 01:48:29PM -0700, Alex Williamson wrote:
-> > On Mon, 3 Nov 2025 07:39:37 +0000
-> > Pranjal Shrivastava <praan@google.com> wrote:
-> > 
-> > > On Thu, Oct 23, 2025 at 08:09:28PM -0300, Jason Gunthorpe wrote:
-> > > > Remove the fallback through the ioctl callback, no drivers use this now.
-> > > > 
-> > > > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > > > ---
-> > > >  drivers/vfio/vfio_main.c | 8 ++++----
-> > > >  1 file changed, 4 insertions(+), 4 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
-> > > > index a390163ce706c4..f056e82ba35075 100644
-> > > > --- a/drivers/vfio/vfio_main.c
-> > > > +++ b/drivers/vfio/vfio_main.c
-> > > > @@ -1297,13 +1297,13 @@ static long vfio_device_fops_unl_ioctl(struct file *filep,
-> > > >  		break;
-> > > >  
-> > > >  	case VFIO_DEVICE_GET_REGION_INFO:
-> > > > -		if (!device->ops->get_region_info)
-> > > > -			goto ioctl_fallback;
-> > > > -		ret = device->ops->get_region_info(device, uptr);
-> > > > +		if (unlikely(!device->ops->get_region_info))
-> > > > +			ret = -EINVAL;  
-> > 
-> > Nit, typically I would have expected a success oriented flow, ie.
-> > 
-> > 		if (likely(device->ops->get_region_info))
-> > 			ret = device->ops->get_region_info(device, uptr);
-> > 		else
-> > 			ret = -EINVAL;
-> > 
-> > But it goes away in the next patch, so *shrug*.
+On Mon, Nov 03, 2025 at 03:05:47PM -0800, Tony Luck wrote:
+> ghes_notify_nmi() is called for every NMI and must check whether the NMI was
+> generated because an error was signalled by platform firmware.
 > 
-> Yeah, still I can edit it..
+> This check is very expensive as for each registered GHES NMI source it reads
+> from the acpi generic address attached to this error source to get the physical
+> address of the acpi_hest_generic_status block.  It then checks the "block_status"
+> to see if an error was logged.
 > 
-> > > Nit: Let's also add a warn/err log here highliting that the device
-> > > doesn't populate the get_region_info op?
-> > 
-> > Are devices required to implement regions?  If so, it'd be more
-> > appropriate to fail the device registration in __vfio_register_dev()
-> > for the missing op than wait for an ioctl.  However, here in the device
-> > agnostic layer of vfio, I think the answer leans more towards no, we
-> > could theoretically have a device with no regions.  We also want to be
-> > careful not to introduce a WARN_ON that's user trigger'able.  Thanks,
+> The ACPI/APEI code must create virtual mappings for each of those physical
+> addresses, and tear them down afterwards. On an Icelake system this takes around
+> 15,000 TSC cycles. Enough to disturb efforts to profile system performance.
 > 
-> Yeah, I had the same thought, so lets leave this. If we do want a warn
-> it should be in registration.
+> If that were not bad enough, there are some atomic accesses in the code path
+> that will cause cache line bounces between CPUs. A problem that gets worse as
+> the core count increases.
 > 
-> A device without regions does not seem useful, but also it doesn't
-> malfunction if someone does want to do that.
+> But BIOS changes neither the acpi generic address nor the physical address of
+> the acpi_hest_generic_status block. So this walk can be done once when the NMI is
+> registered to save the virtual address (unmapping if the NMI is ever unregistered).
+> The "block_status" can be checked directly in the NMI handler. This can be done
+> without any atomic accesses.
 > 
+> Resulting time to check that there is not an error record is around 900 cycles.
+> 
+> Reported-by: Andi Kleen <andi.kleen@intel.com>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> 
+> ---
+> N.B. I only talked to an Intel BIOS expert about this. GHES code is shared by
+> other architectures, so it would be wise to get confirmation on whether this
+> assumption applies to all, or is Intel (or X86) specific.
 
-I agree with the both of you.. I just thought if we should remind the
-user with a log that the dev doesn't expose a region. But I guess we
-don't need to worry about that.
+I think that is how the ACPI spec describes it.
+https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html?highlight=hest#error-source-discovery
 
-> Thanks,
-> Jason
+The HEST and other tables are fixed at init time. There's an ACPI notify
+event for if/when a device method needs to be re-evaluted, but I don't
+think anything in APEI expects that.
 
 Thanks,
-Praan
+Yazen
