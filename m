@@ -1,115 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1718430F81F;
-	Wed,  5 Nov 2025 20:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929EF26ED55;
+	Wed,  5 Nov 2025 20:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762375276; cv=none; b=Z/SO4r5vvI4fUxK6v2P8ofb4Vve0SSz5kgxqN9W2iCeAtOM0LpmgQKpUNsvRk1dhEPMFZoZ4iURKbhiiKsvUwaiQDjhA+mQx7FWHC68u0spthnZmibFbMvbnYj50W+Kp5qdq3KipnlOhdwCAlQuAWbfXrl36dUwAOhkr7Yy1tuM=
+	t=1762375719; cv=none; b=iNXegemmBH2YuweRKsGDjlLLqrSh+4JZi7+53Ihv4LfRp7R9/EbQHd7Ijya9RJCUjo1SUcyiAJ4pzOgYh0FYg19/ts8sZfvn+U2SSIs9rB0yUTV86dpgCiu+Xso1sAdcKJaBG3FOUf4eRD8wvrT5qQY+2ifSnPDtl2c/2QcPDBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762375276; c=relaxed/simple;
-	bh=87mU3vLYFFwt9bHWGzOcy2v3ecVuUeRFDLbcEB2bu/Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lmybaZDCewKiatoAjZ8ExXb3FFODjomhXRsQ5IY/oUxz4sKkKvKBxAXTB0A+bquCIN56omgjUhKth0/UjoKqGhJCOwvjmg3jG1sOyFcKijbGN9JYR2p9fQisDnbHjDIpVgFVfgmSAfMvmoj/3XK9fMTT0Dm4pqcKeQQRkCb6N4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oswqbWyu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762375719; c=relaxed/simple;
+	bh=XjX2Gu+czV/t+mrHM5omQPaJbXT57OwcqoDhbRZ9AEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uynWcSbKk07MGWL14ROSO54iCvJx0wW241R5MRRc5os917hgnKSG2n4lsPrSmnefINMDBvlnVWFzy4PWU7pG3wSD02Kx6mHPMDHJ0UjDHHdDedcBoX6CmDBATlq1UWA7f1E/BACnXRNK6YFkk1O62M76YKzbHViIQIGpnLt6P3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=ggyPflQg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9WfphXM; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oswqbWyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB73C4CEF5;
-	Wed,  5 Nov 2025 20:41:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762375275;
-	bh=87mU3vLYFFwt9bHWGzOcy2v3ecVuUeRFDLbcEB2bu/Y=;
-	h=From:Date:Subject:To:Cc:From;
-	b=oswqbWyuN6UBNAdyC9hDipLDI3cfwlKq6cWR/3h2Qsa+8wSBbluCKbTqybzA+p8d4
-	 E0EuUooHj/PFP2TUmmHf1r32d31kPE4+YGFIEa1smtJMYVTvw7wjR0rQ4jhlgimfwV
-	 1uSKc/PORHF1tRSBJsS9RUXwmV7m284TK2syVIcCuqelmoQaXADlog+eCcxKFMvNq2
-	 AnwREZtI9me5TmwHi2/fD862LExhwcQAstdV6KK7eRQVRu0cj6euNj/WwLBvT60re/
-	 KF3QCG7AyCQ+/KsWpQrr5N0/Y2UkyYwpu/97GP+DopNo1z/DLszPGglP2tH9tnUo0n
-	 QhAuJ/b3P6Xzw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 05 Nov 2025 13:41:09 -0700
-Subject: [PATCH v2] ARM: dts: omap: am335x-mba335x: Fix stray '/*' in
- comment
+	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="ggyPflQg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9WfphXM"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DDCA140012B;
+	Wed,  5 Nov 2025 15:48:34 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Wed, 05 Nov 2025 15:48:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1762375714;
+	 x=1762462114; bh=ohNL1+6zNNmYIdt9oX7AGViWYMx2eZbUzhURanHRVqc=; b=
+	ggyPflQgHh6TLSYrPr5qAFAFzbvv/EUJGhXQZWZjIngcQ43LuqyXJoVstaFGVwyO
+	8v/2eh8QVzB66hrc9OF4ls1c0jlRa/OaC6c4hFXmdTK65pXhjKYNXNrwvDxhCzLb
+	cIhCYO+t1C3CPtuc1rIK/4NdHtSxycUflS+P/I6qOi2HtevQThAbAj23aH+VG8dV
+	btV2Od3y1OwYcnbfTx9hIi0982VRVrYeQ5bHkAg/oMeUTOZwHW1U1Gx+NkLZUFBl
+	MGaH/NWpVbGreZvA3OJ/qzkofm/LfVW066+8Im87qf8OjWvKeHPlTcBgCNuNHQ6Z
+	7Rw4zk2jH0/ZNoAK1C7bLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762375714; x=
+	1762462114; bh=ohNL1+6zNNmYIdt9oX7AGViWYMx2eZbUzhURanHRVqc=; b=F
+	9WfphXMWcIW8a8omrOiJRS4vq2bjM0yAjPJ9s0+pgvj+pgr5niiwhnu6oSFnp6ts
+	dztx1dQOJYjnrNZST1cEDOqwE/FieKKvMJ+0x42WQztd9rkvYEiChxYrVQbQca4i
+	WjpOogdTI2VTz+mg5eFPiss4p1F+WykfHxUILSPHtMIVLfrVt8mRUD3Fk1HyAwH1
+	YMg8acFFDVdv6UE23skQpxrCas3yT0p4hXodsq8ObTOHf1OC/EyoK/ua0yRdwMy6
+	hde1ERzOPT09iH7tb/PJpbex49Xt/dmkLaZ+lXhfGpTuF++Q4xFVT950A8qRn6RE
+	/oXXTTvYOByWlWk7YRAbA==
+X-ME-Sender: <xms:IbgLaZP21oYZAefMJOmF5Mm3c7Lv5X9PhAZF1wVTxXzMhOVaG4gDwQ>
+    <xme:IbgLaVLkT4Zs-ARkdCFuq-0_ZRGqfRQScGVtd9GnT1mWtasvp7PrwPsmCp8AOteH9
+    OeCu0nEjvzTGdVZYmV7iZrUBuzsBMedOWfoU1MxHbAE42ZG39pr>
+X-ME-Received: <xmr:IbgLacgVqytAa8Jgc3CefYGptOjO4IlFqkd6YKB13ltqMVAS6QHVTnXs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeegledtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkjghfgggtgfesthejredttddtvdenucfhrhhomheptehlvgigucgh
+    ihhllhhirghmshhonhcuoegrlhgvgiesshhhrgiisghothdrohhrgheqnecuggftrfgrth
+    htvghrnhepteetudelgeekieegudegleeuvdffgeehleeivddtfeektdekkeehffehudet
+    hffhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hlvgigsehshhgriigsohhtrdhorhhgpdhnsggprhgtphhtthhopeegtddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhrrggrnhesghhoohhglhgvrdgtohhmpdhrtghpth
+    htohepjhhgghesnhhvihguihgrrdgtohhmpdhrtghpthhtoheprghgohhruggvvghvsehl
+    ihhnuhigrdhisghmrdgtohhmpdhrtghpthhtoheprghirhhlihgvugesghhmrghilhdrtg
+    homhdprhgtphhtthhopegrlhgvgidrfihilhhlihgrmhhsohhnsehrvgguhhgrthdrtgho
+    mhdprhgtphhtthhopegrnhhkihhtrgesnhhvihguihgrrdgtohhmpdhrtghpthhtohepsg
+    horhhnthhrrggvghgvrheslhhinhhugidrihgsmhdrtghomhdprhgtphhtthhopegsrhgv
+    thhtrdgtrhgvvghlvgihsegrmhgurdgtohhmpdhrtghpthhtohepughrihdquggvvhgvlh
+    eslhhishhtshdrfhhrvggvuggvshhkthhophdrohhrgh
+X-ME-Proxy: <xmx:IbgLabf4MeGhfi3gNmowE7mD37sHgNH2WDwF5uz_DRckxmZNEl2TVw>
+    <xmx:IbgLac6GnpBjn1Obw1EEsjUzeywMCKsH8b3lTrDAOXZowAalTuV3Ow>
+    <xmx:IbgLachtNFumMNL4vC2n74-G33nTJUMKGlJq_2E4NSbPxZ3-5jNX4g>
+    <xmx:IbgLabH9DtlfEpWnYK7pUkApvb-syRCS2ZP9nP-8RLj2oglsb2bBzQ>
+    <xmx:IrgLaceGyGmekenMqPNiLCD9fPFtA4ot0EGM5UOvgQtmC9TptrzEqdzp>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Nov 2025 15:48:30 -0500 (EST)
+Date: Wed, 5 Nov 2025 13:48:29 -0700
+From: Alex Williamson <alex@shazbot.org>
+To: Pranjal Shrivastava <praan@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ David Airlie <airlied@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Ankit Agrawal <ankita@nvidia.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Brett Creeley <brett.creeley@amd.com>, dri-devel@lists.freedesktop.org,
+ Eric Auger <eric.auger@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+ Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
+ intel-gfx@lists.freedesktop.org,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+ Kirti Wankhede <kwankhede@nvidia.com>, linux-s390@vger.kernel.org,
+ Longfang Liu <liulongfang@huawei.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Nikhil Agarwal <nikhil.agarwal@amd.com>,
+ Nipun Gupta <nipun.gupta@amd.com>,
+ Peter Oberparleiter <oberpar@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, qat-linux@intel.com,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ Mostafa Saleh <smostafa@google.com>, Sven Schnelle <svens@linux.ibm.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, virtualization@lists.linux.dev,
+ Vineeth Vijayan <vneethv@linux.ibm.com>,
+ Yishai Hadas <yishaih@nvidia.com>, Zhenyu Wang <zhenyuw.linux@gmail.com>,
+ Zhi Wang <zhi.wang.linux@gmail.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 14/22] vfio: Require drivers to implement
+ get_region_info
+Message-ID: <20251105134829.333243dd.alex@shazbot.org>
+In-Reply-To: <aQhcOYVbY-LqOjW5@google.com>
+References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+	<14-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+	<aQhcOYVbY-LqOjW5@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251105-omap-mba335x-fix-clang-comment-warning-v2-1-f8a0003e1003@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAGS2C2kC/5WNQQ6CMBBFr0Jm7Rjaiqgr72FYtGWERtqSKUEM4
- e5WbuDy/bz8t0IidpTgVqzANLvkYsggDwXYXoeO0LWZQZayEqKsMHo9ojdaqWrBp1vQDllDG72
- nMOFbc3CZdUvmcqp1qdoa8tnIlOU99Ggy9y5NkT97dxa/9e/ELFDg1ZxrQSStuar7izjQcIzcQ
- bNt2xdEccuJ3QAAAA==
-X-Change-ID: 20251105-omap-mba335x-fix-clang-comment-warning-adeb847a03d7
-To: Kevin Hilman <khilman@baylibre.com>, Tony Lindgren <tony@atomide.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Matthias Schiffer <matthias.schiffer@tq-group.com>, 
- Alexander Stein <alexander.stein@ew.tq-group.com>, linux@ew.tq-group.com, 
- linux-omap@vger.kernel.org, devicetree@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2071; i=nathan@kernel.org;
- h=from:subject:message-id; bh=87mU3vLYFFwt9bHWGzOcy2v3ecVuUeRFDLbcEB2bu/Y=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJnc2zKqLFfvfe9ydUL6V5ON2tuaaxUsQxQLN6ap3Ht+8
- sasc8rOHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiVxYw/C9751movvrmwy5+
- b77Lv01dIrutcoN2/Kh83F2//0LrPkuG/6kcl1O46ta0FNXzeIXrp8iFbX2f1Rg+I3fWnCt5rCE
- nmAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When preprocessing arch/arm/boot/dts/ti/omap/am335x-mba335x.dts with
-clang, there are a couple of warnings about '/*' within a block comment.
+On Mon, 3 Nov 2025 07:39:37 +0000
+Pranjal Shrivastava <praan@google.com> wrote:
 
-  arch/arm/boot/dts/ti/omap/am335x-mba335x.dts:260:7: warning: '/*' within block comment [-Wcomment]
-    260 |                         /* /* gpmc_csn3.gpio2_0 - interrupt */
-        |                            ^
-  arch/arm/boot/dts/ti/omap/am335x-mba335x.dts:267:7: warning: '/*' within block comment [-Wcomment]
-    267 |                         /* /* gpmc_ben1.gpio1_28 - interrupt */
-        |                            ^
+> On Thu, Oct 23, 2025 at 08:09:28PM -0300, Jason Gunthorpe wrote:
+> > Remove the fallback through the ioctl callback, no drivers use this now.
+> > 
+> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> > ---
+> >  drivers/vfio/vfio_main.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
+> > index a390163ce706c4..f056e82ba35075 100644
+> > --- a/drivers/vfio/vfio_main.c
+> > +++ b/drivers/vfio/vfio_main.c
+> > @@ -1297,13 +1297,13 @@ static long vfio_device_fops_unl_ioctl(struct file *filep,
+> >  		break;
+> >  
+> >  	case VFIO_DEVICE_GET_REGION_INFO:
+> > -		if (!device->ops->get_region_info)
+> > -			goto ioctl_fallback;
+> > -		ret = device->ops->get_region_info(device, uptr);
+> > +		if (unlikely(!device->ops->get_region_info))
+> > +			ret = -EINVAL;  
 
-Remove the duplicate '/*' to clear up the warning.
+Nit, typically I would have expected a success oriented flow, ie.
 
-Fixes: 5267fcd180b1 ("ARM: dts: omap: Add support for TQMa335x/MBa335x")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Changes in v2:
-- Fix subject (sorry for the quick update...)
-- Link to v1: https://patch.msgid.link/20251105-omap-mba335x-fix-clang-comment-warning-v1-1-9b671ee2cb93@kernel.org
----
- arch/arm/boot/dts/ti/omap/am335x-mba335x.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+		if (likely(device->ops->get_region_info))
+			ret = device->ops->get_region_info(device, uptr);
+		else
+			ret = -EINVAL;
 
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-mba335x.dts b/arch/arm/boot/dts/ti/omap/am335x-mba335x.dts
-index e51a8a17e74c..f05e5a8c2d61 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-mba335x.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-mba335x.dts
-@@ -257,14 +257,14 @@ AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT, MUX_MODE4)
- 
- 	expander1_pins: expander1-pins {
- 		pinctrl-single,pins = <
--			/* /* gpmc_csn3.gpio2_0 - interrupt */
-+			/* gpmc_csn3.gpio2_0 - interrupt */
- 			AM33XX_PADCONF(AM335X_PIN_GPMC_CSN3, PIN_INPUT_PULLUP, MUX_MODE7 )
- 		>;
- 	};
- 
- 	expander2_pins: expander2-pins {
- 		pinctrl-single,pins = <
--			/* /* gpmc_ben1.gpio1_28 - interrupt */
-+			/* gpmc_ben1.gpio1_28 - interrupt */
- 			AM33XX_PADCONF(AM335X_PIN_GPMC_BEN1, PIN_INPUT_PULLUP, MUX_MODE7)
- 		>;
- 	};
+But it goes away in the next patch, so *shrug*.
 
----
-base-commit: 25e10e2c94da2c7d18d72bd32d60d26d0c29232e
-change-id: 20251105-omap-mba335x-fix-clang-comment-warning-adeb847a03d7
+> 
+> Nit: Let's also add a warn/err log here highliting that the device
+> doesn't populate the get_region_info op?
 
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
+Are devices required to implement regions?  If so, it'd be more
+appropriate to fail the device registration in __vfio_register_dev()
+for the missing op than wait for an ioctl.  However, here in the device
+agnostic layer of vfio, I think the answer leans more towards no, we
+could theoretically have a device with no regions.  We also want to be
+careful not to introduce a WARN_ON that's user trigger'able.  Thanks,
 
+Alex
