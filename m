@@ -1,102 +1,68 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012019.outbound.protection.outlook.com [40.107.209.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D458A31B11E
-	for <patches@lists.linux.dev>; Thu,  6 Nov 2025 18:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C0F26CE2D;
+	Thu,  6 Nov 2025 19:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762452225; cv=fail; b=IMxywtB4cULlegw6Y6t5+2wtwOO0+4WneqcXBfILtbmbKrWHpqVRQ0OfbM4FCIDL2iutj2pP9fCSH6Kg82eIXkdkHs1yGHCuA+0/UVbrBouloQfgEAVeELeQvyXmIDN7qODwJEps0o3lCHB4gizgl6krQh1EAnZscOHMFo6sqKQ=
+	t=1762455744; cv=fail; b=jA9L6OoqbJaAnpeBvfeN55ZsrEbiFzGEBecBAbOWdayzVMpoLRhJUzpy+xDh+qoWQzmqArTBk7hTb2l9aHTG1txENsyKSfZJBvcCJv5fb09kSdUCQ3tF+eRKw6KFdqvwth0AJmhpFQSpbq5bQEYMWoichDmE8RetqGv4IpQuFmw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762452225; c=relaxed/simple;
-	bh=TZe89ilvoe0F5D7fb3pKpcOFFc29UmvWR3vtw1hfLPc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=UrKy04XbzHzxdAVWvgAmI9VS9s4stEh1OI+spU2DoYTHJ75LUc5BktR2T/t3V0pPo+8F6n8vhGBA0MKyfwmd8F/sBDrvSPpEHg4yy6z70FNkPs4w+UgMDLzDIxfw8XEpJNKEbBL9Sql2C5hcubLTStGEw89FJM6Y+EmiQ7a1lD8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MAx+GvTt; arc=fail smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1762455744; c=relaxed/simple;
+	bh=Ka4Qyey+ffqtn5YCVzyS1UE3wnmoiZ8Quz7bPr/iKqk=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=a8iRDz5IH5KzHBFFiKpJynKs2mIxf4XScU9UVdpGpJF4RQQXGqpbGa9I7+YLJO7OpmZHLZOwRxGwhPMRjuMeFZwpj4ao/Jr6Nx3iJcj+SDKB+qo1YvJ09eO68TQxJmY2+X56FakZXX1GoUarA8hraJnxrL+GPJnZuS2qHST7Bwg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Pm7UUlQO; arc=fail smtp.client-ip=40.107.209.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MAx+GvTt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762452224; x=1793988224;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=TZe89ilvoe0F5D7fb3pKpcOFFc29UmvWR3vtw1hfLPc=;
-  b=MAx+GvTtr97poIBRNH7tm8NrmhP1SxFKb41NYplE/lMo/PYa6yvDyHbU
-   IPudXhsnJjESz0MtjdSF7/0/Nhijj7MfrMOGqM+WD/snbZECoVN/Ew1+9
-   G6ooY6CzN82r3tSCcfBberVWvQ9xJkDqzi4ncwJeqRdOXWW2CY6nlPKbl
-   Y/Evv7M9TxZfwVq5hLe6xGOvMlKNv5dzkBLGUi55b02jbDInr9HBer7rM
-   D20nj3k3KDXHbSdie5ejQffSM6kP8BNDdE2a9Gl+Zsb2O73W2vmVBhcea
-   6j/R9jV5WrmmgFosxbv6hAgEkrIEMZ6RDUmlydhTpeZXnzhrs+OPyV7SX
-   w==;
-X-CSE-ConnectionGUID: Vu8MfxvrTciqi9xZYc5BPA==
-X-CSE-MsgGUID: sT/hFvXUQCuOCXF9Wqj1Rw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11604"; a="64750910"
-X-IronPort-AV: E=Sophos;i="6.19,284,1754982000"; 
-   d="scan'208";a="64750910"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2025 10:03:43 -0800
-X-CSE-ConnectionGUID: wofrrKB4Tu+m22HU87LQjA==
-X-CSE-MsgGUID: OoqfgFrlSomikMyhY9jliQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,284,1754982000"; 
-   d="scan'208";a="188264553"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2025 10:03:43 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 6 Nov 2025 10:03:42 -0800
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Thu, 6 Nov 2025 10:03:42 -0800
-Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.55) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Thu, 6 Nov 2025 10:03:42 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Pm7UUlQO"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hKOV0HwXc5JcOFPQQkkckmsziJfVHlAh7OU1c1ei2m+Zo4suP+bg3VYpITkK341ktWjOYyuOniQtEn5/IAXygbp7osbgbGjjvB8ddPt4735N6vY7U7mpngNzSrlSqojWU1uMBMZIfzpS3/lezqtdeZ9DjFtb3GPR6FelWIwICMgnlvfJgSVZfhKbfOZvsM34M2XPcf8vf0Q2xLFlZY4iv6qlNZgjjfwJD4VJYwNIHl5vfXVtI+M5fCAR+A1b/XZtekF7SS/2fJ63Cj6p2/vVWzlnrdSC45zZUFHAGpVDe+0m9rJKa1KVdxXuZik4wi9LYYUcnMbI7T7p7UzvnpVRlQ==
+ b=pxDtomKfw+DwH1ZQzN/cmfLb0h4DwsPhwuYal/NZj2VT4Jg7IFV22bK+sLzChOt/UlKsVTY9HdrvhZSuViAjatyLGvW2ghHzvpkfCE2E8jdkVbnqosb07kW7XOuEINK1Vr/63CrtYHPTPTjgRJ9s6JLavgW3f5C/dn9nSdslkrJbk8wQzi+ohw0HZawAgLUTfo8yy+8TLnlkzOZbOp93yD6erg0IAXFSTwY2mjXrzTZVuaM794qTcts2DfMDcWaCuOdfylYiGd27/lEcuUCM1JIstlB1ILcyqPSYYd53gmEQrDqplfVFqle+rnYZB59Vx0sTZpwtv7hcxWmf9BRdHw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=plMlzNzT7MrU9Fgv+QgupHSQbxzgHwqcXUUppmNbXVU=;
- b=l5N5iKTapjbedUWpSCU4li6arPZ7BSOLEgGD1NxaIwc+YdzPj2a6UgWSE3XJQEzbET39oPWUmkHfNz1aBaWUPmYnukkrqkx84Xq4honuKvdEy4na0ie2R4MK74xwmrC/gTCyEZ06LE/LAHFGUBREWw177mkyceGlZY/cBz98KKWnZKkkTgyehXyLavMnlNqXyYhxg3CSwoisLUgD+hBkwJXZNClxKWP7WoPgmvaEwrrMR68BV/HalkF/tkJ0VyJtXB6j5BCztq/k19hWctuY25Fu/K+sjGvXSJIdDdlqZB/uwcEzGcGesXT68fEhWYf7n86G0p7eJj2v8iK76ySkFA==
+ bh=heYE+Zj9XLSFIof09QeBQZyYx0aokTVHSWQ1jZXMPao=;
+ b=XoAO4+EOc49f7XQ4gZ7XkA031+a3hNZlY9mvhmpRNhCOZD5SMcUXATX/f5qjqs6IlHDYxA9I8//ZHR5JJdN5GfSBQT2VACjwfS4G4oOvnuguB6GmXvFcu0j0AHnjZwtTHYEi/BTmM11VGxZ12c/WZLx+1HNKPytRLI0A2uBQ7N1CWlfU59ofJzw6844OFHPjrbtMgnGBIKVwCe9nqm1ahfTxv4de+4R2CUk65yzNAVMT/xWtmhpPph5FTsPCn6+iWzzV+Y9gyDw5H+W1Tle9i0UcUgExYFu36t93r8sF5ACb49EgzW17MVyHIZyN+XyOaGg8P32Gn8/UcZmeln4W0g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=heYE+Zj9XLSFIof09QeBQZyYx0aokTVHSWQ1jZXMPao=;
+ b=Pm7UUlQOVMK99LJdq/ttcFdOoPysS1lCWgoPr9G7gUQpUD6q17sMnnSiafIUd33hGSEvVtAzbOCPzv7/cOxBKt2phEP6w1KxgaIxVNg0e7Fg2a27S2yRIkcbV+IVswk7jrRv4439FU9zEeBxB3ZweOcWfZLfxhRzN9+lKClpbGpFbzIz8ixFvBT32J9XNR5n4iSBrm/Rs5xzA+xsZAZH4HPqc5y0zpURzvEMG3pQBUKWGDNTPbuq99oVFJeVOIShN97sxdWrh0WaOsmjCjIiqgPCjC44xsVwFMNkqEod0GG5M9CS5UWqmZNBo9a8QFpFOHuhmfiNQtVfkUXYARKYfQ==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by IA0PR11MB7744.namprd11.prod.outlook.com (2603:10b6:208:409::12) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by DS7PR12MB8232.namprd12.prod.outlook.com (2603:10b6:8:e3::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.12; Thu, 6 Nov
- 2025 18:03:34 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::acfd:b7e:b73b:9361]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::acfd:b7e:b73b:9361%7]) with mapi id 15.20.9298.007; Thu, 6 Nov 2025
- 18:03:33 +0000
-Date: Thu, 6 Nov 2025 10:03:31 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Shuai Xue <xueshuai@linux.alibaba.com>
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Borislav Petkov <bp@alien8.de>,
-	Hanjun Guo <guohanjun@huawei.com>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, <linux-acpi@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, Andi Kleen
-	<andi.kleen@intel.com>
-Subject: Re: [PATCH] ACPI: APEI: GHES: Improve ghes_notify_nmi() status check
-Message-ID: <aQzi83dxBold4Rmy@agluck-desk3>
-References: <20251103230547.8715-1-tony.luck@intel.com>
- <4ecbe3d3-71f0-47e9-8fad-35b16689d1fa@linux.alibaba.com>
- <aQwDd-Nhgxpkdrcb@agluck-desk3>
- <d49c1287-6a55-4eff-a908-b8a878bdd08a@linux.alibaba.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+ 2025 19:02:15 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9298.006; Thu, 6 Nov 2025
+ 19:02:15 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Jonathan Corbet <corbet@lwn.net>,
+	iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-doc@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: [PATCH] iommupt: Documentation fixes
+Date: Thu,  6 Nov 2025 15:02:14 -0400
+Message-ID: <0-v1-e93135a62eee+1e4d-iommupt_docs_jgg@nvidia.com>
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d49c1287-6a55-4eff-a908-b8a878bdd08a@linux.alibaba.com>
-X-ClientProxiedBy: BY3PR03CA0015.namprd03.prod.outlook.com
- (2603:10b6:a03:39a::20) To SJ1PR11MB6083.namprd11.prod.outlook.com
- (2603:10b6:a03:48a::9)
+Content-Type: text/plain
+X-ClientProxiedBy: MN0P222CA0020.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:531::23) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -104,278 +70,190 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PR11MB6083:EE_|IA0PR11MB7744:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54461f62-0b06-4fa1-ede7-08de1d5eccd4
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|DS7PR12MB8232:EE_
+X-MS-Office365-Filtering-Correlation-Id: c40c88ca-e939-4019-e904-08de1d66ffeb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eUQvNXFYRVozZm5aaFJoZjlqZTBPZUJKcU43T2kvYnY1UHF4a2E2b3NVWDQ5?=
- =?utf-8?B?WEh6MERzN2d2bGRCUHB6SGdBc0x4MERzY0pCbmd5bjJ3TTRjbUNrVVhuTi9Q?=
- =?utf-8?B?MG9oeTJmeUxOK003VkRIY2Z6TVNFQjkwbkd0QnFBd3orTnlOYWY3dnFIS1JN?=
- =?utf-8?B?dHhNSGtkMExOd1VHdW0xY29RV1luY1Jqejcxb0JhVFhpWUszU2t1STBKaURs?=
- =?utf-8?B?TWFpeHVhTW9kanNlbGxDUXRaL2RjMW5yM0liS1oxdnB6WGl3RFI2N3MzVXgz?=
- =?utf-8?B?SjczRERkeElSaXNFNWtiWFhETWpFeU51eVdta0VBWEpGeTQzWFBOMlpPWG5C?=
- =?utf-8?B?TFo3LzRYRmRYYW5LYVIwdzNMSFRuN0pCSWIrVkwwTDRRU241dlhxZWplZTYz?=
- =?utf-8?B?TjRhbFVMZ1I2V1BUejlEU1RtYndjcHhESGxoZXJNZFZHME44L1R5UWpteDRK?=
- =?utf-8?B?WVUrRFhJUFJuQmdyWWJMU2Y1c3JTdnVaN2NMV3IzVVozUFpkOUR2OUcvelhL?=
- =?utf-8?B?dmhMVnBKOE4raFJKOWh5QlBpdWpnZk8wQ0NBdkRHeTNDWmI3OFU5cEE0eDJ5?=
- =?utf-8?B?Wlp6dUhTejNmenVSVG83WXlFaEJ3bDl2VlRiMmx5Wkt1aFRWcUhScllJTkM1?=
- =?utf-8?B?SFQ2YWFsUXZwMENTY1ZHaGhKMXhFbGVWcDZQdUdXRGRPZDZGWUFFQVdNeXFu?=
- =?utf-8?B?SHdFQU1EYVJqQXFLMStuVFJaeEQ5ODAvZGRqNi94MmxxQTFnMzZpTHpQL1ow?=
- =?utf-8?B?cnFyOTNMbVNGcnVNQ1lHTWV0bVVWMDdZNHU3dHdjVDkzek1WWkhsSkc2OVVH?=
- =?utf-8?B?M3ZQYk1UZUgxMjJYSWlaYkNiMEhlbTlQaFk1a1QydGZwcDRqWjdKTlg2TVg4?=
- =?utf-8?B?b0pQQ1JrVGFsVzNOeEdyUnd1RUVra2NHWmhYclVERWJ5Zm1adHNVdTJqdWtX?=
- =?utf-8?B?bFJOeTBaZjhyUkp5QVpRVzBqclhxbGJINjlQS1dXQzU0TDh5cDh4ZDhOQ0ls?=
- =?utf-8?B?MW5UdjhHeG05cnhBNUNXNm5XYTRmYk52YmtQOW9QV3dWa3IxZjAzendDbGlv?=
- =?utf-8?B?bjA0UkZ5R045MzEweUJEZk03SGR4WWJuWkxSaktJbW9pb01rY1dTRVNzdUdv?=
- =?utf-8?B?aWRqWFZ5djdLL2dtK0ZNVUx3SjFyeUc0OHEzdHl0elV6RUFaaGs4c2FnbXQy?=
- =?utf-8?B?UXBob3l5VWVRRWJEQ0xWK0RYVk1Yd2RROWV4MG9FNVdpV1MzUElWMkNDanl2?=
- =?utf-8?B?SGFwa29LQktMMk9GNG5LSjRLU1kvZExjY04zSEJLMTgweW11QStPTTU0UzJJ?=
- =?utf-8?B?WlB4NDhmSTNXdThTWVhNMEpHVkJQdkVON1NKbU5WTWNkbG5XUzdJSmhXbWRi?=
- =?utf-8?B?QW5ZMUpleTZwVFZDNkdMS2dUTEFsMFM4ditXb3JUSVVWbjlIVzBYaUNYVFVT?=
- =?utf-8?B?VTZCWWpwV2NtS3lhQ0FPRWVUa2ZSSC91VGJSTGFqdThyUCtIMEpSa0xSdzh1?=
- =?utf-8?B?UURTVnQzQ2U2alJrZkdKWCtlTEFZTWxjTEVGM3dKOWwvM0l6eE5IcWtKTkQr?=
- =?utf-8?B?cDh2OEZxeWY3VFE4alBYbzhydkxzVTJDN2dHN3NiWFZhMlhieTJld0MwUmNG?=
- =?utf-8?B?eUpDTkdHWjJ3V2tJZTR1cGw2WS9DSTA0cVkxMHNTaDRYZDl5Z3U4bXQ5TjVC?=
- =?utf-8?B?S1lwcXBTb0ppVFpvNUtRUlp1ZFNQSGxhRG0ramN1T0tBMzFNMEJRYkN2NVlr?=
- =?utf-8?B?RmVyS1UyYVp5Y1pKdjB0UTA5cHJ3Y2NhTjFvODJtdnZZaU52TDVBY0ZnSjFm?=
- =?utf-8?B?eTBOZjlCbkFHaXBKNS93TnE5U0JFd2RMR1dVR04xNklnWXdlbWdHOU8rRUxP?=
- =?utf-8?B?dTV2MW9GL0x6ZFpob1NjeldBSU8zZ1hkNHM4Q3B0eWdtZno3MUxlTi80cC9V?=
- =?utf-8?Q?NF1detsCmRL2dSYPfotUxSx5D9VPSSIB?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?D3Hbe9kTR5jy0k5VuTLP7lJeAKU/KkfRqZemwVRVJjpJO972rLi4jJHwPcB/?=
+ =?us-ascii?Q?Rgqw04ICld5YLafPjY3FwXUryjPGZx+HbuYy8MDsJQkDqZ4vJr3Q5YSa6BwB?=
+ =?us-ascii?Q?fW8kjtMqzHVl2k7DQU8WMNZxyfKDvT97PwhiafhA3JAMAaY8E9/9VXnL52n0?=
+ =?us-ascii?Q?8Hx0DYpIY5I673VqpX5nzXQt7MfFOEEUfsuj2pTALzbE2Gura5B7awuWnLak?=
+ =?us-ascii?Q?uMaa4ExrAzXsGiatyhuPZhIHcjpvud6sjIx4sqomZl5VNLBn3t+5MiF+AmTY?=
+ =?us-ascii?Q?Evtaww7Zb698sokX+ZMxWei8P4SsYpoD3IgTHcIsj3SAXXmq9OxxRazxhYGk?=
+ =?us-ascii?Q?y0/y5bq7dvyRvTjqdhLJQ8QdEgQs3hBrAyu3QfCsLOltOZmDAJ8icR9c8reY?=
+ =?us-ascii?Q?mbRQBUluPlMwQugH4wIm0zdBSou1oXnkAQkKJS02bNv+8Nxs91R4XJ4fiff4?=
+ =?us-ascii?Q?5RycdjYMQR3vruvf9de1XQivawIYyd2/N/99oo1cIHFg+aXP0YerhFTsshAY?=
+ =?us-ascii?Q?EX0sn3Jb/6pc6RAvCXPtIcGjZdPYrlx4hUWcy8ICBymAvUA9/LSPxKe0qGkE?=
+ =?us-ascii?Q?fEfUVyfXqC5wbRxU8a6d9oFx3uJ8XAIdi0fZ+PZCxh2QrXIfSQllXSUz1pd1?=
+ =?us-ascii?Q?EZ3wfYWikBnpVkFsaTeqZFjLZJwA8O1a1BhfWPTvE3uJPvrGxkM9+ewdIchA?=
+ =?us-ascii?Q?U/0VYXjziMCNF4bPZ0phLeprd+zYMoUW0lTMHtGiYr3t2Flj4QLuCC0gtyUq?=
+ =?us-ascii?Q?WdpQICtvJ8yeWsAFGUrhMgpDPSjt4UqgR9/D+vPH0kMrKYcGXPAAHinhA7Cp?=
+ =?us-ascii?Q?99depQJbc6Z9ZOuuRjonniy/fELkhbRwKXzWIiS1tbXwjZam6QvzpfpC7rjU?=
+ =?us-ascii?Q?OAvGG0I5fPsCuj0OmvVL1A0V2SWbSGfgD4clltbmCh4YyLKE/lXpb9QPSSI0?=
+ =?us-ascii?Q?mYWSkMD+XmdLkqJnr//rL6UsLuH6EzCmBHyGL4dCS7QG1XzpD5n1ubiyZNol?=
+ =?us-ascii?Q?qTFL5vWy/jjRzwEzq+MRtQprzFleq6t0/ISkPh4nsEHA4/DkoDevZRcqof+A?=
+ =?us-ascii?Q?TGSCH4Xyojfpz3oZ/TJNl8+/VIKVpipLjs6UsYA9ZcHQgDjzXV1GlAkRHlSk?=
+ =?us-ascii?Q?yW6d+/b3Qp1zcd68joa6SfFFGx8bCumtbCWyVS9aZng0+W8F7mHhXxjCv+57?=
+ =?us-ascii?Q?yVmQ4lRx+0NkfpW8x3Lto5XeJuJ77sproGpnHx+QSVXZISMfXDD5ca6YDCAW?=
+ =?us-ascii?Q?1IB8SufIH93+DlQS/1k3qbfbeKNhdb5bXEaNiPqvvM3YbDY2gcESEDWE9I2G?=
+ =?us-ascii?Q?l6/1WANkIVweddeUHo/l0KJNT0q5BSZlprl2qSSOwXx7fZa653RqfiU/dhGG?=
+ =?us-ascii?Q?VFaUqBgmqZGEbUI7GdARSFyx6jZA9qsRWhbsNd4vQQN7ZsN4f4rOUdO67t5h?=
+ =?us-ascii?Q?weRmfILSA0/peN/2ak6v4ghzlely9vp1?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RnBZU3g2WnNzRnFFdzRaY1c0Q3pFem8wamkzMzNuSU13aFZvT0drK2RiSmVj?=
- =?utf-8?B?RnV1MXRkOWdjRjdkMU9MNG1SOHo3Y2ZvbXljS2F4ZFgzbE42ZDZKcEJXOW8v?=
- =?utf-8?B?aHBPZCtpc0tkbnRFczFRYkc5RWtaRUtSMW1RTHgrd3U2QmV4RWpXZlRyUnJR?=
- =?utf-8?B?TXFVVjMydE10NmJZWUI4QnlJWFhpSjkxSUxpaVZhQVBkdWloK0UyMEltSEFi?=
- =?utf-8?B?SENSVjM0bUNKN1R1ZnphcWlGUUtnOEt5QzJTL3E5MTJkRk5YNWloaDlNYVEv?=
- =?utf-8?B?T2liRTIzVlA3czhNb1V6NitjUEtpdHY4clQwQXpjdEZZTGNqUmt4d1Q5eTFY?=
- =?utf-8?B?cmQ2RzRrY1NzZjZ0Q2htLzJlY083eGtRNmVjVHZBcTdDRTN6YjN2MEFwNm9I?=
- =?utf-8?B?amZIbXZIQnd5YVltVWc3MnRqRVJtNXFEYi9tWFZEenVhbW9Zc2htb012N21N?=
- =?utf-8?B?T2c4V01wbVlOcS8yMGtWcUZQS1RHaTFNRkhNL1dzQmhxVkR6K2tlNGEzT2ow?=
- =?utf-8?B?OXgzZGhQaWwvb2RJL25Fc1AwbXZaRjd4WHZzMlBPSG9DVDNDVVJrc05RSGY5?=
- =?utf-8?B?cDU3T0g2NnIvTGNOMWtQSHJNbzJvTWJFWEFDcUtOVEpCNWpDQjJKaXpCUFF5?=
- =?utf-8?B?VC9oaE5oNWdNbjZ5OStTaW9YZ216bFB2cHBVV2J5WDZMUmYzaEsxY3lWa2M0?=
- =?utf-8?B?SEd1Q002Vm9USUNMM1hWb09wU1pGWGdidjlUUWpuZytFc2tQSUlrNGtkTXBG?=
- =?utf-8?B?cjF5d29ISWFpS01FNG1leXlGVDJTVnR6MWZKLzdCb1RlRkw5N3g4M2lNVjlL?=
- =?utf-8?B?VnhRYXZ4RFdRSFVzVXMvaHdzNVUrS1NmTEEwTll2dHNIaS9KN0JUSzR1UzhV?=
- =?utf-8?B?akNRUyt2bFBIWDJRTlV2K3BBTWsvbEpSL3VSejFSRWtucDRrejB5Y1FSYXJ1?=
- =?utf-8?B?K3NoZm9ENjEzdmswNlVBYXF1OWVhVW9takJwMmhDUlVjejQyenFIKzArUlJo?=
- =?utf-8?B?RHNsWnF3RUhMTW5DZHR0Rkc2V21xR2dIbDVldXZMaCtGVFZCdzRBQkp3TkZn?=
- =?utf-8?B?RUxaVkdWSzdvbnp5cWFqS0RiYWw2ckZEM3R6Z2hZUktKRml4dnkrR3NaQWxX?=
- =?utf-8?B?L010TURVZ0F2TTRQVmNlakRsYjVKb1FILzZBbDlJOGFhUFJxMlBWRjlZR1M0?=
- =?utf-8?B?NWcrMTRwRmJlbHIyeXdxaEc0UUZSMTBBMTNQcXl1d3ZoMEVTdVBVa1A5U2pE?=
- =?utf-8?B?dU9jd00ramJ4N2k3L0s4eDVhRWZXYm5iZTFKL0tLdUYwT2pOME5wWUlJVVhG?=
- =?utf-8?B?N0pEZi9LWUpOUUo4OUh0aW1mNGpwSzBMMUhxTjY4cTdzSDVxbXhVd2VjeG5L?=
- =?utf-8?B?aUVKTm1kd1BTdWxWR1VsZnNBekYxc1JoSGlDQ2hpWDM2aUJ0aTNiWkFMWHVX?=
- =?utf-8?B?TzdabEx2VWM5em0vditFV2duYnJnYWJVbVVScWx1YUgrNHkrSEJBZm1BUHRU?=
- =?utf-8?B?SXlRdU5tOVQ2blRkWW5zNXhJczY4WXB4ME5sR1BTLzY2MitkWnNsQ2xBOCtz?=
- =?utf-8?B?MmovSVNFN3BNdzJlV3pQYjVicjIrOXljNFl2WGkrMFJjZytsdml0dVRjWGdy?=
- =?utf-8?B?TUlCUHlyZllzWUZKa3FybS81bUFYMWJLRXBIc1BQWnlCNXhuZlFIQmxXR1Vh?=
- =?utf-8?B?aTNYQkdXc2ZoaDRUa1dFbkhHYU1sK3Z3N1A2U0orQm14U1c5WE9HTXJkb0Z0?=
- =?utf-8?B?MTNvYmxraC9yd1B2Z1pGRTNkd0JPWWJHUFJOSmhnWUFBT1N0S3ZPUlM3WElT?=
- =?utf-8?B?cUJUdnI2YTdOUzlkeWI5cWZvend0Tmx2SXUxYi9ERHZXUzJFdEhuSXgwY2hC?=
- =?utf-8?B?UkpDL09iKzcxdUVtMVAvaVJOZUVUUEM5NXdnYXVncUpUdENIM1VwOGEzS2JV?=
- =?utf-8?B?K0NPTVJKRWZVdTROUGpIVGhVclpKdHRoek5HVi9JVnFqcEQxbUNiNGNBYnpr?=
- =?utf-8?B?VmVLQkpDaFIreVB6dFU0Tit0TThicVhIMEs1eVBQKzdqaHNCZjZueStHOXJJ?=
- =?utf-8?B?dndwbHd5TWZhZDA5NDdPTlRRZHVnMERGQkUveUNCa1BHaUR5bkV5eEVzUlI0?=
- =?utf-8?Q?HZ//Icymp/hBi4sOWcA5HphxP?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54461f62-0b06-4fa1-ede7-08de1d5eccd4
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?QqyU0liPHPDKYDm87RJtArCZlmh1R8kPBFGSouzYrghZvSSwP+mfTVzSp60m?=
+ =?us-ascii?Q?XSK4yUPGN5zHHbq3i9lxvANN3xf5QkNalMx4CTukGeD1YUtRhKLf2Ipr9XbL?=
+ =?us-ascii?Q?dF21+r4NdkQeFnAf7DTn756OGBTLxxp1RStE2Iqk5yIrzTq3SPW7cMG2dCdn?=
+ =?us-ascii?Q?rFqGS3sF9hwiWFRjbL/rRubSHvSQS+rX7eMnDVASOWDjMfovwl28ujQEVVuk?=
+ =?us-ascii?Q?W66tkr/d8Fgx9NWINXZBc5CgW5dIUUXiLzSzKIrNFYPxejwQrBMxucEWFqjN?=
+ =?us-ascii?Q?HpzKAWTSWewX5zPuLMex6ciI4/+oPamI4GZVbiWhAgCRE7D/GKoz1klwS7HP?=
+ =?us-ascii?Q?tg+7/XwOrFYI6PN2Ol0EMlIVLmBuGbL+ySrKB2D05q+27KwVuKrohGLwPTur?=
+ =?us-ascii?Q?gQzIy0q3XD4mMMflpvcSWLt6pKI/5EoHOLog7O/hIimwRL08hFL4Ep0reooA?=
+ =?us-ascii?Q?QtWuAy7BAQrYZ9kxbh++f2gHZX+5n+wxcyjpjD4K7jwuOkM8n0fU5jviAfoL?=
+ =?us-ascii?Q?Np5+XH2QY2QUgvztL5OpsSpDWhEkvxuy0H+oYH6qioMbFlyDyxXplbQcKGe6?=
+ =?us-ascii?Q?RlDzRrrmdsd7wpUdjG+G9lH0/Z6QC7RfZcXtAcmlqbEO/hSku0/++RR+w439?=
+ =?us-ascii?Q?2OOSeDJ9vgVLi1g9QHgP8FkXeS2YdXYsOhiBGO5ROnGAaijiB2g0xh/j7SjR?=
+ =?us-ascii?Q?HpEQeTSHK3SlEmHvE9vmUiz7fSIJe423EsYHfZ3uTWEICDaeTkWe0XzUOEkp?=
+ =?us-ascii?Q?uYYUx79Ywac8MJsmqrNWBWEGNy/nhBrBF9KtkJ7m7KqQk0zzcwHz06cfbIWY?=
+ =?us-ascii?Q?vjy5Swpivstnd1FIqT0pAPuEDlzQS1GOlOrZYlubsPr5kg9Pj/BmFBYOQp1s?=
+ =?us-ascii?Q?snLl7/Wue0JcB8mL6GlLoM9gfrhNB2TBYiAP4l+mbYxaWgnMA6V3OmC2EbI1?=
+ =?us-ascii?Q?rBo8SmMQO+hBSjb+WhW4QXW6oKDM8Rh4dXh5Yo7u75usr4EsHImXKtwC75Ja?=
+ =?us-ascii?Q?saSmLf/dyJ3pIrRQyMFrogSJPotn8tlfP62VUlyIgnd5bOc2P90K27znnpcR?=
+ =?us-ascii?Q?Hcbq1My/LdBAn9mMFskqVD/P56ZDY/Xmg3tJoWFXdmenFdtaXAkOD+OFe1u6?=
+ =?us-ascii?Q?AXQ4hPRl+q93cSHfhTaayLsMlkoyIB1eyp68HH2YcUw/G8baApyHz7Y20zdY?=
+ =?us-ascii?Q?T9RFpVclCz7bmFSd4vYBd4AzjBgO9PK8GPRMQtrb2+QhWY13zvTm6VqK3RGf?=
+ =?us-ascii?Q?/8oZzopF9KDvwyvueMjzyU889oqMSqH0Ge301Qczl2bjOKT6Il5IVHeErWpw?=
+ =?us-ascii?Q?0xRYBZRNJCy9qprRS5CP5jYvoIhIDdg51t0vxenX2llMOGmhDqF8ZPQGp3Al?=
+ =?us-ascii?Q?Do3r4okfwmpT9DKT3QArFaUA34uqfs0HEP4sRnYMbrbXjPbFF5wX2oKWP74f?=
+ =?us-ascii?Q?ueI7VwFYAfQDcvUNxk0pI2GWKxt25xyUwqLFLtn6WhEWBz+st7LqNNOepjkn?=
+ =?us-ascii?Q?/eYP4VBwmAGXiUzAfuAAFmc7eCWaAAAzrF/rFptbh0QEE/iKJZUOX3iZxfTa?=
+ =?us-ascii?Q?tuZ+V0JWjkCooYbc+oU=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c40c88ca-e939-4019-e904-08de1d66ffeb
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2025 18:03:33.6034
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2025 19:02:15.1654
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2WKGeM1iEVeC1e/9CH1qNIIRxl5Y4pa67N/B8sCvLWcGRsKZ2CvEoMFfSTf51oUpGvTybe7cr+yaEAT5Jm+6iw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7744
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: JqU45AoRAdQvG1aJrTuqNfefzmnlGnyGth1QNr6OdTfDdRVbtG59xHd1YUZPvgrD
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8232
 
-On Thu, Nov 06, 2025 at 01:04:05PM +0800, Shuai Xue wrote:
-> 
-> 
-> 在 2025/11/6 10:09, Luck, Tony 写道:
-> > On Thu, Nov 06, 2025 at 09:46:33AM +0800, Shuai Xue wrote:
-> > > 
-> > > 
-> > > 在 2025/11/4 07:05, Tony Luck 写道:
-> > > > ghes_notify_nmi() is called for every NMI and must check whether the NMI was
-> > > > generated because an error was signalled by platform firmware.
-> > > > 
-> > > > This check is very expensive as for each registered GHES NMI source it reads
-> > > > from the acpi generic address attached to this error source to get the physical
-> > > > address of the acpi_hest_generic_status block.  It then checks the "block_status"
-> > > > to see if an error was logged.
-> > > > 
-> > > > The ACPI/APEI code must create virtual mappings for each of those physical
-> > > > addresses, and tear them down afterwards. On an Icelake system this takes around
-> > > > 15,000 TSC cycles. Enough to disturb efforts to profile system performance.
-> > > 
-> > > Hi, Tony
-> > > 
-> > > Interesting.
-> > > 
-> > > If I understand correctly, you mean ghes_peek_estatus() and
-> > > ghes_clear_estatus().
-> > > 
-> > > I conducted performance testing on our system (ARM v8) and found the
-> > > following average costs:
-> > > 
-> > > - ghes_peek_estatus(): 8,138.3 ns (21,160 cycles)
-> > > - ghes_clear_estatus(): 2,038.3 ns (5,300 cycles)
-> > 
-> > ARM doesn't use the NMI path (HAVE_ACPI_APEI_NMI is only set on X86).
-> > But maybe you are looking at ghes_notify_sea() which seems similar?
-> 
-> Yes. It is measured in ghes_notify_sea().
-> 
-> > > 
-> > > > 
-> > > > If that were not bad enough, there are some atomic accesses in the code path
-> > > > that will cause cache line bounces between CPUs. A problem that gets worse as
-> > > > the core count increases.
-> > > 
-> > > Could you elaborate on which specific atomic accesses you're referring to?
-> > 
-> > ghes_notify_nmi() starts with code to ensure only one CPU executes the
-> > GHES NMI path.
-> > 
-> > 	if (!atomic_add_unless(&ghes_in_nmi, 1, 1))
-> > 		return ret;
-> > 
-> > Looks like an optimization to avoid having a bunch of CPUs queue up
-> > waiting for this spinllock:
-> > 
-> > 	raw_spin_lock(&ghes_notify_lock_nmi);
-> > 
-> > when the first one to get it will find and handle the logged error.
-> 
-> If an NMI issued, at last one status block is active. I don't see how
-> the code path is different.
+Some adjustments pointed out by Randy:
 
-On X86 NMI doesn't include a vector. There is just one interrupt entry
-point for any NMI.
+ "decodes an full 64-bit" -> "decodes the full 64 bit"
 
-Linux deals with this with each subsystem that may expect an NMI
-registering on an NMI notify chain. When an NMI happens the core
-code calls each subsystem function to ask:
+ Correct the function parameter name for iova_to_phys()
 
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
-	Was this NMI for you?
+ Use the recommended section heading style.
 
-This is a problem when profiling the system with "perf" as there are
-thousands of NMIs, and each one calls ghes_notify_nmi() which will look
-to see if an error was logged, and (after all the ACPI/APEI mapping
-physical addresses, reading, and unmapping) will return NMI_DONE to
-indicate that no error was found, so this NMI came from some other
-source.
-> 
-> > > 
-> > > > 
-> > > > But BIOS changes neither the acpi generic address nor the physical address of
-> > > > the acpi_hest_generic_status block. So this walk can be done once when the NMI is
-> > > > registered to save the virtual address (unmapping if the NMI is ever unregistered).
-> > > > The "block_status" can be checked directly in the NMI handler. This can be done
-> > > > without any atomic accesses.
-> > > > 
-> > > > Resulting time to check that there is not an error record is around 900 cycles.
-> > > > 
-> > > > Reported-by: Andi Kleen <andi.kleen@intel.com>
-> > > > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > > > 
-> > > > ---
-> > > > N.B. I only talked to an Intel BIOS expert about this. GHES code is shared by
-> > > > other architectures, so it would be wise to get confirmation on whether this
-> > > > assumption applies to all, or is Intel (or X86) specific.
-> > > 
-> > > The assumption is "BIOS changes neither the acpi generic address nor the
-> > > physical address of the acpi_hest_generic_status block."?
-> > > 
-> > > I've consulted with our BIOS experts from both ARM and RISC-V platform
-> > > teams, and they confirmed that error status blocks are reserved at boot
-> > > time and remain unchanged during runtime.
-> > 
-> > Thanks. Good to have this confirmation.
-> > 
-> > > > ---
-> > > >    include/acpi/ghes.h      |  1 +
-> > > >    drivers/acpi/apei/ghes.c | 39 ++++++++++++++++++++++++++++++++++++---
-> > > >    2 files changed, 37 insertions(+), 3 deletions(-)
-> > > > 
-> > > > diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
-> > > > index ebd21b05fe6e..58655d313a1f 100644
-> > > > --- a/include/acpi/ghes.h
-> > > > +++ b/include/acpi/ghes.h
-> > > > @@ -29,6 +29,7 @@ struct ghes {
-> > > >    	};
-> > > >    	struct device *dev;
-> > > >    	struct list_head elist;
-> > > > +	void __iomem *error_status_vaddr;
-> > > >    };
-> > > >    struct ghes_estatus_node {
-> > > > diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-> > > > index 97ee19f2cae0..62713b612865 100644
-> > > > --- a/drivers/acpi/apei/ghes.c
-> > > > +++ b/drivers/acpi/apei/ghes.c
-> > > > @@ -1425,7 +1425,21 @@ static LIST_HEAD(ghes_nmi);
-> > > >    static int ghes_notify_nmi(unsigned int cmd, struct pt_regs *regs)
-> > > >    {
-> > > >    	static DEFINE_RAW_SPINLOCK(ghes_notify_lock_nmi);
-> > > > +	bool active_error = false;
-> > > >    	int ret = NMI_DONE;
-> > > > +	struct ghes *ghes;
-> > > > +
-> > > > +	rcu_read_lock();
-> > > > +	list_for_each_entry_rcu(ghes, &ghes_nmi, list) {
-> > > > +		if (ghes->error_status_vaddr && readl(ghes->error_status_vaddr)) {
-> > > > +			active_error = true;
-> > > > +			break;
-> > > > +		}
-> > > > +	}
-> > > > +	rcu_read_unlock();
-> > > > +
-> > > > +	if (!active_error)
-> > > > +		return ret;
-> > > 
-> > > Shoud we put active_error into struct ghes? If we know it is active, we
-> > > do not need to call __ghes_peek_estatus() to estatus->block_status().
-> > 
-> > That might be a useful addition. I was primarily concerned in fixing the
-> > "no erroor" case that happens at a very high rate while profiling the
-> > system with "perf".
-> 
-> Do you mean you see "NMI received for unknown reason" when profiling with
-> "perf"? And the unknown error is handled by ghes_notify_nmi().
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 2c8b644f3901 ("genpt: Add Documentation/ files")
+Fixes: ac7ffd8e805c ("iommupt: Add the AMD IOMMU v1 page table format")
+Fixes: e530a2c3a098 ("iommupt: Add iova_to_phys op")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ Documentation/driver-api/generic_pt.rst | 11 +++--------
+ drivers/iommu/generic_pt/Kconfig        |  2 +-
+ drivers/iommu/generic_pt/iommu_pt.h     |  2 +-
+ 3 files changed, 5 insertions(+), 10 deletions(-)
 
-This message is printed when every handler on the NMI chain says "not
-my interrupt" with the NMI_DONE return value.
-> 
-> I see some unknown NMI in production in Intel platform, but I did not
-> figure out how it happend. Can you help to explain it?
-> 
-> > But skipping (or just removing?
-> > __ghes_peek_estatus()) if you have already confirmed that there is
-> > a logged error would be good.
-> > 
-> > If you can use the same technique for ghes_notify_sea() then it would be
-> > sensible to move the code I added to ghes_nmi_add() to ghes_new() to
-> > save the virtual address for every type of GHES notification.
-> 
-> Sure, I'd like to add it for ghes_notify_sea().
+diff --git a/Documentation/driver-api/generic_pt.rst b/Documentation/driver-api/generic_pt.rst
+index 7a9ca9f2878d4f..fd29d1b525e51d 100644
+--- a/Documentation/driver-api/generic_pt.rst
++++ b/Documentation/driver-api/generic_pt.rst
+@@ -10,9 +10,8 @@ Generic Radix Page Table
+ .. kernel-doc:: drivers/iommu/generic_pt/pt_defs.h
+ 	:doc: Generic Page Table Language
+ 
+------
+ Usage
+------
++=====
+ 
+ Generic PT is structured as a multi-compilation system. Since each format
+ provides an API using a common set of names there can be only one format active
+@@ -61,7 +60,6 @@ format-specific information.
+ The implementation will further wrap struct pt_common in its own top-level
+ struct, such as struct pt_iommu_amdv1.
+ 
+-----------------------------------------------
+ Format functions at the struct pt_common level
+ ----------------------------------------------
+ 
+@@ -69,13 +67,11 @@ Format functions at the struct pt_common level
+ 	:identifiers:
+ .. kernel-doc:: drivers/iommu/generic_pt/pt_common.h
+ 
+------------------
+ Iteration Helpers
+ -----------------
+ 
+ .. kernel-doc:: drivers/iommu/generic_pt/pt_iter.h
+ 
+-----------------
+ Writing a Format
+ ----------------
+ 
+@@ -112,7 +108,6 @@ The generic tests are intended to prove out the format functions and give
+ clearer failures to speed up finding the problems. Once those pass then the
+ entire kunit suite should be run.
+ 
+----------------------------
+ IOMMU Invalidation Features
+ ---------------------------
+ 
+@@ -124,7 +119,7 @@ on its design. Every HW has its own approach on how to describe what has changed
+ to have changed items removed from the TLB.
+ 
+ PT_FEAT_FLUSH_RANGE
+--------------------
++~~~~~~~~~~~~~~~~~~~
+ 
+ PT_FEAT_FLUSH_RANGE is the easiest scheme to understand. It tries to generate a
+ single range invalidation for each operation, over-invalidating if there are
+@@ -134,7 +129,7 @@ however, if pages have to be freed then page table pointers have to be cleaned
+ from the walk cache. The range can start/end at any page boundary.
+ 
+ PT_FEAT_FLUSH_RANGE_NO_GAPS
+----------------------------
++~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ PT_FEAT_FLUSH_RANGE_NO_GAPS is similar to PT_FEAT_FLUSH_RANGE; however, it tries
+ to minimize the amount of impacted VA by issuing extra flush operations. This is
+diff --git a/drivers/iommu/generic_pt/Kconfig b/drivers/iommu/generic_pt/Kconfig
+index 79f65268f31212..c88971675662fe 100644
+--- a/drivers/iommu/generic_pt/Kconfig
++++ b/drivers/iommu/generic_pt/Kconfig
+@@ -38,7 +38,7 @@ config IOMMU_PT_AMDV1
+ 	help
+ 	  iommu_domain implementation for the AMD v1 page table. AMDv1 is the
+ 	  "host" page table. It supports granular page sizes of almost every
+-	  power of 2 and decodes an full 64-bit IOVA space.
++	  power of 2 and decodes the full 64-bit IOVA space.
+ 
+ 	  Selected automatically by an IOMMU driver that uses this format.
+ 
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 1dcd85620f9b9c..0e046fe0eea34c 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -158,7 +158,7 @@ PT_MAKE_LEVELS(__iova_to_phys, __do_iova_to_phys);
+ 
+ /**
+  * iova_to_phys() - Return the output address for the given IOVA
+- * @iommu_table: Table to query
++ * @domain: Table to query
+  * @iova: IO virtual address to query
+  *
+  * Determine the output address from the given IOVA. @iova may have any
 
-Great. Take my patch and fix it up to cover ghes_notify_sea() as well. I
-don't have a system that I can test that on. When you are done I can
-retest the ghes_notify_nmi() to check that it still works.
-> 
-> Thanks.
-> Shuai
+base-commit: 1c04204b2a6df18a53bf8663c94e78f8c599a2df
+-- 
+2.43.0
 
--Tony
-> 
