@@ -1,108 +1,204 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out30-112.freemail.mail.aliyun.com (out30-112.freemail.mail.aliyun.com [115.124.30.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968F3245006;
-	Thu,  6 Nov 2025 04:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CD534D38E
+	for <patches@lists.linux.dev>; Thu,  6 Nov 2025 05:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762403249; cv=none; b=KwWnhn8Fey1tkroXoBRQkzLROZlkezJO3U6bCnW6oZ86q/z9Aedc5ymDCrB9HINHTEWqb83MfYSmu8z4lQqYFgql8FP6FOTq1f79v0amIZXM2PZde+ZWSOI+K6Mm8se5umYvPMHDPXX6bXL04VUHh+dpWOtg67w9OV04XwDMdzQ=
+	t=1762405456; cv=none; b=ZZmX5f/oEBYU2TZqJonYvfhVxBpBhqYOURDvxQ2Bwlf1TLq4ZDdk3REGyKSDwjzsrrNI2CNCc2hIGQrgdTqSUB59Yh45D7UZgV14R4Ll3W3Jf/rdIPB9RbvQeWr7alkU39ZRQ6FXXQCRTe1LMmN4REx/BP1z2oVIF2vbuZgx+I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762403249; c=relaxed/simple;
-	bh=LjXjqLiIcTZEnOqRTQkglRGH4acf/bZ0o7BRdQk34q4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J4jPBmnyzHFMtAEotAUfRiB0htZ7evsFd9Kck10g13mieZKiqEFZX5jLv1ctOaJ3cgGmVSI6FamUhKshJM4R8ysUZkSTAif4EjkSRMeT4Sf0a/rnQriA06KUqe93DUc/Z3yaUYGUHmVJ0ShCeD//mL4K+XOOUDj2QmOI/eIRkDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vA9F7BQV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762405456; c=relaxed/simple;
+	bh=9MFTHhTyAuIXmNt1lnMnlfUeqBBv+PebUZL4ozVF4tg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g1wyY0rRGfWhmAX7oUuSLIj1iNLeW3f2vz7gW+KfVeUt2eYsmZV+PxExfYCFpvg1vLVN3mGX3Dv/qbtsJZgCj9ktQN+nSpAj7hknT1reSfK0tOpoziDTqGE8INltVeMHox5TmropO41VLjMjgR8IzIDvSn7ojbwo1HqdHNrPu88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=VzQM6QJL; arc=none smtp.client-ip=115.124.30.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vA9F7BQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B514DC4CEF7;
-	Thu,  6 Nov 2025 04:27:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762403249;
-	bh=LjXjqLiIcTZEnOqRTQkglRGH4acf/bZ0o7BRdQk34q4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vA9F7BQVRZYZmmk9SqDAXOxQ6pzMKyd+PdRqVIMxutAJytjul5dcdIAOXDvFQ9vgy
-	 Msh4g8XLxH6YJrNdxi1oulgyY90RJCh9t+ZprC4Pf6aFIpbnH0nQGhLCIRzPb0i3ln
-	 MxT+Le+ftf3G01A3CdPnFFfZr98TxAo+fprfsFJ0Zf0kDJq5zypKn7bLIGK/2FSwnV
-	 fKxAMv2NaZGCS1DvVVis/+nyDtRDAE26gUeDJ9ddn/FDVVDotB2uspxQjUcveNnNf5
-	 4ayVVTyqT6CGdJI1jTLH7kHjq0Zkw1Ul+hBYKl6WPplCguiiMiD+WBSW6XJXx20YAJ
-	 AxiBxOyx/SPtw==
-Date: Wed, 5 Nov 2025 21:27:25 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 239/332] fsdax: switch dax_iomap_rw to use iomap_iter
-Message-ID: <20251106042725.GA826592@ax162>
-References: <20251027183524.611456697@linuxfoundation.org>
- <20251027183531.141165261@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="VzQM6QJL"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1762405447; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=ayrBHiC5YJYK4R+BfF6m9SthRISNQab5BiTJkkGwV8Q=;
+	b=VzQM6QJLTpKYPkMWL1mWwbq3Jucf5d9Mp6cbimom7J9GUZSGJZwNyg1mycwEZtNqu1lpua8DOzT1mi2jF6Ww4n/xlLP4JM12GVAxJkwbtaB7/ejcHZ2i29l2s8i4MdQxP/Rd28pzjtolnkC9nk1ZluJjJLzSJuSLu4a0a4b7BK8=
+Received: from 30.246.177.186(mailfrom:xueshuai@linux.alibaba.com fp:SMTPD_---0WroMjBT_1762405446 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Thu, 06 Nov 2025 13:04:07 +0800
+Message-ID: <d49c1287-6a55-4eff-a908-b8a878bdd08a@linux.alibaba.com>
+Date: Thu, 6 Nov 2025 13:04:05 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251027183531.141165261@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ACPI: APEI: GHES: Improve ghes_notify_nmi() status check
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Borislav Petkov <bp@alien8.de>,
+ Hanjun Guo <guohanjun@huawei.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, linux-acpi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Andi Kleen <andi.kleen@intel.com>
+References: <20251103230547.8715-1-tony.luck@intel.com>
+ <4ecbe3d3-71f0-47e9-8fad-35b16689d1fa@linux.alibaba.com>
+ <aQwDd-Nhgxpkdrcb@agluck-desk3>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
+In-Reply-To: <aQwDd-Nhgxpkdrcb@agluck-desk3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 27, 2025 at 07:34:52PM +0100, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Christoph Hellwig <hch@lst.de>
-> 
-> [ Upstream commit ca289e0b95afa973d204c77a4ad5c37e06145fbf ]
-> 
-> Switch the dax_iomap_rw implementation to use iomap_iter.
-> 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-> Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-> Stable-dep-of: 154d1e7ad9e5 ("dax: skip read lock assertion for read-only filesystems")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/dax.c | 49 ++++++++++++++++++++++++-------------------------
->  1 file changed, 24 insertions(+), 25 deletions(-)
-> 
-> diff --git a/fs/dax.c b/fs/dax.c
-> index 3e7e9a57fd28c..6619a71b57bbe 100644
-> --- a/fs/dax.c
-> +++ b/fs/dax.c
-> @@ -1104,20 +1104,21 @@ s64 dax_iomap_zero(loff_t pos, u64 length, struct iomap *iomap)
->  	return size;
->  }
->  
-> -static loff_t
-> -dax_iomap_actor(struct inode *inode, loff_t pos, loff_t length, void *data,
-> -		struct iomap *iomap, struct iomap *srcmap)
-> +static loff_t dax_iomap_iter(const struct iomap_iter *iomi,
-> +		struct iov_iter *iter)
->  {
-> +	const struct iomap *iomap = &iomi->iomap;
 
-The constification of iomap in this change depends on commit
-7e4f4b2d689d ("fsdax: mark the iomap argument to dax_iomap_sector as
-const") from the upstream series to avoid compiler warnings, which may
-be fatal in the case of clang since it is a subwarning of
--Wincompatible-pointer-types:
 
-  fs/dax.c: In function 'dax_iomap_iter':
-  fs/dax.c:1147:58: warning: passing argument 1 of 'dax_iomap_sector' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-   1147 |                 const sector_t sector = dax_iomap_sector(iomap, pos);
-        |                                                          ^~~~~
-  fs/dax.c:1009:48: note: expected 'struct iomap *' but argument is of type 'const struct iomap *'
-   1009 | static sector_t dax_iomap_sector(struct iomap *iomap, loff_t pos)
-        |                                  ~~~~~~~~~~~~~~^~~~~
+在 2025/11/6 10:09, Luck, Tony 写道:
+> On Thu, Nov 06, 2025 at 09:46:33AM +0800, Shuai Xue wrote:
+>>
+>>
+>> 在 2025/11/4 07:05, Tony Luck 写道:
+>>> ghes_notify_nmi() is called for every NMI and must check whether the NMI was
+>>> generated because an error was signalled by platform firmware.
+>>>
+>>> This check is very expensive as for each registered GHES NMI source it reads
+>>> from the acpi generic address attached to this error source to get the physical
+>>> address of the acpi_hest_generic_status block.  It then checks the "block_status"
+>>> to see if an error was logged.
+>>>
+>>> The ACPI/APEI code must create virtual mappings for each of those physical
+>>> addresses, and tear them down afterwards. On an Icelake system this takes around
+>>> 15,000 TSC cycles. Enough to disturb efforts to profile system performance.
+>>
+>> Hi, Tony
+>>
+>> Interesting.
+>>
+>> If I understand correctly, you mean ghes_peek_estatus() and
+>> ghes_clear_estatus().
+>>
+>> I conducted performance testing on our system (ARM v8) and found the
+>> following average costs:
+>>
+>> - ghes_peek_estatus(): 8,138.3 ns (21,160 cycles)
+>> - ghes_clear_estatus(): 2,038.3 ns (5,300 cycles)
+> 
+> ARM doesn't use the NMI path (HAVE_ACPI_APEI_NMI is only set on X86).
+> But maybe you are looking at ghes_notify_sea() which seems similar?
 
-  fs/dax.c:1147:44: error: passing 'const struct iomap *' to parameter of type 'struct iomap *' discards qualifiers [-Werror,-Wincompatible-pointer-types-discards-qualifiers]
-   1147 |                 const sector_t sector = dax_iomap_sector(iomap, pos);
-        |                                                          ^~~~~
-  fs/dax.c:1009:48: note: passing argument to parameter 'iomap' here
-   1009 | static sector_t dax_iomap_sector(struct iomap *iomap, loff_t pos)
-        |                                                ^
+Yes. It is measured in ghes_notify_sea().
 
-Cheers,
-Nathan
+>>
+>>>
+>>> If that were not bad enough, there are some atomic accesses in the code path
+>>> that will cause cache line bounces between CPUs. A problem that gets worse as
+>>> the core count increases.
+>>
+>> Could you elaborate on which specific atomic accesses you're referring to?
+> 
+> ghes_notify_nmi() starts with code to ensure only one CPU executes the
+> GHES NMI path.
+> 
+> 	if (!atomic_add_unless(&ghes_in_nmi, 1, 1))
+> 		return ret;
+> 
+> Looks like an optimization to avoid having a bunch of CPUs queue up
+> waiting for this spinllock:
+> 
+> 	raw_spin_lock(&ghes_notify_lock_nmi);
+> 
+> when the first one to get it will find and handle the logged error.
+
+If an NMI issued, at last one status block is active. I don't see how
+the code path is different.
+
+>>
+>>>
+>>> But BIOS changes neither the acpi generic address nor the physical address of
+>>> the acpi_hest_generic_status block. So this walk can be done once when the NMI is
+>>> registered to save the virtual address (unmapping if the NMI is ever unregistered).
+>>> The "block_status" can be checked directly in the NMI handler. This can be done
+>>> without any atomic accesses.
+>>>
+>>> Resulting time to check that there is not an error record is around 900 cycles.
+>>>
+>>> Reported-by: Andi Kleen <andi.kleen@intel.com>
+>>> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>>>
+>>> ---
+>>> N.B. I only talked to an Intel BIOS expert about this. GHES code is shared by
+>>> other architectures, so it would be wise to get confirmation on whether this
+>>> assumption applies to all, or is Intel (or X86) specific.
+>>
+>> The assumption is "BIOS changes neither the acpi generic address nor the
+>> physical address of the acpi_hest_generic_status block."?
+>>
+>> I've consulted with our BIOS experts from both ARM and RISC-V platform
+>> teams, and they confirmed that error status blocks are reserved at boot
+>> time and remain unchanged during runtime.
+> 
+> Thanks. Good to have this confirmation.
+> 
+>>> ---
+>>>    include/acpi/ghes.h      |  1 +
+>>>    drivers/acpi/apei/ghes.c | 39 ++++++++++++++++++++++++++++++++++++---
+>>>    2 files changed, 37 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
+>>> index ebd21b05fe6e..58655d313a1f 100644
+>>> --- a/include/acpi/ghes.h
+>>> +++ b/include/acpi/ghes.h
+>>> @@ -29,6 +29,7 @@ struct ghes {
+>>>    	};
+>>>    	struct device *dev;
+>>>    	struct list_head elist;
+>>> +	void __iomem *error_status_vaddr;
+>>>    };
+>>>    struct ghes_estatus_node {
+>>> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+>>> index 97ee19f2cae0..62713b612865 100644
+>>> --- a/drivers/acpi/apei/ghes.c
+>>> +++ b/drivers/acpi/apei/ghes.c
+>>> @@ -1425,7 +1425,21 @@ static LIST_HEAD(ghes_nmi);
+>>>    static int ghes_notify_nmi(unsigned int cmd, struct pt_regs *regs)
+>>>    {
+>>>    	static DEFINE_RAW_SPINLOCK(ghes_notify_lock_nmi);
+>>> +	bool active_error = false;
+>>>    	int ret = NMI_DONE;
+>>> +	struct ghes *ghes;
+>>> +
+>>> +	rcu_read_lock();
+>>> +	list_for_each_entry_rcu(ghes, &ghes_nmi, list) {
+>>> +		if (ghes->error_status_vaddr && readl(ghes->error_status_vaddr)) {
+>>> +			active_error = true;
+>>> +			break;
+>>> +		}
+>>> +	}
+>>> +	rcu_read_unlock();
+>>> +
+>>> +	if (!active_error)
+>>> +		return ret;
+>>
+>> Shoud we put active_error into struct ghes? If we know it is active, we
+>> do not need to call __ghes_peek_estatus() to estatus->block_status().
+> 
+> That might be a useful addition. I was primarily concerned in fixing the
+> "no erroor" case that happens at a very high rate while profiling the
+> system with "perf". 
+
+Do you mean you see "NMI received for unknown reason" when profiling with
+"perf"? And the unknown error is handled by ghes_notify_nmi().
+
+I see some unknown NMI in production in Intel platform, but I did not
+figure out how it happend. Can you help to explain it?
+
+> But skipping (or just removing?
+> __ghes_peek_estatus()) if you have already confirmed that there is
+> a logged error would be good.
+> 
+> If you can use the same technique for ghes_notify_sea() then it would be
+> sensible to move the code I added to ghes_nmi_add() to ghes_new() to
+> save the virtual address for every type of GHES notification.
+
+Sure, I'd like to add it for ghes_notify_sea().
+
+Thanks.
+Shuai
+
