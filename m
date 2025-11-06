@@ -1,142 +1,209 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010065.outbound.protection.outlook.com [52.101.56.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E521929BDB4;
-	Thu,  6 Nov 2025 19:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762457540; cv=none; b=VnSxEprS4FA4AtTjCMRhoqSe2zNs7N5LRY1DId6iT8Vf0HJFfp+wExyD3iYZm7m/DbVePM55TXEw53fC6wN5WwsmX+Lt6MCiNrN1g4oPzQNqc3hQf+kisJoTw5+jNySzOTsDgwcwz2z/oiF6b+ch9tAfDw1wx/mCM155CAM8XZY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762457540; c=relaxed/simple;
-	bh=Ni+Z5fTEF+YJcvFBiJo8VsFjNREBSsxC1Q0KaC1UIhc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vB+X6trhKaGvS5Ykt9tqO6RVKDM0Zg3nYK97sVlFBlmwONeyWAQNTeD4iwiI0KNfgQ5JRIuDV6aTtN+napy1rhgempVmd87h1RenvtiERCLYEtxnTjOQN/uK58GJ+EL9nxaN1UTKMBNKfL6Hr40tYkkXbMdF5BsnVP2mVNQDzG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uhdO2rCK; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C481F2E9EAA;
+	Thu,  6 Nov 2025 20:35:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.65
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762461306; cv=fail; b=ugVWZiMbHMSw4g4L8UKP4A6Ga+fRT46iDQQvdv43BbLOj+u7Uu/Wt4rttT/hbf+nP82Pg50YShuVMuUy4WNDM+onhxKZe1HM7a3hWv24CZcYe2Lfc9xlEgadNw0cfTNuNZJL2vUw3WxcGYON0IoIStxb5Jl2o9IU5VjXPUZxeHw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762461306; c=relaxed/simple;
+	bh=5DAnhPX0ppfFoDJVimzDBrLUU/gkGs8mAFeyO1NPGiw=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=YJpuSNQbiQxgYdRwETMbxXBALYjn51WsqhDCUIelkD4qYZFczus6RdvVuOz83MOh6Pn/WXj0VTBLJEJ5JEj/I2nJ6Z2M5WIF/B9HH38PJtdj0fH5YcY/8TGkVBOIbxHSPR87DRjl0dgVEahXlvQPfppev6q8jsrdjsKj65OP19I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CQCfDGhw; arc=fail smtp.client-ip=52.101.56.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uhdO2rCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8D4C4CEF7;
-	Thu,  6 Nov 2025 19:32:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762457539;
-	bh=Ni+Z5fTEF+YJcvFBiJo8VsFjNREBSsxC1Q0KaC1UIhc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uhdO2rCKwc+m0T3GRreLTpCoc5sP9T/rvc7JdYXyMVyq9t2UIeMfwKwuGrCedb4mB
-	 IulL3ag5sFDPptex2EzW0EpD0C0vaHM4pFM9NJqPBFNscAzd1ENQpBWjb5Rtvk/aN5
-	 oXL/G0M/75n99PNK2nMXN/TnxshE1hxmrxDGghvhJt7jFBkXcdeSRoE/3mnmMfgcyi
-	 Wpmlp58KBHu2T1JC4KaisdmcrtrUpEFDYF0E1+w7LhE65Yr6GA4/4z+dwatO7Befqr
-	 u3ljs477WayN0WliI2TP/lfQ1Po/+bUuYbJTv8CgKgBAC9e+Cm3pSzB+ULcD2lDAG9
-	 EIXUKO2Dz1ljg==
-Date: Thu, 6 Nov 2025 11:32:18 -0800
-From: Kees Cook <kees@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Russell King - ARM Linux <linux@armlinux.org.uk>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>
-Subject: Re: [PATCH 5.15 000/411] 5.15.186-rc1 review
-Message-ID: <202511061127.52ECA4AB40@keescook>
-References: <20250623130632.993849527@linuxfoundation.org>
- <CA+G9fYuU5uSG1MKdYPoaC6O=-w5z6BtLtwd=+QBzrtZ1uQ8VXg@mail.gmail.com>
- <2025062439-tamer-diner-68e9@gregkh>
- <CA+G9fYvUG9=yGCp1W9-9+dhA6xLRo7mrL=7x9kBNJmzg7TCn7w@mail.gmail.com>
- <2025062517-lucrative-justness-83fe@gregkh>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CQCfDGhw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A5czvbWuL3mZu6W8qjEDhAq2N2tqRkpeke/g6RyF226mD8FTlxqIY2mFQ1gAwJ5+IfbwpQXb95WSgVgSTWe32xRZOPaggL4aBCNj94C35ODxIWHtn2hFBTutwPofbOlgO6WVQC9hXyd3jeNjn/POYbAyXG+lHl7tVzfXFXTjc+2JhjgtAIdOWf9URg9WoowqZ/UVUNl5cwI3XvZXqudu/3a9sL88LelgAR/iJS9/SUUXtvdGhj9TphyEt+r4zrJmQjz5zq7Yr851XtDmX8WJ/TyAH7LdKj3fOFuIY5r2MMmcI3MorVejjord2Il2Puf0+7SDKbR5kDOe4P5S0I1CEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=U2ihODDEvLX8mAtUPTU2wOVCebb0knhHKT7OEISaHNQ=;
+ b=CJlpydQLgz9LP+r8EH7On/Ain4ALyzv0MjH+Y2npO7BqdI3d3bUe0LYSmwV/9gQTdWov1ZnuLKmg5uhebE/3AtTu0aslKmb1OzN/mNI3z+tRZpB3sgb/NW1BkBUUlr8FrmJU5i6JqiEyNXBNyOmyjNQ0eW/vxcZHYLqhl5BRZuh8VwP2hp2CDQ00mO7WmyfhsdTzczinKEsW45FdZrjXHCIZlZBjvGYIq5J2MYFVUeZLzhtXFuk0/rt30KLFhEUaOdqvTIUTD0AYYUGWLyyEhEPWZz/4sXnchIxXBqx5tt9YNgkFb2ypDig8SmlGNKcbaeBMGrvkKvo2adiDzOKlnw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=U2ihODDEvLX8mAtUPTU2wOVCebb0knhHKT7OEISaHNQ=;
+ b=CQCfDGhwpR1IIwGbwNsvm2b/k+9KC7/vWv6KpurNGONYb3KqBLmf7wCfnCq/bUQZwlhIIikljMd+Uthlk4dWntlP48wOa10sz8dAW4Wf/KLsNg6Q1xYFAisDf+LtERe76yrNPpWbfnzC9v4r9APTHu/mG/ETzFGsYbc5Ve/0aJITGagh3SyiVRvE/VGq6zqt6IcU34hn6e0/yvcEJDTDiaHaSW+hbMpGwF0BC7dIpLNq1Pu3UjM54rOhBzSuqJspWSNlsoUzD2wr1lZ8c1hzq6bQapKoBl4K0EADjXU135/8RMZ2PpNqO6lrEt0IEbks5d+xaqQMy5DdhnG4CRlSmA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by SN7PR12MB7108.namprd12.prod.outlook.com (2603:10b6:806:2a3::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.13; Thu, 6 Nov
+ 2025 20:35:00 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9298.006; Thu, 6 Nov 2025
+ 20:35:00 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Christian Benvenuti <benve@cisco.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	iommu@lists.linux.dev,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rdma@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Nelson Escobar <neescoba@cisco.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Will Deacon <will@kernel.org>,
+	Yong Wu <yong.wu@mediatek.com>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>,
+	patches@lists.linux.dev
+Subject: [PATCH v2 0/3] Cleanup around iommu_set_fault_handler()
+Date: Thu,  6 Nov 2025 16:34:56 -0400
+Message-ID: <0-v2-25fc75484cab+ab-iommu_set_fault_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN2PR05CA0049.namprd05.prod.outlook.com
+ (2603:10b6:208:236::18) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025062517-lucrative-justness-83fe@gregkh>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SN7PR12MB7108:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44e83ee0-ed88-4247-99de-08de1d73f545
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|7416014|1800799024|921020;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?ZU8vnOJrAvJ07mx7B2jDOKB5TudGpq19LQAin5lWyAmYOoCXJn7VLhbiKus1?=
+ =?us-ascii?Q?OCsd0QW37a+/lUvsrDrH2QcEPXa49QlM6sBwe27nH3gGA/UTKySu1QcAWlVg?=
+ =?us-ascii?Q?h3eQikLk1ekrH9v8qzrKdtt6iRgXIwvADF1LfoYzbLO0qSIRTltd+dt90FJ7?=
+ =?us-ascii?Q?f3hGSfW/W19NI3CabnXiNVZIEz8E+e8AWa8OY9T5xgESf/DVWaMjEQAUKUmO?=
+ =?us-ascii?Q?j9pqPsAtxbzo1cUzNr3ABIT6xfC4/A+ir8WavTBvBa7e0bSiwNouJoKmOqNQ?=
+ =?us-ascii?Q?bF7st3ndVd5UuEULS5yluFSHnsBJ75CeSukpBqp6WrhL2NMW1P61rSrLGQJn?=
+ =?us-ascii?Q?xKx9x83PdPSL2tPOUSNwsTt+bTzputCcwJyLk2MVkfxsM8eoZQSw5QQyUmJi?=
+ =?us-ascii?Q?FayxQREzyUVoTQ3QJDGGXQq+ZkHNU39P6FPawgc/ZsuR93kmC8ElKgPaqD6m?=
+ =?us-ascii?Q?r3ga681WqrkvGjvFnWDqQiMbHgncn/x3kj49ZVlqJ5q5GtcJ0LtkptCn9Ydr?=
+ =?us-ascii?Q?olpxEkhWG8eXT2R4E/cFkORh9nVsqbZ4amDZx1YBbIDwz1MuqYRB1jSq4uLQ?=
+ =?us-ascii?Q?9zMLR48sO9WG/ZrFN1OYTVodzeEq5Dqr1oxp0Gmct0KUBHiL26oPt6PVDsHE?=
+ =?us-ascii?Q?IyrvhEK45Jc9d8v5TkrbiGWQbtdyK5wnu0DISi4b477HcFjbQbd9OBIoDTOA?=
+ =?us-ascii?Q?XYtyxy7R5yc3ZtIoUEStTwZlyTcOoNks0EdKbjScQL1i+8/imAF+u6DvXwmH?=
+ =?us-ascii?Q?W8I3KjpIaniBu3ANSNR7ioveuDN+tNpAltLVo1jZ55HEPn/qYQpD5rfNDd+o?=
+ =?us-ascii?Q?wGG5GeXvRYYzP4I2lVjm3IpN2Ze3iUqF8Wx44Oz0qonPa+E7ROkmSfaAA+gk?=
+ =?us-ascii?Q?SV4OAOxDpUUL2AMiKbDpJ/6JKnXKnzcgasrRMB27yNISIBP+yxmsE/Qdiyvz?=
+ =?us-ascii?Q?kzIRn8XfLyqpKdWU2C91PM4hAPK0NjN4MXyOdE+KqLAu2VHdgRWsu68sgAwR?=
+ =?us-ascii?Q?3LUmefdJ+gmyTLEvjki7n4rsAGdRwoASijDehffI4qFk3fAYpULNmyRP7CbY?=
+ =?us-ascii?Q?6z56YhB07ofgVb/cEGlDvbhXLaI4aBWPXRplxmOnE+kH40JK4otW63ApyDGp?=
+ =?us-ascii?Q?VOhj/RHUlAFIgXv6XCMFnCcZQLltpty5eUQRubfoVl79nc3d+p/qlJqLwKE1?=
+ =?us-ascii?Q?2Y9DH18Ggbs+HKYF3Py5N/oI42aYJe7Mr9vgN9FMZCoD98JpE5HueBZwTq56?=
+ =?us-ascii?Q?I3yGtfSXoxw9S+N2bUMMi6oicWfGBGinBerMqjVhgBVDeU0RtFyU16CF0bzm?=
+ =?us-ascii?Q?XEQCHs9EsKUwQ3JuyiIjhK4UIweQNmyc0vP5H+WJSLw1LcwJlZv93u9zu2CX?=
+ =?us-ascii?Q?uRAlhTAQdR0FpYCpKbCbzI4MpZJvo4Tge+VlJFuRGpYc33Vwj6CMwW7RWJOd?=
+ =?us-ascii?Q?WiBDtiw5cuPjPpq4oeAmFRfxgO/0fLRwPYoWqZL0Ts4oK4pUIJI+eAzmpC7f?=
+ =?us-ascii?Q?pnpItEdzoPoblYRyH75vkpIJEtuRQdWkWoK8?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(7416014)(1800799024)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?WgSHpEPyG5aEQT+EC3mBX0z41Lnx/UT259IZJyNFJ2NmJPpRq4Py1MNPdpVj?=
+ =?us-ascii?Q?EyBS2aWfG58SQq/8poSSlK3sVs5QCBtsm+f8jIWesjnYug9NDa1OyyjRlc8A?=
+ =?us-ascii?Q?O9GfNAOSw5panc6XAhcghq1LSMdmfx9AMwblptkEH/QzxzfV3jDUffJ5Np9H?=
+ =?us-ascii?Q?NZelr1nFAW46fC7Fks+/qQTpnVZsai8ikXynNK4l7anA1PVhfpDQxo5lHdd+?=
+ =?us-ascii?Q?OoWiy6gdI/oc/nbSByQ4J/QphSNX2wkCaHvgFladTSm9ISllYPbop+ZXs1ql?=
+ =?us-ascii?Q?YG5EhYSGO5v0t2CCLk3bqQC54PXzJBTPCgLhweCbXrA6M0T6a3O+4S+7bPix?=
+ =?us-ascii?Q?eUrVJiyKrIt0Zhe+/T0gfawn4GZRBcw6gbfjdvos/Dkt7tpzVyMOXTy7Dfa+?=
+ =?us-ascii?Q?5dRggabVXSXnASHNaxj7JAGfLNJJXsvuO1BIDzAs1c6SfDRKQA8MdsMCqWhY?=
+ =?us-ascii?Q?h8yKl8swHDDIAGp0vKaswl+vGXjdk2+nzHTRMSxUcfSaDpwYW2s5ZRxjyZaS?=
+ =?us-ascii?Q?OdltdJIKMIbnQ7ses6xVULO7fwoaMiM+NK53JWWl0t7PJsm6Yctzc4joffJl?=
+ =?us-ascii?Q?XAvZWjNW/2DE3mMUQTGB2Aug4ODOG0cT05xDbdPwccD+/F9ZC3REKBT0HZf1?=
+ =?us-ascii?Q?RaWETdd7uaBq9Nw38blyVo25w3kBq84dWbgK5EBjwU8yJf3JuM6MV3KSge0t?=
+ =?us-ascii?Q?22rJsNGZmkS63b+yDXYIDGQ9VEfQGo9Ivg+HzyEWvcdlWPnWa9W8+eniNRa9?=
+ =?us-ascii?Q?blgwzGxkXmn9ECuVtxKK/j8QBHAfKm+9qEs0Nk8Z1jYqYOUBJIGMRzl12UKL?=
+ =?us-ascii?Q?WWe/GiL5pxm/1y/D/5aNsvt4J/YDDdRC7a3Awt+fQrBD2FPKKd1vHSafhCaD?=
+ =?us-ascii?Q?M4/vWzWrk2S8FnZzaWM3Xbgr/v30S3TafrPRoO8XQ9RrVwfGRRHsOpq0I1nI?=
+ =?us-ascii?Q?/BBC3T7ts0FUco3BmDZPFPRXIwiOKqY9pyO1oFqdzdg/TMlB3bDG0QvbKAjM?=
+ =?us-ascii?Q?j/2giO1YaBjYqq4qqrGsW+AZRESZ/6p0tJiC7Orw7wfRWCKQJGWXa13lYfNI?=
+ =?us-ascii?Q?gNQw+Z+IPAhJhu8fpINsOI1yH9fFrU9dgtL6gTw8kq74EjjJZK/U24NA0p/O?=
+ =?us-ascii?Q?iblqvBUILAVTcl/0hEoLMBbJbgHRAbvn3okE8vJUJPRuKQof19JGr2kh7Xe5?=
+ =?us-ascii?Q?8nHgEU0UUFmwwWZseK7ybhMBZ0plXWzjRzGkmnicbGwcWxCGtEFBDAi2SMBC?=
+ =?us-ascii?Q?wNEUeHNevYLU/PJdDnRvott2ESpI+uXNO4gHHO/ax9K3r0Y+nQ/D6qYn0egP?=
+ =?us-ascii?Q?e8BJpw8rxZH8YePeVH7x/PE/voWJz4Jgy/FqrX5aEdbLko9cVQH9Dhk7QArF?=
+ =?us-ascii?Q?/dRnb0zkdzf8EHdic+deo1hDCHEh1p0isFDxVf+I1Q80y7Q4hmxLLoE+dNlV?=
+ =?us-ascii?Q?O7VDebOycNU1JpIMzhWbmMUbFjtw2CH0CE6ueqTaCTGiZYkn2OdtwQjeQwGu?=
+ =?us-ascii?Q?ZYGEAa+eamYywmBh599qxN0qScMnCckYenklo78lGp/wW0igIpshWhXu2zrA?=
+ =?us-ascii?Q?B0GSsvn/KzfMGDYSnb4=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44e83ee0-ed88-4247-99de-08de1d73f545
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Nov 2025 20:35:00.8033
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lBEx087QZQ8FrtbHyAB2YQk89JqjgdDG0GhbonqKpEj8vlolWi7mMfCA7/YOx61B
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7108
 
-On Wed, Jun 25, 2025 at 09:39:45AM +0100, Greg Kroah-Hartman wrote:
-> On Wed, Jun 25, 2025 at 07:15:24AM +0530, Naresh Kamboju wrote:
-> > On Tue, 24 Jun 2025 at 15:48, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > On Tue, Jun 24, 2025 at 02:12:05AM +0530, Naresh Kamboju wrote:
-> > > > On Mon, 23 Jun 2025 at 18:39, Greg Kroah-Hartman
-> > > > <gregkh@linuxfoundation.org> wrote:
-> > > > >
-> > > > > This is the start of the stable review cycle for the 5.15.186 release.
-> > > > > There are 411 patches in this series, all will be posted as a response
-> > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > let me know.
-> > > > >
-> > > > > Responses should be made by Wed, 25 Jun 2025 13:05:51 +0000.
-> > > > > Anything received after that time might be too late.
-> > > > >
-> > > > > The whole patch series can be found in one patch at:
-> > > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.186-rc1.gz
-> > > > > or in the git tree and branch at:
-> > > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > > and the diffstat can be found below.
-> > > > >
-> > > > > thanks,
-> > > > >
-> > > > > greg k-h
-> > > >
-> > > > Regressions on arm64 allyesconfig builds with gcc-12 and clang failed on
-> > > > the Linux stable-rc 5.15.186-rc1.
-> > > >
-> > > > Regressions found on arm64
-> > > > * arm64, build
-> > > >   - gcc-12-allyesconfig
-> > > >
-> > > > Regression Analysis:
-> > > >  - New regression? Yes
-> > > >  - Reproducibility? Yes
-> > > >
-> > > > Build regression: stable-rc 5.15.186-rc1 arm64
-> > > > drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization
-> > > > of field in 'struct' declared with 'designated_init' attribute
-> > > >
-> > > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > > >
-> > > > ## Build errors
-> > > > drivers/scsi/qedf/qedf_main.c:702:9: error: positional initialization
-> > > > of field in 'struct' declared with 'designated_init' attribute
-> > > > [-Werror=designated-init]
-> > > >   702 |         {
-> > > >       |         ^
-> > > > drivers/scsi/qedf/qedf_main.c:702:9: note: (near initialization for
-> > > > 'qedf_cb_ops')
-> > > > cc1: all warnings being treated as errors
-> > >
-> > > I saw this locally, at times, it's random, not always showing up.  Turn
-> > > off the gcc randconfig build option and it goes away, which explains the
-> > > randomness I guess.
-> > >
-> > > If you can bisect this to a real change that causes it, please let me
-> > > know, I couldn't figure it out and so just gave up as I doubt anyone is
-> > > really using that gcc plugin for that kernel version.
-> > 
-> > You are right !
-> > The reported arm64 allyesconfig build failures are due to,
-> > 
-> >   randstruct: gcc-plugin: Remove bogus void member
-> >   [ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
-> 
-> Thanks for the bisection, for some reason that wasn't working for me.
-> I've dropped this, and the other randstruct change from 5.15.y and older
-> kernels now.
+report_iommu_fault() is an older API that has been superseded by
+iommu_report_device_fault() which is capable to support PRI.
 
-This thread got pointed out to me. You can put this back in if you want;
-you just need the other associated fix (which had a bit of an obscure
-Fixes tag):
+Only four external drivers consume this via iommu_set_fault_handler()
+  drivers/remoteproc/omap_remoteproc.c
+  drivers/remoteproc/qcom_q6v5_adsp.c
+  drivers/gpu/drm/msm
+  drivers/infiniband/hw/usnic
 
-d8720235d5b5 ("scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops")
+Remove the use in usnic as the iommu driver logging is good enough these
+days.
 
--Kees
+Remove generation support from the AMD iommu driver since msm and two
+remoteproc drivers are not used on AMD x86 CPUs.
 
+Fail iommu_set_fault_handler() if the underlying iommu driver does not
+support it.
+
+v2:
+ - Revise commit messages
+ - Move report_iommu_fault_supported into the struct iommu_ops
+ - Put back the pr_err in the AMD driver
+v1: https://patch.msgid.link/r/0-v1-391058a85f30+14b-iommu_set_fault_jgg@nvidia.com
+
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+
+Jason Gunthorpe (3):
+  RDMA/usnic: Remove iommu_set_fault_handler()
+  iommu/amd: Don't call report_iommu_fault()
+  iommu: Allow drivers to say if they use report_iommu_fault()
+
+ drivers/infiniband/hw/usnic/usnic_uiom.c | 13 -------------
+ drivers/iommu/amd/iommu.c                |  7 -------
+ drivers/iommu/arm/arm-smmu/arm-smmu.c    |  1 +
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c  |  1 +
+ drivers/iommu/iommu.c                    |  6 +++++-
+ drivers/iommu/ipmmu-vmsa.c               |  1 +
+ drivers/iommu/mtk_iommu.c                |  1 +
+ drivers/iommu/mtk_iommu_v1.c             |  1 +
+ drivers/iommu/omap-iommu.c               |  1 +
+ drivers/iommu/rockchip-iommu.c           |  1 +
+ drivers/iommu/sun50i-iommu.c             |  1 +
+ include/linux/iommu.h                    |  3 +++
+ 12 files changed, 16 insertions(+), 21 deletions(-)
+
+
+base-commit: 211ddde0823f1442e4ad052a2f30f050145ccada
 -- 
-Kees Cook
+2.43.0
+
