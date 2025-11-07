@@ -1,194 +1,184 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010017.outbound.protection.outlook.com [52.101.193.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54640357736
-	for <patches@lists.linux.dev>; Thu,  6 Nov 2025 23:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762473462; cv=none; b=QUQpBDqc0cUXGm9+fZgv2rtV8Aix5SvHtGcfiM9FgabIZy2DrbnF4wGdRwLqBvskW58MYwu0tsb66yPqJG1FMiTMPNnrmmd3Ine+QNLX66OLtYYKXCmAS4Krc00iWzYvdeyo8A0nZEUxPPhzuZmxrH+ZLeYA5cUm42hU+lqHwIg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762473462; c=relaxed/simple;
-	bh=bjf6LQGy9hz7UOIFVMwmyEoKZmem+6HpA3bqKRRaAY8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sOym9HJBLiHNdtT4yUGSor9FuNUEq4joIm8PHkAX6isPl/uGCfTKKa3ljxnxxbHk0tSIAEGwr9MuUl72ZqRWvZTmWTuYcDx9FzlVRAcWFD09n+TYZZGUpYvh+xD0fZrTA71LMGAde5QkRlYHsaeGadB5pDmBwh1eb+xDe6yie+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CxZaD+UI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hXrcTOT7; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93B3285CBA;
+	Fri,  7 Nov 2025 00:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762476231; cv=fail; b=IaJ3+21iXM7lbSb3iceXeQTWmDyqmLGQ4pjCU3feqZBqwDEN6Is2druEa0zfEnhaByqiEWOQ7cbq90ZsTsuEki8DcWCgy2ZdpNViGeXv9KvMTMZuGI2QgSBvJ+YjXgkRc4Qw6fIJ5+Knru48ZJ1AQVNSKy2m6H7NaCQfQOnJkaE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762476231; c=relaxed/simple;
+	bh=YkZ/+GCm1kMPmtKbVLisO11jS3YRS2+LVwVDFESpMpk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=e8pxA8kvTPSAHacKT7nz2/AEh0QIk2cqCqIM/pBbNS+USYXgnqKZqwQs9LmhPypc/Opy0lnIzq2D46f9R4gAOFiVnxDOOyzhL0yYm6Ybyd/8j81q3qxvR7l8/U29bvLbw+UUfe6cYUjvXTVRFKPIE3jlwhSgmjrbymWviEpb3eU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Ldno/FfV; arc=fail smtp.client-ip=52.101.193.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CxZaD+UI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hXrcTOT7"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 50B947A00E2;
-	Thu,  6 Nov 2025 18:57:36 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 06 Nov 2025 18:57:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1762473456;
-	 x=1762559856; bh=XnRUMgWSYNFtGHzQK5QGHPsOxPU91ZCPVklwBlc0e1c=; b=
-	CxZaD+UIVQOKh61JHtWlHD0G8EQgSkrX95Ygd7oY0Pn9AQ80y4ZCmNMg3d3I4REu
-	cyp1E4ln0hq4ehpgAnNRhieIs/aPTW1O9B5CqeQrjWoGUVmDuD9HsdmVbS8z6UwM
-	HGUS9eNESqjLMlU3+9zAs5VzbevtbXUc2KHu0tXqu9c3nGT+LkHTdrHKnU2jo05e
-	L9umhzgaAVsl717Dzo35njVUgQ/rstUYsVfdvmneQmld7JPEC8vme0oJsLX/IZMl
-	fzw1lj8hKqmnXgI8pnNohpDu3DaF6lziHIS2iOczhC8hdo5FY0VmydEyhZ0YLHA6
-	eK1qhb3gAp7L5xrObwKXnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762473456; x=
-	1762559856; bh=XnRUMgWSYNFtGHzQK5QGHPsOxPU91ZCPVklwBlc0e1c=; b=h
-	XrcTOT7uDE1RuT5OVDozsd8KJKM2R1rCt13N5GrmZQFg/sO4qM2jEuKUlgWbkgmt
-	iR3p5W+fVoMobqKvXQmzepmuLrVWWiUQAIWUPWziUccs/EbwRs1ZqoFpzDHa3lEz
-	beQrtaX7q9BBGaTXm/kwfxrytafoPCwh7x6l4nEtpmyGmYMMXfHWTdL8oSV5mYmk
-	/lBuZBjciK2s1fVC3tawDhU2XoJzL5QhEX2Z+OfIwERfjnpcdCrI8dL4Pl+H6RiK
-	hSWKfyN7N4dnDYRRtc4bmwbdSWflaWv8swW9movZOLrk0uXkh0RzGlL6FROTEgSu
-	oqu/dccpGSB5Oc55ntAMw==
-X-ME-Sender: <xms:7zUNaRZCWt8kRQpjdE9Dfj2IoON0HB075IDYmQWfFO_csOZJ5r8Xow>
-    <xme:7zUNaSdHY4MAvG53Ad91mbclW-uzgWvCSCQo_Uk-HHnE4oROskF1fco3icjAFjd76
-    KTqWaT7nlhpKu8V-phSLQB1jc8x_CvQNEVBVJ1UE68yQwRWXLaOYJo>
-X-ME-Received: <xmr:7zUNaT2xAAE_-wee3joT2u9uL1tbEN_YI8bmyKBj3swVlVHq17R9mRci9cUwO5MG8xGNxGs3MApknrQ3gujUVN6ibWn4Fg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeekudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtvdejnecuhfhrohhmpedfuegrrhhr
-    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeeuleeiheeihfeifefglefhtdeukedtkeeikeejieeiffdtvedvgeeu
-    fefhiefggfenucffohhmrghinhepshihiihkrghllhgvrhdrrghpphhsphhothdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrghr
-    rhihnhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepshgrshhhrghlsehkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtohepshhtrg
-    gslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhifigrihesshhu
-    shgvrdguvgdprhgtphhtthhopehshiiisghothdotgefuggstgdvfeelvdehleelgedtvg
-    guvggusggrsehshiiikhgrlhhlvghrrdgrphhpshhpohhtmhgrihhlrdgtohhmpdhrtghp
-    thhtoheprghlvgigrghnughrvgdrfhdruggvmhgvrhhssehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtoheprghlvgigrghnuggvrhdruggvuhgthhgvrhesrghmugdrtghomh
-X-ME-Proxy: <xmx:7zUNaRJALeWrzeOpUf10H6i8LNn4-VeTpTC5wDJaqGUPuqT27Bn4Rg>
-    <xmx:7zUNaaEx-XvR3EQjLvcyskznYWQ-haUVdI4dC6KObxxM_5euWgGHuQ>
-    <xmx:7zUNaVXlBX_ln0WykLrGvzJdhWxT9wx7QhPIqYnpzkb-Hf9_2D1wCQ>
-    <xmx:7zUNaayRJ6ovpDt9S_Y7efQOnLdpm27Au2f84G2fmuZAIW5w0asH6Q>
-    <xmx:8DUNaSP1Nwg0ukQdNiSe5QtrSkIivuj0aJl5pEKslbof6X-5fDd7U4OD>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Nov 2025 18:57:34 -0500 (EST)
-Message-ID: <36f043b1-c27a-4b93-b9ed-c5a3691ba639@pobox.com>
-Date: Thu, 6 Nov 2025 15:57:33 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Ldno/FfV"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bPHF/LSccurDYA4zL9z5qxwpZ+BnaFrmioL31QR8L297kYx1HaFZmhpc8LyRjrwHzcF288U07EzycbROhlblBsTLAdCSlz2kcp/O067jA/9USMIm+JdUhW66DXKb8ok6Tje/Z4UPARrH+/wn1Rnp5eFeCeXJVQsSima/2I0n6OyO8sjBydzLkamNQLYW8gK2As13IIk+DBvVaWtkei3K2stzzZt9i73+gDcmcZFpmjncLKIwr7/5iJAtzRs9ch3A5NgyFa8q4lcruax+XMY3rYvaFV3lx996u4GefUdz2Bz7CdSL1NQgQmoQWaeJ7TCuJZBn6exgtDFI5tCBDEU/Jw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tEiZQrJzrcR2ee6QxGDMUt9sKLput92ma4bI87pkKtg=;
+ b=bSgxdsq8BLyBC84ihqv6GbClgTd9/3tFBjuPfrNxAF2ohbc33qyuf5eZDlowwy9xTOfYjHsOQp1zT583UOVVKYp033fcgo8AKC1loYpCj9y6GLgT0lrxM018gTDz9P4K62KKaZzVI2acr/ebbH7w+JrS9LO2hYiNtHO1K6Lc/avCTSoYHrzuENFITnnAonuqZbYwnC4OcQ5r4aEOskusZBRAIkeaEprFEpbJGAo2CJ3KE3gW8DHLnFs/nnAyRvPFizmhZZ0J08lI3MpEygq9UYoO0l7LIUIcTFx45Kzol+ZQU8WFxYbRDzJdGb/vNW1QiIo0BZJ0nzzJGwBkicEyTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tEiZQrJzrcR2ee6QxGDMUt9sKLput92ma4bI87pkKtg=;
+ b=Ldno/FfVxPWajinsccbL3oHSpzY8fXNUjwBm8J2V1jA7lFw9t0YT9UJE0aKm5k9hNifmYrh0WZVpgsBK86F2lYwbLzFy0axxaLDPxXzvRtiOW31/psqkhl/vzpBvEn8B/IT/XzzVUMdKROqqFg0mNELVuPq25aNCHds/nShs3Vy5aRZC5v0Vj+Hpn4hzOg7ssu1zpxqlN4X082bvEg8RATonN6bU9oBavDtaS0CLBX6uHm0WLtdCk/EvIHorYJ1wZYA2qgnjaolqHLD8qcIwEgcV9EV5/izCK37OnO1LsBPkjem+DNwIWcvGQlhQbMSWrltokW+bZMbGGneOts0qtw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by MW4PR12MB6801.namprd12.prod.outlook.com (2603:10b6:303:1e8::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.7; Fri, 7 Nov
+ 2025 00:43:46 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9298.006; Fri, 7 Nov 2025
+ 00:43:46 +0000
+Date: Thu, 6 Nov 2025 20:43:45 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Pranjal Shrivastava <praan@google.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+	David Airlie <airlied@gmail.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Ankit Agrawal <ankita@nvidia.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	dri-devel@lists.freedesktop.org, Eric Auger <eric.auger@redhat.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>, intel-gfx@lists.freedesktop.org,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+	Kirti Wankhede <kwankhede@nvidia.com>, linux-s390@vger.kernel.org,
+	Longfang Liu <liulongfang@huawei.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Nikhil Agarwal <nikhil.agarwal@amd.com>,
+	Nipun Gupta <nipun.gupta@amd.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>, qat-linux@intel.com,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	virtualization@lists.linux.dev,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Zhenyu Wang <zhenyuw.linux@gmail.com>,
+	Zhi Wang <zhi.wang.linux@gmail.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 22/22] vfio: Remove the get_region_info op
+Message-ID: <20251107004345.GB1708009@nvidia.com>
+References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+ <22-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
+ <aQiJV4p3AKZSDH08@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQiJV4p3AKZSDH08@google.com>
+X-ClientProxiedBy: MN2PR11CA0025.namprd11.prod.outlook.com
+ (2603:10b6:208:23b::30) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.17-5.15] ALSA: seq: Fix KCSAN data-race warning
- at snd_seq_fifo_poll_wait()
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
- Takashi Iwai <tiwai@suse.de>,
- syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com,
- alexandre.f.demers@gmail.com, alexander.deucher@amd.com
-References: <20251025160905.3857885-1-sashal@kernel.org>
- <20251025160905.3857885-60-sashal@kernel.org>
- <4f94b13f-e1f8-49bc-b0c7-bcc3eed5cca9@pobox.com> <aQyxGrttI4OERR96@laps>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <aQyxGrttI4OERR96@laps>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|MW4PR12MB6801:EE_
+X-MS-Office365-Filtering-Correlation-Id: 528f0aa7-5fba-4e60-6f0a-08de1d96b58a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?snkksyHsIbgwYputBRLvNqs+3ga8r0EVWHosqWIzeaY4iGBJzY2F4ocSBYfT?=
+ =?us-ascii?Q?+LZDL+LAZy+8rEOOKJcHoVBhXBdIxx5ULQYtXWH8WriANt93XJXdLhTu+CW6?=
+ =?us-ascii?Q?peyHu0ImF5fSnGoWjU5ybtXYrowuiT9sf+6tvdSU7VhUBq9Aoh0yr5KsGNcF?=
+ =?us-ascii?Q?ZeZdVP6O0Vs7XlpunCH48uJtOf3D8RlHTTLMW2YM31Ln/4MokC2TabygCz2g?=
+ =?us-ascii?Q?weX1Hzd+/xjpzfkZ0m6MBd13pVlrSofZDGDh+3G4VvjHbcKBPy94zk/nQ/Jg?=
+ =?us-ascii?Q?DpkixuAk3vZvFwJXC3zPLdb9j7n502fe6nwh/xrAouCcaRBFk2R6jZu8pMhN?=
+ =?us-ascii?Q?RaOeKE/vdIeRQysI6CdPyXv9pH8kh0Xa/dgHaMLjUFvUlTnJsog5cSeK4xRB?=
+ =?us-ascii?Q?kOBb1jeB1DDqelMxzJ0baruCQTLUVVeukakbxikkxIM9EwbPd2LgAwn9IBKy?=
+ =?us-ascii?Q?5j0So08wJ3Aco1BLJt8kf+C3In8vfPudMoqbrqHQCOjGuvpuw3qFF0kRoagN?=
+ =?us-ascii?Q?FnypnJVzQdwo6AREWSE5IdcquCtK1x7UmAieIINNFzj/CjH/mkT/rHtrDFYz?=
+ =?us-ascii?Q?lxxCbuNdCLW815cC1aGoEKM19O2L5kFYSNiKqKc64BdtLp/pGP0PLBCebM1H?=
+ =?us-ascii?Q?+i40YTZmb5VpNZsz+NGagqq8EYrjFTvwpB7NznoDaLJtGbV2yoi++3RcVPF/?=
+ =?us-ascii?Q?Xt1RoZTk5wi20iXMJNJHe4PzB5KZU6JTB6XJH6s2VyJ0rcxySecMN6uMLAd6?=
+ =?us-ascii?Q?qlFa0cJH4Yj2uMgpja5fEH8K3zA7/qreEaUFGwcUgocSuyO2EOyYMeDhL8AB?=
+ =?us-ascii?Q?0dTFGPQgAMEf0kzRJYFpahSpTzwFJc1o29EqSgsxDmDPRVMjH1+dpm2dt/Wp?=
+ =?us-ascii?Q?LfYtPXdYRAaYYrmiAScreFXyBpx1mQotr+xXXKMyNTH6ZL9TMdgflE6v3SMe?=
+ =?us-ascii?Q?/QSJuWfk7e4scfSfsU+vDG5GNdwdkDoiNv8CvsdVl6Lorrg8kI7mApaeet1/?=
+ =?us-ascii?Q?yRET0iglOpQY/SETBGfx/qOA7FE3FjFAgHqd4WgkIHWZmjvUScI+vrS/yMLy?=
+ =?us-ascii?Q?D+r1LkJBf+GnzsrbG+OHeqw45l7Ju3TUpAb4fH1rbNx3OINAp5MXAI6aBqSK?=
+ =?us-ascii?Q?/LHXIzYHLlSWK9VUjgNSX1ViwlDdjw9tjEGgkz1cSBr2/3RALY6pV0zD0D9i?=
+ =?us-ascii?Q?D7xN4T1EXEgHxkHpTjoiR8YNlO5xzzArIoNcYj6YM58fWSO40vtyeJ8nl7DU?=
+ =?us-ascii?Q?gLTAE9GQJalEmSJLeBQmQFW1GbrBPY02kr7TGwCDCjJX2SnDbZeSF5tZIryI?=
+ =?us-ascii?Q?UMgOHgwl5DW2EFATb6Y8KTP/gpLsfAu1c1Owpd3/EKu8g5MoBF50RFvy/nCb?=
+ =?us-ascii?Q?3g3CIEnduA6zd9C0dplZajRiZnA2U8YHUhj1upFmML8oVcSslw4Tl0g8OA7m?=
+ =?us-ascii?Q?tOxHeKMtMneEbx7kT1uhXcavjtzCuDR2?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?sPsAZm1NsyFB9dIluiw1xW8FwlL7kT9ummZn3FS3Dyyo+haOScKlrYJgDazn?=
+ =?us-ascii?Q?gA0MXBOQSyieU6g3PgCVLFe7Kd6GTaX43RkFJBMRMKNxIcEDJrZFrt22NT5m?=
+ =?us-ascii?Q?M7d3xzhm/P3dradl3sJUXRLBOssmEI1q4nHo446ZY83VSbQj5z33yooEqIKO?=
+ =?us-ascii?Q?tjqEi9sbHOPfkHGtYA2BrtyN/uFPdBvVLzFvcKhdBu35zebUbYceoO2oKD7k?=
+ =?us-ascii?Q?Mpbk7LDLt4h6BDzsaOCEqFHFrBt5SOY4vW4sthdKO4Kizdln5CWlDi8hrZ+I?=
+ =?us-ascii?Q?H4TqAaWeGVEIcRgIW9q0ZR1due2p0af3UD82oqVkBYwr8FGKM6d2Ol+wUcJA?=
+ =?us-ascii?Q?LKFotaaoYYaZdrUkEJSjOleWAIzJ0L2ScHlnbua0ZShpX9MCTujtbMDhkCSN?=
+ =?us-ascii?Q?SNVi6Qu0O/25ccILZ4vTN2+zUzoFFeYbHBTeI3PVPtwJlN+w0VRyqrisszkS?=
+ =?us-ascii?Q?ZwiUySRAYdahd2jw/lIouDtJZtx5BAHTt9VmKLXMNuYcdEmY1Th/GI00tCel?=
+ =?us-ascii?Q?hdktETRzDSg4Ip2wIeueWOcfuYxdeaePqQhIn/TIjTbXnvvkMtrIcLK7jJh+?=
+ =?us-ascii?Q?n6Nb8UTMEL7u0p9Q3/cAiKyLmZbfKl6FNBp0rV/SOMxDH34TiKgsNcfQ9gcz?=
+ =?us-ascii?Q?Bsy05za9OP4jrugnoxYL0f6cCBw8JnH3rTtBMqTfGuy19+Pqg84/yq/v6YRu?=
+ =?us-ascii?Q?sCmFqIH+l6xiENTqspEZ9AkW2UOydzAfZI5fvxxqCN861F/AWgzB6KhdO1xf?=
+ =?us-ascii?Q?HOm0cx2SGwTIAW3HB8BPRfGJiP3/XcXApFPJXf2WJMgcleULu8mBhUhfcsSt?=
+ =?us-ascii?Q?tuqsU3HvhbSJGkdreBpYmbAGqN6pmnBDy4AivwZNAbOkg+qv36RhoiEVoRK2?=
+ =?us-ascii?Q?dRFnTRdkf2RHCNtRdFwb069rJekaZxJPoLPdPReT/dN4vt/9iTVGqwibPxlv?=
+ =?us-ascii?Q?gwHUTxPRVgHGXCZLa4y1jUAtCDSmHLYy2+H9VIVx+qk71qsr4tme5QlYwr2m?=
+ =?us-ascii?Q?paRWOoq6Y/iWMofdxG09Vybl1OWFBAs+UHk6Ab7KDDiaXeqLt3myu24vVNVM?=
+ =?us-ascii?Q?BneqG9iwD5zovmk+7vpY5Qk4Ov93D/0np6pNX8F4x06GgtMY1PXaECrbkNkr?=
+ =?us-ascii?Q?vvZ4MOwlIgZX1PCS+TK1UIjvczG+JspqZbnJNCyR64BR3MoleJ4WblMDB/3b?=
+ =?us-ascii?Q?F90+LxSJ21zPsfk2W0aXkaJQDm+SV8ncTkyzHxLxb+KFH+ZKB+7lO/uLquvi?=
+ =?us-ascii?Q?B83smho78NCulBSmDGy0kGRxIXPNczooHMC4nzR8GR5H7Cc5l7krcd9cklB3?=
+ =?us-ascii?Q?rAI0t3lcfCcHrA5lup/tTV/QjzUcr+cqCeIVq488i3/t/EUE+8VogkBLRYcB?=
+ =?us-ascii?Q?vTMo2osVEtuJ9Y+G/w/+xs4ERBbUvRI3MzkMjCyLbv7aFre5zRrDHkMuTbNu?=
+ =?us-ascii?Q?ctoXUPJ5yTBljq9XyI/i4KK5ZTejk2LSZelzMozSM608kNdN0/QIqV4Xdhal?=
+ =?us-ascii?Q?9UHGF7vYx2t0piZ58bZXAKS6MjWNePFhZe8Iuvv8kiPFoYgbqczQUufhneww?=
+ =?us-ascii?Q?a/jIYQZnrFqmW4A9tmE=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 528f0aa7-5fba-4e60-6f0a-08de1d96b58a
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2025 00:43:46.3014
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zXaHx7ek02bYE4fGR0bVNGAN1og1HhGzevjCyMvZhiPP8jqnOAkNCUpLBtQ6JvKX
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6801
 
-On 11/6/25 06:30, Sasha Levin wrote:
-> On Thu, Nov 06, 2025 at 12:49:37AM -0800, Barry K. Nathan wrote:
->> On 10/25/25 08:54, Sasha Levin wrote:
->>> From: Takashi Iwai <tiwai@suse.de>
->>>
->>> [ Upstream commit 1f9fc89cbbe8a7a8648ea2f827f7d8590e62e52c ]
->>>
->>> snd_seq_fifo_poll_wait() evaluates f->cells without locking after
->>> poll_wait(), and KCSAN doesn't like it as it appears to be a
->>> data-race.  Although this doesn't matter much in practice as the value
->>> is volatile, it's still better to address it for the mind piece.
->>>
->>> Wrap it with f->lock spinlock for avoiding the potential data race.
->>>
->>> Reported-by: syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com
->>> Link: https://syzkaller.appspot.com/bug?extid=c3dbc239259940ededba
->>> Signed-off-by: Takashi Iwai <tiwai@suse.de>
->>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>> ---
->>>
->>> LLM Generated explanations, may be completely bogus:
->>>
->>> YES
->>> - The only runtime change wraps the `f->cells` check in
->>>   `snd_seq_fifo_poll_wait()` with `guard(spinlock_irq)(&f->lock)`
->>>   (`sound/core/seq/seq_fifo.c:213`), aligning this reader with every
->>>   writer of `f->cells`, each of which already holds `f->lock` via
->>>   `scoped_guard(spinlock_irqsave)` or explicit `spin_lock_irqsave`
->>>   (`sound/core/seq/seq_fifo.c:125`, `sound/core/seq/seq_fifo.c:183`).
->>>   That removes the unlocked load which KCSAN flagged as a real data race
->>>   on the non-atomic `int` counter.
->>> - This race is user-visible: if `snd_seq_fifo_poll_wait()` races with a
->>>   concurrent producer/consumer, the poll mask built in `snd_seq_poll()`
->>>   (`sound/core/seq/seq_clientmgr.c:1092-1106`) can sporadically omit
->>>   `EPOLLIN`, leaving sequencer clients to sleep despite queued events.
->>>   On weakly ordered architectures that behavior is not just theoretical;
->>>   racing non-atomic accesses are undefined in the kernel memory model
->>>   and trigger syzbot reports.
->>> - The fix is minimal, self-contained, and mirrors existing guard usage
->>>   in this file, so it has negligible regression risk: the lock is
->>>   already part of the FIFO hot path, RAII unlock occurs immediately on
->>>   return, and there are no new dependencies or API changes.
->>> - Because the bug allows incorrect poll readiness and trips KCSAN, it
->>>   meets stable criteria (user-visible correctness plus sanitizer
->>>   warning) and applies cleanly to older trees that already contain the
->>>   guard helpers used elsewhere in this file.
->>>
->>> Suggested next step: run the targeted ALSA sequencer poll tests (or
->>> reproducer from the linked syzbot report) on the backport branch to
->>> confirm the warning disappears.
->>>
->>>  sound/core/seq/seq_fifo.c | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
->>> index 3a10b081f129c..7dc2bd94cefc3 100644
->>> --- a/sound/core/seq/seq_fifo.c
->>> +++ b/sound/core/seq/seq_fifo.c
->>> @@ -213,6 +213,7 @@ int snd_seq_fifo_poll_wait(struct snd_seq_fifo 
->>> *f, struct file *file,
->>>                 poll_table *wait)
->>>  {
->>>      poll_wait(file, &f->input_sleep, wait);
->>> +    guard(spinlock_irq)(&f->lock);
->>>      return (f->cells > 0);
->>>  }
->>
->> With CONFIG_WERROR enabled, 5.15.y fails to build for me now, and it 
->> seems to be due to this patch introducing a new warning. This is with 
->> Debian bookworm and its default gcc (12.2), building for amd64. I 
->> didn't try building 6.12.y or 6.17.y yet, but this warning does not 
->> happen on 6.1.y, 6.6.y, or 6.18-rc4.
+On Mon, Nov 03, 2025 at 10:52:07AM +0000, Pranjal Shrivastava wrote:
+> > -	if (device->ops->get_region_info_caps) {
+> > -		struct vfio_info_cap caps = { .buf = NULL, .size = 0 };
+> > +	ret = device->ops->get_region_info_caps(device, &info, &caps);
+> > +	if (ret)
+> > +		return ret;
 > 
-> Have you manually applied this patch on top of 5.15? This patch isn't in 
-> any
-> released LTS kernel.
-> 
+> Shall we kfree(caps.buf); before returning?
 
-Yes, I cloned the stable-queue git repo then applied the queue-5.15 
-patches on top of 5.15.196. I figured I'd do some testing and try to 
-find and report problems prior to release. Once I ran into this problem, 
-I looked into it further and narrowed it down to this patch, then I 
-searched the stable mailing list archive to see if anyone else reported 
-it already or if the patch had been posted to the list. The only 
-relevant email I found was the patch itself, so that's what I replied to.
+Yes, I changed it to use a goto unwind
 
-If I made any mistakes in how I reported this, or if I jumped the gun 
-and should've waited until 5.15.197-rc1 before reporting anything, 
-please let me know. (Maybe I should have explicitly mentioned that the 
-patch is present in the queue as 
-"alsa-seq-fix-kcsan-data-race-warning-at-snd_seq_fifo.patch"?)
--- 
--Barry K. Nathan  <barryn@pobox.com>
+Thanks,
+Jason
