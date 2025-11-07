@@ -1,189 +1,272 @@
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
+Received: from out30-118.freemail.mail.aliyun.com (out30-118.freemail.mail.aliyun.com [115.124.30.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB862F5A11;
-	Fri,  7 Nov 2025 01:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4754872623
+	for <patches@lists.linux.dev>; Fri,  7 Nov 2025 02:20:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762478982; cv=none; b=ZpXjCIb8me+2Oj8350TEPQQzGFM9/OxCTvAZMmipehivgVwQJZ7hRLvZhCgfak72tUnDq8x/mFaW1REOlDQ8dRFB+AM/IplspztaKMOTYkiImSlcF20LgANLuVwehez19GFgyovbU5APPZiNTj7Z+sD8pB0wNu5llvl66XeHYd0=
+	t=1762482017; cv=none; b=Bq64jviHpssMKEEtl7LDb6pHs2Iu6xRzW057zRu79djpd0deYjeWTpJ4kPWW1C1AmY+FqZVpjLgBNnMiBIusBnCGKmS1u3vTfUKmg9Zo7P/QhuMKqKZ5sEunvFZjEgZhJLhwLbrsfPFxjKBVbTMONVbkV7yUZwp1nNCY/NXm/nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762478982; c=relaxed/simple;
-	bh=vFYO6EUXFyJCZCY3t3KbQ4nugoGhpeBquhJAKhoMHWw=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=lzpdWwNU33MrRhif3sFqQGIfVib+IHPveBKJ2xvjSeKRvwG5gdFVt7CwyYPO7sEZDYVfH+psMPPsGs6PP08jRXdSATFJHIuOoSxYA9uDS2MEEKrgdGVvu7AN2CSDEzDgsQltAu2SycPTnGe519akvAsHsFHR0lvVxfVEZRo/+2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=ewhpz3Pd; arc=none smtp.client-ip=113.46.200.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1762482017; c=relaxed/simple;
+	bh=Hs/Kv7/mdopEBABjPmkIKPRh0FQoRi77z8KdaZ0GXog=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S8lVdrHq2eOMoplUbrORuO+Ok/9cMBb0WAfe5Ap3RVxHvHKQutvl4/QcXBShJ9V0kfJWPAyu8hR4qBawG/jxNNsJnfyeIjjgzbzX+uT30rrWSI7j6ZcZa1Gq7qckdn8FX69NSETYQyPceFhOfXuypx3PRE4NfPnZPb0mU9XgTx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=dVuyhk0q; arc=none smtp.client-ip=115.124.30.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="ewhpz3Pd"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=xeRQu+SYyXX4GV9ChTkeRHphOYQxpyYIT8412wlVrEE=;
-	b=ewhpz3Pd5N8b+zREBJhYALlUCEZD+ZqBQj3IP36ZRJp8z6vbRJONBBHKLPdl9t15MEoGvtzdn
-	ISg06aXnQWFhToZmVPm/T3Gvr3pZZl6p5AozEhn5wiCa4+aPK2U6dN3eyJlB0Cv2fJyTOCpCdlr
-	UqklBc8/YX0jBIIqXZVpwmI=
-Received: from mail.maildlp.com (unknown [172.19.163.174])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4d2hJX39z7zpSt8;
-	Fri,  7 Nov 2025 09:27:56 +0800 (CST)
-Received: from dggpemf500015.china.huawei.com (unknown [7.185.36.143])
-	by mail.maildlp.com (Postfix) with ESMTPS id 0B687140109;
-	Fri,  7 Nov 2025 09:29:30 +0800 (CST)
-Received: from [10.67.121.110] (10.67.121.110) by
- dggpemf500015.china.huawei.com (7.185.36.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 7 Nov 2025 09:29:27 +0800
-Subject: Re: [PATCH 02/22] vfio/hisi: Convert to the get_region_info op
-To: Pranjal Shrivastava <praan@google.com>, Jason Gunthorpe <jgg@nvidia.com>
-CC: Alexander Gordeev <agordeev@linux.ibm.com>, David Airlie
-	<airlied@gmail.com>, Alex Williamson <alex.williamson@redhat.com>, Ankit
- Agrawal <ankita@nvidia.com>, Christian Borntraeger
-	<borntraeger@linux.ibm.com>, Brett Creeley <brett.creeley@amd.com>,
-	<dri-devel@lists.freedesktop.org>, Eric Auger <eric.auger@redhat.com>, Eric
- Farman <farman@linux.ibm.com>, Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
-	<intel-gfx@lists.freedesktop.org>, Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Kevin Tian
-	<kevin.tian@intel.com>, <kvm@vger.kernel.org>, Kirti Wankhede
-	<kwankhede@nvidia.com>, <linux-s390@vger.kernel.org>, Matthew Rosato
-	<mjrosato@linux.ibm.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>, Nipun
- Gupta <nipun.gupta@amd.com>, Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>, <qat-linux@intel.com>, Rodrigo Vivi
-	<rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>, Shameer Kolothum
-	<skolothumtho@nvidia.com>, Mostafa Saleh <smostafa@google.com>, Sven Schnelle
-	<svens@linux.ibm.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
-	<virtualization@lists.linux.dev>, Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Yishai Hadas <yishaih@nvidia.com>, Zhenyu Wang <zhenyuw.linux@gmail.com>, Zhi
- Wang <zhi.wang.linux@gmail.com>, <patches@lists.linux.dev>
-References: <0-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <2-v1-679a6fa27d31+209-vfio_get_region_info_op_jgg@nvidia.com>
- <aQhGTwg4kpuP8pgF@google.com>
-From: liulongfang <liulongfang@huawei.com>
-Message-ID: <3f7f1781-6d39-a452-ffcc-053c286950a4@huawei.com>
-Date: Fri, 7 Nov 2025 09:29:27 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="dVuyhk0q"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1762482007; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=iDJ8fUxm1buhLjFkKhHU3UhWSiNPKX65HIgx6sPw1SA=;
+	b=dVuyhk0qsl8X3wamcdxF+nWF3mCUttIAIV+W3b2G6HmQSUZykANLk7d4BstByF1oLjp9kLac6+Ke6G7gBXMxtSpTu81/u2eY++qKTOb8ALKpBYPkNCcauK4Yb3cltnfQZQ975xA2U+VkWYacWV6ZnFjPq3GsFV6XvlzGTT/fXwQ=
+Received: from 30.246.177.186(mailfrom:xueshuai@linux.alibaba.com fp:SMTPD_---0WrrH-zZ_1762482006 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Fri, 07 Nov 2025 10:20:06 +0800
+Message-ID: <cd918c98-ef71-4f2e-a02f-6e003ca03ea3@linux.alibaba.com>
+Date: Fri, 7 Nov 2025 10:20:05 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <aQhGTwg4kpuP8pgF@google.com>
-Content-Type: text/plain; charset="gbk"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- dggpemf500015.china.huawei.com (7.185.36.143)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ACPI: APEI: GHES: Improve ghes_notify_nmi() status check
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Borislav Petkov <bp@alien8.de>,
+ Hanjun Guo <guohanjun@huawei.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, linux-acpi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Andi Kleen <andi.kleen@intel.com>
+References: <20251103230547.8715-1-tony.luck@intel.com>
+ <4ecbe3d3-71f0-47e9-8fad-35b16689d1fa@linux.alibaba.com>
+ <aQwDd-Nhgxpkdrcb@agluck-desk3>
+ <d49c1287-6a55-4eff-a908-b8a878bdd08a@linux.alibaba.com>
+ <aQzi83dxBold4Rmy@agluck-desk3>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
+In-Reply-To: <aQzi83dxBold4Rmy@agluck-desk3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 2025/11/3 14:06, Pranjal Shrivastava wrote:
-> On Thu, Oct 23, 2025 at 08:09:16PM -0300, Jason Gunthorpe wrote:
->> Change the function signature of hisi_acc_vfio_pci_ioctl()
->> and re-indent it.
+
+
+在 2025/11/7 02:03, Luck, Tony 写道:
+> On Thu, Nov 06, 2025 at 01:04:05PM +0800, Shuai Xue wrote:
 >>
->> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->> ---
->>  .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 57 +++++++++----------
->>  1 file changed, 27 insertions(+), 30 deletions(-)
 >>
->> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> index fde33f54e99ec5..f06dcfcf09599f 100644
->> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> @@ -1324,43 +1324,39 @@ static ssize_t hisi_acc_vfio_pci_read(struct vfio_device *core_vdev,
->>  	return vfio_pci_core_read(core_vdev, buf, new_count, ppos);
->>  }
->>  
->> -static long hisi_acc_vfio_pci_ioctl(struct vfio_device *core_vdev, unsigned int cmd,
->> -				    unsigned long arg)
->> +static int hisi_acc_vfio_get_region(struct vfio_device *core_vdev,
->> +				    struct vfio_region_info __user *arg)
->>  {
->> -	if (cmd == VFIO_DEVICE_GET_REGION_INFO) {
->> -		struct vfio_pci_core_device *vdev =
->> -			container_of(core_vdev, struct vfio_pci_core_device, vdev);
->> -		struct pci_dev *pdev = vdev->pdev;
->> -		struct vfio_region_info info;
->> -		unsigned long minsz;
->> +	struct vfio_pci_core_device *vdev =
->> +		container_of(core_vdev, struct vfio_pci_core_device, vdev);
->> +	struct pci_dev *pdev = vdev->pdev;
->> +	struct vfio_region_info info;
->> +	unsigned long minsz;
->>  
->> -		minsz = offsetofend(struct vfio_region_info, offset);
->> +	minsz = offsetofend(struct vfio_region_info, offset);
->>  
->> -		if (copy_from_user(&info, (void __user *)arg, minsz))
->> -			return -EFAULT;
->> +	if (copy_from_user(&info, arg, minsz))
->> +		return -EFAULT;
->>  
->> -		if (info.argsz < minsz)
->> -			return -EINVAL;
->> +	if (info.argsz < minsz)
->> +		return -EINVAL;
->>  
->> -		if (info.index == VFIO_PCI_BAR2_REGION_INDEX) {
->> -			info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
->> +	if (info.index != VFIO_PCI_BAR2_REGION_INDEX)
->> +		return vfio_pci_ioctl_get_region_info(core_vdev, arg);
->>  
+>> 在 2025/11/6 10:09, Luck, Tony 写道:
+>>> On Thu, Nov 06, 2025 at 09:46:33AM +0800, Shuai Xue wrote:
+>>>>
+>>>>
+>>>> 在 2025/11/4 07:05, Tony Luck 写道:
+>>>>> ghes_notify_nmi() is called for every NMI and must check whether the NMI was
+>>>>> generated because an error was signalled by platform firmware.
+>>>>>
+>>>>> This check is very expensive as for each registered GHES NMI source it reads
+>>>>> from the acpi generic address attached to this error source to get the physical
+>>>>> address of the acpi_hest_generic_status block.  It then checks the "block_status"
+>>>>> to see if an error was logged.
+>>>>>
+>>>>> The ACPI/APEI code must create virtual mappings for each of those physical
+>>>>> addresses, and tear them down afterwards. On an Icelake system this takes around
+>>>>> 15,000 TSC cycles. Enough to disturb efforts to profile system performance.
+>>>>
+>>>> Hi, Tony
+>>>>
+>>>> Interesting.
+>>>>
+>>>> If I understand correctly, you mean ghes_peek_estatus() and
+>>>> ghes_clear_estatus().
+>>>>
+>>>> I conducted performance testing on our system (ARM v8) and found the
+>>>> following average costs:
+>>>>
+>>>> - ghes_peek_estatus(): 8,138.3 ns (21,160 cycles)
+>>>> - ghes_clear_estatus(): 2,038.3 ns (5,300 cycles)
+>>>
+>>> ARM doesn't use the NMI path (HAVE_ACPI_APEI_NMI is only set on X86).
+>>> But maybe you are looking at ghes_notify_sea() which seems similar?
+>>
+>> Yes. It is measured in ghes_notify_sea().
+>>
+>>>>
+>>>>>
+>>>>> If that were not bad enough, there are some atomic accesses in the code path
+>>>>> that will cause cache line bounces between CPUs. A problem that gets worse as
+>>>>> the core count increases.
+>>>>
+>>>> Could you elaborate on which specific atomic accesses you're referring to?
+>>>
+>>> ghes_notify_nmi() starts with code to ensure only one CPU executes the
+>>> GHES NMI path.
+>>>
+>>> 	if (!atomic_add_unless(&ghes_in_nmi, 1, 1))
+>>> 		return ret;
+>>>
+>>> Looks like an optimization to avoid having a bunch of CPUs queue up
+>>> waiting for this spinllock:
+>>>
+>>> 	raw_spin_lock(&ghes_notify_lock_nmi);
+>>>
+>>> when the first one to get it will find and handle the logged error.
+>>
+>> If an NMI issued, at last one status block is active. I don't see how
+>> the code path is different.
 > 
-> I'm curious to learn the reason for flipping polarity here? (apart from
-> readability).
->
+> On X86 NMI doesn't include a vector. There is just one interrupt entry
+> point for any NMI.
+> 
+> Linux deals with this with each subsystem that may expect an NMI
+> registering on an NMI notify chain. When an NMI happens the core
+> code calls each subsystem function to ask:
+> 
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 	Was this NMI for you?
+> 
+> This is a problem when profiling the system with "perf" as there are
+> thousands of NMIs, and each one calls ghes_notify_nmi() which will look
+> to see if an error was logged, and (after all the ACPI/APEI mapping
+> physical addresses, reading, and unmapping) will return NMI_DONE to
+> indicate that no error was found, so this NMI came from some other
+> source.
 
-Here, since the function's behavior has been reversed, the internal processing
-is also inverted accordingly.
+I see, thank you the datails explaination.
+
+>>
+>>>>
+>>>>>
+>>>>> But BIOS changes neither the acpi generic address nor the physical address of
+>>>>> the acpi_hest_generic_status block. So this walk can be done once when the NMI is
+>>>>> registered to save the virtual address (unmapping if the NMI is ever unregistered).
+>>>>> The "block_status" can be checked directly in the NMI handler. This can be done
+>>>>> without any atomic accesses.
+>>>>>
+>>>>> Resulting time to check that there is not an error record is around 900 cycles.
+>>>>>
+>>>>> Reported-by: Andi Kleen <andi.kleen@intel.com>
+>>>>> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>>>>>
+>>>>> ---
+>>>>> N.B. I only talked to an Intel BIOS expert about this. GHES code is shared by
+>>>>> other architectures, so it would be wise to get confirmation on whether this
+>>>>> assumption applies to all, or is Intel (or X86) specific.
+>>>>
+>>>> The assumption is "BIOS changes neither the acpi generic address nor the
+>>>> physical address of the acpi_hest_generic_status block."?
+>>>>
+>>>> I've consulted with our BIOS experts from both ARM and RISC-V platform
+>>>> teams, and they confirmed that error status blocks are reserved at boot
+>>>> time and remain unchanged during runtime.
+>>>
+>>> Thanks. Good to have this confirmation.
+>>>
+>>>>> ---
+>>>>>     include/acpi/ghes.h      |  1 +
+>>>>>     drivers/acpi/apei/ghes.c | 39 ++++++++++++++++++++++++++++++++++++---
+>>>>>     2 files changed, 37 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
+>>>>> index ebd21b05fe6e..58655d313a1f 100644
+>>>>> --- a/include/acpi/ghes.h
+>>>>> +++ b/include/acpi/ghes.h
+>>>>> @@ -29,6 +29,7 @@ struct ghes {
+>>>>>     	};
+>>>>>     	struct device *dev;
+>>>>>     	struct list_head elist;
+>>>>> +	void __iomem *error_status_vaddr;
+>>>>>     };
+>>>>>     struct ghes_estatus_node {
+>>>>> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+>>>>> index 97ee19f2cae0..62713b612865 100644
+>>>>> --- a/drivers/acpi/apei/ghes.c
+>>>>> +++ b/drivers/acpi/apei/ghes.c
+>>>>> @@ -1425,7 +1425,21 @@ static LIST_HEAD(ghes_nmi);
+>>>>>     static int ghes_notify_nmi(unsigned int cmd, struct pt_regs *regs)
+>>>>>     {
+>>>>>     	static DEFINE_RAW_SPINLOCK(ghes_notify_lock_nmi);
+>>>>> +	bool active_error = false;
+>>>>>     	int ret = NMI_DONE;
+>>>>> +	struct ghes *ghes;
+>>>>> +
+>>>>> +	rcu_read_lock();
+>>>>> +	list_for_each_entry_rcu(ghes, &ghes_nmi, list) {
+>>>>> +		if (ghes->error_status_vaddr && readl(ghes->error_status_vaddr)) {
+>>>>> +			active_error = true;
+>>>>> +			break;
+>>>>> +		}
+>>>>> +	}
+>>>>> +	rcu_read_unlock();
+>>>>> +
+>>>>> +	if (!active_error)
+>>>>> +		return ret;
+>>>>
+>>>> Shoud we put active_error into struct ghes? If we know it is active, we
+>>>> do not need to call __ghes_peek_estatus() to estatus->block_status().
+>>>
+>>> That might be a useful addition. I was primarily concerned in fixing the
+>>> "no erroor" case that happens at a very high rate while profiling the
+>>> system with "perf".
+>>
+>> Do you mean you see "NMI received for unknown reason" when profiling with
+>> "perf"? And the unknown error is handled by ghes_notify_nmi().
+> 
+> This message is printed when every handler on the NMI chain says "not
+> my interrupt" with the NMI_DONE return value.
+
+$sudo perf script
+swapper     0 [148] 1117148.086594: probe:ghes_notify_nmi: (ffffffffb3867210)
+         ffffffffb3867211 ghes_notify_nmi+0x1 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb303c366 nmi_handle.part.0+0x56 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3dc7e0a default_do_nmi+0x11a (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3dc7f40 exc_nmi+0x100 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3e0169a end_repeat_nmi+0x16 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3732915 _find_next_and_bit+0x65 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3177780 update_sg_lb_stats+0xc0 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb317d5dc update_sd_lb_stats.constprop.0+0xcc (/lib/modules/6.6.102+/build/vmlinu>
+         ffffffffb317d7d1 find_busiest_group+0x41 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb317dc0a load_balance+0x12a (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb317efd4 rebalance_domains+0x2b4 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb31235d2 handle_softirqs+0xd2 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb31238b3 __irq_exit_rcu+0xa3 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3dca462 sysvec_apic_timer_interrupt+0x72 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3e00e86 asm_sysvec_apic_timer_interrupt+0x16 (/lib/modules/6.6.102+/build/vmlin>
+         ffffffffb3dcbbee cpuidle_enter_state+0xbe (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3adc6b9 cpuidle_enter+0x29 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb31901ea cpuidle_idle_call+0xfa (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb31902db do_idle+0x7b (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb3190536 cpu_startup_entry+0x26 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb30775d5 start_secondary+0x115 (/lib/modules/6.6.102+/build/vmlinux)
+         ffffffffb30001e7 secondary_startup_64_no_verify+0x182 (/lib/modules/6.6.102+/build/vmlin>
+
+Yes, I even find that ghes_notify_nmi() is called when no perf is used! (:
+
+>>
+>> I see some unknown NMI in production in Intel platform, but I did not
+>> figure out how it happend. Can you help to explain it?
+>>
+>>> But skipping (or just removing?
+>>> __ghes_peek_estatus()) if you have already confirmed that there is
+>>> a logged error would be good.
+>>>
+>>> If you can use the same technique for ghes_notify_sea() then it would be
+>>> sensible to move the code I added to ghes_nmi_add() to ghes_new() to
+>>> save the virtual address for every type of GHES notification.
+>>
+>> Sure, I'd like to add it for ghes_notify_sea().
+> 
+> Great. Take my patch and fix it up to cover ghes_notify_sea() as well. I
+> don't have a system that I can test that on. When you are done I can
+> retest the ghes_notify_nmi() to check that it still works.
+
+Got it.
 
 Thanks.
-Longfang.
-
->> -			/*
->> -			 * ACC VF dev BAR2 region consists of both functional
->> -			 * register space and migration control register space.
->> -			 * Report only the functional region to Guest.
->> -			 */
->> -			info.size = pci_resource_len(pdev, info.index) / 2;
->> +	info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
->>  
->> -			info.flags = VFIO_REGION_INFO_FLAG_READ |
->> -					VFIO_REGION_INFO_FLAG_WRITE |
->> -					VFIO_REGION_INFO_FLAG_MMAP;
->> +	/*
->> +	 * ACC VF dev BAR2 region consists of both functional
->> +	 * register space and migration control register space.
->> +	 * Report only the functional region to Guest.
->> +	 */
->> +	info.size = pci_resource_len(pdev, info.index) / 2;
->>  
->> -			return copy_to_user((void __user *)arg, &info, minsz) ?
->> -					    -EFAULT : 0;
->> -		}
->> -	}
->> -	return vfio_pci_core_ioctl(core_vdev, cmd, arg);
->> +	info.flags = VFIO_REGION_INFO_FLAG_READ | VFIO_REGION_INFO_FLAG_WRITE |
->> +		     VFIO_REGION_INFO_FLAG_MMAP;
->> +
->> +	return copy_to_user(arg, &info, minsz) ? -EFAULT : 0;
->>  }
->>  
->>  static int hisi_acc_vf_debug_check(struct seq_file *seq, struct vfio_device *vdev)
->> @@ -1557,7 +1553,8 @@ static const struct vfio_device_ops hisi_acc_vfio_pci_migrn_ops = {
->>  	.release = vfio_pci_core_release_dev,
->>  	.open_device = hisi_acc_vfio_pci_open_device,
->>  	.close_device = hisi_acc_vfio_pci_close_device,
->> -	.ioctl = hisi_acc_vfio_pci_ioctl,
->> +	.ioctl = vfio_pci_core_ioctl,
->> +	.get_region_info = hisi_acc_vfio_get_region,
->>  	.device_feature = vfio_pci_core_ioctl_feature,
->>  	.read = hisi_acc_vfio_pci_read,
->>  	.write = hisi_acc_vfio_pci_write,
-> 
-> The change seems to maintain original functionality and LGTM.
-> Acked-by: Pranjal Shrivastava <praan@google.com>
-> 
-> Thanks,
-> Praan
-> .
-> 
+Shuai
