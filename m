@@ -1,147 +1,157 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBF74315F
-	for <patches@lists.linux.dev>; Fri,  7 Nov 2025 11:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82A3261588;
+	Fri,  7 Nov 2025 14:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762513657; cv=none; b=mETUHaNZRNgKF01DUY+YUe+WjnHMl3JB3AAs4LLgdQN6Un468OV+PCEh/mX/+WRDY+DzPl7avURWbvDn8wMPktOYwk4F8yYEptrC4yFjhD81dDLkkUDIM506Zwtxu6IbITvuIbKVlMixtjubNmJ4r7un8sDs4Eg06Xj8AsOZaCo=
+	t=1762526324; cv=none; b=ASh0fewbmjq0OdZqqqNvEb1H30Ib/keMR+apvbvL12YDlWKdcoa3AQ+ad0aWnAVJ3pMrOrcrqwdvbDRbO5/UmRMTU7w0Dy3qGqn5EBOYqAGlUIOXl54UK8pc5csiacSLCpoAiHelknz7bfLoNg1Ov5MCThleiSzCKnCcaws2rNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762513657; c=relaxed/simple;
-	bh=2tQXUr/PYkxW61kQejJm6zkf8UjDNUAFUBLRWFzkVR4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aUr1qiA65pDatTBc2fVd2R6SHqEbz1FyT7a63DdrpHAn6mZAZap+JIs5x8iS9VF8KZJJlZNfI70+qh6ghOMTPJx7dfX2/DkPNZuepifq3oJz2R54rOZLlhfGMD9e/qUuGhd0HVwENNWHK9Bw13wQRF4gdWu2y0gRESnWNSE6/T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=alien8.de; dkim=fail (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uffY33Vf reason="signature verification failed"; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1762526324; c=relaxed/simple;
+	bh=so4gfNSYqIzhDfeimFIQKyBgFhD4Jyl0pWhIEM8LbvA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CvTBeio26UJiWOL/GOzti5eiQcqWCDgv5zNMwf0y0aIp+HMKPFniirFCHkZVkfsWTTT2qOq2QCpqUTa/Ce3VzY/KPPfpBYRVvhlGEVQtTMvCeDWaOwX7yzSb93J1CAILD1CCzDNhVB/M0wtC4rqRncfFrmKaAJEhgeMgI4GzBJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Drs7e/FB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uffY33Vf"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 3526A40E01A5
-	for <patches@lists.linux.dev>; Fri,  7 Nov 2025 11:07:27 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id SwPhRxyxXwlW for <patches@lists.linux.dev>;
-	Fri,  7 Nov 2025 11:07:15 +0000 (UTC)
-Received: from zn.tnic (pd9530da1.dip0.t-ipconnect.de [217.83.13.161])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with UTF8SMTPSA id 47CDC40E015B
-	for <patches@lists.linux.dev>; Fri,  7 Nov 2025 11:07:15 +0000 (UTC)
-Resent-From: Borislav Petkov <bp@alien8.de>
-Resent-Date: Fri, 7 Nov 2025 12:07:07 +0100
-Resent-Message-ID: <20251107110707.GAaQ3S200_9YA718V_@fat_crate.local>
-Resent-To: patches <patches@lists.linux.dev>
-Received: from mail.alien8.de
-	by mad with LMTP
-	id qIwlGCnpDGniOhgAc81XFw
-	(envelope-from <superm1@kernel.org>)
-	for <bp@alien8.de>; Thu, 06 Nov 2025 18:30:01 +0000
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 487A540E01CD
-	for <bp@alien8.de>; Thu,  6 Nov 2025 18:30:01 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I1nluOM0yRHm for <bp@alien8.de>;
-	Thu,  6 Nov 2025 18:29:51 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-256))
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPS id C73EA40E016E
-	for <bp@alien8.de>; Thu,  6 Nov 2025 18:29:42 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 8E6F86022D;
-	Thu,  6 Nov 2025 18:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 50DA1C4CEFB; Thu,  6 Nov 2025 18:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD4BC116B1;
-	Thu,  6 Nov 2025 18:29:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Drs7e/FB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCA9C4CEF5;
+	Fri,  7 Nov 2025 14:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762453775;
-	bh=KpOl/2oqnqK1rQInOzndCMZ1Xx7UxlBJ4IlPYa67kzo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=uffY33VfnkeX8d+2AqFLcds1RsRGs2EmEgS7nsrSUvRsUkcFTFxH0Zrt5QN/0MTkM
-	 PiiFhh8EvCeNqutHYtp/Mp3H9Bbb45quYQ93pkE8o50YoqqGbxvrkWE29grDEr/IH9
-	 xrxJxUKcKFeSWoFv+eSLMSA2OAVwhJAzCMWHuUe0tjskkGZRxy70EccrXPHHsrkTmA
-	 rzzlCAdC8VE8qjaqaFF+60ISDCexWmYXSQaiKu29ZGXcl4JW89pE/7w4+Oewxhzat/
-	 UorCrhV8qoWi6sLpoTd3JqtWFiphxo4XIUSxKNKvwMHLGKsBHLd6qw3mOARRJ3gcik
-	 CS+l854wz6kig==
-From: "Mario Limonciello (AMD)" <superm1@kernel.org>
-To: mario.limonciello@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	mingo@redhat.com,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com
-Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH] x86/microcode/AMD: Add more known models to entry sign checking
-Date: Thu,  6 Nov 2025 12:28:54 -0600
-Message-ID: <20251106182904.4143757-1-superm1@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	s=k20201202; t=1762526324;
+	bh=so4gfNSYqIzhDfeimFIQKyBgFhD4Jyl0pWhIEM8LbvA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Drs7e/FBrjH2ENxd86AVQdspdQcVTxSWQ1R7B+l8hKNnekm7X/WBFkPkGI/UxQJNg
+	 IY4iVCnHMaPwTmdeFIRMJIbPQFOTRJjfNQsYrSpnHrCdmOnJ9W5s1BPf12NETk5Bnk
+	 cII53rGzGm1MDS/5i/J+XBQpHXn0buUlYiBwY99CVwe4Vg+i4LHAneaAi0jLUlYz6g
+	 yKbjHbpN7MWY3xY5TLeFXONYXKdhrCKuNYcdQiP88YlC5Y8wgeVZYmkpAp/XKW6WZM
+	 cSZboINLIXdLkxSF2rF7Z+DW36xP4DPCayRP+QlKuuub2BNSr23oEFaRqeu9nCpNGA
+	 GMESL9VaVzFzQ==
+Date: Fri, 7 Nov 2025 09:38:43 -0500
+From: Sasha Levin <sashal@kernel.org>
+To: "Barry K. Nathan" <barryn@pobox.com>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Takashi Iwai <tiwai@suse.de>,
+	syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com,
+	alexandre.f.demers@gmail.com, alexander.deucher@amd.com
+Subject: Re: [PATCH AUTOSEL 6.17-5.15] ALSA: seq: Fix KCSAN data-race warning
+ at snd_seq_fifo_poll_wait()
+Message-ID: <aQ4Ec03iLOg23_hd@laps>
+References: <20251025160905.3857885-1-sashal@kernel.org>
+ <20251025160905.3857885-60-sashal@kernel.org>
+ <4f94b13f-e1f8-49bc-b0c7-bcc3eed5cca9@pobox.com>
+ <aQyxGrttI4OERR96@laps>
+ <36f043b1-c27a-4b93-b9ed-c5a3691ba639@pobox.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Rspamd-Queue-Id: C73EA40E016E
-X-Spamd-Result: default: False [1.18 / 20.00];
-	 ARC_NA(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 R_MISSING_CHARSET(2.50)[];
-	 R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:324::/64];
-	 MIME_GOOD(-0.10)[text/plain];
-	 BROKEN_CONTENT_TYPE(1.50)[];
-	 RBL_VIRUSFREE_UNKNOWN_FAIL(0.00)[2600:3c04:e001:324:0:1991:8:25:query timed out];
-	 MAILSPIKE_FAIL(0.00)[2600:3c04:e001:324:0:1991:8:25:query timed out];
-	 TO_MATCH_ENVRCPT_SOME(0.00)[];
-	 RBL_SEM_IPV6_FAIL(0.00)[2600:3c04:e001:324:0:1991:8:25:query timed out];
-	 DKIM_TRACE(0.00)[kernel.org:+];
-	 DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	 RCPT_COUNT_SEVEN(0.00)[8];
-	 MID_CONTAINS_FROM(1.00)[];
-	 NEURAL_HAM(-0.00)[-1.000];
-	 BLOCKLISTDE_FAIL(0.00)[2600:3c04:e001:324:0:1991:8:25:query timed out,100.75.92.58:query timed out];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 RCVD_TLS_LAST(0.00)[];
-	 ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	 RCVD_COUNT_TWO(0.00)[2];
-	 BAYES_HAM(-2.82)[99.23%]
-X-Rspamd-Server: mad
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <36f043b1-c27a-4b93-b9ed-c5a3691ba639@pobox.com>
 
-Two Zen5 systems are missing from need_sha_check.
+On Thu, Nov 06, 2025 at 03:57:33PM -0800, Barry K. Nathan wrote:
+>On 11/6/25 06:30, Sasha Levin wrote:
+>>On Thu, Nov 06, 2025 at 12:49:37AM -0800, Barry K. Nathan wrote:
+>>>On 10/25/25 08:54, Sasha Levin wrote:
+>>>>From: Takashi Iwai <tiwai@suse.de>
+>>>>
+>>>>[ Upstream commit 1f9fc89cbbe8a7a8648ea2f827f7d8590e62e52c ]
+>>>>
+>>>>snd_seq_fifo_poll_wait() evaluates f->cells without locking after
+>>>>poll_wait(), and KCSAN doesn't like it as it appears to be a
+>>>>data-race.  Although this doesn't matter much in practice as the value
+>>>>is volatile, it's still better to address it for the mind piece.
+>>>>
+>>>>Wrap it with f->lock spinlock for avoiding the potential data race.
+>>>>
+>>>>Reported-by: syzbot+c3dbc239259940ededba@syzkaller.appspotmail.com
+>>>>Link: https://syzkaller.appspot.com/bug?extid=c3dbc239259940ededba
+>>>>Signed-off-by: Takashi Iwai <tiwai@suse.de>
+>>>>Signed-off-by: Sasha Levin <sashal@kernel.org>
+>>>>---
+>>>>
+>>>>LLM Generated explanations, may be completely bogus:
+>>>>
+>>>>YES
+>>>>- The only runtime change wraps the `f->cells` check in
+>>>>  `snd_seq_fifo_poll_wait()` with `guard(spinlock_irq)(&f->lock)`
+>>>>  (`sound/core/seq/seq_fifo.c:213`), aligning this reader with every
+>>>>  writer of `f->cells`, each of which already holds `f->lock` via
+>>>>  `scoped_guard(spinlock_irqsave)` or explicit `spin_lock_irqsave`
+>>>>  (`sound/core/seq/seq_fifo.c:125`, `sound/core/seq/seq_fifo.c:183`).
+>>>>  That removes the unlocked load which KCSAN flagged as a real data race
+>>>>  on the non-atomic `int` counter.
+>>>>- This race is user-visible: if `snd_seq_fifo_poll_wait()` races with a
+>>>>  concurrent producer/consumer, the poll mask built in `snd_seq_poll()`
+>>>>  (`sound/core/seq/seq_clientmgr.c:1092-1106`) can sporadically omit
+>>>>  `EPOLLIN`, leaving sequencer clients to sleep despite queued events.
+>>>>  On weakly ordered architectures that behavior is not just theoretical;
+>>>>  racing non-atomic accesses are undefined in the kernel memory model
+>>>>  and trigger syzbot reports.
+>>>>- The fix is minimal, self-contained, and mirrors existing guard usage
+>>>>  in this file, so it has negligible regression risk: the lock is
+>>>>  already part of the FIFO hot path, RAII unlock occurs immediately on
+>>>>  return, and there are no new dependencies or API changes.
+>>>>- Because the bug allows incorrect poll readiness and trips KCSAN, it
+>>>>  meets stable criteria (user-visible correctness plus sanitizer
+>>>>  warning) and applies cleanly to older trees that already contain the
+>>>>  guard helpers used elsewhere in this file.
+>>>>
+>>>>Suggested next step: run the targeted ALSA sequencer poll tests (or
+>>>>reproducer from the linked syzbot report) on the backport branch to
+>>>>confirm the warning disappears.
+>>>>
+>>>> sound/core/seq/seq_fifo.c | 1 +
+>>>> 1 file changed, 1 insertion(+)
+>>>>
+>>>>diff --git a/sound/core/seq/seq_fifo.c b/sound/core/seq/seq_fifo.c
+>>>>index 3a10b081f129c..7dc2bd94cefc3 100644
+>>>>--- a/sound/core/seq/seq_fifo.c
+>>>>+++ b/sound/core/seq/seq_fifo.c
+>>>>@@ -213,6 +213,7 @@ int snd_seq_fifo_poll_wait(struct 
+>>>>snd_seq_fifo *f, struct file *file,
+>>>>                poll_table *wait)
+>>>> {
+>>>>     poll_wait(file, &f->input_sleep, wait);
+>>>>+    guard(spinlock_irq)(&f->lock);
+>>>>     return (f->cells > 0);
+>>>> }
+>>>
+>>>With CONFIG_WERROR enabled, 5.15.y fails to build for me now, and 
+>>>it seems to be due to this patch introducing a new warning. This 
+>>>is with Debian bookworm and its default gcc (12.2), building for 
+>>>amd64. I didn't try building 6.12.y or 6.17.y yet, but this 
+>>>warning does not happen on 6.1.y, 6.6.y, or 6.18-rc4.
+>>
+>>Have you manually applied this patch on top of 5.15? This patch 
+>>isn't in any
+>>released LTS kernel.
+>>
+>
+>Yes, I cloned the stable-queue git repo then applied the queue-5.15 
+>patches on top of 5.15.196. I figured I'd do some testing and try to 
+>find and report problems prior to release. Once I ran into this 
+>problem, I looked into it further and narrowed it down to this patch, 
+>then I searched the stable mailing list archive to see if anyone else 
+>reported it already or if the patch had been posted to the list. The 
+>only relevant email I found was the patch itself, so that's what I 
+>replied to.
+>
+>If I made any mistakes in how I reported this, or if I jumped the gun 
+>and should've waited until 5.15.197-rc1 before reporting anything, 
+>please let me know. (Maybe I should have explicitly mentioned that the 
+>patch is present in the queue as 
+>"alsa-seq-fix-kcsan-data-race-warning-at-snd_seq_fifo.patch"?)
 
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
----
- arch/x86/kernel/cpu/microcode/amd.c | 2 ++
- 1 file changed, 2 insertions(+)
+No, you did all the right things, it just so very rare to see that :)
 
-diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/mi=
-crocode/amd.c
-index b7c797dc94f45..dc82153009dab 100644
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -220,10 +220,12 @@ static bool need_sha_check(u32 cur_rev)
- 	case 0xaa001: return cur_rev <=3D 0xaa00116; break;
- 	case 0xaa002: return cur_rev <=3D 0xaa00218; break;
- 	case 0xb0021: return cur_rev <=3D 0xb002146; break;
-+	case 0xb0081: return cur_rev <=3D 0xb008111; break;
- 	case 0xb1010: return cur_rev <=3D 0xb101046; break;
- 	case 0xb2040: return cur_rev <=3D 0xb204031; break;
- 	case 0xb4040: return cur_rev <=3D 0xb404031; break;
- 	case 0xb6000: return cur_rev <=3D 0xb600031; break;
-+	case 0xb6080: return cur_rev <=3D 0xb608031; break;
- 	case 0xb7000: return cur_rev <=3D 0xb700031; break;
- 	default: break;
- 	}
---=20
-2.43.0
+I've dropped that patch from all branches.
 
+Thanks for your review!
+
+-- 
+Thanks,
+Sasha
