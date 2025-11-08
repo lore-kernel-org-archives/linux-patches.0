@@ -1,107 +1,115 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421F92AEF5
-	for <patches@lists.linux.dev>; Sat,  8 Nov 2025 00:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514B024166E;
+	Sat,  8 Nov 2025 00:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762561692; cv=none; b=qcSu+ddzzirdDBvOnIQN9Ri3zgqsNztCrRxqQ3jlt0x+u84a5Dbs+AStDECMtqCSzAtvZf3W0EVph3c1v3xVx6mt2wVrdailiZChjyz8Ailz3C6BUwfVedp6XkWkXxOYe0NHLaX923E7sqdLwSweMLbjFlU1KvHdrmJe22Lz7gw=
+	t=1762562234; cv=none; b=J4gGIztFxqNnWHG0e6S0ZBeHcwk50UwTEAB+RL6s9zaPP9eSbk44lWqX/9HH0IzT4c3UAcJ5Dl/E4ydsSg3I59U1UftWWgbBePiC+Ha2trgol+EQH0iIuBvY+s7CDVw6wux9VbqhN7qIfZyH+npZOAUIcJlqzCRMH6ulVM5dKZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762561692; c=relaxed/simple;
-	bh=xAjaHvMSmn7zlTOcpY7YxpGaPXDu9AQfS98dU4FaJHg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sy5rVRZnJrvaetLuWmC98Nci9aQzp0TLKWeBtYR+vLThSvzwCVofItHF6y+JjxQbSrWIwAp1vJ1OjmZ2fXxyP2+EMAw1yq6nT785wRc+WaVxT8AtM2r6gs8hDIo53P+a5tBSTDyKQO10H6PPpaUyFPS1XBo+K6bXwlqMx8dDfHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NecZlZyK; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1762562234; c=relaxed/simple;
+	bh=50HHS0ijG9TAVwMqmB+iIxiQVsMKkOQnCN7kXgu+NYk=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=laNLfFyv3NvmPzrx5jc5ch9LTcvNN7tvQZ7NPFX1Vf3GWvcuLuYDTjoiHswrJE5FODMDGfFgZjcHCJuguHR3CMMHyWZNgoPm+e35pZ1wtcz9c6tTfhVoPK27bvBYEsrBjetoJc/W835FSFW3e5MBir2KypIyzlJPiJlpVnuKbGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oOwHy49F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NecZlZyK"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-79af647cef2so1089751b3a.3
-        for <patches@lists.linux.dev>; Fri, 07 Nov 2025 16:28:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762561690; x=1763166490; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfGsS2MH5xd9qjAA7YCJrfBqaEDAdeU1QGJHQOuJbsg=;
-        b=NecZlZyK6GPk1mJOfDTvI515XwPvskpLLXTh7I5rdEh40SMppu8Avqb/H3c51nS211
-         mb2erGZRaiqgAGpkLbyBYyduz+yDiNnfOl3TEKAYhukcv/YCkcfDu1zsThQ8HOXIuMZ4
-         9w6N2SSBsC70t3MFl7vUdht8YYHl6nBMK7jnyGSD3dQRsSW+IuaXZNj3RaPS9u0y8Bli
-         10sinT2C/SGPw1A/QKEbDMBC5gXnaJMuszd+OsJY4hZaR3Sh3q+2O+/NcRFkluoNKywX
-         Q7tIUbkXLHKnoRQISRtUHmLafXu8O74a+y/2z6Lmlbwk+My8HoALL1OWOaI5b0Jq1ayr
-         nEKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762561690; x=1763166490;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vfGsS2MH5xd9qjAA7YCJrfBqaEDAdeU1QGJHQOuJbsg=;
-        b=uwR9g4jPV3HvHw0gP8cNaFsDNv4J4UtPUSXxsJ57Rwgas4IpRy8TJ26Le+oLIYW8BQ
-         hlsrhbx3xnIiOzfElXEKnjMX+U1ljde2I99WZwfPx//HNGL8ppyDZBMsezkfmGZDakuM
-         w8xlgX+/9TQXxUj99p9OKS0RZ/17MwMTjgtVqWujLm4/OnCRVntyTPl9bP6p29SxN5En
-         87dQVMOlqerBqulz7W+55/qbSgDgf5JMJdbCK7reT8QRshOLldL86E3NLqThpeRY/KsY
-         q3XS2V0kij+QtJIGUSHBSUuJxR+M21D1cakZJOYeB8HZ33zqB18C3x9yyml0upJs+JpB
-         Lmww==
-X-Forwarded-Encrypted: i=1; AJvYcCV9B4w/+3JSh+fdHgr4CveiRMM5OZ3MIULjayPBOj/APJ2JEAuUi0cocPAkjLb8qlfZXyM9hDkX@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQIm9CM7w/+aP6hf2ymBy/sDFrU9Gs/1hcEM3xCmvL/VpK18S2
-	cYEbGayw/MaXeQwmUL/Q4+lYnNT51a4A5tAxXcaB5Pr3SAW4/OPsjAZ8MO74s1dvCA==
-X-Gm-Gg: ASbGnculyHTJL4ovl8dVKcX7zPrhqdeDAF4PxfunNw+eziq+tWJTvIszku7EuoETkJz
-	c686u0X+tePyItKAOTrgnyy0H5siKmblBr5ZvsLbDUt2FgHffKj8ksGgMXvchuv7WNGYjiyR6QY
-	suknbUFylAWe+FDLCV59jSPwk5PMY8/KeODPmds7+NlihsA7TRmBWIAmZKmm7964QlhoG15yT3S
-	z5qqKb8E1GtkzU/5INdKETioPdYem4f7PlnTC9Iw2j2aXnV+zxa3eE0GnZUnoKCqSIM17tLowLB
-	/J1CA9uGOQ3Qi83l4pX9EV3sVlt+PsAEmZ5X9Ez2J7oTm5QXqIgXhInboTE/o9RcaBZKTIsmw9G
-	pieKRHAZf0iW5MxJR4qgZt44AhyO02dT94F0aRtKC/s4NuDA+kDg2MeL2mstbQf4fzq1wexU9FC
-	leNvqgxpU/NHBgQ2QPCGzZpEOgRQxduTKpMZocCbFM10rbxE6R9eeJ
-X-Google-Smtp-Source: AGHT+IFUSovrDS+0WRVHBlbfPfLVHwv6BMRG+QTXHnDZ4UgWakNZf0zOP9bb4qcXnqDQvHke8MZjEg==
-X-Received: by 2002:a05:6a00:2e08:b0:7ac:1444:6777 with SMTP id d2e1a72fcca58-7b225b8db54mr1368536b3a.12.1762561690242;
-        Fri, 07 Nov 2025 16:28:10 -0800 (PST)
-Received: from google.com (132.200.185.35.bc.googleusercontent.com. [35.185.200.132])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0c953d103sm4148113b3a.5.2025.11.07.16.28.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Nov 2025 16:28:09 -0800 (PST)
-Date: Sat, 8 Nov 2025 00:28:04 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
-	Tina Zhang <tina.zhang@intel.com>, Wei Wang <wei.w.wang@intel.com>
-Subject: Re: [PATCH v3 00/10] Convert Intel VT-d to use the generic iommu
- page table
-Message-ID: <aQ6OlHhq4TBM6sF8@google.com>
-References: <0-v3-634ccd3efce0+16d38-iommu_pt_vtd_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oOwHy49F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07358C2BCB1;
+	Sat,  8 Nov 2025 00:37:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762562232;
+	bh=50HHS0ijG9TAVwMqmB+iIxiQVsMKkOQnCN7kXgu+NYk=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+	b=oOwHy49FHh4GUcTBUUqVG4b7fTrjc/gMDnEREAAKy1Is+0XVL4NReGf+uUkJ59bJg
+	 fawVrgoBcfMlmhIARI1MjLfL9RRYj9hYZJInTMwBtP6S+0zuU+2nXSsjs+3KGKwsYb
+	 iBA/z+QqKpmmeSwNbOSZrmAB1njM2zljWehjxLi7jWTi43Qboip9/8488Uu9L/fcgs
+	 rPA2VX20pKvIWesjXZZqjVOlaRYWZ04GEWs6imP6Ur3hGeXrw+zv8mgCfTfPZwfFL6
+	 e87H+QfWwiXVP7zXUcNkNKqe/8FahpN45AVUuGRoqn6VUSVdgg1n4x5I5c951tncsU
+	 /XSUnoAZA8FNw==
+Date: Fri, 7 Nov 2025 17:37:08 -0700 (MST)
+From: Paul Walmsley <pjw@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+    Alexandre Ghiti <alex@ghiti.fr>, 
+    Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+    Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+    Andrew Jones <ajones@ventanamicro.com>, 
+    Ben Dooks <ben.dooks@codethink.co.uk>, linux-riscv@lists.infradead.org, 
+    llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH fixes] riscv: Fix CONFIG_AS_HAS_INSN for new .insn
+ usage
+In-Reply-To: <20251107-riscv-fix-new-insn-usage-v1-1-9a186c5928a0@kernel.org>
+Message-ID: <6668adce-cab2-7f92-5403-723ef8c5ab04@kernel.org>
+References: <20251107-riscv-fix-new-insn-usage-v1-1-9a186c5928a0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v3-634ccd3efce0+16d38-iommu_pt_vtd_jgg@nvidia.com>
+Content-Type: multipart/mixed; boundary="8323329-1559060956-1762562232=:644284"
 
-On 2025-10-23 03:22 PM, Jason Gunthorpe wrote:
-> Replace the VT-d iommu_domain implementation of the VT-d second stage and
-> first stage page tables with the iommupt VTDSS and x86_64
-> pagetables. x86_64 is shared with the AMD driver.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1559060956-1762562232=:644284
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Nathan,
+
+On Fri, 7 Nov 2025, Nathan Chancellor wrote:
+
+> After commit 44aa25c000b4 ("riscv: asm: use .insn for making custom
+> instructions"), builds using LLVM older that 19 or binutils older than
+> 2.38 fail with:
 > 
-> VT-d has HW that requires an incoherent page table walker, the majority of
-> the patches are adding generic support for the required cache flushing to
-> iommupt. This is modeled after the existing ARM64 version and is intended
-> to be re-used there.
+>   arch/riscv/include/asm/vdso/processor.h: Assembler messages:
+>   arch/riscv/include/asm/vdso/processor.h:27: Error: unrecognized opcode `0x100000f'
+>   arch/riscv/include/asm/vdso/processor.h:27: Error: unrecognized opcode `0x100000f'
+>   arch/riscv/include/asm/vdso/processor.h:27: Error: unrecognized opcode `0x100000f'
+>   arch/riscv/include/asm/vdso/processor.h:27: Error: unrecognized opcode `0x100000f'
+>   make[4]: *** [scripts/Makefile.build:287: arch/riscv/kernel/vdso/vgettimeofday.o] Error 1
 > 
-> Applies on top of the AMD conversion:
->   https://patch.msgid.link/r/0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com
+>   In file included from <built-in>:4:
+>   In file included from lib/vdso/gettimeofday.c:6:
+>   In file included from include/vdso/datapage.h:21:
+>   In file included from include/vdso/processor.h:10:
+>   arch/riscv/include/asm/vdso/processor.h:23:2: error: expected instruction format
+>      23 |         ALT_RISCV_PAUSE();
+>         |         ^
+>   arch/riscv/include/asm/errata_list.h:47:3: note: expanded from macro 'ALT_RISCV_PAUSE'
+>      47 |                 RISCV_PAUSE, /* Original RISC‑V pause insn */ \
+>         |                 ^
+>   arch/riscv/include/asm/insn-def.h:259:21: note: expanded from macro 'RISCV_PAUSE'
+>     259 | #define RISCV_PAUSE     ASM_INSN_I("0x100000f")
+>         |                         ^
+>   arch/riscv/include/asm/asm.h:16:26: note: expanded from macro 'ASM_INSN_I'
+>      16 | #define ASM_INSN_I(__x) ".insn " __x
+>         |                          ^
+>   <inline asm>:5:7: note: instantiated into assembly here
+>       5 | .insn 0x100000f
+>         |       ^
 > 
-> This is on github: https://github.com/jgunthorpe/linux/commits/iommu_pt_vtd
+> binutils gained support for '.insn <value>' in 2.38 [1] and LLVM gained
+> support in 19 [2]. Adjust the test for CONFIG_AS_HAS_INSN to ensure that
+> all versions of .insn are supported before being used.
+> 
+> Fixes: 44aa25c000b4 ("riscv: asm: use .insn for making custom instructions")
+> Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=a262b82fdbf4cda3b0648b1adc32245ca3f78b7a [1]
+> Link: https://github.com/llvm/llvm-project/commit/2a086dce691e3cc34a2fc27f4fb255bb2cbbfac9 [2]
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>  arch/riscv/Kconfig | 2 +- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I ran VFIO selftests against this series and did not detect any
-regressions.
+Thanks for the fast fix, and sorry for the trouble. 
 
-Notably, vfio_dma_mapping_test confirmed that this series did not
-regress VFIO's or IOMMUFD's ability to map 2MB and 1GB HugeTLB pages
-as 2MB and 1GB entries in the I/O page tables as expected.  And
-vfio_pci_driver_test validates that a device (Intel DSA in this case)
-can do DMA, and exercises I/O faulting handling.
+Clearly we're not doing sufficiently broad build testing here, either 
+before branch submission, or on -next.  We'll fix this ASAP on the branch 
+submission case, and work on improving -next autobuilds.
 
-Tested-by: David Matlack <dmatlack@google.com>
+Queued for v6.18-rc.
+
+
+- Paul
+--8323329-1559060956-1762562232=:644284--
