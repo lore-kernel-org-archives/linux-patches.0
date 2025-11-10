@@ -1,96 +1,91 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEFC2FE585
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 12:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FA51E492D;
+	Mon, 10 Nov 2025 12:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762776262; cv=none; b=kR2tl/zPkkDBGbt4+cdJLvvet1mxlDeKW0IZouc97yjYz/SIU4Hl9ewsydCRI5JB3lEFn1lZDlobPuKEJIU0nYpdlxV915LrYW2FaIlN8Cq6KDNJ+loZMpAUjxjV7R1SbnuVCBu9aXwkMQDIpmSxc1+FYtnVjA6+XBPzvPJlV+0=
+	t=1762777368; cv=none; b=WHVxWT8XY2FiASbd7VPgsxrVAg35CfpjMoJaPjEwHUw4rPZn8qT8XMyktJWb0T8QclzQwBF/h17bX2MwR4Foz35AGrGe01h3M3vNswZGKImFt0QPff1br7sbqmQCh7wkE76WM/osgm5GYm+TY23+EUwk73fEBC7w4I8rOkZJEYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762776262; c=relaxed/simple;
-	bh=eEgXHGzlAYOJl5c6fOfboUSe/VxaQBrlFhhrVppwDjc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hAb7kyJKCrcc0rLi00jg8YinAlrphSFmgS75esq7rhoD8KTfedximjc4hNvmR2JT1ZdhCe5E2vJirxWe7X42Z0c7cyIoW8pAAhN7UHkJOElGfC8ieoQzDh7PT6umcZtdxriDKKNUUlyNK84ErT5pnYxMpjgb5y+rDBpZrlB9q2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UXRqoSrw; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762777368; c=relaxed/simple;
+	bh=xAU0mcHvvHztf6e/124K2Q7q7xiytklarHatnR9+c18=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tEgxZ40p/nLvVkJaJMuc8gqMspwR0LPg2bMvatxEoFFuxfoMLcvrlZc4eIRdXUUu0rNQl6woI7IWACFuszNbvCUe7yzN3KT35lXliJn8jECGxw8lb52HMv0MjYUBDWtqeITcIyP8tmUAkfuz6Agqitz9dQJKT1e2Q0/HMUhaG1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gTODCh0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UXRqoSrw"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-297ea4c2933so678465ad.0
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 04:04:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762776261; x=1763381061; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eEgXHGzlAYOJl5c6fOfboUSe/VxaQBrlFhhrVppwDjc=;
-        b=UXRqoSrwgRhiyd2tlIuuzeWSCx6pHvZW+Fd4mRMlteBtzxvCcZOXCbbtTJngCwwCS7
-         iHiM+iVaoYDXtHJ10eAXs/0GlY4ruUFpgaUXn3MUP7PMGq9LSAc6pjiPzSrT8sNgtPik
-         VYp/WBIenZqjqLW5HUfo8qXY+xLmfmSfkkUhogNHcVpZsp+i4x3to/lbivPKd7QTTIAJ
-         s3hDq0eWfUp7POG1uNkl4lmsqF62o6kH+ApEUVBJLV3m3ega/bqyQlgewf2+y05oFTJr
-         oCfPjiK69J5f1XlWYohmj3hSt/kZXStF0hIaplm1/+FJHgxVKp4Ekam85Ho6w5oa+OyK
-         Sf4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762776261; x=1763381061;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eEgXHGzlAYOJl5c6fOfboUSe/VxaQBrlFhhrVppwDjc=;
-        b=nvknqvf8rILbYhuPJ2HDXnqwyX06ls2n2kors6VZ84sXA3S+gn4Fb3zg9tMoix7H8W
-         xYWPcrRnkzj5FYT5DmPpe8c0OIi24iSmi7jdFMIqwXtGvkF46bxAp+tvc7SEWG0Pjg06
-         H897LQpQFYUSbt+sGnZM1/WPg+5ck21oTXsgDyuSq/JFRJdqHNLRAGDX9MTDsos+Y0zD
-         qus2fmqd7/oRyFrzzA/8KGtNBLGlupRI2Y0WpCSejCdVHd6MxTs/AcCyzRKXhUgdXr7a
-         Omm3DWz0qEbH5d3tyX2Fyz935/rUQBKAfprxkW1Gxy3Q/wjrRA79n4QcvHqiEfeThgm9
-         kINg==
-X-Forwarded-Encrypted: i=1; AJvYcCWDKVOnCSr5VlmgifDD7V3Ak6IfXGfbP3YQZ3eZLJuqNsUctvpXQ4+yIsPH2ga5guqaBfAV9wqr@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz3ACRgsgX9fsOR0d+DtTfd/wljaQ+z3wG0kEWw59bDRY+M8dYQ
-	4aTPv9AG6h43pzb0Mkm89jpt/puh4bxftwmoOMO2CI/JFYrD0qumo1PQJU4iQOOZuUR3ojoOZyx
-	gufzoReZeprjOap4tGKDCWf19mOY1twI=
-X-Gm-Gg: ASbGncthT29Yj0oGwMY+upy9MfW6fHAlUeJ/Chhxxuxh48KG5Ot0cG3atjJ0cJuSP0F
-	r2Vc2pHQQskhtkP4w3An9TmS8wqbvowd2UbhcxhuFDtTTYxU32jVHzPUsXHVtGgdDZZZ8XptZzb
-	ILYPOusKeSF63KKDkicXtYgmn+mzycDLcgYuhSIyu3gzwX3kGPGY+Vm//UnuKX4Z7srEkOTlX7R
-	1Xciot1ik90U2m2YueNmHXdCMCdW+53yhGRINqsKJKrH/LoHlpNrmHWdYocIwugFYybwnx9suX3
-	+Xwqk/sioGJzv84jYMGwThXfrsjOSJPqUzdAASbSxRCXRu9nJuemp2BIghWyQh6aik8NFN0R6Xu
-	krWoYLcQZcA5yKA==
-X-Google-Smtp-Source: AGHT+IExnxjKRMhBvCvd9Nw1Vzpg0dilgRX0ilaQeygPAtmrJ/VO92XIw2N3ZJ7sb6hS/zOwLVLxlgfmv0VAGSAIzy8=
-X-Received: by 2002:a17:903:230f:b0:295:70b1:edd6 with SMTP id
- d9443c01a7336-297e5643e76mr52737955ad.3.1762776260815; Mon, 10 Nov 2025
- 04:04:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gTODCh0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7610EC4CEFB;
+	Mon, 10 Nov 2025 12:22:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762777366;
+	bh=xAU0mcHvvHztf6e/124K2Q7q7xiytklarHatnR9+c18=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gTODCh0pxTplVAfGXTvgpmRsM7WQ6QKHZ26CCFa/Bze/OIKiYAFRZyCUlrj5ZxzPb
+	 1kkUPvVrtJeAy4Y3RPhKUtVspTaDidcosor9lTQuzZ1DZIdEEaZY0VOuthiGBoN2u5
+	 4VnttDIO0PRluhFgiKw61fuBXbCskn0VtPVmkkjHJ2ERqmhdH/yJ02dKCBoMLNg/a1
+	 dNiV8STiIhoeWJQLpVoyeQPHsMlTHRNlUWHlWWOTaRm6aDyChww6QiE3ZxIgQExaED
+	 PwJOtkN6EAEAlxro58s1ySQMKzdH02eKHWn7xqbKj95btEfDi4HahUmBAVX+NxaMtr
+	 mmOvS68wU7vMg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Trevor Gross <tmgross@umich.edu>,
+	netdev@vger.kernel.org,
+	rust-for-linux@vger.kernel.org,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 1/3] rust: net: phy: fix example's references to `C{22,45}`
+Date: Mon, 10 Nov 2025 13:22:21 +0100
+Message-ID: <20251110122223.1677654-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110113528.1658238-1-ojeda@kernel.org> <aRHSLChi5HYXW4-9@google.com>
-In-Reply-To: <aRHSLChi5HYXW4-9@google.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 10 Nov 2025 13:04:08 +0100
-X-Gm-Features: AWmQ_bklNKkIpzDaIt0BmvJnv6iHBReLEFoejSD6lCAMShx-lppQSbZzdpW8AeA
-Message-ID: <CANiq72n29SUnmm3Dos_NvWbxW-vuX2Y2j7AAYROpa6ruQWguSw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust: allow `unreachable_pub` for doctests
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
-	Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <raemoar63@gmail.com>, 
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 10, 2025 at 12:53=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> =
-wrote:
->
-> Maybe we should also allow disallowed_names in doc tests?
+The example refers to `phy::C{22,45}`, but there are no such items --
+they are within `reg`.
 
-Not sure -- I thought it may point people to try to come up with
-better names in examples. On the other hand, for abstract facilities,
-it is true that there may not be good names anyway.
+Thus fix it.
 
-Cheers,
-Miguel
+Fixes: 5114e05a3cfa ("rust: net::phy unified genphy_read_status function for C22 and C45 registers")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+Please feel free to drop the Fixes tag -- I generally add them for
+things that get actually rendered in the documentation, since the stable
+team sometimes picks even typos, but it is of course not an bug on a
+kernel feature, of course.
+
+ rust/kernel/net/phy/reg.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/rust/kernel/net/phy/reg.rs b/rust/kernel/net/phy/reg.rs
+index a7db0064cb7d..4e8b58711bae 100644
+--- a/rust/kernel/net/phy/reg.rs
++++ b/rust/kernel/net/phy/reg.rs
+@@ -34,10 +34,10 @@ pub trait Sealed {}
+ ///
+ ///     // Checks the link status as reported by registers in the C22 namespace
+ ///     // and updates current link state.
+-///     dev.genphy_read_status::<phy::C22>();
++///     dev.genphy_read_status::<C22>();
+ ///     // Checks the link status as reported by registers in the C45 namespace
+ ///     // and updates current link state.
+-///     dev.genphy_read_status::<phy::C45>();
++///     dev.genphy_read_status::<C45>();
+ /// }
+ /// ```
+ pub trait Register: private::Sealed {
+
+base-commit: e9a6fb0bcdd7609be6969112f3fbfcce3b1d4a7c
+--
+2.51.2
