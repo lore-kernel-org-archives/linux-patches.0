@@ -1,108 +1,98 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8691A211A14
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 10:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4EF307AC5
+	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 11:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762771956; cv=none; b=a12zPwaaCsU/s9Ac6oofPOKN6rCvPQ/zVMX1m9KXW1bGhgHm4gDXMDS0zlVPIGtY1Gj7cAarJGBJ1myQGeu1LFbUn13zO5HqdGs8gU11dZG5ZrFnKcMKcGbB3nwb7y73m86DSEkojhXhbgf8fofLlu9+b4SroVeiNG6BEi2HQXA=
+	t=1762773016; cv=none; b=DJTayER/jFLrOtT8Bod6mgdhRPyWGho7M+ube0ePcGoKvUw2a1pZLjLW3QL8EulaGyr042UJrGLM+eRgo57bkPKPf0SFQibDgFo1C6rwfvwf2CPHcML3qwjdYw8hySFCdIh9Ce9lu3GdWAj/MfF32H78fJ18i0qgrQDk5O3c2Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762771956; c=relaxed/simple;
-	bh=g1oy0my9Z+ccbHHb+iF/yvdsIdcE9KiibVk4bik3RqI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rxQgIEOBEeHK3sA5TWtntKke+5b72PL09YPs02hqsRZD9cJIFhwcmbgfHgnpp+sLP366XR1k791dazGJ04chS88tCRg2M5prE31zoMoLnoHaZglRIJM6lvID8s3O0dm87J66xnzYnrN79Cmo8bK4zeojAhU6oxf2hU6mxfh9CPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZX3AV8CN; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1762773016; c=relaxed/simple;
+	bh=qYod02zCx1H/VIglPSYtMCLBMHqDjGDF49aeweBgJ6E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hB/rcGugA7Ue0sz/u+iMZItZOXeABoOF2buGN7qrCrk4OP2pEAgKCvrpuLZp+m/uqqVbOO0sAaoVWEdkpw4mSi7AieyxBrlaqlvUe5gg/XiC7AfE1RB+pECa0Hgp1aXPz0/89udIsHV9eR0bvLoeh5G5F7ekMGtd/qtJ3RICPRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mEesHgZe; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZX3AV8CN"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-46e39567579so15307595e9.0
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 02:52:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mEesHgZe"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b6a42604093so254121a12.3
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 03:10:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762771952; x=1763376752; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=N6NZ9bgEr68vNmFOnWb6hMPpN/BBFhK5I6oSe3Kfhy0=;
-        b=ZX3AV8CNP3yzkWqxhswvSLhB0q8Gy+mbfRNm+lWr+02GfcYGJQBEu/c46tyBRPTuuD
-         mz0781lMye7/Wuj/GnSMSLaIIPJzMT+q6ES22V9DiPDOFYWMRegErqvlJXHhRjZ5ziF4
-         sGni2IHFu9fVJqTXpm3EijkdKnOA+TxlRJxIgDM5oScL/jM95WPjd6seQ5DNGI3fMbYb
-         Kj+Do5aYCiH4GiH5Nwxu1vHViHvkU+6KfH4tJNb8qOi9P5oD65973NK0qMe4CemZMqz2
-         eMh8wcnEGsmxZLB4SgAHJHEAobCCK7CtgkpH7YSdSiXwYd6eMP2bJAVk2npXXc93fFH3
-         +Cfw==
+        d=gmail.com; s=20230601; t=1762773013; x=1763377813; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qYod02zCx1H/VIglPSYtMCLBMHqDjGDF49aeweBgJ6E=;
+        b=mEesHgZeWNfy3U/o0rJLtJ8vqAtjaJrfbH2j6hSsNzDmEYICaqpzhz+QRX3lZOHGkc
+         jEGna0172EpdNKX4X36UVWhBWTOcj4O64tv75NMQzlH6ktk5KDwkfZulQ+NBO3YFcr6Q
+         usxILcjynIcBFcZJnTaBG92OB6JhcrUFGj9GvStcavW4D90iVRWIN3fCfttUHXq3LKDK
+         m3+1nAq/7SARHBMGTljl5G7kphPB9vR+6d28g3Den/RMe5/c2+NxZrD+TrWy/mn7bzLY
+         6Qk/6Kgkh3LRrkkODGm87Zzbu1FySy11nc7GmlhP0Mzyg88I6J727KDGFJZrZdeEeZUp
+         EP4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762771952; x=1763376752;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N6NZ9bgEr68vNmFOnWb6hMPpN/BBFhK5I6oSe3Kfhy0=;
-        b=BV3MxgnDO8C8GyT8Bzcj4RJgq5b1a8RjS6GFGBIgcmytBBhsT6f/wn+hRkkOBiHTnC
-         iS+28d1Y23VJ8AnL61MsOpdpknrNGS9+VZsvTIe8Wa8irhRsu4O9eCsRMJcLf0zw8+AY
-         mPqsI07YMqu/gGPWulxSj9prYB9Aq2GaLG3eQOWQ5UJdWxb5bEFmCxJQ7+zfurENMgv0
-         4aCw4aePeqOgC3Vuz2svd9ag4rMoG7d4MwpSp/hZ+Wk0YlcsqUtlRDQk5ctk2vFZbhn4
-         SgW7W3h/3bMcbbqLW0Eg7IQlc+BGAR0ZAuuNA0CKZ2XLJiDZhmi7FQHtljdPf0LPqud2
-         wvhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVdTqFucbGGfAQXe2kmmokPlbXZLW6qbtI21IMYamSd91x8CD4iCmHdpPSbxTvLp7A6uQS8Jj8N@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDt/9REKa+FfOhOncDpEr0YBaCTQ1QNvpbKHE25/z+psfgTrh1
-	hZz2DHKtCYR3OSKh5juhQffj+nbabeqGTBedREQw/zuZsT1rxdB+GugLD9na5bisGSrNwCqopnw
-	HI+51CpB+AfD5MFnT+Q==
-X-Google-Smtp-Source: AGHT+IHLTlx/88ANqEFu1mmPKn7N2gVA3BGY0KVpSBasitym/dwRaUr5k7lI5g/0T3mMBoRLLo/Kvlowmg2Jd7c=
-X-Received: from wmjf14.prod.google.com ([2002:a7b:cd0e:0:b0:475:d8de:fe5b])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:524a:b0:46f:d682:3c3d with SMTP id 5b1f17b1804b1-4777323eb5fmr65374595e9.13.1762771951937;
- Mon, 10 Nov 2025 02:52:31 -0800 (PST)
-Date: Mon, 10 Nov 2025 10:52:30 +0000
-In-Reply-To: <20251110095025.1475896-9-ojeda@kernel.org>
+        d=1e100.net; s=20230601; t=1762773013; x=1763377813;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qYod02zCx1H/VIglPSYtMCLBMHqDjGDF49aeweBgJ6E=;
+        b=Js6WzB8eF1vycrIPlQchI71iajDMmOldXkIedxxt0T0HIX+iNHaw3W+yQHmr+fe4XI
+         fAnpzZHA4B0hCCYuZ/NEOFftXkPUlL1DPjGao2ZLAkoPeDZftFOJCQd3xO6dtT4gGaEm
+         OcI713wLtU0IznLjEImAZYjoM4xiN3mzzJDUA7C22fL6zZ30z7qp/EA8pifCnJFKv5bu
+         0w2jjI+gLdvXGvtQOm4R+gogq8oWf285dGjRSriQ/9Tf7qko580pNDrj36ujlVRO2a9f
+         1fEUS9T7fDu4ujbvUSrh90IJwIcSnD81qtjGhPSrnNgOWgbV5QHNpILInEVQMilozp+X
+         TtVg==
+X-Forwarded-Encrypted: i=1; AJvYcCUIlierOMzm35/dVykawkzIsf5o7uX7fnWMeAhOggiXzCXwRSOwjWAkcH+4/pKgIatSyQhcNlvp@lists.linux.dev
+X-Gm-Message-State: AOJu0YxiH9iB4dxyxSn3O6W41olJ0TEz/qGDaTlb8oGlb7wE0CZnpqUa
+	ARMzDF18wbDlbFmGJANCo09z6tWINaCbhw3CPvUPBv86hB8jo+Cl2D0MMUKKBlXBmAy5WtokLGb
+	xhllpAuxtZA3r1YCbkqL6smueg7qfDVM=
+X-Gm-Gg: ASbGncsR8jx32c4cezXYlxRGUbv05ohYffJHs2Cmfr8f0uzBooASqjKABzosdrr1bwL
+	l9Kf2hYRSj2pPULRsn8O4jMXeBfaV1/yi0Wj7LoMJ2bn+0TuFvxG77lBKDpCJL6heOzY/nPoFTu
+	fhKYkIQr2l4UnVcJhzpk1fPeLI3KOL21Ffduj7sbIHjOZp3jWrUPWMbRqWychihh1wNJ1+2+49V
+	uvZEh70WXg3yrvlMwBffe5zA6VSnD1kNx4q6sOKDYMmm3kEBnS0fJH+1saUip/4Gokb5VljuROF
+	pDP8hbf8v9c2MmBuI/s/zcovp3IC2PLBf7e3oq3bof9Czsrxx8iaNMLX7OX1aQrIJASdFCdM6sK
+	7NuTPbqznk5gYZQ==
+X-Google-Smtp-Source: AGHT+IGVXq7fcQEVvIh5RJVo4EGz3TaqkWRnWgnqaRHyeXV2fhzl5cAwdSbAJFL3N5gLtGPGFbMfA/d7S7FryVq/+Z4=
+X-Received: by 2002:a17:902:ecc6:b0:267:8b4f:df1f with SMTP id
+ d9443c01a7336-297e561612amr56745215ad.1.1762773013490; Mon, 10 Nov 2025
+ 03:10:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-9-ojeda@kernel.org>
-Message-ID: <aRHD7m2f7CS_LGK4@google.com>
-Subject: Re: [PATCH 08/18] rust: proc-macro2: add `README.md`
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+MIME-Version: 1.0
+References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-2-ojeda@kernel.org>
+ <aRG9VjsaCjsvAwUn@google.com>
+In-Reply-To: <aRG9VjsaCjsvAwUn@google.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 10 Nov 2025 12:10:01 +0100
+X-Gm-Features: AWmQ_bl715oPxt8H1J_mTcx-bHvv176_Uy8uXuVHipx3MICAaN0f0Hfn-QJfLWg
+Message-ID: <CANiq72nQr8a2Qkt10rPGUgb6DciYQZCsLb-fg8S_ZV=0+Y+ZVg@mail.gmail.com>
+Subject: Re: [PATCH 01/18] rust: condvar: avoid `pub` in example
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
 	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 10, 2025 at 10:50:13AM +0100, Miguel Ojeda wrote:
-> Originally, when the Rust upstream `alloc` standard library crate was
-> vendored in commit 057b8d257107 ("rust: adapt `alloc` crate to the
-> kernel"), a `README.md` file was added to explain the provenance and
-> licensing of the source files.
-> 
-> Thus do the same for the `proc-macro2` crate.
-> 
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  rust/proc-macro2/README.md | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->  create mode 100644 rust/proc-macro2/README.md
-> 
-> diff --git a/rust/proc-macro2/README.md b/rust/proc-macro2/README.md
-> new file mode 100644
-> index 000000000000..af044fee4f59
-> --- /dev/null
-> +++ b/rust/proc-macro2/README.md
-> @@ -0,0 +1,13 @@
-> +# `proc-macro2`
-> +
-> +These source files come from the Rust `proc-macro2` crate, version
-> +1.0.101 (released 2025-08-16), hosted in the
-> +<https://github.com/dtolnay/proc-macro2> repository, licensed under
-> +"Apache-2.0 OR MIT" and only modified to add the SPDX license
-> +identifiers and to remove the `unicode-ident` dependency.
-> +
-> +For copyright details, please see:
-> +
-> +    https://github.com/dtolnay/proc-macro2/blob/1.0.101/README.md#license
-> +    https://github.com/dtolnay/proc-macro2/blob/1.0.101/LICENSE-APACHE
-> +    https://github.com/dtolnay/proc-macro2/blob/1.0.101/LICENSE-MIT
+On Mon, Nov 10, 2025 at 11:24=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
+>
+> The unreachable_pub warning normally does not trigger for documentation
+> tests since using `pub` in documentation tests is not wrong. So this
+> sounds like a bug in our doc-test setup.
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Yeah, we can allow the warning for doctests, that is easy.
+
+In any case, this was needed for the future pin-init, not the current
+one, so I should have probably removed it (we had a bigger branch with
+the new pin-init).
+
+Cheers,
+Miguel
