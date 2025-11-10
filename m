@@ -1,215 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1FA33FE22;
-	Mon, 10 Nov 2025 19:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC8A2F83C3;
+	Mon, 10 Nov 2025 20:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762804653; cv=none; b=MGfDLD+EB6XvOVRC+ve2TbaD+MG9dR8ipXln8NtN2nyYy3VxbQTa1Y401VNfEabBkXUsIpRs46uhihqBrqSvplIGUhXIUbkA1axiEXcas9g27J415q85iFKOByj2pY1tRlSijxTtlcozH6KcZO1FLqFx6clRDD485Ed2FoBBmfQ=
+	t=1762808144; cv=none; b=UDQmuaFbA7apWx+R6MQUgfsC4t7pVAAgnlCRTkn88WxL1zodWIvetCoh5udvhbzRFYX9eIWeV3A1J/9EP8CNdO6LsXVbVXpuetofUKGuJOMFU+MDskooOZ75YxBNOUZ+Zw6rIT4icss2u5v85FxvAGfrYyBjWRbBhi2ftpWreME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762804653; c=relaxed/simple;
-	bh=8jymNanNDh6OTlugBO11d9IPEUWdygDIcCUgZeTZ+BY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZQnxvQQukEeDhFR3z62bkT2Pl8oL8sCHkyuw2+VT9vXgiqRLjGMDM1iTFj5rprgbGorb0rdwepM3cPdtYDqhIX2xd5TSXgskmvkClky1+hKlOzxq5RugW98lNBWsLRmBB2otXbuAK4a6/saMLRqHk6vCBJ7pjrtXp/pvtfnp2K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RejfgAbF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762808144; c=relaxed/simple;
+	bh=YGwndXDVfw313ofFvJKijTm0xMqmknLKipL/FYTW6Uk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=L+cbwiyoy+PVHYLp+iU8Nty8MTBQ30hnqUhP/3vHZRZ3CtIzv9alncXkCBkCM9bvv/JnGkXYV6HWbEoBogy1qfSuQ6GaGdqYV9teNaljogyqnCQxzNDCpxweHIA5VObuqkTCkUUYHuXFoOhyEcZo9k6f1OwW0fN2+VZoM61au6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QcOtzwgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RejfgAbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE84C2BC87;
-	Mon, 10 Nov 2025 19:57:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QcOtzwgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAE7C113D0;
+	Mon, 10 Nov 2025 20:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762804652;
-	bh=8jymNanNDh6OTlugBO11d9IPEUWdygDIcCUgZeTZ+BY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RejfgAbFBT59TuDSFk3Cyjg8poBLbGKWa8PYKiE8jadpNf2V5WdYycEwKl5vLFb6y
-	 OJ3VzPUlRRUibfewgWupWbyVDD6Ibst15G0n/GeAONyUSJlJ+W3Vul28N2JfU8Ja5z
-	 UAwB5VW6BDO1c+SlW0ZfYqImnhGm7sHyfm26Pz5Gl+Y+f7ibHuObZgtDfbJNYSj6jC
-	 ouvlDEckUak8RQNs3PMpYwnxjNOKxAm0KU4bmvDbFEac9TCsxzT7LsLxA3+CuTuPxC
-	 yuPujKOd1PD4I2rJdekjtZDnwON3YiUsjqzhjdazn+zl7OwLM184H7FKLRgB+LMEpI
-	 XX5PtvuEUO/YQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe: Move declarations under conditional branch
-Date: Mon, 10 Nov 2025 14:57:06 -0500
-Message-ID: <20251110195718.859919-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251110195718.859919-1-sashal@kernel.org>
-References: <20251110195718.859919-1-sashal@kernel.org>
+	s=k20201202; t=1762808143;
+	bh=YGwndXDVfw313ofFvJKijTm0xMqmknLKipL/FYTW6Uk=;
+	h=From:Date:Subject:To:Cc:From;
+	b=QcOtzwgxX0m2Cd2j4GyjQOrKbGRga4McuYApdEnHSkrjQPaS+XaiBc46Jw/GOUCxC
+	 Vhd02uLuw8WatRi8PCRpJEPnMx8QYaZ+7cFGctTtyGaKYAVkn3Erzz0HG4sSfxtzXr
+	 jXVb5LvUzggiQTIuFTtY+WBIPn5O3y2t6+v4+UtOAqMnGTVkShVv+RJ5bjS/8aydQh
+	 BMDQLg5nNHKmwPIcJf2k5lAa8kVGIsUhGjc8egH4FywiO+pXnkKRXOkMB/gJV3mp1N
+	 0mENLdf0P2PuSBDuYgF2Q6Ct50c0E3sikZPZxZ1zK24fD2sBdfBE3eLwBmXx3/0IyC
+	 6ZlmtmKi3HJtg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 10 Nov 2025 13:55:34 -0700
+Subject: [PATCH net-next v2] net: netcp: ethss: Fix type of first parameter
+ in hwtstamp stubs
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.7
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251110-netcp_ethss-fix-cpts-stubs-clang-wifpts-v2-1-aa6204ec1f43@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEVREmkC/5WOUQ6CMBBEr0L22zVtxYB+eQ9DTClbaCRAuhUxh
+ Lu7cgM/Z2b3zazAFAMxXLMVIs2BwziIMIcMXGeHljA0osEoc9ZaFThQctODUseMPizopsTI6VU
+ zul4e8B38z2p8UXqvm9wWNQhtiiTne9MdBCKgJUElSRc4jfGzT5j1nv/dNmvUaEtlT8rl5mLL2
+ 5PiQP1xjC1U27Z9ASzjNY3pAAAA
+X-Change-ID: 20251107-netcp_ethss-fix-cpts-stubs-clang-wifpts-df78ff1d4a7b
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Kory Maincent <kory.maincent@bootlin.com>, netdev@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3570; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=YGwndXDVfw313ofFvJKijTm0xMqmknLKipL/FYTW6Uk=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJlCgT4iKSma9h+d9s8ISJx4bmW/5pfE1m9FS77Y/db5F
+ TJ/c++2jlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARwW5Ghv9qmf3PVl9Ol5ws
+ ZJU5Q+7pnNot/bvlrt99kvBNsnvZ/r0M/4w+S4ddT/1eWua7waP9wYYlyTwXcxaopps4m/ZoHX2
+ 4kAMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+When building without CONFIG_TI_CPTS, there are a series of errors from
+-Wincompatible-pointer-types:
 
-[ Upstream commit 9cd27eec872f0b95dcdd811edc39d2d32e4158c8 ]
+  drivers/net/ethernet/ti/netcp_ethss.c:3831:27: error: initialization of 'int (*)(void *, struct kernel_hwtstamp_config *)' from incompatible pointer type 'int (*)(struct gbe_intf *, struct kernel_hwtstamp_config *)' [-Wincompatible-pointer-types]
+   3831 |         .hwtstamp_get   = gbe_hwtstamp_get,
+        |                           ^~~~~~~~~~~~~~~~
+  drivers/net/ethernet/ti/netcp_ethss.c:3831:27: note: (near initialization for 'gbe_module.hwtstamp_get')
+  drivers/net/ethernet/ti/netcp_ethss.c:2758:19: note: 'gbe_hwtstamp_get' declared here
+   2758 | static inline int gbe_hwtstamp_get(struct gbe_intf *gbe_intf,
+        |                   ^~~~~~~~~~~~~~~~
+  drivers/net/ethernet/ti/netcp_ethss.c:3832:27: error: initialization of 'int (*)(void *, struct kernel_hwtstamp_config *, struct netlink_ext_ack *)' from incompatible pointer type 'int (*)(struct gbe_intf *, struct kernel_hwtstamp_config *, struct netlink_ext_ack *)' [-Wincompatible-pointer-types]
+   3832 |         .hwtstamp_set   = gbe_hwtstamp_set,
+        |                           ^~~~~~~~~~~~~~~~
+  drivers/net/ethernet/ti/netcp_ethss.c:3832:27: note: (near initialization for 'gbe_module.hwtstamp_set')
+  drivers/net/ethernet/ti/netcp_ethss.c:2764:19: note: 'gbe_hwtstamp_set' declared here
+   2764 | static inline int gbe_hwtstamp_set(struct gbe_intf *gbe_intf,
+        |                   ^~~~~~~~~~~~~~~~
 
-The xe_device_shutdown() function was needing a few declarations
-that were only required under a specific condition. This change
-moves those declarations to be within that conditional branch
-to avoid unnecessary declarations.
+In a recent conversion to ndo_hwtstamp, the type of the first parameter
+was updated for the CONFIG_TI_CPTS=y implementations of
+gbe_hwtstamp_get() and gbe_hwtstamp_set() but not the CONFIG_TI_CPTS=n
+ones.
 
-Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20251007100208.1407021-1-tejas.upadhyay@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Update the type of the first parameter in the CONFIG_TI_CPTS=n stubs to
+resolve the errors.
+
+Fixes: 3f02b8272557 ("ti: netcp: convert to ndo_hwtstamp callbacks")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
+Changes in v2:
+- Rewrite commit message, as this issue is visible with just
+  -Wincompatible-pointer-types with both clang and GCC. I have an out of
+  tree patch to build with -Wincompatible-function-pointer-types-strict
+  locally applied, which actually changes the type of warning emitted in
+  this case... https://godbolt.org/z/WGb1cYqod
+- Carry forward Vadim's reviewed-by, as the code fix is unchanged.
+- Link to v1: https://patch.msgid.link/20251107-netcp_ethss-fix-cpts-stubs-clang-wifpts-v1-1-a80a30c429a8@kernel.org
+---
+ drivers/net/ethernet/ti/netcp_ethss.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
-
-Based on my analysis using semantic code analysis tools and git
-repository examination, here is my assessment:
-
-## Answer: YES
-
-## Detailed Analysis:
-
-### 1. Semantic Analysis Tools Used:
-
-**mcp__semcode__find_function**: Located the `xe_device_shutdown`
-function in drivers/gpu/drm/xe/xe_device.c:963-983
-
-**mcp__semcode__find_callers**: Identified that `xe_device_shutdown` is
-called by `xe_pci_shutdown` (the PCI device shutdown handler at
-drivers/gpu/drm/xe/xe_pci.c:877)
-
-**mcp__semcode__diff_functions**: Attempted to analyze semantic
-differences in the diff
-
-**Git history analysis**: Examined the commit chain and discovered the
-critical dependency relationship
-
-### 2. Key Findings:
-
-**This commit is explicitly marked as a stable dependency** for commit
-b11a020d914c3 ("drm/xe: Do clean shutdown also when using flr"). The git
-log shows:
-```
-Stable-dep-of: b11a020d914c ("drm/xe: Do clean shutdown also when using
-flr")
-```
-
-**The dependent bug fix (b11a020d914c3)**:
-- Fixes a real bug causing "random warnings from pending related works
-  as the underlying hardware is reset in the middle of their execution"
-- Has a `Fixes:` tag pointing to 501d799a47e2 ("drm/xe: Wire up device
-  shutdown handler")
-- Includes `Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>`
-  indicating maintainer involvement
-- Is already cherry-picked and destined for stable trees
-
-### 3. Code Change Analysis:
-
-**What this commit does**:
-- Moves variable declarations (`struct xe_gt *gt` and `u8 id`) from
-  function start into the conditional block where they're actually used
-- Purely a code organization change with **zero behavioral impact**
-- Changes from:
-  ```c
-  void xe_device_shutdown(struct xe_device *xe) {
-  struct xe_gt *gt;  // Declared at top
-  u8 id;
-  if (xe_driver_flr_disabled(xe)) {
-  // use gt and id here
-  }
-  }
-  ```
-  To:
-  ```c
-  void xe_device_shutdown(struct xe_device *xe) {
-  if (xe_driver_flr_disabled(xe)) {
-  struct xe_gt *gt;  // Declared inside conditional
-  u8 id;
-  // use gt and id here
-  }
-  }
-  ```
-
-### 4. Impact Scope:
-
-- **Affected function**: Single function `xe_device_shutdown` in xe DRM
-  driver
-- **Call path**: User shutdown/reboot → PCI shutdown handler →
-  xe_pci_shutdown → xe_device_shutdown
-- **Risk level**: Minimal - this is a refactoring that doesn't change
-  behavior
-- **Subsystem**: Intel Xe GPU driver (drm/xe) - not a core kernel
-  subsystem
-
-### 5. Why This Should Be Backported:
-
-**Primary Reason**: **Stable Dependency Requirement**
-- The subsequent bug fix b11a020d914c3 needs this commit for clean
-  application
-- Without it, the bug fix patch may have context conflicts or require
-  manual adjustment
-- Stable tree maintainers have already identified this as a required
-  dependency
-
-**Secondary Reasons**:
-- **Zero risk**: Pure code movement with no behavioral change
-- **Small scope**: Single function in a device driver
-- **Cherry-picked**: Already cherry-picked with signature `(cherry
-  picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)`
-- **Enables important fix**: Required for fixing shutdown warnings that
-  affect users
-
-### 6. Stable Tree Rules Compliance:
-
-✅ **Fixes real issue** (as a dependency for an actual bug fix)
-✅ **Small and contained** (single function, declaration movement)
-✅ **No new features** (refactoring only)
-✅ **Low regression risk** (no behavioral change)
-✅ **Explicitly marked for stable** (Stable-dep-of tag)
-
-### Conclusion:
-
-This commit should be backported to stable trees because it is
-explicitly marked as a stable dependency for an important bug fix. While
-it doesn't fix a bug itself, it's a necessary prerequisite that ensures
-the subsequent fix (b11a020d914c3) applies cleanly. The change is safe
-(zero behavioral impact), small (single function), and already
-identified by maintainers as required for stable tree integration.
-
- drivers/gpu/drm/xe/xe_device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index 1c9907b8a4e9e..e7f838fed3298 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -962,12 +962,12 @@ void xe_device_remove(struct xe_device *xe)
- 
- void xe_device_shutdown(struct xe_device *xe)
+diff --git a/drivers/net/ethernet/ti/netcp_ethss.c b/drivers/net/ethernet/ti/netcp_ethss.c
+index 0ae44112812c..4f6cc6cd1f03 100644
+--- a/drivers/net/ethernet/ti/netcp_ethss.c
++++ b/drivers/net/ethernet/ti/netcp_ethss.c
+@@ -2755,13 +2755,13 @@ static inline void gbe_unregister_cpts(struct gbe_priv *gbe_dev)
  {
--	struct xe_gt *gt;
--	u8 id;
--
- 	drm_dbg(&xe->drm, "Shutting down device\n");
+ }
  
- 	if (xe_driver_flr_disabled(xe)) {
-+		struct xe_gt *gt;
-+		u8 id;
-+
- 		xe_display_pm_shutdown(xe);
+-static inline int gbe_hwtstamp_get(struct gbe_intf *gbe_intf,
++static inline int gbe_hwtstamp_get(void *intf_priv,
+ 				   struct kernel_hwtstamp_config *cfg)
+ {
+ 	return -EOPNOTSUPP;
+ }
  
- 		xe_irq_suspend(xe);
--- 
-2.51.0
+-static inline int gbe_hwtstamp_set(struct gbe_intf *gbe_intf,
++static inline int gbe_hwtstamp_set(void *intf_priv,
+ 				   struct kernel_hwtstamp_config *cfg,
+ 				   struct netlink_ext_ack *extack)
+ {
+
+---
+base-commit: 01c87d7f48b4f9b8be0950ed4de5d345632bd564
+change-id: 20251107-netcp_ethss-fix-cpts-stubs-clang-wifpts-df78ff1d4a7b
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
