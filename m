@@ -1,81 +1,77 @@
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DAA30506A
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 14:57:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9C126E706;
+	Mon, 10 Nov 2025 15:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762786643; cv=none; b=VV7/i0R3ta8xXwvoddp8JW4zkgpuR3KLKPAwR4aco6Mv0VJP6UtQaQsGKu/1RcnM+DAZc9+kF+UlElkO9J/Dg2yLvvWZic1vJXcVdU/SEZMv1hNu8qzCdcGwv54NJbuSzcYXrWUgASEUPkeaXWej035rJo5vO+0fLXTA7ta68eE=
+	t=1762789828; cv=none; b=mnRm/TtYcO7xJQqTg8XieTmjlHXjtOFUDXj32yKLS6Q1V6hdP0KnsRsobH6zKIpDfmBB1qwIKB9KyrDIbke4zzuyo5XxiwwVt+KC/MTZplYi/sVot6QquGRHL7JhcumICw9zCNefYHv07bLCRBqf08xYjDNZzuftSnsHb/SfjS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762786643; c=relaxed/simple;
-	bh=XrYjurcXwMFuI1n6vQ4mS/+j3z0zFW9n2Q2HRAorD/k=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=E0XSaXzHdnKwnhZhni8Yv/LC33Ie/SRAbFN3C6lq/s5qegLgpLtziEASzQ8L40yhZytGl7s01yW1qvEcLoGOGNj1SjajMtI2s9/i7bN3QHT5J7lAsKB2vhGwzki4aidmAal8Yl78d9paPJuCIJRanVgkakeiwJDBAkgVVrYhh/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n+1WbeV6; arc=none smtp.client-ip=209.85.218.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1762789828; c=relaxed/simple;
+	bh=dIbMT2XyfmkYVI8XJLQiVObQzFSS0VpVvhb2X74B4Gk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EKY1sOhs5cwwo873AEN2lbHbL3m+nGz9k4OlUco+9XjNJ83ce80/uY1MI25MiZAANgvATgWXNnaIek1/lsaDY3Vc+R4iYHtJr5trQqLDkxELtAFckgcUaaEJpubHZcTsWvgdsMeiu4zfSBAWZAA02SLX9ZEOPLufSBMdz6J2/DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=0GPRZkvc; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n+1WbeV6"
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-b72ad85ee9aso356763366b.3
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 06:57:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762786639; x=1763391439; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XrYjurcXwMFuI1n6vQ4mS/+j3z0zFW9n2Q2HRAorD/k=;
-        b=n+1WbeV6D5YOKCqUFgss5UbnCAZWSzOQxgqxZbAm/yWhSxCh5t4YRZZm97zxZb6sKp
-         IBJJH3H+ayBKj2a/4hfTWBxbDG3ZAOeYE8QX/J1hZH4VIfAit5xX3jaPCNmofXCIyx0G
-         /07u7iOymMeYisleF4j4/6UqWPalYMU2vTMb4zrcZX4MM3+BPOzaFpiCbpZGe41d4sRm
-         B1Kw1/Bm2jzcYuWwcaZbbJdpgOOWLAnTWAtLvIQAir/GLcf4cErS6qd8KmlrS9aKupFu
-         FY3PR6O2jXN8SFfJPzARxteFpt8DFLS0+S5qq/bFH0Fs0QGYPLC1OrcTHPX/wxngD8kY
-         NNjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762786639; x=1763391439;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XrYjurcXwMFuI1n6vQ4mS/+j3z0zFW9n2Q2HRAorD/k=;
-        b=GTl9ZWhYi75H7oNAFUHHIZeN5WQlp7Mhn/y1SOIdaJ0v8/T1jlagmdiv2jrW7mIdvD
-         Fd21Qmvxe9a+kmPrEbSnupuh4xwXYzemvj/3LdWOF6wvI4AEqjlHJK7JEXNEIlGAk4Ar
-         +jSMILOs3SWdpkLNKgAv5Xrf3ZR+qHadiqfUHHVtBGpMpzlbRViJHgiv1dPcMM28LApj
-         sTi5M0i7UqcaEzr+E99/RHehRg1NcdnNo8ioeja86KBazX03YoIMbTuR1QDYvw5B6Wii
-         SGKZl3TtbsgmTx69HO5QdsYSE1fXXAA69/ZFLBq0kPesWn9IyuIFy9rEJzjdtVl048pX
-         gaOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUYKDP+fAmJwaqDdD8BtFToBGFiybQOv8DVkPbdNwnjMXMv/XJbNz43W7SDyNL15coVvkwqEDdh@lists.linux.dev
-X-Gm-Message-State: AOJu0YzwU4Nn7PqDC56ObfxOcHmfrmtcvAKWc+gu2MEKqUQTExHVpx3x
-	creJoIWS6RPtBQ7obzWGsn9lJ+5GerbqfmAlC2UGirMFn/aqx+vAq4HTRzooDhVPEuqVcsEmQUS
-	RtSatB65NJ8wLLG7QwQ==
-X-Google-Smtp-Source: AGHT+IGOnlG8lE2H2BKECccs5w83Ie0qMvDDSxYqNCeNyk/4OUCiSM9N6qmdcMFCMYYfeMybQOzcZG1uqwa4NcY=
-X-Received: from ejcvb9.prod.google.com ([2002:a17:907:d049:b0:b72:b433:246a])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:1c85:b0:b3b:4e6:46e6 with SMTP id a640c23a62f3a-b72e02ca1d9mr839517866b.1.1762786639240;
- Mon, 10 Nov 2025 06:57:19 -0800 (PST)
-Date: Mon, 10 Nov 2025 14:57:18 +0000
-In-Reply-To: <20251110131913.1789896-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="0GPRZkvc"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=QwVCL0MZASuLfr95utdJV3EYFM1oMr5TPPap9WciiMA=; b=0GPRZkvcS3PsVbRQHpKHfF3XLk
+	yjsdhTD6Lblld/gGEnIZehm+TxcobBFnVa/FKQhhIhD/eDDSd56tSaCay19L+e+X99ZjH2gXwCl6b
+	G3v5iphj/Ol9HIjzQ8XaiWeaJdlRZTu6i1ZibPQJ5ItLZq3NJHbjeOSUdIJyKUqAgeaE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vIU9e-00DXI1-H4; Mon, 10 Nov 2025 16:50:06 +0100
+Date: Mon, 10 Nov 2025 16:50:06 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Trevor Gross <tmgross@umich.edu>, netdev@vger.kernel.org,
+	rust-for-linux@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 1/3] rust: net: phy: fix example's references to
+ `C{22,45}`
+Message-ID: <ebc83a89-b13c-49ae-adc3-c8de6903b735@lunn.ch>
+References: <20251110122223.1677654-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20251110131913.1789896-1-ojeda@kernel.org>
-Message-ID: <aRH9Tjf0tszyQhKX@google.com>
-Subject: Re: [PATCH v2] gendwarfksyms: Skip files with no exports
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	linux-modules@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Haiyue Wang <haiyuewa@163.com>
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251110122223.1677654-1-ojeda@kernel.org>
 
-On Mon, Nov 10, 2025 at 02:19:13PM +0100, Miguel Ojeda wrote:
-> Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+On Mon, Nov 10, 2025 at 01:22:21PM +0100, Miguel Ojeda wrote:
+> The example refers to `phy::C{22,45}`, but there are no such items --
+> they are within `reg`.
+> 
+> Thus fix it.
+> 
+> Fixes: 5114e05a3cfa ("rust: net::phy unified genphy_read_status function for C22 and C45 registers")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> Please feel free to drop the Fixes tag -- I generally add them for
+> things that get actually rendered in the documentation, since the stable
+> team sometimes picks even typos, but it is of course not an bug on a
+> kernel feature, of course.
 
-Is gendwarfksyms actually present in 6.12 upstream? I know we have it in
-Android's 6.12 branch, but I thought we backported for Android only.
+netdev generally does backport documentation fixed. There are a lot of
+developers stuck on LTS trees.
 
-Alice
+Please submit this to net, and include the Fixes tag.
+
+	Andrew
