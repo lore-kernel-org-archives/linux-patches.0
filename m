@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7916324A05D;
-	Mon, 10 Nov 2025 12:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6DA24A05D;
+	Mon, 10 Nov 2025 12:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762777370; cv=none; b=ciKjF0x03p/K6X3ZeEBqZ3b4glQ6su0HFHo9DKQpc+tbYB3b3S2uWfacavWkCdm9Xjs8RV6naA0CGcps6EDDqYY0qeCPfj0JdOUfnndQTzthcNB8o5e5c2cmgWpvNjPrMzZFX+/AwKX76bP0DCs6IMAn77Tgac+bS5HtmZ8mEbk=
+	t=1762777374; cv=none; b=p/iHLRh/XFhehIuDVxeCWSHZVDJI6Zf9twKWKnk9/kmBEhQLYDBXA98yGfLO7WDv2qiNTupKwVAp00jylKXZ604gGmPS+5S4wdN51JbVeyd0uQ4VkOdX5zXtoL8R7XnwYNU6wffDk5AMAHS3ZC/D6+buWE1UISKMP5aQrSvuXcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762777370; c=relaxed/simple;
-	bh=1txYqI0NfJPVjX1jc1VEjFEJz01cfG2RKB2vr99FxV4=;
+	s=arc-20240116; t=1762777374; c=relaxed/simple;
+	bh=YY2a8MiBu+A34uZZx2cYOxj0iHaCwvR13+I+yYMoUD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxZJ0pWPdCBz6gMc6WLcqukAY3Yf+LkFKQufRO7rc3tHNCxBS+trjypMHYoB9hClbJjG9lZlHYvQI+wexr3HOAf+EdYFTHHNMHsl+05wpmpmdWvs4QDk7SJEFQldxadyCNrtXNCFKH0zs5w0R2VMmb8IGPBhOAAOwsuiRJRT6dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ueHf8Tj5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlhQx3khBg35LLkt773N+OLSOPGDIen1Bdf8GNvnJhD0clO4tXaPeIvbBXCMLMPQLTXyTV7htrJAjHUA0sulJQKNtCJNBVxfifFALtdSVFHBGVOgET/zIZIZEOhKd6jVgc3mSz9PS8fN8BDzMeRKtZOb5D+H7V3+GPIGxKk8ivo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YsRhTAKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ueHf8Tj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE34C116B1;
-	Mon, 10 Nov 2025 12:22:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YsRhTAKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5982C116B1;
+	Mon, 10 Nov 2025 12:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762777370;
-	bh=1txYqI0NfJPVjX1jc1VEjFEJz01cfG2RKB2vr99FxV4=;
+	s=k20201202; t=1762777374;
+	bh=YY2a8MiBu+A34uZZx2cYOxj0iHaCwvR13+I+yYMoUD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueHf8Tj52UolkHheEPDSjsiBK0FHsPX0Ju6hw72xSVhlQg4TzFUI0IrNr5S4CEZLr
-	 08w4ibm7VSNAIM/CwEdBlqLQGAHbENrFAq+txXA7ln5lRmxF7sxqhkVep1eWVxg5Qp
-	 cFckcOjTw/G9EG3nH5XXgcmqOeAAniPxyAATM1MOlfCZ+dAsEx29oRRlYBALQC8hFp
-	 Tx6dU7IH72tB9B0Uc4nmc6CuDMnogwC6x1xhmIgNc5BJ3MUDBreswLKXLjn5jBTREX
-	 Sq0VRBEkvzv4YYhXGXcjYBMoXRscOCRYC4r4Sf0igvymf29FTITu2VuuFB/vyNJIxS
-	 hpguq+YJCJlig==
+	b=YsRhTAKR3zbhaM6X1BTHuRO0XzAgsA86oI/tbEnLhh1PFWnaSEJV9KsqagvI9Nj0J
+	 pXKe6Si103MnmI/jN9NmhJGW1VXriJjhtH7ODREevN/520zFKW9XwOdrlOVd1diZDw
+	 qHaiQH8JgO1gq5+w2dmc9C2S3E7GUqzsp+sjEYdEUdMIknNepSb3cha31mPCg7yYTm
+	 1pPZq0fFKugldsKiztMKH6qwuNkzRotx+8dF5eAQax1ySc0kSI6W0NFWVKBYihLPua
+	 H1Sc0WsnbjevWQa0oDGUO0H08RaQITzHh6L0ve0rAqS7HHmtQi/2/0CmSk4/WuV6c2
+	 V2vNXsmoCdp6A==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: FUJITA Tomonori <fujita.tomonori@gmail.com>,
 	Miguel Ojeda <ojeda@kernel.org>,
@@ -42,9 +42,9 @@ Cc: Trevor Gross <tmgross@umich.edu>,
 	Danilo Krummrich <dakr@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 2/3] rust: net: phy: make example buildable
-Date: Mon, 10 Nov 2025 13:22:22 +0100
-Message-ID: <20251110122223.1677654-2-ojeda@kernel.org>
+Subject: [PATCH 3/3] rust: net: phy: follow usual comment conventions
+Date: Mon, 10 Nov 2025 13:22:23 +0100
+Message-ID: <20251110122223.1677654-3-ojeda@kernel.org>
 In-Reply-To: <20251110122223.1677654-1-ojeda@kernel.org>
 References: <20251110122223.1677654-1-ojeda@kernel.org>
 Precedence: bulk
@@ -55,38 +55,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This example can easily be made buildable, thus do so.
+Examples should aim to follow the usual conventions, which makes
+documentation more consistent with code and itself, and it should also
+help newcomers learn them more easily.
 
-Making examples buildable prevents issues like the one fixed in the
-previous commit.
+Thus change the comments to follow them.
 
+Link: https://docs.kernel.org/rust/coding-guidelines.html#comments
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/net/phy/reg.rs | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ rust/kernel/net/phy/reg.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/rust/kernel/net/phy/reg.rs b/rust/kernel/net/phy/reg.rs
-index 4e8b58711bae..165bbff93e53 100644
+index 165bbff93e53..5a7b808915f9 100644
 --- a/rust/kernel/net/phy/reg.rs
 +++ b/rust/kernel/net/phy/reg.rs
-@@ -25,7 +25,16 @@ pub trait Sealed {}
- ///
- /// # Examples
- ///
--/// ```ignore
-+/// ```
-+/// # use kernel::net::phy::{
-+/// #     self,
-+/// #     Device,
-+/// #     reg::{
-+/// #         C22,
-+/// #         C45,
-+/// #         Mmd, //
-+/// #     }, //
-+/// # };
+@@ -36,9 +36,9 @@ pub trait Sealed {}
+ /// #     }, //
+ /// # };
  /// fn link_change_notify(dev: &mut Device) {
- ///     // read C22 BMCR register
+-///     // read C22 BMCR register
++///     // Read C22 BMCR register.
  ///     dev.read(C22::BMCR);
+-///     // read C45 PMA/PMD control 1 register
++///     // Read C45 PMA/PMD control 1 register.
+ ///     dev.read(C45::new(Mmd::PMAPMD, 0));
+ ///
+ ///     // Checks the link status as reported by registers in the C22 namespace
 -- 
 2.51.2
 
