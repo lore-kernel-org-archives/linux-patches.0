@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879B733B940;
-	Mon, 10 Nov 2025 19:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1FA33FE22;
+	Mon, 10 Nov 2025 19:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762804651; cv=none; b=rOnkOMZdcings3rsj4yyLAxuG2GoDemJv3L4Mu6rgAykKMLKrb1ADzzoFwijq7pxm1b5zNxfu8hJdgKQACNlaA3f+It0YU9xc/9n+ph1+7CfDodU+HiU7O60qfxQ3gHes97LvCmKMzXiw6cQ6RfeV0wiBW9aG2pNuld0H3NBHEA=
+	t=1762804653; cv=none; b=MGfDLD+EB6XvOVRC+ve2TbaD+MG9dR8ipXln8NtN2nyYy3VxbQTa1Y401VNfEabBkXUsIpRs46uhihqBrqSvplIGUhXIUbkA1axiEXcas9g27J415q85iFKOByj2pY1tRlSijxTtlcozH6KcZO1FLqFx6clRDD485Ed2FoBBmfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762804651; c=relaxed/simple;
-	bh=Z3GzydHgTQcSFwH7hE59dJ2DdOwe016X26HEp2hprcc=;
+	s=arc-20240116; t=1762804653; c=relaxed/simple;
+	bh=8jymNanNDh6OTlugBO11d9IPEUWdygDIcCUgZeTZ+BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uqnjnUTCYl+Cirv32xRisBSl4zgLISp4qVcL3cEHDyE2AFN2l6aTt2iQ7aBA3iI45RvZwKoD9K2DYHmRQ5XzPIRuISZHQy25KaJEcrBKqIEJO6hA+x/1pdfOzfI1NCLnAepD76wlVAmBiSLfOjGCJ3TqAvEPmUbsOL1kH+eVXfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E4SqSrYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZQnxvQQukEeDhFR3z62bkT2Pl8oL8sCHkyuw2+VT9vXgiqRLjGMDM1iTFj5rprgbGorb0rdwepM3cPdtYDqhIX2xd5TSXgskmvkClky1+hKlOzxq5RugW98lNBWsLRmBB2otXbuAK4a6/saMLRqHk6vCBJ7pjrtXp/pvtfnp2K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RejfgAbF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4SqSrYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20B4C16AAE;
-	Mon, 10 Nov 2025 19:57:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RejfgAbF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE84C2BC87;
+	Mon, 10 Nov 2025 19:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762804651;
-	bh=Z3GzydHgTQcSFwH7hE59dJ2DdOwe016X26HEp2hprcc=;
+	s=k20201202; t=1762804652;
+	bh=8jymNanNDh6OTlugBO11d9IPEUWdygDIcCUgZeTZ+BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4SqSrYx0pkSUvnWAHdYYm3jnJaXIPKzVT2CTi25g3Xq3TdPkiSEV/GUPAF8ZPHii
-	 brbLaQuuhi4KbHZtHbPRm6SPRh+NOsg00jSKTnkHjYbVCv3U81L/xJBpwjpb7MHa+r
-	 v/mU0GGrYg13calrMCxIfCfxgITxJGc0sHL24gISQ2a5qanSNTobIgTUllhPb5BNNm
-	 LpYn//vVGHli0NmDHbv0G9Q217pZm+47il+77IaUiTxcBuF9FGD+LnolwGTjdo/Gmw
-	 dgcRK5548JNdG/E5GVhS91Tz10k01YwNoTzen94KVGXU/OhklYXIK5xATPf+Of64VS
-	 OAWN3PyrdPY5w==
+	b=RejfgAbFBT59TuDSFk3Cyjg8poBLbGKWa8PYKiE8jadpNf2V5WdYycEwKl5vLFb6y
+	 OJ3VzPUlRRUibfewgWupWbyVDD6Ibst15G0n/GeAONyUSJlJ+W3Vul28N2JfU8Ja5z
+	 UAwB5VW6BDO1c+SlW0ZfYqImnhGm7sHyfm26Pz5Gl+Y+f7ibHuObZgtDfbJNYSj6jC
+	 ouvlDEckUak8RQNs3PMpYwnxjNOKxAm0KU4bmvDbFEac9TCsxzT7LsLxA3+CuTuPxC
+	 yuPujKOd1PD4I2rJdekjtZDnwON3YiUsjqzhjdazn+zl7OwLM184H7FKLRgB+LMEpI
+	 XX5PtvuEUO/YQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] btrfs: set inode flag BTRFS_INODE_COPY_EVERYTHING when logging new name
-Date: Mon, 10 Nov 2025 14:57:05 -0500
-Message-ID: <20251110195718.859919-5-sashal@kernel.org>
+	thomas.hellstrom@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	intel-xe@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.17-6.12] drm/xe: Move declarations under conditional branch
+Date: Mon, 10 Nov 2025 14:57:06 -0500
+Message-ID: <20251110195718.859919-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251110195718.859919-1-sashal@kernel.org>
 References: <20251110195718.859919-1-sashal@kernel.org>
@@ -55,238 +54,162 @@ X-stable-base: Linux 6.17.7
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 953902e4fb4c373c81a977f78e40f9f93a79e20f ]
+[ Upstream commit 9cd27eec872f0b95dcdd811edc39d2d32e4158c8 ]
 
-If we are logging a new name make sure our inode has the runtime flag
-BTRFS_INODE_COPY_EVERYTHING set so that at btrfs_log_inode() we will find
-new inode refs/extrefs in the subvolume tree and copy them into the log
-tree.
+The xe_device_shutdown() function was needing a few declarations
+that were only required under a specific condition. This change
+moves those declarations to be within that conditional branch
+to avoid unnecessary declarations.
 
-We are currently doing it when adding a new link but we are missing it
-when renaming.
-
-An example where this makes a new name not persisted:
-
-  1) create symlink with name foo in directory A
-  2) fsync directory A, which persists the symlink
-  3) rename the symlink from foo to bar
-  4) fsync directory A to persist the new symlink name
-
-Step 4 isn't working correctly as it's not logging the new name and also
-leaving the old inode ref in the log tree, so after a power failure the
-symlink still has the old name of "foo". This is because when we first
-fsync directoy A we log the symlink's inode (as it's a new entry) and at
-btrfs_log_inode() we set the log mode to LOG_INODE_ALL and then because
-we are using that mode and the inode has the runtime flag
-BTRFS_INODE_NEEDS_FULL_SYNC set, we clear that flag as well as the flag
-BTRFS_INODE_COPY_EVERYTHING. That means the next time we log the inode,
-during the rename through the call to btrfs_log_new_name() (calling
-btrfs_log_inode_parent() and then btrfs_log_inode()), we will not search
-the subvolume tree for new refs/extrefs and jump directory to the
-'log_extents' label.
-
-Fix this by making sure we set BTRFS_INODE_COPY_EVERYTHING on an inode
-when we are about to log a new name. A test case for fstests will follow
-soon.
-
-Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/ac949c74-90c2-4b9a-b7fd-1ffc5c3175c7@gmail.com/
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20251007100208.1407021-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Recommendation
+Based on my analysis using semantic code analysis tools and git
+repository examination, here is my assessment:
 
-**YES** - This commit should be backported to stable kernel trees.
+## Answer: YES
 
-## Analysis Summary
+## Detailed Analysis:
 
-### 1. Semantic Code Analysis Tools Used
+### 1. Semantic Analysis Tools Used:
 
-I employed the following semantic analysis tools to thoroughly evaluate
-this commit:
+**mcp__semcode__find_function**: Located the `xe_device_shutdown`
+function in drivers/gpu/drm/xe/xe_device.c:963-983
 
-- **mcp__semcode__find_function**: Located `btrfs_log_new_name`,
-  `btrfs_link`, `btrfs_log_inode`, `btrfs_rename`, and `btrfs_rename2`
-  to understand the affected code paths
-- **mcp__semcode__find_callers**: Traced the call graph to identify that
-  `btrfs_log_new_name` is called by:
-  - `btrfs_link` (fs/btrfs/inode.c:6808)
-  - `btrfs_rename` (fs/btrfs/inode.c:8339)
-  - `btrfs_rename_exchange` (fs/btrfs/inode.c:8054)
-- **mcp__semcode__grep_functions**: Searched for usage patterns of
-  `BTRFS_INODE_COPY_EVERYTHING` flag across the codebase
-- **Git history analysis**: Examined commit history to understand the
-  bug's age and evolution
+**mcp__semcode__find_callers**: Identified that `xe_device_shutdown` is
+called by `xe_pci_shutdown` (the PCI device shutdown handler at
+drivers/gpu/drm/xe/xe_pci.c:877)
 
-### 2. Impact Scope Analysis
+**mcp__semcode__diff_functions**: Attempted to analyze semantic
+differences in the diff
 
-**User-Space Reachability: HIGH**
-- The bug is directly reachable from user-space through standard system
-  calls:
-  - `rename()` / `renameat()` / `renameat2()` → VFS layer →
-    `btrfs_rename2` → `btrfs_rename` or `btrfs_rename_exchange` →
-    `btrfs_log_new_name`
-  - `link()` → VFS layer → `btrfs_link` → `btrfs_log_new_name`
+**Git history analysis**: Examined the commit chain and discovered the
+critical dependency relationship
 
-**Caller Analysis Results:**
-- `btrfs_rename2` is a VFS inode operation callback (no callers = VFS
-  entry point)
-- 3 direct callers of `btrfs_log_new_name`: all filesystem operations
-- This indicates high exposure to user workloads
+### 2. Key Findings:
 
-**Real-World Impact:**
-- Confirmed user bug report from Vyacheslav Kovalevsky showing data
-  persistence failures
-- Affects crash consistency: renamed files revert to old names after
-  system crashes
-- Other filesystems (ext4, xfs, nilfs2) handle this correctly, making
-  btrfs behavior incorrect
-- Primarily affects symlinks but could impact other file types
-
-### 3. Code Change Analysis
-
-**Scope: VERY SMALL AND CONTAINED**
-
-The fix consists of only 3 effective lines across 2 files:
-
-**fs/btrfs/tree-log.c (ADD 2 lines):**
-```c
-/* The inode has a new name (ref/extref), so make sure we log it. */
-set_bit(BTRFS_INODE_COPY_EVERYTHING, &inode->runtime_flags);
+**This commit is explicitly marked as a stable dependency** for commit
+b11a020d914c3 ("drm/xe: Do clean shutdown also when using flr"). The git
+log shows:
+```
+Stable-dep-of: b11a020d914c ("drm/xe: Do clean shutdown also when using
+flr")
 ```
 
-**fs/btrfs/inode.c (REMOVE 1 line):**
-```c
-- set_bit(BTRFS_INODE_COPY_EVERYTHING, &BTRFS_I(inode)->runtime_flags);
-```
+**The dependent bug fix (b11a020d914c3)**:
+- Fixes a real bug causing "random warnings from pending related works
+  as the underlying hardware is reset in the middle of their execution"
+- Has a `Fixes:` tag pointing to 501d799a47e2 ("drm/xe: Wire up device
+  shutdown handler")
+- Includes `Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>`
+  indicating maintainer involvement
+- Is already cherry-picked and destined for stable trees
 
-The change **moves** flag setting from `btrfs_link()` to
-`btrfs_log_new_name()`, ensuring the flag is set for **both** link and
-rename operations, not just links.
+### 3. Code Change Analysis:
 
-### 4. Semantic Change Analysis
+**What this commit does**:
+- Moves variable declarations (`struct xe_gt *gt` and `u8 id`) from
+  function start into the conditional block where they're actually used
+- Purely a code organization change with **zero behavioral impact**
+- Changes from:
+  ```c
+  void xe_device_shutdown(struct xe_device *xe) {
+  struct xe_gt *gt;  // Declared at top
+  u8 id;
+  if (xe_driver_flr_disabled(xe)) {
+  // use gt and id here
+  }
+  }
+  ```
+  To:
+  ```c
+  void xe_device_shutdown(struct xe_device *xe) {
+  if (xe_driver_flr_disabled(xe)) {
+  struct xe_gt *gt;  // Declared inside conditional
+  u8 id;
+  // use gt and id here
+  }
+  }
+  ```
 
-**Using mcp__semcode__diff_functions findings:**
+### 4. Impact Scope:
 
-The fix is a **behavioral correction**, not a refactoring:
-- **Before**: `BTRFS_INODE_COPY_EVERYTHING` flag was only set during
-  `btrfs_link()` operations
-- **After**: Flag is set in `btrfs_log_new_name()`, covering both link
-  AND rename operations
-- **Effect**: When `btrfs_log_inode()` runs, it now correctly searches
-  the subvolume tree for new inode refs/extrefs during rename operations
+- **Affected function**: Single function `xe_device_shutdown` in xe DRM
+  driver
+- **Call path**: User shutdown/reboot → PCI shutdown handler →
+  xe_pci_shutdown → xe_device_shutdown
+- **Risk level**: Minimal - this is a refactoring that doesn't change
+  behavior
+- **Subsystem**: Intel Xe GPU driver (drm/xe) - not a core kernel
+  subsystem
 
-**Root Cause Identified:**
-When a directory is first fsynced with a new file, `btrfs_log_inode()`
-sets `LOG_INODE_ALL` mode and clears both `BTRFS_INODE_NEEDS_FULL_SYNC`
-and `BTRFS_INODE_COPY_EVERYTHING` flags. On subsequent rename+fsync
-operations, without `BTRFS_INODE_COPY_EVERYTHING` set, the logging code
-jumps directly to `log_extents` label, skipping the critical step of
-copying new refs/extrefs to the log tree.
+### 5. Why This Should Be Backported:
 
-### 5. Dependency Analysis
+**Primary Reason**: **Stable Dependency Requirement**
+- The subsequent bug fix b11a020d914c3 needs this commit for clean
+  application
+- Without it, the bug fix patch may have context conflicts or require
+  manual adjustment
+- Stable tree maintainers have already identified this as a required
+  dependency
 
-**Using mcp__semcode__find_calls findings:**
+**Secondary Reasons**:
+- **Zero risk**: Pure code movement with no behavioral change
+- **Small scope**: Single function in a device driver
+- **Cherry-picked**: Already cherry-picked with signature `(cherry
+  picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)`
+- **Enables important fix**: Required for fixing shutdown warnings that
+  affect users
 
-- No new functions introduced
-- No API changes required
-- No data structure modifications
-- The `BTRFS_INODE_COPY_EVERYTHING` flag has existed since at least 2015
-  (commit a742994aa2e27)
-- No complex dependency chains that would complicate backporting
+### 6. Stable Tree Rules Compliance:
 
-**Backport Risk: MINIMAL**
-- The code structure in stable kernels should be similar enough for
-  clean application
-- Some recent refactoring exists (commits da7ad2ec580b8, 841324a8e60b2,
-  93612a92bade2) but these are upstream changes that may already be in
-  stable trees
-- The core logic being fixed is long-standing
+✅ **Fixes real issue** (as a dependency for an actual bug fix)
+✅ **Small and contained** (single function, declaration movement)
+✅ **No new features** (refactoring only)
+✅ **Low regression risk** (no behavioral change)
+✅ **Explicitly marked for stable** (Stable-dep-of tag)
 
-### 6. Bug Characteristics
+### Conclusion:
 
-**Type:** Data persistence / crash consistency bug
-**Severity:** HIGH - Data integrity issue
-**Age:** Long-standing (related code from 2015+)
-**Reproducibility:** Confirmed with specific test case
-**Subsystem:** Btrfs filesystem - tree-log (fsync path)
+This commit should be backported to stable trees because it is
+explicitly marked as a stable dependency for an important bug fix. While
+it doesn't fix a bug itself, it's a necessary prerequisite that ensures
+the subsequent fix (b11a020d914c3) applies cleanly. The change is safe
+(zero behavioral impact), small (single function), and already
+identified by maintainers as required for stable tree integration.
 
-### 7. Stable Tree Compliance Check
+ drivers/gpu/drm/xe/xe_device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-✅ **Bug fix** (not a new feature)
-✅ **Small, contained change** (3 lines, 2 files)
-✅ **Fixes user-visible problem** (confirmed bug report)
-✅ **Minimal regression risk** (simple flag management)
-✅ **No architectural changes**
-✅ **No new dependencies**
-✅ **Affects data integrity** (HIGH PRIORITY)
-
-**Notable Observations:**
-- ❌ No `Cc: stable@vger.kernel.org` tag (possible oversight)
-- ❌ No `Fixes:` tag (unusual for a bug fix)
-- ✅ Has `Reported-by:` with real user impact
-- ✅ Has multiple `Reviewed-by:` tags (Boris Burkov, Qu Wenruo)
-
-### 8. Why This Is An Excellent Backport Candidate
-
-1. **Clear bug with user impact**: Real-world bug report showing data
-   loss scenario
-2. **Minimal code change**: Moving a single flag assignment to correct
-   location
-3. **No side effects**: Fix purely addresses the reported issue without
-   behavioral changes elsewhere
-4. **Long-standing bug**: Has existed for years, affecting all stable
-   kernels with btrfs
-5. **High confidence fix**: Reviewed by multiple btrfs maintainers
-6. **Data integrity issue**: Violates fsync durability guarantees that
-   applications depend on
-7. **Clean backport**: No complex dependencies or API changes required
-
-### Recommendation
-
-**This commit MUST be backported to all stable kernel trees that support
-btrfs.** The absence of stable tags appears to be an oversight rather
-than intentional exclusion. The fix addresses a clear data integrity bug
-with minimal risk and should be prioritized for stable inclusion.
-
- fs/btrfs/inode.c    | 1 -
- fs/btrfs/tree-log.c | 3 +++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 41da405181b4f..b0e0d8711d127 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -6848,7 +6848,6 @@ static int btrfs_link(struct dentry *old_dentry, struct inode *dir,
- 	BTRFS_I(inode)->dir_index = 0ULL;
- 	inode_inc_iversion(inode);
- 	inode_set_ctime_current(inode);
--	set_bit(BTRFS_INODE_COPY_EVERYTHING, &BTRFS_I(inode)->runtime_flags);
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 1c9907b8a4e9e..e7f838fed3298 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -962,12 +962,12 @@ void xe_device_remove(struct xe_device *xe)
  
- 	ret = btrfs_add_link(trans, BTRFS_I(dir), BTRFS_I(inode),
- 			     &fname.disk_name, 1, index);
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 165d2ee500ca3..410fb1b3f26c2 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -7608,6 +7608,9 @@ void btrfs_log_new_name(struct btrfs_trans_handle *trans,
- 	bool log_pinned = false;
- 	int ret;
+ void xe_device_shutdown(struct xe_device *xe)
+ {
+-	struct xe_gt *gt;
+-	u8 id;
+-
+ 	drm_dbg(&xe->drm, "Shutting down device\n");
  
-+	/* The inode has a new name (ref/extref), so make sure we log it. */
-+	set_bit(BTRFS_INODE_COPY_EVERYTHING, &inode->runtime_flags);
+ 	if (xe_driver_flr_disabled(xe)) {
++		struct xe_gt *gt;
++		u8 id;
 +
- 	btrfs_init_log_ctx(&ctx, inode);
- 	ctx.logging_new_name = true;
+ 		xe_display_pm_shutdown(xe);
  
+ 		xe_irq_suspend(xe);
 -- 
 2.51.0
 
