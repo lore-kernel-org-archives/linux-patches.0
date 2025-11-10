@@ -1,65 +1,65 @@
-Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A5825D527
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 10:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E859305977
+	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 10:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762770820; cv=none; b=dlbVSQOreKfAMmIsVEMBW+33PHj+sO3PeQBIBWSyuKkd53xNVAN7tivi3SHbAgoljnaKqNs7Sh7bsEKVycYQ75dDANBA6T3p1Uo8nE+Rah6q319XqgUKRHv75zNDfqxvog5r0yadxtVJkZxV3sA34Erkiiw0FBJ7YivQl4vzDZk=
+	t=1762771391; cv=none; b=UuYdSw7mCDG2GzlEV49meZR3De/8aCbW/5YM8ARztHJYvVxhfFCYSDY5yOZFD0U6w2IE5Wkdlv70dA/n1apB5RDvuaPUcGICPVIC3kRiDnq97W9A6SEKDbJ+Ss/cTwDs8BePZV28nxpjgxW3IdjQSsdSdYNHHEFpeHH6jgxOxwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762770820; c=relaxed/simple;
-	bh=GoL3gN4h5eYU7litgF4qiXRimx4qE9CB8i92qSY1F7w=;
+	s=arc-20240116; t=1762771391; c=relaxed/simple;
+	bh=PaK9aaWb78+gpE3XwxvDFLq4iKRgKHKKrEr/MVH+uOg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=i1P10yhxZoJOmEYKR8BTV5SS25vMyEl+nhMnxSuOQu8rWjQMR+AsXdGP3JK74Hi21zxCTyTGxcYd5kY53s8RpsTOwbXBwJdjbEQRZ6fBOdaK8c+sz7YgtVX2p1TGtKi0h1H2/OhXME+nmY7m76YSK1YrPP2Gg3dAw0/WhKQf104=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MyzWV7G+; arc=none smtp.client-ip=209.85.208.74
+	 To:Cc:Content-Type; b=IefS0xbR0ypRpRfM1qIea7i1H1CGV1DKbfNnEPHeXVvEKfs0GLKaQG750/z/bT6fFlfjFqNG4uWTcSRoLLcvtMAam5kIcENy4M2ddNC5Zz3CzZ/ppy20QXxF/t5Df2SC2FrJPUj7nZRxnRoTEZPzgnTmlKXBP15TWMC10oeIIzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PKQiHsjg; arc=none smtp.client-ip=209.85.218.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MyzWV7G+"
-Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-6411e349b73so4141320a12.2
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 02:33:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PKQiHsjg"
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-b7276057a5cso258041866b.1
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 02:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762770817; x=1763375617; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1762771387; x=1763376187; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CCzpwObG7lLSpKChT0Fx+ByLzoerKxd9DaM7EmJ24AM=;
-        b=MyzWV7G+GTZBDZlkaiRRVjK1krZjLv9tYjP96XMy/ukDjQ8tBo+J7rJ3mgH2m5Zr3k
-         3a9KgdgJXXEhKg2fwrmiUFvsj29qFlNJ76wF7Zxcn7K2Nuq4qfWi64uLsWQLnuYpfFoJ
-         cckgZd1ItU78jBGNaivfCl2iwugzPoqnmuLv5H03yaA1TbDqbO2hMmH4M8IX75eMWJ9O
-         O+3lTIGxeW1LVU2eR/qFZjnqiGPXy2ZWS8vMTMMlNPkRcRJKjN6LEhbmNTLY+mbKJ2Al
-         omjHE5g+gspyHMAlvIiQhHvAKoTTyfEl69nXHLpcxUp84Yqun8h1vKOv9p3wke2qM5q+
-         HfsQ==
+        bh=v6sNizUOGkciptOGTci4SybgbOhVv6AEZQncHw0dXTs=;
+        b=PKQiHsjgLGP7GRKQcuHJm4i4WdCRxvsIizCNtCP9QUwzJG53+L65yIG9dy6bDp+ggb
+         Za0zzMM1WTBACR6u/JE2vpvV2d1pgluL9OpAubE2Hi/WUBttEnvxssLtxd1CrCZFzUka
+         nrkfl5+MKwqXdCYMR/6loPqh7rXHSkNUzIO2jGTTIqlFi4eHPM5nVrYZhQNHrbwXD54k
+         taxgumoCP1dBk+GsdKUDEqpjB5+ezBnc1k3Wz7SKpyvy/VIamYcdCXFTrxwVNMhMzWM0
+         KCqtF1HNMRJre+rSnhetPLqY0n8N41yT8n3IF1qoY5s2/835lLXfancbX+eR+g3IUc5g
+         BLhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762770817; x=1763375617;
+        d=1e100.net; s=20230601; t=1762771387; x=1763376187;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CCzpwObG7lLSpKChT0Fx+ByLzoerKxd9DaM7EmJ24AM=;
-        b=LTjrVLYD5AX2JY97cd9FXXLdlJQmkVXSUYxTDIAgOinhT87h4bdTHosVW0S7IBKNEt
-         oXxruMyAYuXHvrBVilGioE22iB7hJe5tGdFdhd4SE3LhM4P50BeT5Gomw3PJTtTZjMI0
-         P4j3lBM5NY+DrLL6E22753ox6/9v4mVZN0aCODySZnw2KZCR3J4lnC3UeXrJCMKZgBh6
-         ZTsNfllr6eWIOL9bPZIbQZUPdNTRff0nKU7g1UKE9ejrsdCskHkJfjDDJYZRCWaqGi+s
-         p6Alpg0mFhKQItfrKccDIc2yXZnqB0aZ29EbxyfQPScBGzM918SH6ZQQV3tpmd9aoD5z
-         difA==
-X-Forwarded-Encrypted: i=1; AJvYcCW8/mJE7d6dO5rO0ENWG6uI9Mdb4pEGQcc8clMT5+3rkilxL0h32zaoBi/uZk3K1u+3j5jk6N4m@lists.linux.dev
-X-Gm-Message-State: AOJu0YyFu9MwRMkjyrjlHUd/K3QBsmncvaxsEZHditi/i5nSw0MsYa+c
-	DbINgWyqlSqQpbwAAXKrXfaUiepnXR5s96Lw5areS2w22aLnJjWOUkrHNt2X3n4w5Bkr8P5rOz0
-	U/W1ahGeJTC8Bixx7+w==
-X-Google-Smtp-Source: AGHT+IGrQByfI9wokfMWFe7K1Ttk8ewEB37twW8Y2YwoEzQNcIfJcFh4xKKTJ6P4DH7/NHxDz4jf6iOvc30RilE=
-X-Received: from ede25.prod.google.com ([2002:a05:6402:20d9:b0:641:3d6a:4b38])
+        bh=v6sNizUOGkciptOGTci4SybgbOhVv6AEZQncHw0dXTs=;
+        b=LgYrhptORS/2Z5tqaG/bQId4hskcHehTJzuT4DXITCGxYtdQawenKNlpyWBa/zFBZT
+         BuzpK+IK6S98HKDytegFih3oGY1jtok5sJkjTaUtu1kNRjGOGXkuuZEYSlN7AAEWtnxD
+         oeZaf16kDhAlKmqA82P84peppWOKF1J1MGK1SvnxNAYB9a3SQNPP0T3Mw71BlrJaUB6F
+         Z/VsLtg8NZIeY3Mwigwes8munz1KXFSQ2JdNAPtPtb1673qsjKUg9KKKTrxCXR+u0eBE
+         tvBjq816bvTQw4MsKE2d3M7j8FM085FUuiNmkzLW0ypGFqDKem9lbSx4sfltVQJVnBW+
+         nwZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVWAdYJQehTtoNwv1plP3rYig6APZ3etCi1d2XDgSOy1jktB/AWnO24el4jH7F5G+F3XxrSN+vz@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEuTSx+l/7unLwDNCS2WF2eJVmnLa69a6fvJP2RglrPOrzyH3e
+	jl/T7pIertlPcZ+LZUR7H5/j7cLyC3qnsvCeKcWWthxcdJYh1Kti7zXR6JJf2ER+rSOJvW1hk6T
+	cql/zWZuKcaxHanRYzA==
+X-Google-Smtp-Source: AGHT+IFY61ejHKFEIykzrnpB2o0ZUucS0nhTdm30eA2AKho8jI6G1MrYig9/jVIr/y6CqyP5/ec46LFxxBld4FU=
+X-Received: from ejctp27.prod.google.com ([2002:a17:907:c49b:b0:b72:ce97:7786])
  (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:27d4:b0:640:9eb3:3673 with SMTP id 4fb4d7f45d1cf-6415dbfbd56mr5809440a12.4.1762770816828;
- Mon, 10 Nov 2025 02:33:36 -0800 (PST)
-Date: Mon, 10 Nov 2025 10:33:36 +0000
-In-Reply-To: <20251110095025.1475896-4-ojeda@kernel.org>
+ 2002:a17:907:9812:b0:b71:34c3:d5a9 with SMTP id a640c23a62f3a-b72e03ee841mr671805366b.38.1762771387730;
+ Mon, 10 Nov 2025 02:43:07 -0800 (PST)
+Date: Mon, 10 Nov 2025 10:43:07 +0000
+In-Reply-To: <20251110095025.1475896-5-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-4-ojeda@kernel.org>
-Message-ID: <aRG_gJu_yZeJWPuo@google.com>
-Subject: Re: [PATCH 03/18] rust: kbuild: simplify `--cfg` handling
+References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-5-ojeda@kernel.org>
+Message-ID: <aRHBu3RoOLTrMA8n@google.com>
+Subject: Re: [PATCH 04/18] rust: kbuild: add host library support
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
@@ -71,25 +71,22 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>,
 	patches@lists.linux.dev
 Content-Type: text/plain; charset="utf-8"
 
-On Mon, Nov 10, 2025 at 10:50:08AM +0100, Miguel Ojeda wrote:
-> We need to handle `cfg`s in both `rustc` and `rust-analyzer`, and in
-> future commits some of those contain double quotes, which complicates
-> things further.
-> 
-> Thus, instead of removing the `--cfg ` part in the rust-analyzer
-> generation script, have the `*-cfgs` variables contain just the actual
-> `cfg`, and use that to generate the actual flags in `*-flags`.
+On Mon, Nov 10, 2025 at 10:50:09AM +0100, Miguel Ojeda wrote:
+> Add the a host library rule that produces `.rlib` files to be used by the
+> `macros` crate.
 > 
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+We currently have two kinds of build rules:
 
-For anyone else reviewing this, here is the relevant part of the
-makefile that calls generate_rust_analyzer:
+* cmd_host-rust used for host binaries such as generate_rust_target
+* cmd_rustc_procmacro used for proc macros
 
-rust-analyzer:
-	$(Q)MAKEFLAGS= $(srctree)/scripts/generate_rust_analyzer.py \
-		--cfgs='core=$(core-cfgs)' $(core-edition) \
-		$(realpath $(srctree)) $(realpath $(objtree)) \
-		$(rustc_sysroot) $(RUST_LIB_SRC) $(if $(KBUILD_EXTMOD),$(srcroot)) \
-		> rust-project.json
+This is a library for the second case, not the first case, so it may
+make more sense to name this rule procmacrolibrary?
+
+Note that HOSTRUSTFLAGS is passed to only the first category, but this
+naming makes it sound like it should be passed to this new build rule,
+but I don't think it should be since it is not passed to proc macros.
+
+Alice
