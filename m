@@ -1,65 +1,65 @@
 Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E859305977
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 10:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A46305064
+	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 10:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762771391; cv=none; b=UuYdSw7mCDG2GzlEV49meZR3De/8aCbW/5YM8ARztHJYvVxhfFCYSDY5yOZFD0U6w2IE5Wkdlv70dA/n1apB5RDvuaPUcGICPVIC3kRiDnq97W9A6SEKDbJ+Ss/cTwDs8BePZV28nxpjgxW3IdjQSsdSdYNHHEFpeHH6jgxOxwE=
+	t=1762771856; cv=none; b=pClJTqnyifGrzVewTarABWVq9f/kEbscNaBDxpFTTdbefb1XtIjozE51+N1Z7PNTrgtD5+4GdL8Z+ZZxFKkvNMIv4NVU7wkWB9Oen7NgQnRmYe3NMNO2c3OUW1UxX25UClVJHpmf9nJpzNtULxm8NMRllowGDeFVsvdqjoZrm+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762771391; c=relaxed/simple;
-	bh=PaK9aaWb78+gpE3XwxvDFLq4iKRgKHKKrEr/MVH+uOg=;
+	s=arc-20240116; t=1762771856; c=relaxed/simple;
+	bh=QuvzLQvjJhrJPEv2EiWNZ0BlmMA56gk0ZaiE4mu3nUw=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=IefS0xbR0ypRpRfM1qIea7i1H1CGV1DKbfNnEPHeXVvEKfs0GLKaQG750/z/bT6fFlfjFqNG4uWTcSRoLLcvtMAam5kIcENy4M2ddNC5Zz3CzZ/ppy20QXxF/t5Df2SC2FrJPUj7nZRxnRoTEZPzgnTmlKXBP15TWMC10oeIIzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PKQiHsjg; arc=none smtp.client-ip=209.85.218.73
+	 To:Cc:Content-Type; b=dniiZOloXUS0j3Hj5cjfkOzzFuKsSXr2YJytB9Zo6jMXlXMIbF1CJ7BQ2MYVIT94+HH13gRmr7K/FpI2bRN1GRiTu/aBMhtggO3AnlWfFTQdcswS3Lwu/hF/4tszY6uy/3webv067W7ipkgv9y89rA+21s7avlaYMMxI3XeneJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CkPvBe9c; arc=none smtp.client-ip=209.85.218.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PKQiHsjg"
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-b7276057a5cso258041866b.1
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 02:43:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CkPvBe9c"
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-b71043a0e4fso267166666b.2
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 02:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762771387; x=1763376187; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1762771852; x=1763376652; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v6sNizUOGkciptOGTci4SybgbOhVv6AEZQncHw0dXTs=;
-        b=PKQiHsjgLGP7GRKQcuHJm4i4WdCRxvsIizCNtCP9QUwzJG53+L65yIG9dy6bDp+ggb
-         Za0zzMM1WTBACR6u/JE2vpvV2d1pgluL9OpAubE2Hi/WUBttEnvxssLtxd1CrCZFzUka
-         nrkfl5+MKwqXdCYMR/6loPqh7rXHSkNUzIO2jGTTIqlFi4eHPM5nVrYZhQNHrbwXD54k
-         taxgumoCP1dBk+GsdKUDEqpjB5+ezBnc1k3Wz7SKpyvy/VIamYcdCXFTrxwVNMhMzWM0
-         KCqtF1HNMRJre+rSnhetPLqY0n8N41yT8n3IF1qoY5s2/835lLXfancbX+eR+g3IUc5g
-         BLhg==
+        bh=jAehjyaMCP4/3fDkR7/7In2PF2fJ4VvVwolrpLltF9s=;
+        b=CkPvBe9ckNZgDGWxTMkg8fA83ydbhvwRcUXJWl/+jhiZL/zCGIqvCyCG7jGCtyMqDo
+         TNL6z9GtAHZB0/vpnabWX8C9lrD9kCWTc7/kwH0AdztQ3jXoCuNf+AxdqpEXn3RN7FOW
+         WS1/4SvVs/+2WqmcAkQKB+gjYVYJ7Lmz+Q1dCAOmVJuyKo0+97kd3D6A8bFohRnTklyl
+         cqNTZuZLFwKTvKdhFYNmqTUrzEiMYhW45n6c8LKcb8mlLZJjmnuXroV/BD0yZuF/bOxG
+         WAf5Xy9ZG14hIPpvOHNHQ3Y/lFC3FpMS2eQn5aPY48TWiCDSVO8HUE2MrUJDudVGYKNa
+         J7OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762771387; x=1763376187;
+        d=1e100.net; s=20230601; t=1762771852; x=1763376652;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v6sNizUOGkciptOGTci4SybgbOhVv6AEZQncHw0dXTs=;
-        b=LgYrhptORS/2Z5tqaG/bQId4hskcHehTJzuT4DXITCGxYtdQawenKNlpyWBa/zFBZT
-         BuzpK+IK6S98HKDytegFih3oGY1jtok5sJkjTaUtu1kNRjGOGXkuuZEYSlN7AAEWtnxD
-         oeZaf16kDhAlKmqA82P84peppWOKF1J1MGK1SvnxNAYB9a3SQNPP0T3Mw71BlrJaUB6F
-         Z/VsLtg8NZIeY3Mwigwes8munz1KXFSQ2JdNAPtPtb1673qsjKUg9KKKTrxCXR+u0eBE
-         tvBjq816bvTQw4MsKE2d3M7j8FM085FUuiNmkzLW0ypGFqDKem9lbSx4sfltVQJVnBW+
-         nwZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVWAdYJQehTtoNwv1plP3rYig6APZ3etCi1d2XDgSOy1jktB/AWnO24el4jH7F5G+F3XxrSN+vz@lists.linux.dev
-X-Gm-Message-State: AOJu0YyEuTSx+l/7unLwDNCS2WF2eJVmnLa69a6fvJP2RglrPOrzyH3e
-	jl/T7pIertlPcZ+LZUR7H5/j7cLyC3qnsvCeKcWWthxcdJYh1Kti7zXR6JJf2ER+rSOJvW1hk6T
-	cql/zWZuKcaxHanRYzA==
-X-Google-Smtp-Source: AGHT+IFY61ejHKFEIykzrnpB2o0ZUucS0nhTdm30eA2AKho8jI6G1MrYig9/jVIr/y6CqyP5/ec46LFxxBld4FU=
-X-Received: from ejctp27.prod.google.com ([2002:a17:907:c49b:b0:b72:ce97:7786])
+        bh=jAehjyaMCP4/3fDkR7/7In2PF2fJ4VvVwolrpLltF9s=;
+        b=enHjFoeC3Kw14vY0QdvYAuoABfVQBrd+7eG1Efp2sb9GHRxcM0VnhCavuofV3HAPkC
+         B6op9OUr7sX0pbv5YC+WZyQXQs1q1hNAL+AqotIeAt2IS3GddjUB2mNVwHiXz0s7hxzN
+         MDGV8Xas9SXfIWYcyXoPoj1ivUE/y/cj89Yw3MMxwzPZzHYBYjPMRZNiaAHj+VXI/ogv
+         rjoL3emg4FhKwc9/H8Uxiezf+9INvO37n2UZfeJdLzVSGOIKL1wFi72dnJACxXys7+jZ
+         mwl+ysheFcJ53AJY2aRvEHr9TNh4Rhp+Wwdt1uvDSsDcoxUKPxsqP78P1d2Z5LDPp+ai
+         Nw8g==
+X-Forwarded-Encrypted: i=1; AJvYcCV2NM6FPZLOzlNdBf2VfbtYVrOhhbRb33QbmGpygWr2l/xn0AjLDrkolCUnlCP83KSq6UHg0/6q@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyh5MEAxNcvI9EAlXs8wVOhg12Gj5UMKK2UTd688hjnMEerbQSN
+	a47zK2XmXy+qvdEQw+OyB63BgOTL2StHH6F44wZD/NjllYDD0DqIw4DFdB7xKUbTGkgrM5i16fX
+	FDS0F/818sUGknMAX9A==
+X-Google-Smtp-Source: AGHT+IHAxf8vIQMyFMTQjQQEpwFvS82i11CDs38Q8zhN6iIl6WZ7bHyAX4vTa1PqPqK6uf3c9yj3YRaeI9ccAqo=
+X-Received: from ejctl15.prod.google.com ([2002:a17:907:c30f:b0:b71:a2e3:37b8])
  (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:9812:b0:b71:34c3:d5a9 with SMTP id a640c23a62f3a-b72e03ee841mr671805366b.38.1762771387730;
- Mon, 10 Nov 2025 02:43:07 -0800 (PST)
-Date: Mon, 10 Nov 2025 10:43:07 +0000
-In-Reply-To: <20251110095025.1475896-5-ojeda@kernel.org>
+ 2002:a17:907:1c03:b0:b72:9c81:48ab with SMTP id a640c23a62f3a-b72e050415bmr723371966b.59.1762771851712;
+ Mon, 10 Nov 2025 02:50:51 -0800 (PST)
+Date: Mon, 10 Nov 2025 10:50:51 +0000
+In-Reply-To: <20251110095025.1475896-8-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-5-ojeda@kernel.org>
-Message-ID: <aRHBu3RoOLTrMA8n@google.com>
-Subject: Re: [PATCH 04/18] rust: kbuild: add host library support
+References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-8-ojeda@kernel.org>
+Message-ID: <aRHDi9phG8iz14SO@google.com>
+Subject: Re: [PATCH 07/18] rust: proc-macro2: remove `unicode_ident` dependency
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
@@ -71,22 +71,16 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>,
 	patches@lists.linux.dev
 Content-Type: text/plain; charset="utf-8"
 
-On Mon, Nov 10, 2025 at 10:50:09AM +0100, Miguel Ojeda wrote:
-> Add the a host library rule that produces `.rlib` files to be used by the
-> `macros` crate.
+On Mon, Nov 10, 2025 at 10:50:12AM +0100, Miguel Ojeda wrote:
+> The `proc-macro2` crate depends on the `unicode-ident` crate to determine
+> whether characters have the XID_Start or XID_Continue properties according
+> to Unicode Standard Annex #31.
+> 
+> However, we only need ASCII identifiers in the kernel, thus we can
+> simplify the check and remove completely that dependency.
 > 
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-We currently have two kinds of build rules:
+Verified that these match exactly for ascii characters.
 
-* cmd_host-rust used for host binaries such as generate_rust_target
-* cmd_rustc_procmacro used for proc macros
-
-This is a library for the second case, not the first case, so it may
-make more sense to name this rule procmacrolibrary?
-
-Note that HOSTRUSTFLAGS is passed to only the first category, but this
-naming makes it sound like it should be passed to this new build rule,
-but I don't think it should be since it is not passed to proc macros.
-
-Alice
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
