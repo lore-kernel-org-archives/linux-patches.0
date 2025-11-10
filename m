@@ -1,65 +1,65 @@
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD9C3093CD
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 11:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7A124BC07
+	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 11:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762775601; cv=none; b=buT7J4nUEcgktcKikY42WBTqo/zqXJU5ycSiQhSdI38OJK/Zqvr3gLpZgsoC9glTRYSZWHm9ERyHVtsk+h0Bu2AzDk0oEAr9MAiEiu6bzYz481Fuug3uO230kmPUbyo3l/cx5EIqn3rG9Tb7/k1pN9KJPdinxge+6i9G9t1R7Ko=
+	t=1762775696; cv=none; b=FTLFQ3XmCAYpgzLDrKSMJD8EcxOcCwcgXbAHd8QwHsfrFOjz+zN4wgJk3+q28H4eTVpdS8DhmooRl+GjC/M1at+TDsuD6RotNOGfI6TGE4Xn/l1zyZYC5qUh20s7Z6D9q4U1FebbrGoKaczxdVu2t4pSB2y9FFuX9U9kHMUprD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762775601; c=relaxed/simple;
-	bh=EDZJblRFOBVaS7V9swh66M5uzKZEQn6brygnQ0u2oxA=;
+	s=arc-20240116; t=1762775696; c=relaxed/simple;
+	bh=Wld7jp9tEQXuIh09SWUvMZLGcORmYH4LRprox5mayS4=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=tKKdF4T/BcB8wQ5ZjcpXmzqToUPdNVc6083dkzpeoCRYW4x0U14z/CQvt1xbl4YkVcIeCKBsLz1/5FaqqlAbZI+XEWrIWjt+L1FDqRTZyRyeKBZCYUyDZ9e1IUzE0EPBxXng301Kk9Ooef7YZ6YTaZxmXSCD3UxJWDHa9VC2bdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aDc0aX0Q; arc=none smtp.client-ip=209.85.221.74
+	 To:Cc:Content-Type; b=Aj/KvZxrMC4r1qO7r3HmIIT0aClk37HP3dnFlPo04+ZrFwlW0TbX+Ohs2qcYefLrG3nOET3jSY67FQEhRs+6MeQazTvA20hw3Nz95UmUiSqODGW02jZVavQV5LIFPZ7l875tjJ/gnaiR6/8dSRPQKgWfRBq8WcpzkN//TcIW5Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BgSTBJIQ; arc=none smtp.client-ip=209.85.208.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aDc0aX0Q"
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-42b2c8fb84fso823902f8f.2
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 03:53:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BgSTBJIQ"
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-64097bef0e2so4156497a12.3
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 03:54:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1762775598; x=1763380398; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1762775693; x=1763380493; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FEKi6XUPcJTxR8kCttvI9av/95c/Ll+7Tji2AuMb3UQ=;
-        b=aDc0aX0Qfb9MgGIlUm9jEDZxrDdSg4xNqAabj78DEpAdM/BGm5z2h/iuIB5fAvrtS7
-         k4UZ60qnQEH8vDEUvizv+nslrqz1543N7VFbqoMe/QZMZA2qWP7l6u0mVNE56TJ9eAtn
-         RQkumLXKd/e6/AJ7tTnZCInT7SSRGTNu1YYaw+KHrN5MfsIFAgMwOprb3PNS0Dk44BrM
-         9tKL0gQiqsexDOSWyXS3EmH/Mns4ERhH/wSt+yHGx++92xSux+22AC3kmyQ2q5YH1a7o
-         kgq9LrGTWEroBoubHcgelCto3GaKWV/tvUsSatfve47TB1atXqaysrOo0zfwkGgAyzBn
-         o/mw==
+        bh=RQQBm4PwQuyI6yZ9AdqTjALBwiLdrNslKJZVi9Mtf9A=;
+        b=BgSTBJIQ6hJpX2TfQpABibD961p3yKu4AIq5MjqgzsiBfpqRhNlvVYWFrKEWlpT/FY
+         iSejL5WlPpSQQGdCd84Say8m+64VtHw6sMcwOao+sLvf8+eIOsZA6LCWq8Yg0AX2sHuu
+         9h67AneuyjHaFfUCBOW1/CfzQ665F7IU6vfGgfU/JefJ8YOw1Fgrw3ZWuH5ryCNfAw/D
+         p1E5NZyNM2TNYaOz5YMrhJovJby2CUe/meymJZm39GQkXDklcZeW0FEJx+apEyWYjXwN
+         +0JZPs+f1HbMFaX+79ENPNg4TmWL2cXD3/lmTSl3FTsHv0h8VSKcbHzMOm5ZzpgIEdQP
+         eWKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762775598; x=1763380398;
+        d=1e100.net; s=20230601; t=1762775693; x=1763380493;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FEKi6XUPcJTxR8kCttvI9av/95c/Ll+7Tji2AuMb3UQ=;
-        b=GquxKPCV7zwif03b1ipVpsV2340MIibo0x1X3+L1hMkD1dGetDJzVNvL2hBqSiA4CN
-         slOaQ92pRQ3WvMssXHE71n6J4O1NRJvG+6uq/e+fYcP+38Ye0M5IcMhyplWWFLIrraDe
-         AvRTp6AvL4djB6XRISylmewOecflAtB9uK0xehnDYiLh5ZQu7b/imDtd3GHnhxy406pS
-         glslMi69CRscnKp9uDOB5LvDhHToCft+SLIuJXKuvMdSc4S8jUD8T1kEQWsJ4pcKRzc+
-         F9xJXVGcW2i0tXsBqhVNEf7Yhd+FWQ1VR1jQHDkpdCCfRL1tiSTtmdWN1OTyokVwhM+G
-         tJZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVGzbdL8wG51XKs/Pgzle6dDpd3Bq14mRYOD1b4vhmAJbGSqGQiRdIqE4STZ//wntCUUy621a+E@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy5eXUSKWuKmL4QYn3p1Bi0BZ3+JiTk0C7txfuSfjhgTECyPSSC
-	GvG9tUG76EyHQ6ArKHaL0Q1rYakmQDVzb3QqoFzHejBC61u2MlE49zsXf8uljyvXC3gOUNRnnMl
-	/vPi66p8ggyy+0/6NJQ==
-X-Google-Smtp-Source: AGHT+IGDXVa4jR2Hvr+m+drHIkFWVJ9kU5jgqj0CSyP25A++0dFEDi+XQZITKlDq83CPddiTCOmKe1l7tbj1AWM=
-X-Received: from wrnp5.prod.google.com ([2002:adf:ce05:0:b0:42b:33e5:eba1])
+        bh=RQQBm4PwQuyI6yZ9AdqTjALBwiLdrNslKJZVi9Mtf9A=;
+        b=LtKNKXfU+w2D9A1Mcf0qvT09lFMbj1XxBLDbXIjLGpnDoMKfL40F8lFdOcyTfYPU6m
+         P8ABJ4hMRD1TL7+9r3FMRhxZVKjgJYMyE8k1ff+5z8Gd2NlIqJshcHri6no04tn1FYnk
+         uxCExqGCHvz7k3kyc+8Kb8LqN6G8Cs1WyIVUsaJf1j8tgZX6/bQzw84pfx0Wdcwohq/O
+         vjkuhSzSJtxASoFEGfeiJ7aDwEy17cZSV2U2adnjcyhGSZh04FMd8umBs3CFeuz8AmEQ
+         yn/9YMv2FYMHIY554RVzuEtNzf1gtbu9GuXGxEHM7RsPbE2xflumwdgYFj94DZddF+c2
+         bOCw==
+X-Forwarded-Encrypted: i=1; AJvYcCU4hAURG/oBuja66dyF4tEQP4x1uX0O1ldST9mTLqqLsdPc0exJbc/3FNptJQR44Pu1ABM2OzZW@lists.linux.dev
+X-Gm-Message-State: AOJu0YwKQS3RBUCS/HkdutA/O9BoIT5b38uh1DHJ9+BhsuIK3tZz1h/p
+	ela7QkD76BeGtg/34TvguvhO0WMga1RZbWAtOA5wmzVZiFnVUsxL+TwyqGFQsHg4GZHZd4MeJBh
+	JutnQa+1KzBZRtxipOg==
+X-Google-Smtp-Source: AGHT+IF3M40dNIzNZkxr/1+aJ+nfeEg2fTctw3V8OcAEVxMO8ut0+MdQ2WzFfOK9xMLQ2EWoslAnSoMKLCyCugk=
+X-Received: from edaa20.prod.google.com ([2002:a05:6402:24d4:b0:640:949d:9bf8])
  (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:4710:b0:42b:2dfd:534f with SMTP id ffacd0b85a97d-42b2dfd557dmr4843170f8f.34.1762775597658;
- Mon, 10 Nov 2025 03:53:17 -0800 (PST)
-Date: Mon, 10 Nov 2025 11:53:16 +0000
-In-Reply-To: <20251110113528.1658238-1-ojeda@kernel.org>
+ 2002:a05:6402:27d4:b0:640:fb00:9b0b with SMTP id 4fb4d7f45d1cf-6415e8565d6mr6321846a12.32.1762775693084;
+ Mon, 10 Nov 2025 03:54:53 -0800 (PST)
+Date: Mon, 10 Nov 2025 11:54:52 +0000
+In-Reply-To: <20251110113528.1658238-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20251110113528.1658238-1-ojeda@kernel.org>
-Message-ID: <aRHSLChi5HYXW4-9@google.com>
-Subject: Re: [PATCH 1/2] rust: allow `unreachable_pub` for doctests
+References: <20251110113528.1658238-1-ojeda@kernel.org> <20251110113528.1658238-2-ojeda@kernel.org>
+Message-ID: <aRHSjKsZVz3NfUrW@google.com>
+Subject: Re: [PATCH 2/2] rust: device: make example buildable
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
@@ -74,37 +74,41 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael
 	patches@lists.linux.dev
 Content-Type: text/plain; charset="utf-8"
 
-On Mon, Nov 10, 2025 at 12:35:27PM +0100, Miguel Ojeda wrote:
-> Examples (i.e. doctests) may want to show public items such as structs,
-> thus the `unreachable_pub` warning is not very helpful.
+On Mon, Nov 10, 2025 at 12:35:28PM +0100, Miguel Ojeda wrote:
+> This example can easily be made buildable, thus do so.
 > 
-> Thus allow it for all doctests.
+> It would have triggered an `unreachable_pub` warning without the previous
+> commit.
 > 
-> In addition, remove it from the existing `expect`s we have in a couple
-> doctests.
-> 
-> Suggested-by: Alice Ryhl <aliceryhl@google.com>
-> Link: https://lore.kernel.org/rust-for-linux/aRG9VjsaCjsvAwUn@google.com/
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
->  rust/kernel/init.rs         | 2 +-
->  rust/kernel/types.rs        | 2 +-
->  scripts/rustdoc_test_gen.rs | 1 +
->  3 files changed, 3 insertions(+), 2 deletions(-)
+>  rust/kernel/device.rs | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 > 
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index 4949047af8d7..e476d81c1a27 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -67,7 +67,7 @@
->  //! ```
->  //!
->  //! ```rust
-> -//! # #![expect(unreachable_pub, clippy::disallowed_names)]
-> +//! # #![expect(clippy::disallowed_names)]
-
-Maybe we should also allow disallowed_names in doc tests?
-
-Alice
+> diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
+> index a849b7dde2fd..d00f4af507db 100644
+> --- a/rust/kernel/device.rs
+> +++ b/rust/kernel/device.rs
+> @@ -67,7 +67,16 @@
+>  ///
+>  /// A bus specific device should be defined as follows.
+>  ///
+> -/// ```ignore
+> +/// ```
+> +/// # use core::marker::PhantomData;
+> +/// # use kernel::{
+> +/// #     device,
+> +/// #     types::Opaque, //
+> +/// # };
+> +/// # mod bindings {
+> +/// #     #[expect(non_camel_case_types)]
+> +/// #     pub struct bus_device_type;
+> +/// # }
+>  /// #[repr(transparent)]
+>  /// pub struct Device<Ctx: device::DeviceContext = device::Normal>(
+>  ///     Opaque<bindings::bus_device_type>,
+> -- 
+> 2.51.2
+> 
