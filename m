@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51462336EFD;
-	Mon, 10 Nov 2025 19:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C191032C33C;
+	Mon, 10 Nov 2025 19:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762804648; cv=none; b=NakenPi2LpvSyRh1fUw6vrXNHbwp1M9pztrBniIneNhBdumvTPws5FiJI2audWYk+wn/ndyGxG77J05ysNhRhTd58CUNtQBaSDY4SUvRfvsiH1ArcBGP2sjG1tvB+Su4UW2i3bplradeZayP2/iC6N1YokY9hByanA0vLEBTbfQ=
+	t=1762804649; cv=none; b=Vh8xnmdHm3pKaEgLsrj2c4PuB8jLbZ6fPaM5grxUER4ZVTQ0qD3aZrxPmxgiFvPVbh7fqacffFvXN4nfcXUgAETWDfRX9bwI1dTBUhOvyOY2pX7eVKeVZrLG8eVglzfN7YGn8V8gG1HZrIoWXY2hJFAltPs/hENNIKbxyc6G9MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762804648; c=relaxed/simple;
-	bh=7qoRu0+RlFlou80SR1CpX/1QJvwjgZWdZwchm3F0+R4=;
+	s=arc-20240116; t=1762804649; c=relaxed/simple;
+	bh=1ac7IzhKmYqWG7jucxUrD8X+YajNf9Mfi3O6JIKv6IA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X/ztVf0ByPUf6M/EovWw4kCaPJkM2fdwrR2trWpknujevvRu30aX6BCwqo8U3iHOtBypehabTQGkrR/NrALWHKlNjwyCQXAPHkDJira/W4nF67+emaAcm6OXIVuBLLPbszK5BRHBrQzLpMU5i/bhF5WqjO6HZ1N9E1pNdCaeJuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MwX1ndXs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GbMOiQbi2AX82YUHAUcVsbku3X83SlJ/fw6tgWPX+D4ch8TzAymB48+FX7kTrFXr//T//hWqyS/GhM4d6S1Ml2N2khFCplRHt9acj7GqIXQoiluYA9RkK1W0zXPDHPZAO3T/6/K8BpleyMhktDiLXHMadb+lYPvT8yiCOQzbkO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XYl+zes6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MwX1ndXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEBFC16AAE;
-	Mon, 10 Nov 2025 19:57:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XYl+zes6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B03C4CEFB;
+	Mon, 10 Nov 2025 19:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762804647;
-	bh=7qoRu0+RlFlou80SR1CpX/1QJvwjgZWdZwchm3F0+R4=;
+	s=k20201202; t=1762804649;
+	bh=1ac7IzhKmYqWG7jucxUrD8X+YajNf9Mfi3O6JIKv6IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwX1ndXsEPnx1OdZ0JL/opQXXrG6Z5jRcmuPfkE/5execmaAgpAaIG1bk2BZzaX6z
-	 Odq6EZ7+6e1STaRxM3p+xOx9rHsCa+qIEf/bpQ2bdVVFsInoXiMgHb0JxaDxalOYpd
-	 YzkiZv14LI9afF4MB4I7/bOScsTJyTW1aACr4zjEEXCVUW5By5cKuR9k3RN7qQkWE8
-	 oUFmug+Ir0gZICWJIfmHQ2z8dT+4FPQpWaEkOCyh0eQ3HUI4NUJE5emLfT374l/2nL
-	 +d1A9My/NMk/Z1ZEUZbCxtlSSR64Th4EWY0+v4+2NWbNgG3g6odHqoFr4LfSNwJNz9
-	 5bQXjQbh8oIlw==
+	b=XYl+zes6oNWcMoaIIWj0gQNWgw3zHnKFmEkKDSs6T+/fBSkMWnjA26zIA0T00AhqV
+	 cIGGUYig+ET9N7X2uUlo7L2DPIg8ZbfWw950fMCMflFk2WjmkKrD2ImxEjR7XvElCY
+	 33lG8f0KqlpFm05OFLyQpWklRrI6JvW8AAq6iAehZlnpAvHXEaqegLRZIPMn41LONd
+	 Wm8/Ry3Wr9/GFXah5kumt4F5SyTkUzL/kR77y2YehzcVPaeTTu2pmhHQMWLOjP48Nk
+	 IypBEVTohqSxlquLjORyJGB8Pp/URd6AIoEnpjapI8Pue/LEvjZuLwTDyUJB35k3Gu
+	 6iAF6IX22Ha1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nishanth Menon <nm@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.4] net: ethernet: ti: netcp: Standardize knav_dma_open_channel to return NULL on error
-Date: Mon, 10 Nov 2025 14:57:03 -0500
-Message-ID: <20251110195718.859919-3-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] scsi: ufs: ufs-qcom: Fix UFS OCP issue during UFS power down (PC=3)
+Date: Mon, 10 Nov 2025 14:57:04 -0500
+Message-ID: <20251110195718.859919-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251110195718.859919-1-sashal@kernel.org>
 References: <20251110195718.859919-1-sashal@kernel.org>
@@ -56,293 +53,197 @@ X-stable-base: Linux 6.17.7
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nishanth Menon <nm@ti.com>
+From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
 
-[ Upstream commit 90a88306eb874fe4bbdd860e6c9787f5bbc588b5 ]
+[ Upstream commit 5127be409c6c3815c4a7d8f6d88043e44f9b9543 ]
 
-Make knav_dma_open_channel consistently return NULL on error instead
-of ERR_PTR. Currently the header include/linux/soc/ti/knav_dma.h
-returns NULL when the driver is disabled, but the driver
-implementation does not even return NULL or ERR_PTR on failure,
-causing inconsistency in the users. This results in a crash in
-netcp_free_navigator_resources as followed (trimmed):
+According to UFS specifications, the power-off sequence for a UFS device
+includes:
 
-Unhandled fault: alignment exception (0x221) at 0xfffffff2
-[fffffff2] *pgd=80000800207003, *pmd=82ffda003, *pte=00000000
-Internal error: : 221 [#1] SMP ARM
-Modules linked in:
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.17.0-rc7 #1 NONE
-Hardware name: Keystone
-PC is at knav_dma_close_channel+0x30/0x19c
-LR is at netcp_free_navigator_resources+0x2c/0x28c
+ - Sending an SSU command with Power_Condition=3 and await a response.
 
-[... TRIM...]
+ - Asserting RST_N low.
 
-Call trace:
- knav_dma_close_channel from netcp_free_navigator_resources+0x2c/0x28c
- netcp_free_navigator_resources from netcp_ndo_open+0x430/0x46c
- netcp_ndo_open from __dev_open+0x114/0x29c
- __dev_open from __dev_change_flags+0x190/0x208
- __dev_change_flags from netif_change_flags+0x1c/0x58
- netif_change_flags from dev_change_flags+0x38/0xa0
- dev_change_flags from ip_auto_config+0x2c4/0x11f0
- ip_auto_config from do_one_initcall+0x58/0x200
- do_one_initcall from kernel_init_freeable+0x1cc/0x238
- kernel_init_freeable from kernel_init+0x1c/0x12c
- kernel_init from ret_from_fork+0x14/0x38
-[... TRIM...]
+ - Turning off REF_CLK.
 
-Standardize the error handling by making the function return NULL on
-all error conditions. The API is used in just the netcp_core.c so the
-impact is limited.
+ - Turning off VCC.
 
-Note, this change, in effect reverts commit 5b6cb43b4d62 ("net:
-ethernet: ti: netcp_core: return error while dma channel open issue"),
-but provides a less error prone implementation.
+ - Turning off VCCQ/VCCQ2.
 
-Suggested-by: Simon Horman <horms@kernel.org>
-Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251103162811.3730055-1-nm@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As part of ufs shutdown, after the SSU command completion, asserting
+hardware reset (HWRST) triggers the device firmware to wake up and
+execute its reset routine. This routine initializes hardware blocks and
+takes a few milliseconds to complete. During this time, the ICCQ draws a
+large current.
+
+This large ICCQ current may cause issues for the regulator which is
+supplying power to UFS, because the turn off request from UFS driver to
+the regulator framework will be immediately followed by low power
+mode(LPM) request by regulator framework. This is done by framework
+because UFS which is the only client is requesting for disable. So if
+the rail is still in the process of shutting down while ICCQ exceeds LPM
+current thresholds, and LPM mode is activated in hardware during this
+state, it may trigger an overcurrent protection (OCP) fault in the
+regulator.
+
+To prevent this, a 10ms delay is added after asserting HWRST. This
+allows the reset operation to complete while power rails remain active
+and in high-power mode.
+
+Currently there is no way for Host to query whether the reset is
+completed or not and hence this the delay is based on experiments with
+Qualcomm UFS controllers across multiple UFS vendors.
+
+Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251012173828.9880-1-nitin.rawat@oss.qualcomm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 Based on my comprehensive analysis using semantic code analysis tools
-and kernel repository examination, here is my determination:
+and repository examination, here is my assessment:
 
-## **YES** - This commit SHOULD be backported to stable kernel trees
-
----
+## BACKPORT RECOMMENDATION: YES
 
 ## Analysis Summary
 
 ### Semantic Analysis Tools Used:
 
-1. **mcp__semcode__find_function** - Located all affected functions
-2. **mcp__semcode__find_callers** - Identified call sites and impact
-   scope
-3. **mcp__semcode__find_callchain** - Traced execution paths from user-
-   space
-4. **Read** - Examined header file and code structure
-5. **Grep** - Verified net_device_ops assignment
-6. **git log/show** - Investigated bug history and kernel version
-   presence
+1. **mcp__semcode__find_function** - Located the `ufs_qcom_suspend` and
+   `ufs_qcom_device_reset_ctrl` functions
+2. **mcp__semcode__find_callers** - Found that
+   `ufs_qcom_device_reset_ctrl` is called by only 2 functions, making
+   impact analysis straightforward
+3. **mcp__semcode__find_callchain** - Traced the call path showing this
+   is invoked through variant ops during system suspend
+4. **mcp__semcode__diff_functions** - Confirmed this is a minimal
+   semantic change (just adding a delay)
+5. **git log/blame analysis** - Traced the historical context
 
 ### Key Findings:
 
-#### 1. **User-Space Triggerable Crash** (CRITICAL)
-- **Impact**: The bug causes a kernel crash (alignment exception at
-  0xfffffff2) when opening a network interface
-- **Trigger path**: User command (`ifconfig eth0 up` or `ip link set
-  eth0 up`) → `__dev_open()` → `netcp_ndo_open()`
-  (drivers/net/ethernet/ti/netcp_core.c:1942) →
-  `netcp_setup_navigator_resources()` → `knav_dma_open_channel()`
-- **Call graph analysis** shows `netcp_ndo_open` is assigned to
-  `.ndo_open` in `netcp_netdev_ops` structure, making it directly user-
-  triggerable
+#### 1. **Impact & Scope Analysis**
+- **Function location**: `drivers/ufs/host/ufs-qcom.c:731` in
+  `ufs_qcom_suspend()`
+- **Call graph**: The function is registered as a suspend callback in
+  `ufs_hba_variant_ops` and gets invoked during system suspend
+  operations
+- **Affected devices**: All Qualcomm UFS controllers (MSM8994, MSM8996,
+  SDM845, SM8150, SM8250, SM8350, SM8450, SM8550, SM8650, SM8750, and
+  many more)
+- **User exposure**: HIGH - triggered during normal suspend/resume
+  cycles
 
-#### 2. **Root Cause Analysis**
-The crash occurs due to inconsistent error handling:
-- **Header stub** (include/linux/soc/ti/knav_dma.h:168): Returns `NULL`
-  when driver disabled
-- **Driver implementation** (drivers/soc/ti/knav_dma.c:407-487): Returns
-  `(void *)-EINVAL` (ERR_PTR) on errors
-- **Callers** check `IS_ERR()` after calling `knav_dma_open_channel()`
-- **Cleanup code** in `netcp_free_navigator_resources()` (line 1548)
-  only checks `if (netcp->rx_channel)` before calling
-  `knav_dma_close_channel()`
-- When `rx_channel` contains `-EINVAL` (0xfffffff2), it's non-NULL, so
-  the check passes
-- `knav_dma_close_channel()` attempts to dereference this invalid
-  pointer → alignment exception crash
+#### 2. **Code Change Analysis**
+The change is extremely minimal and low-risk:
+```c
+if (ufs_qcom_is_link_off(hba) && host->device_reset) {
+    ufs_qcom_device_reset_ctrl(hba, true);
++   usleep_range(10000, 11000);  // Only change: 10ms delay
+}
+```
 
-#### 3. **Impact Scope** (from mcp__semcode__find_callers)
-- **Limited scope**: Only 2 callers of `knav_dma_open_channel()`:
-  - `netcp_setup_navigator_resources()`
-    (drivers/net/ethernet/ti/netcp_core.c:1582)
-  - `netcp_txpipe_open()` (drivers/net/ethernet/ti/netcp_core.c:1326)
-- **Affected hardware**: TI Keystone SoC users with NetCP driver
-- **Files changed**: Only 2 files, both in the same subsystem
+#### 3. **Historical Context**
+- The device reset during suspend was introduced in **v5.12-rc1**
+  (commit b61d041413685, Jan 2021)
+- This OCP issue has existed for **~4 years**
+- Not a recent regression - this is a long-standing hardware timing
+  issue
 
-#### 4. **Bug Longevity**
-- **Introduced**: v4.12 (2017) by commit 5b6cb43b4d625
-- **Duration**: ~7-8 years of existence
-- **Fixed in**: v6.18-rc5 (November 2024)
-- Verified the buggy pattern exists in v6.6 LTS kernel
+#### 4. **Problem Severity**
+According to the commit message and code analysis:
+- **Issue**: After asserting hardware reset, the UFS device firmware
+  wakes up and draws large ICCQ current
+- **Consequence**: Can trigger overcurrent protection (OCP) faults in
+  the regulator hardware
+- **Impact**: Potential hardware protection faults during power down
+  sequence
+- **Root cause**: Race between device reset completion and regulator
+  entering low-power mode
 
-#### 5. **Change Characteristics**
-- **Type**: Pure bug fix (crash fix)
-- **Size**: Small and contained
-  (drivers/net/ethernet/ti/netcp_core.c:1326-1366
-  netcp_core.c:1582-1694, drivers/soc/ti/knav_dma.c:407-487)
-- **Semantic changes** (from code inspection):
-  - Standardizes return value from ERR_PTR to NULL on all error paths
-  - Updates callers from `IS_ERR()` checks to simple NULL checks
-  - Updates cleanup from `IS_ERR_OR_NULL()` to simple NULL checks
-  - Changes error code from `PTR_ERR()` extraction to fixed `-EINVAL`
-- **No architectural changes**: No struct modifications, no API
-  additions
-- **No new features**: Only error handling standardization
+#### 5. **Risk Assessment**
+- **Regression risk**: VERY LOW - only adds a 10ms sleep
+- **Side effects**: None beyond slightly longer suspend time (10ms is
+  negligible)
+- **Dependencies**: No new dependencies introduced
+- **Architectural changes**: None
 
-#### 6. **Backport Risk Assessment**
-- **Risk level**: LOW
-  - Changes are localized to error handling paths
-  - Makes behavior consistent with header stub
-  - No complex dependencies identified
-  - Code structure in v6.6 is compatible (verified)
-- **Regression potential**: Minimal
-  - Affects only error paths that were already broken
-  - Improves consistency between header and implementation
-  - All callers updated in same commit
+### Reasoning for YES:
 
-#### 7. **Stable Tree Compliance**
-- ✅ **Fixes important bug**: Kernel crash
-- ✅ **Small and contained**: 2 files, error handling only
-- ✅ **No new features**: Pure bug fix
-- ✅ **No architectural changes**: No struct/API changes
-- ✅ **Obvious and correct**: Crash trace in commit message proves the
-  fix
-- ✅ **Self-contained**: No dependencies on other commits
-- ❌ **Missing stable tags**: No "Cc: stable@vger.kernel.org" or "Fixes:"
-  tag (oversight)
+1. **Fixes important hardware issue**: Prevents OCP faults that could
+   affect regulator hardware integrity
+2. **Wide device impact**: Affects entire Qualcomm UFS ecosystem (very
+   popular in Android devices)
+3. **Long-standing bug**: Has existed since v5.12 (2021), not a new
+   feature
+4. **Minimal and safe**: Single-line change with no complex logic
+5. **Follows stable rules**:
+   - ✓ It fixes a bug
+   - ✓ Obviously correct
+   - ✓ Small and contained
+   - ✓ Doesn't add new features
+   - ✓ Low regression risk
 
-### Specific Code Reference Points:
+### Notable Observations:
 
-1. **drivers/soc/ti/knav_dma.c:407-487**: Changed all error returns from
-   `(void *)-EINVAL` to `NULL`
-2. **drivers/net/ethernet/ti/netcp_core.c:1339**: Changed from
-   `IS_ERR(tx_pipe->dma_channel)` to `!tx_pipe->dma_channel`
-3. **drivers/net/ethernet/ti/netcp_core.c:1361**: Changed from
-   `IS_ERR_OR_NULL()` to simple NULL check in cleanup
-4. **drivers/net/ethernet/ti/netcp_core.c:1680**: Changed from
-   `IS_ERR(netcp->rx_channel)` to `!netcp->rx_channel`
+- **No explicit stable tag**: The commit does NOT include "Cc:
+  stable@vger.kernel.org", which typically indicates maintainers didn't
+  prioritize it for backport
+- **Cautious language**: Commit uses "may cause" rather than "causes" -
+  suggesting this is a potential issue rather than frequently reported
+  problem
+- **No user reports mentioned**: No indication of widespread user-
+  visible failures
 
-### Conclusion:
+### Recommendation:
 
-This commit is an **excellent candidate for stable backporting**:
-- Fixes a real, user-triggerable kernel crash with documented stack
-  trace
-- Affects users of TI Keystone SoCs who configure network interfaces
-- Small, well-contained, low-risk change
-- Bug has existed since v4.12 (2017) affecting all stable trees
-- Should be backported to all active stable kernels (at minimum v6.1+,
-  v6.6+, v6.12+)
+**YES - Backport to stable kernels 5.12+**
 
-The absence of stable/Fixes tags appears to be an oversight and should
-not prevent backporting given the clear evidence of crash and the
-straightforward nature of the fix.
+Despite the lack of explicit stable tag, this commit should be
+backported because:
+- It prevents potential hardware protection faults
+- The fix is trivial and risk-free
+- It affects a critical subsystem (storage) on widely-used platforms
+- The issue has existed for years across all Qualcomm UFS devices
 
- drivers/net/ethernet/ti/netcp_core.c | 10 +++++-----
- drivers/soc/ti/knav_dma.c            | 14 +++++++-------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+Priority: **MEDIUM** - This is a valid fix for a hardware timing issue,
+but the lack of stable tag and cautious commit language suggests it's
+not causing widespread failures. However, preventing OCP faults is
+important for hardware longevity.
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index 857820657bac5..5ee13db568f08 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1338,10 +1338,10 @@ int netcp_txpipe_open(struct netcp_tx_pipe *tx_pipe)
+ drivers/ufs/host/ufs-qcom.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 9574fdc2bb0fd..8fe4405ec0ec7 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -741,8 +741,21 @@ static int ufs_qcom_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
  
- 	tx_pipe->dma_channel = knav_dma_open_channel(dev,
- 				tx_pipe->dma_chan_name, &config);
--	if (IS_ERR(tx_pipe->dma_channel)) {
-+	if (!tx_pipe->dma_channel) {
- 		dev_err(dev, "failed opening tx chan(%s)\n",
- 			tx_pipe->dma_chan_name);
--		ret = PTR_ERR(tx_pipe->dma_channel);
-+		ret = -EINVAL;
- 		goto err;
- 	}
  
-@@ -1359,7 +1359,7 @@ int netcp_txpipe_open(struct netcp_tx_pipe *tx_pipe)
- 	return 0;
+ 	/* reset the connected UFS device during power down */
+-	if (ufs_qcom_is_link_off(hba) && host->device_reset)
++	if (ufs_qcom_is_link_off(hba) && host->device_reset) {
+ 		ufs_qcom_device_reset_ctrl(hba, true);
++		/*
++		 * After sending the SSU command, asserting the rst_n
++		 * line causes the device firmware to wake up and
++		 * execute its reset routine.
++		 *
++		 * During this process, the device may draw current
++		 * beyond the permissible limit for low-power mode (LPM).
++		 * A 10ms delay, based on experimental observations,
++		 * allows the UFS device to complete its hardware reset
++		 * before transitioning the power rail to LPM.
++		 */
++		usleep_range(10000, 11000);
++	}
  
- err:
--	if (!IS_ERR_OR_NULL(tx_pipe->dma_channel))
-+	if (tx_pipe->dma_channel)
- 		knav_dma_close_channel(tx_pipe->dma_channel);
- 	tx_pipe->dma_channel = NULL;
- 	return ret;
-@@ -1678,10 +1678,10 @@ static int netcp_setup_navigator_resources(struct net_device *ndev)
- 
- 	netcp->rx_channel = knav_dma_open_channel(netcp->netcp_device->device,
- 					netcp->dma_chan_name, &config);
--	if (IS_ERR(netcp->rx_channel)) {
-+	if (!netcp->rx_channel) {
- 		dev_err(netcp->ndev_dev, "failed opening rx chan(%s\n",
- 			netcp->dma_chan_name);
--		ret = PTR_ERR(netcp->rx_channel);
-+		ret = -EINVAL;
- 		goto fail;
- 	}
- 
-diff --git a/drivers/soc/ti/knav_dma.c b/drivers/soc/ti/knav_dma.c
-index a25ebe6cd5030..553ae7ee20f16 100644
---- a/drivers/soc/ti/knav_dma.c
-+++ b/drivers/soc/ti/knav_dma.c
-@@ -402,7 +402,7 @@ static int of_channel_match_helper(struct device_node *np, const char *name,
-  * @name:	slave channel name
-  * @config:	dma configuration parameters
-  *
-- * Returns pointer to appropriate DMA channel on success or error.
-+ * Return: Pointer to appropriate DMA channel on success or NULL on error.
-  */
- void *knav_dma_open_channel(struct device *dev, const char *name,
- 					struct knav_dma_cfg *config)
-@@ -414,13 +414,13 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 
- 	if (!kdev) {
- 		pr_err("keystone-navigator-dma driver not registered\n");
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	chan_num = of_channel_match_helper(dev->of_node, name, &instance);
- 	if (chan_num < 0) {
- 		dev_err(kdev->dev, "No DMA instance with name %s\n", name);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	dev_dbg(kdev->dev, "initializing %s channel %d from DMA %s\n",
-@@ -431,7 +431,7 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	if (config->direction != DMA_MEM_TO_DEV &&
- 	    config->direction != DMA_DEV_TO_MEM) {
- 		dev_err(kdev->dev, "bad direction\n");
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	/* Look for correct dma instance */
-@@ -443,7 +443,7 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	}
- 	if (!dma) {
- 		dev_err(kdev->dev, "No DMA instance with name %s\n", instance);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	/* Look for correct dma channel from dma instance */
-@@ -463,14 +463,14 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	if (!chan) {
- 		dev_err(kdev->dev, "channel %d is not in DMA %s\n",
- 				chan_num, instance);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	if (atomic_read(&chan->ref_count) >= 1) {
- 		if (!check_config(chan, config)) {
- 			dev_err(kdev->dev, "channel %d config miss-match\n",
- 				chan_num);
--			return (void *)-EINVAL;
-+			return NULL;
- 		}
- 	}
- 
+ 	return ufs_qcom_ice_suspend(host);
+ }
 -- 
 2.51.0
 
