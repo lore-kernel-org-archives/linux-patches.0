@@ -1,94 +1,119 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CD3305E37
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 11:17:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22EA30AD1F;
+	Mon, 10 Nov 2025 11:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762773444; cv=none; b=oYyu7HhZaRa1DhQnJdF4UkvI6YTqMUJiScTb/WgaXigU5T+RoEXAqkR7CJzU4/PdZgsyqZxfdxjwwp4VJCqxW3WqixxLY4K/17vd3YUMZACa9XhhdFAKffRpDj5nAcSExbakEwV/63CnNpsx3OHrL5kfa0CHPICbMyGBeJQWCXY=
+	t=1762774541; cv=none; b=iPMDB91UerKMTKHWkQi9h66bdxNhzEwgDd0Cb+CrRpSBOXHvSfOjxUM9Xkxc3OzdGr54lKF7jRF6QW7NbPjN0NNoeeMXh/KSUZHiakqyETTUG8eRdXUaV1mERnPFgeQf7p1TEaM0aPkcyk5cmeOhOV1CBp3dgMNVRdceSAu0blo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762773444; c=relaxed/simple;
-	bh=Qe3d2RAqo7YTKqv4jYgqUMxYnjMyEHYM/6ALuA5VeDc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QZg5XYjkU5gXUBQmeTv8gdANPJ1mPCVVnp8RdY8f+K4Fvcj6Pq9qdr5neOe3UmB2ALZQD2gJF75Jj8MjAM+uLfYZO8hovP4fTkH6SJ9jFH8bj4tuzC1tqg/2LB3Qom5JoNv4yr7bGJE7jzR3BcP3zUnKyL2hQ0ZU82KP+sZPHAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W0Xqj6/U; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762774541; c=relaxed/simple;
+	bh=Trw3VkOpFEcmS9Rt6F8pvQePozUV3ete57zjNzKHvuQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DLzEDK6qjSI8MqCOaMfvHtFEowg2yXCWmMfvCfVJkaL7bjb7YLQ1FwqGYRxrxHeY0TQ+hUjd8zNQfAD4wYGhWzFjGqR2+3rb+JCh56rejfVOH8SI0rEYegQUAf2C9mPHkVyHK1Rg0M23PugJw3ns7CewPmCigISslNEin0F/1Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPLAInXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W0Xqj6/U"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-378e18494b7so3615021fa.3
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 03:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762773441; x=1763378241; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qe3d2RAqo7YTKqv4jYgqUMxYnjMyEHYM/6ALuA5VeDc=;
-        b=W0Xqj6/UzJbHwDZ0vaKes6GmSoO2/LNBI5N5DCZQZ518JulDieN6Tsqb9dqMDyugNb
-         4hmPn2pxqiPKVD4QDIIDZRxfBwJPbA/06DH8EM+Z6r3IDcJQrnP+t+/L+xP0H8S8CrZR
-         OR3e8XACZ1z8xsWz2q4qOgh+0a7fykebr0jKK+JTQq1w8yYQhe60kTpFKbM+lSaMQG7T
-         P3G6JlAVS/frl2MvXodCTJsbQNRQ446I4G39NdbpLbSHWrJdW29hmFNwKJlOKSmBflmV
-         3Pe7+lJAsHwsAA6yntuREiyBEXlqyqKr1Xt270zfcnvQQ0BZksqUy6RUqQIpPGIqDcb3
-         W5hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762773441; x=1763378241;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Qe3d2RAqo7YTKqv4jYgqUMxYnjMyEHYM/6ALuA5VeDc=;
-        b=KYgiRFrI48ynG8tBzR/wqNTJ7L7OfAWcObFKK2hRAvOJvTdZ7Bb9gr4q7jCL6f+Nff
-         5HMLGo95SVLAxRL9TKdXNXXHIxH+pWSuqlvi4KC2PaTE7F1IO08bT0aobE9DO2mnMWhj
-         tebP96kBn9umqmEouBCiny55EO0PUieAv6fhJGbpyxfJOyicSa3FQ4i7uVOaqEdirk89
-         Udc04RIdUffxUb8kc6EmP3IoaEStVgHylaPDoMJOzr3nOFJ3xahEdaCi1+Oyc8idFB/K
-         xdYYB2VkDHYJaLrb2Ft+4P/EELz61qz5A7A9HDYMZTYIfBDoZoxnxyR1wb4vEmMRFm7J
-         0C4g==
-X-Forwarded-Encrypted: i=1; AJvYcCUE9JdrprfNvLatne/YpOM0Cli097OxgQR7VgZSudpoHX+iPDcUo0kKwNOTjrUCHPgqvUctvjVY@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGIQGqMuzCu8fR1jFdQqbfKO5BEbWEkUwNWnhxCt/IdBpNAv4p
-	oVWjCH7YkVbEK3dyuDx1xZDr+Gfd0eFq9woe2KGcdcpELyZ1cMXR/kxocXMDSQctfqsZqL1uCso
-	u7/V5xbkhNSBopPceVh8Ff0zCwCzkVgk=
-X-Gm-Gg: ASbGncuzdDlTxkQcmCAEAunWbbqpqGx3JcYedZAAZpQlR4apEZ3BG24GVIuJv3/hCRa
-	kcMIQZE4oBS5+LJ9ZycOTMZ2vnotYGRvkuwyqJnif7ZIGnAf+6lnIWolKhDT+ohpNErcF319JNr
-	xA4qY5hoBbBQ6JO8DidJJkHb5HUTtDxhxPUfw1xpzQyWUc6dtKVSvoqfUq16HxWxihyRfL3ZHeg
-	dcIO1GTXIJ/zzBrKZb5s3tNUx3c4aN6eApKHwyKjVNxyYp1e5Qzg/vsCJw07t8I0VsjwoRhxWFj
-	9hSa2vZyx9ZHN8pztzlkYntA9ZdaPmONBf/d98gsKWiKlFJYfZNUlcxV6Vqd+okpa7757HRDaTS
-	amv8=
-X-Google-Smtp-Source: AGHT+IFBdQ/Kf/pBba056RwUp0V08lYe+9haO2B8HlujtJik6R+WJ/BwK9jrSO5+6zHV9sZYoG2V1Cx82A2l5RDsRZI=
-X-Received: by 2002:a05:6512:104a:b0:594:253c:20ad with SMTP id
- 2adb3069b0e04-5945f1e1fa8mr1168234e87.5.1762773440599; Mon, 10 Nov 2025
- 03:17:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPLAInXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49CFC4CEF5;
+	Mon, 10 Nov 2025 11:35:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762774541;
+	bh=Trw3VkOpFEcmS9Rt6F8pvQePozUV3ete57zjNzKHvuQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=iPLAInXPZw/D61DVlxUjkvYqo6g/qe407waall6A6dN/96v9W29S3uVe3Jz4Z7lIx
+	 eNiqPpbdkO8i3GjuF4rxmtr3dXy9XvHcJ9kLiUW2LzLPuX0ba2jGfij4S01WHP0AwL
+	 OHLSqkjd2O4RfhkTYdCUKjGorF455/qKBA07U9YrZOuQcQnMPO92thPXMtyel3N7Aj
+	 SJr0pXgbJH5GKJ84936xK9fweogKzSIfzT5A97GLwLqHPmoOKh1ITn7tC9X3RgIdkJ
+	 zi6BrAcxJ9JA/RlGB7jj6YSrqRJoj4nt9m5SccUi5zi3To6k+NfEsjWzROPygk+oTf
+	 EGTCegenCyzQw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Rae Moar <raemoar63@gmail.com>,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 1/2] rust: allow `unreachable_pub` for doctests
+Date: Mon, 10 Nov 2025 12:35:27 +0100
+Message-ID: <20251110113528.1658238-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-5-ojeda@kernel.org>
- <aRHBu3RoOLTrMA8n@google.com>
-In-Reply-To: <aRHBu3RoOLTrMA8n@google.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 10 Nov 2025 12:17:02 +0100
-X-Gm-Features: AWmQ_bkXotkhTxYYTuTPjRF1aS8uhIalsBfLfpXM8Q6vG63LofMfHcNy_ClSXmQ
-Message-ID: <CANiq72kdkTif=HHL9ypoztDc8JiQUFCEuKyigQ_6ujXjR=cTyg@mail.gmail.com>
-Subject: Re: [PATCH 04/18] rust: kbuild: add host library support
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 10, 2025 at 11:43=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
-wrote:
->
-> This is a library for the second case, not the first case, so it may
-> make more sense to name this rule procmacrolibrary?
+Examples (i.e. doctests) may want to show public items such as structs,
+thus the `unreachable_pub` warning is not very helpful.
 
-Making it more concrete sounds good to me. We can always rename later
-if we find some other use.
+Thus allow it for all doctests.
 
-Cheers,
-Miguel
+In addition, remove it from the existing `expect`s we have in a couple
+doctests.
+
+Suggested-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/rust-for-linux/aRG9VjsaCjsvAwUn@google.com/
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/init.rs         | 2 +-
+ rust/kernel/types.rs        | 2 +-
+ scripts/rustdoc_test_gen.rs | 1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+index 4949047af8d7..e476d81c1a27 100644
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -67,7 +67,7 @@
+ //! ```
+ //!
+ //! ```rust
+-//! # #![expect(unreachable_pub, clippy::disallowed_names)]
++//! # #![expect(clippy::disallowed_names)]
+ //! use kernel::{prelude::*, types::Opaque};
+ //! use core::{ptr::addr_of_mut, marker::PhantomPinned, pin::Pin};
+ //! # mod bindings {
+diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+index dc0a02f5c3cf..835824788506 100644
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -289,7 +289,7 @@ fn drop(&mut self) {
+ /// # Examples
+ ///
+ /// ```
+-/// # #![expect(unreachable_pub, clippy::disallowed_names)]
++/// # #![expect(clippy::disallowed_names)]
+ /// use kernel::types::Opaque;
+ /// # // Emulate a C struct binding which is from C, maybe uninitialized or not, only the C side
+ /// # // knows.
+diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
+index c8f9dc2ab976..0e6a0542d1bd 100644
+--- a/scripts/rustdoc_test_gen.rs
++++ b/scripts/rustdoc_test_gen.rs
+@@ -208,6 +208,7 @@ macro_rules! assert_eq {{
+     #[allow(unused)]
+     static __DOCTEST_ANCHOR: i32 = ::core::line!() as i32 + {body_offset} + 1;
+     {{
++        #![allow(unreachable_pub)]
+         {body}
+         main();
+     }}
+
+base-commit: e9a6fb0bcdd7609be6969112f3fbfcce3b1d4a7c
+-- 
+2.51.2
+
