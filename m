@@ -1,78 +1,77 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCE82E62D8
-	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 23:34:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E720D2E62BE
+	for <patches@lists.linux.dev>; Mon, 10 Nov 2025 23:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762817661; cv=none; b=RSWkOvS8SUeo0seNt2StNH6rdTUM7Jt3aX3loWygtyyWmHJLDnj2dBKF7B9Uit0ZnzoVKpEDtNv/Yp1a70wwWYToxn3xYKYXNrAwWVrpkfAiYwl5b2azHN0r5xZCi+WzXhVGKnJWw4MQH8b+rk7ASidtot/glIIUlD9Kf5lL8gA=
+	t=1762817848; cv=none; b=fKg0doP+Nx9bPWdm5btma7/ntQcx3a4ZciNtXmfF3Z5XY1gGnMp2NfzHO3njlWZKxZf44wulptPggxS4y9HMEuPLrP6WMxZFEm8eEzBVs2eYCXbR0KWBiqeXETJBbV4AYBi5AvnDQugb9BVYu4w5dqUYdj2GyfbMc4OgwR9jt/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762817661; c=relaxed/simple;
-	bh=K/cQ2C7Ez8KzP7o1OrB0lJTjPYc31Lv7MkdeLsPQ4ZI=;
+	s=arc-20240116; t=1762817848; c=relaxed/simple;
+	bh=rXO4cV7y/7KRb7+PNQISNcMuBYWSEWB/8HSqi1ED97Q=;
 	h=Date:Message-Id:To:Cc:Subject:From:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=EmF9Dd6x7cLBha56AOwI7FcDnDL8IovPeibCQJXMX5o5oAwDNmOzwHuxtYXqWU6EHm3nFDzdMcnyuQjtEzizlDVadIJjQLK7ppkGULkCKQhQYPgFo1IUXddhYHVyJSYiq1rl0/Pq74JGvfXPF/b9ivLL5fHe+A9trFseycJmuZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bcjSANnn; arc=none smtp.client-ip=209.85.214.175
+	 Mime-Version:Content-Type; b=KmyRPJKxcPWoa0MPS27YJiJO6kdVDHvJ7c7ixlWsNsX47VyX/MaM/MlPwOTLKjaQVEQl9YWdXpzrcfnx4buu//bhY+pmBWnhBSTiyaz5fZfZ4wf/B7WdhoLXG1rWVLqPS7Gi9N6h9y4iaqrGN1Odr0hn9AqNJw2zCFUq9CdFyVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IEz8owQr; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bcjSANnn"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-297f8c26dc7so19215695ad.2
-        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 15:34:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IEz8owQr"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7b22ffa2a88so1646662b3a.1
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 15:37:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762817659; x=1763422459; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1762817846; x=1763422646; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to:from
          :subject:cc:to:message-id:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Oy2n9G+dRBzJRRG/yf89aQd7NFJbeGk8QhHqO60fK/U=;
-        b=bcjSANnn4RYxvJmipocdecZjNaOhPkE1rgpJ7lACTW2YKHntSdvL7Wx0BmI2awcqeL
-         H42egr3fXk7M8OyBcI3E9S84TCGH1JfsEYpbAPUki1FXzRmpkBkewdb1FLUqpeKhBxHL
-         Bv0cbimqEH+sxB9Avt+t0LIoTwEubdfakag3y3kQ+BbW3glBIoJJC1PulyexitJhmxP7
-         hF6UHWYHD/rTORgTAeCuhNgw4kg9YpcN+buUGHNQ04ziPaIVB7z2f8gOipSfx25O9G/H
-         gxyQQb4Oe46uuFmca3862gmm/4i+TyUWOc8l7eAtd4Pt+OcgtEaqIBo6D+gw/J5h2G7I
-         ajiw==
+        bh=sONTki0cwOLfaZkpfYHcU55+KIViW3n5GsMd/O6clDo=;
+        b=IEz8owQrmtj0PxTjXU99lw4MztLQUs+FewtU8sN4DK+rE8w0PL97o/pfxtFKTbPXZZ
+         gJvTGli3VyhFjYLv12bREKUyfEGCFqRrB5tlQ6+UU2aN/Rx8ymXQynD+PO3f2QRTvl9a
+         W4PfgoUBTLCy5WWLUU86NYgwCSCFajhi7KHpgVjf5RxwDWNQBDepZq+tZZ6F4s8R0/Je
+         ZZ9f2ZOd3e25ZAcPfOy5hs7yqCdYCB6w6+sA+XYLDPK+7crcZrLrfFMwgJ1R5IgyYIlc
+         RKH0N1XGk6dNlR/51ZNxAo1LwIwMRjBMTa9lfSzbYwEFyUP3osOUFjoG1CsKpexzVCrJ
+         3tYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762817659; x=1763422459;
+        d=1e100.net; s=20230601; t=1762817846; x=1763422646;
         h=content-transfer-encoding:mime-version:references:in-reply-to:from
          :subject:cc:to:message-id:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Oy2n9G+dRBzJRRG/yf89aQd7NFJbeGk8QhHqO60fK/U=;
-        b=eF/p6P+XZTuXxGGQ65hwTxYGUc0XZgFCHgIDSYSM6PZ/2KIdJj65iECnjXesStXPWC
-         6TFwiJkxUR8uWNmP/ujzz7IeTTSbb6AFNDcEBcvlzPfqEyBkcMBIHvNctKwyWRKxAzGl
-         VuTlqUNmF5GxtH0iBMuAcPu0NCoEJkLkKpMAIVSSNXf4jlobXx5pAWW2NH8o+gWGBi8X
-         VLnOXqc5ovfn2PywuCC9Jf7nLabxw1ylVvL6DfFk6hHfCEcTjUOtNyU634lgLU4/X9ot
-         vTbvDCTYaOPr4AHquCOhu760lr/JB8HrCZrhqWj1mDzDm5/JwGSEYWyFNVDVCMx8KEsQ
-         WSMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUkt5NJ7Tlpqs6AsBiNYXYuC5BHfA/S6EIieWFcvDXLLnpqmMuX2/2UYJ6Pj59axQs1XdJ3dbwB@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzhv/3ujlp/N+ZuINFWzPhpKvr1cNNiF4GyoJ7pwNBE6yK8SKB9
-	tTdM0QajkqcLV6+CZhxwPvlh3/8JbSpVwvc6ooibodBAw3xFPZWMy2iFgcXiNQ==
-X-Gm-Gg: ASbGncs33d16TnPhxEeByWLAkQN209LVFyQkUhEkjbpPzapFQeDxH0QpEF3lUwR9SzY
-	/tHHL+XmqUfLJo3ERUKgbzIgggINia6wh9iPr2SqXiHOJN1wzcuzVs3Ezxo8toWsc/dzcZ21vcG
-	vp84kbaAPbIEWw7IyyEt0AzgH5RdI4UnvuNQ+WslqcilVUkDIgExKRyjWi/PsiRP6yNMZ2Ke78N
-	CFo9v4x4BwzWx9OAYlfr0o3TZ0XRgCm/cpkXElIH0gVT2ALWu708gSdABLTeJBuHp7GLY0U8YYy
-	gnf4JUWIexgZSxV0rV2EiwpRxpqneSWpIlLPZPRxr0x/BS5yhDRlajRY9cNjtQWKyxKvNqVDmFl
-	cT0WR3o3UBIEFf+pZc0kbEfdQU2KEf2e5ytQJSXa5aVI/IdCgS5FMoSNdAcClyB7zGlFYiW1Jlt
-	N0oLlRwdozfzOeHOAw+AxEr+oOoCiqAOFpFQi2yqyTBh7exkiC/kSzH3SuAD3sAAQKup9hwHS6y
-	8M=
-X-Google-Smtp-Source: AGHT+IFfD56UHqe8xJ4zib+kMNCisvMUrImAWMr08SYb4N1rj4ajxA2f4+9t3KbkudcD1BAlAqplWg==
-X-Received: by 2002:a17:902:fc46:b0:269:4759:904b with SMTP id d9443c01a7336-297e570bf23mr118686635ad.58.1762817658918;
-        Mon, 10 Nov 2025 15:34:18 -0800 (PST)
+        bh=sONTki0cwOLfaZkpfYHcU55+KIViW3n5GsMd/O6clDo=;
+        b=TaXyvGb2GN+QcF6kfcwmN1f/e7ad+tde8Fs3zkvFqE0ZIBsH0TT2Js1PgpiKLgFK1c
+         vTh4K+tThmxdHuHP1wsGu+tXhGEZga9MIce7x4uIqoP54WYO8ymYyNhyOc13x6sJvsWc
+         8b4xV+FtY7JV4NfsdjX0dvdej3ID//1oasrj412uul/CYg55QPDTkSyFRICeG6saDnzw
+         sfMZHYIYFIT2f7lH/bMMNKzqbe+p1COsWFnAjGe+VL1X2g+jhH8nge2P3hBgd/lNMD8h
+         RflSJb9aJaR8P0p9Ihg8TE5Ypyp/NY/b8dAKT4VjyOpPJWpag3LT9Nh4f/Q6p5/WnzxN
+         1tkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcTQV7How0d8rnn7CL7bT6gq13LDKoDGJhYdLB6dMprZTWCmjhjyn7X7A3ILgQH90OeyagzxJE@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHt+ElHJDNo4jdjg/ipfZ31BUKDmLtT5ezogwNxvumX9kTm2NQ
+	EJNs1Wt4GlQQ2j+qK7+vxCWto8rSSqP1UcOz667t+1Zr2azL3ha9cAeM
+X-Gm-Gg: ASbGnct0zfS6Ey7iO1OJuor5FAEEeS0XrTKzxyR1/ZBR/H+wlbX6qiiw5odPUkskm4M
+	jQ2EN7Yeuqki4i0EIWDSNUXE/UMbYokAqyLzPHKT3pOgfTMHuu3c2J0OwxdJXGtrd7bHdgB8fui
+	DDxGE7rqQLlKgsxHNAYsEOliSztoCTv5B1gmdSzhSpzeJBu5yvrp0v92+JrWQOxbjc8mxUk28tN
+	dGrh7rP802+Z39Rqvha7S1EI83p4VIGqs6aN1zFqcSorUYcqBxZSMbPAXhVCNQ0Jb80uIVhXEMX
+	6d13bbvmiqmReqONlrNHIM2tJ6soTZGZv9DEJbrWKTQ6Cr5QoXsuhtHLTeFPDihxAL7q1V41elb
+	gEAY5a8ldqhj+nvhRLAGOS3VN6qBQCnfreIQb8DL6zNnJaiiOCteg2KYSDEOll4u72hCbZR8/Ax
+	2/HYEtYD9KftP7/+HEEynUqXX9xmqmSVgRDIrLV4DS+01RiG98UBJYB7gUVV9yoXVz
+X-Google-Smtp-Source: AGHT+IHk0TS6U1teQSHT2W5LJ/UoVkLAhqZnFd416dWAUwj/XxNWZoZkE3GEbfX7u/ERSkanItOk1A==
+X-Received: by 2002:a05:6a21:6da0:b0:2df:b68d:f73 with SMTP id adf61e73a8af0-353a3355034mr14081651637.34.1762817846261;
+        Mon, 10 Nov 2025 15:37:26 -0800 (PST)
 Received: from localhost (p5332007-ipxg23901hodogaya.kanagawa.ocn.ne.jp. [180.34.120.7])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-297d4c54be0sm108297385ad.103.2025.11.10.15.34.15
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba8ffd3f6easm14277596a12.21.2025.11.10.15.37.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 15:34:18 -0800 (PST)
-Date: Tue, 11 Nov 2025 08:34:13 +0900 (JST)
-Message-Id: <20251111.083413.2270464617525340597.fujita.tomonori@gmail.com>
+        Mon, 10 Nov 2025 15:37:25 -0800 (PST)
+Date: Tue, 11 Nov 2025 08:37:20 +0900 (JST)
+Message-Id: <20251111.083720.572544715756974945.fujita.tomonori@gmail.com>
 To: ojeda@kernel.org
 Cc: fujita.tomonori@gmail.com, alex.gaynor@gmail.com, tmgross@umich.edu,
  netdev@vger.kernel.org, rust-for-linux@vger.kernel.org,
  boqun.feng@gmail.com, gary@garyguo.net, bjorn3_gh@protonmail.com,
  lossin@kernel.org, a.hindborg@kernel.org, aliceryhl@google.com,
  dakr@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 2/3] rust: net: phy: make example buildable
+Subject: Re: [PATCH 3/3] rust: net: phy: follow usual comment conventions
 From: FUJITA Tomonori <fujita.tomonori@gmail.com>
-In-Reply-To: <20251110122223.1677654-2-ojeda@kernel.org>
+In-Reply-To: <20251110122223.1677654-3-ojeda@kernel.org>
 References: <20251110122223.1677654-1-ojeda@kernel.org>
-	<20251110122223.1677654-2-ojeda@kernel.org>
+	<20251110122223.1677654-3-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -82,41 +81,19 @@ Mime-Version: 1.0
 Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 
-On Mon, 10 Nov 2025 13:22:22 +0100
+On Mon, 10 Nov 2025 13:22:23 +0100
 Miguel Ojeda <ojeda@kernel.org> wrote:
 
-> This example can easily be made buildable, thus do so.
+> Examples should aim to follow the usual conventions, which makes
+> documentation more consistent with code and itself, and it should also
+> help newcomers learn them more easily.
 > 
-> Making examples buildable prevents issues like the one fixed in the
-> previous commit.
+> Thus change the comments to follow them.
 > 
+> Link: https://docs.kernel.org/rust/coding-guidelines.html#comments
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
->  rust/kernel/net/phy/reg.rs | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/rust/kernel/net/phy/reg.rs b/rust/kernel/net/phy/reg.rs
-> index 4e8b58711bae..165bbff93e53 100644
-> --- a/rust/kernel/net/phy/reg.rs
-> +++ b/rust/kernel/net/phy/reg.rs
-> @@ -25,7 +25,16 @@ pub trait Sealed {}
->  ///
->  /// # Examples
->  ///
-> -/// ```ignore
-> +/// ```
-> +/// # use kernel::net::phy::{
-> +/// #     self,
-> +/// #     Device,
-> +/// #     reg::{
-> +/// #         C22,
-> +/// #         C45,
-> +/// #         Mmd, //
-> +/// #     }, //
-> +/// # };
->  /// fn link_change_notify(dev: &mut Device) {
->  ///     // read C22 BMCR register
->  ///     dev.read(C22::BMCR);
+>  rust/kernel/net/phy/reg.rs | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-I think that some code begin lines with # for use lines in a "#
-Examples" section, while others do not. Which style is recommended?
+Reviewed-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
