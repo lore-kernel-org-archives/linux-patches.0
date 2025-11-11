@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C574086A;
-	Tue, 11 Nov 2025 00:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ECF4C97;
+	Tue, 11 Nov 2025 00:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822474; cv=none; b=b842gpRAInIGRhnbLFL5FmzaPFUSH0BSRHgvIwgnAyzvl5k8ImqamZLVEKEezniKPjIU6aCcAlTT3WXfJqalXv2X6OsP2JghfZL4DnsiHYLJnkinWNIw8UO0h1Ogw3pn8CYiyXH8J/Pwt+q/+SO/au2MppStcwyqEmrpVvF1GrQ=
+	t=1762822477; cv=none; b=fejNe9dsmeEiMrvosKuMaeQYf5HI55X9dmNLbx+Lp/Q2v+Rm9PnFju5s6cFTJ6pUsS8JfDE/PeoD2CExF11ZnUTNVNqlt8jga50w2BKmFY2w/qHmE9104Gdw5ZFR1UQ+x4VXcY/dZU7RTPhtbebStx80cUEXhQR8sVmaqglW8uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822474; c=relaxed/simple;
-	bh=oZ1R5OwaTr/yeRoM8AJhWGv6xoj2y9YBuNeo2QKr2mM=;
+	s=arc-20240116; t=1762822477; c=relaxed/simple;
+	bh=R4d/Ev0S9nVt4jqlfiSgTN9nNBpVhbA5+DrAny40TZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZhtUII0qAy95O8hXXtC4M09ZSzVyZ2zqgUo7we2LwZSmJUtIdGL9ETgzKLLDPE180JGVbzgnHcN9yNgQZdFLpVJwiMBzipm0srA39WHf5thYshNtzsh/IqlaPbT0/yom1RLoRkXEX7xnNERGeNUQ0Ju7a8tr4xEo4zV5PJGk0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccu8optK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fNC5lqjOdc/UwlHjlsa6v6P34OC97U7S4EkiM7vo7EcaemV4zk2C5F8JpPNk/swXx957rmSojL4u+D1ai4lA6nZ/FmLIu01ebPxMU1uxNVOtrjHYcywwDZ8NPQuQJQRmPM6p0Gm7qjwUEIA0hCbm5NXg4qPxvbFKNFNKmP7UDj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlJ7Fl1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccu8optK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584D2C2BC87;
-	Tue, 11 Nov 2025 00:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlJ7Fl1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB14C116B1;
+	Tue, 11 Nov 2025 00:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822474;
-	bh=oZ1R5OwaTr/yeRoM8AJhWGv6xoj2y9YBuNeo2QKr2mM=;
+	s=korg; t=1762822477;
+	bh=R4d/Ev0S9nVt4jqlfiSgTN9nNBpVhbA5+DrAny40TZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ccu8optKY5Ot/sRxgAdhxetBmsGbqQjxpoEpDBYgPt2ARZ53k2I8oGFSh14c1Eksk
-	 EU3bw01PVvEBKtFSosEOFVDhNRzoHL+HA56cLKMGMF3fuWlvKfvS+0JAKBda/oWXcS
-	 x4/ERUDyBkBeRG7BN79sM1//VOmEkgNeRHpJ+dpc=
+	b=TlJ7Fl1+heUcgj1KRzLh8xS0ABNov9pEspWiVZPzg+/2kOQt9DP8aoEc6LbNSrabt
+	 BeVrOmso61qSwEIv60NFnRQux2qeQuQuggHqB0M+SIwJDQm1+1htmy+OjQS+EhjH+B
+	 FEIEWItXfrg2Krs7RfDfO8TCnzBaQzkPLviAX0wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Smith <itistotalbotnet@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Askar Safin <safinaskar@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/565] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Fiji
-Date: Tue, 11 Nov 2025 09:38:33 +0900
-Message-ID: <20251111004528.204963076@linuxfoundation.org>
+Subject: [PATCH 6.17 115/849] PM: sleep: Allow pm_restrict_gfp_mask() stacking
+Date: Tue, 11 Nov 2025 09:34:45 +0900
+Message-ID: <20251111004539.178673529@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Smith <itistotalbotnet@gmail.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 07a13f913c291d6ec72ee4fc848d13ecfdc0e705 ]
+[ Upstream commit 35e4a69b2003f20a69e7d19ae96ab1eef1aa8e8d ]
 
-Previously this was initialized with zero which represented PCIe Gen
-1.0 instead of using the
-maximum value from the speed table which is the behaviour of all other
-smumgr implementations.
+Allow pm_restrict_gfp_mask() to be called many times in a row to avoid
+issues with calling dpm_suspend_start() when the GFP mask has been
+already restricted.
 
-Fixes: 18edef19ea44 ("drm/amd/powerplay: implement fw image related smu interface for Fiji.")
-Signed-off-by: John Smith <itistotalbotnet@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c52238c9fb414555c68340cd80e487d982c1921c)
+Only the first invocation of pm_restrict_gfp_mask() will actually
+restrict the GFP mask and the subsequent calls will warn if there is
+a mismatch between the expected allowed GFP mask and the actual one.
+
+Moreover, if pm_restrict_gfp_mask() is called many times in a row,
+pm_restore_gfp_mask() needs to be called matching number of times in
+a row to actually restore the GFP mask.  Calling it when the GFP mask
+has not been restricted will cause it to warn.
+
+This is necessary for the GFP mask restriction starting in
+hibernation_snapshot() to continue throughout the entire hibernation
+flow until it completes or it is aborted (either by a wakeup event or
+by an error).
+
+Fixes: 449c9c02537a1 ("PM: hibernate: Restrict GFP mask in hibernation_snapshot()")
+Fixes: 469d80a3712c ("PM: hibernate: Fix hybrid-sleep")
+Reported-by: Askar Safin <safinaskar@gmail.com>
+Closes: https://lore.kernel.org/linux-pm/20251025050812.421905-1-safinaskar@gmail.com/
+Link: https://lore.kernel.org/linux-pm/20251028111730.2261404-1-safinaskar@gmail.com/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
+Link: https://patch.msgid.link/5935682.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/power/hibernate.c |    4 ----
+ kernel/power/main.c      |   22 +++++++++++++++++-----
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-index 5e43ad2b29564..e7e497b166b3e 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-@@ -2024,7 +2024,7 @@ static int fiji_init_smc_table(struct pp_hwmgr *hwmgr)
- 	table->VoltageResponseTime = 0;
- 	table->PhaseResponseTime = 0;
- 	table->MemoryThermThrottleEnable = 1;
--	table->PCIeBootLinkLevel = 0;      /* 0:Gen1 1:Gen2 2:Gen3*/
-+	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
- 	table->PCIeGenInterval = 1;
- 	table->VRConfig = 0;
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -706,7 +706,6 @@ static void power_down(void)
  
--- 
-2.51.0
-
+ #ifdef CONFIG_SUSPEND
+ 	if (hibernation_mode == HIBERNATION_SUSPEND) {
+-		pm_restore_gfp_mask();
+ 		error = suspend_devices_and_enter(mem_sleep_current);
+ 		if (!error)
+ 			goto exit;
+@@ -746,9 +745,6 @@ static void power_down(void)
+ 		cpu_relax();
+ 
+ exit:
+-	/* Match the pm_restore_gfp_mask() call in hibernate(). */
+-	pm_restrict_gfp_mask();
+-
+ 	/* Restore swap signature. */
+ 	error = swsusp_unmark();
+ 	if (error)
+--- a/kernel/power/main.c
++++ b/kernel/power/main.c
+@@ -31,23 +31,35 @@
+  * held, unless the suspend/hibernate code is guaranteed not to run in parallel
+  * with that modification).
+  */
++static unsigned int saved_gfp_count;
+ static gfp_t saved_gfp_mask;
+ 
+ void pm_restore_gfp_mask(void)
+ {
+ 	WARN_ON(!mutex_is_locked(&system_transition_mutex));
+-	if (saved_gfp_mask) {
+-		gfp_allowed_mask = saved_gfp_mask;
+-		saved_gfp_mask = 0;
+-	}
++
++	if (WARN_ON(!saved_gfp_count) || --saved_gfp_count)
++		return;
++
++	gfp_allowed_mask = saved_gfp_mask;
++	saved_gfp_mask = 0;
++
++	pm_pr_dbg("GFP mask restored\n");
+ }
+ 
+ void pm_restrict_gfp_mask(void)
+ {
+ 	WARN_ON(!mutex_is_locked(&system_transition_mutex));
+-	WARN_ON(saved_gfp_mask);
++
++	if (saved_gfp_count++) {
++		WARN_ON((saved_gfp_mask & ~(__GFP_IO | __GFP_FS)) != gfp_allowed_mask);
++		return;
++	}
++
+ 	saved_gfp_mask = gfp_allowed_mask;
+ 	gfp_allowed_mask &= ~(__GFP_IO | __GFP_FS);
++
++	pm_pr_dbg("GFP mask restricted\n");
+ }
+ 
+ unsigned int lock_system_sleep(void)
 
 
