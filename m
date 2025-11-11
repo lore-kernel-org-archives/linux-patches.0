@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C0330748C;
-	Tue, 11 Nov 2025 01:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CF92857F0;
+	Tue, 11 Nov 2025 01:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825557; cv=none; b=oIExqmldSJPsJhjNzKXuc8T1Lk7cKLrhweiTYBv9AsxTi2Eu4lV43N+96/EWlSPyudiV+LOHrL5SMxcTrd1FMhs6SvSfYi88mdIk6unBYkqHeVZfZABXxm3SkEkb3WX4+yjGC69YATmL6iXrvXnrNz0wg+Q+MrywqRRN+7H4caA=
+	t=1762825559; cv=none; b=sH93xnskMLdkVSt7w7btEjjQr7zTjuVe29f2GIktD2Hw/H4nhlE0Q16xDE3saFoMWM2drMG6r55QuUfw6qDCUeBvbL/eMa6XcthQiwN7L3f0qmDrciG3XFX7TUaHw3qIKPDNTBlWYiX4OEmycvsEuW43qgfnMzIQC5qJx7aEjhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825557; c=relaxed/simple;
-	bh=0V8kim3T1KGIlQIUBgKfUCU7lP3WV/WLZnWWPT0c81c=;
+	s=arc-20240116; t=1762825559; c=relaxed/simple;
+	bh=lZ/za5f0N8LyTuWt0OnB7vYZog6I27hI1Bybw+rh+rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzydJKX8pKU3MvTvFsKIOZl0KbhwakBimbO6ndH4nq1sw0zBC3Tah4jOHA/4FioaMc8mK8/LVOUm0ZwBOcpUin54LTHMSapzYSVuTeBuOmU7pJrGwCFf66+rRoLswcrWvUrFc6MMhXJzI25QISRNkgF+/GTiEk7spuDxoHimfWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pE5C8YrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rr8A0689Ba7ztPvWloxJoPuOvaxZ2bLZIG/Tx/Tx+/BCapYZNth25Ob4Or4dkfGSb8Z14VgFZduNa4YT6ZCjqqAysKSRD9sDl/DhWOwFBxOlGeO6zhlUB3edrELkNb7qfHgrLLnL4lXJ37C84yLXt1xqk0htkPobM8im2xXo2uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtQGYrFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pE5C8YrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56ADC16AAE;
-	Tue, 11 Nov 2025 01:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtQGYrFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36213C116D0;
+	Tue, 11 Nov 2025 01:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825557;
-	bh=0V8kim3T1KGIlQIUBgKfUCU7lP3WV/WLZnWWPT0c81c=;
+	s=korg; t=1762825559;
+	bh=lZ/za5f0N8LyTuWt0OnB7vYZog6I27hI1Bybw+rh+rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pE5C8YrMBO48W/a+MtfxL9U5kTVy+GKZebycTTKTGyJ6X/i0DJsozjGra6O3Bg0gS
-	 5/KAnz0PwOGxsoRP8MdvmOcDygHDko1aa4/QtgU35Fn4Z/GIFal1l7JzzhR1lwDfGk
-	 RYDrmIwctXUQzHPlPxnxLgRfvBnfnVNTF38wZy1E=
+	b=rtQGYrFwvpbkWWMiQEZK9A6fcurLFHz9YLBgeiUiK4lMipoXLXpEjru3qYwpYtL47
+	 Ch/pgAWL82pQX6owwtIsl7KPTvDNNwfDz3hcYbKd8nVuGAn2ArNeCrnpId3JstYK2X
+	 BtpEedfdeS3U4yQihVf1uceZQPCwLRjaNcRCPEco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.17 810/849] iommufd: Dont overflow during division for dirty tracking
-Date: Tue, 11 Nov 2025 09:46:20 +0900
-Message-ID: <20251111004556.009086214@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.17 811/849] riscv: Fix memory leak in module_frob_arch_sections()
+Date: Tue, 11 Nov 2025 09:46:21 +0900
+Message-ID: <20251111004556.033235633@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,43 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit cb30dfa75d55eced379a42fd67bd5fb7ec38555e upstream.
+commit c42458fcf54b3d0bc2ac06667c98dceb43831889 upstream.
 
-If pgshift is 63 then BITS_PER_TYPE(*bitmap->bitmap) * pgsize will overflow
-to 0 and this triggers divide by 0.
+The current code directly overwrites the scratch pointer with the
+return value of kvrealloc(). If kvrealloc() fails and returns NULL,
+the original buffer becomes unreachable, causing a memory leak.
 
-In this case the index should just be 0, so reorganize things to divide
-by shift and avoid hitting any overflows.
+Fix this by using a temporary variable to store kvrealloc()'s return
+value and only update the scratch pointer on success.
 
-Link: https://patch.msgid.link/r/0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com
+Found via static anlaysis and this is similar to commit 42378a9ca553
+("bpf, verifier: Fix memory leak in array reallocation for stack state")
+
+Fixes: be17c0df6795 ("riscv: module: Optimize PLT/GOT entry counting")
 Cc: stable@vger.kernel.org
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=093a8a8b859472e6c257
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20251026091912.39727-1-linmq006@gmail.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/iova_bitmap.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/module-sections.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/iommufd/iova_bitmap.c
-+++ b/drivers/iommu/iommufd/iova_bitmap.c
-@@ -130,9 +130,8 @@ struct iova_bitmap {
- static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
- 						 unsigned long iova)
- {
--	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
--
--	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
-+	return (iova >> bitmap->mapped.pgshift) /
-+	       BITS_PER_TYPE(*bitmap->bitmap);
- }
+diff --git a/arch/riscv/kernel/module-sections.c b/arch/riscv/kernel/module-sections.c
+index 75551ac6504c..1675cbad8619 100644
+--- a/arch/riscv/kernel/module-sections.c
++++ b/arch/riscv/kernel/module-sections.c
+@@ -119,6 +119,7 @@ int module_frob_arch_sections(Elf_Ehdr *ehdr, Elf_Shdr *sechdrs,
+ 	unsigned int num_plts = 0;
+ 	unsigned int num_gots = 0;
+ 	Elf_Rela *scratch = NULL;
++	Elf_Rela *new_scratch;
+ 	size_t scratch_size = 0;
+ 	int i;
  
- /*
+@@ -168,9 +169,12 @@ int module_frob_arch_sections(Elf_Ehdr *ehdr, Elf_Shdr *sechdrs,
+ 		scratch_size_needed = (num_scratch_relas + num_relas) * sizeof(*scratch);
+ 		if (scratch_size_needed > scratch_size) {
+ 			scratch_size = scratch_size_needed;
+-			scratch = kvrealloc(scratch, scratch_size, GFP_KERNEL);
+-			if (!scratch)
++			new_scratch = kvrealloc(scratch, scratch_size, GFP_KERNEL);
++			if (!new_scratch) {
++				kvfree(scratch);
+ 				return -ENOMEM;
++			}
++			scratch = new_scratch;
+ 		}
+ 
+ 		for (size_t j = 0; j < num_relas; j++)
+-- 
+2.51.2
+
 
 
