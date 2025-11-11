@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E191F5F6;
-	Tue, 11 Nov 2025 01:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EDA27FD54;
+	Tue, 11 Nov 2025 01:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824513; cv=none; b=AZlsgQeM25SdABROjIkm9wHzkWgswnyXIrFG3D6Ei4VpLM/cpzeljKp0gLR6Vcs0mRI8KBQysUmAtUqxYnzCsouu0BDgpt1oXwl/vlNm11iUj8dlp+Q/tCsAq1vv6/RiSh0uJa9IS5xNqaWn1UbXcpUAeHTyUrS+tQj0xTcHNhU=
+	t=1762824516; cv=none; b=mgpsr8qS+v716x8g59lwUIaLzivmC27YAbTZu4iZEiLAH027uc3YnhcGco/ajGLMq9C/YcCc0UhxzeAK3cCClM1/r8djpq+HUpJ+8nZGmlVEQBFpHqEYQ5XsSDKmsllqhDXScV7RBwxpCown2s8pRYqUGWv+Wywm0uKEnND5K3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824513; c=relaxed/simple;
-	bh=+h+AZDZ/tlxdfvGQLc+4H4wjdwVL/FcHwOOyawiNRVc=;
+	s=arc-20240116; t=1762824516; c=relaxed/simple;
+	bh=bD4uAmrSuKkkRwqFvri2Lc43Zu67RajFVHU4LtLCa2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7+4sklvE1kc/rg4MOYPpwDvNFFIkSZKEvWGB7idLm+DE/1AozVm0tR4/5ngziQpypXw1/bIU/+stKelyx4z6EyEN0HsXO4mUayo+vLiNj6g4hm+vOLC0qx7EfXRO2SubIM40q/KC6+PJSRXF8mvXhOYvzDH4otUjpRSRmlWQy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDvQlTTB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dnr9grY+eZaKbk4qiNMe7IhPMEPpgLsMS3g45GN7BBf+AMEfrVKtGIfxSqG0x7OJMFclTvFMueTB7L4nm2uPR13RUMz2qfycAMAdylUI/xCv9v7wszcZbZNkd8+VdxzIe1YzrdWllu+k6ElfyuJ1OoA9Ybw2xrdaz/9K3MYCzkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/cwCrje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDvQlTTB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCF4C4CEF5;
-	Tue, 11 Nov 2025 01:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/cwCrje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B4AC4CEF5;
+	Tue, 11 Nov 2025 01:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824513;
-	bh=+h+AZDZ/tlxdfvGQLc+4H4wjdwVL/FcHwOOyawiNRVc=;
+	s=korg; t=1762824516;
+	bh=bD4uAmrSuKkkRwqFvri2Lc43Zu67RajFVHU4LtLCa2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDvQlTTBJpknY0lSJ0HttK2HzeOk6KaSLRWXE1+0AAZDqMOAKUDGd0lyTAEky8Oqx
-	 0vVW2cSjX1uuahTec3kwdcZMpNh6s0dxxh4sx4nPWdpt6X53/+04oscAYg7o2gh5Dd
-	 dxj4xTQq5KC8lU6SPzPQTxponkHDJPYL+U5UndDE=
+	b=m/cwCrjehKkm9+4U/XTH6vGitQWJdux6gMQ4CfInlIlNiS0WobclXDhBa/wegDu/Q
+	 kTZLGewLvij5VeXdbtD9rwbYaH3CHC74FaY6d7iSAvNO6fuCuEuJdGiV7mja83ciPT
+	 Pd/VcLVZy71uL78QFUoAMZ3N/x6IgTOzi09fPRCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhiling <chizhiling@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	chenmiao <chenmiao.ku@gmail.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 442/565] exfat: limit log print for IO error
-Date: Tue, 11 Nov 2025 09:44:58 +0900
-Message-ID: <20251111004536.828636172@linuxfoundation.org>
+Subject: [PATCH 6.17 515/849] openrisc: Add R_OR1K_32_PCREL relocation type module support
+Date: Tue, 11 Nov 2025 09:41:25 +0900
+Message-ID: <20251111004548.881609814@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,87 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chi Zhiling <chizhiling@kylinos.cn>
+From: chenmiao <chenmiao.ku@gmail.com>
 
-[ Upstream commit 6dfba108387bf4e71411b3da90b2d5cce48ba054 ]
+[ Upstream commit 9d0cb6d00be891586261a35da7f8c3c956825c39 ]
 
-For exFAT filesystems with 4MB read_ahead_size, removing the storage device
-when the read operation is in progress, which cause the last read syscall
-spent 150s [1]. The main reason is that exFAT generates excessive log
-messages [2].
+To ensure the proper functioning of the jump_label test module, this patch
+adds support for the R_OR1K_32_PCREL relocation type for any modules. The
+implementation calculates the PC-relative offset by subtracting the
+instruction location from the target value and stores the result at the
+specified location.
 
-After applying this patch, approximately 300,000 lines of log messages
-were suppressed, and the delay of the last read() syscall was reduced
-to about 4 seconds.
-
-[1]:
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000120>
-read(4, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000032>
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000119>
-read(4, 0x7fccf28ae000, 131072)         = -1 EIO (Input/output error) <150.186215>
-
-[2]:
-[  333.696603] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.697378] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.698156] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-
-Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: chenmiao <chenmiao.ku@gmail.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/fatent.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/openrisc/kernel/module.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index 0c60ddc24c54a..2c3ab6313cc98 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -89,35 +89,36 @@ int exfat_ent_get(struct super_block *sb, unsigned int loc,
- 	int err;
- 
- 	if (!is_valid_cluster(sbi, loc)) {
--		exfat_fs_error(sb, "invalid access to FAT (entry 0x%08x)",
-+		exfat_fs_error_ratelimit(sb,
-+			"invalid access to FAT (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	err = __exfat_ent_get(sb, loc, content);
- 	if (err) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"failed to access to FAT (entry 0x%08x, err:%d)",
- 			loc, err);
- 		return err;
- 	}
- 
- 	if (*content == EXFAT_FREE_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT free cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content == EXFAT_BAD_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT bad cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content != EXFAT_EOF_CLUSTER && !is_valid_cluster(sbi, *content)) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT (entry 0x%08x) bogus content (0x%08x)",
- 			loc, *content);
- 		return -EIO;
+diff --git a/arch/openrisc/kernel/module.c b/arch/openrisc/kernel/module.c
+index c9ff4c4a0b29b..4ac4fbaa827c1 100644
+--- a/arch/openrisc/kernel/module.c
++++ b/arch/openrisc/kernel/module.c
+@@ -55,6 +55,10 @@ int apply_relocate_add(Elf32_Shdr *sechdrs,
+ 			value |= *location & 0xfc000000;
+ 			*location = value;
+ 			break;
++		case R_OR1K_32_PCREL:
++			value -= (uint32_t)location;
++			*location = value;
++			break;
+ 		case R_OR1K_AHI16:
+ 			/* Adjust the operand to match with a signed LO16.  */
+ 			value += 0x8000;
 -- 
 2.51.0
 
