@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBB71F4169;
-	Tue, 11 Nov 2025 01:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE78340290;
+	Tue, 11 Nov 2025 01:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824596; cv=none; b=LyIc62g/2e2/jI4O9qyvXoG2kIbLGN8E71277L4DH+VYmJyYGhm0SSff4o8nRFCfuB3NeFHl1uAyCSt1jjRD5djYS4zRrSPRrerED86qx63uZVDn/5O8E2lVbu+1hYkLRHzRK5U7k5gN3yrozLuaEmJUx4qgLtWXr2F4zzYP0tk=
+	t=1762824598; cv=none; b=MclLvWKarOm6Q34Fxm3fXk7XebpGfMsYrvIshqUU3k2CFfEYGsTmVb7Uz2BfeVVp8v//0AqKsNDH8Jd+ARnSAynPapYNfp1hGZknvTl1ETNx5z4E2PTwr+yHylJyQoiSR3LCQNdL2wrnFkPBXUHC3128POrVxaSj2QyM4HuH3+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824596; c=relaxed/simple;
-	bh=JXfyTHWMJsAq0DzahNdpTj7D1LqmFEX27OfVy1sMfpM=;
+	s=arc-20240116; t=1762824598; c=relaxed/simple;
+	bh=bfIWhM6+laCtkEhzeRaw7wPm53qgNxG00CY2mVmBWB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6K9q/VOiGcTN6VRaYFVSX/uF/fhNy+e/197uzAQKkIYPjMdbKnQcZinzcH+cKmHTlzdvIHaX+SrxEvg3CzkwsIQChsVt21Q2+mebQJcKqHCoNNo9zz2pTB3Yy8WGuVgirR8bJrVTgAvoyzsllLBiCTHCmLGb7QpQoGvNRW/OyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wePvV+vp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEX+STWynqMEZaWGaKN3cuXIr+fjCXj7vtNn1P+9c63k59fXrKW7ZEC9IGm1XV6qX32a1bU6ATq0pYzwmmYKJUYRZVreBz5aVj4JfSCgVP1jx52OUPO3xyzVQWjnxbPkzaJaSBW62xz268Xi8ph9K7Y/lewk+DllmJ9GBMENuE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zccXxudp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wePvV+vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F35C113D0;
-	Tue, 11 Nov 2025 01:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zccXxudp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D492FC116B1;
+	Tue, 11 Nov 2025 01:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824596;
-	bh=JXfyTHWMJsAq0DzahNdpTj7D1LqmFEX27OfVy1sMfpM=;
+	s=korg; t=1762824598;
+	bh=bfIWhM6+laCtkEhzeRaw7wPm53qgNxG00CY2mVmBWB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wePvV+vpFoCP4yoduht8pWr8ZVRwtwEDiGLZ6lmWpPBtGI1drXg5zGyrKQ50TJgPm
-	 12LdB3fbK/7tnBShbVoQnyDY1gCAYQDpYx38neQG/R85hSBheNZJ/fttdawOfAwQCf
-	 lclPqS2liCVeFXQAYP1oIZ98o6CbRSsnW3xzpFGk=
+	b=zccXxudpZ7ZAEJ1recW7IYnNJpnXxdP5CKTEcHvKI+MCgZH3ylDGi/wrV8PjWsjwO
+	 E+L4fJReu5wNLbU9B8VDbbkrND+76kGC0viPU9ZB5LWkprBtiMjMeAlz7Y75pBJO48
+	 Ue4Ufz++2SDVYwNDKn9YUkFbfOoiwQilJR/Q66XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 476/565] NTB: epf: Allow arbitrary BAR mapping
-Date: Tue, 11 Nov 2025 09:45:32 +0900
-Message-ID: <20251111004537.622191432@linuxfoundation.org>
+Subject: [PATCH 6.17 531/849] crypto: caam - double the entropy delay interval for retry
+Date: Tue, 11 Nov 2025 09:41:41 +0900
+Message-ID: <20251111004549.255650232@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,248 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Gaurav Jain <gaurav.jain@nxp.com>
 
-[ Upstream commit 5ad865862a0fd349163243e1834ed98ba9b81905 ]
+[ Upstream commit 9048beca9c5614d486e2b492c0a7867164bf56a8 ]
 
-The NTB epf host driver assumes the BAR number associated with a memory
-window is just incremented from the BAR number associated with MW1. This
-seems to have been enough so far but this is not really how the endpoint
-side work and the two could easily become mis-aligned.
+during entropy evaluation, if the generated samples fail
+any statistical test, then, all of the bits will be discarded,
+and a second set of samples will be generated and tested.
 
-ntb_epf_mw_to_bar() even assumes that the BAR number is the memory window
-index + 2, which means the function only returns a proper result if BAR_2
-is associated with MW1.
+the entropy delay interval should be doubled before performing the
+retry.
 
-Instead, fully describe and allow arbitrary NTB BAR mapping.
+also, ctrlpriv->rng4_sh_init and inst_handles both reads RNG DRNG
+status register, but only inst_handles is updated before every retry.
+so only check inst_handles and removing ctrlpriv->rng4_sh_init
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c | 103 ++++++++++++++++----------------
- 1 file changed, 53 insertions(+), 50 deletions(-)
+ drivers/crypto/caam/ctrl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
-index 00f0e78f685bf..2b51156e01b0f 100644
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -49,6 +49,7 @@
- #define NTB_EPF_COMMAND_TIMEOUT	1000 /* 1 Sec */
- 
- enum pci_barno {
-+	NO_BAR = -1,
- 	BAR_0,
- 	BAR_1,
- 	BAR_2,
-@@ -57,16 +58,26 @@ enum pci_barno {
- 	BAR_5,
- };
- 
-+enum epf_ntb_bar {
-+	BAR_CONFIG,
-+	BAR_PEER_SPAD,
-+	BAR_DB,
-+	BAR_MW1,
-+	BAR_MW2,
-+	BAR_MW3,
-+	BAR_MW4,
-+	NTB_BAR_NUM,
-+};
-+
-+#define NTB_EPF_MAX_MW_COUNT	(NTB_BAR_NUM - BAR_MW1)
-+
- struct ntb_epf_dev {
- 	struct ntb_dev ntb;
- 	struct device *dev;
- 	/* Mutex to protect providing commands to NTB EPF */
- 	struct mutex cmd_lock;
- 
--	enum pci_barno ctrl_reg_bar;
--	enum pci_barno peer_spad_reg_bar;
--	enum pci_barno db_reg_bar;
--	enum pci_barno mw_bar;
-+	const enum pci_barno *barno_map;
- 
- 	unsigned int mw_count;
- 	unsigned int spad_count;
-@@ -85,17 +96,6 @@ struct ntb_epf_dev {
- 
- #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
- 
--struct ntb_epf_data {
--	/* BAR that contains both control region and self spad region */
--	enum pci_barno ctrl_reg_bar;
--	/* BAR that contains peer spad region */
--	enum pci_barno peer_spad_reg_bar;
--	/* BAR that contains Doorbell region and Memory window '1' */
--	enum pci_barno db_reg_bar;
--	/* BAR that contains memory windows*/
--	enum pci_barno mw_bar;
--};
--
- static int ntb_epf_send_command(struct ntb_epf_dev *ndev, u32 command,
- 				u32 argument)
- {
-@@ -144,7 +144,7 @@ static int ntb_epf_mw_to_bar(struct ntb_epf_dev *ndev, int idx)
- 		return -EINVAL;
- 	}
- 
--	return idx + 2;
-+	return ndev->barno_map[BAR_MW1 + idx];
- }
- 
- static int ntb_epf_mw_count(struct ntb_dev *ntb, int pidx)
-@@ -413,7 +413,9 @@ static int ntb_epf_mw_set_trans(struct ntb_dev *ntb, int pidx, int idx,
- 		return -EINVAL;
- 	}
- 
--	bar = idx + ndev->mw_bar;
-+	bar = ntb_epf_mw_to_bar(ndev, idx);
-+	if (bar < 0)
-+		return bar;
- 
- 	mw_size = pci_resource_len(ntb->pdev, bar);
- 
-@@ -455,7 +457,9 @@ static int ntb_epf_peer_mw_get_addr(struct ntb_dev *ntb, int idx,
- 	if (idx == 0)
- 		offset = readl(ndev->ctrl_reg + NTB_EPF_MW1_OFFSET);
- 
--	bar = idx + ndev->mw_bar;
-+	bar = ntb_epf_mw_to_bar(ndev, idx);
-+	if (bar < 0)
-+		return bar;
- 
- 	if (base)
- 		*base = pci_resource_start(ndev->ntb.pdev, bar) + offset;
-@@ -560,6 +564,11 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
- 	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
- 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
- 
-+	if (ndev->mw_count > NTB_EPF_MAX_MW_COUNT) {
-+		dev_err(dev, "Unsupported MW count: %u\n", ndev->mw_count);
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
- 
-@@ -596,14 +605,15 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
- 		dev_warn(&pdev->dev, "Cannot DMA highmem\n");
- 	}
- 
--	ndev->ctrl_reg = pci_iomap(pdev, ndev->ctrl_reg_bar, 0);
-+	ndev->ctrl_reg = pci_iomap(pdev, ndev->barno_map[BAR_CONFIG], 0);
- 	if (!ndev->ctrl_reg) {
- 		ret = -EIO;
- 		goto err_pci_regions;
- 	}
- 
--	if (ndev->peer_spad_reg_bar) {
--		ndev->peer_spad_reg = pci_iomap(pdev, ndev->peer_spad_reg_bar, 0);
-+	if (ndev->barno_map[BAR_PEER_SPAD] != ndev->barno_map[BAR_CONFIG]) {
-+		ndev->peer_spad_reg = pci_iomap(pdev,
-+						ndev->barno_map[BAR_PEER_SPAD], 0);
- 		if (!ndev->peer_spad_reg) {
- 			ret = -EIO;
- 			goto err_pci_regions;
-@@ -614,7 +624,7 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
- 		ndev->peer_spad_reg = ndev->ctrl_reg + spad_off  + spad_sz;
- 	}
- 
--	ndev->db_reg = pci_iomap(pdev, ndev->db_reg_bar, 0);
-+	ndev->db_reg = pci_iomap(pdev, ndev->barno_map[BAR_DB], 0);
- 	if (!ndev->db_reg) {
- 		ret = -EIO;
- 		goto err_pci_regions;
-@@ -659,12 +669,7 @@ static void ntb_epf_cleanup_isr(struct ntb_epf_dev *ndev)
- static int ntb_epf_pci_probe(struct pci_dev *pdev,
- 			     const struct pci_device_id *id)
- {
--	enum pci_barno peer_spad_reg_bar = BAR_1;
--	enum pci_barno ctrl_reg_bar = BAR_0;
--	enum pci_barno db_reg_bar = BAR_2;
--	enum pci_barno mw_bar = BAR_2;
- 	struct device *dev = &pdev->dev;
--	struct ntb_epf_data *data;
- 	struct ntb_epf_dev *ndev;
- 	int ret;
- 
-@@ -675,18 +680,10 @@ static int ntb_epf_pci_probe(struct pci_dev *pdev,
- 	if (!ndev)
- 		return -ENOMEM;
- 
--	data = (struct ntb_epf_data *)id->driver_data;
--	if (data) {
--		peer_spad_reg_bar = data->peer_spad_reg_bar;
--		ctrl_reg_bar = data->ctrl_reg_bar;
--		db_reg_bar = data->db_reg_bar;
--		mw_bar = data->mw_bar;
--	}
-+	ndev->barno_map = (const enum pci_barno *)id->driver_data;
-+	if (!ndev->barno_map)
-+		return -EINVAL;
- 
--	ndev->peer_spad_reg_bar = peer_spad_reg_bar;
--	ndev->ctrl_reg_bar = ctrl_reg_bar;
--	ndev->db_reg_bar = db_reg_bar;
--	ndev->mw_bar = mw_bar;
- 	ndev->dev = dev;
- 
- 	ntb_epf_init_struct(ndev, pdev);
-@@ -730,30 +727,36 @@ static void ntb_epf_pci_remove(struct pci_dev *pdev)
- 	ntb_epf_deinit_pci(ndev);
- }
- 
--static const struct ntb_epf_data j721e_data = {
--	.ctrl_reg_bar = BAR_0,
--	.peer_spad_reg_bar = BAR_1,
--	.db_reg_bar = BAR_2,
--	.mw_bar = BAR_2,
-+static const enum pci_barno j721e_map[NTB_BAR_NUM] = {
-+	[BAR_CONFIG]	= BAR_0,
-+	[BAR_PEER_SPAD]	= BAR_1,
-+	[BAR_DB]	= BAR_2,
-+	[BAR_MW1]	= BAR_2,
-+	[BAR_MW2]	= BAR_3,
-+	[BAR_MW3]	= BAR_4,
-+	[BAR_MW4]	= BAR_5
- };
- 
--static const struct ntb_epf_data mx8_data = {
--	.ctrl_reg_bar = BAR_0,
--	.peer_spad_reg_bar = BAR_0,
--	.db_reg_bar = BAR_2,
--	.mw_bar = BAR_4,
-+static const enum pci_barno mx8_map[NTB_BAR_NUM] = {
-+	[BAR_CONFIG]	= BAR_0,
-+	[BAR_PEER_SPAD]	= BAR_0,
-+	[BAR_DB]	= BAR_2,
-+	[BAR_MW1]	= BAR_4,
-+	[BAR_MW2]	= BAR_5,
-+	[BAR_MW3]	= NO_BAR,
-+	[BAR_MW4]	= NO_BAR
- };
- 
- static const struct pci_device_id ntb_epf_pci_tbl[] = {
- 	{
- 		PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
- 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
--		.driver_data = (kernel_ulong_t)&j721e_data,
-+		.driver_data = (kernel_ulong_t)j721e_map,
- 	},
- 	{
- 		PCI_DEVICE(PCI_VENDOR_ID_FREESCALE, 0x0809),
- 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
--		.driver_data = (kernel_ulong_t)&mx8_data,
-+		.driver_data = (kernel_ulong_t)mx8_map,
- 	},
- 	{ },
- };
+diff --git a/drivers/crypto/caam/ctrl.c b/drivers/crypto/caam/ctrl.c
+index a93be395c878c..18a850cf0f971 100644
+--- a/drivers/crypto/caam/ctrl.c
++++ b/drivers/crypto/caam/ctrl.c
+@@ -703,12 +703,12 @@ static int caam_ctrl_rng_init(struct device *dev)
+ 			 */
+ 			if (needs_entropy_delay_adjustment())
+ 				ent_delay = 12000;
+-			if (!(ctrlpriv->rng4_sh_init || inst_handles)) {
++			if (!inst_handles) {
+ 				dev_info(dev,
+ 					 "Entropy delay = %u\n",
+ 					 ent_delay);
+ 				kick_trng(dev, ent_delay);
+-				ent_delay += 400;
++				ent_delay = ent_delay * 2;
+ 			}
+ 			/*
+ 			 * if instantiate_rng(...) fails, the loop will rerun
 -- 
 2.51.0
 
