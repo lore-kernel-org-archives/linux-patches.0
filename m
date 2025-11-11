@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9AA30103C;
-	Tue, 11 Nov 2025 01:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8DD262FEC;
+	Tue, 11 Nov 2025 01:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824398; cv=none; b=Dpn1tRJ0m1pQw6spIARdSAomz8XLG/RLywfn9BuxlUqkXzi3OYGo4La3+Cm7nKILwf6fLeRiV12kO/ruIlzwy9OOU/7BiBiMrzWTqKoW6mphKr5iJ0hKWrvb1NAUAyLNmfHOZX+DNtBcFHe7O6cYuYxs0KJ18Sdv6zY4b+TnB2o=
+	t=1762824401; cv=none; b=BCj7IymXHhk86DGcYn8LR1kDCQ58nUt7PlfGAYspI2ue28JlgcOP5Guguiq3KOqgMpvuHWhs/JD7Bvoth8v5QdwAN0D76MRhmLRqKcrZME7UDxkNlfwZwndT7KFxrInmV+tu7bZJyeBL4PwsCJRe1PsmYv62XoLor/S6MhCsDoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824398; c=relaxed/simple;
-	bh=J0rmfD8uOa8neT7MjE04ryRGymDMsWrFeyQASAnklVQ=;
+	s=arc-20240116; t=1762824401; c=relaxed/simple;
+	bh=gM1JPEbfLUGAFMVHTafKTWOe+lG627OWzjvH8QKXaws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2Ry7pVKidCozweHsahdPVd3M6OWsorjdqw1lx2FeJdyNIY8OfQ1tFzuZsDlatzkVwaJOx84qNh5cRL8Jgls19oIZkZxZVCoTgJXho54Z2Ae68vrFk1UuaXJm6bjSt3tYR5hmWUTOFoY8fOo2pKismCaCIZVGoz0V6iVQEVvi2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwGByNTU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=raNBF0luujEH3QcTd4bFWXsEZ6a/jDdPzmxNRUiiMiGl6hUBFqJ7Wgc4xRL4ihAfcuIWBLV0/sPjDSBr1nEuwESkRxwQDf5SZCVOEaUmsJGqYEHDR+0LErzYEe6egDwgYvUeXuRyUdAAmdDyRHJ8vbrvmHH+qHJoW4s2586/8+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMaUnyzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwGByNTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5977CC113D0;
-	Tue, 11 Nov 2025 01:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMaUnyzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CEBC19421;
+	Tue, 11 Nov 2025 01:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824398;
-	bh=J0rmfD8uOa8neT7MjE04ryRGymDMsWrFeyQASAnklVQ=;
+	s=korg; t=1762824400;
+	bh=gM1JPEbfLUGAFMVHTafKTWOe+lG627OWzjvH8QKXaws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwGByNTUcG0v5RxxpPwDC+7zt7hituY8OvJGgTKGe7GXE6QxosChhBPccaKfkK2pO
-	 aBy4xox+fOa+/1Pkm+sL45guQQKCfbAczHipVNuW0FMscKi6N0vTiGbGEECq9rhxwL
-	 /m4+CKNag95WLhRaHbOqZwnJVWCGO1nWjsBQY5qA=
+	b=dMaUnyzMWahO9QnskHa97VyAnjiJfaDIwfr9dolQt3K/nNY9a+Hx4oROUYHiEpjK4
+	 /JQWorKRCfH1CNDITjZW/r4OU/tFwc3MvdLhek4Ulwemh4lX1zPTg9TlDX1gWWgkUR
+	 KljQezARxDApjzF458fhtxjKyAoKLvEOyTAbL/2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 487/849] drm/bridge: write full Audio InfoFrame
-Date: Tue, 11 Nov 2025 09:40:57 +0900
-Message-ID: <20251111004548.215037742@linuxfoundation.org>
+Subject: [PATCH 6.12 436/565] Bluetooth: btusb: Check for unexpected bytes when defragmenting HCI frames
+Date: Tue, 11 Nov 2025 09:44:52 +0900
+Message-ID: <20251111004536.689019978@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +47,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
 
-[ Upstream commit f0e7f358e72b10b01361787134ebcbd9e9aa72d9 ]
+[ Upstream commit 7722d6fb54e428a8f657fccf422095a8d7e2d72c ]
 
-Instead of writing the first byte of the infoframe (and hoping that the
-rest is default / zeroes), hook Audio InfoFrame support into the
-write_infoframe / clear_infoframes callbacks and use
-drm_atomic_helper_connector_hdmi_update_audio_infoframe() to write the
-frame.
+Some Barrot based USB Bluetooth dongles erroneously send one extra
+random byte for the HCI_OP_READ_LOCAL_EXT_FEATURES command. The
+consequence of that is that the next HCI transfer is misaligned by one
+byte causing undefined behavior. In most cases the response event for
+the next command fails with random error code.
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://lore.kernel.org/r/20250903-adv7511-audio-infoframe-v1-2-05b24459b9a4@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Since the HCI_OP_READ_LOCAL_EXT_FEATURES command is used during HCI
+controller initialization, the initialization fails rendering the USB
+dongle not usable.
+
+> [59.464099] usb 1-1.3: new full-speed USB device number 11 using xhci_hcd
+> [59.561617] usb 1-1.3: New USB device found, idVendor=33fa, idProduct=0012, bcdDevice=88.91
+> [59.561642] usb 1-1.3: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+> [59.561656] usb 1-1.3: Product: UGREEN BT6.0 Adapter
+> [61.720116] Bluetooth: hci1: command 0x1005 tx timeout
+> [61.720167] Bluetooth: hci1: Opcode 0x1005 failed: -110
+
+This patch was tested with the 33fa:0012 device. The info from the
+/sys/kernel/debug/usb/devices is shown below:
+
+T:  Bus=01 Lev=02 Prnt=02 Port=02 Cnt=01 Dev#= 12 Spd=12   MxCh= 0
+D:  Ver= 2.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=33fa ProdID=0012 Rev=88.91
+S:  Product=UGREEN BT6.0 Adapter
+C:* #Ifs= 2 Cfg#= 1 Atr=c0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Now the device is initialized properly:
+
+> [43.329852] usb 1-1.4: new full-speed USB device number 4 using dwc_otg
+> [43.446790] usb 1-1.4: New USB device found, idVendor=33fa, idProduct=0012, bcdDevice=88.91
+> [43.446813] usb 1-1.4: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+> [43.446821] usb 1-1.4: Product: UGREEN BT6.0 Adapter
+> [43.582024] Bluetooth: hci1: Unexpected continuation: 1 bytes
+> [43.703025] Bluetooth: hci1: Unexpected continuation: 1 bytes
+> [43.750141] Bluetooth: MGMT ver 1.23
+
+Link: https://github.com/bluez/bluez/issues/1326
+Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+Tested-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/bridge/adv7511/adv7511_audio.c    | 23 +++++--------------
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c  | 18 +++++++++++++++
- 2 files changed, 24 insertions(+), 17 deletions(-)
+ drivers/bluetooth/btusb.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-index 766b1c96bc887..87e7e820810a8 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-@@ -12,6 +12,8 @@
- #include <sound/soc.h>
- #include <linux/of_graph.h>
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index c07d57eaca3bf..cf5b2a617c771 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -65,6 +65,7 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_INTEL_BROKEN_INITIAL_NCMD BIT(25)
+ #define BTUSB_INTEL_NO_WBS_SUPPORT	BIT(26)
+ #define BTUSB_ACTIONS_SEMI		BIT(27)
++#define BTUSB_BARROT			BIT(28)
  
-+#include <drm/display/drm_hdmi_state_helper.h>
+ static const struct usb_device_id btusb_table[] = {
+ 	/* Generic Bluetooth USB device */
+@@ -796,6 +797,10 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 
++	/* Barrot Technology Bluetooth devices */
++	{ USB_DEVICE(0x33fa, 0x0010), .driver_info = BTUSB_BARROT },
++	{ USB_DEVICE(0x33fa, 0x0012), .driver_info = BTUSB_BARROT },
 +
- #include "adv7511.h"
+ 	/* Actions Semiconductor ATS2851 based devices */
+ 	{ USB_DEVICE(0x10d7, 0xb012), .driver_info = BTUSB_ACTIONS_SEMI },
  
- static void adv7511_calc_cts_n(unsigned int f_tmds, unsigned int fs,
-@@ -155,17 +157,8 @@ int adv7511_hdmi_audio_prepare(struct drm_bridge *bridge,
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
- 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
+@@ -1193,6 +1198,18 @@ static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
+ 		}
  
--	/* send current Audio infoframe values while updating */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
--			   BIT(5), BIT(5));
--
--	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
--
--	/* use Audio infoframe updated info */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
--			   BIT(5), 0);
--
--	return 0;
-+	return drm_atomic_helper_connector_hdmi_update_audio_infoframe(connector,
-+								       &hparms->cea);
- }
- 
- int adv7511_hdmi_audio_startup(struct drm_bridge *bridge,
-@@ -188,15 +181,9 @@ int adv7511_hdmi_audio_startup(struct drm_bridge *bridge,
- 	/* not copyrighted */
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CFG1,
- 				BIT(5), BIT(5));
--	/* enable audio infoframes */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_PACKET_ENABLE1,
--				BIT(3), BIT(3));
- 	/* AV mute disable */
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
- 				BIT(7) | BIT(6), BIT(7));
--	/* use Audio infoframe updated info */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
--				BIT(5), 0);
- 
- 	/* enable SPDIF receiver */
- 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
-@@ -214,4 +201,6 @@ void adv7511_hdmi_audio_shutdown(struct drm_bridge *bridge,
- 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
- 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
- 				   BIT(7), 0);
+ 		if (!hci_skb_expect(skb)) {
++			/* Each chunk should correspond to at least 1 or more
++			 * events so if there are still bytes left that doesn't
++			 * constitute a new event this is likely a bug in the
++			 * controller.
++			 */
++			if (count && count < HCI_EVENT_HDR_SIZE) {
++				bt_dev_warn(data->hdev,
++					"Unexpected continuation: %d bytes",
++					count);
++				count = 0;
++			}
 +
-+	drm_atomic_helper_connector_hdmi_clear_audio_infoframe(connector);
- }
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-index 00d6417c177b4..9081c09fc136b 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -886,6 +886,9 @@ static int adv7511_bridge_hdmi_clear_infoframe(struct drm_bridge *bridge,
- 	struct adv7511 *adv7511 = bridge_to_adv7511(bridge);
- 
- 	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AUDIO:
-+		adv7511_packet_disable(adv7511, ADV7511_PACKET_ENABLE_AUDIO_INFOFRAME);
-+		break;
- 	case HDMI_INFOFRAME_TYPE_AVI:
- 		adv7511_packet_disable(adv7511, ADV7511_PACKET_ENABLE_AVI_INFOFRAME);
- 		break;
-@@ -906,6 +909,21 @@ static int adv7511_bridge_hdmi_write_infoframe(struct drm_bridge *bridge,
- 	adv7511_bridge_hdmi_clear_infoframe(bridge, type);
- 
- 	switch (type) {
-+	case HDMI_INFOFRAME_TYPE_AUDIO:
-+		/* send current Audio infoframe values while updating */
-+		regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+				   BIT(5), BIT(5));
-+
-+		/* The Audio infoframe id is not configurable */
-+		regmap_bulk_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME_VERSION,
-+				  buffer + 1, len - 1);
-+
-+		/* use Audio infoframe updated info */
-+		regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+				   BIT(5), 0);
-+
-+		adv7511_packet_enable(adv7511, ADV7511_PACKET_ENABLE_AUDIO_INFOFRAME);
-+		break;
- 	case HDMI_INFOFRAME_TYPE_AVI:
- 		/* The AVI infoframe id is not configurable */
- 		regmap_bulk_write(adv7511->regmap, ADV7511_REG_AVI_INFOFRAME_VERSION,
+ 			/* Complete frame */
+ 			btusb_recv_event(data, skb);
+ 			skb = NULL;
 -- 
 2.51.0
 
