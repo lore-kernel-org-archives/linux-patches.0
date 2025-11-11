@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277A626980F;
-	Tue, 11 Nov 2025 01:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A872DFA5B;
+	Tue, 11 Nov 2025 01:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824189; cv=none; b=MyHCfSXb0VHpkgrD4w4d8JqktFK5BYeMkHOLnKp78OkXhXRZXAPR3Do3eQaIgUXB3LheffBFBbp8Fyd2Uz3FuhESjSrehoRjElV9jMpFwOHbKvHu40mBRFLp75EJyMm78Dp5Hx/Ft++CLUrXItNGv+40R/9SVhOJS+oFbyOYBgI=
+	t=1762824191; cv=none; b=cwGOw4oWDLoEI8AawZiHiYKCZfFyGOmucXGpbXiTZ0j1vtrsdtV0lDjggj0AV2S/vgQsIBk4ZhBhQ7Djv8xhpEqw/foNMIdgWsfsRekEV30dUSq5wWRk3Dqa4LMNuQ392GCl6qezqVyBJS6o74U1akTim8w+fiv8lmc40y7c+3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824189; c=relaxed/simple;
-	bh=8G8+iHKmBvNR65fLQAjhAuhSno9iOmxirDlFp1SWxsU=;
+	s=arc-20240116; t=1762824191; c=relaxed/simple;
+	bh=wdLjeDiCRy08WmLbexUu/BwbbYOPA9Dc0w3QX2bZ6z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5C7vimo/NRTle6wJ8X/UEbShq7KzT4JVpmVIOHoYDtnpZGiTzr1aPQIJ0Re1squKg5NFVzM1ZIOlWEeD2drYwFX7l4tZUHjJN3aYx9mJKUZR1Z7clZ4UT7VVm/bX7wUeDdrJGoVs3zfz1pyuL2ol2cnh7HoAExu0tM4aNoxxQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikNln/Z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i5gieKMFigU7/KyV908mtXxrhI6IA3R8rvP71o44/WkS9wC9dZ9W5QFLZC+Gb26WpEGYl9QttyIbYE5TXsGJNhj+5k23XH4npUXjuq5Ar9kpzZTTAJ+w2JTdW7pnNiKJNqMPO2hpFpqzvtZXtx4Kpt66NkXKEmFuY4FA6UXJ9mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdBoJxWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikNln/Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95870C113D0;
-	Tue, 11 Nov 2025 01:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdBoJxWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031A0C4CEFB;
+	Tue, 11 Nov 2025 01:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824189;
-	bh=8G8+iHKmBvNR65fLQAjhAuhSno9iOmxirDlFp1SWxsU=;
+	s=korg; t=1762824191;
+	bh=wdLjeDiCRy08WmLbexUu/BwbbYOPA9Dc0w3QX2bZ6z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikNln/Z/eRr2PAJ1fhMfkYj+Jc+7y3NUUbPqLfk1OG3bvyOw9fAn3ChtbST64c+8i
-	 sQxZKWWjhRMA8BM5BYpCQ3Ry/LWrRx2hnZySdmt19ZZbk+fKWzKVEyjlEx8Mv+jPm8
-	 bT7shFNOq2nUOJe9RNYOQsLqx4DzsSL7Y2pQkk+s=
+	b=DdBoJxWI17iVqa8gnf22PGIeQtK3d+NuAc5hgv6jk5cnEbQWJy+jd2yqLo6k0uXJU
+	 PHP/0fxHkboTEjpwCcKs3G7Adqt8pC6G7B0RKhe7F6UMqMwWskFZfkQShjH86Yxd1N
+	 Zb578hLe8I5V+oiwi+4GKRmTqYQT74Nx2Kxf+y9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 407/565] crypto: hisilicon/qm - clear all VF configurations in the hardware
-Date: Tue, 11 Nov 2025 09:44:23 +0900
-Message-ID: <20251111004536.028755133@linuxfoundation.org>
+Subject: [PATCH 6.17 459/849] drm/amd/pm: refine amdgpu pm sysfs node error code
+Date: Tue, 11 Nov 2025 09:40:29 +0900
+Message-ID: <20251111004547.525220241@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,89 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 64b9642fc29a14e1fe67842be9c69c7b90a3bcd6 ]
+[ Upstream commit cf32515a70618c0fb2319bd4a855f4d9447940a8 ]
 
-When disabling SR-IOV, clear the configuration of each VF
-in the hardware. Do not exit the configuration clearing process
-due to the failure of a single VF. Additionally, Clear the VF
-configurations before decrementing the PM counter.
+v1:
+Returns different error codes based on the scenario to help the user app understand
+the AMDGPU device status when an exception occurs.
 
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+v2:
+change -NODEV to -EBUSY.
+
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 73eea2ee1b9b9..35b95996ef82c 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -3475,19 +3475,19 @@ static int qm_vf_q_assign(struct hisi_qm *qm, u32 num_vfs)
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index 5fbfe7333b54d..1fca183827c7c 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -110,9 +110,10 @@ static int amdgpu_pm_dev_state_check(struct amdgpu_device *adev, bool runpm)
+ 	bool runpm_check = runpm ? adev->in_runpm : false;
+ 
+ 	if (amdgpu_in_reset(adev))
+-		return -EPERM;
++		return -EBUSY;
++
+ 	if (adev->in_suspend && !runpm_check)
+-		return -EPERM;
++		return -EBUSY;
+ 
  	return 0;
  }
- 
--static int qm_clear_vft_config(struct hisi_qm *qm)
-+static void qm_clear_vft_config(struct hisi_qm *qm)
- {
--	int ret;
- 	u32 i;
- 
--	for (i = 1; i <= qm->vfs_num; i++) {
--		ret = hisi_qm_set_vft(qm, i, 0, 0);
--		if (ret)
--			return ret;
--	}
--	qm->vfs_num = 0;
-+	/*
-+	 * When disabling SR-IOV, clear the configuration of each VF in the hardware
-+	 * sequentially. Failure to clear a single VF should not affect the clearing
-+	 * operation of other VFs.
-+	 */
-+	for (i = 1; i <= qm->vfs_num; i++)
-+		(void)hisi_qm_set_vft(qm, i, 0, 0);
- 
--	return 0;
-+	qm->vfs_num = 0;
- }
- 
- static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
-@@ -3824,13 +3824,13 @@ int hisi_qm_sriov_enable(struct pci_dev *pdev, int max_vfs)
- 		goto err_put_sync;
- 	}
- 
-+	qm->vfs_num = num_vfs;
- 	ret = pci_enable_sriov(pdev, num_vfs);
- 	if (ret) {
- 		pci_err(pdev, "Can't enable VF!\n");
- 		qm_clear_vft_config(qm);
- 		goto err_put_sync;
- 	}
--	qm->vfs_num = num_vfs;
- 
- 	pci_info(pdev, "VF enabled, vfs_num(=%d)!\n", num_vfs);
- 
-@@ -3865,11 +3865,10 @@ int hisi_qm_sriov_disable(struct pci_dev *pdev, bool is_frozen)
- 	}
- 
- 	pci_disable_sriov(pdev);
--
--	qm->vfs_num = 0;
-+	qm_clear_vft_config(qm);
- 	qm_pm_put_sync(qm);
- 
--	return qm_clear_vft_config(qm);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(hisi_qm_sriov_disable);
- 
 -- 
 2.51.0
 
