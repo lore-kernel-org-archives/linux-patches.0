@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0E33C534;
-	Tue, 11 Nov 2025 01:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6E027FD54;
+	Tue, 11 Nov 2025 01:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823463; cv=none; b=C4qwjK+5FBLOLJFFQdHyG5SzIG3K7OWiBdgC1Dwyi9YxOgAtkW7r44cIgsT9uuQB7Fh5/SVCosSmIE8ehww23b3N5is8tFwoSC5XHW//CyaHftw6obdJl3SToHyv1z85NF/VqRX6a8yGOo5Lv9M9pY8Lh7q/vmO8ZMXLkGfADxI=
+	t=1762823465; cv=none; b=FGxmn535land2XHaB9NJKjgjlxHJ4x2vAcWkWBNYQqbU771Y6xLeLvY7NaXmZGQF1RJ40k9qP7tX/O6RlZBFbgDt6rIoCYvGUAUpjQ4v1WO+iE8wEz+ysm5ALJb18ZP7Abd4cEvIeu7vx5bpfm20iiSmtRJur9hczU0subvnXsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823463; c=relaxed/simple;
-	bh=MtbDxVtBzV9vnhr+zrenADOYhvDEq5+oNg9Js5x79YM=;
+	s=arc-20240116; t=1762823465; c=relaxed/simple;
+	bh=app/Nd6Ri+Pud+lMdNvQHjrXzn2V4SrZPd0dkSxaEWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UrtUnqyCog4dOD64jfwburtTLaDqjAqAgCB6VS42pmNr4ZiwrZmDnm1Z1SYAsR7RyWNLL+o6FaXkSxeTkheZcCawfccTDEDJJeKLRfAgNNvd/CBwd9V+t8++9hSIeKl3XgVPi4lNVYg45+zWq5l4Qgum/mAprs4iviqtgbC4PT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zONq/H/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r44zZkEXBVeiewRs+/SDHYHUX2BGhciby/a1d/oJANhFaXBG2p1xDSLXBEXoJV/URCSAfBBlbeumA424PnHbJDObPOEGnXYSNqUuyAHeKGuVbYzmALWI1h9hHFEpDP+JCl2jXEkkvfR/P5MhrOHyyHuT47WJn2ybljhN0aRwV+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3yYOcGP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zONq/H/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BB1C113D0;
-	Tue, 11 Nov 2025 01:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3yYOcGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5CAC4CEFB;
+	Tue, 11 Nov 2025 01:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823463;
-	bh=MtbDxVtBzV9vnhr+zrenADOYhvDEq5+oNg9Js5x79YM=;
+	s=korg; t=1762823465;
+	bh=app/Nd6Ri+Pud+lMdNvQHjrXzn2V4SrZPd0dkSxaEWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zONq/H/1ax83ax4wqQLUM0F7Kn9BpjEWem/y11Fuq1hiL7gFDwS+3uv9199MWvdfH
-	 uHoUL2CQi9ngsvgFT1cv7DtxJYjGsLk8UnfBOpCH4+Mf5RXjbcM6Ytia4lmSCfFttW
-	 hrtfUYOJMFmtnN58hQtEjkB8Q1HRHFENa/t/zP38=
+	b=S3yYOcGPedqYin9UMCmbZ999hsiEjeYbrUVVTrn8y3njNL0gNwjUwV/4NTKdVqljy
+	 nOHYDhLyxvJUTGDJaWedXC7zQkJWYCqjYYkmpQi/zEoVJGzef7mEh9p3AFGYKP3L2D
+	 OnzzzjzBpwNrq//cKQwILDmCCH0Jxgk4AylzydFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
+	Alice Chao <alice.chao@mediatek.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 287/849] drm/tidss: Set crtc modesetting parameters with adjusted mode
-Date: Tue, 11 Nov 2025 09:37:37 +0900
-Message-ID: <20251111004543.350929348@linuxfoundation.org>
+Subject: [PATCH 6.17 305/849] scsi: ufs: host: mediatek: Assign power mode userdata before FASTAUTO mode change
+Date: Tue, 11 Nov 2025 09:37:55 +0900
+Message-ID: <20251111004543.780167999@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,45 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit cfb29225db20c56432a8525366321c0c09edfb2e ]
+[ Upstream commit 979feee0cf43b32d288931649d7c6d9a5524ea55 ]
 
-TIDSS uses crtc_* fields to propagate its registers and set the
-clock rates. So set the CRTC modesetting timing parameters with
-the adjusted mode when needed, to set correct values.
+Assign power mode userdata settings before transitioning to FASTAUTO
+power mode. This ensures that default timeout values are set for various
+parameters, enhancing the reliability and performance of the power mode
+change process.
 
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Link: https://lore.kernel.org/r/20250624080402.302526-1-j-choudhary@ti.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-7-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufs-mediatek.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
-index 17efd77ce7f23..da89fd01c3376 100644
---- a/drivers/gpu/drm/tidss/tidss_crtc.c
-+++ b/drivers/gpu/drm/tidss/tidss_crtc.c
-@@ -91,7 +91,7 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 	struct dispc_device *dispc = tidss->dispc;
- 	struct tidss_crtc *tcrtc = to_tidss_crtc(crtc);
- 	u32 hw_videoport = tcrtc->hw_videoport;
--	const struct drm_display_mode *mode;
-+	struct drm_display_mode *mode;
- 	enum drm_mode_status ok;
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 4171fa672450d..ada21360aa270 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1349,6 +1349,28 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
+ 		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXHSADAPTTYPE),
+ 			       PA_NO_ADAPT);
  
- 	dev_dbg(ddev->dev, "%s\n", __func__);
-@@ -108,6 +108,9 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 		return -EINVAL;
- 	}
- 
-+	if (drm_atomic_crtc_needs_modeset(crtc_state))
-+		drm_mode_set_crtcinfo(mode, 0);
++		if (!(hba->quirks & UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING)) {
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA0),
++					DL_FC0ProtectionTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA1),
++					DL_TC0ReplayTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA2),
++					DL_AFC0ReqTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA3),
++					DL_FC1ProtectionTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA4),
++					DL_TC1ReplayTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA5),
++					DL_AFC1ReqTimeOutVal_Default);
 +
- 	return dispc_vp_bus_check(dispc, hw_videoport, crtc_state);
- }
++			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalFC0ProtectionTimeOutVal),
++					DL_FC0ProtectionTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalTC0ReplayTimeOutVal),
++					DL_TC0ReplayTimeOutVal_Default);
++			ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalAFC0ReqTimeOutVal),
++					DL_AFC0ReqTimeOutVal_Default);
++		}
++
+ 		ret = ufshcd_uic_change_pwr_mode(hba,
+ 					FASTAUTO_MODE << 4 | FASTAUTO_MODE);
  
 -- 
 2.51.0
