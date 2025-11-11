@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCD2341ACA;
-	Tue, 11 Nov 2025 01:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738D934217C;
+	Tue, 11 Nov 2025 01:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825106; cv=none; b=N3hQvEevYjpoJZtUwCQr7sBXqsIl1vYS5rY6bLWE5V3aWhxruoKwxCZD1av5ajp55su2EJ/lo2D0ep4/2p5VBD6BmzcSTnc2n9rlGQVVEQ56+PEIRd1ncOYh1D+tLetbXQLJi3qClKSupqHmM/4bSYMwHBbB5Pjd0JH+gtmTwVI=
+	t=1762825108; cv=none; b=cy+c7McMc6MYMNR/ajoCqDLJGvh5a+jfYEQEQW2IRsimOLFt+3KkiqGr435+boyKdImcfs7lRDo2fyaPb9jIwH6IDABZAuqWorEPtTPxe+aMHKn280R2FKF0h05yZRMkEZ2sw+vpVlWKPIQI4c9LJZN8UwZc4zqHc2LucGDNwJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825106; c=relaxed/simple;
-	bh=C2bK3N1IfBiRwB3c6jsPAjNHW0bBCHcg5ohGKIBkq/I=;
+	s=arc-20240116; t=1762825108; c=relaxed/simple;
+	bh=BqOcQIDTnusxnmadM7e5wfnMnWxwptD8fyXhkJ16XME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BmEVIdfSsKiiBJ9h2mBf9uxtoQVxTWgHbnYPSbFtnOOdbQzl9ACDNV0X+/6i57JkohtKCTslsAYCnwRNGGfWu7s7UZjlLcuQoEdoCfwrjLDASnMYzBSrpgF3x7DNcNcoJDQWUCrfXhucBIYMoP18ZZZSiZWSz18wSHQNHXsOF/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XLDFpxO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l13t+8G7mXL94js9s7PRlmwYhVv244cgNEJVw4RL/Fafm73gjCGinKWtwtyNJuMUxPJMlAlbJJVhs+2U0VaiGHgC2KtlwAjzoW4Q3c+UXZrXfkXUl6ETWTbkOIhYd+wYd1I1H0uNfg+hw9K/GUPdW/MOz8nE0UtQCfG0wbSH6WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnRp8GU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XLDFpxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4399C16AAE;
-	Tue, 11 Nov 2025 01:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnRp8GU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1322EC4CEFB;
+	Tue, 11 Nov 2025 01:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825106;
-	bh=C2bK3N1IfBiRwB3c6jsPAjNHW0bBCHcg5ohGKIBkq/I=;
+	s=korg; t=1762825108;
+	bh=BqOcQIDTnusxnmadM7e5wfnMnWxwptD8fyXhkJ16XME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XLDFpxOxx7PJCPvsTCOR174jH9ILlpZJzdib0KpmigXBNdaJKaALwmX0oXm09bqZ
-	 50AHawQ4EtPfpOwpP7ExNz2YEF6g8nQCdtV6nqaEKtuLsb3UuciuldWezGSu1NlGG8
-	 0ucfwMN+179TRvPVvzNfsys895yL/hNkVmvvo6Y8=
+	b=EnRp8GU7I2P9n7rxRMRwfXO8qUqytqfjYSr2odjs3/dqd4TsgYKOwrFTlkr8ZUz+D
+	 QRD/i9o1fvxFCaOWWvn6FRjznECDm2b+OmlOf1mAA4Z+UwqAqMDoL0vow7U7UGR98b
+	 9AZrOFMRBaHxGNwqeviFRnr55HJJECjZTv3FSEJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 661/849] Bluetooth: btintel_pcie: Define hdev->wakeup() callback
-Date: Tue, 11 Nov 2025 09:43:51 +0900
-Message-ID: <20251111004552.406553810@linuxfoundation.org>
+Subject: [PATCH 6.17 662/849] Bluetooth: ISO: Dont initiate CIS connections if there are no buffers
+Date: Tue, 11 Nov 2025 09:43:52 +0900
+Message-ID: <20251111004552.429200574@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,52 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 3e94262921990e2884ff7a49064c12fb6d3a0733 ]
+[ Upstream commit d79c7d01f1c8bcf9a48337c8960d618fbe31fc0c ]
 
-Implement hdev->wakeup() callback to support Wake On BT feature.
+If the controller has no buffers left return -ENOBUFF to indicate that
+iso_cnt might be out of sync.
 
-Test steps:
-1. echo enabled > /sys/bus/pci/devices/0000:00:14.7/power/wakeup
-2. connect bluetooth hid device
-3. put the system to suspend - rtcwake -m mem -s 300
-4. press any key on hid to wake up the system
-
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel_pcie.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/iso.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index c9fb824fb8e1d..becb471ffd421 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -2342,6 +2342,13 @@ static void btintel_pcie_hw_error(struct hci_dev *hdev, u8 code)
- 	btintel_pcie_reset(hdev);
- }
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 6e2923b301505..3b2a4a9d79d61 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -460,6 +460,13 @@ static int iso_connect_cis(struct sock *sk)
+ 		goto unlock;
+ 	}
  
-+static bool btintel_pcie_wakeup(struct hci_dev *hdev)
-+{
-+	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
++	/* Check if there are available buffers for output/TX. */
++	if (iso_pi(sk)->qos.ucast.out.sdu && !hci_iso_count(hdev) &&
++	    (hdev->iso_pkts && !hdev->iso_cnt)) {
++		err = -ENOBUFS;
++		goto unlock;
++	}
 +
-+	return device_may_wakeup(&data->pdev->dev);
-+}
-+
- static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- {
- 	int err;
-@@ -2367,6 +2374,7 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- 	hdev->set_diag = btintel_set_diag;
- 	hdev->set_bdaddr = btintel_set_bdaddr;
- 	hdev->reset = btintel_pcie_reset;
-+	hdev->wakeup = btintel_pcie_wakeup;
- 
- 	err = hci_register_dev(hdev);
- 	if (err < 0) {
+ 	/* Just bind if DEFER_SETUP has been set */
+ 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
+ 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
 -- 
 2.51.0
 
