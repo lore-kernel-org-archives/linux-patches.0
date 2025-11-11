@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E8F258EF6;
-	Tue, 11 Nov 2025 01:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D26253944;
+	Tue, 11 Nov 2025 01:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824102; cv=none; b=riq7ARQ/qrUPsEfH6GVYgooC4T0wA1M6IfzzKEdhXdInimXImoC68s0XDByoa2udoqC/mcLh9nvct9lXWa/ZSmGiGpRmO5tpYdAG1Wglk/aKYfv0OaMUKVl22zwss5QHO0kC+QLcM+AhJs4bA4cYDU+LGTMXsDne1iO4w23FkqE=
+	t=1762824104; cv=none; b=SW8KvaKJks/s1onz+i3BBfDPjj6XzZXLv+ewauHkPD7ygeYtji8RR1uQQXib0N/yPlpmmS99pWk07FhixRc885igs1yxfRVTB3sQtJiEheqeFgL5LJhxHwMNMwjbhMNpQUGFk0hutQ6vTok8sFDFZLs8pzcq+vw/hqA60x2m9Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824102; c=relaxed/simple;
-	bh=EZShQ55Zbxax+Em9AeJfmU+82x3WCzyrpkW53sZlAD4=;
+	s=arc-20240116; t=1762824104; c=relaxed/simple;
+	bh=lV1mpWq12QNLkCPfkt0EajkhOwouBaigRLkEDKsIbb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IffAtEPif0cT33KxaTnP6yVWN/gRZ//nRAT9dCCQu+FVP0cIh+nS6qNiuxLehSasFVZZ+RNEbquBAfKlHcEeT8BGzc/9TKIrd6L+yGE8ov8CcGWtlHCd2JQCLL6gCg5ByQ4Z3nQubmn2GtaRKmdbz5J5ubK55WxWwbNltfymdew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TnhG3FN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfJxoSey4xxZ4wZW/Jb8gUsODe/djGZucsplQlQ4Govd32oKAU2avEAHtJdlTFuKoGdOQoc6mup+1RxbSERzcYJpYacoawqCM7ZzSwXmoiGybFYd191Kq11G4KvXZKjaqUDJhq1B+K9Vpsenxk7ssrcrlthdwocdXvK6yz0pfpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdytfc1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TnhG3FN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB55C4CEFB;
-	Tue, 11 Nov 2025 01:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdytfc1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C20C113D0;
+	Tue, 11 Nov 2025 01:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824101;
-	bh=EZShQ55Zbxax+Em9AeJfmU+82x3WCzyrpkW53sZlAD4=;
+	s=korg; t=1762824104;
+	bh=lV1mpWq12QNLkCPfkt0EajkhOwouBaigRLkEDKsIbb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TnhG3FNBCqPVbAuGZmqa1ezKtW+x3lbVyqEXTD/Dlt2HntdkZ1QtKuGAJLxgQHpq
-	 nNrVqvOdGVEVVMuQtvuU5DhTmZQRl+qOqod03x+sAsmh8f4g2K3YJHLV6rYxF+amQg
-	 OswLdvnnknc011bLFydtD7SrpiR2qWFVeZKPgW+A=
+	b=hdytfc1hE7SjRfh+8Z6c++4XcHCju6jnVh9ASAe9Nsh0Mx5Grkacv+ht+k6lAPnci
+	 mXs+c9SA7PQqjqobW1ubrYZSauEAvTmfmBSpxKrzTTQvsxyzx+59kEsf1KjdL6buum
+	 xX8GWhGT1/u6Gn06sm9HckDEeKR17MOA2Aj86gqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 437/849] wifi: mac80211: Fix 6 GHz Band capabilities element advertisement in lower bands
-Date: Tue, 11 Nov 2025 09:40:07 +0900
-Message-ID: <20251111004546.997529381@linuxfoundation.org>
+Subject: [PATCH 6.12 388/565] RDMA/irdma: Update Kconfig
+Date: Tue, 11 Nov 2025 09:44:04 +0900
+Message-ID: <20251111004535.599027257@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit e53f8b12a21c2974b66fa8c706090182da06fff3 ]
+[ Upstream commit 060842fed53f77a73824c9147f51dc6746c1267a ]
 
-Currently, when adding the 6 GHz Band Capabilities element, the channel
-list of the wiphy is checked to determine if 6 GHz is supported for a given
-virtual interface. However, in a multi-radio wiphy (e.g., one that has
-both lower bands and 6 GHz combined), the wiphy advertises support for
-all bands. As a result, the 6 GHz Band Capabilities element is incorrectly
-included in mesh beacon and station's association request frames of
-interfaces operating in lower bands, without verifying whether the
-interface is actually operating in a 6 GHz channel.
+Update Kconfig to add dependency on idpf module and
+add IPU E2000 to the list of supported devices.
 
-Fix this by verifying if the interface operates on 6 GHz channel
-before adding the element. Note that this check cannot be placed
-directly in ieee80211_put_he_6ghz_cap() as the same function is used to
-add probe request elements while initiating scan in which case the
-interface may not be operating in any band's channel.
-
-Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
-Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250606104436.326654-1-rameshkumar.sundaram@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Link: https://patch.msgid.link/20250827152545.2056-17-tatyana.e.nikolova@intel.com
+Tested-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 3 +++
- net/mac80211/mlme.c | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/Kconfig | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index a4a715f6f1c32..f37068a533f4e 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -624,6 +624,9 @@ int mesh_add_he_6ghz_cap_ie(struct ieee80211_sub_if_data *sdata,
- 	if (!sband)
- 		return -EINVAL;
- 
-+	if (sband->band != NL80211_BAND_6GHZ)
-+		return 0;
-+
- 	iftd = ieee80211_get_sband_iftype_data(sband,
- 					       NL80211_IFTYPE_MESH_POINT);
- 	/* The device doesn't support HE in mesh mode or at all */
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index f38881b927d17..c1b13b3411cdb 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -1850,7 +1850,8 @@ ieee80211_add_link_elems(struct ieee80211_sub_if_data *sdata,
- 		ieee80211_put_he_cap(skb, sdata, sband,
- 				     &assoc_data->link[link_id].conn);
- 		ADD_PRESENT_EXT_ELEM(WLAN_EID_EXT_HE_CAPABILITY);
--		ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
-+		if (sband->band == NL80211_BAND_6GHZ)
-+			ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
- 	}
- 
- 	/*
+diff --git a/drivers/infiniband/hw/irdma/Kconfig b/drivers/infiniband/hw/irdma/Kconfig
+index b6f9c41bca51d..41660203e0049 100644
+--- a/drivers/infiniband/hw/irdma/Kconfig
++++ b/drivers/infiniband/hw/irdma/Kconfig
+@@ -4,9 +4,10 @@ config INFINIBAND_IRDMA
+ 	depends on INET
+ 	depends on IPV6 || !IPV6
+ 	depends on PCI
+-	depends on ICE && I40E
++	depends on IDPF && ICE && I40E
+ 	select GENERIC_ALLOCATOR
+ 	select AUXILIARY_BUS
+ 	help
+-	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
+-	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.
++	  This is an Intel(R) Ethernet Protocol Driver for RDMA that
++	  supports IPU E2000 (RoCEv2), E810 (iWARP/RoCEv2) and X722 (iWARP)
++	  network devices.
 -- 
 2.51.0
 
