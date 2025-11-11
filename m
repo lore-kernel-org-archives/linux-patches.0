@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF0E3446B5;
-	Tue, 11 Nov 2025 01:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C613446BC;
+	Tue, 11 Nov 2025 01:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824143; cv=none; b=VzFmxQkZmUbG7l4Sxaud9h4d8W/LNSC9Yq7edHqPlwBQ+z5FbiW4QstFvNzYKrvd7j3Vy/s416aTCjhr7sGhE+dGGph1DoBBTACW30bzenTf3tZMxfjJCD8K2bkkI1hjCS5/KITiC1AyAo1jQrsqxiJAv9Zbaqt4/KxDB8qp/eg=
+	t=1762824146; cv=none; b=Aq4WWiiiQ/7Lye5iPGjPn3b7nKuthkmASrkMiQS3pfWZWBmWmS/+M2DmWP6u0ep7HTfsTbJgHyhC6S1hUZBB0OOO07lrlEOi2uLkInal1CDRyI2vMD6Sgz3WWrBT1azOadAwDaoit87kwjB0KtfdBTY1HIH5sK7lFI5eCMQbCEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824143; c=relaxed/simple;
-	bh=xZwbSjYMk3+f5dPTVZ26+tQA5LXEt8QzVFQnE52Cqx0=;
+	s=arc-20240116; t=1762824146; c=relaxed/simple;
+	bh=NNSfuOr2mkopx3Xy3apxT/x54phpEwVPPzSbccaU5eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PmYe9ZLRb++hrvr66EKDsDVMLMK/3m8+/j9r8P28TftldqWwT8ekN3P612bmT3a90PATqM0K0Wp3rTDiu38zQHfU+JmCX+iAG5sHINAbO7dYONsSjC4XgcD/i9RKmXjBppwWS9yxzPSrDc7nCDeCNLxFZpVj/vc8U7VTzzvBb2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGZ2MjuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZoIAmUTvbbF1y5h8Sj6c7UKA7siJ5MejqeCN+tImAg3rYU/5tf7hw3WjNoITF+qyo2RLYo7OAPN4yPigxy1lDV8A4PIf1ELMB8xASvY/sstpHUBjYVhIvtKfFYXCVVTeZBC2mjaPeMByC0ewTsKHQYK1BF8uGpLMFfk4VXX1aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yasJtiQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGZ2MjuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADB8C4CEF5;
-	Tue, 11 Nov 2025 01:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yasJtiQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838DCC116B1;
+	Tue, 11 Nov 2025 01:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824143;
-	bh=xZwbSjYMk3+f5dPTVZ26+tQA5LXEt8QzVFQnE52Cqx0=;
+	s=korg; t=1762824145;
+	bh=NNSfuOr2mkopx3Xy3apxT/x54phpEwVPPzSbccaU5eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGZ2MjuA//AbLUE15uRvK/B1mxhDg+bGkt1eH0ZWFLhJ9mFFknu9DRYiY3pQSkrqo
-	 71E6whsbqPbpYqoiIj+GXq+FPGqN96HvqA9XvZvGVl4bdHtgx56pmTyxTdU9vn9owt
-	 VEYpvJcAFzvqO0Z8dHeiCyLqRg8Ao+PMqC0O+hmY=
+	b=yasJtiQ58NBmsqvRrgOYGbxxjtTIobu4kOB7lTM1BDPlBk15i8mVtkyEhZvXIKFsp
+	 DfohUKdHfcCMGLguKpoPvRSwvOfi93fvOpqtlg6xxo9+0EgPkry3JCnPTuMn06U3xt
+	 rmK6BQSjcqQYXQRKVOAN/ZoeX0z7uroseThIk41w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Vivek Pernamitta <quic_vpernami@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 445/849] drm/gpusvm: fix hmm_pfn_to_map_order() usage
-Date: Tue, 11 Nov 2025 09:40:15 +0900
-Message-ID: <20251111004547.193943693@linuxfoundation.org>
+Subject: [PATCH 6.12 396/565] bus: mhi: core: Improve mhi_sync_power_up handling for SYS_ERR state
+Date: Tue, 11 Nov 2025 09:44:12 +0900
+Message-ID: <20251111004535.782410353@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,95 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Vivek Pernamitta <quic_vpernami@quicinc.com>
 
-[ Upstream commit c50729c68aaf93611c855752b00e49ce1fdd1558 ]
+[ Upstream commit aa1a0e93ed21a06acb7ca9d4a4a9fce75ea53d0c ]
 
-Handle the case where the hmm range partially covers a huge page (like
-2M), otherwise we can potentially end up doing something nasty like
-mapping memory which is outside the range, and maybe not even mapped by
-the mm. Fix is based on the xe userptr code, which in a future patch
-will directly use gpusvm, so needs alignment here.
+Allow mhi_sync_power_up to handle SYS_ERR during power-up, reboot,
+or recovery. This is to avoid premature exit when MHI_PM_IN_ERROR_STATE is
+observed during above mentioned system states.
 
-v2:
-  - Add kernel-doc (Matt B)
-  - s/fls/ilog2/ (Thomas)
+To achieve this, treat SYS_ERR as a valid state and let its handler process
+the error and queue the next transition to Mission Mode instead of aborting
+early.
 
-Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://lore.kernel.org/r/20250828142430.615826-11-matthew.auld@intel.com
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+[mani: reworded description]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250912-uevent_vdev_next-20250911-v4-5-fa2f6ccd301b@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gpusvm.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/host/internal.h | 2 ++
+ drivers/bus/mhi/host/pm.c       | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_gpusvm.c b/drivers/gpu/drm/drm_gpusvm.c
-index 5bb4c77db2c3c..1dd8f3b593df6 100644
---- a/drivers/gpu/drm/drm_gpusvm.c
-+++ b/drivers/gpu/drm/drm_gpusvm.c
-@@ -708,6 +708,35 @@ drm_gpusvm_range_alloc(struct drm_gpusvm *gpusvm,
- 	return range;
- }
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 762df4bb7f646..e8b68c0fec7b0 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -163,6 +163,8 @@ enum mhi_pm_state {
+ 							MHI_PM_IN_ERROR_STATE(pm_state))
+ #define MHI_PM_IN_SUSPEND_STATE(pm_state)		(pm_state & \
+ 							(MHI_PM_M3_ENTER | MHI_PM_M3))
++#define MHI_PM_FATAL_ERROR(pm_state)			((pm_state == MHI_PM_FW_DL_ERR) || \
++							(pm_state >= MHI_PM_SYS_ERR_FAIL))
  
-+/**
-+ * drm_gpusvm_hmm_pfn_to_order() - Get the largest CPU mapping order.
-+ * @hmm_pfn: The current hmm_pfn.
-+ * @hmm_pfn_index: Index of the @hmm_pfn within the pfn array.
-+ * @npages: Number of pages within the pfn array i.e the hmm range size.
-+ *
-+ * To allow skipping PFNs with the same flags (like when they belong to
-+ * the same huge PTE) when looping over the pfn array, take a given a hmm_pfn,
-+ * and return the largest order that will fit inside the CPU PTE, but also
-+ * crucially accounting for the original hmm range boundaries.
-+ *
-+ * Return: The largest order that will safely fit within the size of the hmm_pfn
-+ * CPU PTE.
-+ */
-+static unsigned int drm_gpusvm_hmm_pfn_to_order(unsigned long hmm_pfn,
-+						unsigned long hmm_pfn_index,
-+						unsigned long npages)
-+{
-+	unsigned long size;
-+
-+	size = 1UL << hmm_pfn_to_map_order(hmm_pfn);
-+	size -= (hmm_pfn & ~HMM_PFN_FLAGS) & (size - 1);
-+	hmm_pfn_index += size;
-+	if (hmm_pfn_index > npages)
-+		size -= (hmm_pfn_index - npages);
-+
-+	return ilog2(size);
-+}
-+
- /**
-  * drm_gpusvm_check_pages() - Check pages
-  * @gpusvm: Pointer to the GPU SVM structure
-@@ -766,7 +795,7 @@ static bool drm_gpusvm_check_pages(struct drm_gpusvm *gpusvm,
- 			err = -EFAULT;
- 			goto err_free;
- 		}
--		i += 0x1 << hmm_pfn_to_map_order(pfns[i]);
-+		i += 0x1 << drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages);
- 	}
+ #define NR_OF_CMD_RINGS					1
+ #define CMD_EL_PER_RING					128
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index 0ccbcb717955a..8f32dd0a2f218 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -1279,7 +1279,7 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+ 		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+ 	wait_event_timeout(mhi_cntrl->state_event,
+ 			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+-			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
++			   MHI_PM_FATAL_ERROR(mhi_cntrl->pm_state),
+ 			   msecs_to_jiffies(timeout_ms));
  
- err_free:
-@@ -1342,7 +1371,7 @@ int drm_gpusvm_range_get_pages(struct drm_gpusvm *gpusvm,
- 	for (i = 0, j = 0; i < npages; ++j) {
- 		struct page *page = hmm_pfn_to_page(pfns[i]);
- 
--		order = hmm_pfn_to_map_order(pfns[i]);
-+		order = drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages);
- 		if (is_device_private_page(page) ||
- 		    is_device_coherent_page(page)) {
- 			if (zdd != page->zone_device_data && i > 0) {
+ 	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
 -- 
 2.51.0
 
