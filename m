@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947F32DC78C;
-	Tue, 11 Nov 2025 01:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E807D33557B;
+	Tue, 11 Nov 2025 01:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825007; cv=none; b=aDcbET8uoSlz7aEtzVwhwsFRVV3VaBdv2KvXFwCCYmvj7jgsw7dOvwBW+EkmFtNMu2hX2TtcEC4JBOHsUElKbW3lYt5tv6xdFcdf4eczH1ZC/X6lGQ65rDDvBUcogvrJHbGfnt6kLxl5R676reM3+oqrREJr3TDM0BCKuh4Nkrg=
+	t=1762825010; cv=none; b=DX4bPHk/o46jGVBlYQP955XTGGcNdT7Lcdjo9IstCipsRIOxYfXEY0+y75KASlx2ydg7CqI3EvzQ1GXKeqRSqmpytBsOdaAF5Ogp3KjdwT5SFmvoqyL1m9VKAK95EBJ2U0h1ei/ePY8BNWO3acwgxk5UlfaswziWVBc0CNWsQYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825007; c=relaxed/simple;
-	bh=4o71WmC4OV8HqdpG6cg+O46gO/X/mkTF28593C774QU=;
+	s=arc-20240116; t=1762825010; c=relaxed/simple;
+	bh=55FUBVrHswWhP5RrH77QH+BVS0aYtuDAZIq7cVX6GkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d60DgsXEjeGCVanuFpuD7U1BfVQ4dLTl4Afzt/6nzqyCzUuGJtqh8If9q7nNx5XvqRDn0xFdRxmVUhg19f0+BBXipJWRbDqavLDA/IZQW+rl0niVsAaxNoOKmWtXXUR09LUcs1C3rk9o1VZpa8l0ZPCEcmrk9I8IXyrJrvZXTcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaQuIC82; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hYCEVrI8kqx29Wf71XtyC5CWYgTf2qb8xrbTU4k35cINGpzBTqvpwURBEEmaqU4yygGSJbI3yt/jiTT4h5oddPcVZ5FxQ+cfiM9GCs5u0EID9oSB+J+nyGEXZcbEFw1IZcbZodMT7lU07n6IG9JSftNfJwjB2PfMpbtYuCJ+GXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQSU68vi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaQuIC82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DAAC19422;
-	Tue, 11 Nov 2025 01:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQSU68vi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FFDC4CEF5;
+	Tue, 11 Nov 2025 01:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825007;
-	bh=4o71WmC4OV8HqdpG6cg+O46gO/X/mkTF28593C774QU=;
+	s=korg; t=1762825009;
+	bh=55FUBVrHswWhP5RrH77QH+BVS0aYtuDAZIq7cVX6GkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vaQuIC824wsogkP88/w8KsTHj8vFqTPkEl0IQqdUHM/MZ7BaRDC4q8s3OSKcLU73n
-	 EzAmZM63mnfwdHcQa+7Efr0j+UF+bzYFpH3y23rZqzyCLcyVS/LYKecm2i98zCXrUC
-	 m8rB9ttwC5OECelcpFugpcuD/t0oXl8GPE7fhKPU=
+	b=LQSU68vi9+edNQwAfIpFW9Lcb6FVpuz9pEMT9veuDj/uDYZQ+utfE8Gvad4WaB2kX
+	 5a5im1hvUEmsYSgwaU4gBxkt/YcrE4fsGQdtYRWlrWGdVC4uHya5iMCJs5crEPrAj+
+	 lrLWgBTBJ/HNB7O05/mDcokJZI48oSXIyvJGUREU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 616/849] wifi: ath12k: Increase DP_REO_CMD_RING_SIZE to 256
-Date: Tue, 11 Nov 2025 09:43:06 +0900
-Message-ID: <20251111004551.323091879@linuxfoundation.org>
+Subject: [PATCH 6.12 532/565] bnxt_en: Add a force parameter to bnxt_free_ctx_mem()
+Date: Tue, 11 Nov 2025 09:46:28 +0900
+Message-ID: <20251111004538.939486690@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +48,198 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+From: Hongguang Gao <hongguang.gao@broadcom.com>
 
-[ Upstream commit 82993345aef6987a916337ebd2fca3ff4a6250a7 ]
+[ Upstream commit 46010d43ab7b18fbc8a3a0bf4d65c775f8d2adbd ]
 
-Increase DP_REO_CMD_RING_SIZE from 128 to 256 to avoid
-queuing failures observed during stress test scenarios.
+If 'force' is false, it will keep the memory pages and all data
+structures for the context memory type if the memory is valid.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+This patch always passes true for the 'force' parameter so there is
+no change in behavior.  Later patches will adjust the 'force' parameter
+for the FW log context memory types so that the logs will not be reset
+after FW reset.
 
-Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250806111750.3214584-2-nithyanantham.paramasivam@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20241115151438.550106-5-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5204943a4c6e ("bnxt_en: Fix warning in bnxt_dl_reload_down()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 44 ++++++++++++-------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  2 +-
+ .../net/ethernet/broadcom/bnxt/bnxt_devlink.c |  2 +-
+ 3 files changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 7baa48b86f7ad..10093b4515882 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -184,7 +184,7 @@ struct ath12k_pdev_dp {
- #define DP_REO_REINJECT_RING_SIZE	32
- #define DP_RX_RELEASE_RING_SIZE		1024
- #define DP_REO_EXCEPTION_RING_SIZE	128
--#define DP_REO_CMD_RING_SIZE		128
-+#define DP_REO_CMD_RING_SIZE		256
- #define DP_REO_STATUS_RING_SIZE		2048
- #define DP_RXDMA_BUF_RING_SIZE		4096
- #define DP_RX_MAC_BUF_RING_SIZE		2048
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 5409ad3cee192..a3491b8383f5a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8340,7 +8340,7 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ {
+ 	struct hwrm_func_backing_store_qcaps_v2_output *resp;
+ 	struct hwrm_func_backing_store_qcaps_v2_input *req;
+-	struct bnxt_ctx_mem_info *ctx;
++	struct bnxt_ctx_mem_info *ctx = bp->ctx;
+ 	u16 type;
+ 	int rc;
+ 
+@@ -8348,10 +8348,12 @@ static int bnxt_hwrm_func_backing_store_qcaps_v2(struct bnxt *bp)
+ 	if (rc)
+ 		return rc;
+ 
+-	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+-	if (!ctx)
+-		return -ENOMEM;
+-	bp->ctx = ctx;
++	if (!ctx) {
++		ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
++		if (!ctx)
++			return -ENOMEM;
++		bp->ctx = ctx;
++	}
+ 
+ 	resp = hwrm_req_hold(bp, req);
+ 
+@@ -8400,7 +8402,8 @@ static int bnxt_hwrm_func_backing_store_qcaps(struct bnxt *bp)
+ 	struct hwrm_func_backing_store_qcaps_input *req;
+ 	int rc;
+ 
+-	if (bp->hwrm_spec_code < 0x10902 || BNXT_VF(bp) || bp->ctx)
++	if (bp->hwrm_spec_code < 0x10902 || BNXT_VF(bp) ||
++	    (bp->ctx && bp->ctx->flags & BNXT_CTX_FLAG_INITED))
+ 		return 0;
+ 
+ 	if (bp->fw_cap & BNXT_FW_CAP_BACKING_STORE_V2)
+@@ -8873,11 +8876,16 @@ static int bnxt_backing_store_cfg_v2(struct bnxt *bp, u32 ena)
+ }
+ 
+ static void bnxt_free_one_ctx_mem(struct bnxt *bp,
+-				  struct bnxt_ctx_mem_type *ctxm)
++				  struct bnxt_ctx_mem_type *ctxm, bool force)
+ {
+ 	struct bnxt_ctx_pg_info *ctx_pg;
+ 	int i, n = 1;
+ 
++	ctxm->last = 0;
++
++	if (ctxm->mem_valid && !force)
++		return;
++
+ 	ctx_pg = ctxm->pg_info;
+ 	if (ctx_pg) {
+ 		if (ctxm->instance_bmap)
+@@ -8891,7 +8899,7 @@ static void bnxt_free_one_ctx_mem(struct bnxt *bp,
+ 	}
+ }
+ 
+-void bnxt_free_ctx_mem(struct bnxt *bp)
++void bnxt_free_ctx_mem(struct bnxt *bp, bool force)
+ {
+ 	struct bnxt_ctx_mem_info *ctx = bp->ctx;
+ 	u16 type;
+@@ -8900,11 +8908,13 @@ void bnxt_free_ctx_mem(struct bnxt *bp)
+ 		return;
+ 
+ 	for (type = 0; type < BNXT_CTX_V2_MAX; type++)
+-		bnxt_free_one_ctx_mem(bp, &ctx->ctx_arr[type]);
++		bnxt_free_one_ctx_mem(bp, &ctx->ctx_arr[type], force);
+ 
+ 	ctx->flags &= ~BNXT_CTX_FLAG_INITED;
+-	kfree(ctx);
+-	bp->ctx = NULL;
++	if (force) {
++		kfree(ctx);
++		bp->ctx = NULL;
++	}
+ }
+ 
+ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
+@@ -11933,7 +11943,7 @@ static int bnxt_hwrm_if_change(struct bnxt *bp, bool up)
+ 			set_bit(BNXT_STATE_FW_RESET_DET, &bp->state);
+ 			if (!test_bit(BNXT_STATE_IN_FW_RESET, &bp->state))
+ 				bnxt_ulp_irq_stop(bp);
+-			bnxt_free_ctx_mem(bp);
++			bnxt_free_ctx_mem(bp, true);
+ 			bnxt_dcb_free(bp);
+ 			rc = bnxt_fw_init_one(bp);
+ 			if (rc) {
+@@ -13657,7 +13667,7 @@ static void bnxt_fw_reset_close(struct bnxt *bp)
+ 	bnxt_hwrm_func_drv_unrgtr(bp);
+ 	if (pci_is_enabled(bp->pdev))
+ 		pci_disable_device(bp->pdev);
+-	bnxt_free_ctx_mem(bp);
++	bnxt_free_ctx_mem(bp, true);
+ }
+ 
+ static bool is_bnxt_fw_ok(struct bnxt *bp)
+@@ -15553,7 +15563,7 @@ static void bnxt_remove_one(struct pci_dev *pdev)
+ 	kfree(bp->fw_health);
+ 	bp->fw_health = NULL;
+ 	bnxt_cleanup_pci(bp);
+-	bnxt_free_ctx_mem(bp);
++	bnxt_free_ctx_mem(bp, true);
+ 	bnxt_free_crash_dump_mem(bp);
+ 	kfree(bp->rss_indir_tbl);
+ 	bp->rss_indir_tbl = NULL;
+@@ -16195,7 +16205,7 @@ static int bnxt_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	kfree(bp->fw_health);
+ 	bp->fw_health = NULL;
+ 	bnxt_cleanup_pci(bp);
+-	bnxt_free_ctx_mem(bp);
++	bnxt_free_ctx_mem(bp, true);
+ 	bnxt_free_crash_dump_mem(bp);
+ 	kfree(bp->rss_indir_tbl);
+ 	bp->rss_indir_tbl = NULL;
+@@ -16251,7 +16261,7 @@ static int bnxt_suspend(struct device *device)
+ 	bnxt_hwrm_func_drv_unrgtr(bp);
+ 	bnxt_ptp_clear(bp);
+ 	pci_disable_device(bp->pdev);
+-	bnxt_free_ctx_mem(bp);
++	bnxt_free_ctx_mem(bp, true);
+ 	rtnl_unlock();
+ 	return rc;
+ }
+@@ -16367,7 +16377,7 @@ static pci_ers_result_t bnxt_io_error_detected(struct pci_dev *pdev,
+ 
+ 	if (pci_is_enabled(pdev))
+ 		pci_disable_device(pdev);
+-	bnxt_free_ctx_mem(bp);
++	bnxt_free_ctx_mem(bp, true);
+ 	rtnl_unlock();
+ 
+ 	/* Request a slot slot reset. */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index d4e63bf599666..37bb9091bf771 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2828,7 +2828,7 @@ int bnxt_hwrm_vnic_alloc(struct bnxt *bp, struct bnxt_vnic_info *vnic,
+ int __bnxt_hwrm_get_tx_rings(struct bnxt *bp, u16 fid, int *tx_rings);
+ int bnxt_nq_rings_in_use(struct bnxt *bp);
+ int bnxt_hwrm_set_coal(struct bnxt *);
+-void bnxt_free_ctx_mem(struct bnxt *bp);
++void bnxt_free_ctx_mem(struct bnxt *bp, bool force);
+ int bnxt_num_tx_to_cp(struct bnxt *bp, int tx);
+ unsigned int bnxt_get_max_func_stat_ctxs(struct bnxt *bp);
+ unsigned int bnxt_get_avail_stat_ctxs_for_en(struct bnxt *bp);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+index 4cb0fabf977e3..901fd36757ed6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+@@ -463,7 +463,7 @@ static int bnxt_dl_reload_down(struct devlink *dl, bool netns_change,
+ 			break;
+ 		}
+ 		bnxt_cancel_reservations(bp, false);
+-		bnxt_free_ctx_mem(bp);
++		bnxt_free_ctx_mem(bp, true);
+ 		break;
+ 	}
+ 	case DEVLINK_RELOAD_ACTION_FW_ACTIVATE: {
 -- 
 2.51.0
 
