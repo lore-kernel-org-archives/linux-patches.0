@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CEC4086A;
-	Tue, 11 Nov 2025 00:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B20A4C97;
+	Tue, 11 Nov 2025 00:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822491; cv=none; b=UjSEB1rGecZ/yBCiI7MtB7kVp9MhAIN8lpMcuMo5TnS3/Y6p2o6ZLBqA/O+kW4rcYArDnSR+zEylkDNcG1R260tRTcb0iIKAJg4+QZlrmYgoHPGyk2qVM9U7NZV8wUMmpTuVutPM+vTYZP6aDFeGGdUQkJtC5uJLs7rCGTm/Nck=
+	t=1762822493; cv=none; b=X+54sZpNrbPkCDdXVzCnq+oqe3Of9srEb6kxP5wvk+yNGKl/5v3ziYUSqw/GOLuebmHnPTBjIAb995NjkeUMiZArWCjqtVWNntMBe++ZfkAMlPlwY73d+Q8OYZ+TYV+EVIMznnCG5q7F2IphibpgIkESsK1zBBPkpLDwaEtGdqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822491; c=relaxed/simple;
-	bh=EV5wQ0mCyPLEunE/u3vabNQNPDiUJmn5KwDtU6Gl5Sg=;
+	s=arc-20240116; t=1762822493; c=relaxed/simple;
+	bh=HKT5ZWFRPjjdQkP/Fq39quOnqOQSLi6eq0g4YTzblls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIiKfEYnQ8O5la+5FkOmo14Q6KYgBTvhgAP1eHHmFjr3mmfYD56jJbolwoL6taRcMaLAuaA6YBN8bE6cd1PMEZm4qB9Jw2CBqm98AkboCM8EiVywZF9OqGM4xViwRvBQFm8v/dGPArGnjDcuo8BlFwGN01bvElzE1fz+xrndTvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DM1EaTu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfaZOXNPPIO7wd6UKZiLu33HuW8zDIIIdl2oGEZojZDRd1+272B0nG8xkKyZsAtZfqJXWA7j6soUynKC/klocz5dWRqlgH/6VHeQZH29OGT6YaM4HKSM4V94T3l1Eajq0Sobup8o66hA/itw5f8XeaUcIeWk2fHNTLfc+WlWHvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idFBLfEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DM1EaTu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94973C116B1;
-	Tue, 11 Nov 2025 00:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idFBLfEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB07DC16AAE;
+	Tue, 11 Nov 2025 00:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822490;
-	bh=EV5wQ0mCyPLEunE/u3vabNQNPDiUJmn5KwDtU6Gl5Sg=;
+	s=korg; t=1762822493;
+	bh=HKT5ZWFRPjjdQkP/Fq39quOnqOQSLi6eq0g4YTzblls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DM1EaTu9IgNwE+qg4yKQfNaE0+mDZyHaFxXY4SmJqe4yEew5C7nFsp/C+lV8Ai32n
-	 rDkGyE01bB4FFJ4rmiTXgAthgAKahztkEI25CWcoe/noykJ68YBU45EtiRhe460biJ
-	 YE3rgqqRgOXOOf+d6GK2YRthZtXP/v4FCnqBRTig=
+	b=idFBLfEba87wSbYPvUl8LGBtkoKvdKjAGBQJ4xeuTPJJ+BWYt+JmYBg5vt5l4GOHg
+	 cCTlpAxNN4wag5ZLP6Hweq81lAqEJiZbUGmAGMvdqBpD7+2FieBdBb9S6Aus9OuAW6
+	 +nNChtFvQbTIaF0GhMytjkA8OajmOLRQg12uADek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Chen <ryan_chen@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 118/849] soc: aspeed: socinfo: Add AST27xx silicon IDs
-Date: Tue, 11 Nov 2025 09:34:48 +0900
-Message-ID: <20251111004539.250161312@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 061/565] block: make REQ_OP_ZONE_OPEN a write operation
+Date: Tue, 11 Nov 2025 09:38:37 +0900
+Message-ID: <20251111004528.299648360@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +49,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Chen <ryan_chen@aspeedtech.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit c30dcfd4b5a0f0e3fe7138bf287f6de6b1b00278 ]
+commit 19de03b312d69a7e9bacb51c806c6e3f4207376c upstream.
 
-Extend the ASPEED SoC info driver to support AST27XX silicon IDs.
+A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
+a zoned block device to the explicitly open condition
+(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
+operation.
 
-Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-Link: https://patch.msgid.link/20250807005208.3517283-1-ryan_chen@aspeedtech.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Change this operation code to be an odd number to reflect this. The
+following operation numbers are changed to keep the numbering compact.
+
+No problems were reported without this change as this operation has no
+data. However, this unifies the zone operation to reflect that they
+modify the device state and also allows strengthening checks in the
+block layer, e.g. checking if this operation is not issued against a
+read-only device.
+
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/aspeed/aspeed-socinfo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/blk_types.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
-index 3f759121dc00a..67e9ac3d08ecc 100644
---- a/drivers/soc/aspeed/aspeed-socinfo.c
-+++ b/drivers/soc/aspeed/aspeed-socinfo.c
-@@ -27,6 +27,10 @@ static struct {
- 	{ "AST2620", 0x05010203 },
- 	{ "AST2605", 0x05030103 },
- 	{ "AST2625", 0x05030403 },
-+	/* AST2700 */
-+	{ "AST2750", 0x06000003 },
-+	{ "AST2700", 0x06000103 },
-+	{ "AST2720", 0x06000203 },
- };
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -338,15 +338,15 @@ enum req_op {
+ 	/* write the zero filled sector many times */
+ 	REQ_OP_WRITE_ZEROES	= (__force blk_opf_t)9,
+ 	/* Open a zone */
+-	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)10,
++	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)11,
+ 	/* Close a zone */
+-	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)11,
++	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)13,
+ 	/* Transition a zone to full */
+-	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)13,
++	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)15,
+ 	/* reset a zone write pointer */
+-	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
++	REQ_OP_ZONE_RESET	= (__force blk_opf_t)17,
+ 	/* reset all the zone present on the device */
+-	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
++	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)19,
  
- static const char *siliconid_to_name(u32 siliconid)
--- 
-2.51.0
-
+ 	/* Driver private requests */
+ 	REQ_OP_DRV_IN		= (__force blk_opf_t)34,
 
 
