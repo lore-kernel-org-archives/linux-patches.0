@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AF534AB1B;
-	Tue, 11 Nov 2025 01:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6FD26D4C1;
+	Tue, 11 Nov 2025 01:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825350; cv=none; b=OTZN4vDMlATwDkhAJWKGYwPhTg3CVd6llHxgz5+5qJVXWtC0aBeh03xeUvrho1DS9svjJcqgz8cRdVoAHKqgbK7VuP+8KyQZm/trQCbjz5zysvLUhHzY6i65xY+IgC+QN1b5ks8KzoKGSKDuOwoNNs6hIFDvq9scdzZ77hb1gFE=
+	t=1762825352; cv=none; b=XYLiopDdGsGe/wvnPme9kG7bRFbghef2PjKmYQOInf0JW6yGFC4qhJnhkt2gvxt/DAiG0f7R8Lm0ztEXZ9Uli5oOoy5OhU3Crq9vYZWRB5epEOesylmjS+9+Kt6jglY8L83LmuEmsE6tOxXrnIzBBAinOsS7FoaBgTqSMTUOgEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825350; c=relaxed/simple;
-	bh=DF/cWCzDOmTRVyTNkf/D/PcDyU2SNjSTWax3z56k1qE=;
+	s=arc-20240116; t=1762825352; c=relaxed/simple;
+	bh=lvUTLfkow3el2Oiatq1S6zFW944dp+CM5I1tiNz1axA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDyFXSIz8DDGd6GH70us94+c/Krs7MFdhQj0Ue+UhfJrwvDDcDddR3rYfXi1GTlgw5F/Az9U2U/Px04RE1vTbJ84Pou4HgU3OLO29a8t2XlkkvC29qhhzTW8TJAZDvisojID+tkDgflPgEch3VVSJP0qo7Z3qzBe6Dhs+rRvE5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhLaSGLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fal8BpGdAgg0eW4tNnILMuJTJ/Kk3Vw2yMhFyiLFiIF1816UqK7irlpBQIOh9TpooJVpvtWm/H6ILnAzmAFmOeM8atQJ9Bg/gbJZFlJikC5z7FHgtzwnsxuFZBXcubZL7zRZnE1een2vMBXHtwqIJlpjS5fqQFSVbbDB3/cGU+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbkkQvoH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhLaSGLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C79C116B1;
-	Tue, 11 Nov 2025 01:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbkkQvoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA1DC4CEF5;
+	Tue, 11 Nov 2025 01:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825350;
-	bh=DF/cWCzDOmTRVyTNkf/D/PcDyU2SNjSTWax3z56k1qE=;
+	s=korg; t=1762825352;
+	bh=lvUTLfkow3el2Oiatq1S6zFW944dp+CM5I1tiNz1axA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhLaSGLhMhUC3Z85wi8hOyuZ79MbCed+CBcny2q7AtEvYONuHpKZgusDttIFEgsB7
-	 vPoSjBF49MOgjGWqiebbPWve6+t2dtPGwx4CXvMpMWm1b1gRNLqKlyrHy/FI6X1LZ5
-	 YCuHZurGO7LTBWI9OUi5kJ6c0o+YRFpW5MTcNr6A=
+	b=BbkkQvoHm5tlI1dpt6Vvrgjuep3tRuMj55IS1SbcbynkfYYkoxO/qQuFgY1LiIH8m
+	 8Epl1nfV0JzA44L54Sp83pyZ3UdNVAHP+y09zYBCBrx1Hk4VG4qE4wFws/aM+RBsPx
+	 +6yuB7TpzgQGFhhinSOT/jJfchG4RtvruXfofk9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 766/849] gpio: swnode: dont use the swnodes name as the key for GPIO lookup
-Date: Tue, 11 Nov 2025 09:45:36 +0900
-Message-ID: <20251111004554.949162403@linuxfoundation.org>
+Subject: [PATCH 6.17 767/849] gpiolib: fix invalid pointer access in debugfs
+Date: Tue, 11 Nov 2025 09:45:37 +0900
+Message-ID: <20251111004554.972860010@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,36 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit e5d527be7e6984882306b49c067f1fec18920735 ]
+[ Upstream commit 2f6115ad8864cf3f48598f26c74c7c8e5c391919 ]
 
-Looking up a GPIO controller by label that is the name of the software
-node is wonky at best - the GPIO controller driver is free to set
-a different label than the name of its firmware node. We're already being
-passed a firmware node handle attached to the GPIO device to
-swnode_get_gpio_device() so use it instead for a more precise lookup.
+If the memory allocation in gpiolib_seq_start() fails, the s->private
+field remains uninitialized and is later dereferenced without checking
+in gpiolib_seq_stop(). Initialize s->private to NULL before calling
+kzalloc() and check it before dereferencing it.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Fixes: e7f9ff5dc90c ("gpiolib: add support for software nodes")
-Link: https://lore.kernel.org/r/20251103-reset-gpios-swnodes-v4-4-6461800b6775@linaro.org
+Fixes: e348544f7994 ("gpio: protect the list of GPIO devices with SRCU")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20251103141132.53471-1-brgl@bgdev.pl
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpiolib.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-swnode.c b/drivers/gpio/gpiolib-swnode.c
-index f21dbc28cf2c8..e3806db1c0e07 100644
---- a/drivers/gpio/gpiolib-swnode.c
-+++ b/drivers/gpio/gpiolib-swnode.c
-@@ -41,7 +41,7 @@ static struct gpio_device *swnode_get_gpio_device(struct fwnode_handle *fwnode)
- 	    !strcmp(gdev_node->name, GPIOLIB_SWNODE_UNDEFINED_NAME))
- 		return ERR_PTR(-ENOENT);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 74d54513730a7..4aa66d7b08598 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -5285,6 +5285,8 @@ static void *gpiolib_seq_start(struct seq_file *s, loff_t *pos)
+ 	struct gpio_device *gdev;
+ 	loff_t index = *pos;
  
--	gdev = gpio_device_find_by_label(gdev_node->name);
-+	gdev = gpio_device_find_by_fwnode(fwnode);
- 	return gdev ?: ERR_PTR(-EPROBE_DEFER);
- }
++	s->private = NULL;
++
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return NULL;
+@@ -5318,7 +5320,11 @@ static void *gpiolib_seq_next(struct seq_file *s, void *v, loff_t *pos)
  
+ static void gpiolib_seq_stop(struct seq_file *s, void *v)
+ {
+-	struct gpiolib_seq_priv *priv = s->private;
++	struct gpiolib_seq_priv *priv;
++
++	priv = s->private;
++	if (!priv)
++		return;
+ 
+ 	srcu_read_unlock(&gpio_devices_srcu, priv->idx);
+ 	kfree(priv);
 -- 
 2.51.0
 
