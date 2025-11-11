@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CAF342CA9;
-	Tue, 11 Nov 2025 01:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB0C261573;
+	Tue, 11 Nov 2025 01:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823553; cv=none; b=I5ZwZmG19hNndWBbbEZFlczZlRtDpG1udTUH+Me65TTY+ly6dAcPyN4KohPFIyw5hV7yk99+C8lysuZPhjlaV7+LWFvV2YvS3n1/fT+kXHlz7fpOc1wLjW55+N4ktEVj3KJRhmXUsEEjpzjfcyOdIq0DU10QhFjhJ3NgUSLRQAk=
+	t=1762823555; cv=none; b=ESUnUQERjyCJTBmGEuDnHJ+L56cwI8SNDuwB4i9wBsNy7uc7w7l4GgDL/9LPX/nf5IOVTa5e0D0rFyR62LhbXN1UDwNuygz7JZ+bGjMUp8tEV4C2y/6jKrBO2DJKyRmF6mDbqynk7NV7ylBmj5uf8a1F97AFRzaSdbYZzwJ6k9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823553; c=relaxed/simple;
-	bh=MyZtydjstefYDgqRaQmj6SvhWx5OJZ6w0lWCYKnrCEs=;
+	s=arc-20240116; t=1762823555; c=relaxed/simple;
+	bh=M3Nm5rYGR4UhJoSceLzjDg4d5PxElO59jsYSx50UZX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJMruMjM06xrNYOHP8S8gAfMYSelRNTS1KBJbFt+6VY0AoAHR5Ir6neycPDZo8jnuWDzVXIFbM6hUBVaIOY+jz0Eby4k7EsZq5gzcettney9GeNU/Y5xbMAM8IqH6Skf0OGNwugLxJHz2t7xoq6b+m6QxW91zZhMjlG0WOT2wqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqzXpqiS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DXA3rYOrBzLXiEIpaS8/zlx5KYoAGNQiP0LlPEnBnuanEDd4gUXoT7MZSME7NV7fG1BUSnzdWfYzQqK8oIwLhJ+rIN7laB6r6QX5EsPyeq3xFtAsST5PmSgSYELN40L6gZYFbvlcgi7Us8asJ0PNQ427+PGnwRqShNe9eSX981Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM5rLcJc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqzXpqiS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81FDC116B1;
-	Tue, 11 Nov 2025 01:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM5rLcJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EACC4CEFB;
+	Tue, 11 Nov 2025 01:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823553;
-	bh=MyZtydjstefYDgqRaQmj6SvhWx5OJZ6w0lWCYKnrCEs=;
+	s=korg; t=1762823555;
+	bh=M3Nm5rYGR4UhJoSceLzjDg4d5PxElO59jsYSx50UZX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqzXpqiSDhzncuaItgi/GtXefGJxRjOWIYr4JLokd5lj7tHlfzIU3sYKY3B7t1rcq
-	 nCR3CePwHcjBYNCuCn2sfw56CN9UsvXYR5PDLIlZoTuWvmhMOAIr08bpQ9jhVz9g6c
-	 0+n5weDqxMCEurScLPUqPAsf9SSdWx7P9LZdk2KY=
+	b=hM5rLcJcuKlO35a3QAB3Lg5MtXvpYWi02WDhE9Wp8KRexFRrHhZiiijA/jvg4CTXT
+	 fTEO512Dh8Lu4JATAKuoF5yKF6l5vt2XDbikS3/R/c/ZOiXKA/BBZP5EDm6WTyQH1Z
+	 /rzLVbA/nZhPeyTcfjjkSj3xNL+YtstKZjUB1XJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shimrra Shai <shimrrashai@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 322/849] ASoC: es8323: remove DAC enablement write from es8323_probe
-Date: Tue, 11 Nov 2025 09:38:12 +0900
-Message-ID: <20251111004544.200323304@linuxfoundation.org>
+Subject: [PATCH 6.12 269/565] mips: lantiq: danube: add missing properties to cpu node
+Date: Tue, 11 Nov 2025 09:42:05 +0900
+Message-ID: <20251111004532.939532103@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shimrra Shai <shimrrashai@gmail.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 33bc29123d26f7caa7d11f139e153e39104afc6c ]
+[ Upstream commit e8dee66c37085dc9858eb8608bc783c2900e50e7 ]
 
-Remove initialization of the DAC and mixer enablement bits from the
-es8323_probe routine. This really should be handled by the DAPM
-subsystem.
+This fixes the following warnings:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpus: '#address-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/cpus.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpus: '#size-cells' is a required property
+	from schema $id: http://devicetree.org/schemas/cpus.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: cpu@0 (mips,mips24Kc): 'reg' is a required property
+	from schema $id: http://devicetree.org/schemas/mips/cpus.yaml#
 
-Signed-off-by: Shimrra Shai <shimrrashai@gmail.com>
-Link: https://patch.msgid.link/20250815042023.115485-2-shimrrashai@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8323.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/mips/boot/dts/lantiq/danube.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/es8323.c b/sound/soc/codecs/es8323.c
-index 70d348ff3b437..4c15fffda733c 100644
---- a/sound/soc/codecs/es8323.c
-+++ b/sound/soc/codecs/es8323.c
-@@ -632,7 +632,6 @@ static int es8323_probe(struct snd_soc_component *component)
+diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
+index 7a7ba66aa5349..0a942bc091436 100644
+--- a/arch/mips/boot/dts/lantiq/danube.dtsi
++++ b/arch/mips/boot/dts/lantiq/danube.dtsi
+@@ -5,8 +5,12 @@
+ 	compatible = "lantiq,xway", "lantiq,danube";
  
- 	snd_soc_component_write(component, ES8323_CONTROL2, 0x60);
- 	snd_soc_component_write(component, ES8323_CHIPPOWER, 0x00);
--	snd_soc_component_write(component, ES8323_DACCONTROL17, 0xB8);
+ 	cpus {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
+ 		cpu@0 {
+ 			compatible = "mips,mips24Kc";
++			reg = <0>;
+ 		};
+ 	};
  
- 	return 0;
- }
 -- 
 2.51.0
 
