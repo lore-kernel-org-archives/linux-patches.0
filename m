@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9788E1DF258;
-	Tue, 11 Nov 2025 00:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB01C6FE1;
+	Tue, 11 Nov 2025 00:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822729; cv=none; b=Oms+OYSRAATqByGO2eTElcKlr8rOEI5SjFSmKL6qI292ymZ55nblHu4h3Ou6+rNseFJYWpANCSlnmhMX76wkTqTSEjbD2YiXHmSoh+Iu1++4KZhz1fJR8PMU7LTh8s2S+u9XxEYRGih1zly8AHXRwPmRr1cAvqXogwtaeZso8G8=
+	t=1762822732; cv=none; b=QuhD+05gpPpADaWPjzWoilhJs/V6M5zQsXE6e4KC3jdv8zIauU6HvnRh/fkIc0u7B19b5x2T3497GThhkr/q/fMggykOlsgKvgDXk5dl6kxjx+tlrGE3quZT+P/RsA0s3KDUMnf0O8CIlf15LiGY6wNUH/l2Yjbn9OxGJBj9qpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822729; c=relaxed/simple;
-	bh=veSxS2/p+4W52PS5nnNDJd6mepwFj2Qk19P0Y/6Bc4Y=;
+	s=arc-20240116; t=1762822732; c=relaxed/simple;
+	bh=D6MxCog94nroTO5GT45KqCrpsGtMJ1TVsuBfUufFNzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gb3m8puWguFqGXhh4iiMkaR1KkIlE3bpGiiK/YZGCwaP+lUr4k3Q70FsLZtoDMCRzHZHZ5xlNQCkaN2d7E7Wp9wm5uzj/VHlGgncwYU6fC9zds689qYYbSxiAibbNAwGt9/yFyrOzdgKIMcDFnhAYCMn/2Q8X+hWHyPJ0/p0VaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cncpiU2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LAwJA/wbQ+jta3ahkW0rD12xz/iyU2RF4fB39crHo46E7fWCoVk/PJuc7cqqjXK6GU8VtX+l8lkELgDI0iTRY8S6N8kVPOJAJCxGYKpykv3vH3oCa6B5F3e3VnCjUsVIQVTV8i5tXoyez24cF92gxri6h9bg5sC7qIvlylg6nds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkilf0gr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cncpiU2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D14C113D0;
-	Tue, 11 Nov 2025 00:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkilf0gr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AA6C113D0;
+	Tue, 11 Nov 2025 00:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822729;
-	bh=veSxS2/p+4W52PS5nnNDJd6mepwFj2Qk19P0Y/6Bc4Y=;
+	s=korg; t=1762822731;
+	bh=D6MxCog94nroTO5GT45KqCrpsGtMJ1TVsuBfUufFNzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cncpiU2/XwhG9WuafdXqvRYX9Y9HbONDbXaLc108+AcqdZp960dEVJkVIo0Ubc9Q9
-	 0knR2WddpofA9jVJT2lCPNpWsIjc5eBcfCl2n2jLG/0A4raUpsptvLm4H7h28TthMM
-	 u2p4rLJd3I8Q+oI93RrxmgCxULHTP6AcGlP/+mLE=
+	b=mkilf0grFAt/WYaGPSoiXDB9wmdfXqeSYCuKBQ/7RcOts956C2tRADS0+fG+B4Upy
+	 QRi4LM6XNg5aT6c5SbXsgSL6+AOKHUMPZaEqr/NZV2Eg5egtqzxUhFaOKzHUmnHlWB
+	 P8wUJbzvDKaVqPx1XVovMIrqj2gI86L6tWVgBTqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhang <chizhang@asrmicro.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Chuande Chen <chuachen@cisco.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/565] pinctrl: single: fix bias pull up/down handling in pin_config_set
-Date: Tue, 11 Nov 2025 09:39:10 +0900
-Message-ID: <20251111004529.076394804@linuxfoundation.org>
+Subject: [PATCH 6.17 157/849] hwmon: (sbtsi_temp) AMD CPU extended temperature range support
+Date: Tue, 11 Nov 2025 09:35:27 +0900
+Message-ID: <20251111004540.229751468@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +47,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chi Zhang <chizhang@asrmicro.com>
+From: Chuande Chen <chuachen@cisco.com>
 
-[ Upstream commit 236152dd9b1675a35eee912e79e6c57ca6b6732f ]
+[ Upstream commit d9d61f1da35038793156c04bb13f0a1350709121 ]
 
-In the pin_config_set function, when handling PIN_CONFIG_BIAS_PULL_DOWN or
-PIN_CONFIG_BIAS_PULL_UP, the function calls pcs_pinconf_clear_bias()
-which writes the register. However, the subsequent operations continue
-using the stale 'data' value from before the register write, effectively
-causing the bias clear operation to be overwritten and not take effect.
+Many AMD CPUs can support this feature now. We would get a wrong CPU DIE
+temperature if don't consider this. In low-temperature environments,
+the CPU die temperature can drop below zero. So many platforms would like
+to make extended temperature range as their default configuration.
+Default temperature range (0C to 255.875C).
+Extended temperature range (-49C to +206.875C).
+Ref Doc: AMD V3000 PPR (Doc ID #56558).
 
-Fix this by reading the 'data' value from the register after calling
-pcs_pinconf_clear_bias().
-
-This bug seems to have existed when this code was first merged in commit
-9dddb4df90d1 ("pinctrl: single: support generic pinconf").
-
-Signed-off-by: Chi Zhang <chizhang@asrmicro.com>
-Link: https://lore.kernel.org/20250807062038.13610-1-chizhang@asrmicro.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Chuande Chen <chuachen@cisco.com>
+Link: https://lore.kernel.org/r/20250814053940.96764-1-chenchuande@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/sbtsi_temp.c | 46 +++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 2ec599e383e4b..1df0a00ae1ee8 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -589,8 +589,10 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 			/* 4 parameters */
- 			case PIN_CONFIG_BIAS_PULL_DOWN:
- 			case PIN_CONFIG_BIAS_PULL_UP:
--				if (arg)
-+				if (arg) {
- 					pcs_pinconf_clear_bias(pctldev, pin);
-+					data = pcs->read(pcs->base + offset);
-+				}
- 				fallthrough;
- 			case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
- 				data &= ~func->conf[i].mask;
+diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
+index 3c839f56c4603..a6c439e376ff7 100644
+--- a/drivers/hwmon/sbtsi_temp.c
++++ b/drivers/hwmon/sbtsi_temp.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/of.h>
++#include <linux/bitfield.h>
+ 
+ /*
+  * SB-TSI registers only support SMBus byte data access. "_INT" registers are
+@@ -29,8 +30,22 @@
+ #define SBTSI_REG_TEMP_HIGH_DEC		0x13 /* RW */
+ #define SBTSI_REG_TEMP_LOW_DEC		0x14 /* RW */
+ 
++/*
++ * Bit for reporting value with temperature measurement range.
++ * bit == 0: Use default temperature range (0C to 255.875C).
++ * bit == 1: Use extended temperature range (-49C to +206.875C).
++ */
++#define SBTSI_CONFIG_EXT_RANGE_SHIFT	2
++/*
++ * ReadOrder bit specifies the reading order of integer and decimal part of
++ * CPU temperature for atomic reads. If bit == 0, reading integer part triggers
++ * latching of the decimal part, so integer part should be read first.
++ * If bit == 1, read order should be reversed.
++ */
+ #define SBTSI_CONFIG_READ_ORDER_SHIFT	5
+ 
++#define SBTSI_TEMP_EXT_RANGE_ADJ	49000
++
+ #define SBTSI_TEMP_MIN	0
+ #define SBTSI_TEMP_MAX	255875
+ 
+@@ -38,6 +53,8 @@
+ struct sbtsi_data {
+ 	struct i2c_client *client;
+ 	struct mutex lock;
++	bool ext_range_mode;
++	bool read_order;
+ };
+ 
+ /*
+@@ -74,23 +91,11 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ {
+ 	struct sbtsi_data *data = dev_get_drvdata(dev);
+ 	s32 temp_int, temp_dec;
+-	int err;
+ 
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+-		/*
+-		 * ReadOrder bit specifies the reading order of integer and
+-		 * decimal part of CPU temp for atomic reads. If bit == 0,
+-		 * reading integer part triggers latching of the decimal part,
+-		 * so integer part should be read first. If bit == 1, read
+-		 * order should be reversed.
+-		 */
+-		err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
+-		if (err < 0)
+-			return err;
+-
+ 		mutex_lock(&data->lock);
+-		if (err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT)) {
++		if (data->read_order) {
+ 			temp_dec = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_DEC);
+ 			temp_int = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_INT);
+ 		} else {
+@@ -122,6 +127,8 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ 		return temp_dec;
+ 
+ 	*val = sbtsi_reg_to_mc(temp_int, temp_dec);
++	if (data->ext_range_mode)
++		*val -= SBTSI_TEMP_EXT_RANGE_ADJ;
+ 
+ 	return 0;
+ }
+@@ -146,6 +153,8 @@ static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
+ 		return -EINVAL;
+ 	}
+ 
++	if (data->ext_range_mode)
++		val += SBTSI_TEMP_EXT_RANGE_ADJ;
+ 	val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
+ 	sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
+ 
+@@ -203,6 +212,7 @@ static int sbtsi_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct sbtsi_data *data;
++	int err;
+ 
+ 	data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
+ 	if (!data)
+@@ -211,8 +221,14 @@ static int sbtsi_probe(struct i2c_client *client)
+ 	data->client = client;
+ 	mutex_init(&data->lock);
+ 
+-	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data, &sbtsi_chip_info,
+-							 NULL);
++	err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
++	if (err < 0)
++		return err;
++	data->ext_range_mode = FIELD_GET(BIT(SBTSI_CONFIG_EXT_RANGE_SHIFT), err);
++	data->read_order = FIELD_GET(BIT(SBTSI_CONFIG_READ_ORDER_SHIFT), err);
++
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
++							 &sbtsi_chip_info, NULL);
+ 
+ 	return PTR_ERR_OR_ZERO(hwmon_dev);
+ }
 -- 
 2.51.0
 
