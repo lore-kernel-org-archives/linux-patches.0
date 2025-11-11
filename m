@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F241D2D97A4;
-	Tue, 11 Nov 2025 01:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15C26ED4A;
+	Tue, 11 Nov 2025 01:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824608; cv=none; b=qUE5sfZ9lHq++Asl1NCn5kLMdM5LVh+FaGMHlPbvFRPc+FQ5exEF9otxCZjLeKoDPK4L5rx1pff9y0VeUiZjIejnH1AlqJU3HFRkDIFTK86OOkc9tM8xi/QO+SDbCiC8EBQw2xn8pc2DlfU5b6f5tA0gMlKE0tC73ReM7YwDPuI=
+	t=1762824610; cv=none; b=lTu7QeGTSmd57iXuqk1AQwlhI1fXbEMxRK1WpsVd/lO9b0yqqkFBKe7vg6jHz8BFDzQGyuRUH2ORnBCtYOTGgtmPyyehh4+6JvKkjGdU7KJwuxubquTBQoJSv4CsOPcvE5JNcu/Ypxh9WrUq1csXhi7HtWIBSTVU4YafdUtw8v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824608; c=relaxed/simple;
-	bh=opcqOgyKk7wKvB0Zj3039oSiCe5j28yUVM4STD2lTPU=;
+	s=arc-20240116; t=1762824610; c=relaxed/simple;
+	bh=pbxF12dU4kM9r60W70vVzYGjiXw5/iSALZEFNe8WUYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAeFzHQKhHmxYmX1H/wt1cQvI6kmD+D6qpGnirrI2+QNm55NjjguOq8nI0UVbuEfgDCIqv7ePjGQix+DMewoD7bM6dvwXgjmFpvCnU9f5j3XmckEasQ7Gr9MULtboSASHXAXMaXGhHevDmbmgkAa3KRVkJSsxf2fZiNn6agO3G4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kl5M8mib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQV6AfdV4XnVbSZeVboYk/W9J5llTotjTtd6ccmKFkyrp5uRRofMXpMrixlxQoZ8sfVXjnN7ePDhjKRP3Tny6b9QaQHahyxQ8nvyiqmYqfd/syWm3Hxc5rMMebwRFD3aUjtWDh1YDKP25tgKHQ+NZNJofibPeYmp/rK8VXyrSFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FN+jecV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl5M8mib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92495C4CEFB;
-	Tue, 11 Nov 2025 01:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FN+jecV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E47C16AAE;
+	Tue, 11 Nov 2025 01:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824607;
-	bh=opcqOgyKk7wKvB0Zj3039oSiCe5j28yUVM4STD2lTPU=;
+	s=korg; t=1762824610;
+	bh=pbxF12dU4kM9r60W70vVzYGjiXw5/iSALZEFNe8WUYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kl5M8mibaQI9+1DsJZq3vYxoJIv4Lg8IBFRSEVKJFYSe8uJb+fAYMrdQ4/42Ma1vd
-	 NbS3H70QPOZj3cddTo4gSId3REJLJSFezAdv3B97p1vfeox7SAw977goUgVdPjfwM3
-	 2TO34WjrEUumjW10UzoFCxam8pHTJdBlZD1Ak6Q8=
+	b=1FN+jecVVIBOam7s0FBFQUqe7rCewk+cR45LH/mQie4YgOGFv6fZJa4kRb2ySYieU
+	 JjXecjqntmvv4K5Hpn0IRHKnobvRvp0Gzklixor6cwfP1QlINMqlRGJMy2j12rXTN8
+	 faVzISg+3wbtuhmUfVr7Q2baLGn7HgOBfReQxmSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Randall P. Embry" <rpembry@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 533/849] net: mana: Reduce waiting time if HWC not responding
-Date: Tue, 11 Nov 2025 09:41:43 +0900
-Message-ID: <20251111004549.304594769@linuxfoundation.org>
+Subject: [PATCH 6.12 479/565] 9p: sysfs_init: dont hardcode error to ENOMEM
+Date: Tue, 11 Nov 2025 09:45:35 +0900
+Message-ID: <20251111004537.694728044@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Randall P. Embry <rpembry@gmail.com>
 
-[ Upstream commit c4deabbc1abe452ea230b86d53ed3711e5a8a062 ]
+[ Upstream commit 528f218b31aac4bbfc58914d43766a22ab545d48 ]
 
-If HW Channel (HWC) is not responding, reduce the waiting time, so further
-steps will fail quickly.
-This will prevent getting stuck for a long time (30 minutes or more), for
-example, during unloading while HWC is not responding.
+v9fs_sysfs_init() always returned -ENOMEM on failure;
+return the actual sysfs_create_group() error instead.
 
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/1757537841-5063-1-git-send-email-haiyangz@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Randall P. Embry <rpembry@gmail.com>
+Message-ID: <20250926-v9fs_misc-v1-3-a8b3907fc04d@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/hw_channel.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/9p/v9fs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index ef072e24c46d0..ada6c78a2bef4 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -881,7 +881,12 @@ int mana_hwc_send_request(struct hw_channel_context *hwc, u32 req_len,
- 	if (!wait_for_completion_timeout(&ctx->comp_event,
- 					 (msecs_to_jiffies(hwc->hwc_timeout)))) {
- 		if (hwc->hwc_timeout != 0)
--			dev_err(hwc->dev, "HWC: Request timed out!\n");
-+			dev_err(hwc->dev, "HWC: Request timed out: %u ms\n",
-+				hwc->hwc_timeout);
-+
-+		/* Reduce further waiting if HWC no response */
-+		if (hwc->hwc_timeout > 1)
-+			hwc->hwc_timeout = 1;
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index e35b30534787d..ccf00a948146a 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -597,13 +597,16 @@ static const struct attribute_group v9fs_attr_group = {
  
- 		err = -ETIMEDOUT;
- 		goto out;
+ static int __init v9fs_sysfs_init(void)
+ {
++	int ret;
++
+ 	v9fs_kobj = kobject_create_and_add("9p", fs_kobj);
+ 	if (!v9fs_kobj)
+ 		return -ENOMEM;
+ 
+-	if (sysfs_create_group(v9fs_kobj, &v9fs_attr_group)) {
++	ret = sysfs_create_group(v9fs_kobj, &v9fs_attr_group);
++	if (ret) {
+ 		kobject_put(v9fs_kobj);
+-		return -ENOMEM;
++		return ret;
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
