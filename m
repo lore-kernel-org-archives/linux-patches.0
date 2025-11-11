@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FAF1D86FF;
-	Tue, 11 Nov 2025 01:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF111F09B3;
+	Tue, 11 Nov 2025 01:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823717; cv=none; b=tHrmnajbkWFUhzHtILaV4trW5xJ2VU8TxivryY64AGdSoKZKjZmNAYhSibPK0q51Dlb1qK7t8OlVVUij8HkeJkwvWY+crLbvdh6qhcIimFv2avvCZr+Ner06VEfPXpcIZLsAzhdF+ASJMhuebLMWtZLaMs/X14+wWhLr77Bt04g=
+	t=1762823719; cv=none; b=Q5+OEHO65jdWozX4F6jt6lMTVtMxyBpO9jPumsif7i6cmwmSPtjxtKxsNhrjVz/xIIB0JInqW9iWkDWqX//aFb1d4rP2NAeHNC1pxH3WnrRetEVWh2LY3mg3RZAX2f2r01I/zoQ0ltp8lH/1PV46JL4VgCVb36IWC34PL9tHFV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823717; c=relaxed/simple;
-	bh=43tVYFp8KxrD3tLFRypStTB+Hwnoanhy0Y8wM9EIhOc=;
+	s=arc-20240116; t=1762823719; c=relaxed/simple;
+	bh=0Y5vM24drnNVcjNRiPxnKm6ii86LIkoQxFVaV4zo6k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0WWtPDKlB2lha52YuUeV5jl1XtQ1y4xz5D13IEdgPAEsFjru0kVIh10G08BxXnOEAilBHZTZjuII4DUvgE+9Ce3YxUV+QWrMMRbEnqOcBr+I6nqpEVnI/CvfIco8ttrKwr3xNvvYMaUNXiTJFSrOGK7dCHVQ+mCD8t8CNVH5Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9vxF2BY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1BBc1WLGn+tqbAk8OPppwsPcp6IhqdbvwHgY7owlTqRn2BsYFc9Z9KOjQnYsYWK2Hnk4oeCCbg9FFzDrV10NZX2aCT9nMBNL3zNmRVb/5Toqzr2ipWheEGwa4dESzAQswpeuk05kOjLUD0FSwYvX98k+DjiG9dggIQ2ALnIWiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFQDQG0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9vxF2BY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED83C2BC86;
-	Tue, 11 Nov 2025 01:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFQDQG0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1589DC116B1;
+	Tue, 11 Nov 2025 01:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823717;
-	bh=43tVYFp8KxrD3tLFRypStTB+Hwnoanhy0Y8wM9EIhOc=;
+	s=korg; t=1762823719;
+	bh=0Y5vM24drnNVcjNRiPxnKm6ii86LIkoQxFVaV4zo6k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9vxF2BYTeq/QwCoFcV6Rf2ZmWA0iMJZAXyBBGZVWlDaCTZviotgtPb3/fJrHI7/k
-	 fkU5fxVEet6PMA4+es4/iUE0yd/6NvqhQUjBCdcjGIKikQfJ1QLkV8qZViHVyFxJJB
-	 7DN896i+kGbU7QMtjJo1DThpO3HYZhMeuCdxFnvw=
+	b=xFQDQG0S+NR1XRsaWFwKlTppizF9sIT5TUEY76qIpLGLs0bxSVNk10sHS2O20DZcn
+	 w2+Nfmqd6qeqBbZus4lToWZO9c3kuV1PGlujk/x+zM8iC5ii70mVJuWLlkHs4mO0K9
+	 jfpdbSj2/mj1CoCvb8WActlklnM4XMw2SM7hLnYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/565] drm/amd: add more cyan skillfish PCI ids
-Date: Tue, 11 Nov 2025 09:42:42 +0900
-Message-ID: <20251111004533.766624913@linuxfoundation.org>
+Subject: [PATCH 6.17 356/849] scsi: mpi3mr: Fix controller init failure on fault during queue creation
+Date: Tue, 11 Nov 2025 09:38:46 +0900
+Message-ID: <20251111004545.025605025@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 1e18746381793bef7c715fc5ec5611a422a75c4c ]
+[ Upstream commit 829fa1582b6ff607b0e2fe41ba1c45c77f686618 ]
 
-Add additional PCI IDs to the cyan skillfish family.
+Firmware can enter a transient fault while creating operational queues.
+The driver fails the load immediately.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add a retry loop that checks controller status and history bit after
+queue creation. If either indicates a fault, retry init up to a set
+limit before failing.
+
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://lore.kernel.org/r/20250820084138.228471-3-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 93c3de2d27d3a..41397f1cdeb8a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2135,6 +2135,11 @@ static const struct pci_device_id pciidlist[] = {
- 	{0x1002, 0x7410, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_ALDEBARAN},
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 9e18cc2747104..8fe6e0bf342e2 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -2353,6 +2353,8 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
+ {
+ 	int retval = 0;
+ 	u16 num_queues = 0, i = 0, msix_count_op_q = 1;
++	u32 ioc_status;
++	enum mpi3mr_iocstate ioc_state;
  
- 	/* CYAN_SKILLFISH */
-+	{0x1002, 0x13DB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
-+	{0x1002, 0x13F9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
-+	{0x1002, 0x13FA, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
-+	{0x1002, 0x13FB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
-+	{0x1002, 0x13FC, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
- 	{0x1002, 0x13FE, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
- 	{0x1002, 0x143F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
- 
+ 	num_queues = min_t(int, mrioc->facts.max_op_reply_q,
+ 	    mrioc->facts.max_op_req_q);
+@@ -2408,6 +2410,14 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
+ 		retval = -1;
+ 		goto out_failed;
+ 	}
++	ioc_status = readl(&mrioc->sysif_regs->ioc_status);
++	ioc_state = mpi3mr_get_iocstate(mrioc);
++	if ((ioc_status & MPI3_SYSIF_IOC_STATUS_RESET_HISTORY) ||
++	    ioc_state != MRIOC_STATE_READY) {
++		mpi3mr_print_fault_info(mrioc);
++		retval = -1;
++		goto out_failed;
++	}
+ 	mrioc->num_op_reply_q = mrioc->num_op_req_q = i;
+ 	ioc_info(mrioc,
+ 	    "successfully created %d operational queue pairs(default/polled) queue = (%d/%d)\n",
 -- 
 2.51.0
 
