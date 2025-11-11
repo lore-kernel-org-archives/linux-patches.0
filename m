@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A492C2F5479;
-	Tue, 11 Nov 2025 01:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4CB2F5479;
+	Tue, 11 Nov 2025 01:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823804; cv=none; b=nyZDap7vJPzQuY3Bcbtd4TLNZxymGbfTVAnl/MG/78i9SThMqpxcpgfOjWVzHXwmTVMwiTDgnH4/TfUn6cdtUW5CMpyh+5NCRX2ct2XEtubWTXZw9mhM/8+WjeHdknQbYioT5rataiyAQCpg4PA2iK23+Pr/xZzGdZK6tiSV4go=
+	t=1762823807; cv=none; b=B0Arv0puN133Rzksg8Nx/Sbq7pgBOIXou131F3+GAEloe4ml9JPpukwSPr/Y3sIZeIOLm0XOYnYf2nlTLArFl57u0zHoVPyrG+zvSPrKJvh0m6roRPjfLnXQQGsAf6W2NX8Hh+ctsVphuhan4zR8ayGvSjdWqddRuy0LIw8hxY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823804; c=relaxed/simple;
-	bh=fSR+fX2Y9LGfqb4uXBKoptpOW817lihqO0NNlA18ysE=;
+	s=arc-20240116; t=1762823807; c=relaxed/simple;
+	bh=oPk2Y+5vO8uWsDEWCTFAP/OjyRwVBjD2GbPnEg7arFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBpJUjt+WsYz5p5jMaXXl/zeUebhKgjiDjyBf31WF5/pISQcKIkXN06DHpsUFU4PG8Bi3IGQD4AvCjPu4YrX4Y2XcHaenGFyvfg6QMa7o6pUDXWCG0ucyXgD3yHbBkMitfpgZxnSQFDRIHPjmTs6CmrzjQDNNbFH1puE7Ae67jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9HDmRrl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D0nmQnj8dRMzmcfs/Qy0wB0+ICiz2N78f8Q+nRiul6gNGw9XlSlyYJ2RYcu2pfAPE3AJepRsfTjInjKaN10Sd5wyyZj8/aPxHgmjnEL73YT52jdXqudQSVeer8sDHSmDu5yOkiX/wgiYg+BEPq97oo58dKDCTOeP4bDMSMVuim8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPmCXCoT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9HDmRrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378EAC116B1;
-	Tue, 11 Nov 2025 01:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPmCXCoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ADAC4CEF5;
+	Tue, 11 Nov 2025 01:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823804;
-	bh=fSR+fX2Y9LGfqb4uXBKoptpOW817lihqO0NNlA18ysE=;
+	s=korg; t=1762823806;
+	bh=oPk2Y+5vO8uWsDEWCTFAP/OjyRwVBjD2GbPnEg7arFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9HDmRrlYnsASXuImaOSMp4SoHtvN4PHDDcf6emrGekF/BpsGKTtY/djDQ8M694Z/
-	 SMrN+SRXjnRujrexBJ7YW+8WxXAO1RF3MdvUlcx1xCccDFWWUkiPBuMeXJrxZPs4SV
-	 SirnyPOajPTrvu/SweEiVDKCY3KQs5+LFPO9VKa0=
+	b=gPmCXCoT4oiHyCo3Znq6OH//CZmtGmgT4a2F5jgF1B4DV7c/WG6VYCP0A4IgQxR8y
+	 eb4+RYiWIYN0A6eTvc7qh84ap4ElbvJKI1L8b5PqrSpj0kz/w1GzqvM4tB66UB3K4L
+	 up1l65GDn9cXjlJMFgwanszBgbwGpSAsqGa8RFhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/565] media: i2c: og01a1b: Specify monochrome media bus format instead of Bayer
-Date: Tue, 11 Nov 2025 09:42:55 +0900
-Message-ID: <20251111004534.064290737@linuxfoundation.org>
+Subject: [PATCH 6.12 328/565] ntfs3: pretend $Extend records as regular files
+Date: Tue, 11 Nov 2025 09:43:04 +0900
+Message-ID: <20251111004534.266123460@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,56 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit bfbd5aa5347fbd11ade188b316b800bfb27d9e22 ]
+[ Upstream commit 4e8011ffec79717e5fdac43a7e79faf811a384b7 ]
 
-The OmniVision OG01A1B image sensor is a monochrome sensor, it supports
-8-bit and 10-bit RAW output formats only.
+Since commit af153bb63a33 ("vfs: catch invalid modes in may_open()")
+requires any inode be one of S_IFDIR/S_IFLNK/S_IFREG/S_IFCHR/S_IFBLK/
+S_IFIFO/S_IFSOCK type, use S_IFREG for $Extend records.
 
-That said the planar greyscale Y8/Y10 media formats are more appropriate
-for the sensor instead of the originally and arbitrary selected SGRBG one,
-since there is no red, green or blue color components.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/og01a1b.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
-index 78d5d406e4b72..b7d0b677975d5 100644
---- a/drivers/media/i2c/og01a1b.c
-+++ b/drivers/media/i2c/og01a1b.c
-@@ -682,7 +682,7 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
- {
- 	fmt->width = mode->width;
- 	fmt->height = mode->height;
--	fmt->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	fmt->code = MEDIA_BUS_FMT_Y10_1X10;
- 	fmt->field = V4L2_FIELD_NONE;
- }
- 
-@@ -828,7 +828,7 @@ static int og01a1b_enum_mbus_code(struct v4l2_subdev *sd,
- 	if (code->index > 0)
- 		return -EINVAL;
- 
--	code->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	code->code = MEDIA_BUS_FMT_Y10_1X10;
- 
- 	return 0;
- }
-@@ -840,7 +840,7 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
- 	if (fse->index >= ARRAY_SIZE(supported_modes))
- 		return -EINVAL;
- 
--	if (fse->code != MEDIA_BUS_FMT_SGRBG10_1X10)
-+	if (fse->code != MEDIA_BUS_FMT_Y10_1X10)
- 		return -EINVAL;
- 
- 	fse->min_width = supported_modes[fse->index].width;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 9077c7b627336..4e2629d020b75 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -471,6 +471,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		   fname->home.seq == cpu_to_le16(MFT_REC_EXTEND)) {
+ 		/* Records in $Extend are not a files or general directories. */
+ 		inode->i_op = &ntfs_file_inode_operations;
++		mode = S_IFREG;
+ 	} else {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.51.0
 
