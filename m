@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AF625A341;
-	Tue, 11 Nov 2025 01:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DF425A341;
+	Tue, 11 Nov 2025 01:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822843; cv=none; b=tfiaKxvnmo4lAkSNFLmY3fxcRjUc4nwqtP0pTBdcy3tiIcRNKiArEVqDomlpJ6On+P++b2aPhNuoDBbs/CaV5LV2WASMhtsw9ZANg4Hulq2UnQvarYj86XtBfmk8SJYqXBVUZr7Cs1fRJHwR41o2zqNcJo5MYUEgwlNNH2wrEgg=
+	t=1762822846; cv=none; b=BuVGFRz1pEBOBeJQBL+IAYksckR+iEraMEziFt5oFGS2ABR7LJteDkOJLY30k5BCos2FQ7jDljbsEms4BWLxixIVuRl9GKRYInBz7rYv3Lhcsy2msuIlFyyMOzbWRosXmMNfp+vEoqjrXplA3WLx45ZwNfVNWT/bfPkndn8O+kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822843; c=relaxed/simple;
-	bh=ve8jNdbU+jIMD5I5F+v7Xi7NL4fBasHmm8bFXNu6rJE=;
+	s=arc-20240116; t=1762822846; c=relaxed/simple;
+	bh=Pd8sEaBoHJoNekoN1UVzRXHrjtFCgOwSH0QECMH3sR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+ddOxsVMJTAVcX0GcRlFX56V+QdVBjFDkDvXhbs0q4LaefELxIN3r0oa9PZNbDro7VkHwaItqB9wtxMhI4c8o1E4INu4aRXwrPij2sGGItckqztXdb8Iud4+CTweyI0X0t6F1+taJrSq5WcjseQcYlAn1XM0CYcAmv1+nIR/fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbZMurtz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hU0/tQ/NWCGFK+YG5DLmWzs73s6eVXqedVROH6MCfaI/Vag+OiyUtsDZmA+rl1m0hDsqAhkAngltoTqGpxuoAY9XN+PpZvqBdzwrtnyC9XEynMcccyWjdPZl4q6xjZZWUtgYp3wp4e2YwXNItIrPvy1M/9zSIlAZhxvZzxGF4HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3o2iYdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbZMurtz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1D9C16AAE;
-	Tue, 11 Nov 2025 01:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3o2iYdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A867C19424;
+	Tue, 11 Nov 2025 01:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822843;
-	bh=ve8jNdbU+jIMD5I5F+v7Xi7NL4fBasHmm8bFXNu6rJE=;
+	s=korg; t=1762822846;
+	bh=Pd8sEaBoHJoNekoN1UVzRXHrjtFCgOwSH0QECMH3sR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbZMurtzmZ43hZw1lBScKTLl1mNOZKgu8x0kdQwd9oq3JgEABGLrcFuzXcgkRqcJc
-	 Iasq/64j86bZl3mgu+LeJdQvZgn5oKXbUKAf/+6nsq5hvge6/ZFAmIg296mFAhczQB
-	 r1/9nVGgLmasdBFXx/62xxcS2qZDrh1rP6BKdHQk=
+	b=v3o2iYdYYpUokDUliNKw0Tbez5vY2/t17y5aZ7+JS+JpdMEiMcE2va9FQh3swKAtS
+	 opgv5TvfGsOSqJd9XfunglDmMTubDRxRRUhAK4Ag4MpML1jgPFUHbFtwHpTciiL6Qb
+	 jCiCR79QWFBirfV5qFtI3ytv6YSioI498Mr93B1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ober <dober@lenovo.com>,
-	David Ober <dober6023@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/565] hwmon: (lenovo-ec-sensors) Update P8 supprt
-Date: Tue, 11 Nov 2025 09:39:35 +0900
-Message-ID: <20251111004529.631306906@linuxfoundation.org>
+Subject: [PATCH 6.17 182/849] selftests/bpf: Fix arena_spin_lock selftest failure
+Date: Tue, 11 Nov 2025 09:35:52 +0900
+Message-ID: <20251111004540.830789409@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +48,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Ober <dober6023@gmail.com>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit 43c056ac85b60232861005765153707f1b0354b6 ]
+[ Upstream commit a9d4e9f0e871352a48a82da11a50df7196fe567a ]
 
-This fixes differences for the P8 system that was initially set to
-the same thermal values as the P7, also adds in the PSU sensor for
-all of the supported systems
+For systems having CONFIG_NR_CPUS set to > 1024 in kernel config
+the selftest fails as arena_spin_lock_irqsave() returns EOPNOTSUPP.
+(eg - incase of powerpc default value for CONFIG_NR_CPUS is 8192)
 
-Signed-off-by: David Ober <dober@lenovo.com>
-Signed-off-by: David Ober <dober6023@gmail.com>
-Link: https://lore.kernel.org/r/20250807103228.10465-1-dober6023@gmail.com
-[groeck: Update subject]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+The selftest is skipped incase bpf program returns EOPNOTSUPP,
+with a descriptive message logged.
+
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250913091337.1841916-1-skb99@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lenovo-ec-sensors.c | 34 +++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ .../selftests/bpf/prog_tests/arena_spin_lock.c      | 13 +++++++++++++
+ tools/testing/selftests/bpf/progs/arena_spin_lock.c |  5 ++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/lenovo-ec-sensors.c b/drivers/hwmon/lenovo-ec-sensors.c
-index 143fb79713f7d..8681bbf6665b1 100644
---- a/drivers/hwmon/lenovo-ec-sensors.c
-+++ b/drivers/hwmon/lenovo-ec-sensors.c
-@@ -66,7 +66,7 @@ enum systems {
- 	LENOVO_P8,
- };
+diff --git a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
+index 0223fce4db2bc..693fd86fbde62 100644
+--- a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
++++ b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
+@@ -40,8 +40,13 @@ static void *spin_lock_thread(void *arg)
  
--static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 32};
- 
- static const char * const lenovo_px_ec_temp_label[] = {
- 	"CPU1",
-@@ -84,9 +84,29 @@ static const char * const lenovo_px_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU1",
-+	"PSU2",
- };
- 
--static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int p8_temp_map[] = {0, 1, 2, 8, 9, 13, 14, 15, 16, 17, 19, 20, 33};
+ 	err = bpf_prog_test_run_opts(prog_fd, &topts);
+ 	ASSERT_OK(err, "test_run err");
 +
-+static const char * const lenovo_p8_ec_temp_label[] = {
-+	"CPU1",
-+	"CPU_DIMM_BANK1",
-+	"CPU_DIMM_BANK2",
-+	"M2_Z2R",
-+	"M2_Z3R",
-+	"DIMM_RIGHT",
-+	"DIMM_LEFT",
-+	"PCI_Z1",
-+	"PCI_Z2",
-+	"PCI_Z3",
-+	"AMB",
-+	"REAR_VR",
-+	"PSU",
-+};
++	if (topts.retval == -EOPNOTSUPP)
++		goto end;
 +
-+static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31};
+ 	ASSERT_EQ((int)topts.retval, 0, "test_run retval");
  
- static const char * const lenovo_gen_ec_temp_label[] = {
- 	"CPU1",
-@@ -101,6 +121,7 @@ static const char * const lenovo_gen_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU",
- };
++end:
+ 	pthread_exit(arg);
+ }
  
- static int px_fan_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-@@ -293,6 +314,8 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_px[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -327,6 +350,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p8[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -359,6 +383,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p7[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -388,6 +413,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p5[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -545,9 +571,9 @@ static int lenovo_ec_probe(struct platform_device *pdev)
- 		break;
- 	case 3:
- 		ec_data->fan_labels = p8_ec_fan_label;
--		ec_data->temp_labels = lenovo_gen_ec_temp_label;
-+		ec_data->temp_labels = lenovo_p8_ec_temp_label;
- 		ec_data->fan_map = p8_fan_map;
--		ec_data->temp_map = gen_temp_map;
-+		ec_data->temp_map = p8_temp_map;
- 		lenovo_ec_chip_info.info = lenovo_ec_hwmon_info_p8;
- 		break;
- 	default:
+@@ -63,6 +68,7 @@ static void test_arena_spin_lock_size(int size)
+ 	skel = arena_spin_lock__open_and_load();
+ 	if (!ASSERT_OK_PTR(skel, "arena_spin_lock__open_and_load"))
+ 		return;
++
+ 	if (skel->data->test_skip == 2) {
+ 		test__skip();
+ 		goto end;
+@@ -86,6 +92,13 @@ static void test_arena_spin_lock_size(int size)
+ 			goto end_barrier;
+ 	}
+ 
++	if (skel->data->test_skip == 3) {
++		printf("%s:SKIP: CONFIG_NR_CPUS exceed the maximum supported by arena spinlock\n",
++		       __func__);
++		test__skip();
++		goto end_barrier;
++	}
++
+ 	ASSERT_EQ(skel->bss->counter, repeat * nthreads, "check counter value");
+ 
+ end_barrier:
+diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+index c4500c37f85e0..086b57a426cf5 100644
+--- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
++++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+@@ -37,8 +37,11 @@ int prog(void *ctx)
+ #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CAST)
+ 	unsigned long flags;
+ 
+-	if ((ret = arena_spin_lock_irqsave(&lock, flags)))
++	if ((ret = arena_spin_lock_irqsave(&lock, flags))) {
++		if (ret == -EOPNOTSUPP)
++			test_skip = 3;
+ 		return ret;
++	}
+ 	if (counter != limit)
+ 		counter++;
+ 	bpf_repeat(cs_count);
 -- 
 2.51.0
 
