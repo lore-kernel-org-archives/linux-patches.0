@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C9E348879;
-	Tue, 11 Nov 2025 01:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11C63491D0;
+	Tue, 11 Nov 2025 01:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823769; cv=none; b=rwNTxQbAyVluvISmFNStDpWYRzEdILe8uFKKjM6iSzMuaYEOR35EtyJABf3Y2DES2nhMlKr7v2ykMvWZadfJaAWqkq+tUupv0OyHLcYRFDRb6FTHUReLeNwCWR550WyGHZ0QiVlCRy8XcCaebHSE4/4S0tQXjU5PpjvVaIci4P0=
+	t=1762823772; cv=none; b=jCRa6axn0qb9gXr2gKub1iMRbsSQI0vppu9Nd4A5YN5iESoyiZNq0TFhb1jitnH3WAJe5i+JAXFS/wjsNgSPpJMK3Pdi+Ba8nqeLBZL1uxZiipzSnTDayYLvlrTcVJH+pGyKefUVDS2boVGrKoDxZAz3LkafrKIuwJsqNKqSDZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823769; c=relaxed/simple;
-	bh=Oa+uYcc/NjAZxHn6DROJ6HHfKgtzDcpBsZWgd1m3kx0=;
+	s=arc-20240116; t=1762823772; c=relaxed/simple;
+	bh=rbiWdiEQvavoRTWSS5Iwt6RFrPpO5seXLFZLs/QPFzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ed1HG2WeZMUn1OCIUXqPKWB3CLX0QKxQyNg5/jJhtczT3nb5GV3fvPDpaR8PP0v3UYL+os7IJWkGygLUvNgVUeQMfv7gCJi8qq07OuVcGGZQWErqD2bvUnv0be6CFIRmec5CsPyazkGwHu+TT+03sKsxMNwX0yvZ6p7XDJl7AxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSqMgUxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reZnYqf12wkfeYOvgRxsgma5IcLvfAx+39njWrcbOEYxC6Ig0B5LUTatfFA+YD1qLD2ltRsVA2/iVs0hLEG715inQ0iqiJSPMi7d4868k9GzB+zVGBmVv5X0KK7tzbsFxKQ7yM74LSFom4nQdLdEY3kPyGkC3iahY5o1UVO+I9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcxA1RbK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSqMgUxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B1CC16AAE;
-	Tue, 11 Nov 2025 01:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcxA1RbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D708C2BC86;
+	Tue, 11 Nov 2025 01:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823766;
-	bh=Oa+uYcc/NjAZxHn6DROJ6HHfKgtzDcpBsZWgd1m3kx0=;
+	s=korg; t=1762823772;
+	bh=rbiWdiEQvavoRTWSS5Iwt6RFrPpO5seXLFZLs/QPFzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSqMgUxCuDqGyeyBGXSNpimpIMG7OY5peVcZtXjT32POnRWSE4BT8fg2RousutMmM
-	 bmPeFoDWxVY2GvmrGw651Zjy+Xwk6U95oxilsvs9FYBI0uRVVUi+G6clGM2c633zgP
-	 D9nMZoBCagBUV3YeXVU8SLRtsUQxJVd0GtzumE8s=
+	b=rcxA1RbKO61mkdhG+SCM/qKTHcWNEwpLThw5xeq8a6KenE/TGgkEqAdMv5YtNpu4/
+	 QcstLLbYcabwtt4XBvIr2mVU7g20wz3+QPIQRr5Q4FaA+yTl4uX+fcKuygHyh70Q62
+	 qKI0GAzmAblvno4eVJP/4e+ck+APb3VM4+lsB5Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xion Wang <xion.wang@mediatek.com>,
+	Chunsheng Luo <luochunsheng@ustc.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 315/565] char: Use list_del_init() in misc_deregister() to reinitialize list pointer
-Date: Tue, 11 Nov 2025 09:42:51 +0900
-Message-ID: <20251111004533.973509850@linuxfoundation.org>
+Subject: [PATCH 6.17 366/849] fuse: zero initialize inode private data
+Date: Tue, 11 Nov 2025 09:38:56 +0900
+Message-ID: <20251111004545.269806099@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xion Wang <xion.wang@mediatek.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit e28022873c0d051e980c4145f1965cab5504b498 ]
+[ Upstream commit 3ca1b311181072415b6432a169de765ac2034e5a ]
 
-Currently, misc_deregister() uses list_del() to remove the device
-from the list. After list_del(), the list pointers are set to
-LIST_POISON1 and LIST_POISON2, which may help catch use-after-free bugs,
-but does not reset the list head.
-If misc_deregister() is called more than once on the same device,
-list_empty() will not return true, and list_del() may be called again,
-leading to undefined behavior.
+This is slightly tricky, since the VFS uses non-zeroing allocation to
+preserve some fields that are left in a consistent state.
 
-Replace list_del() with list_del_init() to reinitialize the list head
-after deletion. This makes the code more robust against double
-deregistration and allows safe usage of list_empty() on the miscdevice
-after deregistration.
-
-[ Note, this seems to keep broken out-of-tree drivers from doing foolish
-  things.  While this does not matter for any in-kernel drivers,
-  external drivers could use a bit of help to show them they shouldn't
-  be doing stuff like re-registering misc devices - gregkh ]
-
-Signed-off-by: Xion Wang <xion.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250904063714.28925-2-xion.wang@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Chunsheng Luo <luochunsheng@ustc.edu>
+Closes: https://lore.kernel.org/all/20250818083224.229-1-luochunsheng@ustc.edu/
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fuse/inode.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 6f9ce6b3cc5a6..792a1412faffe 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -299,7 +299,7 @@ void misc_deregister(struct miscdevice *misc)
- 		return;
+diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
+index 7ddfd2b3cc9c4..7c0403a002e75 100644
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -101,14 +101,11 @@ static struct inode *fuse_alloc_inode(struct super_block *sb)
+ 	if (!fi)
+ 		return NULL;
  
- 	mutex_lock(&misc_mtx);
--	list_del(&misc->list);
-+	list_del_init(&misc->list);
- 	device_destroy(&misc_class, MKDEV(MISC_MAJOR, misc->minor));
- 	misc_minor_free(misc->minor);
- 	if (misc->minor > MISC_DYNAMIC_MINOR)
+-	fi->i_time = 0;
++	/* Initialize private data (i.e. everything except fi->inode) */
++	BUILD_BUG_ON(offsetof(struct fuse_inode, inode) != 0);
++	memset((void *) fi + sizeof(fi->inode), 0, sizeof(*fi) - sizeof(fi->inode));
++
+ 	fi->inval_mask = ~0;
+-	fi->nodeid = 0;
+-	fi->nlookup = 0;
+-	fi->attr_version = 0;
+-	fi->orig_ino = 0;
+-	fi->state = 0;
+-	fi->submount_lookup = NULL;
+ 	mutex_init(&fi->mutex);
+ 	spin_lock_init(&fi->lock);
+ 	fi->forget = fuse_alloc_forget();
 -- 
 2.51.0
 
