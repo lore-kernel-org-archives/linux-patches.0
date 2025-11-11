@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273E32D879A;
-	Tue, 11 Nov 2025 01:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305012DC328;
+	Tue, 11 Nov 2025 01:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823664; cv=none; b=OORZGkeDUYb2EuEsCy26AWoNvSuZJ1/WOUTPw3xBTN4CcC/h1TriSVpQqfZjkwPWrz1H7iGYXKpvrWsUCtlQgblNi1Jv0mNIE/3WQ6xBqZGi/WDa6SCaVpcNDn7cGgp/n2LFVSS3X7JNFyb+yR81pYuI8TJQp+hzBWygFIzEjYs=
+	t=1762823667; cv=none; b=k5zsg3UAoJAlAoikOy7DjQQo5iFIIDP6eDTDwu9RNjk9Aw362WNUqKK6d1AdvX4jaDYRDg60OEVv9vqMeD6jlyPMzA+MxD0ateP4p3ImBV2d8KIR8TQPZFVq1qjnpQvvI6pHd2VIi7ghvPd07dyPeYIfjO2Ud4W7mVVwMs5zm70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823664; c=relaxed/simple;
-	bh=jtxYzvAgkU1aYeFweweuQhJ/wkMuiLxdGK9ZqW6XIb8=;
+	s=arc-20240116; t=1762823667; c=relaxed/simple;
+	bh=1Kyum33o7pMYV2OAoH3MMpV/ZbfGYDqSArgTtXepRAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEIrSjq+rtjP95pm6t8YOZ+lDtcZumgmOBaI9iHEGKIl1jYppKVRYlSm2Kp6kZucabG6bojdBgB9Qd/13cqaj97GetUfkb4LWdeOpL07zPoAT0VxK5QosliKxrb/uAonW3wVZT8RhDb0oBSD2Nc1wtir5auzUDeHjZkCKIgtYak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNLWgiIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=neA3myHcD6MggR7K2gbVvZ3blJTiPreScZTgNEFY+NF0LWB+6h4duFsHV44W0O1nRgc/MS+ANrJVT+p+F1mXETHSzkD3MMduJBGkY0Kx9FA7RpkfO8mRwcfyfhYXQzLafX4yjFz8I6+cSyJRnmBzlLHzv0h+CDjdu7A8nHkE5hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsnmgmyI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNLWgiIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE052C4CEF5;
-	Tue, 11 Nov 2025 01:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsnmgmyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5ADC116B1;
+	Tue, 11 Nov 2025 01:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823664;
-	bh=jtxYzvAgkU1aYeFweweuQhJ/wkMuiLxdGK9ZqW6XIb8=;
+	s=korg; t=1762823666;
+	bh=1Kyum33o7pMYV2OAoH3MMpV/ZbfGYDqSArgTtXepRAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNLWgiIwwM0VBeqW+0b1db6laq/DGDQ2kpCKQPA+VLpOsT3V7kZnbSlvYntSIlKII
-	 57VOYrnRWB+2nHiO+kDkLbGHv9OBFYMXR/MvKP7i6qZHt7UYzYOG7rQGw2gisfL9Em
-	 ieZWhqaLDY7ee08HHoE5TSaoGUI5n9GXMPbAxhiQ=
+	b=KsnmgmyId5eHz5MY5LpGV9ptztgJroM2rHhKgrilXQ1vU+Q9x99YR+aK7Qhh4ITat
+	 lkVsXHHyydZ7UlIoRzwBwpLL1voSYkeGEq90j4Ia8UyEjls2wOR+wdmi5EQ5nAP2Zo
+	 5F1ghrKq+0vp896Mrpm0lk33O8dQHQMBrq3GrDDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/565] media: verisilicon: Explicitly disable selection api ioctls for decoders
-Date: Tue, 11 Nov 2025 09:42:32 +0900
-Message-ID: <20251111004533.536878234@linuxfoundation.org>
+Subject: [PATCH 6.17 346/849] drm/panel: ilitek-ili9881c: move display_on/_off dcs calls to (un-)prepare
+Date: Tue, 11 Nov 2025 09:38:36 +0900
+Message-ID: <20251111004544.784057282@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
+[ Upstream commit 5efa82492066fcb32308210fb3f0b752af74334f ]
 
-Call the dedicated v4l2_disable_ioctl helper instead of manually
-checking whether the current context is an encoder for the selection
-api ioctls.
+At least for panel-bridges, the atomic_enable call is defined as being
+called right after the preceding element in the display pipe is enabled.
 
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+It is also stated that "The bridge can assume that the display pipe (i.e.
+clocks and timing signals) feeding it is running when this callback is
+called"
+
+This means the DSI controller driving this display would have already
+switched over to video-mode from command mode and thus dcs functions
+should not be called anymore at this point.
+
+This caused a non-working display for me, when trying to enable
+the rk3576 dsi controller using a display using this controller.
+
+Therefore move the display_on/off calls the more appropriate
+prepare/unprepare callbacks.
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250707164906.1445288-3-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
- drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 27 +++++--------------
+ 1 file changed, 7 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 05bbac853c4fd..137ca13eeed7c 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -918,6 +918,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
- 		vpu->decoder = func;
- 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
- 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
-+		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
-+		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
- 	}
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index 3af22a5f5700c..7ed65d6762d86 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -1509,35 +1509,24 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 	if (ret)
+ 		goto disable_power;
  
- 	video_set_drvdata(vfd, vpu);
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index 62d3962c18d99..c847c8284ab54 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -633,8 +633,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
- 	struct hantro_ctx *ctx = fh_to_ctx(priv);
+-	return 0;
+-
+-disable_power:
+-	regulator_disable(ctx->power);
+-	return ret;
+-}
+-
+-static int ili9881c_enable(struct drm_panel *panel)
+-{
+-	struct ili9881c *ctx = panel_to_ili9881c(panel);
+-
+ 	msleep(120);
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
+-	mipi_dsi_dcs_set_display_on(ctx->dsi);
++	ret = mipi_dsi_dcs_set_display_on(ctx->dsi);
++	if (ret)
++		goto disable_power;
  
- 	switch (sel->target) {
-@@ -666,8 +665,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
- 	struct vb2_queue *vq;
+ 	return 0;
+-}
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
+-static int ili9881c_disable(struct drm_panel *panel)
+-{
+-	struct ili9881c *ctx = panel_to_ili9881c(panel);
+-
+-	return mipi_dsi_dcs_set_display_off(ctx->dsi);
++disable_power:
++	regulator_disable(ctx->power);
++	return ret;
+ }
  
- 	/* Change not allowed if the queue is streaming. */
+ static int ili9881c_unprepare(struct drm_panel *panel)
+ {
+ 	struct ili9881c *ctx = panel_to_ili9881c(panel);
+ 
++	mipi_dsi_dcs_set_display_off(ctx->dsi);
+ 	mipi_dsi_dcs_enter_sleep_mode(ctx->dsi);
+ 	regulator_disable(ctx->power);
+ 	gpiod_set_value_cansleep(ctx->reset, 1);
+@@ -1710,8 +1699,6 @@ static enum drm_panel_orientation ili9881c_get_orientation(struct drm_panel *pan
+ static const struct drm_panel_funcs ili9881c_funcs = {
+ 	.prepare	= ili9881c_prepare,
+ 	.unprepare	= ili9881c_unprepare,
+-	.enable		= ili9881c_enable,
+-	.disable	= ili9881c_disable,
+ 	.get_modes	= ili9881c_get_modes,
+ 	.get_orientation = ili9881c_get_orientation,
+ };
 -- 
 2.51.0
 
