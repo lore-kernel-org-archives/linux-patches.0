@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658272AE8D;
-	Tue, 11 Nov 2025 00:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E47612DDA1;
+	Tue, 11 Nov 2025 00:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822318; cv=none; b=vCEzvKtkuJsY7DqAaNSTv1FXcm6D5JLimY4pcrdBaj5VyjD4C2gLm9e02ORgsj3RgIUP+d4ZJeANPkcWzS4bWklHvxXstA5mtWTseyJRISzVOTsGIRQgYI6PWFKsqLJThzIi16hNrwl+loJvzP330pUX7M5RPoAHM1dxcVkebX8=
+	t=1762822320; cv=none; b=mel84Mnm80Ixkm5U8MrxUynks4FibXsE2NwQ1+PcNvV8fQjC9yKHci1b0rpLrbx2n9H+z0d1OxAOM57T4fsZBmZY4U7XKQKJbm9EjwJjHaSL4u9fLBNYZKixE+70vnCffreM4r+MsFy3f7CdE+UyNUtj12wweeIRm1wF14Hg0iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822318; c=relaxed/simple;
-	bh=vwyehnNZUn1OZj+58BBZBSsVJtCJGA5NDZmqH9Wdg6g=;
+	s=arc-20240116; t=1762822320; c=relaxed/simple;
+	bh=QtEcIDfQhUeWXIKL5PPG8jYQ7kD7uikckKM+Gdux9M0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlawIvZRiUdqYntndGDb2LPIdnKfxMiINV+UyPP4k61DwuTCfv67hdUokOdhm0EdN1Vy4WWNedqEL1HdOAxxuBhEXoeUYZdkMdyFLsdG/mBjMhWeITdHS1J4xhVgTGA5Nv1mUATUET8O+45bVehK9yEYn2q+CB8XCpWm+Hq35UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VH2ayWiX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nxd4xCydk5vN5aDuoUjnztnyjiJagI9FqDehqNQxcKAVCdDIybXvjyctt+EvmBmNnC6K11xJyKIULVhrrmjLLiIwguC85hbHm6MapPkzaKxUdJmhP8JOp6uNFAvB5YjW3k0NQhwU6xIHFK1P0a8lSL5i8ic0PDDus4vyNBdFYmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9ybqPle; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VH2ayWiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2732C113D0;
-	Tue, 11 Nov 2025 00:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9ybqPle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C6DC4CEFB;
+	Tue, 11 Nov 2025 00:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822317;
-	bh=vwyehnNZUn1OZj+58BBZBSsVJtCJGA5NDZmqH9Wdg6g=;
+	s=korg; t=1762822320;
+	bh=QtEcIDfQhUeWXIKL5PPG8jYQ7kD7uikckKM+Gdux9M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VH2ayWiXXxAIy2LsKrDVoHYUATZfcxfvQ5MLjAqb9RxgNi2ShjYQe90Esag2FwZho
-	 +ESlBIdbmyTi4XNWA9pGdRmmEc2ZvAq+yZA1zGDaNGOmf1yNN6QQUouuce3m8hZBlX
-	 FZFPAeI0lQpbPf+aJ2SxvbDyKG82L+qxIC0KUBY8=
+	b=a9ybqPleCbsctyGyO1r4JhZRXfBQxb6/gerx8NeRJzDdum9AFUbOFIhDQe/aViGfT
+	 vk5kiJ6zVYjkl7sshkUu6zGp3FMAXjsArAV+k6bLU6wjmU/RENYm9vOgsbe31wkKnZ
+	 DxA9SKyv6J1eDVFg1st6h33greLvk8pS4/4KcVGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 084/849] drm/amdgpu: fix SPDX headers on amdgpu_cper.c/h
-Date: Tue, 11 Nov 2025 09:34:14 +0900
-Message-ID: <20251111004538.451341242@linuxfoundation.org>
+Subject: [PATCH 6.12 026/565] ASoC: cs-amp-lib-test: Fix missing include of kunit/test-bug.h
+Date: Tue, 11 Nov 2025 09:38:02 +0900
+Message-ID: <20251111004527.467366868@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit f3b37ebf2c94e3a3d7bbf5e3788ad86cf30fc7be ]
+[ Upstream commit ec20584f25233bfe292c8e18f9a429dfaff58a49 ]
 
-These should be MIT.  The driver in general is MIT and
-the license text at the top of the files is MIT so fix
-it.
+cs-amp-lib-test uses functions from kunit/test-bug.h but wasn't
+including it.
 
-Fixes: 92d5d2a09de1 ("drm/amdgpu: Introduce funcs for populating CPER")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4654
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit abd3f876404cafb107cb34bacb74706bfee11cbe)
+This error was found by smatch.
+
+Fixes: 177862317a98 ("ASoC: cs-amp-lib: Add KUnit test for calibration helpers")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251016094844.92796-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_cper.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs-amp-lib-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-index 25252231a68a9..48a8aa1044b15 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-@@ -1,4 +1,4 @@
--// SPDX-License-Identifier: GPL-2.0
-+// SPDX-License-Identifier: MIT
- /*
-  * Copyright 2025 Advanced Micro Devices, Inc.
-  *
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.h
-index bcb97d245673b..353421807387e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.h
-@@ -1,4 +1,4 @@
--/* SPDX-License-Identifier: GPL-2.0 */
-+/* SPDX-License-Identifier: MIT */
- /*
-  * Copyright 2025 Advanced Micro Devices, Inc.
-  *
+diff --git a/sound/soc/codecs/cs-amp-lib-test.c b/sound/soc/codecs/cs-amp-lib-test.c
+index a6e8348a1bd53..1bc43a4cfe09c 100644
+--- a/sound/soc/codecs/cs-amp-lib-test.c
++++ b/sound/soc/codecs/cs-amp-lib-test.c
+@@ -6,6 +6,7 @@
+ //                    Cirrus Logic International Semiconductor Ltd.
+ 
+ #include <kunit/test.h>
++#include <kunit/test-bug.h>
+ #include <kunit/static_stub.h>
+ #include <linux/firmware/cirrus/cs_dsp.h>
+ #include <linux/firmware/cirrus/wmfw.h>
 -- 
 2.51.0
 
