@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB0E306B30;
-	Tue, 11 Nov 2025 01:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B9C26FDBD;
+	Tue, 11 Nov 2025 01:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823325; cv=none; b=nRGhObDRiJHqe8YDbM5KBEjEbFJFyWKU8xuUACtZs5Q8QR15IXqCrw3JstWYkGmQKWmDp211b3atjAviJIfbAKAhzmjBlADYxkWgfTyIO2Vs27Z9WA5GNA2+mejEr/1/Uak1eX3anj6XnA2tDPJtofDP+4tiQTmJIlPOaYmzHWQ=
+	t=1762823327; cv=none; b=VMeK03c4z91b7mjKmtmL9Ce8MRJ3exnNgSi3wcVzXBHmLXEk0l4XDYoc872sxle8TdjJ3ELmFqU4GjVBEkIiRNipMh0digtpzQ37n3OpywZTtUeg3zbO3jAkN+mnK7gJzSEAw44h7rSQNTfen1MMmfo+BBg7xCJIvM502ph0A70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823325; c=relaxed/simple;
-	bh=dWp2J/DWQky5/ZwP0tQm4eQpUJxq0Yw/r4rlf0iQzWI=;
+	s=arc-20240116; t=1762823327; c=relaxed/simple;
+	bh=6fhgFRErNl6ks6QXUsJbfF6njhiuBB+ffqPddLXyx5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKO/eicMTcDaO1sHsufnzKww9anE9st3eDaAFrLA8dHzvULKddF7NqqXPPnMQxcLrrqKdMvkpFPdun3l1f/GIbRyICzJzTsnx/Q625PEAO79txBtC0cFQoJKKvQLyqjdMDCTPZdtCcssKyaEl/UrmRgVu3J86MnkDBG/XUG50EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XIun5LY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TTurdYhnx/ps7dKzfl5pDYOjLBL6DtL/1Bv96yf5xLldo78g0tr10GbC8Iig6Rs9fLOKfpSdAuTTOIXt3JGMQNjG/pGFPnlxJbCT4RdZneMM0CtlOGbr2HlILjH9VqzFO9O6xV8op9IqGkvFAWS9mqOvcQGBoNWCaiPS3saq0Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m127gS+8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XIun5LY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DA6C113D0;
-	Tue, 11 Nov 2025 01:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m127gS+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1701FC19425;
+	Tue, 11 Nov 2025 01:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823325;
-	bh=dWp2J/DWQky5/ZwP0tQm4eQpUJxq0Yw/r4rlf0iQzWI=;
+	s=korg; t=1762823327;
+	bh=6fhgFRErNl6ks6QXUsJbfF6njhiuBB+ffqPddLXyx5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XIun5LY5WT1vUGQiJBC5zTjhfrHMAF17EBzH1IFz2DQk8ZubP50R3DUFs4sYX17D
-	 rede+2oxxkPrTe03p59wx1UPiwRT39GY+C9UfOvZeJlwwzPkTXUxCyGUQpTL3NRsNa
-	 psDOgo8AykeThy5f4Ad9/xVGjns4OaiuEtMZX7Us=
+	b=m127gS+8sGdJP36W/2xnESKbeGfy8xvegwq9/AX4UZKDpt1VT/+xHqJENaja+8vYY
+	 bZQuxvhKrvUv13M7Z1RyGd6XQUKbruCV9ngBhGQ8bIJ7RmZimuP+FGE0JB1ctcW1/w
+	 PLUNYs4KdqTBuAewFzgSu23BU+vo5JBsDzWMPkuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 276/849] wifi: rtw89: print just once for unknown C2H events
-Date: Tue, 11 Nov 2025 09:37:26 +0900
-Message-ID: <20251111004543.098245920@linuxfoundation.org>
+Subject: [PATCH 6.12 220/565] media: imon: make send_packet() more robust
+Date: Tue, 11 Nov 2025 09:41:16 +0900
+Message-ID: <20251111004531.872795114@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,86 +48,186 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 7e1c44fe4c2e1e01fa47d9490893d95309a99687 ]
+[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
 
-When driver receives new or unknown C2H events, it print out messages
-repeatedly once events are received, like
+syzbot is reporting that imon has three problems which result in
+hung tasks due to forever holding device lock [1].
 
-  rtw89_8922ae 0000:81:00.0: PHY c2h class 2 not support
+First problem is that when usb_rx_callback_intf0() once got -EPROTO error
+after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
+resubmits urb after printk(), and resubmitted urb causes
+usb_rx_callback_intf0() to again get -EPROTO error. This results in
+printk() flooding (RCU stalls).
 
-To avoid the thousands of messages, use rtw89_info_once() instead. Also,
-print out class/func for unknown (undefined) class.
+Alan Stern commented [2] that
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Closes: https://lore.kernel.org/linux-wireless/20250729204437.164320-1-sean.anderson@linux.dev/
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250804012234.8913-2-pkshih@realtek.com
+  In theory it's okay to resubmit _if_ the driver has a robust
+  error-recovery scheme (such as giving up after some fixed limit on the
+  number of errors or after some fixed time has elapsed, perhaps with a
+  time delay to prevent a flood of errors).  Most drivers don't bother to
+  do this; they simply give up right away.  This makes them more
+  vulnerable to short-term noise interference during USB transfers, but in
+  reality such interference is quite rare.  There's nothing really wrong
+  with giving up right away.
+
+but imon has a poor error-recovery scheme which just retries forever;
+this behavior should be fixed.
+
+Since I'm not sure whether it is safe for imon users to give up upon any
+error code, this patch takes care of only union of error codes chosen from
+modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
+ir_toy, mceusb and igorplugusb).
+
+Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
+before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
+resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
+hardware after early callbacks"). Move the ictx->dev_present_intf0 test
+introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
+until intf configured") to immediately before imon_incoming_packet(), or
+the first problem explained above happens without printk() flooding (i.e.
+hung task).
+
+Third problem is that when usb_rx_callback_intf0() is not called for some
+reason (e.g. flaky hardware; the reproducer for this problem sometimes
+prevents usb_rx_callback_intf0() from being called),
+wait_for_completion_interruptible() in send_packet() never returns (i.e.
+hung task). As a workaround for such situation, change send_packet() to
+wait for completion with timeout of 10 seconds.
+
+Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
+Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/debug.h | 1 +
- drivers/net/wireless/realtek/rtw89/mac.c   | 7 +++----
- drivers/net/wireless/realtek/rtw89/phy.c   | 7 +++----
- 3 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.h b/drivers/net/wireless/realtek/rtw89/debug.h
-index fc690f7c55dc7..a364e7adb0798 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.h
-+++ b/drivers/net/wireless/realtek/rtw89/debug.h
-@@ -56,6 +56,7 @@ static inline void rtw89_debugfs_deinit(struct rtw89_dev *rtwdev) {}
- #endif
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 1e7f800701331..ddb1304cb77b8 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
+ 		smp_rmb(); /* ensure later readers know we're not busy */
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+-		/* Wait for transmission to complete (or abort) */
+-		retval = wait_for_completion_interruptible(
+-				&ictx->tx.finished);
+-		if (retval) {
++		/* Wait for transmission to complete (or abort or timeout) */
++		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
++		if (retval <= 0) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
++			if (retval < 0)
++				ictx->tx.status = retval;
++			else
++				ictx->tx.status = -ETIMEDOUT;
+ 		}
  
- #define rtw89_info(rtwdev, a...) dev_info((rtwdev)->dev, ##a)
-+#define rtw89_info_once(rtwdev, a...) dev_info_once((rtwdev)->dev, ##a)
- #define rtw89_warn(rtwdev, a...) dev_warn((rtwdev)->dev, ##a)
- #define rtw89_err(rtwdev, a...) dev_err((rtwdev)->dev, ##a)
+ 		ictx->tx.busy = false;
+@@ -1754,14 +1757,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
+ 	if (!ictx)
+ 		return;
  
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 5a5da9d9c0c5b..ef17a307b7702 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5813,12 +5813,11 @@ void rtw89_mac_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 	case RTW89_MAC_C2H_CLASS_ROLE:
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf0)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
  		return;
- 	default:
--		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
--		return;
-+		break;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "MAC c2h class %d func %d not support\n",
-+				class, func);
- 		return;
- 	}
- 	handler(rtwdev, skb, len);
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index d607577b353c6..01a03d2de3ffb 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3626,12 +3626,11 @@ void rtw89_phy_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 			handler = rtw89_phy_c2h_dm_handler[func];
+@@ -1770,16 +1765,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
  		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf0)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
++		return;
++
  	default:
--		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
--		return;
-+		break;
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
+ 		break;
  	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "PHY c2h class %d func %d not support\n",
-+				class, func);
+ 
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
+ }
+ 
+@@ -1795,14 +1803,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 	if (!ictx)
  		return;
+ 
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf1)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
+ 		return;
+@@ -1811,16 +1811,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf1)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
++		return;
++
+ 	default:
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
+ 		break;
  	}
- 	handler(rtwdev, skb, len);
+ 
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
+ }
+ 
 -- 
 2.51.0
 
