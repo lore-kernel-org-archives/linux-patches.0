@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEED1D86FF;
-	Tue, 11 Nov 2025 01:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7767346E60;
+	Tue, 11 Nov 2025 01:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824231; cv=none; b=kZ7+fMOyhAovjbr27ZpKNVEWmfcLgGAd3RDX1vsUYWKi4j/AfwciRq7AGyW4r/Q4lV3lxMIbyH5wfAMOHuKiZvNVZd+hucNJqeivFYBG1B+SgtUCi6gNyBF21XRpJI4hmp8XhCnIxKDL71GDhY20A0uDxq8ieZgQm/havgAKT78=
+	t=1762824233; cv=none; b=q6k82PF6QLx40hEoBzhdQ+DGQ25wFG6zcgCKaL9kvgKzvVy1mrGDkim6KkogaX5sJURPaPuAnBJRVYCu1jMxWpfsQ5peUg8Xy14jvWlzDF2NfYpKZWEnbNWlAtxkuWlkrKs/r55WNNbdogt5MykMjOrXnp+VRW1xHN95XcbrETk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824231; c=relaxed/simple;
-	bh=O25uRdn8PHlDkGlnMyQTJ7i97k0Y/wKHUExqjdiUDug=;
+	s=arc-20240116; t=1762824233; c=relaxed/simple;
+	bh=Zp5an3NrhkprFpl9uuxVhmPNHtuXAkfWCMrl1ouN7nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnBb92LiMRHyLiP8SN9oKZmqdOKdNapAIsC4Gz0GoWwX+Wp9EAXnnnpZbFuoF0UFqyktc4G+VrL0/t4kvvA/rDr1H+ZMv/SNU3NMb5R/jxY/RUr8510JdPCDB6U3Xs6solKewQYAk0sY7TxadeQ3mnkWlv1pC3vyzucJ45kJg8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES5nLR31; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9cLFSAsCL+0W7Vr4Jk5l7LL9pPFy5xmg3jT2QAKVQZ/OQw1sf7Qom9KPUUzVfqco54cQ79TVxmfGAEA6w21Sh69aijO0bTe/y5V2erszITJp4A1vlU/oKSFq+UbgiRiqEgXwNXzYe292BsBSrXsL4MsXYd+/JRVD1YZ7f6Ihik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQrgnDNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES5nLR31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E4AC4CEF5;
-	Tue, 11 Nov 2025 01:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQrgnDNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DACC19421;
+	Tue, 11 Nov 2025 01:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824231;
-	bh=O25uRdn8PHlDkGlnMyQTJ7i97k0Y/wKHUExqjdiUDug=;
+	s=korg; t=1762824233;
+	bh=Zp5an3NrhkprFpl9uuxVhmPNHtuXAkfWCMrl1ouN7nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES5nLR31EuDwGA7dE1cG/W0JVpAgvzEej7tX3hx19avgmV/qYADke3lBy+0TNGZ9J
-	 qKEzgLWm48/rl6mIHb3vAx5Fun4A0liwtpvt6X24Sx065A2MRvfX+D/i0yk91LwCl6
-	 SwFHXPwoI/5K+hctE6fGrJV5715ANcFjfZN9lFyg=
+	b=ZQrgnDNNDdiVOLn7JYsoL215qLVkD06JXxlz/98JuR1NVDRiiaegIaIBEUg8km/4X
+	 PMY0998Nr1RelqMcE4hRAwANO1Q/BadP9wtvmM0KJer6AeXMdWE9LbA0s0QbK62pt9
+	 +Gmgq0I8tL8ypF0X45dPG2xPH9Lze7cwNJzP46Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Sridevi Arvindekar <sarvinde@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 415/565] drm/amd/display: Fix for test crash due to power gating
-Date: Tue, 11 Nov 2025 09:44:31 +0900
-Message-ID: <20251111004536.201533753@linuxfoundation.org>
+Subject: [PATCH 6.17 467/849] tty/vt: Add missing return value for VT_RESIZE in vt_ioctl()
+Date: Tue, 11 Nov 2025 09:40:37 +0900
+Message-ID: <20251111004547.721655865@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,41 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sridevi Arvindekar <sarvinde@amd.com>
+From: Zizhi Wo <wozizhi@huaweicloud.com>
 
-[ Upstream commit 0bf6b216d4783cb51f9af05a49d3cce4fc22dc24 ]
+[ Upstream commit da7e8b3823962b13e713d4891e136a261ed8e6a2 ]
 
-[Why/How]
-Call power gating routine only if it is defined.
+In vt_ioctl(), the handler for VT_RESIZE always returns 0, which prevents
+users from detecting errors. Add the missing return value so that errors
+can be properly reported to users like vt_resizex().
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Sridevi Arvindekar <sarvinde@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://lore.kernel.org/r/20250904023955.3892120-1-wozizhi@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/vt/vt_ioctl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index 55f067c9e4948..8a1ba78c27f97 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -3086,7 +3086,8 @@ void dcn20_fpga_init_hw(struct dc *dc)
- 		res_pool->dccg->funcs->dccg_init(res_pool->dccg);
+diff --git a/drivers/tty/vt/vt_ioctl.c b/drivers/tty/vt/vt_ioctl.c
+index 61342e06970a0..eddb25bec996e 100644
+--- a/drivers/tty/vt/vt_ioctl.c
++++ b/drivers/tty/vt/vt_ioctl.c
+@@ -923,7 +923,9 @@ int vt_ioctl(struct tty_struct *tty,
  
- 	//Enable ability to power gate / don't force power on permanently
--	hws->funcs.enable_power_gating_plane(hws, true);
-+	if (hws->funcs.enable_power_gating_plane)
-+		hws->funcs.enable_power_gating_plane(hws, true);
- 
- 	// Specific to FPGA dccg and registers
- 	REG_WRITE(RBBMIF_TIMEOUT_DIS, 0xFFFFFFFF);
+ 			if (vc) {
+ 				/* FIXME: review v tty lock */
+-				__vc_resize(vc_cons[i].d, cc, ll, true);
++				ret = __vc_resize(vc_cons[i].d, cc, ll, true);
++				if (ret)
++					return ret;
+ 			}
+ 		}
+ 		console_unlock();
 -- 
 2.51.0
 
