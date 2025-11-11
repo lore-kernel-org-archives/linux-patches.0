@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA312BE7B8;
-	Tue, 11 Nov 2025 01:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD670333443;
+	Tue, 11 Nov 2025 01:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824556; cv=none; b=ICC7XyZYv2KE9L4ddRyNrxT78/EaxROnUVIgCd2gu7NiYrWKIzXB7I25QLYbmg8wga9zB6tcCteOzWwS3nvA3aGZOFIg/Ok9Axr7l2lcDK187fltgTT4+NGWdAykyO+k++YSOwUE15aMNmIyKZ7Qb/jhi1N14GBDzLCJSRZ+I/Q=
+	t=1762824558; cv=none; b=bI4u81GH6FcFivnI6Lc0JZ6nZVIHQiyBCb61bnYINvpKQdncJ59ZqNUulPCEM2zNtNjvyXeBM4VrqvF+sP1M4y4D/L8vBjjplw9JXvtv3J0EMbGHhcQOAQKYLrVsJKISeskqTaVq75dFC/ru2HF2z0Xsn/GENqNjfmvfQXVqrsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824556; c=relaxed/simple;
-	bh=ATNOZwyJ5D25yPtGLg4KcnLuWADrxhQl08ukv0kzR8o=;
+	s=arc-20240116; t=1762824558; c=relaxed/simple;
+	bh=DyS3yffyA6stIZ9z8vyBlZw2hmz//Eg58O/3dPc8U1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIO6h4CAc8SCtoKK4IN6pU9sD+VtNightUJmNT6GbDbzbkBRMiHPs68Zbiv2CVC2lvrUsyWa7O+cmdXDPNBxd4FcqHvU2yymjO8ZckSW7BXY0Bv4zfCsgDNsLNjknKcdJq6IBMdQkuxB3TzzXk8ZgzpzzjlUL//yfMvDjYxfjeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00KXPD8m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eWDiZhlBfnVJ9ZZ4pkBd4AELalXPtxCXHcWgkoVC4haK2lej1V9qYsC5jPGF3oEOB22XwDk6eNJ3GEitsib7vrryPttyBy6gJbe97bQzKBGTP5i1AYx44PxDLURJTWnXyn+ZXmVaYi8Bw4PirclZD62MTqR2t1WbgpCKvJY/TLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2Fii8MR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00KXPD8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184E9C19421;
-	Tue, 11 Nov 2025 01:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2Fii8MR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585F4C4CEF5;
+	Tue, 11 Nov 2025 01:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824556;
-	bh=ATNOZwyJ5D25yPtGLg4KcnLuWADrxhQl08ukv0kzR8o=;
+	s=korg; t=1762824558;
+	bh=DyS3yffyA6stIZ9z8vyBlZw2hmz//Eg58O/3dPc8U1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00KXPD8mH19/3DNTe0yKzrKU0VTaYe8X29Wfysv5QFnEtlTB42JwEaOHKafUVFvqP
-	 HloWDCyklTZ5Nuii5jyWrrsCU1N8P4xBhzTLbgG6/bKMQAWzslY8mD9FoZ4lxHxTXU
-	 dhgnNvmlTpLLcMfaiEebjmvieF3VtGQRAP9RCUQw=
+	b=U2Fii8MRggXn+ZMbn/DRhUin8Q2EYvB801QpQ0aLg81HxG33HQwagpqOFQ2ZtrMuu
+	 xr4fvAHIdDk/+eKfBzKCVvb/pN2r1KDSTcVqeU7qg3Uj1xXyk66JbkbOdwFPPZMyug
+	 ugW7LzV8joRMrcNBoWy5dVFNeAOu4757R5+ksSrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 523/849] net: devmem: expose tcp_recvmsg_locked errors
-Date: Tue, 11 Nov 2025 09:41:33 +0900
-Message-ID: <20251111004549.067210126@linuxfoundation.org>
+Subject: [PATCH 6.12 469/565] clk: at91: sam9x7: Add peripheral clock id for pmecc
+Date: Tue, 11 Nov 2025 09:45:25 +0900
+Message-ID: <20251111004537.455608407@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,54 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
 
-[ Upstream commit 18282100d7040614b553f1cad737cb689c04e2b9 ]
+[ Upstream commit 94a1274100e397a27361ae53ace37be6da42a079 ]
 
-tcp_recvmsg_dmabuf can export the following errors:
-- EFAULT when linear copy fails
-- ETOOSMALL when cmsg put fails
-- ENODEV if one of the frags is readable
-- ENOMEM on xarray failures
+Add pmecc instance id in peripheral clock description.
 
-But they are all ignored and replaced by EFAULT in the caller
-(tcp_recvmsg_locked). Expose real error to the userspace to
-add more transparency on what specifically fails.
-
-In non-devmem case (skb_copy_datagram_msg) doing `if (!copied)
-copied=-EFAULT` is ok because skb_copy_datagram_msg can return only EFAULT.
-
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250910162429.4127997-1-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+Link: https://lore.kernel.org/r/20250909103817.49334-1-balamanikandan.gunasundar@microchip.com
+[claudiu.beznea@tuxon.dev: use tabs instead of spaces]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/at91/sam9x7.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index ba36f558f144c..f421cad69d8c9 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2821,9 +2821,9 @@ static int tcp_recvmsg_locked(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 				err = tcp_recvmsg_dmabuf(sk, skb, offset, msg,
- 							 used);
--				if (err <= 0) {
-+				if (err < 0) {
- 					if (!copied)
--						copied = -EFAULT;
-+						copied = err;
- 
- 					break;
- 				}
+diff --git a/drivers/clk/at91/sam9x7.c b/drivers/clk/at91/sam9x7.c
+index ffab32b047a01..740f52906f6b4 100644
+--- a/drivers/clk/at91/sam9x7.c
++++ b/drivers/clk/at91/sam9x7.c
+@@ -403,6 +403,7 @@ static const struct {
+ 	{ .n = "pioD_clk",	.id = 44, },
+ 	{ .n = "tcb1_clk",	.id = 45, },
+ 	{ .n = "dbgu_clk",	.id = 47, },
++	{ .n = "pmecc_clk",	.id = 48, },
+ 	/*
+ 	 * mpddr_clk feeds DDR controller and is enabled by bootloader thus we
+ 	 * need to keep it enabled in case there is no Linux consumer for it.
 -- 
 2.51.0
 
