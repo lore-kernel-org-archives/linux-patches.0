@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510BF2836F;
-	Tue, 11 Nov 2025 01:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65B72D9798;
+	Tue, 11 Nov 2025 01:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824933; cv=none; b=JUcbFDN4KfoWuL3+9SP7AsHsNVIc0m/S/FVqiWASX+hb28JLyKZwKujnIn/u53iJkOmlWgib1RkgbmuGfPIPBopdXjIthCRnHfzLnpVgHZrB6tTWLWhyg7dcskAkP+BtEqFBcxk21Roz271iv5Ehqk+Gx1nIuRyduj+/J3gfHGI=
+	t=1762824935; cv=none; b=kaRbsUlt9U4nFoOurXUhOd9f9P9GcyKKfeym9akN7liqmCLYpGm4c151ATNG4SXTXnuoKu/cvInnCM6mSCRyKKlGFKOiCcedJZiu2hJS9h2jgMf1ufPejeECVF4R9znn0kiCD8v2wXbDPNRfM7tNxJmXlevAxip7y6lPNr6o9Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824933; c=relaxed/simple;
-	bh=6A4PB/IwOOXQLvhtvUocq51eduAtrnFX3VpZWKZrQjQ=;
+	s=arc-20240116; t=1762824935; c=relaxed/simple;
+	bh=AztoaQPR3MA4gGW3mfRfB5DsyL746fZvvygBoYo/8Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/4nd0E47fTp/VbCTOejfU6uFL/kedBaatAZpuSEo09ku9ZXl9naz2aJONoroLZOBSQ1g+c5Yi+FUWB8uRkX+8mOU2CHll4B5h8Q3Dfgx9hxVv9QWg7VhvqmEFYOr8g9AYC2/xuGnayVyKzZmbANSj0j/PjBWOPixYgYYNCtwGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW9PmKAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYY0RW6juRwhS5Eljc2Q7DSZcDpoFNA7TVdVPn3hJnt3YjyJr4WBzI0QpfUVHhFvcQFihiMa6AwudIKhMKFu3aN9lhhbU6nXBEebTk7BSMc95W2/PVo3LmsEYnY7CKlutAGKTPHtFvYTBqubTJup07bmTLpU3ptZ+hTjd81Qi+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiQQD2mN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW9PmKAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B5AC4CEFB;
-	Tue, 11 Nov 2025 01:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiQQD2mN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45580C16AAE;
+	Tue, 11 Nov 2025 01:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824933;
-	bh=6A4PB/IwOOXQLvhtvUocq51eduAtrnFX3VpZWKZrQjQ=;
+	s=korg; t=1762824935;
+	bh=AztoaQPR3MA4gGW3mfRfB5DsyL746fZvvygBoYo/8Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aW9PmKAB0XjElZDcSAfU+jyPZ4eYtjnzNj//ZukduaedyedBI7Li0RNFG53mWYGUt
-	 ooZIm9qVv4T51qyN1Dz/D0goGT+n7rNWEzGejSs+WfWI0Pi3ZH1HCNSwYynA//30hj
-	 yp4oCeRoZhUZFcV6vSY9cJKjPtclDX0J9M24K0d0=
+	b=BiQQD2mNj4xWMYAtZWnD6fy+3+cm6HBqjrp5wTrZxsI+0jTUahVv6Tgf4yenWqsCl
+	 T3ya9fxOGC6LqEQO4pdKj6tK7aiFgYQ+4sLsP+8o8KouMjqHjqwtvoFxLhOQPOp1dO
+	 TqXrV+Jwl8TbBmn9n+pT5a494SrUyTTVQ7Ooh0NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	Mario Limoncello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 553/565] drm/amd/display: Fix NULL deref in debugfs odm_combine_segments
-Date: Tue, 11 Nov 2025 09:46:49 +0900
-Message-ID: <20251111004539.442734521@linuxfoundation.org>
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Chan <michael.chan@broadcom.com>
+Subject: [PATCH 6.12 530/565] bnxt_en: Add mem_valid bit to struct bnxt_ctx_mem_type
+Date: Tue, 11 Nov 2025 09:46:26 +0900
+Message-ID: <20251111004538.892041139@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,101 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Shruti Parab <shruti.parab@broadcom.com>
 
-commit 6dd97ceb645c08aca9fc871a3006e47fe699f0ac upstream.
+[ Upstream commit 0b350b4927e69d66629099dbb32cad8d2d56a26d ]
 
-When a connector is connected but inactive (e.g., disabled by desktop
-environments), pipe_ctx->stream_res.tg will be destroyed. Then, reading
-odm_combine_segments causes kernel NULL pointer dereference.
+Add a new bit to struct bnxt_ctx_mem_type to indicate that host
+memory has been successfully allocated for this context memory type.
+In the next patches, we'll be adding some additional context memory
+types for FW debugging/logging.  If memory cannot be allocated for
+any of these new types, we will not abort and the cleared mem_valid
+bit will indicate to skip configuring the memory type.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 16 UID: 0 PID: 26474 Comm: cat Not tainted 6.17.0+ #2 PREEMPT(lazy)  e6a17af9ee6db7c63e9d90dbe5b28ccab67520c6
- Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN25WW 03/27/2025
- RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
- Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
- RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
- RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
- RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
- R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
- R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
- FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  seq_read_iter+0x125/0x490
-  ? __alloc_frozen_pages_noprof+0x18f/0x350
-  seq_read+0x12c/0x170
-  full_proxy_read+0x51/0x80
-  vfs_read+0xbc/0x390
-  ? __handle_mm_fault+0xa46/0xef0
-  ? do_syscall_64+0x71/0x900
-  ksys_read+0x73/0xf0
-  do_syscall_64+0x71/0x900
-  ? count_memcg_events+0xc2/0x190
-  ? handle_mm_fault+0x1d7/0x2d0
-  ? do_user_addr_fault+0x21a/0x690
-  ? exc_page_fault+0x7e/0x1a0
-  entry_SYSCALL_64_after_hwframe+0x6c/0x74
- RIP: 0033:0x7f44d4031687
- Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00>
- RSP: 002b:00007ffdb4b5f0b0 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
- RAX: ffffffffffffffda RBX: 00007f44d3f9f740 RCX: 00007f44d4031687
- RDX: 0000000000040000 RSI: 00007f44d3f5e000 RDI: 0000000000000003
- RBP: 0000000000040000 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000202 R12: 00007f44d3f5e000
- R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000040000
-  </TASK>
- Modules linked in: tls tcp_diag inet_diag xt_mark ccm snd_hrtimer snd_seq_dummy snd_seq_midi snd_seq_oss snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device x>
-  snd_hda_codec_atihdmi snd_hda_codec_realtek_lib lenovo_wmi_helpers think_lmi snd_hda_codec_generic snd_hda_codec_hdmi snd_soc_core kvm snd_compress uvcvideo sn>
-  platform_profile joydev amd_pmc mousedev mac_hid sch_fq_codel uinput i2c_dev parport_pc ppdev lp parport nvme_fabrics loop nfnetlink ip_tables x_tables dm_cryp>
- CR2: 0000000000000000
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
- Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
- RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
- RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
- RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
- R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
- R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
- FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
- PKRU: 55555554
-
-Fix this by checking pipe_ctx->stream_res.tg before dereferencing.
-
-Fixes: 07926ba8a44f ("drm/amd/display: Add debugfs interface for ODM combine info")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Reviewed-by: Mario Limoncello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f19bbecd34e3c15eed7e5e593db2ac0fc7a0e6d8)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Signed-of-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20241115151438.550106-3-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5204943a4c6e ("bnxt_en: Fix warning in bnxt_dl_reload_down()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h | 1 +
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -1277,7 +1277,8 @@ static int odm_combine_segments_show(str
- 	if (connector->status != connector_status_connected)
- 		return -ENODEV;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 30d8e8b34dfb9..abf8984ac5e20 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8791,6 +8791,8 @@ static int bnxt_setup_ctxm_pg_tbls(struct bnxt *bp,
+ 		rc = bnxt_alloc_ctx_pg_tbls(bp, &ctx_pg[i], mem_size, pg_lvl,
+ 					    ctxm->init_value ? ctxm : NULL);
+ 	}
++	if (!rc)
++		ctxm->mem_valid = 1;
+ 	return rc;
+ }
  
--	if (pipe_ctx != NULL && pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
-+	if (pipe_ctx && pipe_ctx->stream_res.tg &&
-+	    pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
- 		pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments(pipe_ctx->stream_res.tg, &segments);
+@@ -8861,6 +8863,8 @@ static int bnxt_backing_store_cfg_v2(struct bnxt *bp, u32 ena)
+ 	for (type = 0 ; type < BNXT_CTX_V2_MAX; type++) {
+ 		ctxm = &ctx->ctx_arr[type];
  
- 	seq_printf(m, "%d\n", segments);
++		if (!ctxm->mem_valid)
++			continue;
+ 		rc = bnxt_hwrm_func_backing_store_cfg_v2(bp, ctxm, ctxm->last);
+ 		if (rc)
+ 			return rc;
+@@ -8890,6 +8894,7 @@ void bnxt_free_ctx_mem(struct bnxt *bp)
+ 
+ 		kfree(ctx_pg);
+ 		ctxm->pg_info = NULL;
++		ctxm->mem_valid = 0;
+ 	}
+ 
+ 	ctx->flags &= ~BNXT_CTX_FLAG_INITED;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index cb934f175a3e4..d4e63bf599666 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1892,6 +1892,7 @@ struct bnxt_ctx_mem_type {
+ 	u32	max_entries;
+ 	u32	min_entries;
+ 	u8	last:1;
++	u8	mem_valid:1;
+ 	u8	split_entry_cnt;
+ #define BNXT_MAX_SPLIT_ENTRY	4
+ 	union {
+-- 
+2.51.0
+
 
 
