@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE0F4086A;
-	Tue, 11 Nov 2025 00:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C321D6DB5;
+	Tue, 11 Nov 2025 00:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822426; cv=none; b=n8ZjIfLcPpnEYOOeuFM/0PfBYZlEx8dkPtFhgyue85FHxGCDN+JM0GswF76WZiDeKdiRT/YK/pyrDaukNUenQPVppT86E8j3sB22NGaKu8CHnWs0VU+QnTs/dS+P/vfL04fB3qZXuMqwvSBmNjVVSEWac+PwVZSGHhKyISbFElQ=
+	t=1762822428; cv=none; b=Kn07HwcDVnuUxuBpxVb6Qdoy3PBCvOcfsRhYopfPuRPso8leGFqb+hL4lCQu3NO299nDHqLxAVidyqGsbnDLceQ3W23tGKQjtg3vYVX7Pqf/eDHSl27FBVjqxGJIAQ5VjPzWDUp4R9tqJ5qaxKAT9KVHzqd8IrffLAt1py3MOBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822426; c=relaxed/simple;
-	bh=kRavFmBcNnNUBWeEZFiNAvVT6t5ZefIdV4zOY2VFu+M=;
+	s=arc-20240116; t=1762822428; c=relaxed/simple;
+	bh=SsuAMdHFIM3SJAFlzk8+pMYvUZSlk3rizibuKQvOSLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQfZlcZ4BYW6bzFB+tgXkmLj9a+TJJ+ObiL5UvqUGPhdKGwAffNqGZ3qZNEPKG27NNrggXQZLftdBNb2+0iuRWWLDMlaAc5ms0YBe3o4sWs3dAWRjb69bEjfsEUn0aP1oeB/VWi5YANqmGSisa/4CmGJ2mlrpX8FLzGOyb+Mvk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJZvAgs2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC/hCg0Ahnrhi9uCs1CjYbkDql0BLI8FnPQ+fHRmnT82eaPiLL8vRjQiryEe0GUy5zIoS/z/39FYyA9OLVKuclFL7FazQCuDXFvhf73bnjT2e9I9x5Z1EKByQIbuZbGJfD7aJYPS9ISYxxXW41gMTjy4d4ybSnXSSayU7YYYeq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfOucBAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJZvAgs2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89222C4CEFB;
-	Tue, 11 Nov 2025 00:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfOucBAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70AEC4CEFB;
+	Tue, 11 Nov 2025 00:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822425;
-	bh=kRavFmBcNnNUBWeEZFiNAvVT6t5ZefIdV4zOY2VFu+M=;
+	s=korg; t=1762822428;
+	bh=SsuAMdHFIM3SJAFlzk8+pMYvUZSlk3rizibuKQvOSLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJZvAgs2jwZ41KUg1oR9PVTBA4qQjSpw4qzuFwWd6Ok9biqbS2/MYfX3AW8VdbqsT
-	 VYOJptyt7xn22D5lpWERsPp/nV601jv0i5lbQeHufiB12ZayukB1q0Mhg0V3HxuGfn
-	 eSEbW3uF2B6J7klgHbYYSrBZcIVT2DKT3RbrTnpo=
+	b=PfOucBANcLq26HnChMoGKWhXbSV36TRMXzkUZbKLs9HYtqBZbhxwW4RszBeUTv4zV
+	 ecGeHOZiULNH/zPKohMq7/w/8xt1uRACx7xVcA3IsRC57R3Otom5Dpg3USt2o1FHr1
+	 Q5wJBpZ1CGnSUC/3mglR1d84WVRmy/3d+l6i2Ex8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Peter Schneider <pschneider1968@googlemail.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Nick Bowler <nbowler@draconx.ca>,
-	Douglas Anderson <dianders@chromium.org>,
-	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.17 105/849] drm/ast: Clear preserved bits from register output value
-Date: Tue, 11 Nov 2025 09:34:35 +0900
-Message-ID: <20251111004538.940185021@linuxfoundation.org>
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 048/565] drm/etnaviv: fix flush sequence logic
+Date: Tue, 11 Nov 2025 09:38:24 +0900
+Message-ID: <20251111004527.987488220@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,63 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 
-commit a9fb41b5def8e1e0103d5fd1453787993587281e upstream.
+[ Upstream commit a042beac6e6f8ac1e923784cfff98b47cbabb185 ]
 
-Preserve the I/O register bits in __ast_write8_i_masked() as specified
-by preserve_mask. Accidentally OR-ing the output value into these will
-overwrite the register's previous settings.
+The current logic uses the flush sequence from the current address
+space. This is harmless when deducing the flush requirements for the
+current submit, as either the incoming address space is the same one
+as the currently active one or we switch context, in which case the
+flush is unconditional.
 
-Fixes display output on the AST2300, where the screen can go blank at
-boot. The driver's original commit 312fec1405dd ("drm: Initial KMS
-driver for AST (ASpeed Technologies) 2000 series (v2)") already added
-the broken code. Commit 6f719373b943 ("drm/ast: Blank with VGACR17 sync
-enable, always clear VGACRB6 sync off") triggered the bug.
+However, this sequence is also stored as the current flush sequence
+of the GPU. If we switch context the stored flush sequence will no
+longer belong to the currently active address space. This incoherency
+can then cause missed flushes, resulting in translation errors.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: Peter Schneider <pschneider1968@googlemail.com>
-Closes: https://lore.kernel.org/dri-devel/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Fixes: 6f719373b943 ("drm/ast: Blank with VGACR17 sync enable, always clear VGACRB6 sync off")
-Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Nick Bowler <nbowler@draconx.ca>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v3.5+
-Link: https://patch.msgid.link/20251024073626.129032-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 27b67278e007 ("drm/etnaviv: rework MMU handling")
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://lore.kernel.org/r/20251021093723.3887980-1-l.stach@pengutronix.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_drv.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/ast/ast_drv.h
-+++ b/drivers/gpu/drm/ast/ast_drv.h
-@@ -284,13 +284,13 @@ static inline void __ast_write8_i(void _
- 	__ast_write8(addr, reg + 1, val);
- }
- 
--static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 read_mask,
-+static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 preserve_mask,
- 					 u8 val)
- {
--	u8 tmp = __ast_read8_i_masked(addr, reg, index, read_mask);
-+	u8 tmp = __ast_read8_i_masked(addr, reg, index, preserve_mask);
- 
--	tmp |= val;
--	__ast_write8_i(addr, reg, index, tmp);
-+	val &= ~preserve_mask;
-+	__ast_write8_i(addr, reg, index, tmp | val);
- }
- 
- static inline u32 ast_read32(struct ast_device *ast, u32 reg)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+index b13a17276d07c..88385dc3b30d8 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+@@ -347,7 +347,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
+ 	u32 link_target, link_dwords;
+ 	bool switch_context = gpu->exec_state != exec_state;
+ 	bool switch_mmu_context = gpu->mmu_context != mmu_context;
+-	unsigned int new_flush_seq = READ_ONCE(gpu->mmu_context->flush_seq);
++	unsigned int new_flush_seq = READ_ONCE(mmu_context->flush_seq);
+ 	bool need_flush = switch_mmu_context || gpu->flush_seq != new_flush_seq;
+ 	bool has_blt = !!(gpu->identity.minor_features5 &
+ 			  chipMinorFeatures5_BLT_ENGINE);
+-- 
+2.51.0
+
 
 
