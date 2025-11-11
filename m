@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734AF2DC350;
-	Tue, 11 Nov 2025 01:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36A530E83E;
+	Tue, 11 Nov 2025 01:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825014; cv=none; b=N5iEAw1Xi8DsKxg2VycizGzXdtkrkB59loiXb284/DmugfC0lmB3i1ARyk78mM8b8F0SjID5uWVKQQLDqbIQqbXkw9mUklFYcjo1a08BdO3wP8Z9ShRXak0fkPa8RahS6mcehmiEmuaTR1nwWUzhoJoIMos7DMZYSiVD7rcA5BA=
+	t=1762825017; cv=none; b=oMQRWYLRk/XQOUqvsiCmoT5uF6eDp7aB8X2uFsY6nV0bX/oeX2ODlLPm64qX/TWgBxwHgvMom8vodb4l1XThczlG74vAxMit6oRKJoHGCatACpuikSjuRlymKM42M2Qx/+jNeNbxKxanRaiV7Wif5tsgeSK9e/mV1GS90YXmfL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825014; c=relaxed/simple;
-	bh=5UHJc8xS4tpAvi/QwURSTz63A2mVm5VFxJYVnLkOGMk=;
+	s=arc-20240116; t=1762825017; c=relaxed/simple;
+	bh=0exUASACt2oCGPKlY9oYGHJwAd5xHVxNfy/WquM4zt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uP7sj6qH/eSKBFjoX+wpTo/8Edop9Q+W7A2lfPxWzUsbIUKFGFoIbg7nL/y/91qA1X1d4AjFirpdHV4MYe3qu5+NGdAn1UsJMOyElJifcgG8gCUIHBnLrrzimnAkx37w8HEPqLAO0BggmCRzEyToVHHULH3h2k5OL7tjEOgug8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvYekyH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBOt+BbBPzRr2QSCYPNoWG2hLXFInXtXX8Pdi/C4rJf3+FAjt+HOUwLZWQ7zdKQYvmwFM9rRqmCZ1T4HlwksttOFvRl9JGJaLKybDXJNvpT950b+r0JDik3uLrRT/vBLyx45Ixf+GLAFFt1aPZqukZrXL52DKGgDUQO+PIq5OzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrutIoPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvYekyH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B05C4CEF5;
-	Tue, 11 Nov 2025 01:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrutIoPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80381C113D0;
+	Tue, 11 Nov 2025 01:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825014;
-	bh=5UHJc8xS4tpAvi/QwURSTz63A2mVm5VFxJYVnLkOGMk=;
+	s=korg; t=1762825016;
+	bh=0exUASACt2oCGPKlY9oYGHJwAd5xHVxNfy/WquM4zt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvYekyH1pce46s94t4wjUc4R/jMv+rnDQLxOA9rlatGfzgPb84aqNQThBj3o7iPSK
-	 01OoeqA2JvRfN0tDppP5KcIGlmCIiev8+dmtIDC4bs3fqoq21mC0L0LPHQIusStHjH
-	 Gk0uGWSPBgcvV/Mtug1BkJwg4sXHMMnIwbWr5uYc=
+	b=rrutIoPT4cUVWK3og2zw/Bd1a+3UAGZCgwTNEOFJAfs0EpZqMIwyBVswNWY15VY9K
+	 lTHpbEIJxOiRzYOwCuC2bgW0xabgrKMJ8CKY7w6i8t7nLd59MZI6x1jvgXd5IxBjVM
+	 PSdK3V1r8PrVepLTObFkWSsHtkhvbNIhoY7vwt+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	Bhargava Marreddy <bhargava.marreddy@broadcom.com>,
+	Vikas Gupta <vikas.gupta@broadcom.com>,
+	Rajashekar Hudumula <rajashekar.hudumula@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 525/565] sctp: Hold sock lock while iterating over address list
-Date: Tue, 11 Nov 2025 09:46:21 +0900
-Message-ID: <20251111004538.775434226@linuxfoundation.org>
+Subject: [PATCH 6.17 618/849] bng_en: make bnge_alloc_ring() self-unwind on failure
+Date: Tue, 11 Nov 2025 09:43:08 +0900
+Message-ID: <20251111004551.373230301@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Bhargava Marreddy <bhargava.marreddy@broadcom.com>
 
-[ Upstream commit f1fc201148c7e684c10a72b6a3375597f28d1ef6 ]
+[ Upstream commit 9ee5994418bb527788e77361d338af40a126aa21 ]
 
-Move address list traversal in inet_assoc_attr_size() under the sock
-lock to avoid holding the RCU read lock.
+Ensure bnge_alloc_ring() frees any intermediate allocations
+when it fails. This enables later patches to rely on this
+self-unwinding behavior.
 
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251028161506.3294376-4-stefan.wiehler@nokia.com
+Signed-off-by: Bhargava Marreddy <bhargava.marreddy@broadcom.com>
+Reviewed-by: Vikas Gupta <vikas.gupta@broadcom.com>
+Reviewed-by: Rajashekar Hudumula <rajashekar.hudumula@broadcom.com>
+Link: https://patch.msgid.link/20250919174742.24969-2-bhargava.marreddy@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/diag.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnge/bnge_rmem.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/diag.c b/net/sctp/diag.c
-index 95e65b9d623b3..5a43f25478d03 100644
---- a/net/sctp/diag.c
-+++ b/net/sctp/diag.c
-@@ -230,14 +230,15 @@ struct sctp_comm_param {
- 	bool net_admin;
- };
+diff --git a/drivers/net/ethernet/broadcom/bnge/bnge_rmem.c b/drivers/net/ethernet/broadcom/bnge/bnge_rmem.c
+index 52ada65943a02..98b4e9f55bcbb 100644
+--- a/drivers/net/ethernet/broadcom/bnge/bnge_rmem.c
++++ b/drivers/net/ethernet/broadcom/bnge/bnge_rmem.c
+@@ -95,7 +95,7 @@ int bnge_alloc_ring(struct bnge_dev *bd, struct bnge_ring_mem_info *rmem)
+ 						     &rmem->dma_arr[i],
+ 						     GFP_KERNEL);
+ 		if (!rmem->pg_arr[i])
+-			return -ENOMEM;
++			goto err_free_ring;
  
--static size_t inet_assoc_attr_size(struct sctp_association *asoc)
-+static size_t inet_assoc_attr_size(struct sock *sk,
-+				   struct sctp_association *asoc)
- {
- 	int addrlen = sizeof(struct sockaddr_storage);
- 	int addrcnt = 0;
- 	struct sctp_sockaddr_entry *laddr;
- 
- 	list_for_each_entry_rcu(laddr, &asoc->base.bind_addr.address_list,
--				list)
-+				list, lockdep_sock_is_held(sk))
- 		addrcnt++;
- 
- 	return	  nla_total_size(sizeof(struct sctp_info))
-@@ -263,11 +264,14 @@ static int sctp_sock_dump_one(struct sctp_endpoint *ep, struct sctp_transport *t
- 	if (err)
- 		return err;
- 
--	rep = nlmsg_new(inet_assoc_attr_size(assoc), GFP_KERNEL);
--	if (!rep)
-+	lock_sock(sk);
+ 		if (rmem->ctx_mem)
+ 			bnge_init_ctx_mem(rmem->ctx_mem, rmem->pg_arr[i],
+@@ -116,10 +116,13 @@ int bnge_alloc_ring(struct bnge_dev *bd, struct bnge_ring_mem_info *rmem)
+ 	if (rmem->vmem_size) {
+ 		*rmem->vmem = vzalloc(rmem->vmem_size);
+ 		if (!(*rmem->vmem))
+-			return -ENOMEM;
++			goto err_free_ring;
+ 	}
+-
+ 	return 0;
 +
-+	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
-+	if (!rep) {
-+		release_sock(sk);
- 		return -ENOMEM;
-+	}
++err_free_ring:
++	bnge_free_ring(bd, rmem);
++	return -ENOMEM;
+ }
  
--	lock_sock(sk);
- 	if (ep != assoc->ep) {
- 		err = -EAGAIN;
- 		goto out;
+ static int bnge_alloc_ctx_one_lvl(struct bnge_dev *bd,
 -- 
 2.51.0
 
