@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB531D6DB5;
-	Tue, 11 Nov 2025 00:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9DE1FDA92;
+	Tue, 11 Nov 2025 00:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822203; cv=none; b=fn50r5+C05MpmGAw3cOSZ8u5Hsq4TOCcM6fJNCD9YwnH0t4+Wfa4rCAlsWHpV9SL/Fk2wandxmSLFBaWdFx65UXsRrNeb3OEsjjGLYwal5M+ibhxv52abNRLPPq6N9p+VDOltIz9jsHamNORXoI2X6C28jBasNZ8JEKXlkD+21A=
+	t=1762822205; cv=none; b=gbw2Dd8zWJliUYAbfWLti14VtLAyX5xGUq3SY0Dqmt6ODp5iL5NotBAEtf62ZC+y7jKvHpdvHR3X9eqFnGc9zQ3/Dy/O9pvS1a4qqE3QZ6aGElBWRUrwLNx5N+2FgPeKkzdLe1Q+/8I2sPB2LssB7BGvXFacwX/vjcJYrRMOms8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822203; c=relaxed/simple;
-	bh=DBwN3BIiPETQQzXbPX9AeamphGHbIq8lKwZCpIWCRs8=;
+	s=arc-20240116; t=1762822205; c=relaxed/simple;
+	bh=izEj7Kw81kcgciXxAS/DZrQuLDMV7sdAiOg1UTGTv+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rofrfHq8rB1G//ki8fcZaszaN/FZXX5L3xChOuiFsdZyc/2hjY5NYgjjnMkb9H/yKzNHtnI/JC0Kl3HvqmDcWgyHCaPYX+MuEvOxS6H62R6uwdGrHqyluJnhIQ9izkRHUA7lp6JsorgLvzlBT5Rd82m933sCyoTwTs4TVtiEqXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFp6OuKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NV6EFOBOpMdshAADewVZwmE64a/e8w3WoNC70l4Bt+NfdBk/9A4lqayG8V2Yp+AI1B8znCnzqwvT1BkgqCNEPkatiqpUsf6I/FfmQE3iPCapDeAAluUGipOYiQO4UaTFfnwA9QP7VqMbUSq1T3B1crpG/fglFCttn/eRey8SnXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8DSrMso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFp6OuKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BDAC4CEFB;
-	Tue, 11 Nov 2025 00:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8DSrMso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A33C113D0;
+	Tue, 11 Nov 2025 00:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822202;
-	bh=DBwN3BIiPETQQzXbPX9AeamphGHbIq8lKwZCpIWCRs8=;
+	s=korg; t=1762822205;
+	bh=izEj7Kw81kcgciXxAS/DZrQuLDMV7sdAiOg1UTGTv+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFp6OuKX6rxPkrvHntU55ON11IcJJW4GpwBexgviFbwkBX5ePWESSdThTLPnBPUYl
-	 DP+YTZy9EgEPiDYChqvnxoUTS9AH1LHcpnCHTCH8AAkavOIxbu9cb4lkPW72Po/QcY
-	 deZJ4cXL5AIuMZfdFGZu2IxfMEglM/eoXPF6wEYM=
+	b=v8DSrMsoOfi98h/jUCPdRxJqnanVanToMaI6+Wm85eZpxcwLgD/uDTf3OAl1H6AUV
+	 PtNSSOVu9rLe1AU6wq6BteUGuOKwgig1x0XwbBzd87xx3LH++YIKrhCPDRpSTcbSA6
+	 35j0i/17QcX9cgZorWSsyfNleYrA+GqF3qXbgR4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik M <quic_karm@quicinc.com>,
-	Muna Sinada <muna.sinada@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 031/849] wifi: ath12k: free skb during idr cleanup callback
-Date: Tue, 11 Nov 2025 09:33:21 +0900
-Message-ID: <20251111004537.200213550@linuxfoundation.org>
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 003/565] fbcon: Set fb_display[i]->mode to NULL when the mode is released
+Date: Tue, 11 Nov 2025 09:37:39 +0900
+Message-ID: <20251111004526.914022334@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,111 +47,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthik M <quic_karm@quicinc.com>
+From: Quanmin Yan <yanquanmin1@huawei.com>
 
-[ Upstream commit 92282074e1d2e7b6da5c05fe38a7cc974187fe14 ]
+commit a1f3058930745d2b938b6b4f5bd9630dc74b26b7 upstream.
 
-ath12k just like ath11k [1] did not handle skb cleanup during idr
-cleanup callback. Both ath12k_mac_vif_txmgmt_idr_remove() and
-ath12k_mac_tx_mgmt_pending_free() performed idr cleanup and DMA
-unmapping for skb but only ath12k_mac_tx_mgmt_pending_free() freed
-skb. As a result, during vdev deletion a memory leak occurs.
+Recently, we discovered the following issue through syzkaller:
 
-Refactor all clean up steps into a new function. New function
-ath12k_mac_tx_mgmt_free() creates a centralized area where idr
-cleanup, DMA unmapping for skb and freeing skb is performed. Utilize
-skb pointer given by idr_remove(), instead of passed as a function
-argument because IDR will be protected by locking. This will prevent
-concurrent modification of the same IDR.
+BUG: KASAN: slab-use-after-free in fb_mode_is_equal+0x285/0x2f0
+Read of size 4 at addr ff11000001b3c69c by task syz.xxx
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xab/0xe0
+ print_address_description.constprop.0+0x2c/0x390
+ print_report+0xb9/0x280
+ kasan_report+0xb8/0xf0
+ fb_mode_is_equal+0x285/0x2f0
+ fbcon_mode_deleted+0x129/0x180
+ fb_set_var+0xe7f/0x11d0
+ do_fb_ioctl+0x6a0/0x750
+ fb_ioctl+0xe0/0x140
+ __x64_sys_ioctl+0x193/0x210
+ do_syscall_64+0x5f/0x9c0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Now ath12k_mac_tx_mgmt_pending_free() and
-ath12k_mac_vif_txmgmt_idr_remove() call ath12k_mac_tx_mgmt_free().
+Based on experimentation and analysis, during framebuffer unregistration,
+only the memory of fb_info->modelist is freed, without setting the
+corresponding fb_display[i]->mode to NULL for the freed modes. This leads
+to UAF issues during subsequent accesses. Here's an example of reproduction
+steps:
+1. With /dev/fb0 already registered in the system, load a kernel module
+   to register a new device /dev/fb1;
+2. Set fb1's mode to the global fb_display[] array (via FBIOPUT_CON2FBMAP);
+3. Switch console from fb to VGA (to allow normal rmmod of the ko);
+4. Unload the kernel module, at this point fb1's modelist is freed, leaving
+   a wild pointer in fb_display[];
+5. Trigger the bug via system calls through fb0 attempting to delete a mode
+   from fb0.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Add a check in do_unregister_framebuffer(): if the mode to be freed exists
+in fb_display[], set the corresponding mode pointer to NULL.
 
-Link: https://lore.kernel.org/r/1637832614-13831-1-git-send-email-quic_srirrama@quicinc.com > # [1]
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Karthik M <quic_karm@quicinc.com>
-Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250923220316.1595758-1-muna.sinada@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 34 ++++++++++++++-------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |   19 +++++++++++++++++++
+ drivers/video/fbdev/core/fbmem.c |    1 +
+ include/linux/fbcon.h            |    2 ++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 2644b5d4b0bc8..d717e74b01c89 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -8304,23 +8304,32 @@ static void ath12k_mgmt_over_wmi_tx_drop(struct ath12k *ar, struct sk_buff *skb)
- 		wake_up(&ar->txmgmt_empty_waitq);
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2805,6 +2805,25 @@ int fbcon_mode_deleted(struct fb_info *i
+ 	return found;
  }
  
--int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
-+static void ath12k_mac_tx_mgmt_free(struct ath12k *ar, int buf_id)
- {
--	struct sk_buff *msdu = skb;
-+	struct sk_buff *msdu;
- 	struct ieee80211_tx_info *info;
--	struct ath12k *ar = ctx;
--	struct ath12k_base *ab = ar->ab;
- 
- 	spin_lock_bh(&ar->txmgmt_idr_lock);
--	idr_remove(&ar->txmgmt_idr, buf_id);
-+	msdu = idr_remove(&ar->txmgmt_idr, buf_id);
- 	spin_unlock_bh(&ar->txmgmt_idr_lock);
--	dma_unmap_single(ab->dev, ATH12K_SKB_CB(msdu)->paddr, msdu->len,
++static void fbcon_delete_mode(struct fb_videomode *m)
++{
++	struct fbcon_display *p;
 +
-+	if (!msdu)
-+		return;
-+
-+	dma_unmap_single(ar->ab->dev, ATH12K_SKB_CB(msdu)->paddr, msdu->len,
- 			 DMA_TO_DEVICE);
- 
- 	info = IEEE80211_SKB_CB(msdu);
- 	memset(&info->status, 0, sizeof(info->status));
- 
--	ath12k_mgmt_over_wmi_tx_drop(ar, skb);
-+	ath12k_mgmt_over_wmi_tx_drop(ar, msdu);
++	for (int i = first_fb_vc; i <= last_fb_vc; i++) {
++		p = &fb_display[i];
++		if (p->mode == m)
++			p->mode = NULL;
++	}
 +}
 +
-+int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
++void fbcon_delete_modelist(struct list_head *head)
 +{
-+	struct ath12k *ar = ctx;
++	struct fb_modelist *modelist;
 +
-+	ath12k_mac_tx_mgmt_free(ar, buf_id);
- 
- 	return 0;
- }
-@@ -8329,17 +8338,10 @@ static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
++	list_for_each_entry(modelist, head, list)
++		fbcon_delete_mode(&modelist->mode);
++}
++
+ #ifdef CONFIG_VT_HW_CONSOLE_BINDING
+ static void fbcon_unbind(void)
  {
- 	struct ieee80211_vif *vif = ctx;
- 	struct ath12k_skb_cb *skb_cb = ATH12K_SKB_CB(skb);
--	struct sk_buff *msdu = skb;
- 	struct ath12k *ar = skb_cb->ar;
--	struct ath12k_base *ab = ar->ab;
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -490,6 +490,7 @@ static void do_unregister_framebuffer(st
+ 		fb_info->pixmap.addr = NULL;
+ 	}
  
--	if (skb_cb->vif == vif) {
--		spin_lock_bh(&ar->txmgmt_idr_lock);
--		idr_remove(&ar->txmgmt_idr, buf_id);
--		spin_unlock_bh(&ar->txmgmt_idr_lock);
--		dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len,
--				 DMA_TO_DEVICE);
--	}
-+	if (skb_cb->vif == vif)
-+		ath12k_mac_tx_mgmt_free(ar, buf_id);
- 
- 	return 0;
- }
--- 
-2.51.0
-
++	fbcon_delete_modelist(&fb_info->modelist);
+ 	fb_destroy_modelist(&fb_info->modelist);
+ 	registered_fb[fb_info->node] = NULL;
+ 	num_registered_fb--;
+--- a/include/linux/fbcon.h
++++ b/include/linux/fbcon.h
+@@ -11,6 +11,7 @@ void fbcon_suspended(struct fb_info *inf
+ void fbcon_resumed(struct fb_info *info);
+ int fbcon_mode_deleted(struct fb_info *info,
+ 		       struct fb_videomode *mode);
++void fbcon_delete_modelist(struct list_head *head);
+ void fbcon_new_modelist(struct fb_info *info);
+ void fbcon_get_requirement(struct fb_info *info,
+ 			   struct fb_blit_caps *caps);
+@@ -31,6 +32,7 @@ static inline void fbcon_suspended(struc
+ static inline void fbcon_resumed(struct fb_info *info) {}
+ static inline int fbcon_mode_deleted(struct fb_info *info,
+ 				     struct fb_videomode *mode) { return 0; }
++static inline void fbcon_delete_modelist(struct list_head *head) {}
+ static inline void fbcon_new_modelist(struct fb_info *info) {}
+ static inline void fbcon_get_requirement(struct fb_info *info,
+ 					 struct fb_blit_caps *caps) {}
 
 
