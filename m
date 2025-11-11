@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A10C263F52;
-	Tue, 11 Nov 2025 01:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A582652AF;
+	Tue, 11 Nov 2025 01:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824132; cv=none; b=rfxvz70NyV97KobqDi6nF5MxeMy7mpd6GzSw3NFmTj2L61D0wHoLig1TcwP4YCw+e/BvVFpyb/+jZQP2/yiA6r0D4mRwAxkkg9outSTSBwpqN9xK2oiQKuh5ahlyYE4L6QP5COtkRdq2FV9hjGirEN3pRY7t9hMH9AMtrv10iPM=
+	t=1762824134; cv=none; b=uLICshMEROu2/bD8i/WmHkKcnbKdNQ5tTIVifeOus9u/vrotwObOlK+N8P8r50DtXtLKCWZaykyZFDgC8/DVSoWkDWHFb8rGqBjjiyyHnI/GHOi6Gv8qyrUvqhcO62ngihk5ztBEckO1X2KMMfLDh58TTqDV0FI/AJ4z5mIV9xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824132; c=relaxed/simple;
-	bh=TMKE7IlWqyYzI+qRZlQT+i/u4A1oDEI0GPv+iF4EG0o=;
+	s=arc-20240116; t=1762824134; c=relaxed/simple;
+	bh=YoXkQDBTt0Qh8uwMNt7/WmUMK9RCYZFtuSOzenfbv3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edHEnIy0VOqlps+uNZyz3KE1vf/9pYa2ikuxlxOen6mgtb877x9goPBq/RzKTtMymLMS02IIKNhiujIkUmcp22PhC1rMakgtb6wTrv9IPIp/JtyRs2K4dCU4HHp+pd7kNJeJjP52K6SBCC++v0xRnC3AXsnaBUTOkl2U7BKb/7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAlEkQZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=haRC/T8zNLgQsyrE4fJhKy//xLTHsttlfnV9ccOs9V7QvF0ntcsIBexRrnWPrgSOnvPjE4dir/0agzvO8gB5ojBGIAbitcC77E9OfuZRbiJfoLoqcVZWGra0JfJa/UkPpY+lNs4Yv7g9xvTBJ9IQMH5C0Wo5zBZhLd6EFH7izW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SogaFzp4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAlEkQZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF93C116D0;
-	Tue, 11 Nov 2025 01:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SogaFzp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311BAC4CEF5;
+	Tue, 11 Nov 2025 01:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824132;
-	bh=TMKE7IlWqyYzI+qRZlQT+i/u4A1oDEI0GPv+iF4EG0o=;
+	s=korg; t=1762824134;
+	bh=YoXkQDBTt0Qh8uwMNt7/WmUMK9RCYZFtuSOzenfbv3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAlEkQZD95xaPj81WJo13LEmKLvBL7KFt+CwCGWZ0raOF7GfUQfoOuDwZ/Vxnm05/
-	 i2BA2JSf/ZNiHG7ZxDIJB2FwGyEN+Yka5hSuUCTKeLPcGtGjvF7l9dKHetyfsbAtuf
-	 3cI+vw7s+P8RlEqes7Ci6jMx0jAqaAtBWqACPPD8=
+	b=SogaFzp4yQ7yWoaMIK5HGcz6ZNiaU2PSzX7KPAIQ1nATBGQU85eLNwR8x+ZE2D7u0
+	 U09r2ovBTzk7lENxa2VwS9GumrI1KOxGMlRlWgaafD+IKlwMNTrwLjlXItUyfZVifh
+	 cobsY1gZL/0bgyrHG0804GfgADGgIfeYnlh2tYws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Chen <leo.chen@amd.com>,
-	Ausef Yousof <Ausef.Yousof@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/565] drm/amd/display: fix dml ms order of operations
-Date: Tue, 11 Nov 2025 09:43:38 +0900
-Message-ID: <20251111004535.010145146@linuxfoundation.org>
+Subject: [PATCH 6.17 443/849] net: call cond_resched() less often in __release_sock()
+Date: Tue, 11 Nov 2025 09:40:13 +0900
+Message-ID: <20251111004547.144551640@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,44 +48,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ausef Yousof <Ausef.Yousof@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 02a6c2e4b28ff31f7a904c196a99fb2efe81e2cf ]
+[ Upstream commit 16c610162d1f1c332209de1c91ffb09b659bb65d ]
 
-[why&how]
-small error in order of operations in immediateflipbytes
-calculation on dml ms side that can result in dml ms
-and mp mismatch immediateflip support for a given pipe
-and thus an invalid hw state, correct the order to align
-with mp.
+While stress testing TCP I had unexpected retransmits and sack packets
+when a single cpu receives data from multiple high-throughput flows.
 
-Reviewed-by: Leo Chen <leo.chen@amd.com>
-Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+super_netperf 4 -H srv -T,10 -l 3000 &
+
+Tcpdump extract:
+
+ 00:00:00.000007 IP6 clnt > srv: Flags [.], seq 26062848:26124288, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26124288:26185728, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26185728:26243072, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26243072:26304512, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26304512:26365952, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000007 IP6 clnt > srv: Flags [P.], seq 26365952:26423296, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26423296:26484736, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26484736:26546176, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26546176:26603520, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 57344
+ 00:00:00.003932 IP6 clnt > srv: Flags [P.], seq 26603520:26619904, ack 1, win 66, options [nop,nop,TS val 651464844 ecr 3100753141], length 16384
+ 00:00:00.006602 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651471419 ecr 3100759716], length 4096
+ 00:00:00.013000 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651484421 ecr 3100772718], length 4096
+ 00:00:00.000416 IP6 srv > clnt: Flags [.], ack 26619904, win 1393, options [nop,nop,TS val 3100773185 ecr 651484421,nop,nop,sack 1 {24862720:24866816}], length 0
+
+After analysis, it appears this is because of the cond_resched()
+call from  __release_sock().
+
+When current thread is yielding, while still holding the TCP socket lock,
+it might regain the cpu after a very long time.
+
+Other peer TLP/RTO is firing (multiple times) and packets are retransmit,
+while the initial copy is waiting in the socket backlog or receive queue.
+
+In this patch, I call cond_resched() only once every 16 packets.
+
+Modern TCP stack now spends less time per packet in the backlog,
+especially because ACK are no longer sent (commit 133c4c0d3717
+"tcp: defer regular ACK while processing socket backlog")
+
+Before:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19046186           0.0
+TcpRetransSegs                  1471               0.0
+TcpExtTCPTimeouts               1397               0.0
+TcpExtTCPLossProbes             1356               0.0
+TcpExtTCPDSACKRecv              1352               0.0
+TcpExtTCPSpuriousRTOs           114                0.0
+TcpExtTCPDSACKRecvSegs          1352               0.0
+
+After:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19218936           0.0
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250903174811.1930820-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-index 6822b07951204..d0b7fae7d73c8 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-@@ -6527,7 +6527,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
- 				mode_lib->ms.TotImmediateFlipBytes = 0;
- 				for (k = 0; k <= mode_lib->ms.num_active_planes - 1; k++) {
- 					if (!(mode_lib->ms.policy.ImmediateFlipRequirement[k] == dml_immediate_flip_not_required)) {
--						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k];
-+						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k]);
- 						if (mode_lib->ms.use_one_row_for_frame_flip[j][k]) {
- 							mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (2 * mode_lib->ms.DPTEBytesPerRow[j][k]);
- 						} else {
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 1382bddcbaff4..bdeea7cc134df 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3162,23 +3162,27 @@ void __release_sock(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
+ {
+ 	struct sk_buff *skb, *next;
++	int nb = 0;
+ 
+ 	while ((skb = sk->sk_backlog.head) != NULL) {
+ 		sk->sk_backlog.head = sk->sk_backlog.tail = NULL;
+ 
+ 		spin_unlock_bh(&sk->sk_lock.slock);
+ 
+-		do {
++		while (1) {
+ 			next = skb->next;
+ 			prefetch(next);
+ 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
+ 			skb_mark_not_on_list(skb);
+ 			sk_backlog_rcv(sk, skb);
+ 
+-			cond_resched();
+-
+ 			skb = next;
+-		} while (skb != NULL);
++			if (!skb)
++				break;
++
++			if (!(++nb & 15))
++				cond_resched();
++		}
+ 
+ 		spin_lock_bh(&sk->sk_lock.slock);
+ 	}
 -- 
 2.51.0
 
