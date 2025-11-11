@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51FA1DF258;
-	Tue, 11 Nov 2025 00:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D30214210;
+	Tue, 11 Nov 2025 00:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822710; cv=none; b=QkK8LEejzzTSVu/mUN+3QdfSkSXGs3LqbYJ47fMI2tPSPJHM9HDxBYrs6unPDCoHbtWjWGLaeyA7M/qN8m2pMQ/xLKSXLhMV9eW3L70GPaEvStE2eLUGhpRc8LKZA+u440JXSzgoR3QAOlfKPIHJTDfVDM7siM0+Z8TmFfNlPPk=
+	t=1762822713; cv=none; b=VThKzZu/SArvoUJtkiAmAPW1ZRhaiwac0IkfaOj1Frvbv5djFbkShEZXLQwmZhNvID7WT56EC2cHHVG7X08RlpY/qPZNoh4MriWlaiIHY25LTvsbSCUgC21FS0UgWVkKU6mhwd5CeddIl0BAO7GkiatcNWMrWmUXLK3gg6zybSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822710; c=relaxed/simple;
-	bh=Gd+Xq+b/mUsKXNg9TJRG4jCbJnhRggjjQrVGqrMcrJk=;
+	s=arc-20240116; t=1762822713; c=relaxed/simple;
+	bh=Dl00yJqRW3/J9XBgvL4hVBMd7DxwWky5iR+lcrg3/qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCobu72HR82IcFJ0THOyB1RC9mw9olE6zpJYHIYMyiJ8uJhDvHHqwxdCsxGCbIf2VhRCpROI0bQbqNcmTyLpBflNWb1Tsy+LiiubwdkBS2oPq1Yg0FVZd1EmVtX6NbqcVBnihS1bxTDD1WEFoO2Pgi264nYF7SHakJC0wQg/B2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFywcQ1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtxN8EThaMVAtDuEwtxbFxe6GoVxp+qVtBRdAdTa54colf31ziMMlAjivFqNci//m2tlveB2Wn6dNHEEzuWpq/XZQvlTTsi2qZ3OgVQ2K1Pov2tY9YLhJhtu2hbsSTZgn/QtIw7jJgpciDP449HNIxvvu9Gc2dAgFl/gdy8u1qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk4JO8Q4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFywcQ1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A07C19424;
-	Tue, 11 Nov 2025 00:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk4JO8Q4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5BCC116B1;
+	Tue, 11 Nov 2025 00:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822710;
-	bh=Gd+Xq+b/mUsKXNg9TJRG4jCbJnhRggjjQrVGqrMcrJk=;
+	s=korg; t=1762822713;
+	bh=Dl00yJqRW3/J9XBgvL4hVBMd7DxwWky5iR+lcrg3/qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFywcQ1OK0zQzGEn8pRvEvSh9qQ9BKtMDLVVSyr6kaHT79bxyHsb/pYbTr/e/jTIH
-	 NEcK32/VoP+ePM5Ju0SilghJx72GmskIlDwTkmF6/Cy3xLJ8E6bB1SUwJij/bYTU3P
-	 ksb4fIeOEY+ayM3YPWktiCEIw56sZB+9kefghv9Q=
+	b=Bk4JO8Q4fy0AGIBKdZSXpHM0FdiRcu+qnjH0d93Hrqaws0+WMutAp54DTRQBjpMEE
+	 H5mfnc60FSKXMOZis1UO7v0ZTCTmga7Z6q79uf8cn2b0raIH/Npl+5rLaZcdM0QOYF
+	 1sQNygAMUJ/lHe3GKSog5I8XbMebGyHhGoR+Pcjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Reidel <adrian@mainlining.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christopher Ruehl <chris.ruehl@gtsys.com.hk>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/565] soc: qcom: smem: Fix endian-unaware access of num_entries
-Date: Tue, 11 Nov 2025 09:39:06 +0900
-Message-ID: <20251111004528.992267550@linuxfoundation.org>
+Subject: [PATCH 6.17 153/849] power: supply: qcom_battmgr: add OOI chemistry
+Date: Tue, 11 Nov 2025 09:35:23 +0900
+Message-ID: <20251111004540.122582475@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Reidel <adrian@mainlining.org>
+From: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
 
-[ Upstream commit 19e7aa0e9e46d0ad111a4af55b3d681b6ad945e0 ]
+[ Upstream commit fee0904441325d83e7578ca457ec65a9d3f21264 ]
 
-Add a missing le32_to_cpu when accessing num_entries, which is always a
-little endian integer.
+The ASUS S15 xElite model report the Li-ion battery with an OOI, hence this
+update the detection and return the appropriate type.
 
-Fixes booting on Xiaomi Mi 9T (xiaomi-davinci) in big endian.
-
-Signed-off-by: Jens Reidel <adrian@mainlining.org>
-Link: https://lore.kernel.org/r/20250726235646.254730-1-adrian@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/smem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/qcom_battmgr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index e4411771f482f..db77642776f93 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -892,7 +892,7 @@ static u32 qcom_smem_get_item_count(struct qcom_smem *smem)
- 	if (IS_ERR_OR_NULL(ptable))
- 		return SMEM_ITEM_COUNT;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 99808ea9851f6..fdb2d1b883fc5 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -982,7 +982,8 @@ static void qcom_battmgr_sc8280xp_strcpy(char *dest, const char *src)
  
--	info = (struct smem_info *)&ptable->entry[ptable->num_entries];
-+	info = (struct smem_info *)&ptable->entry[le32_to_cpu(ptable->num_entries)];
- 	if (memcmp(info->magic, SMEM_INFO_MAGIC, sizeof(info->magic)))
- 		return SMEM_ITEM_COUNT;
- 
+ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry)
+ {
+-	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
++	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
++	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
+ 		return POWER_SUPPLY_TECHNOLOGY_LION;
+ 	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
+ 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
 -- 
 2.51.0
 
