@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5532DC328;
-	Tue, 11 Nov 2025 01:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE372DC328;
+	Tue, 11 Nov 2025 01:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824674; cv=none; b=hVv4iPpbtlx4eJRDBFmY2sVIzqTTK7Ipvt4omg+QJrtVE2jfPpjUmibH0wI+/TJ4L2lSFhY/QJab+e0amqLkQaeBaUPQiw7aqobBk8bWYAFFj5Q6fS92YRqWXkDcRBCvt/FSDUX1DakBg1TwU44b0/3tG9XwC+fykQSQ7OxcsZk=
+	t=1762824678; cv=none; b=LSdmgzzkJSsnE9KWFiLAQSYVNl5CBSfr76eq2QQqT3NIdyVOl6NA4BHO1C6hhz5MucRTcdpZgykBamZR9NNKLoPBbXak/EWHZJbn6cz01jNe1docvE+D++sH4Zslm8H9Nk5ttmtF5M99IropcBPDWft0zgVpKxOct9Lo4huFMfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824674; c=relaxed/simple;
-	bh=VYC1RVqkIVwwae6u0JZ6gdMmAUb5LbidN8zcCEWgrEQ=;
+	s=arc-20240116; t=1762824678; c=relaxed/simple;
+	bh=Fl0X1T9ynt1ZNeyiKqZfqNOjb+rNGdeJrxUC2GbLMLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQXLBfd5N2JgRPko7KZEJaQXv+4D1HL3wJt8CBkdg6mmkC8PTtqdYLrYi068P2Ih/YJfThOP0H+i8UbXrW9R5l5cXCAP2cnZyk4ALXfPVkHgnOHiv5QL2PapGYB5yerRHCeq4kZeblNfOqALt4JJe2yUbly1ocjSiVM5GP2ELik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkbe1L0u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ejrKF/xnxLwRiE+Jf/IGJtPkOJDdCqvGDuf1791PJC9H3x93Z54+ZWUetT5RZgw/6YUWynQds/3Lhfk8r+1AsmsrZVKv13gzs0NdeEFgJDWlLASlEOVy7YdLiclU0/OQonFKcG1qBpckHqjNdWTLEohV3vvLC5q6UTj0gFvzk1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLY3LoTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkbe1L0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4CAC4CEF5;
-	Tue, 11 Nov 2025 01:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLY3LoTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C28C4CEFB;
+	Tue, 11 Nov 2025 01:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824674;
-	bh=VYC1RVqkIVwwae6u0JZ6gdMmAUb5LbidN8zcCEWgrEQ=;
+	s=korg; t=1762824676;
+	bh=Fl0X1T9ynt1ZNeyiKqZfqNOjb+rNGdeJrxUC2GbLMLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkbe1L0u5EepmlIKulWjirJOTgTZvFjAN6enHD7Ij3aswnC9qz/VVjkdZplWeKeXb
-	 qcj9IVY2HgpQiGgjWwb7lCJ5FND9ayP+/YCpyzbGSg7zWr0qcuDnPnb5lRzESGYBYu
-	 EcvDYnbapwHM00QLW10sWjVHTxmGlRvgwLWd8lhI=
+	b=yLY3LoTd740L8YJlcFmxdpX2h/jfPCUd5XErROUlvTGfSwJOdj1oUcsWnIO9f5jTc
+	 iBwMONMztEJsnpyEUUCpT6G0cy9byGVDzBPW1ZImYi4t+Pty9jvC8ryS/nqT5qddnh
+	 YfvhvSJHcmPQDuvmJ6KaKATYrKUaRLEYhprhI4Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Laight <David.Laight@aculab.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 548/849] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
-Date: Tue, 11 Nov 2025 09:41:58 +0900
-Message-ID: <20251111004549.654274584@linuxfoundation.org>
+Subject: [PATCH 6.12 496/565] x86: use cmov for user address masking
+Date: Tue, 11 Nov 2025 09:45:52 +0900
+Message-ID: <20251111004538.094514120@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,68 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
+[ Upstream commit 91309a70829d94c735c8bb1cc383e78c96127a16 ]
 
-Replace kmalloc_array() + copy_from_user() with memdup_array_user().
+This was a suggestion by David Laight, and while I was slightly worried
+that some micro-architecture would predict cmov like a conditional
+branch, there is little reason to actually believe any core would be
+that broken.
 
-This shrinks the source code and improves separation between the kernel
-and userspace slabs.
+Intel documents that their existing cores treat CMOVcc as a data
+dependency that will constrain speculation in their "Speculative
+Execution Side Channel Mitigations" whitepaper:
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+  "Other instructions such as CMOVcc, AND, ADC, SBB and SETcc can also
+   be used to prevent bounds check bypass by constraining speculative
+   execution on current family 6 processors (Intel® Core™, Intel® Atom™,
+   Intel® Xeon® and Intel® Xeon Phi™ processors)"
+
+and while that leaves the future uarch issues open, that's certainly
+true of our traditional SBB usage too.
+
+Any core that predicts CMOV will be unusable for various crypto
+algorithms that need data-independent timing stability, so let's just
+treat CMOV as the safe choice that simplifies the address masking by
+avoiding an extra instruction and doesn't need a temporary register.
+
+Suggested-by: David Laight <David.Laight@aculab.com>
+Link: https://www.intel.com/content/dam/develop/external/us/en/documents/336996-speculative-execution-side-channel-mitigations.pdf
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 284922f4c563 ("x86: uaccess: don't use runtime-const rewriting in modules")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ arch/x86/include/asm/uaccess_64.h | 12 ++++++------
+ arch/x86/lib/getuser.S            |  5 ++---
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index d3f220be2ef9a..d541e214a18c8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1767,30 +1767,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index b0a887209400d..c52f0133425b9 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -63,13 +63,13 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm,
+  */
+ static inline void __user *mask_user_address(const void __user *ptr)
  {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 	union drm_amdgpu_wait_fences *wait = data;
--	uint32_t fence_count = wait->in.fence_count;
--	struct drm_amdgpu_fence *fences_user;
- 	struct drm_amdgpu_fence *fences;
- 	int r;
- 
- 	/* Get the fences from userspace */
--	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
--			GFP_KERNEL);
--	if (fences == NULL)
--		return -ENOMEM;
--
--	fences_user = u64_to_user_ptr(wait->in.fences);
--	if (copy_from_user(fences, fences_user,
--		sizeof(struct drm_amdgpu_fence) * fence_count)) {
--		r = -EFAULT;
--		goto err_free_fences;
--	}
-+	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
-+				   wait->in.fence_count,
-+				   sizeof(struct drm_amdgpu_fence));
-+	if (IS_ERR(fences))
-+		return PTR_ERR(fences);
- 
- 	if (wait->in.wait_all)
- 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
- 	else
- 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
- 
--err_free_fences:
- 	kfree(fences);
- 
- 	return r;
+-	unsigned long mask;
++	void __user *ret;
+ 	asm("cmp %1,%0\n\t"
+-	    "sbb %0,%0"
+-		:"=r" (mask)
+-		:"r" (ptr),
+-		 "0" (runtime_const_ptr(USER_PTR_MAX)));
+-	return (__force void __user *)(mask | (__force unsigned long)ptr);
++	    "cmova %1,%0"
++		:"=r" (ret)
++		:"r" (runtime_const_ptr(USER_PTR_MAX)),
++		 "0" (ptr));
++	return ret;
+ }
+ #define masked_user_access_begin(x) ({				\
+ 	__auto_type __masked_ptr = (x);				\
+diff --git a/arch/x86/lib/getuser.S b/arch/x86/lib/getuser.S
+index 4357ec2a0bfc2..89ecd57c9d423 100644
+--- a/arch/x86/lib/getuser.S
++++ b/arch/x86/lib/getuser.S
+@@ -44,9 +44,8 @@
+   .pushsection runtime_ptr_USER_PTR_MAX,"a"
+ 	.long 1b - 8 - .
+   .popsection
+-	cmp %rax, %rdx
+-	sbb %rdx, %rdx
+-	or %rdx, %rax
++	cmp %rdx, %rax
++	cmova %rdx, %rax
+ .else
+ 	cmp $TASK_SIZE_MAX-\size+1, %eax
+ 	jae .Lbad_get_user
 -- 
 2.51.0
 
