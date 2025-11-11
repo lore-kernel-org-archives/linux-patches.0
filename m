@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF04124E4C6;
-	Tue, 11 Nov 2025 01:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD967262A;
+	Tue, 11 Nov 2025 01:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822932; cv=none; b=YwMOX0IkPyXJXkUsXlpufroHGKDg2djCqmTAi3z/rsLZCSkqTERSg1Y5GCv25nnNIIsOihhb7CpS8JmYVU25qJbeS92ouwTg29r9haOnC+RbETYDcc1HcORhs/0caNzCHsZfLVb+7OCJSHUw7++DHp+FQsyB5SRavFzS3zBzVtE=
+	t=1762822935; cv=none; b=PtS5mmNIH6G9U62z46X89tsUpBUCPxYNKJUIXqu3cauIW4IwV1q0meYKDdo10c+3qaevoe4DWFq/KsT/yZ5RqfnVlRh1QoCBev8PVE+Xv8nZuhvBRFwImAaSIORelITeW4Z4k7ahT0UXtXEZxKH6BFijRlEVANNb7Bu4AG1z2xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822932; c=relaxed/simple;
-	bh=efq1Ok5b0v0oiZZuo3rkJADVv2ZAKydYkgVH9WNAdHY=;
+	s=arc-20240116; t=1762822935; c=relaxed/simple;
+	bh=gH/MrHJTwMIkDRVDV+mLbywgqhpghrnkeCfu57Ofltg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g43pSs26tu1dge3wVpFzhUv7Gd9Z7h9lTUJevkyG+J+5bNM3BWrDMsIfDXb8Ld8W20I/PQJiZEOpveuoowypJYgesJDROm2fxGc1wfoPE/UcFlNW3fv5iopo1+TNpSeEOCG38XCkxWui2Tme7dRBhglN6V2C3qFtvrvSHOQO54Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHbe96zf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJQvRHvCpDb+f2nkzihEfCgS4ZXPVl0OPLwdukdybpt1d0kWi2Zp8rrLJz7YlhFzBg7ok+AmSCKiSpMXv8WDao/am2JFY3r5TvLukMDOKnyN26OGq90kZXFuPyH3d0iNzQyGGRTF7lgVsZeZui07Hx4OOIZ5426yHz06bBlEt6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMeBw2d1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHbe96zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB4EC116B1;
-	Tue, 11 Nov 2025 01:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMeBw2d1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049F3C19422;
+	Tue, 11 Nov 2025 01:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822931;
-	bh=efq1Ok5b0v0oiZZuo3rkJADVv2ZAKydYkgVH9WNAdHY=;
+	s=korg; t=1762822934;
+	bh=gH/MrHJTwMIkDRVDV+mLbywgqhpghrnkeCfu57Ofltg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHbe96zfPeaewkahbWKI6s5OcUCc1/MZTe6V1FKSDvYlJzrFOxxUn93lrWJrABiNF
-	 0HgFtOvrphcz2/fhHhTJmIf+Xthw6Flk97IVSifDh53E7IsxqdxzMb71Y9/vsS+RLs
-	 XPwCBDOXgOoLFPkwhLRsU7jEnQ1If+a81vusnNmM=
+	b=kMeBw2d1a01tuXnLKH1w/CI92xEBGmlh0p5nXsJFTvaO55H5lvv8522+02z08kF/v
+	 f8PXqsofvXlM0VWtDRFRcgncL+tnydnc2y91O9BdwHp8vfSo6pItGR7P2BoC+O5Bzn
+	 oI46Mys2CAcHdeu4vjiIrisXI/M/1MG+aK0Mn9nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanyang Wang <quanyang.wang@windriver.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 167/849] arm64: zynqmp: Disable coresight by default
-Date: Tue, 11 Nov 2025 09:35:37 +0900
-Message-ID: <20251111004540.471754484@linuxfoundation.org>
+Subject: [PATCH 6.12 136/565] tee: allow a driver to allocate a tee_device without a pool
+Date: Tue, 11 Nov 2025 09:39:52 +0900
+Message-ID: <20251111004530.005540610@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quanyang Wang <quanyang.wang@windriver.com>
+From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
 
-[ Upstream commit 0e3f9140ad04dca9a6a93dd6a6decdc53fd665ca ]
+[ Upstream commit 6dbcd5a9ab6cb6644e7d728521da1c9035ec7235 ]
 
-When secure-boot mode of bootloader is enabled, the registers of
-coresight are not permitted to access that's why disable it by default.
+A TEE driver doesn't always need to provide a pool if it doesn't
+support memory sharing ioctls and can allocate memory for TEE
+messages in another way. Although this is mentioned in the
+documentation for tee_device_alloc(), it is not handled correctly.
 
-Signed-off-by: Quanyang Wang <quanyang.wang@windriver.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/7e308b8efe977c4912079b4d1b1ab3d24908559e.1756799774.git.michal.simek@amd.com
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tee/tee_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-index e11d282462bd3..23d867c03263d 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp.dtsi
-@@ -550,6 +550,7 @@
- 			reg = <0x0 0xfec10000 0x0 0x1000>;
- 			clock-names = "apb_pclk";
- 			cpu = <&cpu0>;
-+			status = "disabled";
- 		};
+diff --git a/drivers/tee/tee_core.c b/drivers/tee/tee_core.c
+index acc7998758ad8..133447f250657 100644
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -889,7 +889,7 @@ struct tee_device *tee_device_alloc(const struct tee_desc *teedesc,
  
- 		cpu1_debug: debug@fed10000 {
-@@ -557,6 +558,7 @@
- 			reg = <0x0 0xfed10000 0x0 0x1000>;
- 			clock-names = "apb_pclk";
- 			cpu = <&cpu1>;
-+			status = "disabled";
- 		};
+ 	if (!teedesc || !teedesc->name || !teedesc->ops ||
+ 	    !teedesc->ops->get_version || !teedesc->ops->open ||
+-	    !teedesc->ops->release || !pool)
++	    !teedesc->ops->release)
+ 		return ERR_PTR(-EINVAL);
  
- 		cpu2_debug: debug@fee10000 {
-@@ -564,6 +566,7 @@
- 			reg = <0x0 0xfee10000 0x0 0x1000>;
- 			clock-names = "apb_pclk";
- 			cpu = <&cpu2>;
-+			status = "disabled";
- 		};
- 
- 		cpu3_debug: debug@fef10000 {
-@@ -571,6 +574,7 @@
- 			reg = <0x0 0xfef10000 0x0 0x1000>;
- 			clock-names = "apb_pclk";
- 			cpu = <&cpu3>;
-+			status = "disabled";
- 		};
- 
- 		/* GDMA */
+ 	teedev = kzalloc(sizeof(*teedev), GFP_KERNEL);
 -- 
 2.51.0
 
