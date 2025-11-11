@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4162D94B7;
-	Tue, 11 Nov 2025 01:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2113446CB;
+	Tue, 11 Nov 2025 01:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823613; cv=none; b=IB/T7HC/nwjD/ODKrmjE2jdjurBUOTm7QJWRcgLF3xIQ3UCFgZ9weFoJGcuZ7rAanjuig3CdRUYzd5WRpEZJduJbv20zm+cNGAjoJsDThyUBVdpRZhcFKx0YnmdQ3EKcPkYNU/OHJUtDW4YMEpkpHzyvIi35PokSVC9wfh2pINk=
+	t=1762823615; cv=none; b=D+zvhDibvzhpYQt8FQaBSQBM93QsfxjEaDmX221+ukaecfDFmeM5x8BQZ/dpR0lGtmWwkmotGTJpcPxc28In7g8a//Z8yWPj4iEdnnJ866UXcRxpMU29usj9nu6FkNvZmlMjBM7oEAGEzuYC5Bj3hiVTyTQd5U6F07cP3cIlql0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823613; c=relaxed/simple;
-	bh=v+w0jCj7nOO57CbLDZg9gBz8IDEhDaCWECn18/gpho0=;
+	s=arc-20240116; t=1762823615; c=relaxed/simple;
+	bh=ex2me4M4HEgNC3tHDlZGVM883dvh/FJxHlFmG2UB518=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlXXLLkTmPjzYJw78Ru0BICD2HNodt+oldSrthpar/k0fe5AENyetszlT9XwUCZSg1lQvX4KDtKOBNVy3/rIuPxLtLNwGSjqeQoFIVSqAt+C/KSjeBODqkzAUArHeulkpBtjXpC4iDGoEfrz1wzy2ZPtcdaUnDd6clkKFGxh7S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhKkc+ec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ir2A3+8tj+dPDTtGJfrd7UCNDmq9KVOHKQ8HhWM//A3kppGA2LyRAcqcJgOdy9AezbtY1EDApRM4aPvpWo87rUYFQQh7XzxT5oG6/xVJ2WnacKBVyPAvGiCHjLDzpApjwNAdIwP5KxnIKhowj6t6KPHyoey4rd3PjVQBMuFZxtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMWZ0n90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhKkc+ec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78F4C4AF09;
-	Tue, 11 Nov 2025 01:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMWZ0n90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1B9C19422;
+	Tue, 11 Nov 2025 01:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823613;
-	bh=v+w0jCj7nOO57CbLDZg9gBz8IDEhDaCWECn18/gpho0=;
+	s=korg; t=1762823615;
+	bh=ex2me4M4HEgNC3tHDlZGVM883dvh/FJxHlFmG2UB518=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhKkc+ec7LB0uVCQ71AX008tlnrkSRoOVYEaTtfpukvOMpapTKYBiYaR//HtJTLMs
-	 3P/Z8dxU7ctfBmI2mK5nihVIrcT9DCIi9CJqIVTzALTyHnAsTDWyGmXcCe1FnWBtwi
-	 KRnUuchi259vHv3yabagnCU4BPuajyFCG7cJbCPQ=
+	b=VMWZ0n90pz5SmzP3yDCiUj7EqPSaifMIE/+99RPsheIcWuEHwqT9EL3lVKcTNW7Ql
+	 dNDxVd7bZ07ueFlAgUZdnF4RjFZvMttNgMAPdRyDaJVVR+og6Es5ONclW6cjDsfCDA
+	 Hq9d+HQpHhONGaWshacYosFdwYsVE8jT/p+QXBZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/565] drm/amdgpu: Allow kfd CRIU with no buffer objects
-Date: Tue, 11 Nov 2025 09:42:22 +0900
-Message-ID: <20251111004533.312065661@linuxfoundation.org>
+Subject: [PATCH 6.17 336/849] dmaengine: idxd: Add a new IAA device ID for Wildcat Lake family platforms
+Date: Tue, 11 Nov 2025 09:38:26 +0900
+Message-ID: <20251111004544.542442223@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
 
-[ Upstream commit 85705b18ae7674347f8675f64b2b3115fb1d5629 ]
+[ Upstream commit c937969a503ebf45e0bebafee4122db22b0091bd ]
 
-The kfd CRIU checkpoint ioctl would return an error if trying
-to checkpoint a process with no kfd buffer objects.
+A new IAA device ID, 0xfd2d, is introduced across all Wildcat Lake
+family platforms. Add the device ID to the IDXD driver.
 
-This is a normal case and should not be an error.
-
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: David Francis <David.Francis@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20250801215936.188555-1-vinicius.gomes@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/idxd/init.c      | 2 ++
+ drivers/dma/idxd/registers.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 7fbbc67adfd9e..0e73ec69192c3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2572,8 +2572,8 @@ static int criu_restore(struct file *filep,
- 	pr_debug("CRIU restore (num_devices:%u num_bos:%u num_objects:%u priv_data_size:%llu)\n",
- 		 args->num_devices, args->num_bos, args->num_objects, args->priv_data_size);
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 8c4725ad1f648..2acc34b3daff8 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -80,6 +80,8 @@ static struct pci_device_id idxd_pci_tbl[] = {
+ 	{ PCI_DEVICE_DATA(INTEL, IAA_DMR, &idxd_driver_data[IDXD_TYPE_IAX]) },
+ 	/* IAA PTL platforms */
+ 	{ PCI_DEVICE_DATA(INTEL, IAA_PTL, &idxd_driver_data[IDXD_TYPE_IAX]) },
++	/* IAA WCL platforms */
++	{ PCI_DEVICE_DATA(INTEL, IAA_WCL, &idxd_driver_data[IDXD_TYPE_IAX]) },
+ 	{ 0, }
+ };
+ MODULE_DEVICE_TABLE(pci, idxd_pci_tbl);
+diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
+index 9c1c546fe443e..0d84bd7a680b7 100644
+--- a/drivers/dma/idxd/registers.h
++++ b/drivers/dma/idxd/registers.h
+@@ -10,6 +10,7 @@
+ #define PCI_DEVICE_ID_INTEL_DSA_DMR	0x1212
+ #define PCI_DEVICE_ID_INTEL_IAA_DMR	0x1216
+ #define PCI_DEVICE_ID_INTEL_IAA_PTL	0xb02d
++#define PCI_DEVICE_ID_INTEL_IAA_WCL	0xfd2d
  
--	if (!args->bos || !args->devices || !args->priv_data || !args->priv_data_size ||
--	    !args->num_devices || !args->num_bos)
-+	if ((args->num_bos > 0 && !args->bos) || !args->devices || !args->priv_data ||
-+	    !args->priv_data_size || !args->num_devices)
- 		return -EINVAL;
- 
- 	mutex_lock(&p->mutex);
+ #define DEVICE_VERSION_1		0x100
+ #define DEVICE_VERSION_2		0x200
 -- 
 2.51.0
 
