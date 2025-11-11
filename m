@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E890C26E158;
-	Tue, 11 Nov 2025 01:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AED026E158;
+	Tue, 11 Nov 2025 01:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824349; cv=none; b=HXK24yJ1UtzSd6cD0eNe/LD6ngi4Zd+LgNBLFedPRxJ06UWKNTdugnpS5fyjMnwwOaZBye+1Lxh+iM2JjPUqsnQl7ani8VVTNhpG8paf3reZN+K2hfLLeu9aD0IYXM9RkBUOHhWWBh9/jNAmp8rHsn5zwdP1ebufMUu7bX4BvaQ=
+	t=1762824351; cv=none; b=QEVFNYufEL5fGkf7hCCYK7KOYAZbPiJkb1gnka1vm9ZB55/kpMfAiXK1JE9p41KgjnPf2ongZNw1V0hyIWt5vOHBsRM/ImHM3/n5RBPt/C4t+/NXhsqVULeuW8dLD9UOES0n3TsqtP03P8I9jVbQ50LugbH2Wx+KSkbHdzxvzV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824349; c=relaxed/simple;
-	bh=M3xNntnYqHTPMjLyYSjym8YpWq4SE6NCavUArnwhQM8=;
+	s=arc-20240116; t=1762824351; c=relaxed/simple;
+	bh=xbJNB479zV5BE+fbsk3ezV1XJS5dinz1KyzaUJodJW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STCb3OpX+EEx4FlRsShMYDlOjVfvSuofHfA2Th4wuU8rcKF50//1OS23dnlOthZ7EXtI04HNZRiHzHOKOi10ABJtuwrK/76nRxEf3LZYP2J7WssrYL2DBJxrBHR1d6pyx0LE3dnSAT5KX2VEQ9Dy9uT2YvvagfFQF51vVIjAdyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcVQ2Ekj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fo7OwOuMVW5wRyqorotjEJmZAHXWWKeVZRzYQtttwfOmQgqUki2yzt7okimB6sK1408GRv9HH0v8IgnoTcczLBmOQsxHi6A/924xRrElz8TQK8zgxGNQFmnsEfZlQSsf/yiaQ+4C2rsZWrhOyMwsRPu5DTETsadOrh1ouutsu5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB8l/vwp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcVQ2Ekj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B11FC19422;
-	Tue, 11 Nov 2025 01:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB8l/vwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7504C16AAE;
+	Tue, 11 Nov 2025 01:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824348;
-	bh=M3xNntnYqHTPMjLyYSjym8YpWq4SE6NCavUArnwhQM8=;
+	s=korg; t=1762824351;
+	bh=xbJNB479zV5BE+fbsk3ezV1XJS5dinz1KyzaUJodJW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcVQ2EkjxqdBeKh4lKwY+8Dkh0urPlRFHZ7OaY97rylTOYIliTzQBgXh+UuiaU9s4
-	 YF8LgzWXVwm0VVLpkCyafHSPFhYcHxkBLFdWiXgYFVSfWBNLqutJH87B9u+cgeH+jQ
-	 MLU6mGV7G/DEjmHuG/q9LZDrvdEORaPKbfUhth1g=
+	b=SB8l/vwpLLXGPQJy5TkGpvYhZ43FfgYSu0lMh/x98oQNtzTg4zg+uSED4/Gh+FleK
+	 YNy814afAMVFrlu/yCkcD+AQPI+dICJis5t6jTKw4iCZfDyusVR0eBICoRdzzxNpJA
+	 sMgzIMrGodiu8ph9nGl0MQ9rR0/0F5gUM2ZeWYHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	chuguangqing <chuguangqing@inspur.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 478/849] selftests: net: make the dump test less sensitive to mem accounting
-Date: Tue, 11 Nov 2025 09:40:48 +0900
-Message-ID: <20251111004548.000663918@linuxfoundation.org>
+Subject: [PATCH 6.12 427/565] fs: ext4: change GFP_KERNEL to GFP_NOFS to avoid deadlock
+Date: Tue, 11 Nov 2025 09:44:43 +0900
+Message-ID: <20251111004536.472716224@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,131 +47,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: chuguangqing <chuguangqing@inspur.com>
 
-[ Upstream commit 27bc5eaf004c437309dee1b9af24806262631d57 ]
+[ Upstream commit 1534f72dc2a11ded38b0e0268fbcc0ca24e9fd4a ]
 
-Recent changes to make netlink socket memory accounting must
-have broken the implicit assumption of the netlink-dump test
-that we can fit exactly 64 dumps into the socket. Handle the
-failure mode properly, and increase the dump count to 80
-to make sure we still run into the error condition if
-the default buffer size increases in the future.
+The parent function ext4_xattr_inode_lookup_create already uses GFP_NOFS for memory alloction, so the function ext4_xattr_inode_cache_find should use same gfp_flag.
 
-Link: https://patch.msgid.link/20250906211351.3192412-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: chuguangqing <chuguangqing@inspur.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/netlink-dumps.c | 43 ++++++++++++++++-----
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ fs/ext4/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/netlink-dumps.c b/tools/testing/selftests/net/netlink-dumps.c
-index 07423f256f963..7618ebe528a4c 100644
---- a/tools/testing/selftests/net/netlink-dumps.c
-+++ b/tools/testing/selftests/net/netlink-dumps.c
-@@ -31,9 +31,18 @@ struct ext_ack {
- 	const char *str;
- };
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 5ddfa4801bb30..ce986312bf685 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1552,7 +1552,7 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
+ 	WARN_ON_ONCE(ext4_handle_valid(journal_current_handle()) &&
+ 		     !(current->flags & PF_MEMALLOC_NOFS));
  
--/* 0: no done, 1: done found, 2: extack found, -1: error */
--static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
-+enum get_ea_ret {
-+	ERROR = -1,
-+	NO_CTRL = 0,
-+	FOUND_DONE,
-+	FOUND_ERR,
-+	FOUND_EXTACK,
-+};
-+
-+static enum get_ea_ret
-+nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- {
-+	enum get_ea_ret ret = NO_CTRL;
- 	const struct nlmsghdr *nlh;
- 	const struct nlattr *attr;
- 	ssize_t rem;
-@@ -41,15 +50,19 @@ static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- 	for (rem = n; rem > 0; NLMSG_NEXT(nlh, rem)) {
- 		nlh = (struct nlmsghdr *)&buf[n - rem];
- 		if (!NLMSG_OK(nlh, rem))
--			return -1;
-+			return ERROR;
- 
--		if (nlh->nlmsg_type != NLMSG_DONE)
-+		if (nlh->nlmsg_type == NLMSG_ERROR)
-+			ret = FOUND_ERR;
-+		else if (nlh->nlmsg_type == NLMSG_DONE)
-+			ret = FOUND_DONE;
-+		else
- 			continue;
- 
- 		ea->err = -*(int *)NLMSG_DATA(nlh);
- 
- 		if (!(nlh->nlmsg_flags & NLM_F_ACK_TLVS))
--			return 1;
-+			return ret;
- 
- 		ynl_attr_for_each(attr, nlh, sizeof(int)) {
- 			switch (ynl_attr_type(attr)) {
-@@ -68,10 +81,10 @@ static int nl_get_extack(char *buf, size_t n, struct ext_ack *ea)
- 			}
- 		}
- 
--		return 2;
-+		return FOUND_EXTACK;
- 	}
- 
--	return 0;
-+	return ret;
- }
- 
- static const struct {
-@@ -99,9 +112,9 @@ static const struct {
- TEST(dump_extack)
- {
- 	int netlink_sock;
-+	int i, cnt, ret;
- 	char buf[8192];
- 	int one = 1;
--	int i, cnt;
- 	ssize_t n;
- 
- 	netlink_sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
-@@ -118,7 +131,7 @@ TEST(dump_extack)
- 	ASSERT_EQ(n, 0);
- 
- 	/* Dump so many times we fill up the buffer */
--	cnt = 64;
-+	cnt = 80;
- 	for (i = 0; i < cnt; i++) {
- 		n = send(netlink_sock, &dump_neigh_bad,
- 			 sizeof(dump_neigh_bad), 0);
-@@ -140,10 +153,20 @@ TEST(dump_extack)
- 		}
- 		ASSERT_GE(n, (ssize_t)sizeof(struct nlmsghdr));
- 
--		EXPECT_EQ(nl_get_extack(buf, n, &ea), 2);
-+		ret = nl_get_extack(buf, n, &ea);
-+		/* Once we fill the buffer we'll see one ENOBUFS followed
-+		 * by a number of EBUSYs. Then the last recv() will finally
-+		 * trigger and complete the dump.
-+		 */
-+		if (ret == FOUND_ERR && (ea.err == ENOBUFS || ea.err == EBUSY))
-+			continue;
-+		EXPECT_EQ(ret, FOUND_EXTACK);
-+		EXPECT_EQ(ea.err, EINVAL);
- 		EXPECT_EQ(ea.attr_offs,
- 			  sizeof(struct nlmsghdr) + sizeof(struct ndmsg));
- 	}
-+	/* Make sure last message was a full DONE+extack */
-+	EXPECT_EQ(ret, FOUND_EXTACK);
- }
- 
- static const struct {
+-	ea_data = kvmalloc(value_len, GFP_KERNEL);
++	ea_data = kvmalloc(value_len, GFP_NOFS);
+ 	if (!ea_data) {
+ 		mb_cache_entry_put(ea_inode_cache, ce);
+ 		return NULL;
 -- 
 2.51.0
 
