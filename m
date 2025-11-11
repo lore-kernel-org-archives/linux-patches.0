@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B9285CA2;
-	Tue, 11 Nov 2025 01:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE6426B755;
+	Tue, 11 Nov 2025 01:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825035; cv=none; b=cbybwFOpxxCePVUNConkCswHPSTHxPO3jjM7d7fjEOXvBf1JuNliXo2wXqkN6F0DTiOOFbUCuPQEQLcUa0s6AU0HL1kvWdqprXDB56Jq98v1WSsFsRJPE/+GNAb+ED2TRKpefyz9XyJ9kGTSKz6VSI5HE6Ct5vLJa4N5N4kByZU=
+	t=1762825038; cv=none; b=SBFtDtvQzgrEW+LnkoUI3LGgsgRuqzTizkjOD+G/bLVu8RaHsPNBnaj5SM26b4W9mhoRfFK83Qtv16ctgdIdLKYvTInOa8+1t8vywXovTW0T6Bat8srb1e00EGw/B7jrVb7CncvlUFPWIekcYaNW9HgQpzIHjbS+g80fPAjJOjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825035; c=relaxed/simple;
-	bh=Uw426gE+l3+qW6gzJLfB0oJfHa4lBGIMA5W73MnMCrU=;
+	s=arc-20240116; t=1762825038; c=relaxed/simple;
+	bh=e25/eCKx2vHwL6+dph/9ii+L5PKz+qmC7qf1ZT2F4WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qFmt+GFDXY5OH/JI+d21/V6j532oeTgR4ymNx2RNDxWEZH7SdthToWiHSvGBia0nFqMqjnrfprolyW5Q3ORXc9HX0jmi6OlVIjWLpFF5RNTwjQGLdfk7yzvZLos3T9T8HQzVX9IwGfadrNncahNOCOgmM6f3gM1yWNxRqk7V7Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X82XS/jU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrs2h+UMfseMtU3tSPskfmfzUNL5m2pfvRqG7gao2+SnSzTJ4b+fmuktXkz2FkWzMMvfbEBWyabhXUUn/02CcLMe8zVm6U30nPYvQYD3jxOt7qg1whNkAmuXHZYCjhx02lRseoiLUSZxFRWB/hMnxy9/eGdeFNbDs0ftYWoyenQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbDRWaxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X82XS/jU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEA7C2BC86;
-	Tue, 11 Nov 2025 01:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbDRWaxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2385C4CEFB;
+	Tue, 11 Nov 2025 01:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825035;
-	bh=Uw426gE+l3+qW6gzJLfB0oJfHa4lBGIMA5W73MnMCrU=;
+	s=korg; t=1762825038;
+	bh=e25/eCKx2vHwL6+dph/9ii+L5PKz+qmC7qf1ZT2F4WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X82XS/jUDRfFKuYOZDoNxs1WXh0VeM6lL+wA4lSNR2KBdCrDJfafpmLYvP9pxgBHO
-	 wVgShEiUb3t0KgIdrq2WEbaxThIzDfwDbcGZpPRKpoHAycWd9fx5IIwRKBLFBPlKHe
-	 SOO9wQtpTLQvh+vhgsFhYSfDATnC92PrAK9Rfvao=
+	b=kbDRWaxdmZWEBeEsVni+B22tUpmaKW2FWMohe1bo4lqjjwjLL0xk5X+QzNBrB1/px
+	 5bgKqTIoXGx/mMdlHA3fBL9xhlMHLyTEhOAmQny0OjIaU2CTMwnU3FAb3cYnGolsqA
+	 2ooCi+xF82UTbpadvLsq15cLH2JsW6SEulI5Cees=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vered Yavniely <vered.yavniely@intel.com>,
+	Koby Elbaz <koby.elbaz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 634/849] scsi: libfc: Fix potential buffer overflow in fc_ct_ms_fill()
-Date: Tue, 11 Nov 2025 09:43:24 +0900
-Message-ID: <20251111004551.761369026@linuxfoundation.org>
+Subject: [PATCH 6.17 635/849] accel/habanalabs/gaudi2: fix BMON disable configuration
+Date: Tue, 11 Nov 2025 09:43:25 +0900
+Message-ID: <20251111004551.784561978@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -45,72 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Vered Yavniely <vered.yavniely@intel.com>
 
-[ Upstream commit 072fdd4b0be9b9051bdf75f36d0227aa705074ba ]
+[ Upstream commit b4fd8e56c9a3b614370fde2d45aec1032eb67ddd ]
 
-The fc_ct_ms_fill() helper currently formats the OS name and version
-into entry->value using "%s v%s". Since init_utsname()->sysname and
-->release are unbounded strings, snprintf() may attempt to write more
-than FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN bytes, triggering a
--Wformat-truncation warning with W=1.
+Change the BMON_CR register value back to its original state before
+enabling, so that BMON does not continue to collect information
+after being disabled.
 
-In file included from drivers/scsi/libfc/fc_elsct.c:18:
-drivers/scsi/libfc/fc_encode.h: In function ‘fc_ct_ms_fill.constprop’:
-drivers/scsi/libfc/fc_encode.h:359:30: error: ‘%s’ directive output may
-be truncated writing up to 64 bytes into a region of size between 62
-and 126 [-Werror=format-truncation=]
-  359 |                         "%s v%s",
-      |                              ^~
-  360 |                         init_utsname()->sysname,
-  361 |                         init_utsname()->release);
-      |                         ~~~~~~~~~~~~~~~~~~~~~~~
-drivers/scsi/libfc/fc_encode.h:357:17: note: ‘snprintf’ output between
-3 and 131 bytes into a destination of size 128
-  357 |                 snprintf((char *)&entry->value,
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  358 |                         FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN,
-      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  359 |                         "%s v%s",
-      |                         ~~~~~~~~~
-  360 |                         init_utsname()->sysname,
-      |                         ~~~~~~~~~~~~~~~~~~~~~~~~
-  361 |                         init_utsname()->release);
-      |                         ~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fix this by using "%.62s v%.62s", which ensures sysname and release are
-truncated to fit within the 128-byte field defined by
-FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN.
-
-[mkp: clarified commit description]
-
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Vered Yavniely <vered.yavniely@intel.com>
+Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libfc/fc_encode.h | 2 +-
+ drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/libfc/fc_encode.h b/drivers/scsi/libfc/fc_encode.h
-index 02e31db31d68e..e046091a549ae 100644
---- a/drivers/scsi/libfc/fc_encode.h
-+++ b/drivers/scsi/libfc/fc_encode.h
-@@ -356,7 +356,7 @@ static inline int fc_ct_ms_fill(struct fc_lport *lport,
- 		put_unaligned_be16(len, &entry->len);
- 		snprintf((char *)&entry->value,
- 			FC_FDMI_HBA_ATTR_OSNAMEVERSION_LEN,
--			"%s v%s",
-+			"%.62s v%.62s",
- 			init_utsname()->sysname,
- 			init_utsname()->release);
+diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c b/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
+index 2423620ff358f..bc3c57bda5cda 100644
+--- a/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
++++ b/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
+@@ -2426,7 +2426,7 @@ static int gaudi2_config_bmon(struct hl_device *hdev, struct hl_debug_params *pa
+ 		WREG32(base_reg + mmBMON_ADDRH_E3_OFFSET, 0);
+ 		WREG32(base_reg + mmBMON_REDUCTION_OFFSET, 0);
+ 		WREG32(base_reg + mmBMON_STM_TRC_OFFSET, 0x7 | (0xA << 8));
+-		WREG32(base_reg + mmBMON_CR_OFFSET, 0x77 | 0xf << 24);
++		WREG32(base_reg + mmBMON_CR_OFFSET, 0x41);
+ 	}
  
+ 	return 0;
 -- 
 2.51.0
 
