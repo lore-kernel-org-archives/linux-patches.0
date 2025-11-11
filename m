@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47071F5F6;
-	Tue, 11 Nov 2025 01:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C95327E7EB;
+	Tue, 11 Nov 2025 01:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824508; cv=none; b=tuAb/zAek/R8Y/C95pTEPmWH4ps5iUBY0h1uZeiiovNWWWsh5MwQwdmxuoztiNtbNQRrvetz+2JcNqXFxrIimjoEW8EqWtQ8mcaFIKf7zbXSUbfYfWJIchOXCaLjhmnz/gsJIZFlyRBNfKQoZtbAhNm7hY1djG9QhoU+yGTbJJk=
+	t=1762824511; cv=none; b=R1/1zh+9veb1MKn2DskGZ2Pad5pytXymE346fH7En7Nz5h4qY7HMM+hTuWE6v3qKHifZNqtwZfqloJqZOavozTnBAQsb8XYjbZNoe17UOM0YrTiPLi4sEo/2oHl3Bn0za504wttbmh3MGf3J40hDMp2EB7Vg3F52Ny97N4e3fGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824508; c=relaxed/simple;
-	bh=wK9ug8QF0ihLhW1+KgXbKgrFWNERuMNsUL+0Qg5IGQU=;
+	s=arc-20240116; t=1762824511; c=relaxed/simple;
+	bh=NR19GgoEt5R5wjbBwpxCsYNmWZnPmFYBpkD6cqdUnpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jb3G0X9xMt2cjJm9lhfHBNH19iorksM3gkAiJe1cRuvLgThmvzrEZqj7EMT3jr2o6lFROPV1B90dY147SCwp0dumIZGbV3dqu3Zna7vFhv4t79rz/Fo1DKrL4yfdoU12l4B8KtZThvAGXDY0ZEbRWXn72npfnqu+tnByh73XXU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cif50gRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=la32DaMQ04GfFvOamAnPyGN33fhp9XVvrqvZw2TS3MbleKKs7nvIbQp4JW9Go+6d68g8Hea8Z1HockMcXX+vt6oV4UJYeiczcxf4Wio0Ak0QSiSN0MMUr+0BcFpd0D/F83TEokbYhFXQTEVubQFvxTG61jQzxhs1f7TB2QQRshA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWpPVtZN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cif50gRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7426EC16AAE;
-	Tue, 11 Nov 2025 01:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWpPVtZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3DBC116B1;
+	Tue, 11 Nov 2025 01:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824508;
-	bh=wK9ug8QF0ihLhW1+KgXbKgrFWNERuMNsUL+0Qg5IGQU=;
+	s=korg; t=1762824511;
+	bh=NR19GgoEt5R5wjbBwpxCsYNmWZnPmFYBpkD6cqdUnpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cif50gRWgF5kxKENJJFkkdWME0clBtkQ91Q8e/E31EvSNe00e4MrOnuTOS8os9781
-	 v5ieIh6M97Lz2a7redSz7kfDx4A75NfmDicTgOgux0GtqEF44bz+4NE0eG4aOT2VFE
-	 05jPyVEQo5UKYl5h5twY30OHPqsLu3jkh56im0mg=
+	b=QWpPVtZNfT+dRpFkt4nHWzCm5G0MAyYldMEs4FcBGcGY/ne8AIvXHLcnRrZwQjZmt
+	 OPJbrm+TFd5gT+jYLRBNGf+mVq0fQGO3AgEcwAvYqfvL1CwbxsTv7y8xXB+VaQs3mM
+	 wLD1zVv7Y7m81kiM26kicuL+sI0Ckjyd6o4y5syU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 514/849] selftests: traceroute: Return correct value on failure
-Date: Tue, 11 Nov 2025 09:41:24 +0900
-Message-ID: <20251111004548.859121520@linuxfoundation.org>
+Subject: [PATCH 6.12 460/565] RDMA/hns: Fix wrong WQE data when QP wraps around
+Date: Tue, 11 Nov 2025 09:45:16 +0900
+Message-ID: <20251111004537.245806211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +47,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit c068ba9d3ded56cb1ba4d5135ee84bf8039bd563 ]
+[ Upstream commit fe9622011f955e35ba84d3af7b2f2fed31cf8ca1 ]
 
-The test always returns success even if some tests were modified to
-fail. Fix by converting the test to use the appropriate library
-functions instead of using its own functions.
+When QP wraps around, WQE data from the previous use at the same
+position still remains as driver does not clear it. The WQE field
+layout differs across different opcodes, causing that the fields
+that are not explicitly assigned for the current opcode retain
+stale values, and are issued to HW by mistake. Such fields are as
+follows:
 
-Before:
+* MSG_START_SGE_IDX field in ATOMIC WQE
+* BLOCK_SIZE and ZBVA fields in FRMR WQE
+* DirectWQE fields when DirectWQE not used
 
- # ./traceroute.sh
- TEST: IPV6 traceroute                                               [FAIL]
- TEST: IPV4 traceroute                                               [ OK ]
+For ATOMIC WQE, always set the latest sge index in MSG_START_SGE_IDX
+as required by HW.
 
- Tests passed:   1
- Tests failed:   1
- $ echo $?
- 0
+For FRMR WQE and DirectWQE, clear only those unassigned fields
+instead of the entire WQE to avoid performance penalty.
 
-After:
-
- # ./traceroute.sh
- TEST: IPv6 traceroute                                               [FAIL]
-         traceroute6 did not return 2000:102::2
- TEST: IPv4 traceroute                                               [ OK ]
- $ echo $?
- 1
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-5-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20251016114051.1963197-4-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/traceroute.sh | 38 ++++++-----------------
- 1 file changed, 9 insertions(+), 29 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index b50e52afa4f49..1ac91eebd16f5 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -10,28 +10,6 @@ PAUSE_ON_FAIL=no
- 
- ################################################################################
- #
--log_test()
--{
--	local rc=$1
--	local expected=$2
--	local msg="$3"
--
--	if [ ${rc} -eq ${expected} ]; then
--		printf "TEST: %-60s  [ OK ]\n" "${msg}"
--		nsuccess=$((nsuccess+1))
--	else
--		ret=1
--		nfail=$((nfail+1))
--		printf "TEST: %-60s  [FAIL]\n" "${msg}"
--		if [ "${PAUSE_ON_FAIL}" = "yes" ]; then
--			echo
--			echo "hit enter to continue, 'q' to quit"
--			read a
--			[ "$a" = "q" ] && exit 1
--		fi
--	fi
--}
--
- run_cmd()
- {
- 	local ns
-@@ -205,9 +183,12 @@ run_traceroute6()
- {
- 	setup_traceroute6
- 
-+	RET=0
-+
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
- 	run_cmd $h1 "traceroute6 2000:103::4 | grep -q 2000:102::2"
--	log_test $? 0 "IPV6 traceroute"
-+	check_err $? "traceroute6 did not return 2000:102::2"
-+	log_test "IPv6 traceroute"
- 
- 	cleanup_traceroute6
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 6a6daca9f606c..f9356cb89497b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -162,6 +162,8 @@ static void set_frmr_seg(struct hns_roce_v2_rc_send_wqe *rc_sq_wqe,
+ 	hr_reg_write(fseg, FRMR_PBL_BUF_PG_SZ,
+ 		     to_hr_hw_page_shift(mr->pbl_mtr.hem_cfg.buf_pg_shift));
+ 	hr_reg_clear(fseg, FRMR_BLK_MODE);
++	hr_reg_clear(fseg, FRMR_BLOCK_SIZE);
++	hr_reg_clear(fseg, FRMR_ZBVA);
  }
-@@ -265,9 +246,12 @@ run_traceroute()
- {
- 	setup_traceroute
  
-+	RET=0
-+
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
- 	run_cmd $h1 "traceroute 1.0.2.4 | grep -q 1.0.1.1"
--	log_test $? 0 "IPV4 traceroute"
-+	check_err $? "traceroute did not return 1.0.1.1"
-+	log_test "IPv4 traceroute"
+ static void set_atomic_seg(const struct ib_send_wr *wr,
+@@ -336,9 +338,6 @@ static int set_rwqe_data_seg(struct ib_qp *ibqp, const struct ib_send_wr *wr,
+ 	int j = 0;
+ 	int i;
  
- 	cleanup_traceroute
- }
-@@ -284,9 +268,6 @@ run_tests()
- ################################################################################
- # main
- 
--declare -i nfail=0
--declare -i nsuccess=0
+-	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
+-		     (*sge_ind) & (qp->sge.sge_cnt - 1));
 -
- while getopts :pv o
- do
- 	case $o in
-@@ -301,5 +282,4 @@ require_command traceroute
+ 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_INLINE,
+ 		     !!(wr->send_flags & IB_SEND_INLINE));
+ 	if (wr->send_flags & IB_SEND_INLINE)
+@@ -583,6 +582,9 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
+ 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_CQE,
+ 		     (wr->send_flags & IB_SEND_SIGNALED) ? 1 : 0);
  
- run_tests
++	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
++		     curr_idx & (qp->sge.sge_cnt - 1));
++
+ 	if (wr->opcode == IB_WR_ATOMIC_CMP_AND_SWP ||
+ 	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD) {
+ 		if (msg_len != ATOMIC_WR_LEN)
+@@ -731,6 +733,9 @@ static int hns_roce_v2_post_send(struct ib_qp *ibqp,
+ 		owner_bit =
+ 		       ~(((qp->sq.head + nreq) >> ilog2(qp->sq.wqe_cnt)) & 0x1);
  
--printf "\nTests passed: %3d\n" ${nsuccess}
--printf "Tests failed: %3d\n"   ${nfail}
-+exit "${EXIT_STATUS}"
++		/* RC and UD share the same DirectWQE field layout */
++		((struct hns_roce_v2_rc_send_wqe *)wqe)->byte_4 = 0;
++
+ 		/* Corresponding to the QP type, wqe process separately */
+ 		if (ibqp->qp_type == IB_QPT_RC)
+ 			ret = set_rc_wqe(qp, wr, wqe, &sge_idx, owner_bit);
 -- 
 2.51.0
 
