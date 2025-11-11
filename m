@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8AA4C97;
-	Tue, 11 Nov 2025 00:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458A873451;
+	Tue, 11 Nov 2025 00:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822133; cv=none; b=GRCm2IvJhJq8o6qeRTCylPcTfZRqMUytINThaPB/az/elF8oaDD5glSwc5fuQVqz5GyKGO/cex+owxvujHjYZR2Yrm3kQVr9j37Zh0RlXhR7rzdj1FFHtrqtSjB01GP2tUYF9S0U4+pG2sFWhWf6YB2qwEneBRdHJSG0JxSgj5A=
+	t=1762822136; cv=none; b=C3TV1pw6NjRe3F/wTai5/hFdjPpz9Xqv7zS685AT0B5CRI/Z3WtnL77sdTNNZ47dqmjlDrRuvgFb4leCC1G/L93HP2S16jFC9bIK+ClnnI91ssm//eH/uBWo3p/F4eGOZntIoGydy2xwiff9sAUMtP4MjfzqgCFMOXWyiTYQYuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822133; c=relaxed/simple;
-	bh=4hxtnL2npgM/dLm8s0zLyCPXbdMjOx4DjiUZQbaMmr0=;
+	s=arc-20240116; t=1762822136; c=relaxed/simple;
+	bh=AoO+HG5Hmf6AqFp1mY8x3ZJ4aG23z2iUMiu9EU644zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZlpuWDJ61g50vHeYACZDAr3prjkC58BhkcYaFdSmEWJHbuzKKx4BqnY13NrtToYNvfKpIWfpCRqq1YZjUbJBV8UA+SIRYa6dCAXLuqJ03vhGgRUH6wLG2GlKU3KQ5AByu05hNUU3hb91RiAPipZypZSEoflietGT15WiSZf0og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKx4NbPH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0yjyqRnYxdZiB3aAgHbAHS5q5knl8CJD5JBffbjRyqU56mVg31rv3OcD/dJSLD7W/gRHwsv59eoeJzqVclXntAUYxQj+n3AS3G3Qy0Sj41PhGnbG7/j+LqhfZ9QbjRj4VyoOQwIiyjERRCyEC4aLfOnRN69n9RZyPaMTD2YUsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxA0giw9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKx4NbPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE33C16AAE;
-	Tue, 11 Nov 2025 00:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxA0giw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E412C116B1;
+	Tue, 11 Nov 2025 00:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822133;
-	bh=4hxtnL2npgM/dLm8s0zLyCPXbdMjOx4DjiUZQbaMmr0=;
+	s=korg; t=1762822135;
+	bh=AoO+HG5Hmf6AqFp1mY8x3ZJ4aG23z2iUMiu9EU644zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKx4NbPHnDm+LY+nPHBQIbH27aGXi0XBqy8KU6h90PHvR3vQgz18I+345h3k9d+DE
-	 mFNIKXBCENRYzZnab9m8RWZ54yebRo3PN47TXve/wlqBmRdBLPfAYuZ5lJu3XzOQ9A
-	 Xfl5rkU9pIlagq/wupteDmD6b2JH826W9xAZUYKA=
+	b=ZxA0giw9Ma+QaJRLkuEyztbymHmSuwI4GSD1Fyqyl0BHB5S7ipt3hWVoJqCU9+Azk
+	 8Q9IgCiAbuVUPiTuzkAcXRa3CYZTwnYhOlDbMfO1ajoc63hzOKP4k+DUbht0n2InaD
+	 Gk4p3oJO9pO6CAg4GAJfwgXZL1L+ZK6HYHzR3QNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Daniel Palmer <daniel@0x0f.com>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.17 007/849] fbcon: Set fb_display[i]->mode to NULL when the mode is released
-Date: Tue, 11 Nov 2025 09:32:57 +0900
-Message-ID: <20251111004536.641670702@linuxfoundation.org>
+Subject: [PATCH 6.17 008/849] fbdev: atyfb: Check if pll_ops->init_pll failed
+Date: Tue, 11 Nov 2025 09:32:58 +0900
+Message-ID: <20251111004536.663947498@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,113 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-commit a1f3058930745d2b938b6b4f5bd9630dc74b26b7 upstream.
+commit 7073c7fc8d8ba47194e5fc58fcafc0efe7586e9b upstream.
 
-Recently, we discovered the following issue through syzkaller:
+Actually check the return value from pll_ops->init_pll()
+as it can return an error.
 
-BUG: KASAN: slab-use-after-free in fb_mode_is_equal+0x285/0x2f0
-Read of size 4 at addr ff11000001b3c69c by task syz.xxx
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0xab/0xe0
- print_address_description.constprop.0+0x2c/0x390
- print_report+0xb9/0x280
- kasan_report+0xb8/0xf0
- fb_mode_is_equal+0x285/0x2f0
- fbcon_mode_deleted+0x129/0x180
- fb_set_var+0xe7f/0x11d0
- do_fb_ioctl+0x6a0/0x750
- fb_ioctl+0xe0/0x140
- __x64_sys_ioctl+0x193/0x210
- do_syscall_64+0x5f/0x9c0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+If the card's BIOS didn't run because it's not the primary VGA card
+the fact that the xclk source is unsupported is printed as shown
+below but the driver continues on regardless and on my machine causes
+a hard lock up.
 
-Based on experimentation and analysis, during framebuffer unregistration,
-only the memory of fb_info->modelist is freed, without setting the
-corresponding fb_display[i]->mode to NULL for the freed modes. This leads
-to UAF issues during subsequent accesses. Here's an example of reproduction
-steps:
-1. With /dev/fb0 already registered in the system, load a kernel module
-   to register a new device /dev/fb1;
-2. Set fb1's mode to the global fb_display[] array (via FBIOPUT_CON2FBMAP);
-3. Switch console from fb to VGA (to allow normal rmmod of the ko);
-4. Unload the kernel module, at this point fb1's modelist is freed, leaving
-   a wild pointer in fb_display[];
-5. Trigger the bug via system calls through fb0 attempting to delete a mode
-   from fb0.
+[   61.470088] atyfb 0000:03:05.0: enabling device (0080 -> 0083)
+[   61.476191] atyfb: using auxiliary register aperture
+[   61.481239] atyfb: 3D RAGE XL (Mach64 GR, PCI-33) [0x4752 rev 0x27]
+[   61.487569] atyfb: 512K SGRAM (1:1), 14.31818 MHz XTAL, 230 MHz PLL, 83 Mhz MCLK, 63 MHz XCLK
+[   61.496112] atyfb: Unsupported xclk source:  5.
 
-Add a check in do_unregister_framebuffer(): if the mode to be freed exists
-in fb_display[], set the corresponding mode pointer to NULL.
-
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |   19 +++++++++++++++++++
- drivers/video/fbdev/core/fbmem.c |    1 +
- include/linux/fbcon.h            |    2 ++
- 3 files changed, 22 insertions(+)
+ drivers/video/fbdev/aty/atyfb_base.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2817,6 +2817,25 @@ int fbcon_mode_deleted(struct fb_info *i
- 	return found;
- }
- 
-+static void fbcon_delete_mode(struct fb_videomode *m)
-+{
-+	struct fbcon_display *p;
-+
-+	for (int i = first_fb_vc; i <= last_fb_vc; i++) {
-+		p = &fb_display[i];
-+		if (p->mode == m)
-+			p->mode = NULL;
-+	}
-+}
-+
-+void fbcon_delete_modelist(struct list_head *head)
-+{
-+	struct fb_modelist *modelist;
-+
-+	list_for_each_entry(modelist, head, list)
-+		fbcon_delete_mode(&modelist->mode);
-+}
-+
- #ifdef CONFIG_VT_HW_CONSOLE_BINDING
- static void fbcon_unbind(void)
- {
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -544,6 +544,7 @@ static void do_unregister_framebuffer(st
- 		fb_info->pixmap.addr = NULL;
+--- a/drivers/video/fbdev/aty/atyfb_base.c
++++ b/drivers/video/fbdev/aty/atyfb_base.c
+@@ -2614,8 +2614,12 @@ static int aty_init(struct fb_info *info
+ 		pr_cont("\n");
  	}
+ #endif
+-	if (par->pll_ops->init_pll)
+-		par->pll_ops->init_pll(info, &par->pll);
++	if (par->pll_ops->init_pll) {
++		ret = par->pll_ops->init_pll(info, &par->pll);
++		if (ret)
++			return ret;
++	}
++
+ 	if (par->pll_ops->resume_pll)
+ 		par->pll_ops->resume_pll(info, &par->pll);
  
-+	fbcon_delete_modelist(&fb_info->modelist);
- 	fb_destroy_modelist(&fb_info->modelist);
- 	registered_fb[fb_info->node] = NULL;
- 	num_registered_fb--;
---- a/include/linux/fbcon.h
-+++ b/include/linux/fbcon.h
-@@ -11,6 +11,7 @@ void fbcon_suspended(struct fb_info *inf
- void fbcon_resumed(struct fb_info *info);
- int fbcon_mode_deleted(struct fb_info *info,
- 		       struct fb_videomode *mode);
-+void fbcon_delete_modelist(struct list_head *head);
- void fbcon_new_modelist(struct fb_info *info);
- void fbcon_get_requirement(struct fb_info *info,
- 			   struct fb_blit_caps *caps);
-@@ -31,6 +32,7 @@ static inline void fbcon_suspended(struc
- static inline void fbcon_resumed(struct fb_info *info) {}
- static inline int fbcon_mode_deleted(struct fb_info *info,
- 				     struct fb_videomode *mode) { return 0; }
-+static inline void fbcon_delete_modelist(struct list_head *head) {}
- static inline void fbcon_new_modelist(struct fb_info *info) {}
- static inline void fbcon_get_requirement(struct fb_info *info,
- 					 struct fb_blit_caps *caps) {}
 
 
