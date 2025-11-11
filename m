@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DCD2F5474;
-	Tue, 11 Nov 2025 01:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C9B34D38E;
+	Tue, 11 Nov 2025 01:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825403; cv=none; b=sihvKAH0Qc+V7I1FI6QBeOLvkYKJHvHmZYYUqNV6g+F97D0lVvzI2Yz2hg42XHLEqnuaiTJ19OLew1aNBkxs4/coUSdHuxocHp8p+7YPdmhjhYW3VbW/7tbou+alUzYNbd3o2SbCj3sKrITXyULEjIcLzYqlMQ8aTeBw9c/IKyE=
+	t=1762825405; cv=none; b=oYWS6pHSN8aZ6E27oDwBN/NhcpBOEdmV85GVmSiyy3jFOkk9TK/pAEzwCqu2agLiMWc/6Yk7YQQRA1Vylvd/fP6atetgRJ+qMioUg+2xaqFPComCn4kiq5DoNr9LwLKAnxVyg7e4nXHDzv51i2RFYk3krmwxH7jpoUT6Os5isgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825403; c=relaxed/simple;
-	bh=PaD6wkp3CaeF02jEslQpXRFDnQJQavtGamFX37ix8PQ=;
+	s=arc-20240116; t=1762825405; c=relaxed/simple;
+	bh=nfwGKIvSiUuhpqrxzhwbIMpb0LaBhBLpRpqx9P1gTIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StLpkcRRrQNbdabmwWHiqC1zMoQiwbNKCWkOP+7hYMnwEx16T4zc3y/iOkwfPhD9Ny69zLmi5Iv0GVxQH2NROYjmK3j4X1/zZMCKAbmCogcIA11Tcc9eWrxK6O8ydm/amP9oJO2H80Gs9VOsxxRqa8yYrd7dunKE0YPsfAi+ewU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEFQLsiE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBjIkG9y7hx1t8Ppvw2bTomHx9P+io2PSze0tCJXIR7Q5EUiwWgSTZwoz/Trc5EGBtunK8iHhR+i2HR9wpIZ9ffcs69cc6pjuXbHSqxrQjmpQoKMzJG39T9mWcvS5Oss7kDo6gpNfFS1ArS1HpL+GtdLmnIz3mtCmwPin30uq9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiU1Wa9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEFQLsiE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F56C4CEFB;
-	Tue, 11 Nov 2025 01:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiU1Wa9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F27C16AAE;
+	Tue, 11 Nov 2025 01:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825402;
-	bh=PaD6wkp3CaeF02jEslQpXRFDnQJQavtGamFX37ix8PQ=;
+	s=korg; t=1762825405;
+	bh=nfwGKIvSiUuhpqrxzhwbIMpb0LaBhBLpRpqx9P1gTIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEFQLsiEya7tFCkLIFQWJs5QoVbaR3RWuEUo3qlMo16D7tnvPJJ0r9NGz+KAERnIK
-	 /aa+IaRFNG2J1cqvZTpQ5CedHpyqt7bx7R8AcgrBe4Y/EFkEDFDJJJrfR7GYPwX2wH
-	 KxwRvM3mJaedqEB93QIGQapKjayQ2vUVDLOmb/BM=
+	b=XiU1Wa9Du/a6AErNKZyAGFg7Ghz01NGjzv+CXqMG2gPScdjfTfmuEAByKC/en4RJH
+	 iiUxpG7UfMlrZI8S+cxHffGAOYY2SR9zAiSSIG9e7t9V7C+k4E1TwWZ/RVpsFgnCmx
+	 SniQK93XBLqTIRpiY1ofKuQfp8b1J5GwsnWn7jsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Willi <martin@strongswan.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 786/849] netpoll: Fix deadlock in memory allocation under spinlock
-Date: Tue, 11 Nov 2025 09:45:56 +0900
-Message-ID: <20251111004555.439027887@linuxfoundation.org>
+Subject: [PATCH 6.17 787/849] wifi: mac80211_hwsim: Limit destroy_on_close radio removal to netgroup
+Date: Tue, 11 Nov 2025 09:45:57 +0900
+Message-ID: <20251111004555.463417077@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,93 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Martin Willi <martin@strongswan.org>
 
-[ Upstream commit 327c20c21d80e0d87834b392d83ae73c955ad8ff ]
+[ Upstream commit c74619e7602e88a0239cd4999571dd31081e9adf ]
 
-Fix a AA deadlock in refill_skbs() where memory allocation while holding
-skb_pool->lock can trigger a recursive lock acquisition attempt.
+hwsim radios marked destroy_on_close are removed when the Netlink socket
+that created them is closed. As the portid is not unique across network
+namespaces, closing a socket in one namespace may remove radios in another
+if it has the destroy_on_close flag set.
 
-The deadlock scenario occurs when the system is under severe memory
-pressure:
+Instead of matching the network namespace, match the netgroup of the radio
+to limit radio removal to those that have been created by the closing
+Netlink socket. The netgroup of a radio identifies the network namespace
+it was created in, and matching on it removes a destroy_on_close radio
+even if it has been moved to another namespace.
 
-1. refill_skbs() acquires skb_pool->lock (spinlock)
-2. alloc_skb() is called while holding the lock
-3. Memory allocator fails and calls slab_out_of_memory()
-4. This triggers printk() for the OOM warning
-5. The console output path calls netpoll_send_udp()
-6. netpoll_send_udp() attempts to acquire the same skb_pool->lock
-7. Deadlock: the lock is already held by the same CPU
-
-Call stack:
-  refill_skbs()
-    spin_lock_irqsave(&skb_pool->lock)    <- lock acquired
-    __alloc_skb()
-      kmem_cache_alloc_node_noprof()
-        slab_out_of_memory()
-          printk()
-            console_flush_all()
-              netpoll_send_udp()
-                skb_dequeue()
-                  spin_lock_irqsave(&skb_pool->lock)     <- deadlock attempt
-
-This bug was exposed by commit 248f6571fd4c51 ("netpoll: Optimize skb
-refilling on critical path") which removed refill_skbs() from the
-critical path (where nested printk was being deferred), letting nested
-printk being called from inside refill_skbs()
-
-Refactor refill_skbs() to never allocate memory while holding
-the spinlock.
-
-Another possible solution to fix this problem is protecting the
-refill_skbs() from nested printks, basically calling
-printk_deferred_{enter,exit}() in refill_skbs(), then, any nested
-pr_warn() would be deferred.
-
-I prefer this approach, given I _think_ it might be a good idea to move
-the alloc_skb() from GFP_ATOMIC to GFP_KERNEL in the future, so, having
-the alloc_skb() outside of the lock will be necessary step.
-
-There is a possible TOCTOU issue when checking for the pool length, and
-queueing the new allocated skb, but, this is not an issue, given that
-an extra SKB in the pool is harmless and it will be eventually used.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Fixes: 248f6571fd4c51 ("netpoll: Optimize skb refilling on critical path")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251103-fix_netpoll_aa-v4-1-4cfecdf6da7c@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 100cb9ff40e0 ("mac80211_hwsim: Allow managing radios from non-initial namespaces")
+Signed-off-by: Martin Willi <martin@strongswan.org>
+Link: https://patch.msgid.link/20251103082436.30483-1-martin@strongswan.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 5f65b62346d4e..4ab154c614e33 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -228,19 +228,16 @@ static void refill_skbs(struct netpoll *np)
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index 3789d46d56149..0555a6bb3620e 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -6453,14 +6453,15 @@ static struct genl_family hwsim_genl_family __ro_after_init = {
+ 	.n_mcgrps = ARRAY_SIZE(hwsim_mcgrps),
+ };
+ 
+-static void remove_user_radios(u32 portid)
++static void remove_user_radios(u32 portid, int netgroup)
  {
- 	struct sk_buff_head *skb_pool;
- 	struct sk_buff *skb;
--	unsigned long flags;
+ 	struct mac80211_hwsim_data *entry, *tmp;
+ 	LIST_HEAD(list);
  
- 	skb_pool = &np->skb_pool;
+ 	spin_lock_bh(&hwsim_radio_lock);
+ 	list_for_each_entry_safe(entry, tmp, &hwsim_radios, list) {
+-		if (entry->destroy_on_close && entry->portid == portid) {
++		if (entry->destroy_on_close && entry->portid == portid &&
++		    entry->netgroup == netgroup) {
+ 			list_move(&entry->list, &list);
+ 			rhashtable_remove_fast(&hwsim_radios_rht, &entry->rht,
+ 					       hwsim_rht_params);
+@@ -6485,7 +6486,7 @@ static int mac80211_hwsim_netlink_notify(struct notifier_block *nb,
+ 	if (state != NETLINK_URELEASE)
+ 		return NOTIFY_DONE;
  
--	spin_lock_irqsave(&skb_pool->lock, flags);
--	while (skb_pool->qlen < MAX_SKBS) {
-+	while (READ_ONCE(skb_pool->qlen) < MAX_SKBS) {
- 		skb = alloc_skb(MAX_SKB_SIZE, GFP_ATOMIC);
- 		if (!skb)
- 			break;
+-	remove_user_radios(notify->portid);
++	remove_user_radios(notify->portid, hwsim_net_get_netgroup(notify->net));
  
--		__skb_queue_tail(skb_pool, skb);
-+		skb_queue_tail(skb_pool, skb);
- 	}
--	spin_unlock_irqrestore(&skb_pool->lock, flags);
- }
- 
- static void zap_completion_queue(void)
+ 	if (notify->portid == hwsim_net_get_wmediumd(notify->net)) {
+ 		printk(KERN_INFO "mac80211_hwsim: wmediumd released netlink"
 -- 
 2.51.0
 
