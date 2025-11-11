@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29BD2FFFA4;
-	Tue, 11 Nov 2025 01:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4962FF143;
+	Tue, 11 Nov 2025 01:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825448; cv=none; b=Nxto8qdV7qyg3UVsJyvIZ1JPqKL4d8XHgbXshsNCmMYIVWJkr+aiigjkOqtr+3dV3E9dl/lMPUrSBfLgEZeO26Wxh+yrdonh2uoX2BRW6OlZAjX3AyZNWC6kfguuKLwyScOAl9nxlBFBZQ88z0FVxrj+nTIZFu8dWxJ0n+gotM0=
+	t=1762825450; cv=none; b=Rr4Jx4oyEBnvg4OQUmYwOsahN31MC9qcWybdxJilyfBym41IQfJToouu//kU+HCgGkyg+PTJoQqhKjzah/V51e/fPtvGKId2IDG57iiVYGLX1SN7YzGQX05G1uwNlvUWg2Us33At4BlCgx+PSFZgNMOFkztrIBF6czqvmZWNFM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825448; c=relaxed/simple;
-	bh=3/Mh0/ux34dFGZLycF2JavitfsrhmNWCnAxcrtEZf/Q=;
+	s=arc-20240116; t=1762825450; c=relaxed/simple;
+	bh=Z/X8bxL4av4VfNFe7wEfmsXRY4cp9eHqH5V8vnEeDgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swQ0rhdlAxE2mbS4l7gHPBF6Lg8m7xyfT9Q+WpVbri7y38qMBOozQa4LnerdpP1Mt08rk+ZtOq+34TjjCcyp4aRdkBtxpNIFXx/NKGbSnOE6uCB4AU5hGrApJQHHR3q1F9Za1BIbpXCkZtiL2a/c7NgOg/ggeLYP6EjS84wKyes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyVeomO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F2SF9ugvYF9pBddVCT0fNfj4vaKhuXvQFpbbnfQoZwlfU93D4Vt5/ooKQSxz7FvuiuHR6x+JThFAq68K1J1OzX82NnMamvuLZ32Pp1oGt7XR1b1XDcmB9VrdAB4t4tA3hPtWcNOJ1wfAtluP6w7QqEl6syI+MBIvzNUmFKJxEH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Op/8m8pl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyVeomO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C430C116B1;
-	Tue, 11 Nov 2025 01:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Op/8m8pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9372C16AAE;
+	Tue, 11 Nov 2025 01:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825447;
-	bh=3/Mh0/ux34dFGZLycF2JavitfsrhmNWCnAxcrtEZf/Q=;
+	s=korg; t=1762825450;
+	bh=Z/X8bxL4av4VfNFe7wEfmsXRY4cp9eHqH5V8vnEeDgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyVeomO1nI+ed3bqvB9IY0+owLYhvsvgvNR/MiCjZ1foNL8c2tbLYGqgOer/ELf/F
-	 eRlHT+JgB433WBVYIB+SOsywUmaHtC3ayB9J5Yodmc+N6NYfUMy3b7xa4SqX2tQbc4
-	 8XYiDkpVWegUEAYFPCFwGQ035yk/P9iaITnsw0DY=
+	b=Op/8m8pl5ISPlKMMXFbOj2/R/6T1HNBYESyN4/fVMkwv/s6cNsqKCpIvTSUKTy3T4
+	 dtq8Aa08YnEN5drBOKCMBFhSIngfz1ewUbJZkJAReVgFJ1mkQCKyHMZGZp7BIglp+G
+	 AxC7h7sxGIsdlgSzhcEhPN+MAst1vNPvjxWy6bfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Anubhav Singh <anubhavsinggh@google.com>,
+	Wang Liang <wangliang74@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 762/849] selftests/net: use destination options instead of hop-by-hop
-Date: Tue, 11 Nov 2025 09:45:32 +0900
-Message-ID: <20251111004554.855904900@linuxfoundation.org>
+Subject: [PATCH 6.17 763/849] selftests: netdevsim: Fix ethtool-coalesce.sh fail by installing ethtool-common.sh
+Date: Tue, 11 Nov 2025 09:45:33 +0900
+Message-ID: <20251111004554.878696890@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,56 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anubhav Singh <anubhavsinggh@google.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit f8e8486702abb05b8c734093aab1606af0eac068 ]
+[ Upstream commit d01f8136d46b925798abcf86b35a4021e4cfb8bb ]
 
-The GRO self-test, gro.c, currently constructs IPv6 packets containing a
-Hop-by-Hop Options header (IPPROTO_HOPOPTS) to ensure the GRO path
-correctly handles IPv6 extension headers.
+The script "ethtool-common.sh" is not installed in INSTALL_PATH, and
+triggers some errors when I try to run the test
+'drivers/net/netdevsim/ethtool-coalesce.sh':
 
-However, network elements may be configured to drop packets with the
-Hop-by-Hop Options header (HBH). This causes the self-test to fail
-in environments where such network elements are present.
+  TAP version 13
+  1..1
+  # timeout set to 600
+  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
+  # ./ethtool-coalesce.sh: line 4: ethtool-common.sh: No such file or directory
+  # ./ethtool-coalesce.sh: line 25: make_netdev: command not found
+  # ethtool: bad command line argument(s)
+  # ./ethtool-coalesce.sh: line 124: check: command not found
+  # ./ethtool-coalesce.sh: line 126: [: -eq: unary operator expected
+  # FAILED /0 checks
+  not ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh # exit=1
 
-To improve the robustness and reliability of this test in diverse
-network environments, switch from using IPPROTO_HOPOPTS to
-IPPROTO_DSTOPTS (Destination Options).
+Install this file to avoid this error. After this patch:
 
-The Destination Options header is less likely to be dropped by
-intermediate routers and still serves the core purpose of the test:
-validating GRO's handling of an IPv6 extension header. This change
-ensures the test can execute successfully without being incorrectly
-failed by network policies outside the kernel's control.
+  TAP version 13
+  1..1
+  # timeout set to 600
+  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
+  # PASSED all 22 checks
+  ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh
 
-Fixes: 7d1575014a63 ("selftests/net: GRO coalesce test")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Anubhav Singh <anubhavsinggh@google.com>
-Link: https://patch.msgid.link/20251030060436.1556664-1-anubhavsinggh@google.com
+Fixes: fbb8531e58bd ("selftests: extract common functions in ethtool-common.sh")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20251030040340.3258110-1-wangliang74@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/gro.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/drivers/net/netdevsim/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-index 209ec60052f5b..48755b8475a4b 100644
---- a/tools/testing/selftests/net/gro.c
-+++ b/tools/testing/selftests/net/gro.c
-@@ -734,11 +734,11 @@ static void send_ipv6_exthdr(int fd, struct sockaddr_ll *daddr, char *ext_data1,
- 	static char exthdr_pck[sizeof(buf) + MIN_EXTHDR_SIZE];
+diff --git a/tools/testing/selftests/drivers/net/netdevsim/Makefile b/tools/testing/selftests/drivers/net/netdevsim/Makefile
+index 07b7c46d33118..abe5bea5afb3b 100644
+--- a/tools/testing/selftests/drivers/net/netdevsim/Makefile
++++ b/tools/testing/selftests/drivers/net/netdevsim/Makefile
+@@ -18,4 +18,8 @@ TEST_PROGS = devlink.sh \
+ 	tc-mq-visibility.sh \
+ 	udp_tunnel_nic.sh \
  
- 	create_packet(buf, 0, 0, PAYLOAD_LEN, 0);
--	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data1);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_DSTOPTS, ext_data1);
- 	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
- 
- 	create_packet(buf, PAYLOAD_LEN * 1, 0, PAYLOAD_LEN, 0);
--	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data2);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_DSTOPTS, ext_data2);
- 	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
- }
- 
++TEST_FILES := \
++	ethtool-common.sh
++# end of TEST_FILES
++
+ include ../../../lib.mk
 -- 
 2.51.0
 
