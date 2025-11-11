@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448F348458;
-	Tue, 11 Nov 2025 01:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECD9347FF8;
+	Tue, 11 Nov 2025 01:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823218; cv=none; b=MbWHQEOFTgrJuX+deai+S4N1qp1OPT6Z9kcPXy7+/oXgs7CuF+p+txB5X/bpsBEzh65QjspyQRDFvM9B/Kqwb41bafFGydd77rDLF/eJFTp27j2amaJluv8Ay9hVAAtKqbwLChZdqX6EODE1d8V5wjgj1ZCy020K2CqmqecHKmA=
+	t=1762823220; cv=none; b=ASTp4eujOMBooWTpobrTsl6lu59RZSuxGJEbHNWrLupesDmHroBs96asYEF5RiLqNDkAvGnzj6Mxh2+9PatYUd+rDoJJAqqdbygI9TZgU9LJvHiRQmLyVIAt5j5UK2Hlm6pOw5fHu2acDUcsu8rLm/u4xk0Mq1DoLx2xGtyhhNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823218; c=relaxed/simple;
-	bh=7QWHfAlwuPhsFFqfqwO0NO24Hoh3+CDyLkJO93wbG4s=;
+	s=arc-20240116; t=1762823220; c=relaxed/simple;
+	bh=Hk59xLn0zMHI9BHhHcCnOzcbsy3LVte2MDot1uTPgZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUYM/573j+mc8sOZairp/AHAAVzr6jJimaf0acQdDJ7e8JpZBYzzf2hJz4EO510j7yJCzxlJHZeiKJnq2BZ3TT6WtALZeIzKGOV0IHoM9PeOy8/ecCGyUlTsJK4Yr4vofm1LnmhUo+D5JRSOwwswXVEsEiXCvoUxgSVohA7Hy9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK6kATXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rP/nRQC3/8FaS22zZWzNRJzWdC5FM8mdxKn2pmwpYmB7gmI6ArTd5mT2QpvVf307glnFxtjOa8WhqAYG12tyIgRXy0oe4q9lVW2cD5WVrKtSBGFXaLPNtHbeedD7nOlvNCSRKJo/5Gilkc7Iig016j2NLw/m3am9XmfURhG2aTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9+Ii1hd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK6kATXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2C8C116B1;
-	Tue, 11 Nov 2025 01:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9+Ii1hd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A575EC19425;
+	Tue, 11 Nov 2025 01:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823217;
-	bh=7QWHfAlwuPhsFFqfqwO0NO24Hoh3+CDyLkJO93wbG4s=;
+	s=korg; t=1762823219;
+	bh=Hk59xLn0zMHI9BHhHcCnOzcbsy3LVte2MDot1uTPgZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hK6kATXpcxtmplY81Saen9dNFgzObDCowyvVh/E0DrTYH0pJ9mZiyXMHVJXQMSYcs
-	 4pTEEzTcajSEBUQWdhvl1C63rk9s4JrfpE5UbAibN+iXFxkmfE/WkErADkAjaZfk7F
-	 iSiBOT0N9Cs3mek5t6sFQWTXYMx4L2mcnwGAWd0I=
+	b=y9+Ii1hd2yQRUQWGT19s0ct+ieAEkQCej19+mI4yyZ9ukqyfu1YkALRyXHVkn9+vw
+	 9LmsdyHd4YNHK2Hkg7DiMjiOK1nAUpTK0ybeyZY7Wfp+/uLqeUaiQrDP3MIadEiCBw
+	 oGmCd59ZlVFUbqPsgT4XfSph9d2Jut6q27qYa3L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 255/849] drm/amd/display: fix dmub access race condition
-Date: Tue, 11 Nov 2025 09:37:05 +0900
-Message-ID: <20251111004542.593270397@linuxfoundation.org>
+Subject: [PATCH 6.12 199/565] media: amphion: Delete v4l2_fh synchronously in .release()
+Date: Tue, 11 Nov 2025 09:40:55 +0900
+Message-ID: <20251111004531.405601401@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,141 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit c210b757b400959577a5a17b783b5959b82baed8 ]
+[ Upstream commit 19fb9c5b815f70eb90d5b545f65b83bc9c490ecd ]
 
-Accessing DC from amdgpu_dm is usually preceded by acquisition of
-dc_lock mutex. Most of the DC API that DM calls are under a DC lock.
-However, there are a few that are not. Some DC API called from interrupt
-context end up sending DMUB commands via a DC API, while other threads were
-using DMUB. This was apparent from a race between calls for setting idle
-optimization enable/disable and the DC API to set vmin/vmax.
+The v4l2_fh initialized and added in vpu_v4l2_open() is delete and
+cleaned up when the last reference to the vpu_inst is released. This may
+happen later than at vpu_v4l2_close() time.
 
-Offload the call to dc_stream_adjust_vmin_vmax() to a thread instead
-of directly calling them from the interrupt handler such that it waits
-for dc_lock.
+Not deleting and cleaning up the v4l2_fh when closing the file handle to
+the video device is not ideal, as the v4l2_fh will still be present in
+the video device's fh_list, and will store a copy of events queued to
+the video device. There may also be other side effects of keeping alive
+an object that represents an open file handle after the file handle is
+closed.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The v4l2_fh instance is embedded in the vpu_inst structure, and is
+accessed in two different ways:
+
+- in vpu_notify_eos() and vpu_notify_source_change(), to queue V4L2
+  events to the file handle ; and
+
+- through the driver to access the v4l2_fh.m2m_ctx pointer.
+
+The v4l2_fh.m2m_ctx pointer is not touched by v4l2_fh_del() and
+v4l2_fh_exit(). It is set to NULL by the driver when closing the file
+handle, in vpu_v4l2_close().
+
+The vpu_notify_eos() and vpu_notify_source_change() functions are called
+in vpu_set_last_buffer_dequeued() and vdec_handle_resolution_change()
+respectively, only if the v4l2_fh.m2m_ctx pointer is not NULL. There is
+therefore a guarantee that no new event will be queued to the v4l2_fh
+after vpu_v4l2_close() destroys the m2m_ctx.
+
+The vpu_notify_eos() function is also called from vpu_vb2_buf_finish(),
+which is guaranteed to be called for all queued buffers when
+vpu_v4l2_close() calls v4l2_m2m_ctx_release(), and will not be called
+later.
+
+It is therefore safe to assume that the driver will not touch the
+v4l2_fh, except to check the m2m_ctx pointer, after vpu_v4l2_close()
+destroys the m2m_ctx. We can safely delete and cleanup the v4l2_fh
+synchronously in vpu_v4l2_close().
+
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 55 +++++++++++++++++--
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h | 14 +++++
- 2 files changed, 63 insertions(+), 6 deletions(-)
+ drivers/media/platform/amphion/vpu_v4l2.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 163780030eb16..aca57cc815514 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -541,6 +541,50 @@ static void dm_pflip_high_irq(void *interrupt_params)
- 		      amdgpu_crtc->crtc_id, amdgpu_crtc, vrr_active, (int)!e);
+diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
+index f0b1ec79d2961..7f66bfef2abbe 100644
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -709,8 +709,6 @@ static int vpu_v4l2_release(struct vpu_inst *inst)
+ 
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+ 	mutex_destroy(&inst->lock);
+-	v4l2_fh_del(&inst->fh);
+-	v4l2_fh_exit(&inst->fh);
+ 
+ 	call_void_vop(inst, cleanup);
+ 
+@@ -779,6 +777,8 @@ int vpu_v4l2_open(struct file *file, struct vpu_inst *inst)
+ 
+ 	return 0;
+ error:
++	v4l2_fh_del(&inst->fh);
++	v4l2_fh_exit(&inst->fh);
+ 	vpu_inst_put(inst);
+ 	return ret;
  }
+@@ -798,6 +798,9 @@ int vpu_v4l2_close(struct file *file)
+ 	call_void_vop(inst, release);
+ 	vpu_inst_unlock(inst);
  
-+static void dm_handle_vmin_vmax_update(struct work_struct *offload_work)
-+{
-+	struct vupdate_offload_work *work = container_of(offload_work, struct vupdate_offload_work, work);
-+	struct amdgpu_device *adev = work->adev;
-+	struct dc_stream_state *stream = work->stream;
-+	struct dc_crtc_timing_adjust *adjust = work->adjust;
++	v4l2_fh_del(&inst->fh);
++	v4l2_fh_exit(&inst->fh);
 +
-+	mutex_lock(&adev->dm.dc_lock);
-+	dc_stream_adjust_vmin_vmax(adev->dm.dc, stream, adjust);
-+	mutex_unlock(&adev->dm.dc_lock);
-+
-+	dc_stream_release(stream);
-+	kfree(work->adjust);
-+	kfree(work);
-+}
-+
-+static void schedule_dc_vmin_vmax(struct amdgpu_device *adev,
-+	struct dc_stream_state *stream,
-+	struct dc_crtc_timing_adjust *adjust)
-+{
-+	struct vupdate_offload_work *offload_work = kzalloc(sizeof(*offload_work), GFP_KERNEL);
-+	if (!offload_work) {
-+		drm_dbg_driver(adev_to_drm(adev), "Failed to allocate vupdate_offload_work\n");
-+		return;
-+	}
-+
-+	struct dc_crtc_timing_adjust *adjust_copy = kzalloc(sizeof(*adjust_copy), GFP_KERNEL);
-+	if (!adjust_copy) {
-+		drm_dbg_driver(adev_to_drm(adev), "Failed to allocate adjust_copy\n");
-+		kfree(offload_work);
-+		return;
-+	}
-+
-+	dc_stream_retain(stream);
-+	memcpy(adjust_copy, adjust, sizeof(*adjust_copy));
-+
-+	INIT_WORK(&offload_work->work, dm_handle_vmin_vmax_update);
-+	offload_work->adev = adev;
-+	offload_work->stream = stream;
-+	offload_work->adjust = adjust_copy;
-+
-+	queue_work(system_wq, &offload_work->work);
-+}
-+
- static void dm_vupdate_high_irq(void *interrupt_params)
- {
- 	struct common_irq_params *irq_params = interrupt_params;
-@@ -590,10 +634,9 @@ static void dm_vupdate_high_irq(void *interrupt_params)
- 				    acrtc->dm_irq_params.stream,
- 				    &acrtc->dm_irq_params.vrr_params);
+ 	vpu_inst_unregister(inst);
+ 	vpu_inst_put(inst);
  
--				dc_stream_adjust_vmin_vmax(
--				    adev->dm.dc,
--				    acrtc->dm_irq_params.stream,
--				    &acrtc->dm_irq_params.vrr_params.adjust);
-+				schedule_dc_vmin_vmax(adev,
-+					acrtc->dm_irq_params.stream,
-+					&acrtc->dm_irq_params.vrr_params.adjust);
- 				spin_unlock_irqrestore(&adev_to_drm(adev)->event_lock, flags);
- 			}
- 		}
-@@ -683,8 +726,8 @@ static void dm_crtc_high_irq(void *interrupt_params)
- 					     acrtc->dm_irq_params.stream,
- 					     &acrtc->dm_irq_params.vrr_params);
- 
--		dc_stream_adjust_vmin_vmax(adev->dm.dc, acrtc->dm_irq_params.stream,
--					   &acrtc->dm_irq_params.vrr_params.adjust);
-+		schedule_dc_vmin_vmax(adev, acrtc->dm_irq_params.stream,
-+				&acrtc->dm_irq_params.vrr_params.adjust);
- 	}
- 
- 	/*
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index b937da0a4e4a0..c18a6b43c76f6 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -152,6 +152,20 @@ struct idle_workqueue {
- 	bool running;
- };
- 
-+/**
-+ * struct dm_vupdate_work - Work data for periodic action in idle
-+ * @work: Kernel work data for the work event
-+ * @adev: amdgpu_device back pointer
-+ * @stream: DC stream associated with the crtc
-+ * @adjust: DC CRTC timing adjust to be applied to the crtc
-+ */
-+struct vupdate_offload_work {
-+	struct work_struct work;
-+	struct amdgpu_device *adev;
-+	struct dc_stream_state *stream;
-+	struct dc_crtc_timing_adjust *adjust;
-+};
-+
- #define MAX_LUMINANCE_DATA_POINTS 99
- 
- /**
 -- 
 2.51.0
 
