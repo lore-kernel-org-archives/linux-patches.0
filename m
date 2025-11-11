@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756FD4C97;
-	Tue, 11 Nov 2025 00:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC514C97;
+	Tue, 11 Nov 2025 00:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822507; cv=none; b=GnIfleSzkHgHB0o+OSkUGOeC/PVQ5wZ1uJmkaZzEtrBgriAjY6STP61FO62FNng+EZBFpos2p1v6kFR+LpbYFLJ8rtZYy34z4+Gz6M9Y/u01Ng/ntw8qSHOhKz6PsJFa7PbJk5BNkTJU8heti5xAQkgMMG0QMR+iQivOL8OjQK4=
+	t=1762822510; cv=none; b=bPZp2pIqrDf80V2a2jndezQjLadd4/Tnj/Hv2Jl9ojDKfNvKmOkxlWw0UTpDpYCo8bpkNu+kupYWydtV53XvRZ6jiHP6XUpCQBS4yCH1KZ/Bw1XGevlVcyPsRfarHnd2aHAPeIA0Ns/saXKoF8gpV59VjYfKLCjos+R1pAT8ja8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822507; c=relaxed/simple;
-	bh=4IIXF6NqgK/aoGAEq6K/CO+w4RkgnGZJkyaieL3mJdA=;
+	s=arc-20240116; t=1762822510; c=relaxed/simple;
+	bh=4CX55yi0ODp96pavr/1dXLeUyewERS+zpdcJ0QWcMSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iguLXi/eoxgT7Z2RvHzuo6VGKHaQ9Bz+gwcHoDQ5wfNK7BS9YvJHqTx8lHrY91SAzenSIiblSh+Yl/XRnf4gTaNKLdiqsyl8+0o9FuvWZMi/WTGKaaBdotPDKcGGVWDhWICVpT9UAilvfa5RUa+bvLw0xHycnvP0lqNnYRtFUxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK6WHAv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R57jamepY27Ysy1pYq30MF11L2V5LrxzHidi70TJeK5RqgDj0s9CyGZCKXi6iaLuqtFVtQGX3YbC2ImAD+4Z+Ff8YyLm1RBcE6JnqnPwlSs3AI5F/JhbaVk6/pVnwBDJxupfSc1zowb4kzdfUIx0LFQehSfp8S/ndgHxnLhYv/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPk1eSfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK6WHAv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12667C16AAE;
-	Tue, 11 Nov 2025 00:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPk1eSfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7366FC16AAE;
+	Tue, 11 Nov 2025 00:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822507;
-	bh=4IIXF6NqgK/aoGAEq6K/CO+w4RkgnGZJkyaieL3mJdA=;
+	s=korg; t=1762822509;
+	bh=4CX55yi0ODp96pavr/1dXLeUyewERS+zpdcJ0QWcMSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PK6WHAv5JgZDPv59w4szLYVbuW/Cw6Vlh2lxPIO6rjRgvLuiNqOOpt9sA+B+ZdaRF
-	 TCl4eLH6GcMYV40/AMluHBoiK9cFzw/A+PM5cSJJvKNvWaeJQ8bIvjm1GROITItrBg
-	 R/XBmxJvyzBmXI7prp5787N5F7adt7w9Pp6oJitw=
+	b=BPk1eSfaeKcqodTyw4CQSG6VRtrQ88EZ0fn0lKHoHkDXPP8ALTBzpYwhmgXRhUok4
+	 3Pj3ivs9mMxsgfTktD5yQBtYPGZcOqc/h1zvzDWUl8An/jhLlDpzhc7qrUbLwzRkAH
+	 hxaJhe6Yr0Np980xCRZDWZO0Yih2ZllYnfbJQNuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 121/849] spi: loopback-test: Dont use %pK through printk
-Date: Tue, 11 Nov 2025 09:34:51 +0900
-Message-ID: <20251111004539.324238635@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 065/565] drm/xe: Do not wake device during a GT reset
+Date: Tue, 11 Nov 2025 09:38:41 +0900
+Message-ID: <20251111004528.404785642@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,90 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit b832b19318534bb4f1673b24d78037fee339c679 ]
+commit b3fbda1a630a9439c885b2a5dc5230cc49a87e9e upstream.
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log.
-Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
-the regular %p has been improved to avoid this issue.
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping locks in atomic contexts.
+Waking the device during a GT reset can lead to unintended memory
+allocation, which is not allowed since GT resets occur in the reclaim
+path. Prevent this by holding a PM reference while a reset is in flight.
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
-There are still a few users of %pK left, but these use it through seq_file,
-for which its usage is safe.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20250811-restricted-pointers-spi-v1-1-32c47f954e4d@linutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20251022005538.828980-3-matthew.brost@intel.com
+(cherry picked from commit 480b358e7d8ef69fd8f1b0cad6e07c7d70a36ee4)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-loopback-test.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
-index 7dd92deffe3fb..e0b131aa29b62 100644
---- a/drivers/spi/spi-loopback-test.c
-+++ b/drivers/spi/spi-loopback-test.c
-@@ -446,7 +446,7 @@ static void spi_test_dump_message(struct spi_device *spi,
- 	int i;
- 	u8 b;
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -746,17 +746,19 @@ static int gt_reset(struct xe_gt *gt)
+ {
+ 	int err;
  
--	dev_info(&spi->dev, "  spi_msg@%pK\n", msg);
-+	dev_info(&spi->dev, "  spi_msg@%p\n", msg);
- 	if (msg->status)
- 		dev_info(&spi->dev, "    status:        %i\n",
- 			 msg->status);
-@@ -456,15 +456,15 @@ static void spi_test_dump_message(struct spi_device *spi,
- 		 msg->actual_length);
+-	if (xe_device_wedged(gt_to_xe(gt)))
+-		return -ECANCELED;
++	if (xe_device_wedged(gt_to_xe(gt))) {
++		err = -ECANCELED;
++		goto err_pm_put;
++	}
  
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		dev_info(&spi->dev, "    spi_transfer@%pK\n", xfer);
-+		dev_info(&spi->dev, "    spi_transfer@%p\n", xfer);
- 		dev_info(&spi->dev, "      len:    %i\n", xfer->len);
--		dev_info(&spi->dev, "      tx_buf: %pK\n", xfer->tx_buf);
-+		dev_info(&spi->dev, "      tx_buf: %p\n", xfer->tx_buf);
- 		if (dump_data && xfer->tx_buf)
- 			spi_test_print_hex_dump("          TX: ",
- 						xfer->tx_buf,
- 						xfer->len);
+ 	/* We only support GT resets with GuC submission */
+-	if (!xe_device_uc_enabled(gt_to_xe(gt)))
+-		return -ENODEV;
++	if (!xe_device_uc_enabled(gt_to_xe(gt))) {
++		err = -ENODEV;
++		goto err_pm_put;
++	}
  
--		dev_info(&spi->dev, "      rx_buf: %pK\n", xfer->rx_buf);
-+		dev_info(&spi->dev, "      rx_buf: %p\n", xfer->rx_buf);
- 		if (dump_data && xfer->rx_buf)
- 			spi_test_print_hex_dump("          RX: ",
- 						xfer->rx_buf,
-@@ -558,7 +558,7 @@ static int spi_check_rx_ranges(struct spi_device *spi,
- 		/* if still not found then something has modified too much */
- 		/* we could list the "closest" transfer here... */
- 		dev_err(&spi->dev,
--			"loopback strangeness - rx changed outside of allowed range at: %pK\n",
-+			"loopback strangeness - rx changed outside of allowed range at: %p\n",
- 			addr);
- 		/* do not return, only set ret,
- 		 * so that we list all addresses
-@@ -696,7 +696,7 @@ static int spi_test_translate(struct spi_device *spi,
- 	}
+ 	xe_gt_info(gt, "reset started\n");
  
- 	dev_err(&spi->dev,
--		"PointerRange [%pK:%pK[ not in range [%pK:%pK[ or [%pK:%pK[\n",
-+		"PointerRange [%p:%p[ not in range [%p:%p[ or [%p:%p[\n",
- 		*ptr, *ptr + len,
- 		RX(0), RX(SPI_TEST_MAX_SIZE),
- 		TX(0), TX(SPI_TEST_MAX_SIZE));
--- 
-2.51.0
-
+-	xe_pm_runtime_get(gt_to_xe(gt));
+-
+ 	if (xe_fault_inject_gt_reset()) {
+ 		err = -ECANCELED;
+ 		goto err_fail;
+@@ -803,6 +805,7 @@ err_fail:
+ 	xe_gt_err(gt, "reset failed (%pe)\n", ERR_PTR(err));
+ 
+ 	xe_device_declare_wedged(gt_to_xe(gt));
++err_pm_put:
+ 	xe_pm_runtime_put(gt_to_xe(gt));
+ 
+ 	return err;
+@@ -824,7 +827,9 @@ void xe_gt_reset_async(struct xe_gt *gt)
+ 		return;
+ 
+ 	xe_gt_info(gt, "reset queued\n");
+-	queue_work(gt->ordered_wq, &gt->reset.worker);
++	xe_pm_runtime_get_noresume(gt_to_xe(gt));
++	if (!queue_work(gt->ordered_wq, &gt->reset.worker))
++		xe_pm_runtime_put(gt_to_xe(gt));
+ }
+ 
+ void xe_gt_suspend_prepare(struct xe_gt *gt)
 
 
