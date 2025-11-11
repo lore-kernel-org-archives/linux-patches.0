@@ -1,115 +1,139 @@
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BF1331235
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 13:35:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B3D35B15D
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 13:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762868137; cv=none; b=Jl/zEBxabgFgEeDE41YPQP9wOoiEnGeAU2jHQ+J9zqedYuM3jq9Jwzj4TKCu7hApMmFV/FQDv5V4d7wZCsmjEA1yD8Ew7eI0/bS4st82iMHW9sVpWHFhJkDRKII9T9zDwuairgtJ8HPSIDx+88Z8S3Ps+ePRpf2IpGqIS1CHbYo=
+	t=1762869293; cv=none; b=BF3r6EpHUFApxzBAGGgHKQjwrQM9ia+mFZGdgSYlwEUprDjdi1nbwLVhRRn3I11ODE0lxs7QSme4QLs/W578gyTlkIVjnB93c/R5o30DdoMc6BHAJHvKSswiiipyzq1Hv6iG0o2RXRFNbqCP4cnp1YZZeRp4UESbWm/VAm/D3dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762868137; c=relaxed/simple;
-	bh=z3ZXIvYXjsVZ1cD1nGTaG3KtjR212/GOPRxgC4R+gjA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XJU6/Szkotq7P1tnFNU/l+SO+oykn0mwt54LcXNdQv31M3YzSQixdHJdGXyGiS1ZX9J0rZNKpC7jEUfHaXt9hQrL53inrw62ZxK/8qmoh7rJeXSy+8XrIgB7lJlQ4porw+hhHZUuELcuScuHit9kCdv4VwYqAjiaxgbzSUvE3bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Z6tn8a24; arc=none smtp.client-ip=35.89.44.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1762869293; c=relaxed/simple;
+	bh=A2TkjakrfDdkYRGuTxjcRqTay/V7iT1zDDZWS1m5mUQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TySBtlgxy0tNadjv+njTh+dLZpTzfSjoBN3j9hXCYrz1kfDZsIYC6zplvnh6mlFcnaBjBsKEmZghzK0bhZ2z9doSVv06UgEfFZsBAliut8S0rk7ZbxvjF+GY3o2OTDfhc0PQGvyEkPeoxERM2NDiIBl+YhEJZY3tI5ynXfNSjm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O6bsWCdl; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Z6tn8a24"
-Received: from eig-obgw-5001b.ext.cloudfilter.net ([10.0.29.181])
-	by cmsmtp with ESMTPS
-	id ImXSv6i5teNqiIoWyvVQWH; Tue, 11 Nov 2025 13:35:33 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id IoWyvt76cHjyIIoWyvP9dh; Tue, 11 Nov 2025 13:35:32 +0000
-X-Authority-Analysis: v=2.4 cv=Ys4PR5YX c=1 sm=1 tr=0 ts=69133ba4
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=RevD4IuIZOIosi7Z3eEA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=lbR3b93pZJ23GTDhYqz9VgVXdiNorbDVnSQIsSbsXBw=; b=Z6tn8a24re9S72cM8gmbYrfsV3
-	iFti/DNsI1OJkOaCuRuiWQ2Nyj97U4sMSqNGZ/rUMxmdywC6DxUr83wfQORBIVTs9PrSWqgP0n/c0
-	OoftoXYS3HgoQPf2s7seJDlkQXsIRV2TEMtXvJc3muPae3OKkx1NcXvNFs6oO/+e+bwe5hVCcEtEr
-	cdeeTeVTuS3/dsmUw5h149ckTEbywovW6NqZuBd+1Ug8t6J7flvahipsfpCj/h8SlmFm6SaImq2n9
-	xd8rlzEGcJnc6OkgT94dyXJYB31NnEaPTzcYcDyRki4q0m4Zkl74TmZPX7Jcvb/N95S0UJqzxc+Kl
-	td7aGZHQ==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:40038 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1vIoWx-00000002Kut-3fZy;
-	Tue, 11 Nov 2025 06:35:31 -0700
-Message-ID: <8b790183-00cd-4dda-82a9-0988eda9e6d4@w6rz.net>
-Date: Tue, 11 Nov 2025 05:35:30 -0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O6bsWCdl"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-297ea936b39so4128025ad.1
+        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 05:54:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762869289; x=1763474089; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DZoLj4f0GVdI3DGKFlEJ4QWVzpBGFdDaaHgYw2dfwqU=;
+        b=O6bsWCdl6ph7BkPCn7Fy8Ijiwjgd08K6sNUoZVGt+mPcFX2EBZRvDORlzyQgl42QdW
+         8GUrCW/iAkgY/68Qh2mAe+DwHDRdzzT5UKdt0jOlD6at3GzBoaN1UemiOKGFXy7BuzZo
+         fuU5OAiuin+DStyjTcaidNLkjYeIDDStPo9GDnQBKGwlhfdltQ900bL56m15y2uSrxzU
+         yXS3ixYXx0aBqY/diw/OdpvWNz1li6JJU6TYc8UYjeaP7DqRDocdfn3L/ugu7n7rX62x
+         B5Hd/43q56ugyWvHKsFBiutbr4bvwVtzASVIUwowKUUHQk1nufkNdGyTa9+iLzuS5Gn1
+         SiFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762869289; x=1763474089;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DZoLj4f0GVdI3DGKFlEJ4QWVzpBGFdDaaHgYw2dfwqU=;
+        b=ZgFp5uzus0IFwFW5ZX8pAh9qZ8B0kV/k0eNgf27N1lX8UiAnfAU1O2vQot7EF9NtKI
+         HbkBVWVqE0cWaXZJhaF4+uHHjCz1NjOY5lGWbMjLJgW/z/cZJ8sWmrxhKSpi/pKAeCs6
+         M9MCsp8V8DEu2k/znL6K2ea/HTiMEAsccW8KoUag9SXfAnGDNm7N29DUNMs5CZ1Zg0Ly
+         DstEFn4L12kCy7rOcAOdE1c1pK5eoYrZzonWB6F89JjwOGWCecE+2kC7Xgg37qgm5xDv
+         DVF4SUqc+ikYhQTK44I+YQsBemHUoasV00xGu+317NG/vmwGHljtUioxsXeb6ghxVLWS
+         yN7w==
+X-Forwarded-Encrypted: i=1; AJvYcCWEYPNE8k4/GrrfWAEZj0e4Hsmcn7sh6hXRKF4cH3n6l7nsLrwOqP3IEQMYtwEidUewKlz5ABT3@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/aFHYjEGTCoGA5pIMVcRqSes/y9EbfnsY9Bq19pIroRdzWekv
+	EQa+gfBtXM3DSkAIShMdWJuX9CW8ifCLxh5heO4AHznLPobK2o42/+4856L5aAPmemdA8u8Alsu
+	zqlO/4zi/G536736A281vcx9YaH63DDw=
+X-Gm-Gg: ASbGncuLMAnpYFmB2dFn3rPi+1LQY+Ji1FPMuLT89HkZXWzBJ6K1nEzsNPzVVMVd32N
+	CqP8I92PyZZ6y/STGNncqSPvBgjHCoWWhgJUZDrDDCYsspM3EYxlimu4yB+gZs15ws5Cb0QiRsJ
+	C+J7PndS8LHUtYBDo63FRg9BZqNGgy9e3vw60ftn5q3mYja7NffE/XhPmHJaT8pkDt2pWUeR/7M
+	tlVYJeWIdHDLPtkX7+820EqP12S8PbxHhQNqCyxXP8BoQdk0QZ2jXxEa04hl0JzCPTBDA7Bo+o8
+	QBRtyShDQ+dWT4Hzil1HPQsPwhs+oqF8NOy4ryc2gLS0Ucjt62p7d2VmhZkmJL5BHZK6NdFUBCv
+	fswVzteUy3D0RPA==
+X-Google-Smtp-Source: AGHT+IF0Z68cGNnWIYfhE+GmNXty3zSKglcsJIW8DTGnNaR5oz+N94f18Ae9bgXwDGF1o3kKuYh1bmeQkQ96c2H5z8Y=
+X-Received: by 2002:a17:902:ea09:b0:295:511d:534 with SMTP id
+ d9443c01a7336-297e5731561mr84933915ad.10.1762869289453; Tue, 11 Nov 2025
+ 05:54:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/562] 6.12.58-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20251111012348.571643096@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20251111012348.571643096@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.92.56.26
-X-Source-L: No
-X-Exim-ID: 1vIoWx-00000002Kut-3fZy
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.116]) [73.92.56.26]:40038
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 38
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfMUieyu1EWXHSBv5x/AxLNDWCdSVj7JWAYcrfMyY1auFzZo1zaY3lIpZWAoE7NFn9RzuEOk08+SS08q6Jb3Ie+kCnit3kb6XoDYdeyHPe7hBXRoavc/Z
- Mx+wZwPrbFtZXv9PqNSI+POmbo3LrfPDimJQUDZwwZIRaRIpe172Gn/OItOnj1um0BRAKUJ5V/oCcQ==
+References: <20251110131913.1789896-1-ojeda@kernel.org>
+In-Reply-To: <20251110131913.1789896-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 11 Nov 2025 14:54:36 +0100
+X-Gm-Features: AWmQ_blj1Y6aEDrIDY1SHsBj9ipAJhqLELG9lX2PJ-XtkIigMIPK_72YnkrkjN8
+Message-ID: <CANiq72mjFobjfQEtNvk9aA+757RkLpcfmCCEJAH69ZYsr67GdA@mail.gmail.com>
+Subject: Re: [PATCH v2] gendwarfksyms: Skip files with no exports
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	linux-modules@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Haiyue Wang <haiyuewa@163.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/10/25 17:24, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.58 release.
-> There are 562 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Nov 10, 2025 at 2:19=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> Responses should be made by Thu, 13 Nov 2025 01:22:51 +0000.
-> Anything received after that time might be too late.
+> From: Sami Tolvanen <samitolvanen@google.com>
 >
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.58-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
+> Starting with Rust 1.91.0 (released 2025-10-30), in upstream commit
+> ab91a63d403b ("Ignore intrinsic calls in cross-crate-inlining cost model"=
+)
+> [1][2], `bindings.o` stops containing DWARF debug information because the
+> `Default` implementations contained `write_bytes()` calls which are now
+> ignored in that cost model (note that `CLIPPY=3D1` does not reproduce it)=
+.
 >
-> thanks,
+> This means `gendwarfksyms` complains:
 >
-> greg k-h
+>       RUSTC L rust/bindings.o
+>     error: gendwarfksyms: process_module: dwarf_get_units failed: no debu=
+gging information?
+>
+> There are several alternatives that would work here: conditionally
+> skipping in the cases needed (but that is subtle and brittle), forcing
+> DWARF generation with e.g. a dummy `static` (ugly and we may need to
+> do it in several crates), skipping the call to the tool in the Kbuild
+> command when there are no exports (fine) or teaching the tool to do so
+> itself (simple and clean).
+>
+> Thus do the last one: don't attempt to process files if we have no symbol
+> versions to calculate.
+>
+>   [ I used the commit log of my patch linked below since it explained the
+>     root issue and expanded it a bit more to summarize the alternatives.
+>
+>       - Miguel ]
+>
+> Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned i=
+n older LTSs).
+> Reported-by: Haiyue Wang <haiyuewa@163.com>
+> Closes: https://lore.kernel.org/rust-for-linux/b8c1c73d-bf8b-4bf2-beb1-84=
+ffdcd60547@163.com/
+> Suggested-by: Miguel Ojeda <ojeda@kernel.org>
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72nKC5r24VHAp9oUPR1HVPq=
+T+=3D0ab9N0w6GqTF-kJOeiSw@mail.gmail.com/
+> Link: https://github.com/rust-lang/rust/commit/ab91a63d403b0105cacd72809c=
+d292a72984ed99 [1]
+> Link: https://github.com/rust-lang/rust/pull/145910 [2]
+> Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+I will send a couple other fixes to Linus this week, so if nobody
+shouts, I will be picking this one.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks!
 
+Cheers,
+Miguel
