@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33498346E7E;
-	Tue, 11 Nov 2025 01:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DCF346E7E;
+	Tue, 11 Nov 2025 01:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824245; cv=none; b=RtM0qlNMssPG2O7h+cT+XDdd0N6Je0BqdMH3PZRKYPZ9M3W+WXIshbr03JI6+nUXM+La5MUdIL3k54m9nDfZl7Tf7rtJ3TjaWHf7QkwKnl+XMmeMqzQ7I/Lux8tEFVC/ie0R6XGnW3n4Ey0Ssapo2Hv4ZBERyw8sWMRSNihtjcA=
+	t=1762824247; cv=none; b=ZTgmYIwZNN7f+d9pJ5Wf0YiF8m23YiZRRCE4oHGt7jCe854EsbPGQbWZNtgxLcWaPZu0rn/r/2hEdxpQ58lgRXsWL4I8gscvgfzhCb7CBPfaX4CVDsVk8FvGHGvHZCcLVwm99XMuwoUrz/askrxqwEzBDiJtFH8dINxYSw9rKhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824245; c=relaxed/simple;
-	bh=aD6nOUXAv9du+j8BzP0SzMt5UDNvC/P0VRuvCp5gIzs=;
+	s=arc-20240116; t=1762824247; c=relaxed/simple;
+	bh=N8S9gLUyRgQFtUHEjTIIwMQf/EwS2wcOuEVL2Bmgh/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBAoUFxmAiC5jQPWD59fGixkUuZ+slq4APR01wTneLnMEXwUXMlKHY15E7j7Ch8zzwmata3nRBS5PiYHMFIsp1Bmj3qnFqcq8wpc8Y2zzVR8V+BEdTeTKAs+bBe5NCB6ZcOjx0I0bvYeqYE0EemE6dgKWMCNnUzqlMdDOlEFSa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW2Ga4C/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UqjdpzDsuS16ePYbl6XTIjdInJGtVyq4KpDgFnGuhupSDKWpIpxUvGjDrzXXunWxZ4PXODvJU13/Y6vuvjymcFrIeMFgPJChKr9gYrc8Jfk634vWMDZdLBTjYkRpQv8+hiCpA1WtRm/3i94IXEuQvzDxkf/PKblkzccvpb6m2+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMRHeq3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW2Ga4C/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C034EC4CEFB;
-	Tue, 11 Nov 2025 01:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMRHeq3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E0DC116D0;
+	Tue, 11 Nov 2025 01:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824245;
-	bh=aD6nOUXAv9du+j8BzP0SzMt5UDNvC/P0VRuvCp5gIzs=;
+	s=korg; t=1762824247;
+	bh=N8S9gLUyRgQFtUHEjTIIwMQf/EwS2wcOuEVL2Bmgh/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oW2Ga4C/gkOLG3b9vnBeyIDnKcBS+DMVYSOcOZzRQ2U6U8qQ8M0o2MmSDtJ4ULpTs
-	 hWCXHMJ/QgVGrOSpJkD0AoJeEvaReW52s35LCxWBTztbTfwmnQcxcudcb7EOwC29Bj
-	 q47Vf9A05XfAHZuhaRQwvrggngFXS7Z/1d8Bh+xQ=
+	b=pMRHeq3fQf4BcXw3jeekAFh44T98eOuVsKIGwRMcfbLulsdlONjrFuKNZWXToGrvY
+	 yv2mgTI+LsvtVvrPFd/l7NQp9D2lWN1WB2ELILfvU6jkoBv+NHRZAGqUObB85rpoSA
+	 TccX5X0/A09Xnw4g0KyaMRVRuXDtEXpUfVsvWKEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Iliopoulos <ailiop@suse.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 418/565] NFSv4.1: fix mount hang after CREATE_SESSION failure
-Date: Tue, 11 Nov 2025 09:44:34 +0900
-Message-ID: <20251111004536.265970722@linuxfoundation.org>
+Subject: [PATCH 6.17 470/849] drm/msm: Fix 32b size truncation
+Date: Tue, 11 Nov 2025 09:40:40 +0900
+Message-ID: <20251111004547.811909015@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +47,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anthony Iliopoulos <ailiop@suse.com>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit bf75ad096820fee5da40e671ebb32de725a1c417 ]
+[ Upstream commit 6d6a29a19b232e29b61a14d58b71fefc2e003fa4 ]
 
-When client initialization goes through server trunking discovery, it
-schedules the state manager and then sleeps waiting for nfs_client
-initialization completion.
+Somehow we never noticed this when arm64 became a thing, many years ago.
 
-The state manager can fail during state recovery, and specifically in
-lease establishment as nfs41_init_clientid() will bail out in case of
-errors returned from nfs4_proc_create_session(), without ever marking
-the client ready. The session creation can fail for a variety of reasons
-e.g. during backchannel parameter negotiation, with status -EINVAL.
+v2: also fix npages
 
-The error status will propagate all the way to the nfs4_state_manager
-but the client status will not be marked, and thus the mount process
-will remain blocked waiting.
-
-Fix it by adding -EINVAL error handling to nfs4_state_manager().
-
-Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Tested-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/669785/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/msm_gem.c       | 21 ++++++++++-----------
+ drivers/gpu/drm/msm/msm_gem.h       |  6 +++---
+ drivers/gpu/drm/msm/msm_gem_prime.c |  2 +-
+ 3 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 397a86011878f..946acdeaf85ad 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2745,6 +2745,9 @@ static void nfs4_state_manager(struct nfs_client *clp)
- 	case -ENETUNREACH:
- 		nfs_mark_client_ready(clp, -EIO);
- 		break;
-+	case -EINVAL:
-+		nfs_mark_client_ready(clp, status);
-+		break;
- 	default:
- 		ssleep(1);
- 		break;
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index 0745d958f3987..9f7fbe577abb1 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -191,7 +191,7 @@ static struct page **get_pages(struct drm_gem_object *obj)
+ 	if (!msm_obj->pages) {
+ 		struct drm_device *dev = obj->dev;
+ 		struct page **p;
+-		int npages = obj->size >> PAGE_SHIFT;
++		size_t npages = obj->size >> PAGE_SHIFT;
+ 
+ 		p = drm_gem_get_pages(obj);
+ 
+@@ -1152,7 +1152,7 @@ static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
+ 
+ /* convenience method to construct a GEM buffer object, and userspace handle */
+ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+-		uint32_t size, uint32_t flags, uint32_t *handle,
++		size_t size, uint32_t flags, uint32_t *handle,
+ 		char *name)
+ {
+ 	struct drm_gem_object *obj;
+@@ -1218,9 +1218,8 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
+ 	.vm_ops = &vm_ops,
+ };
+ 
+-static int msm_gem_new_impl(struct drm_device *dev,
+-		uint32_t size, uint32_t flags,
+-		struct drm_gem_object **obj)
++static int msm_gem_new_impl(struct drm_device *dev, uint32_t flags,
++			    struct drm_gem_object **obj)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+@@ -1254,7 +1253,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
+ 	return 0;
+ }
+ 
+-struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32_t flags)
++struct drm_gem_object *msm_gem_new(struct drm_device *dev, size_t size, uint32_t flags)
+ {
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+@@ -1269,7 +1268,7 @@ struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32
+ 	if (size == 0)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	ret = msm_gem_new_impl(dev, size, flags, &obj);
++	ret = msm_gem_new_impl(dev, flags, &obj);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -1309,12 +1308,12 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_gem_object *msm_obj;
+ 	struct drm_gem_object *obj;
+-	uint32_t size;
+-	int ret, npages;
++	size_t size, npages;
++	int ret;
+ 
+ 	size = PAGE_ALIGN(dmabuf->size);
+ 
+-	ret = msm_gem_new_impl(dev, size, MSM_BO_WC, &obj);
++	ret = msm_gem_new_impl(dev, MSM_BO_WC, &obj);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+@@ -1357,7 +1356,7 @@ struct drm_gem_object *msm_gem_import(struct drm_device *dev,
+ 	return ERR_PTR(ret);
+ }
+ 
+-void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
++void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
+ 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
+ 			 uint64_t *iova)
+ {
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 751c3b4965bcd..a4cf31853c500 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -297,10 +297,10 @@ bool msm_gem_active(struct drm_gem_object *obj);
+ int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *timeout);
+ int msm_gem_cpu_fini(struct drm_gem_object *obj);
+ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+-		uint32_t size, uint32_t flags, uint32_t *handle, char *name);
++		size_t size, uint32_t flags, uint32_t *handle, char *name);
+ struct drm_gem_object *msm_gem_new(struct drm_device *dev,
+-		uint32_t size, uint32_t flags);
+-void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t flags,
++		size_t size, uint32_t flags);
++void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t flags,
+ 			 struct drm_gpuvm *vm, struct drm_gem_object **bo,
+ 			 uint64_t *iova);
+ void msm_gem_kernel_put(struct drm_gem_object *bo, struct drm_gpuvm *vm);
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index c0a33ac839cb6..036d34c674d9a 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -15,7 +15,7 @@
+ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj)
+ {
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+-	int npages = obj->size >> PAGE_SHIFT;
++	size_t npages = obj->size >> PAGE_SHIFT;
+ 
+ 	if (msm_obj->flags & MSM_BO_NO_SHARE)
+ 		return ERR_PTR(-EINVAL);
 -- 
 2.51.0
 
