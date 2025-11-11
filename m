@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4F91F09B3;
-	Tue, 11 Nov 2025 01:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1342DEA67;
+	Tue, 11 Nov 2025 01:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824688; cv=none; b=EmqTV9aOvf5EHCpiW/Dr8q8cz/+3yDuIljLXK5qMHFFwI9vUZcTr2xFnrRDDcHG8vuhp3UyUenfRpZhoryVotzDj7hae1fqbKcAj6kXs9Tshqntan+Bx5R5op7ZvVYgAyFxQIezO6zcUiE6iE/LTM5G1RhHZX2alHP6Balnyo2A=
+	t=1762824690; cv=none; b=k6mxEzMAf5GJ3DldMKpd2kFFznR6BSqfKOS8Ef7jjorlnL9MTI9g9/oh2uga6kFWGCfgFIuQC2uTLCx0wBVrCLLSBdBDqcRE2dZYCWGJJJvHJBfWBCWIUZig/2bkx601aMo63bljlKGA9Sed3EIDgfLciA/weHTp/6J7qawNNTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824688; c=relaxed/simple;
-	bh=A9trkFZqlWLfSXw+t41/1k7/+VjMO8gGjuEGscMhw0M=;
+	s=arc-20240116; t=1762824690; c=relaxed/simple;
+	bh=ROtnLkkuL9lUadE9RsuSBxCbURJevpXVe3jmRedVh6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsoeQJmzjaind7g1LI+R4S8Q/apjKs5q9Z8THsd2+nA/QeEyE63JjT8aZvqSrhl79lGoHKku2pSnBF98XH4bZWW2zXKPCxjvrl7KIC1cvPK5VgfmUZxsCZZvPOa83H82sQt4hBVro8AUFFkTg7NQYyciXr5cjTlnnRAyJy4yVj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2DBd2s9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PZwJsyi0ROCrzt6SYYy0CNopdtD045TYsKe391kwNZCOogiH8QABpeh/PCF9duFlYIvhE4YpdudrN3lIhoKbQGVR9QENhJf+opXaGdS8ClitFJheeBvUYfhyVG5KL3eUBtv26eeRBmrjCClfSioirv/iSZjWh2rnb/rCJ0iGUfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPodHeDY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2DBd2s9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F321C4CEFB;
-	Tue, 11 Nov 2025 01:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPodHeDY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AE8C16AAE;
+	Tue, 11 Nov 2025 01:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824688;
-	bh=A9trkFZqlWLfSXw+t41/1k7/+VjMO8gGjuEGscMhw0M=;
+	s=korg; t=1762824690;
+	bh=ROtnLkkuL9lUadE9RsuSBxCbURJevpXVe3jmRedVh6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2DBd2s9WFi8GBHa1/45YlCAMmkHQE4OFho3JC8PUWiYWSsN0UvuhTVQRs02Ksdqh
-	 ehZNemCgpBZKo73G/DwOS+cZLxYuOtgqf7+ei3GMiWpU568Qpyh3aD5mvyIi5h3yi2
-	 FtczIjgw4V8wqX/ar+qZbtfgdx+vORKE7X14upm0=
+	b=ZPodHeDYhc268YQzc+TpY2DEghcI3zhK4zAJc0e8NRl0y32E+8Htgp6/TSx9fZkEW
+	 PWlGZDuCGXKFarfLmlseFj1uHdxe/OT1kncpMN7dG0i4CcECLM1ndStqeTTL79boTI
+	 Sw97mvVg22okecLkQkOFXs88+bNgx/wsY5I+7jiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Sean Christopherson <seanjc@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Mateusz Guzik <mjguzik@gmail.com>
-Subject: [PATCH 6.12 498/565] x86: uaccess: dont use runtime-const rewriting in modules
-Date: Tue, 11 Nov 2025 09:45:54 +0900
-Message-ID: <20251111004538.141805709@linuxfoundation.org>
+	Sreeja Golui <sreeja.golui@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 551/849] drm/amd/display: Fix DMCUB loading sequence for DCN3.2
+Date: Tue, 11 Nov 2025 09:42:01 +0900
+Message-ID: <20251111004549.728439878@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,130 +50,180 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 284922f4c563aa3a8558a00f2a05722133237fe8 ]
+[ Upstream commit 18e755155caa57a6e6c4aa4a40b0db0fba015289 ]
 
-The runtime-const infrastructure was never designed to handle the
-modular case, because the constant fixup is only done at boot time for
-core kernel code.
+[Why]
+New sequence from HW for reset and firmware reloading has been
+provided that aims to stabilize the reload sequence in the case the
+firmware is hung or has outstanding requests.
 
-But by the time I used it for the x86-64 user space limit handling in
-commit 86e6b1547b3d ("x86: fix user address masking non-canonical
-speculation issue"), I had completely repressed that fact.
+[How]
+Update the sequence to remove the DMUIF reset and the redundant
+writes in the release.
 
-And it all happens to work because the only code that currently actually
-gets inlined by modules is for the access_ok() limit check, where the
-default constant value works even when not fixed up.  Because at least I
-had intentionally made it be something that is in the non-canonical
-address space region.
-
-But it's technically very wrong, and it does mean that at least in
-theory, the use of 'access_ok()' + '__get_user()' can trigger the same
-speculation issue with non-canonical addresses that the original commit
-was all about.
-
-The pattern is unusual enough that this probably doesn't matter in
-practice, but very wrong is still very wrong.  Also, let's fix it before
-the nice optimized scoped user accessor helpers that Thomas Gleixner is
-working on cause this pseudo-constant to then be more widely used.
-
-This all came up due to an unrelated discussion with Mateusz Guzik about
-using the runtime const infrastructure for names_cachep accesses too.
-There the modular case was much more obviously broken, and Mateusz noted
-it in his 'v2' of the patch series.
-
-That then made me notice how broken 'access_ok()' had been in modules
-all along.  Mea culpa, mea maxima culpa.
-
-Fix it by simply not using the runtime-const code in modules, and just
-using the USER_PTR_MAX variable value instead.  This is not
-performance-critical like the core user accessor functions (get_user()
-and friends) are.
-
-Also make sure this doesn't get forgotten the next time somebody wants
-to do runtime constant optimizations by having the x86 runtime-const.h
-header file error out if included by modules.
-
-Fixes: 86e6b1547b3d ("x86: fix user address masking non-canonical speculation issue")
-Acked-by: Borislav Petkov <bp@alien8.de>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Triggered-by: Mateusz Guzik <mjguzik@gmail.com>
-Link: https://lore.kernel.org/all/20251030105242.801528-1-mjguzik@gmail.com/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reviewed-by: Sreeja Golui <sreeja.golui@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/runtime-const.h |  4 ++++
- arch/x86/include/asm/uaccess_64.h    | 10 +++++-----
- arch/x86/kernel/cpu/common.c         |  6 +++++-
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ .../gpu/drm/amd/display/dmub/src/dmub_dcn32.c | 53 ++++++++++---------
+ .../gpu/drm/amd/display/dmub/src/dmub_dcn32.h |  8 ++-
+ 2 files changed, 35 insertions(+), 26 deletions(-)
 
-diff --git a/arch/x86/include/asm/runtime-const.h b/arch/x86/include/asm/runtime-const.h
-index 8d983cfd06ea6..e5a13dc8816e2 100644
---- a/arch/x86/include/asm/runtime-const.h
-+++ b/arch/x86/include/asm/runtime-const.h
-@@ -2,6 +2,10 @@
- #ifndef _ASM_RUNTIME_CONST_H
- #define _ASM_RUNTIME_CONST_H
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.c
+index e7056205b0506..ce041f6239dc7 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.c
+@@ -89,44 +89,50 @@ static inline void dmub_dcn32_translate_addr(const union dmub_addr *addr_in,
+ void dmub_dcn32_reset(struct dmub_srv *dmub)
+ {
+ 	union dmub_gpint_data_register cmd;
+-	const uint32_t timeout = 30;
+-	uint32_t in_reset, scratch, i;
++	const uint32_t timeout = 100000;
++	uint32_t in_reset, is_enabled, scratch, i, pwait_mode;
  
-+#ifdef MODULE
-+  #error "Cannot use runtime-const infrastructure from modules"
-+#endif
+ 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &in_reset);
++	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_enabled);
+ 
+-	if (in_reset == 0) {
++	if (in_reset == 0 && is_enabled != 0) {
+ 		cmd.bits.status = 1;
+ 		cmd.bits.command_code = DMUB_GPINT__STOP_FW;
+ 		cmd.bits.param = 0;
+ 
+ 		dmub->hw_funcs.set_gpint(dmub, cmd);
+ 
+-		/**
+-		 * Timeout covers both the ACK and the wait
+-		 * for remaining work to finish.
+-		 *
+-		 * This is mostly bound by the PHY disable sequence.
+-		 * Each register check will be greater than 1us, so
+-		 * don't bother using udelay.
+-		 */
+-
+ 		for (i = 0; i < timeout; ++i) {
+ 			if (dmub->hw_funcs.is_gpint_acked(dmub, cmd))
+ 				break;
 +
- #ifdef __ASSEMBLY__
++			udelay(1);
+ 		}
  
- .macro RUNTIME_CONST_PTR sym reg
-diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
-index c52f0133425b9..3f843369f4097 100644
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -12,12 +12,12 @@
- #include <asm/cpufeatures.h>
- #include <asm/page.h>
- #include <asm/percpu.h>
--#include <asm/runtime-const.h>
- 
--/*
-- * Virtual variable: there's no actual backing store for this,
-- * it can purely be used as 'runtime_const_ptr(USER_PTR_MAX)'
-- */
-+#ifdef MODULE
-+  #define runtime_const_ptr(sym) (sym)
-+#else
-+  #include <asm/runtime-const.h>
-+#endif
- extern unsigned long USER_PTR_MAX;
- 
- #ifdef CONFIG_ADDRESS_MASKING
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index bc51fccba4cb6..b54717e6fc606 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -76,6 +76,10 @@
- DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
- EXPORT_PER_CPU_SYMBOL(cpu_info);
- 
-+/* Used for modules: built-in code uses runtime constants */
-+unsigned long USER_PTR_MAX;
-+EXPORT_SYMBOL(USER_PTR_MAX);
+ 		for (i = 0; i < timeout; ++i) {
+-			scratch = dmub->hw_funcs.get_gpint_response(dmub);
++			scratch = REG_READ(DMCUB_SCRATCH7);
+ 			if (scratch == DMUB_GPINT__STOP_FW_RESPONSE)
+ 				break;
 +
- u32 elf_hwcap2 __read_mostly;
++			udelay(1);
+ 		}
  
- /* Number of siblings per CPU package */
-@@ -2473,7 +2477,7 @@ void __init arch_cpu_finalize_init(void)
- 	alternative_instructions();
++		for (i = 0; i < timeout; ++i) {
++			REG_GET(DMCUB_CNTL, DMCUB_PWAIT_MODE_STATUS, &pwait_mode);
++			if (pwait_mode & (1 << 0))
++				break;
++
++			udelay(1);
++		}
+ 		/* Force reset in case we timed out, DMCUB is likely hung. */
+ 	}
  
- 	if (IS_ENABLED(CONFIG_X86_64)) {
--		unsigned long USER_PTR_MAX = TASK_SIZE_MAX;
-+		USER_PTR_MAX = TASK_SIZE_MAX;
+-	REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
+-	REG_UPDATE(DMCUB_CNTL, DMCUB_ENABLE, 0);
+-	REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 1);
++	if (is_enabled) {
++		REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
++		udelay(1);
++		REG_UPDATE(DMCUB_CNTL, DMCUB_ENABLE, 0);
++	}
++
+ 	REG_WRITE(DMCUB_INBOX1_RPTR, 0);
+ 	REG_WRITE(DMCUB_INBOX1_WPTR, 0);
+ 	REG_WRITE(DMCUB_OUTBOX1_RPTR, 0);
+@@ -135,7 +141,7 @@ void dmub_dcn32_reset(struct dmub_srv *dmub)
+ 	REG_WRITE(DMCUB_OUTBOX0_WPTR, 0);
+ 	REG_WRITE(DMCUB_SCRATCH0, 0);
  
- 		/*
- 		 * Enable this when LAM is gated on LASS support
+-	/* Clear the GPINT command manually so we don't reset again. */
++	/* Clear the GPINT command manually so we don't send anything during boot. */
+ 	cmd.all = 0;
+ 	dmub->hw_funcs.set_gpint(dmub, cmd);
+ }
+@@ -419,8 +425,8 @@ uint32_t dmub_dcn32_get_current_time(struct dmub_srv *dmub)
+ 
+ void dmub_dcn32_get_diagnostic_data(struct dmub_srv *dmub)
+ {
+-	uint32_t is_dmub_enabled, is_soft_reset, is_sec_reset;
+-	uint32_t is_traceport_enabled, is_cw0_enabled, is_cw6_enabled;
++	uint32_t is_dmub_enabled, is_soft_reset, is_pwait;
++	uint32_t is_traceport_enabled, is_cw6_enabled;
+ 	struct dmub_timeout_info timeout = {0};
+ 
+ 	if (!dmub)
+@@ -470,18 +476,15 @@ void dmub_dcn32_get_diagnostic_data(struct dmub_srv *dmub)
+ 	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_dmub_enabled);
+ 	dmub->debug.is_dmcub_enabled = is_dmub_enabled;
+ 
++	REG_GET(DMCUB_CNTL, DMCUB_PWAIT_MODE_STATUS, &is_pwait);
++	dmub->debug.is_pwait = is_pwait;
++
+ 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &is_soft_reset);
+ 	dmub->debug.is_dmcub_soft_reset = is_soft_reset;
+ 
+-	REG_GET(DMCUB_SEC_CNTL, DMCUB_SEC_RESET_STATUS, &is_sec_reset);
+-	dmub->debug.is_dmcub_secure_reset = is_sec_reset;
+-
+ 	REG_GET(DMCUB_CNTL, DMCUB_TRACEPORT_EN, &is_traceport_enabled);
+ 	dmub->debug.is_traceport_en  = is_traceport_enabled;
+ 
+-	REG_GET(DMCUB_REGION3_CW0_TOP_ADDRESS, DMCUB_REGION3_CW0_ENABLE, &is_cw0_enabled);
+-	dmub->debug.is_cw0_enabled = is_cw0_enabled;
+-
+ 	REG_GET(DMCUB_REGION3_CW6_TOP_ADDRESS, DMCUB_REGION3_CW6_ENABLE, &is_cw6_enabled);
+ 	dmub->debug.is_cw6_enabled = is_cw6_enabled;
+ 
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.h b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.h
+index 1a229450c53db..daf81027d6631 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.h
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn32.h
+@@ -89,6 +89,9 @@ struct dmub_srv;
+ 	DMUB_SR(DMCUB_REGION5_OFFSET) \
+ 	DMUB_SR(DMCUB_REGION5_OFFSET_HIGH) \
+ 	DMUB_SR(DMCUB_REGION5_TOP_ADDRESS) \
++	DMUB_SR(DMCUB_REGION6_OFFSET) \
++	DMUB_SR(DMCUB_REGION6_OFFSET_HIGH) \
++	DMUB_SR(DMCUB_REGION6_TOP_ADDRESS) \
+ 	DMUB_SR(DMCUB_SCRATCH0) \
+ 	DMUB_SR(DMCUB_SCRATCH1) \
+ 	DMUB_SR(DMCUB_SCRATCH2) \
+@@ -155,6 +158,8 @@ struct dmub_srv;
+ 	DMUB_SF(DMCUB_REGION4_TOP_ADDRESS, DMCUB_REGION4_ENABLE) \
+ 	DMUB_SF(DMCUB_REGION5_TOP_ADDRESS, DMCUB_REGION5_TOP_ADDRESS) \
+ 	DMUB_SF(DMCUB_REGION5_TOP_ADDRESS, DMCUB_REGION5_ENABLE) \
++	DMUB_SF(DMCUB_REGION6_TOP_ADDRESS, DMCUB_REGION6_TOP_ADDRESS) \
++	DMUB_SF(DMCUB_REGION6_TOP_ADDRESS, DMCUB_REGION6_ENABLE) \
+ 	DMUB_SF(CC_DC_PIPE_DIS, DC_DMCUB_ENABLE) \
+ 	DMUB_SF(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET) \
+ 	DMUB_SF(DCN_VM_FB_LOCATION_BASE, FB_BASE) \
+@@ -162,7 +167,8 @@ struct dmub_srv;
+ 	DMUB_SF(DMCUB_INBOX0_WPTR, DMCUB_INBOX0_WPTR) \
+ 	DMUB_SF(DMCUB_REGION3_TMR_AXI_SPACE, DMCUB_REGION3_TMR_AXI_SPACE) \
+ 	DMUB_SF(DMCUB_INTERRUPT_ENABLE, DMCUB_GPINT_IH_INT_EN) \
+-	DMUB_SF(DMCUB_INTERRUPT_ACK, DMCUB_GPINT_IH_INT_ACK)
++	DMUB_SF(DMCUB_INTERRUPT_ACK, DMCUB_GPINT_IH_INT_ACK) \
++	DMUB_SF(DMCUB_CNTL, DMCUB_PWAIT_MODE_STATUS)
+ 
+ struct dmub_srv_dcn32_reg_offset {
+ #define DMUB_SR(reg) uint32_t reg;
 -- 
 2.51.0
 
