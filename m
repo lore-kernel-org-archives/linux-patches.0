@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7A133F37D;
-	Tue, 11 Nov 2025 01:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8E133F382;
+	Tue, 11 Nov 2025 01:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825342; cv=none; b=btzM2V12Ds3AzKLiIXGAYQRicqNzjzKhPIZv6nPQ18xdtVqnXRpswunY15ZMmkQNiYGBSchACA2/ELN4SChAcNXMrTEpGo3ta67RqPuoWgkaxLs7tLdnsoEdxnxSkN2EmJS2XoBQGTjHRQu6zA8wwVPFpmhFcokJzc6n0CrSJss=
+	t=1762825343; cv=none; b=mRwf+WhUQrb9ByfVXGvnhFGkqZQ219VeMzrg6AxS7rtK6Kt5lKGZjeip984y1udVgSjGxfy29zQwh5ycfMH0Jv4AA6ZrlSDCfxB8ogKfv2fojaxI63Fk+6oOsuUV2HyA0YQPLoxoXvw5m/liqJRINa86eC4pswfWnkSlongXxu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825342; c=relaxed/simple;
-	bh=pI4WSoSuI9MwOJx2fCnuM5Ghh7KTO+A/hJqmMoWOkK4=;
+	s=arc-20240116; t=1762825343; c=relaxed/simple;
+	bh=u7SGvKR7+BEG4Hxvsr/EXCKgCD/XY3/n5eAxjI3talg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqzhZ2GaNbStpRURIdnYF2vUW3yGq2VKW0TA1RU6ZSCZOVMQrDGYwtzwypDc74RPN9K2SQ41UeF1s7gmZhEqzzj8m/7Wa862OFQan3zLxK9hRCRQFkN6faLLmxrmtUynOsyeaRTHf/Cn1u9q3oo9DMl8fhnh+GgngmA47sooJis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiQk5PPS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDfNCjvhhMXDI+2ISIpFhhBWFEG1KctKRiZEHaFGtASVR4OZsjoMP0MW4ceJhYCGlRbdC0sVjlDyxRI+QyYCtHya8bzPPXn4ZP3fOStRx9HsFst6BK7kJ1X7gqaHKrSQCVsxIjyQ8G3Aeob88gapjlLpilZWrGOjCv/ja1WTuE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJrCWJe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiQk5PPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82786C16AAE;
-	Tue, 11 Nov 2025 01:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJrCWJe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D79C4CEF5;
+	Tue, 11 Nov 2025 01:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825340;
-	bh=pI4WSoSuI9MwOJx2fCnuM5Ghh7KTO+A/hJqmMoWOkK4=;
+	s=korg; t=1762825343;
+	bh=u7SGvKR7+BEG4Hxvsr/EXCKgCD/XY3/n5eAxjI3talg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiQk5PPSqxWaSDdqwrdw9HG6L90ztoKD/WM2kcjssys14LrcSwSqTpGoD/uzERZFT
-	 NsZXEHQJYKvy/pBQywYUwObUqd4xdVma9IYl7kfrXcDXy4EqhqbI8eM2N69r7RnXX4
-	 byXauCvYslwQu6vjlovOVQFY1c2if7/ucp4Fj0p8=
+	b=lJrCWJe9P03Z4/xvSm4MLFHVRMvBQL4QAqQwsVb83BDVcpIZcBC4mkz9YGBawhO2C
+	 aQLQT1/gzgEMkADdUDdfojf0NkKkhVWX35QylNbFT4VCW8EARJuvLwxiTyGnoaOlRe
+	 MPqyMdYP7gsw34eyM4//BWlUPmedc3td8bNzr92I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Matthias Schiffer <matthias.schiffer@tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 718/849] ACPI: property: Return present device nodes only on fwnode interface
-Date: Tue, 11 Nov 2025 09:44:48 +0900
-Message-ID: <20251111004553.791027632@linuxfoundation.org>
+Subject: [PATCH 6.17 709/849] clk: ti: am33xx: keep WKUP_DEBUGSS_CLKCTRL enabled
+Date: Tue, 11 Nov 2025 09:44:39 +0900
+Message-ID: <20251111004553.578622616@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,73 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Matthias Schiffer <matthias.schiffer@tq-group.com>
 
-[ Upstream commit d9f866b2bb3eec38b3734f1fed325ec7c55ccdfa ]
+[ Upstream commit 1e0d75258bd09323cb452655549e03975992b29e ]
 
-fwnode_graph_get_next_subnode() may return fwnode backed by ACPI
-device nodes and there has been no check these devices are present
-in the system, unlike there has been on fwnode OF backend.
+As described in AM335x Errata Advisory 1.0.42, WKUP_DEBUGSS_CLKCTRL
+can't be disabled - the clock module will just be stuck in transitioning
+state forever, resulting in the following warning message after the wait
+loop times out:
 
-In order to provide consistent behaviour towards callers,
-add a check for device presence by introducing
-a new function acpi_get_next_present_subnode(), used as the
-get_next_child_node() fwnode operation that also checks device
-node presence.
+    l3-aon-clkctrl:0000:0: failed to disable
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20251001102636.1272722-2-sakari.ailus@linux.intel.com
-[ rjw: Kerneldoc comment and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Just add the clock to enable_init_clks, so no attempt is made to disable
+it.
+
+Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Acked-by: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/clk/ti/clk-33xx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index c086786fe84cb..d74678f0ba4af 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -1357,6 +1357,28 @@ struct fwnode_handle *acpi_get_next_subnode(const struct fwnode_handle *fwnode,
- 	return NULL;
- }
- 
-+/*
-+ * acpi_get_next_present_subnode - Return the next present child node handle
-+ * @fwnode: Firmware node to find the next child node for.
-+ * @child: Handle to one of the device's child nodes or a null handle.
-+ *
-+ * Like acpi_get_next_subnode(), but the device nodes returned by
-+ * acpi_get_next_present_subnode() are guaranteed to be present.
-+ *
-+ * Returns: The fwnode handle of the next present sub-node.
-+ */
-+static struct fwnode_handle *
-+acpi_get_next_present_subnode(const struct fwnode_handle *fwnode,
-+			      struct fwnode_handle *child)
-+{
-+	do {
-+		child = acpi_get_next_subnode(fwnode, child);
-+	} while (is_acpi_device_node(child) &&
-+		 !acpi_device_is_present(to_acpi_device_node(child)));
-+
-+	return child;
-+}
-+
- /**
-  * acpi_node_get_parent - Return parent fwnode of this fwnode
-  * @fwnode: Firmware node whose parent to get
-@@ -1701,7 +1723,7 @@ static int acpi_fwnode_irq_get(const struct fwnode_handle *fwnode,
- 		.property_read_string_array =				\
- 			acpi_fwnode_property_read_string_array,		\
- 		.get_parent = acpi_node_get_parent,			\
--		.get_next_child_node = acpi_get_next_subnode,		\
-+		.get_next_child_node = acpi_get_next_present_subnode,	\
- 		.get_named_child_node = acpi_fwnode_get_named_child_node, \
- 		.get_name = acpi_fwnode_get_name,			\
- 		.get_name_prefix = acpi_fwnode_get_name_prefix,		\
+diff --git a/drivers/clk/ti/clk-33xx.c b/drivers/clk/ti/clk-33xx.c
+index 85c50ea39e6da..9269e6a0db6a4 100644
+--- a/drivers/clk/ti/clk-33xx.c
++++ b/drivers/clk/ti/clk-33xx.c
+@@ -258,6 +258,8 @@ static const char *enable_init_clks[] = {
+ 	"dpll_ddr_m2_ck",
+ 	"dpll_mpu_m2_ck",
+ 	"l3_gclk",
++	/* WKUP_DEBUGSS_CLKCTRL - disable fails, AM335x Errata Advisory 1.0.42 */
++	"l3-aon-clkctrl:0000:0",
+ 	/* AM3_L3_L3_MAIN_CLKCTRL, needed during suspend */
+ 	"l3-clkctrl:00bc:0",
+ 	"l4hs_gclk",
 -- 
 2.51.0
 
