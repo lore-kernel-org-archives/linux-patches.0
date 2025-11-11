@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D582DCF6E;
-	Tue, 11 Nov 2025 01:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4877C26E71F;
+	Tue, 11 Nov 2025 01:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824342; cv=none; b=ciXYIMgTFhMqhJGEu6PjWq0Ai6LVk4VaLp5J5uGjyRA9L8LWwYwqFn0ZIzwkYgWFCI3AhujggOTa2xuHlulvx/1sso3QzS1JerzgarJLRZbKuYfNK1DFbcuOB3wV3K3Th++HU6IZJOLVAvq0ONIov04iCQh8oRArEpDo8TGhVgo=
+	t=1762824344; cv=none; b=JOem77q7GxvBW2f8oMSeCQU9aWLynQ5sY7O71sZLZh4KE69ZcbRLGOEOv0SILycrW5VHUE9pKQNd8Nm4uFKdLrSjJYiPo2OtsdinMyd7f2tYPDqrisSVN8HCIhZk5lFN9MQBXvRrqUUerm+Gm/dX7TWqlm/yYRAqddVvVX/2aZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824342; c=relaxed/simple;
-	bh=ZEgVsRLcSVPWxPG9sqWRQz4iwboqVNgWPCesFwrTlX8=;
+	s=arc-20240116; t=1762824344; c=relaxed/simple;
+	bh=IwmoZNLKSs1O6K75p6G5UR4Km81rQeT/yi8PLAMN1jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6YHemU1fI7x4SEEAnCRGc2KY0K8lHjRG3w1etvNjPTqshx8j3uQPya3aQZsUKlwSJZwNCNsjsS+5Naayg1SnEA4CbD3jwBISmLNhuKDelMRrBYSYu/exVXBoUT15PUE2iqlKf9B0VHv0afIe3bf1ZrnOOeT6UxPlT6zs0AXTGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tv0Iglbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OovmOdQ+NrR/SleXIsgoh+F5J98Nmsw1pfs0RgViTe56zj5OZS29kO9JyI5ZNfwqLtiE48eQzYNDwHFt6VzdHGEdqjw5YxxHSdlIwXx3UhrzKaFDatOxk2M+vV3FbrgqB7u8x5isxvk847TZoWDqEgaiRj+uslbU5gA/CzMn0Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZFNLjeP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tv0Iglbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC51C16AAE;
-	Tue, 11 Nov 2025 01:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZFNLjeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D507CC116D0;
+	Tue, 11 Nov 2025 01:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824341;
-	bh=ZEgVsRLcSVPWxPG9sqWRQz4iwboqVNgWPCesFwrTlX8=;
+	s=korg; t=1762824344;
+	bh=IwmoZNLKSs1O6K75p6G5UR4Km81rQeT/yi8PLAMN1jY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tv0Iglbti/5jAGSfI6mjuqRhWlp+Ivmqj1mHP6irTJp/US5+Vz6aYi9utsS+0LvXq
-	 iUvbKFYaejg1EuvOSzbQaVu/sVZsKEH4ELCSc2XIbsImA8zxqzI4rYipO0npL5aoj0
-	 ThXWYijrBiEOt94wd3sE2T/flF0Nzqf+fcl2ALEM=
+	b=zZFNLjePRXb+qchwTYnt+4GHrYbkez49uy5Nwgv1dMc9ntIIF1vNnS25b0CIflAiF
+	 VNSEGxKT0v0Kb/Ft0L522hfvOhq5/0tdgXlNuPHYlKfehW7U43jpuhxn2LUw2CINlo
+	 dMSZJRWJTWvkq+afviqkg+O55Mni0laF50bXMe18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Sinyuk <konstantin.sinyuk@intel.com>,
-	Koby Elbaz <koby.elbaz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 425/565] accel/habanalabs/gaudi2: read preboot status after recovering from dirty state
-Date: Tue, 11 Nov 2025 09:44:41 +0900
-Message-ID: <20251111004536.424063948@linuxfoundation.org>
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Ramu R <ramu.r@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Subject: [PATCH 6.17 477/849] idpf: link NAPIs to queues
+Date: Tue, 11 Nov 2025 09:40:47 +0900
+Message-ID: <20251111004547.976302591@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +49,228 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit a0d866bab184161ba155b352650083bf6695e50e ]
+[ Upstream commit bd74a86bc75d35adefbebcec7c3a743d02c06230 ]
 
-Dirty state can occur when the host VM undergoes a reset while the
-device does not. In such a case, the driver must reset the device before
-it can be used again. As part of this reset, the device capabilities
-are zeroed. Therefore, the driver must read the Preboot status again to
-learn the Preboot state, capabilities, and security configuration.
+Add the missing linking of NAPIs to netdev queues when enabling
+interrupt vectors in order to support NAPI configuration and
+interfaces requiring get_rx_queue()->napi to be set (like XSk
+busy polling).
 
-Signed-off-by: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
-Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
-Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
+As currently, idpf_vport_{start,stop}() is called from several flows
+with inconsistent RTNL locking, we need to synchronize them to avoid
+runtime assertions. Notably:
+
+* idpf_{open,stop}() -- regular NDOs, RTNL is always taken;
+* idpf_initiate_soft_reset() -- usually called under RTNL;
+* idpf_init_task -- called from the init work, needs RTNL;
+* idpf_vport_dealloc -- called without RTNL taken, needs it.
+
+Expand common idpf_vport_{start,stop}() to take an additional bool
+telling whether we need to manually take the RTNL lock.
+
+Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # helper
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Ramu R <ramu.r@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/gaudi2/gaudi2.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c  | 38 +++++++++++++++------
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 17 +++++++++
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-index 5722e4128d3ce..3df72a5d024a6 100644
---- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
-+++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-@@ -3150,7 +3150,6 @@ static int gaudi2_early_init(struct hl_device *hdev)
- 	rc = hl_fw_read_preboot_status(hdev);
- 	if (rc) {
- 		if (hdev->reset_on_preboot_fail)
--			/* we are already on failure flow, so don't check if hw_fini fails. */
- 			hdev->asic_funcs->hw_fini(hdev, true, false);
- 		goto pci_fini;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index e327950c93d8e..f4b89d222610f 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -884,14 +884,18 @@ static void idpf_remove_features(struct idpf_vport *vport)
+ /**
+  * idpf_vport_stop - Disable a vport
+  * @vport: vport to disable
++ * @rtnl: whether to take RTNL lock
+  */
+-static void idpf_vport_stop(struct idpf_vport *vport)
++static void idpf_vport_stop(struct idpf_vport *vport, bool rtnl)
+ {
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ 
+ 	if (np->state <= __IDPF_VPORT_DOWN)
+ 		return;
+ 
++	if (rtnl)
++		rtnl_lock();
++
+ 	netif_carrier_off(vport->netdev);
+ 	netif_tx_disable(vport->netdev);
+ 
+@@ -913,6 +917,9 @@ static void idpf_vport_stop(struct idpf_vport *vport)
+ 	idpf_vport_queues_rel(vport);
+ 	idpf_vport_intr_rel(vport);
+ 	np->state = __IDPF_VPORT_DOWN;
++
++	if (rtnl)
++		rtnl_unlock();
+ }
+ 
+ /**
+@@ -936,7 +943,7 @@ static int idpf_stop(struct net_device *netdev)
+ 	idpf_vport_ctrl_lock(netdev);
+ 	vport = idpf_netdev_to_vport(netdev);
+ 
+-	idpf_vport_stop(vport);
++	idpf_vport_stop(vport, false);
+ 
+ 	idpf_vport_ctrl_unlock(netdev);
+ 
+@@ -1029,7 +1036,7 @@ static void idpf_vport_dealloc(struct idpf_vport *vport)
+ 	idpf_idc_deinit_vport_aux_device(vport->vdev_info);
+ 
+ 	idpf_deinit_mac_addr(vport);
+-	idpf_vport_stop(vport);
++	idpf_vport_stop(vport, true);
+ 
+ 	if (!test_bit(IDPF_HR_RESET_IN_PROG, adapter->flags))
+ 		idpf_decfg_netdev(vport);
+@@ -1370,8 +1377,9 @@ static void idpf_rx_init_buf_tail(struct idpf_vport *vport)
+ /**
+  * idpf_vport_open - Bring up a vport
+  * @vport: vport to bring up
++ * @rtnl: whether to take RTNL lock
+  */
+-static int idpf_vport_open(struct idpf_vport *vport)
++static int idpf_vport_open(struct idpf_vport *vport, bool rtnl)
+ {
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ 	struct idpf_adapter *adapter = vport->adapter;
+@@ -1381,6 +1389,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
+ 	if (np->state != __IDPF_VPORT_DOWN)
+ 		return -EBUSY;
+ 
++	if (rtnl)
++		rtnl_lock();
++
+ 	/* we do not allow interface up just yet */
+ 	netif_carrier_off(vport->netdev);
+ 
+@@ -1388,7 +1399,7 @@ static int idpf_vport_open(struct idpf_vport *vport)
+ 	if (err) {
+ 		dev_err(&adapter->pdev->dev, "Failed to allocate interrupts for vport %u: %d\n",
+ 			vport->vport_id, err);
+-		return err;
++		goto err_rtnl_unlock;
  	}
-@@ -3162,6 +3161,13 @@ static int gaudi2_early_init(struct hl_device *hdev)
- 			dev_err(hdev->dev, "failed to reset HW in dirty state (%d)\n", rc);
- 			goto pci_fini;
+ 
+ 	err = idpf_vport_queues_alloc(vport);
+@@ -1475,6 +1486,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
+ 		goto deinit_rss;
+ 	}
+ 
++	if (rtnl)
++		rtnl_unlock();
++
+ 	return 0;
+ 
+ deinit_rss:
+@@ -1492,6 +1506,10 @@ static int idpf_vport_open(struct idpf_vport *vport)
+ intr_rel:
+ 	idpf_vport_intr_rel(vport);
+ 
++err_rtnl_unlock:
++	if (rtnl)
++		rtnl_unlock();
++
+ 	return err;
+ }
+ 
+@@ -1572,7 +1590,7 @@ void idpf_init_task(struct work_struct *work)
+ 	np = netdev_priv(vport->netdev);
+ 	np->state = __IDPF_VPORT_DOWN;
+ 	if (test_and_clear_bit(IDPF_VPORT_UP_REQUESTED, vport_config->flags))
+-		idpf_vport_open(vport);
++		idpf_vport_open(vport, true);
+ 
+ 	/* Spawn and return 'idpf_init_task' work queue until all the
+ 	 * default vports are created
+@@ -1962,7 +1980,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
+ 		idpf_send_delete_queues_msg(vport);
+ 	} else {
+ 		set_bit(IDPF_VPORT_DEL_QUEUES, vport->flags);
+-		idpf_vport_stop(vport);
++		idpf_vport_stop(vport, false);
+ 	}
+ 
+ 	idpf_deinit_rss(vport);
+@@ -1992,7 +2010,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
+ 		goto err_open;
+ 
+ 	if (current_state == __IDPF_VPORT_UP)
+-		err = idpf_vport_open(vport);
++		err = idpf_vport_open(vport, false);
+ 
+ 	goto free_vport;
+ 
+@@ -2002,7 +2020,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
+ 
+ err_open:
+ 	if (current_state == __IDPF_VPORT_UP)
+-		idpf_vport_open(vport);
++		idpf_vport_open(vport, false);
+ 
+ free_vport:
+ 	kfree(new_vport);
+@@ -2240,7 +2258,7 @@ static int idpf_open(struct net_device *netdev)
+ 	if (err)
+ 		goto unlock;
+ 
+-	err = idpf_vport_open(vport);
++	err = idpf_vport_open(vport, false);
+ 
+ unlock:
+ 	idpf_vport_ctrl_unlock(netdev);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index e75a94d7ac2ac..92634c4bb369a 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -3430,6 +3430,20 @@ void idpf_vport_intr_rel(struct idpf_vport *vport)
+ 	vport->q_vectors = NULL;
+ }
+ 
++static void idpf_q_vector_set_napi(struct idpf_q_vector *q_vector, bool link)
++{
++	struct napi_struct *napi = link ? &q_vector->napi : NULL;
++	struct net_device *dev = q_vector->vport->netdev;
++
++	for (u32 i = 0; i < q_vector->num_rxq; i++)
++		netif_queue_set_napi(dev, q_vector->rx[i]->idx,
++				     NETDEV_QUEUE_TYPE_RX, napi);
++
++	for (u32 i = 0; i < q_vector->num_txq; i++)
++		netif_queue_set_napi(dev, q_vector->tx[i]->idx,
++				     NETDEV_QUEUE_TYPE_TX, napi);
++}
++
+ /**
+  * idpf_vport_intr_rel_irq - Free the IRQ association with the OS
+  * @vport: main vport structure
+@@ -3450,6 +3464,7 @@ static void idpf_vport_intr_rel_irq(struct idpf_vport *vport)
+ 		vidx = vport->q_vector_idxs[vector];
+ 		irq_num = adapter->msix_entries[vidx].vector;
+ 
++		idpf_q_vector_set_napi(q_vector, false);
+ 		kfree(free_irq(irq_num, q_vector));
+ 	}
+ }
+@@ -3637,6 +3652,8 @@ static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
+ 				   "Request_irq failed, error: %d\n", err);
+ 			goto free_q_irqs;
  		}
 +
-+		rc = hl_fw_read_preboot_status(hdev);
-+		if (rc) {
-+			if (hdev->reset_on_preboot_fail)
-+				hdev->asic_funcs->hw_fini(hdev, true, false);
-+			goto pci_fini;
-+		}
++		idpf_q_vector_set_napi(q_vector, true);
  	}
  
  	return 0;
