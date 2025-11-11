@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDA54C97;
-	Tue, 11 Nov 2025 00:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD3B4C97;
+	Tue, 11 Nov 2025 00:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822353; cv=none; b=GvjcVsVMPr3QFm3RVuzLSFzglVN4xegKy2kWp726h7IlR7Z+bSConVY9qzq1r3nQlLIr9l61lcUpxXeoUvUySIN4Wxoo2gO5FJSjsoR4eqdPtPZyTLfEPuIs3NooCKsV5LH4BvTxEBMP+SfBMbEnDkhgfhxAzI8xWe2qlfB5mOg=
+	t=1762822356; cv=none; b=fVuqFMlzv+evBkhJBFsxDTTfdCPCd7zCCxbDJX0vr3sVCJFYy0X7XyRNyZyIXFPOXzJoKx3w1/nUtSPObtsFHMc/J1bQnO4GlT1NY4i4lmwjMI5e/C0hMdQh3O+jMEVLfJQipzr6xiV95i8wE+7RCEDQg8tLB5rckCmp6SLGwnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822353; c=relaxed/simple;
-	bh=bZMcs7QjRIxaGFrvGRHnPFk2AcreOr0JXVEnF/Bc7ug=;
+	s=arc-20240116; t=1762822356; c=relaxed/simple;
+	bh=hZPD9rOS9XjTayKErqOxWiSo2h5/dw8/U40deVKKjwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyQCOguQFhd6BfOD4lhGtk3B7RaP9pv4JRYNitIZksgyBuMQdihkpw/4XUHvABHZs/YwtsVFVPYSHwrHx6C9AxVn+++vH4gi3U9lGL9hagdZRiDk5EaRaPnJEZRjbxLgRsdNJ/mnZmJ+sjOdu6eUeTW87vGD0IRmDP1dCWl2X1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBm1yTYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqfPZ+RD6zoOf0/NTa3FbWLP2JnUWwJ2BYTmWIVLstr7CWEWNgqaJQ55fyIBrtmVsCBqDHWst4YqYdFGCAz3yidAxYE3wpK+xEWzBbir3BdjBRex2JZ4ZAEnMHz1uiJ/fby7EBnnXrGU9aqZWsDA/79Y7OFgUk5bvQ1y6xCwZ+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK3O24A6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBm1yTYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD8BC2BCB2;
-	Tue, 11 Nov 2025 00:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK3O24A6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9F8C19422;
+	Tue, 11 Nov 2025 00:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822352;
-	bh=bZMcs7QjRIxaGFrvGRHnPFk2AcreOr0JXVEnF/Bc7ug=;
+	s=korg; t=1762822355;
+	bh=hZPD9rOS9XjTayKErqOxWiSo2h5/dw8/U40deVKKjwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBm1yTYipKcaUagZVnE2uFXyYbCGCaql+PnjxxadlaUXfdk+nUvspEnUXIo1T+pCh
-	 gs0+h2kk5MqK4De2vWbSwA7C1fJln7KhNQtCIdIvk9QopVRpw//j1O33RinzClIcUb
-	 9lXZuMELthmYHJf+7vm1/IHQiXWRD9yT2npp+778=
+	b=xK3O24A6Epx7YIFVb2MTXcDENSGUo18TZozq25oaGkvY/LRX2duDR5EKy2DPhA2mm
+	 Ufx+aadqtVMVQGw50CVQSegF0J/Jg7yw7i2u9FGFhwtWG7TkRlnSZVdrDTmnpUeLN6
+	 Ol1dnTwbB0pPdTLWzXPHMVjoJa52cjTERA8LR6x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.17 091/849] kbuild: align modinfo section for Secureboot Authenticode EDK2 compat
-Date: Tue, 11 Nov 2025 09:34:21 +0900
-Message-ID: <20251111004538.614315721@linuxfoundation.org>
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 033/565] bpf, x86: Avoid repeated usage of bpf_prog->aux->stack_depth
+Date: Tue, 11 Nov 2025 09:38:09 +0900
+Message-ID: <20251111004527.629016359@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,64 +47,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-commit d50f21091358b2b29dc06c2061106cdb0f030d03 upstream.
+[ Upstream commit f4b21ed0b9d6c9fe155451a1fb3531fb44b0afa8 ]
 
-Previously linker scripts would always generate vmlinuz that has sections
-aligned. And thus padded (correct Authenticode calculation) and unpadded
-calculation would be same. As in https://github.com/rhboot/pesign userspace
-tool would produce the same authenticode digest for both of the following
-commands:
+Refactor the code to avoid repeated usage of bpf_prog->aux->stack_depth
+in do_jit() func. If the private stack is used, the stack_depth will be
+0 for that prog. Refactoring make it easy to adjust stack_depth.
 
-    pesign --padding --hash --in ./arch/x86_64/boot/bzImage
-    pesign --nopadding --hash --in ./arch/x86_64/boot/bzImage
-
-The commit 3e86e4d74c04 ("kbuild: keep .modinfo section in
-vmlinux.unstripped") added .modinfo section of variable length. Depending
-on kernel configuration it may or may not be aligned.
-
-All userspace signing tooling correctly pads such section to calculation
-spec compliant authenticode digest.
-
-However, if bzImage is not further processed and is attempted to be loaded
-directly by EDK2 firmware, it calculates unpadded Authenticode digest and
-fails to correct accept/reject such kernel builds even when propoer
-Authenticode values are enrolled in db/dbx. One can say EDK2 requires
-aligned/padded kernels in Secureboot.
-
-Thus add ALIGN(8) to the .modinfo section, to esure kernels irrespective of
-modinfo contents can be loaded by all existing EDK2 firmware builds.
-
-Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>
-Link: https://patch.msgid.link/20251026202100.679989-1-dimitri.ledkov@surgut.co.uk
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20241112163917.2224189-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 881a9c9cb785 ("bpf: Do not audit capability check in do_jit()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/net/bpf_jit_comp.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index 8a9a2e732a65..e04d56a5332e 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -832,7 +832,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index ccb2f7703c33c..9a861ac77f8eb 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -1472,14 +1472,17 @@ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image
+ 	int i, excnt = 0;
+ 	int ilen, proglen = 0;
+ 	u8 *prog = temp;
++	u32 stack_depth;
+ 	int err;
  
- /* Required sections not related to debugging. */
- #define ELF_DETAILS							\
--		.modinfo : { *(.modinfo) }				\
-+		.modinfo : { *(.modinfo) . = ALIGN(8); }		\
- 		.comment 0 : { *(.comment) }				\
- 		.symtab 0 : { *(.symtab) }				\
- 		.strtab 0 : { *(.strtab) }				\
++	stack_depth = bpf_prog->aux->stack_depth;
++
+ 	arena_vm_start = bpf_arena_get_kern_vm_start(bpf_prog->aux->arena);
+ 	user_vm_start = bpf_arena_get_user_vm_start(bpf_prog->aux->arena);
+ 
+ 	detect_reg_usage(insn, insn_cnt, callee_regs_used);
+ 
+-	emit_prologue(&prog, bpf_prog->aux->stack_depth,
++	emit_prologue(&prog, stack_depth,
+ 		      bpf_prog_was_classic(bpf_prog), tail_call_reachable,
+ 		      bpf_is_subprog(bpf_prog), bpf_prog->aux->exception_cb);
+ 	/* Exception callback will clobber callee regs for its own use, and
+@@ -2175,7 +2178,7 @@ st:			if (is_imm8(insn->off))
+ 
+ 			func = (u8 *) __bpf_call_base + imm32;
+ 			if (tail_call_reachable) {
+-				LOAD_TAIL_CALL_CNT_PTR(bpf_prog->aux->stack_depth);
++				LOAD_TAIL_CALL_CNT_PTR(stack_depth);
+ 				ip += 7;
+ 			}
+ 			if (!imm32)
+@@ -2192,13 +2195,13 @@ st:			if (is_imm8(insn->off))
+ 							  &bpf_prog->aux->poke_tab[imm32 - 1],
+ 							  &prog, image + addrs[i - 1],
+ 							  callee_regs_used,
+-							  bpf_prog->aux->stack_depth,
++							  stack_depth,
+ 							  ctx);
+ 			else
+ 				emit_bpf_tail_call_indirect(bpf_prog,
+ 							    &prog,
+ 							    callee_regs_used,
+-							    bpf_prog->aux->stack_depth,
++							    stack_depth,
+ 							    image + addrs[i - 1],
+ 							    ctx);
+ 			break;
 -- 
-2.51.2
+2.51.0
 
 
 
