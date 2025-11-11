@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37BB34676D;
-	Tue, 11 Nov 2025 01:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E12346789;
+	Tue, 11 Nov 2025 01:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824169; cv=none; b=KtFNLW9qvE7hrQ4+c1lgfuvG8cwgqv89iaHdvbvI+oJOnIlWWfULZQFz2iGcjdrSXHIKbZgzWaQlI93iRhpxtrM2q5cjEF4G1STrAgWPgxfikDTkLTAi/Zz/hG5LudRmtBZFU7n+kDJQT0Ye6krtKVeW+Ci3lencJClN/MG9qBk=
+	t=1762824172; cv=none; b=Us7SBzOjmAF1WSH/xPka0Nywde7CSbaoeQdlVTDZ0m7feQOKqxSDfatjfNm/eOSbWQ/FM3ruoUX2WQK2yud5BG5HrLKdgrcHY43gwCZs6hSbGrDraStWoVeGqH6xmc3Y5MHagwnEuvvwWrRUgsq4cnjSoHNmZiX+WfCDVF51YIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824169; c=relaxed/simple;
-	bh=U5HNWWi5mIIyUqCtiaimQKo99BLl+miY0KeKWCw7hw8=;
+	s=arc-20240116; t=1762824172; c=relaxed/simple;
+	bh=9OlPzqvsJikKzsxfW//CRJyxcDs/vKbHzsdRpjVeU2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T2i20J+XZshCu+DQrPwEE1Q/2HdD0JA3TlB93c+AZXZow22AuI/aewRWvbSUcCsmOwlf4tD/rWSomB3ZXaM4sSsSBWsBA+EzC/Gi/IorwaYhoxmq0foSKhPYsb7c7+iArtXGv+EfhCrAVyR6iP6MyvC8eDaZ3kvRRoha3nfT4HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2plKmpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFru8fJ60uOt0m62K57ERDZdRLvzFJn02dcPuDwN+9JPbAfNvFM2lXCkgq+XBaYJfi/xNTBh7ktWbEscWyHe0o0+7eRap7pWXvSU+JF4DN5xyiOfnPghRp1JmarwUc+YaNZjWxv1kFeQD/P+D17xPUz1vC2WnacfpyrCeCQIMNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlhHOf8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2plKmpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E255EC4CEF5;
-	Tue, 11 Nov 2025 01:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlhHOf8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4370EC116B1;
+	Tue, 11 Nov 2025 01:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824169;
-	bh=U5HNWWi5mIIyUqCtiaimQKo99BLl+miY0KeKWCw7hw8=;
+	s=korg; t=1762824171;
+	bh=9OlPzqvsJikKzsxfW//CRJyxcDs/vKbHzsdRpjVeU2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2plKmpu45l1DrkqBw/kWo3hmXhJ6v0L+eMurMI31EW0jFv+Zil7+OCD//oebP7nF
-	 pRlvAAPCC+8I4mUgSMWLzssBu8/PrKfy8totP64YBp7sYoWL8GFaGNaMfW3CmwlW8F
-	 rBNMePe9KTlOVSp6X8ip6xEgK5SdciwkukvV4nSk=
+	b=FlhHOf8AZgARfPHIg04vv29zaPez6gSl6CHqC+u0DrrYyfsJx+Qu8IuAqIaOJ9WXJ
+	 +BR2RIFBBmP9/2hbpJcCrS9aNO+/my+HIt8CcNBX++1YTGFjbWYOCsb2XdreG+xtDg
+	 HJn0E7OiEuC8TyjTMftNsOWgHLsGP/5+yTHgDUGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AceLan Kao <acelan.kao@canonical.com>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Denis Benato <benato.denis96@gmail.com>,
-	=?UTF-8?q?Merthan=20Karaka=C5=9F?= <m3rthn.k@gmail.com>,
-	Eric Naim <dnaim@cachyos.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Nimesh Sati <nimesh.sati@samsung.com>,
+	Bharat Uppal <bharat.uppal@samsung.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 363/565] drm/amd: Avoid evicting resources at S5
-Date: Tue, 11 Nov 2025 09:43:39 +0900
-Message-ID: <20251111004535.033781019@linuxfoundation.org>
+Subject: [PATCH 6.17 407/849] scsi: ufs: exynos: fsd: Gate ref_clk and put UFS device in reset on suspend
+Date: Tue, 11 Nov 2025 09:39:37 +0900
+Message-ID: <20251111004546.280693374@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,50 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Bharat Uppal <bharat.uppal@samsung.com>
 
-[ Upstream commit 531df041f2a5296174abd8292d298eb62fe1ea97 ]
+[ Upstream commit 6d55af0f0740bf3d77943425fdafb77dc0fa6bb9 ]
 
-Normally resources are evicted on dGPUs at suspend or hibernate and
-on APUs at hibernate.  These steps are unnecessary when using the S4
-callbacks to put the system into S5.
+On FSD platform, gating the reference clock (ref_clk) and putting the
+UFS device in reset by asserting the reset signal during UFS suspend,
+improves the power savings and ensures the PHY is fully turned off.
 
-Cc: AceLan Kao <acelan.kao@canonical.com>
-Cc: Kai-Heng Feng <kaihengf@nvidia.com>
-Cc: Mark Pearson <mpearson-lenovo@squebb.ca>
-Cc: Denis Benato <benato.denis96@gmail.com>
-Cc: Merthan Karakaş <m3rthn.k@gmail.com>
-Tested-by: Eric Naim <dnaim@cachyos.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+These operations are added as FSD specific suspend hook to avoid
+unintended side effects on other SoCs supported by this driver.
+
+Co-developed-by: Nimesh Sati <nimesh.sati@samsung.com>
+Signed-off-by: Nimesh Sati <nimesh.sati@samsung.com>
+Signed-off-by: Bharat Uppal <bharat.uppal@samsung.com>
+Link: https://lore.kernel.org/r/20250821053923.69411-1-bharat.uppal@samsung.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ufs/host/ufs-exynos.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 7ff81bd1ec200..7a8a53fbe918c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4731,6 +4731,10 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
- 	if ((adev->in_s3 || adev->in_s0ix) && (adev->flags & AMD_IS_APU))
- 		return 0;
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index f0adcd9dd553d..513cbcfa10acd 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -1896,6 +1896,13 @@ static int fsd_ufs_pre_pwr_change(struct exynos_ufs *ufs,
+ 	return 0;
+ }
  
-+	/* No need to evict when going to S5 through S4 callbacks */
-+	if (system_state == SYSTEM_POWER_OFF)
-+		return 0;
++static int fsd_ufs_suspend(struct exynos_ufs *ufs)
++{
++	exynos_ufs_gate_clks(ufs);
++	hci_writel(ufs, 0, HCI_GPIO_OUT);
++	return 0;
++}
 +
- 	ret = amdgpu_ttm_evict_resources(adev, TTM_PL_VRAM);
- 	if (ret)
- 		DRM_WARN("evicting device resources failed\n");
+ static inline u32 get_mclk_period_unipro_18(struct exynos_ufs *ufs)
+ {
+ 	return (16 * 1000 * 1000000UL / ufs->mclk_rate);
+@@ -2162,6 +2169,7 @@ static const struct exynos_ufs_drv_data fsd_ufs_drvs = {
+ 	.pre_link               = fsd_ufs_pre_link,
+ 	.post_link              = fsd_ufs_post_link,
+ 	.pre_pwr_change         = fsd_ufs_pre_pwr_change,
++	.suspend                = fsd_ufs_suspend,
+ };
+ 
+ static const struct exynos_ufs_drv_data gs101_ufs_drvs = {
 -- 
 2.51.0
 
