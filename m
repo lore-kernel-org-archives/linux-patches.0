@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B16726FA67;
-	Tue, 11 Nov 2025 01:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B2261573;
+	Tue, 11 Nov 2025 01:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823163; cv=none; b=Quwur7wR+Fj5TGddNXFGOB875HHa8ugdtKNJC9G1+ZaKWbTy4tMee54a1nj9j7xeJ/w1vBg9wT6KpPqf4y9T8di27Y686Oo4h4E2r2hwAuUyyQN1ngKoCgNvtZla6kt3D+ozkyyVfVdnExoJ2aZEKwvZnTP+GBuJxFgWx50xiSY=
+	t=1762823165; cv=none; b=T8Aa8U9YBaewGz11nVgnu3QhqWXzRPopq8VRnLEf9fbf/K5OJoyGrqMentD9kqi72pqfe7mqTzZaGDiceh+CGoCZ6YPL0Ngo6jNdT8h7qfupR9kz1LNP7sahJ3aHkmFclERIxGqVZGeK2dXSMKtdM6uEkVLFgIQJr+X9zwp+HV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823163; c=relaxed/simple;
-	bh=QUPqdXYWZ4sEllJMJ9S3ZAx8a4c/2gD2lwnQT1qFVMs=;
+	s=arc-20240116; t=1762823165; c=relaxed/simple;
+	bh=eEZyCzS7X1/A3Z6AT2BrKZmY/5iYdC/c1YMipdivT2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HApEH+4RJNNUD3aAKdDEP6mG+rZk2V5PHg1LIhJCm1dshzp+4QL/8nZASuYxNgSQwPWZxgWiCxzJ4CMbYH7HFRe7bPP0ZuxXDoWXYVuDiyWPCCpQXo6pku4QU5LZtSZXGwW+gJeqmX9qT6grEmEFPZSC7W1kSqc3aPu4UptgHqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBmqdvbj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WZgS/IFlgfO+LXHCxaaxwnVXkz5p2ijhvUDgvtgTyNYbDkxtYzCyzV+6yjsu3Wn9yGhHL6KD9xXZXj2pRQIgkmiFIy+G7Kfp1VBmOmUAN7kAd9NtyOjk5ANp2RY8BiDrwVm3683h826HA99n6kXNRDNcen+4RENZAO1VpkTzUHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMTmNItZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBmqdvbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99ECC113D0;
-	Tue, 11 Nov 2025 01:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMTmNItZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE711C16AAE;
+	Tue, 11 Nov 2025 01:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823163;
-	bh=QUPqdXYWZ4sEllJMJ9S3ZAx8a4c/2gD2lwnQT1qFVMs=;
+	s=korg; t=1762823165;
+	bh=eEZyCzS7X1/A3Z6AT2BrKZmY/5iYdC/c1YMipdivT2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBmqdvbjaiQnfkWYh3kZ74yL2CpFrAdS8jYckQIV2ep4rtvuBokuK8p5liTsVhdr4
-	 BSgH3REd62h/EHiCitFwiBlDAXnYHTPnqH9hjokYR+0j1cONnIO8k54razUP9I6+B2
-	 VZAFuxDW23dtarbU4HPkurFm+UarBcR0vNQ81sY4=
+	b=vMTmNItZA/OQgul5T/3VSuxY+byfps9zX1h7JdJtc2MCf3h/6qYtOMGB4giKhlWQ5
+	 01Gd3OV6jSKosXpD0rT7Te+Tdv2RjbXrg8DoyxrjTYjccsARUqQqphtUPMr7/9kZC6
+	 W/5ThczjS3gsRp7sSFuGV9WW5stEVR6u/cnKW7+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/565] drm/amd/display: add more cyan skillfish devices
-Date: Tue, 11 Nov 2025 09:40:39 +0900
-Message-ID: <20251111004531.050830561@linuxfoundation.org>
+Subject: [PATCH 6.17 243/849] drm/xe/pf: Dont resume device from restart worker
+Date: Tue, 11 Nov 2025 09:36:53 +0900
+Message-ID: <20251111004542.310532549@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,62 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 3cf06bd4cf2512d564fdb451b07de0cebe7b138d ]
+[ Upstream commit 9fd9f221440024b7451678898facfb34af054310 ]
 
-Add PCI IDs to support display probe for cyan skillfish
-family of SOCs.
+The PF's restart worker shouldn't attempt to resume the device on
+its own, since its goal is to finish PF and VFs reprovisioning on
+the recently reset GuC. Take extra RPM reference while scheduling
+a work and release it from the worker or when we cancel a work.
 
-Acked-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://lore.kernel.org/r/20250801142822.180530-4-michal.wajdeczko@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 8 +++++++-
- drivers/gpu/drm/amd/display/include/dal_asic_id.h | 5 +++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 6dbf139c51f72..36f8eb37e6710 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -164,7 +164,13 @@ enum dce_version resource_parse_asic_id(struct hw_asic_id asic_id)
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+index bdbd15f3afe38..c4dda87b47cc8 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+@@ -55,7 +55,12 @@ static void pf_init_workers(struct xe_gt *gt)
+ static void pf_fini_workers(struct xe_gt *gt)
+ {
+ 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
+-	disable_work_sync(&gt->sriov.pf.workers.restart);
++
++	if (disable_work_sync(&gt->sriov.pf.workers.restart)) {
++		xe_gt_sriov_dbg_verbose(gt, "pending restart disabled!\n");
++		/* release an rpm reference taken on the worker's behalf */
++		xe_pm_runtime_put(gt_to_xe(gt));
++	}
+ }
  
- 	case FAMILY_NV:
- 		dc_version = DCN_VERSION_2_0;
--		if (asic_id.chip_id == DEVICE_ID_NV_13FE || asic_id.chip_id == DEVICE_ID_NV_143F) {
-+		if (asic_id.chip_id == DEVICE_ID_NV_13FE ||
-+		    asic_id.chip_id == DEVICE_ID_NV_143F ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13F9 ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FA ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FB ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13FC ||
-+		    asic_id.chip_id == DEVICE_ID_NV_13DB) {
- 			dc_version = DCN_VERSION_2_01;
- 			break;
- 		}
-diff --git a/drivers/gpu/drm/amd/display/include/dal_asic_id.h b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-index 090230d29df82..f030e167c58e1 100644
---- a/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-+++ b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
-@@ -213,6 +213,11 @@ enum {
- #endif
- #define DEVICE_ID_NV_13FE 0x13FE  // CYAN_SKILLFISH
- #define DEVICE_ID_NV_143F 0x143F
-+#define DEVICE_ID_NV_13F9 0x13F9
-+#define DEVICE_ID_NV_13FA 0x13FA
-+#define DEVICE_ID_NV_13FB 0x13FB
-+#define DEVICE_ID_NV_13FC 0x13FC
-+#define DEVICE_ID_NV_13DB 0x13DB
- #define FAMILY_VGH 144
- #define DEVICE_ID_VGH_163F 0x163F
- #define DEVICE_ID_VGH_1435 0x1435
+ /**
+@@ -207,8 +212,11 @@ static void pf_cancel_restart(struct xe_gt *gt)
+ {
+ 	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
+ 
+-	if (cancel_work_sync(&gt->sriov.pf.workers.restart))
++	if (cancel_work_sync(&gt->sriov.pf.workers.restart)) {
+ 		xe_gt_sriov_dbg_verbose(gt, "pending restart canceled!\n");
++		/* release an rpm reference taken on the worker's behalf */
++		xe_pm_runtime_put(gt_to_xe(gt));
++	}
+ }
+ 
+ /**
+@@ -226,9 +234,12 @@ static void pf_restart(struct xe_gt *gt)
+ {
+ 	struct xe_device *xe = gt_to_xe(gt);
+ 
+-	xe_pm_runtime_get(xe);
++	xe_gt_assert(gt, !xe_pm_runtime_suspended(xe));
++
+ 	xe_gt_sriov_pf_config_restart(gt);
+ 	xe_gt_sriov_pf_control_restart(gt);
++
++	/* release an rpm reference taken on our behalf */
+ 	xe_pm_runtime_put(xe);
+ 
+ 	xe_gt_sriov_dbg(gt, "restart completed\n");
+@@ -247,8 +258,13 @@ static void pf_queue_restart(struct xe_gt *gt)
+ 
+ 	xe_gt_assert(gt, IS_SRIOV_PF(xe));
+ 
+-	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart))
++	/* take an rpm reference on behalf of the worker */
++	xe_pm_runtime_get_noresume(xe);
++
++	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart)) {
+ 		xe_gt_sriov_dbg(gt, "restart already in queue!\n");
++		xe_pm_runtime_put(xe);
++	}
+ }
+ 
+ /**
 -- 
 2.51.0
 
