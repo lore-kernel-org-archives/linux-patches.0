@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6923054D7;
-	Tue, 11 Nov 2025 01:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70E530B50B;
+	Tue, 11 Nov 2025 01:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825506; cv=none; b=jAK3vvU4NS9u55xsawnme7P9aSe2kaqXe8kY/3XcPyRCiqY9ebjfZqLMvrybVA8/DkWdHi7bZ7KM8paKi2QLGNoHzoEdNInfNxV2vpJv5/wskygG2dJKRVQ/t1B226J3mkX2hd2WlZikaaJUSeI5IymN0iPYCW9yYRrzevaBRSY=
+	t=1762825508; cv=none; b=Je2DP7+vee/NKoHXCwKKJvCGiORwnubb8gvbI51NfxEM0Q6aVtKrI077ORhxJ8PYMWgoRK0IBqAuU9cxk8jq9Panh5ByROT7uGvRJoNPd/cel7r3WFQiCsd/n3S3Rr3T+4utiLSL4XhI+KqLaICtI7LskcYT1fMz0OUAEQg1BfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825506; c=relaxed/simple;
-	bh=T7AESE98bVYIIJwBxUd0vokOMz2B1nky1h6a9EYjdck=;
+	s=arc-20240116; t=1762825508; c=relaxed/simple;
+	bh=GHXHDlkf1bcIMzWPPfogT1JhKHN3jrbF0c9aiPwirLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1JeLcLJe8rv7YJOyrxBb8+8eglm+Xaf5DJNucfJiYZe2MOhsYLaYntw9gXtai/kQ2uHs2uy4cIgK87cwJX+33FxzuWAG/4HwCsLVKePQin2TWbOSnzhRgn9QpGTCmlL3fnH9W32fLeA2/tfJFprSQQycvO3KkZ/WOqThdQlE98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03GlwOWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UruGBd0E8IHyF98Deg9BKrswLXFuawUuB4NcQcmBm103cIuN/vagO1aogUY5+KceBRTVnIo/7n56RV5zkxyUlyVc2NfSu5mnPZC15FpQ/t5Y85ML9M+F+o78lbFKIYeZrTtO5FH0qU4/7KyVUUZgcWrmzBe0GJYIBgGKorIH49c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TChb4YLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03GlwOWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF31C4CEF5;
-	Tue, 11 Nov 2025 01:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TChb4YLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15843C4CEFB;
+	Tue, 11 Nov 2025 01:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825506;
-	bh=T7AESE98bVYIIJwBxUd0vokOMz2B1nky1h6a9EYjdck=;
+	s=korg; t=1762825508;
+	bh=GHXHDlkf1bcIMzWPPfogT1JhKHN3jrbF0c9aiPwirLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03GlwOWLTumHEsrpoygaEqv54VrDkJhYG/ERSSfkKHCFQBelGlvhJ4IDJxkHnccls
-	 EgA/T/ITJ1VfQBqI7Ca+FMG19diA8OPFt4CQhBWWjUDulnBwH6S5vb+fqkUHY8ygUt
-	 HZQKNhDMPVNgc+fMKnEwD/xZOrXjrQfdkD1J+zps=
+	b=TChb4YLmSlO+MdmmjhQKAJHgcKVmmer0gE0NntQUzdC5wrWWla3x+6/Nqdt9/3E2+
+	 0E/TzuZnv6TFqfXq84gfwbmIrJhxuQllOvK5caS9jxaSsZoRfsnXs1q3EnwRZIpb70
+	 Rt0xdcIuNQrwiRg1YAIexCAG+Cqtjj1PjhGnRk54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.17 831/849] scsi: ufs: ufs-pci: Fix S0ix/S3 for Intel controllers
-Date: Tue, 11 Nov 2025 09:46:41 +0900
-Message-ID: <20251111004556.517454071@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.17 805/849] wifi: mac80211: use wiphy_hrtimer_work for ttlm_work
+Date: Tue, 11 Nov 2025 09:46:15 +0900
+Message-ID: <20251111004555.891586665@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,138 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit bb44826c3bdbf1fa3957008a04908f45e5666463 upstream.
+commit dfa865d490b1bd252045463588a91a4d3c82f3c8 upstream.
 
-Intel platforms with UFS, can support Suspend-to-Idle (S0ix) and
-Suspend-to-RAM (S3).  For S0ix the link state should be HIBERNATE.  For
-S3, state is lost, so the link state must be OFF.  Driver policy,
-expressed by spm_lvl, can be 3 (link HIBERNATE, device SLEEP) for S0ix
-but must be changed to 5 (link OFF, device POWEROFF) for S3.
+The work item may be scheduled relatively far in the future. As the
+event happens at a specific point in time, the normal timer accuracy is
+not sufficient in that case.
 
-Fix support for S0ix/S3 by switching spm_lvl as needed.  During suspend
-->prepare(), if the suspend target state is not Suspend-to-Idle, ensure
-the spm_lvl is at least 5 to ensure that resume will be possible from
-deep sleep states.  During suspend ->complete(), restore the spm_lvl to
-its original value that is suitable for S0ix.
+Switch to use wiphy_hrtimer_work so that the accuracy is sufficient.
 
-This fix is first needed in Intel Alder Lake based controllers.
-
-Fixes: 7dc9fb47bc9a ("scsi: ufs: ufs-pci: Add support for Intel ADL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251024085918.31825-2-adrian.hunter@intel.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+CC: stable@vger.kernel.org
+Fixes: 702e80470a33 ("wifi: mac80211: support handling of advertised TID-to-link mapping")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251028125710.83c2c611545e.I35498a6d883ea24b0dc4910cf521aa768d2a0e90@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufshcd-pci.c |   67 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 65 insertions(+), 2 deletions(-)
+ net/mac80211/ieee80211_i.h |    2 +-
+ net/mac80211/mlme.c        |   24 ++++++++++++------------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -15,6 +15,7 @@
- #include <linux/pci.h>
- #include <linux/pm_runtime.h>
- #include <linux/pm_qos.h>
-+#include <linux/suspend.h>
- #include <linux/debugfs.h>
- #include <linux/uuid.h>
- #include <linux/acpi.h>
-@@ -31,6 +32,7 @@ struct intel_host {
- 	u32		dsm_fns;
- 	u32		active_ltr;
- 	u32		idle_ltr;
-+	int		saved_spm_lvl;
- 	struct dentry	*debugfs_root;
- 	struct gpio_desc *reset_gpio;
- };
-@@ -347,6 +349,7 @@ static int ufs_intel_common_init(struct
- 	host = devm_kzalloc(hba->dev, sizeof(*host), GFP_KERNEL);
- 	if (!host)
- 		return -ENOMEM;
-+	host->saved_spm_lvl = -1;
- 	ufshcd_set_variant(hba, host);
- 	intel_dsm_init(host, hba->dev);
- 	if (INTEL_DSM_SUPPORTED(host, RESET)) {
-@@ -538,6 +541,66 @@ static int ufshcd_pci_restore(struct dev
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -608,7 +608,7 @@ struct ieee80211_if_managed {
+ 	u16 removed_links;
  
- 	return ufshcd_system_resume(dev);
- }
-+
-+static int ufs_intel_suspend_prepare(struct device *dev)
-+{
-+	struct ufs_hba *hba = dev_get_drvdata(dev);
-+	struct intel_host *host = ufshcd_get_variant(hba);
-+	int err;
-+
-+	/*
-+	 * Only s2idle (S0ix) retains link state.  Force power-off
-+	 * (UFS_PM_LVL_5) for any other case.
-+	 */
-+	if (pm_suspend_target_state != PM_SUSPEND_TO_IDLE && hba->spm_lvl < UFS_PM_LVL_5) {
-+		host->saved_spm_lvl = hba->spm_lvl;
-+		hba->spm_lvl = UFS_PM_LVL_5;
-+	}
-+
-+	err = ufshcd_suspend_prepare(dev);
-+
-+	if (err < 0 && host->saved_spm_lvl != -1) {
-+		hba->spm_lvl = host->saved_spm_lvl;
-+		host->saved_spm_lvl = -1;
-+	}
-+
-+	return err;
-+}
-+
-+static void ufs_intel_resume_complete(struct device *dev)
-+{
-+	struct ufs_hba *hba = dev_get_drvdata(dev);
-+	struct intel_host *host = ufshcd_get_variant(hba);
-+
-+	ufshcd_resume_complete(dev);
-+
-+	if (host->saved_spm_lvl != -1) {
-+		hba->spm_lvl = host->saved_spm_lvl;
-+		host->saved_spm_lvl = -1;
-+	}
-+}
-+
-+static int ufshcd_pci_suspend_prepare(struct device *dev)
-+{
-+	struct ufs_hba *hba = dev_get_drvdata(dev);
-+
-+	if (!strcmp(hba->vops->name, "intel-pci"))
-+		return ufs_intel_suspend_prepare(dev);
-+
-+	return ufshcd_suspend_prepare(dev);
-+}
-+
-+static void ufshcd_pci_resume_complete(struct device *dev)
-+{
-+	struct ufs_hba *hba = dev_get_drvdata(dev);
-+
-+	if (!strcmp(hba->vops->name, "intel-pci")) {
-+		ufs_intel_resume_complete(dev);
-+		return;
-+	}
-+
-+	ufshcd_resume_complete(dev);
-+}
- #endif
+ 	/* TID-to-link mapping support */
+-	struct wiphy_delayed_work ttlm_work;
++	struct wiphy_hrtimer_work ttlm_work;
+ 	struct ieee80211_adv_ttlm_info ttlm_info;
+ 	struct wiphy_work teardown_ttlm_work;
  
- /**
-@@ -611,8 +674,8 @@ static const struct dev_pm_ops ufshcd_pc
- 	.thaw		= ufshcd_system_resume,
- 	.poweroff	= ufshcd_system_suspend,
- 	.restore	= ufshcd_pci_restore,
--	.prepare	= ufshcd_suspend_prepare,
--	.complete	= ufshcd_resume_complete,
-+	.prepare	= ufshcd_pci_suspend_prepare,
-+	.complete	= ufshcd_pci_resume_complete,
- #endif
- };
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -45,7 +45,7 @@
+ #define IEEE80211_ASSOC_TIMEOUT_SHORT	(HZ / 10)
+ #define IEEE80211_ASSOC_MAX_TRIES	3
  
+-#define IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS msecs_to_jiffies(100)
++#define IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS (100 * USEC_PER_MSEC)
+ #define IEEE80211_ADV_TTLM_ST_UNDERFLOW 0xff00
+ 
+ #define IEEE80211_NEG_TTLM_REQ_TIMEOUT (HZ / 5)
+@@ -4237,7 +4237,7 @@ static void ieee80211_set_disassoc(struc
+ 
+ 	memset(&sdata->u.mgd.ttlm_info, 0,
+ 	       sizeof(sdata->u.mgd.ttlm_info));
+-	wiphy_delayed_work_cancel(sdata->local->hw.wiphy, &ifmgd->ttlm_work);
++	wiphy_hrtimer_work_cancel(sdata->local->hw.wiphy, &ifmgd->ttlm_work);
+ 
+ 	memset(&sdata->vif.neg_ttlm, 0, sizeof(sdata->vif.neg_ttlm));
+ 	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+@@ -7087,7 +7087,7 @@ static void ieee80211_process_adv_ttlm(s
+ 			/* if a planned TID-to-link mapping was cancelled -
+ 			 * abort it
+ 			 */
+-			wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
++			wiphy_hrtimer_work_cancel(sdata->local->hw.wiphy,
+ 						  &sdata->u.mgd.ttlm_work);
+ 		} else if (sdata->u.mgd.ttlm_info.active) {
+ 			/* if no TID-to-link element, set to default mapping in
+@@ -7122,7 +7122,7 @@ static void ieee80211_process_adv_ttlm(s
+ 
+ 		if (ttlm_info.switch_time) {
+ 			u16 beacon_ts_tu, st_tu, delay;
+-			u32 delay_jiffies;
++			u64 delay_usec;
+ 			u64 mask;
+ 
+ 			/* The t2l map switch time is indicated with a partial
+@@ -7144,23 +7144,23 @@ static void ieee80211_process_adv_ttlm(s
+ 			if (delay > IEEE80211_ADV_TTLM_ST_UNDERFLOW)
+ 				return;
+ 
+-			delay_jiffies = TU_TO_JIFFIES(delay);
++			delay_usec = ieee80211_tu_to_usec(delay);
+ 
+ 			/* Link switching can take time, so schedule it
+ 			 * 100ms before to be ready on time
+ 			 */
+-			if (delay_jiffies > IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS)
+-				delay_jiffies -=
++			if (delay_usec > IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS)
++				delay_usec -=
+ 					IEEE80211_ADV_TTLM_SAFETY_BUFFER_MS;
+ 			else
+-				delay_jiffies = 0;
++				delay_usec = 0;
+ 
+ 			sdata->u.mgd.ttlm_info = ttlm_info;
+-			wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
++			wiphy_hrtimer_work_cancel(sdata->local->hw.wiphy,
+ 						  &sdata->u.mgd.ttlm_work);
+-			wiphy_delayed_work_queue(sdata->local->hw.wiphy,
++			wiphy_hrtimer_work_queue(sdata->local->hw.wiphy,
+ 						 &sdata->u.mgd.ttlm_work,
+-						 delay_jiffies);
++						 us_to_ktime(delay_usec));
+ 			return;
+ 		}
+ 	}
+@@ -8761,7 +8761,7 @@ void ieee80211_sta_setup_sdata(struct ie
+ 	timer_setup(&ifmgd->conn_mon_timer, ieee80211_sta_conn_mon_timer, 0);
+ 	wiphy_delayed_work_init(&ifmgd->tx_tspec_wk,
+ 				ieee80211_sta_handle_tspec_ac_params_wk);
+-	wiphy_delayed_work_init(&ifmgd->ttlm_work,
++	wiphy_hrtimer_work_init(&ifmgd->ttlm_work,
+ 				ieee80211_tid_to_link_map_work);
+ 	wiphy_delayed_work_init(&ifmgd->neg_ttlm_timeout_work,
+ 				ieee80211_neg_ttlm_timeout_work);
 
 
