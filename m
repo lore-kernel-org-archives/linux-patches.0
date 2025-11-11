@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246C41F09B3;
-	Tue, 11 Nov 2025 01:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4F91F09B3;
+	Tue, 11 Nov 2025 01:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824686; cv=none; b=jQiPW3+Wx4yqVHPraY9RparR0SJDv81SY6n/CfF3UIdanT3Znx0XuK1F/qdmLSEP+CSOKfm42CpL4YhHUZL9b5630sGMWw3llUzzSweJMezT0FbqQ+ene/sMsUG+wIYdnANPbOGpTrOE1jBYQ+uudM7vLLYTiA4TltoXq4Rkjbk=
+	t=1762824688; cv=none; b=EmqTV9aOvf5EHCpiW/Dr8q8cz/+3yDuIljLXK5qMHFFwI9vUZcTr2xFnrRDDcHG8vuhp3UyUenfRpZhoryVotzDj7hae1fqbKcAj6kXs9Tshqntan+Bx5R5op7ZvVYgAyFxQIezO6zcUiE6iE/LTM5G1RhHZX2alHP6Balnyo2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824686; c=relaxed/simple;
-	bh=CG/9mu/FrnTPE3c0WBsyAQ1jagHM6MMDMERdq2zD46Q=;
+	s=arc-20240116; t=1762824688; c=relaxed/simple;
+	bh=A9trkFZqlWLfSXw+t41/1k7/+VjMO8gGjuEGscMhw0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuHwyk9L3fuHuFtXjMIg5esEDxzODnZXEoMz+YWjrLbpo461f2uSsUza19E2EgjXrXgD0CwJRBdeJs9IHK2gIdR2RhP3U8lL4QMkkHaeTiAEi8CBp6koIv3AUCEIG6VXN9C7vCbAThEOukt5AaMggfzxjv2ek6Ll3oR+htPhq/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLjWSfL2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KsoeQJmzjaind7g1LI+R4S8Q/apjKs5q9Z8THsd2+nA/QeEyE63JjT8aZvqSrhl79lGoHKku2pSnBF98XH4bZWW2zXKPCxjvrl7KIC1cvPK5VgfmUZxsCZZvPOa83H82sQt4hBVro8AUFFkTg7NQYyciXr5cjTlnnRAyJy4yVj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2DBd2s9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLjWSfL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA89C113D0;
-	Tue, 11 Nov 2025 01:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2DBd2s9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F321C4CEFB;
+	Tue, 11 Nov 2025 01:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824686;
-	bh=CG/9mu/FrnTPE3c0WBsyAQ1jagHM6MMDMERdq2zD46Q=;
+	s=korg; t=1762824688;
+	bh=A9trkFZqlWLfSXw+t41/1k7/+VjMO8gGjuEGscMhw0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLjWSfL2xv0Sg3A8yt0QbfaVofrC0FtilhoDOLpPlXmsQFIUZpj8R5r5TFprU4sWl
-	 65svqhYeWZ59fU0UomlHVKJp+Ybl5oQS4+Ooy8ACDy/kVGcYEvhQURxgvBsFxp2ShX
-	 iUFU5cd7QAQozj/cVGjf7ztq5uA90ydbCIw2F9BU=
+	b=K2DBd2s9WFi8GBHa1/45YlCAMmkHQE4OFho3JC8PUWiYWSsN0UvuhTVQRs02Ksdqh
+	 ehZNemCgpBZKo73G/DwOS+cZLxYuOtgqf7+ei3GMiWpU568Qpyh3aD5mvyIi5h3yi2
+	 FtczIjgw4V8wqX/ar+qZbtfgdx+vORKE7X14upm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 485/565] tools: lib: thermal: use pkg-config to locate libnl3
-Date: Tue, 11 Nov 2025 09:45:41 +0900
-Message-ID: <20251111004537.839164326@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Sean Christopherson <seanjc@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Mateusz Guzik <mjguzik@gmail.com>
+Subject: [PATCH 6.12 498/565] x86: uaccess: dont use runtime-const rewriting in modules
+Date: Tue, 11 Nov 2025 09:45:54 +0900
+Message-ID: <20251111004538.141805709@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,47 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit b31f7f725cd932e2c2b41f3e4b66273653953687 ]
+[ Upstream commit 284922f4c563aa3a8558a00f2a05722133237fe8 ]
 
-To make libthermal more cross compile friendly use pkg-config to locate
-libnl3. Only if that fails fall back to hardcoded /usr/include/libnl3.
+The runtime-const infrastructure was never designed to handle the
+modular case, because the constant fixup is only done at boot time for
+core kernel code.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+But by the time I used it for the x86-64 user space limit handling in
+commit 86e6b1547b3d ("x86: fix user address masking non-canonical
+speculation issue"), I had completely repressed that fact.
+
+And it all happens to work because the only code that currently actually
+gets inlined by modules is for the access_ok() limit check, where the
+default constant value works even when not fixed up.  Because at least I
+had intentionally made it be something that is in the non-canonical
+address space region.
+
+But it's technically very wrong, and it does mean that at least in
+theory, the use of 'access_ok()' + '__get_user()' can trigger the same
+speculation issue with non-canonical addresses that the original commit
+was all about.
+
+The pattern is unusual enough that this probably doesn't matter in
+practice, but very wrong is still very wrong.  Also, let's fix it before
+the nice optimized scoped user accessor helpers that Thomas Gleixner is
+working on cause this pseudo-constant to then be more widely used.
+
+This all came up due to an unrelated discussion with Mateusz Guzik about
+using the runtime const infrastructure for names_cachep accesses too.
+There the modular case was much more obviously broken, and Mateusz noted
+it in his 'v2' of the patch series.
+
+That then made me notice how broken 'access_ok()' had been in modules
+all along.  Mea culpa, mea maxima culpa.
+
+Fix it by simply not using the runtime-const code in modules, and just
+using the USER_PTR_MAX variable value instead.  This is not
+performance-critical like the core user accessor functions (get_user()
+and friends) are.
+
+Also make sure this doesn't get forgotten the next time somebody wants
+to do runtime constant optimizations by having the x86 runtime-const.h
+header file error out if included by modules.
+
+Fixes: 86e6b1547b3d ("x86: fix user address masking non-canonical speculation issue")
+Acked-by: Borislav Petkov <bp@alien8.de>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Triggered-by: Mateusz Guzik <mjguzik@gmail.com>
+Link: https://lore.kernel.org/all/20251030105242.801528-1-mjguzik@gmail.com/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/Makefile | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/runtime-const.h |  4 ++++
+ arch/x86/include/asm/uaccess_64.h    | 10 +++++-----
+ arch/x86/kernel/cpu/common.c         |  6 +++++-
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/tools/lib/thermal/Makefile b/tools/lib/thermal/Makefile
-index 1694889847caf..8d21ea1950a31 100644
---- a/tools/lib/thermal/Makefile
-+++ b/tools/lib/thermal/Makefile
-@@ -59,8 +59,12 @@ else
-   CFLAGS := -g -Wall
- endif
+diff --git a/arch/x86/include/asm/runtime-const.h b/arch/x86/include/asm/runtime-const.h
+index 8d983cfd06ea6..e5a13dc8816e2 100644
+--- a/arch/x86/include/asm/runtime-const.h
++++ b/arch/x86/include/asm/runtime-const.h
+@@ -2,6 +2,10 @@
+ #ifndef _ASM_RUNTIME_CONST_H
+ #define _ASM_RUNTIME_CONST_H
  
-+NL3_CFLAGS = $(shell pkg-config --cflags libnl-3.0 2>/dev/null)
-+ifeq ($(NL3_CFLAGS),)
-+NL3_CFLAGS = -I/usr/include/libnl3
-+endif
++#ifdef MODULE
++  #error "Cannot use runtime-const infrastructure from modules"
++#endif
 +
- INCLUDES = \
---I/usr/include/libnl3 \
- -I$(srctree)/tools/lib/thermal/include \
- -I$(srctree)/tools/lib/ \
- -I$(srctree)/tools/include \
-@@ -72,6 +76,7 @@ INCLUDES = \
- override CFLAGS += $(EXTRA_WARNINGS)
- override CFLAGS += -Werror -Wall
- override CFLAGS += -fPIC
-+override CFLAGS += $(NL3_CFLAGS)
- override CFLAGS += $(INCLUDES)
- override CFLAGS += -fvisibility=hidden
- override CFGLAS += -Wl,-L.
+ #ifdef __ASSEMBLY__
+ 
+ .macro RUNTIME_CONST_PTR sym reg
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index c52f0133425b9..3f843369f4097 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -12,12 +12,12 @@
+ #include <asm/cpufeatures.h>
+ #include <asm/page.h>
+ #include <asm/percpu.h>
+-#include <asm/runtime-const.h>
+ 
+-/*
+- * Virtual variable: there's no actual backing store for this,
+- * it can purely be used as 'runtime_const_ptr(USER_PTR_MAX)'
+- */
++#ifdef MODULE
++  #define runtime_const_ptr(sym) (sym)
++#else
++  #include <asm/runtime-const.h>
++#endif
+ extern unsigned long USER_PTR_MAX;
+ 
+ #ifdef CONFIG_ADDRESS_MASKING
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index bc51fccba4cb6..b54717e6fc606 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -76,6 +76,10 @@
+ DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
+ EXPORT_PER_CPU_SYMBOL(cpu_info);
+ 
++/* Used for modules: built-in code uses runtime constants */
++unsigned long USER_PTR_MAX;
++EXPORT_SYMBOL(USER_PTR_MAX);
++
+ u32 elf_hwcap2 __read_mostly;
+ 
+ /* Number of siblings per CPU package */
+@@ -2473,7 +2477,7 @@ void __init arch_cpu_finalize_init(void)
+ 	alternative_instructions();
+ 
+ 	if (IS_ENABLED(CONFIG_X86_64)) {
+-		unsigned long USER_PTR_MAX = TASK_SIZE_MAX;
++		USER_PTR_MAX = TASK_SIZE_MAX;
+ 
+ 		/*
+ 		 * Enable this when LAM is gated on LASS support
 -- 
 2.51.0
 
