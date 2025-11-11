@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3E7346A01;
-	Tue, 11 Nov 2025 01:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273E32D879A;
+	Tue, 11 Nov 2025 01:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823661; cv=none; b=P4fcO20ivZHAqbK52zW/fZDv4aCz/ikmQHvJ+DW36QBgNax26H5I6xHSxojeMZmkHZZU+HmDWd95gUqCIpltEIgAP3F/8yaLevUQ3w5HK1A13TYFv/FdpoUzR9Pm8kiSfLD04oyMLi0ORnSKxwPuenlTVx8lv6HHo60/4DOx8RI=
+	t=1762823664; cv=none; b=OORZGkeDUYb2EuEsCy26AWoNvSuZJ1/WOUTPw3xBTN4CcC/h1TriSVpQqfZjkwPWrz1H7iGYXKpvrWsUCtlQgblNi1Jv0mNIE/3WQ6xBqZGi/WDa6SCaVpcNDn7cGgp/n2LFVSS3X7JNFyb+yR81pYuI8TJQp+hzBWygFIzEjYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823661; c=relaxed/simple;
-	bh=f0vtjkmlmmg93Ga65c11F0I+PTpToCWAsDqJUftIvLI=;
+	s=arc-20240116; t=1762823664; c=relaxed/simple;
+	bh=jtxYzvAgkU1aYeFweweuQhJ/wkMuiLxdGK9ZqW6XIb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2ZGtDLCLiSfp3I2kOCkofCuxTBK33/BjZ87rRqwGtgIrV5c88B0MLiApAYgSVFUNu/AqxazzHuokbXFm5D7bNSmfoxwZEdA4NWt1HOfqzpgiJZh6uudSkBv7BDznAMdg+RLJT2k2FG4HbDT+PGntpuRtt+k+0749xP2G7IOozM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+mAeTBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEIrSjq+rtjP95pm6t8YOZ+lDtcZumgmOBaI9iHEGKIl1jYppKVRYlSm2Kp6kZucabG6bojdBgB9Qd/13cqaj97GetUfkb4LWdeOpL07zPoAT0VxK5QosliKxrb/uAonW3wVZT8RhDb0oBSD2Nc1wtir5auzUDeHjZkCKIgtYak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNLWgiIw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+mAeTBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EABC4AF09;
-	Tue, 11 Nov 2025 01:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNLWgiIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE052C4CEF5;
+	Tue, 11 Nov 2025 01:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823661;
-	bh=f0vtjkmlmmg93Ga65c11F0I+PTpToCWAsDqJUftIvLI=;
+	s=korg; t=1762823664;
+	bh=jtxYzvAgkU1aYeFweweuQhJ/wkMuiLxdGK9ZqW6XIb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+mAeTBhiVEFIWFYCtAoeWQ8u+z7iuR+8u8xpm4kAXerNEuZCYhNZMJj+GMax5QZS
-	 +TdL0MLin2LROr9kb0qfqAXegffTZ3DQP+EI+CyGjrijbXccPVqkOSvWnI0fFEzoDK
-	 wUmiKoJkT9z+DXXKruDl1mUx8O6N1viiG8zoQTu0=
+	b=FNLWgiIwwM0VBeqW+0b1db6laq/DGDQ2kpCKQPA+VLpOsT3V7kZnbSlvYntSIlKII
+	 57VOYrnRWB+2nHiO+kDkLbGHv9OBFYMXR/MvKP7i6qZHt7UYzYOG7rQGw2gisfL9Em
+	 ieZWhqaLDY7ee08HHoE5TSaoGUI5n9GXMPbAxhiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 345/849] drm/panel: ilitek-ili9881c: turn off power-supply when init fails
-Date: Tue, 11 Nov 2025 09:38:35 +0900
-Message-ID: <20251111004544.761025411@linuxfoundation.org>
+Subject: [PATCH 6.12 296/565] media: verisilicon: Explicitly disable selection api ioctls for decoders
+Date: Tue, 11 Nov 2025 09:42:32 +0900
+Message-ID: <20251111004533.536878234@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 6c66eba502709a78281333187c1add7b71f7201f ]
+[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
 
-The prepare function turns on the power-supply regulator first, when
-preparing the display. But in an error case, just returns the error
-code, but does not power off the regulator again, fix that.
+Call the dedicated v4l2_disable_ioctl helper instead of manually
+checking whether the current context is an encoder for the selection
+api ioctls.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250707164906.1445288-2-heiko@sntech.de
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
+ drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-index ac433345a1794..3af22a5f5700c 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
-@@ -1486,7 +1486,7 @@ static int ili9881c_prepare(struct drm_panel *panel)
- 						      instr->arg.cmd.data);
- 
- 		if (ret)
--			return ret;
-+			goto disable_power;
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index 05bbac853c4fd..137ca13eeed7c 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -918,6 +918,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
+ 		vpu->decoder = func;
+ 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
+ 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
++		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
++		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
  	}
  
- 	ret = ili9881c_switch_page(ctx, 0);
-@@ -1498,18 +1498,22 @@ static int ili9881c_prepare(struct drm_panel *panel)
- 					 &ctx->address_mode,
- 					 sizeof(ctx->address_mode));
- 		if (ret < 0)
--			return ret;
-+			goto disable_power;
- 	}
+ 	video_set_drvdata(vfd, vpu);
+diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
+index 62d3962c18d99..c847c8284ab54 100644
+--- a/drivers/media/platform/verisilicon/hantro_v4l2.c
++++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
+@@ -633,8 +633,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
+ 	struct hantro_ctx *ctx = fh_to_ctx(priv);
  
- 	ret = mipi_dsi_dcs_set_tear_on(ctx->dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 	if (ret)
--		return ret;
-+		goto disable_power;
+ 	/* Crop only supported on source. */
+-	if (!ctx->is_encoder ||
+-	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
++	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+ 		return -EINVAL;
  
- 	ret = mipi_dsi_dcs_exit_sleep_mode(ctx->dsi);
- 	if (ret)
--		return ret;
-+		goto disable_power;
+ 	switch (sel->target) {
+@@ -666,8 +665,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
+ 	struct vb2_queue *vq;
  
- 	return 0;
-+
-+disable_power:
-+	regulator_disable(ctx->power);
-+	return ret;
- }
+ 	/* Crop only supported on source. */
+-	if (!ctx->is_encoder ||
+-	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
++	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+ 		return -EINVAL;
  
- static int ili9881c_enable(struct drm_panel *panel)
+ 	/* Change not allowed if the queue is streaming. */
 -- 
 2.51.0
 
