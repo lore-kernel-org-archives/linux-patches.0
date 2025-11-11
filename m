@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A25346E45;
-	Tue, 11 Nov 2025 01:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3E7346A01;
+	Tue, 11 Nov 2025 01:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823660; cv=none; b=d51vJNTa+5arngLOPOCuSdnwLHzy/VJxyREF7OwwtMdwndmf80+trkd6Ag/ozW3qf3d5bPiOmLLSRNnjT0ID7Y6uHp5zJhgzUK1Uk9CRF2L/9quX9hClRzEraLEh/dJISY709ANRho1jwtlucPvCQJFmhbseDUcXFIgKhDCvfxU=
+	t=1762823661; cv=none; b=P4fcO20ivZHAqbK52zW/fZDv4aCz/ikmQHvJ+DW36QBgNax26H5I6xHSxojeMZmkHZZU+HmDWd95gUqCIpltEIgAP3F/8yaLevUQ3w5HK1A13TYFv/FdpoUzR9Pm8kiSfLD04oyMLi0ORnSKxwPuenlTVx8lv6HHo60/4DOx8RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823660; c=relaxed/simple;
-	bh=gvPaIz96l6y8st3SQkooKkBeWUfSbuKSGr74dbn6FZw=;
+	s=arc-20240116; t=1762823661; c=relaxed/simple;
+	bh=f0vtjkmlmmg93Ga65c11F0I+PTpToCWAsDqJUftIvLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=czxvUgP0LOI92b7xGvcgaaQSj5+WpI1d40v38SmPS2gejS6LrW+Afta8Bxoxpzut13H9wUxOwJU1aeG5YzlLyh3UAK8D15c/UvYIVAiLAQWXkD2livCqYjKsdo7ZkQkD7Gjta5Cka4o9Ur06LRJorkzlUAKrqg4U7NBQc3YL6M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtwtYLAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2ZGtDLCLiSfp3I2kOCkofCuxTBK33/BjZ87rRqwGtgIrV5c88B0MLiApAYgSVFUNu/AqxazzHuokbXFm5D7bNSmfoxwZEdA4NWt1HOfqzpgiJZh6uudSkBv7BDznAMdg+RLJT2k2FG4HbDT+PGntpuRtt+k+0749xP2G7IOozM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+mAeTBh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtwtYLAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32759C4CEF5;
-	Tue, 11 Nov 2025 01:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+mAeTBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EABC4AF09;
+	Tue, 11 Nov 2025 01:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823659;
-	bh=gvPaIz96l6y8st3SQkooKkBeWUfSbuKSGr74dbn6FZw=;
+	s=korg; t=1762823661;
+	bh=f0vtjkmlmmg93Ga65c11F0I+PTpToCWAsDqJUftIvLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtwtYLAF/rtzYewYPIsTNGH1bY5x5Wdpi9nhOHnX6BKnU4j0NecGOujr6fqPRlgvX
-	 2H/Ydd5GH97Z5xgKjflUzjioFnt9iwtzyuIed27eMvjQK9WNcVFbfh/xsbufxOQGqB
-	 sK87vFCJ2hrivW8CzYXDQKqi62D9sPNnldim3Tbc=
+	b=r+mAeTBhiVEFIWFYCtAoeWQ8u+z7iuR+8u8xpm4kAXerNEuZCYhNZMJj+GMax5QZS
+	 +TdL0MLin2LROr9kb0qfqAXegffTZ3DQP+EI+CyGjrijbXccPVqkOSvWnI0fFEzoDK
+	 wUmiKoJkT9z+DXXKruDl1mUx8O6N1viiG8zoQTu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 295/565] media: adv7180: Only validate format in querystd
-Date: Tue, 11 Nov 2025 09:42:31 +0900
-Message-ID: <20251111004533.514713778@linuxfoundation.org>
+Subject: [PATCH 6.17 345/849] drm/panel: ilitek-ili9881c: turn off power-supply when init fails
+Date: Tue, 11 Nov 2025 09:38:35 +0900
+Message-ID: <20251111004544.761025411@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,87 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
+[ Upstream commit 6c66eba502709a78281333187c1add7b71f7201f ]
 
-The .querystd callback should not program the device with the detected
-standard, it should only report the standard to user-space. User-space
-may then use .s_std to set the standard, if it wants to use it.
+The prepare function turns on the power-supply regulator first, when
+preparing the display. But in an error case, just returns the error
+code, but does not power off the regulator again, fix that.
 
-All that is required of .querystd is to setup the auto detection of
-standards and report its findings.
-
-While at it add some documentation on why this can't happen while
-streaming and improve the error handling using a scoped guard.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250707164906.1445288-2-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/panel/panel-ilitek-ili9881c.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 6eb55f0d89dc9..f3f47beff76bb 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -357,32 +357,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
- static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
- {
- 	struct adv7180_state *state = to_state(sd);
--	int err = mutex_lock_interruptible(&state->mutex);
--	if (err)
--		return err;
--
--	if (state->streaming) {
--		err = -EBUSY;
--		goto unlock;
--	}
-+	int ret;
+diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+index ac433345a1794..3af22a5f5700c 100644
+--- a/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
++++ b/drivers/gpu/drm/panel/panel-ilitek-ili9881c.c
+@@ -1486,7 +1486,7 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 						      instr->arg.cmd.data);
  
--	err = adv7180_set_video_standard(state,
--			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
--	if (err)
--		goto unlock;
-+	guard(mutex)(&state->mutex);
+ 		if (ret)
+-			return ret;
++			goto disable_power;
+ 	}
  
--	msleep(100);
--	__adv7180_status(state, NULL, std);
-+	/*
-+	 * We can't sample the standard if the device is streaming as that would
-+	 * interfere with the capture session as the VID_SEL reg is touched.
-+	 */
-+	if (state->streaming)
-+		return -EBUSY;
+ 	ret = ili9881c_switch_page(ctx, 0);
+@@ -1498,18 +1498,22 @@ static int ili9881c_prepare(struct drm_panel *panel)
+ 					 &ctx->address_mode,
+ 					 sizeof(ctx->address_mode));
+ 		if (ret < 0)
+-			return ret;
++			goto disable_power;
+ 	}
  
--	err = v4l2_std_to_adv7180(state->curr_norm);
--	if (err < 0)
--		goto unlock;
-+	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
-+	ret = adv7180_set_video_standard(state,
-+					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
-+	if (ret)
-+		return ret;
+ 	ret = mipi_dsi_dcs_set_tear_on(ctx->dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+ 	if (ret)
+-		return ret;
++		goto disable_power;
  
--	err = adv7180_set_video_standard(state, err);
-+	/* Allow some time for the autodetection to run. */
-+	msleep(100);
+ 	ret = mipi_dsi_dcs_exit_sleep_mode(ctx->dsi);
+ 	if (ret)
+-		return ret;
++		goto disable_power;
  
--unlock:
--	mutex_unlock(&state->mutex);
--	return err;
-+	return __adv7180_status(state, NULL, std);
+ 	return 0;
++
++disable_power:
++	regulator_disable(ctx->power);
++	return ret;
  }
  
- static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
+ static int ili9881c_enable(struct drm_panel *panel)
 -- 
 2.51.0
 
