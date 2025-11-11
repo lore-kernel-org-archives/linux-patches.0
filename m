@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6442A73451;
-	Tue, 11 Nov 2025 00:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351B44C97;
+	Tue, 11 Nov 2025 00:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822160; cv=none; b=geYuj1LPw9IqLXyY7rJ9f+Iht+9IcvklROwKd2g+bGN5JELMpSUJ2boUJPZRiuk7SF/KxjOGdcxbCZb5w1siFU+kqlmIDT94grQzfzd69Fgh/9QP3azDqUo8nqQnRp5t9AiA1HMgniwTUx4jret8Ya6Wxp4rLdT+Zi30hufojGE=
+	t=1762822163; cv=none; b=NUbREsR5MQzbfXfKC4NGF6sUsEq1vh7UuP0GFHaNj1lwjjo0wUzahByeBwQZ2spkRRv/cJ21AyNPGKBTeHh+kYli3b0rtqlZLGoCYqI/TGvNyhM2bSo9WHB3rB+aQq9/3GX/xgtHwTzHA5sipY9D5qNnFKjCj+O2pINIvv6lu80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822160; c=relaxed/simple;
-	bh=xLeYgTjxS1iER0lp/IucKiH1HDPRMnvpWrfQ3Jo1VWQ=;
+	s=arc-20240116; t=1762822163; c=relaxed/simple;
+	bh=snm5QkyCQeu56tXkJTe3Muy2VqvYP3mSauz/+HhCmxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bz1PSf0eVpyKcLwOji+F5iio38u/adiTW8wAr8hno76mwpPxftx9QVyIRQnpTnaDsTeeHhFuiswFv4oyIFe/2AZnkV7nl3zhAF1AaE/MG8YKH7LdtcXDQCgEomjsMoVfYID9aL6S0KvAFVDrlua8y2MIX/NU9TEZkbVaX30EbfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYb/c17d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8WZxt56T6mfoJBGkxkDZaV0KV4zdyd+mKBUqzFKITtoIH1KqkmAFvgU4penupo0LQWi0xTtv1VWx4DEQWCeU2jtblDsPiLPrwum/cyDkP7O7JKf1ziUrpoOj3VqGrWnFCQk9Slqddq5zwukyaQxp6HY+AHpRCKQi84MswJR5AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzvMopTI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYb/c17d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BB3C113D0;
-	Tue, 11 Nov 2025 00:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzvMopTI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F69C2BC87;
+	Tue, 11 Nov 2025 00:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822160;
-	bh=xLeYgTjxS1iER0lp/IucKiH1HDPRMnvpWrfQ3Jo1VWQ=;
+	s=korg; t=1762822162;
+	bh=snm5QkyCQeu56tXkJTe3Muy2VqvYP3mSauz/+HhCmxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYb/c17doY+Il5cAxyDFB8p3Mcg4t7EvN0mZgWsMABzTpISt/o2h47pIDZBYpYiHl
-	 Gh5iba16PDEqNqUg+k463iqeMqOQyPsE8g9noEygOPrT/OvNaBws209tMCRVH9WPCO
-	 qoYl3LnvEvOHsnnXIVdeSZq9QuP0xfb8fMJidOOk=
+	b=qzvMopTI2mnUP9XpLgP/Ad0GRShvLB9b2aWC6l1ll2HcEKAUZHklUenyzsx8g7cqE
+	 4xIM2Qc9Ipi+fEFpci+pgsNA7LC9/eLDUlJ5wr0qFf2O2Gz3f3/oyK/EfPqXjoL6Ws
+	 5/RoZIzRlyw/rZnyFjlADKQ2eia3Wm2SaePFZTYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	David Gow <davidgow@google.com>,
+	Florian Schmaus <florian.schmaus@codasip.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 041/849] wifi: nl80211: call kfree without a NULL check
-Date: Tue, 11 Nov 2025 09:33:31 +0900
-Message-ID: <20251111004537.431786559@linuxfoundation.org>
+Subject: [PATCH 6.17 042/849] kunit: test_dev_action: Correctly cast priv pointer to long*
+Date: Tue, 11 Nov 2025 09:33:32 +0900
+Message-ID: <20251111004537.454432413@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Florian Schmaus <florian.schmaus@codasip.com>
 
-[ Upstream commit 249e1443e3d57e059925bdb698f53e4d008fc106 ]
+[ Upstream commit 2551a1eedc09f5a86f94b038dc1bb16855c256f1 ]
 
-Coverity is unhappy because we may leak old_radio_rts_threshold. Since
-this pointer is only valid in the context of the function and kfree is
-NULL pointer safe, don't check and just call kfree.
-Note that somehow, we were checking old_rts_threshold to free
-old_radio_rts_threshold which is a bit odd.
+The previous implementation incorrectly assumed the original type of
+'priv' was void**, leading to an unnecessary and misleading
+cast. Correct the cast of the 'priv' pointer in test_dev_action() to
+its actual type, long*, removing an unnecessary cast.
 
-Fixes: 264637941cf4 ("wifi: cfg80211: Add Support to Set RTS Threshold for each Radio")
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20251020075745.44168-1-emmanuel.grumbach@intel.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+As an additional benefit, this fixes an out-of-bounds CHERI fault on
+hardware with architectural capabilities. The original implementation
+tried to store a capability-sized pointer using the priv
+pointer. However, the priv pointer's capability only granted access to
+the memory region of its original long type, leading to a bounds
+violation since the size of a long is smaller than the size of a
+capability. This change ensures that the pointer usage respects the
+capabilities' bounds.
+
+Link: https://lore.kernel.org/r/20251017092814.80022-1-florian.schmaus@codasip.com
+Fixes: d03c720e03bd ("kunit: Add APIs for managing devices")
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ lib/kunit/kunit-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 852573423e52d..46b29ed0bd2e4 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4012,8 +4012,7 @@ static int nl80211_set_wiphy(struct sk_buff *skb, struct genl_info *info)
- 			rdev->wiphy.txq_quantum = old_txq_quantum;
- 		}
+diff --git a/lib/kunit/kunit-test.c b/lib/kunit/kunit-test.c
+index 8c01eabd4eaf2..63130a48e2371 100644
+--- a/lib/kunit/kunit-test.c
++++ b/lib/kunit/kunit-test.c
+@@ -739,7 +739,7 @@ static struct kunit_case kunit_current_test_cases[] = {
  
--		if (old_rts_threshold)
--			kfree(old_radio_rts_threshold);
-+		kfree(old_radio_rts_threshold);
- 		return result;
- 	}
+ static void test_dev_action(void *priv)
+ {
+-	*(void **)priv = (void *)1;
++	*(long *)priv = 1;
+ }
  
+ static void kunit_device_test(struct kunit *test)
 -- 
 2.51.0
 
