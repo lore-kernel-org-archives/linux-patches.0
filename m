@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BB8248F6A;
-	Tue, 11 Nov 2025 01:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35502248F6A;
+	Tue, 11 Nov 2025 01:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823071; cv=none; b=EdBT6Kb0lw7xGpxanyaZnnk2OJvoTJ114gYAqcVSv4W7MBj9jWdlznwV31s6stshbCcq662GR5moEUsycjZmLN/AJ2/Ywb1g+2DhQgqnSC8yqS7pKE9Y9nH3xWM6yCjnuCrVq9VjuD/wOyMJwu5HtLQ1RVKPcBFvwxAYF7p0Cqg=
+	t=1762823073; cv=none; b=fueugpi3IzBaifYdfGC9+n4KPBVB01jGQZLiitUt6C0gEvOgs3oPgLbT3gzgS94Ewg3iebYSwJ8RzSh/rS4Ubq5S/I2Ll3lF5SF8nZy1LiLmMvfZFHt2JeDy7OzYFbjL2dQ4jUUNXYOxXNO/85no7mtLIAXOrqaH+F0/WP71e6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823071; c=relaxed/simple;
-	bh=HOcXWopndfJpQap5verJu69ovCf7uEh9Lk1gZVJuXno=;
+	s=arc-20240116; t=1762823073; c=relaxed/simple;
+	bh=Ypw79DOPCc4II0B4MjrRYrY1izB9W7h+K/aKK9OF6KY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpIBMlAapmt+xkLvNphO6ImfoKhbuWCznWtq3m91j/mwDktTA62J6Y2CbmyWVQ7nogB90dX+QOofZdAbi5Sk99sP9tLKuvKzqppBbs8HV+LcoFEw5caQx4TzBk+CDhqx0aXlGVwE1FfSg/NcK8UcEoztbm4iUNQyLBBywKeEBhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmjJwLvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3FuYSaKO4Rmq5Fnj+INODndbQESg7nZJRB6Ct78Uyz7A+IOu6eGjk87PTQv5F41II/9VMlCuSCNGMAI7nQ2havOmviUSOrGnTUPvdbDL31/TMLQFqltVazWzlW14cH3cfx9fpwaMFew8FEEKOMhk5ERtnAmgMhxhTHK6y32Sjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVnOxR6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmjJwLvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE8AC16AAE;
-	Tue, 11 Nov 2025 01:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVnOxR6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8629C19421;
+	Tue, 11 Nov 2025 01:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823070;
-	bh=HOcXWopndfJpQap5verJu69ovCf7uEh9Lk1gZVJuXno=;
+	s=korg; t=1762823073;
+	bh=Ypw79DOPCc4II0B4MjrRYrY1izB9W7h+K/aKK9OF6KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmjJwLvYLXbMjx2o/1kGMo7T3cY5/a0RckBGTCbbuLe1rIswzzFgBv2ArpzciU6+t
-	 kpywOb1cnNQzrCd3gdxT9gzHXoQ5wk06NmpseH6bmZGq7ijcZwJnaqqFpKvsuIttv6
-	 rvgTaAYrwwiZI5zvsnaym78ZSo8zBopW0TPZku3Y=
+	b=ZVnOxR6eNObzVncSYFBBMPbVG36n6Y9dX8g2YezzX3LCzPq9fOXfvo1qhLKkFlXzY
+	 1iR+iodSxJsa1jNcMz7n9+l1JuhUW7hYhtW4nCTKrgVKrvUjFwa7I6ZywbnL68lRts
+	 5Qqmf52FW8we/6JH2Np97cGL656MMJaoWp6rVU/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 225/849] mfd: macsmc: Add "apple,t8103-smc" compatible
-Date: Tue, 11 Nov 2025 09:36:35 +0900
-Message-ID: <20251111004541.883755040@linuxfoundation.org>
+Subject: [PATCH 6.12 166/565] mfd: stmpe: Remove IRQ domain upon removal
+Date: Tue, 11 Nov 2025 09:40:22 +0900
+Message-ID: <20251111004530.671072073@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 9b959e525fa7e8518e57554b6e17849942938dfc ]
+[ Upstream commit 57bf2a312ab2d0bc8ee0f4e8a447fa94a2fc877d ]
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,smc" anymore [1]. Use
-"apple,t8103-smc" as base compatible as it is the SoC the driver and
-bindings were written for.
+The IRQ domain is (optionally) added during stmpe_probe, but never removed.
+Add the call to stmpe_remove.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
-
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://lore.kernel.org/r/20250828-dt-apple-t6020-v1-18-507ba4c4b98e@jannau.net
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250725070752.338376-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/macsmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/stmpe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/macsmc.c b/drivers/mfd/macsmc.c
-index 870c8b2028a8f..a5e0b99484830 100644
---- a/drivers/mfd/macsmc.c
-+++ b/drivers/mfd/macsmc.c
-@@ -478,6 +478,7 @@ static int apple_smc_probe(struct platform_device *pdev)
- }
+diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
+index 9c3cf58457a7d..be6a84a3062cc 100644
+--- a/drivers/mfd/stmpe.c
++++ b/drivers/mfd/stmpe.c
+@@ -1485,6 +1485,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
  
- static const struct of_device_id apple_smc_of_match[] = {
-+	{ .compatible = "apple,t8103-smc" },
- 	{ .compatible = "apple,smc" },
- 	{},
- };
+ void stmpe_remove(struct stmpe *stmpe)
+ {
++	if (stmpe->domain)
++		irq_domain_remove(stmpe->domain);
++
+ 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+ 		regulator_disable(stmpe->vio);
+ 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
 -- 
 2.51.0
 
