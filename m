@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5660A30C639;
-	Tue, 11 Nov 2025 01:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B51227054C;
+	Tue, 11 Nov 2025 01:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823332; cv=none; b=paDeUGR//K5feMZ0HkJwxeTRpQ/TszMHyF0oBXAHufzFIjD6xtp7epNcJL+pP5tB10wMyPEvcUllH0eS+YexPEG7K3XreTrmJxVMposCTgjishednZShH+qsrf9LmnRERAiokYCNbRIBVvVtnC1Mk+8AWPUj5ZcI5Repez94u2s=
+	t=1762823334; cv=none; b=W4+Rlc14AVN1sR19xWJHMPVLEDfv2AutK+6uR2MmXMi4Yh4+P5TSDh9IBIs6ffBHdFJlyQhFR+DIJ3/YrYBQk41pgY+9Av+mcbK8AUpY55dl4ysO2X/i7kbT2xdqBQff8ruyo8GMKZH8/VYyHksRATv8fZFvK5hZZcys/2vWmSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823332; c=relaxed/simple;
-	bh=6MTOrpLhNN2FewpT1IzX2LFNivcTjVheNR56ZyxZV0c=;
+	s=arc-20240116; t=1762823334; c=relaxed/simple;
+	bh=a2yDht++kmJE83HbJ8CLSRIozXGQNiSjcS/HftZ5/d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fg8hm8MU3ef1Os9OjLvOb/mK/Dh15yM9Sr8MMgWS/ojYF8P6B07rhbI7ZU2y/gwRvjcGA+0V2oc7qX3ZZC9H6F0tfejT681a2kkWW3y8oRJdLEjUB9o5KswpoboVAN+FixpizDaR038DNdqRR4YyxYvTXGFknO+xty1UzwobRY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STi6UwwB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ly7ik+6XcqodwFZzkLEaEljpPfj0dACX8Ub2a0QtmBYzOjtXAE8x8tS80GfAUWZ6SyNJMgSJrWDgy1V+WN9v0EjAY+BWZeXzNQvOI0gs2Y+AzqndtNuJMtT5kAj/7uxjNzaUPEm8dmBOM9ihMxWd5onyrJrNTx6l9Lkg8QauyDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTjxIP7u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STi6UwwB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0DEC4CEFB;
-	Tue, 11 Nov 2025 01:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTjxIP7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEBD0C4CEF5;
+	Tue, 11 Nov 2025 01:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823331;
-	bh=6MTOrpLhNN2FewpT1IzX2LFNivcTjVheNR56ZyxZV0c=;
+	s=korg; t=1762823334;
+	bh=a2yDht++kmJE83HbJ8CLSRIozXGQNiSjcS/HftZ5/d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STi6UwwBJoCqndsioBWe9w6mXwJsnoIpQr6I1ins1X9tvdkO7YwekwNjYXgRLxANw
-	 CQ5yQWE7q9Z2zBDQp9e9WxSSZ3ztI9IEUDGknvz+zrCLax2xOjATU4UQcuDDVps8t9
-	 /Pxnjgtm9LdGue/T0enEDIS1iWXmi2TlS353wfBI=
+	b=qTjxIP7uFMAwYJexHOAdmJn5cGV881B4VUWs5rXmsZNcXy912MxiX/WqPaM50aH2d
+	 L+5OOFHLyzEp822rVkp/pXWzsD6vfJvSK1mSBq1gUsw05uQQqNzph25hV2+bMSbEJ5
+	 B+PaOWfbYemVz02lEqbz73DxBpBvYODwyVBEigvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Dennis Tsiang <dennis.tsiang@arm.com>,
-	Karunika Choo <karunika.choo@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 221/565] drm/panthor: Serialize GPU cache flush operations
-Date: Tue, 11 Nov 2025 09:41:17 +0900
-Message-ID: <20251111004531.895566624@linuxfoundation.org>
+Subject: [PATCH 6.17 278/849] wifi: rtw89: add dummy C2H handlers for BCN resend and update done
+Date: Tue, 11 Nov 2025 09:37:28 +0900
+Message-ID: <20251111004543.145925787@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karunika Choo <karunika.choo@arm.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit e322a4844811b54477b7072eb40dc9e402a1725d ]
+[ Upstream commit 04a2de8cfc95076d6c65d4d6d06d0f9d964a2105 ]
 
-In certain scenarios, it is possible for multiple cache flushes to be
-requested before the previous one completes. This patch introduces the
-cache_flush_lock mutex to serialize these operations and ensure that
-any requested cache flushes are completed instead of dropped.
+Two C2H events are not listed, and driver throws
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Co-developed-by: Dennis Tsiang <dennis.tsiang@arm.com>
-Signed-off-by: Dennis Tsiang <dennis.tsiang@arm.com>
-Signed-off-by: Karunika Choo <karunika.choo@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250807162633.3666310-6-karunika.choo@arm.com
+  MAC c2h class 0 func 6 not support
+  MAC c2h class 1 func 3 not support
+
+Since the implementation in vendor driver does nothing, add two dummy
+functions for them.
+
+Reported-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/d2d62793-046c-4b55-93ed-1d1f43cff7f2@gmail.com/
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250804012234.8913-3-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/realtek/rtw89/mac.c | 13 ++++++++++++-
+ drivers/net/wireless/realtek/rtw89/mac.h |  1 +
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index 5251d8764e7d7..1ca2924e6d552 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -35,6 +35,9 @@ struct panthor_gpu {
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index ef17a307b7702..33a7dd9d6f0e6 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -5235,6 +5235,11 @@ rtw89_mac_c2h_bcn_cnt(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
+ {
+ }
  
- 	/** @reqs_acked: GPU request wait queue. */
- 	wait_queue_head_t reqs_acked;
++static void
++rtw89_mac_c2h_bcn_upd_done(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
++{
++}
 +
-+	/** @cache_flush_lock: Lock to serialize cache flushes */
-+	struct mutex cache_flush_lock;
+ static void
+ rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
+ 			   u32 len)
+@@ -5257,6 +5262,11 @@ rtw89_mac_c2h_pkt_ofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h,
+ 	rtw89_complete_cond(wait, cond, &data);
+ }
+ 
++static void
++rtw89_mac_c2h_bcn_resend(struct rtw89_dev *rtwdev, struct sk_buff *c2h, u32 len)
++{
++}
++
+ static void
+ rtw89_mac_c2h_tx_duty_rpt(struct rtw89_dev *rtwdev, struct sk_buff *skb_c2h, u32 len)
+ {
+@@ -5646,7 +5656,7 @@ void (* const rtw89_mac_c2h_ofld_handler[])(struct rtw89_dev *rtwdev,
+ 	[RTW89_MAC_C2H_FUNC_EFUSE_DUMP] = NULL,
+ 	[RTW89_MAC_C2H_FUNC_READ_RSP] = NULL,
+ 	[RTW89_MAC_C2H_FUNC_PKT_OFLD_RSP] = rtw89_mac_c2h_pkt_ofld_rsp,
+-	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = NULL,
++	[RTW89_MAC_C2H_FUNC_BCN_RESEND] = rtw89_mac_c2h_bcn_resend,
+ 	[RTW89_MAC_C2H_FUNC_MACID_PAUSE] = rtw89_mac_c2h_macid_pause,
+ 	[RTW89_MAC_C2H_FUNC_SCANOFLD_RSP] = rtw89_mac_c2h_scanofld_rsp,
+ 	[RTW89_MAC_C2H_FUNC_TX_DUTY_RPT] = rtw89_mac_c2h_tx_duty_rpt,
+@@ -5661,6 +5671,7 @@ void (* const rtw89_mac_c2h_info_handler[])(struct rtw89_dev *rtwdev,
+ 	[RTW89_MAC_C2H_FUNC_DONE_ACK] = rtw89_mac_c2h_done_ack,
+ 	[RTW89_MAC_C2H_FUNC_C2H_LOG] = rtw89_mac_c2h_log,
+ 	[RTW89_MAC_C2H_FUNC_BCN_CNT] = rtw89_mac_c2h_bcn_cnt,
++	[RTW89_MAC_C2H_FUNC_BCN_UPD_DONE] = rtw89_mac_c2h_bcn_upd_done,
  };
  
- /**
-@@ -201,6 +204,7 @@ int panthor_gpu_init(struct panthor_device *ptdev)
+ static
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
+index 241e89983c4ad..25fe5e5c8a979 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.h
++++ b/drivers/net/wireless/realtek/rtw89/mac.h
+@@ -419,6 +419,7 @@ enum rtw89_mac_c2h_info_func {
+ 	RTW89_MAC_C2H_FUNC_DONE_ACK,
+ 	RTW89_MAC_C2H_FUNC_C2H_LOG,
+ 	RTW89_MAC_C2H_FUNC_BCN_CNT,
++	RTW89_MAC_C2H_FUNC_BCN_UPD_DONE = 0x06,
+ 	RTW89_MAC_C2H_FUNC_INFO_MAX,
+ };
  
- 	spin_lock_init(&gpu->reqs_lock);
- 	init_waitqueue_head(&gpu->reqs_acked);
-+	mutex_init(&gpu->cache_flush_lock);
- 	ptdev->gpu = gpu;
- 	panthor_gpu_init_info(ptdev);
- 
-@@ -383,6 +387,9 @@ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
- 	bool timedout = false;
- 	unsigned long flags;
- 
-+	/* Serialize cache flush operations. */
-+	guard(mutex)(&ptdev->gpu->cache_flush_lock);
-+
- 	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
- 	if (!drm_WARN_ON(&ptdev->base,
- 			 ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
 -- 
 2.51.0
 
