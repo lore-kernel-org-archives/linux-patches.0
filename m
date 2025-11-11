@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E507E2DEA77;
-	Tue, 11 Nov 2025 01:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6001F419F;
+	Tue, 11 Nov 2025 01:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824679; cv=none; b=RtRpg4H5sx+na8/3bkIXbv+o5T45XYEVaqMHtr4DfBRcDkMBceEQL4/f4C1O+9C1nTN7+kKxoD2d+wQQ5xbpeEGxita2WsY0X1OuAHAAJV9GkPhskI22f2elbvWsfOknV6lDbuO4iytfLhPcb4NId7InUNr57840TB/gDI9yXvE=
+	t=1762824680; cv=none; b=nmS1BewMfUeJX9S3V7eNaPZSXeuFSchhA66dp9Yhhu4h/AzCNLcyckQD3LkfTn+zVKkYLoDfR2ElgAYBzg6dA7b3mE3017dCLNki4osiUcHvOPBOhDXuFsUThV43kCnpHJSmgr1AKIVEm1o8PJOueZzvrErFRrEPSdtNY1Ds8Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824679; c=relaxed/simple;
-	bh=Yhp+N0NhRYNoNf2p3jD/A8jMiwVbKnD5JbafBG65J/w=;
+	s=arc-20240116; t=1762824680; c=relaxed/simple;
+	bh=e7rW7qSX9cFCWm+CqUnTj4Xy9wtcix9cYVp8AEQkcqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z29sbMags5IWqxbzI/G68UBhcK7QuP8GYSE1fwDP3SzF7SSH2u94JmNU/2b1oH8LfUvziI/09jeautNJ0eBYQMMyhbuD5B4w0Il6vmgmS1INZRNG2o6ij5/A8O7QC7o7RIhXEAezghpHPthFX8YFlxXYGtQ0JImlFhQ5F//jFNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdWjjiQt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I9pZU3RLpyDg6oiyXcQHaXIPMKVFJo0vWkt2eHBHbl+D2qWhFawsthUOha0PXkIN9oboS/aKrMSjJxxuQGIR8IwPxQYwgCqB7heBWAgaxTzny1sAP+A1AuiXyUN5ZPZFCPhSTZOLf6NYUOGOuD79RxslNE3W/VWOILhiumQEr78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YID9aUrQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdWjjiQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E2FC116D0;
-	Tue, 11 Nov 2025 01:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YID9aUrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CB1C19422;
+	Tue, 11 Nov 2025 01:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824678;
-	bh=Yhp+N0NhRYNoNf2p3jD/A8jMiwVbKnD5JbafBG65J/w=;
+	s=korg; t=1762824680;
+	bh=e7rW7qSX9cFCWm+CqUnTj4Xy9wtcix9cYVp8AEQkcqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdWjjiQt0TQia912KFq2WlEfPoTGVh+C8oDeCJM9NjYzF6ktL+0VDyyUAwsQU5uUG
-	 gXz258qf09+Q94HfD+NuZJTfcScJJSqsIcUMlY86TA7JnBFoTcb95VO5Tf4aIfuWiB
-	 juEEDBVSOBodaH7sntWrDeLSUQaUgHSS/pVPpJ5Y=
+	b=YID9aUrQNkytWQNDSZ53XzI3JIHEuxqWRhHKhin4KkXIbOGZuCAKWnEQbJ9GH4Wwq
+	 JXRkn01sXHGax4Rfh9uHXV8DCC/3aIrZPttm+AStL5ZEe55uyxd9/JJLtpu01rwIkb
+	 FJw1LK4zMhu2t+7XHsX74hGzg1BaxYj4BViOWRfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 549/849] drm/amdgpu: validate userq buffer virtual address and size
-Date: Tue, 11 Nov 2025 09:41:59 +0900
-Message-ID: <20251111004549.678150606@linuxfoundation.org>
+Subject: [PATCH 6.12 497/565] x86/runtime-const: Add the RUNTIME_CONST_PTR assembly macro
+Date: Tue, 11 Nov 2025 09:45:53 +0900
+Message-ID: <20251111004538.118878049@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,151 +50,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 9e46b8bb0539d7bc9a9e7b3072fa4f6082490392 ]
+[ Upstream commit bd72baff229920da1d57c14364c11ecdbaf5b458 ]
 
-It needs to validate the userq object virtual address to
-determine whether it is residented in a valid vm mapping.
+Add an assembly macro to refer runtime cost. It hides linker magic and
+makes assembly more readable.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250304153342.2016569-1-kirill.shutemov@linux.intel.com
+Stable-dep-of: 284922f4c563 ("x86: uaccess: don't use runtime-const rewriting in modules")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c  | 40 ++++++++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h  |  2 ++
- drivers/gpu/drm/amd/amdgpu/mes_userqueue.c | 16 +++++++++
- 3 files changed, 58 insertions(+)
+ arch/x86/include/asm/runtime-const.h | 13 +++++++++++++
+ arch/x86/lib/getuser.S               |  7 ++-----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index 65c8a38890d48..695eb2b052fc0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -44,6 +44,38 @@ u32 amdgpu_userq_get_supported_ip_mask(struct amdgpu_device *adev)
- 	return userq_ip_mask;
+diff --git a/arch/x86/include/asm/runtime-const.h b/arch/x86/include/asm/runtime-const.h
+index 6652ebddfd02f..8d983cfd06ea6 100644
+--- a/arch/x86/include/asm/runtime-const.h
++++ b/arch/x86/include/asm/runtime-const.h
+@@ -2,6 +2,18 @@
+ #ifndef _ASM_RUNTIME_CONST_H
+ #define _ASM_RUNTIME_CONST_H
+ 
++#ifdef __ASSEMBLY__
++
++.macro RUNTIME_CONST_PTR sym reg
++	movq	$0x0123456789abcdef, %\reg
++	1:
++	.pushsection runtime_ptr_\sym, "a"
++	.long	1b - 8 - .
++	.popsection
++.endm
++
++#else /* __ASSEMBLY__ */
++
+ #define runtime_const_ptr(sym) ({				\
+ 	typeof(sym) __ret;					\
+ 	asm_inline("mov %1,%0\n1:\n"				\
+@@ -58,4 +70,5 @@ static inline void runtime_const_fixup(void (*fn)(void *, unsigned long),
+ 	}
  }
  
-+int amdgpu_userq_input_va_validate(struct amdgpu_vm *vm, u64 addr,
-+				   u64 expected_size)
-+{
-+	struct amdgpu_bo_va_mapping *va_map;
-+	u64 user_addr;
-+	u64 size;
-+	int r = 0;
-+
-+	user_addr = (addr & AMDGPU_GMC_HOLE_MASK) >> AMDGPU_GPU_PAGE_SHIFT;
-+	size = expected_size >> AMDGPU_GPU_PAGE_SHIFT;
-+
-+	r = amdgpu_bo_reserve(vm->root.bo, false);
-+	if (r)
-+		return r;
-+
-+	va_map = amdgpu_vm_bo_lookup_mapping(vm, user_addr);
-+	if (!va_map) {
-+		r = -EINVAL;
-+		goto out_err;
-+	}
-+	/* Only validate the userq whether resident in the VM mapping range */
-+	if (user_addr >= va_map->start  &&
-+	    va_map->last - user_addr + 1 >= size) {
-+		amdgpu_bo_unreserve(vm->root.bo);
-+		return 0;
-+	}
-+
-+out_err:
-+	amdgpu_bo_unreserve(vm->root.bo);
-+	return r;
-+}
-+
- static int
- amdgpu_userq_unmap_helper(struct amdgpu_userq_mgr *uq_mgr,
- 			  struct amdgpu_usermode_queue *queue)
-@@ -439,6 +471,14 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
- 		r = -ENOMEM;
- 		goto unlock;
- 	}
-+
-+	/* Validate the userq virtual address.*/
-+	if (amdgpu_userq_input_va_validate(&fpriv->vm, args->in.queue_va, args->in.queue_size) ||
-+	    amdgpu_userq_input_va_validate(&fpriv->vm, args->in.rptr_va, AMDGPU_GPU_PAGE_SIZE) ||
-+	    amdgpu_userq_input_va_validate(&fpriv->vm, args->in.wptr_va, AMDGPU_GPU_PAGE_SIZE)) {
-+		kfree(queue);
-+		goto unlock;
-+	}
- 	queue->doorbell_handle = args->in.doorbell_handle;
- 	queue->queue_type = args->in.ip_type;
- 	queue->vm = &fpriv->vm;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h
-index b1ca91b7cda4b..8603c31320f11 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h
-@@ -133,4 +133,6 @@ int amdgpu_userq_stop_sched_for_enforce_isolation(struct amdgpu_device *adev,
- int amdgpu_userq_start_sched_for_enforce_isolation(struct amdgpu_device *adev,
- 						   u32 idx);
- 
-+int amdgpu_userq_input_va_validate(struct amdgpu_vm *vm, u64 addr,
-+				   u64 expected_size);
++#endif /* __ASSEMBLY__ */
  #endif
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-index 1457fb49a794f..ef54d211214f4 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-@@ -206,6 +206,7 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 	struct amdgpu_mqd *mqd_hw_default = &adev->mqds[queue->queue_type];
- 	struct drm_amdgpu_userq_in *mqd_user = args_in;
- 	struct amdgpu_mqd_prop *userq_props;
-+	struct amdgpu_gfx_shadow_info shadow_info;
- 	int r;
+diff --git a/arch/x86/lib/getuser.S b/arch/x86/lib/getuser.S
+index 89ecd57c9d423..853a2e6287698 100644
+--- a/arch/x86/lib/getuser.S
++++ b/arch/x86/lib/getuser.S
+@@ -34,16 +34,13 @@
+ #include <asm/thread_info.h>
+ #include <asm/asm.h>
+ #include <asm/smap.h>
++#include <asm/runtime-const.h>
  
- 	/* Structure to initialize MQD for userqueue using generic MQD init function */
-@@ -231,6 +232,8 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 	userq_props->doorbell_index = queue->doorbell_index;
- 	userq_props->fence_address = queue->fence_drv->gpu_addr;
+ #define ASM_BARRIER_NOSPEC ALTERNATIVE "", "lfence", X86_FEATURE_LFENCE_RDTSC
  
-+	if (adev->gfx.funcs->get_gfx_shadow_info)
-+		adev->gfx.funcs->get_gfx_shadow_info(adev, &shadow_info, true);
- 	if (queue->queue_type == AMDGPU_HW_IP_COMPUTE) {
- 		struct drm_amdgpu_userq_mqd_compute_gfx11 *compute_mqd;
- 
-@@ -247,6 +250,10 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 			goto free_mqd;
- 		}
- 
-+		if (amdgpu_userq_input_va_validate(queue->vm, compute_mqd->eop_va,
-+		    max_t(u32, PAGE_SIZE, AMDGPU_GPU_PAGE_SIZE)))
-+			goto free_mqd;
-+
- 		userq_props->eop_gpu_addr = compute_mqd->eop_va;
- 		userq_props->hqd_pipe_priority = AMDGPU_GFX_PIPE_PRIO_NORMAL;
- 		userq_props->hqd_queue_priority = AMDGPU_GFX_QUEUE_PRIORITY_MINIMUM;
-@@ -274,6 +281,11 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 		userq_props->csa_addr = mqd_gfx_v11->csa_va;
- 		userq_props->tmz_queue =
- 			mqd_user->flags & AMDGPU_USERQ_CREATE_FLAGS_QUEUE_SECURE;
-+
-+		if (amdgpu_userq_input_va_validate(queue->vm, mqd_gfx_v11->shadow_va,
-+		    shadow_info.shadow_size))
-+			goto free_mqd;
-+
- 		kfree(mqd_gfx_v11);
- 	} else if (queue->queue_type == AMDGPU_HW_IP_DMA) {
- 		struct drm_amdgpu_userq_mqd_sdma_gfx11 *mqd_sdma_v11;
-@@ -291,6 +303,10 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 			goto free_mqd;
- 		}
- 
-+		if (amdgpu_userq_input_va_validate(queue->vm, mqd_sdma_v11->csa_va,
-+		    shadow_info.csa_size))
-+			goto free_mqd;
-+
- 		userq_props->csa_addr = mqd_sdma_v11->csa_va;
- 		kfree(mqd_sdma_v11);
- 	}
+ .macro check_range size:req
+ .if IS_ENABLED(CONFIG_X86_64)
+-	movq $0x0123456789abcdef,%rdx
+-  1:
+-  .pushsection runtime_ptr_USER_PTR_MAX,"a"
+-	.long 1b - 8 - .
+-  .popsection
++	RUNTIME_CONST_PTR USER_PTR_MAX, rdx
+ 	cmp %rdx, %rax
+ 	cmova %rdx, %rax
+ .else
 -- 
 2.51.0
 
