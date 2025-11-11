@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A47E2D979C;
-	Tue, 11 Nov 2025 01:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55772263F52;
+	Tue, 11 Nov 2025 01:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824116; cv=none; b=kQQJYRUZ/Z+HQDtdjuzIBQrZShX06Jsn+vzRiPxnNXT/8i/U3L8fEh2LeN7tM/Ewz/iv5oEPOuxka53uMWzuZgdBG88vgn6FNdbAGAUko1GlqTWcLqIFYBfEseAkuUlFKxT3UcxYPCx16v3+l+ibMTN1siAE++JWog7IP+SlbPI=
+	t=1762824118; cv=none; b=fxWFr7FqUf5LFQz9+YA8U/qlN0IdYQGCNVFM+9fuke8fR2M9UOV+ZJjFxPQ3SPdJCSTO8SgZAWEFkQ5sLwU8G0AcB6DAtgoC6amxj9VAyY38YiBCSO0fpvRiUlfg/QDcwVYigOhweD/HMcnrg0DsR/wF/RAffh7unQWmKextKp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824116; c=relaxed/simple;
-	bh=Oa2pJR8K2KnrgDDAUuC13rnIXhXDDU0ULlbi1g8ttfE=;
+	s=arc-20240116; t=1762824118; c=relaxed/simple;
+	bh=f1iQezGCEkwfUE1msxHjfwvQw0ZW9YsWSKjfIZrHL5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMnzKsnAblZOizKgAjZgja+sCh4ZU1tamLXgulweqG9cZcJsYwyGVQTXRR6bPNkFMxEnP8zMYAO61yDKwciiinjCuzVjTBhsAKyeOYH594bn4KQ0vzxFAabDcrWme9i5omjJyiRDk/9w2RmRmPWKqkCxTheOtb9b5jLG1Bz4jbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ujc8ZOhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5UjhW+jVtNi2QQSUfEmxlARTnf+SqUg4U0EIXq11gDPFmqraUxKSLXxPvKDio5YKyUBq3XiyfDX+4TmrprWyC/UUMt934mzsh180Mv4743BvQlIjoTghAzjVKZ0kAUd+N5THcUFWMuokZikn0QUmsrJUNVIS9UWRrm1DNFMbhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHBj9pZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ujc8ZOhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAEEC19421;
-	Tue, 11 Nov 2025 01:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHBj9pZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81EDC19422;
+	Tue, 11 Nov 2025 01:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824116;
-	bh=Oa2pJR8K2KnrgDDAUuC13rnIXhXDDU0ULlbi1g8ttfE=;
+	s=korg; t=1762824118;
+	bh=f1iQezGCEkwfUE1msxHjfwvQw0ZW9YsWSKjfIZrHL5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ujc8ZOhUXyRXPZW9qSpPazCnHQPpjdJoRdjgYAac5uvOwCd8ATrUVe0Xxc6e/CvEZ
-	 2vJJVbqCMtuTfilgXZAY4rJJUntA699zIKcniuk1B+Pl9dzxmP5Hg2mB4d6ixcz9Rh
-	 67inEz4uTzdBd4O00BPOA9SUctaQ1nCpjWTsZcLM=
+	b=CHBj9pZoH9p4V3LFiIetEYSqqcjzqyqptzYRzZMqUsBfHvV5xGp0u5WgTG88WCdFL
+	 hZbNV1pGGHqCdeKFEuYh5gbjE4ELv0mVTG4cBdMHIay9gEuzYFLUa8UZ3+wwuay8FR
+	 VjWcGVrzUw5exoHI3suhegREhTvUt9JmlUoFj+ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 390/565] jfs: Verify inode mode when loading from disk
-Date: Tue, 11 Nov 2025 09:44:06 +0900
-Message-ID: <20251111004535.645913511@linuxfoundation.org>
+Subject: [PATCH 6.17 440/849] ALSA: usb-audio: apply quirk for MOONDROP Quark2
+Date: Tue, 11 Nov 2025 09:40:10 +0900
+Message-ID: <20251111004547.071456245@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 7a5aa54fba2bd591b22b9b624e6baa9037276986 ]
+[ Upstream commit a73349c5dd27bc544b048e2e2c8ef6394f05b793 ]
 
-The inode mode loaded from corrupted disk can be invalid. Do like what
-commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
-does.
+It reports a MIN value -15360 for volume control, but will mute when
+setting it less than -14208
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-4-d4ca777b8512@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/inode.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
-index 5fe8cb4742c21..8ee653aa07ced 100644
---- a/fs/jfs/inode.c
-+++ b/fs/jfs/inode.c
-@@ -59,9 +59,15 @@ struct inode *jfs_iget(struct super_block *sb, unsigned long ino)
- 			 */
- 			inode->i_link[inode->i_size] = '\0';
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 63b300bc67ba9..cf296decefefc 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1191,6 +1191,13 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 			cval->res = 1;
  		}
--	} else {
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		inode->i_op = &jfs_file_inode_operations;
- 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
-+	} else {
-+		printk(KERN_DEBUG "JFS: Invalid file type 0%04o for inode %lu.\n",
-+		       inode->i_mode, inode->i_ino);
-+		iget_failed(inode);
-+		return ERR_PTR(-EIO);
+ 		break;
++	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
++		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
++			usb_audio_info(chip,
++				"set volume quirk for MOONDROP Quark2\n");
++			cval->min = -14208; /* Mute under it */
++		}
++		break;
  	}
- 	unlock_new_inode(inode);
- 	return inode;
+ }
+ 
 -- 
 2.51.0
 
