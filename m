@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A983431EC;
-	Tue, 11 Nov 2025 01:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0529334321E;
+	Tue, 11 Nov 2025 01:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824085; cv=none; b=JRsDVQl9mvU114tBnSgv/rj4MEdeMfR7buGK1+e3U5G9V+dZH4gkF1MaTjY2IEC42bH/mtjgh6RuiySI6Gbp81waTxkam0ZlBX18jvASilFrAbSIOawqSt4iVjGHqS46LVKqX5ouPnToxtwey1zdSO7/lQxj9HKdFO6KRXfRvuY=
+	t=1762824088; cv=none; b=tjvjvZf/swEhLOfv7ytJQCV+uU8Y7V62Gd3rnSHMA9WU3BbiqObVc5Q8KNCeA6pE+c5ucwUJvuH6SloQnMMyS3H6bnHDOQuwb/5GXbDxLQz/xZtfht2cQV6wOF3TjCPu2En3Yp+Lxa6OV2aBimxeN0WmjTYa7ll11soczKclSZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824085; c=relaxed/simple;
-	bh=osZhLOcvFpzxvJfnYe2YnGiYCLjpmfaOorH0mU+tCys=;
+	s=arc-20240116; t=1762824088; c=relaxed/simple;
+	bh=Bm5eWxr7eMGsGa90O39fmS0KPQztKrVL18u9V0an9J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tv7USQeEW/ggAA8TvHA6oaHBwb5h5Q8gHrui8Ns6vVvrc6E4EUxoG2Zlwlf3FUOfq/hvjjhGAqhRBPe03hgH3h6cJen8AAnNJKF57wU71Ed7Z4q7JRbezGviD2xHeoebeXwrWN1RXqtreYnmrly9KYyXIQ4zytp6oPBDsLPGIpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJXMpXU7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uyGSoNsi2Ez9wWD0xobdHwgmH0oaCUfN56eQUXUQ8Lw1jwNELW4aViTu/pYHk5BRldXXwh8pj+Qoiws/VZnMNXovWhvI7hmLidAwfuSbnCQh8Z84dEOhcdr27Kw8XR+5dIEIoX0Wz5/yJr/fPqZ9XQYjhoXwhdzNGGy+ca5wg1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZZNRwaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJXMpXU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE81C16AAE;
-	Tue, 11 Nov 2025 01:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZZNRwaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C3BC113D0;
+	Tue, 11 Nov 2025 01:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824085;
-	bh=osZhLOcvFpzxvJfnYe2YnGiYCLjpmfaOorH0mU+tCys=;
+	s=korg; t=1762824087;
+	bh=Bm5eWxr7eMGsGa90O39fmS0KPQztKrVL18u9V0an9J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YJXMpXU7D92XhFw0o9rp/enLtiz6LBPY07EcQVgZreIse4oElRHqOXBPrgUa8B8Ty
-	 Rv4Co+bO1PVUYOMOmeVMwAc5M4zfZ7syWwxG7oXYDmJ9tC7FTgLDU5y81tyqElUnpl
-	 EtZ1otXen4B0wp9oqoJG51QAA05LOBZbpjwvtCNw=
+	b=vZZNRwaFWLuDQtaKeHbFq9xX3S1vGNoP2Wajw3VaHp0xBsgKLLse0lQEnCuwJjpAQ
+	 13IJRi5LK5Jekpm6iBGMvQSy4upEjLpTcqwpmA7ENmKouAuw30rlkD8z1iem3qukfY
+	 OrcSIG4NF0vRp/IxnegUN8fd5dhGRp8R5+T3hCwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 384/565] wifi: rtw89: obtain RX path from ppdu status IE00
-Date: Tue, 11 Nov 2025 09:44:00 +0900
-Message-ID: <20251111004535.509511766@linuxfoundation.org>
+Subject: [PATCH 6.17 434/849] media: adv7180: Do not write format to device in set_fmt
+Date: Tue, 11 Nov 2025 09:40:04 +0900
+Message-ID: <20251111004546.924956591@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,55 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit e156d2ab36d7e47aec36845705e4ecb1e4e89976 ]
+[ Upstream commit 46c1e7814d1c3310ef23c01ed1a582ef0c8ab1d2 ]
 
-The header v2 of ppdu status is optional, If it is not enabled, the RX
-path must be obtained from IE00 or IE01. Append the IE00 part.
+The .set_fmt callback should not write the new format directly do the
+device, it should only store it and have it applied by .s_stream.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250915065213.38659-5-pkshih@realtek.com
+The .s_stream callback already calls adv7180_set_field_mode() so it's
+safe to remove programming of the device and just store the format and
+have .s_stream apply it.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
- drivers/net/wireless/realtek/rtw89/txrx.h | 1 +
- 2 files changed, 5 insertions(+)
+ drivers/media/i2c/adv7180.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 1147abf771547..3584445b27387 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1710,6 +1710,10 @@ static void rtw89_core_parse_phy_status_ie00(struct rtw89_dev *rtwdev,
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 84600fa75ae8a..8100fe6b0f1d4 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -812,14 +812,7 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
+ 	ret = adv7180_mbus_fmt(sd,  &format->format);
  
- 	tmp_rpl = le32_get_bits(ie->w0, RTW89_PHY_STS_IE00_W0_RPL);
- 	phy_ppdu->rpl_avg = tmp_rpl >> 1;
-+
-+	if (!phy_ppdu->hdr_2_en)
-+		phy_ppdu->rx_path_en =
-+			le32_get_bits(ie->w3, RTW89_PHY_STS_IE00_W3_RX_PATH_EN);
- }
- 
- static void rtw89_core_parse_phy_status_ie00_v2(struct rtw89_dev *rtwdev,
-diff --git a/drivers/net/wireless/realtek/rtw89/txrx.h b/drivers/net/wireless/realtek/rtw89/txrx.h
-index b2e47829983fe..3a3b6154db458 100644
---- a/drivers/net/wireless/realtek/rtw89/txrx.h
-+++ b/drivers/net/wireless/realtek/rtw89/txrx.h
-@@ -568,6 +568,7 @@ struct rtw89_phy_sts_ie00 {
- } __packed;
- 
- #define RTW89_PHY_STS_IE00_W0_RPL GENMASK(15, 7)
-+#define RTW89_PHY_STS_IE00_W3_RX_PATH_EN GENMASK(31, 28)
- 
- struct rtw89_phy_sts_ie00_v2 {
- 	__le32 w0;
+ 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
+-		if (state->field != format->format.field) {
+-			guard(mutex)(&state->mutex);
+-
+-			state->field = format->format.field;
+-			adv7180_set_power(state, false);
+-			adv7180_set_field_mode(state);
+-			adv7180_set_power(state, true);
+-		}
++		state->field = format->format.field;
+ 	} else {
+ 		framefmt = v4l2_subdev_state_get_format(sd_state, 0);
+ 		*framefmt = format->format;
 -- 
 2.51.0
 
