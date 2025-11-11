@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0864E330B12;
-	Tue, 11 Nov 2025 01:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05230265CA6;
+	Tue, 11 Nov 2025 01:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824926; cv=none; b=YsWzMN9WC9ZUlDR7J5cAwKrMuLIBXWP+UtB7b4Jb+qwGfC6X+aCbAWEtQ3Wruxo4m8XunxrBGdDYKT0TQyKP8+80+RgaqYVAU3DcR3rvPL7T23TirexbHH4KfyoKeoqeKHy0Pv1XX6Q97NlXnMXi03++Vs+WICcYUOWjpWzXLyA=
+	t=1762824928; cv=none; b=Aft78jHfGp9TiXBqKshy62v86ORq1o9nQNpmzqT81U64jcCXBMiOoj/kqtnVL1u2LETUOzBmGCNpXMkWoE/K3cc/T+xe2k+sg9j66mVAcVfJL/Z5AhP6k9pXw0CBjPrMqmZO04DPu3vxH7Z6udywlmO2PnUCQbY/poU6wUWQ7Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824926; c=relaxed/simple;
-	bh=EPcHGQPvVsIaktgHSKvt09p4BeNjNoBIqVx70cn+sPw=;
+	s=arc-20240116; t=1762824928; c=relaxed/simple;
+	bh=vzCk1evj6xt8zohtGaifSfgBbp1wDqslEOM3tIDd4sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHLHk5XtwXiyKJK/oIMpCsAl3wsuzg/VsgxxciDhdQZmlwzMmgZ1BhCyVRyhbGWFQPrWaLK8d0YHZLTtnbPzFAf9FFHdL2FFXOoJNKOnEW8axeftt3KDYFJ/vwo1ylHAkCV6ackdIHOvUaUVTzsSiT83Q0qG7XhpgSklki9G9TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlGwS14I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h4vkFcvfOE4x7p/MsYUYfET73ZoLAp39TGzDQXktlKTG0PZ9ekiUh5VA7fDk/InwR9oJk3VaPgq/5F48ayT/C9+lJsjEsJzbtvPsp0NT/5+NJghd1vfAbs7kOtpgCTX0DaEDivMCMZRj/NHmxbIwNFyHoNN2H6rMobCg9E7PwHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFLyeZxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlGwS14I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA67C116B1;
-	Tue, 11 Nov 2025 01:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFLyeZxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E35C19421;
+	Tue, 11 Nov 2025 01:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824925;
-	bh=EPcHGQPvVsIaktgHSKvt09p4BeNjNoBIqVx70cn+sPw=;
+	s=korg; t=1762824927;
+	bh=vzCk1evj6xt8zohtGaifSfgBbp1wDqslEOM3tIDd4sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlGwS14IfaF80/HzNHB7mym9xV3MF/zP5hBvD1l1zdKKNtUoPjc/+3xmHn0I2E+l5
-	 f4sutACq26VhWXR3Rdmt8vJPC3+GUAMNB+si/j1ORs2wPkIbcbcY93sifYU9icMqCD
-	 QMRe7EmVl69ozJ/Ahp0xWwGhfG39/06EI1oQvEvA=
+	b=ZFLyeZxZgR0ertIt/qSU9fRvU4fThQ4oc6KW9S8MDymz9GTQwIln/GkeGXQlM1RuJ
+	 vPSeo1gByYYPAYFyXTwlyVBFbPZhlZ2zmWpITNN34PmJLSyh7FxBxlskpzNbASY2Vh
+	 HmBHeU+EKMaW+CrnYmCFxNHv1t9ehKZNXhszRIZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 599/849] wifi: ath10k: Fix connection after GTK rekeying
-Date: Tue, 11 Nov 2025 09:42:49 +0900
-Message-ID: <20251111004550.903682634@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 552/565] drm/amdgpu/smu: Handle S0ix for vangogh
+Date: Tue, 11 Nov 2025 09:46:48 +0900
+Message-ID: <20251111004539.419310998@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,70 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
+commit 7c5609b72bfe57d8c601d9561e0d2551b605c017 upstream.
 
-It appears that not all hardware/firmware implementations support
-group key deletion correctly, which can lead to connection hangs
-and deauthentication following GTK rekeying (delete and install).
+Fix the flows for S0ix.  There is no need to stop
+rlc or reintialize PMFW in S0ix.
 
-To avoid this issue, instead of attempting to delete the key using
-the special WMI_CIPHER_NONE value, we now replace the key with an
-invalid (random) value.
-
-This behavior has been observed with WCN39xx chipsets.
-
-Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
-Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reported-by: Antheas Kapenekakis <lkml@antheas.dev>
+Tested-by: Antheas Kapenekakis <lkml@antheas.dev>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fd39b5a5830d8f2553e0c09d4d50bdff28b10080)
+Cc: <stable@vger.kernel.org> # c81f5cebe849: drm/amdgpu: Drop PMFW RLC notifier from amdgpu_device_suspend()
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c        |    6 ++++++
+ drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c |    3 +++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 24dd794e31ea2..154ac7a709824 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -16,6 +16,7 @@
- #include <linux/acpi.h>
- #include <linux/of.h>
- #include <linux/bitfield.h>
-+#include <linux/random.h>
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1942,6 +1942,12 @@ static int smu_disable_dpms(struct smu_c
+ 	    smu->is_apu && (amdgpu_in_reset(adev) || adev->in_s0ix))
+ 		return 0;
  
- #include "hif.h"
- #include "core.h"
-@@ -290,8 +291,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
++	/* vangogh s0ix */
++	if ((amdgpu_ip_version(adev, MP1_HWIP, 0) == IP_VERSION(11, 5, 0) ||
++	     amdgpu_ip_version(adev, MP1_HWIP, 0) == IP_VERSION(11, 5, 2)) &&
++	    adev->in_s0ix)
++		return 0;
++
+ 	/*
+ 	 * For gpu reset, runpm and hibernation through BACO,
+ 	 * BACO feature has to be kept enabled.
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+@@ -2214,6 +2214,9 @@ static int vangogh_post_smu_init(struct
+ 	uint32_t total_cu = adev->gfx.config.max_cu_per_sh *
+ 		adev->gfx.config.max_sh_per_se * adev->gfx.config.max_shader_engines;
  
- 	if (cmd == DISABLE_KEY) {
--		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
--		arg.key_data = NULL;
-+		if (flags & WMI_KEY_GROUP) {
-+			/* Not all hardware handles group-key deletion operation
-+			 * correctly. Replace the key with a junk value to invalidate it.
-+			 */
-+			get_random_bytes(key->key, key->keylen);
-+		} else {
-+			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
-+			arg.key_data = NULL;
-+		}
- 	}
- 
- 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
--- 
-2.51.0
-
++	if (adev->in_s0ix)
++		return 0;
++
+ 	/* allow message will be sent after enable message on Vangogh*/
+ 	if (smu_cmn_feature_is_enabled(smu, SMU_FEATURE_DPM_GFXCLK_BIT) &&
+ 			(adev->pg_flags & AMD_PG_SUPPORT_GFX_PG)) {
 
 
