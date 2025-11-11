@@ -1,110 +1,82 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA46F26D4C7
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 18:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDA420FA81;
+	Tue, 11 Nov 2025 18:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762885224; cv=none; b=IE/HiyBKihPbZI5bRQFd7tbmPDreMcdfJjAo1D+AdZoDnZpGIXOIjggHJcBP/44pPfBGYhWK9IwoaLzwm/w74a0aaaqhaB6842JasfiPgbL6/FW/wCgP8VzYh6i8KN3zKlt7XclCGDNbt2M7MDcxDiocGZO3RkdXWPSnIvfrvN0=
+	t=1762885278; cv=none; b=EVQ51bTtMlQLIamAUAULs6/uNMDLzz+9WFpZHMJSRcup/5wJgHhQjy9aNw1hNuxJGcCDUdxOXlcI33RfNh/OeHCsu4z90jZcIvOvWsSVUk6il94HYWnbLVFtHq7u6Jku4BSJmsTy0u5OhiGc+2klyGmlk575cjN6eWyedvw8oUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762885224; c=relaxed/simple;
-	bh=n95I+wM9yjtOPWAMaBFaxz6m9Ftg/IKT0PcTyfUSGlI=;
+	s=arc-20240116; t=1762885278; c=relaxed/simple;
+	bh=e92g2AtYfV2iwp3wd5R+SkeTrcB37wAq+V40qAhUEIk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D1uE2no9vFUwLPGKyAmPNkxogoaOiWDH6elBNB2uUHRgLo3UEV3B5OKHSJYwYseCNWk9HJljff6Zkeo8hrIMkzKdoOLKoelwzlBH8YEGY0J5bsCgdr4Ot/t2AmYC9sP/BQTqY1cv/9UN9dz37fOQ8sndrb6GwloF/F3me+G5m4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=JtCU6bv2; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=bV61Lig3pvZksGEsX4UZj+F0DKcLKOTHtNBmQyocKoBSYCmqRFnJSSZ5Jlk8n1h/5c01nURmesIzxdHqk4OTgONOaD3cPH2HKFVlCMxoZ5n62bcxd9Ez2SHm6NJCnA98pvrPPa+d1Y1sGd9fmGKnwn0ujbYgudAxt+x1SwKC6Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EUJ655jk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="JtCU6bv2"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2957850c63bso372465ad.0
-        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 10:20:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1762885222; x=1763490022; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xH7fLeRJDduUwW8OBykePNE1qy/cPCbf7jTb60w/cyc=;
-        b=JtCU6bv2tPO/zxDMNfRSex1IYWnzlKSAJsanF7SumQ/Rctp+h8aXAI8mcUJlxg5Bro
-         S16bLIUSTRNZQi561EEk9JsWE9ytmuSF8L9mepT1dIiNbRGRYdP9FmXPp4sCLHncB6nT
-         OXjKqsjA2Z8L2gI/M7Sa14Xl/09N5hWiOVjVU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762885222; x=1763490022;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xH7fLeRJDduUwW8OBykePNE1qy/cPCbf7jTb60w/cyc=;
-        b=xCHN2znjxRQ4UIKYWrfrb7+PLqfvj4EURdZJBajag3R/motz4oTI2Y2Yx7YenNk+QL
-         k/E3h7waFQBGBpldJjdhhlcYKws9Tt5H8mmq7Z8SkNDDvRGTHtNzpX0NURB5y31qY1vR
-         ujexjUMXu/L5CsHiWU1omteJC/R6F7i4UZI2Z/mg1NKr4+bCPfUS/uukrqfW7tOJKsmr
-         kEXzzwbVsUDQjem6s54UgVfRpyrsN5NwAj5hgZvogjYZDla+yaTzYnBDwKR7vKmHj3Ru
-         3AY/c3KONx5UXQNRo/vOrrcHTWzLoUv4pd/hhXDBUUKyox1dVu5JHH0XfFueoL/ZKN22
-         9Puw==
-X-Forwarded-Encrypted: i=1; AJvYcCW1nwjPo7opbh8pOO+abhZrNrbWwJmAHiaxuiQ5ct4N2Mi3zD1LC/E2EH4Bip9JwWoXjUQNzUBf@lists.linux.dev
-X-Gm-Message-State: AOJu0Yygo+5vK8TiPj5dN1LHn4emKrtEfTFXzRBIxhaW4eZD7dhKcBLv
-	SCC0B3sjq63f7V1+3mFocm3LL0DlG2dezc9swhbT8j2nes9UqNpgE0lW/6bvZVydiA==
-X-Gm-Gg: ASbGncuA7cQE2a7pl1wYxXMW+A1PC7n3jR4PMRYjRLvhwVkHAxDOcVTv/I7cePgK8gq
-	kbclp0xOB+LyUzlxJWg+L7WTo+lsp/gpwh1OTtGtQp5K2ot/ImG2uJJgWgyrwWnO8A8ANFx9y5E
-	A3Oriskml3W8SzRBIwfRT6MREsSrDaHOXT3NYJP83wzy6HgAFh1qNSwswoQKGdSzG4kzLX7c4O6
-	QoPrK50iEauc5dLgqK32qr9j7J532nefy0QVRBRZQYwePoPuhRQCp58YBi1r8tB1B6JvPUDsZqS
-	PZrUMnbyk0WhYVA6yInsCOd57Bu3nnM+mP9v37RlzmBeT4meyuFnVCfqJ2NyMaPyflxNtr6m565
-	YEN1Q/F7svkK12YPxbgCLC8ML1DOBcMyHRKLVDgB+X3/epxE7Uhcw8ksAl938O2gtMHpqQLkQMy
-	wYhsnJjhj/jx7uCF0eJHKHyw==
-X-Google-Smtp-Source: AGHT+IFISfayPR8Fe6WwyNlqhp69sJHz84+HZ2Bp8C2NA+i+9BczyVM/K1Yo6kiGYGLWOtzHIehM7g==
-X-Received: by 2002:a17:903:18d:b0:297:df99:6bd4 with SMTP id d9443c01a7336-29840842cb3mr52741695ad.18.1762885222074;
-        Tue, 11 Nov 2025 10:20:22 -0800 (PST)
-Received: from fedora64.linuxtx.org ([216.147.123.202])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2984dceb2efsm3747495ad.110.2025.11.11.10.20.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 10:20:21 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 11 Nov 2025 11:20:19 -0700
-From: Justin Forbes <jforbes@fedoraproject.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EUJ655jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A89C4CEF5;
+	Tue, 11 Nov 2025 18:21:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762885277;
+	bh=e92g2AtYfV2iwp3wd5R+SkeTrcB37wAq+V40qAhUEIk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EUJ655jkzg/gztoYJ/fm6hXVUP6jV2aiZrMF+TN+MrHpwzWGp7f79LSiQI/DujsyB
+	 t7zeftuzBceajphtcLmJGBnH5qYvO9fwVzcY0PkL6UMT8ZhI8HDz5Gx4+asQl1WmNM
+	 NnyIEU6tpYYb+nEkgdwA//9L7+cz0bcX5tiNZ5l51jHc1X1HajL7/vLBYyFfuU8fOw
+	 N0dhd/y/VWy4vPzDHWtwad6CgAu3k8XoSoIGD7olI8DUAmzexIB5xmbNlD4nWWRG9N
+	 f+6Qw3EuTNxaNDtpusd2Vohp8C6BGTphYFXegqv2NSeQO3acg4/8mQH8jV6u0pj4r2
+	 SEvflFWctdGyg==
+Date: Tue, 11 Nov 2025 18:21:14 +0000
+From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Quentin Monnet <qmo@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.17 145/849] bpftool: Add CET-aware symbol matching for
- x86_64 architectures
-Message-ID: <aRN-Y5tjf6v5AtSf@fedora64.linuxtx.org>
-References: <20251111004536.460310036@linuxfoundation.org>
- <20251111004539.911440769@linuxfoundation.org>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/562] 6.12.58-rc2 review
+Message-ID: <aRN-mrcc-r2BM6SQ@finisterre.sirena.org.uk>
+References: <20251111012348.571643096@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MrqEl9d5FXRAs9XX"
+Content-Disposition: inline
+In-Reply-To: <20251111012348.571643096@linuxfoundation.org>
+X-Cookie: You dialed 5483.
+
+
+--MrqEl9d5FXRAs9XX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251111004539.911440769@linuxfoundation.org>
 
-On Tue, Nov 11, 2025 at 09:35:15AM +0900, Greg Kroah-Hartman wrote:
-> 6.17-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Yuan Chen <chenyuan@kylinos.cn>
-> 
-> [ Upstream commit 6417ca85305ecaffef13cf9063ac35da8fba8500 ]
-> 
-> Adjust symbol matching logic to account for Control-flow Enforcement
-> Technology (CET) on x86_64 systems. CET prefixes functions with
-> a 4-byte 'endbr' instruction, shifting the actual hook entry point to
-> symbol + 4.
-> 
-> Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> Acked-by: Quentin Monnet <qmo@kernel.org>
-> Acked-by: Yonghong Song <yonghong.song@linux.dev>
-> Acked-by: Jiri Olsa <jolsa@kernel.org>
-> Link: https://lore.kernel.org/bpf/20250829061107.23905-3-chenyuan_fl@163.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Tue, Nov 11, 2025 at 10:24:49AM +0900, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.58 release.
+> There are 562 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-I am guessing this is missing the other patch that went with this
-upstream 70f32a10ad423fd19e22e71d05d0968e61316278. Without it, this
-patch breaks the build.
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Justin
+--MrqEl9d5FXRAs9XX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmkTfpkACgkQJNaLcl1U
+h9DlEQgAhDVLA8f10hiyMTsxQFwRdbMqMv0DBMgiioIZwlHBMK31f9cM9XhwfmPG
+RdFcsV6o3OmqJ1ABfGLZILaX9dsFcVaGsn0gfijYmn2OxbBcM+7y4AjsZA4T1RT0
+wkgtNlJORblDnSv8jc5Mpt29qEq5hTjhwep6KuoYJKfMCiCTM5eyshWnyzlcLyrD
+seog7K6+PtJl6mARY1YqYr53kcpEZw60OgcpJswbeIafdRIva6KElC6u/fnUIMTi
+o+5/67G2LeydDlnizbfeTAxkchbtXleI5VPmFb9cAdSSFPhDqYoeXyBTm7f2uiNu
+x1C4l13ZiOKyvvrsiM4uguByUQltmw==
+=Kbzq
+-----END PGP SIGNATURE-----
+
+--MrqEl9d5FXRAs9XX--
