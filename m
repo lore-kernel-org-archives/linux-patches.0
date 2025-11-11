@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1DF23C4F2;
-	Tue, 11 Nov 2025 01:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80465305978;
+	Tue, 11 Nov 2025 01:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823890; cv=none; b=KKUr9MbSbqAQjEHnXDae8TnGvVeeauQ7eDJoZp86RN2/S9/qwM2cyxEmzHObImw9g+Dhrv49TAn0dGC+SFnv3iv6VBmAvDBDMvolILMBjviM/ucJfauceEtQ9X685wN47tvoLPvC9AKYRNG8ZZfSLm4Lmvf+BlnmmDpW6CoicBE=
+	t=1762823892; cv=none; b=NofSAvFx4diBesmK7kRwIpuikkS2iCGxTERx2wgGlseMo4hpwUafPacxWmHtlb8tQM4PRC94APzx2Q0D5G/P/IjkvAliU8fjuIWZD0FwNCatWYkvQ+YMgSPGNssC5MB4Zop5Bqen+OV0sqykaVVBh1R2xdEwW7WFv/VxyM40sEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823890; c=relaxed/simple;
-	bh=ZXO5aHmXoKoirKr1X9c4HlE8BLw0UCCJyRv3AknyRqY=;
+	s=arc-20240116; t=1762823892; c=relaxed/simple;
+	bh=gI1lp6AnT+X9Sqxe0MXYR4GEufgEc3aKL4Fn/ceSwdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E15nz22Y/7+JNdAdoVR7TSuE8rYoWXg1nPgDMyHNLtQtBPuuhXKDR/QxW4QICXLKJDOulD6BlUAqc4OSpJc6hzluIo5iWfa4hXO0rg8Of5GF7Qw1PEyHil4ybRShXy4Gulmuj6ZMDilwlNz459skrosRzITJLXVqBHG/DxM1KYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mU1j5kO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJY2MjlmAXQ3JGaJGMafG7rC3PFnWR0XcPKcKbOz5GjNDvynSzhOWTbo7gqKzZ/mP+6E2l3bkNOQlIek3MskVf95J/P6BlgoNxt8KdTr/XEjE9pGIJ/ZMu7EHe0hvEYFLBMZZjp6Fr4U7OnVL6PbRCeP7pj3qCAQ8I5sf4BcGAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt5ol8TE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mU1j5kO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9331AC116B1;
-	Tue, 11 Nov 2025 01:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt5ol8TE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20832C4CEF5;
+	Tue, 11 Nov 2025 01:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823887;
-	bh=ZXO5aHmXoKoirKr1X9c4HlE8BLw0UCCJyRv3AknyRqY=;
+	s=korg; t=1762823892;
+	bh=gI1lp6AnT+X9Sqxe0MXYR4GEufgEc3aKL4Fn/ceSwdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mU1j5kO1QAVviGqjGsiN2V6IP1O/lSyLkJ69jEsteQTO9zODe7Br9IIJDmEctsktV
-	 nMacD6i3CjZODcNz583aD3+cZi7rqy7zPQf7KuYwDqI+cb/LEeF1GI6JgSHX7VPEEx
-	 ccbvOUkMWuHxQb7AaLbyRqcGAsy2bIez0tbdcCWU=
+	b=pt5ol8TEQTMVWN1tMPRG9l5ku/bYEsSCpXAllHs2woIW0OpTvRt9TAOz6/piY1jxc
+	 Z/yVvkRU+EKyEDb3xvLZCPJAj4WSeDiR+qZPfzXLYqyYRNOWxHdmfmMWCymSkKxURi
+	 5nuEM+yq62lC1KvihcMgmrwtyQPZIt6GS/42pupg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Park <chris.park@amd.com>,
-	Relja Vojvodic <rvojvodi@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	Mangesh Gadre <Mangesh.Gadre@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 391/849] drm/amd/display: Increase minimum clock for TMDS 420 with pipe splitting
-Date: Tue, 11 Nov 2025 09:39:21 +0900
-Message-ID: <20251111004545.886344043@linuxfoundation.org>
+Subject: [PATCH 6.17 392/849] drm/amdgpu: Avoid jpeg v5.0.1 poison irq call trace on sriov guest
+Date: Tue, 11 Nov 2025 09:39:22 +0900
+Message-ID: <20251111004545.911137309@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -54,81 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Relja Vojvodic <rvojvodi@amd.com>
+From: Mangesh Gadre <Mangesh.Gadre@amd.com>
 
-[ Upstream commit 002a612023c8b105bd3829d81862dee04368d6de ]
+[ Upstream commit 01152c30eef972c5ca3b3eeb14f2984fa48d18c2 ]
 
-[Why]
--Pipe splitting allows for clocks to be reduced, but when using TMDS 420,
-reduced clocks lead to missed clocks cycles on clock resyncing
+Sriov guest side doesn't init ras feature hence the poison irq shouldn't
+be put during hw fini
 
-[How]
--Impose a minimum clock when using TMDS 420
-
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Relja Vojvodic <rvojvodi@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../src/dml2_core/dml2_core_dcn4_calcs.c      | 28 +++++++++++++------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-index b9cff21985110..bf62d42b3f78b 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-@@ -1238,18 +1238,27 @@ static void CalculateDETBufferSize(
- 
- static double CalculateRequiredDispclk(
- 	enum dml2_odm_mode ODMMode,
--	double PixelClock)
-+	double PixelClock,
-+	bool isTMDS420)
- {
-+	double DispClk;
- 
- 	if (ODMMode == dml2_odm_mode_combine_4to1) {
--		return PixelClock / 4.0;
-+		DispClk = PixelClock / 4.0;
- 	} else if (ODMMode == dml2_odm_mode_combine_3to1) {
--		return PixelClock / 3.0;
-+		DispClk = PixelClock / 3.0;
- 	} else if (ODMMode == dml2_odm_mode_combine_2to1) {
--		return PixelClock / 2.0;
-+		DispClk = PixelClock / 2.0;
- 	} else {
--		return PixelClock;
-+		DispClk = PixelClock;
-+	}
-+
-+	if (isTMDS420) {
-+		double TMDS420MinPixClock = PixelClock / 2.0;
-+		DispClk = math_max2(DispClk, TMDS420MinPixClock);
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+index 8d74455dab1e2..7731ef262d39f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+@@ -315,7 +315,7 @@ static int jpeg_v5_0_1_hw_fini(struct amdgpu_ip_block *ip_block)
+ 			ret = jpeg_v5_0_1_set_powergating_state(ip_block, AMD_PG_STATE_GATE);
  	}
-+
-+	return DispClk;
- }
  
- static double TruncToValidBPP(
-@@ -4122,11 +4131,12 @@ static noinline_for_stack void CalculateODMMode(
- 	bool success;
- 	bool UseDSC = DSCEnable && (NumberOfDSCSlices > 0);
- 	enum dml2_odm_mode DecidedODMMode;
-+	bool isTMDS420 = (OutFormat == dml2_420 && Output == dml2_hdmi);
+-	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG))
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG) && !amdgpu_sriov_vf(adev))
+ 		amdgpu_irq_put(adev, &adev->jpeg.inst->ras_poison_irq, 0);
  
--	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock);
-+	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock, isTMDS420);
- #ifdef __DML_VBA_DEBUG__
- 	DML_LOG_VERBOSE("DML::%s: ODMUse = %d\n", __func__, ODMUse);
- 	DML_LOG_VERBOSE("DML::%s: Output = %d\n", __func__, Output);
+ 	return ret;
 -- 
 2.51.0
 
