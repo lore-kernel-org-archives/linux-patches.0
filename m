@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F692DC350;
-	Tue, 11 Nov 2025 01:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0445126A1B6;
+	Tue, 11 Nov 2025 01:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823671; cv=none; b=UYE2BVzWQvleeFPKkCNPDOxJOpaDkn+ca9EQGKJO36b8fdek7rAcklvWL5/9wQuMVLmrJQ4E5+dhaqbfy44GP2zyu8MAXbG9r5rgEiCjnzrM9dekPYjvY2aYS+cC706846hZMZNRjraQzp6QFosmIOHti43h46RoZOLfszPu9Do=
+	t=1762823674; cv=none; b=m0YmQGnU8yzv6rp2j30RSfHrjZZ4YVJJNyYGHK8E6HRrCaM5wY3heg1LLdkKTeFv8ue0Zml8MeFjPMZZPesv/ZBlxG2il0nOIrdTQRGkjnqCqyrIq/y0yDpeSEs/ulmb2F/WHRBfardBDvi2DiJHQj/rLOm3W75jD0jh7dOPVc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823671; c=relaxed/simple;
-	bh=ujdZTUm5jo0pOUDD9+R5MoysribfuDUfFOyWAfg89KE=;
+	s=arc-20240116; t=1762823674; c=relaxed/simple;
+	bh=/ZVTS3OvOaZ+Em14EWFpRo+tUPtmqIQDKbz6+3zvFWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nn4G1hQQ2+2TmufYfS66G+30ONm5jKOFc/ITPO2X8AoR3ujxyLTHISwpiemusMWfWCZGJsGIfa8+HlEHaaHfAZUxxs3pVXgAfImwG3K5uJWkEaGO7dXTlSWD1yC7h6fyFVcWVOagJiEboW75CNwPf1CYwkSs8llnb3rB5V5I6x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIx1xGnB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=unM59g7//XRcTwvfHMUzc+fYIaDmxmW9e/4vhhmsq5nFmDxpyOKyeqQAm9MVbqoLxFjRuEwmS8gvSeI9MTf+ZH4Ig+qUuH4OD0tNpYDLmYJfKo7YvYvr2CfUaFly88EsMTDa30WDUuYFoNT3nkO/d7IBkH27dEWE8rniU2wgzFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Rh/caqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIx1xGnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7B8C2BC87;
-	Tue, 11 Nov 2025 01:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Rh/caqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3647FC4CEF5;
+	Tue, 11 Nov 2025 01:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823671;
-	bh=ujdZTUm5jo0pOUDD9+R5MoysribfuDUfFOyWAfg89KE=;
+	s=korg; t=1762823673;
+	bh=/ZVTS3OvOaZ+Em14EWFpRo+tUPtmqIQDKbz6+3zvFWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIx1xGnBQgK3N/x8CNoqeUHfavh4xZV2qN44LVPDBUJp3xsK93DNwpOXVhUfyyyMQ
-	 kT8K6ipexcStm+7PnTmF/wG4ffEptopklXBd01hroUYTp2b7lT6m4N+x+JnwozD7GR
-	 FEuCV3pUmeOSd8sa2DR7BQ0FOxXC6Z5EXLMhEk9I=
+	b=2Rh/caqAwPU/c/s0Byxwh/9TMjuHxxnj79hB8T+ZCMnwx76Kfaq757GcZ8IR36zGX
+	 H77pAKwn3gzmmmM5aR+3JIq+LByOa6KthmB8AXyNNq+WGZdOoGVmq0yztDcbGtMesj
+	 MmT1LNeLUcykyVAauqajCZYx5MiRUDCyHOUs0zx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ujwal Kundur <ujwal.kundur@gmail.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 347/849] rds: Fix endianness annotation for RDS_MPATH_HASH
-Date: Tue, 11 Nov 2025 09:38:37 +0900
-Message-ID: <20251111004544.808625708@linuxfoundation.org>
+Subject: [PATCH 6.12 298/565] ALSA: usb-audio: apply quirk for MOONDROP Quark2
+Date: Tue, 11 Nov 2025 09:42:34 +0900
+Message-ID: <20251111004533.581830026@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ujwal Kundur <ujwal.kundur@gmail.com>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
+[ Upstream commit a73349c5dd27bc544b048e2e2c8ef6394f05b793 ]
 
-jhash_1word accepts host endian inputs while rs_bound_port is a be16
-value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
+It reports a MIN value -15360 for volume control, but will mute when
+setting it less than -14208
 
-Flagged by Sparse.
-
-Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
-Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
-Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-4-d4ca777b8512@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index dc360252c5157..5b1c072e2e7ff 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -93,7 +93,7 @@ enum {
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 0591da2839269..ba9c6874915a2 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1191,6 +1191,13 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 			cval->res = 1;
+ 		}
+ 		break;
++	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
++		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
++			usb_audio_info(chip,
++				"set volume quirk for MOONDROP Quark2\n");
++			cval->min = -14208; /* Mute under it */
++		}
++		break;
+ 	}
+ }
  
- /* Max number of multipaths per RDS connection. Must be a power of 2 */
- #define	RDS_MPATH_WORKERS	8
--#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
-+#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
- 			       (rs)->rs_hash_initval) & ((n) - 1))
- 
- #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
