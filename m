@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C7C41C69;
-	Tue, 11 Nov 2025 01:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F390141C69;
+	Tue, 11 Nov 2025 01:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825461; cv=none; b=brWk/oYfUJGJIfWotOOuphWy5mfHzesCFDw3mjKcVMyZF0iXDTKbiFNhfw7aJnGQCGK+PbNYCgrQGlIYkvWSEIkVhJGPwMg+W7RTBQgjYriTv1WRljUzM0m/rzl3LbGO0GBf+Z3UU24KdpU/7eSAb9nOdl2xthCU4bhp2WBDrIE=
+	t=1762825464; cv=none; b=FtjPD7PS5bJhWD8h/wMt+HiMzgROBQU504GWJkoCejJQvv4koYvLQXKDA403W5U6X76irckOfQIuwiBkBes72tDTY2dd3AgUu/v6o+2b8Icq2wUEVb9zaRQoFAnIAOKgJdPghU5eQE3O/TSBaEH3ZSv9OIr23Bk2XLk7UIr+4tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825461; c=relaxed/simple;
-	bh=wbo4RVQOp9vVJhMHZNAAY8VEUDWaqtep6HxFWye/DFc=;
+	s=arc-20240116; t=1762825464; c=relaxed/simple;
+	bh=1uKRyLvwLMluhrdoNbRTTYwgHfSb4BNrik4laonrJAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZFo+kSpIpoP4hf6w1fDYhysGplPigZpCL4vGH5hP6zYIpPXdr8/6OkJ8JqCINGtW0H1BwPmxsbKtldLzb2PlPm0otigJaPTiRWJFI+SaoruO1cUUonyLn2H9p+DZcLfczRqyZgPdvmtY0AJLQQzNjmOA46kO1eDtt7dKZZKSio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLayj1Mo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYUIJiX10vH7otiLvGyFAohUUNO1zuLMl1dyHBFHPJCy2BoClWYpJjdc7NFE5rrwW9ie9ymrmcMgO6L2nQdGhVOpudkdaVNbnZi/jSLHrkOez15ukfFyzq7VpZlFT09q0iBPSyLsIt/eUK6NAIzpUO9vkkMbb8B44eIU0OHwKQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+4YLLLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLayj1Mo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3D3C113D0;
-	Tue, 11 Nov 2025 01:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+4YLLLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB2CC116D0;
+	Tue, 11 Nov 2025 01:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825461;
-	bh=wbo4RVQOp9vVJhMHZNAAY8VEUDWaqtep6HxFWye/DFc=;
+	s=korg; t=1762825463;
+	bh=1uKRyLvwLMluhrdoNbRTTYwgHfSb4BNrik4laonrJAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLayj1MoiADmsj7ZnpI76lJlh7Alk1eq2y1oV7dtz+qv0egX0W0izwtLa6/eDe6c7
-	 F+ZTtAuQHYBpKNgSbFMViMiHmhJnT4I9vllosIuhk0YhOO7Y8My4uPLUBwbjKvDXA6
-	 bN9lflaNd5AFixSKwBGaKWGTZgTo9ck+mjF/cc8U=
+	b=Q+4YLLLY/tTku8//6OBJAN9XUiFimuEnuXDZR5OUVZc5mJ2DQqwm4KFk4bIwNVK2G
+	 nSN6eSYsUuGZSPQ8UsUg3IyDAPSF4S/wnE7AXUqwGAEBJHnEf4OYxYOICYpepmMDhG
+	 Lpi9S0LgSGS+GjTtjIbL+nZ0mdvrNJ525zjEEhPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuta Hayama <hayama@lineo.co.jp>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.17 813/849] rtc: rx8025: fix incorrect register reference
-Date: Tue, 11 Nov 2025 09:46:23 +0900
-Message-ID: <20251111004556.080639642@linuxfoundation.org>
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.17 814/849] x86/microcode/AMD: Add more known models to entry sign checking
+Date: Tue, 11 Nov 2025 09:46:24 +0900
+Message-ID: <20251111004556.104420996@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,33 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuta Hayama <hayama@lineo.co.jp>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 162f24cbb0f6ec596e7e9f3e91610d79dc805229 upstream.
+commit d23550efc6800841b4d1639784afaebdea946ae0 upstream.
 
-This code is intended to operate on the CTRL1 register, but ctrl[1] is
-actually CTRL2. Correctly, ctrl[0] is CTRL1.
+Two Zen5 systems are missing from need_sha_check(). Add them.
 
-Signed-off-by: Yuta Hayama <hayama@lineo.co.jp>
-Fixes: 71af91565052 ("rtc: rx8025: fix 12/24 hour mode detection on RX-8035")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/eae5f479-5d28-4a37-859d-d54794e7628c@lineo.co.jp
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20251106182904.4143757-1-superm1@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-rx8025.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/rtc/rtc-rx8025.c
-+++ b/drivers/rtc/rtc-rx8025.c
-@@ -316,7 +316,7 @@ static int rx8025_init_client(struct i2c
- 			return hour_reg;
- 		rx8025->is_24 = (hour_reg & RX8035_BIT_HOUR_1224);
- 	} else {
--		rx8025->is_24 = (ctrl[1] & RX8025_BIT_CTRL1_1224);
-+		rx8025->is_24 = (ctrl[0] & RX8025_BIT_CTRL1_1224);
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -220,10 +220,12 @@ static bool need_sha_check(u32 cur_rev)
+ 	case 0xaa001: return cur_rev <= 0xaa00116; break;
+ 	case 0xaa002: return cur_rev <= 0xaa00218; break;
+ 	case 0xb0021: return cur_rev <= 0xb002146; break;
++	case 0xb0081: return cur_rev <= 0xb008111; break;
+ 	case 0xb1010: return cur_rev <= 0xb101046; break;
+ 	case 0xb2040: return cur_rev <= 0xb204031; break;
+ 	case 0xb4040: return cur_rev <= 0xb404031; break;
+ 	case 0xb6000: return cur_rev <= 0xb600031; break;
++	case 0xb6080: return cur_rev <= 0xb608031; break;
+ 	case 0xb7000: return cur_rev <= 0xb700031; break;
+ 	default: break;
  	}
- out:
- 	return err;
 
 
