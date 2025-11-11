@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF0334A3CD;
-	Tue, 11 Nov 2025 01:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37EF26A1B6;
+	Tue, 11 Nov 2025 01:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825331; cv=none; b=ep0nio3bzu6MSQ7Z9pHWR2OhKouqCs03pW6srnUsz6RwpRkqhyKw36DNq091DS7cVg2nJtp8iyQhBvRCKODdepX3FXlqYSJcO8zE9p2ZNPn4fso6ACz7gXhjwsO0XchkKNf1/cShSSA0uA7W9tw3qkRnAtJQUYNUL+gD9CCgmIQ=
+	t=1762825331; cv=none; b=P1VmjzxwdArug+fDA65KrjBm74SWztt+QlaZD0Vhzdl4fnkXVrWOza3vcqo0SUk0HsEaBHjVbCnYti2PqUBW366/aXQ1OzL0pZun6ZP7kkypQ7qN1MVJmwLwq2S7GA9DGzY8l2aX/hXy4kwinGrxxiYaStJwa/59dBnhGnT8ZZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762825331; c=relaxed/simple;
-	bh=TqsxLAC8AnZcgkA8sux/4w9D71Yp2//H9JNlc9j5v3A=;
+	bh=tAPVCmpqUqIOLqKLd6pCxzEXjgQh++LdWFdMMPta3gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCuLTeUuuWyPzyB8ItTj1iEGLfBLHuOgfmeG2Pd9hWOnq2+m+gsVp0lKTcjPCwXz5mDwdkLZNF+KmmnvDZaBWNbMwuVklJpxJ5Wp5xPEtlUAXdEkJF7MSneLX8fRpijN6kzvMscDuRK84ZnC9bTd9aF/TmJvnqmhdNuaPiiQFdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGR8bLZ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RokA4RbjMW4m8XOScm6qJ12ER0QBpR8FtBRAZLdWjPba6gO+cnSIkuUnNHkXptnghY+bLve9mJVs8P7niBG4tc8xEbKZtlFpM9RNpCcCLFQrgJZlMOkr40nHgW5wNeG6lVksB9rrGdO0i6/fWEvp6HMw/gZBk4mLvj6Z6ImyZsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHy4NzGs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGR8bLZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76636C4CEF5;
-	Tue, 11 Nov 2025 01:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHy4NzGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E766EC4CEFB;
+	Tue, 11 Nov 2025 01:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825328;
-	bh=TqsxLAC8AnZcgkA8sux/4w9D71Yp2//H9JNlc9j5v3A=;
+	s=korg; t=1762825331;
+	bh=tAPVCmpqUqIOLqKLd6pCxzEXjgQh++LdWFdMMPta3gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGR8bLZ+i6IIjDYKypahUCFItNm1+prOqEKv4JRLXExqsNQr3Et5xt3RE122KBWQh
-	 x+LBVnQjNpUuJCri97aL+4HU4YKCf2X1X9vLZmalMrxazAv00D6XZ0klUkVER+zXIk
-	 F5Qyyw4NlmZFUq/IDsCgTJa76cyexh5tkyzpiJyw=
+	b=LHy4NzGsSxvGFn8uLZ9cs+eMmqkZojr4S8j8FlrDMexeAMJWsA7Yab0n5A1ErUOAv
+	 hOgQUDVWJErzSXuFah4szlMrv4eho6tfX+7PxI+i5cWTBDUqDGQCOAOpLthpOeuma2
+	 AzuaAJrwkX3HvaAVSF7r2FTPGGf9rbExoD3Oas80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Brown <true.robot.ross@gmail.com>,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 754/849] Revert "wifi: ath12k: Fix missing station power save configuration"
-Date: Tue, 11 Nov 2025 09:45:24 +0900
-Message-ID: <20251111004554.661735733@linuxfoundation.org>
+Subject: [PATCH 6.17 714/849] cpufreq: tegra186: Initialize all cores to max frequencies
+Date: Tue, 11 Nov 2025 09:44:44 +0900
+Message-ID: <20251111004553.694746981@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,197 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 9222582ec524707fbb9d076febead5b6a07611ed ]
+[ Upstream commit ba6018929165fc914c665f071f8e8cdbac844a49 ]
 
-This reverts commit 4b66d18918f8e4d85e51974a9e3ce9abad5c7c3d.
+During initialization, the EDVD_COREx_VOLT_FREQ registers for some cores
+are still at reset values and not reflecting the actual frequency. This
+causes get calls to fail. Set all cores to their respective max
+frequency during probe to initialize the registers to working values.
 
-In [1], Ross Brown reports poor performance of WCN7850 after enabling
-power save. Temporarily revert the fix; it will be re-enabled once
-the issue is resolved.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.IOE_HMT.1.1-00011-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
-
-Fixes: 4b66d18918f8 ("wifi: ath12k: Fix missing station power save configuration")
-Reported-by: Ross Brown <true.robot.ross@gmail.com>
-Closes: https://lore.kernel.org/all/CAMn66qZENLhDOcVJuwUZ3ir89PVtVnQRq9DkV5xjJn1p6BKB9w@mail.gmail.com/ # [1]
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251028060744.897198-1-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Suggested-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 122 ++++++++++++--------------
- 1 file changed, 55 insertions(+), 67 deletions(-)
+ drivers/cpufreq/tegra186-cpufreq.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index d717e74b01c89..fd584633392c1 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4078,68 +4078,12 @@ static int ath12k_mac_fils_discovery(struct ath12k_link_vif *arvif,
- 	return ret;
- }
+diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
+index 6c394b429b618..bd94beebc4cc2 100644
+--- a/drivers/cpufreq/tegra186-cpufreq.c
++++ b/drivers/cpufreq/tegra186-cpufreq.c
+@@ -138,13 +138,14 @@ static struct cpufreq_driver tegra186_cpufreq_driver = {
  
--static void ath12k_mac_vif_setup_ps(struct ath12k_link_vif *arvif)
--{
--	struct ath12k *ar = arvif->ar;
--	struct ieee80211_vif *vif = arvif->ahvif->vif;
--	struct ieee80211_conf *conf = &ath12k_ar_to_hw(ar)->conf;
--	enum wmi_sta_powersave_param param;
--	struct ieee80211_bss_conf *info;
--	enum wmi_sta_ps_mode psmode;
--	int ret;
--	int timeout;
--	bool enable_ps;
--
--	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
--
--	if (vif->type != NL80211_IFTYPE_STATION)
--		return;
--
--	enable_ps = arvif->ahvif->ps;
--	if (enable_ps) {
--		psmode = WMI_STA_PS_MODE_ENABLED;
--		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
--
--		timeout = conf->dynamic_ps_timeout;
--		if (timeout == 0) {
--			info = ath12k_mac_get_link_bss_conf(arvif);
--			if (!info) {
--				ath12k_warn(ar->ab, "unable to access bss link conf in setup ps for vif %pM link %u\n",
--					    vif->addr, arvif->link_id);
--				return;
--			}
--
--			/* firmware doesn't like 0 */
--			timeout = ieee80211_tu_to_usec(info->beacon_int) / 1000;
--		}
--
--		ret = ath12k_wmi_set_sta_ps_param(ar, arvif->vdev_id, param,
--						  timeout);
--		if (ret) {
--			ath12k_warn(ar->ab, "failed to set inactivity time for vdev %d: %i\n",
--				    arvif->vdev_id, ret);
--			return;
--		}
--	} else {
--		psmode = WMI_STA_PS_MODE_DISABLED;
--	}
--
--	ath12k_dbg(ar->ab, ATH12K_DBG_MAC, "mac vdev %d psmode %s\n",
--		   arvif->vdev_id, psmode ? "enable" : "disable");
--
--	ret = ath12k_wmi_pdev_set_ps_mode(ar, arvif->vdev_id, psmode);
--	if (ret)
--		ath12k_warn(ar->ab, "failed to set sta power save mode %d for vdev %d: %d\n",
--			    psmode, arvif->vdev_id, ret);
--}
--
- static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
- 					  struct ieee80211_vif *vif,
- 					  u64 changed)
+ static struct cpufreq_frequency_table *init_vhint_table(
+ 	struct platform_device *pdev, struct tegra_bpmp *bpmp,
+-	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id)
++	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id,
++	int *num_rates)
  {
- 	struct ath12k_vif *ahvif = ath12k_vif_to_ahvif(vif);
- 	unsigned long links = ahvif->links_map;
--	struct ieee80211_vif_cfg *vif_cfg;
- 	struct ieee80211_bss_conf *info;
- 	struct ath12k_link_vif *arvif;
- 	struct ieee80211_sta *sta;
-@@ -4203,24 +4147,61 @@ static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
- 			}
- 		}
+ 	struct cpufreq_frequency_table *table;
+ 	struct mrq_cpu_vhint_request req;
+ 	struct tegra_bpmp_message msg;
+ 	struct cpu_vhint_data *data;
+-	int err, i, j, num_rates = 0;
++	int err, i, j;
+ 	dma_addr_t phys;
+ 	void *virt;
+ 
+@@ -174,6 +175,7 @@ static struct cpufreq_frequency_table *init_vhint_table(
+ 		goto free;
  	}
-+}
  
--	if (changed & BSS_CHANGED_PS) {
--		links = ahvif->links_map;
--		vif_cfg = &vif->cfg;
-+static void ath12k_mac_vif_setup_ps(struct ath12k_link_vif *arvif)
-+{
-+	struct ath12k *ar = arvif->ar;
-+	struct ieee80211_vif *vif = arvif->ahvif->vif;
-+	struct ieee80211_conf *conf = &ath12k_ar_to_hw(ar)->conf;
-+	enum wmi_sta_powersave_param param;
-+	struct ieee80211_bss_conf *info;
-+	enum wmi_sta_ps_mode psmode;
-+	int ret;
-+	int timeout;
-+	bool enable_ps;
++	*num_rates = 0;
+ 	for (i = data->vfloor; i <= data->vceil; i++) {
+ 		u16 ndiv = data->ndiv[i];
  
--		for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
--			arvif = wiphy_dereference(hw->wiphy, ahvif->link[link_id]);
--			if (!arvif || !arvif->ar)
--				continue;
-+	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
+@@ -184,10 +186,10 @@ static struct cpufreq_frequency_table *init_vhint_table(
+ 		if (i > 0 && ndiv == data->ndiv[i - 1])
+ 			continue;
  
--			ar = arvif->ar;
-+	if (vif->type != NL80211_IFTYPE_STATION)
-+		return;
-+
-+	enable_ps = arvif->ahvif->ps;
-+	if (enable_ps) {
-+		psmode = WMI_STA_PS_MODE_ENABLED;
-+		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
+-		num_rates++;
++		(*num_rates)++;
+ 	}
  
--			if (ar->ab->hw_params->supports_sta_ps) {
--				ahvif->ps = vif_cfg->ps;
--				ath12k_mac_vif_setup_ps(arvif);
-+		timeout = conf->dynamic_ps_timeout;
-+		if (timeout == 0) {
-+			info = ath12k_mac_get_link_bss_conf(arvif);
-+			if (!info) {
-+				ath12k_warn(ar->ab, "unable to access bss link conf in setup ps for vif %pM link %u\n",
-+					    vif->addr, arvif->link_id);
-+				return;
- 			}
-+
-+			/* firmware doesn't like 0 */
-+			timeout = ieee80211_tu_to_usec(info->beacon_int) / 1000;
- 		}
-+
-+		ret = ath12k_wmi_set_sta_ps_param(ar, arvif->vdev_id, param,
-+						  timeout);
-+		if (ret) {
-+			ath12k_warn(ar->ab, "failed to set inactivity time for vdev %d: %i\n",
-+				    arvif->vdev_id, ret);
-+			return;
+-	table = devm_kcalloc(&pdev->dev, num_rates + 1, sizeof(*table),
++	table = devm_kcalloc(&pdev->dev, *num_rates + 1, sizeof(*table),
+ 			     GFP_KERNEL);
+ 	if (!table) {
+ 		table = ERR_PTR(-ENOMEM);
+@@ -229,7 +231,9 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
+ {
+ 	struct tegra186_cpufreq_data *data;
+ 	struct tegra_bpmp *bpmp;
+-	unsigned int i = 0, err;
++	unsigned int i = 0, err, edvd_offset;
++	int num_rates = 0;
++	u32 edvd_val, cpu;
+ 
+ 	data = devm_kzalloc(&pdev->dev,
+ 			    struct_size(data, clusters, TEGRA186_NUM_CLUSTERS),
+@@ -252,10 +256,21 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
+ 	for (i = 0; i < TEGRA186_NUM_CLUSTERS; i++) {
+ 		struct tegra186_cpufreq_cluster *cluster = &data->clusters[i];
+ 
+-		cluster->table = init_vhint_table(pdev, bpmp, cluster, i);
++		cluster->table = init_vhint_table(pdev, bpmp, cluster, i, &num_rates);
+ 		if (IS_ERR(cluster->table)) {
+ 			err = PTR_ERR(cluster->table);
+ 			goto put_bpmp;
++		} else if (!num_rates) {
++			err = -EINVAL;
++			goto put_bpmp;
 +		}
-+	} else {
-+		psmode = WMI_STA_PS_MODE_DISABLED;
- 	}
 +
-+	ath12k_dbg(ar->ab, ATH12K_DBG_MAC, "mac vdev %d psmode %s\n",
-+		   arvif->vdev_id, psmode ? "enable" : "disable");
-+
-+	ret = ath12k_wmi_pdev_set_ps_mode(ar, arvif->vdev_id, psmode);
-+	if (ret)
-+		ath12k_warn(ar->ab, "failed to set sta power save mode %d for vdev %d: %d\n",
-+			    psmode, arvif->vdev_id, ret);
- }
- 
- static bool ath12k_mac_supports_tpc(struct ath12k *ar, struct ath12k_vif *ahvif,
-@@ -4242,6 +4223,7 @@ static void ath12k_mac_bss_info_changed(struct ath12k *ar,
- {
- 	struct ath12k_vif *ahvif = arvif->ahvif;
- 	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(ahvif);
-+	struct ieee80211_vif_cfg *vif_cfg = &vif->cfg;
- 	struct cfg80211_chan_def def;
- 	u32 param_id, param_value;
- 	enum nl80211_band band;
-@@ -4528,6 +4510,12 @@ static void ath12k_mac_bss_info_changed(struct ath12k *ar,
++		for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
++			if (data->cpus[cpu].bpmp_cluster_id == i) {
++				edvd_val = cluster->table[num_rates - 1].driver_data;
++				edvd_offset = data->cpus[cpu].edvd_offset;
++				writel(edvd_val, data->regs + edvd_offset);
++			}
+ 		}
  	}
  
- 	ath12k_mac_fils_discovery(arvif, info);
-+
-+	if (changed & BSS_CHANGED_PS &&
-+	    ar->ab->hw_params->supports_sta_ps) {
-+		ahvif->ps = vif_cfg->ps;
-+		ath12k_mac_vif_setup_ps(arvif);
-+	}
- }
- 
- static struct ath12k_vif_cache *ath12k_ahvif_get_link_cache(struct ath12k_vif *ahvif,
 -- 
 2.51.0
 
