@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB41A944;
-	Tue, 11 Nov 2025 01:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6230158545;
+	Tue, 11 Nov 2025 01:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824624; cv=none; b=CUGofZvsePBIndiqly3rmJVP/XtOdwIVG3o8TjrJ4jtkhb178fK6bfN6xz65bb3v96eOWFeFgudDYcgz+iiCM6HFm7XBG93Cs3fFUSr+5JoK8DaxTc66U0ZZb5gR74PVXgPaQtEHmijBneeSPZMTxIgg2oVmMuwvZfxc/veAS6s=
+	t=1762824626; cv=none; b=G+gJ9YtRTU4J8R9M98EL1KNGT7+2qOoU1oJBODWyxFITrzjZwBLtTTm29kI+GpT1zYLCEz70w9hx1VkzBTiGynlj1fpuJaJmbBh7eMMgo6NSJgL5NnP/xZmMCDbsTn/Ejg/meIpWUvdNx9SCJUVACtLnEw4eCW/2DerfcjH8KLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824624; c=relaxed/simple;
-	bh=4riI1w7/zpXtsB4kooB1M0kaejTXeJvCX4o4LoQoYLU=;
+	s=arc-20240116; t=1762824626; c=relaxed/simple;
+	bh=lwNYMtVa9GHZAXtZj/otFTtdzeAA2w8PjmTr6Hf59nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8SDi9fFqVr1MeJN0BvmSVmFY6cvgSphDlHSD6KJySblv9SkiKEtOxMvOaTErIrtMVdZajf27HVtiE5zHw+TFrzE9ht38Od9dl1NZ84/MgH5ZQVe3e8h+rUSZAnGr2en1oy9Cdebv89uD2Nmg7fePf9cwYuEGhqlKZnwVYVZpYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXxcT8Mp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z37EbpHFHysCAbex9f68qLNUNzK93XmeFaB0xVsd+iPCiWGRcyVnrbrgm9Yu90xPK9Vnr14eo321EbC4Ic4jSENXPmOi+yqkbya0E2C8h/FY4atx9gsJd/xV65RVu9/oCtMV0nAeKDxLJCEUDqNTOkOB9RsDF6Vn2eavrwK4BOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9xlGqsd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXxcT8Mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1A2C116B1;
-	Tue, 11 Nov 2025 01:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9xlGqsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307FFC19425;
+	Tue, 11 Nov 2025 01:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824624;
-	bh=4riI1w7/zpXtsB4kooB1M0kaejTXeJvCX4o4LoQoYLU=;
+	s=korg; t=1762824626;
+	bh=lwNYMtVa9GHZAXtZj/otFTtdzeAA2w8PjmTr6Hf59nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXxcT8MpAv6CP1gexcub8qNa9RQFgSi4m3E9WAuVG0D6wpUNBcTOCL078S0Yh0cTm
-	 ef0uAt/NT0InUP2VE8fVFcNzArxyr3VSr9YisAO9JTB2y3a87zGy2sEex/PspF2QXh
-	 wn7FoV/0bkJYYrgW3iURO9dkL2SpHtCQwzD98KpM=
+	b=G9xlGqsdye3JS4CUCDMmWRVUV2D8P5P3NK0qIhE+REqjvBIGuRHrkzUk8fKdIakbI
+	 QP3kckYpSwTI4J4ERTLKNvhodvIT6Joyx4zrlNcKkCGHEmrD44sTpXIIa5kTsMToNI
+	 nOlR6C3pVNWsBXr0aVEygxn+4qrYIIPgcGx3qKWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Alice Chao <alice.chao@mediatek.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 536/849] wifi: mt76: mt7921: Add 160MHz beamformee capability for mt7922 device
-Date: Tue, 11 Nov 2025 09:41:46 +0900
-Message-ID: <20251111004549.375436388@linuxfoundation.org>
+Subject: [PATCH 6.17 499/849] scsi: ufs: host: mediatek: Fix adapt issue after PA_Init
+Date: Tue, 11 Nov 2025 09:41:09 +0900
+Message-ID: <20251111004548.498090391@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,40 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit 25ef5b5d02ac03fe8dd91cf25bd011a570fbeba2 ]
+[ Upstream commit d73836cb8535b3078e4d2a57913f301baec58a33 ]
 
-Enable 160MHz beamformee support on mt7922 by updating HE capability
-element configuration. Previously, only 160MHz channel width was set,
-but beamformee for 160MHz was not properly advertised. This patch
-adds BEAMFORMEE_MAX_STS_ABOVE_80MHZ_4 capability to allow devices
-to utilize 160MHz BW for beamforming.
+Address the issue where the host does not send adapt to the device after
+PA_Init success. Ensure the adapt process is correctly initiated for
+devices with IP version MT6899 and above, resolving communication issues
+between the host and device.
 
-Tested by connecting to 160MHz-bandwidth beamforming AP and verified
-HE capability.
-
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Link: https://patch.msgid.link/ae637afaffed387018fdc43709470ef65898ff0b.1756383627.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ufs/host/ufs-mediatek.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 5881040ac1952..67383c41a3199 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -135,6 +135,8 @@ mt7921_init_he_caps(struct mt792x_phy *phy, enum nl80211_band band,
- 			if (is_mt7922(phy->mt76->dev)) {
- 				he_cap_elem->phy_cap_info[0] |=
- 					IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G;
-+				he_cap_elem->phy_cap_info[4] |=
-+					IEEE80211_HE_PHY_CAP4_BEAMFORMEE_MAX_STS_ABOVE_80MHZ_4;
- 				he_cap_elem->phy_cap_info[8] |=
- 					IEEE80211_HE_PHY_CAP8_20MHZ_IN_160MHZ_HE_PPDU |
- 					IEEE80211_HE_PHY_CAP8_80MHZ_IN_160MHZ_HE_PPDU;
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 3defb5f135e33..c0acbd3f8fc36 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1503,8 +1503,19 @@ static int ufs_mtk_pre_link(struct ufs_hba *hba)
+ 
+ 	return ret;
+ }
++
+ static void ufs_mtk_post_link(struct ufs_hba *hba)
+ {
++	struct ufs_mtk_host *host = ufshcd_get_variant(hba);
++	u32 tmp;
++
++	/* fix device PA_INIT no adapt */
++	if (host->ip_ver >= IP_VER_MT6899) {
++		ufshcd_dme_get(hba, UIC_ARG_MIB(VS_DEBUGOMC), &tmp);
++		tmp |= 0x100;
++		ufshcd_dme_set(hba, UIC_ARG_MIB(VS_DEBUGOMC), tmp);
++	}
++
+ 	/* enable unipro clock gating feature */
+ 	ufs_mtk_cfg_unipro_cg(hba, true);
+ }
 -- 
 2.51.0
 
