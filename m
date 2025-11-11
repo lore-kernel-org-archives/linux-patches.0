@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA1B348477;
-	Tue, 11 Nov 2025 01:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655E4348883;
+	Tue, 11 Nov 2025 01:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825317; cv=none; b=c1Kf2M7PVfDE6qo/eckUMZj3nwqh1w2NRj53O5MxdcmEbp2Ei/4x6uARTXhu0tkhqoRNrbpedvxIZchAvtLWhteBwehPiUrxFquNFZhcMeouKs/Ocmf/JCbmj1RtcmOPWHGwNPFGo4wn3P+GvzzGc6kBxGo68GVc+Bzv+FG34ZY=
+	t=1762825319; cv=none; b=riYn4brVY2jiKPxnktcpuQY7oKtz3ypWcuaJq266QvmSrQsAP2g6NxkwylaZP2RyWGqw6W62lXMkWmiAH0EqwwbLewyuLy8EnP9uQm44NNKD+RtDX8XeGW9SKXd05O0cMYCjRoTyqjdWbAjMUWGpfOfnZ4ix75cmPfroAtu0ShQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825317; c=relaxed/simple;
-	bh=x8AOmJ8es490zngRql88dQoCiqKd+vk/SS1UO3e+L3c=;
+	s=arc-20240116; t=1762825319; c=relaxed/simple;
+	bh=qh+pf1O8FiAbLA9D6jYtmkA1/a328n9Wi5HlX+yiHqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViXL1YvFDr7K2j18CQCrPo4BfsFp8IIp7MpvEBvPq9Iz4qVwTANruM/fTAUS1zCe1waz62Xui4Ldv9H3D4TjT8RjAnFqh5G/1xOCOzrBM4UB+v+XbSodc4Mudu2qUJJBYt5SrbkNoGqfIN4R1iYfo7iYgkjPvcdl+mgDcZeg2nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rILu2P3e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnC1dpbeQlp7ijMm9/qcs/zdYgQItEBVV7tggXcrEtzyLXQ93WghCWJiKza+lNaag1UKnJN5X3U9KLL6hfKLppXA6ZdzOQSnxpyZRNjjivsjAk64LPxPyyIv93jKLacfV3I6i8M4fmef9JS7GWzHqga4Itt6rHL10vhuoWaMRhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOcm2bv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rILu2P3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E189C19422;
-	Tue, 11 Nov 2025 01:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOcm2bv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BECC19424;
+	Tue, 11 Nov 2025 01:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825316;
-	bh=x8AOmJ8es490zngRql88dQoCiqKd+vk/SS1UO3e+L3c=;
+	s=korg; t=1762825319;
+	bh=qh+pf1O8FiAbLA9D6jYtmkA1/a328n9Wi5HlX+yiHqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rILu2P3eXigBay/kxwh8EUnU96SKAOBse3JcnJJ4KcVWtf1Ksy+L8WfJpKmFX1Gfk
-	 LqaKesdKbgl7j0Lnta4Nk3DbqKnCJP/4ClaGXEvIwse5mw77KbJmHyl7L9USqjKXtp
-	 YKz/lBDmHXwYpp7avccCTwDg9iaYuVtlLxhAdnXs=
+	b=cOcm2bv6EUfbS2axhL1WtFFoS1Lo34B7TFSSiOl0bQqXlRraIDGFEk+vNIs9hBHad
+	 guQ2GL+ItJUbHsN1WEbWhBcuioooz0e5Bvi6nbWG/DeGrzoZ0hyEQc7kE+FXEdNUF1
+	 BBv/vW4g9+/wmkNqYHiSPnhG9qE8uD+uZWFKDV88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	syzbot+92a3745cea5ec6360309@syzkaller.appspotmail.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.17 749/849] ring-buffer: Do not warn in ring_buffer_map_get_reader() when reader catches up
-Date: Tue, 11 Nov 2025 09:45:19 +0900
-Message-ID: <20251111004554.544105142@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 750/849] net: libwx: fix device bus LAN ID
+Date: Tue, 11 Nov 2025 09:45:20 +0900
+Message-ID: <20251111004554.567488674@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,51 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit aa997d2d2a0b2e76f4df0f1f12829f02acb4fb6b upstream.
+commit a04ea57aae375bdda1cb57034d8bcbb351e1f973 upstream.
 
-The function ring_buffer_map_get_reader() is a bit more strict than the
-other get reader functions, and except for certain situations the
-rb_get_reader_page() should not return NULL. If it does, it triggers a
-warning.
+The device bus LAN ID was obtained from PCI_FUNC(), but when a PF
+port is passthrough to a virtual machine, the function number may not
+match the actual port index on the device. This could cause the driver
+to perform operations such as LAN reset on the wrong port.
 
-This warning was triggering but after looking at why, it was because
-another acceptable situation was happening and it wasn't checked for.
+Fix this by reading the LAN ID from port status register.
 
-If the reader catches up to the writer and there's still data to be read
-on the reader page, then the rb_get_reader_page() will return NULL as
-there's no new page to get.
-
-In this situation, the reader page should not be updated and no warning
-should trigger.
-
+Fixes: a34b3e6ed8fb ("net: txgbe: Store PCI info")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Reported-by: syzbot+92a3745cea5ec6360309@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/690babec.050a0220.baf87.0064.GAE@google.com/
-Link: https://lore.kernel.org/20251016132848.1b11bb37@gandalf.local.home
-Fixes: 117c39200d9d7 ("ring-buffer: Introducing ring-buffer mapping functions")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/B60A670C1F52CB8E+20251104062321.40059-1-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c   |    3 ++-
+ drivers/net/ethernet/wangxun/libwx/wx_type.h |    4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7344,6 +7344,10 @@ consume:
- 		goto out;
- 	}
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -2368,7 +2368,8 @@ int wx_sw_init(struct wx *wx)
+ 	wx->oem_svid = pdev->subsystem_vendor;
+ 	wx->oem_ssid = pdev->subsystem_device;
+ 	wx->bus.device = PCI_SLOT(pdev->devfn);
+-	wx->bus.func = PCI_FUNC(pdev->devfn);
++	wx->bus.func = FIELD_GET(WX_CFG_PORT_ST_LANID,
++				 rd32(wx, WX_CFG_PORT_ST));
  
-+	/* Did the reader catch up with the writer? */
-+	if (cpu_buffer->reader_page == cpu_buffer->commit_page)
-+		goto out;
-+
- 	reader = rb_get_reader_page(cpu_buffer);
- 	if (WARN_ON(!reader))
- 		goto out;
+ 	if (wx->oem_svid == PCI_VENDOR_ID_WANGXUN ||
+ 	    pdev->is_virtfn) {
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -96,6 +96,8 @@
+ #define WX_CFG_PORT_CTL_DRV_LOAD     BIT(3)
+ #define WX_CFG_PORT_CTL_QINQ         BIT(2)
+ #define WX_CFG_PORT_CTL_D_VLAN       BIT(0) /* double vlan*/
++#define WX_CFG_PORT_ST               0x14404
++#define WX_CFG_PORT_ST_LANID         GENMASK(9, 8)
+ #define WX_CFG_TAG_TPID(_i)          (0x14430 + ((_i) * 4))
+ #define WX_CFG_PORT_CTL_NUM_VT_MASK  GENMASK(13, 12) /* number of TVs */
+ 
+@@ -549,8 +551,6 @@ enum WX_MSCA_CMD_value {
+ #define TXD_USE_COUNT(S)     DIV_ROUND_UP((S), WX_MAX_DATA_PER_TXD)
+ #define DESC_NEEDED          (MAX_SKB_FRAGS + 4)
+ 
+-#define WX_CFG_PORT_ST               0x14404
+-
+ /******************* Receive Descriptor bit definitions **********************/
+ #define WX_RXD_STAT_DD               BIT(0) /* Done */
+ #define WX_RXD_STAT_EOP              BIT(1) /* End of Packet */
 
 
