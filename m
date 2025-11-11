@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAA925A64C;
-	Tue, 11 Nov 2025 01:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BE3266B6C;
+	Tue, 11 Nov 2025 01:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824460; cv=none; b=g4B8bmv+sVkTt2l7qRhyZD47XXhuxjU3cr+rZ6GRsWQWJRu20o6i25t+YxM7yr4PqaoJ2akJX5IOYMg2GTgnrXBa12vckp1CXyxK7p16iPbsX1HiYQWIo2YbHm1XXN/N0bF4qzeZvayUVU1rOb9JbRUrOCkNu6gBMF4hbmJnM5E=
+	t=1762824462; cv=none; b=SJRviki2zihIqlwYZoc71cgwAPVNylu8UfONT5Wd4LVBnfh/B8QJTXABPh6AdFeEx53Wn4ORMrp44kNqnhO6piPkM7pFXouVehCXaxQDf7uzSl0oo3Hryo+tcppZ4JrehQ1Ghj2Ao3oGAc2ATwbsJ6I2SCQ1jsycqswsBoYHRfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824460; c=relaxed/simple;
-	bh=NEWb/2wXl4OhFYXBfMGSa0bRE0JU+qs2z3Q6295fXSE=;
+	s=arc-20240116; t=1762824462; c=relaxed/simple;
+	bh=F3S/5jLut1Y+HaSPBKutzjyYGt9K1eQoRj289REydnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEWUOb+lEeLokkqY1gGdFTNAQ0GBkMcTg7nldcv0dLPnNlAsJGYGazREXTwOb3FyoFsDaxzX3AEJIYKGtTplkQWwyRw049V7y2Yw+GB6ho3IMKoL9pW4agTL6aEh2F4sfUIgxz1vNVN/vRhgF4vD29UML+QnvtU6N/Y5cgd4JVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jImMS6t4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+G6FqGy3pTTkkZXU/CLsxdPT4rNZHNXy5hgQb8svTDsSjRoko/BjHjzVnYTpcD1qMKnA8sdy9tp6FpkD7Pg1beC+marKTGKD2OuEeDTzteZ75sITAf1ITuEu5ehYgKdy2YXl45OvdVtB1dpnanEIwvit8dCLLnpsjb7+QeKkxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhOJX/X7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jImMS6t4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE89C116D0;
-	Tue, 11 Nov 2025 01:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhOJX/X7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EA6C2BCAF;
+	Tue, 11 Nov 2025 01:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824460;
-	bh=NEWb/2wXl4OhFYXBfMGSa0bRE0JU+qs2z3Q6295fXSE=;
+	s=korg; t=1762824462;
+	bh=F3S/5jLut1Y+HaSPBKutzjyYGt9K1eQoRj289REydnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jImMS6t4pjUsgLFHgTSrRsZ0M0QirTpPYa3ot0+pJox2heyefV/0jrhcEht0ccm6X
-	 8GLxdmqxzEHj5KM4h0nttWFa/2RiNINAGdK6uIw4h6k9kYTdBY2YBenscfU2vy/eq1
-	 alWvqoYK+BpSXdpbI/erEE/ECdp87ElwpgekPUNI=
+	b=LhOJX/X7PZ3iT/m4yWMvs3foQSxgfarZaKTB3dfP4SWry9KvVyLbReYDYa1NmkhDe
+	 xCBA5T7mkIEASkbzTEUrCqYOAu4hOB2G8qAfdqeUw8jOev4NDKz1RoBrJb2Hs2ZYl6
+	 mFXtC6VIMkdKGoBcVIbazh/2EEE0j64e55EfUnY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Harikrishna Shenoy <h-shenoy@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 495/849] scsi: ufs: host: mediatek: Enhance recovery on hibernation exit failure
-Date: Tue, 11 Nov 2025 09:41:05 +0900
-Message-ID: <20251111004548.405321671@linuxfoundation.org>
+Subject: [PATCH 6.17 504/849] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
+Date: Tue, 11 Nov 2025 09:41:14 +0900
+Message-ID: <20251111004548.616946263@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,96 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Harikrishna Shenoy <h-shenoy@ti.com>
 
-[ Upstream commit faac32d4ece30609f1a0930ca0ae951cf6dc1786 ]
+[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
 
-Improve the recovery process for hibernation exit failures. Trigger the
-error handler and break the suspend operation to ensure effective
-recovery from hibernation errors. Activate the error handling mechanism
-by ufshcd_force_error_recovery and scheduling the error handler work.
+Enable support for data lane rates between 80-160 Mbps cdns dphy
+as mentioned in TRM [0] by setting the pll_opdiv field to 16.
+This change enables lower resolutions like 640x480 at 60Hz.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[0]: https://www.ti.com/lit/zip/spruil1
+(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
+
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
+Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c       |  3 ++-
- drivers/ufs/host/ufs-mediatek.c | 14 +++++++++++---
- include/ufs/ufshcd.h            |  1 +
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/phy/cadence/cdns-dphy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 52f2c599a348e..8bb6c48216963 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6462,13 +6462,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
- 	}
- }
+diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
+index de5389374d79d..1bd986cba8f7f 100644
+--- a/drivers/phy/cadence/cdns-dphy.c
++++ b/drivers/phy/cadence/cdns-dphy.c
+@@ -145,7 +145,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
  
--static void ufshcd_force_error_recovery(struct ufs_hba *hba)
-+void ufshcd_force_error_recovery(struct ufs_hba *hba)
- {
- 	spin_lock_irq(hba->host->host_lock);
- 	hba->force_reset = true;
- 	ufshcd_schedule_eh_work(hba);
- 	spin_unlock_irq(hba->host->host_lock);
- }
-+EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery);
+ 	dlane_bps = opts->hs_clk_rate;
  
- static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
- {
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 055b24758ca3d..6bdbbee1f0708 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1646,7 +1646,7 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
- 	}
- }
+-	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
++	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
+ 		return -EINVAL;
+ 	else if (dlane_bps >= 1250000000)
+ 		cfg->pll_opdiv = 1;
+@@ -155,6 +155,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+ 		cfg->pll_opdiv = 4;
+ 	else if (dlane_bps >= 160000000)
+ 		cfg->pll_opdiv = 8;
++	else if (dlane_bps >= 80000000)
++		cfg->pll_opdiv = 16;
  
--static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
-+static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- {
- 	int ret;
- 
-@@ -1657,8 +1657,16 @@ static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- 	ufs_mtk_wait_idle_state(hba, 5);
- 
- 	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
--	if (ret)
-+	if (ret) {
- 		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
-+
-+		ufshcd_force_error_recovery(hba);
-+
-+		/* trigger error handler and break suspend */
-+		ret = -EBUSY;
-+	}
-+
-+	return ret;
- }
- 
- static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-@@ -1669,7 +1677,7 @@ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- 
- 	if (status == PRE_CHANGE) {
- 		if (ufshcd_is_auto_hibern8_supported(hba))
--			ufs_mtk_auto_hibern8_disable(hba);
-+			return ufs_mtk_auto_hibern8_disable(hba);
- 		return 0;
- 	}
- 
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index a3fa98540d184..a4eb5bde46e88 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1511,5 +1511,6 @@ int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask);
- int ufshcd_write_ee_control(struct ufs_hba *hba);
- int ufshcd_update_ee_control(struct ufs_hba *hba, u16 *mask,
- 			     const u16 *other_mask, u16 set, u16 clr);
-+void ufshcd_force_error_recovery(struct ufs_hba *hba);
- 
- #endif /* End of Header */
+ 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
+ 					  cfg->pll_ipdiv,
 -- 
 2.51.0
 
