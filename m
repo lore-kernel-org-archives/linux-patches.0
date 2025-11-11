@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABFD34B18B;
-	Tue, 11 Nov 2025 01:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B78E34AB09;
+	Tue, 11 Nov 2025 01:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823784; cv=none; b=umCpju1vWld7dkr7w345tjX3aLVc5U0GRk4JWZscX6K7BG1s3fTCyzsCvTprEkaioRdI9yQiAOhOqrbm0SXBugZX3Fu/rKqRGuLg+lGxZ27OKJxoRSY/rkpZKXX1q9m0G7Icl4LmFISpsZFDG8EHjPnpmtKItCweytY37DTyA1Y=
+	t=1762823786; cv=none; b=tmzEfx41pQoPdpsx7+SdxZD++KFgSlkHvM1GXHMQHsuUpcUkVgu3sAI26rBFqOqORVH8BO3sHCGcgTj+zLrR1uozw/uHRlZM7e1quqLV+c/7x/VrGBnB4kEc/AmMwmRlx4jnevenHw0Qb0glLYD0pKrUWTLpJhzQ/69Yc1e+wO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823784; c=relaxed/simple;
-	bh=ORjJg6sYoipHcKMHGAVrdYnkfUPgKqFOp2W2SqdhTMk=;
+	s=arc-20240116; t=1762823786; c=relaxed/simple;
+	bh=2fiCxR0S7hOpHOPg9USi+qbb5TjXlsx/qJry76V2HVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r76Vjl2qmlUXfsTC6tf/eektWnTnvcsxNadFBtWOV2YWcJdI9pxpJP/erNZLV/YMYzoh2R71LkN+j2gXxN2f0eJJxlGbcyjkBSGYhy/zuhA1RpMkzoDkn5EKj3RgkNhhv7gYkgO09WJxbA/bUwcvjDBcQ0tDNQ9Dap1WyCXTlVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChPR2f2w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iscz/9SsylQpAV7KRvh6Uuf+ZClOhVQ5ZsISQgjhTyA/GNigwv21v6ABocrq9j6kpaZ74VCj/t+zbBPKAI+Yl/+U6741KX5lHOB9F6fJJtoztVg6CQ3hN6ZRWhXOq5V/rNGLGCz+GUcZfByHyE3D/gmdAunU5QkoySMahew7EZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gy3DTyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChPR2f2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4037C4CEF5;
-	Tue, 11 Nov 2025 01:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gy3DTyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3603CC19421;
+	Tue, 11 Nov 2025 01:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823784;
-	bh=ORjJg6sYoipHcKMHGAVrdYnkfUPgKqFOp2W2SqdhTMk=;
+	s=korg; t=1762823786;
+	bh=2fiCxR0S7hOpHOPg9USi+qbb5TjXlsx/qJry76V2HVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ChPR2f2wWenlIBFYgZ1tSrCWc0TAzY9sp0ZjEqReIFwgo3JZkF21RflCPK4zDIWdZ
-	 ZtTjbOoaO21R5usHJONzng6QN1qv8w7Ppd4qCKTFyFE9hB4/51TP4islUNcnRgEBlY
-	 g4Iz1E6KuZXwcoubAIBuVv5wQo4fS5JQQnHwKcuE=
+	b=0gy3DTywKRue/pMmJDR1N5KT18UnekyWIKcMxPRbyvMbPlYeIBPBGj7/e4ewnugQP
+	 +0u9xeFirDDG1+KkNx894LFv/vIYtpaowp6IdYsA9XMlb5n2ckvun4+U14QH0bKvMm
+	 AgX8m2thr2tCC/0CPvDpv6SqZiYIuxZmUfhIYgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ce Sun <cesun102@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 371/849] drm/amdgpu: Correct the loss of aca bank reg info
-Date: Tue, 11 Nov 2025 09:39:01 +0900
-Message-ID: <20251111004545.396206465@linuxfoundation.org>
+Subject: [PATCH 6.12 324/565] scsi: ufs: host: mediatek: Enhance recovery on hibernation exit failure
+Date: Tue, 11 Nov 2025 09:43:00 +0900
+Message-ID: <20251111004534.173867039@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,217 +48,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ce Sun <cesun102@amd.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit d8442bcad0764c5613e9f8b2356f3e0a48327e20 ]
+[ Upstream commit faac32d4ece30609f1a0930ca0ae951cf6dc1786 ]
 
-By polling, poll ACA bank count to ensure that valid
-ACA bank reg info can be obtained
+Improve the recovery process for hibernation exit failures. Trigger the
+error handler and break the suspend operation to ensure effective
+recovery from hibernation errors. Activate the error handling mechanism
+by ufshcd_force_error_recovery and scheduling the error handler work.
 
-v2: add corresponding delay before send msg to SMU to query mca bank info
-(Stanley)
-
-v3: the loop cannot exit. (Thomas)
-
-v4: remove amdgpu_aca_clear_bank_count. (Kevin)
-
-v5: continuously inject ce. If a creation interruption
-occurs at this time, bank reg info will be lost. (Thomas)
-v5: each cycle is delayed by 100ms. (Tao)
-
-Signed-off-by: Ce Sun <cesun102@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 50 +++++++++++--------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h |  5 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c |  1 +
- drivers/gpu/drm/amd/amdgpu/umc_v12_0.c  |  5 ++-
- 4 files changed, 29 insertions(+), 32 deletions(-)
+ drivers/ufs/core/ufshcd.c       |  3 ++-
+ drivers/ufs/host/ufs-mediatek.c | 14 +++++++++++---
+ include/ufs/ufshcd.h            |  1 +
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-index 54909bcf181f3..893cae9813fbb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -122,7 +122,7 @@ const char *get_ras_block_str(struct ras_common_if *ras_block)
- /* typical ECC bad page rate is 1 bad page per 100MB VRAM */
- #define RAS_BAD_PAGE_COVER              (100 * 1024 * 1024ULL)
- 
--#define MAX_UMC_POISON_POLLING_TIME_ASYNC  300  //ms
-+#define MAX_UMC_POISON_POLLING_TIME_ASYNC  10
- 
- #define AMDGPU_RAS_RETIRE_PAGE_INTERVAL 100  //ms
- 
-@@ -3239,7 +3239,7 @@ static void amdgpu_ras_ecc_log_init(struct ras_ecc_log_info *ecc_log)
- 
- 	INIT_RADIX_TREE(&ecc_log->de_page_tree, GFP_KERNEL);
- 	ecc_log->de_queried_count = 0;
--	ecc_log->prev_de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 2d07902ce7f1b..d4dbb6769efa2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6374,13 +6374,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
+ 	}
  }
  
- static void amdgpu_ras_ecc_log_fini(struct ras_ecc_log_info *ecc_log)
-@@ -3259,7 +3259,7 @@ static void amdgpu_ras_ecc_log_fini(struct ras_ecc_log_info *ecc_log)
+-static void ufshcd_force_error_recovery(struct ufs_hba *hba)
++void ufshcd_force_error_recovery(struct ufs_hba *hba)
+ {
+ 	spin_lock_irq(hba->host->host_lock);
+ 	hba->force_reset = true;
+ 	ufshcd_schedule_eh_work(hba);
+ 	spin_unlock_irq(hba->host->host_lock);
+ }
++EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery);
  
- 	mutex_destroy(&ecc_log->lock);
- 	ecc_log->de_queried_count = 0;
--	ecc_log->prev_de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
+ static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
+ {
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 5cb3af17aec47..7c13bce03694f 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1483,7 +1483,7 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
+ 	}
  }
  
- static bool amdgpu_ras_schedule_retirement_dwork(struct amdgpu_ras *con,
-@@ -3309,47 +3309,34 @@ static int amdgpu_ras_poison_creation_handler(struct amdgpu_device *adev,
- 	int ret = 0;
- 	struct ras_ecc_log_info *ecc_log;
- 	struct ras_query_if info;
--	uint32_t timeout = 0;
-+	u32 timeout = MAX_UMC_POISON_POLLING_TIME_ASYNC;
- 	struct amdgpu_ras *ras = amdgpu_ras_get_context(adev);
--	uint64_t de_queried_count;
--	uint32_t new_detect_count, total_detect_count;
--	uint32_t need_query_count = poison_creation_count;
-+	u64 de_queried_count;
-+	u64 consumption_q_count;
- 	enum ras_event_type type = RAS_EVENT_TYPE_POISON_CREATION;
+-static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
++static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
+ {
+ 	int ret;
  
- 	memset(&info, 0, sizeof(info));
- 	info.head.block = AMDGPU_RAS_BLOCK__UMC;
+@@ -1494,8 +1494,16 @@ static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
+ 	ufs_mtk_wait_idle_state(hba, 5);
  
- 	ecc_log = &ras->umc_ecc_log;
--	total_detect_count = 0;
-+	ecc_log->de_queried_count = 0;
-+	ecc_log->consumption_q_count = 0;
+ 	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
+-	if (ret)
++	if (ret) {
+ 		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
 +
- 	do {
- 		ret = amdgpu_ras_query_error_status_with_event(adev, &info, type);
- 		if (ret)
- 			return ret;
- 
- 		de_queried_count = ecc_log->de_queried_count;
--		if (de_queried_count > ecc_log->prev_de_queried_count) {
--			new_detect_count = de_queried_count - ecc_log->prev_de_queried_count;
--			ecc_log->prev_de_queried_count = de_queried_count;
--			timeout = 0;
--		} else {
--			new_detect_count = 0;
--		}
-+		consumption_q_count = ecc_log->consumption_q_count;
- 
--		if (new_detect_count) {
--			total_detect_count += new_detect_count;
--		} else {
--			if (!timeout && need_query_count)
--				timeout = MAX_UMC_POISON_POLLING_TIME_ASYNC;
-+		if (de_queried_count && consumption_q_count)
-+			break;
- 
--			if (timeout) {
--				if (!--timeout)
--					break;
--				msleep(1);
--			}
--		}
--	} while (total_detect_count < need_query_count);
-+		msleep(100);
-+	} while (--timeout);
- 
--	if (total_detect_count)
-+	if (de_queried_count)
- 		schedule_delayed_work(&ras->page_retirement_dwork, 0);
- 
- 	if (amdgpu_ras_is_rma(adev) && atomic_cmpxchg(&ras->rma_in_recovery, 0, 1) == 0)
-@@ -3446,7 +3433,8 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 				atomic_sub(poison_creation_count, &con->poison_creation_count);
- 				atomic_sub(poison_creation_count, &con->page_retirement_req_cnt);
- 			}
--		} while (atomic_read(&con->poison_creation_count));
-+		} while (atomic_read(&con->poison_creation_count) &&
-+			!atomic_read(&con->poison_consumption_count));
- 
- 		if (ret != -EIO) {
- 			msg_count = kfifo_len(&con->poison_fifo);
-@@ -3463,6 +3451,7 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 			/* gpu mode-1 reset is ongoing or just completed ras mode-1 reset */
- 			/* Clear poison creation request */
- 			atomic_set(&con->poison_creation_count, 0);
-+			atomic_set(&con->poison_consumption_count, 0);
- 
- 			/* Clear poison fifo */
- 			amdgpu_ras_clear_poison_fifo(adev);
-@@ -3487,6 +3476,8 @@ static int amdgpu_ras_page_retirement_thread(void *param)
- 				atomic_sub(msg_count, &con->page_retirement_req_cnt);
- 			}
- 
-+			atomic_set(&con->poison_consumption_count, 0);
++		ufshcd_force_error_recovery(hba);
 +
- 			/* Wake up work to save bad pages to eeprom */
- 			schedule_delayed_work(&con->page_retirement_dwork, 0);
- 		}
-@@ -3590,6 +3581,7 @@ int amdgpu_ras_recovery_init(struct amdgpu_device *adev, bool init_bp_info)
- 	init_waitqueue_head(&con->page_retirement_wq);
- 	atomic_set(&con->page_retirement_req_cnt, 0);
- 	atomic_set(&con->poison_creation_count, 0);
-+	atomic_set(&con->poison_consumption_count, 0);
- 	con->page_retirement_thread =
- 		kthread_run(amdgpu_ras_page_retirement_thread, adev, "umc_page_retirement");
- 	if (IS_ERR(con->page_retirement_thread)) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-index 699953c02649f..96cb62a44a35b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
-@@ -492,8 +492,8 @@ struct ras_ecc_err {
- struct ras_ecc_log_info {
- 	struct mutex lock;
- 	struct radix_tree_root de_page_tree;
--	uint64_t	de_queried_count;
--	uint64_t	prev_de_queried_count;
-+	uint64_t de_queried_count;
-+	uint64_t consumption_q_count;
- };
- 
- struct amdgpu_ras {
-@@ -558,6 +558,7 @@ struct amdgpu_ras {
- 	struct mutex page_retirement_lock;
- 	atomic_t page_retirement_req_cnt;
- 	atomic_t poison_creation_count;
-+	atomic_t poison_consumption_count;
- 	struct mutex page_rsv_lock;
- 	DECLARE_KFIFO(poison_fifo, struct ras_poison_msg, 128);
- 	struct ras_ecc_log_info  umc_ecc_log;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-index c92b8794aa73d..2e039fb778ea8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_umc.c
-@@ -252,6 +252,7 @@ int amdgpu_umc_pasid_poison_handler(struct amdgpu_device *adev,
- 				block, pasid, pasid_fn, data, reset);
- 			if (!ret) {
- 				atomic_inc(&con->page_retirement_req_cnt);
-+				atomic_inc(&con->poison_consumption_count);
- 				wake_up(&con->page_retirement_wq);
- 			}
- 		}
-diff --git a/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c b/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-index e590cbdd8de96..8dc32787d6250 100644
---- a/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/umc_v12_0.c
-@@ -536,8 +536,11 @@ static int umc_v12_0_update_ecc_status(struct amdgpu_device *adev,
- 	hwid = REG_GET_FIELD(ipid, MCMP1_IPIDT0, HardwareID);
- 	mcatype = REG_GET_FIELD(ipid, MCMP1_IPIDT0, McaType);
- 
--	if ((hwid != MCA_UMC_HWID_V12_0) || (mcatype != MCA_UMC_MCATYPE_V12_0))
-+	/* The IP block decode of consumption is SMU */
-+	if (hwid != MCA_UMC_HWID_V12_0 || mcatype != MCA_UMC_MCATYPE_V12_0) {
-+		con->umc_ecc_log.consumption_q_count++;
- 		return 0;
++		/* trigger error handler and break suspend */
++		ret = -EBUSY;
 +	}
++
++	return ret;
+ }
  
- 	if (!status)
+ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+@@ -1506,7 +1514,7 @@ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+ 
+ 	if (status == PRE_CHANGE) {
+ 		if (ufshcd_is_auto_hibern8_supported(hba))
+-			ufs_mtk_auto_hibern8_disable(hba);
++			return ufs_mtk_auto_hibern8_disable(hba);
  		return 0;
+ 	}
+ 
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 47cba116f87b8..52ea0ab437fe0 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -1487,5 +1487,6 @@ int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask);
+ int ufshcd_write_ee_control(struct ufs_hba *hba);
+ int ufshcd_update_ee_control(struct ufs_hba *hba, u16 *mask,
+ 			     const u16 *other_mask, u16 set, u16 clr);
++void ufshcd_force_error_recovery(struct ufs_hba *hba);
+ 
+ #endif /* End of Header */
 -- 
 2.51.0
 
