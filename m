@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFED8284880;
-	Tue, 11 Nov 2025 01:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6F9274FF1;
+	Tue, 11 Nov 2025 01:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824521; cv=none; b=BAvMY+ogR5SukvCRu/YdMvUqoVBsRVKy19H+XIPiO3GAAp+ZRCwgFCh9s4iVd++OCOR+Ikvf8gZYqtPlchGjGYQ/mYkJ0s+ms4H6zM8NZRhX95CyRzB9d/e4fS+rAVF1Gz3V7MZJyAg5KTbX75SneLSNhg5l324I3u4XSyp33Ho=
+	t=1762824523; cv=none; b=e/2ShAjeL45+3QkiU6w9KDMlxoutF+FtBwvHtyGsozyvNCI+33PIVxNeSB207ZdvDXTllq8pY3/eVXSCxzkYxC3I9jtcobp01zE1p5J+cRUcRk2jK6StxeETJGhORPkCRtcoTtql01zXagKGtpEuR17odNE64tcHrYtXF7QPpQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824521; c=relaxed/simple;
-	bh=OhPP+aYtiv2Xas1CVBAElutw/ofB+pBwuGJ2iWRsEE4=;
+	s=arc-20240116; t=1762824523; c=relaxed/simple;
+	bh=hCv1UgBf3efpySSNpVQGKzErm61WBY7I7KA8QhkMk98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4Z3TAw2+BrWGPcOPhQU8bSyrrlT12+Ffq/PN9BwwludRgx3aI3wHOCesmE1N1QKWm/GA3FdSWAYfMNVldnwnnJuvqyj+faJDP53bip44PaxqC9DjOdoICEnPE/bZA0e+QLzbVVENyZwzDTdZWzx0+JgtuMynQWvFRo0nBxHLA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rx7FKgPy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SeEWl70cmgvGKN+U7ESRWMqyJy9XkEi1Jcbw1dct4y/4zL+Hxme3ZheQmnN3kXO/wzVBaNDQng9fyfbFCReGSk/G31dBPn5YDZit8acRE1OtibfaJ15SY41WZWzijEREBIrHO6hTBn5x8bUbzgV15i4i//BVP21XOeQqnmv5ZZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf3pzddb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rx7FKgPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784A9C4AF09;
-	Tue, 11 Nov 2025 01:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf3pzddb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF22DC4CEFB;
+	Tue, 11 Nov 2025 01:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824520;
-	bh=OhPP+aYtiv2Xas1CVBAElutw/ofB+pBwuGJ2iWRsEE4=;
+	s=korg; t=1762824523;
+	bh=hCv1UgBf3efpySSNpVQGKzErm61WBY7I7KA8QhkMk98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rx7FKgPy1/GODXvsgAL22JoCKE1+ty79XvPCZv1j98Rg7WXeNADzJrLf0Q+n5vp/e
-	 F3I6PTOAjnS7iu2iwNddtyRxz+/vTSYuKbL1BqNvJfdA8PQ8oen4M2iYVthKdSkgrW
-	 xHA2uUskVNm152z9T0BJHrfn7tvsJpnDUoUExaV0=
+	b=qf3pzddbsuWeyNrVcBZf7VPAgiDbZX+X5zokDT6KhZ2bcxtqFoMhXSXaak4YR3bKe
+	 /ZVWj02UhAB0P0Ec+E5GQFtb0ybbymcZyfxkC0OYuOEDyTB9pHATgv3iIGQafv2/l/
+	 BUsAMHdITUevQ4CYyanGy5nUgF8Cro0hYnvbOz74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	austinchang <austinchang@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 516/849] netfilter: nf_reject: dont reply to icmp error messages
-Date: Tue, 11 Nov 2025 09:41:26 +0900
-Message-ID: <20251111004548.905219200@linuxfoundation.org>
+Subject: [PATCH 6.12 462/565] btrfs: mark dirty extent range for out of bound prealloc extents
+Date: Tue, 11 Nov 2025 09:45:18 +0900
+Message-ID: <20251111004537.292059372@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,131 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: austinchang <austinchang@synology.com>
 
-[ Upstream commit db99b2f2b3e2cd8227ac9990ca4a8a31a1e95e56 ]
+[ Upstream commit 3b1a4a59a2086badab391687a6a0b86e03048393 ]
 
-tcp reject code won't reply to a tcp reset.
+In btrfs_fallocate(), when the allocated range overlaps with a prealloc
+extent and the extent starts after i_size, the range doesn't get marked
+dirty in file_extent_tree. This results in persisting an incorrect
+disk_i_size for the inode when not using the no-holes feature.
 
-But the icmp reject 'netdev' family versions will reply to icmp
-dst-unreach errors, unlike icmp_send() and icmp6_send() which are used
-by the inet family implementation (and internally by the REJECT target).
+This is reproducible since commit 41a2ee75aab0 ("btrfs: introduce
+per-inode file extent tree"), then became hidden since commit 3d7db6e8bd22
+("btrfs: don't allocate file extent tree for non regular files") and then
+visible again after commit 8679d2687c35 ("btrfs: initialize
+inode::file_extent_tree after i_mode has been set"), which fixes the
+previous commit.
 
-Check for the icmp(6) type and do not respond if its an unreachable error.
+The following reproducer triggers the problem:
 
-Without this, something like 'ip protocol icmp reject', when used
-in a netdev chain attached to 'lo', cause a packet loop.
+$ cat test.sh
 
-Same for two hosts that both use such a rule: each error packet
-will be replied to.
+MNT=/mnt/test
+DEV=/dev/vdb
 
-Such situation persist until the (bogus) rule is amended to ratelimit or
-checks the icmp type before the reject statement.
+mkdir -p $MNT
 
-As the inet versions don't do this make the netdev ones follow along.
+mkfs.btrfs -f -O ^no-holes $DEV
+mount $DEV $MNT
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
+touch $MNT/file1
+fallocate -n -o 1M -l 2M $MNT/file1
+
+umount $MNT
+mount $DEV $MNT
+
+len=$((1 * 1024 * 1024))
+
+fallocate -o 1M -l $len $MNT/file1
+
+du --bytes $MNT/file1
+
+umount $MNT
+mount $DEV $MNT
+
+du --bytes $MNT/file1
+
+umount $MNT
+
+Running the reproducer gives the following result:
+
+$ ./test.sh
+(...)
+2097152 /mnt/test/file1
+1048576 /mnt/test/file1
+
+The difference is exactly 1048576 as we assigned.
+
+Fix by adding a call to btrfs_inode_set_file_extent_range() in
+btrfs_fallocate_update_isize().
+
+Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
+Signed-off-by: austinchang <austinchang@synology.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 25 ++++++++++++++++++++++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 30 +++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ fs/btrfs/file.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 0d3cb2ba6fc84..a7a3439fe7800 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -71,6 +71,27 @@ struct sk_buff *nf_reject_skb_v4_tcp_reset(struct net *net,
- }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v4_tcp_reset);
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 0e63603ac5c78..9ed2771f303c9 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2839,12 +2839,22 @@ static int btrfs_fallocate_update_isize(struct inode *inode,
+ {
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_root *root = BTRFS_I(inode)->root;
++	u64 range_start;
++	u64 range_end;
+ 	int ret;
+ 	int ret2;
  
-+static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
-+{
-+	const struct iphdr *iph = ip_hdr(skb);
-+	u8 *tp, _type;
-+	int thoff;
-+
-+	if (iph->protocol != IPPROTO_ICMP)
-+		return false;
-+
-+	thoff = skb_network_offset(skb) + sizeof(*iph);
-+
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmphdr, type),
-+				sizeof(_type), &_type);
-+
-+	if (!tp)
-+		return false;
-+
-+	return *tp == ICMP_DEST_UNREACH;
-+}
-+
- struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -91,6 +112,10 @@ struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 	if (ip_hdr(oldskb)->frag_off & htons(IP_OFFSET))
- 		return NULL;
+ 	if (mode & FALLOC_FL_KEEP_SIZE || end <= i_size_read(inode))
+ 		return 0;
  
-+	/* don't reply to ICMP_DEST_UNREACH with ICMP_DEST_UNREACH. */
-+	if (nf_skb_is_icmp_unreach(oldskb))
-+		return NULL;
++	range_start = round_down(i_size_read(inode), root->fs_info->sectorsize);
++	range_end = round_up(end, root->fs_info->sectorsize);
 +
- 	/* RFC says return as much as we can without exceeding 576 bytes. */
- 	len = min_t(unsigned int, 536, oldskb->len);
- 
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index cb2d38e80de9a..3c56e94e6943b 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -91,6 +91,32 @@ struct sk_buff *nf_reject_skb_v6_tcp_reset(struct net *net,
- }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v6_tcp_reset);
- 
-+static bool nf_skb_is_icmp6_unreach(const struct sk_buff *skb)
-+{
-+	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
-+	u8 proto = ip6h->nexthdr;
-+	u8 _type, *tp;
-+	int thoff;
-+	__be16 fo;
++	ret = btrfs_inode_set_file_extent_range(BTRFS_I(inode), range_start,
++						range_end - range_start);
++	if (ret)
++		return ret;
 +
-+	thoff = ipv6_skip_exthdr(skb, ((u8 *)(ip6h + 1) - skb->data), &proto, &fo);
-+
-+	if (thoff < 0 || thoff >= skb->len || fo != 0)
-+		return false;
-+
-+	if (proto != IPPROTO_ICMPV6)
-+		return false;
-+
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmp6hdr, icmp6_type),
-+				sizeof(_type), &_type);
-+
-+	if (!tp)
-+		return false;
-+
-+	return *tp == ICMPV6_DEST_UNREACH;
-+}
-+
- struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -104,6 +130,10 @@ struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 	if (!nf_reject_ip6hdr_validate(oldskb))
- 		return NULL;
- 
-+	/* Don't reply to ICMPV6_DEST_UNREACH with ICMPV6_DEST_UNREACH */
-+	if (nf_skb_is_icmp6_unreach(oldskb))
-+		return NULL;
-+
- 	/* Include "As much of invoking packet as possible without the ICMPv6
- 	 * packet exceeding the minimum IPv6 MTU" in the ICMP payload.
- 	 */
+ 	trans = btrfs_start_transaction(root, 1);
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
 -- 
 2.51.0
 
