@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216FD345757;
-	Tue, 11 Nov 2025 01:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E1A266EFC;
+	Tue, 11 Nov 2025 01:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823627; cv=none; b=EkN2wW9SzRRTUTQBQ31mq9cLQh/fMLB6jdmkgRFmWbgtfXIwq9hNdAtYFGg7+uu/EzIJN0TqJ4bX+WQ1AMR4DWEZkAdS0B9ZZhf5s9Re9fA86pYTSMSBR7VGMrSdu/8rEfYBtp+B07i/0t+CNVhay2VGFoJm8JhJvHziHVG3Waw=
+	t=1762823629; cv=none; b=T6DCLbdkeEuT6sOiVOdcJEWEjXOuJDy2pnJUT3lVrDFDDCbIH+tcCvzYE2iS3E+9OmD/DXv0Db0Zj2tAB/Z6RioD1zPuEHJvf347FNTEWA4UFGIJNx2984nJG5wNQhMoXJ3EiyGwnzmCJH4RXGfL3HFcJikxXzOmZ7beQpHrJgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823627; c=relaxed/simple;
-	bh=th6wBPZnubua1wWNJ2Y8cr7Goj4qXZH/PYujpc6MhYw=;
+	s=arc-20240116; t=1762823629; c=relaxed/simple;
+	bh=QlPfgLeKOAG2b7GoFCP0v4GPRCDfGJO/Vy8uldEJexY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MriGXrZOzHdiltdHsJQApBtYUFe1qSMq6xCOIvAdtIGP5Bj6cI/i6MXdwulRTHRVqyrKbiJoaEgCgRi7Rp2S4MJtGpShbu/rD7QHufZlaUgJq3JUCeny9yLHIt5eB7usY8/qCnb/rD7s2zUcylP17RmohUR7xUgDYE5D2w6Bfws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEao0hWm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REjRl23Jacvk+qvjrwdpHO5Pyg4DrgDS0V2MJoOQtQ2b2AuvQq6vXQkgJmLa0qh2u5vgBt9kLrhM0YZlMZYoMh5Z9caz8Y+yV4/91uj2wLWWbqi9TMCYbOOO/YMV1aW7OMJ9AeeLJngQ86eNL29PCjlbcglymhSsjQ+ZcPuHlCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzRtTYA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEao0hWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CFEC16AAE;
-	Tue, 11 Nov 2025 01:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzRtTYA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E653AC19422;
+	Tue, 11 Nov 2025 01:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823627;
-	bh=th6wBPZnubua1wWNJ2Y8cr7Goj4qXZH/PYujpc6MhYw=;
+	s=korg; t=1762823629;
+	bh=QlPfgLeKOAG2b7GoFCP0v4GPRCDfGJO/Vy8uldEJexY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEao0hWmUNhXkA4AxvVYFBZt4jSiOvEWBl1VIQVkTBKW//dy3PBiSblGSRweMsdU2
-	 VKWydoFrFWJ0gMUSkzpZ0CkxQqJ1g1oVamumZj6O81SxKmrJDk6skzeAMFxsBAMYTf
-	 L4Kj1cghLqESxx8wCoIGkBv1FIE19UMO/At+PNi8=
+	b=BzRtTYA66kzmeCribfzj7wlT1meonkVzbM9yECEJXVNVQjIIKmPQeVLD3O0vxRtXC
+	 RlyAXvmKMYXo2MI/RZGx5Hn6hIwyrFgPVZVyrOlL9A2r1CGScI3OrTt5IyFLKPpvlg
+	 Xt8vlqIfEM744lE4D+0ke+B97Qq2CbVL1j+8NTvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 289/565] ipv6: Add sanity checks on ipv6_devconf.rpl_seg_enabled
-Date: Tue, 11 Nov 2025 09:42:25 +0900
-Message-ID: <20251111004533.377371973@linuxfoundation.org>
+Subject: [PATCH 6.17 339/849] bnxt_en: Add Hyper-V VF ID
+Date: Tue, 11 Nov 2025 09:38:29 +0900
+Message-ID: <20251111004544.616794642@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +50,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 3d95261eeb74958cd496e1875684827dc5d028cc ]
+[ Upstream commit 5be7cb805bd9a6680b863a1477dbc6e7986cc223 ]
 
-In ipv6_rpl_srh_rcv() we use min(net->ipv6.devconf_all->rpl_seg_enabled,
-idev->cnf.rpl_seg_enabled) is intended to return 0 when either value is
-zero, but if one of the values is negative it will in fact return non-zero.
+VFs of the P7 chip family created by Hyper-V will have the device ID of
+0x181b.
 
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://patch.msgid.link/20250901123726.1972881-3-yuehaibing@huawei.com
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250819163919.104075-6-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 ++++-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 49ec223f2eda4..228cf72e52503 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -7176,7 +7176,9 @@ static const struct ctl_table addrconf_sysctl[] = {
- 		.data		= &ipv6_devconf.rpl_seg_enabled,
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
-+		.proc_handler   = proc_dointvec_minmax,
-+		.extra1         = SYSCTL_ZERO,
-+		.extra2         = SYSCTL_ONE,
- 	},
- 	{
- 		.procname	= "ioam6_enabled",
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 0daa08cecaf28..0f3cc21ab0320 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -142,6 +142,7 @@ static const struct {
+ 	[NETXTREME_E_P5_VF] = { "Broadcom BCM5750X NetXtreme-E Ethernet Virtual Function" },
+ 	[NETXTREME_E_P5_VF_HV] = { "Broadcom BCM5750X NetXtreme-E Virtual Function for Hyper-V" },
+ 	[NETXTREME_E_P7_VF] = { "Broadcom BCM5760X Virtual Function" },
++	[NETXTREME_E_P7_VF_HV] = { "Broadcom BCM5760X Virtual Function for Hyper-V" },
+ };
+ 
+ static const struct pci_device_id bnxt_pci_tbl[] = {
+@@ -217,6 +218,7 @@ static const struct pci_device_id bnxt_pci_tbl[] = {
+ 	{ PCI_VDEVICE(BROADCOM, 0x1808), .driver_data = NETXTREME_E_P5_VF_HV },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1809), .driver_data = NETXTREME_E_P5_VF_HV },
+ 	{ PCI_VDEVICE(BROADCOM, 0x1819), .driver_data = NETXTREME_E_P7_VF },
++	{ PCI_VDEVICE(BROADCOM, 0x181b), .driver_data = NETXTREME_E_P7_VF_HV },
+ 	{ PCI_VDEVICE(BROADCOM, 0xd800), .driver_data = NETXTREME_S_VF },
+ #endif
+ 	{ 0 }
+@@ -315,7 +317,8 @@ static bool bnxt_vf_pciid(enum board_idx idx)
+ 	return (idx == NETXTREME_C_VF || idx == NETXTREME_E_VF ||
+ 		idx == NETXTREME_S_VF || idx == NETXTREME_C_VF_HV ||
+ 		idx == NETXTREME_E_VF_HV || idx == NETXTREME_E_P5_VF ||
+-		idx == NETXTREME_E_P5_VF_HV || idx == NETXTREME_E_P7_VF);
++		idx == NETXTREME_E_P5_VF_HV || idx == NETXTREME_E_P7_VF ||
++		idx == NETXTREME_E_P7_VF_HV);
+ }
+ 
+ #define DB_CP_REARM_FLAGS	(DB_KEY_CP | DB_IDX_VALID)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index fda0d3cc6227c..119d4ef6ef660 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2130,6 +2130,7 @@ enum board_idx {
+ 	NETXTREME_E_P5_VF,
+ 	NETXTREME_E_P5_VF_HV,
+ 	NETXTREME_E_P7_VF,
++	NETXTREME_E_P7_VF_HV,
+ };
+ 
+ #define BNXT_TRACE_BUF_MAGIC_BYTE ((u8)0xbc)
 -- 
 2.51.0
 
