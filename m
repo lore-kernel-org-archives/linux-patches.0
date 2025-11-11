@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F411D6DB5;
-	Tue, 11 Nov 2025 00:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312761D6DB5;
+	Tue, 11 Nov 2025 00:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822468; cv=none; b=RFpObU0rDXMBeAt04jr0cN/00hfNb7H6wK4Zeqyy33Qz+Yvrntf+7nTysUMBA8eL8r/Rakeqs7PzgLCJhxbHNYjmLX4GRtGJRL/0UtptV11/dkspbG1HNXtWZbM9jGagFmT0kQDg0q82V+8Mdt7e8jlbwcyHUZ6k9YAHFB9keHc=
+	t=1762822470; cv=none; b=bjFR9USfmgaZXcS0IXnvQDHXrwdlsUzOdkYw4mZEPDyDwcM9mu0H2l5E8J8gH3F48DCS4l1tCv3ubFoFnrGdzmNCCvSvuIiMw7O6oPwmAnnYBplGMD2lGC7pQ8VWV20EWQe61HPEnfiVSuXjtlhVNdyZ15Zt37lZhnAaRrWFusk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822468; c=relaxed/simple;
-	bh=96UUxEHosG32pE5b/+gAwanwuZumthYfHq02XqtC2XQ=;
+	s=arc-20240116; t=1762822470; c=relaxed/simple;
+	bh=RYFlOeIzRr0Ywt/Gxat/4373vS6KnLmULMRSqFBUfwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4KDRCwRiHtKWtjxNoyIDzo9S4+toyvhvHIivkCOYiwjvQNCE0mhgNlvxE30s6X7USMI7iqdD8gLi3GUv0h3el/jyHSuZgo5M31pqg1zlWsyW07l5Mdwj9wZxdHLbHKKyLDHdujbL7eLYB3vzkAZE4f0JEOkbl3NeaW2GktSwIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jV3bjYNP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZUAT6YsVZT1HhWx13xo4BNdfGIkx/vdfY4EzJgWk674N6+7eKokxVS2uSPLplGS5FHCCNAtXfbS8u4ZuKwSu8iuFivfFVhf4QcBkUnBF3j/FOyjjvGWyv8EJbA3qUw/UeMZWf+Ucy/4koCWhvw6RsokIJdqUVN2s720fxNcy3Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/MaL702; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jV3bjYNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A4EC4CEF5;
-	Tue, 11 Nov 2025 00:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/MaL702"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0714C4AF09;
+	Tue, 11 Nov 2025 00:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822467;
-	bh=96UUxEHosG32pE5b/+gAwanwuZumthYfHq02XqtC2XQ=;
+	s=korg; t=1762822470;
+	bh=RYFlOeIzRr0Ywt/Gxat/4373vS6KnLmULMRSqFBUfwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jV3bjYNPWNltxA0eAjGcxJKcFwbSgW0lc/qDSlYyckA+i3cDtnAXRnZXMhE5mAvK3
-	 osjGSRqx6KMy6a7LEHiZRIySR7NIXlmSeuxt6MIkcDKUrinI3UGvhuXiSzJ6beEFby
-	 wkTqf7Ra2x9o0bjaDJ5sNrOVAu7o1lLiVBjJM5AM=
+	b=W/MaL702S0C0hFnWjrXp2jamoPkXd1IBkExr+KtGtb3UapFsVMdQaoG/Lzl9SFTVl
+	 8YpyvNZ6dOIkDwjMs9dr80APoSqO8a9LwR0TIIxdQ11VLsyvp6F4PKV42nPX9jNMwe
+	 lHguF+56R239HOWixIcUk9sPSGMMW5oArUNMTrbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/565] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
-Date: Tue, 11 Nov 2025 09:38:32 +0900
-Message-ID: <20251111004528.181163718@linuxfoundation.org>
+Subject: [PATCH 6.12 024/565] drm/msm/a6xx: Fix GMU firmware parser
+Date: Tue, 11 Nov 2025 09:38:00 +0900
+Message-ID: <20251111004527.419225349@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,38 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
+[ Upstream commit b4789aac9d3441d9f830f0a4022d8dc122d6cab3 ]
 
-'table_index' is a variable defined by the smu driver (kmd)
-'table_id' is a variable defined by the hw smu (pmfw)
+Current parser logic for GMU firmware assumes a dword aligned payload
+size for every block. This is not true for all GMU firmwares. So, fix
+this by using correct 'size' value in the calculation for the offset
+for the next block's header.
 
-This code should use table_index as a bounds check.
-
-Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
+Fixes: c6ed04f856a4 ("drm/msm/a6xx: A640/A650 GMU firmware path")
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/674040/
+Message-ID: <20250911-assorted-sept-1-v2-2-a8bf1ee20792@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-index 0ce1766c859f5..d2f11d82312f0 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -955,7 +955,7 @@ int smu_cmn_update_table(struct smu_context *smu,
- 						      table_index);
- 	uint32_t table_size;
- 	int ret = 0;
--	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
-+	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 8609fa38058ea..bfb1225a47c50 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -730,6 +730,9 @@ static bool fw_block_mem(struct a6xx_gmu_bo *bo, const struct block_header *blk)
+ 	return true;
+ }
  
- 	table_size = smu_table->tables[table_index].size;
++#define NEXT_BLK(blk) \
++	((const struct block_header *)((const char *)(blk) + sizeof(*(blk)) + (blk)->size))
++
+ static int a6xx_gmu_fw_load(struct a6xx_gmu *gmu)
+ {
+ 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
+@@ -760,7 +763,7 @@ static int a6xx_gmu_fw_load(struct a6xx_gmu *gmu)
+ 
+ 	for (blk = (const struct block_header *) fw_image->data;
+ 	     (const u8*) blk < fw_image->data + fw_image->size;
+-	     blk = (const struct block_header *) &blk->data[blk->size >> 2]) {
++	     blk = NEXT_BLK(blk)) {
+ 		if (blk->size == 0)
+ 			continue;
+ 
 -- 
 2.51.0
 
