@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F392E33B6C4;
-	Tue, 11 Nov 2025 01:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6DA333443;
+	Tue, 11 Nov 2025 01:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824552; cv=none; b=BJNJDogKId2mCG3s2cFBCoXcnlmivRGvCekBHXh+Ai7f0KSUSDeHnoMBjwAagsn3++bs93EtpD3ISauLKS3YHfSxW+XW2e8pOyGyxt1hvCZ8wUYJMiAq5MVIYvmOsms0U5Xrqd7RPUPBO6x6Zb6+1THXeq6d+F93klGTWpWkdGE=
+	t=1762824554; cv=none; b=EG9O8K5fhscYq8SqDo/2J2UY+bzNRYwfYrwGujJxyBIyKKFtTTOdzoqylP7stnigyU/3R/ARFe8z8FsdzAgyc12YJbUlMTb5nKy/na1kD+8/cyhTh6ugVxrZ7czLEXqILLIbM4N1tYOy7eICKZ52uHI/YY19kksndcPAjAKA3H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824552; c=relaxed/simple;
-	bh=ixDeqf2uYrkHLBMBBVxPspnDmVNwR9JDAAA7PkOaNi8=;
+	s=arc-20240116; t=1762824554; c=relaxed/simple;
+	bh=1ZS5WDExK27thcnymUTqHvAS+2whPudeKzdsfcEBUA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKP2JhcNP5GMMUj5A+0KFS6sGSm5BZ9kNWk4pF+QBdZLRueVE8ALCIQr6oaPEIXwChdNjkVec3tTlOOkB4u3HVKwLkTOs9PM7gmmxJtQf/J8UyneH9oKWpjPsI501AOSbnNQnaf4k/v8Cu6svtpllBCibXIa1ONj/qc5c2Y9Z+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vooQiSWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZUHgEZ9AlFD/r3zUvhIKKF7jKqQMUrHJpAHUAU3tWBOrm9seZMO0cRSzNge2xzkWmJx5roJzYBWQp2GB1pFeR6okMghOFUFLpAQHQf4C0XuVShidkhjAJF/k6xnaY/1invUyivrQ+vh3jU82lg8PQ1osFMR+e0Gss065vsD3BLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNH62QZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vooQiSWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA00C4CEFB;
-	Tue, 11 Nov 2025 01:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNH62QZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09ABC116B1;
+	Tue, 11 Nov 2025 01:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824551;
-	bh=ixDeqf2uYrkHLBMBBVxPspnDmVNwR9JDAAA7PkOaNi8=;
+	s=korg; t=1762824554;
+	bh=1ZS5WDExK27thcnymUTqHvAS+2whPudeKzdsfcEBUA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vooQiSWcRVdPMQAtl/1D7dCJPIwloPUKk4iF4AQPwAsCszfj3+/mZh+cjJ6YGk5ux
-	 3wc9eQ+UBtKAbQO8VlFGZjoyJVB4+PSK+Ih1GEWFGl5/j6JSzhyyL67Yr8bOawvnT+
-	 3LFl/2F0f+Y0Io38iYA0uQroou3CbP0ZIbEmqd3M=
+	b=zNH62QZxlA0/sEh/3EtTv4pA0wa0v3jYm1kC3iZfGdP7Ta4fvBJ98RtFoHtcBYg/x
+	 S+kRa/oLieO5LdRl238101g9OKx2+E9uNaB7pIZt0JM+4jKAZRx1OA9U+rcpqBdaMH
+	 s36vjqNbQ2beZlB291eC5BnEHqjpfWtEoYUrypVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Cristian Birsan <cristian.birsan@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 522/849] selftests: Replace sleep with slowwait
-Date: Tue, 11 Nov 2025 09:41:32 +0900
-Message-ID: <20251111004549.043155472@linuxfoundation.org>
+Subject: [PATCH 6.12 468/565] ARM: at91: pm: save and restore ACR during PLL disable/enable
+Date: Tue, 11 Nov 2025 09:45:24 +0900
+Message-ID: <20251111004537.431382915@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Ahern <dsahern@kernel.org>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit 2f186dd5585c3afb415df80e52f71af16c9d3655 ]
+[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
 
-Replace the sleep in kill_procs with slowwait.
+Add a new word in assembly to store ACR value during the calls
+to at91_plla_disable/at91_plla_enable macros and use it.
 
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250910025828.38900-2-dsahern@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
+Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
+Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
-index cf535c23a959a..dfd368371fb3c 100755
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -189,7 +189,7 @@ show_hint()
- kill_procs()
- {
- 	killall nettest ping ping6 >/dev/null 2>&1
--	sleep 1
-+	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
- }
+diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
+index 94dece1839af3..99aaf5cf89696 100644
+--- a/arch/arm/mach-at91/pm_suspend.S
++++ b/arch/arm/mach-at91/pm_suspend.S
+@@ -689,6 +689,10 @@ sr_dis_exit:
+ 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
+ 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
  
- set_ping_group()
++	/* save acr */
++	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
++	str	tmp2, .saved_acr
++
+ 	/* save div. */
+ 	mov	tmp1, #0
+ 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
+@@ -758,7 +762,7 @@ sr_dis_exit:
+ 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
+ 
+ 	/* step 2. */
+-	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
++	ldr	tmp1, .saved_acr
+ 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
+ 
+ 	/* step 3. */
+@@ -1134,6 +1138,8 @@ ENDPROC(at91_pm_suspend_in_sram)
+ 	.word 0
+ .saved_mckr:
+ 	.word 0
++.saved_acr:
++	.word 0
+ .saved_pllar:
+ 	.word 0
+ .saved_sam9_lpr:
 -- 
 2.51.0
 
