@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324B926FA67;
-	Tue, 11 Nov 2025 01:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784EE26FA67;
+	Tue, 11 Nov 2025 01:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823489; cv=none; b=Ggy8sOMnlblixk+LkdV36DQdhhC4y9cnM14qgcTwe7VEHbSTa91QJkd5/TQrGG4wwDTUgWu6npkKswQvvk3hkRVYYQZDD+8/pjaM0YbNNlIr90ytkb2AVi5bLg6at9zp0Ws5rfw3VZnVGyKWXR9ReKffKFD4w0z+qHy18NaJip0=
+	t=1762823491; cv=none; b=tYCJ+KaTc5sHLVoLQkLyxFPFjdItl+eqGzUbcYlFe7sZOft2YqXGymLWIn3EvMPUMvvPBg/4IhrTctA1jNtLXZRKHhye9SMsTT6pLAukl8Q4ORo+y2qVxrGR+HeeXpYJmYSXl586HB1r4DUrZ8azt4UGTDNhZ+NIZw4D0ST7D/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823489; c=relaxed/simple;
-	bh=XLFXVozV0fj0ysJ6xjRxwUrMrx4nvEKOvxwDAndJHjo=;
+	s=arc-20240116; t=1762823491; c=relaxed/simple;
+	bh=N9ExtDtUHVAGbpwUyOyiOvAK2r72cnMObNG1HoBNNX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggcrvL7amHDugkd+eJU8RV//Y3/MBYF6/PSBFW1/NryFrBTe6qhVKUeb6mC/oWz07HDmDtY4czB15ivR11yFlIDtVSKx4VqlW93qfhinNsQtWc9Fm01E9rgTAGUW6rL9EW8T9XIBU5oygTANpogExxgkb26QPp9fU6ZwIjTUYAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgqYCo7s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEUtKqb97XyDJ9EZoka2d1CnFAharqV0wJhq+HrD1yhpOB46rJ2OdpdZzdchwSqWbkYeyENPdjAnHslWF7ct8B9tlVEuSlEnx6ATycedS0rf3IhJnxCEzEIh4ZMTdLz+nzCIyssXDOk88jwvk4agyOafsV05fkPaWjQnA9Dj+rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/fZvWdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgqYCo7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ED9C4CEF5;
-	Tue, 11 Nov 2025 01:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/fZvWdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18427C4CEFB;
+	Tue, 11 Nov 2025 01:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823489;
-	bh=XLFXVozV0fj0ysJ6xjRxwUrMrx4nvEKOvxwDAndJHjo=;
+	s=korg; t=1762823491;
+	bh=N9ExtDtUHVAGbpwUyOyiOvAK2r72cnMObNG1HoBNNX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgqYCo7suuoiObGK2LQcOtG+tTst/6+4PV2wOkB0NbZfc9oVDSSjSwEPoLxsjssPD
-	 CMiDA0DAxjzQ2g60JnjFfwY9qPkfyRY1nx+7EPU917bCW8BaHZYIrmOcf2MIsN2fG8
-	 7X/OlOHLCte4janJs1Li7rWOQhVos4tq4bLJQ3PM=
+	b=L/fZvWdWEvs++nhMnolx9NhDDDqVqGcal1fx93R1lY4v6djUj8qkaIp2TJIpmds8a
+	 wClyMWOgIZeF/0j9ghxNYtkD79UvLqA/rt6hc9wdfzZ+000SPq23m391aI+sunmdXx
+	 c89bmuL3X4wcBKS+ocosO5Roib93BZ0mQ/UeFSSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 234/565] char: misc: Does not request module for miscdevice with dynamic minor
-Date: Tue, 11 Nov 2025 09:41:30 +0900
-Message-ID: <20251111004532.178275959@linuxfoundation.org>
+Subject: [PATCH 6.17 310/849] media: imon: make send_packet() more robust
+Date: Tue, 11 Nov 2025 09:38:00 +0900
+Message-ID: <20251111004543.908043143@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +48,186 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 1ba0fb42aa6a5f072b1b8c0b0520b32ad4ef4b45 ]
+[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
 
-misc_open() may request module for miscdevice with dynamic minor, which
-is meaningless since:
+syzbot is reporting that imon has three problems which result in
+hung tasks due to forever holding device lock [1].
 
-- The dynamic minor allocated is unknown in advance without registering
-  miscdevice firstly.
-- Macro MODULE_ALIAS_MISCDEV() is not applicable for dynamic minor.
+First problem is that when usb_rx_callback_intf0() once got -EPROTO error
+after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
+resubmits urb after printk(), and resubmitted urb causes
+usb_rx_callback_intf0() to again get -EPROTO error. This results in
+printk() flooding (RCU stalls).
 
-Fix by only requesting module for miscdevice with fixed minor.
+Alan Stern commented [2] that
 
-Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-6-2ed949665bde@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  In theory it's okay to resubmit _if_ the driver has a robust
+  error-recovery scheme (such as giving up after some fixed limit on the
+  number of errors or after some fixed time has elapsed, perhaps with a
+  time delay to prevent a flood of errors).  Most drivers don't bother to
+  do this; they simply give up right away.  This makes them more
+  vulnerable to short-term noise interference during USB transfers, but in
+  reality such interference is quite rare.  There's nothing really wrong
+  with giving up right away.
+
+but imon has a poor error-recovery scheme which just retries forever;
+this behavior should be fixed.
+
+Since I'm not sure whether it is safe for imon users to give up upon any
+error code, this patch takes care of only union of error codes chosen from
+modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
+ir_toy, mceusb and igorplugusb).
+
+Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
+before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
+resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
+hardware after early callbacks"). Move the ictx->dev_present_intf0 test
+introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
+until intf configured") to immediately before imon_incoming_packet(), or
+the first problem explained above happens without printk() flooding (i.e.
+hung task).
+
+Third problem is that when usb_rx_callback_intf0() is not called for some
+reason (e.g. flaky hardware; the reproducer for this problem sometimes
+prevents usb_rx_callback_intf0() from being called),
+wait_for_completion_interruptible() in send_packet() never returns (i.e.
+hung task). As a workaround for such situation, change send_packet() to
+wait for completion with timeout of 10 seconds.
+
+Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
+Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 9ee78c76e8663..6f9ce6b3cc5a6 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -150,7 +150,8 @@ static int misc_open(struct inode *inode, struct file *file)
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index cf3e6e43c0c7e..8668d53c0d426 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
+ 		smp_rmb(); /* ensure later readers know we're not busy */
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+-		/* Wait for transmission to complete (or abort) */
+-		retval = wait_for_completion_interruptible(
+-				&ictx->tx.finished);
+-		if (retval) {
++		/* Wait for transmission to complete (or abort or timeout) */
++		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
++		if (retval <= 0) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
++			if (retval < 0)
++				ictx->tx.status = retval;
++			else
++				ictx->tx.status = -ETIMEDOUT;
+ 		}
+ 
+ 		ictx->tx.busy = false;
+@@ -1754,14 +1757,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
+ 	if (!ictx)
+ 		return;
+ 
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf0)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
+ 		return;
+@@ -1770,16 +1765,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
+ 		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf0)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
++		return;
++
+ 	default:
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
  		break;
  	}
  
--	if (!new_fops) {
-+	/* Only request module for fixed minor code */
-+	if (!new_fops && minor < MISC_DYNAMIC_MINOR) {
- 		mutex_unlock(&misc_mtx);
- 		request_module("char-major-%d-%d", MISC_MAJOR, minor);
- 		mutex_lock(&misc_mtx);
-@@ -162,10 +163,11 @@ static int misc_open(struct inode *inode, struct file *file)
- 			new_fops = fops_get(iter->fops);
- 			break;
- 		}
--		if (!new_fops)
--			goto fail;
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
+ }
+ 
+@@ -1795,14 +1803,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 	if (!ictx)
+ 		return;
+ 
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf1)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
+ 		return;
+@@ -1811,16 +1811,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf1)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
++		return;
++
+ 	default:
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
+ 		break;
  	}
  
-+	if (!new_fops)
-+		goto fail;
-+
- 	/*
- 	 * Place the miscdevice in the file's
- 	 * private_data so it can be used by the
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
+ }
+ 
 -- 
 2.51.0
 
