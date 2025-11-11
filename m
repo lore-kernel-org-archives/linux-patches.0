@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EE734D38E;
-	Tue, 11 Nov 2025 01:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09352F6186;
+	Tue, 11 Nov 2025 01:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825412; cv=none; b=QUvJ7L5Yu3e0NzUJt3WKChAqO6DYkqGcjBGcWp2uJ1Fh59vM6olsWt+JwDhsPB/TP1eCqjlslfNXVRosGqq/clwyiW+mYRj0SwM5m+rS57YtYHQWFtCTzMpI4/l911y51CJ6CPbNdH7uPherXl0SPd0GfZJs3lJZLOIITI7lzhE=
+	t=1762825415; cv=none; b=AYO+JN+X8WpqhzY24w3YJY8hlIUunu1MSpgJydJkzzK9W25ZwERsXN4Q+wH4Z1LGGtvVWsARS74RC5LzobCRhDBaUFr2PpmNDiiy45+zv6VjpGsi964gW8ZUWUfkZOUgBenTEqCamo34+gHdTjylmMbl6soCKNjirzvD9bFD+VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825412; c=relaxed/simple;
-	bh=6UPWC9luoZCtA+sgGphMBNsllFkSajpTQGbSxJjM3bo=;
+	s=arc-20240116; t=1762825415; c=relaxed/simple;
+	bh=m1sLZtZ2RwcVa/BdA6Ncov+ar8ZkgNLr7gkGZ+z688w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1qriB0s6baYvB9YVu/D3H4eZS01KTl/7Ke36gJ/hQZAu8OFh0xBnRh0z458/vFczmQeGKPvZq9zc7HO7lyZBc7DTHul2TdaCQqgorXIgdLECZmIaG6rn1WuhiA1ko0+cTf0jpPwQbVahwCDjtSS0l3y81jCxX74yDlud6yr31U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCnj8b1K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AhEpDxqUpaByVDVLnGQN3DFJyYIJvKQQ7tDbO2Sq9gfck8G8cMz5fvjF/FoXYg0hUt8maKeD+4QKTMzaxDJK0Ai9pN+dZ7qoViJhzYY5+u6HHZszIV8udWLip6ywJc/Wb4K9ZHEdz6BwbtXxOmo0GDGBZCkL+ZxgUh6ZZwCf5D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqGE27Ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCnj8b1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76E0C116B1;
-	Tue, 11 Nov 2025 01:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqGE27Ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2F1C19424;
+	Tue, 11 Nov 2025 01:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825412;
-	bh=6UPWC9luoZCtA+sgGphMBNsllFkSajpTQGbSxJjM3bo=;
+	s=korg; t=1762825414;
+	bh=m1sLZtZ2RwcVa/BdA6Ncov+ar8ZkgNLr7gkGZ+z688w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCnj8b1KN3wnhqk3ob9SpbptR6EAQobfUiUJjiXw1TL1wdKUh21wO2+fs5uR43mt1
-	 mNto46xyEOIUr/bQpY+QSMpu1CBUrZLZLZJ+BlBnYuAO25h+3G5crLzm4VKJh8zE3/
-	 WMx6ID69tI85Xxga5Z81vRMblurM2ZSnoDJBeE/o=
+	b=gqGE27Iaq7bM+kJSVD5f7DSF3cE+Rt44RjKJ5nvw+/tU++pVKi/etzmiornPRKR9Y
+	 hrx9FGtAvfpH4PEQ0FEAbvIvYN6KgfGO/vZyD0RLlDiVfEh40wcNUfPJ7W9dTChXU6
+	 1h/zmqwqL6UhE2zRNK2DIb5CmnZP2Myqw6SRbNj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 790/849] net: ti: icssg-prueth: Fix fdb hash size configuration
-Date: Tue, 11 Nov 2025 09:46:00 +0900
-Message-ID: <20251111004555.532676580@linuxfoundation.org>
+Subject: [PATCH 6.17 791/849] net/mlx5e: SHAMPO, Fix header mapping for 64K pages
+Date: Tue, 11 Nov 2025 09:46:01 +0900
+Message-ID: <20251111004555.554777770@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,67 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit ae4789affd1e181ae46e72e2b5fbe2d6d7b6616a ]
+[ Upstream commit 665a7e13c220bbde55531a24bd5524320648df10 ]
 
-The ICSSG driver does the initial FDB configuration which
-includes setting the control registers. Other run time
-management like learning is managed by the PRU's. The default
-FDB hash size used by the firmware is 512 slots, which is
-currently missing in the current driver. Update the driver
-FDB config to include FDB hash size as well.
+HW-GRO is broken on mlx5 for 64K page sizes. The patch in the fixes tag
+didn't take into account larger page sizes when doing an align down
+of max_ksm_entries. For 64K page size, max_ksm_entries is 0 which will skip
+mapping header pages via WQE UMR. This breaks header-data split
+and will result in the following syndrome:
 
-Please refer trm [1] 6.4.14.12.17 section on how the FDB config
-register gets configured. From the table 6-1404, there is a reset
-field for FDB_HAS_SIZE which is 4, meaning 1024 slots. Currently
-the driver is not updating this reset value from 4(1024 slots) to
-3(512 slots). This patch fixes this by updating the reset value
-to 512 slots.
+mlx5_core 0000:00:08.0 eth2: Error cqe on cqn 0x4c9, ci 0x0, qn 0x1133, opcode 0xe, syndrome 0x4, vendor syndrome 0x32
+00000000: 00 00 00 00 04 4a 00 00 00 00 00 00 20 00 93 32
+00000010: 55 00 00 00 fb cc 00 00 00 00 00 00 07 18 00 00
+00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4a
+00000030: 00 00 3b c7 93 01 32 04 00 00 00 00 00 00 bf e0
+mlx5_core 0000:00:08.0 eth2: ERR CQE on RQ: 0x1133
 
-[1]: https://www.ti.com/lit/pdf/spruim2
-Fixes: abd5576b9c57f ("net: ti: icssg-prueth: Add support for ICSSG switch firmware")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Furthermore, the function that fills in WQE UMRs for the headers
+(mlx5e_build_shampo_hd_umr()) only supports mapping page sizes that
+fit in a single UMR WQE.
+
+This patch goes back to the old non-aligned max_ksm_entries value and it
+changes mlx5e_build_shampo_hd_umr() to support mapping a large page over
+multiple UMR WQEs.
+
+This means that mlx5e_build_shampo_hd_umr() can now leave a page only
+partially mapped. The caller, mlx5e_alloc_rx_hd_mpwqe(), ensures that
+there are enough UMR WQEs to cover complete pages by working on
+ksm_entries that are multiples of MLX5E_SHAMPO_WQ_HEADER_PER_PAGE.
+
+Fixes: 8a0ee54027b1 ("net/mlx5e: SHAMPO, Simplify UMR allocation for headers")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251104104415.3110537-1-m-malladi@ti.com
+Link: https://patch.msgid.link/1762238915-1027590-2-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_config.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/en_rx.c   | 36 +++++++++----------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_config.c b/drivers/net/ethernet/ti/icssg/icssg_config.c
-index da53eb04b0a43..3f8237c17d099 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_config.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_config.c
-@@ -66,6 +66,9 @@
- #define FDB_GEN_CFG1		0x60
- #define SMEM_VLAN_OFFSET	8
- #define SMEM_VLAN_OFFSET_MASK	GENMASK(25, 8)
-+#define FDB_HASH_SIZE_MASK	GENMASK(6, 3)
-+#define FDB_HASH_SIZE_SHIFT	3
-+#define FDB_HASH_SIZE		3
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 5dbf48da2f4f1..f19e94884a52e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -670,7 +670,7 @@ static int mlx5e_build_shampo_hd_umr(struct mlx5e_rq *rq,
+ 	u16 pi, header_offset, err, wqe_bbs;
+ 	u32 lkey = rq->mdev->mlx5e_res.hw_objs.mkey;
+ 	struct mlx5e_umr_wqe *umr_wqe;
+-	int headroom, i = 0;
++	int headroom, i;
  
- #define FDB_GEN_CFG2		0x64
- #define FDB_VLAN_EN		BIT(6)
-@@ -463,6 +466,8 @@ void icssg_init_emac_mode(struct prueth *prueth)
- 	/* Set VLAN TABLE address base */
- 	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, SMEM_VLAN_OFFSET_MASK,
- 			   addr <<  SMEM_VLAN_OFFSET);
-+	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, FDB_HASH_SIZE_MASK,
-+			   FDB_HASH_SIZE << FDB_HASH_SIZE_SHIFT);
- 	/* Set enable VLAN aware mode, and FDBs for all PRUs */
- 	regmap_write(prueth->miig_rt, FDB_GEN_CFG2, (FDB_PRU0_EN | FDB_PRU1_EN | FDB_HOST_EN));
- 	prueth->vlan_tbl = (struct prueth_vlan_tbl __force *)(prueth->shram.va +
-@@ -484,6 +489,8 @@ void icssg_init_fw_offload_mode(struct prueth *prueth)
- 	/* Set VLAN TABLE address base */
- 	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, SMEM_VLAN_OFFSET_MASK,
- 			   addr <<  SMEM_VLAN_OFFSET);
-+	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, FDB_HASH_SIZE_MASK,
-+			   FDB_HASH_SIZE << FDB_HASH_SIZE_SHIFT);
- 	/* Set enable VLAN aware mode, and FDBs for all PRUs */
- 	regmap_write(prueth->miig_rt, FDB_GEN_CFG2, FDB_EN_ALL);
- 	prueth->vlan_tbl = (struct prueth_vlan_tbl __force *)(prueth->shram.va +
+ 	headroom = rq->buff.headroom;
+ 	wqe_bbs = MLX5E_KSM_UMR_WQEBBS(ksm_entries);
+@@ -678,25 +678,24 @@ static int mlx5e_build_shampo_hd_umr(struct mlx5e_rq *rq,
+ 	umr_wqe = mlx5_wq_cyc_get_wqe(&sq->wq, pi);
+ 	build_ksm_umr(sq, umr_wqe, shampo->mkey_be, index, ksm_entries);
+ 
+-	WARN_ON_ONCE(ksm_entries & (MLX5E_SHAMPO_WQ_HEADER_PER_PAGE - 1));
+-	while (i < ksm_entries) {
+-		struct mlx5e_frag_page *frag_page = mlx5e_shampo_hd_to_frag_page(rq, index);
++	for (i = 0; i < ksm_entries; i++, index++) {
++		struct mlx5e_frag_page *frag_page;
+ 		u64 addr;
+ 
+-		err = mlx5e_page_alloc_fragmented(rq->hd_page_pool, frag_page);
+-		if (unlikely(err))
+-			goto err_unmap;
++		frag_page = mlx5e_shampo_hd_to_frag_page(rq, index);
++		header_offset = mlx5e_shampo_hd_offset(index);
++		if (!header_offset) {
++			err = mlx5e_page_alloc_fragmented(rq->hd_page_pool,
++							  frag_page);
++			if (err)
++				goto err_unmap;
++		}
+ 
+ 		addr = page_pool_get_dma_addr_netmem(frag_page->netmem);
+-
+-		for (int j = 0; j < MLX5E_SHAMPO_WQ_HEADER_PER_PAGE; j++) {
+-			header_offset = mlx5e_shampo_hd_offset(index++);
+-
+-			umr_wqe->inline_ksms[i++] = (struct mlx5_ksm) {
+-				.key = cpu_to_be32(lkey),
+-				.va  = cpu_to_be64(addr + header_offset + headroom),
+-			};
+-		}
++		umr_wqe->inline_ksms[i] = (struct mlx5_ksm) {
++			.key = cpu_to_be32(lkey),
++			.va  = cpu_to_be64(addr + header_offset + headroom),
++		};
+ 	}
+ 
+ 	sq->db.wqe_info[pi] = (struct mlx5e_icosq_wqe_info) {
+@@ -712,7 +711,7 @@ static int mlx5e_build_shampo_hd_umr(struct mlx5e_rq *rq,
+ 	return 0;
+ 
+ err_unmap:
+-	while (--i) {
++	while (--i >= 0) {
+ 		--index;
+ 		header_offset = mlx5e_shampo_hd_offset(index);
+ 		if (!header_offset) {
+@@ -734,8 +733,7 @@ static int mlx5e_alloc_rx_hd_mpwqe(struct mlx5e_rq *rq)
+ 	struct mlx5e_icosq *sq = rq->icosq;
+ 	int i, err, max_ksm_entries, len;
+ 
+-	max_ksm_entries = ALIGN_DOWN(MLX5E_MAX_KSM_PER_WQE(rq->mdev),
+-				     MLX5E_SHAMPO_WQ_HEADER_PER_PAGE);
++	max_ksm_entries = MLX5E_MAX_KSM_PER_WQE(rq->mdev);
+ 	ksm_entries = bitmap_find_window(shampo->bitmap,
+ 					 shampo->hd_per_wqe,
+ 					 shampo->hd_per_wq, shampo->pi);
 -- 
 2.51.0
 
