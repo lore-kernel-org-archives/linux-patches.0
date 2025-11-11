@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B54C97;
-	Tue, 11 Nov 2025 00:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D174086A;
+	Tue, 11 Nov 2025 00:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822564; cv=none; b=tX6K3ahiTj6d/MS3v75uvlVw5qIloK79GoZ2VuRo+mm2SU/0o8JZfk/cwpfHMOGasV91NLK0XobNCWPGzxvcWUOZP4nxTzU4EiulsvUN+paYssA6M954GwbYXAt/fN1hLjjsrrat1LSDV7K2WrgWsl/LrSXWzRMNOq76oAQGlco=
+	t=1762822567; cv=none; b=GzyW04f2qvFyvOHlmR2fiweg14x5WnazqFhdtnPHtpnzFMM4jRR0sTw8bt8trp2TnzObIpb2IufKoL/okxCOZfptRkvBCEnR9Ggr7yIDmFiP7rsa140EhX+4ReScRL8knOQRW4PPB/d2O32lXaSKhZoYoabWS9bWNlc/XmJSA2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822564; c=relaxed/simple;
-	bh=Xz2FNJtVVFJ19lm/iLb5MNMnNcG0iOzh27qH4hEja6g=;
+	s=arc-20240116; t=1762822567; c=relaxed/simple;
+	bh=tGQxLlQrl+044a4aRXCjCkwzjHja4vPGGgzHuY573hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emWm2SvDMUO33HQFB0cek7Z1GuUaNkZrMLi0lVzMxlCQwRhWHIoI961cPDemHgBxdXMYP0OvKZQQZA+NIsOJeBLkm0IGkn2AQ4MN+ujuz8ftv08/MmYwtxp2kb9TwV0u045JBuM7WyeBxlXS03CQBFb11MB50OjwgScKvdemn0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWmZSYqd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BMERbPjbsMYS6nT0qvSnIOs/klvHZGtERjsaz2Eqs6qcyWrbefKfmgYpdGfEN8xFq2TzBIWdoVgqK2dQAT4J/Tw6qKWf95glfMxID9wTBYMeBR5z8rMefTV+OzkXchl/744WJnNua18F2vzDCA3aYP6uE63DuH5sjRZdOQ/KP7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUCjUKh1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWmZSYqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2A9C16AAE;
-	Tue, 11 Nov 2025 00:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUCjUKh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6EFC4CEFB;
+	Tue, 11 Nov 2025 00:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822564;
-	bh=Xz2FNJtVVFJ19lm/iLb5MNMnNcG0iOzh27qH4hEja6g=;
+	s=korg; t=1762822566;
+	bh=tGQxLlQrl+044a4aRXCjCkwzjHja4vPGGgzHuY573hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWmZSYqdoS8+1efhNdpuOBlimZnxrlhMsylLbzA4ZpmIQtQkBowTnuPviYdsf3imc
-	 M9cMNlTwyxPcbtVj28AJBKwSb59i/H/5NLvctpSPxkCNGoOu4sUMpLYFWa8TMDhftk
-	 AmtX37ctP50sEmJD+vFi+8V2M3eNv+ULzr+H2LkM=
+	b=OUCjUKh1YDED9ih6j0Vf4qZIpFDHN+3yq1qtJN3QpIK7RDzIK0J3G/EWioU4TXo0d
+	 8JdSkJxbgtlG/1xcITxHqVefl4nnI2hib6UdV9xmBASdmT56VRgFMkFQkhfMJa2dh+
+	 zeIVUVipQn2Ctolq2Kg345P50tJLcULOaCGX2Yyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiawei Zhao <phoenix500526@163.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/565] net: phy: add phy_disable_eee
-Date: Tue, 11 Nov 2025 09:38:51 +0900
-Message-ID: <20251111004528.644972235@linuxfoundation.org>
+Subject: [PATCH 6.17 138/849] libbpf: Fix USDT SIB argument handling causing unrecognized register error
+Date: Tue, 11 Nov 2025 09:35:08 +0900
+Message-ID: <20251111004539.732790091@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +47,203 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jiawei Zhao <phoenix500526@163.com>
 
-[ Upstream commit b55498ff14bd14860d48dc8d2a0b6889b218c408 ]
+[ Upstream commit 758acb9ccfdbf854b55abaceaf1f3f229cde3d19 ]
 
-If a MAC driver doesn't support EEE, then the PHY shouldn't advertise it.
-Add phy_disable_eee() for this purpose.
+On x86-64, USDT arguments can be specified using Scale-Index-Base (SIB)
+addressing, e.g. "1@-96(%rbp,%rax,8)". The current USDT implementation
+in libbpf cannot parse this format, causing `bpf_program__attach_usdt()`
+to fail with -ENOENT (unrecognized register).
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/fd51738c-dcd6-4d61-b8c5-faa6ac0f1026@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 84a905290cb4 ("net: phy: dp83867: Disable EEE support as not implemented")
+This patch fixes this by implementing the necessary changes:
+- add correct handling for SIB-addressed arguments in `bpf_usdt_arg`.
+- add adaptive support to `__bpf_usdt_arg_type` and
+  `__bpf_usdt_arg_spec` to represent SIB addressing parameters.
+
+Signed-off-by: Jiawei Zhao <phoenix500526@163.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250827053128.1301287-2-phoenix500526@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |   16 ++++++++++++++++
- include/linux/phy.h          |    1 +
- 2 files changed, 17 insertions(+)
+ tools/lib/bpf/usdt.bpf.h | 44 ++++++++++++++++++++++++++--
+ tools/lib/bpf/usdt.c     | 62 ++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 99 insertions(+), 7 deletions(-)
 
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3046,6 +3046,22 @@ void phy_support_eee(struct phy_device *
- EXPORT_SYMBOL(phy_support_eee);
+diff --git a/tools/lib/bpf/usdt.bpf.h b/tools/lib/bpf/usdt.bpf.h
+index 2a7865c8e3fe3..43deb05a51970 100644
+--- a/tools/lib/bpf/usdt.bpf.h
++++ b/tools/lib/bpf/usdt.bpf.h
+@@ -34,13 +34,32 @@ enum __bpf_usdt_arg_type {
+ 	BPF_USDT_ARG_CONST,
+ 	BPF_USDT_ARG_REG,
+ 	BPF_USDT_ARG_REG_DEREF,
++	BPF_USDT_ARG_SIB,
+ };
  
- /**
-+ * phy_disable_eee - Disable EEE for the PHY
-+ * @phydev: Target phy_device struct
-+ *
-+ * This function is used by MAC drivers for MAC's which don't support EEE.
-+ * It disables EEE on the PHY layer.
++/*
++ * This struct layout is designed specifically to be backwards/forward
++ * compatible between libbpf versions for ARG_CONST, ARG_REG, and
++ * ARG_REG_DEREF modes. ARG_SIB requires libbpf v1.7+.
 + */
-+void phy_disable_eee(struct phy_device *phydev)
-+{
-+	linkmode_zero(phydev->supported_eee);
-+	linkmode_zero(phydev->advertising_eee);
-+	phydev->eee_cfg.tx_lpi_enabled = false;
-+	phydev->eee_cfg.eee_enabled = false;
-+}
-+EXPORT_SYMBOL_GPL(phy_disable_eee);
+ struct __bpf_usdt_arg_spec {
+ 	/* u64 scalar interpreted depending on arg_type, see below */
+ 	__u64 val_off;
++#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+ 	/* arg location case, see bpf_usdt_arg() for details */
+-	enum __bpf_usdt_arg_type arg_type;
++	enum __bpf_usdt_arg_type arg_type: 8;
++	/* index register offset within struct pt_regs */
++	__u16 idx_reg_off: 12;
++	/* scale factor for index register (1, 2, 4, or 8) */
++	__u16 scale_bitshift: 4;
++	/* reserved for future use, keeps reg_off offset stable */
++	__u8 __reserved: 8;
++#else
++	__u8 __reserved: 8;
++	__u16 idx_reg_off: 12;
++	__u16 scale_bitshift: 4;
++	enum __bpf_usdt_arg_type arg_type: 8;
++#endif
+ 	/* offset of referenced register within struct pt_regs */
+ 	short reg_off;
+ 	/* whether arg should be interpreted as signed value */
+@@ -149,7 +168,7 @@ int bpf_usdt_arg(struct pt_regs *ctx, __u64 arg_num, long *res)
+ {
+ 	struct __bpf_usdt_spec *spec;
+ 	struct __bpf_usdt_arg_spec *arg_spec;
+-	unsigned long val;
++	unsigned long val, idx;
+ 	int err, spec_id;
+ 
+ 	*res = 0;
+@@ -202,6 +221,27 @@ int bpf_usdt_arg(struct pt_regs *ctx, __u64 arg_num, long *res)
+ 			return err;
+ #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+ 		val >>= arg_spec->arg_bitshift;
++#endif
++		break;
++	case BPF_USDT_ARG_SIB:
++		/* Arg is in memory addressed by SIB (Scale-Index-Base) mode
++		 * (e.g., "-1@-96(%rbp,%rax,8)" in USDT arg spec). We first
++		 * fetch the base register contents and the index register
++		 * contents from pt_regs. Then we calculate the final address
++		 * as base + (index * scale) + offset, and do a user-space
++		 * probe read to fetch the argument value.
++		 */
++		err = bpf_probe_read_kernel(&val, sizeof(val), (void *)ctx + arg_spec->reg_off);
++		if (err)
++			return err;
++		err = bpf_probe_read_kernel(&idx, sizeof(idx), (void *)ctx + arg_spec->idx_reg_off);
++		if (err)
++			return err;
++		err = bpf_probe_read_user(&val, sizeof(val), (void *)(val + (idx << arg_spec->scale_bitshift) + arg_spec->val_off));
++		if (err)
++			return err;
++#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
++		val >>= arg_spec->arg_bitshift;
+ #endif
+ 		break;
+ 	default:
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index 3373b9d45ac44..867bff6b06990 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -200,12 +200,23 @@ enum usdt_arg_type {
+ 	USDT_ARG_CONST,
+ 	USDT_ARG_REG,
+ 	USDT_ARG_REG_DEREF,
++	USDT_ARG_SIB,
+ };
+ 
+ /* should match exactly struct __bpf_usdt_arg_spec from usdt.bpf.h */
+ struct usdt_arg_spec {
+ 	__u64 val_off;
+-	enum usdt_arg_type arg_type;
++#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
++	enum usdt_arg_type arg_type: 8;
++	__u16	idx_reg_off: 12;
++	__u16	scale_bitshift: 4;
++	__u8 __reserved: 8;     /* keep reg_off offset stable */
++#else
++	__u8 __reserved: 8;     /* keep reg_off offset stable */
++	__u16	idx_reg_off: 12;
++	__u16	scale_bitshift: 4;
++	enum usdt_arg_type arg_type: 8;
++#endif
+ 	short reg_off;
+ 	bool arg_signed;
+ 	char arg_bitshift;
+@@ -1283,11 +1294,51 @@ static int calc_pt_regs_off(const char *reg_name)
+ 
+ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec *arg, int *arg_sz)
+ {
+-	char reg_name[16];
+-	int len, reg_off;
+-	long off;
++	char reg_name[16] = {0}, idx_reg_name[16] = {0};
++	int len, reg_off, idx_reg_off, scale = 1;
++	long off = 0;
 +
-+/**
-  * phy_support_sym_pause - Enable support of symmetrical pause
-  * @phydev: target phy_device struct
-  *
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -2030,6 +2030,7 @@ void phy_advertise_eee_all(struct phy_de
- void phy_support_sym_pause(struct phy_device *phydev);
- void phy_support_asym_pause(struct phy_device *phydev);
- void phy_support_eee(struct phy_device *phydev);
-+void phy_disable_eee(struct phy_device *phydev);
- void phy_set_sym_pause(struct phy_device *phydev, bool rx, bool tx,
- 		       bool autoneg);
- void phy_set_asym_pause(struct phy_device *phydev, bool rx, bool tx);
++	if (sscanf(arg_str, " %d @ %ld ( %%%15[^,] , %%%15[^,] , %d ) %n",
++		   arg_sz, &off, reg_name, idx_reg_name, &scale, &len) == 5 ||
++		sscanf(arg_str, " %d @ ( %%%15[^,] , %%%15[^,] , %d ) %n",
++		       arg_sz, reg_name, idx_reg_name, &scale, &len) == 4 ||
++		sscanf(arg_str, " %d @ %ld ( %%%15[^,] , %%%15[^)] ) %n",
++		       arg_sz, &off, reg_name, idx_reg_name, &len) == 4 ||
++		sscanf(arg_str, " %d @ ( %%%15[^,] , %%%15[^)] ) %n",
++		       arg_sz, reg_name, idx_reg_name, &len) == 3
++		) {
++		/*
++		 * Scale Index Base case:
++		 * 1@-96(%rbp,%rax,8)
++		 * 1@(%rbp,%rax,8)
++		 * 1@-96(%rbp,%rax)
++		 * 1@(%rbp,%rax)
++		 */
++		arg->arg_type = USDT_ARG_SIB;
++		arg->val_off = off;
+ 
+-	if (sscanf(arg_str, " %d @ %ld ( %%%15[^)] ) %n", arg_sz, &off, reg_name, &len) == 3) {
++		reg_off = calc_pt_regs_off(reg_name);
++		if (reg_off < 0)
++			return reg_off;
++		arg->reg_off = reg_off;
++
++		idx_reg_off = calc_pt_regs_off(idx_reg_name);
++		if (idx_reg_off < 0)
++			return idx_reg_off;
++		arg->idx_reg_off = idx_reg_off;
++
++		/* validate scale factor and set fields directly */
++		switch (scale) {
++		case 1: arg->scale_bitshift = 0; break;
++		case 2: arg->scale_bitshift = 1; break;
++		case 4: arg->scale_bitshift = 2; break;
++		case 8: arg->scale_bitshift = 3; break;
++		default:
++			pr_warn("usdt: invalid SIB scale %d, expected 1, 2, 4, 8\n", scale);
++			return -EINVAL;
++		}
++	} else if (sscanf(arg_str, " %d @ %ld ( %%%15[^)] ) %n",
++				arg_sz, &off, reg_name, &len) == 3) {
+ 		/* Memory dereference case, e.g., -4@-20(%rbp) */
+ 		arg->arg_type = USDT_ARG_REG_DEREF;
+ 		arg->val_off = off;
+@@ -1306,6 +1357,7 @@ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec
+ 	} else if (sscanf(arg_str, " %d @ %%%15s %n", arg_sz, reg_name, &len) == 2) {
+ 		/* Register read case, e.g., -4@%eax */
+ 		arg->arg_type = USDT_ARG_REG;
++		/* register read has no memory offset */
+ 		arg->val_off = 0;
+ 
+ 		reg_off = calc_pt_regs_off(reg_name);
+-- 
+2.51.0
+
 
 
