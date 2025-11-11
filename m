@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1FF1C28E;
-	Tue, 11 Nov 2025 01:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CDE24466D;
+	Tue, 11 Nov 2025 01:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823928; cv=none; b=B/IfANPycY0209arvLvRxZGgf9aaWt5nL/flZ8TpF0N1PUWXt8T/Yx6yVNJip7iFx+FDwMyvucOFAqRL8mOaWY1BJmi/E6JhjW01Mjw29G4q0pG++MC2uAd7k4kVnpxlE6smPBPaiNmEd3E7sPz/oka9sMoiXzNXnQn7CCyBBbU=
+	t=1762823930; cv=none; b=FXiehLjiWVoX+jwTSJ1DyFqwRqP6OhtCpzYJRpd73dC1WPaOleXiuDgoY/c6hURiipC9EvCU13NtYKoDJT9/v5Cd4HKA4K9JkU9Dsiik8xKHpigeG6hPvP+5XxubjmjS9fv8up5qTFtc7Nyl8HR0jNXZ4TlaspXQaF90Q7JrWPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823928; c=relaxed/simple;
-	bh=mdb732vT4pTDJKuk11xLMvhk0tt5owTeEACDbBozp5I=;
+	s=arc-20240116; t=1762823930; c=relaxed/simple;
+	bh=8iH5CFWg5gONxRHkiGvtGkD3TNOm+tCAtf2Zu/wMv6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jzd9gFirKKKE5pweM9l1N+XYi1z6TIO+oleqAEwwxLYm0u7sy1G3cADo8+Qo8OOjA+0jnLVN/RxGd9FxWQJk1LNH/0hgXe9z1jTijybftncJQ5tUhQlrJ7co/icKCdwkmGOGXdB2RoFXSXBzOSkq0woLpyUGFP3xiNwZhDQ6XOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzKogZmA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSJuABB0bhRXanrTfeEwTceQb5rIKcrhROnTi7aerh7FLO9bmcsbwWydHFnazWSOQ0sIZ88wXdPoyZX3h+jomw/4lCzfupOM1Y0yqJ6S0RFK+nx06q9meDe22vgw/NmxjyQfTX2LFQ+uFgj0NgZv6xuNB/Xgr/eirw/dOFSYGAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6T1b8EG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzKogZmA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B7CC4CEF5;
-	Tue, 11 Nov 2025 01:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6T1b8EG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F412CC2BCB0;
+	Tue, 11 Nov 2025 01:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823927;
-	bh=mdb732vT4pTDJKuk11xLMvhk0tt5owTeEACDbBozp5I=;
+	s=korg; t=1762823930;
+	bh=8iH5CFWg5gONxRHkiGvtGkD3TNOm+tCAtf2Zu/wMv6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzKogZmAh3BsGEUKVZbpzB5hZDTiey7i8xDRCy4ZfuVK8ggxz7izR1FM/N7xM9DCM
-	 fHiISZz3Tg9rFNzXqjE0KYYkym/+YHU5xciZnPmm2ccj0YwGTCd2t8MD04+3Lse4HX
-	 7PJ1NQUOZ1mBWCwZ5Ym28myn7aw8OjsutnkRd4oQ=
+	b=k6T1b8EGKm1+1ytgvSMkmZIm3fYtSynkimI7C+jWROhor5oUOavjO3WLi6tjbckEP
+	 ZMW67t9RJJ8IROgUYH2RL5dCBakZfKIsLqwFlOMUHK2rKwOpi2/uX8wI2lwkvPNaJo
+	 feNe5sktqjg+a/FWiEJ7oZqM1VrTcE62tPazw1cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 399/849] mips: lantiq: xway: sysctrl: rename stp clock
-Date: Tue, 11 Nov 2025 09:39:29 +0900
-Message-ID: <20251111004546.084919092@linuxfoundation.org>
+	Yunseong Kim <ysk@kzalloc.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>
+Subject: [PATCH 6.12 352/565] crypto: ccp - Fix incorrect payload size calculation in psp_poulate_hsti()
+Date: Tue, 11 Nov 2025 09:43:28 +0900
+Message-ID: <20251111004534.792492679@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Yunseong Kim <ysk@kzalloc.com>
 
-[ Upstream commit b0d04fe6a633ada2c7bc1b5ddd011cbd85961868 ]
+[ Upstream commit 2b0dc40ac6ca16ee0c489927f4856cf9cd3874c7 ]
 
-Bindig requires a node name matching ‘^gpio@[0-9a-f]+$’. This patch
-changes the clock name from “stp” to “gpio”.
+payload_size field of the request header is incorrectly calculated using
+sizeof(req). Since 'req' is a pointer (struct hsti_request *), sizeof(req)
+returns the size of the pointer itself (e.g., 8 bytes on a 64-bit system),
+rather than the size of the structure it points to. This leads to an
+incorrect payload size being sent to the Platform Security Processor (PSP),
+potentially causing the HSTI query command to fail.
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fix this by using sizeof(*req) to correctly calculate the size of the
+struct hsti_request.
+
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/lantiq/xway/sysctrl.c | 2 +-
+ drivers/crypto/ccp/hsti.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/lantiq/xway/sysctrl.c b/arch/mips/lantiq/xway/sysctrl.c
-index 6031a0272d874..d9aa80afdf9d6 100644
---- a/arch/mips/lantiq/xway/sysctrl.c
-+++ b/arch/mips/lantiq/xway/sysctrl.c
-@@ -485,7 +485,7 @@ void __init ltq_soc_init(void)
- 	/* add our generic xway clocks */
- 	clkdev_add_pmu("10000000.fpi", NULL, 0, 0, PMU_FPI);
- 	clkdev_add_pmu("1e100a00.gptu", NULL, 1, 0, PMU_GPT);
--	clkdev_add_pmu("1e100bb0.stp", NULL, 1, 0, PMU_STP);
-+	clkdev_add_pmu("1e100bb0.gpio", NULL, 1, 0, PMU_STP);
- 	clkdev_add_pmu("1e100c00.serial", NULL, 0, 0, PMU_ASC1);
- 	clkdev_add_pmu("1e104100.dma", NULL, 1, 0, PMU_DMA);
- 	clkdev_add_pmu("1e100800.spi", NULL, 1, 0, PMU_SPI);
+diff --git a/drivers/crypto/ccp/hsti.c b/drivers/crypto/ccp/hsti.c
+index 1b39a4fb55c06..0e6b73b55dbf7 100644
+--- a/drivers/crypto/ccp/hsti.c
++++ b/drivers/crypto/ccp/hsti.c
+@@ -88,7 +88,7 @@ static int psp_poulate_hsti(struct psp_device *psp)
+ 	if (!req)
+ 		return -ENOMEM;
+ 
+-	req->header.payload_size = sizeof(req);
++	req->header.payload_size = sizeof(*req);
+ 
+ 	ret = psp_send_platform_access_msg(PSP_CMD_HSTI_QUERY, (struct psp_request *)req);
+ 	if (ret)
 -- 
 2.51.0
 
