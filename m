@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8484C97;
-	Tue, 11 Nov 2025 00:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6C44086A;
+	Tue, 11 Nov 2025 00:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822411; cv=none; b=KBvfXFX4xEQZoPF+uT63bImoHxQ4NxT9NaDGLaMBKsb7xAgaTArJSsHRvpZxFTZCGeTvm4HN/W8tVVZNCVPGOW+Ieq3VOTUiQApzKMTA/dBaxaSSNAwV1UXYF7ls+V1plVlXYKAhzovIKF3qxn9D+rmswpKVd+r6EoRg5PwNQ6k=
+	t=1762822414; cv=none; b=hYG/baCt4CN/7BQFItbRXGgRZ4ED0S2NXO+QzEM1WCe9j4ewv/oU4i5TRdTz+6WFeENADYNWfMWq+0Ia2nH9wYPNRnMyWI8oT8haA6pBazomNNpnORMZQMhuwD7Dfol5Ubh4DajvDP60udXYpqmQEagm/ChNBEIwqml8OsLhui4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822411; c=relaxed/simple;
-	bh=M6fID+/ndcVzLAgMza0olKG5Q/HGbAz8gK61NNigda0=;
+	s=arc-20240116; t=1762822414; c=relaxed/simple;
+	bh=ij8VMSVky3d80Oqb/Adv1Q/cz3MyKbwXsOij7wQI73I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8nIXsAJE3Y/P1AdtM8Q3ANvertvyoT1aFqzLVvqx6pFz541Mu+hnMFEyMOY0V5TvYrD1caUslMITXXCi4057R04GD9TPiMvrlj2O7cmIIu31xAamcC0ZMkXGKqlkHgbpnbmY46pmP7HxkVftbxmo4W5pCYAfu3q6Nb1xVI+C8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM74FXSY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6p4qLCX27TzXxJ2RlSP4BPhQkCxpkl/Br57RvL1ExRmATDcgJFHAYXNBkq/Q0qWMJD4592/ADPmA/ywB2PosYIzsgOeeqXB/Yt6Cn+yyPaJZsvGzM/UOk9s11GsU/1X0lcUbw3g66snJcNZ/TWKRkAIbrpvCU05rloErkRi82c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MPgjl0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM74FXSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCAAC4CEFB;
-	Tue, 11 Nov 2025 00:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MPgjl0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB05C113D0;
+	Tue, 11 Nov 2025 00:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822411;
-	bh=M6fID+/ndcVzLAgMza0olKG5Q/HGbAz8gK61NNigda0=;
+	s=korg; t=1762822413;
+	bh=ij8VMSVky3d80Oqb/Adv1Q/cz3MyKbwXsOij7wQI73I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM74FXSYhRDS0gDS6xwoLFrcj4ydDbaMKFTudT+kGDAcSXdsRYpPdzwYFbbpxI+o9
-	 2mXPko7HchZ/kcSKQF/9AGhz6eQRObY/uM4wBFOnD2rHVTyPKbXR13ZxfVpvLs45cF
-	 QbHz5Alt1ybTqIqQsdQRmvJaedvjbke2EBVti6/c=
+	b=0MPgjl0hXo2h4wDXXd17rB4Y6LlPvOhSDbKQ1n5bw5PLs7/C+//lM+abjx0D9VAzm
+	 yq5YNjpEE7X/Y1S1Mxisog+/LhSgSDw9w7MBCGiMbB9q6cCLGXhG+2EYs8abOFsg6G
+	 BmgLsDqr3xBMQHR0yWcJgJT4o0zbKIefLHvz5hpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/565] Bluetooth: HCI: Fix tracking of advertisement set/instance 0x00
-Date: Tue, 11 Nov 2025 09:38:21 +0900
-Message-ID: <20251111004527.919095035@linuxfoundation.org>
+	Sjoerd Simons <sjoerd@collabora.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Johan Hovold <johan@kernel.org>,
+	Ritesh Raj Sarraf <ritesh.sarraf@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.17 103/849] drm/mediatek: Fix device use-after-free on unbind
+Date: Tue, 11 Nov 2025 09:34:33 +0900
+Message-ID: <20251111004538.892936897@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,82 +51,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 0d92808024b4e9868cef68d16f121d509843e80e ]
+commit 926d002e6d7e2f1fd5c1b53cf6208153ee7d380d upstream.
 
-This fixes the state tracking of advertisement set/instance 0x00 which
-is considered a legacy instance and is not tracked individually by
-adv_instances list, previously it was assumed that hci_dev itself would
-track it via HCI_LE_ADV but that is a global state not specifc to
-instance 0x00, so to fix it a new flag is introduced that only tracks the
-state of instance 0x00.
+A recent change fixed device reference leaks when looking up drm
+platform device driver data during bind() but failed to remove a partial
+fix which had been added by commit 80805b62ea5b ("drm/mediatek: Fix
+kobject put for component sub-drivers").
 
-Fixes: 1488af7b8b5f ("Bluetooth: hci_sync: Fix hci_resume_advertising_sync")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This results in a reference imbalance on component bind() failures and
+on unbind() which could lead to a user-after-free.
+
+Make sure to only drop the references after retrieving the driver data
+by effectively reverting the previous partial fix.
+
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
+
+Fixes: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
+Reported-by: Sjoerd Simons <sjoerd@collabora.com>
+Closes: https://lore.kernel.org/r/20251003-mtk-drm-refcount-v1-1-3b3f2813b0db@collabora.com
+Cc: stable@vger.kernel.org
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Sjoerd Simons <sjoerd@collabora.com>
+Tested-by: Sjoerd Simons <sjoerd@collabora.com>
+Tested-by: Ritesh Raj Sarraf <ritesh.sarraf@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20251006093937.27869-1-johan@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci.h | 1 +
- net/bluetooth/hci_event.c   | 4 ++++
- net/bluetooth/hci_sync.c    | 5 ++---
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 4b3200542fe66..999ac27050993 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -424,6 +424,7 @@ enum {
- 	HCI_USER_CHANNEL,
- 	HCI_EXT_CONFIGURED,
- 	HCI_LE_ADV,
-+	HCI_LE_ADV_0,
- 	HCI_LE_PER_ADV,
- 	HCI_LE_SCAN,
- 	HCI_SSP_ENABLED,
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index debe9cc2f72d9..176565ef47c63 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1600,6 +1600,8 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -686,10 +686,6 @@ err_free:
+ 	for (i = 0; i < private->data->mmsys_dev_num; i++)
+ 		private->all_drm_private[i]->drm = NULL;
+ err_put_dev:
+-	for (i = 0; i < private->data->mmsys_dev_num; i++) {
+-		/* For device_find_child in mtk_drm_get_all_priv() */
+-		put_device(private->all_drm_private[i]->dev);
+-	}
+ 	put_device(private->mutex_dev);
+ 	return ret;
+ }
+@@ -697,18 +693,12 @@ err_put_dev:
+ static void mtk_drm_unbind(struct device *dev)
+ {
+ 	struct mtk_drm_private *private = dev_get_drvdata(dev);
+-	int i;
  
- 		if (adv && !adv->periodic)
- 			adv->enabled = true;
-+		else if (!set->handle)
-+			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
- 
- 		conn = hci_lookup_le_connect(hdev);
- 		if (conn)
-@@ -1610,6 +1612,8 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 		if (cp->num_of_sets) {
- 			if (adv)
- 				adv->enabled = false;
-+			else if (!set->handle)
-+				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
- 
- 			/* If just one instance was disabled check if there are
- 			 * any other instance enabled before clearing HCI_LE_ADV
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index c08e46ee70b24..06d8ab997bd85 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2616,9 +2616,8 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 		/* If current advertising instance is set to instance 0x00
- 		 * then we need to re-enable it.
- 		 */
--		if (!hdev->cur_adv_instance)
--			err = hci_enable_ext_advertising_sync(hdev,
--							      hdev->cur_adv_instance);
-+		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
-+			err = hci_enable_ext_advertising_sync(hdev, 0x00);
- 	} else {
- 		/* Schedule for most recent instance to be restarted and begin
- 		 * the software rotation loop
--- 
-2.51.0
-
+ 	/* for multi mmsys dev, unregister drm dev in mmsys master */
+ 	if (private->drm_master) {
+ 		drm_dev_unregister(private->drm);
+ 		mtk_drm_kms_deinit(private->drm);
+ 		drm_dev_put(private->drm);
+-
+-		for (i = 0; i < private->data->mmsys_dev_num; i++) {
+-			/* For device_find_child in mtk_drm_get_all_priv() */
+-			put_device(private->all_drm_private[i]->dev);
+-		}
+ 		put_device(private->mutex_dev);
+ 	}
+ 	private->mtk_drm_bound = false;
 
 
