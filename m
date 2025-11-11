@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77CF27FD54;
-	Tue, 11 Nov 2025 01:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA3E27D786;
+	Tue, 11 Nov 2025 01:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823473; cv=none; b=Q7bQz8GREMaP1V3FuwUjqTpRulESFLJKUa3avR1LazdOJ9kyCyA7JZ0BK1ON8Nn1uBhmUdFGBlOj6y6gEgtphr5p1mB+R9qAk58JS6A3j1sl64nymNnOSBlJ174daQiS/bQEeac6wzxAlO5ynND0zFTIypovUPwJIlnbfRHHj5M=
+	t=1762823475; cv=none; b=NKCSIQjxwX+OXPcjlHn5r0sdhn+VkVOYQS20fEjKhcYsp81KR607rYFtszm7GswIYaraiPnIxakf6vTfjgM675Dw05aQfAF8hquBj45Sd/FwlTSvS2u3mE9N1ODVrsg44GD7VCwnFqNK9mjO5ebs6i5AM3jvGrchJzNMbb+5Wqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823473; c=relaxed/simple;
-	bh=7w+NS156tK3pGcF+IxjH7aqqA+zlaiQ+QulxYwT2V0U=;
+	s=arc-20240116; t=1762823475; c=relaxed/simple;
+	bh=PF22k3YWnVQrq4Hw4mJzqhLmcW5j2FTzuMIEUMTvJAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksU41Sya0tAt13MJDS4pVPa96/0EschBOyMzxVqCbd0Kt2jdGmQfPMtPLedb8yEKP912d8dYebzdg2uud6N3GdkIzEsK3Aj2GuLnklAJzzm9i3EGyC2BnGJThlqOJE5hUrT4xrkoPeJ/3brcb15I0Yjc7+wehiSjgq04bluy9Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix9c9yRb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7QN4++j8DrtDmeJRiliUcVFHUwUrXKf+f7VwrMVGSuW7lUG3DgzdG4zdALJuJbk9vvt6ynLwMJQDjZ7NuSAQVE7qpQHqGpb1yc5z/0xCQViJRdv4wu7Pw0ZjabfP/v5DdxrHm8jBF81m1RsS6EPiRaSRU638PlhzNneToMWNGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17i7SuO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix9c9yRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B7C116B1;
-	Tue, 11 Nov 2025 01:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17i7SuO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB0DC4CEF5;
+	Tue, 11 Nov 2025 01:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823472;
-	bh=7w+NS156tK3pGcF+IxjH7aqqA+zlaiQ+QulxYwT2V0U=;
+	s=korg; t=1762823475;
+	bh=PF22k3YWnVQrq4Hw4mJzqhLmcW5j2FTzuMIEUMTvJAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ix9c9yRbj5cQ95w5RgXjcoIsqAcrjYVahzKbeEAiohEu8OdPnKZ+HJw4FpJ1OKjJf
-	 lz/D4fazIhr2Y381kFK52AMV3fPyMov4sVKU9zy3o3yYfZVf48zwlyi7G9WSEII5tS
-	 6W/dNagxtRO0jMH42WjUjctmBrdxPFhRzexIIKgY=
+	b=17i7SuO54QTe6wBw1jznVIqt5PvYV3ybPrXXmALyzDYaNdjx0RoeEe3sVHBekgHTQ
+	 GRqjhyFV12pX5mITlpGq52W8nMfyrXYbhYuL/gGWtB61mhrQzAtWG33iLk/cmecBBT
+	 9XZyHRtyjso5O/puycBgw7UjPCSvcnWzO5LBKRRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Alice Chao <alice.chao@mediatek.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 253/565] remoteproc: wkup_m3: Use devm_pm_runtime_enable() helper
-Date: Tue, 11 Nov 2025 09:41:49 +0900
-Message-ID: <20251111004532.597001627@linuxfoundation.org>
+Subject: [PATCH 6.17 307/849] scsi: ufs: host: mediatek: Fix invalid access in vccqx handling
+Date: Tue, 11 Nov 2025 09:37:57 +0900
+Message-ID: <20251111004543.834777790@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit 461edcf73eec57bc0006fbb5209f5012c514c58b ]
+[ Upstream commit 5863638598f5e4f64d2f85b03f376383ca1f2ab7 ]
 
-Use device life-cycle managed runtime enable function to simplify probe
-and exit paths.
+Add a NULL check before accessing the 'vccqx' pointer to prevent invalid
+memory access. This ensures that the function safely handles cases where
+'vccq' and 'vccq2' are not initialized, improving the robustness of the
+power management code.
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20250814153940.670564-1-afd@ti.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-11-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/wkup_m3_rproc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ufs/host/ufs-mediatek.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/remoteproc/wkup_m3_rproc.c b/drivers/remoteproc/wkup_m3_rproc.c
-index 36a55f7ffa64d..c39bd2bf2c1e7 100644
---- a/drivers/remoteproc/wkup_m3_rproc.c
-+++ b/drivers/remoteproc/wkup_m3_rproc.c
-@@ -148,7 +148,9 @@ static int wkup_m3_rproc_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 82160da8ec71b..bb0be6bed1bca 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1589,6 +1589,9 @@ static void ufs_mtk_vccqx_set_lpm(struct ufs_hba *hba, bool lpm)
+ {
+ 	struct ufs_vreg *vccqx = NULL;
  
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "Failed to enable runtime PM\n");
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "pm_runtime_get_sync() failed\n");
-@@ -219,7 +221,6 @@ static int wkup_m3_rproc_probe(struct platform_device *pdev)
- 	rproc_free(rproc);
- err:
- 	pm_runtime_put_noidle(dev);
--	pm_runtime_disable(dev);
- 	return ret;
- }
- 
-@@ -230,7 +231,6 @@ static void wkup_m3_rproc_remove(struct platform_device *pdev)
- 	rproc_del(rproc);
- 	rproc_free(rproc);
- 	pm_runtime_put_sync(&pdev->dev);
--	pm_runtime_disable(&pdev->dev);
- }
- 
- #ifdef CONFIG_PM
++	if (!hba->vreg_info.vccq && !hba->vreg_info.vccq2)
++		return;
++
+ 	if (hba->vreg_info.vccq)
+ 		vccqx = hba->vreg_info.vccq;
+ 	else
 -- 
 2.51.0
 
