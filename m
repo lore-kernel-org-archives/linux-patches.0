@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EF82AE8D;
-	Tue, 11 Nov 2025 00:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F4B4C97;
+	Tue, 11 Nov 2025 00:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822257; cv=none; b=H7FNsk6jCUQlL2pesND7CACUYEjxo2++GCzeq0FgrXNpzW0DGkFOUIDZyT9LmdTx9jHhYbvxdjma2QAANR/cgMZEIf9Et0tNs684v3DtiaVtkhqpKNipOxKFoXMGUr0xgdLdA+sKHb6KUCUP28WlD/HNmFt/IZPmcCl0hlquXrU=
+	t=1762822260; cv=none; b=tU/No3N5BnqbuZAo5Lz+UCW3ZTX4jqwufF2Y+v8eomjm97pO1I6ASyomaQSpZEdI3uvrU3GBRi37cGk8NyL1pXplXe8G22l6h2bJlSCHE6b9y6upFpJQlj0buDNZ6iC2FNg3EjyTh3sp0hO/MYLNo/mzljnemzuhnPS3R4w/uNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822257; c=relaxed/simple;
-	bh=UjGXIgY7A4TIf90yRijJQhr9V7+5mxSomI3a0/AvnHY=;
+	s=arc-20240116; t=1762822260; c=relaxed/simple;
+	bh=4WApMxtJqfX65bjHdX1BiiDPKme86yY3p1CDzq0s6+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOTBtccwcYmqydHGYryUD2gCgDUS8JDq6bNnoA4vTOy5b9fo6vKZIDwoQ0s/SyrhDjbouh7iLB4+xzSjzJKeDjASAFhu0p6xfTLTdTyVoR9TFRJ5D3jdiddHoGrPEdsMSHzXfz2QeBpQgibVOTcQUofDGLRsxzTtCrx7yJLSJw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDlCFJsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Br3k+fX1FFFfH2CAUNmFiwHe5BsETa+fp79e3m+NxANLTTXXet7Hb/rWeaGaP2v+IvdXtonqOKaL8tCDyEFS09CBHiT4BqUUyex1EkUM+zweHTpo2A9Ky3l8MZRYQg/5OMB0rlmclV9rXACXbzhtVnlwjc7scQlF8I/VGP1BPqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdlhoNSu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDlCFJsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E861C19422;
-	Tue, 11 Nov 2025 00:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdlhoNSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFC2C113D0;
+	Tue, 11 Nov 2025 00:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822257;
-	bh=UjGXIgY7A4TIf90yRijJQhr9V7+5mxSomI3a0/AvnHY=;
+	s=korg; t=1762822259;
+	bh=4WApMxtJqfX65bjHdX1BiiDPKme86yY3p1CDzq0s6+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDlCFJsiY08EquMvfZAH5+Es/f3TSbs/Dzlb/VsQYWwrTy7UzHof0MWc7qQJYrzzH
-	 yF5FRU9hlxMTqPNiAovauRXzZn4wxX5ALvmxCdGXfMmmgFcih3Sssu1KAOQWPAkRog
-	 E5cr1lsNue+cZh/9Ud0iS9Wq5TJWSdYWfinfTKFo=
+	b=MdlhoNSuCQNkzX08QBdo0mTft/u319k3FMSkXcjyTQgh2WkAA5ejktl/N6L1Y14+m
+	 +hGkhwEnKCT1M26IahLlC3vLGToHmwKYaYlOW3LPISUqBJJdQmiIm8EJ/+FihyBZKF
+	 TGCosCWU4u0HMUdcISI1t0l5DYby885dH6kLZSBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH 6.17 033/849] drm/msm: Fix GEM free for imported dma-bufs
-Date: Tue, 11 Nov 2025 09:33:23 +0900
-Message-ID: <20251111004537.246227961@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 013/565] mptcp: drop bogus optimization in __mptcp_check_push()
+Date: Tue, 11 Nov 2025 09:37:49 +0900
+Message-ID: <20251111004527.159238392@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,95 +49,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c34e08ba6c0037a72a7433741225b020c989e4ae ]
+commit 27b0e701d3872ba59c5b579a9e8a02ea49ad3d3b upstream.
 
-Imported dma-bufs also have obj->resv != &obj->_resv.  So we should
-check both this condition in addition to flags for handling the
-_NO_SHARE case.
+Accessing the transmit queue without owning the msk socket lock is
+inherently racy, hence __mptcp_check_push() could actually quit early
+even when there is pending data.
 
-Fixes this splat that was reported with IRIS video playback:
+That in turn could cause unexpected tx lock and timeout.
 
-    ------------[ cut here ]------------
-    WARNING: CPU: 3 PID: 2040 at drivers/gpu/drm/msm/msm_gem.c:1127 msm_gem_free_object+0x1f8/0x264 [msm]
-    CPU: 3 UID: 1000 PID: 2040 Comm: .gnome-shell-wr Not tainted 6.17.0-rc7 #1 PREEMPT
-    pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-    pc : msm_gem_free_object+0x1f8/0x264 [msm]
-    lr : msm_gem_free_object+0x138/0x264 [msm]
-    sp : ffff800092a1bb30
-    x29: ffff800092a1bb80 x28: ffff800092a1bce8 x27: ffffbc702dbdbe08
-    x26: 0000000000000008 x25: 0000000000000009 x24: 00000000000000a6
-    x23: ffff00083c72f850 x22: ffff00083c72f868 x21: ffff00087e69f200
-    x20: ffff00087e69f330 x19: ffff00084d157ae0 x18: 0000000000000000
-    x17: 0000000000000000 x16: ffffbc704bd46b80 x15: 0000ffffd0959540
-    x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-    x11: ffffbc702e6cdb48 x10: 0000000000000000 x9 : 000000000000003f
-    x8 : ffff800092a1ba90 x7 : 0000000000000000 x6 : 0000000000000020
-    x5 : ffffbc704bd46c40 x4 : fffffdffe102cf60 x3 : 0000000000400032
-    x2 : 0000000000020000 x1 : ffff00087e6978e8 x0 : ffff00087e6977e8
-    Call trace:
-     msm_gem_free_object+0x1f8/0x264 [msm] (P)
-     drm_gem_object_free+0x1c/0x30 [drm]
-     drm_gem_object_handle_put_unlocked+0x138/0x150 [drm]
-     drm_gem_object_release_handle+0x5c/0xcc [drm]
-     drm_gem_handle_delete+0x68/0xbc [drm]
-     drm_gem_close_ioctl+0x34/0x40 [drm]
-     drm_ioctl_kernel+0xc0/0x130 [drm]
-     drm_ioctl+0x360/0x4e0 [drm]
-     __arm64_sys_ioctl+0xac/0x104
-     invoke_syscall+0x48/0x104
-     el0_svc_common.constprop.0+0x40/0xe0
-     do_el0_svc+0x1c/0x28
-     el0_svc+0x34/0xec
-     el0t_64_sync_handler+0xa0/0xe4
-     el0t_64_sync+0x198/0x19c
-    ---[ end trace 0000000000000000 ]---
-    ------------[ cut here ]------------
+Dropping the early check avoids the race, implicitly relaying on later
+tests under the relevant lock. With such change, all the other
+mptcp_send_head() call sites are now under the msk socket lock and we
+can additionally drop the now unneeded annotation on the transmit head
+pointer accesses.
 
-Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Fixes: de651b6e040b ("drm/msm: Fix refcnt underflow in error path")
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165-rb5
-Patchwork: https://patchwork.freedesktop.org/patch/676273/
-Message-ID: <20250923140441.746081-1-robin.clark@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6e628cd3a8f7 ("mptcp: use mptcp release_cb for delayed tasks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-1-38ffff5a9ec8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |   11 ++++-------
+ net/mptcp/protocol.h |    2 +-
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index e7631f4ef5309..0745d958f3987 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -1120,12 +1120,16 @@ static void msm_gem_free_object(struct drm_gem_object *obj)
- 		put_pages(obj);
- 	}
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1047,7 +1047,7 @@ static void __mptcp_clean_una(struct soc
+ 			if (WARN_ON_ONCE(!msk->recovery))
+ 				break;
  
--	if (obj->resv != &obj->_resv) {
-+	/*
-+	 * In error paths, we could end up here before msm_gem_new_handle()
-+	 * has changed obj->resv to point to the shared resv.  In this case,
-+	 * we don't want to drop a ref to the shared r_obj that we haven't
-+	 * taken yet.
-+	 */
-+	if ((msm_obj->flags & MSM_BO_NO_SHARE) && (obj->resv != &obj->_resv)) {
- 		struct drm_gem_object *r_obj =
- 			container_of(obj->resv, struct drm_gem_object, _resv);
+-			WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
++			msk->first_pending = mptcp_send_next(sk);
+ 		}
  
--		WARN_ON(!(msm_obj->flags & MSM_BO_NO_SHARE));
+ 		dfrag_clear(sk, dfrag);
+@@ -1593,7 +1593,7 @@ static int __subflow_push_pending(struct
+ 
+ 			mptcp_update_post_push(msk, dfrag, ret);
+ 		}
+-		WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
++		msk->first_pending = mptcp_send_next(sk);
+ 
+ 		if (msk->snd_burst <= 0 ||
+ 		    !sk_stream_memory_free(ssk) ||
+@@ -1937,7 +1937,7 @@ static int mptcp_sendmsg(struct sock *sk
+ 			get_page(dfrag->page);
+ 			list_add_tail(&dfrag->list, &msk->rtx_queue);
+ 			if (!msk->first_pending)
+-				WRITE_ONCE(msk->first_pending, dfrag);
++				msk->first_pending = dfrag;
+ 		}
+ 		pr_debug("msk=%p dfrag at seq=%llu len=%u sent=%u new=%d\n", msk,
+ 			 dfrag->data_seq, dfrag->data_len, dfrag->already_sent,
+@@ -2940,7 +2940,7 @@ static void __mptcp_clear_xmit(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct mptcp_data_frag *dtmp, *dfrag;
+ 
+-	WRITE_ONCE(msk->first_pending, NULL);
++	msk->first_pending = NULL;
+ 	list_for_each_entry_safe(dfrag, dtmp, &msk->rtx_queue, list)
+ 		dfrag_clear(sk, dfrag);
+ }
+@@ -3494,9 +3494,6 @@ void __mptcp_data_acked(struct sock *sk)
+ 
+ void __mptcp_check_push(struct sock *sk, struct sock *ssk)
+ {
+-	if (!mptcp_send_head(sk))
+-		return;
 -
- 		/* Drop reference we hold to shared resv obj: */
- 		drm_gem_object_put(r_obj);
- 	}
--- 
-2.51.0
-
+ 	if (!sock_owned_by_user(sk))
+ 		__mptcp_subflow_push_pending(sk, ssk, false);
+ 	else
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -414,7 +414,7 @@ static inline struct mptcp_data_frag *mp
+ {
+ 	const struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+-	return READ_ONCE(msk->first_pending);
++	return msk->first_pending;
+ }
+ 
+ static inline struct mptcp_data_frag *mptcp_send_next(struct sock *sk)
 
 
