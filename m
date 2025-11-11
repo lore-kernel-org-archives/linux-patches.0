@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0554C97;
-	Tue, 11 Nov 2025 00:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AFE4C97;
+	Tue, 11 Nov 2025 00:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822269; cv=none; b=qMjxFi1LFMJiI6qReroD+xO95nHFnDeeDoqk3F3ell8FX06UjfuMyVMigNFX60ByayK4bsH2Op7Q9hvyeJNiExsWoIcJKlUo3iqK3URbwm2+4egSdR83sURq/cHBb+2U9WCiXjksiYfqu7lOwiVhvwk1Enr54DQ/bOBqA+fIrro=
+	t=1762822271; cv=none; b=XwDKLACZqImu92PTFfgytO/jYgqk9Z/Rw2coxm8Of15SRNs9TxQT8tH4Q4jUq8/UM49kNP52B006cZeqabsB0ZaGmuwZzUNxgdymoX3Fiby94eocFqTPtbwPTKsCMp8zs4WSoJXwstCiJNvacw5bUxDyLeqKkGD1hDc3iNSiKMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822269; c=relaxed/simple;
-	bh=WPSdfXQqXmwBvUgXXTrRvPsQ0FlAmUlC7Gh2z1b03zE=;
+	s=arc-20240116; t=1762822271; c=relaxed/simple;
+	bh=D0qnVgigPLDNTSnOHEaS4QmAALhCWwnd+hi6sbhlawg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bxh3cBxTzTSCkIWv6oZb1x6nbg9EFoqILm95xCvRvsedtWWFyBYqtYMGhYSps/OLQUhi6cj/AV8r3nGLKcP7g+Bkp2+0PTd0Y/R6jfUPYW/SckqCBqDE3CFSBOjzN6YY0/qhxzO4y+bZzE+54vIc8rYokBxTP7vFty2TZAnEY/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXfRISET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BePhaDS7FiVpIPPo+LpO1h9+FaQt4kGdWvyUk4wOx4ytRhJyhnirJIbIZck5hDrADLGPAwe0DSmc+Cgzg09rb80SYQNj+drmMwHZLgKdO7YCUQITOLpODUasnI9Z44YbYlrn8coAhN4yaxFomkvxv3dzz7NJNjvZqmZSXct2vDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcj94vco; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXfRISET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E8AC113D0;
-	Tue, 11 Nov 2025 00:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcj94vco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF95C113D0;
+	Tue, 11 Nov 2025 00:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822269;
-	bh=WPSdfXQqXmwBvUgXXTrRvPsQ0FlAmUlC7Gh2z1b03zE=;
+	s=korg; t=1762822271;
+	bh=D0qnVgigPLDNTSnOHEaS4QmAALhCWwnd+hi6sbhlawg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXfRISETALt0LIh5gzjJtJHlk7Fx2qAc7FFutIGOpbk3l7sxTAg7Yz4OmRJZkfnU3
-	 3MykOqzsbU21xwGLM0hL9oLCMNIvwidRaKZG8PKCfz27xB7SnVDaXIvmagTu7FfmBg
-	 6/KO0UjyszsgBoY//nAyzaGl6JZdHaFqgIgoEJoQ=
+	b=wcj94vcoDgAfvVYeph9D3LjDtHoDowiLOEyTcvZW8wA5LU+sKJ1s1KI9otQn7w8Pn
+	 d76bUzyYnOczxSHXIzYtbQYwKoDrINHtjIO/8r1QqOqwITgGrYp9n78ufEV77TQ6Nt
+	 8fjc9iDrTrjvcbf4OQhf8as07ZPs25zMQOubw8b8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 015/565] ASoC: qdsp6: q6asm: do not sleep while atomic
-Date: Tue, 11 Nov 2025 09:37:51 +0900
-Message-ID: <20251111004527.208508941@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 070/849] ACPI: MRRM: Check revision of MRRM table
+Date: Tue, 11 Nov 2025 09:34:00 +0900
+Message-ID: <20251111004538.118947355@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
+[ Upstream commit dc131bcd8d9219f7da533918abcb0d32951b7702 ]
 
-For some reason we ended up kfree between spinlock lock and unlock,
-which can sleep.
+Before trying to parse the MRRM table, check that the table revision
+is the one that is expected.
 
-move the kfree out of spinlock section.
-
-Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b9020bdb9f76 ("ACPI: MRRM: Minimal parse of ACPI MRRM table")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20251022204523.10752-1-tony.luck@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6asm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_mrrm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/soc/qcom/qdsp6/q6asm.c
-+++ b/sound/soc/qcom/qdsp6/q6asm.c
-@@ -377,9 +377,9 @@ static void q6asm_audio_client_free_buf(
+diff --git a/drivers/acpi/acpi_mrrm.c b/drivers/acpi/acpi_mrrm.c
+index 47ea3ccc21424..a6dbf623e5571 100644
+--- a/drivers/acpi/acpi_mrrm.c
++++ b/drivers/acpi/acpi_mrrm.c
+@@ -63,6 +63,9 @@ static __init int acpi_parse_mrrm(struct acpi_table_header *table)
+ 	if (!mrrm)
+ 		return -ENODEV;
  
- 	spin_lock_irqsave(&ac->lock, flags);
- 	port->num_periods = 0;
-+	spin_unlock_irqrestore(&ac->lock, flags);
- 	kfree(port->buf);
- 	port->buf = NULL;
--	spin_unlock_irqrestore(&ac->lock, flags);
- }
++	if (mrrm->header.revision != 1)
++		return -EINVAL;
++
+ 	if (mrrm->flags & ACPI_MRRM_FLAGS_REGION_ASSIGNMENT_OS)
+ 		return -EOPNOTSUPP;
  
- /**
+-- 
+2.51.0
+
 
 
