@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6318320A23;
-	Tue, 11 Nov 2025 01:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF0632BF46;
+	Tue, 11 Nov 2025 01:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824525; cv=none; b=AEKQLxkLJ4b+ZZQxwrT5RduLEE3Puklz3lSRKH7g0Ah1LCsVq8WkTcSMaaQZTuFCMGybr2vUL+1tMSR6YvnS1+2Nw/jRyqBdMBY1VayqVkxzGtb32myvS0za774LLSZ6k/6kIsz2Bvp0irI/5O7zWdalZRwRXxH7hH0gMnYNXkw=
+	t=1762824528; cv=none; b=ZDTqtpkb0Fe626r8lCeQzjcYjdjvd4MckF2Ja/sEEZ8uhzbjPSgHWEi4cDk4UQjwkpfGBPmIV1UKxpPqbZpMB+OO4Py99ETxY5IKpLkK+eWdZpYaVv5YjKm7vY5gNCWnzTi04/7ta9SOQ6s/kXoY9t/CdhtauaDugUxD/TW8p5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824525; c=relaxed/simple;
-	bh=GcvRp11BfItme/ZeDyHuG7Bbt9NhNadEyrOHyrEZ3N8=;
+	s=arc-20240116; t=1762824528; c=relaxed/simple;
+	bh=TqlPQlwoV5qt/5sq0b7YRA3hi+m6rzFiiWB7pmczQs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHzRJnQ11ErbykuSrb9o/g9yBGRm6vX8FrVtN/EkQqMdqMdEG0Bonzcub/uRaT2y58NLHDSaQBBJ4aZd4Jo7RlIR2iBA4jBdDKq97mto/0jzEAVq/pQ3pxRlfPJzbKafvHBfI/EDuYhOcLren2dRES8P5D7DqiZ4VYa9GDAmmfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU+D4KR4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SXySAziMPnemfKhdvZJDAatyNTETvJBXIY1tPT9r1I7gLh/BqCpc5Fu6DJQF8LRoy8Ip+Xvu491RXWBunYaxla4krnFXEqPT7QyQaDi46o54MhPbFiVhwiptvhTRV2lsSV4ADmFTkH62joKapX0oE2bpHfK8SYlzgnnYYg/zD5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxIRyrjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU+D4KR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B7CC4AF09;
-	Tue, 11 Nov 2025 01:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxIRyrjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886D3C16AAE;
+	Tue, 11 Nov 2025 01:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824525;
-	bh=GcvRp11BfItme/ZeDyHuG7Bbt9NhNadEyrOHyrEZ3N8=;
+	s=korg; t=1762824527;
+	bh=TqlPQlwoV5qt/5sq0b7YRA3hi+m6rzFiiWB7pmczQs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QU+D4KR4vdSmD3VX4TEbShqVZPtLr29rJu7OcObLTNEvajzz2W0zzgFVUIF43TzFT
-	 1AYb3PcLpgiWABiJM96MrOS5vtpLDu2Kf2JIRg411O3GC8v8n94uWP+ctHZnnyJQ0v
-	 /ylMyIaCV1D1hTLURVAN30ZKY28sP+6jSD/zkqWk=
+	b=BxIRyrjkw9Ltrq2sDBV25YCYNnlGLwGKyfpu7ZD4E8bWy2vPg4Mzw+8fXtI1xN0hI
+	 fYVWeaedSVzaYGse4hocpM6G0iWffo6jtUjNrocRUbN2tc6y37w+qweYBE8DVyhIF8
+	 SxFgwFioi+1nCKYsbnbRs4fT3MmBVyYnO+BAbRE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Wangyang Guo <wangyang.guo@intel.com>,
+	=?UTF-8?q?Marko=20M=C3=A4kel=C3=A4?= <marko.makela@iki.fi>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 517/849] x86/kvm: Prefer native qspinlock for dedicated vCPUs irrespective of PV_UNHALT
-Date: Tue, 11 Nov 2025 09:41:27 +0900
-Message-ID: <20251111004548.926699049@linuxfoundation.org>
+Subject: [PATCH 6.12 463/565] clk: qcom: gcc-ipq6018: rework nss_port5 clock to multiple conf
+Date: Tue, 11 Nov 2025 09:45:19 +0900
+Message-ID: <20251111004537.316726975@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,84 +46,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Marko Mäkelä <marko.makela@iki.fi>
 
-[ Upstream commit 960550503965094b0babd7e8c83ec66c8a763b0b ]
+[ Upstream commit 2f7b168323c22faafb1fbf94ef93b7ce5efc15c6 ]
 
-The commit b2798ba0b876 ("KVM: X86: Choose qspinlock when dedicated
-physical CPUs are available") states that when PV_DEDICATED=1
-(vCPU has dedicated pCPU), qspinlock should be preferred regardless of
-PV_UNHALT.  However, the current implementation doesn't reflect this: when
-PV_UNHALT=0, we still use virt_spin_lock() even with dedicated pCPUs.
+Rework nss_port5 to use the new multiple configuration implementation
+and correctly fix the clocks for this port under some corner case.
 
-This is suboptimal because:
-1. Native qspinlocks should outperform virt_spin_lock() for dedicated
-   vCPUs irrespective of HALT exiting
-2. virt_spin_lock() should only be preferred when vCPUs may be preempted
-   (non-dedicated case)
+In OpenWrt, this patch avoids intermittent dmesg errors of the form
+nss_port5_rx_clk_src: rcg didn't update its configuration.
 
-So reorder the PV spinlock checks to:
-1. First handle dedicated pCPU case (disable virt_spin_lock_key)
-2. Second check single CPU, and nopvspin configuration
-3. Only then check PV_UNHALT support
+This is a mechanical, straightforward port of
+commit e88f03230dc07aa3293b6aeb078bd27370bb2594
+("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
+to gcc-ipq6018, with two conflicts resolved: different frequency of the
+P_XO clock source, and only 5 Ethernet ports.
 
-This ensures we always use native qspinlock for dedicated vCPUs, delivering
-pretty performance gains at high contention levels.
+This was originally developed by JiaY-shi <shi05275@163.com>.
 
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Wangyang Guo <wangyang.guo@intel.com>
-Link: https://lore.kernel.org/r/20250722110005.4988-1-lirongqing@baidu.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/all/20231220221724.3822-4-ansuelsmth@gmail.com/
+Signed-off-by: Marko Mäkelä <marko.makela@iki.fi>
+Tested-by: Marko Mäkelä <marko.makela@iki.fi>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250802095546.295448-1-marko.makela@iki.fi
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/kvm.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/clk/qcom/gcc-ipq6018.c | 60 +++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 22 deletions(-)
 
-diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-index 57379698015ed..2ecb2ec06aebc 100644
---- a/arch/x86/kernel/kvm.c
-+++ b/arch/x86/kernel/kvm.c
-@@ -1089,16 +1089,6 @@ static void kvm_wait(u8 *ptr, u8 val)
-  */
- void __init kvm_spinlock_init(void)
- {
--	/*
--	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
--	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
--	 * preferred over native qspinlock when vCPU is preempted.
--	 */
--	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
--		pr_info("PV spinlocks disabled, no host support\n");
--		return;
--	}
--
- 	/*
- 	 * Disable PV spinlocks and use native qspinlock when dedicated pCPUs
- 	 * are available.
-@@ -1118,6 +1108,16 @@ void __init kvm_spinlock_init(void)
- 		goto out;
- 	}
+diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+index ab0f7fc665a97..c04a7a961a24a 100644
+--- a/drivers/clk/qcom/gcc-ipq6018.c
++++ b/drivers/clk/qcom/gcc-ipq6018.c
+@@ -511,15 +511,23 @@ static struct clk_rcg2 apss_ahb_clk_src = {
+ 	},
+ };
  
-+	/*
-+	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
-+	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
-+	 * preferred over native qspinlock when vCPU is preempted.
-+	 */
-+	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
-+		pr_info("PV spinlocks disabled, no host support\n");
-+		return;
-+	}
+-static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
+-	F(24000000, P_XO, 1, 0, 0),
+-	F(25000000, P_UNIPHY1_RX, 12.5, 0, 0),
+-	F(25000000, P_UNIPHY0_RX, 5, 0, 0),
+-	F(78125000, P_UNIPHY1_RX, 4, 0, 0),
+-	F(125000000, P_UNIPHY1_RX, 2.5, 0, 0),
+-	F(125000000, P_UNIPHY0_RX, 1, 0, 0),
+-	F(156250000, P_UNIPHY1_RX, 2, 0, 0),
+-	F(312500000, P_UNIPHY1_RX, 1, 0, 0),
++static const struct freq_conf ftbl_nss_port5_rx_clk_src_25[] = {
++	C(P_UNIPHY1_RX, 12.5, 0, 0),
++	C(P_UNIPHY0_RX, 5, 0, 0),
++};
 +
- 	pr_info("PV spinlocks enabled\n");
++static const struct freq_conf ftbl_nss_port5_rx_clk_src_125[] = {
++	C(P_UNIPHY1_RX, 2.5, 0, 0),
++	C(P_UNIPHY0_RX, 1, 0, 0),
++};
++
++static const struct freq_multi_tbl ftbl_nss_port5_rx_clk_src[] = {
++	FMS(24000000, P_XO, 1, 0, 0),
++	FM(25000000, ftbl_nss_port5_rx_clk_src_25),
++	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
++	FM(125000000, ftbl_nss_port5_rx_clk_src_125),
++	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
++	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
+ 	{ }
+ };
  
- 	__pv_init_lock_hash();
+@@ -547,26 +555,34 @@ gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map[] = {
+ 
+ static struct clk_rcg2 nss_port5_rx_clk_src = {
+ 	.cmd_rcgr = 0x68060,
+-	.freq_tbl = ftbl_nss_port5_rx_clk_src,
++	.freq_multi_tbl = ftbl_nss_port5_rx_clk_src,
+ 	.hid_width = 5,
+ 	.parent_map = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "nss_port5_rx_clk_src",
+ 		.parent_data = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias,
+ 		.num_parents = 7,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_fm_ops,
+ 	},
+ };
+ 
+-static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
+-	F(24000000, P_XO, 1, 0, 0),
+-	F(25000000, P_UNIPHY1_TX, 12.5, 0, 0),
+-	F(25000000, P_UNIPHY0_TX, 5, 0, 0),
+-	F(78125000, P_UNIPHY1_TX, 4, 0, 0),
+-	F(125000000, P_UNIPHY1_TX, 2.5, 0, 0),
+-	F(125000000, P_UNIPHY0_TX, 1, 0, 0),
+-	F(156250000, P_UNIPHY1_TX, 2, 0, 0),
+-	F(312500000, P_UNIPHY1_TX, 1, 0, 0),
++static const struct freq_conf ftbl_nss_port5_tx_clk_src_25[] = {
++	C(P_UNIPHY1_TX, 12.5, 0, 0),
++	C(P_UNIPHY0_TX, 5, 0, 0),
++};
++
++static const struct freq_conf ftbl_nss_port5_tx_clk_src_125[] = {
++	C(P_UNIPHY1_TX, 2.5, 0, 0),
++	C(P_UNIPHY0_TX, 1, 0, 0),
++};
++
++static const struct freq_multi_tbl ftbl_nss_port5_tx_clk_src[] = {
++	FMS(24000000, P_XO, 1, 0, 0),
++	FM(25000000, ftbl_nss_port5_tx_clk_src_25),
++	FMS(78125000, P_UNIPHY1_TX, 4, 0, 0),
++	FM(125000000, ftbl_nss_port5_tx_clk_src_125),
++	FMS(156250000, P_UNIPHY1_TX, 2, 0, 0),
++	FMS(312500000, P_UNIPHY1_TX, 1, 0, 0),
+ 	{ }
+ };
+ 
+@@ -594,14 +610,14 @@ gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map[] = {
+ 
+ static struct clk_rcg2 nss_port5_tx_clk_src = {
+ 	.cmd_rcgr = 0x68068,
+-	.freq_tbl = ftbl_nss_port5_tx_clk_src,
++	.freq_multi_tbl = ftbl_nss_port5_tx_clk_src,
+ 	.hid_width = 5,
+ 	.parent_map = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "nss_port5_tx_clk_src",
+ 		.parent_data = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias,
+ 		.num_parents = 7,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_fm_ops,
+ 	},
+ };
+ 
 -- 
 2.51.0
 
