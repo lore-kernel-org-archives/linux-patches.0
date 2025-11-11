@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FAC265CA8;
-	Tue, 11 Nov 2025 01:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCF12DEA9D;
+	Tue, 11 Nov 2025 01:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823137; cv=none; b=gu/bo++835QJONYXScKqXrdMwGfA4QnSmgzgsh4IkEjKn7s7DkzydZywAWWXu9E1EPZS3P6JYNqRqf9l6nczRrSBDE+lTbtQzHxPFMCZezw2+QQ8nKbPX5QwDiYslHHXyNuUMWwZ+eX7EZKV6v5VPEwn1LCsCZw9EL08EEx6qDM=
+	t=1762823140; cv=none; b=t8NWSoUt1OlOv+kQhccnyZqRjpH6qD7ynygSgMzP11Fey9905M8OD9mKn1n6pTXcRDeS7PIcZ4Zr1xBIZ2t/MASoRGvD4pFlR36FCYNbhwGcPKvB2QPdGZvAP/tlDX4//t80oi4H/8fJPhPUQ3KMyandGfJz0N8APZMdpvNBY4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823137; c=relaxed/simple;
-	bh=R4PYAyzt/uZpCS/EM9hwwEnvzhkIYQquisVOXvRLtww=;
+	s=arc-20240116; t=1762823140; c=relaxed/simple;
+	bh=JnF02ApenazAgjaRg5roIeHbSXOzbPCcQ1edTPbuW90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiuojT0BUTCGzjFXYPE4vQyHH8XSG5sf+iX77xQjF3SG81wGaEtSGAbvRNnBVfhdrEFaW/ekkg1xwXZcHTq3vszxTE2jR2N7qfYVFIye2B3Q0L71VSB8bT+Hjo944int/DRx6iRtduWW5C3UkSmzKQ1PlCilhq6v5Ut4aMZp1tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrQsQW87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVym2MDckU2PSb8+sz4QLu+pBPYECsS+NTVu9RyMpIEMBQcd+b7MLcBpbwhC5X9OCpYBdtIDF4hb7mMwWAlVP3NkjfWBmSn/pIm0lpghD0pTmEhSzXvNsjqhh0/Th2FC5ep7SI90SCpndWj/PHKl5Llq1t+bKCWyJPO+XtJwRwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQfJ3PLL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrQsQW87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B8BC113D0;
-	Tue, 11 Nov 2025 01:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQfJ3PLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5157AC4CEFB;
+	Tue, 11 Nov 2025 01:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823137;
-	bh=R4PYAyzt/uZpCS/EM9hwwEnvzhkIYQquisVOXvRLtww=;
+	s=korg; t=1762823139;
+	bh=JnF02ApenazAgjaRg5roIeHbSXOzbPCcQ1edTPbuW90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrQsQW87yP561oJEWklDIpTA6pFEAeGfPr/0dRWgietuwXr359PG2YMvxkINnoQT1
-	 DYLlyOV5sucdwoVZFzLagg6uYGpAvBFBLUSljjrN890SjP+4yXbLlqQzL4mFaAHCxT
-	 86U998bNstzcbvqi0hH+56jkQMyHvXFwidsciSQI=
+	b=DQfJ3PLLZADTeOjL2PqbfPdP578GYlilTX4IdZ9KHKeVk4aNw6+OJSZYmDggOI962
+	 Z6irjMHNlIuZAakiaHoVXiBTqMJTutDxDei2EuUNk8wdNgfWG0KKsnKRVBii1Lge+W
+	 6mK+Kgpd6pbz7+KKBwqwHZRZe3Je8wmf+a3wn5bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 178/565] drm/xe/guc: Add more GuC load error status codes
-Date: Tue, 11 Nov 2025 09:40:34 +0900
-Message-ID: <20251111004530.937229479@linuxfoundation.org>
+Subject: [PATCH 6.17 238/849] drm/amd/display: Increase AUX Intra-Hop Done Max Wait Duration
+Date: Tue, 11 Nov 2025 09:36:48 +0900
+Message-ID: <20251111004542.194942759@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,105 +50,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit 45fbb51050e72723c2bdcedc1ce32305256c70ed ]
+[ Upstream commit e3419e1e44b87d4176fb98679a77301b1ca40f63 ]
 
-The GuC load process will abort if certain status codes (which are
-indicative of a fatal error) are reported. Otherwise, it keeps waiting
-until the 'success' code is returned. New error codes have been added
-in recent GuC releases, so add support for aborting on those as well.
+[WHY]
+In the worst case, AUX intra-hop done can take hundreds of milliseconds as
+each retimer in a link might have to wait a full AUX_RD_INTERVAL to send
+LT abort downstream.
 
-v2: Shuffle HWCONFIG_START to the front of the switch to keep the
-ordering as per the enum define for clarity (review feedback by
-Jonathan). Also add a description for the basic 'invalid init data'
-code which was missing.
+[HOW]
+Wait 300ms for each retimer in a link to allow time to propagate a LT abort
+without infinitely waiting on intra-hop done.
+For no-retimer case, keep the max duration at 10ms.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://lore.kernel.org/r/20250726024337.4056272-1-John.C.Harrison@Intel.com
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/abi/guc_errors_abi.h |  3 +++
- drivers/gpu/drm/xe/xe_guc.c             | 19 +++++++++++++++++--
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ .../drm/amd/display/dc/link/protocols/link_dp_training.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/abi/guc_errors_abi.h b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-index 2c627a21648f7..9260f4a1997d9 100644
---- a/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-+++ b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
-@@ -55,6 +55,7 @@ enum xe_guc_load_status {
- 	XE_GUC_LOAD_STATUS_HWCONFIG_START                   = 0x05,
- 	XE_GUC_LOAD_STATUS_HWCONFIG_DONE                    = 0x06,
- 	XE_GUC_LOAD_STATUS_HWCONFIG_ERROR                   = 0x07,
-+	XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH         = 0x08,
- 	XE_GUC_LOAD_STATUS_GDT_DONE                         = 0x10,
- 	XE_GUC_LOAD_STATUS_IDT_DONE                         = 0x20,
- 	XE_GUC_LOAD_STATUS_LAPIC_DONE                       = 0x30,
-@@ -67,6 +68,8 @@ enum xe_guc_load_status {
- 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_START,
- 	XE_GUC_LOAD_STATUS_MPU_DATA_INVALID                 = 0x73,
- 	XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID   = 0x74,
-+	XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR        = 0x75,
-+	XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG                 = 0x76,
- 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_END,
- 
- 	XE_GUC_LOAD_STATUS_READY                            = 0xF0,
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index 96373cdb366be..907a458c9eff5 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -527,11 +527,14 @@ static int guc_load_done(u32 status)
- 	case XE_GUC_LOAD_STATUS_GUC_PREPROD_BUILD_MISMATCH:
- 	case XE_GUC_LOAD_STATUS_ERROR_DEVID_INVALID_GUCTYPE:
- 	case XE_GUC_LOAD_STATUS_HWCONFIG_ERROR:
-+	case XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH:
- 	case XE_GUC_LOAD_STATUS_DPC_ERROR:
- 	case XE_GUC_LOAD_STATUS_EXCEPTION:
- 	case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
- 	case XE_GUC_LOAD_STATUS_MPU_DATA_INVALID:
- 	case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
-+	case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
-+	case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
- 		return -1;
- 	}
- 
-@@ -670,17 +673,29 @@ static void guc_wait_ucode(struct xe_guc *guc)
- 		}
- 
- 		switch (ukernel) {
-+		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
-+			xe_gt_err(gt, "still extracting hwconfig table.\n");
-+			break;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+index 2dc1a660e5045..134093ce5a8e8 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -1018,7 +1018,12 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
+ {
+ 	enum dc_status status;
+ 	uint8_t sink_status = 0;
+-	uint8_t i;
++	uint32_t i;
++	uint8_t lttpr_count = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
++	uint32_t intra_hop_disable_time_ms = (lttpr_count > 0 ? lttpr_count * 300 : 10);
 +
- 		case XE_GUC_LOAD_STATUS_EXCEPTION:
- 			xe_gt_err(gt, "firmware exception. EIP: %#x\n",
- 				  xe_mmio_read32(gt, SOFT_SCRATCH(13)));
- 			break;
++	// Each hop could theoretically take over 256ms (max 128b/132b AUX RD INTERVAL)
++	// To be safe, allow 300ms per LTTPR and 10ms for no LTTPR case
  
-+		case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
-+			xe_gt_err(gt, "illegal init/ADS data\n");
-+			break;
-+
- 		case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
- 			xe_gt_err(gt, "illegal register in save/restore workaround list\n");
- 			break;
+ 	/* clear training pattern set */
+ 	status = dpcd_set_training_pattern(link, DP_TRAINING_PATTERN_VIDEOIDLE);
+@@ -1028,7 +1033,7 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
  
--		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
--			xe_gt_err(gt, "still extracting hwconfig table.\n");
-+		case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
-+			xe_gt_err(gt, "illegal workaround KLV data\n");
-+			break;
-+
-+		case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
-+			xe_gt_err(gt, "illegal feature flag specified\n");
- 			break;
- 		}
- 
+ 	if (encoding == DP_128b_132b_ENCODING) {
+ 		/* poll for intra-hop disable */
+-		for (i = 0; i < 10; i++) {
++		for (i = 0; i < intra_hop_disable_time_ms; i++) {
+ 			if ((core_link_read_dpcd(link, DP_SINK_STATUS, &sink_status, 1) == DC_OK) &&
+ 					(sink_status & DP_INTRA_HOP_AUX_REPLY_INDICATION) == 0)
+ 				break;
 -- 
 2.51.0
 
