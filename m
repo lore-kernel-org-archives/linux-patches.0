@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829831D86FF;
-	Tue, 11 Nov 2025 01:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0512E6CA4;
+	Tue, 11 Nov 2025 01:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824702; cv=none; b=j2PYJNopk6eMS30f93hwXuaqmTP2maaHCU2spsn3N8SW/s7sYxXc90cE5Ly2UB4UC545U3caObSOhJNDAZeFE3liBHznXtHAUACj4T6xOMhX1veaqpxLr38e+PwsNfOR725nP5v3Qh3m63gy9AV5l4R3xzi8woxO0BJn+NQMF5A=
+	t=1762824704; cv=none; b=jyaHh+LAIYB5OPbRj6FQvJeq+hai+Te+UoFhb2vgTwTKJXhta7+kETia9t6GXZ8RWMzwtnt982zgZcgWWu9RvLQBvtRo0M1TXmkPOaL2Dz5pXwoRAxxvIVvaTtQ70iF4jehyc+QkATxdwk25h0y+uGaSRe7VEo7GLGJMDya1VSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824702; c=relaxed/simple;
-	bh=Cm3j8CyV6uvEeXa3I049W+3SD3RRfVGs+kMbI5NCUEI=;
+	s=arc-20240116; t=1762824704; c=relaxed/simple;
+	bh=mPNRHLMw1NUjAflDT9gul4zv5Cz9MnOQIL6InIp3SR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwnM8tpwIaXuOuqOd+rDoIStw6UuKRMBxYPWjK4jhVwEF3ksaADqIG1UmO1L2LuuNuOrqQKWchmZEIf4YJeSZo2xqpdTd2PngUyuoCMV5/XBdFjyBToV9TeWQb6qrGetSTeszepFMLF3ZvlJlr0Ip78GxVG3Hr3cXawxOHbj2uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9ESmQvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s8A1pXpDaJhrFiPOi2dAVfLxy0Exq39eAy4c3rNFFmmS7pk02IbPt4dWWsVrlPbNiRCWP67MnOeAAFXW9xO6YshzPRzBhNcXq/bLteKhTwXKvNaqqLlGAwYlqb7KsLa6hwCThaTrSjSk7JaE7HR0wBXTfHqPEWyU/HzmbgdaMqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O01TN+7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9ESmQvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EEEC19421;
-	Tue, 11 Nov 2025 01:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O01TN+7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE90C4AF0B;
+	Tue, 11 Nov 2025 01:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824702;
-	bh=Cm3j8CyV6uvEeXa3I049W+3SD3RRfVGs+kMbI5NCUEI=;
+	s=korg; t=1762824704;
+	bh=mPNRHLMw1NUjAflDT9gul4zv5Cz9MnOQIL6InIp3SR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9ESmQvLgYd8VrHBruZHhpSpyNZPrD/TMULoUZc4t3RIVDwdUw48A9iFp4B3/36Vo
-	 p6lL5y7xqmBWIC8B1z4QsjZz/hPvadOxKoe57rFdb3TOeX9OTjzQ2TwQulMbSNhopC
-	 gFcgoPTeQXRO393hmYpWLSCsPJfa2UtB86lFquD0=
+	b=O01TN+7GAovCFnoinlMoFgoQjs66PCAuoO/wmcA3LPkccpm1N/45Jlfafd9fzNuaV
+	 kVcFrTvf4geR8AJi4CO5u3UxnNk+RU/l6CK5fK/5wbWeDp4KC3aOHwu7w8OnPkoI18
+	 603P9qwRl0LsZXkaopQb64g3D/qLqMGe1h67Dji8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel4005 <ooara1337@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 501/565] media: uvcvideo: Use heuristic to find stream entity
-Date: Tue, 11 Nov 2025 09:45:57 +0900
-Message-ID: <20251111004538.213498740@linuxfoundation.org>
+	AceLan Kao <acelan.kao@canonical.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Denis Benato <benato.denis96@gmail.com>,
+	=?UTF-8?q?Merthan=20Karaka=C5=9F?= <m3rthn.k@gmail.com>,
+	Eric Naim <dnaim@cachyos.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 554/849] drm/amd: Avoid evicting resources at S5
+Date: Tue, 11 Nov 2025 09:42:04 +0900
+Message-ID: <20251111004549.802337279@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,66 +51,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 758dbc756aad429da11c569c0d067f7fd032bcf7 upstream.
+[ Upstream commit 531df041f2a5296174abd8292d298eb62fe1ea97 ]
 
-Some devices, like the Grandstream GUV3100 webcam, have an invalid UVC
-descriptor where multiple entities share the same ID, this is invalid
-and makes it impossible to make a proper entity tree without heuristics.
+Normally resources are evicted on dGPUs at suspend or hibernate and
+on APUs at hibernate.  These steps are unnecessary when using the S4
+callbacks to put the system into S5.
 
-We have recently introduced a change in the way that we handle invalid
-entities that has caused a regression on broken devices.
-
-Implement a new heuristic to handle these devices properly.
-
-Reported-by: Angel4005 <ooara1337@gmail.com>
-Closes: https://lore.kernel.org/linux-media/CAOzBiVuS7ygUjjhCbyWg-KiNx+HFTYnqH5+GJhd6cYsNLT=DaA@mail.gmail.com/
-Fixes: 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: AceLan Kao <acelan.kao@canonical.com>
+Cc: Kai-Heng Feng <kaihengf@nvidia.com>
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: Denis Benato <benato.denis96@gmail.com>
+Cc: Merthan Karakaş <m3rthn.k@gmail.com>
+Tested-by: Eric Naim <dnaim@cachyos.org>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -165,13 +165,26 @@ static struct uvc_entity *uvc_entity_by_
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 56a737df87cc7..1115af343e013 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5016,6 +5016,10 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ 	if (!adev->in_s4 && (adev->flags & AMD_IS_APU))
+ 		return 0;
  
- static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, int id)
- {
--	struct uvc_streaming *stream;
-+	struct uvc_streaming *stream, *last_stream;
-+	unsigned int count = 0;
- 
- 	list_for_each_entry(stream, &dev->streams, list) {
-+		count += 1;
-+		last_stream = stream;
- 		if (stream->header.bTerminalLink == id)
- 			return stream;
- 	}
- 
-+	/*
-+	 * If the streaming entity is referenced by an invalid ID, notify the
-+	 * user and use heuristics to guess the correct entity.
-+	 */
-+	if (count == 1 && id == UVC_INVALID_ENTITY_ID) {
-+		dev_warn(&dev->intf->dev,
-+			 "UVC non compliance: Invalid USB header. The streaming entity has an invalid ID, guessing the correct one.");
-+		return last_stream;
-+	}
++	/* No need to evict when going to S5 through S4 callbacks */
++	if (system_state == SYSTEM_POWER_OFF)
++		return 0;
 +
- 	return NULL;
- }
- 
+ 	ret = amdgpu_ttm_evict_resources(adev, TTM_PL_VRAM);
+ 	if (ret) {
+ 		dev_warn(adev->dev, "evicting device resources failed\n");
+-- 
+2.51.0
+
 
 
