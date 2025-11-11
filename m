@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FE12F2612;
-	Tue, 11 Nov 2025 01:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B9C301707;
+	Tue, 11 Nov 2025 01:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823833; cv=none; b=rUAhZR1yghwzvWPwShPz+RixaH6u/7Bm4DSG/uogHkfAtY+LVVyNKuj6y2kT/6zCS31yBarWztk6BXUkhxHgTzg63qHReN0ujsLgYweuF15uovJeJ7+eXaPU58xOCmjH/8bOR93F2VZUYSTxjI6q1tbOQpAdpBpCZRr2kkIcW/w=
+	t=1762823835; cv=none; b=KPAsT71KxiE5kEAQ7pw8m4m2M6A2gxr6R1Q5JHG5XH0CugTQiI3VJdULzNvUm7sYvJD/UTBJdjY3I5OAPzpq/vmm1DELkLKF+GQfQVsCa5B0LQJXgIMH+cbKSvO7pyoBIMBAq4fqgEfcuRZsZ/ZiMuaNdbEMQ2wKq/b/xLL4ygo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823833; c=relaxed/simple;
-	bh=YlkoS1V+qR5rQKP7P1s2iEKHpEgPbBPQW1se8+JOduU=;
+	s=arc-20240116; t=1762823835; c=relaxed/simple;
+	bh=6+8+DQoNA9JShTUn71/sTUcgqIXGkz77uQZRGwoDeys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNlcN5ZCMqKZbiJw1y95ZPgBK7fE98c/rmfIxiuRl808nDkaW8oMy/HAF3+HRB/iVxF2nqrmJtjV47ZNnFYHewGkp9h9WVGEhbD/3p5KhEAaL/n9Waz2dVZbTq0EWcGZzPD9qHHfT0+7drOLisr8mOYFE0nC6u0NVXn0KFCRvvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBjEqakn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnQQMV3CoxNDBM4mAiiPuzbzJO1HslMjL3HZJCwv3uKkaYogNDTzK9LLMuhGhlOldIIpJcMG/fCAFRnpc/C1LUks6GXjM8i18CituPOfdVHp0u8EZBXkXwqDQlRMrt+X4uhbuepObYFObNd5/gRiVGHOy06FnmHDcuNoZaLKXlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT11L+21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBjEqakn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F50AC4CEFB;
-	Tue, 11 Nov 2025 01:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT11L+21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A4CC2BC86;
+	Tue, 11 Nov 2025 01:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823832;
-	bh=YlkoS1V+qR5rQKP7P1s2iEKHpEgPbBPQW1se8+JOduU=;
+	s=korg; t=1762823835;
+	bh=6+8+DQoNA9JShTUn71/sTUcgqIXGkz77uQZRGwoDeys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBjEqakn/uno+O7pkXwcy4HMMvBrjqispZyeRBfzN8O5BzEiO5qnYC899AatkYGtA
-	 MOZfLbdrj25OQXfQGzIZQFyZaPFdj1UiKvWcoyN10Dkr1WdUDTR0Um/5BbUnDd0/r9
-	 j0VZmUjpB6aH85eeqPtalR2F5B2jrWxtinbRWX0s=
+	b=NT11L+21QDsZXcaAwSsoDQdRyTjG2z8XVtBqTPiNWTu5FiTKgGiBoonbrAj0PmIbu
+	 5Wy0GmDg5IJGrCuidPiVkpxLRcXaSgz/J85EWB4uuQmavaHHjKeNTt6fMvYjAba/FR
+	 /MxGXln4Bw1cXRT8HGeFllWw3rYt+tzw2Fh++s14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Mohsin Bashir <mohsin.bashr@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 333/565] phy: rockchip: phy-rockchip-inno-csidphy: allow writes to grf register 0
-Date: Tue, 11 Nov 2025 09:43:09 +0900
-Message-ID: <20251111004534.374157775@linuxfoundation.org>
+Subject: [PATCH 6.17 381/849] eth: fbnic: Reset hw stats upon PCI error
+Date: Tue, 11 Nov 2025 09:39:11 +0900
+Message-ID: <20251111004545.643047387@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Riesch <michael.riesch@collabora.com>
+From: Mohsin Bashir <mohsin.bashr@gmail.com>
 
-[ Upstream commit 8c7c19466c854fa86b82d2148eaa9bf0e6531423 ]
+[ Upstream commit b1161b1863c5f3d592adba5accd6e5c79741720f ]
 
-The driver for the Rockchip MIPI CSI-2 DPHY uses GRF register offset
-value 0 to sort out undefined registers. However, the RK3588 CSIDPHY GRF
-this offset is perfectly fine (in fact, register 0 is the only one in
-this register file).
-Introduce a boolean variable to indicate valid registers and allow writes
-to register 0.
+Upon experiencing a PCI error, fbnic reset the device to recover from
+the failure. Reset the hardware stats as part of the device reset to
+ensure accurate stats reporting.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Michael Riesch <michael.riesch@collabora.com>
-Link: https://lore.kernel.org/r/20250616-rk3588-csi-dphy-v4-4-a4f340a7f0cf@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Note that the reset is not really resetting the aggregate value to 0,
+which may result in a spike for a system collecting deltas in stats.
+Rather, the reset re-latches the current value as previous, in case HW
+got reset.
+
+Signed-off-by: Mohsin Bashir <mohsin.bashr@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250825200206.2357713-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-index 98c92d6c482fe..279e19e7546b6 100644
---- a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
-@@ -87,10 +87,11 @@ struct dphy_reg {
- 	u32 offset;
- 	u32 mask;
- 	u32 shift;
-+	u8 valid;
- };
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+index 28e23e3ffca88..c4d51490140eb 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
+@@ -489,6 +489,8 @@ static void __fbnic_pm_attach(struct device *dev)
+ 	struct net_device *netdev = fbd->netdev;
+ 	struct fbnic_net *fbn;
  
- #define PHY_REG(_offset, _width, _shift) \
--	{ .offset = _offset, .mask = BIT(_width) - 1, .shift = _shift, }
-+	{ .offset = _offset, .mask = BIT(_width) - 1, .shift = _shift, .valid = 1, }
++	fbnic_reset_hw_stats(fbd);
++
+ 	if (fbnic_init_failure(fbd))
+ 		return;
  
- static const struct dphy_reg rk1808_grf_dphy_regs[] = {
- 	[GRF_DPHY_CSIPHY_FORCERXMODE] = PHY_REG(RK1808_GRF_PD_VI_CON_OFFSET, 4, 0),
-@@ -145,7 +146,7 @@ static inline void write_grf_reg(struct rockchip_inno_csidphy *priv,
- 	const struct dphy_drv_data *drv_data = priv->drv_data;
- 	const struct dphy_reg *reg = &drv_data->grf_regs[index];
- 
--	if (reg->offset)
-+	if (reg->valid)
- 		regmap_write(priv->grf, reg->offset,
- 			     HIWORD_UPDATE(value, reg->mask, reg->shift));
- }
 -- 
 2.51.0
 
