@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F4E258EF6;
-	Tue, 11 Nov 2025 01:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26D5246768;
+	Tue, 11 Nov 2025 01:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822995; cv=none; b=QM95Dh5Oihya/gnEtsM4bqJE/epFD1YgC5QE/CLZkdotiozQEWUnmwdQKQPDRm4mC8VPYrJy+i+4FznxjGevf7VuyZSnua03jE3Gez3kyHmnPKa8xe3hn8uNWyKKidb8+C7X42X13/i5WYgByU4hqhucMAR4L6tnb3ClSU1+L0c=
+	t=1762822998; cv=none; b=dBwKhGv3APXBJEBczzYJ/RLfPua5Rby18piUlz/44Acbyagk4DXtYAFLpIxHlBefOZMYRv3S1MkRVVIe88tXsWjdmbrV1heQXR1QdIeIrhrJdKcelyInN4D505Ql6HcOBYZR85mADBhDE6ZnczztJ1aAgGdlF2XvnOQ8YVZBGhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822995; c=relaxed/simple;
-	bh=stQbRNPWyZz+ZXOKthJEDoi4It3//vhhhOayAVcRfKc=;
+	s=arc-20240116; t=1762822998; c=relaxed/simple;
+	bh=yLyuMcLE3LdKZONcOWexHAypwNvI2IoeswzNZVTtV0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSl6qgmknSUK75SNmu2h1zPBYOb2OkLYMGdNGJGuuPkonJHnZk36shqK/tHLFvzWW+7b1pR26xEQiw61Kvk8E7udIcRb4pn1mCe4ubjan6VMHbLBScWgPwBXLrcQXYNtQ63hfu/AXqHe8x9rZNRQw9DwrhiaZG6qhlCG5oGhHtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlo+yRw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PX0KeclJylecMdeWhb831+Tii8Xi8QTIrDe/VeOtExQ5ZlmoOoad7JmZPTwMO6mOZZfn1cuQ43fGTWpyixE4k7EUR0nd6UjnQiPFu6lFYwBzss6cxhvZPvKdQtm3vUA6Fm+ZPqkVEUQzTHbnk7KbEgf9E6cMDUmJN2NVKQGEODg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rti8wI5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlo+yRw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F73DC19424;
-	Tue, 11 Nov 2025 01:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rti8wI5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022C2C4CEF5;
+	Tue, 11 Nov 2025 01:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822994;
-	bh=stQbRNPWyZz+ZXOKthJEDoi4It3//vhhhOayAVcRfKc=;
+	s=korg; t=1762822997;
+	bh=yLyuMcLE3LdKZONcOWexHAypwNvI2IoeswzNZVTtV0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlo+yRw1MyJOIpRn5DZYlWQUWBG+31Pv5ZuYPhx0K95zV5ZreOXTILsc5HBOwRkB1
-	 YrfQMuh+RthHZaJrBvE4vDXUgfwbMF8CF+h4QgGDqTl19RtkqOjQWndZVxFg0bFsJl
-	 L+wOQwCDDUDDdDu/HdA9Oz5XGAh3+8Cpzn9xV2SA=
+	b=rti8wI5CRKPkvMiL8rRuZqt7o77sgaSLMxHPb3VfuVFH+2lnpoII2hpA8SVEmSEyM
+	 rw+Q7MPrvfa06/peXDXpVZtB1S7hlbDanf3EVKAcx2yrdzEHRkiuDVuimb44zqvs8/
+	 kpd9mf1d00LNMJvTT4mJAReByvoxd9PwzvmowD0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/565] clocksource/drivers/vf-pit: Replace raw_readl/writel to readl/writel
-Date: Tue, 11 Nov 2025 09:40:07 +0900
-Message-ID: <20251111004530.337853354@linuxfoundation.org>
+Subject: [PATCH 6.17 211/849] hwmon: (dell-smm) Add support for Dell OptiPlex 7040
+Date: Tue, 11 Nov 2025 09:36:21 +0900
+Message-ID: <20251111004541.547481565@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,99 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 0b781f527d6f99e68e5b3780ae03cd69a7cb5c0c ]
+[ Upstream commit 53d3bd48ef6ff1567a75ca77728968f5ab493cb4 ]
 
-The driver uses the raw_readl() and raw_writel() functions. Those are
-not for MMIO devices. Replace them with readl() and writel()
+The Dell OptiPlex 7040 supports the legacy SMM interface for reading
+sensors and performing fan control. Whitelist this machine so that
+this driver loads automatically.
 
-[ dlezcano: Fixed typo in the subject s/reald/readl/ ]
-
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20250804152344.1109310-2-daniel.lezcano@linaro.org
+Closes: https://github.com/Wer-Wolf/i8kutils/issues/15
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250917181036.10972-5-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-vf-pit.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/clocksource/timer-vf-pit.c b/drivers/clocksource/timer-vf-pit.c
-index 911c92146eca6..8041a8f62d1fa 100644
---- a/drivers/clocksource/timer-vf-pit.c
-+++ b/drivers/clocksource/timer-vf-pit.c
-@@ -35,30 +35,30 @@ static unsigned long cycle_per_jiffy;
- 
- static inline void pit_timer_enable(void)
- {
--	__raw_writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
-+	writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
- }
- 
- static inline void pit_timer_disable(void)
- {
--	__raw_writel(0, clkevt_base + PITTCTRL);
-+	writel(0, clkevt_base + PITTCTRL);
- }
- 
- static inline void pit_irq_acknowledge(void)
- {
--	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
-+	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
- }
- 
- static u64 notrace pit_read_sched_clock(void)
- {
--	return ~__raw_readl(clksrc_base + PITCVAL);
-+	return ~readl(clksrc_base + PITCVAL);
- }
- 
- static int __init pit_clocksource_init(unsigned long rate)
- {
- 	/* set the max load value and start the clock source counter */
--	__raw_writel(0, clksrc_base + PITTCTRL);
--	__raw_writel(~0UL, clksrc_base + PITLDVAL);
--	__raw_writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
-+	writel(0, clksrc_base + PITTCTRL);
-+	writel(~0UL, clksrc_base + PITLDVAL);
-+	writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
- 
- 	sched_clock_register(pit_read_sched_clock, 32, rate);
- 	return clocksource_mmio_init(clksrc_base + PITCVAL, "vf-pit", rate,
-@@ -76,7 +76,7 @@ static int pit_set_next_event(unsigned long delta,
- 	 * hardware requirement.
- 	 */
- 	pit_timer_disable();
--	__raw_writel(delta - 1, clkevt_base + PITLDVAL);
-+	writel(delta - 1, clkevt_base + PITLDVAL);
- 	pit_timer_enable();
- 
- 	return 0;
-@@ -125,8 +125,8 @@ static struct clock_event_device clockevent_pit = {
- 
- static int __init pit_clockevent_init(unsigned long rate, int irq)
- {
--	__raw_writel(0, clkevt_base + PITTCTRL);
--	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
-+	writel(0, clkevt_base + PITTCTRL);
-+	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
- 
- 	BUG_ON(request_irq(irq, pit_timer_interrupt, IRQF_TIMER | IRQF_IRQPOLL,
- 			   "VF pit timer", &clockevent_pit));
-@@ -183,7 +183,7 @@ static int __init pit_timer_init(struct device_node *np)
- 	cycle_per_jiffy = clk_rate / (HZ);
- 
- 	/* enable the pit module */
--	__raw_writel(~PITMCR_MDIS, timer_base + PITMCR);
-+	writel(~PITMCR_MDIS, timer_base + PITMCR);
- 
- 	ret = pit_clocksource_init(clk_rate);
- 	if (ret)
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index 3f61b2d7935e4..5801128e16c3c 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -1280,6 +1280,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7050"),
+ 		},
+ 	},
++	{
++		.ident = "Dell OptiPlex 7040",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7040"),
++		},
++	},
+ 	{
+ 		.ident = "Dell Precision",
+ 		.matches = {
 -- 
 2.51.0
 
