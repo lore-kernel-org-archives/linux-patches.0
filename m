@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B321E343D6A;
-	Tue, 11 Nov 2025 01:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E8F258EF6;
+	Tue, 11 Nov 2025 01:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824099; cv=none; b=LSZSGZFOLcbHfnQ8EavPV2U5NEgHPPnlbwuAYffqoPJceXIHv4dzUCOzM+nGFEDMHc4TvErBp5U0GQRvK9qZB3vcpVQ9C2+UeDcwIROt1eMUUWcEhPRq+p0Vr10jWYx0ETYUIfBrOlv3ch6GXStrTGxsgDcLQVB678cnOxUaNM8=
+	t=1762824102; cv=none; b=riq7ARQ/qrUPsEfH6GVYgooC4T0wA1M6IfzzKEdhXdInimXImoC68s0XDByoa2udoqC/mcLh9nvct9lXWa/ZSmGiGpRmO5tpYdAG1Wglk/aKYfv0OaMUKVl22zwss5QHO0kC+QLcM+AhJs4bA4cYDU+LGTMXsDne1iO4w23FkqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824099; c=relaxed/simple;
-	bh=KjMvWbDPJUEVes2yndLr4E8dWSR18jHtmhuHnRwOM6k=;
+	s=arc-20240116; t=1762824102; c=relaxed/simple;
+	bh=EZShQ55Zbxax+Em9AeJfmU+82x3WCzyrpkW53sZlAD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASmaM+VfX6jD95Lno0yp5JsODmbnKJJ69iUx9nv8K1dEnOGtiYLThbfkyaJDDwMSUqRxmRSs2kLiFgbl9R9z5nB7v52n35iWy1FUDZ+iQjXDQN1pt32Q9L2oOpdUy0uQQhG6kblQhXt0YtrVl9h5gRe2YYYPJ0OoaKmqBUJ6LXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXLpcvwj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IffAtEPif0cT33KxaTnP6yVWN/gRZ//nRAT9dCCQu+FVP0cIh+nS6qNiuxLehSasFVZZ+RNEbquBAfKlHcEeT8BGzc/9TKIrd6L+yGE8ov8CcGWtlHCd2JQCLL6gCg5ByQ4Z3nQubmn2GtaRKmdbz5J5ubK55WxWwbNltfymdew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TnhG3FN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXLpcvwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D805C113D0;
-	Tue, 11 Nov 2025 01:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TnhG3FN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB55C4CEFB;
+	Tue, 11 Nov 2025 01:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824099;
-	bh=KjMvWbDPJUEVes2yndLr4E8dWSR18jHtmhuHnRwOM6k=;
+	s=korg; t=1762824101;
+	bh=EZShQ55Zbxax+Em9AeJfmU+82x3WCzyrpkW53sZlAD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXLpcvwjYGrttU3xkEPJGm16KwsnVlqUjVLWR3IzTmLdrqjUXnk4IBTqS/L7/HzfT
-	 QTrpPdkZqHlwchYfHvI0Teq2tYAFofZgCQapkVv+Lmu2P+hLxX5WaZNE8s8oIgppsG
-	 NCd0pWmIpoQeg7Y9v37HvtEknCtkEJKENHe8Dy/o=
+	b=1TnhG3FNBCqPVbAuGZmqa1ezKtW+x3lbVyqEXTD/Dlt2HntdkZ1QtKuGAJLxgQHpq
+	 nNrVqvOdGVEVVMuQtvuU5DhTmZQRl+qOqod03x+sAsmh8f4g2K3YJHLV6rYxF+amQg
+	 OswLdvnnknc011bLFydtD7SrpiR2qWFVeZKPgW+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 387/565] ipv6: np->rxpmtu race annotation
-Date: Tue, 11 Nov 2025 09:44:03 +0900
-Message-ID: <20251111004535.578610128@linuxfoundation.org>
+Subject: [PATCH 6.17 437/849] wifi: mac80211: Fix 6 GHz Band capabilities element advertisement in lower bands
+Date: Tue, 11 Nov 2025 09:40:07 +0900
+Message-ID: <20251111004546.997529381@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,60 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
 
-[ Upstream commit 9fba1eb39e2f74d2002c5cbcf1d4435d37a4f752 ]
+[ Upstream commit e53f8b12a21c2974b66fa8c706090182da06fff3 ]
 
-Add READ_ONCE() annotations because np->rxpmtu can be changed
-while udpv6_recvmsg() and rawv6_recvmsg() read it.
+Currently, when adding the 6 GHz Band Capabilities element, the channel
+list of the wiphy is checked to determine if 6 GHz is supported for a given
+virtual interface. However, in a multi-radio wiphy (e.g., one that has
+both lower bands and 6 GHz combined), the wiphy advertises support for
+all bands. As a result, the 6 GHz Band Capabilities element is incorrectly
+included in mesh beacon and station's association request frames of
+interfaces operating in lower bands, without verifying whether the
+interface is actually operating in a 6 GHz channel.
 
-Since this is a very rarely used feature, and that udpv6_recvmsg()
-and rawv6_recvmsg() read np->rxopt anyway, change the test order
-so that np->rxpmtu does not need to be in a hot cache line.
+Fix this by verifying if the interface operates on 6 GHz channel
+before adding the element. Note that this check cannot be placed
+directly in ieee80211_put_he_6ghz_cap() as the same function is used to
+add probe request elements while initiating scan in which case the
+interface may not be operating in any band's channel.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250916160951.541279-4-edumazet@google.com
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250606104436.326654-1-rameshkumar.sundaram@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 2 +-
- net/ipv6/udp.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/mesh.c | 3 +++
+ net/mac80211/mlme.c | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index 328419e05c815..d148f1b03c5d0 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -445,7 +445,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index a4a715f6f1c32..f37068a533f4e 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -624,6 +624,9 @@ int mesh_add_he_6ghz_cap_ie(struct ieee80211_sub_if_data *sdata,
+ 	if (!sband)
+ 		return -EINVAL;
  
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
++	if (sband->band != NL80211_BAND_6GHZ)
++		return 0;
++
+ 	iftd = ieee80211_get_sband_iftype_data(sband,
+ 					       NL80211_IFTYPE_MESH_POINT);
+ 	/* The device doesn't support HE in mesh mode or at all */
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index f38881b927d17..c1b13b3411cdb 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1850,7 +1850,8 @@ ieee80211_add_link_elems(struct ieee80211_sub_if_data *sdata,
+ 		ieee80211_put_he_cap(skb, sdata, sband,
+ 				     &assoc_data->link[link_id].conn);
+ 		ADD_PRESENT_EXT_ELEM(WLAN_EID_EXT_HE_CAPABILITY);
+-		ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
++		if (sband->band == NL80211_BAND_6GHZ)
++			ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
+ 	}
  
- 	skb = skb_recv_datagram(sk, flags, &err);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 57e38e5e4be92..9b93df668025d 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -394,7 +394,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
- 
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
- 
- try_again:
+ 	/*
 -- 
 2.51.0
 
