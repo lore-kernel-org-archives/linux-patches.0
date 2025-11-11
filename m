@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06FE2BE7B8;
-	Tue, 11 Nov 2025 01:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969B22472A6;
+	Tue, 11 Nov 2025 01:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823501; cv=none; b=TnTF3wKjssg1wDFK06h+q3GGp7pHQsX5OsOoz3roJnirmpjFjqMvBD0O1CDYS2/ou6ZUHsCo70GDDQWwAIusdp4GkVQdyb4I37I+wTa62v83UwpIMl6ViGU044Uf8UuuSabxGVGSZ9nU22JWyqMYUoY5xZDIUul66xI0BPSUx2I=
+	t=1762823503; cv=none; b=WqcDjpYnEqr+9Sf7L3piRSuCn6gILxWBP3w3LQzt1ahy39FPg263Mr79aVtVkNHJc8YUCbPY7XKhKGoxxO9oGT4tJbFQdYTyM4LHL6RmUIrlRtOU3Kn6D+3peWVAbV075kMolF5odQqV2oNr5YyAvIsMI2bXRPU12jpixEnC6wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823501; c=relaxed/simple;
-	bh=cwDqJpAWpjpehzjiO1PglxE2a5MWoHXn4zL34zs+Hhc=;
+	s=arc-20240116; t=1762823503; c=relaxed/simple;
+	bh=cTMhbSbDAfMPNSOim0OmA/52SHKXNP6ReOc7zH1OVDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FpUtkbPKOoZ0Il/h2kYcjlCYPVPb3NlgHD/6TScFEJFKjylpoupLWREQhLAqZLiH8XrixfaxmDvm4mNCXGkxsYfWugusS2QAI/64uwEtF4kHLEQw6eNaLY6MPt0iC/1zGZGLyY3nV1AzSCfg+vtMNROm7eLSLbbiBIVfMb/6WQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCLBm0H6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uj+Yjd7c/f9xaL8Urb9xENGk8uPg4WAHPUjqdRzzVm2ccwuKPbuxrimohxutwEUUABfUvfbZzQ+IpyZY4a6u8OW31/tcMwlPoigU0sGEdd4fHogzBIaqqjBcHon5WIxdleEmomqKsLL9Pv50h7bbwPjr0KvMO3fHSkKqHJCxq5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aV56JjKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCLBm0H6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CDAC113D0;
-	Tue, 11 Nov 2025 01:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aV56JjKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CCEC19424;
+	Tue, 11 Nov 2025 01:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823500;
-	bh=cwDqJpAWpjpehzjiO1PglxE2a5MWoHXn4zL34zs+Hhc=;
+	s=korg; t=1762823503;
+	bh=cTMhbSbDAfMPNSOim0OmA/52SHKXNP6ReOc7zH1OVDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCLBm0H6AbGc84mBcyu6iJN1h7WasCNhoWW0dbInRuMCWKwO8BJf5S9nJs3t9sKL1
-	 mm5EuihRucs1Fe2NTQ2cPitXI7a1A2ykER3mhZIzST7TpAU0Pd+grHCs9ektm9N+e0
-	 AmFYjjaBbyv6nWTIAtQupBkV3Ya+uzQNAsijvLhg=
+	b=aV56JjKjq12Wfc/jOs7LRmRvUlksQTTaAnCWFoDWlUZD+pooI3IV2Y8I1dgzfzXLO
+	 fLowHtZSAQfowviCj85C+a9LLmBMmIM+FcKacia4zRUEY0Tr9c62idtQRdk3+xZq5W
+	 Vi36p/QVF8/NVaO8rSdd/Z4mWfIsCQ1NTyIZFVI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Oleg Makarenko <oleg@makarenk.ooo>,
-	Jiri Kosina <jkosina@suse.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 312/849] HID: pidff: Use direction fix only for conditional effects
-Date: Tue, 11 Nov 2025 09:38:02 +0900
-Message-ID: <20251111004543.956626223@linuxfoundation.org>
+Subject: [PATCH 6.12 259/565] drm/amdkfd: Tie UNMAP_LATENCY to queue_preemption
+Date: Tue, 11 Nov 2025 09:41:55 +0900
+Message-ID: <20251111004532.722993847@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,152 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Amber Lin <Amber.Lin@amd.com>
 
-[ Upstream commit f345a4798dab800159b09d088e7bdae0f16076c3 ]
+[ Upstream commit f3820e9d356132e18405cd7606e22dc87ccfa6d1 ]
 
-The already fixed bug in SDL only affected conditional effects. This
-should fix FFB in Forza Horizion 4/5 on Moza Devices as Forza Horizon
-flips the constant force direction instead of using negative magnitude
-values.
+When KFD asks CP to preempt queues, other than preempt CP queues, CP
+also requests SDMA to preempt SDMA queues with UNMAP_LATENCY timeout.
+Currently queue_preemption_timeout_ms is 9000 ms by default but can be
+configured via module parameter. KFD_UNMAP_LATENCY_MS is hard coded as
+4000 ms though. This patch ties KFD_UNMAP_LATENCY_MS to
+queue_preemption_timeout_ms so in a slow system such as emulator, both
+CP and SDMA slowness are taken into account.
 
-Changing the direction in the effect directly in pidff_upload_effect()
-would affect it's value in further operations like comparing to the old
-effect and/or just reading the effect values in the user application.
-
-This, in turn, would lead to constant PID_SET_EFFECT spam as the effect
-direction would constantly not match the value that's set by the
-application.
-
-This way, it's still transparent to any software/API.
-
-Only affects conditional effects now so it's better for it to explicitly
-state that in the name. If any HW ever needs fixed direction for other
-effects, we'll add more quirks.
-
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Reviewed-by: Oleg Makarenko <oleg@makarenk.ooo>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-universal-pidff.c | 20 ++++++++++----------
- drivers/hid/usbhid/hid-pidff.c    | 28 +++++++++++++++++++++++-----
- drivers/hid/usbhid/hid-pidff.h    |  2 +-
- 3 files changed, 34 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
-index 554a6559aeb73..70fce0f88e825 100644
---- a/drivers/hid/hid-universal-pidff.c
-+++ b/drivers/hid/hid-universal-pidff.c
-@@ -144,25 +144,25 @@ static int universal_pidff_input_configured(struct hid_device *hdev,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 75523f30cd38b..5041860e2737c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -111,7 +111,14 @@
  
- static const struct hid_device_id universal_pidff_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3_2),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5_2),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9_2),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12_2),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21_2),
--		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
-+		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C5) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C12) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_DFP),
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 614a20b620231..c6b4f61e535d5 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -205,6 +205,14 @@ struct pidff_device {
- 	u8 effect_count;
- };
+ #define KFD_KERNEL_QUEUE_SIZE 2048
  
-+static int pidff_is_effect_conditional(struct ff_effect *effect)
-+{
-+	return effect->type == FF_SPRING  ||
-+	       effect->type == FF_DAMPER  ||
-+	       effect->type == FF_INERTIA ||
-+	       effect->type == FF_FRICTION;
-+}
-+
- /*
-  * Clamp value for a given field
-  */
-@@ -294,6 +302,20 @@ static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
- 	pidff_set_time(usage, duration);
- }
+-#define KFD_UNMAP_LATENCY_MS	(4000)
++/*  KFD_UNMAP_LATENCY_MS is the timeout CP waiting for SDMA preemption. One XCC
++ *  can be associated to 2 SDMA engines. queue_preemption_timeout_ms is the time
++ *  driver waiting for CP returning the UNMAP_QUEUE fence. Thus the math is
++ *  queue_preemption_timeout_ms = sdma_preemption_time * 2 + cp workload
++ *  The format here makes CP workload 10% of total timeout
++ */
++#define KFD_UNMAP_LATENCY_MS	\
++	((queue_preemption_timeout_ms - queue_preemption_timeout_ms / 10) >> 1)
  
-+static void pidff_set_effect_direction(struct pidff_device *pidff,
-+				       struct ff_effect *effect)
-+{
-+	u16 direction = effect->direction;
-+
-+	/* Use fixed direction if needed */
-+	if (pidff->quirks & HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION &&
-+	    pidff_is_effect_conditional(effect))
-+		direction = PIDFF_FIXED_WHEEL_DIRECTION;
-+
-+	pidff->effect_direction->value[0] =
-+		pidff_rescale(direction, U16_MAX, pidff->effect_direction);
-+}
-+
- /*
-  * Send envelope report to the device
-  */
-@@ -395,11 +417,7 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 		pidff->set_effect[PID_GAIN].field->logical_maximum;
- 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
+ #define KFD_MAX_SDMA_QUEUES	128
  
--	/* Use fixed direction if needed */
--	pidff->effect_direction->value[0] = pidff_rescale(
--		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
--		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
--		U16_MAX, pidff->effect_direction);
-+	pidff_set_effect_direction(pidff, effect);
- 
- 	/* Omit setting delay field if it's missing */
- 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
-diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
-index a53a8b436baa6..f321f675e1318 100644
---- a/drivers/hid/usbhid/hid-pidff.h
-+++ b/drivers/hid/usbhid/hid-pidff.h
-@@ -16,7 +16,7 @@
- #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
- 
- /* Use fixed 0x4000 direction during SET_EFFECT report upload */
--#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
-+#define HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION	BIT(3)
- 
- /* Force all periodic effects to be uploaded as SINE */
- #define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
 -- 
 2.51.0
 
