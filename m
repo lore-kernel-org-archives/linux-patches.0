@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2134426560B;
-	Tue, 11 Nov 2025 01:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730B626560B;
+	Tue, 11 Nov 2025 01:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824570; cv=none; b=EJOM7hXojFpvk+H7dTT3JmrGOFGuJHTaKZpVwwTjf/5TXoR43JnUftLMKPg5JSJthPKwGtHfrUb3ubzbWZUlGqG5z2b/ruojwNwGjPPc9nu0S0s/oEsLZvbd6PX9ncxMnVYYiv1OiAkKxPBOgK0IOwH6lZ/QdseiQJeFLErZELs=
+	t=1762824572; cv=none; b=Mt0Iqbu2t8lTivdoo9hqqw4h1vECdIGLMejdcroqqs2gpjMYU6tdFvIEm4BGr1zcuW1x9K/wdih2WVGIQyxb45S6QnEK0W5Wyqk8Bb1Cd8S3dbHxGSTqTgLVKZza2i3EAsVkJRbKF7HaTbYiqIWbvDQBLmRWN4/0hEMHO62CITg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824570; c=relaxed/simple;
-	bh=/hwFxUSCjlV5r5W78CQ/KPLfSqsoNk7mBE99+zSjQfY=;
+	s=arc-20240116; t=1762824572; c=relaxed/simple;
+	bh=dg0C5Poynn2Q7UnDJ/hSJHoAaTGrlYdJ5Jl4yzw2Gy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdIfwf8Af5LI7eA3kaOGhxnDL5uaETHbzMNWRa4QFOaOH4DVyeVyRJr/9qEbrx3L2L9DsL0YjMW1+IhrI5kjBSAV2b+RMXIPV2HG1ClrCuNw+kTwjGGB74upda7H2nPAt2/2dfQIwD80awMA5ssrrIiZwQR9dWIEveoEL2zajPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1redgKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oL9KE45uRevATa4l7EP0HsqVAtFf+Nb9H3RmU/F4ueaAQOJZ/4izk4azRHevGnaKozb4oHDqu1D6z1q1/zzjtODV9kkkxIQ5nkiyX68fAW/2usDRkAA73k9Bpm07tHn2aQ9KUXaNnd+T3IE5MfAXjFno5qt5IPk1o6VjlACRe80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOqmXBOI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1redgKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53DAC16AAE;
-	Tue, 11 Nov 2025 01:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOqmXBOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5226C4CEFB;
+	Tue, 11 Nov 2025 01:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824570;
-	bh=/hwFxUSCjlV5r5W78CQ/KPLfSqsoNk7mBE99+zSjQfY=;
+	s=korg; t=1762824572;
+	bh=dg0C5Poynn2Q7UnDJ/hSJHoAaTGrlYdJ5Jl4yzw2Gy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1redgKqu1klGN8wRX1rY8usEsFzgtj6L0vlu4+2LV8xrNNFuB//bbdPQev/bBMHx
-	 24P/XF/ayu6/D4aLdx46oKIpATQ6xrCF1l+NQ1YWIY0KTUeZhu3f4uV9a0nZN38Kl+
-	 Psh41zBK50LpUpDm5TgrMHK3eG90b4S6EPNwYIxA=
+	b=pOqmXBOI8cYnoMNxHwuwjoOlcEajz0Yp5jFuE7TvG5+pb7NK7KH3ed4AgMY6UrZ6j
+	 GvfOESFr++2rRPMgSoMW6L/qgXsIiJyEHKx4gp+aPSDJ3tImkVjL/zSIeOpwF7GR7B
+	 zXwtdF02ydSx+fdX0w4dCz/luDaUCTpLOkmt9j10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Sasha Levin <sashal@kernel.org>,
-	Ryan Wanner <ryan.wanner@microchip.com>
-Subject: [PATCH 6.12 471/565] clk: at91: clk-sam9x60-pll: force write to PLL_UPDT register
-Date: Tue, 11 Nov 2025 09:45:27 +0900
-Message-ID: <20251111004537.505219144@linuxfoundation.org>
+	"Luke D. Jones" <luke@ljones.dev>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 526/849] HID: asus: add Z13 folio to generic group for multitouch to work
+Date: Tue, 11 Nov 2025 09:41:36 +0900
+Message-ID: <20251111004549.136543847@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,216 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit af98caeaa7b6ad11eb7b7c8bfaddc769df2889f3 ]
+[ Upstream commit b595974b4afe0e171dd707da570964ff642742e3 ]
 
-This register is important for sequencing the commands to PLLs, so
-actually write the update bits with regmap_write_bits() instead of
-relying on a read/modify/write regmap command that could skip the actual
-hardware write if the value is identical to the one read.
+The Asus Z13 folio has a multitouch touchpad that needs to bind
+to the hid-multitouch driver in order to work properly. So bind
+it to the HID_GROUP_GENERIC group to release the touchpad and
+move it to the bottom so that the comment applies to it.
 
-It's changed when modification is needed to the PLL, when
-read-only operation is done, we could keep the call to
-regmap_update_bits().
+While at it, change the generic KEYBOARD3 name to Z13_FOLIO.
 
-Add a comment to the sam9x60_div_pll_set_div() function that uses this
-PLL_UPDT register so that it's used consistently, according to the
-product's datasheet.
-
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Tested-by: Ryan Wanner <ryan.wanner@microchip.com> # on sama7d65 and sam9x75
-Link: https://lore.kernel.org/r/20250827150811.82496-1-nicolas.ferre@microchip.com
-[claudiu.beznea: fix "Alignment should match open parenthesis"
- checkpatch.pl check]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Reviewed-by: Luke D. Jones <luke@ljones.dev>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-sam9x60-pll.c | 75 ++++++++++++++++--------------
- 1 file changed, 39 insertions(+), 36 deletions(-)
+ drivers/hid/hid-asus.c | 6 +++---
+ drivers/hid/hid-ids.h  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
-index fda0411022246..e05d036252e0e 100644
---- a/drivers/clk/at91/clk-sam9x60-pll.c
-+++ b/drivers/clk/at91/clk-sam9x60-pll.c
-@@ -93,8 +93,8 @@ static int sam9x60_frac_pll_set(struct sam9x60_pll_core *core)
- 
- 	spin_lock_irqsave(core->lock, flags);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
- 	regmap_read(regmap, AT91_PMC_PLL_CTRL1, &val);
- 	cmul = (val & core->layout->mul_mask) >> core->layout->mul_shift;
- 	cfrac = (val & core->layout->frac_mask) >> core->layout->frac_shift;
-@@ -128,17 +128,17 @@ static int sam9x60_frac_pll_set(struct sam9x60_pll_core *core)
- 		udelay(10);
- 	}
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
- 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL,
- 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	while (!sam9x60_pll_ready(regmap, core->id))
- 		cpu_relax();
-@@ -164,8 +164,8 @@ static void sam9x60_frac_pll_unprepare(struct clk_hw *hw)
- 
- 	spin_lock_irqsave(core->lock, flags);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
- 
- 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0, AT91_PMC_PLL_CTRL0_ENPLL, 0);
- 
-@@ -173,9 +173,9 @@ static void sam9x60_frac_pll_unprepare(struct clk_hw *hw)
- 		regmap_update_bits(regmap, AT91_PMC_PLL_ACR,
- 				   AT91_PMC_PLL_ACR_UTMIBG | AT91_PMC_PLL_ACR_UTMIVR, 0);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	spin_unlock_irqrestore(core->lock, flags);
- }
-@@ -262,8 +262,8 @@ static int sam9x60_frac_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
- 
- 	spin_lock_irqsave(core->lock, irqflags);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
--			   core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
-+			  core->id);
- 	regmap_read(regmap, AT91_PMC_PLL_CTRL1, &val);
- 	cmul = (val & core->layout->mul_mask) >> core->layout->mul_shift;
- 	cfrac = (val & core->layout->frac_mask) >> core->layout->frac_shift;
-@@ -275,18 +275,18 @@ static int sam9x60_frac_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
- 		     (frac->mul << core->layout->mul_shift) |
- 		     (frac->frac << core->layout->frac_shift));
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
- 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL,
- 			   AT91_PMC_PLL_CTRL0_ENLOCK |
- 			   AT91_PMC_PLL_CTRL0_ENPLL);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	while (!sam9x60_pll_ready(regmap, core->id))
- 		cpu_relax();
-@@ -338,7 +338,10 @@ static const struct clk_ops sam9x60_frac_pll_ops_chg = {
- 	.restore_context = sam9x60_frac_pll_restore_context,
- };
- 
--/* This function should be called with spinlock acquired. */
-+/* This function should be called with spinlock acquired.
-+ * Warning: this function must be called only if the same PLL ID was set in
-+ *          PLL_UPDT register previously.
-+ */
- static void sam9x60_div_pll_set_div(struct sam9x60_pll_core *core, u32 div,
- 				    bool enable)
- {
-@@ -350,9 +353,9 @@ static void sam9x60_div_pll_set_div(struct sam9x60_pll_core *core, u32 div,
- 			   core->layout->div_mask | ena_msk,
- 			   (div << core->layout->div_shift) | ena_val);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	while (!sam9x60_pll_ready(regmap, core->id))
- 		cpu_relax();
-@@ -366,8 +369,8 @@ static int sam9x60_div_pll_set(struct sam9x60_pll_core *core)
- 	unsigned int val, cdiv;
- 
- 	spin_lock_irqsave(core->lock, flags);
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
- 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
- 	cdiv = (val & core->layout->div_mask) >> core->layout->div_shift;
- 
-@@ -398,15 +401,15 @@ static void sam9x60_div_pll_unprepare(struct clk_hw *hw)
- 
- 	spin_lock_irqsave(core->lock, flags);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
- 
- 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
- 			   core->layout->endiv_mask, 0);
- 
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
--			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
--			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
-+			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
-+			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
- 
- 	spin_unlock_irqrestore(core->lock, flags);
- }
-@@ -518,8 +521,8 @@ static int sam9x60_div_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
- 	div->div = DIV_ROUND_CLOSEST(parent_rate, rate) - 1;
- 
- 	spin_lock_irqsave(core->lock, irqflags);
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
--			   core->id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
-+			  core->id);
- 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
- 	cdiv = (val & core->layout->div_mask) >> core->layout->div_shift;
- 
-@@ -574,8 +577,8 @@ static int sam9x60_div_pll_notifier_fn(struct notifier_block *notifier,
- 	div->div = div->safe_div;
- 
- 	spin_lock_irqsave(core.lock, irqflags);
--	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
--			   core.id);
-+	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
-+			  core.id);
- 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
- 	cdiv = (val & core.layout->div_mask) >> core.layout->div_shift;
- 
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 8db9d4e7c3b0b..a444d41e53b6c 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1387,9 +1387,6 @@ static const struct hid_device_id asus_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+-	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3),
+-	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+@@ -1419,6 +1416,9 @@ static const struct hid_device_id asus_devices[] = {
+ 	 * Note bind to the HID_GROUP_GENERIC group, so that we only bind to the keyboard
+ 	 * part, while letting hid-multitouch.c handle the touchpad.
+ 	 */
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO),
++	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_T101HA_KEYBOARD) },
+ 	{ }
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ded5348d190c5..5721b8414bbdf 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -223,7 +223,7 @@
+ #define USB_DEVICE_ID_ASUSTEK_ROG_KEYBOARD3 0x1822
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD	0x1866
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2	0x19b6
+-#define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3	0x1a30
++#define USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO		0x1a30
+ #define USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR		0x18c6
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY		0x1abe
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
 -- 
 2.51.0
 
