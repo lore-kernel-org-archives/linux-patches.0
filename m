@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D18D33C534;
-	Tue, 11 Nov 2025 01:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70AA2820A0;
+	Tue, 11 Nov 2025 01:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823456; cv=none; b=QbAOKNo7/DzJ+K9SFXFcuBBkICX9UU/GSQZarwGhmrZJZA+ONOig3NLP9J2OZKcIzVIQNQXZ3QzLuNfO7kwT1mBDSZ1UD96rg5CIMRrJeP5O62jyXIOD5KzojehjM9JX3lRFVtq1uVZ98+PTq2XO5+I0c4zlc3ax2nfI2HgdPiI=
+	t=1762823458; cv=none; b=H6mJW8VZrVIhD4+i1LI7amZm3ofV8H4oz1xS0ytNUIpnBAtmq2vVaUCFFQxhTP6WagYQoF+trQGMTIg0SLzdpxHePCf0kxxiA/InGlm+lzs1cfbwEP3NYW7B3a6Q2C9+9XBI8NQXcf15FXGu1PNWrw37aJUmyi5byqwEzXQlC0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823456; c=relaxed/simple;
-	bh=wsm62C6ED7zR6GQa05AiTQVT3c9LFW/x2I9400k8GmM=;
+	s=arc-20240116; t=1762823458; c=relaxed/simple;
+	bh=hIUfKc31UJD71wAG3WfE3dN25Pm0f8DjATKbtjnQA+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeYVu5BJ6JCoHJUJbIuSXslwrXrwx3ujSp/+cVxNtcB9nkrhFJ14Tddu0GebL3oRmoOoegWFnlK+bEk1i7mO6bifYVzqGTdwykZN+V5XWEd/qBafqcuq45fnVgCDN5UmMGQacARICNFssKnU+C2gLxMn127ahQSG3QSW9q8eMYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GEg0yjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WvY9QFLngWl8IZXYwjaR4ZNETlKBPX2XiqgNF9KoTKG/8MoOfL80efx8lC2FZ3mxmU4VCoKf39QJEw7VgKMXcFzFFFhmsaZaVZg6gbVqaSpPdOY522Snt7t5MM0WjokDoZzIx77/tMfCWK5xzcVFqbu0ziecbR2OtDo0XAtU/MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY8pqVue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GEg0yjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F81EC19424;
-	Tue, 11 Nov 2025 01:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY8pqVue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41411C4CEF5;
+	Tue, 11 Nov 2025 01:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823456;
-	bh=wsm62C6ED7zR6GQa05AiTQVT3c9LFW/x2I9400k8GmM=;
+	s=korg; t=1762823458;
+	bh=hIUfKc31UJD71wAG3WfE3dN25Pm0f8DjATKbtjnQA+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GEg0yjGkhTS/NXQqQw4kVaompehdoe2wRPbSwygwtAkurw2pujhU2X9p4UK4/JTa
-	 Pu7NPmibSKEWC32V+OIq38B3DpWrAAw4B8jLO+VwDM7VGfRGtjlcVRgdBBUFWv4qnU
-	 DAPt2vhu9WCwqkFDCkdzRDvQg2Z6td/pcVWmvQm4=
+	b=gY8pqVueFxFHSXO0sykUSG9r67GnaF5Sl2NoEJww10qcnu3MfiB5d5JCz9/PHJLdO
+	 pa4+CUq27JnBKU7ucYuo7ekQ2SyJ+8JcZn9VfaPyY0DMVfk5EM564PWSPJ4uFaMrlZ
+	 UL8KgzuZcdLsV4IddxtPbCoMuxkMkiLtx16cDT8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Peter Wang <peter.wang@mediatek.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 250/565] scsi: mpi3mr: Fix controller init failure on fault during queue creation
-Date: Tue, 11 Nov 2025 09:41:46 +0900
-Message-ID: <20251111004532.531604839@linuxfoundation.org>
+Subject: [PATCH 6.17 304/849] scsi: ufs: host: mediatek: Fix PWM mode switch issue
+Date: Tue, 11 Nov 2025 09:37:54 +0900
+Message-ID: <20251111004543.757763245@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 829fa1582b6ff607b0e2fe41ba1c45c77f686618 ]
+[ Upstream commit 7212d624f8638f8ea8ad1ecbb80622c7987bc7a1 ]
 
-Firmware can enter a transient fault while creating operational queues.
-The driver fails the load immediately.
+Address a failure in switching to PWM mode by ensuring proper
+configuration of power modes and adaptation settings. The changes
+include checks for SLOW_MODE and adjustments to the desired working mode
+and adaptation configuration based on the device's power mode and
+hardware version.
 
-Add a retry loop that checks controller status and history bit after
-queue creation. If either indicates a fault, retry init up to a set
-limit before failing.
-
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20250820084138.228471-3-chandrakanth.patil@broadcom.com
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-6-peter.wang@mediatek.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ufs/host/ufs-mediatek.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 82cbe98e8a044..acb2f7b04fb8f 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -2337,6 +2337,8 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- {
- 	int retval = 0;
- 	u16 num_queues = 0, i = 0, msix_count_op_q = 1;
-+	u32 ioc_status;
-+	enum mpi3mr_iocstate ioc_state;
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 8dd124835151a..4171fa672450d 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1303,6 +1303,10 @@ static bool ufs_mtk_pmc_via_fastauto(struct ufs_hba *hba,
+ 	    dev_req_params->gear_rx < UFS_HS_G4)
+ 		return false;
  
- 	num_queues = min_t(int, mrioc->facts.max_op_reply_q,
- 	    mrioc->facts.max_op_req_q);
-@@ -2392,6 +2394,14 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- 		retval = -1;
- 		goto out_failed;
++	if (dev_req_params->pwr_tx == SLOW_MODE ||
++	    dev_req_params->pwr_rx == SLOW_MODE)
++		return false;
++
+ 	return true;
+ }
+ 
+@@ -1318,6 +1322,10 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
+ 	host_params.hs_rx_gear = UFS_HS_G5;
+ 	host_params.hs_tx_gear = UFS_HS_G5;
+ 
++	if (dev_max_params->pwr_rx == SLOW_MODE ||
++	    dev_max_params->pwr_tx == SLOW_MODE)
++		host_params.desired_working_mode = UFS_PWM_MODE;
++
+ 	ret = ufshcd_negotiate_pwr_params(&host_params, dev_max_params, dev_req_params);
+ 	if (ret) {
+ 		pr_info("%s: failed to determine capabilities\n",
+@@ -1350,10 +1358,21 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
+ 		}
  	}
-+	ioc_status = readl(&mrioc->sysif_regs->ioc_status);
-+	ioc_state = mpi3mr_get_iocstate(mrioc);
-+	if ((ioc_status & MPI3_SYSIF_IOC_STATUS_RESET_HISTORY) ||
-+	    ioc_state != MRIOC_STATE_READY) {
-+		mpi3mr_print_fault_info(mrioc);
-+		retval = -1;
-+		goto out_failed;
-+	}
- 	mrioc->num_op_reply_q = mrioc->num_op_req_q = i;
- 	ioc_info(mrioc,
- 	    "successfully created %d operational queue pairs(default/polled) queue = (%d/%d)\n",
+ 
+-	if (host->hw_ver.major >= 3) {
++	if (dev_req_params->pwr_rx == FAST_MODE ||
++	    dev_req_params->pwr_rx == FASTAUTO_MODE) {
++		if (host->hw_ver.major >= 3) {
++			ret = ufshcd_dme_configure_adapt(hba,
++						   dev_req_params->gear_tx,
++						   PA_INITIAL_ADAPT);
++		} else {
++			ret = ufshcd_dme_configure_adapt(hba,
++				   dev_req_params->gear_tx,
++				   PA_NO_ADAPT);
++		}
++	} else {
+ 		ret = ufshcd_dme_configure_adapt(hba,
+-					   dev_req_params->gear_tx,
+-					   PA_INITIAL_ADAPT);
++			   dev_req_params->gear_tx,
++			   PA_NO_ADAPT);
+ 	}
+ 
+ 	return ret;
 -- 
 2.51.0
 
