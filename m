@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4AC27FD72;
-	Tue, 11 Nov 2025 01:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9C30BF66;
+	Tue, 11 Nov 2025 01:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824504; cv=none; b=Fl3mEpxxc+Mzlog4HeAITolm72/6L6ze3h1cf0AgVIrYw/j6nFSaGinR53T2vZCtp4XeHJfe667XzrjTZEb9c1JafX+8vNxzkKV+f96sORZjsVE000u/RoIqIlBZ9cLy4DNCfkZFTazm9tpAqWsrp0vds6/iSgzHpxmLTM21hC4=
+	t=1762824506; cv=none; b=bvsIXbez+yDY2joxnFgOQ6PhHPmbPg5LSihPuFeat3dP5KEAXIOG+DW1AWWeOxVgNVRhN/OYS/zFaWD0E34Yk2cuNSqj1548H7dSlBYbYmIHBzCZn0XkiA569NJBeKpiYdbLh7BmrI+JBckjbhD27JCySPE3TAAaW5huTBHKZpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824504; c=relaxed/simple;
-	bh=0p0q1bZK2NdKQvcSxE0KsrX5XU7MCufUTJkuZa7i3XI=;
+	s=arc-20240116; t=1762824506; c=relaxed/simple;
+	bh=GJDjOwl/RLse9PcpjRrx5BmgzJADvk3ZAPwDO8ioO9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwrH0zGINlE9pF/F5jAbd3UYnW5CQe7Peybm18wvFa/H1hGbHf73/TrgqeaT1V59Xk/ZBN6QY1tIIYCTmtGvarStfjOUlT08x6hBdNZ4DFnt5zuwqbTiqSiWmMcz9oC9+UqyGsMZ7Klw+Hi0DPqk5h3rByIiXmwd2w54+Ngzis8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0KJvnUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=An19mhz+ptzobS44oAFpsNtmd+tb1nqRBMgkQYDGomeBFy+4TlmgtIt9a0Ll9wft8OSCrwqqZIzV42WMhfS5X9jljSKaiqhsUw6hUcDgFtue3W+TolChVb4mql3CFFBBXTuF9TnP//MSjdxBSN/F4aIbQ3RHjK4ZT8WR2L/NArQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywLaJghn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0KJvnUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D25C116D0;
-	Tue, 11 Nov 2025 01:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywLaJghn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27146C4CEFB;
+	Tue, 11 Nov 2025 01:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824504;
-	bh=0p0q1bZK2NdKQvcSxE0KsrX5XU7MCufUTJkuZa7i3XI=;
+	s=korg; t=1762824506;
+	bh=GJDjOwl/RLse9PcpjRrx5BmgzJADvk3ZAPwDO8ioO9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0KJvnUjFm35GuIbdg9GtLqhordzrMVTeyQPgXT5dA3xz6hJIU8Vfdcx1tEohUVdL
-	 OCVeGrntU9n916+WXpgIXvI9izIJtNi+Q0+BIqZpl23YwN6WBIOSYl3gDAOPM1DqJ5
-	 1k8bT8AQbuIhKVhoTSt4Nr0e3Of3+5m6FJ3B1AlU=
+	b=ywLaJghn9Smak+Qhiz/lGfVKDtFBlkEqvcrdNM9Puf+DkJNa2H1wlLGeFJjvv5F/G
+	 Vev9lcBrlYMnvWeFsOl+dHtVWBPHvmwFXo6Fioo7GIvin9nuMm7JE6ts5yFaomt9vi
+	 8ClnmXc7nZXOfGSkp8vEMY7qN1rWFPwkqGgVw+kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	wenglianfa <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 513/849] selftests: traceroute: Use require_command()
-Date: Tue, 11 Nov 2025 09:41:23 +0900
-Message-ID: <20251111004548.833645102@linuxfoundation.org>
+Subject: [PATCH 6.12 459/565] RDMA/hns: Fix the modification of max_send_sge
+Date: Tue, 11 Nov 2025 09:45:15 +0900
+Message-ID: <20251111004537.223227930@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit 47efbac9b768553331b9459743a29861e0acd797 ]
+[ Upstream commit f5a7cbea5411668d429eb4ffe96c4063fe8dac9e ]
 
-Use require_command() so that the test will return SKIP (4) when a
-required command is not present.
+The actual sge number may exceed the value specified in init_attr->cap
+when HW needs extra sge to enable inline feature. Since these extra
+sges are not expected by ULP, return the user-specified value to ULP
+instead of the expanded sge number.
 
-Before:
-
- # ./traceroute.sh
- SKIP: Could not run IPV6 test without traceroute6
- SKIP: Could not run IPV4 test without traceroute
- $ echo $?
- 0
-
-After:
-
- # ./traceroute.sh
- TEST: traceroute6 not installed                                    [SKIP]
- $ echo $?
- 4
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-6-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0c5e259b06a8 ("RDMA/hns: Fix incorrect sge nums calculation")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20251016114051.1963197-3-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/traceroute.sh | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index 282f14760940d..b50e52afa4f49 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -203,11 +203,6 @@ setup_traceroute6()
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 8901c142c1b65..66d4c693694e9 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -662,7 +662,6 @@ static int set_user_sq_size(struct hns_roce_dev *hr_dev,
  
- run_traceroute6()
- {
--	if [ ! -x "$(command -v traceroute6)" ]; then
--		echo "SKIP: Could not run IPV6 test without traceroute6"
--		return
--	fi
--
- 	setup_traceroute6
+ 	hr_qp->sq.wqe_shift = ucmd->log_sq_stride;
+ 	hr_qp->sq.wqe_cnt = cnt;
+-	cap->max_send_sge = hr_qp->sq.max_gs;
  
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
-@@ -268,11 +263,6 @@ setup_traceroute()
+ 	return 0;
+ }
+@@ -744,7 +743,6 @@ static int set_kernel_sq_size(struct hns_roce_dev *hr_dev,
  
- run_traceroute()
- {
--	if [ ! -x "$(command -v traceroute)" ]; then
--		echo "SKIP: Could not run IPV4 test without traceroute"
--		return
--	fi
--
- 	setup_traceroute
+ 	/* sync the parameters of kernel QP to user's configuration */
+ 	cap->max_send_wr = cnt;
+-	cap->max_send_sge = hr_qp->sq.max_gs;
  
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
-@@ -306,6 +296,9 @@ do
- 	esac
- done
- 
-+require_command traceroute6
-+require_command traceroute
-+
- run_tests
- 
- printf "\nTests passed: %3d\n" ${nsuccess}
+ 	return 0;
+ }
 -- 
 2.51.0
 
