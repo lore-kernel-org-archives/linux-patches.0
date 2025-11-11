@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAA1262FEC;
-	Tue, 11 Nov 2025 01:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9F8303A1C;
+	Tue, 11 Nov 2025 01:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824793; cv=none; b=FMd0Hh9EQpzTbJp/gdyWaAikfRMApjCJes7h0SSd7ITV924vl4vLcaZiJPiL9jNHQIH/fPQu9dgMzHiwOELIaKOnx6d+/I4q28Te4+YfCw9QMyH6AM6REjYtrbfli07TKzBrsH7negOzzy4aMFuVrBdWE7STLhbStNsKeuoCJdY=
+	t=1762824795; cv=none; b=X6h4s/0LOfK+atMiRLVks1xV3R6uHIXdtP1fPfTC9SgclvMxwcRjUEUvilUoAKaPiWU8IFhlgbi1uXQoXH2or1RqX3aE3T5IZw94ktX9+D/FeWITVVBNJB2wmoIeT8w3/VcxW8DLu6sHTwTIOS4ER5F1VpFbge9TqPm5ftFyNv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824793; c=relaxed/simple;
-	bh=Coezu9Wl/JWNJGcI6x+JYiUftPatNoMBQDrvLsoGTOo=;
+	s=arc-20240116; t=1762824795; c=relaxed/simple;
+	bh=VrroIApCN0fTLGiHxq5J03MPJnTVqzB0nW/MLgeAnDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DY17YfxpBlWqw0fYMOsIylfu8N19ynRIa62jDNmbiIlz2vsI940D4CWvFxzhRsLiZ/Dpi/hqYVtloX/sM6e7p9VEPgO6nK3cOLLDjDyOYlJoIgzzP7ZaJPXjksJyyeU3zn5KQei1G+oEOjjldN4RQj3eYnW8AyBaWxhF5U58/e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qez51ZZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxvQM2hZDxM4MQ46NM6kcHgCBKjmPtwxm+HwVDZK6BkWrP/JXpuKBNoE18PZqBtUVk2l/8RcYkKXOgzcClY+UnAN0iAFPeBaQYcgmo5OUvrhWWKhz6ryz8QTKlVSmYR0slVtVJq1T3Q/dWRVnXMK3wbkxo6y3Uy5Pzo/L1mY+pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laRr7jA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qez51ZZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A0C4CEF5;
-	Tue, 11 Nov 2025 01:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laRr7jA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593A3C16AAE;
+	Tue, 11 Nov 2025 01:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824793;
-	bh=Coezu9Wl/JWNJGcI6x+JYiUftPatNoMBQDrvLsoGTOo=;
+	s=korg; t=1762824795;
+	bh=VrroIApCN0fTLGiHxq5J03MPJnTVqzB0nW/MLgeAnDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qez51ZZBvYrXlGjnBv90rbAgP0cQejWvB3izmJS0FsSYPd+QWrrxDNJgnouu6rGh/
-	 syHh9D4ommjkFElw6S0myUkz80ih3v4B/JtaVOdlLu0X7SK5yAZfuTBdfhUArMFNpa
-	 BwY4FcYuz4HjPhmKanNFHIUyxNDXSpb7SH+eRKSs=
+	b=laRr7jA8tSQxMirsLdkCIVmClVllbbAGeShAiwGkXqGOh1oq9p9VXsPJejerYi/hn
+	 dx9eQhU+S13YgNsNDeVgmvnZjerM9y+OL+ZchIQxLPKhJvy3GmbUWXsbG4L1vTi6Iu
+	 d6nVzTPPudMq/0bglft42IqsF2sMqjBuGip9ArsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 518/565] gpiolib: fix invalid pointer access in debugfs
-Date: Tue, 11 Nov 2025 09:46:14 +0900
-Message-ID: <20251111004538.612759596@linuxfoundation.org>
+Subject: [PATCH 6.17 571/849] scsi: ufs: core: Disable timestamp functionality if not supported
+Date: Tue, 11 Nov 2025 09:42:21 +0900
+Message-ID: <20251111004550.219818985@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +51,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 2f6115ad8864cf3f48598f26c74c7c8e5c391919 ]
+[ Upstream commit fb1f4568346153d2f80fdb4ffcfa0cf4fb257d3c ]
 
-If the memory allocation in gpiolib_seq_start() fails, the s->private
-field remains uninitialized and is later dereferenced without checking
-in gpiolib_seq_stop(). Initialize s->private to NULL before calling
-kzalloc() and check it before dereferencing it.
+Some Kioxia UFS 4 devices do not support the qTimestamp attribute.  Set
+the UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT for these devices such that no
+error messages appear in the kernel log about failures to set the
+qTimestamp attribute.
 
-Fixes: e348544f7994 ("gpio: protect the list of GPIO devices with SRCU")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20251103141132.53471-1-brgl@bgdev.pl
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Tested-by: Nitin Rawat <quic_nitirawa@quicinc.com> # on SM8650-QRD
+Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Message-ID: <20250909190614.3531435-1-bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 6 +++++-
+ include/ufs/ufs_quirks.h  | 3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index e5d0d2b0d7989..967ff661e4c96 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -4997,6 +4997,8 @@ static void *gpiolib_seq_start(struct seq_file *s, loff_t *pos)
- 	struct gpio_device *gdev;
- 	loff_t index = *pos;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 8bb6c48216963..bd6d1d4c82427 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -316,6 +316,9 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
+ 	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+ 	  .model = "THGLF2G9D8KBADG",
+ 	  .quirk = UFS_DEVICE_QUIRK_PA_TACTIVATE },
++	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
++	  .model = "THGJFJT1E45BATP",
++	  .quirk = UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT },
+ 	{}
+ };
  
-+	s->private = NULL;
+@@ -8794,7 +8797,8 @@ static void ufshcd_set_timestamp_attr(struct ufs_hba *hba)
+ 	struct ufs_dev_info *dev_info = &hba->dev_info;
+ 	struct utp_upiu_query_v4_0 *upiu_data;
+ 
+-	if (dev_info->wspecversion < 0x400)
++	if (dev_info->wspecversion < 0x400 ||
++	    hba->dev_quirks & UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT)
+ 		return;
+ 
+ 	ufshcd_dev_man_lock(hba);
+diff --git a/include/ufs/ufs_quirks.h b/include/ufs/ufs_quirks.h
+index f52de5ed1b3b6..83563247c36cb 100644
+--- a/include/ufs/ufs_quirks.h
++++ b/include/ufs/ufs_quirks.h
+@@ -113,4 +113,7 @@ struct ufs_dev_quirk {
+  */
+ #define UFS_DEVICE_QUIRK_PA_HIBER8TIME          (1 << 12)
+ 
++/* Some UFS 4 devices do not support the qTimestamp attribute */
++#define UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT	(1 << 13)
 +
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return NULL;
-@@ -5030,7 +5032,11 @@ static void *gpiolib_seq_next(struct seq_file *s, void *v, loff_t *pos)
- 
- static void gpiolib_seq_stop(struct seq_file *s, void *v)
- {
--	struct gpiolib_seq_priv *priv = s->private;
-+	struct gpiolib_seq_priv *priv;
-+
-+	priv = s->private;
-+	if (!priv)
-+		return;
- 
- 	srcu_read_unlock(&gpio_devices_srcu, priv->idx);
- 	kfree(priv);
+ #endif /* UFS_QUIRKS_H_ */
 -- 
 2.51.0
 
