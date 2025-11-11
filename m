@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F073726D4C7;
-	Tue, 11 Nov 2025 01:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED9E2DE707;
+	Tue, 11 Nov 2025 01:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824698; cv=none; b=rcVM8aJUoanOYnFvxVbvP1g984i8bl3mfmux6HKQrVcSmtkClXM6QmOssCPk0504OULr5yVy6RqYGRA30UNCKgOGdTrCMvOlxQXrzPxXboURfamRqZuIkLnRQVW4Pj031mj+m1qFp8SNVR9r3AOWuYRNsQdt0z5Pm2eIxZ4fqXs=
+	t=1762824700; cv=none; b=OGVSOg7qf1Urge402NzOnIr/AiI/yR+c9YxD+MvNq/FFbDoq+3YGbnzjY3LSGGaLzRnhoy4qNS/BwL9Satg7ji/3gvsMZVGvfvd6FDBVDGMduItmDcvhktIJRdpKsi5AX5ON6zblz9KsixGqiQVFRthyfGQZCJ8xSahph/ooP1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824698; c=relaxed/simple;
-	bh=bhFDN3PWoj8/3OXaqyoO1CCY7Aj/ZdVs77DZl7y9SeQ=;
+	s=arc-20240116; t=1762824700; c=relaxed/simple;
+	bh=1veMqOIlF2DhuEpuLQsDYAoqufV84kmi2FBw4ExIPgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3GVDv+zWfB/OFfhd/zfLJHRcsGpEzztQx7r01fEBxesTxcCBOveBTh4FCXkRBSrTCFGZlO4y76uMBaIuni3Z1I31UGPZM54ej+2Bj5iSe0Tl8jRVE76T+l3Qx1/mtf2Y+rWFgsWeRVSnBJLpOju3Fonh2SL7QH4xizbo9gPOew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWJLrIjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPwlppK3v94Y3wA3YWvcAWkM3TPYBeT9NLmhXAsMrkTK96mQIoBTrgNIJrtMWhOR206aqYOj/1yS6mVvP8GGkZLGarVr2iUKMDzgPP97mM1tNJEAvD//brOXCvJq8ONNvgv4LyG3qp5JJYwtZGtROkq6OZXSMN9JmlPTJeBvXa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Od55mhKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWJLrIjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926CFC4CEFB;
-	Tue, 11 Nov 2025 01:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Od55mhKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7D3C4AF0C;
+	Tue, 11 Nov 2025 01:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824697;
-	bh=bhFDN3PWoj8/3OXaqyoO1CCY7Aj/ZdVs77DZl7y9SeQ=;
+	s=korg; t=1762824700;
+	bh=1veMqOIlF2DhuEpuLQsDYAoqufV84kmi2FBw4ExIPgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWJLrIjM/bGiHWey+Wf9yZlLb7SlInyVUs51J7Gl9Y0zv5X8XDEWC0W9X/WekuOOf
-	 3wfaNAPag5FMhkQGawxnc47zKtU9RmA4SXCgznG2hPjF3PiRE9DOsR6buhZhJc38YC
-	 aYVtMNKGDGlT1W8vBZVg/e3VRy3A50kIqJM+H8Xs=
+	b=Od55mhKtkO31F+xDNk/azvsV+g4oeg5KbBliLlIO3Vs84y3ERPutAwzLhoD86kux8
+	 OZ+A23bOopCdODjGe9IB20M10ANq9uZftyZRoEzCEAXGtmjvjP5FOKCoUk4pR1fPy1
+	 ZunAhaYHE4coBJ5luNUypY3UwOvA/Uruue6nXap4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 500/565] btrfs: ensure no dirty metadata is written back for an fs with errors
-Date: Tue, 11 Nov 2025 09:45:56 +0900
-Message-ID: <20251111004538.188042778@linuxfoundation.org>
+	Leo Chen <leo.chen@amd.com>,
+	Ausef Yousof <Ausef.Yousof@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 553/849] drm/amd/display: fix dml ms order of operations
+Date: Tue, 11 Nov 2025 09:42:03 +0900
+Message-ID: <20251111004549.777561885@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +50,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ausef Yousof <Ausef.Yousof@amd.com>
 
-commit 2618849f31e7cf51fadd4a5242458501a6d5b315 upstream.
+[ Upstream commit 02a6c2e4b28ff31f7a904c196a99fb2efe81e2cf ]
 
-[BUG]
-During development of a minor feature (make sure all btrfs_bio::end_io()
-is called in task context), I noticed a crash in generic/388, where
-metadata writes triggered new works after btrfs_stop_all_workers().
+[why&how]
+small error in order of operations in immediateflipbytes
+calculation on dml ms side that can result in dml ms
+and mp mismatch immediateflip support for a given pipe
+and thus an invalid hw state, correct the order to align
+with mp.
 
-It turns out that it can even happen without any code modification, just
-using RAID5 for metadata and the same workload from generic/388 is going
-to trigger the use-after-free.
-
-[CAUSE]
-If btrfs hits an error, the fs is marked as error, no new
-transaction is allowed thus metadata is in a frozen state.
-
-But there are some metadata modifications before that error, and they are
-still in the btree inode page cache.
-
-Since there will be no real transaction commit, all those dirty folios
-are just kept as is in the page cache, and they can not be invalidated
-by invalidate_inode_pages2() call inside close_ctree(), because they are
-dirty.
-
-And finally after btrfs_stop_all_workers(), we call iput() on btree
-inode, which triggers writeback of those dirty metadata.
-
-And if the fs is using RAID56 metadata, this will trigger RMW and queue
-new works into rmw_workers, which is already stopped, causing warning
-from queue_work() and use-after-free.
-
-[FIX]
-Add a special handling for write_one_eb(), that if the fs is already in
-an error state, immediately mark the bbio as failure, instead of really
-submitting them.
-
-Then during close_ctree(), iput() will just discard all those dirty
-tree blocks without really writing them back, thus no more new jobs for
-already stopped-and-freed workqueues.
-
-The extra discard in write_one_eb() also acts as an extra safenet.
-E.g. the transaction abort is triggered by some extent/free space
-tree corruptions, and since extent/free space tree is already corrupted
-some tree blocks may be allocated where they shouldn't be (overwriting
-existing tree blocks). In that case writing them back will further
-corrupting the fs.
-
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Leo Chen <leo.chen@amd.com>
+Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1882,6 +1882,14 @@ static noinline_for_stack void write_one
- 			folio_unlock(folio);
- 		}
- 	}
-+	/*
-+	 * If the fs is already in error status, do not submit any writeback
-+	 * but immediately finish it.
-+	 */
-+	if (unlikely(BTRFS_FS_ERROR(fs_info))) {
-+		btrfs_bio_end_io(bbio, errno_to_blk_status(BTRFS_FS_ERROR(fs_info)));
-+		return;
-+	}
- 	btrfs_submit_bbio(bbio, 0);
- }
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+index 715f9019a33e2..4b9b2e84d3811 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+@@ -6529,7 +6529,7 @@ static noinline_for_stack void dml_prefetch_check(struct display_mode_lib_st *mo
+ 				mode_lib->ms.TotImmediateFlipBytes = 0;
+ 				for (k = 0; k <= mode_lib->ms.num_active_planes - 1; k++) {
+ 					if (!(mode_lib->ms.policy.ImmediateFlipRequirement[k] == dml_immediate_flip_not_required)) {
+-						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k];
++						mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k] + mode_lib->ms.MetaRowBytes[j][k]);
+ 						if (mode_lib->ms.use_one_row_for_frame_flip[j][k]) {
+ 							mode_lib->ms.TotImmediateFlipBytes = mode_lib->ms.TotImmediateFlipBytes + mode_lib->ms.NoOfDPP[j][k] * (2 * mode_lib->ms.DPTEBytesPerRow[j][k]);
+ 						} else {
+-- 
+2.51.0
+
 
 
