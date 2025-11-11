@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15C26ED4A;
-	Tue, 11 Nov 2025 01:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C829F340D8C;
+	Tue, 11 Nov 2025 01:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824610; cv=none; b=lTu7QeGTSmd57iXuqk1AQwlhI1fXbEMxRK1WpsVd/lO9b0yqqkFBKe7vg6jHz8BFDzQGyuRUH2ORnBCtYOTGgtmPyyehh4+6JvKkjGdU7KJwuxubquTBQoJSv4CsOPcvE5JNcu/Ypxh9WrUq1csXhi7HtWIBSTVU4YafdUtw8v8=
+	t=1762824612; cv=none; b=Pog49A6xI0XfwOkuPBozO2dPJfDjxOc6fTrKJh547S1eYuYDC0hUrXGF7PI2Y3JJfuC4dB0u1IYTWzIq4GqqhQwFPD4BmEzPpULOB0nEJO+U8s15+mV2WfhK76jKL1ydEgoC0kwF5bAnsB1EAYixGnSTtG4vsdcxPpHmDQqEmcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824610; c=relaxed/simple;
-	bh=pbxF12dU4kM9r60W70vVzYGjiXw5/iSALZEFNe8WUYw=;
+	s=arc-20240116; t=1762824612; c=relaxed/simple;
+	bh=uS3Webz7eflAnPlyAStcO+pT7c7loLztxLMfqo9zzUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQV6AfdV4XnVbSZeVboYk/W9J5llTotjTtd6ccmKFkyrp5uRRofMXpMrixlxQoZ8sfVXjnN7ePDhjKRP3Tny6b9QaQHahyxQ8nvyiqmYqfd/syWm3Hxc5rMMebwRFD3aUjtWDh1YDKP25tgKHQ+NZNJofibPeYmp/rK8VXyrSFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FN+jecV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvwXCe4+Hq34c5OQudFzfSZCFF+DSpaOU+j7THiNKwXYJ5kk3vpZFNQEM4JCx+jLas0iJIxrWnc5YZb61YP41aX03v7Y2NXa9ZGZZvVZue4bEFTqcfCSTaqPoHipymL3wOmTyJ/e3/PS7rf/fg19TD2UGxax/wLZ2XfO7no0Un0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgU4pBHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FN+jecV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E47C16AAE;
-	Tue, 11 Nov 2025 01:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgU4pBHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6692CC16AAE;
+	Tue, 11 Nov 2025 01:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824610;
-	bh=pbxF12dU4kM9r60W70vVzYGjiXw5/iSALZEFNe8WUYw=;
+	s=korg; t=1762824612;
+	bh=uS3Webz7eflAnPlyAStcO+pT7c7loLztxLMfqo9zzUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FN+jecVVIBOam7s0FBFQUqe7rCewk+cR45LH/mQie4YgOGFv6fZJa4kRb2ySYieU
-	 JjXecjqntmvv4K5Hpn0IRHKnobvRvp0Gzklixor6cwfP1QlINMqlRGJMy2j12rXTN8
-	 faVzISg+3wbtuhmUfVr7Q2baLGn7HgOBfReQxmSE=
+	b=qgU4pBHpFwlh0NiyarAD9u4U1RctvcE3k/CUokbqBFLSiBYZUL+mZxouXufbEaFwV
+	 wpmvzUMBx8M0yEWgz/NjuyakPJNl4slp4uX3zZxLxZ4t7Cm35iCe8qejWSDR6YDH3C
+	 D6NRlxtdsU3795y1vGGMxngum6pbBqHgTZqcPpic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Randall P. Embry" <rpembry@gmail.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Shannon Nelson <sln@onemain.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 479/565] 9p: sysfs_init: dont hardcode error to ENOMEM
-Date: Tue, 11 Nov 2025 09:45:35 +0900
-Message-ID: <20251111004537.694728044@linuxfoundation.org>
+Subject: [PATCH 6.17 534/849] ionic: use int type for err in ionic_get_module_eeprom_by_page
+Date: Tue, 11 Nov 2025 09:41:44 +0900
+Message-ID: <20251111004549.327504070@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randall P. Embry <rpembry@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 528f218b31aac4bbfc58914d43766a22ab545d48 ]
+[ Upstream commit d586676a2714176bed06cf70467c4e08ac2d4681 ]
 
-v9fs_sysfs_init() always returned -ENOMEM on failure;
-return the actual sysfs_create_group() error instead.
+The variable 'err' is declared as u32, but it is used to store
+negative error codes such as -EINVAL.
 
-Signed-off-by: Randall P. Embry <rpembry@gmail.com>
-Message-ID: <20250926-v9fs_misc-v1-3-a8b3907fc04d@codewreck.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Changing the type of 'err' to int ensures proper representation of
+negative error codes and aligns with standard kernel error handling
+conventions.
+
+Also, there is no need to initialize 'err' since it is always set
+before being used.
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Shannon Nelson <sln@onemain.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://patch.msgid.link/20250912141426.3922545-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index e35b30534787d..ccf00a948146a 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -597,13 +597,16 @@ static const struct attribute_group v9fs_attr_group = {
- 
- static int __init v9fs_sysfs_init(void)
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index 92f30ff2d6316..2d9efadb5d2ae 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -978,7 +978,7 @@ static int ionic_get_module_eeprom_by_page(struct net_device *netdev,
  {
-+	int ret;
-+
- 	v9fs_kobj = kobject_create_and_add("9p", fs_kobj);
- 	if (!v9fs_kobj)
- 		return -ENOMEM;
+ 	struct ionic_lif *lif = netdev_priv(netdev);
+ 	struct ionic_dev *idev = &lif->ionic->idev;
+-	u32 err = -EINVAL;
++	int err;
+ 	u8 *src;
  
--	if (sysfs_create_group(v9fs_kobj, &v9fs_attr_group)) {
-+	ret = sysfs_create_group(v9fs_kobj, &v9fs_attr_group);
-+	if (ret) {
- 		kobject_put(v9fs_kobj);
--		return -ENOMEM;
-+		return ret;
- 	}
- 
- 	return 0;
+ 	if (!page_data->length)
 -- 
 2.51.0
 
