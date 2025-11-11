@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4877C26E71F;
-	Tue, 11 Nov 2025 01:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7FF26E158;
+	Tue, 11 Nov 2025 01:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824344; cv=none; b=JOem77q7GxvBW2f8oMSeCQU9aWLynQ5sY7O71sZLZh4KE69ZcbRLGOEOv0SILycrW5VHUE9pKQNd8Nm4uFKdLrSjJYiPo2OtsdinMyd7f2tYPDqrisSVN8HCIhZk5lFN9MQBXvRrqUUerm+Gm/dX7TWqlm/yYRAqddVvVX/2aZs=
+	t=1762824347; cv=none; b=V4lZbSpiUfncRxSe3zEM97ZGmBRMfsowvD27Z1Ejtso8LDnwpXd7tOUYz1/JPBxGiTXCZVqBcM4phgx7Yj8H/v5/yTgmpk3U/E8BR9MxgCALRLiLJfy8QLqM8YRZhoNTUjOaf5fQywnifvW1E9aof2q8WRU2joNCtD6HKsbaJHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824344; c=relaxed/simple;
-	bh=IwmoZNLKSs1O6K75p6G5UR4Km81rQeT/yi8PLAMN1jY=;
+	s=arc-20240116; t=1762824347; c=relaxed/simple;
+	bh=21lDTjUr7yDI/czM3QM34TZU2yvHimMWlS5K3t5cQU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OovmOdQ+NrR/SleXIsgoh+F5J98Nmsw1pfs0RgViTe56zj5OZS29kO9JyI5ZNfwqLtiE48eQzYNDwHFt6VzdHGEdqjw5YxxHSdlIwXx3UhrzKaFDatOxk2M+vV3FbrgqB7u8x5isxvk847TZoWDqEgaiRj+uslbU5gA/CzMn0Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZFNLjeP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZeLdzNe5icvrUxD6opI3KXZg2qNHhQ8K6auPsBTYqFwo9hEyl9Z9mmL70I0HvYsfed5Uwb11xymjwscIOG0zgDYqdmE9lttCuZFG/XeP81QDy8ds7v+Je0ej4ppG6o0R8kWXB6rg1YDtNBuL4tFK2plEeiqpaRWKPLA8jK4+qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b252c2GZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZFNLjeP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D507CC116D0;
-	Tue, 11 Nov 2025 01:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b252c2GZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F13C4CEFB;
+	Tue, 11 Nov 2025 01:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824344;
-	bh=IwmoZNLKSs1O6K75p6G5UR4Km81rQeT/yi8PLAMN1jY=;
+	s=korg; t=1762824346;
+	bh=21lDTjUr7yDI/czM3QM34TZU2yvHimMWlS5K3t5cQU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZFNLjePRXb+qchwTYnt+4GHrYbkez49uy5Nwgv1dMc9ntIIF1vNnS25b0CIflAiF
-	 VNSEGxKT0v0Kb/Ft0L522hfvOhq5/0tdgXlNuPHYlKfehW7U43jpuhxn2LUw2CINlo
-	 dMSZJRWJTWvkq+afviqkg+O55Mni0laF50bXMe18=
+	b=b252c2GZPdbJaohi/kfOef5GBJdiA9B4wTfEOouWIdet6VSa+a+G4Kogu67TWnHui
+	 IuH40gkuGB2UM34QxImntuXdGehxYvhmZ458Ui/ZTcT6prkh+7DG2AXvwq2MfU4ViE
+	 Q3R8HKJJWtM/7IjbKnDd274Ieb7/rwLjSElQ3hVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Ramu R <ramu.r@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Subject: [PATCH 6.17 477/849] idpf: link NAPIs to queues
-Date: Tue, 11 Nov 2025 09:40:47 +0900
-Message-ID: <20251111004547.976302591@linuxfoundation.org>
+	Moti Haimovski <moti.haimovski@intel.com>,
+	Koby Elbaz <koby.elbaz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 426/565] accel/habanalabs: support mapping cb with vmalloc-backed coherent memory
+Date: Tue, 11 Nov 2025 09:44:42 +0900
+Message-ID: <20251111004536.447384573@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,231 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Moti Haimovski <moti.haimovski@intel.com>
 
-[ Upstream commit bd74a86bc75d35adefbebcec7c3a743d02c06230 ]
+[ Upstream commit 513024d5a0e34fd34247043f1876b6138ca52847 ]
 
-Add the missing linking of NAPIs to netdev queues when enabling
-interrupt vectors in order to support NAPI configuration and
-interfaces requiring get_rx_queue()->napi to be set (like XSk
-busy polling).
+When IOMMU is enabled, dma_alloc_coherent() with GFP_USER may return
+addresses from the vmalloc range. If such an address is mapped without
+VM_MIXEDMAP, vm_insert_page() will trigger a BUG_ON due to the
+VM_PFNMAP restriction.
 
-As currently, idpf_vport_{start,stop}() is called from several flows
-with inconsistent RTNL locking, we need to synchronize them to avoid
-runtime assertions. Notably:
+Fix this by checking for vmalloc addresses and setting VM_MIXEDMAP
+in the VMA before mapping. This ensures safe mapping and avoids kernel
+crashes. The memory is still driver-allocated and cannot be accessed
+directly by userspace.
 
-* idpf_{open,stop}() -- regular NDOs, RTNL is always taken;
-* idpf_initiate_soft_reset() -- usually called under RTNL;
-* idpf_init_task -- called from the init work, needs RTNL;
-* idpf_vport_dealloc -- called without RTNL taken, needs it.
-
-Expand common idpf_vport_{start,stop}() to take an additional bool
-telling whether we need to manually take the RTNL lock.
-
-Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # helper
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Ramu R <ramu.r@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Moti Haimovski  <moti.haimovski@intel.com>
+Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c  | 38 +++++++++++++++------
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 17 +++++++++
- 2 files changed, 45 insertions(+), 10 deletions(-)
+ drivers/accel/habanalabs/gaudi/gaudi.c   | 19 +++++++++++++++++++
+ drivers/accel/habanalabs/gaudi2/gaudi2.c |  7 +++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index e327950c93d8e..f4b89d222610f 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -884,14 +884,18 @@ static void idpf_remove_features(struct idpf_vport *vport)
- /**
-  * idpf_vport_stop - Disable a vport
-  * @vport: vport to disable
-+ * @rtnl: whether to take RTNL lock
-  */
--static void idpf_vport_stop(struct idpf_vport *vport)
-+static void idpf_vport_stop(struct idpf_vport *vport, bool rtnl)
- {
- 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+diff --git a/drivers/accel/habanalabs/gaudi/gaudi.c b/drivers/accel/habanalabs/gaudi/gaudi.c
+index fa893a9b826ec..34771d75da9d7 100644
+--- a/drivers/accel/habanalabs/gaudi/gaudi.c
++++ b/drivers/accel/habanalabs/gaudi/gaudi.c
+@@ -4168,10 +4168,29 @@ static int gaudi_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
+ 	vm_flags_set(vma, VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP |
+ 			VM_DONTCOPY | VM_NORESERVE);
  
- 	if (np->state <= __IDPF_VPORT_DOWN)
- 		return;
- 
-+	if (rtnl)
-+		rtnl_lock();
++#ifdef _HAS_DMA_MMAP_COHERENT
++	/*
++	 * If dma_alloc_coherent() returns a vmalloc address, set VM_MIXEDMAP
++	 * so vm_insert_page() can handle it safely. Without this, the kernel
++	 * may BUG_ON due to VM_PFNMAP.
++	 */
++	if (is_vmalloc_addr(cpu_addr))
++		vm_flags_set(vma, VM_MIXEDMAP);
 +
- 	netif_carrier_off(vport->netdev);
- 	netif_tx_disable(vport->netdev);
- 
-@@ -913,6 +917,9 @@ static void idpf_vport_stop(struct idpf_vport *vport)
- 	idpf_vport_queues_rel(vport);
- 	idpf_vport_intr_rel(vport);
- 	np->state = __IDPF_VPORT_DOWN;
+ 	rc = dma_mmap_coherent(hdev->dev, vma, cpu_addr,
+ 				(dma_addr - HOST_PHYS_BASE), size);
+ 	if (rc)
+ 		dev_err(hdev->dev, "dma_mmap_coherent error %d", rc);
++#else
 +
-+	if (rtnl)
-+		rtnl_unlock();
++	rc = remap_pfn_range(vma, vma->vm_start,
++				virt_to_phys(cpu_addr) >> PAGE_SHIFT,
++				size, vma->vm_page_prot);
++	if (rc)
++		dev_err(hdev->dev, "remap_pfn_range error %d", rc);
++
++ #endif
++
+ 
+ 	return rc;
  }
+diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
+index 3df72a5d024a6..b957957df3d3a 100644
+--- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
++++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
+@@ -6490,6 +6490,13 @@ static int gaudi2_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
+ 			VM_DONTCOPY | VM_NORESERVE);
  
- /**
-@@ -936,7 +943,7 @@ static int idpf_stop(struct net_device *netdev)
- 	idpf_vport_ctrl_lock(netdev);
- 	vport = idpf_netdev_to_vport(netdev);
+ #ifdef _HAS_DMA_MMAP_COHERENT
++	/*
++	 * If dma_alloc_coherent() returns a vmalloc address, set VM_MIXEDMAP
++	 * so vm_insert_page() can handle it safely. Without this, the kernel
++	 * may BUG_ON due to VM_PFNMAP.
++	 */
++	if (is_vmalloc_addr(cpu_addr))
++		vm_flags_set(vma, VM_MIXEDMAP);
  
--	idpf_vport_stop(vport);
-+	idpf_vport_stop(vport, false);
- 
- 	idpf_vport_ctrl_unlock(netdev);
- 
-@@ -1029,7 +1036,7 @@ static void idpf_vport_dealloc(struct idpf_vport *vport)
- 	idpf_idc_deinit_vport_aux_device(vport->vdev_info);
- 
- 	idpf_deinit_mac_addr(vport);
--	idpf_vport_stop(vport);
-+	idpf_vport_stop(vport, true);
- 
- 	if (!test_bit(IDPF_HR_RESET_IN_PROG, adapter->flags))
- 		idpf_decfg_netdev(vport);
-@@ -1370,8 +1377,9 @@ static void idpf_rx_init_buf_tail(struct idpf_vport *vport)
- /**
-  * idpf_vport_open - Bring up a vport
-  * @vport: vport to bring up
-+ * @rtnl: whether to take RTNL lock
-  */
--static int idpf_vport_open(struct idpf_vport *vport)
-+static int idpf_vport_open(struct idpf_vport *vport, bool rtnl)
- {
- 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
- 	struct idpf_adapter *adapter = vport->adapter;
-@@ -1381,6 +1389,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 	if (np->state != __IDPF_VPORT_DOWN)
- 		return -EBUSY;
- 
-+	if (rtnl)
-+		rtnl_lock();
-+
- 	/* we do not allow interface up just yet */
- 	netif_carrier_off(vport->netdev);
- 
-@@ -1388,7 +1399,7 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 	if (err) {
- 		dev_err(&adapter->pdev->dev, "Failed to allocate interrupts for vport %u: %d\n",
- 			vport->vport_id, err);
--		return err;
-+		goto err_rtnl_unlock;
- 	}
- 
- 	err = idpf_vport_queues_alloc(vport);
-@@ -1475,6 +1486,9 @@ static int idpf_vport_open(struct idpf_vport *vport)
- 		goto deinit_rss;
- 	}
- 
-+	if (rtnl)
-+		rtnl_unlock();
-+
- 	return 0;
- 
- deinit_rss:
-@@ -1492,6 +1506,10 @@ static int idpf_vport_open(struct idpf_vport *vport)
- intr_rel:
- 	idpf_vport_intr_rel(vport);
- 
-+err_rtnl_unlock:
-+	if (rtnl)
-+		rtnl_unlock();
-+
- 	return err;
- }
- 
-@@ -1572,7 +1590,7 @@ void idpf_init_task(struct work_struct *work)
- 	np = netdev_priv(vport->netdev);
- 	np->state = __IDPF_VPORT_DOWN;
- 	if (test_and_clear_bit(IDPF_VPORT_UP_REQUESTED, vport_config->flags))
--		idpf_vport_open(vport);
-+		idpf_vport_open(vport, true);
- 
- 	/* Spawn and return 'idpf_init_task' work queue until all the
- 	 * default vports are created
-@@ -1962,7 +1980,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 		idpf_send_delete_queues_msg(vport);
- 	} else {
- 		set_bit(IDPF_VPORT_DEL_QUEUES, vport->flags);
--		idpf_vport_stop(vport);
-+		idpf_vport_stop(vport, false);
- 	}
- 
- 	idpf_deinit_rss(vport);
-@@ -1992,7 +2010,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 		goto err_open;
- 
- 	if (current_state == __IDPF_VPORT_UP)
--		err = idpf_vport_open(vport);
-+		err = idpf_vport_open(vport, false);
- 
- 	goto free_vport;
- 
-@@ -2002,7 +2020,7 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
- 
- err_open:
- 	if (current_state == __IDPF_VPORT_UP)
--		idpf_vport_open(vport);
-+		idpf_vport_open(vport, false);
- 
- free_vport:
- 	kfree(new_vport);
-@@ -2240,7 +2258,7 @@ static int idpf_open(struct net_device *netdev)
- 	if (err)
- 		goto unlock;
- 
--	err = idpf_vport_open(vport);
-+	err = idpf_vport_open(vport, false);
- 
- unlock:
- 	idpf_vport_ctrl_unlock(netdev);
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index e75a94d7ac2ac..92634c4bb369a 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3430,6 +3430,20 @@ void idpf_vport_intr_rel(struct idpf_vport *vport)
- 	vport->q_vectors = NULL;
- }
- 
-+static void idpf_q_vector_set_napi(struct idpf_q_vector *q_vector, bool link)
-+{
-+	struct napi_struct *napi = link ? &q_vector->napi : NULL;
-+	struct net_device *dev = q_vector->vport->netdev;
-+
-+	for (u32 i = 0; i < q_vector->num_rxq; i++)
-+		netif_queue_set_napi(dev, q_vector->rx[i]->idx,
-+				     NETDEV_QUEUE_TYPE_RX, napi);
-+
-+	for (u32 i = 0; i < q_vector->num_txq; i++)
-+		netif_queue_set_napi(dev, q_vector->tx[i]->idx,
-+				     NETDEV_QUEUE_TYPE_TX, napi);
-+}
-+
- /**
-  * idpf_vport_intr_rel_irq - Free the IRQ association with the OS
-  * @vport: main vport structure
-@@ -3450,6 +3464,7 @@ static void idpf_vport_intr_rel_irq(struct idpf_vport *vport)
- 		vidx = vport->q_vector_idxs[vector];
- 		irq_num = adapter->msix_entries[vidx].vector;
- 
-+		idpf_q_vector_set_napi(q_vector, false);
- 		kfree(free_irq(irq_num, q_vector));
- 	}
- }
-@@ -3637,6 +3652,8 @@ static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
- 				   "Request_irq failed, error: %d\n", err);
- 			goto free_q_irqs;
- 		}
-+
-+		idpf_q_vector_set_napi(q_vector, true);
- 	}
- 
- 	return 0;
+ 	rc = dma_mmap_coherent(hdev->dev, vma, cpu_addr, dma_addr, size);
+ 	if (rc)
 -- 
 2.51.0
 
