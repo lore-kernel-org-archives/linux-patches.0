@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7214C26ED5E;
-	Tue, 11 Nov 2025 01:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D3226ED5E;
+	Tue, 11 Nov 2025 01:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823311; cv=none; b=D9EmTY/rTumrOx2L6tm48pJ+l7zQThzAmJhvzU/HTnzhTaG1pbHae8n6lZv48GfDKGJxjvNO8ftFMk6wMUe1Al2yDwj2tGYR8LtE3/JeD76wYjjRcEOAms36gW51anDwPz9zkCvqa1XL2/Q0qtzFP1IUSg/WUuGSlqUtTQY/VOk=
+	t=1762823313; cv=none; b=Box1zY1CAAFB8URddiSnZ4JH1XPBF6gO8xaiLfuSwoxX2xEghk24MnJEDz04BegrHz6sVNlV7NS1vYuMhss6kZRwb8w9arR7HorLSuWe08Dj1d7f0zGKOqrDgJZsH4dGbAXDJBSZW4nk8ZbsW3+KIqNzI1Z1u7DJ9pLF/I9DV50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823311; c=relaxed/simple;
-	bh=QJIU0YVI4OBdZxwPH2n7SoxIvZWGzVvKpflxEawhEVk=;
+	s=arc-20240116; t=1762823313; c=relaxed/simple;
+	bh=P9pnHyEDNpAHWJ63PfhV0ah4+Hpvy9qFAODYxJwkDYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMTAEfB+RsJZhp20z9TTLEh0GoCYamaQ64CySImXu/+ME7c5mqAigiPhbhlCMVuoS/yze+/EGa7uxcEyNrIT1+9TUO99OmRxTyxW3MIJ3FLLAIjZpSmmMj23yiGHgGPYGD88EicHKigIVv6hqHdynukw9qRkLU4flM4lqpVgX4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCc05hef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIUcdZBxipIxOQEvsPFX+CKuIMNlH25ujriUo1egDwQiiLahg/HmQljBrZkECNjyosooDLxFDd4zlgm7gl4Qd9hBGQ/d1B3o5D1lKINcUWlPujp4wbPltUq8zF+aqqmPP1RfM013tMUZks0IoC4KQor7MiKBIPDiJc2xppvZWO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWuQgjob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCc05hef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11117C4CEFB;
-	Tue, 11 Nov 2025 01:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWuQgjob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5359EC19422;
+	Tue, 11 Nov 2025 01:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823311;
-	bh=QJIU0YVI4OBdZxwPH2n7SoxIvZWGzVvKpflxEawhEVk=;
+	s=korg; t=1762823313;
+	bh=P9pnHyEDNpAHWJ63PfhV0ah4+Hpvy9qFAODYxJwkDYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCc05hefabI+mTCBs6tWn5UCR9eHvGvalGiY706OSXXCVtnWwntHWZhpMSg6iGqP5
-	 HNTEdf/jUDSx89sKT+3BzEP2rjLW4SXnK+YLg3RRC6uBqC2l4sYy/N6vIwLefF+AHu
-	 vW0W+55p1Z2baQmTc0wr/SA0Q0UiUJQPQ3oKGudE=
+	b=IWuQgjobDmfcro5jS1uIzrds7A4SjA3kC90PAzXIpbmT/Ke8x5CFx3cmJSuuM3QP0
+	 kmFGGwgRDLQjv5vl98ETdL7JnhQBkBBve/JFqfo4HMzNb4Vw9yTgqp1e4XQ8PkDrwq
+	 qKMoUCQKLpaIyhTVxyaaPmO1wb3Ken7qY8IdcJ6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ce Sun <cesun102@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/565] scsi: ufs: host: mediatek: Change reset sequence for improved stability
-Date: Tue, 11 Nov 2025 09:41:13 +0900
-Message-ID: <20251111004531.804745204@linuxfoundation.org>
+Subject: [PATCH 6.17 247/849] drm/amdgpu: Effective health check before reset
+Date: Tue, 11 Nov 2025 09:36:57 +0900
+Message-ID: <20251111004542.403821518@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Ce Sun <cesun102@amd.com>
 
-[ Upstream commit 878ed88c50bfb14d972dd3b86a1c8188c58de4e5 ]
+[ Upstream commit da467352296f8e50c7ab7057ead44a1df1c81496 ]
 
-Modify the reset sequence to ensure that the device reset pin is set low
-before the host is disabled. This change enhances the stability of the
-reset process by ensuring the correct order of operations.
+Move amdgpu_device_health_check into amdgpu_device_gpu_recover to
+ensure that if the device is present can be checked before reset
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250811131423.3444014-10-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The reason is:
+1.During the dpc event, the device where the dpc event occurs is not
+present on the bus
+2.When both dpc event and ATHUB event occur simultaneously,the dpc thread
+holds the reset domain lock when detecting error,and the gpu recover thread
+acquires the hive lock.The device is simultaneously in the states of
+amdgpu_ras_in_recovery and occurs_dpc,so gpu recover thread will not go to
+amdgpu_device_health_check.It waits for the reset domain lock held by the
+dpc thread, but dpc thread has not released the reset domain lock.In the dpc
+callback slot_reset,to obtain the hive lock, the hive lock is held by the
+gpu recover thread at this time.So a deadlock occurred
+
+Signed-off-by: Ce Sun <cesun102@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 26 +++++++---------------
+ 1 file changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 191db60b393d9..c0106fb3792d4 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1340,11 +1340,11 @@ static int ufs_mtk_device_reset(struct ufs_hba *hba)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index c8459337fcb89..dfa68cb411966 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -6132,12 +6132,11 @@ static int amdgpu_device_health_check(struct list_head *device_list_handle)
+ 	return ret;
+ }
+ 
+-static int amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
++static void amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
+ 					  struct list_head *device_list,
+ 					  struct amdgpu_hive_info *hive)
  {
- 	struct arm_smccc_res res;
+ 	struct amdgpu_device *tmp_adev = NULL;
+-	int r;
  
--	/* disable hba before device reset */
--	ufshcd_hba_stop(hba);
--
- 	ufs_mtk_device_reset_ctrl(0, res);
- 
-+	/* disable hba in middle of device reset */
-+	ufshcd_hba_stop(hba);
-+
  	/*
- 	 * The reset signal is active low. UFS devices shall detect
- 	 * more than or equal to 1us of positive or negative RST_n
+ 	 * Build list of devices to reset.
+@@ -6157,14 +6156,6 @@ static int amdgpu_device_recovery_prepare(struct amdgpu_device *adev,
+ 	} else {
+ 		list_add_tail(&adev->reset_list, device_list);
+ 	}
+-
+-	if (!amdgpu_sriov_vf(adev) && (!adev->pcie_reset_ctx.occurs_dpc)) {
+-		r = amdgpu_device_health_check(device_list);
+-		if (r)
+-			return r;
+-	}
+-
+-	return 0;
+ }
+ 
+ static void amdgpu_device_recovery_get_reset_lock(struct amdgpu_device *adev,
+@@ -6457,8 +6448,13 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	reset_context->hive = hive;
+ 	INIT_LIST_HEAD(&device_list);
+ 
+-	if (amdgpu_device_recovery_prepare(adev, &device_list, hive))
+-		goto end_reset;
++	amdgpu_device_recovery_prepare(adev, &device_list, hive);
++
++	if (!amdgpu_sriov_vf(adev)) {
++		r = amdgpu_device_health_check(&device_list);
++		if (r)
++			goto end_reset;
++	}
+ 
+ 	/* We need to lock reset domain only once both for XGMI and single device */
+ 	amdgpu_device_recovery_get_reset_lock(adev, &device_list);
+@@ -6965,12 +6961,6 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
+ 	int r = 0, i;
+ 	u32 memsize;
+ 
+-	/* PCI error slot reset should be skipped During RAS recovery */
+-	if ((amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 3) ||
+-	    amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 4)) &&
+-	    amdgpu_ras_in_recovery(adev))
+-		return PCI_ERS_RESULT_RECOVERED;
+-
+ 	dev_info(adev->dev, "PCI error: slot reset callback!!\n");
+ 
+ 	memset(&reset_context, 0, sizeof(reset_context));
 -- 
 2.51.0
 
