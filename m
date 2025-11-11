@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317E423FC41;
-	Tue, 11 Nov 2025 00:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9A3244693;
+	Tue, 11 Nov 2025 00:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822767; cv=none; b=QI1TlDuJ3xRHHBOWh1vhpumsM9lh55KPFYBTQjMLQ9SwA5ki9ODHAvte56koszmS92jFoHSDGg2d38iw/mNHZdg3/8tMIjax6QcWCbVjgG0DbAjEGtJlXt6+ut4Wq4+NbIwTVbgrQkRIG4JJ4k6Ww2HKKpGd9MdkosYKx1+lwr4=
+	t=1762822769; cv=none; b=tNraua53LonvvD0I7fWKFZBedHP9/QXQX6Q6OgRkeU7ptVa31z+EWa6LkBQWM05HF+WejbkxKwYR140cA+ZGdeU6nSnOan8riKeqSvMpXskYf/48XOyWb4ct/KiURyq+xwEQmPaheltwmSaftApaC5G+ASGEXrPZQeNqggyGUsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822767; c=relaxed/simple;
-	bh=EN2SqQt/dN9tSjTgMfM1jjwEcw/ul7N8D45GQMEQfAE=;
+	s=arc-20240116; t=1762822769; c=relaxed/simple;
+	bh=8Sjm/58tXU6rHHJSb+cunhSoO5QLiml58nUqGMx5REY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijBcmyJ2bAppGv8WEc3W+eykpqsOCnFUlP964rcIkUank7xgdsLmCPJZV3/oOF7TTWxdqoXFuAkQUOEekXpBOxhbZeIc1kvj2pz9e5/AAaRSqD7hFP/Kjhm6MFCLuofeer6cWXY0+kCZB5dgWGuDMQICel9y6Do7Uc0ckvLL9jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXIJBY2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHXir56NIgoRXxoU35t+i2ru4wQuTptdk7liLgCAkDDovl/i6RDj64nZZYvQ+767N4USK9JN4TZqvwlcn5m98dp0vyMgvta79NrhI+Y7HB+kBxi1DYLuowvzwoFg65IpY5IJ/OzhT6aJ9sQZc7UcmO0oX0yVKDDPtSwUIP9EgvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbjQWi8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXIJBY2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C042BC2BC86;
-	Tue, 11 Nov 2025 00:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbjQWi8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DECCC4AF09;
+	Tue, 11 Nov 2025 00:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822767;
-	bh=EN2SqQt/dN9tSjTgMfM1jjwEcw/ul7N8D45GQMEQfAE=;
+	s=korg; t=1762822769;
+	bh=8Sjm/58tXU6rHHJSb+cunhSoO5QLiml58nUqGMx5REY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vXIJBY2Rx2VC50n31avHTRbE+yI1lbo+syhFFhwVQsh7LkmQui/P1hC9BCH1nGRW+
-	 K86Uv5/LrUiF3Ucwn3Qv273IGC1w349kwuvh1lY7R7c3Eb6aHo47t1dy5l8XPIYQvL
-	 CVcccf3cRvKABe1p9KS+IZIlC5A1VOplEIuSqP5Y=
+	b=ZbjQWi8OCadv605c2GVJNBWJGXGJjrPaCLCrnT2u+sCNf1e6YuRh1aXAYVqZuJJY4
+	 sSn2ujizOv6IAMu4Ei+o49PZX+p8ZinK81fakZUnZGVTiIg69RGgUxKiwV2SBo1Jof
+	 Vm2SpP5qVjQyBCoRw8/Ghin30PQVxpqJaalNGFq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Jens Reidel <adrian@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 127/849] mmc: host: renesas_sdhi: Fix the actual clock
-Date: Tue, 11 Nov 2025 09:34:57 +0900
-Message-ID: <20251111004539.465616273@linuxfoundation.org>
+Subject: [PATCH 6.17 120/849] soc: qcom: smem: Fix endian-unaware access of num_entries
+Date: Tue, 11 Nov 2025 09:34:50 +0900
+Message-ID: <20251111004539.300003232@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Jens Reidel <adrian@mainlining.org>
 
-[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
+[ Upstream commit 19e7aa0e9e46d0ad111a4af55b3d681b6ad945e0 ]
 
-Wrong actual clock reported, if the SD clock division ratio is other
-than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
+Add a missing le32_to_cpu when accessing num_entries, which is always a
+little endian integer.
 
-On high speed mode, cat /sys/kernel/debug/mmc1/ios
-Without the patch:
-clock:          50000000 Hz
-actual clock:   200000000 Hz
+Fixes booting on Xiaomi Mi 9T (xiaomi-davinci) in big endian.
 
-After the fix:
-clock:          50000000 Hz
-actual clock:   50000000 Hz
-
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Link: https://lore.kernel.org/r/20250726235646.254730-1-adrian@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
-index fb8ca03f661d7..a41291a28e9bd 100644
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -222,7 +222,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
- 			clk &= ~0xff;
- 	}
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index cf425930539e4..c4c45f15dca4f 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -898,7 +898,7 @@ static u32 qcom_smem_get_item_count(struct qcom_smem *smem)
+ 	if (IS_ERR_OR_NULL(ptable))
+ 		return SMEM_ITEM_COUNT;
  
--	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
-+	clock = clk & CLK_CTL_DIV_MASK;
-+	if (clock != 0xff)
-+		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
-+
-+	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
- 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
- 		usleep_range(10000, 11000);
+-	info = (struct smem_info *)&ptable->entry[ptable->num_entries];
++	info = (struct smem_info *)&ptable->entry[le32_to_cpu(ptable->num_entries)];
+ 	if (memcmp(info->magic, SMEM_INFO_MAGIC, sizeof(info->magic)))
+ 		return SMEM_ITEM_COUNT;
  
 -- 
 2.51.0
