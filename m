@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572C5255F28;
-	Tue, 11 Nov 2025 01:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C343126B9;
+	Tue, 11 Nov 2025 01:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824911; cv=none; b=hhJDtvdAyPSgM2XiBo6IGkdZffDhMm48WrndxbplzQBLLnBUYNraR1x+EiiWYkmPwjdoKL9zM6W17qC7mYzTbIU9LXTRNGtmoH8dJv55h7VtxTLGU0wYSNivfrBkzCzqstDLVM4Y0MoXBEYgBocfcGOMEbkdiyePmsqjKlpyONo=
+	t=1762824914; cv=none; b=tb/TqjPKpGf213wg5Sy6S+9zWEquP//Og8GBbSflNzDy5375GpcgUd3Zo7BmKB/OOVS2eaKmJTOfYbA98W0Fq0+FKGc1n5KdQ9X6O72pT4ydpxxwhudvlZL+HYeNbllZcQKuJV5QJZ0JXYWVFj7j69xamkTnoay8nrPv6kiEx2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824911; c=relaxed/simple;
-	bh=aluxYcoqOdkO56apVt8bRAZMYp1snkhSDYfu4lPIqlQ=;
+	s=arc-20240116; t=1762824914; c=relaxed/simple;
+	bh=i+/YuHzDJ2iA2AG8ZcK3ajTwv9XBMkAWJeZG8HqfXBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4x/eaQCrzU0Vi25UneOFIxr1HXh4xT+PoqlbJH5xw0axUHdPINOWHRa4izhYwRXsoQt8L/OLOs4i9yV3VZ7QgEMXAIXSfFSrGqNU409OXo7Mw1JIrOqBjL3w0UBT2Zl8/TufbqpEHxPJBWCGT7RJIJn2eOARfMsecw+GPv9TCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQWQOh6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lpmm82Rfh5jZzz12eyGf2imrGwkvJ86qmVretnQwI9Bf5pRKeYnKhCg105/vTWHiwieOgSMiw5stvIQQyHrQ9rwVMWuU+Wib75NlehbymluYyqwk6yB3wUB/wONqilWQPWa7E91d8U2Swh8MQjoeI2uir3bLna5Bst6CDInwm2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7HVZhb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQWQOh6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8ABC4CEF5;
-	Tue, 11 Nov 2025 01:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7HVZhb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F7AC113D0;
+	Tue, 11 Nov 2025 01:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824911;
-	bh=aluxYcoqOdkO56apVt8bRAZMYp1snkhSDYfu4lPIqlQ=;
+	s=korg; t=1762824913;
+	bh=i+/YuHzDJ2iA2AG8ZcK3ajTwv9XBMkAWJeZG8HqfXBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQWQOh6pSnfubFiP8CLMQ326aFQXEGaA3uEMh7sPwAYgFb3WYuK7dhwo2mtTedTAd
-	 Jx//uwiWKDgin817txJHHLZgsw/+94dwBscbv4ibivXoK7ebB/OC/Hj+ZfPhfIz7ov
-	 6Y6656C0WDxYajpROS5u0DMkO6GsdU2GfKEfeAIA=
+	b=c7HVZhb7GqaDEu2Jr6a1tuM/ew694cbsYeAPp1WKTgZcBS1B6tLPMdQ5ktm1WvCD3
+	 Ge2OUgxP/VibBNi9i1TxM1AQqsQKcz4qZai0B0RHpopo7aAAcQlD6f3XZ49eIvOYPl
+	 JWF5zmHD+kyEwB1iFIn9rE3Q/9gcYfLzsxoQ6EW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 596/849] net: ethernet: microchip: sparx5: make it selectable for ARCH_LAN969X
-Date: Tue, 11 Nov 2025 09:42:46 +0900
-Message-ID: <20251111004550.830554645@linuxfoundation.org>
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.12 549/565] x86/microcode/AMD: Add more known models to entry sign checking
+Date: Tue, 11 Nov 2025 09:46:45 +0900
+Message-ID: <20251111004539.346600069@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 6287982aa54946449bccff3e6488d3a15e458392 ]
+commit d23550efc6800841b4d1639784afaebdea946ae0 upstream.
 
-LAN969x switchdev support depends on the SparX-5 core,so make it selectable
-for ARCH_LAN969X.
+Two Zen5 systems are missing from need_sha_check(). Add them.
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20250917110106.55219-1-robert.marko@sartura.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20251106182904.4143757-1-superm1@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/sparx5/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/Kconfig b/drivers/net/ethernet/microchip/sparx5/Kconfig
-index 35e1c0cf345ea..a4d6706590d25 100644
---- a/drivers/net/ethernet/microchip/sparx5/Kconfig
-+++ b/drivers/net/ethernet/microchip/sparx5/Kconfig
-@@ -3,7 +3,7 @@ config SPARX5_SWITCH
- 	depends on NET_SWITCHDEV
- 	depends on HAS_IOMEM
- 	depends on OF
--	depends on ARCH_SPARX5 || COMPILE_TEST
-+	depends on ARCH_SPARX5 || ARCH_LAN969X || COMPILE_TEST
- 	depends on PTP_1588_CLOCK_OPTIONAL
- 	depends on BRIDGE || BRIDGE=n
- 	select PHYLINK
--- 
-2.51.0
-
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -208,10 +208,12 @@ static bool need_sha_check(u32 cur_rev)
+ 	case 0xaa001: return cur_rev <= 0xaa00116; break;
+ 	case 0xaa002: return cur_rev <= 0xaa00218; break;
+ 	case 0xb0021: return cur_rev <= 0xb002146; break;
++	case 0xb0081: return cur_rev <= 0xb008111; break;
+ 	case 0xb1010: return cur_rev <= 0xb101046; break;
+ 	case 0xb2040: return cur_rev <= 0xb204031; break;
+ 	case 0xb4040: return cur_rev <= 0xb404031; break;
+ 	case 0xb6000: return cur_rev <= 0xb600031; break;
++	case 0xb6080: return cur_rev <= 0xb608031; break;
+ 	case 0xb7000: return cur_rev <= 0xb700031; break;
+ 	default: break;
+ 	}
 
 
