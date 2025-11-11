@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB84E263F28;
-	Tue, 11 Nov 2025 01:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C309333443;
+	Tue, 11 Nov 2025 01:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824544; cv=none; b=Jb1MyvdbpmM4wEw7Te5Pmqm8lhszyrzcr+C2+/NPlRIJbDl7bOUJHTw06oj/wuZeDHUbcg2GeGIZ3ObH7NGsDa59CiIcxVZxv32E04jzWTGZHp0jS29+zZBvQouIEP3D1NP77ABUDq7PzwxJYk8vlDz6ARFh+rvK5pvd86TbpQM=
+	t=1762824547; cv=none; b=PihO8xiG+ftbyP8JwO/39rY5BfpatMEyzA/RUP7zY/L/avS3B0eUP3TsvX44gqCYH1+87UCSuZpByuzQboZShopJ8udVCeBTCE8Kfkj82jmj8UOXATHkLv4zHvnIh8uOPNniKcKNtixkhAf1JNk3MU+zLzVzzOHVpth1ZtIKMIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824544; c=relaxed/simple;
-	bh=Ty+nRpOiBBeQn29wGZuUzB+8T2aiRwob0zeFSRNzwl4=;
+	s=arc-20240116; t=1762824547; c=relaxed/simple;
+	bh=AaSuHM5R4dv9yVkktqDVzXn9ievVjelhU2oV8Op6x3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rd15gNkK+qWdEcNidkgWQnvoaSy4uzoWD0NQYhkxgUAOlC+3BpnN0vf9YngxF91BLbD9DaerFBCWqXX8zRe4jFMFO6o8X1pe9SOaqPnMsQPD/NhL9e535OGWLAJPVzTBixhf5ESI8kBty/Y4YdGzj/GkCJg/OH6kkBSMN+XKUZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRO4TlEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmFxDsNyn68OtEEhbrFVSWGoDja3e/ys4/4rDFOlodVHw2+Zne+2+gmS98I0pFJOcViLoUUX/MMBIRtZv+yv/MAuqXuHcbdna+FfJN7WG1/yrbi/lgcYLZq83Sc6TT/a0+KN0yVbIMV6aMzfYToaYztCqCULd56pEgSDA1XK/+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVYnSy0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRO4TlEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8CAC116D0;
-	Tue, 11 Nov 2025 01:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVYnSy0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F9EC2BC86;
+	Tue, 11 Nov 2025 01:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824544;
-	bh=Ty+nRpOiBBeQn29wGZuUzB+8T2aiRwob0zeFSRNzwl4=;
+	s=korg; t=1762824547;
+	bh=AaSuHM5R4dv9yVkktqDVzXn9ievVjelhU2oV8Op6x3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRO4TlEF/n6QiH8sj1EYpi2uB1FJb2een2vVc/h0zLtAPfHqhZAr0ZPLW2JPuPGSz
-	 6U8sqpMbNwtlrHJyvkrH0sN/Lv9YYOg9hzcIl78cJHSMTxSz6eljT3CZCbG6SWDHpQ
-	 heXhuc2lZZdeoZBD4ErANcFPB2MPPe21hKGB9s2I=
+	b=OVYnSy0TRbZ0m08h6sKp8ijFiLNMuSrIT8VUCJgeyxizlqXZAkghNqQ4HI/e7rM0T
+	 y+HjIXrAGwabZr6tLW+SrIksV+59+GHegtHPw/mOE4cqYSal4u8FF2xuFY/TA4dUVq
+	 4Y0uQZbMIE3WT2uepFgAozOsYxCpeaB7UkQ+r3jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 466/565] clk: sunxi-ng: sun6i-rtc: Add A523 specifics
-Date: Tue, 11 Nov 2025 09:45:22 +0900
-Message-ID: <20251111004537.385017383@linuxfoundation.org>
+Subject: [PATCH 6.17 521/849] PCI/AER: Fix NULL pointer access by aer_info
+Date: Tue, 11 Nov 2025 09:41:31 +0900
+Message-ID: <20251111004549.019934434@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-[ Upstream commit 7aa8781f379c32c31bd78f1408a31765b2297c43 ]
+[ Upstream commit 0a27bdb14b028fed30a10cec2f945c38cb5ca4fa ]
 
-The A523's RTC block is backward compatible with the R329's, but it also
-has a calibration function for its internal oscillator, which would
-allow it to provide a clock rate closer to the desired 32.768 KHz. This
-is useful on the Radxa Cubie A5E, which does not have an external 32.768
-KHz crystal.
+The kzalloc(GFP_KERNEL) may return NULL, so all accesses to aer_info->xxx
+will result in kernel panic. Fix it.
 
-Add new compatible-specific data for it.
-
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250909170947.2221611-1-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250904182527.67371-1-vernon2gm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun6i-rtc.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/pci/pcie/aer.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-index 87e23d16ed0f3..50a85f33b8fbb 100644
---- a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-@@ -325,6 +325,13 @@ static const struct sun6i_rtc_match_data sun50i_r329_rtc_ccu_data = {
- 	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
- };
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 9d23294ceb2f6..3dba9c0c6ae11 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -383,6 +383,10 @@ void pci_aer_init(struct pci_dev *dev)
+ 		return;
  
-+static const struct sun6i_rtc_match_data sun55i_a523_rtc_ccu_data = {
-+	.have_ext_osc32k	= true,
-+	.have_iosc_calibration	= true,
-+	.osc32k_fanout_parents	= sun50i_r329_osc32k_fanout_parents,
-+	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
-+};
-+
- static const struct of_device_id sun6i_rtc_ccu_match[] = {
- 	{
- 		.compatible	= "allwinner,sun50i-h616-rtc",
-@@ -334,6 +341,10 @@ static const struct of_device_id sun6i_rtc_ccu_match[] = {
- 		.compatible	= "allwinner,sun50i-r329-rtc",
- 		.data		= &sun50i_r329_rtc_ccu_data,
- 	},
-+	{
-+		.compatible	= "allwinner,sun55i-a523-rtc",
-+		.data		= &sun55i_a523_rtc_ccu_data,
-+	},
- 	{},
- };
- MODULE_DEVICE_TABLE(of, sun6i_rtc_ccu_match);
+ 	dev->aer_info = kzalloc(sizeof(*dev->aer_info), GFP_KERNEL);
++	if (!dev->aer_info) {
++		dev->aer_cap = 0;
++		return;
++	}
+ 
+ 	ratelimit_state_init(&dev->aer_info->correctable_ratelimit,
+ 			     DEFAULT_RATELIMIT_INTERVAL, DEFAULT_RATELIMIT_BURST);
 -- 
 2.51.0
 
