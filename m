@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0512E6CA4;
-	Tue, 11 Nov 2025 01:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499541D86FF;
+	Tue, 11 Nov 2025 01:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824704; cv=none; b=jyaHh+LAIYB5OPbRj6FQvJeq+hai+Te+UoFhb2vgTwTKJXhta7+kETia9t6GXZ8RWMzwtnt982zgZcgWWu9RvLQBvtRo0M1TXmkPOaL2Dz5pXwoRAxxvIVvaTtQ70iF4jehyc+QkATxdwk25h0y+uGaSRe7VEo7GLGJMDya1VSM=
+	t=1762824707; cv=none; b=Sd+aTK01GA+ngzY8VTg728m1nY+a8LBJRgxj8v2zPZd7vRCLnkLTvA0mylh3V2BXmjO3j//GulaxbrBPvjU6inOrbNP41NHA7tKY+SkEQJrQvNxG9TOOhyaJnjaY1hCQ0ilcQLoAYP0YlfDfX0Zm7X8LjTzEwT+aQ26e2TIDXUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824704; c=relaxed/simple;
-	bh=mPNRHLMw1NUjAflDT9gul4zv5Cz9MnOQIL6InIp3SR4=;
+	s=arc-20240116; t=1762824707; c=relaxed/simple;
+	bh=klSHM/jm5EcPVefNCW850AihEpDiIA1VlMH3bz7GNb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s8A1pXpDaJhrFiPOi2dAVfLxy0Exq39eAy4c3rNFFmmS7pk02IbPt4dWWsVrlPbNiRCWP67MnOeAAFXW9xO6YshzPRzBhNcXq/bLteKhTwXKvNaqqLlGAwYlqb7KsLa6hwCThaTrSjSk7JaE7HR0wBXTfHqPEWyU/HzmbgdaMqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O01TN+7G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVmiczAANyd9bwID0wfeW54WmyaFMViaa+/+Dfx/Nu2nPm0tiRG7Es1Xor0CY1wWlWq+nv7FFHqEI5YpwkmkarjIFntjUdfBlW9o5F/rkoB+s4EyqtZ7hRaS/jo4ruCZizdybMhfug7nhSGDc3KZtZfgLZGlpdA9T5pVRlCmGE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtQ9JfFg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O01TN+7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE90C4AF0B;
-	Tue, 11 Nov 2025 01:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtQ9JfFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8008C19422;
+	Tue, 11 Nov 2025 01:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824704;
-	bh=mPNRHLMw1NUjAflDT9gul4zv5Cz9MnOQIL6InIp3SR4=;
+	s=korg; t=1762824707;
+	bh=klSHM/jm5EcPVefNCW850AihEpDiIA1VlMH3bz7GNb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O01TN+7GAovCFnoinlMoFgoQjs66PCAuoO/wmcA3LPkccpm1N/45Jlfafd9fzNuaV
-	 kVcFrTvf4geR8AJi4CO5u3UxnNk+RU/l6CK5fK/5wbWeDp4KC3aOHwu7w8OnPkoI18
-	 603P9qwRl0LsZXkaopQb64g3D/qLqMGe1h67Dji8=
+	b=MtQ9JfFgUn/R0jltPMHa2Yv9iJ7LFoFhX4wj1+r5JO9fU2gd83VgZUNni8GWzWdmQ
+	 A5SDH16NL/lQNKdV74hnkCrg6AnJFQBZWQofh1gQF9bFjv84+v9pIpD6F9lWs8iTmU
+	 ldMtQ5fFJVaMSmd0Z32/EOtYadF+jbcpHLwm5DzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AceLan Kao <acelan.kao@canonical.com>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Denis Benato <benato.denis96@gmail.com>,
-	=?UTF-8?q?Merthan=20Karaka=C5=9F?= <m3rthn.k@gmail.com>,
-	Eric Naim <dnaim@cachyos.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 554/849] drm/amd: Avoid evicting resources at S5
-Date: Tue, 11 Nov 2025 09:42:04 +0900
-Message-ID: <20251111004549.802337279@linuxfoundation.org>
+	Shuangpeng Bai <SJB7183@psu.edu>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 502/565] media: videobuf2: forbid remove_bufs when legacy fileio is active
+Date: Tue, 11 Nov 2025 09:45:58 +0900
+Message-ID: <20251111004538.236283810@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,52 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 531df041f2a5296174abd8292d298eb62fe1ea97 ]
+commit 27afd6e066cfd80ddbe22a4a11b99174ac89cced upstream.
 
-Normally resources are evicted on dGPUs at suspend or hibernate and
-on APUs at hibernate.  These steps are unnecessary when using the S4
-callbacks to put the system into S5.
+vb2_ioctl_remove_bufs() call manipulates queue internal buffer list,
+potentially overwriting some pointers used by the legacy fileio access
+mode. Forbid that ioctl when fileio is active to protect internal queue
+state between subsequent read/write calls.
 
-Cc: AceLan Kao <acelan.kao@canonical.com>
-Cc: Kai-Heng Feng <kaihengf@nvidia.com>
-Cc: Mark Pearson <mpearson-lenovo@squebb.ca>
-Cc: Denis Benato <benato.denis96@gmail.com>
-Cc: Merthan Karakaş <m3rthn.k@gmail.com>
-Tested-by: Eric Naim <dnaim@cachyos.org>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Fixes: a3293a85381e ("media: v4l2: Add REMOVE_BUFS ioctl")
+Reported-by: Shuangpeng Bai <SJB7183@psu.edu>
+Closes: https://lore.kernel.org/linux-media/5317B590-AAB4-4F17-8EA1-621965886D49@psu.edu/
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-v4l2.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 56a737df87cc7..1115af343e013 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5016,6 +5016,10 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
- 	if (!adev->in_s4 && (adev->flags & AMD_IS_APU))
- 		return 0;
+--- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
++++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+@@ -1015,6 +1015,11 @@ int vb2_ioctl_remove_bufs(struct file *f
+ 	if (vb2_queue_is_busy(vdev->queue, file))
+ 		return -EBUSY;
  
-+	/* No need to evict when going to S5 through S4 callbacks */
-+	if (system_state == SYSTEM_POWER_OFF)
-+		return 0;
++	if (vb2_fileio_is_active(vdev->queue)) {
++		dprintk(vdev->queue, 1, "file io in progress\n");
++		return -EBUSY;
++	}
 +
- 	ret = amdgpu_ttm_evict_resources(adev, TTM_PL_VRAM);
- 	if (ret) {
- 		dev_warn(adev->dev, "evicting device resources failed\n");
--- 
-2.51.0
-
+ 	return vb2_core_remove_bufs(vdev->queue, d->index, d->count);
+ }
+ EXPORT_SYMBOL_GPL(vb2_ioctl_remove_bufs);
 
 
