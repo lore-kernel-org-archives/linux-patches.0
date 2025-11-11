@@ -1,108 +1,116 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A916733D6E9
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 20:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B418F326923
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 21:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762893687; cv=none; b=eUiN/qy5d96GSQc/5XABGLE9lEhKM3LcPrK3iG+SjoxppNcc0YFYf1oJuO3FNbP75AitJHyFZic/ewu+Z7lMI2VMPPrkJ4hUKEwtPZymGg6x1DwKEsSHZlwDZmatEeeDlL/3J81qPfFP8KiHUeIDvEsDK75iYU1Xc3RAwyA307s=
+	t=1762894961; cv=none; b=SqZFmEpJU1egALxpsSoAQbvBEgWdaUWjtX7aP/bd7oIn4Pcj9MLc4A1CnpZGOcEJci5e2dq5mgTa7J4M82w+LH02nDl0vEIA3/oFgViB3vyTY8+yIAFuzOpPwREwN8Ksz+yPlosuDGWM06L0CYgDDEJyFpIJaE39ohFTOqHMBJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762893687; c=relaxed/simple;
-	bh=YEr04aoMcmyecPDZJfLTTNm/R81XpSd91kOBrbpoX5s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DhNj83eadkAl4II0ezDwJSwHG6+y6wg+IGIKzP9iA2ZghRGSu4Uszu+t6WB5OLYTKuEdWzzmSYS81CNv4wSB7a55y/M7lc0EUUxQbM3+mWoVeD//rmbSv9rNsEs3o+gLy+ZXDd5K1gS5WRQbDNEyO3z5/tqktS5rXhtlwRM/4dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/5Yexv7; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1762894961; c=relaxed/simple;
+	bh=oON1JhPqjwjhg7G9S0lDlzyPRkRNc3w2DTMTGVj9WQc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JmTVOV+GXVc9ii3zjqTcAsXhYptAHxNAxTAeEs52t1gYrH0k0alJTxbFsZCSQo2GI46du1ZIKA/vrNGA/SBYvWKlNtmwdPGAT01bYklt3Jvm8Gpt02FKTH6VieMs55njyTt9JSMLOzFDxMcZmd3T8qjAt9838Dw/7xaaS86Ave4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E4+AY01k; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/5Yexv7"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-4331d3eea61so820125ab.2
-        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 12:41:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E4+AY01k"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7a271fc7e6bso17295b3a.2
+        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 13:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1762893685; x=1763498485; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5r/++3mVCJ9xD+Mh5hsq3AQxsTxN+uDvyJmdcqTQc8I=;
-        b=D/5Yexv75iv2yh8EgCWCXLqqhu4I+xl5ATtoYlHAxCFycTant/wD46ttPjVq+SDJ2v
-         dCo9j/ElJmwPLv4mzT0imUlUjY/guFVV3E5o3BZC7Hnq3Rn3FhfTKen6mtUypYEgXvuK
-         560IwfQOQYq/DL5U7RcGUccbgEEDUsYdUetn0=
+        d=gmail.com; s=20230601; t=1762894959; x=1763499759; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QwP6Mm7gy1ZK8oeG4x4mgYN5Qt7fbG4Gah1TecksR98=;
+        b=E4+AY01kExIjtk3NvBIvgOaKjIUKM8PDncYwowv5kWctc/6P8gN+0NnjrdBnK5DcId
+         WLLgfpajpKOj2Zcpz7a27gu+3j7omds8za0A5pERVJVjsVIVPMD8rK31sQ0i1Dksni3F
+         8oh7gTOSnmSp3wMU8s24v1JMIQJbUuu0Rc8Hyx0Z5XAlfmA6XGrYY5vkardMymLKCt22
+         yH3S8SR135PbMAK0in4clWn9/S3g+/lhrEpaxvVw9vHWizCrekdpJ0lk9zmSSJ0mMpO8
+         RUFe+s6VDycI5do/PCOD2xePP33XyjWnsF8O59hSL2Zn23ubM/XlifjhsJyOTaEg7a3C
+         HezQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762893685; x=1763498485;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5r/++3mVCJ9xD+Mh5hsq3AQxsTxN+uDvyJmdcqTQc8I=;
-        b=pKGEWlPtdHayiWjjnAmesbkdOuMDKwr68dlG5WpPRlIUe7uRAWGTjslu3A32cVupJJ
-         laRNw9gKMho7J7/hZRyMN3YBtBSVE1fSXqo3r0q6qNVImgLjxCFtU9lazz7X9xxLPBKr
-         Zots/egPSG11b+I0sSh+xtkHBXna7+n6/i2ivkuTRkpy8b96O8jKyl6GbUHVax95UJ9p
-         3ZwlKIBCHOkWKxGJ+cbjia+8VRO2bNmpv/ZolOJ9GvqFioDP3rIdDH+ZxznXNIATVOo5
-         hNBb6vem+4n72RFFv757QKJtSuvItQevI1osJcUVVbUN4RkUa8A+6dZcEhnjtLAMAlwR
-         0+jg==
-X-Gm-Message-State: AOJu0YyIcazAAt7mNHUR77aII4QVM8ozO5gRQavE1VJCMjvlrcXl7B7A
-	U9d8OJR0N4Xe8thC1+22kWkP39Z3ZfW9k02zRJbw/JXkB9/aqPjj3XGhPkhCWbbpKLk=
-X-Gm-Gg: ASbGnctvr+yWD/j0OnCIW6n9/PVeJr3UbetEmWytZ0/2rZoHYKYyOnhLvl+4y0ONbW9
-	mJTu9mKcUIVlLnNyJgH7C2J7EJN/LHzFoc8TOMwkzvCvWmoLlErMpBYQ21pn0c7i2nxEuy1XE5O
-	fwjpMTV0TJUTTN1+diA9nqNL5tLM0TvSA6PBXMg3mKYxBTzevzZNtPVfcXsf3uosEA03R668ItO
-	P8Zli26hZQNSdb6csOpaOMBL0arI0W8Hk9PqoS6fJH1pjQTFQfE8po5E3hFPaRFxQNcEmBCBFS5
-	asznqnkoCGpitjTMBtBGjiAY/nJJVHaHZd4LOoOfnt0r3/fysE5C6oLCJVB2cmpfYnKggQxzsof
-	E2R3wcdPp21Sj7GfAfgcGSzRtoSfYYZfVrK7r9Ea7wIgL8itl9SWHHUG0KegAzaXXxYYuZYPTEe
-	Tlrw4w29FQpoRKNz/foY/BZgw=
-X-Google-Smtp-Source: AGHT+IHc85hYIBG9ds9G2pphrlClRxY7dfT0RUGyDwgFy2LVDtnEan/ZgMhySlr1XPzoCUV2ctuLfA==
-X-Received: by 2002:a05:6e02:174e:b0:433:5e33:d424 with SMTP id e9e14a558f8ab-43473cff5demr8186165ab.2.1762893684483;
-        Tue, 11 Nov 2025 12:41:24 -0800 (PST)
-Received: from [192.168.1.14] ([38.175.187.108])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4347338d4d7sm2687265ab.20.2025.11.11.12.41.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Nov 2025 12:41:24 -0800 (PST)
-Message-ID: <b7cc8106-6383-4035-bf9a-f3abcf0b7da3@linuxfoundation.org>
-Date: Tue, 11 Nov 2025 13:41:22 -0700
+        d=1e100.net; s=20230601; t=1762894959; x=1763499759;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QwP6Mm7gy1ZK8oeG4x4mgYN5Qt7fbG4Gah1TecksR98=;
+        b=e3+c/Q5NIaMQYqyUWb708Ay5cpE8Okl0Q0r4CV4ha0K7Cn/d7uK4hrShlYJ0ILYXLz
+         fLd4AUzzC7bqU25TecBRWr2G+XEJRRLQKC4KLhs9OhZ2bsuKo1Z00NUuE4u+oKGs/H6k
+         AzHoTgyohvVcLsp25zZqzJbeCMe0iUmqXVHhhqZvRrNkn+8HLQcilYSmiW9ZUNTs+Adn
+         +TOkjT3nzb4rmhMlaMn33xeLfbFhd1X9Zf0UYGXrksjAW7qz++YOgSEG710xg9q7hwgY
+         MA3ecVZoCYiAiPB9H5h2KXo+MRFzii4jrkVoUYNR53Fjh71hkw9hPAB7bz2MbtrJEbUC
+         wiqg==
+X-Forwarded-Encrypted: i=1; AJvYcCWN58FayrLGkNFjcEKHtm6PC98LRMQt2A682QoRwbcs2/s+gpmLLu1/AkqSlbyZMztbJTusnO0e@lists.linux.dev
+X-Gm-Message-State: AOJu0YwUfSpmIbjlbOd8shgG8s1qCKD4Nx+6sMeZAojQ2Jnmm97dyMAW
+	vGmEBQbmOESdTIAOB5iJHYzmVAyMi5pLJmBPcza1rOTNBuhJoeYBEm7f96+t4xuqFmxrGNl08O4
+	O2+OHrhOX2PapWYt6szRCmsmL6GjxFNanjuXzaJ8=
+X-Gm-Gg: ASbGncutbja7V4nu5fFfdU2+aj93MhW5a72pIzVry/jvWVVGzaBklX4bpxCgXiN82r6
+	F1mBSCw1yL2ycxdvwUgqypAmj6f5aa5KD9nh44IK1mnlUVxOWrilxz3LMSjuR1kNiIAxHF92Wgy
+	6cnhyn18yTkNRDOcqfeyfZwm57VZIxgWW7m4Q+ht2ZxGH+2lymri8HuaW3s4gZgeIJf58XtrI7N
+	YN+s96foHIPPT2thkTS+Hr2Z+30S1pQwc9nyjDQS0fHxepIcE5iV4kGUHKFlFWU96kRZXrL3Xfr
+	1ICqiFbyrO8O8r+ZS12W1PA/FVGJxVlVQ0LyJ3jBv+uXTsva88P3Yt0Z4ATFQLtrKvU/TFy1k8U
+	SWtk=
+X-Google-Smtp-Source: AGHT+IFsOytGgnt1U92UtoUky/1wulIEh+Pmaa8W6gEGOIHALbiKUTckaUZPy8kghTMbfkFxlO7xNvj5AdbhpE8EjaQ=
+X-Received: by 2002:a17:902:f551:b0:297:d825:bf22 with SMTP id
+ d9443c01a7336-2984eda386emr4468665ad.5.1762894958907; Tue, 11 Nov 2025
+ 13:02:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/565] 6.12.58-rc1 review
-To: Slade Watkins <sr@sladewatkins.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
- <641427c7-0069-4bee-8e6a-53347654a926@linuxfoundation.org>
- <07d63659-72b1-43d0-9139-2a0b6d73edd4@sladewatkins.com>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <07d63659-72b1-43d0-9139-2a0b6d73edd4@sladewatkins.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251110122223.1677654-1-ojeda@kernel.org> <20251110122223.1677654-2-ojeda@kernel.org>
+ <20251111.083413.2270464617525340597.fujita.tomonori@gmail.com>
+In-Reply-To: <20251111.083413.2270464617525340597.fujita.tomonori@gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 11 Nov 2025 22:02:26 +0100
+X-Gm-Features: AWmQ_bm-YuisXj51ok0HAEEwIhVZdnLtQdiqb_sOWGEJwZXB-OjiypMxPqOmm74
+Message-ID: <CANiq72=_KAgUZ9u5YY-iw7kyA9R1Nv6eNzZqMLSwOLQk6sR7kw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] rust: net: phy: make example buildable
+To: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Cc: ojeda@kernel.org, alex.gaynor@gmail.com, tmgross@umich.edu, 
+	netdev@vger.kernel.org, rust-for-linux@vger.kernel.org, boqun.feng@gmail.com, 
+	gary@garyguo.net, bjorn3_gh@protonmail.com, lossin@kernel.org, 
+	a.hindborg@kernel.org, aliceryhl@google.com, dakr@kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Guillaume Gomez <guillaume1.gomez@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/11/25 12:47, Slade Watkins wrote:
-> On 11/11/2025 1:00 PM, Shuah Khan wrote:
->> I am seeing a build failure on my system - the following
->> commit could be the reason.
->>
->>>
->>> Heiner Kallweit <hkallweit1@gmail.com>
->>>      net: phy: fix phy_disable_eee
->>>
-> 
-> Hey Shuah,
-> 
-> Just to save you some time, this patch was already dropped from 6.12.58-rc2! :)
-> 
-> rc2: https://lore.kernel.org/stable/20251111012348.571643096@linuxfoundation.org/
-> 
+On Tue, Nov 11, 2025 at 12:34=E2=80=AFAM FUJITA Tomonori
+<fujita.tomonori@gmail.com> wrote:
+>
+> I think that some code begin lines with # for use lines in a "#
+> Examples" section, while others do not. Which style is recommended?
 
-Thanks. I noticed that right after sending the email. I am building
-rc2 now.
+There is no hard rule for all cases -- we typically hide things that
+are not important for the example (e.g. fake `mod bindings` that are
+used to support the example but aren't important and would bloat the
+example or confuse the reader).
 
-thanks,
--- Shuah
+For imports, some people prefer to see them, others don't. Here, for
+instance, it may be interesting to show the paths (e.g. that the
+`Device` is a `net::phy::` one, or where `C22` is coming from), so we
+could unhide it. So up to you!
+
+So I think the rule is really: if it is something that we think people
+should see to actually understand the example, then we should show it.
+
+And if it is something that would confuse them more than help, or that
+generally should not be used in real code (like the fake bindings),
+then we should hide it.
+
+Ideally `rustdoc` could perhaps support showing the hidden parts with
+the click of a button or similar -- there was e.g.:
+
+    https://github.com/rust-lang/rust/pull/86892
+
+On the other hand, there is already a "Source" button nearby that one
+can click to see it, so it is not too bad. But, yeah, if they need to
+do that, it is likely it shouldn't have been hidden to begin with.
+
+Cheers,
+Miguel
