@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5765B261B77;
-	Tue, 11 Nov 2025 01:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E90248883;
+	Tue, 11 Nov 2025 01:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823433; cv=none; b=kuTokr7wuiAgPOkq6uiEwx1kvgSUKqKLKlzmhtdU+vlXTqZbF9Fs43a3rwYL9AiqLOPV+3q1rr8KH5mv3i471O9crdTdJ7oXuB+mPKwRILopDvO5AvgeHlSHX7y0xxXMvLx5g2ZqhHJLBLIlc0GIpzmViau0ur4Dg2UpSXJ5Qv0=
+	t=1762823437; cv=none; b=UkBV/2AOY0K1pZbGTdLbO+jY7xNURz24dRbtUzP4jb8sXc/d+JnpE3Vuej/XYkv+vofzhjrqS2t3ktwm7P/Nie8So2BhYUOQCH3Ko4zBCzmKeVZ4Flhq2JIOury6lwBj1G37hLNFU6RtY+Kt53wN31wOlSA/1zTIS3lJbQ1Plzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823433; c=relaxed/simple;
-	bh=JrY7+4my1yG5deiadWtkLjOY2yf4vgzKjc1Yidqtt3Q=;
+	s=arc-20240116; t=1762823437; c=relaxed/simple;
+	bh=9t/RU+eYxNNNdSKxyp+nFWyuKD38zcssJ0/dgSGWfvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slhoBmeAxO9JrzUMHJXQnXRH7OaRsnBiFArbMgixbJZlQOQYTMF7hy/ZGmh/u4QD5H8m+h8uGPYma5T9fMHnCtK4rUbrzREH5yyZE/tqZLNkowDoA+BBzD7aM5byv9Z4ZawRO6njcCACUcXGS/Y6tF3bkwRYpqzQ1Q6hO6lm8xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMMCHfQ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XeMO04euuGPAR5yFeIN1AHSACwCGZ9VSMM1P/H9d+N3yDp1Ue+JEOjrVPA1amw0MdgvXmthyMwc9AeqpQ2gKuMqTYlZTqHSi0DNSgNmcRrsMud4SN2TrFXyTbN5LrXIu53dd5iGkt4Fjsy4KrQjuTz3bb1N4SrXnc17P7c1JISA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bymmt0DQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMMCHfQ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B796CC4CEF5;
-	Tue, 11 Nov 2025 01:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bymmt0DQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB16C19424;
+	Tue, 11 Nov 2025 01:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823433;
-	bh=JrY7+4my1yG5deiadWtkLjOY2yf4vgzKjc1Yidqtt3Q=;
+	s=korg; t=1762823437;
+	bh=9t/RU+eYxNNNdSKxyp+nFWyuKD38zcssJ0/dgSGWfvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMMCHfQ0s1wuPbweNMgN2ifake7ATMQXLM3+XPBlkaxZlqNHSBlpsrgF42ebXt8kv
-	 0Q8X49g0+zONmzapzAsMHsfkqok9Bkg0Nap3f68lizdJM7U1cleUbJ6S/NtXOUbST3
-	 lWJX/eZ13MDF+tv+EqsrQ5Kbx7e9OIHSmW2uQzug=
+	b=bymmt0DQkN8UndCphVQfWT6YgL/ffrLhVrx+OuDRfGP2ZnniFw6DpcybeIwYNE6UP
+	 H0UrnFZn4Z7lFCSZrdud3qjhHolMBrZTQ1mRdc2oUNxJc6OepQQJqs7bLlnRfK+gX4
+	 pcHh9H8uvhRTgbg4ZXERuTdIxHVyI3hYyBTO3Kxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 246/565] media: ipu6: isys: Set embedded data type correctly for metadata formats
-Date: Tue, 11 Nov 2025 09:41:42 +0900
-Message-ID: <20251111004532.444502154@linuxfoundation.org>
+Subject: [PATCH 6.12 233/565] char: misc: Make misc_register() reentry for miscdevice who wants dynamic minor
+Date: Tue, 11 Nov 2025 09:41:29 +0900
+Message-ID: <20251111004532.157988818@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,37 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit f5a2826cd50c6fd1af803812d1d910a64ae8e0a1 ]
+[ Upstream commit 52e2bb5ff089d65e2c7d982fe2826dc88e473d50 ]
 
-The IPU6 ISYS driver supported metadata formats but was missing correct
-embedded data type in the receiver configuration. Add it now.
+For miscdevice who wants dynamic minor, it may fail to be registered again
+without reinitialization after being de-registered, which is illustrated
+by kunit test case miscdev_test_dynamic_reentry() newly added.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+There is a real case found by cascardo when a part of minor range were
+contained by range [0, 255):
+
+1) wmi/dell-smbios registered minor 122, and acpi_thermal_rel registered
+   minor 123
+2) unbind "int3400 thermal" driver from its device, this will de-register
+   acpi_thermal_rel
+3) rmmod then insmod dell_smbios again, now wmi/dell-smbios is using minor
+   123
+4) bind the device to "int3400 thermal" driver again, acpi_thermal_rel
+   fails to register.
+
+Some drivers may reuse the miscdevice structure after they are deregistered
+If the intention is to allocate a dynamic minor, if the minor number is not
+reset to MISC_DYNAMIC_MINOR before calling misc_register(), it will try to
+register a previously dynamically allocated minor number, which may have
+been registered by a different driver.
+
+One such case is the acpi_thermal_rel misc device, registered by the
+int3400 thermal driver. If the device is unbound from the driver and later
+bound, if there was another dynamic misc device registered in between, it
+would fail to register the acpi_thermal_rel misc device. Other drivers
+behave similarly.
+
+Actually, this kind of issue is prone to happen if APIs
+misc_register()/misc_deregister() are invoked by driver's
+probe()/remove() separately.
+
+Instead of fixing all the drivers, just reset the minor member to
+MISC_DYNAMIC_MINOR in misc_deregister() in case it was a dynamically
+allocated minor number, as error handling of misc_register() does.
+
+Cc: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-5-2ed949665bde@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/char/misc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-index 0a06de5c739c7..463a0adf9e131 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-@@ -81,6 +81,12 @@ unsigned int ipu6_isys_mbus_code_to_mipi(u32 code)
- 	case MEDIA_BUS_FMT_SGRBG8_1X8:
- 	case MEDIA_BUS_FMT_SRGGB8_1X8:
- 		return MIPI_CSI2_DT_RAW8;
-+	case MEDIA_BUS_FMT_META_8:
-+	case MEDIA_BUS_FMT_META_10:
-+	case MEDIA_BUS_FMT_META_12:
-+	case MEDIA_BUS_FMT_META_16:
-+	case MEDIA_BUS_FMT_META_24:
-+		return MIPI_CSI2_DT_EMBEDDED_8B;
- 	default:
- 		/* return unavailable MIPI data type - 0x3f */
- 		WARN_ON(1);
+diff --git a/drivers/char/misc.c b/drivers/char/misc.c
+index 30178e20d962d..9ee78c76e8663 100644
+--- a/drivers/char/misc.c
++++ b/drivers/char/misc.c
+@@ -300,6 +300,8 @@ void misc_deregister(struct miscdevice *misc)
+ 	list_del(&misc->list);
+ 	device_destroy(&misc_class, MKDEV(MISC_MAJOR, misc->minor));
+ 	misc_minor_free(misc->minor);
++	if (misc->minor > MISC_DYNAMIC_MINOR)
++		misc->minor = MISC_DYNAMIC_MINOR;
+ 	mutex_unlock(&misc_mtx);
+ }
+ EXPORT_SYMBOL(misc_deregister);
 -- 
 2.51.0
 
