@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAC72472A6;
-	Tue, 11 Nov 2025 01:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0B5263F4E;
+	Tue, 11 Nov 2025 01:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824876; cv=none; b=W4MUkfmgsSxqVNcR+oNytdqwj1QVLjSRnZfOC1lFYlF0dNmziHyJ/rpjwRIeQQdZAcc/IWPdwF4N63XIqmpSBwJrBtmOrxC7psSrdyBBI9rY+4f3NKRq8AZMMD8wW/i6f8r7Lel7JzzRpJhnb4r8tI4RZOc3/8T6tvGodVxv6Wg=
+	t=1762824879; cv=none; b=UzEWx6PlYQErN8jIQe6FiBvZykJ9KJjw3PVDNj+sRArWaaDUTxgDPGG5cWz5/lyFWxi0NQJGts8hnHz3iMPqJa9mBCLR4R0bNlGUR7SauBj1JYJuOxzRo9wfd6J7BFKe6JoWs9qxeJSrefRb2RJlYNcb0O0OQzNXWgiQciwb4cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824876; c=relaxed/simple;
-	bh=kl5GYNfS9EcXdMYoZ+stpHUoCe/hsj7BnCGT3OsKHO0=;
+	s=arc-20240116; t=1762824879; c=relaxed/simple;
+	bh=GI8swBkacSLQGi/I0sN4CKZUlGlBsfTkr84+XBfq7Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llMkq1LAsOxhxMCSAY5M70BAGa41TCPBVJFVefdMX5iNR8hGTKHz+lqzxc4uYeFd3DbpyeqBM/DGRswd0xMdi/wrRK1qfeN/tHFpAuGvvl5ra9TgbcJEOyAjO/W/a9xf2flNnCrmLrng01r/MFqfscVJGRE11CjxNgl+Kx3j+8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFqkmfno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHK7GjeMXqZCDI0T9Y62BSh8E+viXAOb33XiCSM0KkPhuEQesm0YFct8nSwGcZyR6UjiBgKw2mh9dUwAPegfuHyFG5cwesMZ+fn/FoCgr1QL4mG+MXTqmtB/2dhTcc6v5YyBOGGRYj/AFeimzW/hE1AsWTKEA3prP2Kyu/ixUlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/NwLW3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFqkmfno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3E5C4CEFB;
-	Tue, 11 Nov 2025 01:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/NwLW3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7D2C113D0;
+	Tue, 11 Nov 2025 01:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824876;
-	bh=kl5GYNfS9EcXdMYoZ+stpHUoCe/hsj7BnCGT3OsKHO0=;
+	s=korg; t=1762824878;
+	bh=GI8swBkacSLQGi/I0sN4CKZUlGlBsfTkr84+XBfq7Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFqkmfno7OX7bavF2+/GbWoohkt8fws7itbNNj7lt3SIRndDSeQBw9F1auRJuAsSI
-	 twOVSfHEx3W98Qrp8hJrYuB1wGTL+I9speAa5+V5pTP5Q81Tgf1OB+JC80tPLy9t3L
-	 M1BNCc7UXb+N0vWHBOOm9WhAmZCfo/VmaptqHDwg=
+	b=q/NwLW3EfWgSBFcXBZ2es4rwe4qXODPitWi6fnyZriadiemexodiVudpgsf5mgubT
+	 4m4cqLnvGHAy7ejG/UFAnI46GZ39XPPyZthfZJp49ScXRKVUqeKT9YVLFkoqajqU5w
+	 PXcDzf3knEkPs0hmuW0qm4kf+1ou3uOa4U+ILeaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 542/565] tracing: Fix memory leaks in create_field_var()
-Date: Tue, 11 Nov 2025 09:46:38 +0900
-Message-ID: <20251111004539.178291240@linuxfoundation.org>
+Subject: [PATCH 6.17 590/849] jfs: Verify inode mode when loading from disk
+Date: Tue, 11 Nov 2025 09:42:40 +0900
+Message-ID: <20251111004550.689115742@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 80f0d631dcc76ee1b7755bfca1d8417d91d71414 ]
+[ Upstream commit 7a5aa54fba2bd591b22b9b624e6baa9037276986 ]
 
-The function create_field_var() allocates memory for 'val' through
-create_hist_field() inside parse_atom(), and for 'var' through
-create_var(), which in turn allocates var->type and var->var.name
-internally. Simply calling kfree() to release these structures will
-result in memory leaks.
+The inode mode loaded from corrupted disk can be invalid. Do like what
+commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
+does.
 
-Use destroy_hist_field() to properly free 'val', and explicitly release
-the memory of var->type and var->var.name before freeing 'var' itself.
-
-Link: https://patch.msgid.link/20251106120132.3639920-1-zilin@seu.edu.cn
-Fixes: 02205a6752f22 ("tracing: Add support for 'field variables'")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/jfs/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 3379e14d38e9b..84954b8918156 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -3251,14 +3251,16 @@ static struct field_var *create_field_var(struct hist_trigger_data *hist_data,
- 	var = create_var(hist_data, file, field_name, val->size, val->type);
- 	if (IS_ERR(var)) {
- 		hist_err(tr, HIST_ERR_VAR_CREATE_FIND_FAIL, errpos(field_name));
--		kfree(val);
-+		destroy_hist_field(val, 0);
- 		ret = PTR_ERR(var);
- 		goto err;
+diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
+index fcedeb514e14a..21f3d029da7dd 100644
+--- a/fs/jfs/inode.c
++++ b/fs/jfs/inode.c
+@@ -59,9 +59,15 @@ struct inode *jfs_iget(struct super_block *sb, unsigned long ino)
+ 			 */
+ 			inode->i_link[inode->i_size] = '\0';
+ 		}
+-	} else {
++	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
++		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
+ 		inode->i_op = &jfs_file_inode_operations;
+ 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
++	} else {
++		printk(KERN_DEBUG "JFS: Invalid file type 0%04o for inode %lu.\n",
++		       inode->i_mode, inode->i_ino);
++		iget_failed(inode);
++		return ERR_PTR(-EIO);
  	}
- 
- 	field_var = kzalloc(sizeof(struct field_var), GFP_KERNEL);
- 	if (!field_var) {
--		kfree(val);
-+		destroy_hist_field(val, 0);
-+		kfree_const(var->type);
-+		kfree(var->var.name);
- 		kfree(var);
- 		ret =  -ENOMEM;
- 		goto err;
+ 	unlock_new_inode(inode);
+ 	return inode;
 -- 
 2.51.0
 
