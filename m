@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF15253951;
-	Tue, 11 Nov 2025 01:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E5F26FA67;
+	Tue, 11 Nov 2025 01:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825186; cv=none; b=UIJjHayQb1RrtCh6qPGkos7XP9PGGVRThR1TDTG+I9ewY+msRGZH8tSzEHOxZTeRhFXUy/3ui0dwpXOT9ZPOmP/m4DCH46ydnHua0d5n812w1F99pQpcNHmrCqEHZnVpaXosdsAn+lRyva1daCs0BWT4pRF5b/gQmWV/nVzoLP8=
+	t=1762825188; cv=none; b=s0N/Xh2ajuoIPA9M3iwD3QZN+RSwM+gZd8iI2dNAPigqaYZ9TBUEfk4N0fAGa36MkvjZ46/rFJlD5fE5cn0EDEpOIxTF+lGycc9V3stpnJhls7roYSdRkVyLRDC7iTSP+E/zDJSZsw99w1Daq033Z+RQ4TOn8TJSedzxscE53zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825186; c=relaxed/simple;
-	bh=bRzzm0rCYS0TXclBVXBs05M1kRTf1cQYUEE2ACalUrE=;
+	s=arc-20240116; t=1762825188; c=relaxed/simple;
+	bh=J98T4PlSJr3krxFP7436siFRg76A2XkAdoHuwv6Ekrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JqnUokIgGK0m7hyfMHb7zfNGkqb05CBcwQPrh52Qv71yMUtUdg6hCOjuLzGGf/HVQJzOeleM1mbZIrmn3yW8BNCPgDxdx3yT7szGKrsaM7cO6MEzRNcQgRexCbYWGywNfYVquwF/YEsqmzKlI/oq9/Y4vTyYtqCYAYVRf8I4RXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J18cRzfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q5BpkjyhCtEEOQbqC4JHqNiR4WGT+t1gp8NNvW/F3SpV06yu8KGOCvcL3S7/eRUIeBmpYKfvHczFK9hj784u5AmjEayuoLBnx1wNY5LYbdKWtDD5QF5dKNKot3xKxB4x2PNgcFVPO+amxW6OVl+ZSb8SBxicGFsWu2e7OPTDEsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oqdBm60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J18cRzfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF77DC4CEFB;
-	Tue, 11 Nov 2025 01:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oqdBm60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314BAC116B1;
+	Tue, 11 Nov 2025 01:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825186;
-	bh=bRzzm0rCYS0TXclBVXBs05M1kRTf1cQYUEE2ACalUrE=;
+	s=korg; t=1762825188;
+	bh=J98T4PlSJr3krxFP7436siFRg76A2XkAdoHuwv6Ekrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J18cRzfmu1NUNsMEQNYUMDau/jOLbKu3XmdVoP/mHWVHK9bToQNIzadihMz5eL5tG
-	 lfeMXodMdJqyTlGcTKLXMAy/3ostutqRIYzQCIbPyDC12ZRFFkGei7M+crraFmOUD5
-	 /JeKaxcz1HPxxuJyeY8Irjwm+O0AHfE1epr/H7m4=
+	b=0oqdBm60d7ltlVGfFP69vE40p0eG0XaFAfYu1xLBYSIvPEW+UqwNVDBmpuxnS2rdM
+	 OML5HEh+VEEnsx3wJAjiQ9GaqxyEIKtqisybtBznA8FwyXYgS+U9wauJMTnmTCVeZb
+	 E/Rv23UOupiXsPHnHJJFtlPdCENmZwfT7cyfZtzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denzeel Oliva <wachiturroxd150@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Yikang Yue <yikangy2@illinois.edu>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 696/849] clk: samsung: exynos990: Add missing USB clock registers to HSI0
-Date: Tue, 11 Nov 2025 09:44:26 +0900
-Message-ID: <20251111004553.258145530@linuxfoundation.org>
+Subject: [PATCH 6.17 697/849] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
+Date: Tue, 11 Nov 2025 09:44:27 +0900
+Message-ID: <20251111004553.282595344@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,34 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denzeel Oliva <wachiturroxd150@gmail.com>
+From: Yikang Yue <yikangy2@illinois.edu>
 
-[ Upstream commit f00a5dc81744250e7a3f843adfe12d7883282c56 ]
+[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
 
-These registers are required for proper USB operation and were omitted
-in the initial clock controller setup.
+The function call new_inode() is a primitive for allocating an inode in memory,
+rather than planning disk space for it. Therefore, -ENOMEM should be returned
+as the error code rather than -ENOSPC.
 
-Signed-off-by: Denzeel Oliva <wachiturroxd150@gmail.com>
-Link: https://lore.kernel.org/r/20250831-usb-v2-3-00b9c0559733@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To be specific, new_inode()'s call path looks like this:
+new_inode
+  new_inode_pseudo
+    alloc_inode
+      ops->alloc_inode (hpfs_alloc_inode)
+        alloc_inode_sb
+          kmem_cache_alloc_lru
+
+Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
+not a lack of disk space. However, the current implementation of
+hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
+This patch fix this by set err to -ENOMEM before the goto statement.
+
+BTW, we also noticed that other nested calls within these four functions,
+like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
+But similarly, only -ENOSPC is returned. Addressing these will involve code
+modifications in other functions, and we plan to submit dedicated patches for these
+issues in the future. For this patch, we focus on new_inode().
+
+Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-exynos990.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/hpfs/namei.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk-exynos990.c b/drivers/clk/samsung/clk-exynos990.c
-index 8571c225d0907..7cf5932e914c2 100644
---- a/drivers/clk/samsung/clk-exynos990.c
-+++ b/drivers/clk/samsung/clk-exynos990.c
-@@ -1198,6 +1198,8 @@ static const unsigned long hsi0_clk_regs[] __initconst = {
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_SYSMMU_USB_IPCLKPORT_CLK_S2,
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_SYSREG_HSI0_IPCLKPORT_PCLK,
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_ACLK_PHYCTRL,
-+	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_I_USB31DRD_REF_CLK_40,
-+	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_I_USBDPPHY_REF_SOC_PLL,
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_I_USBDPPHY_SCL_APB_PCLK,
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_I_USBPCS_APB_CLK,
- 	CLK_CON_GAT_GOUT_BLK_HSI0_UID_USB31DRD_IPCLKPORT_BUS_CLK_EARLY,
+diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
+index e3cdc421dfba7..353e13a615f56 100644
+--- a/fs/hpfs/namei.c
++++ b/fs/hpfs/namei.c
+@@ -52,8 +52,10 @@ static struct dentry *hpfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.fnode = cpu_to_le32(fno);
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail2;
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -153,9 +155,10 @@ static int hpfs_create(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-	
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	result->i_mode |= S_IFREG;
+@@ -239,9 +242,10 @@ static int hpfs_mknod(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -314,8 +318,10 @@ static int hpfs_symlink(struct mnt_idmap *idmap, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
++	}
+ 	result->i_ino = fno;
+ 	hpfs_init_inode(result);
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
 -- 
 2.51.0
 
