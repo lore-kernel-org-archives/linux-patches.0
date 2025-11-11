@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B191D86FF;
-	Tue, 11 Nov 2025 01:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246461D86FF;
+	Tue, 11 Nov 2025 01:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824219; cv=none; b=GoaftnJaL6dj+KYamqmyvPMEsZ3LKc/ia1jh38rwHsWpHhRmTvZqCMdNj0qrok1PJuy+1PhFKvsh8I6mZpBPYnSzNKQgXsOMP3RjZ8P3FBtF37mvd4/L7965lAnvZeBlw2ag+a2XVoMQBKZXmbp85yovxF0ZrvWpVZBT+7I2KBQ=
+	t=1762824222; cv=none; b=RhQmgoPqvmU+c1vhhDtFeW45guR1JSuUesP90xlqotL0qc5aUazR2TG3ArpvXV0XK0aZ+WlqNIYgKuPEIrWr8xBtZnCPlvNgPsNb6wEAgqicvCdEAQR55XqmdmR+wMOIctkkMdVzmlIj+xM1GpjRRgnEU4jL2M5COr5JF1+GF3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824219; c=relaxed/simple;
-	bh=pyFUXsJq/eqJLg0q8Ne9N/wBi0U2QRzEyTlNxtVMXFM=;
+	s=arc-20240116; t=1762824222; c=relaxed/simple;
+	bh=G7Dh3BDSluzGhl86fQpNF7ujjhHO3uL9Eg5MqlTz2vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqgcx9k0Ttb2o90K8eNd7RbHVMKv9KtG49wa+biuszsYThDBNpJxb9u9JdZaGgfv3cZ8KRA2BgxbI+/Fx5sgPJNAoAbqdVCxCVDCGYd/uVrqsVclaTFW+BCp2SxsDkdPAjZb2SETz8abgkGCxfPNOkFY0HVWevyHgvsZuq5rKIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDTyTa1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdIjXDxQ2vNRIRV6455KVI0aI/vPvsD38MvcVMBhujOKVnltWNDLkw1CAXELD3+WphkqxB80V3BNYOyihzvJJaSKY5KhwlKtFt14ukLr+JDcRqNf77azICEH2l5sm2SoQUrafZaIw+PCLY+/iteOM5HogIJIcMPY8zSpHqLAewU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVhDSOO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDTyTa1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255AAC4CEFB;
-	Tue, 11 Nov 2025 01:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVhDSOO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6247BC4CEFB;
+	Tue, 11 Nov 2025 01:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824219;
-	bh=pyFUXsJq/eqJLg0q8Ne9N/wBi0U2QRzEyTlNxtVMXFM=;
+	s=korg; t=1762824221;
+	bh=G7Dh3BDSluzGhl86fQpNF7ujjhHO3uL9Eg5MqlTz2vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDTyTa1vHg4wXnH9XZGZes76zhcUQiDUXb0CfRP9K95jWofQg/vmbpCP24pUwl6u6
-	 /wpNFAxYzO3WWH6T5xlhE5q60h2mnKkDtS9f8lymUBx5fX9X37b+NBTpgcBDswcyAn
-	 BVrwFc0lJa6elh6z/ka/C9w3x7mFuaqtOBrFl+ps=
+	b=UVhDSOO6gZRUc4EBh6hUv/qSbeOfZ94kJ9sQ3iUpd60VthfsNDixz7HC3+dP7ue/R
+	 wdUHysG92ld5Wr6tDhz/medzHucCpThljIhDZzuKUO5VSMi38HR2DhqLq3fgPJ/gLy
+	 mWkF4Of0tkN4wMuT4v9u5Ff1XzBeKm3P1EScxyyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aric Cyr <aric.cyr@amd.com>,
-	Karthi Kandasamy <karthi.kandasamy@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 413/565] drm/amd/display: Add AVI infoframe copy in copy_stream_update_to_stream
-Date: Tue, 11 Nov 2025 09:44:29 +0900
-Message-ID: <20251111004536.158044109@linuxfoundation.org>
+Subject: [PATCH 6.17 465/849] serial: qcom-geni: Add DFS clock mode support to GENI UART driver
+Date: Tue, 11 Nov 2025 09:40:35 +0900
+Message-ID: <20251111004547.670375110@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,106 +46,168 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthi Kandasamy <karthi.kandasamy@amd.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit c8bedab2d9a1a0daa49ac20f9928a943f7205582 ]
+[ Upstream commit fc6a5b540c02d1ec624e4599f45a17f2941a5c00 ]
 
-[WHY]
-Ensure AVI infoframe updates from stream updates are applied to the active
-stream so OS overrides are not lost.
+GENI UART driver currently supports only non-DFS (Dynamic Frequency
+Scaling) mode for source frequency selection. However, to operate correctly
+in DFS mode, the GENI SCLK register must be programmed with the appropriate
+DFS index. Failing to do so can result in incorrect frequency selection
 
-[HOW]
-Copy avi_infopacket to stream when valid flag is set.
-Follow existing infopacket copy pattern and perform a basic validity check before assignment.
+Add support for Dynamic Frequency Scaling (DFS) mode in the GENI UART
+driver by configuring the GENI_CLK_SEL register with the appropriate DFS
+index. This ensures correct frequency selection when operating in DFS mode.
 
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Karthi Kandasamy <karthi.kandasamy@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Replace the UART driver-specific logic for clock selection with the GENI
+common driver function to obtain the desired frequency and corresponding
+clock index. This improves maintainability and consistency across
+GENI-based drivers.
+
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250903063136.3015237-1-viken.dadhaniya@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c          | 7 ++++++-
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 6 ++++++
- drivers/gpu/drm/amd/display/dc/dc_stream.h        | 3 +++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/tty/serial/qcom_geni_serial.c | 92 ++++++---------------------
+ 1 file changed, 21 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 426912d82179c..257d77aa7c979 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -3035,6 +3035,9 @@ static void copy_stream_update_to_stream(struct dc *dc,
- 	if (update->adaptive_sync_infopacket)
- 		stream->adaptive_sync_infopacket = *update->adaptive_sync_infopacket;
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 81f385d900d06..ff401e331f1bb 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1,5 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+-// Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
++/*
++ * Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
  
-+	if (update->avi_infopacket)
-+		stream->avi_infopacket = *update->avi_infopacket;
-+
- 	if (update->dither_option)
- 		stream->dither_option = *update->dither_option;
+ /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
+ #define __DISABLE_TRACE_MMIO__
+@@ -1253,75 +1256,15 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+ 	return 0;
+ }
  
-@@ -3325,7 +3328,8 @@ static void commit_planes_do_stream_update(struct dc *dc,
- 					stream_update->vsp_infopacket ||
- 					stream_update->hfvsif_infopacket ||
- 					stream_update->adaptive_sync_infopacket ||
--					stream_update->vtem_infopacket) {
-+					stream_update->vtem_infopacket ||
-+					stream_update->avi_infopacket) {
- 				resource_build_info_frame(pipe_ctx);
- 				dc->hwss.update_info_frame(pipe_ctx);
+-static unsigned long find_clk_rate_in_tol(struct clk *clk, unsigned int desired_clk,
+-			unsigned int *clk_div, unsigned int percent_tol)
+-{
+-	unsigned long freq;
+-	unsigned long div, maxdiv;
+-	u64 mult;
+-	unsigned long offset, abs_tol, achieved;
+-
+-	abs_tol = div_u64((u64)desired_clk * percent_tol, 100);
+-	maxdiv = CLK_DIV_MSK >> CLK_DIV_SHFT;
+-	div = 1;
+-	while (div <= maxdiv) {
+-		mult = (u64)div * desired_clk;
+-		if (mult != (unsigned long)mult)
+-			break;
+-
+-		offset = div * abs_tol;
+-		freq = clk_round_rate(clk, mult - offset);
+-
+-		/* Can only get lower if we're done */
+-		if (freq < mult - offset)
+-			break;
+-
+-		/*
+-		 * Re-calculate div in case rounding skipped rates but we
+-		 * ended up at a good one, then check for a match.
+-		 */
+-		div = DIV_ROUND_CLOSEST(freq, desired_clk);
+-		achieved = DIV_ROUND_CLOSEST(freq, div);
+-		if (achieved <= desired_clk + abs_tol &&
+-		    achieved >= desired_clk - abs_tol) {
+-			*clk_div = div;
+-			return freq;
+-		}
+-
+-		div = DIV_ROUND_UP(freq, desired_clk);
+-	}
+-
+-	return 0;
+-}
+-
+-static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+-			unsigned int sampling_rate, unsigned int *clk_div)
+-{
+-	unsigned long ser_clk;
+-	unsigned long desired_clk;
+-
+-	desired_clk = baud * sampling_rate;
+-	if (!desired_clk)
+-		return 0;
+-
+-	/*
+-	 * try to find a clock rate within 2% tolerance, then within 5%
+-	 */
+-	ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 2);
+-	if (!ser_clk)
+-		ser_clk = find_clk_rate_in_tol(clk, desired_clk, clk_div, 5);
+-
+-	return ser_clk;
+-}
+-
+ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	unsigned long clk_rate;
+-	unsigned int avg_bw_core;
++	unsigned int avg_bw_core, clk_idx;
+ 	unsigned int clk_div;
+ 	u32 ver, sampling_rate;
+ 	u32 ser_clk_cfg;
++	int ret;
  
-@@ -4759,6 +4763,7 @@ static bool full_update_required(struct dc *dc,
- 			stream_update->hfvsif_infopacket ||
- 			stream_update->vtem_infopacket ||
- 			stream_update->adaptive_sync_infopacket ||
-+			stream_update->avi_infopacket ||
- 			stream_update->dpms_off ||
- 			stream_update->allow_freesync ||
- 			stream_update->vrr_active_variable ||
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 36f8eb37e6710..07473e9604277 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -4156,8 +4156,14 @@ static void set_avi_info_frame(
- 	unsigned int fr_ind = pipe_ctx->stream->timing.fr_index;
- 	enum dc_timing_3d_format format;
+ 	sampling_rate = UART_OVERSAMPLING;
+ 	/* Sampling rate is halved for IP versions >= 2.5 */
+@@ -1329,17 +1272,22 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ 	if (ver >= QUP_SE_VERSION_2_5)
+ 		sampling_rate /= 2;
  
-+	if (stream->avi_infopacket.valid) {
-+		*info_packet = stream->avi_infopacket;
-+		return;
+-	clk_rate = get_clk_div_rate(port->se.clk, baud,
+-		sampling_rate, &clk_div);
+-	if (!clk_rate) {
+-		dev_err(port->se.dev,
+-			"Couldn't find suitable clock rate for %u\n",
+-			baud * sampling_rate);
++	ret = geni_se_clk_freq_match(&port->se, baud * sampling_rate, &clk_idx, &clk_rate, false);
++	if (ret) {
++		dev_err(port->se.dev, "Failed to find src clk for baud rate: %d ret: %d\n",
++			baud, ret);
++		return ret;
 +	}
 +
- 	memset(&hdmi_info, 0, sizeof(union hdmi_info_packet));
++	clk_div = DIV_ROUND_UP(clk_rate, baud * sampling_rate);
++	/* Check if calculated divider exceeds maximum allowed value */
++	if (clk_div > (CLK_DIV_MSK >> CLK_DIV_SHFT)) {
++		dev_err(port->se.dev, "Calculated clock divider %u exceeds maximum\n", clk_div);
+ 		return -EINVAL;
+ 	}
  
-+
- 	color_space = pipe_ctx->stream->output_color_space;
- 	if (color_space == COLOR_SPACE_UNKNOWN)
- 		color_space = (stream->timing.pixel_encoding == PIXEL_ENCODING_RGB) ?
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-index 8b9af1a6a0316..1ecf956a71020 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
-@@ -200,6 +200,7 @@ struct dc_stream_state {
- 	struct dc_info_packet hfvsif_infopacket;
- 	struct dc_info_packet vtem_infopacket;
- 	struct dc_info_packet adaptive_sync_infopacket;
-+	struct dc_info_packet avi_infopacket;
- 	uint8_t dsc_packed_pps[128];
- 	struct rect src; /* composition area */
- 	struct rect dst; /* stream addressable area */
-@@ -331,6 +332,8 @@ struct dc_stream_update {
- 	struct dc_info_packet *hfvsif_infopacket;
- 	struct dc_info_packet *vtem_infopacket;
- 	struct dc_info_packet *adaptive_sync_infopacket;
-+	struct dc_info_packet *avi_infopacket;
-+
- 	bool *dpms_off;
- 	bool integer_scaling_update;
- 	bool *allow_freesync;
+-	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n",
+-			baud * sampling_rate, clk_rate, clk_div);
++	dev_dbg(port->se.dev, "desired_rate = %u, clk_rate = %lu, clk_div = %u\n, clk_idx = %u\n",
++		baud * sampling_rate, clk_rate, clk_div, clk_idx);
+ 
+ 	uport->uartclk = clk_rate;
+ 	port->clk_rate = clk_rate;
+@@ -1359,6 +1307,8 @@ static int geni_serial_set_rate(struct uart_port *uport, unsigned int baud)
+ 
+ 	writel(ser_clk_cfg, uport->membase + GENI_SER_M_CLK_CFG);
+ 	writel(ser_clk_cfg, uport->membase + GENI_SER_S_CLK_CFG);
++	/* Configure clock selection register with the selected clock index */
++	writel(clk_idx & CLK_SEL_MSK, uport->membase + SE_GENI_CLK_SEL);
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
