@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3226B76A;
-	Tue, 11 Nov 2025 01:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15F92F5A10;
+	Tue, 11 Nov 2025 01:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825391; cv=none; b=Bi7YBhFKEU7Uj5gY3sWxbMJxnwJzP58m18oRi6/ola+dxDtLJsf9Sx7lOMPcVWiXS/HwIWUTmqAJk2Jhx44qLSBiJZs/wDfMDRGln6nc2yPVTO/GzqHjnsg48ozDpeMaGScQcdVHxqXGeZ1gdI6WVyf/UOnQV7yErW1sBZa1QKs=
+	t=1762825393; cv=none; b=nvQ5CTlOelPb9V3u3MzEgYUw6pbXFz4/zORwRVu1CxLHAKrAAefrX679QX3G2nGddY9goMbmKGGOYdgVKKKX3ykhU+f6moJbx9trbigR6WjVCE+BgKr5hy4se+JQsowmuypYHnMM29DHSqXTQ/J+Ts8vfMxubxgmgQO1pjgywXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825391; c=relaxed/simple;
-	bh=QQmVr82XLPwT7ZnPN43oBKBVwE4ox55ZkhuXXZmJ6/8=;
+	s=arc-20240116; t=1762825393; c=relaxed/simple;
+	bh=qO/cQsTqArRwvyNo1CWSPoKh0eLARbE3FuPt5sI0mM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D27Pz9B6yA0slTitaX26n2VZ1+MIhv9FQtcSForsikai0fzjFDwKP7HMtq1ZUIqYKY7EY7/xi64LoWFmQR+Zqlr6KGJgbrP8OFa9ApIxl0JSVUqw1SA5Xg2rAbPBvoMofEqTd5E9B82JbAx5FWbBDFBu4ETufh7XzO0Hm2w6PLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frpkgjWQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUyWmuPOb2evNA/o2r1KChUREe6UPe6oo5kYDVbVB2Qeg4X3E42NRM4xVBW06B3Wp9twQ7DvLWvF6hVT0aezw9ibCfLiceyTeyXpWQ5xrmPwNWDbkwdBd740Uv8OA+sUK9slzYZsqIWOKQd7uld3xzZ/LAfv+PVJ+Z2LMs32Ybo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOWbOqy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frpkgjWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD04BC4CEFB;
-	Tue, 11 Nov 2025 01:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOWbOqy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A33C4CEFB;
+	Tue, 11 Nov 2025 01:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825391;
-	bh=QQmVr82XLPwT7ZnPN43oBKBVwE4ox55ZkhuXXZmJ6/8=;
+	s=korg; t=1762825393;
+	bh=qO/cQsTqArRwvyNo1CWSPoKh0eLARbE3FuPt5sI0mM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frpkgjWQNEx2p7veF/TxjJqaonjNt3TmC/jHcJMqPsvxDLAMA9onsiXt++i1lLU5+
-	 0z5oMW4w4ktImj7jMb8t+EJPjpQfHUOURrVfGkwID4IfH9DBUaZoG8yFdupk17+DL7
-	 sgnIvNhAz4a81higIm3FmuJTn7OMW28fw1OoF1+U=
+	b=TOWbOqy3Z5xJcVKl2IOGLX1tHwK7UdyxC+wynEVaG2RQNvhn7AGA6kxzZwX189WYl
+	 n8lDBK5v0PK3W3qWxO7yl222q78iqNK85EpbyyvSI1rMoXJzxk+RFd73czyb2uwB/E
+	 R/5Ky3TS86u3Dz/RE5W/WYu3cH2vI7PgC1he+ZgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	Gautam R A <gautam-r.a@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 782/849] bnxt_en: Fix a possible memory leak in bnxt_ptp_init
-Date: Tue, 11 Nov 2025 09:45:52 +0900
-Message-ID: <20251111004555.333954796@linuxfoundation.org>
+Subject: [PATCH 6.17 783/849] bnxt_en: Fix null pointer dereference in bnxt_bs_trace_check_wrap()
+Date: Tue, 11 Nov 2025 09:45:53 +0900
+Message-ID: <20251111004555.364110417@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -54,42 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Gautam R A <gautam-r.a@broadcom.com>
 
-[ Upstream commit deb8eb39164382f1f67ef8e8af9176baf5e10f2d ]
+[ Upstream commit ff02be05f78399c766be68ab0b2285ff90b2aaa8 ]
 
-In bnxt_ptp_init(), when ptp_clock_register() fails, the driver is
-not freeing the memory allocated for ptp_info->pin_config.  Fix it
-to unconditionally free ptp_info->pin_config in bnxt_ptp_free().
+With older FW, we may get the ASYNC_EVENT_CMPL_EVENT_ID_DBG_BUF_PRODUCER
+for FW trace data type that has not been initialized.  This will result
+in a crash in bnxt_bs_trace_type_wrap().  Add a guard to check for a
+valid magic_byte pointer before proceeding.
 
-Fixes: caf3eedbcd8d ("bnxt_en: 1PPS support for 5750X family chips")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Fixes: 84fcd9449fd7 ("bnxt_en: Manage the FW trace context memory")
 Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Shruti Parab <shruti.parab@broadcom.com>
+Signed-off-by: Gautam R A <gautam-r.a@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20251104005700.542174-3-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20251104005700.542174-4-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index ca660e6d28a4c..8f2faff044591 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -1054,9 +1054,9 @@ static void bnxt_ptp_free(struct bnxt *bp)
- 	if (ptp->ptp_clock) {
- 		ptp_clock_unregister(ptp->ptp_clock);
- 		ptp->ptp_clock = NULL;
--		kfree(ptp->ptp_info.pin_config);
--		ptp->ptp_info.pin_config = NULL;
- 	}
-+	kfree(ptp->ptp_info.pin_config);
-+	ptp->ptp_info.pin_config = NULL;
- }
- 
- int bnxt_ptp_init(struct bnxt *bp)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 2317172166c7d..6b751eb29c2d4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2148,7 +2148,7 @@ struct bnxt_bs_trace_info {
+ static inline void bnxt_bs_trace_check_wrap(struct bnxt_bs_trace_info *bs_trace,
+ 					    u32 offset)
+ {
+-	if (!bs_trace->wrapped &&
++	if (!bs_trace->wrapped && bs_trace->magic_byte &&
+ 	    *bs_trace->magic_byte != BNXT_TRACE_BUF_MAGIC_BYTE)
+ 		bs_trace->wrapped = 1;
+ 	bs_trace->last_offset = offset;
 -- 
 2.51.0
 
