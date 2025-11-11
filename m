@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499541D86FF;
-	Tue, 11 Nov 2025 01:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DFA2E6CA4;
+	Tue, 11 Nov 2025 01:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824707; cv=none; b=Sd+aTK01GA+ngzY8VTg728m1nY+a8LBJRgxj8v2zPZd7vRCLnkLTvA0mylh3V2BXmjO3j//GulaxbrBPvjU6inOrbNP41NHA7tKY+SkEQJrQvNxG9TOOhyaJnjaY1hCQ0ilcQLoAYP0YlfDfX0Zm7X8LjTzEwT+aQ26e2TIDXUA=
+	t=1762824709; cv=none; b=oy73SmFPvPKC1o930i1C2A1mvNuAmIhIA/wieNEuHWUVS52oZ+yBBfxqvtiuJXrxpHjL3m7UCZQBlf/3v0XDZlqoGflCvM1CBktbAWfsdBmpOk7NMD8hOlh/FKCg2ojzqb4EWpO+VWlppI+ZXvBPefMxKC+5mg39WllM6lMALSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824707; c=relaxed/simple;
-	bh=klSHM/jm5EcPVefNCW850AihEpDiIA1VlMH3bz7GNb0=;
+	s=arc-20240116; t=1762824709; c=relaxed/simple;
+	bh=v8hhlNAEzzFNB37lhW6lj9D3cIIpwD6ONPK915jcUF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVmiczAANyd9bwID0wfeW54WmyaFMViaa+/+Dfx/Nu2nPm0tiRG7Es1Xor0CY1wWlWq+nv7FFHqEI5YpwkmkarjIFntjUdfBlW9o5F/rkoB+s4EyqtZ7hRaS/jo4ruCZizdybMhfug7nhSGDc3KZtZfgLZGlpdA9T5pVRlCmGE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtQ9JfFg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kTzUSndcwBC+MSVU0pP50q6o293ThIbGRcJqEUNr/k5d4beYzpIU+fhg3nc3DchD5fhC+YEfAZUzsQ05Jhvw1TkUvXOwzbhplxMSlpHm2BH0J12MJflyVs18q0nG5c96aNDblSDWUpIcvw4jm+fP7t+Suax7CYeq7ot2CNbgD6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ob0sNbnu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtQ9JfFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8008C19422;
-	Tue, 11 Nov 2025 01:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ob0sNbnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D66C4CEF5;
+	Tue, 11 Nov 2025 01:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824707;
-	bh=klSHM/jm5EcPVefNCW850AihEpDiIA1VlMH3bz7GNb0=;
+	s=korg; t=1762824709;
+	bh=v8hhlNAEzzFNB37lhW6lj9D3cIIpwD6ONPK915jcUF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtQ9JfFgUn/R0jltPMHa2Yv9iJ7LFoFhX4wj1+r5JO9fU2gd83VgZUNni8GWzWdmQ
-	 A5SDH16NL/lQNKdV74hnkCrg6AnJFQBZWQofh1gQF9bFjv84+v9pIpD6F9lWs8iTmU
-	 ldMtQ5fFJVaMSmd0Z32/EOtYadF+jbcpHLwm5DzY=
+	b=Ob0sNbnuVuZhit8nnPb2RnDnIybru7TIwGYDcR8xXORBPg9xzhuHhIn1s8ajXR2/X
+	 bow3DmrlP9hoE6gd0O2NZ2x+HeQOojrPw5mFtMDYH2sWqqWmep1tBOdNX6teQPvZz1
+	 8EPnE2tVMnHEg/396+wKRuyg9rdvOE01nZjP8HRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <SJB7183@psu.edu>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 502/565] media: videobuf2: forbid remove_bufs when legacy fileio is active
-Date: Tue, 11 Nov 2025 09:45:58 +0900
-Message-ID: <20251111004538.236283810@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 555/849] drm/amd/display: Dont use non-registered VUPDATE on DCE 6
+Date: Tue, 11 Nov 2025 09:42:05 +0900
+Message-ID: <20251111004549.826037244@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,45 +47,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 27afd6e066cfd80ddbe22a4a11b99174ac89cced upstream.
+[ Upstream commit 6cbe6e072c5d088101cd542ad8ef8541edeea5c3 ]
 
-vb2_ioctl_remove_bufs() call manipulates queue internal buffer list,
-potentially overwriting some pointers used by the legacy fileio access
-mode. Forbid that ioctl when fileio is active to protect internal queue
-state between subsequent read/write calls.
+The VUPDATE interrupt isn't registered on DCE 6, so don't try
+to use that.
 
-CC: stable@vger.kernel.org
-Fixes: a3293a85381e ("media: v4l2: Add REMOVE_BUFS ioctl")
-Reported-by: Shuangpeng Bai <SJB7183@psu.edu>
-Closes: https://lore.kernel.org/linux-media/5317B590-AAB4-4F17-8EA1-621965886D49@psu.edu/
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fixes a page flip timeout after sleep/resume on DCE 6.
+
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/videobuf2/videobuf2-v4l2.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 22 ++++++++++++-------
+ .../amd/display/amdgpu_dm/amdgpu_dm_crtc.c    | 16 +++++++++-----
+ 2 files changed, 24 insertions(+), 14 deletions(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
-+++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-@@ -1015,6 +1015,11 @@ int vb2_ioctl_remove_bufs(struct file *f
- 	if (vb2_queue_is_busy(vdev->queue, file))
- 		return -EBUSY;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 3762b3c0ef983..f450bcb43c9c1 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3050,14 +3050,20 @@ static void dm_gpureset_toggle_interrupts(struct amdgpu_device *adev,
+ 				drm_warn(adev_to_drm(adev), "Failed to %s pflip interrupts\n",
+ 					 enable ? "enable" : "disable");
  
-+	if (vb2_fileio_is_active(vdev->queue)) {
-+		dprintk(vdev->queue, 1, "file io in progress\n");
-+		return -EBUSY;
-+	}
+-			if (enable) {
+-				if (amdgpu_dm_crtc_vrr_active(to_dm_crtc_state(acrtc->base.state)))
+-					rc = amdgpu_dm_crtc_set_vupdate_irq(&acrtc->base, true);
+-			} else
+-				rc = amdgpu_dm_crtc_set_vupdate_irq(&acrtc->base, false);
+-
+-			if (rc)
+-				drm_warn(adev_to_drm(adev), "Failed to %sable vupdate interrupt\n", enable ? "en" : "dis");
++			if (dc_supports_vrr(adev->dm.dc->ctx->dce_version)) {
++				if (enable) {
++					if (amdgpu_dm_crtc_vrr_active(
++							to_dm_crtc_state(acrtc->base.state)))
++						rc = amdgpu_dm_crtc_set_vupdate_irq(
++							&acrtc->base, true);
++				} else
++					rc = amdgpu_dm_crtc_set_vupdate_irq(
++							&acrtc->base, false);
 +
- 	return vb2_core_remove_bufs(vdev->queue, d->index, d->count);
- }
- EXPORT_SYMBOL_GPL(vb2_ioctl_remove_bufs);
++				if (rc)
++					drm_warn(adev_to_drm(adev), "Failed to %sable vupdate interrupt\n",
++						enable ? "en" : "dis");
++			}
+ 
+ 			irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
+ 			/* During gpu-reset we disable and then enable vblank irq, so
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+index 80205c9bc9403..2047ac51f1b66 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -321,13 +321,17 @@ static inline int amdgpu_dm_crtc_set_vblank(struct drm_crtc *crtc, bool enable)
+ 			dc->config.disable_ips != DMUB_IPS_DISABLE_ALL &&
+ 			sr_supported && vblank->config.disable_immediate)
+ 			drm_crtc_vblank_restore(crtc);
++	}
+ 
+-		/* vblank irq on -> Only need vupdate irq in vrr mode */
+-		if (amdgpu_dm_crtc_vrr_active(acrtc_state))
+-			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
+-	} else {
+-		/* vblank irq off -> vupdate irq off */
+-		rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, false);
++	if (dc_supports_vrr(dm->dc->ctx->dce_version)) {
++		if (enable) {
++			/* vblank irq on -> Only need vupdate irq in vrr mode */
++			if (amdgpu_dm_crtc_vrr_active(acrtc_state))
++				rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
++		} else {
++			/* vblank irq off -> vupdate irq off */
++			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, false);
++		}
+ 	}
+ 
+ 	if (rc)
+-- 
+2.51.0
+
 
 
