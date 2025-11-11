@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED7B34886F;
-	Tue, 11 Nov 2025 01:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5563434888F;
+	Tue, 11 Nov 2025 01:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823763; cv=none; b=uZ9OYtwMqAMBYvp04oAJtX1WsJsNQhgBCeH9kY0n/zCJgnsFHZKenlWfqTY1wrVL5aCTs51QjlZteEO7luQxATLzO51QDa06U0hxS9M6krGDrfRN4D2WMvPQhIjck/hT2Yuxxh8sEj4B+uepUj081qiPt2Rfxdw/1g7jrvbMUN4=
+	t=1762823768; cv=none; b=ENN0ON+k5DJvo67brBKjZ2tg5Yh9Y8+ENOVNVJrdG+zbZXROMd9rInOGarzkKDfMzhRUJHWljW62s7NUzEZxNd7RZtkSmV/myV8LP/WTGQrGblg3nVUY/7gmYJccwxpQt+AzAVkieOnKJgxxxIpYvs6xqDxC6rEyWBr3T9meRLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823763; c=relaxed/simple;
-	bh=79smmCPBx/zQi56gtC0cUGf1+EsUry+Tm7TEMwptic0=;
+	s=arc-20240116; t=1762823768; c=relaxed/simple;
+	bh=Ep8nM/nrGV87z+s1QHFLC8XSfkc0bXKt5mFYCgiY7RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTlqdJeM88HEOUsLJG8ub7sJ5AG7JZabcxcedUc5c85/uxIcKdf8kSrIkduRyYHSlazbuqdRQn3DOLCzz2g/ytZOmINGehIgus6ibxkwY0TFiL6Rky/uPDYnTYd3mMKi2NyyA7gv8xKe11Kws4Mk1Mb1Ns3OMDVSFLIKMXKNUrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DO/RL8cW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4z71+Wj0MP6K+SySikOM0jK48wHKx7uYH+8io69Ken/2QNS4BzlV1M23CS7JZAXJ375idHaRfwJNO/+1RhrIS8xypH5igN1CuFf4cTI7AsjvOZwDclReaMZOTcX4YdmFJRSxMFE8QMPO5fpOsEeUTVuUUsg8qUkQXQ+9xRfMlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfEdyzk1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DO/RL8cW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37065C4CEF5;
-	Tue, 11 Nov 2025 01:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfEdyzk1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AAAC113D0;
+	Tue, 11 Nov 2025 01:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823763;
-	bh=79smmCPBx/zQi56gtC0cUGf1+EsUry+Tm7TEMwptic0=;
+	s=korg; t=1762823768;
+	bh=Ep8nM/nrGV87z+s1QHFLC8XSfkc0bXKt5mFYCgiY7RQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DO/RL8cW1s8DbBaUYuhDuJcwsHzqsHutbtjcLaw8JU5Fy7HnojSZgCDVk5hri9rS7
-	 zDAleRyAdf7inHbwqJHiNxMaxw+oH1I0cn2urwnoMp0L9heiHJOjN6AY5dJOqIqrU1
-	 H0wvB9d1tZW9F9wGPMnKmn2nNxkfwDIl/atQR9sQ=
+	b=qfEdyzk1i8T58uV1TOe7BNqAOuMhTdWXMFFlSVpYAnPCVNS7sqrkM6CDIfjA42mzO
+	 jRWy39LGk/gHpp2KsUSaZADslZ9f1Q2csgIso6ovTWpwVXrMstfpYC3hJxsE2mlN3c
+	 1wwZDaHxxCHjI82AlFq8dlGDpSKbkUGCwUX2K0XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nimesh Sati <nimesh.sati@samsung.com>,
-	Bharat Uppal <bharat.uppal@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/565] scsi: ufs: exynos: fsd: Gate ref_clk and put UFS device in reset on suspend
-Date: Tue, 11 Nov 2025 09:42:15 +0900
-Message-ID: <20251111004533.157248878@linuxfoundation.org>
+Subject: [PATCH 6.17 365/849] selftests: drv-net: hds: restore hds settings
+Date: Tue, 11 Nov 2025 09:38:55 +0900
+Message-ID: <20251111004545.244667917@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +46,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bharat Uppal <bharat.uppal@samsung.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 6d55af0f0740bf3d77943425fdafb77dc0fa6bb9 ]
+[ Upstream commit ee3ae27721fb994ac0b4705b5806ce68a5a74c73 ]
 
-On FSD platform, gating the reference clock (ref_clk) and putting the
-UFS device in reset by asserting the reset signal during UFS suspend,
-improves the power savings and ensures the PHY is fully turned off.
+The test currently modifies the HDS settings and doesn't restore them.
+This may cause subsequent tests to fail (or pass when they should not).
+Add defer()ed reset handling.
 
-These operations are added as FSD specific suspend hook to avoid
-unintended side effects on other SoCs supported by this driver.
-
-Co-developed-by: Nimesh Sati <nimesh.sati@samsung.com>
-Signed-off-by: Nimesh Sati <nimesh.sati@samsung.com>
-Signed-off-by: Bharat Uppal <bharat.uppal@samsung.com>
-Link: https://lore.kernel.org/r/20250821053923.69411-1-bharat.uppal@samsung.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://patch.msgid.link/20250825175939.2249165-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/drivers/net/hds.py | 39 ++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 6bd1532bfd1d6..6a337e058e5c4 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1882,6 +1882,13 @@ static int fsd_ufs_pre_pwr_change(struct exynos_ufs *ufs,
- 	return 0;
- }
+diff --git a/tools/testing/selftests/drivers/net/hds.py b/tools/testing/selftests/drivers/net/hds.py
+index 7c90a040ce45a..a2011474e6255 100755
+--- a/tools/testing/selftests/drivers/net/hds.py
++++ b/tools/testing/selftests/drivers/net/hds.py
+@@ -3,6 +3,7 @@
  
-+static int fsd_ufs_suspend(struct exynos_ufs *ufs)
-+{
-+	exynos_ufs_gate_clks(ufs);
-+	hci_writel(ufs, 0, HCI_GPIO_OUT);
-+	return 0;
-+}
+ import errno
+ import os
++from typing import Union
+ from lib.py import ksft_run, ksft_exit, ksft_eq, ksft_raises, KsftSkipEx
+ from lib.py import CmdExitFailure, EthtoolFamily, NlError
+ from lib.py import NetDrvEnv
+@@ -58,7 +59,39 @@ def get_hds_thresh(cfg, netnl) -> None:
+     if 'hds-thresh' not in rings:
+         raise KsftSkipEx('hds-thresh not supported by device')
+ 
 +
- static inline u32 get_mclk_period_unipro_18(struct exynos_ufs *ufs)
- {
- 	return (16 * 1000 * 1000000UL / ufs->mclk_rate);
-@@ -2162,6 +2169,7 @@ static const struct exynos_ufs_drv_data fsd_ufs_drvs = {
- 	.pre_link               = fsd_ufs_pre_link,
- 	.post_link              = fsd_ufs_post_link,
- 	.pre_pwr_change         = fsd_ufs_pre_pwr_change,
-+	.suspend                = fsd_ufs_suspend,
- };
++def _hds_reset(cfg, netnl, rings) -> None:
++    cur = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++
++    arg = {'header': {'dev-index': cfg.ifindex}}
++    if cur.get('tcp-data-split') != rings.get('tcp-data-split'):
++        # Try to reset to "unknown" first, we don't know if the setting
++        # was the default or user chose it. Default seems more likely.
++        arg['tcp-data-split'] = "unknown"
++        netnl.rings_set(arg)
++        cur = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++        if cur['tcp-data-split'] == rings['tcp-data-split']:
++            del arg['tcp-data-split']
++        else:
++            # Try the explicit setting
++            arg['tcp-data-split'] = rings['tcp-data-split']
++    if cur.get('hds-thresh') != rings.get('hds-thresh'):
++        arg['hds-thresh'] = rings['hds-thresh']
++    if len(arg) > 1:
++        netnl.rings_set(arg)
++
++
++def _defer_reset_hds(cfg, netnl) -> Union[dict, None]:
++    try:
++        rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
++        if 'hds-thresh' in rings or 'tcp-data-split' in rings:
++            defer(_hds_reset, cfg, netnl, rings)
++    except NlError as e:
++        pass
++
++
+ def set_hds_enable(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'tcp-data-split': 'enabled'})
+     except NlError as e:
+@@ -76,6 +109,7 @@ def set_hds_enable(cfg, netnl) -> None:
+     ksft_eq('enabled', rings['tcp-data-split'])
  
- static const struct exynos_ufs_drv_data gs101_ufs_drvs = {
+ def set_hds_disable(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'tcp-data-split': 'disabled'})
+     except NlError as e:
+@@ -93,6 +127,7 @@ def set_hds_disable(cfg, netnl) -> None:
+     ksft_eq('disabled', rings['tcp-data-split'])
+ 
+ def set_hds_thresh_zero(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex}, 'hds-thresh': 0})
+     except NlError as e:
+@@ -110,6 +145,7 @@ def set_hds_thresh_zero(cfg, netnl) -> None:
+     ksft_eq(0, rings['hds-thresh'])
+ 
+ def set_hds_thresh_random(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -140,6 +176,7 @@ def set_hds_thresh_random(cfg, netnl) -> None:
+     ksft_eq(hds_thresh, rings['hds-thresh'])
+ 
+ def set_hds_thresh_max(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -157,6 +194,7 @@ def set_hds_thresh_max(cfg, netnl) -> None:
+     ksft_eq(rings['hds-thresh'], rings['hds-thresh-max'])
+ 
+ def set_hds_thresh_gt(cfg, netnl) -> None:
++    _defer_reset_hds(cfg, netnl)
+     try:
+         rings = netnl.rings_get({'header': {'dev-index': cfg.ifindex}})
+     except NlError as e:
+@@ -178,6 +216,7 @@ def set_xdp(cfg, netnl) -> None:
+     """
+     mode = _get_hds_mode(cfg, netnl)
+     if mode == 'enabled':
++        _defer_reset_hds(cfg, netnl)
+         netnl.rings_set({'header': {'dev-index': cfg.ifindex},
+                          'tcp-data-split': 'unknown'})
+ 
 -- 
 2.51.0
 
