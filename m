@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88337306B39;
-	Tue, 11 Nov 2025 01:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C218F306D57;
+	Tue, 11 Nov 2025 01:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824881; cv=none; b=hdXaMAqfLgf5UjdbBhIyIyD2UezV7oBe10VHRIrXfpFC7maPScBmrodiidHrEaspfbD6QcmnegbdrBIjY6F9CxZdnBXq8TZmHGUpgQHym4OO771gcX1fFcb3Ru7Bci6drLEJDZfeSM0nv+gPQKZb6dSwgtvtxxo/N0oxbmISGFs=
+	t=1762824883; cv=none; b=tWfpP1FGOwszSxfGvG5DJ2XXarCAjJYqXEJ76yU8spkEfvdtcb0iHjLUepjoqjvEFtvCProgyu2QLthpZR0SZlUuNyw3gNduFarwbvNnnL85l62xZouDG8b7+8AhKrBI0FCTnoD/30qvGTDebLhDsdnAZ6cB2Q8wElrnXSbvfRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824881; c=relaxed/simple;
-	bh=WTIBi5wHNJs8AxMSur0hmlnYpcJdJDU3Gaw4WwfTsq4=;
+	s=arc-20240116; t=1762824883; c=relaxed/simple;
+	bh=lBDzGFabeSc5fGjBOzjvA18kpV9HiZ+e2jM59GejBvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+OoYDln+9x5qLbR+tdF2iv782imLhS4KTyXI5H9kxWu0TICwfpSs+nMgiJ+M4bQUllPEi6+Ttn6b1mIwm887fNJ9cDMzU/qejlwSrgMsyzi4rSq1Ppe8AYvcOv9+qYBue1szlburh706Tz4IRxHve89y3oxy2NAH3BkOvzXSf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHXk6kC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oFQLO8X2E2BOUnzZMyjrtwNKB7zEN+MNNgRw9+yn+wYmF7R51mIsMhdJLZUVOGOxUW4reBHuzi1lYMQOKjKzqxGe8Y4BH4qk6R198qMim+oE6v0arlz/SlTbEnxUDoilq1pCzDACvAZ/wVw1pHf/3T+YVT19ZfSKWfW/TvJw1Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4RGs/FY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHXk6kC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3A2C2BC87;
-	Tue, 11 Nov 2025 01:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4RGs/FY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7DCC116D0;
+	Tue, 11 Nov 2025 01:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824881;
-	bh=WTIBi5wHNJs8AxMSur0hmlnYpcJdJDU3Gaw4WwfTsq4=;
+	s=korg; t=1762824883;
+	bh=lBDzGFabeSc5fGjBOzjvA18kpV9HiZ+e2jM59GejBvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHXk6kC+aYq+opdbSdT7kAXr33NhuB+Z2epFokZeD95+4C8rjkVBdxsbpX+dlolHe
-	 +No2ZQpM+KdSDMf9UJ1hGPnieZYJW3Ri99CSZPOf9zWPUo3FDXdpC1/Snof0jp7Uat
-	 33rfT6E6UW/VnROXrroiYG4j5Ef0+PZ8s2ih5eyc=
+	b=A4RGs/FYOWdNW3qTFJjRRLDJp0g/1Ha8YHDqgYhlsqQadFcYwumOSs/sWAkMzoTeH
+	 tlQFI3hQl6c7xrituPYfDaIFoU4Joa/ttOfyY7Q6oN5aHsob7+nIl3yLPabf2+i/v9
+	 CKqCadq3P6s+4n5MIJ3S0ONQD4NQlvbK063PJvG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.12 543/565] drm/amd/display: Enable mst when its detected but yet to be initialized
-Date: Tue, 11 Nov 2025 09:46:39 +0900
-Message-ID: <20251111004539.203270951@linuxfoundation.org>
+	Qendrim Maxhuni <qendrim.maxhuni@garderos.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 528/565] net: usb: qmi_wwan: initialize MAC header offset in qmimux_rx_fixup
+Date: Tue, 11 Nov 2025 09:46:24 +0900
+Message-ID: <20251111004538.846399760@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -53,63 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
 
-commit 3c6a743c6961cc2cab453b343bb157d6bbbf8120 upstream.
+[ Upstream commit e120f46768d98151ece8756ebd688b0e43dc8b29 ]
 
-[Why]
-drm_dp_mst_topology_queue_probe() is used under the assumption that
-mst is already initialized. If we connect system with SST first
-then switch to the mst branch during suspend, we will fail probing
-topology by calling the wrong API since the mst manager is yet to
-be initialized.
+Raw IP packets have no MAC header, leaving skb->mac_header uninitialized.
+This can trigger kernel panics on ARM64 when xfrm or other subsystems
+access the offset due to strict alignment checks.
 
-[How]
-At dm_resume(), once it's detected as mst branc connected, check if
-the mst is initialized already. If not, call
-dm_helpers_dp_mst_start_top_mgr() instead to initialize mst
+Initialize the MAC header to prevent such crashes.
 
-V2: Adjust the commit msg a bit
+This can trigger kernel panics on ARM when running IPsec over the
+qmimux0 interface.
 
-Fixes: bc068194f548 ("drm/amd/display: Don't write DP_MSTM_CTRL after LT")
-Cc: Fangzhi Zuo <jerry.zuo@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 62320fb8d91a0bddc44a228203cfa9bfbb5395bd)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Example trace:
+
+    Internal error: Oops: 000000009600004f [#1] SMP
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.34-gbe78e49cb433 #1
+    Hardware name: LS1028A RDB Board (DT)
+    pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    pc : xfrm_input+0xde8/0x1318
+    lr : xfrm_input+0x61c/0x1318
+    sp : ffff800080003b20
+    Call trace:
+     xfrm_input+0xde8/0x1318
+     xfrm6_rcv+0x38/0x44
+     xfrm6_esp_rcv+0x48/0xa8
+     ip6_protocol_deliver_rcu+0x94/0x4b0
+     ip6_input_finish+0x44/0x70
+     ip6_input+0x44/0xc0
+     ipv6_rcv+0x6c/0x114
+     __netif_receive_skb_one_core+0x5c/0x8c
+     __netif_receive_skb+0x18/0x60
+     process_backlog+0x78/0x17c
+     __napi_poll+0x38/0x180
+     net_rx_action+0x168/0x2f0
+
+Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
+Signed-off-by: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
+Link: https://patch.msgid.link/20251029075744.105113-1-qendrim.maxhuni@garderos.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/usb/qmi_wwan.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3424,6 +3424,7 @@ static int dm_resume(void *handle)
- 	/* Do mst topology probing after resuming cached state*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
-+		bool init = false;
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index f04da733240c0..bd51435ed4184 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -192,6 +192,12 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		if (!skbn)
+ 			return 0;
  
- 		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
- 			continue;
-@@ -3433,7 +3434,14 @@ static int dm_resume(void *handle)
- 		    aconnector->mst_root)
- 			continue;
- 
--		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
-+		scoped_guard(mutex, &aconnector->mst_mgr.lock) {
-+			init = !aconnector->mst_mgr.mst_primary;
-+		}
-+		if (init)
-+			dm_helpers_dp_mst_start_top_mgr(aconnector->dc_link->ctx,
-+				aconnector->dc_link, false);
-+		else
-+			drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
- 	}
- 	drm_connector_list_iter_end(&iter);
- 
++	       /* Raw IP packets don't have a MAC header, but other subsystems
++		* (like xfrm) may still access MAC header offsets, so they must
++		* be initialized.
++		*/
++		skb_reset_mac_header(skbn);
++
+ 		switch (skb->data[offset + qmimux_hdr_sz] & 0xf0) {
+ 		case 0x40:
+ 			skbn->protocol = htons(ETH_P_IP);
+-- 
+2.51.0
+
 
 
