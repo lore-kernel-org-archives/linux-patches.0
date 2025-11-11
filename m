@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736851F5F6;
-	Tue, 11 Nov 2025 01:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261957262A;
+	Tue, 11 Nov 2025 01:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823009; cv=none; b=nPmhWQTmZR6RC1Q4UPRdk4JeML3RfaxZ7cPQ1Zk7PqYZSpQSVlq0gzAtIh4Wgh28cB3doBKuMyVuZKReF4mYW6noAhrOm5znTVa41PDvu7IH1jyguGSfeERtuRJXL1cLt7YbmX9pJQzBjNc/oNSOH36gi/mTLO3D/fpale6mU5c=
+	t=1762823012; cv=none; b=C3PTXckcPZZ0stNyJ4lJMu1LflZ467BjpVW6j+fxiXWBcKgLdXztQ2Paq/ixtQ6VKxxJwI+rOi/PKffkZBOlyppf+K5HnI0RSTuNYdldCfa4RucyFA4G+9NznHvKrWGMICZIWLNjN4vg3HMjZ5I5+2ARlM4aTjFLbSFQ8S3uZ4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823009; c=relaxed/simple;
-	bh=UcyZXHP/GuquRrX6bHTr8bAlFt2wsdALOQsWPxcq+d0=;
+	s=arc-20240116; t=1762823012; c=relaxed/simple;
+	bh=0cGhx5HAAlnaFCz9iU58MVxm3nkogs7ngUkuku9iKvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D38ZhKjkSBiyV1iK9YHKegnXGiVM3j2OqxQRDkqFoF0x6Cj9z5TT3vVmxex/+P0TvrpswBqiDM2x0cXcfrRo5/rDJlJfK6AA7moSqwUcCXOoeVrxs7aR8LqMuZg/vcJNNyWF102a16NGOlL/hMyFMFRCS26nfV50uNarZ/t19xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PM+k7f1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCqDw2vPKm+CxsKqyJJnSI9udHCXPL2nFOHdoaUIquLYMsuewcio+/Koxi1zBy/xY9vTbfcf5z2QAkNAgiRIUomNRnkSb5puCku/8JbYXUjAX9SAGUdPtDhJomDYNmoX5QdkbmrPRXHilriPWjJe0ltChWx0a2Y/8e3BTh5ocDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loUlM38f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PM+k7f1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFC3C2BCB0;
-	Tue, 11 Nov 2025 01:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loUlM38f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A6DC16AAE;
+	Tue, 11 Nov 2025 01:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823009;
-	bh=UcyZXHP/GuquRrX6bHTr8bAlFt2wsdALOQsWPxcq+d0=;
+	s=korg; t=1762823012;
+	bh=0cGhx5HAAlnaFCz9iU58MVxm3nkogs7ngUkuku9iKvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PM+k7f1FvRlPbt4rCkvfZz6BC6W6sa8H/V+gXo74g7P41tonctjvH1lu+ybxjTdGl
-	 m2SUp2NHpYQgOpHNCU1J/6bEkbOG/HHJwm2y2xPEn+sfa6AU9V8DFipxTFTm7D0Ot/
-	 WfdVfRTxP90n12JUWBQ57q/0rm7SiDurhzivGtSY=
+	b=loUlM38fEdNMBZfohNizpLvogw6EYm+6uAz8+8Arp/qswuwqprxvwJP8aWDvc+gTO
+	 CUj9GfsEFSZTCsrc6CRHoRPLQEbbspSfvUzjboO3siA2u3975NrtG1/3M1SpHueoUU
+	 0XYSXcCnGl1WGU75Pua2njs4iIqNaKG6VAzKjjfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Tom Stellard <tstellar@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/565] blk-cgroup: fix possible deadlock while configuring policy
-Date: Tue, 11 Nov 2025 09:40:10 +0900
-Message-ID: <20251111004530.403528870@linuxfoundation.org>
+Subject: [PATCH 6.12 145/565] bpftool: Fix -Wuninitialized-const-pointer warnings with clang >= 21
+Date: Tue, 11 Nov 2025 09:40:01 +0900
+Message-ID: <20251111004530.203956973@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,186 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Tom Stellard <tstellar@redhat.com>
 
-[ Upstream commit 5d726c4dbeeddef612e6bed27edd29733f4d13af ]
+[ Upstream commit 5612ea8b554375d45c14cbb0f8ea93ec5d172891 ]
 
-Following deadlock can be triggered easily by lockdep:
+This fixes the build with -Werror -Wall.
 
-WARNING: possible circular locking dependency detected
-6.17.0-rc3-00124-ga12c2658ced0 #1665 Not tainted
-------------------------------------------------------
-check/1334 is trying to acquire lock:
-ff1100011d9d0678 (&q->sysfs_lock){+.+.}-{4:4}, at: blk_unregister_queue+0x53/0x180
+btf_dumper.c:71:31: error: variable 'finfo' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   71 |         info.func_info = ptr_to_u64(&finfo);
+      |                                      ^~~~~
 
-but task is already holding lock:
-ff1100011d9d00e0 (&q->q_usage_counter(queue)#3){++++}-{0:0}, at: del_gendisk+0xba/0x110
+prog.c:2294:31: error: variable 'func_info' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+ 2294 |         info.func_info = ptr_to_u64(&func_info);
+      |
 
-which lock already depends on the new lock.
+v2:
+  - Initialize instead of using memset.
 
-the existing dependency chain (in reverse order) is:
-
--> #2 (&q->q_usage_counter(queue)#3){++++}-{0:0}:
-       blk_queue_enter+0x40b/0x470
-       blkg_conf_prep+0x7b/0x3c0
-       tg_set_limit+0x10a/0x3e0
-       cgroup_file_write+0xc6/0x420
-       kernfs_fop_write_iter+0x189/0x280
-       vfs_write+0x256/0x490
-       ksys_write+0x83/0x190
-       __x64_sys_write+0x21/0x30
-       x64_sys_call+0x4608/0x4630
-       do_syscall_64+0xdb/0x6b0
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
--> #1 (&q->rq_qos_mutex){+.+.}-{4:4}:
-       __mutex_lock+0xd8/0xf50
-       mutex_lock_nested+0x2b/0x40
-       wbt_init+0x17e/0x280
-       wbt_enable_default+0xe9/0x140
-       blk_register_queue+0x1da/0x2e0
-       __add_disk+0x38c/0x5d0
-       add_disk_fwnode+0x89/0x250
-       device_add_disk+0x18/0x30
-       virtblk_probe+0x13a3/0x1800
-       virtio_dev_probe+0x389/0x610
-       really_probe+0x136/0x620
-       __driver_probe_device+0xb3/0x230
-       driver_probe_device+0x2f/0xe0
-       __driver_attach+0x158/0x250
-       bus_for_each_dev+0xa9/0x130
-       driver_attach+0x26/0x40
-       bus_add_driver+0x178/0x3d0
-       driver_register+0x7d/0x1c0
-       __register_virtio_driver+0x2c/0x60
-       virtio_blk_init+0x6f/0xe0
-       do_one_initcall+0x94/0x540
-       kernel_init_freeable+0x56a/0x7b0
-       kernel_init+0x2b/0x270
-       ret_from_fork+0x268/0x4c0
-       ret_from_fork_asm+0x1a/0x30
-
--> #0 (&q->sysfs_lock){+.+.}-{4:4}:
-       __lock_acquire+0x1835/0x2940
-       lock_acquire+0xf9/0x450
-       __mutex_lock+0xd8/0xf50
-       mutex_lock_nested+0x2b/0x40
-       blk_unregister_queue+0x53/0x180
-       __del_gendisk+0x226/0x690
-       del_gendisk+0xba/0x110
-       sd_remove+0x49/0xb0 [sd_mod]
-       device_remove+0x87/0xb0
-       device_release_driver_internal+0x11e/0x230
-       device_release_driver+0x1a/0x30
-       bus_remove_device+0x14d/0x220
-       device_del+0x1e1/0x5a0
-       __scsi_remove_device+0x1ff/0x2f0
-       scsi_remove_device+0x37/0x60
-       sdev_store_delete+0x77/0x100
-       dev_attr_store+0x1f/0x40
-       sysfs_kf_write+0x65/0x90
-       kernfs_fop_write_iter+0x189/0x280
-       vfs_write+0x256/0x490
-       ksys_write+0x83/0x190
-       __x64_sys_write+0x21/0x30
-       x64_sys_call+0x4608/0x4630
-       do_syscall_64+0xdb/0x6b0
-       entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-other info that might help us debug this:
-
-Chain exists of:
-  &q->sysfs_lock --> &q->rq_qos_mutex --> &q->q_usage_counter(queue)#3
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&q->q_usage_counter(queue)#3);
-                               lock(&q->rq_qos_mutex);
-                               lock(&q->q_usage_counter(queue)#3);
-  lock(&q->sysfs_lock);
-
-Root cause is that queue_usage_counter is grabbed with rq_qos_mutex
-held in blkg_conf_prep(), while queue should be freezed before
-rq_qos_mutex from other context.
-
-The blk_queue_enter() from blkg_conf_prep() is used to protect against
-policy deactivation, which is already protected with blkcg_mutex, hence
-convert blk_queue_enter() to blkcg_mutex to fix this problem. Meanwhile,
-consider that blkcg_mutex is held after queue is freezed from policy
-deactivation, also convert blkg_alloc() to use GFP_NOIO.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Tom Stellard <tstellar@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20250917183847.318163-1-tstellar@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ tools/bpf/bpftool/btf_dumper.c | 2 +-
+ tools/bpf/bpftool/prog.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 643d6bf66522e..5a5525d10a5e5 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -847,14 +847,8 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 	disk = ctx->bdev->bd_disk;
- 	q = disk->queue;
+diff --git a/tools/bpf/bpftool/btf_dumper.c b/tools/bpf/bpftool/btf_dumper.c
+index 527fe867a8fbd..93995275c7f66 100644
+--- a/tools/bpf/bpftool/btf_dumper.c
++++ b/tools/bpf/bpftool/btf_dumper.c
+@@ -38,7 +38,7 @@ static int dump_prog_id_as_func_ptr(const struct btf_dumper *d,
+ 	__u32 info_len = sizeof(info);
+ 	const char *prog_name = NULL;
+ 	struct btf *prog_btf = NULL;
+-	struct bpf_func_info finfo;
++	struct bpf_func_info finfo = {};
+ 	__u32 finfo_rec_size;
+ 	char prog_str[1024];
+ 	int err;
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index 52ffb74ae4e89..6e095a3afc046 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -2207,7 +2207,7 @@ static void profile_print_readings(void)
  
--	/*
--	 * blkcg_deactivate_policy() requires queue to be frozen, we can grab
--	 * q_usage_counter to prevent concurrent with blkcg_deactivate_policy().
--	 */
--	ret = blk_queue_enter(q, 0);
--	if (ret)
--		goto fail;
--
-+	/* Prevent concurrent with blkcg_deactivate_policy() */
-+	mutex_lock(&q->blkcg_mutex);
- 	spin_lock_irq(&q->queue_lock);
- 
- 	if (!blkcg_policy_enabled(q, pol)) {
-@@ -884,16 +878,16 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 		/* Drop locks to do new blkg allocation with GFP_KERNEL. */
- 		spin_unlock_irq(&q->queue_lock);
- 
--		new_blkg = blkg_alloc(pos, disk, GFP_KERNEL);
-+		new_blkg = blkg_alloc(pos, disk, GFP_NOIO);
- 		if (unlikely(!new_blkg)) {
- 			ret = -ENOMEM;
--			goto fail_exit_queue;
-+			goto fail_exit;
- 		}
- 
- 		if (radix_tree_preload(GFP_KERNEL)) {
- 			blkg_free(new_blkg);
- 			ret = -ENOMEM;
--			goto fail_exit_queue;
-+			goto fail_exit;
- 		}
- 
- 		spin_lock_irq(&q->queue_lock);
-@@ -921,7 +915,7 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 			goto success;
- 	}
- success:
--	blk_queue_exit(q);
-+	mutex_unlock(&q->blkcg_mutex);
- 	ctx->blkg = blkg;
- 	return 0;
- 
-@@ -929,9 +923,8 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
- 	radix_tree_preload_end();
- fail_unlock:
- 	spin_unlock_irq(&q->queue_lock);
--fail_exit_queue:
--	blk_queue_exit(q);
--fail:
-+fail_exit:
-+	mutex_unlock(&q->blkcg_mutex);
- 	/*
- 	 * If queue was bypassing, we should retry.  Do so after a
- 	 * short msleep().  It isn't strictly necessary but queue
+ static char *profile_target_name(int tgt_fd)
+ {
+-	struct bpf_func_info func_info;
++	struct bpf_func_info func_info = {};
+ 	struct bpf_prog_info info = {};
+ 	__u32 info_len = sizeof(info);
+ 	const struct btf_type *t;
 -- 
 2.51.0
 
