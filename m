@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06E17640E;
-	Tue, 11 Nov 2025 01:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8DDF76;
+	Tue, 11 Nov 2025 01:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825281; cv=none; b=iWI58ms+EngtwZDkMWlaVrHyKe9npVUiADvRFjFlfmV+7csdLPtZtAXoLovWtbLFXzTd1wqMCSBT5LcUHAZEbzfK81S9HrtzrjxPjOwIs+28bTydMftQx53ynDfkSsPStp01GOMkpQhPOroTc4Fk4zI/nOibtYrmWn0/7mBNkvI=
+	t=1762825283; cv=none; b=o0ecqI6nAoziIS7TN270FbDU9XZXNMkcKVjYmTRFqEXVfqW2+b4E/XUd/LNJKum9HUo+WPnRI4J4xvhr2Eb9zmYUY/bFWMlyBkiAuTteEJ/axBq6k4GwIBRcwTiUwVCqjk5hpEkDYw2xgiWOMDdxcbzLucrxMolX61CiAXs6bRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825281; c=relaxed/simple;
-	bh=TEH8EWbQA8LvwdN6T5rJ134mJcwpxvxBLR2mvibYBXw=;
+	s=arc-20240116; t=1762825283; c=relaxed/simple;
+	bh=G2r4ewsU3aYmKvI0Xpc0qWP3beXfSAxHto1g/s9vnPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8cTvV90DRkoA+qCwJspRudBSHyrXNvXG3Rz6+7nuGGZDtqh6t1R4vtQIM8xEnu75Ry+qd85uWzkqig4uPOSNvg6LXCmDebwAQaUkRnXvxi7ZPuF5bLIBLnYCBQXxGft0feRBj6TRU0QU4CkWeiTgKv+LLQCT+mzxurAZh887aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGNpjQeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8yik0xeTIPq4YkSweplAWB7dKIWH0791kt5wrI93kW6bJBjCAQH8ItbI7yLk9lcQPFcbuwxyYs5NWZcVd+AZ90PBa88yapwz8P1Ni+PGNDrDCpLbU9UpbpOqSWRalJlTkO0xkdn/P4KRtP/CmV8RKSOuPc5e5+Lk0db78HR20w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrM4dlPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGNpjQeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91549C19422;
-	Tue, 11 Nov 2025 01:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrM4dlPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F35C4CEF5;
+	Tue, 11 Nov 2025 01:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825280;
-	bh=TEH8EWbQA8LvwdN6T5rJ134mJcwpxvxBLR2mvibYBXw=;
+	s=korg; t=1762825283;
+	bh=G2r4ewsU3aYmKvI0Xpc0qWP3beXfSAxHto1g/s9vnPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGNpjQeEwIBsx2QJLPpY6IjXHOjlyBSJvfuu61s0kUKgIKkIOryMn9ZgDd9YOvFni
-	 SAA+//6dOkNMWKARm7D7dHrDAsJUiPQf+7L4OBq8EjK+shLBYN3YggwyQgRBN3tYhw
-	 yvs77GNy376NCBMgXyVZiPbpA8htE+EcxJcbeECI=
+	b=rrM4dlPUZXS9v0XhmPwcrZf0dPPE9tyLBrOnLrzGmFIMW7GVrGRCFOqOQlOqIKoE2
+	 6aiq15ti8RN7QNCREKSqwSwpa/U54wy+39d2D2k1EiHkAbt/Kc+jWOaDzjF0xmwJmu
+	 QPiQeNlA4DEYDVnl9B9XE+Gfb9WkOsGOYdPsWLP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kotresh HR <khiremat@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 736/849] ceph: fix multifs mds auth caps issue
-Date: Tue, 11 Nov 2025 09:45:06 +0900
-Message-ID: <20251111004554.233540766@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Sean Christopherson <seanjc@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Mateusz Guzik <mjguzik@gmail.com>
+Subject: [PATCH 6.17 737/849] x86: uaccess: dont use runtime-const rewriting in modules
+Date: Tue, 11 Nov 2025 09:45:07 +0900
+Message-ID: <20251111004554.255742858@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,173 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kotresh HR <khiremat@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 22c73d52a6d05c5a2053385c0d6cd9984732799d ]
+[ Upstream commit 284922f4c563aa3a8558a00f2a05722133237fe8 ]
 
-The mds auth caps check should also validate the
-fsname along with the associated caps. Not doing
-so would result in applying the mds auth caps of
-one fs on to the other fs in a multifs ceph cluster.
-The bug causes multiple issues w.r.t user
-authentication, following is one such example.
+The runtime-const infrastructure was never designed to handle the
+modular case, because the constant fixup is only done at boot time for
+core kernel code.
 
-Steps to Reproduce (on vstart cluster):
-1. Create two file systems in a cluster, say 'fsname1' and 'fsname2'
-2. Authorize read only permission to the user 'client.usr' on fs 'fsname1'
-    $ceph fs authorize fsname1 client.usr / r
-3. Authorize read and write permission to the same user 'client.usr' on fs 'fsname2'
-    $ceph fs authorize fsname2 client.usr / rw
-4. Update the keyring
-    $ceph auth get client.usr >> ./keyring
+But by the time I used it for the x86-64 user space limit handling in
+commit 86e6b1547b3d ("x86: fix user address masking non-canonical
+speculation issue"), I had completely repressed that fact.
 
-With above permssions for the user 'client.usr', following is the
-expectation.
-  a. The 'client.usr' should be able to only read the contents
-     and not allowed to create or delete files on file system 'fsname1'.
-  b. The 'client.usr' should be able to read/write on file system 'fsname2'.
+And it all happens to work because the only code that currently actually
+gets inlined by modules is for the access_ok() limit check, where the
+default constant value works even when not fixed up.  Because at least I
+had intentionally made it be something that is in the non-canonical
+address space region.
 
-But, with this bug, the 'client.usr' is allowed to read/write on file
-system 'fsname1'. See below.
+But it's technically very wrong, and it does mean that at least in
+theory, the use of 'access_ok()' + '__get_user()' can trigger the same
+speculation issue with non-canonical addresses that the original commit
+was all about.
 
-5. Mount the file system 'fsname1' with the user 'client.usr'
-     $sudo bin/mount.ceph usr@.fsname1=/ /kmnt_fsname1_usr/
-6. Try creating a file on file system 'fsname1' with user 'client.usr'. This
-   should fail but passes with this bug.
-     $touch /kmnt_fsname1_usr/file1
-7. Mount the file system 'fsname1' with the user 'client.admin' and create a
-   file.
-     $sudo bin/mount.ceph admin@.fsname1=/ /kmnt_fsname1_admin
-     $echo "data" > /kmnt_fsname1_admin/admin_file1
-8. Try removing an existing file on file system 'fsname1' with the user
-   'client.usr'. This shoudn't succeed but succeeds with the bug.
-     $rm -f /kmnt_fsname1_usr/admin_file1
+The pattern is unusual enough that this probably doesn't matter in
+practice, but very wrong is still very wrong.  Also, let's fix it before
+the nice optimized scoped user accessor helpers that Thomas Gleixner is
+working on cause this pseudo-constant to then be more widely used.
 
-For more information, please take a look at the corresponding mds/fuse patch
-and tests added by looking into the tracker mentioned below.
+This all came up due to an unrelated discussion with Mateusz Guzik about
+using the runtime const infrastructure for names_cachep accesses too.
+There the modular case was much more obviously broken, and Mateusz noted
+it in his 'v2' of the patch series.
 
-v2: Fix a possible null dereference in doutc
-v3: Don't store fsname from mdsmap, validate against
-    ceph_mount_options's fsname and use it
-v4: Code refactor, better warning message and
-    fix possible compiler warning
+That then made me notice how broken 'access_ok()' had been in modules
+all along.  Mea culpa, mea maxima culpa.
 
-[ Slava.Dubeyko: "fsname check failed" -> "fsname mismatch" ]
+Fix it by simply not using the runtime-const code in modules, and just
+using the USER_PTR_MAX variable value instead.  This is not
+performance-critical like the core user accessor functions (get_user()
+and friends) are.
 
-Link: https://tracker.ceph.com/issues/72167
-Signed-off-by: Kotresh HR <khiremat@redhat.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Also make sure this doesn't get forgotten the next time somebody wants
+to do runtime constant optimizations by having the x86 runtime-const.h
+header file error out if included by modules.
+
+Fixes: 86e6b1547b3d ("x86: fix user address masking non-canonical speculation issue")
+Acked-by: Borislav Petkov <bp@alien8.de>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Triggered-by: Mateusz Guzik <mjguzik@gmail.com>
+Link: https://lore.kernel.org/all/20251030105242.801528-1-mjguzik@gmail.com/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |  8 ++++++++
- fs/ceph/mdsmap.c     | 14 +++++++++++++-
- fs/ceph/super.c      | 14 --------------
- fs/ceph/super.h      | 14 ++++++++++++++
- 4 files changed, 35 insertions(+), 15 deletions(-)
+ arch/x86/include/asm/runtime-const.h |  4 ++++
+ arch/x86/include/asm/uaccess_64.h    | 10 +++++-----
+ arch/x86/kernel/cpu/common.c         |  6 +++++-
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 3bc72b47fe4d4..3efbc11596e00 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -5649,11 +5649,19 @@ static int ceph_mds_auth_match(struct ceph_mds_client *mdsc,
- 	u32 caller_uid = from_kuid(&init_user_ns, cred->fsuid);
- 	u32 caller_gid = from_kgid(&init_user_ns, cred->fsgid);
- 	struct ceph_client *cl = mdsc->fsc->client;
-+	const char *fs_name = mdsc->fsc->mount_options->mds_namespace;
- 	const char *spath = mdsc->fsc->mount_options->server_path;
- 	bool gid_matched = false;
- 	u32 gid, tlen, len;
- 	int i, j;
+diff --git a/arch/x86/include/asm/runtime-const.h b/arch/x86/include/asm/runtime-const.h
+index 8d983cfd06ea6..e5a13dc8816e2 100644
+--- a/arch/x86/include/asm/runtime-const.h
++++ b/arch/x86/include/asm/runtime-const.h
+@@ -2,6 +2,10 @@
+ #ifndef _ASM_RUNTIME_CONST_H
+ #define _ASM_RUNTIME_CONST_H
  
-+	doutc(cl, "fsname check fs_name=%s  match.fs_name=%s\n",
-+	      fs_name, auth->match.fs_name ? auth->match.fs_name : "");
-+	if (auth->match.fs_name && strcmp(auth->match.fs_name, fs_name)) {
-+		/* fsname mismatch, try next one */
-+		return 0;
-+	}
++#ifdef MODULE
++  #error "Cannot use runtime-const infrastructure from modules"
++#endif
 +
- 	doutc(cl, "match.uid %lld\n", auth->match.uid);
- 	if (auth->match.uid != MDS_AUTH_UID_ANY) {
- 		if (auth->match.uid != caller_uid)
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 8109aba66e023..2c7b151a7c95c 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -353,10 +353,22 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 		__decode_and_drop_type(p, end, u8, bad_ext);
- 	}
- 	if (mdsmap_ev >= 8) {
-+		u32 fsname_len;
- 		/* enabled */
- 		ceph_decode_8_safe(p, end, m->m_enabled, bad_ext);
- 		/* fs_name */
--		ceph_decode_skip_string(p, end, bad_ext);
-+		ceph_decode_32_safe(p, end, fsname_len, bad_ext);
-+
-+		/* validate fsname against mds_namespace */
-+		if (!namespace_equals(mdsc->fsc->mount_options, *p,
-+				      fsname_len)) {
-+			pr_warn_client(cl, "fsname %*pE doesn't match mds_namespace %s\n",
-+				       (int)fsname_len, (char *)*p,
-+				       mdsc->fsc->mount_options->mds_namespace);
-+			goto bad;
-+		}
-+		/* skip fsname after validation */
-+		ceph_decode_skip_n(p, end, fsname_len, bad);
- 	}
- 	/* damaged */
- 	if (mdsmap_ev >= 9) {
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index c3eb651862c55..ebef5244ae25a 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -246,20 +246,6 @@ static void canonicalize_path(char *path)
- 	path[j] = '\0';
- }
+ #ifdef __ASSEMBLY__
+ 
+ .macro RUNTIME_CONST_PTR sym reg
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index c8a5ae35c8714..641f45c22f9da 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -12,12 +12,12 @@
+ #include <asm/cpufeatures.h>
+ #include <asm/page.h>
+ #include <asm/percpu.h>
+-#include <asm/runtime-const.h>
  
 -/*
-- * Check if the mds namespace in ceph_mount_options matches
-- * the passed in namespace string. First time match (when
-- * ->mds_namespace is NULL) is treated specially, since
-- * ->mds_namespace needs to be initialized by the caller.
+- * Virtual variable: there's no actual backing store for this,
+- * it can purely be used as 'runtime_const_ptr(USER_PTR_MAX)'
 - */
--static int namespace_equals(struct ceph_mount_options *fsopt,
--			    const char *namespace, size_t len)
--{
--	return !(fsopt->mds_namespace &&
--		 (strlen(fsopt->mds_namespace) != len ||
--		  strncmp(fsopt->mds_namespace, namespace, len)));
--}
--
- static int ceph_parse_old_source(const char *dev_name, const char *dev_name_end,
- 				 struct fs_context *fc)
- {
-diff --git a/fs/ceph/super.h b/fs/ceph/super.h
-index cf176aab0f823..4ac6561285b18 100644
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -104,6 +104,20 @@ struct ceph_mount_options {
- 	struct fscrypt_dummy_policy dummy_enc_policy;
- };
++#ifdef MODULE
++  #define runtime_const_ptr(sym) (sym)
++#else
++  #include <asm/runtime-const.h>
++#endif
+ extern unsigned long USER_PTR_MAX;
  
-+/*
-+ * Check if the mds namespace in ceph_mount_options matches
-+ * the passed in namespace string. First time match (when
-+ * ->mds_namespace is NULL) is treated specially, since
-+ * ->mds_namespace needs to be initialized by the caller.
-+ */
-+static inline int namespace_equals(struct ceph_mount_options *fsopt,
-+				   const char *namespace, size_t len)
-+{
-+	return !(fsopt->mds_namespace &&
-+		 (strlen(fsopt->mds_namespace) != len ||
-+		  strncmp(fsopt->mds_namespace, namespace, len)));
-+}
+ #ifdef CONFIG_ADDRESS_MASKING
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index f98ec9c7fc07f..c08fe6f6a186e 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -78,6 +78,10 @@
+ DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
+ EXPORT_PER_CPU_SYMBOL(cpu_info);
+ 
++/* Used for modules: built-in code uses runtime constants */
++unsigned long USER_PTR_MAX;
++EXPORT_SYMBOL(USER_PTR_MAX);
 +
- /* mount state */
- enum {
- 	CEPH_MOUNT_MOUNTING,
+ u32 elf_hwcap2 __read_mostly;
+ 
+ /* Number of siblings per CPU package */
+@@ -2578,7 +2582,7 @@ void __init arch_cpu_finalize_init(void)
+ 	alternative_instructions();
+ 
+ 	if (IS_ENABLED(CONFIG_X86_64)) {
+-		unsigned long USER_PTR_MAX = TASK_SIZE_MAX;
++		USER_PTR_MAX = TASK_SIZE_MAX;
+ 
+ 		/*
+ 		 * Enable this when LAM is gated on LASS support
 -- 
 2.51.0
 
