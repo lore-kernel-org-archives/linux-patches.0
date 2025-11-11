@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B62D342CA9;
-	Tue, 11 Nov 2025 01:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0C2C026E;
+	Tue, 11 Nov 2025 01:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823179; cv=none; b=KX0Q4yEyKE3yzx8A7wj+kqDiJaeXo+pJUOecmR3f6E3zgd4xdIAcC1pNz9ozZ50vViGRjMuXlw4NtPFXpDSszRmi48LLNZsu99VbpreLGr0S1xbSkveOj5fHLJ+IH+CogG7FFVWQOCU8HreoNoFavxxb1VidtJQVaOSpYZQf7Qc=
+	t=1762823181; cv=none; b=oTB2FhAZQd00DilOw0KYJOowZIE+jXOoZpDpXmYqYKAikrCCxaoC4VCRNmgCrqFj8dPuX9x4NMeScYRnUO7QkrPULHoEgz5mx35H8yIUqKBvCW3h7GxJ9KJGkgECvuo2ezYnvL9j+L0G409CEJW6Uayu3je/7mnYL93+U7de4o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823179; c=relaxed/simple;
-	bh=mqDGC/Yq0TJQm+mPe30IH4RiGtPpLJeJ+SL5OfbIPLQ=;
+	s=arc-20240116; t=1762823181; c=relaxed/simple;
+	bh=z5sfeEliNNOzcXhkJ9twYVLzi3sHJhc9RKxufjFBwLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gqjw7CLyH+2KF79A3pYPxh4xc+Ydve381B5bgyZtJxW9qR+v99I3SLEcoQxSTyFsXfjjX8wbPBIhw9T/HnqtP8eJ7LjSf84WM9GnweHvZKacqhi4ZRsbNyKwAzRa5KikLbMFfWOeXBl5tfnkU45DRbYbzZmxv96ArjqQfn4qO/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEeNEYZ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNRBjlLET1axd1X3EiLtjMCl+sei+pBXKWBZEA4K7jy9B8k/HFhnn/Hewscd0af333sCAgt4BZtNaANBLf8oG3OmjF7o+J7BJDCzimJ45Ja8fZjPm/ZYN+ZmBFSb/mDpX5I63qy1zGS1ILGgBi5ZUz6j+z7QS2tefz6xoiN6aCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayPDOZ1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEeNEYZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6963C2BCAF;
-	Tue, 11 Nov 2025 01:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayPDOZ1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637FBC16AAE;
+	Tue, 11 Nov 2025 01:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823179;
-	bh=mqDGC/Yq0TJQm+mPe30IH4RiGtPpLJeJ+SL5OfbIPLQ=;
+	s=korg; t=1762823181;
+	bh=z5sfeEliNNOzcXhkJ9twYVLzi3sHJhc9RKxufjFBwLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEeNEYZ1EO05yOBR+YHvAzo+aHMW/OcIFnbn9tqyiu1PQ/k8WJrCpWncfVJBC2Q/4
-	 7OwMvbsvSPWEGv8yncOKdBbltqeRpO7fiFIjuihk5fVASWhliGcmPKrxgbKCqsrBw8
-	 r9CwZtVyvKoyzuj5eUN1/LsiGZ02Z2Nv5iu9/QfQ=
+	b=ayPDOZ1T3R1YBd6zikKkxfTMooUGrcCHdnjl76qByoElwaHRyWiJNGDsVYiSX+VYE
+	 2SDHZSdwywQPTt6hCCCAipRqZbTsc7SYHL5BF8A5DIMUkPsF534avqslMP4j1rAoa0
+	 /oZtE4BHovVkFihtUhI4iHF7r9FVs4ysFGihGROI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Neal Gompa <neal@gompa.dev>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/565] spi: rpc-if: Add resume support for RZ/G3E
-Date: Tue, 11 Nov 2025 09:40:05 +0900
-Message-ID: <20251111004530.292473970@linuxfoundation.org>
+Subject: [PATCH 6.12 143/565] pmdomain: apple: Add "apple,t8103-pmgr-pwrstate"
+Date: Tue, 11 Nov 2025 09:39:59 +0900
+Message-ID: <20251111004530.158673882@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,34 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit ad4728740bd68d74365a43acc25a65339a9b2173 ]
+[ Upstream commit 442816f97a4f84cb321d3359177a3b9b0ce48a60 ]
 
-On RZ/G3E using PSCI, s2ram powers down the SoC. After resume,
-reinitialize the hardware for SPI operations.
+After discussion with the devicetree maintainers we agreed to not extend
+lists with the generic compatible "apple,pmgr-pwrstate" anymore [1]. Use
+"apple,t8103-pmgr-pwrstate" as base compatible as it is the SoC the
+driver and bindings were written for.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20250921112649.104516-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
+
+Signed-off-by: Janne Grunau <j@jannau.net>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rpc-if.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pmdomain/apple/pmgr-pwrstate.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-rpc-if.c b/drivers/spi/spi-rpc-if.c
-index c24dad51a0e96..43e829251af59 100644
---- a/drivers/spi/spi-rpc-if.c
-+++ b/drivers/spi/spi-rpc-if.c
-@@ -193,6 +193,8 @@ static int __maybe_unused rpcif_spi_resume(struct device *dev)
- {
- 	struct spi_controller *ctlr = dev_get_drvdata(dev);
- 
-+	rpcif_hw_init(dev, false);
-+
- 	return spi_controller_resume(ctlr);
+diff --git a/drivers/pmdomain/apple/pmgr-pwrstate.c b/drivers/pmdomain/apple/pmgr-pwrstate.c
+index 9467235110f46..82c33cf727a82 100644
+--- a/drivers/pmdomain/apple/pmgr-pwrstate.c
++++ b/drivers/pmdomain/apple/pmgr-pwrstate.c
+@@ -306,6 +306,7 @@ static int apple_pmgr_ps_probe(struct platform_device *pdev)
  }
  
+ static const struct of_device_id apple_pmgr_ps_of_match[] = {
++	{ .compatible = "apple,t8103-pmgr-pwrstate" },
+ 	{ .compatible = "apple,pmgr-pwrstate" },
+ 	{}
+ };
 -- 
 2.51.0
 
