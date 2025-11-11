@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853043064AB;
-	Tue, 11 Nov 2025 01:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FEC311C33;
+	Tue, 11 Nov 2025 01:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823151; cv=none; b=oOsrDaa4y31bO/Wd2J3Njye2YoOssksOoqSluK5mjGf4IX29AnpZ3CSAa81q2N91mHDsRrAfgXhybmZVFouOF6pjsvK8dyBEU3+Mpmo4IReVMqAnBtRnlegi2FZqGURQDqW79ZkUvsSpy80TEULhirlqu+zu4bMCbHCZh/Rfu6U=
+	t=1762823154; cv=none; b=VqAdg19Pt3Lk9pD51+QRWI71eMo6wPmVdlU98Up8qya1x48I4vP/c1Pb8vhzSAiYjjmX7qst/UQ/wk276GPqBvteM2FieVGmLMI2tLnmI//zAAghBWUN21E/ZfA7cTZmLSGqVRX58U49XanstgxFYobXwz8/rYPcZSMUtvoJj3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823151; c=relaxed/simple;
-	bh=bi1XfDS6ZfSof7koK2lfvWbhjWrmJOl15nd+E8BIJrA=;
+	s=arc-20240116; t=1762823154; c=relaxed/simple;
+	bh=kfLYFKhgPaNlpYqrW2TqVsq1i/PK0rvZ6B+dP64i924=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFbpPD3UW+8x+VQMp8Mgr1/0o3WjHzggMdkwI/tXvmGyq/bgV931qor06ZpsXouaoywe6mEO3aE6jKAX/Q4gJLU8WmbFq7oZF2evFxhNJCvNuEpQ5e9Z/LXg03B0g8UStjF8byn2ZqyTRwiTxCwETXKfntezR4S6s/MHoTvy9u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgDEKsew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h371rds7qctJ+NqGlc6x/hweMSRPPafOKb8vKn5PhR0tMpjzermqqbVO8IDORbNJkHz5Zu7tcBqUAlMBC0OA9YIsIwoZRZnouFOB9JB2uChHN5DBzVvnV37F1kaoXZJ39w7SI6BGmYlj5tL/wk3imVBrYk+rIdc3d2tjHwXgiKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxQB0fL3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgDEKsew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDEBC16AAE;
-	Tue, 11 Nov 2025 01:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxQB0fL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72387C19422;
+	Tue, 11 Nov 2025 01:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823151;
-	bh=bi1XfDS6ZfSof7koK2lfvWbhjWrmJOl15nd+E8BIJrA=;
+	s=korg; t=1762823153;
+	bh=kfLYFKhgPaNlpYqrW2TqVsq1i/PK0rvZ6B+dP64i924=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgDEKsew0cUXwj58P+ji/8UoQkG/7snd+yETYvdwT2ft9PEq1BPIaH+LFydQXWQRV
-	 sPzhu8E/5/fiKoR9n7fFsWTa60hrA2hZ3y9h6Dh6M/TqKcf8/RgQ+VQ1V2u16tL28R
-	 SwiFQDRmOTjogdYke8u+ALPpv4YE0aGf5r8KgrrU=
+	b=vxQB0fL3AChVJFOdaIxiyVZcjr4bFk0tpLI2ZW2LUQM95fHkLf873hpShlGre+vgE
+	 eNCFygw7+b4pTjM6N6rL2m3H/Rl4N1B0QnxHjcGiscEg/7AI042PQozQbGaabvTA5O
+	 V8F/JvBxqWr8X1zlSNEo6Vmxzq0s2bO565UCrk5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
+	Meng Li <li.meng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 240/849] drm/amd/display: Cache streams targeting link when performing LT automation
-Date: Tue, 11 Nov 2025 09:36:50 +0900
-Message-ID: <20251111004542.239431181@linuxfoundation.org>
+Subject: [PATCH 6.12 181/565] drm/amd/amdgpu: Release xcp drm memory after unplug
+Date: Tue, 11 Nov 2025 09:40:37 +0900
+Message-ID: <20251111004531.006560595@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,70 +49,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: Meng Li <li.meng@amd.com>
 
-[ Upstream commit f5b69101f956f5b89605a13cb15f093a7906f2a1 ]
+[ Upstream commit e6c2b0f23221ed43c4cc6f636e9ab7862954d562 ]
 
-[WHY]
-Last LT automation update can cause crash by referencing current_state and
-calling into dc_update_planes_and_stream which may clobber current_state.
+Add a new API amdgpu_xcp_drm_dev_free().
+After unplug xcp device, need to release xcp drm memory etc.
 
-[HOW]
-Cache relevant stream pointers and iterate through them instead of relying
-on the current_state.
-
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Co-developed-by: Jiang Liu <gerry@linux.alibaba.com>
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
+Signed-off-by: Meng Li <li.meng@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/dc/link/accessories/link_dp_cts.c  | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c     |  1 +
+ drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c | 56 +++++++++++++++++----
+ drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h |  1 +
+ 3 files changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-index b12d61701d4d9..23f41c99fa38c 100644
---- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
-@@ -76,6 +76,9 @@ static void dp_retrain_link_dp_test(struct dc_link *link,
- 	uint8_t count;
- 	int i;
- 
-+	struct dc_stream_state *streams_on_link[MAX_PIPES];
-+	int num_streams_on_link = 0;
-+
- 	needs_divider_update = (link->dc->link_srv->dp_get_encoding_format(link_setting) !=
- 	link->dc->link_srv->dp_get_encoding_format((const struct dc_link_settings *) &link->cur_link_settings));
- 
-@@ -138,12 +141,19 @@ static void dp_retrain_link_dp_test(struct dc_link *link,
- 		pipes[i]->stream_res.tg->funcs->enable_crtc(pipes[i]->stream_res.tg);
- 
- 	// Set DPMS on with stream update
--	for (i = 0; i < state->stream_count; i++)
--		if (state->streams[i] && state->streams[i]->link && state->streams[i]->link == link) {
--			stream_update.stream = state->streams[i];
-+	// Cache all streams on current link since dc_update_planes_and_stream might kill current_state
-+	for (i = 0; i < MAX_PIPES; i++) {
-+		if (state->streams[i] && state->streams[i]->link && state->streams[i]->link == link)
-+			streams_on_link[num_streams_on_link++] = state->streams[i];
-+	}
-+
-+	for (i = 0; i < num_streams_on_link; i++) {
-+		if (streams_on_link[i] && streams_on_link[i]->link && streams_on_link[i]->link == link) {
-+			stream_update.stream = streams_on_link[i];
- 			stream_update.dpms_off = &dpms_off;
--			dc_update_planes_and_stream(state->clk_mgr->ctx->dc, NULL, 0, state->streams[i], &stream_update);
-+			dc_update_planes_and_stream(state->clk_mgr->ctx->dc, NULL, 0, streams_on_link[i], &stream_update);
- 		}
-+	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+index a6d456ec6aeb1..9e9c7ac1f5075 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
+@@ -382,6 +382,7 @@ void amdgpu_xcp_dev_unplug(struct amdgpu_device *adev)
+ 		p_ddev->primary->dev = adev->xcp_mgr->xcp[i].pdev;
+ 		p_ddev->driver =  adev->xcp_mgr->xcp[i].driver;
+ 		p_ddev->vma_offset_manager = adev->xcp_mgr->xcp[i].vma_offset_manager;
++		amdgpu_xcp_drm_dev_free(p_ddev);
+ 	}
  }
  
- static void dp_test_send_link_training(struct dc_link *link)
+diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
+index faed84172dd43..587ad4132561c 100644
+--- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
++++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
+@@ -45,18 +45,29 @@ static const struct drm_driver amdgpu_xcp_driver = {
+ 
+ static int8_t pdev_num;
+ static struct xcp_device *xcp_dev[MAX_XCP_PLATFORM_DEVICE];
++static DEFINE_MUTEX(xcp_mutex);
+ 
+ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
+ {
+ 	struct platform_device *pdev;
+ 	struct xcp_device *pxcp_dev;
+ 	char dev_name[20];
+-	int ret;
++	int ret, i;
++
++	guard(mutex)(&xcp_mutex);
+ 
+ 	if (pdev_num >= MAX_XCP_PLATFORM_DEVICE)
+ 		return -ENODEV;
+ 
+-	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", pdev_num);
++	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
++		if (!xcp_dev[i])
++			break;
++	}
++
++	if (i >= MAX_XCP_PLATFORM_DEVICE)
++		return -ENODEV;
++
++	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", i);
+ 	pdev = platform_device_register_simple(dev_name, -1, NULL, 0);
+ 	if (IS_ERR(pdev))
+ 		return PTR_ERR(pdev);
+@@ -72,8 +83,8 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
+ 		goto out_devres;
+ 	}
+ 
+-	xcp_dev[pdev_num] = pxcp_dev;
+-	xcp_dev[pdev_num]->pdev = pdev;
++	xcp_dev[i] = pxcp_dev;
++	xcp_dev[i]->pdev = pdev;
+ 	*ddev = &pxcp_dev->drm;
+ 	pdev_num++;
+ 
+@@ -88,16 +99,43 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
+ }
+ EXPORT_SYMBOL(amdgpu_xcp_drm_dev_alloc);
+ 
+-void amdgpu_xcp_drv_release(void)
++static void free_xcp_dev(int8_t index)
+ {
+-	for (--pdev_num; pdev_num >= 0; --pdev_num) {
+-		struct platform_device *pdev = xcp_dev[pdev_num]->pdev;
++	if ((index < MAX_XCP_PLATFORM_DEVICE) && (xcp_dev[index])) {
++		struct platform_device *pdev = xcp_dev[index]->pdev;
+ 
+ 		devres_release_group(&pdev->dev, NULL);
+ 		platform_device_unregister(pdev);
+-		xcp_dev[pdev_num] = NULL;
++
++		xcp_dev[index] = NULL;
++		pdev_num--;
++	}
++}
++
++void amdgpu_xcp_drm_dev_free(struct drm_device *ddev)
++{
++	int8_t i;
++
++	guard(mutex)(&xcp_mutex);
++
++	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
++		if ((xcp_dev[i]) && (&xcp_dev[i]->drm == ddev)) {
++			free_xcp_dev(i);
++			break;
++		}
++	}
++}
++EXPORT_SYMBOL(amdgpu_xcp_drm_dev_free);
++
++void amdgpu_xcp_drv_release(void)
++{
++	int8_t i;
++
++	guard(mutex)(&xcp_mutex);
++
++	for (i = 0; pdev_num && i < MAX_XCP_PLATFORM_DEVICE; i++) {
++		free_xcp_dev(i);
+ 	}
+-	pdev_num = 0;
+ }
+ EXPORT_SYMBOL(amdgpu_xcp_drv_release);
+ 
+diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
+index c1c4b679bf95c..580a1602c8e36 100644
+--- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
++++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
+@@ -25,5 +25,6 @@
+ #define _AMDGPU_XCP_DRV_H_
+ 
+ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev);
++void amdgpu_xcp_drm_dev_free(struct drm_device *ddev);
+ void amdgpu_xcp_drv_release(void);
+ #endif /* _AMDGPU_XCP_DRV_H_ */
 -- 
 2.51.0
 
