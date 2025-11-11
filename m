@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1346A34A3C5;
-	Tue, 11 Nov 2025 01:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E466A34A76A;
+	Tue, 11 Nov 2025 01:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823775; cv=none; b=FIE9ODJ7AW+vnhycdl46SbgXBVYFOp00EovvFNVCKFjis7mJwi/C7i+3SDMx5vcX68GL2ivz1g+ewTdBtA6EmTAf3+jMs0THFTX3qOL+swrj75mrmSr6mol+lPqC+hBqMGzOdrz+aTJpkoriZZROSMq5mQ+Q6anSadOvIqoAWPU=
+	t=1762823778; cv=none; b=qvFtrZijxPW0NbzSjWm6XTHVEGHkeVoU5fSUMqBX+VtfdCcWJQnCL89GNAQi5aVYAlSkVMkulnFYEoZ9ZwhzvUTBUxP3/WBTpkt1/mU9D/mVLX0z7niGYymHFlySXvZ33+6gPl9EpkbBrgbUyv1F6QZ+G9Y2re7h4f8enmVYOUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823775; c=relaxed/simple;
-	bh=3Rp+3zpM7jv1h41GRCuB0vgInHdHByiyj4wGKGXE8/4=;
+	s=arc-20240116; t=1762823778; c=relaxed/simple;
+	bh=aRNkAIjKLK4By5reu3uuGrQx9ol+oSHbvEpz0O/w+4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAfXF5Xbr7lHpQ3PBhJHx4e65SsMV1OHcMDchYHxWpR8YITRH9quf4EqnzxjKAfS3VVfCDXEcd/K76GbBr8kgLKKzlAbV+WhKYpnzno51vlZ4XjqLQYe+ci+eNgN7mQj9MnlYiysKTFIYat4YImdAH+VkMYQGbgoMSgoIFgoC1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAHWbWyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdncYG9U/US7rm5y/lcXfuhXeZupoxjm4lEboBWA/neVLrdzq/cHraaHVZhqHHObEEnudD9mlzyX4DPZpivL21rGL7mfoW4UHVxjMayLO/dDBj/wfGZkQGTNfQlYxj9R8uabHwY58hyDgBEFOwcZe8wOHvKdSrxiXNG4oW+EvCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQP9kOzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAHWbWyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2607C16AAE;
-	Tue, 11 Nov 2025 01:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQP9kOzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069BAC4CEF5;
+	Tue, 11 Nov 2025 01:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823774;
-	bh=3Rp+3zpM7jv1h41GRCuB0vgInHdHByiyj4wGKGXE8/4=;
+	s=korg; t=1762823777;
+	bh=aRNkAIjKLK4By5reu3uuGrQx9ol+oSHbvEpz0O/w+4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAHWbWyW56gCnhWkxh8p2QvPdv5hfkfzbiNt+GwzHOaTUeeKV2+1kiZoHBw110Kg2
-	 mBqoABcU789u18keAmWdohMNDaej12HQjF7/CjkHS7m6GkzpDNlGvi8Wy7ldgDwVc1
-	 fXufKfXzqGTsYNLSrN2bqGcqi8kzgtYe0H2JuY9E=
+	b=IQP9kOzxiDPlza6aAwrbFGLMDZZ980R6adbBvBK0593gs1GdhTfZb0aHGPF+qlWVZ
+	 v90reyLU664/C90dnT13EQ0FMUbAQlnCT21Uyu7tutfvkQmNHBNTStldZlhKwMC6oX
+	 SA5iQH06h3Wc4sPzwDyJzwDBkRfO7YNz/ExOIHe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 329/849] wifi: rtw89: 8851b: rfk: update IQK TIA setting
-Date: Tue, 11 Nov 2025 09:38:19 +0900
-Message-ID: <20251111004544.373580748@linuxfoundation.org>
+Subject: [PATCH 6.12 273/565] mips: lantiq: danube: rename stp node on EASY50712 reference board
+Date: Tue, 11 Nov 2025 09:42:09 +0900
+Message-ID: <20251111004533.026660724@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,217 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit b521685da35ebf091e51f9ea9ad2896a4ddb6e98 ]
+[ Upstream commit 2b9706ce84be9cb26be03e1ad2e43ec8bc3986be ]
 
-With the new TIA setting of RX IQK, unstable RX throughput can
-be avoided, especially in medium-high attenuation environments.
+This fixes the following warning:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: stp@e100bb0 (lantiq,gpio-stp-xway): $nodename:0: 'stp@e100bb0' does not match '^gpio@[0-9a-f]+$'
+	from schema $id: http://devicetree.org/schemas/gpio/gpio-stp-xway.yaml#
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250811123744.15361-5-pkshih@realtek.com
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtw89/rtw8851b_rfk.c | 85 ++++++++++++-------
- 1 file changed, 54 insertions(+), 31 deletions(-)
+ arch/mips/boot/dts/lantiq/danube_easy50712.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-index 7a319a6c838af..a7867b0e083ac 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
-@@ -17,7 +17,7 @@
- #define DPK_RF_REG_NUM_8851B 4
- #define DPK_KSET_NUM 4
- #define RTW8851B_RXK_GROUP_NR 4
--#define RTW8851B_RXK_GROUP_IDX_NR 2
-+#define RTW8851B_RXK_GROUP_IDX_NR 4
- #define RTW8851B_TXK_GROUP_NR 1
- #define RTW8851B_IQK_VER 0x14
- #define RTW8851B_IQK_SS 1
-@@ -114,9 +114,9 @@ static const u32 _tssi_de_mcs_10m[RF_PATH_NUM_8851B] = {0x5830};
- static const u32 g_idxrxgain[RTW8851B_RXK_GROUP_NR] = {0x10e, 0x116, 0x28e, 0x296};
- static const u32 g_idxattc2[RTW8851B_RXK_GROUP_NR] = {0x0, 0xf, 0x0, 0xf};
- static const u32 g_idxrxagc[RTW8851B_RXK_GROUP_NR] = {0x0, 0x1, 0x2, 0x3};
--static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x28c};
--static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf};
--static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x6};
-+static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x112, 0x28c, 0x292};
-+static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf, 0xf, 0xf};
-+static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x5, 0x6, 0x7};
- static const u32 a_power_range[RTW8851B_TXK_GROUP_NR] = {0x0};
- static const u32 a_track_range[RTW8851B_TXK_GROUP_NR] = {0x6};
- static const u32 a_gain_bb[RTW8851B_TXK_GROUP_NR] = {0x0a};
-@@ -139,17 +139,6 @@ static const u32 dpk_rf_reg[DPK_RF_REG_NUM_8851B] = {0xde, 0x8f, 0x5, 0x10005};
+diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+index ab70028dbefcf..c9f7886f57b8c 100644
+--- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
++++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+@@ -96,7 +96,7 @@
+ 			lantiq,tx-burst-length = <4>;
+ 		};
  
- static void _set_ch(struct rtw89_dev *rtwdev, u32 val);
- 
--static u8 _rxk_5ghz_group_from_idx(u8 idx)
--{
--	/* There are four RXK groups (RTW8851B_RXK_GROUP_NR), but only group 0
--	 * and 2 are used in 5 GHz band, so reduce elements to 2.
--	 */
--	if (idx < RTW8851B_RXK_GROUP_IDX_NR)
--		return idx * 2;
--
--	return 0;
--}
--
- static u8 _kpath(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx)
- {
- 	return RF_A;
-@@ -196,7 +185,7 @@ static void _txck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
- static void _rxck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
- 			bool force, enum adc_ck ck)
- {
--	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x93};
-+	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x92};
- 	static const u32 ck1920_8851b[] = {0x9, 0x0, 0x0, 0x3, 0xf, 0xa, 0x49};
- 	const u32 *data;
- 
-@@ -905,18 +894,27 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 	bool kfail = false;
- 	bool notready;
- 	u32 rf_0;
--	u8 idx;
-+	u32 val;
- 	u8 gp;
- 
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
- 
--	for (idx = 0; idx < RTW8851B_RXK_GROUP_IDX_NR; idx++) {
--		gp = _rxk_5ghz_group_from_idx(idx);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
- 
-+	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
-+
-+	for (gp = 0; gp < RTW8851B_RXK_GROUP_IDX_NR; gp++) {
- 		rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
- 
--		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
--		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
-+		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
- 
- 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
- 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
-@@ -926,7 +924,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		fsleep(100);
- 		rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
- 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
--		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
- 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
- 		notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
- 
-@@ -959,6 +957,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		_iqk_sram(rtwdev, path);
- 
- 	if (kfail) {
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RES, B_IQK_RES_RXCFIR, 0x0);
- 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8), MASKDWORD,
- 				       iqk_info->nb_rxcfir[path] | 0x2);
- 		iqk_info->is_wb_txiqk[path] = false;
-@@ -968,6 +967,14 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
- 		iqk_info->is_wb_txiqk[path] = true;
- 	}
- 
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
- 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
- 		    1 << path, iqk_info->nb_rxcfir[path]);
-@@ -980,17 +987,26 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
- 	bool kfail = false;
- 	bool notready;
--	u8 idx = 0x1;
-+	u8 gp = 2;
- 	u32 rf_0;
--	u8 gp;
--
--	gp = _rxk_5ghz_group_from_idx(idx);
-+	u32 val;
- 
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
- 
--	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
--	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
-+	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
-+
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
- 
- 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
- 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
-@@ -1000,7 +1016,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 	fsleep(100);
- 	rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
- 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
--	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
-+	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
- 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
- 	notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
- 
-@@ -1026,6 +1042,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 		kfail = !!rtw89_phy_read32_mask(rtwdev, R_NCTL_RPT, B_NCTL_RPT_FLG);
- 
- 	if (kfail) {
-+		rtw89_phy_write32_mask(rtwdev, R_IQK_RES + (path << 8), 0xf, 0x0);
- 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8),
- 				       MASKDWORD, 0x40000002);
- 		iqk_info->is_wb_rxiqk[path] = false;
-@@ -1033,6 +1050,14 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
- 		iqk_info->is_wb_rxiqk[path] = false;
- 	}
- 
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
-+	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
-+
- 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
- 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
- 		    1 << path, iqk_info->nb_rxcfir[path]);
-@@ -1664,8 +1689,6 @@ static void _iqk_init(struct rtw89_dev *rtwdev)
- 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
- 	u8 idx, path;
- 
--	rtw89_phy_write32_mask(rtwdev, R_IQKINF, MASKDWORD, 0x0);
--
- 	if (iqk_info->is_iqk_init)
- 		return;
- 
+-		stp0: stp@e100bb0 {
++		stp0: gpio@e100bb0 {
+ 			#gpio-cells = <2>;
+ 			compatible = "lantiq,gpio-stp-xway";
+ 			gpio-controller;
 -- 
 2.51.0
 
