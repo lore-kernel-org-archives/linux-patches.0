@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0A1341650;
-	Tue, 11 Nov 2025 01:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDF6341642;
+	Tue, 11 Nov 2025 01:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824043; cv=none; b=FwhxlLjsL/TQ71zqr6A27vEfKMZ02qwWjbqoUgy7gVoL+V5kBpN1PUj/kQsgPgLEsCxznrxPkkevWZ/aoaTRLKehLC1pCfw2Hkcahsl6vFI3e4uA/sozgdmDXY3OG+7lpC1w3uHqjAC7RSRY68wnzByJuok1T2qqhWHETAYRYK8=
+	t=1762824045; cv=none; b=XoSEP1Xvs/6AnVsYgSMmiaHBDc4WFv1WU/PfXFoo980+ej06ByUEA+4JantjgoOc8LikIScinnlgz/71bLCDktmQ2TL7P8pRn7UdxJ//i1FuhiUPhQGQwx+NceZ3LCWQ8+HOalqbQpzilZvCC5VPQ6xSmc/38AsNPdtcAU3JFYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824043; c=relaxed/simple;
-	bh=xYsb7htl5kWtAzYEukzqL/1GEckej4TRpn/MN4Oa7pg=;
+	s=arc-20240116; t=1762824045; c=relaxed/simple;
+	bh=JAbZYHDyuM43JRPoSOh3EJ0d12Wva9vj8qQ29RtP0ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9roldlexXs5D3hBGqmO9j3Xin7CU0sT3FSma8SI46PLluzp1ezeFKXTStsH2f++4q6pK+C9cr01vXFBuktTKsqiRgE8g2T4M4GJiB73MpnMmof1DQYNvTqc3Ygq0dd5x5blyQezBByQlYhZq3P32ZLsFDAo22x6OjtrPPZ6/Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tog16TCa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kBCKcVo7XD2NSrBStcOIJxMvv3bibrDeC97zI2HLh7/q2Wi+iDXsu29fLdHIy/k3muCD1eYkNI+vzy+qda+CbV0eMlTV5FFzvSlSKVC/K7DOr9EohV2npvPFrLSLdt0OcI1KcfaryHCW1cet4aE21wmHdtY0NhSuGM9Lg5b0D8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYF3evlB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tog16TCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E4AC113D0;
-	Tue, 11 Nov 2025 01:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYF3evlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EDBC116B1;
+	Tue, 11 Nov 2025 01:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824043;
-	bh=xYsb7htl5kWtAzYEukzqL/1GEckej4TRpn/MN4Oa7pg=;
+	s=korg; t=1762824045;
+	bh=JAbZYHDyuM43JRPoSOh3EJ0d12Wva9vj8qQ29RtP0ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tog16TCazeP05ozWF8XP0wbr+q0sraUBulMXehC8DOOUN4LsskqVgbd0ifWChvuzk
-	 c/VYTuN+Ao8IjgiY9nXHUw+Q/uUYtiAGdSjv70Rm40n/C/Hjkyg/9Iv6ZCuxzuTLC0
-	 5lA4qzGJH7gh+OVAZA4++nvKI2bgZ3ukKNqPNFFg=
+	b=gYF3evlBg8YEkPgwkrPha3S1VCBl7UcI/3i83GeSf4x/MgE/FDlVeHq7rXX0O0EeD
+	 AWvOrV7AeLm+VfZlooGGgFCXac3Xgijz+LPALiNO/UwbJYQbdEvASwFQqlUxk8eEq8
+	 eypGNYqpV4A8hdDJYiFmHl99ZDjC4BhnBaZAwWkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Atwood <matthew.s.atwood@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 426/849] drm/xe: Extend Wa_22021007897 to Xe3 platforms
-Date: Tue, 11 Nov 2025 09:39:56 +0900
-Message-ID: <20251111004546.735663149@linuxfoundation.org>
+Subject: [PATCH 6.12 377/565] scsi: lpfc: Remove ndlp kref decrement clause for F_Port_Ctrl in lpfc_cleanup
+Date: Tue, 11 Nov 2025 09:43:53 +0900
+Message-ID: <20251111004535.351272815@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 8d6f16f1f082881aa50ea7ae537b604dec647ed6 ]
+[ Upstream commit a4809b98eb004fcbf7c4d45eb5a624d1c682bb73 ]
 
-WA 22021007897 should also be applied to Graphics Versions 30.00, 30.01
-and 30.03. To make it simple, simply use the range [3000, 3003] that
-should be ok as there isn't a 3002 and if it's added, the WA list would
-need to be revisited anyway.
+In lpfc_cleanup, there is an extraneous nlp_put for NPIV ports on the
+F_Port_Ctrl ndlp object.  In cases when an ABTS is issued, the
+outstanding kref is needed for when a second XRI_ABORTED CQE is
+received.  The final kref for the ndlp is designed to be decremented in
+lpfc_sli4_els_xri_aborted instead.  Also, add a new log message to allow
+for future diagnostics when debugging related issues.
 
-Cc: Matt Atwood <matthew.s.atwood@intel.com>
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://lore.kernel.org/r/20250827-wa-22021007897-v1-1-96922eb52af4@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-5-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/lpfc/lpfc_els.c  | 6 +++++-
+ drivers/scsi/lpfc/lpfc_init.c | 7 -------
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index 535067e7fb0c9..f14bdaac674bb 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -879,6 +879,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
- 			     DIS_PARTIAL_AUTOSTRIP |
- 			     DIS_AUTOSTRIP))
- 	},
-+	{ XE_RTP_NAME("22021007897"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3003), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE))
-+	},
- };
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index ac2fa05cc89c1..9309c42487ca8 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -11992,7 +11992,11 @@ lpfc_sli4_els_xri_aborted(struct lpfc_hba *phba,
+ 			sglq_entry->state = SGL_FREED;
+ 			spin_unlock_irqrestore(&phba->sli4_hba.sgl_list_lock,
+ 					       iflag);
+-
++			lpfc_printf_log(phba, KERN_INFO, LOG_ELS | LOG_SLI |
++					LOG_DISCOVERY | LOG_NODE,
++					"0732 ELS XRI ABORT on Node: ndlp=x%px "
++					"xri=x%x\n",
++					ndlp, xri);
+ 			if (ndlp) {
+ 				lpfc_set_rrq_active(phba, ndlp,
+ 					sglq_entry->sli4_lxritag,
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 3ddcaa864f075..08e6b8ed601c4 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -3036,13 +3036,6 @@ lpfc_cleanup(struct lpfc_vport *vport)
+ 		lpfc_vmid_vport_cleanup(vport);
  
- static __maybe_unused const struct xe_rtp_entry oob_was[] = {
+ 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
+-		if (vport->port_type != LPFC_PHYSICAL_PORT &&
+-		    ndlp->nlp_DID == Fabric_DID) {
+-			/* Just free up ndlp with Fabric_DID for vports */
+-			lpfc_nlp_put(ndlp);
+-			continue;
+-		}
+-
+ 		if (ndlp->nlp_DID == Fabric_Cntl_DID &&
+ 		    ndlp->nlp_state == NLP_STE_UNUSED_NODE) {
+ 			lpfc_nlp_put(ndlp);
 -- 
 2.51.0
 
