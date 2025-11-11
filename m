@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022AA3469E2;
-	Tue, 11 Nov 2025 01:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA11234679B;
+	Tue, 11 Nov 2025 01:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823648; cv=none; b=C7jbd9uGtfMgWOz1TMZggVNzL4VnR4UOjlpdtmpdP0ba3Q7Ma5aotPKWolQVovFezeQRxRouTDi28uw40CWFVRxu0ijkIeedPlDYhPjRPt23M+n13joP8jZpyuwE1TWMj1cvyh7MPubkl9kZQplQ/wqD9plU5E65nYZm6+zBRVE=
+	t=1762823651; cv=none; b=ur0rMpkKYQROSQD3J2L47KFna9urxO2ue/t7IFQvok/NhQwD0kvJECQg8XomgRurZ7U59Pq2tjOcHccuqERrb7UYLaEnsflHYpBS0k7b8btVK82uxQ3/yurSl2Zoz8zsB1i8js2A+ooAk8d+6wLpIffL92OuA3w7tXusOY6L+qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823648; c=relaxed/simple;
-	bh=+UJLF2xNZv2mr9/ozkphesT9cr1Luxv1HMq3s+kgVOM=;
+	s=arc-20240116; t=1762823651; c=relaxed/simple;
+	bh=N4tCefMC0Bju6lMgRNKQwo8jbcuS1nR79tYDhOPwsT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VZZQErjlLqkJ1GYWOmlhiasyrzADEzXaaUtpJU1XjoHhpiUw85dHBBcNBFhFv/i2TjPELwaDB5iMpw5wtd5IK5fERwSMOSJPxXwdIkSG2w/XPUXfhPo0Z7qa2/pvFlcRs94mAvirBYI7F4boAozbXRNFmkN0dEQXp6JuVdcL+Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13YxsCUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHtkuiNjrwZgfnzuRZIBeZSiaGodIN/lwrONHQkeuQR9PNQfSkgUqgH1LRcSFiobRj0rxcsVhhAzS4mRFpGy65amSKXamyZ+RdQtjfYTd7jf6buTRKqzO5y3fUNTY16rKRcGH6PSi9n2CdyLTQW3rhEYYXWuHy2jLGxQDg9t6Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jga1xDTD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13YxsCUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D2DC113D0;
-	Tue, 11 Nov 2025 01:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jga1xDTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B055CC2BC86;
+	Tue, 11 Nov 2025 01:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823647;
-	bh=+UJLF2xNZv2mr9/ozkphesT9cr1Luxv1HMq3s+kgVOM=;
+	s=korg; t=1762823650;
+	bh=N4tCefMC0Bju6lMgRNKQwo8jbcuS1nR79tYDhOPwsT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13YxsCUUTmI+7ZVuSBRmSz1ZLUMt/8s1btxsVoEs7zCql/lHFJUpIuN5bRBB7icqu
-	 cOVYvSXxIKkq/EffNGtoBsgRb7lY+bRcqaTrkgBhq2bGXAHbXkooZB9Jt6MPSdQWZ9
-	 wSba9JiV1qKviWQziNqcFmXNmd2NNIziYS1cn23k=
+	b=Jga1xDTDGY16sOqg1oWje8/AkrVR8kSu+xL9GgyHER53pyMjknXPdlXpgFDj3Gsh7
+	 ahcZpJrb8qijRl5WPpbFnhJRWtXOz1ZiQ32eiwON9Mg3FLi2tPWWrClFe1aoHUcPuG
+	 DqbwCz7/Fb8CWNYsrLjRtDbBodN/YTXVGq8fn5G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Brian Vazquez <brianvv@google.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 293/565] media: adv7180: Add missing lock in suspend callback
-Date: Tue, 11 Nov 2025 09:42:29 +0900
-Message-ID: <20251111004533.469906293@linuxfoundation.org>
+Subject: [PATCH 6.17 343/849] idpf: do not linearize big TSO packets
+Date: Tue, 11 Nov 2025 09:38:33 +0900
+Message-ID: <20251111004544.712666866@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +54,349 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 878c496ac5080f94a93a9216a8f70cfd67ace8c9 ]
+[ Upstream commit 02614eee26fbdfd73b944769001cefeff6ed008c ]
 
-The adv7180_set_power() utilizes adv7180_write() which in turn requires
-the state mutex to be held, take it before calling adv7180_set_power()
-to avoid tripping a lockdep_assert_held().
+idpf has a limit on number of scatter-gather frags
+that can be used per segment.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Currently, idpf_tx_start() checks if the limit is hit
+and forces a linearization of the whole packet.
+
+This requires high order allocations that can fail
+under memory pressure. A full size BIG-TCP packet
+would require order-7 alocation on x86_64 :/
+
+We can move the check earlier from idpf_features_check()
+for TSO packets, to force GSO in this case, removing the
+cost of a big copy.
+
+This means that a linearization will eventually happen
+with sizes smaller than one MSS.
+
+__idpf_chk_linearize() is renamed to idpf_chk_tso_segment()
+and moved to idpf_lib.c
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Madhu Chittim <madhu.chittim@intel.com>
+Cc: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Reviewed-by: Joshua Hay <joshua.a.hay@intel.com>
+Tested-by: Brian Vazquez <brianvv@google.com>
+Acked-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250818195934.757936-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf.h      |   2 +
+ drivers/net/ethernet/intel/idpf/idpf_lib.c  | 102 +++++++++++++++-
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 129 ++++----------------
+ 3 files changed, 120 insertions(+), 113 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 2a20a4fad796c..684a9bba3c5d2 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -813,6 +813,8 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
+diff --git a/drivers/net/ethernet/intel/idpf/idpf.h b/drivers/net/ethernet/intel/idpf/idpf.h
+index f4c0eaf9bde33..aafbb280c2e73 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf.h
++++ b/drivers/net/ethernet/intel/idpf/idpf.h
+@@ -148,6 +148,7 @@ enum idpf_vport_state {
+  * @link_speed_mbps: Link speed in mbps
+  * @vport_idx: Relative vport index
+  * @max_tx_hdr_size: Max header length hardware can support
++ * @tx_max_bufs: Max buffers that can be transmitted with scatter-gather
+  * @state: See enum idpf_vport_state
+  * @netstats: Packet and byte stats
+  * @stats_lock: Lock to protect stats update
+@@ -159,6 +160,7 @@ struct idpf_netdev_priv {
+ 	u32 link_speed_mbps;
+ 	u16 vport_idx;
+ 	u16 max_tx_hdr_size;
++	u16 tx_max_bufs;
+ 	enum idpf_vport_state state;
+ 	struct rtnl_link_stats64 netstats;
+ 	spinlock_t stats_lock;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 513032cb5f088..e327950c93d8e 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -776,6 +776,7 @@ static int idpf_cfg_netdev(struct idpf_vport *vport)
+ 	np->vport_idx = vport->idx;
+ 	np->vport_id = vport->vport_id;
+ 	np->max_tx_hdr_size = idpf_get_max_tx_hdr_size(adapter);
++	np->tx_max_bufs = idpf_get_max_tx_bufs(adapter);
  
- 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
- 		if (state->field != format->format.field) {
-+			guard(mutex)(&state->mutex);
-+
- 			state->field = format->format.field;
- 			adv7180_set_power(state, false);
- 			adv7180_set_field_mode(state);
-@@ -1564,6 +1566,8 @@ static int adv7180_suspend(struct device *dev)
- 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
- 	struct adv7180_state *state = to_state(sd);
+ 	spin_lock_init(&np->stats_lock);
  
-+	guard(mutex)(&state->mutex);
-+
- 	return adv7180_set_power(state, false);
+@@ -2271,6 +2272,92 @@ static int idpf_change_mtu(struct net_device *netdev, int new_mtu)
+ 	return err;
  }
  
-@@ -1577,6 +1581,8 @@ static int adv7180_resume(struct device *dev)
- 	if (ret < 0)
- 		return ret;
- 
-+	guard(mutex)(&state->mutex);
++/**
++ * idpf_chk_tso_segment - Check skb is not using too many buffers
++ * @skb: send buffer
++ * @max_bufs: maximum number of buffers
++ *
++ * For TSO we need to count the TSO header and segment payload separately.  As
++ * such we need to check cases where we have max_bufs-1 fragments or more as we
++ * can potentially require max_bufs+1 DMA transactions, 1 for the TSO header, 1
++ * for the segment payload in the first descriptor, and another max_buf-1 for
++ * the fragments.
++ *
++ * Returns true if the packet needs to be software segmented by core stack.
++ */
++static bool idpf_chk_tso_segment(const struct sk_buff *skb,
++				 unsigned int max_bufs)
++{
++	const struct skb_shared_info *shinfo = skb_shinfo(skb);
++	const skb_frag_t *frag, *stale;
++	int nr_frags, sum;
 +
- 	ret = adv7180_set_power(state, state->powered);
- 	if (ret)
- 		return ret;
++	/* no need to check if number of frags is less than max_bufs - 1 */
++	nr_frags = shinfo->nr_frags;
++	if (nr_frags < (max_bufs - 1))
++		return false;
++
++	/* We need to walk through the list and validate that each group
++	 * of max_bufs-2 fragments totals at least gso_size.
++	 */
++	nr_frags -= max_bufs - 2;
++	frag = &shinfo->frags[0];
++
++	/* Initialize size to the negative value of gso_size minus 1.  We use
++	 * this as the worst case scenario in which the frag ahead of us only
++	 * provides one byte which is why we are limited to max_bufs-2
++	 * descriptors for a single transmit as the header and previous
++	 * fragment are already consuming 2 descriptors.
++	 */
++	sum = 1 - shinfo->gso_size;
++
++	/* Add size of frags 0 through 4 to create our initial sum */
++	sum += skb_frag_size(frag++);
++	sum += skb_frag_size(frag++);
++	sum += skb_frag_size(frag++);
++	sum += skb_frag_size(frag++);
++	sum += skb_frag_size(frag++);
++
++	/* Walk through fragments adding latest fragment, testing it, and
++	 * then removing stale fragments from the sum.
++	 */
++	for (stale = &shinfo->frags[0];; stale++) {
++		int stale_size = skb_frag_size(stale);
++
++		sum += skb_frag_size(frag++);
++
++		/* The stale fragment may present us with a smaller
++		 * descriptor than the actual fragment size. To account
++		 * for that we need to remove all the data on the front and
++		 * figure out what the remainder would be in the last
++		 * descriptor associated with the fragment.
++		 */
++		if (stale_size > IDPF_TX_MAX_DESC_DATA) {
++			int align_pad = -(skb_frag_off(stale)) &
++					(IDPF_TX_MAX_READ_REQ_SIZE - 1);
++
++			sum -= align_pad;
++			stale_size -= align_pad;
++
++			do {
++				sum -= IDPF_TX_MAX_DESC_DATA_ALIGNED;
++				stale_size -= IDPF_TX_MAX_DESC_DATA_ALIGNED;
++			} while (stale_size > IDPF_TX_MAX_DESC_DATA);
++		}
++
++		/* if sum is negative we failed to make sufficient progress */
++		if (sum < 0)
++			return true;
++
++		if (!nr_frags--)
++			break;
++
++		sum -= stale_size;
++	}
++
++	return false;
++}
++
+ /**
+  * idpf_features_check - Validate packet conforms to limits
+  * @skb: skb buffer
+@@ -2292,12 +2379,15 @@ static netdev_features_t idpf_features_check(struct sk_buff *skb,
+ 	if (skb->ip_summed != CHECKSUM_PARTIAL)
+ 		return features;
+ 
+-	/* We cannot support GSO if the MSS is going to be less than
+-	 * 88 bytes. If it is then we need to drop support for GSO.
+-	 */
+-	if (skb_is_gso(skb) &&
+-	    (skb_shinfo(skb)->gso_size < IDPF_TX_TSO_MIN_MSS))
+-		features &= ~NETIF_F_GSO_MASK;
++	if (skb_is_gso(skb)) {
++		/* We cannot support GSO if the MSS is going to be less than
++		 * 88 bytes. If it is then we need to drop support for GSO.
++		 */
++		if (skb_shinfo(skb)->gso_size < IDPF_TX_TSO_MIN_MSS)
++			features &= ~NETIF_F_GSO_MASK;
++		else if (idpf_chk_tso_segment(skb, np->tx_max_bufs))
++			features &= ~NETIF_F_GSO_MASK;
++	}
+ 
+ 	/* Ensure MACLEN is <= 126 bytes (63 words) and not an odd size */
+ 	len = skb_network_offset(skb);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index 50f90ed3107ec..e75a94d7ac2ac 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -11,8 +11,28 @@
+ #define idpf_tx_buf_next(buf)		(*(u32 *)&(buf)->priv)
+ LIBETH_SQE_CHECK_PRIV(u32);
+ 
+-static bool idpf_chk_linearize(struct sk_buff *skb, unsigned int max_bufs,
+-			       unsigned int count);
++/**
++ * idpf_chk_linearize - Check if skb exceeds max descriptors per packet
++ * @skb: send buffer
++ * @max_bufs: maximum scatter gather buffers for single packet
++ * @count: number of buffers this packet needs
++ *
++ * Make sure we don't exceed maximum scatter gather buffers for a single
++ * packet.
++ * TSO case has been handled earlier from idpf_features_check().
++ */
++static bool idpf_chk_linearize(const struct sk_buff *skb,
++			       unsigned int max_bufs,
++			       unsigned int count)
++{
++	if (likely(count <= max_bufs))
++		return false;
++
++	if (skb_is_gso(skb))
++		return false;
++
++	return true;
++}
+ 
+ /**
+  * idpf_tx_timeout - Respond to a Tx Hang
+@@ -2397,111 +2417,6 @@ int idpf_tso(struct sk_buff *skb, struct idpf_tx_offload_params *off)
+ 	return 1;
+ }
+ 
+-/**
+- * __idpf_chk_linearize - Check skb is not using too many buffers
+- * @skb: send buffer
+- * @max_bufs: maximum number of buffers
+- *
+- * For TSO we need to count the TSO header and segment payload separately.  As
+- * such we need to check cases where we have max_bufs-1 fragments or more as we
+- * can potentially require max_bufs+1 DMA transactions, 1 for the TSO header, 1
+- * for the segment payload in the first descriptor, and another max_buf-1 for
+- * the fragments.
+- */
+-static bool __idpf_chk_linearize(struct sk_buff *skb, unsigned int max_bufs)
+-{
+-	const struct skb_shared_info *shinfo = skb_shinfo(skb);
+-	const skb_frag_t *frag, *stale;
+-	int nr_frags, sum;
+-
+-	/* no need to check if number of frags is less than max_bufs - 1 */
+-	nr_frags = shinfo->nr_frags;
+-	if (nr_frags < (max_bufs - 1))
+-		return false;
+-
+-	/* We need to walk through the list and validate that each group
+-	 * of max_bufs-2 fragments totals at least gso_size.
+-	 */
+-	nr_frags -= max_bufs - 2;
+-	frag = &shinfo->frags[0];
+-
+-	/* Initialize size to the negative value of gso_size minus 1.  We use
+-	 * this as the worst case scenario in which the frag ahead of us only
+-	 * provides one byte which is why we are limited to max_bufs-2
+-	 * descriptors for a single transmit as the header and previous
+-	 * fragment are already consuming 2 descriptors.
+-	 */
+-	sum = 1 - shinfo->gso_size;
+-
+-	/* Add size of frags 0 through 4 to create our initial sum */
+-	sum += skb_frag_size(frag++);
+-	sum += skb_frag_size(frag++);
+-	sum += skb_frag_size(frag++);
+-	sum += skb_frag_size(frag++);
+-	sum += skb_frag_size(frag++);
+-
+-	/* Walk through fragments adding latest fragment, testing it, and
+-	 * then removing stale fragments from the sum.
+-	 */
+-	for (stale = &shinfo->frags[0];; stale++) {
+-		int stale_size = skb_frag_size(stale);
+-
+-		sum += skb_frag_size(frag++);
+-
+-		/* The stale fragment may present us with a smaller
+-		 * descriptor than the actual fragment size. To account
+-		 * for that we need to remove all the data on the front and
+-		 * figure out what the remainder would be in the last
+-		 * descriptor associated with the fragment.
+-		 */
+-		if (stale_size > IDPF_TX_MAX_DESC_DATA) {
+-			int align_pad = -(skb_frag_off(stale)) &
+-					(IDPF_TX_MAX_READ_REQ_SIZE - 1);
+-
+-			sum -= align_pad;
+-			stale_size -= align_pad;
+-
+-			do {
+-				sum -= IDPF_TX_MAX_DESC_DATA_ALIGNED;
+-				stale_size -= IDPF_TX_MAX_DESC_DATA_ALIGNED;
+-			} while (stale_size > IDPF_TX_MAX_DESC_DATA);
+-		}
+-
+-		/* if sum is negative we failed to make sufficient progress */
+-		if (sum < 0)
+-			return true;
+-
+-		if (!nr_frags--)
+-			break;
+-
+-		sum -= stale_size;
+-	}
+-
+-	return false;
+-}
+-
+-/**
+- * idpf_chk_linearize - Check if skb exceeds max descriptors per packet
+- * @skb: send buffer
+- * @max_bufs: maximum scatter gather buffers for single packet
+- * @count: number of buffers this packet needs
+- *
+- * Make sure we don't exceed maximum scatter gather buffers for a single
+- * packet. We have to do some special checking around the boundary (max_bufs-1)
+- * if TSO is on since we need count the TSO header and payload separately.
+- * E.g.: a packet with 7 fragments can require 9 DMA transactions; 1 for TSO
+- * header, 1 for segment payload, and then 7 for the fragments.
+- */
+-static bool idpf_chk_linearize(struct sk_buff *skb, unsigned int max_bufs,
+-			       unsigned int count)
+-{
+-	if (likely(count < max_bufs))
+-		return false;
+-	if (skb_is_gso(skb))
+-		return __idpf_chk_linearize(skb, max_bufs);
+-
+-	return count > max_bufs;
+-}
+ 
+ /**
+  * idpf_tx_splitq_get_ctx_desc - grab next desc and update buffer ring
 -- 
 2.51.0
 
