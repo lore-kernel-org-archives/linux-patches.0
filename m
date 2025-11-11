@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0947225F797;
-	Tue, 11 Nov 2025 01:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6162926FDBD;
+	Tue, 11 Nov 2025 01:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823316; cv=none; b=ajTNZhmt3dsQ4fCJ6EwYaHyYgo5sxVQDhHqOleKt8TKcsrBiFuhPxl4ExWJptz7KShRi1fYxKrV1PHlh6XH727KyuPHn21ohOKNOmwCd/BwmjQgsLFeFD98KU6tMJLZ2EKYKYBwPzOJt4vfBLlYZPOnNsMa2sboq0zXc4nL5jEU=
+	t=1762823318; cv=none; b=mGhWuxhrkiXoaY1GMRxApFN/7LkG5lktZfQoXp8koA5jpihAs4ynJVsf8w8Od1N0PwIAnwe29DqERW/pXFFHTWaq3eXfVw+aZ4/W636qUO8Bgk7NNUi32FyKpEqhzaiz1hStBe77kAe+6rfbZT9olI1RwQ2zIx0u3Aabv+mMgJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823316; c=relaxed/simple;
-	bh=kN48xLI2kl7w8jxbGAzW4o1yS2vCOeFkQ9yjAVEHY4Q=;
+	s=arc-20240116; t=1762823318; c=relaxed/simple;
+	bh=OCm94MuMPUu6vfcFWxv2ux7o+VOzTg4tO8ZsyTDtYCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o31ai3239PlL9edcrJ3ot8l84UBcQvRKICGXWzeorJOQkGt5cZ2f+WdWFwi3l2SJQAfN/m4MIRVcRs+tsIwJIrlLsI5++GT0TcV1aPXSMv3BPeJr6dvHQiwllh5aOcWOMFgQySEnVArkosPeOT67w5h87/OTwPSE0AE4ygJItH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5Tg9/sH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZxl2B9CH1B4FgTvnSfR3NYN1xMwJzVpdexgx6HB4dy0xHoklT26iunB7qGDD3Uqj8HavvZ46qVrpfLUpEBIAElXOw9yeQYF+26/fSHzuH7ze51Pwrk/uRs1dFOrLixtbqINfOzAv49N1ubtxt7uiEQAq0afZkt3GG/mdx8EYbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9NM+M37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5Tg9/sH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96356C19422;
-	Tue, 11 Nov 2025 01:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9NM+M37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE674C16AAE;
+	Tue, 11 Nov 2025 01:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823315;
-	bh=kN48xLI2kl7w8jxbGAzW4o1yS2vCOeFkQ9yjAVEHY4Q=;
+	s=korg; t=1762823318;
+	bh=OCm94MuMPUu6vfcFWxv2ux7o+VOzTg4tO8ZsyTDtYCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5Tg9/sHVLYSOx2q8ae+ES4XkDCb4B7qJhooQlvTph5OtudSMx9bLQKkSWr0+X339
-	 Mph0Eqe3VAOhlRGzmJ0+5B/cA3r6v3nDitGJa3Wg/TE5t3Qy5q4d0V9oQLbYcTdsnG
-	 azAn3udMO/kDoU2L6GFDs+BO+LOTy0IPWNM48dqI=
+	b=Y9NM+M371wzx7t0VQD8vOoAJ/RNIyJaJ1VB3tN9DmGJlzK2a9OFV5nwqctf5npO70
+	 ++0PXR+COAr7wvOAhUgHT0bG0jNz+XfGmCSQn66+lKPmKt0mlwaqIBqEkm2a5fp7HR
+	 UHSeGNdQNIHshz1nSpmL/5rzmx787X4k1vBp4VOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alice Chao <alice.chao@mediatek.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 274/849] selftests/net: Replace non-standard __WORDSIZE with sizeof(long) * 8
-Date: Tue, 11 Nov 2025 09:37:24 +0900
-Message-ID: <20251111004543.052617833@linuxfoundation.org>
+Subject: [PATCH 6.12 218/565] scsi: ufs: host: mediatek: Fix invalid access in vccqx handling
+Date: Tue, 11 Nov 2025 09:41:14 +0900
+Message-ID: <20251111004531.826737116@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit c36748e8733ef9c5f4cd1d7c4327994e5b88b8df ]
+[ Upstream commit 5863638598f5e4f64d2f85b03f376383ca1f2ab7 ]
 
-The `__WORDSIZE` macro, defined in the non-standard `<bits/wordsize.h>`
-header, is a GNU extension and not universally available with all
-toolchains, such as Clang when used with musl libc.
+Add a NULL check before accessing the 'vccqx' pointer to prevent invalid
+memory access. This ensures that the function safely handles cases where
+'vccq' and 'vccq2' are not initialized, improving the robustness of the
+power management code.
 
-This can lead to build failures in environments where this header is
-missing.
-
-The intention of the code is to determine the bit width of a C `long`.
-Replace the non-portable `__WORDSIZE` with the standard and portable
-`sizeof(long) * 8` expression to achieve the same result.
-
-This change also removes the inclusion of the now-unused
-`<bits/wordsize.h>` header.
-
-Signed-off-by: Wake Liu <wakel@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-11-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/psock_tpacket.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ufs/host/ufs-mediatek.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 221270cee3eaa..0dd909e325d93 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -33,7 +33,6 @@
- #include <ctype.h>
- #include <fcntl.h>
- #include <unistd.h>
--#include <bits/wordsize.h>
- #include <net/ethernet.h>
- #include <netinet/ip.h>
- #include <arpa/inet.h>
-@@ -785,7 +784,7 @@ static int test_kernel_bit_width(void)
- 
- static int test_user_bit_width(void)
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index c0106fb3792d4..2be74662f960b 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1426,6 +1426,9 @@ static void ufs_mtk_vccqx_set_lpm(struct ufs_hba *hba, bool lpm)
  {
--	return __WORDSIZE;
-+	return sizeof(long) * 8;
- }
+ 	struct ufs_vreg *vccqx = NULL;
  
- static const char *tpacket_str[] = {
++	if (!hba->vreg_info.vccq && !hba->vreg_info.vccq2)
++		return;
++
+ 	if (hba->vreg_info.vccq)
+ 		vccqx = hba->vreg_info.vccq;
+ 	else
 -- 
 2.51.0
 
