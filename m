@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B18F263F52;
-	Tue, 11 Nov 2025 01:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FEB2D6605;
+	Tue, 11 Nov 2025 01:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824125; cv=none; b=feislqb5qoygcewdjCKFG7yGD2vZQjKBAVvNYuqQk6pZHa+c2ChKu2RV1cyFaCi5HTyexVivxMureujQ5hXzal+YahPEBXxsoQiDuBxF2k7VQ/MM1YymQKaCKP/fD9Rte/mpwCeLKplhIjPVRiV/h35Mo76m/7eMWjMOTskz9mQ=
+	t=1762824127; cv=none; b=sMs4qVTPT3m6Ddz2dQlm6imQKMsyktP0eCzSR/ekUWTUBo1XpajHlNT9uB3SjoYLL7uw/LnqrLPyOemgcnItyohEAq1hLohZn6vobPCghcd+dDNyfs9KDt5LaGZgeKH1L0es3VV6fBYHQA/dYUS3AHEbC/UpsXzKx2eiBJGtiAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824125; c=relaxed/simple;
-	bh=g4XU2wgFHTyJ4oxFhUkT7SMvwgBdRvQg9Y9prOIP2z0=;
+	s=arc-20240116; t=1762824127; c=relaxed/simple;
+	bh=gtX1Xevitw+p65UOfD3cTzDq7y+IpcckZQoXdo4kdLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6K3JSez4FpSzWUgu8bh6hQI01iXpmR3Dgp38mzEw8HYUHW+9RNGfi0Vm/LTGjGirSZKkGKH4RKxQlvUA4MJFzRihMMnsJ9ionVgVKb2nXmWSbmTLmyFotjfGVgsDfHlGIhtd3Jz4VFEJHbTFge6MgLrrhsAucwuKz5nIXJoFBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QayP3X/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2dgTJvPPVQ5lNUNb6df/Bk5qtNbB38NGCDo7kMfuu++YrwVoZCOeMW3jORIfCMw+t8DFJtwClWYoSTCdhjlf+EPPKukKlK/CO+ZVHV4BJbqPxkfLbseg4w5si1BfQly+ApqfWI7HmbLEDrjZ8MCAd/vdh7nCOmexyL7gU1S7xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EA76v6m8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QayP3X/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7DBC116D0;
-	Tue, 11 Nov 2025 01:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EA76v6m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0C2C4AF09;
+	Tue, 11 Nov 2025 01:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824125;
-	bh=g4XU2wgFHTyJ4oxFhUkT7SMvwgBdRvQg9Y9prOIP2z0=;
+	s=korg; t=1762824127;
+	bh=gtX1Xevitw+p65UOfD3cTzDq7y+IpcckZQoXdo4kdLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QayP3X/F3fDnXpTQ49Zt9K7XH5RD6B5cpfECQxy6jKURc4+oFVASyv2fexm1WShvg
-	 dXdFPSNiUi88kd9eCcZ0Jmna1x1d1GITOPq2Xyucy7ezzhHDYqTGsYT8TC4g4Sr895
-	 O65gosvABAvYCV8CLUTiMIbWJMUk+I6F/Zy91z94=
+	b=EA76v6m8c91Isb1/SAhGY3k1Um22nIeXkxMolcBuZ2yfuKpQ/UBrpOGxvXxkxs5V3
+	 xzNLUNGSf0NyjwmRIPQ9OZjbjN02itlE4zeFFRD7ap1j0Xm3T4ixxpx2zRDgActKei
+	 x27qka8q4UNE8ha9WhEBlL2H9UKEdvItch5rVN3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 392/565] drm/amdgpu/atom: Check kcalloc() for WS buffer in amdgpu_atom_execute_table_locked()
-Date: Tue, 11 Nov 2025 09:44:08 +0900
-Message-ID: <20251111004535.690466842@linuxfoundation.org>
+Subject: [PATCH 6.17 442/849] drm/xe/guc: Set upper limit of H2G retries over CTB
+Date: Tue, 11 Nov 2025 09:40:12 +0900
+Message-ID: <20251111004547.119381958@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +50,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit cc9a8e238e42c1f43b98c097995137d644b69245 ]
+[ Upstream commit 2506af5f8109a387a5e8e9e3d7c498480b8033db ]
 
-kcalloc() may fail. When WS is non-zero and allocation fails, ectx.ws
-remains NULL while ectx.ws_size is set, leading to a potential NULL
-pointer dereference in atom_get_src_int() when accessing WS entries.
+The GuC communication protocol allows GuC to send NO_RESPONSE_RETRY
+reply message to indicate that due to some interim condition it can
+not handle incoming H2G request and the host shall resend it.
 
-Return -ENOMEM on allocation failure to avoid the NULL dereference.
+But in some cases, due to errors, this unsatisfied condition might
+be final and this could lead to endless retries as it was recently
+seen on the CI:
 
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+ [drm] GT0: PF: VF1 FLR didn't finish in 5000 ms (-ETIMEDOUT)
+ [drm] GT0: PF: VF1 resource sanitizing failed (-ETIMEDOUT)
+ [drm] GT0: PF: VF1 FLR failed!
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+ [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
+
+To avoid such dangerous loops allow only limited number of retries
+(for now 50) and add some delays (n * 5ms) to slow down the rate of
+resending this repeated request.
+
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://lore.kernel.org/r/20250903223330.6408-1-michal.wajdeczko@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
-index 81d195d366ceb..bed3083f317b8 100644
---- a/drivers/gpu/drm/amd/amdgpu/atom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1246,6 +1246,10 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
- 	ectx.last_jump_jiffies = 0;
- 	if (ws) {
- 		ectx.ws = kcalloc(4, ws, GFP_KERNEL);
-+		if (!ectx.ws) {
-+			ret = -ENOMEM;
-+			goto free;
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 6d70dd1c106d4..ff622628d823f 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -1079,11 +1079,15 @@ static bool retry_failure(struct xe_guc_ct *ct, int ret)
+ 	return true;
+ }
+ 
++#define GUC_SEND_RETRY_LIMIT	50
++#define GUC_SEND_RETRY_MSLEEP	5
++
+ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 			    u32 *response_buffer, bool no_fail)
+ {
+ 	struct xe_gt *gt = ct_to_gt(ct);
+ 	struct g2h_fence g2h_fence;
++	unsigned int retries = 0;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -1148,6 +1152,12 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 		xe_gt_dbg(gt, "H2G action %#x retrying: reason %#x\n",
+ 			  action[0], g2h_fence.reason);
+ 		mutex_unlock(&ct->lock);
++		if (++retries > GUC_SEND_RETRY_LIMIT) {
++			xe_gt_err(gt, "H2G action %#x reached retry limit=%u, aborting\n",
++				  action[0], GUC_SEND_RETRY_LIMIT);
++			return -ELOOP;
 +		}
- 		ectx.ws_size = ws;
- 	} else {
- 		ectx.ws = NULL;
++		msleep(GUC_SEND_RETRY_MSLEEP * retries);
+ 		goto retry;
+ 	}
+ 	if (g2h_fence.fail) {
 -- 
 2.51.0
 
