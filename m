@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB84C97;
-	Tue, 11 Nov 2025 00:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BDF4C97;
+	Tue, 11 Nov 2025 00:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822527; cv=none; b=ksvFBFmQAsFp6ouaXPQrIcSVhkMEgDbuLITY5C/+Hfaqduw4G9kUcYFJRK6VGllD2gO4/43Ekp5KpOzBdW8rxVx7OJVmOk2KPcWqKXg3gilBIn0k/Txv+IbA4m+LgH0f/EIi2cRlv8JX54eRyVim3cmOQdtgAHOurJ0FCUDTbDk=
+	t=1762822530; cv=none; b=l4aYvJt4SaaxS2xhXqsOfIH0WX1lsE5kixpGcA1Zp5MmZ1SmsUtziDBjeoTiwhc0Sw41qY2Hzz4jSawAp3rTp/+aoffx9wOpEHQhMVKb0yWHlPsL2rb73tzc4th27TFBV1vZSWugClDfIUcFpyGzbAVBh/X+TWzoM6nJxQ6C3Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822527; c=relaxed/simple;
-	bh=dKSVGaozOVo4Bom0HD3QOrMbs/AGYuCDP9161RhQ1lU=;
+	s=arc-20240116; t=1762822530; c=relaxed/simple;
+	bh=aWeNZT2zFIB4b6hXN+7g5nSt8xSZ/P4G1/YigYr6UXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jq/LnvMW4Z8Lww/5ws279Y9CDYJF4cjnTumBIYjqdNbn6uzQWxP7j7o6pLa9VVxDa1uUzPrkaMkLeApmHb1DGG63uqZOg7s5fYI3F1FDN6CnxWzsLeNGOXENFIKdvA5fggICDbEjYPSn2jo0PrO+zL3fhymb3zWrT7fMfqPabmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2QsdIT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gze+AqmCuEyUuwNcTGkljXNiyiohFVAk9tatnBn2cdQdoMtkXWF3mjjTQXntu5FjjCvTXaiwkPSSCqyBm73iwPKCIv3/6q3x6k49Z45Hbb8SSrMjHmW3S5V/3s0fbDMgcBPai6ojRsq+SGpzU8d6jdBD8C+rfTxri0tuYPWZpT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxCe0Sj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2QsdIT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B96DC4CEF5;
-	Tue, 11 Nov 2025 00:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxCe0Sj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF47C4AF09;
+	Tue, 11 Nov 2025 00:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822527;
-	bh=dKSVGaozOVo4Bom0HD3QOrMbs/AGYuCDP9161RhQ1lU=;
+	s=korg; t=1762822529;
+	bh=aWeNZT2zFIB4b6hXN+7g5nSt8xSZ/P4G1/YigYr6UXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2QsdIT509v1vFqsbWFUS5L3olaRsVGjRRIvMRn502T9BoevADz61ZzGl2erbq6r0
-	 jsHimRnxTRsBMbwsE1uotAzY+G+QesUG9Cdc2sc1TFXuaeKLMt7nnzekNRQdMN2ewX
-	 mhPTsuiFsHHI1j3ifKmUy6LXGTaQu78NdCDeseRg=
+	b=vxCe0Sj+42Dl+HFBXYAu2Y/hF3zZFXBTJGITSwP0CjmwfR4iBRvrSwoCxtu9x4tpA
+	 29s2Bg7t5q4NkikKAEby6+ao739bSExZJAqC2HVnsAuIW0enu7mZq3HZTwt4a9NU2A
+	 YlmMLMVM1Cg9qZAq8PpwW/8SxGUvukCAz3v58mTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.12 068/565] drm/nouveau: Fix race in nouveau_sched_fini()
-Date: Tue, 11 Nov 2025 09:38:44 +0900
-Message-ID: <20251111004528.478421094@linuxfoundation.org>
+	Kendall Willis <k-willis@ti.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Nishanth Menon <nm@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 131/849] firmware: ti_sci: Enable abort handling of entry to LPM
+Date: Tue, 11 Nov 2025 09:35:01 +0900
+Message-ID: <20251111004539.561610240@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +48,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Kendall Willis <k-willis@ti.com>
 
-commit e0023c8a74028739643aa14bd201c41a99866ca4 upstream.
+[ Upstream commit 0fdd3240fe5a9bf4785e40506bf86b7e16546b83 ]
 
-nouveau_sched_fini() uses a memory barrier before wait_event().
-wait_event(), however, is a macro which expands to a loop which might
-check the passed condition several times. The barrier would only take
-effect for the first check.
+The PM co-processor (device manager or DM) adds the ability to abort
+entry to a low power mode by clearing the mode selection in the
+latest version of its firmware (11.01.09) [1].
 
-Replace the barrier with a function which takes the spinlock.
+Enable the ti_sci driver to support the LPM abort call which clears the
+low power mode selection of the DM. This fixes an issue where failed
+system suspend attempts would cause subsequent suspends to fail.
 
-Cc: stable@vger.kernel.org # v6.8+
-Fixes: 5f03a507b29e ("drm/nouveau: implement 1:1 scheduler - entity relationship")
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251024161221.196155-2-phasta@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+After system suspend completes, regardless of if system suspend succeeds
+or fails, the ->complete() hook in TI SCI will be called. In the
+->complete() hook, a message will be sent to the DM to clear the current
+low power mode selection. Clearing the low power mode selection
+unconditionally will not cause any error in the DM.
+
+[1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/pm/lpm.html
+
+Signed-off-by: Kendall Willis <k-willis@ti.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/20250819195453.1094520-1-k-willis@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_sched.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/firmware/ti_sci.c | 57 +++++++++++++++++++++++++++++++++++++--
+ drivers/firmware/ti_sci.h |  3 +++
+ 2 files changed, 58 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_sched.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
-@@ -475,6 +475,17 @@ nouveau_sched_create(struct nouveau_sche
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index ae5fd1936ad32..49fd2ae01055d 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -2015,6 +2015,47 @@ static int ti_sci_cmd_set_latency_constraint(const struct ti_sci_handle *handle,
+ 	return ret;
+ }
+ 
++/**
++ * ti_sci_cmd_lpm_abort() - Abort entry to LPM by clearing selection of LPM to enter
++ * @dev:	Device pointer corresponding to the SCI entity
++ *
++ * Return: 0 if all went well, else returns appropriate error value.
++ */
++static int ti_sci_cmd_lpm_abort(struct device *dev)
++{
++	struct ti_sci_info *info = dev_get_drvdata(dev);
++	struct ti_sci_msg_hdr *req;
++	struct ti_sci_msg_hdr *resp;
++	struct ti_sci_xfer *xfer;
++	int ret = 0;
++
++	xfer = ti_sci_get_one_xfer(info, TI_SCI_MSG_LPM_ABORT,
++				   TI_SCI_FLAG_REQ_ACK_ON_PROCESSED,
++				   sizeof(*req), sizeof(*resp));
++	if (IS_ERR(xfer)) {
++		ret = PTR_ERR(xfer);
++		dev_err(dev, "Message alloc failed(%d)\n", ret);
++		return ret;
++	}
++	req = (struct ti_sci_msg_hdr *)xfer->xfer_buf;
++
++	ret = ti_sci_do_xfer(info, xfer);
++	if (ret) {
++		dev_err(dev, "Mbox send fail %d\n", ret);
++		goto fail;
++	}
++
++	resp = (struct ti_sci_msg_hdr *)xfer->xfer_buf;
++
++	if (!ti_sci_is_response_ack(resp))
++		ret = -ENODEV;
++
++fail:
++	ti_sci_put_one_xfer(&info->minfo, xfer);
++
++	return ret;
++}
++
+ static int ti_sci_cmd_core_reboot(const struct ti_sci_handle *handle)
+ {
+ 	struct ti_sci_info *info;
+@@ -3739,11 +3780,22 @@ static int __maybe_unused ti_sci_resume_noirq(struct device *dev)
  	return 0;
  }
  
-+static bool
-+nouveau_sched_job_list_empty(struct nouveau_sched *sched)
++static void __maybe_unused ti_sci_pm_complete(struct device *dev)
 +{
-+	bool empty;
++	struct ti_sci_info *info = dev_get_drvdata(dev);
 +
-+	spin_lock(&sched->job.list.lock);
-+	empty = list_empty(&sched->job.list.head);
-+	spin_unlock(&sched->job.list.lock);
-+
-+	return empty;
++	if (info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT) {
++		if (ti_sci_cmd_lpm_abort(dev))
++			dev_err(dev, "LPM clear selection failed.\n");
++	}
 +}
++
+ static const struct dev_pm_ops ti_sci_pm_ops = {
+ #ifdef CONFIG_PM_SLEEP
+ 	.suspend = ti_sci_suspend,
+ 	.suspend_noirq = ti_sci_suspend_noirq,
+ 	.resume_noirq = ti_sci_resume_noirq,
++	.complete = ti_sci_pm_complete,
+ #endif
+ };
  
- static void
- nouveau_sched_fini(struct nouveau_sched *sched)
-@@ -482,8 +493,7 @@ nouveau_sched_fini(struct nouveau_sched
- 	struct drm_gpu_scheduler *drm_sched = &sched->base;
- 	struct drm_sched_entity *entity = &sched->entity;
+@@ -3876,10 +3928,11 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	}
  
--	rmb(); /* for list_empty to work without lock */
--	wait_event(sched->job.wq, list_empty(&sched->job.list.head));
-+	wait_event(sched->job.wq, nouveau_sched_job_list_empty(sched));
+ 	ti_sci_msg_cmd_query_fw_caps(&info->handle, &info->fw_caps);
+-	dev_dbg(dev, "Detected firmware capabilities: %s%s%s\n",
++	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s\n",
+ 		info->fw_caps & MSG_FLAG_CAPS_GENERIC ? "Generic" : "",
+ 		info->fw_caps & MSG_FLAG_CAPS_LPM_PARTIAL_IO ? " Partial-IO" : "",
+-		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : ""
++		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : "",
++		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : ""
+ 	);
  
- 	drm_sched_entity_fini(entity);
- 	drm_sched_fini(drm_sched);
+ 	ti_sci_setup_ops(info);
+diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
+index 053387d7baa06..701c416b2e78f 100644
+--- a/drivers/firmware/ti_sci.h
++++ b/drivers/firmware/ti_sci.h
+@@ -42,6 +42,7 @@
+ #define TI_SCI_MSG_SET_IO_ISOLATION	0x0307
+ #define TI_SCI_MSG_LPM_SET_DEVICE_CONSTRAINT	0x0309
+ #define TI_SCI_MSG_LPM_SET_LATENCY_CONSTRAINT	0x030A
++#define TI_SCI_MSG_LPM_ABORT	0x0311
+ 
+ /* Resource Management Requests */
+ #define TI_SCI_MSG_GET_RESOURCE_RANGE	0x1500
+@@ -147,6 +148,7 @@ struct ti_sci_msg_req_reboot {
+  *		MSG_FLAG_CAPS_GENERIC: Generic capability (LPM not supported)
+  *		MSG_FLAG_CAPS_LPM_PARTIAL_IO: Partial IO in LPM
+  *		MSG_FLAG_CAPS_LPM_DM_MANAGED: LPM can be managed by DM
++ *		MSG_FLAG_CAPS_LPM_ABORT: Abort entry to LPM
+  *
+  * Response to a generic message with message type TI_SCI_MSG_QUERY_FW_CAPS
+  * providing currently available SOC/firmware capabilities. SoC that don't
+@@ -157,6 +159,7 @@ struct ti_sci_msg_resp_query_fw_caps {
+ #define MSG_FLAG_CAPS_GENERIC		TI_SCI_MSG_FLAG(0)
+ #define MSG_FLAG_CAPS_LPM_PARTIAL_IO	TI_SCI_MSG_FLAG(4)
+ #define MSG_FLAG_CAPS_LPM_DM_MANAGED	TI_SCI_MSG_FLAG(5)
++#define MSG_FLAG_CAPS_LPM_ABORT		TI_SCI_MSG_FLAG(9)
+ #define MSG_MASK_CAPS_LPM		GENMASK_ULL(4, 1)
+ 	u64 fw_caps;
+ } __packed;
+-- 
+2.51.0
+
 
 
