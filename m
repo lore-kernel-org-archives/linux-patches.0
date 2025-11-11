@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA3E27D786;
-	Tue, 11 Nov 2025 01:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F90826FA67;
+	Tue, 11 Nov 2025 01:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823475; cv=none; b=NKCSIQjxwX+OXPcjlHn5r0sdhn+VkVOYQS20fEjKhcYsp81KR607rYFtszm7GswIYaraiPnIxakf6vTfjgM675Dw05aQfAF8hquBj45Sd/FwlTSvS2u3mE9N1ODVrsg44GD7VCwnFqNK9mjO5ebs6i5AM3jvGrchJzNMbb+5Wqo=
+	t=1762823477; cv=none; b=JKUNGe5XAyFZbV9lzSaYAhAWmjDZ8pBI3wfRPSge0TXHUDgAyjU38Bo49PU1JCF1rfSKikDkEUusENAdQf7OHX5PqGvBXtiJJSPtGAEt1zGJXekgdGysRc/aHWhnMlGEOq3/RXnh1aBE2zAFEzxZkSYxDfaWtag3Qa45reaN67Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823475; c=relaxed/simple;
-	bh=PF22k3YWnVQrq4Hw4mJzqhLmcW5j2FTzuMIEUMTvJAs=;
+	s=arc-20240116; t=1762823477; c=relaxed/simple;
+	bh=5qulNKsku3UAqvQ6ArelGhv53MXJwtRPDgT5E3cdJ2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7QN4++j8DrtDmeJRiliUcVFHUwUrXKf+f7VwrMVGSuW7lUG3DgzdG4zdALJuJbk9vvt6ynLwMJQDjZ7NuSAQVE7qpQHqGpb1yc5z/0xCQViJRdv4wu7Pw0ZjabfP/v5DdxrHm8jBF81m1RsS6EPiRaSRU638PlhzNneToMWNGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17i7SuO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjISwMWLeitZtXJgld24lLsT63w4ytKqqsRnwuS/xo8TXhXqF27HqAyPCEpNkBqYnuWtVIP7Yu8RZma722cuApkzCnWrmpXut26ArJuQ+oshud969mmUNF87CCuPSCwcB1S3K5YV/rAwdq9TAF0V/1CIpICPBoYW/ecMWDuyh7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iENA8Utk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17i7SuO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB0DC4CEF5;
-	Tue, 11 Nov 2025 01:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iENA8Utk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205DDC113D0;
+	Tue, 11 Nov 2025 01:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823475;
-	bh=PF22k3YWnVQrq4Hw4mJzqhLmcW5j2FTzuMIEUMTvJAs=;
+	s=korg; t=1762823477;
+	bh=5qulNKsku3UAqvQ6ArelGhv53MXJwtRPDgT5E3cdJ2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17i7SuO54QTe6wBw1jznVIqt5PvYV3ybPrXXmALyzDYaNdjx0RoeEe3sVHBekgHTQ
-	 GRqjhyFV12pX5mITlpGq52W8nMfyrXYbhYuL/gGWtB61mhrQzAtWG33iLk/cmecBBT
-	 9XZyHRtyjso5O/puycBgw7UjPCSvcnWzO5LBKRRY=
+	b=iENA8UtkkJK95hHYWnuUx8F1Gw959YBiRMtilPfoXCRVImZnI8uco9NBzdcAEO2u/
+	 4kteZGw2ibQqTiAV31bXq6+9/dO35J6Av6ATGQ/0oKowXRYI6UXq0jcwZVhw8gP2Jh
+	 08og7+ybGgy0vyqAFwQanDav1GvzdcSEDAPSgjno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Chao <alice.chao@mediatek.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 307/849] scsi: ufs: host: mediatek: Fix invalid access in vccqx handling
-Date: Tue, 11 Nov 2025 09:37:57 +0900
-Message-ID: <20251111004543.834777790@linuxfoundation.org>
+Subject: [PATCH 6.12 254/565] net: phy: fixed_phy: let fixed_phy_unregister free the phy_device
+Date: Tue, 11 Nov 2025 09:41:50 +0900
+Message-ID: <20251111004532.617378947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alice Chao <alice.chao@mediatek.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 5863638598f5e4f64d2f85b03f376383ca1f2ab7 ]
+[ Upstream commit a0f849c1cc6df0db9083b4c81c05a5456b1ed0fb ]
 
-Add a NULL check before accessing the 'vccqx' pointer to prevent invalid
-memory access. This ensures that the function safely handles cases where
-'vccq' and 'vccq2' are not initialized, improving the robustness of the
-power management code.
+fixed_phy_register() creates and registers the phy_device. To be
+symmetric, we should not only unregister, but also free the phy_device
+in fixed_phy_unregister(). This allows to simplify code in users.
 
-Signed-off-by: Alice Chao <alice.chao@mediatek.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250811131423.3444014-11-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Note wrt of_phy_deregister_fixed_link():
+put_device(&phydev->mdio.dev) and phy_device_free(phydev) are identical.
+
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/ad8dda9a-10ed-4060-916b-3f13bdbb899d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/dsa_loop.c  | 9 +++------
+ drivers/net/mdio/of_mdio.c  | 1 -
+ drivers/net/phy/fixed_phy.c | 1 +
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 82160da8ec71b..bb0be6bed1bca 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1589,6 +1589,9 @@ static void ufs_mtk_vccqx_set_lpm(struct ufs_hba *hba, bool lpm)
- {
- 	struct ufs_vreg *vccqx = NULL;
+diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
+index c70ed67cc1888..5c7f40acfa391 100644
+--- a/drivers/net/dsa/dsa_loop.c
++++ b/drivers/net/dsa/dsa_loop.c
+@@ -387,13 +387,10 @@ static struct mdio_driver dsa_loop_drv = {
  
-+	if (!hba->vreg_info.vccq && !hba->vreg_info.vccq2)
-+		return;
-+
- 	if (hba->vreg_info.vccq)
- 		vccqx = hba->vreg_info.vccq;
- 	else
+ static void dsa_loop_phydevs_unregister(void)
+ {
+-	unsigned int i;
+-
+-	for (i = 0; i < NUM_FIXED_PHYS; i++)
+-		if (!IS_ERR(phydevs[i])) {
++	for (int i = 0; i < NUM_FIXED_PHYS; i++) {
++		if (!IS_ERR(phydevs[i]))
+ 			fixed_phy_unregister(phydevs[i]);
+-			phy_device_free(phydevs[i]);
+-		}
++	}
+ }
+ 
+ static int __init dsa_loop_init(void)
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index 2f4fc664d2e12..cc6ae8f35b1c2 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -473,6 +473,5 @@ void of_phy_deregister_fixed_link(struct device_node *np)
+ 	fixed_phy_unregister(phydev);
+ 
+ 	put_device(&phydev->mdio.dev);	/* of_phy_find_device() */
+-	phy_device_free(phydev);	/* fixed_phy_register() */
+ }
+ EXPORT_SYMBOL(of_phy_deregister_fixed_link);
+diff --git a/drivers/net/phy/fixed_phy.c b/drivers/net/phy/fixed_phy.c
+index aef739c20ac4d..4694fb3eaa2ff 100644
+--- a/drivers/net/phy/fixed_phy.c
++++ b/drivers/net/phy/fixed_phy.c
+@@ -329,6 +329,7 @@ void fixed_phy_unregister(struct phy_device *phy)
+ 	phy_device_remove(phy);
+ 	of_node_put(phy->mdio.dev.of_node);
+ 	fixed_phy_del(phy->mdio.addr);
++	phy_device_free(phy);
+ }
+ EXPORT_SYMBOL_GPL(fixed_phy_unregister);
+ 
 -- 
 2.51.0
 
