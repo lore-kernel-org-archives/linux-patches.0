@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DF52701D1;
-	Tue, 11 Nov 2025 01:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88BC27E7EB;
+	Tue, 11 Nov 2025 01:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823123; cv=none; b=vB9ZftJ1VS3pf1lfF0yYiTtGuFGFGMFxUWd3Rkq6otRmGmVDKnbnAdaVB2YSvYMc3NSvatgh5G58OHW+oB8gRAMIAn5o0x6HByWnV2HFhsf6HYHeSAQm5uKkeGkjYnjQF8jNCDp8cRuUX7j/9Eb1Bycv1FgBgzDAL8w7P8UMbVQ=
+	t=1762823125; cv=none; b=fzGTBJ7DG+/9MyTM56PuPiv2iPKldGdzk0/kOTkPgEgcK63GGEKnpVxuoTfzG8WnpSAg0EvaPxZ1smPnZB8PCgAFIa8WLdHSAnuXqyYqqlzqQe5t3BBoGCaVsQbvF2j51Ty8eJa6TjR5UOGB2mty1yYdt909amqi4jdwWlLb5o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823123; c=relaxed/simple;
-	bh=zwkiW6AmNgW+4Eva5zs/Dy20gNk+4RZOIGlkRwGgue8=;
+	s=arc-20240116; t=1762823125; c=relaxed/simple;
+	bh=t+KY48PtpUdH9WfRCMd9Ty4dKxzxadZtKrhQrGgNH8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rK4DpAR+onG//zIZ/y9DdQpeCrBFw1ziKgp8TSxS5y3eg5SSKgN3dh8h6TQ/f4y6IbNb2BUcw+dU8JssMkBYjchTZxUrtuQGPsPCgzT1OYpvhb3MKpobrwmOX0MIoWiUQm89ENTeyldKf2uEOvtL8zQbHaycGU/RBoQCR1/0gdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvd4hgWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PxdParuNWfAYCo5X2/yV/JVT/jy1oOv5u8vVKw3ftnsW/G751K6zmNqbHEAkVDJe5fCfKVnPspiapk35giw96W8HFy+KrPfTfXOgZrZjbZ9LWU6EUIZNB8vwV3WCAuw/dEKcofNxqghLSMXpj1/IF3T+kvSHDuxXw/qclpY4yQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ls1E8nUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvd4hgWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69ACC16AAE;
-	Tue, 11 Nov 2025 01:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ls1E8nUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E07C2BC87;
+	Tue, 11 Nov 2025 01:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823123;
-	bh=zwkiW6AmNgW+4Eva5zs/Dy20gNk+4RZOIGlkRwGgue8=;
+	s=korg; t=1762823125;
+	bh=t+KY48PtpUdH9WfRCMd9Ty4dKxzxadZtKrhQrGgNH8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvd4hgWC5cfMDD1To1kV+aZiaq8qg0/i6itULTc0J+8qTOCL01SyNjsPOGPkWGLDy
-	 kgBqPBS7Cj/bQJbdTjp/JKn0kW3ffbTJT9ZXd9SQu1pg1r8NeFvHoDapR1ir1NQbXA
-	 hBYSFyNalLBw1lV4Ec/6RX1KRKenQHsFndrqPQJs=
+	b=ls1E8nUpbYrw34uCcppM2Ge6VRw9YihkrgB4Us7EaBaXpvBCIPUni2h9wayw5vCNP
+	 tPEmSfNCnz9xFvbF1C+BikUdl0x92eQvEmMBMaSP02RurTZ//GM2jTulRFn3h+rtnH
+	 gqNnaOrB6c9y3xJ5PK1xvowuNCpPlwynlx0z2Yas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
+	"Ovidiu (Ovi) Bunea" <ovidiu.bunea@amd.com>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 235/849] drm/amdgpu: Check vcn sram load return value
-Date: Tue, 11 Nov 2025 09:36:45 +0900
-Message-ID: <20251111004542.125538181@linuxfoundation.org>
+Subject: [PATCH 6.12 176/565] drm/amd/display: Move setup_stream_attribute
+Date: Tue, 11 Nov 2025 09:40:32 +0900
+Message-ID: <20251111004530.892902463@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,257 +50,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sathishkumar S <sathishkumar.sundararaju@amd.com>
+From: Michael Strauss <michael.strauss@amd.com>
 
-[ Upstream commit faab5ea0836733ef1c8e83cf6b05690a5c9066be ]
+[ Upstream commit 2681bf4ae8d24df950138b8c9ea9c271cd62e414 ]
 
-Log an error when vcn sram load fails in indirect mode
-and return the same error value.
+[WHY]
+If symclk RCO is enabled, stream encoder may not be receiving an ungated
+clock by the time we attempt to set stream attributes when setting dpms
+on. Since the clock is gated, register writes to the stream encoder fail.
 
-Signed-off-by: Sathishkumar S <sathishkumar.sundararaju@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
+[HOW]
+Move set_stream_attribute call into enable_stream, just after the point
+where symclk32_se is ungated.
+Logically there is no need to set stream attributes as early as is
+currently done in link_set_dpms_on, so this should have no impact beyond
+the RCO fix.
+
+Reviewed-by: Ovidiu (Ovi) Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: Michael Strauss <michael.strauss@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c   | 10 ++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c   | 10 ++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c   | 10 ++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c   | 10 ++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c | 11 ++++++++---
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c | 10 ++++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c |  9 +++++++--
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c | 11 ++++++++---
- 8 files changed, 63 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 1 +
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c    | 2 ++
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c  | 2 ++
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c            | 3 ---
+ .../drm/amd/display/dc/virtual/virtual_stream_encoder.c    | 7 +++++++
+ 5 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 68b4371df0f1b..d1481e6d57ecd 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -865,6 +865,7 @@ static int vcn_v2_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 	volatile struct amdgpu_fw_shared *fw_shared = adev->vcn.inst->fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring = &adev->vcn.inst->ring_dec;
- 	uint32_t rb_bufsz, tmp;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 03b22e9115ea8..9e5cb609e89ee 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -670,6 +670,7 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
+ 	uint32_t early_control = 0;
+ 	struct timing_generator *tg = pipe_ctx->stream_res.tg;
  
- 	vcn_v2_0_enable_static_power_gating(vinst);
++	link_hwss->setup_stream_attribute(pipe_ctx);
+ 	link_hwss->setup_stream_encoder(pipe_ctx);
  
-@@ -948,8 +949,13 @@ static int vcn_v2_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 		UVD, 0, mmUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
+ 	dc->hwss.update_info_frame(pipe_ctx);
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index d96f52a551940..55f067c9e4948 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -3009,6 +3009,8 @@ void dcn20_enable_stream(struct pipe_ctx *pipe_ctx)
+ 						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
+ 	}
  
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, 0, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, 0, 0);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
++	link_hwss->setup_stream_attribute(pipe_ctx);
++
+ 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div)
+ 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
+ 			dc->res_pool->dccg,
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index bcb296a954f2b..f1a3e70893805 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -1019,6 +1019,8 @@ void dcn401_enable_stream(struct pipe_ctx *pipe_ctx)
+ 		}
+ 	}
  
- 	/* force RBC into idle state */
- 	rb_bufsz = order_base_2(ring->ring_size);
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-index f13ed3c1e29c2..fdd8e33916f27 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
-@@ -1012,6 +1012,7 @@ static int vcn_v2_5_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 	volatile struct amdgpu_fw_shared *fw_shared = adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	uint32_t rb_bufsz, tmp;
-+	int ret;
++	link_hwss->setup_stream_attribute(pipe_ctx);
++
+ 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div) {
+ 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
+ 			dc->res_pool->dccg,
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 9d740659521a4..f6ab52979e331 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -2447,7 +2447,6 @@ void link_set_dpms_on(
+ 	struct link_encoder *link_enc;
+ 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;
+ 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
+-	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
+ 	bool apply_edp_fast_boot_optimization =
+ 		pipe_ctx->stream->apply_edp_fast_boot_optimization;
  
- 	/* disable register anti-hang mechanism */
- 	WREG32_P(SOC15_REG_OFFSET(VCN, inst_idx, mmUVD_POWER_STATUS), 1,
-@@ -1102,8 +1103,13 @@ static int vcn_v2_5_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 		VCN, 0, mmUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
+@@ -2490,8 +2489,6 @@ void link_set_dpms_on(
+ 		pipe_ctx->stream_res.tg->funcs->set_out_mux(pipe_ctx->stream_res.tg, otg_out_dest);
+ 	}
  
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
+-	link_hwss->setup_stream_attribute(pipe_ctx);
+-
+ 	pipe_ctx->stream->apply_edp_fast_boot_optimization = false;
  
- 	ring = &adev->vcn.inst[inst_idx].ring_dec;
- 	/* force RBC into idle state */
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-index 866222fc10a05..b7c4fcca18bb1 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -1041,6 +1041,7 @@ static int vcn_v3_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 	volatile struct amdgpu_fw_shared *fw_shared = adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	uint32_t rb_bufsz, tmp;
-+	int ret;
+ 	// Enable VPG before building infoframe
+diff --git a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
+index ad088d70e1893..6ffc74fc9dcd8 100644
+--- a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
+@@ -44,6 +44,11 @@ static void virtual_stream_encoder_dvi_set_stream_attribute(
+ 	struct dc_crtc_timing *crtc_timing,
+ 	bool is_dual_link) {}
  
- 	/* disable register anti-hang mechanism */
- 	WREG32_P(SOC15_REG_OFFSET(VCN, inst_idx, mmUVD_POWER_STATUS), 1,
-@@ -1133,8 +1134,13 @@ static int vcn_v3_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 	WREG32_SOC15_DPG_MODE(inst_idx, SOC15_DPG_MODE_OFFSET(
- 		VCN, inst_idx, mmUVD_VCPU_CNTL), tmp, 0, indirect);
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
- 
- 	ring = &adev->vcn.inst[inst_idx].ring_dec;
- 	/* force RBC into idle state */
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-index ac55549e20be6..082def4a6bdfe 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1012,6 +1012,7 @@ static int vcn_v4_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 	volatile struct amdgpu_vcn4_fw_shared *fw_shared = adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	uint32_t tmp;
-+	int ret;
- 
- 	/* disable register anti-hang mechanism */
- 	WREG32_P(SOC15_REG_OFFSET(VCN, inst_idx, regUVD_POWER_STATUS), 1,
-@@ -1094,8 +1095,13 @@ static int vcn_v4_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst, bool indirect)
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
- 
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
- 
- 	ring = &adev->vcn.inst[inst_idx].ring_enc[0];
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-index ba944a96c0707..2e985c4a288a3 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
-@@ -849,7 +849,7 @@ static int vcn_v4_0_3_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 	volatile struct amdgpu_vcn4_fw_shared *fw_shared =
- 						adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
--	int vcn_inst;
-+	int vcn_inst, ret;
- 	uint32_t tmp;
- 
- 	vcn_inst = GET_INST(VCN, inst_idx);
-@@ -942,8 +942,13 @@ static int vcn_v4_0_3_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 		VCN, 0, regUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, AMDGPU_UCODE_ID_VCN0_RAM);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, AMDGPU_UCODE_ID_VCN0_RAM);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
- 
- 	ring = &adev->vcn.inst[inst_idx].ring_enc[0];
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-index 11fec716e846a..3ce49dfd3897d 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
-@@ -924,6 +924,7 @@ static int vcn_v4_0_5_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 	volatile struct amdgpu_vcn4_fw_shared *fw_shared = adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	uint32_t tmp;
-+	int ret;
- 
- 	/* disable register anti-hang mechanism */
- 	WREG32_P(SOC15_REG_OFFSET(VCN, inst_idx, regUVD_POWER_STATUS), 1,
-@@ -1004,8 +1005,13 @@ static int vcn_v4_0_5_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 		VCN, inst_idx, regUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
- 
- 	ring = &adev->vcn.inst[inst_idx].ring_enc[0];
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-index 07a6e95828808..f8bb90fe764bb 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-@@ -713,6 +713,7 @@ static int vcn_v5_0_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 	volatile struct amdgpu_vcn5_fw_shared *fw_shared = adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	uint32_t tmp;
-+	int ret;
- 
- 	/* disable register anti-hang mechanism */
- 	WREG32_P(SOC15_REG_OFFSET(VCN, inst_idx, regUVD_POWER_STATUS), 1,
-@@ -766,8 +767,12 @@ static int vcn_v5_0_0_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 		VCN, inst_idx, regUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
-+		dev_err(adev->dev, "%s: vcn sram load failed %d\n", __func__, ret);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ring = &adev->vcn.inst[inst_idx].ring_enc[0];
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-index cdefd7fcb0da6..d8bbb93767318 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-@@ -605,7 +605,7 @@ static int vcn_v5_0_1_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 		adev->vcn.inst[inst_idx].fw_shared.cpu_addr;
- 	struct amdgpu_ring *ring;
- 	struct dpg_pause_state state = {.fw_based = VCN_DPG_STATE__PAUSE};
--	int vcn_inst;
-+	int vcn_inst, ret;
- 	uint32_t tmp;
- 
- 	vcn_inst = GET_INST(VCN, inst_idx);
-@@ -666,8 +666,13 @@ static int vcn_v5_0_1_start_dpg_mode(struct amdgpu_vcn_inst *vinst,
- 		VCN, 0, regUVD_MASTINT_EN),
- 		UVD_MASTINT_EN__VCPU_EN_MASK, 0, indirect);
- 
--	if (indirect)
--		amdgpu_vcn_psp_update_sram(adev, inst_idx, AMDGPU_UCODE_ID_VCN0_RAM);
-+	if (indirect) {
-+		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, AMDGPU_UCODE_ID_VCN0_RAM);
-+		if (ret) {
-+			dev_err(adev->dev, "vcn sram load failed %d\n", ret);
-+			return ret;
-+		}
-+	}
- 
- 	/* resetting ring, fw should not check RB ring */
- 	fw_shared->sq.queue_mode |= FW_QUEUE_RING_RESET;
++static void virtual_stream_encoder_lvds_set_stream_attribute(
++	struct stream_encoder *enc,
++	struct dc_crtc_timing *crtc_timing)
++{}
++
+ static void virtual_stream_encoder_set_throttled_vcp_size(
+ 	struct stream_encoder *enc,
+ 	struct fixed31_32 avg_time_slots_per_mtp)
+@@ -115,6 +120,8 @@ static const struct stream_encoder_funcs virtual_str_enc_funcs = {
+ 		virtual_stream_encoder_hdmi_set_stream_attribute,
+ 	.dvi_set_stream_attribute =
+ 		virtual_stream_encoder_dvi_set_stream_attribute,
++	.lvds_set_stream_attribute =
++		virtual_stream_encoder_lvds_set_stream_attribute,
+ 	.set_throttled_vcp_size =
+ 		virtual_stream_encoder_set_throttled_vcp_size,
+ 	.update_hdmi_info_packets =
 -- 
 2.51.0
 
