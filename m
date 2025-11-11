@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C42D1D6DB5;
-	Tue, 11 Nov 2025 00:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDA54C97;
+	Tue, 11 Nov 2025 00:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822350; cv=none; b=N8gde1vmiyW9ZTecafYd/Oga+AVCn66KwpsaFymlBO+BA/7wCM7IjC3a11hJE9rIsujpU4q1TJQ5vH6ky1Y+6cLhqBQEhoh3fhSb9gt9yujfnxNmORd1GYxaIk2CkdoLxkg5z6y+hbdh+xw889nMlXddOJeFh43JdflXHwxXtmQ=
+	t=1762822353; cv=none; b=GvjcVsVMPr3QFm3RVuzLSFzglVN4xegKy2kWp726h7IlR7Z+bSConVY9qzq1r3nQlLIr9l61lcUpxXeoUvUySIN4Wxoo2gO5FJSjsoR4eqdPtPZyTLfEPuIs3NooCKsV5LH4BvTxEBMP+SfBMbEnDkhgfhxAzI8xWe2qlfB5mOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822350; c=relaxed/simple;
-	bh=2dKv6bMLp11XXXF6Mrk0FW3m0R+lyZ/Tng+PPK4qNsU=;
+	s=arc-20240116; t=1762822353; c=relaxed/simple;
+	bh=bZMcs7QjRIxaGFrvGRHnPFk2AcreOr0JXVEnF/Bc7ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVF0AFHUA2oOWEkIQ0yrqDv1vTwdpa+dZqktXIZUueAmj7gJYL3AeuvJywSYe7dy8yTX3l7menAML1589QyepGpkXJ8l+Atk6pImziFDGtWx4Yc1CgdclaBjjmaWx82Kthtkvo94FwTALShudo5G9ddYDPr6HiCFpzB8TwpBbPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ey426eU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyQCOguQFhd6BfOD4lhGtk3B7RaP9pv4JRYNitIZksgyBuMQdihkpw/4XUHvABHZs/YwtsVFVPYSHwrHx6C9AxVn+++vH4gi3U9lGL9hagdZRiDk5EaRaPnJEZRjbxLgRsdNJ/mnZmJ+sjOdu6eUeTW87vGD0IRmDP1dCWl2X1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBm1yTYi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ey426eU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B71CC4CEF5;
-	Tue, 11 Nov 2025 00:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBm1yTYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD8BC2BCB2;
+	Tue, 11 Nov 2025 00:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822350;
-	bh=2dKv6bMLp11XXXF6Mrk0FW3m0R+lyZ/Tng+PPK4qNsU=;
+	s=korg; t=1762822352;
+	bh=bZMcs7QjRIxaGFrvGRHnPFk2AcreOr0JXVEnF/Bc7ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ey426eUJmkjcLGNLaXSn1FqOJO89ALav+k5u+7Dgx8YRdGpeP24CF3CvhgnOi815
-	 Zv/N+6jQ9MHb36gnkRXZzENaaFNv14WFR/RCQT47eHRtRp/y0vq1Kdn+zJ1YrOAA4p
-	 JSj31eYhJicxB6OvT0gQSO2pnMg1S+N4HVDw8Xq0=
+	b=gBm1yTYipKcaUagZVnE2uFXyYbCGCaql+PnjxxadlaUXfdk+nUvspEnUXIo1T+pCh
+	 gs0+h2kk5MqK4De2vWbSwA7C1fJln7KhNQtCIdIvk9QopVRpw//j1O33RinzClIcUb
+	 9lXZuMELthmYHJf+7vm1/IHQiXWRD9yT2npp+778=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/565] bpf: Find eligible subprogs for private stack support
-Date: Tue, 11 Nov 2025 09:38:08 +0900
-Message-ID: <20251111004527.606121404@linuxfoundation.org>
+	Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.17 091/849] kbuild: align modinfo section for Secureboot Authenticode EDK2 compat
+Date: Tue, 11 Nov 2025 09:34:21 +0900
+Message-ID: <20251111004538.614315721@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,269 +46,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>
 
-[ Upstream commit a76ab5731e32d50ff5b1ae97e9dc4b23f41c23f5 ]
+commit d50f21091358b2b29dc06c2061106cdb0f030d03 upstream.
 
-Private stack will be allocated with percpu allocator in jit time.
-To avoid complexity at runtime, only one copy of private stack is
-available per cpu per prog. So runtime recursion check is necessary
-to avoid stack corruption.
+Previously linker scripts would always generate vmlinuz that has sections
+aligned. And thus padded (correct Authenticode calculation) and unpadded
+calculation would be same. As in https://github.com/rhboot/pesign userspace
+tool would produce the same authenticode digest for both of the following
+commands:
 
-Current private stack only supports kprobe/perf_event/tp/raw_tp
-which has recursion check in the kernel, and prog types that use
-bpf trampoline recursion check. For trampoline related prog types,
-currently only tracing progs have recursion checking.
+    pesign --padding --hash --in ./arch/x86_64/boot/bzImage
+    pesign --nopadding --hash --in ./arch/x86_64/boot/bzImage
 
-To avoid complexity, all async_cb subprogs use normal kernel stack
-including those subprogs used by both main prog subtree and async_cb
-subtree. Any prog having tail call also uses kernel stack.
+The commit 3e86e4d74c04 ("kbuild: keep .modinfo section in
+vmlinux.unstripped") added .modinfo section of variable length. Depending
+on kernel configuration it may or may not be aligned.
 
-To avoid jit penalty with private stack support, a subprog stack
-size threshold is set such that only if the stack size is no less
-than the threshold, private stack is supported. The current threshold
-is 64 bytes. This avoids jit penality if the stack usage is small.
+All userspace signing tooling correctly pads such section to calculation
+spec compliant authenticode digest.
 
-A useless 'continue' is also removed from a loop in func
-check_max_stack_depth().
+However, if bzImage is not further processed and is attempted to be loaded
+directly by EDK2 firmware, it calculates unpadded Authenticode digest and
+fails to correct accept/reject such kernel builds even when propoer
+Authenticode values are enrolled in db/dbx. One can say EDK2 requires
+aligned/padded kernels in Secureboot.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20241112163907.2223839-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 881a9c9cb785 ("bpf: Do not audit capability check in do_jit()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thus add ALIGN(8) to the .modinfo section, to esure kernels irrespective of
+modinfo contents can be loaded by all existing EDK2 firmware builds.
+
+Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dimitri John Ledkov <dimitri.ledkov@surgut.co.uk>
+Link: https://patch.msgid.link/20251026202100.679989-1-dimitri.ledkov@surgut.co.uk
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_verifier.h |  7 +++
- include/linux/filter.h       |  1 +
- kernel/bpf/core.c            |  5 ++
- kernel/bpf/verifier.c        | 96 ++++++++++++++++++++++++++++++++----
- 4 files changed, 99 insertions(+), 10 deletions(-)
+ include/asm-generic/vmlinux.lds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index fb33458f2fc77..1a9b69743cb15 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -654,6 +654,12 @@ struct bpf_subprog_arg_info {
- 	};
- };
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index 8a9a2e732a65..e04d56a5332e 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -832,7 +832,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
  
-+enum priv_stack_mode {
-+	PRIV_STACK_UNKNOWN,
-+	NO_PRIV_STACK,
-+	PRIV_STACK_ADAPTIVE,
-+};
-+
- struct bpf_subprog_info {
- 	/* 'start' has to be the first field otherwise find_subprog() won't work */
- 	u32 start; /* insn idx of function entry point */
-@@ -675,6 +681,7 @@ struct bpf_subprog_info {
- 	bool keep_fastcall_stack: 1;
- 	bool changes_pkt_data: 1;
- 
-+	enum priv_stack_mode priv_stack_mode;
- 	u8 arg_cnt;
- 	struct bpf_subprog_arg_info args[MAX_BPF_FUNC_REG_ARGS];
- };
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 5118caf8aa1c7..0477254bc2d30 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -1119,6 +1119,7 @@ bool bpf_jit_supports_exceptions(void);
- bool bpf_jit_supports_ptr_xchg(void);
- bool bpf_jit_supports_arena(void);
- bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena);
-+bool bpf_jit_supports_private_stack(void);
- u64 bpf_arch_uaddress_limit(void);
- void arch_bpf_stack_walk(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp), void *cookie);
- bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id);
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 08bdb623f4f91..76dfa9ab43a5d 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -3094,6 +3094,11 @@ bool __weak bpf_jit_supports_exceptions(void)
- 	return false;
- }
- 
-+bool __weak bpf_jit_supports_private_stack(void)
-+{
-+	return false;
-+}
-+
- void __weak arch_bpf_stack_walk(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp), void *cookie)
- {
- }
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 96640a80fd9c4..709151d33e5e4 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -194,6 +194,8 @@ struct bpf_verifier_stack_elem {
- 
- #define BPF_GLOBAL_PERCPU_MA_MAX_SIZE  512
- 
-+#define BPF_PRIV_STACK_MIN_SIZE		64
-+
- static int acquire_reference_state(struct bpf_verifier_env *env, int insn_idx);
- static int release_reference(struct bpf_verifier_env *env, int ref_obj_id);
- static void invalidate_non_owning_refs(struct bpf_verifier_env *env);
-@@ -6027,6 +6029,34 @@ static int check_ptr_alignment(struct bpf_verifier_env *env,
- 					   strict);
- }
- 
-+static enum priv_stack_mode bpf_enable_priv_stack(struct bpf_prog *prog)
-+{
-+	if (!bpf_jit_supports_private_stack())
-+		return NO_PRIV_STACK;
-+
-+	/* bpf_prog_check_recur() checks all prog types that use bpf trampoline
-+	 * while kprobe/tp/perf_event/raw_tp don't use trampoline hence checked
-+	 * explicitly.
-+	 */
-+	switch (prog->type) {
-+	case BPF_PROG_TYPE_KPROBE:
-+	case BPF_PROG_TYPE_TRACEPOINT:
-+	case BPF_PROG_TYPE_PERF_EVENT:
-+	case BPF_PROG_TYPE_RAW_TRACEPOINT:
-+		return PRIV_STACK_ADAPTIVE;
-+	case BPF_PROG_TYPE_TRACING:
-+	case BPF_PROG_TYPE_LSM:
-+	case BPF_PROG_TYPE_STRUCT_OPS:
-+		if (bpf_prog_check_recur(prog))
-+			return PRIV_STACK_ADAPTIVE;
-+		fallthrough;
-+	default:
-+		break;
-+	}
-+
-+	return NO_PRIV_STACK;
-+}
-+
- static int round_up_stack_depth(struct bpf_verifier_env *env, int stack_depth)
- {
- 	if (env->prog->jit_requested)
-@@ -6044,17 +6074,20 @@ static int round_up_stack_depth(struct bpf_verifier_env *env, int stack_depth)
-  * Since recursion is prevented by check_cfg() this algorithm
-  * only needs a local stack of MAX_CALL_FRAMES to remember callsites
-  */
--static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
-+static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
-+					 bool priv_stack_supported)
- {
- 	struct bpf_subprog_info *subprog = env->subprog_info;
- 	struct bpf_insn *insn = env->prog->insnsi;
--	int depth = 0, frame = 0, i, subprog_end;
-+	int depth = 0, frame = 0, i, subprog_end, subprog_depth;
- 	bool tail_call_reachable = false;
- 	int ret_insn[MAX_CALL_FRAMES];
- 	int ret_prog[MAX_CALL_FRAMES];
- 	int j;
- 
- 	i = subprog[idx].start;
-+	if (!priv_stack_supported)
-+		subprog[idx].priv_stack_mode = NO_PRIV_STACK;
- process_func:
- 	/* protect against potential stack overflow that might happen when
- 	 * bpf2bpf calls get combined with tailcalls. Limit the caller's stack
-@@ -6081,11 +6114,31 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
- 			depth);
- 		return -EACCES;
- 	}
--	depth += round_up_stack_depth(env, subprog[idx].stack_depth);
--	if (depth > MAX_BPF_STACK) {
--		verbose(env, "combined stack size of %d calls is %d. Too large\n",
--			frame + 1, depth);
--		return -EACCES;
-+
-+	subprog_depth = round_up_stack_depth(env, subprog[idx].stack_depth);
-+	if (priv_stack_supported) {
-+		/* Request private stack support only if the subprog stack
-+		 * depth is no less than BPF_PRIV_STACK_MIN_SIZE. This is to
-+		 * avoid jit penalty if the stack usage is small.
-+		 */
-+		if (subprog[idx].priv_stack_mode == PRIV_STACK_UNKNOWN &&
-+		    subprog_depth >= BPF_PRIV_STACK_MIN_SIZE)
-+			subprog[idx].priv_stack_mode = PRIV_STACK_ADAPTIVE;
-+	}
-+
-+	if (subprog[idx].priv_stack_mode == PRIV_STACK_ADAPTIVE) {
-+		if (subprog_depth > MAX_BPF_STACK) {
-+			verbose(env, "stack size of subprog %d is %d. Too large\n",
-+				idx, subprog_depth);
-+			return -EACCES;
-+		}
-+	} else {
-+		depth += subprog_depth;
-+		if (depth > MAX_BPF_STACK) {
-+			verbose(env, "combined stack size of %d calls is %d. Too large\n",
-+				frame + 1, depth);
-+			return -EACCES;
-+		}
- 	}
- continue_func:
- 	subprog_end = subprog[idx + 1].start;
-@@ -6142,6 +6195,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
- 		}
- 		i = next_insn;
- 		idx = sidx;
-+		if (!priv_stack_supported)
-+			subprog[idx].priv_stack_mode = NO_PRIV_STACK;
- 
- 		if (subprog[idx].has_tail_call)
- 			tail_call_reachable = true;
-@@ -6175,7 +6230,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
- 	 */
- 	if (frame == 0)
- 		return 0;
--	depth -= round_up_stack_depth(env, subprog[idx].stack_depth);
-+	if (subprog[idx].priv_stack_mode != PRIV_STACK_ADAPTIVE)
-+		depth -= round_up_stack_depth(env, subprog[idx].stack_depth);
- 	frame--;
- 	i = ret_insn[frame];
- 	idx = ret_prog[frame];
-@@ -6184,16 +6240,36 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
- 
- static int check_max_stack_depth(struct bpf_verifier_env *env)
- {
-+	enum priv_stack_mode priv_stack_mode = PRIV_STACK_UNKNOWN;
- 	struct bpf_subprog_info *si = env->subprog_info;
-+	bool priv_stack_supported;
- 	int ret;
- 
- 	for (int i = 0; i < env->subprog_cnt; i++) {
-+		if (si[i].has_tail_call) {
-+			priv_stack_mode = NO_PRIV_STACK;
-+			break;
-+		}
-+	}
-+
-+	if (priv_stack_mode == PRIV_STACK_UNKNOWN)
-+		priv_stack_mode = bpf_enable_priv_stack(env->prog);
-+
-+	/* All async_cb subprogs use normal kernel stack. If a particular
-+	 * subprog appears in both main prog and async_cb subtree, that
-+	 * subprog will use normal kernel stack to avoid potential nesting.
-+	 * The reverse subprog traversal ensures when main prog subtree is
-+	 * checked, the subprogs appearing in async_cb subtrees are already
-+	 * marked as using normal kernel stack, so stack size checking can
-+	 * be done properly.
-+	 */
-+	for (int i = env->subprog_cnt - 1; i >= 0; i--) {
- 		if (!i || si[i].is_async_cb) {
--			ret = check_max_stack_depth_subprog(env, i);
-+			priv_stack_supported = !i && priv_stack_mode == PRIV_STACK_ADAPTIVE;
-+			ret = check_max_stack_depth_subprog(env, i, priv_stack_supported);
- 			if (ret < 0)
- 				return ret;
- 		}
--		continue;
- 	}
- 	return 0;
- }
+ /* Required sections not related to debugging. */
+ #define ELF_DETAILS							\
+-		.modinfo : { *(.modinfo) }				\
++		.modinfo : { *(.modinfo) . = ALIGN(8); }		\
+ 		.comment 0 : { *(.comment) }				\
+ 		.symtab 0 : { *(.symtab) }				\
+ 		.strtab 0 : { *(.strtab) }				\
 -- 
-2.51.0
+2.51.2
 
 
 
