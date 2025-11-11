@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C285025F797;
-	Tue, 11 Nov 2025 01:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B026E146;
+	Tue, 11 Nov 2025 01:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824445; cv=none; b=SPMFPl3cv2aE5yJhdXM2h2YniMrmtFD5HC70uD4dp1v598lHX3zcv1P46JyRF6Z3eNeL8OJNcqISiprE/CorJZQelYFsL79d+YVharPEY4sYZI6Kv6btVRRfL/CeTtHa+VWoDpho8uUuXUthffSmZAWMvBa71EyzzwtINWfkIys=
+	t=1762824448; cv=none; b=hbmr+qWj5u+moZSJzS6KkhPWe//Ae8y0feVLrSjNWup6WB+/Qt9qqOuaxxu1Xqj2hlqmcPJrmvv6CTkVCbr0qnhJVlcoq1ZFQFkVdxGAwukuHIQHYG1SfR3cxdjy8jcvddrQcKERBQWtryBC0aEkSN7GOw/Xqh81TL0kuBcSjGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824445; c=relaxed/simple;
-	bh=er7PZRM4G0R67ZMirWF4+mFTqfpkRtVjE2/oagXA78M=;
+	s=arc-20240116; t=1762824448; c=relaxed/simple;
+	bh=1JaIySDXTn5wr+Ll4OW9Glkus8qj88oqQg6/5Mi0ozY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2Ui8p5DcnmnDGlXficjtFJwbYS4og6ZXIB+6HLN4InLU3DyI/FRf3IZq7hmt3JPJgZUf6Cq/pV5EqjI/EbtwUXl5NkYVNaa64NKZ1h2/4iqQ5BhUz9bT30ePYvy3ZfcWW3N9H5h4q5G0p3cg5DJ64nXpH9E6dt8kNnUm1iGW2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJylGDQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSlMYNuEZ5DrOdjGQnoN82lVgRf6ojB9G1r0kOcsFgeKc7IXiFIpAAFN6dEZ0GoXeDZL5ojtu09snR+fJfLFW8rD+EMm+QghSij40jhUPLGoZHN/T7xXBWcf/32nuAlqRKs1nnLWUDTpvUjLGLs3kY8CbcZ8EMxJ2SwR+uDBQ30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi0R+DmR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJylGDQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0BFC4CEF5;
-	Tue, 11 Nov 2025 01:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi0R+DmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6EC16AAE;
+	Tue, 11 Nov 2025 01:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824445;
-	bh=er7PZRM4G0R67ZMirWF4+mFTqfpkRtVjE2/oagXA78M=;
+	s=korg; t=1762824448;
+	bh=1JaIySDXTn5wr+Ll4OW9Glkus8qj88oqQg6/5Mi0ozY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJylGDQwS44HWstJD8eq+fYnCMAypXZsUriTEkUogUrKJ74KwQuDi5TgSua7ObY9E
-	 Ap7goE+nEroU4Rno4/laEido8coXoMhdHy0eFXO/5BWa2eRqhR0o9lPVLIeCcC7gwu
-	 OuXjEN0Y8Z3u5R8Q+ev2YNGzIQL3aPXfi2uwKV44=
+	b=pi0R+DmR95WFYVdZpG2VukpK30mP38okC5OAp3Gfk+zMb4GfHl3NaiI1YGX/SfRxc
+	 /5i+vbe4bKJvyPlFcyoZUGsqfvAnYSo76ah0k0CVEpD7BpSBIgX8u7FJbRlViFLWTM
+	 aIvGYwDjexyhvO/K64Aka1JNvT7649efMdatc6gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 447/565] ftrace: Fix softlockup in ftrace_module_enable
-Date: Tue, 11 Nov 2025 09:45:03 +0900
-Message-ID: <20251111004536.944575588@linuxfoundation.org>
+Subject: [PATCH 6.17 502/849] wifi: mac80211: Fix HE capabilities element check
+Date: Tue, 11 Nov 2025 09:41:12 +0900
+Message-ID: <20251111004548.569938646@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 4099b98203d6b33d990586542fa5beee408032a3 ]
+[ Upstream commit ea928544f3215fdeac24d66bef85e10bb638b8c1 ]
 
-A soft lockup was observed when loading amdgpu module.
-If a module has a lot of tracable functions, multiple calls
-to kallsyms_lookup can spend too much time in RCU critical
-section and with disabled preemption, causing kernel panic.
-This is the same issue that was fixed in
-commit d0b24b4e91fc ("ftrace: Prevent RCU stall on PREEMPT_VOLUNTARY
-kernels") and commit 42ea22e754ba ("ftrace: Add cond_resched() to
-ftrace_graph_set_hash()").
+The element data length check did not account for the extra
+octet used for the extension ID. Fix it.
 
-Fix it the same way by adding cond_resched() in ftrace_module_enable.
-
-Link: https://lore.kernel.org/aMQD9_lxYmphT-up@vova-pc
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250907115109.8da0012e2286.I8c0c69a0011f7153c13b365b14dfef48cfe7c3e3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/mlme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 370cde32c696e..f7208f2525447 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -7396,6 +7396,8 @@ void ftrace_module_enable(struct module *mod)
- 		if (!within_module(rec->ip, mod))
- 			break;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index c1b13b3411cdb..24a35fccca9de 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -5733,7 +5733,7 @@ static u8 ieee80211_max_rx_chains(struct ieee80211_link_data *link,
+ 	he_cap_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY,
+ 					     ies->data, ies->len);
  
-+		cond_resched();
-+
- 		/* Weak functions should still be ignored */
- 		if (!test_for_valid_rec(rec)) {
- 			/* Clear all other flags. Should not be enabled anyway */
+-	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap))
++	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap) + 1)
+ 		return chains;
+ 
+ 	/* skip one byte ext_tag_id */
 -- 
 2.51.0
 
