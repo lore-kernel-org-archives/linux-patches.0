@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D862BB17;
-	Tue, 11 Nov 2025 01:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824D2189B84;
+	Tue, 11 Nov 2025 01:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824970; cv=none; b=K+W56R6Rpq/TkM1gIO+VQQG+4qlLqe+G9UYth5pSWXXYRsIQz4cDVSXj3RDfmHpdzdcRomEttpLJmeaUy+LZj6sNgrvkrBun4bkM/PP8hZXDlgFsf7qaDAmXcBMK8FvJNzOSa0AQQUqSm4dOfsxY+EIy0f3qg6ov/zRogdztiF8=
+	t=1762824973; cv=none; b=H6hdnYxUDyG2JE6p1aUkiPxIJWMGpu3nYI6vnUcpbKzo+ho28TtKUTtw8qy7+50kP/jy3pPHHhspy07xAQLq+OnsR2Rw+6/QjSKQX14KaMnlW03w/TYY2CQnO2MRDqbd5wAmHkkHVc+wycCy4lbvuppXf0zVK5GQwSODt3vSPwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824970; c=relaxed/simple;
-	bh=ok6M+oYbjteZO0B0sgcWpfmO2O74WaHSZX3shj+qXQ0=;
+	s=arc-20240116; t=1762824973; c=relaxed/simple;
+	bh=iTaxvizlyUyhgnfEg4YgeWIw9gjea9r/mUuL1gYPfF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5eoYoZTBftlsnbgn9gx37MCk26yw9PVP23L1o4mvyDIy0fina5Z+G8et8tzATOWGmIEKgrCr3gbLS2brwN2ltCcq1XMq3xw3MgS8Z6IvLcyPF6uRkty9rARVrLOqyfFC/UK789f/TqnMJRCUmS87x0tc5A7FWBFpZsL9R2AWu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFkEH/vr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+SidSuz2hRAeWSOhsHE3qcBwQLHXMG92um8oVF/uKWExv5bjSaV47vPCSSOmUqjOCVya1POWo+3OcIB/Vd39hiV6V6E8cJehm/q92B3zVPkQ1ouUlF5eD8cA+m2oyLayULNs5dzvZugYIAqdo9mTkXv9khNUKgGYS+GV+r8YPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVByikz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFkEH/vr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E994C19425;
-	Tue, 11 Nov 2025 01:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVByikz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24293C116B1;
+	Tue, 11 Nov 2025 01:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824970;
-	bh=ok6M+oYbjteZO0B0sgcWpfmO2O74WaHSZX3shj+qXQ0=;
+	s=korg; t=1762824973;
+	bh=iTaxvizlyUyhgnfEg4YgeWIw9gjea9r/mUuL1gYPfF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qFkEH/vrPMNJlft4sZ0OtPrODEo41C1Pjqnc8i1CLJZ/6xg5Hx+tajYMOpdLm5R30
-	 SypD1RqFLTbfakEobECa0x2qdmMRWD2rMX6zF8m6Nn67SRZS0cJ7bPOQLPvRarRaE0
-	 hUyGrmbzYYngQCWrve3dSON+weA2asYOGZRrI56A=
+	b=yVByikz8LoYylFDLSGMkMDcysJzpVVenRU8Do8qOVE5cHcvpw/Q8BsMTXEgJnEqFR
+	 5C0ss4KIhtaEgHj2bzX8sC1AnFfnd86wXaHHnXYb5Ejz/VxBYVfB59EF1O3Rhh03Sd
+	 276KXVFISvXX8Zz83LIPP+cwOwW+pYZ/QHbCX3Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andreas Larsson <andreas@gaisler.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 607/849] sparc64: fix prototypes of reads[bwl]()
-Date: Tue, 11 Nov 2025 09:42:57 +0900
-Message-ID: <20251111004551.095496162@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 6.12 560/565] extcon: adc-jack: Cleanup wakeup source only if it was enabled
+Date: Tue, 11 Nov 2025 09:46:56 +0900
+Message-ID: <20251111004539.612765492@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7205ef77dfe167df1b83aea28cf00fc02d662990 ]
+commit 92bac7d4de9c07933f6b76d8f1c7f8240f911f4f upstream.
 
-Conventions for readsl() are the same as for readl() - any __iomem
-pointer is acceptable, both const and volatile ones being OK.  Same
-for readsb() and readsw().
+Driver in the probe enables wakeup source conditionally, so the cleanup
+path should do the same - do not release the wakeup source memory if it
+was not allocated.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com> # Making sparc64 subject prefix
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/lkml/20250509071703.39442-2-krzysztof.kozlowski@linaro.org/
+Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Closes: https://lore.kernel.org/r/22aaebb7-553b-4571-8a43-58a523241082@wanadoo.fr/
+Fixes: 78b6a991eb6c ("extcon: adc-jack: Fix wakeup source leaks on device unbind")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/include/asm/io_64.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/extcon/extcon-adc-jack.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sparc/include/asm/io_64.h b/arch/sparc/include/asm/io_64.h
-index c9528e4719cd2..d8ed296624afd 100644
---- a/arch/sparc/include/asm/io_64.h
-+++ b/arch/sparc/include/asm/io_64.h
-@@ -250,19 +250,19 @@ void insl(unsigned long, void *, unsigned long);
- #define insw insw
- #define insl insl
- 
--static inline void readsb(void __iomem *port, void *buf, unsigned long count)
-+static inline void readsb(const volatile void __iomem *port, void *buf, unsigned long count)
+--- a/drivers/extcon/extcon-adc-jack.c
++++ b/drivers/extcon/extcon-adc-jack.c
+@@ -164,7 +164,8 @@ static void adc_jack_remove(struct platf
  {
- 	insb((unsigned long __force)port, buf, count);
- }
- #define readsb readsb
+ 	struct adc_jack_data *data = platform_get_drvdata(pdev);
  
--static inline void readsw(void __iomem *port, void *buf, unsigned long count)
-+static inline void readsw(const volatile void __iomem *port, void *buf, unsigned long count)
- {
- 	insw((unsigned long __force)port, buf, count);
+-	device_init_wakeup(&pdev->dev, false);
++	if (data->wakeup_source)
++		device_init_wakeup(&pdev->dev, false);
+ 	free_irq(data->irq, data);
+ 	cancel_work_sync(&data->handler.work);
  }
- #define readsw readsw
- 
--static inline void readsl(void __iomem *port, void *buf, unsigned long count)
-+static inline void readsl(const volatile void __iomem *port, void *buf, unsigned long count)
- {
- 	insl((unsigned long __force)port, buf, count);
- }
--- 
-2.51.0
-
 
 
