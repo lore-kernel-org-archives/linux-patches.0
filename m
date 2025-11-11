@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D93C1DF258;
-	Tue, 11 Nov 2025 00:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EFC1D6DB5;
+	Tue, 11 Nov 2025 00:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822444; cv=none; b=BvnEj58J97j/HBeyUkttIBDFTp8wh/riYkG1ZFRiN/Un6DjbHV+1jSb4G4HlV+dz8JIXd4LjHKdZaIFr6yhzyby4fvk+mHXKHKlVTyDnA0Ud37K6ZLU5rXfYfe3Vv5pQcxDjAudM0aBEnJDSwcPnzRDefJld2WXp+IyOOQhR3oE=
+	t=1762822447; cv=none; b=FCnYtLFQAwrtprd0TsBwG5VWJa5RWmXqxPkej2JND+Lfjb77yQv6zHTjkFDFMr1KtAktOXXWUG4h/FV26pGiVRvZf84MpPxno90jM5y0B7aSkG+u6phggPSUiwRAoBa5QXz33wZ73wCsxnaXmLj+Ohi8Z4bkU54/M7NV3gvy1YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822444; c=relaxed/simple;
-	bh=PE2XE7kTrN/518qo/4Y5V4L5qgMoQzpSTcg+Ytap1iM=;
+	s=arc-20240116; t=1762822447; c=relaxed/simple;
+	bh=R1HZLa7ECdZav7R4Q6yIXuTsey886sRppXunLrrxJ/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOoyzKN/raVrwVGUGs3GIl7XuCAp1m9z2bBeIV2nRXrKkcTwhENaIVaiYZHv/pLAZV8iF2h9zJR4kf5+VUBlKXgFLtzyYuxzhyzsM0LD/zueUv5vurzPLC493fDva5mxmsw+TAorruXwASe8W+Z7fM6MGPp0tFCS/XgBNZ3/p1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAsaDixf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mW1Bjf/qCHRGB+G2pcNGGfih7wVcF/VtsvuB8yGXmUdnJHkN6kzskItt5o8cUeBkifJ5Uz8VE5Qi5XI2TsndhoDeZCT1MqRMVD61EpAUPWFwsVrIMkCTUBkE5didZeErwp1rOq7DP6y0AsLAFmX5saRSopFh9+1kmI7PTFHUQ80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXG2Oqsn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAsaDixf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C9DC4CEF5;
-	Tue, 11 Nov 2025 00:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXG2Oqsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805F3C16AAE;
+	Tue, 11 Nov 2025 00:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822444;
-	bh=PE2XE7kTrN/518qo/4Y5V4L5qgMoQzpSTcg+Ytap1iM=;
+	s=korg; t=1762822446;
+	bh=R1HZLa7ECdZav7R4Q6yIXuTsey886sRppXunLrrxJ/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAsaDixf3yK+qYbedwD+86Y3257rYuFdtqW+GL9EBEefNoIlpO6Nm4pcxtLdxPpTc
-	 +Pf897NdFZpJaOIsPzaikcBVMvopbX7JHV2WRml0wIXS4Hvm7FQZ8TEmLL+nAYWS7n
-	 xHerOfvOQhx9CG1fZHP2+/xK8w1IoevOFZp/ASb8=
+	b=qXG2OqsnCFrOrZPEL2xcbAGbbyprsU2AeeKtGQMdbWaDBz7t0TyS7PK4HUFaNPQ7z
+	 gElTKxjEacS8305/2HmvXPzu5+QdQqASCOXwQd8YX2LCsG2iKv6rra6y+9kSniljgZ
+	 jI8NHmvOacaOD8OR5YRXAq5JTT+jkg+dBhTrsln4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Smith <itistotalbotnet@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 082/849] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Fiji
-Date: Tue, 11 Nov 2025 09:34:12 +0900
-Message-ID: <20251111004538.403589600@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.17 109/849] drm/amd/display: Add HDR workaround for a specific eDP
+Date: Tue, 11 Nov 2025 09:34:39 +0900
+Message-ID: <20251111004539.030889026@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,39 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Smith <itistotalbotnet@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 07a13f913c291d6ec72ee4fc848d13ecfdc0e705 ]
+commit 7d08c3b1731014dd1cfd0bf8b0cb1cef9dfd191e upstream.
 
-Previously this was initialized with zero which represented PCIe Gen
-1.0 instead of using the
-maximum value from the speed table which is the behaviour of all other
-smumgr implementations.
+[WHY & HOW]
+Some eDP panels suffer from flicking when HDR is enabled in KDE or
+Gnome.
 
-Fixes: 18edef19ea44 ("drm/amd/powerplay: implement fw image related smu interface for Fiji.")
-Signed-off-by: John Smith <itistotalbotnet@gmail.com>
+This add another quirk to worksaround to skip VSC that is incompatible
+with an eDP panel.
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/4452
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c52238c9fb414555c68340cd80e487d982c1921c)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+(cherry picked from commit 99441824bec63549a076cd86631d138ec9a0c71c)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-index 5e43ad2b29564..e7e497b166b3e 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
-@@ -2024,7 +2024,7 @@ static int fiji_init_smc_table(struct pp_hwmgr *hwmgr)
- 	table->VoltageResponseTime = 0;
- 	table->PhaseResponseTime = 0;
- 	table->MemoryThermThrottleEnable = 1;
--	table->PCIeBootLinkLevel = 0;      /* 0:Gen1 1:Gen2 2:Gen3*/
-+	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
- 	table->PCIeGenInterval = 1;
- 	table->VRConfig = 0;
- 
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -82,6 +82,7 @@ static void apply_edid_quirks(struct drm
+ 		edid_caps->panel_patch.remove_sink_ext_caps = true;
+ 		break;
+ 	case drm_edid_encode_panel_id('S', 'D', 'C', 0x4154):
++	case drm_edid_encode_panel_id('S', 'D', 'C', 0x4171):
+ 		drm_dbg_driver(dev, "Disabling VSC on monitor with panel id %X\n", panel_id);
+ 		edid_caps->panel_patch.disable_colorimetry = true;
+ 		break;
 
 
