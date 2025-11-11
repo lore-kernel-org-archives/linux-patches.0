@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F84246333;
-	Tue, 11 Nov 2025 01:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B03F1D86FF;
+	Tue, 11 Nov 2025 01:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825476; cv=none; b=XbekT3ovHNKzdBUu+hja2lVj9lkUhzgQ43vwBMfxmNhmwxKyioqdmJi3oiHfrBS9bAzCgfoBb5hxMxhweiGs4rmdcdQh9mysBflzRzQLx3F2kY2j0KMTnHxJd7lqkeh0oudG9Hjmi+ph3VSe04zgKvgncVNJwhsqlfJCSWRMGbc=
+	t=1762825478; cv=none; b=EHvYcHz7JURm0wtRU62gBTlaF+a1w9DcZnlFCwDR6WMLXl012zYOw1Skwv15AA5MeiBZMzmGGOg8WrEHr0peXc8PrQbpSdyJ1w/tZDfkqFZStm+LldD6H4d6zkaCwGjZQEIK1Ueb/gS5n++NwR3g58WRfRwNkeEKmK4BhzBwBEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825476; c=relaxed/simple;
-	bh=RBZvN719IMLdr9lT37VUKjPokM+ThoJBuQ7DmrMWULY=;
+	s=arc-20240116; t=1762825478; c=relaxed/simple;
+	bh=atZlN0nBYw60VEBdK/U7BeDPTajCJSvMoRluLKegocQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJJ3LpQujPMeEbdV60Vmet0AN7zfPknaZVXhljKR6Vu3gpy73vOHrDsWXY60ZyIspF/frboAurwgPEupyvowVlz+GoEWuihAPrzw65IvS5Nt+s/QXZuPxUCmP20liP1jv0+s2kFPr+NrvFVSirmfVHAuUhWPMrH6Koz1ALtR6ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYul3NFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oS1a6aC0ZHQrFrLLf89hocSitMqweDyLdrQrljnfZ6aJpSIWD1fRTRoKt+TP2EWkM67YVQNV4wez50Np4VDUNLE3CIaM1WIaRkC+V0uNUsWZpWRP/cMyfT6H3ZhLTU8rwGg2okvQi+Q/0BEqnq27FjCzjy2ff/azR9YMK9qPTIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQKVnUvg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYul3NFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB1DC19425;
-	Tue, 11 Nov 2025 01:44:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQKVnUvg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE66C4CEF5;
+	Tue, 11 Nov 2025 01:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825475;
-	bh=RBZvN719IMLdr9lT37VUKjPokM+ThoJBuQ7DmrMWULY=;
+	s=korg; t=1762825478;
+	bh=atZlN0nBYw60VEBdK/U7BeDPTajCJSvMoRluLKegocQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYul3NFfoAyYedbUJHewwHYyD+sL6SAJKuwrLtuLQobH4nV/GO10lY4rMGXSTd5XI
-	 /Z8usNGMYGZh8hE0epFlXgVVFHTntlVuPZB3xFO9BwgRNV3RZAn9hsmJwt/6wWv/Sk
-	 SYEbrqe/+viKs323Ip8kn+U9d/A+rVNkve6HHwRg=
+	b=dQKVnUvgCXL3eo77VUWbAJLDP0a2bjifsiQFcNjY6ou92zi1WjVUFJdsBa4bc8pKa
+	 VsojUQzT45Lr7824YOBCsthFqGork28kibO9utMD8tGw3Y5rmza70I7r/DGUibX+0B
+	 +HkV7e1D/e1d8+yDeSfJRVYgutAS1t8eQ0vYFPaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.17 819/849] x86/amd_node: Fix AMD root device caching
-Date: Tue, 11 Nov 2025 09:46:29 +0900
-Message-ID: <20251111004556.225687864@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.17 820/849] xfs: fix delalloc write failures in software-provided atomic writes
+Date: Tue, 11 Nov 2025 09:46:30 +0900
+Message-ID: <20251111004556.249808619@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,267 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 0a4b61d9c2e496b5f0a10e29e355a1465c8738bb upstream.
+commit 8d54eacd82a0623a963e0c150ad3b02970638b0d upstream.
 
-Recent AMD node rework removed the "search and count" method of caching AMD
-root devices. This depended on the value from a Data Fabric register that was
-expected to hold the PCI bus of one of the root devices attached to that
-fabric.
+With the 20 Oct 2025 release of fstests, generic/521 fails for me on
+regular (aka non-block-atomic-writes) storage:
 
-However, this expectation is incorrect. The register, when read from PCI
-config space, returns the bitwise-OR of the buses of all attached root
-devices.
+QA output created by 521
+dowrite: write: Input/output error
+LOG DUMP (8553 total operations):
+1(  1 mod 256): SKIPPED (no operation)
+2(  2 mod 256): WRITE    0x7e000 thru 0x8dfff	(0x10000 bytes) HOLE
+3(  3 mod 256): READ     0x69000 thru 0x79fff	(0x11000 bytes)
+4(  4 mod 256): FALLOC   0x53c38 thru 0x5e853	(0xac1b bytes) INTERIOR
+5(  5 mod 256): COPY 0x55000 thru 0x59fff	(0x5000 bytes) to 0x25000 thru 0x29fff
+6(  6 mod 256): WRITE    0x74000 thru 0x88fff	(0x15000 bytes)
+7(  7 mod 256): ZERO     0xedb1 thru 0x11693	(0x28e3 bytes)
 
-This behavior is benign on AMD reference design boards, since the bus numbers
-are aligned. This results in a bitwise-OR value matching one of the buses. For
-example, 0x00 | 0x40 | 0xA0 | 0xE0 = 0xE0.
+with a warning in dmesg from iomap about XFS trying to give it a
+delalloc mapping for a directio write.  Fix the software atomic write
+iomap_begin code to convert the reservation into a written mapping.
+This doesn't fix the data corruption problems reported by generic/760,
+but it's a start.
 
-This behavior breaks on boards where the bus numbers are not exactly aligned.
-For example, 0x00 | 0x07 | 0xE0 | 0x15 = 0x1F.
-
-The examples above are for AMD node 0. The first root device on other nodes
-will not be 0x00. The first root device for other nodes will depend on the
-total number of root devices, the system topology, and the specific PCI bus
-number assignment.
-
-For example, a system with 2 AMD nodes could have this:
-
-  Node 0 : 0x00 0x07 0x0e 0x15
-  Node 1 : 0x1c 0x23 0x2a 0x31
-
-The bus numbering style in the reference boards is not a requirement.  The
-numbering found in other boards is not incorrect. Therefore, the root device
-caching method needs to be adjusted.
-
-Go back to the "search and count" method used before the recent rework.
-Search for root devices using PCI class code rather than fixed PCI IDs.
-
-This keeps the goal of the rework (remove dependency on PCI IDs) while being
-able to support various board designs.
-
-Merge helper functions to reduce code duplication.
-
-  [ bp: Reflow comment. ]
-
-Fixes: 40a5f6ffdfc8 ("x86/amd_nb: Simplify root device search")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/all/20251028-fix-amd-root-v2-1-843e38f8be2c@amd.com
+Cc: stable@vger.kernel.org # v6.16
+Fixes: bd1d2c21d5d249 ("xfs: add xfs_atomic_write_cow_iomap_begin()")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/amd/node.h |    1 
- arch/x86/kernel/amd_node.c      |  150 +++++++++++++---------------------------
- 2 files changed, 51 insertions(+), 100 deletions(-)
+ fs/xfs/xfs_iomap.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/amd/node.h
-+++ b/arch/x86/include/asm/amd/node.h
-@@ -23,7 +23,6 @@
- #define AMD_NODE0_PCI_SLOT	0x18
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -1121,7 +1121,7 @@ xfs_atomic_write_cow_iomap_begin(
+ 		return -EAGAIN;
  
- struct pci_dev *amd_node_get_func(u16 node, u8 func);
--struct pci_dev *amd_node_get_root(u16 node);
+ 	trace_xfs_iomap_atomic_write_cow(ip, offset, length);
+-
++retry:
+ 	xfs_ilock(ip, XFS_ILOCK_EXCL);
  
- static inline u16 amd_num_nodes(void)
- {
---- a/arch/x86/kernel/amd_node.c
-+++ b/arch/x86/kernel/amd_node.c
-@@ -34,62 +34,6 @@ struct pci_dev *amd_node_get_func(u16 no
- 	return pci_get_domain_bus_and_slot(0, 0, PCI_DEVFN(AMD_NODE0_PCI_SLOT + node, func));
- }
- 
--#define DF_BLK_INST_CNT		0x040
--#define	DF_CFG_ADDR_CNTL_LEGACY	0x084
--#define	DF_CFG_ADDR_CNTL_DF4	0xC04
--
--#define DF_MAJOR_REVISION	GENMASK(27, 24)
--
--static u16 get_cfg_addr_cntl_offset(struct pci_dev *df_f0)
--{
--	u32 reg;
--
--	/*
--	 * Revision fields added for DF4 and later.
--	 *
--	 * Major revision of '0' is found pre-DF4. Field is Read-as-Zero.
--	 */
--	if (pci_read_config_dword(df_f0, DF_BLK_INST_CNT, &reg))
--		return 0;
--
--	if (reg & DF_MAJOR_REVISION)
--		return DF_CFG_ADDR_CNTL_DF4;
--
--	return DF_CFG_ADDR_CNTL_LEGACY;
--}
--
--struct pci_dev *amd_node_get_root(u16 node)
--{
--	struct pci_dev *root;
--	u16 cntl_off;
--	u8 bus;
--
--	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
--		return NULL;
--
--	/*
--	 * D18F0xXXX [Config Address Control] (DF::CfgAddressCntl)
--	 * Bits [7:0] (SecBusNum) holds the bus number of the root device for
--	 * this Data Fabric instance. The segment, device, and function will be 0.
--	 */
--	struct pci_dev *df_f0 __free(pci_dev_put) = amd_node_get_func(node, 0);
--	if (!df_f0)
--		return NULL;
--
--	cntl_off = get_cfg_addr_cntl_offset(df_f0);
--	if (!cntl_off)
--		return NULL;
--
--	if (pci_read_config_byte(df_f0, cntl_off, &bus))
--		return NULL;
--
--	/* Grab the pointer for the actual root device instance. */
--	root = pci_get_domain_bus_and_slot(0, bus, 0);
--
--	pci_dbg(root, "is root for AMD node %u\n", node);
--	return root;
--}
--
- static struct pci_dev **amd_roots;
- 
- /* Protect the PCI config register pairs used for SMN. */
-@@ -274,51 +218,21 @@ DEFINE_SHOW_STORE_ATTRIBUTE(smn_node);
- DEFINE_SHOW_STORE_ATTRIBUTE(smn_address);
- DEFINE_SHOW_STORE_ATTRIBUTE(smn_value);
- 
--static int amd_cache_roots(void)
-+static struct pci_dev *get_next_root(struct pci_dev *root)
- {
--	u16 node, num_nodes = amd_num_nodes();
--
--	amd_roots = kcalloc(num_nodes, sizeof(*amd_roots), GFP_KERNEL);
--	if (!amd_roots)
--		return -ENOMEM;
--
--	for (node = 0; node < num_nodes; node++)
--		amd_roots[node] = amd_node_get_root(node);
--
--	return 0;
--}
--
--static int reserve_root_config_spaces(void)
--{
--	struct pci_dev *root = NULL;
--	struct pci_bus *bus = NULL;
--
--	while ((bus = pci_find_next_bus(bus))) {
--		/* Root device is Device 0 Function 0 on each Primary Bus. */
--		root = pci_get_slot(bus, 0);
--		if (!root)
-+	while ((root = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, root))) {
-+		/* Root device is Device 0 Function 0. */
-+		if (root->devfn)
- 			continue;
- 
- 		if (root->vendor != PCI_VENDOR_ID_AMD &&
- 		    root->vendor != PCI_VENDOR_ID_HYGON)
- 			continue;
- 
--		pci_dbg(root, "Reserving PCI config space\n");
--
--		/*
--		 * There are a few SMN index/data pairs and other registers
--		 * that shouldn't be accessed by user space.
--		 * So reserve the entire PCI config space for simplicity rather
--		 * than covering specific registers piecemeal.
--		 */
--		if (!pci_request_config_region_exclusive(root, 0, PCI_CFG_SPACE_SIZE, NULL)) {
--			pci_err(root, "Failed to reserve config space\n");
--			return -EEXIST;
--		}
-+		break;
+ 	if (!ip->i_cowfp) {
+@@ -1132,6 +1132,8 @@ xfs_atomic_write_cow_iomap_begin(
+ 	if (!xfs_iext_lookup_extent(ip, ip->i_cowfp, offset_fsb, &icur, &cmap))
+ 		cmap.br_startoff = end_fsb;
+ 	if (cmap.br_startoff <= offset_fsb) {
++		if (isnullstartblock(cmap.br_startblock))
++			goto convert_delay;
+ 		xfs_trim_extent(&cmap, offset_fsb, count_fsb);
+ 		goto found;
+ 	}
+@@ -1160,8 +1162,10 @@ xfs_atomic_write_cow_iomap_begin(
+ 	if (!xfs_iext_lookup_extent(ip, ip->i_cowfp, offset_fsb, &icur, &cmap))
+ 		cmap.br_startoff = end_fsb;
+ 	if (cmap.br_startoff <= offset_fsb) {
+-		xfs_trim_extent(&cmap, offset_fsb, count_fsb);
+ 		xfs_trans_cancel(tp);
++		if (isnullstartblock(cmap.br_startblock))
++			goto convert_delay;
++		xfs_trim_extent(&cmap, offset_fsb, count_fsb);
+ 		goto found;
  	}
  
--	smn_exclusive = true;
--	return 0;
-+	return root;
- }
+@@ -1201,6 +1205,19 @@ found:
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags, IOMAP_F_SHARED, seq);
  
- static bool enable_dfs;
-@@ -332,7 +246,8 @@ __setup("amd_smn_debugfs_enable", amd_sm
- 
- static int __init amd_smn_init(void)
- {
--	int err;
-+	u16 count, num_roots, roots_per_node, node, num_nodes;
-+	struct pci_dev *root;
- 
- 	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
- 		return 0;
-@@ -342,13 +257,48 @@ static int __init amd_smn_init(void)
- 	if (amd_roots)
- 		return 0;
- 
--	err = amd_cache_roots();
--	if (err)
--		return err;
-+	num_roots = 0;
-+	root = NULL;
-+	while ((root = get_next_root(root))) {
-+		pci_dbg(root, "Reserving PCI config space\n");
- 
--	err = reserve_root_config_spaces();
--	if (err)
--		return err;
-+		/*
-+		 * There are a few SMN index/data pairs and other registers
-+		 * that shouldn't be accessed by user space. So reserve the
-+		 * entire PCI config space for simplicity rather than covering
-+		 * specific registers piecemeal.
-+		 */
-+		if (!pci_request_config_region_exclusive(root, 0, PCI_CFG_SPACE_SIZE, NULL)) {
-+			pci_err(root, "Failed to reserve config space\n");
-+			return -EEXIST;
-+		}
++convert_delay:
++	xfs_iunlock(ip, XFS_ILOCK_EXCL);
++	error = xfs_bmapi_convert_delalloc(ip, XFS_COW_FORK, offset, iomap,
++			NULL);
++	if (error)
++		return error;
 +
-+		num_roots++;
-+	}
-+
-+	pr_debug("Found %d AMD root devices\n", num_roots);
-+
-+	if (!num_roots)
-+		return -ENODEV;
-+
-+	num_nodes = amd_num_nodes();
-+	amd_roots = kcalloc(num_nodes, sizeof(*amd_roots), GFP_KERNEL);
-+	if (!amd_roots)
-+		return -ENOMEM;
-+
-+	roots_per_node = num_roots / num_nodes;
-+
-+	count = 0;
-+	node = 0;
-+	root = NULL;
-+	while (node < num_nodes && (root = get_next_root(root))) {
-+		/* Use one root for each node and skip the rest. */
-+		if (count++ % roots_per_node)
-+			continue;
-+
-+		pci_dbg(root, "is root for AMD node %u\n", node);
-+		amd_roots[node++] = root;
-+	}
- 
- 	if (enable_dfs) {
- 		debugfs_dir = debugfs_create_dir("amd_smn", arch_debugfs_dir);
-@@ -358,6 +308,8 @@ static int __init amd_smn_init(void)
- 		debugfs_create_file("value",	0600, debugfs_dir, NULL, &smn_value_fops);
- 	}
- 
-+	smn_exclusive = true;
-+
- 	return 0;
- }
- 
++	/*
++	 * Try the lookup again, because the delalloc conversion might have
++	 * turned the COW mapping into unwritten, but we need it to be in
++	 * written state.
++	 */
++	goto retry;
+ out_unlock:
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	return error;
 
 
