@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061432D8DC3;
-	Tue, 11 Nov 2025 01:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6122D2D8DC3;
+	Tue, 11 Nov 2025 01:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823537; cv=none; b=kLGjUJjmxovB69fv9yZhSZi4mAFDe7Fh9X0Roz06nPMz9LRXSsJVpnK1c37JiBN9+k1uotd0uCx2XA9/geWrog7XXANGd0JGiyIT2hpl+InDiyzGQkYgM0Q/EtjmDkfp3IzHoQJe9Seva368odJBtcAXUSZrLaCq523PY6XJ4W8=
+	t=1762823539; cv=none; b=fjoqfvsZ0glQ5Fgi2gbNcWokxzuyrp91hD6veHw+TdS2Mz6nR9SQCggc96yPcSN0mlKqLxUlNozgANB39kH0G95ARyjZ4YomxQ5hMdEJO/KOwPaPFKwxc919OP9SKzEhylTyqDa/gIPVYyeJy4vegbQLJZbXzzH6YG3xHCMjGzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823537; c=relaxed/simple;
-	bh=rCFDDwrHQLDPraSpHyaOU7kywXHIFGTWN/h63SN7gHg=;
+	s=arc-20240116; t=1762823539; c=relaxed/simple;
+	bh=p+jX9PQxZK9idWuiO8m6pPgfzR7zsLFNenKYWb1Zefw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4QrlR4KuhbzM20UgaFYCJVlf0ufhsJgeNZsZDgCKn45Oz5rlRls3ZqwbV7RUt7NQXdX/c4JZ/R8F04KVePm1gWo5avJDUvgKdUBY2I0hifx3bD/jNiXsZboDqlz6suWdogMtHPsh6l9sqodfrAGAIBqC1ldU/syBh52FdAagu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiGDq2rb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYR/kR2015h3+pOLHlXepWhy4IobEVEPJ5ItL6/nfhPPrRnhrIh2pp9P3va8Z8OFTScuHP7d8Bpphi7nJe9uyL6uDZeIAb/8QDk24R2laabJUlJB/Qy6ZFVA02/FpxVGyPO6umMqs5jQy4kqoMAcS/8afUbGB5p2KD8VyMbYnXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqNyCkok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiGDq2rb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988A0C113D0;
-	Tue, 11 Nov 2025 01:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqNyCkok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02399C113D0;
+	Tue, 11 Nov 2025 01:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823536;
-	bh=rCFDDwrHQLDPraSpHyaOU7kywXHIFGTWN/h63SN7gHg=;
+	s=korg; t=1762823539;
+	bh=p+jX9PQxZK9idWuiO8m6pPgfzR7zsLFNenKYWb1Zefw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GiGDq2rbvy2zq4su6jt6pTD+r1pvUalqujrbAMoXCadQuoY99ZdA039Z3fFPLf5nx
-	 3z07Us4yD/ybuSCWjUgX7CIUQazcrMYyQrAAUDvJOt1GA+Ccdum/UwGuwYF8VSc96I
-	 WUlUrH0JuaRjAd0USrfdK/ml9FCgpcswB244eci8=
+	b=xqNyCkokdx8604KZQQANz20i/qnD4TZNjS3AOsnRSIRjLwP5j2Er+MLxnexjR8HwK
+	 d5V2xlUtRe9QT8D89z1/fT08HXzjxpuwoLABRRaGFfwgbqeVJi6p6eFRaUpWaaUlG+
+	 F/ceUqbFBF6+cDvvQSxxObdhZzNdWOQr/Qw2zeYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Clay King <clayking@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 319/849] iio: adc: spear_adc: mask SPEAR_ADC_STATUS channel and avg sample before setting register
-Date: Tue, 11 Nov 2025 09:38:09 +0900
-Message-ID: <20251111004544.125911931@linuxfoundation.org>
+Subject: [PATCH 6.12 266/565] drm/amd/display: incorrect conditions for failing dto calculations
+Date: Tue, 11 Nov 2025 09:42:02 +0900
+Message-ID: <20251111004532.875944429@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +50,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+From: Clay King <clayking@amd.com>
 
-[ Upstream commit d75c7021c08e8ae3f311ef2464dca0eaf75fab9f ]
+[ Upstream commit 306cbcc6f687d791ab3cc8fbbe30f5286fd0d1e5 ]
 
-avg sample info is a bit field coded inside the following
-bits: 5,6,7 and 8 of a device status register.
+[Why & How]
+Previously, when calculating dto phase, we would incorrectly fail when phase
+<=0 without additionally checking for the integer value. This meant that
+calculations would incorrectly fail when the desired pixel clock was an exact
+multiple of the reference clock.
 
-Channel num info the same, but over bits: 1, 2 and 3.
-
-Mask both values in order to avoid touching other register bits,
-since the first info (avg sample), came from DT.
-
-Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250717221559.158872-1-rodrigo.gobbi.7@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Clay King <clayking@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/spear_adc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
-index e3a865c79686e..df100dce77da4 100644
---- a/drivers/iio/adc/spear_adc.c
-+++ b/drivers/iio/adc/spear_adc.c
-@@ -14,6 +14,7 @@
- #include <linux/kernel.h>
- #include <linux/slab.h>
- #include <linux/io.h>
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/err.h>
- #include <linux/completion.h>
-@@ -29,9 +30,9 @@
+diff --git a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
+index 62402c7be0a5e..8cdc7ad104549 100644
+--- a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
+@@ -619,7 +619,7 @@ static void dccg401_set_dp_dto(
+ 		dto_integer = div_u64(params->pixclk_hz, dto_modulo_hz);
+ 		dto_phase_hz = params->pixclk_hz - dto_integer * dto_modulo_hz;
  
- /* Bit definitions for SPEAR_ADC_STATUS */
- #define SPEAR_ADC_STATUS_START_CONVERSION	BIT(0)
--#define SPEAR_ADC_STATUS_CHANNEL_NUM(x)		((x) << 1)
-+#define SPEAR_ADC_STATUS_CHANNEL_NUM_MASK	GENMASK(3, 1)
- #define SPEAR_ADC_STATUS_ADC_ENABLE		BIT(4)
--#define SPEAR_ADC_STATUS_AVG_SAMPLE(x)		((x) << 5)
-+#define SPEAR_ADC_STATUS_AVG_SAMPLE_MASK	GENMASK(8, 5)
- #define SPEAR_ADC_STATUS_VREF_INTERNAL		BIT(9)
- 
- #define SPEAR_ADC_DATA_MASK		0x03ff
-@@ -157,8 +158,8 @@ static int spear_adc_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CHAN_INFO_RAW:
- 		mutex_lock(&st->lock);
- 
--		status = SPEAR_ADC_STATUS_CHANNEL_NUM(chan->channel) |
--			SPEAR_ADC_STATUS_AVG_SAMPLE(st->avg_samples) |
-+		status = FIELD_PREP(SPEAR_ADC_STATUS_CHANNEL_NUM_MASK, chan->channel) |
-+			FIELD_PREP(SPEAR_ADC_STATUS_AVG_SAMPLE_MASK, st->avg_samples) |
- 			SPEAR_ADC_STATUS_START_CONVERSION |
- 			SPEAR_ADC_STATUS_ADC_ENABLE;
- 		if (st->vref_external == 0)
+-		if (dto_phase_hz <= 0) {
++		if (dto_phase_hz <= 0 && dto_integer <= 0) {
+ 			/* negative pixel rate should never happen */
+ 			BREAK_TO_DEBUGGER();
+ 			return;
 -- 
 2.51.0
 
