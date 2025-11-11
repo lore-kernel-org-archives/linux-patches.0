@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FEB2D6605;
-	Tue, 11 Nov 2025 01:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9FE263F52;
+	Tue, 11 Nov 2025 01:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824127; cv=none; b=sMs4qVTPT3m6Ddz2dQlm6imQKMsyktP0eCzSR/ekUWTUBo1XpajHlNT9uB3SjoYLL7uw/LnqrLPyOemgcnItyohEAq1hLohZn6vobPCghcd+dDNyfs9KDt5LaGZgeKH1L0es3VV6fBYHQA/dYUS3AHEbC/UpsXzKx2eiBJGtiAI=
+	t=1762824130; cv=none; b=WfpjKbYU/FbIeeC1yo1A1R3k4/BIOW0HgBs9y3B966BZ1EV8Z3TETzFQ5lybSTvF92260DxhQlpiq0ZmWOZUwDAdgJWoPyg9KP/83DHV3mlWOSGOAAjdMRX2R/T236OhOIX7lSdNwnCdTKFVPiM/crlslstnw9ZyPFl6SPrxtmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824127; c=relaxed/simple;
-	bh=gtX1Xevitw+p65UOfD3cTzDq7y+IpcckZQoXdo4kdLQ=;
+	s=arc-20240116; t=1762824130; c=relaxed/simple;
+	bh=nXd8/RrJWiNmoAens8ZKRDPk9tgGBNl3598VGwi9pC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2dgTJvPPVQ5lNUNb6df/Bk5qtNbB38NGCDo7kMfuu++YrwVoZCOeMW3jORIfCMw+t8DFJtwClWYoSTCdhjlf+EPPKukKlK/CO+ZVHV4BJbqPxkfLbseg4w5si1BfQly+ApqfWI7HmbLEDrjZ8MCAd/vdh7nCOmexyL7gU1S7xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EA76v6m8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UnailNitspf7LzDelhQ1Dgcp+aefeorqRzEw3vixkHdLjhPLUcYwg1gM4mymLBGfZAWHp5xs07S19aQnhydw1i8VNptfNA2Lfvfp2aYBYUIacuhQqM81BFHmLkE/BSOvN4Y2YV0c98g4p7Rc8SBtKQJCcPQErEhuY5RoDD3FCc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoSW37b3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EA76v6m8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0C2C4AF09;
-	Tue, 11 Nov 2025 01:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoSW37b3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA23C116D0;
+	Tue, 11 Nov 2025 01:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824127;
-	bh=gtX1Xevitw+p65UOfD3cTzDq7y+IpcckZQoXdo4kdLQ=;
+	s=korg; t=1762824130;
+	bh=nXd8/RrJWiNmoAens8ZKRDPk9tgGBNl3598VGwi9pC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EA76v6m8c91Isb1/SAhGY3k1Um22nIeXkxMolcBuZ2yfuKpQ/UBrpOGxvXxkxs5V3
-	 xzNLUNGSf0NyjwmRIPQ9OZjbjN02itlE4zeFFRD7ap1j0Xm3T4ixxpx2zRDgActKei
-	 x27qka8q4UNE8ha9WhEBlL2H9UKEdvItch5rVN3w=
+	b=QoSW37b3JiV4VV0OgKBr55dU5vxGrVryJc+bRzPAr4s32BaDI9f5iU7f4GeF1FhIM
+	 U5184IN/CJT5mfTz8inbRANpR1TWqc039by8NK+iRAsJuwdUosdvUrLo6Iejn6lWEJ
+	 FCtleFK0jJfxELQfB/nZinZlF41fmnPcZFCd/ZDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 442/849] drm/xe/guc: Set upper limit of H2G retries over CTB
-Date: Tue, 11 Nov 2025 09:40:12 +0900
-Message-ID: <20251111004547.119381958@linuxfoundation.org>
+Subject: [PATCH 6.12 393/565] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
+Date: Tue, 11 Nov 2025 09:44:09 +0900
+Message-ID: <20251111004535.712491068@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,78 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 2506af5f8109a387a5e8e9e3d7c498480b8033db ]
+[ Upstream commit 9565c9d53c5b440f0dde6fa731a99c1b14d879d2 ]
 
-The GuC communication protocol allows GuC to send NO_RESPONSE_RETRY
-reply message to indicate that due to some interim condition it can
-not handle incoming H2G request and the host shall resend it.
+Setting format to s16le is required for compressed playback on compatible
+soundcards.
 
-But in some cases, due to errors, this unsatisfied condition might
-be final and this could lead to endless retries as it was recently
-seen on the CI:
-
- [drm] GT0: PF: VF1 FLR didn't finish in 5000 ms (-ETIMEDOUT)
- [drm] GT0: PF: VF1 resource sanitizing failed (-ETIMEDOUT)
- [drm] GT0: PF: VF1 FLR failed!
- [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
- [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
- [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
- [drm:guc_ct_send_recv [xe]] GT0: H2G action 0x5503 retrying: reason 0x0
-
-To avoid such dangerous loops allow only limited number of retries
-(for now 50) and add some delays (n * 5ms) to slow down the rate of
-resending this repeated request.
-
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://lore.kernel.org/r/20250903223330.6408-1-michal.wajdeczko@intel.com
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20250911154340.2798304-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/soc/qcom/sc8280xp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
-index 6d70dd1c106d4..ff622628d823f 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -1079,11 +1079,15 @@ static bool retry_failure(struct xe_guc_ct *ct, int ret)
- 	return true;
- }
+diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+index 922ecada1cd8d..916a156f991fa 100644
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -7,6 +7,7 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/pcm.h>
++#include <sound/pcm_params.h>
+ #include <linux/soundwire/sdw.h>
+ #include <sound/jack.h>
+ #include <linux/input-event-codes.h>
+@@ -82,8 +83,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+ 					SNDRV_PCM_HW_PARAM_RATE);
+ 	struct snd_interval *channels = hw_param_interval(params,
+ 					SNDRV_PCM_HW_PARAM_CHANNELS);
++	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
  
-+#define GUC_SEND_RETRY_LIMIT	50
-+#define GUC_SEND_RETRY_MSLEEP	5
-+
- static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
- 			    u32 *response_buffer, bool no_fail)
- {
- 	struct xe_gt *gt = ct_to_gt(ct);
- 	struct g2h_fence g2h_fence;
-+	unsigned int retries = 0;
- 	int ret = 0;
- 
- 	/*
-@@ -1148,6 +1152,12 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
- 		xe_gt_dbg(gt, "H2G action %#x retrying: reason %#x\n",
- 			  action[0], g2h_fence.reason);
- 		mutex_unlock(&ct->lock);
-+		if (++retries > GUC_SEND_RETRY_LIMIT) {
-+			xe_gt_err(gt, "H2G action %#x reached retry limit=%u, aborting\n",
-+				  action[0], GUC_SEND_RETRY_LIMIT);
-+			return -ELOOP;
-+		}
-+		msleep(GUC_SEND_RETRY_MSLEEP * retries);
- 		goto retry;
- 	}
- 	if (g2h_fence.fail) {
+ 	rate->min = rate->max = 48000;
++	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
+ 	channels->min = 2;
+ 	channels->max = 2;
+ 	switch (cpu_dai->id) {
 -- 
 2.51.0
 
