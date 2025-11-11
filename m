@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBD72DC32A;
-	Tue, 11 Nov 2025 01:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F652DC78C;
+	Tue, 11 Nov 2025 01:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823688; cv=none; b=EpEPz2V1GOHvrlQZZLPP29i8JSo3m0n/esIbHkOVWn3yq8oMLtda5UIeEgMsYSyFUN5LKY/mAbpDzOilBO64AOLwd7VAzsDv9wYmx4XuEmePfNfhNr+5no8lyZ8jpVRPXcecVkB4DFpzHzmY7utpf2iYpHeHWaZGNk0/ZkEkSWs=
+	t=1762823690; cv=none; b=ljQZer581n6U/e3Yw8FIqWWA72ieAjbM/s/hSUUoG8E+uLG0j2vi7wbU50aMuKtnV6OkAStL1XjKq3uHx3A9UMmMQwtEtE0cADV4j8cm88D53q3jSXHGXCznmU3QkbwAsSy7vJ2ItW70bYz89Z1UVI7liX5R1Cf1IpIOLaRyg48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823688; c=relaxed/simple;
-	bh=HJeFXieQsIzpwqtkCJD+etqEF/jslBZksAV5D2R6eoQ=;
+	s=arc-20240116; t=1762823690; c=relaxed/simple;
+	bh=AJZ3/qPZk3jVdaks5zN3LXcgA68wf/zudXv3m4o6LNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UE2OdAKHGYiLh4+ppmzUH/+Gs5OZqolPd9T3OqRYMpKRot8LSMHKLI/S0n+ZZyq2j0uf2m0+QgiljT6k/gLpx6HKrOnNZ3h9jVwQv0vF5GVfuRaGA2pkOfrA+BjfM7Fq+CrPZ1vZFW62CagFzXeVn8gonUxnB2b1OI37y4VGvRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUgcMn0j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhqTmgeagT+PvrbBqsA9h+Y0wzesfPQzHo5Z/ZErk64OgzspyVvIhZcF5OlRL3OnJK45ulr6zPpiJRJQ/WEFwk8sN03QPchq7lDB4JvSAyXFELSSY0pqyGdlWzUQ0rkwRoaa1JuCE+KtSkFnt00p+zqi+8n3+aJf0IPxEH/clTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZIGzCn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUgcMn0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A856CC116B1;
-	Tue, 11 Nov 2025 01:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZIGzCn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BA0C16AAE;
+	Tue, 11 Nov 2025 01:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823688;
-	bh=HJeFXieQsIzpwqtkCJD+etqEF/jslBZksAV5D2R6eoQ=;
+	s=korg; t=1762823690;
+	bh=AJZ3/qPZk3jVdaks5zN3LXcgA68wf/zudXv3m4o6LNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUgcMn0jpb7TzVmI3r6GvnST/r7f+OIT6gjW/oMOL/UBBH2wpMSsAVtzyy42Z8QBc
-	 rH+BTR9VnKN9/DUf1jliFDU/KxPp2wF08KXf0pH58hr1IEqwgkUqmrPcV6/SEKhMy/
-	 YgJE6ihf4gKzVzepVg7f/vjGtYH983FR/FGBGFu8=
+	b=UZIGzCn6rIiUZUzdfliTHKm001C6PI0qgJJ14qHNLhzyxoEgnK+vd5wLLhCerPyeU
+	 +o8YoF3PTwoPx/y+uQHd/4lrTo+9lZx5+O5sgYDXk0295hWYnrHCu58luDtlNonGTV
+	 LZNrSbdl07ihrPZduuaBB+VC2miLAVnIDoviFeeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 350/849] media: ipu6: isys: Set embedded data type correctly for metadata formats
-Date: Tue, 11 Nov 2025 09:38:40 +0900
-Message-ID: <20251111004544.881799115@linuxfoundation.org>
+Subject: [PATCH 6.12 301/565] net: call cond_resched() less often in __release_sock()
+Date: Tue, 11 Nov 2025 09:42:37 +0900
+Message-ID: <20251111004533.649912675@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f5a2826cd50c6fd1af803812d1d910a64ae8e0a1 ]
+[ Upstream commit 16c610162d1f1c332209de1c91ffb09b659bb65d ]
 
-The IPU6 ISYS driver supported metadata formats but was missing correct
-embedded data type in the receiver configuration. Add it now.
+While stress testing TCP I had unexpected retransmits and sack packets
+when a single cpu receives data from multiple high-throughput flows.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+super_netperf 4 -H srv -T,10 -l 3000 &
+
+Tcpdump extract:
+
+ 00:00:00.000007 IP6 clnt > srv: Flags [.], seq 26062848:26124288, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26124288:26185728, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26185728:26243072, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26243072:26304512, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26304512:26365952, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000007 IP6 clnt > srv: Flags [P.], seq 26365952:26423296, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26423296:26484736, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26484736:26546176, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26546176:26603520, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 57344
+ 00:00:00.003932 IP6 clnt > srv: Flags [P.], seq 26603520:26619904, ack 1, win 66, options [nop,nop,TS val 651464844 ecr 3100753141], length 16384
+ 00:00:00.006602 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651471419 ecr 3100759716], length 4096
+ 00:00:00.013000 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651484421 ecr 3100772718], length 4096
+ 00:00:00.000416 IP6 srv > clnt: Flags [.], ack 26619904, win 1393, options [nop,nop,TS val 3100773185 ecr 651484421,nop,nop,sack 1 {24862720:24866816}], length 0
+
+After analysis, it appears this is because of the cond_resched()
+call from  __release_sock().
+
+When current thread is yielding, while still holding the TCP socket lock,
+it might regain the cpu after a very long time.
+
+Other peer TLP/RTO is firing (multiple times) and packets are retransmit,
+while the initial copy is waiting in the socket backlog or receive queue.
+
+In this patch, I call cond_resched() only once every 16 packets.
+
+Modern TCP stack now spends less time per packet in the backlog,
+especially because ACK are no longer sent (commit 133c4c0d3717
+"tcp: defer regular ACK while processing socket backlog")
+
+Before:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19046186           0.0
+TcpRetransSegs                  1471               0.0
+TcpExtTCPTimeouts               1397               0.0
+TcpExtTCPLossProbes             1356               0.0
+TcpExtTCPDSACKRecv              1352               0.0
+TcpExtTCPSpuriousRTOs           114                0.0
+TcpExtTCPDSACKRecvSegs          1352               0.0
+
+After:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19218936           0.0
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250903174811.1930820-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/sock.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-index 0a06de5c739c7..463a0adf9e131 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-isys-subdev.c
-@@ -81,6 +81,12 @@ unsigned int ipu6_isys_mbus_code_to_mipi(u32 code)
- 	case MEDIA_BUS_FMT_SGRBG8_1X8:
- 	case MEDIA_BUS_FMT_SRGGB8_1X8:
- 		return MIPI_CSI2_DT_RAW8;
-+	case MEDIA_BUS_FMT_META_8:
-+	case MEDIA_BUS_FMT_META_10:
-+	case MEDIA_BUS_FMT_META_12:
-+	case MEDIA_BUS_FMT_META_16:
-+	case MEDIA_BUS_FMT_META_24:
-+		return MIPI_CSI2_DT_EMBEDDED_8B;
- 	default:
- 		/* return unavailable MIPI data type - 0x3f */
- 		WARN_ON(1);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index bf31b19045243..1781f3a642b46 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3093,23 +3093,27 @@ void __release_sock(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
+ {
+ 	struct sk_buff *skb, *next;
++	int nb = 0;
+ 
+ 	while ((skb = sk->sk_backlog.head) != NULL) {
+ 		sk->sk_backlog.head = sk->sk_backlog.tail = NULL;
+ 
+ 		spin_unlock_bh(&sk->sk_lock.slock);
+ 
+-		do {
++		while (1) {
+ 			next = skb->next;
+ 			prefetch(next);
+ 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
+ 			skb_mark_not_on_list(skb);
+ 			sk_backlog_rcv(sk, skb);
+ 
+-			cond_resched();
+-
+ 			skb = next;
+-		} while (skb != NULL);
++			if (!skb)
++				break;
++
++			if (!(++nb & 15))
++				cond_resched();
++		}
+ 
+ 		spin_lock_bh(&sk->sk_lock.slock);
+ 	}
 -- 
 2.51.0
 
