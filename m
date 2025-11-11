@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C100345CD8;
-	Tue, 11 Nov 2025 01:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE4E345CBE;
+	Tue, 11 Nov 2025 01:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824165; cv=none; b=GeN9TuIbLwx98ch/Q2aIWRLX8SzIyGMh3UHTz6qyPXY7GL/iQMTj/V74Vk+WQemlPWdzSp1xJd3eSQxvQA7TrLTRdNtF24/M0Nga2Zur4hwxNQC515PAqfcx5EwXBIqQK0lCi4GipJDkA+DnTUKO4VkxXrOWDTFjF0CrPTu0MTI=
+	t=1762824167; cv=none; b=Vft9FFEj6p+1PB4d9z+3diNdWZKPbjDfvviFs65HiY9sObxGV8QH6P0GUUUfyb+Z5D9lkZCAeRAWjOsFP+vSOxdXZcbpATRMNzyrzTbEsjC/3d4EY0NW2HQeM7t8m/1ig6mkZTsqhT4/oo1wEIuLFAEmOQl8qRzq9/G6XubZphI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824165; c=relaxed/simple;
-	bh=g/Hq2uAVogcSmxpQuyBgN/SX2ZrC6G2MVrF5bnWZkVc=;
+	s=arc-20240116; t=1762824167; c=relaxed/simple;
+	bh=BNnXRM1DV1Hpd3DirFFP0fTk3C7xm6ty3mTafVSHHsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXerAZssq9dhDxr0jmj0I0BJPEoog8zRoTHHeisoDCrZVPfLi4uUpgLsxCwrHWxINnHl1jiE8krugmiTlKt4uRowpDVn73PFInoKr+YYgIRKBihoQ1mAkhMfOyoD+wuGX9g2peH5gijHsrT5u8gZA+N0rLqClkIcsfSt4jrikJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sn5au44Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oj1kQNUWPiW4aoHLqveyfoQspcGI9ilY6k2KNJn1Zc9MYIGlUyqan7hMeGZ/doBqqkcxrX2uKP+fXgj+8+B6LdGIcJodaPUYwgwWMUJBq1FaxkjZaODI2bmuzZfXliqYiyLuVsJQiNh/c4zy1/obyJPnzeIUly35M2cMu6NvSZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSDs5FNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sn5au44Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B34C4CEFB;
-	Tue, 11 Nov 2025 01:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSDs5FNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991ACC19424;
+	Tue, 11 Nov 2025 01:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824164;
-	bh=g/Hq2uAVogcSmxpQuyBgN/SX2ZrC6G2MVrF5bnWZkVc=;
+	s=korg; t=1762824166;
+	bh=BNnXRM1DV1Hpd3DirFFP0fTk3C7xm6ty3mTafVSHHsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sn5au44QeU9QqFiXw2v25NQX+muvxtelyajav8NTRE4CMzwSyfZOZb4SosWUsmw5g
-	 lwpmCrnK6/U19/XB3HXe+KtTl0pVjm4W7Yik7egVSFNmLtalzv7wHi9NREv9PYIZyB
-	 8IrkYKIyvIvwy3ajdJNEjbzOgjM7P7qPV/94hZ70=
+	b=CSDs5FNjVfurmcz1KTE0jzqr7N37+2HKx76ndMjydeG6VOeKDf68XqQQ23tQrKfaO
+	 iX7lP565fxRvby/k1I/SHS9JraoZKrbUJe4csy2qL2eCu7AzIcVpuVAybj6h4r0JSg
+	 BSycOBZV0TGgYNctoZk+0qOsR07Kei6MLxSXr4mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Brahmajit Das <listout@listout.xyz>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 449/849] iommu/amd: Reuse device table for kdump
-Date: Tue, 11 Nov 2025 09:40:19 +0900
-Message-ID: <20251111004547.288258424@linuxfoundation.org>
+Subject: [PATCH 6.12 400/565] net: intel: fm10k: Fix parameter idx set but not used
+Date: Tue, 11 Nov 2025 09:44:16 +0900
+Message-ID: <20251111004535.869904497@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,231 +49,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 38e5f33ee3596f37ee8d1e694073a17590904004 ]
+[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
 
-After a panic if SNP is enabled in the previous kernel then the kdump
-kernel boots with IOMMU SNP enforcement still enabled.
+Variable idx is set in the loop, but is never used resulting in dead
+code. Building with GCC 16, which enables
+-Werror=unused-but-set-parameter= by default results in build error.
+This patch removes the idx parameter, since all the callers of the
+fm10k_unbind_hw_stats_q as 0 as idx anyways.
 
-IOMMU device table register is locked and exclusive to the previous
-kernel. Attempts to copy old device table from the previous kernel
-fails in kdump kernel as hardware ignores writes to the locked device
-table base address register as per AMD IOMMU spec Section 2.12.2.1.
-
-This causes the IOMMU driver (OS) and the hardware to reference
-different memory locations. As a result, the IOMMU hardware cannot
-process the command which results in repeated "Completion-Wait loop
-timed out" errors and a second kernel panic: "Kernel panic - not
-syncing: timer doesn't work through Interrupt-remapped IO-APIC".
-
-Reuse device table instead of copying device table in case of kdump
-boot and remove all copying device table code.
-
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/3a31036fb2f7323e6b1a1a1921ac777e9f7bdddc.1756157913.git.ashish.kalra@amd.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 104 +++++++++++++--------------------------
- 1 file changed, 34 insertions(+), 70 deletions(-)
+ drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index d0cd40ee0dec6..f2991c11867cb 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -406,6 +406,9 @@ static void iommu_set_device_table(struct amd_iommu *iommu)
- 
- 	BUG_ON(iommu->mmio_base == NULL);
- 
-+	if (is_kdump_kernel())
-+		return;
-+
- 	entry = iommu_virt_to_phys(dev_table);
- 	entry |= (dev_table_size >> 12) - 1;
- 	memcpy_toio(iommu->mmio_base + MMIO_DEV_TABLE_OFFSET,
-@@ -646,7 +649,10 @@ static inline int __init alloc_dev_table(struct amd_iommu_pci_seg *pci_seg)
- 
- static inline void free_dev_table(struct amd_iommu_pci_seg *pci_seg)
- {
--	iommu_free_pages(pci_seg->dev_table);
-+	if (is_kdump_kernel())
-+		memunmap((void *)pci_seg->dev_table);
-+	else
-+		iommu_free_pages(pci_seg->dev_table);
- 	pci_seg->dev_table = NULL;
- }
- 
-@@ -1127,15 +1133,12 @@ static void set_dte_bit(struct dev_table_entry *dte, u8 bit)
- 	dte->data[i] |= (1UL << _bit);
- }
- 
--static bool __copy_device_table(struct amd_iommu *iommu)
-+static bool __reuse_device_table(struct amd_iommu *iommu)
- {
--	u64 int_ctl, int_tab_len, entry = 0;
- 	struct amd_iommu_pci_seg *pci_seg = iommu->pci_seg;
--	struct dev_table_entry *old_devtb = NULL;
--	u32 lo, hi, devid, old_devtb_size;
-+	u32 lo, hi, old_devtb_size;
- 	phys_addr_t old_devtb_phys;
--	u16 dom_id, dte_v, irq_v;
--	u64 tmp;
-+	u64 entry;
- 
- 	/* Each IOMMU use separate device table with the same size */
- 	lo = readl(iommu->mmio_base + MMIO_DEV_TABLE_OFFSET);
-@@ -1160,66 +1163,20 @@ static bool __copy_device_table(struct amd_iommu *iommu)
- 		pr_err("The address of old device table is above 4G, not trustworthy!\n");
- 		return false;
- 	}
--	old_devtb = (cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT) && is_kdump_kernel())
--		    ? (__force void *)ioremap_encrypted(old_devtb_phys,
--							pci_seg->dev_table_size)
--		    : memremap(old_devtb_phys, pci_seg->dev_table_size, MEMREMAP_WB);
--
--	if (!old_devtb)
--		return false;
- 
--	pci_seg->old_dev_tbl_cpy = iommu_alloc_pages_sz(
--		GFP_KERNEL | GFP_DMA32, pci_seg->dev_table_size);
-+	/*
-+	 * Re-use the previous kernel's device table for kdump.
-+	 */
-+	pci_seg->old_dev_tbl_cpy = iommu_memremap(old_devtb_phys, pci_seg->dev_table_size);
- 	if (pci_seg->old_dev_tbl_cpy == NULL) {
--		pr_err("Failed to allocate memory for copying old device table!\n");
--		memunmap(old_devtb);
-+		pr_err("Failed to remap memory for reusing old device table!\n");
- 		return false;
- 	}
- 
--	for (devid = 0; devid <= pci_seg->last_bdf; ++devid) {
--		pci_seg->old_dev_tbl_cpy[devid] = old_devtb[devid];
--		dom_id = old_devtb[devid].data[1] & DEV_DOMID_MASK;
--		dte_v = old_devtb[devid].data[0] & DTE_FLAG_V;
--
--		if (dte_v && dom_id) {
--			pci_seg->old_dev_tbl_cpy[devid].data[0] = old_devtb[devid].data[0];
--			pci_seg->old_dev_tbl_cpy[devid].data[1] = old_devtb[devid].data[1];
--			/* Reserve the Domain IDs used by previous kernel */
--			if (ida_alloc_range(&pdom_ids, dom_id, dom_id, GFP_ATOMIC) != dom_id) {
--				pr_err("Failed to reserve domain ID 0x%x\n", dom_id);
--				memunmap(old_devtb);
--				return false;
--			}
--			/* If gcr3 table existed, mask it out */
--			if (old_devtb[devid].data[0] & DTE_FLAG_GV) {
--				tmp = (DTE_GCR3_30_15 | DTE_GCR3_51_31);
--				pci_seg->old_dev_tbl_cpy[devid].data[1] &= ~tmp;
--				tmp = (DTE_GCR3_14_12 | DTE_FLAG_GV);
--				pci_seg->old_dev_tbl_cpy[devid].data[0] &= ~tmp;
--			}
--		}
--
--		irq_v = old_devtb[devid].data[2] & DTE_IRQ_REMAP_ENABLE;
--		int_ctl = old_devtb[devid].data[2] & DTE_IRQ_REMAP_INTCTL_MASK;
--		int_tab_len = old_devtb[devid].data[2] & DTE_INTTABLEN_MASK;
--		if (irq_v && (int_ctl || int_tab_len)) {
--			if ((int_ctl != DTE_IRQ_REMAP_INTCTL) ||
--			    (int_tab_len != DTE_INTTABLEN_512 &&
--			     int_tab_len != DTE_INTTABLEN_2K)) {
--				pr_err("Wrong old irq remapping flag: %#x\n", devid);
--				memunmap(old_devtb);
--				return false;
--			}
--
--			pci_seg->old_dev_tbl_cpy[devid].data[2] = old_devtb[devid].data[2];
--		}
--	}
--	memunmap(old_devtb);
--
- 	return true;
- }
- 
--static bool copy_device_table(void)
-+static bool reuse_device_table(void)
- {
- 	struct amd_iommu *iommu;
- 	struct amd_iommu_pci_seg *pci_seg;
-@@ -1227,17 +1184,17 @@ static bool copy_device_table(void)
- 	if (!amd_iommu_pre_enabled)
- 		return false;
- 
--	pr_warn("Translation is already enabled - trying to copy translation structures\n");
-+	pr_warn("Translation is already enabled - trying to reuse translation structures\n");
- 
- 	/*
- 	 * All IOMMUs within PCI segment shares common device table.
--	 * Hence copy device table only once per PCI segment.
-+	 * Hence reuse device table only once per PCI segment.
- 	 */
- 	for_each_pci_segment(pci_seg) {
- 		for_each_iommu(iommu) {
- 			if (pci_seg->id != iommu->pci_seg->id)
- 				continue;
--			if (!__copy_device_table(iommu))
-+			if (!__reuse_device_table(iommu))
- 				return false;
- 			break;
- 		}
-@@ -2916,8 +2873,8 @@ static void early_enable_iommu(struct amd_iommu *iommu)
-  * This function finally enables all IOMMUs found in the system after
-  * they have been initialized.
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+index f51a63fca513e..1f919a50c7653 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ /**
+  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
+  *  @q: pointer to the ring of hardware statistics queue
+- *  @idx: index pointing to the start of the ring iteration
+  *  @count: number of queues to iterate over
   *
-- * Or if in kdump kernel and IOMMUs are all pre-enabled, try to copy
-- * the old content of device table entries. Not this case or copy failed,
-+ * Or if in kdump kernel and IOMMUs are all pre-enabled, try to reuse
-+ * the old content of device table entries. Not this case or reuse failed,
-  * just continue as normal kernel does.
-  */
- static void early_enable_iommus(void)
-@@ -2925,18 +2882,25 @@ static void early_enable_iommus(void)
- 	struct amd_iommu *iommu;
- 	struct amd_iommu_pci_seg *pci_seg;
+  *  Function invalidates the index values for the queues so any updates that
+  *  may have happened are ignored and the base for the queue stats is reset.
+  **/
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
+ {
+ 	u32 i;
  
--	if (!copy_device_table()) {
-+	if (!reuse_device_table()) {
- 		/*
--		 * If come here because of failure in copying device table from old
-+		 * If come here because of failure in reusing device table from old
- 		 * kernel with all IOMMUs enabled, print error message and try to
- 		 * free allocated old_dev_tbl_cpy.
- 		 */
--		if (amd_iommu_pre_enabled)
--			pr_err("Failed to copy DEV table from previous kernel.\n");
-+		if (amd_iommu_pre_enabled) {
-+			pr_err("Failed to reuse DEV table from previous kernel.\n");
-+			/*
-+			 * Bail out early if unable to remap/reuse DEV table from
-+			 * previous kernel if SNP enabled as IOMMU commands will
-+			 * time out without DEV table and cause kdump boot panic.
-+			 */
-+			BUG_ON(check_feature(FEATURE_SNP));
-+		}
+-	for (i = 0; i < count; i++, idx++, q++) {
++	for (i = 0; i < count; i++, q++) {
+ 		q->rx_stats_idx = 0;
+ 		q->tx_stats_idx = 0;
+ 	}
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+index 4c48fb73b3e78..13fca6a91a01b 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
+ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ 			     u32 idx, u32 count);
+ #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
+ s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
+ #endif /* _FM10K_COMMON_H_ */
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+index 98861cc6df7cc..797b99af0c453 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
+ 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
  
- 		for_each_pci_segment(pci_seg) {
- 			if (pci_seg->old_dev_tbl_cpy != NULL) {
--				iommu_free_pages(pci_seg->old_dev_tbl_cpy);
-+				memunmap((void *)pci_seg->old_dev_tbl_cpy);
- 				pci_seg->old_dev_tbl_cpy = NULL;
- 			}
- 		}
-@@ -2946,7 +2910,7 @@ static void early_enable_iommus(void)
- 			early_enable_iommu(iommu);
- 		}
- 	} else {
--		pr_info("Copied DEV table from previous kernel.\n");
-+		pr_info("Reused DEV table from previous kernel.\n");
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
  
- 		for_each_pci_segment(pci_seg) {
- 			iommu_free_pages(pci_seg->dev_table);
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_pf(hw, stats);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+index 7fb1961f29210..6861a0bdc14e1 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
+ 				     struct fm10k_hw_stats *stats)
+ {
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_vf(hw, stats);
 -- 
 2.51.0
 
