@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA36244693;
-	Tue, 11 Nov 2025 00:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9788E1DF258;
+	Tue, 11 Nov 2025 00:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822727; cv=none; b=kBP0QAdyO8CKYeOsbdHqZkhJj6aUJhomEhdzmVZfpVybQKfXgyBpoMX0wJdrI3QgotvY00GjLPXpmQAiyW4spKQ+gCd7UlreIrdKnQkx8kXViYQAVKDzX4j8pw5Zxn37yFcC7LNCVO9qnVTh7sAsIcL2Ggt51V605qf2gPsMtWs=
+	t=1762822729; cv=none; b=Oms+OYSRAATqByGO2eTElcKlr8rOEI5SjFSmKL6qI292ymZ55nblHu4h3Ou6+rNseFJYWpANCSlnmhMX76wkTqTSEjbD2YiXHmSoh+Iu1++4KZhz1fJR8PMU7LTh8s2S+u9XxEYRGih1zly8AHXRwPmRr1cAvqXogwtaeZso8G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822727; c=relaxed/simple;
-	bh=tSYfcLOrx9Mc01SJCoamGchLkn+0W22VdaXD7QyUxfY=;
+	s=arc-20240116; t=1762822729; c=relaxed/simple;
+	bh=veSxS2/p+4W52PS5nnNDJd6mepwFj2Qk19P0Y/6Bc4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4DOv/uMZVxwO8RXKGq8qmP5o6FJP/TG6AlE43kk357AH4CivyglyemTuzHUrpdDtwnfNX5/3uDBYknsJpSjLvkFIkfXCa/UzlxZ/5tqqUgdgQmm9prKt8k4FbmE6QM0Hn30/L8d4PNZ3jtTeGeUJnnGpLkZ9XqAYvPZLq9mu24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfYDFOZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gb3m8puWguFqGXhh4iiMkaR1KkIlE3bpGiiK/YZGCwaP+lUr4k3Q70FsLZtoDMCRzHZHZ5xlNQCkaN2d7E7Wp9wm5uzj/VHlGgncwYU6fC9zds689qYYbSxiAibbNAwGt9/yFyrOzdgKIMcDFnhAYCMn/2Q8X+hWHyPJ0/p0VaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cncpiU2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfYDFOZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEDEC4AF0B;
-	Tue, 11 Nov 2025 00:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cncpiU2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D14C113D0;
+	Tue, 11 Nov 2025 00:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822727;
-	bh=tSYfcLOrx9Mc01SJCoamGchLkn+0W22VdaXD7QyUxfY=;
+	s=korg; t=1762822729;
+	bh=veSxS2/p+4W52PS5nnNDJd6mepwFj2Qk19P0Y/6Bc4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfYDFOZVM+55OUlFskTEewjWE0q+CNA1/RNw8OlnIG4mPcLd5K611UUOxowR8ZYYi
-	 dI1EM7xhzwLHCpSwQrhp82W8nZh2DtRptSDWnymt+QFstaJkT6n7MMjztLkpVuGgPq
-	 h7W+CFdzV17n1SUHvQ1Dr4/4mikeuJE7o5jKrHc0=
+	b=cncpiU2/XwhG9WuafdXqvRYX9Y9HbONDbXaLc108+AcqdZp960dEVJkVIo0Ubc9Q9
+	 0knR2WddpofA9jVJT2lCPNpWsIjc5eBcfCl2n2jLG/0A4raUpsptvLm4H7h28TthMM
+	 u2p4rLJd3I8Q+oI93RrxmgCxULHTP6AcGlP/+mLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ober <dober@lenovo.com>,
-	David Ober <dober6023@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Chi Zhang <chizhang@asrmicro.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 156/849] hwmon: (lenovo-ec-sensors) Update P8 supprt
-Date: Tue, 11 Nov 2025 09:35:26 +0900
-Message-ID: <20251111004540.202259936@linuxfoundation.org>
+Subject: [PATCH 6.12 094/565] pinctrl: single: fix bias pull up/down handling in pin_config_set
+Date: Tue, 11 Nov 2025 09:39:10 +0900
+Message-ID: <20251111004529.076394804@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,125 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Ober <dober6023@gmail.com>
+From: Chi Zhang <chizhang@asrmicro.com>
 
-[ Upstream commit 43c056ac85b60232861005765153707f1b0354b6 ]
+[ Upstream commit 236152dd9b1675a35eee912e79e6c57ca6b6732f ]
 
-This fixes differences for the P8 system that was initially set to
-the same thermal values as the P7, also adds in the PSU sensor for
-all of the supported systems
+In the pin_config_set function, when handling PIN_CONFIG_BIAS_PULL_DOWN or
+PIN_CONFIG_BIAS_PULL_UP, the function calls pcs_pinconf_clear_bias()
+which writes the register. However, the subsequent operations continue
+using the stale 'data' value from before the register write, effectively
+causing the bias clear operation to be overwritten and not take effect.
 
-Signed-off-by: David Ober <dober@lenovo.com>
-Signed-off-by: David Ober <dober6023@gmail.com>
-Link: https://lore.kernel.org/r/20250807103228.10465-1-dober6023@gmail.com
-[groeck: Update subject]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fix this by reading the 'data' value from the register after calling
+pcs_pinconf_clear_bias().
+
+This bug seems to have existed when this code was first merged in commit
+9dddb4df90d1 ("pinctrl: single: support generic pinconf").
+
+Signed-off-by: Chi Zhang <chizhang@asrmicro.com>
+Link: https://lore.kernel.org/20250807062038.13610-1-chizhang@asrmicro.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lenovo-ec-sensors.c | 34 +++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-single.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/lenovo-ec-sensors.c b/drivers/hwmon/lenovo-ec-sensors.c
-index 143fb79713f7d..8681bbf6665b1 100644
---- a/drivers/hwmon/lenovo-ec-sensors.c
-+++ b/drivers/hwmon/lenovo-ec-sensors.c
-@@ -66,7 +66,7 @@ enum systems {
- 	LENOVO_P8,
- };
- 
--static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int px_temp_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 32};
- 
- static const char * const lenovo_px_ec_temp_label[] = {
- 	"CPU1",
-@@ -84,9 +84,29 @@ static const char * const lenovo_px_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU1",
-+	"PSU2",
- };
- 
--static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-+static int p8_temp_map[] = {0, 1, 2, 8, 9, 13, 14, 15, 16, 17, 19, 20, 33};
-+
-+static const char * const lenovo_p8_ec_temp_label[] = {
-+	"CPU1",
-+	"CPU_DIMM_BANK1",
-+	"CPU_DIMM_BANK2",
-+	"M2_Z2R",
-+	"M2_Z3R",
-+	"DIMM_RIGHT",
-+	"DIMM_LEFT",
-+	"PCI_Z1",
-+	"PCI_Z2",
-+	"PCI_Z3",
-+	"AMB",
-+	"REAR_VR",
-+	"PSU",
-+};
-+
-+static int gen_temp_map[] = {0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31};
- 
- static const char * const lenovo_gen_ec_temp_label[] = {
- 	"CPU1",
-@@ -101,6 +121,7 @@ static const char * const lenovo_gen_ec_temp_label[] = {
- 	"PCI_Z3",
- 	"PCI_Z4",
- 	"AMB",
-+	"PSU",
- };
- 
- static int px_fan_map[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-@@ -293,6 +314,8 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_px[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -327,6 +350,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p8[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -359,6 +383,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p7[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -388,6 +413,7 @@ static const struct hwmon_channel_info *lenovo_ec_hwmon_info_p5[] = {
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL,
-+			   HWMON_T_INPUT | HWMON_T_LABEL,
- 			   HWMON_T_INPUT | HWMON_T_LABEL),
- 	HWMON_CHANNEL_INFO(fan,
- 			   HWMON_F_INPUT | HWMON_F_LABEL | HWMON_F_MAX,
-@@ -545,9 +571,9 @@ static int lenovo_ec_probe(struct platform_device *pdev)
- 		break;
- 	case 3:
- 		ec_data->fan_labels = p8_ec_fan_label;
--		ec_data->temp_labels = lenovo_gen_ec_temp_label;
-+		ec_data->temp_labels = lenovo_p8_ec_temp_label;
- 		ec_data->fan_map = p8_fan_map;
--		ec_data->temp_map = gen_temp_map;
-+		ec_data->temp_map = p8_temp_map;
- 		lenovo_ec_chip_info.info = lenovo_ec_hwmon_info_p8;
- 		break;
- 	default:
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 2ec599e383e4b..1df0a00ae1ee8 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -589,8 +589,10 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
+ 			/* 4 parameters */
+ 			case PIN_CONFIG_BIAS_PULL_DOWN:
+ 			case PIN_CONFIG_BIAS_PULL_UP:
+-				if (arg)
++				if (arg) {
+ 					pcs_pinconf_clear_bias(pctldev, pin);
++					data = pcs->read(pcs->base + offset);
++				}
+ 				fallthrough;
+ 			case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
+ 				data &= ~func->conf[i].mask;
 -- 
 2.51.0
 
