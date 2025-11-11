@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2562E1F5F6;
-	Tue, 11 Nov 2025 01:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E724A1F5F6;
+	Tue, 11 Nov 2025 01:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823005; cv=none; b=eRKf30irIzX0GUdP4CsnrpAG5HeF+ytWbkDXIeIFyJBQrxx3ePDgm9ufZGYMTOgL9NQPTXB9781dkL6UBv3fy87vQj9VIjQoIQg23eO9xR1z6hbCf0ZKJf9gV4iamlrEYgQqjs/42j5vzG5PczEuCkJiH7HLphJ6KX7cOVSCnGw=
+	t=1762823007; cv=none; b=ltKVs9+aXDA/R6GMgulreF+s8RrVcQN4g5bYrmj9/rWlYZBDz/fUfIvfPkJRq6rM4oo878QWWJ8lIESrtQJ3doI3Zi/5bpU2mjaoVinO45AIR3b3YWDUXOjENBIpFmEEqTks6Vf7wKXYBPpz1pauDgmkVl5zrNZa4XwECSjQiRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823005; c=relaxed/simple;
-	bh=YvXiwM6FGBqPPbW/RQ3Bouz2gzRL9AU5xqbMu7SeSOw=;
+	s=arc-20240116; t=1762823007; c=relaxed/simple;
+	bh=5fBuZvFVGtDVn7kaAhCboEcr+jlNMPAnA0wQq3jcOEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VXtkH1lhz/o2c5/1mYG2FB4a9I2ukGH9y6NBPuVsZvJ80z+ZAz2nbpxRs862F2ZFDrdnPyjUP5vq66kMTO86rMnFbyVJElKzxyJ55z+ooeewJPVq9A7g6Is8oBOvrznHoE+vOMvWVigQfsPoDm4/7U/+82P9Z6iIDoGTqN2oNUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtGAfn7H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ia8CPDlHt7D/S13SxFIQdPAoXiQl1m5CnoN1W6JFz6kt9bc1FS98JZsC1114DfAamLQtIGtnI6u0J3yzLoVKJEwnRe4L0mSXHWcySVs4QiybRS7CJv3nagZJVyZnVHOFDIy6NVv268m6PXmOc49UDEWILYAg30ZmZZMPx8pVMmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUuYKBN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtGAfn7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2613FC2BC87;
-	Tue, 11 Nov 2025 01:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUuYKBN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AD3C4CEF5;
+	Tue, 11 Nov 2025 01:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823004;
-	bh=YvXiwM6FGBqPPbW/RQ3Bouz2gzRL9AU5xqbMu7SeSOw=;
+	s=korg; t=1762823006;
+	bh=5fBuZvFVGtDVn7kaAhCboEcr+jlNMPAnA0wQq3jcOEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jtGAfn7HWzG5yxrm90q2VzbFKMZKuZ0huefjvwwf82/XZ1ESNyVYWBdhrMUQDUV1d
-	 kL2xeoiyj1nlHiGeYKe3bT5jt0+SDGJ9A2mkzy1XwATGPeKWHmIgB1VWZMT1YT/7EB
-	 a3+Gc7pKUGH6YHPh8dTKiSsFo5z5T9P+VmeaScqU=
+	b=IUuYKBN+06lmm2XSDN7xzLA28d9922bMHC4EtrOwZpRPye+kiPCUGUsOux1+SlVmj
+	 kQyXZWFPXzJ7+PZ4I4lFPKBbuqGf3weRHV5JXfCPjKC9kkc4fUWZTMapyxBKV9T7DN
+	 IkwxioX6EFUYmPIRhst8+dIedsOowCpxGcpZD+Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Stockhausen <markus.stockhausen@gmx.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Stephen Howell <howels@allthatwemight.be>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/565] clocksource/drivers/timer-rtl-otto: Do not interfere with interrupts
-Date: Tue, 11 Nov 2025 09:40:09 +0900
-Message-ID: <20251111004530.381195347@linuxfoundation.org>
+Subject: [PATCH 6.17 213/849] selftests/bpf: Fix flaky bpf_cookie selftest
+Date: Tue, 11 Nov 2025 09:36:23 +0900
+Message-ID: <20251111004541.592042287@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Stockhausen <markus.stockhausen@gmx.de>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit c445bffbf28f721e05d0ce06895045fc62aaff7c ]
+[ Upstream commit 105eb5dc74109a9f53c2f26c9a918d9347a73595 ]
 
-During normal operation the timers are reprogrammed including an
-interrupt acknowledgement. This has no effect as the whole timer
-is setup from scratch afterwards. Especially in an interrupt this
-has already been done by rttm_timer_interrupt().
+bpf_cookie can fail on perf_event_open(), when it runs after the task_work
+selftest. The task_work test causes perf to lower
+sysctl_perf_event_sample_rate, and bpf_cookie uses sample_freq,
+which is validated against that sysctl. As a result,
+perf_event_open() rejects the attr if the (now tighter) limit is
+exceeded.
 
-Change the behaviour as follows:
+>From perf_event_open():
+if (attr.freq) {
+	if (attr.sample_freq > sysctl_perf_event_sample_rate)
+		return -EINVAL;
+} else {
+	if (attr.sample_period & (1ULL << 63))
+		return -EINVAL;
+}
 
-- Use rttm_disable_timer() during reprogramming
-- Keep rttm_stop_timer() for all other use cases.
+Switch bpf_cookie to use sample_period, which is not checked against
+sysctl_perf_event_sample_rate.
 
-Downstream has already tested and confirmed a patch. See
-https://github.com/openwrt/openwrt/pull/19468
-https://forum.openwrt.org/t/support-for-rtl838x-based-managed-switches/57875/3788
-
-Signed-off-by: Markus Stockhausen <markus.stockhausen@gmx.de>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Tested-by: Stephen Howell <howels@allthatwemight.be>
-Tested-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20250804080328.2609287-4-markus.stockhausen@gmx.de
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250925215230.265501-1-mykyta.yatsenko5@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-rtl-otto.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/bpf_cookie.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/timer-rtl-otto.c b/drivers/clocksource/timer-rtl-otto.c
-index 8be45a11fb8b6..24c4aa6a30131 100644
---- a/drivers/clocksource/timer-rtl-otto.c
-+++ b/drivers/clocksource/timer-rtl-otto.c
-@@ -147,7 +147,7 @@ static int rttm_next_event(unsigned long delta, struct clock_event_device *clkev
- 
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_COUNTER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, delta);
- 	rttm_start_timer(to, RTTM_CTRL_COUNTER);
- 
-@@ -160,7 +160,7 @@ static int rttm_state_oneshot(struct clock_event_device *clkevt)
- 
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_COUNTER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, RTTM_TICKS_PER_SEC / HZ);
- 	rttm_start_timer(to, RTTM_CTRL_COUNTER);
- 
-@@ -173,7 +173,7 @@ static int rttm_state_periodic(struct clock_event_device *clkevt)
- 
- 	RTTM_DEBUG(to->of_base.base);
- 	rttm_bounce_timer(to->of_base.base, RTTM_CTRL_TIMER);
--	rttm_stop_timer(to->of_base.base);
-+	rttm_disable_timer(to->of_base.base);
- 	rttm_set_period(to->of_base.base, RTTM_TICKS_PER_SEC / HZ);
- 	rttm_start_timer(to, RTTM_CTRL_TIMER);
- 
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c b/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
+index 4a0670c056bad..75f4dff7d0422 100644
+--- a/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
+@@ -450,8 +450,7 @@ static void pe_subtest(struct test_bpf_cookie *skel)
+ 	attr.size = sizeof(attr);
+ 	attr.type = PERF_TYPE_SOFTWARE;
+ 	attr.config = PERF_COUNT_SW_CPU_CLOCK;
+-	attr.freq = 1;
+-	attr.sample_freq = 10000;
++	attr.sample_period = 100000;
+ 	pfd = syscall(__NR_perf_event_open, &attr, -1, 0, -1, PERF_FLAG_FD_CLOEXEC);
+ 	if (!ASSERT_GE(pfd, 0, "perf_fd"))
+ 		goto cleanup;
 -- 
 2.51.0
 
