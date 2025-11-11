@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0C5263F52;
-	Tue, 11 Nov 2025 01:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F13263F52;
+	Tue, 11 Nov 2025 01:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823608; cv=none; b=rLbZqDYHWv4uLH7iguuY0J+wehLm/g2NUu/EFHCc0jwa5srP5Z4HMsoA8YEdWnSbND4c2ZN5SbCcxspRxnwp+F/bbEEJrnE1HPYk0+ng3ryKcRpla8LiKAzUiIwU1G6uB0vIYGPMcHO3j32a0uQuIrB4UbXLl7xyU9/K5Z//1TU=
+	t=1762823611; cv=none; b=Lg19aY3XtSE4S67AqIDeLuQPJqTsrZCkJ5bR/xjhn6jRPulv89TCK88u5iXZF4jw57Jmz5Npm1BwZq6xMkaKqBvq6Nmf1bhooHX2KKOxBXz+oeefjf2lCqlK+HhJbK5/Vo6ourl0tUjj5vWxs3OjQoZzUcXMWCJmlwFIuaa8Dkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823608; c=relaxed/simple;
-	bh=wauE9aZTGxd/FkJuO4pvuzvmBp0eGXz5ZMkzjHnGi4s=;
+	s=arc-20240116; t=1762823611; c=relaxed/simple;
+	bh=RttPQttfLFIMuax/ghoPLxGFKSAIhMalaxcgEjiVZlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNguCjUX0QfyVtgKUbrjiAKJ+VRI+pwnXebs6qm97HAaN2TgfIhklsVWD2BiLRlmWhYCgfWF8vL2DUFiFYzFBroj7ic8rTzIr4lBe9Oe+jCGNmXmZHf8FS6katZUnDB/qYMWvdFzJe//91xz13OTIB9HuiDaOcXCP9fpS+CcY5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+w5OPXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=We1B/NhC4/ji6AL5VaBUSqqd0WFacuFHuC6gmrj7qUdA4WBrw1kqyZ+AagHJtF3HKc+0WWLwqbQ4yNU/9hPYPMgvHS61K6TnfgZ6J5KPU3jxzQonO8+Ko//Rqa2GMSCIvdIL4Q4rPMaZD0UzmiFBHaOxYHXRxdJZa2+LBUHhb2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pT4ulrLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+w5OPXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35832C4CEF5;
-	Tue, 11 Nov 2025 01:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pT4ulrLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA1EC113D0;
+	Tue, 11 Nov 2025 01:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823608;
-	bh=wauE9aZTGxd/FkJuO4pvuzvmBp0eGXz5ZMkzjHnGi4s=;
+	s=korg; t=1762823610;
+	bh=RttPQttfLFIMuax/ghoPLxGFKSAIhMalaxcgEjiVZlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+w5OPXmybj1T+ZIP5tWvZq68HtXoy7eoQ6DoNlO84dIfdjOOjEX1OjZcFV4R/IN5
-	 CQJrIrV6A1naCPe9MWTyuWrs/YsCANMR13uQZo3THcm4UPhobD6yXiPZu4tnPl43sB
-	 PZgs1yVttbyheJU7Aa+QScqEN5DtEBBbdtvpYMuw=
+	b=pT4ulrLhy4o+M+/1ATyvjIPxUrV5lGvbCj8IxPaED668nXRPrnNKG33meY//NXkYW
+	 N+FHpH2LiXLiSzVmLf45YVn3MsoODe3R5gzVqNK4OaJ/qdj0fkNVD62bJqebQI7ld5
+	 yxu39+NutngRh1CoK55bnzAUx+A5Ro4GRRIgCRTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/565] drm/msm/dsi/phy_7nm: Fix missing initial VCO rate
-Date: Tue, 11 Nov 2025 09:42:21 +0900
-Message-ID: <20251111004533.289985963@linuxfoundation.org>
+Subject: [PATCH 6.17 335/849] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
+Date: Tue, 11 Nov 2025 09:38:25 +0900
+Message-ID: <20251111004544.518155442@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 5ddcb0cb9d10e6e70a68e0cb8f0b8e3a7eb8ccaf ]
+[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
 
-Driver unconditionally saves current state on first init in
-dsi_pll_7nm_init(), but does not save the VCO rate, only some of the
-divider registers.  The state is then restored during probe/enable via
-msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
-dsi_7nm_pll_restore_state().
+Initially, trace_sock_exceed_buf_limit() was invoked when
+__sk_mem_raise_allocated() failed due to the memcg limit or the
+global limit.
 
-Restoring calls dsi_pll_7nm_vco_set_rate() with
-pll_7nm->vco_current_rate=0, which basically overwrites existing rate of
-VCO and messes with clock hierarchy, by setting frequency to 0 to clock
-tree.  This makes anyway little sense - VCO rate was not saved, so
-should not be restored.
+However, commit d6f19938eb031 ("net: expose sk wmem in
+sock_exceed_buf_limit tracepoint") somehow suppressed the event
+only when memcg failed to charge for SK_MEM_RECV, although the
+memcg failure for SK_MEM_SEND still triggers the event.
 
-If PLL was not configured configure it to minimum rate to avoid glitches
-and configuring entire in clock hierarchy to 0 Hz.
+Let's restore the event for SK_MEM_RECV.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657827/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-9-ee633e3ddbff@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/sock.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index ec5aa8cb37d9a..0f8440fa73b4a 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -814,6 +814,12 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index e21348ead7e76..1382bddcbaff4 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3336,8 +3336,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
+ 		}
+ 	}
  
- 	/* TODO: Remove this when we have proper display handover support */
- 	msm_dsi_phy_pll_save_state(phy);
-+	/*
-+	 * Store also proper vco_current_rate, because its value will be used in
-+	 * dsi_7nm_pll_restore_state().
-+	 */
-+	if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw, VCO_REF_CLK_RATE))
-+		pll_7nm->vco_current_rate = pll_7nm->phy->cfg->min_pll_rate;
+-	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
+-		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
++	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
  
- 	return 0;
- }
+ 	sk_memory_allocated_sub(sk, amt);
+ 
 -- 
 2.51.0
 
