@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7962C2357;
-	Tue, 11 Nov 2025 01:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C535F342CBB;
+	Tue, 11 Nov 2025 01:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823522; cv=none; b=LNcg/pPAUHj+Gj1ZF2iRVg4Ain6NY+JLPx6i366av2Rg2WGcx8aQuScAQQ26YcM+UKI+YicQ83cD6owtstq4zxnrXGD3eQnflZWUVwqGppiCJZTb6iDIZIDmsUS2abUOgetuj1bsbV+4YN9+Ife99THpUp5rY0WqwwPAhBbsZkc=
+	t=1762823524; cv=none; b=Ms0NynK1IBT1OpLRCF+LRErVZV2yoAXw/sHAB6oe5oQUKdu+cyuW62Pq65Ne9VqoPbbdhmohZTnoCmun1WBAOlZCm2TmyTdjjllWHcBAkWgLUGE5Pvp6wzZMf7cYZQG2X4h9fy8CJn5UR2s8oRnWUizaJcAZG2rzbOhfGg1Q/zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823522; c=relaxed/simple;
-	bh=SC/sPu1QmFoT0FqMD3F8Fh9IT/S1pIhrAcA1+5PS4Hk=;
+	s=arc-20240116; t=1762823524; c=relaxed/simple;
+	bh=dzW6vPopAHg/ll2QICGA7JIMgw0B4PsUo+Hk3Dkxx2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlIO3GLXafKBPG3Q2/nyLcKg3+95WJA2ExyXpS3ow5iyKRzEv5ZRkT1zQ7O/Lx5/J1JlO7G4Um0PHQeI5lU/A0TO+HIt82RL22eA6nluleKNb1vtZxaAXNOwYiZzAB1JWlDtdo2dUz3b4yZ+drXx6T/9VpEzSqHSqK2k4tcDRdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+rek/Q8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xuuuon+HZRXbV/QBxyTmrFRM2L4OnRxj2G9xsSuR27HpKp7Riop1afZPQmH2/45qBlDZRu871r4C9rzQG6N5MkMvmH1n0pPmrzCQWdBy7t2+1uQ79U4GYlt9gxnoWSQL3lNXrG/jk+eZ0l8BAstUaUeJca9yRM/i+UXdd4IydQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpGX9EDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+rek/Q8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B138C4CEF5;
-	Tue, 11 Nov 2025 01:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpGX9EDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D21C4CEF5;
+	Tue, 11 Nov 2025 01:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823522;
-	bh=SC/sPu1QmFoT0FqMD3F8Fh9IT/S1pIhrAcA1+5PS4Hk=;
+	s=korg; t=1762823524;
+	bh=dzW6vPopAHg/ll2QICGA7JIMgw0B4PsUo+Hk3Dkxx2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+rek/Q89HXA0Xws737Fh1fj+mHHyKqD5aXRrk2Q24zTdbPmgWw8hmDyL3PV3HuyH
-	 Lsm9l9jsU5l6BIFVcUqKU/OkwBn3FCPISffIHtVUplh5016k3HN7GdzfDD8c9N31S2
-	 k0op4YsSRhdCRuxwvuz6EySJTRy7i9jOiGXMcBeo=
+	b=EpGX9EDhc5sAysxTPKIhQgBQ0Es/r5icvYzdTW927dUZb1EBf+snrT9uIm56O7aDD
+	 aJVthDmixK5jLx3sDmS3TQCZwfEva5/e3lcWpxUhD1rdNDBkDUi/GYxXcmopmVguy+
+	 F3v22BvywLu6Pjq4nw7qVxyNg/Xblq+//AvEjrKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 316/849] drm/amdkfd: Handle lack of READ permissions in SVM mapping
-Date: Tue, 11 Nov 2025 09:38:06 +0900
-Message-ID: <20251111004544.056840283@linuxfoundation.org>
+Subject: [PATCH 6.12 263/565] media: pci: mgb4: Fix timings comparison in VIDIOC_S_DV_TIMINGS
+Date: Tue, 11 Nov 2025 09:41:59 +0900
+Message-ID: <20251111004532.810001784@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,71 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kent Russell <kent.russell@amd.com>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-[ Upstream commit 0ed704d058cec7643a716a21888d58c7d03f2c3e ]
+[ Upstream commit 0750649b528ff18d1d68aecb45b34ec22d5ab778 ]
 
-HMM assumes that pages have READ permissions by default. Inside
-svm_range_validate_and_map, we add READ permissions then add WRITE
-permissions if the VMA isn't read-only. This will conflict with regions
-that only have PROT_WRITE or have PROT_NONE. When that happens,
-svm_range_restore_work will continue to retry, silently, giving the
-impression of a hang if pr_debug isn't enabled to show the retries..
+Compare the whole v4l2_bt_timings struct, not just the width/height when
+setting new timings. Timings with the same resolution and different
+pixelclock can now be properly set.
 
-If pages don't have READ permissions, simply unmap them and continue. If
-they weren't mapped in the first place, this would be a no-op. Since x86
-doesn't support write-only, and PROT_NONE doesn't allow reads or writes
-anyways, this will allow the svm range validation to continue without
-getting stuck in a loop forever on mappings we can't use with HMM.
-
-Signed-off-by: Kent Russell <kent.russell@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/media/pci/mgb4/mgb4_vin.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 3d8b20828c068..cecdbcea0bb90 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1714,6 +1714,29 @@ static int svm_range_validate_and_map(struct mm_struct *mm,
- 
- 			next = min(vma->vm_end, end);
- 			npages = (next - addr) >> PAGE_SHIFT;
-+			/* HMM requires at least READ permissions. If provided with PROT_NONE,
-+			 * unmap the memory. If it's not already mapped, this is a no-op
-+			 * If PROT_WRITE is provided without READ, warn first then unmap
-+			 */
-+			if (!(vma->vm_flags & VM_READ)) {
-+				unsigned long e, s;
-+
-+				svm_range_lock(prange);
-+				if (vma->vm_flags & VM_WRITE)
-+					pr_debug("VM_WRITE without VM_READ is not supported");
-+				s = max(start, prange->start);
-+				e = min(end, prange->last);
-+				if (e >= s)
-+					r = svm_range_unmap_from_gpus(prange, s, e,
-+						       KFD_SVM_UNMAP_TRIGGER_UNMAP_FROM_CPU);
-+				svm_range_unlock(prange);
-+				/* If unmap returns non-zero, we'll bail on the next for loop
-+				 * iteration, so just leave r and continue
-+				 */
-+				addr = next;
-+				continue;
-+			}
-+
- 			WRITE_ONCE(p->svms.faulting_task, current);
- 			r = amdgpu_hmm_range_get_pages(&prange->notifier, addr, npages,
- 						       readonly, owner, NULL,
+diff --git a/drivers/media/pci/mgb4/mgb4_vin.c b/drivers/media/pci/mgb4/mgb4_vin.c
+index e9332abb31729..cfb6be8a81669 100644
+--- a/drivers/media/pci/mgb4/mgb4_vin.c
++++ b/drivers/media/pci/mgb4/mgb4_vin.c
+@@ -624,8 +624,7 @@ static int vidioc_s_dv_timings(struct file *file, void *fh,
+ 	    timings->bt.height < video_timings_cap.bt.min_height ||
+ 	    timings->bt.height > video_timings_cap.bt.max_height)
+ 		return -EINVAL;
+-	if (timings->bt.width == vindev->timings.bt.width &&
+-	    timings->bt.height == vindev->timings.bt.height)
++	if (v4l2_match_dv_timings(timings, &vindev->timings, 0, false))
+ 		return 0;
+ 	if (vb2_is_busy(&vindev->queue))
+ 		return -EBUSY;
 -- 
 2.51.0
 
