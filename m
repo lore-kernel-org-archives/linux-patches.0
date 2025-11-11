@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D9821ABB9;
-	Tue, 11 Nov 2025 01:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A1F21ABB9;
+	Tue, 11 Nov 2025 01:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825085; cv=none; b=Ke1LGP9pjAOJF9Gc/ccH9o6GhjE/5sgxbuW8IBYsBaohhXC06OmYAXi7SmtSJGxfthDt7LZAoVtxJKyLmK86Zh6S/KTZVitS4/uswl/kuxlEuODGsfq6E/yisRzYjvRzuxmah9DJdKTPWAsh+z0Lgzb97zSbXdT9HLD8ESSsPzM=
+	t=1762825087; cv=none; b=p5lOTSqb0KmbjxdwipKBCMP7TpXV7HjSZzqtcGof+dtqMBuqjEVicd3mOCRQVRV7q+VUAKmn0KcpZboVB6rieTTGWJRd5136B7fuY1J+nieajYKLg76jfbu90U/L3ZqAgngPIoNznbEBGgXqcszreljN2wyonvMhrZ6byBbkhiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825085; c=relaxed/simple;
-	bh=lv356gCG0bc/RcSwuerMNjw3fsKwFb0GIp3Qy3M58iw=;
+	s=arc-20240116; t=1762825087; c=relaxed/simple;
+	bh=2Ybh7+3Pa2jOxAhKPZznNUZVllAPcTF8GOHOjrF150s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iX9r1PyFB4XyjBeQE4hP80CDNYRUdKBp4vjRr8ELtYnWZwWfTfw+sgml3rE4g+1Gjd057VT49S96nR7LF1vK6cAdtcnNO/zI6SO584eogKpktzedwAb6YHEh39+eHl0Te7I8DcDEpqjFmEQpvAZti+s0y2fVV27CgKt87FplKhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeIGqYb8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rl4F5oYatPM6w3xaX1TQsinHeldy/NLH4etL2j3hejkH4NmGVCe5KTK2e8Up4DQv/nfLsZVvOSZlU5zogid6yRfoXkzGyaFFKgUOwELTUVzFbxhKLnZi/CqjQ2NrhrCbnqEiSTD1sGmFRXPVjcETZMEwXpN7Mtrke+xVHk8vv0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yD2cRvgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeIGqYb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D033C4CEFB;
-	Tue, 11 Nov 2025 01:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yD2cRvgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66CAC4CEF5;
+	Tue, 11 Nov 2025 01:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825084;
-	bh=lv356gCG0bc/RcSwuerMNjw3fsKwFb0GIp3Qy3M58iw=;
+	s=korg; t=1762825087;
+	bh=2Ybh7+3Pa2jOxAhKPZznNUZVllAPcTF8GOHOjrF150s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JeIGqYb8rOfEUQ5YnHSKwuCWjTHilykKR6rVHv3pIq58hWokOx6331AU7bVdFpoEg
-	 lSXrFP8jaOt9BYVmBY1CWWbktGeQzgRzgStJd22176KjChOakM27M9e+XqVMuYAUYx
-	 XHLiLvd4eL7p23mDBfNUoG8KJ57kP/wKJ1h/hee4=
+	b=yD2cRvgLVqoyUIcbplBXmuV3wGCUkssK0XUhfwstG7Sm9+Dr1sfnk7PqbKWQaCD2+
+	 j/KLcOh5yA1K5+g2DbOQBrcD9aLpyeU+lzHccLfE8EDSRSgmO0zWJyv0Cv/RIDyMQJ
+	 wlkrySGXvB3mz0bmvjiBuf1BH4hiIrlF0LSPG7L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 653/849] platform/x86: x86-android-tablets: Stop using EPROBE_DEFER
-Date: Tue, 11 Nov 2025 09:43:43 +0900
-Message-ID: <20251111004552.215669736@linuxfoundation.org>
+Subject: [PATCH 6.17 654/849] vfio/pci: Fix INTx handling on legacy non-PCI 2.3 devices
+Date: Tue, 11 Nov 2025 09:43:44 +0900
+Message-ID: <20251111004552.240113911@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -47,69 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 01fd7cf3534aa107797d130f461ba7bcad30414d ]
+[ Upstream commit 8b9f128947dd72e0fcf256088a673abac9b720bf ]
 
-Since the x86-android-tablets code uses platform_create_bundle() it cannot
-use EPROBE_DEFER and the driver-core will translate EPROBE_DEFER to ENXIO.
+PCI devices prior to PCI 2.3 both use level interrupts and do not support
+interrupt masking, leading to a failure when passed through to a KVM guest on
+at least the ppc64 platform. This failure manifests as receiving and
+acknowledging a single interrupt in the guest, while the device continues to
+assert the level interrupt indicating a need for further servicing.
 
-Stop using EPROBE_DEFER instead log an error and return ENODEV, or for
-non-fatal cases log a warning and return 0.
+When lazy IRQ masking is used on DisINTx- (non-PCI 2.3) hardware, the following
+sequence occurs:
 
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250920200713.20193-21-hansg@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+ * Level IRQ assertion on device
+ * IRQ marked disabled in kernel
+ * Host interrupt handler exits without clearing the interrupt on the device
+ * Eventfd is delivered to userspace
+ * Guest processes IRQ and clears device interrupt
+ * Device de-asserts INTx, then re-asserts INTx while the interrupt is masked
+ * Newly asserted interrupt acknowledged by kernel VMM without being handled
+ * Software mask removed by VFIO driver
+ * Device INTx still asserted, host controller does not see new edge after EOI
+
+The behavior is now platform-dependent.  Some platforms (amd64) will continue
+to spew IRQs for as long as the INTX line remains asserted, therefore the IRQ
+will be handled by the host as soon as the mask is dropped.  Others (ppc64) will
+only send the one request, and if it is not handled no further interrupts will
+be sent.  The former behavior theoretically leaves the system vulnerable to
+interrupt storm, and the latter will result in the device stalling after
+receiving exactly one interrupt in the guest.
+
+Work around this by disabling lazy IRQ masking for DisINTx- INTx devices.
+
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Link: https://lore.kernel.org/r/333803015.1744464.1758647073336.JavaMail.zimbra@raptorengineeringinc.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/x86-android-tablets/core.c  | 6 ++++--
- drivers/platform/x86/x86-android-tablets/other.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
-index 2a9c471785050..8c8f10983f289 100644
---- a/drivers/platform/x86/x86-android-tablets/core.c
-+++ b/drivers/platform/x86/x86-android-tablets/core.c
-@@ -277,8 +277,10 @@ get_serdev_controller_by_pci_parent(const struct x86_serdev_info *info)
- 	struct pci_dev *pdev;
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 123298a4dc8f5..61d29f6b3730c 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -304,9 +304,14 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
  
- 	pdev = pci_get_domain_bus_and_slot(0, 0, info->ctrl.pci.devfn);
--	if (!pdev)
--		return ERR_PTR(-EPROBE_DEFER);
-+	if (!pdev) {
-+		pr_err("error could not get PCI serdev at devfn 0x%02x\n", info->ctrl.pci.devfn);
-+		return ERR_PTR(-ENODEV);
-+	}
+ 	vdev->irq_type = VFIO_PCI_INTX_IRQ_INDEX;
  
- 	/* This puts our reference on pdev and returns a ref on the ctrl */
- 	return get_serdev_controller_from_parent(&pdev->dev, 0, info->ctrl_devname);
-diff --git a/drivers/platform/x86/x86-android-tablets/other.c b/drivers/platform/x86/x86-android-tablets/other.c
-index f7bd9f863c85e..aa4f8810974d5 100644
---- a/drivers/platform/x86/x86-android-tablets/other.c
-+++ b/drivers/platform/x86/x86-android-tablets/other.c
-@@ -809,8 +809,10 @@ static int __init vexia_edu_atla10_9v_init(struct device *dev)
- 
- 	/* Reprobe the SDIO controller to enumerate the now enabled Wifi module */
- 	pdev = pci_get_domain_bus_and_slot(0, 0, PCI_DEVFN(0x11, 0));
--	if (!pdev)
--		return -EPROBE_DEFER;
-+	if (!pdev) {
-+		pr_warn("Could not get PCI SDIO at devfn 0x%02x\n", PCI_DEVFN(0x11, 0));
-+		return 0;
-+	}
- 
- 	ret = device_reprobe(&pdev->dev);
- 	if (ret)
++	if (!vdev->pci_2_3)
++		irq_set_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
++
+ 	ret = request_irq(pdev->irq, vfio_intx_handler,
+ 			  irqflags, ctx->name, ctx);
+ 	if (ret) {
++		if (!vdev->pci_2_3)
++			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
+ 		vdev->irq_type = VFIO_PCI_NUM_IRQS;
+ 		kfree(name);
+ 		vfio_irq_ctx_free(vdev, ctx, 0);
+@@ -352,6 +357,8 @@ static void vfio_intx_disable(struct vfio_pci_core_device *vdev)
+ 		vfio_virqfd_disable(&ctx->unmask);
+ 		vfio_virqfd_disable(&ctx->mask);
+ 		free_irq(pdev->irq, ctx);
++		if (!vdev->pci_2_3)
++			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
+ 		if (ctx->trigger)
+ 			eventfd_ctx_put(ctx->trigger);
+ 		kfree(ctx->name);
 -- 
 2.51.0
 
