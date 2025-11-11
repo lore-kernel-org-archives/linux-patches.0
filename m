@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C77E7262A;
-	Tue, 11 Nov 2025 01:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C929D7262A;
+	Tue, 11 Nov 2025 01:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822810; cv=none; b=lppEClt86QSgaXe8ytMksnDU0ehZoaQwSroIFTy0Kks8i0sU226bsTfLQu2NZAmiiVmPgOLOweisExF4YSNWptwvcsgqOHNVROHYB2gng+1tAe+AUoBYlT3HLLJkV2oV9rOM4z0hT4vuP+/30iTNd7a9hStgdbbKHMxhSNBwZXE=
+	t=1762822812; cv=none; b=RbWwXDXELA8ZyCxDsggz1JWg61csKIoe5p3J+FkwV148xQ+gofECTElqV21u+kmqVhkWmExu1LSbiL2SlscVSsWfr6I698BG4xUM6m/fjPywxmHka5Jy9seKqCJ3fEpUwKXV+rTPCmniPhYT+GdZLzSZEkuVK/qMNKguhPtMlk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822810; c=relaxed/simple;
-	bh=2b5aeT5il8QcHRX0QNMCXjt24N5a1dBL/gVrtCzp+SM=;
+	s=arc-20240116; t=1762822812; c=relaxed/simple;
+	bh=4HxNyrTY5lGfmbj+p5AH/cwoEhZ7Lc9xHfln6K9QM4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwgkauHEQ5zTzKxcg/tZoC3skzhwgTl+OVHqI+taiI3ZLrMquRs6kSdTXPwmjs6FltDIzhUiP+kE/OzCD4VGVJB34iazag/bb6/MfbvItlx8v8CQiLug1EeXFX7qFeEe0ibBRt6bflayQeEvDGAJ23F10aGMP4YaxS+HsUsAYfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xS4Zu8oW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AZ0BPyWCN0K/T0yiLxVUffr7ZHLdfLIucSk/sWigFkw4uwSRiIUq570f8IbsQWPLEJ5CGI8/0Odiwg5NsJgean566ETxOPRa2e2cufn3x2NtxiT9+SOlNoc8IRxGH7bpa5dBhRdaNMnqXnFJZHDsTLI0ObYiMKASFYvGGUV13tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPMeFMFy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xS4Zu8oW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E90C116B1;
-	Tue, 11 Nov 2025 01:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPMeFMFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634FDC4CEF5;
+	Tue, 11 Nov 2025 01:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822810;
-	bh=2b5aeT5il8QcHRX0QNMCXjt24N5a1dBL/gVrtCzp+SM=;
+	s=korg; t=1762822812;
+	bh=4HxNyrTY5lGfmbj+p5AH/cwoEhZ7Lc9xHfln6K9QM4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xS4Zu8oWdew/eipqqgN+5QIlmCn3zE1dcL64DsJAwg0p6O2o3dCyAu6F8OxeMNTxq
-	 T/3a2CV8shPCj2e4h6YNidywk6v52lc9rvpfnlOF223W/nUQrASNLCpr6aWmC3ws9N
-	 mE1uE4Kb2V9I2SoivVhIHi34Bf76qh2wwueA6i8c=
+	b=aPMeFMFyEtq0eQjsKMs1nixdRkgAnqzsbc98qb8zfqQ67lKkbQ4IDmha3M2KyzhQL
+	 YJTqB4E+ktqQvZ5hW8+MSKPFFMp2sRhqhn4Dut7/XMZZNPt2m+s4jnqnKpVafEYAPe
+	 qB6NoQdW7u2jZtiQbFrVNexTBRxDPMC0AIrL756A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/565] ACPI: scan: Add Intel CVS ACPI HIDs to acpi_ignore_dep_ids[]
-Date: Tue, 11 Nov 2025 09:39:29 +0900
-Message-ID: <20251111004529.496125921@linuxfoundation.org>
+Subject: [PATCH 6.17 176/849] pwm: pca9685: Use bulk write to atomicially update registers
+Date: Tue, 11 Nov 2025 09:35:46 +0900
+Message-ID: <20251111004540.689010179@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,56 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 4405a214df146775338a1e6232701a29024b82e1 ]
+[ Upstream commit de5855613263b426ee697dd30224322f2e634dec ]
 
-Some x86/ACPI laptops with MIPI cameras have a INTC10DE or INTC10E0 ACPI
-device in the _DEP dependency list of the ACPI devices for the camera-
-sensors (which have flags.honor_deps set).
+The output of a PWM channel is configured by four register values. Write
+them in a single i2c transaction to ensure glitch free updates.
 
-These devices are for an Intel Vision CVS chip for which an out of tree
-driver is available [1].
-
-The camera sensor works fine without a driver being loaded for this
-ACPI device on the 2 laptops this was tested on:
-
-ThinkPad X1 Carbon Gen 12 (Meteor Lake)
-ThinkPad X1 2-in-1 Gen 10 (Arrow Lake)
-
-For now add these HIDs to acpi_ignore_dep_ids[] so that
-acpi_dev_ready_for_enumeration() will return true once the other _DEP
-dependencies are met and an i2c_client for the camera sensor will get
-instantiated.
-
-Link: https://github.com/intel/vision-drivers/ [1]
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250829142748.21089-1-hansg@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/bfa8c0267c9ec059d0d77f146998d564654c75ca.1753784092.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/scan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pwm/pwm-pca9685.c | 46 ++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 7ecc401fb97f9..4ef94d06365fc 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -847,6 +847,8 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
- static const char * const acpi_ignore_dep_ids[] = {
- 	"PNP0D80", /* Windows-compatible System Power Management Controller */
- 	"INT33BD", /* Intel Baytrail Mailbox Device */
-+	"INTC10DE", /* Intel CVS LNL */
-+	"INTC10E0", /* Intel CVS ARL */
- 	"LATT2021", /* Lattice FW Update Client Driver */
- 	NULL
- };
+diff --git a/drivers/pwm/pwm-pca9685.c b/drivers/pwm/pwm-pca9685.c
+index 9ce75704a15f8..91f96b28ce1b5 100644
+--- a/drivers/pwm/pwm-pca9685.c
++++ b/drivers/pwm/pwm-pca9685.c
+@@ -61,6 +61,8 @@
+ #define MODE1_SUB2		BIT(2)
+ #define MODE1_SUB1		BIT(3)
+ #define MODE1_SLEEP		BIT(4)
++#define MODE1_AI		BIT(5)
++
+ #define MODE2_INVRT		BIT(4)
+ #define MODE2_OUTDRV		BIT(2)
+ 
+@@ -131,6 +133,19 @@ static int pca9685_write_reg(struct pwm_chip *chip, unsigned int reg, unsigned i
+ 	return err;
+ }
+ 
++static int pca9685_write_4reg(struct pwm_chip *chip, unsigned int reg, u8 val[4])
++{
++	struct pca9685 *pca = to_pca(chip);
++	struct device *dev = pwmchip_parent(chip);
++	int err;
++
++	err = regmap_bulk_write(pca->regmap, reg, val, 4);
++	if (err)
++		dev_err(dev, "regmap_write to register 0x%x failed: %pe\n", reg, ERR_PTR(err));
++
++	return err;
++}
++
+ /* Helper function to set the duty cycle ratio to duty/4096 (e.g. duty=2048 -> 50%) */
+ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned int duty)
+ {
+@@ -143,12 +158,10 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
+ 		return;
+ 	} else if (duty >= PCA9685_COUNTER_RANGE) {
+ 		/* Set the full ON bit and clear the full OFF bit */
+-		pca9685_write_reg(chip, REG_ON_H(channel), LED_FULL);
+-		pca9685_write_reg(chip, REG_OFF_H(channel), 0);
++		pca9685_write_4reg(chip, REG_ON_L(channel), (u8[4]){ 0, LED_FULL, 0, 0 });
+ 		return;
+ 	}
+ 
+-
+ 	if (pwm->state.usage_power && channel < PCA9685_MAXCHAN) {
+ 		/*
+ 		 * If usage_power is set, the pca9685 driver will phase shift
+@@ -163,12 +176,9 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
+ 
+ 	off = (on + duty) % PCA9685_COUNTER_RANGE;
+ 
+-	/* Set ON time (clears full ON bit) */
+-	pca9685_write_reg(chip, REG_ON_L(channel), on & 0xff);
+-	pca9685_write_reg(chip, REG_ON_H(channel), (on >> 8) & 0xf);
+-	/* Set OFF time (clears full OFF bit) */
+-	pca9685_write_reg(chip, REG_OFF_L(channel), off & 0xff);
+-	pca9685_write_reg(chip, REG_OFF_H(channel), (off >> 8) & 0xf);
++	/* implicitly clear full ON and full OFF bit */
++	pca9685_write_4reg(chip, REG_ON_L(channel),
++			   (u8[4]){ on & 0xff, (on >> 8) & 0xf, off & 0xff, (off >> 8) & 0xf });
+ }
+ 
+ static unsigned int pca9685_pwm_get_duty(struct pwm_chip *chip, int channel)
+@@ -544,9 +554,8 @@ static int pca9685_pwm_probe(struct i2c_client *client)
+ 
+ 	mutex_init(&pca->lock);
+ 
+-	ret = pca9685_read_reg(chip, PCA9685_MODE2, &reg);
+-	if (ret)
+-		return ret;
++	/* clear MODE2_OCH */
++	reg = 0;
+ 
+ 	if (device_property_read_bool(&client->dev, "invert"))
+ 		reg |= MODE2_INVRT;
+@@ -562,16 +571,19 @@ static int pca9685_pwm_probe(struct i2c_client *client)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Disable all LED ALLCALL and SUBx addresses to avoid bus collisions */
++	/*
++	 * Disable all LED ALLCALL and SUBx addresses to avoid bus collisions,
++	 * enable Auto-Increment.
++	 */
+ 	pca9685_read_reg(chip, PCA9685_MODE1, &reg);
+ 	reg &= ~(MODE1_ALLCALL | MODE1_SUB1 | MODE1_SUB2 | MODE1_SUB3);
++	reg |= MODE1_AI;
+ 	pca9685_write_reg(chip, PCA9685_MODE1, reg);
+ 
+ 	/* Reset OFF/ON registers to POR default */
+-	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_L, 0);
+-	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_H, LED_FULL);
+-	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_L, 0);
+-	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_H, LED_FULL);
++	ret = pca9685_write_4reg(chip, PCA9685_ALL_LED_ON_L, (u8[]){ 0, LED_FULL, 0, LED_FULL });
++	if (ret < 0)
++		return dev_err_probe(&client->dev, ret, "Failed to reset ON/OFF registers\n");
+ 
+ 	chip->ops = &pca9685_pwm_ops;
+ 
 -- 
 2.51.0
 
