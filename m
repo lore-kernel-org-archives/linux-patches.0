@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4CB2F5479;
-	Tue, 11 Nov 2025 01:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4262F7467;
+	Tue, 11 Nov 2025 01:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823807; cv=none; b=B0Arv0puN133Rzksg8Nx/Sbq7pgBOIXou131F3+GAEloe4ml9JPpukwSPr/Y3sIZeIOLm0XOYnYf2nlTLArFl57u0zHoVPyrG+zvSPrKJvh0m6roRPjfLnXQQGsAf6W2NX8Hh+ctsVphuhan4zR8ayGvSjdWqddRuy0LIw8hxY0=
+	t=1762823809; cv=none; b=m4mbDnA0SMJtMdbdCOf9VoJQEsrsds66LPI23jaaQTvswcjKSd90VLhXGmXtCGRaJ2omuciozsH4uZe4OXyG7Sih3RjMZJgauTJoDJl/AfB5e4v5fRpTvFIkrNeVSYFLLNqymVpJX+3i2vUQu7N9k2rbLDmXBOofRAkyyRmj5Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823807; c=relaxed/simple;
-	bh=oPk2Y+5vO8uWsDEWCTFAP/OjyRwVBjD2GbPnEg7arFM=;
+	s=arc-20240116; t=1762823809; c=relaxed/simple;
+	bh=R9I53E/MGPTGSua8N/QAJa2SByOKXx+YCybVAZQsbv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0nmQnj8dRMzmcfs/Qy0wB0+ICiz2N78f8Q+nRiul6gNGw9XlSlyYJ2RYcu2pfAPE3AJepRsfTjInjKaN10Sd5wyyZj8/aPxHgmjnEL73YT52jdXqudQSVeer8sDHSmDu5yOkiX/wgiYg+BEPq97oo58dKDCTOeP4bDMSMVuim8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPmCXCoT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xp2JyFFdvGRuQ03+5Q/Nt40TKPpO26M1GpeJLEf9UDkgIyYL5r2wNTuADjgkjcPwvHLvqaH4U/SNy4pz1S/mTZo5gZxy/IjAx35NkIWiHdnlmSKrZtkhGvZkg6mwkwzeKC2cBswjDAMisc1zR5iCaLrXHR/ZQYzpZb44CGLwpBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adXYhwOI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPmCXCoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88ADAC4CEF5;
-	Tue, 11 Nov 2025 01:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adXYhwOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97FBC4CEF5;
+	Tue, 11 Nov 2025 01:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823806;
-	bh=oPk2Y+5vO8uWsDEWCTFAP/OjyRwVBjD2GbPnEg7arFM=;
+	s=korg; t=1762823809;
+	bh=R9I53E/MGPTGSua8N/QAJa2SByOKXx+YCybVAZQsbv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPmCXCoT4oiHyCo3Znq6OH//CZmtGmgT4a2F5jgF1B4DV7c/WG6VYCP0A4IgQxR8y
-	 eb4+RYiWIYN0A6eTvc7qh84ap4ElbvJKI1L8b5PqrSpj0kz/w1GzqvM4tB66UB3K4L
-	 up1l65GDn9cXjlJMFgwanszBgbwGpSAsqGa8RFhg=
+	b=adXYhwOIT+gGwPseTVLAMQbXq70hJhcMknLO+xMUrU2R/z8ANuUtAQXu5j+syjKUO
+	 0CNs3YsMF61Rx2+G+cUiacpApc/0F2Mz+gWlpfhhllAy3OJDfs6GJuhH6zfo3M8ywP
+	 6IGZoMMtFv8qW6YFhj9dY0g+Bl1LgNcJVQ75pK0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Yihan Zhu <Yihan.Zhu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 328/565] ntfs3: pretend $Extend records as regular files
-Date: Tue, 11 Nov 2025 09:43:04 +0900
-Message-ID: <20251111004534.266123460@linuxfoundation.org>
+Subject: [PATCH 6.17 376/849] drm/amd/display: wait for otg update pending latch before clock optimization
+Date: Tue, 11 Nov 2025 09:39:06 +0900
+Message-ID: <20251111004545.524318307@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +50,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Yihan Zhu <Yihan.Zhu@amd.com>
 
-[ Upstream commit 4e8011ffec79717e5fdac43a7e79faf811a384b7 ]
+[ Upstream commit f382e2d0faad0e0d73f626dbd71f2a4fce03975b ]
 
-Since commit af153bb63a33 ("vfs: catch invalid modes in may_open()")
-requires any inode be one of S_IFDIR/S_IFLNK/S_IFREG/S_IFCHR/S_IFBLK/
-S_IFIFO/S_IFSOCK type, use S_IFREG for $Extend records.
+[WHY & HOW]
+OTG pending update unlatched will cause system fail, wait OTG fully disabled to
+avoid this error.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../drm/amd/display/dc/core/dc_hw_sequencer.c  |  2 ++
+ .../amd/display/dc/inc/hw/timing_generator.h   |  1 +
+ .../drm/amd/display/dc/optc/dcn32/dcn32_optc.h |  1 +
+ .../drm/amd/display/dc/optc/dcn35/dcn35_optc.c | 18 ++++++++++++++++++
+ 4 files changed, 22 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 9077c7b627336..4e2629d020b75 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -471,6 +471,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		   fname->home.seq == cpu_to_le16(MFT_REC_EXTEND)) {
- 		/* Records in $Extend are not a files or general directories. */
- 		inode->i_op = &ntfs_file_inode_operations;
-+		mode = S_IFREG;
- 	} else {
- 		err = -EINVAL;
- 		goto out;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+index ec4e80e5b6eb2..d82b1cb467f4b 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -1177,6 +1177,8 @@ void hwss_wait_for_odm_update_pending_complete(struct dc *dc, struct dc_state *c
+ 		tg = otg_master->stream_res.tg;
+ 		if (tg->funcs->wait_odm_doublebuffer_pending_clear)
+ 			tg->funcs->wait_odm_doublebuffer_pending_clear(tg);
++		if (tg->funcs->wait_otg_disable)
++			tg->funcs->wait_otg_disable(tg);
+ 	}
+ 
+ 	/* ODM update may require to reprogram blank pattern for each OPP */
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h b/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h
+index 267ace4eef8a3..f2de2cf23859e 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/timing_generator.h
+@@ -374,6 +374,7 @@ struct timing_generator_funcs {
+ 	void (*wait_drr_doublebuffer_pending_clear)(struct timing_generator *tg);
+ 	void (*set_long_vtotal)(struct timing_generator *optc, const struct long_vtotal_params *params);
+ 	void (*wait_odm_doublebuffer_pending_clear)(struct timing_generator *tg);
++	void (*wait_otg_disable)(struct timing_generator *optc);
+ 	bool (*get_optc_double_buffer_pending)(struct timing_generator *tg);
+ 	bool (*get_otg_double_buffer_pending)(struct timing_generator *tg);
+ 	bool (*get_pipe_update_pending)(struct timing_generator *tg);
+diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn32/dcn32_optc.h b/drivers/gpu/drm/amd/display/dc/optc/dcn32/dcn32_optc.h
+index d159e3ed3bb3c..ead92ad78a234 100644
+--- a/drivers/gpu/drm/amd/display/dc/optc/dcn32/dcn32_optc.h
++++ b/drivers/gpu/drm/amd/display/dc/optc/dcn32/dcn32_optc.h
+@@ -62,6 +62,7 @@
+ 	SF(OTG0_OTG_CONTROL, OTG_DISABLE_POINT_CNTL, mask_sh),\
+ 	SF(OTG0_OTG_CONTROL, OTG_FIELD_NUMBER_CNTL, mask_sh),\
+ 	SF(OTG0_OTG_CONTROL, OTG_OUT_MUX, mask_sh),\
++	SF(OTG0_OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE, mask_sh),\
+ 	SF(OTG0_OTG_STEREO_CONTROL, OTG_STEREO_EN, mask_sh),\
+ 	SF(OTG0_OTG_STEREO_CONTROL, OTG_STEREO_SYNC_OUTPUT_LINE_NUM, mask_sh),\
+ 	SF(OTG0_OTG_STEREO_CONTROL, OTG_STEREO_SYNC_OUTPUT_POLARITY, mask_sh),\
+diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn35/dcn35_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn35/dcn35_optc.c
+index 72bff94cb57da..52d5ea98c86b1 100644
+--- a/drivers/gpu/drm/amd/display/dc/optc/dcn35/dcn35_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/optc/dcn35/dcn35_optc.c
+@@ -162,6 +162,8 @@ static bool optc35_disable_crtc(struct timing_generator *optc)
+ 	REG_WAIT(OTG_CLOCK_CONTROL,
+ 			OTG_BUSY, 0,
+ 			1, 100000);
++	REG_WAIT(OTG_CONTROL, OTG_CURRENT_MASTER_EN_STATE, 0, 1, 100000);
++
+ 	optc1_clear_optc_underflow(optc);
+ 
+ 	return true;
+@@ -428,6 +430,21 @@ static void optc35_set_long_vtotal(
+ 	}
+ }
+ 
++static void optc35_wait_otg_disable(struct timing_generator *optc)
++{
++	struct optc *optc1;
++	uint32_t is_master_en;
++
++	if (!optc || !optc->ctx)
++		return;
++
++	optc1 = DCN10TG_FROM_TG(optc);
++
++	REG_GET(OTG_CONTROL, OTG_MASTER_EN, &is_master_en);
++	if (!is_master_en)
++		REG_WAIT(OTG_CLOCK_CONTROL, OTG_CURRENT_MASTER_EN_STATE, 0, 1, 100000);
++}
++
+ static const struct timing_generator_funcs dcn35_tg_funcs = {
+ 		.validate_timing = optc1_validate_timing,
+ 		.program_timing = optc1_program_timing,
+@@ -479,6 +496,7 @@ static const struct timing_generator_funcs dcn35_tg_funcs = {
+ 		.set_odm_bypass = optc32_set_odm_bypass,
+ 		.set_odm_combine = optc35_set_odm_combine,
+ 		.get_optc_source = optc2_get_optc_source,
++		.wait_otg_disable = optc35_wait_otg_disable,
+ 		.set_h_timing_div_manual_mode = optc32_set_h_timing_div_manual_mode,
+ 		.set_out_mux = optc3_set_out_mux,
+ 		.set_drr_trigger_window = optc3_set_drr_trigger_window,
 -- 
 2.51.0
 
