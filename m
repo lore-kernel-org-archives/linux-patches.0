@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42902D9497;
-	Tue, 11 Nov 2025 01:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CAF342CA9;
+	Tue, 11 Nov 2025 01:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823551; cv=none; b=boXoSyrYIkAUWNn66La4fSXvjkvlTgm8iTGD55Wk+T+5ai2rXSUkvCFHV0ydw0IUc/0s/tbP7Wk0FDoDTnlY0RvoTsRdGpL1okgSFqZz7f/OlhMCOL0/K66rlIeHtFQS0OBLwKScJReujC0366sZCgkv2zgFFe20LohfROBgf6M=
+	t=1762823553; cv=none; b=I5ZwZmG19hNndWBbbEZFlczZlRtDpG1udTUH+Me65TTY+ly6dAcPyN4KohPFIyw5hV7yk99+C8lysuZPhjlaV7+LWFvV2YvS3n1/fT+kXHlz7fpOc1wLjW55+N4ktEVj3KJRhmXUsEEjpzjfcyOdIq0DU10QhFjhJ3NgUSLRQAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823551; c=relaxed/simple;
-	bh=eoDRwpVkre8Mun/kcOVethtcIob7gJe0FMWCK3VU2h4=;
+	s=arc-20240116; t=1762823553; c=relaxed/simple;
+	bh=MyZtydjstefYDgqRaQmj6SvhWx5OJZ6w0lWCYKnrCEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GxKSwsWstZJccEsIJtNNsBXrsVZglMEfrsPagnjcSk8BRCcYg8jcwCd2lvyjHhOAqjjlLi9nYL8KneGjzOztSw8JxUO4+fTm9bKa0+ePDjD3Q/Lqy7hfcLX59DI8FjaDvNuM7AfDIhwv05QB2+vslkaDhjrnfSG5bmT4XEuH3zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgEZN0M8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJMruMjM06xrNYOHP8S8gAfMYSelRNTS1KBJbFt+6VY0AoAHR5Ir6neycPDZo8jnuWDzVXIFbM6hUBVaIOY+jz0Eby4k7EsZq5gzcettney9GeNU/Y5xbMAM8IqH6Skf0OGNwugLxJHz2t7xoq6b+m6QxW91zZhMjlG0WOT2wqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqzXpqiS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgEZN0M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF7EC19424;
-	Tue, 11 Nov 2025 01:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqzXpqiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81FDC116B1;
+	Tue, 11 Nov 2025 01:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823550;
-	bh=eoDRwpVkre8Mun/kcOVethtcIob7gJe0FMWCK3VU2h4=;
+	s=korg; t=1762823553;
+	bh=MyZtydjstefYDgqRaQmj6SvhWx5OJZ6w0lWCYKnrCEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgEZN0M84Ogggyus3yWDRzkowTO+hSE8JjfXGA0SRzsh9evrSjTMLjsVRsgPcgLIX
-	 Pe1pPnRjAacnpHRT0rViuskUlAwEb8gaoPe7ozcDb1E497S9Yhpa/oYXQIVT91JFzC
-	 R4klps/PMvkELFI6zD5XjbwLqFMk2rJUc/LjC0DM=
+	b=FqzXpqiSDhzncuaItgi/GtXefGJxRjOWIYr4JLokd5lj7tHlfzIU3sYKY3B7t1rcq
+	 nCR3CePwHcjBYNCuCn2sfw56CN9UsvXYR5PDLIlZoTuWvmhMOAIr08bpQ9jhVz9g6c
+	 0+n5weDqxMCEurScLPUqPAsf9SSdWx7P9LZdk2KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Shimrra Shai <shimrrashai@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 268/565] drm/amdgpu: Respect max pixel clock for HDMI and DVI-D (v2)
-Date: Tue, 11 Nov 2025 09:42:04 +0900
-Message-ID: <20251111004532.918446000@linuxfoundation.org>
+Subject: [PATCH 6.17 322/849] ASoC: es8323: remove DAC enablement write from es8323_probe
+Date: Tue, 11 Nov 2025 09:38:12 +0900
+Message-ID: <20251111004544.200323304@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,116 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Shimrra Shai <shimrrashai@gmail.com>
 
-[ Upstream commit 585b2f685c56c5095cc22c7202bf74d8e9a73cdd ]
+[ Upstream commit 33bc29123d26f7caa7d11f139e153e39104afc6c ]
 
-Update the legacy (non-DC) display code to respect the maximum
-pixel clock for HDMI and DVI-D. Reject modes that would require
-a higher pixel clock than can be supported.
+Remove initialization of the DAC and mixer enablement bits from the
+es8323_probe routine. This really should be handled by the DAPM
+subsystem.
 
-Also update the maximum supported HDMI clock value depending on
-the ASIC type.
-
-For reference, see the DC code:
-check max_hdmi_pixel_clock in dce*_resource.c
-
-v2:
-Fix maximum clocks for DVI-D and DVI/HDMI adapters.
-
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Shimrra Shai <shimrrashai@gmail.com>
+Link: https://patch.msgid.link/20250815042023.115485-2-shimrrashai@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdgpu/amdgpu_connectors.c    | 57 ++++++++++++++-----
- 1 file changed, 44 insertions(+), 13 deletions(-)
+ sound/soc/codecs/es8323.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-index 344e0a9ee08a9..f9e679de79a7c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
-@@ -1195,29 +1195,60 @@ static void amdgpu_connector_dvi_force(struct drm_connector *connector)
- 		amdgpu_connector->use_digital = true;
+diff --git a/sound/soc/codecs/es8323.c b/sound/soc/codecs/es8323.c
+index 70d348ff3b437..4c15fffda733c 100644
+--- a/sound/soc/codecs/es8323.c
++++ b/sound/soc/codecs/es8323.c
+@@ -632,7 +632,6 @@ static int es8323_probe(struct snd_soc_component *component)
+ 
+ 	snd_soc_component_write(component, ES8323_CONTROL2, 0x60);
+ 	snd_soc_component_write(component, ES8323_CHIPPOWER, 0x00);
+-	snd_soc_component_write(component, ES8323_DACCONTROL17, 0xB8);
+ 
+ 	return 0;
  }
- 
-+/**
-+ * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
-+ */
-+static int amdgpu_max_hdmi_pixel_clock(const struct amdgpu_device *adev)
-+{
-+	if (adev->asic_type >= CHIP_POLARIS10)
-+		return 600000;
-+	else if (adev->asic_type >= CHIP_TONGA)
-+		return 300000;
-+	else
-+		return 297000;
-+}
-+
-+/**
-+ * Validates the given display mode on DVI and HDMI connectors,
-+ * including analog signals on DVI-I.
-+ */
- static enum drm_mode_status amdgpu_connector_dvi_mode_valid(struct drm_connector *connector,
- 					    struct drm_display_mode *mode)
- {
- 	struct drm_device *dev = connector->dev;
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 	struct amdgpu_connector *amdgpu_connector = to_amdgpu_connector(connector);
-+	const int max_hdmi_pixel_clock = amdgpu_max_hdmi_pixel_clock(adev);
-+	const int max_dvi_single_link_pixel_clock = 165000;
-+	int max_digital_pixel_clock_khz;
- 
- 	/* XXX check mode bandwidth */
- 
--	if (amdgpu_connector->use_digital && (mode->clock > 165000)) {
--		if ((amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I) ||
--		    (amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D) ||
--		    (amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_HDMI_TYPE_B)) {
--			return MODE_OK;
--		} else if (connector->display_info.is_hdmi) {
--			/* HDMI 1.3+ supports max clock of 340 Mhz */
--			if (mode->clock > 340000)
--				return MODE_CLOCK_HIGH;
--			else
--				return MODE_OK;
--		} else {
--			return MODE_CLOCK_HIGH;
-+	if (amdgpu_connector->use_digital) {
-+		switch (amdgpu_connector->connector_object_id) {
-+		case CONNECTOR_OBJECT_ID_HDMI_TYPE_A:
-+			max_digital_pixel_clock_khz = max_hdmi_pixel_clock;
-+			break;
-+		case CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I:
-+		case CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D:
-+			max_digital_pixel_clock_khz = max_dvi_single_link_pixel_clock;
-+			break;
-+		case CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I:
-+		case CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D:
-+		case CONNECTOR_OBJECT_ID_HDMI_TYPE_B:
-+			max_digital_pixel_clock_khz = max_dvi_single_link_pixel_clock * 2;
-+			break;
- 		}
-+
-+		/* When the display EDID claims that it's an HDMI display,
-+		 * we use the HDMI encoder mode of the display HW,
-+		 * so we should verify against the max HDMI clock here.
-+		 */
-+		if (connector->display_info.is_hdmi)
-+			max_digital_pixel_clock_khz = max_hdmi_pixel_clock;
-+
-+		if (mode->clock > max_digital_pixel_clock_khz)
-+			return MODE_CLOCK_HIGH;
- 	}
- 
- 	/* check against the max pixel clock */
 -- 
 2.51.0
 
