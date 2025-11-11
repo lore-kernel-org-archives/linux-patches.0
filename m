@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B449342C8B;
-	Tue, 11 Nov 2025 01:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EEB26E16C;
+	Tue, 11 Nov 2025 01:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825111; cv=none; b=fXLsRDqkgiIwWfaL396AgmS441x5AcUjwEd+Rllq9segVZw+B3vH5gRva49nnRewkLaR/qNU9gthaLoDSuF13ULN3yzAkRPV8+1xXbMGJqGhKGFSvLNUqncc43owcvn6MseCkbk3sQdFrBDllomaCAY0c2oYX8n74hdkIo9K5Jg=
+	t=1762825113; cv=none; b=htCOhhCNPE4Ol4AXIhzNIayBA4k7TUcX1kMHnXinVl4ZIO75Pi0j1iqoQcUSY7BuSDUd9ahdcmnfifpsARReWji9cbE7Q5SHe08dE9CMcjPejq3ifs1b+Pz2wbqceFSPgT+xidoE0ff7G5IMzw///PvOHo/nb0Ew3000ofRCGRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825111; c=relaxed/simple;
-	bh=DriF6BeU1wnPZX7YdSIf9fFXd5ulcXUzzFRvNbKHSUM=;
+	s=arc-20240116; t=1762825113; c=relaxed/simple;
+	bh=S+GsYSptzVPttWQhp3qp9YIuC2lw881B2D8NfH+vR7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBf+fo0BrT5lcFy8jqyqSb8daVD3pguKZ5Q8hJk/iv9REWBNWbTYl/aszR7MmBiMMnxFCnYAB437ZuprbCvM8ajLIuKKxdtLjafHlWgXBbUIJ6YGBrOtXf1TvklpOyiMUuWTVIxmx/hizl4kiVutufxgk6tA4DZz2gAcKmDZ+Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMr7HbOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMdM09XdB+Vs3ZgNHsbBVy1LXOsxh2az/N7aPD0O1KcA+LuK4Z3xFUhKnMo/YcTkKLej2gycXil9XVEhz6aLe4YYvL4RCcVv0IOsG3YwtuWDC+TavipdRz6ZK3vbFdnLmKdm3Y24LhdlFu5JdoNgjn/0SXDYoxxLPzvr5f1pOqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0VXIyjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMr7HbOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B30AC19422;
-	Tue, 11 Nov 2025 01:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0VXIyjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6D0C4CEFB;
+	Tue, 11 Nov 2025 01:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825110;
-	bh=DriF6BeU1wnPZX7YdSIf9fFXd5ulcXUzzFRvNbKHSUM=;
+	s=korg; t=1762825112;
+	bh=S+GsYSptzVPttWQhp3qp9YIuC2lw881B2D8NfH+vR7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMr7HbOCdJvYmj8eN7IDR+RF2Rir6AtjSvrOx19stm0MROByUnkxhktcrIyLwlBCp
-	 zhY6t4Jn4lEl3jdu8Sc1kJXRQtvK9XESNR9ST/wyS3Bt/yv7BJ6vR53i6/5WJ8vqDp
-	 cixNrHcWAgM52HUdeuKtgFYWqBdwh1rMDZ5ZVF1c=
+	b=L0VXIyjVIlafYLKQH4ydfuddpMmGUGkMvabRw2pip+GjzHWvQspUaX47rVfFV3hri
+	 LJBwLRjtTVtE11Yd79Qxex+4D8Wm90HOuqNaz6r6A1hDSXSO1+82HrGsJbhYccgKLE
+	 xxqff2uzLngcSJqDjaWqjBwMySpqp0XK3AHjFWCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dillon Varone <Dillon.Varone@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Karthi Kandasamy <karthi.kandasamy@amd.com>,
 	Ivan Lipski <ivan.lipski@amd.com>,
 	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 622/849] drm/amd/display: Add missing post flip calls
-Date: Tue, 11 Nov 2025 09:43:12 +0900
-Message-ID: <20251111004551.467528440@linuxfoundation.org>
+Subject: [PATCH 6.17 623/849] drm/amd/display: Add AVI infoframe copy in copy_stream_update_to_stream
+Date: Tue, 11 Nov 2025 09:43:13 +0900
+Message-ID: <20251111004551.493348042@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -54,68 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Karthi Kandasamy <karthi.kandasamy@amd.com>
 
-[ Upstream commit 54980f3c63ed3e5cca3d251416581193c90eae76 ]
+[ Upstream commit c8bedab2d9a1a0daa49ac20f9928a943f7205582 ]
 
-[WHY&HOW]
-dc_post_update_surfaces_to_stream needs to be called after a full update
-completes in order to optimize clocks and watermarks for power. Add
-missing calls before idle entry is requested to ensure optimal power.
+[WHY]
+Ensure AVI infoframe updates from stream updates are applied to the active
+stream so OS overrides are not lost.
 
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+[HOW]
+Copy avi_infopacket to stream when valid flag is set.
+Follow existing infopacket copy pattern and perform a basic validity check before assignment.
+
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Signed-off-by: Karthi Kandasamy <karthi.kandasamy@amd.com>
 Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
 Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c      | 3 +--
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c | 8 ++++++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c          | 7 ++++++-
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 6 ++++++
+ drivers/gpu/drm/amd/display/dc/dc_stream.h        | 3 +++
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 57b46572fba27..d66c9609efd8d 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -427,8 +427,7 @@ static inline bool update_planes_and_stream_adapter(struct dc *dc,
- 	/*
- 	 * Previous frame finished and HW is ready for optimization.
- 	 */
--	if (update_type == UPDATE_TYPE_FAST)
--		dc_post_update_surfaces_to_stream(dc);
-+	dc_post_update_surfaces_to_stream(dc);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 74efd50b7c23a..77a842cf84e08 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3307,6 +3307,9 @@ static void copy_stream_update_to_stream(struct dc *dc,
+ 	if (update->adaptive_sync_infopacket)
+ 		stream->adaptive_sync_infopacket = *update->adaptive_sync_infopacket;
  
- 	return dc_update_planes_and_stream(dc,
- 					   array_of_surface_update,
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 2047ac51f1b66..2e7ee77c010e1 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -218,8 +218,10 @@ static void amdgpu_dm_idle_worker(struct work_struct *work)
- 			break;
- 		}
++	if (update->avi_infopacket)
++		stream->avi_infopacket = *update->avi_infopacket;
++
+ 	if (update->dither_option)
+ 		stream->dither_option = *update->dither_option;
  
--		if (idle_work->enable)
-+		if (idle_work->enable) {
-+			dc_post_update_surfaces_to_stream(idle_work->dm->dc);
- 			dc_allow_idle_optimizations(idle_work->dm->dc, true);
-+		}
- 		mutex_unlock(&idle_work->dm->dc_lock);
- 	}
- 	idle_work->dm->idle_workqueue->running = false;
-@@ -273,8 +275,10 @@ static void amdgpu_dm_crtc_vblank_control_worker(struct work_struct *work)
- 			vblank_work->acrtc->dm_irq_params.allow_sr_entry);
- 	}
+@@ -3601,7 +3604,8 @@ static void commit_planes_do_stream_update(struct dc *dc,
+ 					stream_update->vsp_infopacket ||
+ 					stream_update->hfvsif_infopacket ||
+ 					stream_update->adaptive_sync_infopacket ||
+-					stream_update->vtem_infopacket) {
++					stream_update->vtem_infopacket ||
++					stream_update->avi_infopacket) {
+ 				resource_build_info_frame(pipe_ctx);
+ 				dc->hwss.update_info_frame(pipe_ctx);
  
--	if (dm->active_vblank_irq_count == 0)
-+	if (dm->active_vblank_irq_count == 0) {
-+		dc_post_update_surfaces_to_stream(dm->dc);
- 		dc_allow_idle_optimizations(dm->dc, true);
+@@ -5073,6 +5077,7 @@ static bool full_update_required(struct dc *dc,
+ 			stream_update->hfvsif_infopacket ||
+ 			stream_update->vtem_infopacket ||
+ 			stream_update->adaptive_sync_infopacket ||
++			stream_update->avi_infopacket ||
+ 			stream_update->dpms_off ||
+ 			stream_update->allow_freesync ||
+ 			stream_update->vrr_active_variable ||
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index d712548b1927d..d37fc14e27dbf 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -4417,8 +4417,14 @@ static void set_avi_info_frame(
+ 	unsigned int fr_ind = pipe_ctx->stream->timing.fr_index;
+ 	enum dc_timing_3d_format format;
+ 
++	if (stream->avi_infopacket.valid) {
++		*info_packet = stream->avi_infopacket;
++		return;
 +	}
++
+ 	memset(&hdmi_info, 0, sizeof(union hdmi_info_packet));
  
- 	mutex_unlock(&dm->dc_lock);
- 
++
+ 	color_space = pipe_ctx->stream->output_color_space;
+ 	if (color_space == COLOR_SPACE_UNKNOWN)
+ 		color_space = (stream->timing.pixel_encoding == PIXEL_ENCODING_RGB) ?
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+index 5fc6fea211de3..76cf9fdedab0e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+@@ -203,6 +203,7 @@ struct dc_stream_state {
+ 	struct dc_info_packet hfvsif_infopacket;
+ 	struct dc_info_packet vtem_infopacket;
+ 	struct dc_info_packet adaptive_sync_infopacket;
++	struct dc_info_packet avi_infopacket;
+ 	uint8_t dsc_packed_pps[128];
+ 	struct rect src; /* composition area */
+ 	struct rect dst; /* stream addressable area */
+@@ -335,6 +336,8 @@ struct dc_stream_update {
+ 	struct dc_info_packet *hfvsif_infopacket;
+ 	struct dc_info_packet *vtem_infopacket;
+ 	struct dc_info_packet *adaptive_sync_infopacket;
++	struct dc_info_packet *avi_infopacket;
++
+ 	bool *dpms_off;
+ 	bool integer_scaling_update;
+ 	bool *allow_freesync;
 -- 
 2.51.0
 
