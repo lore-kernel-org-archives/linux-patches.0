@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95BA261B77;
-	Tue, 11 Nov 2025 01:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51266337BAE;
+	Tue, 11 Nov 2025 01:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823965; cv=none; b=q4h5LLhsWI0JWVN4e+zcFr+PZwIeLCayW1y8076zxXKqrB4i78vBa6/stImbe8PqJZxry2uKNmrzQBAFcRFS1CYueMWB6o+fPEUqWDoc4p+PCgQUxUUROZEIuWZgGNHBy/b0nG/XlZhtpong3kngfof6LHsncjrTVs1qqm6Ntgg=
+	t=1762823968; cv=none; b=VNW0scgYRaW11QNePbRALAByc/J9WAxuaiXjYHogyxdtGXTVUFhgibL4msYySNieQRG32pLx8SOcAbNkxf+zlCzSiqs4VnO82SZW4pdWw8X4ekw9LC4XhSg87HtJ9dBS7JyoQmYHcuRl4Kk77lWzLvsnAAEcTJ6I7G6757yu+JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823965; c=relaxed/simple;
-	bh=bbEH8/MvBagHuddh22niWUHmuR0q91sMixB4P7E2a5Y=;
+	s=arc-20240116; t=1762823968; c=relaxed/simple;
+	bh=0fb2+hXRUm+CfSCZXhTLlFsLc4iAHS/Ps0UShTU+KUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGqjzDkvg2TWoaJrt7+IOaWfNsHMDypRgmRnxxw2roK+D1pN4J0xcuUGGWYtu/seoVk9bKY7cNOnIa9A44luDdwIydUo/Sw8dBn97Cb9rURKcIgeqjNHVSPXzCPYqMj+vvu3Fa7BHqgm/DuPvuemQ1F6MffUHQEQnoLsMdkct8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6ag8zsG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtprq7zB+gKv3G0hP2WgJ7NatoPP/Xsx7h87bRnt4g0FaBzBHgvf724LRKa0UzJrHQ4qu4iOfxZ4sjjMTUeHwNVxDBUmmC41HiwQzlc1gD4Fb+//KILRw9BBjDjvRAqSjJ97wYSiegj8eNtQvkedyTSFsm7UTxxG/rXAGuGxXSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dl4Cv9Y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6ag8zsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5115BC116B1;
-	Tue, 11 Nov 2025 01:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dl4Cv9Y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D735AC16AAE;
+	Tue, 11 Nov 2025 01:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823965;
-	bh=bbEH8/MvBagHuddh22niWUHmuR0q91sMixB4P7E2a5Y=;
+	s=korg; t=1762823968;
+	bh=0fb2+hXRUm+CfSCZXhTLlFsLc4iAHS/Ps0UShTU+KUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6ag8zsGJA7w9vBHrcurGUPLERy467fcyFfCw/mIC/ZFOkbqSTpaNbk52i6I1dVUU
-	 wdFeVz8EztQ0ECJ8yXCOtFVB4bpqUcbjByLqKnxWWpPheKibXBA78afK2UP8RITl8G
-	 L/inXjN5IBxnuDBiHBTw7dSaVPdpmyZGWElsKnyE=
+	b=Dl4Cv9Y/jv8QsPiKR54dXep9K2QbAZ1SzSMAwEKSDlOdfiGARHFrERlqbca29XJFj
+	 Z+PymkkLA+ydM7RD7Giq01G1IQoWxd7Ne8YQLl7Jz9tlY5p8UUMzu6Y0CxgKOul5Cv
+	 VmYo0/d8c2ATAyfFSAyukA4GTM5bA5QjwzAutMAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 406/849] iio: adc: ad7124: do not require mclk
-Date: Tue, 11 Nov 2025 09:39:36 +0900
-Message-ID: <20251111004546.256801440@linuxfoundation.org>
+Subject: [PATCH 6.12 359/565] wifi: mt76: mt7996: fix memory leak on mt7996_mcu_sta_key_tlv error
+Date: Tue, 11 Nov 2025 09:43:35 +0900
+Message-ID: <20251111004534.944333527@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,130 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit aead8e4cc04612f74c7277de137cc995df280829 ]
+[ Upstream commit 7c0f63fe37a5da2c13fc35c89053b31be8ead895 ]
 
-Make the "mclk" clock optional in the ad7124 driver. The MCLK is an
-internal counter on the ADC, so it is not something that should be
-coming from the devicetree. However, existing users may be using this
-to essentially select the power mode of the ADC from the devicetree.
-In order to not break those users, we have to keep the existing "mclk"
-handling, but now it is optional.
+Free the allocated skb on error
 
-Now, when the "mclk" clock is omitted from the devicetree, the driver
-will default to the full power mode. Support for an external clock
-and dynamic power mode switching can be added later if needed.
-
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250828-iio-adc-ad7124-proper-clock-support-v3-2-0b317b4605e5@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://patch.msgid.link/20250915075910.47558-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c | 62 ++++++++++++++++++++++++++++------------
- 1 file changed, 44 insertions(+), 18 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad7124.c b/drivers/iio/adc/ad7124.c
-index 4d8c6bafd1c31..ed35d2a8bbf1b 100644
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -174,7 +174,6 @@ struct ad7124_state {
- 	struct ad_sigma_delta sd;
- 	struct ad7124_channel *channels;
- 	struct regulator *vref[4];
--	struct clk *mclk;
- 	unsigned int adc_control;
- 	unsigned int num_channels;
- 	struct mutex cfgs_lock; /* lock for configs access */
-@@ -254,7 +253,9 @@ static void ad7124_set_channel_odr(struct ad7124_state *st, unsigned int channel
- {
- 	unsigned int fclk, odr_sel_bits;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 5f5544b6214cd..8738e4b645420 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -2283,8 +2283,10 @@ int mt7996_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
+ 		return PTR_ERR(skb);
  
--	fclk = clk_get_rate(st->mclk);
-+	fclk = ad7124_master_clk_freq_hz[FIELD_GET(AD7124_ADC_CONTROL_POWER_MODE,
-+						   st->adc_control)];
-+
- 	/*
- 	 * FS[10:0] = fCLK / (fADC x 32) where:
- 	 * fADC is the output data rate
-@@ -1111,21 +1112,50 @@ static int ad7124_parse_channel_config(struct iio_dev *indio_dev,
- static int ad7124_setup(struct ad7124_state *st)
- {
- 	struct device *dev = &st->sd.spi->dev;
--	unsigned int fclk, power_mode;
-+	unsigned int power_mode;
-+	struct clk *mclk;
- 	int i, ret;
- 
--	fclk = clk_get_rate(st->mclk);
--	if (!fclk)
--		return dev_err_probe(dev, -EINVAL, "Failed to get mclk rate\n");
-+	/*
-+	 * Always use full power mode for max performance. If needed, the driver
-+	 * could be adapted to use a dynamic power mode based on the requested
-+	 * output data rate.
-+	 */
-+	power_mode = AD7124_ADC_CONTROL_POWER_MODE_FULL;
- 
--	/* The power mode changes the master clock frequency */
--	power_mode = ad7124_find_closest_match(ad7124_master_clk_freq_hz,
--					ARRAY_SIZE(ad7124_master_clk_freq_hz),
--					fclk);
--	if (fclk != ad7124_master_clk_freq_hz[power_mode]) {
--		ret = clk_set_rate(st->mclk, fclk);
--		if (ret)
--			return dev_err_probe(dev, ret, "Failed to set mclk rate\n");
-+	/*
-+	 * This "mclk" business is needed for backwards compatibility with old
-+	 * devicetrees that specified a fake clock named "mclk" to select the
-+	 * power mode.
-+	 */
-+	mclk = devm_clk_get_optional_enabled(dev, "mclk");
-+	if (IS_ERR(mclk))
-+		return dev_err_probe(dev, PTR_ERR(mclk), "Failed to get mclk\n");
-+
-+	if (mclk) {
-+		unsigned long mclk_hz;
-+
-+		mclk_hz = clk_get_rate(mclk);
-+		if (!mclk_hz)
-+			return dev_err_probe(dev, -EINVAL,
-+					     "Failed to get mclk rate\n");
-+
-+		/*
-+		 * This logic is a bit backwards, which is why it is only here
-+		 * for backwards compatibility. The driver should be able to set
-+		 * the power mode as it sees fit and the f_clk/mclk rate should
-+		 * be dynamic accordingly. But here, we are selecting a fixed
-+		 * power mode based on the given "mclk" rate.
-+		 */
-+		power_mode = ad7124_find_closest_match(ad7124_master_clk_freq_hz,
-+			ARRAY_SIZE(ad7124_master_clk_freq_hz), mclk_hz);
-+
-+		if (mclk_hz != ad7124_master_clk_freq_hz[power_mode]) {
-+			ret = clk_set_rate(mclk, mclk_hz);
-+			if (ret)
-+				return dev_err_probe(dev, ret,
-+						     "Failed to set mclk rate\n");
-+		}
- 	}
- 
- 	/* Set the power mode */
-@@ -1303,10 +1333,6 @@ static int ad7124_probe(struct spi_device *spi)
- 			return dev_err_probe(dev, ret, "Failed to register disable handler for regulator #%d\n", i);
- 	}
- 
--	st->mclk = devm_clk_get_enabled(&spi->dev, "mclk");
--	if (IS_ERR(st->mclk))
--		return dev_err_probe(dev, PTR_ERR(st->mclk), "Failed to get mclk\n");
--
- 	ret = ad7124_soft_reset(st);
- 	if (ret < 0)
+ 	ret = mt7996_mcu_sta_key_tlv(wcid, skb, key, cmd);
+-	if (ret)
++	if (ret) {
++		dev_kfree_skb(skb);
  		return ret;
++	}
+ 
+ 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
+ }
 -- 
 2.51.0
 
