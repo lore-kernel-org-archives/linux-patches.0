@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA2B2BCF5;
-	Tue, 11 Nov 2025 01:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67BA2D9497;
+	Tue, 11 Nov 2025 01:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825269; cv=none; b=SOwAnxtQHOPlzfmJ+C/q3Z9v6MH2xe60RKcvn+bwC6IY1ZkL6mC1+oESxoc6fhw72uLN7LOSDkDf9lpl5kjB7FAj1UR/jC+MGjKaGI6SOdNG/4amsZFUOSMfvhKh0EIuMwnBEt+bItZZ9sCPX2LmqKuI/dHQFeecVBwW5Haz5sU=
+	t=1762825271; cv=none; b=j1l4NxYud6MYqhldGeeq5xBZOrM210YsAYkFQaQ9H1vCjUa857+nSHDwHNwtTvhdOFq2+voSBQwt3XXbaWtUYPgSdjEdXAmjnV2fm/LxFqpN7PW2+tUDNHrJLxBfJRQxYQgMg1R8Onimn4nqTAGH7PicbSN1p9ZgZ6BQ0FpYmdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825269; c=relaxed/simple;
-	bh=5BLRkKcUBQGIhxHKKYbteev+Y87x0KArfXzG6SQpUkk=;
+	s=arc-20240116; t=1762825271; c=relaxed/simple;
+	bh=hB581TaBkdp8UFx1DHM+UnZuGs0D+oDosQgjNBeES/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2yXZaaznD0/Ap2YfZONpf6MDrK3fKg9BKLfMnC17YZHbl9VM7Mjvllisu7ZHSCUsbpJzEQrenP1XGprvBxcPJRV5CwTe1g7ALKdZeVUfoemmW0M5lE/LZ5cyLFNcmsh6/l045PJb1wrkV58yX1weuIOaJWmtHm9ZryuMeUdVVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFOsQxcz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnkNnlopMZPAFeY5P5e8YH55+9CUcUsSAyRaR9uJlnL3HzfsQEztoRq3JGAA7cPRX55d7S29OV6myl/GGQoIBekjRD1AKLkRZKmhvRC0t79Vr08aix0MngQpKd94eze9MkAeqHlqFk5tGFbyznHLAGSfdUjVH2kYd95DrKhPyNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huEz1V4T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFOsQxcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF309C113D0;
-	Tue, 11 Nov 2025 01:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huEz1V4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F910C4CEF5;
+	Tue, 11 Nov 2025 01:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825269;
-	bh=5BLRkKcUBQGIhxHKKYbteev+Y87x0KArfXzG6SQpUkk=;
+	s=korg; t=1762825271;
+	bh=hB581TaBkdp8UFx1DHM+UnZuGs0D+oDosQgjNBeES/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFOsQxczeZnNp2uSZB/FcYhvlb8ttlQYWh5juybmkX9gRKgjNvjE8+bNZam6MlTwB
-	 w3at10B5xWXciuG9IZNEiJsbrUYqKUrhwZjbED5nz1H0IwDFxwTlWdncx9aeCFW/0z
-	 j8aVA9sWLQjgaeQN5cT7ZDnWp8BPkxKoBu2ubBZQ=
+	b=huEz1V4Tps0jswbc4KGqVXel2oa8T7RodMeN6CfROF3WJ9sLX7p1JpCJbtpEAejSt
+	 SOjPyBxzvXoH73pAW4mMXDV7EWozAowY+sGRGyPSZ3jp4d3gf6+eZMP8vTKAkSXRdr
+	 Dx3ZUXwucB8vh9kkLIOsszHJw5fAqvbXuhMtt3jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 732/849] drm/amdgpu: Report individual reset error
-Date: Tue, 11 Nov 2025 09:45:02 +0900
-Message-ID: <20251111004554.131974541@linuxfoundation.org>
+Subject: [PATCH 6.17 733/849] ceph: add checking of wait_for_completion_killable() return value
+Date: Tue, 11 Nov 2025 09:45:03 +0900
+Message-ID: <20251111004554.158094581@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,80 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 2e97663760e5fb7ee14f399c68e57b894f01e505 ]
+[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
 
-If reinitialization of one of the GPUs fails after reset, it logs
-failure on all subsequent GPUs eventhough they have resumed
-successfully.
+The Coverity Scan service has detected the calling of
+wait_for_completion_killable() without checking the return
+value in ceph_lock_wait_for_completion() [1]. The CID 1636232
+defect contains explanation: "If the function returns an error
+value, the error value may be mistaken for a normal value.
+In ceph_lock_wait_for_completion(): Value returned from
+a function is not checked for errors before being used. (CWE-252)".
 
-A sample log where only device at 0000:95:00.0 had a failure -
+The patch adds the checking of wait_for_completion_killable()
+return value and return the error code from
+ceph_lock_wait_for_completion().
 
-	amdgpu 0000:15:00.0: amdgpu: GPU reset(19) succeeded!
-	amdgpu 0000:65:00.0: amdgpu: GPU reset(19) succeeded!
-	amdgpu 0000:75:00.0: amdgpu: GPU reset(19) succeeded!
-	amdgpu 0000:85:00.0: amdgpu: GPU reset(19) succeeded!
-	amdgpu 0000:95:00.0: amdgpu: GPU reset(19) failed
-	amdgpu 0000:e5:00.0: amdgpu: GPU reset(19) failed
-	amdgpu 0000:f5:00.0: amdgpu: GPU reset(19) failed
-	amdgpu 0000:05:00.0: amdgpu: GPU reset(19) failed
-	amdgpu 0000:15:00.0: amdgpu: GPU reset end with ret = -5
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
 
-To avoid confusion, report the error for each device
-separately and return the first error as the overall result.
-
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 25 +++++++++++++---------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ fs/ceph/locks.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 1115af343e013..ddd0e7ab82be7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -6337,23 +6337,28 @@ static int amdgpu_device_sched_resume(struct list_head *device_list,
- 		if (!drm_drv_uses_atomic_modeset(adev_to_drm(tmp_adev)) && !job_signaled)
- 			drm_helper_resume_force_mode(adev_to_drm(tmp_adev));
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index ebf4ac0055ddc..dd764f9c64b9f 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -221,7 +221,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
+ 	if (err && err != -ERESTARTSYS)
+ 		return err;
  
--		if (tmp_adev->asic_reset_res)
--			r = tmp_adev->asic_reset_res;
--
--		tmp_adev->asic_reset_res = 0;
--
--		if (r) {
-+		if (tmp_adev->asic_reset_res) {
- 			/* bad news, how to tell it to userspace ?
- 			 * for ras error, we should report GPU bad status instead of
- 			 * reset failure
- 			 */
- 			if (reset_context->src != AMDGPU_RESET_SRC_RAS ||
- 			    !amdgpu_ras_eeprom_check_err_threshold(tmp_adev))
--				dev_info(tmp_adev->dev, "GPU reset(%d) failed\n",
--					atomic_read(&tmp_adev->gpu_reset_counter));
--			amdgpu_vf_error_put(tmp_adev, AMDGIM_ERROR_VF_GPU_RESET_FAIL, 0, r);
-+				dev_info(
-+					tmp_adev->dev,
-+					"GPU reset(%d) failed with error %d \n",
-+					atomic_read(
-+						&tmp_adev->gpu_reset_counter),
-+					tmp_adev->asic_reset_res);
-+			amdgpu_vf_error_put(tmp_adev,
-+					    AMDGIM_ERROR_VF_GPU_RESET_FAIL, 0,
-+					    tmp_adev->asic_reset_res);
-+			if (!r)
-+				r = tmp_adev->asic_reset_res;
-+			tmp_adev->asic_reset_res = 0;
- 		} else {
--			dev_info(tmp_adev->dev, "GPU reset(%d) succeeded!\n", atomic_read(&tmp_adev->gpu_reset_counter));
-+			dev_info(tmp_adev->dev, "GPU reset(%d) succeeded!\n",
-+				 atomic_read(&tmp_adev->gpu_reset_counter));
- 			if (amdgpu_acpi_smart_shift_update(tmp_adev,
- 							   AMDGPU_SS_DEV_D0))
- 				dev_warn(tmp_adev->dev,
+-	wait_for_completion_killable(&req->r_safe_completion);
++	err = wait_for_completion_killable(&req->r_safe_completion);
++	if (err)
++		return err;
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
