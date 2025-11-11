@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D22C1E9B3D;
-	Tue, 11 Nov 2025 01:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBC2DF76;
+	Tue, 11 Nov 2025 01:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825285; cv=none; b=sZ1tYl4ztysWCrAGOYP87Yfg+MRiRqw3C3SrTEX5guU8wrqdEYAQ6TTBHC1wlgyEyiL3/1Qt98n5a8KWuSeKFOe6kTtsLfLw5o+hMFux4Ht1V+2WrEHM517939YDuRlVKI5nsqBlHRQeOV/6EXVorZimr4jlIyIoogpPl9I6tnQ=
+	t=1762825288; cv=none; b=T+PmpTUCTX6ecJKLMoRyoFXvQoF15NkwuqG91sxJ49qsvG9f2lGI8b9yaaCHGRzzlXDX/8s/+qOY7fNRWrNmITCTu+FASZESmlJryaGu5AzjwL+/igwpQXnIVkJ8wtMnDnDwikhrmBAV9jI58s+L2V1RLeNWopok0cxJyJN2Iqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825285; c=relaxed/simple;
-	bh=6MrKhXiVwGNm1qHIOKUGf7nnxNKRKtHqJKSF9iHgdkY=;
+	s=arc-20240116; t=1762825288; c=relaxed/simple;
+	bh=QDSA+/WwPmJeMdj1IfLaZhphdFcM27jL0oxaD4D28FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BQRUdKgDqi0u5ivVGcVd5rqu4g3FeSW5tdqXbVQtz4j9c0NaPtnxOqdLXcpxhiGxQfemCU7xLCEH16lLZ0JN1wohQJAAEEx3ZtJiInX7hER6+imFa1hfyMXqSLWmC1kzVUMxUXL7+JjyPAP9in2hNlwIp7avYAzeJKNs6aJ1ilw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyHTDGzZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RX3D02dWF6EFfRgghK1WaNNKXGksjJY4Yog4cLNZj5HvhQl4a2dy+pmOQ8GLX9GHnKAB2xWtiEbjiSx1QLrBbgVs6tIzjG8aRN6OPf77STZntJCBZKmcrYOlXc0Y1L/qQpW4xpC14P8CH+uH65mnmXnH5Oy6LAz47xCTkAN+6kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcCpRjpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyHTDGzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EB5C16AAE;
-	Tue, 11 Nov 2025 01:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcCpRjpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28AAC19421;
+	Tue, 11 Nov 2025 01:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825285;
-	bh=6MrKhXiVwGNm1qHIOKUGf7nnxNKRKtHqJKSF9iHgdkY=;
+	s=korg; t=1762825288;
+	bh=QDSA+/WwPmJeMdj1IfLaZhphdFcM27jL0oxaD4D28FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZyHTDGzZgu7qdbtQgJAsR4zkdsXc5U9MWCnWDlPVguDBBBQTF56EQbBa7RzStNSoD
-	 fm4Y23K9484bbbFR/DN3cmnyyL5FyAg1+U/KjkyHy/geDUMnHatResEHztQJweFxTq
-	 KWKKpqew6a75Ukb74D9Q5oyQnELnC4AGWtlLLAZw=
+	b=pcCpRjpVgYtZ11ZZ1sxcdlTNpNLgPtN7348V0FAI+I85VHwkmZRISxAXRWF0cdDMy
+	 in8NJ+i/2xwq4WFg/Vg3KUY8YdUFJHy6DjcZQk3J4Z98qod0FyQEaSEkwMZShqPz0F
+	 puGWdxUacYKu88LWQjTJBzPWmOj+uchZBqTDiikY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.17 738/849] rust: condvar: fix broken intra-doc link
-Date: Tue, 11 Nov 2025 09:45:08 +0900
-Message-ID: <20251111004554.282781730@linuxfoundation.org>
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jon Mason <jdmason@kudzu.us>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 712/849] NTB: epf: Allow arbitrary BAR mapping
+Date: Tue, 11 Nov 2025 09:44:42 +0900
+Message-ID: <20251111004553.651340728@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,52 +51,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-commit 09b1704f5b02c18dd02b21343530463fcfc92c54 upstream.
+[ Upstream commit 5ad865862a0fd349163243e1834ed98ba9b81905 ]
 
-The future move of pin-init to `syn` uncovers the following broken
-intra-doc link:
+The NTB epf host driver assumes the BAR number associated with a memory
+window is just incremented from the BAR number associated with MW1. This
+seems to have been enough so far but this is not really how the endpoint
+side work and the two could easily become mis-aligned.
 
-    error: unresolved link to `crate::pin_init`
-      --> rust/kernel/sync/condvar.rs:39:40
-       |
-    39 | /// instances is with the [`pin_init`](crate::pin_init!) and [`new_condvar`] macros.
-       |                                        ^^^^^^^^^^^^^^^^ no item named `pin_init` in module `kernel`
-       |
-       = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
-       = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+ntb_epf_mw_to_bar() even assumes that the BAR number is the memory window
+index + 2, which means the function only returns a proper result if BAR_2
+is associated with MW1.
 
-Currently, when rendered, the link points to a literal `crate::pin_init!`
-URL.
+Instead, fully describe and allow arbitrary NTB BAR mapping.
 
-Thus fix it.
-
-Cc: stable@vger.kernel.org
-Fixes: 129e97be8e28 ("rust: pin-init: fix documentation links")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20251029073344.349341-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/sync/condvar.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c | 103 ++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 50 deletions(-)
 
-diff --git a/rust/kernel/sync/condvar.rs b/rust/kernel/sync/condvar.rs
-index c6ec64295c9f..aa5b9a7a726d 100644
---- a/rust/kernel/sync/condvar.rs
-+++ b/rust/kernel/sync/condvar.rs
-@@ -36,7 +36,7 @@ macro_rules! new_condvar {
- /// spuriously.
- ///
- /// Instances of [`CondVar`] need a lock class and to be pinned. The recommended way to create such
--/// instances is with the [`pin_init`](crate::pin_init!) and [`new_condvar`] macros.
-+/// instances is with the [`pin_init`](pin_init::pin_init!) and [`new_condvar`] macros.
- ///
- /// # Examples
- ///
+diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+index 00f0e78f685bf..2b51156e01b0f 100644
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -49,6 +49,7 @@
+ #define NTB_EPF_COMMAND_TIMEOUT	1000 /* 1 Sec */
+ 
+ enum pci_barno {
++	NO_BAR = -1,
+ 	BAR_0,
+ 	BAR_1,
+ 	BAR_2,
+@@ -57,16 +58,26 @@ enum pci_barno {
+ 	BAR_5,
+ };
+ 
++enum epf_ntb_bar {
++	BAR_CONFIG,
++	BAR_PEER_SPAD,
++	BAR_DB,
++	BAR_MW1,
++	BAR_MW2,
++	BAR_MW3,
++	BAR_MW4,
++	NTB_BAR_NUM,
++};
++
++#define NTB_EPF_MAX_MW_COUNT	(NTB_BAR_NUM - BAR_MW1)
++
+ struct ntb_epf_dev {
+ 	struct ntb_dev ntb;
+ 	struct device *dev;
+ 	/* Mutex to protect providing commands to NTB EPF */
+ 	struct mutex cmd_lock;
+ 
+-	enum pci_barno ctrl_reg_bar;
+-	enum pci_barno peer_spad_reg_bar;
+-	enum pci_barno db_reg_bar;
+-	enum pci_barno mw_bar;
++	const enum pci_barno *barno_map;
+ 
+ 	unsigned int mw_count;
+ 	unsigned int spad_count;
+@@ -85,17 +96,6 @@ struct ntb_epf_dev {
+ 
+ #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
+ 
+-struct ntb_epf_data {
+-	/* BAR that contains both control region and self spad region */
+-	enum pci_barno ctrl_reg_bar;
+-	/* BAR that contains peer spad region */
+-	enum pci_barno peer_spad_reg_bar;
+-	/* BAR that contains Doorbell region and Memory window '1' */
+-	enum pci_barno db_reg_bar;
+-	/* BAR that contains memory windows*/
+-	enum pci_barno mw_bar;
+-};
+-
+ static int ntb_epf_send_command(struct ntb_epf_dev *ndev, u32 command,
+ 				u32 argument)
+ {
+@@ -144,7 +144,7 @@ static int ntb_epf_mw_to_bar(struct ntb_epf_dev *ndev, int idx)
+ 		return -EINVAL;
+ 	}
+ 
+-	return idx + 2;
++	return ndev->barno_map[BAR_MW1 + idx];
+ }
+ 
+ static int ntb_epf_mw_count(struct ntb_dev *ntb, int pidx)
+@@ -413,7 +413,9 @@ static int ntb_epf_mw_set_trans(struct ntb_dev *ntb, int pidx, int idx,
+ 		return -EINVAL;
+ 	}
+ 
+-	bar = idx + ndev->mw_bar;
++	bar = ntb_epf_mw_to_bar(ndev, idx);
++	if (bar < 0)
++		return bar;
+ 
+ 	mw_size = pci_resource_len(ntb->pdev, bar);
+ 
+@@ -455,7 +457,9 @@ static int ntb_epf_peer_mw_get_addr(struct ntb_dev *ntb, int idx,
+ 	if (idx == 0)
+ 		offset = readl(ndev->ctrl_reg + NTB_EPF_MW1_OFFSET);
+ 
+-	bar = idx + ndev->mw_bar;
++	bar = ntb_epf_mw_to_bar(ndev, idx);
++	if (bar < 0)
++		return bar;
+ 
+ 	if (base)
+ 		*base = pci_resource_start(ndev->ntb.pdev, bar) + offset;
+@@ -560,6 +564,11 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
+ 	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
+ 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
+ 
++	if (ndev->mw_count > NTB_EPF_MAX_MW_COUNT) {
++		dev_err(dev, "Unsupported MW count: %u\n", ndev->mw_count);
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -596,14 +605,15 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
+ 		dev_warn(&pdev->dev, "Cannot DMA highmem\n");
+ 	}
+ 
+-	ndev->ctrl_reg = pci_iomap(pdev, ndev->ctrl_reg_bar, 0);
++	ndev->ctrl_reg = pci_iomap(pdev, ndev->barno_map[BAR_CONFIG], 0);
+ 	if (!ndev->ctrl_reg) {
+ 		ret = -EIO;
+ 		goto err_pci_regions;
+ 	}
+ 
+-	if (ndev->peer_spad_reg_bar) {
+-		ndev->peer_spad_reg = pci_iomap(pdev, ndev->peer_spad_reg_bar, 0);
++	if (ndev->barno_map[BAR_PEER_SPAD] != ndev->barno_map[BAR_CONFIG]) {
++		ndev->peer_spad_reg = pci_iomap(pdev,
++						ndev->barno_map[BAR_PEER_SPAD], 0);
+ 		if (!ndev->peer_spad_reg) {
+ 			ret = -EIO;
+ 			goto err_pci_regions;
+@@ -614,7 +624,7 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
+ 		ndev->peer_spad_reg = ndev->ctrl_reg + spad_off  + spad_sz;
+ 	}
+ 
+-	ndev->db_reg = pci_iomap(pdev, ndev->db_reg_bar, 0);
++	ndev->db_reg = pci_iomap(pdev, ndev->barno_map[BAR_DB], 0);
+ 	if (!ndev->db_reg) {
+ 		ret = -EIO;
+ 		goto err_pci_regions;
+@@ -659,12 +669,7 @@ static void ntb_epf_cleanup_isr(struct ntb_epf_dev *ndev)
+ static int ntb_epf_pci_probe(struct pci_dev *pdev,
+ 			     const struct pci_device_id *id)
+ {
+-	enum pci_barno peer_spad_reg_bar = BAR_1;
+-	enum pci_barno ctrl_reg_bar = BAR_0;
+-	enum pci_barno db_reg_bar = BAR_2;
+-	enum pci_barno mw_bar = BAR_2;
+ 	struct device *dev = &pdev->dev;
+-	struct ntb_epf_data *data;
+ 	struct ntb_epf_dev *ndev;
+ 	int ret;
+ 
+@@ -675,18 +680,10 @@ static int ntb_epf_pci_probe(struct pci_dev *pdev,
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+-	data = (struct ntb_epf_data *)id->driver_data;
+-	if (data) {
+-		peer_spad_reg_bar = data->peer_spad_reg_bar;
+-		ctrl_reg_bar = data->ctrl_reg_bar;
+-		db_reg_bar = data->db_reg_bar;
+-		mw_bar = data->mw_bar;
+-	}
++	ndev->barno_map = (const enum pci_barno *)id->driver_data;
++	if (!ndev->barno_map)
++		return -EINVAL;
+ 
+-	ndev->peer_spad_reg_bar = peer_spad_reg_bar;
+-	ndev->ctrl_reg_bar = ctrl_reg_bar;
+-	ndev->db_reg_bar = db_reg_bar;
+-	ndev->mw_bar = mw_bar;
+ 	ndev->dev = dev;
+ 
+ 	ntb_epf_init_struct(ndev, pdev);
+@@ -730,30 +727,36 @@ static void ntb_epf_pci_remove(struct pci_dev *pdev)
+ 	ntb_epf_deinit_pci(ndev);
+ }
+ 
+-static const struct ntb_epf_data j721e_data = {
+-	.ctrl_reg_bar = BAR_0,
+-	.peer_spad_reg_bar = BAR_1,
+-	.db_reg_bar = BAR_2,
+-	.mw_bar = BAR_2,
++static const enum pci_barno j721e_map[NTB_BAR_NUM] = {
++	[BAR_CONFIG]	= BAR_0,
++	[BAR_PEER_SPAD]	= BAR_1,
++	[BAR_DB]	= BAR_2,
++	[BAR_MW1]	= BAR_2,
++	[BAR_MW2]	= BAR_3,
++	[BAR_MW3]	= BAR_4,
++	[BAR_MW4]	= BAR_5
+ };
+ 
+-static const struct ntb_epf_data mx8_data = {
+-	.ctrl_reg_bar = BAR_0,
+-	.peer_spad_reg_bar = BAR_0,
+-	.db_reg_bar = BAR_2,
+-	.mw_bar = BAR_4,
++static const enum pci_barno mx8_map[NTB_BAR_NUM] = {
++	[BAR_CONFIG]	= BAR_0,
++	[BAR_PEER_SPAD]	= BAR_0,
++	[BAR_DB]	= BAR_2,
++	[BAR_MW1]	= BAR_4,
++	[BAR_MW2]	= BAR_5,
++	[BAR_MW3]	= NO_BAR,
++	[BAR_MW4]	= NO_BAR
+ };
+ 
+ static const struct pci_device_id ntb_epf_pci_tbl[] = {
+ 	{
+ 		PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
+ 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
+-		.driver_data = (kernel_ulong_t)&j721e_data,
++		.driver_data = (kernel_ulong_t)j721e_map,
+ 	},
+ 	{
+ 		PCI_DEVICE(PCI_VENDOR_ID_FREESCALE, 0x0809),
+ 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
+-		.driver_data = (kernel_ulong_t)&mx8_data,
++		.driver_data = (kernel_ulong_t)mx8_map,
+ 	},
+ 	{ },
+ };
 -- 
-2.51.2
+2.51.0
 
 
 
