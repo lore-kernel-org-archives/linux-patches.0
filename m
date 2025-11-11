@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715F72D979C;
-	Tue, 11 Nov 2025 01:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4353358C3;
+	Tue, 11 Nov 2025 01:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824092; cv=none; b=qyFJLCW6mHry4igy5Wr9VSkY2mvjhKwWJn1igOP7d3WY8iZ1kux3c4efn95ZFk5+pXAHUz/7KndpXCYe+WGeC8Tv1PxaRqM2V3us1Z/3QlJEoRT6AXeLZ5M9oNCtK448JuYd6GnGXAtNA1j4q7Um0rccekholR7z1c41K/hfYTs=
+	t=1762824094; cv=none; b=rXwLnSkCmfnQxmKULvH88rmxTsCiTNWiG8pqrQhUog6oayNlLHY8xYP5e5qNH9g8+esWHB7OdrKCazf/rwt2ZEeV24/oBXkyB7A9OMTJWUXS+iXD9tQb5T3Ye9gMx9FzqdSwF125q2FZpVmRwZdAApxLlu0iNk/AQ9NCW8RGFLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824092; c=relaxed/simple;
-	bh=WdvUI/2yHQF4Wdz3BIubOHQK6kRY2PqvFeZFn3biam0=;
+	s=arc-20240116; t=1762824094; c=relaxed/simple;
+	bh=0ZWQ5h+KfAL5sNyNIce/FyTqf1En0+xE9WhPSyThy5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E2QB8qX2yE2I80LLlgcw0QHUzmG6YjQyRoCrHdM2H39i01luyP0imNBbmM4vhXKu1uTk+rgy6jI5ONQoSSh4uPwDG6AP7ygZQUaTbbK3lIbK4lA5AmSfK5cI/VUD+JYMqwoQN9nAWmyJNxpCz8/21j7g9heFOxZF2HRz17D7pvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12PlZhYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VWBlMuTrZMaCImhZl+TZUWc3ws2V4Dd6iZa8VlSQkM6OzIhW/dp0FQd3SfA5EzwNRjmgNyk4YP/ZBxZFIzj1R5118WB4r02Sgdh9b4uc3eP+zXKLYzhQMCQ8Qiaj8km/ZLiAB4Ix7WU9P4CvempliYdqqdoO6I1cP01IIvReLNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHCMRd0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12PlZhYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0921EC113D0;
-	Tue, 11 Nov 2025 01:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHCMRd0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5986BC4CEF5;
+	Tue, 11 Nov 2025 01:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824092;
-	bh=WdvUI/2yHQF4Wdz3BIubOHQK6kRY2PqvFeZFn3biam0=;
+	s=korg; t=1762824094;
+	bh=0ZWQ5h+KfAL5sNyNIce/FyTqf1En0+xE9WhPSyThy5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12PlZhYDUN+BnzxQgj4McqU/6ru/yD+MBfh0zXVUxwLgh7+zVX0xmKCPMAOmRpv2v
-	 2tNHwpZlnaHsdtUwtaVRZBCm64j94ilXDP4RsBXCz76e0IlcVNBcpDjr/7jNZ9nMn9
-	 srSUQ+onMYsgSkKs9VOvJGiP9B8zW2LiM/GEusWw=
+	b=vHCMRd0IS/Fn4fjGvBnNq13yBKl1VJoo5GIP0n5j6bu0oq/Kreb2DCyTm2xUxQn4F
+	 qgOPOgWAkTMoFwODUtoADAMnQSDsd+VGUTysJlF/M6KhU9FW4mD/+hIWWGN0D2UoJA
+	 0BY+GyHegvbiYUJXDBiejMydYAtNBD+51IsBPlhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nick Nielsen <nick.kainielsen@free.fr>,
+	grm1 <grm1@mailbox.org>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 435/849] media: adv7180: Only validate format in querystd
-Date: Tue, 11 Nov 2025 09:40:05 +0900
-Message-ID: <20251111004546.947597363@linuxfoundation.org>
+Subject: [PATCH 6.12 386/565] usb: xhci-pci: add support for hosts with zero USB3 ports
+Date: Tue, 11 Nov 2025 09:44:02 +0900
+Message-ID: <20251111004535.555528802@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,87 +47,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
+[ Upstream commit 719de070f764e079cdcb4ddeeb5b19b3ddddf9c1 ]
 
-The .querystd callback should not program the device with the detected
-standard, it should only report the standard to user-space. User-space
-may then use .s_std to set the standard, if it wants to use it.
+Add xhci support for PCI hosts that have zero USB3 ports.
+Avoid creating a shared Host Controller Driver (HCD) when there is only
+one root hub. Additionally, all references to 'xhci->shared_hcd' are now
+checked before use.
 
-All that is required of .querystd is to setup the auto detection of
-standards and report its findings.
+Only xhci-pci.c requires modification to accommodate this change, as the
+xhci core already supports configurations with zero USB3 ports. This
+capability was introduced when xHCI Platform and MediaTek added support
+for zero USB3 ports.
 
-While at it add some documentation on why this can't happen while
-streaming and improve the error handling using a scoped guard.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220181
+Tested-by: Nick Nielsen <nick.kainielsen@free.fr>
+Tested-by: grm1 <grm1@mailbox.org>
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250917210726.97100-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ drivers/usb/host/xhci-pci.c | 42 +++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 8100fe6b0f1d4..5accf3020e076 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -357,32 +357,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
- static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 234efb9731b2c..933d9fdd9516b 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -616,7 +616,7 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
  {
- 	struct adv7180_state *state = to_state(sd);
--	int err = mutex_lock_interruptible(&state->mutex);
--	if (err)
--		return err;
--
--	if (state->streaming) {
--		err = -EBUSY;
--		goto unlock;
+ 	int retval;
+ 	struct xhci_hcd *xhci;
+-	struct usb_hcd *hcd;
++	struct usb_hcd *hcd, *usb3_hcd;
+ 	struct reset_control *reset;
+ 
+ 	reset = devm_reset_control_get_optional_exclusive(&dev->dev, NULL);
+@@ -642,26 +642,32 @@ int xhci_pci_common_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	hcd = dev_get_drvdata(&dev->dev);
+ 	xhci = hcd_to_xhci(hcd);
+ 	xhci->reset = reset;
+-	xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
+-						 pci_name(dev), hcd);
+-	if (!xhci->shared_hcd) {
+-		retval = -ENOMEM;
+-		goto dealloc_usb2_hcd;
 -	}
-+	int ret;
  
--	err = adv7180_set_video_standard(state,
--			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
--	if (err)
--		goto unlock;
-+	guard(mutex)(&state->mutex);
+-	retval = xhci_ext_cap_init(xhci);
+-	if (retval)
+-		goto put_usb3_hcd;
++	xhci->allow_single_roothub = 1;
++	if (!xhci_has_one_roothub(xhci)) {
++		xhci->shared_hcd = usb_create_shared_hcd(&xhci_pci_hc_driver, &dev->dev,
++							 pci_name(dev), hcd);
++		if (!xhci->shared_hcd) {
++			retval = -ENOMEM;
++			goto dealloc_usb2_hcd;
++		}
  
--	msleep(100);
--	__adv7180_status(state, NULL, std);
-+	/*
-+	 * We can't sample the standard if the device is streaming as that would
-+	 * interfere with the capture session as the VID_SEL reg is touched.
-+	 */
-+	if (state->streaming)
-+		return -EBUSY;
+-	retval = usb_add_hcd(xhci->shared_hcd, dev->irq,
+-			IRQF_SHARED);
+-	if (retval)
+-		goto put_usb3_hcd;
+-	/* Roothub already marked as USB 3.0 speed */
++		retval = xhci_ext_cap_init(xhci);
++		if (retval)
++			goto put_usb3_hcd;
++
++		retval = usb_add_hcd(xhci->shared_hcd, dev->irq, IRQF_SHARED);
++		if (retval)
++			goto put_usb3_hcd;
++	} else {
++		retval = xhci_ext_cap_init(xhci);
++		if (retval)
++			goto dealloc_usb2_hcd;
++	}
  
--	err = v4l2_std_to_adv7180(state->curr_norm);
--	if (err < 0)
--		goto unlock;
-+	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
-+	ret = adv7180_set_video_standard(state,
-+					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
-+	if (ret)
-+		return ret;
+-	if (!(xhci->quirks & XHCI_BROKEN_STREAMS) &&
+-			HCC_MAX_PSA(xhci->hcc_params) >= 4)
+-		xhci->shared_hcd->can_do_streams = 1;
++	usb3_hcd = xhci_get_usb3_hcd(xhci);
++	if (usb3_hcd && !(xhci->quirks & XHCI_BROKEN_STREAMS) && HCC_MAX_PSA(xhci->hcc_params) >= 4)
++		usb3_hcd->can_do_streams = 1;
  
--	err = adv7180_set_video_standard(state, err);
-+	/* Allow some time for the autodetection to run. */
-+	msleep(100);
- 
--unlock:
--	mutex_unlock(&state->mutex);
--	return err;
-+	return __adv7180_status(state, NULL, std);
- }
- 
- static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
+ 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
+ 	pm_runtime_put_noidle(&dev->dev);
 -- 
 2.51.0
 
