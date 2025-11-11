@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C373426056C;
-	Tue, 11 Nov 2025 01:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42135256C8D;
+	Tue, 11 Nov 2025 01:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822915; cv=none; b=YQyCFPXu8Rcgq32yVZX5ia0TUespIZcsVzwZR0bfLQotug8Dyt4iswROfdvpWeMHV05/ggduSf5tEdtJvm8BNDky0IM/lSUPLPmD9g1e5KYUOyat5hiJE6SLpy7gnYuv9bxJeHAqy4Mi7DQHbnXWTQueQ1ROxed7875HChQAW0Q=
+	t=1762822918; cv=none; b=EahJ9Gl4j050aQL+IvV2V3Ji6CiVMBrUenKTzrhw//PP1eoxjyxsFUX5GKcJQdqo6Q6vwu6oMzQ7XmJ62NXLDAamK02mYQIUb3m8o5IjL2G9z8oDjbFOM1cybGh+9RPrIVUS8iGTpWSzkhHLQqcpoUEwKqIE18jOtL5XniV8ckA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822915; c=relaxed/simple;
-	bh=yBoyAByBJz7fsdusSgDkJziIDXaBbYooutDoicsQTaY=;
+	s=arc-20240116; t=1762822918; c=relaxed/simple;
+	bh=dDwTpTWVqiyrq4t1Aw8YdeWgtF249MaBp4o5B/OFDJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiEiNYqiza26qZ920R0scwETRpjQ2SbSn3sI8X4XTzirzEit9A0viN5t92GgdSKFiicQzJpQ/NSeHjG/i1pTAhs8lEFWbIj6D3uEmgU4pmvgnNGlriOBFVgvrNjYZRV95l6S8VwiW25tEVZCOQeGlVzoOSNODfO6MFwQVqw6Txc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LhSn/Z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hjdMboO3048IRmUlFVeoXlP3oQUo4Wt4LjcHMEh9w3MWxflYmLslsWAaqtxdTRoIL5xDWu8V3Ml7MAGdXkKCxF+RztQwPXCtlqF69El023xmqXyt8xAcohLB7SJbUvWT7Iejw9SITj7o4kXwGGz/kEog8biOdzdEf9p+EyOH/L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ2W5y1f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LhSn/Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0340C4CEFB;
-	Tue, 11 Nov 2025 01:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ2W5y1f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFEDC4CEF5;
+	Tue, 11 Nov 2025 01:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822915;
-	bh=yBoyAByBJz7fsdusSgDkJziIDXaBbYooutDoicsQTaY=;
+	s=korg; t=1762822917;
+	bh=dDwTpTWVqiyrq4t1Aw8YdeWgtF249MaBp4o5B/OFDJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LhSn/Z/YwNEp9Qjag99S3ogIxAp3syS57bO/QYkdOQpmdEzO/X/opQKVETEAAMxd
-	 LdXg6OjeYxZfsriNtZ5DphvOXdsp0Q3ELZks1I8Wk0Dj0gl9fm4RSF64iroTh9XJeh
-	 Nx1vmRIJYv4YKl2gAgSjsmThA3hRGiLnXIYiXohw=
+	b=fQ2W5y1f1GOPxKXn5lG7xu7aNNmvPdMn/lmmf4uziefcAkK2bl1EZ+I21aLtRLKwE
+	 7KBOZa37X5wSwI7XXdxhK8TySv9VmD83+FTY+/hqfoFniOqVblA7c/Er5z8WLPg5tH
+	 HmsLEGJ4aDMPuIT70X6XLRh6Tfietdx2iy0Ey/IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jann@thejh.net>,
-	Pranav Tyagi <pranav.tyagi03@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Sarthak Garg <quic_sartgarg@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 195/849] futex: Dont leak robust_list pointer on exec race
-Date: Tue, 11 Nov 2025 09:36:05 +0900
-Message-ID: <20251111004541.156268000@linuxfoundation.org>
+Subject: [PATCH 6.12 133/565] mmc: sdhci-msm: Enable tuning for SDR50 mode for SD card
+Date: Tue, 11 Nov 2025 09:39:49 +0900
+Message-ID: <20251111004529.940940637@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,201 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pranav Tyagi <pranav.tyagi03@gmail.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-[ Upstream commit 6b54082c3ed4dc9821cdf0edb17302355cc5bb45 ]
+[ Upstream commit 08b68ca543ee9d5a8d2dc406165e4887dd8f170b ]
 
-sys_get_robust_list() and compat_get_robust_list() use ptrace_may_access()
-to check if the calling task is allowed to access another task's
-robust_list pointer. This check is racy against a concurrent exec() in the
-target process.
+For Qualcomm SoCs which needs level shifter for SD card, extra delay is
+seen on receiver data path.
 
-During exec(), a task may transition from a non-privileged binary to a
-privileged one (e.g., setuid binary) and its credentials/memory mappings
-may change. If get_robust_list() performs ptrace_may_access() before
-this transition, it may erroneously allow access to sensitive information
-after the target becomes privileged.
+To compensate this delay enable tuning for SDR50 mode for targets which
+has level shifter. SDHCI_SDR50_NEEDS_TUNING caps will be set for targets
+with level shifter on Qualcomm SOC's.
 
-A racy access allows an attacker to exploit a window during which
-ptrace_may_access() passes before a target process transitions to a
-privileged state via exec().
-
-For example, consider a non-privileged task T that is about to execute a
-setuid-root binary. An attacker task A calls get_robust_list(T) while T
-is still unprivileged. Since ptrace_may_access() checks permissions
-based on current credentials, it succeeds. However, if T begins exec
-immediately afterwards, it becomes privileged and may change its memory
-mappings. Because get_robust_list() proceeds to access T->robust_list
-without synchronizing with exec() it may read user-space pointers from a
-now-privileged process.
-
-This violates the intended post-exec access restrictions and could
-expose sensitive memory addresses or be used as a primitive in a larger
-exploit chain. Consequently, the race can lead to unauthorized
-disclosure of information across privilege boundaries and poses a
-potential security risk.
-
-Take a read lock on signal->exec_update_lock prior to invoking
-ptrace_may_access() and accessing the robust_list/compat_robust_list.
-This ensures that the target task's exec state remains stable during the
-check, allowing for consistent and synchronized validation of
-credentials.
-
-Suggested-by: Jann Horn <jann@thejh.net>
-Signed-off-by: Pranav Tyagi <pranav.tyagi03@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/linux-fsdevel/1477863998-3298-5-git-send-email-jann@thejh.net/
-Link: https://github.com/KSPP/linux/issues/119
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/syscalls.c | 106 +++++++++++++++++++++-------------------
- 1 file changed, 56 insertions(+), 50 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/futex/syscalls.c b/kernel/futex/syscalls.c
-index 4b6da9116aa6c..880c9bf2f3150 100644
---- a/kernel/futex/syscalls.c
-+++ b/kernel/futex/syscalls.c
-@@ -39,6 +39,56 @@ SYSCALL_DEFINE2(set_robust_list, struct robust_list_head __user *, head,
- 	return 0;
- }
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index c2144a3efb308..74234ee5f6089 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -81,6 +81,7 @@
+ #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
+ #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
+ #define CORE_HC_SELECT_IN_EN	BIT(18)
++#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
+ #define CORE_HC_SELECT_IN_HS400	(6 << 19)
+ #define CORE_HC_SELECT_IN_MASK	(7 << 19)
  
-+static inline void __user *futex_task_robust_list(struct task_struct *p, bool compat)
-+{
-+#ifdef CONFIG_COMPAT
-+	if (compat)
-+		return p->compat_robust_list;
-+#endif
-+	return p->robust_list;
-+}
+@@ -1133,6 +1134,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
+ {
+ 	struct mmc_ios *ios = &host->mmc->ios;
+ 
++	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING)
++		return true;
 +
-+static void __user *futex_get_robust_list_common(int pid, bool compat)
-+{
-+	struct task_struct *p = current;
-+	void __user *head;
-+	int ret;
-+
-+	scoped_guard(rcu) {
-+		if (pid) {
-+			p = find_task_by_vpid(pid);
-+			if (!p)
-+				return (void __user *)ERR_PTR(-ESRCH);
-+		}
-+		get_task_struct(p);
+ 	/*
+ 	 * Tuning is required for SDR104, HS200 and HS400 cards and
+ 	 * if clock frequency is greater than 100MHz in these modes.
+@@ -1201,6 +1206,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	struct mmc_ios ios = host->mmc->ios;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
++	u32 config;
+ 
+ 	if (!sdhci_msm_is_tuning_needed(host)) {
+ 		msm_host->use_cdr = false;
+@@ -1217,6 +1224,14 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	 */
+ 	msm_host->tuning_done = 0;
+ 
++	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING) {
++		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
++		config &= ~CORE_HC_SELECT_IN_MASK;
++		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
++		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
 +	}
 +
-+	/*
-+	 * Hold exec_update_lock to serialize with concurrent exec()
-+	 * so ptrace_may_access() is checked against stable credentials
-+	 */
-+	ret = down_read_killable(&p->signal->exec_update_lock);
-+	if (ret)
-+		goto err_put;
-+
-+	ret = -EPERM;
-+	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
-+		goto err_unlock;
-+
-+	head = futex_task_robust_list(p, compat);
-+
-+	up_read(&p->signal->exec_update_lock);
-+	put_task_struct(p);
-+
-+	return head;
-+
-+err_unlock:
-+	up_read(&p->signal->exec_update_lock);
-+err_put:
-+	put_task_struct(p);
-+	return (void __user *)ERR_PTR(ret);
-+}
-+
- /**
-  * sys_get_robust_list() - Get the robust-futex list head of a task
-  * @pid:	pid of the process [zero for current task]
-@@ -49,36 +99,14 @@ SYSCALL_DEFINE3(get_robust_list, int, pid,
- 		struct robust_list_head __user * __user *, head_ptr,
- 		size_t __user *, len_ptr)
- {
--	struct robust_list_head __user *head;
--	unsigned long ret;
--	struct task_struct *p;
--
--	rcu_read_lock();
--
--	ret = -ESRCH;
--	if (!pid)
--		p = current;
--	else {
--		p = find_task_by_vpid(pid);
--		if (!p)
--			goto err_unlock;
--	}
--
--	ret = -EPERM;
--	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
--		goto err_unlock;
-+	struct robust_list_head __user *head = futex_get_robust_list_common(pid, false);
- 
--	head = p->robust_list;
--	rcu_read_unlock();
-+	if (IS_ERR(head))
-+		return PTR_ERR(head);
- 
- 	if (put_user(sizeof(*head), len_ptr))
- 		return -EFAULT;
- 	return put_user(head, head_ptr);
--
--err_unlock:
--	rcu_read_unlock();
--
--	return ret;
- }
- 
- long do_futex(u32 __user *uaddr, int op, u32 val, ktime_t *timeout,
-@@ -455,36 +483,14 @@ COMPAT_SYSCALL_DEFINE3(get_robust_list, int, pid,
- 			compat_uptr_t __user *, head_ptr,
- 			compat_size_t __user *, len_ptr)
- {
--	struct compat_robust_list_head __user *head;
--	unsigned long ret;
--	struct task_struct *p;
--
--	rcu_read_lock();
--
--	ret = -ESRCH;
--	if (!pid)
--		p = current;
--	else {
--		p = find_task_by_vpid(pid);
--		if (!p)
--			goto err_unlock;
--	}
--
--	ret = -EPERM;
--	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
--		goto err_unlock;
-+	struct compat_robust_list_head __user *head = futex_get_robust_list_common(pid, true);
- 
--	head = p->compat_robust_list;
--	rcu_read_unlock();
-+	if (IS_ERR(head))
-+		return PTR_ERR(head);
- 
- 	if (put_user(sizeof(*head), len_ptr))
- 		return -EFAULT;
- 	return put_user(ptr_to_compat(head), head_ptr);
--
--err_unlock:
--	rcu_read_unlock();
--
--	return ret;
- }
- #endif /* CONFIG_COMPAT */
- 
+ 	/*
+ 	 * For HS400 tuning in HS200 timing requires:
+ 	 * - select MCLK/2 in VENDOR_SPEC
 -- 
 2.51.0
 
