@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BDB4C97;
-	Tue, 11 Nov 2025 00:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2DB4C97;
+	Tue, 11 Nov 2025 00:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822687; cv=none; b=BfrHxQ/Daon8n+wmGdvj7cK8VjEZwKGKKk+0Fw+nZ48IQoRRHN5vSqIsyhQcr6sgnk6FklnxCeSgZ1+1Ls6wxRDOmxDJDcuYJzcGU41JIiiz+xc8XYfVnXHZNVdKA5CyRUJzKnhdwL4nwQFlK1jUv4Lubn69nuuHbnYUD3pyc3E=
+	t=1762822689; cv=none; b=evxXDd9G7lmN6da2xUTM9qisBh29XeEEIrv4zzocH/DvujIMBxM34lg9pSmTBDm4rCiCgR+liZwccXZcNQQD+jvRlqG9AYtHPfhdBu2Yv2gyTXCq4hlhbEVqUotO9D0HnFcogkv/qGWDCCt6JIUt4+3FlPg5Ebr4rTtwJtZHUy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822687; c=relaxed/simple;
-	bh=elVWCuUDlhMC94KCEFGW9q751IDG3f5zX4IXSNF+Flg=;
+	s=arc-20240116; t=1762822689; c=relaxed/simple;
+	bh=MxPyAX7okoWmEPFIaiLU5ER5blpMGWjHwq6oOZJFcLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELy4SkFRyjC+2Sav6A8Wa5h+Cs/LycF+XNw+2PuNi0DCmNe0t4WMoyuGvIFYJrwyv43lbTlWypR8LgIaEJ/eijdRexqpdO4eiD6nTUqwIEI+mweRaUc4xiA6Xck3qkdiDG76pp/70VxL+hM1FRWwb1FNoUqeE0+tq6fUDnWJwwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvfpdPlE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vAkKWSfnCBwM56wENVHInfpK31oy0ya5jHA7Wb9+rBbsjldEMXo1Ie5H4dgyYC+Yjv9JoeV4UWrPqf7b9LImE/pIvraAd3t5GxV4MfNFHT3TgE7D1PHg8DoYZbaBr/ZTMpznB1yiPNNqDxZzpk44m35h5RjucoApXeKLj/DnXkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GggaYyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvfpdPlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D706AC19421;
-	Tue, 11 Nov 2025 00:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GggaYyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2553DC4CEF5;
+	Tue, 11 Nov 2025 00:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822687;
-	bh=elVWCuUDlhMC94KCEFGW9q751IDG3f5zX4IXSNF+Flg=;
+	s=korg; t=1762822689;
+	bh=MxPyAX7okoWmEPFIaiLU5ER5blpMGWjHwq6oOZJFcLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvfpdPlEyDhRh1mGSL1a807x3WggIuNGX48IExo0O++p+tb1m6i9sCjZZrarVSmNt
-	 AbNUSMkIbS7qdAykWvJCDFBhIiIpCD4icNZ5qxwQzFcmXZtlbEuJ3RLpDIjjarC39N
-	 Nh5OVcFh/iFS0cUD4yDdYl9hN6pDblwBzwA0VbMQ=
+	b=0GggaYyffyTMjEpILQUsa8SX+y7oPCzRqu4ueLnWjACPN4Z7i/psqk2148WygTJBe
+	 kkJ9FPFiaiLJUOyCM3CASx9d0VQFrmPOSrycShGDHDYs0DeosExv2HUG5mWkePnIko
+	 sJFC0/iR8KV/Pykz4ffj3UOFoHfpth3hcGoq9hWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Shang song (Lenovo)" <shangsong2@foxmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 148/849] ACPI: PRM: Skip handlers with NULL handler_address or NULL VA
-Date: Tue, 11 Nov 2025 09:35:18 +0900
-Message-ID: <20251111004539.992792576@linuxfoundation.org>
+Subject: [PATCH 6.12 086/565] s390/pci: Avoid deadlock between PCI error recovery and mlx5 crdump
+Date: Tue, 11 Nov 2025 09:39:02 +0900
+Message-ID: <20251111004528.902729914@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +48,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shang song (Lenovo) <shangsong2@foxmail.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit 311942ce763e21dacef7e53996d5a1e19b8adab1 ]
+[ Upstream commit 0fd20f65df6aa430454a0deed8f43efa91c54835 ]
 
-If handler_address or mapped VA is NULL, the related buffer address and
-VA can be ignored, so make acpi_parse_prmt() skip the current handler
-in those cases.
+Do not block PCI config accesses through pci_cfg_access_lock() when
+executing the s390 variant of PCI error recovery: Acquire just
+device_lock() instead of pci_dev_lock() as powerpc's EEH and
+generig PCI AER processing do.
 
-Signed-off-by: Shang song (Lenovo) <shangsong2@foxmail.com>
-Link: https://patch.msgid.link/20250826030229.834901-1-shangsong2@foxmail.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+During error recovery testing a pair of tasks was reported to be hung:
+
+mlx5_core 0000:00:00.1: mlx5_health_try_recover:338:(pid 5553): health recovery flow aborted, PCI reads still not working
+INFO: task kmcheck:72 blocked for more than 122 seconds.
+      Not tainted 5.14.0-570.12.1.bringup7.el9.s390x #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kmcheck         state:D stack:0     pid:72    tgid:72    ppid:2      flags:0x00000000
+Call Trace:
+ [<000000065256f030>] __schedule+0x2a0/0x590
+ [<000000065256f356>] schedule+0x36/0xe0
+ [<000000065256f572>] schedule_preempt_disabled+0x22/0x30
+ [<0000000652570a94>] __mutex_lock.constprop.0+0x484/0x8a8
+ [<000003ff800673a4>] mlx5_unload_one+0x34/0x58 [mlx5_core]
+ [<000003ff8006745c>] mlx5_pci_err_detected+0x94/0x140 [mlx5_core]
+ [<0000000652556c5a>] zpci_event_attempt_error_recovery+0xf2/0x398
+ [<0000000651b9184a>] __zpci_event_error+0x23a/0x2c0
+INFO: task kworker/u1664:6:1514 blocked for more than 122 seconds.
+      Not tainted 5.14.0-570.12.1.bringup7.el9.s390x #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u1664:6 state:D stack:0     pid:1514  tgid:1514  ppid:2      flags:0x00000000
+Workqueue: mlx5_health0000:00:00.0 mlx5_fw_fatal_reporter_err_work [mlx5_core]
+Call Trace:
+ [<000000065256f030>] __schedule+0x2a0/0x590
+ [<000000065256f356>] schedule+0x36/0xe0
+ [<0000000652172e28>] pci_wait_cfg+0x80/0xe8
+ [<0000000652172f94>] pci_cfg_access_lock+0x74/0x88
+ [<000003ff800916b6>] mlx5_vsc_gw_lock+0x36/0x178 [mlx5_core]
+ [<000003ff80098824>] mlx5_crdump_collect+0x34/0x1c8 [mlx5_core]
+ [<000003ff80074b62>] mlx5_fw_fatal_reporter_dump+0x6a/0xe8 [mlx5_core]
+ [<0000000652512242>] devlink_health_do_dump.part.0+0x82/0x168
+ [<0000000652513212>] devlink_health_report+0x19a/0x230
+ [<000003ff80075a12>] mlx5_fw_fatal_reporter_err_work+0xba/0x1b0 [mlx5_core]
+
+No kernel log of the exact same error with an upstream kernel is
+available - but the very same deadlock situation can be constructed there,
+too:
+
+- task: kmcheck
+  mlx5_unload_one() tries to acquire devlink lock while the PCI error
+  recovery code has set pdev->block_cfg_access by way of
+  pci_cfg_access_lock()
+- task: kworker
+  mlx5_crdump_collect() tries to set block_cfg_access through
+  pci_cfg_access_lock() while devlink_health_report() had acquired
+  the devlink lock.
+
+A similar deadlock situation can be reproduced by requesting a
+crdump with
+  > devlink health dump show pci/<BDF> reporter fw_fatal
+
+while PCI error recovery is executed on the same <BDF> physical function
+by mlx5_core's pci_error_handlers. On s390 this can be injected with
+  > zpcictl --reset-fw <BDF>
+
+Tests with this patch failed to reproduce that second deadlock situation,
+the devlink command is rejected with "kernel answers: Permission denied" -
+and we get a kernel log message of:
+
+mlx5_core 1ed0:00:00.1: mlx5_crdump_collect:50:(pid 254382): crdump: failed to lock vsc gw err -5
+
+because the config read of VSC_SEMAPHORE is rejected by the underlying
+hardware.
+
+Two prior attempts to address this issue have been discussed and
+ultimately rejected [see link], with the primary argument that s390's
+implementation of PCI error recovery is imposing restrictions that
+neither powerpc's EEH nor PCI AER handling need. Tests show that PCI
+error recovery on s390 is running to completion even without blocking
+access to PCI config space.
+
+Link: https://lore.kernel.org/all/20251007144826.2825134-1-gbayer@linux.ibm.com/
+Cc: stable@vger.kernel.org
+Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/prmt.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ arch/s390/pci/pci_event.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index be033bbb126a4..6792d4385eee4 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -150,15 +150,28 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		th = &tm->handlers[cur_handler];
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -180,7 +180,7 @@ static pci_ers_result_t zpci_event_attem
+ 	 * is unbound or probed and that userspace can't access its
+ 	 * configuration space while we perform recovery.
+ 	 */
+-	pci_dev_lock(pdev);
++	device_lock(&pdev->dev);
+ 	if (pdev->error_state == pci_channel_io_perm_failure) {
+ 		ers_res = PCI_ERS_RESULT_DISCONNECT;
+ 		goto out_unlock;
+@@ -228,7 +228,7 @@ static pci_ers_result_t zpci_event_attem
+ 	if (driver->err_handler->resume)
+ 		driver->err_handler->resume(pdev);
+ out_unlock:
+-	pci_dev_unlock(pdev);
++	device_unlock(&pdev->dev);
  
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
-+
-+		/*
-+		 * Print an error message if handler_address is NULL, the parse of VA also
-+		 * can be skipped.
-+		 */
-+		if (unlikely(!handler_info->handler_address)) {
-+			pr_info("Skipping handler with NULL address for GUID: %pUL",
-+					(guid_t *)handler_info->handler_guid);
-+			continue;
-+		}
-+
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
- 		/*
--		 * Print a warning message if handler_addr is zero which is not expected to
--		 * ever happen.
-+		 * Print a warning message and skip the parse of VA if handler_addr is zero
-+		 * which is not expected to ever happen.
- 		 */
--		if (unlikely(!th->handler_addr))
-+		if (unlikely(!th->handler_addr)) {
- 			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
- 				&th->guid, handler_info->handler_address);
-+			continue;
-+		}
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
--- 
-2.51.0
-
+ 	return ers_res;
+ }
 
 
