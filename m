@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6BF4C97;
-	Tue, 11 Nov 2025 00:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA824113D;
+	Tue, 11 Nov 2025 00:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822585; cv=none; b=N6AgBKpAct86Wkoe8d3fxo4giO9Vt9ZOjg+HYZBbk9V2ZGT8kN0wulSnU/YQSBDYTHQe9mg7QfOXw6E8EESQE640onv0S0+Nky0AQ0qEpLO8Xnfkg0vzIGYYCFWdcOqBBD4vCaXdbITaxMVKBROUdaR9uzOyWRa2pHDmuaTmi60=
+	t=1762822587; cv=none; b=nw58luq8CTZMkW57l+q58hI62RrJOWx6vvQ+vzpJT0Q09hIez8C61WM6ZOGamOAI9fU2IsLWFcHSLLNLSr52/xdHlIJcly6GAnH86SGo+zt2YJiIFWZ5SD4fwpb+FjZxZWsF8s8Dz07uThZ16TgM9CWY8MCBZLOwetQ5eyn0Mkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822585; c=relaxed/simple;
-	bh=0votJrKzJq9Mk1kpz6wALd7kIN+jY03kvpy1MeAy1pU=;
+	s=arc-20240116; t=1762822587; c=relaxed/simple;
+	bh=IAGS69NpOa2jkX+C59CLnNBlQYLEbp4hGyOySQUubkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKSnd1vOr/CPtprKVVUP7AqRtIN1T8VdGC5O36p+FHue3h7+k9P6aeIshxbWbKYwEmb/oVfScNB+W6ZbzArR/gFO0JnOCHy8/ZSE7lBS6YincvNOZE22a3GqTnOPoVwmYXQ380jXaQfnPedQuiIot1DolkeAIWxrYfQ0gFOJ64M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfFkIy6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ae6CthwByqkbb12hKyx72OlDnjUyKKEyi4+Hxq4sCvwSQQsKbU4PR2h0kbj9xhwqetuolK5x+JXevK1HWJhrPReGsqnxS9r3SsMmXnFzMGvDP/SYgG6Tzqfq+Tm9K78yfOKGe4UboeLMDi81MuFPjm+AWFg6v7X22bkZoqBXQE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXTR/ffS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfFkIy6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EB7C113D0;
-	Tue, 11 Nov 2025 00:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXTR/ffS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F447C4AF09;
+	Tue, 11 Nov 2025 00:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822585;
-	bh=0votJrKzJq9Mk1kpz6wALd7kIN+jY03kvpy1MeAy1pU=;
+	s=korg; t=1762822587;
+	bh=IAGS69NpOa2jkX+C59CLnNBlQYLEbp4hGyOySQUubkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfFkIy6wQdb/Cs8K0NvNGokWyrJpzXfkSrGPbKaOxbUoqvHalH2MKVAjfvGihfJ5r
-	 NLAcgwxwjGArnHKJlXkXM14lvhDK50sNsZTLas9zFFeRKbMu0PAEKRij0JiB0nAT57
-	 Z/sWOZRdD2YBNDRzS82rxks2gmEf9IzDlcqD7v2E=
+	b=zXTR/ffSY51wyqw4L1O+20SFXecSL2z/R0E8X3MOrT9Y4dLs9PTwSCtqjHfs8vjeJ
+	 m163n1p2HM59CyzhBUzPIiRDMrzD8DmVBmfV3U4MDF01/0sbCfe/L3GOVbDRqzIKxk
+	 GgFFO0QwpTd0QWS4kzcNz8KrlCLAKuxq2nX/9xu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Laurentiu Tudor <laurentiu.tudor1@dell.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 142/849] firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude 7455
-Date: Tue, 11 Nov 2025 09:35:12 +0900
-Message-ID: <20251111004539.830124662@linuxfoundation.org>
+Subject: [PATCH 6.17 124/849] bpf: Dont use %pK through printk
+Date: Tue, 11 Nov 2025 09:34:54 +0900
+Message-ID: <20251111004539.396365941@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -47,41 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 30ee285f1e3cdc88ec7010abeaba0cbed800bdcd ]
+[ Upstream commit 2caa6b88e0ba0231fb4ff0ba8e73cedd5fb81fc8 ]
 
-Allow these machines to access efivars through qseecom/uefisecapp.
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Laurentiu Tudor <laurentiu.tudor1@dell.com>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20250716003139.18543-5-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250811-restricted-pointers-bpf-v1-1-a1d7cc3cb9e7@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/filter.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 5243d5abbbe99..7f43f12e4e1b2 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1994,6 +1994,8 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "asus,vivobook-s15" },
- 	{ .compatible = "asus,zenbook-a14-ux3407qa" },
- 	{ .compatible = "asus,zenbook-a14-ux3407ra" },
-+	{ .compatible = "dell,inspiron-14-plus-7441" },
-+	{ .compatible = "dell,latitude-7455" },
- 	{ .compatible = "dell,xps13-9345" },
- 	{ .compatible = "hp,elitebook-ultra-g1q" },
- 	{ .compatible = "hp,omnibook-x14" },
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 1e7fd3ee759e0..52fecb7a1fe36 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -1296,7 +1296,7 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other);
+ static inline void bpf_jit_dump(unsigned int flen, unsigned int proglen,
+ 				u32 pass, void *image)
+ {
+-	pr_err("flen=%u proglen=%u pass=%u image=%pK from=%s pid=%d\n", flen,
++	pr_err("flen=%u proglen=%u pass=%u image=%p from=%s pid=%d\n", flen,
+ 	       proglen, pass, image, current->comm, task_pid_nr(current));
+ 
+ 	if (image)
 -- 
 2.51.0
 
