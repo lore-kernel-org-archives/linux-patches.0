@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F209248F6A;
-	Tue, 11 Nov 2025 01:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A00248F6A;
+	Tue, 11 Nov 2025 01:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823278; cv=none; b=goZfOf+1BHcVBpTc8FYh5huG2Sd7svF2gEFXYyxAC0XgL1rUsDX2DyRDVzUPfCzCj866l6lcJMcmbcPx1r++sXisD8haQddhRleRVzCc7PnxyfzZnZ4tu15ZL4qQW3PFUJDfZln8nipzLR1zZ122sh3kcEM5oHRLXcYmvcrlfCk=
+	t=1762823280; cv=none; b=FOVcZOHguqWawbiTgLIZxD9OTr87hfY/0cwRThRNkKQHkqS2DipU6opwPghmuFswY9Sgw7PmlpAstjGAN4XFSdFpeB8VqavrxIGNPL1LMJZQ3vPn+xFS8nUKeqQ+p/EMQXtQ+ramUWLJX5/5OhOdhENewpcpD4YLvQeuB7TNS44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823278; c=relaxed/simple;
-	bh=p8zsIi9iV2Jg/QMyA7YeG4QVH4ttlruPdDlAqAL5NzI=;
+	s=arc-20240116; t=1762823280; c=relaxed/simple;
+	bh=AN4a+tzo1SKrgoYbO6d+famVGGWn9UrHIhDfD7aNHpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQko80cQJmqYtyPfeE+pHIAz0uNe+1T//g1xItazQlJiyarTD4aj1MLRBxQtFIWLE0dVT6Yo7cJFwpXH5WYfsyWWjyin1Ww57wd+V9gyctbro7h+uy2yt36J6RX0kXAv68YR8bP+0H+LFxk3T+wG6pKfGDFOl3wcmsR0Jc1hocw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSS0M8OA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNWuN0fQEiSGf367wxEd5MMcm0hLV61/tWOJhqCDq+R4omK36Q4cOzylwo+1z2cmaJffkhZeP/l8PwCb8YfVwTXXW+WXhxRFNrgZ7c1V66XsMeDVYmDvoYMTfo0jum2pHGEUmHqQ0NVGXoprtMhFOQ/M7FdR2Rc4izaIJHxA4YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvPSPWo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSS0M8OA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C19C4CEFB;
-	Tue, 11 Nov 2025 01:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvPSPWo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269FCC4CEFB;
+	Tue, 11 Nov 2025 01:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823278;
-	bh=p8zsIi9iV2Jg/QMyA7YeG4QVH4ttlruPdDlAqAL5NzI=;
+	s=korg; t=1762823280;
+	bh=AN4a+tzo1SKrgoYbO6d+famVGGWn9UrHIhDfD7aNHpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSS0M8OAF6KWcAj1KTyomC9uJT1NG4u7IB4POgo2JWcde3OF8QJLtpdF5Z6rL2ZX1
-	 7/ObOL33M+afHOZT7ha8ulatN7EeY3cBceadDer58eZdnNm9QthpIAWqGBNerZOi8e
-	 5NNKQ2nJYHGzsMfXTCHzluQh6UPMJNl6ZnSTYHIE=
+	b=LvPSPWo0IlUWJvW7QihSxmZLo54sONSeY1yptrf8048Tlh1rsomwMFzwvBo//k4Pi
+	 yPr8Vbl43bS2/BB7iwXN7ZcYK9D6/tyJ3/5jdlkNT+2xpbRZIBJNYKNnhYem8FrYjn
+	 zG0Tv1hQMJa6EVVN9eYSTwA1bzrCjlzS2coeeL84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	TungYu Lu <tungyu.lu@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 267/849] drm/amd/display: Wait until OTG enable state is cleared
-Date: Tue, 11 Nov 2025 09:37:17 +0900
-Message-ID: <20251111004542.887357803@linuxfoundation.org>
+Subject: [PATCH 6.12 211/565] powerpc/eeh: Use result of error_detected() in uevent
+Date: Tue, 11 Nov 2025 09:41:07 +0900
+Message-ID: <20251111004531.672729632@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +50,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: TungYu Lu <tungyu.lu@amd.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit e7496c15d830689cc4fc666b976c845ed2c5ed28 ]
+[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
 
-[Why]
-Customer reported an issue that OS starts and stops device multiple times
-during driver installation. Frequently disabling and enabling OTG may
-prevent OTG from being safely disabled and cause incorrect configuration
-upon the next enablement.
+Ever since uevent support was added for AER and EEH with commit
+856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
+reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
 
-[How]
-Add a wait until OTG_CURRENT_MASTER_EN_STATE is cleared as a short term
-solution.
+Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
+udev") subsequently amended AER to report the actual return value of
+error_detected().
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: TungYu Lu <tungyu.lu@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Make the same change to EEH to align it with AER and s390.
+
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/kernel/eeh_driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-index ff79c38287df1..5af13706e6014 100644
---- a/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/optc/dcn401/dcn401_optc.c
-@@ -226,6 +226,11 @@ bool optc401_disable_crtc(struct timing_generator *optc)
- 	REG_UPDATE(CONTROL,
- 			VTG0_ENABLE, 0);
+diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
+index dd50de91c4383..c73e4225e84a5 100644
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -334,7 +334,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
+ 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
  
-+	// wait until CRTC_CURRENT_MASTER_EN_STATE == 0
-+	REG_WAIT(OTG_CONTROL,
-+			 OTG_CURRENT_MASTER_EN_STATE,
-+			 0, 10, 15000);
-+
- 	/* CRTC disabled, so disable  clock. */
- 	REG_WAIT(OTG_CLOCK_CONTROL,
- 			OTG_BUSY, 0,
+ 	edev->in_error = true;
+-	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
++	pci_uevent_ers(pdev, rc);
+ 	return rc;
+ }
+ 
 -- 
 2.51.0
 
