@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD774C97;
-	Tue, 11 Nov 2025 00:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F754C97;
+	Tue, 11 Nov 2025 00:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822407; cv=none; b=EdtAdOlf5ZPhoNdkWqpPsv5D3KrsRlDRG9fDLSOxaukYu3Yop+wOmZVVUKM9opiGcBgspNlMss/XdQGgxzzKhddch4h2HRlDQYxNbe/meiCh0ejB/k16HYtqISbq16JniIQ+y5hL80nycowEu0rmsHA8WC/WVG2fxhyVNguEm2g=
+	t=1762822409; cv=none; b=sTYgUTgYfP00jvySJ68JvOPrTvkSno1wsa2b2n1cRr1a7qBrvFsCeK8P4gtoFK0sQeNr38XJK+cq5y5oTUF2Tq1re6dW0KIYSHwFyeCEvm7rVpVLWGQzKHTcrSWfX6Wdfc6Ze/fiPHh9s9ZHl+AcayZrqn60581AS71jZhjw0Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822407; c=relaxed/simple;
-	bh=Y9Os1agqA+NZRAm+bBgOkBn+oChjCyOTIRyZBeB7Vs0=;
+	s=arc-20240116; t=1762822409; c=relaxed/simple;
+	bh=NuqdgO724e1HG6QEqX5SD9UVduw7KN5BQM0FHu70DgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrugraZLjDsQtoHM6rGRcjRWbsRGRrSDCm9odcndjlKYQUT/LB9B6jqwtPzVrq75/RpBIPKRdS/phfdW/HHOx++32bYomXAGnLR71pUfDRoDhqp0/pBsn3o8zawbwsyg9zEXeTf1MY93wH3XcjRWiS6Cl8QqUdteutu95YkaO/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4t5uhft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5eboLJh85Wv/NsZMBuybsgS+i3Y+nLEf8z1Yj3Y7ZgC4UvGIPhJMGLXO1K0kWz9huQaIa0yjDh3LEhpN9JI8qjsZr4rRoiq5205SRXKy3bDH6iW+wEcpZtwvZxEx9wLErnfmUYZ14GK0L2KIlFRqqUsGZpS+kPu9YK6IsyqA6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhS7sU8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4t5uhft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD5EC4AF09;
-	Tue, 11 Nov 2025 00:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhS7sU8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EB7C4CEF5;
+	Tue, 11 Nov 2025 00:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822407;
-	bh=Y9Os1agqA+NZRAm+bBgOkBn+oChjCyOTIRyZBeB7Vs0=;
+	s=korg; t=1762822409;
+	bh=NuqdgO724e1HG6QEqX5SD9UVduw7KN5BQM0FHu70DgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4t5uhftFg1EXFZQf4/CSuuI8jqE7t4B+Upc61UOPGnjyEUYMIvL5WiAd8ves79A7
-	 U7PESF7IUg+KQjveTOHIN8Uc/MYKsi6li5Y6SeyVV4p79HuPyQey946flh5REVymd2
-	 JfBZvvF9sBHBrzBD36dUlgsJKoaR6oYQ1zXrF6JE=
+	b=uhS7sU8gshi5oTiGhjIbGxZOaU0dm+Xc3dgFPL4lod4XUMo6r4hbu3RdhzxxBmTxt
+	 YOstifDKqse+u1brbLgm0kzXVF/6tk1KnclnX50/DEkdIYI8rtJU9KIn6qbM0sExQW
+	 irTEtacyIDIly2KhAcZjSsnBqjWHsREnLqIrbQkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/565] Bluetooth: btmtksdio: Add pmctrl handling for BT closed state during reset
-Date: Tue, 11 Nov 2025 09:38:20 +0900
-Message-ID: <20251111004527.894458773@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.17 102/849] drm/nouveau: Fix race in nouveau_sched_fini()
+Date: Tue, 11 Nov 2025 09:34:32 +0900
+Message-ID: <20251111004538.871337495@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +46,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit 77343b8b4f87560f8f03e77b98a81ff3a147b262 ]
+commit e0023c8a74028739643aa14bd201c41a99866ca4 upstream.
 
-This patch adds logic to handle power management control when the
-Bluetooth function is closed during the SDIO reset sequence.
+nouveau_sched_fini() uses a memory barrier before wait_event().
+wait_event(), however, is a macro which expands to a loop which might
+check the passed condition several times. The barrier would only take
+effect for the first check.
 
-Specifically, if BT is closed before reset, the driver enables the
-SDIO function and sets driver pmctrl. After reset, if BT remains
-closed, the driver sets firmware pmctrl and disables the SDIO function.
+Replace the barrier with a function which takes the spinlock.
 
-These changes ensure proper power management and device state consistency
-across the reset flow.
-
-Fixes: 8fafe702253d ("Bluetooth: mt7921s: support bluetooth reset mechanism")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.8+
+Fixes: 5f03a507b29e ("drm/nouveau: implement 1:1 scheduler - entity relationship")
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251024161221.196155-2-phasta@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btmtksdio.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_sched.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index 13dcc0077732b..206de38fc1c82 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -1270,6 +1270,12 @@ static void btmtksdio_cmd_timeout(struct hci_dev *hdev)
+--- a/drivers/gpu/drm/nouveau/nouveau_sched.c
++++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
+@@ -482,6 +482,17 @@ nouveau_sched_create(struct nouveau_sche
+ 	return 0;
+ }
  
- 	sdio_claim_host(bdev->func);
- 
-+	/* set drv_pmctrl if BT is closed before doing reset */
-+	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
-+		sdio_enable_func(bdev->func);
-+		btmtksdio_drv_pmctrl(bdev);
-+	}
++static bool
++nouveau_sched_job_list_empty(struct nouveau_sched *sched)
++{
++	bool empty;
 +
- 	sdio_writel(bdev->func, C_INT_EN_CLR, MTK_REG_CHLPCR, NULL);
- 	skb_queue_purge(&bdev->txq);
- 	cancel_work_sync(&bdev->txrx_work);
-@@ -1285,6 +1291,12 @@ static void btmtksdio_cmd_timeout(struct hci_dev *hdev)
- 		goto err;
- 	}
- 
-+	/* set fw_pmctrl back if BT is closed after doing reset */
-+	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
-+		btmtksdio_fw_pmctrl(bdev);
-+		sdio_disable_func(bdev->func);
-+	}
++	spin_lock(&sched->job.list.lock);
++	empty = list_empty(&sched->job.list.head);
++	spin_unlock(&sched->job.list.lock);
 +
- 	clear_bit(BTMTKSDIO_PATCH_ENABLED, &bdev->tx_state);
- err:
- 	sdio_release_host(bdev->func);
--- 
-2.51.0
-
++	return empty;
++}
+ 
+ static void
+ nouveau_sched_fini(struct nouveau_sched *sched)
+@@ -489,8 +500,7 @@ nouveau_sched_fini(struct nouveau_sched
+ 	struct drm_gpu_scheduler *drm_sched = &sched->base;
+ 	struct drm_sched_entity *entity = &sched->entity;
+ 
+-	rmb(); /* for list_empty to work without lock */
+-	wait_event(sched->job.wq, list_empty(&sched->job.list.head));
++	wait_event(sched->job.wq, nouveau_sched_job_list_empty(sched));
+ 
+ 	drm_sched_entity_fini(entity);
+ 	drm_sched_fini(drm_sched);
 
 
