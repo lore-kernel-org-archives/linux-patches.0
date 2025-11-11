@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DFA2E6CA4;
-	Tue, 11 Nov 2025 01:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFACA2DECB0;
+	Tue, 11 Nov 2025 01:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824709; cv=none; b=oy73SmFPvPKC1o930i1C2A1mvNuAmIhIA/wieNEuHWUVS52oZ+yBBfxqvtiuJXrxpHjL3m7UCZQBlf/3v0XDZlqoGflCvM1CBktbAWfsdBmpOk7NMD8hOlh/FKCg2ojzqb4EWpO+VWlppI+ZXvBPefMxKC+5mg39WllM6lMALSc=
+	t=1762824712; cv=none; b=KF9Tt2/2DWHfvdP8yBD9rjoXrBLTUHx4nef45VUnw4TEfrO3YmpIklKkjpTWRJ1iVbdO1/ixuqG1g4gQtz53kq63s8D80LNWxlN72f6QFwxOUgu++aV75uC3Jzx3p/8i55cyNM0MHuFiUxgs2bW/0+iNLhvr/XC9zbLfMgUd6Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824709; c=relaxed/simple;
-	bh=v8hhlNAEzzFNB37lhW6lj9D3cIIpwD6ONPK915jcUF8=;
+	s=arc-20240116; t=1762824712; c=relaxed/simple;
+	bh=8xE8asWKcU2j6EaDS4TPo9GWW+6nKdUkw/JG9G0DaN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kTzUSndcwBC+MSVU0pP50q6o293ThIbGRcJqEUNr/k5d4beYzpIU+fhg3nc3DchD5fhC+YEfAZUzsQ05Jhvw1TkUvXOwzbhplxMSlpHm2BH0J12MJflyVs18q0nG5c96aNDblSDWUpIcvw4jm+fP7t+Suax7CYeq7ot2CNbgD6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ob0sNbnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QqgDQoI6eVykHZaxFnYUmV0oMlnDEiTpLNYxTTeSmgnEbfScoRDeeU3huz7o57aTJuZ9I2N4zUELUIPI4uzUgQdz5U1lx1N84jFBI7uNxidn/mmW8jOnQVrcyW4ivMWn5ImtNR/mBgnFwXpLfTMFr71XSLxupGHGUsAQ9iNn6ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm/AMgVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ob0sNbnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D66C4CEF5;
-	Tue, 11 Nov 2025 01:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm/AMgVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6ACC4CEFB;
+	Tue, 11 Nov 2025 01:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824709;
-	bh=v8hhlNAEzzFNB37lhW6lj9D3cIIpwD6ONPK915jcUF8=;
+	s=korg; t=1762824711;
+	bh=8xE8asWKcU2j6EaDS4TPo9GWW+6nKdUkw/JG9G0DaN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ob0sNbnuVuZhit8nnPb2RnDnIybru7TIwGYDcR8xXORBPg9xzhuHhIn1s8ajXR2/X
-	 bow3DmrlP9hoE6gd0O2NZ2x+HeQOojrPw5mFtMDYH2sWqqWmep1tBOdNX6teQPvZz1
-	 8EPnE2tVMnHEg/396+wKRuyg9rdvOE01nZjP8HRA=
+	b=Qm/AMgVj8P8rIZxivS78p+IoPGheOLMMnAUmyV30yu7KrzD+E4Nsd4DCkGoOovYde
+	 J6z17F0AvIWGuntE1OnULTimxw43SVt8++5p8762FDaEum/AdvhlvKWS/HXrwCqgcE
+	 VSvBHLc60gueNjyCyknAjerL6mwAfCmEHsFihwF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Jack Kao <jack.kao@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 555/849] drm/amd/display: Dont use non-registered VUPDATE on DCE 6
-Date: Tue, 11 Nov 2025 09:42:05 +0900
-Message-ID: <20251111004549.826037244@linuxfoundation.org>
+Subject: [PATCH 6.17 537/849] wifi: mt76: mt7925: add pci restore for hibernate
+Date: Tue, 11 Nov 2025 09:41:47 +0900
+Message-ID: <20251111004549.398434980@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -47,94 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Jack Kao <jack.kao@mediatek.com>
 
-[ Upstream commit 6cbe6e072c5d088101cd542ad8ef8541edeea5c3 ]
+[ Upstream commit d54424fbc53b4d6be00f90a8b529cd368f20d357 ]
 
-The VUPDATE interrupt isn't registered on DCE 6, so don't try
-to use that.
+Due to hibernation causing a power off and power on,
+this modification adds mt7925_pci_restore callback function for kernel.
+When hibernation resumes, it calls mt7925_pci_restore to reset the device,
+allowing it to return to the state it was in before the power off.
 
-This fixes a page flip timeout after sleep/resume on DCE 6.
-
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jack Kao <jack.kao@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250901073200.230033-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 22 ++++++++++++-------
- .../amd/display/amdgpu_dm/amdgpu_dm_crtc.c    | 16 +++++++++-----
- 2 files changed, 24 insertions(+), 14 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7925/pci.c   | 26 ++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 3762b3c0ef983..f450bcb43c9c1 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3050,14 +3050,20 @@ static void dm_gpureset_toggle_interrupts(struct amdgpu_device *adev,
- 				drm_warn(adev_to_drm(adev), "Failed to %s pflip interrupts\n",
- 					 enable ? "enable" : "disable");
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+index 89dc30f7c6b7a..8eb1fe1082d15 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
+@@ -529,7 +529,7 @@ static int mt7925_pci_suspend(struct device *device)
+ 	return err;
+ }
  
--			if (enable) {
--				if (amdgpu_dm_crtc_vrr_active(to_dm_crtc_state(acrtc->base.state)))
--					rc = amdgpu_dm_crtc_set_vupdate_irq(&acrtc->base, true);
--			} else
--				rc = amdgpu_dm_crtc_set_vupdate_irq(&acrtc->base, false);
--
--			if (rc)
--				drm_warn(adev_to_drm(adev), "Failed to %sable vupdate interrupt\n", enable ? "en" : "dis");
-+			if (dc_supports_vrr(adev->dm.dc->ctx->dce_version)) {
-+				if (enable) {
-+					if (amdgpu_dm_crtc_vrr_active(
-+							to_dm_crtc_state(acrtc->base.state)))
-+						rc = amdgpu_dm_crtc_set_vupdate_irq(
-+							&acrtc->base, true);
-+				} else
-+					rc = amdgpu_dm_crtc_set_vupdate_irq(
-+							&acrtc->base, false);
+-static int mt7925_pci_resume(struct device *device)
++static int _mt7925_pci_resume(struct device *device, bool restore)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(device);
+ 	struct mt76_dev *mdev = pci_get_drvdata(pdev);
+@@ -569,6 +569,9 @@ static int mt7925_pci_resume(struct device *device)
+ 	napi_schedule(&mdev->tx_napi);
+ 	local_bh_enable();
+ 
++	if (restore)
++		goto failed;
 +
-+				if (rc)
-+					drm_warn(adev_to_drm(adev), "Failed to %sable vupdate interrupt\n",
-+						enable ? "en" : "dis");
-+			}
+ 	mt76_connac_mcu_set_hif_suspend(mdev, false, false);
+ 	ret = wait_event_timeout(dev->wait,
+ 				 dev->hif_resumed, 3 * HZ);
+@@ -585,7 +588,7 @@ static int mt7925_pci_resume(struct device *device)
+ failed:
+ 	pm->suspended = false;
  
- 			irq_source = IRQ_TYPE_VBLANK + acrtc->otg_inst;
- 			/* During gpu-reset we disable and then enable vblank irq, so
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 80205c9bc9403..2047ac51f1b66 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -321,13 +321,17 @@ static inline int amdgpu_dm_crtc_set_vblank(struct drm_crtc *crtc, bool enable)
- 			dc->config.disable_ips != DMUB_IPS_DISABLE_ALL &&
- 			sr_supported && vblank->config.disable_immediate)
- 			drm_crtc_vblank_restore(crtc);
-+	}
+-	if (err < 0)
++	if (err < 0 || restore)
+ 		mt792x_reset(&dev->mt76);
  
--		/* vblank irq on -> Only need vupdate irq in vrr mode */
--		if (amdgpu_dm_crtc_vrr_active(acrtc_state))
--			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
--	} else {
--		/* vblank irq off -> vupdate irq off */
--		rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, false);
-+	if (dc_supports_vrr(dm->dc->ctx->dce_version)) {
-+		if (enable) {
-+			/* vblank irq on -> Only need vupdate irq in vrr mode */
-+			if (amdgpu_dm_crtc_vrr_active(acrtc_state))
-+				rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
-+		} else {
-+			/* vblank irq off -> vupdate irq off */
-+			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, false);
-+		}
- 	}
+ 	return err;
+@@ -596,7 +599,24 @@ static void mt7925_pci_shutdown(struct pci_dev *pdev)
+ 	mt7925_pci_remove(pdev);
+ }
  
- 	if (rc)
+-static DEFINE_SIMPLE_DEV_PM_OPS(mt7925_pm_ops, mt7925_pci_suspend, mt7925_pci_resume);
++static int mt7925_pci_resume(struct device *device)
++{
++	return _mt7925_pci_resume(device, false);
++}
++
++static int mt7925_pci_restore(struct device *device)
++{
++	return _mt7925_pci_resume(device, true);
++}
++
++static const struct dev_pm_ops mt7925_pm_ops = {
++	.suspend = pm_sleep_ptr(mt7925_pci_suspend),
++	.resume  = pm_sleep_ptr(mt7925_pci_resume),
++	.freeze = pm_sleep_ptr(mt7925_pci_suspend),
++	.thaw = pm_sleep_ptr(mt7925_pci_resume),
++	.poweroff = pm_sleep_ptr(mt7925_pci_suspend),
++	.restore = pm_sleep_ptr(mt7925_pci_restore),
++};
+ 
+ static struct pci_driver mt7925_pci_driver = {
+ 	.name		= KBUILD_MODNAME,
 -- 
 2.51.0
 
