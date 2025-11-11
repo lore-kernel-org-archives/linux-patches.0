@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9FE2820A0;
-	Tue, 11 Nov 2025 01:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6E2305E15;
+	Tue, 11 Nov 2025 01:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824860; cv=none; b=dpR43Bu+ylWY1CKkFK5gCoheEF2CpAeeuTLznBo4LbusPZ7TtIP7/Wtww8vS1cXFACmkrL6mHvrWlHqkrEbXmZtRvlPXiQo9NV74abRYO7BQadLtA/4CghxtivxXdJqjIYEYDECJnAaZf4oA4+1h1TfWA4G0rr8OqfaMnchXKKg=
+	t=1762824862; cv=none; b=lbMy+EnuePbnHRzio5NqAjd2PrJADCVWGgc60v5URZeEJDgNmBnUKm4DMh4Pz93kDLqvuWciv8JVjLUmf/aTaMjYl4ttvY/tFuavSFdeezoDqOWvx9eua9olzb1wVcAU5ol5occ4HYMC3cKg1fRFqvh4MY2o0M77Z50xfTakxsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824860; c=relaxed/simple;
-	bh=Q0mmcAp9ukSV7Y6o22jj2iCxpP+FsTWj1Zfl9FYzTDs=;
+	s=arc-20240116; t=1762824862; c=relaxed/simple;
+	bh=5L8AASuC6xpp72TNjZ+wXDmqf+UYBw/quzr7gFuz208=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gm3Jb7ezktyXxjIDI4FPcbrPS1rwKGxWb0N5Fu36kCdQZKb/pUvZiuT7GX9jy0TzNDjpmCmIB4Duecp+2nhpAvubtYjWRZZRW60EgM12kIoLXwX2EWEM7HcWUDp7/AOlbOPxU8ahHU2t2iczulor7VG4Y8zYmABtvo5dYAKIs1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkSP8aDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjpbQ29ZRilXq5yDuc1j5jbfdaqYiYtD2hjLtg5CDvziENxSlqg+9pAO+GFFVUNG/SWAX+3acsfv4oIih4ZLTWTRpWHIqBWl20Bs8drrrRU8IbcITLehgw8nCS9Bf9GTc/69ik9THK7u+iyxuP8RN7sCI5maFLRiXj2/4XDigQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9MwIFWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkSP8aDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19C8C116B1;
-	Tue, 11 Nov 2025 01:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9MwIFWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47ADCC16AAE;
+	Tue, 11 Nov 2025 01:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824860;
-	bh=Q0mmcAp9ukSV7Y6o22jj2iCxpP+FsTWj1Zfl9FYzTDs=;
+	s=korg; t=1762824862;
+	bh=5L8AASuC6xpp72TNjZ+wXDmqf+UYBw/quzr7gFuz208=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TkSP8aDK5+xi4ab1Mp27/HMvi/GVi74YHTN8BNaHuKXL2t1j3H6USeL/sBCnNof8u
-	 vQ3C4P40QDw8lO27ZblcR9JdhY9DIpS2kL7DRpWdCd+tqAP8uLr1fWXu5mcuDWzKtp
-	 hpKmx4wISvMaHpoEYn4ARD8rAsnc3qd6Qma3I5rA=
+	b=g9MwIFWEA9Lbolt7Eh0hKCz5UQqkpqqgGHMnlEvSGxwqJJ71wSdSdcESODbG1y1v3
+	 ii4f2eyLdFZQ4DTCMJFydhbVMngdIV+kUL/PUcCrhWGVAoq/7gMP1e4r+O1P2GeYNU
+	 Y7b0DoE7tTmRck/Nn9e4hUfCx9e1yG6Z30YAtrrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 586/849] ipv6: np->rxpmtu race annotation
-Date: Tue, 11 Nov 2025 09:42:36 +0900
-Message-ID: <20251111004550.590768869@linuxfoundation.org>
+Subject: [PATCH 6.17 587/849] RDMA/irdma: Update Kconfig
+Date: Tue, 11 Nov 2025 09:42:37 +0900
+Message-ID: <20251111004550.616147638@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -55,56 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
 
-[ Upstream commit 9fba1eb39e2f74d2002c5cbcf1d4435d37a4f752 ]
+[ Upstream commit 060842fed53f77a73824c9147f51dc6746c1267a ]
 
-Add READ_ONCE() annotations because np->rxpmtu can be changed
-while udpv6_recvmsg() and rawv6_recvmsg() read it.
+Update Kconfig to add dependency on idpf module and
+add IPU E2000 to the list of supported devices.
 
-Since this is a very rarely used feature, and that udpv6_recvmsg()
-and rawv6_recvmsg() read np->rxopt anyway, change the test order
-so that np->rxpmtu does not need to be in a hot cache line.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250916160951.541279-4-edumazet@google.com
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Link: https://patch.msgid.link/20250827152545.2056-17-tatyana.e.nikolova@intel.com
+Tested-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 2 +-
- net/ipv6/udp.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/irdma/Kconfig | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index 4c3f8245c40f1..eceef8af1355f 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -445,7 +445,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
- 
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
- 
- 	skb = skb_recv_datagram(sk, flags, &err);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 6a68f77da44b5..7f53fcc82a9ec 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -479,7 +479,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (flags & MSG_ERRQUEUE)
- 		return ipv6_recv_error(sk, msg, len, addr_len);
- 
--	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
-+	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
- 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
- 
- try_again:
+diff --git a/drivers/infiniband/hw/irdma/Kconfig b/drivers/infiniband/hw/irdma/Kconfig
+index 5f49a58590ed7..0bd7e3fca1fbb 100644
+--- a/drivers/infiniband/hw/irdma/Kconfig
++++ b/drivers/infiniband/hw/irdma/Kconfig
+@@ -4,10 +4,11 @@ config INFINIBAND_IRDMA
+ 	depends on INET
+ 	depends on IPV6 || !IPV6
+ 	depends on PCI
+-	depends on ICE && I40E
++	depends on IDPF && ICE && I40E
+ 	select GENERIC_ALLOCATOR
+ 	select AUXILIARY_BUS
+ 	select CRC32
+ 	help
+-	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
+-	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.
++	  This is an Intel(R) Ethernet Protocol Driver for RDMA that
++	  supports IPU E2000 (RoCEv2), E810 (iWARP/RoCEv2) and X722 (iWARP)
++	  network devices.
 -- 
 2.51.0
 
