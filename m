@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F7F2727FD;
-	Tue, 11 Nov 2025 01:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1982727FD;
+	Tue, 11 Nov 2025 01:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823355; cv=none; b=raLWf4srusjzwnMBfLdxzMhdKpr70aNyr/KoFAShvQKWdn49uwc1HG0zPcEd8sxiyZtQ8VkDxGh48ykxhTgTA5zAxuEC5UK9ZINv0g0wuTxInhWdSHiBAx32hca4d8HLBycTSWfd9bdyYaFfF2wVHiALLSEfwK6lNIX8Bk6QSno=
+	t=1762823357; cv=none; b=K+V52j92e1M1rdhAw1lqG0xm2Gjc26FlBjeHCdq46EsNuW1Vx05ozvhX7tIAFjVh3Gs2GDHdTwSGhGvPDc9CSIDLkxQ2fgwOiDmjc8FZIidi5YGOtKuhF0Sl94VEEIhp98fOqiHUtvURJxl8a2HJ+4B3K1A4ozZ3xjv1wcRYUAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823355; c=relaxed/simple;
-	bh=dbzSHCIlN0pehbE7vpT3CvLMdFhmCpaVo9MR5UqLnZE=;
+	s=arc-20240116; t=1762823357; c=relaxed/simple;
+	bh=dEsadJjc02qVhZZcptcDA3v2fc687BoS06g4c8tgRsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpne3X/Er+uKR1QzJh7meXcPvAgigy39CvWgL+IS4fABtMPED4jYg6qfFZx6vvXayt5V1t/UcvFrsHQobQqQZ+ZUNvpt++OGGn1Szsb7lIggVJOBm1KMC/x79vuBXVtCRtuJWCilOsurs1RdnYCV+jXrsB/DORqH3E84TD/6IcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLXd+JXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iLFsb9gzs5kSc8gY9xYfHNDyj5Wpz71orMqzrpmOX/746zX0TvSf/wn0IInigAVIaxH5TuoG3k2crzBw1PE5X7BE4YRq0ecyS4/hauZpsctMqOvmlhHZiFdiuOh4C25JF2xoKOCDUIRbPDGK7Cb53bnSpkzhTtG+kK3Fe/xhF1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izrIBZS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLXd+JXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44AEC4AF0B;
-	Tue, 11 Nov 2025 01:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izrIBZS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C41EC116B1;
+	Tue, 11 Nov 2025 01:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823355;
-	bh=dbzSHCIlN0pehbE7vpT3CvLMdFhmCpaVo9MR5UqLnZE=;
+	s=korg; t=1762823357;
+	bh=dEsadJjc02qVhZZcptcDA3v2fc687BoS06g4c8tgRsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLXd+JXXRwP5LMkxDQaP9wA6VZpif4uoSc2OwT1Wgv/3ZiNAyOmMlK2tVHxVTZMTN
-	 nsIwrQWijNOIVoGxx4PYU2Cn/QP+nzxnNzg6mu+o5pgPWXtT3oBTxyG3nxu6hZNd0Y
-	 DMY4L4R7nmGuzpbEZgaX4ct3qjZIbaVd0CNeoBQs=
+	b=izrIBZS/C0awsQ0CQSgRvDxqNSiKRcU070IXUFpp73carwDHxd5XEvqWUWYd59i6S
+	 7aKrZCA7anbeSq7QvBHC3NlZPZfr9I+KU+WAfrZHbajNO7Y/OyrrAAyRC40v9wzhh5
+	 wyl2A+ghxeXXim0sOJoNZVYCb1HTUFm6wycfFMxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Kent Russell <kent.russell@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 282/849] media: pci: ivtv: Dont create fake v4l2_fh
-Date: Tue, 11 Nov 2025 09:37:32 +0900
-Message-ID: <20251111004543.239267938@linuxfoundation.org>
+Subject: [PATCH 6.12 226/565] drm/amdkfd: Handle lack of READ permissions in SVM mapping
+Date: Tue, 11 Nov 2025 09:41:22 +0900
+Message-ID: <20251111004532.003153260@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,182 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Kent Russell <kent.russell@amd.com>
 
-[ Upstream commit cc6e8d1ccea792d8550428e0831e3a35b0ccfddc ]
+[ Upstream commit 0ed704d058cec7643a716a21888d58c7d03f2c3e ]
 
-The ivtv driver has a structure named ivtv_open_id that models an open
-file handle for the device. It embeds a v4l2_fh instance for file
-handles that correspond to a V4L2 video device, and stores a pointer to
-that v4l2_fh in struct ivtv_stream to identify which open file handle
-owns a particular stream.
+HMM assumes that pages have READ permissions by default. Inside
+svm_range_validate_and_map, we add READ permissions then add WRITE
+permissions if the VMA isn't read-only. This will conflict with regions
+that only have PROT_WRITE or have PROT_NONE. When that happens,
+svm_range_restore_work will continue to retry, silently, giving the
+impression of a hang if pr_debug isn't enabled to show the retries..
 
-In addition to video devices, streams can be owned by ALSA PCM devices.
-Those devices do not make use of the v4l2_fh instance for obvious
-reasons, but the snd_ivtv_pcm_capture_open() function still initializes
-a "fake" v4l2_fh for the sole purpose of using it as an open file handle
-identifier. The v4l2_fh is not properly destroyed when the ALSA PCM
-device is closed, leading to possible resource leaks.
+If pages don't have READ permissions, simply unmap them and continue. If
+they weren't mapped in the first place, this would be a no-op. Since x86
+doesn't support write-only, and PROT_NONE doesn't allow reads or writes
+anyways, this will allow the svm range validation to continue without
+getting stuck in a loop forever on mappings we can't use with HMM.
 
-Fortunately, the v4l2_fh instance pointed to by ivtv_stream is not
-accessed, only the pointer value is used for comparison. Replace it with
-a pointer to the ivtv_open_id structure that embeds the v4l2_fh, and
-don't initialize the v4l2_fh for ALSA PCM devices.
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Kent Russell <kent.russell@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ivtv/ivtv-alsa-pcm.c |  2 --
- drivers/media/pci/ivtv/ivtv-driver.h   |  3 ++-
- drivers/media/pci/ivtv/ivtv-fileops.c  | 18 +++++++++---------
- drivers/media/pci/ivtv/ivtv-irq.c      |  4 ++--
- 4 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-index 8f346d7da9c8d..269a799ec046c 100644
---- a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-+++ b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-@@ -148,14 +148,12 @@ static int snd_ivtv_pcm_capture_open(struct snd_pcm_substream *substream)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index a8d4b3a3e77af..155948dc3d07a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1704,6 +1704,29 @@ static int svm_range_validate_and_map(struct mm_struct *mm,
  
- 	s = &itv->streams[IVTV_ENC_STREAM_TYPE_PCM];
- 
--	v4l2_fh_init(&item.fh, &s->vdev);
- 	item.itv = itv;
- 	item.type = s->type;
- 
- 	/* See if the stream is available */
- 	if (ivtv_claim_stream(&item, item.type)) {
- 		/* No, it's already in use */
--		v4l2_fh_exit(&item.fh);
- 		snd_ivtv_unlock(itvsc);
- 		return -EBUSY;
- 	}
-diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
-index a6ffa99e16bc6..83818048f7fe4 100644
---- a/drivers/media/pci/ivtv/ivtv-driver.h
-+++ b/drivers/media/pci/ivtv/ivtv-driver.h
-@@ -322,6 +322,7 @@ struct ivtv_queue {
- };
- 
- struct ivtv;				/* forward reference */
-+struct ivtv_open_id;
- 
- struct ivtv_stream {
- 	/* These first four fields are always set, even if the stream
-@@ -331,7 +332,7 @@ struct ivtv_stream {
- 	const char *name;		/* name of the stream */
- 	int type;			/* stream type */
- 
--	struct v4l2_fh *fh;		/* pointer to the streaming filehandle */
-+	struct ivtv_open_id *id;	/* pointer to the streaming ivtv_open_id */
- 	spinlock_t qlock;		/* locks access to the queues */
- 	unsigned long s_flags;		/* status flags, see above */
- 	int dma;			/* can be PCI_DMA_TODEVICE, PCI_DMA_FROMDEVICE or PCI_DMA_NONE */
-diff --git a/drivers/media/pci/ivtv/ivtv-fileops.c b/drivers/media/pci/ivtv/ivtv-fileops.c
-index cfa28d0355863..1ac8d691df5cd 100644
---- a/drivers/media/pci/ivtv/ivtv-fileops.c
-+++ b/drivers/media/pci/ivtv/ivtv-fileops.c
-@@ -39,16 +39,16 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 
- 	if (test_and_set_bit(IVTV_F_S_CLAIMED, &s->s_flags)) {
- 		/* someone already claimed this stream */
--		if (s->fh == &id->fh) {
-+		if (s->id == id) {
- 			/* yes, this file descriptor did. So that's OK. */
- 			return 0;
- 		}
--		if (s->fh == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
-+		if (s->id == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
- 					 type == IVTV_ENC_STREAM_TYPE_VBI)) {
- 			/* VBI is handled already internally, now also assign
- 			   the file descriptor to this stream for external
- 			   reading of the stream. */
--			s->fh = &id->fh;
-+			s->id = id;
- 			IVTV_DEBUG_INFO("Start Read VBI\n");
- 			return 0;
- 		}
-@@ -56,7 +56,7 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 		IVTV_DEBUG_INFO("Stream %d is busy\n", type);
- 		return -EBUSY;
- 	}
--	s->fh = &id->fh;
-+	s->id = id;
- 	if (type == IVTV_DEC_STREAM_TYPE_VBI) {
- 		/* Enable reinsertion interrupt */
- 		ivtv_clear_irq_mask(itv, IVTV_IRQ_DEC_VBI_RE_INSERT);
-@@ -94,7 +94,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 	struct ivtv *itv = s->itv;
- 	struct ivtv_stream *s_vbi;
- 
--	s->fh = NULL;
-+	s->id = NULL;
- 	if ((s->type == IVTV_DEC_STREAM_TYPE_VBI || s->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 		/* this stream is still in use internally */
-@@ -126,7 +126,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 		/* was already cleared */
- 		return;
- 	}
--	if (s_vbi->fh) {
-+	if (s_vbi->id) {
- 		/* VBI stream still claimed by a file descriptor */
- 		return;
- 	}
-@@ -359,7 +359,7 @@ static ssize_t ivtv_read(struct ivtv_stream *s, char __user *ubuf, size_t tot_co
- 	size_t tot_written = 0;
- 	int single_frame = 0;
- 
--	if (atomic_read(&itv->capturing) == 0 && s->fh == NULL) {
-+	if (atomic_read(&itv->capturing) == 0 && s->id == NULL) {
- 		/* shouldn't happen */
- 		IVTV_DEBUG_WARN("Stream %s not initialized before read\n", s->name);
- 		return -EIO;
-@@ -831,7 +831,7 @@ void ivtv_stop_capture(struct ivtv_open_id *id, int gop_end)
- 		     id->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		    test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 			/* Also used internally, don't stop capturing */
--			s->fh = NULL;
-+			s->id = NULL;
- 		}
- 		else {
- 			ivtv_stop_v4l2_encode_stream(s, gop_end);
-@@ -915,7 +915,7 @@ int ivtv_v4l2_close(struct file *filp)
- 	v4l2_fh_exit(fh);
- 
- 	/* Easy case first: this stream was never claimed by us */
--	if (s->fh != &id->fh)
-+	if (s->id != id)
- 		goto close_done;
- 
- 	/* 'Unclaim' this stream */
-diff --git a/drivers/media/pci/ivtv/ivtv-irq.c b/drivers/media/pci/ivtv/ivtv-irq.c
-index 4d63daa01eed2..078d9cd77c710 100644
---- a/drivers/media/pci/ivtv/ivtv-irq.c
-+++ b/drivers/media/pci/ivtv/ivtv-irq.c
-@@ -305,7 +305,7 @@ static void dma_post(struct ivtv_stream *s)
- 			ivtv_process_vbi_data(itv, buf, 0, s->type);
- 			s->q_dma.bytesused += buf->bytesused;
- 		}
--		if (s->fh == NULL) {
-+		if (s->id == NULL) {
- 			ivtv_queue_move(s, &s->q_dma, NULL, &s->q_free, 0);
- 			return;
- 		}
-@@ -330,7 +330,7 @@ static void dma_post(struct ivtv_stream *s)
- 		set_bit(IVTV_F_I_HAVE_WORK, &itv->i_flags);
- 	}
- 
--	if (s->fh)
-+	if (s->id)
- 		wake_up(&s->waitq);
- }
- 
+ 			next = min(vma->vm_end, end);
+ 			npages = (next - addr) >> PAGE_SHIFT;
++			/* HMM requires at least READ permissions. If provided with PROT_NONE,
++			 * unmap the memory. If it's not already mapped, this is a no-op
++			 * If PROT_WRITE is provided without READ, warn first then unmap
++			 */
++			if (!(vma->vm_flags & VM_READ)) {
++				unsigned long e, s;
++
++				svm_range_lock(prange);
++				if (vma->vm_flags & VM_WRITE)
++					pr_debug("VM_WRITE without VM_READ is not supported");
++				s = max(start, prange->start);
++				e = min(end, prange->last);
++				if (e >= s)
++					r = svm_range_unmap_from_gpus(prange, s, e,
++						       KFD_SVM_UNMAP_TRIGGER_UNMAP_FROM_CPU);
++				svm_range_unlock(prange);
++				/* If unmap returns non-zero, we'll bail on the next for loop
++				 * iteration, so just leave r and continue
++				 */
++				addr = next;
++				continue;
++			}
++
+ 			WRITE_ONCE(p->svms.faulting_task, current);
+ 			r = amdgpu_hmm_range_get_pages(&prange->notifier, addr, npages,
+ 						       readonly, owner, NULL,
 -- 
 2.51.0
 
