@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DF425A341;
-	Tue, 11 Nov 2025 01:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF722266B6C;
+	Tue, 11 Nov 2025 01:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822846; cv=none; b=BuVGFRz1pEBOBeJQBL+IAYksckR+iEraMEziFt5oFGS2ABR7LJteDkOJLY30k5BCos2FQ7jDljbsEms4BWLxixIVuRl9GKRYInBz7rYv3Lhcsy2msuIlFyyMOzbWRosXmMNfp+vEoqjrXplA3WLx45ZwNfVNWT/bfPkndn8O+kI=
+	t=1762822848; cv=none; b=ip1bqd0rZIXPw+qQMvBMSDXUtnctrOzrK6T/RSMExjIjsOF1X3BaDNlabcno3M+sdgT+FTCWGNDoQ6TLtj0nAJYouqDGkK3zdF8NMg0wVoeSN47JdYR1aV6gf4J/pRo6CueSYAq10q1/F3CbGpTDFfGNmSWjUBr/zk3Vp3ddhZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822846; c=relaxed/simple;
-	bh=Pd8sEaBoHJoNekoN1UVzRXHrjtFCgOwSH0QECMH3sR0=;
+	s=arc-20240116; t=1762822848; c=relaxed/simple;
+	bh=8xDb3yUrnMKR3gjug6h0sqJ52NP8IExO5dT6lEvkPeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hU0/tQ/NWCGFK+YG5DLmWzs73s6eVXqedVROH6MCfaI/Vag+OiyUtsDZmA+rl1m0hDsqAhkAngltoTqGpxuoAY9XN+PpZvqBdzwrtnyC9XEynMcccyWjdPZl4q6xjZZWUtgYp3wp4e2YwXNItIrPvy1M/9zSIlAZhxvZzxGF4HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3o2iYdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k3CeBB/4JxyJ3NRVDuWPwpGsxRvMmFsRiKpShc6wTescUVloqS12bxol/J1IGcw4e2GsBStSDRgs4WEQGp3NUgeiqQy6kyKXS8o3/jHdcHNNfGP5lc7qHAVPlyHDh5jjs0+2a3x+pQDqcRJF1ZdTpRBeR4HOjn9VC+yqcHixQJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/ZGNL32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3o2iYdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A867C19424;
-	Tue, 11 Nov 2025 01:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/ZGNL32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEAEC2BC86;
+	Tue, 11 Nov 2025 01:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822846;
-	bh=Pd8sEaBoHJoNekoN1UVzRXHrjtFCgOwSH0QECMH3sR0=;
+	s=korg; t=1762822848;
+	bh=8xDb3yUrnMKR3gjug6h0sqJ52NP8IExO5dT6lEvkPeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3o2iYdYYpUokDUliNKw0Tbez5vY2/t17y5aZ7+JS+JpdMEiMcE2va9FQh3swKAtS
-	 opgv5TvfGsOSqJd9XfunglDmMTubDRxRRUhAK4Ag4MpML1jgPFUHbFtwHpTciiL6Qb
-	 jCiCR79QWFBirfV5qFtI3ytv6YSioI498Mr93B1M=
+	b=U/ZGNL32p6L8Zo3PZXya2Shh9rjmvJu9B0wGqEnAQlvNLCPIlLxdJC2Ebh0iSAMLw
+	 ArvwRTMo+pJnn9QeQKFb/y+KzVAQrJJm8wPIgZiSHIX/Y/w/gGtAYuL1prlNCduQvm
+	 OkaWxFgnd9rNB8ol3a4dwxyjZLyAjFOm93zrzmLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Chuande Chen <chuachen@cisco.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 182/849] selftests/bpf: Fix arena_spin_lock selftest failure
-Date: Tue, 11 Nov 2025 09:35:52 +0900
-Message-ID: <20251111004540.830789409@linuxfoundation.org>
+Subject: [PATCH 6.12 120/565] hwmon: (sbtsi_temp) AMD CPU extended temperature range support
+Date: Tue, 11 Nov 2025 09:39:36 +0900
+Message-ID: <20251111004529.655986562@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,88 +47,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Chuande Chen <chuachen@cisco.com>
 
-[ Upstream commit a9d4e9f0e871352a48a82da11a50df7196fe567a ]
+[ Upstream commit d9d61f1da35038793156c04bb13f0a1350709121 ]
 
-For systems having CONFIG_NR_CPUS set to > 1024 in kernel config
-the selftest fails as arena_spin_lock_irqsave() returns EOPNOTSUPP.
-(eg - incase of powerpc default value for CONFIG_NR_CPUS is 8192)
+Many AMD CPUs can support this feature now. We would get a wrong CPU DIE
+temperature if don't consider this. In low-temperature environments,
+the CPU die temperature can drop below zero. So many platforms would like
+to make extended temperature range as their default configuration.
+Default temperature range (0C to 255.875C).
+Extended temperature range (-49C to +206.875C).
+Ref Doc: AMD V3000 PPR (Doc ID #56558).
 
-The selftest is skipped incase bpf program returns EOPNOTSUPP,
-with a descriptive message logged.
-
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250913091337.1841916-1-skb99@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Chuande Chen <chuachen@cisco.com>
+Link: https://lore.kernel.org/r/20250814053940.96764-1-chenchuande@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/arena_spin_lock.c      | 13 +++++++++++++
- tools/testing/selftests/bpf/progs/arena_spin_lock.c |  5 ++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/hwmon/sbtsi_temp.c | 46 +++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-index 0223fce4db2bc..693fd86fbde62 100644
---- a/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-+++ b/tools/testing/selftests/bpf/prog_tests/arena_spin_lock.c
-@@ -40,8 +40,13 @@ static void *spin_lock_thread(void *arg)
+diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
+index 3c839f56c4603..a6c439e376ff7 100644
+--- a/drivers/hwmon/sbtsi_temp.c
++++ b/drivers/hwmon/sbtsi_temp.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/of.h>
++#include <linux/bitfield.h>
  
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
- 	ASSERT_OK(err, "test_run err");
-+
-+	if (topts.retval == -EOPNOTSUPP)
-+		goto end;
-+
- 	ASSERT_EQ((int)topts.retval, 0, "test_run retval");
+ /*
+  * SB-TSI registers only support SMBus byte data access. "_INT" registers are
+@@ -29,8 +30,22 @@
+ #define SBTSI_REG_TEMP_HIGH_DEC		0x13 /* RW */
+ #define SBTSI_REG_TEMP_LOW_DEC		0x14 /* RW */
  
-+end:
- 	pthread_exit(arg);
++/*
++ * Bit for reporting value with temperature measurement range.
++ * bit == 0: Use default temperature range (0C to 255.875C).
++ * bit == 1: Use extended temperature range (-49C to +206.875C).
++ */
++#define SBTSI_CONFIG_EXT_RANGE_SHIFT	2
++/*
++ * ReadOrder bit specifies the reading order of integer and decimal part of
++ * CPU temperature for atomic reads. If bit == 0, reading integer part triggers
++ * latching of the decimal part, so integer part should be read first.
++ * If bit == 1, read order should be reversed.
++ */
+ #define SBTSI_CONFIG_READ_ORDER_SHIFT	5
+ 
++#define SBTSI_TEMP_EXT_RANGE_ADJ	49000
++
+ #define SBTSI_TEMP_MIN	0
+ #define SBTSI_TEMP_MAX	255875
+ 
+@@ -38,6 +53,8 @@
+ struct sbtsi_data {
+ 	struct i2c_client *client;
+ 	struct mutex lock;
++	bool ext_range_mode;
++	bool read_order;
+ };
+ 
+ /*
+@@ -74,23 +91,11 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ {
+ 	struct sbtsi_data *data = dev_get_drvdata(dev);
+ 	s32 temp_int, temp_dec;
+-	int err;
+ 
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+-		/*
+-		 * ReadOrder bit specifies the reading order of integer and
+-		 * decimal part of CPU temp for atomic reads. If bit == 0,
+-		 * reading integer part triggers latching of the decimal part,
+-		 * so integer part should be read first. If bit == 1, read
+-		 * order should be reversed.
+-		 */
+-		err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
+-		if (err < 0)
+-			return err;
+-
+ 		mutex_lock(&data->lock);
+-		if (err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT)) {
++		if (data->read_order) {
+ 			temp_dec = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_DEC);
+ 			temp_int = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_INT);
+ 		} else {
+@@ -122,6 +127,8 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ 		return temp_dec;
+ 
+ 	*val = sbtsi_reg_to_mc(temp_int, temp_dec);
++	if (data->ext_range_mode)
++		*val -= SBTSI_TEMP_EXT_RANGE_ADJ;
+ 
+ 	return 0;
  }
- 
-@@ -63,6 +68,7 @@ static void test_arena_spin_lock_size(int size)
- 	skel = arena_spin_lock__open_and_load();
- 	if (!ASSERT_OK_PTR(skel, "arena_spin_lock__open_and_load"))
- 		return;
-+
- 	if (skel->data->test_skip == 2) {
- 		test__skip();
- 		goto end;
-@@ -86,6 +92,13 @@ static void test_arena_spin_lock_size(int size)
- 			goto end_barrier;
+@@ -146,6 +153,8 @@ static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
+ 		return -EINVAL;
  	}
  
-+	if (skel->data->test_skip == 3) {
-+		printf("%s:SKIP: CONFIG_NR_CPUS exceed the maximum supported by arena spinlock\n",
-+		       __func__);
-+		test__skip();
-+		goto end_barrier;
-+	}
++	if (data->ext_range_mode)
++		val += SBTSI_TEMP_EXT_RANGE_ADJ;
+ 	val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
+ 	sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
+ 
+@@ -203,6 +212,7 @@ static int sbtsi_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct sbtsi_data *data;
++	int err;
+ 
+ 	data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
+ 	if (!data)
+@@ -211,8 +221,14 @@ static int sbtsi_probe(struct i2c_client *client)
+ 	data->client = client;
+ 	mutex_init(&data->lock);
+ 
+-	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data, &sbtsi_chip_info,
+-							 NULL);
++	err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
++	if (err < 0)
++		return err;
++	data->ext_range_mode = FIELD_GET(BIT(SBTSI_CONFIG_EXT_RANGE_SHIFT), err);
++	data->read_order = FIELD_GET(BIT(SBTSI_CONFIG_READ_ORDER_SHIFT), err);
 +
- 	ASSERT_EQ(skel->bss->counter, repeat * nthreads, "check counter value");
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
++							 &sbtsi_chip_info, NULL);
  
- end_barrier:
-diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-index c4500c37f85e0..086b57a426cf5 100644
---- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-+++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-@@ -37,8 +37,11 @@ int prog(void *ctx)
- #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CAST)
- 	unsigned long flags;
- 
--	if ((ret = arena_spin_lock_irqsave(&lock, flags)))
-+	if ((ret = arena_spin_lock_irqsave(&lock, flags))) {
-+		if (ret == -EOPNOTSUPP)
-+			test_skip = 3;
- 		return ret;
-+	}
- 	if (counter != limit)
- 		counter++;
- 	bpf_repeat(cs_count);
+ 	return PTR_ERR_OR_ZERO(hwmon_dev);
+ }
 -- 
 2.51.0
 
