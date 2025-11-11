@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656E82BB17;
-	Tue, 11 Nov 2025 01:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B2B2D6605;
+	Tue, 11 Nov 2025 01:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824633; cv=none; b=A4FZIMV3LvncNEam6MDdFh5fP9z8JGQwGshPYPqybgKJ/s5+aJOrhEAEFez3c/J60BvdaXXJHAaGyw7IFDipxT7o8AatYA2Evz+DNnShGL5kC4GJCoM4fxzlLxVhpcwoEQb0NA0W1I+4/UyDs7SDxG/dUrJN0zDVlaxvKZzDInk=
+	t=1762824635; cv=none; b=SlbYQ0BQLtsurD3sEMBZR53TlvgonoT7NGEQtjnPcvrdANlwsJ2e+PUe5k6DEHR07BSb7jqm3lUexT8djzmTE+L0XI/bwacF4SioqGnFBtGYQvZuUC8T7+th8WcVV1qBLVcSnBuHHQkMOQKQT+zpWWZGr8dBGdZ5rn6CaQFA8K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824633; c=relaxed/simple;
-	bh=v3py1gVPVsnZ9+Gu1nXxNBUDU+jq+9FzQisQvKBQ1Zw=;
+	s=arc-20240116; t=1762824635; c=relaxed/simple;
+	bh=YV/F39sT4hznVZ+e6TzLnkIh3Za2lHW6TcBb4V7P4EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kC7TFIvy6L7QVkUxgA0CBNJ2lc8+AoLJm/Uq7g3/YwpSmopcglESPGx8qGx8XIeUX6cCvyw+qRNwtdfqdltJFEsdgfJKHI2JCKQHSsI15bjQPmQPHqhUI3mZu7TYWkDDjaUp3nOQpS2YsuksROigWMnmDUpmROHLkAbTovL+v78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUbsW5sy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ddPFux87ynge7dVDfNEx9GrZwdgaYRD98ZH0RstzPJT4UvUHfXceoGCuBOwxH4bjR0kDocG52tgzIZjMgWouBvoPS8iaz8eEJBvF/gLBM1CO37eOcIAw2nj5NwvHHbjusieCbVWFA+sxIm3vqYLKaAwQxIMwkdESxrZdNqWL1BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gE3BQ+sp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUbsW5sy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0635DC19422;
-	Tue, 11 Nov 2025 01:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gE3BQ+sp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D0BC2BC87;
+	Tue, 11 Nov 2025 01:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824633;
-	bh=v3py1gVPVsnZ9+Gu1nXxNBUDU+jq+9FzQisQvKBQ1Zw=;
+	s=korg; t=1762824635;
+	bh=YV/F39sT4hznVZ+e6TzLnkIh3Za2lHW6TcBb4V7P4EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUbsW5syr0OSp8uBYHqBCQ5N0lTEhWLfFwjbhB2uA8O0Sqab6kUCbuHVCbFWFrtrR
-	 sMCZqr9md3FS/maWVyj/jeOkm5zJ4+Yqs0QLvcArbP7sXWcR5wyCUuuyvBw1ho53+N
-	 kXnO6BVkfJz+3r9YlUdFowb9yN8a7jpjjcmbdc9U=
+	b=gE3BQ+spcFVEoClsGVb5gd22C1HURUEhY/nfnGUepIoZDlWNazGdSL2s8auxnXvxU
+	 caE+PU+R16jEi4sxb69790Kn0igh2BgCwirj9+cKb55geS8Esg4WPD4TddnUXCGOOg
+	 X4D4GdhfeCNPpzd47d10l6TNeqLwEyeRhoW0FaFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 540/849] wifi: mt76: mt7996: Temporarily disable EPCS
-Date: Tue, 11 Nov 2025 09:41:50 +0900
-Message-ID: <20251111004549.469391961@linuxfoundation.org>
+Subject: [PATCH 6.12 489/565] kbuild: uapi: Strip comments before size type check
+Date: Tue, 11 Nov 2025 09:45:45 +0900
+Message-ID: <20251111004537.931437749@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit e6291bb7a5935b2f1d337fd7a58eab7ada6678ad ]
+[ Upstream commit 66128f4287b04aef4d4db9bf5035985ab51487d5 ]
 
-EPCS is not yet ready, so do not claim to support it.
+On m68k, check_sizetypes in headers_check reports:
 
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Co-developed-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250904-mt7996-mlo-more-fixes-v1-4-89d8fed67f20@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+    ./usr/include/asm/bootinfo-amiga.h:17: found __[us]{8,16,32,64} type without #include <linux/types.h>
+
+This header file does not use any of the Linux-specific integer types,
+but merely refers to them from comments, so this is a false positive.
+As of commit c3a9d74ee413bdb3 ("kbuild: uapi: upgrade check_sizetypes()
+warning to error"), this check was promoted to an error, breaking m68k
+all{mod,yes}config builds.
+
+Fix this by stripping simple comments before looking for Linux-specific
+integer types.
+
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/949f096337e28d50510e970ae3ba3ec9c1342ec0.1759753998.git.geert@linux-m68k.org
+[nathan: Adjust comment and remove unnecessary escaping from slashes in
+         regex]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 -
- 1 file changed, 1 deletion(-)
+ usr/include/headers_check.pl | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 84015ab24af62..5a77771e3e6d6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1330,7 +1330,6 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 	eht_cap->has_eht = true;
- 
- 	eht_cap_elem->mac_cap_info[0] =
--		IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
- 		IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
- 		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
- 			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
+diff --git a/usr/include/headers_check.pl b/usr/include/headers_check.pl
+index b6aec5e4365f9..682980781eb37 100755
+--- a/usr/include/headers_check.pl
++++ b/usr/include/headers_check.pl
+@@ -160,6 +160,8 @@ sub check_sizetypes
+ 	if (my $included = ($line =~ /^\s*#\s*include\s+[<"](\S+)[>"]/)[0]) {
+ 		check_include_typesh($included);
+ 	}
++	# strip single-line comments, as types may be referenced within them
++	$line =~ s@/\*.*?\*/@@;
+ 	if ($line =~ m/__[us](8|16|32|64)\b/) {
+ 		printf STDERR "$filename:$lineno: " .
+ 		              "found __[us]{8,16,32,64} type " .
 -- 
 2.51.0
 
