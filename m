@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A7026D4C1;
-	Tue, 11 Nov 2025 01:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1923A26D4C1;
+	Tue, 11 Nov 2025 01:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824208; cv=none; b=JpKQcw/tRme/bJ2Hti4betTiRyTEX+RynrAD6Luq9n1zYZ4CnZ8lO9FDTZDncpm+TYaQjIO62fqnH6wIjh4qVd0CfwGSg/me7JVuuwmQg54zcfTfhQzGyFmP8JaOadubKxCToz1W2SHOLhZeSnjcKru16gztIZmaG5UwsSqtmTw=
+	t=1762824210; cv=none; b=O8+6MQVOSpQF6MLWKx420QpiU8F39LCr4nn2b/WBATgp3lOyMK+/CwwAl89hc56VzoKRstkopwtlBHlM+kgqFJ3/y9pqWwKiukPvORHRbaPwrXqZA3ZtfEmHaUP2w5QO8Zu1yUKe3KveVWBK9nIYL60sQl8mDgxi443/2nRFtXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824208; c=relaxed/simple;
-	bh=elFJri/nCeLqO0D8bV9P/sdDKlpVzMMaKgyCyoSUwjQ=;
+	s=arc-20240116; t=1762824210; c=relaxed/simple;
+	bh=sDOAACzSP3M3wuC2kIFefoPeo+vuPvL7bxEzMsPCkrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxIGiTlyLJwr+a+1SCHQbNMZaw1mkhjFxoSnh9vODH6tyD2xqz2BLCE7ZKSfKBPwVnQV/4GfM4g4cyESjonnvLzM7Hg5jiwhZX28wvwGdpAy6h3yFP8ITHIdxh/LSpBirkEIKSK4PwXfoaQ3RG5CVUcDTS6d/a/sgHi2J0sYphc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlzvkRXV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GgnOn+prvjOBZ7vHnTotShb7eA+QjC4Uh5ed3xOYThD39fSnrFB5d2v0Zk+sY2G6WoCXBPlmSzLtH6AeyeRCBdrDTYBtrRZkh2gSUA95JntrYrAU1LYkOaXvq7bM8Es4K0WGH3vihWjoa+ju3r2w7rzZonNq8WMC0jeAyjoYGeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5sMGTLt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlzvkRXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC88C4CEF5;
-	Tue, 11 Nov 2025 01:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5sMGTLt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85322C19424;
+	Tue, 11 Nov 2025 01:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824207;
-	bh=elFJri/nCeLqO0D8bV9P/sdDKlpVzMMaKgyCyoSUwjQ=;
+	s=korg; t=1762824209;
+	bh=sDOAACzSP3M3wuC2kIFefoPeo+vuPvL7bxEzMsPCkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NlzvkRXVkf30nF6L7nDIEN4xLQnRwEQcujUsFLv9YS1g20vqj4uAVB0OJ7hfC+c3R
-	 fTO5dTUU0i4fG+/7C3OdB21kNiOjKB6PoCKJNyOJRsTYe+4Rm5LyB4MfsyrjNyZpLI
-	 76zVQwo4ZMZ3B2v574dsttQhbTYnwWDXPJ9Tg0yg=
+	b=H5sMGTLt72CvQQRu5uzqN5WU5ZZhuvCPHfqkgnXEcy0vk3EXWv9Xq6Z6SmX1dZFja
+	 Z3REz7pcFdds3/zEG2eQqRubsx3NjxV5HkXUiDc7AMSc2onZAWKcVpUUuNziiLejOG
+	 ULZB/eWA/l9s3bR7Vbo+4q3nCIJkszr3Hwjxbq90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 462/849] net: dsa: felix: support phy-mode = "10g-qxgmii"
-Date: Tue, 11 Nov 2025 09:40:32 +0900
-Message-ID: <20251111004547.596854857@linuxfoundation.org>
+Subject: [PATCH 6.12 411/565] wifi: ath12k: Increase DP_REO_CMD_RING_SIZE to 256
+Date: Tue, 11 Nov 2025 09:44:27 +0900
+Message-ID: <20251111004536.114750271@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,100 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
 
-[ Upstream commit 6f616757dd306fce4b55131df23737732e347d8f ]
+[ Upstream commit 82993345aef6987a916337ebd2fca3ff4a6250a7 ]
 
-The "usxgmii" phy-mode that the Felix switch ports support on LS1028A is
-not quite USXGMII, it is defined by the USXGMII multiport specification
-document as 10G-QXGMII. It uses the same signaling as USXGMII, but it
-multiplexes 4 ports over the link, resulting in a maximum speed of 2.5G
-per port.
+Increase DP_REO_CMD_RING_SIZE from 128 to 256 to avoid
+queuing failures observed during stress test scenarios.
 
-This change is needed in preparation for the lynx-10g SerDes driver on
-LS1028A, which will make a more clear distinction between usxgmii
-(supported on lane 0) and 10g-qxgmii (supported on lane 1). These
-protocols have their configuration in different PCCR registers (PCCRB vs
-PCCR9).
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Continue parsing and supporting single-port-per-lane USXGMII when found
-in the device tree as usual (because it works), but add support for
-10G-QXGMII too. Using phy-mode = "10g-qxgmii" will be required when
-modifying the device trees to specify a "phys" phandle to the SerDes
-lane. The result when the "phys" phandle is present but the phy-mode is
-wrong is undefined.
-
-The only PHY driver in known use with this phy-mode, AQR412C, will gain
-logic to transition from "usxgmii" to "10g-qxgmii" in a future change.
-Prepare the driver by also setting PHY_INTERFACE_MODE_10G_QXGMII in
-supported_interfaces when PHY_INTERFACE_MODE_USXGMII is there, to
-prevent breakage with existing device trees.
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250903130730.2836022-3-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250806111750.3214584-2-nithyanantham.paramasivam@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/ocelot/felix.c         | 4 ++++
- drivers/net/dsa/ocelot/felix.h         | 3 ++-
- drivers/net/dsa/ocelot/felix_vsc9959.c | 3 ++-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/ocelot/felix.c b/drivers/net/dsa/ocelot/felix.c
-index 2dd4e56e1cf11..20ab558fde247 100644
---- a/drivers/net/dsa/ocelot/felix.c
-+++ b/drivers/net/dsa/ocelot/felix.c
-@@ -1153,6 +1153,9 @@ static void felix_phylink_get_caps(struct dsa_switch *ds, int port,
- 
- 	__set_bit(ocelot->ports[port]->phy_mode,
- 		  config->supported_interfaces);
-+	if (ocelot->ports[port]->phy_mode == PHY_INTERFACE_MODE_USXGMII)
-+		__set_bit(PHY_INTERFACE_MODE_10G_QXGMII,
-+			  config->supported_interfaces);
- }
- 
- static void felix_phylink_mac_config(struct phylink_config *config,
-@@ -1359,6 +1362,7 @@ static const u32 felix_phy_match_table[PHY_INTERFACE_MODE_MAX] = {
- 	[PHY_INTERFACE_MODE_SGMII] = OCELOT_PORT_MODE_SGMII,
- 	[PHY_INTERFACE_MODE_QSGMII] = OCELOT_PORT_MODE_QSGMII,
- 	[PHY_INTERFACE_MODE_USXGMII] = OCELOT_PORT_MODE_USXGMII,
-+	[PHY_INTERFACE_MODE_10G_QXGMII] = OCELOT_PORT_MODE_10G_QXGMII,
- 	[PHY_INTERFACE_MODE_1000BASEX] = OCELOT_PORT_MODE_1000BASEX,
- 	[PHY_INTERFACE_MODE_2500BASEX] = OCELOT_PORT_MODE_2500BASEX,
- };
-diff --git a/drivers/net/dsa/ocelot/felix.h b/drivers/net/dsa/ocelot/felix.h
-index 211991f494e35..a657b190c5d7b 100644
---- a/drivers/net/dsa/ocelot/felix.h
-+++ b/drivers/net/dsa/ocelot/felix.h
-@@ -12,8 +12,9 @@
- #define OCELOT_PORT_MODE_SGMII		BIT(1)
- #define OCELOT_PORT_MODE_QSGMII		BIT(2)
- #define OCELOT_PORT_MODE_2500BASEX	BIT(3)
--#define OCELOT_PORT_MODE_USXGMII	BIT(4)
-+#define OCELOT_PORT_MODE_USXGMII	BIT(4) /* compatibility */
- #define OCELOT_PORT_MODE_1000BASEX	BIT(5)
-+#define OCELOT_PORT_MODE_10G_QXGMII	BIT(6)
- 
- struct device_node;
- 
-diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
-index 7b35d24c38d76..8cf4c89865876 100644
---- a/drivers/net/dsa/ocelot/felix_vsc9959.c
-+++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
-@@ -34,7 +34,8 @@
- 					 OCELOT_PORT_MODE_QSGMII | \
- 					 OCELOT_PORT_MODE_1000BASEX | \
- 					 OCELOT_PORT_MODE_2500BASEX | \
--					 OCELOT_PORT_MODE_USXGMII)
-+					 OCELOT_PORT_MODE_USXGMII | \
-+					 OCELOT_PORT_MODE_10G_QXGMII)
- 
- static const u32 vsc9959_port_modes[VSC9959_NUM_PORTS] = {
- 	VSC9959_PORT_MODE_SERDES,
+diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
+index 2fb18b83b3eec..ec140052097e9 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.h
++++ b/drivers/net/wireless/ath/ath12k/dp.h
+@@ -167,7 +167,7 @@ struct ath12k_pdev_dp {
+ #define DP_REO_REINJECT_RING_SIZE	32
+ #define DP_RX_RELEASE_RING_SIZE		1024
+ #define DP_REO_EXCEPTION_RING_SIZE	128
+-#define DP_REO_CMD_RING_SIZE		128
++#define DP_REO_CMD_RING_SIZE		256
+ #define DP_REO_STATUS_RING_SIZE		2048
+ #define DP_RXDMA_BUF_RING_SIZE		4096
+ #define DP_RX_MAC_BUF_RING_SIZE		2048
 -- 
 2.51.0
 
