@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C7F73451;
-	Tue, 11 Nov 2025 00:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D7F192B75;
+	Tue, 11 Nov 2025 00:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822153; cv=none; b=f92ZorMp7v5yOHsLD9Vrz6KJHdX/teWTiOhAjoOR+IAnp5bsR1KFo5btCRcbzH4Ye4sewuUHzUNr9YVvzuVW3VySdThSuuNQfutrD9IHDEsqdtEWyygx8W60pLwN4H4OfVOxb4rFuEtMzGIA1qlHbE8tl3Vg6oXLAdBLlRlKslQ=
+	t=1762822156; cv=none; b=NdH3Jf8vo6hlelSST2vFwRsiiZf8aSQSoNQhMZUxrK5MbwEwBIDA0N1FwjoUlS3Sk4HKW8sGaTedBy0gWzJBZEou2Ta5sUgeFrBhrD+ZIrMn2nMrue8HIkqPQNy9ZwTCDNsg/dy0Fd3KYxJfgyqucDMrlQAc1pUK/tBZU7U0DVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822153; c=relaxed/simple;
-	bh=OS9mAyh1f/Gxo/k7ariML793bR/zO8PesxijDb5CL6U=;
+	s=arc-20240116; t=1762822156; c=relaxed/simple;
+	bh=7S5RTgnEIXB3VO+jYxJtvGkWBEbpigCqe2sSjMPvmys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9Kd3gu7Yb+rz0hiYKyV3e0kT9E9mhsz31pEvWzlSIusRspmY6nzfBu8teTHQgL5FZXDJUKeWix2AfFo5V+cBgAxkr64A98vBKN1UKM2ZZJJEYIxjemEIGS5SkGgrf8ynvfhM9JXhIzlh5hIuUgK5f0VjX+BJCv98hRlQihuXO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7DltC08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0Or1i3bEqpw5u7JpwTdZxTFouIxxwuS7GcYo7uDt///7x68KdcAgJFjOQh0kHA5dn7a0Qs7VULVB/b7wFvJjsiKq1x3Eo9Gi373yx1gz4bLRDPZyWNu4mfnEKWuVtt4Grwna2Y53g4PjYKnsO42UM6OEbAeCcB9cML4D5knlPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTjDNdNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7DltC08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB320C19425;
-	Tue, 11 Nov 2025 00:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTjDNdNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3129FC4CEFB;
+	Tue, 11 Nov 2025 00:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822153;
-	bh=OS9mAyh1f/Gxo/k7ariML793bR/zO8PesxijDb5CL6U=;
+	s=korg; t=1762822155;
+	bh=7S5RTgnEIXB3VO+jYxJtvGkWBEbpigCqe2sSjMPvmys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7DltC08D2j49TasoqDDiy0ct9VGSh44ZatNBF4dCxWa0Jii5JgFT+VCufglTl/TS
-	 foRyeULtIkR+lDxJmpW1gSww80ay+Qu3j/70/ehv74M6DurulpPUOyTCzwkWuNwyWN
-	 fl+NEcWQiDbd0C/0f/r9ZUK31K7SNBN9uLhgPuSE=
+	b=BTjDNdNNiXyXCIRKZduzsLqbE4owFjHWyDPD9waQkqod7IPGa4O3Pio3uBe8aYuWO
+	 a18Bi8xbsKDagt2y+QzOMGzcSdQAn8IugD7o7LgteDNRQX7lhYSTryFm51fAWTOsnU
+	 vUNSB7fjtlB4laz9VZ7alts8poPu8AfMzjxeTorQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 038/849] ASoC: cs-amp-lib-test: Fix missing include of kunit/test-bug.h
-Date: Tue, 11 Nov 2025 09:33:28 +0900
-Message-ID: <20251111004537.361693163@linuxfoundation.org>
+Subject: [PATCH 6.17 039/849] wifi: mac80211: reset FILS discovery and unsol probe resp intervals
+Date: Tue, 11 Nov 2025 09:33:29 +0900
+Message-ID: <20251111004537.385618746@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,36 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
 
-[ Upstream commit ec20584f25233bfe292c8e18f9a429dfaff58a49 ]
+[ Upstream commit 607844761454e3c17e928002e126ccf21c83f6aa ]
 
-cs-amp-lib-test uses functions from kunit/test-bug.h but wasn't
-including it.
+When ieee80211_stop_ap() deletes the FILS discovery and unsolicited
+broadcast probe response templates, the associated interval values
+are not reset. This can lead to drivers subsequently operating with
+the non-zero values, leading to unexpected behavior.
 
-This error was found by smatch.
+Trigger repeated retrieval attempts of the FILS discovery template in
+ath12k, resulting in excessive log messages such as:
 
-Fixes: 177862317a98 ("ASoC: cs-amp-lib: Add KUnit test for calibration helpers")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251016094844.92796-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+mac vdev 0 failed to retrieve FILS discovery template
+mac vdev 4 failed to retrieve FILS discovery template
+
+Fix this by resetting the intervals in ieee80211_stop_ap() to ensure
+proper cleanup of FILS discovery and unsolicited broadcast probe
+response templates.
+
+Fixes: 295b02c4be74 ("mac80211: Add FILS discovery support")
+Fixes: 632189a0180f ("mac80211: Unsolicited broadcast probe response support")
+Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250924130014.2575533-1-aaradhana.sahu@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs-amp-lib-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/cfg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/cs-amp-lib-test.c b/sound/soc/codecs/cs-amp-lib-test.c
-index f53650128fc3d..a1a9758a73eb6 100644
---- a/sound/soc/codecs/cs-amp-lib-test.c
-+++ b/sound/soc/codecs/cs-amp-lib-test.c
-@@ -7,6 +7,7 @@
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 7609c7c31df74..e5e82e0b48ff1 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1772,6 +1772,9 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
+ 	link_conf->nontransmitted = false;
+ 	link_conf->ema_ap = false;
+ 	link_conf->bssid_indicator = 0;
++	link_conf->fils_discovery.min_interval = 0;
++	link_conf->fils_discovery.max_interval = 0;
++	link_conf->unsol_bcast_probe_resp_interval = 0;
  
- #include <kunit/resource.h>
- #include <kunit/test.h>
-+#include <kunit/test-bug.h>
- #include <kunit/static_stub.h>
- #include <linux/device/faux.h>
- #include <linux/firmware/cirrus/cs_dsp.h>
+ 	__sta_info_flush(sdata, true, link_id, NULL);
+ 
 -- 
 2.51.0
 
