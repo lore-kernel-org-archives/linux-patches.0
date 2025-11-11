@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77403A944;
-	Tue, 11 Nov 2025 01:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C453A944;
+	Tue, 11 Nov 2025 01:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825080; cv=none; b=a+t4upSujyug9ua50XK2T+7YsD8Y/DgLIxrJuhNvPm9lh5ZDSEKKsjvzIVLPtyWaLzGCFnzB9xJUYn6OHAwGfbVtkHFWtI0XP1Kr61d7WBIrXPRj01oLJ5jKW1gsJ/VqlEt+trzMu3iy87ZfYHzkslzl51Q/PcqQPY/F29Uqg60=
+	t=1762825082; cv=none; b=tIZBnLFWmjEyiQSSpPMPz80gDdwseCVG42YAK1kiimfHOjayc9YakYdr2kHF7hHT/r1JVkgNDktS1VUSQvONXWoYsdEHejMw4qlSi0Ekvxzu03qtXJSOJgZ1zWhCot7lhP50t85QZUKuSASeKkcvmBLpnsSq//8fnqIQDSnE8aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825080; c=relaxed/simple;
-	bh=YpAFs6L0nYvc+wC4NzWMjQT6rHFHh8yznGm0CVLC2nc=;
+	s=arc-20240116; t=1762825082; c=relaxed/simple;
+	bh=zxyHmcDBRZgH0Fw5AjXxp9qO/a2WfUjjyI1LDmAwDQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmyKJ1bXJc3ZJhsqqsxWaMeUMf4sk+kR4Nd6TCXEOm2cl0pQczjIwOvmHEq1QOElqrcowYDIzzr+N3Cj8btfzbmQBC7+z98SZk+GA3xGzpVMZLYw/LFoJHzunLbtDXWukkfZvZM1COVOuUd+lF6AoLk5hxfhoXlueXfX1aOkpVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AV3t6Yc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bn7j9V1tsSJEpbAOQVXTFHEbMHZ+hHm8jQphJrP58s1YiwQYwLQ5CYBgH56Aef1DSPP9As3Dw9NZKsDRklFMaUNYjlXJ0ZOg4XiRqsBQjtkjE1H8zmowsDCOckgzz8izA1nnLQtLJHOo5MZNbfrBqfJribnD0/VDBb57AJUvxis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLdPYc7+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AV3t6Yc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CD2C2BCAF;
-	Tue, 11 Nov 2025 01:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLdPYc7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387A3C16AAE;
+	Tue, 11 Nov 2025 01:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825080;
-	bh=YpAFs6L0nYvc+wC4NzWMjQT6rHFHh8yznGm0CVLC2nc=;
+	s=korg; t=1762825082;
+	bh=zxyHmcDBRZgH0Fw5AjXxp9qO/a2WfUjjyI1LDmAwDQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AV3t6Yc4+6e373VrLzz8DU0iTixRfnNgdtK8mCi+ckopOwtVO/zYs2gIb0z3mn8j+
-	 j2p1MuexNK/Jt3kToZcprkczeNQkXYKOe2i64IxuftmxmlV7Ff30ph6ITR00HRaWee
-	 ok2l09zwiZA10sO6SC/78h+SzKLvC/eWB7INTmBs=
+	b=bLdPYc7+m1oO3VHsu68G0GY0vzrLR1BADwlf0Eeexdr21EUB9JF6JwjPU2pQpBgqJ
+	 fLnA001DLNTlbDmZecTzUgzJVe5KsMJcupaeBUGEVMhzjkisz8+auQsf5bS2V59mix
+	 TIsiYyrcSPJZ+fYUcbonD1rzgDz+s+Bl5SwYngGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Primoz Fiser <primoz.fiser@norik.com>,
-	Mark Brown <broonie@kernel.org>,
+	Atish Patra <atishp@rivosinc.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sunil V L <sunilvl@ventanamicro.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 651/849] ASoC: tlv320aic3x: Fix class-D initialization for tlv320aic3007
-Date: Tue, 11 Nov 2025 09:43:41 +0900
-Message-ID: <20251111004552.168555552@linuxfoundation.org>
+Subject: [PATCH 6.17 652/849] ACPI: scan: Update honor list for RPMI System MSI
+Date: Tue, 11 Nov 2025 09:43:42 +0900
+Message-ID: <20251111004552.191296596@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,97 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Primoz Fiser <primoz.fiser@norik.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-[ Upstream commit 733a763dd8b3ac2858dd238a91bb3a2fdff4739e ]
+[ Upstream commit 4215d1cf59e4b272755f4277a05cd5967935a704 ]
 
-The problem of having class-D initialization sequence in probe using
-regmap_register_patch() is that it will do hardware register writes
-immediately after being called as it bypasses regcache. Afterwards, in
-aic3x_init() we also perform codec soft reset, rendering class-D init
-sequence pointless. This issue is even more apparent when using reset
-GPIO line, since in that case class-D amplifier initialization fails
-with "Failed to init class D: -5" message as codec is already held in
-reset state after requesting the reset GPIO and hence hardware I/O
-fails with -EIO errno.
+The RPMI System MSI interrupt controller (just like PLIC and APLIC)
+needs to probed prior to devices like GED which use interrupts provided
+by it. Also, it has dependency on the SBI MPXY mailbox device.
 
-Thus move class-D amplifier initialization sequence from probe function
-to aic3x_set_power() just before the usual regcache sync. Use bypassed
-regmap_multi_reg_write_bypassed() function to make sure, class-D init
-sequence is performed in proper order as described in the datasheet.
+Add HIDs of RPMI System MSI and SBI MPXY mailbox devices to the honor
+list so that those dependencies are handled.
 
-Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
-Link: https://patch.msgid.link/20250925085929.2581749-1-primoz.fiser@norik.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Acked-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://lore.kernel.org/r/20250818040920.272664-17-apatel@ventanamicro.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic3x.c | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ drivers/acpi/scan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
-index f1649df197389..eea8ca285f8e0 100644
---- a/sound/soc/codecs/tlv320aic3x.c
-+++ b/sound/soc/codecs/tlv320aic3x.c
-@@ -121,6 +121,16 @@ static const struct reg_default aic3x_reg[] = {
- 	{ 108, 0x00 }, { 109, 0x00 },
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 9865faa996b0d..f2e032f381625 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -860,6 +860,8 @@ static const char * const acpi_honor_dep_ids[] = {
+ 	"INTC10CF", /* IVSC (MTL) driver must be loaded to allow i2c access to camera sensors */
+ 	"RSCV0001", /* RISC-V PLIC */
+ 	"RSCV0002", /* RISC-V APLIC */
++	"RSCV0005", /* RISC-V SBI MPXY MBOX */
++	"RSCV0006", /* RISC-V RPMI SYSMSI */
+ 	"PNP0C0F",  /* PCI Link Device */
+ 	NULL
  };
- 
-+static const struct reg_sequence aic3007_class_d[] = {
-+	/* Class-D speaker driver init; datasheet p. 46 */
-+	{ AIC3X_PAGE_SELECT, 0x0D },
-+	{ 0xD, 0x0D },
-+	{ 0x8, 0x5C },
-+	{ 0x8, 0x5D },
-+	{ 0x8, 0x5C },
-+	{ AIC3X_PAGE_SELECT, 0x00 },
-+};
-+
- static bool aic3x_volatile_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-@@ -1393,6 +1403,10 @@ static int aic3x_set_power(struct snd_soc_component *component, int power)
- 			gpiod_set_value(aic3x->gpio_reset, 0);
- 		}
- 
-+		if (aic3x->model == AIC3X_MODEL_3007)
-+			regmap_multi_reg_write_bypassed(aic3x->regmap, aic3007_class_d,
-+							ARRAY_SIZE(aic3007_class_d));
-+
- 		/* Sync reg_cache with the hardware */
- 		regcache_cache_only(aic3x->regmap, false);
- 		regcache_sync(aic3x->regmap);
-@@ -1723,17 +1737,6 @@ static void aic3x_configure_ocmv(struct device *dev, struct aic3x_priv *aic3x)
- 	}
- }
- 
--
--static const struct reg_sequence aic3007_class_d[] = {
--	/* Class-D speaker driver init; datasheet p. 46 */
--	{ AIC3X_PAGE_SELECT, 0x0D },
--	{ 0xD, 0x0D },
--	{ 0x8, 0x5C },
--	{ 0x8, 0x5D },
--	{ 0x8, 0x5C },
--	{ AIC3X_PAGE_SELECT, 0x00 },
--};
--
- int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver_data)
- {
- 	struct aic3x_priv *aic3x;
-@@ -1823,13 +1826,6 @@ int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver
- 
- 	aic3x_configure_ocmv(dev, aic3x);
- 
--	if (aic3x->model == AIC3X_MODEL_3007) {
--		ret = regmap_register_patch(aic3x->regmap, aic3007_class_d,
--					    ARRAY_SIZE(aic3007_class_d));
--		if (ret != 0)
--			dev_err(dev, "Failed to init class D: %d\n", ret);
--	}
--
- 	ret = devm_snd_soc_register_component(dev, &soc_component_dev_aic3x, &aic3x_dai, 1);
- 	if (ret)
- 		return ret;
 -- 
 2.51.0
 
