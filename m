@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6122D2D8DC3;
-	Tue, 11 Nov 2025 01:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F3B3431FD;
+	Tue, 11 Nov 2025 01:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823539; cv=none; b=fjoqfvsZ0glQ5Fgi2gbNcWokxzuyrp91hD6veHw+TdS2Mz6nR9SQCggc96yPcSN0mlKqLxUlNozgANB39kH0G95ARyjZ4YomxQ5hMdEJO/KOwPaPFKwxc919OP9SKzEhylTyqDa/gIPVYyeJy4vegbQLJZbXzzH6YG3xHCMjGzE=
+	t=1762823541; cv=none; b=ryE8b++Zf7kUNl/PhFR4z7/TbbiajCNU5/74AQy4hzA8p0LnwRgJwup6GAEDSi453KTJ/8CjunvszI0uQ4MdcNNtJd8EgHrZPYi75eqvWQcSzpiqaMj3OAfBDpWvAQuOi1/HXCv0oG/bV5JSHaH4GONZdokTVEy4mWQYy1ipu0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823539; c=relaxed/simple;
-	bh=p+jX9PQxZK9idWuiO8m6pPgfzR7zsLFNenKYWb1Zefw=;
+	s=arc-20240116; t=1762823541; c=relaxed/simple;
+	bh=usrnoDow3Y1z6gGrOBlOKlbSJejc/1p+B2FR4t7fBQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYR/kR2015h3+pOLHlXepWhy4IobEVEPJ5ItL6/nfhPPrRnhrIh2pp9P3va8Z8OFTScuHP7d8Bpphi7nJe9uyL6uDZeIAb/8QDk24R2laabJUlJB/Qy6ZFVA02/FpxVGyPO6umMqs5jQy4kqoMAcS/8afUbGB5p2KD8VyMbYnXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqNyCkok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZsGlTjNt0JrUuD5iSJtzvvBOaxxs+dnTc3Z9IJTbT88QbUjkYBW1dlpQqVEdZE570Tc749ck+xKkjCXSYQmNs+Ssm/sop7ES/rGLRQm+Rr/szr22nxRot1gMP553ONVsyuhRI7qR9gp1HBa9j+zj9ZdNIdjWyKrD6y1C1h7Ltn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6cSlUlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqNyCkok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02399C113D0;
-	Tue, 11 Nov 2025 01:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6cSlUlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53782C4CEF5;
+	Tue, 11 Nov 2025 01:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823539;
-	bh=p+jX9PQxZK9idWuiO8m6pPgfzR7zsLFNenKYWb1Zefw=;
+	s=korg; t=1762823541;
+	bh=usrnoDow3Y1z6gGrOBlOKlbSJejc/1p+B2FR4t7fBQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqNyCkokdx8604KZQQANz20i/qnD4TZNjS3AOsnRSIRjLwP5j2Er+MLxnexjR8HwK
-	 d5V2xlUtRe9QT8D89z1/fT08HXzjxpuwoLABRRaGFfwgbqeVJi6p6eFRaUpWaaUlG+
-	 F/ceUqbFBF6+cDvvQSxxObdhZzNdWOQr/Qw2zeYQ=
+	b=f6cSlUlXh1bW+t6CM2JDuh+omXjimPkMcMuDP6ehPmweey6Sm7el1SBT6kjqQjdde
+	 vGsBFDAf8Srm4GaKyplk0q+FueYHUag5pGR5rERXpMp1l94hZ0bAFi29WHnxDkAk3k
+	 SB75vVhOzFRWbEYFo+lpPUxf0KgYRWZRTk7lQMZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Clay King <clayking@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christoph Paasch <cpaasch@openai.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 266/565] drm/amd/display: incorrect conditions for failing dto calculations
-Date: Tue, 11 Nov 2025 09:42:02 +0900
-Message-ID: <20251111004532.875944429@linuxfoundation.org>
+Subject: [PATCH 6.12 235/565] net: When removing nexthops, dont call synchronize_net if it is not necessary
+Date: Tue, 11 Nov 2025 09:41:31 +0900
+Message-ID: <20251111004532.200152746@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -54,39 +55,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clay King <clayking@amd.com>
+From: Christoph Paasch <cpaasch@openai.com>
 
-[ Upstream commit 306cbcc6f687d791ab3cc8fbbe30f5286fd0d1e5 ]
+[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
 
-[Why & How]
-Previously, when calculating dto phase, we would incorrectly fail when phase
-<=0 without additionally checking for the integer value. This meant that
-calculations would incorrectly fail when the desired pixel clock was an exact
-multiple of the reference clock.
+When removing a nexthop, commit
+90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
+call to synchronize_rcu() (later changed to _net()) to make sure
+everyone sees the new nexthop-group before the rtnl-lock is released.
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Clay King <clayking@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+When one wants to delete a large number of groups and nexthops, it is
+fastest to first flush the groups (ip nexthop flush groups) and then
+flush the nexthops themselves (ip -6 nexthop flush). As that way the
+groups don't need to be rebalanced.
+
+However, `ip -6 nexthop flush` will still take a long time if there is
+a very large number of nexthops because of the call to
+synchronize_net(). Now, if there are no more groups, there is no point
+in calling synchronize_net(). So, let's skip that entirely by checking
+if nh->grp_list is empty.
+
+This gives us a nice speedup:
+
+BEFORE:
+=======
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	1m45.345s
+user	0m0.001s
+sys	0m0.005s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	3m10.430s
+user	0m0.002s
+sys	0m0.004s
+
+AFTER:
+======
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	0m17.545s
+user	0m0.003s
+sys	0m0.003s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	0m35.823s
+user	0m0.002s
+sys	0m0.004s
+
+Signed-off-by: Christoph Paasch <cpaasch@openai.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/nexthop.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-index 62402c7be0a5e..8cdc7ad104549 100644
---- a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-@@ -619,7 +619,7 @@ static void dccg401_set_dp_dto(
- 		dto_integer = div_u64(params->pixclk_hz, dto_modulo_hz);
- 		dto_phase_hz = params->pixclk_hz - dto_integer * dto_modulo_hz;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index c52ff9364ae8d..ee2e62ac0dcfe 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2074,6 +2074,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
+ {
+ 	struct nh_grp_entry *nhge, *tmp;
  
--		if (dto_phase_hz <= 0) {
-+		if (dto_phase_hz <= 0 && dto_integer <= 0) {
- 			/* negative pixel rate should never happen */
- 			BREAK_TO_DEBUGGER();
- 			return;
++	/* If there is nothing to do, let's avoid the costly call to
++	 * synchronize_net()
++	 */
++	if (list_empty(&nh->grp_list))
++		return;
++
+ 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
+ 		remove_nh_grp_entry(net, nhge, nlinfo);
+ 
 -- 
 2.51.0
 
