@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0144305E1B;
-	Tue, 11 Nov 2025 01:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A028305E1B;
+	Tue, 11 Nov 2025 01:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823864; cv=none; b=QdP0fWGUrY4kpcLCJvA8fDPncqRotGGsIo6U4l14JR02x7T2ig8dS4Kll9U8bJqtO5ix99lbJBWhzlFg7/1j10DgYqRCLiEi3Mwc5yber3oL0mOMvrL3PChUBSYJ4wor38NpbCGIp3cXWnHAPFJ6DnXP8cwwrbpiZXxvzG90x1c=
+	t=1762823866; cv=none; b=kQPiB3SuI4+t9hsRaStaXB3p04VvChcq5MjBMZUxvtpg/4bjsUZcMeTqxcxaALXe1+fckfsAI9ZhsK87jkUby4iEuFVAu7MmusAVF8qk1tuEL8rGD7MwnHVCsgT+vnr5ClrvbI1uw52h/xzEOPNOhmtg9ZpjwdKI2knnF8urvTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823864; c=relaxed/simple;
-	bh=OVufMZiUR9yJPmHb2iS57k3MZ9fi6B6dQK0Dr5XhigQ=;
+	s=arc-20240116; t=1762823866; c=relaxed/simple;
+	bh=5hu6u/6ms9ya3TZWlVUb7avNID/MC8EyAK9hmLALFyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJmEBR1OTjUcx2rOBOvvcDvpcjCBg4Cf8qGOIzIdY4m07phPjq5MRjAH87ZGYRDAHcF+/kA5DS5LJFaAgtCJjaEDA4ohmQhHEwMBbmR7hkQNpIWBLseVEKEsENkuS5HD6OSrExXFO4+xjkMzD+UNmsrHaIYCyXU9q6gNtCGmi4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnuPeHbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lune4KiSOV5lAPfP8pFoBN/x5WJLNDlrGGFjkqhMdrua67rCPgwHZ6zOLIH+rX9BVRy04ISHp10bWmEfZfN4j9BmM/PoM4XoWNh1bgmLlTfrg7yY+YQOkkdq12ZCSBI81CizVqpkWzqrhhOvMbA+M0qSZyJA+Cc83ygJ6hDj3v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZWc68Qk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnuPeHbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727D4C19422;
-	Tue, 11 Nov 2025 01:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZWc68Qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3370C2BCB2;
+	Tue, 11 Nov 2025 01:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823863;
-	bh=OVufMZiUR9yJPmHb2iS57k3MZ9fi6B6dQK0Dr5XhigQ=;
+	s=korg; t=1762823866;
+	bh=5hu6u/6ms9ya3TZWlVUb7avNID/MC8EyAK9hmLALFyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnuPeHbQnQuzKxL7KtULKff0Eq+3pXAyz5O3anNrf+aBsrxrTZKjatDuq92CMuGRy
-	 PP0xoQjxvq7F/jrZnjfpQXPwLIPH7osyVBIR4h5wA/oVytL/5875gQSelxij+wxUVO
-	 KYjdJSKdif6y+Rga/5bIJjf9LpAe//5l9pMfRO/Y=
+	b=MZWc68QkwtafwV3KWMr3LYjl/l6KxcwhkBSviHmdGiBedzEiIIISXIwoA2zensmdW
+	 MhFW5+yw+Mz/LoVlJ7EWOGnMsmzfeppaeyJwkdHfSu94UGBNsrp3rp044kEFVCpFFH
+	 FvVGQ6Z+gi/TyvW2EfI19o0u6JP+qi7LbAg74aOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 339/565] selftests: traceroute: Return correct value on failure
-Date: Tue, 11 Nov 2025 09:43:15 +0900
-Message-ID: <20251111004534.505980074@linuxfoundation.org>
+Subject: [PATCH 6.17 387/849] media: fix uninitialized symbol warnings
+Date: Tue, 11 Nov 2025 09:39:17 +0900
+Message-ID: <20251111004545.789062657@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +47,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 
-[ Upstream commit c068ba9d3ded56cb1ba4d5135ee84bf8039bd563 ]
+[ Upstream commit b4c441310c3baaa7c39a5457e305ca93c7a0400d ]
 
-The test always returns success even if some tests were modified to
-fail. Fix by converting the test to use the appropriate library
-functions instead of using its own functions.
+Initialize variables to fix these smatch warnings
+drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
+symbol 'protocol'.
+drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
+symbol 'scancode'.
+drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
+symbol 'toggle'.
+drivers/media/tuners/xc4000.c:1102 xc_debug_dump() error: uninitialized
+symbol 'adc_envelope'.
+drivers/media/tuners/xc4000.c:1108 xc_debug_dump() error: uninitialized
+symbol 'lock_status'.
+drivers/media/tuners/xc4000.c:1123 xc_debug_dump() error: uninitialized
+symbol 'frame_lines'.
+drivers/media/tuners/xc4000.c:1127 xc_debug_dump() error: uninitialized
+symbol 'quality'.
+drivers/media/tuners/xc5000.c:645 xc_debug_dump() error: uninitialized
+symbol 'adc_envelope'.
+drivers/media/tuners/xc5000.c:651 xc_debug_dump() error: uninitialized
+symbol 'lock_status'.
+drivers/media/tuners/xc5000.c:665 xc_debug_dump() error: uninitialized
+symbol 'frame_lines'.
+drivers/media/tuners/xc5000.c:668 xc_debug_dump() error: uninitialized
+symbol 'quality'.
+drivers/media/tuners/xc5000.c:671 xc_debug_dump() error: uninitialized
+symbol 'snr'.
+drivers/media/tuners/xc5000.c:674 xc_debug_dump() error: uninitialized
+symbol 'totalgain'.
 
-Before:
-
- # ./traceroute.sh
- TEST: IPV6 traceroute                                               [FAIL]
- TEST: IPV4 traceroute                                               [ OK ]
-
- Tests passed:   1
- Tests failed:   1
- $ echo $?
- 0
-
-After:
-
- # ./traceroute.sh
- TEST: IPv6 traceroute                                               [FAIL]
-         traceroute6 did not return 2000:102::2
- TEST: IPv4 traceroute                                               [ OK ]
- $ echo $?
- 1
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-5-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: dropped ' = 0' from rc in ir-kbd-i2c.c, not needed]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/traceroute.sh | 38 ++++++-----------------
- 1 file changed, 9 insertions(+), 29 deletions(-)
+ drivers/media/i2c/ir-kbd-i2c.c |  6 +++---
+ drivers/media/tuners/xc4000.c  |  8 ++++----
+ drivers/media/tuners/xc5000.c  | 12 ++++++------
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index b50e52afa4f49..1ac91eebd16f5 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -10,28 +10,6 @@ PAUSE_ON_FAIL=no
+diff --git a/drivers/media/i2c/ir-kbd-i2c.c b/drivers/media/i2c/ir-kbd-i2c.c
+index c84e1e0e6109a..5588cdd7ec20d 100644
+--- a/drivers/media/i2c/ir-kbd-i2c.c
++++ b/drivers/media/i2c/ir-kbd-i2c.c
+@@ -321,9 +321,9 @@ static int get_key_avermedia_cardbus(struct IR_i2c *ir, enum rc_proto *protocol,
  
- ################################################################################
- #
--log_test()
--{
--	local rc=$1
--	local expected=$2
--	local msg="$3"
--
--	if [ ${rc} -eq ${expected} ]; then
--		printf "TEST: %-60s  [ OK ]\n" "${msg}"
--		nsuccess=$((nsuccess+1))
--	else
--		ret=1
--		nfail=$((nfail+1))
--		printf "TEST: %-60s  [FAIL]\n" "${msg}"
--		if [ "${PAUSE_ON_FAIL}" = "yes" ]; then
--			echo
--			echo "hit enter to continue, 'q' to quit"
--			read a
--			[ "$a" = "q" ] && exit 1
--		fi
--	fi
--}
--
- run_cmd()
+ static int ir_key_poll(struct IR_i2c *ir)
  {
- 	local ns
-@@ -205,9 +183,12 @@ run_traceroute6()
+-	enum rc_proto protocol;
+-	u32 scancode;
+-	u8 toggle;
++	enum rc_proto protocol = 0;
++	u32 scancode = 0;
++	u8 toggle = 0;
+ 	int rc;
+ 
+ 	dev_dbg(&ir->rc->dev, "%s\n", __func__);
+diff --git a/drivers/media/tuners/xc4000.c b/drivers/media/tuners/xc4000.c
+index 3cf54d776d36c..b44c97e4e5ec6 100644
+--- a/drivers/media/tuners/xc4000.c
++++ b/drivers/media/tuners/xc4000.c
+@@ -1087,12 +1087,12 @@ static int check_firmware(struct dvb_frontend *fe, unsigned int type,
+ 
+ static void xc_debug_dump(struct xc4000_priv *priv)
  {
- 	setup_traceroute6
+-	u16	adc_envelope;
++	u16	adc_envelope = 0;
+ 	u32	freq_error_hz = 0;
+-	u16	lock_status;
++	u16	lock_status = 0;
+ 	u32	hsync_freq_hz = 0;
+-	u16	frame_lines;
+-	u16	quality;
++	u16	frame_lines = 0;
++	u16	quality = 0;
+ 	u16	signal = 0;
+ 	u16	noise = 0;
+ 	u8	hw_majorversion = 0, hw_minorversion = 0;
+diff --git a/drivers/media/tuners/xc5000.c b/drivers/media/tuners/xc5000.c
+index ec9a3cd4784e1..a28481edd22ed 100644
+--- a/drivers/media/tuners/xc5000.c
++++ b/drivers/media/tuners/xc5000.c
+@@ -622,14 +622,14 @@ static int xc5000_fwupload(struct dvb_frontend *fe,
  
-+	RET=0
-+
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
- 	run_cmd $h1 "traceroute6 2000:103::4 | grep -q 2000:102::2"
--	log_test $? 0 "IPV6 traceroute"
-+	check_err $? "traceroute6 did not return 2000:102::2"
-+	log_test "IPv6 traceroute"
- 
- 	cleanup_traceroute6
- }
-@@ -265,9 +246,12 @@ run_traceroute()
+ static void xc_debug_dump(struct xc5000_priv *priv)
  {
- 	setup_traceroute
- 
-+	RET=0
-+
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
- 	run_cmd $h1 "traceroute 1.0.2.4 | grep -q 1.0.1.1"
--	log_test $? 0 "IPV4 traceroute"
-+	check_err $? "traceroute did not return 1.0.1.1"
-+	log_test "IPv4 traceroute"
- 
- 	cleanup_traceroute
- }
-@@ -284,9 +268,6 @@ run_tests()
- ################################################################################
- # main
- 
--declare -i nfail=0
--declare -i nsuccess=0
--
- while getopts :pv o
- do
- 	case $o in
-@@ -301,5 +282,4 @@ require_command traceroute
- 
- run_tests
- 
--printf "\nTests passed: %3d\n" ${nsuccess}
--printf "Tests failed: %3d\n"   ${nfail}
-+exit "${EXIT_STATUS}"
+-	u16 adc_envelope;
++	u16 adc_envelope = 0;
+ 	u32 freq_error_hz = 0;
+-	u16 lock_status;
++	u16 lock_status = 0;
+ 	u32 hsync_freq_hz = 0;
+-	u16 frame_lines;
+-	u16 quality;
+-	u16 snr;
+-	u16 totalgain;
++	u16 frame_lines = 0;
++	u16 quality = 0;
++	u16 snr = 0;
++	u16 totalgain = 0;
+ 	u8 hw_majorversion = 0, hw_minorversion = 0;
+ 	u8 fw_majorversion = 0, fw_minorversion = 0;
+ 	u16 fw_buildversion = 0;
 -- 
 2.51.0
 
