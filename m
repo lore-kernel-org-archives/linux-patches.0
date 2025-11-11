@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C38A246768;
-	Tue, 11 Nov 2025 01:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62D3246768;
+	Tue, 11 Nov 2025 01:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822937; cv=none; b=UFCkFxjWLiN71Q6f44B+liWXuaPHH6n5f0r2RKVUGdF3x0HhHkc8NZyz4gwnJxTg43l5GitJ5MWFvMfQKtPuGNNrqpVtKm9poL3Tj+VDvgNqnrdnc3b2Z/Q1OIBfH1zlicaPWCCiDNXVT9LGFqCKQMt0poAmqDKlrbbcKEtP4e8=
+	t=1762822939; cv=none; b=O767DKuRHaXBEX8xvLJtFoSqSXod7x3pAFBppNA/sdwlVtQ3Du72V5zWIWyK2nQvvbbYkvy+aFEKIYWyAUd6pkb8dM+NYEcPTC0r86oxVGv+J4ZLyyoel6mL27RfPWKPwhgcMtIUTQOZf8qtT0gvgM75p6teUvJK96R0bKY1R8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822937; c=relaxed/simple;
-	bh=P0t8p6eWvdkCo3kJUJ9tX5F3vr8NtVtg09zxCFGxP4Y=;
+	s=arc-20240116; t=1762822939; c=relaxed/simple;
+	bh=TXaPvtFuAX4RngGoN4cI1nHkIQ6lxlRs+BAmEbRYh34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZGHpC3yz6kcEmFPoswjIIOdLnWOjmHsNYzQzYW6H0glEzNgozYTM+dXWZ9ARBeyYEBjBVFg6IGDwefnAsrcBA4iTeaglRflZ59qd/yvwJmvFlaUcWubb5BL0ice272nNEM4fmZ4df5Evmp9e7pzX2wBUMuv8C68i2OmSbCbyCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fF75vBtC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FFrtpQRRzpAXFQ/mQ05SdQhGyzN24sPbR5eJWXUGibYEHi7fuyBayWgVvD7H1PBtj5PabLW03F+64sbFS1DTaz7ISXALph/DqV/OsGPVu1tGZvSYz4DfjGMKbwifBAn2gsZQw5OG49gapp/nYCrpor0oixAY2z3lt0G3tTB8zrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryz6tz01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fF75vBtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E4FC16AAE;
-	Tue, 11 Nov 2025 01:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryz6tz01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F185DC116B1;
+	Tue, 11 Nov 2025 01:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822936;
-	bh=P0t8p6eWvdkCo3kJUJ9tX5F3vr8NtVtg09zxCFGxP4Y=;
+	s=korg; t=1762822939;
+	bh=TXaPvtFuAX4RngGoN4cI1nHkIQ6lxlRs+BAmEbRYh34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fF75vBtCmST4Xu+C0dvBIbJBoTMeQ+nwUK5xu9/RIvrWQJD1kGM2LP3rH7hoqleO1
-	 rJp1MhsVuIjwWd4DGk9SQKu6MXL5f3abmo7ISiFM/ecwGf+tykYsqu940h1j40KFWp
-	 4wS+ttkWKDUTm/sPX3jRsZ6qLV2tzNNbyp6FT7Bk=
+	b=ryz6tz01wnFZUFuVOgs+SyBc63deN1ElNHLx3yBM7YWpQGMqWWdCbB6eR4zBUB6uL
+	 TB7xT0DyX2YOTWdsPVygfmu8sxqmJxviw0rCNeWAxmae3sMQID/8ATW4RcWEKBVhr4
+	 neseBQfpp144c3z5y8go32iAYNQSkm9fhrdw4Vpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Pei <cp0613@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 199/849] ACPI: SPCR: Support Precise Baud Rate field
-Date: Tue, 11 Nov 2025 09:36:09 +0900
-Message-ID: <20251111004541.250277650@linuxfoundation.org>
+Subject: [PATCH 6.12 137/565] nvmet-fc: avoid scheduling association deletion twice
+Date: Tue, 11 Nov 2025 09:39:53 +0900
+Message-ID: <20251111004530.027461868@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +49,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 4d330fe54145ecfbb657ac01a554fdedf3c1927e ]
+[ Upstream commit f2537be4f8421f6495edfa0bc284d722f253841d ]
 
-The Microsoft Serial Port Console Redirection (SPCR) specification
-revision 1.09 comprises additional field: Precise Baud Rate [1].
+When forcefully shutting down a port via the configfs interface,
+nvmet_port_subsys_drop_link() first calls nvmet_port_del_ctrls() and
+then nvmet_disable_port(). Both functions will eventually schedule all
+remaining associations for deletion.
 
-It is used to describe non-traditional baud rates (such as those
-used by high-speed UARTs).
+The current implementation checks whether an association is about to be
+removed, but only after the work item has already been scheduled. As a
+result, it is possible for the first scheduled work item to free all
+resources, and then for the same work item to be scheduled again for
+deletion.
 
-It contains a specific non-zero baud rate which overrides the value
-of the Configured Baud Rate field. If this field is zero or not
-present, Configured Baud Rate is used.
+Because the association list is an RCU list, it is not possible to take
+a lock and remove the list entry directly, so it cannot be looked up
+again. Instead, a flag (terminating) must be used to determine whether
+the association is already in the process of being deleted.
 
-Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table [1]
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Link: https://patch.msgid.link/20250913070815.16758-1-cp0613@linux.alibaba.com
-[ rjw: Corrected typo in the subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Closes: https://lore.kernel.org/all/rsdinhafrtlguauhesmrrzkybpnvwantwmyfq2ih5aregghax5@mhr7v3eryci3/
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/spcr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/nvme/target/fc.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
-index cd36a97b0ea2c..fa12e740386de 100644
---- a/drivers/acpi/spcr.c
-+++ b/drivers/acpi/spcr.c
-@@ -146,7 +146,15 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
- 		goto done;
- 	}
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 0ade23610ae64..67767e926b1bb 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1088,6 +1088,14 @@ nvmet_fc_delete_assoc_work(struct work_struct *work)
+ static void
+ nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
+ {
++	int terminating;
++
++	terminating = atomic_xchg(&assoc->terminating, 1);
++
++	/* if already terminating, do nothing */
++	if (terminating)
++		return;
++
+ 	nvmet_fc_tgtport_get(assoc->tgtport);
+ 	if (!queue_work(nvmet_wq, &assoc->del_work))
+ 		nvmet_fc_tgtport_put(assoc->tgtport);
+@@ -1214,13 +1222,7 @@ nvmet_fc_delete_target_assoc(struct nvmet_fc_tgt_assoc *assoc)
+ {
+ 	struct nvmet_fc_tgtport *tgtport = assoc->tgtport;
+ 	unsigned long flags;
+-	int i, terminating;
+-
+-	terminating = atomic_xchg(&assoc->terminating, 1);
+-
+-	/* if already terminating, do nothing */
+-	if (terminating)
+-		return;
++	int i;
  
--	switch (table->baud_rate) {
-+	/*
-+	 * SPCR 1.09 defines Precise Baud Rate Filed contains a specific
-+	 * non-zero baud rate which overrides the value of the Configured
-+	 * Baud Rate field. If this field is zero or not present, Configured
-+	 * Baud Rate is used.
-+	 */
-+	if (table->precise_baudrate)
-+		baud_rate = table->precise_baudrate;
-+	else switch (table->baud_rate) {
- 	case 0:
- 		/*
- 		 * SPCR 1.04 defines 0 as a preconfigured state of UART.
+ 	spin_lock_irqsave(&tgtport->lock, flags);
+ 	list_del_rcu(&assoc->a_list);
 -- 
 2.51.0
 
