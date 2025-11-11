@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C218F306D57;
-	Tue, 11 Nov 2025 01:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1173B2472A6;
+	Tue, 11 Nov 2025 01:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824883; cv=none; b=tWfpP1FGOwszSxfGvG5DJ2XXarCAjJYqXEJ76yU8spkEfvdtcb0iHjLUepjoqjvEFtvCProgyu2QLthpZR0SZlUuNyw3gNduFarwbvNnnL85l62xZouDG8b7+8AhKrBI0FCTnoD/30qvGTDebLhDsdnAZ6cB2Q8wElrnXSbvfRA=
+	t=1762824886; cv=none; b=RgIPaCpzpXKgy0/hvHbq8ir1l53Sv5ElxVkhJ9O7LxC/y1ZDXXv3vpn+BWzHlG/kK8n7oX88+9sdu8kE8+dETKgldOI9EC4D6NxZyXIVeOF0Onck1XoqAcgCnQtK4AclRFzR0WGiKPDI1q9W+FtwraZ4+XhYDb97mK//cOzvfRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824883; c=relaxed/simple;
-	bh=lBDzGFabeSc5fGjBOzjvA18kpV9HiZ+e2jM59GejBvU=;
+	s=arc-20240116; t=1762824886; c=relaxed/simple;
+	bh=mkC/cvJ/UxLsEljq9oKmOMt0J7eLDGCbh1m/vDd9wms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFQLO8X2E2BOUnzZMyjrtwNKB7zEN+MNNgRw9+yn+wYmF7R51mIsMhdJLZUVOGOxUW4reBHuzi1lYMQOKjKzqxGe8Y4BH4qk6R198qMim+oE6v0arlz/SlTbEnxUDoilq1pCzDACvAZ/wVw1pHf/3T+YVT19ZfSKWfW/TvJw1Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4RGs/FY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwVxF9cm0pa7CmCcdWjhTbxO2ZCnZzu3vJLH7sgqArhyAfD79AOm3ErsOAtCH0ZAtMgJBab40dXb924G5v9X3Qtpu8EDC2+qmo95hqb6Jn6rYyfl/Lc/ucCb4/XBNiwu6XO0PO4ojfI2yZEbMLyluvAtY/6WNlWfmBF98ntiYrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLpdTg4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4RGs/FY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7DCC116D0;
-	Tue, 11 Nov 2025 01:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLpdTg4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69C7C116D0;
+	Tue, 11 Nov 2025 01:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824883;
-	bh=lBDzGFabeSc5fGjBOzjvA18kpV9HiZ+e2jM59GejBvU=;
+	s=korg; t=1762824885;
+	bh=mkC/cvJ/UxLsEljq9oKmOMt0J7eLDGCbh1m/vDd9wms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4RGs/FYOWdNW3qTFJjRRLDJp0g/1Ha8YHDqgYhlsqQadFcYwumOSs/sWAkMzoTeH
-	 tlQFI3hQl6c7xrituPYfDaIFoU4Joa/ttOfyY7Q6oN5aHsob7+nIl3yLPabf2+i/v9
-	 CKqCadq3P6s+4n5MIJ3S0ONQD4NQlvbK063PJvG0=
+	b=cLpdTg4CxCh4g1drNb1zk+YHhKlePkP60dfadXdiZVoerlQa2w0udbHK4FMaNH5g7
+	 lCLL4IpUFAuX2R6OYrx2Pzx6B06u0Lqs1uH7Y6toAZEao7sjPFocyxEyQlboUp1bBr
+	 dC+qtE9/CfBZb36qtwDELXEsxMliBzP+unNVI4LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qendrim Maxhuni <qendrim.maxhuni@garderos.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com,
+	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 528/565] net: usb: qmi_wwan: initialize MAC header offset in qmimux_rx_fixup
-Date: Tue, 11 Nov 2025 09:46:24 +0900
-Message-ID: <20251111004538.846399760@linuxfoundation.org>
+Subject: [PATCH 6.17 591/849] jfs: fix uninitialized waitqueue in transaction manager
+Date: Tue, 11 Nov 2025 09:42:41 +0900
+Message-ID: <20251111004550.712161392@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
+From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
 
-[ Upstream commit e120f46768d98151ece8756ebd688b0e43dc8b29 ]
+[ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
 
-Raw IP packets have no MAC header, leaving skb->mac_header uninitialized.
-This can trigger kernel panics on ARM64 when xfrm or other subsystems
-access the offset due to strict alignment checks.
+The transaction manager initialization in txInit() was not properly
+initializing TxBlock[0].waitor waitqueue, causing a crash when
+txEnd(0) is called on read-only filesystems.
 
-Initialize the MAC header to prevent such crashes.
+When a filesystem is mounted read-only, txBegin() returns tid=0 to
+indicate no transaction. However, txEnd(0) still gets called and
+tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
+waitqueue was never initialized because the initialization loop
+started at index 1 instead of 0.
 
-This can trigger kernel panics on ARM when running IPsec over the
-qmimux0 interface.
+This causes a 'non-static key' lockdep warning and system crash:
+  INFO: trying to register non-static key in txEnd
 
-Example trace:
+Fix by ensuring all transaction blocks including TxBlock[0] have
+their waitqueues properly initialized during txInit().
 
-    Internal error: Oops: 000000009600004f [#1] SMP
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.34-gbe78e49cb433 #1
-    Hardware name: LS1028A RDB Board (DT)
-    pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    pc : xfrm_input+0xde8/0x1318
-    lr : xfrm_input+0x61c/0x1318
-    sp : ffff800080003b20
-    Call trace:
-     xfrm_input+0xde8/0x1318
-     xfrm6_rcv+0x38/0x44
-     xfrm6_esp_rcv+0x48/0xa8
-     ip6_protocol_deliver_rcu+0x94/0x4b0
-     ip6_input_finish+0x44/0x70
-     ip6_input+0x44/0xc0
-     ipv6_rcv+0x6c/0x114
-     __netif_receive_skb_one_core+0x5c/0x8c
-     __netif_receive_skb+0x18/0x60
-     process_backlog+0x78/0x17c
-     __napi_poll+0x38/0x180
-     net_rx_action+0x168/0x2f0
+Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
 
-Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
-Signed-off-by: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
-Link: https://patch.msgid.link/20251029075744.105113-1-qendrim.maxhuni@garderos.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jfs/jfs_txnmgr.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index f04da733240c0..bd51435ed4184 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -192,6 +192,12 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		if (!skbn)
- 			return 0;
+diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
+index be17e3c43582f..7840a03e5bcb7 100644
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -272,14 +272,15 @@ int txInit(void)
+ 	if (TxBlock == NULL)
+ 		return -ENOMEM;
  
-+	       /* Raw IP packets don't have a MAC header, but other subsystems
-+		* (like xfrm) may still access MAC header offsets, so they must
-+		* be initialized.
-+		*/
-+		skb_reset_mac_header(skbn);
+-	for (k = 1; k < nTxBlock - 1; k++) {
+-		TxBlock[k].next = k + 1;
++	for (k = 0; k < nTxBlock; k++) {
+ 		init_waitqueue_head(&TxBlock[k].gcwait);
+ 		init_waitqueue_head(&TxBlock[k].waitor);
+ 	}
 +
- 		switch (skb->data[offset + qmimux_hdr_sz] & 0xf0) {
- 		case 0x40:
- 			skbn->protocol = htons(ETH_P_IP);
++	for (k = 1; k < nTxBlock - 1; k++) {
++		TxBlock[k].next = k + 1;
++	}
+ 	TxBlock[k].next = 0;
+-	init_waitqueue_head(&TxBlock[k].gcwait);
+-	init_waitqueue_head(&TxBlock[k].waitor);
+ 
+ 	TxAnchor.freetid = 1;
+ 	init_waitqueue_head(&TxAnchor.freewait);
 -- 
 2.51.0
 
