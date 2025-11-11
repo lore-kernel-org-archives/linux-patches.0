@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B642737E3;
-	Tue, 11 Nov 2025 01:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD7B305E24;
+	Tue, 11 Nov 2025 01:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823343; cv=none; b=c1VkARrGyvqA847ioJNjjT7K8cpILvRPFrWx0R0/5GgA55R5sc7R/jL7tqXScR1NTiaXfGKi3ygNYUpOz2Zt+3m8O2oqFWCftnbOqjSWn7uSBUfII00W2MkQnxrJmHrBRTGDx7w7QdekaQTPxwOXoL8pB2Z5wZdhBqsJ1VOfqdo=
+	t=1762823345; cv=none; b=BfqvKgNeN81231xyUnzBUvkZTVO1AB47pGEsBLwjokA2s4wpDkddA/5HKFAzoyUUU5fYZI3zu94871tLWpCGPy0F+swZzXLJNAbxHTd8Cb039KUWeWDIi2zhKo232sMZyteQLfC9LahUlgVs2/uYup5z2dGreEs3kPU7B0lPwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823343; c=relaxed/simple;
-	bh=gaUf4ycDLWo3gn9PgEhPgr5mP8UxMHZevZyT2WEd0xg=;
+	s=arc-20240116; t=1762823345; c=relaxed/simple;
+	bh=GlxAvpcG/DKO8CeJsMKG+nYLKQrVGXeyzM10E9a4eeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UROTdcHuSxBHo22kfLcYYtVOFRhz3YzyNcvFBdybyBlpc7OhAgMTjpGTag6WVfB1ANmC5aAomSmNGdfkibHpkuAal9XMzK1MUQpsYmzx0vErhrJUsro+1lNeWviz4UCklPLpm3+BFeNXu4j8mzk8/9UnQGxzzC+HbmqkovF8D9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYx9KMte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E7meKqs13H8qXJ3itCpUp+2nAbyDT3xNqoE9RM19I/KVftpNq7iOAlpAa5e05Ze1+oOcSk7u0+RGfFCoEoTJo5fAPZbxhn5OSDn9kdHZMXC87kncTaTXjCFJYeogFtqYN/ZumKVSgRUenwvqJ+YZOdY7tKiv/Usy/+rsfpsB09c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7hXS6Pc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYx9KMte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A3EC16AAE;
-	Tue, 11 Nov 2025 01:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7hXS6Pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EE5C4CEFB;
+	Tue, 11 Nov 2025 01:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823343;
-	bh=gaUf4ycDLWo3gn9PgEhPgr5mP8UxMHZevZyT2WEd0xg=;
+	s=korg; t=1762823345;
+	bh=GlxAvpcG/DKO8CeJsMKG+nYLKQrVGXeyzM10E9a4eeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYx9KMte69kxPohgIFdfDkexHic4jOeZD23hv4m6FCx1g+kfyIOo5LPzemO3qswHE
-	 aNKVwJ7ww1CbdWXmbuhIaVopSFdvrdcmVQKi54b8RJWSOwvsmuWwU6cJ+BufxuvTdM
-	 tKV7TfJwCo+jDbByDc2cpdsVLnMH3uu2e6eCGjfw=
+	b=x7hXS6Pc0jHfFjU+5/0bbofC+y923BV8gjiwOcFWfsERAEMVfSWgDGI45JaLcTxSP
+	 Hgz2op+ok1AW2uiWYM4sDCDg46ntrqX5cSU0TFVVfXzeKTrE1M/wf8JFDGTRjD+HQq
+	 e+dpMtUuz5JCsi1H7Zsz4jtkeY7LdqbbbL2iZ0Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Joe Damato <joe@dama.to>,
+	Mina Almasry <almasrymina@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/565] HID: pidff: PERMISSIVE_CONTROL quirk autodetection
-Date: Tue, 11 Nov 2025 09:41:19 +0900
-Message-ID: <20251111004531.938096925@linuxfoundation.org>
+Subject: [PATCH 6.17 280/849] selftests: drv-net: devmem: add / correct the IPv6 support
+Date: Tue, 11 Nov 2025 09:37:30 +0900
+Message-ID: <20251111004543.193897731@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +47,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit c2dc9f0b368c08c34674311cf78407718d5715a7 ]
+[ Upstream commit 424e96de30230aac2061f941961be645cf0070d5 ]
 
-Fixes force feedback for devices built with MMOS firmware and many more
-not yet detected devices.
+We need to use bracketed IPv6 addresses for socat.
 
-Update quirks mask debug message to always contain all 32 bits of data.
-
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250811231334.561137-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/usbhid/hid-pidff.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ tools/testing/selftests/drivers/net/hw/devmem.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 0e60e4dc9e247..566eba0e045fa 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -1152,8 +1152,16 @@ static int pidff_find_special_fields(struct pidff_device *pidff)
- 					 PID_DIRECTION, 0);
- 	pidff->device_control =
- 		pidff_find_special_field(pidff->reports[PID_DEVICE_CONTROL],
--			PID_DEVICE_CONTROL_ARRAY,
--			!(pidff->quirks & HID_PIDFF_QUIRK_PERMISSIVE_CONTROL));
-+			PID_DEVICE_CONTROL_ARRAY, 1);
-+
-+	/* Detect and set permissive control quirk */
-+	if (!pidff->device_control) {
-+		pr_debug("Setting PERMISSIVE_CONTROL quirk\n");
-+		pidff->quirks |= HID_PIDFF_QUIRK_PERMISSIVE_CONTROL;
-+		pidff->device_control = pidff_find_special_field(
-+			pidff->reports[PID_DEVICE_CONTROL],
-+			PID_DEVICE_CONTROL_ARRAY, 0);
-+	}
+diff --git a/tools/testing/selftests/drivers/net/hw/devmem.py b/tools/testing/selftests/drivers/net/hw/devmem.py
+index baa2f24240ba5..0a2533a3d6d60 100755
+--- a/tools/testing/selftests/drivers/net/hw/devmem.py
++++ b/tools/testing/selftests/drivers/net/hw/devmem.py
+@@ -24,7 +24,7 @@ def check_rx(cfg) -> None:
+     require_devmem(cfg)
  
- 	pidff->block_load_status =
- 		pidff_find_special_field(pidff->reports[PID_BLOCK_LOAD],
-@@ -1492,7 +1500,7 @@ int hid_pidff_init_with_quirks(struct hid_device *hid, u32 initial_quirks)
- 	ff->playback = pidff_playback;
+     port = rand_port()
+-    socat = f"socat -u - TCP{cfg.addr_ipver}:{cfg.addr}:{port},bind={cfg.remote_addr}:{port}"
++    socat = f"socat -u - TCP{cfg.addr_ipver}:{cfg.baddr}:{port},bind={cfg.remote_baddr}:{port}"
+     listen_cmd = f"{cfg.bin_local} -l -f {cfg.ifname} -s {cfg.addr} -p {port} -c {cfg.remote_addr} -v 7"
  
- 	hid_info(dev, "Force feedback for USB HID PID devices by Anssi Hannula <anssi.hannula@gmail.com>\n");
--	hid_dbg(dev, "Active quirks mask: 0x%x\n", pidff->quirks);
-+	hid_dbg(dev, "Active quirks mask: 0x%08x\n", pidff->quirks);
- 
- 	hid_device_io_stop(hid);
- 
+     with bkg(listen_cmd, exit_wait=True) as ncdevmem:
 -- 
 2.51.0
 
