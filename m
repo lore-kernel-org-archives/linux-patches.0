@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2113446CB;
-	Tue, 11 Nov 2025 01:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0133446DE;
+	Tue, 11 Nov 2025 01:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823615; cv=none; b=D+zvhDibvzhpYQt8FQaBSQBM93QsfxjEaDmX221+ukaecfDFmeM5x8BQZ/dpR0lGtmWwkmotGTJpcPxc28In7g8a//Z8yWPj4iEdnnJ866UXcRxpMU29usj9nu6FkNvZmlMjBM7oEAGEzuYC5Bj3hiVTyTQd5U6F07cP3cIlql0=
+	t=1762823618; cv=none; b=ZV5on8NGl2KMmOYHVKgqmKCvyHS3SBTQtrK5oaVbOfUASEoolI2aFcGb7i+qGoHDe3pskVH5aQp+GCW6x575e+caGy4xzheZvwiR2UZaWSThj0ubLE6EG8i/bJ2UaSoLpJRK+9YErnvrqj+KssK+5wdPgYBPb2/nslJ2a5BIdKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823615; c=relaxed/simple;
-	bh=ex2me4M4HEgNC3tHDlZGVM883dvh/FJxHlFmG2UB518=;
+	s=arc-20240116; t=1762823618; c=relaxed/simple;
+	bh=na8uSJiSgUd2+awJe4dibEW3+zzhjO7a3jAmAVjK4as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ir2A3+8tj+dPDTtGJfrd7UCNDmq9KVOHKQ8HhWM//A3kppGA2LyRAcqcJgOdy9AezbtY1EDApRM4aPvpWo87rUYFQQh7XzxT5oG6/xVJ2WnacKBVyPAvGiCHjLDzpApjwNAdIwP5KxnIKhowj6t6KPHyoey4rd3PjVQBMuFZxtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMWZ0n90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxx7u5+q59iYK6DKMVc+HA35GBuhi7OzH5h3xn8GfHYkh9pBlgnxpfZ8rV8oxTiqJWCMhIocVPn1C2LeN1iv/k95XEXvwbgFBb28cPbRaEO1HhB1VYFjE5FKCVIdyEAl315uXy+iIJ8JgaUNInUhZaWo41mr0zUZfKLroUIHZzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfPDr4xw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMWZ0n90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1B9C19422;
-	Tue, 11 Nov 2025 01:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfPDr4xw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B126FC16AAE;
+	Tue, 11 Nov 2025 01:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823615;
-	bh=ex2me4M4HEgNC3tHDlZGVM883dvh/FJxHlFmG2UB518=;
+	s=korg; t=1762823618;
+	bh=na8uSJiSgUd2+awJe4dibEW3+zzhjO7a3jAmAVjK4as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMWZ0n90pz5SmzP3yDCiUj7EqPSaifMIE/+99RPsheIcWuEHwqT9EL3lVKcTNW7Ql
-	 dNDxVd7bZ07ueFlAgUZdnF4RjFZvMttNgMAPdRyDaJVVR+og6Es5ONclW6cjDsfCDA
-	 Hq9d+HQpHhONGaWshacYosFdwYsVE8jT/p+QXBZk=
+	b=qfPDr4xwEUswYVl7JmqBOyz+aMZtlc3rNFCl8lIlEbjZ10ZsVPrIWgiu6aG/YIGQH
+	 uc2MVbd0psRE81JIeOaCSEPffFrk2wXJuItz7OYq17aU3CUNo1SFX+d1DWWei+3cwC
+	 ynr+6lUqri+cFF4Wql74dExcBSVvj6S6rSeSSuFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 336/849] dmaengine: idxd: Add a new IAA device ID for Wildcat Lake family platforms
-Date: Tue, 11 Nov 2025 09:38:26 +0900
-Message-ID: <20251111004544.542442223@linuxfoundation.org>
+Subject: [PATCH 6.12 287/565] drm/xe/guc: Increase GuC crash dump buffer size
+Date: Tue, 11 Nov 2025 09:42:23 +0900
+Message-ID: <20251111004533.334178155@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
+From: Zhanjun Dong <zhanjun.dong@intel.com>
 
-[ Upstream commit c937969a503ebf45e0bebafee4122db22b0091bd ]
+[ Upstream commit ad83b1da5b786ee2d245e41ce55cb1c71fed7c22 ]
 
-A new IAA device ID, 0xfd2d, is introduced across all Wildcat Lake
-family platforms. Add the device ID to the IDXD driver.
+There are platforms already have a maximum dump size of 12KB, to avoid
+data truncating, increase GuC crash dump buffer size to 16KB.
 
-Signed-off-by: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250801215936.188555-1-vinicius.gomes@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Zhanjun Dong <zhanjun.dong@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://lore.kernel.org/r/20250829160427.1245732-1-zhanjun.dong@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/init.c      | 2 ++
- drivers/dma/idxd/registers.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_log.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 8c4725ad1f648..2acc34b3daff8 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -80,6 +80,8 @@ static struct pci_device_id idxd_pci_tbl[] = {
- 	{ PCI_DEVICE_DATA(INTEL, IAA_DMR, &idxd_driver_data[IDXD_TYPE_IAX]) },
- 	/* IAA PTL platforms */
- 	{ PCI_DEVICE_DATA(INTEL, IAA_PTL, &idxd_driver_data[IDXD_TYPE_IAX]) },
-+	/* IAA WCL platforms */
-+	{ PCI_DEVICE_DATA(INTEL, IAA_WCL, &idxd_driver_data[IDXD_TYPE_IAX]) },
- 	{ 0, }
- };
- MODULE_DEVICE_TABLE(pci, idxd_pci_tbl);
-diff --git a/drivers/dma/idxd/registers.h b/drivers/dma/idxd/registers.h
-index 9c1c546fe443e..0d84bd7a680b7 100644
---- a/drivers/dma/idxd/registers.h
-+++ b/drivers/dma/idxd/registers.h
-@@ -10,6 +10,7 @@
- #define PCI_DEVICE_ID_INTEL_DSA_DMR	0x1212
- #define PCI_DEVICE_ID_INTEL_IAA_DMR	0x1216
- #define PCI_DEVICE_ID_INTEL_IAA_PTL	0xb02d
-+#define PCI_DEVICE_ID_INTEL_IAA_WCL	0xfd2d
- 
- #define DEVICE_VERSION_1		0x100
- #define DEVICE_VERSION_2		0x200
+diff --git a/drivers/gpu/drm/xe/xe_guc_log.h b/drivers/gpu/drm/xe/xe_guc_log.h
+index 2d25ab28b4b3a..1c673c2fbd567 100644
+--- a/drivers/gpu/drm/xe/xe_guc_log.h
++++ b/drivers/gpu/drm/xe/xe_guc_log.h
+@@ -15,7 +15,7 @@ struct drm_printer;
+ #define DEBUG_BUFFER_SIZE       SZ_8M
+ #define CAPTURE_BUFFER_SIZE     SZ_2M
+ #else
+-#define CRASH_BUFFER_SIZE	SZ_8K
++#define CRASH_BUFFER_SIZE	SZ_16K
+ #define DEBUG_BUFFER_SIZE	SZ_64K
+ #define CAPTURE_BUFFER_SIZE	SZ_16K
+ #endif
 -- 
 2.51.0
 
