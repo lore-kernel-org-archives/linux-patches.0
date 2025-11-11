@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B1033FE22;
-	Tue, 11 Nov 2025 01:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0202F6186;
+	Tue, 11 Nov 2025 01:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825431; cv=none; b=Ay+meFmiGfV6tVtdphHQutiKlVu6/9/O5ZuHZi4pREz8dyOD6/kIp5VdI21C/c0FFioNC8M+V0EJOw5dCSQ2OFiK8zDu64GJqb2y7klh1fwX52FzjSY+pqBjen64l/TzWx+WDy669Y0xeqbOp1AzUazk7CN+RBMbvjO3ue/PWLo=
+	t=1762825433; cv=none; b=JhOL8uMuZekQ1HWt/KPyYqoQYAzcszD1SPsGnVOXdGAov6QIgc61WKeXhqHMVWnSdMh/chqm7UsEAx7ctrkV/MhaZ/PIqJc4jTYFC/oyG6U6b8OfKJhSxpkdTWHYaJdy+542R8Oke63FIun/2bjRs1AlofygPPNcz3Ygyn0yQL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825431; c=relaxed/simple;
-	bh=pDzhzv2uDXmVghxw7VbDOEnd0yPaQ9R3kRz1ughru/A=;
+	s=arc-20240116; t=1762825433; c=relaxed/simple;
+	bh=PgjYWaGgJI24HjgtoikYPYqRVaRwaN7UbED535O37Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCcmyAvasTlQ+GEhnn0hqQgigBshVJsupoaZ+Ni/1SauJDett4yRuGQpUcJ7/Wo+dzyauYVp8PLmAqBNtbT7zrmKmXzQuKmvqgaH46JTZDjhyxIpsHq/gHm6YYbL75dDj9pLJ9lB9FH+RIkrQPxdV2+IFsmUuQ6epS+iGWzPLRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rowUU1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aC/z1ErEh7TL8WOfYhQqBwb0hMOWYUDVKqitkIdcQZyavmKjBEJjEPQCu/PfQCxkWIXnWIcivLIqW7m+TzYGhVhS8uPyEfSu3fDLW2FoEC9voiTUZS9zfePcRo9m7rlbkvZzjvwqZRhDYx/CTquW+ssF5GS5okt+txc6HAHqEpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd/r/byE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rowUU1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5C3C116B1;
-	Tue, 11 Nov 2025 01:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd/r/byE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBCAC19421;
+	Tue, 11 Nov 2025 01:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825431;
-	bh=pDzhzv2uDXmVghxw7VbDOEnd0yPaQ9R3kRz1ughru/A=;
+	s=korg; t=1762825433;
+	bh=PgjYWaGgJI24HjgtoikYPYqRVaRwaN7UbED535O37Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rowUU1d++QRU7VrOfeOp0Kzdfu0BrWH5lgSj05TACz9DGq4Pzey8ggtdXCdWClL/
-	 4569rEf26HQwyaeDUJ9VU/ZHyzlnlGoumcfHh/cgrHKuuNjAf46Hj5qOplGwgx+USE
-	 vXDwIYLGeGn8kT31EhrBqji/kMdvyNiQUZk/b6Go=
+	b=sd/r/byE1uevl+izL0KbmP9wJ9nktzrQ+Twuor59kK6UqIX2oUk/Ff7zpfZC8DUmA
+	 gHQw6XdMO7nJNaTK+g3iHKb0wt6P+MW3OCCt8Msts7gdAfoyNJCYliSEOMsWEZ/oZg
+	 BzIDkboUk/FhJzUugoEmt/eppTfdSSohWIdImyk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 797/849] net: bridge: fix use-after-free due to MST port state bypass
-Date: Tue, 11 Nov 2025 09:46:07 +0900
-Message-ID: <20251111004555.701741588@linuxfoundation.org>
+Subject: [PATCH 6.17 798/849] net: bridge: fix MST static key usage
+Date: Tue, 11 Nov 2025 09:46:08 +0900
+Message-ID: <20251111004555.726990935@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -55,100 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 8dca36978aa80bab9d4da130c211db75c9e00048 ]
+[ Upstream commit ee87c63f9b2a418f698d79c2991347e31a7d2c27 ]
 
-syzbot reported[1] a use-after-free when deleting an expired fdb. It is
-due to a race condition between learning still happening and a port being
-deleted, after all its fdbs have been flushed. The port's state has been
-toggled to disabled so no learning should happen at that time, but if we
-have MST enabled, it will bypass the port's state, that together with VLAN
-filtering disabled can lead to fdb learning at a time when it shouldn't
-happen while the port is being deleted. VLAN filtering must be disabled
-because we flush the port VLANs when it's being deleted which will stop
-learning. This fix adds a check for the port's vlan group which is
-initialized to NULL when the port is getting deleted, that avoids the port
-state bypass. When MST is enabled there would be a minimal new overhead
-in the fast-path because the port's vlan group pointer is cache-hot.
-
-[1] https://syzkaller.appspot.com/bug?extid=dd280197f0f7ab3917be
+As Ido pointed out, the static key usage in MST is buggy and should use
+inc/dec instead of enable/disable because we can have multiple bridges
+with MST enabled which means a single bridge can disable MST for all.
+Use static_branch_inc/dec to avoid that. When destroying a bridge decrement
+the key if MST was enabled.
 
 Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Reported-by: syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69088ffa.050a0220.29fc44.003d.GAE@google.com/
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Closes: https://lore.kernel.org/netdev/20251104120313.1306566-1-razor@blackwall.org/T/#m6888d87658f94ed1725433940f4f4ebb00b5a68b
 Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251105111919.1499702-2-razor@blackwall.org
+Link: https://patch.msgid.link/20251105111919.1499702-3-razor@blackwall.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 2 +-
- net/bridge/br_input.c   | 4 ++--
- net/bridge/br_private.h | 8 +++++---
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ net/bridge/br_if.c      |  1 +
+ net/bridge/br_mst.c     | 10 ++++++++--
+ net/bridge/br_private.h |  5 +++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index 870bdf2e082c4..dea09096ad0fb 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -25,7 +25,7 @@ static inline int should_deliver(const struct net_bridge_port *p,
+diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
+index 98c5b9c3145f3..ca3a637d7cca7 100644
+--- a/net/bridge/br_if.c
++++ b/net/bridge/br_if.c
+@@ -386,6 +386,7 @@ void br_dev_delete(struct net_device *dev, struct list_head *head)
+ 		del_nbp(p);
+ 	}
  
- 	vg = nbp_vlan_group_rcu(p);
- 	return ((p->flags & BR_HAIRPIN_MODE) || skb->dev != p->dev) &&
--		(br_mst_is_enabled(p->br) || p->state == BR_STATE_FORWARDING) &&
-+		(br_mst_is_enabled(p) || p->state == BR_STATE_FORWARDING) &&
- 		br_allowed_egress(vg, skb) && nbp_switchdev_allowed_egress(p, skb) &&
- 		!br_skb_isolated(p, skb);
++	br_mst_uninit(br);
+ 	br_recalculate_neigh_suppress_enabled(br);
+ 
+ 	br_fdb_delete_by_port(br, NULL, 0, 1);
+diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
+index 3f24b4ee49c27..43a300ae6bfaf 100644
+--- a/net/bridge/br_mst.c
++++ b/net/bridge/br_mst.c
+@@ -22,6 +22,12 @@ bool br_mst_enabled(const struct net_device *dev)
  }
-diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
-index 5f6ac9bf15275..c07265b365b10 100644
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -94,7 +94,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ EXPORT_SYMBOL_GPL(br_mst_enabled);
  
- 	br = p->br;
++void br_mst_uninit(struct net_bridge *br)
++{
++	if (br_opt_get(br, BROPT_MST_ENABLED))
++		static_branch_dec(&br_mst_used);
++}
++
+ int br_mst_get_info(const struct net_device *dev, u16 msti, unsigned long *vids)
+ {
+ 	const struct net_bridge_vlan_group *vg;
+@@ -225,9 +231,9 @@ int br_mst_set_enabled(struct net_bridge *br, bool on,
+ 		return err;
  
--	if (br_mst_is_enabled(br)) {
-+	if (br_mst_is_enabled(p)) {
- 		state = BR_STATE_FORWARDING;
- 	} else {
- 		if (p->state == BR_STATE_DISABLED) {
-@@ -421,7 +421,7 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
- 		return RX_HANDLER_PASS;
+ 	if (on)
+-		static_branch_enable(&br_mst_used);
++		static_branch_inc(&br_mst_used);
+ 	else
+-		static_branch_disable(&br_mst_used);
++		static_branch_dec(&br_mst_used);
  
- forward:
--	if (br_mst_is_enabled(p->br))
-+	if (br_mst_is_enabled(p))
- 		goto defer_stp_filtering;
- 
- 	switch (p->state) {
+ 	br_opt_toggle(br, BROPT_MST_ENABLED, on);
+ 	return 0;
 diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 8de0904b9627f..fdaf7d8374639 100644
+index fdaf7d8374639..5926e708d586a 100644
 --- a/net/bridge/br_private.h
 +++ b/net/bridge/br_private.h
-@@ -1932,10 +1932,12 @@ static inline bool br_vlan_state_allowed(u8 state, bool learn_allow)
- /* br_mst.c */
- #ifdef CONFIG_BRIDGE_VLAN_FILTERING
- DECLARE_STATIC_KEY_FALSE(br_mst_used);
--static inline bool br_mst_is_enabled(struct net_bridge *br)
-+static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
- {
-+	/* check the port's vlan group to avoid racing with port deletion */
- 	return static_branch_unlikely(&br_mst_used) &&
--		br_opt_get(br, BROPT_MST_ENABLED);
-+	       br_opt_get(p->br, BROPT_MST_ENABLED) &&
-+	       rcu_access_pointer(p->vlgrp);
- }
- 
- int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
-@@ -1950,7 +1952,7 @@ int br_mst_fill_info(struct sk_buff *skb,
+@@ -1951,6 +1951,7 @@ int br_mst_fill_info(struct sk_buff *skb,
+ 		     const struct net_bridge_vlan_group *vg);
  int br_mst_process(struct net_bridge_port *p, const struct nlattr *mst_attr,
  		   struct netlink_ext_ack *extack);
++void br_mst_uninit(struct net_bridge *br);
  #else
--static inline bool br_mst_is_enabled(struct net_bridge *br)
-+static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
+ static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
  {
- 	return false;
+@@ -1986,6 +1987,10 @@ static inline int br_mst_process(struct net_bridge_port *p,
+ {
+ 	return -EOPNOTSUPP;
  }
++
++static inline void br_mst_uninit(struct net_bridge *br)
++{
++}
+ #endif
+ 
+ struct nf_br_ops {
 -- 
 2.51.0
 
