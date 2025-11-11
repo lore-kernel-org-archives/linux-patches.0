@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D958E2EB5BD;
-	Tue, 11 Nov 2025 01:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8457F2E7182;
+	Tue, 11 Nov 2025 01:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823240; cv=none; b=QJdSJqtiTcFk00/SBnPeNztu3uyWa+Fon/I49aAZFjLEG796PebGhN958KGEvjWEeeFLMb2NEZ8TJT3sCbSLEY7GUTxcNW4YRmoCazrBq/InwE/0TKGMD3Ev8kBZRZWlCKV5ha9+ucjcTlgl38NqLr4MMxx4ynZX9one8XpJzPw=
+	t=1762823243; cv=none; b=Hb4oA6bVgK+JZWeuvB4Ocr+W+4s6QNJgWlPAtdCPHC4c5UTtudStNsmifcYdi//x0NI4Qt61aC3nqSkalGqIXZXku1ABXYSPUbRkVZ1abWrO5qfPgRgThaRIW09a7NLLOnOL4FkRO4F1KLNKiAO/O8xQHaASdw35HoMN/DHfwtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823240; c=relaxed/simple;
-	bh=DmMf6HYXlNU8o+rcT4iVzcTF8Q4CoA+uSBBmt2GSU7g=;
+	s=arc-20240116; t=1762823243; c=relaxed/simple;
+	bh=jtnz8ZFyIL0fJMZP7FCwnBbB6nWUDtCeaJ3i9zrVMsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4sfd30ICLQnfCOFbqNG3o8MGQ+qzA0K9QQRjfFB0Rh2UV8Zf8yvIe17e1+r9z3/RFEL/IUS9Q6XchcfL4IQ0l/xjuuu3HttJG69TDe65VE+WCMsiSW5FHPvOhIJIHWmYLpSuaQz35W225eNLJN4wjuMOMn4aGYoRRhqGJ5wsYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Icfci42e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lXeqO98GFUYopo/L3hDKaYmDaf2UYyzE+xafOfVzg4nAj57NOpGv28Wu6E2VvPSykckNDlPfUthU8a/M9QMFuMRWUSCmoxtJeF/5NRqS3zmtdxU9dfnnFCFeRtgaXQsb0FOEqkLjO6kOWXQXsRhmqINauT3kILP9ao9zjtjqDrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUAIBryc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Icfci42e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7717AC19421;
-	Tue, 11 Nov 2025 01:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUAIBryc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3949C4CEF5;
+	Tue, 11 Nov 2025 01:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823240;
-	bh=DmMf6HYXlNU8o+rcT4iVzcTF8Q4CoA+uSBBmt2GSU7g=;
+	s=korg; t=1762823243;
+	bh=jtnz8ZFyIL0fJMZP7FCwnBbB6nWUDtCeaJ3i9zrVMsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Icfci42eLHt+ApBiOWrctIMtpWXC/qa3tBw0BEM0WqsX7r6pmvZKSiA3X6pj9Nob8
-	 LZnrfCb192r0EggpUiaPVHlFrcSBQq11aJhUA7QU4I4A/v1sG2eINkMKF01EZo4XpJ
-	 0d7HTMOMxRg9WDhECW+DtZBzzKZZEEluZrIYtJM8=
+	b=YUAIBrycDiCUeWNdwEIG3Imr30BRtHiOoyJ86O/BzXQUsqP7zzwRNU7qA3YEUG/Xg
+	 /S/a5cgPqKcpHAGsXKnX/O3IlbAswzW5Vj+XBu9p0+LkWNY0qlVNmisvYaWRDqSXTw
+	 VoW5lPJKGthxKrA0p0pdkTVJj2PnKfAhtFAT6kCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
+	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/565] drm/tidss: Set crtc modesetting parameters with adjusted mode
-Date: Tue, 11 Nov 2025 09:40:59 +0900
-Message-ID: <20251111004531.493464041@linuxfoundation.org>
+Subject: [PATCH 6.17 260/849] drm/amdgpu/jpeg: Hold pg_lock before jpeg poweroff
+Date: Tue, 11 Nov 2025 09:37:10 +0900
+Message-ID: <20251111004542.718512645@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Sathishkumar S <sathishkumar.sundararaju@amd.com>
 
-[ Upstream commit cfb29225db20c56432a8525366321c0c09edfb2e ]
+[ Upstream commit 0e7581eda8c76d1ca4cf519631a4d4eb9f82b94c ]
 
-TIDSS uses crtc_* fields to propagate its registers and set the
-clock rates. So set the CRTC modesetting timing parameters with
-the adjusted mode when needed, to set correct values.
+Acquire jpeg_pg_lock before changes to jpeg power state
+and release it after power off from idle work handler.
 
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Link: https://lore.kernel.org/r/20250624080402.302526-1-j-choudhary@ti.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sathishkumar S <sathishkumar.sundararaju@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
-index 1604eca265ef6..36c22d8608527 100644
---- a/drivers/gpu/drm/tidss/tidss_crtc.c
-+++ b/drivers/gpu/drm/tidss/tidss_crtc.c
-@@ -91,7 +91,7 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 	struct dispc_device *dispc = tidss->dispc;
- 	struct tidss_crtc *tcrtc = to_tidss_crtc(crtc);
- 	u32 hw_videoport = tcrtc->hw_videoport;
--	const struct drm_display_mode *mode;
-+	struct drm_display_mode *mode;
- 	enum drm_mode_status ok;
- 
- 	dev_dbg(ddev->dev, "%s\n", __func__);
-@@ -108,6 +108,9 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
+index 82d58ac7afb01..5d5e9ee83a5d6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
+@@ -121,10 +121,12 @@ static void amdgpu_jpeg_idle_work_handler(struct work_struct *work)
+ 			fences += amdgpu_fence_count_emitted(&adev->jpeg.inst[i].ring_dec[j]);
  	}
  
-+	if (drm_atomic_crtc_needs_modeset(crtc_state))
-+		drm_mode_set_crtcinfo(mode, 0);
-+
- 	return dispc_vp_bus_check(dispc, hw_videoport, crtc_state);
+-	if (!fences && !atomic_read(&adev->jpeg.total_submission_cnt))
++	if (!fences && !atomic_read(&adev->jpeg.total_submission_cnt)) {
++		mutex_lock(&adev->jpeg.jpeg_pg_lock);
+ 		amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_JPEG,
+ 						       AMD_PG_STATE_GATE);
+-	else
++		mutex_unlock(&adev->jpeg.jpeg_pg_lock);
++	} else
+ 		schedule_delayed_work(&adev->jpeg.idle_work, JPEG_IDLE_TIMEOUT);
  }
  
 -- 
