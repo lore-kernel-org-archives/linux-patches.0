@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA97255F5E;
-	Tue, 11 Nov 2025 01:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0E31F09B3;
+	Tue, 11 Nov 2025 01:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824203; cv=none; b=orOlL6qlz8IQxO/o6fRLg0MtyXZCrqLD+p7WebBiTLjMixfOQ4tCDdNbvHYLSJ5LxvKrHjVT9rnRohYc7t3Ma2rDtKSx96cM5NF2j+28vewCd5UgMg/kb91Ed7srtKaHdLyCCuDiF5cjaqNivUeG4SYS4kzgNjxX05TdMt9D03s=
+	t=1762824206; cv=none; b=ZRNrzLqok/vNEVH2ZiaRjQxBEgzBPbpZjlY/SHoLdw9gNChZDsA2H6nlZYA2Zk0r8myrYX21Lgnm5IKaYLKNuEWrGPVld+MdGHcXMETyYZVBsh75GUN8NlOwQfDBeE/OE5aBYoM1c5L0by8i+jg7k9HjlY2LMA3W4skB55SQMbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824203; c=relaxed/simple;
-	bh=yYEHAgJwx+nPs4tHVlzx/48GTiGQwonKWsXgxnWKgHY=;
+	s=arc-20240116; t=1762824206; c=relaxed/simple;
+	bh=IbGpFvFNLbc8DSJ2q5XVtj0fstkZQZRVjRolkzKzWKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOVX8a+kgLD6B4V4Zs4EhW9hl9/SOxuzlJhHK+BFpoToiKwyuPgFKWk6C+EMHocOrbsEC7pqEiyVmP7/cn7nHYd4lzl0gtTA750DR0hpaHTw4KG0cTV6iAKl8zKT3W5EfCD1o/qposGA3eD+d6iKEMIOuUBxumV9opdUPCrMqjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkXlRgeQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKsWnogg+EqDTyeny3YzmRlUC2A4gpOc3qzAqjttxZ8a+jABO7AG+np1utighBFGXa4lfPzzHFokVMcAtVs94CFufh0cZXRKl49V9zx+rj88o7Ee/srcPkBdSKqMa1GHuh2nPZPg1ddIWNQy8FPsFSpxzzgkN60sQZpuRnZLKA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feOynr5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkXlRgeQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06796C16AAE;
-	Tue, 11 Nov 2025 01:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feOynr5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A41C4CEF5;
+	Tue, 11 Nov 2025 01:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824203;
-	bh=yYEHAgJwx+nPs4tHVlzx/48GTiGQwonKWsXgxnWKgHY=;
+	s=korg; t=1762824205;
+	bh=IbGpFvFNLbc8DSJ2q5XVtj0fstkZQZRVjRolkzKzWKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkXlRgeQvJ0y4BbCAsiH4T0Hqd+bKshlkvSkE76iZjFYoPnKw4nwRbzfWdNX3jPLe
-	 tTudQEEP6ksJwSevSF7uAolqf/v5tX+g4L04IDyVj0sps6eo4Tk2dGVtrPSz23e2Qa
-	 FF9S8O1HmnhiuKF+5bD1em5GOOJwUUwlc8g1Ff44=
+	b=feOynr5XdKrCkAYekt1SFhqnp2xWQxeUHK9i+AogaQuQe7UNXbJ4XI7bvevuvKFzT
+	 ezjLhyJLJPQupUgw+ZN6usziF1+MwJnrTdhyeCygkLrgug617rnS7F0U9Ivy3sGTlb
+	 Z4+//Dja36qaD6VQTpDmzmdHpuiil1YeGZtlz7C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 461/849] selftests: ncdevmem: dont retry EFAULT
-Date: Tue, 11 Nov 2025 09:40:31 +0900
-Message-ID: <20251111004547.573571372@linuxfoundation.org>
+Subject: [PATCH 6.12 410/565] remoteproc: qcom: q6v5: Avoid handling handover twice
+Date: Tue, 11 Nov 2025 09:44:26 +0900
+Message-ID: <20251111004536.091847220@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 8c0b9ed2401b9b3f164c8c94221899a1ace6e9ab ]
+[ Upstream commit 54898664e1eb6b5b3e6cdd9343c6eb15da776153 ]
 
-devmem test fails on NIPA. Most likely we get skb(s) with readable
-frags (why?) but the failure manifests as an OOM. The OOM happens
-because ncdevmem spams the following message:
+A remoteproc could theoretically signal handover twice. This is unexpected
+and would break the reference counting for the handover resources (power
+domains, clocks, regulators, etc), so add a check to prevent that from
+happening.
 
-  recvmsg ret=-1
-  recvmsg: Bad address
-
-As of today, ncdevmem can't deal with various reasons of EFAULT:
-- falling back to regular recvmsg for non-devmem skbs
-- increasing ctrl_data size (can't happen with ncdevmem's large buffer)
-
-Exit (cleanly) with error when recvmsg returns EFAULT. This should at
-least cause the test to cleanup its state.
-
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250904182710.1586473-1-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-2-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/hw/ncdevmem.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/remoteproc/qcom_q6v5.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/ncdevmem.c b/tools/testing/selftests/drivers/net/hw/ncdevmem.c
-index 72f828021f832..147976e55dac2 100644
---- a/tools/testing/selftests/drivers/net/hw/ncdevmem.c
-+++ b/tools/testing/selftests/drivers/net/hw/ncdevmem.c
-@@ -631,6 +631,10 @@ static int do_server(struct memory_buffer *mem)
- 			continue;
- 		if (ret < 0) {
- 			perror("recvmsg");
-+			if (errno == EFAULT) {
-+				pr_err("received EFAULT, won't recover");
-+				goto err_close_client;
-+			}
- 			continue;
- 		}
- 		if (ret == 0) {
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 769c6d6d6a731..58d5b85e58cda 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -164,6 +164,11 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
+ 
++	if (q6v5->handover_issued) {
++		dev_err(q6v5->dev, "Handover signaled, but it already happened\n");
++		return IRQ_HANDLED;
++	}
++
+ 	if (q6v5->handover)
+ 		q6v5->handover(q6v5);
+ 
 -- 
 2.51.0
 
