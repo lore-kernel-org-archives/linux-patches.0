@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27A426D4DF;
-	Tue, 11 Nov 2025 01:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5AD2E9EB1;
+	Tue, 11 Nov 2025 01:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823814; cv=none; b=l3OX8KJeWl2X9OZd2HQpnbmqk9dzLnJD2AMQjxqja5rvUbcXUW0tq1do4hQ3FZe3no8l4iWRhQQSd/sBfvaiUSElzEx4oalfJ2NukBknIInLtbZBpubFsILA//xw81dFDgGWiaVaTNLI3UcFeI4QYlNPlF+e00YatthDvJMrpyA=
+	t=1762823816; cv=none; b=HiqPMlACOTGcPe99wYn0fEqyDqv4USkLIavM1AITPJC3h45930Nfb5E5u5j7wzEZFF+qFeE58pV488+kupbvyQuDsSoW/fGt9q5FfGAnI8j4Wjrta65mS/8gYye/r6bVO0I2lWoAWcM+ZZ9SbuzRVeD6185ic3GJ6qK3Scs6n2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823814; c=relaxed/simple;
-	bh=IHOv4QrwKicMPElzoOMMLcFOik2a2YFcPciqSX72IEk=;
+	s=arc-20240116; t=1762823816; c=relaxed/simple;
+	bh=fF5KPeyNwXftviB+jvhP15DXFHlrPf47RVW8uicLnVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hejEV/j43r6gSaoOQs9zuO3aHKlskkQS5/yo5w0rfEC4c6dIso2U7H4SlMTB6/k++n0mihkR9Wy81dnO8WOOxwzNABp1O8NFUgUyJA5ZmnLawunGNn7TBgU7GRl4yI/L4KcmSMCRERBVsQivGUj6LSu7z7HNfOUrPPvX3+mH/nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFaOA2z6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BM2YMC/tm0VKePBxwXAZMoXvDrkRkM4VxjCeli7H3IpJ80BF1euafrrf7FfYtO9JRZBcJZ/JQFZHI/amhvIei++ZQ457drVVNEzl8TXy9e/HAFO8apUKMQQxNCnH4K+3O0gma9PqieR2s7MyMjF/YjjsBarE81ieP+rTi3nsyFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAc2oJsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFaOA2z6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F99AC19421;
-	Tue, 11 Nov 2025 01:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAc2oJsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02E9C2BC86;
+	Tue, 11 Nov 2025 01:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823813;
-	bh=IHOv4QrwKicMPElzoOMMLcFOik2a2YFcPciqSX72IEk=;
+	s=korg; t=1762823816;
+	bh=fF5KPeyNwXftviB+jvhP15DXFHlrPf47RVW8uicLnVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFaOA2z63jtPFQ1iixziHPMadWfsxWmhJMpf/iPOSHD2EdUgRa2TZYZBtGt7RALMp
-	 qdanjcw//plakF0QsC9rgsUEi5M05kGPtx+vxty9yMDOQzzB7oZPVbe61u2z/Td3mI
-	 6/gQnQTVk1gExoTBCaqXOhz55Eu562E6AwejtNqU=
+	b=dAc2oJshDp/uEsssABfbFXLORYy9qN5hVPwa49yLf5svHeTanY7Vs5AXbVr4CPVQL
+	 6A4leZ24aPdNEim+FPnUhzTchH/9zeJjhwC92bjIwbb1kVj9Dt1/QC2AhV5uhnIhYk
+	 /V8C2Vs/c77gU9BlFrxiBSANWcB+JHgFnHNJzH2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Wenjing Liu <Wenjing.Liu@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Harikrishna Shenoy <h-shenoy@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 377/849] drm/amd/display: Consider sink max slice width limitation for dsc
-Date: Tue, 11 Nov 2025 09:39:07 +0900
-Message-ID: <20251111004545.548043338@linuxfoundation.org>
+Subject: [PATCH 6.12 330/565] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
+Date: Tue, 11 Nov 2025 09:43:06 +0900
+Message-ID: <20251111004534.309833853@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,46 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Harikrishna Shenoy <h-shenoy@ti.com>
 
-[ Upstream commit 6b34e7ed4ba583ee77032a4c850ff97ba16ad870 ]
+[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
 
-[WHY&HOW]
-The sink max slice width limitation should be considered for DSC, but
-was removed in "refactor DSC cap calculations".
-This patch adds it back and takes the valid minimum between the sink and
-source.
+Enable support for data lane rates between 80-160 Mbps cdns dphy
+as mentioned in TRM [0] by setting the pll_opdiv field to 16.
+This change enables lower resolutions like 640x480 at 60Hz.
 
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Wenjing Liu <Wenjing.Liu@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[0]: https://www.ti.com/lit/zip/spruil1
+(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
+
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
+Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/phy/cadence/cdns-dphy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-index 1f53a9f0c0ac3..e4144b2443324 100644
---- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-@@ -1157,6 +1157,11 @@ static bool setup_dsc_config(
- 	if (!is_dsc_possible)
- 		goto done;
+diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
+index 8d93a830ab8bf..a24df36e5c376 100644
+--- a/drivers/phy/cadence/cdns-dphy.c
++++ b/drivers/phy/cadence/cdns-dphy.c
+@@ -145,7 +145,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
  
-+	/* increase miniumum slice count to meet sink slice width limitations */
-+	min_slices_h = dc_fixpt_ceil(dc_fixpt_max(
-+			dc_fixpt_div_int(dc_fixpt_from_int(pic_width), dsc_common_caps.max_slice_width), // sink min
-+			dc_fixpt_from_int(min_slices_h))); // source min
-+
- 	min_slices_h = fit_num_slices_up(dsc_common_caps.slice_caps, min_slices_h);
+ 	dlane_bps = opts->hs_clk_rate;
  
- 	/* increase minimum slice count to meet sink throughput limitations */
+-	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
++	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
+ 		return -EINVAL;
+ 	else if (dlane_bps >= 1250000000)
+ 		cfg->pll_opdiv = 1;
+@@ -155,6 +155,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+ 		cfg->pll_opdiv = 4;
+ 	else if (dlane_bps >= 160000000)
+ 		cfg->pll_opdiv = 8;
++	else if (dlane_bps >= 80000000)
++		cfg->pll_opdiv = 16;
+ 
+ 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
+ 					  cfg->pll_ipdiv,
 -- 
 2.51.0
 
