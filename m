@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B7526CE37;
-	Tue, 11 Nov 2025 01:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513A92E173B;
+	Tue, 11 Nov 2025 01:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825059; cv=none; b=c5HzczF2xGwkS2Qqw/H42dgp83EQSPGdxYDuDKnnLzGO1si0SdDpXP0kjKQ2iPJHLfwOSQDTBfpucQXoK6O3Klv6P8vDBaGWrXa3asMa7al9NEr+wEgrusWYqtJL0L1wxYWeI7m/T8/2x9t+AVuTdyGeJ0Wiyu4lz+SPureamxc=
+	t=1762825061; cv=none; b=YCJ6MD7J0VqaQg9Szg/VB01Td0tWnloKMjMzet9drI7+vAZG1t8GJw5e6KLpQevX2Dh+KTRXPDtb3lDZS7LaIE4hrJWG1t/Edc6ZJP+xrS0sahMa7EWjjr0YC2643UcmiXkUp9tY2Gnuyli7JWgGvJeGoD3kxdn4IZZUPoMsEdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825059; c=relaxed/simple;
-	bh=ofqtRckkAWlzv8J8fZhZv04Mx44eArmvqFf3cJJNmZY=;
+	s=arc-20240116; t=1762825061; c=relaxed/simple;
+	bh=Fb4ORf60/3rsZMlAuzxGNlBbLnWKa+FPwc3g6kTlB0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlaNzaxwPzkLnMfblmqANyGHD0PgUeFfq/EPha9x99fSklUspwmlPrw7j7cvPanOY5e2GBFXmm+3FWhdpTOxRO+CsfgG4MGibYRU8MM1zjiNS6CuKy5ZVCGeH48/6PIJkVHMQyL3fq108AAODTqYWhCWfSb4Jb+hqRSztLbDli4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyQVqydu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRahvy7S1NvoOvF67ETTzSZj3tlESs1i68FMrKPIVvH1ho5iRRPiugWeE+ud2d9b3Wj0+TMrJ8Kp+u6igGL6pznBbbZKirjPB+ZGWv1onaQWlC4UwRJ64VaBc5Eyfqt2jkgl66yYvoiy0yzHHu4t1csILK1o0cM/6lkn/ntSDc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RJCvdVN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyQVqydu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0DBC116D0;
-	Tue, 11 Nov 2025 01:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RJCvdVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60DDC4CEF5;
+	Tue, 11 Nov 2025 01:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825059;
-	bh=ofqtRckkAWlzv8J8fZhZv04Mx44eArmvqFf3cJJNmZY=;
+	s=korg; t=1762825061;
+	bh=Fb4ORf60/3rsZMlAuzxGNlBbLnWKa+FPwc3g6kTlB0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyQVqyduSx9X9ZlmxGi65VRRy+LTdXYyDr7DIeJTLyQy2/lq2Q2Vj1/+rOgxtLgRb
-	 B3ZnV9lCes/KIMn0TcQBYSkJXN54hAG08qaqo8FIg5WCZmkVDPC+cvYoK8mNQEP7l6
-	 hLKsdVaGFLm9esqdjgZNTT9E4s0hbitC4WLi9oEM=
+	b=2RJCvdVN2CAMdQs5SG8PZKyMSMCnnlw6Ygb7f2F5HwUXRgEIsgPG5SkIZaxEJNpXF
+	 4LYe1UhG79020PEtFRCBQStDoZUtdoiQp5DLvKM3AD3617XuLBPQGnz/zrm/ck4URt
+	 1ubRGJnJeXsNNS06dKY1+e2R9tPs20VYxZb1ryTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Yusuke Goda <yusuke.goda.sx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	chuguangqing <chuguangqing@inspur.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 643/849] ASoC: renesas: msiof: set SIFCTR register
-Date: Tue, 11 Nov 2025 09:43:33 +0900
-Message-ID: <20251111004551.976735621@linuxfoundation.org>
+Subject: [PATCH 6.17 644/849] fs: ext4: change GFP_KERNEL to GFP_NOFS to avoid deadlock
+Date: Tue, 11 Nov 2025 09:43:34 +0900
+Message-ID: <20251111004551.998940589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,39 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: chuguangqing <chuguangqing@inspur.com>
 
-[ Upstream commit 130947b4681c515a5e5a7961244b502de2de85ca ]
+[ Upstream commit 1534f72dc2a11ded38b0e0268fbcc0ca24e9fd4a ]
 
-Because it uses DMAC, we would like to transfer data if there is any data.
-Set SIFCTR for it.
+The parent function ext4_xattr_inode_lookup_create already uses GFP_NOFS for memory alloction, so the function ext4_xattr_inode_cache_find should use same gfp_flag.
 
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Tested-by: Yusuke Goda <yusuke.goda.sx@renesas.com>
-Link: https://patch.msgid.link/87bjmzyuub.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: chuguangqing <chuguangqing@inspur.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/renesas/rcar/msiof.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/renesas/rcar/msiof.c b/sound/soc/renesas/rcar/msiof.c
-index 555fdd4fb2513..ede0211daacba 100644
---- a/sound/soc/renesas/rcar/msiof.c
-+++ b/sound/soc/renesas/rcar/msiof.c
-@@ -185,6 +185,12 @@ static int msiof_hw_start(struct snd_soc_component *component,
- 		msiof_write(priv, SIRMDR3, val);
- 	}
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index b0e60a44dae9d..ce7253b3f5499 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1535,7 +1535,7 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
+ 	WARN_ON_ONCE(ext4_handle_valid(journal_current_handle()) &&
+ 		     !(current->flags & PF_MEMALLOC_NOFS));
  
-+	/* SIFCTR */
-+	if (is_play)
-+		msiof_update(priv, SIFCTR, SIFCTR_TFWM, FIELD_PREP(SIFCTR_TFWM, SIFCTR_TFWM_1));
-+	else
-+		msiof_update(priv, SIFCTR, SIFCTR_RFWM, FIELD_PREP(SIFCTR_RFWM, SIFCTR_RFWM_1));
-+
- 	/* SIIER */
- 	if (is_play)
- 		val = SIIER_TDREQE | SIIER_TDMAE | SISTR_ERR_TX;
+-	ea_data = kvmalloc(value_len, GFP_KERNEL);
++	ea_data = kvmalloc(value_len, GFP_NOFS);
+ 	if (!ea_data) {
+ 		mb_cache_entry_put(ea_inode_cache, ce);
+ 		return NULL;
 -- 
 2.51.0
 
