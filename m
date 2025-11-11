@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80465305978;
-	Tue, 11 Nov 2025 01:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCFD306B39;
+	Tue, 11 Nov 2025 01:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823892; cv=none; b=NofSAvFx4diBesmK7kRwIpuikkS2iCGxTERx2wgGlseMo4hpwUafPacxWmHtlb8tQM4PRC94APzx2Q0D5G/P/IjkvAliU8fjuIWZD0FwNCatWYkvQ+YMgSPGNssC5MB4Zop5Bqen+OV0sqykaVVBh1R2xdEwW7WFv/VxyM40sEQ=
+	t=1762823892; cv=none; b=ecjwFtbxGpeDFPpTKZtWYVeNDii9hUSlyqaW7bIXMTXQA2eTL4HzV61wrQDE1X/xou6zHlr+ziNmqt/pCn0O9HmBB1fXB5Jyhm8mjkzjZC6fgRspcRzgA27nQ4oSnRo1W4ZIbuq7AMO7wngaPvPWALN7P9fl2zylUm36B0WVLFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762823892; c=relaxed/simple;
-	bh=gI1lp6AnT+X9Sqxe0MXYR4GEufgEc3aKL4Fn/ceSwdY=;
+	bh=1TNWhKOPDoIeREK8uu7dOR8RUsZ07OKAmsopFzv6jQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJY2MjlmAXQ3JGaJGMafG7rC3PFnWR0XcPKcKbOz5GjNDvynSzhOWTbo7gqKzZ/mP+6E2l3bkNOQlIek3MskVf95J/P6BlgoNxt8KdTr/XEjE9pGIJ/ZMu7EHe0hvEYFLBMZZjp6Fr4U7OnVL6PbRCeP7pj3qCAQ8I5sf4BcGAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt5ol8TE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nqwet3HOa/E5rnQP37TxLPXBjfSrtvZY5M3teCqGC/EatpuuPcJ4iCf/4jn0LEfgQBB4OYLmLGakeNpckS6vEQwlUzmiwYtN6JEG69FHHnTYyja0JrIeWb+zVpQpPuFlSclF0/5ARbGZDKqzuCai9ikHybw/7lQPKfFsobP7jNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMwOt+iK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt5ol8TE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20832C4CEF5;
-	Tue, 11 Nov 2025 01:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMwOt+iK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD54FC4AF0B;
+	Tue, 11 Nov 2025 01:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823892;
-	bh=gI1lp6AnT+X9Sqxe0MXYR4GEufgEc3aKL4Fn/ceSwdY=;
+	s=korg; t=1762823890;
+	bh=1TNWhKOPDoIeREK8uu7dOR8RUsZ07OKAmsopFzv6jQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pt5ol8TEQTMVWN1tMPRG9l5ku/bYEsSCpXAllHs2woIW0OpTvRt9TAOz6/piY1jxc
-	 Z/yVvkRU+EKyEDb3xvLZCPJAj4WSeDiR+qZPfzXLYqyYRNOWxHdmfmMWCymSkKxURi
-	 5nuEM+yq62lC1KvihcMgmrwtyQPZIt6GS/42pupg=
+	b=KMwOt+iKDZMVHeRycOj+DYO/teBJYn+y/UtMMC6jxSjhJNUv33FR31I92QNKupTNo
+	 nvXTGqqIePvgVxKWyDbeOQCV9gWkSoWHly1peydx21yS8DzATiccvfZ0w2364OZkn1
+	 lPWGtfsBZy8vaF0NxQmPrAPLhMD1RItlNS5Dysag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mangesh Gadre <Mangesh.Gadre@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 392/849] drm/amdgpu: Avoid jpeg v5.0.1 poison irq call trace on sriov guest
-Date: Tue, 11 Nov 2025 09:39:22 +0900
-Message-ID: <20251111004545.911137309@linuxfoundation.org>
+Subject: [PATCH 6.12 344/565] eth: 8139too: Make 8139TOO_PIO depend on !NO_IOPORT_MAP
+Date: Tue, 11 Nov 2025 09:43:20 +0900
+Message-ID: <20251111004534.614089718@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mangesh Gadre <Mangesh.Gadre@amd.com>
+From: Daniel Palmer <daniel@thingy.jp>
 
-[ Upstream commit 01152c30eef972c5ca3b3eeb14f2984fa48d18c2 ]
+[ Upstream commit 43adad382e1fdecabd2c4cd2bea777ef4ce4109e ]
 
-Sriov guest side doesn't init ras feature hence the poison irq shouldn't
-be put during hw fini
+When 8139too is probing and 8139TOO_PIO=y it will call pci_iomap_range()
+and from there __pci_ioport_map() for the PCI IO space.
+If HAS_IOPORT_MAP=n and NO_GENERIC_PCI_IOPORT_MAP=n, like it is on my
+m68k config, __pci_ioport_map() becomes NULL, pci_iomap_range() will
+always fail and the driver will complain it couldn't map the PIO space
+and return an error.
 
-Signed-off-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+NO_IOPORT_MAP seems to cover the case where what 8139too is trying
+to do cannot ever work so make 8139TOO_PIO depend on being it false
+and avoid creating an unusable driver.
+
+Signed-off-by: Daniel Palmer <daniel@thingy.jp>
+Link: https://patch.msgid.link/20250907064349.3427600-1-daniel@thingy.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 2 +-
+ drivers/net/ethernet/realtek/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-index 8d74455dab1e2..7731ef262d39f 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-@@ -315,7 +315,7 @@ static int jpeg_v5_0_1_hw_fini(struct amdgpu_ip_block *ip_block)
- 			ret = jpeg_v5_0_1_set_powergating_state(ip_block, AMD_PG_STATE_GATE);
- 	}
- 
--	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG))
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__JPEG) && !amdgpu_sriov_vf(adev))
- 		amdgpu_irq_put(adev, &adev->jpeg.inst->ras_poison_irq, 0);
- 
- 	return ret;
+diff --git a/drivers/net/ethernet/realtek/Kconfig b/drivers/net/ethernet/realtek/Kconfig
+index 8a8ea51c639e9..9c1247ddc238f 100644
+--- a/drivers/net/ethernet/realtek/Kconfig
++++ b/drivers/net/ethernet/realtek/Kconfig
+@@ -58,7 +58,7 @@ config 8139TOO
+ config 8139TOO_PIO
+ 	bool "Use PIO instead of MMIO"
+ 	default y
+-	depends on 8139TOO
++	depends on 8139TOO && !NO_IOPORT_MAP
+ 	help
+ 	  This instructs the driver to use programmed I/O ports (PIO) instead
+ 	  of PCI shared memory (MMIO).  This can possibly solve some problems
 -- 
 2.51.0
 
