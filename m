@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CF92857F0;
-	Tue, 11 Nov 2025 01:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC961307AE6;
+	Tue, 11 Nov 2025 01:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825559; cv=none; b=sH93xnskMLdkVSt7w7btEjjQr7zTjuVe29f2GIktD2Hw/H4nhlE0Q16xDE3saFoMWM2drMG6r55QuUfw6qDCUeBvbL/eMa6XcthQiwN7L3f0qmDrciG3XFX7TUaHw3qIKPDNTBlWYiX4OEmycvsEuW43qgfnMzIQC5qJx7aEjhk=
+	t=1762825562; cv=none; b=i5SulGuOLJ4PVKhPNeG11PHLqMVoB4NyW8C8W3C3Wv7hHkOGumf3R0+DY4p+O3OVLi1aE5RhvRzIyiUFOnoAvq7mBkHxrPzt3W/NIRrqOTe6H7+ffgIraGM7dJRtP6zYqwRhMY6ciwU7o3xWAH4oHFzPGwkBbkMPdBUotaLROTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825559; c=relaxed/simple;
-	bh=lZ/za5f0N8LyTuWt0OnB7vYZog6I27hI1Bybw+rh+rI=;
+	s=arc-20240116; t=1762825562; c=relaxed/simple;
+	bh=Q23Bj1VE6nZE8qCRYMaWRBJ8wcuX7o8bJ9ABh2f78EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rr8A0689Ba7ztPvWloxJoPuOvaxZ2bLZIG/Tx/Tx+/BCapYZNth25Ob4Or4dkfGSb8Z14VgFZduNa4YT6ZCjqqAysKSRD9sDl/DhWOwFBxOlGeO6zhlUB3edrELkNb7qfHgrLLnL4lXJ37C84yLXt1xqk0htkPobM8im2xXo2uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtQGYrFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WR9ZUrc/QE/VHi0Ydn/IO1LIz8e/XXMB2hNmsb/dDjHxP2YKuCOgj5e6ohMmPlKR1R9YR1Y+WvIy5OwuWEyDnOOcDGdqzaUigb4wdAjLsaE1DcNEnsML4hwciWXt+5VKHflWJghQFfHlfuL6g6QbbJn1yX4cuf0SIkLY/LvBKS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhntXoMh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtQGYrFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36213C116D0;
-	Tue, 11 Nov 2025 01:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhntXoMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B69C19424;
+	Tue, 11 Nov 2025 01:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825559;
-	bh=lZ/za5f0N8LyTuWt0OnB7vYZog6I27hI1Bybw+rh+rI=;
+	s=korg; t=1762825561;
+	bh=Q23Bj1VE6nZE8qCRYMaWRBJ8wcuX7o8bJ9ABh2f78EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtQGYrFwvpbkWWMiQEZK9A6fcurLFHz9YLBgeiUiK4lMipoXLXpEjru3qYwpYtL47
-	 Ch/pgAWL82pQX6owwtIsl7KPTvDNNwfDz3hcYbKd8nVuGAn2ArNeCrnpId3JstYK2X
-	 BtpEedfdeS3U4yQihVf1uceZQPCwLRjaNcRCPEco=
+	b=jhntXoMhWw0h11d7JPGhfVpvzur61u6tTusZEZE2iZwb2foREIM5GLaARb8O0e2Nm
+	 XFhT8XR9SdxN+92u9XrlQIDvxq0twlxYJD+T76vESMCG6WSwmCEg0+MDuauNoZ/0+A
+	 YeYtmuEs6TuqNEZE9vKVvpyWB81sqrVGTKKFVVJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.17 811/849] riscv: Fix memory leak in module_frob_arch_sections()
-Date: Tue, 11 Nov 2025 09:46:21 +0900
-Message-ID: <20251111004556.033235633@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.17 802/849] wifi: cfg80211: add an hrtimer based delayed work item
+Date: Tue, 11 Nov 2025 09:46:12 +0900
+Message-ID: <20251111004555.820987426@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,59 +51,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit c42458fcf54b3d0bc2ac06667c98dceb43831889 upstream.
+commit 7ceba45a6658ce637da334cd0ebf27f4ede6c0fe upstream.
 
-The current code directly overwrites the scratch pointer with the
-return value of kvrealloc(). If kvrealloc() fails and returns NULL,
-the original buffer becomes unreachable, causing a memory leak.
+The normal timer mechanism assume that timeout further in the future
+need a lower accuracy. As an example, the granularity for a timer
+scheduled 4096 ms in the future on a 1000 Hz system is already 512 ms.
+This granularity is perfectly sufficient for e.g. timeouts, but there
+are other types of events that will happen at a future point in time and
+require a higher accuracy.
 
-Fix this by using a temporary variable to store kvrealloc()'s return
-value and only update the scratch pointer on success.
+Add a new wiphy_hrtimer_work type that uses an hrtimer internally. The
+API is almost identical to the existing wiphy_delayed_work and it can be
+used as a drop-in replacement after minor adjustments. The work will be
+scheduled relative to the current time with a slack of 1 millisecond.
 
-Found via static anlaysis and this is similar to commit 42378a9ca553
-("bpf, verifier: Fix memory leak in array reallocation for stack state")
-
-Fixes: be17c0df6795 ("riscv: module: Optimize PLT/GOT entry counting")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20251026091912.39727-1-linmq006@gmail.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+CC: stable@vger.kernel.org # 6.4+
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251028125710.7f13a2adc5eb.I01b5af0363869864b0580d9c2a1770bafab69566@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/module-sections.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/cfg80211.h |   78 +++++++++++++++++++++++++++++++++++++++++++++++++
+ net/wireless/core.c    |   56 +++++++++++++++++++++++++++++++++++
+ net/wireless/trace.h   |   21 +++++++++++++
+ 3 files changed, 155 insertions(+)
 
-diff --git a/arch/riscv/kernel/module-sections.c b/arch/riscv/kernel/module-sections.c
-index 75551ac6504c..1675cbad8619 100644
---- a/arch/riscv/kernel/module-sections.c
-+++ b/arch/riscv/kernel/module-sections.c
-@@ -119,6 +119,7 @@ int module_frob_arch_sections(Elf_Ehdr *ehdr, Elf_Shdr *sechdrs,
- 	unsigned int num_plts = 0;
- 	unsigned int num_gots = 0;
- 	Elf_Rela *scratch = NULL;
-+	Elf_Rela *new_scratch;
- 	size_t scratch_size = 0;
- 	int i;
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -6289,6 +6289,11 @@ static inline void wiphy_delayed_work_in
+  * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
+  * use just cancel_work() instead of cancel_work_sync(), it requires
+  * being in a section protected by wiphy_lock().
++ *
++ * Note that these are scheduled with a timer where the accuracy
++ * becomes less the longer in the future the scheduled timer is. Use
++ * wiphy_hrtimer_work_queue() if the timer must be not be late by more
++ * than approximately 10 percent.
+  */
+ void wiphy_delayed_work_queue(struct wiphy *wiphy,
+ 			      struct wiphy_delayed_work *dwork,
+@@ -6360,6 +6365,79 @@ void wiphy_delayed_work_flush(struct wip
+ bool wiphy_delayed_work_pending(struct wiphy *wiphy,
+ 				struct wiphy_delayed_work *dwork);
  
-@@ -168,9 +169,12 @@ int module_frob_arch_sections(Elf_Ehdr *ehdr, Elf_Shdr *sechdrs,
- 		scratch_size_needed = (num_scratch_relas + num_relas) * sizeof(*scratch);
- 		if (scratch_size_needed > scratch_size) {
- 			scratch_size = scratch_size_needed;
--			scratch = kvrealloc(scratch, scratch_size, GFP_KERNEL);
--			if (!scratch)
-+			new_scratch = kvrealloc(scratch, scratch_size, GFP_KERNEL);
-+			if (!new_scratch) {
-+				kvfree(scratch);
- 				return -ENOMEM;
-+			}
-+			scratch = new_scratch;
- 		}
++struct wiphy_hrtimer_work {
++	struct wiphy_work work;
++	struct wiphy *wiphy;
++	struct hrtimer timer;
++};
++
++enum hrtimer_restart wiphy_hrtimer_work_timer(struct hrtimer *t);
++
++static inline void wiphy_hrtimer_work_init(struct wiphy_hrtimer_work *hrwork,
++					   wiphy_work_func_t func)
++{
++	hrtimer_setup(&hrwork->timer, wiphy_hrtimer_work_timer,
++		      CLOCK_BOOTTIME, HRTIMER_MODE_REL);
++	wiphy_work_init(&hrwork->work, func);
++}
++
++/**
++ * wiphy_hrtimer_work_queue - queue hrtimer work for the wiphy
++ * @wiphy: the wiphy to queue for
++ * @hrwork: the high resolution timer worker
++ * @delay: the delay given as a ktime_t
++ *
++ * Please refer to wiphy_delayed_work_queue(). The difference is that
++ * the hrtimer work uses a high resolution timer for scheduling. This
++ * may be needed if timeouts might be scheduled further in the future
++ * and the accuracy of the normal timer is not sufficient.
++ *
++ * Expect a delay of a few milliseconds as the timer is scheduled
++ * with some slack and some more time may pass between queueing the
++ * work and its start.
++ */
++void wiphy_hrtimer_work_queue(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork,
++			      ktime_t delay);
++
++/**
++ * wiphy_hrtimer_work_cancel - cancel previously queued hrtimer work
++ * @wiphy: the wiphy, for debug purposes
++ * @hrtimer: the hrtimer work to cancel
++ *
++ * Cancel the work *without* waiting for it, this assumes being
++ * called under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_hrtimer_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_hrtimer_work *hrtimer);
++
++/**
++ * wiphy_hrtimer_work_flush - flush previously queued hrtimer work
++ * @wiphy: the wiphy, for debug purposes
++ * @hrwork: the hrtimer work to flush
++ *
++ * Flush the work (i.e. run it if pending). This must be called
++ * under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_hrtimer_work_flush(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork);
++
++/**
++ * wiphy_hrtimer_work_pending - Find out whether a wiphy hrtimer
++ * work item is currently pending.
++ *
++ * @wiphy: the wiphy, for debug purposes
++ * @hrwork: the hrtimer work in question
++ *
++ * Return: true if timer is pending, false otherwise
++ *
++ * Please refer to the wiphy_delayed_work_pending() documentation as
++ * this is the equivalent function for hrtimer based delayed work
++ * items.
++ */
++bool wiphy_hrtimer_work_pending(struct wiphy *wiphy,
++				struct wiphy_hrtimer_work *hrwork);
++
+ /**
+  * enum ieee80211_ap_reg_power - regulatory power for an Access Point
+  *
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1778,6 +1778,62 @@ bool wiphy_delayed_work_pending(struct w
+ }
+ EXPORT_SYMBOL_GPL(wiphy_delayed_work_pending);
  
- 		for (size_t j = 0; j < num_relas; j++)
--- 
-2.51.2
-
++enum hrtimer_restart wiphy_hrtimer_work_timer(struct hrtimer *t)
++{
++	struct wiphy_hrtimer_work *hrwork =
++		container_of(t, struct wiphy_hrtimer_work, timer);
++
++	wiphy_work_queue(hrwork->wiphy, &hrwork->work);
++
++	return HRTIMER_NORESTART;
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_timer);
++
++void wiphy_hrtimer_work_queue(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork,
++			      ktime_t delay)
++{
++	trace_wiphy_hrtimer_work_queue(wiphy, &hrwork->work, delay);
++
++	if (!delay) {
++		hrtimer_cancel(&hrwork->timer);
++		wiphy_work_queue(wiphy, &hrwork->work);
++		return;
++	}
++
++	hrwork->wiphy = wiphy;
++	hrtimer_start_range_ns(&hrwork->timer, delay,
++			       1000 * NSEC_PER_USEC, HRTIMER_MODE_REL);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_queue);
++
++void wiphy_hrtimer_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_hrtimer_work *hrwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	hrtimer_cancel(&hrwork->timer);
++	wiphy_work_cancel(wiphy, &hrwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_cancel);
++
++void wiphy_hrtimer_work_flush(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	hrtimer_cancel(&hrwork->timer);
++	wiphy_work_flush(wiphy, &hrwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_flush);
++
++bool wiphy_hrtimer_work_pending(struct wiphy *wiphy,
++				struct wiphy_hrtimer_work *hrwork)
++{
++	return hrtimer_is_queued(&hrwork->timer);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_pending);
++
+ static int __init cfg80211_init(void)
+ {
+ 	int err;
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -304,6 +304,27 @@ TRACE_EVENT(wiphy_delayed_work_queue,
+ 		  __entry->delay)
+ );
+ 
++TRACE_EVENT(wiphy_hrtimer_work_queue,
++	TP_PROTO(struct wiphy *wiphy, struct wiphy_work *work,
++		 ktime_t delay),
++	TP_ARGS(wiphy, work, delay),
++	TP_STRUCT__entry(
++		WIPHY_ENTRY
++		__field(void *, instance)
++		__field(void *, func)
++		__field(ktime_t, delay)
++	),
++	TP_fast_assign(
++		WIPHY_ASSIGN;
++		__entry->instance = work;
++		__entry->func = work->func;
++		__entry->delay = delay;
++	),
++	TP_printk(WIPHY_PR_FMT " instance=%p func=%pS delay=%llu",
++		  WIPHY_PR_ARG, __entry->instance, __entry->func,
++		  __entry->delay)
++);
++
+ TRACE_EVENT(wiphy_work_worker_start,
+ 	TP_PROTO(struct wiphy *wiphy),
+ 	TP_ARGS(wiphy),
 
 
