@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A00248F6A;
-	Tue, 11 Nov 2025 01:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F03E25F797;
+	Tue, 11 Nov 2025 01:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823280; cv=none; b=FOVcZOHguqWawbiTgLIZxD9OTr87hfY/0cwRThRNkKQHkqS2DipU6opwPghmuFswY9Sgw7PmlpAstjGAN4XFSdFpeB8VqavrxIGNPL1LMJZQ3vPn+xFS8nUKeqQ+p/EMQXtQ+ramUWLJX5/5OhOdhENewpcpD4YLvQeuB7TNS44=
+	t=1762823283; cv=none; b=La6BYAm5FxmfpTjaSqsqBYHXWPpG9K1TBMwv+bfnN1Ds47Nxa/qMYMtZDJK4o9PrODX1OYFV54wGNjt/MDySM+OzdcBiiIBpLzAO8Aypnf7z3p5AWnxe8dov+gUFaZI8Kp0RdoqvwvCAR2JHqWi2LbA56OD+cgLQIMJzebLdCqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823280; c=relaxed/simple;
-	bh=AN4a+tzo1SKrgoYbO6d+famVGGWn9UrHIhDfD7aNHpk=;
+	s=arc-20240116; t=1762823283; c=relaxed/simple;
+	bh=gr4oBPdtULGdRRzBdVwlqONjNiEyu8ANinfjOGGjyM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNWuN0fQEiSGf367wxEd5MMcm0hLV61/tWOJhqCDq+R4omK36Q4cOzylwo+1z2cmaJffkhZeP/l8PwCb8YfVwTXXW+WXhxRFNrgZ7c1V66XsMeDVYmDvoYMTfo0jum2pHGEUmHqQ0NVGXoprtMhFOQ/M7FdR2Rc4izaIJHxA4YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvPSPWo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bm7lAEe1s9zXio8x5to8/Tlvdj7sC+b5Z1gPJDaa9oHyMt1rA0HR+E7LMfpX/MKBTPd7j0dDAy680u4kTdRmncQMpJUj88FTOPhNm42Ov+P8+SJ2eVh3YSB9YZuPjmbE9BDfycDNsJNQLIjtz93G9kWAt8xKl7UxghRTCSNMbns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+3+mXIy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvPSPWo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269FCC4CEFB;
-	Tue, 11 Nov 2025 01:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+3+mXIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84469C16AAE;
+	Tue, 11 Nov 2025 01:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823280;
-	bh=AN4a+tzo1SKrgoYbO6d+famVGGWn9UrHIhDfD7aNHpk=;
+	s=korg; t=1762823282;
+	bh=gr4oBPdtULGdRRzBdVwlqONjNiEyu8ANinfjOGGjyM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvPSPWo0IlUWJvW7QihSxmZLo54sONSeY1yptrf8048Tlh1rsomwMFzwvBo//k4Pi
-	 yPr8Vbl43bS2/BB7iwXN7ZcYK9D6/tyJ3/5jdlkNT+2xpbRZIBJNYKNnhYem8FrYjn
-	 zG0Tv1hQMJa6EVVN9eYSTwA1bzrCjlzS2coeeL84=
+	b=y+3+mXIySrjb5PpzkhTFqqfwhYjj2odRdHWLrHKM9VqCzhNIGGn8h8RrxCO1HemmS
+	 DRS+WM3Vn+yuRE3j1+X/ILmhnFGC5Uz14oj/8E/KpqoqycCIHq5mbCAgcK/jHuytRV
+	 SSflMmMg1r1i7q5RT8J8bX0VfofCyIswdZEBM7so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 211/565] powerpc/eeh: Use result of error_detected() in uevent
-Date: Tue, 11 Nov 2025 09:41:07 +0900
-Message-ID: <20251111004531.672729632@linuxfoundation.org>
+Subject: [PATCH 6.17 268/849] drm/xe: rework PDE PAT index selection
+Date: Tue, 11 Nov 2025 09:37:18 +0900
+Message-ID: <20251111004542.909981532@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +48,183 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
+[ Upstream commit 17593a69b75f098280ad88b625f2d8c5bfe4c6a1 ]
 
-Ever since uevent support was added for AER and EEH with commit
-856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
-reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
+For non-leaf paging structures we end up selecting a random index
+between [0, 3], depending on the first user if the page-table is shared,
+since non-leaf structures only have two bits in the HW for encoding the
+PAT index, and here we are just passing along the full user provided
+index, which can be an index as large as ~31 on xe2+. The user provided
+index is meant for the leaf node, which maps the actual BO pages where
+we have more PAT bits, and not the non-leaf nodes which are only mapping
+other paging structures, and so only needs a minimal PAT index range.
+Also the chosen index might need to consider how the driver mapped the
+paging structures on the host side, like wc vs wb, which is separate
+from the user provided index.
 
-Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
-udev") subsequently amended AER to report the actual return value of
-error_detected().
+With that move the PDE PAT index selection under driver control. For now
+just use a coherent index on platforms with page-tables that are cached
+on host side, and incoherent otherwise. Using a coherent index could
+potentially be expensive, and would be overkill if we know the page-table
+is always uncached on host side.
 
-Make the same change to EEH to align it with AER and s390.
+v2 (Stuart):
+  - Add some documentation and split into separate helper.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
+BSpec: 59510
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://lore.kernel.org/r/20250808103455.462424-2-matthew.auld@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_migrate.c  | 10 ++++------
+ drivers/gpu/drm/xe/xe_pt.c       |  4 ++--
+ drivers/gpu/drm/xe/xe_pt_types.h |  3 +--
+ drivers/gpu/drm/xe/xe_vm.c       | 34 +++++++++++++++++++++++++++-----
+ 4 files changed, 36 insertions(+), 15 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index dd50de91c4383..c73e4225e84a5 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -334,7 +334,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
- 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 13e287e037096..9b1e3dce1aea3 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -163,8 +163,7 @@ static void xe_migrate_program_identity(struct xe_device *xe, struct xe_vm *vm,
+ 	for (pos = dpa_base; pos < vram_limit;
+ 	     pos += SZ_1G, ofs += 8) {
+ 		if (pos + SZ_1G >= vram_limit) {
+-			entry = vm->pt_ops->pde_encode_bo(bo, pt_2m_ofs,
+-							  pat_index);
++			entry = vm->pt_ops->pde_encode_bo(bo, pt_2m_ofs);
+ 			xe_map_wr(xe, &bo->vmap, ofs, u64, entry);
  
- 	edev->in_error = true;
--	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
-+	pci_uevent_ers(pdev, rc);
- 	return rc;
+ 			flags = vm->pt_ops->pte_encode_addr(xe, 0,
+@@ -218,7 +217,7 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+ 
+ 	/* PT30 & PT31 reserved for 2M identity map */
+ 	pt29_ofs = xe_bo_size(bo) - 3 * XE_PAGE_SIZE;
+-	entry = vm->pt_ops->pde_encode_bo(bo, pt29_ofs, pat_index);
++	entry = vm->pt_ops->pde_encode_bo(bo, pt29_ofs);
+ 	xe_pt_write(xe, &vm->pt_root[id]->bo->vmap, 0, entry);
+ 
+ 	map_ofs = (num_entries - num_setup) * XE_PAGE_SIZE;
+@@ -286,15 +285,14 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
+ 			flags = XE_PDE_64K;
+ 
+ 		entry = vm->pt_ops->pde_encode_bo(bo, map_ofs + (u64)(level - 1) *
+-						  XE_PAGE_SIZE, pat_index);
++						  XE_PAGE_SIZE);
+ 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE * level, u64,
+ 			  entry | flags);
+ 	}
+ 
+ 	/* Write PDE's that point to our BO. */
+ 	for (i = 0; i < map_ofs / PAGE_SIZE; i++) {
+-		entry = vm->pt_ops->pde_encode_bo(bo, (u64)i * XE_PAGE_SIZE,
+-						  pat_index);
++		entry = vm->pt_ops->pde_encode_bo(bo, (u64)i * XE_PAGE_SIZE);
+ 
+ 		xe_map_wr(xe, &bo->vmap, map_ofs + XE_PAGE_SIZE +
+ 			  (i + 1) * 8, u64, entry);
+diff --git a/drivers/gpu/drm/xe/xe_pt.c b/drivers/gpu/drm/xe/xe_pt.c
+index c8e63bd23300e..eb9774a8f683c 100644
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -69,7 +69,7 @@ static u64 __xe_pt_empty_pte(struct xe_tile *tile, struct xe_vm *vm,
+ 
+ 	if (level > MAX_HUGEPTE_LEVEL)
+ 		return vm->pt_ops->pde_encode_bo(vm->scratch_pt[id][level - 1]->bo,
+-						 0, pat_index);
++						 0);
+ 
+ 	return vm->pt_ops->pte_encode_addr(xe, 0, pat_index, level, IS_DGFX(xe), 0) |
+ 		XE_PTE_NULL;
+@@ -616,7 +616,7 @@ xe_pt_stage_bind_entry(struct xe_ptw *parent, pgoff_t offset,
+ 			xe_child->is_compact = true;
+ 		}
+ 
+-		pte = vm->pt_ops->pde_encode_bo(xe_child->bo, 0, pat_index) | flags;
++		pte = vm->pt_ops->pde_encode_bo(xe_child->bo, 0) | flags;
+ 		ret = xe_pt_insert_entry(xe_walk, xe_parent, offset, xe_child,
+ 					 pte);
+ 	}
+diff --git a/drivers/gpu/drm/xe/xe_pt_types.h b/drivers/gpu/drm/xe/xe_pt_types.h
+index 69eab6f37cfe6..17cdd7c7e9f5e 100644
+--- a/drivers/gpu/drm/xe/xe_pt_types.h
++++ b/drivers/gpu/drm/xe/xe_pt_types.h
+@@ -45,8 +45,7 @@ struct xe_pt_ops {
+ 	u64 (*pte_encode_addr)(struct xe_device *xe, u64 addr,
+ 			       u16 pat_index,
+ 			       u32 pt_level, bool devmem, u64 flags);
+-	u64 (*pde_encode_bo)(struct xe_bo *bo, u64 bo_offset,
+-			     u16 pat_index);
++	u64 (*pde_encode_bo)(struct xe_bo *bo, u64 bo_offset);
+ };
+ 
+ struct xe_pt_entry {
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index bf44cd5bf49c0..30c32717a980e 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1547,14 +1547,39 @@ static u64 pte_encode_ps(u32 pt_level)
+ 	return 0;
  }
  
+-static u64 xelp_pde_encode_bo(struct xe_bo *bo, u64 bo_offset,
+-			      const u16 pat_index)
++static u16 pde_pat_index(struct xe_bo *bo)
++{
++	struct xe_device *xe = xe_bo_device(bo);
++	u16 pat_index;
++
++	/*
++	 * We only have two bits to encode the PAT index in non-leaf nodes, but
++	 * these only point to other paging structures so we only need a minimal
++	 * selection of options. The user PAT index is only for encoding leaf
++	 * nodes, where we have use of more bits to do the encoding. The
++	 * non-leaf nodes are instead under driver control so the chosen index
++	 * here should be distict from the user PAT index. Also the
++	 * corresponding coherency of the PAT index should be tied to the
++	 * allocation type of the page table (or at least we should pick
++	 * something which is always safe).
++	 */
++	if (!xe_bo_is_vram(bo) && bo->ttm.ttm->caching == ttm_cached)
++		pat_index = xe->pat.idx[XE_CACHE_WB];
++	else
++		pat_index = xe->pat.idx[XE_CACHE_NONE];
++
++	xe_assert(xe, pat_index <= 3);
++
++	return pat_index;
++}
++
++static u64 xelp_pde_encode_bo(struct xe_bo *bo, u64 bo_offset)
+ {
+ 	u64 pde;
+ 
+ 	pde = xe_bo_addr(bo, bo_offset, XE_PAGE_SIZE);
+ 	pde |= XE_PAGE_PRESENT | XE_PAGE_RW;
+-	pde |= pde_encode_pat_index(pat_index);
++	pde |= pde_encode_pat_index(pde_pat_index(bo));
+ 
+ 	return pde;
+ }
+@@ -2085,8 +2110,7 @@ struct xe_vm *xe_vm_lookup(struct xe_file *xef, u32 id)
+ 
+ u64 xe_vm_pdp4_descriptor(struct xe_vm *vm, struct xe_tile *tile)
+ {
+-	return vm->pt_ops->pde_encode_bo(vm->pt_root[tile->id]->bo, 0,
+-					 tile_to_xe(tile)->pat.idx[XE_CACHE_WB]);
++	return vm->pt_ops->pde_encode_bo(vm->pt_root[tile->id]->bo, 0);
+ }
+ 
+ static struct xe_exec_queue *
 -- 
 2.51.0
 
