@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15D2AE8D;
-	Tue, 11 Nov 2025 00:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F3212DDA1;
+	Tue, 11 Nov 2025 00:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822290; cv=none; b=QGcbx+y5kt7wveCxVyyscziQ6LJSK/2KyisJTv3accY5qPCZozn4GSBU5MNSiIgyw+j1JNvWZbZd10n7AudZkWCQOodEsXkF1wja9W1hvVnF1i8HHLvZ/t2zymP/Z/Uq428u9KGyn9ue2Hz7q76A9lJtGyZYtf6sqRuqXbU6xzM=
+	t=1762822292; cv=none; b=ZuCRlBziTz2wChXBOgz30p08FST9rep7Kbfn0XAlm1jx2cG48NZz+monZAWsaMEAFpvBVHWbkcO2sJKL3ZPcbTKGMMHTxI4B61R8SPL1nZOLGzDj6y+P2cphx+3gaDFVDhQblrJ8kAyHtpEnSl5Vx8NvDg7eHIlrJxs6MLNAWuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822290; c=relaxed/simple;
-	bh=xKVKudnfb0CS3YoOePYnqv2cL1YyReHD9t293nmhl1A=;
+	s=arc-20240116; t=1762822292; c=relaxed/simple;
+	bh=3NwIJ4x0qJ4xMyM4SO79rVTTthq4p3FcAr2CabHbwRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkthZcV2mB55LDuJb3mqJ2MBw9Se3NYIiu9AzHc0PdjlnNedKS9w30b3CWEs3fM4OgbQIGifYhJyphflV8CD5alTCu9EyFcS8THkcl06WdV+WTjbtXWzAXKSWIxiFCPI6lSIEbjnKETXCRPyg9DypNqYBmnb7gWpoi42umHqYFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU6uEtu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VLKOLpZvt5MVJ5aTIu5ENSHuHi6j2kFoRaH29G6cPN7obIs1P7nKo9Yq4Bkg1Dm+Ms2zDVP+I0/FQt6osZ2JRc/S6g8eHT5z9PxsVvbVxQapvhlhlC30dbPvo+qX0T46yPlUop1eXJHiiXR8tqzQY8cs0syOUApOtY44TA7FmXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6g+q4uj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU6uEtu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59AAC116B1;
-	Tue, 11 Nov 2025 00:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6g+q4uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6DDC4CEF5;
+	Tue, 11 Nov 2025 00:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822289;
-	bh=xKVKudnfb0CS3YoOePYnqv2cL1YyReHD9t293nmhl1A=;
+	s=korg; t=1762822292;
+	bh=3NwIJ4x0qJ4xMyM4SO79rVTTthq4p3FcAr2CabHbwRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iU6uEtu00MfyroP0kZiCqgH8WvbNoFD+eF1PeljZNF0m5ahUvu/R2bMBeXabd8rr6
-	 LPpQ5iML6QG09Hs+2ETVPH+ity9pJK9Tx0zfFWDQcKsyJpLzcMGLggPld94C8cZaSN
-	 KR/LvpmMzK+vWbRYtobZOERQ2WBWYjuHHQPn5j+A=
+	b=i6g+q4ujdaZqxdN/apYTcO8oiK8cjL/SR75LCsJiYvVx7ts/CuOi+ojRSAZ+WSbBZ
+	 pzq1m9ohThYK1kYdjCMV000K0A1C148wVWcIRzsqJ25pmUOegfLbwXr/5ExsRTcU1K
+	 Wv8EGxhQD7wHisn1WkFhPsorwQRTJ1v6QRILlIQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/565] wifi: ath10k: Fix memory leak on unsupported WMI command
-Date: Tue, 11 Nov 2025 09:37:55 +0900
-Message-ID: <20251111004527.302767099@linuxfoundation.org>
+Subject: [PATCH 6.17 074/849] sfc: fix potential memory leak in efx_mae_process_mport()
+Date: Tue, 11 Nov 2025 09:34:04 +0900
+Message-ID: <20251111004538.212445283@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 2e9c1da4ee9d0acfca2e0a3d78f3d8cb5802da1b ]
+[ Upstream commit 46a499aaf8c27476fd05e800f3e947bfd71aa724 ]
 
-ath10k_wmi_cmd_send takes ownership of the passed buffer (skb) and has the
-responsibility to release it in case of error. This patch fixes missing
-free in case of early error due to unhandled WMI command ID.
+In efx_mae_enumerate_mports(), memory allocated for mae_mport_desc is
+passed as a argument to efx_mae_process_mport(), but when the error path
+in efx_mae_process_mport() gets executed, the memory allocated for desc
+gets leaked.
 
-Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+Fix that by freeing the memory allocation before returning error.
 
-Fixes: 553215592f14 ("ath10k: warn if give WMI command is not supported")
-Suggested-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250926195656.187970-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: a6a15aca4207 ("sfc: enumerate mports in ef100")
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20251023141844.25847-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/sfc/mae.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index fdab67a56e438..32754f894f0b0 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1937,6 +1937,7 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
- 	if (cmd_id == WMI_CMD_UNSUPPORTED) {
- 		ath10k_warn(ar, "wmi command %d is not supported by firmware\n",
- 			    cmd_id);
-+		dev_kfree_skb_any(skb);
- 		return ret;
+diff --git a/drivers/net/ethernet/sfc/mae.c b/drivers/net/ethernet/sfc/mae.c
+index 6fd0c1e9a7d54..7cfd9000f79de 100644
+--- a/drivers/net/ethernet/sfc/mae.c
++++ b/drivers/net/ethernet/sfc/mae.c
+@@ -1090,6 +1090,9 @@ void efx_mae_remove_mport(void *desc, void *arg)
+ 	kfree(mport);
+ }
+ 
++/*
++ * Takes ownership of @desc, even if it returns an error
++ */
+ static int efx_mae_process_mport(struct efx_nic *efx,
+ 				 struct mae_mport_desc *desc)
+ {
+@@ -1100,6 +1103,7 @@ static int efx_mae_process_mport(struct efx_nic *efx,
+ 	if (!IS_ERR_OR_NULL(mport)) {
+ 		netif_err(efx, drv, efx->net_dev,
+ 			  "mport with id %u does exist!!!\n", desc->mport_id);
++		kfree(desc);
+ 		return -EEXIST;
  	}
  
 -- 
