@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778FA4C97;
-	Tue, 11 Nov 2025 00:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2984C97;
+	Tue, 11 Nov 2025 00:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822486; cv=none; b=megIVv96SMCBtuN829hLLkkdz6crZ1Kw7pjydv/kcBndoZPA0IDa/R+2L/FDhoEflKwxmRTl4d4PNpqJrzrdSJWqxqxIh1fCO71I07CBvoP3Jr5tHZhHGT1n3bjUfp1kQOIIPfC0QhwrF634GpuTUtS/J65KhO9M4YMlw1fYH6U=
+	t=1762822488; cv=none; b=SOkVGvWl8KuZJKk7Dy4/obWBvP2PbZ/qHlEwIRWZdoNhvGhARB4lIubwigvxXPgOz8aQ0cygXoAEtnhQDskQSbepD8uyuqzPSQ+O45BqN5Ojp5Kbf4Mb3HOuRJMH7uKMGe/D/WB5JflhC36bJKMPxijLPLJfKGT1JMu8+5In3jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822486; c=relaxed/simple;
-	bh=qBk3KkO/+3tvQI8+O/BHrIR9rycjLqbj7LwhkDHP8ow=;
+	s=arc-20240116; t=1762822488; c=relaxed/simple;
+	bh=YDQaxWjOtOBUOi4Wg+hcSvjepwHN1oRun6ZT6usYKtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2q0Sw8xCgXIPk1iX3H+621l99dfOtinSCiZ42rFpM3e+LfADVza00tANHqNckMJocLVgogykcrgQiBZev6IcGmETQLslb+FwR+hLggNaXikQktKt1rT/trz+p5CUi1EFtpzDXqpSahzmeFqd2KcCPJ3MbrwD2ZiWmIqQM2NPrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AB9f3Vpn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc+4h/70QrZ7jyU/oe1z4KeR0L/ckBkOUvA6UYHvYMMg7X255YIVc2iPCZ5OWMEOUaMKbZB2dox7CXlMR1dHc7VvBi/fndqRLs3XsZJ2YNuRwUpxDGApmzFMwo7j7mbOL4SiaC/dBBNATKeGPRff3Pf0yT5ZDi1P9J1V/BSTxBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiVOT/aI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AB9f3Vpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACD8C116B1;
-	Tue, 11 Nov 2025 00:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiVOT/aI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D213C113D0;
+	Tue, 11 Nov 2025 00:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822486;
-	bh=qBk3KkO/+3tvQI8+O/BHrIR9rycjLqbj7LwhkDHP8ow=;
+	s=korg; t=1762822488;
+	bh=YDQaxWjOtOBUOi4Wg+hcSvjepwHN1oRun6ZT6usYKtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AB9f3VpnIAGUnfnW36COv+2eOQhmEtosjiqB2lWTd1+AsRCvjiKrmuPdBSrUWM0w7
-	 ePgoPPotnpzBKqhvWi4m87tePDtEBQNUT9zs7Co1qUn0BoiMOOLExi4z6XEhm77Rji
-	 m5TMxi75xcmbpkhof/K6m0hCvPH/MgPMugPk/fzA=
+	b=FiVOT/aIeZ/d6e3ZFM6MldDDoe/b8pB7lXiz3BoTRiaACCOFTPm8uC0Z3EKP50zBP
+	 cc6gNGdZUDxBmh4HniBXRoRCPrhjGaL0gSPZBqqwjo7h9dfSDYP37wueuXUQEdSB9w
+	 esmJ/qyg2A3gSeL8VmBT4wyuvtvH7aIlDceERFZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Owen Gu <guhuinan@xiaomi.com>
-Subject: [PATCH 6.17 117/849] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
-Date: Tue, 11 Nov 2025 09:34:47 +0900
-Message-ID: <20251111004539.226746676@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 060/565] block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL
+Date: Tue, 11 Nov 2025 09:38:36 +0900
+Message-ID: <20251111004528.274726931@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
+commit 12a1c9353c47c0fb3464eba2d78cdf649dee1cf7 upstream.
 
-A race condition occurs when ffs_func_eps_enable() runs concurrently
-with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
-sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
-to a NULL pointer dereference when accessing epfile->ep in
-ffs_func_eps_enable() after successful usb_ep_enable().
+REQ_OP_ZONE_RESET_ALL is a zone management request. Fix
+op_is_zone_mgmt() to return true for that operation, like it already
+does for REQ_OP_ZONE_RESET.
 
-The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
-ffs_data_close() functions, and its modification is protected by the
-spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
-is also protected by ffs->eps_lock.
+While no problems were reported without this fix, this change allows
+strengthening checks in various block device drivers (scsi sd,
+virtioblk, DM) where op_is_zone_mgmt() is used to verify that a zone
+management command is not being issued to a regular block device.
 
-Thus, add NULL pointer handling for ffs->epfiles in the
-ffs_func_eps_enable() function to fix issues
-
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/linux/blk_types.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2407,7 +2407,12 @@ static int ffs_func_eps_enable(struct ff
- 	ep = func->eps;
- 	epfile = ffs->epfiles;
- 	count = ffs->eps_count;
--	while(count--) {
-+	if (!epfile) {
-+		ret = -ENOMEM;
-+		goto done;
-+	}
-+
-+	while (count--) {
- 		ep->ep->driver_data = ep;
- 
- 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
-@@ -2431,6 +2436,7 @@ static int ffs_func_eps_enable(struct ff
- 	}
- 
- 	wake_up_interruptible(&ffs->wait);
-+done:
- 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
- 
- 	return ret;
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -473,6 +473,7 @@ static inline bool op_is_zone_mgmt(enum
+ {
+ 	switch (op & REQ_OP_MASK) {
+ 	case REQ_OP_ZONE_RESET:
++	case REQ_OP_ZONE_RESET_ALL:
+ 	case REQ_OP_ZONE_OPEN:
+ 	case REQ_OP_ZONE_CLOSE:
+ 	case REQ_OP_ZONE_FINISH:
 
 
