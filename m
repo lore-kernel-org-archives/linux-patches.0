@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013772FFF94;
-	Tue, 11 Nov 2025 01:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA9C301477;
+	Tue, 11 Nov 2025 01:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824786; cv=none; b=E9ghK7TgtzpJPpKTAGwNEu64bTchiQ3aqAxSp4OI+wVzlQJWdB3uB7Qc7iPRiAREXGmFwUwYgjlTENPFYwAbSGGhIxHUmCB9Mw4pd7RlSfc5kdgmAglMyoI/4mUL22ykFGsRmR5+NlV7GXdKCPPmYwwmpmYENWbPDG4oW6PivxU=
+	t=1762824788; cv=none; b=DUZ2GB2i6LUwh3u2hSIbGhSrwFphcVDkdDMucGNkxrxY9YfOtgw7sJogPZUvkcq5p79hdrZQ4EVJaQScWwGkBW+kO+kA+XdqcjXDN6gDF93GFqPPT3abpOCenU4BQZKVgNh+whkW5VHYP+Va6na2RJjluO6bbeFe1YmrhN8wUT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824786; c=relaxed/simple;
-	bh=S6LQh/wrTloX8Ocn9O7Muv/6NAX+GoP/CBT9MyNWEmA=;
+	s=arc-20240116; t=1762824788; c=relaxed/simple;
+	bh=igWHXWBpwkGEvtjFojt/761aEwfTCfqHb7Ajl3FXWPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulEKSaBIY3WS5PTGIIWZxGrxceAOPLk42rVvTGwWcsWghXL4SiykkuHGCnM3JZS/wsk/l5rl4CkgpBdmhR8V6OR0HN8U7Tml7DU6vFzSM35ZYFgzjzQJJTsV6lkKE3XLMmisjE+SlUhAzLhoQ+SqTRLn2uUJRRPCJa7O77+he5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr6qeEN7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G336z5iX6yOiV5A+hWlqKnCUz97uQloM/OVRAuaSy/C04a/Cu8x7wkImAJSyFDgcg12Q21PnGKIlr4HNqdp8UXQ7aemrZ/9NvRgJJe6IKCXiUUVi0rtWpAf8DoKEe+mcp1RxzZ2eZJORkhcgF1F0SGgdxf25rI04c6te1CALbuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5dTn4NB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr6qeEN7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91539C113D0;
-	Tue, 11 Nov 2025 01:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5dTn4NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2B6C19421;
+	Tue, 11 Nov 2025 01:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824785;
-	bh=S6LQh/wrTloX8Ocn9O7Muv/6NAX+GoP/CBT9MyNWEmA=;
+	s=korg; t=1762824788;
+	bh=igWHXWBpwkGEvtjFojt/761aEwfTCfqHb7Ajl3FXWPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qr6qeEN7PYPT05uHHgqrPxuD/JKkvpkvGr9EZWfNDKi+sUlXapYOr4cjbCPwV9zVu
-	 NBPzoavRWcuE55oQhOaf/BHKJRP16fX9tm5jRvaXkRY4YyS3elI5s2L+KDeHzRGxi0
-	 yysGFHIxxPKGLiV2R1yqGvTK7OeSzdTTx8wdkN5o=
+	b=P5dTn4NBkDLUUKkoyDITWNph6nTCLHHkNth2BQQ6EZqh7h1QzTscOr1P8njNKzZvy
+	 W0XFis5vuB2H6yvGHZe7XUWfS+SpDP8EC/naivqu01qsPK1/THqLXkTtWRRGTCqFSk
+	 8nGRjZeeCfO+9ETH0C5JPagNSOVgkMMwEh9PwylA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Nai-Chen Cheng <bleach1827@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 517/565] gpio: swnode: dont use the swnodes name as the key for GPIO lookup
-Date: Tue, 11 Nov 2025 09:46:13 +0900
-Message-ID: <20251111004538.590656595@linuxfoundation.org>
+Subject: [PATCH 6.17 570/849] selftests/Makefile: include $(INSTALL_DEP_TARGETS) in clean target to clean net/lib dependency
+Date: Tue, 11 Nov 2025 09:42:20 +0900
+Message-ID: <20251111004550.192849215@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Nai-Chen Cheng <bleach1827@gmail.com>
 
-[ Upstream commit e5d527be7e6984882306b49c067f1fec18920735 ]
+[ Upstream commit d3f7457da7b9527a06dbcbfaf666aa51ac2eeb53 ]
 
-Looking up a GPIO controller by label that is the name of the software
-node is wonky at best - the GPIO controller driver is free to set
-a different label than the name of its firmware node. We're already being
-passed a firmware node handle attached to the GPIO device to
-swnode_get_gpio_device() so use it instead for a more precise lookup.
+The selftests 'make clean' does not clean the net/lib because it only
+processes $(TARGETS) and ignores $(INSTALL_DEP_TARGETS). This leaves
+compiled objects in net/lib after cleaning, requiring manual cleanup.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Fixes: e7f9ff5dc90c ("gpiolib: add support for software nodes")
-Link: https://lore.kernel.org/r/20251103-reset-gpios-swnodes-v4-4-6461800b6775@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Include $(INSTALL_DEP_TARGETS) in clean target to ensure net/lib
+dependency is properly cleaned.
+
+Signed-off-by: Nai-Chen Cheng <bleach1827@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20250910-selftests-makefile-clean-v1-1-29e7f496cd87@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-swnode.c | 2 +-
+ tools/testing/selftests/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-swnode.c b/drivers/gpio/gpiolib-swnode.c
-index 51d2475c05c57..bb652921585ea 100644
---- a/drivers/gpio/gpiolib-swnode.c
-+++ b/drivers/gpio/gpiolib-swnode.c
-@@ -41,7 +41,7 @@ static struct gpio_device *swnode_get_gpio_device(struct fwnode_handle *fwnode)
- 	    !strcmp(gdev_node->name, GPIOLIB_SWNODE_UNDEFINED_NAME))
- 		return ERR_PTR(-ENOENT);
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index 030da61dbff3a..a2d8e1093b005 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -314,7 +314,7 @@ gen_tar: install
+ 	@echo "Created ${TAR_PATH}"
  
--	gdev = gpio_device_find_by_label(gdev_node->name);
-+	gdev = gpio_device_find_by_fwnode(fwnode);
- 	return gdev ?: ERR_PTR(-EPROBE_DEFER);
- }
- 
+ clean:
+-	@for TARGET in $(TARGETS); do \
++	@for TARGET in $(TARGETS) $(INSTALL_DEP_TARGETS); do \
+ 		BUILD_TARGET=$$BUILD/$$TARGET;	\
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean;\
+ 	done;
 -- 
 2.51.0
 
