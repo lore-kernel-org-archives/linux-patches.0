@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FF93446B3;
-	Tue, 11 Nov 2025 01:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1249D2D97A4;
+	Tue, 11 Nov 2025 01:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823602; cv=none; b=GT/j4jofJAfxlkvQOk8nQ4Q/aRjPlZqPqLK9CDH1DmpeROLuIdUt1P9H/c3h2oASYe/csSTR8CzCgTkP9lI+3X+8FYAFe4W/BhS9HVbLjfscpSG4X5qBOI8GSY3vGXkG+WRonYOHSx2pDNBnzLOrK0P90UCD6vRSLCSLm02HtjQ=
+	t=1762823604; cv=none; b=ng9gf1nKzeOMDlEO+76kRx2YKZIdtktn33yv0yWnUgPB5oto9s8QIN0KwcnozGMEm9/04d3gPRWrsEfeHt5Fn5vXmjJ0oAudQThieoXdkfsfmEExvrYTenslH4h5zkVY4qX217rC728uFrTEWNagrJgtHEC+l2PENbO6H9vRO2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823602; c=relaxed/simple;
-	bh=B79jNhXSjvQc2nPx9HkEtnmNwPwsXkfRXWnGK8hxOH8=;
+	s=arc-20240116; t=1762823604; c=relaxed/simple;
+	bh=/102WdBlA5sSpX/1QhcYBKHN6ONksyGKA7N4FetiH+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pLsLqwL8GUBOOYzs4IMrJQ5bKzprlzINrJLLZgOPE0DjMGMkxWJDwz6/oi3a4uIOaTRKZR1kS2qD3YlACgrnu7MqLgQ0Drpc+DsYQSlzV+LW7YzoAa7qFCwJWcZSHoOk2uC+s4ZE07LBXDZE8UqCLN5onxOgaQ6fclZp9PiN40c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nt8WoEwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DhxS7WPLO3QUHLkMHZdsmQjzeBzeHH9wbk1R9LLeCwiI59xszRwXvCJ1qWQszbOddOdI6KUh89PVZwMfTuIwH59VcTTlGGE9hKBZm/aD6KY0KTx8UHllJgcM3VSWgbPYcDdt276eLW/3aA05W0QFwSTL59m0MZB0h5/lLpC8fB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xawcXPWU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nt8WoEwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FEBBC4CEFB;
-	Tue, 11 Nov 2025 01:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xawcXPWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E4AC4CEFB;
+	Tue, 11 Nov 2025 01:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823601;
-	bh=B79jNhXSjvQc2nPx9HkEtnmNwPwsXkfRXWnGK8hxOH8=;
+	s=korg; t=1762823603;
+	bh=/102WdBlA5sSpX/1QhcYBKHN6ONksyGKA7N4FetiH+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nt8WoEwR8a8Ke6hPK+2u9oL4MuUZCRlQcIKnm8BaG8GqVhQk/Cj/x3+rrMKTwB0Nq
-	 u54QYmuIUu6aXH14EXPMs+wZYWiMKmP1KolbFAw3jWC6N8dTfpjl+n0N5+5lBQj2tP
-	 kqUHYCrOT/QPi/yRpJx41kDdr2iGHHYAbKtzYgWs=
+	b=xawcXPWUBALVQGsvkuasLvTC6pIjshfMa34g3pYoseNMP8YhA60WMdHf/2ML2a3w3
+	 xGg2T2weztMktYZ08dPVf4ojE27SYqqrYOJ7P1JZfYiUarueBVVw+G+RoCdezgjx0m
+	 OxZ56Qem3qPnFDJN0+AHRtUVo27HyNsLYMEKY1CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 284/565] drm/msm/dsi/phy: Toggle back buffer resync after preparing PLL
-Date: Tue, 11 Nov 2025 09:42:20 +0900
-Message-ID: <20251111004533.267748481@linuxfoundation.org>
+Subject: [PATCH 6.17 334/849] net: stmmac: Correctly handle Rx checksum offload errors
+Date: Tue, 11 Nov 2025 09:38:24 +0900
+Message-ID: <20251111004544.491264962@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit b63f008f395ca5f6bc89123db97440bdc19981c4 ]
+[ Upstream commit ee0aace5f844ef59335148875d05bec8764e71e8 ]
 
-According to Hardware Programming Guide for DSI PHY, the retime buffer
-resync should be done after PLL clock users (byte_clk and intf_byte_clk)
-are enabled.  Downstream also does it as part of configuring the PLL.
+The stmmac_rx function would previously set skb->ip_summed to
+CHECKSUM_UNNECESSARY if hardware checksum offload (CoE) was enabled
+and the packet was of a known IP ethertype.
 
-Driver was only turning off the resync FIFO buffer, but never bringing it
-on again.
+However, this logic failed to check if the hardware had actually
+reported a checksum error. The hardware status, indicating a header or
+payload checksum failure, was being ignored at this stage. This could
+cause corrupt packets to be passed up the network stack as valid.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657823/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+This patch corrects the logic by checking the `csum_none` status flag,
+which is set when the hardware reports a checksum error. If this flag
+is set, skb->ip_summed is now correctly set to CHECKSUM_NONE,
+ensuring the kernel's network stack will perform its own validation and
+properly handle the corrupt packet.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250818090217.2789521-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index a2c87c84aa05b..ec5aa8cb37d9a 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -465,6 +465,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
- 	if (pll_7nm->slave)
- 		dsi_pll_enable_global_clk(pll_7nm->slave);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index b9f55e4e360fb..7a375de2258c4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5735,7 +5735,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
  
-+	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+	if (pll_7nm->slave)
-+		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+
- error:
- 	return rc;
- }
+ 		skb->protocol = eth_type_trans(skb, priv->dev);
+ 
+-		if (unlikely(!coe) || !stmmac_has_ip_ethertype(skb))
++		if (unlikely(!coe) || !stmmac_has_ip_ethertype(skb) ||
++		    (status & csum_none))
+ 			skb_checksum_none_assert(skb);
+ 		else
+ 			skb->ip_summed = CHECKSUM_UNNECESSARY;
 -- 
 2.51.0
 
