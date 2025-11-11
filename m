@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44603255F28;
-	Tue, 11 Nov 2025 01:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2189D2BE7B8;
+	Tue, 11 Nov 2025 01:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824900; cv=none; b=KU4OuQkbKJxeXtRvt2IW1SQnBdlhQ5QYdfPn5Lz+bb4rx4fndwdpjCQvf3ZnMidLyk/Vst/KB7mIKp7GlrzXAbkUwsvh51BCBnCHPyUirTxNNNqBlQbM3HeWPYKHL+n2lGVqox3ZMAKMuFPjkmYHwMZftVQZw0K+H+PYMP8oJ68=
+	t=1762824902; cv=none; b=omC/XzYxmC2WYdb3K1esZFOzY6dNWECm1HA8iYn56r2h2qwm15g4izeC+q6ap0DJT41Ul0lR0Zy6bHMa7kzr6LZ4aFTvQ1msOVaIO8OLVa4QD+dy9VTalVNf5IYzP0katZERgESV/xNsQiFgC9aJeyXCSUPfUpWx+lBqO42eYJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824900; c=relaxed/simple;
-	bh=/l9k3s4R5xTvRJKTyyz9DKkxImFguyCcSKeAk8giSFI=;
+	s=arc-20240116; t=1762824902; c=relaxed/simple;
+	bh=A3Wbc1lHIKVxJfLyM4YDp7ATYOVOY7MiN7ayuNJEZiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUAUmLAfnsfthD6u7IUbbBAvl4uxfk56X3if+xUpydU7a+OdcbFjX+WM9P0G3gieRfy6qyPY7UC1tIVoto8MPaIhMhg5ZNmvY2kFFPEH5WeoRTmQjxIkZ0MMpJ+2p12VkyJl6xo8eE8wao2Jjnnx8Wis+Ubceb+D4Q6wYNJtMx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qewgp2rY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2rOrAYMao7SFtU0+/zw/yBf9mHiprnWBDNFYJilmeLsk7LeYLD05btyGn9Gay7G10YgXoZjW5hZgMm/6y49aJFKxKbXvpLCXD4tEhF8PNqhzIfNtmVukaS1XCuUkGnNQq7orfXp7CsyxM81Me/JKQLW4yf/X8QzmexSvVhaUYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN99hwV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qewgp2rY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A4CC19421;
-	Tue, 11 Nov 2025 01:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN99hwV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B520BC16AAE;
+	Tue, 11 Nov 2025 01:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824899;
-	bh=/l9k3s4R5xTvRJKTyyz9DKkxImFguyCcSKeAk8giSFI=;
+	s=korg; t=1762824902;
+	bh=A3Wbc1lHIKVxJfLyM4YDp7ATYOVOY7MiN7ayuNJEZiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qewgp2rYJNkVp8uDKTVb0DxZMrNrn8hNpghcZfj9BKlEfoOx0t3f/7WrOncqB43Uz
-	 FQqTO1OxJNlPuCfb1UdrlCAhe135/E/YWDGP2sk2Ks3lDIOuxol/3c095AcxXyaqjf
-	 xkbJTrQbtJePNVSeJKrZY44fhqM8fpNnjfi4GnHc=
+	b=EN99hwV2woBfYDiO7T8tprFrx1JPjd9o7gTPSZmOacrR0UvHvQUZ6uSwylUDyWa5O
+	 gyQWSqXYxVQbRYl4M/Pd8aZJGnBJln2AiJqIjsi91OnuV48RLtf8/wEJLCOP9Re4Hm
+	 3xpjS8zHQbkbsQfhbzFYiUDeYNGUQQ7d3PV3QPPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 594/849] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
-Date: Tue, 11 Nov 2025 09:42:44 +0900
-Message-ID: <20251111004550.783198977@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 547/565] parisc: Avoid crash due to unaligned access in unwinder
+Date: Tue, 11 Nov 2025 09:46:43 +0900
+Message-ID: <20251111004539.300134028@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +46,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 9565c9d53c5b440f0dde6fa731a99c1b14d879d2 ]
+commit fd9f30d1038ee1624baa17a6ff11effe5f7617cb upstream.
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+Guenter Roeck reported this kernel crash on his emulated B160L machine:
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250911154340.2798304-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Starting network: udhcpc: started, v1.36.1
+ Backtrace:
+  [<104320d4>] unwind_once+0x1c/0x5c
+  [<10434a00>] walk_stackframe.isra.0+0x74/0xb8
+  [<10434a6c>] arch_stack_walk+0x28/0x38
+  [<104e5efc>] stack_trace_save+0x48/0x5c
+  [<105d1bdc>] set_track_prepare+0x44/0x6c
+  [<105d9c80>] ___slab_alloc+0xfc4/0x1024
+  [<105d9d38>] __slab_alloc.isra.0+0x58/0x90
+  [<105dc80c>] kmem_cache_alloc_noprof+0x2ac/0x4a0
+  [<105b8e54>] __anon_vma_prepare+0x60/0x280
+  [<105a823c>] __vmf_anon_prepare+0x68/0x94
+  [<105a8b34>] do_wp_page+0x8cc/0xf10
+  [<105aad88>] handle_mm_fault+0x6c0/0xf08
+  [<10425568>] do_page_fault+0x110/0x440
+  [<10427938>] handle_interruption+0x184/0x748
+  [<11178398>] schedule+0x4c/0x190
+  BUG: spinlock recursion on CPU#0, ifconfig/2420
+  lock: terminate_lock.2+0x0/0x1c, .magic: dead4ead, .owner: ifconfig/2420, .owner_cpu: 0
+
+While creating the stack trace, the unwinder uses the stack pointer to guess
+the previous frame to read the previous stack pointer from memory.  The crash
+happens, because the unwinder tries to read from unaligned memory and as such
+triggers the unalignment trap handler which then leads to the spinlock
+recursion and finally to a deadlock.
+
+Fix it by checking the alignment before accessing the memory.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/sc8280xp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/parisc/kernel/unwind.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-index 6847ae4acbd18..78e327bc2f077 100644
---- a/sound/soc/qcom/sc8280xp.c
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include <sound/jack.h>
- #include <linux/input-event-codes.h>
-@@ -86,8 +87,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
+diff --git a/arch/parisc/kernel/unwind.c b/arch/parisc/kernel/unwind.c
+index f7e0fee5ee55..7ac88ff13d3c 100644
+--- a/arch/parisc/kernel/unwind.c
++++ b/arch/parisc/kernel/unwind.c
+@@ -35,6 +35,8 @@
  
- 	rate->min = rate->max = 48000;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
- 	channels->min = 2;
- 	channels->max = 2;
- 	switch (cpu_dai->id) {
+ #define KERNEL_START (KERNEL_BINARY_TEXT_START)
+ 
++#define ALIGNMENT_OK(ptr, type) (((ptr) & (sizeof(type) - 1)) == 0)
++
+ extern struct unwind_table_entry __start___unwind[];
+ extern struct unwind_table_entry __stop___unwind[];
+ 
+@@ -257,12 +259,15 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
+ 	if (pc_is_kernel_fn(pc, _switch_to) ||
+ 	    pc == (unsigned long)&_switch_to_ret) {
+ 		info->prev_sp = info->sp - CALLEE_SAVE_FRAME_SIZE;
+-		info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
++		if (ALIGNMENT_OK(info->prev_sp, long))
++			info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
++		else
++			info->prev_ip = info->prev_sp = 0;
+ 		return 1;
+ 	}
+ 
+ #ifdef CONFIG_IRQSTACKS
+-	if (pc == (unsigned long)&_call_on_stack) {
++	if (pc == (unsigned long)&_call_on_stack && ALIGNMENT_OK(info->sp, long)) {
+ 		info->prev_sp = *(unsigned long *)(info->sp - FRAME_SIZE - REG_SZ);
+ 		info->prev_ip = *(unsigned long *)(info->sp - FRAME_SIZE - RP_OFFSET);
+ 		return 1;
+@@ -370,8 +375,10 @@ static void unwind_frame_regs(struct unwind_frame_info *info)
+ 			info->prev_sp = info->sp - frame_size;
+ 			if (e->Millicode)
+ 				info->rp = info->r31;
+-			else if (rpoffset)
++			else if (rpoffset && ALIGNMENT_OK(info->prev_sp, long))
+ 				info->rp = *(unsigned long *)(info->prev_sp - rpoffset);
++			else
++				info->rp = 0;
+ 			info->prev_ip = info->rp;
+ 			info->rp = 0;
+ 		}
 -- 
-2.51.0
+2.51.2
 
 
 
