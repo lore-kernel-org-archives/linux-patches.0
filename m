@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ACB3431F8;
-	Tue, 11 Nov 2025 01:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A983431EC;
+	Tue, 11 Nov 2025 01:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824083; cv=none; b=Opexd3ftd+hfkK+ogdaIK4/chngw+KcLtuboTY4Q0umFPxT3i0QZz5haacZ4vaT7+4MUWs47OaqFjNi8oHsmUF+D06jutGnrNiYRGRr0pqoKXb9M/Wh7NMkGs4H1yyt9nM24I5EVQzTG/vz/BQ5ySTjlvRXtfbVVqlLuhWT/58Q=
+	t=1762824085; cv=none; b=JRsDVQl9mvU114tBnSgv/rj4MEdeMfR7buGK1+e3U5G9V+dZH4gkF1MaTjY2IEC42bH/mtjgh6RuiySI6Gbp81waTxkam0ZlBX18jvASilFrAbSIOawqSt4iVjGHqS46LVKqX5ouPnToxtwey1zdSO7/lQxj9HKdFO6KRXfRvuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824083; c=relaxed/simple;
-	bh=LrDuVaTVzfvYbiFdhdi/t0PA8dOyoIw0PBibWXRSxSk=;
+	s=arc-20240116; t=1762824085; c=relaxed/simple;
+	bh=osZhLOcvFpzxvJfnYe2YnGiYCLjpmfaOorH0mU+tCys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fNtqh9IP6YqNIVtP0l78j7NYED2Jy2Sg3rDs8efrsWOmUboJVP7QpmhJ6AhrKupl9G0peWsT6udT1pXTEfFuKf1W2Ck63lc2YLacqAgaKQZzfhLOBhqudO38/d/O1x+5NSvzd3vADhgLRVPeZiZbGKHXAvw4JUnpAzZGv24F22M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qA9jQBdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tv7USQeEW/ggAA8TvHA6oaHBwb5h5Q8gHrui8Ns6vVvrc6E4EUxoG2Zlwlf3FUOfq/hvjjhGAqhRBPe03hgH3h6cJen8AAnNJKF57wU71Ed7Z4q7JRbezGviD2xHeoebeXwrWN1RXqtreYnmrly9KYyXIQ4zytp6oPBDsLPGIpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJXMpXU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qA9jQBdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56DBC4CEF5;
-	Tue, 11 Nov 2025 01:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJXMpXU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE81C16AAE;
+	Tue, 11 Nov 2025 01:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824083;
-	bh=LrDuVaTVzfvYbiFdhdi/t0PA8dOyoIw0PBibWXRSxSk=;
+	s=korg; t=1762824085;
+	bh=osZhLOcvFpzxvJfnYe2YnGiYCLjpmfaOorH0mU+tCys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qA9jQBdLLvSJ/sXpC6ZWl41BWJHMTnzVUZ3c8IwB5k1+IvfuedihdyvSXq9au2lsW
-	 gCXrvML8jJMpzLHdWYSlIjhCm7gSz8Nt2jTyQbFjXjeuM7wae3e+m4i7vQp0s9f0U8
-	 12FzIOJuxy73LEI1acC9/HLrdr6u7N38+lcc+xrw=
+	b=YJXMpXU7D92XhFw0o9rp/enLtiz6LBPY07EcQVgZreIse4oElRHqOXBPrgUa8B8Ty
+	 Rv4Co+bO1PVUYOMOmeVMwAc5M4zfZ7syWwxG7oXYDmJ9tC7FTgLDU5y81tyqElUnpl
+	 EtZ1otXen4B0wp9oqoJG51QAA05LOBZbpjwvtCNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 433/849] media: adv7180: Add missing lock in suspend callback
-Date: Tue, 11 Nov 2025 09:40:03 +0900
-Message-ID: <20251111004546.900053819@linuxfoundation.org>
+Subject: [PATCH 6.12 384/565] wifi: rtw89: obtain RX path from ppdu status IE00
+Date: Tue, 11 Nov 2025 09:44:00 +0900
+Message-ID: <20251111004535.509511766@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 878c496ac5080f94a93a9216a8f70cfd67ace8c9 ]
+[ Upstream commit e156d2ab36d7e47aec36845705e4ecb1e4e89976 ]
 
-The adv7180_set_power() utilizes adv7180_write() which in turn requires
-the state mutex to be held, take it before calling adv7180_set_power()
-to avoid tripping a lockdep_assert_held().
+The header v2 of ppdu status is optional, If it is not enabled, the RX
+path must be obtained from IE00 or IE01. Append the IE00 part.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250915065213.38659-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
+ drivers/net/wireless/realtek/rtw89/txrx.h | 1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 5d90b8ab9b6df..84600fa75ae8a 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -813,6 +813,8 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 1147abf771547..3584445b27387 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -1710,6 +1710,10 @@ static void rtw89_core_parse_phy_status_ie00(struct rtw89_dev *rtwdev,
  
- 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
- 		if (state->field != format->format.field) {
-+			guard(mutex)(&state->mutex);
+ 	tmp_rpl = le32_get_bits(ie->w0, RTW89_PHY_STS_IE00_W0_RPL);
+ 	phy_ppdu->rpl_avg = tmp_rpl >> 1;
 +
- 			state->field = format->format.field;
- 			adv7180_set_power(state, false);
- 			adv7180_set_field_mode(state);
-@@ -1549,6 +1551,8 @@ static int adv7180_suspend(struct device *dev)
- 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
- 	struct adv7180_state *state = to_state(sd);
- 
-+	guard(mutex)(&state->mutex);
-+
- 	return adv7180_set_power(state, false);
++	if (!phy_ppdu->hdr_2_en)
++		phy_ppdu->rx_path_en =
++			le32_get_bits(ie->w3, RTW89_PHY_STS_IE00_W3_RX_PATH_EN);
  }
  
-@@ -1562,6 +1566,8 @@ static int adv7180_resume(struct device *dev)
- 	if (ret < 0)
- 		return ret;
+ static void rtw89_core_parse_phy_status_ie00_v2(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/realtek/rtw89/txrx.h b/drivers/net/wireless/realtek/rtw89/txrx.h
+index b2e47829983fe..3a3b6154db458 100644
+--- a/drivers/net/wireless/realtek/rtw89/txrx.h
++++ b/drivers/net/wireless/realtek/rtw89/txrx.h
+@@ -568,6 +568,7 @@ struct rtw89_phy_sts_ie00 {
+ } __packed;
  
-+	guard(mutex)(&state->mutex);
-+
- 	ret = adv7180_set_power(state, state->powered);
- 	if (ret)
- 		return ret;
+ #define RTW89_PHY_STS_IE00_W0_RPL GENMASK(15, 7)
++#define RTW89_PHY_STS_IE00_W3_RX_PATH_EN GENMASK(31, 28)
+ 
+ struct rtw89_phy_sts_ie00_v2 {
+ 	__le32 w0;
 -- 
 2.51.0
 
