@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A511265CC5;
-	Tue, 11 Nov 2025 01:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434B82F2612;
+	Tue, 11 Nov 2025 01:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823257; cv=none; b=DxrpmqAvQhUE7oqSD/0QLt14InOqvqxxd38L44Onxxf6kIhY7lP/Tq4mBpAMy5W+s3IKJd6j3zIefld+m2ASXK7mp0V8Cikp3h+VakTZpZyujDpdfho2TijVyIVcA4/lQWaWJJbpcunyoDddfiRG3dFCPmDlkWJ9pL4TaDYcRhk=
+	t=1762823259; cv=none; b=cMIKiDydvoh1Epsbs7uB6OuOeON9AVTgqwYYx6HGq6Z3jconcX4PmMyBzbzD9z5PCxDmt98jBoC01gaiejdwXqm51bgEGk3o/pq6KHoRCXTtrIl8+g4cKvrP7kQOSAyjZlwXQk3Cy9e8h3CrvXzAOI3anPk1fPZe6zMHbUmLniA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823257; c=relaxed/simple;
-	bh=cWA8GNsEIoTzoKAvfA7Z6BaPxH9SIkBdYBkjBe9jFaE=;
+	s=arc-20240116; t=1762823259; c=relaxed/simple;
+	bh=DZ3X/0edUqF9chtZzuT6YGAtcRBVbChzBbz8Y3VlK1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZRFWbsMvyZrnOPC//jVsWuB4hVf9hQkPhC05QpQKn2CyroCfKhJ7OW216Pa5JvqiXPyXq+jJ43wmWGe2W8GGl+rIu1K2J+94JzXLRJm09FIlPfyyQVCg485eOGffpfZpPl3wxWbaitE+VoBIa1OIguNcW7mKLmFEFif06Av3u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcZDVm8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0L/j0B6i7Ktwi6xtseW6kih1g+MIM6/yiqR7yZ3hRlsARilw1dcPG2LSIIPUUAA4KRhgF7nWI6P2xlumhTpslumivuWgMVznxxKAa7ZIloOeaIPj/d/ncfXPLeOFDKCTwLE+T79Mfne3KT33RU2xOVhrvg0lLNvlxhYcEUrmRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGu7QUuU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcZDVm8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97908C19421;
-	Tue, 11 Nov 2025 01:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGu7QUuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41EBC4CEF5;
+	Tue, 11 Nov 2025 01:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823256;
-	bh=cWA8GNsEIoTzoKAvfA7Z6BaPxH9SIkBdYBkjBe9jFaE=;
+	s=korg; t=1762823259;
+	bh=DZ3X/0edUqF9chtZzuT6YGAtcRBVbChzBbz8Y3VlK1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mcZDVm8q7dVcWXU7spK059NYM59j9uMrrfp9dHSzIh/xNNj26kzaoa3WE5ViOzNfw
-	 Q3psnCFBq578FxGUXj1SzbTyhivqv6zZrEOMKM/NmCM7fAsbu/UNLqNpNlax23l3g1
-	 oxg9E+i5gZsLFkJ465m3RNuwVEGTrNqkIkZBg/7E=
+	b=WGu7QUuUTTeFpbZpEO8Q5h7cgsUX74y4I+fVrWr5mlExS3liMBdI7/dNrMTzo0heB
+	 lZOH4Puz0+KZ0KpigrbCIY7cT3D2GtvU+ujHeDXmZxI1EljomPHXxTBNS+kv4VHgui
+	 +3io+icyksoIG8YOF9P/La/prdYfkY1r5x9Cy/rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 263/849] ASoC: tas2781: Add keyword "init" in profile section
-Date: Tue, 11 Nov 2025 09:37:13 +0900
-Message-ID: <20251111004542.790485687@linuxfoundation.org>
+Subject: [PATCH 6.12 207/565] net: stmmac: Check stmmac_hw_setup() in stmmac_resume()
+Date: Tue, 11 Nov 2025 09:41:03 +0900
+Message-ID: <20251111004531.581978312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit e83dcd139e776ebb86d5e88e13282580407278e4 ]
+[ Upstream commit 6896c2449a1858acb643014894d01b3a1223d4e5 ]
 
-Since version 0x105, the keyword 'init' was introduced into the profile,
-which is used for chip initialization, particularly to store common
-settings for other non-initialization profiles.
+stmmac_hw_setup() may return 0 on success and an appropriate negative
+integer as defined in errno.h file on failure, just check it and then
+return early if failed in stmmac_resume().
 
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-Link: https://patch.msgid.link/20250803131110.1443-1-shenghao-ding@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://patch.msgid.link/20250811073506.27513-2-yangtiezhu@loongson.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781-dsp.h       |  8 ++++++++
- sound/soc/codecs/tas2781-fmwlib.c | 12 ++++++++++++
- sound/soc/codecs/tas2781-i2c.c    |  6 ++++++
- 3 files changed, 26 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/tas2781-dsp.h b/include/sound/tas2781-dsp.h
-index c3a9efa73d5d0..a21f34c0266ea 100644
---- a/include/sound/tas2781-dsp.h
-+++ b/include/sound/tas2781-dsp.h
-@@ -198,6 +198,14 @@ struct tasdevice_rca {
- 	int ncfgs;
- 	struct tasdevice_config_info **cfg_info;
- 	int profile_cfg_id;
-+	/*
-+	 * Since version 0x105, the keyword 'init' was introduced into the
-+	 * profile, which is used for chip initialization, particularly to
-+	 * store common settings for other non-initialization profiles.
-+	 * if (init_profile_id < 0)
-+	 *         No init profile inside the RCA firmware.
-+	 */
-+	int init_profile_id;
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 40d56ff66b6a8..16f76a89cb0d0 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -8030,7 +8030,14 @@ int stmmac_resume(struct device *dev)
+ 	stmmac_free_tx_skbufs(priv);
+ 	stmmac_clear_descriptors(priv, &priv->dma_conf);
  
- void tasdevice_select_cfg_blk(void *context, int conf_no,
-diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
-index c9c1e608ddb75..8baf56237624a 100644
---- a/sound/soc/codecs/tas2781-fmwlib.c
-+++ b/sound/soc/codecs/tas2781-fmwlib.c
-@@ -180,6 +180,16 @@ static struct tasdevice_config_info *tasdevice_add_config(
- 			dev_err(tas_priv->dev, "add conf: Out of boundary\n");
- 			goto out;
- 		}
-+		/* If in the RCA bin file are several profiles with the
-+		 * keyword "init", init_profile_id only store the last
-+		 * init profile id.
-+		 */
-+		if (strnstr(&config_data[config_offset], "init", 64)) {
-+			tas_priv->rcabin.init_profile_id =
-+				tas_priv->rcabin.ncfgs - 1;
-+			dev_dbg(tas_priv->dev, "%s: init profile id = %d\n",
-+				__func__, tas_priv->rcabin.init_profile_id);
-+		}
- 		config_offset += 64;
- 	}
- 
-@@ -283,6 +293,8 @@ int tasdevice_rca_parser(void *context, const struct firmware *fmw)
- 	int i;
- 
- 	rca = &(tas_priv->rcabin);
-+	/* Initialize to none */
-+	rca->init_profile_id = -1;
- 	fw_hdr = &(rca->fw_hdr);
- 	if (!fmw || !fmw->data) {
- 		dev_err(tas_priv->dev, "Failed to read %s\n",
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index 0e09d794516fc..ea3cdb8553de1 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -1641,6 +1641,12 @@ static void tasdevice_fw_ready(const struct firmware *fmw,
- 	tasdevice_prmg_load(tas_priv, 0);
- 	tas_priv->cur_prog = 0;
- 
-+	/* Init common setting for different audio profiles */
-+	if (tas_priv->rcabin.init_profile_id >= 0)
-+		tasdevice_select_cfg_blk(tas_priv,
-+			tas_priv->rcabin.init_profile_id,
-+			TASDEVICE_BIN_BLK_PRE_POWER_UP);
+-	stmmac_hw_setup(ndev, false);
++	ret = stmmac_hw_setup(ndev, false);
++	if (ret < 0) {
++		netdev_err(priv->dev, "%s: Hw setup failed\n", __func__);
++		mutex_unlock(&priv->lock);
++		rtnl_unlock();
++		return ret;
++	}
 +
- #ifdef CONFIG_SND_SOC_TAS2781_ACOUST_I2C
- 	if (tas_priv->name_prefix)
- 		acoustic_debugfs_node = devm_kasprintf(tas_priv->dev,
+ 	stmmac_init_coalesce(priv);
+ 	stmmac_set_rx_mode(ndev);
+ 
 -- 
 2.51.0
 
