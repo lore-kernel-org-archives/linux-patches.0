@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C323224113D;
-	Tue, 11 Nov 2025 00:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317E423FC41;
+	Tue, 11 Nov 2025 00:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822764; cv=none; b=TVZQ1hoGtCui2rGJOvAle7ygK+mIanqv58YeftivjngHONzxwV1o3GsVCiN/oIUdT9yanc9ZcSTWD9+NjcQEk6xPGJJRw8hs6sr7sJXp6qc2QEE2EaO2xokBPRKgWe/kRtb+YgN4ubXT13bDlu3MjAqEDyXUeWjymQjWZDuY1P8=
+	t=1762822767; cv=none; b=QI1TlDuJ3xRHHBOWh1vhpumsM9lh55KPFYBTQjMLQ9SwA5ki9ODHAvte56koszmS92jFoHSDGg2d38iw/mNHZdg3/8tMIjax6QcWCbVjgG0DbAjEGtJlXt6+ut4Wq4+NbIwTVbgrQkRIG4JJ4k6Ww2HKKpGd9MdkosYKx1+lwr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822764; c=relaxed/simple;
-	bh=E91sg/zmdvunB3pWEPwItxq4qZU8HVDh5wkXChSmMI8=;
+	s=arc-20240116; t=1762822767; c=relaxed/simple;
+	bh=EN2SqQt/dN9tSjTgMfM1jjwEcw/ul7N8D45GQMEQfAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnUEyWPcyopgjtukds3ttNCqbBMMmX3QOiLPbjlv5WosbiEsh4DJPQlRbMgUvSpoBKSaNn7dd7KkOSLDWp4zkyx+hMjebt7JFOTmM/dVRHqtFVDM+VRx3bITO0zvUj9I8nCp42+EwHkfb7yJBPo3gxc/ZfQtgDrWWYrKzA4Eops=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdmjVFl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijBcmyJ2bAppGv8WEc3W+eykpqsOCnFUlP964rcIkUank7xgdsLmCPJZV3/oOF7TTWxdqoXFuAkQUOEekXpBOxhbZeIc1kvj2pz9e5/AAaRSqD7hFP/Kjhm6MFCLuofeer6cWXY0+kCZB5dgWGuDMQICel9y6Do7Uc0ckvLL9jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXIJBY2R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdmjVFl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E21C19421;
-	Tue, 11 Nov 2025 00:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXIJBY2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C042BC2BC86;
+	Tue, 11 Nov 2025 00:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822764;
-	bh=E91sg/zmdvunB3pWEPwItxq4qZU8HVDh5wkXChSmMI8=;
+	s=korg; t=1762822767;
+	bh=EN2SqQt/dN9tSjTgMfM1jjwEcw/ul7N8D45GQMEQfAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdmjVFl0Mm9LhgQ2R7dlwY5oay7PPENW68NIH7ojyqqB7IhTTFwWPBqtrNO1rP3Gy
-	 DD3aU+TwhF61bsjgyd0Ky34PrFH5ZVTg2fh5HxjDDlKGyr1vSZ13H71YI3Q0elCKrx
-	 /xyIaEH7/YKA6h1ezUAZMiWg/GX+GUFoiUhEuteQ=
+	b=vXIJBY2Rx2VC50n31avHTRbE+yI1lbo+syhFFhwVQsh7LkmQui/P1hC9BCH1nGRW+
+	 K86Uv5/LrUiF3Ucwn3Qv273IGC1w349kwuvh1lY7R7c3Eb6aHo47t1dy5l8XPIYQvL
+	 CVcccf3cRvKABe1p9KS+IZIlC5A1VOplEIuSqP5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 163/849] selftests/bpf: Fix incorrect array size calculation
-Date: Tue, 11 Nov 2025 09:35:33 +0900
-Message-ID: <20251111004540.371788912@linuxfoundation.org>
+Subject: [PATCH 6.17 127/849] mmc: host: renesas_sdhi: Fix the actual clock
+Date: Tue, 11 Nov 2025 09:34:57 +0900
+Message-ID: <20251111004539.465616273@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit f85981327a90c51e76f60e073cb6648b2f167226 ]
+[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
 
-The loop in bench_sockmap_prog_destroy() has two issues:
+Wrong actual clock reported, if the SD clock division ratio is other
+than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
 
-1. Using 'sizeof(ctx.fds)' as the loop bound results in the number of
-   bytes, not the number of file descriptors, causing the loop to iterate
-   far more times than intended.
+On high speed mode, cat /sys/kernel/debug/mmc1/ios
+Without the patch:
+clock:          50000000 Hz
+actual clock:   200000000 Hz
 
-2. The condition 'ctx.fds[0] > 0' incorrectly checks only the first fd for
-   all iterations, potentially leaving file descriptors unclosed. Change
-   it to 'ctx.fds[i] > 0' to check each fd properly.
+After the fix:
+clock:          50000000 Hz
+actual clock:   50000000 Hz
 
-These fixes ensure correct cleanup of all file descriptors when the
-benchmark exits.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250909124721.191555-1-jiayuan.chen@linux.dev
-
-Closes: https://lore.kernel.org/bpf/aLqfWuRR9R_KTe5e@stanley.mountain/
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/benchs/bench_sockmap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/benchs/bench_sockmap.c b/tools/testing/selftests/bpf/benchs/bench_sockmap.c
-index 8ebf563a67a2b..cfc072aa7fff7 100644
---- a/tools/testing/selftests/bpf/benchs/bench_sockmap.c
-+++ b/tools/testing/selftests/bpf/benchs/bench_sockmap.c
-@@ -10,6 +10,7 @@
- #include <argp.h>
- #include "bench.h"
- #include "bench_sockmap_prog.skel.h"
-+#include "bpf_util.h"
- 
- #define FILE_SIZE (128 * 1024)
- #define DATA_REPEAT_SIZE 10
-@@ -124,8 +125,8 @@ static void bench_sockmap_prog_destroy(void)
- {
- 	int i;
- 
--	for (i = 0; i < sizeof(ctx.fds); i++) {
--		if (ctx.fds[0] > 0)
-+	for (i = 0; i < ARRAY_SIZE(ctx.fds); i++) {
-+		if (ctx.fds[i] > 0)
- 			close(ctx.fds[i]);
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index fb8ca03f661d7..a41291a28e9bd 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -222,7 +222,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
+ 			clk &= ~0xff;
  	}
+ 
+-	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
++	clock = clk & CLK_CTL_DIV_MASK;
++	if (clock != 0xff)
++		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
++
++	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
+ 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
+ 		usleep_range(10000, 11000);
  
 -- 
 2.51.0
