@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880F72FC009;
-	Tue, 11 Nov 2025 01:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27A426D4DF;
+	Tue, 11 Nov 2025 01:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823811; cv=none; b=B7OfbmMZkn6ewY0RrzhUzlNtPJ/k8eyhXjDdbc9dWU6+ioKK6WerwUHEPImGT9QgudkJvVPZ9UgYJLbT3U+zSKddTPe9lOuWijLpnORBiNfKLZSA3CekvE2dqOIbxrETnjgL7zJrWQEkM61Y8H9y4wI3jQ10AzfvmVh0sDWz1RY=
+	t=1762823814; cv=none; b=l3OX8KJeWl2X9OZd2HQpnbmqk9dzLnJD2AMQjxqja5rvUbcXUW0tq1do4hQ3FZe3no8l4iWRhQQSd/sBfvaiUSElzEx4oalfJ2NukBknIInLtbZBpubFsILA//xw81dFDgGWiaVaTNLI3UcFeI4QYlNPlF+e00YatthDvJMrpyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823811; c=relaxed/simple;
-	bh=jeWmOEvjGpUV0TXvtwnAL4MFtzvtrd2mIAcAO+EG9q0=;
+	s=arc-20240116; t=1762823814; c=relaxed/simple;
+	bh=IHOv4QrwKicMPElzoOMMLcFOik2a2YFcPciqSX72IEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4SmrvaAdIPVzyo0R60vrIFm1TG08kIMITlbeD9m67/f531DuoEFPzQIP8ZeywmoTJDFa3dLUH0NGwnpfGZVzMTweOWZ9x2Rgr8C1c4kFEqQBqfj6ZIQYvqmPPEkEM0fJShkgwA8sxtUnqSg6cnJGK5tdddZBftqBzyW/xM6h7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8uYuwcZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hejEV/j43r6gSaoOQs9zuO3aHKlskkQS5/yo5w0rfEC4c6dIso2U7H4SlMTB6/k++n0mihkR9Wy81dnO8WOOxwzNABp1O8NFUgUyJA5ZmnLawunGNn7TBgU7GRl4yI/L4KcmSMCRERBVsQivGUj6LSu7z7HNfOUrPPvX3+mH/nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFaOA2z6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8uYuwcZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23977C2BCB5;
-	Tue, 11 Nov 2025 01:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFaOA2z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F99AC19421;
+	Tue, 11 Nov 2025 01:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823811;
-	bh=jeWmOEvjGpUV0TXvtwnAL4MFtzvtrd2mIAcAO+EG9q0=;
+	s=korg; t=1762823813;
+	bh=IHOv4QrwKicMPElzoOMMLcFOik2a2YFcPciqSX72IEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8uYuwcZkRid1TAbNgYEEFp+Az2w5Zwz7H17MPA69SKE60iC2VXuRWIMaW7r+UPWe
-	 OIX4ruQJNCdutVvudJ+IsGfetFpTBkD5BCybHUH6A4wRYpFnkmwFQAugQAnNoKZgoH
-	 UfKCYDbJLRPWs3+AjS6uL9vz8+E4Ut955n2MaQZg=
+	b=lFaOA2z63jtPFQ1iixziHPMadWfsxWmhJMpf/iPOSHD2EdUgRa2TZYZBtGt7RALMp
+	 qdanjcw//plakF0QsC9rgsUEi5M05kGPtx+vxty9yMDOQzzB7oZPVbe61u2z/Td3mI
+	 6/gQnQTVk1gExoTBCaqXOhz55Eu562E6AwejtNqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dillon Varone <Dillon.Varone@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Wenjing Liu <Wenjing.Liu@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/565] wifi: mac80211: Fix HE capabilities element check
-Date: Tue, 11 Nov 2025 09:43:05 +0900
-Message-ID: <20251111004534.288025374@linuxfoundation.org>
+Subject: [PATCH 6.17 377/849] drm/amd/display: Consider sink max slice width limitation for dsc
+Date: Tue, 11 Nov 2025 09:39:07 +0900
+Message-ID: <20251111004545.548043338@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +50,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Dillon Varone <Dillon.Varone@amd.com>
 
-[ Upstream commit ea928544f3215fdeac24d66bef85e10bb638b8c1 ]
+[ Upstream commit 6b34e7ed4ba583ee77032a4c850ff97ba16ad870 ]
 
-The element data length check did not account for the extra
-octet used for the extension ID. Fix it.
+[WHY&HOW]
+The sink max slice width limitation should be considered for DSC, but
+was removed in "refactor DSC cap calculations".
+This patch adds it back and takes the valid minimum between the sink and
+source.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250907115109.8da0012e2286.I8c0c69a0011f7153c13b365b14dfef48cfe7c3e3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Wenjing Liu <Wenjing.Liu@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index fd2bc70afa0cd..0cba454d6e685 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -5148,7 +5148,7 @@ static u8 ieee80211_max_rx_chains(struct ieee80211_link_data *link,
- 	he_cap_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY,
- 					     ies->data, ies->len);
+diff --git a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
+index 1f53a9f0c0ac3..e4144b2443324 100644
+--- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
++++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
+@@ -1157,6 +1157,11 @@ static bool setup_dsc_config(
+ 	if (!is_dsc_possible)
+ 		goto done;
  
--	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap))
-+	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap) + 1)
- 		return chains;
++	/* increase miniumum slice count to meet sink slice width limitations */
++	min_slices_h = dc_fixpt_ceil(dc_fixpt_max(
++			dc_fixpt_div_int(dc_fixpt_from_int(pic_width), dsc_common_caps.max_slice_width), // sink min
++			dc_fixpt_from_int(min_slices_h))); // source min
++
+ 	min_slices_h = fit_num_slices_up(dsc_common_caps.slice_caps, min_slices_h);
  
- 	/* skip one byte ext_tag_id */
+ 	/* increase minimum slice count to meet sink throughput limitations */
 -- 
 2.51.0
 
