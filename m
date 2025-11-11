@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B026E146;
-	Tue, 11 Nov 2025 01:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97D326E146;
+	Tue, 11 Nov 2025 01:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824448; cv=none; b=hbmr+qWj5u+moZSJzS6KkhPWe//Ae8y0feVLrSjNWup6WB+/Qt9qqOuaxxu1Xqj2hlqmcPJrmvv6CTkVCbr0qnhJVlcoq1ZFQFkVdxGAwukuHIQHYG1SfR3cxdjy8jcvddrQcKERBQWtryBC0aEkSN7GOw/Xqh81TL0kuBcSjGo=
+	t=1762824450; cv=none; b=pmQ6ovaj672R6Bl00Bgv2dzOm2PMkCO6BT7Dsna4Vkj84rUPil8MYz6ENbOjsXBHb/RsYprdgY+fDBlj69bo8JjFN4zRUJuCWLyvXhw/l3R+EBED4zJg70amdWicJ6GvHWnqoWroon3GX3diLJtBGsTuq9O9iNuINlJVt69ImY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824448; c=relaxed/simple;
-	bh=1JaIySDXTn5wr+Ll4OW9Glkus8qj88oqQg6/5Mi0ozY=;
+	s=arc-20240116; t=1762824450; c=relaxed/simple;
+	bh=4bNaVSR6Ph3EqGls69mPtMQIfTz9Zyyta11Daj0ZaH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSlMYNuEZ5DrOdjGQnoN82lVgRf6ojB9G1r0kOcsFgeKc7IXiFIpAAFN6dEZ0GoXeDZL5ojtu09snR+fJfLFW8rD+EMm+QghSij40jhUPLGoZHN/T7xXBWcf/32nuAlqRKs1nnLWUDTpvUjLGLs3kY8CbcZ8EMxJ2SwR+uDBQ30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi0R+DmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kwa8DjJRTLbcALw118yRfXF7lrB50bNFWtH8Lcs6C9fEcbHaY/p+tE+1IOVB+zW8fA6vLzsBW0daG/EFBtJ8fPIe9us96bpp22jpvoOxlBEMQLGsEXkk5bBk8C8wYu8H7TVjCG+otnzUmKG4iTe6+lv+oxJe8wXfBfmiLcLM2Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsPOlXHq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi0R+DmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6EC16AAE;
-	Tue, 11 Nov 2025 01:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsPOlXHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1EDC2BC86;
+	Tue, 11 Nov 2025 01:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824448;
-	bh=1JaIySDXTn5wr+Ll4OW9Glkus8qj88oqQg6/5Mi0ozY=;
+	s=korg; t=1762824450;
+	bh=4bNaVSR6Ph3EqGls69mPtMQIfTz9Zyyta11Daj0ZaH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pi0R+DmR95WFYVdZpG2VukpK30mP38okC5OAp3Gfk+zMb4GfHl3NaiI1YGX/SfRxc
-	 /5i+vbe4bKJvyPlFcyoZUGsqfvAnYSo76ah0k0CVEpD7BpSBIgX8u7FJbRlViFLWTM
-	 aIvGYwDjexyhvO/K64Aka1JNvT7649efMdatc6gM=
+	b=UsPOlXHqvSXEWwXeAZaF92b1Fgu4cTQ9flfagQhzMKskpbLK2EYeeffthkr94kKWu
+	 3m6axaqjgEru/BrH8LD+S895QJUK9JyUdCxCXqGX3en8OmeJeje/3xOWm7H2vZQsrv
+	 OUoX08raFJriLiEyVKB+233RJ50J5JqMHm/0ovpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 502/849] wifi: mac80211: Fix HE capabilities element check
-Date: Tue, 11 Nov 2025 09:41:12 +0900
-Message-ID: <20251111004548.569938646@linuxfoundation.org>
+Subject: [PATCH 6.12 448/565] ksmbd: use sock_create_kern interface to create kernel socket
+Date: Tue, 11 Nov 2025 09:45:04 +0900
+Message-ID: <20251111004536.967436847@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ea928544f3215fdeac24d66bef85e10bb638b8c1 ]
+[ Upstream commit 3677ca67b9791481af16d86e47c3c7d1f2442f95 ]
 
-The element data length check did not account for the extra
-octet used for the extension ID. Fix it.
+we should use sock_create_kern() if the socket resides in kernel space.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250907115109.8da0012e2286.I8c0c69a0011f7153c13b365b14dfef48cfe7c3e3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/transport_tcp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index c1b13b3411cdb..24a35fccca9de 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -5733,7 +5733,7 @@ static u8 ieee80211_max_rx_chains(struct ieee80211_link_data *link,
- 	he_cap_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY,
- 					     ies->data, ies->len);
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index b51ccc16abe11..169e3013e48b5 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -475,12 +475,13 @@ static int create_socket(struct interface *iface)
+ 	struct socket *ksmbd_socket;
+ 	bool ipv4 = false;
  
--	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap))
-+	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap) + 1)
- 		return chains;
- 
- 	/* skip one byte ext_tag_id */
+-	ret = sock_create(PF_INET6, SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
++	ret = sock_create_kern(current->nsproxy->net_ns, PF_INET6, SOCK_STREAM,
++			IPPROTO_TCP, &ksmbd_socket);
+ 	if (ret) {
+ 		if (ret != -EAFNOSUPPORT)
+ 			pr_err("Can't create socket for ipv6, fallback to ipv4: %d\n", ret);
+-		ret = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP,
+-				  &ksmbd_socket);
++		ret = sock_create_kern(current->nsproxy->net_ns, PF_INET,
++				SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
+ 		if (ret) {
+ 			pr_err("Can't create socket for ipv4: %d\n", ret);
+ 			goto out_clear;
 -- 
 2.51.0
 
