@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46003431FA;
-	Tue, 11 Nov 2025 01:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139063431F8;
+	Tue, 11 Nov 2025 01:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824078; cv=none; b=cPYKWIhrSzsGrJ4WiGtSZfYxt/M+Viq0KzEqK7lk1DyC/wZ5fWbQqod7lMS8cEY2jUrqvCnZcyFxDQ5Yji5UulXO5xcAPvZ23FVTJRhfOH+6u5uEDyyFPgJG5bFGOHWcGJA8s+kr4w5aiMGGIStSPljdYtaCIxbmGYiw9du6CpI=
+	t=1762824081; cv=none; b=HLAD1jVneiUue9RACbY2JJZQ/4zC+1SkKEg4RW/yE2PBdFvoMz8ILyz/nhN1dNbMo32uvIYZjx1FHf4jFpF4JcqIcs6yXt+4EorAy8WLFg5nt5DrXfzzb8T1FUK7KYjMtRdsld9ZYoPxKDj7I2+XKgQZxs7/cATb1m3lHz9QvxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824078; c=relaxed/simple;
-	bh=NSKdRJmnsGjkFTNMMf0H4UjltGvwBeY15SoMg3hFnGA=;
+	s=arc-20240116; t=1762824081; c=relaxed/simple;
+	bh=hVqerY9oTrkOx2lUez2sovOBpKwwI/+dzTiD93GUDoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RWcP3AOKAT6NV8moiL6rjTYesrk6h8xolhJDgo9+X6JhsJQxHvzUVFLb4yzkw/Sp6uKL5dOTD+AVZ871TY4Bu0xznXR6WuPfyHehkPRDhIgR5+llmjar/uSwUHyp3MR4EbryywlqpGyAJPa435m6/uuQo7kEWMGYhfFPNTCQmh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joY/wbyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7J3RrF9ERq5ZroHto1iGNN3gSUDcERc4zGZE4qjHw4sR9QH/prfomtjoFRsjihBGhQP6xoUWg0WXtEKZLFdmK5pAW6QxWZ6qhKtBWsL0VEJBeeu51Stk1PH0QZmh0oNWYUGeZfN+rVgczcbzZgJlYthhUeN9ZZmjro9cxVwtQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNavRHQP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joY/wbyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4C4C4CEFB;
-	Tue, 11 Nov 2025 01:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNavRHQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A880AC116B1;
+	Tue, 11 Nov 2025 01:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824078;
-	bh=NSKdRJmnsGjkFTNMMf0H4UjltGvwBeY15SoMg3hFnGA=;
+	s=korg; t=1762824081;
+	bh=hVqerY9oTrkOx2lUez2sovOBpKwwI/+dzTiD93GUDoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=joY/wbyTIeSmGEmtUawy0oMJ2TPUdIuhMPNCWIuwXusHYAO7HvA1ZkOSWU5qatiRu
-	 Iiht8AM1FFsQL3/cYUDz8MbieAt/F6vU2Bac1CwuEVeo4DXzpxQSRsLtbblboH+0NV
-	 04P/X+H3XC6+FZ98v8mT0qq3Me/xFgCVZuKAlMBg=
+	b=vNavRHQP14yMz5rNm3/ujGq23wolj3f0hvwSsfqGsiP0z+3NeVQce1LX76aWTQYq+
+	 lucf+77ANSpLqV6HusLyfzf9fKeJ/3WGDqg9vqiACdN9t/oix5/gyF3yXXoHoZ6ORK
+	 4a+2cArXGW6pcvTQKxcycLYWP9G30Gsyzgc5ih9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mauri Carvalho <mcarvalho3@lenovo.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Mario Limonciello <Mario.Limonciello@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 432/849] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
-Date: Tue, 11 Nov 2025 09:40:02 +0900
-Message-ID: <20251111004546.877447933@linuxfoundation.org>
+Subject: [PATCH 6.12 361/565] drm/amd/display: Set up pixel encoding for YCBCR422
+Date: Tue, 11 Nov 2025 09:43:37 +0900
+Message-ID: <20251111004534.987216870@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +49,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juraj Šarinay <juraj@sarinay.com>
+From: Mario Limonciello <Mario.Limonciello@amd.com>
 
-[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
+[ Upstream commit 5e76bc677cb7c92b37d8bc66bb67a18922895be2 ]
 
-An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
-A delay of 700 ms is not sufficient for cryptographic operations on smart
-cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
-or 3072-bit RSA. To prevent brute-force attacks, passports and similar
-documents introduce even longer delays into access control protocols
-(BAC/PACE).
+[Why]
+fill_stream_properties_from_drm_display_mode() will not configure pixel
+encoding to YCBCR422 when the DRM color format supports YCBCR422 but not
+YCBCR420 or YCBCR4444.  Instead it will fallback to RGB.
 
-The timeout should be higher, but not too much. The expiration allows
-us to detect that a NFC target has disappeared.
+[How]
+Add support for YCBCR422 in pixel encoding mapping.
 
-Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Mauri Carvalho <mcarvalho3@lenovo.com>
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Mario Limonciello <Mario.Limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nfc/nci_core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
-index e180bdf2f82b0..664d5058e66e0 100644
---- a/include/net/nfc/nci_core.h
-+++ b/include/net/nfc/nci_core.h
-@@ -52,7 +52,7 @@ enum nci_state {
- #define NCI_RF_DISC_SELECT_TIMEOUT		5000
- #define NCI_RF_DEACTIVATE_TIMEOUT		30000
- #define NCI_CMD_TIMEOUT				5000
--#define NCI_DATA_TIMEOUT			700
-+#define NCI_DATA_TIMEOUT			3000
- 
- struct nci_dev;
- 
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index fd44d011ffd2d..37307caf92999 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6161,6 +6161,9 @@ static void fill_stream_properties_from_drm_display_mode(
+ 			&& aconnector
+ 			&& aconnector->force_yuv420_output)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR420;
++	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR422)
++			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
++		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+ 	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR444)
+ 			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR444;
 -- 
 2.51.0
 
