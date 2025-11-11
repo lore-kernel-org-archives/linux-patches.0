@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890094C97;
-	Tue, 11 Nov 2025 00:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5EB4086A;
+	Tue, 11 Nov 2025 00:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822500; cv=none; b=UIJM/ow9KWsX/WV1C9pOVN7TVkvhyW1K8Fwfg79rXmcEHb2iUdA41h5z83f50tGLCWcWKPFiz/OwF2F7ap7UL8IYcEi0R1YT28J5K+3IHm3pEtezHLK53P54wYO5kQn3CtjfNyT8M4t74Uli+ugXkspLUjvrYn7sN2uzYJfeoOM=
+	t=1762822503; cv=none; b=FJuwsQVXQajgLxfjR4BdGu0OPiIvjxc3qjbhC5LFMYhy6m1SoRviF4jPFyuLPiburfEFIR0ghRne4l40zFMjHpX5Vhfs6CPws72DuYKkcPI5BdUwkkVpsHsKfH0kOtHwhLiYZwwg4G4m74FXBexKTN691ayJptXZHsmPstZLYTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822500; c=relaxed/simple;
-	bh=0G9ASr8sa0o/o0erfp3+IsWW5IAcyYmtLiO54/swpYs=;
+	s=arc-20240116; t=1762822503; c=relaxed/simple;
+	bh=azq9VAxkyupea6r8E10LgCR7RvnjvpOiG9XKq5GMT10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGhhUiKnpnh7fRvOgZmm7u9753mzXmDlSY9W3f2JyecO7cntVEHhJlUSCrxMbg/aLqEqDrBv29xVzsorzlrYYJuxdVU5RkXWRElW7MfeA1SOOBYXEr8Xd+y3SDVPFPWJrIEJpirdDZolduog3wdk26SsT6ssC+RYObjVAGI6Llo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+GTLK5D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UlHjob7M/q3/O6qXHwOeLKfpa+SQjScglKh9KiVNwhduwRTzEsU/kalKgzQCYLm0IY9lfvj8dMg7KBWQQaDKSdnatOj9oi3tXIEBa+v73E5ja8VGzEd9vVIOf7CpLyE5aUZ5Iu18K83O4n1BwQIisT8vYaowQ7VVZGTwb7PUMy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6EMp8FZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+GTLK5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25611C116B1;
-	Tue, 11 Nov 2025 00:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6EMp8FZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A15C4CEFB;
+	Tue, 11 Nov 2025 00:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822500;
-	bh=0G9ASr8sa0o/o0erfp3+IsWW5IAcyYmtLiO54/swpYs=;
+	s=korg; t=1762822502;
+	bh=azq9VAxkyupea6r8E10LgCR7RvnjvpOiG9XKq5GMT10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+GTLK5DOHtW4AlzShskzQwKoglTLxm44NLaoPPUW2j2FSuvREAAzpUPlq5BkDSBn
-	 VRRJK/ZPIhzIeH5UP9JKx2Uvzn1IoE6vvO/DxAdSjqk260fV/XxxThIOgVBfGBbCjN
-	 ALCAnXyjEmSfJ8bwJr9eFKnVyscTRl6f4nXO+u9g=
+	b=z6EMp8FZJFVJtGtSVm+t7KwDb4o8fjIztoEl2J/gWJhwnywYAD2BDovDJVCh5ky3R
+	 tlsHfzBd3EB+UDgG6boddaJ+e/Twz6s9QiOr+y1wvqv8/HQd3ci/9AvzIboleFSXjp
+	 YNBaEfNlB8lMUoUpxZr+iwDvsp1VfMhWPZV4gAZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xudong Hao <xudong.hao@intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 6.12 062/565] perf/x86/intel: Fix KASAN global-out-of-bounds warning
-Date: Tue, 11 Nov 2025 09:38:38 +0900
-Message-ID: <20251111004528.325919807@linuxfoundation.org>
+	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 025/565] ALSA: usb-audio: fix control pipe direction
+Date: Tue, 11 Nov 2025 09:38:01 +0900
+Message-ID: <20251111004527.442832552@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,57 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-commit 0ba6502ce167fc3d598c08c2cc3b4ed7ca5aa251 upstream.
+[ Upstream commit 7963891f7c9c6f759cc9ab7da71406b4234f3dd6 ]
 
-When running "perf mem record" command on CWF, the below KASAN
-global-out-of-bounds warning is seen.
+Since the requesttype has USB_DIR_OUT the pipe should be
+constructed with usb_sndctrlpipe().
 
-  ==================================================================
-  BUG: KASAN: global-out-of-bounds in cmt_latency_data+0x176/0x1b0
-  Read of size 4 at addr ffffffffb721d000 by task dtlb/9850
-
-  Call Trace:
-
-   kasan_report+0xb8/0xf0
-   cmt_latency_data+0x176/0x1b0
-   setup_arch_pebs_sample_data+0xf49/0x2560
-   intel_pmu_drain_arch_pebs+0x577/0xb00
-   handle_pmi_common+0x6c4/0xc80
-
-The issue is caused by below code in __grt_latency_data(). The code
-tries to access x86_hybrid_pmu structure which doesn't exist on
-non-hybrid platform like CWF.
-
-        WARN_ON_ONCE(hybrid_pmu(event->pmu)->pmu_type == hybrid_big)
-
-So add is_hybrid() check before calling this WARN_ON_ONCE to fix the
-global-out-of-bounds access issue.
-
-Fixes: 090262439f66 ("perf/x86/intel: Rename model-specific pebs_latency_data functions")
-Reported-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251028064214.1451968-1-dapeng1.mi@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8dc5efe3d17c ("ALSA: usb-audio: Add support for Presonus Studio 1810c")
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Link: https://patch.msgid.link/aPPL3tBFE_oU-JHv@ark
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/ds.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/mixer_s1810c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -305,7 +305,8 @@ static u64 __grt_latency_data(struct per
- {
- 	u64 val;
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index fac4bbc6b2757..65bdda0841048 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -181,7 +181,7 @@ snd_sc1810c_get_status_field(struct usb_device *dev,
  
--	WARN_ON_ONCE(hybrid_pmu(event->pmu)->pmu_type == hybrid_big);
-+	WARN_ON_ONCE(is_hybrid() &&
-+		     hybrid_pmu(event->pmu)->pmu_type == hybrid_big);
- 
- 	dse &= PERF_PEBS_DATA_SOURCE_GRT_MASK;
- 	val = hybrid_var(event->pmu, pebs_data_source)[dse];
+ 	pkt_out.fields[SC1810C_STATE_F1_IDX] = SC1810C_SET_STATE_F1;
+ 	pkt_out.fields[SC1810C_STATE_F2_IDX] = SC1810C_SET_STATE_F2;
+-	ret = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
++	ret = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0),
+ 			      SC1810C_SET_STATE_REQ,
+ 			      SC1810C_SET_STATE_REQTYPE,
+ 			      (*seqnum), 0, &pkt_out, sizeof(pkt_out));
+-- 
+2.51.0
+
 
 
