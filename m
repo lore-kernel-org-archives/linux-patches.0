@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38015189B84;
-	Tue, 11 Nov 2025 01:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519D3214210;
+	Tue, 11 Nov 2025 01:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824649; cv=none; b=jSbzgjBJxgq/xbUWQdOnyw1f/79fhWa4txRip2uGSeOkuf/IDWdUKhKB7vRScRIjL8M5xBn9TDPGUoirUmofNptIlYQ4t/ugAGMl0QISzKzyPGuTLjmZpO6FHWCz/qrYWFD2rVMcmKOm3WrI47mVn4f2pRie8Rk48wNlu8MXTPA=
+	t=1762824650; cv=none; b=tA4zZP37+ZKm98fOCErxsqtGyuvP+Ov+tMPoPAcq4+uN8XBbXHPA5gKU1CTQFn3m1APbiwug8gwN/4yWsw37vDaI6RUTMNUr6cl+s+fLw35tPX+lNl+sw3gI/wUWFByTBFZG+u3dAVOiF9QmltS3z1hPDN/HQ+PzFn9yHH+VSXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824649; c=relaxed/simple;
-	bh=oVdHYDGfhZfButhH0Z6a/0MtVXZgHWrb7BmurdeL6VE=;
+	s=arc-20240116; t=1762824650; c=relaxed/simple;
+	bh=1oEudp+LF4LFQhdNR4QKGXHcgipflWPlok5ytgza38U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIntFwTvRn/BoXjb3DuKXUhJnlPb4rZTVywOxEPpXkpYq4atOsCEEkqudlWucIJrH5hOTtpr4aCv8jQvnGaWxPH1u+aoKmEKZyml0Q+Qh36QsQ22KUdAfvuYPj5U/vbfr/Qachu6ZhYoKcN1PcFLFFjET1IgAl905xUwDMdo7yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnaQxzqr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i2YWRMQTjitYKh/OTbAkNOE2Wr6B6B1IiWqKSesLftUI6aMSW07L7txpSznWfVobcdFowTaiO+Z27+gTz6LX8+WgWKL5cGjSEO6viha4lLkQFcRzb5M26tEpcoA+pGkfNUixXBclKMlsMlEBXGivQldozOPviVy05WYIsqGTTis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SR3hxTkP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnaQxzqr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA66C19421;
-	Tue, 11 Nov 2025 01:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SR3hxTkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B3CC116D0;
+	Tue, 11 Nov 2025 01:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824647;
-	bh=oVdHYDGfhZfButhH0Z6a/0MtVXZgHWrb7BmurdeL6VE=;
+	s=korg; t=1762824650;
+	bh=1oEudp+LF4LFQhdNR4QKGXHcgipflWPlok5ytgza38U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnaQxzqrPFXnlnwP83YwSuOU88IJcsEV13Oh9sCUHQCoqSnsBDiEBRJRKdSU8b1Uv
-	 8V0m0dE3DKxCLJun7dfpHYMgI9zNJabO2Ex/jxRSgykixeQDNrAVe8/aQntYFCAc6S
-	 9A0jdLUCzB8/JbeLv/KXjgnzE4iRnyxRuu1BQ/sg=
+	b=SR3hxTkPOFzUbNYBPdpuEjU8ILOUq79Yp1odAqJUaXO3UF/2RfbZOEa86sqvgwYO+
+	 hOzt2ni/zYs3zWadO+JkEtWT2XejGCEfmtnO0meaDVzCM7k+hUY4JSnqp4mq2GPIib
+	 0vPbJrvbMSqewAO/XO+47bDm5h/1C9rycsvSbDMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 543/849] ALSA: serial-generic: remove shared static buffer
-Date: Tue, 11 Nov 2025 09:41:53 +0900
-Message-ID: <20251111004549.538852134@linuxfoundation.org>
+Subject: [PATCH 6.12 492/565] ceph: add checking of wait_for_completion_killable() return value
+Date: Tue, 11 Nov 2025 09:45:48 +0900
+Message-ID: <20251111004538.001948937@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 84973249011fda3ff292f83439a062fec81ef982 ]
+[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
 
-If multiple instances of this driver are instantiated and try to send
-concurrently then the single static buffer snd_serial_generic_tx_work()
-will cause corruption in the data output.
+The Coverity Scan service has detected the calling of
+wait_for_completion_killable() without checking the return
+value in ceph_lock_wait_for_completion() [1]. The CID 1636232
+defect contains explanation: "If the function returns an error
+value, the error value may be mistaken for a normal value.
+In ceph_lock_wait_for_completion(): Value returned from
+a function is not checked for errors before being used. (CWE-252)".
 
-Move the buffer into the per-instance driver data to avoid this.
+The patch adds the checking of wait_for_completion_killable()
+return value and return the error code from
+ceph_lock_wait_for_completion().
 
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/serial-generic.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/ceph/locks.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/serial-generic.c b/sound/drivers/serial-generic.c
-index 21ae053c05767..766206c6ca75a 100644
---- a/sound/drivers/serial-generic.c
-+++ b/sound/drivers/serial-generic.c
-@@ -37,6 +37,8 @@ MODULE_LICENSE("GPL");
- #define SERIAL_TX_STATE_ACTIVE	1
- #define SERIAL_TX_STATE_WAKEUP	2
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index ebf4ac0055ddc..dd764f9c64b9f 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -221,7 +221,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
+ 	if (err && err != -ERESTARTSYS)
+ 		return err;
  
-+#define INTERNAL_BUF_SIZE 256
+-	wait_for_completion_killable(&req->r_safe_completion);
++	err = wait_for_completion_killable(&req->r_safe_completion);
++	if (err)
++		return err;
 +
- struct snd_serial_generic {
- 	struct serdev_device *serdev;
- 
-@@ -51,6 +53,7 @@ struct snd_serial_generic {
- 	struct work_struct tx_work;
- 	unsigned long tx_state;
- 
-+	char tx_buf[INTERNAL_BUF_SIZE];
- };
- 
- static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
-@@ -61,11 +64,8 @@ static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
- 	schedule_work(&drvdata->tx_work);
+ 	return 0;
  }
  
--#define INTERNAL_BUF_SIZE 256
--
- static void snd_serial_generic_tx_work(struct work_struct *work)
- {
--	static char buf[INTERNAL_BUF_SIZE];
- 	int num_bytes;
- 	struct snd_serial_generic *drvdata = container_of(work, struct snd_serial_generic,
- 						   tx_work);
-@@ -78,8 +78,10 @@ static void snd_serial_generic_tx_work(struct work_struct *work)
- 		if (!test_bit(SERIAL_MODE_OUTPUT_OPEN, &drvdata->filemode))
- 			break;
- 
--		num_bytes = snd_rawmidi_transmit_peek(substream, buf, INTERNAL_BUF_SIZE);
--		num_bytes = serdev_device_write_buf(drvdata->serdev, buf, num_bytes);
-+		num_bytes = snd_rawmidi_transmit_peek(substream, drvdata->tx_buf,
-+						      INTERNAL_BUF_SIZE);
-+		num_bytes = serdev_device_write_buf(drvdata->serdev, drvdata->tx_buf,
-+						    num_bytes);
- 
- 		if (!num_bytes)
- 			break;
 -- 
 2.51.0
 
