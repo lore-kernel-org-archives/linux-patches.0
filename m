@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66564C97;
-	Tue, 11 Nov 2025 00:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE0F4086A;
+	Tue, 11 Nov 2025 00:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822423; cv=none; b=tyPYiC69jBfhj9kT5PAPCb7pAgV4V/HugPeDr0ZznRA0c7yVrWOHmWIdFqc3St6HXq5ok2wNbx5sm0QO6YrDL829qc/kNi+BUqfakr9k80hz/iBP2Vy8VXUwfRBYSHE9FKWw5dBaR1VmOkSKucPQK0SKV9DWy59eomgle/Ks0X0=
+	t=1762822426; cv=none; b=n8ZjIfLcPpnEYOOeuFM/0PfBYZlEx8dkPtFhgyue85FHxGCDN+JM0GswF76WZiDeKdiRT/YK/pyrDaukNUenQPVppT86E8j3sB22NGaKu8CHnWs0VU+QnTs/dS+P/vfL04fB3qZXuMqwvSBmNjVVSEWac+PwVZSGHhKyISbFElQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822423; c=relaxed/simple;
-	bh=xw3gy5sa+WsY81Hp7Sgo9JXKpJ/rxLzUNKHBlk7Nr3o=;
+	s=arc-20240116; t=1762822426; c=relaxed/simple;
+	bh=kRavFmBcNnNUBWeEZFiNAvVT6t5ZefIdV4zOY2VFu+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tj9ciZKpi+F+e+v1dVGTLyENh7tzblz9zNiH5Bhkox7Mh7Ww8xh+nuiCrLVPLU4i0dAIuKQp9hVnyxW8G8K8EhlChmCwYo7P/nwRUCQ1eT9lRIF2l+CEMrMQEuBmGeltW0DHt4mWTADo8MNgcuQVM4M4MB4XK7jH47ipevXOouQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4ZhDUZv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQfZlcZ4BYW6bzFB+tgXkmLj9a+TJJ+ObiL5UvqUGPhdKGwAffNqGZ3qZNEPKG27NNrggXQZLftdBNb2+0iuRWWLDMlaAc5ms0YBe3o4sWs3dAWRjb69bEjfsEUn0aP1oeB/VWi5YANqmGSisa/4CmGJ2mlrpX8FLzGOyb+Mvk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJZvAgs2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4ZhDUZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4308BC16AAE;
-	Tue, 11 Nov 2025 00:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJZvAgs2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89222C4CEFB;
+	Tue, 11 Nov 2025 00:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822423;
-	bh=xw3gy5sa+WsY81Hp7Sgo9JXKpJ/rxLzUNKHBlk7Nr3o=;
+	s=korg; t=1762822425;
+	bh=kRavFmBcNnNUBWeEZFiNAvVT6t5ZefIdV4zOY2VFu+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4ZhDUZvAtxwU1hQpCB6N9U4OXrNj31fS4ro4MSs6f/K/RNMdd2/dqBqyx1WV02l1
-	 ybfuEoXI/aAHasVD0sGu+oXwRQSDbHG+xW/Nx5Y7viCyXiybD8RaAOTB+poa2Xf+Yb
-	 NqxCOCsTtOcQzQzshqZmV/nH6g2MOJ+NcyYfgnJY=
+	b=LJZvAgs2jwZ41KUg1oR9PVTBA4qQjSpw4qzuFwWd6Ok9biqbS2/MYfX3AW8VdbqsT
+	 VYOJptyt7xn22D5lpWERsPp/nV601jv0i5lbQeHufiB12ZayukB1q0Mhg0V3HxuGfn
+	 eSEbW3uF2B6J7klgHbYYSrBZcIVT2DKT3RbrTnpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/565] Bluetooth: hci_core: Fix tracking of periodic advertisement
-Date: Tue, 11 Nov 2025 09:38:23 +0900
-Message-ID: <20251111004527.964473033@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Peter Schneider <pschneider1968@googlemail.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.17 105/849] drm/ast: Clear preserved bits from register output value
+Date: Tue, 11 Nov 2025 09:34:35 +0900
+Message-ID: <20251111004538.940185021@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,92 +51,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 751463ceefc3397566d03c8b64ef4a77f5fd88ac ]
+commit a9fb41b5def8e1e0103d5fd1453787993587281e upstream.
 
-Periodic advertising enabled flag cannot be tracked by the enabled
-flag since advertising and periodic advertising each can be
-enabled/disabled separately from one another causing the states to be
-inconsistent when for example an advertising set is disabled its
-enabled flag is set to false which is then used for periodic which has
-not being disabled.
+Preserve the I/O register bits in __ast_write8_i_masked() as specified
+by preserve_mask. Accidentally OR-ing the output value into these will
+overwrite the register's previous settings.
 
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes display output on the AST2300, where the screen can go blank at
+boot. The driver's original commit 312fec1405dd ("drm: Initial KMS
+driver for AST (ASpeed Technologies) 2000 series (v2)") already added
+the broken code. Commit 6f719373b943 ("drm/ast: Blank with VGACR17 sync
+enable, always clear VGACRB6 sync off") triggered the bug.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: Peter Schneider <pschneider1968@googlemail.com>
+Closes: https://lore.kernel.org/dri-devel/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: 6f719373b943 ("drm/ast: Blank with VGACR17 sync enable, always clear VGACRB6 sync off")
+Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Nick Bowler <nbowler@draconx.ca>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.5+
+Link: https://patch.msgid.link/20251024073626.129032-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h | 1 +
- net/bluetooth/hci_event.c        | 7 +++++--
- net/bluetooth/hci_sync.c         | 4 ++--
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/ast/ast_drv.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index ca75c71b58588..35b5f58b562cb 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -240,6 +240,7 @@ struct adv_info {
- 	bool	enabled;
- 	bool	pending;
- 	bool	periodic;
-+	bool	periodic_enabled;
- 	__u8	mesh;
- 	__u8	instance;
- 	__u8	handle;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 176565ef47c63..ccc73742de356 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1598,7 +1598,7 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+--- a/drivers/gpu/drm/ast/ast_drv.h
++++ b/drivers/gpu/drm/ast/ast_drv.h
+@@ -284,13 +284,13 @@ static inline void __ast_write8_i(void _
+ 	__ast_write8(addr, reg + 1, val);
+ }
  
- 		hci_dev_set_flag(hdev, HCI_LE_ADV);
+-static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 read_mask,
++static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 preserve_mask,
+ 					 u8 val)
+ {
+-	u8 tmp = __ast_read8_i_masked(addr, reg, index, read_mask);
++	u8 tmp = __ast_read8_i_masked(addr, reg, index, preserve_mask);
  
--		if (adv && !adv->periodic)
-+		if (adv)
- 			adv->enabled = true;
- 		else if (!set->handle)
- 			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
-@@ -3955,8 +3955,11 @@ static u8 hci_cc_le_set_per_adv_enable(struct hci_dev *hdev, void *data,
- 		hci_dev_set_flag(hdev, HCI_LE_PER_ADV);
+-	tmp |= val;
+-	__ast_write8_i(addr, reg, index, tmp);
++	val &= ~preserve_mask;
++	__ast_write8_i(addr, reg, index, tmp | val);
+ }
  
- 		if (adv)
--			adv->enabled = true;
-+			adv->periodic_enabled = true;
- 	} else {
-+		if (adv)
-+			adv->periodic_enabled = false;
-+
- 		/* If just one instance was disabled check if there are
- 		 * any other instance enabled before clearing HCI_LE_PER_ADV.
- 		 * The current periodic adv instance will be marked as
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 06d8ab997bd85..f79b38603205c 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1605,7 +1605,7 @@ int hci_disable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
- 
- 	/* If periodic advertising already disabled there is nothing to do. */
- 	adv = hci_find_adv_instance(hdev, instance);
--	if (!adv || !adv->periodic || !adv->enabled)
-+	if (!adv || !adv->periodic_enabled)
- 		return 0;
- 
- 	memset(&cp, 0, sizeof(cp));
-@@ -1670,7 +1670,7 @@ static int hci_enable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
- 
- 	/* If periodic advertising already enabled there is nothing to do. */
- 	adv = hci_find_adv_instance(hdev, instance);
--	if (adv && adv->periodic && adv->enabled)
-+	if (adv && adv->periodic_enabled)
- 		return 0;
- 
- 	memset(&cp, 0, sizeof(cp));
--- 
-2.51.0
-
+ static inline u32 ast_read32(struct ast_device *ast, u32 reg)
 
 
