@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B9C26FDBD;
-	Tue, 11 Nov 2025 01:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0116930BBBF;
+	Tue, 11 Nov 2025 01:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823327; cv=none; b=VMeK03c4z91b7mjKmtmL9Ce8MRJ3exnNgSi3wcVzXBHmLXEk0l4XDYoc872sxle8TdjJ3ELmFqU4GjVBEkIiRNipMh0digtpzQ37n3OpywZTtUeg3zbO3jAkN+mnK7gJzSEAw44h7rSQNTfen1MMmfo+BBg7xCJIvM502ph0A70=
+	t=1762823330; cv=none; b=tAA6OrII6x3CAWnpHIr8ZVdTSSnTh8t/0oX7IBRHqoO/p3yQb+d3cfA/fcpsuNmJWhTU+xnTph6KEbrcbfVavL/lR5THZEOdn8Pr/nIdbReO5OA85uK2+WjS58GjC7FDZNVFEt3UpWeV9kjLzFsuX6L/AmZkVFQFPPYwwdeNWvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823327; c=relaxed/simple;
-	bh=6fhgFRErNl6ks6QXUsJbfF6njhiuBB+ffqPddLXyx5U=;
+	s=arc-20240116; t=1762823330; c=relaxed/simple;
+	bh=V8rCj03XCcLAxSyxvo582CJUFyJsMLIGQJ3s+AQ0flY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTurdYhnx/ps7dKzfl5pDYOjLBL6DtL/1Bv96yf5xLldo78g0tr10GbC8Iig6Rs9fLOKfpSdAuTTOIXt3JGMQNjG/pGFPnlxJbCT4RdZneMM0CtlOGbr2HlILjH9VqzFO9O6xV8op9IqGkvFAWS9mqOvcQGBoNWCaiPS3saq0Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m127gS+8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fg8JWmea7bhUYq/Rki78WJJSu70amcei5zgz+aHwYiH9WQUC4jUtn2H9UMvtE326sTut/6qPa3G7YjapSDCSSWgJEWmcyWk0uHJ5WgGuLDjgA8obIMMxEQpg8m7KFatfNOX4it4zatA1PxLtjptM3QPYkY2Y7K7FOdTgI3u5MnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0xK9okP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m127gS+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1701FC19425;
-	Tue, 11 Nov 2025 01:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0xK9okP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7C6C4CEFB;
+	Tue, 11 Nov 2025 01:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823327;
-	bh=6fhgFRErNl6ks6QXUsJbfF6njhiuBB+ffqPddLXyx5U=;
+	s=korg; t=1762823329;
+	bh=V8rCj03XCcLAxSyxvo582CJUFyJsMLIGQJ3s+AQ0flY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m127gS+8sGdJP36W/2xnESKbeGfy8xvegwq9/AX4UZKDpt1VT/+xHqJENaja+8vYY
-	 bZQuxvhKrvUv13M7Z1RyGd6XQUKbruCV9ngBhGQ8bIJ7RmZimuP+FGE0JB1ctcW1/w
-	 PLUNYs4KdqTBuAewFzgSu23BU+vo5JBsDzWMPkuo=
+	b=D0xK9okPORJmuRHr5H34eCp86Jfqd/7bHQ+X/JtzXgc6wamNdSVOv/ImNYW9bmBd/
+	 sAYDqiq0OQPPWNty9eBmVzRSybLl5zX48GnX/woFAV+c+rzDXRPaFHctaoS+neGUAX
+	 L4ah+qh4HN64oHglASLncR9uOjAeeZyPmHfyIUbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Piotr Oniszczuk <piotr.oniszczuk@gmail.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/565] media: imon: make send_packet() more robust
-Date: Tue, 11 Nov 2025 09:41:16 +0900
-Message-ID: <20251111004531.872795114@linuxfoundation.org>
+Subject: [PATCH 6.17 277/849] wifi: rtw88: sdio: use indirect IO for device registers before power-on
+Date: Tue, 11 Nov 2025 09:37:27 +0900
+Message-ID: <20251111004543.122727774@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,186 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
+[ Upstream commit 58de1f91e033b1fface8d8948984583125f93736 ]
 
-syzbot is reporting that imon has three problems which result in
-hung tasks due to forever holding device lock [1].
+The register REG_SYS_CFG1 is used to determine chip basic information
+as arguments of following flows, such as download firmware and load PHY
+parameters, so driver read the value early (before power-on).
 
-First problem is that when usb_rx_callback_intf0() once got -EPROTO error
-after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
-resubmits urb after printk(), and resubmitted urb causes
-usb_rx_callback_intf0() to again get -EPROTO error. This results in
-printk() flooding (RCU stalls).
+However, the direct IO is disallowed before power-on, or it causes wrong
+values, which driver recognizes a chip as a wrong type RF_1T1R, but
+actually RF_2T2R, causing driver warns:
 
-Alan Stern commented [2] that
+  rtw88_8822cs mmc1:0001:1: unsupported rf path (1)
 
-  In theory it's okay to resubmit _if_ the driver has a robust
-  error-recovery scheme (such as giving up after some fixed limit on the
-  number of errors or after some fixed time has elapsed, perhaps with a
-  time delay to prevent a flood of errors).  Most drivers don't bother to
-  do this; they simply give up right away.  This makes them more
-  vulnerable to short-term noise interference during USB transfers, but in
-  reality such interference is quite rare.  There's nothing really wrong
-  with giving up right away.
+Fix it by using indirect IO before power-on.
 
-but imon has a poor error-recovery scheme which just retries forever;
-this behavior should be fixed.
-
-Since I'm not sure whether it is safe for imon users to give up upon any
-error code, this patch takes care of only union of error codes chosen from
-modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
-ir_toy, mceusb and igorplugusb).
-
-Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
-before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
-resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
-hardware after early callbacks"). Move the ictx->dev_present_intf0 test
-introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
-until intf configured") to immediately before imon_incoming_packet(), or
-the first problem explained above happens without printk() flooding (i.e.
-hung task).
-
-Third problem is that when usb_rx_callback_intf0() is not called for some
-reason (e.g. flaky hardware; the reproducer for this problem sometimes
-prevents usb_rx_callback_intf0() from being called),
-wait_for_completion_interruptible() in send_packet() never returns (i.e.
-hung task). As a workaround for such situation, change send_packet() to
-wait for completion with timeout of 10 seconds.
-
-Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
-Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/699C22B4-A3E3-4206-97D0-22AB3348EBF6@gmail.com/T/#t
+Suggested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Tested-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250724004815.7043-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 1e7f800701331..ddb1304cb77b8 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
- 		smp_rmb(); /* ensure later readers know we're not busy */
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
--		/* Wait for transmission to complete (or abort) */
--		retval = wait_for_completion_interruptible(
--				&ictx->tx.finished);
--		if (retval) {
-+		/* Wait for transmission to complete (or abort or timeout) */
-+		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
-+		if (retval <= 0) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
-+			if (retval < 0)
-+				ictx->tx.status = retval;
-+			else
-+				ictx->tx.status = -ETIMEDOUT;
- 		}
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index cc2d4fef35879..99d7c629eac6f 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -144,6 +144,10 @@ static u32 rtw_sdio_to_io_address(struct rtw_dev *rtwdev, u32 addr,
  
- 		ictx->tx.busy = false;
-@@ -1754,14 +1757,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf0)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1770,16 +1765,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf0)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
+ static bool rtw_sdio_use_direct_io(struct rtw_dev *rtwdev, u32 addr)
+ {
++	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags) &&
++	    !rtw_sdio_is_bus_addr(addr))
++		return false;
 +
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
+ 	return !rtw_sdio_is_sdio30_supported(rtwdev) ||
+ 		rtw_sdio_is_bus_addr(addr);
  }
- 
-@@ -1795,14 +1803,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf1)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1811,16 +1811,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf1)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
-+
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
- }
- 
 -- 
 2.51.0
 
