@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E3741C69;
-	Tue, 11 Nov 2025 01:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6426E3043CD;
+	Tue, 11 Nov 2025 01:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823854; cv=none; b=tj0SICarrpUYaqXt41FkEzJo6UEAkri1dHuWhZ5K8ngLn6RNH4vTiUZyYPDCGOdPShJ4rAgKIWkdwriVJ9pX7EHIdt9KMczG11Y/TSB8v2OB1y+Ckh9PVIy/zJtX89O8jPoyhY4fnFaSMvHUuY1LDw5iWzlbHEg1djj05KHL9Tc=
+	t=1762823856; cv=none; b=MgJ8Yl+HTq+0bBog/YSjqBd8j9fYPHROHQoVQnlD3g4AfdhX8iugSfi1q/i+5ngpkkZAyWLHOegQOGQ9evX4OlWPERarSI4Mr5l0tsMl5z/wqBs/r6lzCIX1CwH5foUTMlu0GHfwyCn51k4Hh+6rb5cvN4QUaUC2KvrQfOteQsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823854; c=relaxed/simple;
-	bh=f04XJFjspASzS2qrNzjo2WOziXpkwI1Yj61yMHG0+GM=;
+	s=arc-20240116; t=1762823856; c=relaxed/simple;
+	bh=vRRlQZzaLxiowKK6nPmemeLZxI7aMYpZm/sTYx2w0eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbnBFJ3SXXBqO/AAbBB91uXj1enjuFM92rPUmlobG/4vW1987+RvxrPYTURA9Z2GdFGlBeRpLn6VdMrFB/sM9GOaiXkhGoNh2DR0hhiyZBvj+GVtU9fa4sYm0Zj3UhtJXoBKntO1IvaF/FIAtVYsoRjTXhpVrknn4bHW+c0V8EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viZ0BBwp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0U2DqEGVJd9k4cwjdZ2zK2FD9ssa8iQ2nEmr+7336uUlmQg3T0eZeYuYUZ/95+MJnsEm8SiTBP49r4lESxlvfxU8TQOYx0u/4JIwL6q5CwCT3OU8nIaIknZ93WskQPJSNBMZF1vhsJbpz8lDUzhiIeQM1pYGPwRNp3Zg1Jlfa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deNIwrM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viZ0BBwp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97D1C116B1;
-	Tue, 11 Nov 2025 01:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deNIwrM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040A2C16AAE;
+	Tue, 11 Nov 2025 01:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823854;
-	bh=f04XJFjspASzS2qrNzjo2WOziXpkwI1Yj61yMHG0+GM=;
+	s=korg; t=1762823856;
+	bh=vRRlQZzaLxiowKK6nPmemeLZxI7aMYpZm/sTYx2w0eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viZ0BBwpH+KIZ0thqeeyQPwVRpSaBMmyFXTGJqvUoP08mLcz1MOf1XfGFv2ljXCDi
-	 Fh9Mt2JTiqlGylQkosJ97l1ZyxMsTPaoURl0znmkkxzbc7YkqEjIdrFEpP4lzxTrzZ
-	 mlEiB/p0AxKjcuKEyf2l07TonVBywCoipVd3A90Y=
+	b=deNIwrM0NWRbFr5qkj1GlCrQmbma1XZ0OocctFAjIq5GpTaOK9UKPwBX41rZnrkd7
+	 gmNf0CU0aj/7rhh+IZzeQMdF3XxNEUInp1EP8bMt1VPplocioNo0RO6ksSsOylDi//
+	 kcBypWNYlUq9H+XXhG3PbYmooYxou+Vt+sgZEAMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 385/849] drm/msm: Use of_reserved_mem_region_to_resource() for "memory-region"
-Date: Tue, 11 Nov 2025 09:39:15 +0900
-Message-ID: <20251111004545.738865577@linuxfoundation.org>
+Subject: [PATCH 6.12 320/565] f2fs: fix wrong layout information on 16KB page
+Date: Tue, 11 Nov 2025 09:42:56 +0900
+Message-ID: <20251111004534.085893959@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit fb53e8f09fc1e1a343fd08ea4f353f81613975d7 ]
+[ Upstream commit a33be64b98d0723748d2fab0832b926613e1fce0 ]
 
-Use the newly added of_reserved_mem_region_to_resource() function to
-handle "memory-region" properties.
+This patch fixes to support different block size.
 
-The original code did not set 'zap_available' to false if
-of_address_to_resource() failed which seems like an oversight.
-
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/662275/
-Link: https://lore.kernel.org/r/20250703183442.2073717-1-robh@kernel.org
-[DB: dropped part related to VRAM, no longer applicable]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/f2fs/sysfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index f1230465bf0d0..8c6336b007dc0 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -10,7 +10,7 @@
- #include <linux/interconnect.h>
- #include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/kernel.h>
--#include <linux/of_address.h>
-+#include <linux/of_reserved_mem.h>
- #include <linux/pm_opp.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
-@@ -33,7 +33,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 	struct device *dev = &gpu->pdev->dev;
- 	const struct firmware *fw;
- 	const char *signed_fwname = NULL;
--	struct device_node *np, *mem_np;
-+	struct device_node *np;
- 	struct resource r;
- 	phys_addr_t mem_phys;
- 	ssize_t mem_size;
-@@ -51,18 +51,11 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
- 		return -ENODEV;
- 	}
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index eb84b9418ac11..b3c04ecc3a271 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -1623,12 +1623,15 @@ static int __maybe_unused disk_map_seq_show(struct seq_file *seq,
+ 	seq_printf(seq, " Main          : 0x%010x (%10d)\n",
+ 			SM_I(sbi)->main_blkaddr,
+ 			le32_to_cpu(F2FS_RAW_SUPER(sbi)->segment_count_main));
+-	seq_printf(seq, " # of Sections : %12d\n",
+-			le32_to_cpu(F2FS_RAW_SUPER(sbi)->section_count));
++	seq_printf(seq, " Block size    : %12lu KB\n", F2FS_BLKSIZE >> 10);
++	seq_printf(seq, " Segment size  : %12d MB\n",
++			(BLKS_PER_SEG(sbi) << (F2FS_BLKSIZE_BITS - 10)) >> 10);
+ 	seq_printf(seq, " Segs/Sections : %12d\n",
+ 			SEGS_PER_SEC(sbi));
+ 	seq_printf(seq, " Section size  : %12d MB\n",
+-			SEGS_PER_SEC(sbi) << 1);
++			(BLKS_PER_SEC(sbi) << (F2FS_BLKSIZE_BITS - 10)) >> 10);
++	seq_printf(seq, " # of Sections : %12d\n",
++			le32_to_cpu(F2FS_RAW_SUPER(sbi)->section_count));
  
--	mem_np = of_parse_phandle(np, "memory-region", 0);
--	of_node_put(np);
--	if (!mem_np) {
-+	ret = of_reserved_mem_region_to_resource(np, 0, &r);
-+	if (ret) {
- 		zap_available = false;
--		return -EINVAL;
--	}
--
--	ret = of_address_to_resource(mem_np, 0, &r);
--	of_node_put(mem_np);
--	if (ret)
- 		return ret;
--
-+	}
- 	mem_phys = r.start;
- 
- 	/*
+ 	if (!f2fs_is_multi_device(sbi))
+ 		return 0;
 -- 
 2.51.0
 
