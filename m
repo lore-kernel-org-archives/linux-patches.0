@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72DF3446CC;
-	Tue, 11 Nov 2025 01:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A962C2DC76F;
+	Tue, 11 Nov 2025 01:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824155; cv=none; b=QDSj1TGk5rfFfqHZNbGL1A8stS0vWbu1SrRqgqb1Mou9ZHHskiAbVtc6+XqJEcfhZ8P2/FBJgL5VAHMJonqpow+cezepYnoddxsVCnh9E0oGhp5OVCXxf0vhkeXhMbpT4tLJ83TZGf/63JEQ6/fZu/U7wlpJIGVA0wScp/sU7ek=
+	t=1762824157; cv=none; b=rOOS0Cb/+uzIzgilKZz5l5H1Z6F6VEAiZ+Eb6/Ry99/RkuQkkqAPrQI7zoQbuwV3yGK7Ul2ZjrSX1VRrbiQVB4U8MyhhSY1xnGk3QpIPQHJqK692j0OqgejpV9xNLC5IIFGBn2gKMEMKhRxkInjfzRohT8zAWXBIwI2PM7KwdM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824155; c=relaxed/simple;
-	bh=AAeT8gGCo7tSSqXRL7LnAt6n+xAOya5vxubWMz6TYLw=;
+	s=arc-20240116; t=1762824157; c=relaxed/simple;
+	bh=Iy7W29jEpA/dIDCR4l2K9WjXDS+qVXhRFkYHoAXBwY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1vrS5Xa/EWeM1lIRz4ja9oIugmnICuIs98kWWBBDry0HTRNzCc8pkoRx9TkYi4fa8NUQja21tqtBvJgz1pAVxU1DZZ0S9T0eVkeLIiLn6W8d8AuYF97hG7PdTnsFTlfsq4hekLKE/rUW/fpWeEGNIfNwwnNm3U74HGaOSkZ6Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1l6c+geq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/jtB45sbmU1ARaMFj9QMC2WcvNLNG24ryGl37m3NQQ0sFJbwKZnBxDn3Lb4H2HvWQGiv/sqJTWwkA6TKJUqcOkqMKhPFdZTqB/duT+ph+DJnYeStrJp437nnQ6K1nGbzyZ/Nfgpz0/k9jKRoIyU8p1Nn/tll7G8VOe31LZt9cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYtLUbea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l6c+geq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9B8C19422;
-	Tue, 11 Nov 2025 01:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYtLUbea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4778FC4CEF5;
+	Tue, 11 Nov 2025 01:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824155;
-	bh=AAeT8gGCo7tSSqXRL7LnAt6n+xAOya5vxubWMz6TYLw=;
+	s=korg; t=1762824157;
+	bh=Iy7W29jEpA/dIDCR4l2K9WjXDS+qVXhRFkYHoAXBwY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1l6c+geq2CO4defCgCgT2L9zfOaoojxY1WvXWz50IPSc1xYHAexBbxQa9iB/CqRtz
-	 73R9vs8cyAM6qj6IkDs/VCMA44JFbryIgtXHK0zAIP6AQYAi3XD5RaX9CsCQIRjW3B
-	 37Wieb3ufyxf8Ije3kDi4Mt8Uv1W096uqo+tYyeQ=
+	b=tYtLUbeaQzvCjTRCdY/z63t2zqsQjeZRIjBAvPQIKYYm+tg3inojWkxyuW9SWElSl
+	 FqIGf+DqPm9zFGQ/X2dTI2r2spCeYCnEbCZ9L22ws/345nOboGnAYsj35aNl81/zgg
+	 wqImudDu5Ah87DPffh5vcIgvMiyMYLmsaNs7kZcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Miroslav Lichvar <mlichvar@redhat.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 398/565] wifi: ath10k: Fix connection after GTK rekeying
-Date: Tue, 11 Nov 2025 09:44:14 +0900
-Message-ID: <20251111004535.825901154@linuxfoundation.org>
+Subject: [PATCH 6.17 412/849] ptp: Limit time setting of PTP clocks
+Date: Tue, 11 Nov 2025 09:39:42 +0900
+Message-ID: <20251111004546.401768687@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,68 +52,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Miroslav Lichvar <mlichvar@redhat.com>
 
-[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
+[ Upstream commit 5a8c02a6bf52b1cf9cfb7868a8330f7c3c6aebe9 ]
 
-It appears that not all hardware/firmware implementations support
-group key deletion correctly, which can lead to connection hangs
-and deauthentication following GTK rekeying (delete and install).
+Networking drivers implementing PTP clocks and kernel socket code
+handling hardware timestamps use the 64-bit signed ktime_t type counting
+nanoseconds. When a PTP clock reaches the maximum value in year 2262,
+the timestamps returned to applications will overflow into year 1667.
+The same thing happens when injecting a large offset with
+clock_adjtime(ADJ_SETOFFSET).
 
-To avoid this issue, instead of attempting to delete the key using
-the special WMI_CIPHER_NONE value, we now replace the key with an
-invalid (random) value.
+The commit 7a8e61f84786 ("timekeeping: Force upper bound for setting
+CLOCK_REALTIME") limited the maximum accepted value setting the system
+clock to 30 years before the maximum representable value (i.e. year
+2232) to avoid the overflow, assuming the system will not run for more
+than 30 years.
 
-This behavior has been observed with WCN39xx chipsets.
+Enforce the same limit for PTP clocks. Don't allow negative values and
+values closer than 30 years to the maximum value. Drivers may implement
+an even lower limit if the hardware registers cannot represent the whole
+interval between years 1970 and 2262 in the required resolution.
 
-Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
-Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
+Cc: Richard Cochran <richardcochran@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: John Stultz <jstultz@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250828103300.1387025-1-mlichvar@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/ptp/ptp_clock.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 6493731333abb..74ee3c4f7a6a2 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -14,6 +14,7 @@
- #include <linux/acpi.h>
- #include <linux/of.h>
- #include <linux/bitfield.h>
-+#include <linux/random.h>
- 
- #include "hif.h"
- #include "core.h"
-@@ -288,8 +289,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
- 
- 	if (cmd == DISABLE_KEY) {
--		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
--		arg.key_data = NULL;
-+		if (flags & WMI_KEY_GROUP) {
-+			/* Not all hardware handles group-key deletion operation
-+			 * correctly. Replace the key with a junk value to invalidate it.
-+			 */
-+			get_random_bytes(key->key, key->keylen);
-+		} else {
-+			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
-+			arg.key_data = NULL;
-+		}
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 1cc06b7cb17ef..3e0726c6f55b3 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -100,6 +100,9 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
+ 		return -EBUSY;
  	}
  
- 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
++	if (!timespec64_valid_settod(tp))
++		return -EINVAL;
++
+ 	return  ptp->info->settime64(ptp->info, tp);
+ }
+ 
+@@ -130,7 +133,7 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 	ops = ptp->info;
+ 
+ 	if (tx->modes & ADJ_SETOFFSET) {
+-		struct timespec64 ts;
++		struct timespec64 ts, ts2;
+ 		ktime_t kt;
+ 		s64 delta;
+ 
+@@ -143,6 +146,14 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 		if ((unsigned long) ts.tv_nsec >= NSEC_PER_SEC)
+ 			return -EINVAL;
+ 
++		/* Make sure the offset is valid */
++		err = ptp_clock_gettime(pc, &ts2);
++		if (err)
++			return err;
++		ts2 = timespec64_add(ts2, ts);
++		if (!timespec64_valid_settod(&ts2))
++			return -EINVAL;
++
+ 		kt = timespec64_to_ktime(ts);
+ 		delta = ktime_to_ns(kt);
+ 		err = ops->adjtime(ops, delta);
 -- 
 2.51.0
 
