@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861AE4C97;
-	Tue, 11 Nov 2025 00:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43804C97;
+	Tue, 11 Nov 2025 00:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822238; cv=none; b=Dfs2g+9IkY1AEeHF33LPRGRGnN/GtjoDo/WtxM/+vnKSFUVq1awTv7hgBy4JDRM0hIsoNXgGjHQKgRCPbguSRt0D03AZZJqBHYwX2I9MwHdZr0l05vSgPobJ8yh9UTJbcK4GYO9bxnosZiPXlBU9QPWDuppeiNQ85+uB8bU7hG4=
+	t=1762822240; cv=none; b=m1k4F3n+NN2rS5Y4h9igVfM6qwQyPDIt4yZ5O3Ko8tZeW5Y2fWHFR4YnwGy5ZqCqzXoOHTMTPsnoprFWKMO0hvoqJvKElY6wKld4xSx/HYx0g4EuFtGf4aBgN9xeYBJxpwc6T4APBFBRLgVFVMI7lvuuf+X8AUNEVad0+tHXuSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822238; c=relaxed/simple;
-	bh=r+Du16tQgaCsoiful6mS8Rczy/24c40pPPjjSQOaRAc=;
+	s=arc-20240116; t=1762822240; c=relaxed/simple;
+	bh=hyZGk0YPHWE5UnsKqwhRi0+fDhk3ptQBvA0pe9Vw19U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=um3sBYVbfhua/sWlKPaXaFYbqzG884Qw3a8/vrAmHXDrkud8Qy71T9ptCmLCCkqLmwXHmy+VETbmxeFBqMAMXBYRNiloTrA+IPO2Sl8Ag5bmQk1kdFehjZZwu+zCS4cR7Hx5XuA2ozf+9wu05NfSglOv67ydhIeTnmSesQSWv/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSysGliw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdgGbkYMWqKPS9dGnGt66IP18fv10N+vC/VmFMXU5ew3FtXNV7v3VbPs+EcWUCmGTNcAFyi52VlMhxv6P7wufDndPXMMX3NMPTaQbE9qX5KNFCui+BG4cMN3rrCMA8Pj1/xvjA5NC4gif+7njYi4+xPqntFkTS+wWJxdAh5+5qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUU1+Xny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSysGliw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C25CC19421;
-	Tue, 11 Nov 2025 00:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUU1+Xny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF46C113D0;
+	Tue, 11 Nov 2025 00:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822238;
-	bh=r+Du16tQgaCsoiful6mS8Rczy/24c40pPPjjSQOaRAc=;
+	s=korg; t=1762822240;
+	bh=hyZGk0YPHWE5UnsKqwhRi0+fDhk3ptQBvA0pe9Vw19U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSysGliwpydFFMCxFA0vuihmvpUSme7yjpdBm1hCNJ0TRlfIeOhOxhpEJFq7hZetL
-	 HS5qqSi2214ZIHhylr4hSpNIVO6qRMD9bY0LC+Q0O+Pb5RpWt6YxNqdtwG12DMwAzA
-	 ZUYYWa3Ov/WWaSuYtV309djCqpbaoocyoLRF3TR8=
+	b=xUU1+XnyQ1StpYLgib98y90VYhk4p7cr729m6SXC6MIuTtYqOIsILmkaohiaRZGCw
+	 8lu+KPZL+TQz4HowYJvipUY29LH6aFfJ7edtLI1RDen+5FKORAWrhHH+D09VDRX4iK
+	 09Yb+DnRkKOVh6yEqktkBwmcvIHwKLmmfFqHjCnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 009/565] Bluetooth: rfcomm: fix modem control handling
-Date: Tue, 11 Nov 2025 09:37:45 +0900
-Message-ID: <20251111004527.063172964@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 064/849] Bluetooth: hci_conn: Fix connection cleanup with BIG with 2 or more BIS
+Date: Tue, 11 Nov 2025 09:33:54 +0900
+Message-ID: <20251111004537.979640286@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,93 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 91d35ec9b3956d6b3cf789c1593467e58855b03a upstream.
+[ Upstream commit 857eb0fabc389be5159e0e17d84bc122614b5b98 ]
 
-The RFCOMM driver confuses the local and remote modem control signals,
-which specifically means that the reported DTR and RTS state will
-instead reflect the remote end (i.e. DSR and CTS).
+This fixes bis_cleanup not considering connections in BT_OPEN state
+before attempting to remove the BIG causing the following error:
 
-This issue dates back to the original driver (and a follow-on update)
-merged in 2002, which resulted in a non-standard implementation of
-TIOCMSET that allowed controlling also the TS07.10 IC and DV signals by
-mapping them to the RI and DCD input flags, while TIOCMGET failed to
-return the actual state of DTR and RTS.
+btproxy[20110]: < HCI Command: LE Terminate Broadcast Isochronous Group (0x08|0x006a) plen 2
+        BIG Handle: 0x01
+        Reason: Connection Terminated By Local Host (0x16)
+> HCI Event: Command Status (0x0f) plen 4
+      LE Terminate Broadcast Isochronous Group (0x08|0x006a) ncmd 1
+        Status: Unknown Advertising Identifier (0x42)
 
-Note that the bogus control of input signals in tiocmset() is just
-dead code as those flags will have been masked out by the tty layer
-since 2003.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: fa224d0c094a ("Bluetooth: ISO: Reassociate a socket with an active BIS")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/tty.c |   26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ net/bluetooth/hci_conn.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -648,8 +648,8 @@ static void rfcomm_dev_modem_status(stru
- 		tty_port_tty_hangup(&dev->port, true);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index e524bb59bff23..63ae62fe20bbc 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -843,6 +843,13 @@ static void bis_cleanup(struct hci_conn *conn)
+ 		if (bis)
+ 			return;
  
- 	dev->modem_status =
--		((v24_sig & RFCOMM_V24_RTC) ? (TIOCM_DSR | TIOCM_DTR) : 0) |
--		((v24_sig & RFCOMM_V24_RTR) ? (TIOCM_RTS | TIOCM_CTS) : 0) |
-+		((v24_sig & RFCOMM_V24_RTC) ? TIOCM_DSR : 0) |
-+		((v24_sig & RFCOMM_V24_RTR) ? TIOCM_CTS : 0) |
- 		((v24_sig & RFCOMM_V24_IC)  ? TIOCM_RI : 0) |
- 		((v24_sig & RFCOMM_V24_DV)  ? TIOCM_CD : 0);
- }
-@@ -1060,10 +1060,14 @@ static void rfcomm_tty_hangup(struct tty
- static int rfcomm_tty_tiocmget(struct tty_struct *tty)
- {
- 	struct rfcomm_dev *dev = tty->driver_data;
-+	struct rfcomm_dlc *dlc = dev->dlc;
-+	u8 v24_sig;
- 
- 	BT_DBG("tty %p dev %p", tty, dev);
- 
--	return dev->modem_status;
-+	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
++		bis = hci_conn_hash_lookup_big_state(hdev,
++						     conn->iso_qos.bcast.big,
++						     BT_OPEN,
++						     HCI_ROLE_MASTER);
++		if (bis)
++			return;
 +
-+	return (v24_sig & (TIOCM_DTR | TIOCM_RTS)) | dev->modem_status;
- }
- 
- static int rfcomm_tty_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
-@@ -1076,23 +1080,15 @@ static int rfcomm_tty_tiocmset(struct tt
- 
- 	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
- 
--	if (set & TIOCM_DSR || set & TIOCM_DTR)
-+	if (set & TIOCM_DTR)
- 		v24_sig |= RFCOMM_V24_RTC;
--	if (set & TIOCM_RTS || set & TIOCM_CTS)
-+	if (set & TIOCM_RTS)
- 		v24_sig |= RFCOMM_V24_RTR;
--	if (set & TIOCM_RI)
--		v24_sig |= RFCOMM_V24_IC;
--	if (set & TIOCM_CD)
--		v24_sig |= RFCOMM_V24_DV;
- 
--	if (clear & TIOCM_DSR || clear & TIOCM_DTR)
-+	if (clear & TIOCM_DTR)
- 		v24_sig &= ~RFCOMM_V24_RTC;
--	if (clear & TIOCM_RTS || clear & TIOCM_CTS)
-+	if (clear & TIOCM_RTS)
- 		v24_sig &= ~RFCOMM_V24_RTR;
--	if (clear & TIOCM_RI)
--		v24_sig &= ~RFCOMM_V24_IC;
--	if (clear & TIOCM_CD)
--		v24_sig &= ~RFCOMM_V24_DV;
- 
- 	rfcomm_dlc_set_modem_status(dlc, v24_sig);
- 
+ 		hci_le_terminate_big(hdev, conn);
+ 	} else {
+ 		hci_le_big_terminate(hdev, conn->iso_qos.bcast.big,
+-- 
+2.51.0
+
 
 
