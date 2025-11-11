@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6E333EAFD;
-	Tue, 11 Nov 2025 01:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947F32DC78C;
+	Tue, 11 Nov 2025 01:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825005; cv=none; b=PvRPSZrscZ1F5cWr1cDbszqZ21ObwifrAONFChh/aBN3ShBt5gVocAl7FWO6A0NXZC3jvsJHBjihVpX/hM93eEn83A4qEHJKnRj58XrS69HoLJ15ssQHFeulSpfE/xkXgrZFpgnKv3isan0AsSP41akqo5YfdRm75mBOE+Mnf3M=
+	t=1762825007; cv=none; b=aDcbET8uoSlz7aEtzVwhwsFRVV3VaBdv2KvXFwCCYmvj7jgsw7dOvwBW+EkmFtNMu2hX2TtcEC4JBOHsUElKbW3lYt5tv6xdFcdf4eczH1ZC/X6lGQ65rDDvBUcogvrJHbGfnt6kLxl5R676reM3+oqrREJr3TDM0BCKuh4Nkrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825005; c=relaxed/simple;
-	bh=mMPH3Vjf9I7SczbaOOz2fE6Nxe8sFdKGdHqIf66hWws=;
+	s=arc-20240116; t=1762825007; c=relaxed/simple;
+	bh=4o71WmC4OV8HqdpG6cg+O46gO/X/mkTF28593C774QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFE1cHaw+z+HE5MBGcbxoQizgqwoSxD1zPSwGcueOleTOJwshVEbrhpqjeIFNAXhXbfgJLtcQSM+KpZRcXtwEn6EUyI18d34heEoxo1ihKkLbTGACxijrmHIxY1IbaAZR9+FYvqmOk12SR8xHWnChntag/0pzfSTPkQM9Mgur5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZ7gVhxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d60DgsXEjeGCVanuFpuD7U1BfVQ4dLTl4Afzt/6nzqyCzUuGJtqh8If9q7nNx5XvqRDn0xFdRxmVUhg19f0+BBXipJWRbDqavLDA/IZQW+rl0niVsAaxNoOKmWtXXUR09LUcs1C3rk9o1VZpa8l0ZPCEcmrk9I8IXyrJrvZXTcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaQuIC82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZ7gVhxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCE4C116D0;
-	Tue, 11 Nov 2025 01:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaQuIC82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DAAC19422;
+	Tue, 11 Nov 2025 01:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825005;
-	bh=mMPH3Vjf9I7SczbaOOz2fE6Nxe8sFdKGdHqIf66hWws=;
+	s=korg; t=1762825007;
+	bh=4o71WmC4OV8HqdpG6cg+O46gO/X/mkTF28593C774QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZ7gVhxB+AX9sYl7F6ty0HWET0dYnBpB7b/gK9wTsYMr8uq1tZ8C8yxs1J93mpSXa
-	 0zIhu+AhR3Euy9GRhN9eFT3Z5pf4hNg3A5u32yByAhtb51HRHGDiyYKCYTdawM2umv
-	 wjXMT3hX7ChytMFPMeGMMwBbkmTzLUICtNsXWbN8=
+	b=vaQuIC824wsogkP88/w8KsTHj8vFqTPkEl0IQqdUHM/MZ7BaRDC4q8s3OSKcLU73n
+	 EzAmZM63mnfwdHcQa+7Efr0j+UF+bzYFpH3y23rZqzyCLcyVS/LYKecm2i98zCXrUC
+	 m8rB9ttwC5OECelcpFugpcuD/t0oXl8GPE7fhKPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 615/849] remoteproc: qcom: q6v5: Avoid handling handover twice
-Date: Tue, 11 Nov 2025 09:43:05 +0900
-Message-ID: <20251111004551.296886452@linuxfoundation.org>
+Subject: [PATCH 6.17 616/849] wifi: ath12k: Increase DP_REO_CMD_RING_SIZE to 256
+Date: Tue, 11 Nov 2025 09:43:06 +0900
+Message-ID: <20251111004551.323091879@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,40 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
 
-[ Upstream commit 54898664e1eb6b5b3e6cdd9343c6eb15da776153 ]
+[ Upstream commit 82993345aef6987a916337ebd2fca3ff4a6250a7 ]
 
-A remoteproc could theoretically signal handover twice. This is unexpected
-and would break the reference counting for the handover resources (power
-domains, clocks, regulators, etc), so add a check to prevent that from
-happening.
+Increase DP_REO_CMD_RING_SIZE from 128 to 256 to avoid
+queuing failures observed during stress test scenarios.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-2-910b1a3aff71@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250806111750.3214584-2-nithyanantham.paramasivam@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
-index 769c6d6d6a731..58d5b85e58cda 100644
---- a/drivers/remoteproc/qcom_q6v5.c
-+++ b/drivers/remoteproc/qcom_q6v5.c
-@@ -164,6 +164,11 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
- {
- 	struct qcom_q6v5 *q6v5 = data;
- 
-+	if (q6v5->handover_issued) {
-+		dev_err(q6v5->dev, "Handover signaled, but it already happened\n");
-+		return IRQ_HANDLED;
-+	}
-+
- 	if (q6v5->handover)
- 		q6v5->handover(q6v5);
- 
+diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
+index 7baa48b86f7ad..10093b4515882 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.h
++++ b/drivers/net/wireless/ath/ath12k/dp.h
+@@ -184,7 +184,7 @@ struct ath12k_pdev_dp {
+ #define DP_REO_REINJECT_RING_SIZE	32
+ #define DP_RX_RELEASE_RING_SIZE		1024
+ #define DP_REO_EXCEPTION_RING_SIZE	128
+-#define DP_REO_CMD_RING_SIZE		128
++#define DP_REO_CMD_RING_SIZE		256
+ #define DP_REO_STATUS_RING_SIZE		2048
+ #define DP_RXDMA_BUF_RING_SIZE		4096
+ #define DP_RX_MAC_BUF_RING_SIZE		2048
 -- 
 2.51.0
 
