@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A582652AF;
-	Tue, 11 Nov 2025 01:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE7214210;
+	Tue, 11 Nov 2025 01:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824134; cv=none; b=uLICshMEROu2/bD8i/WmHkKcnbKdNQ5tTIVifeOus9u/vrotwObOlK+N8P8r50DtXtLKCWZaykyZFDgC8/DVSoWkDWHFb8rGqBjjiyyHnI/GHOi6Gv8qyrUvqhcO62ngihk5ztBEckO1X2KMMfLDh58TTqDV0FI/AJ4z5mIV9xU=
+	t=1762824136; cv=none; b=My3pN3gmPpI/JfXiFgwaWbNs5EoqOkZ7dt1Cc6mKyIgmZfGpAyZT0XEm2L37LNaQE8UXS68GoDDvJ/doCY3XO5m+IQ+F0kNapP299BjMfM1Ti/fHcxXLrXtVhDl7gjNlaJHP6Lb3Mvk2gPLz4GWDL3bc8JIcy0567VwXgBdd670=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824134; c=relaxed/simple;
-	bh=YoXkQDBTt0Qh8uwMNt7/WmUMK9RCYZFtuSOzenfbv3U=;
+	s=arc-20240116; t=1762824136; c=relaxed/simple;
+	bh=rZzU+lPMGoSSS/N+yQacbxD2VpimDeeVlUPszSZuXVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haRC/T8zNLgQsyrE4fJhKy//xLTHsttlfnV9ccOs9V7QvF0ntcsIBexRrnWPrgSOnvPjE4dir/0agzvO8gB5ojBGIAbitcC77E9OfuZRbiJfoLoqcVZWGra0JfJa/UkPpY+lNs4Yv7g9xvTBJ9IQMH5C0Wo5zBZhLd6EFH7izW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SogaFzp4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVDq2DHsv+TOjfGsI2ib8bzHD4FFKK4yThaF3mHwhNMW3E0JoIKzdIxYoylUHAWoOsuJ0gbzSAtO7SSp2R98crD/kqixPAePZ8gxdZevI0g7TcmbLSIjEei1LhuB65kMdwLYK8+ZRhcx+TgS5K5SJJwd05sHZcS22alF5PRD6RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIU1oF0X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SogaFzp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311BAC4CEF5;
-	Tue, 11 Nov 2025 01:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIU1oF0X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697F0C4CEFB;
+	Tue, 11 Nov 2025 01:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824134;
-	bh=YoXkQDBTt0Qh8uwMNt7/WmUMK9RCYZFtuSOzenfbv3U=;
+	s=korg; t=1762824136;
+	bh=rZzU+lPMGoSSS/N+yQacbxD2VpimDeeVlUPszSZuXVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SogaFzp4yQ7yWoaMIK5HGcz6ZNiaU2PSzX7KPAIQ1nATBGQU85eLNwR8x+ZE2D7u0
-	 U09r2ovBTzk7lENxa2VwS9GumrI1KOxGMlRlWgaafD+IKlwMNTrwLjlXItUyfZVifh
-	 cobsY1gZL/0bgyrHG0804GfgADGgIfeYnlh2tYws=
+	b=IIU1oF0XylF7kOTGz++PQIHCky/Oy3MrKKnRDQxa5WC91+htC/P1370Fk3LnMODce
+	 deodahnE0iC8+YH7GFTPsEy0TMYyUm6dJcW0hWLw0vJe4NvkLCQn6A6CgN39llBAxC
+	 l9eaDssJCcm43acw3/YwzGrqbnmscpZQDwKEeHoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 443/849] net: call cond_resched() less often in __release_sock()
-Date: Tue, 11 Nov 2025 09:40:13 +0900
-Message-ID: <20251111004547.144551640@linuxfoundation.org>
+Subject: [PATCH 6.12 394/565] net: phy: clear link parameters on admin link down
+Date: Tue, 11 Nov 2025 09:44:10 +0900
+Message-ID: <20251111004535.736266718@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 16c610162d1f1c332209de1c91ffb09b659bb65d ]
+[ Upstream commit 60f887b1290b43a4f5a3497982a725687b193fa4 ]
 
-While stress testing TCP I had unexpected retransmits and sack packets
-when a single cpu receives data from multiple high-throughput flows.
+When a PHY is halted (e.g. `ip link set dev lan2 down`), several
+fields in struct phy_device may still reflect the last active
+connection. This leads to ethtool showing stale values even though
+the link is down.
 
-super_netperf 4 -H srv -T,10 -l 3000 &
+Reset selected fields in _phy_state_machine() when transitioning
+to PHY_HALTED and the link was previously up:
 
-Tcpdump extract:
+- speed/duplex -> UNKNOWN, but only in autoneg mode (in forced mode
+  these fields carry configuration, not status)
+- master_slave_state -> UNKNOWN if previously supported
+- mdix -> INVALID (state only, same meaning as "unknown")
+- lp_advertising -> always cleared
 
- 00:00:00.000007 IP6 clnt > srv: Flags [.], seq 26062848:26124288, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26124288:26185728, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26185728:26243072, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 57344
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26243072:26304512, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26304512:26365952, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
- 00:00:00.000007 IP6 clnt > srv: Flags [P.], seq 26365952:26423296, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 57344
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26423296:26484736, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26484736:26546176, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26546176:26603520, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 57344
- 00:00:00.003932 IP6 clnt > srv: Flags [P.], seq 26603520:26619904, ack 1, win 66, options [nop,nop,TS val 651464844 ecr 3100753141], length 16384
- 00:00:00.006602 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651471419 ecr 3100759716], length 4096
- 00:00:00.013000 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651484421 ecr 3100772718], length 4096
- 00:00:00.000416 IP6 srv > clnt: Flags [.], ack 26619904, win 1393, options [nop,nop,TS val 3100773185 ecr 651484421,nop,nop,sack 1 {24862720:24866816}], length 0
+The cleanup is skipped if the PHY is in PHY_ERROR state, so the
+last values remain available for diagnostics.
 
-After analysis, it appears this is because of the cond_resched()
-call from  __release_sock().
-
-When current thread is yielding, while still holding the TCP socket lock,
-it might regain the cpu after a very long time.
-
-Other peer TLP/RTO is firing (multiple times) and packets are retransmit,
-while the initial copy is waiting in the socket backlog or receive queue.
-
-In this patch, I call cond_resched() only once every 16 packets.
-
-Modern TCP stack now spends less time per packet in the backlog,
-especially because ACK are no longer sent (commit 133c4c0d3717
-"tcp: defer regular ACK while processing socket backlog")
-
-Before:
-
-clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
-TcpOutSegs                      19046186           0.0
-TcpRetransSegs                  1471               0.0
-TcpExtTCPTimeouts               1397               0.0
-TcpExtTCPLossProbes             1356               0.0
-TcpExtTCPDSACKRecv              1352               0.0
-TcpExtTCPSpuriousRTOs           114                0.0
-TcpExtTCPDSACKRecvSegs          1352               0.0
-
-After:
-
-clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
-TcpOutSegs                      19218936           0.0
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250903174811.1930820-1-edumazet@google.com
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250917094751.2101285-1-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/phy/phy.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 1382bddcbaff4..bdeea7cc134df 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3162,23 +3162,27 @@ void __release_sock(struct sock *sk)
- 	__acquires(&sk->sk_lock.slock)
- {
- 	struct sk_buff *skb, *next;
-+	int nb = 0;
- 
- 	while ((skb = sk->sk_backlog.head) != NULL) {
- 		sk->sk_backlog.head = sk->sk_backlog.tail = NULL;
- 
- 		spin_unlock_bh(&sk->sk_lock.slock);
- 
--		do {
-+		while (1) {
- 			next = skb->next;
- 			prefetch(next);
- 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
- 			skb_mark_not_on_list(skb);
- 			sk_backlog_rcv(sk, skb);
- 
--			cond_resched();
--
- 			skb = next;
--		} while (skb != NULL);
-+			if (!skb)
-+				break;
-+
-+			if (!(++nb & 15))
-+				cond_resched();
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index c9cfdc33fc5f1..707a6ff5242bd 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -1477,6 +1477,19 @@ static enum phy_state_work _phy_state_machine(struct phy_device *phydev)
+ 		}
+ 		break;
+ 	case PHY_HALTED:
++		if (phydev->link) {
++			if (phydev->autoneg == AUTONEG_ENABLE) {
++				phydev->speed = SPEED_UNKNOWN;
++				phydev->duplex = DUPLEX_UNKNOWN;
++			}
++			if (phydev->master_slave_state !=
++						MASTER_SLAVE_STATE_UNSUPPORTED)
++				phydev->master_slave_state =
++						MASTER_SLAVE_STATE_UNKNOWN;
++			phydev->mdix = ETH_TP_MDI_INVALID;
++			linkmode_zero(phydev->lp_advertising);
 +		}
- 
- 		spin_lock_bh(&sk->sk_lock.slock);
- 	}
++		fallthrough;
+ 	case PHY_ERROR:
+ 		if (phydev->link) {
+ 			phydev->link = 0;
 -- 
 2.51.0
 
