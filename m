@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D7927D786;
-	Tue, 11 Nov 2025 01:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA305335081;
+	Tue, 11 Nov 2025 01:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823484; cv=none; b=Tea6BdTbBbdzbj5mbytrl+vC+Oq4ZPfMavS6nHeFh6ORJmw92bYd6gFgocvo1h/S5oO0fGR2MW7qey+AN849ZwGqCikxLUlcH4BPZ0z8NcKITrccLNo+5EsgK8V/gdScXyl0WLDEjw7zg7JdZovivTL6jSlXCf+v5OVUrdxFNWo=
+	t=1762823486; cv=none; b=DPEGuOh8wN9YqZXKXq01DMFCDM0KKwJ5qenMZ3M50AUnc4+aqWS0yOomoR6ycM0c9PyJ3hujq3Xr9wHoSz+5lC2CwGRMzrq7loOm4qD0HnwQc5LaLx5JnaYZ/XVWRm8OO78SORHK3o4wdM723MH3BQfqVl5aJham0dRNzpGuQmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823484; c=relaxed/simple;
-	bh=3s/I97XRatwNPy01CRqDo3y0lYjiviwLwRdbSDJRQVg=;
+	s=arc-20240116; t=1762823486; c=relaxed/simple;
+	bh=+oJdBj1vSf6WXPZcipb0aqE9AvqN3LW2gBZkN6kGtcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsfZ7uM4XFyG5mKYi9WP986JW3Nebe4rRinGm0EuQHxoSKnfZKukBXEX7VkyUZ/UKoNwf/22amm8+/BYvR7RbzsM6iqok0GwlRUt+FWUBZVfR0uTJLuYwKV7zO5pdvOTo1USQrAir8euKMDTKXmOcV8TxIzU0xXlOhirwc85TkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM7Y3/qe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kn+gyF0hd54SW6VCIQ3eAt9wBvwPt+ufIsfK2TfHpJXZLGq7r+rhBWFl4zrom6BHU3q/+DQiNLfpaWX1VrSeSDN2AnSgFJTP18OgpTytBofXyk4pC4Pyg5xAS04S131fVHHHRFtjAfzkjH1u1aZ/eYHKVzysqtHNpzG3XFHLRBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tAolOegq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM7Y3/qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A15C4CEF5;
-	Tue, 11 Nov 2025 01:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAolOegq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EA4C4CEF5;
+	Tue, 11 Nov 2025 01:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823484;
-	bh=3s/I97XRatwNPy01CRqDo3y0lYjiviwLwRdbSDJRQVg=;
+	s=korg; t=1762823486;
+	bh=+oJdBj1vSf6WXPZcipb0aqE9AvqN3LW2gBZkN6kGtcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UM7Y3/qeqe/UGqg1ruA2OSIsWNaX8K1Jfb+vQMGyY0aL0TSnOQw05Fks3t9Wxims1
-	 /PbHazEfaXB3zjQN3xdbFhX9DIZkGcpyQnRkvJYSKuYbJ1vuQdvr8yvmqJ9kehrV6F
-	 j9lpWWPoU728T4ot7u6VXZ/RAq53n3KZeBWOng9w=
+	b=tAolOegqNBSgQjji8LJB1y/9QJtmQW4WNgc3Smhb9r4rCUvFdLAXRStErUpmrl0Gf
+	 hniI6ANNMExvP9b7EEzm+w8kWyR7pfBsuyMANECk1T8OlxfaCQCXwjRe9aeaippUdp
+	 7CiPbOsHAPD5WxXXGfz6zqsPG5BhyiaGjYfTHOCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Ce Sun <cesun102@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 309/849] net: ipv6: fix field-spanning memcpy warning in AH output
-Date: Tue, 11 Nov 2025 09:37:59 +0900
-Message-ID: <20251111004543.883455504@linuxfoundation.org>
+Subject: [PATCH 6.12 256/565] drm/amdgpu: Correct the counts of nr_banks and nr_errors
+Date: Tue, 11 Nov 2025 09:41:52 +0900
+Message-ID: <20251111004532.660504912@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,119 +49,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Ce Sun <cesun102@amd.com>
 
-[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
+[ Upstream commit 907813e5d7cadfeafab12467d748705a5309efb0 ]
 
-Fix field-spanning memcpy warnings in ah6_output() and
-ah6_output_done() where extension headers are copied to/from IPv6
-address fields, triggering fortify-string warnings about writes beyond
-the 16-byte address fields.
+Correct the counts of nr_banks and nr_errors
 
-  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
-  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
-
-The warnings are false positives as the extension headers are
-intentionally placed after the IPv6 header in memory. Fix by properly
-copying addresses and extension headers separately, and introduce
-helper functions to avoid code duplication.
-
-Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Ce Sun <cesun102@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
-index eb474f0987ae0..95372e0f1d216 100644
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -46,6 +46,34 @@ struct ah_skb_cb {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+index a95f45d063144..a7ecc33ddf223 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_aca.c
+@@ -86,6 +86,7 @@ static void aca_banks_release(struct aca_banks *banks)
+ 	list_for_each_entry_safe(node, tmp, &banks->list, node) {
+ 		list_del(&node->node);
+ 		kvfree(node);
++		banks->nr_banks--;
+ 	}
+ }
  
- #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
+@@ -236,6 +237,7 @@ static struct aca_bank_error *new_bank_error(struct aca_error *aerr, struct aca_
  
-+/* Helper to save IPv6 addresses and extension headers to temporary storage */
-+static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
-+				 struct ipv6hdr *top_iph, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	iph_ext->saddr = top_iph->saddr;
-+#endif
-+	iph_ext->daddr = top_iph->daddr;
-+	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
-+}
-+
-+/* Helper to restore IPv6 addresses and extension headers from temporary storage */
-+static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
-+				    struct tmp_ext *iph_ext, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	top_iph->saddr = iph_ext->saddr;
-+#endif
-+	top_iph->daddr = iph_ext->daddr;
-+	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
-+}
-+
- static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
- 			  unsigned int size)
- {
-@@ -301,13 +329,7 @@ static void ah6_output_done(void *data, int err)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 	mutex_lock(&aerr->lock);
+ 	list_add_tail(&bank_error->node, &aerr->list);
++	aerr->nr_errors++;
+ 	mutex_unlock(&aerr->lock);
  
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- 	kfree(AH_SKB_CB(skb)->tmp);
- 	xfrm_output_resume(skb->sk, skb, err);
-@@ -378,12 +400,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	 */
- 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
- 
-+	ah6_save_hdrs(iph_ext, top_iph, extlen);
- 	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(iph_ext, &top_iph->saddr, extlen);
--#else
--		memcpy(iph_ext, &top_iph->daddr, extlen);
--#endif
- 		err = ipv6_clear_mutable_options(top_iph,
- 						 extlen - sizeof(*iph_ext) +
- 						 sizeof(*top_iph),
-@@ -434,13 +452,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- out_free:
- 	kfree(iph_base);
+ 	return bank_error;
 -- 
 2.51.0
 
