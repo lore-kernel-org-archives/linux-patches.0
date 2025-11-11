@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787E2E413;
-	Tue, 11 Nov 2025 01:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8181972617;
+	Tue, 11 Nov 2025 01:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825513; cv=none; b=CWfvY/MSNtOXrUtXSy3e2bc7abeliXYOyto2zo6vYhPQYB4R0IhZsEgK9PCfrXUJ0OtuD3BGf0y2XkpzPywZkgjXNagon5U93LakcCi8Xnj8NuYieXRr1oMdU/d6mWfEZDDITLdWsK9A9VtD/Sztq9NdolcqPMD0ckZnPqbJ8iM=
+	t=1762825516; cv=none; b=mH7sNhR8m8XE6ukVU+c0+XfEl2frXWMpfwFk41fUANdXKWsqOzarENd4oxwMGNE/WbC0bV9pszYDqVWbkns471JG99klIs8Z2zalNGlJ2q6COWimtZQo6Y4zv6NZKVBWHx+hLRYrRr1v8aw6tipUAUxvAH+VYYipSW4wKv0Gdeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825513; c=relaxed/simple;
-	bh=dA6vPA8CHK+A4E32FfcOu3kLpEApP3FCysAX9r54HWw=;
+	s=arc-20240116; t=1762825516; c=relaxed/simple;
+	bh=JL6d6Ku0EA8swH+DRmD1r4PEf0y4ssy4fAVFBi/bmn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEt8KmK6ojy66K/kTeP2pKQNtXtblEcXc99v/7whZ6eX8EoCkYoz/l6blaPpud2jHuEtGNgTdaoVdbpPOASrx9irdNozwcAsloPPi2x06r68O9a8tixiJWnGpI288nSsVB5WgUtTFGDZSba+l/ZgnYMlPD4LGhpKKIByRj3IbaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flTbPgJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QqBvWlYncn7LPf868LAqNktkeNIz6DZm2gyYccwXfA8xE7Gy+O42WQrxSXjYM8tzgaxejavUVLuCeD24PK31vB7xCM7B89LJHnh4fEQVPS4etre70h3ZJ5vyK2CUsOb2l8pdtJkQc/abVbLEwy1QnoX9qlHwF1m0g6jIz4O13W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ71Zt8+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flTbPgJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FF6C4CEF5;
-	Tue, 11 Nov 2025 01:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ71Zt8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBB0C19421;
+	Tue, 11 Nov 2025 01:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825512;
-	bh=dA6vPA8CHK+A4E32FfcOu3kLpEApP3FCysAX9r54HWw=;
+	s=korg; t=1762825515;
+	bh=JL6d6Ku0EA8swH+DRmD1r4PEf0y4ssy4fAVFBi/bmn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flTbPgJ7cPCRTdRjNRsNqOqb57LPJTVagFJHxCq8c8oymkRiMfe6MEVgPbDTDkcwS
-	 NFyG1XprllaGUvBeiI/pSIWdfKBe0ZgSZOrebkNLO9XQvZFsQ0CLUdO1ki5Mo2qxEi
-	 Kaww5GNAuFbWYr+EmaUrSB5qvKE+4diyXRaOM0D4=
+	b=YJ71Zt8+P3WcYkdotATbYTi0LuA7JUCJsGEhLd6CCfFg6D6Xg2xgPfGnm5ijEd9Q1
+	 kbt5S6gsJAQ1wx2/7eNH6AKUWPjtMoPt6kg9NEp32mGVHGgs0WtYQazbUVpQmzgXOh
+	 r2naYIOSecMsek6YOgxCJHA8ApNv3SJE1enhE6w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.17 833/849] scsi: ufs: core: Add a quirk to suppress link_startup_again
-Date: Tue, 11 Nov 2025 09:46:43 +0900
-Message-ID: <20251111004556.565158758@linuxfoundation.org>
+Subject: [PATCH 6.17 834/849] scsi: ufs: core: Fix invalid probe error return value
+Date: Tue, 11 Nov 2025 09:46:44 +0900
+Message-ID: <20251111004556.586182423@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,58 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit d34caa89a132cd69efc48361d4772251546fdb88 upstream.
+commit a2b32bc1d9e359a9f90d0de6af16699facb10935 upstream.
 
-ufshcd_link_startup() has a facility (link_startup_again) to issue
-DME_LINKSTARTUP a 2nd time even though the 1st time was successful.
+After DME Link Startup, the error return value is set to the MIPI UniPro
+GenericErrorCode which can be 0 (SUCCESS) or 1 (FAILURE).  Upon failure
+during driver probe, the error code 1 is propagated back to the driver
+probe function which must return a negative value to indicate an error,
+but 1 is not negative, so the probe is considered to be successful even
+though it failed.  Subsequently, removing the driver results in an oops
+because it is not in a valid state.
 
-Some older hardware benefits from that, however the behaviour is
-non-standard, and has been found to cause link startup to be unreliable
-for some Intel Alder Lake based host controllers.
+This happens because none of the callers of ufshcd_init() expect a
+non-negative error code.
 
-Add UFSHCD_QUIRK_PERFORM_LINK_STARTUP_ONCE to suppress
-link_startup_again, in preparation for setting the quirk for affected
-controllers.
+Fix the return value and documentation to match actual usage.
 
-Fixes: 7dc9fb47bc9a ("scsi: ufs: ufs-pci: Add support for Intel ADL")
+Fixes: 69f5eb78d4b0 ("scsi: ufs: core: Move the ufshcd_device_init(hba, true) call")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251024085918.31825-3-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20251024085918.31825-5-adrian.hunter@intel.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    3 ++-
- include/ufs/ufshcd.h      |    7 +++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -5060,7 +5060,8 @@ static int ufshcd_link_startup(struct uf
- 	 * If UFS device isn't active then we will have to issue link startup
- 	 * 2 times to make sure the device state move to active.
- 	 */
--	if (!ufshcd_is_ufs_dev_active(hba))
-+	if (!(hba->quirks & UFSHCD_QUIRK_PERFORM_LINK_STARTUP_ONCE) &&
-+	    !ufshcd_is_ufs_dev_active(hba))
- 		link_startup_again = true;
+@@ -10638,7 +10638,7 @@ remove_scsi_host:
+  * @mmio_base: base register address
+  * @irq: Interrupt line of device
+  *
+- * Return: 0 on success, non-zero value on failure.
++ * Return: 0 on success; < 0 on failure.
+  */
+ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+ {
+@@ -10879,7 +10879,7 @@ out_disable:
+ 	hba->is_irq_enabled = false;
+ 	ufshcd_hba_exit(hba);
+ out_error:
+-	return err;
++	return err > 0 ? -EIO : err;
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_init);
  
- link_startup:
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -689,6 +689,13 @@ enum ufshcd_quirks {
- 	 * single doorbell mode.
- 	 */
- 	UFSHCD_QUIRK_BROKEN_LSDBS_CAP			= 1 << 25,
-+
-+	/*
-+	 * This quirk indicates that DME_LINKSTARTUP should not be issued a 2nd
-+	 * time (refer link_startup_again) after the 1st time was successful,
-+	 * because it causes link startup to become unreliable.
-+	 */
-+	UFSHCD_QUIRK_PERFORM_LINK_STARTUP_ONCE		= 1 << 26,
- };
- 
- enum ufshcd_caps {
 
 
