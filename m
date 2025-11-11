@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670512737E3;
-	Tue, 11 Nov 2025 01:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A242726ED5E;
+	Tue, 11 Nov 2025 01:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823371; cv=none; b=pDg521O7Yop8j9UFJAHMNrdgM2/W5OiWWsAH7zuim3E8ygrgY3yCPPiwEEGCBwnRygpv3IAjLL9LMhctVwyDqGQ90q8dcqbWSqUDmh9sr/+ewjwVm7WUGVrrQHY9wr/9KdpkN2c+xorFjdIMCfd9FsglSywsmEJO5MHClNdivMA=
+	t=1762823373; cv=none; b=dY/36POTFZVbKm2DlVThMW9dVpX5zrpDu1JNcvvNIwOwdPuR7nHdBDSCXdHidYMNPfDC2R7lJW9nxjKp7x5rJFgCf4Nz+r+OQ+/wy6QBUyaYHYp7N6hiLcjA9xtNQ4wC4yuM/iTG8tMgTftmDcb0KiUbbPEgWx9j3HlznMlsg1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823371; c=relaxed/simple;
-	bh=if0pW8EFkCtkYL5c3SzP8eNVZZ7aJWSfVHiHBwpM7YE=;
+	s=arc-20240116; t=1762823373; c=relaxed/simple;
+	bh=iIh7DpSA+plwPsh/DRjgyVGHwdKxbmjPCqJ02hmRfXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCTBYYstnzNfNlsqoFgf+rxA7FLwwA6DdMmFYNlowabAEXSTDEDPDVfBmHZ4ytl/mWQ2rdRmmuClqgoQrsUoAEyrQj2SkxVSaamX0SpKxIdU8xy7lV+tI+2sRpFIM1xYZ4obQcn6vqApP693WaBIkCDZUUdcF9tYOJBe5aH20zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDxflP4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NDrY3nyckwcmJt4aNbq2m7f5ywnycQyO/u71wIJovcoaxOhesoBN99Mp54NIDzbaf2deJv7QMuvUbUMRnt2+h72M/dzonIY9EqOM1x10VT/H3Uv0o3dIok74VI9y1h88UEqcnFYcpUTX+MBkNybow4jIRhppffqeubAOG06YzoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFwWmCX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDxflP4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F4FC19421;
-	Tue, 11 Nov 2025 01:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFwWmCX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435FFC4CEF5;
+	Tue, 11 Nov 2025 01:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823371;
-	bh=if0pW8EFkCtkYL5c3SzP8eNVZZ7aJWSfVHiHBwpM7YE=;
+	s=korg; t=1762823373;
+	bh=iIh7DpSA+plwPsh/DRjgyVGHwdKxbmjPCqJ02hmRfXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDxflP4hVyARuM6K1vpQmi1iJMAc1sXEUl+mJatAeV9Qs7p2SPojv0F+523ZiOBZ6
-	 fgk+SkkUYiRex0Wcd5UOPn5xvNkC0QG2FTDTcXnik/3/KrYEmlGXEJU1WSAG1bNfYW
-	 mb2eI2zOwO+WmrOMy6sHLEIaXECAHV/Wtr1ogH0k=
+	b=iFwWmCX3cGjPjG79KktwfQZksY5nCFRFEN1dKgB/m+GXHXOudlbEVD2FUqEGYe5E0
+	 t1hl+VkRnGVOb57fSlVwYbjq7gjQR6pJzgAav8iiaRuBZWyWDOUArAgetCCAtUTtDo
+	 qh9/6Or9bTpLTUU9EWa6Kk0CVCT2OLiZMR2DvlMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	raub camaioni <raubcameo@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 285/849] drm/bridge: cdns-dsi: Fix REG_WAKEUP_TIME value
-Date: Tue, 11 Nov 2025 09:37:35 +0900
-Message-ID: <20251111004543.304325688@linuxfoundation.org>
+Subject: [PATCH 6.12 229/565] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
+Date: Tue, 11 Nov 2025 09:41:25 +0900
+Message-ID: <20251111004532.068784725@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: raub camaioni <raubcameo@gmail.com>
 
-[ Upstream commit eea4f89b6461294ed6bea1d3285bb3f79c09a041 ]
+[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
 
-The driver tries to calculate the value for REG_WAKEUP_TIME. However,
-the calculation itself is not correct, and to add on it, the resulting
-value is almost always larger than the field's size, so the actual
-result is more or less random.
+This fix is already present in f_ecm.c and was never
+propagated to f_ncm.c
 
-According to the docs, figuring out the value for REG_WAKEUP_TIME
-requires HW characterization and there's no way to have a generic
-algorithm to come up with the value. That doesn't help at all...
+When creating multiple NCM ethernet devices
+on a composite usb gadget device
+each MAC address on the HOST side will be identical.
+Having the same MAC on different network interfaces is bad.
 
-However, we know that the value must be smaller than the line time, and,
-at least in my understanding, the proper value for it is quite small.
-Testing shows that setting it to 1/10 of the line time seems to work
-well. All video modes from my HDMI monitor work with this algorithm.
+This fix updates the MAC address inside the
+ncm_strings_defs global during the ncm_bind call.
+This ensures each device has a unique MAC.
+In f_ecm.c ecm_string_defs is updated in the same way.
 
-Hopefully we'll get more information on how to calculate the value, and
-we can then update this.
+The defunct MAC assignment in ncm_alloc has been removed.
 
-Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
-Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Link: https://lore.kernel.org/r/20250723-cdns-dsi-impro-v5-11-e61cc06074c2@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: raub camaioni <raubcameo@gmail.com>
+Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_ncm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-index 695b6246b280f..9f1c460d5f0d4 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -882,7 +882,13 @@ static void cdns_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
+index 3afc9a622086c..28e57d93973ac 100644
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1464,6 +1464,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
  
- 	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
- 					    phy_cfg->hs_clk_rate);
--	reg_wakeup = (phy_cfg->hs_prepare + phy_cfg->hs_zero) / tx_byte_period;
+ 	ncm_opts->bound = true;
+ 
++	ncm_string_defs[1].s = ncm->ethaddr;
 +
-+	/*
-+	 * Estimated time [in clock cycles] to perform LP->HS on D-PHY.
-+	 * It is not clear how to calculate this, so for now,
-+	 * set it to 1/10 of the total number of clocks in a line.
-+	 */
-+	reg_wakeup = dsi_cfg.htotal / nlanes / 10;
- 	writel(REG_WAKEUP_TIME(reg_wakeup) | REG_LINE_DURATION(tmp),
- 	       dsi->regs + VID_DPHY_TIME);
+ 	us = usb_gstrings_attach(cdev, ncm_strings,
+ 				 ARRAY_SIZE(ncm_string_defs));
+ 	if (IS_ERR(us))
+@@ -1759,7 +1761,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
+ 		mutex_unlock(&opts->lock);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+-	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
  
+ 	spin_lock_init(&ncm->lock);
+ 	ncm_reset_values(ncm);
 -- 
 2.51.0
 
