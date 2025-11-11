@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F13263F52;
-	Tue, 11 Nov 2025 01:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4162D94B7;
+	Tue, 11 Nov 2025 01:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823611; cv=none; b=Lg19aY3XtSE4S67AqIDeLuQPJqTsrZCkJ5bR/xjhn6jRPulv89TCK88u5iXZF4jw57Jmz5Npm1BwZq6xMkaKqBvq6Nmf1bhooHX2KKOxBXz+oeefjf2lCqlK+HhJbK5/Vo6ourl0tUjj5vWxs3OjQoZzUcXMWCJmlwFIuaa8Dkk=
+	t=1762823613; cv=none; b=IB/T7HC/nwjD/ODKrmjE2jdjurBUOTm7QJWRcgLF3xIQ3UCFgZ9weFoJGcuZ7rAanjuig3CdRUYzd5WRpEZJduJbv20zm+cNGAjoJsDThyUBVdpRZhcFKx0YnmdQ3EKcPkYNU/OHJUtDW4YMEpkpHzyvIi35PokSVC9wfh2pINk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823611; c=relaxed/simple;
-	bh=RttPQttfLFIMuax/ghoPLxGFKSAIhMalaxcgEjiVZlM=;
+	s=arc-20240116; t=1762823613; c=relaxed/simple;
+	bh=v+w0jCj7nOO57CbLDZg9gBz8IDEhDaCWECn18/gpho0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=We1B/NhC4/ji6AL5VaBUSqqd0WFacuFHuC6gmrj7qUdA4WBrw1kqyZ+AagHJtF3HKc+0WWLwqbQ4yNU/9hPYPMgvHS61K6TnfgZ6J5KPU3jxzQonO8+Ko//Rqa2GMSCIvdIL4Q4rPMaZD0UzmiFBHaOxYHXRxdJZa2+LBUHhb2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pT4ulrLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlXXLLkTmPjzYJw78Ru0BICD2HNodt+oldSrthpar/k0fe5AENyetszlT9XwUCZSg1lQvX4KDtKOBNVy3/rIuPxLtLNwGSjqeQoFIVSqAt+C/KSjeBODqkzAUArHeulkpBtjXpC4iDGoEfrz1wzy2ZPtcdaUnDd6clkKFGxh7S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhKkc+ec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pT4ulrLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA1EC113D0;
-	Tue, 11 Nov 2025 01:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhKkc+ec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78F4C4AF09;
+	Tue, 11 Nov 2025 01:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823610;
-	bh=RttPQttfLFIMuax/ghoPLxGFKSAIhMalaxcgEjiVZlM=;
+	s=korg; t=1762823613;
+	bh=v+w0jCj7nOO57CbLDZg9gBz8IDEhDaCWECn18/gpho0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pT4ulrLhy4o+M+/1ATyvjIPxUrV5lGvbCj8IxPaED668nXRPrnNKG33meY//NXkYW
-	 N+FHpH2LiXLiSzVmLf45YVn3MsoODe3R5gzVqNK4OaJ/qdj0fkNVD62bJqebQI7ld5
-	 yxu39+NutngRh1CoK55bnzAUx+A5Ro4GRRIgCRTs=
+	b=nhKkc+ec7LB0uVCQ71AX008tlnrkSRoOVYEaTtfpukvOMpapTKYBiYaR//HtJTLMs
+	 3P/Z8dxU7ctfBmI2mK5nihVIrcT9DCIi9CJqIVTzALTyHnAsTDWyGmXcCe1FnWBtwi
+	 KRnUuchi259vHv3yabagnCU4BPuajyFCG7cJbCPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 335/849] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
-Date: Tue, 11 Nov 2025 09:38:25 +0900
-Message-ID: <20251111004544.518155442@linuxfoundation.org>
+Subject: [PATCH 6.12 286/565] drm/amdgpu: Allow kfd CRIU with no buffer objects
+Date: Tue, 11 Nov 2025 09:42:22 +0900
+Message-ID: <20251111004533.312065661@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
+[ Upstream commit 85705b18ae7674347f8675f64b2b3115fb1d5629 ]
 
-Initially, trace_sock_exceed_buf_limit() was invoked when
-__sk_mem_raise_allocated() failed due to the memcg limit or the
-global limit.
+The kfd CRIU checkpoint ioctl would return an error if trying
+to checkpoint a process with no kfd buffer objects.
 
-However, commit d6f19938eb031 ("net: expose sk wmem in
-sock_exceed_buf_limit tracepoint") somehow suppressed the event
-only when memcg failed to charge for SK_MEM_RECV, although the
-memcg failure for SK_MEM_SEND still triggers the event.
+This is a normal case and should not be an error.
 
-Let's restore the event for SK_MEM_RECV.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index e21348ead7e76..1382bddcbaff4 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3336,8 +3336,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 7fbbc67adfd9e..0e73ec69192c3 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2572,8 +2572,8 @@ static int criu_restore(struct file *filep,
+ 	pr_debug("CRIU restore (num_devices:%u num_bos:%u num_objects:%u priv_data_size:%llu)\n",
+ 		 args->num_devices, args->num_bos, args->num_objects, args->priv_data_size);
  
--	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
--		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
-+	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
+-	if (!args->bos || !args->devices || !args->priv_data || !args->priv_data_size ||
+-	    !args->num_devices || !args->num_bos)
++	if ((args->num_bos > 0 && !args->bos) || !args->devices || !args->priv_data ||
++	    !args->priv_data_size || !args->num_devices)
+ 		return -EINVAL;
  
- 	sk_memory_allocated_sub(sk, amt);
- 
+ 	mutex_lock(&p->mutex);
 -- 
 2.51.0
 
