@@ -1,106 +1,181 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE223659F0
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 15:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ECE36655F
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 15:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762874725; cv=none; b=p8oAg6cHZAOxh9Jdm2aB3nCMdwDb6B6i9+Snbvv/dxgvPr3cjmt4Xvv0oxcfJZ9qZY2rFkNxVDVYmKO0XtPJYDKgNIwAz5Z/rTv8D/THy6l9ntfK9AbUQBHjq8V/OAydbbtOAAvY6VSzm9hZxlSmYFTqsaqqD/5Ij/hC4Sb+3c0=
+	t=1762875373; cv=none; b=lOr76N45RAdZoZAvOX4fJI97h145PrtuzS9SftN7WJAs95du3QY4CU7QlRZxfV+Kn60Vr8yNCH/0Y0VPbfzHW1gAiebwxtydH46YnBUFON7XCni5OH6mzQILgkib31fuP84jGgM4+TiNGr53OYZ1O6ATY9shKnTQaFWJjSFoR/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762874725; c=relaxed/simple;
-	bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p/Zb+Lmrwpr7EN2S7Y4w7Se4wIqFdHRuSrVbjq9gUz4eIjfTNObkj1VozW0g1zbVsVBc7Z6+KCkjPVrSvCj2q/J/V8mkkmTTOhk3qNcRndPQLpx+ogwXdvDKvryHnqsGoIKvK/QtxN/VNwTarCzuA026d7j2Kx0c9Ww9TxiFZ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CKOHfnP2; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762875373; c=relaxed/simple;
+	bh=IkdCNuwQBj0E/byUN80NSHnSj8LYAZwsDDKIrEasEbk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u8XmQ3ehzpDpPVdzdjYoWtchXCsRTEDoQaW73rFWDZBAifZmNOTX3jWtaolkWP1Scq1UPPFqEim1meE4AFd+Ur1P5lob+8alvApO1no/TKFUnb4xij71kH5GCMprpkIRQVnp8niYgCYgHQ4G2qOBdgW9TQYpoJO2rd8RBwEiOp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ekyMDMuV; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKOHfnP2"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-378d6fa5aebso37797101fa.2
-        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 07:25:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ekyMDMuV"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-477775d3728so26559725e9.2
+        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 07:36:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762874722; x=1763479522; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-        b=CKOHfnP2IJoS/z/R/4CRamJnvyrL6QUbCOaoEcDnRUdMMm6v3wO/0fcPKGVqbvqlky
-         rsxz3NtD90yidfEoJGClkjrY/o9Weq4jOdtpjcLii0ReEweGQwh6E9/l0IdByXKGSsZ4
-         2ywpoLQEg4y23wK2xV+A9NJiXDp9RVJo24zqws9LXPfICPd+E1+SAV2lxnSA9WJlgdq6
-         jVgS2QEPYMViM7hdrE832bwN8ijbmjDYEdQS277lehdQw+PI4CBYhB5PoZwLIzRP6tN9
-         e4Og1aasxmYW/BVh8RMitGbh1yycaHq3DQo4BYX5Kzwyk9WTNAeGxnM4Jlc8i58j3pIh
-         3SXw==
+        d=googlemail.com; s=20230601; t=1762875369; x=1763480169; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ppR1x+hLMCIFniD0aWhZe//Po7//TeOQkjJokWKR8R8=;
+        b=ekyMDMuVs2U51kHAyxe5L/VJZT9L1C3KIYDNR5zHRKJMzGY4EMsHk5zXpfVNQ62ul6
+         87ivdTpb5G0ATLLEWAaBCG+Ne0EIk59sIH0zVv0aw/G9O2DYhEUav+tC3kFlHfT2oSyh
+         5DnHG1yBIzCoCDEzqdp6lSmyFvmejIn8DnpjvsaUSI9llA+k+8XhIniQWrFaiXLrr2or
+         PiTdUSrGxdJ6c936bhNluj0a7zS4CB9wHEeWzF3f4/6mJPEzQmUSyhfj5sJA3ATZaD7D
+         6a0cMxrbcpfkQ98RVJt25HLK2kAtLSYNYlNKOwYD6Q6xFA8/Jo3vK2tQTGGLw/94ra7+
+         xwzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762874722; x=1763479522;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-        b=XaNGeIYNnnu5uUsJ4OtLCvelui7Mb1cG5VRwSIxWkyArUOsiWXwxD51/6+KLC9HS01
-         bQ3YLN2jKT99AZbQau9eKw22gdYU5eZa6SJ/C0Ioo4IxFfqFL3096NkptYUi8gW/MgC/
-         UeQUnFcQOg1pS8AD73giaf89DOk2fFc2H17GiujJ/SsijePI1yWEQzxCbEwYbdwP6oA9
-         N/woIPC76ltf0SHmPvhFnRMt+/Ism+XwmgLEbiWh0PLGEZmzV3SUpnEw8hFQQL34ul5f
-         JlTemyu2MTtuY6OYVEWZIU2bipA9UZet4FmLbKe3w009LCFkWBRM5m+HE/CT5oom0QvQ
-         TVDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXDoULrWx5yXCzzKd7xzEFE5HndMDCF5EdkhRHZqaIMzm4p4Bkz0bdfr1q7U826YrLJTQNqgQHC@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1Is+UILKoOeV0cWDOyayhdmS96j1a+I5ANfUd3jaPc6BpuOWD
-	PViMAcCdUZYaUGI8CY6DqykJsQDmyhuD07SXWKvAFprFB73kLYd8zBQQQWlCe/VlijBBWXyayVJ
-	LaFN+ndrtKJ1Gd5kXGftr0MCoj9SO70s=
-X-Gm-Gg: ASbGnctIfDIQEzMeP0WuyKod8kbeHh4nbDZOnU0PuAVTl90W1TSKdzmHhnuKf3hceNF
-	u61sB8RIlpVsXcMthB4InqpJAsohgMh4/oRM9Ef8V1Eou8qg0oxyFEeKRMVvoVmVn5vwH+5UPwv
-	+mhB0dmUZeF5lLGAwJ5zCyMb+2I/uc2N1IXFkdE1+a3+hVmMdaRN2bUTS81eV+o/T1zaJxHSqh7
-	rYetEWB80Cmc3oySqyuCtBN1UWqfLJqetXa36eSjrzRtGUOZCcpYU7Acdxl5tqgWSwfBpTssg==
-X-Google-Smtp-Source: AGHT+IELN2Wzp2bTqYWDhcQjlFtX9DA00ce12BJNW8cO2c8JdiyexJqlAubB4Ie5Gjviyerq6QZ+GfCfwjPRPrxTi4A=
-X-Received: by 2002:a05:651c:f06:b0:37a:7c41:79e with SMTP id
- 38308e7fff4ca-37a7c410bf5mr32947351fa.13.1762874721655; Tue, 11 Nov 2025
- 07:25:21 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762875369; x=1763480169;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ppR1x+hLMCIFniD0aWhZe//Po7//TeOQkjJokWKR8R8=;
+        b=CdvnwkzFalOOKEwpvSRs92wuMVq2J8z9AHFHuCHmWygwk51tiBgjWZpGqngdKQx0fV
+         xN+k/h4doRKoM8gHmYkDtUYKh+00i3JXgF8GCZtpadjwXtjMAvS7vYXZszf5PZGfaDL/
+         1ULCuMx/9f6YIK9BbUt9T1M6wjMvekOdbFzJ+bfVfWOv7nGJfO7NmYe9GS9uOddHjsgC
+         uCGfYBSI9rSI+tOa8KwzNMNCwQOZPUSVgCTp6zxkIoT3notalYpYaGqmyr4QDRfNrzhS
+         pcq3crNkLeFG1kFMc8wmqCKFnQPX6IzR40z5hkOwzBRW4wvFeh5CfczLt2Jf1jAz/d7E
+         WkSQ==
+X-Gm-Message-State: AOJu0YztvYULLIPjYo6QIoBE6udifG1ufuvndIGLuB3zLovVXuhXvFBu
+	RZHNnJhmp40EkCSvqBnZaTCGN4F8LHnrgxcm+fZwHe7s/3BYovNGWIY61cV2
+X-Gm-Gg: ASbGncsIAR19tjilmnea5WGb0rEzgMwS9GoJQRJhXSxwFdLx1vaDEiWHyyE6Leqdh1X
+	xzMaU/gdtM75SwvbTyxUNIweKruNFv9vHPHZNwKfabzBCTo/1DZK53aqA2ogTISRcELOZ9f/o08
+	QIv075yE0A19r70O2i5DE7nhJsnhE6mKwIMfZ80757pfki4W6kcY8fuMOaTKYBUf61xOW3emXdB
+	Cp2butkJhWhh4fFziw5AwDKf8QpAd07i/Q/PJGGABwgVMgAD6rQbrnsBfLov5k8x6Alv5hVKPJ+
+	6Dvbeyo+rb8nCblcWPefNVdffFYheST9ijzYaDTQoXX4SjfFWJoAunbmjGJYgBefyukc8JE/ZFF
+	rOWQo3TUGzPJgsvhcPih7OAyaVrLdI6X9XyKKRWLLaiRmEqJs+B5ZX8lhcEg5kCYl7aE9D4xgPO
+	yRY9B7fEENksmhhU6012va2T9gWVfvD4tzVtShu+4H8bhyPhhgonqC
+X-Google-Smtp-Source: AGHT+IEojolfoccSO+8VSzilqIjHUxDcGXaj6DHabhOg/LEXqYLd3SjX02gv/CDQ8AJjB3/I7SQ/bA==
+X-Received: by 2002:a05:600c:3b8d:b0:46f:b327:ecfb with SMTP id 5b1f17b1804b1-47773230895mr107537725e9.9.1762875369310;
+        Tue, 11 Nov 2025 07:36:09 -0800 (PST)
+Received: from [192.168.1.3] (p5b2b46e7.dip0.t-ipconnect.de. [91.43.70.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42ac675cd25sm29278958f8f.22.2025.11.11.07.36.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Nov 2025 07:36:08 -0800 (PST)
+Message-ID: <657784d1-72df-43f1-91c4-2d19984dfb14@googlemail.com>
+Date: Tue, 11 Nov 2025 16:36:08 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110131913.1789896-1-ojeda@kernel.org> <CANiq72mjFobjfQEtNvk9aA+757RkLpcfmCCEJAH69ZYsr67GdA@mail.gmail.com>
-In-Reply-To: <CANiq72mjFobjfQEtNvk9aA+757RkLpcfmCCEJAH69ZYsr67GdA@mail.gmail.com>
-Reply-To: sedat.dilek@gmail.com
-From: Sedat Dilek <sedat.dilek@gmail.com>
-Date: Tue, 11 Nov 2025 16:24:45 +0100
-X-Gm-Features: AWmQ_bl70oXfEo-1yQ9VfgUdYtwxWC_v2530llNoS_lks6MxxMHeFjNTi0L0Vkg
-Message-ID: <CA+icZUVcHfLru9SRfhNGToiRmyOY+fLw-ASEvQakZYfU1Kxq4g@mail.gmail.com>
-Subject: Re: [PATCH v2] gendwarfksyms: Skip files with no exports
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, linux-modules@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Haiyue Wang <haiyuewa@163.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.12 070/565] drm/ast: Clear preserved bits from register
+ output value
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>,
+ Jocelyn Falempe <jfalempe@redhat.com>, Nick Bowler <nbowler@draconx.ca>,
+ Douglas Anderson <dianders@chromium.org>, Dave Airlie <airlied@redhat.com>,
+ dri-devel@lists.freedesktop.org
+References: <20251111004526.816196597@linuxfoundation.org>
+ <20251111004528.526435608@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251111004528.526435608@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 11, 2025 at 2:58=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
-...
->
-> I will send a couple other fixes to Linus this week, so if nobody
-> shouts, I will be picking this one.
->
+Hi Greg,
 
-Hi Miguel, Hi Sami,
 
-I switched over to gendwarfksyms in the very early testing days.
-Faster builds. DWARFv5 fan.
+Am 11.11.2025 um 01:38 schrieb Greg Kroah-Hartman:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Thomas Zimmermann <tzimmermann@suse.de>
+> 
+> commit a9fb41b5def8e1e0103d5fd1453787993587281e upstream.
+> 
+> Preserve the I/O register bits in __ast_write8_i_masked() as specified
+> by preserve_mask. Accidentally OR-ing the output value into these will
+> overwrite the register's previous settings.
+> 
+> Fixes display output on the AST2300, where the screen can go blank at
+> boot. The driver's original commit 312fec1405dd ("drm: Initial KMS
+> driver for AST (ASpeed Technologies) 2000 series (v2)") already added
+> the broken code. Commit 6f719373b943 ("drm/ast: Blank with VGACR17 sync
+> enable, always clear VGACRB6 sync off") triggered the bug.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Reported-by: Peter Schneider <pschneider1968@googlemail.com>
+> Closes: https://lore.kernel.org/dri-devel/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+> Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+> Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+> Fixes: 6f719373b943 ("drm/ast: Blank with VGACR17 sync enable, always clear VGACRB6 sync off")
+> Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
+> Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> Cc: Nick Bowler <nbowler@draconx.ca>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Dave Airlie <airlied@redhat.com>
+> Cc: Jocelyn Falempe <jfalempe@redhat.com>
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: <stable@vger.kernel.org> # v3.5+
+> Link: https://patch.msgid.link/20251024073626.129032-1-tzimmermann@suse.de
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   drivers/gpu/drm/ast/ast_drv.h |    8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> --- a/drivers/gpu/drm/ast/ast_drv.h
+> +++ b/drivers/gpu/drm/ast/ast_drv.h
+> @@ -286,13 +286,13 @@ static inline void __ast_write8_i(void _
+>   	__ast_write8(addr, reg + 1, val);
+>   }
+>   
+> -static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 read_mask,
+> +static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 preserve_mask,
+>   					 u8 val)
+>   {
+> -	u8 tmp = __ast_read8_i_masked(addr, reg, index, read_mask);
+> +	u8 tmp = __ast_read8_i_masked(addr, reg, index, preserve_mask);
+>   
+> -	tmp |= val;
+> -	__ast_write8_i(addr, reg, index, tmp);
+> +	val &= ~preserve_mask;
+> +	__ast_write8_i(addr, reg, index, tmp | val);
+>   }
+>   
+>   static inline u32 ast_read32(struct ast_device *ast, u32 reg)
+> 
 
-And was using v5 of Sami's patchset against Linux v6.12 as it cleanly appli=
-ed.
 
-Last week, I jumped over to Linux v6.17.6 and the next testing will be
-Linux v6.18-rc5+ (upcoming next LTS kernel-version).
+I think that with this patch (which fixes a bug in the original ast driver affecting AST2300), it is now safe to also 
+include (in both 6.12.58 AND 6.17.8)
 
-I will try this patch - might be you will get a Tested-by.
+6f719373b943 ("drm/ast: Blank with VGACR17 sync enable, always clear VGACRB6 sync off")
 
-Best regards,
--Sedat-
+
+which triggered that bug, and which you dropped from 6.12.55 and 6.17.5, respectively, because of my report
+
+https://lore.kernel.org/dri-devel/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+
+
+NB: 6f719373b943 fixed (IIRC) an important issue for AST2500 users. I have tested the combination of both patches in 
+mainline 6.18-rc2, and they work fine together, and Linus has both of them in his tree since 6.18-rc4.
+
+Also, I tested both of them already on top of 6.12.5 and 6.17.5, and they were fine, too. Please see:
+
+https://lore.kernel.org/lkml/045e6362-01db-47f3-9a4f-8a86b2c15d00@googlemail.com/
+
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
