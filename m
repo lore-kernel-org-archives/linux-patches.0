@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46404C97;
-	Tue, 11 Nov 2025 00:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BF11D6DB5;
+	Tue, 11 Nov 2025 00:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822518; cv=none; b=cpcZntINILYkOywtPAfCoyKoMwwSx5WOFvdY6exF2gtKsODr84xP9HRtZCPMSKmQAeAJ/1vZ3lU6S1odVujk8yA6zsnIHDhnyEZY+r0j9OO/cXOrcdMuP29wPB1imIwnH1EvqwP6rmgOfRT74+rzEsseH8Hhj+i4XTVghSuoUIM=
+	t=1762822520; cv=none; b=KTK/72kFIZ/VXI7CfZTAnqqGsv91s7O2knEdsmb72V536ZVXjLHFt6TWZJOycLeq/+gT04JW3atJWC/ld9EklKx9wBBzerQlDXI+e/ib4XdfhD8AqYIxwlFYMaaDVSd17uVM/cAON1u77ynIB2ZSkizbLUsUYhT2UXhqZ341GqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822518; c=relaxed/simple;
-	bh=MeiCOYirxYR3uP+B/dzbVUNE5+aQug5PiSZDwp6VMA0=;
+	s=arc-20240116; t=1762822520; c=relaxed/simple;
+	bh=fDwfr4LCXz/Uq2TZ01ZihnsNCp/1/qzjcxcRwxsPRvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/8SekwR5FpWrolW/oWzzxC2dPJZW6UixlrilpfoHRnhRM1oC0RLSoznwbY5Dn29v1GpZ/6X2sGAVVBbvoEuk4u4RUVuDCnoOjh9fbTJBpZTblB01OKnYqvU48GpqEE0kZmRnhLXikQoN3C+gGltIOL5kAn7jdaJIo9WUbcPHvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0w5geyyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6gyjHVQsmvk6MSXNXWyhfXfkMLcsaLssQLVAynxfr3y16gSe2j29kW5HhlWwaAznzS7bavMf+BHiWRCLVfEZCNZv0TuWKwaluY3BQJPJFEWMLXv/pz0aUsEJuA09ToNM6pWy3RfZE3FkBYVOp+0rCibyvVaRkNmBT9qf5Tyllw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWfWbwqe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0w5geyyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706D9C113D0;
-	Tue, 11 Nov 2025 00:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWfWbwqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D609C4CEF5;
+	Tue, 11 Nov 2025 00:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822517;
-	bh=MeiCOYirxYR3uP+B/dzbVUNE5+aQug5PiSZDwp6VMA0=;
+	s=korg; t=1762822520;
+	bh=fDwfr4LCXz/Uq2TZ01ZihnsNCp/1/qzjcxcRwxsPRvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0w5geyypRDguODmk9dcDi2AgcqosEDFaopDnjEadgiuSjro63zcyJXAp/p+udKRgH
-	 zZaoFuMUdGcFACAVKLC7KIGmHU9dwg63chBB6R1HaBTqTLAmM0I0iUAIiYOwAceHQs
-	 yoHdgO7JMoW0OzqWSaUu+T+crf9zfd1EycXm/3i0=
+	b=rWfWbwqehNikNwplxLOSGJPSL1oBszLKjck+R4N1XuW1EYcPbQXGp+1YjyZj4qbmG
+	 YxaL/HuzUo5tmVGkhPi7gLKG9ImVLnpASZ+jmUXIlrn9lDr9HsJdWqwKd1ujMtSOu0
+	 649lH1k7HpQZCUY++zbgkFqqQPdRuHxi0OSzJmcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Melissa Wen <melissa.srw@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 6.12 066/565] drm/sysfb: Do not dereference NULL pointer in plane reset
-Date: Tue, 11 Nov 2025 09:38:42 +0900
-Message-ID: <20251111004528.430436499@linuxfoundation.org>
+	Paresh Bhagat <p-bhagat@ti.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 129/849] cpufreq: ti: Add support for AM62D2
+Date: Tue, 11 Nov 2025 09:34:59 +0900
+Message-ID: <20251111004539.513153421@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,56 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Paresh Bhagat <p-bhagat@ti.com>
 
-commit 14e02ed3876f4ab0ed6d3f41972175f8b8df3d70 upstream.
+[ Upstream commit b5af45302ebc141662b2b60c713c9202e88c943c ]
 
-The plane state in __drm_gem_reset_shadow_plane() can be NULL. Do not
-deref that pointer, but forward NULL to the other plane-reset helpers.
-Clears plane->state to NULL.
+Add support for TI K3 AM62D2 SoC to read speed and revision values
+from hardware and pass to OPP layer. AM62D shares the same configuations
+as AM62A so use existing am62a7_soc_data.
 
-v2:
-- fix typo in commit description (Javier)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: b71565022031 ("drm/gem: Export implementation of shadow-plane helpers")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/dri-devel/aPIDAsHIUHp_qSW4@stanley.mountain/
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Melissa Wen <melissa.srw@gmail.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.15+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20251017091407.58488-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Paresh Bhagat <p-bhagat@ti.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gem_atomic_helper.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/cpufreq/ti-cpufreq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/drm_gem_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_gem_atomic_helper.c
-@@ -309,8 +309,12 @@ EXPORT_SYMBOL(drm_gem_destroy_shadow_pla
- void __drm_gem_reset_shadow_plane(struct drm_plane *plane,
- 				  struct drm_shadow_plane_state *shadow_plane_state)
- {
--	__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
--	drm_format_conv_state_init(&shadow_plane_state->fmtcnv_state);
-+	if (shadow_plane_state) {
-+		__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
-+		drm_format_conv_state_init(&shadow_plane_state->fmtcnv_state);
-+	} else {
-+		__drm_atomic_helper_plane_reset(plane, NULL);
-+	}
- }
- EXPORT_SYMBOL(__drm_gem_reset_shadow_plane);
+diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+index 5a5147277cd0a..9a912d3093153 100644
+--- a/drivers/cpufreq/ti-cpufreq.c
++++ b/drivers/cpufreq/ti-cpufreq.c
+@@ -310,6 +310,7 @@ static const struct soc_device_attribute k3_cpufreq_soc[] = {
+ 	{ .family = "AM62X", .revision = "SR1.0" },
+ 	{ .family = "AM62AX", .revision = "SR1.0" },
+ 	{ .family = "AM62PX", .revision = "SR1.0" },
++	{ .family = "AM62DX", .revision = "SR1.0" },
+ 	{ /* sentinel */ }
+ };
  
+@@ -457,6 +458,7 @@ static const struct of_device_id ti_cpufreq_of_match[]  __maybe_unused = {
+ 	{ .compatible = "ti,omap36xx", .data = &omap36xx_soc_data, },
+ 	{ .compatible = "ti,am625", .data = &am625_soc_data, },
+ 	{ .compatible = "ti,am62a7", .data = &am62a7_soc_data, },
++	{ .compatible = "ti,am62d2", .data = &am62a7_soc_data, },
+ 	{ .compatible = "ti,am62p5", .data = &am62p5_soc_data, },
+ 	/* legacy */
+ 	{ .compatible = "ti,omap3430", .data = &omap34xx_soc_data, },
+-- 
+2.51.0
+
 
 
