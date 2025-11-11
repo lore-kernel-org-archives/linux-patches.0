@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BDF4C97;
-	Tue, 11 Nov 2025 00:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12DD4086A;
+	Tue, 11 Nov 2025 00:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822530; cv=none; b=l4aYvJt4SaaxS2xhXqsOfIH0WX1lsE5kixpGcA1Zp5MmZ1SmsUtziDBjeoTiwhc0Sw41qY2Hzz4jSawAp3rTp/+aoffx9wOpEHQhMVKb0yWHlPsL2rb73tzc4th27TFBV1vZSWugClDfIUcFpyGzbAVBh/X+TWzoM6nJxQ6C3Mo=
+	t=1762822533; cv=none; b=BsgjC/ZC+NJ/bg8S0OGAwYNAfN3yI1kNZRAuRbzVP7tB0v4znHbynDkUJ/kG797o4inybhzyDib17aS+kjBbmBKzwjk+qD1RALZPcg1SPBYMmbB+jfvq8A0P9/RV53YiCcmdX9tHtX2/nrwo469JQnBMHR1kl6pHrAEamdsYZDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822530; c=relaxed/simple;
-	bh=aWeNZT2zFIB4b6hXN+7g5nSt8xSZ/P4G1/YigYr6UXM=;
+	s=arc-20240116; t=1762822533; c=relaxed/simple;
+	bh=xjCBFBCNWsusTBdUvRI8LkS5ucvS2f16SQ3Su/D3KC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gze+AqmCuEyUuwNcTGkljXNiyiohFVAk9tatnBn2cdQdoMtkXWF3mjjTQXntu5FjjCvTXaiwkPSSCqyBm73iwPKCIv3/6q3x6k49Z45Hbb8SSrMjHmW3S5V/3s0fbDMgcBPai6ojRsq+SGpzU8d6jdBD8C+rfTxri0tuYPWZpT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxCe0Sj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fc2hnLTi/70V4QXkiue4zLPrj+SOXncenl3KE8fjH5yf02GdySZknWBluAuw+fFDsw6QQKZTEmuqqswXQNddvj1RN4PVddlyokCWOHO1jTBM4HRkK8jydLk3he9++KvwsBabD0GllJz6uPjp3VxIgnlalBNy/QAEDW5sQTXTQ/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmz6hygY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxCe0Sj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF47C4AF09;
-	Tue, 11 Nov 2025 00:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmz6hygY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8FCC116B1;
+	Tue, 11 Nov 2025 00:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822529;
-	bh=aWeNZT2zFIB4b6hXN+7g5nSt8xSZ/P4G1/YigYr6UXM=;
+	s=korg; t=1762822532;
+	bh=xjCBFBCNWsusTBdUvRI8LkS5ucvS2f16SQ3Su/D3KC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxCe0Sj+42Dl+HFBXYAu2Y/hF3zZFXBTJGITSwP0CjmwfR4iBRvrSwoCxtu9x4tpA
-	 29s2Bg7t5q4NkikKAEby6+ao739bSExZJAqC2HVnsAuIW0enu7mZq3HZTwt4a9NU2A
-	 YlmMLMVM1Cg9qZAq8PpwW/8SxGUvukCAz3v58mTE=
+	b=rmz6hygYrJ1xlI6NlA0G+sCTqYiVPU3DdyqLLhPYUf6QVic27/lhjUgRYWXJOjiXl
+	 Ynvm/M5J/TsJkvbzWCQEefduP1YEUWcT3v5wYwXjt4q+/PhyfwReCp6yXmb2sfpP9d
+	 q8DVp8jBJ1V8Hh2BteQtNV6Q9Lwrr7tg9iSFU1rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kendall Willis <k-willis@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Nishanth Menon <nm@ti.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 131/849] firmware: ti_sci: Enable abort handling of entry to LPM
-Date: Tue, 11 Nov 2025 09:35:01 +0900
-Message-ID: <20251111004539.561610240@linuxfoundation.org>
+	Sjoerd Simons <sjoerd@collabora.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Johan Hovold <johan@kernel.org>,
+	Ritesh Raj Sarraf <ritesh.sarraf@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.12 069/565] drm/mediatek: Fix device use-after-free on unbind
+Date: Tue, 11 Nov 2025 09:38:45 +0900
+Message-ID: <20251111004528.502494715@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,159 +51,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kendall Willis <k-willis@ti.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 0fdd3240fe5a9bf4785e40506bf86b7e16546b83 ]
+commit 926d002e6d7e2f1fd5c1b53cf6208153ee7d380d upstream.
 
-The PM co-processor (device manager or DM) adds the ability to abort
-entry to a low power mode by clearing the mode selection in the
-latest version of its firmware (11.01.09) [1].
+A recent change fixed device reference leaks when looking up drm
+platform device driver data during bind() but failed to remove a partial
+fix which had been added by commit 80805b62ea5b ("drm/mediatek: Fix
+kobject put for component sub-drivers").
 
-Enable the ti_sci driver to support the LPM abort call which clears the
-low power mode selection of the DM. This fixes an issue where failed
-system suspend attempts would cause subsequent suspends to fail.
+This results in a reference imbalance on component bind() failures and
+on unbind() which could lead to a user-after-free.
 
-After system suspend completes, regardless of if system suspend succeeds
-or fails, the ->complete() hook in TI SCI will be called. In the
-->complete() hook, a message will be sent to the DM to clear the current
-low power mode selection. Clearing the low power mode selection
-unconditionally will not cause any error in the DM.
+Make sure to only drop the references after retrieving the driver data
+by effectively reverting the previous partial fix.
 
-[1] https://software-dl.ti.com/tisci/esd/latest/2_tisci_msgs/pm/lpm.html
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
-Signed-off-by: Kendall Willis <k-willis@ti.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://patch.msgid.link/20250819195453.1094520-1-k-willis@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
+Reported-by: Sjoerd Simons <sjoerd@collabora.com>
+Closes: https://lore.kernel.org/r/20251003-mtk-drm-refcount-v1-1-3b3f2813b0db@collabora.com
+Cc: stable@vger.kernel.org
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Sjoerd Simons <sjoerd@collabora.com>
+Tested-by: Sjoerd Simons <sjoerd@collabora.com>
+Tested-by: Ritesh Raj Sarraf <ritesh.sarraf@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20251006093937.27869-1-johan@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/ti_sci.c | 57 +++++++++++++++++++++++++++++++++++++--
- drivers/firmware/ti_sci.h |  3 +++
- 2 files changed, 58 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index ae5fd1936ad32..49fd2ae01055d 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -2015,6 +2015,47 @@ static int ti_sci_cmd_set_latency_constraint(const struct ti_sci_handle *handle,
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -684,10 +684,6 @@ err_free:
+ 	for (i = 0; i < private->data->mmsys_dev_num; i++)
+ 		private->all_drm_private[i]->drm = NULL;
+ err_put_dev:
+-	for (i = 0; i < private->data->mmsys_dev_num; i++) {
+-		/* For device_find_child in mtk_drm_get_all_priv() */
+-		put_device(private->all_drm_private[i]->dev);
+-	}
+ 	put_device(private->mutex_dev);
  	return ret;
  }
- 
-+/**
-+ * ti_sci_cmd_lpm_abort() - Abort entry to LPM by clearing selection of LPM to enter
-+ * @dev:	Device pointer corresponding to the SCI entity
-+ *
-+ * Return: 0 if all went well, else returns appropriate error value.
-+ */
-+static int ti_sci_cmd_lpm_abort(struct device *dev)
-+{
-+	struct ti_sci_info *info = dev_get_drvdata(dev);
-+	struct ti_sci_msg_hdr *req;
-+	struct ti_sci_msg_hdr *resp;
-+	struct ti_sci_xfer *xfer;
-+	int ret = 0;
-+
-+	xfer = ti_sci_get_one_xfer(info, TI_SCI_MSG_LPM_ABORT,
-+				   TI_SCI_FLAG_REQ_ACK_ON_PROCESSED,
-+				   sizeof(*req), sizeof(*resp));
-+	if (IS_ERR(xfer)) {
-+		ret = PTR_ERR(xfer);
-+		dev_err(dev, "Message alloc failed(%d)\n", ret);
-+		return ret;
-+	}
-+	req = (struct ti_sci_msg_hdr *)xfer->xfer_buf;
-+
-+	ret = ti_sci_do_xfer(info, xfer);
-+	if (ret) {
-+		dev_err(dev, "Mbox send fail %d\n", ret);
-+		goto fail;
-+	}
-+
-+	resp = (struct ti_sci_msg_hdr *)xfer->xfer_buf;
-+
-+	if (!ti_sci_is_response_ack(resp))
-+		ret = -ENODEV;
-+
-+fail:
-+	ti_sci_put_one_xfer(&info->minfo, xfer);
-+
-+	return ret;
-+}
-+
- static int ti_sci_cmd_core_reboot(const struct ti_sci_handle *handle)
+@@ -695,18 +691,12 @@ err_put_dev:
+ static void mtk_drm_unbind(struct device *dev)
  {
- 	struct ti_sci_info *info;
-@@ -3739,11 +3780,22 @@ static int __maybe_unused ti_sci_resume_noirq(struct device *dev)
- 	return 0;
- }
+ 	struct mtk_drm_private *private = dev_get_drvdata(dev);
+-	int i;
  
-+static void __maybe_unused ti_sci_pm_complete(struct device *dev)
-+{
-+	struct ti_sci_info *info = dev_get_drvdata(dev);
-+
-+	if (info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT) {
-+		if (ti_sci_cmd_lpm_abort(dev))
-+			dev_err(dev, "LPM clear selection failed.\n");
-+	}
-+}
-+
- static const struct dev_pm_ops ti_sci_pm_ops = {
- #ifdef CONFIG_PM_SLEEP
- 	.suspend = ti_sci_suspend,
- 	.suspend_noirq = ti_sci_suspend_noirq,
- 	.resume_noirq = ti_sci_resume_noirq,
-+	.complete = ti_sci_pm_complete,
- #endif
- };
- 
-@@ -3876,10 +3928,11 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	/* for multi mmsys dev, unregister drm dev in mmsys master */
+ 	if (private->drm_master) {
+ 		drm_dev_unregister(private->drm);
+ 		mtk_drm_kms_deinit(private->drm);
+ 		drm_dev_put(private->drm);
+-
+-		for (i = 0; i < private->data->mmsys_dev_num; i++) {
+-			/* For device_find_child in mtk_drm_get_all_priv() */
+-			put_device(private->all_drm_private[i]->dev);
+-		}
+ 		put_device(private->mutex_dev);
  	}
- 
- 	ti_sci_msg_cmd_query_fw_caps(&info->handle, &info->fw_caps);
--	dev_dbg(dev, "Detected firmware capabilities: %s%s%s\n",
-+	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s\n",
- 		info->fw_caps & MSG_FLAG_CAPS_GENERIC ? "Generic" : "",
- 		info->fw_caps & MSG_FLAG_CAPS_LPM_PARTIAL_IO ? " Partial-IO" : "",
--		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : ""
-+		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : "",
-+		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : ""
- 	);
- 
- 	ti_sci_setup_ops(info);
-diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
-index 053387d7baa06..701c416b2e78f 100644
---- a/drivers/firmware/ti_sci.h
-+++ b/drivers/firmware/ti_sci.h
-@@ -42,6 +42,7 @@
- #define TI_SCI_MSG_SET_IO_ISOLATION	0x0307
- #define TI_SCI_MSG_LPM_SET_DEVICE_CONSTRAINT	0x0309
- #define TI_SCI_MSG_LPM_SET_LATENCY_CONSTRAINT	0x030A
-+#define TI_SCI_MSG_LPM_ABORT	0x0311
- 
- /* Resource Management Requests */
- #define TI_SCI_MSG_GET_RESOURCE_RANGE	0x1500
-@@ -147,6 +148,7 @@ struct ti_sci_msg_req_reboot {
-  *		MSG_FLAG_CAPS_GENERIC: Generic capability (LPM not supported)
-  *		MSG_FLAG_CAPS_LPM_PARTIAL_IO: Partial IO in LPM
-  *		MSG_FLAG_CAPS_LPM_DM_MANAGED: LPM can be managed by DM
-+ *		MSG_FLAG_CAPS_LPM_ABORT: Abort entry to LPM
-  *
-  * Response to a generic message with message type TI_SCI_MSG_QUERY_FW_CAPS
-  * providing currently available SOC/firmware capabilities. SoC that don't
-@@ -157,6 +159,7 @@ struct ti_sci_msg_resp_query_fw_caps {
- #define MSG_FLAG_CAPS_GENERIC		TI_SCI_MSG_FLAG(0)
- #define MSG_FLAG_CAPS_LPM_PARTIAL_IO	TI_SCI_MSG_FLAG(4)
- #define MSG_FLAG_CAPS_LPM_DM_MANAGED	TI_SCI_MSG_FLAG(5)
-+#define MSG_FLAG_CAPS_LPM_ABORT		TI_SCI_MSG_FLAG(9)
- #define MSG_MASK_CAPS_LPM		GENMASK_ULL(4, 1)
- 	u64 fw_caps;
- } __packed;
--- 
-2.51.0
-
+ 	private->mtk_drm_bound = false;
 
 
