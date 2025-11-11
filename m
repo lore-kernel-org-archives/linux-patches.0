@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21DF1DF258;
-	Tue, 11 Nov 2025 00:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C90B4C97;
+	Tue, 11 Nov 2025 00:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822703; cv=none; b=YW+PVCnO8wcGSQvWlOYLnTsHrMMrAkUq2GOSyk15Z/tqNHv2Fkw4R/DJu4HdcgkRcvCwUE+wtNDluxjTcfnQnYQ5i+eI6zwQKzbO2VKIvbqSCTBbEOedqErAGjdSkINBISe3F2T+4SouXaqYSQIb3Tw495TwBxo2FYjZaB8J+Co=
+	t=1762822706; cv=none; b=cg8iUW4uj59LcJOVIPGsM2HGNAHMG8SZnwkxDrqr0tA0JVQ3rutqupa6dYqPHMTaRsUp9/ZtueL9p1YAsUBXJ/qr5Lz1UqKZJ/+1EXQBIUbQA4/LppLK/5GxRsXEPul01K+PcERH4LgUraDldUOuPB6jjXf/nPgoka9YsCon9AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822703; c=relaxed/simple;
-	bh=hQ2cYZThJ/ZRRipIttx8NPfq0XZzONHnYJ+iDwvHK40=;
+	s=arc-20240116; t=1762822706; c=relaxed/simple;
+	bh=wmzvZEFcGS7irPOLEt0189XyxHbWMPuzrJ9uJQ9Tk0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLxUgGUbB8gwa4M2ZBk/q7OkG+53nEtKR8P/M+qhvmRm2Cxpete117D7PHmo/0Ec5Rx9JREGHji1+rKLUTki+syUkWpMJVc/13v8jZL126r4BVEJENvipAAi81L1MTwzq9duCzo4O+0/2Utm9a+8jpxf4bcaox84XJNGf1W+/9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2dJe8vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvu2dVn+SrL/LbuKFYyMlFPFD4zA09cbMXbt0kHzEEcNRnliZwoe/LtsQH47G2Ts7POv/FNO+g1zKsg6++xk9ySI2Rd9bLWtL9RVIvCwomqCoaI1+T6iRlbNgprJ5OdectSO0tdYR0ug2f3GjXiZaxbpI5MiKEVRoNtGcSQeMkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+rnQWnE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2dJe8vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4F6C19425;
-	Tue, 11 Nov 2025 00:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+rnQWnE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1247C4CEFB;
+	Tue, 11 Nov 2025 00:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822703;
-	bh=hQ2cYZThJ/ZRRipIttx8NPfq0XZzONHnYJ+iDwvHK40=;
+	s=korg; t=1762822705;
+	bh=wmzvZEFcGS7irPOLEt0189XyxHbWMPuzrJ9uJQ9Tk0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2dJe8vl5OwSAm6sLQqlz6Wl+BXeAeb/mNBL1LSShETmXJl9geJounR1ddj/Sls3t
-	 HWoK6Mt+JxDBtIfRFEvHX5JNPzY9LX2+XoA8lO8K6mEZZV8KIfhald8MNip68qGbge
-	 XcOhSzjSQwYNheH/GOiZ6ejOtKHyBsLZf2zerjCQ=
+	b=D+rnQWnEK4rp7Xeh3/mwiK66ZeUTX6e3vvkmqJPmumkl0cT6mOAiGgtzndXapukeH
+	 jEVx6Kh8/PkmCOLqEzG3olQ+qcGgGgB+LgUebEwSyU/nl1GfOwbVkZtbiVHODkwwd/
+	 n0MufYk+TF47IM6DxmIVOY+XobykjoLyYZL/8Qxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/565] firmware: qcom: scm: preserve assign_mem() error return value
-Date: Tue, 11 Nov 2025 09:39:05 +0900
-Message-ID: <20251111004528.971363913@linuxfoundation.org>
+Subject: [PATCH 6.17 152/849] thermal: intel: selftests: workload_hint: Mask unsupported types
+Date: Tue, 11 Nov 2025 09:35:22 +0900
+Message-ID: <20251111004540.096973251@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 121fcf3c871181edce0708a49d2397cedd6ad21f ]
+[ Upstream commit 0115d063559fa6d25e41751cf455dda40aa2c856 ]
 
-When qcom_scm_assign_mem() fails, the error value is currently being
-overwritten after it is logged, resulting in the loss of the original
-error code. Fix this by retaining and returning the original error value
-as intended.
+The workload hint may contain some other hints which are not defined.
+So mask out unsupported types. Currently only lower 4 bits of workload
+type hints are defined.
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250807124451.2623019-1-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20250828201541.931425-1-srinivas.pandruvada@linux.intel.com
+[ rjw: Subject cleanup ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/thermal/intel/workload_hint/workload_hint_test.c  | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 23aefbf6fca58..1da16bc79391c 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1093,7 +1093,7 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	if (ret) {
- 		dev_err(__scm->dev,
- 			"Assign memory protection call failed %d\n", ret);
--		return -EINVAL;
-+		return ret;
- 	}
- 
- 	*srcvm = next_vm;
+diff --git a/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c b/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
+index ba58589a11454..ca2bd03154e4d 100644
+--- a/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
++++ b/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
+@@ -144,6 +144,8 @@ int main(int argc, char **argv)
+ 			ret = sscanf(index_str, "%d", &index);
+ 			if (ret < 0)
+ 				break;
++
++			index &= 0x0f;
+ 			if (index > WORKLOAD_TYPE_MAX_INDEX)
+ 				printf("Invalid workload type index\n");
+ 			else
 -- 
 2.51.0
 
