@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8E3246768;
-	Tue, 11 Nov 2025 01:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D507B3AC3B;
+	Tue, 11 Nov 2025 01:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822887; cv=none; b=LEp8xZ4iTJk6WaRa5WDCrN1g2exIfJmLTHpD8aY4uQFWV9JJpvVLIsd/A512pHv6jQkYGoOf63dyKw7rrig3ygOkRKOnDDjZN7N9Qk9rADMFBlPyT/rS+6y/a/s+szuYW6ZM7cddTcMcdGE1G2QtyPtwW1pXL4RCgmRy9q7gYLo=
+	t=1762822889; cv=none; b=W11n0p4LhUoJCoN8maBvUjzn+cHxHGEUB2RaYFEOARsEsndw8CmUqjpL5DYOrHRav33WppIXXTIfPSVzoO4kEHv/FxCfOv6RFVSmxnf4n/Ua7kX5NUiP4UTgnjfw6WlL8Z8Faw3mGlqsVmZI/8s6FYUHxnnDOps+piYAKMZnd5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822887; c=relaxed/simple;
-	bh=oCtul7SH05HdejLwk8GoKzWSWE4nl73V8hS//Gh9kFM=;
+	s=arc-20240116; t=1762822889; c=relaxed/simple;
+	bh=967soiR7boCgfbNupzIGR/qS1eX9pcr6TNDdsD+sVHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5yQfcl6/A+D8YHxstruVf7iM6IVw9f1hR4xhua2NnG0c+JuQg5az+oG1MJrNNnvEpG75iFO53vqWuuvyzuZZFsgbohxKOAjAoTmi8qWUIO4tJm3/oVFpkVJm3I8OJ2LAebPqmbKhaftfY1AnMvzeu66E5wF9DBYNDF7vad2moU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cq848ukv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bXOrTiC03b22ELJcjYCwSKjaPL6h8josq2FXJGer3RuxEHQmb48bkd0WK1hjIyExdfFz4TRty9d4ZGk4FkNWEcJV+00xWi+WCxyC5wcL6MvezVM3+BnkkWHn5ezQKyv7f/TGe1CtPpchBZaU1UWm8kwagqq0AaoKsXDcr2SzOJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ehm5kqhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cq848ukv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AABC16AAE;
-	Tue, 11 Nov 2025 01:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ehm5kqhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717A7C19421;
+	Tue, 11 Nov 2025 01:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822887;
-	bh=oCtul7SH05HdejLwk8GoKzWSWE4nl73V8hS//Gh9kFM=;
+	s=korg; t=1762822889;
+	bh=967soiR7boCgfbNupzIGR/qS1eX9pcr6TNDdsD+sVHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cq848ukvbzvSZv+FoZt6OKR8EKcdUaOl1Rros8q9g/Ivz/kXsBFpxBz2xivUIyp+E
-	 JZmISgeksdpH+czIZequpe/LP27PsUACkhqWaKNJ2/RHN3lFVRbPJNSXml7Avcv/hk
-	 iyeNT1LlOv9ShtvUztrJi/rEkXImhDF8x0JH26ew=
+	b=Ehm5kqhRzbTT5vTSLJOBZVBZloDIbTvo2aDV/DPZWmFkLeAKdM3APD/8+FNjX7IRZ
+	 d/tL+wX6jWvQBOnUZ76hU3vZc2Pxe9jKKQgPzpqjGEtsyc7Aykzn2fGIgd9d/jOYkG
+	 1Ig5qHVTviLX9RSFVcoZ4O24t1rJHJy19joAuRpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/565] arm64: zynqmp: Revert usb node drive strength and slew rate for zcu106
-Date: Tue, 11 Nov 2025 09:39:43 +0900
-Message-ID: <20251111004529.809462168@linuxfoundation.org>
+Subject: [PATCH 6.17 190/849] io_uring/zcrx: account niov arrays to cgroup
+Date: Tue, 11 Nov 2025 09:36:00 +0900
+Message-ID: <20251111004541.019878819@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 767ecf9da7b31e5c0c22c273001cb2784705fe8c ]
+[ Upstream commit 31bf77dcc3810e08bcc7d15470e92cdfffb7f7f1 ]
 
-On a few zcu106 boards USB devices (Dell MS116 USB Optical Mouse, Dell USB
-Entry Keyboard) are not enumerated on linux boot due to commit
-'b8745e7eb488 ("arm64: zynqmp: Fix usb node drive strength and slew
-rate")'.
+net_iov / freelist / etc. arrays can be quite long, make sure they're
+accounted.
 
-To fix it as a workaround revert to working version and then investigate
-at board level why drive strength from 12mA to 4mA and slew from fast to
-slow is not working.
-
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/85a70cb014ec1f07972fccb60b875596eeaa6b5c.1756799774.git.michal.simek@amd.com
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/zcrx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts b/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
-index 7beedd730f940..9dd63cc384e6e 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp-zcu106-revA.dts
-@@ -808,8 +808,8 @@
- 			pins = "MIO54", "MIO56", "MIO57", "MIO58", "MIO59",
- 			       "MIO60", "MIO61", "MIO62", "MIO63";
- 			bias-disable;
--			drive-strength = <4>;
--			slew-rate = <SLEW_RATE_SLOW>;
-+			drive-strength = <12>;
-+			slew-rate = <SLEW_RATE_FAST>;
- 		};
- 	};
+diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+index 23ffc95caa427..e3953ea740c03 100644
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -426,17 +426,17 @@ static int io_zcrx_create_area(struct io_zcrx_ifq *ifq,
+ 
+ 	ret = -ENOMEM;
+ 	area->nia.niovs = kvmalloc_array(nr_iovs, sizeof(area->nia.niovs[0]),
+-					 GFP_KERNEL | __GFP_ZERO);
++					 GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+ 	if (!area->nia.niovs)
+ 		goto err;
+ 
+ 	area->freelist = kvmalloc_array(nr_iovs, sizeof(area->freelist[0]),
+-					GFP_KERNEL | __GFP_ZERO);
++					GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+ 	if (!area->freelist)
+ 		goto err;
+ 
+ 	area->user_refs = kvmalloc_array(nr_iovs, sizeof(area->user_refs[0]),
+-					GFP_KERNEL | __GFP_ZERO);
++					GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+ 	if (!area->user_refs)
+ 		goto err;
  
 -- 
 2.51.0
