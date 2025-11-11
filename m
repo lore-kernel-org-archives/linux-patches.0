@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C49303CAE;
-	Tue, 11 Nov 2025 01:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D22F305E1B;
+	Tue, 11 Nov 2025 01:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823294; cv=none; b=We56jNmqQ3rIVyI/e73Kt7Uv5FTbt5YZBPjzYLi8/q1wLMijB78UVZyaaoSR1nQt7QN1FW6k6DDS0Hl/IxZZ09MkvknFTOT1UJprCATAdNfSrCM7Gs3gNgt9GgoK4H0jrHFdY4CGtZEXIrAqM1Gswc3jkptxS8oZRRYHRG/HnSE=
+	t=1762823297; cv=none; b=r1H6ahJX48tDPOeDZSgDF/54pHcMFXt96QPSnHBe3zDIIxtS54oziqZa0FbEWCRLQ5vqHtC+fhXE2Tw7lklY8JPIZNs6DaCDZCgMyDlm8/vp7bZmU0XJXeFbH0ZL5jV/zrjavbvumK6WAAIkxVwURgpF9h3NJZdwuiIIuYypi3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823294; c=relaxed/simple;
-	bh=3iXnmmi16rEpRBDcRIA0W0fdnYWw5WC6Zl03GVUBg+c=;
+	s=arc-20240116; t=1762823297; c=relaxed/simple;
+	bh=Gq5w1jT2h7Y4xc8tGju6YTuehHzu7Bjy2iLjTZRTwCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UODVBbs0R3r5ZGs4kwZ8dd8aJS9Y922wfiJmsBnw+GqE7sp0LK4j9L4z9xFKxjadd95qtCIKRtz6huJnj4tZS7V4m+Ud8NxpeEX39AT+InSM9CFugrT+/CvqVAFGDsgisX47ha6ac4gr0xBR/3xJbs/SyvuSKF+GG03qo6RaRTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJWQBkJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZM2FkCXUPtpSerxt5VEjMU3ugjg0hMvXxH+ChT9xrcLgqF5/M0wYTkapoY+WjKCVS+WgxU60Zc8EHtfeOEj2k+SNNa2JT7V8+ILY5FH8414CTvUVOJjSlOvn7X7PRWon4LaW8DDVvb/HdOVtEuUeNPV0Q3jwPGvVPZdd14nXqbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4qLqglV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJWQBkJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2973FC4CEFB;
-	Tue, 11 Nov 2025 01:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4qLqglV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658AFC4CEFB;
+	Tue, 11 Nov 2025 01:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823294;
-	bh=3iXnmmi16rEpRBDcRIA0W0fdnYWw5WC6Zl03GVUBg+c=;
+	s=korg; t=1762823296;
+	bh=Gq5w1jT2h7Y4xc8tGju6YTuehHzu7Bjy2iLjTZRTwCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJWQBkJUvflz5EteC/ABNs7/PC630maPg7KDIFgMtQQbeMvt3ZSn8Z16yaODTWbQD
-	 W96HrzJgO9++Yvm4Ilt012BTuKmMz9lW+2duO+Vtgmgn5Px5NWznDYpkP4Ap6TQPGj
-	 N2CtKDIwCh/FfeIUj8eprk6LMMXUo+Ldrji0iDGE=
+	b=v4qLqglVGXnGzewOfsHIU04VHOM24NxFwh+hBHZPjWrRZICqiQf7TTDzUziTTLDKx
+	 wIVg26JqG4z/5KLDNOe9iH4gxp6/8n/V0pgky+u2p1ZosavhghmQjkdH+BxusllqGi
+	 xt4TO2EA2evgQSWzRDs72+tWW7bPF8egimmAR2F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 270/849] drm/sharp-memory: Do not access GEM-DMA vaddr directly
-Date: Tue, 11 Nov 2025 09:37:20 +0900
-Message-ID: <20251111004542.957821040@linuxfoundation.org>
+Subject: [PATCH 6.12 214/565] scsi: ufs: host: mediatek: Fix auto-hibern8 timer configuration
+Date: Tue, 11 Nov 2025 09:41:10 +0900
+Message-ID: <20251111004531.737988798@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,141 +47,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 136c374d8c80378d2982a46b2adabfc007299641 ]
+[ Upstream commit aa86602a483ba48f51044fbaefa1ebbf6da194a4 ]
 
-Use DRM's shadow-plane helper to map and access the GEM object's buffer
-within kernel address space. Encapsulates the vmap logic in the GEM-DMA
-helpers.
+Move the configuration of the Auto-Hibern8 (AHIT) timer from the
+post-link stage to the 'fixup_dev_quirks' function. This change allows
+setting the AHIT based on the vendor requirements:
 
-The sharp-memory driver currently reads the vaddr field from the GME
-buffer object directly. This only works because GEM code 'automagically'
-sets vaddr.
+   (a) Samsung: 3.5 ms
+   (b) Micron: 2 ms
+   (c) Others: 1 ms
 
-Shadow-plane helpers perform the same steps, but with correct abstraction
-behind drm_gem_vmap(). The shadow-plane state provides the buffer address
-in kernel address space and the format-conversion state.
+Additionally, the clock gating timer is adjusted based on the AHIT
+scale, with a maximum setting of 10 ms. This ensures that the clock
+gating delay is appropriately configured to match the AHIT settings.
 
-v2:
-- fix typo in commit description
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://lore.kernel.org/r/20250627152327.8244-1-tzimmermann@suse.de
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20250811131423.3444014-3-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/sharp-memory.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/ufs/host/ufs-mediatek.c | 86 ++++++++++++++++++++++++---------
+ 1 file changed, 64 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/sharp-memory.c b/drivers/gpu/drm/tiny/sharp-memory.c
-index 03d2850310c47..64272cd0f6e22 100644
---- a/drivers/gpu/drm/tiny/sharp-memory.c
-+++ b/drivers/gpu/drm/tiny/sharp-memory.c
-@@ -126,28 +126,28 @@ static inline void sharp_memory_set_tx_buffer_addresses(u8 *buffer,
- 
- static void sharp_memory_set_tx_buffer_data(u8 *buffer,
- 					    struct drm_framebuffer *fb,
-+					    const struct iosys_map *vmap,
- 					    struct drm_rect clip,
- 					    u32 pitch,
- 					    struct drm_format_conv_state *fmtcnv_state)
- {
- 	int ret;
--	struct iosys_map dst, vmap;
--	struct drm_gem_dma_object *dma_obj = drm_fb_dma_get_gem_obj(fb, 0);
-+	struct iosys_map dst;
- 
- 	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
- 	if (ret)
- 		return;
- 
- 	iosys_map_set_vaddr(&dst, buffer);
--	iosys_map_set_vaddr(&vmap, dma_obj->vaddr);
- 
--	drm_fb_xrgb8888_to_mono(&dst, &pitch, &vmap, fb, &clip, fmtcnv_state);
-+	drm_fb_xrgb8888_to_mono(&dst, &pitch, vmap, fb, &clip, fmtcnv_state);
- 
- 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index c834d38921b6c..5841431d98543 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -916,6 +916,69 @@ static void ufs_mtk_vreg_fix_vccqx(struct ufs_hba *hba)
+ 	}
  }
  
- static int sharp_memory_update_display(struct sharp_memory_device *smd,
- 				       struct drm_framebuffer *fb,
-+				       const struct iosys_map *vmap,
- 				       struct drm_rect clip,
- 				       struct drm_format_conv_state *fmtcnv_state)
++static void ufs_mtk_setup_clk_gating(struct ufs_hba *hba)
++{
++	unsigned long flags;
++	u32 ah_ms = 10;
++	u32 ah_scale, ah_timer;
++	u32 scale_us[] = {1, 10, 100, 1000, 10000, 100000};
++
++	if (ufshcd_is_clkgating_allowed(hba)) {
++		if (ufshcd_is_auto_hibern8_supported(hba) && hba->ahit) {
++			ah_scale = FIELD_GET(UFSHCI_AHIBERN8_SCALE_MASK,
++					  hba->ahit);
++			ah_timer = FIELD_GET(UFSHCI_AHIBERN8_TIMER_MASK,
++					  hba->ahit);
++			if (ah_scale <= 5)
++				ah_ms = ah_timer * scale_us[ah_scale] / 1000;
++		}
++
++		spin_lock_irqsave(hba->host->host_lock, flags);
++		hba->clk_gating.delay_ms = max(ah_ms, 10U);
++		spin_unlock_irqrestore(hba->host->host_lock, flags);
++	}
++}
++
++/* Convert microseconds to Auto-Hibernate Idle Timer register value */
++static u32 ufs_mtk_us_to_ahit(unsigned int timer)
++{
++	unsigned int scale;
++
++	for (scale = 0; timer > UFSHCI_AHIBERN8_TIMER_MASK; ++scale)
++		timer /= UFSHCI_AHIBERN8_SCALE_FACTOR;
++
++	return FIELD_PREP(UFSHCI_AHIBERN8_TIMER_MASK, timer) |
++	       FIELD_PREP(UFSHCI_AHIBERN8_SCALE_MASK, scale);
++}
++
++static void ufs_mtk_fix_ahit(struct ufs_hba *hba)
++{
++	unsigned int us;
++
++	if (ufshcd_is_auto_hibern8_supported(hba)) {
++		switch (hba->dev_info.wmanufacturerid) {
++		case UFS_VENDOR_SAMSUNG:
++			/* configure auto-hibern8 timer to 3.5 ms */
++			us = 3500;
++			break;
++
++		case UFS_VENDOR_MICRON:
++			/* configure auto-hibern8 timer to 2 ms */
++			us = 2000;
++			break;
++
++		default:
++			/* configure auto-hibern8 timer to 1 ms */
++			us = 1000;
++			break;
++		}
++
++		hba->ahit = ufs_mtk_us_to_ahit(us);
++	}
++
++	ufs_mtk_setup_clk_gating(hba);
++}
++
+ static void ufs_mtk_init_mcq_irq(struct ufs_hba *hba)
  {
-@@ -163,7 +163,7 @@ static int sharp_memory_update_display(struct sharp_memory_device *smd,
- 	sharp_memory_set_tx_buffer_mode(&tx_buffer[0],
- 					SHARP_MEMORY_DISPLAY_UPDATE_MODE, vcom);
- 	sharp_memory_set_tx_buffer_addresses(&tx_buffer[1], clip, pitch);
--	sharp_memory_set_tx_buffer_data(&tx_buffer[2], fb, clip, pitch, fmtcnv_state);
-+	sharp_memory_set_tx_buffer_data(&tx_buffer[2], fb, vmap, clip, pitch, fmtcnv_state);
+ 	struct ufs_mtk_host *host = ufshcd_get_variant(hba);
+@@ -1206,32 +1269,10 @@ static int ufs_mtk_pre_link(struct ufs_hba *hba)
  
- 	ret = sharp_memory_spi_write(smd->spi, tx_buffer, tx_buffer_size);
- 
-@@ -206,7 +206,8 @@ static int sharp_memory_clear_display(struct sharp_memory_device *smd)
  	return ret;
  }
- 
--static void sharp_memory_fb_dirty(struct drm_framebuffer *fb, struct drm_rect *rect,
-+static void sharp_memory_fb_dirty(struct drm_framebuffer *fb, const struct iosys_map *vmap,
-+				  struct drm_rect *rect,
- 				  struct drm_format_conv_state *fmtconv_state)
- {
- 	struct drm_rect clip;
-@@ -218,7 +219,7 @@ static void sharp_memory_fb_dirty(struct drm_framebuffer *fb, struct drm_rect *r
- 	clip.y1 = rect->y1;
- 	clip.y2 = rect->y2;
- 
--	sharp_memory_update_display(smd, fb, clip, fmtconv_state);
-+	sharp_memory_update_display(smd, fb, vmap, clip, fmtconv_state);
- }
- 
- static int sharp_memory_plane_atomic_check(struct drm_plane *plane,
-@@ -242,7 +243,7 @@ static void sharp_memory_plane_atomic_update(struct drm_plane *plane,
- {
- 	struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(state, plane);
- 	struct drm_plane_state *plane_state = plane->state;
--	struct drm_format_conv_state fmtcnv_state = DRM_FORMAT_CONV_STATE_INIT;
-+	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
- 	struct sharp_memory_device *smd;
- 	struct drm_rect rect;
- 
-@@ -251,15 +252,15 @@ static void sharp_memory_plane_atomic_update(struct drm_plane *plane,
- 		return;
- 
- 	if (drm_atomic_helper_damage_merged(old_state, plane_state, &rect))
--		sharp_memory_fb_dirty(plane_state->fb, &rect, &fmtcnv_state);
 -
--	drm_format_conv_state_release(&fmtcnv_state);
-+		sharp_memory_fb_dirty(plane_state->fb, shadow_plane_state->data,
-+				      &rect, &shadow_plane_state->fmtcnv_state);
+-static void ufs_mtk_setup_clk_gating(struct ufs_hba *hba)
+-{
+-	u32 ah_ms;
+-
+-	if (ufshcd_is_clkgating_allowed(hba)) {
+-		if (ufshcd_is_auto_hibern8_supported(hba) && hba->ahit)
+-			ah_ms = FIELD_GET(UFSHCI_AHIBERN8_TIMER_MASK,
+-					  hba->ahit);
+-		else
+-			ah_ms = 10;
+-		ufshcd_clkgate_delay_set(hba->dev, ah_ms + 5);
+-	}
+-}
+-
+ static void ufs_mtk_post_link(struct ufs_hba *hba)
+ {
+ 	/* enable unipro clock gating feature */
+ 	ufs_mtk_cfg_unipro_cg(hba, true);
+-
+-	/* will be configured during probe hba */
+-	if (ufshcd_is_auto_hibern8_supported(hba))
+-		hba->ahit = FIELD_PREP(UFSHCI_AHIBERN8_TIMER_MASK, 10) |
+-			FIELD_PREP(UFSHCI_AHIBERN8_SCALE_MASK, 3);
+-
+-	ufs_mtk_setup_clk_gating(hba);
  }
  
- static const struct drm_plane_helper_funcs sharp_memory_plane_helper_funcs = {
- 	.prepare_fb = drm_gem_plane_helper_prepare_fb,
- 	.atomic_check = sharp_memory_plane_atomic_check,
- 	.atomic_update = sharp_memory_plane_atomic_update,
-+	DRM_GEM_SHADOW_PLANE_HELPER_FUNCS,
- };
+ static int ufs_mtk_link_startup_notify(struct ufs_hba *hba,
+@@ -1556,6 +1597,7 @@ static void ufs_mtk_fixup_dev_quirks(struct ufs_hba *hba)
  
- static bool sharp_memory_format_mod_supported(struct drm_plane *plane,
-@@ -273,9 +274,7 @@ static const struct drm_plane_funcs sharp_memory_plane_funcs = {
- 	.update_plane = drm_atomic_helper_update_plane,
- 	.disable_plane = drm_atomic_helper_disable_plane,
- 	.destroy = drm_plane_cleanup,
--	.reset = drm_atomic_helper_plane_reset,
--	.atomic_duplicate_state	= drm_atomic_helper_plane_duplicate_state,
--	.atomic_destroy_state = drm_atomic_helper_plane_destroy_state,
-+	DRM_GEM_SHADOW_PLANE_FUNCS,
- 	.format_mod_supported = sharp_memory_format_mod_supported,
- };
+ 	ufs_mtk_vreg_fix_vcc(hba);
+ 	ufs_mtk_vreg_fix_vccqx(hba);
++	ufs_mtk_fix_ahit(hba);
+ }
  
+ static void ufs_mtk_event_notify(struct ufs_hba *hba,
 -- 
 2.51.0
 
