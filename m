@@ -1,168 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com [209.85.166.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B435307ACF;
-	Tue, 11 Nov 2025 01:34:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D777307AC6
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 01:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824888; cv=none; b=gub59Q2feGMB3TOvpkNfQVo1AHtvhLl33ZUZOJ1A+NscmCCsNxj7Fig09BqaeKXLHXhbhQL6lajLxDOdDJCHg+uCI3obYpmGq9IqGc/TCViKPytjnmiBeYioDmW5dl6A0mHJ2BEdaomGbYJmecxUJavAak8eWLwIEknb7Z+EFPc=
+	t=1762824889; cv=none; b=YqyL5H3oTTJPMQZkjHS0u8zgu0ukVgghgm0qFLRUAvrS0c1SOu5rVISMrTaHUr1q8aP4Xxfi1P+hteTfj6Hmc66l2+XlBDgv1bJoS6frdjVTviWZEizHCX56d0KHKRxDGHpw7i9ONvis9F2m6VJ3GpQRzy67CyDEHCPf4nPVRTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824888; c=relaxed/simple;
-	bh=VKUIKsO/icmh7avD06b9UUVIJze0e/oRXNXUlsBnnxU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tOWYlndc+nCONXHIABwXRhl5rLepdxB74nDqMGPWZgkgIWfLn4JImhVITpj+NuroXtYPNqX5DBpXw3JbNZ8T7bbVApK4YR2IWIGVCYPYUqRQiUzKsX1vCYsOwVcvfKEg2kZgoI9+wuTqmShjaA+jigBq+I9K9neEe/VvQBclgoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsP2uGcg; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsP2uGcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B660C4CEF5;
-	Tue, 11 Nov 2025 01:34:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824888;
-	bh=VKUIKsO/icmh7avD06b9UUVIJze0e/oRXNXUlsBnnxU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsP2uGcg6VE3ukyw/Rprlkyo6DltWa36+Ni9uBhXZyHyMwzwig4nKguTCYQ0as1fm
-	 1AR+M14jHsmbv6mr+7lAzk/3M5Ul5R6fUULIJtEGcXfRSOoem6FcIaTYRI1GJTJDts
-	 pytutTGnDonp4u+/qFfnMxQKIbAzADsKRxehCDv4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.12 544/565] drm/sched: Fix deadlock in drm_sched_entity_kill_jobs_cb
-Date: Tue, 11 Nov 2025 09:46:40 +0900
-Message-ID: <20251111004539.225868517@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1762824889; c=relaxed/simple;
+	bh=G9s9R549Bj0/8DmLMijlDCCQFUoEsEcNQ4J5IbrxMCo=;
+	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=EiECiIGJNivKDTIR7wM8xGFVs9A/qe940JYriKL2h1Ra6Bjh7TriJp0lYay0brhOpEddjx5QyQv74o5RxuXS3UCmEQSQb54rQPKScPCI62fA+ZGcCDYA++xrVDjf6aoCAiQ7imBjxl5VvOAR0hnfq7sRqivBy4IadpuWtKpJU+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-il1-f197.google.com with SMTP id e9e14a558f8ab-4331d49b5b3so2502295ab.0
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 17:34:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762824887; x=1763429687;
+        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iFdhnMtQbvk+cxGkbCmb0GUX1So7hpWDFjTG3gplQc0=;
+        b=E0VyG98Nlb5B6c2FvoLW+AnFolSAo3jIpxl7NfXlY0qpHtNxqIe+0EcrEscKNJmHWb
+         5ZaxIoFycG4uH5oIpLmHf5XRbVgWfULwCcWk+psOwcG+Tqq8v3v76SV+a9SaY5ATWoRv
+         mt34hDPcHlT4yJI97WH2W+OgGebIj53UzhdiQQptspexqypQtClTyAksU+XCjv1O0yMf
+         6aHEeRug+B9UOFPIWmu3rB3xVvhXI2FIRYePysxIJmKIJcfhT1WM/VzRjXAeXjwL5Ehg
+         aaIuDDzBk4KJM04Bu6dcUUa4rseWZNPVUEoHLyuke0jRo8JHnpoiwWEXCjPWb/KT4g2v
+         tc0w==
+X-Forwarded-Encrypted: i=1; AJvYcCV+pD8uR5GnkVH3GWD3H9kUu1ZwvSGBqfbH8PMkxqKc6dI01zR27UIvnFghNCU+q3dn1sDbr9XK@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZVL+7oCmncYRwCUQwCWdu3wVb3L7B+HzthwgDsFQ3Z0KFpXYx
+	HTvSNYwZrcs9Rxz7AJ3L7/mVu1EjTS07cWRO7cX4BYwZqkWtIT0PdwpbvMkJ6Nzd2a1Oc00AQ41
+	bb+GWLRLlW9Zc5DNBuEi/0aT4EScSXxgntnNwMJY555E7NMmcmfGmoJFuojk=
+X-Google-Smtp-Source: AGHT+IHSHE/ZwvX7/pJgiSzkq1D2fW7OKj4ywqUFD2FdrJzS5Suqixrr3UkXqTx5ck6CZwqCjmTC4ff7cxFBFIS4FV83DNAeGizX
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a05:6e02:228f:b0:433:28c7:6d7c with SMTP id
+ e9e14a558f8ab-43367df3b3bmr173309345ab.12.1762824887377; Mon, 10 Nov 2025
+ 17:34:47 -0800 (PST)
+Date: Mon, 10 Nov 2025 17:34:47 -0800
+In-Reply-To: <20251111004550.712161392@linuxfoundation.org>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <691292b7.a70a0220.22f260.011c.GAE@google.com>
+Subject: Re: [PATCH 6.17 591/849] jfs: fix uninitialized waitqueue in
+ transaction manager
+From: syzbot <syzbot@syzkaller.appspotmail.com>
+To: gregkh@linuxfoundation.org
+Cc: dave.kleikamp@oracle.com, gregkh@linuxfoundation.org, 
+	patches@lists.linux.dev, sashal@kernel.org, ssrane_b23@ee.vjti.ac.in, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+> 6.17-stable review patch.  If anyone has any objections, please let me know.
+>
+> ------------------
+>
+> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+>
+> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
+>
+> The transaction manager initialization in txInit() was not properly
+> initializing TxBlock[0].waitor waitqueue, causing a crash when
+> txEnd(0) is called on read-only filesystems.
+>
+> When a filesystem is mounted read-only, txBegin() returns tid=0 to
+> indicate no transaction. However, txEnd(0) still gets called and
+> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
+> waitqueue was never initialized because the initialization loop
+> started at index 1 instead of 0.
+>
+> This causes a 'non-static key' lockdep warning and system crash:
+>   INFO: trying to register non-static key in txEnd
+>
+> Fix by ensuring all transaction blocks including TxBlock[0] have
+> their waitqueues properly initialized during txInit().
+>
+> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
+>
+> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/jfs/jfs_txnmgr.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
+> index be17e3c43582f..7840a03e5bcb7 100644
+> --- a/fs/jfs/jfs_txnmgr.c
+> +++ b/fs/jfs/jfs_txnmgr.c
+> @@ -272,14 +272,15 @@ int txInit(void)
+>  	if (TxBlock == NULL)
+>  		return -ENOMEM;
+>  
+> -	for (k = 1; k < nTxBlock - 1; k++) {
+> -		TxBlock[k].next = k + 1;
+> +	for (k = 0; k < nTxBlock; k++) {
+>  		init_waitqueue_head(&TxBlock[k].gcwait);
+>  		init_waitqueue_head(&TxBlock[k].waitor);
+>  	}
+> +
+> +	for (k = 1; k < nTxBlock - 1; k++) {
+> +		TxBlock[k].next = k + 1;
+> +	}
+>  	TxBlock[k].next = 0;
+> -	init_waitqueue_head(&TxBlock[k].gcwait);
+> -	init_waitqueue_head(&TxBlock[k].waitor);
+>  
+>  	TxAnchor.freetid = 1;
+>  	init_waitqueue_head(&TxAnchor.freewait);
+> -- 
+> 2.51.0
+>
+>
+>
 
-------------------
-
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-
-commit 487df8b698345dd5a91346335f05170ed5f29d4e upstream.
-
-The Mesa issue referenced below pointed out a possible deadlock:
-
-[ 1231.611031]  Possible interrupt unsafe locking scenario:
-
-[ 1231.611033]        CPU0                    CPU1
-[ 1231.611034]        ----                    ----
-[ 1231.611035]   lock(&xa->xa_lock#17);
-[ 1231.611038]                                local_irq_disable();
-[ 1231.611039]                                lock(&fence->lock);
-[ 1231.611041]                                lock(&xa->xa_lock#17);
-[ 1231.611044]   <Interrupt>
-[ 1231.611045]     lock(&fence->lock);
-[ 1231.611047]
-                *** DEADLOCK ***
-
-In this example, CPU0 would be any function accessing job->dependencies
-through the xa_* functions that don't disable interrupts (eg:
-drm_sched_job_add_dependency(), drm_sched_entity_kill_jobs_cb()).
-
-CPU1 is executing drm_sched_entity_kill_jobs_cb() as a fence signalling
-callback so in an interrupt context. It will deadlock when trying to
-grab the xa_lock which is already held by CPU0.
-
-Replacing all xa_* usage by their xa_*_irq counterparts would fix
-this issue, but Christian pointed out another issue: dma_fence_signal
-takes fence.lock and so does dma_fence_add_callback.
-
-  dma_fence_signal() // locks f1.lock
-  -> drm_sched_entity_kill_jobs_cb()
-  -> foreach dependencies
-     -> dma_fence_add_callback() // locks f2.lock
-
-This will deadlock if f1 and f2 share the same spinlock.
-
-To fix both issues, the code iterating on dependencies and re-arming them
-is moved out to drm_sched_entity_kill_jobs_work().
-
-Cc: stable@vger.kernel.org # v6.2+
-Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
-Link: https://gitlab.freedesktop.org/mesa/mesa/-/issues/13908
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-[phasta: commit message nits]
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251104095358.15092-1-pierre-eric.pelloux-prayer@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/gpu/drm/scheduler/sched_entity.c |   34 +++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
-
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -186,26 +186,15 @@ int drm_sched_entity_error(struct drm_sc
- }
- EXPORT_SYMBOL(drm_sched_entity_error);
- 
-+static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
-+					  struct dma_fence_cb *cb);
-+
- static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
- {
- 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
--
--	drm_sched_fence_scheduled(job->s_fence, NULL);
--	drm_sched_fence_finished(job->s_fence, -ESRCH);
--	WARN_ON(job->s_fence->parent);
--	job->sched->ops->free_job(job);
--}
--
--/* Signal the scheduler finished fence when the entity in question is killed. */
--static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
--					  struct dma_fence_cb *cb)
--{
--	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
--						 finish_cb);
-+	struct dma_fence *f;
- 	unsigned long index;
- 
--	dma_fence_put(f);
--
- 	/* Wait for all dependencies to avoid data corruptions */
- 	xa_for_each(&job->dependencies, index, f) {
- 		struct drm_sched_fence *s_fence = to_drm_sched_fence(f);
-@@ -233,6 +222,21 @@ static void drm_sched_entity_kill_jobs_c
- 		dma_fence_put(f);
- 	}
- 
-+	drm_sched_fence_scheduled(job->s_fence, NULL);
-+	drm_sched_fence_finished(job->s_fence, -ESRCH);
-+	WARN_ON(job->s_fence->parent);
-+	job->sched->ops->free_job(job);
-+}
-+
-+/* Signal the scheduler finished fence when the entity in question is killed. */
-+static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
-+					  struct dma_fence_cb *cb)
-+{
-+	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
-+						 finish_cb);
-+
-+	dma_fence_put(f);
-+
- 	INIT_WORK(&job->work, drm_sched_entity_kill_jobs_work);
- 	schedule_work(&job->work);
- }
-
+I see the command but can't find the corresponding bug.
+The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
+but the HASH does not correspond to any known bug.
+Please double check the address.
 
