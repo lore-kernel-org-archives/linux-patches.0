@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5FB4C97;
-	Tue, 11 Nov 2025 00:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BDB4C97;
+	Tue, 11 Nov 2025 00:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822684; cv=none; b=TthAHblPjbvUdq4loiwkaNt0limZxR9zklQp2ufP5DUselvWZIhRQhP7l0rCnT8edbp/gkAclC4OiCIWdF7Tjv7n2g1gz7hQQtykOWlasRHnfeSLlZVA9ggIv1G8aotmJoZvheHRbfEJ9U0TguJ3SlW9kX0GcsqVkE/ELBodwEk=
+	t=1762822687; cv=none; b=BfrHxQ/Daon8n+wmGdvj7cK8VjEZwKGKKk+0Fw+nZ48IQoRRHN5vSqIsyhQcr6sgnk6FklnxCeSgZ1+1Ls6wxRDOmxDJDcuYJzcGU41JIiiz+xc8XYfVnXHZNVdKA5CyRUJzKnhdwL4nwQFlK1jUv4Lubn69nuuHbnYUD3pyc3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822684; c=relaxed/simple;
-	bh=Rh7LKzMXzjCNGVffEXQN/Mrd1C67EyLxdiWhGpWbO50=;
+	s=arc-20240116; t=1762822687; c=relaxed/simple;
+	bh=elVWCuUDlhMC94KCEFGW9q751IDG3f5zX4IXSNF+Flg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr1xKdYUznbkhwEGHk2BcUNo2DNcPCCyn5nh32P0ESydUTlcv7lbQZyBwMlKGQ9V8hZvhs0DSZXt3ymxxeyRzWCGcewLiIyMd1jKaovcmIYF70RIxFh1530skmJM2Ulu6HAmUK2CLky1oqiQI5vtFl485TTaey3TkSK+ldOt4yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MJHZTwC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ELy4SkFRyjC+2Sav6A8Wa5h+Cs/LycF+XNw+2PuNi0DCmNe0t4WMoyuGvIFYJrwyv43lbTlWypR8LgIaEJ/eijdRexqpdO4eiD6nTUqwIEI+mweRaUc4xiA6Xck3qkdiDG76pp/70VxL+hM1FRWwb1FNoUqeE0+tq6fUDnWJwwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvfpdPlE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MJHZTwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE57C19422;
-	Tue, 11 Nov 2025 00:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvfpdPlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D706AC19421;
+	Tue, 11 Nov 2025 00:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822684;
-	bh=Rh7LKzMXzjCNGVffEXQN/Mrd1C67EyLxdiWhGpWbO50=;
+	s=korg; t=1762822687;
+	bh=elVWCuUDlhMC94KCEFGW9q751IDG3f5zX4IXSNF+Flg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MJHZTwCTzwR3bv15HDOeltmbCz938hgWlvaIs84g2BZ2XaF3hBnCcKXJIa9Z59K7
-	 oiNiaE0uwNOm/Q4bCI69cncbGwj+72yY8JQpEvEuXU3fqu7YKfiRO4Xc8joZOJlrns
-	 eyoBOY0FtsEQECXTGFS+yfUPlTFkYMr9X+jwfErY=
+	b=nvfpdPlEyDhRh1mGSL1a807x3WggIuNGX48IExo0O++p+tb1m6i9sCjZZrarVSmNt
+	 AbNUSMkIbS7qdAykWvJCDFBhIiIpCD4icNZ5qxwQzFcmXZtlbEuJ3RLpDIjjarC39N
+	 Nh5OVcFh/iFS0cUD4yDdYl9hN6pDblwBzwA0VbMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	"Shang song (Lenovo)" <shangsong2@foxmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/565] drm/sched: Fix race in drm_sched_entity_select_rq()
-Date: Tue, 11 Nov 2025 09:39:01 +0900
-Message-ID: <20251111004528.880167215@linuxfoundation.org>
+Subject: [PATCH 6.17 148/849] ACPI: PRM: Skip handlers with NULL handler_address or NULL VA
+Date: Tue, 11 Nov 2025 09:35:18 +0900
+Message-ID: <20251111004539.992792576@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Shang song (Lenovo) <shangsong2@foxmail.com>
 
-[ Upstream commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 ]
+[ Upstream commit 311942ce763e21dacef7e53996d5a1e19b8adab1 ]
 
-In a past bug fix it was forgotten that entity access must be protected
-by the entity lock. That's a data race and potentially UB.
+If handler_address or mapped VA is NULL, the related buffer address and
+VA can be ignored, so make acpi_parse_prmt() skip the current handler
+in those cases.
 
-Move the spin_unlock() to the appropriate position.
-
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
+Signed-off-by: Shang song (Lenovo) <shangsong2@foxmail.com>
+Link: https://patch.msgid.link/20250826030229.834901-1-shangsong2@foxmail.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/prmt.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -558,10 +558,11 @@ void drm_sched_entity_select_rq(struct d
- 		drm_sched_rq_remove_entity(entity->rq, entity);
- 		entity->rq = rq;
- 	}
--	spin_unlock(&entity->lock);
+diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
+index be033bbb126a4..6792d4385eee4 100644
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -150,15 +150,28 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
+ 		th = &tm->handlers[cur_handler];
  
- 	if (entity->num_sched_list == 1)
- 		entity->sched_list = NULL;
+ 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
 +
-+	spin_unlock(&entity->lock);
- }
++		/*
++		 * Print an error message if handler_address is NULL, the parse of VA also
++		 * can be skipped.
++		 */
++		if (unlikely(!handler_info->handler_address)) {
++			pr_info("Skipping handler with NULL address for GUID: %pUL",
++					(guid_t *)handler_info->handler_guid);
++			continue;
++		}
++
+ 		th->handler_addr =
+ 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
+ 		/*
+-		 * Print a warning message if handler_addr is zero which is not expected to
+-		 * ever happen.
++		 * Print a warning message and skip the parse of VA if handler_addr is zero
++		 * which is not expected to ever happen.
+ 		 */
+-		if (unlikely(!th->handler_addr))
++		if (unlikely(!th->handler_addr)) {
+ 			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
+ 				&th->guid, handler_info->handler_address);
++			continue;
++		}
  
- /**
+ 		th->static_data_buffer_addr =
+ 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
+-- 
+2.51.0
+
 
 
