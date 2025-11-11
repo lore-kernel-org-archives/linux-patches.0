@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D43B3431FA;
-	Tue, 11 Nov 2025 01:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8D2343D9E;
+	Tue, 11 Nov 2025 01:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824662; cv=none; b=sLGHidw+bpGvSPemJtQ4guxZsVzDKkMh5Y6GwE6lpFWCyR2liMkSBMBznqxLBo/Ftr6oOAgC9ObKmuxXWgGIlqwkwPbKhFRSCLN7wuFqS5sA6Hhuxr9DqPQZW3L1UEoj/UKBLa9+DCYq84Y5CMMT4eMXEYnmC9gOx+n4bKtrdBc=
+	t=1762824663; cv=none; b=aWd2sG4vVIaqbvCsRsXdBObbarvXyq28Fuf7TMYu0FLdWbGkFb3vxY5nC5sL6FQ1fcEeQUqJFgVEjFpo+DXc/7wsWtGvhLggrbCiCufng/p5KPv346tBloYml0uMOZieel11Ql7sPOZ4wwPugGKuBB8KmcmDDAzp1VGr7jsqFnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824662; c=relaxed/simple;
-	bh=gqgBLKI74qjNKMhxh0kiFPWK2XeXx/0W4PBIzGGqxG0=;
+	s=arc-20240116; t=1762824663; c=relaxed/simple;
+	bh=nO8REVMcAOF44XwLiJM2T7QNhQlZCdPAam1juqmJMUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPtuSeQ44Idy8BxAOJdMOmrNj+ap0rO8I3kj1YXugW1Fj1Vs5wGJo8bT78h9D2aXQKigNLqR7QRWyEAMpM255sryIFP8BXwi4tXNkeEWhmZDPfytiWC66wxEKp14CCFkxFWYffipN5S0wwYdFzQFqB1mLt6Hy5xEuG0ffccCdjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ7OlwBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRNk5zKSD5XqFk+0vO3wZoCV3rQrpCyNtWjoul8UJFVfwSyOZI1aSycRA/4uh8QyYc+Dn0nbYAoqjPLPCY04dBlW6sBsCxJy/egym1lqtg7UcbDhKqhGNEYcZNzW9+a2Hc/AI+TxgfY88c82z/LBt3ZuRuThx5MI+EBnKzrO5gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gdua0/R3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ7OlwBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFA1C16AAE;
-	Tue, 11 Nov 2025 01:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gdua0/R3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129F9C4CEFB;
+	Tue, 11 Nov 2025 01:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824659;
-	bh=gqgBLKI74qjNKMhxh0kiFPWK2XeXx/0W4PBIzGGqxG0=;
+	s=korg; t=1762824663;
+	bh=nO8REVMcAOF44XwLiJM2T7QNhQlZCdPAam1juqmJMUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZ7OlwBzolk0Jfg0tGy7A8qizO2cdyhybrbxWKZpDhVttD4/ZmlL/n1BYnps11i+C
-	 sHG8je6qBwOpV8Lf9/gxzfK8LXIsjNw+PSD4PQqDSgd4kSTNhXvEH911c/yZi417HX
-	 ter55lXG8vyzquZPzNinCySXUwM3AHJPsVRH6U+s=
+	b=Gdua0/R3Yg1siZ12DGuI2N1hZ8vn1hiDjKJasjptwQw3aX7cI1Zqcv6f3IOIRxWfa
+	 8HDuSbLTCLWqlTAjxdU10YTayvpLA3eJnrUN0/WJelIlRJI1zqkwpIOJTDRyic1QUk
+	 VHfiUYnSeClbVrXp7KMs1jixcbzUiaqLjMihb/B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 545/849] wifi: mt76: mt7996: disable promiscuous mode by default
-Date: Tue, 11 Nov 2025 09:41:55 +0900
-Message-ID: <20251111004549.585259182@linuxfoundation.org>
+Subject: [PATCH 6.12 494/565] ceph: refactor wake_up_bit() pattern of calling
+Date: Tue, 11 Nov 2025 09:45:50 +0900
+Message-ID: <20251111004538.047384349@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit a4a66cbaa20f51cb953d09a95c67cb237a088ec9 ]
+[ Upstream commit 53db6f25ee47cb1265141d31562604e56146919a ]
 
-Set MT_WF_RFCR_DROP_OTHER_UC by default and disable this flag in
-mt7996_set_monitor only if monitor mode is enabled.
+The wake_up_bit() is called in ceph_async_unlink_cb(),
+wake_async_create_waiters(), and ceph_finish_async_create().
+It makes sense to switch on clear_bit() function, because
+it makes the code much cleaner and easier to understand.
+More important rework is the adding of smp_mb__after_atomic()
+memory barrier after the bit modification and before
+wake_up_bit() call. It can prevent potential race condition
+of accessing the modified bit in other threads. Luckily,
+clear_and_wake_up_bit() already implements the required
+functionality pattern:
 
-Without this patch, the MT_WF_RFCR_DROP_OTHER_UC would not be set so the
-driver would receive lots of packets meant for other devices.
+static inline void clear_and_wake_up_bit(int bit, unsigned long *word)
+{
+	clear_bit_unlock(bit, word);
+	/* See wake_up_bit() for which memory barrier you need to use. */
+	smp_mb__after_atomic();
+	wake_up_bit(word, bit);
+}
 
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Link: https://patch.msgid.link/20250915075910.47558-10-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ceph/dir.c  | 3 +--
+ fs/ceph/file.c | 6 ++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index a75b29bada141..5e81edde1e283 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -383,6 +383,7 @@ mt7996_init_wiphy_band(struct ieee80211_hw *hw, struct mt7996_phy *phy)
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index 16c25c48465e5..ba960a9bfbc8b 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1252,8 +1252,7 @@ static void ceph_async_unlink_cb(struct ceph_mds_client *mdsc,
+ 	spin_unlock(&fsc->async_unlink_conflict_lock);
  
- 	phy->slottime = 9;
- 	phy->beacon_rate = -1;
-+	phy->rxfilter = MT_WF_RFCR_DROP_OTHER_UC;
+ 	spin_lock(&dentry->d_lock);
+-	di->flags &= ~CEPH_DENTRY_ASYNC_UNLINK;
+-	wake_up_bit(&di->flags, CEPH_DENTRY_ASYNC_UNLINK_BIT);
++	clear_and_wake_up_bit(CEPH_DENTRY_ASYNC_UNLINK_BIT, &di->flags);
+ 	spin_unlock(&dentry->d_lock);
  
- 	if (phy->mt76->cap.has_2ghz) {
- 		phy->mt76->sband_2g.sband.ht_cap.cap |=
+ 	synchronize_rcu();
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 6587c2d5af1e0..147126d2fa0c7 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -579,8 +579,7 @@ static void wake_async_create_waiters(struct inode *inode,
+ 
+ 	spin_lock(&ci->i_ceph_lock);
+ 	if (ci->i_ceph_flags & CEPH_I_ASYNC_CREATE) {
+-		ci->i_ceph_flags &= ~CEPH_I_ASYNC_CREATE;
+-		wake_up_bit(&ci->i_ceph_flags, CEPH_ASYNC_CREATE_BIT);
++		clear_and_wake_up_bit(CEPH_ASYNC_CREATE_BIT, &ci->i_ceph_flags);
+ 
+ 		if (ci->i_ceph_flags & CEPH_I_ASYNC_CHECK_CAPS) {
+ 			ci->i_ceph_flags &= ~CEPH_I_ASYNC_CHECK_CAPS;
+@@ -762,8 +761,7 @@ static int ceph_finish_async_create(struct inode *dir, struct inode *inode,
+ 	}
+ 
+ 	spin_lock(&dentry->d_lock);
+-	di->flags &= ~CEPH_DENTRY_ASYNC_CREATE;
+-	wake_up_bit(&di->flags, CEPH_DENTRY_ASYNC_CREATE_BIT);
++	clear_and_wake_up_bit(CEPH_DENTRY_ASYNC_CREATE_BIT, &di->flags);
+ 	spin_unlock(&dentry->d_lock);
+ 
+ 	return ret;
 -- 
 2.51.0
 
