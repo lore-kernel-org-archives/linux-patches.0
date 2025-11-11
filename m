@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA3033A02F;
-	Tue, 11 Nov 2025 01:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA7222301;
+	Tue, 11 Nov 2025 01:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824565; cv=none; b=ZYsaQuMT11yYbgg+dfwS7Zt6Q2kN1Qx2paOLziSPnvRgu/onaFaO/7ZqmX/mT8DyxBWodrY4GaavsXGHBkf4fbQHBBpL23Ra5Rxo9P/usAW7JrO/RU7m5Jn1oWL5efdbT9PWYuLjVgB1ju4fm3w+PkaUE+rQjmVEH1txMPg56lk=
+	t=1762824567; cv=none; b=oXCWkiAJgnI/6jS7TRQppQB/oD1Apq2OBFYcYyztYL1TQFXr3BPQUXUcRrnEdGyG0OX3/sHeKvjXGRfDMFn/5fxQxoANiAlNeWQfFpNcSPDt/pyjJ3SUxiOOjwEik6cXR0P5GV8rOv/gQMd0VJd8wRu9pPgog+P2EM93loq5S2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824565; c=relaxed/simple;
-	bh=5+5t0qVRyMR8T48NZKrwSWNLH7UzFSrGldVoCqGQ1oc=;
+	s=arc-20240116; t=1762824567; c=relaxed/simple;
+	bh=NfLbOmu8X45X/nwzth9yQ04sIZEB0/4eDa2JWHejbio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4+1JRcPy7U920uFoWzHu/QgszQrr7i3zVoAsA1VX33AuQS5Rxvv+NxgvFBxYHMaxu9M9JY669hobFLWwi72zbOkKPwfPpKv7xqVHWW95iYyO6fhEtorx5PVIs+rcdCtg9SHg1SKp+DZIhVyk2ANR0AV+AzBmddA1uTLgkwNKrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvMN5Oc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdOJ76P9OsDh1qf/0S+IvZ3Ol35Kkor+6sJXQTpjR2CxxWcoyMMTHhoIHPnI5KlyhRvxrSN4ctwf9T+3klP4XYolqvBWJvbzAVlsZdJdK/HrKeaGDALsvRROKqKrw8egPg9p14iaYBHFuEI4JfrndiDNpw86kRCbLEaP3z/Uamk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBm9zKET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvMN5Oc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D90C116D0;
-	Tue, 11 Nov 2025 01:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBm9zKET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4DBC4AF0B;
+	Tue, 11 Nov 2025 01:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824565;
-	bh=5+5t0qVRyMR8T48NZKrwSWNLH7UzFSrGldVoCqGQ1oc=;
+	s=korg; t=1762824567;
+	bh=NfLbOmu8X45X/nwzth9yQ04sIZEB0/4eDa2JWHejbio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvMN5Oc8xC171Kl2M39XXwYhMbi70yTmv+UYiTQH/iTnRhnVs/rjkbX7eqfv8kBMm
-	 dCBeNcWRjD8+PIIZvenIdN2nVQ/tTsXj1VlLn64ytnG7vcEE+XZhhUtA/T4g57h0V9
-	 KlMJCqW9Pyj/0LO9QCYwWK319fFiHz+hjx3xGrbo=
+	b=iBm9zKET+7CMXBAiX5Sigm7rz+ZgoXwDHOoplfAUGn4YwPIfskSLIciMW/zZ/YrH4
+	 rSuZ2+QGYRP/Rb4JojLo3lVpPjtTth/NkL7n18CqTKpFM3gpszuQgquVO0GhjddLOz
+	 MQRi5TZoi6ybE7BzQHLKrDIOjW6tl+xiDIC5DERE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/565] exfat: validate cluster allocation bits of the allocation bitmap
-Date: Tue, 11 Nov 2025 09:44:59 +0900
-Message-ID: <20251111004536.851167170@linuxfoundation.org>
+Subject: [PATCH 6.17 525/849] udp_tunnel: use netdev_warn() instead of netdev_WARN()
+Date: Tue, 11 Nov 2025 09:41:35 +0900
+Message-ID: <20251111004549.113731433@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,132 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 79c1587b6cda74deb0c86fc7ba194b92958c793c ]
+[ Upstream commit dc2f650f7e6857bf384069c1a56b2937a1ee370d ]
 
-syzbot created an exfat image with cluster bits not set for the allocation
-bitmap. exfat-fs reads and uses the allocation bitmap without checking
-this. The problem is that if the start cluster of the allocation bitmap
-is 6, cluster 6 can be allocated when creating a directory with mkdir.
-exfat zeros out this cluster in exfat_mkdir, which can delete existing
-entries. This can reallocate the allocated entries. In addition,
-the allocation bitmap is also zeroed out, so cluster 6 can be reallocated.
-This patch adds exfat_test_bitmap_range to validate that clusters used for
-the allocation bitmap are correctly marked as in-use.
+netdev_WARN() uses WARN/WARN_ON to print a backtrace along with
+file and line information. In this case, udp_tunnel_nic_register()
+returning an error is just a failed operation, not a kernel bug.
 
-Reported-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
-Tested-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+udp_tunnel_nic_register() can fail due to a memory allocation
+failure (kzalloc() or udp_tunnel_nic_alloc()).
+This is a normal runtime error and not a kernel bug.
+
+Replace netdev_WARN() with netdev_warn() accordingly.
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250910195031.3784748-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c | 72 +++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 60 insertions(+), 12 deletions(-)
+ net/ipv4/udp_tunnel_nic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 9ff825f1502d5..b2b55ad76b7fd 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -26,12 +26,55 @@
- /*
-  *  Allocation Bitmap Management Functions
-  */
-+static bool exfat_test_bitmap_range(struct super_block *sb, unsigned int clu,
-+		unsigned int count)
-+{
-+	struct exfat_sb_info *sbi = EXFAT_SB(sb);
-+	unsigned int start = clu;
-+	unsigned int end = clu + count;
-+	unsigned int ent_idx, i, b;
-+	unsigned int bit_offset, bits_to_check;
-+	__le_long *bitmap_le;
-+	unsigned long mask, word;
-+
-+	if (!is_valid_cluster(sbi, start) || !is_valid_cluster(sbi, end - 1))
-+		return false;
-+
-+	while (start < end) {
-+		ent_idx = CLUSTER_TO_BITMAP_ENT(start);
-+		i = BITMAP_OFFSET_SECTOR_INDEX(sb, ent_idx);
-+		b = BITMAP_OFFSET_BIT_IN_SECTOR(sb, ent_idx);
-+
-+		bitmap_le = (__le_long *)sbi->vol_amap[i]->b_data;
-+
-+		/* Calculate how many bits we can check in the current word */
-+		bit_offset = b % BITS_PER_LONG;
-+		bits_to_check = min(end - start,
-+				    (unsigned int)(BITS_PER_LONG - bit_offset));
-+
-+		/* Create a bitmask for the range of bits to check */
-+		if (bits_to_check >= BITS_PER_LONG)
-+			mask = ~0UL;
-+		else
-+			mask = ((1UL << bits_to_check) - 1) << bit_offset;
-+		word = lel_to_cpu(bitmap_le[b / BITS_PER_LONG]);
-+
-+		/* Check if all bits in the mask are set */
-+		if ((word & mask) != mask)
-+			return false;
-+
-+		start += bits_to_check;
-+	}
-+
-+	return true;
-+}
-+
- static int exfat_allocate_bitmap(struct super_block *sb,
- 		struct exfat_dentry *ep)
- {
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
- 	long long map_size;
--	unsigned int i, need_map_size;
-+	unsigned int i, j, need_map_size;
- 	sector_t sector;
+diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
+index ff66db48453cf..944b3cf25468e 100644
+--- a/net/ipv4/udp_tunnel_nic.c
++++ b/net/ipv4/udp_tunnel_nic.c
+@@ -930,7 +930,7 @@ udp_tunnel_nic_netdevice_event(struct notifier_block *unused,
  
- 	sbi->map_clu = le32_to_cpu(ep->dentry.bitmap.start_clu);
-@@ -58,20 +101,25 @@ static int exfat_allocate_bitmap(struct super_block *sb,
- 	sector = exfat_cluster_to_sector(sbi, sbi->map_clu);
- 	for (i = 0; i < sbi->map_sectors; i++) {
- 		sbi->vol_amap[i] = sb_bread(sb, sector + i);
--		if (!sbi->vol_amap[i]) {
--			/* release all buffers and free vol_amap */
--			int j = 0;
--
--			while (j < i)
--				brelse(sbi->vol_amap[j++]);
--
--			kvfree(sbi->vol_amap);
--			sbi->vol_amap = NULL;
--			return -EIO;
--		}
-+		if (!sbi->vol_amap[i])
-+			goto err_out;
+ 		err = udp_tunnel_nic_register(dev);
+ 		if (err)
+-			netdev_WARN(dev, "failed to register for UDP tunnel offloads: %d", err);
++			netdev_warn(dev, "failed to register for UDP tunnel offloads: %d", err);
+ 		return notifier_from_errno(err);
  	}
- 
-+	if (exfat_test_bitmap_range(sb, sbi->map_clu,
-+		EXFAT_B_TO_CLU_ROUND_UP(map_size, sbi)) == false)
-+		goto err_out;
-+
- 	return 0;
-+
-+err_out:
-+	j = 0;
-+	/* release all buffers and free vol_amap */
-+	while (j < i)
-+		brelse(sbi->vol_amap[j++]);
-+
-+	kvfree(sbi->vol_amap);
-+	sbi->vol_amap = NULL;
-+	return -EIO;
- }
- 
- int exfat_load_bitmap(struct super_block *sb)
+ 	/* All other events will need the udp_tunnel_nic state */
 -- 
 2.51.0
 
