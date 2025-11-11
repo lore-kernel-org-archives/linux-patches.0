@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C53272E7C;
-	Tue, 11 Nov 2025 01:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0F1261B77;
+	Tue, 11 Nov 2025 01:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823975; cv=none; b=B0fTc4eLEBIEba798siOsTsKy6QVlXLSJx986gdi8ihS8MMIjMvvjiP3IcFB7PYtS/vz3u9GgP7QTqdmyhCr2hgA5kIwygNJiW980VQU6OJxXEzoLHVmXaJiFvoeODgB5ARsKedQb5qTwJZarrWvt0iecPFjhJX2nIRZHC8sZEs=
+	t=1762823977; cv=none; b=orvSs/fNsHsu8KqNmuVrHcvwDkLkwAbsmiRPAXGdmdd/F5GbkErywgfpkomC+BYh4PKpg/rO6CMiH5kG/GyLnkn3HvEvnbnajCul0wZynihTrxCBs1LsdU4M+8MonSNgIN3/xvx285Eo4dRJAhF6q3YGPuhtp2UIvAj13juylAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823975; c=relaxed/simple;
-	bh=InfHzoNmOEa6YwJJy9uXGAFCZHItG5FOttJVs5wFYNY=;
+	s=arc-20240116; t=1762823977; c=relaxed/simple;
+	bh=eHXRCrpi6KcAO5j6r5dwSMYL9sQ1XwG0xZ4sM6JbJgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=id34a3aNeHAozGLd3pBAM0gv4HOT+qQtPhEDjBdIkYmbpHzSZGA8CWDx/w5Nnh5rijzMlF7BmYBkriOxGL4HeYn5tlh1rWixXhhgm2Hj2w9NaQfQoA8q0rcN9EBk0U2v5SYZiOw1MU+hD4od4mxl2L7Dvyz58oJ+smB2Aj3clBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCGfDcNX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXpiILAxTWuvULvH0SJlgQoAPxzmYyahwowr2giYurAaMM2vYRuSckjoEP0p2cNKdv71xJ3CB7f5b+Y4hOmZBr1M2LUIG15EE0l/PtkMB3wDGazyczfW6RgEMLl0agcbPCE7invLiXAvUN8SmAQFB/HrY+RZQubxVS8+75kLocM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0x+OfHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCGfDcNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B79C116B1;
-	Tue, 11 Nov 2025 01:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0x+OfHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCF6C19424;
+	Tue, 11 Nov 2025 01:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823974;
-	bh=InfHzoNmOEa6YwJJy9uXGAFCZHItG5FOttJVs5wFYNY=;
+	s=korg; t=1762823977;
+	bh=eHXRCrpi6KcAO5j6r5dwSMYL9sQ1XwG0xZ4sM6JbJgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCGfDcNXFacbLxRVG1Gu2X8PxAnY6ahMVi5QdnE8FW1VprDhKY7h0O20hJ9wo20JO
-	 26Uf7E26+P2gHsNI3pCLr/6cZZTgxQ4la0ZpndpGBT8MR4aqnRmQaeJI1rU49ICVCX
-	 adBa0J/siQHd6o2mOea80Y7sdXsadWTRfZP6UZPU=
+	b=O0x+OfHlYXo5WUlAUTYY3C9742URjbW1LAKu6qw2R8y/yZ/Hm0TFuGWChFSuMG+PL
+	 yfvSfLvUNcL0pTm+2YC+2gsxPMl2oayA6rtkSG23GfxDkR9qVuBlqHlYfCLOkHEDg6
+	 qkLnIhNcP7hTMsRhy5u9sUNVWI2/8Gtlmp1Uc4HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Summers Stuart <stuart.summers@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 408/849] media: imx-mipi-csis: Only set clock rate when specified in DT
-Date: Tue, 11 Nov 2025 09:39:38 +0900
-Message-ID: <20251111004546.303894326@linuxfoundation.org>
+Subject: [PATCH 6.17 413/849] drm/xe/guc: Add devm release action to safely tear down CT
+Date: Tue, 11 Nov 2025 09:39:43 +0900
+Message-ID: <20251111004546.425355633@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,85 +54,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
 
-[ Upstream commit 65673c6e33cf46f220cc5774166b373b3c087739 ]
+[ Upstream commit ee4b32220a6b41e71512e8804585325e685456ba ]
 
-The imx-mipi-csis driver sets the rate of the wrap clock to the value
-specified in the device tree's "clock-frequency" property, and defaults
-to 166 MHz otherwise. This is a historical mistake, as clock rate
-selection should have been left to the assigned-clock-rates property.
+When a buffer object (BO) is allocated with the XE_BO_FLAG_GGTT_INVALIDATE
+flag, the driver initiates TLB invalidation requests via the CTB mechanism
+while releasing the BO. However a premature release of the CTB BO can lead
+to system crashes, as observed in:
 
-Honouring the clock-frequency property can't be removed without breaking
-backwards compatibility, and the corresponding code isn't very
-intrusive. The 166 MHz default, on the other hand, prevents
-configuration of the clock rate through assigned-clock-rates, as the
-driver immediately overwrites the rate. This behaviour is confusing and
-has cost debugging time.
+Oops: Oops: 0000 [#1] SMP NOPTI
+RIP: 0010:h2g_write+0x2f3/0x7c0 [xe]
+Call Trace:
+ guc_ct_send_locked+0x8b/0x670 [xe]
+ xe_guc_ct_send_locked+0x19/0x60 [xe]
+ send_tlb_invalidation+0xb4/0x460 [xe]
+ xe_gt_tlb_invalidation_ggtt+0x15e/0x2e0 [xe]
+ ggtt_invalidate_gt_tlb.part.0+0x16/0x90 [xe]
+ ggtt_node_remove+0x110/0x140 [xe]
+ xe_ggtt_node_remove+0x40/0xa0 [xe]
+ xe_ggtt_remove_bo+0x87/0x250 [xe]
 
-There is little value in a 166 MHz default. All mainline device tree
-sources that enable the CSIS specify a clock-frequency explicitly, and
-the default wrap clock configuration on supported platforms is at least
-as high as 166 MHz. Drop the default, and only set the clock rate
-manually when the clock-frequency property is specified.
+Introduce a devm-managed release action during xe_guc_ct_init() and
+xe_guc_ct_init_post_hwconfig() to ensure proper CTB disablement before
+resource deallocation, preventing the use-after-free scenario.
 
-Link: https://lore.kernel.org/r/20250822002734.23516-10-laurent.pinchart@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Summers Stuart <stuart.summers@intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://lore.kernel.org/r/20250901072541.31461-1-satyanarayana.k.v.p@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-mipi-csis.c | 23 +++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/xe/xe_guc.c    |  8 +++----
+ drivers/gpu/drm/xe/xe_guc_ct.c | 41 +++++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/xe/xe_guc_ct.h |  1 +
+ 3 files changed, 45 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-mipi-csis.c b/drivers/media/platform/nxp/imx-mipi-csis.c
-index 2beb5f43c2c01..cea017a2b14ec 100644
---- a/drivers/media/platform/nxp/imx-mipi-csis.c
-+++ b/drivers/media/platform/nxp/imx-mipi-csis.c
-@@ -228,8 +228,6 @@
- #define MIPI_CSIS_PKTDATA_EVEN			0x3000
- #define MIPI_CSIS_PKTDATA_SIZE			SZ_4K
- 
--#define DEFAULT_SCLK_CSIS_FREQ			166000000UL
--
- struct mipi_csis_event {
- 	bool debug;
- 	u32 mask;
-@@ -704,12 +702,17 @@ static int mipi_csis_clk_get(struct mipi_csis_device *csis)
- 	if (ret < 0)
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index 9e0ed8fabcd54..62c76760fd26f 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -701,10 +701,6 @@ static int xe_guc_realloc_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
  		return ret;
  
--	/* Set clock rate */
--	ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
--			   csis->clk_frequency);
--	if (ret < 0)
--		dev_err(csis->dev, "set rate=%d failed: %d\n",
--			csis->clk_frequency, ret);
-+	if (csis->clk_frequency) {
-+		/*
-+		 * Set the clock rate. This is deprecated, for backward
-+		 * compatibility with old device trees.
-+		 */
-+		ret = clk_set_rate(csis->clks[MIPI_CSIS_CLK_WRAP].clk,
-+				   csis->clk_frequency);
-+		if (ret < 0)
-+			dev_err(csis->dev, "set rate=%d failed: %d\n",
-+				csis->clk_frequency, ret);
-+	}
- 
- 	return ret;
- }
-@@ -1413,9 +1416,7 @@ static int mipi_csis_parse_dt(struct mipi_csis_device *csis)
- {
- 	struct device_node *node = csis->dev->of_node;
- 
--	if (of_property_read_u32(node, "clock-frequency",
--				 &csis->clk_frequency))
--		csis->clk_frequency = DEFAULT_SCLK_CSIS_FREQ;
-+	of_property_read_u32(node, "clock-frequency", &csis->clk_frequency);
- 
+-	ret = xe_managed_bo_reinit_in_vram(xe, tile, &guc->ct.bo);
+-	if (ret)
+-		return ret;
+-
  	return 0;
  }
+ 
+@@ -839,6 +835,10 @@ int xe_guc_init_post_hwconfig(struct xe_guc *guc)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = xe_guc_ct_init_post_hwconfig(&guc->ct);
++	if (ret)
++		return ret;
++
+ 	guc_init_params_post_hwconfig(guc);
+ 
+ 	ret = xe_guc_submit_init(guc, ~0);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 3f4e6a46ff163..6d70dd1c106d4 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -39,6 +39,8 @@ static void receive_g2h(struct xe_guc_ct *ct);
+ static void g2h_worker_func(struct work_struct *w);
+ static void safe_mode_worker_func(struct work_struct *w);
+ static void ct_exit_safe_mode(struct xe_guc_ct *ct);
++static void guc_ct_change_state(struct xe_guc_ct *ct,
++				enum xe_guc_ct_state state);
+ 
+ #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
+ enum {
+@@ -252,6 +254,13 @@ int xe_guc_ct_init_noalloc(struct xe_guc_ct *ct)
+ }
+ ALLOW_ERROR_INJECTION(xe_guc_ct_init_noalloc, ERRNO); /* See xe_pci_probe() */
+ 
++static void guc_action_disable_ct(void *arg)
++{
++	struct xe_guc_ct *ct = arg;
++
++	guc_ct_change_state(ct, XE_GUC_CT_STATE_DISABLED);
++}
++
+ int xe_guc_ct_init(struct xe_guc_ct *ct)
+ {
+ 	struct xe_device *xe = ct_to_xe(ct);
+@@ -268,10 +277,40 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
+ 		return PTR_ERR(bo);
+ 
+ 	ct->bo = bo;
+-	return 0;
++
++	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
+ }
+ ALLOW_ERROR_INJECTION(xe_guc_ct_init, ERRNO); /* See xe_pci_probe() */
+ 
++/**
++ * xe_guc_ct_init_post_hwconfig - Reinitialize the GuC CTB in VRAM
++ * @ct: the &xe_guc_ct
++ *
++ * Allocate a new BO in VRAM and free the previous BO that was allocated
++ * in system memory (SMEM). Applicable only for DGFX products.
++ *
++ * Return: 0 on success, or a negative errno on failure.
++ */
++int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct)
++{
++	struct xe_device *xe = ct_to_xe(ct);
++	struct xe_gt *gt = ct_to_gt(ct);
++	struct xe_tile *tile = gt_to_tile(gt);
++	int ret;
++
++	xe_assert(xe, !xe_guc_ct_enabled(ct));
++
++	if (!IS_DGFX(xe))
++		return 0;
++
++	ret = xe_managed_bo_reinit_in_vram(xe, tile, &ct->bo);
++	if (ret)
++		return ret;
++
++	devm_release_action(xe->drm.dev, guc_action_disable_ct, ct);
++	return devm_add_action_or_reset(xe->drm.dev, guc_action_disable_ct, ct);
++}
++
+ #define desc_read(xe_, guc_ctb__, field_)			\
+ 	xe_map_rd_field(xe_, &guc_ctb__->desc, 0,		\
+ 			struct guc_ct_buffer_desc, field_)
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.h b/drivers/gpu/drm/xe/xe_guc_ct.h
+index 18d4225e65024..cf41210ab30ae 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.h
++++ b/drivers/gpu/drm/xe/xe_guc_ct.h
+@@ -13,6 +13,7 @@ struct xe_device;
+ 
+ int xe_guc_ct_init_noalloc(struct xe_guc_ct *ct);
+ int xe_guc_ct_init(struct xe_guc_ct *ct);
++int xe_guc_ct_init_post_hwconfig(struct xe_guc_ct *ct);
+ int xe_guc_ct_enable(struct xe_guc_ct *ct);
+ void xe_guc_ct_disable(struct xe_guc_ct *ct);
+ void xe_guc_ct_stop(struct xe_guc_ct *ct);
 -- 
 2.51.0
 
