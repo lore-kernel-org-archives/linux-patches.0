@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37EF26A1B6;
-	Tue, 11 Nov 2025 01:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886D34A3D3;
+	Tue, 11 Nov 2025 01:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825331; cv=none; b=P1VmjzxwdArug+fDA65KrjBm74SWztt+QlaZD0Vhzdl4fnkXVrWOza3vcqo0SUk0HsEaBHjVbCnYti2PqUBW366/aXQ1OzL0pZun6ZP7kkypQ7qN1MVJmwLwq2S7GA9DGzY8l2aX/hXy4kwinGrxxiYaStJwa/59dBnhGnT8ZZc=
+	t=1762825334; cv=none; b=Tha1q92my8s6EFh2NVuS9YL8lDcatHZrqsPU1t04WqoN4fyWZxm9uHPX8oGIj2fKudhZIZqe2YnuUQ0KNzSrtyw/PhPr5AZIUgbUPttNPAsbW4/p0VG6BptF612dZ87hLcbsK2gnZadSXm9hyB5CH3ZiIzJHOHsVV5DyQvAa8nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825331; c=relaxed/simple;
-	bh=tAPVCmpqUqIOLqKLd6pCxzEXjgQh++LdWFdMMPta3gI=;
+	s=arc-20240116; t=1762825334; c=relaxed/simple;
+	bh=C9rcMefQ4SWHLT0+zH207qN9ptFbNwpFrVwLltKEJhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RokA4RbjMW4m8XOScm6qJ12ER0QBpR8FtBRAZLdWjPba6gO+cnSIkuUnNHkXptnghY+bLve9mJVs8P7niBG4tc8xEbKZtlFpM9RNpCcCLFQrgJZlMOkr40nHgW5wNeG6lVksB9rrGdO0i6/fWEvp6HMw/gZBk4mLvj6Z6ImyZsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHy4NzGs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQ9BzaCp3ltEDr7pgAEJHjX4Gu931R9xGZ16ZzjLJa2rt+aUIG2OyAqhG0W68IlGZn6tI3kQpqFKBakvXVByoFUJjJy+XrgDg83S83MyqXZH66K591G8G/6yMFIjNoHLnIEhyF0TAsR98KPf2SvVwc41RkNt+Rd4db7X30nqY64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVvZUKP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHy4NzGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E766EC4CEFB;
-	Tue, 11 Nov 2025 01:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVvZUKP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C05C2BCB1;
+	Tue, 11 Nov 2025 01:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825331;
-	bh=tAPVCmpqUqIOLqKLd6pCxzEXjgQh++LdWFdMMPta3gI=;
+	s=korg; t=1762825333;
+	bh=C9rcMefQ4SWHLT0+zH207qN9ptFbNwpFrVwLltKEJhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHy4NzGsSxvGFn8uLZ9cs+eMmqkZojr4S8j8FlrDMexeAMJWsA7Yab0n5A1ErUOAv
-	 hOgQUDVWJErzSXuFah4szlMrv4eho6tfX+7PxI+i5cWTBDUqDGQCOAOpLthpOeuma2
-	 AzuaAJrwkX3HvaAVSF7r2FTPGGf9rbExoD3Oas80=
+	b=PVvZUKP7UUAqUSqZFBoW80WDhvjlQyIhLlkPXtfJr8T431SSV7jsroU+B9qAiscGu
+	 dx2UGlJM/t5kmR/tVSce5KG9Y9qN8MKxl3J3bfgI5kUdFoXvF/o+iAQm1QJq/RtxF/
+	 mjDJM6zQC/z91rxYYkg5V6uxCnmMMB7+TwEhUH+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Randall P. Embry" <rpembry@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 714/849] cpufreq: tegra186: Initialize all cores to max frequencies
-Date: Tue, 11 Nov 2025 09:44:44 +0900
-Message-ID: <20251111004553.694746981@linuxfoundation.org>
+Subject: [PATCH 6.17 715/849] 9p: sysfs_init: dont hardcode error to ENOMEM
+Date: Tue, 11 Nov 2025 09:44:45 +0900
+Message-ID: <20251111004553.719125449@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,100 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Randall P. Embry <rpembry@gmail.com>
 
-[ Upstream commit ba6018929165fc914c665f071f8e8cdbac844a49 ]
+[ Upstream commit 528f218b31aac4bbfc58914d43766a22ab545d48 ]
 
-During initialization, the EDVD_COREx_VOLT_FREQ registers for some cores
-are still at reset values and not reflecting the actual frequency. This
-causes get calls to fail. Set all cores to their respective max
-frequency during probe to initialize the registers to working values.
+v9fs_sysfs_init() always returned -ENOMEM on failure;
+return the actual sysfs_create_group() error instead.
 
-Suggested-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Randall P. Embry <rpembry@gmail.com>
+Message-ID: <20250926-v9fs_misc-v1-3-a8b3907fc04d@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/tegra186-cpufreq.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ fs/9p/v9fs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
-index 6c394b429b618..bd94beebc4cc2 100644
---- a/drivers/cpufreq/tegra186-cpufreq.c
-+++ b/drivers/cpufreq/tegra186-cpufreq.c
-@@ -138,13 +138,14 @@ static struct cpufreq_driver tegra186_cpufreq_driver = {
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 714cfe76ee651..a59c26cc3c7d9 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -597,13 +597,16 @@ static const struct attribute_group v9fs_attr_group = {
  
- static struct cpufreq_frequency_table *init_vhint_table(
- 	struct platform_device *pdev, struct tegra_bpmp *bpmp,
--	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id)
-+	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id,
-+	int *num_rates)
+ static int __init v9fs_sysfs_init(void)
  {
- 	struct cpufreq_frequency_table *table;
- 	struct mrq_cpu_vhint_request req;
- 	struct tegra_bpmp_message msg;
- 	struct cpu_vhint_data *data;
--	int err, i, j, num_rates = 0;
-+	int err, i, j;
- 	dma_addr_t phys;
- 	void *virt;
- 
-@@ -174,6 +175,7 @@ static struct cpufreq_frequency_table *init_vhint_table(
- 		goto free;
- 	}
- 
-+	*num_rates = 0;
- 	for (i = data->vfloor; i <= data->vceil; i++) {
- 		u16 ndiv = data->ndiv[i];
- 
-@@ -184,10 +186,10 @@ static struct cpufreq_frequency_table *init_vhint_table(
- 		if (i > 0 && ndiv == data->ndiv[i - 1])
- 			continue;
- 
--		num_rates++;
-+		(*num_rates)++;
- 	}
- 
--	table = devm_kcalloc(&pdev->dev, num_rates + 1, sizeof(*table),
-+	table = devm_kcalloc(&pdev->dev, *num_rates + 1, sizeof(*table),
- 			     GFP_KERNEL);
- 	if (!table) {
- 		table = ERR_PTR(-ENOMEM);
-@@ -229,7 +231,9 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
- {
- 	struct tegra186_cpufreq_data *data;
- 	struct tegra_bpmp *bpmp;
--	unsigned int i = 0, err;
-+	unsigned int i = 0, err, edvd_offset;
-+	int num_rates = 0;
-+	u32 edvd_val, cpu;
- 
- 	data = devm_kzalloc(&pdev->dev,
- 			    struct_size(data, clusters, TEGRA186_NUM_CLUSTERS),
-@@ -252,10 +256,21 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
- 	for (i = 0; i < TEGRA186_NUM_CLUSTERS; i++) {
- 		struct tegra186_cpufreq_cluster *cluster = &data->clusters[i];
- 
--		cluster->table = init_vhint_table(pdev, bpmp, cluster, i);
-+		cluster->table = init_vhint_table(pdev, bpmp, cluster, i, &num_rates);
- 		if (IS_ERR(cluster->table)) {
- 			err = PTR_ERR(cluster->table);
- 			goto put_bpmp;
-+		} else if (!num_rates) {
-+			err = -EINVAL;
-+			goto put_bpmp;
-+		}
++	int ret;
 +
-+		for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
-+			if (data->cpus[cpu].bpmp_cluster_id == i) {
-+				edvd_val = cluster->table[num_rates - 1].driver_data;
-+				edvd_offset = data->cpus[cpu].edvd_offset;
-+				writel(edvd_val, data->regs + edvd_offset);
-+			}
- 		}
+ 	v9fs_kobj = kobject_create_and_add("9p", fs_kobj);
+ 	if (!v9fs_kobj)
+ 		return -ENOMEM;
+ 
+-	if (sysfs_create_group(v9fs_kobj, &v9fs_attr_group)) {
++	ret = sysfs_create_group(v9fs_kobj, &v9fs_attr_group);
++	if (ret) {
+ 		kobject_put(v9fs_kobj);
+-		return -ENOMEM;
++		return ret;
  	}
  
+ 	return 0;
 -- 
 2.51.0
 
