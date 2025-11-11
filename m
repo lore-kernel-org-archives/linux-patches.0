@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D507B3AC3B;
-	Tue, 11 Nov 2025 01:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3AE1F5F6;
+	Tue, 11 Nov 2025 01:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822889; cv=none; b=W11n0p4LhUoJCoN8maBvUjzn+cHxHGEUB2RaYFEOARsEsndw8CmUqjpL5DYOrHRav33WppIXXTIfPSVzoO4kEHv/FxCfOv6RFVSmxnf4n/Ua7kX5NUiP4UTgnjfw6WlL8Z8Faw3mGlqsVmZI/8s6FYUHxnnDOps+piYAKMZnd5U=
+	t=1762822892; cv=none; b=TB2l0A6OFMsm7EUrUn3gbpiR5yzPZS1xvS+E8PGiJs9OyWduNZIRofP6S84ZKTK+UbgjFR9ideVHYKdYE5BCQWwJXQMfXG/54/LspzRsaPWCl6pC6+gdRCYZxFtRtaSIZVQog43aGKv2EC6GCf+6LBOSk2SHVruof34WG+fApEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822889; c=relaxed/simple;
-	bh=967soiR7boCgfbNupzIGR/qS1eX9pcr6TNDdsD+sVHE=;
+	s=arc-20240116; t=1762822892; c=relaxed/simple;
+	bh=VcF/N0QpWKMxBb3hGEWSDOSZqYUJ1dYBcwZd3IlatM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXOrTiC03b22ELJcjYCwSKjaPL6h8josq2FXJGer3RuxEHQmb48bkd0WK1hjIyExdfFz4TRty9d4ZGk4FkNWEcJV+00xWi+WCxyC5wcL6MvezVM3+BnkkWHn5ezQKyv7f/TGe1CtPpchBZaU1UWm8kwagqq0AaoKsXDcr2SzOJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ehm5kqhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfEzzLTzxSHTbXasYAk3lNBbnadQcHU6HTKgh5iWzrTUeSmY2CgfS1o8lcrMB6mt3hExrUFvJJA+cGrq8jd9F3vOcY54srip+IMs2ee9efRSG7efZF5ciGf6fKYAq3O+HkU/sK4iJesB1i7H9EdoPfslVOhkE2GfmW+Eg0S9MOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqV6fQI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ehm5kqhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717A7C19421;
-	Tue, 11 Nov 2025 01:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqV6fQI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD450C19425;
+	Tue, 11 Nov 2025 01:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822889;
-	bh=967soiR7boCgfbNupzIGR/qS1eX9pcr6TNDdsD+sVHE=;
+	s=korg; t=1762822892;
+	bh=VcF/N0QpWKMxBb3hGEWSDOSZqYUJ1dYBcwZd3IlatM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ehm5kqhRzbTT5vTSLJOBZVBZloDIbTvo2aDV/DPZWmFkLeAKdM3APD/8+FNjX7IRZ
-	 d/tL+wX6jWvQBOnUZ76hU3vZc2Pxe9jKKQgPzpqjGEtsyc7Aykzn2fGIgd9d/jOYkG
-	 1Ig5qHVTviLX9RSFVcoZ4O24t1rJHJy19joAuRpo=
+	b=pqV6fQI1BSzQdvcq1uuNoDX/YCBy+82w0JQT/wHQyA54GuIil40GdzMtkrpIIjR9B
+	 M1C0y4M+pakiQ32eplqdDL71Mrf3sQOwAhzBah88uhgCD3itH7dlFpNOJqm73AXkBS
+	 Z3VKfQBrMj0ULCM8t0nfRt77VxsrMdLh58qBEguw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 190/849] io_uring/zcrx: account niov arrays to cgroup
-Date: Tue, 11 Nov 2025 09:36:00 +0900
-Message-ID: <20251111004541.019878819@linuxfoundation.org>
+Subject: [PATCH 6.12 128/565] soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
+Date: Tue, 11 Nov 2025 09:39:44 +0900
+Message-ID: <20251111004529.832044903@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +48,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 31bf77dcc3810e08bcc7d15470e92cdfffb7f7f1 ]
+[ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
 
-net_iov / freelist / etc. arrays can be quite long, make sure they're
-accounted.
+Add missing Tegra114 nvmem cells and fuse lookups which were added for
+Tegra124+ but omitted for Tegra114.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/zcrx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/soc/tegra/fuse/fuse-tegra30.c | 122 ++++++++++++++++++++++++++
+ 1 file changed, 122 insertions(+)
 
-diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
-index 23ffc95caa427..e3953ea740c03 100644
---- a/io_uring/zcrx.c
-+++ b/io_uring/zcrx.c
-@@ -426,17 +426,17 @@ static int io_zcrx_create_area(struct io_zcrx_ifq *ifq,
+diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
+index e24ab5f7d2bf1..524fa1b0cd3d6 100644
+--- a/drivers/soc/tegra/fuse/fuse-tegra30.c
++++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
+@@ -117,6 +117,124 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
+ #endif
  
- 	ret = -ENOMEM;
- 	area->nia.niovs = kvmalloc_array(nr_iovs, sizeof(area->nia.niovs[0]),
--					 GFP_KERNEL | __GFP_ZERO);
-+					 GFP_KERNEL_ACCOUNT | __GFP_ZERO);
- 	if (!area->nia.niovs)
- 		goto err;
- 
- 	area->freelist = kvmalloc_array(nr_iovs, sizeof(area->freelist[0]),
--					GFP_KERNEL | __GFP_ZERO);
-+					GFP_KERNEL_ACCOUNT | __GFP_ZERO);
- 	if (!area->freelist)
- 		goto err;
- 
- 	area->user_refs = kvmalloc_array(nr_iovs, sizeof(area->user_refs[0]),
--					GFP_KERNEL | __GFP_ZERO);
-+					GFP_KERNEL_ACCOUNT | __GFP_ZERO);
- 	if (!area->user_refs)
- 		goto err;
- 
+ #ifdef CONFIG_ARCH_TEGRA_114_SOC
++static const struct nvmem_cell_info tegra114_fuse_cells[] = {
++	{
++		.name = "tsensor-cpu1",
++		.offset = 0x084,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu2",
++		.offset = 0x088,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-common",
++		.offset = 0x08c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu0",
++		.offset = 0x098,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "xusb-pad-calibration",
++		.offset = 0x0f0,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu3",
++		.offset = 0x12c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-gpu",
++		.offset = 0x154,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem0",
++		.offset = 0x158,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem1",
++		.offset = 0x15c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-pllx",
++		.offset = 0x160,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	},
++};
++
++static const struct nvmem_cell_lookup tegra114_fuse_lookups[] = {
++	{
++		.nvmem_name = "fuse",
++		.cell_name = "xusb-pad-calibration",
++		.dev_id = "7009f000.padctl",
++		.con_id = "calibration",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-common",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "common",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu2",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu2",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu3",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu3",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-gpu",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "gpu",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-pllx",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "pllx",
++	},
++};
++
+ static const struct tegra_fuse_info tegra114_fuse_info = {
+ 	.read = tegra30_fuse_read,
+ 	.size = 0x2a0,
+@@ -127,6 +245,10 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
+ 	.init = tegra30_fuse_init,
+ 	.speedo_init = tegra114_init_speedo_data,
+ 	.info = &tegra114_fuse_info,
++	.lookups = tegra114_fuse_lookups,
++	.num_lookups = ARRAY_SIZE(tegra114_fuse_lookups),
++	.cells = tegra114_fuse_cells,
++	.num_cells = ARRAY_SIZE(tegra114_fuse_cells),
+ 	.soc_attr_group = &tegra_soc_attr_group,
+ 	.clk_suspend_on = false,
+ };
 -- 
 2.51.0
 
