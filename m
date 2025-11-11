@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674D14C97;
-	Tue, 11 Nov 2025 00:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98721DF258;
+	Tue, 11 Nov 2025 00:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822670; cv=none; b=S0g7oY+Yf0lYdPyZKzWvfwCe2/0pxMFiEQamgiEbKX3NzN/h7s31sLfDDZnROwh3ZyMBugi2PunPCIA3q6kVFWwZcDHcvwJet2AIyG0stLHJceWxXXlTWEA1cWs0e14C5ecUtvrQkzyzFR8DWYSHU82PuMwOe8crjjNz2v7BOy8=
+	t=1762822672; cv=none; b=q1NVbeXefr8rfWAxPFG5nHW910q+syThwsiyh+5NtjWQciB8xyBSdvaEUUhMzy23K4R0DE/aSSdxpqbfSrHheO9dF6Fxfuyc1VTdtvIjk4Y7RcqzwBvMBdbD6apRIbvhVdOxz96ZI/fIwdfcZ8K99Fm/YHz9yFx5NAODWI8U0lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822670; c=relaxed/simple;
-	bh=mvxqgDY/ZwZDY0G1szpA/vulWeCZS2hp7etNuFGo4q0=;
+	s=arc-20240116; t=1762822672; c=relaxed/simple;
+	bh=LJRWELax0r8vZxNJTrqabuzlN5OQfBgIJwsQIHh3PGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TceKQ4bzQ8r7498s3WGIu7ac1lsc0IlqcYZuVztgDz5GMbTRUWz2Gso4kTkHfPcfyHW3hzfC9jY2VzdhkG5aXq54FP7JeQHcf7zS8Nu7+wNYrNSzZappzXOYazprtaOVcxJboZdWaVp1UEhM1Sg0vFZtZzi+hI4NT6Ax1DD7Zvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaXwUHU9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pGiI+Z/cjj2MrJyAmZkicX9k3gaALM6ifDp9IvJXRA/s0hM92bUM4Wio9L+FIfM/QnHKpngaFYN7C8vwxoKFX+p8gAAqlYmN97xgZcDqiJJUmKcHu/NlMmhxRHBW/GvpHeRM00VWHcvXZMwIIOPmP2I04R3nPtMwyPCTYhB4Wv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvOdmjGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaXwUHU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF248C19421;
-	Tue, 11 Nov 2025 00:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvOdmjGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66698C4CEFB;
+	Tue, 11 Nov 2025 00:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822670;
-	bh=mvxqgDY/ZwZDY0G1szpA/vulWeCZS2hp7etNuFGo4q0=;
+	s=korg; t=1762822672;
+	bh=LJRWELax0r8vZxNJTrqabuzlN5OQfBgIJwsQIHh3PGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GaXwUHU9XVL06TveT89I4dP6QEKtGI/sFCVWeL1ebIFPY7zmfD9EmCCQDAca3PgN6
-	 hxFZ59M+7q9KqZUVDJjI5jbYMNg37Za2UzdeX93q0jvH+eoShQpa2mIyLrDd6zEHg6
-	 bTMIPHznRznOyBAdKHcxmHYZQe03PxSGa6ZL4F2Y=
+	b=XvOdmjGAYkstEEZ8TLqDTMUUpf8rdz45+k3KxONKyB5cVZJHEhc+ULjrEIRtU2W6G
+	 q7sgOGYR37EPKcm6I0iZkR2JoEJawLP2ecw8UKOIPBFCk6uqHhdwshMG9Qlhp+9rWJ
+	 uaghFh1/fNt8Fb1W2hHOwZHd239KVX9f+JVM1dLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Quentin Monnet <qmo@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Luben Tuikov <ltuikov89@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Philipp Stanner <pstanner@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 145/849] bpftool: Add CET-aware symbol matching for x86_64 architectures
-Date: Tue, 11 Nov 2025 09:35:15 +0900
-Message-ID: <20251111004539.911440769@linuxfoundation.org>
+Subject: [PATCH 6.12 083/565] drm/sched: Optimise drm_sched_entity_push_job
+Date: Tue, 11 Nov 2025 09:38:59 +0900
+Message-ID: <20251111004528.834203751@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,132 +49,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit 6417ca85305ecaffef13cf9063ac35da8fba8500 ]
+[ Upstream commit d42a254633c773921884a19e8a1a0f53a31150c3 ]
 
-Adjust symbol matching logic to account for Control-flow Enforcement
-Technology (CET) on x86_64 systems. CET prefixes functions with
-a 4-byte 'endbr' instruction, shifting the actual hook entry point to
-symbol + 4.
+In FIFO mode (which is the default), both drm_sched_entity_push_job() and
+drm_sched_rq_update_fifo(), where the latter calls the former, are
+currently taking and releasing the same entity->rq_lock.
 
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20250829061107.23905-3-chenyuan_fl@163.com
+We can avoid that design inelegance, and also have a miniscule
+efficiency improvement on the submit from idle path, by introducing a new
+drm_sched_rq_update_fifo_locked() helper and pulling up the lock taking to
+its callers.
+
+v2:
+ * Remove drm_sched_rq_update_fifo() altogether. (Christian)
+
+v3:
+ * Improved commit message. (Philipp)
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Luben Tuikov <ltuikov89@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Philipp Stanner <pstanner@redhat.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philipp Stanner <pstanner@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241016122013.7857-2-tursulin@igalia.com
+Stable-dep-of: d25e3a610bae ("drm/sched: Fix race in drm_sched_entity_select_rq()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bpf/bpftool/link.c | 54 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |   13 +++++++++----
+ drivers/gpu/drm/scheduler/sched_main.c   |    6 +++---
+ include/drm/gpu_scheduler.h              |    2 +-
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
-index a773e05d5ade4..bdcd717b0348f 100644
---- a/tools/bpf/bpftool/link.c
-+++ b/tools/bpf/bpftool/link.c
-@@ -282,11 +282,52 @@ get_addr_cookie_array(__u64 *addrs, __u64 *cookies, __u32 count)
- 	return data;
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -506,8 +506,12 @@ struct drm_sched_job *drm_sched_entity_p
+ 		struct drm_sched_job *next;
+ 
+ 		next = to_drm_sched_job(spsc_queue_peek(&entity->job_queue));
+-		if (next)
+-			drm_sched_rq_update_fifo(entity, next->submit_ts);
++		if (next) {
++			spin_lock(&entity->rq_lock);
++			drm_sched_rq_update_fifo_locked(entity,
++							next->submit_ts);
++			spin_unlock(&entity->rq_lock);
++		}
+ 	}
+ 
+ 	/* Jobs and entities might have different lifecycles. Since we're
+@@ -607,10 +611,11 @@ void drm_sched_entity_push_job(struct dr
+ 		sched = rq->sched;
+ 
+ 		drm_sched_rq_add_entity(rq, entity);
+-		spin_unlock(&entity->rq_lock);
+ 
+ 		if (drm_sched_policy == DRM_SCHED_POLICY_FIFO)
+-			drm_sched_rq_update_fifo(entity, submit_ts);
++			drm_sched_rq_update_fifo_locked(entity, submit_ts);
++
++		spin_unlock(&entity->rq_lock);
+ 
+ 		drm_sched_wakeup(sched);
+ 	}
+--- a/drivers/gpu/drm/scheduler/sched_main.c
++++ b/drivers/gpu/drm/scheduler/sched_main.c
+@@ -169,14 +169,15 @@ static inline void drm_sched_rq_remove_f
+ 	}
  }
  
-+static bool is_x86_ibt_enabled(void)
-+{
-+#if defined(__x86_64__)
-+	struct kernel_config_option options[] = {
-+		{ "CONFIG_X86_KERNEL_IBT", },
-+	};
-+	char *values[ARRAY_SIZE(options)] = { };
-+	bool ret;
-+
-+	if (read_kernel_config(options, ARRAY_SIZE(options), values, NULL))
-+		return false;
-+
-+	ret = !!values[0];
-+	free(values[0]);
-+	return ret;
-+#else
-+	return false;
-+#endif
-+}
-+
-+static bool
-+symbol_matches_target(__u64 sym_addr, __u64 target_addr, bool is_ibt_enabled)
-+{
-+	if (sym_addr == target_addr)
-+		return true;
-+
-+	/*
-+	 * On x86_64 architectures with CET (Control-flow Enforcement Technology),
-+	 * function entry points have a 4-byte 'endbr' instruction prefix.
-+	 * This causes kprobe hooks to target the address *after* 'endbr'
-+	 * (symbol address + 4), preserving the CET instruction.
-+	 * Here we check if the symbol address matches the hook target address
-+	 * minus 4, indicating a CET-enabled function entry point.
-+	 */
-+	if (is_ibt_enabled && sym_addr == target_addr - 4)
-+		return true;
-+
-+	return false;
-+}
-+
- static void
- show_kprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
+-void drm_sched_rq_update_fifo(struct drm_sched_entity *entity, ktime_t ts)
++void drm_sched_rq_update_fifo_locked(struct drm_sched_entity *entity, ktime_t ts)
  {
- 	struct addr_cookie *data;
- 	__u32 i, j = 0;
-+	bool is_ibt_enabled;
+ 	/*
+ 	 * Both locks need to be grabbed, one to protect from entity->rq change
+ 	 * for entity from within concurrent drm_sched_entity_select_rq and the
+ 	 * other to update the rb tree structure.
+ 	 */
+-	spin_lock(&entity->rq_lock);
++	lockdep_assert_held(&entity->rq_lock);
++
+ 	spin_lock(&entity->rq->lock);
  
- 	jsonw_bool_field(json_wtr, "retprobe",
- 			 info->kprobe_multi.flags & BPF_F_KPROBE_MULTI_RETURN);
-@@ -306,11 +347,13 @@ show_kprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
- 	if (!dd.sym_count)
- 		goto error;
+ 	drm_sched_rq_remove_fifo_locked(entity);
+@@ -187,7 +188,6 @@ void drm_sched_rq_update_fifo(struct drm
+ 		      drm_sched_entity_compare_before);
  
-+	is_ibt_enabled = is_x86_ibt_enabled();
- 	for (i = 0; i < dd.sym_count; i++) {
--		if (dd.sym_mapping[i].address != data[j].addr)
-+		if (!symbol_matches_target(dd.sym_mapping[i].address,
-+					   data[j].addr, is_ibt_enabled))
- 			continue;
- 		jsonw_start_object(json_wtr);
--		jsonw_uint_field(json_wtr, "addr", dd.sym_mapping[i].address);
-+		jsonw_uint_field(json_wtr, "addr", (unsigned long)data[j].addr);
- 		jsonw_string_field(json_wtr, "func", dd.sym_mapping[i].name);
- 		/* Print null if it is vmlinux */
- 		if (dd.sym_mapping[i].module[0] == '\0') {
-@@ -719,6 +762,7 @@ static void show_kprobe_multi_plain(struct bpf_link_info *info)
- {
- 	struct addr_cookie *data;
- 	__u32 i, j = 0;
-+	bool is_ibt_enabled;
+ 	spin_unlock(&entity->rq->lock);
+-	spin_unlock(&entity->rq_lock);
+ }
  
- 	if (!info->kprobe_multi.count)
- 		return;
-@@ -742,12 +786,14 @@ static void show_kprobe_multi_plain(struct bpf_link_info *info)
- 	if (!dd.sym_count)
- 		goto error;
+ /**
+--- a/include/drm/gpu_scheduler.h
++++ b/include/drm/gpu_scheduler.h
+@@ -593,7 +593,7 @@ void drm_sched_rq_add_entity(struct drm_
+ void drm_sched_rq_remove_entity(struct drm_sched_rq *rq,
+ 				struct drm_sched_entity *entity);
  
-+	is_ibt_enabled = is_x86_ibt_enabled();
- 	printf("\n\t%-16s %-16s %s", "addr", "cookie", "func [module]");
- 	for (i = 0; i < dd.sym_count; i++) {
--		if (dd.sym_mapping[i].address != data[j].addr)
-+		if (!symbol_matches_target(dd.sym_mapping[i].address,
-+					   data[j].addr, is_ibt_enabled))
- 			continue;
- 		printf("\n\t%016lx %-16llx %s",
--		       dd.sym_mapping[i].address, data[j].cookie, dd.sym_mapping[i].name);
-+		       (unsigned long)data[j].addr, data[j].cookie, dd.sym_mapping[i].name);
- 		if (dd.sym_mapping[i].module[0] != '\0')
- 			printf(" [%s]  ", dd.sym_mapping[i].module);
- 		else
--- 
-2.51.0
-
+-void drm_sched_rq_update_fifo(struct drm_sched_entity *entity, ktime_t ts);
++void drm_sched_rq_update_fifo_locked(struct drm_sched_entity *entity, ktime_t ts);
+ 
+ int drm_sched_entity_init(struct drm_sched_entity *entity,
+ 			  enum drm_sched_priority priority,
 
 
