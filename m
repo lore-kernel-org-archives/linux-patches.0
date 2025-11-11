@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289511F09B3;
-	Tue, 11 Nov 2025 01:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B8C346FA7;
+	Tue, 11 Nov 2025 01:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823726; cv=none; b=pXFgKNL+MehHmwCmKwj2+xFmSB3v3aezFy2vZnCzG1s9+qDc2PyZ0G85gQlXoQ5/JzmKO0G+Ze2FUG/mIattU8xmj8jwGl/MdhfWTAkq1sOEmS/WUKHPEHbmu3jzJ6R9LO79A549Z18UL4lYMK70KMLej5ER3HsGD7JyPhW3+KE=
+	t=1762823728; cv=none; b=gut8m2MgdGLhAJzNbTYY/tBAERCyx/bjqM3SZWQMWGod1CjOYBU8qHq3z+Wyk5bmaRt/dRjjF/oztQ1pWH2xCAYHQBrKcJDnxg5yNr1cTy3dAoB5FPGhA5uKKJMuzM8VATxaHu8M0QNLPocTTJYtXU0bwap8Xqpde3G7x6LYf7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823726; c=relaxed/simple;
-	bh=tobJo+FmRj8l2xkBpmiCeGRm44p2612Qfxd7eS8eSBI=;
+	s=arc-20240116; t=1762823728; c=relaxed/simple;
+	bh=NxU2pDEjRZEaYkfS82R7FrzdTCXrEVN7DUH1udGvvMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7tv4PGqFap8OvY5SmoHvrRBnx3gow7pwENY9X5sfk91qhSuU036ZDPJHOv24gZVsX3/gmMFm7FKOp7AnrCOqPSGtyOgSCNwsQIJdaH99K5uE4mP+cnv3vSFNydvrdTD342whwB3Oo8vMpJc3EeE13IjNQBauK7Vi1LxJIEaCv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBQZvtMR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSXU0B47edsueBsrNA/NJ6bwbmgC1yT2l+ze4Yg400YCZLBLa1x61kJYbSBBnmpqSu0TJouwWFfW8FdSa9y61Q5+wJn0Dym2dpARkguavvDA4BXp65CHwFpWIztXrB0LMThS0cgruQPURzYbRSuhTPLoqQ+j/KvYKHJV4ZTmYxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH2zG0Pk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBQZvtMR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B900FC4CEF5;
-	Tue, 11 Nov 2025 01:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH2zG0Pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282EBC4CEF5;
+	Tue, 11 Nov 2025 01:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823726;
-	bh=tobJo+FmRj8l2xkBpmiCeGRm44p2612Qfxd7eS8eSBI=;
+	s=korg; t=1762823728;
+	bh=NxU2pDEjRZEaYkfS82R7FrzdTCXrEVN7DUH1udGvvMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBQZvtMRw7GgOSr//zxlwQwqR8PU23mxNCqEMs27xoT3FU4UucLjxZVV+JlJV4edP
-	 hM6D9TYFNJx+e2ICyp82Duyyxc+HGfT9x00My4M3STRJBElvqy1/BBwFyKsvnr5LbK
-	 KKZGHKWAx86sw/sFRZO+6fVBWVtYJpegektALSZs=
+	b=kH2zG0Pk6JgKyCEbVrPmlqMCFHb3k6ffugn4c81yB0eY2MSjW47SqFeb3WH3Yxieh
+	 gq3IeyWLa9RHjADAieXCymGgnuwU+J2HDHCLCT2VBxAEpt1hXlK4Mu5afgmP+plM+C
+	 PkarjwtLlYwuFOj4G7zG9p69YqFOZq6Vi7li4Jjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/565] drm/amdgpu: add support for cyan skillfish gpu_info
-Date: Tue, 11 Nov 2025 09:42:44 +0900
-Message-ID: <20251111004533.814631806@linuxfoundation.org>
+Subject: [PATCH 6.17 358/849] extcon: adc-jack: Fix wakeup source leaks on device unbind
+Date: Tue, 11 Nov 2025 09:38:48 +0900
+Message-ID: <20251111004545.073535767@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit fa819e3a7c1ee994ce014cc5a991c7fd91bc00f1 ]
+[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
 
-Some SOCs which are part of the cyan skillfish family
-rely on an explicit firmware for IP discovery.  Add support
-for the gpu_info firmware.
+Device can be unbound, so driver must also release memory for the wakeup
+source.  Do not use devm interface, because it would change the order of
+cleanup.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/extcon/extcon-adc-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 373c626247a1a..7ff81bd1ec200 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -93,6 +93,7 @@ MODULE_FIRMWARE("amdgpu/picasso_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/raven2_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/arcturus_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/navi12_gpu_info.bin");
-+MODULE_FIRMWARE("amdgpu/cyan_skillfish_gpu_info.bin");
+diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
+index 46c40d85c2ac8..557930394abd2 100644
+--- a/drivers/extcon/extcon-adc-jack.c
++++ b/drivers/extcon/extcon-adc-jack.c
+@@ -164,6 +164,7 @@ static void adc_jack_remove(struct platform_device *pdev)
+ {
+ 	struct adc_jack_data *data = platform_get_drvdata(pdev);
  
- #define AMDGPU_RESUME_MS		2000
- #define AMDGPU_MAX_RETRY_LIMIT		2
-@@ -2412,6 +2413,9 @@ static int amdgpu_device_parse_gpu_info_fw(struct amdgpu_device *adev)
- 			return 0;
- 		chip_name = "navi12";
- 		break;
-+	case CHIP_CYAN_SKILLFISH:
-+		chip_name = "cyan_skillfish";
-+		break;
- 	}
- 
- 	err = amdgpu_ucode_request(adev, &adev->firmware.gpu_info_fw,
++	device_init_wakeup(&pdev->dev, false);
+ 	free_irq(data->irq, data);
+ 	cancel_work_sync(&data->handler.work);
+ }
 -- 
 2.51.0
 
