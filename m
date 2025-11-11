@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67DA244693;
-	Tue, 11 Nov 2025 00:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6171F73451;
+	Tue, 11 Nov 2025 00:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822038; cv=none; b=q8I5Aj36txAtNmeoeYbuTA4Xu/KZ43wsIh517CiI1gqC+ljVU3k1190VFkZpc9eFTc/bf8pNqQCQFoAUsNjheHn/HWFqXexZW2lVIV5E/CVhcH3asGK853b0p5xA2p07VGJuUktQHAukJXuCTFdvegx9EpV9tWMQxLY/w8+dBZU=
+	t=1762822041; cv=none; b=pDTxF3yQPSQZrjc8FxfZx/lCQK++GclMZoDsg8+uKiJ+mzhywjbbDuzdgMdl9dTa+u0owfp1co/0+ISmPWG/VUaV3wzk8kmBAh0ymTulBK/SHb6qU6XSGzKvI+/hPELo3GL84xblSb6xjWtz29WoL9mHoBl1LsINZfqr+9qm8BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822038; c=relaxed/simple;
-	bh=w9EHiAXtZaRwZf36WgAB0NZbQ4DrDzTdCn8Di7krVUY=;
+	s=arc-20240116; t=1762822041; c=relaxed/simple;
+	bh=w4RhXjH1+TYLM1urmjjvLHGHYKmCHY+rGX9vFVeZiVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2PFk1hBL8eU1xbjZpjyATgQxmGlAXDTiZ0/zs1cZy3ruZl9EB7IkKyCLALI+l2NThKmBAS6RP+BG+vR204bo2t3FERQbq8yEJY8ZknaYaENzZ98TPPcz+jir4Dqxx0r8u6at13J8P0OSK6lo/Zku0pOETVQehdPRDudqvMsQqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOZJmGWQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5M3sHX0Sds4ucd+uKOaDWJQTcWMEUD3KNL9VXVqvr7847zXsBfzOD/u2pto01ulsfKOLOxmKUgzc4lXTqe05ZAYd+LPGykcQ/erGUo8jyfb1OPHoWp/f597Rf3ZqUvxxxt4zviwblrH7rbzbI3YT2p2HYX1SFqG/sdU1x8Cr80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPZPOal/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOZJmGWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AB1C4CEFB;
-	Tue, 11 Nov 2025 00:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPZPOal/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B792BC2BC86;
+	Tue, 11 Nov 2025 00:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822038;
-	bh=w9EHiAXtZaRwZf36WgAB0NZbQ4DrDzTdCn8Di7krVUY=;
+	s=korg; t=1762822041;
+	bh=w4RhXjH1+TYLM1urmjjvLHGHYKmCHY+rGX9vFVeZiVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOZJmGWQP0vAIMXJQgzdFGkG48CFQOgTmn3knhGFLN7U4BB+QZQbS9zQWMn0BjslD
-	 8DFhON37WyClM3JE6d0ZIcEzdHuIwnPPWjXWjZc5qKtUT4Rca7xD4fK7xJKEI+sjUO
-	 jn/kESSFoCyz7Z4Gy/1Mogkgsa9KF3LzxwEiCdLE=
+	b=nPZPOal/dfSzEDTy2aRajLuC9OHAshU0+rZGO9EC5RucQ1p4O/xwjN/RljWwjOp31
+	 tVb0CvbSxzgLKcqX2T/iVDyfUc6Jx+bRP624XvUA9OQb0BNcfOgINSO8yam6RRvg+q
+	 axNIvziPJS/PxlrLI5K8UkAhjQ/Cm0bWXO7UedqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 001/565] NFSD: Fix crash in nfsd4_read_release()
-Date: Tue, 11 Nov 2025 09:37:37 +0900
-Message-ID: <20251111004526.862105989@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 002/565] net: usb: asix_devices: Check return value of usbnet_get_endpoints
+Date: Tue, 11 Nov 2025 09:37:38 +0900
+Message-ID: <20251111004526.887254757@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -50,38 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit abb1f08a2121dd270193746e43b2a9373db9ad84 upstream.
+commit dc89548c6926d68dfdda11bebc1a5258bc41d887 upstream.
 
-When tracing is enabled, the trace_nfsd_read_done trace point
-crashes during the pynfs read.testNoFh test.
+The code did not check the return value of usbnet_get_endpoints.
+Add checks and return the error if it fails to transfer the error.
 
-Fixes: 15a8b55dbb1b ("nfsd: call op_release, even when op_func returns an error")
+Found via static anlaysis and this is similar to
+commit 07161b2416f7 ("sr9800: Add check for usbnet_get_endpoints").
+
+Fixes: 933a27d39e0e ("USB: asix - Add AX88178 support and many other changes")
+Fixes: 2e55cc7210fe ("[PATCH] USB: usbnet (3/9) module for ASIX Ethernet adapters")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20251026164318.57624-1-linmq006@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/usb/asix_devices.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -982,10 +982,11 @@ nfsd4_read(struct svc_rqst *rqstp, struc
- static void
- nfsd4_read_release(union nfsd4_op_u *u)
- {
--	if (u->read.rd_nf)
-+	if (u->read.rd_nf) {
-+		trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
-+				     u->read.rd_offset, u->read.rd_length);
- 		nfsd_file_put(u->read.rd_nf);
--	trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
--			     u->read.rd_offset, u->read.rd_length);
-+	}
- }
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -230,7 +230,9 @@ static int ax88172_bind(struct usbnet *d
+ 	int i;
+ 	unsigned long gpio_bits = dev->driver_info->data;
  
- static __be32
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		goto out;
+ 
+ 	/* Toggle the GPIOs in a manufacturer/model specific way */
+ 	for (i = 2; i >= 0; i--) {
+@@ -848,7 +850,9 @@ static int ax88772_bind(struct usbnet *d
+ 
+ 	dev->driver_priv = priv;
+ 
+-	usbnet_get_endpoints(dev, intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
+ 
+ 	/* Maybe the boot loader passed the MAC address via device tree */
+ 	if (!eth_platform_get_mac_address(&dev->udev->dev, buf)) {
+@@ -1281,7 +1285,9 @@ static int ax88178_bind(struct usbnet *d
+ 	int ret;
+ 	u8 buf[ETH_ALEN] = {0};
+ 
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
+ 
+ 	/* Get the MAC address */
+ 	ret = asix_read_cmd(dev, AX_CMD_READ_NODE_ID, 0, 0, ETH_ALEN, buf, 0);
 
 
