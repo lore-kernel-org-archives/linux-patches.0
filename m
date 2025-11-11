@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1923A26D4C1;
-	Tue, 11 Nov 2025 01:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CF81D86FF;
+	Tue, 11 Nov 2025 01:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824210; cv=none; b=O8+6MQVOSpQF6MLWKx420QpiU8F39LCr4nn2b/WBATgp3lOyMK+/CwwAl89hc56VzoKRstkopwtlBHlM+kgqFJ3/y9pqWwKiukPvORHRbaPwrXqZA3ZtfEmHaUP2w5QO8Zu1yUKe3KveVWBK9nIYL60sQl8mDgxi443/2nRFtXo=
+	t=1762824213; cv=none; b=QtnhFSJ1P9PQ+utofF6UgWC8sS/WAoPBlYfz/eh6QpV0NGvkAWfy1JpeGT3LHwRCQculJ6MZhWjIAT/ozCQd0boGnabjLXwuhL0lL/7EuSY1jPsoHGGY6WdncSR3hLgnW2ZDB423MtiM8q/Pup3JmRoq4HuSKMejsXeyk38sJJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824210; c=relaxed/simple;
-	bh=sDOAACzSP3M3wuC2kIFefoPeo+vuPvL7bxEzMsPCkrA=;
+	s=arc-20240116; t=1762824213; c=relaxed/simple;
+	bh=omJjpcDGGgqO6+97A+NIWZkZ5uV69sWZJ1Rn2YyOI3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgnOn+prvjOBZ7vHnTotShb7eA+QjC4Uh5ed3xOYThD39fSnrFB5d2v0Zk+sY2G6WoCXBPlmSzLtH6AeyeRCBdrDTYBtrRZkh2gSUA95JntrYrAU1LYkOaXvq7bM8Es4K0WGH3vihWjoa+ju3r2w7rzZonNq8WMC0jeAyjoYGeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5sMGTLt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnGgGjSAwVOeNuw1WEcq6BSfal6Bv+noUCKFh9Orbq3hu1p2Vcdf57DBWcvO2kSZplxr6n8AAVIK7rOS0yEgA37rZQgF6YL7KHGSD/V1UNIOS5i3tNAWEpmkXhS/mPS1SiRtASvePalpvd9H6yFtmZErGR22izMohXwb9//M+64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iuj3OmeX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5sMGTLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85322C19424;
-	Tue, 11 Nov 2025 01:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iuj3OmeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917EC19422;
+	Tue, 11 Nov 2025 01:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824209;
-	bh=sDOAACzSP3M3wuC2kIFefoPeo+vuPvL7bxEzMsPCkrA=;
+	s=korg; t=1762824212;
+	bh=omJjpcDGGgqO6+97A+NIWZkZ5uV69sWZJ1Rn2YyOI3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5sMGTLt72CvQQRu5uzqN5WU5ZZhuvCPHfqkgnXEcy0vk3EXWv9Xq6Z6SmX1dZFja
-	 Z3REz7pcFdds3/zEG2eQqRubsx3NjxV5HkXUiDc7AMSc2onZAWKcVpUUuNziiLejOG
-	 ULZB/eWA/l9s3bR7Vbo+4q3nCIJkszr3Hwjxbq90=
+	b=Iuj3OmeXjV6rc0qqwlukkMaFl5B7IjNlE1/+MplqFbBL56lhV6zdhtjSc7NaSDw0g
+	 eNPVynPUeBHFWNl331E6mq+pAiwqEMpmr12NbIJNIc4rGUSwAbtKcI6L3NDbfVsb1T
+	 OtL8mSOXCGVAui4kkMf0hfYRQFC1m4rqpMa6RHHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	William Wu <william.wu@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 411/565] wifi: ath12k: Increase DP_REO_CMD_RING_SIZE to 256
-Date: Tue, 11 Nov 2025 09:44:27 +0900
-Message-ID: <20251111004536.114750271@linuxfoundation.org>
+Subject: [PATCH 6.17 463/849] usb: gadget: f_hid: Fix zero length packet transfer
+Date: Tue, 11 Nov 2025 09:40:33 +0900
+Message-ID: <20251111004547.622673197@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +46,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit 82993345aef6987a916337ebd2fca3ff4a6250a7 ]
+[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
 
-Increase DP_REO_CMD_RING_SIZE from 128 to 256 to avoid
-queuing failures observed during stress test scenarios.
+Set the hid req->zero flag of ep0/in_ep to true by default,
+then the UDC drivers can transfer a zero length packet at
+the end if the hid transfer with size divisible to EPs max
+packet size according to the USB 2.0 spec.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: Nithyanantham Paramasivam <nithyanantham.paramasivam@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250806111750.3214584-2-nithyanantham.paramasivam@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_hid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
-index 2fb18b83b3eec..ec140052097e9 100644
---- a/drivers/net/wireless/ath/ath12k/dp.h
-+++ b/drivers/net/wireless/ath/ath12k/dp.h
-@@ -167,7 +167,7 @@ struct ath12k_pdev_dp {
- #define DP_REO_REINJECT_RING_SIZE	32
- #define DP_RX_RELEASE_RING_SIZE		1024
- #define DP_REO_EXCEPTION_RING_SIZE	128
--#define DP_REO_CMD_RING_SIZE		128
-+#define DP_REO_CMD_RING_SIZE		256
- #define DP_REO_STATUS_RING_SIZE		2048
- #define DP_RXDMA_BUF_RING_SIZE		4096
- #define DP_RX_MAC_BUF_RING_SIZE		2048
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 8e1d1e8840503..307ea563af95e 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -511,7 +511,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
+ 	}
+ 
+ 	req->status   = 0;
+-	req->zero     = 0;
++	req->zero     = 1;
+ 	req->length   = count;
+ 	req->complete = f_hidg_req_complete;
+ 	req->context  = hidg;
+@@ -967,7 +967,7 @@ static int hidg_setup(struct usb_function *f,
+ 	return -EOPNOTSUPP;
+ 
+ respond:
+-	req->zero = 0;
++	req->zero = 1;
+ 	req->length = length;
+ 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+ 	if (status < 0)
 -- 
 2.51.0
 
