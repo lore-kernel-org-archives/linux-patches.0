@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F192FD7CA;
-	Tue, 11 Nov 2025 01:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BCD34D38E;
+	Tue, 11 Nov 2025 01:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824377; cv=none; b=Zi5EQy+DgI3JwDpQeowmb9e/etnt3Zi+1faGQbOtOlTFglYamfaAwxXBpDGKK2snxjxG97YivWFAV5ZVO5udWO2IKbi+prx7vt+tMXDruCAfotji+0t6GEMWIVS72V1LWxNGeq+3ULaJDDywAGDLSOzK7GNLkZdMf6mNE9RuQCE=
+	t=1762824380; cv=none; b=iMCeJmzjy5ijVoBuiXKyNIbvybdqjkcTz3jm20ZbgAlWHiWDIfFqnitw12uoLpeBeZePzMZq0nmxNsDhAU/8FeTEJpma7AYfq3htEFljf99aazxDjc9TUwa3AgCJ/i6uVmmfrzr13hrUIFrH64ql7OqFNVIRXuedzE52X7zmWQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824377; c=relaxed/simple;
-	bh=gb2lo9eafL3inZ/vR5F+jbHMTdNoAQuoXvjdabHz1HM=;
+	s=arc-20240116; t=1762824380; c=relaxed/simple;
+	bh=wMuM6b4bCUOOVRJpI85pk7+NcnkzRN7kmbG7hW8l7S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4jsQn2hOqf4pc/jhuybw+UlAF/h24daeg/DRrkQipb9dftuATbOQTL3xVVGA2L3RIJaO8dR1bMnCUmsRT268eYGOixl3KITfu7kquddntrGUNC8ejbZv/cz+Z+TL8y+kGEblogUO0cynOqzrLVTLLOhuS64SR/OF2bNt0QjpdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ae8eLELt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QP/fkYwOo3sXnht7AcZLyh5BQ7AXWiC0z8i/3R46GbcZQt58sLB3c959KinYtnizozGPRekeDQpX2WWJq8toDvapIBA6IvxV8dZvEHh4qDpZBA4qe6Eg9rfeLB9Nu7BP47ReehNpbV3x2WKN7cM2DT7UN0IghlA6e2GHI7f+YqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfzhtj6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ae8eLELt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39206C116B1;
-	Tue, 11 Nov 2025 01:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfzhtj6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B76C113D0;
+	Tue, 11 Nov 2025 01:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824377;
-	bh=gb2lo9eafL3inZ/vR5F+jbHMTdNoAQuoXvjdabHz1HM=;
+	s=korg; t=1762824379;
+	bh=wMuM6b4bCUOOVRJpI85pk7+NcnkzRN7kmbG7hW8l7S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ae8eLELtv+4YUt3FR2ctLq8TeHM8qxmuxH/Xnem8aq7Z2A0YgdkIqIcjRfLbCJFj9
-	 wytLeC4AbEu1yNFahJdomY341bUMujNMNlHqM1CobzPsnaNqVhHhKxjB3ofStL6RAq
-	 P3hLEwlbUZ2iYgwpjkBDRISMNlkfn0RUsMx+b4qo=
+	b=Yfzhtj6n3Rrb5YsFvX3zfzCtNPxqMiYQTjrUzUfcHIOn+hj9MepJQDKGKpt2T9aJK
+	 CIUZWQFHV+TekwGJdt+C4JSNEDUs0DqsdgpZ67G+U//mTmcoAO3Su5OtGaQtiUaJyp
+	 GdtGqrqQOxSYs136/eHPCgB5pb+87IdRHsDn2GV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raag Jadav <raag.jadav@intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sunil V L <sunilvl@ventanamicro.com>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 483/849] drm/xe/i2c: Enable bus mastering
-Date: Tue, 11 Nov 2025 09:40:53 +0900
-Message-ID: <20251111004548.118828098@linuxfoundation.org>
+Subject: [PATCH 6.12 432/565] ACPI: scan: Update honor list for RPMI System MSI
+Date: Tue, 11 Nov 2025 09:44:48 +0900
+Message-ID: <20251111004536.592577455@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +52,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raag Jadav <raag.jadav@intel.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-[ Upstream commit fce99326c9cf5a0e57c4283a61c6b622ef5b0de8 ]
+[ Upstream commit 4215d1cf59e4b272755f4277a05cd5967935a704 ]
 
-Enable bus mastering for I2C controller to support device initiated
-in-band transactions.
+The RPMI System MSI interrupt controller (just like PLIC and APLIC)
+needs to probed prior to devices like GED which use interrupts provided
+by it. Also, it has dependency on the SBI MPXY mailbox device.
 
-Signed-off-by: Raag Jadav <raag.jadav@intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250908055320.2549722-1-raag.jadav@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Add HIDs of RPMI System MSI and SBI MPXY mailbox devices to the honor
+list so that those dependencies are handled.
+
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Acked-by: Jassi Brar <jassisinghbrar@gmail.com>
+Link: https://lore.kernel.org/r/20250818040920.272664-17-apatel@ventanamicro.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/scan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_i2c.c b/drivers/gpu/drm/xe/xe_i2c.c
-index bc7dc2099470c..983e8e08e4739 100644
---- a/drivers/gpu/drm/xe/xe_i2c.c
-+++ b/drivers/gpu/drm/xe/xe_i2c.c
-@@ -245,7 +245,7 @@ void xe_i2c_pm_resume(struct xe_device *xe, bool d3cold)
- 		return;
- 
- 	if (d3cold)
--		xe_mmio_rmw32(mmio, I2C_CONFIG_CMD, 0, PCI_COMMAND_MEMORY);
-+		xe_mmio_rmw32(mmio, I2C_CONFIG_CMD, 0, PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER);
- 
- 	xe_mmio_rmw32(mmio, I2C_CONFIG_PMCSR, PCI_PM_CTRL_STATE_MASK, (__force u32)PCI_D0);
- 	drm_dbg(&xe->drm, "pmcsr: 0x%08x\n", xe_mmio_read32(mmio, I2C_CONFIG_PMCSR));
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 4ef94d06365fc..ba98763ced7d4 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -862,6 +862,8 @@ static const char * const acpi_honor_dep_ids[] = {
+ 	"INTC10CF", /* IVSC (MTL) driver must be loaded to allow i2c access to camera sensors */
+ 	"RSCV0001", /* RISC-V PLIC */
+ 	"RSCV0002", /* RISC-V APLIC */
++	"RSCV0005", /* RISC-V SBI MPXY MBOX */
++	"RSCV0006", /* RISC-V RPMI SYSMSI */
+ 	"PNP0C0F",  /* PCI Link Device */
+ 	NULL
+ };
 -- 
 2.51.0
 
