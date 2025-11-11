@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B062E0412;
-	Tue, 11 Nov 2025 01:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5BE26B76A;
+	Tue, 11 Nov 2025 01:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825379; cv=none; b=WmWyUMHXtCcHhYUGKce3r5kQRKhfKaUnfZH/Fvl+AlrFWc+yUVQMy9y5PdzW6NwFF1xi1Jf2NQu202AUFOsR+Us+z2Hqgv82XweIwjaCVns6k6Q3RvqdsUsAU6ZvpVj8++U5WBogacLYMEwxhiuAKygD8XCymj3Tqjif21nbI7I=
+	t=1762825381; cv=none; b=J8Hg93TAvdrqWakljUN5VvHkBn7dNeEyem4D+/Po5WtLZdce2mZF5rYNNyI2PQrxq2tHK76CqjWpYvhNWXhm0raImnWT6Zo4jgEmrSWkpzkXKS7pgefKDUMRblOyWft6ZBDXoSYJe89JC1BJ2HmQPi3DTenrEx9VxfM0vbZnRIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825379; c=relaxed/simple;
-	bh=519wM4PKG6MoONCdKIiXPLs8sxFX6t3gCRMOZP/edZE=;
+	s=arc-20240116; t=1762825381; c=relaxed/simple;
+	bh=gsNaFRHbtHxQCfKp9N/wlxXsjSe3x4du2//i6O5mcUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgxI04NP/9NNJ7m7mBGOyuEmiC79R/j7DcAer4O251cfLtMi5quoXGlTYXWakYoK+mN1WkwoGj90fIGJkYGcE1nENdDf8lAusf3779eaBRUeeQEb+hdFSMj3F9KRu1Bmqn+dH2sG/EPydCjnWF80gN9hUSAjZ0U1raKcKwNEkoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQoIC3/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V7hk3jueHSPGMrp6GO81aSP1qBiSxB6ZxaT2FRNfOIsQZk1xYcT8Lg5eP4iQUxD+BscMg/wTwxz2clt9/ucaeyYXG8zAFbuoeNn8wWuq0CDP9FKzVrBZe5ai+BhDHmIdvxDPf9qgaXpTd9QvWbJVn7x2/ypMT7epUfiMUqnToqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLYNeR8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQoIC3/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A59C19422;
-	Tue, 11 Nov 2025 01:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLYNeR8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2957AC19425;
+	Tue, 11 Nov 2025 01:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825379;
-	bh=519wM4PKG6MoONCdKIiXPLs8sxFX6t3gCRMOZP/edZE=;
+	s=korg; t=1762825381;
+	bh=gsNaFRHbtHxQCfKp9N/wlxXsjSe3x4du2//i6O5mcUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQoIC3/VgHTZ7Ha1iEUJm646iqZxiuw7uwJI83gNq36/I1X/1UU/tww+s6o/6JF/G
-	 LCTIdNi7v85EFlqKDDE8Ea4T4tkhQM6as6R3NdSgkOhNo73bDPQULnKsCkfyGGU2jv
-	 3X6QmpYRw29/Ud30HFF+DXsiM7lrN2+OgpWhjhLw=
+	b=tLYNeR8ahGCtAgseYiBlws2L+yWct2ygGbV/r5CAS0tZVYgZTkLoosQfDPpI4iKzM
+	 /c22WvycfPyRqpivQwri0dSp6wYpYFGJkn3th0KUbTA2mzNsUZo+8Re+0Ue0lPNpJj
+	 mTceu8T2A1CQiN2JC1nE8bj9cjEcJbPBF+rrmJyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mohammad Heib <mheib@redhat.com>,
+	Brett Creeley <brett.creeley@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 777/849] net: ionic: add dma_wmb() before ringing TX doorbell
-Date: Tue, 11 Nov 2025 09:45:47 +0900
-Message-ID: <20251111004555.214231705@linuxfoundation.org>
+Subject: [PATCH 6.17 778/849] net: ionic: map SKB after pseudo-header checksum prep
+Date: Tue, 11 Nov 2025 09:45:48 +0900
+Message-ID: <20251111004555.240306634@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,41 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit d261f5b09c28850dc63ca1d3018596f829f402d5 ]
+[ Upstream commit de0337d641bfa5b6d6b489e479792f1039274e84 ]
 
-The TX path currently writes descriptors and then immediately writes to
-the MMIO doorbell register to notify the NIC.  On weakly ordered
-architectures, descriptor writes may still be pending in CPU or DMA
-write buffers when the doorbell is issued, leading to the device
-fetching stale or incomplete descriptors.
+The TSO path called ionic_tx_map_skb() before preparing the TCP pseudo
+checksum (ionic_tx_tcp_[inner_]pseudo_csum()), which may perform
+skb_cow_head() and might modifies bytes in the linear header area.
 
-Add a dma_wmb() in ionic_txq_post() to ensure all descriptor writes are
-visible to the device before the doorbell MMIO write.
+Mapping first and then mutating the header risks:
+  - Using a stale DMA address if skb_cow_head() relocates the head, and/or
+  - Device reading stale header bytes on weakly-ordered systems
+    (CPU writes after mapping are not guaranteed visible without an
+    explicit dma_sync_single_for_device()).
+
+Reorder the TX path to perform all header mutations (including
+skb_cow_head()) *before* DMA mapping. Mapping is now done only after the
+skb layout and header contents are final. This removes the need for any
+post-mapping dma_sync and prevents on-wire corruption observed under
+VLAN+TSO load after repeated runs.
+
+This change is purely an ordering fix; no functional behavior change
+otherwise.
 
 Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
 Signed-off-by: Mohammad Heib <mheib@redhat.com>
-Link: https://patch.msgid.link/20251031155203.203031-1-mheib@redhat.com
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Link: https://patch.msgid.link/20251031155203.203031-2-mheib@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../net/ethernet/pensando/ionic/ionic_txrx.c  | 30 ++++++++-----------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index d10b58ebf6034..2e571d0a0d8a2 100644
+index 2e571d0a0d8a2..301ebee2fdc50 100644
 --- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
 +++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -29,6 +29,10 @@ static void ionic_tx_clean(struct ionic_queue *q,
+@@ -1448,19 +1448,6 @@ static int ionic_tx_tso(struct net_device *netdev, struct ionic_queue *q,
+ 	bool encap;
+ 	int err;
  
- static inline void ionic_txq_post(struct ionic_queue *q, bool ring_dbell)
- {
-+	/* Ensure TX descriptor writes reach memory before NIC reads them.
-+	 * Prevents device from fetching stale descriptors.
-+	 */
-+	dma_wmb();
- 	ionic_q_post(q, ring_dbell);
- }
+-	desc_info = &q->tx_info[q->head_idx];
+-
+-	if (unlikely(ionic_tx_map_skb(q, skb, desc_info)))
+-		return -EIO;
+-
+-	len = skb->len;
+-	mss = skb_shinfo(skb)->gso_size;
+-	outer_csum = (skb_shinfo(skb)->gso_type & (SKB_GSO_GRE |
+-						   SKB_GSO_GRE_CSUM |
+-						   SKB_GSO_IPXIP4 |
+-						   SKB_GSO_IPXIP6 |
+-						   SKB_GSO_UDP_TUNNEL |
+-						   SKB_GSO_UDP_TUNNEL_CSUM));
+ 	has_vlan = !!skb_vlan_tag_present(skb);
+ 	vlan_tci = skb_vlan_tag_get(skb);
+ 	encap = skb->encapsulation;
+@@ -1474,12 +1461,21 @@ static int ionic_tx_tso(struct net_device *netdev, struct ionic_queue *q,
+ 		err = ionic_tx_tcp_inner_pseudo_csum(skb);
+ 	else
+ 		err = ionic_tx_tcp_pseudo_csum(skb);
+-	if (unlikely(err)) {
+-		/* clean up mapping from ionic_tx_map_skb */
+-		ionic_tx_desc_unmap_bufs(q, desc_info);
++	if (unlikely(err))
+ 		return err;
+-	}
  
++	desc_info = &q->tx_info[q->head_idx];
++	if (unlikely(ionic_tx_map_skb(q, skb, desc_info)))
++		return -EIO;
++
++	len = skb->len;
++	mss = skb_shinfo(skb)->gso_size;
++	outer_csum = (skb_shinfo(skb)->gso_type & (SKB_GSO_GRE |
++						   SKB_GSO_GRE_CSUM |
++						   SKB_GSO_IPXIP4 |
++						   SKB_GSO_IPXIP6 |
++						   SKB_GSO_UDP_TUNNEL |
++						   SKB_GSO_UDP_TUNNEL_CSUM));
+ 	if (encap)
+ 		hdrlen = skb_inner_tcp_all_headers(skb);
+ 	else
 -- 
 2.51.0
 
