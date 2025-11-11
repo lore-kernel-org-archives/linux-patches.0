@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB9D1FDA92;
-	Tue, 11 Nov 2025 00:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D680C12DDA1;
+	Tue, 11 Nov 2025 00:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822264; cv=none; b=R1dAXSC5lBU+W4yLgnKaE42bCAHsgkbaiQkEsoxe7Ns1g3eMFrqKksjD7iHzhY4P8nCjVtXKtP6dhfwgt0ZUmte2MuDbvkCRWSnsO+aPJPRDITtFEYWZZ22AWJdhzaKPBbEes1VAVB6rBYXnAY+IqooCV2HmJKxVqNDpDstt2wg=
+	t=1762822266; cv=none; b=m04u8+sHarDy8EDTlniqC0bacWIeJV1vcQdEq/UoihIKJA0wVuSFpoOGMoEnzbvX9vFb1ROi6wUAr6vRkJX21GGxDHiAhkVu7+3NSfnzlTxfzkSgEooMgO9KaJfzSO+kav43IBMuMb6/WGtgPx9yoZYRrr2PBqTSl4xSWEOM/x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822264; c=relaxed/simple;
-	bh=qDo08HJc97ZOlbphHhMX2clzexLOE5GzeDYVU1daZkU=;
+	s=arc-20240116; t=1762822266; c=relaxed/simple;
+	bh=eOmjF8VLW4B8wMyWobjFrutIFlU2Bx4A9ByDHp0aFrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kf+fLMoVU49xPYMGlJ2C2gjwX3dScBM8DOPMM1w/Uf1A3jWPO/MCVHnHOUP4Nza1CbcwLok5hHBKcVUZ1sCYTzAURsjyKgYBsKiFfSXjAC+3m0UHN+7vPpwSXtO7nXlvKivS9E2clIW3/gLIfDU60OPptYjp6EZKCdctCSEQYWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMjZFhqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKdzSvGSmOzu4Whb4HrvWl+szHhs5jn6SQS0X1TQ444eIf8sQQ5sNMfFrmoimh28Vuo2ZJkWru+Q/4yv9s/N3ZQXlZ19lSLDzDiLhGV5dBwLAkGmz6PdEI7vp+cxfMtUMZts/oAJoYSV68jVdPhfhf74SI2iEsfl2sCReve2ZDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxEHByVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMjZFhqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37374C16AAE;
-	Tue, 11 Nov 2025 00:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxEHByVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BF1C116B1;
+	Tue, 11 Nov 2025 00:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822264;
-	bh=qDo08HJc97ZOlbphHhMX2clzexLOE5GzeDYVU1daZkU=;
+	s=korg; t=1762822266;
+	bh=eOmjF8VLW4B8wMyWobjFrutIFlU2Bx4A9ByDHp0aFrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMjZFhqkEELUdFpJsUjO06o6alGL6VTlfI6p7jR6ui/HVK/9TlMijNtWRjrTBueP3
-	 T3qFh81x0ar2tiEGxeCxs/iElcxdTIR9qm2Nzu7wU/FRIvU1HBp4Gox8mPxDqyHZ5d
-	 /OJyaux2sTHXafVDh02nkrxwWHxrqu5jnTSD3WIc=
+	b=OxEHByVBjJ8zn9YhWaDGO5JXKJApz5ZqmCMokWxeHoerGNGXwRO4LXvXZDKjfJmEX
+	 LlijnDPvpxJXD72YFK58AU8igDcxDPZw4vGokV5R2YI2GnSbtJ57NAn+z277LZ/WBY
+	 NAwpX6IYnQT/wZUGeipsw80IU4XiEl+fhsix/HLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 014/565] mptcp: restore window probe
-Date: Tue, 11 Nov 2025 09:37:50 +0900
-Message-ID: <20251111004527.184527451@linuxfoundation.org>
+	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 069/849] ALSA: usb-audio: dont log messages meant for 1810c when initializing 1824c
+Date: Tue, 11 Nov 2025 09:33:59 +0900
+Message-ID: <20251111004538.095004192@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-commit a824084b98d8a1dbd6e85d0842a8eb5e73467f59 upstream.
+[ Upstream commit 75cdae446ddffe0a6a991bbb146dee51d9d4c865 ]
 
-Since commit 72377ab2d671 ("mptcp: more conservative check for zero
-probes") the MPTCP-level zero window probe check is always disabled, as
-the TCP-level write queue always contains at least the newly allocated
-skb.
+The log messages for the PreSonus STUDIO 1810c about
+device_setup are not applicable to the 1824c, and should
+not be logged when 1824c initializes.
 
-Refine the relevant check tacking in account that the above condition
-and that such skb can have zero length.
+Refactor from if statement to switch statement as there
+might be more STUDIO series devices added later.
 
-Fixes: 72377ab2d671 ("mptcp: more conservative check for zero probes")
-Cc: stable@vger.kernel.org
-Reported-by: Geliang Tang <geliang@kernel.org>
-Closes: https://lore.kernel.org/d0a814c364e744ca6b836ccd5b6e9146882e8d42.camel@kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-3-38ffff5a9ec8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 080564558eb1 ("ALSA: usb-audio: enable support for Presonus Studio 1824c within 1810c file")
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Link: https://patch.msgid.link/aPaYTP7ceuABf8c7@ark
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/usb/mixer_s1810c.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1340,7 +1340,12 @@ alloc_skb:
- 	if (copy == 0) {
- 		u64 snd_una = READ_ONCE(msk->snd_una);
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index 2413a6d96971c..5b187f89c7f8e 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -562,15 +562,6 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
+ 	if (!list_empty(&chip->mixer_list))
+ 		return 0;
  
--		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
-+		/* No need for zero probe if there are any data pending
-+		 * either at the msk or ssk level; skb is the current write
-+		 * queue tail and can be empty at this point.
-+		 */
-+		if (snd_una != msk->snd_nxt || skb->len ||
-+		    skb != tcp_send_head(ssk)) {
- 			tcp_remove_empty_skb(ssk);
- 			return 0;
- 		}
+-	dev_info(&dev->dev,
+-		 "Presonus Studio 1810c, device_setup: %u\n", chip->setup);
+-	if (chip->setup == 1)
+-		dev_info(&dev->dev, "(8out/18in @ 48kHz)\n");
+-	else if (chip->setup == 2)
+-		dev_info(&dev->dev, "(6out/8in @ 192kHz)\n");
+-	else
+-		dev_info(&dev->dev, "(8out/14in @ 96kHz)\n");
+-
+ 	ret = snd_s1810c_init_mixer_maps(chip);
+ 	if (ret < 0)
+ 		return ret;
+@@ -599,16 +590,28 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	// The 1824c has a Mono Main switch instead of a
+-	// A/B select switch.
+-	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
+-		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
++	switch (chip->usb_id) {
++	case USB_ID(0x194f, 0x010c): /* Presonus Studio 1810c */
++		dev_info(&dev->dev,
++			 "Presonus Studio 1810c, device_setup: %u\n", chip->setup);
++		if (chip->setup == 1)
++			dev_info(&dev->dev, "(8out/18in @ 48kHz)\n");
++		else if (chip->setup == 2)
++			dev_info(&dev->dev, "(6out/8in @ 192kHz)\n");
++		else
++			dev_info(&dev->dev, "(8out/14in @ 96kHz)\n");
++
++		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
+ 		if (ret < 0)
+ 			return ret;
+-	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
+-		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
++
++		break;
++	case USB_ID(0x194f, 0x010d): /* Presonus Studio 1824c */
++		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
+ 		if (ret < 0)
+ 			return ret;
++
++		break;
+ 	}
+ 
+ 	return ret;
+-- 
+2.51.0
+
 
 
