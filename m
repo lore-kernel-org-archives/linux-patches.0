@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C992D979C;
-	Tue, 11 Nov 2025 01:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4120343D67;
+	Tue, 11 Nov 2025 01:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823583; cv=none; b=DwbllSBoa/4oLVjXM/9aE3ij1qfoGFDgmohjOlxfb2ll81dNE4Ivjs3dW/F10jGCMzb4MhBtib26uhcFazIvv2/5F/pH3geFX5BZ4ZtVo4XDndUI8PMPbmgd5/F+1uCYFLXBp6UAJGVCGyumzSvzUdIvvNolPMt5YW+IaSYwIk0=
+	t=1762823586; cv=none; b=K2cRcwPoRJdWr9tMbbShQidx2ChDvRchA3mY20VXmdF/dnMqcC+Z/IaSxaL7AqAiekW+Z/bXidhZj3DxSRvT0qUcH2xzUnnihP8mMqAfOKuUxaUg+Zrmb9e2k/UqiPlal3M8nNXNQCeKRXut+TjmEo7fvV8S3ci4vY2oOa8c/ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823583; c=relaxed/simple;
-	bh=TXWRpJZsAcN1z0/NAAAGRUWZzdiiGNFp8iQFbZIYN5Y=;
+	s=arc-20240116; t=1762823586; c=relaxed/simple;
+	bh=RGSDBrhNJTsvggl0TW86jP5DkpVnndit6lxhf9pfsQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdN6X0UnX9daBwlmh2jafIf2zORWNKaWG+qpgcxu3xtUjcNEi5eBxxm9Q4lLDLGiNDQefAxE9Ajfu2E1I010xxpcx09e8a7iENFM/xt4ERKdAiz4+2U1NZuZwk4NR+54f559J87qzilKR+JQj/t+8NiB8vglrCVDqPGOlooAg2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIJh1vgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=moqbsaZ/2fvOhYQxZyEq/jcDIUVfuCfs/3t7hldPK8WlF4XMAKcV+bpM1F7VH/gTJWgkumTcq3V29DLkmx6s2YVA5qnFlljfnyuR9ek4HisUbk4AZ/puyoctmtwo15RoyTlT3QopfTEkprUzdl224Hn7Xmbs1HokSPxglrAMgCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gvmvj2M9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIJh1vgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5F9C4CEF5;
-	Tue, 11 Nov 2025 01:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gvmvj2M9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850A3C4CEFB;
+	Tue, 11 Nov 2025 01:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823583;
-	bh=TXWRpJZsAcN1z0/NAAAGRUWZzdiiGNFp8iQFbZIYN5Y=;
+	s=korg; t=1762823585;
+	bh=RGSDBrhNJTsvggl0TW86jP5DkpVnndit6lxhf9pfsQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mIJh1vgt9W66w3xkSacPhu7359v7bVI+JKjus6iVghAr3+XaMDPRGa1I92YTfkV3I
-	 PGM7goPTKIRCgsC53DwPv7lbldyAsjpkmrsFPZRf6cZslHtoxtHBOiQMd6mCbIILdb
-	 vkaMLAByaVeGwObqL84iS8eY7fFDioxFGD5sf7So=
+	b=Gvmvj2M9+vwVUU141M52UcwAsNHD+ms4eQdBWikOxHj8sGuPrwbRc9Qvv78E4NkYg
+	 vbdEWAkiOe/aUC5eYIToNbI+/IBH+3rTkfOje6oJsfYwSJ8cHdmbRkCJLh49L+k7rO
+	 RHL6s9BiSY5qaDnwWoyxBWBlw6o/ZOpD3zYRqYWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miroslav Lichvar <mlichvar@redhat.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Stultz <jstultz@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 280/565] ptp: Limit time setting of PTP clocks
-Date: Tue, 11 Nov 2025 09:42:16 +0900
-Message-ID: <20251111004533.179997626@linuxfoundation.org>
+Subject: [PATCH 6.17 330/849] dm error: mark as DM_TARGET_PASSES_INTEGRITY
+Date: Tue, 11 Nov 2025 09:38:20 +0900
+Message-ID: <20251111004544.396606497@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,83 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miroslav Lichvar <mlichvar@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 5a8c02a6bf52b1cf9cfb7868a8330f7c3c6aebe9 ]
+[ Upstream commit 499cbe0f2fb0641cf07a1a8ac9f7317674295fea ]
 
-Networking drivers implementing PTP clocks and kernel socket code
-handling hardware timestamps use the 64-bit signed ktime_t type counting
-nanoseconds. When a PTP clock reaches the maximum value in year 2262,
-the timestamps returned to applications will overflow into year 1667.
-The same thing happens when injecting a large offset with
-clock_adjtime(ADJ_SETOFFSET).
+Mark dm error as DM_TARGET_PASSES_INTEGRITY so that it can be stacked on
+top of PI capable devices.  The claim is strictly speaking as lie as dm
+error fails all I/O and doesn't pass anything on, but doing the same for
+integrity I/O work just fine :)
 
-The commit 7a8e61f84786 ("timekeeping: Force upper bound for setting
-CLOCK_REALTIME") limited the maximum accepted value setting the system
-clock to 30 years before the maximum representable value (i.e. year
-2232) to avoid the overflow, assuming the system will not run for more
-than 30 years.
+This helps to make about two dozen xfstests test cases pass on PI capable
+devices.
 
-Enforce the same limit for PTP clocks. Don't allow negative values and
-values closer than 30 years to the maximum value. Drivers may implement
-an even lower limit if the hardware registers cannot represent the whole
-interval between years 1970 and 2262 in the required resolution.
-
-Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
-Cc: Richard Cochran <richardcochran@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: John Stultz <jstultz@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250828103300.1387025-1-mlichvar@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_clock.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/md/dm-target.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 642a540861d43..03c17b1db7aac 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -100,6 +100,9 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
- 		return -EBUSY;
- 	}
- 
-+	if (!timespec64_valid_settod(tp))
-+		return -EINVAL;
-+
- 	return  ptp->info->settime64(ptp->info, tp);
- }
- 
-@@ -130,7 +133,7 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 	ops = ptp->info;
- 
- 	if (tx->modes & ADJ_SETOFFSET) {
--		struct timespec64 ts;
-+		struct timespec64 ts, ts2;
- 		ktime_t kt;
- 		s64 delta;
- 
-@@ -143,6 +146,14 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
- 		if ((unsigned long) ts.tv_nsec >= NSEC_PER_SEC)
- 			return -EINVAL;
- 
-+		/* Make sure the offset is valid */
-+		err = ptp_clock_gettime(pc, &ts2);
-+		if (err)
-+			return err;
-+		ts2 = timespec64_add(ts2, ts);
-+		if (!timespec64_valid_settod(&ts2))
-+			return -EINVAL;
-+
- 		kt = timespec64_to_ktime(ts);
- 		delta = ktime_to_ns(kt);
- 		err = ops->adjtime(ops, delta);
+diff --git a/drivers/md/dm-target.c b/drivers/md/dm-target.c
+index 2af5a9514c05e..8fede41adec00 100644
+--- a/drivers/md/dm-target.c
++++ b/drivers/md/dm-target.c
+@@ -263,7 +263,8 @@ static long io_err_dax_direct_access(struct dm_target *ti, pgoff_t pgoff,
+ static struct target_type error_target = {
+ 	.name = "error",
+ 	.version = {1, 7, 0},
+-	.features = DM_TARGET_WILDCARD | DM_TARGET_ZONED_HM,
++	.features = DM_TARGET_WILDCARD | DM_TARGET_ZONED_HM |
++		DM_TARGET_PASSES_INTEGRITY,
+ 	.ctr  = io_err_ctr,
+ 	.dtr  = io_err_dtr,
+ 	.map  = io_err_map,
 -- 
 2.51.0
 
