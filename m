@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6F91D6DB5;
-	Tue, 11 Nov 2025 00:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8813B25CC40;
+	Tue, 11 Nov 2025 00:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822119; cv=none; b=dWuh1ocYGM9WKqvCPozHMaw6wVBrD5penkwhBicsHb2gM9QXPirkWWESJJDqKYCmBvJuoCzKza5FiR3KKDoOK7M4ny93A9ocPQEMPbG3QRifaN3Var5gz6hC4xEKk1H9wbGzgMq6e+JSgfmdv3I5PHN8kJzIKmOcGJuSRCR9fW8=
+	t=1762822122; cv=none; b=Jn2eznBco6664Vmuc5o0tY9qkd4sy88ODTQhVfvYxQZ2EeinYCv2eZqZKDcEfEFgeqtNbTlh8kQAl0747kj1mejSGdNYya4A9fwD49BEBgov19vcorXfF8/i90xPWjxEoviJwnkrT85NiLo6WuuRUcx3+bWDk2M+u5EOiO027ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822119; c=relaxed/simple;
-	bh=YL4F4f5wWut2mc1/7KCmQ8WT+1t0w9VESCVv/Gkp/mA=;
+	s=arc-20240116; t=1762822122; c=relaxed/simple;
+	bh=siUw9xtkYnFlQi5Czc0O2r8mPqztmNJsqUDaFvohfso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rttT91sWsl+X3X4pJ1pmk6pOwcEXny7xfqeeP9lfweRMTPInrJ0JIm2GkzlVu6AFI3qDN4OOvHuMcnP3gizVwofZOQd8uPMuTTL02vpFP6KKgGAli5TkYhAhndAdZLU+9npjyGWPScTY1fStiOEyCQU224KibbSB7/tCoE9+9UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rzvq7qQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVhhYnFIsG/6sgPx3PXxDoMQDmG0jAaOagDECTxkoMZar4ZAQOKVbZcc9fA9nKBRCtQBE8k+8DAXq2MtBSxXysWHxmyPzFcVvzPrD2pR35tkzrTnqaHAKPU3NbN1nak9X6/Pkx6zjZSGBmP8Dy9LTlp5lyJsOChU7+9daYLJliM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADwMqxV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rzvq7qQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C261C4CEFB;
-	Tue, 11 Nov 2025 00:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADwMqxV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B70C19421;
+	Tue, 11 Nov 2025 00:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822119;
-	bh=YL4F4f5wWut2mc1/7KCmQ8WT+1t0w9VESCVv/Gkp/mA=;
+	s=korg; t=1762822122;
+	bh=siUw9xtkYnFlQi5Czc0O2r8mPqztmNJsqUDaFvohfso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rzvq7qQyBuYXAW89ePAxk8HeNm4UxLhU634FYfXs3Sv3yTcM7oi2OIknbOHGwp1WX
-	 l2bgVSxMKcBaWOAbrJQV2ZyrfGxIX6xpA+lNoJQXoLHw/iTWXRZc5Z1cciyQmAy/Cq
-	 0FgH8j0ScchiYUws50L+SEOnHIPRu4qoAnGXnkKE=
+	b=ADwMqxV88e+12uD4plI1G9VKUYf+PQHqT6G3Azg0UMrbZqgZS2J4eX+/jzjV687H0
+	 nycX8YoaO0nXNQWrBFAoJgyVOVu4YrWbRJh50SY3oR7diolG4ccx0auboESolCj2IE
+	 3Ek8fu+41+c8PbyoBNlXLDBPAxLrr64iCFU/zWk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.17 023/849] ASoC: renesas: rz-ssi: Use proper dma_buffer_pos after resume
-Date: Tue, 11 Nov 2025 09:33:13 +0900
-Message-ID: <20251111004537.013205801@linuxfoundation.org>
+	stable@vger.kernnel.org,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.17 024/849] s390/pci: Restore IRQ unconditionally for the zPCI device
+Date: Tue, 11 Nov 2025 09:33:14 +0900
+Message-ID: <20251111004537.036364705@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,115 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-commit 22897e568646de5907d4981eae6cc895be2978d1 upstream.
+commit b45873c3f09153d1ad9b3a7bf9e5c0b0387fd2ea upstream.
 
-When the driver supports DMA, it enqueues four DMA descriptors per
-substream before the substream is started. New descriptors are enqueued in
-the DMA completion callback, and each time a new descriptor is queued, the
-dma_buffer_pos is incremented.
+Commit c1e18c17bda6 ("s390/pci: add zpci_set_irq()/zpci_clear_irq()"),
+introduced the zpci_set_irq() and zpci_clear_irq(), to be used while
+resetting a zPCI device.
 
-During suspend, the DMA transactions are terminated. There might be cases
-where the four extra enqueued DMA descriptors are not completed and are
-instead canceled on suspend. However, the cancel operation does not take
-into account that the dma_buffer_pos was already incremented.
+Commit da995d538d3a ("s390/pci: implement reset_slot for hotplug
+slot"), mentions zpci_clear_irq() being called in the path for
+zpci_hot_reset_device().  But that is not the case anymore and these
+functions are not called outside of this file. Instead
+zpci_hot_reset_device() relies on zpci_disable_device() also clearing
+the IRQs, but misses to reset the zdev->irqs_registered flag.
 
-Previously, the suspend code reinitialized dma_buffer_pos to zero, but this
-is not always correct.
+However after a CLP disable/enable reset, the device's IRQ are
+unregistered, but the flag zdev->irq_registered does not get cleared. It
+creates an inconsistent state and so arch_restore_msi_irqs() doesn't
+correctly restore the device's IRQ. This becomes a problem when a PCI
+driver tries to restore the state of the device through
+pci_restore_state(). Restore IRQ unconditionally for the device and remove
+the irq_registered flag as its redundant.
 
-To avoid losing any audio periods during suspend/resume and to prevent
-clip sound, save the completed DMA buffer position in the DMA callback and
-reinitialize dma_buffer_pos on resume.
-
-Cc: stable@vger.kernel.org
-Fixes: 1fc778f7c833a ("ASoC: renesas: rz-ssi: Add suspend to RAM support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20251029141134.2556926-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c1e18c17bda6 ("s390/pci: add zpci_set_irq()/zpci_clear_irq()")
+Cc: stable@vger.kernnel.org
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/renesas/rz-ssi.c |   25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ arch/s390/include/asm/pci.h |    1 -
+ arch/s390/pci/pci_irq.c     |    9 +--------
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
---- a/sound/soc/renesas/rz-ssi.c
-+++ b/sound/soc/renesas/rz-ssi.c
-@@ -85,6 +85,7 @@ struct rz_ssi_stream {
- 	struct snd_pcm_substream *substream;
- 	int fifo_sample_size;	/* sample capacity of SSI FIFO */
- 	int dma_buffer_pos;	/* The address for the next DMA descriptor */
-+	int completed_dma_buf_pos; /* The address of the last completed DMA descriptor. */
- 	int period_counter;	/* for keeping track of periods transferred */
- 	int sample_width;
- 	int buffer_pos;		/* current frame position in the buffer */
-@@ -221,6 +222,7 @@ static void rz_ssi_stream_init(struct rz
- 	rz_ssi_set_substream(strm, substream);
- 	strm->sample_width = samples_to_bytes(runtime, 1);
- 	strm->dma_buffer_pos = 0;
-+	strm->completed_dma_buf_pos = 0;
- 	strm->period_counter = 0;
- 	strm->buffer_pos = 0;
+--- a/arch/s390/include/asm/pci.h
++++ b/arch/s390/include/asm/pci.h
+@@ -145,7 +145,6 @@ struct zpci_dev {
+ 	u8		has_resources	: 1;
+ 	u8		is_physfn	: 1;
+ 	u8		util_str_avail	: 1;
+-	u8		irqs_registered	: 1;
+ 	u8		tid_avail	: 1;
+ 	u8		rtr_avail	: 1; /* Relaxed translation allowed */
+ 	unsigned int	devfn;		/* DEVFN part of the RID*/
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -107,9 +107,6 @@ static int zpci_set_irq(struct zpci_dev
+ 	else
+ 		rc = zpci_set_airq(zdev);
  
-@@ -443,6 +445,10 @@ static void rz_ssi_pointer_update(struct
- 		snd_pcm_period_elapsed(strm->substream);
- 		strm->period_counter = current_period;
- 	}
-+
-+	strm->completed_dma_buf_pos += runtime->period_size;
-+	if (strm->completed_dma_buf_pos >= runtime->buffer_size)
-+		strm->completed_dma_buf_pos = 0;
- }
- 
- static int rz_ssi_pio_recv(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
-@@ -784,10 +790,14 @@ no_dma:
- 	return -ENODEV;
- }
- 
--static int rz_ssi_trigger_resume(struct rz_ssi_priv *ssi)
-+static int rz_ssi_trigger_resume(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
- {
-+	struct snd_pcm_substream *substream = strm->substream;
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	int ret;
- 
-+	strm->dma_buffer_pos = strm->completed_dma_buf_pos + runtime->period_size;
-+
- 	if (rz_ssi_is_stream_running(&ssi->playback) ||
- 	    rz_ssi_is_stream_running(&ssi->capture))
- 		return 0;
-@@ -800,16 +810,6 @@ static int rz_ssi_trigger_resume(struct
- 				ssi->hw_params_cache.channels);
- }
- 
--static void rz_ssi_streams_suspend(struct rz_ssi_priv *ssi)
--{
--	if (rz_ssi_is_stream_running(&ssi->playback) ||
--	    rz_ssi_is_stream_running(&ssi->capture))
--		return;
+-	if (!rc)
+-		zdev->irqs_registered = 1;
 -
--	ssi->playback.dma_buffer_pos = 0;
--	ssi->capture.dma_buffer_pos = 0;
--}
+ 	return rc;
+ }
+ 
+@@ -123,9 +120,6 @@ static int zpci_clear_irq(struct zpci_de
+ 	else
+ 		rc = zpci_clear_airq(zdev);
+ 
+-	if (!rc)
+-		zdev->irqs_registered = 0;
 -
- static int rz_ssi_dai_trigger(struct snd_pcm_substream *substream, int cmd,
- 			      struct snd_soc_dai *dai)
+ 	return rc;
+ }
+ 
+@@ -427,8 +421,7 @@ bool arch_restore_msi_irqs(struct pci_de
  {
-@@ -819,7 +819,7 @@ static int rz_ssi_dai_trigger(struct snd
+ 	struct zpci_dev *zdev = to_zpci(pdev);
  
- 	switch (cmd) {
- 	case SNDRV_PCM_TRIGGER_RESUME:
--		ret = rz_ssi_trigger_resume(ssi);
-+		ret = rz_ssi_trigger_resume(ssi, strm);
- 		if (ret)
- 			return ret;
+-	if (!zdev->irqs_registered)
+-		zpci_set_irq(zdev);
++	zpci_set_irq(zdev);
+ 	return true;
+ }
  
-@@ -858,7 +858,6 @@ static int rz_ssi_dai_trigger(struct snd
- 
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 		rz_ssi_stop(ssi, strm);
--		rz_ssi_streams_suspend(ssi);
- 		break;
- 
- 	case SNDRV_PCM_TRIGGER_STOP:
 
 
