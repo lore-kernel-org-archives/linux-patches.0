@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678053081AB;
-	Tue, 11 Nov 2025 01:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D2255F28;
+	Tue, 11 Nov 2025 01:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825222; cv=none; b=K3OC2x8PknqOZKtzhfdNjyq17YYkRVFACVWWr2X2h482uCIeuEiCpzX+vmcwP33nkMxA1zbV9F3qd/CBvAB9SI8dedwR9LtApnaD+YQZPnvm1fUvXNk2yUZa35Fdnx4oVJJ1ogDMU5Epu4jTKvlrn7G8rV2OJTcXacBlvEn+gdU=
+	t=1762825224; cv=none; b=T3cSy3HzkY8Qp+s+FhyWxmP4uT0mCiHuqr9OL4lUvRgj//OfnlB0B6Yf29wDCY9D67XJC8YTP+swoXpN4C0idOsOV4Q38BBCd1WnoRzrsQ+lX/NX9CjxEuS0zvPVFjfYPJymlXjyGUBHQOOZZvuo9HfBcNAIoJ4bCOB5aJb6KB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825222; c=relaxed/simple;
-	bh=d60mMrOMkltGPQSWdDny0lxGi9yMjLTJvlQ1kgVJyOI=;
+	s=arc-20240116; t=1762825224; c=relaxed/simple;
+	bh=i1feWGyNxKDtnd4mc+OnqdsCD7E1R0M8lv83oWWO4aE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N85rhTk0dgmJyCD/a3gKmTnAb2vf5mADDvAtzMQx2ekKPc7hcnVy9Qm5V9h8ehh9dGsmnoSq17A/lYLcAGMFiL2xZEEuf+W5834A9DTIbQSUKRTuQJ1Wa7VLO5V3WES6Z37q6T3L7NEVtkEPrce9xVy5mmxJ0KAEZ0rAXoOTl2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeyXuDp8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3c76dvbaS+Tx7lV2QiT3xzcrLHbtnTJKBzDppsoKUC3gVjs5cB9+pjPdpHLwJgFe5CVLfklKyKlcJOUMLy2c4rpHOV48DSBmDBjf0GFWxMFrKw7EoIFCA/TZlQlyCu7yr4KjGIn5Bw6xCCbUUQdIAdvd/J6kkiWXtnxVqnEmGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeVnw/xx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeyXuDp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DE9C116B1;
-	Tue, 11 Nov 2025 01:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeVnw/xx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33767C116B1;
+	Tue, 11 Nov 2025 01:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825222;
-	bh=d60mMrOMkltGPQSWdDny0lxGi9yMjLTJvlQ1kgVJyOI=;
+	s=korg; t=1762825224;
+	bh=i1feWGyNxKDtnd4mc+OnqdsCD7E1R0M8lv83oWWO4aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeyXuDp8Aad9v3RVNRB3U2GnIF8qcuGmWGGQfaYnKTxy8kD9q9VdXH/sO0/3GHuw2
-	 yc8WY9ySTkPnUvbyatpHGl8ZT9TQ0HSL05djB/XvVxxB7siXFRzuP2wG/WpvPs2AKs
-	 Ygt9tJXeyBrhkeHGfZOtRhW2GaeWkBeJv8dtsMPs=
+	b=VeVnw/xxlOAbO/H6wjkcE9WzmEpJ8/VJNUi2upzrCL2n9jBo9AmH1XB/jn3w/vGqp
+	 x+55YnQbT7/kOksVHVsn03r4uTVmByIYGcH5dN2nMtHSWe4L/SIKMO58st8VOOlWyD
+	 7pmLLajAs3Hst2YfReF2tLNrI7Ui0m6SKdmblaiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhiling <chizhiling@kylinos.cn>,
+	syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 669/849] exfat: limit log print for IO error
-Date: Tue, 11 Nov 2025 09:43:59 +0900
-Message-ID: <20251111004552.595998494@linuxfoundation.org>
+Subject: [PATCH 6.17 670/849] exfat: validate cluster allocation bits of the allocation bitmap
+Date: Tue, 11 Nov 2025 09:44:00 +0900
+Message-ID: <20251111004552.618679163@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,83 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhiling <chizhiling@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 6dfba108387bf4e71411b3da90b2d5cce48ba054 ]
+[ Upstream commit 79c1587b6cda74deb0c86fc7ba194b92958c793c ]
 
-For exFAT filesystems with 4MB read_ahead_size, removing the storage device
-when the read operation is in progress, which cause the last read syscall
-spent 150s [1]. The main reason is that exFAT generates excessive log
-messages [2].
+syzbot created an exfat image with cluster bits not set for the allocation
+bitmap. exfat-fs reads and uses the allocation bitmap without checking
+this. The problem is that if the start cluster of the allocation bitmap
+is 6, cluster 6 can be allocated when creating a directory with mkdir.
+exfat zeros out this cluster in exfat_mkdir, which can delete existing
+entries. This can reallocate the allocated entries. In addition,
+the allocation bitmap is also zeroed out, so cluster 6 can be reallocated.
+This patch adds exfat_test_bitmap_range to validate that clusters used for
+the allocation bitmap are correctly marked as in-use.
 
-After applying this patch, approximately 300,000 lines of log messages
-were suppressed, and the delay of the last read() syscall was reduced
-to about 4 seconds.
-
-[1]:
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000120>
-read(4, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000032>
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000119>
-read(4, 0x7fccf28ae000, 131072)         = -1 EIO (Input/output error) <150.186215>
-
-[2]:
-[  333.696603] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.697378] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.698156] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-
-Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Reported-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
+Tested-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/fatent.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/exfat/balloc.c | 72 +++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 60 insertions(+), 12 deletions(-)
 
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index 232cc7f8ab92f..825083634ba2d 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -89,35 +89,36 @@ int exfat_ent_get(struct super_block *sb, unsigned int loc,
- 	int err;
+diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
+index cc01556c9d9b3..071448adbd5d9 100644
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -26,12 +26,55 @@
+ /*
+  *  Allocation Bitmap Management Functions
+  */
++static bool exfat_test_bitmap_range(struct super_block *sb, unsigned int clu,
++		unsigned int count)
++{
++	struct exfat_sb_info *sbi = EXFAT_SB(sb);
++	unsigned int start = clu;
++	unsigned int end = clu + count;
++	unsigned int ent_idx, i, b;
++	unsigned int bit_offset, bits_to_check;
++	__le_long *bitmap_le;
++	unsigned long mask, word;
++
++	if (!is_valid_cluster(sbi, start) || !is_valid_cluster(sbi, end - 1))
++		return false;
++
++	while (start < end) {
++		ent_idx = CLUSTER_TO_BITMAP_ENT(start);
++		i = BITMAP_OFFSET_SECTOR_INDEX(sb, ent_idx);
++		b = BITMAP_OFFSET_BIT_IN_SECTOR(sb, ent_idx);
++
++		bitmap_le = (__le_long *)sbi->vol_amap[i]->b_data;
++
++		/* Calculate how many bits we can check in the current word */
++		bit_offset = b % BITS_PER_LONG;
++		bits_to_check = min(end - start,
++				    (unsigned int)(BITS_PER_LONG - bit_offset));
++
++		/* Create a bitmask for the range of bits to check */
++		if (bits_to_check >= BITS_PER_LONG)
++			mask = ~0UL;
++		else
++			mask = ((1UL << bits_to_check) - 1) << bit_offset;
++		word = lel_to_cpu(bitmap_le[b / BITS_PER_LONG]);
++
++		/* Check if all bits in the mask are set */
++		if ((word & mask) != mask)
++			return false;
++
++		start += bits_to_check;
++	}
++
++	return true;
++}
++
+ static int exfat_allocate_bitmap(struct super_block *sb,
+ 		struct exfat_dentry *ep)
+ {
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+ 	long long map_size;
+-	unsigned int i, need_map_size;
++	unsigned int i, j, need_map_size;
+ 	sector_t sector;
  
- 	if (!is_valid_cluster(sbi, loc)) {
--		exfat_fs_error(sb, "invalid access to FAT (entry 0x%08x)",
-+		exfat_fs_error_ratelimit(sb,
-+			"invalid access to FAT (entry 0x%08x)",
- 			loc);
- 		return -EIO;
+ 	sbi->map_clu = le32_to_cpu(ep->dentry.bitmap.start_clu);
+@@ -58,20 +101,25 @@ static int exfat_allocate_bitmap(struct super_block *sb,
+ 	sector = exfat_cluster_to_sector(sbi, sbi->map_clu);
+ 	for (i = 0; i < sbi->map_sectors; i++) {
+ 		sbi->vol_amap[i] = sb_bread(sb, sector + i);
+-		if (!sbi->vol_amap[i]) {
+-			/* release all buffers and free vol_amap */
+-			int j = 0;
+-
+-			while (j < i)
+-				brelse(sbi->vol_amap[j++]);
+-
+-			kvfree(sbi->vol_amap);
+-			sbi->vol_amap = NULL;
+-			return -EIO;
+-		}
++		if (!sbi->vol_amap[i])
++			goto err_out;
  	}
  
- 	err = __exfat_ent_get(sb, loc, content);
- 	if (err) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"failed to access to FAT (entry 0x%08x, err:%d)",
- 			loc, err);
- 		return err;
- 	}
++	if (exfat_test_bitmap_range(sb, sbi->map_clu,
++		EXFAT_B_TO_CLU_ROUND_UP(map_size, sbi)) == false)
++		goto err_out;
++
+ 	return 0;
++
++err_out:
++	j = 0;
++	/* release all buffers and free vol_amap */
++	while (j < i)
++		brelse(sbi->vol_amap[j++]);
++
++	kvfree(sbi->vol_amap);
++	sbi->vol_amap = NULL;
++	return -EIO;
+ }
  
- 	if (*content == EXFAT_FREE_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT free cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content == EXFAT_BAD_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT bad cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content != EXFAT_EOF_CLUSTER && !is_valid_cluster(sbi, *content)) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT (entry 0x%08x) bogus content (0x%08x)",
- 			loc, *content);
- 		return -EIO;
+ int exfat_load_bitmap(struct super_block *sb)
 -- 
 2.51.0
 
