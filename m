@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1755D330B1F;
-	Tue, 11 Nov 2025 01:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670512737E3;
+	Tue, 11 Nov 2025 01:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823369; cv=none; b=VXTT84xCRk0n/G1kJ6zXC2tDBQ/7fzpjB3UO+XEX8Z9RRWEvxS4wSvo+deiNCeIb04jOeHvpbgw2V0XYRjZhzHT92JZDCFkQvbKgwKMyT3XGTZXUng6NGTVtHlfA3PQop01mwKSwhJK4xSBs93l2WtPJSjNPPxO+jP6p9KuetCg=
+	t=1762823371; cv=none; b=pDg521O7Yop8j9UFJAHMNrdgM2/W5OiWWsAH7zuim3E8ygrgY3yCPPiwEEGCBwnRygpv3IAjLL9LMhctVwyDqGQ90q8dcqbWSqUDmh9sr/+ewjwVm7WUGVrrQHY9wr/9KdpkN2c+xorFjdIMCfd9FsglSywsmEJO5MHClNdivMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823369; c=relaxed/simple;
-	bh=2onommx/dYMWH4XzVD3e45+W71VgGPGha1HLiKu0wlk=;
+	s=arc-20240116; t=1762823371; c=relaxed/simple;
+	bh=if0pW8EFkCtkYL5c3SzP8eNVZZ7aJWSfVHiHBwpM7YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUsZ1URiSkyJqe+hUDeC8OkMoNr8W2rDvSXRe8W9gbmL0H8k1Qrju4NJJW+4U3+UWCG85WxOHn5oydZFJHbOZl1W+x6xFxLxewNDIMIr1wq9i/HjkDSVkm2VJmfBCa+8B9YvmMZsyTbDDIFQ7xWJmDwB+wuSdwGb3J1187vwxbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnrBTbDn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCTBYYstnzNfNlsqoFgf+rxA7FLwwA6DdMmFYNlowabAEXSTDEDPDVfBmHZ4ytl/mWQ2rdRmmuClqgoQrsUoAEyrQj2SkxVSaamX0SpKxIdU8xy7lV+tI+2sRpFIM1xYZ4obQcn6vqApP693WaBIkCDZUUdcF9tYOJBe5aH20zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDxflP4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnrBTbDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A887EC113D0;
-	Tue, 11 Nov 2025 01:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDxflP4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F4FC19421;
+	Tue, 11 Nov 2025 01:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823368;
-	bh=2onommx/dYMWH4XzVD3e45+W71VgGPGha1HLiKu0wlk=;
+	s=korg; t=1762823371;
+	bh=if0pW8EFkCtkYL5c3SzP8eNVZZ7aJWSfVHiHBwpM7YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnrBTbDnzQWTpNcPNhjU8GdRqyZSolXRCiJBJ2+i3hDYm6pl4sFynUWd+Qn+BSYBg
-	 zdNkG75HzfzldlwX8ZMd+jcHA6fNH/GRBzM2+o87AqXUmxPfkKi1XJTKQvRcu3gDbu
-	 o8utE5OyVOEWty94mF5c4xSQ1zd0HeDa4G0nogcU=
+	b=HDxflP4hVyARuM6K1vpQmi1iJMAc1sXEUl+mJatAeV9Qs7p2SPojv0F+523ZiOBZ6
+	 fgk+SkkUYiRex0Wcd5UOPn5xvNkC0QG2FTDTcXnik/3/KrYEmlGXEJU1WSAG1bNfYW
+	 mb2eI2zOwO+WmrOMy6sHLEIaXECAHV/Wtr1ogH0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Primoz Fiser <primoz.fiser@norik.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Parth Pancholi <parth.pancholi@toradex.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 228/565] iio: adc: imx93_adc: load calibrated values even calibration failed
-Date: Tue, 11 Nov 2025 09:41:24 +0900
-Message-ID: <20251111004532.047490308@linuxfoundation.org>
+Subject: [PATCH 6.17 285/849] drm/bridge: cdns-dsi: Fix REG_WAKEUP_TIME value
+Date: Tue, 11 Nov 2025 09:37:35 +0900
+Message-ID: <20251111004543.304325688@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,90 +49,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 12c9b09e981ab14ebec8e4eefa946cbd26dd306b ]
+[ Upstream commit eea4f89b6461294ed6bea1d3285bb3f79c09a041 ]
 
-ADC calibration might fail because of the noise on reference voltage.
-To avoid calibration fail, need to meet the following requirement:
-    ADC reference voltage Noise < 1.8V * 1/2^ENOB
+The driver tries to calculate the value for REG_WAKEUP_TIME. However,
+the calculation itself is not correct, and to add on it, the resulting
+value is almost always larger than the field's size, so the actual
+result is more or less random.
 
-For the case which the ADC reference voltage on board do not meet
-the requirement, still load the calibrated values, so ADC can also
-work but maybe not that accurate.
+According to the docs, figuring out the value for REG_WAKEUP_TIME
+requires HW characterization and there's no way to have a generic
+algorithm to come up with the value. That doesn't help at all...
 
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Primoz Fiser <primoz.fiser@norik.com>
-Link: https://patch.msgid.link/20250812-adc-v2-2-0260833f13b8@nxp.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+However, we know that the value must be smaller than the line time, and,
+at least in my understanding, the proper value for it is quite small.
+Testing shows that setting it to 1/10 of the line time seems to work
+well. All video modes from my HDMI monitor work with this algorithm.
+
+Hopefully we'll get more information on how to calculate the value, and
+we can then update this.
+
+Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
+Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Link: https://lore.kernel.org/r/20250723-cdns-dsi-impro-v5-11-e61cc06074c2@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/imx93_adc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/imx93_adc.c b/drivers/iio/adc/imx93_adc.c
-index 4ccf4819f1f13..75cf2f93d5edd 100644
---- a/drivers/iio/adc/imx93_adc.c
-+++ b/drivers/iio/adc/imx93_adc.c
-@@ -38,6 +38,7 @@
- #define IMX93_ADC_PCDR6		0x118
- #define IMX93_ADC_PCDR7		0x11c
- #define IMX93_ADC_CALSTAT	0x39C
-+#define IMX93_ADC_CALCFG0	0x3A0
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
+index 695b6246b280f..9f1c460d5f0d4 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
+@@ -882,7 +882,13 @@ static void cdns_dsi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
  
- /* ADC bit shift */
- #define IMX93_ADC_MCR_MODE_MASK			BIT(29)
-@@ -58,6 +59,8 @@
- #define IMX93_ADC_IMR_ECH_MASK			BIT(0)
- #define IMX93_ADC_PCDR_CDATA_MASK		GENMASK(11, 0)
- 
-+#define IMX93_ADC_CALCFG0_LDFAIL_MASK		BIT(4)
+ 	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
+ 					    phy_cfg->hs_clk_rate);
+-	reg_wakeup = (phy_cfg->hs_prepare + phy_cfg->hs_zero) / tx_byte_period;
 +
- /* ADC status */
- #define IMX93_ADC_MSR_ADCSTATUS_IDLE			0
- #define IMX93_ADC_MSR_ADCSTATUS_POWER_DOWN		1
-@@ -145,7 +148,7 @@ static void imx93_adc_config_ad_clk(struct imx93_adc *adc)
++	/*
++	 * Estimated time [in clock cycles] to perform LP->HS on D-PHY.
++	 * It is not clear how to calculate this, so for now,
++	 * set it to 1/10 of the total number of clocks in a line.
++	 */
++	reg_wakeup = dsi_cfg.htotal / nlanes / 10;
+ 	writel(REG_WAKEUP_TIME(reg_wakeup) | REG_LINE_DURATION(tmp),
+ 	       dsi->regs + VID_DPHY_TIME);
  
- static int imx93_adc_calibration(struct imx93_adc *adc)
- {
--	u32 mcr, msr;
-+	u32 mcr, msr, calcfg;
- 	int ret;
- 
- 	/* make sure ADC in power down mode */
-@@ -158,6 +161,11 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
- 
- 	imx93_adc_power_up(adc);
- 
-+	/* Enable loading of calibrated values even in fail condition */
-+	calcfg = readl(adc->regs + IMX93_ADC_CALCFG0);
-+	calcfg |= IMX93_ADC_CALCFG0_LDFAIL_MASK;
-+	writel(calcfg, adc->regs + IMX93_ADC_CALCFG0);
-+
- 	/*
- 	 * TODO: we use the default TSAMP/NRSMPL/AVGEN in MCR,
- 	 * can add the setting of these bit if need in future.
-@@ -180,9 +188,13 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
- 	/* check whether calbration is success or not */
- 	msr = readl(adc->regs + IMX93_ADC_MSR);
- 	if (msr & IMX93_ADC_MSR_CALFAIL_MASK) {
-+		/*
-+		 * Only give warning here, this means the noise of the
-+		 * reference voltage do not meet the requirement:
-+		 *     ADC reference voltage Noise < 1.8V * 1/2^ENOB
-+		 * And the resault of ADC is not that accurate.
-+		 */
- 		dev_warn(adc->dev, "ADC calibration failed!\n");
--		imx93_adc_power_down(adc);
--		return -EAGAIN;
- 	}
- 
- 	return 0;
 -- 
 2.51.0
 
