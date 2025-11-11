@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803CA3469FA;
-	Tue, 11 Nov 2025 01:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A403469F2;
+	Tue, 11 Nov 2025 01:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824198; cv=none; b=Obe8Ak1ptMfKW+bvSwINGPzr1wIPMb/36rkhCXXPqo3oeMtxHaKgVsUN6Mju6KBb/OXxYTkibjt1XEilBZmqNwXQ/wRw2v6eUazM01z0Q3Gvqdvhfsrh8Hq5F/GJJJ8fHXptCnwW9CiItmf29dELyxXS7kbsIzhyWgrevO+Lwkw=
+	t=1762824201; cv=none; b=P6YtISn6SM4+14iAQ7VkOgL6okbqtwMX5nOiRpXbRBXfdQjm3eNlWSMUTLqAIXNYjKQZMRO0WsuzAJ6dww4LpPjRcrqx4kELCujLh9R57dbBFDHJ6WoJkw2JkLKnFbrcEzVFssHhKBT8TxBbEYnVfNH6xgKQ7kQ/LKDnRnK5+Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824198; c=relaxed/simple;
-	bh=Rh9Lz3TupRVsYFCSuM95PcpMseFNRxdjfwkH14HyPno=;
+	s=arc-20240116; t=1762824201; c=relaxed/simple;
+	bh=3AR8Vl1OiMR9bSmR14vjmioDL+M6R09T35dKcUAFs/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TSb/1Dr5qq94oRAA8HKRrSJ5716T4wLwd2de5Lm+0lg5MmVaUoucZOoCDumYHyl9ftFRsm8qJiYnNgWI1PS2+jE03J9w6+aVATRfTGbE3q1uWiT6B9wx31mTNRGf6kNwDktJ4I9UEk6cLQHTNVAN7F5uF/WmJBAGNgzxwhtOe9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOohhkro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gEPiP5FRZyOfk7uD5r4RECd2Hb4Xx+pTNyqmjIVa+Z1smAmkkvCEDcCQztMHQSvEqGV7xfqkAGC6+35sgmVP9nlum8oR02IcA7xCMTvDSLogV6eYmp8CXGGkPtj8U8aEBLGk/zNZGnGmngJX9jMfLUI1SX8GU+nNqYl6Z3iNo54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOkLKRNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOohhkro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1398BC19422;
-	Tue, 11 Nov 2025 01:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOkLKRNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729C0C116B1;
+	Tue, 11 Nov 2025 01:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824198;
-	bh=Rh9Lz3TupRVsYFCSuM95PcpMseFNRxdjfwkH14HyPno=;
+	s=korg; t=1762824200;
+	bh=3AR8Vl1OiMR9bSmR14vjmioDL+M6R09T35dKcUAFs/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOohhkroulrjUdIPzw/pwXn0PL3LYdp+qdplZuRnwOd+zlIG1nkzp3TMyFOQTh7QK
-	 5S46+GH0mSD2egjt9WgmjQRtuucn9JKPXEtWlSGRUGGR4rm/hKSdIK2N7mnq4db1Cm
-	 V+sMHOvXTRoLWJ37K8sjUjUTqpJzj4V3kl6sMcu8=
+	b=AOkLKRNH9Xo9E9uk4quhHooQ4mr4f4zOSf3A3YFdPCJDogN4YSkobGULtI8ISA0wh
+	 tq5Dl9/ViTW/XbAvKmSXEaQzEcou804bJbZ0929ZOzWl/CIm6o0IOaaS/Cj3SezqG1
+	 VciAykWDMQ6FpfLGH2+mKD/XgN2rut4dGxN0q0Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 409/565] selftests: forwarding: Reorder (ar)ping arguments to obey POSIX getopt
-Date: Tue, 11 Nov 2025 09:44:25 +0900
-Message-ID: <20251111004536.070622909@linuxfoundation.org>
+Subject: [PATCH 6.17 452/849] bus: mhi: host: pci_generic: Add support for all Foxconn T99W696 SKU variants
+Date: Tue, 11 Nov 2025 09:40:22 +0900
+Message-ID: <20251111004547.355741066@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,172 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-[ Upstream commit 50d51cef555ee42fe47dd51b71366a77895e5f0b ]
+[ Upstream commit 376358bb9770e5313d22d8784511497096cdb75f ]
 
-Quoted from musl wiki:
+Since there are too many variants available for Foxconn T99W696 modem, and
+they all share the same configuration, use PCI_ANY_ID as the subsystem
+device ID to match each possible SKUs and support all of them.
 
-  GNU getopt permutes argv to pull options to the front, ahead of
-  non-option arguments. musl and the POSIX standard getopt stop
-  processing options at the first non-option argument with no
-  permutation.
-
-Thus these scripts stop working on musl since non-option arguments for
-tools using getopt() (in this case, (ar)ping) do not always come last.
-Fix it by reordering arguments.
-
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250919053538.1106753-1-mmyangfl@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+[mani: reworded subject/description and dropped the fixes tag]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250819020013.122162-1-slark_xiao@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/forwarding/custom_multipath_hash.sh     | 2 +-
- .../selftests/net/forwarding/gre_custom_multipath_hash.sh | 2 +-
- .../selftests/net/forwarding/ip6_forward_instats_vrf.sh   | 6 +++---
- .../net/forwarding/ip6gre_custom_multipath_hash.sh        | 2 +-
- tools/testing/selftests/net/forwarding/lib.sh             | 8 ++++----
- .../selftests/net/forwarding/mirror_gre_bridge_1q_lag.sh  | 2 +-
- .../selftests/net/forwarding/mirror_gre_vlan_bridge_1q.sh | 4 ++--
- 7 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/bus/mhi/host/pci_generic.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/custom_multipath_hash.sh b/tools/testing/selftests/net/forwarding/custom_multipath_hash.sh
-index 7d531f7091e6f..5dbfab0e23e3d 100755
---- a/tools/testing/selftests/net/forwarding/custom_multipath_hash.sh
-+++ b/tools/testing/selftests/net/forwarding/custom_multipath_hash.sh
-@@ -226,7 +226,7 @@ send_flowlabel()
- 	# Generate 16384 echo requests, each with a random flow label.
- 	ip vrf exec v$h1 sh -c \
- 		"for _ in {1..16384}; do \
--			$PING6 2001:db8:4::2 -F 0 -c 1 -q >/dev/null 2>&1; \
-+			$PING6 -F 0 -c 1 -q 2001:db8:4::2 >/dev/null 2>&1; \
- 		done"
- }
- 
-diff --git a/tools/testing/selftests/net/forwarding/gre_custom_multipath_hash.sh b/tools/testing/selftests/net/forwarding/gre_custom_multipath_hash.sh
-index dda11a4a9450a..b4f17a5bbc614 100755
---- a/tools/testing/selftests/net/forwarding/gre_custom_multipath_hash.sh
-+++ b/tools/testing/selftests/net/forwarding/gre_custom_multipath_hash.sh
-@@ -321,7 +321,7 @@ send_flowlabel()
- 	# Generate 16384 echo requests, each with a random flow label.
- 	ip vrf exec v$h1 sh -c \
- 		"for _ in {1..16384}; do \
--			$PING6 2001:db8:2::2 -F 0 -c 1 -q >/dev/null 2>&1; \
-+			$PING6 -F 0 -c 1 -q 2001:db8:2::2 >/dev/null 2>&1; \
- 		done"
- }
- 
-diff --git a/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh b/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
-index 49fa94b53a1ca..25036e38043c8 100755
---- a/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
-+++ b/tools/testing/selftests/net/forwarding/ip6_forward_instats_vrf.sh
-@@ -95,7 +95,7 @@ ipv6_in_too_big_err()
- 
- 	# Send too big packets
- 	ip vrf exec $vrf_name \
--		$PING6 -s 1300 2001:1:2::2 -c 1 -w $PING_TIMEOUT &> /dev/null
-+		$PING6 -s 1300 -c 1 -w $PING_TIMEOUT 2001:1:2::2 &> /dev/null
- 
- 	local t1=$(ipv6_stats_get $rtr1 Ip6InTooBigErrors)
- 	test "$((t1 - t0))" -ne 0
-@@ -131,7 +131,7 @@ ipv6_in_addr_err()
- 	# Disable forwarding temporary while sending the packet
- 	sysctl -qw net.ipv6.conf.all.forwarding=0
- 	ip vrf exec $vrf_name \
--		$PING6 2001:1:2::2 -c 1 -w $PING_TIMEOUT &> /dev/null
-+		$PING6 -c 1 -w $PING_TIMEOUT 2001:1:2::2 &> /dev/null
- 	sysctl -qw net.ipv6.conf.all.forwarding=1
- 
- 	local t1=$(ipv6_stats_get $rtr1 Ip6InAddrErrors)
-@@ -150,7 +150,7 @@ ipv6_in_discard()
- 	# Add a policy to discard
- 	ip xfrm policy add dst 2001:1:2::2/128 dir fwd action block
- 	ip vrf exec $vrf_name \
--		$PING6 2001:1:2::2 -c 1 -w $PING_TIMEOUT &> /dev/null
-+		$PING6 -c 1 -w $PING_TIMEOUT 2001:1:2::2 &> /dev/null
- 	ip xfrm policy del dst 2001:1:2::2/128 dir fwd
- 
- 	local t1=$(ipv6_stats_get $rtr1 Ip6InDiscards)
-diff --git a/tools/testing/selftests/net/forwarding/ip6gre_custom_multipath_hash.sh b/tools/testing/selftests/net/forwarding/ip6gre_custom_multipath_hash.sh
-index e28b4a079e525..b24acfa52a3a7 100755
---- a/tools/testing/selftests/net/forwarding/ip6gre_custom_multipath_hash.sh
-+++ b/tools/testing/selftests/net/forwarding/ip6gre_custom_multipath_hash.sh
-@@ -323,7 +323,7 @@ send_flowlabel()
- 	# Generate 16384 echo requests, each with a random flow label.
- 	ip vrf exec v$h1 sh -c \
- 		"for _ in {1..16384}; do \
--			$PING6 2001:db8:2::2 -F 0 -c 1 -q >/dev/null 2>&1; \
-+			$PING6 -F 0 -c 1 -q 2001:db8:2::2 >/dev/null 2>&1; \
- 		done"
- }
- 
-diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
-index 195360082d949..c61da12d12e4b 100644
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -1360,8 +1360,8 @@ ping_do()
- 
- 	vrf_name=$(master_name_get $if_name)
- 	ip vrf exec $vrf_name \
--		$PING $args $dip -c $PING_COUNT -i 0.1 \
--		-w $PING_TIMEOUT &> /dev/null
-+		$PING $args -c $PING_COUNT -i 0.1 \
-+		-w $PING_TIMEOUT $dip &> /dev/null
- }
- 
- ping_test()
-@@ -1391,8 +1391,8 @@ ping6_do()
- 
- 	vrf_name=$(master_name_get $if_name)
- 	ip vrf exec $vrf_name \
--		$PING6 $args $dip -c $PING_COUNT -i 0.1 \
--		-w $PING_TIMEOUT &> /dev/null
-+		$PING6 $args -c $PING_COUNT -i 0.1 \
-+		-w $PING_TIMEOUT $dip &> /dev/null
- }
- 
- ping6_test()
-diff --git a/tools/testing/selftests/net/forwarding/mirror_gre_bridge_1q_lag.sh b/tools/testing/selftests/net/forwarding/mirror_gre_bridge_1q_lag.sh
-index fe4d7c906a708..04090f4412acf 100755
---- a/tools/testing/selftests/net/forwarding/mirror_gre_bridge_1q_lag.sh
-+++ b/tools/testing/selftests/net/forwarding/mirror_gre_bridge_1q_lag.sh
-@@ -237,7 +237,7 @@ test_lag_slave()
- 	ip neigh flush dev br1
- 	setup_wait_dev $up_dev
- 	setup_wait_dev $host_dev
--	$ARPING -I br1 192.0.2.130 -qfc 1
-+	$ARPING -I br1 -qfc 1 192.0.2.130
- 	sleep 2
- 	mirror_test vrf-h1 192.0.2.1 192.0.2.18 $host_dev 1 ">= 10"
- 
-diff --git a/tools/testing/selftests/net/forwarding/mirror_gre_vlan_bridge_1q.sh b/tools/testing/selftests/net/forwarding/mirror_gre_vlan_bridge_1q.sh
-index 1b902cc579f62..a21c771908b33 100755
---- a/tools/testing/selftests/net/forwarding/mirror_gre_vlan_bridge_1q.sh
-+++ b/tools/testing/selftests/net/forwarding/mirror_gre_vlan_bridge_1q.sh
-@@ -196,7 +196,7 @@ test_span_gre_forbidden_egress()
- 
- 	bridge vlan add dev $swp3 vid 555
- 	# Re-prime FDB
--	$ARPING -I br1.555 192.0.2.130 -fqc 1
-+	$ARPING -I br1.555 -fqc 1 192.0.2.130
- 	sleep 1
- 	quick_test_span_gre_dir $tundev
- 
-@@ -290,7 +290,7 @@ test_span_gre_fdb_roaming()
- 
- 	bridge fdb del dev $swp2 $h3mac vlan 555 master 2>/dev/null
- 	# Re-prime FDB
--	$ARPING -I br1.555 192.0.2.130 -fqc 1
-+	$ARPING -I br1.555 -fqc 1 192.0.2.130
- 	sleep 1
- 	quick_test_span_gre_dir $tundev
- 
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 4edb5bb476baf..4564e2528775e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -917,20 +917,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FE990A */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
+-	/* Foxconn T99W696.01, Lenovo Generic SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe142),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.02, Lenovo X1 Carbon SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe143),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.03, Lenovo X1 2in1 SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe144),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.04, Lenovo PRC SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe145),
+-		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+-	/* Foxconn T99W696.00, Foxconn SKU */
+-	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
++	/* Foxconn T99W696, all variants */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, PCI_ANY_ID),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
 -- 
 2.51.0
 
