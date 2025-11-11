@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DD41F09B3;
-	Tue, 11 Nov 2025 01:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E311C4A24;
+	Tue, 11 Nov 2025 01:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824194; cv=none; b=De45rfyPC/eTxvl5RK8W9kPbhnSb4FOYWWslMoLOxEUufHuixDLQQ9CUurqYQAKZ5HlEhu34p1e2WDRxIWcJtWruV5FOGjpkbzHkuqAj4Fl8uFCmfwek8sEum9Q/hoYnY/lAfJgMaC8iA09i1zgdQDyOiR5kptdiSKLTVSNv2JA=
+	t=1762824198; cv=none; b=fFDx3etUJ9+CvFQI2OYE0WZAkfF9NR5zp3nrhYPouWLd9UQzrGnfmLARD57HBNlTV5LYDzwcYOJ/sAiQ7MIhpriCg/b5RcizFctnlM85gyeBPHi//TgcUUtPcm8kPNKwCXbYgvujjLSktJaVyUyqpLiTUPUGpepFZtePNTZMUls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824194; c=relaxed/simple;
-	bh=ptzH4nJEOxfwRJP5w2WQrNuHCEQjT+M6ehFesNxdDrQ=;
+	s=arc-20240116; t=1762824198; c=relaxed/simple;
+	bh=Vywo1JvmdO2ALzS3zJmdWGjWrpDEdIydu2lw7elflTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iXJWiGlq2ch3mWVAfQX9nYQq29yU/viWeosxAOa5CahEG/a4T/xv3hpSxZ8M6Qc6MhhVspvb2bnHcs/W/RRVZFyfyEwIqoICKlpTYX3fMEafh7T3/mHUoqvWVQVA0wKADzit1xFcf9NcR8G06uhcY7F9Rv7SCwEbPqSoEHailpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysD3wOfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1e8mYw5bI3DQfGZhzSWU7wlPTeAITwEMyyutS90HwIjteip/lgXtCLrAhYcT6jqhwjxiTtY8Dq+n2T0iRAZs6bvGRiUdQteCGj+hF4N0wANfvHFCTUyFLuOhB4+lcDlNjkCrpmzII3JC03vew0zNpZB/OJBQ9BFnRsfr3Q324I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HelsQVHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysD3wOfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35366C4CEF5;
-	Tue, 11 Nov 2025 01:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HelsQVHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B959DC113D0;
+	Tue, 11 Nov 2025 01:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824193;
-	bh=ptzH4nJEOxfwRJP5w2WQrNuHCEQjT+M6ehFesNxdDrQ=;
+	s=korg; t=1762824196;
+	bh=Vywo1JvmdO2ALzS3zJmdWGjWrpDEdIydu2lw7elflTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysD3wOfCmKeSQl1aFwp4beijx34hv5USKLO6f/KerkmVwX2JFHipZKGAfPLAYlVOA
-	 kwt5GK3jdoI7dWsB7Dk3uzbyo8n2gN9gYZhFbZwGhTirJ3E7WOCK2EAiTIenw1Hotm
-	 ueIVAKJ/MbIlUKFxXc6uSu/+aFTLtYKmeAHFoPRM=
+	b=HelsQVHzO9b7Os8sFI4yu6iO0o4UPzWctraWcos1C7sdBrCoHJY8VkWMQjAp5PGuq
+	 6UasCzDvF2iqNJ8XEIzEJqew1Heljs0yT7HAsCtoHRS2o2R+FcuwUmJEl9rx3wj0LE
+	 iqTpbVOe75a8L4L7GRJOJIGvlqw1fUdK+4uyqaAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 408/565] PCI/PM: Skip resuming to D0 if device is disconnected
-Date: Tue, 11 Nov 2025 09:44:24 +0900
-Message-ID: <20251111004536.049547943@linuxfoundation.org>
+Subject: [PATCH 6.17 460/849] drm/amd/display: Indicate when custom brightness curves are in use
+Date: Tue, 11 Nov 2025 09:40:30 +0900
+Message-ID: <20251111004547.549098781@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +48,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Mario Limonciello <superm1@kernel.org>
 
-[ Upstream commit 299fad4133677b845ce962f78c9cf75bded63f61 ]
+[ Upstream commit 68f3c044f37d9f50d67417fa8018d9cf16423458 ]
 
-When a device is surprise-removed (e.g., due to a dock unplug), the PCI
-core unconfigures all downstream devices and sets their error state to
-pci_channel_io_perm_failure. This marks them as disconnected via
-pci_dev_is_disconnected().
+[Why]
+There is a `scale` sysfs attribute that can be used to indicate when
+non-linear brightness scaling is in use.  As Custom brightness curves
+work by linear interpolation of points the scale is no longer linear.
 
-During device removal, the runtime PM framework may attempt to resume the
-device to D0 via pm_runtime_get_sync(), which calls into pci_power_up().
-Since the device is already disconnected, this resume attempt is
-unnecessary and results in a predictable errors like this, typically when
-undocking from a TBT3 or USB4 dock with PCIe tunneling:
+[How]
+Indicate non-linear scaling when custom brightness curves in use and
+linear scaling otherwise.
 
-  pci 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-
-Avoid powering up disconnected devices by checking their status early in
-pci_power_up() and returning -EIO.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: add typical message]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://patch.msgid.link/20250909031916.4143121-1-superm1@kernel.org
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 0dd548e2b3676..5e5326031eb72 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1403,6 +1403,11 @@ int pci_power_up(struct pci_dev *dev)
- 		return -EIO;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index afe3a8279c3a9..8eb2fc4133487 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5032,8 +5032,11 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
+ 	} else
+ 		props.brightness = props.max_brightness = MAX_BACKLIGHT_LEVEL;
  
-+	if (pci_dev_is_disconnected(dev)) {
-+		dev->current_state = PCI_D3cold;
-+		return -EIO;
-+	}
-+
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
- 		pci_err(dev, "Unable to change power state from %s to D0, device inaccessible\n",
+-	if (caps->data_points && !(amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE))
++	if (caps->data_points && !(amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE)) {
+ 		drm_info(drm, "Using custom brightness curve\n");
++		props.scale = BACKLIGHT_SCALE_NON_LINEAR;
++	} else
++		props.scale = BACKLIGHT_SCALE_LINEAR;
+ 	props.type = BACKLIGHT_RAW;
+ 
+ 	snprintf(bl_name, sizeof(bl_name), "amdgpu_bl%d",
 -- 
 2.51.0
 
