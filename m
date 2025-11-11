@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C86133B955;
-	Tue, 11 Nov 2025 01:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E6E348894;
+	Tue, 11 Nov 2025 01:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825322; cv=none; b=RTo1qq9lXIng2JBXtn/z/WPBLXcK+iWdL9QlHxQzayay6i4QPfJu1hofViAQc0vKrFFr39mO8KRCpgjQKnSv4r7AAz2ssyVqA2bIR20R4okILPLekIKaV8UiUaU32fiFXDJ/nl8ny2e1ZNhSI1hIAzhQE3hDzPMuTNkTxl9+1WY=
+	t=1762825324; cv=none; b=fn0tQ7g1Af+umpcUxA81plhAP1d4MBTpApKCcyzrYjeYZa4P73N22RsId+KY0zzdxskIwUHm8frHB2Gd9IoODsgrC4FK5jZ++W8QaK89yAl+orhDu7Bn4eENaHXX7hbRE/ECSmXifHD5LnYkk9M9xC5PLREIcqu3wlkFih0VIKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825322; c=relaxed/simple;
-	bh=Ho2qf58uEKgX4udxdzx6MQw1Rf7e8SZfWYoCzxyZlzk=;
+	s=arc-20240116; t=1762825324; c=relaxed/simple;
+	bh=flV0s+vc0KIYUJOvIky4GSf7VDWasQBJsuakD+PeMYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApZK4SKVdNvEvHTmAF/0rwRfpFCnmeZjR33XizOkdjtkWsxCBmpk5tO2MaC/COdIVlA1h02AhO7d3tAP4YSMT4PoAMxy0zssjMPwsMeoUVy4N9igLBhfGFBJFx4J7vaWf/jezSF5OhlzG4k+JVEIIyyEMlRj9ddZuIQZYDjHM00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMIuVoqF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iyb2ZPyLUVBwvwvIN8TRUFxIrcXn7wmz151VBa8ecHi2mwP5jhhlClIsXzkav7hhyM4kQujS3HzioN+3F7ZfBbEDnb0hEqR2Nne5IZOEpNKYvz3nWx7pmgskasAn0bTP3xbfwFkEjz58/yctJ5P4GVuK+AIvobwFxgVgly+oh3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXrIMe0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMIuVoqF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81ABBC19425;
-	Tue, 11 Nov 2025 01:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXrIMe0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC315C4CEF5;
+	Tue, 11 Nov 2025 01:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825321;
-	bh=Ho2qf58uEKgX4udxdzx6MQw1Rf7e8SZfWYoCzxyZlzk=;
+	s=korg; t=1762825324;
+	bh=flV0s+vc0KIYUJOvIky4GSf7VDWasQBJsuakD+PeMYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMIuVoqFmBsPyMiCm16ru+9ylKLkq2DylyL0n9lBDBnnUUFYVbz+mIk7k24mht5Hi
-	 5CxKASZ7VrLHngSr7qy0MeHbudqt4nLJkwpidGUrfEEkhvodp3anJvV5ZZBqzH8qYE
-	 8v933Uyi+38kHYjBRNf5T5DAZHjXIO+XJgVA20cI=
+	b=YXrIMe0hN8LszHKFdCPtlMVWN2k8t0wgDpOiV7a5ShDO7dNngaJkFZtkY1SRUp/sF
+	 y3J9FabEJj8jszGnr8tCLwulVxym9IFaeYjMjfLhA92ukoD2ohmvCFGBOsIJ6+rkGz
+	 o3693bqFv20fIllHog38tzsgOyMNC+M+Y5J4H1XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lee <chullee@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 751/849] scsi: ufs: core: Fix a race condition related to the "hid" attribute group
-Date: Tue, 11 Nov 2025 09:45:21 +0900
-Message-ID: <20251111004554.590969951@linuxfoundation.org>
+Subject: [PATCH 6.17 752/849] riscv: stacktrace: Disable KASAN checks for non-current tasks
+Date: Tue, 11 Nov 2025 09:45:22 +0900
+Message-ID: <20251111004554.613480498@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,74 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit c74dc8ab47c1ec3927f63ca83b542c363249b3d8 ]
+[ Upstream commit 060ea84a484e852b52b938f234bf9b5503a6c910 ]
 
-ufs_sysfs_add_nodes() is called concurrently with ufs_get_device_desc().
-This may cause the following code to be called before
-ufs_sysfs_add_nodes():
+Unwinding the stack of a task other than current, KASAN would report
+"BUG: KASAN: out-of-bounds in walk_stackframe+0x41c/0x460"
 
-	sysfs_update_group(&hba->dev->kobj, &ufs_sysfs_hid_group);
+There is a same issue on x86 and has been resolved by the commit
+84936118bdf3 ("x86/unwind: Disable KASAN checks for non-current tasks")
+The solution could be applied to RISC-V too.
 
-If this happens, ufs_sysfs_add_nodes() triggers a kernel warning and
-fails. Fix this by calling ufs_sysfs_add_nodes() before SCSI LUNs are
-scanned since the sysfs_update_group() call happens from the context of
-thread that executes ufshcd_async_scan(). This patch fixes the following
-kernel warning:
+This patch also can solve the issue:
+https://seclists.org/oss-sec/2025/q4/23
 
-sysfs: cannot create duplicate filename '/devices/platform/3c2d0000.ufs/hid'
-Workqueue: async async_run_entry_fn
-Call trace:
- dump_backtrace+0xfc/0x17c
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0x104
- dump_stack+0x18/0x3c
- sysfs_warn_dup+0x6c/0xc8
- internal_create_group+0x1c8/0x504
- sysfs_create_groups+0x38/0x9c
- ufs_sysfs_add_nodes+0x20/0x58
- ufshcd_init+0x1114/0x134c
- ufshcd_pltfrm_init+0x728/0x7d8
- ufs_google_probe+0x30/0x84
- platform_probe+0xa0/0xe0
- really_probe+0x114/0x454
- __driver_probe_device+0xa4/0x160
- driver_probe_device+0x44/0x23c
- __device_attach_driver+0x15c/0x1f4
- bus_for_each_drv+0x10c/0x168
- __device_attach_async_helper+0x80/0xf8
- async_run_entry_fn+0x4c/0x17c
- process_one_work+0x26c/0x65c
- worker_thread+0x33c/0x498
- kthread+0x110/0x134
- ret_from_fork+0x10/0x20
-ufshcd 3c2d0000.ufs: ufs_sysfs_add_nodes: sysfs groups creation failed (err = -17)
-
-Cc: Daniel Lee <chullee@google.com>
-Fixes: bb7663dec67b ("scsi: ufs: sysfs: Make HID attributes visible")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251014200118.3390839-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Co-developed-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251022072608.743484-1-zhangchunyan@iscas.ac.cn
+[pjw@kernel.org: clean up checkpatch issues]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/stacktrace.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index b6d5d135527c0..8208a26c3ed63 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10869,8 +10869,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	if (err)
- 		goto out_disable;
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 3fe9e6edef8f1..b41b6255751cb 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -16,6 +16,22 @@
  
--	async_schedule(ufshcd_async_scan, hba);
- 	ufs_sysfs_add_nodes(hba->dev);
-+	async_schedule(ufshcd_async_scan, hba);
+ #ifdef CONFIG_FRAME_POINTER
  
- 	device_enable_async_suspend(dev);
- 	ufshcd_pm_qos_init(hba);
++/*
++ * This disables KASAN checking when reading a value from another task's stack,
++ * since the other task could be running on another CPU and could have poisoned
++ * the stack in the meantime.
++ */
++#define READ_ONCE_TASK_STACK(task, x)			\
++({							\
++	unsigned long val;				\
++	unsigned long addr = x;				\
++	if ((task) == current)				\
++		val = READ_ONCE(addr);			\
++	else						\
++		val = READ_ONCE_NOCHECK(addr);		\
++	val;						\
++})
++
+ extern asmlinkage void handle_exception(void);
+ extern unsigned long ret_from_exception_end;
+ 
+@@ -69,8 +85,9 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			fp = frame->ra;
+ 			pc = regs->ra;
+ 		} else {
+-			fp = frame->fp;
+-			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
++			fp = READ_ONCE_TASK_STACK(task, frame->fp);
++			pc = READ_ONCE_TASK_STACK(task, frame->ra);
++			pc = ftrace_graph_ret_addr(current, &graph_idx, pc,
+ 						   &frame->ra);
+ 			if (pc >= (unsigned long)handle_exception &&
+ 			    pc < (unsigned long)&ret_from_exception_end) {
 -- 
 2.51.0
 
