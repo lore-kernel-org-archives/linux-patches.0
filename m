@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784EE26FA67;
-	Tue, 11 Nov 2025 01:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21A429A30A;
+	Tue, 11 Nov 2025 01:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823491; cv=none; b=tYCJ+KaTc5sHLVoLQkLyxFPFjdItl+eqGzUbcYlFe7sZOft2YqXGymLWIn3EvMPUMvvPBg/4IhrTctA1jNtLXZRKHhye9SMsTT6pLAukl8Q4ORo+y2qVxrGR+HeeXpYJmYSXl586HB1r4DUrZ8azt4UGTDNhZ+NIZw4D0ST7D/Q=
+	t=1762823493; cv=none; b=rJEOH7pPf5/WyoAMeFVZkC0FRPnbSvoXVtME4mwj5p4uFRrl/TMNyQ1lvRDAiWu8jfZr8qXdTw4IQ6yQ0LpNpUyHCioozT6CPA1D28bcTSgHM5mTsCsYKEwbgJquSA4jyN8cdEKD5t5NwuBQFcTyJQEziF71vkoyifnUCSOhWMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823491; c=relaxed/simple;
-	bh=N9ExtDtUHVAGbpwUyOyiOvAK2r72cnMObNG1HoBNNX8=;
+	s=arc-20240116; t=1762823493; c=relaxed/simple;
+	bh=cA/jFJxmMzGb+ALdDm7kiSd2hYuslmHOyrzfDp2swHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEUtKqb97XyDJ9EZoka2d1CnFAharqV0wJhq+HrD1yhpOB46rJ2OdpdZzdchwSqWbkYeyENPdjAnHslWF7ct8B9tlVEuSlEnx6ATycedS0rf3IhJnxCEzEIh4ZMTdLz+nzCIyssXDOk88jwvk4agyOafsV05fkPaWjQnA9Dj+rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/fZvWdW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdNwOpMBQ+gweiBVIc0LdNLFqpA0mJPJu7T6BszmI7XJ2Hvw3T4h/ZswpkpXJQfXUX0PEQeyb/O/DWttUHFKION24sK45Tp/JNiLkxinVHKUFJiqQBxkKPTBVJfjAtKt1MhwKV3uCYsoD19P5iLwEbw56n04TQnXAdG+/xc44ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsJShA/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/fZvWdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18427C4CEFB;
-	Tue, 11 Nov 2025 01:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsJShA/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E885C4AF0B;
+	Tue, 11 Nov 2025 01:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823491;
-	bh=N9ExtDtUHVAGbpwUyOyiOvAK2r72cnMObNG1HoBNNX8=;
+	s=korg; t=1762823493;
+	bh=cA/jFJxmMzGb+ALdDm7kiSd2hYuslmHOyrzfDp2swHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/fZvWdWEvs++nhMnolx9NhDDDqVqGcal1fx93R1lY4v6djUj8qkaIp2TJIpmds8a
-	 wClyMWOgIZeF/0j9ghxNYtkD79UvLqA/rt6hc9wdfzZ+000SPq23m391aI+sunmdXx
-	 c89bmuL3X4wcBKS+ocosO5Roib93BZ0mQ/UeFSSQ=
+	b=FsJShA/bsOIQ0Za6c0pEiQwAeToBOfP4BAmevXKLX3jxg7BC1YOGVa5H32VNVB3sq
+	 jEqhSECkG3ft3Rw7lex77XVLpL8ge2tj7/lam3h0wk5AEMIZ4+ADLvuTGSJ8lq62Q0
+	 afKS9mO07c6aTVJr9RlVKBctye8K+q/wpi+Z9aS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 310/849] media: imon: make send_packet() more robust
-Date: Tue, 11 Nov 2025 09:38:00 +0900
-Message-ID: <20251111004543.908043143@linuxfoundation.org>
+Subject: [PATCH 6.12 257/565] drm/amdkfd: fix vram allocation failure for a special case
+Date: Tue, 11 Nov 2025 09:41:53 +0900
+Message-ID: <20251111004532.680592465@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,186 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
+[ Upstream commit 93aa919ca05bec544b17ee9a1bfe394ce6c94bd8 ]
 
-syzbot is reporting that imon has three problems which result in
-hung tasks due to forever holding device lock [1].
+When it only allocates vram without va, which is 0, and a
+SVM range allocated stays in this range, the vram allocation
+returns failure. It should be skipped for this case from
+SVM usage check.
 
-First problem is that when usb_rx_callback_intf0() once got -EPROTO error
-after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
-resubmits urb after printk(), and resubmitted urb causes
-usb_rx_callback_intf0() to again get -EPROTO error. This results in
-printk() flooding (RCU stalls).
-
-Alan Stern commented [2] that
-
-  In theory it's okay to resubmit _if_ the driver has a robust
-  error-recovery scheme (such as giving up after some fixed limit on the
-  number of errors or after some fixed time has elapsed, perhaps with a
-  time delay to prevent a flood of errors).  Most drivers don't bother to
-  do this; they simply give up right away.  This makes them more
-  vulnerable to short-term noise interference during USB transfers, but in
-  reality such interference is quite rare.  There's nothing really wrong
-  with giving up right away.
-
-but imon has a poor error-recovery scheme which just retries forever;
-this behavior should be fixed.
-
-Since I'm not sure whether it is safe for imon users to give up upon any
-error code, this patch takes care of only union of error codes chosen from
-modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
-ir_toy, mceusb and igorplugusb).
-
-Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
-before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
-resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
-hardware after early callbacks"). Move the ictx->dev_present_intf0 test
-introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
-until intf configured") to immediately before imon_incoming_packet(), or
-the first problem explained above happens without printk() flooding (i.e.
-hung task).
-
-Third problem is that when usb_rx_callback_intf0() is not called for some
-reason (e.g. flaky hardware; the reproducer for this problem sometimes
-prevents usb_rx_callback_intf0() from being called),
-wait_for_completion_interruptible() in send_packet() never returns (i.e.
-hung task). As a workaround for such situation, change send_packet() to
-wait for completion with timeout of 10 seconds.
-
-Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
-Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index cf3e6e43c0c7e..8668d53c0d426 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
- 		smp_rmb(); /* ensure later readers know we're not busy */
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
--		/* Wait for transmission to complete (or abort) */
--		retval = wait_for_completion_interruptible(
--				&ictx->tx.finished);
--		if (retval) {
-+		/* Wait for transmission to complete (or abort or timeout) */
-+		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
-+		if (retval <= 0) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
-+			if (retval < 0)
-+				ictx->tx.status = retval;
-+			else
-+				ictx->tx.status = -ETIMEDOUT;
- 		}
- 
- 		ictx->tx.busy = false;
-@@ -1754,14 +1757,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf0)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1770,16 +1765,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf0)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index fc473e3ba2d00..7fbbc67adfd9e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1069,7 +1069,12 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
+ 	svm_range_list_lock_and_flush_work(&p->svms, current->mm);
+ 	mutex_lock(&p->svms.lock);
+ 	mmap_write_unlock(current->mm);
+-	if (interval_tree_iter_first(&p->svms.objects,
 +
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
- }
- 
-@@ -1795,14 +1803,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf1)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1811,16 +1811,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf1)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
-+
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
- }
- 
++	/* Skip a special case that allocates VRAM without VA,
++	 * VA will be invalid of 0.
++	 */
++	if (!(!args->va_addr && (flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM)) &&
++	    interval_tree_iter_first(&p->svms.objects,
+ 				     args->va_addr >> PAGE_SHIFT,
+ 				     (args->va_addr + args->size - 1) >> PAGE_SHIFT)) {
+ 		pr_err("Address: 0x%llx already allocated by SVM\n",
 -- 
 2.51.0
 
