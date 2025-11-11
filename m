@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B19533FE26;
-	Tue, 11 Nov 2025 01:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8EF33FE26;
+	Tue, 11 Nov 2025 01:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824022; cv=none; b=Si3lpq+OyAGlDnZ/JLeENsK0EPFV1qMMwiSLC1kOFVd10bWfgqVbdxsibYoIw3jYZGZLknbNmFjCmWRI9MmE4Nt1F5AVUkDAzGjXcJ+BGb3DXna3eLKSIq+JvWGLmkpn17+iwKIJ0XkXLVud2rElqBD3rH9m/Hzoh77SU3jCQNc=
+	t=1762824024; cv=none; b=rWtgF1gPuRCs6s1VBLEf8fbGwNr2o9yC157/XLp3o1z0HaTfuEEtUjGajUcQ/uYXqsRT7krT6o2SJEHBSom6JWpcqZMP8i6p51z6ewb3xt2s39DNeBXLeVNu3yzh/9IUcThUkozk2EgnDG3glnffymI52toyPrhiIJacKFpM768=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824022; c=relaxed/simple;
-	bh=ze5aSfWEj7ryxrxiSGj3VL1DqEU4hV8QT5V+z33NkAU=;
+	s=arc-20240116; t=1762824024; c=relaxed/simple;
+	bh=keZmqWeOPgZa2p0VY/x9ShlnPC00vgHoE5LN1tRWHsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ui7f3dW7t7dRp67Mtruu9T9GltDJkCz9SPUztSnUFUyL3Fyw8yTP6FhBs/ss9g2ZXAgOtynPSWn0Rf39JGmvW4GSPWLlIFyMFBIGUDutraBygL3E6PistI0VzaEmDbqM+0bJd3B4W+zKoNc49VSqTCqDEW1PBw3yCAkNx9aR6fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xh7gcBC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5r8apf2dTprozXhmZIDXzxZS7/ZPI/Ile5H6sFszrLjHaOmQojlXEMs6f9I0VrvJYPcrwVTSxZ7yJs4tD5DZa5yS6Gz0Qzjgw2N3RGvurMPKvMbaAgZcbgTo+NBGw45WSycdDsLvaOm22XusK4xoCtNxuSLnmZqlJG5z9/3TRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJqBkH1K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xh7gcBC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8B6C4CEFB;
-	Tue, 11 Nov 2025 01:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJqBkH1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67353C4CEF5;
+	Tue, 11 Nov 2025 01:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824022;
-	bh=ze5aSfWEj7ryxrxiSGj3VL1DqEU4hV8QT5V+z33NkAU=;
+	s=korg; t=1762824024;
+	bh=keZmqWeOPgZa2p0VY/x9ShlnPC00vgHoE5LN1tRWHsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh7gcBC9YgYztTU4MDZ/s5sFen82uL+WT5k2ROrnKNL89Ti37yXzR5v4uVNC/txhw
-	 sTktoLSeL4bLVr8DNAil67rShBG+usfKTsdT02MYzQintKfDlr2GLJ578tCyecogGU
-	 72r8YmVqeBcRrKSXtkllR0pEDPMllM8lGiGLB2jI=
+	b=ZJqBkH1KkbgmoyoMuLkmb+3+QZ0KUFTe8o1ovz6IHVVSz8HC3dCAIyYh3l2yolRTV
+	 F8zwsmcLaGPGudM0Tbqr+ffHNHAshoid+fGEsrvZxSbt0RUZprJSuQ1KBsbZtua5Zp
+	 8S6p+CiWZrpeHjieMOcdGKKpK7GFAuuIkUc/19kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 422/849] drm/amd/pm: Increase SMC timeout on SI and warn (v3)
-Date: Tue, 11 Nov 2025 09:39:52 +0900
-Message-ID: <20251111004546.644639471@linuxfoundation.org>
+Subject: [PATCH 6.12 373/565] scsi: ufs: core: Disable timestamp functionality if not supported
+Date: Tue, 11 Nov 2025 09:43:49 +0900
+Message-ID: <20251111004535.260302077@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,106 +49,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 813d13524a3bdcc5f0253e06542440ca74c2653a ]
+[ Upstream commit fb1f4568346153d2f80fdb4ffcfa0cf4fb257d3c ]
 
-The SMC can take an excessive amount of time to process some
-messages under some conditions.
+Some Kioxia UFS 4 devices do not support the qTimestamp attribute.  Set
+the UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT for these devices such that no
+error messages appear in the kernel log about failures to set the
+qTimestamp attribute.
 
-Background:
-Sending a message to the SMC works by writing the message into
-the mmSMC_MESSAGE_0 register and its optional parameter into
-the mmSMC_SCRATCH0, and then polling mmSMC_RESP_0. Previously
-the timeout was AMDGPU_MAX_USEC_TIMEOUT, ie. 100 ms.
-
-Increase the timeout to 200 ms for all messages and to 1 sec for
-a few messages which I've observed to be especially slow:
-PPSMC_MSG_NoForcedLevel
-PPSMC_MSG_SetEnabledLevels
-PPSMC_MSG_SetForcedLevels
-PPSMC_MSG_DisableULV
-PPSMC_MSG_SwitchToSwState
-
-This fixes the following problems on Tahiti when switching
-from a lower clock power state to a higher clock state, such
-as when DC turns on a display which was previously turned off.
-
-* si_restrict_performance_levels_before_switch would fail
-  (if the user previously forced high clocks using sysfs)
-* si_set_sw_state would fail (always)
-
-It turns out that both of those failures were SMC timeouts and
-that the SMC actually didn't fail or hang, just needs more time
-to process those.
-
-Add a warning when there is an SMC timeout to make it easier to
-identify this type of problem in the future.
-
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Tested-by: Nitin Rawat <quic_nitirawa@quicinc.com> # on SM8650-QRD
+Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Message-ID: <20250909190614.3531435-1-bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c | 26 ++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 6 +++++-
+ include/ufs/ufs_quirks.h  | 3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-index 4e65ab9e931c9..281a5e377aee4 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_smc.c
-@@ -172,20 +172,42 @@ PPSMC_Result amdgpu_si_send_msg_to_smc(struct amdgpu_device *adev,
- {
- 	u32 tmp;
- 	int i;
-+	int usec_timeout;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d4dbb6769efa2..fca05834eefc2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -295,6 +295,9 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
+ 	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+ 	  .model = "THGLF2G9D8KBADG",
+ 	  .quirk = UFS_DEVICE_QUIRK_PA_TACTIVATE },
++	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
++	  .model = "THGJFJT1E45BATP",
++	  .quirk = UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT },
+ 	{}
+ };
+ 
+@@ -8670,7 +8673,8 @@ static void ufshcd_set_timestamp_attr(struct ufs_hba *hba)
+ 	struct ufs_dev_info *dev_info = &hba->dev_info;
+ 	struct utp_upiu_query_v4_0 *upiu_data;
+ 
+-	if (dev_info->wspecversion < 0x400)
++	if (dev_info->wspecversion < 0x400 ||
++	    hba->dev_quirks & UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT)
+ 		return;
+ 
+ 	ufshcd_dev_man_lock(hba);
+diff --git a/include/ufs/ufs_quirks.h b/include/ufs/ufs_quirks.h
+index f52de5ed1b3b6..83563247c36cb 100644
+--- a/include/ufs/ufs_quirks.h
++++ b/include/ufs/ufs_quirks.h
+@@ -113,4 +113,7 @@ struct ufs_dev_quirk {
+  */
+ #define UFS_DEVICE_QUIRK_PA_HIBER8TIME          (1 << 12)
+ 
++/* Some UFS 4 devices do not support the qTimestamp attribute */
++#define UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT	(1 << 13)
 +
-+	/* SMC seems to process some messages exceptionally slowly. */
-+	switch (msg) {
-+	case PPSMC_MSG_NoForcedLevel:
-+	case PPSMC_MSG_SetEnabledLevels:
-+	case PPSMC_MSG_SetForcedLevels:
-+	case PPSMC_MSG_DisableULV:
-+	case PPSMC_MSG_SwitchToSwState:
-+		usec_timeout = 1000000; /* 1 sec */
-+		break;
-+	default:
-+		usec_timeout = 200000; /* 200 ms */
-+		break;
-+	}
- 
- 	if (!amdgpu_si_is_smc_running(adev))
- 		return PPSMC_Result_Failed;
- 
- 	WREG32(mmSMC_MESSAGE_0, msg);
- 
--	for (i = 0; i < adev->usec_timeout; i++) {
-+	for (i = 0; i < usec_timeout; i++) {
- 		tmp = RREG32(mmSMC_RESP_0);
- 		if (tmp != 0)
- 			break;
- 		udelay(1);
- 	}
- 
--	return (PPSMC_Result)RREG32(mmSMC_RESP_0);
-+	tmp = RREG32(mmSMC_RESP_0);
-+	if (tmp == 0) {
-+		drm_warn(adev_to_drm(adev),
-+			"%s timeout on message: %x (SMC_SCRATCH0: %x)\n",
-+			__func__, msg, RREG32(mmSMC_SCRATCH0));
-+	}
-+
-+	return (PPSMC_Result)tmp;
- }
- 
- PPSMC_Result amdgpu_si_wait_for_smc_inactive(struct amdgpu_device *adev)
+ #endif /* UFS_QUIRKS_H_ */
 -- 
 2.51.0
 
