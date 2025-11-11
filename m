@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410A62652AF;
-	Tue, 11 Nov 2025 01:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F934214210;
+	Tue, 11 Nov 2025 01:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824638; cv=none; b=JDQ+VRVLNmw0HWItGgRzEfAXImQSuzqQUD11C+FYeu+D2es40bT+d/NjWtJCP+yd3AMdjZgebrurHpKSBrrduLTkeekjtptZpAmiDITlTu+SvxNJEod+k3U030NauKN7V1U2CzlOJDMeYcBhQRrtdeX6yySmoUGez1giIKWtLD4=
+	t=1762824640; cv=none; b=rBNcxr++7AxKniMb/itD+tJwxgpU8TuKguVIk1FFcq5aOFJj4twc3NHaKRGOUGahZ1BAQ2TsyknxhimIfvJjp8aQH5RBU/xarcrNK1Yo/4V4hEeBY7lzSrFmiBgTMHLl2SA242WLoZjYD7g7dnzwQLkMX1n1knERpVzwl5mEdJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824638; c=relaxed/simple;
-	bh=HG9cOspX43/+gRgG6OBiehmm4Z10Ih2JyFG5jhMgTG4=;
+	s=arc-20240116; t=1762824640; c=relaxed/simple;
+	bh=APeFQIrCfPys4N1eC43CW+1wgSGDmIi58KqHQZKLkjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usjcGy0bKjAIkCbmZ1DZJcco2ToW1bnpMfHhh9Xs/7mZyie3a1hbwq12TmmcEFfjnEyy+seYbaQMWRnHsInjQw3HLaoCY8sx6pCgPqbSxWUoJ0DQDaidDbVb3NL7mwE6i5JdUT38IICoeO3BA158pZ2vIIFV5WwUDAEPK7VIYMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snD+4aVs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IcTLUspZ1mlyWm6iQL87WBnbpmSwwoBRpiXGm7yp11kMo4ZWdZr6FhCjr8uojdtxdHcLWd6HdbYwh1KTC3iKVzN8zHe+ounKrQIFD9IYid7o/YG5FT442O0y8Z0xsJ5e1uf1l+ZoUSs4YDKqZmbPSetP75YmfaD9twSieoQPnHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAVBXqNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snD+4aVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79C5C16AAE;
-	Tue, 11 Nov 2025 01:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAVBXqNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2235DC4CEFB;
+	Tue, 11 Nov 2025 01:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824638;
-	bh=HG9cOspX43/+gRgG6OBiehmm4Z10Ih2JyFG5jhMgTG4=;
+	s=korg; t=1762824640;
+	bh=APeFQIrCfPys4N1eC43CW+1wgSGDmIi58KqHQZKLkjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snD+4aVsvXkwamGUvh7sb6bKcWq4+4+XDdVBMLj93EPEWHY3nQURGCj97HR31PoQV
-	 brbByRjbjiknYHOobPKNYHSV3YJSieGC8yVhyHYHYO2tzsLNwAW4zg708Ywmmm7+xi
-	 jN3y1dGId02i77bDFyZgVqgB4X8vJlwAdhwgc8eU=
+	b=jAVBXqNPpCvQdxOhR2mpI5Tp4kUXI/l/qtMzgqjGAEwnia5OXGRr+Jek1vx+rjbnZ
+	 aME8I9hNJ1o2ws8Q/EBIfTLkGWCmgzEwjcCn4NAC1TwEewgqk6NvUgQIKoLh7A1i4K
+	 BmbY/Wlv/m2yn1rkTk+5Jk3MWYVZrMq+wIIfnKmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Valerio Setti <vsetti@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 541/849] wifi: mt76: mt7996: support writing MAC TXD for AddBA Request
-Date: Tue, 11 Nov 2025 09:41:51 +0900
-Message-ID: <20251111004549.492052494@linuxfoundation.org>
+Subject: [PATCH 6.12 490/565] ASoC: meson: aiu-encoder-i2s: fix bit clock polarity
+Date: Tue, 11 Nov 2025 09:45:46 +0900
+Message-ID: <20251111004537.956655855@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,179 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Valerio Setti <vsetti@baylibre.com>
 
-[ Upstream commit cb6ebbdffef2a888b95f121637cd1fad473919c6 ]
+[ Upstream commit 4c4ed5e073a923fb3323022e1131cb51ad8df7a0 ]
 
-Support writing MAC TXD for the AddBA Req. Without this commit, the
-start sequence number in AddBA Req will be unexpected value for MT7996
-and MT7992. This can result in certain stations (e.g., AX200) dropping
-packets, leading to ping failures and degraded connectivity. Ensuring
-the correct MAC TXD and TXP helps maintain reliable packet transmission
-and prevents interoperability issues with affected stations.
+According to I2S specs audio data is sampled on the rising edge of the
+clock and it can change on the falling one. When operating in normal mode
+this SoC behaves the opposite so a clock polarity inversion is required
+in this case.
 
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
-Link: https://patch.msgid.link/20250909-mt7996-addba-txd-fix-v1-1-feec16f0c6f0@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This was tested on an OdroidC2 (Amlogic S905 SoC) board.
+
+Signed-off-by: Valerio Setti <vsetti@baylibre.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Tested-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20251007-fix-i2s-polarity-v1-1-86704d9cda10@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt76_connac3_mac.h |  7 ++
- .../net/wireless/mediatek/mt76/mt7996/mac.c   | 91 +++++++++++++------
- 2 files changed, 69 insertions(+), 29 deletions(-)
+ sound/soc/meson/aiu-encoder-i2s.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-index 1013cad57a7ff..c5eaedca11e09 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
-@@ -294,6 +294,13 @@ enum tx_frag_idx {
- #define MT_TXP_BUF_LEN			GENMASK(11, 0)
- #define MT_TXP_DMA_ADDR_H		GENMASK(15, 12)
+diff --git a/sound/soc/meson/aiu-encoder-i2s.c b/sound/soc/meson/aiu-encoder-i2s.c
+index a0dd914c8ed13..3b4061508c180 100644
+--- a/sound/soc/meson/aiu-encoder-i2s.c
++++ b/sound/soc/meson/aiu-encoder-i2s.c
+@@ -236,8 +236,12 @@ static int aiu_encoder_i2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 	    inv == SND_SOC_DAIFMT_IB_IF)
+ 		val |= AIU_CLK_CTRL_LRCLK_INVERT;
  
-+#define MT_TXP0_TOKEN_ID0		GENMASK(14, 0)
-+#define MT_TXP0_TOKEN_ID0_VALID_MASK	BIT(15)
-+
-+#define MT_TXP1_TID_ADDBA		GENMASK(14, 12)
-+#define MT_TXP3_ML0_MASK		BIT(15)
-+#define MT_TXP3_DMA_ADDR_H		GENMASK(13, 12)
-+
- #define MT_TX_RATE_STBC			BIT(14)
- #define MT_TX_RATE_NSS			GENMASK(13, 10)
- #define MT_TX_RATE_MODE			GENMASK(9, 6)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 222e720a56cf5..30e2ef1404b90 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -802,6 +802,9 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
- 	    mgmt->u.action.u.addba_req.action_code == WLAN_ACTION_ADDBA_REQ) {
- 		if (is_mt7990(&dev->mt76))
- 			txwi[6] |= cpu_to_le32(FIELD_PREP(MT_TXD6_TID_ADDBA, tid));
-+		else
-+			txwi[7] |= cpu_to_le32(MT_TXD7_MAC_TXD);
-+
- 		tid = MT_TX_ADDBA;
- 	} else if (ieee80211_is_mgmt(hdr->frame_control)) {
- 		tid = MT_TX_NORMAL;
-@@ -1034,10 +1037,10 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx_info->skb);
- 	struct ieee80211_key_conf *key = info->control.hw_key;
- 	struct ieee80211_vif *vif = info->control.vif;
--	struct mt76_connac_txp_common *txp;
- 	struct mt76_txwi_cache *t;
- 	int id, i, pid, nbuf = tx_info->nbuf - 1;
- 	bool is_8023 = info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP;
-+	__le32 *ptr = (__le32 *)txwi_ptr;
- 	u8 *txwi = (u8 *)txwi_ptr;
- 
- 	if (unlikely(tx_info->skb->len <= ETH_HLEN))
-@@ -1060,46 +1063,76 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 		mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, key,
- 				      pid, qid, 0);
- 
--	txp = (struct mt76_connac_txp_common *)(txwi + MT_TXD_SIZE);
--	for (i = 0; i < nbuf; i++) {
--		u16 len;
-+	/* MT7996 and MT7992 require driver to provide the MAC TXP for AddBA
-+	 * req
+-	if (inv == SND_SOC_DAIFMT_IB_NF ||
+-	    inv == SND_SOC_DAIFMT_IB_IF)
++	/*
++	 * The SoC changes data on the rising edge of the bitclock
++	 * so an inversion of the bitclock is required in normal mode
 +	 */
-+	if (le32_to_cpu(ptr[7]) & MT_TXD7_MAC_TXD) {
-+		u32 val;
-+
-+		ptr = (__le32 *)(txwi + MT_TXD_SIZE);
-+		memset((void *)ptr, 0, sizeof(struct mt76_connac_fw_txp));
-+
-+		val = FIELD_PREP(MT_TXP0_TOKEN_ID0, id) |
-+		      MT_TXP0_TOKEN_ID0_VALID_MASK;
-+		ptr[0] = cpu_to_le32(val);
++	if (inv == SND_SOC_DAIFMT_NB_NF ||
++	    inv == SND_SOC_DAIFMT_NB_IF)
+ 		val |= AIU_CLK_CTRL_AOCLK_INVERT;
  
--		len = FIELD_PREP(MT_TXP_BUF_LEN, tx_info->buf[i + 1].len);
-+		val = FIELD_PREP(MT_TXP1_TID_ADDBA,
-+				 tx_info->skb->priority &
-+				 IEEE80211_QOS_CTL_TID_MASK);
-+		ptr[1] = cpu_to_le32(val);
-+		ptr[2] = cpu_to_le32(tx_info->buf[1].addr & 0xFFFFFFFF);
-+
-+		val = FIELD_PREP(MT_TXP_BUF_LEN, tx_info->buf[1].len) |
-+		      MT_TXP3_ML0_MASK;
- #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
--		len |= FIELD_PREP(MT_TXP_DMA_ADDR_H,
--				  tx_info->buf[i + 1].addr >> 32);
-+		val |= FIELD_PREP(MT_TXP3_DMA_ADDR_H,
-+				  tx_info->buf[1].addr >> 32);
- #endif
-+		ptr[3] = cpu_to_le32(val);
-+	} else {
-+		struct mt76_connac_txp_common *txp;
- 
--		txp->fw.buf[i] = cpu_to_le32(tx_info->buf[i + 1].addr);
--		txp->fw.len[i] = cpu_to_le16(len);
--	}
--	txp->fw.nbuf = nbuf;
-+		txp = (struct mt76_connac_txp_common *)(txwi + MT_TXD_SIZE);
-+		for (i = 0; i < nbuf; i++) {
-+			u16 len;
-+
-+			len = FIELD_PREP(MT_TXP_BUF_LEN, tx_info->buf[i + 1].len);
-+#ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
-+			len |= FIELD_PREP(MT_TXP_DMA_ADDR_H,
-+					  tx_info->buf[i + 1].addr >> 32);
-+#endif
- 
--	txp->fw.flags = cpu_to_le16(MT_CT_INFO_FROM_HOST);
-+			txp->fw.buf[i] = cpu_to_le32(tx_info->buf[i + 1].addr);
-+			txp->fw.len[i] = cpu_to_le16(len);
-+		}
-+		txp->fw.nbuf = nbuf;
- 
--	if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
--		txp->fw.flags |= cpu_to_le16(MT_CT_INFO_APPLY_TXD);
-+		txp->fw.flags = cpu_to_le16(MT_CT_INFO_FROM_HOST);
- 
--	if (!key)
--		txp->fw.flags |= cpu_to_le16(MT_CT_INFO_NONE_CIPHER_FRAME);
-+		if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
-+			txp->fw.flags |= cpu_to_le16(MT_CT_INFO_APPLY_TXD);
- 
--	if (!is_8023 && mt7996_tx_use_mgmt(dev, tx_info->skb))
--		txp->fw.flags |= cpu_to_le16(MT_CT_INFO_MGMT_FRAME);
-+		if (!key)
-+			txp->fw.flags |= cpu_to_le16(MT_CT_INFO_NONE_CIPHER_FRAME);
- 
--	if (vif) {
--		struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
--		struct mt76_vif_link *mlink = NULL;
-+		if (!is_8023 && mt7996_tx_use_mgmt(dev, tx_info->skb))
-+			txp->fw.flags |= cpu_to_le16(MT_CT_INFO_MGMT_FRAME);
- 
--		if (wcid->offchannel)
--			mlink = rcu_dereference(mvif->mt76.offchannel_link);
--		if (!mlink)
--			mlink = rcu_dereference(mvif->mt76.link[wcid->link_id]);
-+		if (vif) {
-+			struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
-+			struct mt76_vif_link *mlink = NULL;
- 
--		txp->fw.bss_idx = mlink ? mlink->idx : mvif->deflink.mt76.idx;
--	}
-+			if (wcid->offchannel)
-+				mlink = rcu_dereference(mvif->mt76.offchannel_link);
-+			if (!mlink)
-+				mlink = rcu_dereference(mvif->mt76.link[wcid->link_id]);
- 
--	txp->fw.token = cpu_to_le16(id);
--	txp->fw.rept_wds_wcid = cpu_to_le16(sta ? wcid->idx : 0xfff);
-+			txp->fw.bss_idx = mlink ? mlink->idx : mvif->deflink.mt76.idx;
-+		}
-+
-+		txp->fw.token = cpu_to_le16(id);
-+		txp->fw.rept_wds_wcid = cpu_to_le16(sta ? wcid->idx : 0xfff);
-+	}
- 
- 	tx_info->skb = NULL;
- 
+ 	/* Signal skew */
+@@ -328,4 +332,3 @@ const struct snd_soc_dai_ops aiu_encoder_i2s_dai_ops = {
+ 	.startup	= aiu_encoder_i2s_startup,
+ 	.shutdown	= aiu_encoder_i2s_shutdown,
+ };
+-
 -- 
 2.51.0
 
