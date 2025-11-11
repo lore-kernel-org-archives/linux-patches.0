@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261957262A;
-	Tue, 11 Nov 2025 01:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84017262A;
+	Tue, 11 Nov 2025 01:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823012; cv=none; b=C3PTXckcPZZ0stNyJ4lJMu1LflZ467BjpVW6j+fxiXWBcKgLdXztQ2Paq/ixtQ6VKxxJwI+rOi/PKffkZBOlyppf+K5HnI0RSTuNYdldCfa4RucyFA4G+9NznHvKrWGMICZIWLNjN4vg3HMjZ5I5+2ARlM4aTjFLbSFQ8S3uZ4E=
+	t=1762823014; cv=none; b=S7mfOGPTZYecLmo7P/wexgeKl5lP0WSIggMMs8w4HTmbqcU7wEeMLAaPpQXJS7zfZ2iilGvPvpdESdbvyiXCF3lQw9fPVOHuVfvV89oQM1HLm4bsL868rydlvHKksP31y12rBrmVbTOTsQzu9Y5J1Jq4YPikUk2VdvUjZcurSsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823012; c=relaxed/simple;
-	bh=0cGhx5HAAlnaFCz9iU58MVxm3nkogs7ngUkuku9iKvY=;
+	s=arc-20240116; t=1762823014; c=relaxed/simple;
+	bh=f3RaFVc/+bVJY8ywjHF7bCzFSPFyQeqb8r1WkIKzNIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCqDw2vPKm+CxsKqyJJnSI9udHCXPL2nFOHdoaUIquLYMsuewcio+/Koxi1zBy/xY9vTbfcf5z2QAkNAgiRIUomNRnkSb5puCku/8JbYXUjAX9SAGUdPtDhJomDYNmoX5QdkbmrPRXHilriPWjJe0ltChWx0a2Y/8e3BTh5ocDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loUlM38f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJV74fwjCaU0EDng4TQEMSMZQe+7b428KtseMtnNXsXU+0kL2x3dayzj45Y24XMCuUPtYm7W8xP3/rPTM+oy4vpSqwx+So/2zdNZiAAYyEeK9R21AZUjZlRlFsaYqeSdz99UjJgYWxINCLigP0TFkydgvQmS28fF+aqf8bYP1KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPHwvXb8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loUlM38f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A6DC16AAE;
-	Tue, 11 Nov 2025 01:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPHwvXb8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048D3C4CEF5;
+	Tue, 11 Nov 2025 01:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823012;
-	bh=0cGhx5HAAlnaFCz9iU58MVxm3nkogs7ngUkuku9iKvY=;
+	s=korg; t=1762823014;
+	bh=f3RaFVc/+bVJY8ywjHF7bCzFSPFyQeqb8r1WkIKzNIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loUlM38fEdNMBZfohNizpLvogw6EYm+6uAz8+8Arp/qswuwqprxvwJP8aWDvc+gTO
-	 CUj9GfsEFSZTCsrc6CRHoRPLQEbbspSfvUzjboO3siA2u3975NrtG1/3M1SpHueoUU
-	 0XYSXcCnGl1WGU75Pua2njs4iIqNaKG6VAzKjjfQ=
+	b=iPHwvXb8btINr3O5gRIZ4V4lO0s/hPe55P7wdfF7TGF1YCgd1HJXUSfK9bEUm81tc
+	 b+wqjNHWzWMTVqFqnyD0OCtO1srVnnhPPFMg8gC5AXKmCREDuYy6pl7WwnZXPCLkvq
+	 R6Ej7SccytqKCwS0I+30WbNEuBKHVrP4frbk6zng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Stellard <tstellar@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/565] bpftool: Fix -Wuninitialized-const-pointer warnings with clang >= 21
-Date: Tue, 11 Nov 2025 09:40:01 +0900
-Message-ID: <20251111004530.203956973@linuxfoundation.org>
+Subject: [PATCH 6.17 214/849] tools/power turbostat: Fix incorrect sorting of PMT telemetry
+Date: Tue, 11 Nov 2025 09:36:24 +0900
+Message-ID: <20251111004541.615777383@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tom Stellard <tstellar@redhat.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 5612ea8b554375d45c14cbb0f8ea93ec5d172891 ]
+[ Upstream commit cafb47be3f38ad81306bf894e743bebc2ccf66ab ]
 
-This fixes the build with -Werror -Wall.
+The pmt_telemdir_sort() comparison function was returning a boolean
+value (0 or 1) instead of the required negative, zero, or positive
+value for proper sorting. This caused unpredictable and incorrect
+ordering of telemetry directories named telem0, telem1, ..., telemN.
+Update the comparison logic to return -1, 0, or 1 based on the
+numerical value extracted from the directory name, ensuring correct
+numerical ordering when using scandir.
 
-btf_dumper.c:71:31: error: variable 'finfo' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   71 |         info.func_info = ptr_to_u64(&finfo);
-      |                                      ^~~~~
+This change improves stability and correctness when iterating PMT
+telemetry directories.
 
-prog.c:2294:31: error: variable 'func_info' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
- 2294 |         info.func_info = ptr_to_u64(&func_info);
-      |
-
-v2:
-  - Initialize instead of using memset.
-
-Signed-off-by: Tom Stellard <tstellar@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250917183847.318163-1-tstellar@redhat.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/btf_dumper.c | 2 +-
- tools/bpf/bpftool/prog.c       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/btf_dumper.c b/tools/bpf/bpftool/btf_dumper.c
-index 527fe867a8fbd..93995275c7f66 100644
---- a/tools/bpf/bpftool/btf_dumper.c
-+++ b/tools/bpf/bpftool/btf_dumper.c
-@@ -38,7 +38,7 @@ static int dump_prog_id_as_func_ptr(const struct btf_dumper *d,
- 	__u32 info_len = sizeof(info);
- 	const char *prog_name = NULL;
- 	struct btf *prog_btf = NULL;
--	struct bpf_func_info finfo;
-+	struct bpf_func_info finfo = {};
- 	__u32 finfo_rec_size;
- 	char prog_str[1024];
- 	int err;
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 52ffb74ae4e89..6e095a3afc046 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -2207,7 +2207,7 @@ static void profile_print_readings(void)
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 72a280e7a9d59..931bad99277fe 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1890,7 +1890,7 @@ int pmt_telemdir_sort(const struct dirent **a, const struct dirent **b)
+ 	sscanf((*a)->d_name, "telem%u", &aidx);
+ 	sscanf((*b)->d_name, "telem%u", &bidx);
  
- static char *profile_target_name(int tgt_fd)
- {
--	struct bpf_func_info func_info;
-+	struct bpf_func_info func_info = {};
- 	struct bpf_prog_info info = {};
- 	__u32 info_len = sizeof(info);
- 	const struct btf_type *t;
+-	return aidx >= bidx;
++	return (aidx > bidx) ? 1 : (aidx < bidx) ? -1 : 0;
+ }
+ 
+ const struct dirent *pmt_diriter_next(struct pmt_diriter_t *iter)
 -- 
 2.51.0
 
