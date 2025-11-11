@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD3B4C97;
-	Tue, 11 Nov 2025 00:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FD04086A;
+	Tue, 11 Nov 2025 00:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822356; cv=none; b=fVuqFMlzv+evBkhJBFsxDTTfdCPCd7zCCxbDJX0vr3sVCJFYy0X7XyRNyZyIXFPOXzJoKx3w1/nUtSPObtsFHMc/J1bQnO4GlT1NY4i4lmwjMI5e/C0hMdQh3O+jMEVLfJQipzr6xiV95i8wE+7RCEDQg8tLB5rckCmp6SLGwnA=
+	t=1762822358; cv=none; b=W+xzecEhteIKMRZStx15HljvrqETEY31BD8TiRZfouNsD+6tEYCHILxlL0Q/0IHLjEm4WRbrr1REWtZnDLgjIC3vJZcZa2H/Ik0jDqeVWQY3rCyGGlIMMVYtgP2Y2zRA0HNkmkNE0I1bdI/nay82B+O03xurK2HLEpIiWmVQjHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822356; c=relaxed/simple;
-	bh=hZPD9rOS9XjTayKErqOxWiSo2h5/dw8/U40deVKKjwM=;
+	s=arc-20240116; t=1762822358; c=relaxed/simple;
+	bh=lg+OX0CrwGvVNZ3fYIqiSMfU5LTNCd7lEQlHl7tVlMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqfPZ+RD6zoOf0/NTa3FbWLP2JnUWwJ2BYTmWIVLstr7CWEWNgqaJQ55fyIBrtmVsCBqDHWst4YqYdFGCAz3yidAxYE3wpK+xEWzBbir3BdjBRex2JZ4ZAEnMHz1uiJ/fby7EBnnXrGU9aqZWsDA/79Y7OFgUk5bvQ1y6xCwZ+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK3O24A6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvUFGBOKwwFhjG6vcWSH5LsLbWlZVZWuJKr7LgPMGOxC2Hhd5i+5kGE+E94X6sBRc89C1p6gKvhbKE1hbn0FuteYQ5BasCxYBQzZUepK8X4l1sdPN7bvZReiLBFarGZPsi79kDm0EuRZpnPyPR9cii/OT/y6w1tSoDnyiBK9Yrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imoAgGnU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK3O24A6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9F8C19422;
-	Tue, 11 Nov 2025 00:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imoAgGnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C959BC4CEF5;
+	Tue, 11 Nov 2025 00:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822355;
-	bh=hZPD9rOS9XjTayKErqOxWiSo2h5/dw8/U40deVKKjwM=;
+	s=korg; t=1762822358;
+	bh=lg+OX0CrwGvVNZ3fYIqiSMfU5LTNCd7lEQlHl7tVlMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xK3O24A6Epx7YIFVb2MTXcDENSGUo18TZozq25oaGkvY/LRX2duDR5EKy2DPhA2mm
-	 Ufx+aadqtVMVQGw50CVQSegF0J/Jg7yw7i2u9FGFhwtWG7TkRlnSZVdrDTmnpUeLN6
-	 Ol1dnTwbB0pPdTLWzXPHMVjoJa52cjTERA8LR6x0=
+	b=imoAgGnU8IYgClBUcM96tfeMrbdbKmQF49pMaIprTYyAW8q5yAynDii+NUsgZudQf
+	 ou7qS+X/0Aipgw9mymkaNxEpkdJIpwVrfN5x47OGsdZcscEiVQ1tzP2C0fax4QTsKJ
+	 hiZ+6hZRYnXxb6X2xhLGq6P91DyGLCLkVhPkjTx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/565] bpf, x86: Avoid repeated usage of bpf_prog->aux->stack_depth
-Date: Tue, 11 Nov 2025 09:38:09 +0900
-Message-ID: <20251111004527.629016359@linuxfoundation.org>
+	Xudong Hao <xudong.hao@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zide Chen <zide.chen@intel.com>
+Subject: [PATCH 6.17 092/849] perf/x86/intel: Fix KASAN global-out-of-bounds warning
+Date: Tue, 11 Nov 2025 09:34:22 +0900
+Message-ID: <20251111004538.637484914@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit f4b21ed0b9d6c9fe155451a1fb3531fb44b0afa8 ]
+commit 0ba6502ce167fc3d598c08c2cc3b4ed7ca5aa251 upstream.
 
-Refactor the code to avoid repeated usage of bpf_prog->aux->stack_depth
-in do_jit() func. If the private stack is used, the stack_depth will be
-0 for that prog. Refactoring make it easy to adjust stack_depth.
+When running "perf mem record" command on CWF, the below KASAN
+global-out-of-bounds warning is seen.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20241112163917.2224189-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 881a9c9cb785 ("bpf: Do not audit capability check in do_jit()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ==================================================================
+  BUG: KASAN: global-out-of-bounds in cmt_latency_data+0x176/0x1b0
+  Read of size 4 at addr ffffffffb721d000 by task dtlb/9850
+
+  Call Trace:
+
+   kasan_report+0xb8/0xf0
+   cmt_latency_data+0x176/0x1b0
+   setup_arch_pebs_sample_data+0xf49/0x2560
+   intel_pmu_drain_arch_pebs+0x577/0xb00
+   handle_pmi_common+0x6c4/0xc80
+
+The issue is caused by below code in __grt_latency_data(). The code
+tries to access x86_hybrid_pmu structure which doesn't exist on
+non-hybrid platform like CWF.
+
+        WARN_ON_ONCE(hybrid_pmu(event->pmu)->pmu_type == hybrid_big)
+
+So add is_hybrid() check before calling this WARN_ON_ONCE to fix the
+global-out-of-bounds access issue.
+
+Fixes: 090262439f66 ("perf/x86/intel: Rename model-specific pebs_latency_data functions")
+Reported-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251028064214.1451968-1-dapeng1.mi@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/events/intel/ds.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index ccb2f7703c33c..9a861ac77f8eb 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1472,14 +1472,17 @@ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image
- 	int i, excnt = 0;
- 	int ilen, proglen = 0;
- 	u8 *prog = temp;
-+	u32 stack_depth;
- 	int err;
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -317,7 +317,8 @@ static u64 __grt_latency_data(struct per
+ {
+ 	u64 val;
  
-+	stack_depth = bpf_prog->aux->stack_depth;
-+
- 	arena_vm_start = bpf_arena_get_kern_vm_start(bpf_prog->aux->arena);
- 	user_vm_start = bpf_arena_get_user_vm_start(bpf_prog->aux->arena);
+-	WARN_ON_ONCE(hybrid_pmu(event->pmu)->pmu_type == hybrid_big);
++	WARN_ON_ONCE(is_hybrid() &&
++		     hybrid_pmu(event->pmu)->pmu_type == hybrid_big);
  
- 	detect_reg_usage(insn, insn_cnt, callee_regs_used);
- 
--	emit_prologue(&prog, bpf_prog->aux->stack_depth,
-+	emit_prologue(&prog, stack_depth,
- 		      bpf_prog_was_classic(bpf_prog), tail_call_reachable,
- 		      bpf_is_subprog(bpf_prog), bpf_prog->aux->exception_cb);
- 	/* Exception callback will clobber callee regs for its own use, and
-@@ -2175,7 +2178,7 @@ st:			if (is_imm8(insn->off))
- 
- 			func = (u8 *) __bpf_call_base + imm32;
- 			if (tail_call_reachable) {
--				LOAD_TAIL_CALL_CNT_PTR(bpf_prog->aux->stack_depth);
-+				LOAD_TAIL_CALL_CNT_PTR(stack_depth);
- 				ip += 7;
- 			}
- 			if (!imm32)
-@@ -2192,13 +2195,13 @@ st:			if (is_imm8(insn->off))
- 							  &bpf_prog->aux->poke_tab[imm32 - 1],
- 							  &prog, image + addrs[i - 1],
- 							  callee_regs_used,
--							  bpf_prog->aux->stack_depth,
-+							  stack_depth,
- 							  ctx);
- 			else
- 				emit_bpf_tail_call_indirect(bpf_prog,
- 							    &prog,
- 							    callee_regs_used,
--							    bpf_prog->aux->stack_depth,
-+							    stack_depth,
- 							    image + addrs[i - 1],
- 							    ctx);
- 			break;
--- 
-2.51.0
-
+ 	dse &= PERF_PEBS_DATA_SOURCE_GRT_MASK;
+ 	val = hybrid_var(event->pmu, pebs_data_source)[dse];
 
 
