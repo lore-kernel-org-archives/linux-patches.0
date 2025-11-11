@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2728A4C97;
-	Tue, 11 Nov 2025 00:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDB84C97;
+	Tue, 11 Nov 2025 00:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822525; cv=none; b=iajqqrusVF9MVkyDQUe/Lj7oFnfBCb80V3v8ovshSttH6oqJ+scc9ZiR7PUb2tkPxfnQG82N9AXrhEBT4sT+n/1RXYLGSuLhgo0BQ8x6KbqzrlYep0rkWCGqCUDonk327NuBY2FsAujjfD1W+w8Kp/4ST9h2mgp7UgNiPp4Kwmw=
+	t=1762822527; cv=none; b=ksvFBFmQAsFp6ouaXPQrIcSVhkMEgDbuLITY5C/+Hfaqduw4G9kUcYFJRK6VGllD2gO4/43Ekp5KpOzBdW8rxVx7OJVmOk2KPcWqKXg3gilBIn0k/Txv+IbA4m+LgH0f/EIi2cRlv8JX54eRyVim3cmOQdtgAHOurJ0FCUDTbDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822525; c=relaxed/simple;
-	bh=PCVNDdstFtVn/p5iofNMV7O9oNXFhvCzmhCrDX9v3Bg=;
+	s=arc-20240116; t=1762822527; c=relaxed/simple;
+	bh=dKSVGaozOVo4Bom0HD3QOrMbs/AGYuCDP9161RhQ1lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuDkYPMFD2AQf640kL0nFYUtccJbjT320XhU6tzJZJhLzE0RR1FdK2DT/FK2qgJ6xE3CfIqXIFtqzm36Of5qG38ZEhPbf6pkUecUUCBq3sgOGW55dB3HFYxXdCfTVa/CR0gaghlGYvGMkg4d1RZ5Gcf3AjMk0OsRPZefXRnrSh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZErg6IH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jq/LnvMW4Z8Lww/5ws279Y9CDYJF4cjnTumBIYjqdNbn6uzQWxP7j7o6pLa9VVxDa1uUzPrkaMkLeApmHb1DGG63uqZOg7s5fYI3F1FDN6CnxWzsLeNGOXENFIKdvA5fggICDbEjYPSn2jo0PrO+zL3fhymb3zWrT7fMfqPabmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2QsdIT5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZErg6IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8620C19424;
-	Tue, 11 Nov 2025 00:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2QsdIT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B96DC4CEF5;
+	Tue, 11 Nov 2025 00:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822525;
-	bh=PCVNDdstFtVn/p5iofNMV7O9oNXFhvCzmhCrDX9v3Bg=;
+	s=korg; t=1762822527;
+	bh=dKSVGaozOVo4Bom0HD3QOrMbs/AGYuCDP9161RhQ1lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZErg6IHzNKWNDamVdacxCrhxjDsqX4Lf2T6fagYrh0KzgsOIlKEGqmtfvzfEALpB
-	 S3rAeoSFyEsB0xUizwgBVehOkx300JNOpj5YekI4a2Hcz3vc5SLCMpalf4ys22IGps
-	 GbOpF+EIBWrTaDQF5ovUGU8dZ75GTm6bvdUaFcqk=
+	b=D2QsdIT509v1vFqsbWFUS5L3olaRsVGjRRIvMRn502T9BoevADz61ZzGl2erbq6r0
+	 jsHimRnxTRsBMbwsE1uotAzY+G+QesUG9Cdc2sc1TFXuaeKLMt7nnzekNRQdMN2ewX
+	 mhPTsuiFsHHI1j3ifKmUy6LXGTaQu78NdCDeseRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 130/849] bpf: Use tnums for JEQ/JNE is_branch_taken logic
-Date: Tue, 11 Nov 2025 09:35:00 +0900
-Message-ID: <20251111004539.537809878@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.12 068/565] drm/nouveau: Fix race in nouveau_sched_fini()
+Date: Tue, 11 Nov 2025 09:38:44 +0900
+Message-ID: <20251111004528.478421094@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,110 +46,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit f41345f47fb267a9c95ca710c33448f8d0d81d83 ]
+commit e0023c8a74028739643aa14bd201c41a99866ca4 upstream.
 
-In the following toy program (reg states minimized for readability), R0
-and R1 always have different values at instruction 6. This is obvious
-when reading the program but cannot be guessed from ranges alone as
-they overlap (R0 in [0; 0xc0000000], R1 in [1024; 0xc0000400]).
+nouveau_sched_fini() uses a memory barrier before wait_event().
+wait_event(), however, is a macro which expands to a loop which might
+check the passed condition several times. The barrier would only take
+effect for the first check.
 
-  0: call bpf_get_prandom_u32#7  ; R0_w=scalar()
-  1: w0 = w0                     ; R0_w=scalar(var_off=(0x0; 0xffffffff))
-  2: r0 >>= 30                   ; R0_w=scalar(var_off=(0x0; 0x3))
-  3: r0 <<= 30                   ; R0_w=scalar(var_off=(0x0; 0xc0000000))
-  4: r1 = r0                     ; R1_w=scalar(var_off=(0x0; 0xc0000000))
-  5: r1 += 1024                  ; R1_w=scalar(var_off=(0x400; 0xc0000000))
-  6: if r1 != r0 goto pc+1
+Replace the barrier with a function which takes the spinlock.
 
-Looking at tnums however, we can deduce that R1 is always different from
-R0 because their tnums don't agree on known bits. This patch uses this
-logic to improve is_scalar_branch_taken in case of BPF_JEQ and BPF_JNE.
-
-This change has a tiny impact on complexity, which was measured with
-the Cilium complexity CI test. That test covers 72 programs with
-various build and load time configurations for a total of 970 test
-cases. For 80% of test cases, the patch has no impact. On the other
-test cases, the patch decreases complexity by only 0.08% on average. In
-the best case, the verifier needs to walk 3% less instructions and, in
-the worst case, 1.5% more. Overall, the patch has a small positive
-impact, especially for our largest programs.
-
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/be3ee70b6e489c49881cb1646114b1d861b5c334.1755694147.git.paul.chaignon@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.8+
+Fixes: 5f03a507b29e ("drm/nouveau: implement 1:1 scheduler - entity relationship")
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251024161221.196155-2-phasta@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tnum.h  | 3 +++
- kernel/bpf/tnum.c     | 8 ++++++++
- kernel/bpf/verifier.c | 4 ++++
- 3 files changed, 15 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_sched.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/tnum.h b/include/linux/tnum.h
-index 57ed3035cc309..0ffb77ffe0e87 100644
---- a/include/linux/tnum.h
-+++ b/include/linux/tnum.h
-@@ -51,6 +51,9 @@ struct tnum tnum_xor(struct tnum a, struct tnum b);
- /* Multiply two tnums, return @a * @b */
- struct tnum tnum_mul(struct tnum a, struct tnum b);
- 
-+/* Return true if the known bits of both tnums have the same value */
-+bool tnum_overlap(struct tnum a, struct tnum b);
-+
- /* Return a tnum representing numbers satisfying both @a and @b */
- struct tnum tnum_intersect(struct tnum a, struct tnum b);
- 
-diff --git a/kernel/bpf/tnum.c b/kernel/bpf/tnum.c
-index fa353c5d550fc..d9328bbb3680b 100644
---- a/kernel/bpf/tnum.c
-+++ b/kernel/bpf/tnum.c
-@@ -143,6 +143,14 @@ struct tnum tnum_mul(struct tnum a, struct tnum b)
- 	return tnum_add(TNUM(acc_v, 0), acc_m);
+--- a/drivers/gpu/drm/nouveau/nouveau_sched.c
++++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
+@@ -475,6 +475,17 @@ nouveau_sched_create(struct nouveau_sche
+ 	return 0;
  }
  
-+bool tnum_overlap(struct tnum a, struct tnum b)
++static bool
++nouveau_sched_job_list_empty(struct nouveau_sched *sched)
 +{
-+	u64 mu;
++	bool empty;
 +
-+	mu = ~a.mask & ~b.mask;
-+	return (a.value & mu) == (b.value & mu);
++	spin_lock(&sched->job.list.lock);
++	empty = list_empty(&sched->job.list.head);
++	spin_unlock(&sched->job.list.lock);
++
++	return empty;
 +}
-+
- /* Note that if a and b disagree - i.e. one has a 'known 1' where the other has
-  * a 'known 0' - this will return a 'known 1' for that bit.
-  */
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ed1457c273409..2844adf4da61a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15906,6 +15906,8 @@ static int is_scalar_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_sta
- 		 */
- 		if (tnum_is_const(t1) && tnum_is_const(t2))
- 			return t1.value == t2.value;
-+		if (!tnum_overlap(t1, t2))
-+			return 0;
- 		/* non-overlapping ranges */
- 		if (umin1 > umax2 || umax1 < umin2)
- 			return 0;
-@@ -15930,6 +15932,8 @@ static int is_scalar_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_sta
- 		 */
- 		if (tnum_is_const(t1) && tnum_is_const(t2))
- 			return t1.value != t2.value;
-+		if (!tnum_overlap(t1, t2))
-+			return 1;
- 		/* non-overlapping ranges */
- 		if (umin1 > umax2 || umax1 < umin2)
- 			return 1;
--- 
-2.51.0
-
+ 
+ static void
+ nouveau_sched_fini(struct nouveau_sched *sched)
+@@ -482,8 +493,7 @@ nouveau_sched_fini(struct nouveau_sched
+ 	struct drm_gpu_scheduler *drm_sched = &sched->base;
+ 	struct drm_sched_entity *entity = &sched->entity;
+ 
+-	rmb(); /* for list_empty to work without lock */
+-	wait_event(sched->job.wq, list_empty(&sched->job.list.head));
++	wait_event(sched->job.wq, nouveau_sched_job_list_empty(sched));
+ 
+ 	drm_sched_entity_fini(entity);
+ 	drm_sched_fini(drm_sched);
 
 
