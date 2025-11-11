@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E600F4086A;
-	Tue, 11 Nov 2025 01:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684C62F12C1;
+	Tue, 11 Nov 2025 01:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825066; cv=none; b=W4wUyzQrC8z57LPqlkUA5ECzQs6QCl5GWzKbWLYONeLl4La5D9RF3kiHAoR+lsMJR7flLA4aMk7urjIEygRT83VpeyXc57IJ5R/DXJEZLHGA4iX1rGCSgnjs6utHzfYiE9MWzVrlcFiQGNGjgMZVPjFVQOCrLuz77M2YLrbzR88=
+	t=1762825068; cv=none; b=ljTftzf4K+tPcTcRhVK4fwpH5RV+t0xFkGbxrPOaZ68xmFlUOKyQZl3re1qwBiaLHkylgZWbmhq0KqH4p/hBtSt6SovTTn/44JEJhh4DtEs9gbXvdZAAUo8XTnNPRAoKDD3eFGfSAs6SmMJAeQFeeUnB+GeShxCd+CtWQJ7bn50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825066; c=relaxed/simple;
-	bh=3FJOFnUPClrpH/yuueuuUtQT6L+4znF1UYL4dqN9PhE=;
+	s=arc-20240116; t=1762825068; c=relaxed/simple;
+	bh=WA/JjebdGegu3BNapxd+Jqd1XgWLd3bZfr7Gp8NZyFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQwyai2Jx7XuFm8QkTKjouZo5jJCc4dopaK+drxtfJmO7RWKXcUQUrDDGmVXrj3/jUtvyc+MM1NeKTFFr0ZSpHS2XVvf+EvHK8xlGaDg/6Wft8AQ4UuUqyZZ2oAUFhYsgP/M2xBpXUrf7YpEeOF/jSzXOo4vUIResNZSUzZrM2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMZ2yFlN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KzrenSy/UA4UKIX16J3ul6Xoqj2AXbPw9cNn1kOaKgFUgSmksrji7fuMng4TI69JvbOsiG477q0F7g7QAdK2bTtYvJe3y9CTV09lZ0J7UPHj3uzXsG+xyd/iv3Ne4tMAGd9H2szxUmVaDwY+6/fXDqHqQ6kwtslLmlE2jwkJpMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT9ccZ+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMZ2yFlN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8719CC19425;
-	Tue, 11 Nov 2025 01:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT9ccZ+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ABAC113D0;
+	Tue, 11 Nov 2025 01:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825065;
-	bh=3FJOFnUPClrpH/yuueuuUtQT6L+4znF1UYL4dqN9PhE=;
+	s=korg; t=1762825068;
+	bh=WA/JjebdGegu3BNapxd+Jqd1XgWLd3bZfr7Gp8NZyFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMZ2yFlNdCqXfYQXtz88IM1gt9VfPdtx3fzG7Ve5PY+4177PslTTkRPCCLhCo5Gqo
-	 Mjc/ueNDCmRN4uesnRS5aDdaNzM1j48fbaceEbZVixhqI4FFiYTIp6armuGzXTnbyF
-	 sxVfJ5biV6CPNsfN1ciWR6/K//nm+55xC0NafKiA=
+	b=AT9ccZ+lQhYwRbKs/cLJgou9310p0bhPkZ5aa6JOCoL/a5aH4vTP+pjXn16MOKrOm
+	 nmXRTWLpFS1aNMbdbFRAknY/MhFJ81iuIwEUgfJGo3gh/v5MMc3TkCyIGdo0UG9Jrd
+	 ElwJc3v8jy/SfOME7AwAMhWXFLTxZWbs2zSdnQPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 646/849] amd/amdkfd: resolve a race in amdgpu_amdkfd_device_fini_sw
-Date: Tue, 11 Nov 2025 09:43:36 +0900
-Message-ID: <20251111004552.044722088@linuxfoundation.org>
+Subject: [PATCH 6.17 620/849] tcp: Update bind bucket state on port release
+Date: Tue, 11 Nov 2025 09:43:10 +0900
+Message-ID: <20251111004551.421380930@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,119 +52,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 99d7181bca34e96fbf61bdb6844918bdd4df2814 ]
+[ Upstream commit d57f4b874946e997be52f5ebb5e0e1dad368c16f ]
 
-There is race in amdgpu_amdkfd_device_fini_sw and interrupt.
-if amdgpu_amdkfd_device_fini_sw run in b/w kfd_cleanup_nodes and
-  kfree(kfd), and KGD interrupt generated.
+Today, once an inet_bind_bucket enters a state where fastreuse >= 0 or
+fastreuseport >= 0 after a socket is explicitly bound to a port, it remains
+in that state until all sockets are removed and the bucket is destroyed.
 
-kernel panic log:
+In this state, the bucket is skipped during ephemeral port selection in
+connect(). For applications using a reduced ephemeral port
+range (IP_LOCAL_PORT_RANGE socket option), this can cause faster port
+exhaustion since blocked buckets are excluded from reuse.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000098
-amdgpu 0000:c8:00.0: amdgpu: Requesting 4 partitions through PSP
+The reason the bucket state isn't updated on port release is unclear.
+Possibly a performance trade-off to avoid scanning bucket owners, or just
+an oversight.
 
-PGD d78c68067 P4D d78c68067
+Fix it by recalculating the bucket state when a socket releases a port. To
+limit overhead, each inet_bind2_bucket stores its own (fastreuse,
+fastreuseport) state. On port release, only the relevant port-addr bucket
+is scanned, and the overall state is derived from these.
 
-kfd kfd: amdgpu: Allocated 3969056 bytes on gart
-
-PUD 1465b8067 PMD @
-
-Oops: @002 [#1] SMP NOPTI
-
-kfd kfd: amdgpu: Total number of KFD nodes to be created: 4
-CPU: 115 PID: @ Comm: swapper/115 Kdump: loaded Tainted: G S W OE K
-
-RIP: 0010:_raw_spin_lock_irqsave+0x12/0x40
-
-Code: 89 e@ 41 5c c3 cc cc cc cc 66 66 2e Of 1f 84 00 00 00 00 00 OF 1f 40 00 Of 1f 44% 00 00 41 54 9c 41 5c fa 31 cO ba 01 00 00 00 <fO> OF b1 17 75 Ba 4c 89 e@ 41 Sc
-
-89 c6 e8 07 38 5d
-
-RSP: 0018: ffffc90@1a6b0e28 EFLAGS: 00010046
-
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000018
-0000000000000001 RSI: ffff8883bb623e00 RDI: 0000000000000098
-ffff8883bb000000 RO8: ffff888100055020 ROO: ffff888100055020
-0000000000000000 R11: 0000000000000000 R12: 0900000000000002
-ffff888F2b97da0@ R14: @000000000000098 R15: ffff8883babdfo00
-
-CS: 010 DS: 0000 ES: 0000 CRO: 0000000080050033
-
-CR2: 0000000000000098 CR3: 0000000e7cae2006 CR4: 0000000002770ce0
-0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-0000000000000000 DR6: 00000000fffeO7FO DR7: 0000000000000400
-
-PKRU: 55555554
-
-Call Trace:
-
-<IRQ>
-
-kgd2kfd_interrupt+@x6b/0x1f@ [amdgpu]
-
-? amdgpu_fence_process+0xa4/0x150 [amdgpu]
-
-kfd kfd: amdgpu: Node: 0, interrupt_bitmap: 3 YcpxFl Rant tErace
-
-amdgpu_irq_dispatch+0x165/0x210 [amdgpu]
-
-amdgpu_ih_process+0x80/0x100 [amdgpu]
-
-amdgpu: Virtual CRAT table created for GPU
-
-amdgpu_irq_handler+0x1f/@x60 [amdgpu]
-
-__handle_irq_event_percpu+0x3d/0x170
-
-amdgpu: Topology: Add dGPU node [0x74a2:0x1002]
-
-handle_irq_event+0x5a/@xcO
-
-handle_edge_irq+0x93/0x240
-
-kfd kfd: amdgpu: KFD node 1 partition @ size 49148M
-
-asm_call_irq_on_stack+0xf/@x20
-
-</IRQ>
-
-common_interrupt+0xb3/0x130
-
-asm_common_interrupt+0x1le/0x40
-
-5.10.134-010.a1i5000.a18.x86_64 #1
-
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Philip Yang<Philip.Yang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250917-update-bind-bucket-state-on-unhash-v5-1-57168b661b47@cloudflare.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/net/inet_connection_sock.h |  5 ++--
+ include/net/inet_hashtables.h      |  2 ++
+ include/net/inet_timewait_sock.h   |  3 +-
+ include/net/sock.h                 |  4 +++
+ net/ipv4/inet_connection_sock.c    | 12 +++++---
+ net/ipv4/inet_hashtables.c         | 44 +++++++++++++++++++++++++++++-
+ net/ipv4/inet_timewait_sock.c      |  1 +
+ 7 files changed, 63 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index 349c351e242b5..051a00152b089 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -1133,7 +1133,15 @@ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 1735db332aab5..072347f164830 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -322,8 +322,9 @@ int inet_csk_listen_start(struct sock *sk);
+ void inet_csk_listen_stop(struct sock *sk);
+ 
+ /* update the fast reuse flag when adding a socket */
+-void inet_csk_update_fastreuse(struct inet_bind_bucket *tb,
+-			       struct sock *sk);
++void inet_csk_update_fastreuse(const struct sock *sk,
++			       struct inet_bind_bucket *tb,
++			       struct inet_bind2_bucket *tb2);
+ 
+ struct dst_entry *inet_csk_update_pmtu(struct sock *sk, u32 mtu);
+ 
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index 19dbd9081d5a5..d6676746dabfe 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -108,6 +108,8 @@ struct inet_bind2_bucket {
+ 	struct hlist_node	bhash_node;
+ 	/* List of sockets hashed to this bucket */
+ 	struct hlist_head	owners;
++	signed char		fastreuse;
++	signed char		fastreuseport;
+ };
+ 
+ static inline struct net *ib_net(const struct inet_bind_bucket *ib)
+diff --git a/include/net/inet_timewait_sock.h b/include/net/inet_timewait_sock.h
+index 67a3135757809..baafef24318e0 100644
+--- a/include/net/inet_timewait_sock.h
++++ b/include/net/inet_timewait_sock.h
+@@ -70,7 +70,8 @@ struct inet_timewait_sock {
+ 	unsigned int		tw_transparent  : 1,
+ 				tw_flowlabel	: 20,
+ 				tw_usec_ts	: 1,
+-				tw_pad		: 2,	/* 2 bits hole */
++				tw_connect_bind	: 1,
++				tw_pad		: 1,	/* 1 bit hole */
+ 				tw_tos		: 8;
+ 	u32			tw_txhash;
+ 	u32			tw_priority;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 2e14283c5be1a..57c0df29ee964 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1488,6 +1488,10 @@ static inline int __sk_prot_rehash(struct sock *sk)
+ 
+ #define SOCK_BINDADDR_LOCK	4
+ #define SOCK_BINDPORT_LOCK	8
++/**
++ * define SOCK_CONNECT_BIND - &sock->sk_userlocks flag for auto-bind at connect() time
++ */
++#define SOCK_CONNECT_BIND	16
+ 
+ struct socket_alloc {
+ 	struct socket socket;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 1e2df51427fed..0076c67d9bd41 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -423,7 +423,7 @@ inet_csk_find_open_port(const struct sock *sk, struct inet_bind_bucket **tb_ret,
+ }
+ 
+ static inline int sk_reuseport_match(struct inet_bind_bucket *tb,
+-				     struct sock *sk)
++				     const struct sock *sk)
+ {
+ 	if (tb->fastreuseport <= 0)
+ 		return 0;
+@@ -453,8 +453,9 @@ static inline int sk_reuseport_match(struct inet_bind_bucket *tb,
+ 				    ipv6_only_sock(sk), true, false);
+ }
+ 
+-void inet_csk_update_fastreuse(struct inet_bind_bucket *tb,
+-			       struct sock *sk)
++void inet_csk_update_fastreuse(const struct sock *sk,
++			       struct inet_bind_bucket *tb,
++			       struct inet_bind2_bucket *tb2)
+ {
+ 	bool reuse = sk->sk_reuse && sk->sk_state != TCP_LISTEN;
+ 
+@@ -501,6 +502,9 @@ void inet_csk_update_fastreuse(struct inet_bind_bucket *tb,
+ 			tb->fastreuseport = 0;
+ 		}
+ 	}
++
++	tb2->fastreuse = tb->fastreuse;
++	tb2->fastreuseport = tb->fastreuseport;
+ }
+ 
+ /* Obtain a reference to a local port for the given sock,
+@@ -582,7 +586,7 @@ int inet_csk_get_port(struct sock *sk, unsigned short snum)
  	}
  
- 	for (i = 0; i < kfd->num_nodes; i++) {
--		node = kfd->nodes[i];
-+		/* Race if another thread in b/w
-+		 * kfd_cleanup_nodes and kfree(kfd),
-+		 * when kfd->nodes[i] = NULL
-+		 */
-+		if (kfd->nodes[i])
-+			node = kfd->nodes[i];
-+		else
-+			return;
-+
- 		spin_lock_irqsave(&node->interrupt_lock, flags);
+ success:
+-	inet_csk_update_fastreuse(tb, sk);
++	inet_csk_update_fastreuse(sk, tb, tb2);
  
- 		if (node->interrupts_active
+ 	if (!inet_csk(sk)->icsk_bind_hash)
+ 		inet_bind_hash(sk, tb, tb2, port);
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index ceeeec9b7290a..4316c127f7896 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -58,6 +58,14 @@ static u32 sk_ehashfn(const struct sock *sk)
+ 			    sk->sk_daddr, sk->sk_dport);
+ }
+ 
++static bool sk_is_connect_bind(const struct sock *sk)
++{
++	if (sk->sk_state == TCP_TIME_WAIT)
++		return inet_twsk(sk)->tw_connect_bind;
++	else
++		return sk->sk_userlocks & SOCK_CONNECT_BIND;
++}
++
+ /*
+  * Allocate and initialize a new local port bind bucket.
+  * The bindhash mutex for snum's hash chain must be held here.
+@@ -87,10 +95,22 @@ struct inet_bind_bucket *inet_bind_bucket_create(struct kmem_cache *cachep,
+  */
+ void inet_bind_bucket_destroy(struct inet_bind_bucket *tb)
+ {
++	const struct inet_bind2_bucket *tb2;
++
+ 	if (hlist_empty(&tb->bhash2)) {
+ 		hlist_del_rcu(&tb->node);
+ 		kfree_rcu(tb, rcu);
++		return;
++	}
++
++	if (tb->fastreuse == -1 && tb->fastreuseport == -1)
++		return;
++	hlist_for_each_entry(tb2, &tb->bhash2, bhash_node) {
++		if (tb2->fastreuse != -1 || tb2->fastreuseport != -1)
++			return;
+ 	}
++	tb->fastreuse = -1;
++	tb->fastreuseport = -1;
+ }
+ 
+ bool inet_bind_bucket_match(const struct inet_bind_bucket *tb, const struct net *net,
+@@ -121,6 +141,8 @@ static void inet_bind2_bucket_init(struct inet_bind2_bucket *tb2,
+ #else
+ 	tb2->rcv_saddr = sk->sk_rcv_saddr;
+ #endif
++	tb2->fastreuse = 0;
++	tb2->fastreuseport = 0;
+ 	INIT_HLIST_HEAD(&tb2->owners);
+ 	hlist_add_head(&tb2->node, &head->chain);
+ 	hlist_add_head(&tb2->bhash_node, &tb->bhash2);
+@@ -143,11 +165,23 @@ struct inet_bind2_bucket *inet_bind2_bucket_create(struct kmem_cache *cachep,
+ /* Caller must hold hashbucket lock for this tb with local BH disabled */
+ void inet_bind2_bucket_destroy(struct kmem_cache *cachep, struct inet_bind2_bucket *tb)
+ {
++	const struct sock *sk;
++
+ 	if (hlist_empty(&tb->owners)) {
+ 		__hlist_del(&tb->node);
+ 		__hlist_del(&tb->bhash_node);
+ 		kmem_cache_free(cachep, tb);
++		return;
+ 	}
++
++	if (tb->fastreuse == -1 && tb->fastreuseport == -1)
++		return;
++	sk_for_each_bound(sk, &tb->owners) {
++		if (!sk_is_connect_bind(sk))
++			return;
++	}
++	tb->fastreuse = -1;
++	tb->fastreuseport = -1;
+ }
+ 
+ static bool inet_bind2_bucket_addr_match(const struct inet_bind2_bucket *tb2,
+@@ -191,6 +225,7 @@ static void __inet_put_port(struct sock *sk)
+ 	tb = inet_csk(sk)->icsk_bind_hash;
+ 	inet_csk(sk)->icsk_bind_hash = NULL;
+ 	inet_sk(sk)->inet_num = 0;
++	sk->sk_userlocks &= ~SOCK_CONNECT_BIND;
+ 
+ 	spin_lock(&head2->lock);
+ 	if (inet_csk(sk)->icsk_bind2_hash) {
+@@ -277,7 +312,7 @@ int __inet_inherit_port(const struct sock *sk, struct sock *child)
+ 		}
+ 	}
+ 	if (update_fastreuse)
+-		inet_csk_update_fastreuse(tb, child);
++		inet_csk_update_fastreuse(child, tb, tb2);
+ 	inet_bind_hash(child, tb, tb2, port);
+ 	spin_unlock(&head2->lock);
+ 	spin_unlock(&head->lock);
+@@ -966,6 +1001,10 @@ static int __inet_bhash2_update_saddr(struct sock *sk, void *saddr, int family,
+ 	if (!tb2) {
+ 		tb2 = new_tb2;
+ 		inet_bind2_bucket_init(tb2, net, head2, inet_csk(sk)->icsk_bind_hash, sk);
++		if (sk_is_connect_bind(sk)) {
++			tb2->fastreuse = -1;
++			tb2->fastreuseport = -1;
++		}
+ 	}
+ 	inet_csk(sk)->icsk_bind2_hash = tb2;
+ 	sk_add_bind_node(sk, &tb2->owners);
+@@ -1136,6 +1175,8 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 					       head2, tb, sk);
+ 		if (!tb2)
+ 			goto error;
++		tb2->fastreuse = -1;
++		tb2->fastreuseport = -1;
+ 	}
+ 
+ 	/* Here we want to add a little bit of randomness to the next source
+@@ -1148,6 +1189,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 
+ 	/* Head lock still held and bh's disabled */
+ 	inet_bind_hash(sk, tb, tb2, port);
++	sk->sk_userlocks |= SOCK_CONNECT_BIND;
+ 
+ 	if (sk_unhashed(sk)) {
+ 		inet_sk(sk)->inet_sport = htons(port);
+diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
+index 875ff923a8ed0..6fb9efdbee27a 100644
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -206,6 +206,7 @@ struct inet_timewait_sock *inet_twsk_alloc(const struct sock *sk,
+ 		tw->tw_hash	    = sk->sk_hash;
+ 		tw->tw_ipv6only	    = 0;
+ 		tw->tw_transparent  = inet_test_bit(TRANSPARENT, sk);
++		tw->tw_connect_bind = !!(sk->sk_userlocks & SOCK_CONNECT_BIND);
+ 		tw->tw_prot	    = sk->sk_prot_creator;
+ 		atomic64_set(&tw->tw_cookie, atomic64_read(&sk->sk_cookie));
+ 		twsk_net_set(tw, sock_net(sk));
 -- 
 2.51.0
 
