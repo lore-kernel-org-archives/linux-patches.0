@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270A72F39B1;
-	Tue, 11 Nov 2025 01:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2212E7182;
+	Tue, 11 Nov 2025 01:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824361; cv=none; b=fOV50wAkTcTe0of+6xkr1jwJssTPfjF4dNT/kThowOpwogQOcf/Zuguprss2y9PTnkuJn+tbDghbckObcQaeG2oq1IT5K+mBcQlYbl9wKRQdOcXLd7PG8/o5aB6cEu1awu9KEgBoFlOCBbWrzuaAgNmithZDcZnTJRZ3XfHo7PA=
+	t=1762824363; cv=none; b=rUvdGSnZ71BO0YDeA6Gyng0iCLvk0Ei1t5Jr8xhSsnfU7GyfzK4HI1D/VFkOJABPOHS8qgh5G8HYJC/QmvoNHLcDsQS0sr0Wvu1ceLmRFm6yjDFk9bEIbugQNUdufk8lb/9NMXuXPD7FPqk9XDuip/zK1SzWzEzdNq6kWF5anmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824361; c=relaxed/simple;
-	bh=ekkgtDmTbeuJbIZ6JTXolfh2bRt5vQStnzF9l8H1a+M=;
+	s=arc-20240116; t=1762824363; c=relaxed/simple;
+	bh=xmN+xCPKoEmY/WGxr0PTfnYVqceTse2dr3u9BSIe044=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/fijHkEDYVGd5sFojEP4Zyagq3O00OSlS0XFa1hcuTDoH3FeHWaSjIWCyeDSLf303Lk0Zzuny97j/B1TZJCGUTVulmVMZ+JCSC+Cl2oTX5InC5Y+Lm+S9e/Qqarml7DcIDK4684/tX2RjiNif6+BT+36bGVDTnj34fF3j6lDA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEsMX7Oe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uSBXVu1aDmOg18DEctiPCoxT/x0KVw+DSoV8e+ygJKtBqw8pgEMg0AVrkUQr2KpAJBoFY0TDW0CDStoMv9XUAJVi4CJyIWeyvzhLo8wzSGJ4oUqwTwfdnmGycazgTdNxMmWnBQlQoCL60dJrMuxiW6Bk+hMfFeXLsrt29qTvjxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pjcoiybg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEsMX7Oe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7737C19422;
-	Tue, 11 Nov 2025 01:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pjcoiybg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11A8C116B1;
+	Tue, 11 Nov 2025 01:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824361;
-	bh=ekkgtDmTbeuJbIZ6JTXolfh2bRt5vQStnzF9l8H1a+M=;
+	s=korg; t=1762824363;
+	bh=xmN+xCPKoEmY/WGxr0PTfnYVqceTse2dr3u9BSIe044=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEsMX7OeP/EoXjIDTsV8X27cXEPkue+z3AvFlt0NG/lDHEpK/tprcP2ZXvIujCyRA
-	 C17zt1gh+gm/zXh8+9wUxMmAOzqX3B0NkGlcnKimPYDlecECHZGWdOLyyHKf3NFCB5
-	 3e0XIe0+GCRi2D4xLgSKFVrCTjqtRnMS0LAKXF1M=
+	b=Pjcoiybgnwb1cgovbVOpIBDqrIStu2yJXn04rdu9QbpoBtu8Y8mt8K6VMkg6pDbaG
+	 JG0hH8Z+M7hyq4bCz2V2J8GiGMqqDFyc7IPbDDP8g8dHM2Jmsv2uGSQTirz2LKQwlR
+	 kJHKCpmCdR4dJVOdAafombRw2Gg1xzBH1RrTfDXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 480/849] wifi: rtw89: Add USB ID 2001:332a for D-Link AX9U rev. A1
-Date: Tue, 11 Nov 2025 09:40:50 +0900
-Message-ID: <20251111004548.047172543@linuxfoundation.org>
+Subject: [PATCH 6.12 429/565] amd/amdkfd: resolve a race in amdgpu_amdkfd_device_fini_sw
+Date: Tue, 11 Nov 2025 09:44:45 +0900
+Message-ID: <20251111004536.521372969@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit 2ffc73cdb8247dc09b6534c4018681a126c1d5f5 ]
+[ Upstream commit 99d7181bca34e96fbf61bdb6844918bdd4df2814 ]
 
-Add USB ID 2001:332a for D-Link AX9U rev. A1 which is a RTL8851BU-based
-Wi-Fi adapter.
+There is race in amdgpu_amdkfd_device_fini_sw and interrupt.
+if amdgpu_amdkfd_device_fini_sw run in b/w kfd_cleanup_nodes and
+  kfree(kfd), and KGD interrupt generated.
 
-Only managed mode and AP mode are tested and it works in both.
+kernel panic log:
 
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250902035755.1969530-1-zenmchen@gmail.com
+BUG: kernel NULL pointer dereference, address: 0000000000000098
+amdgpu 0000:c8:00.0: amdgpu: Requesting 4 partitions through PSP
+
+PGD d78c68067 P4D d78c68067
+
+kfd kfd: amdgpu: Allocated 3969056 bytes on gart
+
+PUD 1465b8067 PMD @
+
+Oops: @002 [#1] SMP NOPTI
+
+kfd kfd: amdgpu: Total number of KFD nodes to be created: 4
+CPU: 115 PID: @ Comm: swapper/115 Kdump: loaded Tainted: G S W OE K
+
+RIP: 0010:_raw_spin_lock_irqsave+0x12/0x40
+
+Code: 89 e@ 41 5c c3 cc cc cc cc 66 66 2e Of 1f 84 00 00 00 00 00 OF 1f 40 00 Of 1f 44% 00 00 41 54 9c 41 5c fa 31 cO ba 01 00 00 00 <fO> OF b1 17 75 Ba 4c 89 e@ 41 Sc
+
+89 c6 e8 07 38 5d
+
+RSP: 0018: ffffc90@1a6b0e28 EFLAGS: 00010046
+
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000018
+0000000000000001 RSI: ffff8883bb623e00 RDI: 0000000000000098
+ffff8883bb000000 RO8: ffff888100055020 ROO: ffff888100055020
+0000000000000000 R11: 0000000000000000 R12: 0900000000000002
+ffff888F2b97da0@ R14: @000000000000098 R15: ffff8883babdfo00
+
+CS: 010 DS: 0000 ES: 0000 CRO: 0000000080050033
+
+CR2: 0000000000000098 CR3: 0000000e7cae2006 CR4: 0000000002770ce0
+0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+0000000000000000 DR6: 00000000fffeO7FO DR7: 0000000000000400
+
+PKRU: 55555554
+
+Call Trace:
+
+<IRQ>
+
+kgd2kfd_interrupt+@x6b/0x1f@ [amdgpu]
+
+? amdgpu_fence_process+0xa4/0x150 [amdgpu]
+
+kfd kfd: amdgpu: Node: 0, interrupt_bitmap: 3 YcpxFl Rant tErace
+
+amdgpu_irq_dispatch+0x165/0x210 [amdgpu]
+
+amdgpu_ih_process+0x80/0x100 [amdgpu]
+
+amdgpu: Virtual CRAT table created for GPU
+
+amdgpu_irq_handler+0x1f/@x60 [amdgpu]
+
+__handle_irq_event_percpu+0x3d/0x170
+
+amdgpu: Topology: Add dGPU node [0x74a2:0x1002]
+
+handle_irq_event+0x5a/@xcO
+
+handle_edge_irq+0x93/0x240
+
+kfd kfd: amdgpu: KFD node 1 partition @ size 49148M
+
+asm_call_irq_on_stack+0xf/@x20
+
+</IRQ>
+
+common_interrupt+0xb3/0x130
+
+asm_common_interrupt+0x1le/0x40
+
+5.10.134-010.a1i5000.a18.x86_64 #1
+
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Philip Yang<Philip.Yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/rtw8851bu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-index c3722547c6b09..04e1ab13b7535 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851bu.c
-@@ -16,6 +16,9 @@ static const struct rtw89_driver_info rtw89_8851bu_info = {
- static const struct usb_device_id rtw_8851bu_id_table[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0bda, 0xb851, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
-+	/* D-Link AX9U rev. A1 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332a, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
- 	/* TP-Link Archer TX10UB Nano */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3625, 0x010b, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8851bu_info },
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index 07eadab4c1c4d..b536ec72cffb7 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -1084,7 +1084,15 @@ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+ 	}
+ 
+ 	for (i = 0; i < kfd->num_nodes; i++) {
+-		node = kfd->nodes[i];
++		/* Race if another thread in b/w
++		 * kfd_cleanup_nodes and kfree(kfd),
++		 * when kfd->nodes[i] = NULL
++		 */
++		if (kfd->nodes[i])
++			node = kfd->nodes[i];
++		else
++			return;
++
+ 		spin_lock_irqsave(&node->interrupt_lock, flags);
+ 
+ 		if (node->interrupts_active
 -- 
 2.51.0
 
