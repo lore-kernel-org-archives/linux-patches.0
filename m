@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906CF304BDC;
-	Tue, 11 Nov 2025 01:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4AA305976;
+	Tue, 11 Nov 2025 01:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825524; cv=none; b=pozhKlfDLWLdeF1zN7FAQDW3JToo/r1HVfrmsgrtqW5Rla+wfWDNR7Kbieo4iUh9erDsvWtQGFuJTfLpfNtU/X9ypq1Ew0n5OIFcwRZs69LYl9WTYWij9z5sYXdr6JQv4YaDbrKlZElrk+bPzSH/U7rSbnH4hpxgYQALBQx/Ph4=
+	t=1762825526; cv=none; b=t+3ElyhVEY7ZkCwE0Bgq9b3BM3TD9x1P7k1uo/pCNpigpvBNKTY5/dEK+npb6FRCGD1I0zcQz8CZPvrE7wgCroIX7t+jPth1VYpkoMKesqiU2UT/KLOFkqQnVSUHTwOupzSsUOgZ7i6uqAY7FKTCxmGYSJabE4dGBZDKZToe8KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825524; c=relaxed/simple;
-	bh=uLkN/DMyWvuCnEU4u2DRbycyuZbEaubuiZa9DLVH8Lo=;
+	s=arc-20240116; t=1762825526; c=relaxed/simple;
+	bh=9jmasd7OdOKUZQf/YUU1+tSh0ygoJkJzWawUqmFdoh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGix9vkiKkmEAV0fV7tYlVmyXJAJtxLwS6pviVr9znQIth3pZt+g6KcKGnM8M5ZdMkgKsHbgAau61uHEYUktMfGcntA/r0L5DJPE95ybMrhT/c3fGFb48IucMN336vaR544BuuMwXVXEiWi6A//wDpHDlkmRl09BL7TLbTJGFro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7WqNoiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQS2juAkMQGtD+WyUCukVRu2JRHCT/hTGEopq8rJQnQKRv3CTg5OKxNzSr/k0H+2JtYdXycryxLMKh4T5iiHAa05twCAzGrdxCL2e3GO1DGnCuaR8szyy1x1paDacdGsreGC2oboMNBZaphJngABtM8njJZRFXX6Mm51wWttsLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKaTknC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7WqNoiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9F6C16AAE;
-	Tue, 11 Nov 2025 01:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKaTknC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B09C4CEF5;
+	Tue, 11 Nov 2025 01:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825524;
-	bh=uLkN/DMyWvuCnEU4u2DRbycyuZbEaubuiZa9DLVH8Lo=;
+	s=korg; t=1762825526;
+	bh=9jmasd7OdOKUZQf/YUU1+tSh0ygoJkJzWawUqmFdoh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7WqNoiyejGPnzCAeK2ZsqUgs3HRA/nA5vtMVz2+LoiYTV4o68HF8IFoZ2WF+njZO
-	 aPWOHkqbrPV7IbKizEqOaoRdIXD4xklz/1oixcoXzAXl9NdoCcNRpRK/v53mlJDQyn
-	 JAvmJpGODtTD/t1D/Ev8sS5FKMRmk4Xj/1kFyMA0=
+	b=NKaTknC4C4ByrQBLfUZoiZIP5SpnrKFx0jIjz+W/L6Wxh2rf+BQF1OSclaG7WjNNF
+	 U32RB8yIBmNuZtFzczgKUrt2sgqVCohuPpnOxIkmtkDVV/uPrP5JpWfdiAZ9/eFSg8
+	 XDEV3Sq+7zbrnia5kq3YGAxKRZv84BPavy6roya4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.17 838/849] ALSA: hda/tas2781: Enable init_profile_id for device initialization
-Date: Tue, 11 Nov 2025 09:46:48 +0900
-Message-ID: <20251111004556.683005115@linuxfoundation.org>
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.17 839/849] ACPI: SPCR: Check for table version when using precise baudrate
+Date: Tue, 11 Nov 2025 09:46:49 +0900
+Message-ID: <20251111004556.706573958@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,50 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
 
-commit 7ddb711b6e0d33e0a673b49f69dff0d950ed60b9 upstream.
+commit 543d35004007a06ef247acf2fc55efa8388aa741 upstream.
 
-Optimize the time consumption of profile switching, init_profile saves
-the common settings of different profiles, such as the dsp coefficients,
-etc, which can greatly reduce the profile switching time comsumption and
-remove the repetitive settings.
+Commit 4d330fe54145 ("ACPI: SPCR: Support Precise Baud Rate field")
+added support to use the precise baud rate available since SPCR 1.09
+(revision 4) but failed to check the version of the table provided by
+the firmware.
 
-Fixes: e83dcd139e77 ("ASoC: tas2781: Add keyword "init" in profile section")
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Accessing an older version of SPCR table causes accesses beyond the
+end of the table and can lead to garbage data to be used for the baud
+rate.
+
+Check the version of the firmware provided SPCR to ensure that the
+precise baudrate is vaild before using it.
+
+Fixes: 4d330fe54145 ("ACPI: SPCR: Support Precise Baud Rate field")
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251024123125.1081612-1-punit.agrawal@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda_i2c.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/acpi/spcr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-@@ -472,6 +472,12 @@ static void tasdevice_dspfw_init(void *c
- 	if (tas_priv->fmw->nr_configurations > 0)
- 		tas_priv->cur_conf = 0;
- 
-+	/* Init common setting for different audio profiles */
-+	if (tas_priv->rcabin.init_profile_id >= 0)
-+		tasdevice_select_cfg_blk(tas_priv,
-+			tas_priv->rcabin.init_profile_id,
-+			TASDEVICE_BIN_BLK_PRE_POWER_UP);
-+
- 	/* If calibrated data occurs error, dsp will still works with default
- 	 * calibrated data inside algo.
+--- a/drivers/acpi/spcr.c
++++ b/drivers/acpi/spcr.c
+@@ -152,7 +152,7 @@ int __init acpi_parse_spcr(bool enable_e
+ 	 * Baud Rate field. If this field is zero or not present, Configured
+ 	 * Baud Rate is used.
  	 */
-@@ -760,6 +766,12 @@ static int tas2781_system_resume(struct
- 	tasdevice_reset(tas_hda->priv);
- 	tasdevice_prmg_load(tas_hda->priv, tas_hda->priv->cur_prog);
- 
-+	/* Init common setting for different audio profiles */
-+	if (tas_hda->priv->rcabin.init_profile_id >= 0)
-+		tasdevice_select_cfg_blk(tas_hda->priv,
-+			tas_hda->priv->rcabin.init_profile_id,
-+			TASDEVICE_BIN_BLK_PRE_POWER_UP);
-+
- 	if (tas_hda->priv->playback_started)
- 		tasdevice_tuning_switch(tas_hda->priv, 0);
- 
+-	if (table->precise_baudrate)
++	if (table->header.revision >= 4 && table->precise_baudrate)
+ 		baud_rate = table->precise_baudrate;
+ 	else switch (table->baud_rate) {
+ 	case 0:
 
 
