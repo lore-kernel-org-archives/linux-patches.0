@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2983A266B6C;
-	Tue, 11 Nov 2025 01:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FAC265CA8;
+	Tue, 11 Nov 2025 01:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823135; cv=none; b=Z878y0aiZ6uWClunnXyPDPB2OoIlnbARASDTi2aFfTkGp0OgAvp+KMs1TwqqfpjEehbjCA8i+6nrS4lgquAzfX9YI95RiUhaOSruJab1/cqHYKJz5e1vBoXV1bw0xAubIib9QuUUXHCvFUAO7XREA1Rm3jbN7NL5Z17R+940KSE=
+	t=1762823137; cv=none; b=gu/bo++835QJONYXScKqXrdMwGfA4QnSmgzgsh4IkEjKn7s7DkzydZywAWWXu9E1EPZS3P6JYNqRqf9l6nczRrSBDE+lTbtQzHxPFMCZezw2+QQ8nKbPX5QwDiYslHHXyNuUMWwZ+eX7EZKV6v5VPEwn1LCsCZw9EL08EEx6qDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823135; c=relaxed/simple;
-	bh=G1eQLFuG3nh2XzJjHt+HdLd6REmTr2JB5iYn3Hsl1k4=;
+	s=arc-20240116; t=1762823137; c=relaxed/simple;
+	bh=R4PYAyzt/uZpCS/EM9hwwEnvzhkIYQquisVOXvRLtww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzFW0fX/ENg6/4SSzVPQUy96O+GcegSyZ6lnC/GnSoPCXVg8iQxhUqq+7NmmvYFYaognzQvtIRE4QL22mzj6wgdibOlS5io1/p6O8H0zowawGLNlgD+wRaHRiY0SDVLJlQoLM+M//heTe2acd39s5cKcPgEr4Ym/bhK5npFvwqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arvmTgGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EiuojT0BUTCGzjFXYPE4vQyHH8XSG5sf+iX77xQjF3SG81wGaEtSGAbvRNnBVfhdrEFaW/ekkg1xwXZcHTq3vszxTE2jR2N7qfYVFIye2B3Q0L71VSB8bT+Hjo944int/DRx6iRtduWW5C3UkSmzKQ1PlCilhq6v5Ut4aMZp1tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrQsQW87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arvmTgGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D86C113D0;
-	Tue, 11 Nov 2025 01:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrQsQW87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B8BC113D0;
+	Tue, 11 Nov 2025 01:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823135;
-	bh=G1eQLFuG3nh2XzJjHt+HdLd6REmTr2JB5iYn3Hsl1k4=;
+	s=korg; t=1762823137;
+	bh=R4PYAyzt/uZpCS/EM9hwwEnvzhkIYQquisVOXvRLtww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arvmTgGhomf4hzJ3JfVArnYGQ4O7Uc/B4cTJufAnMo4SnmBeTa4RYNyk0ioIwJHD3
-	 c5wRmYgV2Aa8W98c7Oz1L1mYbapJmYHIAox2nIRCNi1GxFlCBFDly/IwAgF/6ItAKs
-	 eLKWhwFJ+EcLCKeZnvaNv4eXZNu38+kpeQqdopHo=
+	b=nrQsQW87yP561oJEWklDIpTA6pFEAeGfPr/0dRWgietuwXr359PG2YMvxkINnoQT1
+	 DYLlyOV5sucdwoVZFzLagg6uYGpAvBFBLUSljjrN890SjP+4yXbLlqQzL4mFaAHCxT
+	 86U998bNstzcbvqi0hH+56jkQMyHvXFwidsciSQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ovidiu (Ovi) Bunea" <ovidiu.bunea@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 237/849] drm/amd/display: Move setup_stream_attribute
-Date: Tue, 11 Nov 2025 09:36:47 +0900
-Message-ID: <20251111004542.171172491@linuxfoundation.org>
+Subject: [PATCH 6.12 178/565] drm/xe/guc: Add more GuC load error status codes
+Date: Tue, 11 Nov 2025 09:40:34 +0900
+Message-ID: <20251111004530.937229479@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,124 +47,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 2681bf4ae8d24df950138b8c9ea9c271cd62e414 ]
+[ Upstream commit 45fbb51050e72723c2bdcedc1ce32305256c70ed ]
 
-[WHY]
-If symclk RCO is enabled, stream encoder may not be receiving an ungated
-clock by the time we attempt to set stream attributes when setting dpms
-on. Since the clock is gated, register writes to the stream encoder fail.
+The GuC load process will abort if certain status codes (which are
+indicative of a fatal error) are reported. Otherwise, it keeps waiting
+until the 'success' code is returned. New error codes have been added
+in recent GuC releases, so add support for aborting on those as well.
 
-[HOW]
-Move set_stream_attribute call into enable_stream, just after the point
-where symclk32_se is ungated.
-Logically there is no need to set stream attributes as early as is
-currently done in link_set_dpms_on, so this should have no impact beyond
-the RCO fix.
+v2: Shuffle HWCONFIG_START to the front of the switch to keep the
+ordering as per the enum define for clarity (review feedback by
+Jonathan). Also add a description for the basic 'invalid init data'
+code which was missing.
 
-Reviewed-by: Ovidiu (Ovi) Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://lore.kernel.org/r/20250726024337.4056272-1-John.C.Harrison@Intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 1 +
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c    | 2 ++
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c  | 2 ++
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c            | 3 ---
- .../drm/amd/display/dc/virtual/virtual_stream_encoder.c    | 7 +++++++
- 5 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/abi/guc_errors_abi.h |  3 +++
+ drivers/gpu/drm/xe/xe_guc.c             | 19 +++++++++++++++++--
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index c69194e04ff93..32fd6bdc18d73 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -671,6 +671,7 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
- 	uint32_t early_control = 0;
- 	struct timing_generator *tg = pipe_ctx->stream_res.tg;
+diff --git a/drivers/gpu/drm/xe/abi/guc_errors_abi.h b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
+index 2c627a21648f7..9260f4a1997d9 100644
+--- a/drivers/gpu/drm/xe/abi/guc_errors_abi.h
++++ b/drivers/gpu/drm/xe/abi/guc_errors_abi.h
+@@ -55,6 +55,7 @@ enum xe_guc_load_status {
+ 	XE_GUC_LOAD_STATUS_HWCONFIG_START                   = 0x05,
+ 	XE_GUC_LOAD_STATUS_HWCONFIG_DONE                    = 0x06,
+ 	XE_GUC_LOAD_STATUS_HWCONFIG_ERROR                   = 0x07,
++	XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH         = 0x08,
+ 	XE_GUC_LOAD_STATUS_GDT_DONE                         = 0x10,
+ 	XE_GUC_LOAD_STATUS_IDT_DONE                         = 0x20,
+ 	XE_GUC_LOAD_STATUS_LAPIC_DONE                       = 0x30,
+@@ -67,6 +68,8 @@ enum xe_guc_load_status {
+ 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_START,
+ 	XE_GUC_LOAD_STATUS_MPU_DATA_INVALID                 = 0x73,
+ 	XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID   = 0x74,
++	XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR        = 0x75,
++	XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG                 = 0x76,
+ 	XE_GUC_LOAD_STATUS_INVALID_INIT_DATA_RANGE_END,
  
-+	link_hwss->setup_stream_attribute(pipe_ctx);
- 	link_hwss->setup_stream_encoder(pipe_ctx);
- 
- 	dc->hwss.update_info_frame(pipe_ctx);
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index 5e57bd1a08e73..9d3946065620a 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -3052,6 +3052,8 @@ void dcn20_enable_stream(struct pipe_ctx *pipe_ctx)
- 						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
+ 	XE_GUC_LOAD_STATUS_READY                            = 0xF0,
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index 96373cdb366be..907a458c9eff5 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -527,11 +527,14 @@ static int guc_load_done(u32 status)
+ 	case XE_GUC_LOAD_STATUS_GUC_PREPROD_BUILD_MISMATCH:
+ 	case XE_GUC_LOAD_STATUS_ERROR_DEVID_INVALID_GUCTYPE:
+ 	case XE_GUC_LOAD_STATUS_HWCONFIG_ERROR:
++	case XE_GUC_LOAD_STATUS_BOOTROM_VERSION_MISMATCH:
+ 	case XE_GUC_LOAD_STATUS_DPC_ERROR:
+ 	case XE_GUC_LOAD_STATUS_EXCEPTION:
+ 	case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
+ 	case XE_GUC_LOAD_STATUS_MPU_DATA_INVALID:
+ 	case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
++	case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
++	case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
+ 		return -1;
  	}
  
-+	link_hwss->setup_stream_attribute(pipe_ctx);
-+
- 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div)
- 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
- 			dc->res_pool->dccg,
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index b95b98cc25534..0fe7637049457 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -968,6 +968,8 @@ void dcn401_enable_stream(struct pipe_ctx *pipe_ctx)
+@@ -670,17 +673,29 @@ static void guc_wait_ucode(struct xe_guc *guc)
  		}
- 	}
  
-+	link_hwss->setup_stream_attribute(pipe_ctx);
+ 		switch (ukernel) {
++		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
++			xe_gt_err(gt, "still extracting hwconfig table.\n");
++			break;
 +
- 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div) {
- 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
- 			dc->res_pool->dccg,
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index 8c8682f743d6f..cb80b45999360 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -2458,7 +2458,6 @@ void link_set_dpms_on(
- 	struct link_encoder *link_enc = pipe_ctx->link_res.dio_link_enc;
- 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;
- 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
--	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
- 	bool apply_edp_fast_boot_optimization =
- 		pipe_ctx->stream->apply_edp_fast_boot_optimization;
+ 		case XE_GUC_LOAD_STATUS_EXCEPTION:
+ 			xe_gt_err(gt, "firmware exception. EIP: %#x\n",
+ 				  xe_mmio_read32(gt, SOFT_SCRATCH(13)));
+ 			break;
  
-@@ -2502,8 +2501,6 @@ void link_set_dpms_on(
- 		pipe_ctx->stream_res.tg->funcs->set_out_mux(pipe_ctx->stream_res.tg, otg_out_dest);
- 	}
- 
--	link_hwss->setup_stream_attribute(pipe_ctx);
--
- 	pipe_ctx->stream->apply_edp_fast_boot_optimization = false;
- 
- 	// Enable VPG before building infoframe
-diff --git a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-index ad088d70e1893..6ffc74fc9dcd8 100644
---- a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-@@ -44,6 +44,11 @@ static void virtual_stream_encoder_dvi_set_stream_attribute(
- 	struct dc_crtc_timing *crtc_timing,
- 	bool is_dual_link) {}
- 
-+static void virtual_stream_encoder_lvds_set_stream_attribute(
-+	struct stream_encoder *enc,
-+	struct dc_crtc_timing *crtc_timing)
-+{}
++		case XE_GUC_LOAD_STATUS_INIT_DATA_INVALID:
++			xe_gt_err(gt, "illegal init/ADS data\n");
++			break;
 +
- static void virtual_stream_encoder_set_throttled_vcp_size(
- 	struct stream_encoder *enc,
- 	struct fixed31_32 avg_time_slots_per_mtp)
-@@ -115,6 +120,8 @@ static const struct stream_encoder_funcs virtual_str_enc_funcs = {
- 		virtual_stream_encoder_hdmi_set_stream_attribute,
- 	.dvi_set_stream_attribute =
- 		virtual_stream_encoder_dvi_set_stream_attribute,
-+	.lvds_set_stream_attribute =
-+		virtual_stream_encoder_lvds_set_stream_attribute,
- 	.set_throttled_vcp_size =
- 		virtual_stream_encoder_set_throttled_vcp_size,
- 	.update_hdmi_info_packets =
+ 		case XE_GUC_LOAD_STATUS_INIT_MMIO_SAVE_RESTORE_INVALID:
+ 			xe_gt_err(gt, "illegal register in save/restore workaround list\n");
+ 			break;
+ 
+-		case XE_GUC_LOAD_STATUS_HWCONFIG_START:
+-			xe_gt_err(gt, "still extracting hwconfig table.\n");
++		case XE_GUC_LOAD_STATUS_KLV_WORKAROUND_INIT_ERROR:
++			xe_gt_err(gt, "illegal workaround KLV data\n");
++			break;
++
++		case XE_GUC_LOAD_STATUS_INVALID_FTR_FLAG:
++			xe_gt_err(gt, "illegal feature flag specified\n");
+ 			break;
+ 		}
+ 
 -- 
 2.51.0
 
