@@ -1,116 +1,110 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCDC24BBE4
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 22:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B7A2F39AD
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 23:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762901752; cv=none; b=h/ceya8pjnb9TaqzCzIlGhS4WN36YybwJTj4xW6iaPwlhwv+fLkH6OsiOoABD9xk7/H6B53RTRw8p5dfL+uvX0oj/l60gCqy+V/4xnMA+eLgNZP60RWafp2eULd1J7LpkBOnPaNE+izaBmoXAzdO0io/LQWMoawjjJQbtAEJHZQ=
+	t=1762903654; cv=none; b=nqCiFYXsQtiZQwY1z1RKZjpMzwhFFy0zq4Gw2upq5CzwicEGSFdG+pt1TsjcVI7GdYWL9MsoXTP9kGXUrWN0C6IQ+j6hA8Mmy0ygIXaY+tBd/M9FOiiW4b7AhpQBpbeNc+fXnNmjFvduKL0CfOZ5Xlv4Vu1PsJ3RfDRdNxzlzhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762901752; c=relaxed/simple;
-	bh=no6awPYlNWD2ZDTvcdrXtI2J2BOWdlGtNS+ynn3kOI8=;
-	h=Date:Message-Id:To:Cc:Subject:From:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=loLqoF6QjFThg/I3eSdm2QOkbnq4fGAjMUi2vIMqmniBqh3Gy9jEMY4k9EB+JSh1p5z84+8vtuUWWYDGx1n52DqKK3DQMfcUwlA2mUfPTjdNDZ6EN7+0A3oZtR4TUXMokaMHj8ldmscj16TpgTL9W4RfR11lYKVrvU/uOCntXqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9NYM13E; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762903654; c=relaxed/simple;
+	bh=IuR5ZRXeBEMrVUdIn/c5gPLOVw4Th37CLXfP2y0VULE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JfXXQlIbYW4kf+8xPKV4grvs9vu1n5rCLhSXuP5RQI6ZqpdG1zzCpsgPf/u0F+S+pRCmyNH18qIQ7uO0HM6coyDeL1I+D/gQDf5+zZ98qGWeocN0JYkHQcx60Dmz04aTwTxhZ233rZgjpNYR8xMtRiqQjhuGjNzXZDTkxVy3HmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h869laU2; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9NYM13E"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3436a328bbbso296709a91.2
-        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 14:55:50 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h869laU2"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7c28bf230feso192744a34.0
+        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 15:27:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762901750; x=1763506550; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to:from
-         :subject:cc:to:message-id:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WV8SpjyToHnox8eW+EUZvNmanBSrZ2+/14Ld9cc4nK4=;
-        b=J9NYM13EK7pHKfDwFU3U58JaxklDAdQQjx8iKsMIMkcinbBF+mxdN8LL+I84TFw0/M
-         CIYQKyFu8aWTJ4iOLVleZyJ5DoL6NiiSxk4BWRbBbeDo1ESRjsIpv42WaBfnEEIh0n6Y
-         F4XkNgpfo4jLgPC67GrqP/HzH6i4o17K73TeVAwCxk9H95MqKri2+4n2FHyMIJho3trg
-         dp9ukzD60Nto1oZ++vByMM6mVE6n60c3DZLDUdp1iV1zDQaRNQzbi49/l4+iHXefCysZ
-         pYIhaNA4h5H2fa1z11Ttn24NRsaHbz5+DFCoOBXR4VUeCKW++eijS6rqCD8tcwHpZ1eZ
-         8cJA==
+        d=linuxfoundation.org; s=google; t=1762903652; x=1763508452; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O9QgRZSf+qoN7+x7rLV1kVs/iEm4M3TDqxWUlp4O9RQ=;
+        b=h869laU2Hcv1G6K8wGQL8bCAZtGJpueTKKk15B7IjTR0IM0yYH2dmL+Q5p3g3rHRbz
+         AX21WYZWP8zKti+FsMOVKOrI3SwhKPUB4tcvfTRubtcnPVCf+5+zlka7I8YuRQdZNxod
+         b2Y4hrSV4Rvl1i+IElPbpvdrf19ktpqaZgN7A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762901750; x=1763506550;
-        h=content-transfer-encoding:mime-version:references:in-reply-to:from
-         :subject:cc:to:message-id:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WV8SpjyToHnox8eW+EUZvNmanBSrZ2+/14Ld9cc4nK4=;
-        b=FE4ZSe1+3PVDrmBqgFU99eh+332FBx+uKuAKsH0/T4a1cXfyVJjCEoP7+fZEH8Hj1V
-         Z5eswLHk+3W3moU9315SLtz9Q/8IWmq+XC6dfPd49jqcVnhbLeb9qbsUOgWbpGJIwETj
-         3VMY2kot/S7m4XYcoGy6YQ+ZuJlr5AnKcp4p/tBEDfvpiGVczoYepDMn/J4pd6riBy5m
-         VR7Hb/np9BHg6xyQKcIEaada+qtWwGtO6sqVG8AJwnNAlWKBOje3M3Bbk1iuKbS/8CtZ
-         iv6kVPPh+cE0Ufm2I+OsbAxA2R+IsUxifFd4NiympzMx52TK2zaV7n5jQlYz8v493ndK
-         sfmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVEpzWHrDs59yeYNYPq2TKfl3/MxYIxkAqGBZ7Qg9p853k+LNdj1J7B8JEs0ooRxsko22SBkrH6@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx3pVRnxCQdIVlUdL1c5a0syYoSiPWR/q7nWb2TmWWd4uD3Q4Qu
-	ztBW3a2ZJraRspYoPSm5a6AC1TmvnZaqdHLj/lrFpr8Kq5gG93E5YIm1EAKDuQSU
-X-Gm-Gg: ASbGncuHnJJ7Z43DO8u93ZZCO3CmXOWY/8GevFCvk6KuJ5fM2qInAwIAqEgiA91QheN
-	PgpFiTuYSSIwz/XAknbK0cVDAaLXSjsgADxZrcAn1dn0m6/ZjDEMKgN3GSmr092/mWA8dBfHHo2
-	8X7lfGhL1/l7DXUDGnlY/e08TKAO024V11o77PTov4zvT4LUn84AMytZshgKDZT89wCUAywVl0C
-	5/QMo9bvNg9ejH/V/yQhnJgQdeRpXIxhL8VLymUa1ZVG5EoVjacXlTdiXsCiDd4JaDaNDJaJxy7
-	kBvzqbe21bn2GZBQe/0rd7RHRbpbWMr9bPjTU8RVR+dETo7/9Mz1RtM4kMFdpf7re46Q7jJamAp
-	o0HAd9SuOFzVt3HzXcBA9GJp1Zv6MHC4ALu/D8fMfZR16kV0UUqb6qOh2+L0TAFTfFGbPHAeaKf
-	D7Z/Vwo0wDkX1WRUCJJl0R+bUxjR/LygevzsIJM1LNkmUr+gQVDYjV/5KZitFL1o3Z70CGB3Hto
-	cE=
-X-Google-Smtp-Source: AGHT+IF4OnkRMbd6m4HrTuqN+m+jnjr3E5I1/MHuhkYwY6fxfKQpu9u5zArrBIuDS/wyoE+OqOffGw==
-X-Received: by 2002:a17:90b:1b0c:b0:343:7714:4c9e with SMTP id 98e67ed59e1d1-343dddeef91mr1097421a91.2.1762901749896;
-        Tue, 11 Nov 2025 14:55:49 -0800 (PST)
-Received: from localhost (p5332007-ipxg23901hodogaya.kanagawa.ocn.ne.jp. [180.34.120.7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-343e07156absm214042a91.5.2025.11.11.14.55.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 14:55:49 -0800 (PST)
-Date: Wed, 12 Nov 2025 07:55:34 +0900 (JST)
-Message-Id: <20251112.075534.1069241481796218298.fujita.tomonori@gmail.com>
-To: miguel.ojeda.sandonis@gmail.com
-Cc: fujita.tomonori@gmail.com, ojeda@kernel.org, alex.gaynor@gmail.com,
- tmgross@umich.edu, netdev@vger.kernel.org, rust-for-linux@vger.kernel.org,
- boqun.feng@gmail.com, gary@garyguo.net, bjorn3_gh@protonmail.com,
- lossin@kernel.org, a.hindborg@kernel.org, aliceryhl@google.com,
- dakr@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- guillaume1.gomez@gmail.com
-Subject: Re: [PATCH 2/3] rust: net: phy: make example buildable
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
-In-Reply-To: <CANiq72=_KAgUZ9u5YY-iw7kyA9R1Nv6eNzZqMLSwOLQk6sR7kw@mail.gmail.com>
-References: <20251110122223.1677654-2-ojeda@kernel.org>
-	<20251111.083413.2270464617525340597.fujita.tomonori@gmail.com>
-	<CANiq72=_KAgUZ9u5YY-iw7kyA9R1Nv6eNzZqMLSwOLQk6sR7kw@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1762903652; x=1763508452;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O9QgRZSf+qoN7+x7rLV1kVs/iEm4M3TDqxWUlp4O9RQ=;
+        b=PGKIrr0ITv3N8YtvOvu9FVj7QhSnkFoAyKozzTEYle1MAlcbpsTZQR621Y2oKBzxHk
+         4GsRGizUFqCww2bGpu/pBMdQF8PcciendUshdB2worenYOu5YO2zsBhVScurOvXp6iXP
+         Y2218IRA8Dw9FMFqNzKZLhIJTTVveBiEXTDn779kfpCdRrB0S/S+UGa79GUshS69XNXl
+         A89kGIJ9lwUOd/DeQxPUhrAlxwOudT2OKWanFJcBUxMYhG77msrtlEw2bm9V53HrUg5m
+         qt27JSgK85yBmwYX04XXWmX1Skwy0MLkIYNONhvYnAjSn6F5/DyQK4YgQOVHkMIEveLk
+         mkWA==
+X-Gm-Message-State: AOJu0YwDioOD2SEcAJFaz3nzpkXdxSJ7jTNWoKoeNMKXApo5U0/UcbGw
+	5uWriGXleCrLi5OQEncASjAoL+mu1DDD/2e3N1EKiOX8ElhC0mnawMli8O83kG86pvo=
+X-Gm-Gg: ASbGnctdAOeOToIdiqFXmOE0BxG30cE5NExQeGyZ0BPtzSJinjDWvAKykaMTsiBAqhb
+	xnWC4kBmJsLK3+cj2wvlm9ykebto5xvrmuoSnt1SU0ybsEAJLXzpaYytUx8/ct0O3MNmDC5s0OF
+	mZsQP7XCw+YZaZ7MzxR1c6pMsJ0KUhojcI3lHY0CrMndM2WI9hFaZTS+scAJzQF0EKSqFTu6Hpc
+	zUwfxeoEITWClEmIUTXW5phuSdtXfWUoziOThEOaOqaE9fz4DT5nb44htCkcXKxC7790QKxAZ02
+	rtDdTqxDb2IGQdvag3PgKrs/RpjkBlV8EWA+ZG01q0oTLFaLbpipJ+gi2WgRDsggGRXGKoO1SAd
+	/dQ+/0y3lo0SacNK+grmyqVKsOA52+oMaW0jvVlDlhOqlCoAwZzwsGmSkehHGOzYyj/Sqg9wwue
+	AYfwGosccloC9M
+X-Google-Smtp-Source: AGHT+IHveGWcHvUuvrntsLVRkctV87zv6f2ES3vse/t5ppbqYjXZLjyMUEBBOSX6NbMtKYeNIAOi6w==
+X-Received: by 2002:a05:6830:6d25:b0:7c5:33f5:c028 with SMTP id 46e09a7af769-7c72d4d77a8mr807476a34.8.1762903651855;
+        Tue, 11 Nov 2025 15:27:31 -0800 (PST)
+Received: from [192.168.1.14] ([38.175.187.108])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c6f0f5e882sm7650941a34.8.2025.11.11.15.27.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Nov 2025 15:27:31 -0800 (PST)
+Message-ID: <0c6b16e6-bee1-44c1-bd62-2c4baa22630c@linuxfoundation.org>
+Date: Tue, 11 Nov 2025 16:27:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.17 000/849] 6.17.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Tue, 11 Nov 2025 22:02:26 +0100
-Miguel Ojeda <miguel.ojeda.sandonis@gmail.com> wrote:
-
->> I think that some code begin lines with # for use lines in a "#
->> Examples" section, while others do not. Which style is recommended?
+On 11/10/25 17:32, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.17.8 release.
+> There are 849 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> There is no hard rule for all cases -- we typically hide things that
-> are not important for the example (e.g. fake `mod bindings` that are
-> used to support the example but aren't important and would bloat the
-> example or confuse the reader).
+> Responses should be made by Thu, 13 Nov 2025 00:43:57 +0000.
+> Anything received after that time might be too late.
 > 
-> For imports, some people prefer to see them, others don't. Here, for
-> instance, it may be interesting to show the paths (e.g. that the
-> `Device` is a `net::phy::` one, or where `C22` is coming from), so we
-> could unhide it. So up to you!
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.8-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+> and the diffstat can be found below.
 > 
-> So I think the rule is really: if it is something that we think people
-> should see to actually understand the example, then we should show it.
+> thanks,
 > 
-> And if it is something that would confuse them more than help, or that
-> generally should not be used in real code (like the fake bindings),
-> then we should hide it.
+> greg k-h
+> 
 
-Understood, thanks!
+Compiled and booted on my test system. No dmesg regressions.
 
-Then I don't think that the imports in this example are important so
-please add:
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Reviewed-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-
+thanks,
+-- Shuah
