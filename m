@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3432AE8D;
-	Tue, 11 Nov 2025 00:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB9D1FDA92;
+	Tue, 11 Nov 2025 00:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822262; cv=none; b=ijNp2Se8CnkKNReRbFFUWx9y0ydukrTH1+EOL4RUu3pGbdiI/ROfXKWmHt97gcQrfbN3FwJ0GUHkGSVJRJSoH82/2YdzLoB6jXrauJiHfTgNES4W8K2SNSgAxzH/eVYJG1LTMGzMtFHIyM0Sc3Oz0ssIUQ6Js4+CWXm2rXbQyC8=
+	t=1762822264; cv=none; b=R1dAXSC5lBU+W4yLgnKaE42bCAHsgkbaiQkEsoxe7Ns1g3eMFrqKksjD7iHzhY4P8nCjVtXKtP6dhfwgt0ZUmte2MuDbvkCRWSnsO+aPJPRDITtFEYWZZ22AWJdhzaKPBbEes1VAVB6rBYXnAY+IqooCV2HmJKxVqNDpDstt2wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822262; c=relaxed/simple;
-	bh=FOufYa5A1Wnw7YuUxGQUPRtbQVOsOK7YdpwjN2Ak0fo=;
+	s=arc-20240116; t=1762822264; c=relaxed/simple;
+	bh=qDo08HJc97ZOlbphHhMX2clzexLOE5GzeDYVU1daZkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShBUHhCEno6QQOXldrbL0of5vdOIMVUCieb8MwO6zb6QGHdSWsSmgd2XLIMqag4b1T59kxGTvzSLYi1rEe+Dw4bi0Uz+K9HYPtDgXQTFLuwEr/7cEvyKZmxhQKmGhKzIM5LmyckXXbZ4s0iserxDAGLDSTIS/7uHeFrls/A8iY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYGLogyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kf+fLMoVU49xPYMGlJ2C2gjwX3dScBM8DOPMM1w/Uf1A3jWPO/MCVHnHOUP4Nza1CbcwLok5hHBKcVUZ1sCYTzAURsjyKgYBsKiFfSXjAC+3m0UHN+7vPpwSXtO7nXlvKivS9E2clIW3/gLIfDU60OPptYjp6EZKCdctCSEQYWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMjZFhqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYGLogyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E456BC4CEF5;
-	Tue, 11 Nov 2025 00:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMjZFhqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37374C16AAE;
+	Tue, 11 Nov 2025 00:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822262;
-	bh=FOufYa5A1Wnw7YuUxGQUPRtbQVOsOK7YdpwjN2Ak0fo=;
+	s=korg; t=1762822264;
+	bh=qDo08HJc97ZOlbphHhMX2clzexLOE5GzeDYVU1daZkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYGLogyncqq/VIZtjxLfY+kBLV8ERI5M0wHAAY6RGQdiP5hOvGMzAOe05yKxQwrKs
-	 U1r/0REByZ8Eo0T2EMOSxM9+ijC/Ps+0J5gkz6EAub1OtO9GniGugZebU5S8n2htD8
-	 b64E1F7+q49KOXAlG2hmIeDWpBCjf8LAfRfbXV7k=
+	b=uMjZFhqkEELUdFpJsUjO06o6alGL6VTlfI6p7jR6ui/HVK/9TlMijNtWRjrTBueP3
+	 T3qFh81x0ar2tiEGxeCxs/iElcxdTIR9qm2Nzu7wU/FRIvU1HBp4Gox8mPxDqyHZ5d
+	 /OJyaux2sTHXafVDh02nkrxwWHxrqu5jnTSD3WIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 068/849] ALSA: usb-audio: add mono main switch to Presonus S1824c
-Date: Tue, 11 Nov 2025 09:33:58 +0900
-Message-ID: <20251111004538.070660263@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 014/565] mptcp: restore window probe
+Date: Tue, 11 Nov 2025 09:37:50 +0900
+Message-ID: <20251111004527.184527451@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 659169c4eb21f8d9646044a4f4e1bc314f6f9d0c ]
+commit a824084b98d8a1dbd6e85d0842a8eb5e73467f59 upstream.
 
-The 1824c does not have the A/B switch that the 1810c has,
-but instead it has a mono main switch that sums the two
-main output channels to mono.
+Since commit 72377ab2d671 ("mptcp: more conservative check for zero
+probes") the MPTCP-level zero window probe check is always disabled, as
+the TCP-level write queue always contains at least the newly allocated
+skb.
 
-Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 75cdae446ddf ("ALSA: usb-audio: don't log messages meant for 1810c when initializing 1824c")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Refine the relevant check tacking in account that the above condition
+and that such skb can have zero length.
+
+Fixes: 72377ab2d671 ("mptcp: more conservative check for zero probes")
+Cc: stable@vger.kernel.org
+Reported-by: Geliang Tang <geliang@kernel.org>
+Closes: https://lore.kernel.org/d0a814c364e744ca6b836ccd5b6e9146882e8d42.camel@kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-3-38ffff5a9ec8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_s1810c.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
-index 65bdda0841048..2413a6d96971c 100644
---- a/sound/usb/mixer_s1810c.c
-+++ b/sound/usb/mixer_s1810c.c
-@@ -93,6 +93,7 @@ struct s1810c_ctl_packet {
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1340,7 +1340,12 @@ alloc_skb:
+ 	if (copy == 0) {
+ 		u64 snd_una = READ_ONCE(msk->snd_una);
  
- #define SC1810C_CTL_LINE_SW	0
- #define SC1810C_CTL_MUTE_SW	1
-+#define SC1824C_CTL_MONO_SW	2
- #define SC1810C_CTL_AB_SW	3
- #define SC1810C_CTL_48V_SW	4
- 
-@@ -123,6 +124,7 @@ struct s1810c_state_packet {
- #define SC1810C_STATE_48V_SW	58
- #define SC1810C_STATE_LINE_SW	59
- #define SC1810C_STATE_MUTE_SW	60
-+#define SC1824C_STATE_MONO_SW	61
- #define SC1810C_STATE_AB_SW	62
- 
- struct s1810_mixer_state {
-@@ -502,6 +504,15 @@ static const struct snd_kcontrol_new snd_s1810c_mute_sw = {
- 	.private_value = (SC1810C_STATE_MUTE_SW | SC1810C_CTL_MUTE_SW << 8)
- };
- 
-+static const struct snd_kcontrol_new snd_s1824c_mono_sw = {
-+	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
-+	.name = "Mono Main Out Switch",
-+	.info = snd_ctl_boolean_mono_info,
-+	.get = snd_s1810c_switch_get,
-+	.put = snd_s1810c_switch_set,
-+	.private_value = (SC1824C_STATE_MONO_SW | SC1824C_CTL_MONO_SW << 8)
-+};
-+
- static const struct snd_kcontrol_new snd_s1810c_48v_sw = {
- 	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
- 	.name = "48V Phantom Power On Mic Inputs Switch",
-@@ -588,8 +599,17 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
- 	if (ret < 0)
- 		return ret;
- 
--	ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
--	if (ret < 0)
--		return ret;
-+	// The 1824c has a Mono Main switch instead of a
-+	// A/B select switch.
-+	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
-+		if (ret < 0)
-+			return ret;
-+	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	return ret;
- }
--- 
-2.51.0
-
+-		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
++		/* No need for zero probe if there are any data pending
++		 * either at the msk or ssk level; skb is the current write
++		 * queue tail and can be empty at this point.
++		 */
++		if (snd_una != msk->snd_nxt || skb->len ||
++		    skb != tcp_send_head(ssk)) {
+ 			tcp_remove_empty_skb(ssk);
+ 			return 0;
+ 		}
 
 
