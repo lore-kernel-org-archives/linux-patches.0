@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFD02FFF94;
-	Tue, 11 Nov 2025 01:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAA1262FEC;
+	Tue, 11 Nov 2025 01:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824790; cv=none; b=fYWYlqv/M2Mi312CVHkZl8waQraucBEHfZNct00zwMCOxBpu3G/xyJg2UHUxU93ni/mORluMPM+J0xoYlRx3L9qwedG6IgZEA3H9vZ77nYxixLhL52OIs1UEvb8FHR/0e0PbIZXIMC+rxjO1T+GHO0rBz1vjPKBzO23VKjVf490=
+	t=1762824793; cv=none; b=FMd0Hh9EQpzTbJp/gdyWaAikfRMApjCJes7h0SSd7ITV924vl4vLcaZiJPiL9jNHQIH/fPQu9dgMzHiwOELIaKOnx6d+/I4q28Te4+YfCw9QMyH6AM6REjYtrbfli07TKzBrsH7negOzzy4aMFuVrBdWE7STLhbStNsKeuoCJdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824790; c=relaxed/simple;
-	bh=MvytS1IcXzQ0YjfC0EsJVPjsF6GNwkYGgUDXiL3AboQ=;
+	s=arc-20240116; t=1762824793; c=relaxed/simple;
+	bh=Coezu9Wl/JWNJGcI6x+JYiUftPatNoMBQDrvLsoGTOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N20U4c8gxd5V2WKTKtrT8c6+m/dG9YqDI3tLWHFPdZb2qhhQBkZjts+YKbyJr3ZKhNogHgLoF8oLTQyRMlGxuwS66YOv0iSPWFtnsQ0geHV9/QrFYW/OB+3kU+/dq0qMVD97NAf5648Hvdy75wKcooxNQVEYGXvJsMPHRtolBMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtB6I3sy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DY17YfxpBlWqw0fYMOsIylfu8N19ynRIa62jDNmbiIlz2vsI940D4CWvFxzhRsLiZ/Dpi/hqYVtloX/sM6e7p9VEPgO6nK3cOLLDjDyOYlJoIgzzP7ZaJPXjksJyyeU3zn5KQei1G+oEOjjldN4RQj3eYnW8AyBaWxhF5U58/e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qez51ZZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtB6I3sy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493EBC4CEFB;
-	Tue, 11 Nov 2025 01:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qez51ZZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A0C4CEF5;
+	Tue, 11 Nov 2025 01:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824790;
-	bh=MvytS1IcXzQ0YjfC0EsJVPjsF6GNwkYGgUDXiL3AboQ=;
+	s=korg; t=1762824793;
+	bh=Coezu9Wl/JWNJGcI6x+JYiUftPatNoMBQDrvLsoGTOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtB6I3sye99R+5TEja3GGXRIHVKPkML4YtdrjTWzMK8jaCrq33Hv0GG8q8Ff9wff6
-	 E6n1LV9XphI6mJM+hd8RK4A/C8awE5vjOUtkvifFTUZG2A1UG/eb2QVYvGAOMr8g1N
-	 p7J+acatfkqLCmHH8TTwGfDRFsy0UxRxZnzW3+VI=
+	b=qez51ZZBvYrXlGjnBv90rbAgP0cQejWvB3izmJS0FsSYPd+QWrrxDNJgnouu6rGh/
+	 syHh9D4ommjkFElw6S0myUkz80ih3v4B/JtaVOdlLu0X7SK5yAZfuTBdfhUArMFNpa
+	 BwY4FcYuz4HjPhmKanNFHIUyxNDXSpb7SH+eRKSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruno Thomsen <bruno.thomsen@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 487/565] rtc: pcf2127: fix watchdog interrupt mask on pcf2131
-Date: Tue, 11 Nov 2025 09:45:43 +0900
-Message-ID: <20251111004537.884743771@linuxfoundation.org>
+Subject: [PATCH 6.12 518/565] gpiolib: fix invalid pointer access in debugfs
+Date: Tue, 11 Nov 2025 09:46:14 +0900
+Message-ID: <20251111004538.612759596@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,48 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bruno Thomsen <bruno.thomsen@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 87064da2db7be537a7da20a25c18ba912c4db9e1 ]
+[ Upstream commit 2f6115ad8864cf3f48598f26c74c7c8e5c391919 ]
 
-When using interrupt pin (INT A) as watchdog output all other
-interrupt sources need to be disabled to avoid additional
-resets. Resulting INT_A_MASK1 value is 55 (0x37).
+If the memory allocation in gpiolib_seq_start() fails, the s->private
+field remains uninitialized and is later dereferenced without checking
+in gpiolib_seq_stop(). Initialize s->private to NULL before calling
+kzalloc() and check it before dereferencing it.
 
-Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Link: https://lore.kernel.org/r/20250902182235.6825-1-bruno.thomsen@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: e348544f7994 ("gpio: protect the list of GPIO devices with SRCU")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20251103141132.53471-1-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf2127.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpio/gpiolib.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
-index e793c019fb9d7..05a54f4d4d9a6 100644
---- a/drivers/rtc/rtc-pcf2127.c
-+++ b/drivers/rtc/rtc-pcf2127.c
-@@ -528,6 +528,21 @@ static int pcf2127_watchdog_init(struct device *dev, struct pcf2127 *pcf2127)
- 			set_bit(WDOG_HW_RUNNING, &pcf2127->wdd.status);
- 	}
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index e5d0d2b0d7989..967ff661e4c96 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -4997,6 +4997,8 @@ static void *gpiolib_seq_start(struct seq_file *s, loff_t *pos)
+ 	struct gpio_device *gdev;
+ 	loff_t index = *pos;
  
-+	/*
-+	 * When using interrupt pin (INT A) as watchdog output, only allow
-+	 * watchdog interrupt (PCF2131_BIT_INT_WD_CD) and disable (mask) all
-+	 * other interrupts.
-+	 */
-+	if (pcf2127->cfg->type == PCF2131) {
-+		ret = regmap_write(pcf2127->regmap,
-+				   PCF2131_REG_INT_A_MASK1,
-+				   PCF2131_BIT_INT_BLIE |
-+				   PCF2131_BIT_INT_BIE |
-+				   PCF2131_BIT_INT_AIE |
-+				   PCF2131_BIT_INT_SI |
-+				   PCF2131_BIT_INT_MI);
-+	}
++	s->private = NULL;
 +
- 	return devm_watchdog_register_device(dev, &pcf2127->wdd);
- }
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return NULL;
+@@ -5030,7 +5032,11 @@ static void *gpiolib_seq_next(struct seq_file *s, void *v, loff_t *pos)
  
+ static void gpiolib_seq_stop(struct seq_file *s, void *v)
+ {
+-	struct gpiolib_seq_priv *priv = s->private;
++	struct gpiolib_seq_priv *priv;
++
++	priv = s->private;
++	if (!priv)
++		return;
+ 
+ 	srcu_read_unlock(&gpio_devices_srcu, priv->idx);
+ 	kfree(priv);
 -- 
 2.51.0
 
