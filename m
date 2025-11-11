@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1C9337BB4;
-	Tue, 11 Nov 2025 01:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98021347FEA;
+	Tue, 11 Nov 2025 01:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825312; cv=none; b=jnnQmn2JE3fNeBn4ldUb5vMWZ4xkikRNN06XZ+eZZ+RwI81RdswEiMLFJcxYz7/5gOhFLEV7ysdStjJKlpzjkc83jxVzGKAdOF7LEZmSk3GkgdT7PQrC/7BsarFWEpw6eru+Gh9WT5iixRNNAPduPcBGj2TtRR+YCQE87ypHnX0=
+	t=1762825314; cv=none; b=R+5fgGmk23eT2yuqchubYWom09NXz7eWcfxf1ns4cSMSpBQdirjveitxXKJrXQQ7kyhA35h7RMMhw8lfo6bRDlQ8vOaKyzFy6vfXg3itkcrvUqzktLIu7qDuVl+e1qa73ah4qtKCoYZg/Q9s6LQAv5NgXCZhUBFv32fUUVtbq7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825312; c=relaxed/simple;
-	bh=2jhp47A2ZnYUS3WAGFs0mKespybatzglls4I4lxxhm0=;
+	s=arc-20240116; t=1762825314; c=relaxed/simple;
+	bh=Kn3gl+ZSPiVEzOnb7O2L1rkrDByVHEV0edWpgOxnq+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=USBDBrC+xVF2L5lo2EJ6izmYcrotNdviFxCihbRlG7zyiBTL6MNa/YxlxFfWbbOL0jPLVydPWsXNTMhu8hsiw5CdP+3WcAN8lkzs3IDBFc807GUI9vCi3yAMgTBAzFNO6Us/DnCAIBhBUiNS0yMBl/ZUAG8y1PqjKLRFGgrT4Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmKJeUBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ew4/vq8yvdATok2yDlnl0AkG4WDK1+F22dJrgOyNC/QjrY9dt5PkdK47ZVy+/9jo5z1M9i93NgDflHcBI1VbfvZZn7eTovaTBgHTCLVWVjl7lJXU10tEfO4WtFb0BQjxikrRdypp7+6D71I8yPjabIyZkmgvVv/KNZdcx18+PZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE5VfA5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmKJeUBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2681C4CEFB;
-	Tue, 11 Nov 2025 01:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE5VfA5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31095C4CEF5;
+	Tue, 11 Nov 2025 01:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825312;
-	bh=2jhp47A2ZnYUS3WAGFs0mKespybatzglls4I4lxxhm0=;
+	s=korg; t=1762825314;
+	bh=Kn3gl+ZSPiVEzOnb7O2L1rkrDByVHEV0edWpgOxnq+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmKJeUBzL7ihvbFKHpFWg1DNJmoAQuC3Jsbd2g1+wwlGb+3PlAR92IoI0UeuML/aP
-	 ykPlEVADr8S4rE2EH/54peFTg3vQNPNnybx5jzqnbM/id6TEjrOx4ixNSqR5PRcN90
-	 R4cOSIVpMS5yypNO+tPN2W6fi7He9yih16yHix1w=
+	b=LE5VfA5pZjJD4ZB2u9QeX+9X53uQOFAKP7p0bj5ELQWC9uaQaS/fysnHl8Gp7NzWT
+	 CnsA+6gHEXwTDk524/GSxjhQQro6slaKXv71lefVYEU+FNGUPnyJDaCm+NSe1opynG
+	 gO/XDSmBg7bh500iS5nhGA173Q0VzGqryKyi98KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Beau Belgrave <beaub@linux.microsoft.com>
-Subject: [PATCH 6.17 748/849] tracing: tprobe-events: Fix to put tracepoint_user when disable the tprobe
-Date: Tue, 11 Nov 2025 09:45:18 +0900
-Message-ID: <20251111004554.520308026@linuxfoundation.org>
+	"Randall P. Embry" <rpembry@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 713/849] 9p: fix /sys/fs/9p/caches overwriting itself
+Date: Tue, 11 Nov 2025 09:44:43 +0900
+Message-ID: <20251111004553.672578120@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -44,52 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Randall P. Embry <rpembry@gmail.com>
 
-commit c91afa7610235f89a5e8f5686aac23892ab227ed upstream.
+[ Upstream commit 86db0c32f16c5538ddb740f54669ace8f3a1f3d7 ]
 
-__unregister_trace_fprobe() checks tf->tuser to put it when removing
-tprobe. However, disable_trace_fprobe() does not use it and only calls
-unregister_fprobe(). Thus it forgets to disable tracepoint_user.
+caches_show() overwrote its buffer on each iteration,
+so only the last cache tag was visible in sysfs output.
 
-If the trace_fprobe has tuser, put it for unregistering the tracepoint
-callbacks when disabling tprobe correctly.
+Properly append with snprintf(buf + count, …).
 
-Link: https://lore.kernel.org/all/176244794466.155515.3971904050506100243.stgit@devnote2/
-
-Fixes: 2867495dea86 ("tracing: tprobe-events: Register tracepoint when enable tprobe event")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: Beau Belgrave <beaub@linux.microsoft.com>
-Reviewed-by: Beau Belgrave <beaub@linux.microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Randall P. Embry <rpembry@gmail.com>
+Message-ID: <20250926-v9fs_misc-v1-2-a8b3907fc04d@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_fprobe.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/9p/v9fs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_fprobe.c b/kernel/trace/trace_fprobe.c
-index fd1b108ab639..8001dbf16891 100644
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -1514,6 +1514,10 @@ static int disable_trace_fprobe(struct trace_event_call *call,
- 	if (!trace_probe_is_enabled(tp)) {
- 		list_for_each_entry(tf, trace_probe_probe_list(tp), tp.list) {
- 			unregister_fprobe(&tf->fp);
-+			if (tf->tuser) {
-+				tracepoint_user_put(tf->tuser);
-+				tf->tuser = NULL;
-+			}
- 		}
- 	}
- 
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 77e9c4387c1df..714cfe76ee651 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -561,7 +561,7 @@ static ssize_t caches_show(struct kobject *kobj,
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+ 		if (v9ses->cachetag) {
+-			n = snprintf(buf, limit, "%s\n", v9ses->cachetag);
++			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+ 			if (n < 0) {
+ 				count = n;
+ 				break;
 -- 
-2.51.2
+2.51.0
 
 
 
