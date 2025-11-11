@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5215D1F5F6;
-	Tue, 11 Nov 2025 01:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D471C28E;
+	Tue, 11 Nov 2025 01:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822894; cv=none; b=cVTuhJQVqZNPRMbnsLEgOHul+J3p2onpT0apaYbyOXlvFXknSk1hThH99T6UdsBcWXKL4MvZicWHf2zb73Kl4a3bFFb9yvybQDooM5KpyJjRUEl0cbHc6EVqOzirW0mLVkcngYKsQLOU5Z53JzyWkf4ZsRiKJBBAp08KJvPAlNY=
+	t=1762822896; cv=none; b=LRgU3ierrbAH9IJRSG0VQhh29KXeYHjWQL2Cx5tdtKKrLh+V0yosccLdvs1c2OwA7x756gTC1swgkKa3xelsb2p+r3gtCvOpPUsWtCoXY5meffbcOCtMojyzXo9xNewWDlH83PE1q7h0cm5kbbspxClHX3s+PFx3LMH+bgVq3dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822894; c=relaxed/simple;
-	bh=IwGfsHayuZeZeWLynPUXTAxZcBbgRLK8zDv6cFT9Hlg=;
+	s=arc-20240116; t=1762822896; c=relaxed/simple;
+	bh=V413ZodMG1xKKZqpiIup39OLaKSfA/pNH5xrD3ieHx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DarMdPXHjeeDnF6MoV+ozT8qxXDKWpQRqxuGWajmGwot+i7V7NnJO4pkWs+YnDW5URGJ8t5qjiFCM5yRu3MkM4NpdUto/Fx60YkI7xlmiDptssvhkprEZb06dtfvXLMl9aNRAiPQM9IGe61UYycuSyqjtkIu7shC3+Oakl6h/+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/geCPOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MrIc6ehpehZNCg6VSqgnsuEvstB0NnrfQr/HAUxtIS75AISVwJDltjcSWq0nmNbtvNmi866gh3AIgX3OJjkd1Mx0MQFF8zoK08IZx7HRNF2nb1HUYCQ4CRQAf4KeWF0w8+ubei+KGCgCTDfRnKkGUqJsJ/JTpg8qc59Uju1MEbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjUzkENn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/geCPOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59C9C4CEF5;
-	Tue, 11 Nov 2025 01:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjUzkENn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24790C4CEF5;
+	Tue, 11 Nov 2025 01:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822894;
-	bh=IwGfsHayuZeZeWLynPUXTAxZcBbgRLK8zDv6cFT9Hlg=;
+	s=korg; t=1762822896;
+	bh=V413ZodMG1xKKZqpiIup39OLaKSfA/pNH5xrD3ieHx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/geCPOxUNap/z2nkTgGkjosexhxfoUmNcBM0x9TjDn1UgZORppGOxi0Yd/rytQaD
-	 6rkjhK4Y2KZphUaSlTgQtpkS3go+Ak2U+DY9hGVReP51nLMUFG9wrULZNSdohwc9Aa
-	 pKBLcZrlvu7dvZ60eKPIDMexwpJDVLy+dombc7Vs=
+	b=NjUzkENnX+UqtQowwHm3f/9kA5npl2nMLPwYDLRwJZomGNwMrich9xe6YFVb7SXPc
+	 mCbWFiAFMXnaLDrQmnh8PxarA6hWbXlzt08VwyPqKkHsTdbWxxeeLA/tdTbQW1Pjzv
+	 k+IruLKDlu91VSxsR+4pvXD7KLfa3ywQjYhVpb9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Neal Gompa <neal@gompa.dev>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Sven Peter <sven@kernel.org>,
+	=?UTF-8?q?Jonas=20Schw=C3=B6bel?= <jonasschwoebel@yahoo.de>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 191/849] pmdomain: apple: Add "apple,t8103-pmgr-pwrstate"
-Date: Tue, 11 Nov 2025 09:36:01 +0900
-Message-ID: <20251111004541.053061546@linuxfoundation.org>
+Subject: [PATCH 6.12 129/565] ARM: tegra: p880: set correct touchscreen clipping
+Date: Tue, 11 Nov 2025 09:39:45 +0900
+Message-ID: <20251111004529.852597951@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Jonas Schwöbel <jonasschwoebel@yahoo.de>
 
-[ Upstream commit 442816f97a4f84cb321d3359177a3b9b0ce48a60 ]
+[ Upstream commit b49a73a08100ab139e07cfa7ca36e9b15787d0ab ]
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,pmgr-pwrstate" anymore [1]. Use
-"apple,t8103-pmgr-pwrstate" as base compatible as it is the SoC the
-driver and bindings were written for.
+Existing touchscreen clipping is too small and causes problems with
+touchscreen accuracy.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
-
-Signed-off-by: Janne Grunau <j@jannau.net>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Jonas Schwöbel <jonasschwoebel@yahoo.de>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/apple/pmgr-pwrstate.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/apple/pmgr-pwrstate.c b/drivers/pmdomain/apple/pmgr-pwrstate.c
-index 9467235110f46..82c33cf727a82 100644
---- a/drivers/pmdomain/apple/pmgr-pwrstate.c
-+++ b/drivers/pmdomain/apple/pmgr-pwrstate.c
-@@ -306,6 +306,7 @@ static int apple_pmgr_ps_probe(struct platform_device *pdev)
- }
+diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+index 2f7754fd42a16..c6ef0a20c19f3 100644
+--- a/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
++++ b/arch/arm/boot/dts/nvidia/tegra30-lg-p880.dts
+@@ -108,8 +108,8 @@
+ 	i2c@7000c400 {
+ 		touchscreen@20 {
+ 			rmi4-f11@11 {
+-				syna,clip-x-high = <1110>;
+-				syna,clip-y-high = <1973>;
++				syna,clip-x-high = <1440>;
++				syna,clip-y-high = <2560>;
  
- static const struct of_device_id apple_pmgr_ps_of_match[] = {
-+	{ .compatible = "apple,t8103-pmgr-pwrstate" },
- 	{ .compatible = "apple,pmgr-pwrstate" },
- 	{}
- };
+ 				touchscreen-inverted-y;
+ 			};
 -- 
 2.51.0
 
