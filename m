@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B14B25C818;
-	Tue, 11 Nov 2025 01:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0FD2848BA;
+	Tue, 11 Nov 2025 01:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824757; cv=none; b=F7Y14C2oeAc5AXpEwNIK6yyMwgYT45ytWFlFM8S/YxtzggIYi5DDxBa6IArOOZlXl1h3CXYCxNuY7675ys9vsghVGlO/iFIJUW1dh3Xw7OMlg8FYkQNAw9/Gr/DGf3a0Iav567uC22JVX+iyqDf/O55MQ7RusC1uCn2SBFCeXSE=
+	t=1762824759; cv=none; b=l00O/8EoG5bvzSWhIXbPUBaVq82EltFZGQ8um6r6ml0yzRh3FXXY1nYnMxFhtI/KlCiI2hwSQckArBLkg1xNfTsPzNDOE7Dbsp6dG0k8TPAxtgtgLAVI8I5AWzBmectDFxbaP/08Z8lcsc2Cy98hg3D2WX20BWvuiLIyphSSRds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824757; c=relaxed/simple;
-	bh=4SyVeKiv/CWkIPeUmfEVD6B2SmKcJ0Vci3v6zmEA+Gs=;
+	s=arc-20240116; t=1762824759; c=relaxed/simple;
+	bh=7t7sxIxd8GOAme5ZTpNEOF5Eg2DFpjRUGHDM1pbDyZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGNSn6UENat8eIe4Q9K+xqvQe03DqSI5QBUh8gZrmLqjyazv2O3zbiICFL4kfSo0mcR9xz9LGOb34E7VaF7tSaQVi9TnU7oVEIo4wt8u7Q5rtAq7Gy4Al6MZx8pZcg5+fhHugXYAPPoqmxpbfSBAreMDk6Q3HzlvOn/1SDRfkrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kE0XbUhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMc555N2ClnUeHCuqr6gNDLC7QBNAo1o7CYyuSbuCSqvpOCRogxTj/Jouos/94F2CIuXrM7HazltmfheWWmMRGU/0OzQM3BMteupth6GwQ9X3SAYxEaAk+nAsAMeJafth6YShgY5cFfupGkk8cYBsEio4JQyYjMm/rzY/Y+jGtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdTtL2pY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kE0XbUhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95AAC4CEF5;
-	Tue, 11 Nov 2025 01:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdTtL2pY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BD2C4CEFB;
+	Tue, 11 Nov 2025 01:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824757;
-	bh=4SyVeKiv/CWkIPeUmfEVD6B2SmKcJ0Vci3v6zmEA+Gs=;
+	s=korg; t=1762824759;
+	bh=7t7sxIxd8GOAme5ZTpNEOF5Eg2DFpjRUGHDM1pbDyZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kE0XbUhRsqsv2iAJaCMbmKzXXhZW1m6aMFYW5wJTQdzsuCBU1NCwtfT+zfx744NSQ
-	 BVparGZd6rLJ7ws1lNerOiKfP5QaaJkjJkQHMl1t/OkiUd17UmUC2faG1rwRFDcP6M
-	 tkqZFhKWOJ5rXzEeb+C+9DDiTIXUhJZYwfJ3THA0=
+	b=MdTtL2pY93E7EZaoUoUm0G2ub+63weUTc17UDSSZUzvrUbNuw0ULDs5ZaZlG8BrxA
+	 3hcq2ZLy+diPI68j1Gbt6sxIN44lh8MZhHRCp6BIcK6ASxXMbfcfPenb73QqxhOM0E
+	 Cw50jxBHpOx72IHA8+p4+wGTLiC6/tBGjs0fgTcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 564/849] HID: i2c-hid: Resolve touchpad issues on Dell systems during S4
-Date: Tue, 11 Nov 2025 09:42:14 +0900
-Message-ID: <20251111004550.047473889@linuxfoundation.org>
+Subject: [PATCH 6.12 512/565] net: dsa: tag_brcm: legacy: fix untagged rx on unbridged ports for bcm63xx
+Date: Tue, 11 Nov 2025 09:46:08 +0900
+Message-ID: <20251111004538.472446946@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,132 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 7d62beb102d6fa9a4e5e874be7fbf47a62fcc4f6 ]
+[ Upstream commit 3d18a84eddde169d6dbf3c72cc5358b988c347d0 ]
 
-Dell systems utilize an EC-based touchpad emulation when the ACPI
-touchpad _DSM is not invoked. This emulation acts as a secondary
-master on the I2C bus, designed for scenarios where the I2C touchpad
-driver is absent, such as in BIOS menus. Typically, loading the
-i2c-hid module triggers the _DSM at initialization, disabling the
-EC-based emulation.
+The internal switch on BCM63XX SoCs will unconditionally add 802.1Q VLAN
+tags on egress to CPU when 802.1Q mode is enabled. We do this
+unconditionally since commit ed409f3bbaa5 ("net: dsa: b53: Configure
+VLANs while not filtering").
 
-However, if the i2c-hid module is missing from the boot kernel
-used for hibernation snapshot restoration, the _DSM remains
-uncalled, resulting in dual masters on the I2C bus and
-subsequent arbitration errors. This issue arises when i2c-hid
-resides in the rootfs instead of the kernel or initramfs.
+This is fine for VLAN aware bridges, but for standalone ports and vlan
+unaware bridges this means all packets are tagged with the default VID,
+which is 0.
 
-To address this, switch from using the SYSTEM_SLEEP_PM_OPS()
-macro to dedicated callbacks, introducing a specific
-callback for restoring the S4 image. This callback ensures
-the _DSM is invoked.
+While the kernel will treat that like untagged, this can break userspace
+applications processing raw packets, expecting untagged traffic, like
+STP daemons.
 
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+This also breaks several bridge tests, where the tcpdump output then
+does not match the expected output anymore.
+
+Since 0 isn't a valid VID, just strip out the VLAN tag if we encounter
+it, unless the priority field is set, since that would be a valid tag
+again.
+
+Fixes: 964dbf186eaa ("net: dsa: tag_brcm: add support for legacy tags")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20251027194621.133301-1-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-acpi.c |  8 ++++++++
- drivers/hid/i2c-hid/i2c-hid-core.c | 28 +++++++++++++++++++++++++++-
- drivers/hid/i2c-hid/i2c-hid.h      |  2 ++
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ net/dsa/tag_brcm.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index 1b49243adb16a..abd700a101f46 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -76,6 +76,13 @@ static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
- 	return hid_descriptor_address;
- }
- 
-+static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
-+{
-+	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
-+
-+	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+}
-+
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
+diff --git a/net/dsa/tag_brcm.c b/net/dsa/tag_brcm.c
+index 9f4b0bcd95cde..df0ab8215b810 100644
+--- a/net/dsa/tag_brcm.c
++++ b/net/dsa/tag_brcm.c
+@@ -218,12 +218,14 @@ static struct sk_buff *brcm_leg_tag_rcv(struct sk_buff *skb,
  {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
-@@ -96,6 +103,7 @@ static int i2c_hid_acpi_probe(struct i2c_client *client)
+ 	int len = BRCM_LEG_TAG_LEN;
+ 	int source_port;
++	__be16 *proto;
+ 	u8 *brcm_tag;
  
- 	ihid_acpi->adev = ACPI_COMPANION(dev);
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
-+	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
+ 	if (unlikely(!pskb_may_pull(skb, BRCM_LEG_TAG_LEN + VLAN_HLEN)))
+ 		return NULL;
  
- 	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
- 	if (ret < 0)
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 30ebde1273be3..63f46a2e57882 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -961,6 +961,14 @@ static void i2c_hid_core_shutdown_tail(struct i2c_hid *ihid)
- 	ihid->ops->shutdown_tail(ihid->ops);
- }
+ 	brcm_tag = dsa_etype_header_pos_rx(skb);
++	proto = (__be16 *)(brcm_tag + BRCM_LEG_TAG_LEN);
  
-+static void i2c_hid_core_restore_sequence(struct i2c_hid *ihid)
-+{
-+	if (!ihid->ops->restore_sequence)
-+		return;
-+
-+	ihid->ops->restore_sequence(ihid->ops);
-+}
-+
- static int i2c_hid_core_suspend(struct i2c_hid *ihid, bool force_poweroff)
- {
- 	struct i2c_client *client = ihid->client;
-@@ -1370,8 +1378,26 @@ static int i2c_hid_core_pm_resume(struct device *dev)
- 	return i2c_hid_core_resume(ihid);
- }
+ 	source_port = brcm_tag[5] & BRCM_LEG_PORT_ID;
  
-+static int i2c_hid_core_pm_restore(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	struct i2c_hid *ihid = i2c_get_clientdata(client);
-+
-+	if (ihid->is_panel_follower)
-+		return 0;
-+
-+	i2c_hid_core_restore_sequence(ihid);
-+
-+	return i2c_hid_core_resume(ihid);
-+}
-+
- const struct dev_pm_ops i2c_hid_core_pm = {
--	SYSTEM_SLEEP_PM_OPS(i2c_hid_core_pm_suspend, i2c_hid_core_pm_resume)
-+	.suspend = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.resume = pm_sleep_ptr(i2c_hid_core_pm_resume),
-+	.freeze = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.thaw = pm_sleep_ptr(i2c_hid_core_pm_resume),
-+	.poweroff = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.restore = pm_sleep_ptr(i2c_hid_core_pm_restore),
- };
- EXPORT_SYMBOL_GPL(i2c_hid_core_pm);
+@@ -231,8 +233,12 @@ static struct sk_buff *brcm_leg_tag_rcv(struct sk_buff *skb,
+ 	if (!skb->dev)
+ 		return NULL;
  
-diff --git a/drivers/hid/i2c-hid/i2c-hid.h b/drivers/hid/i2c-hid/i2c-hid.h
-index 2c7b66d5caa0f..1724a435c783a 100644
---- a/drivers/hid/i2c-hid/i2c-hid.h
-+++ b/drivers/hid/i2c-hid/i2c-hid.h
-@@ -27,11 +27,13 @@ static inline u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
-  * @power_up: do sequencing to power up the device.
-  * @power_down: do sequencing to power down the device.
-  * @shutdown_tail: called at the end of shutdown.
-+ * @restore_sequence: hibernation restore sequence.
-  */
- struct i2chid_ops {
- 	int (*power_up)(struct i2chid_ops *ops);
- 	void (*power_down)(struct i2chid_ops *ops);
- 	void (*shutdown_tail)(struct i2chid_ops *ops);
-+	void (*restore_sequence)(struct i2chid_ops *ops);
- };
+-	/* VLAN tag is added by BCM63xx internal switch */
+-	if (netdev_uses_dsa(skb->dev))
++	/* The internal switch in BCM63XX SoCs always tags on egress on the CPU
++	 * port. We use VID 0 internally for untagged traffic, so strip the tag
++	 * if the TCI field is all 0, and keep it otherwise to also retain
++	 * e.g. 802.1p tagged packets.
++	 */
++	if (proto[0] == htons(ETH_P_8021Q) && proto[1] == 0)
+ 		len += VLAN_HLEN;
  
- int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
+ 	/* Remove Broadcom tag and update checksum */
 -- 
 2.51.0
 
