@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF344C97;
-	Tue, 11 Nov 2025 00:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1014C97;
+	Tue, 11 Nov 2025 00:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822592; cv=none; b=dFOCjlkhnzNUK9COfmNZ/qY2OzwoibBtAtAM+IFIDfgyBUHtY623Z8KsZql/gOaZO/LhKhpbc/j1mMvU0E40t5OUxUIbRnhQlpY4sY4ONTAquj/E3AbVuWV6U8RUJw3XZAXgXKDUURcQc/brh7AxKYUHcvTwHIuHYg4QJc6F5Zs=
+	t=1762822595; cv=none; b=jFyaIfA/NHyqUharPTN7Yscd2AS5cKiNNFY4D8qus00EVGtjka6sk1hDDD8VlYhopmhE+EZd4JEfg/54HblckfL04cBXNLgC55OqfYhLwX+Zs0Y0sY/9Wl1WS1gRAkN6S1GJwrRz5IODrg2VZtwiyAt9TQ1/PyaLPU2IuEwLz8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822592; c=relaxed/simple;
-	bh=P4La11gWHwUZ9Q1P5MliVuAq9AnZ2wdYlsi7DiHgUwI=;
+	s=arc-20240116; t=1762822595; c=relaxed/simple;
+	bh=X4bHshdUPSahY1+xvfvgsQP8sE/bWi76sCWOjyQ0Rxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IHkqjp25ejafFVHre2kWXt802lTHFUe6W6FwZ9ETIGthsMj1444uGKA5pVsWqnF1YEywFqShGEQr4HdQkf6yx/nB92UTYkavhy3YKdjqlEmGFzKl4Ow9gx40Y1c0QFwT9fLwQAKNKpCEqOilNmgzPDE5rBq1RN8U1LH2KXPmOhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njF33hPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2vw6qNrCI3ygt2cMWQyh/uBIblES00HC1feTEcOIlIQnQciYk8VpLQ2HMc2oq8xB/PzM3LWKTze6u2gdEqDx9LF9/4FIFkYe8h8NWDmyeMTEZUKxBhaX32TIOuirOX+uoYEvxTaC5P6qSqxzI3hX9EEqvCdjPDemuOyu+2PWtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bz7KHwTK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njF33hPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E952C16AAE;
-	Tue, 11 Nov 2025 00:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bz7KHwTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8526DC19421;
+	Tue, 11 Nov 2025 00:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822592;
-	bh=P4La11gWHwUZ9Q1P5MliVuAq9AnZ2wdYlsi7DiHgUwI=;
+	s=korg; t=1762822594;
+	bh=X4bHshdUPSahY1+xvfvgsQP8sE/bWi76sCWOjyQ0Rxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njF33hPEn372dmF2dMLOYKBhOPrRYrxWeebxFkKggwlqdaD5GnJrBGOH1XfkGzCbl
-	 0iDiCWZR7+E5xbrtA4Vo59V7we22RY3e6BsCGACKhLzlYDvs+NHqw+7fKaaqNWl4DI
-	 AnmqxjZmR0Ex77iO+s7hkawNN5YAaT7j7XLh1D9w=
+	b=Bz7KHwTK9ok+Rft4GGfmVMt8witjUz4+4Po+3GJ9OFSeVWobW9/TUFUArzQOE5JQQ
+	 ayir05I8k10sWq9W2+ncC+SCucF7CvDUmnZhv4IdeOu19FkW0pIsVS+G7UCYdV11hD
+	 WuoltDUFod/mnpntdgECc4MQHAJPgj3MUVx3aw5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 143/849] kselftest/arm64: tpidr2: Switch to waitpid() over wait4()
-Date: Tue, 11 Nov 2025 09:35:13 +0900
-Message-ID: <20251111004539.857559880@linuxfoundation.org>
+	Gregory Price <gourry@gourry.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.12 081/565] x86/CPU/AMD: Add RDSEED fix for Zen5
+Date: Tue, 11 Nov 2025 09:38:57 +0900
+Message-ID: <20251111004528.790455929@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 61a3cf7934b6da3c926cd9961860dd94eb7192ba ]
+commit 607b9fb2ce248cc5b633c5949e0153838992c152 upstream.
 
-wait4() is deprecated, non-standard and about to be removed from nolibc.
+There's an issue with RDSEED's 16-bit and 32-bit register output
+variants on Zen5 which return a random value of 0 "at a rate inconsistent
+with randomness while incorrectly signaling success (CF=1)". Search the
+web for AMD-SB-7055 for more detail.
 
-Switch to the equivalent waitpid() call.
+Add a fix glue which checks microcode revisions.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20250821-nolibc-enosys-v1-6-4b63f2caaa89@weissschuh.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [ bp: Add microcode revisions checking, rewrite. ]
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20251018024010.4112396-1-gourry@gourry.net
+[ bp: 6.12 backport: use the alternative microcode version checking. ]
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/arm64/abi/tpidr2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/amd.c |   35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/tools/testing/selftests/arm64/abi/tpidr2.c b/tools/testing/selftests/arm64/abi/tpidr2.c
-index 4c89ab0f10101..1703543fb7c76 100644
---- a/tools/testing/selftests/arm64/abi/tpidr2.c
-+++ b/tools/testing/selftests/arm64/abi/tpidr2.c
-@@ -182,16 +182,16 @@ static int write_clone_read(void)
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1018,8 +1018,43 @@ static void init_amd_zen4(struct cpuinfo
  	}
+ }
  
- 	for (;;) {
--		waiting = wait4(ret, &status, __WCLONE, NULL);
-+		waiting = waitpid(ret, &status, __WCLONE);
++static bool check_rdseed_microcode(void)
++{
++	struct cpuinfo_x86 *c = &boot_cpu_data;
++	union zen_patch_rev p;
++	u32 min_rev = 0;
++
++	p.ext_fam	= c->x86 - 0xf;
++	p.model		= c->x86_model;
++	p.ext_model	= c->x86_model >> 4;
++	p.stepping	= c->x86_stepping;
++	/* reserved bits are expected to be 0 in test below */
++	p.__reserved	= 0;
++
++	if (cpu_has(c, X86_FEATURE_ZEN5)) {
++		switch (p.ucode_rev >> 8) {
++		case 0xb0021:	min_rev = 0xb00215a; break;
++		case 0xb1010:	min_rev = 0xb101054; break;
++		default:
++			pr_debug("%s: ucode_rev: 0x%x, current revision: 0x%x\n",
++				 __func__, p.ucode_rev, c->microcode);
++			return false;
++		}
++	}
++
++	if (!min_rev)
++		return false;
++
++	return c->microcode >= min_rev;
++}
++
+ static void init_amd_zen5(struct cpuinfo_x86 *c)
+ {
++	if (!check_rdseed_microcode()) {
++		clear_cpu_cap(c, X86_FEATURE_RDSEED);
++		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
++		pr_emerg_once("RDSEED32 is broken. Disabling the corresponding CPUID bit.\n");
++	}
+ }
  
- 		if (waiting < 0) {
- 			if (errno == EINTR)
- 				continue;
--			ksft_print_msg("wait4() failed: %d\n", errno);
-+			ksft_print_msg("waitpid() failed: %d\n", errno);
- 			return 0;
- 		}
- 		if (waiting != ret) {
--			ksft_print_msg("wait4() returned wrong PID %d\n",
-+			ksft_print_msg("waitpid() returned wrong PID %d\n",
- 				       waiting);
- 			return 0;
- 		}
--- 
-2.51.0
-
+ static void init_amd(struct cpuinfo_x86 *c)
 
 
