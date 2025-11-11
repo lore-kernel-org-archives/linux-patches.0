@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F60285CA2;
-	Tue, 11 Nov 2025 01:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5532DC328;
+	Tue, 11 Nov 2025 01:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824672; cv=none; b=VPTs1JXeUdVhkKE/PsWuU7gdvbORpy3LaxNZBSlf6tOv5IlmH2uhNT76XP/1LQkvJGDNoClLEpVhn7LvKLgQt7ck3Nn6C23Me/21YccZemMYebQ3d9NOB/QQu1BxgVEXlt/q9tfGPH2Fpz99HKlrNldnJPwdhJ9+Osc43kSr+cA=
+	t=1762824674; cv=none; b=hVv4iPpbtlx4eJRDBFmY2sVIzqTTK7Ipvt4omg+QJrtVE2jfPpjUmibH0wI+/TJ4L2lSFhY/QJab+e0amqLkQaeBaUPQiw7aqobBk8bWYAFFj5Q6fS92YRqWXkDcRBCvt/FSDUX1DakBg1TwU44b0/3tG9XwC+fykQSQ7OxcsZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824672; c=relaxed/simple;
-	bh=vJEQ3qUY9kKWiOYjf0CEY6PFG81xW89G6Wa+3OEpQZk=;
+	s=arc-20240116; t=1762824674; c=relaxed/simple;
+	bh=VYC1RVqkIVwwae6u0JZ6gdMmAUb5LbidN8zcCEWgrEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPexgWk/Mwk4BVGU6804+i2tDOaZakAfBabiYCvdh2KzGvFANQD+NZjQ6YqGmHGGr5VkgAMUmekk9VBxbZCG1oEsNLxWrwfCbQ1S7cmeNHFclvi+s0XmQiGExQ4oiN6D4LXL6AzNqxuEDQtmk9Tc2Hlnxay7WdWqsEyct6gnjMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ5oWcGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQXLBfd5N2JgRPko7KZEJaQXv+4D1HL3wJt8CBkdg6mmkC8PTtqdYLrYi068P2Ih/YJfThOP0H+i8UbXrW9R5l5cXCAP2cnZyk4ALXfPVkHgnOHiv5QL2PapGYB5yerRHCeq4kZeblNfOqALt4JJe2yUbly1ocjSiVM5GP2ELik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkbe1L0u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ5oWcGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DBDC113D0;
-	Tue, 11 Nov 2025 01:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkbe1L0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4CAC4CEF5;
+	Tue, 11 Nov 2025 01:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824671;
-	bh=vJEQ3qUY9kKWiOYjf0CEY6PFG81xW89G6Wa+3OEpQZk=;
+	s=korg; t=1762824674;
+	bh=VYC1RVqkIVwwae6u0JZ6gdMmAUb5LbidN8zcCEWgrEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZ5oWcGqTrxh2+lP+wsoiKvDQ90/5anc/YjtVoNsYgSbRU3KvIseb7ZsP/34ltnlI
-	 ZPrTkxnYRDDOolQsaqxo2Phw+eqptiEy1s/iPRntbfry/uNoHPDzBaKhpOQOFwIGYG
-	 nRgZnA0FWqHuA3tCFIgBc3I4xThBe0+d35iqR+vM=
+	b=qkbe1L0u5EepmlIKulWjirJOTgTZvFjAN6enHD7Ij3aswnC9qz/VVjkdZplWeKeXb
+	 qcj9IVY2HgpQiGgjWwb7lCJ5FND9ayP+/YCpyzbGSg7zWr0qcuDnPnb5lRzESGYBYu
+	 EcvDYnbapwHM00QLW10sWjVHTxmGlRvgwLWd8lhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kotresh HR <khiremat@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 495/565] ceph: fix multifs mds auth caps issue
-Date: Tue, 11 Nov 2025 09:45:51 +0900
-Message-ID: <20251111004538.070508755@linuxfoundation.org>
+Subject: [PATCH 6.17 548/849] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
+Date: Tue, 11 Nov 2025 09:41:58 +0900
+Message-ID: <20251111004549.654274584@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,177 +47,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kotresh HR <khiremat@redhat.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit 22c73d52a6d05c5a2053385c0d6cd9984732799d ]
+[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
 
-The mds auth caps check should also validate the
-fsname along with the associated caps. Not doing
-so would result in applying the mds auth caps of
-one fs on to the other fs in a multifs ceph cluster.
-The bug causes multiple issues w.r.t user
-authentication, following is one such example.
+Replace kmalloc_array() + copy_from_user() with memdup_array_user().
 
-Steps to Reproduce (on vstart cluster):
-1. Create two file systems in a cluster, say 'fsname1' and 'fsname2'
-2. Authorize read only permission to the user 'client.usr' on fs 'fsname1'
-    $ceph fs authorize fsname1 client.usr / r
-3. Authorize read and write permission to the same user 'client.usr' on fs 'fsname2'
-    $ceph fs authorize fsname2 client.usr / rw
-4. Update the keyring
-    $ceph auth get client.usr >> ./keyring
+This shrinks the source code and improves separation between the kernel
+and userspace slabs.
 
-With above permssions for the user 'client.usr', following is the
-expectation.
-  a. The 'client.usr' should be able to only read the contents
-     and not allowed to create or delete files on file system 'fsname1'.
-  b. The 'client.usr' should be able to read/write on file system 'fsname2'.
-
-But, with this bug, the 'client.usr' is allowed to read/write on file
-system 'fsname1'. See below.
-
-5. Mount the file system 'fsname1' with the user 'client.usr'
-     $sudo bin/mount.ceph usr@.fsname1=/ /kmnt_fsname1_usr/
-6. Try creating a file on file system 'fsname1' with user 'client.usr'. This
-   should fail but passes with this bug.
-     $touch /kmnt_fsname1_usr/file1
-7. Mount the file system 'fsname1' with the user 'client.admin' and create a
-   file.
-     $sudo bin/mount.ceph admin@.fsname1=/ /kmnt_fsname1_admin
-     $echo "data" > /kmnt_fsname1_admin/admin_file1
-8. Try removing an existing file on file system 'fsname1' with the user
-   'client.usr'. This shoudn't succeed but succeeds with the bug.
-     $rm -f /kmnt_fsname1_usr/admin_file1
-
-For more information, please take a look at the corresponding mds/fuse patch
-and tests added by looking into the tracker mentioned below.
-
-v2: Fix a possible null dereference in doutc
-v3: Don't store fsname from mdsmap, validate against
-    ceph_mount_options's fsname and use it
-v4: Code refactor, better warning message and
-    fix possible compiler warning
-
-[ Slava.Dubeyko: "fsname check failed" -> "fsname mismatch" ]
-
-Link: https://tracker.ceph.com/issues/72167
-Signed-off-by: Kotresh HR <khiremat@redhat.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |  8 ++++++++
- fs/ceph/mdsmap.c     | 14 +++++++++++++-
- fs/ceph/super.c      | 14 --------------
- fs/ceph/super.h      | 14 ++++++++++++++
- 4 files changed, 35 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index df89d45f33a1f..50587c64f6144 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -5652,11 +5652,19 @@ static int ceph_mds_auth_match(struct ceph_mds_client *mdsc,
- 	u32 caller_uid = from_kuid(&init_user_ns, cred->fsuid);
- 	u32 caller_gid = from_kgid(&init_user_ns, cred->fsgid);
- 	struct ceph_client *cl = mdsc->fsc->client;
-+	const char *fs_name = mdsc->fsc->mount_options->mds_namespace;
- 	const char *spath = mdsc->fsc->mount_options->server_path;
- 	bool gid_matched = false;
- 	u32 gid, tlen, len;
- 	int i, j;
- 
-+	doutc(cl, "fsname check fs_name=%s  match.fs_name=%s\n",
-+	      fs_name, auth->match.fs_name ? auth->match.fs_name : "");
-+	if (auth->match.fs_name && strcmp(auth->match.fs_name, fs_name)) {
-+		/* fsname mismatch, try next one */
-+		return 0;
-+	}
-+
- 	doutc(cl, "match.uid %lld\n", auth->match.uid);
- 	if (auth->match.uid != MDS_AUTH_UID_ANY) {
- 		if (auth->match.uid != caller_uid)
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 8109aba66e023..2c7b151a7c95c 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -353,10 +353,22 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 		__decode_and_drop_type(p, end, u8, bad_ext);
- 	}
- 	if (mdsmap_ev >= 8) {
-+		u32 fsname_len;
- 		/* enabled */
- 		ceph_decode_8_safe(p, end, m->m_enabled, bad_ext);
- 		/* fs_name */
--		ceph_decode_skip_string(p, end, bad_ext);
-+		ceph_decode_32_safe(p, end, fsname_len, bad_ext);
-+
-+		/* validate fsname against mds_namespace */
-+		if (!namespace_equals(mdsc->fsc->mount_options, *p,
-+				      fsname_len)) {
-+			pr_warn_client(cl, "fsname %*pE doesn't match mds_namespace %s\n",
-+				       (int)fsname_len, (char *)*p,
-+				       mdsc->fsc->mount_options->mds_namespace);
-+			goto bad;
-+		}
-+		/* skip fsname after validation */
-+		ceph_decode_skip_n(p, end, fsname_len, bad);
- 	}
- 	/* damaged */
- 	if (mdsmap_ev >= 9) {
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index b61074b377ac5..96d582f71beaa 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -246,20 +246,6 @@ static void canonicalize_path(char *path)
- 	path[j] = '\0';
- }
- 
--/*
-- * Check if the mds namespace in ceph_mount_options matches
-- * the passed in namespace string. First time match (when
-- * ->mds_namespace is NULL) is treated specially, since
-- * ->mds_namespace needs to be initialized by the caller.
-- */
--static int namespace_equals(struct ceph_mount_options *fsopt,
--			    const char *namespace, size_t len)
--{
--	return !(fsopt->mds_namespace &&
--		 (strlen(fsopt->mds_namespace) != len ||
--		  strncmp(fsopt->mds_namespace, namespace, len)));
--}
--
- static int ceph_parse_old_source(const char *dev_name, const char *dev_name_end,
- 				 struct fs_context *fc)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index d3f220be2ef9a..d541e214a18c8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1767,30 +1767,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
  {
-diff --git a/fs/ceph/super.h b/fs/ceph/super.h
-index 037eac35a9e02..caa01a564925c 100644
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -104,6 +104,20 @@ struct ceph_mount_options {
- 	struct fscrypt_dummy_policy dummy_enc_policy;
- };
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 	union drm_amdgpu_wait_fences *wait = data;
+-	uint32_t fence_count = wait->in.fence_count;
+-	struct drm_amdgpu_fence *fences_user;
+ 	struct drm_amdgpu_fence *fences;
+ 	int r;
  
-+/*
-+ * Check if the mds namespace in ceph_mount_options matches
-+ * the passed in namespace string. First time match (when
-+ * ->mds_namespace is NULL) is treated specially, since
-+ * ->mds_namespace needs to be initialized by the caller.
-+ */
-+static inline int namespace_equals(struct ceph_mount_options *fsopt,
-+				   const char *namespace, size_t len)
-+{
-+	return !(fsopt->mds_namespace &&
-+		 (strlen(fsopt->mds_namespace) != len ||
-+		  strncmp(fsopt->mds_namespace, namespace, len)));
-+}
-+
- /* mount state */
- enum {
- 	CEPH_MOUNT_MOUNTING,
+ 	/* Get the fences from userspace */
+-	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
+-			GFP_KERNEL);
+-	if (fences == NULL)
+-		return -ENOMEM;
+-
+-	fences_user = u64_to_user_ptr(wait->in.fences);
+-	if (copy_from_user(fences, fences_user,
+-		sizeof(struct drm_amdgpu_fence) * fence_count)) {
+-		r = -EFAULT;
+-		goto err_free_fences;
+-	}
++	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
++				   wait->in.fence_count,
++				   sizeof(struct drm_amdgpu_fence));
++	if (IS_ERR(fences))
++		return PTR_ERR(fences);
+ 
+ 	if (wait->in.wait_all)
+ 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
+ 	else
+ 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
+ 
+-err_free_fences:
+ 	kfree(fences);
+ 
+ 	return r;
 -- 
 2.51.0
 
