@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199F826E706;
-	Tue, 11 Nov 2025 01:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC7C2848BA;
+	Tue, 11 Nov 2025 01:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824762; cv=none; b=liZ3bLWn+diJS7e7rujglJrUeDP0CjS3BorBm8PlgiBr4FeiagYneimaigDG3RA+fybVmXzxnSy6+mkup8+SJsYY9K2qp0lryw48NMfenrNNVyuMaSnrILRq2oFqIwKKRk73d04eLTAOcev8Na+Ko+hNZqFGoaeIKjIirYCmzdM=
+	t=1762824764; cv=none; b=Icu1nPjrbEKbMQjrnXZzK1mq3aY6Yue6vX+wH7yQKWwqS13OI9/+LBZwlPgyHhT9YJ6zAIYPDMZLXg14j/uvDcUZVrLTn31ANtcy0yqUE8KmXfITMZwklUr/YoCYb66LRPtb1vJoNQm65ZCqwF/IxxlGD2DzJiHdixEegD375W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824762; c=relaxed/simple;
-	bh=u43XNPOjrORMj8IDAmh7DSTkW141mfTYBKCePPd8Z0I=;
+	s=arc-20240116; t=1762824764; c=relaxed/simple;
+	bh=917ORm9kSaszTHaBQdiCtlSUA7DlnWSQhZq7cGhJBO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBqnyAcjaTV9BMjbSOnNqrb/ssc/qhxJgCVlpYtHqdDlU3rW6AZdBDAk/ilfvgEQfbwnmilUkYvBsxYETO0qPnzVDU+7lDxrDCJrRm+J4dtw61YUx3ZYshH9gto0kcpXjfMo7V+sJAYaiXzo3Vdx333SP1mubVRm70RPZQYokxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB3s9xQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOoSLfSZi/4Bd6dmx6anlX+2WGAU0qPg0YpgKl0b8G/ltYoMFz/kbfwr3krS5YsQKEb75iAVdP52Mfi+eOoVmK83VVpylnAxB+wTBKvv34oqpQB8fYpxEZRXf89BUMXnSVpGjAgLFNJlEa1Tbpj+MrWAtWh6KbUt/Wi8lttFIBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kG0l0P0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB3s9xQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D87C116D0;
-	Tue, 11 Nov 2025 01:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kG0l0P0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11782C116B1;
+	Tue, 11 Nov 2025 01:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824761;
-	bh=u43XNPOjrORMj8IDAmh7DSTkW141mfTYBKCePPd8Z0I=;
+	s=korg; t=1762824764;
+	bh=917ORm9kSaszTHaBQdiCtlSUA7DlnWSQhZq7cGhJBO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oB3s9xQYw4hsC0KpMH/HtxEJxS4muPlte55Lhgj5ROtVBMV+w7XfKy3vxS0wwHKCw
-	 ArGZ+ZwyHr4SUv0wlObXCQiYESYfcumFfS3fuovhGwZn0wkRUXf4rWzBvev3i6KLqD
-	 uvVPvzPSrxJN8OgDvBC9fVoWUlnHVAzQxgvTPEZo=
+	b=kG0l0P0TpTnW8keZReXs7Bx8jLw21LhyHCKg1SPC63Itucw3cwSW5qQIU+cZgB/me
+	 sf8f4zF4jtiZyfc6Qr3XCUxGAgneKRKtsGM1zomJdEjIzPcqduywSpMUfl6aqNxl4O
+	 hS8E4IL8HeltGkd8NZ3khaRv+FiOfqPoEPXxfHOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yikai <zhuyikai1@h-partners.com>,
-	Fan Gong <gongfan1@huawei.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bo Jiao <Bo.Jiao@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 565/849] hinic3: Queue pair endianness improvements
-Date: Tue, 11 Nov 2025 09:42:15 +0900
-Message-ID: <20251111004550.072658368@linuxfoundation.org>
+Subject: [PATCH 6.17 538/849] wifi: mt76: mt7996: Fix mt7996_reverse_frag0_hdr_trans for MLO
+Date: Tue, 11 Nov 2025 09:41:48 +0900
+Message-ID: <20251111004549.422394833@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -54,374 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Gong <gongfan1@huawei.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 6b822b658aafe840ffd6d7f1af5bf4f77df15a11 ]
+[ Upstream commit a3ea1c309bf32fdb3665898c40b3ff8ca29ba6c4 ]
 
-Explicitly use little-endian & big-endian structs to support big
-endian hosts.
+Update mt7996_reverse_frag0_hdr_trans routine to support MLO.
 
-Co-developed-by: Zhu Yikai <zhuyikai1@h-partners.com>
-Signed-off-by: Zhu Yikai <zhuyikai1@h-partners.com>
-Signed-off-by: Fan Gong <gongfan1@huawei.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/9b995a10f1e209a878bf98e4e1cdfb926f386695.1757653621.git.zhuyikai1@h-partners.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Co-developed-by: Bo Jiao <Bo.Jiao@mediatek.com>
+Signed-off-by: Bo Jiao <Bo.Jiao@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Co-developed-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250904-mt7996-mlo-more-fixes-v1-1-89d8fed67f20@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/huawei/hinic3/hinic3_nic_io.h    | 15 ++--
- .../net/ethernet/huawei/hinic3/hinic3_rx.c    | 10 +--
- .../net/ethernet/huawei/hinic3/hinic3_rx.h    | 24 +++---
- .../net/ethernet/huawei/hinic3/hinic3_tx.c    | 81 ++++++++++---------
- .../net/ethernet/huawei/hinic3/hinic3_tx.h    | 18 ++---
- 5 files changed, 79 insertions(+), 69 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_nic_io.h b/drivers/net/ethernet/huawei/hinic3/hinic3_nic_io.h
-index 865ba6878c483..1808d37e7cf71 100644
---- a/drivers/net/ethernet/huawei/hinic3/hinic3_nic_io.h
-+++ b/drivers/net/ethernet/huawei/hinic3/hinic3_nic_io.h
-@@ -75,8 +75,8 @@ static inline u16 hinic3_get_sq_hw_ci(const struct hinic3_io_queue *sq)
- #define DB_CFLAG_DP_RQ   1
- 
- struct hinic3_nic_db {
--	u32 db_info;
--	u32 pi_hi;
-+	__le32 db_info;
-+	__le32 pi_hi;
- };
- 
- static inline void hinic3_write_db(struct hinic3_io_queue *queue, int cos,
-@@ -84,11 +84,12 @@ static inline void hinic3_write_db(struct hinic3_io_queue *queue, int cos,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 28477702c18b3..222e720a56cf5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -229,7 +229,9 @@ static int mt7996_reverse_frag0_hdr_trans(struct sk_buff *skb, u16 hdr_gap)
  {
- 	struct hinic3_nic_db db;
+ 	struct mt76_rx_status *status = (struct mt76_rx_status *)skb->cb;
+ 	struct ethhdr *eth_hdr = (struct ethhdr *)(skb->data + hdr_gap);
+-	struct mt7996_sta *msta = (struct mt7996_sta *)status->wcid;
++	struct mt7996_sta_link *msta_link = (void *)status->wcid;
++	struct mt7996_sta *msta = msta_link->sta;
++	struct ieee80211_bss_conf *link_conf;
+ 	__le32 *rxd = (__le32 *)skb->data;
+ 	struct ieee80211_sta *sta;
+ 	struct ieee80211_vif *vif;
+@@ -246,8 +248,11 @@ static int mt7996_reverse_frag0_hdr_trans(struct sk_buff *skb, u16 hdr_gap)
+ 	if (!msta || !msta->vif)
+ 		return -EINVAL;
  
--	db.db_info = DB_INFO_SET(DB_SRC_TYPE, TYPE) |
--		     DB_INFO_SET(cflag, CFLAG) |
--		     DB_INFO_SET(cos, COS) |
--		     DB_INFO_SET(queue->q_id, QID);
--	db.pi_hi = DB_PI_HIGH(pi);
-+	db.db_info =
-+		cpu_to_le32(DB_INFO_SET(DB_SRC_TYPE, TYPE) |
-+			    DB_INFO_SET(cflag, CFLAG) |
-+			    DB_INFO_SET(cos, COS) |
-+			    DB_INFO_SET(queue->q_id, QID));
-+	db.pi_hi = cpu_to_le32(DB_PI_HIGH(pi));
+-	sta = container_of((void *)msta, struct ieee80211_sta, drv_priv);
++	sta = wcid_to_sta(status->wcid);
+ 	vif = container_of((void *)msta->vif, struct ieee80211_vif, drv_priv);
++	link_conf = rcu_dereference(vif->link_conf[msta_link->wcid.link_id]);
++	if (!link_conf)
++		return -EINVAL;
  
- 	writeq(*((u64 *)&db), DB_ADDR(queue, pi));
- }
-diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_rx.c b/drivers/net/ethernet/huawei/hinic3/hinic3_rx.c
-index 860163e9d66cf..ac04e3a192ada 100644
---- a/drivers/net/ethernet/huawei/hinic3/hinic3_rx.c
-+++ b/drivers/net/ethernet/huawei/hinic3/hinic3_rx.c
-@@ -66,8 +66,8 @@ static void rq_wqe_buf_set(struct hinic3_io_queue *rq, uint32_t wqe_idx,
- 	struct hinic3_rq_wqe *rq_wqe;
- 
- 	rq_wqe = get_q_element(&rq->wq.qpages, wqe_idx, NULL);
--	rq_wqe->buf_hi_addr = upper_32_bits(dma_addr);
--	rq_wqe->buf_lo_addr = lower_32_bits(dma_addr);
-+	rq_wqe->buf_hi_addr = cpu_to_le32(upper_32_bits(dma_addr));
-+	rq_wqe->buf_lo_addr = cpu_to_le32(lower_32_bits(dma_addr));
- }
- 
- static u32 hinic3_rx_fill_buffers(struct hinic3_rxq *rxq)
-@@ -279,7 +279,7 @@ static int recv_one_pkt(struct hinic3_rxq *rxq, struct hinic3_rq_cqe *rx_cqe,
- 	if (skb_is_nonlinear(skb))
- 		hinic3_pull_tail(skb);
- 
--	offload_type = rx_cqe->offload_type;
-+	offload_type = le32_to_cpu(rx_cqe->offload_type);
- 	hinic3_rx_csum(rxq, offload_type, status, skb);
- 
- 	num_lro = RQ_CQE_STATUS_GET(status, NUM_LRO);
-@@ -311,14 +311,14 @@ int hinic3_rx_poll(struct hinic3_rxq *rxq, int budget)
- 	while (likely(nr_pkts < budget)) {
- 		sw_ci = rxq->cons_idx & rxq->q_mask;
- 		rx_cqe = rxq->cqe_arr + sw_ci;
--		status = rx_cqe->status;
-+		status = le32_to_cpu(rx_cqe->status);
- 		if (!RQ_CQE_STATUS_GET(status, RXDONE))
- 			break;
- 
- 		/* make sure we read rx_done before packet length */
- 		rmb();
- 
--		vlan_len = rx_cqe->vlan_len;
-+		vlan_len = le32_to_cpu(rx_cqe->vlan_len);
- 		pkt_len = RQ_CQE_SGE_GET(vlan_len, LEN);
- 		if (recv_one_pkt(rxq, rx_cqe, pkt_len, vlan_len, status))
- 			break;
-diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_rx.h b/drivers/net/ethernet/huawei/hinic3/hinic3_rx.h
-index 1cca21858d40e..e7b496d13a697 100644
---- a/drivers/net/ethernet/huawei/hinic3/hinic3_rx.h
-+++ b/drivers/net/ethernet/huawei/hinic3/hinic3_rx.h
-@@ -27,21 +27,21 @@
- 
- /* RX Completion information that is provided by HW for a specific RX WQE */
- struct hinic3_rq_cqe {
--	u32 status;
--	u32 vlan_len;
--	u32 offload_type;
--	u32 rsvd3;
--	u32 rsvd4;
--	u32 rsvd5;
--	u32 rsvd6;
--	u32 pkt_info;
-+	__le32 status;
-+	__le32 vlan_len;
-+	__le32 offload_type;
-+	__le32 rsvd3;
-+	__le32 rsvd4;
-+	__le32 rsvd5;
-+	__le32 rsvd6;
-+	__le32 pkt_info;
- };
- 
- struct hinic3_rq_wqe {
--	u32 buf_hi_addr;
--	u32 buf_lo_addr;
--	u32 cqe_hi_addr;
--	u32 cqe_lo_addr;
-+	__le32 buf_hi_addr;
-+	__le32 buf_lo_addr;
-+	__le32 cqe_hi_addr;
-+	__le32 cqe_lo_addr;
- };
- 
- struct hinic3_rx_info {
-diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
-index 3f7f73430be41..dd8f362ded185 100644
---- a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
-+++ b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.c
-@@ -81,10 +81,10 @@ static int hinic3_tx_map_skb(struct net_device *netdev, struct sk_buff *skb,
- 
- 	dma_info[0].len = skb_headlen(skb);
- 
--	wqe_desc->hi_addr = upper_32_bits(dma_info[0].dma);
--	wqe_desc->lo_addr = lower_32_bits(dma_info[0].dma);
-+	wqe_desc->hi_addr = cpu_to_le32(upper_32_bits(dma_info[0].dma));
-+	wqe_desc->lo_addr = cpu_to_le32(lower_32_bits(dma_info[0].dma));
- 
--	wqe_desc->ctrl_len = dma_info[0].len;
-+	wqe_desc->ctrl_len = cpu_to_le32(dma_info[0].len);
- 
- 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
- 		frag = &(skb_shinfo(skb)->frags[i]);
-@@ -197,7 +197,8 @@ static int hinic3_tx_csum(struct hinic3_txq *txq, struct hinic3_sq_task *task,
- 		union hinic3_ip ip;
- 		u8 l4_proto;
- 
--		task->pkt_info0 |= SQ_TASK_INFO0_SET(1, TUNNEL_FLAG);
-+		task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1,
-+								 TUNNEL_FLAG));
- 
- 		ip.hdr = skb_network_header(skb);
- 		if (ip.v4->version == 4) {
-@@ -226,7 +227,7 @@ static int hinic3_tx_csum(struct hinic3_txq *txq, struct hinic3_sq_task *task,
- 		}
- 	}
- 
--	task->pkt_info0 |= SQ_TASK_INFO0_SET(1, INNER_L4_EN);
-+	task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1, INNER_L4_EN));
- 
- 	return 1;
- }
-@@ -255,26 +256,28 @@ static void get_inner_l3_l4_type(struct sk_buff *skb, union hinic3_ip *ip,
- 	}
- }
- 
--static void hinic3_set_tso_info(struct hinic3_sq_task *task, u32 *queue_info,
-+static void hinic3_set_tso_info(struct hinic3_sq_task *task, __le32 *queue_info,
- 				enum hinic3_l4_offload_type l4_offload,
- 				u32 offset, u32 mss)
- {
- 	if (l4_offload == HINIC3_L4_OFFLOAD_TCP) {
--		*queue_info |= SQ_CTRL_QUEUE_INFO_SET(1, TSO);
--		task->pkt_info0 |= SQ_TASK_INFO0_SET(1, INNER_L4_EN);
-+		*queue_info |= cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(1, TSO));
-+		task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1,
-+								 INNER_L4_EN));
- 	} else if (l4_offload == HINIC3_L4_OFFLOAD_UDP) {
--		*queue_info |= SQ_CTRL_QUEUE_INFO_SET(1, UFO);
--		task->pkt_info0 |= SQ_TASK_INFO0_SET(1, INNER_L4_EN);
-+		*queue_info |= cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(1, UFO));
-+		task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1,
-+								 INNER_L4_EN));
- 	}
- 
- 	/* enable L3 calculation */
--	task->pkt_info0 |= SQ_TASK_INFO0_SET(1, INNER_L3_EN);
-+	task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1, INNER_L3_EN));
- 
--	*queue_info |= SQ_CTRL_QUEUE_INFO_SET(offset >> 1, PLDOFF);
-+	*queue_info |= cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(offset >> 1, PLDOFF));
- 
- 	/* set MSS value */
--	*queue_info &= ~SQ_CTRL_QUEUE_INFO_MSS_MASK;
--	*queue_info |= SQ_CTRL_QUEUE_INFO_SET(mss, MSS);
-+	*queue_info &= cpu_to_le32(~SQ_CTRL_QUEUE_INFO_MSS_MASK);
-+	*queue_info |= cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(mss, MSS));
- }
- 
- static __sum16 csum_magic(union hinic3_ip *ip, unsigned short proto)
-@@ -284,7 +287,7 @@ static __sum16 csum_magic(union hinic3_ip *ip, unsigned short proto)
- 		csum_ipv6_magic(&ip->v6->saddr, &ip->v6->daddr, 0, proto, 0);
- }
- 
--static int hinic3_tso(struct hinic3_sq_task *task, u32 *queue_info,
-+static int hinic3_tso(struct hinic3_sq_task *task, __le32 *queue_info,
- 		      struct sk_buff *skb)
- {
- 	enum hinic3_l4_offload_type l4_offload;
-@@ -305,15 +308,17 @@ static int hinic3_tso(struct hinic3_sq_task *task, u32 *queue_info,
- 	if (skb->encapsulation) {
- 		u32 gso_type = skb_shinfo(skb)->gso_type;
- 		/* L3 checksum is always enabled */
--		task->pkt_info0 |= SQ_TASK_INFO0_SET(1, OUT_L3_EN);
--		task->pkt_info0 |= SQ_TASK_INFO0_SET(1, TUNNEL_FLAG);
-+		task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1, OUT_L3_EN));
-+		task->pkt_info0 |= cpu_to_le32(SQ_TASK_INFO0_SET(1,
-+								 TUNNEL_FLAG));
- 
- 		l4.hdr = skb_transport_header(skb);
- 		ip.hdr = skb_network_header(skb);
- 
- 		if (gso_type & SKB_GSO_UDP_TUNNEL_CSUM) {
- 			l4.udp->check = ~csum_magic(&ip, IPPROTO_UDP);
--			task->pkt_info0 |= SQ_TASK_INFO0_SET(1, OUT_L4_EN);
-+			task->pkt_info0 |=
-+				cpu_to_le32(SQ_TASK_INFO0_SET(1, OUT_L4_EN));
- 		}
- 
- 		ip.hdr = skb_inner_network_header(skb);
-@@ -343,13 +348,14 @@ static void hinic3_set_vlan_tx_offload(struct hinic3_sq_task *task,
- 	 * 2=select TPID2 in IPSU, 3=select TPID3 in IPSU,
- 	 * 4=select TPID4 in IPSU
- 	 */
--	task->vlan_offload = SQ_TASK_INFO3_SET(vlan_tag, VLAN_TAG) |
--			     SQ_TASK_INFO3_SET(vlan_tpid, VLAN_TPID) |
--			     SQ_TASK_INFO3_SET(1, VLAN_TAG_VALID);
-+	task->vlan_offload =
-+		cpu_to_le32(SQ_TASK_INFO3_SET(vlan_tag, VLAN_TAG) |
-+			    SQ_TASK_INFO3_SET(vlan_tpid, VLAN_TPID) |
-+			    SQ_TASK_INFO3_SET(1, VLAN_TAG_VALID));
- }
- 
- static u32 hinic3_tx_offload(struct sk_buff *skb, struct hinic3_sq_task *task,
--			     u32 *queue_info, struct hinic3_txq *txq)
-+			     __le32 *queue_info, struct hinic3_txq *txq)
- {
- 	u32 offload = 0;
- 	int tso_cs_en;
-@@ -440,39 +446,41 @@ static u16 hinic3_set_wqe_combo(struct hinic3_txq *txq,
- }
- 
- static void hinic3_prepare_sq_ctrl(struct hinic3_sq_wqe_combo *wqe_combo,
--				   u32 queue_info, int nr_descs, u16 owner)
-+				   __le32 queue_info, int nr_descs, u16 owner)
- {
- 	struct hinic3_sq_wqe_desc *wqe_desc = wqe_combo->ctrl_bd0;
- 
- 	if (wqe_combo->wqe_type == SQ_WQE_COMPACT_TYPE) {
- 		wqe_desc->ctrl_len |=
--		    SQ_CTRL_SET(SQ_NORMAL_WQE, DATA_FORMAT) |
--		    SQ_CTRL_SET(wqe_combo->wqe_type, EXTENDED) |
--		    SQ_CTRL_SET(owner, OWNER);
-+			cpu_to_le32(SQ_CTRL_SET(SQ_NORMAL_WQE, DATA_FORMAT) |
-+				    SQ_CTRL_SET(wqe_combo->wqe_type, EXTENDED) |
-+				    SQ_CTRL_SET(owner, OWNER));
- 
- 		/* compact wqe queue_info will transfer to chip */
- 		wqe_desc->queue_info = 0;
- 		return;
- 	}
- 
--	wqe_desc->ctrl_len |= SQ_CTRL_SET(nr_descs, BUFDESC_NUM) |
--			      SQ_CTRL_SET(wqe_combo->task_type, TASKSECT_LEN) |
--			      SQ_CTRL_SET(SQ_NORMAL_WQE, DATA_FORMAT) |
--			      SQ_CTRL_SET(wqe_combo->wqe_type, EXTENDED) |
--			      SQ_CTRL_SET(owner, OWNER);
-+	wqe_desc->ctrl_len |=
-+		cpu_to_le32(SQ_CTRL_SET(nr_descs, BUFDESC_NUM) |
-+			    SQ_CTRL_SET(wqe_combo->task_type, TASKSECT_LEN) |
-+			    SQ_CTRL_SET(SQ_NORMAL_WQE, DATA_FORMAT) |
-+			    SQ_CTRL_SET(wqe_combo->wqe_type, EXTENDED) |
-+			    SQ_CTRL_SET(owner, OWNER));
- 
- 	wqe_desc->queue_info = queue_info;
--	wqe_desc->queue_info |= SQ_CTRL_QUEUE_INFO_SET(1, UC);
-+	wqe_desc->queue_info |= cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(1, UC));
- 
- 	if (!SQ_CTRL_QUEUE_INFO_GET(wqe_desc->queue_info, MSS)) {
- 		wqe_desc->queue_info |=
--		    SQ_CTRL_QUEUE_INFO_SET(HINIC3_TX_MSS_DEFAULT, MSS);
-+		    cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(HINIC3_TX_MSS_DEFAULT, MSS));
- 	} else if (SQ_CTRL_QUEUE_INFO_GET(wqe_desc->queue_info, MSS) <
- 		   HINIC3_TX_MSS_MIN) {
- 		/* mss should not be less than 80 */
--		wqe_desc->queue_info &= ~SQ_CTRL_QUEUE_INFO_MSS_MASK;
-+		wqe_desc->queue_info &=
-+		    cpu_to_le32(~SQ_CTRL_QUEUE_INFO_MSS_MASK);
- 		wqe_desc->queue_info |=
--		    SQ_CTRL_QUEUE_INFO_SET(HINIC3_TX_MSS_MIN, MSS);
-+		    cpu_to_le32(SQ_CTRL_QUEUE_INFO_SET(HINIC3_TX_MSS_MIN, MSS));
- 	}
- }
- 
-@@ -482,12 +490,13 @@ static netdev_tx_t hinic3_send_one_skb(struct sk_buff *skb,
- {
- 	struct hinic3_sq_wqe_combo wqe_combo = {};
- 	struct hinic3_tx_info *tx_info;
--	u32 offload, queue_info = 0;
- 	struct hinic3_sq_task task;
- 	u16 wqebb_cnt, num_sge;
-+	__le32 queue_info = 0;
- 	u16 saved_wq_prod_idx;
- 	u16 owner, pi = 0;
- 	u8 saved_sq_owner;
-+	u32 offload;
- 	int err;
- 
- 	if (unlikely(skb->len < MIN_SKB_LEN)) {
-diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.h b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.h
-index 9e505cc19dd55..21dfe879a29a2 100644
---- a/drivers/net/ethernet/huawei/hinic3/hinic3_tx.h
-+++ b/drivers/net/ethernet/huawei/hinic3/hinic3_tx.h
-@@ -58,7 +58,7 @@ enum hinic3_tx_offload_type {
- #define SQ_CTRL_QUEUE_INFO_SET(val, member) \
- 	FIELD_PREP(SQ_CTRL_QUEUE_INFO_##member##_MASK, val)
- #define SQ_CTRL_QUEUE_INFO_GET(val, member) \
--	FIELD_GET(SQ_CTRL_QUEUE_INFO_##member##_MASK, val)
-+	FIELD_GET(SQ_CTRL_QUEUE_INFO_##member##_MASK, le32_to_cpu(val))
- 
- #define SQ_CTRL_MAX_PLDOFF  221
- 
-@@ -77,17 +77,17 @@ enum hinic3_tx_offload_type {
- 	FIELD_PREP(SQ_TASK_INFO3_##member##_MASK, val)
- 
- struct hinic3_sq_wqe_desc {
--	u32 ctrl_len;
--	u32 queue_info;
--	u32 hi_addr;
--	u32 lo_addr;
-+	__le32 ctrl_len;
-+	__le32 queue_info;
-+	__le32 hi_addr;
-+	__le32 lo_addr;
- };
- 
- struct hinic3_sq_task {
--	u32 pkt_info0;
--	u32 ip_identify;
--	u32 rsvd;
--	u32 vlan_offload;
-+	__le32 pkt_info0;
-+	__le32 ip_identify;
-+	__le32 rsvd;
-+	__le32 vlan_offload;
- };
- 
- struct hinic3_sq_wqe_combo {
+ 	/* store the info from RXD and ethhdr to avoid being overridden */
+ 	frame_control = le32_get_bits(rxd[8], MT_RXD8_FRAME_CONTROL);
+@@ -260,7 +265,7 @@ static int mt7996_reverse_frag0_hdr_trans(struct sk_buff *skb, u16 hdr_gap)
+ 	switch (frame_control & (IEEE80211_FCTL_TODS |
+ 				 IEEE80211_FCTL_FROMDS)) {
+ 	case 0:
+-		ether_addr_copy(hdr.addr3, vif->bss_conf.bssid);
++		ether_addr_copy(hdr.addr3, link_conf->bssid);
+ 		break;
+ 	case IEEE80211_FCTL_FROMDS:
+ 		ether_addr_copy(hdr.addr3, eth_hdr->h_source);
 -- 
 2.51.0
 
