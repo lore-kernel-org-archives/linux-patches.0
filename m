@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E576726FDBD;
-	Tue, 11 Nov 2025 01:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB0E306B30;
+	Tue, 11 Nov 2025 01:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823323; cv=none; b=G9ekljlH79A8IXqSF4ZvG70dbUzx4/akLvvdDzE6nULgsCFhayy0VOKNZDqLico5d3ms5S4isFtMQ2HlyvIx7W2FiTIKcjyiIlF3L9Rr8ix6wAy+F7R7SKQu9ykOFkkCfEI60atTFATCc9cKD+b0fbAfK8o+B+OtrdXC3156mZE=
+	t=1762823325; cv=none; b=nRGhObDRiJHqe8YDbM5KBEjEbFJFyWKU8xuUACtZs5Q8QR15IXqCrw3JstWYkGmQKWmDp211b3atjAviJIfbAKAhzmjBlADYxkWgfTyIO2Vs27Z9WA5GNA2+mejEr/1/Uak1eX3anj6XnA2tDPJtofDP+4tiQTmJIlPOaYmzHWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823323; c=relaxed/simple;
-	bh=vqS1y/LZjRKdNZJrBH7xJy2GR3Swzez1v1XIZbqSPyc=;
+	s=arc-20240116; t=1762823325; c=relaxed/simple;
+	bh=dWp2J/DWQky5/ZwP0tQm4eQpUJxq0Yw/r4rlf0iQzWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmBwYHhNmj3+baSO/tlUnv5ly2yV/CryHnRrLdr0hdmlIpJRXHJQl4b/hQlqd5O4aS274eU34ji8jQ1DUSSfxmve+Gryke2B17XkPmO5MPOvESHhJA/Pz23aN6YFHKEhw3zHsf17Y1fYNhruFXAHeoVf4yGnWPXT67dsS5XJPrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMT/maSc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKO/eicMTcDaO1sHsufnzKww9anE9st3eDaAFrLA8dHzvULKddF7NqqXPPnMQxcLrrqKdMvkpFPdun3l1f/GIbRyICzJzTsnx/Q625PEAO79txBtC0cFQoJKKvQLyqjdMDCTPZdtCcssKyaEl/UrmRgVu3J86MnkDBG/XUG50EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XIun5LY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMT/maSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815F3C19422;
-	Tue, 11 Nov 2025 01:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XIun5LY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DA6C113D0;
+	Tue, 11 Nov 2025 01:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823322;
-	bh=vqS1y/LZjRKdNZJrBH7xJy2GR3Swzez1v1XIZbqSPyc=;
+	s=korg; t=1762823325;
+	bh=dWp2J/DWQky5/ZwP0tQm4eQpUJxq0Yw/r4rlf0iQzWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMT/maSc9uw0p7mLJNPv+j6dUHn0ptMQaX+i41chzbD19xNLCMeraNgarrXxJqNKd
-	 KdDZj6SfFXVGy/POnqlNUYoOSibOz2TCdSoUsrsmJ1egTrzwE7p5XDEhyn1g/5wXNm
-	 nONRsG01C4GvZJ/V/ve1+K03X5n21lKmo4vK8aSE=
+	b=1XIun5LY5WT1vUGQiJBC5zTjhfrHMAF17EBzH1IFz2DQk8ZubP50R3DUFs4sYX17D
+	 rede+2oxxkPrTe03p59wx1UPiwRT39GY+C9UfOvZeJlwwzPkTXUxCyGUQpTL3NRsNa
+	 psDOgo8AykeThy5f4Ad9/xVGjns4OaiuEtMZX7Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 219/565] net: ipv6: fix field-spanning memcpy warning in AH output
-Date: Tue, 11 Nov 2025 09:41:15 +0900
-Message-ID: <20251111004531.850113083@linuxfoundation.org>
+Subject: [PATCH 6.17 276/849] wifi: rtw89: print just once for unknown C2H events
+Date: Tue, 11 Nov 2025 09:37:26 +0900
+Message-ID: <20251111004543.098245920@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,119 +47,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
+[ Upstream commit 7e1c44fe4c2e1e01fa47d9490893d95309a99687 ]
 
-Fix field-spanning memcpy warnings in ah6_output() and
-ah6_output_done() where extension headers are copied to/from IPv6
-address fields, triggering fortify-string warnings about writes beyond
-the 16-byte address fields.
+When driver receives new or unknown C2H events, it print out messages
+repeatedly once events are received, like
 
-  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
-  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
+  rtw89_8922ae 0000:81:00.0: PHY c2h class 2 not support
 
-The warnings are false positives as the extension headers are
-intentionally placed after the IPv6 header in memory. Fix by properly
-copying addresses and extension headers separately, and introduce
-helper functions to avoid code duplication.
+To avoid the thousands of messages, use rtw89_info_once() instead. Also,
+print out class/func for unknown (undefined) class.
 
-Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: Sean Anderson <sean.anderson@linux.dev>
+Closes: https://lore.kernel.org/linux-wireless/20250729204437.164320-1-sean.anderson@linux.dev/
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250804012234.8913-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+ drivers/net/wireless/realtek/rtw89/debug.h | 1 +
+ drivers/net/wireless/realtek/rtw89/mac.c   | 7 +++----
+ drivers/net/wireless/realtek/rtw89/phy.c   | 7 +++----
+ 3 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
-index eb474f0987ae0..95372e0f1d216 100644
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -46,6 +46,34 @@ struct ah_skb_cb {
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.h b/drivers/net/wireless/realtek/rtw89/debug.h
+index fc690f7c55dc7..a364e7adb0798 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.h
++++ b/drivers/net/wireless/realtek/rtw89/debug.h
+@@ -56,6 +56,7 @@ static inline void rtw89_debugfs_deinit(struct rtw89_dev *rtwdev) {}
+ #endif
  
- #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
+ #define rtw89_info(rtwdev, a...) dev_info((rtwdev)->dev, ##a)
++#define rtw89_info_once(rtwdev, a...) dev_info_once((rtwdev)->dev, ##a)
+ #define rtw89_warn(rtwdev, a...) dev_warn((rtwdev)->dev, ##a)
+ #define rtw89_err(rtwdev, a...) dev_err((rtwdev)->dev, ##a)
  
-+/* Helper to save IPv6 addresses and extension headers to temporary storage */
-+static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
-+				 struct ipv6hdr *top_iph, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	iph_ext->saddr = top_iph->saddr;
-+#endif
-+	iph_ext->daddr = top_iph->daddr;
-+	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
-+}
-+
-+/* Helper to restore IPv6 addresses and extension headers from temporary storage */
-+static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
-+				    struct tmp_ext *iph_ext, int extlen)
-+{
-+	if (!extlen)
-+		return;
-+
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	top_iph->saddr = iph_ext->saddr;
-+#endif
-+	top_iph->daddr = iph_ext->daddr;
-+	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
-+}
-+
- static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
- 			  unsigned int size)
- {
-@@ -301,13 +329,7 @@ static void ah6_output_done(void *data, int err)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- 	kfree(AH_SKB_CB(skb)->tmp);
- 	xfrm_output_resume(skb->sk, skb, err);
-@@ -378,12 +400,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	 */
- 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
- 
-+	ah6_save_hdrs(iph_ext, top_iph, extlen);
- 	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(iph_ext, &top_iph->saddr, extlen);
--#else
--		memcpy(iph_ext, &top_iph->daddr, extlen);
--#endif
- 		err = ipv6_clear_mutable_options(top_iph,
- 						 extlen - sizeof(*iph_ext) +
- 						 sizeof(*top_iph),
-@@ -434,13 +452,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- out_free:
- 	kfree(iph_base);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 5a5da9d9c0c5b..ef17a307b7702 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -5813,12 +5813,11 @@ void rtw89_mac_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
+ 	case RTW89_MAC_C2H_CLASS_ROLE:
+ 		return;
+ 	default:
+-		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
+-		return;
++		break;
+ 	}
+ 	if (!handler) {
+-		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
+-			   func);
++		rtw89_info_once(rtwdev, "MAC c2h class %d func %d not support\n",
++				class, func);
+ 		return;
+ 	}
+ 	handler(rtwdev, skb, len);
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index d607577b353c6..01a03d2de3ffb 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -3626,12 +3626,11 @@ void rtw89_phy_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
+ 			handler = rtw89_phy_c2h_dm_handler[func];
+ 		break;
+ 	default:
+-		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
+-		return;
++		break;
+ 	}
+ 	if (!handler) {
+-		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
+-			   func);
++		rtw89_info_once(rtwdev, "PHY c2h class %d func %d not support\n",
++				class, func);
+ 		return;
+ 	}
+ 	handler(rtwdev, skb, len);
 -- 
 2.51.0
 
