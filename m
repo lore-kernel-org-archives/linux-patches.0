@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C0726E703;
-	Tue, 11 Nov 2025 01:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACEC2F39B1;
+	Tue, 11 Nov 2025 01:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824354; cv=none; b=CoakScH5s4D4q1mZXR5DtrZb7KWD5/QOc/zs6TkNOdugOhdr88/A46ghm7D+FciH0UY5tnKjCfUnEvNeeLPds1E0LRiieUAVi5nO0tIPGTBwEdl/IuidLCIk2X93C3YJtjcMUqiinkgCfVdgYTMIen/Gxt2d1MIX3WaLUpnxTE4=
+	t=1762824357; cv=none; b=eGw4MMmR64UNSyYH0wRfBsAdkDO2/I7L0qozaBR05rgUP4YxBJjOmHoe1ijkCA1NNh50m1XMpkrsxlvBc+WEWS0cDyE2DusyRWKv1a89lYl79a7LHzJKtsSiYkVIAYoqaP6pjU4S7YvomaVXnAN3VrpGdHkFJKBzsiIypC7qABU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824354; c=relaxed/simple;
-	bh=GHpBvTO86YQbO5Z5kvjhV8vONaBQPWRlvQ7hw+Jn1JI=;
+	s=arc-20240116; t=1762824357; c=relaxed/simple;
+	bh=IxT6OWKHIkG+4uXLawMHR9s/IF5nYQPOiZKe4oYFhRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QreVzHufPY/62hn33KOUu5dq/V8Mz+OME4lRmtNCUg76LtW5I9cSoa2zeVFKh3KMayc6d2fAram5ksnSKt9dNJM/26BWtamPjHCOumtLx7eCbzrjpPF6PT/48M5fO04K0QgTwzqXcX23UXwbLu0IFxnhxM/ObNHx3usV6oSodY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvhB57LY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eN3Cr+D5jnyaRmekqb8u87Xps7e985Y2aF6HSkcbOHe9+0gtMdLXEPdLxEJTrhNDfiFzd7YB9zm1M5BvAu8OdjuZXEP/thb54miaxJa5he6Z/PUCIb+GeZcu7pPSXhIBQVERuQd8SqulBQLEFUpkUwhjJ6h3VOIE6xy7wRigkZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPcyMK60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvhB57LY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E9FC19421;
-	Tue, 11 Nov 2025 01:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPcyMK60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17818C116D0;
+	Tue, 11 Nov 2025 01:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824353;
-	bh=GHpBvTO86YQbO5Z5kvjhV8vONaBQPWRlvQ7hw+Jn1JI=;
+	s=korg; t=1762824357;
+	bh=IxT6OWKHIkG+4uXLawMHR9s/IF5nYQPOiZKe4oYFhRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zvhB57LYdm9vZlhXVDksCoAq+Quo3yZapYHyGyPZM4xlfvY6uETXsvbRZ26l3JA54
-	 5kMaVHU8rBHm+xMwAGduVT0J4LZHrIgwY70PzlXFjlu6iy4bh1wyOoT6kvntqAUCo1
-	 gbpHw9YolWRvzwmr4wIoBOzeB9+l/QvyIsvdokt0=
+	b=cPcyMK60e9obQb/hrcxrLh8afyrhiN4uyuxNMztkwv/i2NDpsxmmnGkCimPhCDvYM
+	 Mw8s0i2zscJof/JpzKPRvbNAGzO4+6OfHOqX+bUf9EnUXeD6rycvsru0QxhxSsrGW/
+	 5DvLVWRcgei6AnoP2Q3FP/Rv6s1delFZube538Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 479/849] PCI: endpoint: pci-epf-test: Limit PCIe BAR size for fixed BARs
-Date: Tue, 11 Nov 2025 09:40:49 +0900
-Message-ID: <20251111004548.024391297@linuxfoundation.org>
+Subject: [PATCH 6.12 428/565] ext4: increase IO priority of fastcommit
+Date: Tue, 11 Nov 2025 09:44:44 +0900
+Message-ID: <20251111004536.496501346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +50,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit d5f6bd3ee3f5048f272182dc91675c082773999e ]
+[ Upstream commit 46e75c56dfeafb6756773b71cabe187a6886859a ]
 
-Currently, the test allocates BAR sizes according to fixed table bar_size.
-This does not work with controllers which have fixed size BARs that are
-smaller than the requested BAR size. One such controller is Renesas R-Car
-V4H PCIe controller, which has BAR4 size limited to 256 bytes, which is
-much less than one of the BAR size, 131072 currently requested by this
-test. A lot of controllers drivers in-tree have fixed size BARs, and they
-do work perfectly fine, but it is only because their fixed size is larger
-than the size requested by pci-epf-test.c
+The following code paths may result in high latency or even task hangs:
+   1. fastcommit io is throttled by wbt.
+   2. jbd2_fc_wait_bufs() might wait for a long time while
+JBD2_FAST_COMMIT_ONGOING is set in journal->flags, and then
+jbd2_journal_commit_transaction() waits for the
+JBD2_FAST_COMMIT_ONGOING bit for a long time while holding the write
+lock of j_state_lock.
+   3. start_this_handle() waits for read lock of j_state_lock which
+results in high latency or task hang.
 
-Adjust the test such that in case a fixed size BAR is detected, the fixed
-BAR size is used, as that is the only possible option.
+Given the fact that ext4_fc_commit() already modifies the current
+process' IO priority to match that of the jbd2 thread, it should be
+reasonable to match jbd2's IO submission flags as well.
 
-This helps with test failures reported as follows:
-
-  pci_epf_test pci_epf_test.0: requested BAR size is larger than fixed size
-  pci_epf_test pci_epf_test.0: Failed to allocate space for BAR4
-
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20250905184240.144431-1-marek.vasut+renesas@mailbox.org
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Message-ID: <20250827121812.1477634-1-sunjunchao@bytedance.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ext4/fast_commit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 044f5ea0716d1..31617772ad516 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -1067,7 +1067,12 @@ static int pci_epf_test_alloc_space(struct pci_epf *epf)
- 		if (bar == test_reg_bar)
- 			continue;
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index b33664f6ce2ab..76a3c2e21b9db 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -675,7 +675,7 @@ void ext4_fc_track_range(handle_t *handle, struct inode *inode, ext4_lblk_t star
  
--		base = pci_epf_alloc_space(epf, bar_size[bar], bar,
-+		if (epc_features->bar[bar].type == BAR_FIXED)
-+			test_reg_size = epc_features->bar[bar].fixed_size;
-+		else
-+			test_reg_size = bar_size[bar];
-+
-+		base = pci_epf_alloc_space(epf, test_reg_size, bar,
- 					   epc_features, PRIMARY_INTERFACE);
- 		if (!base)
- 			dev_err(dev, "Failed to allocate space for BAR%d\n",
+ static void ext4_fc_submit_bh(struct super_block *sb, bool is_tail)
+ {
+-	blk_opf_t write_flags = REQ_SYNC;
++	blk_opf_t write_flags = JBD2_JOURNAL_REQ_FLAGS;
+ 	struct buffer_head *bh = EXT4_SB(sb)->s_fc_bh;
+ 
+ 	/* Add REQ_FUA | REQ_PREFLUSH only its tail */
 -- 
 2.51.0
 
