@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BBB281525;
-	Tue, 11 Nov 2025 01:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179DC26AC3;
+	Tue, 11 Nov 2025 01:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825021; cv=none; b=k//HqRO3+s4nCeaTkByuYVKwh/d9msMns8USr8xl6aU6tzHo4n8qvSAS0d1WnJ3UEyiTiY3k2jEezfno191PXLHrSHiylLwCGucRc9T4AB0m3wDgXNXwX6WxZto8skNwL6U1VBB0GumWYyVOO9owal63r139O+xLzFgwH6He8pU=
+	t=1762825024; cv=none; b=qA6Yo23EToiU0JbN4Cp2KUl2SXm8GUTsFc4amXHzmMo6ya2Xxur1Yi3k38y3MagtKmDZuAy9mnIIvJEHViZz7o/TpJ6tm0gt43nPKz8Q//koG0ja1QzAaeNvN2nyL+4EcipIBrZ5SU+pMoOktM824hROsRZwut41K0Lb4rcqLZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825021; c=relaxed/simple;
-	bh=+JZoKEr/9zng5Jtat8qiZdI83BJl2cNxWaIL2zeuC3s=;
+	s=arc-20240116; t=1762825024; c=relaxed/simple;
+	bh=ySA+VaZ4ndNF7c6YK2GHXE694PIWjwzTyivZy9B+P3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mj8jRJhZ9Lyjq4tS7ETMxmycO8cNukcULOZxcj/SOufOjwQaMkL5Lvj0a8/7w5KUV44G1WkROfsga5DjyfGlGhihIRk0XXb1MrTv71XxT+w/7gmkpkte6gkFXdj6QZX2tsdxYvOmNX2I1We+kZCl/4OGoiSd447sMpaD8iWkFZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mojmqpJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WI2eCV9SkoeNY+UZ8e9FWzOlhNMJL85rZdvohfE+FiY5z3mPFKw5Y2DgmUYnVK9qCxLnnBkTNMXWTtZ1tVer1cmpc+ewTsjUHXIVMjs/345qLjF02U9k5BMlihd6Vca1lJITYgsMxm9RRDX+OR3b6H4Nu9j34Pp7NqmTfW2bB3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nimlJi0z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mojmqpJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CC5C19421;
-	Tue, 11 Nov 2025 01:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nimlJi0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A793AC4CEF5;
+	Tue, 11 Nov 2025 01:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825021;
-	bh=+JZoKEr/9zng5Jtat8qiZdI83BJl2cNxWaIL2zeuC3s=;
+	s=korg; t=1762825024;
+	bh=ySA+VaZ4ndNF7c6YK2GHXE694PIWjwzTyivZy9B+P3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mojmqpJRtAkjNyLG/xplAXES6unRcc0ULNp8DxrD2MDf4Twwr95j1hpj1CDvp1fUQ
-	 W9ev6nVzvTastWWNCWZ0WUbGVneTu39CUkWQyL6vZYPuFkKqZSUN6h9Io4UfGPoDrn
-	 8YvxY6/LpSWrQoT4mcLmapQYNsHTGkGb5SFuybFc=
+	b=nimlJi0zz3Rg2KXE+7a7p7eLFulKh0j107mLmvVn36h/zDJL+bk352GRHGNLMFS0M
+	 8CqZFCQt9NJCdJmJo37RbGI8C5tQ8P86eCoObQoEx6zx9kpKBsiuGJvqiSNTFESnuU
+	 3EiEdg+x+Yl0+uxdRjy61R5NkNRT9d7cjjnuBIPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
+	Anthony Iliopoulos <ailiop@suse.com>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 628/849] NFSv4: handle ERR_GRACE on delegation recalls
-Date: Tue, 11 Nov 2025 09:43:18 +0900
-Message-ID: <20251111004551.616910703@linuxfoundation.org>
+Subject: [PATCH 6.17 629/849] NFSv4.1: fix mount hang after CREATE_SESSION failure
+Date: Tue, 11 Nov 2025 09:43:19 +0900
+Message-ID: <20251111004551.639871793@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,37 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Anthony Iliopoulos <ailiop@suse.com>
 
-[ Upstream commit be390f95242785adbf37d7b8a5101dd2f2ba891b ]
+[ Upstream commit bf75ad096820fee5da40e671ebb32de725a1c417 ]
 
-RFC7530 states that clients should be prepared for the return of
-NFS4ERR_GRACE errors for non-reclaim lock and I/O requests.
+When client initialization goes through server trunking discovery, it
+schedules the state manager and then sleeps waiting for nfs_client
+initialization completion.
 
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+The state manager can fail during state recovery, and specifically in
+lease establishment as nfs41_init_clientid() will bail out in case of
+errors returned from nfs4_proc_create_session(), without ever marking
+the client ready. The session creation can fail for a variety of reasons
+e.g. during backchannel parameter negotiation, with status -EINVAL.
+
+The error status will propagate all the way to the nfs4_state_manager
+but the client status will not be marked, and thus the mount process
+will remain blocked waiting.
+
+Fix it by adding -EINVAL error handling to nfs4_state_manager().
+
+Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4state.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 611e6283c194f..4de3e4bd724b7 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -7872,10 +7872,10 @@ int nfs4_lock_delegation_recall(struct file_lock *fl, struct nfs4_state *state,
- 		return err;
- 	do {
- 		err = _nfs4_do_setlk(state, F_SETLK, fl, NFS_LOCK_NEW);
--		if (err != -NFS4ERR_DELAY)
-+		if (err != -NFS4ERR_DELAY && err != -NFS4ERR_GRACE)
- 			break;
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 7612e977e80b5..01179f7de3225 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2744,6 +2744,9 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 	case -ENETUNREACH:
+ 		nfs_mark_client_ready(clp, -EIO);
+ 		break;
++	case -EINVAL:
++		nfs_mark_client_ready(clp, status);
++		break;
+ 	default:
  		ssleep(1);
--	} while (err == -NFS4ERR_DELAY);
-+	} while (err == -NFS4ERR_DELAY || err == -NFSERR_GRACE);
- 	return nfs4_handle_delegation_recall_error(server, state, stateid, fl, err);
- }
- 
+ 		break;
 -- 
 2.51.0
 
