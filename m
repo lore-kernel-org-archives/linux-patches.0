@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0116930BBBF;
-	Tue, 11 Nov 2025 01:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5660A30C639;
+	Tue, 11 Nov 2025 01:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823330; cv=none; b=tAA6OrII6x3CAWnpHIr8ZVdTSSnTh8t/0oX7IBRHqoO/p3yQb+d3cfA/fcpsuNmJWhTU+xnTph6KEbrcbfVavL/lR5THZEOdn8Pr/nIdbReO5OA85uK2+WjS58GjC7FDZNVFEt3UpWeV9kjLzFsuX6L/AmZkVFQFPPYwwdeNWvo=
+	t=1762823332; cv=none; b=paDeUGR//K5feMZ0HkJwxeTRpQ/TszMHyF0oBXAHufzFIjD6xtp7epNcJL+pP5tB10wMyPEvcUllH0eS+YexPEG7K3XreTrmJxVMposCTgjishednZShH+qsrf9LmnRERAiokYCNbRIBVvVtnC1Mk+8AWPUj5ZcI5Repez94u2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823330; c=relaxed/simple;
-	bh=V8rCj03XCcLAxSyxvo582CJUFyJsMLIGQJ3s+AQ0flY=;
+	s=arc-20240116; t=1762823332; c=relaxed/simple;
+	bh=6MTOrpLhNN2FewpT1IzX2LFNivcTjVheNR56ZyxZV0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fg8JWmea7bhUYq/Rki78WJJSu70amcei5zgz+aHwYiH9WQUC4jUtn2H9UMvtE326sTut/6qPa3G7YjapSDCSSWgJEWmcyWk0uHJ5WgGuLDjgA8obIMMxEQpg8m7KFatfNOX4it4zatA1PxLtjptM3QPYkY2Y7K7FOdTgI3u5MnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0xK9okP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fg8hm8MU3ef1Os9OjLvOb/mK/Dh15yM9Sr8MMgWS/ojYF8P6B07rhbI7ZU2y/gwRvjcGA+0V2oc7qX3ZZC9H6F0tfejT681a2kkWW3y8oRJdLEjUB9o5KswpoboVAN+FixpizDaR038DNdqRR4YyxYvTXGFknO+xty1UzwobRY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STi6UwwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0xK9okP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7C6C4CEFB;
-	Tue, 11 Nov 2025 01:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STi6UwwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0DEC4CEFB;
+	Tue, 11 Nov 2025 01:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823329;
-	bh=V8rCj03XCcLAxSyxvo582CJUFyJsMLIGQJ3s+AQ0flY=;
+	s=korg; t=1762823331;
+	bh=6MTOrpLhNN2FewpT1IzX2LFNivcTjVheNR56ZyxZV0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0xK9okPORJmuRHr5H34eCp86Jfqd/7bHQ+X/JtzXgc6wamNdSVOv/ImNYW9bmBd/
-	 sAYDqiq0OQPPWNty9eBmVzRSybLl5zX48GnX/woFAV+c+rzDXRPaFHctaoS+neGUAX
-	 L4ah+qh4HN64oHglASLncR9uOjAeeZyPmHfyIUbk=
+	b=STi6UwwBJoCqndsioBWe9w6mXwJsnoIpQr6I1ins1X9tvdkO7YwekwNjYXgRLxANw
+	 CQ5yQWE7q9Z2zBDQp9e9WxSSZ3ztI9IEUDGknvz+zrCLax2xOjATU4UQcuDDVps8t9
+	 /Pxnjgtm9LdGue/T0enEDIS1iWXmi2TlS353wfBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Oniszczuk <piotr.oniszczuk@gmail.com>,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Dennis Tsiang <dennis.tsiang@arm.com>,
+	Karunika Choo <karunika.choo@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 277/849] wifi: rtw88: sdio: use indirect IO for device registers before power-on
-Date: Tue, 11 Nov 2025 09:37:27 +0900
-Message-ID: <20251111004543.122727774@linuxfoundation.org>
+Subject: [PATCH 6.12 221/565] drm/panthor: Serialize GPU cache flush operations
+Date: Tue, 11 Nov 2025 09:41:17 +0900
+Message-ID: <20251111004531.895566624@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Karunika Choo <karunika.choo@arm.com>
 
-[ Upstream commit 58de1f91e033b1fface8d8948984583125f93736 ]
+[ Upstream commit e322a4844811b54477b7072eb40dc9e402a1725d ]
 
-The register REG_SYS_CFG1 is used to determine chip basic information
-as arguments of following flows, such as download firmware and load PHY
-parameters, so driver read the value early (before power-on).
+In certain scenarios, it is possible for multiple cache flushes to be
+requested before the previous one completes. This patch introduces the
+cache_flush_lock mutex to serialize these operations and ensure that
+any requested cache flushes are completed instead of dropped.
 
-However, the direct IO is disallowed before power-on, or it causes wrong
-values, which driver recognizes a chip as a wrong type RF_1T1R, but
-actually RF_2T2R, causing driver warns:
-
-  rtw88_8822cs mmc1:0001:1: unsupported rf path (1)
-
-Fix it by using indirect IO before power-on.
-
-Reported-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/699C22B4-A3E3-4206-97D0-22AB3348EBF6@gmail.com/T/#t
-Suggested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Tested-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250724004815.7043-1-pkshih@realtek.com
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Co-developed-by: Dennis Tsiang <dennis.tsiang@arm.com>
+Signed-off-by: Dennis Tsiang <dennis.tsiang@arm.com>
+Signed-off-by: Karunika Choo <karunika.choo@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250807162633.3666310-6-karunika.choo@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/panthor/panthor_gpu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index cc2d4fef35879..99d7c629eac6f 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -144,6 +144,10 @@ static u32 rtw_sdio_to_io_address(struct rtw_dev *rtwdev, u32 addr,
+diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
+index 5251d8764e7d7..1ca2924e6d552 100644
+--- a/drivers/gpu/drm/panthor/panthor_gpu.c
++++ b/drivers/gpu/drm/panthor/panthor_gpu.c
+@@ -35,6 +35,9 @@ struct panthor_gpu {
  
- static bool rtw_sdio_use_direct_io(struct rtw_dev *rtwdev, u32 addr)
- {
-+	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags) &&
-+	    !rtw_sdio_is_bus_addr(addr))
-+		return false;
+ 	/** @reqs_acked: GPU request wait queue. */
+ 	wait_queue_head_t reqs_acked;
 +
- 	return !rtw_sdio_is_sdio30_supported(rtwdev) ||
- 		rtw_sdio_is_bus_addr(addr);
- }
++	/** @cache_flush_lock: Lock to serialize cache flushes */
++	struct mutex cache_flush_lock;
+ };
+ 
+ /**
+@@ -201,6 +204,7 @@ int panthor_gpu_init(struct panthor_device *ptdev)
+ 
+ 	spin_lock_init(&gpu->reqs_lock);
+ 	init_waitqueue_head(&gpu->reqs_acked);
++	mutex_init(&gpu->cache_flush_lock);
+ 	ptdev->gpu = gpu;
+ 	panthor_gpu_init_info(ptdev);
+ 
+@@ -383,6 +387,9 @@ int panthor_gpu_flush_caches(struct panthor_device *ptdev,
+ 	bool timedout = false;
+ 	unsigned long flags;
+ 
++	/* Serialize cache flush operations. */
++	guard(mutex)(&ptdev->gpu->cache_flush_lock);
++
+ 	spin_lock_irqsave(&ptdev->gpu->reqs_lock, flags);
+ 	if (!drm_WARN_ON(&ptdev->base,
+ 			 ptdev->gpu->pending_reqs & GPU_IRQ_CLEAN_CACHES_COMPLETED)) {
 -- 
 2.51.0
 
