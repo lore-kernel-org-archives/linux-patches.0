@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043A27D786;
-	Tue, 11 Nov 2025 01:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA8C33F39D;
+	Tue, 11 Nov 2025 01:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824005; cv=none; b=DazdPZ5oujCVTRXNnX+i5J2zg7B8qR/UXeUZZWRxQC+3HYV5du8/CjjgQkyu97mZjt/CqxJ3veMdB46CKe1HfmiboVflKXr4rwB8GgCLZG8AVPFrK0sFqnqi4z25AwVAtRQt52XmBc1UtdmfPywu7CUQGGvXRHGPEml0HLa2I54=
+	t=1762824008; cv=none; b=I2wiLl7gV7fWy7vaxm9YIEJ9SJZxl0Rd51jN7LfGpUmzNDRCFGI5+MnQ11NPhJB7bW5bwBO48AnZhAvOdQkWfzexXS6xbM6P42eMs7JWFkwBwlSjQiiyaVG1pkgcNXsbxP/G9urRKHu+eKoPEWpLJ07kyUsy0VtUVzGJWzacNP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824005; c=relaxed/simple;
-	bh=Z/rRTaU2IlYo1TDOa5rqpDkZWnwKw1Vop3eTfsmFn+Y=;
+	s=arc-20240116; t=1762824008; c=relaxed/simple;
+	bh=YyIymvxzxpccLWmULbu16ovYvF+yxEiT0oVJtKYpPTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EP80XTffrNGEgYMxcK9t6mOZBVF9EBQbH2+zfJgyHGsP778XhRtkMwyG6GWdClTJJAqyaLgt1sxqjM1Yl8Ywok/+IP0bHm834p7gfX4f1HKADk7ImAwUZdoigxSyCePn92uoMppeg5AiO3dDm5eRF4mudUSW4o9bJ3O0kIzOY8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrC+30ih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7M7nqM2uk71DfqBorWz7vqBUPPUp5kD5K62OHJP3dG6XlG3PPj7iNzmLhguN3I1PJEkX4iO4qWSuj6j5yKvNGGgP9Ve0niJm/jRIJ44V7n9DIoh6ifpALi51F2eQICnY7zDeN/1Kx+OAkCzZx9AyFDXLUi6mWisWh85es7mW4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQEF67Ff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrC+30ih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F210C113D0;
-	Tue, 11 Nov 2025 01:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQEF67Ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0CCC116B1;
+	Tue, 11 Nov 2025 01:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824005;
-	bh=Z/rRTaU2IlYo1TDOa5rqpDkZWnwKw1Vop3eTfsmFn+Y=;
+	s=korg; t=1762824008;
+	bh=YyIymvxzxpccLWmULbu16ovYvF+yxEiT0oVJtKYpPTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrC+30ihWtrsw+dB46u4s5JP6a9RPG7UFSXORZyWdstB3wUr3rpw/Ex+I5f4Zcdt8
-	 HaB+nRmClF7foIxM+EJRJbeu2r0ZqnBwsbaR+A/QTqdqtNppUgNqAaD0C9wb4VJ3/Y
-	 4jSDEDVakUDBpbExar2fpF0OrlRG+9do6tEwJgVc=
+	b=lQEF67FfU9S2isZ8/pMwc+iSTToN+UVuwaWQqdHegXBFAGOFf/bc9np6GW9AyuP7U
+	 aa4y1RqECxeF+l9V8M2eHOoD6Aim5IV/g1HwOtiNvy7zxjxKFyF2AX9tTpCaXCO7ch
+	 TgM4BBfS/4cOnRZOUrCTp37emh9NlRQax28L0DUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/565] HID: i2c-hid: Resolve touchpad issues on Dell systems during S4
-Date: Tue, 11 Nov 2025 09:43:45 +0900
-Message-ID: <20251111004535.170143956@linuxfoundation.org>
+Subject: [PATCH 6.17 419/849] drm/msm/dsi/phy_7nm: Fix missing initial VCO rate
+Date: Tue, 11 Nov 2025 09:39:49 +0900
+Message-ID: <20251111004546.571174060@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,132 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7d62beb102d6fa9a4e5e874be7fbf47a62fcc4f6 ]
+[ Upstream commit 5ddcb0cb9d10e6e70a68e0cb8f0b8e3a7eb8ccaf ]
 
-Dell systems utilize an EC-based touchpad emulation when the ACPI
-touchpad _DSM is not invoked. This emulation acts as a secondary
-master on the I2C bus, designed for scenarios where the I2C touchpad
-driver is absent, such as in BIOS menus. Typically, loading the
-i2c-hid module triggers the _DSM at initialization, disabling the
-EC-based emulation.
+Driver unconditionally saves current state on first init in
+dsi_pll_7nm_init(), but does not save the VCO rate, only some of the
+divider registers.  The state is then restored during probe/enable via
+msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
+dsi_7nm_pll_restore_state().
 
-However, if the i2c-hid module is missing from the boot kernel
-used for hibernation snapshot restoration, the _DSM remains
-uncalled, resulting in dual masters on the I2C bus and
-subsequent arbitration errors. This issue arises when i2c-hid
-resides in the rootfs instead of the kernel or initramfs.
+Restoring calls dsi_pll_7nm_vco_set_rate() with
+pll_7nm->vco_current_rate=0, which basically overwrites existing rate of
+VCO and messes with clock hierarchy, by setting frequency to 0 to clock
+tree.  This makes anyway little sense - VCO rate was not saved, so
+should not be restored.
 
-To address this, switch from using the SYSTEM_SLEEP_PM_OPS()
-macro to dedicated callbacks, introducing a specific
-callback for restoring the S4 image. This callback ensures
-the _DSM is invoked.
+If PLL was not configured configure it to minimum rate to avoid glitches
+and configuring entire in clock hierarchy to 0 Hz.
 
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/657827/
+Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-9-ee633e3ddbff@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-acpi.c |  8 ++++++++
- drivers/hid/i2c-hid/i2c-hid-core.c | 28 +++++++++++++++++++++++++++-
- drivers/hid/i2c-hid/i2c-hid.h      |  2 ++
- 3 files changed, 37 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index 1b49243adb16a..abd700a101f46 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -76,6 +76,13 @@ static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
- 	return hid_descriptor_address;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 6b765f3fd529a..5c8a3394c3da0 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -843,6 +843,12 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
+ 
+ 	/* TODO: Remove this when we have proper display handover support */
+ 	msm_dsi_phy_pll_save_state(phy);
++	/*
++	 * Store also proper vco_current_rate, because its value will be used in
++	 * dsi_7nm_pll_restore_state().
++	 */
++	if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw, VCO_REF_CLK_RATE))
++		pll_7nm->vco_current_rate = pll_7nm->phy->cfg->min_pll_rate;
+ 
+ 	return 0;
  }
- 
-+static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
-+{
-+	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
-+
-+	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+}
-+
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
- {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
-@@ -96,6 +103,7 @@ static int i2c_hid_acpi_probe(struct i2c_client *client)
- 
- 	ihid_acpi->adev = ACPI_COMPANION(dev);
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
-+	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
- 
- 	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
- 	if (ret < 0)
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index bcca89ef73606..276490547378d 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -955,6 +955,14 @@ static void i2c_hid_core_shutdown_tail(struct i2c_hid *ihid)
- 	ihid->ops->shutdown_tail(ihid->ops);
- }
- 
-+static void i2c_hid_core_restore_sequence(struct i2c_hid *ihid)
-+{
-+	if (!ihid->ops->restore_sequence)
-+		return;
-+
-+	ihid->ops->restore_sequence(ihid->ops);
-+}
-+
- static int i2c_hid_core_suspend(struct i2c_hid *ihid, bool force_poweroff)
- {
- 	struct i2c_client *client = ihid->client;
-@@ -1350,8 +1358,26 @@ static int i2c_hid_core_pm_resume(struct device *dev)
- 	return i2c_hid_core_resume(ihid);
- }
- 
-+static int i2c_hid_core_pm_restore(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	struct i2c_hid *ihid = i2c_get_clientdata(client);
-+
-+	if (ihid->is_panel_follower)
-+		return 0;
-+
-+	i2c_hid_core_restore_sequence(ihid);
-+
-+	return i2c_hid_core_resume(ihid);
-+}
-+
- const struct dev_pm_ops i2c_hid_core_pm = {
--	SYSTEM_SLEEP_PM_OPS(i2c_hid_core_pm_suspend, i2c_hid_core_pm_resume)
-+	.suspend = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.resume = pm_sleep_ptr(i2c_hid_core_pm_resume),
-+	.freeze = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.thaw = pm_sleep_ptr(i2c_hid_core_pm_resume),
-+	.poweroff = pm_sleep_ptr(i2c_hid_core_pm_suspend),
-+	.restore = pm_sleep_ptr(i2c_hid_core_pm_restore),
- };
- EXPORT_SYMBOL_GPL(i2c_hid_core_pm);
- 
-diff --git a/drivers/hid/i2c-hid/i2c-hid.h b/drivers/hid/i2c-hid/i2c-hid.h
-index 2c7b66d5caa0f..1724a435c783a 100644
---- a/drivers/hid/i2c-hid/i2c-hid.h
-+++ b/drivers/hid/i2c-hid/i2c-hid.h
-@@ -27,11 +27,13 @@ static inline u32 i2c_hid_get_dmi_quirks(const u16 vendor, const u16 product)
-  * @power_up: do sequencing to power up the device.
-  * @power_down: do sequencing to power down the device.
-  * @shutdown_tail: called at the end of shutdown.
-+ * @restore_sequence: hibernation restore sequence.
-  */
- struct i2chid_ops {
- 	int (*power_up)(struct i2chid_ops *ops);
- 	void (*power_down)(struct i2chid_ops *ops);
- 	void (*shutdown_tail)(struct i2chid_ops *ops);
-+	void (*restore_sequence)(struct i2chid_ops *ops);
- };
- 
- int i2c_hid_core_probe(struct i2c_client *client, struct i2chid_ops *ops,
 -- 
 2.51.0
 
