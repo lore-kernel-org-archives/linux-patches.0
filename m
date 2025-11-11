@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458A873451;
-	Tue, 11 Nov 2025 00:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751A9244693;
+	Tue, 11 Nov 2025 00:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822136; cv=none; b=C3TV1pw6NjRe3F/wTai5/hFdjPpz9Xqv7zS685AT0B5CRI/Z3WtnL77sdTNNZ47dqmjlDrRuvgFb4leCC1G/L93HP2S16jFC9bIK+ClnnI91ssm//eH/uBWo3p/F4eGOZntIoGydy2xwiff9sAUMtP4MjfzqgCFMOXWyiTYQYuM=
+	t=1762822138; cv=none; b=eoMgPagqG1AU7rgPNe2fZA5X/O3i6ZSZdfeYEQQXX6lOp5+tLuP96nth/2YbnMJZ7249NGsTft0klVkxWFPmopnb72y4tCmVYE/slJ6K8MTikMJ1Vc1UMRAsW3V3a/5MNVOGqu9rJZlCRi3ECIoF8Ou8ib1Wu1++Hgtkr8ujGAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822136; c=relaxed/simple;
-	bh=AoO+HG5Hmf6AqFp1mY8x3ZJ4aG23z2iUMiu9EU644zU=;
+	s=arc-20240116; t=1762822138; c=relaxed/simple;
+	bh=CQI1mBdQW7QVjMRKou0ZvnROBbcIpjcuHEXqF/rdqRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0yjyqRnYxdZiB3aAgHbAHS5q5knl8CJD5JBffbjRyqU56mVg31rv3OcD/dJSLD7W/gRHwsv59eoeJzqVclXntAUYxQj+n3AS3G3Qy0Sj41PhGnbG7/j+LqhfZ9QbjRj4VyoOQwIiyjERRCyEC4aLfOnRN69n9RZyPaMTD2YUsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxA0giw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwxxy9uCoYSHlNCIeRFMf7/haJb/4CzAnTfSVvmQY0EkhnU6pN4nSutZrxIhBlYf5CArRt756xx949i47kFWjhsnt4JrV9V5hyVp8Vxo3JV4Y85d8lGliXT11TWxktuwZCcPDx2644boQ9V2Wn5ScCsM1S0Lcrt7/OTRnnWDy4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGAWmiwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxA0giw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E412C116B1;
-	Tue, 11 Nov 2025 00:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGAWmiwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBE8C19425;
+	Tue, 11 Nov 2025 00:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822135;
-	bh=AoO+HG5Hmf6AqFp1mY8x3ZJ4aG23z2iUMiu9EU644zU=;
+	s=korg; t=1762822138;
+	bh=CQI1mBdQW7QVjMRKou0ZvnROBbcIpjcuHEXqF/rdqRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZxA0giw9Ma+QaJRLkuEyztbymHmSuwI4GSD1Fyqyl0BHB5S7ipt3hWVoJqCU9+Azk
-	 8Q9IgCiAbuVUPiTuzkAcXRa3CYZTwnYhOlDbMfO1ajoc63hzOKP4k+DUbht0n2InaD
-	 Gk4p3oJO9pO6CAg4GAJfwgXZL1L+ZK6HYHzR3QNo=
+	b=XGAWmiwMW3/Hn7Bv5un3KsMuK7v1lhK+i9ar9l0b3S3t2LJDGHk1nMXi91KbZ9w7O
+	 SQvsOth8kvK7O4bCitbsZm0qbCQIUs7zkVtO+l/mwld8X6b78xmPVc+0gfEpyhBXZO
+	 yxMEzzLWt8Lg97flQM6DeQ1fbVBbyZGkc3CW+iu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.17 008/849] fbdev: atyfb: Check if pll_ops->init_pll failed
-Date: Tue, 11 Nov 2025 09:32:58 +0900
-Message-ID: <20251111004536.663947498@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.17 009/849] ACPI: video: Fix use-after-free in acpi_video_switch_brightness()
+Date: Tue, 11 Nov 2025 09:32:59 +0900
+Message-ID: <20251111004536.689255773@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,49 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Yuhao Jiang <danisjiang@gmail.com>
 
-commit 7073c7fc8d8ba47194e5fc58fcafc0efe7586e9b upstream.
+commit 8f067aa59430266386b83c18b983ca583faa6a11 upstream.
 
-Actually check the return value from pll_ops->init_pll()
-as it can return an error.
+The switch_brightness_work delayed work accesses device->brightness
+and device->backlight, freed by acpi_video_dev_unregister_backlight()
+during device removal.
 
-If the card's BIOS didn't run because it's not the primary VGA card
-the fact that the xclk source is unsupported is printed as shown
-below but the driver continues on regardless and on my machine causes
-a hard lock up.
+If the work executes after acpi_video_bus_unregister_backlight()
+frees these resources, it causes a use-after-free when
+acpi_video_switch_brightness() dereferences device->brightness or
+device->backlight.
 
-[   61.470088] atyfb 0000:03:05.0: enabling device (0080 -> 0083)
-[   61.476191] atyfb: using auxiliary register aperture
-[   61.481239] atyfb: 3D RAGE XL (Mach64 GR, PCI-33) [0x4752 rev 0x27]
-[   61.487569] atyfb: 512K SGRAM (1:1), 14.31818 MHz XTAL, 230 MHz PLL, 83 Mhz MCLK, 63 MHz XCLK
-[   61.496112] atyfb: Unsupported xclk source:  5.
+Fix this by calling cancel_delayed_work_sync() for each device's
+switch_brightness_work in acpi_video_bus_remove_notify_handler()
+after removing the notify handler that queues the work. This ensures
+the work completes before the memory is freed.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+Fixes: 8ab58e8e7e097 ("ACPI / video: Fix backlight taking 2 steps on a brightness up/down keypress")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Yuhao Jiang <danisjiang@gmail.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+[ rjw: Changelog edit ]
+Link: https://patch.msgid.link/20251022200704.2655507-1-danisjiang@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/aty/atyfb_base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/acpi/acpi_video.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/aty/atyfb_base.c
-+++ b/drivers/video/fbdev/aty/atyfb_base.c
-@@ -2614,8 +2614,12 @@ static int aty_init(struct fb_info *info
- 		pr_cont("\n");
- 	}
- #endif
--	if (par->pll_ops->init_pll)
--		par->pll_ops->init_pll(info, &par->pll);
-+	if (par->pll_ops->init_pll) {
-+		ret = par->pll_ops->init_pll(info, &par->pll);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	if (par->pll_ops->resume_pll)
- 		par->pll_ops->resume_pll(info, &par->pll);
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -1959,8 +1959,10 @@ static void acpi_video_bus_remove_notify
+ 	struct acpi_video_device *dev;
  
+ 	mutex_lock(&video->device_list_lock);
+-	list_for_each_entry(dev, &video->video_device_list, entry)
++	list_for_each_entry(dev, &video->video_device_list, entry) {
+ 		acpi_video_dev_remove_notify_handler(dev);
++		cancel_delayed_work_sync(&dev->switch_brightness_work);
++	}
+ 	mutex_unlock(&video->device_list_lock);
+ 
+ 	acpi_video_bus_stop_devices(video);
 
 
