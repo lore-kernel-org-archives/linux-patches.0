@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351B44C97;
-	Tue, 11 Nov 2025 00:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3C7192B75;
+	Tue, 11 Nov 2025 00:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822163; cv=none; b=NUbREsR5MQzbfXfKC4NGF6sUsEq1vh7UuP0GFHaNj1lwjjo0wUzahByeBwQZ2spkRRv/cJ21AyNPGKBTeHh+kYli3b0rtqlZLGoCYqI/TGvNyhM2bSo9WHB3rB+aQq9/3GX/xgtHwTzHA5sipY9D5qNnFKjCj+O2pINIvv6lu80=
+	t=1762822165; cv=none; b=VlAqGHx7fTpmegVIWv7jbGpF3QTnUgomQ6T3DzKi7iiAbJCblA9511lruISvwvd3dXUpAbu8U3KPasXJleF8MpXO2zdKRykBgYXhziOpRD7o+oMWuwVtPy4DiIgqArBH1M0mm93VGbHak4/1S9c9VOkE+EP7tu3yjggidvtyh4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822163; c=relaxed/simple;
-	bh=snm5QkyCQeu56tXkJTe3Muy2VqvYP3mSauz/+HhCmxw=;
+	s=arc-20240116; t=1762822165; c=relaxed/simple;
+	bh=q2Ptivv6yP7GOrx0KrZfrBruQI/Oh62pJ+e1X0Humso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8WZxt56T6mfoJBGkxkDZaV0KV4zdyd+mKBUqzFKITtoIH1KqkmAFvgU4penupo0LQWi0xTtv1VWx4DEQWCeU2jtblDsPiLPrwum/cyDkP7O7JKf1ziUrpoOj3VqGrWnFCQk9Slqddq5zwukyaQxp6HY+AHpRCKQi84MswJR5AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzvMopTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8u0BZxKOhYov11aIphCAUut8ubqxxO01ERiL7hL/t1Dt4tVpALy3Npi2SREljtl4TXc0ZAh2dkic05VeUNKxZmXXSDj4q/0TAvGu6FWf1AGSm7J06WlsIjb7c+Hj+su5+0mE19o8gbXnggZZsO78IVwH6dGYLHZBLZaRFxbBgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpkuIHeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzvMopTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F69C2BC87;
-	Tue, 11 Nov 2025 00:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpkuIHeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAB4C16AAE;
+	Tue, 11 Nov 2025 00:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822162;
-	bh=snm5QkyCQeu56tXkJTe3Muy2VqvYP3mSauz/+HhCmxw=;
+	s=korg; t=1762822165;
+	bh=q2Ptivv6yP7GOrx0KrZfrBruQI/Oh62pJ+e1X0Humso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzvMopTI2mnUP9XpLgP/Ad0GRShvLB9b2aWC6l1ll2HcEKAUZHklUenyzsx8g7cqE
-	 4xIM2Qc9Ipi+fEFpci+pgsNA7LC9/eLDUlJ5wr0qFf2O2Gz3f3/oyK/EfPqXjoL6Ws
-	 5/RoZIzRlyw/rZnyFjlADKQ2eia3Wm2SaePFZTYE=
+	b=LpkuIHeC2YQJmGLg3sCEZYJ3auZkLKSSc/RVAgFG4lko4AHI5+LDeSgdXcjRloMm2
+	 R0P1Ml4wX6Iwnqo9Nbh0mGTecKI6omZuIdJk5qUvrmp1ba78yMqEUX3F6WimH4MQ+Y
+	 bSP7xcWPB+pekSv2wRk+p7WZbijIP56Vmv2qfCIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Florian Schmaus <florian.schmaus@codasip.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com,
+	Noorain Eqbal <nooraineqbal@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 042/849] kunit: test_dev_action: Correctly cast priv pointer to long*
-Date: Tue, 11 Nov 2025 09:33:32 +0900
-Message-ID: <20251111004537.454432413@linuxfoundation.org>
+Subject: [PATCH 6.17 043/849] bpf: Sync pending IRQ work before freeing ring buffer
+Date: Tue, 11 Nov 2025 09:33:33 +0900
+Message-ID: <20251111004537.482914851@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schmaus <florian.schmaus@codasip.com>
+From: Noorain Eqbal <nooraineqbal@gmail.com>
 
-[ Upstream commit 2551a1eedc09f5a86f94b038dc1bb16855c256f1 ]
+[ Upstream commit 4e9077638301816a7d73fa1e1b4c1db4a7e3b59c ]
 
-The previous implementation incorrectly assumed the original type of
-'priv' was void**, leading to an unnecessary and misleading
-cast. Correct the cast of the 'priv' pointer in test_dev_action() to
-its actual type, long*, removing an unnecessary cast.
+Fix a race where irq_work can be queued in bpf_ringbuf_commit()
+but the ring buffer is freed before the work executes.
+In the syzbot reproducer, a BPF program attached to sched_switch
+triggers bpf_ringbuf_commit(), queuing an irq_work. If the ring buffer
+is freed before this work executes, the irq_work thread may accesses
+freed memory.
+Calling `irq_work_sync(&rb->work)` ensures that all pending irq_work
+complete before freeing the buffer.
 
-As an additional benefit, this fixes an out-of-bounds CHERI fault on
-hardware with architectural capabilities. The original implementation
-tried to store a capability-sized pointer using the priv
-pointer. However, the priv pointer's capability only granted access to
-the memory region of its original long type, leading to a bounds
-violation since the size of a long is smaller than the size of a
-capability. This change ensures that the pointer usage respects the
-capabilities' bounds.
-
-Link: https://lore.kernel.org/r/20251017092814.80022-1-florian.schmaus@codasip.com
-Fixes: d03c720e03bd ("kunit: Add APIs for managing devices")
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
+Reported-by: syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2617fc732430968b45d2
+Tested-by: syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com
+Signed-off-by: Noorain Eqbal <nooraineqbal@gmail.com>
+Link: https://lore.kernel.org/r/20251020180301.103366-1-nooraineqbal@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/kunit-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/ringbuf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/kunit/kunit-test.c b/lib/kunit/kunit-test.c
-index 8c01eabd4eaf2..63130a48e2371 100644
---- a/lib/kunit/kunit-test.c
-+++ b/lib/kunit/kunit-test.c
-@@ -739,7 +739,7 @@ static struct kunit_case kunit_current_test_cases[] = {
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 719d73299397b..d706c4b7f532d 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -216,6 +216,8 @@ static struct bpf_map *ringbuf_map_alloc(union bpf_attr *attr)
  
- static void test_dev_action(void *priv)
+ static void bpf_ringbuf_free(struct bpf_ringbuf *rb)
  {
--	*(void **)priv = (void *)1;
-+	*(long *)priv = 1;
- }
- 
- static void kunit_device_test(struct kunit *test)
++	irq_work_sync(&rb->work);
++
+ 	/* copy pages pointer and nr_pages to local variable, as we are going
+ 	 * to unmap rb itself with vunmap() below
+ 	 */
 -- 
 2.51.0
 
