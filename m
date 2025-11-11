@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066CA308F2E;
-	Tue, 11 Nov 2025 01:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9426056C;
+	Tue, 11 Nov 2025 01:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824490; cv=none; b=RVSTt7JRtgU+A/KQCrchfcryJ1U3WbKh5ZKtNmvANj0Ae7qsn0m/Y1BhNLpHdqqJn8KwOUuhnF5y90Gp657mIW62GiM7ybSI6HfbqEtI8SC3BTKjVCsrHix+m+DuJL+ZokZtDxm6FIfTmwImkCwxLDxfAbWTU5BPt5abapy+2p4=
+	t=1762824491; cv=none; b=G4ZEc3+7Z62dG5w/ToyKSDX2bHZ6eX4hq9RZFyNlQHXcE0TQkYh6HmZI32jylAIIZNgVh9QfI6fBjPLvd6Ljvluoy0p+qc9FEb3PRIJRpLq4/dt9Kt6bj36Y9YuvfWSw8W1aEI9N5QHff5yn0dzIo3YF1Fjt11cKD1QfvMr/+R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824490; c=relaxed/simple;
-	bh=1wmy1QnBY8106ZopRprJmlZ4tjpi835NsRFkCGCvC0M=;
+	s=arc-20240116; t=1762824491; c=relaxed/simple;
+	bh=E7muqKVVibUXCcyWh/R4Gd2+3u+PzyR4d76kPrQZRe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVcDjA1GTuYAOOT7/SlFjGCtQ4ZBSXlsWEa1vJ1oGFJwusEtdiu18kC+d1xABUGhlS8gD+RxC6h0V/cnsYnYDMWz2FXWP1x89q9rawLiRaX8A0Fg6FOtCCkoDLViCj9jkGA0IZ53cvP+a2AymhxrC7FWa8VKb7Dnt/JNqh6HEjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Balxg6GR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWnspTA43twXbPqQl5wQ62ehejO0c8h5EuEm7NEySsb8YwxKWpek8/Ago0+SXtUYQCL4o94A5dSQPNMzM3fF8bWMslezez85WuDiz6rSo6oi/1SzUDSrTGshLSF+c86BnPLNhypVBiszqJAxAvTmDJuyKt8WsQthHs5qb3iksLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWPUY453; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Balxg6GR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F40C2BC86;
-	Tue, 11 Nov 2025 01:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWPUY453"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A28C16AAE;
+	Tue, 11 Nov 2025 01:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824486;
-	bh=1wmy1QnBY8106ZopRprJmlZ4tjpi835NsRFkCGCvC0M=;
+	s=korg; t=1762824491;
+	bh=E7muqKVVibUXCcyWh/R4Gd2+3u+PzyR4d76kPrQZRe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Balxg6GRo1rXWhKbRcySqiIbYJ+1XndCK4tSsbmDJ9OxaFeCQ0Nl19Kglib0eEtAT
-	 qlf7lHzumKlQc2Ks6kpyoufuuyrxL4RfBa+FOv+e6HwPBUtjZ8feO8n9ZSFEdJi9f4
-	 NuNPkKrcgBl6YxSdoYOvCweZkDcU1NIuduMZj7BI=
+	b=sWPUY453GXPqu0XNA08U7fSNQIjXK7UZskQqD2nqHFurj0RI5EcNYyX8oKvWmMAxC
+	 4X2Fyr0O/oDlOjcgO8+Ni6YzcV1j0/I6/AKdPHvM1ZWDUkEuw8OTHmvQQImlNocVIK
+	 jcb60qgLKV9cuvaRBlneeoihslERla0ePohBGVVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 496/849] net: phy: marvell: Fix 88e1510 downshift counter errata
-Date: Tue, 11 Nov 2025 09:41:06 +0900
-Message-ID: <20251111004548.427976144@linuxfoundation.org>
+Subject: [PATCH 6.12 456/565] RDMA/irdma: Remove unused struct irdma_cq fields
+Date: Tue, 11 Nov 2025 09:45:12 +0900
+Message-ID: <20251111004537.152751049@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,91 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit deb105f49879dd50d595f7f55207d6e74dec34e6 ]
+[ Upstream commit 880245fd029a8f8ee8fd557c2681d077c1b1a959 ]
 
-The 88e1510 PHY has an erratum where the phy downshift counter is not
-cleared after phy being suspended(BMCR_PDOWN set) and then later
-resumed(BMCR_PDOWN cleared). This can cause the gigabit link to
-intermittently downshift to a lower speed.
+These fields were set but not used anywhere, so remove them.
 
-Disabling and re-enabling the downshift feature clears the counter,
-allowing the PHY to retry gigabit link negotiation up to the programmed
-retry count times before downshifting. This behavior has been observed
-on copper links.
-
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250906-marvell_fix-v2-1-f6efb286937f@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/r/20250923142128.943240-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 5575b7646b94 ("RDMA/irdma: Set irdma_cq cq_num field during CQ create")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/marvell.c | 39 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 3 ---
+ drivers/infiniband/hw/irdma/verbs.h | 6 ------
+ 2 files changed, 9 deletions(-)
 
-diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
-index 623292948fa70..0ea366c1217eb 100644
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -1902,6 +1902,43 @@ static int marvell_resume(struct phy_device *phydev)
- 	return err;
- }
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index eeb932e587303..ba844f4b1c21a 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2116,8 +2116,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 			goto cq_free_rsrc;
+ 		}
  
-+/* m88e1510_resume
-+ *
-+ * The 88e1510 PHY has an erratum where the phy downshift counter is not cleared
-+ * after phy being suspended(BMCR_PDOWN set) and then later resumed(BMCR_PDOWN
-+ * cleared). This can cause the link to intermittently downshift to a lower speed.
-+ *
-+ * Disabling and re-enabling the downshift feature clears the counter, allowing
-+ * the PHY to retry gigabit link negotiation up to the programmed retry count
-+ * before downshifting. This behavior has been observed on copper links.
-+ */
-+static int m88e1510_resume(struct phy_device *phydev)
-+{
-+	int err;
-+	u8 cnt = 0;
-+
-+	err = marvell_resume(phydev);
-+	if (err < 0)
-+		return err;
-+
-+	/* read downshift counter value */
-+	err = m88e1011_get_downshift(phydev, &cnt);
-+	if (err < 0)
-+		return err;
-+
-+	if (cnt) {
-+		/* downshift disabled */
-+		err = m88e1011_set_downshift(phydev, 0);
-+		if (err < 0)
-+			return err;
-+
-+		/* downshift enabled, with previous counter value */
-+		err = m88e1011_set_downshift(phydev, cnt);
-+	}
-+
-+	return err;
-+}
-+
- static int marvell_aneg_done(struct phy_device *phydev)
- {
- 	int retval = phy_read(phydev, MII_M1011_PHY_STATUS);
-@@ -3923,7 +3960,7 @@ static struct phy_driver marvell_drivers[] = {
- 		.handle_interrupt = marvell_handle_interrupt,
- 		.get_wol = m88e1318_get_wol,
- 		.set_wol = m88e1318_set_wol,
--		.resume = marvell_resume,
-+		.resume = m88e1510_resume,
- 		.suspend = marvell_suspend,
- 		.read_page = marvell_read_page,
- 		.write_page = marvell_write_page,
+-		iwcq->iwpbl = iwpbl;
+-		iwcq->cq_mem_size = 0;
+ 		cqmr = &iwpbl->cq_mr;
+ 
+ 		if (rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
+@@ -2132,7 +2130,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 				err_code = -EPROTO;
+ 				goto cq_free_rsrc;
+ 			}
+-			iwcq->iwpbl_shadow = iwpbl_shadow;
+ 			cqmr_shadow = &iwpbl_shadow->cq_mr;
+ 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
+ 			cqmr->split = true;
+diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
+index cfa140b36395a..4381e5dbe782a 100644
+--- a/drivers/infiniband/hw/irdma/verbs.h
++++ b/drivers/infiniband/hw/irdma/verbs.h
+@@ -115,21 +115,15 @@ struct irdma_mr {
+ struct irdma_cq {
+ 	struct ib_cq ibcq;
+ 	struct irdma_sc_cq sc_cq;
+-	u16 cq_head;
+-	u16 cq_size;
+ 	u16 cq_num;
+ 	bool user_mode;
+ 	atomic_t armed;
+ 	enum irdma_cmpl_notify last_notify;
+-	u32 polled_cmpls;
+-	u32 cq_mem_size;
+ 	struct irdma_dma_mem kmem;
+ 	struct irdma_dma_mem kmem_shadow;
+ 	struct completion free_cq;
+ 	refcount_t refcnt;
+ 	spinlock_t lock; /* for poll cq */
+-	struct irdma_pbl *iwpbl;
+-	struct irdma_pbl *iwpbl_shadow;
+ 	struct list_head resize_list;
+ 	struct irdma_cq_poll_info cur_cqe;
+ 	struct list_head cmpl_generated;
 -- 
 2.51.0
 
