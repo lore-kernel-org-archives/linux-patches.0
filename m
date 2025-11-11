@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8645334A790;
-	Tue, 11 Nov 2025 01:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7A133F37D;
+	Tue, 11 Nov 2025 01:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825338; cv=none; b=msClpCoCO73FFkriKH1KZqryy4EbTbIVyRkuYQPUU2T37308YHbtomxu9zIxbL+cmDajeXrQZQ8lodJJ22A9QzTHV4CCKZPps140zM0YexfrVxK5/8nXPHFtlH6Xqn9p9VPtqdal8t+sS7lN54xQM9cdPRPjWCteZAQsjaOFkcw=
+	t=1762825342; cv=none; b=btzM2V12Ds3AzKLiIXGAYQRicqNzjzKhPIZv6nPQ18xdtVqnXRpswunY15ZMmkQNiYGBSchACA2/ELN4SChAcNXMrTEpGo3ta67RqPuoWgkaxLs7tLdnsoEdxnxSkN2EmJS2XoBQGTjHRQu6zA8wwVPFpmhFcokJzc6n0CrSJss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825338; c=relaxed/simple;
-	bh=qpGs6pJI7KmnothcuDfNPt+Eo9V57CkCHWeZc7xVkiY=;
+	s=arc-20240116; t=1762825342; c=relaxed/simple;
+	bh=pI4WSoSuI9MwOJx2fCnuM5Ghh7KTO+A/hJqmMoWOkK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYV1Y8XxsLtb+022WSBgyNdyMOBIng4/bVdyE57BubUy/puJPSu9Am6TbH84ZL+JbFCUu1hB6jhbVbcNt0Zd9+eXBgfQ58jgLtD3CCoNMxE6vgZgJfeTkksNCCCtW//HT7N8fpieaN2p/Zr68PWK9e0ne4HwiJKsTH95OXUn32I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WddZbDj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqzhZ2GaNbStpRURIdnYF2vUW3yGq2VKW0TA1RU6ZSCZOVMQrDGYwtzwypDc74RPN9K2SQ41UeF1s7gmZhEqzzj8m/7Wa862OFQan3zLxK9hRCRQFkN6faLLmxrmtUynOsyeaRTHf/Cn1u9q3oo9DMl8fhnh+GgngmA47sooJis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiQk5PPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WddZbDj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AF1C4CEFB;
-	Tue, 11 Nov 2025 01:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiQk5PPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82786C16AAE;
+	Tue, 11 Nov 2025 01:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825338;
-	bh=qpGs6pJI7KmnothcuDfNPt+Eo9V57CkCHWeZc7xVkiY=;
+	s=korg; t=1762825340;
+	bh=pI4WSoSuI9MwOJx2fCnuM5Ghh7KTO+A/hJqmMoWOkK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WddZbDj3DMZmiDFy/HksPiHN37GCwMX4IPfBo3RXJ52f7yu0xL+2zP9kXYQLDPwgv
-	 I5StZVzyThYw7wTR0M/1S8paQ34XSNglvk/dfjM0L1C0aGSECUon8zemhRR6ub8uv3
-	 d8IKQJgQ+m5H7FcOrkE09aX9SI50NTwVVHsNGqT0=
+	b=TiQk5PPSqxWaSDdqwrdw9HG6L90ztoKD/WM2kcjssys14LrcSwSqTpGoD/uzERZFT
+	 NsZXEHQJYKvy/pBQywYUwObUqd4xdVma9IYl7kfrXcDXy4EqhqbI8eM2N69r7RnXX4
+	 byXauCvYslwQu6vjlovOVQFY1c2if7/ucp4Fj0p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zsolt Kajtar <soci@c64.rulez.org>,
-	Helge Deller <deller@gmx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 717/849] fbdev: core: Fix ubsan warning in pixel_to_pat
-Date: Tue, 11 Nov 2025 09:44:47 +0900
-Message-ID: <20251111004553.766207014@linuxfoundation.org>
+Subject: [PATCH 6.17 718/849] ACPI: property: Return present device nodes only on fwnode interface
+Date: Tue, 11 Nov 2025 09:44:48 +0900
+Message-ID: <20251111004553.791027632@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,35 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zsolt Kajtar <soci@c64.rulez.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit aad1d99beaaf132e2024a52727c24894cdf9474a ]
+[ Upstream commit d9f866b2bb3eec38b3734f1fed325ec7c55ccdfa ]
 
-It could be triggered on 32 bit big endian machines at 32 bpp in the
-pattern realignment. In this case just return early as the result is
-an identity.
+fwnode_graph_get_next_subnode() may return fwnode backed by ACPI
+device nodes and there has been no check these devices are present
+in the system, unlike there has been on fwnode OF backend.
 
-Signed-off-by: Zsolt Kajtar <soci@c64.rulez.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+In order to provide consistent behaviour towards callers,
+add a check for device presence by introducing
+a new function acpi_get_next_present_subnode(), used as the
+get_next_child_node() fwnode operation that also checks device
+node presence.
+
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20251001102636.1272722-2-sakari.ailus@linux.intel.com
+[ rjw: Kerneldoc comment and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_fillrect.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/acpi/property.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fb_fillrect.h b/drivers/video/fbdev/core/fb_fillrect.h
-index 66042e534de77..f366670a53af8 100644
---- a/drivers/video/fbdev/core/fb_fillrect.h
-+++ b/drivers/video/fbdev/core/fb_fillrect.h
-@@ -92,8 +92,7 @@ static unsigned long pixel_to_pat(int bpp, u32 color)
- 		pattern = pattern | pattern << bpp;
- 		break;
- 	default:
--		pattern = color;
--		break;
-+		return color;
- 	}
- #ifndef __LITTLE_ENDIAN
- 	pattern <<= (BITS_PER_LONG % bpp);
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index c086786fe84cb..d74678f0ba4af 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1357,6 +1357,28 @@ struct fwnode_handle *acpi_get_next_subnode(const struct fwnode_handle *fwnode,
+ 	return NULL;
+ }
+ 
++/*
++ * acpi_get_next_present_subnode - Return the next present child node handle
++ * @fwnode: Firmware node to find the next child node for.
++ * @child: Handle to one of the device's child nodes or a null handle.
++ *
++ * Like acpi_get_next_subnode(), but the device nodes returned by
++ * acpi_get_next_present_subnode() are guaranteed to be present.
++ *
++ * Returns: The fwnode handle of the next present sub-node.
++ */
++static struct fwnode_handle *
++acpi_get_next_present_subnode(const struct fwnode_handle *fwnode,
++			      struct fwnode_handle *child)
++{
++	do {
++		child = acpi_get_next_subnode(fwnode, child);
++	} while (is_acpi_device_node(child) &&
++		 !acpi_device_is_present(to_acpi_device_node(child)));
++
++	return child;
++}
++
+ /**
+  * acpi_node_get_parent - Return parent fwnode of this fwnode
+  * @fwnode: Firmware node whose parent to get
+@@ -1701,7 +1723,7 @@ static int acpi_fwnode_irq_get(const struct fwnode_handle *fwnode,
+ 		.property_read_string_array =				\
+ 			acpi_fwnode_property_read_string_array,		\
+ 		.get_parent = acpi_node_get_parent,			\
+-		.get_next_child_node = acpi_get_next_subnode,		\
++		.get_next_child_node = acpi_get_next_present_subnode,	\
+ 		.get_named_child_node = acpi_fwnode_get_named_child_node, \
+ 		.get_name = acpi_fwnode_get_name,			\
+ 		.get_name_prefix = acpi_fwnode_get_name_prefix,		\
 -- 
 2.51.0
 
