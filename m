@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1C43491D6;
-	Tue, 11 Nov 2025 01:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FF73491D6;
+	Tue, 11 Nov 2025 01:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823791; cv=none; b=HGFx9RmX0a214DouaBBj4iAv9pdjZGCoG03fiPcB6W2htzyvNHQqgyjsdI+pBB6o6Idxx0O+2RBDE3xSOk4/MBH54KQ9IRmZmniyrCw580Hag2oGcPXdLWNYIXwrBPle/vFuiEwP8T5WgWLB7GiL9/w1u9TH0sy4uwPZLhICx1k=
+	t=1762823793; cv=none; b=ITUUjLsAkpd0faCBZnSKBD+YJ3om0NLutAfQ5x9IF7v0o+UFc/Dbdgoyb/SHleLkk7LKLQmT61DJUnwaPOvdy+c9HLGJQVGvtwv/17mBgGDSj6ca9WdklgE725IP9GIOMcfITcisP2tgvTA4gcTgF7cuEITX/oaVFjaZBw5fjE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823791; c=relaxed/simple;
-	bh=jLiEZW7OPZRTZdwtITs27+mLnmgku0e5Qtt4/4L9KjQ=;
+	s=arc-20240116; t=1762823793; c=relaxed/simple;
+	bh=zzvbXEz2wLqOcVgyyVanX5128UJjd2NreyOiPBmE2zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1wBvTCtpGlZpvoydpMCzBmlRdrq3tfdjQo7SA4INSAA9xv0gBeTjYDLrIoR56pzjfFUzdqYJHuCMF3xOt0M/vrHpGKkj6moY+KnvELHM0W73uvZpEau0mFszgJzi1ItDbD/bB1GT87Lh/hDvNe1K3ppnf65VF18VR3lnk3w0bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbHuEU6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaolE1Ik4fX+62nHEQBlhzgv3KoaDPcKYtD+z40FgOmyPXfuXl5Ze0NX8XZSfgA6yiAgFYlbaEqcpEJpOo3ZNKK4hZG2XxesZ6kNaHanLrHpbO4YTL7DAisPjxDfOMCuaSicCeM2ft4dJ4ajY4dzFTic8tQfeoMad1+8cRbxWqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NO7o7hy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbHuEU6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A319EC113D0;
-	Tue, 11 Nov 2025 01:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NO7o7hy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BCBC113D0;
+	Tue, 11 Nov 2025 01:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823790;
-	bh=jLiEZW7OPZRTZdwtITs27+mLnmgku0e5Qtt4/4L9KjQ=;
+	s=korg; t=1762823793;
+	bh=zzvbXEz2wLqOcVgyyVanX5128UJjd2NreyOiPBmE2zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbHuEU6Xf+y8j81g4NjgE2iAvRmEqh4DDA3DU8hkroxlqB6m2WBsbTJ1drkk4WQNo
-	 TkMwIpBHeP3wdP9cmyXAm73iVYzPeCCX3bWSpvFyqyv7g1HoegxpMudgRvYg/pyWEm
-	 hbqdcesSnKr7oTntF+QoFoy5fqQXDDfeqzwPJ12w=
+	b=0NO7o7hySdU/Sfk+qlecWkmMgNh/Y24NpSbhxpOczlJUGxP8VahckauYLdy0lSqQ5
+	 R/Nnrbklb7M0Q24FH9LOAt71zp88drSW2UmnolNo+78rEVuPOisURSu04rvsNuqAWX
+	 gGk2AfTpq/ndlVhu64JVLQ89CnswDpQMD1/50fKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 325/565] net: phy: marvell: Fix 88e1510 downshift counter errata
-Date: Tue, 11 Nov 2025 09:43:01 +0900
-Message-ID: <20251111004534.196185779@linuxfoundation.org>
+Subject: [PATCH 6.17 373/849] drm/amdkfd: fix vram allocation failure for a special case
+Date: Tue, 11 Nov 2025 09:39:03 +0900
+Message-ID: <20251111004545.449667208@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,91 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit deb105f49879dd50d595f7f55207d6e74dec34e6 ]
+[ Upstream commit 93aa919ca05bec544b17ee9a1bfe394ce6c94bd8 ]
 
-The 88e1510 PHY has an erratum where the phy downshift counter is not
-cleared after phy being suspended(BMCR_PDOWN set) and then later
-resumed(BMCR_PDOWN cleared). This can cause the gigabit link to
-intermittently downshift to a lower speed.
+When it only allocates vram without va, which is 0, and a
+SVM range allocated stays in this range, the vram allocation
+returns failure. It should be skipped for this case from
+SVM usage check.
 
-Disabling and re-enabling the downshift feature clears the counter,
-allowing the PHY to retry gigabit link negotiation up to the programmed
-retry count times before downshifting. This behavior has been observed
-on copper links.
-
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250906-marvell_fix-v2-1-f6efb286937f@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/marvell.c | 39 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
-index 9964bf3dea2fb..2b64a11fe9b36 100644
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -1848,6 +1848,43 @@ static int marvell_resume(struct phy_device *phydev)
- 	return err;
- }
- 
-+/* m88e1510_resume
-+ *
-+ * The 88e1510 PHY has an erratum where the phy downshift counter is not cleared
-+ * after phy being suspended(BMCR_PDOWN set) and then later resumed(BMCR_PDOWN
-+ * cleared). This can cause the link to intermittently downshift to a lower speed.
-+ *
-+ * Disabling and re-enabling the downshift feature clears the counter, allowing
-+ * the PHY to retry gigabit link negotiation up to the programmed retry count
-+ * before downshifting. This behavior has been observed on copper links.
-+ */
-+static int m88e1510_resume(struct phy_device *phydev)
-+{
-+	int err;
-+	u8 cnt = 0;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 79ed3be63d0dd..43115a3744694 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1070,7 +1070,12 @@ static int kfd_ioctl_alloc_memory_of_gpu(struct file *filep,
+ 	svm_range_list_lock_and_flush_work(&p->svms, current->mm);
+ 	mutex_lock(&p->svms.lock);
+ 	mmap_write_unlock(current->mm);
+-	if (interval_tree_iter_first(&p->svms.objects,
 +
-+	err = marvell_resume(phydev);
-+	if (err < 0)
-+		return err;
-+
-+	/* read downshift counter value */
-+	err = m88e1011_get_downshift(phydev, &cnt);
-+	if (err < 0)
-+		return err;
-+
-+	if (cnt) {
-+		/* downshift disabled */
-+		err = m88e1011_set_downshift(phydev, 0);
-+		if (err < 0)
-+			return err;
-+
-+		/* downshift enabled, with previous counter value */
-+		err = m88e1011_set_downshift(phydev, cnt);
-+	}
-+
-+	return err;
-+}
-+
- static int marvell_aneg_done(struct phy_device *phydev)
- {
- 	int retval = phy_read(phydev, MII_M1011_PHY_STATUS);
-@@ -3887,7 +3924,7 @@ static struct phy_driver marvell_drivers[] = {
- 		.handle_interrupt = marvell_handle_interrupt,
- 		.get_wol = m88e1318_get_wol,
- 		.set_wol = m88e1318_set_wol,
--		.resume = marvell_resume,
-+		.resume = m88e1510_resume,
- 		.suspend = marvell_suspend,
- 		.read_page = marvell_read_page,
- 		.write_page = marvell_write_page,
++	/* Skip a special case that allocates VRAM without VA,
++	 * VA will be invalid of 0.
++	 */
++	if (!(!args->va_addr && (flags & KFD_IOC_ALLOC_MEM_FLAGS_VRAM)) &&
++	    interval_tree_iter_first(&p->svms.objects,
+ 				     args->va_addr >> PAGE_SHIFT,
+ 				     (args->va_addr + args->size - 1) >> PAGE_SHIFT)) {
+ 		pr_err("Address: 0x%llx already allocated by SVM\n",
 -- 
 2.51.0
 
