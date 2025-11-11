@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4BD30FC3D;
-	Tue, 11 Nov 2025 01:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F241D2D97A4;
+	Tue, 11 Nov 2025 01:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824605; cv=none; b=OqAkbKPZa0aN8V0Zk+A3C/FtIS4J0gFAOX1AxfHxQ0/7cUn3vy7Tk+44PzS/osjTno3soxCY2t7XOy2NYPuN1oD9q3uFmIIqI9mmFo4kJHzcmcWQZ2I+ZhHNCSNHgGlHfA/rssmsoe74W6oeHonEagzxDoG56lQf9fpcPcFginY=
+	t=1762824608; cv=none; b=qUE5sfZ9lHq++Asl1NCn5kLMdM5LVh+FaGMHlPbvFRPc+FQ5exEF9otxCZjLeKoDPK4L5rx1pff9y0VeUiZjIejnH1AlqJU3HFRkDIFTK86OOkc9tM8xi/QO+SDbCiC8EBQw2xn8pc2DlfU5b6f5tA0gMlKE0tC73ReM7YwDPuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824605; c=relaxed/simple;
-	bh=kexhX7+9n32yJILKSDP7znhUKDmCuPshhlYTWkroTBw=;
+	s=arc-20240116; t=1762824608; c=relaxed/simple;
+	bh=opcqOgyKk7wKvB0Zj3039oSiCe5j28yUVM4STD2lTPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auqpfKMldFuSltfX+t3fvluUf0/NCm3YhDXAqu6ta09kLxIDsKPQWPmvhglU+QDMaLQ/YI40vWIYjSdToKyO2HIJzOYJ7lmCbBGn+HjMnR7r6cn4JPI7LkUquVOX/WxAr6JVlhT0GiMs+AF9gfWVQX+E5eTwOef9ZHE3+2YfcKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjiz9jxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAeFzHQKhHmxYmX1H/wt1cQvI6kmD+D6qpGnirrI2+QNm55NjjguOq8nI0UVbuEfgDCIqv7ePjGQix+DMewoD7bM6dvwXgjmFpvCnU9f5j3XmckEasQ7Gr9MULtboSASHXAXMaXGhHevDmbmgkAa3KRVkJSsxf2fZiNn6agO3G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kl5M8mib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjiz9jxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD0C116B1;
-	Tue, 11 Nov 2025 01:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl5M8mib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92495C4CEFB;
+	Tue, 11 Nov 2025 01:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824605;
-	bh=kexhX7+9n32yJILKSDP7znhUKDmCuPshhlYTWkroTBw=;
+	s=korg; t=1762824607;
+	bh=opcqOgyKk7wKvB0Zj3039oSiCe5j28yUVM4STD2lTPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjiz9jxek2a2kr+mxBhMRwUneoZZw7UW3A8X5YGDeI/IhnkYcG1O4x7cI2XErbrnk
-	 3OJpkAssM/D37U7rAu2NYiLO40olt5fVwFvDUBvQCCS9FujoWzk1QXuurfZ5OrMee2
-	 1fZYUaXJFe9VytKXTshcLOLjW1PgAPebczC+Wyug=
+	b=Kl5M8mibaQI9+1DsJZq3vYxoJIv4Lg8IBFRSEVKJFYSe8uJb+fAYMrdQ4/42Ma1vd
+	 NbS3H70QPOZj3cddTo4gSId3REJLJSFezAdv3B97p1vfeox7SAw977goUgVdPjfwM3
+	 2TO34WjrEUumjW10UzoFCxam8pHTJdBlZD1Ak6Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 478/565] cpufreq: tegra186: Initialize all cores to max frequencies
-Date: Tue, 11 Nov 2025 09:45:34 +0900
-Message-ID: <20251111004537.670279422@linuxfoundation.org>
+Subject: [PATCH 6.17 533/849] net: mana: Reduce waiting time if HWC not responding
+Date: Tue, 11 Nov 2025 09:41:43 +0900
+Message-ID: <20251111004549.304594769@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,104 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-[ Upstream commit ba6018929165fc914c665f071f8e8cdbac844a49 ]
+[ Upstream commit c4deabbc1abe452ea230b86d53ed3711e5a8a062 ]
 
-During initialization, the EDVD_COREx_VOLT_FREQ registers for some cores
-are still at reset values and not reflecting the actual frequency. This
-causes get calls to fail. Set all cores to their respective max
-frequency during probe to initialize the registers to working values.
+If HW Channel (HWC) is not responding, reduce the waiting time, so further
+steps will fail quickly.
+This will prevent getting stuck for a long time (30 minutes or more), for
+example, during unloading while HWC is not responding.
 
-Suggested-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/1757537841-5063-1-git-send-email-haiyangz@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/tegra186-cpufreq.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/microsoft/mana/hw_channel.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/tegra186-cpufreq.c b/drivers/cpufreq/tegra186-cpufreq.c
-index 39186008afbfd..233c82a834086 100644
---- a/drivers/cpufreq/tegra186-cpufreq.c
-+++ b/drivers/cpufreq/tegra186-cpufreq.c
-@@ -132,13 +132,14 @@ static struct cpufreq_driver tegra186_cpufreq_driver = {
- 
- static struct cpufreq_frequency_table *init_vhint_table(
- 	struct platform_device *pdev, struct tegra_bpmp *bpmp,
--	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id)
-+	struct tegra186_cpufreq_cluster *cluster, unsigned int cluster_id,
-+	int *num_rates)
- {
- 	struct cpufreq_frequency_table *table;
- 	struct mrq_cpu_vhint_request req;
- 	struct tegra_bpmp_message msg;
- 	struct cpu_vhint_data *data;
--	int err, i, j, num_rates = 0;
-+	int err, i, j;
- 	dma_addr_t phys;
- 	void *virt;
- 
-@@ -168,6 +169,7 @@ static struct cpufreq_frequency_table *init_vhint_table(
- 		goto free;
- 	}
- 
-+	*num_rates = 0;
- 	for (i = data->vfloor; i <= data->vceil; i++) {
- 		u16 ndiv = data->ndiv[i];
- 
-@@ -178,10 +180,10 @@ static struct cpufreq_frequency_table *init_vhint_table(
- 		if (i > 0 && ndiv == data->ndiv[i - 1])
- 			continue;
- 
--		num_rates++;
-+		(*num_rates)++;
- 	}
- 
--	table = devm_kcalloc(&pdev->dev, num_rates + 1, sizeof(*table),
-+	table = devm_kcalloc(&pdev->dev, *num_rates + 1, sizeof(*table),
- 			     GFP_KERNEL);
- 	if (!table) {
- 		table = ERR_PTR(-ENOMEM);
-@@ -223,7 +225,9 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
- {
- 	struct tegra186_cpufreq_data *data;
- 	struct tegra_bpmp *bpmp;
--	unsigned int i = 0, err;
-+	unsigned int i = 0, err, edvd_offset;
-+	int num_rates = 0;
-+	u32 edvd_val, cpu;
- 
- 	data = devm_kzalloc(&pdev->dev,
- 			    struct_size(data, clusters, TEGRA186_NUM_CLUSTERS),
-@@ -246,10 +250,21 @@ static int tegra186_cpufreq_probe(struct platform_device *pdev)
- 	for (i = 0; i < TEGRA186_NUM_CLUSTERS; i++) {
- 		struct tegra186_cpufreq_cluster *cluster = &data->clusters[i];
- 
--		cluster->table = init_vhint_table(pdev, bpmp, cluster, i);
-+		cluster->table = init_vhint_table(pdev, bpmp, cluster, i, &num_rates);
- 		if (IS_ERR(cluster->table)) {
- 			err = PTR_ERR(cluster->table);
- 			goto put_bpmp;
-+		} else if (!num_rates) {
-+			err = -EINVAL;
-+			goto put_bpmp;
-+		}
+diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+index ef072e24c46d0..ada6c78a2bef4 100644
+--- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
++++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+@@ -881,7 +881,12 @@ int mana_hwc_send_request(struct hw_channel_context *hwc, u32 req_len,
+ 	if (!wait_for_completion_timeout(&ctx->comp_event,
+ 					 (msecs_to_jiffies(hwc->hwc_timeout)))) {
+ 		if (hwc->hwc_timeout != 0)
+-			dev_err(hwc->dev, "HWC: Request timed out!\n");
++			dev_err(hwc->dev, "HWC: Request timed out: %u ms\n",
++				hwc->hwc_timeout);
 +
-+		for (cpu = 0; cpu < ARRAY_SIZE(tegra186_cpus); cpu++) {
-+			if (data->cpus[cpu].bpmp_cluster_id == i) {
-+				edvd_val = cluster->table[num_rates - 1].driver_data;
-+				edvd_offset = data->cpus[cpu].edvd_offset;
-+				writel(edvd_val, data->regs + edvd_offset);
-+			}
- 		}
- 	}
++		/* Reduce further waiting if HWC no response */
++		if (hwc->hwc_timeout > 1)
++			hwc->hwc_timeout = 1;
  
+ 		err = -ETIMEDOUT;
+ 		goto out;
 -- 
 2.51.0
 
