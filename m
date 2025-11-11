@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6F934403D;
-	Tue, 11 Nov 2025 01:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1C92D879A;
+	Tue, 11 Nov 2025 01:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823579; cv=none; b=E5pC3l1p3Vnk4Nszu89LQ5hza5G4c7F4DiJxinJmUU0Lv6jDUz/st1Wh0DphrOSYJ9kRIdyuZAwO8xwM+dsI8Sh4TfB6tADZb6g/qVq1T4hiHg4XLnBW+ICioPDMyU/TGvjZiJiMjN7YI+593sgkiPRSuiEwm8arpJLGfbiwY3g=
+	t=1762823581; cv=none; b=FbcpYzACBc7rwC7YL+fw6V7pIJD8vCREVuLapL1ljZhaQ8X+kHFwqWiuYgqHxbk/pitacvvR8Va6WmyCLYLljidHMrvleT5QLBhMpk7JYo2bXcfvIACu/O/zMnbbU/i+h9yX95pqH672kwD2ErTL4ZUAfTmlKGgyuZK/UkDiO8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823579; c=relaxed/simple;
-	bh=m3IJ1Od+IZb+CkV9b/hKLINLgwlUw5Ue9twy0CqRD/U=;
+	s=arc-20240116; t=1762823581; c=relaxed/simple;
+	bh=0h1pEephsztK766OuMmNuHRMr5veDpn7kS38SJICkI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KahfbE/c7E8JXBHmzClZmuviel48yCIaWFiGxqwLInL7V8WdsGOzb/w95zbHdDJ5jX9aLd2kPtT2xj5W72mc2RPqqmdggDVhbdk/6y/dIabgse0nl3QFFb3VO7RJfPqxWKSgcl62IVWYUNhvv6AwPSIVvuTq7YUhyjzTU+DH3V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcfBD2D5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5hdtcaeQeK8dgnNrLDIQbLP5Me6+Eo5ccKDwVwqVwxFrP+P/8wQ0ncVSyDntyLao5EbL1AlceGq17e3jq/XeACak1t7OQLPsEHblRtjFk9MTurhslB6X4C/P5jxei3bhyFacF78vvPIchFKURTLrlYIl2gdqj6dq8W9xxaDPGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK9VCTN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcfBD2D5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03EAC19424;
-	Tue, 11 Nov 2025 01:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK9VCTN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB1CC113D0;
+	Tue, 11 Nov 2025 01:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823579;
-	bh=m3IJ1Od+IZb+CkV9b/hKLINLgwlUw5Ue9twy0CqRD/U=;
+	s=korg; t=1762823581;
+	bh=0h1pEephsztK766OuMmNuHRMr5veDpn7kS38SJICkI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcfBD2D5ALIZlbJzOiHSg7F7JXzaHsZWD51w8UXt6SdpJp5OYp7zjsQEUVZeoyX3U
-	 2ClHtEs3uEH3alNi8Q5gb0fZU6vgIOwR86+IPgKSLFRuC/kX16/WZ79gAq8ZJ98zdE
-	 3lR+EzUCw+FjfeKNdRQZdKUDyZgJZsZT8zT7FcuE=
+	b=BK9VCTN+73xgJIuokJfD4QQRh99U3KKSr5gb0vMlRPAQ1uH9UMQxAUrDwti4LBu/q
+	 nZnZjrlNiFJ99f1IWaKU6XCa8T5UpqllHAGBoE1VAzs8P50coBtUDYDPalrb3G1LSI
+	 9TKsG5RpixO5TzCGuACJHrsD3o6K6vVNZykG8YX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 230/565] wifi: rtw89: wow: remove notify during WoWLAN net-detect
-Date: Tue, 11 Nov 2025 09:41:26 +0900
-Message-ID: <20251111004532.090434341@linuxfoundation.org>
+Subject: [PATCH 6.12 274/565] inet_diag: annotate data-races in inet_diag_bc_sk()
+Date: Tue, 11 Nov 2025 09:42:10 +0900
+Message-ID: <20251111004533.048153516@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 38846585f9df9af1f7261d85134a5510fc079458 ]
+[ Upstream commit 4fd84a0aaf2ba125b441aa09d415022385e66bf2 ]
 
-In WoWLAN net-detect mode, the firmware periodically performs scans
-and sends scan reports via C2H, which driver does not need. These
-unnecessary C2H events cause firmware watchdog timeout, leading
-to unexpected wakeups and SER 0x2599 on 8922AE.
+inet_diag_bc_sk() runs with an unlocked socket,
+annotate potential races with READ_ONCE().
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250811123744.15361-4-pkshih@realtek.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250828102738.2065992-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/ipv4/inet_diag.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index 10a3a66a9981d..7894e1a569a2c 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -6212,7 +6212,6 @@ static void rtw89_pno_scan_add_chan_ax(struct rtw89_dev *rtwdev,
- 	struct rtw89_pktofld_info *info;
- 	u8 probe_count = 0;
+diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
+index 67639309163d0..f2de2f2962595 100644
+--- a/net/ipv4/inet_diag.c
++++ b/net/ipv4/inet_diag.c
+@@ -783,7 +783,7 @@ static void entry_fill_addrs(struct inet_diag_entry *entry,
+ 			     const struct sock *sk)
+ {
+ #if IS_ENABLED(CONFIG_IPV6)
+-	if (sk->sk_family == AF_INET6) {
++	if (entry->family == AF_INET6) {
+ 		entry->saddr = sk->sk_v6_rcv_saddr.s6_addr32;
+ 		entry->daddr = sk->sk_v6_daddr.s6_addr32;
+ 	} else
+@@ -796,18 +796,18 @@ static void entry_fill_addrs(struct inet_diag_entry *entry,
  
--	ch_info->notify_action = RTW89_SCANOFLD_DEBUG_MASK;
- 	ch_info->dfs_ch = chan_type == RTW89_CHAN_DFS;
- 	ch_info->bw = RTW89_SCAN_WIDTH;
- 	ch_info->tx_pkt = true;
-@@ -6341,7 +6340,6 @@ static void rtw89_pno_scan_add_chan_be(struct rtw89_dev *rtwdev, int chan_type,
- 	struct rtw89_pktofld_info *info;
- 	u8 probe_count = 0, i;
+ int inet_diag_bc_sk(const struct nlattr *bc, struct sock *sk)
+ {
+-	struct inet_sock *inet = inet_sk(sk);
++	const struct inet_sock *inet = inet_sk(sk);
+ 	struct inet_diag_entry entry;
  
--	ch_info->notify_action = RTW89_SCANOFLD_DEBUG_MASK;
- 	ch_info->dfs_ch = chan_type == RTW89_CHAN_DFS;
- 	ch_info->bw = RTW89_SCAN_WIDTH;
- 	ch_info->tx_null = false;
+ 	if (!bc)
+ 		return 1;
+ 
+-	entry.family = sk->sk_family;
++	entry.family = READ_ONCE(sk->sk_family);
+ 	entry_fill_addrs(&entry, sk);
+-	entry.sport = inet->inet_num;
+-	entry.dport = ntohs(inet->inet_dport);
+-	entry.ifindex = sk->sk_bound_dev_if;
+-	entry.userlocks = sk_fullsock(sk) ? sk->sk_userlocks : 0;
++	entry.sport = READ_ONCE(inet->inet_num);
++	entry.dport = ntohs(READ_ONCE(inet->inet_dport));
++	entry.ifindex = READ_ONCE(sk->sk_bound_dev_if);
++	entry.userlocks = sk_fullsock(sk) ? READ_ONCE(sk->sk_userlocks) : 0;
+ 	if (sk_fullsock(sk))
+ 		entry.mark = READ_ONCE(sk->sk_mark);
+ 	else if (sk->sk_state == TCP_NEW_SYN_RECV)
 -- 
 2.51.0
 
