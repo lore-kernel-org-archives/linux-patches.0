@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E11DDAB;
-	Tue, 11 Nov 2025 01:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AD3DDAB;
+	Tue, 11 Nov 2025 01:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824828; cv=none; b=YmSBoebNJuAO2mYLMyPXvDIAhWgLk0s30Lc8V8xB2029P314ILwJ/gk6LVBw3yWL1eXTup96XT7OBsD0qyFYSEUimGKMv565XcL9H8JEnrSgEgxHqtuV1RFdtuxt4H0NZfC809r10O3wpihiDNwZuIxNUrE54d5XuZKQm8HTfCs=
+	t=1762824830; cv=none; b=BDw8IeQeHc5aeAlvniYL22cgUxHqOy8vOh1HSEa9DeG9OEilEz8Meskvgz8+lBkePcZsVe3fR9FWTeJXAQ3frJPFJCfiHJpodxrYyOZkolzdKMno/Rbg1JglbKmeRVelq/pKRkLGi+v3+E2+XgAALs8FKAHaeWa1bgEPNRpSMbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824828; c=relaxed/simple;
-	bh=ch8CckVD0t5TrJnm2bNxgtlrRBq1e2Rtd9EVgon/PoQ=;
+	s=arc-20240116; t=1762824830; c=relaxed/simple;
+	bh=hTaeJkrXWbLIa8dnpeSz18k9t7iiub3LcgpuB0Yffg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paiFY12uNOY+vcuq0Djt1EmnHDIUBrDoSG4+Ki4ULYcN37KYg8wIPfJSs9NWS36JVluwoXcLUIcfczqbTV4rGnDahEbHPro3O2XEnMw1y8NI2f1iIZ/7EAVI7Ro2exNbzPklkwhHzgbQGVUo2Zzg60sl+scuuJhdyFZg9vRVtI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fobXoLf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMksdCrkYhY43givT6Ok/m8ZQjobR34KVjvD9Im+kBcurryYxHVkrOz/uug7Y1mys+BpHqYq6ug2yaoDQXfMXdQdQcXskyFvX0RP0uODu4drihzVbBrRlOY6JvVcnAwks0Xtkc2GvsxLw5S36VHyhGkE2NlZRlEBsr490nFs1Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzGG63Eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fobXoLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A496CC116B1;
-	Tue, 11 Nov 2025 01:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzGG63Eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C404C116D0;
+	Tue, 11 Nov 2025 01:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824827;
-	bh=ch8CckVD0t5TrJnm2bNxgtlrRBq1e2Rtd9EVgon/PoQ=;
+	s=korg; t=1762824830;
+	bh=hTaeJkrXWbLIa8dnpeSz18k9t7iiub3LcgpuB0Yffg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fobXoLfLmXFtYPc6SIngtx6cDtdTsHWzV9BaaG/83UhH0IAV0drslvDFdqpSLK4W
-	 r9iQtjG58PmZYcfFojG6PBuYe3cjN4gk+sM6U28hbgqVbBk5meqXtkaZoDpodLbfb+
-	 OLwCvt3UW37baHW1AF5TvwvRR1hfir6o33OuqtHk=
+	b=kzGG63EobJDDAXwYF2SgbW5jTKGj7rPqLhPEib41EfpyZ77s/6mAkmzb3uFysVQcM
+	 u9G5TDSMrZzXwMY64erthwBkXXRC7gsPO5XCLzA3lhRcX2cZ+ccrzTYdRf66OxUJX4
+	 NjFMzyq6qYp4M/FdQIfYYF+Fzj1MNxe6BY+2K0xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sammy Hsu <sammy.hsu@wnc.com.tw>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 488/565] net: wwan: t7xx: add support for HP DRMR-H01
-Date: Tue, 11 Nov 2025 09:45:44 +0900
-Message-ID: <20251111004537.908668752@linuxfoundation.org>
+Subject: [PATCH 6.12 482/565] LoongArch: Handle new atomic instructions for probes
+Date: Tue, 11 Nov 2025 09:45:38 +0900
+Message-ID: <20251111004537.767447256@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,32 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sammy Hsu <zelda3121@gmail.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 370e98728bda92b1bdffb448d1acdcbe19dadb4c ]
+[ Upstream commit db740f5689e61f2e75b73e5c8e7c985a3b4bc045 ]
 
-add support for HP DRMR-H01 (0x03f0, 0x09c8)
+The atomic instructions sc.q, llacq.{w/d}, screl.{w/d} were newly added
+in the LoongArch Reference Manual v1.10, it is necessary to handle them
+in insns_not_supported() to avoid putting a breakpoint in the middle of
+a ll/sc atomic sequence, otherwise it will loop forever for kprobes and
+uprobes.
 
-Signed-off-by: Sammy Hsu <sammy.hsu@wnc.com.tw>
-Link: https://patch.msgid.link/20251002024841.5979-1-sammy.hsu@wnc.com.tw
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/include/asm/inst.h |  5 +++++
+ arch/loongarch/kernel/inst.c      | 12 ++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_pci.c b/drivers/net/wwan/t7xx/t7xx_pci.c
-index e556e5bd49abc..c7020d107903a 100644
---- a/drivers/net/wwan/t7xx/t7xx_pci.c
-+++ b/drivers/net/wwan/t7xx/t7xx_pci.c
-@@ -885,6 +885,7 @@ static void t7xx_pci_remove(struct pci_dev *pdev)
- 
- static const struct pci_device_id t7xx_pci_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK, 0x4d75) },
-+	{ PCI_DEVICE(0x03f0, 0x09c8) }, // HP DRMR-H01
- 	{ PCI_DEVICE(0x14c0, 0x4d75) }, // Dell DW5933e
- 	{ }
+diff --git a/arch/loongarch/include/asm/inst.h b/arch/loongarch/include/asm/inst.h
+index 3089785ca97e7..bec5b63e46888 100644
+--- a/arch/loongarch/include/asm/inst.h
++++ b/arch/loongarch/include/asm/inst.h
+@@ -77,6 +77,10 @@ enum reg2_op {
+ 	iocsrwrh_op     = 0x19205,
+ 	iocsrwrw_op     = 0x19206,
+ 	iocsrwrd_op     = 0x19207,
++	llacqw_op	= 0xe15e0,
++	screlw_op	= 0xe15e1,
++	llacqd_op	= 0xe15e2,
++	screld_op	= 0xe15e3,
  };
+ 
+ enum reg2i5_op {
+@@ -189,6 +193,7 @@ enum reg3_op {
+ 	fldxd_op	= 0x7068,
+ 	fstxs_op	= 0x7070,
+ 	fstxd_op	= 0x7078,
++	scq_op		= 0x70ae,
+ 	amswapw_op	= 0x70c0,
+ 	amswapd_op	= 0x70c1,
+ 	amaddw_op	= 0x70c2,
+diff --git a/arch/loongarch/kernel/inst.c b/arch/loongarch/kernel/inst.c
+index 14d7d700bcb98..e6896a40017ea 100644
+--- a/arch/loongarch/kernel/inst.c
++++ b/arch/loongarch/kernel/inst.c
+@@ -139,6 +139,9 @@ bool insns_not_supported(union loongarch_instruction insn)
+ 	case amswapw_op ... ammindbdu_op:
+ 		pr_notice("atomic memory access instructions are not supported\n");
+ 		return true;
++	case scq_op:
++		pr_notice("sc.q instruction is not supported\n");
++		return true;
+ 	}
+ 
+ 	switch (insn.reg2i14_format.opcode) {
+@@ -150,6 +153,15 @@ bool insns_not_supported(union loongarch_instruction insn)
+ 		return true;
+ 	}
+ 
++	switch (insn.reg2_format.opcode) {
++	case llacqw_op:
++	case llacqd_op:
++	case screlw_op:
++	case screld_op:
++		pr_notice("llacq and screl instructions are not supported\n");
++		return true;
++	}
++
+ 	switch (insn.reg1i21_format.opcode) {
+ 	case bceqz_op:
+ 		pr_notice("bceqz and bcnez instructions are not supported\n");
 -- 
 2.51.0
 
