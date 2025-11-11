@@ -1,42 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DEA158545;
-	Tue, 11 Nov 2025 01:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F61A944;
+	Tue, 11 Nov 2025 01:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824629; cv=none; b=jwEdBM2fIKF50SwRKm2jxp4r1evqdEztcBB+jByerwwOZhG+VR+BiJmU+gsOxFUhldrjr3plGAJgSRylD4SJaepWHxts9SPLkos9WvzhfcZOy8dK9TQu1F4Bpf1U8sP55Y9wD9ZUSNanxI64JI+NpVlmgBkNa+FNJvn4zdYIJ2M=
+	t=1762824631; cv=none; b=SkNj4S35J/yCPuJ+lF/VW6E41aT8W3/FFSXw5ZM+HWYjy7seBrVH3fJ3GSok397sexlLQ4WwEeKdD5CpvbicFhjaibwIN7OewUomxJyN1CzO6y/LIAXT4ZDPg5B2oOzsjeOHzhWtlxAH2Cen6UZKBL1cyQcguOrbVGI5qkUl8s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824629; c=relaxed/simple;
-	bh=jpsti5m5z2zePBISgoCKGD54VzHmbW76HoMgz7XKYbQ=;
+	s=arc-20240116; t=1762824631; c=relaxed/simple;
+	bh=/X43xbv2Qu5tyTaKOlui/HvzjjmqTz3vK5gwCmdipOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARSeerrYoTsBDMCX98ItioLLHd/p5Ose+XpShvGQyZaRWPF24/UDomkJxywNkbSsJNXdEveeERczDwYzF4lwM4wQEcpn7K/rCQi8W2FNbakcMP6LqMKHiUabXfXZEAagZzPQkEjA7UpqxTrb8BcQ9KM/xsAG/XZo77XZTKszF9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAtxCCI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Oa7n+Nvp6IEoCUagvZXz/ZadmonQpCR8Hp5NhDnGlc+O5YqhLZd/6eL7ulCIk6d2hR2FMBGy0a+lCDq5Q6nGfMGC5sLGOjjnS4lbK4dj8xVj3Zzrl5RY33ajr3qh8K4xYlYkMqF1J13yyk3z+xZrcTZuhxaVrn6yvB89BgGOkYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ/xyKD1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAtxCCI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F43BC113D0;
-	Tue, 11 Nov 2025 01:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ/xyKD1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07F0C4CEF5;
+	Tue, 11 Nov 2025 01:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824628;
-	bh=jpsti5m5z2zePBISgoCKGD54VzHmbW76HoMgz7XKYbQ=;
+	s=korg; t=1762824631;
+	bh=/X43xbv2Qu5tyTaKOlui/HvzjjmqTz3vK5gwCmdipOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAtxCCI8kyNxh039NtPZex8Mr63oG5sr3E40b+f3X/XBMDB48+4oa64e2FumtrtcR
-	 POsZQAIGS9w0JpJklGDFXU05XhKFYmbPXEa0uBF+w5BAMClYSCVDIlbqEGiy0ps2+H
-	 ZYd07RUZouSA3NX9igLdFgTjHyPhWizuzvFdXYM0=
+	b=gZ/xyKD1aGFr4FIQkveOl8byc7wfYYa/eFQLL7ixXb1kk53nVviWlVDiN2XhGn/1p
+	 fJJccv73b0FFzJ0c020/XD6sKIok/plovu8m3loGDDkT2gzr3yVjexlSGk7Qy+xyxi
+	 /FBVFD1xHMOG76CJs0vrae5IbH+wacYvojFDL6HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palash Kambar <quic_pkambar@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ian Rogers <irogers@google.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Darren Hart <dvhart@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Jonas Gottlieb <jonas.gottlieb@stackit.cloud>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Maurice Lambert <mauricelambert434@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yuyang Huang <yuyanghuang@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 493/849] scsi: ufs: ufs-qcom: Align programming sequence of Shared ICE for UFS controller v5
-Date: Tue, 11 Nov 2025 09:41:03 +0900
-Message-ID: <20251111004548.358871745@linuxfoundation.org>
+Subject: [PATCH 6.12 483/565] tools bitmap: Add missing asm-generic/bitsperlong.h include
+Date: Tue, 11 Nov 2025 09:45:39 +0900
+Message-ID: <20251111004537.790876231@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,95 +70,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Palash Kambar <quic_pkambar@quicinc.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 3126b5fd02270380cce833d06f973a3ffb33a69b ]
+[ Upstream commit f38ce0209ab4553906b44bd1159e35c740a84161 ]
 
-Disabling the AES core in Shared ICE is not supported during power
-collapse for UFS Host Controller v5.0, which may lead to data errors
-after Hibern8 exit. To comply with hardware programming guidelines and
-avoid this issue, issue a sync reset to ICE upon power collapse exit.
+small_const_nbits is defined in asm-generic/bitsperlong.h which
+bitmap.h uses but doesn't include causing build failures in some build
+systems. Add the missing #include.
 
-Hence follow below steps to reset the ICE upon exiting power collapse
-and align with Hw programming guide.
+Note the bitmap.h in tools has diverged from that of the kernel, so no
+changes are made there.
 
-a. Assert the ICE sync reset by setting both SYNC_RST_SEL and
-   SYNC_RST_SW bits in UFS_MEM_ICE_CFG
-
-b. Deassert the reset by clearing SYNC_RST_SW in  UFS_MEM_ICE_CFG
-
-Signed-off-by: Palash Kambar <quic_pkambar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Yury Norov <yury.norov@gmail.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: André Almeida <andrealmeid@igalia.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jason Xing <kerneljasonxing@gmail.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Jonas Gottlieb <jonas.gottlieb@stackit.cloud>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Maurice Lambert <mauricelambert434@gmail.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Petr Machata <petrm@nvidia.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Yuyang Huang <yuyanghuang@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++++++++
- drivers/ufs/host/ufs-qcom.h |  2 +-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ tools/include/linux/bitmap.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 9574fdc2bb0fd..3ea6b08d2b526 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -38,6 +38,9 @@
- #define DEEMPHASIS_3_5_dB	0x04
- #define NO_DEEMPHASIS		0x0
+diff --git a/tools/include/linux/bitmap.h b/tools/include/linux/bitmap.h
+index 2a7f260ef9dc5..7081f4a8d634b 100644
+--- a/tools/include/linux/bitmap.h
++++ b/tools/include/linux/bitmap.h
+@@ -3,6 +3,7 @@
+ #define _TOOLS_LINUX_BITMAP_H
  
-+#define UFS_ICE_SYNC_RST_SEL	BIT(3)
-+#define UFS_ICE_SYNC_RST_SW	BIT(4)
-+
- enum {
- 	TSTBUS_UAWM,
- 	TSTBUS_UARM,
-@@ -751,11 +754,29 @@ static int ufs_qcom_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	int err;
-+	u32 reg_val;
- 
- 	err = ufs_qcom_enable_lane_clks(host);
- 	if (err)
- 		return err;
- 
-+	if ((!ufs_qcom_is_link_active(hba)) &&
-+	    host->hw_ver.major == 5 &&
-+	    host->hw_ver.minor == 0 &&
-+	    host->hw_ver.step == 0) {
-+		ufshcd_writel(hba, UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW, UFS_MEM_ICE_CFG);
-+		reg_val = ufshcd_readl(hba, UFS_MEM_ICE_CFG);
-+		reg_val &= ~(UFS_ICE_SYNC_RST_SEL | UFS_ICE_SYNC_RST_SW);
-+		/*
-+		 * HW documentation doesn't recommend any delay between the
-+		 * reset set and clear. But we are enforcing an arbitrary delay
-+		 * to give flops enough time to settle in.
-+		 */
-+		usleep_range(50, 100);
-+		ufshcd_writel(hba, reg_val, UFS_MEM_ICE_CFG);
-+		ufshcd_readl(hba, UFS_MEM_ICE_CFG);
-+	}
-+
- 	return ufs_qcom_ice_resume(host);
- }
- 
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index e0e129af7c16b..88e2f322d37d8 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -60,7 +60,7 @@ enum {
- 	UFS_AH8_CFG				= 0xFC,
- 
- 	UFS_RD_REG_MCQ				= 0xD00,
--
-+	UFS_MEM_ICE_CFG				= 0x2600,
- 	REG_UFS_MEM_ICE_CONFIG			= 0x260C,
- 	REG_UFS_MEM_ICE_NUM_CORE		= 0x2664,
- 
+ #include <string.h>
++#include <asm-generic/bitsperlong.h>
+ #include <linux/align.h>
+ #include <linux/bitops.h>
+ #include <linux/find.h>
 -- 
 2.51.0
 
