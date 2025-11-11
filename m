@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2554204E;
-	Tue, 11 Nov 2025 01:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA6618027;
+	Tue, 11 Nov 2025 01:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822982; cv=none; b=O+91zcZjzMKmClRw2GrOXenQ1AP4tLThaHIpFjNtJUUUXuLVVw/fNUTU6d3X7CHUItSUsxt5Iej6fRzFbi4qH1YKRD6ltkuoaZkq3qq9DAB3Vx5UOuELrddajVAv2bgs856BqTQPWjFoVNTIQBT2L7MXx50OMjKGb7h/+PX/J7I=
+	t=1762822984; cv=none; b=ehncmKtFj8DUix4AA2X9ujjO6fdBoA0kUr1Yul4BoIHSmXw47OIBHmEWbICHkLLhojf2oe6RhNgIttaxuoB4lfy1gL6xVQa9Mh+e7kXfNZMrJ2uaBgwsfnnQRae4U+o/f80lHg/xLVaBVgobj3Xpmwo0ameBH0x//C1ZG159ATk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822982; c=relaxed/simple;
-	bh=jUxTuTfghiC6bVrXwafx0x+aHEkYZmrsfdkxFjU3ajA=;
+	s=arc-20240116; t=1762822984; c=relaxed/simple;
+	bh=56DjzD+1aGSvbW07nm/7kPWMoFHLGp8QSOtrm3I/bWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEFp7s6N91eaNQNztLF3IXyM7IVDgz1v2Vea1sqUThRuqYca76lVaOr3LM1VPfUvZaXcu2HuMKFi36uCoCeadIQFLo8Kn8g3WSwLnpCY+4BmfB/3KJQUnYCB1UBLZhjP4fys75z9k12DbhQnodcOYA3bKHP4QQRJBD5Z2PLyDQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZWbfcOO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q5yeYx7VkSdRsJ2EBnUhQI4pl/P0ylSCeIKgtnzAqdCmPHi7ZtJDxLvgM8YvA/wDCrShen/yMVKCmN09eG+Dru8G0abFQ+aE7hOM6ugneu/U1bM7lg/cwVFA75ySht041rFiZsiyQln02nI57dPPYkV96UwxQKZIIjWJa4E806Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YhYYf+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZWbfcOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FE5C4CEFB;
-	Tue, 11 Nov 2025 01:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YhYYf+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FBDC16AAE;
+	Tue, 11 Nov 2025 01:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822981;
-	bh=jUxTuTfghiC6bVrXwafx0x+aHEkYZmrsfdkxFjU3ajA=;
+	s=korg; t=1762822984;
+	bh=56DjzD+1aGSvbW07nm/7kPWMoFHLGp8QSOtrm3I/bWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZWbfcOOoltHNGtHvjA0j8qyXAPRa5GSJRl6ge7JOWPrldkXb8fazmPPmsLsPVAhh
-	 fjiSPbYdiDgZ3HTLTDZNBcD+2g5e7IGftWwg++s7laQ/PQ3XKgB+lBHmh6RsczirOc
-	 bizJfXG9YMAt8mHSQoiVyljj8mLDl6hvpno3ouH8=
+	b=0YhYYf+BOh8Tw/b3Tdr0HTIOdm2HsI56Yrq2GGQ4Bpaw0KQcIkV2+9GlTQtBcezhx
+	 vRKv/r7NmwCZqMSNGPcM/RkfFwWj4Z1Ew3lGad61NakPNQ5JPlzhf9UeyMexpboiiB
+	 JRgB5ZRAdP+cF256dP1wi1YE8IE0oLirihg8Kxi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/565] io_uring/zctx: check chained notif contexts
-Date: Tue, 11 Nov 2025 09:39:17 +0900
-Message-ID: <20251111004529.228376390@linuxfoundation.org>
+Subject: [PATCH 6.12 144/565] power: supply: qcom_battmgr: handle charging state change notifications
+Date: Tue, 11 Nov 2025 09:40:00 +0900
+Message-ID: <20251111004530.181703480@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,42 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 
-[ Upstream commit ab3ea6eac5f45669b091309f592c4ea324003053 ]
+[ Upstream commit 41307ec7df057239aae3d0f089cc35a0d735cdf8 ]
 
-Send zc only links ubuf_info for requests coming from the same context.
-There are some ambiguous syz reports, so let's check the assumption on
-notification completion.
+The X1E80100 battery management firmware sends a notification with
+code 0x83 when the battery charging state changes, such as switching
+between fast charge, taper charge, end of charge, or any other error
+charging states.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/fd527d8638203fe0f1c5ff06ff2e1d8fd68f831b.1755179962.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The same notification code is used with bit[8] set when charging stops
+because the charge control end threshold is reached. Additionally,
+a 2-bit value is included in bit[10:9] with the same code to indicate
+the charging source capability, which is determined by the calculated
+power from voltage and current readings from PDOs: 2 means a strong
+charger over 60W, 1 indicates a weak charger, and 0 means there is no
+charging source.
+
+These 3-MSB [10:8] in the notification code is not much useful for now,
+hence just ignore them and trigger a power supply change event whenever
+0x83 notification code is received. This helps to eliminate the unknown
+notification error messages.
+
+Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Closes: https://lore.kernel.org/all/r65idyc4of5obo6untebw4iqfj2zteiggnnzabrqtlcinvtddx@xc4aig5abesu/
+Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/notif.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/qcom_battmgr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/notif.c b/io_uring/notif.c
-index d4cf5a1328e63..f50964c7dab82 100644
---- a/io_uring/notif.c
-+++ b/io_uring/notif.c
-@@ -14,10 +14,15 @@ static const struct ubuf_info_ops io_ubuf_ops;
- static void io_notif_tw_complete(struct io_kiocb *notif, struct io_tw_state *ts)
- {
- 	struct io_notif_data *nd = io_notif_to_data(notif);
-+	struct io_ring_ctx *ctx = notif->ctx;
-+
-+	lockdep_assert_held(&ctx->uring_lock);
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index dd89104cb1672..f8bea732ba7f2 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -29,8 +29,9 @@ enum qcom_battmgr_variant {
+ #define NOTIF_BAT_PROPERTY		0x30
+ #define NOTIF_USB_PROPERTY		0x32
+ #define NOTIF_WLS_PROPERTY		0x34
+-#define NOTIF_BAT_INFO			0x81
+ #define NOTIF_BAT_STATUS		0x80
++#define NOTIF_BAT_INFO			0x81
++#define NOTIF_BAT_CHARGING_STATE	0x83
  
- 	do {
- 		notif = cmd_to_io_kiocb(nd);
+ #define BATTMGR_BAT_INFO		0x9
  
-+		if (WARN_ON_ONCE(ctx != notif->ctx))
-+			return;
- 		lockdep_assert(refcount_read(&nd->uarg.refcnt) == 0);
+@@ -943,12 +944,14 @@ static void qcom_battmgr_notification(struct qcom_battmgr *battmgr,
+ 	}
  
- 		if (unlikely(nd->zc_report) && (nd->zc_copied || !nd->zc_used))
+ 	notification = le32_to_cpu(msg->notification);
++	notification &= 0xff;
+ 	switch (notification) {
+ 	case NOTIF_BAT_INFO:
+ 		battmgr->info.valid = false;
+ 		fallthrough;
+ 	case NOTIF_BAT_STATUS:
+ 	case NOTIF_BAT_PROPERTY:
++	case NOTIF_BAT_CHARGING_STATE:
+ 		power_supply_changed(battmgr->bat_psy);
+ 		break;
+ 	case NOTIF_USB_PROPERTY:
 -- 
 2.51.0
 
