@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECD9347FF8;
-	Tue, 11 Nov 2025 01:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EC93491D5;
+	Tue, 11 Nov 2025 01:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823220; cv=none; b=ASTp4eujOMBooWTpobrTsl6lu59RZSuxGJEbHNWrLupesDmHroBs96asYEF5RiLqNDkAvGnzj6Mxh2+9PatYUd+rDoJJAqqdbygI9TZgU9LJvHiRQmLyVIAt5j5UK2Hlm6pOw5fHu2acDUcsu8rLm/u4xk0Mq1DoLx2xGtyhhNg=
+	t=1762823223; cv=none; b=oKFx39Msn41bQV4KJhG12VHzX2LMlSGjxpiu8Qr2AxxNpaczjWqBlcbBWqzdm8104LcRFXupnzM3wruyw51ZFPMG1IbrU1ydc3bJj1ukuNrezI2nIFaLLP9mHuEske4+pNJa+tjK2+4bIPTu+66f086K9N0uB8zdBiVc5sRaLvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823220; c=relaxed/simple;
-	bh=Hk59xLn0zMHI9BHhHcCnOzcbsy3LVte2MDot1uTPgZ0=;
+	s=arc-20240116; t=1762823223; c=relaxed/simple;
+	bh=IVWr5A96RhHaG+OTWKv9uWEX/YPlxclbxARA0LTV0pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rP/nRQC3/8FaS22zZWzNRJzWdC5FM8mdxKn2pmwpYmB7gmI6ArTd5mT2QpvVf307glnFxtjOa8WhqAYG12tyIgRXy0oe4q9lVW2cD5WVrKtSBGFXaLPNtHbeedD7nOlvNCSRKJo/5Gilkc7Iig016j2NLw/m3am9XmfURhG2aTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9+Ii1hd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NEsCwNlokP9rPejqvcqljWSZxEhFf2Z/iWNRfBnxtTUKMOx379Ggmley6AGATh18C7cq8mCfpgGxXhL9vGE+tTaMFhby/YU0vXrV8j9saP4Tg60OyjJ0xTl5+hZY1jP443lnhjqYi+gjP0ofksHPP3ut0tLGhBVa4zyff3+9Go8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eiFmnCcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9+Ii1hd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A575EC19425;
-	Tue, 11 Nov 2025 01:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eiFmnCcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E07C19424;
+	Tue, 11 Nov 2025 01:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823219;
-	bh=Hk59xLn0zMHI9BHhHcCnOzcbsy3LVte2MDot1uTPgZ0=;
+	s=korg; t=1762823222;
+	bh=IVWr5A96RhHaG+OTWKv9uWEX/YPlxclbxARA0LTV0pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9+Ii1hd2yQRUQWGT19s0ct+ieAEkQCej19+mI4yyZ9ukqyfu1YkALRyXHVkn9+vw
-	 9LmsdyHd4YNHK2Hkg7DiMjiOK1nAUpTK0ybeyZY7Wfp+/uLqeUaiQrDP3MIadEiCBw
-	 oGmCd59ZlVFUbqPsgT4XfSph9d2Jut6q27qYa3L0=
+	b=eiFmnCcCBmMLaApj/IT+o9gm98E9Dy3bhxY4zg79wMoy3Z6D3LEdxI40YS/TMgOPD
+	 9P1ccBDtEB9+1PV9jSFDVtoClxyVRxCgcF6RT5yIfSZBWuJpgg+mNtheofjF1QDien
+	 ToHIYv7eaYhj0CcgaBJSn1nKug+zhi932O7fBnto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Paul Hsieh <Paul.Hsieh@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/565] media: amphion: Delete v4l2_fh synchronously in .release()
-Date: Tue, 11 Nov 2025 09:40:55 +0900
-Message-ID: <20251111004531.405601401@linuxfoundation.org>
+Subject: [PATCH 6.17 256/849] drm/amd/display: update dpp/disp clock from smu clock table
+Date: Tue, 11 Nov 2025 09:37:06 +0900
+Message-ID: <20251111004542.618663511@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +50,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Paul Hsieh <Paul.Hsieh@amd.com>
 
-[ Upstream commit 19fb9c5b815f70eb90d5b545f65b83bc9c490ecd ]
+[ Upstream commit 2e72fdba8a32ce062a86571edff4592710c26215 ]
 
-The v4l2_fh initialized and added in vpu_v4l2_open() is delete and
-cleaned up when the last reference to the vpu_inst is released. This may
-happen later than at vpu_v4l2_close() time.
+[Why]
+The reason some high-resolution monitors fail to display properly
+is that this platform does not support sufficiently high DPP and
+DISP clock frequencies
 
-Not deleting and cleaning up the v4l2_fh when closing the file handle to
-the video device is not ideal, as the v4l2_fh will still be present in
-the video device's fh_list, and will store a copy of events queued to
-the video device. There may also be other side effects of keeping alive
-an object that represents an open file handle after the file handle is
-closed.
+[How]
+Update DISP and DPP clocks from the smu clock table then DML can
+filter these mode if not support.
 
-The v4l2_fh instance is embedded in the vpu_inst structure, and is
-accessed in two different ways:
-
-- in vpu_notify_eos() and vpu_notify_source_change(), to queue V4L2
-  events to the file handle ; and
-
-- through the driver to access the v4l2_fh.m2m_ctx pointer.
-
-The v4l2_fh.m2m_ctx pointer is not touched by v4l2_fh_del() and
-v4l2_fh_exit(). It is set to NULL by the driver when closing the file
-handle, in vpu_v4l2_close().
-
-The vpu_notify_eos() and vpu_notify_source_change() functions are called
-in vpu_set_last_buffer_dequeued() and vdec_handle_resolution_change()
-respectively, only if the v4l2_fh.m2m_ctx pointer is not NULL. There is
-therefore a guarantee that no new event will be queued to the v4l2_fh
-after vpu_v4l2_close() destroys the m2m_ctx.
-
-The vpu_notify_eos() function is also called from vpu_vb2_buf_finish(),
-which is guaranteed to be called for all queued buffers when
-vpu_v4l2_close() calls v4l2_m2m_ctx_release(), and will not be called
-later.
-
-It is therefore safe to assume that the driver will not touch the
-v4l2_fh, except to check the m2m_ctx pointer, after vpu_v4l2_close()
-destroys the m2m_ctx. We can safely delete and cleanup the v4l2_fh
-synchronously in vpu_v4l2_close().
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Paul Hsieh <Paul.Hsieh@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../display/dc/clk_mgr/dcn301/vg_clk_mgr.c    | 16 +++++++++++++++
+ .../amd/display/dc/dml/dcn301/dcn301_fpu.c    | 20 ++++++++++++++++---
+ 2 files changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index f0b1ec79d2961..7f66bfef2abbe 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -709,8 +709,6 @@ static int vpu_v4l2_release(struct vpu_inst *inst)
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
+index 9e2ef0e724fcf..7aee02d562923 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn301/vg_clk_mgr.c
+@@ -563,6 +563,7 @@ static void vg_clk_mgr_helper_populate_bw_params(
+ {
+ 	int i, j;
+ 	struct clk_bw_params *bw_params = clk_mgr->base.bw_params;
++	uint32_t max_dispclk = 0, max_dppclk = 0;
  
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
- 	mutex_destroy(&inst->lock);
--	v4l2_fh_del(&inst->fh);
--	v4l2_fh_exit(&inst->fh);
+ 	j = -1;
  
- 	call_void_vop(inst, cleanup);
+@@ -584,6 +585,15 @@ static void vg_clk_mgr_helper_populate_bw_params(
+ 		return;
+ 	}
  
-@@ -779,6 +777,8 @@ int vpu_v4l2_open(struct file *file, struct vpu_inst *inst)
- 
- 	return 0;
- error:
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
- 	vpu_inst_put(inst);
- 	return ret;
- }
-@@ -798,6 +798,9 @@ int vpu_v4l2_close(struct file *file)
- 	call_void_vop(inst, release);
- 	vpu_inst_unlock(inst);
- 
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
++	/* dispclk and dppclk can be max at any voltage, same number of levels for both */
++	if (clock_table->NumDispClkLevelsEnabled <= VG_NUM_DISPCLK_DPM_LEVELS &&
++	    clock_table->NumDispClkLevelsEnabled <= VG_NUM_DPPCLK_DPM_LEVELS) {
++		max_dispclk = find_max_clk_value(clock_table->DispClocks, clock_table->NumDispClkLevelsEnabled);
++		max_dppclk = find_max_clk_value(clock_table->DppClocks, clock_table->NumDispClkLevelsEnabled);
++	} else {
++		ASSERT(0);
++	}
 +
- 	vpu_inst_unregister(inst);
- 	vpu_inst_put(inst);
+ 	bw_params->clk_table.num_entries = j + 1;
  
+ 	for (i = 0; i < bw_params->clk_table.num_entries - 1; i++, j--) {
+@@ -591,11 +601,17 @@ static void vg_clk_mgr_helper_populate_bw_params(
+ 		bw_params->clk_table.entries[i].memclk_mhz = clock_table->DfPstateTable[j].memclk;
+ 		bw_params->clk_table.entries[i].voltage = clock_table->DfPstateTable[j].voltage;
+ 		bw_params->clk_table.entries[i].dcfclk_mhz = find_dcfclk_for_voltage(clock_table, clock_table->DfPstateTable[j].voltage);
++
++		/* Now update clocks we do read */
++		bw_params->clk_table.entries[i].dispclk_mhz = max_dispclk;
++		bw_params->clk_table.entries[i].dppclk_mhz = max_dppclk;
+ 	}
+ 	bw_params->clk_table.entries[i].fclk_mhz = clock_table->DfPstateTable[j].fclk;
+ 	bw_params->clk_table.entries[i].memclk_mhz = clock_table->DfPstateTable[j].memclk;
+ 	bw_params->clk_table.entries[i].voltage = clock_table->DfPstateTable[j].voltage;
+ 	bw_params->clk_table.entries[i].dcfclk_mhz = find_max_clk_value(clock_table->DcfClocks, VG_NUM_DCFCLK_DPM_LEVELS);
++	bw_params->clk_table.entries[i].dispclk_mhz = find_max_clk_value(clock_table->DispClocks, VG_NUM_DISPCLK_DPM_LEVELS);
++	bw_params->clk_table.entries[i].dppclk_mhz = find_max_clk_value(clock_table->DppClocks, VG_NUM_DPPCLK_DPM_LEVELS);
+ 
+ 	bw_params->vram_type = bios_info->memory_type;
+ 	bw_params->num_channels = bios_info->ma_channel_number;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn301/dcn301_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn301/dcn301_fpu.c
+index 0c0b2d67c9cd9..2066a65c69bbc 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn301/dcn301_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn301/dcn301_fpu.c
+@@ -326,7 +326,7 @@ void dcn301_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
+ 	struct dcn301_resource_pool *pool = TO_DCN301_RES_POOL(dc->res_pool);
+ 	struct clk_limit_table *clk_table = &bw_params->clk_table;
+ 	unsigned int i, closest_clk_lvl;
+-	int j;
++	int j = 0, max_dispclk_mhz = 0, max_dppclk_mhz = 0;
+ 
+ 	dc_assert_fp_enabled();
+ 
+@@ -338,6 +338,15 @@ void dcn301_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
+ 	dcn3_01_soc.num_chans = bw_params->num_channels;
+ 
+ 	ASSERT(clk_table->num_entries);
++
++	/* Prepass to find max clocks independent of voltage level. */
++	for (i = 0; i < clk_table->num_entries; ++i) {
++		if (clk_table->entries[i].dispclk_mhz > max_dispclk_mhz)
++			max_dispclk_mhz = clk_table->entries[i].dispclk_mhz;
++		if (clk_table->entries[i].dppclk_mhz > max_dppclk_mhz)
++			max_dppclk_mhz = clk_table->entries[i].dppclk_mhz;
++	}
++
+ 	for (i = 0; i < clk_table->num_entries; i++) {
+ 		/* loop backwards*/
+ 		for (closest_clk_lvl = 0, j = dcn3_01_soc.num_states - 1; j >= 0; j--) {
+@@ -353,8 +362,13 @@ void dcn301_fpu_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_p
+ 		s[i].socclk_mhz = clk_table->entries[i].socclk_mhz;
+ 		s[i].dram_speed_mts = clk_table->entries[i].memclk_mhz * 2;
+ 
+-		s[i].dispclk_mhz = dcn3_01_soc.clock_limits[closest_clk_lvl].dispclk_mhz;
+-		s[i].dppclk_mhz = dcn3_01_soc.clock_limits[closest_clk_lvl].dppclk_mhz;
++		/* Clocks independent of voltage level. */
++		s[i].dispclk_mhz = max_dispclk_mhz ? max_dispclk_mhz :
++			dcn3_01_soc.clock_limits[closest_clk_lvl].dispclk_mhz;
++
++		s[i].dppclk_mhz = max_dppclk_mhz ? max_dppclk_mhz :
++			dcn3_01_soc.clock_limits[closest_clk_lvl].dppclk_mhz;
++
+ 		s[i].dram_bw_per_chan_gbps =
+ 			dcn3_01_soc.clock_limits[closest_clk_lvl].dram_bw_per_chan_gbps;
+ 		s[i].dscclk_mhz = dcn3_01_soc.clock_limits[closest_clk_lvl].dscclk_mhz;
 -- 
 2.51.0
 
