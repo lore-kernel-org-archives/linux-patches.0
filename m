@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D4D4C97;
-	Tue, 11 Nov 2025 00:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540AB4C97;
+	Tue, 11 Nov 2025 00:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822212; cv=none; b=qdI8TH3sKNqFP739DvUiPuuNLPIwPJLql+u2dPKMCArgIZO4R+hv//XEWFBj4XqP4hdwQzaTWtP1Qu49tXpgT5nEISNGUTYlf8jn0TqPM7f2PMWFztdJkuYD7eSnrQXJmHk2ar4aDONvnkFtlX7pwSGsQxfPsvoOIe2sCzy/sgo=
+	t=1762822215; cv=none; b=qfi/xff/dzXtlKcFI5PVK9OKKpwBvfRXa6Q5/L42naoLmuSxxvdNz0mSaAsHUyS0jBNwlmdasXvoxsbrE+2ROQV9bbNr++9Ac8/SiYPiuSncxTIzycoCfQHpPrb693qL1jiPV0+ZMH0FWqQkl+95Yq5e1B3PJHPFVbU6ullvmf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822212; c=relaxed/simple;
-	bh=1Oo4632yTClkqHTEWApnFklwhv88RifsjKSVQuKtKSg=;
+	s=arc-20240116; t=1762822215; c=relaxed/simple;
+	bh=klUJ310fL6TTrXiTBtOYkIEMjQhjaXyCxH+7eUE6w/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gf6DA9FqgpNpGXxwieMaznRvcg192YRoHbj+HSSzubJlVak9nIcVIrLKa2oB6Y1VyWR6KdsnZptq5Xs95FIn7JxzstaslIxofqPgh4SGFdUO6j4VCj/r36yabaDFbnxngLXcRi0dj5toLtqcAsxSaTD2bTW2zrwczsklwDse+eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0Itl6AG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVywPMmCr0ddqvpOXLbKvJXNiKjh/QZbxRGRPI+LezC54WliIi57oa7clv81xbUuyTnRJxUWTEANR73qwYf8QqBO9w496eEPvw5KFu0quFNlNIH9MqwDgJSdl0mcXnD2EP5E9r6nECmVd5ED1F1xswuUSP0GlhpyvFyaFN1H1WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElLcs5rF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0Itl6AG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24B9C16AAE;
-	Tue, 11 Nov 2025 00:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElLcs5rF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23C1C4CEFB;
+	Tue, 11 Nov 2025 00:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822212;
-	bh=1Oo4632yTClkqHTEWApnFklwhv88RifsjKSVQuKtKSg=;
+	s=korg; t=1762822215;
+	bh=klUJ310fL6TTrXiTBtOYkIEMjQhjaXyCxH+7eUE6w/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i0Itl6AGPK/P/jnrD8VUfq7i6YCQe2uKVFCsj1IS1h+B2dctLPj22brRC+qKfkQP0
-	 NnXJt2VzT2Tri3X/rQQqQYxECjwHv1pGsmI1Ir+lGBLDflZG3/VR2vQb075J304IDX
-	 lY2kry3YcWNFNmSm3TpLzIPBAgA81Vil7Yz2G4fs=
+	b=ElLcs5rFd6cnl3PebNtYQLbLmEzbCUhI7oNAILP8L6ZdFzJelbsK+xqZ48W7ByLhz
+	 1DRy8TpIwe04VZclX1WbbhRsDHp12HkOoYNJx9hn7YoPCk8P/pfVw2+c78RRCI1YU5
+	 zKScNC7GsPDswAtJl3w6scBEXZZoQHX0pLPOPzxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 004/565] fbdev: atyfb: Check if pll_ops->init_pll failed
-Date: Tue, 11 Nov 2025 09:37:40 +0900
-Message-ID: <20251111004526.939770757@linuxfoundation.org>
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 059/849] Bluetooth: btmtksdio: Add pmctrl handling for BT closed state during reset
+Date: Tue, 11 Nov 2025 09:33:49 +0900
+Message-ID: <20251111004537.861777105@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-commit 7073c7fc8d8ba47194e5fc58fcafc0efe7586e9b upstream.
+[ Upstream commit 77343b8b4f87560f8f03e77b98a81ff3a147b262 ]
 
-Actually check the return value from pll_ops->init_pll()
-as it can return an error.
+This patch adds logic to handle power management control when the
+Bluetooth function is closed during the SDIO reset sequence.
 
-If the card's BIOS didn't run because it's not the primary VGA card
-the fact that the xclk source is unsupported is printed as shown
-below but the driver continues on regardless and on my machine causes
-a hard lock up.
+Specifically, if BT is closed before reset, the driver enables the
+SDIO function and sets driver pmctrl. After reset, if BT remains
+closed, the driver sets firmware pmctrl and disables the SDIO function.
 
-[   61.470088] atyfb 0000:03:05.0: enabling device (0080 -> 0083)
-[   61.476191] atyfb: using auxiliary register aperture
-[   61.481239] atyfb: 3D RAGE XL (Mach64 GR, PCI-33) [0x4752 rev 0x27]
-[   61.487569] atyfb: 512K SGRAM (1:1), 14.31818 MHz XTAL, 230 MHz PLL, 83 Mhz MCLK, 63 MHz XCLK
-[   61.496112] atyfb: Unsupported xclk source:  5.
+These changes ensure proper power management and device state consistency
+across the reset flow.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8fafe702253d ("Bluetooth: mt7921s: support bluetooth reset mechanism")
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/aty/atyfb_base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtksdio.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/video/fbdev/aty/atyfb_base.c
-+++ b/drivers/video/fbdev/aty/atyfb_base.c
-@@ -2614,8 +2614,12 @@ static int aty_init(struct fb_info *info
- 		pr_cont("\n");
- 	}
- #endif
--	if (par->pll_ops->init_pll)
--		par->pll_ops->init_pll(info, &par->pll);
-+	if (par->pll_ops->init_pll) {
-+		ret = par->pll_ops->init_pll(info, &par->pll);
-+		if (ret)
-+			return ret;
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index 4fc673640bfce..24ce1bf660669 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -1270,6 +1270,12 @@ static void btmtksdio_reset(struct hci_dev *hdev)
+ 
+ 	sdio_claim_host(bdev->func);
+ 
++	/* set drv_pmctrl if BT is closed before doing reset */
++	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
++		sdio_enable_func(bdev->func);
++		btmtksdio_drv_pmctrl(bdev);
 +	}
 +
- 	if (par->pll_ops->resume_pll)
- 		par->pll_ops->resume_pll(info, &par->pll);
+ 	sdio_writel(bdev->func, C_INT_EN_CLR, MTK_REG_CHLPCR, NULL);
+ 	skb_queue_purge(&bdev->txq);
+ 	cancel_work_sync(&bdev->txrx_work);
+@@ -1285,6 +1291,12 @@ static void btmtksdio_reset(struct hci_dev *hdev)
+ 		goto err;
+ 	}
  
++	/* set fw_pmctrl back if BT is closed after doing reset */
++	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
++		btmtksdio_fw_pmctrl(bdev);
++		sdio_disable_func(bdev->func);
++	}
++
+ 	clear_bit(BTMTKSDIO_PATCH_ENABLED, &bdev->tx_state);
+ err:
+ 	sdio_release_host(bdev->func);
+-- 
+2.51.0
+
 
 
