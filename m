@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A15343D6D;
-	Tue, 11 Nov 2025 01:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D43B3431FA;
+	Tue, 11 Nov 2025 01:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824657; cv=none; b=FPOscq4YE4cGAbFwcbImEY8TmjzlaOs6mPDaOPIXDTC9XL2LDNXE0e5CaFGFJIO1EqKv8M0oM5jMfbTQnyvAkZS74lc0afQqRp0JSsvbYLkI/Tw3Hkpe/1yMVNyPvlpTIJ8bUAY60T8M4bBoy99qjxo0HGfmpBzuHoMI6pvi/74=
+	t=1762824662; cv=none; b=sLGHidw+bpGvSPemJtQ4guxZsVzDKkMh5Y6GwE6lpFWCyR2liMkSBMBznqxLBo/Ftr6oOAgC9ObKmuxXWgGIlqwkwPbKhFRSCLN7wuFqS5sA6Hhuxr9DqPQZW3L1UEoj/UKBLa9+DCYq84Y5CMMT4eMXEYnmC9gOx+n4bKtrdBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824657; c=relaxed/simple;
-	bh=buFIL69bNZOu6JQWyMwJCrK9z+t4SpsHt5ZZgqy6agM=;
+	s=arc-20240116; t=1762824662; c=relaxed/simple;
+	bh=gqgBLKI74qjNKMhxh0kiFPWK2XeXx/0W4PBIzGGqxG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTfVKDJKuUClW05dCSxw7Js6fF6r+bPTMjyj/fUfhSKhMbZCPHOXLovwysP542CeuGTuA+1sYDAq+beelEBVngdjC/HhPGWC5o7Udsb3xAEKYQ6KFk5sznm+9Zee7uTjLRqI2SQwtH2tf8Z+M05z36+6CrboddteQCSI5v1I7DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFfBoHha; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPtuSeQ44Idy8BxAOJdMOmrNj+ap0rO8I3kj1YXugW1Fj1Vs5wGJo8bT78h9D2aXQKigNLqR7QRWyEAMpM255sryIFP8BXwi4tXNkeEWhmZDPfytiWC66wxEKp14CCFkxFWYffipN5S0wwYdFzQFqB1mLt6Hy5xEuG0ffccCdjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ7OlwBz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFfBoHha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B233C4CEFB;
-	Tue, 11 Nov 2025 01:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ7OlwBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFA1C16AAE;
+	Tue, 11 Nov 2025 01:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824657;
-	bh=buFIL69bNZOu6JQWyMwJCrK9z+t4SpsHt5ZZgqy6agM=;
+	s=korg; t=1762824659;
+	bh=gqgBLKI74qjNKMhxh0kiFPWK2XeXx/0W4PBIzGGqxG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFfBoHha39f6rXnQbMAm+mjXplxgmvdwmzyGtCxWxhFajUdaKxWX+usBZzrVcyYEC
-	 ScZ9T+1uD5GPPsGGLzzdsI8PrPSN8zbdiEh2vPNPkuR0DFxHLTlTUoksqPhTxU9kKa
-	 Iy2jEBddA9Kn20R0oO1xIVvIYwG4cC7A/E8drqOY=
+	b=jZ7OlwBzolk0Jfg0tGy7A8qizO2cdyhybrbxWKZpDhVttD4/ZmlL/n1BYnps11i+C
+	 sHG8je6qBwOpV8Lf9/gxzfK8LXIsjNw+PSD4PQqDSgd4kSTNhXvEH911c/yZi417HX
+	 ter55lXG8vyzquZPzNinCySXUwM3AHJPsVRH6U+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Dahl Juhl <juhl.emildahl@gmail.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 484/565] tools: lib: thermal: dont preserve owner in install
-Date: Tue, 11 Nov 2025 09:45:40 +0900
-Message-ID: <20251111004537.814876591@linuxfoundation.org>
+Subject: [PATCH 6.17 545/849] wifi: mt76: mt7996: disable promiscuous mode by default
+Date: Tue, 11 Nov 2025 09:41:55 +0900
+Message-ID: <20251111004549.585259182@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emil Dahl Juhl <juhl.emildahl@gmail.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 1375152bb02ab2a8435e87ea27034482dbc95f57 ]
+[ Upstream commit a4a66cbaa20f51cb953d09a95c67cb237a088ec9 ]
 
-Instead of preserving mode, timestamp, and owner, for the object files
-during installation, just preserve the mode and timestamp.
+Set MT_WF_RFCR_DROP_OTHER_UC by default and disable this flag in
+mt7996_set_monitor only if monitor mode is enabled.
 
-When installing as root, the installed files should be owned by root.
-When installing as user, --preserve=ownership doesn't work anyway. This
-makes --preserve=ownership rather pointless.
+Without this patch, the MT_WF_RFCR_DROP_OTHER_UC would not be set so the
+driver would receive lots of packets meant for other devices.
 
-Signed-off-by: Emil Dahl Juhl <juhl.emildahl@gmail.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Link: https://patch.msgid.link/20250915075910.47558-10-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/lib/thermal/Makefile b/tools/lib/thermal/Makefile
-index 8890fd57b110c..1694889847caf 100644
---- a/tools/lib/thermal/Makefile
-+++ b/tools/lib/thermal/Makefile
-@@ -147,7 +147,7 @@ endef
- install_lib: libs
- 	$(call QUIET_INSTALL, $(LIBTHERMAL_ALL)) \
- 		$(call do_install_mkdir,$(libdir_SQ)); \
--		cp -fpR $(LIBTHERMAL_ALL) $(DESTDIR)$(libdir_SQ)
-+		cp -fR --preserve=mode,timestamp $(LIBTHERMAL_ALL) $(DESTDIR)$(libdir_SQ)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index a75b29bada141..5e81edde1e283 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -383,6 +383,7 @@ mt7996_init_wiphy_band(struct ieee80211_hw *hw, struct mt7996_phy *phy)
  
- install_headers:
- 	$(call QUIET_INSTALL, headers) \
+ 	phy->slottime = 9;
+ 	phy->beacon_rate = -1;
++	phy->rxfilter = MT_WF_RFCR_DROP_OTHER_UC;
+ 
+ 	if (phy->mt76->cap.has_2ghz) {
+ 		phy->mt76->sband_2g.sband.ht_cap.cap |=
 -- 
 2.51.0
 
