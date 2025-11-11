@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F7F303CAF;
-	Tue, 11 Nov 2025 01:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E622FF672;
+	Tue, 11 Nov 2025 01:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825438; cv=none; b=Vh711PwvOLP61zjTrUsEd99Osen5f9alRp1v6QecOsP2xlqXWmixRV101SfUz5TWhlWCjmHuM01tKNIgDzNhNzI0VgugjY123pm9PScXdXZ7rp1GKr6AoLYbH6JJqnh0Cjqfx/nRoouYqxmPix4usWdkg8wpyWLRXvfFWRhOpOI=
+	t=1762825440; cv=none; b=KEFf/xhvHr0I7r9mrJIRifl7bkb8pWLHHdvtst5WmKulB0FrzVSi/K/W5btgtkl78GkoNDE+IVxxVIbHTazwz2ZIxIX1DEsAwhLI3JPd79CgtZfw/W/Ow40zito2zLIN2NE5sXoooEoE9j2bIqTQD63awYG5b721Au2o4WiM+Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825438; c=relaxed/simple;
-	bh=C5XNF6hFFnm2x/zKduhCnWv/OT5IaAjjNNe89a/ffMk=;
+	s=arc-20240116; t=1762825440; c=relaxed/simple;
+	bh=g4AhtdM1CryErsE127K7tZS9nWwKlxWxSBAPN4JcKdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbQ8VHLxOWfHC4RJltKScTWvSi+mecoNLIsmeNxq/c2fMzuAD81FxtyibMuaLAbqR2R6lq5wz2WYO50bwmu5Ys0zTLCpoaAh7RNgqChoxT8y+IT/ZiZ0uit3gP5KjVBFNz2o7Ehf2qaC4QxEdjV1eqNARuNyO9Bft2ce/wQwHqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQEezulx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czpml9L7nr58NHKnMMt/zr5qDf2dcZsGhGqazrOMwtt1zLGxprZ+cH408oBhyZo3m/b7YC/4QIUtm6fiO1nMaUofBj2F/Uefcv8hcbSfUom11mFYJzG2g19u0RHEQP69q5pvuXsvdL48yKhpjCLyKZ8tPgLA7q32NqG39DsL3Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ey91ppTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQEezulx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9CEC16AAE;
-	Tue, 11 Nov 2025 01:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ey91ppTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BC2C19422;
+	Tue, 11 Nov 2025 01:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825438;
-	bh=C5XNF6hFFnm2x/zKduhCnWv/OT5IaAjjNNe89a/ffMk=;
+	s=korg; t=1762825440;
+	bh=g4AhtdM1CryErsE127K7tZS9nWwKlxWxSBAPN4JcKdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQEezulxrEHrLQj3OU+qRQBuPcZ9aGq1Md6H9Ga5LGiFKDjQOQ168ynkyomJ8I1Ir
-	 623iBymZlavFmirxgRQ2AgPo7ukcyxOpidaQ65Os0I1DJeyh49OnGBstzdNjD7sx7i
-	 sOKWUqq4DWts3vY8SWa/nNaOCGl2Ahb02jj3o91k=
+	b=Ey91ppTMZGrtzu6HO1Z/wE7HeMGQhcdX39veFqs404nNlguC2rHZUm6sIUb80RPDr
+	 xIOxh+2JRwWU5PvNVDL8WbnFuJWhj93zrnvJqJJXHk5AZyKEjAH6TfwRglahkLDdM1
+	 A+5aTBlRDweFVwlh4ny117EtQ8GPO6fKOsbjj85Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 800/849] tracing: Fix memory leaks in create_field_var()
-Date: Tue, 11 Nov 2025 09:46:10 +0900
-Message-ID: <20251111004555.771425124@linuxfoundation.org>
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>
+Subject: [PATCH 6.17 801/849] drm/amd/display: Enable mst when its detected but yet to be initialized
+Date: Tue, 11 Nov 2025 09:46:11 +0900
+Message-ID: <20251111004555.796937869@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,53 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 80f0d631dcc76ee1b7755bfca1d8417d91d71414 ]
+commit 3c6a743c6961cc2cab453b343bb157d6bbbf8120 upstream.
 
-The function create_field_var() allocates memory for 'val' through
-create_hist_field() inside parse_atom(), and for 'var' through
-create_var(), which in turn allocates var->type and var->var.name
-internally. Simply calling kfree() to release these structures will
-result in memory leaks.
+[Why]
+drm_dp_mst_topology_queue_probe() is used under the assumption that
+mst is already initialized. If we connect system with SST first
+then switch to the mst branch during suspend, we will fail probing
+topology by calling the wrong API since the mst manager is yet to
+be initialized.
 
-Use destroy_hist_field() to properly free 'val', and explicitly release
-the memory of var->type and var->var.name before freeing 'var' itself.
+[How]
+At dm_resume(), once it's detected as mst branc connected, check if
+the mst is initialized already. If not, call
+dm_helpers_dp_mst_start_top_mgr() instead to initialize mst
 
-Link: https://patch.msgid.link/20251106120132.3639920-1-zilin@seu.edu.cn
-Fixes: 02205a6752f22 ("tracing: Add support for 'field variables'")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+V2: Adjust the commit msg a bit
+
+Fixes: bc068194f548 ("drm/amd/display: Don't write DP_MSTM_CTRL after LT")
+Cc: Fangzhi Zuo <jerry.zuo@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 62320fb8d91a0bddc44a228203cfa9bfbb5395bd)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 1d536219b6248..6bfaf1210dd24 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -3272,14 +3272,16 @@ static struct field_var *create_field_var(struct hist_trigger_data *hist_data,
- 	var = create_var(hist_data, file, field_name, val->size, val->type);
- 	if (IS_ERR(var)) {
- 		hist_err(tr, HIST_ERR_VAR_CREATE_FIND_FAIL, errpos(field_name));
--		kfree(val);
-+		destroy_hist_field(val, 0);
- 		ret = PTR_ERR(var);
- 		goto err;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3574,6 +3574,7 @@ static int dm_resume(struct amdgpu_ip_bl
+ 	/* Do mst topology probing after resuming cached state*/
+ 	drm_connector_list_iter_begin(ddev, &iter);
+ 	drm_for_each_connector_iter(connector, &iter) {
++		bool init = false;
  
- 	field_var = kzalloc(sizeof(struct field_var), GFP_KERNEL);
- 	if (!field_var) {
--		kfree(val);
-+		destroy_hist_field(val, 0);
-+		kfree_const(var->type);
-+		kfree(var->var.name);
- 		kfree(var);
- 		ret =  -ENOMEM;
- 		goto err;
--- 
-2.51.0
-
+ 		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
+ 			continue;
+@@ -3583,7 +3584,14 @@ static int dm_resume(struct amdgpu_ip_bl
+ 		    aconnector->mst_root)
+ 			continue;
+ 
+-		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
++		scoped_guard(mutex, &aconnector->mst_mgr.lock) {
++			init = !aconnector->mst_mgr.mst_primary;
++		}
++		if (init)
++			dm_helpers_dp_mst_start_top_mgr(aconnector->dc_link->ctx,
++				aconnector->dc_link, false);
++		else
++			drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
+ 	}
+ 	drm_connector_list_iter_end(&iter);
+ 
 
 
