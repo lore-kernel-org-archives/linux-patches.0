@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE5D2DD5E2;
-	Tue, 11 Nov 2025 01:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448F348458;
+	Tue, 11 Nov 2025 01:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823215; cv=none; b=ggeex5WtEnU7+Af9SStvGO4r7vv96q49zXyyEsiQ6vhr0Qoous3se4anYM3QTyS8b2zWTx0bM9XJwCx89lnJoUieSS7u3OC+249s5+ji/L9p5t0POpA7lXlCvSDfaeyBwqZUpdFXSo2jfoR60tJI/g1rEGib5cKX60bRYGoZ99Y=
+	t=1762823218; cv=none; b=MbWHQEOFTgrJuX+deai+S4N1qp1OPT6Z9kcPXy7+/oXgs7CuF+p+txB5X/bpsBEzh65QjspyQRDFvM9B/Kqwb41bafFGydd77rDLF/eJFTp27j2amaJluv8Ay9hVAAtKqbwLChZdqX6EODE1d8V5wjgj1ZCy020K2CqmqecHKmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823215; c=relaxed/simple;
-	bh=EgnSWLyckA4C2JaJGqbJ0WYxn5xc/TlBZ8IqsPcHOPU=;
+	s=arc-20240116; t=1762823218; c=relaxed/simple;
+	bh=7QWHfAlwuPhsFFqfqwO0NO24Hoh3+CDyLkJO93wbG4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0pDs8VXfe2Q5c6Ggeq1S/w2OFo5Px5TQAQ65JP3PcRp/BRp1/xFBhLeuUe3G4A7UaCbDaL1LbZd2QNWizK+8em69xcw0bb4N2P07/PRAjYBFGjQ5w4icyaJtKG/MXiivJ+DzarVjQGGkEKKn64di/WWEvgDV24F3t3QA2OHv2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TT/YLThT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUYM/573j+mc8sOZairp/AHAAVzr6jJimaf0acQdDJ7e8JpZBYzzf2hJz4EO510j7yJCzxlJHZeiKJnq2BZ3TT6WtALZeIzKGOV0IHoM9PeOy8/ecCGyUlTsJK4Yr4vofm1LnmhUo+D5JRSOwwswXVEsEiXCvoUxgSVohA7Hy9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK6kATXp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TT/YLThT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C08C4AF09;
-	Tue, 11 Nov 2025 01:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK6kATXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2C8C116B1;
+	Tue, 11 Nov 2025 01:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823215;
-	bh=EgnSWLyckA4C2JaJGqbJ0WYxn5xc/TlBZ8IqsPcHOPU=;
+	s=korg; t=1762823217;
+	bh=7QWHfAlwuPhsFFqfqwO0NO24Hoh3+CDyLkJO93wbG4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TT/YLThTDwbeK7eohimEb+Xb1jpWoN/AWTbfpTIMV/8/IgJ3mJZWd6Bv3bOoZ7WAF
-	 j87mjfAUhjuNYB5pmkwGUwvf+tbrazUmIMUjMa7pWclqQ2JxBMMne7+76mNs+AaVKj
-	 SY1KuQ9eFrH6rCZcq0RBzbofL7PIVdL7Gb06Rblg=
+	b=hK6kATXpcxtmplY81Saen9dNFgzObDCowyvVh/E0DrTYH0pJ9mZiyXMHVJXQMSYcs
+	 4pTEEzTcajSEBUQWdhvl1C63rk9s4JrfpE5UbAibN+iXFxkmfE/WkErADkAjaZfk7F
+	 iSiBOT0N9Cs3mek5t6sFQWTXYMx4L2mcnwGAWd0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/565] media: pci: ivtv: Dont create fake v4l2_fh
-Date: Tue, 11 Nov 2025 09:40:54 +0900
-Message-ID: <20251111004531.382852918@linuxfoundation.org>
+Subject: [PATCH 6.17 255/849] drm/amd/display: fix dmub access race condition
+Date: Tue, 11 Nov 2025 09:37:05 +0900
+Message-ID: <20251111004542.593270397@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,182 +50,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit cc6e8d1ccea792d8550428e0831e3a35b0ccfddc ]
+[ Upstream commit c210b757b400959577a5a17b783b5959b82baed8 ]
 
-The ivtv driver has a structure named ivtv_open_id that models an open
-file handle for the device. It embeds a v4l2_fh instance for file
-handles that correspond to a V4L2 video device, and stores a pointer to
-that v4l2_fh in struct ivtv_stream to identify which open file handle
-owns a particular stream.
+Accessing DC from amdgpu_dm is usually preceded by acquisition of
+dc_lock mutex. Most of the DC API that DM calls are under a DC lock.
+However, there are a few that are not. Some DC API called from interrupt
+context end up sending DMUB commands via a DC API, while other threads were
+using DMUB. This was apparent from a race between calls for setting idle
+optimization enable/disable and the DC API to set vmin/vmax.
 
-In addition to video devices, streams can be owned by ALSA PCM devices.
-Those devices do not make use of the v4l2_fh instance for obvious
-reasons, but the snd_ivtv_pcm_capture_open() function still initializes
-a "fake" v4l2_fh for the sole purpose of using it as an open file handle
-identifier. The v4l2_fh is not properly destroyed when the ALSA PCM
-device is closed, leading to possible resource leaks.
+Offload the call to dc_stream_adjust_vmin_vmax() to a thread instead
+of directly calling them from the interrupt handler such that it waits
+for dc_lock.
 
-Fortunately, the v4l2_fh instance pointed to by ivtv_stream is not
-accessed, only the pointer value is used for comparison. Replace it with
-a pointer to the ivtv_open_id structure that embeds the v4l2_fh, and
-don't initialize the v4l2_fh for ALSA PCM devices.
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ivtv/ivtv-alsa-pcm.c |  2 --
- drivers/media/pci/ivtv/ivtv-driver.h   |  3 ++-
- drivers/media/pci/ivtv/ivtv-fileops.c  | 18 +++++++++---------
- drivers/media/pci/ivtv/ivtv-irq.c      |  4 ++--
- 4 files changed, 13 insertions(+), 14 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 55 +++++++++++++++++--
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h | 14 +++++
+ 2 files changed, 63 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-index 8f346d7da9c8d..269a799ec046c 100644
---- a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-+++ b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
-@@ -148,14 +148,12 @@ static int snd_ivtv_pcm_capture_open(struct snd_pcm_substream *substream)
- 
- 	s = &itv->streams[IVTV_ENC_STREAM_TYPE_PCM];
- 
--	v4l2_fh_init(&item.fh, &s->vdev);
- 	item.itv = itv;
- 	item.type = s->type;
- 
- 	/* See if the stream is available */
- 	if (ivtv_claim_stream(&item, item.type)) {
- 		/* No, it's already in use */
--		v4l2_fh_exit(&item.fh);
- 		snd_ivtv_unlock(itvsc);
- 		return -EBUSY;
- 	}
-diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
-index a6ffa99e16bc6..83818048f7fe4 100644
---- a/drivers/media/pci/ivtv/ivtv-driver.h
-+++ b/drivers/media/pci/ivtv/ivtv-driver.h
-@@ -322,6 +322,7 @@ struct ivtv_queue {
- };
- 
- struct ivtv;				/* forward reference */
-+struct ivtv_open_id;
- 
- struct ivtv_stream {
- 	/* These first four fields are always set, even if the stream
-@@ -331,7 +332,7 @@ struct ivtv_stream {
- 	const char *name;		/* name of the stream */
- 	int type;			/* stream type */
- 
--	struct v4l2_fh *fh;		/* pointer to the streaming filehandle */
-+	struct ivtv_open_id *id;	/* pointer to the streaming ivtv_open_id */
- 	spinlock_t qlock;		/* locks access to the queues */
- 	unsigned long s_flags;		/* status flags, see above */
- 	int dma;			/* can be PCI_DMA_TODEVICE, PCI_DMA_FROMDEVICE or PCI_DMA_NONE */
-diff --git a/drivers/media/pci/ivtv/ivtv-fileops.c b/drivers/media/pci/ivtv/ivtv-fileops.c
-index cfa28d0355863..1ac8d691df5cd 100644
---- a/drivers/media/pci/ivtv/ivtv-fileops.c
-+++ b/drivers/media/pci/ivtv/ivtv-fileops.c
-@@ -39,16 +39,16 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 
- 	if (test_and_set_bit(IVTV_F_S_CLAIMED, &s->s_flags)) {
- 		/* someone already claimed this stream */
--		if (s->fh == &id->fh) {
-+		if (s->id == id) {
- 			/* yes, this file descriptor did. So that's OK. */
- 			return 0;
- 		}
--		if (s->fh == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
-+		if (s->id == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
- 					 type == IVTV_ENC_STREAM_TYPE_VBI)) {
- 			/* VBI is handled already internally, now also assign
- 			   the file descriptor to this stream for external
- 			   reading of the stream. */
--			s->fh = &id->fh;
-+			s->id = id;
- 			IVTV_DEBUG_INFO("Start Read VBI\n");
- 			return 0;
- 		}
-@@ -56,7 +56,7 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
- 		IVTV_DEBUG_INFO("Stream %d is busy\n", type);
- 		return -EBUSY;
- 	}
--	s->fh = &id->fh;
-+	s->id = id;
- 	if (type == IVTV_DEC_STREAM_TYPE_VBI) {
- 		/* Enable reinsertion interrupt */
- 		ivtv_clear_irq_mask(itv, IVTV_IRQ_DEC_VBI_RE_INSERT);
-@@ -94,7 +94,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 	struct ivtv *itv = s->itv;
- 	struct ivtv_stream *s_vbi;
- 
--	s->fh = NULL;
-+	s->id = NULL;
- 	if ((s->type == IVTV_DEC_STREAM_TYPE_VBI || s->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 		/* this stream is still in use internally */
-@@ -126,7 +126,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
- 		/* was already cleared */
- 		return;
- 	}
--	if (s_vbi->fh) {
-+	if (s_vbi->id) {
- 		/* VBI stream still claimed by a file descriptor */
- 		return;
- 	}
-@@ -359,7 +359,7 @@ static ssize_t ivtv_read(struct ivtv_stream *s, char __user *ubuf, size_t tot_co
- 	size_t tot_written = 0;
- 	int single_frame = 0;
- 
--	if (atomic_read(&itv->capturing) == 0 && s->fh == NULL) {
-+	if (atomic_read(&itv->capturing) == 0 && s->id == NULL) {
- 		/* shouldn't happen */
- 		IVTV_DEBUG_WARN("Stream %s not initialized before read\n", s->name);
- 		return -EIO;
-@@ -831,7 +831,7 @@ void ivtv_stop_capture(struct ivtv_open_id *id, int gop_end)
- 		     id->type == IVTV_ENC_STREAM_TYPE_VBI) &&
- 		    test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
- 			/* Also used internally, don't stop capturing */
--			s->fh = NULL;
-+			s->id = NULL;
- 		}
- 		else {
- 			ivtv_stop_v4l2_encode_stream(s, gop_end);
-@@ -915,7 +915,7 @@ int ivtv_v4l2_close(struct file *filp)
- 	v4l2_fh_exit(fh);
- 
- 	/* Easy case first: this stream was never claimed by us */
--	if (s->fh != &id->fh)
-+	if (s->id != id)
- 		goto close_done;
- 
- 	/* 'Unclaim' this stream */
-diff --git a/drivers/media/pci/ivtv/ivtv-irq.c b/drivers/media/pci/ivtv/ivtv-irq.c
-index e39bf64c5c715..404335e5aff4e 100644
---- a/drivers/media/pci/ivtv/ivtv-irq.c
-+++ b/drivers/media/pci/ivtv/ivtv-irq.c
-@@ -305,7 +305,7 @@ static void dma_post(struct ivtv_stream *s)
- 			ivtv_process_vbi_data(itv, buf, 0, s->type);
- 			s->q_dma.bytesused += buf->bytesused;
- 		}
--		if (s->fh == NULL) {
-+		if (s->id == NULL) {
- 			ivtv_queue_move(s, &s->q_dma, NULL, &s->q_free, 0);
- 			return;
- 		}
-@@ -330,7 +330,7 @@ static void dma_post(struct ivtv_stream *s)
- 		set_bit(IVTV_F_I_HAVE_WORK, &itv->i_flags);
- 	}
- 
--	if (s->fh)
-+	if (s->id)
- 		wake_up(&s->waitq);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 163780030eb16..aca57cc815514 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -541,6 +541,50 @@ static void dm_pflip_high_irq(void *interrupt_params)
+ 		      amdgpu_crtc->crtc_id, amdgpu_crtc, vrr_active, (int)!e);
  }
  
++static void dm_handle_vmin_vmax_update(struct work_struct *offload_work)
++{
++	struct vupdate_offload_work *work = container_of(offload_work, struct vupdate_offload_work, work);
++	struct amdgpu_device *adev = work->adev;
++	struct dc_stream_state *stream = work->stream;
++	struct dc_crtc_timing_adjust *adjust = work->adjust;
++
++	mutex_lock(&adev->dm.dc_lock);
++	dc_stream_adjust_vmin_vmax(adev->dm.dc, stream, adjust);
++	mutex_unlock(&adev->dm.dc_lock);
++
++	dc_stream_release(stream);
++	kfree(work->adjust);
++	kfree(work);
++}
++
++static void schedule_dc_vmin_vmax(struct amdgpu_device *adev,
++	struct dc_stream_state *stream,
++	struct dc_crtc_timing_adjust *adjust)
++{
++	struct vupdate_offload_work *offload_work = kzalloc(sizeof(*offload_work), GFP_KERNEL);
++	if (!offload_work) {
++		drm_dbg_driver(adev_to_drm(adev), "Failed to allocate vupdate_offload_work\n");
++		return;
++	}
++
++	struct dc_crtc_timing_adjust *adjust_copy = kzalloc(sizeof(*adjust_copy), GFP_KERNEL);
++	if (!adjust_copy) {
++		drm_dbg_driver(adev_to_drm(adev), "Failed to allocate adjust_copy\n");
++		kfree(offload_work);
++		return;
++	}
++
++	dc_stream_retain(stream);
++	memcpy(adjust_copy, adjust, sizeof(*adjust_copy));
++
++	INIT_WORK(&offload_work->work, dm_handle_vmin_vmax_update);
++	offload_work->adev = adev;
++	offload_work->stream = stream;
++	offload_work->adjust = adjust_copy;
++
++	queue_work(system_wq, &offload_work->work);
++}
++
+ static void dm_vupdate_high_irq(void *interrupt_params)
+ {
+ 	struct common_irq_params *irq_params = interrupt_params;
+@@ -590,10 +634,9 @@ static void dm_vupdate_high_irq(void *interrupt_params)
+ 				    acrtc->dm_irq_params.stream,
+ 				    &acrtc->dm_irq_params.vrr_params);
+ 
+-				dc_stream_adjust_vmin_vmax(
+-				    adev->dm.dc,
+-				    acrtc->dm_irq_params.stream,
+-				    &acrtc->dm_irq_params.vrr_params.adjust);
++				schedule_dc_vmin_vmax(adev,
++					acrtc->dm_irq_params.stream,
++					&acrtc->dm_irq_params.vrr_params.adjust);
+ 				spin_unlock_irqrestore(&adev_to_drm(adev)->event_lock, flags);
+ 			}
+ 		}
+@@ -683,8 +726,8 @@ static void dm_crtc_high_irq(void *interrupt_params)
+ 					     acrtc->dm_irq_params.stream,
+ 					     &acrtc->dm_irq_params.vrr_params);
+ 
+-		dc_stream_adjust_vmin_vmax(adev->dm.dc, acrtc->dm_irq_params.stream,
+-					   &acrtc->dm_irq_params.vrr_params.adjust);
++		schedule_dc_vmin_vmax(adev, acrtc->dm_irq_params.stream,
++				&acrtc->dm_irq_params.vrr_params.adjust);
+ 	}
+ 
+ 	/*
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index b937da0a4e4a0..c18a6b43c76f6 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -152,6 +152,20 @@ struct idle_workqueue {
+ 	bool running;
+ };
+ 
++/**
++ * struct dm_vupdate_work - Work data for periodic action in idle
++ * @work: Kernel work data for the work event
++ * @adev: amdgpu_device back pointer
++ * @stream: DC stream associated with the crtc
++ * @adjust: DC CRTC timing adjust to be applied to the crtc
++ */
++struct vupdate_offload_work {
++	struct work_struct work;
++	struct amdgpu_device *adev;
++	struct dc_stream_state *stream;
++	struct dc_crtc_timing_adjust *adjust;
++};
++
+ #define MAX_LUMINANCE_DATA_POINTS 99
+ 
+ /**
 -- 
 2.51.0
 
