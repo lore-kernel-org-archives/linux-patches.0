@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15D524113D;
-	Tue, 11 Nov 2025 00:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE36A25D209;
+	Tue, 11 Nov 2025 00:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822360; cv=none; b=lz3ZEm0ex37ZFzd4KiPxebGLpGRCIHnoGLQphOuR+pGG6WIvsrwE6aDPMxoNU1Jq09KAfSp2VjgwHnpZS+20NTvvQ1RsDuffyOOKUfg9SOd3pqllN9OAv5QRt15Wk9OQj9DnebNExvE70Z/OCrwA0WIlNvaC0Iqh4yHyP2LXJKg=
+	t=1762822362; cv=none; b=rNvlcAkqYX4vnTuZWjwicGwClGe7yxpOK8OTuDPFxcXmZnEibQTklbcd8MIRFRNY2/SHZP2uaUied4gnFU3jpPdpiIPHxx1KRK/G84IaiPt5CYXgJoVhqmF6ZRLn9yWtZMF2rJjL7H0HATUnGzLH6aLKdnXLg4QoYqIr+a/BZzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822360; c=relaxed/simple;
-	bh=D44oObjobkoBdE6Y9Hr72kGXTViRPQZzwlV3mq+s7yI=;
+	s=arc-20240116; t=1762822362; c=relaxed/simple;
+	bh=ESfXxHmvaRnIblViW6st2dSUaOkoRXQJmZYfFf6YqAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRiTrAHOSdbGozKLtuVeMVEs9O+zIhF7cMJbGSQpNb/mZrhTuJ1D4Hl3iyzvf3qLKhl6zxxmEmDMm8/aIh0VQa0xeIXzni8sUYAn9cPTaIDApH+cXDERvDNQeIuVm3sXeSs+m86a3dRHseN5JmkizflhxWf7dTw4rQjh1TTUI/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQcCw+ZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iiOCJ33Cv8t+SvVQLQ5laHes8ix4ApHFryJZysHLQEiU2RozmhPeD0IjxaBdR1K9aAs/rT0BOlM19ul4uDLXq8QwxyVV79shwjLAN97K0OzJGUhrC1DuNela2d4e+P1zl2vipTIHCVVdqHbNuteyKqnxzk8XMUItOBoEXfMKP0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icbjJ3EQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQcCw+ZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CFFC19425;
-	Tue, 11 Nov 2025 00:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icbjJ3EQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4836AC19421;
+	Tue, 11 Nov 2025 00:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822360;
-	bh=D44oObjobkoBdE6Y9Hr72kGXTViRPQZzwlV3mq+s7yI=;
+	s=korg; t=1762822362;
+	bh=ESfXxHmvaRnIblViW6st2dSUaOkoRXQJmZYfFf6YqAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQcCw+ZHY2OR1Q/IaW0AA4OSvibwTh7CAH6QSvBw6L3ang7cf7zN8kc1SRvJvSQXd
-	 DcS6VDrySOCTZPYSmxF1/8wIs9vhPUH0CDqVnYJ4V4AzNrkAAy8i8Ef6sbhYuJlWE+
-	 sAwbSGX2dkE6/ENx3IXvaM+TPhctDnC1sFxZZfK0=
+	b=icbjJ3EQ7T34z0m9UCS87wjTDswcoiBTdkjOBaDlpoVpWX9s+A0CKNwbO2/NIIl1L
+	 2K3GbGohvQB60fPncXhionmlRWE/UToU9UmObYmP75bcXzrJGAb2FFbx6n9IhPyAeC
+	 VuZuUOqmNJlFxQdxR9Kc7l/gf+rfRznqK2X2rQCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/565] bpf: Do not audit capability check in do_jit()
-Date: Tue, 11 Nov 2025 09:38:10 +0900
-Message-ID: <20251111004527.652267814@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Steev Klimaszewski <steev@kali.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.17 093/849] regmap: slimbus: fix bus_context pointer in regmap init calls
+Date: Tue, 11 Nov 2025 09:34:23 +0900
+Message-ID: <20251111004538.662087171@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +51,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 881a9c9cb7856b24e390fad9f59acfd73b98b3b2 ]
+commit 434f7349a1f00618a620b316f091bd13a12bc8d2 upstream.
 
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
+wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
+That commit breaks audio playback, for instance, on sdm845 Thundercomm
+Dragonboard 845c board:
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
+ Unable to handle kernel paging request at virtual address ffff8000847cbad4
+ ...
+ CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
+ Hardware name: Thundercomm Dragonboard 845c (DT)
+ ...
+ Call trace:
+  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
+  slim_read+0x48/0x74 [slimbus]
+  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
+  _regmap_raw_read+0xe8/0x174
+  _regmap_bus_read+0x44/0x80
+  _regmap_read+0x60/0xd8
+  _regmap_update_bits+0xf4/0x140
+  _regmap_select_page+0xa8/0x124
+  _regmap_raw_write_impl+0x3b8/0x65c
+  _regmap_bus_raw_write+0x60/0x80
+  _regmap_write+0x58/0xc0
+  regmap_write+0x4c/0x80
+  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
+  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
+  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
+  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
+  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
+  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
+  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
+  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
+  __arm64_sys_ioctl+0xac/0x104
+  invoke_syscall+0x48/0x104
+  el0_svc_common.constprop.0+0x40/0xe0
+  do_el0_svc+0x1c/0x28
+  el0_svc+0x34/0xec
+  el0t_64_sync_handler+0xa0/0xf0
+  el0t_64_sync+0x198/0x19c
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2369326
-Fixes: d4e89d212d40 ("x86/bpf: Call branch history clearing sequence on exit")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20251021122758.2659513-1-omosnace@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The __devm_regmap_init_slimbus() started to be used instead of
+__regmap_init_slimbus() after the commit mentioned above and turns out
+the incorrect bus_context pointer (3rd argument) was used in
+__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
+to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
+the first user of devm_regmap_init_slimbus() but we should fix it till
+the point where __devm_regmap_init_slimbus() was introduced therefore
+two "Fixes" tags.
+
+While at this, also correct the same argument in __regmap_init_slimbus().
+
+Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
+Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
+Cc: stable@vger.kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: Steev Klimaszewski <steev@kali.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251022201013.1740211-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/regmap/regmap-slimbus.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 9a861ac77f8eb..8cbc26081bdb2 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2453,7 +2453,7 @@ st:			if (is_imm8(insn->off))
- 			/* Update cleanup_addr */
- 			ctx->cleanup_addr = proglen;
- 			if (bpf_prog_was_classic(bpf_prog) &&
--			    !capable(CAP_SYS_ADMIN)) {
-+			    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
- 				u8 *ip = image + addrs[i - 1];
+--- a/drivers/base/regmap/regmap-slimbus.c
++++ b/drivers/base/regmap/regmap-slimbus.c
+@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(str
+ 	if (IS_ERR(bus))
+ 		return ERR_CAST(bus);
  
- 				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
--- 
-2.51.0
-
+-	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
+-			     lock_key, lock_name);
++	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
+ }
+ EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
+ 
+@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbu
+ 	if (IS_ERR(bus))
+ 		return ERR_CAST(bus);
+ 
+-	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
+-				  lock_key, lock_name);
++	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
+ }
+ EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
+ 
 
 
