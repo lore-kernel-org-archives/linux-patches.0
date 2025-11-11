@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDFB2EBB8C;
-	Tue, 11 Nov 2025 01:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593A3342CAD;
+	Tue, 11 Nov 2025 01:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825160; cv=none; b=aMqXL67uj++h0xt8gCOKYxVtQt0FxLC8/WV+J8Nv3Ox7I/9tQEqTcL95upPJztex6x0rq1b4OffDgl3NxQJRQvNS14Q4AFLdG8hDbIsclHW1mHnkZymF8ohkInMUMLqCals2kNHfevRQDFSDyQ8qaq/EVUWcKyuRQ7PzOsMjesY=
+	t=1762825163; cv=none; b=NT5eHMFKpycE7FBsDMSHWo9+XOq7uGfPHXqUU0GSLxIryDEoh/8bkbG/7ScFBDsIlsjpVYMrq8EKcjmw+006eDAtUU3mCkWSOjGnptf/NV5TQE0kvBLHE7YsX7n1lReAy7qstWVgF9YFwvUlAyAwEd9t/uyTgn+UWHzl0YMPxDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825160; c=relaxed/simple;
-	bh=dZK7MV9Ilnion5UgmYk3geqiyCrQEV2zEEn/ImLTIDE=;
+	s=arc-20240116; t=1762825163; c=relaxed/simple;
+	bh=o37TYFAO5N+ll9Yn+XEFXbOhObjE9Wxwlx7QVv9ixoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULL1xnHJq0dh1GPopFHKh0ILEQkYYEJu23niWBRrflW5OPYHvMJd6ZoNQ9t66zPM3P3MdvfIZT0QbUeBZddoUNG6Kd0oyQWpsxw81s0pcsQpz6dxlCLi2ANZC8m15o44033Q0ETZBx/bTkLkWOmosLb4YcSOijvB7sQaPxk4cRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMZPsh7Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QovpItjArlcHa/DFaLY/V5KXFWL3sKkI+IHNh2VU294lOigNI+01IjVGKFpBDZ11pRMiASjD9HxyX6x1vaxbZB5usvJijMRXjld2Zq0YAjsfPnRSDPXg1k/r1uYAdfoxCmLadIjEGfgpwnSmjay07z1IrVT2M8BhZg5moeHaUYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhH7BDPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMZPsh7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5221DC113D0;
-	Tue, 11 Nov 2025 01:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhH7BDPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB8BC4AF09;
+	Tue, 11 Nov 2025 01:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825160;
-	bh=dZK7MV9Ilnion5UgmYk3geqiyCrQEV2zEEn/ImLTIDE=;
+	s=korg; t=1762825163;
+	bh=o37TYFAO5N+ll9Yn+XEFXbOhObjE9Wxwlx7QVv9ixoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMZPsh7YVvrDkVukiuPBovHlOMuOJMUR/UIg+SiuRTVweIaJgGSjk3Lqqjmm16cyT
-	 6LCvlg1K0uYMjAmVpCXpqDxGJXAZ9xh+O7+cTyQxelR1Ukw6BdfkamQOGWJgxur+UY
-	 ndQP5jTxucMwVZo/W7v8LGzDAy2kzyfM9yQSb1Uc=
+	b=PhH7BDPNDuqvcuhvaqe6+IZ52vpMYJBQQPOsuyBL6zJeGT8iwHiIdXlxHMXE9gUza
+	 TvtNPraKKGuLaGjGNDZoU1zJTfNCP559OnD75QJbYdjJGkm92anbiyJ4DUS93aebGH
+	 Tl4pd695EnORhkBv+s4Wu5lWZNIGFFiZRDEewiH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 686/849] RDMA/irdma: Set irdma_cq cq_num field during CQ create
-Date: Tue, 11 Nov 2025 09:44:16 +0900
-Message-ID: <20251111004553.010703739@linuxfoundation.org>
+Subject: [PATCH 6.17 687/849] RDMA/uverbs: Fix umem release in UVERBS_METHOD_CQ_CREATE
+Date: Tue, 11 Nov 2025 09:44:17 +0900
+Message-ID: <20251111004553.035480885@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,55 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 5575b7646b94c0afb0f4c0d86e00e13cf3397a62 ]
+[ Upstream commit d8713158faad0fd4418cb2f4e432c3876ad53a1f ]
 
-The driver maintains a CQ table that is used to ensure that a CQ is
-still valid when processing CQ related AEs. When a CQ is destroyed,
-the table entry is cleared, using irdma_cq.cq_num as the index. This
-field was never being set, so it was just always clearing out entry
-0.
+In `UVERBS_METHOD_CQ_CREATE`, umem should be released if anything goes
+wrong. Currently, if `create_cq_umem` fails, umem would not be
+released or referenced, causing a possible leak.
 
-Additionally, the cq_num field size was increased to accommodate HW
-supporting more than 64K CQs.
+In this patch, we release umem at `UVERBS_METHOD_CQ_CREATE`, the driver
+should not release umem if it returns an error code.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20250923142439.943930-1-jmoroni@google.com
-Acked-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Fixes: 1a40c362ae26 ("RDMA/uverbs: Add a common way to create CQ with umem")
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Link: https://patch.msgid.link/aOh1le4YqtYwj-hH@osx.local
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 1 +
- drivers/infiniband/hw/irdma/verbs.h | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_std_types_cq.c |  1 +
+ drivers/infiniband/hw/efa/efa_verbs.c         | 16 +++++++---------
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 105ffb1764b80..eb4683b248af9 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2078,6 +2078,7 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 	spin_lock_init(&iwcq->lock);
- 	INIT_LIST_HEAD(&iwcq->resize_list);
- 	INIT_LIST_HEAD(&iwcq->cmpl_generated);
-+	iwcq->cq_num = cq_num;
- 	info.dev = dev;
- 	ukinfo->cq_size = max(entries, 4);
- 	ukinfo->cq_id = cq_num;
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index 4381e5dbe782a..36ff8dd712f00 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -115,7 +115,7 @@ struct irdma_mr {
- struct irdma_cq {
- 	struct ib_cq ibcq;
- 	struct irdma_sc_cq sc_cq;
--	u16 cq_num;
-+	u32 cq_num;
- 	bool user_mode;
- 	atomic_t armed;
- 	enum irdma_cmpl_notify last_notify;
+diff --git a/drivers/infiniband/core/uverbs_std_types_cq.c b/drivers/infiniband/core/uverbs_std_types_cq.c
+index 37cd375565104..fab5d914029dd 100644
+--- a/drivers/infiniband/core/uverbs_std_types_cq.c
++++ b/drivers/infiniband/core/uverbs_std_types_cq.c
+@@ -206,6 +206,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_CQ_CREATE)(
+ 	return ret;
+ 
+ err_free:
++	ib_umem_release(umem);
+ 	rdma_restrack_put(&cq->res);
+ 	kfree(cq);
+ err_event_file:
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 886923d5fe506..542d25e191ea6 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1216,13 +1216,13 @@ int efa_create_cq_umem(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 		if (umem->length < cq->size) {
+ 			ibdev_dbg(&dev->ibdev, "External memory too small\n");
+ 			err = -EINVAL;
+-			goto err_free_mem;
++			goto err_out;
+ 		}
+ 
+ 		if (!ib_umem_is_contiguous(umem)) {
+ 			ibdev_dbg(&dev->ibdev, "Non contiguous CQ unsupported\n");
+ 			err = -EINVAL;
+-			goto err_free_mem;
++			goto err_out;
+ 		}
+ 
+ 		cq->cpu_addr = NULL;
+@@ -1251,7 +1251,7 @@ int efa_create_cq_umem(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 
+ 	err = efa_com_create_cq(&dev->edev, &params, &result);
+ 	if (err)
+-		goto err_free_mem;
++		goto err_free_mapped;
+ 
+ 	resp.db_off = result.db_off;
+ 	resp.cq_idx = result.cq_idx;
+@@ -1299,12 +1299,10 @@ int efa_create_cq_umem(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	efa_cq_user_mmap_entries_remove(cq);
+ err_destroy_cq:
+ 	efa_destroy_cq_idx(dev, cq->cq_idx);
+-err_free_mem:
+-	if (umem)
+-		ib_umem_release(umem);
+-	else
+-		efa_free_mapped(dev, cq->cpu_addr, cq->dma_addr, cq->size, DMA_FROM_DEVICE);
+-
++err_free_mapped:
++	if (!umem)
++		efa_free_mapped(dev, cq->cpu_addr, cq->dma_addr, cq->size,
++				DMA_FROM_DEVICE);
+ err_out:
+ 	atomic64_inc(&dev->stats.create_cq_err);
+ 	return err;
 -- 
 2.51.0
 
