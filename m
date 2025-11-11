@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA5B4C97;
-	Tue, 11 Nov 2025 00:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF51DF258;
+	Tue, 11 Nov 2025 00:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822440; cv=none; b=iLLCW8Drk83lsFQuJGk30/fW0SCInPw5Xdtt3E9xp0OoI+Df2eYLXsdXUjNPRFkIwcC8dgvHBv2OsDsO4qj7Lk5kFZUNpXEP9qMhrCgstRfevqonxRnsiJTE1PYBMbt1FKjl2R7+gyHvdz86XkFjfrj1L4t1kKe/g9XBStEggHY=
+	t=1762822442; cv=none; b=sQ3S2Sa6CSjVibVOuYNvTJeIsfsJv99mSI1tEEIJetnieiQJBEWAvgWcS9SZ5o2iZPqc4hR7sL9q6LMDl+Ez7xsMfWxVXVno/jHSaoo4Mg9j7Hi6kklfftf7aG5jJIkA9WFoNtd1gW6sBBcsg+uJj2+gumQ7GOhVDl5Xe9K4/vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822440; c=relaxed/simple;
-	bh=n8qSX+iKrhLNMSYIzba2CZXdxdGIiB7OWS67vYvm3X4=;
+	s=arc-20240116; t=1762822442; c=relaxed/simple;
+	bh=xXpDNPWrOlnyiBz+JMhdey4hVDnLFhN2G8Hdi0oKTYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9s1sRdpzzXHaVdyWSaLLxEn2wnB91muxBGLTV8rT2rsXs0PcEhkSYHWMj3kNhOEKh7urN+tRi6JNJFP3HKEzcnePIVl0ctEPfUo22g09GA5NM+iiWWFlKbRgfYSqNGeOiSSnlJviz+l6qPPOPfFAhq4wN8MHclpIXU3G/dYGWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsQLPDyf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okYe8NAiahBEkoEscS3m1YY8HY8orPr1nkpfg4e6zPWc2+WE/or8Kqp2a68AvTFh6ajBfRFojjFLyAk3mbJ/zOU8cPSP0BajJdkmmAnl3jzgyrp/zcwxzraWEqdYvd8thQ+j9piA4ZieQC/DT4Lx6fhxkMH8do/xnBFPtL3GfAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdHSc1JM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsQLPDyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECA2C4CEF5;
-	Tue, 11 Nov 2025 00:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdHSc1JM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75B2C19424;
+	Tue, 11 Nov 2025 00:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822439;
-	bh=n8qSX+iKrhLNMSYIzba2CZXdxdGIiB7OWS67vYvm3X4=;
+	s=korg; t=1762822442;
+	bh=xXpDNPWrOlnyiBz+JMhdey4hVDnLFhN2G8Hdi0oKTYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsQLPDyflF1lmWz5hB1VJ+53ReFUBHEksbZZQJ4jCTDsBb6Zt7xxvR9TvXR1tR9VM
-	 tb1QXiLXKXf/p4P4l2+pBZmk3KK/PZiOLOKAap8m0v+/Km1ZMKP1lseYegT/Jk8hOe
-	 vUw/+HVEmXlW0ZIlFGAdvKvunoGjDs/zV9+ttHd4=
+	b=VdHSc1JM5vNMaSpfxrbOQKHO6Jt4GdlOYhlvofsmbLjQMgZ91ybeA7JGHt1U5rDyJ
+	 1bLWEtm4KTZXSP9bG8gUe2nTjKv1woYwuvfoRGPH6KAHc+OcnS3MdCYIfbeO86KeA0
+	 tSwSFqUg3mMUxQ/xqWbXTl6bXyj4lEW6zfDMkuik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 108/849] drm/amd/display: Dont program BLNDGAM_MEM_PWR_FORCE when CM low-power is disabled on DCN30
-Date: Tue, 11 Nov 2025 09:34:38 +0900
-Message-ID: <20251111004539.008021952@linuxfoundation.org>
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 051/565] sfc: fix potential memory leak in efx_mae_process_mport()
+Date: Tue, 11 Nov 2025 09:38:27 +0900
+Message-ID: <20251111004528.057191906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 382bd6a792836875da555fe9a2b51222b813fed1 upstream.
+[ Upstream commit 46a499aaf8c27476fd05e800f3e947bfd71aa724 ]
 
-Before commit 33056a97ae5e ("drm/amd/display: Remove double checks for
-`debug.enable_mem_low_power.bits.cm`"), dpp3_program_blnd_lut(NULL)
-checked the low-power debug flag before calling
-dpp3_power_on_blnd_lut(false).
+In efx_mae_enumerate_mports(), memory allocated for mae_mport_desc is
+passed as a argument to efx_mae_process_mport(), but when the error path
+in efx_mae_process_mport() gets executed, the memory allocated for desc
+gets leaked.
 
-After commit 33056a97ae5e ("drm/amd/display: Remove double checks for
-`debug.enable_mem_low_power.bits.cm`"), dpp3_program_blnd_lut(NULL)
-unconditionally calls dpp3_power_on_blnd_lut(false). The BLNDGAM power
-helper writes BLNDGAM_MEM_PWR_FORCE when CM low-power is disabled, causing
-immediate SRAM power toggles instead of deferring at vupdate. This can
-disrupt atomic color/LUT sequencing during transitions between
-direct scanout and composition within gamescope's DRM backend on
-Steam Deck OLED.
+Fix that by freeing the memory allocation before returning error.
 
-To fix this, leave the BLNDGAM power state unchanged when low-power is
-disabled, matching dpp3_power_on_hdr3dlut and dpp3_power_on_shaper.
-
-Fixes: 33056a97ae5e ("drm/amd/display: Remove double checks for `debug.enable_mem_low_power.bits.cm`")
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 13ff4f63fcddfc84ec8632f1443936b00aa26725)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a6a15aca4207 ("sfc: enumerate mports in ef100")
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20251023141844.25847-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/sfc/mae.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c b/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
-index 09be2a90cc79..4f569cd8a5d6 100644
---- a/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
-+++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
-@@ -578,9 +578,6 @@ static void dpp3_power_on_blnd_lut(
- 			dpp_base->ctx->dc->optimized_required = true;
- 			dpp_base->deferred_reg_writes.bits.disable_blnd_lut = true;
- 		}
--	} else {
--		REG_SET(CM_MEM_PWR_CTRL, 0,
--				BLNDGAM_MEM_PWR_FORCE, power_on == true ? 0 : 1);
- 	}
+diff --git a/drivers/net/ethernet/sfc/mae.c b/drivers/net/ethernet/sfc/mae.c
+index 10709d828a636..21d5596460732 100644
+--- a/drivers/net/ethernet/sfc/mae.c
++++ b/drivers/net/ethernet/sfc/mae.c
+@@ -1101,6 +1101,9 @@ void efx_mae_remove_mport(void *desc, void *arg)
+ 	kfree(mport);
  }
  
++/*
++ * Takes ownership of @desc, even if it returns an error
++ */
+ static int efx_mae_process_mport(struct efx_nic *efx,
+ 				 struct mae_mport_desc *desc)
+ {
+@@ -1111,6 +1114,7 @@ static int efx_mae_process_mport(struct efx_nic *efx,
+ 	if (!IS_ERR_OR_NULL(mport)) {
+ 		netif_err(efx, drv, efx->net_dev,
+ 			  "mport with id %u does exist!!!\n", desc->mport_id);
++		kfree(desc);
+ 		return -EEXIST;
+ 	}
+ 
 -- 
-2.51.2
+2.51.0
 
 
 
