@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE79F3019BA;
-	Tue, 11 Nov 2025 01:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFF93043BF;
+	Tue, 11 Nov 2025 01:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825124; cv=none; b=XmLC6q+evD6K94nC0dyjN6RRl2e6EjOKf1CkIc+yvAUGEhi+2jOISEQRdkCHw8byABdO9BKfZ9n/2ueMc6WBYPVgvgKGKL6dkiUzcujz/oPk0/FYE1ipvVzn0C7oDvmTfMXh2L6Ux9fSIYJVaxSVrN9BXGkP3odMuqiUEmW3Vcw=
+	t=1762825127; cv=none; b=two6ESQfSo2RuFpXGgkIslnonsT3jAs9SqqXWbA5SAQpL8VnDvtHoRnX7spTtZfkfevZY19bTk+iKtVd918sAeJnwJNdGNAMaPtCPGH6O0ai2IU1FIclNbg4YqdxjvuS83gB3BnWRxJiwqxuhplsE6dckdcv+iyiRQv4rMdgQFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825124; c=relaxed/simple;
-	bh=peD8OXDzT//qt3k+iYHU7narVN4Z2VSXAP5NKd98nU8=;
+	s=arc-20240116; t=1762825127; c=relaxed/simple;
+	bh=xs2dyrCDKvg47fHuzsqVGtyT17eJHKVgeHvlDhtvEDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWrHTuiOwkyMU3C+3D+uzTjo8mfyM1HikAOsJ3c6icEpbM486khI7ztYO75cCVg7UBDfTbqj1p/cL7MR6L87L/rw7Cjiy03ZJEuPGbKvhZQQ9cJ8hHoiwsLbWpW1roto7yq8998K14kr44YiWYLffDfuH5BF6soj0pBjBiceD/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSRXe9kO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5rDPJ7WWlyJkLZPcsp+m5Pz+uVn3DdI+3OWkcmogVJxvWZD1UwPBvYupRjDa0QO0blNvV4dz/mOTSN3MzBIPJhxW5bIeoSU/2rovkp9tXnlGZeSIcs+kXjvSwVeEeRbpq6tPloaardH1hBBRtJf4PwfL3idW7fFTIItzj0hAL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ige7ofcr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSRXe9kO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6621BC16AAE;
-	Tue, 11 Nov 2025 01:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ige7ofcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DC6C4CEFB;
+	Tue, 11 Nov 2025 01:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825124;
-	bh=peD8OXDzT//qt3k+iYHU7narVN4Z2VSXAP5NKd98nU8=;
+	s=korg; t=1762825126;
+	bh=xs2dyrCDKvg47fHuzsqVGtyT17eJHKVgeHvlDhtvEDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSRXe9kOol01FCKbZiG5VYRXc8ZID/cVmINXRIe418QHT2UgYDRlAfwjZ1iZLH8g9
-	 ozrmJ0oy9Xx2HALFFXwgeEYe50M6KF7odfSXGp0bgDWH9CV93/0G7PrICaxKvLSgsK
-	 gW4eB2LzDL7FjhckiV9JXZG2dujUaCVOGuVf29dg=
+	b=ige7ofcrpyikvwBVao3fOnuyUi7Xyqo63kVksD2GLEWmKCkDKSmvmknSs5ZgHTiWp
+	 oEYPJ/CmAN06ygk9/Iqw7T7jucm01F605dMh8hTaPc+PyOYW+lFHigLWUKCF89wImV
+	 pxPst3+QSZE/+ZpsrKItZ7yMnjG7y91m+6YsVyf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mike Marshall <hubcap@omnibond.com>,
+	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 664/849] Bluetooth: ISO: Use sk_sndtimeo as conn_timeout
-Date: Tue, 11 Nov 2025 09:43:54 +0900
-Message-ID: <20251111004552.478646154@linuxfoundation.org>
+Subject: [PATCH 6.17 673/849] orangefs: fix xattr related buffer overflow...
+Date: Tue, 11 Nov 2025 09:44:03 +0900
+Message-ID: <20251111004552.691470598@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,197 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit 339a87883a14d6a818ca436fed41aa5d10e0f4bd ]
+[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
 
-This aligns the usage of socket sk_sndtimeo as conn_timeout when
-initiating a connection and then use it when scheduling the
-resulting HCI command, similar to what has been done in bf98feea5b65
-("Bluetooth: hci_conn: Always use sk_timeo as conn_timeout").
+Willy Tarreau <w@1wt.eu> forwarded me a message from
+Disclosure <disclosure@aisle.com> with the following
+warning:
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> The helper `xattr_key()` uses the pointer variable in the loop condition
+> rather than dereferencing it. As `key` is incremented, it remains non-NULL
+> (until it runs into unmapped memory), so the loop does not terminate on
+> valid C strings and will walk memory indefinitely, consuming CPU or hanging
+> the thread.
+
+I easily reproduced this with setfattr and getfattr, causing a kernel
+oops, hung user processes and corrupted orangefs files. Disclosure
+sent along a diff (not a patch) with a suggested fix, which I based
+this patch on.
+
+After xattr_key started working right, xfstest generic/069 exposed an
+xattr related memory leak that lead to OOM. xattr_key returns
+a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
+used hash_add, a kernel hashing macro. hash_add also hashes the key using
+hash_log which resulted in additions to the xattr cache going to the wrong
+hash bucket. generic/069 tortures a single file and orangefs does a
+getattr for the xattr "security.capability" every time. Orangefs
+negative caches on xattrs which includes a kmalloc. Since adds to the
+xattr cache were going to the wrong bucket, every getattr for
+"security.capability" resulted in another kmalloc, none of which were
+ever freed.
+
+I changed the two uses of hash_add to hlist_add_head instead
+and the memory leak ceased and generic/069 quit throwing furniture.
+
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 10 ++++++----
- net/bluetooth/hci_conn.c         | 20 ++++++++++++--------
- net/bluetooth/iso.c              | 16 ++++++++++------
- 3 files changed, 28 insertions(+), 18 deletions(-)
+ fs/orangefs/xattr.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 8a4b2ac15f470..8d78cb2b9f1ab 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1588,16 +1588,18 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
- 				 __u16 setting, struct bt_codec *codec,
- 				 u16 timeout);
- struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
--			      __u8 dst_type, struct bt_iso_qos *qos);
-+			      __u8 dst_type, struct bt_iso_qos *qos,
-+			      u16 timeout);
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 			      struct bt_iso_qos *qos,
--			      __u8 base_len, __u8 *base);
-+			      __u8 base_len, __u8 *base, u16 timeout);
- struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
--				 __u8 dst_type, struct bt_iso_qos *qos);
-+				 __u8 dst_type, struct bt_iso_qos *qos,
-+				 u16 timeout);
- struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				 __u8 dst_type, __u8 sid,
- 				 struct bt_iso_qos *qos,
--				 __u8 data_len, __u8 *data);
-+				 __u8 data_len, __u8 *data, u16 timeout);
- struct hci_conn *hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst,
- 		       __u8 dst_type, __u8 sid, struct bt_iso_qos *qos);
- int hci_conn_big_create_sync(struct hci_dev *hdev, struct hci_conn *hcon,
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 63ae62fe20bbc..c021c6cb3d9a5 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1547,7 +1547,7 @@ static int qos_set_bis(struct hci_dev *hdev, struct bt_iso_qos *qos)
- /* This function requires the caller holds hdev->lock */
- static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				    __u8 sid, struct bt_iso_qos *qos,
--				    __u8 base_len, __u8 *base)
-+				    __u8 base_len, __u8 *base, u16 timeout)
+diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
+index 74ef75586f384..eee3c5ed1bbbb 100644
+--- a/fs/orangefs/xattr.c
++++ b/fs/orangefs/xattr.c
+@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
+ static unsigned int xattr_key(const char *key)
  {
- 	struct hci_conn *conn;
- 	int err;
-@@ -1589,6 +1589,7 @@ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 
- 	conn->state = BT_CONNECT;
- 	conn->sid = sid;
-+	conn->conn_timeout = timeout;
- 
- 	hci_conn_hold(conn);
- 	return conn;
-@@ -1929,7 +1930,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	unsigned int i = 0;
+-	while (key)
++	if (!key)
++		return 0;
++	while (*key)
+ 		i += *key++;
+ 	return i % 16;
  }
- 
- struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
--			      __u8 dst_type, struct bt_iso_qos *qos)
-+			      __u8 dst_type, struct bt_iso_qos *qos,
-+			      u16 timeout)
- {
- 	struct hci_conn *cis;
- 
-@@ -1944,6 +1946,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 		cis->dst_type = dst_type;
- 		cis->iso_qos.ucast.cig = BT_ISO_QOS_CIG_UNSET;
- 		cis->iso_qos.ucast.cis = BT_ISO_QOS_CIS_UNSET;
-+		cis->conn_timeout = timeout;
+@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 				cx->length = -1;
+ 				cx->timeout = jiffies +
+ 				    orangefs_getattr_timeout_msecs*HZ/1000;
+-				hash_add(orangefs_inode->xattr_cache, &cx->node,
+-				    xattr_key(cx->key));
++				hlist_add_head( &cx->node,
++                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 			}
+ 		}
+ 		goto out_release_op;
+@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 			memcpy(cx->val, buffer, length);
+ 			cx->length = length;
+ 			cx->timeout = jiffies + HZ;
+-			hash_add(orangefs_inode->xattr_cache, &cx->node,
+-			    xattr_key(cx->key));
++			hlist_add_head(&cx->node,
++				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 		}
  	}
  
- 	if (cis->state == BT_CONNECTED)
-@@ -2183,7 +2186,7 @@ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
- 
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 			      struct bt_iso_qos *qos,
--			      __u8 base_len, __u8 *base)
-+			      __u8 base_len, __u8 *base, u16 timeout)
- {
- 	struct hci_conn *conn;
- 	struct hci_conn *parent;
-@@ -2204,7 +2207,7 @@ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
- 						   base, base_len);
- 
- 	/* We need hci_conn object using the BDADDR_ANY as dst */
--	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir);
-+	conn = hci_add_bis(hdev, dst, sid, qos, base_len, eir, timeout);
- 	if (IS_ERR(conn))
- 		return conn;
- 
-@@ -2257,13 +2260,13 @@ static void bis_mark_per_adv(struct hci_conn *conn, void *data)
- struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 				 __u8 dst_type, __u8 sid,
- 				 struct bt_iso_qos *qos,
--				 __u8 base_len, __u8 *base)
-+				 __u8 base_len, __u8 *base, u16 timeout)
- {
- 	struct hci_conn *conn;
- 	int err;
- 	struct iso_list_data data;
- 
--	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base);
-+	conn = hci_bind_bis(hdev, dst, sid, qos, base_len, base, timeout);
- 	if (IS_ERR(conn))
- 		return conn;
- 
-@@ -2306,7 +2309,8 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- }
- 
- struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
--				 __u8 dst_type, struct bt_iso_qos *qos)
-+				 __u8 dst_type, struct bt_iso_qos *qos,
-+				 u16 timeout)
- {
- 	struct hci_conn *le;
- 	struct hci_conn *cis;
-@@ -2330,7 +2334,7 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 	hci_iso_qos_setup(hdev, le, &qos->ucast.in,
- 			  le->le_rx_phy ? le->le_rx_phy : hdev->le_rx_def_phys);
- 
--	cis = hci_bind_cis(hdev, dst, dst_type, qos);
-+	cis = hci_bind_cis(hdev, dst, dst_type, qos, timeout);
- 	if (IS_ERR(cis)) {
- 		hci_conn_drop(le);
- 		return cis;
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 3b2a4a9d79d61..3d98cb6291da6 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -91,8 +91,8 @@ static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
- 				 iso_sock_match_t match, void *data);
- 
- /* ---- ISO timers ---- */
--#define ISO_CONN_TIMEOUT	(HZ * 40)
--#define ISO_DISCONN_TIMEOUT	(HZ * 2)
-+#define ISO_CONN_TIMEOUT	secs_to_jiffies(20)
-+#define ISO_DISCONN_TIMEOUT	secs_to_jiffies(2)
- 
- static void iso_conn_free(struct kref *ref)
- {
-@@ -369,7 +369,8 @@ static int iso_connect_bis(struct sock *sk)
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		hcon = hci_bind_bis(hdev, &iso_pi(sk)->dst, iso_pi(sk)->bc_sid,
- 				    &iso_pi(sk)->qos, iso_pi(sk)->base_len,
--				    iso_pi(sk)->base);
-+				    iso_pi(sk)->base,
-+				    READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -378,7 +379,8 @@ static int iso_connect_bis(struct sock *sk)
- 		hcon = hci_connect_bis(hdev, &iso_pi(sk)->dst,
- 				       le_addr_type(iso_pi(sk)->dst_type),
- 				       iso_pi(sk)->bc_sid, &iso_pi(sk)->qos,
--				       iso_pi(sk)->base_len, iso_pi(sk)->base);
-+				       iso_pi(sk)->base_len, iso_pi(sk)->base,
-+				       READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -471,7 +473,8 @@ static int iso_connect_cis(struct sock *sk)
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
- 				    le_addr_type(iso_pi(sk)->dst_type),
--				    &iso_pi(sk)->qos);
-+				    &iso_pi(sk)->qos,
-+				    READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
-@@ -479,7 +482,8 @@ static int iso_connect_cis(struct sock *sk)
- 	} else {
- 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
- 				       le_addr_type(iso_pi(sk)->dst_type),
--				       &iso_pi(sk)->qos);
-+				       &iso_pi(sk)->qos,
-+				       READ_ONCE(sk->sk_sndtimeo));
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto unlock;
 -- 
 2.51.0
 
