@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6134C97;
-	Tue, 11 Nov 2025 00:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C825224113D;
+	Tue, 11 Nov 2025 00:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822571; cv=none; b=rmD8oRHQ6SMEEFhMT91PWh/FwO7uhwmrvX9GwcYW4Httzrx0SKHlTkVaH+TU9TNQcEHqm7O2mFUqIkhNa1F2U7I14QUshdQDnnVN4UBxivvDeVtWw9SwrQo0nrnw+GYJAxp31wc9bI25rx82noe0zLoJOFShIS9x5eqsZ/IGDxU=
+	t=1762822573; cv=none; b=p3tpxa+Gx8pP5PqLHcCbqOpmj7FszG8IvMv32GB0291rTwYfvyNHe7IgKYIoAvNG1t7ozTgMwHRWMQTGn6svEnhx9QA7/e3GiDdZOVXT3LzC9ku+hPzjm+cLK/QFBBoZMDxEwgL2z7oTPEUHsKMfS0+cR0UAdDTAziA7pK6LvUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822571; c=relaxed/simple;
-	bh=Q4SIXdj4QSuh+hJrtzqHwKsgdew657vHylqGw4mi8Fw=;
+	s=arc-20240116; t=1762822573; c=relaxed/simple;
+	bh=YrOPYrWLTACaHrF23owHTe+46E7WoMYdwPlQet79ZCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BQ/XsYIHOb2bD0LNyNx2mFtFhCOJn10x9Fm4cL1A1CgtlCAqa+4K/uunW5LsO7ceK9u+JwezqQ5sYJuEOGZSMrGf0s+kusDzmNF+OoXuV19F+kKd5n+igFTEQVujFBLzj0LlSparQRGoF3wn9DkLfy9S6LsBMDs2daZRpSW6B20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgP9bJ7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHOzvbB/uxxYRTBlvHOEdgUFAcoY3zJILdFhA7r8WkLn0HFRInX9HAnvWh2QoEPHK7Kv1YDBT1TMUgfbNNXiu0wsH596HSIilTZdbKia5w/XeOHTiy7JdfcLG/gz67sdEZ3DawSDnyey1QvGUQEGbmbBoHrbJ9bUsuMH2ThDd2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srovob6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgP9bJ7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF19C19425;
-	Tue, 11 Nov 2025 00:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srovob6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FBBC4CEF5;
+	Tue, 11 Nov 2025 00:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822571;
-	bh=Q4SIXdj4QSuh+hJrtzqHwKsgdew657vHylqGw4mi8Fw=;
+	s=korg; t=1762822573;
+	bh=YrOPYrWLTACaHrF23owHTe+46E7WoMYdwPlQet79ZCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgP9bJ7RSrMAf998HfYyZ8S3mtME9AWrDxjqyg7i+HlhkoWx0gzfPR8x1uCIPhUhk
-	 Kp2i1WQ1Ojf/mULXUUVzWRY1YIlAuxR6km8HQRL+t3f6cPTMcLnfFgQDXBkdvxXepT
-	 iqYMt8ByOZbrHqwJfU8ln2ghgiLDKD2nTlgpW+TA=
+	b=srovob6NZ2AHUzEkD7rXsN3WNqbEWqWTp6i1KKduglCuVzvpEwNVuRqJLApGPdetm
+	 g8ceMTCJeghR6pOpi76E5MpxdUKl1t7FFEb3+RhxTioTRf/hBwz8Giu7w08iMYl4Sz
+	 uBnA4ew3vTgPupb68BHcpXnR7ivfdBPakuBL4NTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 139/849] selftests/bpf: Fix bpf_prog_detach2 usage in test_lirc_mode2
-Date: Tue, 11 Nov 2025 09:35:09 +0900
-Message-ID: <20251111004539.756199226@linuxfoundation.org>
+Subject: [PATCH 6.12 077/565] sched_ext: Mark scx_bpf_dsq_move_set_[slice|vtime]() with KF_RCU
+Date: Tue, 11 Nov 2025 09:38:53 +0900
+Message-ID: <20251111004528.697634109@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 98857d111c53954aa038fcbc4cf48873e4240f7c ]
+[ Upstream commit 54e96258a6930909b690fd7e8889749231ba8085 ]
 
-Commit e9fc3ce99b34 ("libbpf: Streamline error reporting for high-level
-APIs") redefined the way that bpf_prog_detach2() returns. Therefore, adapt
-the usage in test_lirc_mode2_user.c.
+scx_bpf_dsq_move_set_slice() and scx_bpf_dsq_move_set_vtime() take a DSQ
+iterator argument which has to be valid. Mark them with KF_RCU.
 
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250828-selftests-bpf-v1-1-c7811cd8b98c@suse.com
+Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
+Cc: stable@vger.kernel.org # v6.12+
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[ scx_bpf_dsq_move_set_* => scx_bpf_dispatch_from_dsq_set_* ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/test_lirc_mode2_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_lirc_mode2_user.c b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-index 4694422aa76c3..88e4aeab21b7b 100644
---- a/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-+++ b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-@@ -74,7 +74,7 @@ int main(int argc, char **argv)
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6493,8 +6493,8 @@ BTF_KFUNCS_START(scx_kfunc_ids_dispatch)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_nr_slots)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_cancel)
+ BTF_ID_FLAGS(func, scx_bpf_consume)
+-BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice)
+-BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime)
++BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_vtime_from_dsq, KF_RCU)
+ BTF_KFUNCS_END(scx_kfunc_ids_dispatch)
+@@ -6593,8 +6593,8 @@ __bpf_kfunc_end_defs();
  
- 	/* Let's try detach it before it was ever attached */
- 	ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
--	if (ret != -1 || errno != ENOENT) {
-+	if (ret != -ENOENT) {
- 		printf("bpf_prog_detach2 not attached should fail: %m\n");
- 		return 1;
- 	}
--- 
-2.51.0
-
+ BTF_KFUNCS_START(scx_kfunc_ids_unlocked)
+ BTF_ID_FLAGS(func, scx_bpf_create_dsq, KF_SLEEPABLE)
+-BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice)
+-BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime)
++BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_vtime_from_dsq, KF_RCU)
+ BTF_KFUNCS_END(scx_kfunc_ids_unlocked)
 
 
