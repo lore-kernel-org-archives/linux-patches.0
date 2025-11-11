@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71097262A;
-	Tue, 11 Nov 2025 01:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1DB1F5F6;
+	Tue, 11 Nov 2025 01:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823016; cv=none; b=u5I1IP6BaPn2YpRV9FvbrAa4g+abFWbMIDatmvMiS81desyEcpkbIQ5muaIyjMu4L4Eo4Y3s/RtbSeTQgu10xgGaPfC5SZGgk9asNgBuco1wnBRKzUKFaf1c/iv80RUnFcOU+GlYjyAdr8IHsBc3p/Q/Xp1iiw13kX/cZum+hXM=
+	t=1762823019; cv=none; b=myC+i0hx3kJ+2eCyftVSZo9kxkwtppAGKVTNQGaeAa2JroSW+UaSOEm3QhJy50IiEgi38OmhsD2rJyfrdvF5WVy17VIJF3nPfy68vT4NKUbR1ziln6929vqlC64KY+QTrZtZWIiKm3NfwmFY2KnefbJz4hu2oMJ85sGL6SKHtoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823016; c=relaxed/simple;
-	bh=Y4aDlYj+WIvTolN1xbeSTbnASPpx6Xh/MO7vdqbVXnk=;
+	s=arc-20240116; t=1762823019; c=relaxed/simple;
+	bh=nY2nb1pi/dkBklhB/8noKOnYd2TvBFmE5W4wLrVx4hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFB47qxnmuT7NMD+5qhC7X1RDeIcswqSkI5Jv1Qvv8HLBhrJT4TsnzlENjl7MwH3PNvs3wT1zQwhOjWt4gIfpBXbRcig76MSD9eD6VLt7PLr3BvXgO7w0ErGJ+cm/U2AxXJhFNOZQV2W4j+Q+OVh9l9C3WWGFhVZVoHtXaKsz+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cq+nB/us; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7jZU6ZCzXDs0GvT3X5p2FUx3DPLtJtYJNPcyq+/s8Og3jbihOWTge2uvIADcDpa6J7KcQGawDZk7ubMUULlKJnID7AjRQ5raHFFd8n1cl99FpKsqU/i8mzzRndb4s/+JhZldYwEoGVElfwGfn+59yC1QuP0uogAijgQrWUWZfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebUIahlX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cq+nB/us"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599B0C4CEF5;
-	Tue, 11 Nov 2025 01:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebUIahlX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9C3C4CEFB;
+	Tue, 11 Nov 2025 01:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823016;
-	bh=Y4aDlYj+WIvTolN1xbeSTbnASPpx6Xh/MO7vdqbVXnk=;
+	s=korg; t=1762823018;
+	bh=nY2nb1pi/dkBklhB/8noKOnYd2TvBFmE5W4wLrVx4hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cq+nB/uspDKuVoRhWzrUVQ22hvlk5PeeY0kL3dAr/SFHOk7K4Z4nssA/jbQKKdalW
-	 fyFkVyW+XJDZz81SEb0/qOUrz9BSHL8WEPhWgaeFcG7jvgJVaBHznMG6g2ihn2zxGg
-	 EMMkmKScxmVkQPQu+vQZE+pVZf0rJFpQKIHjIVfg=
+	b=ebUIahlXmDiZ7pGVEGGK9hondiVh6Mn9Ngfi7HlGex5e6sTOSaEh419kr/l9a/kQw
+	 9K4nqkxDQ0zkQr1azPmYPc8iig0IJcjCmhtGtJPPRZSNVrP2YdDVsu+IaIenWE4CfC
+	 4je2RgI0tDprL+/jOY53LiGYoeQORW67fT95yCQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghao Duan <duanchenghao@kylinos.cn>,
-	Pu Lehui <pulehui@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/565] riscv: bpf: Fix uninitialized symbol retval_off
-Date: Tue, 11 Nov 2025 09:40:11 +0900
-Message-ID: <20251111004530.426935924@linuxfoundation.org>
+Subject: [PATCH 6.17 215/849] tools/power x86_energy_perf_policy: Fix incorrect fopen mode usage
+Date: Tue, 11 Nov 2025 09:36:25 +0900
+Message-ID: <20251111004541.638475147@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenghao Duan <duanchenghao@kylinos.cn>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit d0bf7cd5df18466d969bb60e8890b74cf96081ca ]
+[ Upstream commit 62127655b7ab7b8c2997041aca48a81bf5c6da0c ]
 
-In the __arch_prepare_bpf_trampoline() function, retval_off is only
-meaningful when save_ret is true, so the current logic is correct.
-However, in the original logic, retval_off is only initialized under
-certain conditions; for example, in the fmod_ret logic, the compiler is
-not aware that the flags of the fmod_ret program (prog) have set
-BPF_TRAMP_F_CALL_ORIG, which results in an uninitialized symbol
-compilation warning.
+The fopen_or_die() function was previously hardcoded
+to open files in read-only mode ("r"), ignoring the
+mode parameter passed to it. This patch corrects
+fopen_or_die() to use the provided mode argument,
+allowing for flexible file access as intended.
 
-So initialize retval_off unconditionally to fix it.
+Additionally, the call to fopen_or_die() in
+err_on_hypervisor() incorrectly used the mode
+"ro", which is not a valid fopen mode. This is
+fixed to use the correct "r" mode.
 
-Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/r/20250922062244.822937-2-duanchenghao@kylinos.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 497945aa3e2c4..5895c1b2be203 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -906,10 +906,9 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 	stack_size += 16;
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index ebda9c366b2ba..c883f211dbcc9 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -630,7 +630,7 @@ void cmdline(int argc, char **argv)
+  */
+ FILE *fopen_or_die(const char *path, const char *mode)
+ {
+-	FILE *filep = fopen(path, "r");
++	FILE *filep = fopen(path, mode);
  
- 	save_ret = flags & (BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_RET_FENTRY_RET);
--	if (save_ret) {
-+	if (save_ret)
- 		stack_size += 16; /* Save both A5 (BPF R0) and A0 */
--		retval_off = stack_size;
--	}
-+	retval_off = stack_size;
+ 	if (!filep)
+ 		err(1, "%s: open failed", path);
+@@ -644,7 +644,7 @@ void err_on_hypervisor(void)
+ 	char *buffer;
  
- 	stack_size += nr_arg_slots * 8;
- 	args_off = stack_size;
+ 	/* On VMs /proc/cpuinfo contains a "flags" entry for hypervisor */
+-	cpuinfo = fopen_or_die("/proc/cpuinfo", "ro");
++	cpuinfo = fopen_or_die("/proc/cpuinfo", "r");
+ 
+ 	buffer = malloc(4096);
+ 	if (!buffer) {
 -- 
 2.51.0
 
