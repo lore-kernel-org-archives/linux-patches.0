@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B89E2AE8D;
-	Tue, 11 Nov 2025 00:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EB42AE8D;
+	Tue, 11 Nov 2025 00:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822224; cv=none; b=sZqZl6q4t7naA4qMJx5S29LRv6KvLPpUOMfsXpzgo0Vhl5SAiGFBGjKIYbMNG/uz1AoRl7hc8A9T19R582t9vrw3J+CLu5NFVMsnCKfFDl1oZpAtMZAZorU1I6vz6UhEl/nSUTHQ359enqX3BFK/tVZBox2SyvQqvdOfKLdZ+s4=
+	t=1762822227; cv=none; b=iEMNxoEYAfbt202u94UR2lWojFj2FFSfyYD/I578eRS8zdH5Icza11PHpqn/g5Rbhy1WSpV2F8KW1ouA5jhTzyuQaK9OAwVN8A+q/PW38OMRJqFO2Wpzm3pdKDwIbkDRI+PqWjrLISWFqjtHTQiCiJDxAAx3tt+wjzugVSNXUyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822224; c=relaxed/simple;
-	bh=SG6532gCO7hawQ2BgbHHYJB193iv2g3sOsl7WY1WB0E=;
+	s=arc-20240116; t=1762822227; c=relaxed/simple;
+	bh=IBOAfQGOXhpkA4V7u+I8yDNDk/qQ/sqBTAMw3XxTI4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8N5UkAWdOMvj8ylvJgbujWGwq3beWUEBZEs93qRPt99zfKFQkdAUNxx/KDADZJwf4CQ0fxwceutrHSMqavedniA2+FYqop9BUMrGsiX5HTTg0SVCDcSTH7DXj0SiEX+cz1jQz0gF0NyRVpfD+H4xcRSbty3DaJ88lIKBL54aHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYlG+GGS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8OGr/ciiZackDasB/ZuM/zijB19WAd++kfGWcJlkYP3t+6lvC8Y6l/jkf4SOiXdqIlpzREREAhrUxQgrlabgSd0kMOVlHCo7CKUsBPIRCopeyEwZnzLSYhF33mH0f/fHGnOEOulNaPGGoOcYPMvmIUODmneZcWsoHAe7qk3Yyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRv1/EFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYlG+GGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2956AC16AAE;
-	Tue, 11 Nov 2025 00:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRv1/EFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FA7C16AAE;
+	Tue, 11 Nov 2025 00:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822224;
-	bh=SG6532gCO7hawQ2BgbHHYJB193iv2g3sOsl7WY1WB0E=;
+	s=korg; t=1762822226;
+	bh=IBOAfQGOXhpkA4V7u+I8yDNDk/qQ/sqBTAMw3XxTI4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYlG+GGSZu1JSUviFqB9+tR26GnK8wpcWY85qd5eQjaaFLMIh8Ar+2D5QveL73l5v
-	 fG5CxBISzA65CtaZ6Mw7XDoS3XFnu4idLAnygRsjGDXzMqoEhk4Jl7OKREI8ER91vh
-	 itFzhcEI0P1ca1MHrPxca07GIRMM2LnZp6kvzho4=
+	b=mRv1/EFXS8feUBlnLEjj8KuyvVrDzABXByy+50IEiB+LOOI8b2SKRcgGRcWiMjzHw
+	 f2ZhSQ/ibgYrPdtFRtGnS1iGFs/RVp8IOW4lUXwDoxcEGbCpcdfmDWbpgZJYD5BSTu
+	 othQUOC7hnI9rSlwjbPF1ufxQsLgOkq+n35ccw9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 061/849] Bluetooth: MGMT: fix crash in set_mesh_sync and set_mesh_complete
-Date: Tue, 11 Nov 2025 09:33:51 +0900
-Message-ID: <20251111004537.908463619@linuxfoundation.org>
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 007/565] virtio-net: drop the multi-buffer XDP packet in zerocopy
+Date: Tue, 11 Nov 2025 09:37:43 +0900
+Message-ID: <20251111004527.016529811@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,118 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit e8785404de06a69d89dcdd1e9a0b6ea42dc6d327 ]
+commit 1ab665817448c31f4758dce43c455bd4c5e460aa upstream.
 
-There is a BUG: KASAN: stack-out-of-bounds in set_mesh_sync due to
-memcpy from badly declared on-stack flexible array.
+In virtio-net, we have not yet supported multi-buffer XDP packet in
+zerocopy mode when there is a binding XDP program. However, in that
+case, when receiving multi-buffer XDP packet, we skip the XDP program
+and return XDP_PASS. As a result, the packet is passed to normal network
+stack which is an incorrect behavior (e.g. a XDP program for packet
+count is installed, multi-buffer XDP packet arrives and does go through
+XDP program. As a result, the packet count does not increase but the
+packet is still received from network stack).This commit instead returns
+XDP_ABORTED in that case.
 
-Another crash is in set_mesh_complete() due to double list_del via
-mgmt_pending_valid + mgmt_pending_remove.
-
-Use DEFINE_FLEX to declare the flexible array right, and don't memcpy
-outside bounds.
-
-As mgmt_pending_valid removes the cmd from list, use mgmt_pending_free,
-and also report status on error.
-
-Fixes: 302a1f674c00d ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 99c861b44eb1 ("virtio_net: xsk: rx: support recv merge mode")
+Cc: stable@vger.kernel.org
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Link: https://patch.msgid.link/20251022155630.49272-1-minhquangbui99@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/mgmt.h |  2 +-
- net/bluetooth/mgmt.c         | 26 +++++++++++++++-----------
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ drivers/net/virtio_net.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/mgmt.h b/include/net/bluetooth/mgmt.h
-index 3575cd16049a8..6095cbb03811d 100644
---- a/include/net/bluetooth/mgmt.h
-+++ b/include/net/bluetooth/mgmt.h
-@@ -848,7 +848,7 @@ struct mgmt_cp_set_mesh {
- 	__le16 window;
- 	__le16 period;
- 	__u8   num_ad_types;
--	__u8   ad_types[];
-+	__u8   ad_types[] __counted_by(num_ad_types);
- } __packed;
- #define MGMT_SET_MESH_RECEIVER_SIZE	6
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1314,9 +1314,14 @@ static struct sk_buff *virtnet_receive_x
+ 	ret = XDP_PASS;
+ 	rcu_read_lock();
+ 	prog = rcu_dereference(rq->xdp_prog);
+-	/* TODO: support multi buffer. */
+-	if (prog && num_buf == 1)
+-		ret = virtnet_xdp_handler(prog, xdp, dev, xdp_xmit, stats);
++	if (prog) {
++		/* TODO: support multi buffer. */
++		if (num_buf == 1)
++			ret = virtnet_xdp_handler(prog, xdp, dev, xdp_xmit,
++						  stats);
++		else
++			ret = XDP_ABORTED;
++	}
+ 	rcu_read_unlock();
  
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index a3d16eece0d23..24e335e3a7271 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2175,19 +2175,24 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
- 
- 	if (status) {
-+		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
-+				status);
- 		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
- 				     cmd_status_rsp, &status);
--		return;
-+		goto done;
- 	}
- 
--	mgmt_pending_remove(cmd);
- 	mgmt_cmd_complete(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER, 0, NULL, 0);
-+
-+done:
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_mesh_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_mesh cp;
-+	DEFINE_FLEX(struct mgmt_cp_set_mesh, cp, ad_types, num_ad_types,
-+		    sizeof(hdev->mesh_ad_types));
- 	size_t len;
- 
- 	mutex_lock(&hdev->mgmt_pending_lock);
-@@ -2197,27 +2202,26 @@ static int set_mesh_sync(struct hci_dev *hdev, void *data)
- 		return -ECANCELED;
- 	}
- 
--	memcpy(&cp, cmd->param, sizeof(cp));
-+	len = cmd->param_len;
-+	memcpy(cp, cmd->param, min(__struct_size(cp), len));
- 
- 	mutex_unlock(&hdev->mgmt_pending_lock);
- 
--	len = cmd->param_len;
--
- 	memset(hdev->mesh_ad_types, 0, sizeof(hdev->mesh_ad_types));
- 
--	if (cp.enable)
-+	if (cp->enable)
- 		hci_dev_set_flag(hdev, HCI_MESH);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_MESH);
- 
--	hdev->le_scan_interval = __le16_to_cpu(cp.period);
--	hdev->le_scan_window = __le16_to_cpu(cp.window);
-+	hdev->le_scan_interval = __le16_to_cpu(cp->period);
-+	hdev->le_scan_window = __le16_to_cpu(cp->window);
- 
--	len -= sizeof(cp);
-+	len -= sizeof(struct mgmt_cp_set_mesh);
- 
- 	/* If filters don't fit, forward all adv pkts */
- 	if (len <= sizeof(hdev->mesh_ad_types))
--		memcpy(hdev->mesh_ad_types, cp.ad_types, len);
-+		memcpy(hdev->mesh_ad_types, cp->ad_types, len);
- 
- 	hci_update_passive_scan_sync(hdev);
- 	return 0;
--- 
-2.51.0
-
+ 	switch (ret) {
 
 
