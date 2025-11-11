@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390D92D29D6;
-	Tue, 11 Nov 2025 01:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CF92D8DC3;
+	Tue, 11 Nov 2025 01:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824055; cv=none; b=ala+eb8WtA4GX6ArjcWuyXk5k2D9ra1ATR4eqaCUeJlisAwm/HTbo42xzaYbHRRug5SoO6W2zsj8E5lU0j1+y1Ahff6N5VpFXMrGx8b8y61XkJXbA/ykmDRCI/YP9RyOa5UYE5ozz5H+npXF2VBgGDRvbxnbG8wMO1Qi96aoulA=
+	t=1762824057; cv=none; b=ALg8Qmn104W0Q6kyrZDPQx8Vid+E1OhJeKnkpg3Aui3+Der2ZKXOCITCCrWTmY+p55AkLEyQSNQNaV+PMVovQQy8e84AA/YAfAIrTUU4sfbvkelOsptNYwTjzERalOW4NcpzWAowz3al/PQHmphpSFUI+XBnz7lg35IlTL3XNIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824055; c=relaxed/simple;
-	bh=dZHKEU5/+50oroupJkqJCtm41mdrlarp2f3kao4ulpE=;
+	s=arc-20240116; t=1762824057; c=relaxed/simple;
+	bh=nzCX9YuEq+hmEju//FW3dmbkbt5mG6lbpMTSZPns5ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqYJ6XgBhaHRnMX4cUMqQTIlCJe93c7IEtBwSA1jrigCSfLbuf7Dxq4tDx5z87tmAzTm5FpAG04RseVIvHR/Yp34J2b3VxkKHG4we7v+vQozMSaJaZnFGaF9yT64rhY9WZAhChCQEcaUI3amhEU+hWBiOKfKXYLyWcYoJ5WUMOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq5wzLm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prwzl4efDNoF0s1LoK+tTNeWJTB+Ek07TERvuWnYh460XeVz+Lx0Gtit0YdrEWsucT416kxEx2uNf4bxxqOKurJX/eXQPvJ0nCtsr+6LgC6VoaF5GquOgz2krpocamSmDpfdgtKxhOJuBPAg0Ubl3FCAZT/k7NqqjSOIfdlV8Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfJ+4cCI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq5wzLm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA32C4CEF5;
-	Tue, 11 Nov 2025 01:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfJ+4cCI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219C9C16AAE;
+	Tue, 11 Nov 2025 01:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824055;
-	bh=dZHKEU5/+50oroupJkqJCtm41mdrlarp2f3kao4ulpE=;
+	s=korg; t=1762824057;
+	bh=nzCX9YuEq+hmEju//FW3dmbkbt5mG6lbpMTSZPns5ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq5wzLm0sErCD/IOA6NOHwnW0rbMVUr53hTB8zsI2ktHQS5SqknKXQNsR9+HpUSWc
-	 wZafDmoAMEMzFJ33yG1MpPpKiI81NoZ5D3Zf0IpnxZEtUaEtAXZwXFQ3rfmOlA3+XI
-	 lh5TGJF9YsX83Yib8ButwZWFPZ7lydgiR2a9zCTA=
+	b=UfJ+4cCIunxKB7UdLNyX4T10zvZysx6iaZm5igI1lKHSHCQ/E7+ygDmINXnpy7w4Q
+	 Q9/rxYo0Jbo1To5PM6ReGU9caHUTpvJfCtPupvt+8SInl527uMGlVWu0TveQUygaG+
+	 u47h3wT814EQl6G2/J19Fp2FzuzPYkuJooqIaDmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yedidya Ben Shimol <yedidya.ben.shimol@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 410/849] wifi: iwlwifi: pcie: remember when interrupts are disabled
-Date: Tue, 11 Nov 2025 09:39:40 +0900
-Message-ID: <20251111004546.354618741@linuxfoundation.org>
+Subject: [PATCH 6.17 428/849] drm/panthor: check bo offset alignment in vm bind
+Date: Tue, 11 Nov 2025 09:39:58 +0900
+Message-ID: <20251111004546.782401171@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,45 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit 1a33efe4fc64b8135fe94e22299761cc69333404 ]
+[ Upstream commit 5afa9d2a9bb1410f816e0123846047288b16e4b9 ]
 
-trans_pcie::fh_mask and hw_mask indicates what are the interrupts are
-currently enabled (unmasked).
-When we disable all interrupts, those should be set to 0, so if, for
-some reason, we get an interrupt even though it was disabled, we will
-know to ignore.
+Fail early from panthor_vm_bind_prepare_op_ctx instead of late from
+ops->map_pages.
 
-Reviewed-by: Yedidya Ben Shimol <yedidya.ben.shimol@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250828111032.e293d6a8385b.I919375e5ad7bd7e4fee4a95ce6ce6978653d6b16@changeid
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250828200116.3532255-1-olvaffe@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/internal.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/internal.h b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/internal.h
-index f48aeebb151cc..86edc79ac09f8 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/internal.h
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/internal.h
-@@ -818,6 +818,8 @@ static inline void _iwl_disable_interrupts(struct iwl_trans *trans)
- 			    trans_pcie->fh_init_mask);
- 		iwl_write32(trans, CSR_MSIX_HW_INT_MASK_AD,
- 			    trans_pcie->hw_init_mask);
-+		trans_pcie->fh_mask = 0;
-+		trans_pcie->hw_mask = 0;
- 	}
- 	IWL_DEBUG_ISR(trans, "Disabled interrupts\n");
- }
-@@ -1000,6 +1002,7 @@ static inline void iwl_enable_rfkill_int(struct iwl_trans *trans)
- 	} else {
- 		iwl_write32(trans, CSR_MSIX_FH_INT_MASK_AD,
- 			    trans_pcie->fh_init_mask);
-+		trans_pcie->fh_mask = 0;
- 		iwl_enable_hw_int_msk_msix(trans,
- 					   MSIX_HW_INT_CAUSES_REG_RF_KILL);
- 	}
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 0402f5f734a1b..de6ec324c8efc 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1198,7 +1198,7 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
+ 	    (flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) != DRM_PANTHOR_VM_BIND_OP_TYPE_MAP)
+ 		return -EINVAL;
+ 
+-	/* Make sure the VA and size are aligned and in-bounds. */
++	/* Make sure the VA and size are in-bounds. */
+ 	if (size > bo->base.base.size || offset > bo->base.base.size - size)
+ 		return -EINVAL;
+ 
+@@ -2415,7 +2415,7 @@ panthor_vm_bind_prepare_op_ctx(struct drm_file *file,
+ 	int ret;
+ 
+ 	/* Aligned on page size. */
+-	if (!IS_ALIGNED(op->va | op->size, vm_pgsz))
++	if (!IS_ALIGNED(op->va | op->size | op->bo_offset, vm_pgsz))
+ 		return -EINVAL;
+ 
+ 	switch (op->flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) {
 -- 
 2.51.0
 
