@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932B84C97;
-	Tue, 11 Nov 2025 00:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3D74C97;
+	Tue, 11 Nov 2025 00:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822430; cv=none; b=XkHPUy8eHTR25f7fPBrdWfGarhoMSM5LyLFF6G7aEapegGse4Mi9gDK3ciZFMN4CVfKzjVlNqYKSf5p7Ng72YRaKTydpWD9T5sljbbPF8MpZt7Gk/y/xR15wWGimYwublcf+zjVXWA7/AgKlczN6UyWFpwd9R1gSXcyWdeDnTQs=
+	t=1762822433; cv=none; b=Il7DwnD12rB66gyK55+38vGZFa1tema+eQhmo7Sxnt3GgLIYzspbySDsYsEWExY9WI3pUS0YQfr7+r6YRqcMFgqCet4GJcB1s+YnKIOQQlS16wxHSl2kZQfizHMiaGjMrse3CN6uHAOFVgTpcVdDZOjPk2L/JjYdR1DqB5Xxpgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822430; c=relaxed/simple;
-	bh=M0AqXFJLcQrQnh/aCeXX01syfuPT5x4xZzhzsdJ8jfA=;
+	s=arc-20240116; t=1762822433; c=relaxed/simple;
+	bh=nNVIjYDWwSDJG7bZNlCGvQOILZgpdWTkEKde+57AVjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bMbe5O5GE4UyGbCYEZXJGhc/1KJ4Fgh6eaMhDAKzGSFzJo2/it7L8UmXl0gYRLeuOi8/K1EkO5LCKjmjUA4j739smdDPq2FItCy+KiiNzAr35g+3xg0azfD1tJaX2nzv5dJHP36YChzrkiH7OZvBPgVTlc24oW4lceiTN4HQvoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3Wr1Yb4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z72cV8u0WSEql/7aaAYWYciqLZVHUC0fO9/qL8xS44dfTAcWERxsnOiP6Sf34ctk+gNdfKqFKQhXxSduuYKrqMa2m+sO5zxX1ncCQCY38tPLjzQPgTWphQ7iKFuM9rji3sze0/7nW02Sgd/evXfCZ3NUsFY+E40kx88ky7/GyeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r77kiOxO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3Wr1Yb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F394C16AAE;
-	Tue, 11 Nov 2025 00:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r77kiOxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6D0C4CEFB;
+	Tue, 11 Nov 2025 00:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822430;
-	bh=M0AqXFJLcQrQnh/aCeXX01syfuPT5x4xZzhzsdJ8jfA=;
+	s=korg; t=1762822433;
+	bh=nNVIjYDWwSDJG7bZNlCGvQOILZgpdWTkEKde+57AVjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3Wr1Yb4EDRcHL+bWzsgTOB/wnoLe6EgYC6Kifxzq4FDrJ4yiqxtmnmBoRo/PQS5v
-	 1acv3Z1k23wERb4BuTFJEzy7USHb5bblB2D5nZqgOj2sbK/Iy5pYnAh6IhEdgC1aCY
-	 dw6wf3UFLzV3SfDc99gWk38BjprgSqIZCirDCwbw=
+	b=r77kiOxO8vck+Nb1OdKYmhcrysxUZUx45eaWO2DCbXyJmq4R42A84secAvD9NA5oc
+	 Kh96yf4cfGuqNRe5X0LnE9Q5jk4gRxxXLS+g7dl0TQBB+zMdB2enfPOUmsKzD39rSD
+	 yi5OXydjViGEjuKr3Gz7jM0/PbGG03g0kPNCFI+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peyton.Lee@amd.com,
-	Sultan Alsawaf <sultan@kerneltoast.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 106/849] drm/amd: Check that VPE has reached DPM0 in idle handler
-Date: Tue, 11 Nov 2025 09:34:36 +0900
-Message-ID: <20251111004538.962749518@linuxfoundation.org>
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 049/565] tools: ynl: fix string attribute length to include null terminator
+Date: Tue, 11 Nov 2025 09:38:25 +0900
+Message-ID: <20251111004528.011682907@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,96 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Petr Oros <poros@redhat.com>
 
-commit ba10f8d92a2c026b1052b4c0fa2cd7538838c965 upstream.
+[ Upstream commit 65f9c4c5888913c2cf5d2fc9454c83f9930d537d ]
 
-[Why]
-Newer VPE microcode has functionality that will decrease DPM level
-only when a workload has run for 2 or more seconds.  If VPE is turned
-off before this DPM decrease and the PMFW doesn't reset it when
-power gating VPE, the SOC can get stuck with a higher DPM level.
+The ynl_attr_put_str() function was not including the null terminator
+in the attribute length calculation. This caused kernel to reject
+CTRL_CMD_GETFAMILY requests with EINVAL:
+"Attribute failed policy validation".
 
-This can happen from amdgpu's ring buffer test because it's a short
-quick workload for VPE and VPE is turned off after 1s.
+For a 4-character family name like "dpll":
+- Sent: nla_len=8 (4 byte header + 4 byte string without null)
+- Expected: nla_len=9 (4 byte header + 5 byte string with null)
 
-[How]
-In idle handler besides checking fences are drained check PMFW version
-to determine if it will reset DPM when power gating VPE.  If PMFW will
-not do this, then check VPE DPM level. If it is not DPM0 reschedule
-delayed work again until it is.
+The bug was introduced in commit 15d2540e0d62 ("tools: ynl: check for
+overflow of constructed messages") when refactoring from stpcpy() to
+strlen(). The original code correctly included the null terminator:
 
-v2: squash in return fix (Alex)
+  end = stpcpy(ynl_attr_data(attr), str);
+  attr->nla_len = NLA_HDRLEN + NLA_ALIGN(end -
+                                (char *)ynl_attr_data(attr));
 
-Cc: Peyton.Lee@amd.com
-Reported-by: Sultan Alsawaf <sultan@kerneltoast.com>
-Reviewed-by: Sultan Alsawaf <sultan@kerneltoast.com>
-Tested-by: Sultan Alsawaf <sultan@kerneltoast.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4615
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3ac635367eb589bee8edcc722f812a89970e14b7)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since stpcpy() returns a pointer past the null terminator, the length
+included it. The refactored version using strlen() omitted the +1.
+
+The fix also removes NLA_ALIGN() from nla_len calculation, since
+nla_len should contain actual attribute length, not aligned length.
+Alignment is only for calculating next attribute position. This makes
+the code consistent with ynl_attr_put().
+
+CTRL_ATTR_FAMILY_NAME uses NLA_NUL_STRING policy which requires
+null terminator. Kernel validates with memchr() and rejects if not
+found.
+
+Fixes: 15d2540e0d62 ("tools: ynl: check for overflow of constructed messages")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://lore.kernel.org/20251018151737.365485-3-zahari.doychev@linux.com
+Link: https://patch.msgid.link/20251024132438.351290-1-poros@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c |   34 ++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ tools/net/ynl/lib/ynl-priv.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vpe.c
-@@ -322,6 +322,26 @@ static int vpe_early_init(struct amdgpu_
- 	return 0;
+diff --git a/tools/net/ynl/lib/ynl-priv.h b/tools/net/ynl/lib/ynl-priv.h
+index 3c09a7bbfba59..baafc66a61855 100644
+--- a/tools/net/ynl/lib/ynl-priv.h
++++ b/tools/net/ynl/lib/ynl-priv.h
+@@ -301,7 +301,7 @@ ynl_attr_put_str(struct nlmsghdr *nlh, unsigned int attr_type, const char *str)
+ 	struct nlattr *attr;
+ 	size_t len;
+ 
+-	len = strlen(str);
++	len = strlen(str) + 1;
+ 	if (__ynl_attr_put_overflow(nlh, len))
+ 		return;
+ 
+@@ -309,7 +309,7 @@ ynl_attr_put_str(struct nlmsghdr *nlh, unsigned int attr_type, const char *str)
+ 	attr->nla_type = attr_type;
+ 
+ 	strcpy((char *)ynl_attr_data(attr), str);
+-	attr->nla_len = NLA_HDRLEN + NLA_ALIGN(len);
++	attr->nla_len = NLA_HDRLEN + len;
+ 
+ 	nlh->nlmsg_len += NLMSG_ALIGN(attr->nla_len);
  }
- 
-+static bool vpe_need_dpm0_at_power_down(struct amdgpu_device *adev)
-+{
-+	switch (amdgpu_ip_version(adev, VPE_HWIP, 0)) {
-+	case IP_VERSION(6, 1, 1):
-+		return adev->pm.fw_version < 0x0a640500;
-+	default:
-+		return false;
-+	}
-+}
-+
-+static int vpe_get_dpm_level(struct amdgpu_device *adev)
-+{
-+	struct amdgpu_vpe *vpe = &adev->vpe;
-+
-+	if (!adev->pm.dpm_enabled)
-+		return 0;
-+
-+	return RREG32(vpe_get_reg_offset(vpe, 0, vpe->regs.dpm_request_lv));
-+}
-+
- static void vpe_idle_work_handler(struct work_struct *work)
- {
- 	struct amdgpu_device *adev =
-@@ -329,11 +349,17 @@ static void vpe_idle_work_handler(struct
- 	unsigned int fences = 0;
- 
- 	fences += amdgpu_fence_count_emitted(&adev->vpe.ring);
-+	if (fences)
-+		goto reschedule;
-+
-+	if (vpe_need_dpm0_at_power_down(adev) && vpe_get_dpm_level(adev) != 0)
-+		goto reschedule;
-+
-+	amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_VPE, AMD_PG_STATE_GATE);
-+	return;
- 
--	if (fences == 0)
--		amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_VPE, AMD_PG_STATE_GATE);
--	else
--		schedule_delayed_work(&adev->vpe.idle_work, VPE_IDLE_TIMEOUT);
-+reschedule:
-+	schedule_delayed_work(&adev->vpe.idle_work, VPE_IDLE_TIMEOUT);
- }
- 
- static int vpe_common_init(struct amdgpu_vpe *vpe)
+-- 
+2.51.0
+
 
 
