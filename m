@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D554266B6F;
-	Tue, 11 Nov 2025 01:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5C3266B6F;
+	Tue, 11 Nov 2025 01:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823641; cv=none; b=e0L3r0YFPG4Lm0de1gQWIq7nmb24dpKdn7yAvKkZfKd8VabCvkEDvPd57qXEgWXK8BHETz5wkQCBTabb164SOyFZGg6uTvpEy/9yEVVgNERWEFM534LUqv/Yb6vey2PFA+dQUG/Nuh107rxt1mOfDiI//K0KF5f/dQb1bxbCc90=
+	t=1762823643; cv=none; b=sZAjeNl0MktIb7o0qVTMyuZwyCaRFqOAI6fzFPhTOdzOSWkHSzkVJNUqW6fSLYYXCdORMCd4106P2nMpNoOojCSa00Tgixkxo8co6TwIFEs/SUi8tqPvJ/BbHt6I2pthgI64lLyypI5wsMYM6dvnd5qjvwzMZABnaBB3UxXsVL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823641; c=relaxed/simple;
-	bh=6ryN/w0fyT3yJzMqa3UehYmKi38GVhhL6dTnjdYvY1o=;
+	s=arc-20240116; t=1762823643; c=relaxed/simple;
+	bh=Mb4aoEBytoa73PsTnL7jgBWJMBoUz6KlhNivDCg6sps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uC5swRUhnpyVarX5UMfXgZjhfFFDVjTFFoRp3vdvOqKkK+rMBnq8ahB09e6FkDy0+grGEhiSTCt+r3AK4Uq+gy/PQB2qQTI1DMnnigojIIxcSp6d7wd2smEMY0s5VeWdtsSvNTS1tC+VixgsetUoTtsm70yjI/2mbbNzox2IX4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpzlZdv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HQl6w0DIUl6AGJH3IfG2U+ygvFxpGoYB0VF/iLeqZwlg+uxXK7FvyIJJZUt5Eywdb5hLrhv6of+UzISZgapdiuyP+lN+itaKKanB/tTFVdcpUb5htT1Qow/G4LylNWxq27dRd+D3QdbYGWb2h2sFXrG2G4J6n3tmTOpM60fz4OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxx155dC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpzlZdv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC796C4CEF5;
-	Tue, 11 Nov 2025 01:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxx155dC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB5BC116B1;
+	Tue, 11 Nov 2025 01:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823641;
-	bh=6ryN/w0fyT3yJzMqa3UehYmKi38GVhhL6dTnjdYvY1o=;
+	s=korg; t=1762823643;
+	bh=Mb4aoEBytoa73PsTnL7jgBWJMBoUz6KlhNivDCg6sps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpzlZdv98ThjpiSP0e6ttm2USW8Cer6fc1RxfYCUjorxsDtOLghs13G2hFdcBtRZs
-	 5BUr25gKKABmNHTu6WSfGlmCZjFyF7lkg0w0l6sncKHku1wcAExNMDYmxjMexxUv2b
-	 5aOqShHV1trWVew342GV+Ymf8cGIIND5V8FMxKr4=
+	b=kxx155dCHRQil7t2GVIC8CKLZ9zz/rSKQHb2p3198mdPi8vtPc3Afzxg0vKklOKgC
+	 6KCAxC8Tx6jp5eeiOX6cNWxuPud9zrmUdznU0rdn+pSQqRNk/w+9x71kfjjP1U1DGW
+	 Ul5jN+eHV14mNzvL0R5Fl0H6B+zGPIkWcrONRBnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 341/849] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
-Date: Tue, 11 Nov 2025 09:38:31 +0900
-Message-ID: <20251111004544.663949206@linuxfoundation.org>
+Subject: [PATCH 6.12 292/565] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
+Date: Tue, 11 Nov 2025 09:42:28 +0900
+Message-ID: <20251111004533.446991355@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,56 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Juraj Šarinay <juraj@sarinay.com>
 
-[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
+[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
 
-Just add fixed struct size validations for UAC2 and UAC3 effect
-units.  The descriptor has a variable-length array, so it should be
-validated with a proper function later once when the unit is really
-parsed and used by the driver (currently only referred partially for
-the input terminal parsing).
+An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
+A delay of 700 ms is not sufficient for cryptographic operations on smart
+cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
+or 3072-bit RSA. To prevent brute-force attacks, passports and similar
+documents introduce even longer delays into access control protocols
+(BAC/PACE).
 
-Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The timeout should be higher, but not too much. The expiration allows
+us to detect that a NFC target has disappeared.
+
+Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/net/nfc/nci_core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index a0d55b77c9941..4bb4893f6e74f 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
--	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
-+	/* just a stop-gap, it should be a proper function for the array
-+	 * once if the unit is really parsed/used
-+	 */
-+	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor),
- 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
- 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
- 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
-@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
--	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
-+	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
- 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
+diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
+index ea8595651c384..e066bdbc807be 100644
+--- a/include/net/nfc/nci_core.h
++++ b/include/net/nfc/nci_core.h
+@@ -52,7 +52,7 @@ enum nci_state {
+ #define NCI_RF_DISC_SELECT_TIMEOUT		5000
+ #define NCI_RF_DEACTIVATE_TIMEOUT		30000
+ #define NCI_CMD_TIMEOUT				5000
+-#define NCI_DATA_TIMEOUT			700
++#define NCI_DATA_TIMEOUT			3000
+ 
+ struct nci_dev;
+ 
 -- 
 2.51.0
 
