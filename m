@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916A2305E15;
-	Tue, 11 Nov 2025 01:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27D92820A0;
+	Tue, 11 Nov 2025 01:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825179; cv=none; b=iRlF3bHChZJwdox9DC0PDZNRJjcYHXyIAJH2NYvgfJqVVumYdvAGK/xrNZnYlQ3TcfVh18WamxdjaLpeHgiS8Njt9XgSuwACYoJzLFh9uEo3WNQtpuG4mQ0UAvnYogOGM7/GHux/PF/EPaQOzh2l+5QN7H1uj7KZw2rCDNlLyFw=
+	t=1762825181; cv=none; b=pwCWg1x9lEcSA/IxgNXBjZSdOoIIxtEGBeScyb4RxTXaLbYKt4/rkMk3ZaFuWKlgkpDGYzLcC6xHQRmxGrKc2TmA61uAvTkEEQvKZaN3K/P+5OYDHDuuHw+ZN5aPKK9Uww+DvB+zR+jBVX2XG9A3uJ68egSkwzL+2bOn0zGUkVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825179; c=relaxed/simple;
-	bh=AlZEX2E5FTPr3bvh+GETvdcExgYm1ibY65Xskvk7r34=;
+	s=arc-20240116; t=1762825181; c=relaxed/simple;
+	bh=kAwkjWDIwEQG5vn96pLxcoEGrRTBMvt39KkUDowdf7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mddJhdQElVns1PX7koVbHbgOdSD4z7maBetfcCOECVPEMUDlV4AHd3BH84BFPoW3iS2JkUyUqXt02GAXQ/4ZD6i/8FLYT5rP8GMycqEYy6Yya72LkrXwrt4ksiL0yNWdvlNHyIpWslKdB+nhEQZb6IU8STOaK0gauN3D27ULhD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9rSmRgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNrHEoIHSuptYl/waDi15yCVk+F9Im2Qv0TOW/gWZ8oHHyTpCzTlu2IJHnZXRWd4J9SWUbsIPNQweO1qeaHEG+hSRH2XhzvvOYaEujsqrh0sIWzNGNYr3t/lBzEVvw20Q0357inJR8/4tGgOv++rNWtl/yFSqd/lC9oaAfQw6/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1qsHf2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9rSmRgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D92EC4CEF5;
-	Tue, 11 Nov 2025 01:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1qsHf2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F2EC116B1;
+	Tue, 11 Nov 2025 01:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825179;
-	bh=AlZEX2E5FTPr3bvh+GETvdcExgYm1ibY65Xskvk7r34=;
+	s=korg; t=1762825181;
+	bh=kAwkjWDIwEQG5vn96pLxcoEGrRTBMvt39KkUDowdf7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9rSmRgC9l7p3Ur4KDavNwJ+sWynjmyF4+3FA3/aotMD1OwlRXEKMCg6hzS2FOi2g
-	 y7xkyaNFLC7tfPfWSTgz6JiXASBdi+WRudQC2zwsiRUvUkmeiPNMy3OhhR4Seuu6l+
-	 UYLe+wOCuEBn7YeghYMweOG2g32ct35DwhpmoPaY=
+	b=t1qsHf2/YBfDtb7SAD03gLHROUGiyLVTiQZ4neMvh/T4JBHyXMj/28vprNvSIK5W7
+	 2x2usmRFb6iDUumL6gSipVdAUuaAvLlxiRy0QyaLYsEr6dQusbF+4VzIME+LIvI4it
+	 9PGMF0DbLSb7vG/3cEhWiMvVoNk0vg6P8Tdt/hiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marko=20M=C3=A4kel=C3=A4?= <marko.makela@iki.fi>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Drew Fustini <fustini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 693/849] clk: qcom: gcc-ipq6018: rework nss_port5 clock to multiple conf
-Date: Tue, 11 Nov 2025 09:44:23 +0900
-Message-ID: <20251111004553.185212089@linuxfoundation.org>
+Subject: [PATCH 6.17 694/849] clk: thead: th1520-ap: set all AXI clocks to CLK_IS_CRITICAL
+Date: Tue, 11 Nov 2025 09:44:24 +0900
+Message-ID: <20251111004553.210454468@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -46,142 +45,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marko Mäkelä <marko.makela@iki.fi>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit 2f7b168323c22faafb1fbf94ef93b7ce5efc15c6 ]
+[ Upstream commit c567bc5fc68c4388c00e11fc65fd14fe86b52070 ]
 
-Rework nss_port5 to use the new multiple configuration implementation
-and correctly fix the clocks for this port under some corner case.
+The AXI crossbar of TH1520 has no proper timeout handling, which means
+gating AXI clocks can easily lead to bus timeout and thus system hang.
 
-In OpenWrt, this patch avoids intermittent dmesg errors of the form
-nss_port5_rx_clk_src: rcg didn't update its configuration.
+Set all AXI clock gates to CLK_IS_CRITICAL. All these clock gates are
+ungated by default on system reset.
 
-This is a mechanical, straightforward port of
-commit e88f03230dc07aa3293b6aeb078bd27370bb2594
-("clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf")
-to gcc-ipq6018, with two conflicts resolved: different frequency of the
-P_XO clock source, and only 5 Ethernet ports.
+In addition, convert all current CLK_IGNORE_UNUSED usage to
+CLK_IS_CRITICAL to prevent unwanted clock gating.
 
-This was originally developed by JiaY-shi <shi05275@163.com>.
-
-Link: https://lore.kernel.org/all/20231220221724.3822-4-ansuelsmth@gmail.com/
-Signed-off-by: Marko Mäkelä <marko.makela@iki.fi>
-Tested-by: Marko Mäkelä <marko.makela@iki.fi>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250802095546.295448-1-marko.makela@iki.fi
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq6018.c | 60 +++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 22 deletions(-)
+ drivers/clk/thead/clk-th1520-ap.c | 44 +++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
-index d861191b0c85c..d4fc491a18b22 100644
---- a/drivers/clk/qcom/gcc-ipq6018.c
-+++ b/drivers/clk/qcom/gcc-ipq6018.c
-@@ -511,15 +511,23 @@ static struct clk_rcg2 apss_ahb_clk_src = {
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index ec52726fbea95..6c1976aa1ae62 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -480,7 +480,7 @@ static struct ccu_div axi4_cpusys2_aclk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_HW("axi4-cpusys2-aclk",
+ 					      gmac_pll_clk_parent,
+ 					      &ccu_div_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
  	},
  };
  
--static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
--	F(24000000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_RX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_RX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_RX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_RX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_RX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_RX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_25[] = {
-+	C(P_UNIPHY1_RX, 12.5, 0, 0),
-+	C(P_UNIPHY0_RX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_125[] = {
-+	C(P_UNIPHY1_RX, 2.5, 0, 0),
-+	C(P_UNIPHY0_RX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_rx_clk_src[] = {
-+	FMS(24000000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_rx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_rx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -547,26 +555,34 @@ gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_rx_clk_src = {
- 	.cmd_rcgr = 0x68060,
--	.freq_tbl = ftbl_nss_port5_rx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_rx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_rx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias,
- 		.num_parents = 7,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
+@@ -502,7 +502,7 @@ static struct ccu_div axi_aclk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("axi-aclk",
+ 						      axi_parents,
+ 						      &ccu_div_ops,
+-						      0),
++						      CLK_IS_CRITICAL),
  	},
  };
  
--static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
--	F(24000000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_TX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_TX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_TX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_TX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_TX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_TX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_25[] = {
-+	C(P_UNIPHY1_TX, 12.5, 0, 0),
-+	C(P_UNIPHY0_TX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_125[] = {
-+	C(P_UNIPHY1_TX, 2.5, 0, 0),
-+	C(P_UNIPHY0_TX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_tx_clk_src[] = {
-+	FMS(24000000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_tx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_TX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_tx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_TX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_TX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -594,14 +610,14 @@ gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_tx_clk_src = {
- 	.cmd_rcgr = 0x68068,
--	.freq_tbl = ftbl_nss_port5_tx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_tx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_tx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias,
- 		.num_parents = 7,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
+@@ -651,7 +651,7 @@ static struct ccu_div apb_pclk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("apb-pclk",
+ 						      apb_parents,
+ 						      &ccu_div_ops,
+-						      CLK_IGNORE_UNUSED),
++						      CLK_IS_CRITICAL),
  	},
  };
  
+@@ -682,7 +682,7 @@ static struct ccu_div vi_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_HW("vi",
+ 					      video_pll_clk_parent,
+ 					      &ccu_div_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -707,7 +707,7 @@ static struct ccu_div vo_axi_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_HW("vo-axi",
+ 					      video_pll_clk_parent,
+ 					      &ccu_div_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -732,7 +732,7 @@ static struct ccu_div vp_axi_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_HW("vp-axi",
+ 					      video_pll_clk_parent,
+ 					      &ccu_div_ops,
+-					      CLK_IGNORE_UNUSED),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -791,27 +791,27 @@ static const struct clk_parent_data emmc_sdio_ref_clk_pd[] = {
+ static CCU_GATE(CLK_BROM, brom_clk, "brom", ahb2_cpusys_hclk_pd, 0x100, 4, 0);
+ static CCU_GATE(CLK_BMU, bmu_clk, "bmu", axi4_cpusys2_aclk_pd, 0x100, 5, 0);
+ static CCU_GATE(CLK_AON2CPU_A2X, aon2cpu_a2x_clk, "aon2cpu-a2x", axi4_cpusys2_aclk_pd,
+-		0x134, 8, 0);
++		0x134, 8, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_X2X_CPUSYS, x2x_cpusys_clk, "x2x-cpusys", axi4_cpusys2_aclk_pd,
+-		0x134, 7, 0);
++		0x134, 7, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd,
+-		0x138, 8, CLK_IGNORE_UNUSED);
++		0x138, 8, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_CPU2PERI_X2H, cpu2peri_x2h_clk, "cpu2peri-x2h", axi4_cpusys2_aclk_pd,
+-		0x140, 9, CLK_IGNORE_UNUSED);
++		0x140, 9, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_PERISYS_APB1_HCLK, perisys_apb1_hclk, "perisys-apb1-hclk", perisys_ahb_hclk_pd,
+-		0x150, 9, CLK_IGNORE_UNUSED);
++		0x150, 9, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_PERISYS_APB2_HCLK, perisys_apb2_hclk, "perisys-apb2-hclk", perisys_ahb_hclk_pd,
+-		0x150, 10, CLK_IGNORE_UNUSED);
++		0x150, 10, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_PERISYS_APB3_HCLK, perisys_apb3_hclk, "perisys-apb3-hclk", perisys_ahb_hclk_pd,
+-		0x150, 11, CLK_IGNORE_UNUSED);
++		0x150, 11, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_PERISYS_APB4_HCLK, perisys_apb4_hclk, "perisys-apb4-hclk", perisys_ahb_hclk_pd,
+ 		0x150, 12, 0);
+ static const struct clk_parent_data perisys_apb4_hclk_pd[] = {
+ 	{ .hw = &perisys_apb4_hclk.gate.hw },
+ };
+ 
+-static CCU_GATE(CLK_NPU_AXI, npu_axi_clk, "npu-axi", axi_aclk_pd, 0x1c8, 5, 0);
+-static CCU_GATE(CLK_CPU2VP, cpu2vp_clk, "cpu2vp", axi_aclk_pd, 0x1e0, 13, 0);
++static CCU_GATE(CLK_NPU_AXI, npu_axi_clk, "npu-axi", axi_aclk_pd, 0x1c8, 5, CLK_IS_CRITICAL);
++static CCU_GATE(CLK_CPU2VP, cpu2vp_clk, "cpu2vp", axi_aclk_pd, 0x1e0, 13, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_EMMC_SDIO, emmc_sdio_clk, "emmc-sdio", emmc_sdio_ref_clk_pd, 0x204, 30, 0);
+ static CCU_GATE(CLK_GMAC1, gmac1_clk, "gmac1", gmac_pll_clk_pd, 0x204, 26, 0);
+ static CCU_GATE(CLK_PADCTRL1, padctrl1_clk, "padctrl1", perisys_apb_pclk_pd, 0x204, 24, 0);
+@@ -855,11 +855,11 @@ static CCU_GATE(CLK_SRAM2, sram2_clk, "sram2", axi_aclk_pd, 0x20c, 2, 0);
+ static CCU_GATE(CLK_SRAM3, sram3_clk, "sram3", axi_aclk_pd, 0x20c, 1, 0);
+ 
+ static CCU_GATE(CLK_AXI4_VO_ACLK, axi4_vo_aclk, "axi4-vo-aclk",
+-		video_pll_clk_pd, 0x0, 0, 0);
++		video_pll_clk_pd, 0x0, 0, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_GPU_CORE, gpu_core_clk, "gpu-core-clk", video_pll_clk_pd,
+ 		0x0, 3, 0);
+ static CCU_GATE(CLK_GPU_CFG_ACLK, gpu_cfg_aclk, "gpu-cfg-aclk",
+-		video_pll_clk_pd, 0x0, 4, 0);
++		video_pll_clk_pd, 0x0, 4, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_DPU_PIXELCLK0, dpu0_pixelclk, "dpu0-pixelclk",
+ 		dpu0_clk_pd, 0x0, 5, 0);
+ static CCU_GATE(CLK_DPU_PIXELCLK1, dpu1_pixelclk, "dpu1-pixelclk",
+@@ -891,9 +891,9 @@ static CCU_GATE(CLK_MIPI_DSI1_REFCLK, mipi_dsi1_refclk, "mipi-dsi1-refclk",
+ static CCU_GATE(CLK_HDMI_I2S, hdmi_i2s_clk, "hdmi-i2s-clk", video_pll_clk_pd,
+ 		0x0, 19, 0);
+ static CCU_GATE(CLK_X2H_DPU1_ACLK, x2h_dpu1_aclk, "x2h-dpu1-aclk",
+-		video_pll_clk_pd, 0x0, 20, 0);
++		video_pll_clk_pd, 0x0, 20, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_X2H_DPU_ACLK, x2h_dpu_aclk, "x2h-dpu-aclk",
+-		video_pll_clk_pd, 0x0, 21, 0);
++		video_pll_clk_pd, 0x0, 21, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_AXI4_VO_PCLK, axi4_vo_pclk, "axi4-vo-pclk",
+ 		video_pll_clk_pd, 0x0, 22, 0);
+ static CCU_GATE(CLK_IOPMP_VOSYS_DPU_PCLK, iopmp_vosys_dpu_pclk,
+@@ -903,11 +903,11 @@ static CCU_GATE(CLK_IOPMP_VOSYS_DPU1_PCLK, iopmp_vosys_dpu1_pclk,
+ static CCU_GATE(CLK_IOPMP_VOSYS_GPU_PCLK, iopmp_vosys_gpu_pclk,
+ 		"iopmp-vosys-gpu-pclk", video_pll_clk_pd, 0x0, 25, 0);
+ static CCU_GATE(CLK_IOPMP_DPU1_ACLK, iopmp_dpu1_aclk, "iopmp-dpu1-aclk",
+-		video_pll_clk_pd, 0x0, 27, 0);
++		video_pll_clk_pd, 0x0, 27, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_IOPMP_DPU_ACLK, iopmp_dpu_aclk, "iopmp-dpu-aclk",
+-		video_pll_clk_pd, 0x0, 28, 0);
++		video_pll_clk_pd, 0x0, 28, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_IOPMP_GPU_ACLK, iopmp_gpu_aclk, "iopmp-gpu-aclk",
+-		video_pll_clk_pd, 0x0, 29, 0);
++		video_pll_clk_pd, 0x0, 29, CLK_IS_CRITICAL);
+ static CCU_GATE(CLK_MIPIDSI0_PIXCLK, mipi_dsi0_pixclk, "mipi-dsi0-pixclk",
+ 		video_pll_clk_pd, 0x0, 30, 0);
+ static CCU_GATE(CLK_MIPIDSI1_PIXCLK, mipi_dsi1_pixclk, "mipi-dsi1-pixclk",
 -- 
 2.51.0
 
