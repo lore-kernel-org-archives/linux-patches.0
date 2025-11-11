@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0860E2D94AB;
-	Tue, 11 Nov 2025 01:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7390D33F8A7;
+	Tue, 11 Nov 2025 01:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824575; cv=none; b=S8wpTzCo1OjS8zNtk6uRn2W6RaTjea5F8fdAwlxhXd48wh8wBpgLrVRyrG8LtEnmCWJ/lVWXuvaW47VcW89wHNU+DwzMBfttymz91SFPxsOX9dyatkVoI6WoOH9qZjFlJSf7AUe+H3OqYjnhPvPnxlpFZCn2tKQLzCEBw8KBPTM=
+	t=1762824577; cv=none; b=bIf4fvOHF0evCqnO+Hc3djbvrBO5IeEZH+LqSLt+OWqEtcjmbSLXdvWwJvxmUsMZNFuN82iidgQKPJYNu1xa5PrHj142CvfEbRhq2shP2whzeGqdwGw8yRBpWjsR0xqe/BiTxjAV7f4ZY5VzLdIhcLxpIFrI7LcJ12fQZbmjC7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824575; c=relaxed/simple;
-	bh=SYMPS5mP7g0Sv41PczP4vQV9TkEnasUULphEnp/HhvQ=;
+	s=arc-20240116; t=1762824577; c=relaxed/simple;
+	bh=iFz4KGk7kNoPxtLjnc0KSJ05HnEmSTVs/kXw+7UHQt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YduuAUwNEuQYV5O4g3YJXZ/rdJ3E0MddiK/RSSBEJVDjbXQqDHVgRrrCNUao+gbpzCLf/coGCDfCKBYS242JBQfxEHiTjcf/wF2zmuIUlBFWxqq/bCoHQ0ju7THbj83vzQh6oWE1+OHvRdeDj6UMaeWr/3vtvTPcON0WruqSlIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krn8ydM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uk9Io2b3WH0/HtPAecYSA5YDPFIaSHAVirR3NQ8mXN9JvkRx8gySju+BvR1zzKBMwwaMQ7N4QYiQ3Aj4dt8sIM5djwWwtL7g69Tw0TewApR4zxXuF4SS5qUhoj8g7RQBpnciVM1+S4B08mGkE0Pi9CoaSy9yv4qriwdlCzUpHq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu8qjpNk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krn8ydM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FA5C4CEFB;
-	Tue, 11 Nov 2025 01:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu8qjpNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105E7C116D0;
+	Tue, 11 Nov 2025 01:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824574;
-	bh=SYMPS5mP7g0Sv41PczP4vQV9TkEnasUULphEnp/HhvQ=;
+	s=korg; t=1762824577;
+	bh=iFz4KGk7kNoPxtLjnc0KSJ05HnEmSTVs/kXw+7UHQt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krn8ydM/kW34rf0XZ1nE+HPjHyBU/WZImmtdqN3npnajwOQ9Hs+jmDnAJbd38/Ew6
-	 7w/DQH/qbcEF3SfSKDH/opXlemARnHXQQebiVgsuekk8eickLUZQNOPtULzLhkRhBN
-	 wDWHxM1iqFe9reyY0SAHzNcVbcykuSftJTb+7vCM=
+	b=Hu8qjpNk2h+Nd6f7JI0i/WIVGr7dTNthQmwgCimRZV9jqM96x6LwLGOL4iS6YXSsF
+	 iTWqpNjHAB6a2voTrvMslW+UrEpTtS72YsGRbfvnpBcC6I3JoWRFZfWSThQl9g3HDT
+	 hdO4CEyI7HW3IUulFtpxr8Ou0BonnT3x8oiXGsok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Sangwook Shin <sw617.shin@samsung.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 472/565] 9p/trans_fd: p9_fd_request: kick rx thread if EPOLLIN
-Date: Tue, 11 Nov 2025 09:45:28 +0900
-Message-ID: <20251111004537.530112851@linuxfoundation.org>
+Subject: [PATCH 6.17 527/849] watchdog: s3c2410_wdt: Fix max_timeout being calculated larger
+Date: Tue, 11 Nov 2025 09:41:37 +0900
+Message-ID: <20251111004549.159373375@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Sangwook Shin <sw617.shin@samsung.com>
 
-[ Upstream commit e8fe3f07a357c39d429e02ca34f740692d88967a ]
+[ Upstream commit df3c6e0b6d83450563d6266e1dacc7eaf25511f4 ]
 
-p9_read_work() doesn't set Rworksched and doesn't do schedule_work(m->rq)
-if list_empty(&m->req_list).
+Fix the issue of max_timeout being calculated larger than actual value.
+The calculation result of freq / (S3C2410_WTCON_PRESCALE_MAX + 1) /
+S3C2410_WTCON_MAXDIV is smaller than the actual value because the remainder
+is discarded during the calculation process. This leads to a larger
+calculated value for max_timeout compared to the actual settable value.
+To resolve this issue, the order of calculations in the computation process
+has been adjusted.
 
-However, if the pipe is full, we need to read more data and this used to
-work prior to commit aaec5a95d59615 ("pipe_read: don't wake up the writer
-if the pipe is still full").
-
-p9_read_work() does p9_fd_read() -> ... -> anon_pipe_read() which (before
-the commit above) triggered the unnecessary wakeup. This wakeup calls
-p9_pollwake() which kicks p9_poll_workfn() -> p9_poll_mux(), p9_poll_mux()
-will notice EPOLLIN and schedule_work(&m->rq).
-
-This no longer happens after the optimization above, change p9_fd_request()
-to use p9_poll_mux() instead of only checking for EPOLLOUT.
-
-Reported-by: syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com
-Tested-by: syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68a2de8f.050a0220.e29e5.0097.GAE@google.com/
-Link: https://lore.kernel.org/all/67dedd2f.050a0220.31a16b.003f.GAE@google.com/
-Co-developed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Message-ID: <20250819161013.GB11345@redhat.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Sangwook Shin <sw617.shin@samsung.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/watchdog/s3c2410_wdt.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index 7e9d731c45976..5bdfc25689169 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -665,7 +665,6 @@ static void p9_poll_mux(struct p9_conn *m)
+diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
+index 40901bdac4261..6df7d526c52fb 100644
+--- a/drivers/watchdog/s3c2410_wdt.c
++++ b/drivers/watchdog/s3c2410_wdt.c
+@@ -27,6 +27,7 @@
+ #include <linux/mfd/syscon.h>
+ #include <linux/regmap.h>
+ #include <linux/delay.h>
++#include <linux/math64.h>
  
- static int p9_fd_request(struct p9_client *client, struct p9_req_t *req)
+ #define S3C2410_WTCON		0x00
+ #define S3C2410_WTDAT		0x04
+@@ -410,9 +411,14 @@ static inline unsigned long s3c2410wdt_get_freq(struct s3c2410_wdt *wdt)
+ static inline unsigned int s3c2410wdt_max_timeout(struct s3c2410_wdt *wdt)
  {
--	__poll_t n;
- 	int err;
- 	struct p9_trans_fd *ts = client->trans;
- 	struct p9_conn *m = &ts->conn;
-@@ -685,13 +684,7 @@ static int p9_fd_request(struct p9_client *client, struct p9_req_t *req)
- 	list_add_tail(&req->req_list, &m->unsent_req_list);
- 	spin_unlock(&m->req_lock);
+ 	const unsigned long freq = s3c2410wdt_get_freq(wdt);
++	const u64 n_max = (u64)(S3C2410_WTCON_PRESCALE_MAX + 1) *
++			S3C2410_WTCON_MAXDIV * S3C2410_WTCNT_MAXCNT;
++	u64 t_max = div64_ul(n_max, freq);
  
--	if (test_and_clear_bit(Wpending, &m->wsched))
--		n = EPOLLOUT;
--	else
--		n = p9_fd_poll(m->client, NULL, NULL);
--
--	if (n & EPOLLOUT && !test_and_set_bit(Wworksched, &m->wsched))
--		schedule_work(&m->wq);
-+	p9_poll_mux(m);
- 
- 	return 0;
+-	return S3C2410_WTCNT_MAXCNT / (freq / (S3C2410_WTCON_PRESCALE_MAX + 1)
+-				       / S3C2410_WTCON_MAXDIV);
++	if (t_max > UINT_MAX)
++		t_max = UINT_MAX;
++
++	return t_max;
  }
+ 
+ static int s3c2410wdt_disable_wdt_reset(struct s3c2410_wdt *wdt, bool mask)
 -- 
 2.51.0
 
