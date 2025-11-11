@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264B026B76A;
-	Tue, 11 Nov 2025 01:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAD934D38E;
+	Tue, 11 Nov 2025 01:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825398; cv=none; b=XQDtNVgcE/oBgDvTKZsk4V5d+NbeQUkIdCdN8sgOBpVTKC2eklqDPvPU6p3IGlxNT9b3dqzXN6cOirVuBcek8YzEX+EzwS5NlSV0OUFVEd5pJP1cNz4COXqGG4tILNP+2iCwDw4NnxSPsMGmsc/JQdkWE2qPS2jkmxcuGzrSUa4=
+	t=1762825400; cv=none; b=kSsoaGn0p8Aks7bGkiSQCBoKVgEg3uXFbyrt4K0GhDr/aVJLdrc+DXV6V+BuqXhdmkjf59i54uSbddq4Dj4TwxWKI1d1dKhs8AoeikZPRKKIFrQLOjlDKiOctdRPSzoRhnshsOtSDyFjC1SlU10q8OPcL1UhRjmiu8ITOAbzbTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825398; c=relaxed/simple;
-	bh=JT4jiHMQc3g2fvKeYOGQMU8OJe1uQpmWsDZ59/ZfGmM=;
+	s=arc-20240116; t=1762825400; c=relaxed/simple;
+	bh=c4EGxsRY3YOQ0nA8nQCBs9KQvK57HLNxCu1FYggAAJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSYP0KEc6kdN8j8l30eAjWNN6iWw4Z88hzWXEnEFLjXOBhQuYlXQ4FI4f7RKvxNfSn3Q2O1jxMT2rgwx2Tji/6Tm49koT3ECDQyERXpPHRg5vNWEAH3rMFmz6bNmICSfaW61xfvxmz5wjh6mLFNSAuqnisJMurD9t2xGNBmXmWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQIPABWn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=heS0QiaL2MFveO7WsT824fXS5hUld4NcJ6WGRprgd3cYYE0IosMCtQkAad3rPJ69M5/Q+9/GvuEjC3QrDJCta+5+b4iXAuBqyk+L0dSk3QMPuSCv8tk8ff2IEjCNUciqlbsfbcMrrlzKRxPfK9U+dWhCto2jRjTxnYaQMAWPQ2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9jNKjjy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQIPABWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BC0C116D0;
-	Tue, 11 Nov 2025 01:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9jNKjjy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D89C19424;
+	Tue, 11 Nov 2025 01:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825398;
-	bh=JT4jiHMQc3g2fvKeYOGQMU8OJe1uQpmWsDZ59/ZfGmM=;
+	s=korg; t=1762825400;
+	bh=c4EGxsRY3YOQ0nA8nQCBs9KQvK57HLNxCu1FYggAAJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQIPABWnRxtwNbIFREZudc/gsj6/oxr4S8ILkn9eOVCnCRdQuY0qwqWX59j/j4rH3
-	 L+70s4FWaHrVfPbczy3Qai4sAETWeC8L7/xDBVmNSRdS1fU3ztL6JdXlK3mkqVijo6
-	 Z5GWrkRAV09P2crT2cA5nidUMEUxdrM1MlXjHIyI=
+	b=t9jNKjjyRZXgvJlwkLU22XpSYFvvmCWwKro6BjKs+rUaXluUzSogRAP9kw+igyNYv
+	 k1L611NnbX8rhXljFdpSZvbQD0tE2ysoOyqTYzfeXZmtU8dH8icoZoB4IDF7KrFnjo
+	 7MFC7txJipYmLS2mqdUmSPusaoK1lkGbxH+4YFLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c8c0e7ccabd456541612@syzkaller.appspotmail.com,
-	Tim Hostetler <thostet@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Joshua Washington <joshwash@google.com>,
+	Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Shantiprasad Shettar <shantiprasad.shettar@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 758/849] gve: Implement gettimex64 with -EOPNOTSUPP
-Date: Tue, 11 Nov 2025 09:45:28 +0900
-Message-ID: <20251111004554.760615324@linuxfoundation.org>
+Subject: [PATCH 6.17 785/849] bnxt_en: Fix warning in bnxt_dl_reload_down()
+Date: Tue, 11 Nov 2025 09:45:55 +0900
+Message-ID: <20251111004555.413101258@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -55,55 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Hostetler <thostet@google.com>
+From: Shantiprasad Shettar <shantiprasad.shettar@broadcom.com>
 
-[ Upstream commit 6ab753b5d8e521616cd9bd10b09891cbeb7e0235 ]
+[ Upstream commit 5204943a4c6efc832993c0fa17dec275071eeccc ]
 
-gve implemented a ptp_clock for sole use of do_aux_work at this time.
-ptp_clock_gettime() and ptp_sys_offset() assume every ptp_clock has
-implemented either gettimex64 or gettime64. Stub gettimex64 and return
--EOPNOTSUPP to prevent NULL dereferencing.
+The existing code calls bnxt_cancel_reservations() after
+bnxt_hwrm_func_drv_unrgtr() in bnxt_dl_reload_down().
+bnxt_cancel_reservations() calls the FW and it will always fail since
+the driver has already unregistered, triggering this warning:
 
-Fixes: acd16380523b ("gve: Add initial PTP device support")
-Reported-by: syzbot+c8c0e7ccabd456541612@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c8c0e7ccabd456541612
-Signed-off-by: Tim Hostetler <thostet@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20251029184555.3852952-2-joshwash@google.com
+bnxt_en 0000:0a:00.0 ens2np0: resc_qcaps failed
+
+Fix it by calling bnxt_clear_reservations() which will skip the
+unnecessary FW call since we have unregistered.
+
+Fixes: 228ea8c187d8 ("bnxt_en: implement devlink dev reload driver_reinit")
+Reviewed-by: Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Shantiprasad Shettar <shantiprasad.shettar@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20251104005700.542174-6-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ptp.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c         | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h         | 1 +
+ drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ptp.c b/drivers/net/ethernet/google/gve/gve_ptp.c
-index e96247c9d68d2..19ae699d4b18d 100644
---- a/drivers/net/ethernet/google/gve/gve_ptp.c
-+++ b/drivers/net/ethernet/google/gve/gve_ptp.c
-@@ -26,6 +26,13 @@ int gve_clock_nic_ts_read(struct gve_priv *priv)
- 	return 0;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 6a97753c618de..b213ef75c5d17 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12428,7 +12428,7 @@ static int bnxt_try_recover_fw(struct bnxt *bp)
+ 	return -ENODEV;
  }
  
-+static int gve_ptp_gettimex64(struct ptp_clock_info *info,
-+			      struct timespec64 *ts,
-+			      struct ptp_system_timestamp *sts)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static long gve_ptp_do_aux_work(struct ptp_clock_info *info)
+-static void bnxt_clear_reservations(struct bnxt *bp, bool fw_reset)
++void bnxt_clear_reservations(struct bnxt *bp, bool fw_reset)
  {
- 	const struct gve_ptp *ptp = container_of(info, struct gve_ptp, info);
-@@ -47,6 +54,7 @@ static long gve_ptp_do_aux_work(struct ptp_clock_info *info)
- static const struct ptp_clock_info gve_ptp_caps = {
- 	.owner          = THIS_MODULE,
- 	.name		= "gve clock",
-+	.gettimex64	= gve_ptp_gettimex64,
- 	.do_aux_work	= gve_ptp_do_aux_work,
- };
+ 	struct bnxt_hw_resc *hw_resc = &bp->hw_resc;
  
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 6b751eb29c2d4..2e96e7fd74914 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2930,6 +2930,7 @@ void bnxt_report_link(struct bnxt *bp);
+ int bnxt_update_link(struct bnxt *bp, bool chng_link_state);
+ int bnxt_hwrm_set_pause(struct bnxt *);
+ int bnxt_hwrm_set_link_setting(struct bnxt *, bool, bool);
++void bnxt_clear_reservations(struct bnxt *bp, bool fw_reset);
+ int bnxt_cancel_reservations(struct bnxt *bp, bool fw_reset);
+ int bnxt_hwrm_alloc_wol_fltr(struct bnxt *bp);
+ int bnxt_hwrm_free_wol_fltr(struct bnxt *bp);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+index 4c4581b0342e8..3c540c63c7949 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+@@ -467,7 +467,7 @@ static int bnxt_dl_reload_down(struct devlink *dl, bool netns_change,
+ 			rtnl_unlock();
+ 			break;
+ 		}
+-		bnxt_cancel_reservations(bp, false);
++		bnxt_clear_reservations(bp, false);
+ 		bnxt_free_ctx_mem(bp, false);
+ 		break;
+ 	}
 -- 
 2.51.0
 
