@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB904C97;
-	Tue, 11 Nov 2025 00:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616EA4C97;
+	Tue, 11 Nov 2025 00:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822400; cv=none; b=QYmK83YmQFWc8gVclEGlCWq4rs5nNBKlb9DGTRW154Lxpmk5+gFmpAakHBoLGyZ/ZhzwcL/y5GvGVK0cdqU43i3zsmYrx9VXLzv5mCKlP/xFsqc/QCrEJfDMmO13Aj1m62cOwKJ/7SfPOghLzP1BuLYGtxTFPM6vWsVcfUnJul8=
+	t=1762822402; cv=none; b=A5eFoD5/T4TY8Zvr9VT7VNU8AbZPaC18h5uZTb2TpqfeQqJv9dP4DX1aYHGxrK5XBndOsoaYwhwi+K0DgjDAM1BflC5vq75xUUA1EKSxchPWnuWmAKimyz6yopVKjgspewo9mhmh4Q9tZbCL+IeLx/NP/My3rMSfTzNJpPtSViE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822400; c=relaxed/simple;
-	bh=v6bFqT8Mh6BCpvEnXvdHkDnLm+g6Q74ysh7utcIK6nY=;
+	s=arc-20240116; t=1762822402; c=relaxed/simple;
+	bh=JuwhFDiPMhQlKT3rCQZOlaScnVQk832qro1z4qxErpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FXPob3RgDNC/5Rjo2aIONwpt8XqoaEN6tO/Tr6lSoYri2//nQa+BvWpQ7KtSEGrEkPIieqBepsElnqJT15koPIVZuD5eU+DRFknHrSmwii/NZ3W3ltxTSHz0t7HuoL3WRAYEf7I1Nj9AetSYAwF4OLx4XBEC2lDErXS9PRdf2nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPOc9HaJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WL8EaHf4SkLMMSz+jMLx2InNRgZxvWpj8eAUkTz35cD4D8eHUF+RRFkB4CfWUmfr/0XMfE5wOn4K3KTcCJeSTmIh8Wv921dUc/39KSfkKWFrdeWFlIRQPRtOoVtxUHwooFOItQw+MRGh2+ZG13g2RmGsqwBIZbuK8YV1lJ7dXhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTjgJy43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPOc9HaJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCCCC4CEFB;
-	Tue, 11 Nov 2025 00:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTjgJy43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C237DC4CEF5;
+	Tue, 11 Nov 2025 00:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822399;
-	bh=v6bFqT8Mh6BCpvEnXvdHkDnLm+g6Q74ysh7utcIK6nY=;
+	s=korg; t=1762822402;
+	bh=JuwhFDiPMhQlKT3rCQZOlaScnVQk832qro1z4qxErpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPOc9HaJKewzEczLjk/72Ek9OkkzBpDTIKsa9ZZP+05n1DRguo2NyRd80SR3AatB1
-	 +ZzuaZE+lgugW91kxczCo/acBQAjLi7D7rW5rNeNLUNzGzQLipwsFUsrWKXQ4Yvtx6
-	 jP4H+rExfF25C45JiRmqfhZDTmIn/OMfz5oCltJg=
+	b=CTjgJy43PORPKe0I9F5zXEMw6cPxAUbRnqWo1Jax+CrFovetfZSqz23jMCM2ioc7f
+	 ZR/UlQ7kDFekIHTNLKuQWHi3QQQAm+eqBc/+shmi/w5Msy0WJKM8RA0/NjJiFqIdqt
+	 /1aIFvM51w5JpUg1sPSbS/jsoL5IKf+a8pANOOks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.17 100/849] drm/sched: avoid killing parent entity on child SIGKILL
-Date: Tue, 11 Nov 2025 09:34:30 +0900
-Message-ID: <20251111004538.822358794@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 043/565] Bluetooth: ISO: Fix BIS connection dst_type handling
+Date: Tue, 11 Nov 2025 09:38:19 +0900
+Message-ID: <20251111004527.869081465@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 9e8b3201c7302d5b522ba3535630bed21cc03c27 upstream.
+[ Upstream commit f0c200a4a537f8f374584a974518b0ce69eda76c ]
 
-The DRM scheduler tracks who last uses an entity and when that process
-is killed blocks all further submissions to that entity.
+Socket dst_type cannot be directly assigned to hci_conn->type since
+there domain is different which may lead to the wrong address type being
+used.
 
-The problem is that we didn't track who initially created an entity, so
-when a process accidently leaked its file descriptor to a child and
-that child got killed, we killed the parent's entities.
-
-Avoid that and instead initialize the entities last user on entity
-creation. This also allows to drop the extra NULL check.
-
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4568
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-CC: stable@vger.kernel.org
-Acked-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20251015140128.1470-1-christian.koenig@amd.com
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251015140128.1470-1-christian.koenig@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a5ad251b7cd ("Bluetooth: ISO: Fix possible circular locking dependency")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/iso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -70,6 +70,7 @@ int drm_sched_entity_init(struct drm_sch
- 	entity->guilty = guilty;
- 	entity->num_sched_list = num_sched_list;
- 	entity->priority = priority;
-+	entity->last_user = current->group_leader;
- 	/*
- 	 * It's perfectly valid to initialize an entity without having a valid
- 	 * scheduler attached. It's just not valid to use the scheduler before it
-@@ -302,7 +303,7 @@ long drm_sched_entity_flush(struct drm_s
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index f48a694b004ab..c9a262f97678b 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1927,7 +1927,7 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 		 */
+ 		if (!bacmp(&hcon->dst, BDADDR_ANY)) {
+ 			bacpy(&hcon->dst, &iso_pi(parent)->dst);
+-			hcon->dst_type = iso_pi(parent)->dst_type;
++			hcon->dst_type = le_addr_type(iso_pi(parent)->dst_type);
+ 		}
  
- 	/* For killed process disable any more IBs enqueue right now */
- 	last_user = cmpxchg(&entity->last_user, current->group_leader, NULL);
--	if ((!last_user || last_user == current->group_leader) &&
-+	if (last_user == current->group_leader &&
- 	    (current->flags & PF_EXITING) && (current->exit_code == SIGKILL))
- 		drm_sched_entity_kill(entity);
- 
+ 		if (ev3) {
+-- 
+2.51.0
+
 
 
