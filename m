@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A98E262FEC;
-	Tue, 11 Nov 2025 01:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD7248F6A;
+	Tue, 11 Nov 2025 01:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824410; cv=none; b=t764SRnQKvZW6QwnmUzOiXo4Z+c3ZcrDr8lQk+W0Xwo5kQYlU2rtN6sW3eNEgs2PJhwAkRA0ksjEx5WF1kxHiYvmIb0585u+FVfv2G12dFWJvaKG3nD0i6pi0CMHIgXaB24hu6Jx3l7gDS22SyflcKpC4vKvFlf2WayGMNrtBRE=
+	t=1762824412; cv=none; b=oI8af7LwFNrZSByq86QTLeb9Jw2xUb5HssS5CgfpE/2HcFuGYSZ7kCLO4peEqMkPgHez/0msnNOtq2Uz/XEMwYE3kTQVwPOH+9bYMVwnjPBt8wZe7se6rWbT2/PziXVSPNFGkyJwcOOqxY7vRulyKxOcigmjz8H+VzH+oISyB84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824410; c=relaxed/simple;
-	bh=RazG4idSuBpORJ1fscWHubFCF96ISR1Lj9tLRxLpdGI=;
+	s=arc-20240116; t=1762824412; c=relaxed/simple;
+	bh=ZS9lkYvlJpGyjt0slwuzj2WvdBFW08KWDqcJsKXy9MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBdLuq8KBkSbKIBmcOA+kSO+S1WXZgS3Q28wbI4MDhM6Blk6+E32MInfH7jUc3TeyLq8lxshyeByumf9odG55EqhFa5MeoUkzfCmBI8ac+KSR+bjFRhLqyxjDd3uS72WTR41Px6isqi47XzofHKN5YOwl1g/BQeQn4TrkVOYbi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYASD6VX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pH5k25OhN518p/oqx4/5u1g7we9UKbNFUMeO9s3ERtfsN55XYwrd/ubg7o47EEgIbHBiujBymPQwkV3EF5D4oEYqLwPkfxK4PzfbX+dyeEKEVc3eSR7bFPBsxqk6qq7vMMhtVdqwv0o8Ig1oGYlwKWfRL6iqSJLQPetQ7p2VIOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9hUjylJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYASD6VX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAB6C4CEFB;
-	Tue, 11 Nov 2025 01:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9hUjylJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D25C116B1;
+	Tue, 11 Nov 2025 01:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824410;
-	bh=RazG4idSuBpORJ1fscWHubFCF96ISR1Lj9tLRxLpdGI=;
+	s=korg; t=1762824412;
+	bh=ZS9lkYvlJpGyjt0slwuzj2WvdBFW08KWDqcJsKXy9MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYASD6VXNnI1WFngLmH3lr93+/lDHFE516WzzyAAPxAFlsJtIorfAbtA4uPidAStH
-	 TDnvNAP7+UcMkEAOv+Wh9P7qCZvw19iSpZvDgQB9lmWZoqTTpqBNrCOeK7IsWHjPLn
-	 32kWbvIzCHYN1wnLneCZW53d5VQA3v83vsaNf2fk=
+	b=m9hUjylJlG1rzRJBpChpgDLRdjozw5hGO8gFffX04d4+94yqLpj/85iBCn5fxABHT
+	 uucFsaRqKi5GhlSkc9HDsJJgu8Dx9X0Ch2SpCDoS2wKsIdxGY2/HUr1XTqV2ci2dvh
+	 rctDSIeMIzCWtlht+ZKAtI+RqQmqYGySuyEs4bwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 438/565] Bluetooth: btusb: Add new VID/PID 13d3/3633 for MT7922
-Date: Tue, 11 Nov 2025 09:44:54 +0900
-Message-ID: <20251111004536.735457747@linuxfoundation.org>
+Subject: [PATCH 6.17 490/849] drm/amdgpu: validate userq input args
+Date: Tue, 11 Nov 2025 09:41:00 +0900
+Message-ID: <20251111004548.288044460@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,163 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 70cd38d22d4659ca8133c7124528c90678215dda ]
+[ Upstream commit 219be4711a1ba788bc2a9fafc117139d133e5fea ]
 
-Add VID 13d3 & PID 3633 for MediaTek MT7922 USB Bluetooth chip.
+This will help on validating the userq input args, and
+rejecting for the invalid userq request at the IOCTLs
+first place.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
-
-T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3633 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c  | 81 +++++++++++++++-------
+ drivers/gpu/drm/amd/amdgpu/mes_userqueue.c |  7 --
+ 2 files changed, 56 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index cf5b2a617c771..a734c5135a8be 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -689,6 +689,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3615), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3633), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x35f5, 0x7922), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 8190c24a649a2..65c8a38890d48 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -404,27 +404,10 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 		(args->in.flags & AMDGPU_USERQ_CREATE_FLAGS_QUEUE_PRIORITY_MASK) >>
+ 		AMDGPU_USERQ_CREATE_FLAGS_QUEUE_PRIORITY_SHIFT;
  
+-	/* Usermode queues are only supported for GFX IP as of now */
+-	if (args->in.ip_type != AMDGPU_HW_IP_GFX &&
+-	    args->in.ip_type != AMDGPU_HW_IP_DMA &&
+-	    args->in.ip_type != AMDGPU_HW_IP_COMPUTE) {
+-		drm_file_err(uq_mgr->file, "Usermode queue doesn't support IP type %u\n",
+-			     args->in.ip_type);
+-		return -EINVAL;
+-	}
+-
+ 	r = amdgpu_userq_priority_permit(filp, priority);
+ 	if (r)
+ 		return r;
+ 
+-	if ((args->in.flags & AMDGPU_USERQ_CREATE_FLAGS_QUEUE_SECURE) &&
+-	    (args->in.ip_type != AMDGPU_HW_IP_GFX) &&
+-	    (args->in.ip_type != AMDGPU_HW_IP_COMPUTE) &&
+-	    !amdgpu_is_tmz(adev)) {
+-		drm_file_err(uq_mgr->file, "Secure only supported on GFX/Compute queues\n");
+-		return -EINVAL;
+-	}
+-
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	if (r < 0) {
+ 		drm_file_err(uq_mgr->file, "pm_runtime_get_sync() failed for userqueue create\n");
+@@ -543,22 +526,45 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 	return r;
+ }
+ 
+-int amdgpu_userq_ioctl(struct drm_device *dev, void *data,
+-		       struct drm_file *filp)
++static int amdgpu_userq_input_args_validate(struct drm_device *dev,
++					union drm_amdgpu_userq *args,
++					struct drm_file *filp)
+ {
+-	union drm_amdgpu_userq *args = data;
+-	int r;
++	struct amdgpu_device *adev = drm_to_adev(dev);
+ 
+ 	switch (args->in.op) {
+ 	case AMDGPU_USERQ_OP_CREATE:
+ 		if (args->in.flags & ~(AMDGPU_USERQ_CREATE_FLAGS_QUEUE_PRIORITY_MASK |
+ 				       AMDGPU_USERQ_CREATE_FLAGS_QUEUE_SECURE))
+ 			return -EINVAL;
+-		r = amdgpu_userq_create(filp, args);
+-		if (r)
+-			drm_file_err(filp, "Failed to create usermode queue\n");
+-		break;
++		/* Usermode queues are only supported for GFX IP as of now */
++		if (args->in.ip_type != AMDGPU_HW_IP_GFX &&
++		    args->in.ip_type != AMDGPU_HW_IP_DMA &&
++		    args->in.ip_type != AMDGPU_HW_IP_COMPUTE) {
++			drm_file_err(filp, "Usermode queue doesn't support IP type %u\n",
++				     args->in.ip_type);
++			return -EINVAL;
++		}
++
++		if ((args->in.flags & AMDGPU_USERQ_CREATE_FLAGS_QUEUE_SECURE) &&
++		    (args->in.ip_type != AMDGPU_HW_IP_GFX) &&
++		    (args->in.ip_type != AMDGPU_HW_IP_COMPUTE) &&
++		    !amdgpu_is_tmz(adev)) {
++			drm_file_err(filp, "Secure only supported on GFX/Compute queues\n");
++			return -EINVAL;
++		}
+ 
++		if (args->in.queue_va == AMDGPU_BO_INVALID_OFFSET ||
++		    args->in.queue_va == 0 ||
++		    args->in.queue_size == 0) {
++			drm_file_err(filp, "invalidate userq queue va or size\n");
++			return -EINVAL;
++		}
++		if (!args->in.wptr_va || !args->in.rptr_va) {
++			drm_file_err(filp, "invalidate userq queue rptr or wptr\n");
++			return -EINVAL;
++		}
++		break;
+ 	case AMDGPU_USERQ_OP_FREE:
+ 		if (args->in.ip_type ||
+ 		    args->in.doorbell_handle ||
+@@ -572,6 +578,31 @@ int amdgpu_userq_ioctl(struct drm_device *dev, void *data,
+ 		    args->in.mqd ||
+ 		    args->in.mqd_size)
+ 			return -EINVAL;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
++int amdgpu_userq_ioctl(struct drm_device *dev, void *data,
++		       struct drm_file *filp)
++{
++	union drm_amdgpu_userq *args = data;
++	int r;
++
++	if (amdgpu_userq_input_args_validate(dev, args, filp) < 0)
++		return -EINVAL;
++
++	switch (args->in.op) {
++	case AMDGPU_USERQ_OP_CREATE:
++		r = amdgpu_userq_create(filp, args);
++		if (r)
++			drm_file_err(filp, "Failed to create usermode queue\n");
++		break;
++
++	case AMDGPU_USERQ_OP_FREE:
+ 		r = amdgpu_userq_destroy(filp, args->in.queue_id);
+ 		if (r)
+ 			drm_file_err(filp, "Failed to destroy usermode queue\n");
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
+index d6f50b13e2ba0..1457fb49a794f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
+@@ -215,13 +215,6 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
+ 		return -ENOMEM;
+ 	}
+ 
+-	if (!mqd_user->wptr_va || !mqd_user->rptr_va ||
+-	    !mqd_user->queue_va || mqd_user->queue_size == 0) {
+-		DRM_ERROR("Invalid MQD parameters for userqueue\n");
+-		r = -EINVAL;
+-		goto free_props;
+-	}
+-
+ 	r = amdgpu_userq_create_object(uq_mgr, &queue->mqd, mqd_hw_default->mqd_size);
+ 	if (r) {
+ 		DRM_ERROR("Failed to create MQD object for userqueue\n");
 -- 
 2.51.0
 
