@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC7B253944;
-	Tue, 11 Nov 2025 01:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992E325A341;
+	Tue, 11 Nov 2025 01:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822922; cv=none; b=j7aM+f+HuAvYNQWc4fM/NE34ENUgqVkSvH4Zl+GNYVCk03iNbPQMXXvYcO9Jkx70KSvj4e16AvHw5jNE8054jb+ZN9cX3KIZz0I6ygicUB9jjpUdZlpqkIaH6Jf89eCOTCAmXlZUD+o9deUXCZy80+87YPs5dAOS0eoo5lgc5e4=
+	t=1762822923; cv=none; b=TgMw3seGGvwehdileNGzaJX9INbAOkE9rF0c/yTLU2HzRF9P45bU9LuAl4BiyF2A5kwvayVvMPqbJzJW0jaWNhMoxYp3rqhXveC2hb/ve2LKOiGjlMqjbafJ6ieuXjcuyH5mXKwGscFG75XpfzHQjHoxSLoyDtKyQH2JoBB41uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822922; c=relaxed/simple;
-	bh=JsFQPXA9Txw30GGYybIM7TaQkCQD0xtGyNHrnI+EGX0=;
+	s=arc-20240116; t=1762822923; c=relaxed/simple;
+	bh=y2TYIee4cIKgFCP4HIesO6yE+eqzUzXQ2x3nIR5cW5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GNdEnkkHiEF5EmSAMFeiUFTXLx1h41TQFoG90Hlel3R8utL0SvI06CUpA6SxlNg5r9NhoXhoFzMcpapfxpcOhQmxRVdo63mzTTNpZEaO/aCMSCaQkcEnFCGDoaySsSlaH8ptDcy8SdpaP8WsY7XuAQPx54I6lXPDFXLtWafavJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asXqTwXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cK6WLQTB30ZQBZcExd6ruqPIADMiKr9VBZfSl2D5BkenHz/w9j2+oAnZvwTykaqO3v2ACLN1ILxfeGsk0fqa4pxqTFQJpV6Goq3Ut+MrrLl0iauwE4WG5kxPx1CzM+dZfdSafmnmI8Tm7hOad03h5r1dE7RWVPCNtiAFDqXPkLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miCDmc7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asXqTwXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECEEC19422;
-	Tue, 11 Nov 2025 01:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miCDmc7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE8CC16AAE;
+	Tue, 11 Nov 2025 01:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822922;
-	bh=JsFQPXA9Txw30GGYybIM7TaQkCQD0xtGyNHrnI+EGX0=;
+	s=korg; t=1762822919;
+	bh=y2TYIee4cIKgFCP4HIesO6yE+eqzUzXQ2x3nIR5cW5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asXqTwXwpXhlvOTH9iEYOPzdSMuQhZcmAwDn2JtiNVTVuBTfd3pZ7ixGAmPCZ7Ebu
-	 263BYGuXnzilKgRyQtezCEWhIxpM1MYeYecGE+ZfOx/VAoMIdQ40jBxwxTUQZ52j4r
-	 OZ5HUrkiomxVj4OGjSea54TDm3qi2ZwHX5zuSF3E=
+	b=miCDmc7xQmxIWtBQoAGvjtsCBQX81sxDk5RcNXqa3jsvlQKZDxu/CAnKb857JRNwY
+	 k8YjObMpIa/oS4Fpd6tG1HQOfRuo2W7wCFwbBnRQ5zzVLSdLo6zAb6mcIq1suqLJnX
+	 SrEFHstleb3b1H4WoEblS5PkJrLn7VdsG60Eam+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/565] pwm: pca9685: Use bulk write to atomicially update registers
-Date: Tue, 11 Nov 2025 09:39:50 +0900
-Message-ID: <20251111004529.962811081@linuxfoundation.org>
+Subject: [PATCH 6.17 196/849] selftests/bpf: Fix selftest verifier_arena_large failure
+Date: Tue, 11 Nov 2025 09:36:06 +0900
+Message-ID: <20251111004541.179986684@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,128 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit de5855613263b426ee697dd30224322f2e634dec ]
+[ Upstream commit 5a427fddec5e76360725a0f03df3a2a003efbe2e ]
 
-The output of a PWM channel is configured by four register values. Write
-them in a single i2c transaction to ensure glitch free updates.
+With latest llvm22, I got the following verification failure:
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/bfa8c0267c9ec059d0d77f146998d564654c75ca.1753784092.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+  ...
+  ; int big_alloc2(void *ctx) @ verifier_arena_large.c:207
+  0: (b4) w6 = 1                        ; R6_w=1
+  ...
+  ; if (err) @ verifier_arena_large.c:233
+  53: (56) if w6 != 0x0 goto pc+62      ; R6=0
+  54: (b7) r7 = -4                      ; R7_w=-4
+  55: (18) r8 = 0x7f4000000000          ; R8_w=scalar()
+  57: (bf) r9 = addr_space_cast(r8, 0, 1)       ; R8_w=scalar() R9_w=arena
+  58: (b4) w6 = 5                       ; R6_w=5
+  ; pg = page[i]; @ verifier_arena_large.c:238
+  59: (bf) r1 = r7                      ; R1_w=-4 R7_w=-4
+  60: (07) r1 += 4                      ; R1_w=0
+  61: (79) r2 = *(u64 *)(r9 +0)         ; R2_w=scalar() R9_w=arena
+  ; if (*pg != i) @ verifier_arena_large.c:239
+  62: (bf) r3 = addr_space_cast(r2, 0, 1)       ; R2_w=scalar() R3_w=arena
+  63: (71) r3 = *(u8 *)(r3 +0)          ; R3_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+  64: (5d) if r1 != r3 goto pc+51       ; R1_w=0 R3_w=0
+  ; bpf_arena_free_pages(&arena, (void __arena *)pg, 2); @ verifier_arena_large.c:241
+  65: (18) r1 = 0xff11000114548000      ; R1_w=map_ptr(map=arena,ks=0,vs=0)
+  67: (b4) w3 = 2                       ; R3_w=2
+  68: (85) call bpf_arena_free_pages#72675      ;
+  69: (b7) r1 = 0                       ; R1_w=0
+  ; page[i + 1] = NULL; @ verifier_arena_large.c:243
+  70: (7b) *(u64 *)(r8 +8) = r1
+  R8 invalid mem access 'scalar'
+  processed 61 insns (limit 1000000) max_states_per_insn 0 total_states 6 peak_states 6 mark_read 2
+  =============
+  #489/5   verifier_arena_large/big_alloc2:FAIL
+
+The main reason is that 'r8' in insn '70' is not an arena pointer.
+Further debugging at llvm side shows that llvm commit ([1]) caused
+the failure. For the original code:
+  page[i] = NULL;
+  page[i + 1] = NULL;
+the llvm transformed it to something like below at source level:
+  __builtin_memset(&page[i], 0, 16)
+Such transformation prevents llvm BPFCheckAndAdjustIR pass from
+generating proper addr_space_cast insns ([2]).
+
+Adding support in llvm BPFCheckAndAdjustIR pass should work, but
+not sure that such a pattern exists or not in real applications.
+At the same time, simply adding a memory barrier between two 'page'
+assignment can fix the issue.
+
+  [1] https://github.com/llvm/llvm-project/pull/155415
+  [2] https://github.com/llvm/llvm-project/pull/84410
+
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250920045805.3288551-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-pca9685.c | 46 ++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ tools/testing/selftests/bpf/progs/verifier_arena_large.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-pca9685.c b/drivers/pwm/pwm-pca9685.c
-index 1298b29183e55..e1b60756bb485 100644
---- a/drivers/pwm/pwm-pca9685.c
-+++ b/drivers/pwm/pwm-pca9685.c
-@@ -62,6 +62,8 @@
- #define MODE1_SUB2		BIT(2)
- #define MODE1_SUB1		BIT(3)
- #define MODE1_SLEEP		BIT(4)
-+#define MODE1_AI		BIT(5)
-+
- #define MODE2_INVRT		BIT(4)
- #define MODE2_OUTDRV		BIT(2)
- 
-@@ -132,6 +134,19 @@ static int pca9685_write_reg(struct pwm_chip *chip, unsigned int reg, unsigned i
- 	return err;
- }
- 
-+static int pca9685_write_4reg(struct pwm_chip *chip, unsigned int reg, u8 val[4])
-+{
-+	struct pca9685 *pca = to_pca(chip);
-+	struct device *dev = pwmchip_parent(chip);
-+	int err;
-+
-+	err = regmap_bulk_write(pca->regmap, reg, val, 4);
-+	if (err)
-+		dev_err(dev, "regmap_write to register 0x%x failed: %pe\n", reg, ERR_PTR(err));
-+
-+	return err;
-+}
-+
- /* Helper function to set the duty cycle ratio to duty/4096 (e.g. duty=2048 -> 50%) */
- static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned int duty)
- {
-@@ -144,12 +159,10 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
- 		return;
- 	} else if (duty >= PCA9685_COUNTER_RANGE) {
- 		/* Set the full ON bit and clear the full OFF bit */
--		pca9685_write_reg(chip, REG_ON_H(channel), LED_FULL);
--		pca9685_write_reg(chip, REG_OFF_H(channel), 0);
-+		pca9685_write_4reg(chip, REG_ON_L(channel), (u8[4]){ 0, LED_FULL, 0, 0 });
- 		return;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_arena_large.c b/tools/testing/selftests/bpf/progs/verifier_arena_large.c
+index 9dbdf123542d3..f19e15400b3e1 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_arena_large.c
++++ b/tools/testing/selftests/bpf/progs/verifier_arena_large.c
+@@ -240,6 +240,7 @@ int big_alloc2(void *ctx)
+ 			return 5;
+ 		bpf_arena_free_pages(&arena, (void __arena *)pg, 2);
+ 		page[i] = NULL;
++		barrier();
+ 		page[i + 1] = NULL;
+ 		cond_break;
  	}
- 
--
- 	if (pwm->state.usage_power && channel < PCA9685_MAXCHAN) {
- 		/*
- 		 * If usage_power is set, the pca9685 driver will phase shift
-@@ -164,12 +177,9 @@ static void pca9685_pwm_set_duty(struct pwm_chip *chip, int channel, unsigned in
- 
- 	off = (on + duty) % PCA9685_COUNTER_RANGE;
- 
--	/* Set ON time (clears full ON bit) */
--	pca9685_write_reg(chip, REG_ON_L(channel), on & 0xff);
--	pca9685_write_reg(chip, REG_ON_H(channel), (on >> 8) & 0xf);
--	/* Set OFF time (clears full OFF bit) */
--	pca9685_write_reg(chip, REG_OFF_L(channel), off & 0xff);
--	pca9685_write_reg(chip, REG_OFF_H(channel), (off >> 8) & 0xf);
-+	/* implicitly clear full ON and full OFF bit */
-+	pca9685_write_4reg(chip, REG_ON_L(channel),
-+			   (u8[4]){ on & 0xff, (on >> 8) & 0xf, off & 0xff, (off >> 8) & 0xf });
- }
- 
- static unsigned int pca9685_pwm_get_duty(struct pwm_chip *chip, int channel)
-@@ -543,9 +553,8 @@ static int pca9685_pwm_probe(struct i2c_client *client)
- 
- 	mutex_init(&pca->lock);
- 
--	ret = pca9685_read_reg(chip, PCA9685_MODE2, &reg);
--	if (ret)
--		return ret;
-+	/* clear MODE2_OCH */
-+	reg = 0;
- 
- 	if (device_property_read_bool(&client->dev, "invert"))
- 		reg |= MODE2_INVRT;
-@@ -561,16 +570,19 @@ static int pca9685_pwm_probe(struct i2c_client *client)
- 	if (ret)
- 		return ret;
- 
--	/* Disable all LED ALLCALL and SUBx addresses to avoid bus collisions */
-+	/*
-+	 * Disable all LED ALLCALL and SUBx addresses to avoid bus collisions,
-+	 * enable Auto-Increment.
-+	 */
- 	pca9685_read_reg(chip, PCA9685_MODE1, &reg);
- 	reg &= ~(MODE1_ALLCALL | MODE1_SUB1 | MODE1_SUB2 | MODE1_SUB3);
-+	reg |= MODE1_AI;
- 	pca9685_write_reg(chip, PCA9685_MODE1, reg);
- 
- 	/* Reset OFF/ON registers to POR default */
--	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_L, 0);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_OFF_H, LED_FULL);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_L, 0);
--	pca9685_write_reg(chip, PCA9685_ALL_LED_ON_H, LED_FULL);
-+	ret = pca9685_write_4reg(chip, PCA9685_ALL_LED_ON_L, (u8[]){ 0, LED_FULL, 0, LED_FULL });
-+	if (ret < 0)
-+		return dev_err_probe(&client->dev, ret, "Failed to reset ON/OFF registers\n");
- 
- 	chip->ops = &pca9685_pwm_ops;
- 
 -- 
 2.51.0
 
