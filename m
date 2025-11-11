@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A01325CC40;
-	Tue, 11 Nov 2025 01:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081A925CC40;
+	Tue, 11 Nov 2025 01:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823998; cv=none; b=nenDy1K7kyzKNhk1aZn+jmrUtMoHbQDeY8O22GroTM1IUqSZPbix9y/FpR+xnuf8BnYcsT0TqGgpH+Eiznjcgxo9YZWdNLE8bcjjf7in3bo2H5hADswQde6lK/SHEftJd9KwbgnYqFWahRw8L+nTWyP3aom6G6WqqEKy6Ozkqms=
+	t=1762824001; cv=none; b=kRNxH8bQS/FTDQzirgyRgmpVH1cWWsRy+EG7NhA/fqq+dDMaqhNfS0Y/MT258/CUjeetAhq5VYd6N8wGE1Kb1UZiLywe5ELHKWKuFBj953YAjsq3cLU2TObhQ4ZXyWY3q9bpajpPC1W4E6ACFY4wPJfMW2xij13tKpHrjYE0Llk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823998; c=relaxed/simple;
-	bh=swntWXiu6ejr6eXuazvBlD3C2wohGf5KqfHhbvfbWlg=;
+	s=arc-20240116; t=1762824001; c=relaxed/simple;
+	bh=meN4BPqI428n9/wURJ2Jagp0ZHMR+WPn/Mpf6nHDoKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jl8m4G8cEonyN+GBAp6Sd+gMAAJKFiSLOc3ABpd+1uqQdxOcbg9IlrttEEtHTpWGnvEPBkbA5BBHPQ2xCKKMHaWdDf/JSXFJy15Km8GTuNVP8sXoyak0zlOhCZGJx/q1Ok8uVfrVCpOa30CS0hdYB31HFz4LOTPAAcFSsdfDakE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBscdZD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvPlv1tDKWjuXP3G2wsVwrUrvpjcWieEz0zf4TSriyWHiyaFAMn1fvggKh3rx929EyD7kRlOvz0Ah0cTNIByTvVpFSQhGYMjxs/LppXK04SnXmgUp3B4NxJbV25Wy2HosUb1BlNqmL9quA9vOQ+VKdSXjpfbRyOaIkm8YJn81Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GwNHlCE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBscdZD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3EAC113D0;
-	Tue, 11 Nov 2025 01:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GwNHlCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4CFC4CEF5;
+	Tue, 11 Nov 2025 01:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823998;
-	bh=swntWXiu6ejr6eXuazvBlD3C2wohGf5KqfHhbvfbWlg=;
+	s=korg; t=1762824000;
+	bh=meN4BPqI428n9/wURJ2Jagp0ZHMR+WPn/Mpf6nHDoKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBscdZD3o1No+wtxyGpFDNj+Bs6z4kD6jnibBCPjsyNi+Ajivi9g+m4tOZlcZ2TRu
-	 SR6Rkzgtn7YVrL5AQK4srATsHaadz1UPm6klOGz4qj+sdqxsxoHSmKl0d/JV37MvwJ
-	 PaVXL0Z9OTWEp09vrjeTQhMrda4hM96LReFOcUcY=
+	b=1GwNHlCEMmuNJvsynC3wPDsVJJCrtP+HEl55JhAZIa60OJ81HNP3GLbr3q9fYgPbJ
+	 S+xW5OOJW+RgkeRXwVxPPl57pWhIYAdGmt3KMm7QCp+n6sq5EKIN1+Q1+qpJyworOF
+	 e7DiRvQ1Ch9ORlBi5W+XdoM409gCfO7WMSQ89ejo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 368/565] ethernet: Extend device_get_mac_address() to use NVMEM
-Date: Tue, 11 Nov 2025 09:43:44 +0900
-Message-ID: <20251111004535.148496214@linuxfoundation.org>
+Subject: [PATCH 6.12 360/565] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
+Date: Tue, 11 Nov 2025 09:43:36 +0900
+Message-ID: <20251111004534.966362312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,40 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit d2d3f529e7b6ff2aa432b16a2317126621c28058 ]
+[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
 
-A lot of modern SoC have the ability to store MAC addresses in their
-NVMEM. So extend the generic function device_get_mac_address() to
-obtain the MAC address from an nvmem cell named 'mac-address' in
-case there is no firmware node which contains the MAC address directly.
+Replace kmalloc_array() + copy_from_user() with memdup_array_user().
 
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250912140332.35395-3-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This shrinks the source code and improves separation between the kernel
+and userspace slabs.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethernet/eth.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/net/ethernet/eth.c b/net/ethernet/eth.c
-index 4e3651101b866..43e211e611b16 100644
---- a/net/ethernet/eth.c
-+++ b/net/ethernet/eth.c
-@@ -613,7 +613,10 @@ EXPORT_SYMBOL(fwnode_get_mac_address);
-  */
- int device_get_mac_address(struct device *dev, char *addr)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 5df21529b3b13..187263c0406ef 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1737,30 +1737,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
  {
--	return fwnode_get_mac_address(dev_fwnode(dev), addr);
-+	if (!fwnode_get_mac_address(dev_fwnode(dev), addr))
-+		return 0;
-+
-+	return nvmem_get_mac_address(dev, addr);
- }
- EXPORT_SYMBOL(device_get_mac_address);
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 	union drm_amdgpu_wait_fences *wait = data;
+-	uint32_t fence_count = wait->in.fence_count;
+-	struct drm_amdgpu_fence *fences_user;
+ 	struct drm_amdgpu_fence *fences;
+ 	int r;
  
+ 	/* Get the fences from userspace */
+-	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
+-			GFP_KERNEL);
+-	if (fences == NULL)
+-		return -ENOMEM;
+-
+-	fences_user = u64_to_user_ptr(wait->in.fences);
+-	if (copy_from_user(fences, fences_user,
+-		sizeof(struct drm_amdgpu_fence) * fence_count)) {
+-		r = -EFAULT;
+-		goto err_free_fences;
+-	}
++	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
++				   wait->in.fence_count,
++				   sizeof(struct drm_amdgpu_fence));
++	if (IS_ERR(fences))
++		return PTR_ERR(fences);
+ 
+ 	if (wait->in.wait_all)
+ 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
+ 	else
+ 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
+ 
+-err_free_fences:
+ 	kfree(fences);
+ 
+ 	return r;
 -- 
 2.51.0
 
