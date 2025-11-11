@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEBE26E146;
-	Tue, 11 Nov 2025 01:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F84246333;
+	Tue, 11 Nov 2025 01:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825473; cv=none; b=jIHVKewirq5Or6mnUJfR3SvWqH6s9/QJwI7yChKFAOzDftCZYssM7WsFCQ4u1JRWB9z9vWJEDKWbcUm44Chj1ktS/wuezzxqv29fXjUT9wPqrSZupMDpKCO6M0q8qpVTEIxyGN8PEsUVARcf3VDBY8fN4pK5xn8fZb6VuzStlSc=
+	t=1762825476; cv=none; b=XbekT3ovHNKzdBUu+hja2lVj9lkUhzgQ43vwBMfxmNhmwxKyioqdmJi3oiHfrBS9bAzCgfoBb5hxMxhweiGs4rmdcdQh9mysBflzRzQLx3F2kY2j0KMTnHxJd7lqkeh0oudG9Hjmi+ph3VSe04zgKvgncVNJwhsqlfJCSWRMGbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825473; c=relaxed/simple;
-	bh=T/QCPGjtNYIWgAHXb7KqTv951RjYi8WmSRBRQCtJZz0=;
+	s=arc-20240116; t=1762825476; c=relaxed/simple;
+	bh=RBZvN719IMLdr9lT37VUKjPokM+ThoJBuQ7DmrMWULY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDhzQmONx4IvWilsBhgB8kWGHfVk3fclYrXGTx3l+lHatISS9BcfavtCPICB1AXMhdALfMKmw3VxlkkuOl66O9gZvcLXbS+lzmLrO9MBsomgXwvYFhn4H/UlLCRuJmxt08XNLe/9oBj0sAdxFi6ycoRpUVPafJAvzK4q2pmC8tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLB4G2fv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJJ3LpQujPMeEbdV60Vmet0AN7zfPknaZVXhljKR6Vu3gpy73vOHrDsWXY60ZyIspF/frboAurwgPEupyvowVlz+GoEWuihAPrzw65IvS5Nt+s/QXZuPxUCmP20liP1jv0+s2kFPr+NrvFVSirmfVHAuUhWPMrH6Koz1ALtR6ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYul3NFf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLB4G2fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDDFC116B1;
-	Tue, 11 Nov 2025 01:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYul3NFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB1DC19425;
+	Tue, 11 Nov 2025 01:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825473;
-	bh=T/QCPGjtNYIWgAHXb7KqTv951RjYi8WmSRBRQCtJZz0=;
+	s=korg; t=1762825475;
+	bh=RBZvN719IMLdr9lT37VUKjPokM+ThoJBuQ7DmrMWULY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLB4G2fvH1p9QHkdPMHfGBWN/7AjBdgnhN4UDOt3gjoMHG5t0xC/IoZKNOQg+tpsD
-	 ypkTy05MK4ZLvLvxVATygC3HYNmNOvVE9puFG/RSg4Y7WqOpZPLwjPSf24SxW0z4Zt
-	 Z/GWwBFb+dXCR/PT3deOGpnWSfCKowFYiJcAMptc=
+	b=LYul3NFfoAyYedbUJHewwHYyD+sL6SAJKuwrLtuLQobH4nV/GO10lY4rMGXSTd5XI
+	 /Z8usNGMYGZh8hE0epFlXgVVFHTntlVuPZB3xFO9BwgRNV3RZAn9hsmJwt/6wWv/Sk
+	 SYEbrqe/+viKs323Ip8kn+U9d/A+rVNkve6HHwRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Octavia Togami <octavia.togami@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.17 818/849] perf/core: Fix system hang caused by cpu-clock usage
-Date: Tue, 11 Nov 2025 09:46:28 +0900
-Message-ID: <20251111004556.202259336@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.17 819/849] x86/amd_node: Fix AMD root device caching
+Date: Tue, 11 Nov 2025 09:46:29 +0900
+Message-ID: <20251111004556.225687864@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,112 +50,267 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit eb3182ef0405ff2f6668fd3e5ff9883f60ce8801 upstream.
+commit 0a4b61d9c2e496b5f0a10e29e355a1465c8738bb upstream.
 
-cpu-clock usage by the async-profiler tool can trigger a system hang,
-which got bisected back to the following commit by Octavia Togami:
+Recent AMD node rework removed the "search and count" method of caching AMD
+root devices. This depended on the value from a Data Fabric register that was
+expected to hold the PCI bus of one of the root devices attached to that
+fabric.
 
-  18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage") causes this issue
+However, this expectation is incorrect. The register, when read from PCI
+config space, returns the bitwise-OR of the buses of all attached root
+devices.
 
-The root cause of the hang is that cpu-clock is a special type of SW
-event which relies on hrtimers. The __perf_event_overflow() callback
-is invoked from the hrtimer handler for cpu-clock events, and
-__perf_event_overflow() tries to call cpu_clock_event_stop()
-to stop the event, which calls htimer_cancel() to cancel the hrtimer.
+This behavior is benign on AMD reference design boards, since the bus numbers
+are aligned. This results in a bitwise-OR value matching one of the buses. For
+example, 0x00 | 0x40 | 0xA0 | 0xE0 = 0xE0.
 
-But that's a recursion into the hrtimer code from a hrtimer handler,
-which (unsurprisingly) deadlocks.
+This behavior breaks on boards where the bus numbers are not exactly aligned.
+For example, 0x00 | 0x07 | 0xE0 | 0x15 = 0x1F.
 
-To fix this bug, use hrtimer_try_to_cancel() instead, and set
-the PERF_HES_STOPPED flag, which causes perf_swevent_hrtimer()
-to stop the event once it sees the PERF_HES_STOPPED flag.
+The examples above are for AMD node 0. The first root device on other nodes
+will not be 0x00. The first root device for other nodes will depend on the
+total number of root devices, the system topology, and the specific PCI bus
+number assignment.
 
-[ mingo: Fixed the comments and improved the changelog. ]
+For example, a system with 2 AMD nodes could have this:
 
-Closes: https://lore.kernel.org/all/CAHPNGSQpXEopYreir+uDDEbtXTBvBvi8c6fYXJvceqtgTPao3Q@mail.gmail.com/
-Fixes: 18dbcbfabfff ("perf: Fix the POLL_HUP delivery breakage")
-Reported-by: Octavia Togami <octavia.togami@gmail.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Octavia Togami <octavia.togami@gmail.com>
+  Node 0 : 0x00 0x07 0x0e 0x15
+  Node 1 : 0x1c 0x23 0x2a 0x31
+
+The bus numbering style in the reference boards is not a requirement.  The
+numbering found in other boards is not incorrect. Therefore, the root device
+caching method needs to be adjusted.
+
+Go back to the "search and count" method used before the recent rework.
+Search for root devices using PCI class code rather than fixed PCI IDs.
+
+This keeps the goal of the rework (remove dependency on PCI IDs) while being
+able to support various board designs.
+
+Merge helper functions to reduce code duplication.
+
+  [ bp: Reflow comment. ]
+
+Fixes: 40a5f6ffdfc8 ("x86/amd_nb: Simplify root device search")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Link: https://github.com/lucko/spark/issues/530
-Link: https://patch.msgid.link/20251015051828.12809-1-dapeng1.mi@linux.intel.com
+Link: https://patch.msgid.link/all/20251028-fix-amd-root-v2-1-843e38f8be2c@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/amd/node.h |    1 
+ arch/x86/kernel/amd_node.c      |  150 +++++++++++++---------------------------
+ 2 files changed, 51 insertions(+), 100 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11757,7 +11757,8 @@ static enum hrtimer_restart perf_swevent
+--- a/arch/x86/include/asm/amd/node.h
++++ b/arch/x86/include/asm/amd/node.h
+@@ -23,7 +23,6 @@
+ #define AMD_NODE0_PCI_SLOT	0x18
  
- 	event = container_of(hrtimer, struct perf_event, hw.hrtimer);
+ struct pci_dev *amd_node_get_func(u16 node, u8 func);
+-struct pci_dev *amd_node_get_root(u16 node);
  
--	if (event->state != PERF_EVENT_STATE_ACTIVE)
-+	if (event->state != PERF_EVENT_STATE_ACTIVE ||
-+	    event->hw.state & PERF_HES_STOPPED)
- 		return HRTIMER_NORESTART;
+ static inline u16 amd_num_nodes(void)
+ {
+--- a/arch/x86/kernel/amd_node.c
++++ b/arch/x86/kernel/amd_node.c
+@@ -34,62 +34,6 @@ struct pci_dev *amd_node_get_func(u16 no
+ 	return pci_get_domain_bus_and_slot(0, 0, PCI_DEVFN(AMD_NODE0_PCI_SLOT + node, func));
+ }
  
- 	event->pmu->read(event);
-@@ -11803,15 +11804,20 @@ static void perf_swevent_cancel_hrtimer(
- 	struct hw_perf_event *hwc = &event->hw;
+-#define DF_BLK_INST_CNT		0x040
+-#define	DF_CFG_ADDR_CNTL_LEGACY	0x084
+-#define	DF_CFG_ADDR_CNTL_DF4	0xC04
+-
+-#define DF_MAJOR_REVISION	GENMASK(27, 24)
+-
+-static u16 get_cfg_addr_cntl_offset(struct pci_dev *df_f0)
+-{
+-	u32 reg;
+-
+-	/*
+-	 * Revision fields added for DF4 and later.
+-	 *
+-	 * Major revision of '0' is found pre-DF4. Field is Read-as-Zero.
+-	 */
+-	if (pci_read_config_dword(df_f0, DF_BLK_INST_CNT, &reg))
+-		return 0;
+-
+-	if (reg & DF_MAJOR_REVISION)
+-		return DF_CFG_ADDR_CNTL_DF4;
+-
+-	return DF_CFG_ADDR_CNTL_LEGACY;
+-}
+-
+-struct pci_dev *amd_node_get_root(u16 node)
+-{
+-	struct pci_dev *root;
+-	u16 cntl_off;
+-	u8 bus;
+-
+-	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
+-		return NULL;
+-
+-	/*
+-	 * D18F0xXXX [Config Address Control] (DF::CfgAddressCntl)
+-	 * Bits [7:0] (SecBusNum) holds the bus number of the root device for
+-	 * this Data Fabric instance. The segment, device, and function will be 0.
+-	 */
+-	struct pci_dev *df_f0 __free(pci_dev_put) = amd_node_get_func(node, 0);
+-	if (!df_f0)
+-		return NULL;
+-
+-	cntl_off = get_cfg_addr_cntl_offset(df_f0);
+-	if (!cntl_off)
+-		return NULL;
+-
+-	if (pci_read_config_byte(df_f0, cntl_off, &bus))
+-		return NULL;
+-
+-	/* Grab the pointer for the actual root device instance. */
+-	root = pci_get_domain_bus_and_slot(0, bus, 0);
+-
+-	pci_dbg(root, "is root for AMD node %u\n", node);
+-	return root;
+-}
+-
+ static struct pci_dev **amd_roots;
  
- 	/*
--	 * The throttle can be triggered in the hrtimer handler.
--	 * The HRTIMER_NORESTART should be used to stop the timer,
--	 * rather than hrtimer_cancel(). See perf_swevent_hrtimer()
-+	 * Careful: this function can be triggered in the hrtimer handler,
-+	 * for cpu-clock events, so hrtimer_cancel() would cause a
-+	 * deadlock.
-+	 *
-+	 * So use hrtimer_try_to_cancel() to try to stop the hrtimer,
-+	 * and the cpu-clock handler also sets the PERF_HES_STOPPED flag,
-+	 * which guarantees that perf_swevent_hrtimer() will stop the
-+	 * hrtimer once it sees the PERF_HES_STOPPED flag.
- 	 */
- 	if (is_sampling_event(event) && (hwc->interrupts != MAX_INTERRUPTS)) {
- 		ktime_t remaining = hrtimer_get_remaining(&hwc->hrtimer);
- 		local64_set(&hwc->period_left, ktime_to_ns(remaining));
+ /* Protect the PCI config register pairs used for SMN. */
+@@ -274,51 +218,21 @@ DEFINE_SHOW_STORE_ATTRIBUTE(smn_node);
+ DEFINE_SHOW_STORE_ATTRIBUTE(smn_address);
+ DEFINE_SHOW_STORE_ATTRIBUTE(smn_value);
  
--		hrtimer_cancel(&hwc->hrtimer);
-+		hrtimer_try_to_cancel(&hwc->hrtimer);
+-static int amd_cache_roots(void)
++static struct pci_dev *get_next_root(struct pci_dev *root)
+ {
+-	u16 node, num_nodes = amd_num_nodes();
+-
+-	amd_roots = kcalloc(num_nodes, sizeof(*amd_roots), GFP_KERNEL);
+-	if (!amd_roots)
+-		return -ENOMEM;
+-
+-	for (node = 0; node < num_nodes; node++)
+-		amd_roots[node] = amd_node_get_root(node);
+-
+-	return 0;
+-}
+-
+-static int reserve_root_config_spaces(void)
+-{
+-	struct pci_dev *root = NULL;
+-	struct pci_bus *bus = NULL;
+-
+-	while ((bus = pci_find_next_bus(bus))) {
+-		/* Root device is Device 0 Function 0 on each Primary Bus. */
+-		root = pci_get_slot(bus, 0);
+-		if (!root)
++	while ((root = pci_get_class(PCI_CLASS_BRIDGE_HOST << 8, root))) {
++		/* Root device is Device 0 Function 0. */
++		if (root->devfn)
+ 			continue;
+ 
+ 		if (root->vendor != PCI_VENDOR_ID_AMD &&
+ 		    root->vendor != PCI_VENDOR_ID_HYGON)
+ 			continue;
+ 
+-		pci_dbg(root, "Reserving PCI config space\n");
+-
+-		/*
+-		 * There are a few SMN index/data pairs and other registers
+-		 * that shouldn't be accessed by user space.
+-		 * So reserve the entire PCI config space for simplicity rather
+-		 * than covering specific registers piecemeal.
+-		 */
+-		if (!pci_request_config_region_exclusive(root, 0, PCI_CFG_SPACE_SIZE, NULL)) {
+-			pci_err(root, "Failed to reserve config space\n");
+-			return -EEXIST;
+-		}
++		break;
  	}
+ 
+-	smn_exclusive = true;
+-	return 0;
++	return root;
  }
  
-@@ -11855,12 +11861,14 @@ static void cpu_clock_event_update(struc
+ static bool enable_dfs;
+@@ -332,7 +246,8 @@ __setup("amd_smn_debugfs_enable", amd_sm
  
- static void cpu_clock_event_start(struct perf_event *event, int flags)
+ static int __init amd_smn_init(void)
  {
-+	event->hw.state = 0;
- 	local64_set(&event->hw.prev_count, local_clock());
- 	perf_swevent_start_hrtimer(event);
+-	int err;
++	u16 count, num_roots, roots_per_node, node, num_nodes;
++	struct pci_dev *root;
+ 
+ 	if (!cpu_feature_enabled(X86_FEATURE_ZEN))
+ 		return 0;
+@@ -342,13 +257,48 @@ static int __init amd_smn_init(void)
+ 	if (amd_roots)
+ 		return 0;
+ 
+-	err = amd_cache_roots();
+-	if (err)
+-		return err;
++	num_roots = 0;
++	root = NULL;
++	while ((root = get_next_root(root))) {
++		pci_dbg(root, "Reserving PCI config space\n");
+ 
+-	err = reserve_root_config_spaces();
+-	if (err)
+-		return err;
++		/*
++		 * There are a few SMN index/data pairs and other registers
++		 * that shouldn't be accessed by user space. So reserve the
++		 * entire PCI config space for simplicity rather than covering
++		 * specific registers piecemeal.
++		 */
++		if (!pci_request_config_region_exclusive(root, 0, PCI_CFG_SPACE_SIZE, NULL)) {
++			pci_err(root, "Failed to reserve config space\n");
++			return -EEXIST;
++		}
++
++		num_roots++;
++	}
++
++	pr_debug("Found %d AMD root devices\n", num_roots);
++
++	if (!num_roots)
++		return -ENODEV;
++
++	num_nodes = amd_num_nodes();
++	amd_roots = kcalloc(num_nodes, sizeof(*amd_roots), GFP_KERNEL);
++	if (!amd_roots)
++		return -ENOMEM;
++
++	roots_per_node = num_roots / num_nodes;
++
++	count = 0;
++	node = 0;
++	root = NULL;
++	while (node < num_nodes && (root = get_next_root(root))) {
++		/* Use one root for each node and skip the rest. */
++		if (count++ % roots_per_node)
++			continue;
++
++		pci_dbg(root, "is root for AMD node %u\n", node);
++		amd_roots[node++] = root;
++	}
+ 
+ 	if (enable_dfs) {
+ 		debugfs_dir = debugfs_create_dir("amd_smn", arch_debugfs_dir);
+@@ -358,6 +308,8 @@ static int __init amd_smn_init(void)
+ 		debugfs_create_file("value",	0600, debugfs_dir, NULL, &smn_value_fops);
+ 	}
+ 
++	smn_exclusive = true;
++
+ 	return 0;
  }
  
- static void cpu_clock_event_stop(struct perf_event *event, int flags)
- {
-+	event->hw.state = PERF_HES_STOPPED;
- 	perf_swevent_cancel_hrtimer(event);
- 	if (flags & PERF_EF_UPDATE)
- 		cpu_clock_event_update(event);
-@@ -11934,12 +11942,14 @@ static void task_clock_event_update(stru
- 
- static void task_clock_event_start(struct perf_event *event, int flags)
- {
-+	event->hw.state = 0;
- 	local64_set(&event->hw.prev_count, event->ctx->time);
- 	perf_swevent_start_hrtimer(event);
- }
- 
- static void task_clock_event_stop(struct perf_event *event, int flags)
- {
-+	event->hw.state = PERF_HES_STOPPED;
- 	perf_swevent_cancel_hrtimer(event);
- 	if (flags & PERF_EF_UPDATE)
- 		task_clock_event_update(event, event->ctx->time);
 
 
