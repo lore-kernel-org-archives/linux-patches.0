@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A36E2AE8D;
-	Tue, 11 Nov 2025 00:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BC42BB17;
+	Tue, 11 Nov 2025 00:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822172; cv=none; b=UJ95pXnX91q6q+eqJPNck+lM4NCDGkEKJdIfkEP49moGYKvL6bl+cBRFlOtmQ402JCfGQ6oTPa5YXS7D7MC/NWBwSqT2L9ET2V5N30CVBcsGz/VnjDSbAjBAAQRsELAwJCgx8cJHB7lDc7w4QkX7BYpMgKAsmEiarMfsXytBCh8=
+	t=1762822174; cv=none; b=oDS3gSerbDWzHg0n2EcT1zQ8/FxyQRyL/uX21p54QN24ZA70e9tqRavR5jGN3m82+K2sB5BD3Xfjyg3pPgCaHs25xA28sTsStQhmzQzwueGkb+ErA7gVwr35aPgvbiAY1qMio1j2jl7cwVfCXEC125Cva/79pDLSc7vvZoCAjgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822172; c=relaxed/simple;
-	bh=2ZeWSSzN3lZe4d4epqYobxgnIAHlzd4Mtn6ll3snAOQ=;
+	s=arc-20240116; t=1762822174; c=relaxed/simple;
+	bh=y18lPUL1wgj2uv89gAEvVgUlX3DoLR0CwfRExwh0Wp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXLih0xC2cmKDN/YSBOciegJ0D4+UksXC9Lz9lq4j3hIBnyI4R2+X98mK/c9WrUSEcM6O3UJwLLmbqoP4o5g9xOctbz9LZ7v5ghSvqzJXCx8VOfCmM8vExWwOhD8XaUnGiuWIaWSP98hbnvw7r0m2hEQhgeHYsfx5ej+Jk1YgmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QEVL2tH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTVZCUYRx+c/uT0DqjMTeWS4F11Ezpz8X3J6I7EP2RnSzqAJiI9v967+cmtheMYgi8NqdVYErm5McIuJMsFGbPO2YhR2ClIeO1eKC8O2Tzo3Ex2+ossulET8VyEhxDqiPmk0zRSnysuAlKnQUqg6AgS/hRrz3e8qiVujn5DoeCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebB9oUHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QEVL2tH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCFFC4CEF5;
-	Tue, 11 Nov 2025 00:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebB9oUHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CCAC19425;
+	Tue, 11 Nov 2025 00:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822172;
-	bh=2ZeWSSzN3lZe4d4epqYobxgnIAHlzd4Mtn6ll3snAOQ=;
+	s=korg; t=1762822174;
+	bh=y18lPUL1wgj2uv89gAEvVgUlX3DoLR0CwfRExwh0Wp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QEVL2tH6kVom8YD2Da45m3/6M5KmsNB2gAO8ycYUtJTfqUolpS/vMj4bU7vK5buo
-	 gU/9K+jyytXoHR3SiY3tWagrtK5bGZBOUFDXmawvmQAk/Avp+ZTR319AeNPDvBW07p
-	 UMXexixhHAQ8BaINiTEyuaNjp4etnBqF2iSioWWg=
+	b=ebB9oUHzBqmXM3gpjR5zTl+yt4HUvasMZOQzQ8OlyBepRKIOdDfm3BxKDNcJXmxVK
+	 drNHXrOygXvZJf77e+wXrNiqseZt2ry35GLTN92D2zIrrehva0bJpN24sypbni3FBf
+	 ge6eM1MTQ+4I+FF6exGTIAlJjTQ6fc057S1QBeYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 046/849] bpf: Do not audit capability check in do_jit()
-Date: Tue, 11 Nov 2025 09:33:36 +0900
-Message-ID: <20251111004537.554496776@linuxfoundation.org>
+Subject: [PATCH 6.17 047/849] nvmet-auth: update sc_c in host response
+Date: Tue, 11 Nov 2025 09:33:37 +0900
+Message-ID: <20251111004537.576693156@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,48 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit 881a9c9cb7856b24e390fad9f59acfd73b98b3b2 ]
+[ Upstream commit 60ad1de8e59278656092f56e87189ec82f078d12 ]
 
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+The target code should set the sc_c bit in calculating the host response
+based on the status of the 'concat' setting, otherwise we'll get an
+authentication mismatch for hosts setting that bit correctly.
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2369326
-Fixes: d4e89d212d40 ("x86/bpf: Call branch history clearing sequence on exit")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20251021122758.2659513-1-omosnace@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 7e091add9c43 ("nvme-auth: update sc_c in host response")
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/auth.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 7e3fca1646203..574586a6d97f8 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2592,7 +2592,7 @@ st:			if (is_imm8(insn->off))
- 			/* Update cleanup_addr */
- 			ctx->cleanup_addr = proglen;
- 			if (bpf_prog_was_classic(bpf_prog) &&
--			    !capable(CAP_SYS_ADMIN)) {
-+			    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
- 				u8 *ip = image + addrs[i - 1];
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index b340380f38922..ceba21684e82c 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -298,7 +298,7 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 	const char *hash_name;
+ 	u8 *challenge = req->sq->dhchap_c1;
+ 	struct nvme_dhchap_key *transformed_key;
+-	u8 buf[4];
++	u8 buf[4], sc_c = ctrl->concat ? 1 : 0;
+ 	int ret;
  
- 				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
+ 	hash_name = nvme_auth_hmac_name(ctrl->shash_id);
+@@ -367,13 +367,14 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 	ret = crypto_shash_update(shash, buf, 2);
+ 	if (ret)
+ 		goto out;
+-	memset(buf, 0, 4);
++	*buf = sc_c;
+ 	ret = crypto_shash_update(shash, buf, 1);
+ 	if (ret)
+ 		goto out;
+ 	ret = crypto_shash_update(shash, "HostHost", 8);
+ 	if (ret)
+ 		goto out;
++	memset(buf, 0, 4);
+ 	ret = crypto_shash_update(shash, ctrl->hostnqn, strlen(ctrl->hostnqn));
+ 	if (ret)
+ 		goto out;
 -- 
 2.51.0
 
