@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A29E246333;
-	Tue, 11 Nov 2025 00:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41B54C97;
+	Tue, 11 Nov 2025 00:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822562; cv=none; b=TFZ2Y7mPqCmg0TWIFYN6ucm4bao2YeF7PMaDla1K7lIKIGM3EmMjXNr2v/HOT5KcC6BVsVZW/7mR8Z2FMbMs8S1QmuFNcZhsrXAJSObiw6mq81PHDKBwNTYD8ZOHRNG9ASlkdNFt2otHCqoCbupl3WcMIPiGIaOlQM2QGi2zSdo=
+	t=1762822564; cv=none; b=tX6K3ahiTj6d/MS3v75uvlVw5qIloK79GoZ2VuRo+mm2SU/0o8JZfk/cwpfHMOGasV91NLK0XobNCWPGzxvcWUOZP4nxTzU4EiulsvUN+paYssA6M954GwbYXAt/fN1hLjjsrrat1LSDV7K2WrgWsl/LrSXWzRMNOq76oAQGlco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822562; c=relaxed/simple;
-	bh=f/+At7dNsiIsE4evDk/PILSqjW0NYc5lYqnyuIYnD2w=;
+	s=arc-20240116; t=1762822564; c=relaxed/simple;
+	bh=Xz2FNJtVVFJ19lm/iLb5MNMnNcG0iOzh27qH4hEja6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZImPnz92Iv3fJ+g6vQ+uiXLnbO5I4dGHtt4DkXe+BHiRFDCLcaezpfJCunsx1SemGyeRs8+O+n/0gq42ievYiYn26nicyXlPWh8paQyZJtG5TFpl2ozoBJ9qZ97OAXIOLlyleiBqJ2Q3D0STxqZDtyCgtNUDHoVUh5WaquwaX30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilr6UHfB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emWm2SvDMUO33HQFB0cek7Z1GuUaNkZrMLi0lVzMxlCQwRhWHIoI961cPDemHgBxdXMYP0OvKZQQZA+NIsOJeBLkm0IGkn2AQ4MN+ujuz8ftv08/MmYwtxp2kb9TwV0u045JBuM7WyeBxlXS03CQBFb11MB50OjwgScKvdemn0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWmZSYqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilr6UHfB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4EDC113D0;
-	Tue, 11 Nov 2025 00:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWmZSYqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2A9C16AAE;
+	Tue, 11 Nov 2025 00:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822562;
-	bh=f/+At7dNsiIsE4evDk/PILSqjW0NYc5lYqnyuIYnD2w=;
+	s=korg; t=1762822564;
+	bh=Xz2FNJtVVFJ19lm/iLb5MNMnNcG0iOzh27qH4hEja6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilr6UHfBCM09rHxGXzyr/DvZrcc6WMIYgpOKn4mpdRgK9u8zGBvUddBWgL7rBEUbQ
-	 t+oMgDVyxFWgALnRsPIL829gdhYxDXA0xEyWo0U2KufylnW8qV0x6RfoRjOm0HA9qH
-	 mx8yQFVHJusl1cjQ/Ep44TNl6VobtnrSmRHwBDM8=
+	b=iWmZSYqdoS8+1efhNdpuOBlimZnxrlhMsylLbzA4ZpmIQtQkBowTnuPviYdsf3imc
+	 M9cMNlTwyxPcbtVj28AJBKwSb59i/H/5NLvctpSPxkCNGoOu4sUMpLYFWa8TMDhftk
+	 AmtX37ctP50sEmJD+vFi+8V2M3eNv+ULzr+H2LkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nishanth Menon <nm@ti.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 123/849] soc: ti: pruss: dont use %pK through printk
-Date: Tue, 11 Nov 2025 09:34:53 +0900
-Message-ID: <20251111004539.369465931@linuxfoundation.org>
+Subject: [PATCH 6.12 075/565] net: phy: add phy_disable_eee
+Date: Tue, 11 Nov 2025 09:38:51 +0900
+Message-ID: <20251111004528.644972235@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,51 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit a5039648f86424885aae37f03dc39bc9cb972ecb ]
+[ Upstream commit b55498ff14bd14860d48dc8d2a0b6889b218c408 ]
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log.
-Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
-the regular %p has been improved to avoid this issue.
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping locks in atomic contexts.
+If a MAC driver doesn't support EEE, then the PHY shouldn't advertise it.
+Add phy_disable_eee() for this purpose.
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
-
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://lore.kernel.org/r/20250811-restricted-pointers-soc-v2-1-7af7ed993546@linutronix.de
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/fd51738c-dcd6-4d61-b8c5-faa6ac0f1026@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 84a905290cb4 ("net: phy: dp83867: Disable EEE support as not implemented")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ti/pruss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/phy_device.c |   16 ++++++++++++++++
+ include/linux/phy.h          |    1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/soc/ti/pruss.c b/drivers/soc/ti/pruss.c
-index d7634bf5413a3..038576805bfa0 100644
---- a/drivers/soc/ti/pruss.c
-+++ b/drivers/soc/ti/pruss.c
-@@ -449,7 +449,7 @@ static int pruss_of_setup_memories(struct device *dev, struct pruss *pruss)
- 		pruss->mem_regions[i].pa = res.start;
- 		pruss->mem_regions[i].size = resource_size(&res);
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3046,6 +3046,22 @@ void phy_support_eee(struct phy_device *
+ EXPORT_SYMBOL(phy_support_eee);
  
--		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %pK\n",
-+		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %p\n",
- 			mem_names[i], &pruss->mem_regions[i].pa,
- 			pruss->mem_regions[i].size, pruss->mem_regions[i].va);
- 	}
--- 
-2.51.0
-
+ /**
++ * phy_disable_eee - Disable EEE for the PHY
++ * @phydev: Target phy_device struct
++ *
++ * This function is used by MAC drivers for MAC's which don't support EEE.
++ * It disables EEE on the PHY layer.
++ */
++void phy_disable_eee(struct phy_device *phydev)
++{
++	linkmode_zero(phydev->supported_eee);
++	linkmode_zero(phydev->advertising_eee);
++	phydev->eee_cfg.tx_lpi_enabled = false;
++	phydev->eee_cfg.eee_enabled = false;
++}
++EXPORT_SYMBOL_GPL(phy_disable_eee);
++
++/**
+  * phy_support_sym_pause - Enable support of symmetrical pause
+  * @phydev: target phy_device struct
+  *
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -2030,6 +2030,7 @@ void phy_advertise_eee_all(struct phy_de
+ void phy_support_sym_pause(struct phy_device *phydev);
+ void phy_support_asym_pause(struct phy_device *phydev);
+ void phy_support_eee(struct phy_device *phydev);
++void phy_disable_eee(struct phy_device *phydev);
+ void phy_set_sym_pause(struct phy_device *phydev, bool rx, bool tx,
+ 		       bool autoneg);
+ void phy_set_asym_pause(struct phy_device *phydev, bool rx, bool tx);
 
 
