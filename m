@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FA025EF81;
-	Tue, 11 Nov 2025 01:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510BF2836F;
+	Tue, 11 Nov 2025 01:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824931; cv=none; b=M8eIMA9su9RPxMD14/iQAetrmd5BNUBTX/FOB2UKUq1SMTCBvbx5yBHXmxg0RbL2zn1c7i6wxOg++T6gMaJAkprFM40CoQnNK48+owf7Jj0HZpw8U39FmtWYLbCSyrMN/WpTcrcNR8b8nsGmPMsasJ2ChKQ9sUuhKOOhFS1j1rw=
+	t=1762824933; cv=none; b=JUcbFDN4KfoWuL3+9SP7AsHsNVIc0m/S/FVqiWASX+hb28JLyKZwKujnIn/u53iJkOmlWgib1RkgbmuGfPIPBopdXjIthCRnHfzLnpVgHZrB6tTWLWhyg7dcskAkP+BtEqFBcxk21Roz271iv5Ehqk+Gx1nIuRyduj+/J3gfHGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824931; c=relaxed/simple;
-	bh=wp4KjkC+enCRoTPUmnMYl1JwndAcLAMewf0QVw8t5LM=;
+	s=arc-20240116; t=1762824933; c=relaxed/simple;
+	bh=6A4PB/IwOOXQLvhtvUocq51eduAtrnFX3VpZWKZrQjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TI+xRf7CLc8ffiCcJ6bmkcgb8lP/IQzLUDQXuNtWbc/I10sAZy2GsDfNYGef9qDi4ufBR2UvSrywRPGN+o65LkkSDSq8+4pnubqkdd7CKYVxI2wQWap8JO9daEj0OskDq0vSPkFOODcxx/AC/G7CnorZ0QaADtPvIrP3dhpKQJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tc+Zywyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/4nd0E47fTp/VbCTOejfU6uFL/kedBaatAZpuSEo09ku9ZXl9naz2aJONoroLZOBSQ1g+c5Yi+FUWB8uRkX+8mOU2CHll4B5h8Q3Dfgx9hxVv9QWg7VhvqmEFYOr8g9AYC2/xuGnayVyKzZmbANSj0j/PjBWOPixYgYYNCtwGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW9PmKAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tc+Zywyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394BEC4CEFB;
-	Tue, 11 Nov 2025 01:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW9PmKAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B5AC4CEFB;
+	Tue, 11 Nov 2025 01:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824930;
-	bh=wp4KjkC+enCRoTPUmnMYl1JwndAcLAMewf0QVw8t5LM=;
+	s=korg; t=1762824933;
+	bh=6A4PB/IwOOXQLvhtvUocq51eduAtrnFX3VpZWKZrQjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tc+ZywybdxNS0zgfWzLKcGzr8LmqM3RClXXPMMLuW0j+Mi3i7IjxNiyfSrFlM4gFO
-	 HRz4MF7KZitwRnKmPN5sReTO0ppDTmpUIpxejM+HM57uDBJWyev0ap6ColerCVBPBy
-	 RzatXwaCpdGxb/9rc+PMahJxKiw6gTc7wqt9pK7I=
+	b=aW9PmKAB0XjElZDcSAfU+jyPZ4eYtjnzNj//ZukduaedyedBI7Li0RNFG53mWYGUt
+	 ooZIm9qVv4T51qyN1Dz/D0goGT+n7rNWEzGejSs+WfWI0Pi3ZH1HCNSwYynA//30hj
+	 yp4oCeRoZhUZFcV6vSY9cJKjPtclDX0J9M24K0d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 600/849] iommu/vt-d: Remove LPIG from page group response descriptor
-Date: Tue, 11 Nov 2025 09:42:50 +0900
-Message-ID: <20251111004550.929461708@linuxfoundation.org>
+	Rong Zhang <i@rong.moe>,
+	Mario Limoncello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 553/565] drm/amd/display: Fix NULL deref in debugfs odm_combine_segments
+Date: Tue, 11 Nov 2025 09:46:49 +0900
+Message-ID: <20251111004539.442734521@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +47,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 4402e8f39d0bfff5c0a5edb5e1afe27a56545e11 ]
+commit 6dd97ceb645c08aca9fc871a3006e47fe699f0ac upstream.
 
-Bit 66 in the page group response descriptor used to be the LPIG (Last
-Page in Group), but it was marked as Reserved since Specification 4.0.
-Remove programming on this bit to make it consistent with the latest
-specification.
+When a connector is connected but inactive (e.g., disabled by desktop
+environments), pipe_ctx->stream_res.tg will be destroyed. Then, reading
+odm_combine_segments causes kernel NULL pointer dereference.
 
-Existing hardware all treats bit 66 of the page group response descriptor
-as "ignored", therefore this change doesn't break any existing hardware.
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ CPU: 16 UID: 0 PID: 26474 Comm: cat Not tainted 6.17.0+ #2 PREEMPT(lazy)  e6a17af9ee6db7c63e9d90dbe5b28ccab67520c6
+ Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN25WW 03/27/2025
+ RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
+ Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
+ RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
+ RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
+ RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
+ RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
+ R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
+ R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
+ FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  seq_read_iter+0x125/0x490
+  ? __alloc_frozen_pages_noprof+0x18f/0x350
+  seq_read+0x12c/0x170
+  full_proxy_read+0x51/0x80
+  vfs_read+0xbc/0x390
+  ? __handle_mm_fault+0xa46/0xef0
+  ? do_syscall_64+0x71/0x900
+  ksys_read+0x73/0xf0
+  do_syscall_64+0x71/0x900
+  ? count_memcg_events+0xc2/0x190
+  ? handle_mm_fault+0x1d7/0x2d0
+  ? do_user_addr_fault+0x21a/0x690
+  ? exc_page_fault+0x7e/0x1a0
+  entry_SYSCALL_64_after_hwframe+0x6c/0x74
+ RIP: 0033:0x7f44d4031687
+ Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00>
+ RSP: 002b:00007ffdb4b5f0b0 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
+ RAX: ffffffffffffffda RBX: 00007f44d3f9f740 RCX: 00007f44d4031687
+ RDX: 0000000000040000 RSI: 00007f44d3f5e000 RDI: 0000000000000003
+ RBP: 0000000000040000 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000202 R12: 00007f44d3f5e000
+ R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000040000
+  </TASK>
+ Modules linked in: tls tcp_diag inet_diag xt_mark ccm snd_hrtimer snd_seq_dummy snd_seq_midi snd_seq_oss snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device x>
+  snd_hda_codec_atihdmi snd_hda_codec_realtek_lib lenovo_wmi_helpers think_lmi snd_hda_codec_generic snd_hda_codec_hdmi snd_soc_core kvm snd_compress uvcvideo sn>
+  platform_profile joydev amd_pmc mousedev mac_hid sch_fq_codel uinput i2c_dev parport_pc ppdev lp parport nvme_fabrics loop nfnetlink ip_tables x_tables dm_cryp>
+ CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
+ RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
+ Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
+ RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
+ RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
+ RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
+ RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
+ R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
+ R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
+ FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
+ PKRU: 55555554
 
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20250901053943.1708490-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by checking pipe_ctx->stream_res.tg before dereferencing.
+
+Fixes: 07926ba8a44f ("drm/amd/display: Add debugfs interface for ODM combine info")
+Signed-off-by: Rong Zhang <i@rong.moe>
+Reviewed-by: Mario Limoncello <mario.limonciello@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f19bbecd34e3c15eed7e5e593db2ac0fc7a0e6d8)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.h | 1 -
- drivers/iommu/intel/prq.c   | 7 ++-----
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 2c261c069001c..21b2c3f85ddc5 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -462,7 +462,6 @@ enum {
- #define QI_PGRP_PASID(pasid)	(((u64)(pasid)) << 32)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -1277,7 +1277,8 @@ static int odm_combine_segments_show(str
+ 	if (connector->status != connector_status_connected)
+ 		return -ENODEV;
  
- /* Page group response descriptor QW1 */
--#define QI_PGRP_LPIG(x)		(((u64)(x)) << 2)
- #define QI_PGRP_IDX(idx)	(((u64)(idx)) << 3)
+-	if (pipe_ctx != NULL && pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
++	if (pipe_ctx && pipe_ctx->stream_res.tg &&
++	    pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
+ 		pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments(pipe_ctx->stream_res.tg, &segments);
  
- 
-diff --git a/drivers/iommu/intel/prq.c b/drivers/iommu/intel/prq.c
-index 52570e42a14c0..ff63c228e6e19 100644
---- a/drivers/iommu/intel/prq.c
-+++ b/drivers/iommu/intel/prq.c
-@@ -151,8 +151,7 @@ static void handle_bad_prq_event(struct intel_iommu *iommu,
- 			QI_PGRP_PASID_P(req->pasid_present) |
- 			QI_PGRP_RESP_CODE(result) |
- 			QI_PGRP_RESP_TYPE;
--	desc.qw1 = QI_PGRP_IDX(req->prg_index) |
--			QI_PGRP_LPIG(req->lpig);
-+	desc.qw1 = QI_PGRP_IDX(req->prg_index);
- 
- 	qi_submit_sync(iommu, &desc, 1, 0);
- }
-@@ -379,19 +378,17 @@ void intel_iommu_page_response(struct device *dev, struct iopf_fault *evt,
- 	struct iommu_fault_page_request *prm;
- 	struct qi_desc desc;
- 	bool pasid_present;
--	bool last_page;
- 	u16 sid;
- 
- 	prm = &evt->fault.prm;
- 	sid = PCI_DEVID(bus, devfn);
- 	pasid_present = prm->flags & IOMMU_FAULT_PAGE_REQUEST_PASID_VALID;
--	last_page = prm->flags & IOMMU_FAULT_PAGE_REQUEST_LAST_PAGE;
- 
- 	desc.qw0 = QI_PGRP_PASID(prm->pasid) | QI_PGRP_DID(sid) |
- 			QI_PGRP_PASID_P(pasid_present) |
- 			QI_PGRP_RESP_CODE(msg->code) |
- 			QI_PGRP_RESP_TYPE;
--	desc.qw1 = QI_PGRP_IDX(prm->grpid) | QI_PGRP_LPIG(last_page);
-+	desc.qw1 = QI_PGRP_IDX(prm->grpid);
- 	desc.qw2 = 0;
- 	desc.qw3 = 0;
- 
--- 
-2.51.0
-
+ 	seq_printf(m, "%d\n", segments);
 
 
