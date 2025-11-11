@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3E22D8DDA;
-	Tue, 11 Nov 2025 01:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B4B2D9ECD;
+	Tue, 11 Nov 2025 01:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823594; cv=none; b=SOMbqt94axfD5Ixkf9wiNciiKymMOPgtzFj9FNnQzoug4rlhp8kv7bySd61g4bJ1tqxp8i50kLK6dMQBXJaIOHAQfVeZpf9EDqePUK24/E95hq3RvSwjlcU6rmAjc6q/rWRcstkbn1SERqcu81lGNU12i5MLlk/IIW7EyKIr9os=
+	t=1762823597; cv=none; b=sntRzikmRM24cNBPxQ2YRuS9fC14mgGnkPXDp4fs6awqMRyfDhhgMQOwwbiLkalfrLvtR0jCAU1Vv1BF1P77x5ovLYY3tHiHBm0NE0rqBP/GF5dEbP78VxBBFb8t7/Lf0czUaFszn3d/oR4mKANpxhU2bxGsBeP3EaANolgLPSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823594; c=relaxed/simple;
-	bh=0qheAxGUoJPUHvFu1lNK/0FYj5M+NDvhw2ZOw/sFcKM=;
+	s=arc-20240116; t=1762823597; c=relaxed/simple;
+	bh=Fib3j1FeVcde93v6bJlxRaKNe27BDAk4VG+Vdrc8+hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryNlPbiVU5Zyuw5CK2SIK90XfN+Rv0AVGNUVBOvGkuvUFC9xj1eiM4A/iziXp5pLJhqxdqtYdFkuaMoyZovEKN54fvPvmr7TI6mz85YNNyfSCQuby5Ut7dyqs7p0AHzwGmuSFNBaQQcgTB/j1W3B1DNULKvDVj01Mfl88Qy24tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1B+4NiDv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlXg8quYuRZsx/wWqhxuc69iJsxZi8VqDs/lKibDDAyhBCAfJkHxjdlXH+d0bHTIUgl0a7j79N9R1ToAAu4kqPbp6crqJxBAG15LzsLbmUD/etdTusqK1HIaICJfvbYX0DwsiFg47gAULiid6y0xYz2SwQdHcbU/cICRbThK/Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQW3lpQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1B+4NiDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A4EC4CEFB;
-	Tue, 11 Nov 2025 01:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQW3lpQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABADEC4CEF5;
+	Tue, 11 Nov 2025 01:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823594;
-	bh=0qheAxGUoJPUHvFu1lNK/0FYj5M+NDvhw2ZOw/sFcKM=;
+	s=korg; t=1762823597;
+	bh=Fib3j1FeVcde93v6bJlxRaKNe27BDAk4VG+Vdrc8+hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1B+4NiDvfO5/Jj2ZCJ1UEH1et3OSYMn1ZcUy05r1wRuQzIxgyUlU3fsCLLDsO/JbY
-	 CzB4uhtLkpxM7SjAUnmxwNNDiuXWa3rGM8v1P2u11uK462+CWIMLfjlY5AotcBwaYr
-	 cX4rDNhu3PlGBlBEfgnvp7QDvleLEVPMAWW+3c4o=
+	b=KQW3lpQj3Ew/DIHvk07wnLm5WtCpJJC/aKnXzCoS1HIVy3VKAxwTmjSEk7pO1Ne+0
+	 NPCM7KwoI+qQ7469piijlbkIFZJlKo94OomPh2hd/CZknoBcVMhKpaRtJ7rke4MM0i
+	 Ug1uGbD2BaUyNf2DEA+U+WcJLOlWlWH7l0J/yRoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Devendra K Verma <devverma@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 332/849] char: misc: Does not request module for miscdevice with dynamic minor
-Date: Tue, 11 Nov 2025 09:38:22 +0900
-Message-ID: <20251111004544.444096120@linuxfoundation.org>
+Subject: [PATCH 6.12 283/565] dmaengine: dw-edma: Set status for callback_result
+Date: Tue, 11 Nov 2025 09:42:19 +0900
+Message-ID: <20251111004533.246192393@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Devendra K Verma <devverma@amd.com>
 
-[ Upstream commit 1ba0fb42aa6a5f072b1b8c0b0520b32ad4ef4b45 ]
+[ Upstream commit 5e742de97c806a4048418237ef1283e7d71eaf4b ]
 
-misc_open() may request module for miscdevice with dynamic minor, which
-is meaningless since:
+DMA Engine has support for the callback_result which provides
+the status of the request and the residue. This helps in
+determining the correct status of the request and in
+efficient resource management of the request.
+The 'callback_result' method is preferred over the deprecated
+'callback' method.
 
-- The dynamic minor allocated is unknown in advance without registering
-  miscdevice firstly.
-- Macro MODULE_ALIAS_MISCDEV() is not applicable for dynamic minor.
-
-Fix by only requesting module for miscdevice with fixed minor.
-
-Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-6-2ed949665bde@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Devendra K Verma <devverma@amd.com>
+Link: https://lore.kernel.org/r/20250821121505.318179-1-devverma@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 255a164eec86d..4c276b8066ff8 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -132,7 +132,8 @@ static int misc_open(struct inode *inode, struct file *file)
- 		break;
- 	}
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 68236247059d1..9ae789d4aca7b 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -595,6 +595,25 @@ dw_edma_device_prep_interleaved_dma(struct dma_chan *dchan,
+ 	return dw_edma_device_transfer(&xfer);
+ }
  
--	if (!new_fops) {
-+	/* Only request module for fixed minor code */
-+	if (!new_fops && minor < MISC_DYNAMIC_MINOR) {
- 		mutex_unlock(&misc_mtx);
- 		request_module("char-major-%d-%d", MISC_MAJOR, minor);
- 		mutex_lock(&misc_mtx);
-@@ -144,10 +145,11 @@ static int misc_open(struct inode *inode, struct file *file)
- 			new_fops = fops_get(iter->fops);
- 			break;
- 		}
--		if (!new_fops)
--			goto fail;
- 	}
- 
-+	if (!new_fops)
-+		goto fail;
++static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
++					enum dmaengine_tx_result result)
++{
++	u32 residue = 0;
++	struct dw_edma_desc *desc;
++	struct dmaengine_result *res;
 +
- 	/*
- 	 * Place the miscdevice in the file's
- 	 * private_data so it can be used by the
++	if (!vd->tx.callback_result)
++		return;
++
++	desc = vd2dw_edma_desc(vd);
++	if (desc)
++		residue = desc->alloc_sz - desc->xfer_sz;
++
++	res = &vd->tx_result;
++	res->result = result;
++	res->residue = residue;
++}
++
+ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ {
+ 	struct dw_edma_desc *desc;
+@@ -608,6 +627,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ 		case EDMA_REQ_NONE:
+ 			desc = vd2dw_edma_desc(vd);
+ 			if (!desc->chunks_alloc) {
++				dw_hdma_set_callback_result(vd,
++							    DMA_TRANS_NOERROR);
+ 				list_del(&vd->node);
+ 				vchan_cookie_complete(vd);
+ 			}
+@@ -644,6 +665,7 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 	vd = vchan_next_desc(&chan->vc);
+ 	if (vd) {
++		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+ 	}
 -- 
 2.51.0
 
