@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84F73090CB;
-	Tue, 11 Nov 2025 01:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E576726FDBD;
+	Tue, 11 Nov 2025 01:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823320; cv=none; b=pWgb5DKrLqMaW6YJtm2PylT6yjwFHTppPCHghPGe2kbYUyu58JPE9CvRbsKYUYkHGiLERBLpZF98pyJxUWVTq2Dkr/uzjpbSaIuIqCJDRqoGrnfrmw0vcV3oqKnBGcvxzyDpSPvwfsOgAJ8/hsGCxdUUpXmxDhBaDAKZI7sIzRI=
+	t=1762823323; cv=none; b=G9ekljlH79A8IXqSF4ZvG70dbUzx4/akLvvdDzE6nULgsCFhayy0VOKNZDqLico5d3ms5S4isFtMQ2HlyvIx7W2FiTIKcjyiIlF3L9Rr8ix6wAy+F7R7SKQu9ykOFkkCfEI60atTFATCc9cKD+b0fbAfK8o+B+OtrdXC3156mZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823320; c=relaxed/simple;
-	bh=ui+JZ0eQLLbLvLDByRJGqL0ng5QbGX+IEaJdWc03lKw=;
+	s=arc-20240116; t=1762823323; c=relaxed/simple;
+	bh=vqS1y/LZjRKdNZJrBH7xJy2GR3Swzez1v1XIZbqSPyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L03u7KaEL6k0Hf9OGtWv2SteNli9Xq9ZOMujj1/WjS+tB8mufPTm4NOeAeV21sGFXAyfRpxIEq5hbYRpabZoq6LN6Cfl0ikFstmTZhjX0LbKWWsAotE+lJkNI11VfV1aRTi2hE9AOfwM1jFuovI6DMejKPntuZkE1ir4SfxlWfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ga4mQbEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmBwYHhNmj3+baSO/tlUnv5ly2yV/CryHnRrLdr0hdmlIpJRXHJQl4b/hQlqd5O4aS274eU34ji8jQ1DUSSfxmve+Gryke2B17XkPmO5MPOvESHhJA/Pz23aN6YFHKEhw3zHsf17Y1fYNhruFXAHeoVf4yGnWPXT67dsS5XJPrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMT/maSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ga4mQbEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A631C4CEFB;
-	Tue, 11 Nov 2025 01:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMT/maSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815F3C19422;
+	Tue, 11 Nov 2025 01:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823320;
-	bh=ui+JZ0eQLLbLvLDByRJGqL0ng5QbGX+IEaJdWc03lKw=;
+	s=korg; t=1762823322;
+	bh=vqS1y/LZjRKdNZJrBH7xJy2GR3Swzez1v1XIZbqSPyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ga4mQbEcPJtXst51uy79kXe6jIrWR5cohONxLO4I1ayXKhEbrAEcnJkf528EZsmis
-	 Igu7fXEc5HH9j2jmwGBlU9BlqKFGB53W9YvPnkPqoOK/n2p8V3vD+QQyYkEzQVgBoB
-	 5lXVbpqfY/Rya+Vi5yiqRLaLHxIf4wqmaBRofTyE=
+	b=kMT/maSc9uw0p7mLJNPv+j6dUHn0ptMQaX+i41chzbD19xNLCMeraNgarrXxJqNKd
+	 KdDZj6SfFXVGy/POnqlNUYoOSibOz2TCdSoUsrsmJ1egTrzwE7p5XDEhyn1g/5wXNm
+	 nONRsG01C4GvZJ/V/ve1+K03X5n21lKmo4vK8aSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 275/849] selftests/net: Ensure assert() triggers in psock_tpacket.c
-Date: Tue, 11 Nov 2025 09:37:25 +0900
-Message-ID: <20251111004543.075605548@linuxfoundation.org>
+Subject: [PATCH 6.12 219/565] net: ipv6: fix field-spanning memcpy warning in AH output
+Date: Tue, 11 Nov 2025 09:41:15 +0900
+Message-ID: <20251111004531.850113083@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +48,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
+[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
 
-The get_next_frame() function in psock_tpacket.c was missing a return
-statement in its default switch case, leading to a compiler warning.
+Fix field-spanning memcpy warnings in ah6_output() and
+ah6_output_done() where extension headers are copied to/from IPv6
+address fields, triggering fortify-string warnings about writes beyond
+the 16-byte address fields.
 
-This was caused by a `bug_on(1)` call, which is defined as an
-`assert()`, being compiled out because NDEBUG is defined during the
-build.
+  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
+  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
 
-Instead of adding a `return NULL;` which would silently hide the error
-and could lead to crashes later, this change restores the original
-author's intent. By adding `#undef NDEBUG` before including <assert.h>,
-we ensure the assertion is active and will cause the test to abort if
-this unreachable code is ever executed.
+The warnings are false positives as the extension headers are
+intentionally placed after the IPv6 header in memory. Fix by properly
+copying addresses and extension headers separately, and introduce
+helper functions to avoid code duplication.
 
-Signed-off-by: Wake Liu <wakel@google.com>
-Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/psock_tpacket.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 0dd909e325d93..2938045c5cf97 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -22,6 +22,7 @@
-  *   - TPACKET_V3: RX_RING
-  */
+diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
+index eb474f0987ae0..95372e0f1d216 100644
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -46,6 +46,34 @@ struct ah_skb_cb {
  
-+#undef NDEBUG
- #include <stdio.h>
- #include <stdlib.h>
- #include <sys/types.h>
+ #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
+ 
++/* Helper to save IPv6 addresses and extension headers to temporary storage */
++static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
++				 struct ipv6hdr *top_iph, int extlen)
++{
++	if (!extlen)
++		return;
++
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	iph_ext->saddr = top_iph->saddr;
++#endif
++	iph_ext->daddr = top_iph->daddr;
++	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
++}
++
++/* Helper to restore IPv6 addresses and extension headers from temporary storage */
++static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
++				    struct tmp_ext *iph_ext, int extlen)
++{
++	if (!extlen)
++		return;
++
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	top_iph->saddr = iph_ext->saddr;
++#endif
++	top_iph->daddr = iph_ext->daddr;
++	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
++}
++
+ static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
+ 			  unsigned int size)
+ {
+@@ -301,13 +329,7 @@ static void ah6_output_done(void *data, int err)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ 	kfree(AH_SKB_CB(skb)->tmp);
+ 	xfrm_output_resume(skb->sk, skb, err);
+@@ -378,12 +400,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	 */
+ 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
+ 
++	ah6_save_hdrs(iph_ext, top_iph, extlen);
+ 	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(iph_ext, &top_iph->saddr, extlen);
+-#else
+-		memcpy(iph_ext, &top_iph->daddr, extlen);
+-#endif
+ 		err = ipv6_clear_mutable_options(top_iph,
+ 						 extlen - sizeof(*iph_ext) +
+ 						 sizeof(*top_iph),
+@@ -434,13 +452,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ out_free:
+ 	kfree(iph_base);
 -- 
 2.51.0
 
