@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B00A26E146;
-	Tue, 11 Nov 2025 01:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519EB25F797;
+	Tue, 11 Nov 2025 01:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824453; cv=none; b=St8pKFXf58y9Qz1Z1QFVw1cR1X6Lc2L64txH9ArT4jV9czIrjzMUZU+aX4HzPkfAhCHem8BN9Ag0QG5nGv6fzs2pmk4P2u73CKQZtLm7R62gOfZkbXVtjSe46IVpcwIy3/wz7yRCuhE1mbh70XvrIJ/tmyka+dfowcdj5gCDJfc=
+	t=1762824455; cv=none; b=kCEtt24ODTDu1dW5Hl+JvfqDyVeB9BjqIhbr+YbUZpHjfaptBOT9H1DOzAEaI+fp72zg/fJQp7qg79IATELlQeZPrHxbZs7tiSLaJ3M32xyn2FkJV6RucZP9kDIyz5GzxwNjntMrNPBNc0Zd36pqKxXzpN03p1AyQz+rRA5TF6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824453; c=relaxed/simple;
-	bh=wEOjBIcvqfN4ZPHrbB6TgG1mX6834pWeW2JKgPi3glo=;
+	s=arc-20240116; t=1762824455; c=relaxed/simple;
+	bh=E/Qs3gRZTD8mnP1GR8JeRfbBd4ZMUyHpG72uAQl1o/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzgALIWiju+AbrEXMlQKEZQejxmIoP9a0tPrwxrcvp66XnYHS/aiAPprtS3uEX8bFWL9sPFdlpXZEVhf5CDYkF6kqqlYvi1mc5Sw4Sx2G1Nc9JR/UwbU8hYENlbfnujnods6DzfpuRiXqBgRqW7o2hJ2QhOMNlSRE3aOgaT3ktY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8VahAwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXmVuZGRadPmZjy6bFgVWgGvaDdjwQi3EaWWxaAZA2Pqm8CljqYWysq+9C2mOj48NWGwb/Kb0IA8+0eScPpVzxAsLp3QWhTgK/iJYXuFy69LLAF8s9tUbpEqJe7byAMl7zYDKlqsmv5azvMqWI6c6pGS33yUKA0vrKTctYsEotw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4BMoyu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8VahAwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BFCC4CEF5;
-	Tue, 11 Nov 2025 01:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4BMoyu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53CBC113D0;
+	Tue, 11 Nov 2025 01:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824453;
-	bh=wEOjBIcvqfN4ZPHrbB6TgG1mX6834pWeW2JKgPi3glo=;
+	s=korg; t=1762824455;
+	bh=E/Qs3gRZTD8mnP1GR8JeRfbBd4ZMUyHpG72uAQl1o/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8VahAwAQk2fa+odAy0QDDohvVHFrvWiuTdtYrbdNIHPEDxig6EOW4iMb2i7sklgD
-	 NCJoQWerg/v9RBV9/9Vx36PsjXrn2WfNaUl70CBvAJhbJ2ra2pzLcpT+f8KrheoG9p
-	 xanF4HLOG/574POIQpBeyjOMSm+wT1cXRrQmgEo4=
+	b=y4BMoyu0Gv454l6zUu4vNWDHeKAHT91zX+3tT3P2xgN56KUs/laH9/ueo0OZBoel+
+	 QjQewOOyPj444c9l0LurHQWhMKIHvhUGP+TKPoNQaEpgoxpimuYN8U9x1Sw4l+0V6o
+	 d7rlupqKHuFVWLKBjmeLQbPqTaPLLyldMPR4XBl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Ebner <f.ebner@proxmox.com>,
-	Steve French <stfrench@microsoft.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 449/565] smb: client: transport: avoid reconnects triggered by pending task work
-Date: Tue, 11 Nov 2025 09:45:05 +0900
-Message-ID: <20251111004536.991310383@linuxfoundation.org>
+Subject: [PATCH 6.17 503/849] fbcon: Use screen info to find primary device
+Date: Tue, 11 Nov 2025 09:41:13 +0900
+Message-ID: <20251111004548.594036299@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 00be6f26a2a7c671f1402d74c4d3c30a5844660a ]
+[ Upstream commit ad90860bd10ee3ed387077aed88828b139339976 ]
 
-When io_uring is used in the same task as CIFS, there might be
-unnecessary reconnects, causing issues in user-space applications
-like QEMU with a log like:
+On systems with non VGA GPUs fbcon can't find the primary GPU because
+video_is_primary_device() only checks the VGA arbiter.
 
-> CIFS: VFS: \\10.10.100.81 Error -512 sending data on socket to server
+Add a screen info check to video_is_primary_device() so that callers
+can get accurate data on such systems.
 
-Certain io_uring completions might be added to task_work with
-notify_method being TWA_SIGNAL and thus TIF_NOTIFY_SIGNAL is set for
-the task.
-
-In __smb_send_rqst(), signals are masked before calling
-smb_send_kvec(), but the masking does not apply to TIF_NOTIFY_SIGNAL.
-
-If sk_stream_wait_memory() is reached via sock_sendmsg() while
-TIF_NOTIFY_SIGNAL is set, signal_pending(current) will evaluate to
-true there, and -EINTR will be propagated all the way from
-sk_stream_wait_memory() to sock_sendmsg() in smb_send_kvec().
-Afterwards, __smb_send_rqst() will see that not everything was written
-and reconnect.
-
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20250811162606.587759-4-superm1@kernel.org
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/video/video-common.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 35d1871187931..691c9265994fb 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -22,6 +22,7 @@
- #include <linux/mempool.h>
- #include <linux/sched/signal.h>
- #include <linux/task_io_accounting_ops.h>
-+#include <linux/task_work.h>
- #include "cifspdu.h"
- #include "cifsglob.h"
- #include "cifsproto.h"
-@@ -212,9 +213,16 @@ smb_send_kvec(struct TCP_Server_Info *server, struct msghdr *smb_msg,
- 		 * send a packet.  In most cases if we fail to send
- 		 * after the retries we will kill the socket and
- 		 * reconnect which may clear the network problem.
-+		 *
-+		 * Even if regular signals are masked, EINTR might be
-+		 * propagated from sk_stream_wait_memory() to here when
-+		 * TIF_NOTIFY_SIGNAL is used for task work. For example,
-+		 * certain io_uring completions will use that. Treat
-+		 * having EINTR with pending task work the same as EAGAIN
-+		 * to avoid unnecessary reconnects.
- 		 */
- 		rc = sock_sendmsg(ssocket, smb_msg);
--		if (rc == -EAGAIN) {
-+		if (rc == -EAGAIN || unlikely(rc == -EINTR && task_work_pending(current))) {
- 			retries++;
- 			if (retries >= 14 ||
- 			    (!server->noblocksnd && (retries > 2))) {
+diff --git a/arch/x86/video/video-common.c b/arch/x86/video/video-common.c
+index 81fc97a2a837a..e0aeee99bc99e 100644
+--- a/arch/x86/video/video-common.c
++++ b/arch/x86/video/video-common.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/module.h>
+ #include <linux/pci.h>
++#include <linux/screen_info.h>
+ #include <linux/vgaarb.h>
+ 
+ #include <asm/video.h>
+@@ -27,6 +28,11 @@ EXPORT_SYMBOL(pgprot_framebuffer);
+ 
+ bool video_is_primary_device(struct device *dev)
+ {
++#ifdef CONFIG_SCREEN_INFO
++	struct screen_info *si = &screen_info;
++	struct resource res[SCREEN_INFO_MAX_RESOURCES];
++	ssize_t i, numres;
++#endif
+ 	struct pci_dev *pdev;
+ 
+ 	if (!dev_is_pci(dev))
+@@ -34,7 +40,24 @@ bool video_is_primary_device(struct device *dev)
+ 
+ 	pdev = to_pci_dev(dev);
+ 
+-	return (pdev == vga_default_device());
++	if (!pci_is_display(pdev))
++		return false;
++
++	if (pdev == vga_default_device())
++		return true;
++
++#ifdef CONFIG_SCREEN_INFO
++	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
++	for (i = 0; i < numres; ++i) {
++		if (!(res[i].flags & IORESOURCE_MEM))
++			continue;
++
++		if (pci_find_resource(pdev, &res[i]))
++			return true;
++	}
++#endif
++
++	return false;
+ }
+ EXPORT_SYMBOL(video_is_primary_device);
+ 
 -- 
 2.51.0
 
