@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3042725C818;
-	Tue, 11 Nov 2025 01:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712072EB5CE;
+	Tue, 11 Nov 2025 01:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824743; cv=none; b=F4cpmfa7u/UfcS9vorcp6OGWkGcpfgXTa+TMx6Gq6vj+rdo01napSuAnq6JYKhzRzgyTYZAM6PxJEhcZKOu9qJ9y9TW3YHaSzKF0haQmv91CaUj/2RpS4EvOXMSyKZoMl5sUr3sNerEVl94BbXYgRvhlXgsSb3Ddnm+IrjWUHkY=
+	t=1762824745; cv=none; b=Cna2ttYPvrWr6egtMDXLXvJySSWpMG/O6OVcs+PmXB05sEbDfjv75vdhQtc2iraebf5FGGqPyEZjnVgdoraSj3mPveh+GyS9FKc3GAu+DTmv6FynbquuO3YON5JN0FL+eJT3FyDob8FATtB40R/xJpj9tYrVqlKx6OCDokdXSXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824743; c=relaxed/simple;
-	bh=p/DNvw9RD32dbU2ZEvon3hAyV1HJdfbLfY6O0E6Nyww=;
+	s=arc-20240116; t=1762824745; c=relaxed/simple;
+	bh=vYcE9JyLlGN4jwwEjgzPEkhNHDRpXTCnrQxO7WdFfkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNv7UmDW3HgDlubRnhBzH+vpvjSjMUmrBPob5QnZEhzvdl1BxOoeLvgschafCrIActesn8zDyStFd9h4oMk2UpfHh61TNZxcaQmfqX5WjOUUXQ1F73n3yLBDgYwYs14syE2qEmlEsFCJSdwKpmcAR8snDGaWfRAiPG9GXAl0NK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4SYIjDe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdRplS1F2DR8M9SqrdoFSnx2QToG+3FRS6P21mC3X0Irw5oy2/30yWWtSrWu///ANUUZ7Gi5dAEgYqTsGgMnJKjQTjws2fea/tezxmX9Ry0ZN8afexNnppdDylMNuDkLwgggnjJ/RGuwHjKbecR9oO8EHPbUOQhIDI5diY3zIMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvoMqbiN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4SYIjDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929A8C116B1;
-	Tue, 11 Nov 2025 01:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvoMqbiN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C9FC4CEFB;
+	Tue, 11 Nov 2025 01:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824743;
-	bh=p/DNvw9RD32dbU2ZEvon3hAyV1HJdfbLfY6O0E6Nyww=;
+	s=korg; t=1762824745;
+	bh=vYcE9JyLlGN4jwwEjgzPEkhNHDRpXTCnrQxO7WdFfkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4SYIjDeYDJvrH1qnoLcsxpzxyPhZldYuwaIaIal+5xikBKF2gx6XkS/qjdtS0VRz
-	 vYS7s7xT+XCXPdJF2XB5TfcaSSgbbRo0g9NrKcZR1m0V5N6RqCmwp7aQyvIxgemldG
-	 tOBigqSpfQqHgej1KqfDFkchb9dPWoyxtkm8vtWo=
+	b=rvoMqbiNUwE10HDMWaxJ26jYQmkU5WuxWY/ZPOBG34SYLKcQSBHU+Twu0zkq49X1F
+	 GDgsR03fXCf2cOTaEYlr7IjnJP4/v/utPhK/ObQOgRJfTHm3+dqSmcHVXO1ZfGhf1m
+	 BGp8D5hcYGjaJeGOhjj5i2eC8HAtOPHTFb5zKGzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+a9a4bedfca6aa9d7fa24@syzkaller.appspotmail.com,
+	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 561/849] page_pool: always add GFP_NOWARN for ATOMIC allocations
-Date: Tue, 11 Nov 2025 09:42:11 +0900
-Message-ID: <20251111004549.976870465@linuxfoundation.org>
+Subject: [PATCH 6.12 509/565] Bluetooth: hci_event: validate skb length for unknown CC opcode
+Date: Tue, 11 Nov 2025 09:46:05 +0900
+Message-ID: <20251111004538.403786977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
 
-[ Upstream commit f3b52167a0cb23b27414452fbc1278da2ee884fc ]
+[ Upstream commit 5c5f1f64681cc889d9b13e4a61285e9e029d6ab5 ]
 
-Driver authors often forget to add GFP_NOWARN for page allocation
-from the datapath. This is annoying to users as OOMs are a fact
-of life, and we pretty much expect network Rx to hit page allocation
-failures during OOM. Make page pool add GFP_NOWARN for ATOMIC allocations
-by default.
+In hci_cmd_complete_evt(), if the command complete event has an unknown
+opcode, we assume the first byte of the remaining skb->data contains the
+return status. However, parameter data has previously been pulled in
+hci_event_func(), which may leave the skb empty. If so, using skb->data[0]
+for the return status uses un-init memory.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250912161703.361272-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The fix is to check skb->len before using skb->data.
+
+Reported-by: syzbot+a9a4bedfca6aa9d7fa24@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a9a4bedfca6aa9d7fa24
+Tested-by: syzbot+a9a4bedfca6aa9d7fa24@syzkaller.appspotmail.com
+Fixes: afcb3369f46ed ("Bluetooth: hci_event: Fix vendor (unknown) opcode status handling")
+Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bluetooth/hci_event.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 19c92aa04e549..e224d2145eed9 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -596,6 +596,12 @@ static noinline netmem_ref __page_pool_alloc_netmems_slow(struct page_pool *pool
- 	netmem_ref netmem;
- 	int i, nr_pages;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index ccc73742de356..498b7e4c76d59 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4210,6 +4210,13 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, void *data,
+ 	}
  
-+	/* Unconditionally set NOWARN if allocating from NAPI.
-+	 * Drivers forget to set it, and OOM reports on packet Rx are useless.
-+	 */
-+	if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
-+		gfp |= __GFP_NOWARN;
+ 	if (i == ARRAY_SIZE(hci_cc_table)) {
++		if (!skb->len) {
++			bt_dev_err(hdev, "Unexpected cc 0x%4.4x with no status",
++				   *opcode);
++			*status = HCI_ERROR_UNSPECIFIED;
++			return;
++		}
 +
- 	/* Don't support bulk alloc for high-order pages */
- 	if (unlikely(pp_order))
- 		return page_to_netmem(__page_pool_alloc_page_order(pool, gfp));
+ 		/* Unknown opcode, assume byte 0 contains the status, so
+ 		 * that e.g. __hci_cmd_sync() properly returns errors
+ 		 * for vendor specific commands send by HCI drivers.
 -- 
 2.51.0
 
