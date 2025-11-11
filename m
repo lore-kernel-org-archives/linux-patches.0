@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453ABDF76;
-	Tue, 11 Nov 2025 01:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBF32FFFA2;
+	Tue, 11 Nov 2025 01:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824938; cv=none; b=X9T/HPB1+bitce60j4tHr6eaWStnKAJI6J7hGQUOj/6kzbktWPqE6oMxkTCrgPQ6v3gmfVuojP86bDWR2kelPAUU7MAYdyO5xhhpqduN60TkmspfUH3pBXIkyxUr1Tyh4X0Qn1t/w7rBGsDTEx4xrhiDuBZbNG8ULtDUOHWFhNQ=
+	t=1762824940; cv=none; b=GxKeO5KhsPjLYOkL4/+0tbWvdpUnYE102SRFBJTSNPvNBnVvhbYEMPN9x439gKqbPKVOOKmKtGqhdJ3KaeO3j2tBKFI/0O6z2nTy73l9bA/o7epTx/6bg/mYawFPct9s0zo3VkSzFLe56IykGAsovzn67JOLHykmFfMW3ei5x70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824938; c=relaxed/simple;
-	bh=jhV3iXm4ClNrX3FYViHB3stdgwTdTo+WunpHEWvfPH0=;
+	s=arc-20240116; t=1762824940; c=relaxed/simple;
+	bh=rOGvzcoJg2PhWzLU3DV7eru5eJhgZmBOmrcmVHUwR+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDETnH2ngVt4x0gXPYfhKBcDlDpL5PTKODTiTHFb9xaLgJPVo6WUBPSBMu5oYx5tT677QTt0sJTOerYIHi7NzORVckZngDdVuCi/cgyT/U/W5J18nnp2ijZRM5U8C7nqoNS83NCrZydxbh1j+Cl3DGxU0Nrde9U8ikzvtITva0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaRx1wO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NsTuGNUJS1nALjoClUxKE8JcisfAmlP7upijtbA09BZgRizsdVr1zn7djToP5Y77JdeulIidgSYlr+hQiazXFZtc5u1GJnQauBLG/n+26x0QKr7agQEFS5irKg71HIQbOIeUpwHpF/N0K9TBJj/c/vIVDbacbuyFKxckZIRk3PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=of/n+cMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaRx1wO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3DBC16AAE;
-	Tue, 11 Nov 2025 01:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="of/n+cMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35761C4CEFB;
+	Tue, 11 Nov 2025 01:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824938;
-	bh=jhV3iXm4ClNrX3FYViHB3stdgwTdTo+WunpHEWvfPH0=;
+	s=korg; t=1762824940;
+	bh=rOGvzcoJg2PhWzLU3DV7eru5eJhgZmBOmrcmVHUwR+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaRx1wO7Nd5VemWXY3s9C3UtzsqndRMr5qrWfrm1b4KMr4h6m3E3pkX+hgaOb5yRe
-	 UP3VG6pMrxmGjpX7i9UzmNJnUybaM26jbEfHkUZ63MCdhkd5S9vx3H0lfuSztcKkNl
-	 fieJbxcwrLhGZjeSbAQSI3rRtNSbTsCbOAI6MOgI=
+	b=of/n+cMC9wFpTG6e7JneKvIzz9R61x9Hs0hOeM43x/Vb/mJtFGlyiMO2SBVPhI/c6
+	 yRnnvKBkTogt3apDk4UspBPHUeqvvY7j8mYMVy78wba2Y9kXUSMXCD5CJrK9fi8B6j
+	 qy+D9fCX8TmPgy/KCUE8NJPEZ9AaaWUFv3+2UtwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Andrei Otcheretianski <andrei.otcheretianski@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 601/849] wifi: mac80211: Get the correct interface for non-netdev skb status
-Date: Tue, 11 Nov 2025 09:42:51 +0900
-Message-ID: <20251111004550.953803617@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Lei Yang <leiyang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 554/565] virtio-net: fix received length check in big packets
+Date: Tue, 11 Nov 2025 09:46:50 +0900
+Message-ID: <20251111004539.467092243@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,140 +48,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit c7b5355b37a59c927b2374e9f783acd004d00960 ]
+commit 0c716703965ffc5ef4311b65cb5d84a703784717 upstream.
 
-The function ieee80211_sdata_from_skb() always returned the P2P Device
-interface in case the skb was not associated with a netdev and didn't
-consider the possibility that an NAN Device interface is also enabled.
+Since commit 4959aebba8c0 ("virtio-net: use mtu size as buffer length
+for big packets"), when guest gso is off, the allocated size for big
+packets is not MAX_SKB_FRAGS * PAGE_SIZE anymore but depends on
+negotiated MTU. The number of allocated frags for big packets is stored
+in vi->big_packets_num_skbfrags.
 
-To support configurations where both P2P Device and a NAN Device
-interface are active, extend the function to match the correct
-interface based on address 2 in the 802.11 MAC header.
+Because the host announced buffer length can be malicious (e.g. the host
+vhost_net driver's get_rx_bufs is modified to announce incorrect
+length), we need a check in virtio_net receive path. Currently, the
+check is not adapted to the new change which can lead to NULL page
+pointer dereference in the below while loop when receiving length that
+is larger than the allocated one.
 
-Since the 'p2p_sdata' field in struct ieee80211_local is no longer
-needed, remove it.
+This commit fixes the received length check corresponding to the new
+change.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Reviewed-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250908140015.5252d2579a49.Id4576531c6b2ad83c9498b708dc0ade6b0214fa8@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4959aebba8c0 ("virtio-net: use mtu size as buffer length for big packets")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Link: https://patch.msgid.link/20251030144438.7582-1-minhquangbui99@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h |  2 --
- net/mac80211/iface.c       | 16 +---------------
- net/mac80211/status.c      | 21 +++++++++++++++++++--
- 3 files changed, 20 insertions(+), 19 deletions(-)
+ drivers/net/virtio_net.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 8afa2404eaa8e..140dc7e32d4aa 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1665,8 +1665,6 @@ struct ieee80211_local {
- 	struct idr ack_status_frames;
- 	spinlock_t ack_status_lock;
- 
--	struct ieee80211_sub_if_data __rcu *p2p_sdata;
--
- 	/* virtual monitor interface */
- 	struct ieee80211_sub_if_data __rcu *monitor_sdata;
- 	struct ieee80211_chan_req monitor_chanreq;
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 07ba68f7cd817..abc8cca54f4e1 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -611,10 +611,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
- 
- 		spin_unlock_bh(&sdata->u.nan.func_lock);
- 		break;
--	case NL80211_IFTYPE_P2P_DEVICE:
--		/* relies on synchronize_rcu() below */
--		RCU_INIT_POINTER(local->p2p_sdata, NULL);
--		fallthrough;
- 	default:
- 		wiphy_work_cancel(sdata->local->hw.wiphy, &sdata->work);
- 		/*
-@@ -1405,6 +1401,7 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
- 		ieee80211_recalc_idle(local);
- 
- 		netif_carrier_on(dev);
-+		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
- 		break;
- 	default:
- 		if (coming_up) {
-@@ -1468,17 +1465,6 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
- 			sdata->vif.type != NL80211_IFTYPE_STATION);
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -868,17 +868,6 @@ static struct sk_buff *page_to_skb(struc
+ 		goto ok;
  	}
  
--	switch (sdata->vif.type) {
--	case NL80211_IFTYPE_P2P_DEVICE:
--		rcu_assign_pointer(local->p2p_sdata, sdata);
--		break;
--	case NL80211_IFTYPE_MONITOR:
--		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
--		break;
--	default:
--		break;
+-	/*
+-	 * Verify that we can indeed put this data into a skb.
+-	 * This is here to handle cases when the device erroneously
+-	 * tries to receive more than is possible. This is usually
+-	 * the case of a broken device.
+-	 */
+-	if (unlikely(len > MAX_SKB_FRAGS * PAGE_SIZE)) {
+-		net_dbg_ratelimited("%s: too much data\n", skb->dev->name);
+-		dev_kfree_skb(skb);
+-		return NULL;
 -	}
--
- 	/*
- 	 * set_multicast_list will be invoked by the networking core
- 	 * which will check whether any increments here were done in
-diff --git a/net/mac80211/status.c b/net/mac80211/status.c
-index a362254b310cd..4b38aa0e902a8 100644
---- a/net/mac80211/status.c
-+++ b/net/mac80211/status.c
-@@ -5,7 +5,7 @@
-  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
-  * Copyright 2008-2010	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-- * Copyright 2021-2024  Intel Corporation
-+ * Copyright 2021-2025  Intel Corporation
-  */
- 
- #include <linux/export.h>
-@@ -572,6 +572,7 @@ static struct ieee80211_sub_if_data *
- ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
+ 	BUG_ON(offset >= PAGE_SIZE);
+ 	while (len) {
+ 		unsigned int frag_size = min((unsigned)PAGE_SIZE - offset, len);
+@@ -1928,9 +1917,19 @@ static struct sk_buff *receive_big(struc
+ 				   struct virtnet_rq_stats *stats)
  {
- 	struct ieee80211_sub_if_data *sdata;
-+	struct ieee80211_hdr *hdr = (void *)skb->data;
- 
- 	if (skb->dev) {
- 		list_for_each_entry_rcu(sdata, &local->interfaces, list) {
-@@ -585,7 +586,23 @@ ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
- 		return NULL;
- 	}
- 
--	return rcu_dereference(local->p2p_sdata);
-+	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
-+		switch (sdata->vif.type) {
-+		case NL80211_IFTYPE_P2P_DEVICE:
-+			break;
-+		case NL80211_IFTYPE_NAN:
-+			if (sdata->u.nan.started)
-+				break;
-+			fallthrough;
-+		default:
-+			continue;
-+		}
+ 	struct page *page = buf;
+-	struct sk_buff *skb =
+-		page_to_skb(vi, rq, page, 0, len, PAGE_SIZE, 0);
++	struct sk_buff *skb;
 +
-+		if (ether_addr_equal(sdata->vif.addr, hdr->addr2))
-+			return sdata;
++	/* Make sure that len does not exceed the size allocated in
++	 * add_recvbuf_big.
++	 */
++	if (unlikely(len > (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE)) {
++		pr_debug("%s: rx error: len %u exceeds allocated size %lu\n",
++			 dev->name, len,
++			 (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE);
++		goto err;
 +	}
-+
-+	return NULL;
- }
  
- static void ieee80211_report_ack_skb(struct ieee80211_local *local,
--- 
-2.51.0
-
++	skb = page_to_skb(vi, rq, page, 0, len, PAGE_SIZE, 0);
+ 	u64_stats_add(&stats->bytes, len - vi->hdr_len);
+ 	if (unlikely(!skb))
+ 		goto err;
 
 
