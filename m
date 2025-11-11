@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A31D6DB5;
-	Tue, 11 Nov 2025 00:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F411D6DB5;
+	Tue, 11 Nov 2025 00:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822465; cv=none; b=IWjJhazhPHt400kEKeHraJX0yvfdWdB/DWNPN7X8IKXn+7ks2NLbgx2NRsgQbLUb7+rlBJlK1MuuRJJPZv9uUqakTRdEA1hPBToHUSdRDPmA7TxQUifabE05ESeDBht/Set7Vv8XWP6km0syzFzyk/0Nn+ug6TRHkzYr4shs66I=
+	t=1762822468; cv=none; b=RFpObU0rDXMBeAt04jr0cN/00hfNb7H6wK4Zeqyy33Qz+Yvrntf+7nTysUMBA8eL8r/Rakeqs7PzgLCJhxbHNYjmLX4GRtGJRL/0UtptV11/dkspbG1HNXtWZbM9jGagFmT0kQDg0q82V+8Mdt7e8jlbwcyHUZ6k9YAHFB9keHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822465; c=relaxed/simple;
-	bh=db/AwEpkCNfnTw8P/0YLETo9CGARNcuTTMb6Dx86CoI=;
+	s=arc-20240116; t=1762822468; c=relaxed/simple;
+	bh=96UUxEHosG32pE5b/+gAwanwuZumthYfHq02XqtC2XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+Rf9fc10SliGX70hwwMnm+Ix4r+jRKP7ycPktf6qI8BpVCJ0/TRXsNubHdKFxXhM4AJrGSHeQxv55Rd6WS7yEopxTEhMjA6lbZlBbL2CpXEMZF5J6VeKrmDqF6FDJHF8x9yi4Rm+k27XtuZbQLAGI1Qbpou5sdjjswFvQrUJ6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ip8gSeP9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4KDRCwRiHtKWtjxNoyIDzo9S4+toyvhvHIivkCOYiwjvQNCE0mhgNlvxE30s6X7USMI7iqdD8gLi3GUv0h3el/jyHSuZgo5M31pqg1zlWsyW07l5Mdwj9wZxdHLbHKKyLDHdujbL7eLYB3vzkAZE4f0JEOkbl3NeaW2GktSwIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jV3bjYNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ip8gSeP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F93CC19421;
-	Tue, 11 Nov 2025 00:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jV3bjYNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A4EC4CEF5;
+	Tue, 11 Nov 2025 00:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822465;
-	bh=db/AwEpkCNfnTw8P/0YLETo9CGARNcuTTMb6Dx86CoI=;
+	s=korg; t=1762822467;
+	bh=96UUxEHosG32pE5b/+gAwanwuZumthYfHq02XqtC2XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ip8gSeP9u3boTjtrXE6LK3dhrs0KJpJ0bimTjTD8r+oC3I4zIPMRGr56v29cJCG1m
-	 PKFjUsCrBBixjPZ6/iwqHMKbOkwnhsA6QN4Lyt/jau2v5OHI5w66cUrQHAFlxhj/7V
-	 9lNZp5fGCRRjBwjVrPET0tgfOLZu/QxWn+at2gZw=
+	b=jV3bjYNPWNltxA0eAjGcxJKcFwbSgW0lc/qDSlYyckA+i3cDtnAXRnZXMhE5mAvK3
+	 osjGSRqx6KMy6a7LEHiZRIySR7NIXlmSeuxt6MIkcDKUrinI3UGvhuXiSzJ6beEFby
+	 wkTqf7Ra2x9o0bjaDJ5sNrOVAu7o1lLiVBjJM5AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Smythies <dsmythies@telus.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 113/849] cpuidle: governors: menu: Select polling state in some more cases
-Date: Tue, 11 Nov 2025 09:34:43 +0900
-Message-ID: <20251111004539.128654010@linuxfoundation.org>
+Subject: [PATCH 6.12 056/565] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
+Date: Tue, 11 Nov 2025 09:38:32 +0900
+Message-ID: <20251111004528.181163718@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit db86f55bf81a3a297be05ee8775ae9a8c6e3a599 ]
+[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
 
-A throughput regression of 11% introduced by commit 779b1a1cb13a ("cpuidle:
-governors: menu: Avoid selecting states with too much latency") has been
-reported and it is related to the case when the menu governor checks if
-selecting a proper idle state instead of a polling one makes sense.
+'table_index' is a variable defined by the smu driver (kmd)
+'table_id' is a variable defined by the hw smu (pmfw)
 
-In particular, it is questionable to do so if the exit latency of the
-idle state in question exceeds the predicted idle duration, so add a
-check for that, which is sufficient to make the reported regression go
-away, and update the related code comment accordingly.
+This code should use table_index as a bounds check.
 
-Fixes: 779b1a1cb13a ("cpuidle: governors: menu: Avoid selecting states with too much latency")
-Closes: https://lore.kernel.org/linux-pm/004501dc43c9$ec8aa930$c59ffb90$@telus.net/
-Reported-by: Doug Smythies <dsmythies@telus.net>
-Tested-by: Doug Smythies <dsmythies@telus.net>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/12786727.O9o76ZdvQC@rafael.j.wysocki
+Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -318,10 +318,13 @@ static int menu_select(struct cpuidle_dr
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+index 0ce1766c859f5..d2f11d82312f0 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -955,7 +955,7 @@ int smu_cmn_update_table(struct smu_context *smu,
+ 						      table_index);
+ 	uint32_t table_size;
+ 	int ret = 0;
+-	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
++	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
+ 		return -EINVAL;
  
- 		/*
- 		 * Use a physical idle state, not busy polling, unless a timer
--		 * is going to trigger soon enough.
-+		 * is going to trigger soon enough or the exit latency of the
-+		 * idle state in question is greater than the predicted idle
-+		 * duration.
- 		 */
- 		if ((drv->states[idx].flags & CPUIDLE_FLAG_POLLING) &&
--		    s->target_residency_ns <= data->next_timer_ns) {
-+		    s->target_residency_ns <= data->next_timer_ns &&
-+		    s->exit_latency_ns <= predicted_ns) {
- 			predicted_ns = s->target_residency_ns;
- 			idx = i;
- 			break;
+ 	table_size = smu_table->tables[table_index].size;
+-- 
+2.51.0
+
 
 
