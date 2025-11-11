@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352ED4C97;
-	Tue, 11 Nov 2025 00:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E824C97;
+	Tue, 11 Nov 2025 00:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822597; cv=none; b=ZsZF88EhTAqogmCl89I6EKY/QXdn3D7FLxxwiM0I1Q1dF5SBnGPlbf1Dmcv1/gzr/x/3cuOm9dbn0mLeJa9pfDzdc4MNiP4OsRSrGa9sdoqZKfEugf1NjKKYbBSyHpfko0S9wgOYSG2ZzHBr9fNhjZAt1zsSNxTsHjkQnRkKeiU=
+	t=1762822599; cv=none; b=c22WXa8dMvt7SyC2krIa7JiCnciuvwvM3OJZLgfieax5zF8z39yTZvF1Hubm1dxU0loI7gfJhml+NClEBfw6D4EJ8ACjAbC1D67MLAdSZYNP4JRjMN++oTiCBeZbyVA77ltxnJ62H0zbAFup+/zLIBGmK29NCu/VRoZy9nj8bEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822597; c=relaxed/simple;
-	bh=yZ30SqsdCbUdOrd3nXnq5zZl0RvISKKkScZTwKv5vIU=;
+	s=arc-20240116; t=1762822599; c=relaxed/simple;
+	bh=APn0V5kaqnhZClzem5ZZRBp0TAQaw3BAGv7YesHevPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgvGKUCZsMKkMe/zACrshqz/g1mX600Z07uwsY/Z/WuHVcSXlwWasTE9wCBCE09P4r7BLb0f3fXqiHU/DxCmgXYt/ip6FyThCYPek3umkfhR51Vuo8GMA8o3UBpBTGaLt8FOQLZ0N94JW6cO7MmSNsIKMaJ9OTJxPAP/XVpyhEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVTnKL5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pI9ODT8ZZaSSkLL8zoHokdtMgQMW+f6/BnNcTkfm/8CNM0sucs1jj7NDInOYXJk9THQKb7pYWLUVO49r/2epDM2GgenmTTSMX5ObpoXN7zOsMwrlP6Lkf0wtMW0PII4w6N6tJV2H+1PVkH0IwlMuKQuP4Tf9hf3261sWCuGpHL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2zEBvXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVTnKL5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FBBC116B1;
-	Tue, 11 Nov 2025 00:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2zEBvXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7A4C4CEF5;
+	Tue, 11 Nov 2025 00:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822597;
-	bh=yZ30SqsdCbUdOrd3nXnq5zZl0RvISKKkScZTwKv5vIU=;
+	s=korg; t=1762822599;
+	bh=APn0V5kaqnhZClzem5ZZRBp0TAQaw3BAGv7YesHevPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVTnKL5QgmJUwrRGJ5oKCr4EgDkinypzYwUhBlxaTOPCm9GUqGhy4puAkc243rCnU
-	 fvhYRTFjV4/zKoaKzym101PYTpEtTXGAWyj7NBD8GiYJHAHknL8SeSbvSl0DLJ+QEx
-	 /fC9rYxfiKIIbRwoX466GdbB4bUOAR4NBg/9Io8U=
+	b=a2zEBvXI6tEWKUGdyxP5UPoF1wm706pcjg+o+EEt2mDY1+LiYIMPq4RuilZAkaGsX
+	 MFtcE16L9PE8JrZgpuw6ymPnWEwLLYX7N2KfQWYnFgceahD3+t1QcTXlNCJucPl2ZT
+	 uHS1upjRLjVDFMzHhIAbOcZht/9EV+Lyg8PW6nLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kees Cook <kees@kernel.org>,
-	Vineet Gupta <vgupta@kernel.org>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 144/849] arc: Fix __fls() const-foldability via __builtin_clzl()
-Date: Tue, 11 Nov 2025 09:35:14 +0900
-Message-ID: <20251111004539.885026039@linuxfoundation.org>
+	Owen Gu <guhuinan@xiaomi.com>
+Subject: [PATCH 6.12 082/565] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
+Date: Tue, 11 Nov 2025 09:38:58 +0900
+Message-ID: <20251111004528.813359854@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,65 +45,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Owen Gu <guhuinan@xiaomi.com>
 
-[ Upstream commit a3fecb9160482367365cc384c59dd220b162b066 ]
+commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
 
-While tracking down a problem where constant expressions used by
-BUILD_BUG_ON() suddenly stopped working[1], we found that an added static
-initializer was convincing the compiler that it couldn't track the state
-of the prior statically initialized value. Tracing this down found that
-ffs() was used in the initializer macro, but since it wasn't marked with
-__attribute__const__, the compiler had to assume the function might
-change variable states as a side-effect (which is not true for ffs(),
-which provides deterministic math results).
+A race condition occurs when ffs_func_eps_enable() runs concurrently
+with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
+sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
+to a NULL pointer dereference when accessing epfile->ep in
+ffs_func_eps_enable() after successful usb_ep_enable().
 
-For arc architecture with CONFIG_ISA_ARCV2=y, the __fls() function
-uses __builtin_arc_fls() which lacks GCC's const attribute, preventing
-compile-time constant folding, and KUnit testing of ffs/fls fails on
-arc[3]. A patch[2] to GCC to solve this has been sent.
+The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
+ffs_data_close() functions, and its modification is protected by the
+spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
+is also protected by ffs->eps_lock.
 
-Add a fix for this by handling compile-time constants with the standard
-__builtin_clzl() builtin (which has const attribute) while preserving
-the optimized arc-specific builtin for runtime cases. This has the added
-benefit of skipping runtime calculation of compile-time constant values.
-Even with the GCC bug fixed (which is about "attribute const") this is a
-good change to avoid needless runtime costs, and should be done
-regardless of the state of GCC's bug.
+Thus, add NULL pointer handling for ffs->epfiles in the
+ffs_func_eps_enable() function to fix issues
 
-Build tested ARCH=arc allyesconfig with GCC arc-linux 15.2.0.
-
-Link: https://github.com/KSPP/linux/issues/364 [1]
-Link: https://gcc.gnu.org/pipermail/gcc-patches/2025-August/693273.html
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202508031025.doWxtzzc-lkp@intel.com/ [3]
-Signed-off-by: Kees Cook <kees@kernel.org>
-Acked-by: Vineet Gupta <vgupta@kernel.org>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
+Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arc/include/asm/bitops.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/function/f_fs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arc/include/asm/bitops.h b/arch/arc/include/asm/bitops.h
-index 5340c28713927..df894235fdbc6 100644
---- a/arch/arc/include/asm/bitops.h
-+++ b/arch/arc/include/asm/bitops.h
-@@ -133,6 +133,8 @@ static inline __attribute__ ((const)) int fls(unsigned int x)
-  */
- static inline __attribute__ ((const)) unsigned long __fls(unsigned long x)
- {
-+	if (__builtin_constant_p(x))
-+		return x ? BITS_PER_LONG - 1 - __builtin_clzl(x) : 0;
- 	/* FLS insn has exactly same semantics as the API */
- 	return	__builtin_arc_fls(x);
- }
--- 
-2.51.0
-
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -2418,7 +2418,12 @@ static int ffs_func_eps_enable(struct ff
+ 	ep = func->eps;
+ 	epfile = ffs->epfiles;
+ 	count = ffs->eps_count;
+-	while(count--) {
++	if (!epfile) {
++		ret = -ENOMEM;
++		goto done;
++	}
++
++	while (count--) {
+ 		ep->ep->driver_data = ep;
+ 
+ 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
+@@ -2442,6 +2447,7 @@ static int ffs_func_eps_enable(struct ff
+ 	}
+ 
+ 	wake_up_interruptible(&ffs->wait);
++done:
+ 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
+ 
+ 	return ret;
 
 
