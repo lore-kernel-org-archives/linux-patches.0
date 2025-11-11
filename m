@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC46D4C97;
-	Tue, 11 Nov 2025 00:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FE81FDA92;
+	Tue, 11 Nov 2025 00:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822095; cv=none; b=EK4lDp5GLF60LYIjU+BX4xMk8bfOFlS1EGJUcRLD9L3rjgYnVlcJtv4eLjy7G/swzCfVpG+G8vlAU1QU4YHGmkQopxgUtUhSOstU6wUtsX70f26fhWofFm2oX+0pNph/GMO4d1LcIgpfI+96i6oH6YnfZzAKYfcLj1UwjIcIjE0=
+	t=1762822097; cv=none; b=Ycc/WsDuqTR6CgRD1FO7USS0oI2kST9QQvsV6+3OQlHn9oK4DXwspNTRZcayfABvUTisIpM+5otd0dKnwBrveDNkVX6ffeKqa+DohMFn554nUG7mmXBRU8Qz9pKXqP3/sAOZtYN2DDxDMcCsXRANCP1WF21T9Mt1Uyn+zjsiSzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822095; c=relaxed/simple;
-	bh=dxphBdHXjSjImXPzMEpuNYn4pkmT2auTk6k7j+9oHkQ=;
+	s=arc-20240116; t=1762822097; c=relaxed/simple;
+	bh=C3/+Pwjwyxp7Q2o8zXWiRFLQSbl4pkxbMRkt3O8O5lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epT45ZfpWrrEaOcQ/oG5mtxCteQx8RUBXfqlTq24eXnxaUR3lvHsMtY4ne5mRnaCYdFRsObaAP/QxII+2waQczlpBrcM8Fx7E1+q2NrSS/qMRN5OviCdK5blvLvG0CzmpAt2wu2jn1oO4TH9rKT2nWNysxHYJW11ryFMr7bP8UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzYTB+ue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjmJ//Wg4R7d7GYjFMNMCGdUD31ONjmwxO9WH+WmyUN07A2QzSIBHh6869o0zgdx4tVE++yPkImXCvMyOxRL6lJG9ET0veCt1Gu2VUv8hFLh4uP6PXkOkpts77YqWl3VfmfjiidhU981xA3o2mBqgblMC5HFTLmscP09rMbG/q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CLPqIPs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzYTB+ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06209C4CEF5;
-	Tue, 11 Nov 2025 00:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CLPqIPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47543C16AAE;
+	Tue, 11 Nov 2025 00:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822095;
-	bh=dxphBdHXjSjImXPzMEpuNYn4pkmT2auTk6k7j+9oHkQ=;
+	s=korg; t=1762822097;
+	bh=C3/+Pwjwyxp7Q2o8zXWiRFLQSbl4pkxbMRkt3O8O5lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzYTB+ueL3Fh/vyfYv5o9pFiuyk7ZNDUvB2dsMdF3heR1s6P4dEjhMmoagaY05Jv4
-	 cnmgl8DMlztFu4A9LPt2FZB1Of/htL3tt7j/OtKyFwtO/FopGZuqncVtJ42fE8gKAS
-	 Nc/9m/PJGRdOFPTpsfdblMGWPTIqfZVmsC3yYpUo=
+	b=1CLPqIPsf5xJWpLd1NZ31a/ej5FtFj8h8cdp0SvR1unXp8jl0nN+RPGKbe1vfFc5V
+	 sGSL1gnHWm3KHylxefOSP87jvQx3YcUZoPAY65GPfVqMMrfhpdL5LoCTfBX9ElMBKc
+	 TxalzdARghXSLZTs6epZbfrUpPrDR0C6e7zr17Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.17 015/849] Bluetooth: rfcomm: fix modem control handling
-Date: Tue, 11 Nov 2025 09:33:05 +0900
-Message-ID: <20251111004536.829973850@linuxfoundation.org>
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 016/849] net: phy: dp83867: Disable EEE support as not implemented
+Date: Tue, 11 Nov 2025 09:33:06 +0900
+Message-ID: <20251111004536.852862484@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,89 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-commit 91d35ec9b3956d6b3cf789c1593467e58855b03a upstream.
+commit 84a905290cb4c3d9a71a9e3b2f2e02e031e7512f upstream.
 
-The RFCOMM driver confuses the local and remote modem control signals,
-which specifically means that the reported DTR and RTS state will
-instead reflect the remote end (i.e. DSR and CTS).
+While the DP83867 PHYs report EEE capability through their feature
+registers, the actual hardware does not support EEE (see Links).
+When the connected MAC enables EEE, it causes link instability and
+communication failures.
 
-This issue dates back to the original driver (and a follow-on update)
-merged in 2002, which resulted in a non-standard implementation of
-TIOCMSET that allowed controlling also the TS07.10 IC and DV signals by
-mapping them to the RI and DCD input flags, while TIOCMGET failed to
-return the actual state of DTR and RTS.
+The issue is reproducible with a iMX8MP and relevant stmmac ethernet port.
+Since the introduction of phylink-managed EEE support in the stmmac driver,
+EEE is now enabled by default, leading to issues on systems using the
+DP83867 PHY.
 
-Note that the bogus control of input signals in tiocmset() is just
-dead code as those flags will have been masked out by the tty layer
-since 2003.
+Call phy_disable_eee during phy initialization to prevent EEE from being
+enabled on DP83867 PHYs.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1445244/dp83867ir-dp83867-disable-eee-lpi
+Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/658638/dp83867ir-eee-energy-efficient-ethernet
+Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251023144857.529566-1-ghidoliemanuele@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/tty.c |   26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/net/phy/dp83867.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -643,8 +643,8 @@ static void rfcomm_dev_modem_status(stru
- 		tty_port_tty_hangup(&dev->port, true);
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -738,6 +738,12 @@ static int dp83867_config_init(struct ph
+ 			return ret;
+ 	}
  
- 	dev->modem_status =
--		((v24_sig & RFCOMM_V24_RTC) ? (TIOCM_DSR | TIOCM_DTR) : 0) |
--		((v24_sig & RFCOMM_V24_RTR) ? (TIOCM_RTS | TIOCM_CTS) : 0) |
-+		((v24_sig & RFCOMM_V24_RTC) ? TIOCM_DSR : 0) |
-+		((v24_sig & RFCOMM_V24_RTR) ? TIOCM_CTS : 0) |
- 		((v24_sig & RFCOMM_V24_IC)  ? TIOCM_RI : 0) |
- 		((v24_sig & RFCOMM_V24_DV)  ? TIOCM_CD : 0);
- }
-@@ -1055,10 +1055,14 @@ static void rfcomm_tty_hangup(struct tty
- static int rfcomm_tty_tiocmget(struct tty_struct *tty)
- {
- 	struct rfcomm_dev *dev = tty->driver_data;
-+	struct rfcomm_dlc *dlc = dev->dlc;
-+	u8 v24_sig;
- 
- 	BT_DBG("tty %p dev %p", tty, dev);
- 
--	return dev->modem_status;
-+	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
++	/* Although the DP83867 reports EEE capability through the
++	 * MDIO_PCS_EEE_ABLE and MDIO_AN_EEE_ADV registers, the feature
++	 * is not actually implemented in hardware.
++	 */
++	phy_disable_eee(phydev);
 +
-+	return (v24_sig & (TIOCM_DTR | TIOCM_RTS)) | dev->modem_status;
- }
- 
- static int rfcomm_tty_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
-@@ -1071,23 +1075,15 @@ static int rfcomm_tty_tiocmset(struct tt
- 
- 	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
- 
--	if (set & TIOCM_DSR || set & TIOCM_DTR)
-+	if (set & TIOCM_DTR)
- 		v24_sig |= RFCOMM_V24_RTC;
--	if (set & TIOCM_RTS || set & TIOCM_CTS)
-+	if (set & TIOCM_RTS)
- 		v24_sig |= RFCOMM_V24_RTR;
--	if (set & TIOCM_RI)
--		v24_sig |= RFCOMM_V24_IC;
--	if (set & TIOCM_CD)
--		v24_sig |= RFCOMM_V24_DV;
- 
--	if (clear & TIOCM_DSR || clear & TIOCM_DTR)
-+	if (clear & TIOCM_DTR)
- 		v24_sig &= ~RFCOMM_V24_RTC;
--	if (clear & TIOCM_RTS || clear & TIOCM_CTS)
-+	if (clear & TIOCM_RTS)
- 		v24_sig &= ~RFCOMM_V24_RTR;
--	if (clear & TIOCM_RI)
--		v24_sig &= ~RFCOMM_V24_IC;
--	if (clear & TIOCM_CD)
--		v24_sig &= ~RFCOMM_V24_DV;
- 
- 	rfcomm_dlc_set_modem_status(dlc, v24_sig);
- 
+ 	if (phy_interface_is_rgmii(phydev) ||
+ 	    phydev->interface == PHY_INTERFACE_MODE_SGMII) {
+ 		val = phy_read(phydev, MII_DP83867_PHYCTRL);
 
 
