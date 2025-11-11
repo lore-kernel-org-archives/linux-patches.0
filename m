@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A028305E1B;
-	Tue, 11 Nov 2025 01:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF2830748A;
+	Tue, 11 Nov 2025 01:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823866; cv=none; b=kQPiB3SuI4+t9hsRaStaXB3p04VvChcq5MjBMZUxvtpg/4bjsUZcMeTqxcxaALXe1+fckfsAI9ZhsK87jkUby4iEuFVAu7MmusAVF8qk1tuEL8rGD7MwnHVCsgT+vnr5ClrvbI1uw52h/xzEOPNOhmtg9ZpjwdKI2knnF8urvTU=
+	t=1762823868; cv=none; b=p/UlBAzWoKk6P7urBPPsQXahLr/g8VUHLa2Iw58F4kfgj9WGSP/GJtIlc+P9/cl0pUHNEQe56KJKtejn8xUwu2WfLDPa7KthT6rZ/Qd5PV0hqwiOtsysUN8spP+XCCg0wmtdTuBY9Yu8WRCazbZc/buI/Y/cLFPDd7PA9qxEdOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823866; c=relaxed/simple;
-	bh=5hu6u/6ms9ya3TZWlVUb7avNID/MC8EyAK9hmLALFyA=;
+	s=arc-20240116; t=1762823868; c=relaxed/simple;
+	bh=Wlg3utuCbsLKxTQHPm8ZgQbylCpfmD7kRcrbFNF9OUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lune4KiSOV5lAPfP8pFoBN/x5WJLNDlrGGFjkqhMdrua67rCPgwHZ6zOLIH+rX9BVRy04ISHp10bWmEfZfN4j9BmM/PoM4XoWNh1bgmLlTfrg7yY+YQOkkdq12ZCSBI81CizVqpkWzqrhhOvMbA+M0qSZyJA+Cc83ygJ6hDj3v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZWc68Qk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EGr8AL6GPLNikerZZLyTRiZ13xfGQDA0vMZfl/6ec1ZrGRBZOhJCOypah4Np1P1hgNc6pHCIHhB4wKW7srpuQoa5slZWwuerYkntyJ0VaCTzNJRYpRqII43Pe43bmYvWgykRYqHqMISYWmNe4Z2Q/cD4gv5rzMCv+JrYuIFyMt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLw/VINR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZWc68Qk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3370C2BCB2;
-	Tue, 11 Nov 2025 01:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLw/VINR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3929FC4CEF5;
+	Tue, 11 Nov 2025 01:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823866;
-	bh=5hu6u/6ms9ya3TZWlVUb7avNID/MC8EyAK9hmLALFyA=;
+	s=korg; t=1762823868;
+	bh=Wlg3utuCbsLKxTQHPm8ZgQbylCpfmD7kRcrbFNF9OUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZWc68QkwtafwV3KWMr3LYjl/l6KxcwhkBSviHmdGiBedzEiIIISXIwoA2zensmdW
-	 MhFW5+yw+Mz/LoVlJ7EWOGnMsmzfeppaeyJwkdHfSu94UGBNsrp3rp044kEFVCpFFH
-	 FvVGQ6Z+gi/TyvW2EfI19o0u6JP+qi7LbAg74aOM=
+	b=tLw/VINRQv7x03h3gWmDS2mbeecXc3dkU1p3LaaZ78HTE7TPYXuBzeThAOOe6pC1e
+	 uEK4QQZ2tCBebOPCYTRlCoMTBAukEbArQinBdIurlu6DTZNmKkGfB7iMmyQHyE3EIg
+	 EBDZohpFXds7Nu6KjpPoJidxmV9JsVspRlxd7Rpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	chenmiao <chenmiao.ku@gmail.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 387/849] media: fix uninitialized symbol warnings
-Date: Tue, 11 Nov 2025 09:39:17 +0900
-Message-ID: <20251111004545.789062657@linuxfoundation.org>
+Subject: [PATCH 6.12 340/565] openrisc: Add R_OR1K_32_PCREL relocation type module support
+Date: Tue, 11 Nov 2025 09:43:16 +0900
+Message-ID: <20251111004534.528068607@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,115 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+From: chenmiao <chenmiao.ku@gmail.com>
 
-[ Upstream commit b4c441310c3baaa7c39a5457e305ca93c7a0400d ]
+[ Upstream commit 9d0cb6d00be891586261a35da7f8c3c956825c39 ]
 
-Initialize variables to fix these smatch warnings
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'protocol'.
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'scancode'.
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'toggle'.
-drivers/media/tuners/xc4000.c:1102 xc_debug_dump() error: uninitialized
-symbol 'adc_envelope'.
-drivers/media/tuners/xc4000.c:1108 xc_debug_dump() error: uninitialized
-symbol 'lock_status'.
-drivers/media/tuners/xc4000.c:1123 xc_debug_dump() error: uninitialized
-symbol 'frame_lines'.
-drivers/media/tuners/xc4000.c:1127 xc_debug_dump() error: uninitialized
-symbol 'quality'.
-drivers/media/tuners/xc5000.c:645 xc_debug_dump() error: uninitialized
-symbol 'adc_envelope'.
-drivers/media/tuners/xc5000.c:651 xc_debug_dump() error: uninitialized
-symbol 'lock_status'.
-drivers/media/tuners/xc5000.c:665 xc_debug_dump() error: uninitialized
-symbol 'frame_lines'.
-drivers/media/tuners/xc5000.c:668 xc_debug_dump() error: uninitialized
-symbol 'quality'.
-drivers/media/tuners/xc5000.c:671 xc_debug_dump() error: uninitialized
-symbol 'snr'.
-drivers/media/tuners/xc5000.c:674 xc_debug_dump() error: uninitialized
-symbol 'totalgain'.
+To ensure the proper functioning of the jump_label test module, this patch
+adds support for the R_OR1K_32_PCREL relocation type for any modules. The
+implementation calculates the PC-relative offset by subtracting the
+instruction location from the target value and stores the result at the
+specified location.
 
-Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[hverkuil: dropped ' = 0' from rc in ir-kbd-i2c.c, not needed]
+Signed-off-by: chenmiao <chenmiao.ku@gmail.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ir-kbd-i2c.c |  6 +++---
- drivers/media/tuners/xc4000.c  |  8 ++++----
- drivers/media/tuners/xc5000.c  | 12 ++++++------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ arch/openrisc/kernel/module.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/i2c/ir-kbd-i2c.c b/drivers/media/i2c/ir-kbd-i2c.c
-index c84e1e0e6109a..5588cdd7ec20d 100644
---- a/drivers/media/i2c/ir-kbd-i2c.c
-+++ b/drivers/media/i2c/ir-kbd-i2c.c
-@@ -321,9 +321,9 @@ static int get_key_avermedia_cardbus(struct IR_i2c *ir, enum rc_proto *protocol,
- 
- static int ir_key_poll(struct IR_i2c *ir)
- {
--	enum rc_proto protocol;
--	u32 scancode;
--	u8 toggle;
-+	enum rc_proto protocol = 0;
-+	u32 scancode = 0;
-+	u8 toggle = 0;
- 	int rc;
- 
- 	dev_dbg(&ir->rc->dev, "%s\n", __func__);
-diff --git a/drivers/media/tuners/xc4000.c b/drivers/media/tuners/xc4000.c
-index 3cf54d776d36c..b44c97e4e5ec6 100644
---- a/drivers/media/tuners/xc4000.c
-+++ b/drivers/media/tuners/xc4000.c
-@@ -1087,12 +1087,12 @@ static int check_firmware(struct dvb_frontend *fe, unsigned int type,
- 
- static void xc_debug_dump(struct xc4000_priv *priv)
- {
--	u16	adc_envelope;
-+	u16	adc_envelope = 0;
- 	u32	freq_error_hz = 0;
--	u16	lock_status;
-+	u16	lock_status = 0;
- 	u32	hsync_freq_hz = 0;
--	u16	frame_lines;
--	u16	quality;
-+	u16	frame_lines = 0;
-+	u16	quality = 0;
- 	u16	signal = 0;
- 	u16	noise = 0;
- 	u8	hw_majorversion = 0, hw_minorversion = 0;
-diff --git a/drivers/media/tuners/xc5000.c b/drivers/media/tuners/xc5000.c
-index ec9a3cd4784e1..a28481edd22ed 100644
---- a/drivers/media/tuners/xc5000.c
-+++ b/drivers/media/tuners/xc5000.c
-@@ -622,14 +622,14 @@ static int xc5000_fwupload(struct dvb_frontend *fe,
- 
- static void xc_debug_dump(struct xc5000_priv *priv)
- {
--	u16 adc_envelope;
-+	u16 adc_envelope = 0;
- 	u32 freq_error_hz = 0;
--	u16 lock_status;
-+	u16 lock_status = 0;
- 	u32 hsync_freq_hz = 0;
--	u16 frame_lines;
--	u16 quality;
--	u16 snr;
--	u16 totalgain;
-+	u16 frame_lines = 0;
-+	u16 quality = 0;
-+	u16 snr = 0;
-+	u16 totalgain = 0;
- 	u8 hw_majorversion = 0, hw_minorversion = 0;
- 	u8 fw_majorversion = 0, fw_minorversion = 0;
- 	u16 fw_buildversion = 0;
+diff --git a/arch/openrisc/kernel/module.c b/arch/openrisc/kernel/module.c
+index c9ff4c4a0b29b..4ac4fbaa827c1 100644
+--- a/arch/openrisc/kernel/module.c
++++ b/arch/openrisc/kernel/module.c
+@@ -55,6 +55,10 @@ int apply_relocate_add(Elf32_Shdr *sechdrs,
+ 			value |= *location & 0xfc000000;
+ 			*location = value;
+ 			break;
++		case R_OR1K_32_PCREL:
++			value -= (uint32_t)location;
++			*location = value;
++			break;
+ 		case R_OR1K_AHI16:
+ 			/* Adjust the operand to match with a signed LO16.  */
+ 			value += 0x8000;
 -- 
 2.51.0
 
