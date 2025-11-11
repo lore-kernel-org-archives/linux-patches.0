@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C95D1D6DB5;
-	Tue, 11 Nov 2025 00:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4884086A;
+	Tue, 11 Nov 2025 00:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822341; cv=none; b=NO/hlbzWH4D+2T1gc6gRvG2mgpt7JwNWD6omdXHBOPHy/PilOcGDjOfZ2N367jTR5hJD8gnNFJ78eH9l10OaGaB3QhtqLjYBpqlFyttYUQ0VN7y29A7zaZqqGx5gmdcLrlpjw0Kf3XsgxMqA8Am7K2wloGQ7AZk4TVrFyLV132o=
+	t=1762822343; cv=none; b=oP99woe3Mj87pE78hLPGKeCBOhdmHI0PTSTbJmYWimh9obqVHkE2I6CQgPo75pI//hcYbJDTOSZMrUNfPlM4+dQQjjyMKIP68wnMHZ2YTBjOh+M7/orC1uB8FzKGg2/TOgEp4SFjB6Vgpy24WHIi5UhoHd/0ETf/9ryYB8dXU9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822341; c=relaxed/simple;
-	bh=RRj0TMCskm6QXOJZDTBLdRZlixorOleDy3pPV0RGN18=;
+	s=arc-20240116; t=1762822343; c=relaxed/simple;
+	bh=lPut8GiC2dJC0N0ZrDi+EJgpNEvkjWBiLOO9RyHOUxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUSEjoqwcGaTxPYXFJ7i7Vr80BmAVwkomZLftodRt5CTg1Ga7bfDvXM4I4dtuKJq2On5O4jluqazRdjjbuHyfHFkEBWaF2nc9WHhsCY2dFu7NXYF/00+6+rEmtD7cDVaxSAaYuqjotiofGPr3X2nucZxapM0vt2+ivVMQktPbnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBQBmaUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FN89Kfj/eTWhuruRX2e1y8WpFapCUaLB4yaFUhkfV/n7N/PvkISOYK38r0tITnuLC6rvWcQOYuI/QGxI3t/HIfgOOsmqY2IinBbO8sPec0hBoUe9B7wTY5WVSzGl2ZZMuntSiRV/0oiQyKPBXcxGf28VgKywfcrt9ZGhacPduCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OiNrGIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBQBmaUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FC0C19425;
-	Tue, 11 Nov 2025 00:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OiNrGIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36924C19425;
+	Tue, 11 Nov 2025 00:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822341;
-	bh=RRj0TMCskm6QXOJZDTBLdRZlixorOleDy3pPV0RGN18=;
+	s=korg; t=1762822343;
+	bh=lPut8GiC2dJC0N0ZrDi+EJgpNEvkjWBiLOO9RyHOUxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BBQBmaUHH/fePqKbRS5CAp36HWdBMPFUM47oxvMIirLn7iitCm9zK84mH0/yd2l+O
-	 bXXQ1Ui/fgthRmHhgL5Qch+NEYkbygEyfcy6l3xGNPc1ClnYStXgf5OrnjCSYFoLQK
-	 CnvohYgIsuVXvrEmSkxVpNmX4sRlR0szE/wnkHAg=
+	b=2OiNrGIW359ixT/QR5/BvRe1ofrEyVt0tQI6Tq66C496bg0zkqrddGdnf1VbJ0xLY
+	 OrPFAJp7OM02Y2cEUXheWJgwRzOfeTtdOyDDEtcxM95hXylH+eewAVKhEI4tmNZCsp
+	 tp1DL18biqPuZsenWK+B85YvArKpHx50rOeiZZ8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@0x0f.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/849] drm/radeon: Do not kfree() devres managed rdev
-Date: Tue, 11 Nov 2025 09:34:09 +0900
-Message-ID: <20251111004538.329376573@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.17 089/849] block: make REQ_OP_ZONE_OPEN a write operation
+Date: Tue, 11 Nov 2025 09:34:19 +0900
+Message-ID: <20251111004538.567768853@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,40 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 3328443363a0895fd9c096edfe8ecd372ca9145e ]
+commit 19de03b312d69a7e9bacb51c806c6e3f4207376c upstream.
 
-Since the allocation of the drivers main structure was changed to
-devm_drm_dev_alloc() rdev is managed by devres and we shouldn't be calling
-kfree() on it.
+A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
+a zoned block device to the explicitly open condition
+(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
+operation.
 
-This fixes things exploding if the driver probe fails and devres cleans up
-the rdev after we already free'd it.
+Change this operation code to be an odd number to reflect this. The
+following operation numbers are changed to keep the numbering compact.
 
-Fixes: a9ed2f052c5c ("drm/radeon: change drm_dev_alloc to devm_drm_dev_alloc")
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 16c0681617b8a045773d4d87b6140002fa75b03b)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+No problems were reported without this change as this operation has no
+data. However, this unifies the zone operation to reflect that they
+modify the device state and also allows strengthening checks in the
+block layer, e.g. checking if this operation is not issued against a
+read-only device.
+
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_kms.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/linux/blk_types.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_kms.c b/drivers/gpu/drm/radeon/radeon_kms.c
-index 645e33bf7947e..ba1446acd7032 100644
---- a/drivers/gpu/drm/radeon/radeon_kms.c
-+++ b/drivers/gpu/drm/radeon/radeon_kms.c
-@@ -84,7 +84,6 @@ void radeon_driver_unload_kms(struct drm_device *dev)
- 	rdev->agp = NULL;
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -343,15 +343,15 @@ enum req_op {
+ 	/* write the zero filled sector many times */
+ 	REQ_OP_WRITE_ZEROES	= (__force blk_opf_t)9,
+ 	/* Open a zone */
+-	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)10,
++	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)11,
+ 	/* Close a zone */
+-	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)11,
++	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)13,
+ 	/* Transition a zone to full */
+-	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)13,
++	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)15,
+ 	/* reset a zone write pointer */
+-	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
++	REQ_OP_ZONE_RESET	= (__force blk_opf_t)17,
+ 	/* reset all the zone present on the device */
+-	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
++	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)19,
  
- done_free:
--	kfree(rdev);
- 	dev->dev_private = NULL;
- }
- 
--- 
-2.51.0
-
+ 	/* Driver private requests */
+ 	REQ_OP_DRV_IN		= (__force blk_opf_t)34,
 
 
