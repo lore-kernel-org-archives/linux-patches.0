@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C249246768;
-	Tue, 11 Nov 2025 01:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F33341AC7;
+	Tue, 11 Nov 2025 01:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823508; cv=none; b=TwK3ESzA0IboUJ5dTv9i1a5bPGmePVU+urV/C/Qo4owW6dRO1dFuO8dtkAbYW+5JlayYcGr0oq9M2tYw0TOiu4/etPjYD3GG6gyd92qd3QnxnfgWzrk9hAVWIUxADalA6nHBW1IxyXhroFf4NuTWE6Sya01aXC3xf2TuV9ACiN4=
+	t=1762823510; cv=none; b=LrXiSyBP9oKeTExBalcy/9QTXDOmj+69nRT3qY9uUbmgW2dB4XvRGY+GkEEUT+CaGBlxyZNDfhg9R/zkcNW/G0l/obyTibBUND8D0jvzAfgHTwIPUhlFIPqScXFMCr86hU3KekMdYKF1c6zkB0KDTedFKvZPxEjLe/qegnx7VgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823508; c=relaxed/simple;
-	bh=KIG63C4NLAX9XNMm+A/TWqCXwzrIAUNPwzHS8XiwrpQ=;
+	s=arc-20240116; t=1762823510; c=relaxed/simple;
+	bh=w62OGB6d91pbiylO8LycuB3Ke7bGhejqjK2oZGtQFQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ayX8HmWklEHAa/KiXy+U+6VHtwEcXFKh7HDlfN5Ca8O9EiJ02A5SiX5aOT2Q1SqN0jXfkTzjuPIm/pIj0l26pQ36IPdOCE3rVnY5IpmhEEbgEs5IRoEzOW21gnPWyISmOcqLgK4noi5VfWxmLUeXfXJTuGnW05/AQKKXOfp6uIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHJBRddt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ev9pJk1PDpt7NbVb019BGQlToST7HQYCSn7qnDToxxCNBILjKqwj/o5pqmdwYczRsI9eRlxD6uJ2AWNegWmvLIqVOTmU/0NoMhlFGR+ppJ9r59XXyia/pbAKl6bDkZxJGTPs1oMt0sx3XYZLkGz7ax2R2t39zTZUcwqh9GhgUsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcAeMwW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHJBRddt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAF9C116B1;
-	Tue, 11 Nov 2025 01:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcAeMwW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32F8C116B1;
+	Tue, 11 Nov 2025 01:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823507;
-	bh=KIG63C4NLAX9XNMm+A/TWqCXwzrIAUNPwzHS8XiwrpQ=;
+	s=korg; t=1762823510;
+	bh=w62OGB6d91pbiylO8LycuB3Ke7bGhejqjK2oZGtQFQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHJBRddtz9T/UHAhhBWQHRcFjbYtsozKciTTx7rgn8j6ybBiRWsLRWIKj0yCrEnCY
-	 pMSAMEH82qH76zU1e9qXznCrrSnur6pGzc72qL0YxGqAkrB6lDwyMCVRfCjvl7aYxF
-	 i7c9P8hLPJSgWUefvglso/lpIq3l28PD+sgy/ASE=
+	b=AcAeMwW6v40zVIMk85aw/v6FQzTu2ppZ6fWz1ieLpLAYwG5MEplxY2yyH8m7ZxZy6
+	 5O3Z95zHcmz3yL4jmOfd3dEuwndHXkHs0djXMZ3r+jXjV0wHtMbf/Ofqyi/zYfMOiF
+	 nTUEtI0kClmgPyCTZ2tDcUbZxfjV37/btp6tRBVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 260/565] platform/x86/intel-uncore-freq: Fix warning in partitioned system
-Date: Tue, 11 Nov 2025 09:41:56 +0900
-Message-ID: <20251111004532.746617295@linuxfoundation.org>
+Subject: [PATCH 6.17 314/849] drm/bridge: display-connector: dont set OP_DETECT for DisplayPorts
+Date: Tue, 11 Nov 2025 09:38:04 +0900
+Message-ID: <20251111004544.004144487@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,56 +48,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 6d47b4f08436cb682fb2644e6265a3897fd42a77 ]
+[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
 
-A partitioned system configured with only one package and one compute
-die, warning will be generated for duplicate sysfs entry. This typically
-occurs during the platform bring-up phase.
+Detecting the monitor for DisplayPort targets is more complicated than
+just reading the HPD pin level: it requires reading the DPCD in order to
+check what kind of device is attached to the port and whether there is
+an actual display attached.
 
-Partitioned systems expose dies, equivalent to TPMI compute domains,
-through the CPUID. Each partitioned system must contains at least one
-compute die per partition, resulting in a minimum of two dies per
-package. Hence the function topology_max_dies_per_package() returns at
-least two, and the condition "topology_max_dies_per_package() > 1"
-prevents the creation of a root domain.
+In order to let DRM framework handle such configurations, disable
+DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
+driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
+it is valid for the bridge to report HPD events.
 
-In this case topology_max_dies_per_package() will return 1 and root
-domain will be created for partition 0 and a duplicate sysfs warning
-for partition 1 as both partitions have same package ID.
+Currently inside the kernel there are only two targets which list
+hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
+arm64/qcom/sa8295p-adp. Both should be fine with this change.
 
-To address this also check for non zero partition in addition to
-topology_max_dies_per_package() > 1.
-
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://lore.kernel.org/r/20250819211034.3776284-1-srinivas.pandruvada@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/display-connector.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-index 9a5ff9163988d..e36ae804e21e6 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
-@@ -589,7 +589,7 @@ static int uncore_probe(struct auxiliary_device *auxdev, const struct auxiliary_
- 
- 	auxiliary_set_drvdata(auxdev, tpmi_uncore);
- 
--	if (topology_max_dies_per_package() > 1)
-+	if (topology_max_dies_per_package() > 1 || plat_info->partition)
- 		return 0;
- 
- 	tpmi_uncore->root_cluster.root_domain = true;
+diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
+index 52b7b5889e6fe..4f0295efb8f68 100644
+--- a/drivers/gpu/drm/bridge/display-connector.c
++++ b/drivers/gpu/drm/bridge/display-connector.c
+@@ -373,7 +373,8 @@ static int display_connector_probe(struct platform_device *pdev)
+ 	if (conn->bridge.ddc)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
+ 				 |  DRM_BRIDGE_OP_DETECT;
+-	if (conn->hpd_gpio)
++	/* Detecting the monitor requires reading DPCD */
++	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
+ 	if (conn->hpd_irq >= 0)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
 -- 
 2.51.0
 
