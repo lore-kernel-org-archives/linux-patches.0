@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608F7304BDB;
-	Tue, 11 Nov 2025 01:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37DE248F6A;
+	Tue, 11 Nov 2025 01:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824417; cv=none; b=ot1Cis703ooWcVvfJEHoZb+zwZ09h0qiY5MgyD1QxNiX24m+Y0s33Nz0RBJmaZqlHwij5dQEXuukHuT5p9cB8YvUXIG+cD7j9woNbsyjo+N0PYWOVpjEUwiLHw66oX2W5jGejQoVooWxrv4f/zGNLX4DJpXb3F/0zdmDQjzPll8=
+	t=1762824419; cv=none; b=a6Bn0sUEdDqv1uWtncu5oCu0ssDA0A/gdwFnnLnGKbiT4c0zqjPZTy1ybo5ETTX5f8U7re4dbHjKGqaTx8osN4GQ3E76h1+AcaZ64Tw7InmA1YQ1hotBUA1HqVyU2X/BNKYFu4XUE5wIA/qy7UIm9hi92VogSAq1y6X94GO3Mm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824417; c=relaxed/simple;
-	bh=krjBI1iW/svi+kDvXRlTC0nItvDHVHJbLmpN3vCM2Vk=;
+	s=arc-20240116; t=1762824419; c=relaxed/simple;
+	bh=wExKomsksmWmWxeEtjBTaUDJGFtjHB5naps03LFJN+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0a5bnZQT/JuOf9Fz17TlR6wKWrE19ZprUFrydFPmxiPhRYR/RbZQ+b4YnlzXt9XmI+kgD9EFIexcCgJFjGzydrBO1oz4PMSWwEjb7efWXqK2FdF/2UjFi++I+6iPm4lWiXwrJobzWZao8kWeRQIwTCecgaV3yTwGQ6oX5Z6jzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgyptyUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ph8urSmlcSh1OoQUbmErMWEUHLFWfD4wSuTLEUXGeb1d006YF8pWUJA8LikSR3nMznEJm81sAA3cKUHIKrIDUI91agGJXMmN4XC72nK4LeLpEKLhFTdxaLtTDQbNpfdlo1vm3ngzr+R3VSu/Rdm2cct0PfQcCaeEenf89HcXiHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZL4/Hwe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgyptyUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86D8C4AF0C;
-	Tue, 11 Nov 2025 01:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZL4/Hwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F66BC116B1;
+	Tue, 11 Nov 2025 01:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824417;
-	bh=krjBI1iW/svi+kDvXRlTC0nItvDHVHJbLmpN3vCM2Vk=;
+	s=korg; t=1762824419;
+	bh=wExKomsksmWmWxeEtjBTaUDJGFtjHB5naps03LFJN+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgyptyUHBwjO3N1Vy6OgArep/7K2zZrn1Wg1Lv5P74l14DQLkbMDosgc3Mb01tTZz
-	 hMQQ5Cuv8uinrIli/obdo1jLSejNoR6n1fJRXE9UtxjynCvd7W5VzVuOBVHjftxcpF
-	 fMvRJMlZnmNtTFBwQpunDcUwePJswO1ZEbkn4Oz0=
+	b=SZL4/HweWVPEC1DmMzvn3sMBB8ih6iecu8FATiqNG8FXtRsdjQQdJrDOPb2M4Wv4T
+	 R+cQdqXdU6fH2p5GJH6k8XUnkQhB0x/FgatJZtMJQ+C8qj5qjSgcPclLKcVOrIg+Cy
+	 TagAkyUqph5K9REu07vwbqaDXrvtGYf2MX/h5JrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 455/849] drm/amdgpu: dont enable SMU on cyan skillfish
-Date: Tue, 11 Nov 2025 09:40:25 +0900
-Message-ID: <20251111004547.429016758@linuxfoundation.org>
+Subject: [PATCH 6.17 491/849] selftests: mptcp: join: allow more time to send ADD_ADDR
+Date: Tue, 11 Nov 2025 09:41:01 +0900
+Message-ID: <20251111004548.311837287@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 94bd7bf2c920998b4c756bc8a54fd3dbdf7e4360 ]
+[ Upstream commit e2cda6343bfe459c3331db5afcd675ab333112dd ]
 
-Cyan skillfish uses different SMU firmware.
+When many ADD_ADDR need to be sent, it can take some time to send each
+of them, and create new subflows. Some CIs seem to occasionally have
+issues with these tests, especially with "debug" kernels.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Two subtests will now run for a slightly longer time: the last two where
+3 or more ADD_ADDR are sent during the test.
+
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250907-net-next-mptcp-add_addr-retrans-adapt-v1-3-824cc805772b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-index e814da2b14225..dd7b2b796427c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -2126,7 +2126,6 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
- 	case IP_VERSION(11, 0, 5):
- 	case IP_VERSION(11, 0, 9):
- 	case IP_VERSION(11, 0, 7):
--	case IP_VERSION(11, 0, 8):
- 	case IP_VERSION(11, 0, 11):
- 	case IP_VERSION(11, 0, 12):
- 	case IP_VERSION(11, 0, 13):
-@@ -2134,6 +2133,10 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
- 	case IP_VERSION(11, 5, 2):
- 		amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
- 		break;
-+	case IP_VERSION(11, 0, 8):
-+		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
-+			amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
-+		break;
- 	case IP_VERSION(12, 0, 0):
- 	case IP_VERSION(12, 0, 1):
- 		amdgpu_device_ip_block_add(adev, &smu_v12_0_ip_block);
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index 5579709c36533..725f1a00bbf19 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2151,7 +2151,8 @@ signal_address_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.4.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1
++		speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
+ 		chk_join_nr 3 3 3
+ 		chk_add_nr 3 3
+ 	fi
+@@ -2163,7 +2164,8 @@ signal_address_tests()
+ 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
+ 		pm_nl_set_limits $ns2 3 3
+-		run_tests $ns1 $ns2 10.0.1.1
++		speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
+ 		join_syn_tx=3 \
+ 			chk_join_nr 1 1 1
+ 		chk_add_nr 3 3
 -- 
 2.51.0
 
