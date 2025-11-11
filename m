@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1C92D879A;
-	Tue, 11 Nov 2025 01:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C992D979C;
+	Tue, 11 Nov 2025 01:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823581; cv=none; b=FbcpYzACBc7rwC7YL+fw6V7pIJD8vCREVuLapL1ljZhaQ8X+kHFwqWiuYgqHxbk/pitacvvR8Va6WmyCLYLljidHMrvleT5QLBhMpk7JYo2bXcfvIACu/O/zMnbbU/i+h9yX95pqH672kwD2ErTL4ZUAfTmlKGgyuZK/UkDiO8s=
+	t=1762823583; cv=none; b=DwbllSBoa/4oLVjXM/9aE3ij1qfoGFDgmohjOlxfb2ll81dNE4Ivjs3dW/F10jGCMzb4MhBtib26uhcFazIvv2/5F/pH3geFX5BZ4ZtVo4XDndUI8PMPbmgd5/F+1uCYFLXBp6UAJGVCGyumzSvzUdIvvNolPMt5YW+IaSYwIk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823581; c=relaxed/simple;
-	bh=0h1pEephsztK766OuMmNuHRMr5veDpn7kS38SJICkI0=;
+	s=arc-20240116; t=1762823583; c=relaxed/simple;
+	bh=TXWRpJZsAcN1z0/NAAAGRUWZzdiiGNFp8iQFbZIYN5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5hdtcaeQeK8dgnNrLDIQbLP5Me6+Eo5ccKDwVwqVwxFrP+P/8wQ0ncVSyDntyLao5EbL1AlceGq17e3jq/XeACak1t7OQLPsEHblRtjFk9MTurhslB6X4C/P5jxei3bhyFacF78vvPIchFKURTLrlYIl2gdqj6dq8W9xxaDPGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK9VCTN+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdN6X0UnX9daBwlmh2jafIf2zORWNKaWG+qpgcxu3xtUjcNEi5eBxxm9Q4lLDLGiNDQefAxE9Ajfu2E1I010xxpcx09e8a7iENFM/xt4ERKdAiz4+2U1NZuZwk4NR+54f559J87qzilKR+JQj/t+8NiB8vglrCVDqPGOlooAg2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIJh1vgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK9VCTN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB1CC113D0;
-	Tue, 11 Nov 2025 01:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIJh1vgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5F9C4CEF5;
+	Tue, 11 Nov 2025 01:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823581;
-	bh=0h1pEephsztK766OuMmNuHRMr5veDpn7kS38SJICkI0=;
+	s=korg; t=1762823583;
+	bh=TXWRpJZsAcN1z0/NAAAGRUWZzdiiGNFp8iQFbZIYN5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BK9VCTN+73xgJIuokJfD4QQRh99U3KKSr5gb0vMlRPAQ1uH9UMQxAUrDwti4LBu/q
-	 nZnZjrlNiFJ99f1IWaKU6XCa8T5UpqllHAGBoE1VAzs8P50coBtUDYDPalrb3G1LSI
-	 9TKsG5RpixO5TzCGuACJHrsD3o6K6vVNZykG8YX8=
+	b=mIJh1vgt9W66w3xkSacPhu7359v7bVI+JKjus6iVghAr3+XaMDPRGa1I92YTfkV3I
+	 PGM7goPTKIRCgsC53DwPv7lbldyAsjpkmrsFPZRf6cZslHtoxtHBOiQMd6mCbIILdb
+	 vkaMLAByaVeGwObqL84iS8eY7fFDioxFGD5sf7So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Miroslav Lichvar <mlichvar@redhat.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 274/565] inet_diag: annotate data-races in inet_diag_bc_sk()
-Date: Tue, 11 Nov 2025 09:42:10 +0900
-Message-ID: <20251111004533.048153516@linuxfoundation.org>
+Subject: [PATCH 6.12 280/565] ptp: Limit time setting of PTP clocks
+Date: Tue, 11 Nov 2025 09:42:16 +0900
+Message-ID: <20251111004533.179997626@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,60 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Miroslav Lichvar <mlichvar@redhat.com>
 
-[ Upstream commit 4fd84a0aaf2ba125b441aa09d415022385e66bf2 ]
+[ Upstream commit 5a8c02a6bf52b1cf9cfb7868a8330f7c3c6aebe9 ]
 
-inet_diag_bc_sk() runs with an unlocked socket,
-annotate potential races with READ_ONCE().
+Networking drivers implementing PTP clocks and kernel socket code
+handling hardware timestamps use the 64-bit signed ktime_t type counting
+nanoseconds. When a PTP clock reaches the maximum value in year 2262,
+the timestamps returned to applications will overflow into year 1667.
+The same thing happens when injecting a large offset with
+clock_adjtime(ADJ_SETOFFSET).
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250828102738.2065992-4-edumazet@google.com
+The commit 7a8e61f84786 ("timekeeping: Force upper bound for setting
+CLOCK_REALTIME") limited the maximum accepted value setting the system
+clock to 30 years before the maximum representable value (i.e. year
+2232) to avoid the overflow, assuming the system will not run for more
+than 30 years.
+
+Enforce the same limit for PTP clocks. Don't allow negative values and
+values closer than 30 years to the maximum value. Drivers may implement
+an even lower limit if the hardware registers cannot represent the whole
+interval between years 1970 and 2262 in the required resolution.
+
+Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
+Cc: Richard Cochran <richardcochran@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: John Stultz <jstultz@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250828103300.1387025-1-mlichvar@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_diag.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/ptp/ptp_clock.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index 67639309163d0..f2de2f2962595 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -783,7 +783,7 @@ static void entry_fill_addrs(struct inet_diag_entry *entry,
- 			     const struct sock *sk)
- {
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sk->sk_family == AF_INET6) {
-+	if (entry->family == AF_INET6) {
- 		entry->saddr = sk->sk_v6_rcv_saddr.s6_addr32;
- 		entry->daddr = sk->sk_v6_daddr.s6_addr32;
- 	} else
-@@ -796,18 +796,18 @@ static void entry_fill_addrs(struct inet_diag_entry *entry,
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 642a540861d43..03c17b1db7aac 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -100,6 +100,9 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
+ 		return -EBUSY;
+ 	}
  
- int inet_diag_bc_sk(const struct nlattr *bc, struct sock *sk)
- {
--	struct inet_sock *inet = inet_sk(sk);
-+	const struct inet_sock *inet = inet_sk(sk);
- 	struct inet_diag_entry entry;
++	if (!timespec64_valid_settod(tp))
++		return -EINVAL;
++
+ 	return  ptp->info->settime64(ptp->info, tp);
+ }
  
- 	if (!bc)
- 		return 1;
+@@ -130,7 +133,7 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 	ops = ptp->info;
  
--	entry.family = sk->sk_family;
-+	entry.family = READ_ONCE(sk->sk_family);
- 	entry_fill_addrs(&entry, sk);
--	entry.sport = inet->inet_num;
--	entry.dport = ntohs(inet->inet_dport);
--	entry.ifindex = sk->sk_bound_dev_if;
--	entry.userlocks = sk_fullsock(sk) ? sk->sk_userlocks : 0;
-+	entry.sport = READ_ONCE(inet->inet_num);
-+	entry.dport = ntohs(READ_ONCE(inet->inet_dport));
-+	entry.ifindex = READ_ONCE(sk->sk_bound_dev_if);
-+	entry.userlocks = sk_fullsock(sk) ? READ_ONCE(sk->sk_userlocks) : 0;
- 	if (sk_fullsock(sk))
- 		entry.mark = READ_ONCE(sk->sk_mark);
- 	else if (sk->sk_state == TCP_NEW_SYN_RECV)
+ 	if (tx->modes & ADJ_SETOFFSET) {
+-		struct timespec64 ts;
++		struct timespec64 ts, ts2;
+ 		ktime_t kt;
+ 		s64 delta;
+ 
+@@ -143,6 +146,14 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 		if ((unsigned long) ts.tv_nsec >= NSEC_PER_SEC)
+ 			return -EINVAL;
+ 
++		/* Make sure the offset is valid */
++		err = ptp_clock_gettime(pc, &ts2);
++		if (err)
++			return err;
++		ts2 = timespec64_add(ts2, ts);
++		if (!timespec64_valid_settod(&ts2))
++			return -EINVAL;
++
+ 		kt = timespec64_to_ktime(ts);
+ 		delta = ktime_to_ns(kt);
+ 		err = ops->adjtime(ops, delta);
 -- 
 2.51.0
 
