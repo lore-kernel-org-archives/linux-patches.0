@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86132C2357;
-	Tue, 11 Nov 2025 01:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B98F2D94B8;
+	Tue, 11 Nov 2025 01:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824059; cv=none; b=nyUYWuem0ly3GEyLX0m192Fs//q08tfy7cqV8GItu9vUnSJLUROwHQVriP5lxsGRvKFZKIzhw+3kc0EHt0lKmrsq5wprepTXbSpLjyeWP2ys3YtF6q+IPuswuGpeFOY2ggCCbIeqXTgbuFDYWixUBwXi5J03vMhwaV0ruMmmV9c=
+	t=1762824062; cv=none; b=iI7qAR0iMCTpjSasYKAYHHacbO+3bEDr5Qz4lD1RnlRB12bViybmGeMORyLwC2STqp+qbDid3Gb2JU2OGeSiYsKLh5VPcPXy1RUxxwJzxsBRuQi7PY0yu86Q2M4CaaKN6fLiho9ykw0dOaB6pdYJjNrFi+CAkRLHtdFRFl/Hpgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824059; c=relaxed/simple;
-	bh=4h5RlWvDPeysFeJBXzGBOZEx+wzBkCcQ6X2UsqLWlxM=;
+	s=arc-20240116; t=1762824062; c=relaxed/simple;
+	bh=bGeQSNz22sBqSjKheL21K89EW1g5WLghscdzRbKzHHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/4FVYrD86yJhxaJo1FkNI1UEguXuWYu+KOk7bnqWh8qvfGBYzLqcJIhbLnKJkBkGnvw0cquxsax72afPw7vxK8wO1iKRMwVGwukGXuaGY1WA5T/CeVUiBtd9ehJgH4WUpkLfVQsNZgNiXR0nbFycAaehMySE3PvKikrf0CCnrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYxQNg/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qy1wwFGdhZkuwt03TtHlgjSLHjecoVAAkTO2mZ8IRorTYHxqNyBpx6Nay4YVzh295xrBl/wFo2hObWWUeYjrBJWqiPtio/axB+UtjodoS6hA5abxGK2UiAaHcOJHb5+tDjyei909+2U3WxkLDYZgHDtec9fAJ4av5XEHa1FwGZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAXdvau8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYxQNg/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DBFC113D0;
-	Tue, 11 Nov 2025 01:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAXdvau8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE63C19425;
+	Tue, 11 Nov 2025 01:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824059;
-	bh=4h5RlWvDPeysFeJBXzGBOZEx+wzBkCcQ6X2UsqLWlxM=;
+	s=korg; t=1762824062;
+	bh=bGeQSNz22sBqSjKheL21K89EW1g5WLghscdzRbKzHHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYxQNg/AxMxjbqMZkOkjsf1L0b/+2k73F6S371urqc9H9QR1PbF+wcK43KOk+uL/C
-	 G6R6NljU8LAAFT/erscKrzClnsBhrRn73SNkb/aQqH4PLwyaeWbfT5YL4Blat+2SW3
-	 yVuVE8E+Jx5iGRoZHm4wYsfTdZ7WVKbL24NK2q1s=
+	b=SAXdvau85lFpUqQL2+4pFPFKmdc5/IlKrJV5Mryn0s0ZMj6I0V9Eeq1Xvkr+HqE6+
+	 X2AdQ+Wiroj7iojXFaR3qH5fuCxE1eEUNtLJNB+Z8eMdQ6o1KExMoI8Bqa1SpWq5g8
+	 p4irz9odPeejrvZUaTYVTj5jSGETx73umTwfF+Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/565] scsi: lpfc: Ensure PLOGI_ACC is sent prior to PRLI in Point to Point topology
-Date: Tue, 11 Nov 2025 09:43:55 +0900
-Message-ID: <20251111004535.398131304@linuxfoundation.org>
+Subject: [PATCH 6.17 429/849] drm: panel-backlight-quirks: Make EDID match optional
+Date: Tue, 11 Nov 2025 09:39:59 +0900
+Message-ID: <20251111004546.805467404@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,103 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 2bf81856a403c92a4ce375288f33fba82ca2ccc6 ]
+[ Upstream commit 9931e4be11f2129a20ffd908bc364598a63016f8 ]
 
-There is a timing race condition when a PRLI may be sent on the wire
-before PLOGI_ACC in Point to Point topology.  Fix by deferring REG_RPI
-mbox completion handling to after PLOGI_ACC's CQE completion.  Because
-the discovery state machine only sends PRLI after REG_RPI mbox
-completion, PRLI is now guaranteed to be sent after PLOGI_ACC.
+Currently, having a valid panel_id match is required to use the quirk
+system. For certain devices, we know that all SKUs need a certain quirk.
+Therefore, allow not specifying ident by only checking for a match
+if panel_id is non-zero.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Message-ID: <20250915180811.137530-8-justintee8345@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Tested-by: Philip Müller <philm@manjaro.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://lore.kernel.org/r/20250829145541.512671-2-lkml@antheas.dev
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c       | 10 +++++++---
- drivers/scsi/lpfc/lpfc_nportdisc.c | 23 ++++++++++++++++++-----
- 2 files changed, 25 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/drm_panel_backlight_quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 9309c42487ca8..36ee9f51a8fa2 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -5329,12 +5329,12 @@ lpfc_cmpl_els_rsp(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
- 		ulp_status, ulp_word4, did);
- 	/* ELS response tag <ulpIoTag> completes */
- 	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
--			 "0110 ELS response tag x%x completes "
-+			 "0110 ELS response tag x%x completes fc_flag x%lx"
- 			 "Data: x%x x%x x%x x%x x%lx x%x x%x x%x %p %p\n",
--			 iotag, ulp_status, ulp_word4, tmo,
-+			 iotag, vport->fc_flag, ulp_status, ulp_word4, tmo,
- 			 ndlp->nlp_DID, ndlp->nlp_flag, ndlp->nlp_state,
- 			 ndlp->nlp_rpi, kref_read(&ndlp->kref), mbox, ndlp);
--	if (mbox) {
-+	if (mbox && !test_bit(FC_PT2PT, &vport->fc_flag)) {
- 		if (ulp_status == 0 &&
- 		    test_bit(NLP_ACC_REGLOGIN, &ndlp->nlp_flag)) {
- 			if (!lpfc_unreg_rpi(vport, ndlp) &&
-@@ -5393,6 +5393,10 @@ lpfc_cmpl_els_rsp(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
- 		}
- out_free_mbox:
- 		lpfc_mbox_rsrc_cleanup(phba, mbox, MBOX_THD_UNLOCKED);
-+	} else if (mbox && test_bit(FC_PT2PT, &vport->fc_flag) &&
-+		   test_bit(NLP_ACC_REGLOGIN, &ndlp->nlp_flag)) {
-+		lpfc_mbx_cmpl_reg_login(phba, mbox);
-+		clear_bit(NLP_ACC_REGLOGIN, &ndlp->nlp_flag);
- 	}
- out:
- 	if (ndlp && shost) {
-diff --git a/drivers/scsi/lpfc/lpfc_nportdisc.c b/drivers/scsi/lpfc/lpfc_nportdisc.c
-index 4d88cfe71caed..2897674b78d4c 100644
---- a/drivers/scsi/lpfc/lpfc_nportdisc.c
-+++ b/drivers/scsi/lpfc/lpfc_nportdisc.c
-@@ -329,8 +329,14 @@ lpfc_defer_plogi_acc(struct lpfc_hba *phba, LPFC_MBOXQ_t *login_mbox)
- 		/* Now that REG_RPI completed successfully,
- 		 * we can now proceed with sending the PLOGI ACC.
- 		 */
--		rc = lpfc_els_rsp_acc(login_mbox->vport, ELS_CMD_PLOGI,
--				      save_iocb, ndlp, NULL);
-+		if (test_bit(FC_PT2PT, &ndlp->vport->fc_flag)) {
-+			rc = lpfc_els_rsp_acc(login_mbox->vport, ELS_CMD_PLOGI,
-+					      save_iocb, ndlp, login_mbox);
-+		} else {
-+			rc = lpfc_els_rsp_acc(login_mbox->vport, ELS_CMD_PLOGI,
-+					      save_iocb, ndlp, NULL);
-+		}
-+
- 		if (rc) {
- 			lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
- 					"4576 PLOGI ACC fails pt2pt discovery: "
-@@ -338,9 +344,16 @@ lpfc_defer_plogi_acc(struct lpfc_hba *phba, LPFC_MBOXQ_t *login_mbox)
- 		}
- 	}
+diff --git a/drivers/gpu/drm/drm_panel_backlight_quirks.c b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+index 598f812b7cb38..b38b33e26ea5c 100644
+--- a/drivers/gpu/drm/drm_panel_backlight_quirks.c
++++ b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+@@ -50,7 +50,7 @@ static bool drm_panel_min_backlight_quirk_matches(const struct drm_panel_min_bac
+ 	if (!dmi_match(quirk->dmi_match.field, quirk->dmi_match.value))
+ 		return false;
  
--	/* Now process the REG_RPI cmpl */
--	lpfc_mbx_cmpl_reg_login(phba, login_mbox);
--	clear_bit(NLP_ACC_REGLOGIN, &ndlp->nlp_flag);
-+	/* If this is a fabric topology, complete the reg_rpi and prli now.
-+	 * For Pt2Pt, the reg_rpi and PRLI are deferred until after the LS_ACC
-+	 * completes.  This ensures, in Pt2Pt, that the PLOGI LS_ACC is sent
-+	 * before the PRLI.
-+	 */
-+	if (!test_bit(FC_PT2PT, &ndlp->vport->fc_flag)) {
-+		/* Now process the REG_RPI cmpl */
-+		lpfc_mbx_cmpl_reg_login(phba, login_mbox);
-+		clear_bit(NLP_ACC_REGLOGIN, &ndlp->nlp_flag);
-+	}
- 	kfree(save_iocb);
- }
+-	if (!drm_edid_match(edid, &quirk->ident))
++	if (quirk->ident.panel_id && !drm_edid_match(edid, &quirk->ident))
+ 		return false;
  
+ 	return true;
 -- 
 2.51.0
 
