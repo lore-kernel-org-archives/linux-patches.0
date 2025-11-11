@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4681C265CC5;
-	Tue, 11 Nov 2025 01:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EFE258EF6;
+	Tue, 11 Nov 2025 01:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822990; cv=none; b=iIqVObEeiVZrfUbqgBPifs8nmjzfzDL620EoiNBOz6eayT73rxtHUXkL8QgXAnLa6eKEC7lUOYUaapezkjyK5bAxhyE0CZc108lwX5mMZZusowf/s9YKj0tds8NSZw9dPsb7LTh5PdH5EFcdZEOqGDe6qJkycOuGkDf/7Tgivww=
+	t=1762822992; cv=none; b=J88zISHB1n0TC25EzmtpipuTyNMW9UBKF2fYaaVTCqx3UTG9S6kkCG6T2iWTp9nt9lX05Qb7yySbmBVJgPSMYo4SQNN07T/nDMvCslIbHwCSbU9K3WupkUBHd8ykoUsaBk6Qyw7Hu2f1Vv+uQI2rZi58/WYlTg+lPeFAqkZ0Kls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822990; c=relaxed/simple;
-	bh=0YUzorIgoAttoetr8+iSUBZ6tNuw1e6gSMlzjAdCwX4=;
+	s=arc-20240116; t=1762822992; c=relaxed/simple;
+	bh=vqioFOxfZgtLXHGBSIneGoGTsHbleNF28bvpzm6B+jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M02rbPwj8AeE/czX9sM2GP++4DQkWVA7RMGBRf9FCSJAXQYMhlZWbRLzx+c6T7dqijzuWjRck8blFFqZs2s1iFrqFEM4i+WkdG6SWy5/8Q5F8OVAwufzF/1Xca+Sie1SkNiiK0BcnqIKSIVPnKRucMv9AGIj+GSlO5By+P8N7yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXHAlhv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSZt8WHO8W3SQOn6YUKihS0iVBe+ER9aw1Tdg33Nf6BjQU5SJMw5QCc/8RJKAQDJWnpu/kGoJzNcSqfZCPvOXkCE510EsNlIZMGBaxBWf9Zyth0xG3g96gJFz3iJy7x9twdJiee+KqDZVW5C0Ql0TkkX0V5XZvfj2xunkRWLA3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAkQ24mU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXHAlhv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44A1C4CEFB;
-	Tue, 11 Nov 2025 01:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAkQ24mU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDAEC2BCAF;
+	Tue, 11 Nov 2025 01:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822990;
-	bh=0YUzorIgoAttoetr8+iSUBZ6tNuw1e6gSMlzjAdCwX4=;
+	s=korg; t=1762822992;
+	bh=vqioFOxfZgtLXHGBSIneGoGTsHbleNF28bvpzm6B+jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXHAlhv5JDZSBCKHbFozyFNoF/baEVTB51Vxp9JZVhH7YIC13vtNSCLJB+1CtHB7D
-	 9ISRdg/RhaEtyIZwGx6hVaRtesKiHtrkH+s5/qAxnFMgdztm+UJPjDRp2QgfYeA/Ho
-	 0VjAd/4+Wg6V13z9X11i7EhPi+fqEUsZDhcMyQgo=
+	b=PAkQ24mURQ7KpB3QX3lBNphx/Vwhd0Twua1IVCVLsKxy6VKlGS2EbGVmlGSA0apqS
+	 BDa1XV+LoAkpRigyuT/bvf7BHVvDRRspmhEh9JQ4umNb6WFbcSQ8VegoT6E5CSoZwT
+	 +gd7DpY/vLDywmf/jsbwSv2NCy+CiY5V79yMBeIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Pei <cp0613@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/565] ACPI: SPCR: Support Precise Baud Rate field
-Date: Tue, 11 Nov 2025 09:40:06 +0900
-Message-ID: <20251111004530.314647273@linuxfoundation.org>
+Subject: [PATCH 6.17 210/849] hwmon: (dell-smm) Remove Dell Precision 490 custom config data
+Date: Tue, 11 Nov 2025 09:36:20 +0900
+Message-ID: <20251111004541.522005486@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 4d330fe54145ecfbb657ac01a554fdedf3c1927e ]
+[ Upstream commit ddb61e737f04e3c6c8299c1e00bf17a42a7f05cf ]
 
-The Microsoft Serial Port Console Redirection (SPCR) specification
-revision 1.09 comprises additional field: Precise Baud Rate [1].
+It turns out the second fan on the Dell Precision 490 does not
+really support I8K_FAN_TURBO. Setting the fan state to 3 enables
+automatic fan control, just like on the other two fans.
+The reason why this was misinterpreted as turbo mode was that
+the second fan normally spins faster in automatic mode than
+in the previous fan states. Yet when in state 3, the fan speed
+reacts to heat exposure, exposing the automatic mode setting.
 
-It is used to describe non-traditional baud rates (such as those
-used by high-speed UARTs).
-
-It contains a specific non-zero baud rate which overrides the value
-of the Configured Baud Rate field. If this field is zero or not
-present, Configured Baud Rate is used.
-
-Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table [1]
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Link: https://patch.msgid.link/20250913070815.16758-1-cp0613@linux.alibaba.com
-[ rjw: Corrected typo in the subject ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://github.com/lm-sensors/lm-sensors/pull/383
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250917181036.10972-2-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/spcr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/hwmon/dell-smm-hwmon.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
-index cd36a97b0ea2c..fa12e740386de 100644
---- a/drivers/acpi/spcr.c
-+++ b/drivers/acpi/spcr.c
-@@ -146,7 +146,15 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
- 		goto done;
- 	}
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index 1e2c8e2840015..3f61b2d7935e4 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -1331,7 +1331,6 @@ struct i8k_config_data {
  
--	switch (table->baud_rate) {
-+	/*
-+	 * SPCR 1.09 defines Precise Baud Rate Filed contains a specific
-+	 * non-zero baud rate which overrides the value of the Configured
-+	 * Baud Rate field. If this field is zero or not present, Configured
-+	 * Baud Rate is used.
-+	 */
-+	if (table->precise_baudrate)
-+		baud_rate = table->precise_baudrate;
-+	else switch (table->baud_rate) {
- 	case 0:
- 		/*
- 		 * SPCR 1.04 defines 0 as a preconfigured state of UART.
+ enum i8k_configs {
+ 	DELL_LATITUDE_D520,
+-	DELL_PRECISION_490,
+ 	DELL_STUDIO,
+ 	DELL_XPS,
+ };
+@@ -1341,10 +1340,6 @@ static const struct i8k_config_data i8k_config_data[] __initconst = {
+ 		.fan_mult = 1,
+ 		.fan_max = I8K_FAN_TURBO,
+ 	},
+-	[DELL_PRECISION_490] = {
+-		.fan_mult = 1,
+-		.fan_max = I8K_FAN_TURBO,
+-	},
+ 	[DELL_STUDIO] = {
+ 		.fan_mult = 1,
+ 		.fan_max = I8K_FAN_HIGH,
+@@ -1364,15 +1359,6 @@ static const struct dmi_system_id i8k_config_dmi_table[] __initconst = {
+ 		},
+ 		.driver_data = (void *)&i8k_config_data[DELL_LATITUDE_D520],
+ 	},
+-	{
+-		.ident = "Dell Precision 490",
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME,
+-				  "Precision WorkStation 490"),
+-		},
+-		.driver_data = (void *)&i8k_config_data[DELL_PRECISION_490],
+-	},
+ 	{
+ 		.ident = "Dell Studio",
+ 		.matches = {
 -- 
 2.51.0
 
