@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70AA2820A0;
-	Tue, 11 Nov 2025 01:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E4733C534;
+	Tue, 11 Nov 2025 01:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823458; cv=none; b=H6mJW8VZrVIhD4+i1LI7amZm3ofV8H4oz1xS0ytNUIpnBAtmq2vVaUCFFQxhTP6WagYQoF+trQGMTIg0SLzdpxHePCf0kxxiA/InGlm+lzs1cfbwEP3NYW7B3a6Q2C9+9XBI8NQXcf15FXGu1PNWrw37aJUmyi5byqwEzXQlC0Y=
+	t=1762823461; cv=none; b=sAtXG4BmVX6pqCCVK7qCnUx4/RqCIKB0hDmWmg/OoR7meSA84arAk1LCTQ/uzBMkv/E/Y8ekCaFdGSI5yAQ6am2sS+JUuwv3iMhPnIBUEjkceP3/LsHLE4qkPNXAMVK78wn1zaD3uKXWQjbNu0nLH+4RM2kRKUw/ciTiYQIuFec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823458; c=relaxed/simple;
-	bh=hIUfKc31UJD71wAG3WfE3dN25Pm0f8DjATKbtjnQA+w=;
+	s=arc-20240116; t=1762823461; c=relaxed/simple;
+	bh=tKr5Qs44xTy7AB5CFwKsw7cbhapNOzA0420aeCCgMOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WvY9QFLngWl8IZXYwjaR4ZNETlKBPX2XiqgNF9KoTKG/8MoOfL80efx8lC2FZ3mxmU4VCoKf39QJEw7VgKMXcFzFFFhmsaZaVZg6gbVqaSpPdOY522Snt7t5MM0WjokDoZzIx77/tMfCWK5xzcVFqbu0ziecbR2OtDo0XAtU/MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY8pqVue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHjGJldzfNMT9/6CPRVhQC57Y4Dg743gySVPJTo0fTdbEBP5ef+zpWliRWCoXrY1qpd8R/4z9pLaY+jDqpt5s+I/Gr5guxaPD1E5S3zcSTl4vi/LW8Nbkn2uxRueT0+7arx+H/5ioZN3QIVUpf9A755Ugo5R4gz8AwtkblrS02U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1SOfTNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY8pqVue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41411C4CEF5;
-	Tue, 11 Nov 2025 01:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1SOfTNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FF6C4CEF5;
+	Tue, 11 Nov 2025 01:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823458;
-	bh=hIUfKc31UJD71wAG3WfE3dN25Pm0f8DjATKbtjnQA+w=;
+	s=korg; t=1762823461;
+	bh=tKr5Qs44xTy7AB5CFwKsw7cbhapNOzA0420aeCCgMOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gY8pqVueFxFHSXO0sykUSG9r67GnaF5Sl2NoEJww10qcnu3MfiB5d5JCz9/PHJLdO
-	 pa4+CUq27JnBKU7ucYuo7ekQ2SyJ+8JcZn9VfaPyY0DMVfk5EM564PWSPJ4uFaMrlZ
-	 UL8KgzuZcdLsV4IddxtPbCoMuxkMkiLtx16cDT8c=
+	b=S1SOfTNXoV6GZOwZ3G2v0q/4PLDEVtKC3V9ul2mEmCOaLq7bpeajzUNoMrxeCYt12
+	 xEA1yavAXtjTsmwQbJvKasjVMrlESgws0bcEdF8UEexyivYFyfNV9kYDaHDryBtD+z
+	 GSadn3YZRgrcV0riCUSqs+CvtuK7wqVX0fMMqvO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
+	Francisco Gutierrez <frankramirez@google.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 304/849] scsi: ufs: host: mediatek: Fix PWM mode switch issue
-Date: Tue, 11 Nov 2025 09:37:54 +0900
-Message-ID: <20251111004543.757763245@linuxfoundation.org>
+Subject: [PATCH 6.12 251/565] scsi: pm80xx: Fix race condition caused by static variables
+Date: Tue, 11 Nov 2025 09:41:47 +0900
+Message-ID: <20251111004532.553732427@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Francisco Gutierrez <frankramirez@google.com>
 
-[ Upstream commit 7212d624f8638f8ea8ad1ecbb80622c7987bc7a1 ]
+[ Upstream commit d6477ee38ccfbeaed885733c13f41d9076e2f94a ]
 
-Address a failure in switching to PWM mode by ensuring proper
-configuration of power modes and adaptation settings. The changes
-include checks for SLOW_MODE and adjustments to the desired working mode
-and adaptation configuration based on the device's power mode and
-hardware version.
+Eliminate the use of static variables within the log pull implementation
+to resolve a race condition and prevent data gaps when pulling logs from
+multiple controllers in parallel, ensuring each operation is properly
+isolated.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250811131423.3444014-6-peter.wang@mediatek.com
+Signed-off-by: Francisco Gutierrez <frankramirez@google.com>
+Link: https://lore.kernel.org/r/20250723183543.1443301-1-frankramirez@google.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/scsi/pm8001/pm8001_ctl.c  | 22 ++++++++++++----------
+ drivers/scsi/pm8001/pm8001_init.c |  1 +
+ drivers/scsi/pm8001/pm8001_sas.h  |  4 ++++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 8dd124835151a..4171fa672450d 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1303,6 +1303,10 @@ static bool ufs_mtk_pmc_via_fastauto(struct ufs_hba *hba,
- 	    dev_req_params->gear_rx < UFS_HS_G4)
- 		return false;
+diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
+index 85ff95c6543a5..0e7497e490f40 100644
+--- a/drivers/scsi/pm8001/pm8001_ctl.c
++++ b/drivers/scsi/pm8001/pm8001_ctl.c
+@@ -534,23 +534,25 @@ static ssize_t pm8001_ctl_iop_log_show(struct device *cdev,
+ 	char *str = buf;
+ 	u32 read_size =
+ 		pm8001_ha->main_cfg_tbl.pm80xx_tbl.event_log_size / 1024;
+-	static u32 start, end, count;
+ 	u32 max_read_times = 32;
+ 	u32 max_count = (read_size * 1024) / (max_read_times * 4);
+ 	u32 *temp = (u32 *)pm8001_ha->memoryMap.region[IOP].virt_ptr;
  
-+	if (dev_req_params->pwr_tx == SLOW_MODE ||
-+	    dev_req_params->pwr_rx == SLOW_MODE)
-+		return false;
+-	if ((count % max_count) == 0) {
+-		start = 0;
+-		end = max_read_times;
+-		count = 0;
++	mutex_lock(&pm8001_ha->iop_log_lock);
 +
- 	return true;
++	if ((pm8001_ha->iop_log_count % max_count) == 0) {
++		pm8001_ha->iop_log_start = 0;
++		pm8001_ha->iop_log_end = max_read_times;
++		pm8001_ha->iop_log_count = 0;
+ 	} else {
+-		start = end;
+-		end = end + max_read_times;
++		pm8001_ha->iop_log_start = pm8001_ha->iop_log_end;
++		pm8001_ha->iop_log_end = pm8001_ha->iop_log_end + max_read_times;
+ 	}
+ 
+-	for (; start < end; start++)
+-		str += sprintf(str, "%08x ", *(temp+start));
+-	count++;
++	for (; pm8001_ha->iop_log_start < pm8001_ha->iop_log_end; pm8001_ha->iop_log_start++)
++		str += sprintf(str, "%08x ", *(temp+pm8001_ha->iop_log_start));
++	pm8001_ha->iop_log_count++;
++	mutex_unlock(&pm8001_ha->iop_log_lock);
+ 	return str - buf;
  }
+ static DEVICE_ATTR(iop_log, S_IRUGO, pm8001_ctl_iop_log_show, NULL);
+diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
+index b53b1ae5b74c3..5317f82c51fd4 100644
+--- a/drivers/scsi/pm8001/pm8001_init.c
++++ b/drivers/scsi/pm8001/pm8001_init.c
+@@ -550,6 +550,7 @@ static struct pm8001_hba_info *pm8001_pci_alloc(struct pci_dev *pdev,
+ 	pm8001_ha->id = pm8001_id++;
+ 	pm8001_ha->logging_level = logging_level;
+ 	pm8001_ha->non_fatal_count = 0;
++	mutex_init(&pm8001_ha->iop_log_lock);
+ 	if (link_rate >= 1 && link_rate <= 15)
+ 		pm8001_ha->link_rate = (link_rate << 8);
+ 	else {
+diff --git a/drivers/scsi/pm8001/pm8001_sas.h b/drivers/scsi/pm8001/pm8001_sas.h
+index c46470e0cf63b..efb6dc26bc35b 100644
+--- a/drivers/scsi/pm8001/pm8001_sas.h
++++ b/drivers/scsi/pm8001/pm8001_sas.h
+@@ -537,6 +537,10 @@ struct pm8001_hba_info {
+ 	u32 ci_offset;
+ 	u32 pi_offset;
+ 	u32 max_memcnt;
++	u32 iop_log_start;
++	u32 iop_log_end;
++	u32 iop_log_count;
++	struct mutex iop_log_lock;
+ };
  
-@@ -1318,6 +1322,10 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
- 	host_params.hs_rx_gear = UFS_HS_G5;
- 	host_params.hs_tx_gear = UFS_HS_G5;
- 
-+	if (dev_max_params->pwr_rx == SLOW_MODE ||
-+	    dev_max_params->pwr_tx == SLOW_MODE)
-+		host_params.desired_working_mode = UFS_PWM_MODE;
-+
- 	ret = ufshcd_negotiate_pwr_params(&host_params, dev_max_params, dev_req_params);
- 	if (ret) {
- 		pr_info("%s: failed to determine capabilities\n",
-@@ -1350,10 +1358,21 @@ static int ufs_mtk_pre_pwr_change(struct ufs_hba *hba,
- 		}
- 	}
- 
--	if (host->hw_ver.major >= 3) {
-+	if (dev_req_params->pwr_rx == FAST_MODE ||
-+	    dev_req_params->pwr_rx == FASTAUTO_MODE) {
-+		if (host->hw_ver.major >= 3) {
-+			ret = ufshcd_dme_configure_adapt(hba,
-+						   dev_req_params->gear_tx,
-+						   PA_INITIAL_ADAPT);
-+		} else {
-+			ret = ufshcd_dme_configure_adapt(hba,
-+				   dev_req_params->gear_tx,
-+				   PA_NO_ADAPT);
-+		}
-+	} else {
- 		ret = ufshcd_dme_configure_adapt(hba,
--					   dev_req_params->gear_tx,
--					   PA_INITIAL_ADAPT);
-+			   dev_req_params->gear_tx,
-+			   PA_NO_ADAPT);
- 	}
- 
- 	return ret;
+ struct pm8001_work {
 -- 
 2.51.0
 
