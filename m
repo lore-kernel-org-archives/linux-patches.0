@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0152701D1;
-	Tue, 11 Nov 2025 01:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1755D330B1F;
+	Tue, 11 Nov 2025 01:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823366; cv=none; b=LeaJA07WEdNu+3Nh3+vK6Rf5WJGZrRSDLxRZvCQyuZ4GvL0XvXWSK8jjCx4AyjA8Gfqa2Auw7Y+DFMaKUyq9p7OtKGJZvumTzMTFHT8rLjwsVsXCyv80cmGVrUc9t99hrQsCzpasSCAWa23MJcYqZyeY3yVfIR355sAOAnS62s4=
+	t=1762823369; cv=none; b=VXTT84xCRk0n/G1kJ6zXC2tDBQ/7fzpjB3UO+XEX8Z9RRWEvxS4wSvo+deiNCeIb04jOeHvpbgw2V0XYRjZhzHT92JZDCFkQvbKgwKMyT3XGTZXUng6NGTVtHlfA3PQop01mwKSwhJK4xSBs93l2WtPJSjNPPxO+jP6p9KuetCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823366; c=relaxed/simple;
-	bh=bp/SWDKgqEM3bWxtajt/MMHC0W6vofcgyTr4zsvTpVs=;
+	s=arc-20240116; t=1762823369; c=relaxed/simple;
+	bh=2onommx/dYMWH4XzVD3e45+W71VgGPGha1HLiKu0wlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKYZ4J5dsaFPlBpjhWHkHKd3FZLYx2obWewqYARUoIAV+/G5QT6gGCEOoAO8MCkTruWx03xrxSc5N2/rYjSPhmS44motk2os0obNSv5XE//yzSn2h0K6kWbsP4MZtTzMy+aoC8ZovVvEwqZvTqJ2vY5ux0t/lMdRYOmUmjWnhhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/amaeRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gUsZ1URiSkyJqe+hUDeC8OkMoNr8W2rDvSXRe8W9gbmL0H8k1Qrju4NJJW+4U3+UWCG85WxOHn5oydZFJHbOZl1W+x6xFxLxewNDIMIr1wq9i/HjkDSVkm2VJmfBCa+8B9YvmMZsyTbDDIFQ7xWJmDwB+wuSdwGb3J1187vwxbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnrBTbDn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/amaeRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7F5C2BCAF;
-	Tue, 11 Nov 2025 01:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnrBTbDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A887EC113D0;
+	Tue, 11 Nov 2025 01:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823366;
-	bh=bp/SWDKgqEM3bWxtajt/MMHC0W6vofcgyTr4zsvTpVs=;
+	s=korg; t=1762823368;
+	bh=2onommx/dYMWH4XzVD3e45+W71VgGPGha1HLiKu0wlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/amaeRvwuY3ESjKF9inuafNgu7r6NNwj4FrceyuHdW+T+FaoR45Pazy6/SJ4Wim1
-	 S+lQdEqv17rrAWqOGQKSgSPYns/KUkd84bNEDFs54DXhdnczqlaiTDGDUj23QPu1qA
-	 F5eVym2RidyiKFgZiKmkut0DO6smOUxtIxmqZAgg=
+	b=VnrBTbDnzQWTpNcPNhjU8GdRqyZSolXRCiJBJ2+i3hDYm6pl4sFynUWd+Qn+BSYBg
+	 zdNkG75HzfzldlwX8ZMd+jcHA6fNH/GRBzM2+o87AqXUmxPfkKi1XJTKQvRcu3gDbu
+	 o8utE5OyVOEWty94mF5c4xSQ1zd0HeDa4G0nogcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Primoz Fiser <primoz.fiser@norik.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 284/849] drm/tidss: Use the crtc_* timings when programming the HW
-Date: Tue, 11 Nov 2025 09:37:34 +0900
-Message-ID: <20251111004543.282532059@linuxfoundation.org>
+Subject: [PATCH 6.12 228/565] iio: adc: imx93_adc: load calibrated values even calibration failed
+Date: Tue, 11 Nov 2025 09:41:24 +0900
+Message-ID: <20251111004532.047490308@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,78 +49,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 478306edc23eec4f0ec24a46222485910c66212d ]
+[ Upstream commit 12c9b09e981ab14ebec8e4eefa946cbd26dd306b ]
 
-Use the crtc_* fields from drm_display_mode, instead of the "logical"
-fields. This shouldn't change anything in practice, but afaiu the crtc_*
-fields are the correct ones to use here.
+ADC calibration might fail because of the noise on reference voltage.
+To avoid calibration fail, need to meet the following requirement:
+    ADC reference voltage Noise < 1.8V * 1/2^ENOB
 
-Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
-Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Link: https://lore.kernel.org/r/20250723-cdns-dsi-impro-v5-3-e61cc06074c2@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+For the case which the ADC reference voltage on board do not meet
+the requirement, still load the calibrated values, so ADC can also
+work but maybe not that accurate.
+
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Primoz Fiser <primoz.fiser@norik.com>
+Link: https://patch.msgid.link/20250812-adc-v2-2-0260833f13b8@nxp.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_crtc.c  |  2 +-
- drivers/gpu/drm/tidss/tidss_dispc.c | 16 ++++++++--------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/iio/adc/imx93_adc.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
-index a2f40a5c77030..17efd77ce7f23 100644
---- a/drivers/gpu/drm/tidss/tidss_crtc.c
-+++ b/drivers/gpu/drm/tidss/tidss_crtc.c
-@@ -225,7 +225,7 @@ static void tidss_crtc_atomic_enable(struct drm_crtc *crtc,
- 	tidss_runtime_get(tidss);
+diff --git a/drivers/iio/adc/imx93_adc.c b/drivers/iio/adc/imx93_adc.c
+index 4ccf4819f1f13..75cf2f93d5edd 100644
+--- a/drivers/iio/adc/imx93_adc.c
++++ b/drivers/iio/adc/imx93_adc.c
+@@ -38,6 +38,7 @@
+ #define IMX93_ADC_PCDR6		0x118
+ #define IMX93_ADC_PCDR7		0x11c
+ #define IMX93_ADC_CALSTAT	0x39C
++#define IMX93_ADC_CALCFG0	0x3A0
  
- 	r = dispc_vp_set_clk_rate(tidss->dispc, tcrtc->hw_videoport,
--				  mode->clock * 1000);
-+				  mode->crtc_clock * 1000);
- 	if (r != 0)
- 		return;
+ /* ADC bit shift */
+ #define IMX93_ADC_MCR_MODE_MASK			BIT(29)
+@@ -58,6 +59,8 @@
+ #define IMX93_ADC_IMR_ECH_MASK			BIT(0)
+ #define IMX93_ADC_PCDR_CDATA_MASK		GENMASK(11, 0)
  
-diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
-index c0277fa36425e..3f6cff2ab1b29 100644
---- a/drivers/gpu/drm/tidss/tidss_dispc.c
-+++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -1215,13 +1215,13 @@ void dispc_vp_enable(struct dispc_device *dispc, u32 hw_videoport,
++#define IMX93_ADC_CALCFG0_LDFAIL_MASK		BIT(4)
++
+ /* ADC status */
+ #define IMX93_ADC_MSR_ADCSTATUS_IDLE			0
+ #define IMX93_ADC_MSR_ADCSTATUS_POWER_DOWN		1
+@@ -145,7 +148,7 @@ static void imx93_adc_config_ad_clk(struct imx93_adc *adc)
  
- 	dispc_set_num_datalines(dispc, hw_videoport, fmt->data_width);
+ static int imx93_adc_calibration(struct imx93_adc *adc)
+ {
+-	u32 mcr, msr;
++	u32 mcr, msr, calcfg;
+ 	int ret;
  
--	hfp = mode->hsync_start - mode->hdisplay;
--	hsw = mode->hsync_end - mode->hsync_start;
--	hbp = mode->htotal - mode->hsync_end;
-+	hfp = mode->crtc_hsync_start - mode->crtc_hdisplay;
-+	hsw = mode->crtc_hsync_end - mode->crtc_hsync_start;
-+	hbp = mode->crtc_htotal - mode->crtc_hsync_end;
+ 	/* make sure ADC in power down mode */
+@@ -158,6 +161,11 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
  
--	vfp = mode->vsync_start - mode->vdisplay;
--	vsw = mode->vsync_end - mode->vsync_start;
--	vbp = mode->vtotal - mode->vsync_end;
-+	vfp = mode->crtc_vsync_start - mode->crtc_vdisplay;
-+	vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
-+	vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
+ 	imx93_adc_power_up(adc);
  
- 	dispc_vp_write(dispc, hw_videoport, DISPC_VP_TIMING_H,
- 		       FLD_VAL(hsw - 1, 7, 0) |
-@@ -1263,8 +1263,8 @@ void dispc_vp_enable(struct dispc_device *dispc, u32 hw_videoport,
- 		       FLD_VAL(ivs, 12, 12));
++	/* Enable loading of calibrated values even in fail condition */
++	calcfg = readl(adc->regs + IMX93_ADC_CALCFG0);
++	calcfg |= IMX93_ADC_CALCFG0_LDFAIL_MASK;
++	writel(calcfg, adc->regs + IMX93_ADC_CALCFG0);
++
+ 	/*
+ 	 * TODO: we use the default TSAMP/NRSMPL/AVGEN in MCR,
+ 	 * can add the setting of these bit if need in future.
+@@ -180,9 +188,13 @@ static int imx93_adc_calibration(struct imx93_adc *adc)
+ 	/* check whether calbration is success or not */
+ 	msr = readl(adc->regs + IMX93_ADC_MSR);
+ 	if (msr & IMX93_ADC_MSR_CALFAIL_MASK) {
++		/*
++		 * Only give warning here, this means the noise of the
++		 * reference voltage do not meet the requirement:
++		 *     ADC reference voltage Noise < 1.8V * 1/2^ENOB
++		 * And the resault of ADC is not that accurate.
++		 */
+ 		dev_warn(adc->dev, "ADC calibration failed!\n");
+-		imx93_adc_power_down(adc);
+-		return -EAGAIN;
+ 	}
  
- 	dispc_vp_write(dispc, hw_videoport, DISPC_VP_SIZE_SCREEN,
--		       FLD_VAL(mode->hdisplay - 1, 11, 0) |
--		       FLD_VAL(mode->vdisplay - 1, 27, 16));
-+		       FLD_VAL(mode->crtc_hdisplay - 1, 11, 0) |
-+		       FLD_VAL(mode->crtc_vdisplay - 1, 27, 16));
- 
- 	VP_REG_FLD_MOD(dispc, hw_videoport, DISPC_VP_CONTROL, 1, 0, 0);
- }
+ 	return 0;
 -- 
 2.51.0
 
