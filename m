@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0090D3491D4;
-	Tue, 11 Nov 2025 01:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1346A34A3C5;
+	Tue, 11 Nov 2025 01:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823773; cv=none; b=R3CrrGE10TxTn64gRU5Ek8bRVEn44eaxSpzkSAdAejDGzxrVrXpWhiBSPr7uQIgpjnCDAX5J+4JANY6b6MO54PIxjZStWXY2FmFteL9fKtC1Xm73nJHRwZu1s+//Fb9+xjEwWDCHRcCQWJEsbXLb9GnMBucN45JZBUnL/Wo7oZo=
+	t=1762823775; cv=none; b=FIE9ODJ7AW+vnhycdl46SbgXBVYFOp00EovvFNVCKFjis7mJwi/C7i+3SDMx5vcX68GL2ivz1g+ewTdBtA6EmTAf3+jMs0THFTX3qOL+swrj75mrmSr6mol+lPqC+hBqMGzOdrz+aTJpkoriZZROSMq5mQ+Q6anSadOvIqoAWPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823773; c=relaxed/simple;
-	bh=XJRcxWP4a4rJL61h8Lg/vAGRMyLKvdFoL4u+xTdJpt4=;
+	s=arc-20240116; t=1762823775; c=relaxed/simple;
+	bh=3Rp+3zpM7jv1h41GRCuB0vgInHdHByiyj4wGKGXE8/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJd1VxXZ32/wMePzraxwvW79Gt/P8uNBk5Tgd4oTU8F1yNtpM4Jz7OJuhG95ymqaDSFiYJ1RXtgGL+wNdXewrmZqGuHmmfM0oy4fSxKkCsEhVlo0gHx6CDxWPRpyhgqxfwE7IPBPAmh1xCJRt0qXYCHBA3L/erxdJWXXtE5b2gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y22bIXdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAfXF5Xbr7lHpQ3PBhJHx4e65SsMV1OHcMDchYHxWpR8YITRH9quf4EqnzxjKAfS3VVfCDXEcd/K76GbBr8kgLKKzlAbV+WhKYpnzno51vlZ4XjqLQYe+ci+eNgN7mQj9MnlYiysKTFIYat4YImdAH+VkMYQGbgoMSgoIFgoC1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAHWbWyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y22bIXdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272BFC113D0;
-	Tue, 11 Nov 2025 01:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAHWbWyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2607C16AAE;
+	Tue, 11 Nov 2025 01:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823770;
-	bh=XJRcxWP4a4rJL61h8Lg/vAGRMyLKvdFoL4u+xTdJpt4=;
+	s=korg; t=1762823774;
+	bh=3Rp+3zpM7jv1h41GRCuB0vgInHdHByiyj4wGKGXE8/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y22bIXdXLGUZm8qkXFsbIV/edM7OH85FclGaUaVgblAnbXDdog2I7AFWxClNFJj8L
-	 W/5qQAeEcJiCCWGUACuROBUY6aJ5hDehTChslidjDzx/RriksUVBz+l9fXloZexIrq
-	 rkxj2wcbI3ObdW3yJv3/vu0A3vtFo5sZDGbYkjwQ=
+	b=DAHWbWyW56gCnhWkxh8p2QvPdv5hfkfzbiNt+GwzHOaTUeeKV2+1kiZoHBw110Kg2
+	 mBqoABcU789u18keAmWdohMNDaej12HQjF7/CjkHS7m6GkzpDNlGvi8Wy7ldgDwVc1
+	 fXufKfXzqGTsYNLSrN2bqGcqi8kzgtYe0H2JuY9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Kuan-Chung Chen <damon.chen@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 316/565] PCI: endpoint: pci-epf-test: Limit PCIe BAR size for fixed BARs
-Date: Tue, 11 Nov 2025 09:42:52 +0900
-Message-ID: <20251111004533.995732482@linuxfoundation.org>
+Subject: [PATCH 6.17 329/849] wifi: rtw89: 8851b: rfk: update IQK TIA setting
+Date: Tue, 11 Nov 2025 09:38:19 +0900
+Message-ID: <20251111004544.373580748@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +47,217 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Kuan-Chung Chen <damon.chen@realtek.com>
 
-[ Upstream commit d5f6bd3ee3f5048f272182dc91675c082773999e ]
+[ Upstream commit b521685da35ebf091e51f9ea9ad2896a4ddb6e98 ]
 
-Currently, the test allocates BAR sizes according to fixed table bar_size.
-This does not work with controllers which have fixed size BARs that are
-smaller than the requested BAR size. One such controller is Renesas R-Car
-V4H PCIe controller, which has BAR4 size limited to 256 bytes, which is
-much less than one of the BAR size, 131072 currently requested by this
-test. A lot of controllers drivers in-tree have fixed size BARs, and they
-do work perfectly fine, but it is only because their fixed size is larger
-than the size requested by pci-epf-test.c
+With the new TIA setting of RX IQK, unstable RX throughput can
+be avoided, especially in medium-high attenuation environments.
 
-Adjust the test such that in case a fixed size BAR is detected, the fixed
-BAR size is used, as that is the only possible option.
-
-This helps with test failures reported as follows:
-
-  pci_epf_test pci_epf_test.0: requested BAR size is larger than fixed size
-  pci_epf_test pci_epf_test.0: Failed to allocate space for BAR4
-
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20250905184240.144431-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250811123744.15361-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../net/wireless/realtek/rtw89/rtw8851b_rfk.c | 85 ++++++++++++-------
+ 1 file changed, 54 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index eeb7fbc2d67a5..a1aa54e97ca39 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -860,7 +860,12 @@ static int pci_epf_test_alloc_space(struct pci_epf *epf)
- 		if (bar == test_reg_bar)
- 			continue;
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
+index 7a319a6c838af..a7867b0e083ac 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8851b_rfk.c
+@@ -17,7 +17,7 @@
+ #define DPK_RF_REG_NUM_8851B 4
+ #define DPK_KSET_NUM 4
+ #define RTW8851B_RXK_GROUP_NR 4
+-#define RTW8851B_RXK_GROUP_IDX_NR 2
++#define RTW8851B_RXK_GROUP_IDX_NR 4
+ #define RTW8851B_TXK_GROUP_NR 1
+ #define RTW8851B_IQK_VER 0x14
+ #define RTW8851B_IQK_SS 1
+@@ -114,9 +114,9 @@ static const u32 _tssi_de_mcs_10m[RF_PATH_NUM_8851B] = {0x5830};
+ static const u32 g_idxrxgain[RTW8851B_RXK_GROUP_NR] = {0x10e, 0x116, 0x28e, 0x296};
+ static const u32 g_idxattc2[RTW8851B_RXK_GROUP_NR] = {0x0, 0xf, 0x0, 0xf};
+ static const u32 g_idxrxagc[RTW8851B_RXK_GROUP_NR] = {0x0, 0x1, 0x2, 0x3};
+-static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x28c};
+-static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf};
+-static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x6};
++static const u32 a_idxrxgain[RTW8851B_RXK_GROUP_IDX_NR] = {0x10C, 0x112, 0x28c, 0x292};
++static const u32 a_idxattc2[RTW8851B_RXK_GROUP_IDX_NR] = {0xf, 0xf, 0xf, 0xf};
++static const u32 a_idxrxagc[RTW8851B_RXK_GROUP_IDX_NR] = {0x4, 0x5, 0x6, 0x7};
+ static const u32 a_power_range[RTW8851B_TXK_GROUP_NR] = {0x0};
+ static const u32 a_track_range[RTW8851B_TXK_GROUP_NR] = {0x6};
+ static const u32 a_gain_bb[RTW8851B_TXK_GROUP_NR] = {0x0a};
+@@ -139,17 +139,6 @@ static const u32 dpk_rf_reg[DPK_RF_REG_NUM_8851B] = {0xde, 0x8f, 0x5, 0x10005};
  
--		base = pci_epf_alloc_space(epf, bar_size[bar], bar,
-+		if (epc_features->bar[bar].type == BAR_FIXED)
-+			test_reg_size = epc_features->bar[bar].fixed_size;
-+		else
-+			test_reg_size = bar_size[bar];
+ static void _set_ch(struct rtw89_dev *rtwdev, u32 val);
+ 
+-static u8 _rxk_5ghz_group_from_idx(u8 idx)
+-{
+-	/* There are four RXK groups (RTW8851B_RXK_GROUP_NR), but only group 0
+-	 * and 2 are used in 5 GHz band, so reduce elements to 2.
+-	 */
+-	if (idx < RTW8851B_RXK_GROUP_IDX_NR)
+-		return idx * 2;
+-
+-	return 0;
+-}
+-
+ static u8 _kpath(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx)
+ {
+ 	return RF_A;
+@@ -196,7 +185,7 @@ static void _txck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
+ static void _rxck_force(struct rtw89_dev *rtwdev, enum rtw89_rf_path path,
+ 			bool force, enum adc_ck ck)
+ {
+-	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x93};
++	static const u32 ck960_8851b[] = {0x8, 0x2, 0x2, 0x4, 0xf, 0xa, 0x92};
+ 	static const u32 ck1920_8851b[] = {0x9, 0x0, 0x0, 0x3, 0xf, 0xa, 0x49};
+ 	const u32 *data;
+ 
+@@ -905,18 +894,27 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
+ 	bool kfail = false;
+ 	bool notready;
+ 	u32 rf_0;
+-	u8 idx;
++	u32 val;
+ 	u8 gp;
+ 
+ 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
+ 
+-	for (idx = 0; idx < RTW8851B_RXK_GROUP_IDX_NR; idx++) {
+-		gp = _rxk_5ghz_group_from_idx(idx);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
+ 
++	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
 +
-+		base = pci_epf_alloc_space(epf, test_reg_size, bar,
- 					   epc_features, PRIMARY_INTERFACE);
- 		if (!base)
- 			dev_err(dev, "Failed to allocate space for BAR%d\n",
++	for (gp = 0; gp < RTW8851B_RXK_GROUP_IDX_NR; gp++) {
+ 		rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
+ 
+-		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
+-		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
++		rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
++		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
++		rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
+ 
+ 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
+ 		rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
+@@ -926,7 +924,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
+ 		fsleep(100);
+ 		rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
+ 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
+-		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
++		rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
+ 		rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
+ 		notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
+ 
+@@ -959,6 +957,7 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
+ 		_iqk_sram(rtwdev, path);
+ 
+ 	if (kfail) {
++		rtw89_phy_write32_mask(rtwdev, R_IQK_RES, B_IQK_RES_RXCFIR, 0x0);
+ 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8), MASKDWORD,
+ 				       iqk_info->nb_rxcfir[path] | 0x2);
+ 		iqk_info->is_wb_txiqk[path] = false;
+@@ -968,6 +967,14 @@ static bool _rxk_5g_group_sel(struct rtw89_dev *rtwdev,
+ 		iqk_info->is_wb_txiqk[path] = true;
+ 	}
+ 
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
++
+ 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
+ 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
+ 		    1 << path, iqk_info->nb_rxcfir[path]);
+@@ -980,17 +987,26 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
+ 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
+ 	bool kfail = false;
+ 	bool notready;
+-	u8 idx = 0x1;
++	u8 gp = 2;
+ 	u32 rf_0;
+-	u8 gp;
+-
+-	gp = _rxk_5ghz_group_from_idx(idx);
++	u32 val;
+ 
+ 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]===>%s\n", __func__);
+ 	rtw89_debug(rtwdev, RTW89_DBG_RFK, "[IQK]S%x, gp = %x\n", path, gp);
+ 
+-	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[idx]);
+-	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[idx]);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x17);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
++
++	val = rtw89_read_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_MASK, 0xc);
++
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_MOD, RR_MOD_RGM, a_idxrxgain[gp]);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, RR_RXA2_ATT, a_idxattc2[gp]);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, 0x1);
+ 
+ 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_SEL, 0x1);
+ 	rtw89_phy_write32_mask(rtwdev, R_CFIR_LUT, B_CFIR_LUT_G3, 0x0);
+@@ -1000,7 +1016,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
+ 	fsleep(100);
+ 	rf_0 = rtw89_read_rf(rtwdev, path, RR_MOD, RFREG_MASK);
+ 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF2, B_IQK_DIF2_RXPI, rf_0);
+-	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[idx]);
++	rtw89_phy_write32_mask(rtwdev, R_IQK_RXA, B_IQK_RXAGC, a_idxrxagc[gp]);
+ 	rtw89_phy_write32_mask(rtwdev, R_IQK_DIF4, B_IQK_DIF4_RXT, 0x11);
+ 	notready = _iqk_one_shot(rtwdev, phy_idx, path, ID_RXAGC);
+ 
+@@ -1026,6 +1042,7 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
+ 		kfail = !!rtw89_phy_read32_mask(rtwdev, R_NCTL_RPT, B_NCTL_RPT_FLG);
+ 
+ 	if (kfail) {
++		rtw89_phy_write32_mask(rtwdev, R_IQK_RES + (path << 8), 0xf, 0x0);
+ 		rtw89_phy_write32_mask(rtwdev, R_RXIQC + (path << 8),
+ 				       MASKDWORD, 0x40000002);
+ 		iqk_info->is_wb_rxiqk[path] = false;
+@@ -1033,6 +1050,14 @@ static bool _iqk_5g_nbrxk(struct rtw89_dev *rtwdev, enum rtw89_phy_idx phy_idx,
+ 		iqk_info->is_wb_rxiqk[path] = false;
+ 	}
+ 
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_RXA2, 0x20, val);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x1000);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x4);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x37);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWA, RFREG_MASK, 0x5);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWD0, RFREG_MASK, 0x27);
++	rtw89_write_rf(rtwdev, RF_PATH_A, RR_LUTWE, RFREG_MASK, 0x0);
++
+ 	rtw89_debug(rtwdev, RTW89_DBG_RFK,
+ 		    "[IQK]S%x, kfail = 0x%x, 0x8%x3c = 0x%x\n", path, kfail,
+ 		    1 << path, iqk_info->nb_rxcfir[path]);
+@@ -1664,8 +1689,6 @@ static void _iqk_init(struct rtw89_dev *rtwdev)
+ 	struct rtw89_iqk_info *iqk_info = &rtwdev->iqk;
+ 	u8 idx, path;
+ 
+-	rtw89_phy_write32_mask(rtwdev, R_IQKINF, MASKDWORD, 0x0);
+-
+ 	if (iqk_info->is_iqk_init)
+ 		return;
+ 
 -- 
 2.51.0
 
