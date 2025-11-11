@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECCB343D67;
-	Tue, 11 Nov 2025 01:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FF93446B3;
+	Tue, 11 Nov 2025 01:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823599; cv=none; b=DoxSou/98RQFQNfRWuBlG9hzhEJSp+w+vOFJw2EHRitk3QDW8HmUFRi+bt1xlmMzkcTCxpAlpm+awrY3By+dFCrUcD5wbmaGL5V3S/jnO944zoCMEQseF3K92twHzMdHZofVxb+lCTwh7d3BdaLx8fB7YQe4QRknis9fdBoksbE=
+	t=1762823602; cv=none; b=GT/j4jofJAfxlkvQOk8nQ4Q/aRjPlZqPqLK9CDH1DmpeROLuIdUt1P9H/c3h2oASYe/csSTR8CzCgTkP9lI+3X+8FYAFe4W/BhS9HVbLjfscpSG4X5qBOI8GSY3vGXkG+WRonYOHSx2pDNBnzLOrK0P90UCD6vRSLCSLm02HtjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823599; c=relaxed/simple;
-	bh=vHPYdzg5lmy1xvrkKITrTkitomBh0eKuOJDs5NetCf0=;
+	s=arc-20240116; t=1762823602; c=relaxed/simple;
+	bh=B79jNhXSjvQc2nPx9HkEtnmNwPwsXkfRXWnGK8hxOH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NamsjEGjwyVZu6jyMER7Pi828Ms29akP5EJhuZvvi2k2Le06lmTIBG1cnBmbKErGkttrdbOAZOKopicA/J3K/XTlYNJIYJrXnelByRYIM6VCbIZYCzbp8KWrKYD3nZ7sH9Uzr4eebPJyHVjQvaxkMwF6tpufV3O1rvdahH02MXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKe5JHgi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pLsLqwL8GUBOOYzs4IMrJQ5bKzprlzINrJLLZgOPE0DjMGMkxWJDwz6/oi3a4uIOaTRKZR1kS2qD3YlACgrnu7MqLgQ0Drpc+DsYQSlzV+LW7YzoAa7qFCwJWcZSHoOk2uC+s4ZE07LBXDZE8UqCLN5onxOgaQ6fclZp9PiN40c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nt8WoEwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKe5JHgi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00298C116B1;
-	Tue, 11 Nov 2025 01:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nt8WoEwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FEBBC4CEFB;
+	Tue, 11 Nov 2025 01:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823599;
-	bh=vHPYdzg5lmy1xvrkKITrTkitomBh0eKuOJDs5NetCf0=;
+	s=korg; t=1762823601;
+	bh=B79jNhXSjvQc2nPx9HkEtnmNwPwsXkfRXWnGK8hxOH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKe5JHgiTze7BkDBJPPziuSGIZpP8eAg+4h9BsKL3yh7gZz6eacIFsJioR59WMVET
-	 83p9AAkgUvnpv9fbII/71nDbwry84XGsY6mnwjem01mVRchyYe5yy5tziT79mi0D4O
-	 Lg2zxNj1Qn7nZhaITGIHKw1v4vXb3grRsd6ZBKqE=
+	b=Nt8WoEwR8a8Ke6hPK+2u9oL4MuUZCRlQcIKnm8BaG8GqVhQk/Cj/x3+rrMKTwB0Nq
+	 u54QYmuIUu6aXH14EXPMs+wZYWiMKmP1KolbFAw3jWC6N8dTfpjl+n0N5+5lBQj2tP
+	 kqUHYCrOT/QPi/yRpJx41kDdr2iGHHYAbKtzYgWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@openai.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 333/849] net: When removing nexthops, dont call synchronize_net if it is not necessary
-Date: Tue, 11 Nov 2025 09:38:23 +0900
-Message-ID: <20251111004544.467774433@linuxfoundation.org>
+Subject: [PATCH 6.12 284/565] drm/msm/dsi/phy: Toggle back buffer resync after preparing PLL
+Date: Tue, 11 Nov 2025 09:42:20 +0900
+Message-ID: <20251111004533.267748481@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,99 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Paasch <cpaasch@openai.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
+[ Upstream commit b63f008f395ca5f6bc89123db97440bdc19981c4 ]
 
-When removing a nexthop, commit
-90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
-call to synchronize_rcu() (later changed to _net()) to make sure
-everyone sees the new nexthop-group before the rtnl-lock is released.
+According to Hardware Programming Guide for DSI PHY, the retime buffer
+resync should be done after PLL clock users (byte_clk and intf_byte_clk)
+are enabled.  Downstream also does it as part of configuring the PLL.
 
-When one wants to delete a large number of groups and nexthops, it is
-fastest to first flush the groups (ip nexthop flush groups) and then
-flush the nexthops themselves (ip -6 nexthop flush). As that way the
-groups don't need to be rebalanced.
+Driver was only turning off the resync FIFO buffer, but never bringing it
+on again.
 
-However, `ip -6 nexthop flush` will still take a long time if there is
-a very large number of nexthops because of the call to
-synchronize_net(). Now, if there are no more groups, there is no point
-in calling synchronize_net(). So, let's skip that entirely by checking
-if nh->grp_list is empty.
-
-This gives us a nice speedup:
-
-BEFORE:
-=======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	1m45.345s
-user	0m0.001s
-sys	0m0.005s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	3m10.430s
-user	0m0.002s
-sys	0m0.004s
-
-AFTER:
-======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	0m17.545s
-user	0m0.003s
-sys	0m0.003s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	0m35.823s
-user	0m0.002s
-sys	0m0.004s
-
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/657823/
+Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 34137768e7f9a..15acfb74fd238 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2087,6 +2087,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
- {
- 	struct nh_grp_entry *nhge, *tmp;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index a2c87c84aa05b..ec5aa8cb37d9a 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -465,6 +465,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
+ 	if (pll_7nm->slave)
+ 		dsi_pll_enable_global_clk(pll_7nm->slave);
  
-+	/* If there is nothing to do, let's avoid the costly call to
-+	 * synchronize_net()
-+	 */
-+	if (list_empty(&nh->grp_list))
-+		return;
++	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
++	if (pll_7nm->slave)
++		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
 +
- 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
- 		remove_nh_grp_entry(net, nhge, nlinfo);
- 
+ error:
+ 	return rc;
+ }
 -- 
 2.51.0
 
