@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86CF26E706;
-	Tue, 11 Nov 2025 01:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA262561A7;
+	Tue, 11 Nov 2025 01:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824778; cv=none; b=uRvHFfbdOlV4yGKAMw+hEU1G4GsdaMDYP5aRIJAGGqXDlGJByLFXgnECkBcxv/dQ6ruL2qw2ugzNdwV8JRGCU9BiEble1DIwEmRLYxnaKLk9V2bPaZAFdfzvPTPYJ7uOp2iqmmIawTaIked8+RVKrcvwv12qSaeyLdNkavLWTak=
+	t=1762824781; cv=none; b=dOebbquYaddqJl0baeaPCr8hfuHT1WnJUt2jvuTAhUNHM4I+2E/vhbTaS4PF0F3IKvfZPS+/pQfTY+TorKyH7l0lsjyDVG4CaC2QCG6EIQ+qTkEg7aY6L5+jGMuhFN0cEcS/qpJfvaWDBBd5sxXTAdz5tanq8TmBUvufHKC6rPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824778; c=relaxed/simple;
-	bh=l734/eE6AmndzW+kiHjwol0fx+E82zsRAPMEsgbNDio=;
+	s=arc-20240116; t=1762824781; c=relaxed/simple;
+	bh=IeCDjyzIU59MNxj4/XI17rhV/BPcbHSwyiw35ol+mBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFLjYjz6NbqLLi9GBxqxLgrkbZRZVxfz8NGeljcyd+gvBn9qEJGmw+orPEkpeQZK4PrpGcIh2D5TK1n09gpJSsyU3yanAzIMPlbqa19YpwT8ourLS+KPWz1a1uIQVQIqPdIcWiD4GZ/Kjx8XJvIBnA1yhN3Ns0OJYwp5/N0w8w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZgW5WsH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A1ZO6YmsLCsrMNbv7vkML+ACmiTT8aqiWAD/EpI52aR44VyROrCk9/g8eBJQo9AF+BblrPlT1+38seSQ1b6LDMwVfJHfr1TtarIOw/RXmJNMloev+HKpNo+wU6+NAp9sIUBy7UjXaWV3wv5DMMZ2qz6KoU1qpsm+s3ejDTS9G/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAvTODHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZgW5WsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68975C116D0;
-	Tue, 11 Nov 2025 01:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAvTODHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2721C113D0;
+	Tue, 11 Nov 2025 01:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824778;
-	bh=l734/eE6AmndzW+kiHjwol0fx+E82zsRAPMEsgbNDio=;
+	s=korg; t=1762824781;
+	bh=IeCDjyzIU59MNxj4/XI17rhV/BPcbHSwyiw35ol+mBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ZgW5WsHLfIVVa9yM8Y1b95h8QUEIZDlNTX+bWmCidVgdu7OfID3GdLgL8OXH2W3a
-	 spYfnib17YABe0VDtigESoVkJWMomur7Dma1Qwds0tcdqoqVTlwcDGQDd97DeLSJHZ
-	 DSONcfgYDgrjdZBgiqfB2Fxq8yb51sbOwmOtm7h0=
+	b=sAvTODHRIOcfXB0mkSbX/f3xlCzv3b7UeVGyjQV1r+N/Aah2tyM9tYyEEFc9uNKPC
+	 chfJgNuZJ++bC455gwaNkf7MTjd5ONv6oGysywaH9KGLl8Aggdb4KljVnkGUrsqopj
+	 YX6cOk4Rm009wG/M2RzPnTkrsUbybRPKbeRewtTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Matt Atwood <matthew.s.atwood@intel.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 568/849] drm/xe/guc: Return an error code if the GuC load fails
-Date: Tue, 11 Nov 2025 09:42:18 +0900
-Message-ID: <20251111004550.144721191@linuxfoundation.org>
+Subject: [PATCH 6.12 516/565] net: vlan: sync VLAN features with lower device
+Date: Tue, 11 Nov 2025 09:46:12 +0900
+Message-ID: <20251111004538.568087388@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,96 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 3b09b11805bfee32d5a0000f5ede42c07237a6c4 ]
+[ Upstream commit c211f5d7cbd5cb34489d526648bb9c8ecc907dee ]
 
-Due to multiple explosion issues in the early days of the Xe driver,
-the GuC load was hacked to never return a failure. That prevented
-kernel panics and such initially, but now all it achieves is creating
-more confusing errors when the driver tries to submit commands to a
-GuC it already knows is not there. So fix that up.
+After registering a VLAN device and setting its feature flags, we need to
+synchronize the VLAN features with the lower device. For example, the VLAN
+device does not have the NETIF_F_LRO flag, it should be synchronized with
+the lower device based on the NETIF_F_UPPER_DISABLES definition.
 
-As a stop-gap and to help with debug of load failures due to invalid
-GuC init params, a wedge call had been added to the inner GuC load
-function. The reason being that it leaves the GuC log accessible via
-debugfs. However, for an end user, simply aborting the module load is
-much cleaner than wedging and trying to continue. The wedge blocks
-user submissions but it seems that various bits of the driver itself
-still try to submit to a dead GuC and lots of subsequent errors occur.
-And with regards to developers debugging why their particular code
-change is being rejected by the GuC, it is trivial to either add the
-wedge back in and hack the return code to zero again or to just do a
-GuC log dump to dmesg.
+As the dev->vlan_features has changed, we need to call
+netdev_update_features(). The caller must run after netdev_upper_dev_link()
+links the lower devices, so this patch adds the netdev_update_features()
+call in register_vlan_dev().
 
-v2: Add support for error injection testing and drop the now redundant
-wedge call.
-
-CC: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Matt Atwood <matthew.s.atwood@intel.com>
-Link: https://lore.kernel.org/r/20250909224132.536320-1-John.C.Harrison@Intel.com
+Fixes: fd867d51f889 ("net/core: generic support for disabling netdev features down stack")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20251030073539.133779-1-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/8021q/vlan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index 62c76760fd26f..ab5b69cee3bff 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -1056,7 +1056,7 @@ static s32 guc_pc_get_cur_freq(struct xe_guc_pc *guc_pc)
- #endif
- #define GUC_LOAD_TIME_WARN_MS      200
+diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
+index 49a6d49c23dc5..ecc1c8624006f 100644
+--- a/net/8021q/vlan.c
++++ b/net/8021q/vlan.c
+@@ -194,6 +194,8 @@ int register_vlan_dev(struct net_device *dev, struct netlink_ext_ack *extack)
+ 	vlan_group_set_device(grp, vlan->vlan_proto, vlan_id, dev);
+ 	grp->nr_vlan_devs++;
  
--static void guc_wait_ucode(struct xe_guc *guc)
-+static int guc_wait_ucode(struct xe_guc *guc)
- {
- 	struct xe_gt *gt = guc_to_gt(guc);
- 	struct xe_mmio *mmio = &gt->mmio;
-@@ -1163,7 +1163,7 @@ static void guc_wait_ucode(struct xe_guc *guc)
- 			break;
- 		}
- 
--		xe_device_declare_wedged(gt_to_xe(gt));
-+		return -EPROTO;
- 	} else if (delta_ms > GUC_LOAD_TIME_WARN_MS) {
- 		xe_gt_warn(gt, "excessive init time: %lldms! [status = 0x%08X, timeouts = %d]\n",
- 			   delta_ms, status, count);
-@@ -1175,7 +1175,10 @@ static void guc_wait_ucode(struct xe_guc *guc)
- 			  delta_ms, xe_guc_pc_get_act_freq(guc_pc), guc_pc_get_cur_freq(guc_pc),
- 			  before_freq, status, count);
- 	}
++	netdev_update_features(dev);
 +
-+	return 0;
- }
-+ALLOW_ERROR_INJECTION(guc_wait_ucode, ERRNO);
- 
- static int __xe_guc_upload(struct xe_guc *guc)
- {
-@@ -1207,14 +1210,16 @@ static int __xe_guc_upload(struct xe_guc *guc)
- 		goto out;
- 
- 	/* Wait for authentication */
--	guc_wait_ucode(guc);
-+	ret = guc_wait_ucode(guc);
-+	if (ret)
-+		goto out;
- 
- 	xe_uc_fw_change_status(&guc->fw, XE_UC_FIRMWARE_RUNNING);
  	return 0;
  
- out:
- 	xe_uc_fw_change_status(&guc->fw, XE_UC_FIRMWARE_LOAD_FAIL);
--	return 0	/* FIXME: ret, don't want to stop load currently */;
-+	return ret;
- }
- 
- static int vf_guc_min_load_for_hwconfig(struct xe_guc *guc)
+ out_unregister_netdev:
 -- 
 2.51.0
 
