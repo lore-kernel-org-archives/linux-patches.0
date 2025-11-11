@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB88D3431FD;
-	Tue, 11 Nov 2025 01:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061432D8DC3;
+	Tue, 11 Nov 2025 01:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823534; cv=none; b=mJl2/PYIVD+u75IBdOiBHSoF+SkgYXOuBAwZGn51T1Mu4aE0PnQPdGI+40o0em0H7tsrgKpm4zvt9N1BdHGtZrHLPOgikVwzwwnEQiYCwoJ0YZwK31qa0zeCSoqQqDB33wzCgicvTFCyGp5FAVQebb5ZQDzWBAdfec1CKo0pZ+k=
+	t=1762823537; cv=none; b=kLGjUJjmxovB69fv9yZhSZi4mAFDe7Fh9X0Roz06nPMz9LRXSsJVpnK1c37JiBN9+k1uotd0uCx2XA9/geWrog7XXANGd0JGiyIT2hpl+InDiyzGQkYgM0Q/EtjmDkfp3IzHoQJe9Seva368odJBtcAXUSZrLaCq523PY6XJ4W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823534; c=relaxed/simple;
-	bh=emv+zPQgpQOgvltPs9s2U8/0tW/asD45RsJYj7FtCmU=;
+	s=arc-20240116; t=1762823537; c=relaxed/simple;
+	bh=rCFDDwrHQLDPraSpHyaOU7kywXHIFGTWN/h63SN7gHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8NA3B1f2iqnSZGLgMH3vFHHNNgD2cdZANzMfVJfr4TKau85FJR54xNtu6STkeFe+ysrACssnp62SAtMkbip0KBG/chThJ2zKviErXzB8w4905M3Q1PKlIPvhH5+0In8r3hgATpc6PIiO3n3qgfqBOEkPHysCXdsVVU5S4bj5f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7P4jQdB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a4QrlR4KuhbzM20UgaFYCJVlf0ufhsJgeNZsZDgCKn45Oz5rlRls3ZqwbV7RUt7NQXdX/c4JZ/R8F04KVePm1gWo5avJDUvgKdUBY2I0hifx3bD/jNiXsZboDqlz6suWdogMtHPsh6l9sqodfrAGAIBqC1ldU/syBh52FdAagu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiGDq2rb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7P4jQdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4972CC4CEF5;
-	Tue, 11 Nov 2025 01:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiGDq2rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988A0C113D0;
+	Tue, 11 Nov 2025 01:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823534;
-	bh=emv+zPQgpQOgvltPs9s2U8/0tW/asD45RsJYj7FtCmU=;
+	s=korg; t=1762823536;
+	bh=rCFDDwrHQLDPraSpHyaOU7kywXHIFGTWN/h63SN7gHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7P4jQdBG7gNxhLQdobZriffXBjIT59EMnKQK+rvoKJ77PmPjGYqUiyIUOClTpDQA
-	 2+Matk1wiZEtr/F4oYbPXK4+LLPxgJnuF53fUX20mCclyOYlA4s1LsLwKuRw0g9mNJ
-	 GKPVH8Rnli9wxj5hpLxz+9zwpSrb2QIiuFTvwoiU=
+	b=GiGDq2rbvy2zq4su6jt6pTD+r1pvUalqujrbAMoXCadQuoY99ZdA039Z3fFPLf5nx
+	 3z07Us4yD/ybuSCWjUgX7CIUQazcrMYyQrAAUDvJOt1GA+Ccdum/UwGuwYF8VSc96I
+	 WUlUrH0JuaRjAd0USrfdK/ml9FCgpcswB244eci8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Park <chris.park@amd.com>,
-	Relja Vojvodic <rvojvodi@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 265/565] drm/amd/display: Increase minimum clock for TMDS 420 with pipe splitting
-Date: Tue, 11 Nov 2025 09:42:01 +0900
-Message-ID: <20251111004532.854529542@linuxfoundation.org>
+Subject: [PATCH 6.17 319/849] iio: adc: spear_adc: mask SPEAR_ADC_STATUS channel and avg sample before setting register
+Date: Tue, 11 Nov 2025 09:38:09 +0900
+Message-ID: <20251111004544.125911931@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,85 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Relja Vojvodic <rvojvodi@amd.com>
+From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
 
-[ Upstream commit 002a612023c8b105bd3829d81862dee04368d6de ]
+[ Upstream commit d75c7021c08e8ae3f311ef2464dca0eaf75fab9f ]
 
-[Why]
--Pipe splitting allows for clocks to be reduced, but when using TMDS 420,
-reduced clocks lead to missed clocks cycles on clock resyncing
+avg sample info is a bit field coded inside the following
+bits: 5,6,7 and 8 of a device status register.
 
-[How]
--Impose a minimum clock when using TMDS 420
+Channel num info the same, but over bits: 1, 2 and 3.
 
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Relja Vojvodic <rvojvodi@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Mask both values in order to avoid touching other register bits,
+since the first info (avg sample), came from DT.
+
+Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250717221559.158872-1-rodrigo.gobbi.7@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../src/dml2_core/dml2_core_dcn4_calcs.c      | 28 +++++++++++++------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/iio/adc/spear_adc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-index 157903115f3b4..54969ba7e2b7e 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-@@ -1262,18 +1262,27 @@ static void CalculateDETBufferSize(
+diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
+index e3a865c79686e..df100dce77da4 100644
+--- a/drivers/iio/adc/spear_adc.c
++++ b/drivers/iio/adc/spear_adc.c
+@@ -14,6 +14,7 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/completion.h>
+@@ -29,9 +30,9 @@
  
- static double CalculateRequiredDispclk(
- 	enum dml2_odm_mode ODMMode,
--	double PixelClock)
-+	double PixelClock,
-+	bool isTMDS420)
- {
-+	double DispClk;
+ /* Bit definitions for SPEAR_ADC_STATUS */
+ #define SPEAR_ADC_STATUS_START_CONVERSION	BIT(0)
+-#define SPEAR_ADC_STATUS_CHANNEL_NUM(x)		((x) << 1)
++#define SPEAR_ADC_STATUS_CHANNEL_NUM_MASK	GENMASK(3, 1)
+ #define SPEAR_ADC_STATUS_ADC_ENABLE		BIT(4)
+-#define SPEAR_ADC_STATUS_AVG_SAMPLE(x)		((x) << 5)
++#define SPEAR_ADC_STATUS_AVG_SAMPLE_MASK	GENMASK(8, 5)
+ #define SPEAR_ADC_STATUS_VREF_INTERNAL		BIT(9)
  
- 	if (ODMMode == dml2_odm_mode_combine_4to1) {
--		return PixelClock / 4.0;
-+		DispClk = PixelClock / 4.0;
- 	} else if (ODMMode == dml2_odm_mode_combine_3to1) {
--		return PixelClock / 3.0;
-+		DispClk = PixelClock / 3.0;
- 	} else if (ODMMode == dml2_odm_mode_combine_2to1) {
--		return PixelClock / 2.0;
-+		DispClk = PixelClock / 2.0;
- 	} else {
--		return PixelClock;
-+		DispClk = PixelClock;
-+	}
-+
-+	if (isTMDS420) {
-+		double TMDS420MinPixClock = PixelClock / 2.0;
-+		DispClk = math_max2(DispClk, TMDS420MinPixClock);
- 	}
-+
-+	return DispClk;
- }
+ #define SPEAR_ADC_DATA_MASK		0x03ff
+@@ -157,8 +158,8 @@ static int spear_adc_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CHAN_INFO_RAW:
+ 		mutex_lock(&st->lock);
  
- static double TruncToValidBPP(
-@@ -4088,11 +4097,12 @@ static void CalculateODMMode(
- 	bool success;
- 	bool UseDSC = DSCEnable && (NumberOfDSCSlices > 0);
- 	enum dml2_odm_mode DecidedODMMode;
-+	bool isTMDS420 = (OutFormat == dml2_420 && Output == dml2_hdmi);
- 
--	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock);
--	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock);
-+	SurfaceRequiredDISPCLKWithoutODMCombine = CalculateRequiredDispclk(dml2_odm_mode_bypass, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineTwoToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_2to1, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineThreeToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_3to1, PixelClock, isTMDS420);
-+	SurfaceRequiredDISPCLKWithODMCombineFourToOne = CalculateRequiredDispclk(dml2_odm_mode_combine_4to1, PixelClock, isTMDS420);
- #ifdef __DML_VBA_DEBUG__
- 	dml2_printf("DML::%s: ODMUse = %d\n", __func__, ODMUse);
- 	dml2_printf("DML::%s: Output = %d\n", __func__, Output);
+-		status = SPEAR_ADC_STATUS_CHANNEL_NUM(chan->channel) |
+-			SPEAR_ADC_STATUS_AVG_SAMPLE(st->avg_samples) |
++		status = FIELD_PREP(SPEAR_ADC_STATUS_CHANNEL_NUM_MASK, chan->channel) |
++			FIELD_PREP(SPEAR_ADC_STATUS_AVG_SAMPLE_MASK, st->avg_samples) |
+ 			SPEAR_ADC_STATUS_START_CONVERSION |
+ 			SPEAR_ADC_STATUS_ADC_ENABLE;
+ 		if (st->vref_external == 0)
 -- 
 2.51.0
 
