@@ -1,109 +1,110 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EE528468C
-	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 18:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA46F26D4C7
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 18:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762884935; cv=none; b=CxJzL5HFaeLbSh0FvAJ7yLjE8xg39M4HhzFm5J+OvGv7JNl5roI/nc4wEO5yJvq2ybAynFV565TUUe8Cbd/RVth9tUhEpa+AwvUBxZlb8N9TbBBGpvkXveHvY+L4T01x9mAxzu2DaYkc6OTshFu4Edi43kEeAxNCsCZMfUg04qY=
+	t=1762885224; cv=none; b=IE/HiyBKihPbZI5bRQFd7tbmPDreMcdfJjAo1D+AdZoDnZpGIXOIjggHJcBP/44pPfBGYhWK9IwoaLzwm/w74a0aaaqhaB6842JasfiPgbL6/FW/wCgP8VzYh6i8KN3zKlt7XclCGDNbt2M7MDcxDiocGZO3RkdXWPSnIvfrvN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762884935; c=relaxed/simple;
-	bh=WY0tvD3JrT6UDkw/8hTycx0qbVjC0GxEVNXJGB/A9dc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z6D9ab9/Y1oPifBZ0r1tjIsZQLQDVpvUkzid5Ip5nPVPYE+vFaN0JsDjrYzmlFzqsltpFTrn4gZVBe1Dzw12JszYC5+6JNl/RDDFIspi0OBz8qtddOjSEqMUJRT1B97XYS9VIxwGo3mJXt++PapuRrXgxr9K8Eo6X93e/uXKoEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=UgWPfdbZ; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1762885224; c=relaxed/simple;
+	bh=n95I+wM9yjtOPWAMaBFaxz6m9Ftg/IKT0PcTyfUSGlI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D1uE2no9vFUwLPGKyAmPNkxogoaOiWDH6elBNB2uUHRgLo3UEV3B5OKHSJYwYseCNWk9HJljff6Zkeo8hrIMkzKdoOLKoelwzlBH8YEGY0J5bsCgdr4Ot/t2AmYC9sP/BQTqY1cv/9UN9dz37fOQ8sndrb6GwloF/F3me+G5m4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=JtCU6bv2; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="UgWPfdbZ"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47777000dadso237915e9.1
-        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 10:15:31 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="JtCU6bv2"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2957850c63bso372465ad.0
+        for <patches@lists.linux.dev>; Tue, 11 Nov 2025 10:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1762884930; x=1763489730; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wYuH1i5ZoIizzTTIcboUh84PgIhPsB1tWiXRAjKgYIM=;
-        b=UgWPfdbZMvzRAkOg9xe92P/MglZd6Dj0H4dLX1NsHA+4RxCEiuTf4FL98Iba6Rzk5P
-         5kW72v6BjovHNLWfl1oT4nlg+Shfvd7ifz4JMCFShOjCRZxdh4n6gy3x1tTexDw30gq8
-         1xOIvNEfYeDuJZovFYascEy/nJA3wSd4IHotSbewUR6+5Al3AMtEHeUQzrmGPv3xEVE6
-         9UliBRhj2KKD2nstmbzsCgvaa0GyfD2oT2vBPwGkbiSIH+WWK7/OMBKtDFWlngUTlJac
-         j+bt7G6+MyIBQPemUB6abCAtVQb4ewEKnSk6jIxGhcB48mvK5pE6lGbOiberea4TXfXA
-         5HtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762884930; x=1763489730;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linuxtx.org; s=google; t=1762885222; x=1763490022; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wYuH1i5ZoIizzTTIcboUh84PgIhPsB1tWiXRAjKgYIM=;
-        b=vMkhNDg4HcZh2ql6MdjxauS/AGyUW82vAN2X8LfqF12Y3bnU5orrAnhT+pOhwCglCJ
-         ay3CHiytD6cZgy3xFxcgpLvvSR7jsdygu7Jq+4ZAb7UoHctTTMVOLk9Lk1KgpXp5nqqP
-         rG5+pJ12222mxySE4tzKRYl2EgW8fepoquRSxJV4eZ5giOQVZHa8PhNea3uraUMVW+CD
-         56PT5kKlphw0ZJ5s+j+lQ3nizNT4Y8gI0sc+LvYHjjKGZ2uE4zj5KZ2YbVMIUgoa7a19
-         MbxcSxP7Cw22oXL7q9ZbYKKhO4YeJJzgzGv1AutjWuJ6pkATLgaMaetGD5urPsZ7/Njo
-         OrYg==
-X-Gm-Message-State: AOJu0YwTje0H0GzGsTV35r1/S11O++NDcYHYFfbAqVDJZocDfkDcrQti
-	DsdkWtfJka+bh6C7fz4+Hl0Y4Vc4Da7J6XOh56GiBoe5IojH94Reh7g=
-X-Gm-Gg: ASbGnctXAihrZwzVMc9wknp5VNul0hWRU2lvlBSfVYRffN7+/uGNWBVu+2wLuhcoFBB
-	DCB3jzbnba3F2DG0UuCTgbDiI9R4j5K0rrvM5jP7ye2t2fsvKLtbYbumu54+kJCa0/c8kl7ijSM
-	yz+986sDiPK1FCnVM3SoK6+AOArhlR+AgBqLu23CAKO42q/1i6D8Y4tHL+AmTEDLcwJl0OpfKfA
-	8sqsDMx35DROAx3kPNc7SLjkY473VYWf2531STHXTjpLCE24h+haulrJaca9zgWQ26fItEheJfb
-	o1QusJb68V97XeCwsXKYwXcZELnOIKeRT1J7G1Y8k7pVXat2uKmYJlO2ydOEBHR5WO3Z9tCJVja
-	qdzcBqs4wUc67PrnVMbEuIY56KjHWvmfokeNQMwNZYD6ad2sIjVsWPwTAvfheHDEqmVqkl3wuFv
-	Jx8YOD27Amsm7GZ0JCmXBKW7Dm2mNESJ/5c3jZD0FPAREo7kehJW4AvxmTExMuuZs=
-X-Google-Smtp-Source: AGHT+IHIoHZOFXMv7iwBPA10zJJM1peaNTeyWqz8HkDkOlb0lFxAYESnE/oaas1auLh1AqL4deR9OQ==
-X-Received: by 2002:a05:600c:45d4:b0:46e:396b:f5ae with SMTP id 5b1f17b1804b1-47787046a95mr3297515e9.16.1762884930128;
-        Tue, 11 Nov 2025 10:15:30 -0800 (PST)
-Received: from [192.168.1.3] (p5b2b46e7.dip0.t-ipconnect.de. [91.43.70.231])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477815faadesm25345635e9.0.2025.11.11.10.15.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Nov 2025 10:15:29 -0800 (PST)
-Message-ID: <870f0a18-8a5e-44c9-9270-8d3a70ce2eb7@googlemail.com>
-Date: Tue, 11 Nov 2025 19:15:29 +0100
+        bh=xH7fLeRJDduUwW8OBykePNE1qy/cPCbf7jTb60w/cyc=;
+        b=JtCU6bv2tPO/zxDMNfRSex1IYWnzlKSAJsanF7SumQ/Rctp+h8aXAI8mcUJlxg5Bro
+         S16bLIUSTRNZQi561EEk9JsWE9ytmuSF8L9mepT1dIiNbRGRYdP9FmXPp4sCLHncB6nT
+         OXjKqsjA2Z8L2gI/M7Sa14Xl/09N5hWiOVjVU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762885222; x=1763490022;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xH7fLeRJDduUwW8OBykePNE1qy/cPCbf7jTb60w/cyc=;
+        b=xCHN2znjxRQ4UIKYWrfrb7+PLqfvj4EURdZJBajag3R/motz4oTI2Y2Yx7YenNk+QL
+         k/E3h7waFQBGBpldJjdhhlcYKws9Tt5H8mmq7Z8SkNDDvRGTHtNzpX0NURB5y31qY1vR
+         ujexjUMXu/L5CsHiWU1omteJC/R6F7i4UZI2Z/mg1NKr4+bCPfUS/uukrqfW7tOJKsmr
+         kEXzzwbVsUDQjem6s54UgVfRpyrsN5NwAj5hgZvogjYZDla+yaTzYnBDwKR7vKmHj3Ru
+         3AY/c3KONx5UXQNRo/vOrrcHTWzLoUv4pd/hhXDBUUKyox1dVu5JHH0XfFueoL/ZKN22
+         9Puw==
+X-Forwarded-Encrypted: i=1; AJvYcCW1nwjPo7opbh8pOO+abhZrNrbWwJmAHiaxuiQ5ct4N2Mi3zD1LC/E2EH4Bip9JwWoXjUQNzUBf@lists.linux.dev
+X-Gm-Message-State: AOJu0Yygo+5vK8TiPj5dN1LHn4emKrtEfTFXzRBIxhaW4eZD7dhKcBLv
+	SCC0B3sjq63f7V1+3mFocm3LL0DlG2dezc9swhbT8j2nes9UqNpgE0lW/6bvZVydiA==
+X-Gm-Gg: ASbGncuA7cQE2a7pl1wYxXMW+A1PC7n3jR4PMRYjRLvhwVkHAxDOcVTv/I7cePgK8gq
+	kbclp0xOB+LyUzlxJWg+L7WTo+lsp/gpwh1OTtGtQp5K2ot/ImG2uJJgWgyrwWnO8A8ANFx9y5E
+	A3Oriskml3W8SzRBIwfRT6MREsSrDaHOXT3NYJP83wzy6HgAFh1qNSwswoQKGdSzG4kzLX7c4O6
+	QoPrK50iEauc5dLgqK32qr9j7J532nefy0QVRBRZQYwePoPuhRQCp58YBi1r8tB1B6JvPUDsZqS
+	PZrUMnbyk0WhYVA6yInsCOd57Bu3nnM+mP9v37RlzmBeT4meyuFnVCfqJ2NyMaPyflxNtr6m565
+	YEN1Q/F7svkK12YPxbgCLC8ML1DOBcMyHRKLVDgB+X3/epxE7Uhcw8ksAl938O2gtMHpqQLkQMy
+	wYhsnJjhj/jx7uCF0eJHKHyw==
+X-Google-Smtp-Source: AGHT+IFISfayPR8Fe6WwyNlqhp69sJHz84+HZ2Bp8C2NA+i+9BczyVM/K1Yo6kiGYGLWOtzHIehM7g==
+X-Received: by 2002:a17:903:18d:b0:297:df99:6bd4 with SMTP id d9443c01a7336-29840842cb3mr52741695ad.18.1762885222074;
+        Tue, 11 Nov 2025 10:20:22 -0800 (PST)
+Received: from fedora64.linuxtx.org ([216.147.123.202])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2984dceb2efsm3747495ad.110.2025.11.11.10.20.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 10:20:21 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 11 Nov 2025 11:20:19 -0700
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Quentin Monnet <qmo@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.17 145/849] bpftool: Add CET-aware symbol matching for
+ x86_64 architectures
+Message-ID: <aRN-Y5tjf6v5AtSf@fedora64.linuxtx.org>
+References: <20251111004536.460310036@linuxfoundation.org>
+ <20251111004539.911440769@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 000/562] 6.12.58-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20251111012348.571643096@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20251111012348.571643096@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251111004539.911440769@linuxfoundation.org>
 
-Am 11.11.2025 um 02:24 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.58 release.
-> There are 562 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Nov 11, 2025 at 09:35:15AM +0900, Greg Kroah-Hartman wrote:
+> 6.17-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Yuan Chen <chenyuan@kylinos.cn>
+> 
+> [ Upstream commit 6417ca85305ecaffef13cf9063ac35da8fba8500 ]
+> 
+> Adjust symbol matching logic to account for Control-flow Enforcement
+> Technology (CET) on x86_64 systems. CET prefixes functions with
+> a 4-byte 'endbr' instruction, shifting the actual hook entry point to
+> symbol + 4.
+> 
+> Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+> Acked-by: Quentin Monnet <qmo@kernel.org>
+> Acked-by: Yonghong Song <yonghong.song@linux.dev>
+> Acked-by: Jiri Olsa <jolsa@kernel.org>
+> Link: https://lore.kernel.org/bpf/20250829061107.23905-3-chenyuan_fl@163.com
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+I am guessing this is missing the other patch that went with this
+upstream 70f32a10ad423fd19e22e71d05d0968e61316278. Without it, this
+patch breaks the build.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Justin
