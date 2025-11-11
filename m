@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5C525EF9C;
-	Tue, 11 Nov 2025 01:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4693346A0F;
+	Tue, 11 Nov 2025 01:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823198; cv=none; b=f9HjcSXO9StVRQsoKaGR642WAc8zOKy0txnLDLx8lOvLGKMigXZVqEJ20Ee4sX4w17aHM+y7LGLsxaQ5SOIBPU5WEzP+oYA+OS0bDXVXbQb0gxgaAEwjtjWD7TtLL+N6T7lWpsNRy7EFTNAifkz5JxfnTUk/R7URaddX67BQSMg=
+	t=1762823200; cv=none; b=IXITFjfwFJDj9oluicrvxU2P0cejaM/LyvdkdO5ELobTj0QNpnan16niR6mWG7ogB+0W3UVhziFkYdVhF/Fd2+mLvf3bo+mr701vjIUPGNlENa8AAAOjRN215w/M4aGaSf7251ytNJ7sbs71NYMKLEGOgGVXZzZKyO4L/Lvt4wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823198; c=relaxed/simple;
-	bh=KUJMzbzgdVODCNF8i7xUyh8HLDcqi3ao0CmviePpYK0=;
+	s=arc-20240116; t=1762823200; c=relaxed/simple;
+	bh=/stVaWOGU5Byadn4FsqyxuMm7ZHGjMNzixyG86r+ErY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dkza4+byL1lf0MHdf2pR2PR2wsv2N4bhGuo8RvDuDFmB1g3wlvXPtVgppZ0rI8e7GGEzbFem4dVA9IBEJC/+wB7S98VOmyyGzr1yy7+LwqI1clRp9D9d3EoZVXL/UfQ2rk6vaGqgwmKxZvDbjIEy6+MmsvNXghle81pAKlpSXfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7oAE4/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJDYGq14ew2fUgyZJVgFHyYDBCe9HbO1Ccb9JA/1bUdWZ0avtsDnYTtFw5L9ZMdC+tXuXn8Qq4sN+21Dh535TX/LoT68N4DjedPn8sGbfx1SU2csJWNfcVXAe7aEf8efLL6m6c1tLlvL2k3E2sgTcsrwolHfoLiXbbZVgk/kdzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLlWCrZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7oAE4/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0283C4CEF5;
-	Tue, 11 Nov 2025 01:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLlWCrZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E74C19422;
+	Tue, 11 Nov 2025 01:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823198;
-	bh=KUJMzbzgdVODCNF8i7xUyh8HLDcqi3ao0CmviePpYK0=;
+	s=korg; t=1762823200;
+	bh=/stVaWOGU5Byadn4FsqyxuMm7ZHGjMNzixyG86r+ErY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7oAE4/vGXQYwZlXd9PuWTyokFfDJ2/15c2MCaKWcX3XT/NsyfMsshP8UkGvquwlY
-	 1QGNpjnYnhLq/O4H1kB37pG6YYv0ItUTLK9WJK0drOeUwdioHJDHsnatwxxZZcCzcS
-	 a09ZhiGhvWLZU5qqJzJq2B4NFuhR664TU482fpvk=
+	b=wLlWCrZSmwMfrXPNFO2KkMYeyKOFhnMvQMqZOeRMejQ//dnwJAPEAABv8eIQTygCQ
+	 fDoT9xHU5xoXqhuYEWxCEBcszf6UKibcOdR7voRPABLTwtzO5zZjluUwb7DhneXBVw
+	 dw2hEQWettmjraa6Ja/FEs6pSOXsUfKRGK9dqDb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 195/565] wifi: rtw89: print just once for unknown C2H events
-Date: Tue, 11 Nov 2025 09:40:51 +0900
-Message-ID: <20251111004531.316894074@linuxfoundation.org>
+Subject: [PATCH 6.17 252/849] drm/amd/display: add more cyan skillfish devices
+Date: Tue, 11 Nov 2025 09:37:02 +0900
+Message-ID: <20251111004542.521540117@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,86 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 7e1c44fe4c2e1e01fa47d9490893d95309a99687 ]
+[ Upstream commit 3cf06bd4cf2512d564fdb451b07de0cebe7b138d ]
 
-When driver receives new or unknown C2H events, it print out messages
-repeatedly once events are received, like
+Add PCI IDs to support display probe for cyan skillfish
+family of SOCs.
 
-  rtw89_8922ae 0000:81:00.0: PHY c2h class 2 not support
-
-To avoid the thousands of messages, use rtw89_info_once() instead. Also,
-print out class/func for unknown (undefined) class.
-
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Closes: https://lore.kernel.org/linux-wireless/20250729204437.164320-1-sean.anderson@linux.dev/
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250804012234.8913-2-pkshih@realtek.com
+Acked-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/debug.h | 1 +
- drivers/net/wireless/realtek/rtw89/mac.c   | 7 +++----
- drivers/net/wireless/realtek/rtw89/phy.c   | 7 +++----
- 3 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 8 +++++++-
+ drivers/gpu/drm/amd/display/include/dal_asic_id.h | 5 +++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/debug.h b/drivers/net/wireless/realtek/rtw89/debug.h
-index fc690f7c55dc7..a364e7adb0798 100644
---- a/drivers/net/wireless/realtek/rtw89/debug.h
-+++ b/drivers/net/wireless/realtek/rtw89/debug.h
-@@ -56,6 +56,7 @@ static inline void rtw89_debugfs_deinit(struct rtw89_dev *rtwdev) {}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index 4d6181e7c612b..d712548b1927d 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -165,7 +165,13 @@ enum dce_version resource_parse_asic_id(struct hw_asic_id asic_id)
+ 
+ 	case FAMILY_NV:
+ 		dc_version = DCN_VERSION_2_0;
+-		if (asic_id.chip_id == DEVICE_ID_NV_13FE || asic_id.chip_id == DEVICE_ID_NV_143F) {
++		if (asic_id.chip_id == DEVICE_ID_NV_13FE ||
++		    asic_id.chip_id == DEVICE_ID_NV_143F ||
++		    asic_id.chip_id == DEVICE_ID_NV_13F9 ||
++		    asic_id.chip_id == DEVICE_ID_NV_13FA ||
++		    asic_id.chip_id == DEVICE_ID_NV_13FB ||
++		    asic_id.chip_id == DEVICE_ID_NV_13FC ||
++		    asic_id.chip_id == DEVICE_ID_NV_13DB) {
+ 			dc_version = DCN_VERSION_2_01;
+ 			break;
+ 		}
+diff --git a/drivers/gpu/drm/amd/display/include/dal_asic_id.h b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
+index 5fc29164e4b45..8aea50aa95330 100644
+--- a/drivers/gpu/drm/amd/display/include/dal_asic_id.h
++++ b/drivers/gpu/drm/amd/display/include/dal_asic_id.h
+@@ -213,6 +213,11 @@ enum {
  #endif
- 
- #define rtw89_info(rtwdev, a...) dev_info((rtwdev)->dev, ##a)
-+#define rtw89_info_once(rtwdev, a...) dev_info_once((rtwdev)->dev, ##a)
- #define rtw89_warn(rtwdev, a...) dev_warn((rtwdev)->dev, ##a)
- #define rtw89_err(rtwdev, a...) dev_err((rtwdev)->dev, ##a)
- 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 8b7ca63af7ed0..b956ea2add919 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5532,12 +5532,11 @@ void rtw89_mac_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 	case RTW89_MAC_C2H_CLASS_FWDBG:
- 		return;
- 	default:
--		rtw89_info(rtwdev, "MAC c2h class %d not support\n", class);
--		return;
-+		break;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "MAC c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "MAC c2h class %d func %d not support\n",
-+				class, func);
- 		return;
- 	}
- 	handler(rtwdev, skb, len);
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index 355c3f58ab185..b473e02ecd9e7 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3125,12 +3125,11 @@ void rtw89_phy_c2h_handle(struct rtw89_dev *rtwdev, struct sk_buff *skb,
- 			return;
- 		fallthrough;
- 	default:
--		rtw89_info(rtwdev, "PHY c2h class %d not support\n", class);
--		return;
-+		break;
- 	}
- 	if (!handler) {
--		rtw89_info(rtwdev, "PHY c2h class %d func %d not support\n", class,
--			   func);
-+		rtw89_info_once(rtwdev, "PHY c2h class %d func %d not support\n",
-+				class, func);
- 		return;
- 	}
- 	handler(rtwdev, skb, len);
+ #define DEVICE_ID_NV_13FE 0x13FE  // CYAN_SKILLFISH
+ #define DEVICE_ID_NV_143F 0x143F
++#define DEVICE_ID_NV_13F9 0x13F9
++#define DEVICE_ID_NV_13FA 0x13FA
++#define DEVICE_ID_NV_13FB 0x13FB
++#define DEVICE_ID_NV_13FC 0x13FC
++#define DEVICE_ID_NV_13DB 0x13DB
+ #define FAMILY_VGH 144
+ #define DEVICE_ID_VGH_163F 0x163F
+ #define DEVICE_ID_VGH_1435 0x1435
 -- 
 2.51.0
 
