@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D31D26FA67;
-	Tue, 11 Nov 2025 01:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06FE2BE7B8;
+	Tue, 11 Nov 2025 01:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823498; cv=none; b=Do/w8oO/pKeNTiZNdirrfNG7eO+BTnWqEEZztGDkgUAXjmOHVjSeL8VnHyJmEazmuZEeG6PLVB6c+8ZPA/j9+1GkKmcgGtJhll0ULxNl+mQHaBHAcUwbp97RQnmj8XwyMW90U+3XvEjfCRv4ra4/TrhJs1nQs8UEdHDBkBcLZEo=
+	t=1762823501; cv=none; b=TnTF3wKjssg1wDFK06h+q3GGp7pHQsX5OsOoz3roJnirmpjFjqMvBD0O1CDYS2/ou6ZUHsCo70GDDQWwAIusdp4GkVQdyb4I37I+wTa62v83UwpIMl6ViGU044Uf8UuuSabxGVGSZ9nU22JWyqMYUoY5xZDIUul66xI0BPSUx2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823498; c=relaxed/simple;
-	bh=m4KI9kBaEgxZDksjkYLA8bCYVeCJahpWN3FwZr02gZY=;
+	s=arc-20240116; t=1762823501; c=relaxed/simple;
+	bh=cwDqJpAWpjpehzjiO1PglxE2a5MWoHXn4zL34zs+Hhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1uvhMN3jQjAMReNdjud0dbdAcoDCgmlb76RdLaxaIoe7Vd77fE+YMHiSOAkAP1ui9JH89luuujnswAxiK3ipOmxUFFldgHw9D98byYTE0B9QW14i9gGYS+x7mcqk3UyS076Jxor6HdTQ6kipF3Dsqh/blCATHYNiUBj4msaXrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1PrWFk1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FpUtkbPKOoZ0Il/h2kYcjlCYPVPb3NlgHD/6TScFEJFKjylpoupLWREQhLAqZLiH8XrixfaxmDvm4mNCXGkxsYfWugusS2QAI/64uwEtF4kHLEQw6eNaLY6MPt0iC/1zGZGLyY3nV1AzSCfg+vtMNROm7eLSLbbiBIVfMb/6WQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCLBm0H6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1PrWFk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D853C4CEF5;
-	Tue, 11 Nov 2025 01:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCLBm0H6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CDAC113D0;
+	Tue, 11 Nov 2025 01:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823498;
-	bh=m4KI9kBaEgxZDksjkYLA8bCYVeCJahpWN3FwZr02gZY=;
+	s=korg; t=1762823500;
+	bh=cwDqJpAWpjpehzjiO1PglxE2a5MWoHXn4zL34zs+Hhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1PrWFk1KxOI5pISA788d5GGNGHkNZN23zSfvzXJ9dywV8ztIS+7PzThNgZBq7tzT
-	 vgrczWAEqE9f4/o5TXHaZgWbjyav1fJXL9x8cwQg373RcwfdWrvcwl9mrtqpgIIcrS
-	 E+vn/O5/mgezsv9vNVonvzqqUAfORNmGK3pWMb4M=
+	b=xCLBm0H6AbGc84mBcyu6iJN1h7WasCNhoWW0dbInRuMCWKwO8BJf5S9nJs3t9sKL1
+	 mm5EuihRucs1Fe2NTQ2cPitXI7a1A2ykER3mhZIzST7TpAU0Pd+grHCs9ektm9N+e0
+	 AmFYjjaBbyv6nWTIAtQupBkV3Ya+uzQNAsijvLhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
+	Oleg Makarenko <oleg@makarenk.ooo>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 258/565] drm/amd/display: Support HW cursor 180 rot for any number of pipe splits
-Date: Tue, 11 Nov 2025 09:41:54 +0900
-Message-ID: <20251111004532.701908045@linuxfoundation.org>
+Subject: [PATCH 6.17 312/849] HID: pidff: Use direction fix only for conditional effects
+Date: Tue, 11 Nov 2025 09:38:02 +0900
+Message-ID: <20251111004543.956626223@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,165 +46,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
 
-[ Upstream commit 8a359f0f138d5ac7ceffd21b73279be50e516c0a ]
+[ Upstream commit f345a4798dab800159b09d088e7bdae0f16076c3 ]
 
-[Why]
-For the HW cursor, its current position in the pipe_ctx->stream struct is
-not affected by the 180 rotation, i. e. the top left corner is still at
-0,0. However, the DPP & HUBP set_cursor_position functions require rotated
-position.
+The already fixed bug in SDL only affected conditional effects. This
+should fix FFB in Forza Horizion 4/5 on Moza Devices as Forza Horizon
+flips the constant force direction instead of using negative magnitude
+values.
 
-The current approach is hard-coded for ODM 2:1, thus it's failing for
-ODM 4:1, resulting in a double cursor.
+Changing the direction in the effect directly in pidff_upload_effect()
+would affect it's value in further operations like comparing to the old
+effect and/or just reading the effect values in the user application.
 
-[How]
-Instead of calculating the new cursor position relatively to the
-viewports, we calculate it using a viewavable clip_rect of each plane.
+This, in turn, would lead to constant PID_SET_EFFECT spam as the effect
+direction would constantly not match the value that's set by the
+application.
 
-The clip_rects are first offset and scaled to the same space as the
-src_rect, i. e. Stream space -> Plane space.
+This way, it's still transparent to any software/API.
 
-In case of a pipe split, which divides the plane into 2 or more viewports,
-the clip_rect is the union of all the viewports of the given plane.
+Only affects conditional effects now so it's better for it to explicitly
+state that in the name. If any HW ever needs fixed direction for other
+effects, we'll add more quirks.
 
-With the assumption that the viewports in HUBP's set_cursor_position are
-in the Plane space as well, it should produce a correct cursor position
-for any number of pipe splits.
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Signed-off-by: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Oleg Makarenko <oleg@makarenk.ooo>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 73 +++++++------------
- 1 file changed, 27 insertions(+), 46 deletions(-)
+ drivers/hid/hid-universal-pidff.c | 20 ++++++++++----------
+ drivers/hid/usbhid/hid-pidff.c    | 28 +++++++++++++++++++++++-----
+ drivers/hid/usbhid/hid-pidff.h    |  2 +-
+ 3 files changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index 00be0b26689d3..d33bdefca05bb 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -3494,6 +3494,8 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	int y_plane = pipe_ctx->plane_state->dst_rect.y;
- 	int x_pos = pos_cpy.x;
- 	int y_pos = pos_cpy.y;
-+	int clip_x = pipe_ctx->plane_state->clip_rect.x;
-+	int clip_width = pipe_ctx->plane_state->clip_rect.width;
+diff --git a/drivers/hid/hid-universal-pidff.c b/drivers/hid/hid-universal-pidff.c
+index 554a6559aeb73..70fce0f88e825 100644
+--- a/drivers/hid/hid-universal-pidff.c
++++ b/drivers/hid/hid-universal-pidff.c
+@@ -144,25 +144,25 @@ static int universal_pidff_input_configured(struct hid_device *hdev,
  
- 	if ((pipe_ctx->top_pipe != NULL) || (pipe_ctx->bottom_pipe != NULL)) {
- 		if ((pipe_ctx->plane_state->src_rect.width != pipe_ctx->plane_res.scl_data.viewport.width) ||
-@@ -3512,7 +3514,7 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	 */
+ static const struct hid_device_id universal_pidff_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R3_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R5_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R9_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R12_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_MOZA, USB_DEVICE_ID_MOZA_R16_R21_2),
+-		.driver_data = HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION },
++		.driver_data = HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C5) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CAMMUS, USB_DEVICE_ID_CAMMUS_C12) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_DFP),
+diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
+index 614a20b620231..c6b4f61e535d5 100644
+--- a/drivers/hid/usbhid/hid-pidff.c
++++ b/drivers/hid/usbhid/hid-pidff.c
+@@ -205,6 +205,14 @@ struct pidff_device {
+ 	u8 effect_count;
+ };
  
- 	/**
--	 * Translate cursor from stream space to plane space.
-+	 * Translate cursor and clip offset from stream space to plane space.
- 	 *
- 	 * If the cursor is scaled then we need to scale the position
- 	 * to be in the approximately correct place. We can't do anything
-@@ -3529,6 +3531,10 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 				pipe_ctx->plane_state->dst_rect.width;
- 		y_pos = (y_pos - y_plane) * pipe_ctx->plane_state->src_rect.height /
- 				pipe_ctx->plane_state->dst_rect.height;
-+		clip_x = (clip_x - x_plane) * pipe_ctx->plane_state->src_rect.width /
-+				pipe_ctx->plane_state->dst_rect.width;
-+		clip_width = clip_width * pipe_ctx->plane_state->src_rect.width /
-+				pipe_ctx->plane_state->dst_rect.width;
- 	}
++static int pidff_is_effect_conditional(struct ff_effect *effect)
++{
++	return effect->type == FF_SPRING  ||
++	       effect->type == FF_DAMPER  ||
++	       effect->type == FF_INERTIA ||
++	       effect->type == FF_FRICTION;
++}
++
+ /*
+  * Clamp value for a given field
+  */
+@@ -294,6 +302,20 @@ static void pidff_set_duration(struct pidff_usage *usage, u16 duration)
+ 	pidff_set_time(usage, duration);
+ }
  
- 	/**
-@@ -3575,30 +3581,18 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
++static void pidff_set_effect_direction(struct pidff_device *pidff,
++				       struct ff_effect *effect)
++{
++	u16 direction = effect->direction;
++
++	/* Use fixed direction if needed */
++	if (pidff->quirks & HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION &&
++	    pidff_is_effect_conditional(effect))
++		direction = PIDFF_FIXED_WHEEL_DIRECTION;
++
++	pidff->effect_direction->value[0] =
++		pidff_rescale(direction, U16_MAX, pidff->effect_direction);
++}
++
+ /*
+  * Send envelope report to the device
+  */
+@@ -395,11 +417,7 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
+ 		pidff->set_effect[PID_GAIN].field->logical_maximum;
+ 	pidff->set_effect[PID_DIRECTION_ENABLE].value[0] = 1;
  
+-	/* Use fixed direction if needed */
+-	pidff->effect_direction->value[0] = pidff_rescale(
+-		pidff->quirks & HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION ?
+-		PIDFF_FIXED_WHEEL_DIRECTION : effect->direction,
+-		U16_MAX, pidff->effect_direction);
++	pidff_set_effect_direction(pidff, effect);
  
- 	if (param.rotation == ROTATION_ANGLE_0) {
--		int viewport_width =
--			pipe_ctx->plane_res.scl_data.viewport.width;
--		int viewport_x =
--			pipe_ctx->plane_res.scl_data.viewport.x;
+ 	/* Omit setting delay field if it's missing */
+ 	if (!(pidff->quirks & HID_PIDFF_QUIRK_MISSING_DELAY))
+diff --git a/drivers/hid/usbhid/hid-pidff.h b/drivers/hid/usbhid/hid-pidff.h
+index a53a8b436baa6..f321f675e1318 100644
+--- a/drivers/hid/usbhid/hid-pidff.h
++++ b/drivers/hid/usbhid/hid-pidff.h
+@@ -16,7 +16,7 @@
+ #define HID_PIDFF_QUIRK_PERMISSIVE_CONTROL	BIT(2)
  
- 		if (param.mirror) {
--			if (pipe_split_on || odm_combine_on) {
--				if (pos_cpy.x >= viewport_width + viewport_x) {
--					pos_cpy.x = 2 * viewport_width
--							- pos_cpy.x + 2 * viewport_x;
--				} else {
--					uint32_t temp_x = pos_cpy.x;
--
--					pos_cpy.x = 2 * viewport_x - pos_cpy.x;
--					if (temp_x >= viewport_x +
--						(int)hubp->curs_attr.width || pos_cpy.x
--						<= (int)hubp->curs_attr.width +
--						pipe_ctx->plane_state->src_rect.x) {
--						pos_cpy.x = 2 * viewport_width - temp_x;
--					}
--				}
--			} else {
--				pos_cpy.x = viewport_width - pos_cpy.x + 2 * viewport_x;
--			}
-+			/*
-+			 * The plane is split into multiple viewports.
-+			 * The combination of all viewports span the
-+			 * entirety of the clip rect.
-+			 *
-+			 * For no pipe_split, viewport_width is represents
-+			 * the full width of the clip_rect, so we can just
-+			 * mirror it.
-+			 */
-+			pos_cpy.x = clip_width - pos_cpy.x + 2 * clip_x;
- 		}
- 	}
- 	// Swap axis and mirror horizontally
-@@ -3668,30 +3662,17 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	}
- 	// Mirror horizontally and vertically
- 	else if (param.rotation == ROTATION_ANGLE_180) {
--		int viewport_width =
--			pipe_ctx->plane_res.scl_data.viewport.width;
--		int viewport_x =
--			pipe_ctx->plane_res.scl_data.viewport.x;
--
- 		if (!param.mirror) {
--			if (pipe_split_on || odm_combine_on) {
--				if (pos_cpy.x >= viewport_width + viewport_x) {
--					pos_cpy.x = 2 * viewport_width
--							- pos_cpy.x + 2 * viewport_x;
--				} else {
--					uint32_t temp_x = pos_cpy.x;
--
--					pos_cpy.x = 2 * viewport_x - pos_cpy.x;
--					if (temp_x >= viewport_x +
--						(int)hubp->curs_attr.width || pos_cpy.x
--						<= (int)hubp->curs_attr.width +
--						pipe_ctx->plane_state->src_rect.x) {
--						pos_cpy.x = temp_x + viewport_width;
--					}
--				}
--			} else {
--				pos_cpy.x = viewport_width - pos_cpy.x + 2 * viewport_x;
--			}
-+			/*
-+			 * The plane is split into multiple viewports.
-+			 * The combination of all viewports span the
-+			 * entirety of the clip rect.
-+			 *
-+			 * For no pipe_split, viewport_width is represents
-+			 * the full width of the clip_rect, so we can just
-+			 * mirror it.
-+			 */
-+			pos_cpy.x = clip_width - pos_cpy.x + 2 * clip_x;
- 		}
+ /* Use fixed 0x4000 direction during SET_EFFECT report upload */
+-#define HID_PIDFF_QUIRK_FIX_WHEEL_DIRECTION	BIT(3)
++#define HID_PIDFF_QUIRK_FIX_CONDITIONAL_DIRECTION	BIT(3)
  
- 		/**
+ /* Force all periodic effects to be uploaded as SINE */
+ #define HID_PIDFF_QUIRK_PERIODIC_SINE_ONLY	BIT(4)
 -- 
 2.51.0
 
