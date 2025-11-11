@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BB92472A6;
-	Tue, 11 Nov 2025 01:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD48E255F28;
+	Tue, 11 Nov 2025 01:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824895; cv=none; b=hIm7NWXEVGqUngH7tSIafC+MsbMC3Q4WLtcDfYwA/4D1BGJvHdAF8oJHIpnbJCm4Lh0TxGzOLpP381ke2aMfW1C0OpKOslLjUE48co72J3Z23NC1SZtXfoj8fIi4xiw/nQdHHn24ESKC/TXjZrdJVAykONM6FtHM887Px0XySqI=
+	t=1762824897; cv=none; b=loH5AJ6lzaE1pyW+qUlJqxsBh5atHrKeKQmAwV0HVLcUUSkK+OhB7P/CPw81jl0YUkrpEhe8gKVTXKe9irpud5iQ8TBcRo8bFZq2bzAFgER6QQpX+tVwPBiiJcjRO38Nqv/PgTwBh8Gnq7XAD9ZhW+4Eakz7lyyrWnxY36hSvTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824895; c=relaxed/simple;
-	bh=88xBQLB0RU3biCaUZDdWxhCmYyA+L2SxHI/qLjg05Ao=;
+	s=arc-20240116; t=1762824897; c=relaxed/simple;
+	bh=ENbfdeINzxN9W8wckLs9F1Igw/x0vPRqnkPJ8347i8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OS+RQ7i63CTz7q/ZJpd5LPtcVvU5ekwa+wdmW64oWUUsXVEyY+mSIb/F0zr6Ukiw/i1v2yv3n2arFXUwfahJn4oKX7Xbf58cMOuo4UamvovbqNhK8RCPks0k+Lv7+d3tcid8g63k58+5vUTVpbTz9ePKpUX43AmuhgmFCSNarCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhJt1+cx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBeqYWQueFJwXP34QyVTmp4h0e9YK+aKQmiUt2rSEQNmDDUTpjaZR7zSHEQDQxjIQcaPqovEMP8xC/9Gw7RBNqmhZOpHBGftkAlEdLGmyE+m6K7TkAl3pvi9GzA6cDyZ+VCJaed5UDEjm3uQR3mziY7H7qzSztt0cb4C8xjgx1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k9YM2qp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhJt1+cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED183C116D0;
-	Tue, 11 Nov 2025 01:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k9YM2qp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E501C4CEF5;
+	Tue, 11 Nov 2025 01:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824895;
-	bh=88xBQLB0RU3biCaUZDdWxhCmYyA+L2SxHI/qLjg05Ao=;
+	s=korg; t=1762824897;
+	bh=ENbfdeINzxN9W8wckLs9F1Igw/x0vPRqnkPJ8347i8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhJt1+cxJtDq3n8hT+RRlIPlmOTPwfbx89SwtPyxoat4QxHHSII65MFrPGUGybUPA
-	 ZoHRNTop6mStAKldda5FlY5/+hLTFvUyz0dOHs2+ByBuXxBZwVNMpEkHfPQJgfCrP9
-	 bEWt1hH+nCxFyUY1/mvHvcMscXJHlYntVsXyPPj0=
+	b=2k9YM2qp51m5x7sBnQ9FaCRgzi5roilZyGiMvq0RajUmm8bOmwuophsSnCxgQvIvf
+	 5FpEPoScki+/autGvkEYfHEcpoWVL6teevpAiqy9ylCWmrOSDq9x/7vBWnfSCpYTPN
+	 pLGCMHMUaCtBbBHPZjfzYZYk7dUfWUo+ViIR3rvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 593/849] drm/amdgpu/atom: Check kcalloc() for WS buffer in amdgpu_atom_execute_table_locked()
-Date: Tue, 11 Nov 2025 09:42:43 +0900
-Message-ID: <20251111004550.760483828@linuxfoundation.org>
+	Joao Martins <joao.m.martins@oracle.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 546/565] iommufd: Dont overflow during division for dirty tracking
+Date: Tue, 11 Nov 2025 09:46:42 +0900
+Message-ID: <20251111004539.275320944@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit cc9a8e238e42c1f43b98c097995137d644b69245 ]
+commit cb30dfa75d55eced379a42fd67bd5fb7ec38555e upstream.
 
-kcalloc() may fail. When WS is non-zero and allocation fails, ectx.ws
-remains NULL while ectx.ws_size is set, leading to a potential NULL
-pointer dereference in atom_get_src_int() when accessing WS entries.
+If pgshift is 63 then BITS_PER_TYPE(*bitmap->bitmap) * pgsize will overflow
+to 0 and this triggers divide by 0.
 
-Return -ENOMEM on allocation failure to avoid the NULL dereference.
+In this case the index should just be 0, so reorganize things to divide
+by shift and avoid hitting any overflows.
 
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/r/0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reported-by: syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=093a8a8b859472e6c257
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iommu/iommufd/iova_bitmap.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
-index 427b073de2fc1..1a7591ca2f9a0 100644
---- a/drivers/gpu/drm/amd/amdgpu/atom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1246,6 +1246,10 @@ static int amdgpu_atom_execute_table_locked(struct atom_context *ctx, int index,
- 	ectx.last_jump_jiffies = 0;
- 	if (ws) {
- 		ectx.ws = kcalloc(4, ws, GFP_KERNEL);
-+		if (!ectx.ws) {
-+			ret = -ENOMEM;
-+			goto free;
-+		}
- 		ectx.ws_size = ws;
- 	} else {
- 		ectx.ws = NULL;
--- 
-2.51.0
-
+--- a/drivers/iommu/iommufd/iova_bitmap.c
++++ b/drivers/iommu/iommufd/iova_bitmap.c
+@@ -130,9 +130,8 @@ struct iova_bitmap {
+ static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
+ 						 unsigned long iova)
+ {
+-	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
+-
+-	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
++	return (iova >> bitmap->mapped.pgshift) /
++	       BITS_PER_TYPE(*bitmap->bitmap);
+ }
+ 
+ /*
 
 
