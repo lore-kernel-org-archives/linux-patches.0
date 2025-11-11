@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325D7305976;
-	Tue, 11 Nov 2025 01:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD41918DF80;
+	Tue, 11 Nov 2025 01:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825529; cv=none; b=OOFnqr9Hj5ge7H3JVmgK//nr68hQKp1YL5vXqSvANabxSP5hbqwE12TLxun6f1X41G1iO/9g6LyG8vkaot5gZGMwQ6hTli2Bm8j+KyDvWcju/WB4SSJyZk2Gjrt+NYpWdOlffAlpXqC95hNZSA+O8VYxDscFUDoix28r51Y/T7Q=
+	t=1762825532; cv=none; b=fvunGaQPJxDI8frEYwkpQQjpiyecoxQOaT6mUDqjzilPIXJPJCtAk4WjsLpE9lHVOmZpxGscjp11wS+wzK/8R8c+vJ2vxkw0PbKrh9kQ+jbIaXIH6HA9K3F/Upg4dBL9yHqY512ftlRisIZ77pP1Yj9OLrJoGYWtrbKDgSgiY8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825529; c=relaxed/simple;
-	bh=tYdb6CRbT61gIzaRcyrbMHB3RR77MHgKEon8g4ZKgGI=;
+	s=arc-20240116; t=1762825532; c=relaxed/simple;
+	bh=xNo6MFK1GAftxy9g7PKbmWsuZCH+52iM00blEXI8FPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eageh46qipTd2M2jmtP/b+PfAdNp7fRklrDEO+BJtqtYKT/aWAmGpDIFfo5qCu576fY2npUbRTC8qkZ5+irGS5GJE8yMoKojKHQD/opSTX83JEcNZSWeDTQj0O0OoNqFwmSKmr5Q9PYjO/grrrx6Y60BT3KfoOqPOZPaF4n82Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b7N55Xk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ky3rQ7dS9MXPT4vG8cPdeSBzMgcpL8pkQ6esXe8P1VUoU6aev6uc98GsAn0Klaoni04EFIK/NYAujdWPROnrWuyTJAyIqm9OsmRwx3qFJXEfCK9PxSr5ADIQeMZtFwtusO0AGDU94dQhoMYG3D1jUO1zHxF59OK0FnIk6x70zC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6ly9StY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b7N55Xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6173C16AAE;
-	Tue, 11 Nov 2025 01:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6ly9StY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0548CC4CEFB;
+	Tue, 11 Nov 2025 01:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825529;
-	bh=tYdb6CRbT61gIzaRcyrbMHB3RR77MHgKEon8g4ZKgGI=;
+	s=korg; t=1762825531;
+	bh=xNo6MFK1GAftxy9g7PKbmWsuZCH+52iM00blEXI8FPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0b7N55XkKgMJ7DmVBMw6WKzSgm0WgvFV2jRw+UqZ6NsKmQfUDhwZwGKs3RapEXp2q
-	 dyvsB/rMCZ3/GyD9qTVnfEkSQ4Hfi41FRKjGLZx8aqSVqO7ih5OEzm66/YHW3V7Q3K
-	 1WFsFW7R5n1AXsuW0TNYSdT2E9viBLW0FsVf3u4Y=
+	b=X6ly9StYfF+V9DO5LNiSboAmK9c/uGZRpBLYgccOOowOMhQV7sZd1GModt9vy+j7x
+	 /aH85sh5wl3GUVmHgoX0O0YR/ClSvVbBVA09cqwCBrhlWEFfRTTVcgLWG5FqJbCVsp
+	 9hNpSpbI2kaPJQ7uEKWs22RjSdKTMJPsrEylHvqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Sandoval <osandov@fb.com>,
-	Samir M <samir@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.17 840/849] kbuild: Strip trailing padding bytes from modules.builtin.modinfo
-Date: Tue, 11 Nov 2025 09:46:50 +0900
-Message-ID: <20251111004556.729582472@linuxfoundation.org>
+	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.17 841/849] drm/amdgpu: Fix unintended error log in VCN5_0_0
+Date: Tue, 11 Nov 2025 09:46:51 +0900
+Message-ID: <20251111004556.754078226@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,73 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Sathishkumar S <sathishkumar.sundararaju@amd.com>
 
-commit a26a6c93edfeee82cb73f55e87d995eea59ddfe8 upstream.
+commit 46b0e6b9d749cfa891e6969d6565be1131c53aa2 upstream.
 
-After commit d50f21091358 ("kbuild: align modinfo section for Secureboot
-Authenticode EDK2 compat"), running modules_install with certain
-versions of kmod (such as 29.1 in Ubuntu Jammy) in certain
-configurations may fail with:
+The error log is supposed to be gaurded under if failure condition.
 
-  depmod: ERROR: kmod_builtin_iter_next: unexpected string without modname prefix
-
-The additional padding bytes to ensure .modinfo is aligned within
-vmlinux.unstripped are unexpected by kmod, as this section has always
-just been null-terminated strings.
-
-Strip the trailing padding bytes from modules.builtin.modinfo after it
-has been extracted from vmlinux.unstripped to restore the format that
-kmod expects while keeping .modinfo aligned within vmlinux.unstripped to
-avoid regressing the Authenticode calculation fix for EDK2.
-
-Cc: stable@vger.kernel.org
-Fixes: d50f21091358 ("kbuild: align modinfo section for Secureboot Authenticode EDK2 compat")
-Reported-by: Omar Sandoval <osandov@fb.com>
-Reported-by: Samir M <samir@linux.ibm.com>
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/7fef7507-ad64-4e51-9bb8-c9fb6532e51e@linux.ibm.com/
-Tested-by: Omar Sandoval <osandov@fb.com>
-Tested-by: Samir M <samir@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251105-kbuild-fix-builtin-modinfo-for-kmod-v1-1-b419d8ad4606@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-[nathan: Apply to scripts/Makefile.vmlinux_o, location of
-         modules.builtin.modinfo rule prior to 39cfd5b12160]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: faab5ea08367 ("drm/amdgpu: Check vcn sram load return value")
+Signed-off-by: Sathishkumar S <sathishkumar.sundararaju@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.vmlinux_o |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/scripts/Makefile.vmlinux_o
-+++ b/scripts/Makefile.vmlinux_o
-@@ -76,11 +76,24 @@ targets += vmlinux.o
- # modules.builtin.modinfo
- # ---------------------------------------------------------------------------
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
+@@ -769,9 +769,10 @@ static int vcn_v5_0_0_start_dpg_mode(str
  
-+# .modinfo in vmlinux.unstripped is aligned to 8 bytes for compatibility with
-+# tools that expect vmlinux to have sufficiently aligned sections but the
-+# additional bytes used for padding .modinfo to satisfy this requirement break
-+# certain versions of kmod with
-+#
-+#   depmod: ERROR: kmod_builtin_iter_next: unexpected string without modname prefix
-+#
-+# Strip the trailing padding bytes after extracting .modinfo to comply with
-+# what kmod expects to parse.
-+quiet_cmd_modules_builtin_modinfo = GEN     $@
-+      cmd_modules_builtin_modinfo = $(cmd_objcopy); \
-+                                    sed -i 's/\x00\+$$/\x00/g' $@
-+
- OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
+ 	if (indirect) {
+ 		ret = amdgpu_vcn_psp_update_sram(adev, inst_idx, 0);
+-		dev_err(adev->dev, "%s: vcn sram load failed %d\n", __func__, ret);
+-		if (ret)
++		if (ret) {
++			dev_err(adev->dev, "%s: vcn sram load failed %d\n", __func__, ret);
+ 			return ret;
++		}
+ 	}
  
- targets += modules.builtin.modinfo
- modules.builtin.modinfo: vmlinux.o FORCE
--	$(call if_changed,objcopy)
-+	$(call if_changed,modules_builtin_modinfo)
- 
- # modules.builtin
- # ---------------------------------------------------------------------------
+ 	ring = &adev->vcn.inst[inst_idx].ring_enc[0];
 
 
