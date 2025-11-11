@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8819A306B39;
-	Tue, 11 Nov 2025 01:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC37B23C4F2;
+	Tue, 11 Nov 2025 01:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823873; cv=none; b=PMHFMzCwrqUyMlYEwEL+1AQ0sbQOGRffbFyM1nSHVE9QmyUj+FmaZQ3DJuc44DK0VpIbF3cK3x0DHKMv0obO3ziCIaJsqr0GR4esMzC+XUEAs+gWOn0Cv5/na0Uqit9ppqF9UOyJHclGq9wLab0qNinewOiafrxxw9F7vfpmqKE=
+	t=1762823875; cv=none; b=Lv2x9IH7t4e0nYCSiXEaxVJLP+Ez2yuLigAMRGDy2mn2VsjxPqPLVoE5cWtOeQPe1GRsoMurQdAkguNi/hKa5Ila/2hysM15sWubd9JBZDS4OhrGu3dTvEfIJ20SkQmnfpNfwKX7lb5ckhzSsdRph1g3yjAQePIjKyBj5Bfkoxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823873; c=relaxed/simple;
-	bh=0puMK1jm214Pr9X9H9ZaB/thqip84pezsEQLdIVI0xE=;
+	s=arc-20240116; t=1762823875; c=relaxed/simple;
+	bh=QpPc+YLOA9DkfuTu+cB6RHsU4yuaj3kkngfb3Jj+PQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrmygwUdW6kASz2GDXEvgB0DKf977c+2vWCE99J9kqBgyJx5P7dODaPxYN97iBLb4eLdG24IZNOXK+r8c9h0bkoB1xy47zdaLCq9Qi3RBq+d1vS5zTx9ErOaTQqdPkQOi91/7TxL2kQ8oMTDgxrIASN6DBOGlAV4esRAK8EymZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jz0FLj+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P55IWr8Hs/ZzHfn0rijlRhJSSGcH6UU4GXjr30HKxDPdiPMzk0chN7nlywoWSeDnLx5KJM+KdbxYg3WsZG5EQKHyg8zqboqQX7BGT4a7xvdPj8+0EsrjWF/HCRlEhWv05LaHxkaM69RJsmwirhl6sT1UIbgAN2xfVwV6WT5UoYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQ/54Ewu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jz0FLj+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06917C113D0;
-	Tue, 11 Nov 2025 01:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQ/54Ewu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FC1C4CEF5;
+	Tue, 11 Nov 2025 01:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823873;
-	bh=0puMK1jm214Pr9X9H9ZaB/thqip84pezsEQLdIVI0xE=;
+	s=korg; t=1762823875;
+	bh=QpPc+YLOA9DkfuTu+cB6RHsU4yuaj3kkngfb3Jj+PQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jz0FLj+xbNCDseYy1pFrGTDweGmmOfcHrpwORE8QG1IhyNA5KzOa21vpBgjzRYX2d
-	 vhvFap89mMtQv9l8EFvVVXpE/3pyb2VwJc3XInQW9I29mhYxnMTqflogCab8iut46g
-	 O8/+YrmwY0yaKIuK7k9NlpwNP2imGGyEPWeszik8=
+	b=EQ/54EwuPHEfLbyt7kLEJn5oxlssbiJRkiqZM6/KHIniAL0AX+shQibiT8ZpUW2VU
+	 ySZ1jl7Arrf81EiEmKp8mMsC4cj4bd6AmsKYtTMob3TkEuMZ3FOvOfcGQ2XG8+5Ec7
+	 DnLhPTD5BoyNVxGDY+6JZ9Gh2usZ5Qg3fXB9CuS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 341/565] netfilter: nf_reject: dont reply to icmp error messages
-Date: Tue, 11 Nov 2025 09:43:17 +0900
-Message-ID: <20251111004534.549817347@linuxfoundation.org>
+Subject: [PATCH 6.17 389/849] ASoC: SOF: ipc4-pcm: Add fixup for channels
+Date: Tue, 11 Nov 2025 09:39:19 +0900
+Message-ID: <20251111004545.837179959@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,131 +50,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit db99b2f2b3e2cd8227ac9990ca4a8a31a1e95e56 ]
+[ Upstream commit 6ad299a9b968e1c63988e2a327295e522cf6bbf5 ]
 
-tcp reject code won't reply to a tcp reset.
+We can have modules in path which can change the number of channels and in
+this case the BE params needs to be adjusted to configure the DAI according
+to the copier configuration.
 
-But the icmp reject 'netdev' family versions will reply to icmp
-dst-unreach errors, unlike icmp_send() and icmp6_send() which are used
-by the inet family implementation (and internally by the REJECT target).
-
-Check for the icmp(6) type and do not respond if its an unreachable error.
-
-Without this, something like 'ip protocol icmp reject', when used
-in a netdev chain attached to 'lo', cause a packet loop.
-
-Same for two hosts that both use such a rule: each error packet
-will be replied to.
-
-Such situation persist until the (bogus) rule is amended to ratelimit or
-checks the icmp type before the reject statement.
-
-As the inet versions don't do this make the netdev ones follow along.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Message-ID: <20250829105305.31818-2-peter.ujfalusi@linux.intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 25 ++++++++++++++++++++++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 30 +++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ sound/soc/sof/ipc4-pcm.c | 56 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 0d3cb2ba6fc84..a7a3439fe7800 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -71,6 +71,27 @@ struct sk_buff *nf_reject_skb_v4_tcp_reset(struct net *net,
+diff --git a/sound/soc/sof/ipc4-pcm.c b/sound/soc/sof/ipc4-pcm.c
+index 37d72a50c1272..9542c428daa4a 100644
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -738,6 +738,58 @@ static int sof_ipc4_pcm_dai_link_fixup_rate(struct snd_sof_dev *sdev,
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v4_tcp_reset);
  
-+static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
++static int sof_ipc4_pcm_dai_link_fixup_channels(struct snd_sof_dev *sdev,
++						struct snd_pcm_hw_params *params,
++						struct sof_ipc4_copier *ipc4_copier)
 +{
-+	const struct iphdr *iph = ip_hdr(skb);
-+	u8 *tp, _type;
-+	int thoff;
++	struct sof_ipc4_pin_format *pin_fmts = ipc4_copier->available_fmt.input_pin_fmts;
++	struct snd_interval *channels = hw_param_interval(params, SNDRV_PCM_HW_PARAM_CHANNELS);
++	int num_input_formats = ipc4_copier->available_fmt.num_input_formats;
++	unsigned int fe_channels = params_channels(params);
++	bool fe_be_match = false;
++	bool single_be_channels = true;
++	unsigned int be_channels, val;
++	int i;
 +
-+	if (iph->protocol != IPPROTO_ICMP)
-+		return false;
++	if (WARN_ON_ONCE(!num_input_formats))
++		return -EINVAL;
 +
-+	thoff = skb_network_offset(skb) + sizeof(*iph);
++	/*
++	 * Copier does not change channels, so we
++	 * need to only consider the input pin information.
++	 */
++	be_channels = SOF_IPC4_AUDIO_FORMAT_CFG_CHANNELS_COUNT(pin_fmts[0].audio_fmt.fmt_cfg);
++	for (i = 0; i < num_input_formats; i++) {
++		val = SOF_IPC4_AUDIO_FORMAT_CFG_CHANNELS_COUNT(pin_fmts[i].audio_fmt.fmt_cfg);
 +
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmphdr, type),
-+				sizeof(_type), &_type);
++		if (val != be_channels)
++			single_be_channels = false;
 +
-+	if (!tp)
-+		return false;
++		if (val == fe_channels) {
++			fe_be_match = true;
++			break;
++		}
++	}
 +
-+	return *tp == ICMP_DEST_UNREACH;
++	/*
++	 * If channels is different than FE channels, topology must contain a
++	 * module which can change the number of channels. But we do require
++	 * topology to define a single channels in the DAI copier config in
++	 * this case (FE channels may be variable).
++	 */
++	if (!fe_be_match) {
++		if (!single_be_channels) {
++			dev_err(sdev->dev, "Unable to select channels for DAI link\n");
++			return -EINVAL;
++		}
++
++		channels->min = be_channels;
++		channels->max = be_channels;
++	}
++
++	return 0;
 +}
 +
- struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -91,6 +112,10 @@ struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 	if (ip_hdr(oldskb)->frag_off & htons(IP_OFFSET))
- 		return NULL;
+ static int sof_ipc4_pcm_dai_link_fixup(struct snd_soc_pcm_runtime *rtd,
+ 				       struct snd_pcm_hw_params *params)
+ {
+@@ -801,6 +853,10 @@ static int sof_ipc4_pcm_dai_link_fixup(struct snd_soc_pcm_runtime *rtd,
+ 	if (ret)
+ 		return ret;
  
-+	/* don't reply to ICMP_DEST_UNREACH with ICMP_DEST_UNREACH. */
-+	if (nf_skb_is_icmp_unreach(oldskb))
-+		return NULL;
++	ret = sof_ipc4_pcm_dai_link_fixup_channels(sdev, params, ipc4_copier);
++	if (ret)
++		return ret;
 +
- 	/* RFC says return as much as we can without exceeding 576 bytes. */
- 	len = min_t(unsigned int, 536, oldskb->len);
- 
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index c3d64c4b69d7d..84afa0cbc9021 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -91,6 +91,32 @@ struct sk_buff *nf_reject_skb_v6_tcp_reset(struct net *net,
- }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v6_tcp_reset);
- 
-+static bool nf_skb_is_icmp6_unreach(const struct sk_buff *skb)
-+{
-+	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
-+	u8 proto = ip6h->nexthdr;
-+	u8 _type, *tp;
-+	int thoff;
-+	__be16 fo;
-+
-+	thoff = ipv6_skip_exthdr(skb, ((u8 *)(ip6h + 1) - skb->data), &proto, &fo);
-+
-+	if (thoff < 0 || thoff >= skb->len || fo != 0)
-+		return false;
-+
-+	if (proto != IPPROTO_ICMPV6)
-+		return false;
-+
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmp6hdr, icmp6_type),
-+				sizeof(_type), &_type);
-+
-+	if (!tp)
-+		return false;
-+
-+	return *tp == ICMPV6_DEST_UNREACH;
-+}
-+
- struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -104,6 +130,10 @@ struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 	if (!nf_reject_ip6hdr_validate(oldskb))
- 		return NULL;
- 
-+	/* Don't reply to ICMPV6_DEST_UNREACH with ICMPV6_DEST_UNREACH */
-+	if (nf_skb_is_icmp6_unreach(oldskb))
-+		return NULL;
-+
- 	/* Include "As much of invoking packet as possible without the ICMPv6
- 	 * packet exceeding the minimum IPv6 MTU" in the ICMP payload.
- 	 */
+ 	if (single_bitdepth) {
+ 		snd_mask_none(fmt);
+ 		valid_bits = SOF_IPC4_AUDIO_FORMAT_CFG_V_BIT_DEPTH(ipc4_fmt->fmt_cfg);
 -- 
 2.51.0
 
