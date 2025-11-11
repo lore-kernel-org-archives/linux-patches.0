@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D26253944;
-	Tue, 11 Nov 2025 01:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125002DA743;
+	Tue, 11 Nov 2025 01:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824104; cv=none; b=SW8KvaKJks/s1onz+i3BBfDPjj6XzZXLv+ewauHkPD7ygeYtji8RR1uQQXib0N/yPlpmmS99pWk07FhixRc885igs1yxfRVTB3sQtJiEheqeFgL5LJhxHwMNMwjbhMNpQUGFk0hutQ6vTok8sFDFZLs8pzcq+vw/hqA60x2m9Qk=
+	t=1762824107; cv=none; b=IYo3GqXjKHGyvDvcxZ+PtQv/D95f1HLXw7+N4mnmuHgw/Bvwr9syVKn2mYe3fApqWZchu846uLCjFVKqTByG9yYf6ubk1Q79MbW4ENcDZktQsYr32XwaLd68Vq6dr7WaSPfQ+X/nGqcw+RP7kk42gxag+CVtEyCL0qhWsLEtmhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824104; c=relaxed/simple;
-	bh=lV1mpWq12QNLkCPfkt0EajkhOwouBaigRLkEDKsIbb8=;
+	s=arc-20240116; t=1762824107; c=relaxed/simple;
+	bh=G/Zr4yifU8HQDRDZsEYzc8YZICeISSo/HYPbvaJFEU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfJxoSey4xxZ4wZW/Jb8gUsODe/djGZucsplQlQ4Govd32oKAU2avEAHtJdlTFuKoGdOQoc6mup+1RxbSERzcYJpYacoawqCM7ZzSwXmoiGybFYd191Kq11G4KvXZKjaqUDJhq1B+K9Vpsenxk7ssrcrlthdwocdXvK6yz0pfpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdytfc1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVg1WTcqJmobcKVcOX6fzr4Y2dgMrlSxCLtwBpTavrEX+aB/DadABcTUjY7Rsn8zuutpmoImkM3txmSGTZmDsvpoWAdML2KfpRzwFICycr9i2l8UDV9SCe3CcPAY7pWnjt1UZH0F6ob2ZgTMcZ1cGq/N1XQQ99yjOAbyjxzX/5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5BGUO0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdytfc1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C20C113D0;
-	Tue, 11 Nov 2025 01:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5BGUO0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD8AC16AAE;
+	Tue, 11 Nov 2025 01:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824104;
-	bh=lV1mpWq12QNLkCPfkt0EajkhOwouBaigRLkEDKsIbb8=;
+	s=korg; t=1762824106;
+	bh=G/Zr4yifU8HQDRDZsEYzc8YZICeISSo/HYPbvaJFEU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdytfc1hE7SjRfh+8Z6c++4XcHCju6jnVh9ASAe9Nsh0Mx5Grkacv+ht+k6lAPnci
-	 mXs+c9SA7PQqjqobW1ubrYZSauEAvTmfmBSpxKrzTTQvsxyzx+59kEsf1KjdL6buum
-	 xX8GWhGT1/u6Gn06sm9HckDEeKR17MOA2Aj86gqU=
+	b=E5BGUO0Yu/FNaMi55VGsJuHh0QCfrOj2+TuGUAoCKd7PC2j5bZ3G/w0aaE6V+0wgp
+	 7sS6sJoW+h8cktLGeUINpK1qNgwHXcvtcoNUMDxEWxS4M90HRIjcKIszWDp42adYlK
+	 jDUOBGXJKCRogk0DJrPLn9oVaL7rGf6yU6mz0ZbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 388/565] RDMA/irdma: Update Kconfig
-Date: Tue, 11 Nov 2025 09:44:04 +0900
-Message-ID: <20251111004535.599027257@linuxfoundation.org>
+Subject: [PATCH 6.17 411/849] drm/st7571-i2c: add support for inverted pixel format
+Date: Tue, 11 Nov 2025 09:39:41 +0900
+Message-ID: <20251111004546.378760947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 060842fed53f77a73824c9147f51dc6746c1267a ]
+[ Upstream commit e61c35157d32b4b422f0a4cbc3c40d04d883a9c9 ]
 
-Update Kconfig to add dependency on idpf module and
-add IPU E2000 to the list of supported devices.
+Depending on which display that is connected to the controller, an
+"1" means either a black or a white pixel.
 
-Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20250827152545.2056-17-tatyana.e.nikolova@intel.com
-Tested-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The supported formats (R1/R2/XRGB8888) expects the pixels
+to map against (4bit):
+    00 => Black
+    01 => Dark Gray
+    10 => Light Gray
+    11 => White
+
+If this is not what the display map against, make it possible to invert
+the pixels.
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Link: https://lore.kernel.org/r/20250721-st7571-format-v2-4-159f4134098c@gmail.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/Kconfig | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/sitronix/st7571-i2c.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/Kconfig b/drivers/infiniband/hw/irdma/Kconfig
-index b6f9c41bca51d..41660203e0049 100644
---- a/drivers/infiniband/hw/irdma/Kconfig
-+++ b/drivers/infiniband/hw/irdma/Kconfig
-@@ -4,9 +4,10 @@ config INFINIBAND_IRDMA
- 	depends on INET
- 	depends on IPV6 || !IPV6
- 	depends on PCI
--	depends on ICE && I40E
-+	depends on IDPF && ICE && I40E
- 	select GENERIC_ALLOCATOR
- 	select AUXILIARY_BUS
- 	help
--	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
--	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.
-+	  This is an Intel(R) Ethernet Protocol Driver for RDMA that
-+	  supports IPU E2000 (RoCEv2), E810 (iWARP/RoCEv2) and X722 (iWARP)
-+	  network devices.
+diff --git a/drivers/gpu/drm/sitronix/st7571-i2c.c b/drivers/gpu/drm/sitronix/st7571-i2c.c
+index 453eb7e045e5f..125e810df1391 100644
+--- a/drivers/gpu/drm/sitronix/st7571-i2c.c
++++ b/drivers/gpu/drm/sitronix/st7571-i2c.c
+@@ -151,6 +151,7 @@ struct st7571_device {
+ 	bool ignore_nak;
+ 
+ 	bool grayscale;
++	bool inverted;
+ 	u32 height_mm;
+ 	u32 width_mm;
+ 	u32 startline;
+@@ -792,6 +793,7 @@ static int st7567_parse_dt(struct st7571_device *st7567)
+ 
+ 	of_property_read_u32(np, "width-mm", &st7567->width_mm);
+ 	of_property_read_u32(np, "height-mm", &st7567->height_mm);
++	st7567->inverted = of_property_read_bool(np, "sitronix,inverted");
+ 
+ 	st7567->pformat = &st7571_monochrome;
+ 	st7567->bpp = 1;
+@@ -819,6 +821,7 @@ static int st7571_parse_dt(struct st7571_device *st7571)
+ 	of_property_read_u32(np, "width-mm", &st7571->width_mm);
+ 	of_property_read_u32(np, "height-mm", &st7571->height_mm);
+ 	st7571->grayscale = of_property_read_bool(np, "sitronix,grayscale");
++	st7571->inverted = of_property_read_bool(np, "sitronix,inverted");
+ 
+ 	if (st7571->grayscale) {
+ 		st7571->pformat = &st7571_grayscale;
+@@ -873,7 +876,7 @@ static int st7567_lcd_init(struct st7571_device *st7567)
+ 		ST7571_SET_POWER(0x6),	/* Power Control, VC: ON, VR: ON, VF: OFF */
+ 		ST7571_SET_POWER(0x7),	/* Power Control, VC: ON, VR: ON, VF: ON */
+ 
+-		ST7571_SET_REVERSE(0),
++		ST7571_SET_REVERSE(st7567->inverted ? 1 : 0),
+ 		ST7571_SET_ENTIRE_DISPLAY_ON(0),
+ 	};
+ 
+@@ -917,7 +920,7 @@ static int st7571_lcd_init(struct st7571_device *st7571)
+ 		ST7571_SET_COLOR_MODE(st7571->pformat->mode),
+ 		ST7571_COMMAND_SET_NORMAL,
+ 
+-		ST7571_SET_REVERSE(0),
++		ST7571_SET_REVERSE(st7571->inverted ? 1 : 0),
+ 		ST7571_SET_ENTIRE_DISPLAY_ON(0),
+ 	};
+ 
 -- 
 2.51.0
 
