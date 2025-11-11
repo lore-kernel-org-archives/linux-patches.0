@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0085FDDAB;
-	Tue, 11 Nov 2025 01:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A772DDAB;
+	Tue, 11 Nov 2025 01:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824842; cv=none; b=iq/wlw7hqt/noU0fEoYyXBjnFLIdK7zZptlFgZEsj2xiZr9IeVEcAzltyU4ICMe0M/EJ+QMUpIs2kQIEimfrwJPAHi25XqOZgAwMaPdJfDGr49pKYOag1F4I9tNupqqhUGKPo9zu/E1n8oUjMLozyMc47hQ6AXipXWZIcBzliSA=
+	t=1762824844; cv=none; b=OGlU2Yg+EZecj1pLQza9FUnBp7RZFhqjUjm93LW+lOmymXuVEagxJWkBnvk01qQnKG+P0dUT/lgZSUPgcHNW85hTA/zL5eQXHCgyNrjJTPkCPh7qimSx1QFtr+B/JNzc0OBm3ogzQQjbzaUN0lDMScQkqlBbGbFUI9bXgpXq2Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824842; c=relaxed/simple;
-	bh=gzlJR/TycdueY79o8HWknf2CE/Vu0nX41Qy/H6H8yg0=;
+	s=arc-20240116; t=1762824844; c=relaxed/simple;
+	bh=yZdWvsypXNECnwA9FCBTWMmlPO1dhZPmCvhN4m3khl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVTq1BsdS2YRDPH9hhpFAvNcGfHoHE19ptvsPYFG4NSbpnY1xpgMWCKMZHSiPsypzLCUb18SSOcIOyzfcZmCyWjtLfA8RK501coj7boSL3fnOL9KXTuVd0Uk+texH5sKLdjLeJN7376XzmGcnwz0ObKizY70tiPeullI+3QbyiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVhII8jF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mENmZD1WojuUAYvH7qtGHzbEIagRVPrGEP4nO+ccjGqawXG1FLUEsvmWMT5+NfIDRd+UFMC+Wu46LDG/5D/oveypevkmOtL05Z/PgPny6jYaiWuih1E/+gxy3D/RO0L5piJ3cOVaLFhtAQyW1dR6sZo17E/ZKanmen9O88k49kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvARaakU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVhII8jF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9384AC4CEFB;
-	Tue, 11 Nov 2025 01:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvARaakU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED06BC19421;
+	Tue, 11 Nov 2025 01:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824841;
-	bh=gzlJR/TycdueY79o8HWknf2CE/Vu0nX41Qy/H6H8yg0=;
+	s=korg; t=1762824844;
+	bh=yZdWvsypXNECnwA9FCBTWMmlPO1dhZPmCvhN4m3khl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVhII8jFqIIqiX1ZJ+UmXiZb5qpGg6QHE2yxlhRBHd7pIMcQKCGh1a+7i8T3cXBmN
-	 haE3JkcB6w/+mqwpvT+sk/ul+mJXzTjXMLyxq3HQVrne2Njf89hDzJovmp1p1q7akg
-	 ZZSxDw9gUNcgQJfSLoaxovuk+Sxz/yaGClaHDGQo=
+	b=dvARaakU8UCKEqbGhDz5Bzxs6cE41Rw+vniWcs17mDIsoJm6RkV4j/P7zJax+YqBQ
+	 J1cYwy59jHFGo7IhSw3D57LR4vXjYLkehKGgOgFo6UantjhFhycDUPFB8auHrBsQyx
+	 dU/7qmXkaE3C3Us5xTUv8iYSQXPjnDEVSmHiM9Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 535/565] net: ti: icssg-prueth: Fix fdb hash size configuration
-Date: Tue, 11 Nov 2025 09:46:31 +0900
-Message-ID: <20251111004539.007695373@linuxfoundation.org>
+Subject: [PATCH 6.17 583/849] wifi: rtw89: obtain RX path from ppdu status IE00
+Date: Tue, 11 Nov 2025 09:42:33 +0900
+Message-ID: <20251111004550.513133505@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit ae4789affd1e181ae46e72e2b5fbe2d6d7b6616a ]
+[ Upstream commit e156d2ab36d7e47aec36845705e4ecb1e4e89976 ]
 
-The ICSSG driver does the initial FDB configuration which
-includes setting the control registers. Other run time
-management like learning is managed by the PRU's. The default
-FDB hash size used by the firmware is 512 slots, which is
-currently missing in the current driver. Update the driver
-FDB config to include FDB hash size as well.
+The header v2 of ppdu status is optional, If it is not enabled, the RX
+path must be obtained from IE00 or IE01. Append the IE00 part.
 
-Please refer trm [1] 6.4.14.12.17 section on how the FDB config
-register gets configured. From the table 6-1404, there is a reset
-field for FDB_HAS_SIZE which is 4, meaning 1024 slots. Currently
-the driver is not updating this reset value from 4(1024 slots) to
-3(512 slots). This patch fixes this by updating the reset value
-to 512 slots.
-
-[1]: https://www.ti.com/lit/pdf/spruim2
-Fixes: abd5576b9c57f ("net: ti: icssg-prueth: Add support for ICSSG switch firmware")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251104104415.3110537-1-m-malladi@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250915065213.38659-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_config.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.c | 4 ++++
+ drivers/net/wireless/realtek/rtw89/txrx.h | 1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_config.c b/drivers/net/ethernet/ti/icssg/icssg_config.c
-index da53eb04b0a43..3f8237c17d099 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_config.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_config.c
-@@ -66,6 +66,9 @@
- #define FDB_GEN_CFG1		0x60
- #define SMEM_VLAN_OFFSET	8
- #define SMEM_VLAN_OFFSET_MASK	GENMASK(25, 8)
-+#define FDB_HASH_SIZE_MASK	GENMASK(6, 3)
-+#define FDB_HASH_SIZE_SHIFT	3
-+#define FDB_HASH_SIZE		3
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 0f7a467671ca8..2cebea10cb99b 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -1844,6 +1844,10 @@ static void rtw89_core_parse_phy_status_ie00(struct rtw89_dev *rtwdev,
  
- #define FDB_GEN_CFG2		0x64
- #define FDB_VLAN_EN		BIT(6)
-@@ -463,6 +466,8 @@ void icssg_init_emac_mode(struct prueth *prueth)
- 	/* Set VLAN TABLE address base */
- 	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, SMEM_VLAN_OFFSET_MASK,
- 			   addr <<  SMEM_VLAN_OFFSET);
-+	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, FDB_HASH_SIZE_MASK,
-+			   FDB_HASH_SIZE << FDB_HASH_SIZE_SHIFT);
- 	/* Set enable VLAN aware mode, and FDBs for all PRUs */
- 	regmap_write(prueth->miig_rt, FDB_GEN_CFG2, (FDB_PRU0_EN | FDB_PRU1_EN | FDB_HOST_EN));
- 	prueth->vlan_tbl = (struct prueth_vlan_tbl __force *)(prueth->shram.va +
-@@ -484,6 +489,8 @@ void icssg_init_fw_offload_mode(struct prueth *prueth)
- 	/* Set VLAN TABLE address base */
- 	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, SMEM_VLAN_OFFSET_MASK,
- 			   addr <<  SMEM_VLAN_OFFSET);
-+	regmap_update_bits(prueth->miig_rt, FDB_GEN_CFG1, FDB_HASH_SIZE_MASK,
-+			   FDB_HASH_SIZE << FDB_HASH_SIZE_SHIFT);
- 	/* Set enable VLAN aware mode, and FDBs for all PRUs */
- 	regmap_write(prueth->miig_rt, FDB_GEN_CFG2, FDB_EN_ALL);
- 	prueth->vlan_tbl = (struct prueth_vlan_tbl __force *)(prueth->shram.va +
+ 	tmp_rpl = le32_get_bits(ie->w0, RTW89_PHY_STS_IE00_W0_RPL);
+ 	phy_ppdu->rpl_avg = tmp_rpl >> 1;
++
++	if (!phy_ppdu->hdr_2_en)
++		phy_ppdu->rx_path_en =
++			le32_get_bits(ie->w3, RTW89_PHY_STS_IE00_W3_RX_PATH_EN);
+ }
+ 
+ static void rtw89_core_parse_phy_status_ie00_v2(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/realtek/rtw89/txrx.h b/drivers/net/wireless/realtek/rtw89/txrx.h
+index ec01bfc363da3..307b22ae13b2a 100644
+--- a/drivers/net/wireless/realtek/rtw89/txrx.h
++++ b/drivers/net/wireless/realtek/rtw89/txrx.h
+@@ -572,6 +572,7 @@ struct rtw89_phy_sts_ie00 {
+ } __packed;
+ 
+ #define RTW89_PHY_STS_IE00_W0_RPL GENMASK(15, 7)
++#define RTW89_PHY_STS_IE00_W3_RX_PATH_EN GENMASK(31, 28)
+ 
+ struct rtw89_phy_sts_ie00_v2 {
+ 	__le32 w0;
 -- 
 2.51.0
 
