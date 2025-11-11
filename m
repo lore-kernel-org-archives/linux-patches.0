@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566DB27FD72;
-	Tue, 11 Nov 2025 01:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF49C30ACF7;
+	Tue, 11 Nov 2025 01:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824499; cv=none; b=AqLeV42K7AjApFyuly9r3TAYlxsPVp+5L5bLf4OLJzpANZoa+daEG4FofLGsxfYrrFWuy1Be0BHVkESN5oSoG9xve8DPq/Vvjgi4SOcnNKgI+MGpmkSICGkwpK/MkgwuNh2vYeSHi3f3nWF6dk6BCQ9ueP7BtDZNisQrhnrBBQs=
+	t=1762824502; cv=none; b=GCjFwzeMPGwybAp/Ds79mB5y9xVGMhZebMSLqDUgLpbDAWUhTnNSrudsqs9fid6kw4JnvfN2HaAvF3qr/TQ/55UonQuepDp3eFxzZP6s2qhHIE1IBl3+JLRCgyCK1//fV+CZ24Ju27UBzn29irB464jchLfghjb1b/EfKjLlAcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824499; c=relaxed/simple;
-	bh=/t0rQEmCOrBqhsF9zLFOZrC7OkqjHpKBAH0iw8qiHRI=;
+	s=arc-20240116; t=1762824502; c=relaxed/simple;
+	bh=O2/bk+oy7k+upgTZOFM39aJTHaZqzRWCK+bComdfVvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k8+TxhyjqP1zJ/MbO+qBpwaJTE12+ebPo1JPT8e3oq8J+A6W2urmIT0HKq7Dm21sG9JWgqdsGFcA6X/yrFY2XEzYKl6hahDCHSwmCSmB0QWuLKZfEquIndMqePgHO+mAcoO5Y8pCZxY17q7iTVQ6LwaTqCPGQlqgRBQcP04j6+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRrTkMte; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbCdU0rCVTBQEkHPHsuiJ0oEndOeP0eCNPzytdHL4wvtpNPilYI7Wwyi8NUspi7pQpF4MG2+VhK2YsNsLhWN7A0ASfXAw6jQehZQse/puPV95y0ScdMaQ2ZbMrki2ed4Jsuw16z6G9SNXFLAg0+KaQ1Y46ki816g6IU13yOzfEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpXed29M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRrTkMte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A79C116D0;
-	Tue, 11 Nov 2025 01:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpXed29M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ED1C116D0;
+	Tue, 11 Nov 2025 01:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824499;
-	bh=/t0rQEmCOrBqhsF9zLFOZrC7OkqjHpKBAH0iw8qiHRI=;
+	s=korg; t=1762824501;
+	bh=O2/bk+oy7k+upgTZOFM39aJTHaZqzRWCK+bComdfVvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRrTkMteILK+DRMgBlRm7+F8Ry+c8xZg5X+RqnQGqjvbVsi+QEzTZwI/2xvG2Jpc8
-	 g3QABm41gahAUwrVFLuiFZNAnH/EXb+UzPHLQEpxdZuDCJaE3ichxwTKpcx5LITyLb
-	 k5UM2ICKvJVrdSift7xe+86FN5oWWtIxYWePpZWk=
+	b=KpXed29MZBNDa6hTKcXJpJyuTfI4t6z/7C3IfYMjS2RF34h21FIsw1KJ6idINAXkl
+	 h9e/AfsutBhPQ4Zwma+m4Mfe5kcuyJ+bEx6f8IN49B4Va9vdUeswSfZKOXzvcwJ6DN
+	 6j/y0yNugO4FVfHTPQfaTf5tGYheyq9ZixcmpY54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Yijun Shen <Yijun.Shen@Dell.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 512/849] platform/x86/amd/pmf: Fix the custom bios input handling mechanism
-Date: Tue, 11 Nov 2025 09:41:22 +0900
-Message-ID: <20251111004548.809078779@linuxfoundation.org>
+Subject: [PATCH 6.12 458/565] RDMA/hns: Fix recv CQ and QP cache affinity
+Date: Tue, 11 Nov 2025 09:45:14 +0900
+Message-ID: <20251111004537.200564981@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,156 +46,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit d82e3d2dd0ba019ac6cdd81e47bf4c8ac895cfa0 ]
+[ Upstream commit c4b67b514af8c2d73c64b36e0cd99e9b26b9ac82 ]
 
-Originally, the 'amd_pmf_get_custom_bios_inputs()' function was written
-under the assumption that the BIOS would only send a single pending
-request for the driver to process. However, following OEM enablement, it
-became clear that multiple pending requests for custom BIOS inputs might
-be sent at the same time, a scenario that the current code logic does not
-support when it comes to handling multiple custom BIOS inputs.
+Currently driver enforces affinity between QP cache and send CQ
+cache, which helps improve the performance of sending, but doesn't
+set affinity with recv CQ cache, resulting in suboptimal performance
+of receiving.
 
-To address this, the code logic needs to be improved to not only manage
-multiple simultaneous custom BIOS inputs but also to ensure it is scalable
-for future additional inputs.
+Use one CQ bank per context to ensure the affinity among QP, send CQ
+and recv CQ. For kernel ULP, CQ bank is fixed to 0.
 
-Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Tested-by: Yijun Shen <Yijun.Shen@Dell.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://patch.msgid.link/20250901110140.2519072-3-Shyam-sundar.S-k@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 9e03dbea2b06 ("RDMA/hns: Fix CQ and QP cache affinity")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20251016114051.1963197-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/pmf.h | 15 +++++-----
- drivers/platform/x86/amd/pmf/spc.c | 48 +++++++++++++++++++++++-------
- 2 files changed, 44 insertions(+), 19 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_cq.c     | 58 +++++++++++++++++++--
+ drivers/infiniband/hw/hns/hns_roce_device.h |  4 ++
+ drivers/infiniband/hw/hns/hns_roce_main.c   |  4 ++
+ 3 files changed, 63 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/pmf.h b/drivers/platform/x86/amd/pmf/pmf.h
-index 45b60238d5277..df1b4a4f9586b 100644
---- a/drivers/platform/x86/amd/pmf/pmf.h
-+++ b/drivers/platform/x86/amd/pmf/pmf.h
-@@ -621,14 +621,14 @@ enum ta_slider {
- 	TA_MAX,
- };
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index 3a5c93c9fb3e6..6aa82fe9dd3df 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -30,6 +30,7 @@
+  * SOFTWARE.
+  */
  
--enum apmf_smartpc_custom_bios_inputs {
--	APMF_SMARTPC_CUSTOM_BIOS_INPUT1,
--	APMF_SMARTPC_CUSTOM_BIOS_INPUT2,
-+struct amd_pmf_pb_bitmap {
-+	const char *name;
-+	u32 bit_mask;
- };
++#include <linux/pci.h>
+ #include <rdma/ib_umem.h>
+ #include <rdma/uverbs_ioctl.h>
+ #include "hns_roce_device.h"
+@@ -37,6 +38,43 @@
+ #include "hns_roce_hem.h"
+ #include "hns_roce_common.h"
  
--enum apmf_preq_smartpc {
--	NOTIFY_CUSTOM_BIOS_INPUT1 = 5,
--	NOTIFY_CUSTOM_BIOS_INPUT2,
-+static const struct amd_pmf_pb_bitmap custom_bios_inputs[] __used = {
-+	{"NOTIFY_CUSTOM_BIOS_INPUT1",     BIT(5)},
-+	{"NOTIFY_CUSTOM_BIOS_INPUT2",     BIT(6)},
- };
- 
- enum platform_type {
-@@ -686,8 +686,7 @@ struct ta_pmf_condition_info {
- 	u32 power_slider;
- 	u32 lid_state;
- 	bool user_present;
--	u32 bios_input1;
--	u32 bios_input2;
-+	u32 bios_input_1[2];
- 	u32 monitor_count;
- 	u32 rsvd2[2];
- 	u32 bat_design;
-diff --git a/drivers/platform/x86/amd/pmf/spc.c b/drivers/platform/x86/amd/pmf/spc.c
-index 1d90f9382024b..869b4134513f3 100644
---- a/drivers/platform/x86/amd/pmf/spc.c
-+++ b/drivers/platform/x86/amd/pmf/spc.c
-@@ -70,8 +70,20 @@ static const char *ta_slider_as_str(unsigned int state)
- 	}
- }
- 
-+static u32 amd_pmf_get_ta_custom_bios_inputs(struct ta_pmf_enact_table *in, int index)
++void hns_roce_put_cq_bankid_for_uctx(struct hns_roce_ucontext *uctx)
 +{
-+	switch (index) {
-+	case 0 ... 1:
-+		return in->ev_info.bios_input_1[index];
-+	default:
-+		return 0;
-+	}
-+}
++	struct hns_roce_dev *hr_dev = to_hr_dev(uctx->ibucontext.device);
++	struct hns_roce_cq_table *cq_table = &hr_dev->cq_table;
 +
- void amd_pmf_dump_ta_inputs(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *in)
- {
-+	int i;
-+
- 	dev_dbg(dev->dev, "==== TA inputs START ====\n");
- 	dev_dbg(dev->dev, "Slider State: %s\n", ta_slider_as_str(in->ev_info.power_slider));
- 	dev_dbg(dev->dev, "Power Source: %s\n", amd_pmf_source_as_str(in->ev_info.power_source));
-@@ -90,29 +102,43 @@ void amd_pmf_dump_ta_inputs(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *
- 	dev_dbg(dev->dev, "Platform type: %s\n", platform_type_as_str(in->ev_info.platform_type));
- 	dev_dbg(dev->dev, "Laptop placement: %s\n",
- 		laptop_placement_as_str(in->ev_info.device_state));
--	dev_dbg(dev->dev, "Custom BIOS input1: %u\n", in->ev_info.bios_input1);
--	dev_dbg(dev->dev, "Custom BIOS input2: %u\n", in->ev_info.bios_input2);
-+	for (i = 0; i < ARRAY_SIZE(custom_bios_inputs); i++)
-+		dev_dbg(dev->dev, "Custom BIOS input%d: %u\n", i + 1,
-+			amd_pmf_get_ta_custom_bios_inputs(in, i));
- 	dev_dbg(dev->dev, "==== TA inputs END ====\n");
- }
- #else
- void amd_pmf_dump_ta_inputs(struct amd_pmf_dev *dev, struct ta_pmf_enact_table *in) {}
- #endif
- 
-+/*
-+ * This helper function sets the appropriate BIOS input value in the TA enact
-+ * table based on the provided index. We need this approach because the custom
-+ * BIOS input array is not continuous, due to the existing TA structure layout.
-+ */
-+static void amd_pmf_set_ta_custom_bios_input(struct ta_pmf_enact_table *in, int index, u32 value)
-+{
-+	switch (index) {
-+	case 0 ... 1:
-+		in->ev_info.bios_input_1[index] = value;
-+		break;
-+	default:
++	if (hr_dev->pci_dev->revision < PCI_REVISION_ID_HIP09)
 +		return;
-+	}
++
++	mutex_lock(&cq_table->bank_mutex);
++	cq_table->ctx_num[uctx->cq_bank_id]--;
++	mutex_unlock(&cq_table->bank_mutex);
 +}
 +
- static void amd_pmf_get_custom_bios_inputs(struct amd_pmf_dev *pdev,
- 					   struct ta_pmf_enact_table *in)
- {
-+	unsigned int i;
++void hns_roce_get_cq_bankid_for_uctx(struct hns_roce_ucontext *uctx)
++{
++	struct hns_roce_dev *hr_dev = to_hr_dev(uctx->ibucontext.device);
++	struct hns_roce_cq_table *cq_table = &hr_dev->cq_table;
++	u32 least_load = cq_table->ctx_num[0];
++	u8 bankid = 0;
++	u8 i;
 +
- 	if (!pdev->req.pending_req)
- 		return;
++	if (hr_dev->pci_dev->revision < PCI_REVISION_ID_HIP09)
++		return;
++
++	mutex_lock(&cq_table->bank_mutex);
++	for (i = 1; i < HNS_ROCE_CQ_BANK_NUM; i++) {
++		if (cq_table->ctx_num[i] < least_load) {
++			least_load = cq_table->ctx_num[i];
++			bankid = i;
++		}
++	}
++	cq_table->ctx_num[bankid]++;
++	mutex_unlock(&cq_table->bank_mutex);
++
++	uctx->cq_bank_id = bankid;
++}
++
+ static u8 get_least_load_bankid_for_cq(struct hns_roce_bank *bank)
+ {
+ 	u32 least_load = bank[0].inuse;
+@@ -55,7 +93,21 @@ static u8 get_least_load_bankid_for_cq(struct hns_roce_bank *bank)
+ 	return bankid;
+ }
  
--	switch (pdev->req.pending_req) {
--	case BIT(NOTIFY_CUSTOM_BIOS_INPUT1):
--		in->ev_info.bios_input1 = pdev->req.custom_policy[APMF_SMARTPC_CUSTOM_BIOS_INPUT1];
--		break;
--	case BIT(NOTIFY_CUSTOM_BIOS_INPUT2):
--		in->ev_info.bios_input2 = pdev->req.custom_policy[APMF_SMARTPC_CUSTOM_BIOS_INPUT2];
--		break;
--	default:
--		dev_dbg(pdev->dev, "Invalid preq for BIOS input: 0x%x\n", pdev->req.pending_req);
-+	for (i = 0; i < ARRAY_SIZE(custom_bios_inputs); i++) {
-+		if (!(pdev->req.pending_req & custom_bios_inputs[i].bit_mask))
-+			continue;
-+		amd_pmf_set_ta_custom_bios_input(in, i, pdev->req.custom_policy[i]);
+-static int alloc_cqn(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
++static u8 select_cq_bankid(struct hns_roce_dev *hr_dev,
++			   struct hns_roce_bank *bank, struct ib_udata *udata)
++{
++	struct hns_roce_ucontext *uctx = udata ?
++		rdma_udata_to_drv_context(udata, struct hns_roce_ucontext,
++					  ibucontext) : NULL;
++
++	if (hr_dev->pci_dev->revision >= PCI_REVISION_ID_HIP09)
++		return uctx ? uctx->cq_bank_id : 0;
++
++	return get_least_load_bankid_for_cq(bank);
++}
++
++static int alloc_cqn(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq,
++		     struct ib_udata *udata)
+ {
+ 	struct hns_roce_cq_table *cq_table = &hr_dev->cq_table;
+ 	struct hns_roce_bank *bank;
+@@ -63,7 +115,7 @@ static int alloc_cqn(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
+ 	int id;
+ 
+ 	mutex_lock(&cq_table->bank_mutex);
+-	bankid = get_least_load_bankid_for_cq(cq_table->bank);
++	bankid = select_cq_bankid(hr_dev, cq_table->bank, udata);
+ 	bank = &cq_table->bank[bankid];
+ 
+ 	id = ida_alloc_range(&bank->ida, bank->min, bank->max, GFP_KERNEL);
+@@ -396,7 +448,7 @@ int hns_roce_create_cq(struct ib_cq *ib_cq, const struct ib_cq_init_attr *attr,
+ 		goto err_cq_buf;
  	}
  
- 	/* Clear pending requests after handling */
+-	ret = alloc_cqn(hr_dev, hr_cq);
++	ret = alloc_cqn(hr_dev, hr_cq, udata);
+ 	if (ret) {
+ 		ibdev_err(ibdev, "failed to alloc CQN, ret = %d.\n", ret);
+ 		goto err_cq_db;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index cbe73d9ad5253..e184a715d1661 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -217,6 +217,7 @@ struct hns_roce_ucontext {
+ 	struct mutex		page_mutex;
+ 	struct hns_user_mmap_entry *db_mmap_entry;
+ 	u32			config;
++	u8 cq_bank_id;
+ };
+ 
+ struct hns_roce_pd {
+@@ -505,6 +506,7 @@ struct hns_roce_cq_table {
+ 	struct hns_roce_hem_table	table;
+ 	struct hns_roce_bank bank[HNS_ROCE_CQ_BANK_NUM];
+ 	struct mutex			bank_mutex;
++	u32 ctx_num[HNS_ROCE_CQ_BANK_NUM];
+ };
+ 
+ struct hns_roce_srq_table {
+@@ -1303,5 +1305,7 @@ hns_roce_user_mmap_entry_insert(struct ib_ucontext *ucontext, u64 address,
+ 				size_t length,
+ 				enum hns_roce_mmap_type mmap_type);
+ bool check_sl_valid(struct hns_roce_dev *hr_dev, u8 sl);
++void hns_roce_put_cq_bankid_for_uctx(struct hns_roce_ucontext *uctx);
++void hns_roce_get_cq_bankid_for_uctx(struct hns_roce_ucontext *uctx);
+ 
+ #endif /* _HNS_ROCE_DEVICE_H */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index 11fa64044a8d8..ed9b5e5778ed8 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -425,6 +425,8 @@ static int hns_roce_alloc_ucontext(struct ib_ucontext *uctx,
+ 	if (ret)
+ 		goto error_fail_copy_to_udata;
+ 
++	hns_roce_get_cq_bankid_for_uctx(context);
++
+ 	return 0;
+ 
+ error_fail_copy_to_udata:
+@@ -447,6 +449,8 @@ static void hns_roce_dealloc_ucontext(struct ib_ucontext *ibcontext)
+ 	struct hns_roce_ucontext *context = to_hr_ucontext(ibcontext);
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibcontext->device);
+ 
++	hns_roce_put_cq_bankid_for_uctx(context);
++
+ 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_CQ_RECORD_DB ||
+ 	    hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_QP_RECORD_DB)
+ 		mutex_destroy(&context->page_mutex);
 -- 
 2.51.0
 
