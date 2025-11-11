@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD48E255F28;
-	Tue, 11 Nov 2025 01:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44603255F28;
+	Tue, 11 Nov 2025 01:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824897; cv=none; b=loH5AJ6lzaE1pyW+qUlJqxsBh5atHrKeKQmAwV0HVLcUUSkK+OhB7P/CPw81jl0YUkrpEhe8gKVTXKe9irpud5iQ8TBcRo8bFZq2bzAFgER6QQpX+tVwPBiiJcjRO38Nqv/PgTwBh8Gnq7XAD9ZhW+4Eakz7lyyrWnxY36hSvTo=
+	t=1762824900; cv=none; b=KU4OuQkbKJxeXtRvt2IW1SQnBdlhQ5QYdfPn5Lz+bb4rx4fndwdpjCQvf3ZnMidLyk/Vst/KB7mIKp7GlrzXAbkUwsvh51BCBnCHPyUirTxNNNqBlQbM3HeWPYKHL+n2lGVqox3ZMAKMuFPjkmYHwMZftVQZw0K+H+PYMP8oJ68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824897; c=relaxed/simple;
-	bh=ENbfdeINzxN9W8wckLs9F1Igw/x0vPRqnkPJ8347i8E=;
+	s=arc-20240116; t=1762824900; c=relaxed/simple;
+	bh=/l9k3s4R5xTvRJKTyyz9DKkxImFguyCcSKeAk8giSFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBeqYWQueFJwXP34QyVTmp4h0e9YK+aKQmiUt2rSEQNmDDUTpjaZR7zSHEQDQxjIQcaPqovEMP8xC/9Gw7RBNqmhZOpHBGftkAlEdLGmyE+m6K7TkAl3pvi9GzA6cDyZ+VCJaed5UDEjm3uQR3mziY7H7qzSztt0cb4C8xjgx1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k9YM2qp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUAUmLAfnsfthD6u7IUbbBAvl4uxfk56X3if+xUpydU7a+OdcbFjX+WM9P0G3gieRfy6qyPY7UC1tIVoto8MPaIhMhg5ZNmvY2kFFPEH5WeoRTmQjxIkZ0MMpJ+2p12VkyJl6xo8eE8wao2Jjnnx8Wis+Ubceb+D4Q6wYNJtMx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qewgp2rY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k9YM2qp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E501C4CEF5;
-	Tue, 11 Nov 2025 01:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qewgp2rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A4CC19421;
+	Tue, 11 Nov 2025 01:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824897;
-	bh=ENbfdeINzxN9W8wckLs9F1Igw/x0vPRqnkPJ8347i8E=;
+	s=korg; t=1762824899;
+	bh=/l9k3s4R5xTvRJKTyyz9DKkxImFguyCcSKeAk8giSFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2k9YM2qp51m5x7sBnQ9FaCRgzi5roilZyGiMvq0RajUmm8bOmwuophsSnCxgQvIvf
-	 5FpEPoScki+/autGvkEYfHEcpoWVL6teevpAiqy9ylCWmrOSDq9x/7vBWnfSCpYTPN
-	 pLGCMHMUaCtBbBHPZjfzYZYk7dUfWUo+ViIR3rvU=
+	b=qewgp2rYJNkVp8uDKTVb0DxZMrNrn8hNpghcZfj9BKlEfoOx0t3f/7WrOncqB43Uz
+	 FQqTO1OxJNlPuCfb1UdrlCAhe135/E/YWDGP2sk2Ks3lDIOuxol/3c095AcxXyaqjf
+	 xkbJTrQbtJePNVSeJKrZY44fhqM8fpNnjfi4GnHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 546/565] iommufd: Dont overflow during division for dirty tracking
-Date: Tue, 11 Nov 2025 09:46:42 +0900
-Message-ID: <20251111004539.275320944@linuxfoundation.org>
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 594/849] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
+Date: Tue, 11 Nov 2025 09:42:44 +0900
+Message-ID: <20251111004550.783198977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-commit cb30dfa75d55eced379a42fd67bd5fb7ec38555e upstream.
+[ Upstream commit 9565c9d53c5b440f0dde6fa731a99c1b14d879d2 ]
 
-If pgshift is 63 then BITS_PER_TYPE(*bitmap->bitmap) * pgsize will overflow
-to 0 and this triggers divide by 0.
+Setting format to s16le is required for compressed playback on compatible
+soundcards.
 
-In this case the index should just be 0, so reorganize things to divide
-by shift and avoid hitting any overflows.
-
-Link: https://patch.msgid.link/r/0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reported-by: syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=093a8a8b859472e6c257
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20250911154340.2798304-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/iova_bitmap.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/qcom/sc8280xp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iommu/iommufd/iova_bitmap.c
-+++ b/drivers/iommu/iommufd/iova_bitmap.c
-@@ -130,9 +130,8 @@ struct iova_bitmap {
- static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
- 						 unsigned long iova)
- {
--	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
--
--	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
-+	return (iova >> bitmap->mapped.pgshift) /
-+	       BITS_PER_TYPE(*bitmap->bitmap);
- }
+diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+index 6847ae4acbd18..78e327bc2f077 100644
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -7,6 +7,7 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/pcm.h>
++#include <sound/pcm_params.h>
+ #include <linux/soundwire/sdw.h>
+ #include <sound/jack.h>
+ #include <linux/input-event-codes.h>
+@@ -86,8 +87,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+ 					SNDRV_PCM_HW_PARAM_RATE);
+ 	struct snd_interval *channels = hw_param_interval(params,
+ 					SNDRV_PCM_HW_PARAM_CHANNELS);
++	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
  
- /*
+ 	rate->min = rate->max = 48000;
++	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
+ 	channels->min = 2;
+ 	channels->max = 2;
+ 	switch (cpu_dai->id) {
+-- 
+2.51.0
+
 
 
