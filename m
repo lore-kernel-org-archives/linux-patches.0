@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D62234402B;
-	Tue, 11 Nov 2025 01:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627661F4617;
+	Tue, 11 Nov 2025 01:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824668; cv=none; b=InJ9puRyaPkAcU3EO3TTahc4lymOT3dYh1XkhTaZQD3k37Di+PJwBU9NIzfXNCY6F07CL2XKNhJiDWkpNTQEDQ820XZueNm2sgmuWtxteTZ28DIJLUngltBiaaz4zh0AtmMHNpkgKKjjQEqrohc+sebfASjMe4Qx+Cm+NuroeBA=
+	t=1762824669; cv=none; b=i5wea0LETjWhlKrugAtbj2jtESycY9q0oTcReKfABOtVaxpPwQl4NoRKJbu158aSqhgALR58OtX5xcr4ZbG8TC9bVz+YaihpUC0Leg6EIWJKC4ngZW+QhEy/G0TEKDXJsdEtRbjAXkxpy5JWX+ep32khp5iFwlEhxOsKfsJfKxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824668; c=relaxed/simple;
-	bh=gkKwe39/QS2TxLOdU4aCmqThknfEKquFZhyvaB4WKlU=;
+	s=arc-20240116; t=1762824669; c=relaxed/simple;
+	bh=3sM9FB6aRxBJJQ7/sINecKX/V5GI2hBDfvUvWmsMaSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZsE8XrIZvBcXCUQJCV1k/8UW/9rgo1rJwuDMiHZTmau4YppGDe9IbYV47rI66Co+3e75qLAVA2JBhTHrLuwPvbIiNpfKmVzRK+tToquVurSJZxCdxFjWmSMsh4nPBAp0YjSwjuKZsauFcyUkufYRB3SkrpbFFryojo25+aWPlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1v3NJ+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdmyPl7xv/uHjcGI8hz5e7KfJv8Z5sxEDbvsfUqNo5MxHuvWQvJvN/c+VoJdpyr2OU6P1GDuAfexTRYdHmoKpQkEUCVyz6U6NySmLdq1ZEWsMR8JCTx6p/rYIEybaMz5WgodmhzE5E/9TVYanxVJFZL30Qr1t/ZiBcW9SCwGmOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbM71Pf6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1v3NJ+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0C2C4CEFB;
-	Tue, 11 Nov 2025 01:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbM71Pf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB550C113D0;
+	Tue, 11 Nov 2025 01:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824666;
-	bh=gkKwe39/QS2TxLOdU4aCmqThknfEKquFZhyvaB4WKlU=;
+	s=korg; t=1762824669;
+	bh=3sM9FB6aRxBJJQ7/sINecKX/V5GI2hBDfvUvWmsMaSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1v3NJ+Wfbtsfk5sXlKbsEISPjb+SiDCF5B6MJMhbDT8YFfUjtjY2/ZMDSYyi4DoD
-	 Au22WYEvWY5lol3xpnHozhXqKMeW9o49FdPcDcK9+k7m3QwLCTZlRdyydpdfhJ1/M9
-	 /5BZsh2RSSzyI/1+mGD8S0ZgSN2t1N1aVjGgSOpc=
+	b=EbM71Pf6bGCrw6WKt7Eeb9Yo1A38HxVYityPX2rEBYKfEXZF201xGzFqQUAD3YPEn
+	 XnQFBwIo59gc4iVvxrgZ81mqEh0s7zMvx58wtVjXwIXoa50I6TqbmH9/zBYBEj7KXF
+	 WEmvIlClAzAZiq7lnXpWOapaMWx45ndm9YGWXegU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 546/849] wifi: mt76: use altx queue for offchannel tx on connac+
-Date: Tue, 11 Nov 2025 09:41:56 +0900
-Message-ID: <20251111004549.607173568@linuxfoundation.org>
+Subject: [PATCH 6.17 547/849] wifi: mt76: improve phy reset on hw restart
+Date: Tue, 11 Nov 2025 09:41:57 +0900
+Message-ID: <20251111004549.631288587@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,32 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 12911593efa97abc27b75e98c530b8b1193c384b ]
+[ Upstream commit 3f34cced88a429872d1eefc393686f9a48ec01d9 ]
 
-This ensures that packets are sent out immediately and are not held by
-firmware internal buffering.
+- fix number of station accounting for scanning code.
+- reset channel context
 
-Link: https://patch.msgid.link/20250915075910.47558-9-nbd@nbd.name
+Link: https://patch.msgid.link/20250915075910.47558-14-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 8ab5840fee57f..b78ae6a34b658 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -618,7 +618,8 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
- 		    !(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) &&
- 		    !ieee80211_is_data(hdr->frame_control) &&
- 		    (!ieee80211_is_bufferable_mmpdu(skb) ||
--		     ieee80211_is_deauth(hdr->frame_control)))
-+		     ieee80211_is_deauth(hdr->frame_control) ||
-+		     head == &wcid->tx_offchannel))
- 			qid = MT_TXQ_PSD;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index 59adf33126170..4fa045e87a81f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -824,6 +824,8 @@ static void mt76_reset_phy(struct mt76_phy *phy)
+ 		return;
  
- 		q = phy->q_tx[qid];
+ 	INIT_LIST_HEAD(&phy->tx_list);
++	phy->num_sta = 0;
++	phy->chanctx = NULL;
+ }
+ 
+ void mt76_reset_device(struct mt76_dev *dev)
 -- 
 2.51.0
 
