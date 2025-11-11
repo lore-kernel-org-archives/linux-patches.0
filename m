@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0B5263F4E;
-	Tue, 11 Nov 2025 01:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88337306B39;
+	Tue, 11 Nov 2025 01:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824879; cv=none; b=UzEWx6PlYQErN8jIQe6FiBvZykJ9KJjw3PVDNj+sRArWaaDUTxgDPGG5cWz5/lyFWxi0NQJGts8hnHz3iMPqJa9mBCLR4R0bNlGUR7SauBj1JYJuOxzRo9wfd6J7BFKe6JoWs9qxeJSrefRb2RJlYNcb0O0OQzNXWgiQciwb4cQ=
+	t=1762824881; cv=none; b=hdXaMAqfLgf5UjdbBhIyIyD2UezV7oBe10VHRIrXfpFC7maPScBmrodiidHrEaspfbD6QcmnegbdrBIjY6F9CxZdnBXq8TZmHGUpgQHym4OO771gcX1fFcb3Ru7Bci6drLEJDZfeSM0nv+gPQKZb6dSwgtvtxxo/N0oxbmISGFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824879; c=relaxed/simple;
-	bh=GI8swBkacSLQGi/I0sN4CKZUlGlBsfTkr84+XBfq7Hw=;
+	s=arc-20240116; t=1762824881; c=relaxed/simple;
+	bh=WTIBi5wHNJs8AxMSur0hmlnYpcJdJDU3Gaw4WwfTsq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHK7GjeMXqZCDI0T9Y62BSh8E+viXAOb33XiCSM0KkPhuEQesm0YFct8nSwGcZyR6UjiBgKw2mh9dUwAPegfuHyFG5cwesMZ+fn/FoCgr1QL4mG+MXTqmtB/2dhTcc6v5YyBOGGRYj/AFeimzW/hE1AsWTKEA3prP2Kyu/ixUlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/NwLW3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+OoYDln+9x5qLbR+tdF2iv782imLhS4KTyXI5H9kxWu0TICwfpSs+nMgiJ+M4bQUllPEi6+Ttn6b1mIwm887fNJ9cDMzU/qejlwSrgMsyzi4rSq1Ppe8AYvcOv9+qYBue1szlburh706Tz4IRxHve89y3oxy2NAH3BkOvzXSf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHXk6kC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/NwLW3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7D2C113D0;
-	Tue, 11 Nov 2025 01:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHXk6kC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3A2C2BC87;
+	Tue, 11 Nov 2025 01:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824878;
-	bh=GI8swBkacSLQGi/I0sN4CKZUlGlBsfTkr84+XBfq7Hw=;
+	s=korg; t=1762824881;
+	bh=WTIBi5wHNJs8AxMSur0hmlnYpcJdJDU3Gaw4WwfTsq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/NwLW3EfWgSBFcXBZ2es4rwe4qXODPitWi6fnyZriadiemexodiVudpgsf5mgubT
-	 4m4cqLnvGHAy7ejG/UFAnI46GZ39XPPyZthfZJp49ScXRKVUqeKT9YVLFkoqajqU5w
-	 PXcDzf3knEkPs0hmuW0qm4kf+1ou3uOa4U+ILeaI=
+	b=sHXk6kC+aYq+opdbSdT7kAXr33NhuB+Z2epFokZeD95+4C8rjkVBdxsbpX+dlolHe
+	 +No2ZQpM+KdSDMf9UJ1hGPnieZYJW3Ri99CSZPOf9zWPUo3FDXdpC1/Snof0jp7Uat
+	 33rfT6E6UW/VnROXrroiYG4j5Ef0+PZ8s2ih5eyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 590/849] jfs: Verify inode mode when loading from disk
-Date: Tue, 11 Nov 2025 09:42:40 +0900
-Message-ID: <20251111004550.689115742@linuxfoundation.org>
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>
+Subject: [PATCH 6.12 543/565] drm/amd/display: Enable mst when its detected but yet to be initialized
+Date: Tue, 11 Nov 2025 09:46:39 +0900
+Message-ID: <20251111004539.203270951@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +49,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 7a5aa54fba2bd591b22b9b624e6baa9037276986 ]
+commit 3c6a743c6961cc2cab453b343bb157d6bbbf8120 upstream.
 
-The inode mode loaded from corrupted disk can be invalid. Do like what
-commit 0a9e74051313 ("isofs: Verify inode mode when loading from disk")
-does.
+[Why]
+drm_dp_mst_topology_queue_probe() is used under the assumption that
+mst is already initialized. If we connect system with SST first
+then switch to the mst branch during suspend, we will fail probing
+topology by calling the wrong API since the mst manager is yet to
+be initialized.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[How]
+At dm_resume(), once it's detected as mst branc connected, check if
+the mst is initialized already. If not, call
+dm_helpers_dp_mst_start_top_mgr() instead to initialize mst
+
+V2: Adjust the commit msg a bit
+
+Fixes: bc068194f548 ("drm/amd/display: Don't write DP_MSTM_CTRL after LT")
+Cc: Fangzhi Zuo <jerry.zuo@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 62320fb8d91a0bddc44a228203cfa9bfbb5395bd)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/inode.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
-index fcedeb514e14a..21f3d029da7dd 100644
---- a/fs/jfs/inode.c
-+++ b/fs/jfs/inode.c
-@@ -59,9 +59,15 @@ struct inode *jfs_iget(struct super_block *sb, unsigned long ino)
- 			 */
- 			inode->i_link[inode->i_size] = '\0';
- 		}
--	} else {
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		inode->i_op = &jfs_file_inode_operations;
- 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
-+	} else {
-+		printk(KERN_DEBUG "JFS: Invalid file type 0%04o for inode %lu.\n",
-+		       inode->i_mode, inode->i_ino);
-+		iget_failed(inode);
-+		return ERR_PTR(-EIO);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3424,6 +3424,7 @@ static int dm_resume(void *handle)
+ 	/* Do mst topology probing after resuming cached state*/
+ 	drm_connector_list_iter_begin(ddev, &iter);
+ 	drm_for_each_connector_iter(connector, &iter) {
++		bool init = false;
+ 
+ 		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
+ 			continue;
+@@ -3433,7 +3434,14 @@ static int dm_resume(void *handle)
+ 		    aconnector->mst_root)
+ 			continue;
+ 
+-		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
++		scoped_guard(mutex, &aconnector->mst_mgr.lock) {
++			init = !aconnector->mst_mgr.mst_primary;
++		}
++		if (init)
++			dm_helpers_dp_mst_start_top_mgr(aconnector->dc_link->ctx,
++				aconnector->dc_link, false);
++		else
++			drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
  	}
- 	unlock_new_inode(inode);
- 	return inode;
--- 
-2.51.0
-
+ 	drm_connector_list_iter_end(&iter);
+ 
 
 
