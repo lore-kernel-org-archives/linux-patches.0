@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2412DC350;
-	Tue, 11 Nov 2025 01:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F692DC350;
+	Tue, 11 Nov 2025 01:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823669; cv=none; b=S7DyX5sRGbkAHqBN4Dd9SgEiNEo4UrENKbTPCM9gR1kvQoimi7oJvgMD+cnzghGNuRfFpKQngAU8gdmSYyxZwOlHss5gC7lrSAX24mVlDfMU0wZa6VXcY48KOwY1CfnX0+nx7ZSInh11JIgrgB8skIbWggNw1ABNHWgkmi5IIGM=
+	t=1762823671; cv=none; b=UYE2BVzWQvleeFPKkCNPDOxJOpaDkn+ca9EQGKJO36b8fdek7rAcklvWL5/9wQuMVLmrJQ4E5+dhaqbfy44GP2zyu8MAXbG9r5rgEiCjnzrM9dekPYjvY2aYS+cC706846hZMZNRjraQzp6QFosmIOHti43h46RoZOLfszPu9Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823669; c=relaxed/simple;
-	bh=14NOmhg5uCC1iLjCphVrmr3BK4x5yc4+oQqkbJbwa8M=;
+	s=arc-20240116; t=1762823671; c=relaxed/simple;
+	bh=ujdZTUm5jo0pOUDD9+R5MoysribfuDUfFOyWAfg89KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRtGIeogUeJOHuiiZRgLMLWZ8jQDErQ0i0wtx/BpT3x4z23WxDMl7kgin54GLDqTnfYfxt8JBIwGtC3KP4+PVoVS1AVmWyAL5dy27oLk+rfZRtAZXrj6wrY5tGCIydcBSBMxeX3n/9nTsxNEUZefg32bs3f8Ia2HVIHbfQHSWlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrS2ua38; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nn4G1hQQ2+2TmufYfS66G+30ONm5jKOFc/ITPO2X8AoR3ujxyLTHISwpiemusMWfWCZGJsGIfa8+HlEHaaHfAZUxxs3pVXgAfImwG3K5uJWkEaGO7dXTlSWD1yC7h6fyFVcWVOagJiEboW75CNwPf1CYwkSs8llnb3rB5V5I6x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIx1xGnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrS2ua38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7590C116B1;
-	Tue, 11 Nov 2025 01:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIx1xGnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7B8C2BC87;
+	Tue, 11 Nov 2025 01:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823669;
-	bh=14NOmhg5uCC1iLjCphVrmr3BK4x5yc4+oQqkbJbwa8M=;
+	s=korg; t=1762823671;
+	bh=ujdZTUm5jo0pOUDD9+R5MoysribfuDUfFOyWAfg89KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrS2ua38wHQawTpdXSc4kbBUezZ43qkfPWwbrQGd6FvIq3V/4ZWf06bmlqD3A1ysC
-	 yFMjWO1pK42u4J1M3HOsqKGOTx5SUkBTeyjTrOZSeZTs78wZHTXbVIYtQ/4o/D8z4c
-	 UfJ3PoAU+X9Lx6urViWEXPgr7t1nxJS5+fSiuxAk=
+	b=tIx1xGnBQgK3N/x8CNoqeUHfavh4xZV2qN44LVPDBUJp3xsK93DNwpOXVhUfyyyMQ
+	 kT8K6ipexcStm+7PnTmF/wG4ffEptopklXBd01hroUYTp2b7lT6m4N+x+JnwozD7GR
+	 FEuCV3pUmeOSd8sa2DR7BQ0FOxXC6Z5EXLMhEk9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ujwal Kundur <ujwal.kundur@gmail.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 297/565] wifi: mac80211: Fix 6 GHz Band capabilities element advertisement in lower bands
-Date: Tue, 11 Nov 2025 09:42:33 +0900
-Message-ID: <20251111004533.559002471@linuxfoundation.org>
+Subject: [PATCH 6.17 347/849] rds: Fix endianness annotation for RDS_MPATH_HASH
+Date: Tue, 11 Nov 2025 09:38:37 +0900
+Message-ID: <20251111004544.808625708@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+From: Ujwal Kundur <ujwal.kundur@gmail.com>
 
-[ Upstream commit e53f8b12a21c2974b66fa8c706090182da06fff3 ]
+[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
 
-Currently, when adding the 6 GHz Band Capabilities element, the channel
-list of the wiphy is checked to determine if 6 GHz is supported for a given
-virtual interface. However, in a multi-radio wiphy (e.g., one that has
-both lower bands and 6 GHz combined), the wiphy advertises support for
-all bands. As a result, the 6 GHz Band Capabilities element is incorrectly
-included in mesh beacon and station's association request frames of
-interfaces operating in lower bands, without verifying whether the
-interface is actually operating in a 6 GHz channel.
+jhash_1word accepts host endian inputs while rs_bound_port is a be16
+value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
 
-Fix this by verifying if the interface operates on 6 GHz channel
-before adding the element. Note that this check cannot be placed
-directly in ieee80211_put_he_6ghz_cap() as the same function is used to
-add probe request elements while initiating scan in which case the
-interface may not be operating in any band's channel.
+Flagged by Sparse.
 
-Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
-Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250606104436.326654-1-rameshkumar.sundaram@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 3 +++
- net/mac80211/mlme.c | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/rds/rds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index 50eb1d8cd43de..37e11320553e3 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -623,6 +623,9 @@ int mesh_add_he_6ghz_cap_ie(struct ieee80211_sub_if_data *sdata,
- 	if (!sband)
- 		return -EINVAL;
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index dc360252c5157..5b1c072e2e7ff 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -93,7 +93,7 @@ enum {
  
-+	if (sband->band != NL80211_BAND_6GHZ)
-+		return 0;
-+
- 	iftd = ieee80211_get_sband_iftype_data(sband,
- 					       NL80211_IFTYPE_MESH_POINT);
- 	/* The device doesn't support HE in mesh mode or at all */
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 5a9a84a0cc35d..fd2bc70afa0cd 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -1569,7 +1569,8 @@ static size_t ieee80211_assoc_link_elems(struct ieee80211_sub_if_data *sdata,
- 		ieee80211_put_he_cap(skb, sdata, sband,
- 				     &assoc_data->link[link_id].conn);
- 		ADD_PRESENT_EXT_ELEM(WLAN_EID_EXT_HE_CAPABILITY);
--		ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
-+		if (sband->band == NL80211_BAND_6GHZ)
-+			ieee80211_put_he_6ghz_cap(skb, sdata, smps_mode);
- 	}
+ /* Max number of multipaths per RDS connection. Must be a power of 2 */
+ #define	RDS_MPATH_WORKERS	8
+-#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
++#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
+ 			       (rs)->rs_hash_initval) & ((n) - 1))
  
- 	/*
+ #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
