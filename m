@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FDD1D6DB5;
-	Tue, 11 Nov 2025 00:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59AA1FDA92;
+	Tue, 11 Nov 2025 00:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822188; cv=none; b=fT/nFCp1eHJCeID7Ka1i51fJGFy1Y5mcXiKtVx39iqf2YxujCKxFCkvuTNJ/7l7VOANkaal4Rb7brb/Y0a+OrxfkQSSX7CGW7cR9ZGkKtMwCxBLVrJip7TVC9pihtp97KMhChFE/2nwZLzfWtJhLOA9UFu5FOH7f/i8MC9dmMUE=
+	t=1762822191; cv=none; b=rvVFvS7GBj5VWCFvunJ7Znc+eQrUfNMbOB/60sTcYUBaE3wdl43MYmf9iUAwLlpVBFJrezek44EjDaacl+FrtzGgfpRwqYFB/JQJPF0w0Dc7yMo9dswP4waOYPTt8xYBStM5DKaoCoVjDBJOVgQa3E45/svclBD9JtConcERryA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822188; c=relaxed/simple;
-	bh=dlxBATFKt9KBFNq8cCeWVQIzTjUSjCA2i+ybPiojXts=;
+	s=arc-20240116; t=1762822191; c=relaxed/simple;
+	bh=eV+S3k90sKckHpVPly8OL8ApzvJ+69dsVWLI7e+UiA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfkdm8gIbzjLQaVohf0SHOuWR/zNoARqFPtrLSnn4TTYIkkCGNyP00Dri4+9fqln2FKFL7sTm8zHu28UjYvn5Jr+cWFJj46Urdw+/yiV3hzQHHfi6yNnzT3tgkjUekmfvnEDJrlcjzS9+3PkTB0wjfHgkmcy+jOk2tev4CV9wXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeQx/r7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTOtNmh6dipuZ7NCuv5In/nf+eUiZv7jOOwBqa4TjqzC5jhZ8ks01NVkhJ89pV01q5YTzT2mkIfZ3k7HWpq6kjn+WMmZPrNWxjRTFz/K9ilEhEGEsM4F00t4iKLpzA3jH1V+Ilcx+hYpB6uK7+ZGSC2Rgu6x/WoCRf48kcEDM5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzdJjfCT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeQx/r7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D831C113D0;
-	Tue, 11 Nov 2025 00:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzdJjfCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87727C4CEFB;
+	Tue, 11 Nov 2025 00:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822188;
-	bh=dlxBATFKt9KBFNq8cCeWVQIzTjUSjCA2i+ybPiojXts=;
+	s=korg; t=1762822190;
+	bh=eV+S3k90sKckHpVPly8OL8ApzvJ+69dsVWLI7e+UiA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeQx/r7AZ0hpuWOxDnOkcEs9yucb+/kC/7TKUO1ah0JXYduFqE42/K2hsqLGbGFi4
-	 bbWxhZVWaJXjeFg+7CEmryNKN/rve8T+nPrFaRTP8CXVDmH3ITaiCaYj+U9I3kFcPi
-	 Z8gH0hpz4hJMYL9hzK8iYnaa30vEeUvtlw+xmup0=
+	b=qzdJjfCTKl+tRGyv18DG6s4aCRJtXy1QZ3Q1sOhUFA1mCQs+D5R8SSHBaGJwVzMF8
+	 vrEZf8bvcQTUKdkCiJqNGEeI7/F9tu3yzZpxN8XVEKHcv9Umi1bVRPovyqFjzAs1pR
+	 XXswNeu7sBKDSTvQb58q/ICkHY0uDYN68IVpOx3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 052/849] ASoC: fsl_sai: fix bit order for DSD format
-Date: Tue, 11 Nov 2025 09:33:42 +0900
-Message-ID: <20251111004537.695750596@linuxfoundation.org>
+Subject: [PATCH 6.17 053/849] ASoC: fsl_micfil: correct the endian format for DSD
+Date: Tue, 11 Nov 2025 09:33:43 +0900
+Message-ID: <20251111004537.719151937@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,42 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit d9fbe5b0bf7e2d1e20d53e4e2274f9f61bdcca98 ]
+[ Upstream commit ba3a5e1aeaa01ea67067d725710a839114214fc6 ]
 
-The DSD little endian format requires the msb first, because oldest bit
-is in msb.
-found this issue by testing with pipewire.
+The DSD format supported by micfil is that oldest bit is in bit 31, so
+the format should be DSD little endian format.
 
-Fixes: c111c2ddb3fd ("ASoC: fsl_sai: Add PDM daifmt support")
+Fixes: 21aa330fec31 ("ASoC: fsl_micfil: Add decimation filter bypass mode support")
 Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20251023064538.368850-2-shengjiu.wang@nxp.com
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/20251023064538.368850-3-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index d0367b21f7757..6c0ae4b33aa4f 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -353,7 +353,6 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index aabd90a8b3eca..cac26ba0aa4b0 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -131,7 +131,7 @@ static struct fsl_micfil_soc_data fsl_micfil_imx943 = {
+ 	.fifos = 8,
+ 	.fifo_depth = 32,
+ 	.dataline =  0xf,
+-	.formats = SNDRV_PCM_FMTBIT_S32_LE | SNDRV_PCM_FMTBIT_DSD_U32_BE,
++	.formats = SNDRV_PCM_FMTBIT_S32_LE | SNDRV_PCM_FMTBIT_DSD_U32_LE,
+ 	.use_edma = true,
+ 	.use_verid = true,
+ 	.volume_sx = false,
+@@ -823,7 +823,7 @@ static int fsl_micfil_hw_params(struct snd_pcm_substream *substream,
  		break;
- 	case SND_SOC_DAIFMT_PDM:
- 		val_cr2 |= FSL_SAI_CR2_BCP;
--		val_cr4 &= ~FSL_SAI_CR4_MF;
- 		sai->is_pdm_mode = true;
- 		break;
- 	case SND_SOC_DAIFMT_RIGHT_J:
-@@ -638,7 +637,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
- 	val_cr5 |= FSL_SAI_CR5_WNW(slot_width);
- 	val_cr5 |= FSL_SAI_CR5_W0W(slot_width);
+ 	}
  
--	if (sai->is_lsb_first || sai->is_pdm_mode)
-+	if (sai->is_lsb_first)
- 		val_cr5 |= FSL_SAI_CR5_FBT(0);
- 	else
- 		val_cr5 |= FSL_SAI_CR5_FBT(word_width - 1);
+-	if (format == SNDRV_PCM_FORMAT_DSD_U32_BE) {
++	if (format == SNDRV_PCM_FORMAT_DSD_U32_LE) {
+ 		micfil->dec_bypass = true;
+ 		/*
+ 		 * According to equation 29 in RM:
 -- 
 2.51.0
 
