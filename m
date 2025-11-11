@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3605248883;
-	Tue, 11 Nov 2025 01:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4227262A;
+	Tue, 11 Nov 2025 01:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823030; cv=none; b=O8/1EcU1M8u3hICa2OWNfzJld9pAYkMHkbVHmaefatrsHLn9zmimihfyEAmnkyQfgzsToqueh6I7DEWo0ci7+XzGv0RCIgWOst0v7ayTI+oOZW/qW1wUZTsLo5+l0sBsq2W81dlbZvJy5u/RDjXKWzwCO552//nxHtgJ69ChUBk=
+	t=1762823033; cv=none; b=J8HsIQBlEm88+JQq+5XUIENgY+1rkjupuCadxxWwShaC/Ludf7gN2HUcj61/yPKqpSkUPP50DLJIsVyo3To3NkYEbcfl+2l8sjW+dFcNMmCL+K1iupaERqSHGl+QlLKaVUyG7L9+eYrlaXLWoQBx6vHjX59l6tg9SQSkFzrsVDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823030; c=relaxed/simple;
-	bh=Yr8v0oOCgSHoSaMaGIkgEjtUmfeAsZSTmDBRiu0VHkc=;
+	s=arc-20240116; t=1762823033; c=relaxed/simple;
+	bh=OavhtcT7UlMg1hmqp5ZxI2nTAr/iBBYP4xYMQD2paUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m66VtkKXT5pRV3SMAU7LV/6KWuYb6imWcFWJ4LH6HqxhigXYFGPTFj3dHJAJ0+/4AyGRYAA8QH6rEE5vVjYlwzBfzyT98kViCe76AtpSCO6xw70lNyxE/sTRUGQGtaD/GF7K7+UKcrzWDbQFhTvf0R1ikBvugjThqr8n6qnnB9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0WgpRmh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KA1XBazPwWrEdeigpYBjmW2s+hZbNbTZXWqBMrDwaeA+cVELFnz1oz1wptbWxSUEHEZ+3cx0zmxzOe2YuN+iXW4zutoh304hgaZMRzHcZq8CcxQcJ/hkIbw1frfACrsImtQpLG5TPnNo/MYMiTMvJAPSqGrr4VB4LNAzfjxNFx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is6NUQ+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0WgpRmh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD30C4CEFB;
-	Tue, 11 Nov 2025 01:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is6NUQ+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C10C4CEF5;
+	Tue, 11 Nov 2025 01:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823030;
-	bh=Yr8v0oOCgSHoSaMaGIkgEjtUmfeAsZSTmDBRiu0VHkc=;
+	s=korg; t=1762823032;
+	bh=OavhtcT7UlMg1hmqp5ZxI2nTAr/iBBYP4xYMQD2paUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0WgpRmhO0rq0A1q4MSAxWiqGlIbUuPwWOgc/U324O3VzmPn7dWrJ1NFOl6n6toHP
-	 vI7ZsrgRNwjdsg4WYEoP1cq/A0HVFUvOZDvfO4xW2Mg3cdGqsky/ma1tl9dt4ugIy1
-	 AgyPOd8hoNRaXLTPBnrZESLCqCTt7whtFC+kzdA8=
+	b=Is6NUQ+x+dqbtzBoXiJ1PVpwcetSryIpnpc1bO2+C5fpeRrj8KdJTIacqNBqEoif6
+	 N6zU6Ha3eRp7Lm0Px33cLjqeh4QFfHxSoiGY+57cW1qcdQf6zq29FiyvmRhDA54dX9
+	 8vkIoWiqQXnSXYrLaVZOBvSldZuz9fHG5ze7QkfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 158/565] uprobe: Do not emulate/sstep original instruction when ip is changed
-Date: Tue, 11 Nov 2025 09:40:14 +0900
-Message-ID: <20251111004530.491150183@linuxfoundation.org>
+Subject: [PATCH 6.17 218/849] mfd: simple-mfd-i2c: Add compatible strings for Layerscape QIXIS FPGA
+Date: Tue, 11 Nov 2025 09:36:28 +0900
+Message-ID: <20251111004541.710167645@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 4363264111e1297fa37aa39b0598faa19298ecca ]
+[ Upstream commit 81a2c31257411296862487aaade98b7d9e25dc72 ]
 
-If uprobe handler changes instruction pointer we still execute single
-step) or emulate the original instruction and increment the (new) ip
-with its length.
+The QIXIS FPGA found on Layerscape boards such as LX2160AQDS, LS1028AQDS
+etc deals with power-on-reset timing, muxing etc. Use the simple-mfd-i2c
+as its core driver by adding its compatible string (already found in
+some dt files). By using the simple-mfd-i2c driver, any child device
+will have access to the i2c regmap created by it.
 
-This makes the new instruction pointer bogus and application will
-likely crash on illegal instruction execution.
-
-If user decided to take execution elsewhere, it makes little sense
-to execute the original instruction, so let's skip it.
-
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20250916215301.664963-3-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20250707153120.1371719-1-ioana.ciornei@nxp.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mfd/simple-mfd-i2c.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index c00981cc6fe5b..e30c4dd345f40 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -2338,6 +2338,13 @@ static void handle_swbp(struct pt_regs *regs)
- 
- 	handler_chain(uprobe, regs);
- 
-+	/*
-+	 * If user decided to take execution elsewhere, it makes little sense
-+	 * to execute the original instruction, so let's skip it.
-+	 */
-+	if (instruction_pointer(regs) != bp_vaddr)
-+		goto out;
-+
- 	if (arch_uprobe_skip_sstep(&uprobe->arch, regs))
- 		goto out;
- 
+diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+index 22159913bea03..f7798bd922224 100644
+--- a/drivers/mfd/simple-mfd-i2c.c
++++ b/drivers/mfd/simple-mfd-i2c.c
+@@ -99,6 +99,8 @@ static const struct of_device_id simple_mfd_i2c_of_match[] = {
+ 	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
+ 	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
+ 	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
++	{ .compatible = "fsl,lx2160aqds-fpga" },
++	{ .compatible = "fsl,ls1028aqds-fpga" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
 -- 
 2.51.0
 
