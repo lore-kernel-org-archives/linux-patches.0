@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDE72DEA9D;
-	Tue, 11 Nov 2025 01:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361CE26C399;
+	Tue, 11 Nov 2025 01:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824264; cv=none; b=b7AfMfhjvQT7FmoOCBbO9ISSQCpGHpIXkAnsXHFjWW/pUTvfdBAXHm4jVLXnKe2NVlHnh8YBldgXPRx3E2074Xs3/4W9bR0z6VvtfRsW00e5YBxAlcIs+fvyBdPKsgSLJbpNIAp6NCfiuMOzVvxRllTXDjGsIMbXvHoX/aKhDnA=
+	t=1762824266; cv=none; b=Pml4xotZ4py+QXbSU7vNZqofFBMwkWTuUxisgfS/XQKPhS3ToMbJkfpLb+Puy7xzstZeTM3nzDJCdieFoVOr99N8Epte5qPYUjxjdIM21mjkpgnIGJTrhxe0lFBO9BFwVKHY9RIzvTRR2mnujB+y22NHfX/ul9rwJ58WtkcrjkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824264; c=relaxed/simple;
-	bh=iWdm0e9PMbesC4CbJfD8esl7JmZxkZwnSTiweqJwHQc=;
+	s=arc-20240116; t=1762824266; c=relaxed/simple;
+	bh=7dw6EtSQuqKn74qnH9YjVl6YhXQ/x5WyeFdQKIkP6D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzRhJ4vY86GlbfFkt+9Gy+kkZGJQL3YhhjRrMxRDLV476bevpM3nc1F2TL6RxN4CwP3G/WxqVsx9Sl0vpQlwnfpY6GqX8N+Jprh8rzw+11eFF4A+Tu3TYw9j/duiKefTjcMxxAjhhbuawZ9kQBCAkaTbF9Dyz66Oez8RvCi7Aoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqHiMDZa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paF71IdiCOS1Rd8z9EYpFBZ1oJKI1AI0J9xSUVoFafuCkOCMf8CYoMa0rZb5YmjXR2tc08ULYKXCAl2Wz85z8lmen6/RmYOQgC5Y40rG7nZNshPwhcQOTwbTgBTpAJ/496wouQNSc9pGIRqycFnOEQJJrhyl+QjIdmBlonAzC9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GckgA9R7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqHiMDZa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3B5C116B1;
-	Tue, 11 Nov 2025 01:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GckgA9R7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF87C16AAE;
+	Tue, 11 Nov 2025 01:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824263;
-	bh=iWdm0e9PMbesC4CbJfD8esl7JmZxkZwnSTiweqJwHQc=;
+	s=korg; t=1762824265;
+	bh=7dw6EtSQuqKn74qnH9YjVl6YhXQ/x5WyeFdQKIkP6D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqHiMDZaKrd1EYkW5gc7WD1dNSG3JxvcvQrqlrCCRFlJDfpfFJ7REfBPm+cCbFh2t
-	 KbnWknPiyhq3joAQhIuUtEhYW+IWlbUg+u7ty73Q50+D8fBndLAnaBbQ/9dR22E+Ya
-	 zIASbAcVjU1vAFUogfh2hkZeuxzfr1Ihgckh1w8M=
+	b=GckgA9R7SH05w7dGVgSbm2QaBF54pWgCTtaWqe+M+tiyxZ9KJvh+uMnvEdapcqbZK
+	 7txmbeyEB4s4j7PwORgKnQarnFrJcZd4yinxXqNJImEqsc7DqPDVGrfzVhb8TWAJhi
+	 GfgcyIcEa49iFfrNkG+DxGcAadV4KNppmh7EpYl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xion Wang <xion.wang@mediatek.com>,
+	Vered Yavniely <vered.yavniely@intel.com>,
+	Koby Elbaz <koby.elbaz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 473/849] char: Use list_del_init() in misc_deregister() to reinitialize list pointer
-Date: Tue, 11 Nov 2025 09:40:43 +0900
-Message-ID: <20251111004547.883688690@linuxfoundation.org>
+Subject: [PATCH 6.12 422/565] accel/habanalabs/gaudi2: fix BMON disable configuration
+Date: Tue, 11 Nov 2025 09:44:38 +0900
+Message-ID: <20251111004536.356629948@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xion Wang <xion.wang@mediatek.com>
+From: Vered Yavniely <vered.yavniely@intel.com>
 
-[ Upstream commit e28022873c0d051e980c4145f1965cab5504b498 ]
+[ Upstream commit b4fd8e56c9a3b614370fde2d45aec1032eb67ddd ]
 
-Currently, misc_deregister() uses list_del() to remove the device
-from the list. After list_del(), the list pointers are set to
-LIST_POISON1 and LIST_POISON2, which may help catch use-after-free bugs,
-but does not reset the list head.
-If misc_deregister() is called more than once on the same device,
-list_empty() will not return true, and list_del() may be called again,
-leading to undefined behavior.
+Change the BMON_CR register value back to its original state before
+enabling, so that BMON does not continue to collect information
+after being disabled.
 
-Replace list_del() with list_del_init() to reinitialize the list head
-after deletion. This makes the code more robust against double
-deregistration and allows safe usage of list_empty() on the miscdevice
-after deregistration.
-
-[ Note, this seems to keep broken out-of-tree drivers from doing foolish
-  things.  While this does not matter for any in-kernel drivers,
-  external drivers could use a bit of help to show them they shouldn't
-  be doing stuff like re-registering misc devices - gregkh ]
-
-Signed-off-by: Xion Wang <xion.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20250904063714.28925-2-xion.wang@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vered Yavniely <vered.yavniely@intel.com>
+Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 2 +-
+ drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 4c276b8066ff8..ea5b4975347a0 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -281,7 +281,7 @@ void misc_deregister(struct miscdevice *misc)
- 		return;
+diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c b/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
+index 2423620ff358f..bc3c57bda5cda 100644
+--- a/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
++++ b/drivers/accel/habanalabs/gaudi2/gaudi2_coresight.c
+@@ -2426,7 +2426,7 @@ static int gaudi2_config_bmon(struct hl_device *hdev, struct hl_debug_params *pa
+ 		WREG32(base_reg + mmBMON_ADDRH_E3_OFFSET, 0);
+ 		WREG32(base_reg + mmBMON_REDUCTION_OFFSET, 0);
+ 		WREG32(base_reg + mmBMON_STM_TRC_OFFSET, 0x7 | (0xA << 8));
+-		WREG32(base_reg + mmBMON_CR_OFFSET, 0x77 | 0xf << 24);
++		WREG32(base_reg + mmBMON_CR_OFFSET, 0x41);
+ 	}
  
- 	mutex_lock(&misc_mtx);
--	list_del(&misc->list);
-+	list_del_init(&misc->list);
- 	device_destroy(&misc_class, MKDEV(MISC_MAJOR, misc->minor));
- 	misc_minor_free(misc->minor);
- 	if (misc->minor > MISC_DYNAMIC_MINOR)
+ 	return 0;
 -- 
 2.51.0
 
