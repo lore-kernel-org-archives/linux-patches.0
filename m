@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626F624A043;
-	Tue, 11 Nov 2025 01:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31F725F797;
+	Tue, 11 Nov 2025 01:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823066; cv=none; b=rbSeTt4eL2oWeWK8Lf8A7Vlx/QZvJweLpzoxDFc8rBKR8b8VzNH5xbMX7iKezUaiEjN6D09Vn1m/xSB0WyC+3cQS7IFWkarncO3SacSBl8uqEq9iWDkNu/jyUEMI2ZLLwyqzkpwoKwM3zHz4OGoCggQSLK3OhHPpBXiZkh1Aork=
+	t=1762823068; cv=none; b=tmgxjKYquYt3KID1e2nwnzUzZFIlOywU5eEXQhnGYly5jnCesMPzuYmZpT/m4cL6wlNWAwG5or1aQincc6cWiaSiVuHhv/brVMVHxzXVrmfrbGhjKJqtgKRVGPOUdZ+uPZQFshgKCHkpe/hC+Q1Cc0UJX3sSPHAfv+UkyYzZWYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823066; c=relaxed/simple;
-	bh=LZ6/9ToqSIms6DY5hyB2o1PFChe/AAZoSJFzvgtwj6g=;
+	s=arc-20240116; t=1762823068; c=relaxed/simple;
+	bh=Bc1x9VrHwotFwylO3KQ5/NGJSUkQttdbDzTWqrD+Axo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGmyFZ1rVrlfpIfoU9o3rqRMwZfP+3B8+UcHGxk8f6GEJte+GzXAmZzz9mGg8xnvmHjgkojPFwU6rXOmeArrvQhurAHcn8ypEad0KoRGED6eXdptTjfPA99upq1gOlx3A+P2kiOw/rfcSe7yWp2A5orBNRqy6kDqa3GqRGEJM1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcdentOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBx/8eHTeigjkCATTvNsoKJOjcEnImaxDrUWItLR+GbWf1BHSBJ94dMoiduYuUs1bdwpx2oMcy8z080aIZHhjhvXeFalXByS8NdzloU1Nog/0qMgKr66DYqcIb1EKUpvFvhAkzP2X6z+ZcVPsnM4Aei4tBqP0oNEjYdo20xb0C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi8vYgMa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcdentOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EF9C113D0;
-	Tue, 11 Nov 2025 01:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi8vYgMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435ACC19424;
+	Tue, 11 Nov 2025 01:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823066;
-	bh=LZ6/9ToqSIms6DY5hyB2o1PFChe/AAZoSJFzvgtwj6g=;
+	s=korg; t=1762823068;
+	bh=Bc1x9VrHwotFwylO3KQ5/NGJSUkQttdbDzTWqrD+Axo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcdentOw9bV/LLTKVPpZmDBQTmCaFShvkt0KiG4QLiZTmTlXR1SyVJAZaI5vfxx95
-	 7lWBHMYu0YgcGmBQbvKpgWujELozQho/+CFiyreeePxliPVLpsRBmeFlNOfz82k74b
-	 1o/JAz8KW1FJf3gK/X67qH/xTncxonoGgaKsC420=
+	b=pi8vYgMaB/Idrxy5HUp/SHUpq5LrEFB2zFIbi+lvUUwTdmaxivPM96ywgmWhJYLGD
+	 9ppJBY9ScL989H/4rmbx6ceXEWhgvXhBdlRCcK7Lfr9aJNrWYy6zJ3u3Y3ZO9jo4x7
+	 bBVvzcZ/ap5vLE5W1HbBwtKxNvBXgh57BK0WdGNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Kehne <jens.kehne@agilent.com>,
-	Lee Jones <lee@kernel.org>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 224/849] mfd: da9063: Split chip variant reading in two bus transactions
-Date: Tue, 11 Nov 2025 09:36:34 +0900
-Message-ID: <20251111004541.862168421@linuxfoundation.org>
+Subject: [PATCH 6.12 165/565] tools/power x86_energy_perf_policy: Prefer driver HWP limits
+Date: Tue, 11 Nov 2025 09:40:21 +0900
+Message-ID: <20251111004530.649899324@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +46,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Kehne <jens.kehne@agilent.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 9ac4890ac39352ccea132109e32911495574c3ec ]
+[ Upstream commit 2734fdbc9bb8a3aeb309ba0d62212d7f53f30bc7 ]
 
-We observed the initial probe of the da9063 failing in
-da9063_get_device_type in about 30% of boots on a Xilinx ZynqMP based
-board. The problem originates in da9063_i2c_blockreg_read, which uses
-a single bus transaction to turn the register page and then read a
-register. On the bus, this should translate to a write to register 0,
-followed by a read to the target register, separated by a repeated
-start. However, we found that after the write to register 0, the
-controller sometimes continues directly with the register address of
-the read request, without sending the chip address or a repeated start
-in between, which makes the read request invalid.
+When we are successful in using cpufreq min/max limits,
+skip setting the raw MSR limits entirely.
 
-To fix this, separate turning the page and reading the register into
-two separate transactions. This brings the initialization code in line
-with the rest of the driver, which uses register maps (which to my
-knowledge do not use repeated starts after turning the page). This has
-been included in our kernel for several months and was recently
-included in a shipped product. For us, it reliably fixes the issue,
-and we have not observed any new issues.
+This is necessary to avoid undoing any modification that
+the cpufreq driver makes to our sysfs request.
 
-While the underlying problem is probably with the i2c controller or
-its driver, I still propose a change here in the interest of
-robustness: First, I'm not sure this issue can be fixed on the
-controller side, since there are other issues related to repeated
-start which can't (AR# 60695, AR# 61664). Second, similar problems
-might exist with other controllers.
+eg. intel_pstate may take our request for a limit
+that is valid according to HWP.CAP.MIN/MAX and clip
+it to be within the range available in PLATFORM_INFO.
 
-Signed-off-by: Jens Kehne <jens.kehne@agilent.com>
-Link: https://lore.kernel.org/r/20250804133754.3496718-1-jens.kehne@agilent.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9063-i2c.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ .../x86_energy_perf_policy/x86_energy_perf_policy.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/da9063-i2c.c b/drivers/mfd/da9063-i2c.c
-index c6235cd0dbdc4..1ec9ab56442df 100644
---- a/drivers/mfd/da9063-i2c.c
-+++ b/drivers/mfd/da9063-i2c.c
-@@ -37,9 +37,13 @@ enum da9063_page_sel_buf_fmt {
- 	DA9063_PAGE_SEL_BUF_SIZE,
- };
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 0bda8e3ae7f77..891738116c8b2 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -62,6 +62,7 @@ unsigned char turbo_update_value;
+ unsigned char update_hwp_epp;
+ unsigned char update_hwp_min;
+ unsigned char update_hwp_max;
++unsigned char hwp_limits_done_via_sysfs;
+ unsigned char update_hwp_desired;
+ unsigned char update_hwp_window;
+ unsigned char update_hwp_use_pkg;
+@@ -951,8 +952,10 @@ int ratio_2_sysfs_khz(int ratio)
+ }
+ /*
+  * If HWP is enabled and cpufreq sysfs attribtes are present,
+- * then update sysfs, so that it will not become
+- * stale when we write to MSRs.
++ * then update via sysfs. The intel_pstate driver may modify (clip)
++ * this request, say, when HWP_CAP is outside of PLATFORM_INFO limits,
++ * and the driver-chosen value takes precidence.
++ *
+  * (intel_pstate's max_perf_pct and min_perf_pct will follow cpufreq,
+  *  so we don't have to touch that.)
+  */
+@@ -1007,6 +1010,8 @@ int update_sysfs(int cpu)
+ 	if (update_hwp_max)
+ 		update_cpufreq_scaling_freq(1, cpu, req_update.hwp_max);
  
-+enum da9063_page_sel_msgs {
-+	DA9063_PAGE_SEL_MSG = 0,
-+	DA9063_PAGE_SEL_CNT,
-+};
++	hwp_limits_done_via_sysfs = 1;
 +
- enum da9063_paged_read_msgs {
--	DA9063_PAGED_READ_MSG_PAGE_SEL = 0,
--	DA9063_PAGED_READ_MSG_REG_SEL,
-+	DA9063_PAGED_READ_MSG_REG_SEL = 0,
- 	DA9063_PAGED_READ_MSG_DATA,
- 	DA9063_PAGED_READ_MSG_CNT,
- };
-@@ -65,10 +69,21 @@ static int da9063_i2c_blockreg_read(struct i2c_client *client, u16 addr,
- 		(page_num << DA9063_I2C_PAGE_SEL_SHIFT) & DA9063_REG_PAGE_MASK;
+ 	return 0;
+ }
  
- 	/* Write reg address, page selection */
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].addr = client->addr;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].flags = 0;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].len = DA9063_PAGE_SEL_BUF_SIZE;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].buf = page_sel_buf;
-+	xfer[DA9063_PAGE_SEL_MSG].addr = client->addr;
-+	xfer[DA9063_PAGE_SEL_MSG].flags = 0;
-+	xfer[DA9063_PAGE_SEL_MSG].len = DA9063_PAGE_SEL_BUF_SIZE;
-+	xfer[DA9063_PAGE_SEL_MSG].buf = page_sel_buf;
-+
-+	ret = i2c_transfer(client->adapter, xfer, DA9063_PAGE_SEL_CNT);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Page switch failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	if (ret != DA9063_PAGE_SEL_CNT) {
-+		dev_err(&client->dev, "Page switch failed to complete\n");
-+		return -EIO;
-+	}
+@@ -1085,10 +1090,10 @@ int update_hwp_request(int cpu)
+ 	if (debug)
+ 		print_hwp_request(cpu, &req, "old: ");
  
- 	/* Select register address */
- 	xfer[DA9063_PAGED_READ_MSG_REG_SEL].addr = client->addr;
+-	if (update_hwp_min)
++	if (update_hwp_min && !hwp_limits_done_via_sysfs)
+ 		req.hwp_min = req_update.hwp_min;
+ 
+-	if (update_hwp_max)
++	if (update_hwp_max && !hwp_limits_done_via_sysfs)
+ 		req.hwp_max = req_update.hwp_max;
+ 
+ 	if (update_hwp_desired)
 -- 
 2.51.0
 
