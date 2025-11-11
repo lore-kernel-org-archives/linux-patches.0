@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7935A256C88;
-	Tue, 11 Nov 2025 00:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6F91D6DB5;
+	Tue, 11 Nov 2025 00:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822117; cv=none; b=L4u8uV8V0b5D/QjMN5ENpK5eTida4+jzabHk6lnxRGgDIwb1Hf60w4kirAeksbUnNBcm3lIzTESAGP+BF/vcM5B8u8AmpKE3IPsENeK+eCdVrgw23CP36TD/Tt0crlB6FtRRMvz4cok8xCP+dDX/mYylzEu7tzyX9IGr7CJ6u/4=
+	t=1762822119; cv=none; b=dWuh1ocYGM9WKqvCPozHMaw6wVBrD5penkwhBicsHb2gM9QXPirkWWESJJDqKYCmBvJuoCzKza5FiR3KKDoOK7M4ny93A9ocPQEMPbG3QRifaN3Var5gz6hC4xEKk1H9wbGzgMq6e+JSgfmdv3I5PHN8kJzIKmOcGJuSRCR9fW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822117; c=relaxed/simple;
-	bh=ITwVk2bMf3bWJRT1qtW/+mN4oXdjdYJRM4q6hMMSDeY=;
+	s=arc-20240116; t=1762822119; c=relaxed/simple;
+	bh=YL4F4f5wWut2mc1/7KCmQ8WT+1t0w9VESCVv/Gkp/mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twR4nDu0gu4OSWY15qTZ27nirmbTanUWXsoA7Z10YAACRl7WaREmDOD1UIkQwv523Dmyiaips8KJ3RizYZ+HFSBFR4kJhQVJmLoDWooz2P2YetwKfnxtCgGTJDBN0CI19bsg+DnTQWx70PjhaH8hxsJyAWsP4E0KVpj6D8sICtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nX5GgQKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rttT91sWsl+X3X4pJ1pmk6pOwcEXny7xfqeeP9lfweRMTPInrJ0JIm2GkzlVu6AFI3qDN4OOvHuMcnP3gizVwofZOQd8uPMuTTL02vpFP6KKgGAli5TkYhAhndAdZLU+9npjyGWPScTY1fStiOEyCQU224KibbSB7/tCoE9+9UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rzvq7qQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nX5GgQKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1685AC116B1;
-	Tue, 11 Nov 2025 00:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rzvq7qQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C261C4CEFB;
+	Tue, 11 Nov 2025 00:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822117;
-	bh=ITwVk2bMf3bWJRT1qtW/+mN4oXdjdYJRM4q6hMMSDeY=;
+	s=korg; t=1762822119;
+	bh=YL4F4f5wWut2mc1/7KCmQ8WT+1t0w9VESCVv/Gkp/mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nX5GgQKvHfbWIAh1oP+wj+8kT3/ViikGewYCYX1TxJgzfTORjr972UCSfqs7ZqOFL
-	 rqcv35mDigRCH9UnVaO+b8Gu0hxq1QqUY0Z7JqO0zSUt5OLBa8fj4mmzRPgFU5whw4
-	 HQ8pupOJb91wWbDA4fSJIu/iV/G7lf/wtdLbYeJw=
+	b=Rzvq7qQyBuYXAW89ePAxk8HeNm4UxLhU634FYfXs3Sv3yTcM7oi2OIknbOHGwp1WX
+	 l2bgVSxMKcBaWOAbrJQV2ZyrfGxIX6xpA+lNoJQXoLHw/iTWXRZc5Z1cciyQmAy/Cq
+	 0FgH8j0ScchiYUws50L+SEOnHIPRu4qoAnGXnkKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.17 005/849] Revert "NFSD: Remove the cap on number of operations per NFSv4 COMPOUND"
-Date: Tue, 11 Nov 2025 09:32:55 +0900
-Message-ID: <20251111004536.593564653@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.17 023/849] ASoC: renesas: rz-ssi: Use proper dma_buffer_pos after resume
+Date: Tue, 11 Nov 2025 09:33:13 +0900
+Message-ID: <20251111004537.013205801@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,121 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 3e7f011c255582d7c914133785bbba1990441713 upstream.
+commit 22897e568646de5907d4981eae6cc895be2978d1 upstream.
 
-I've found that pynfs COMP6 now leaves the connection or lease in a
-strange state, which causes CLOSE9 to hang indefinitely. I've dug
-into it a little, but I haven't been able to root-cause it yet.
-However, I bisected to commit 48aab1606fa8 ("NFSD: Remove the cap on
-number of operations per NFSv4 COMPOUND").
+When the driver supports DMA, it enqueues four DMA descriptors per
+substream before the substream is started. New descriptors are enqueued in
+the DMA completion callback, and each time a new descriptor is queued, the
+dma_buffer_pos is incremented.
 
-Tianshuo Han also reports a potential vulnerability when decoding
-an NFSv4 COMPOUND. An attacker can place an arbitrarily large op
-count in the COMPOUND header, which results in:
+During suspend, the DMA transactions are terminated. There might be cases
+where the four extra enqueued DMA descriptors are not completed and are
+instead canceled on suspend. However, the cancel operation does not take
+into account that the dma_buffer_pos was already incremented.
 
-[   51.410584] nfsd: vmalloc error: size 1209533382144, exceeds total
-pages, mode:0xdc0(GFP_KERNEL|__GFP_ZERO),
-nodemask=(null),cpuset=/,mems_allowed=0
+Previously, the suspend code reinitialized dma_buffer_pos to zero, but this
+is not always correct.
 
-when NFSD attempts to allocate the COMPOUND op array.
+To avoid losing any audio periods during suspend/resume and to prevent
+clip sound, save the completed DMA buffer position in the DMA callback and
+reinitialize dma_buffer_pos on resume.
 
-Let's restore the operation-per-COMPOUND limit, but increased to 200
-for now.
-
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Cc: stable@vger.kernel.org
-Tested-by: Tianshuo Han <hantianshuo233@gmail.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 1fc778f7c833a ("ASoC: renesas: rz-ssi: Add suspend to RAM support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20251029141134.2556926-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c  |   14 ++++++++++++--
- fs/nfsd/nfs4state.c |    1 +
- fs/nfsd/nfs4xdr.c   |    4 +++-
- fs/nfsd/nfsd.h      |    3 +++
- fs/nfsd/xdr4.h      |    1 +
- 5 files changed, 20 insertions(+), 3 deletions(-)
+ sound/soc/renesas/rz-ssi.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2859,10 +2859,20 @@ nfsd4_proc_compound(struct svc_rqst *rqs
+--- a/sound/soc/renesas/rz-ssi.c
++++ b/sound/soc/renesas/rz-ssi.c
+@@ -85,6 +85,7 @@ struct rz_ssi_stream {
+ 	struct snd_pcm_substream *substream;
+ 	int fifo_sample_size;	/* sample capacity of SSI FIFO */
+ 	int dma_buffer_pos;	/* The address for the next DMA descriptor */
++	int completed_dma_buf_pos; /* The address of the last completed DMA descriptor. */
+ 	int period_counter;	/* for keeping track of periods transferred */
+ 	int sample_width;
+ 	int buffer_pos;		/* current frame position in the buffer */
+@@ -221,6 +222,7 @@ static void rz_ssi_stream_init(struct rz
+ 	rz_ssi_set_substream(strm, substream);
+ 	strm->sample_width = samples_to_bytes(runtime, 1);
+ 	strm->dma_buffer_pos = 0;
++	strm->completed_dma_buf_pos = 0;
+ 	strm->period_counter = 0;
+ 	strm->buffer_pos = 0;
  
- 	rqstp->rq_lease_breaker = (void **)&cstate->clp;
- 
--	trace_nfsd_compound(rqstp, args->tag, args->taglen, args->opcnt);
-+	trace_nfsd_compound(rqstp, args->tag, args->taglen, args->client_opcnt);
- 	while (!status && resp->opcnt < args->opcnt) {
- 		op = &args->ops[resp->opcnt++];
- 
-+		if (unlikely(resp->opcnt == NFSD_MAX_OPS_PER_COMPOUND)) {
-+			/* If there are still more operations to process,
-+			 * stop here and report NFS4ERR_RESOURCE. */
-+			if (cstate->minorversion == 0 &&
-+			    args->client_opcnt > resp->opcnt) {
-+				op->status = nfserr_resource;
-+				goto encode_op;
-+			}
-+		}
+@@ -443,6 +445,10 @@ static void rz_ssi_pointer_update(struct
+ 		snd_pcm_period_elapsed(strm->substream);
+ 		strm->period_counter = current_period;
+ 	}
 +
- 		/*
- 		 * The XDR decode routines may have pre-set op->status;
- 		 * for example, if there is a miscellaneous XDR error
-@@ -2939,7 +2949,7 @@ encode_op:
- 			status = op->status;
- 		}
++	strm->completed_dma_buf_pos += runtime->period_size;
++	if (strm->completed_dma_buf_pos >= runtime->buffer_size)
++		strm->completed_dma_buf_pos = 0;
+ }
  
--		trace_nfsd_compound_status(args->opcnt, resp->opcnt,
-+		trace_nfsd_compound_status(args->client_opcnt, resp->opcnt,
- 					   status, nfsd4_op_name(op->opnum));
+ static int rz_ssi_pio_recv(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
+@@ -784,10 +790,14 @@ no_dma:
+ 	return -ENODEV;
+ }
  
- 		nfsd4_cstate_clear_replay(cstate);
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -3865,6 +3865,7 @@ static __be32 check_forechannel_attrs(st
- 	ca->headerpadsz = 0;
- 	ca->maxreq_sz = min_t(u32, ca->maxreq_sz, maxrpc);
- 	ca->maxresp_sz = min_t(u32, ca->maxresp_sz, maxrpc);
-+	ca->maxops = min_t(u32, ca->maxops, NFSD_MAX_OPS_PER_COMPOUND);
- 	ca->maxresp_cached = min_t(u32, ca->maxresp_cached,
- 			NFSD_SLOT_CACHE_SIZE + NFSD_MIN_HDR_SEQ_SZ);
- 	ca->maxreqs = min_t(u32, ca->maxreqs, NFSD_MAX_SLOTS_PER_SESSION);
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2488,8 +2488,10 @@ nfsd4_decode_compound(struct nfsd4_compo
+-static int rz_ssi_trigger_resume(struct rz_ssi_priv *ssi)
++static int rz_ssi_trigger_resume(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
+ {
++	struct snd_pcm_substream *substream = strm->substream;
++	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	int ret;
  
- 	if (xdr_stream_decode_u32(argp->xdr, &argp->minorversion) < 0)
- 		return false;
--	if (xdr_stream_decode_u32(argp->xdr, &argp->opcnt) < 0)
-+	if (xdr_stream_decode_u32(argp->xdr, &argp->client_opcnt) < 0)
- 		return false;
-+	argp->opcnt = min_t(u32, argp->client_opcnt,
-+			    NFSD_MAX_OPS_PER_COMPOUND);
- 
- 	if (argp->opcnt > ARRAY_SIZE(argp->iops)) {
- 		argp->ops = vcalloc(argp->opcnt, sizeof(*argp->ops));
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -57,6 +57,9 @@ struct readdir_cd {
- 	__be32			err;	/* 0, nfserr, or nfserr_eof */
- };
- 
-+/* Maximum number of operations per session compound */
-+#define NFSD_MAX_OPS_PER_COMPOUND	200
++	strm->dma_buffer_pos = strm->completed_dma_buf_pos + runtime->period_size;
 +
- struct nfsd_genl_rqstp {
- 	struct sockaddr		rq_daddr;
- 	struct sockaddr		rq_saddr;
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -903,6 +903,7 @@ struct nfsd4_compoundargs {
- 	char *				tag;
- 	u32				taglen;
- 	u32				minorversion;
-+	u32				client_opcnt;
- 	u32				opcnt;
- 	bool				splice_ok;
- 	struct nfsd4_op			*ops;
+ 	if (rz_ssi_is_stream_running(&ssi->playback) ||
+ 	    rz_ssi_is_stream_running(&ssi->capture))
+ 		return 0;
+@@ -800,16 +810,6 @@ static int rz_ssi_trigger_resume(struct
+ 				ssi->hw_params_cache.channels);
+ }
+ 
+-static void rz_ssi_streams_suspend(struct rz_ssi_priv *ssi)
+-{
+-	if (rz_ssi_is_stream_running(&ssi->playback) ||
+-	    rz_ssi_is_stream_running(&ssi->capture))
+-		return;
+-
+-	ssi->playback.dma_buffer_pos = 0;
+-	ssi->capture.dma_buffer_pos = 0;
+-}
+-
+ static int rz_ssi_dai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 			      struct snd_soc_dai *dai)
+ {
+@@ -819,7 +819,7 @@ static int rz_ssi_dai_trigger(struct snd
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+-		ret = rz_ssi_trigger_resume(ssi);
++		ret = rz_ssi_trigger_resume(ssi, strm);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -858,7 +858,6 @@ static int rz_ssi_dai_trigger(struct snd
+ 
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 		rz_ssi_stop(ssi, strm);
+-		rz_ssi_streams_suspend(ssi);
+ 		break;
+ 
+ 	case SNDRV_PCM_TRIGGER_STOP:
 
 
