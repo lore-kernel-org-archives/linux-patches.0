@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B0C1C28E;
-	Tue, 11 Nov 2025 01:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C77E7262A;
+	Tue, 11 Nov 2025 01:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822809; cv=none; b=kh5VKwjyr6TJCKyiZ8nQLUouNsQ3QtzxexOz/YK1PxbBpWew5rPi1NNDRJtzlUJeND+7bQQPH8n+yNLQudk69nc3mT3JwbVWAjpc6iaIX40hubaQILPYrfbAe/Q5qXoHqI1WudtGIgx+7DNUNYd8PxMRt0NyZkv2YYbyVk9hQ6g=
+	t=1762822810; cv=none; b=lppEClt86QSgaXe8ytMksnDU0ehZoaQwSroIFTy0Kks8i0sU226bsTfLQu2NZAmiiVmPgOLOweisExF4YSNWptwvcsgqOHNVROHYB2gng+1tAe+AUoBYlT3HLLJkV2oV9rOM4z0hT4vuP+/30iTNd7a9hStgdbbKHMxhSNBwZXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822809; c=relaxed/simple;
-	bh=nHdXDrNimmdepIewviz/9Z5UzMFkgRk6tkS/NSS7MKo=;
+	s=arc-20240116; t=1762822810; c=relaxed/simple;
+	bh=2b5aeT5il8QcHRX0QNMCXjt24N5a1dBL/gVrtCzp+SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ry9ls9TQp7vxtxTSYb5gcWTJr9oiHgeRhZVfsfVXjzZ+UbyCd5BezL4QZMkRMrqcQV5aeaxPxOvGAEM/gNlw2WXpTVgh09+MARxZGU3ceHvEOoulEVMxGlKKIHSlTqWw3NveFOJk2NowyD1on2p5BMTLqJyiygtzKqD2MtBsgu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGnjkDFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VwgkauHEQ5zTzKxcg/tZoC3skzhwgTl+OVHqI+taiI3ZLrMquRs6kSdTXPwmjs6FltDIzhUiP+kE/OzCD4VGVJB34iazag/bb6/MfbvItlx8v8CQiLug1EeXFX7qFeEe0ibBRt6bflayQeEvDGAJ23F10aGMP4YaxS+HsUsAYfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xS4Zu8oW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGnjkDFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7987C113D0;
-	Tue, 11 Nov 2025 01:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xS4Zu8oW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E90C116B1;
+	Tue, 11 Nov 2025 01:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822808;
-	bh=nHdXDrNimmdepIewviz/9Z5UzMFkgRk6tkS/NSS7MKo=;
+	s=korg; t=1762822810;
+	bh=2b5aeT5il8QcHRX0QNMCXjt24N5a1dBL/gVrtCzp+SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGnjkDFbcssTe0agm7FsQheiMmS2HWaMye/JOTA8iIv7iPzAI3C75ESfOreAy3j97
-	 Dn/xsuhYtsF+dH2LmxytzS82K5rTUuZVcxBiqE7pBgl9m5a2RoGgZ2t5aZ/gXGWAF8
-	 IYZO/f77mH9tX/OEMrml+hf2qubisdiNHaCG+X9A=
+	b=xS4Zu8oWdew/eipqqgN+5QIlmCn3zE1dcL64DsJAwg0p6O2o3dCyAu6F8OxeMNTxq
+	 T/3a2CV8shPCj2e4h6YNidywk6v52lc9rvpfnlOF223W/nUQrASNLCpr6aWmC3ws9N
+	 mE1uE4Kb2V9I2SoivVhIHi34Bf76qh2wwueA6i8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarthak Garg <quic_sartgarg@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hans de Goede <hansg@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 175/849] mmc: sdhci-msm: Enable tuning for SDR50 mode for SD card
-Date: Tue, 11 Nov 2025 09:35:45 +0900
-Message-ID: <20251111004540.664345790@linuxfoundation.org>
+Subject: [PATCH 6.12 113/565] ACPI: scan: Add Intel CVS ACPI HIDs to acpi_ignore_dep_ids[]
+Date: Tue, 11 Nov 2025 09:39:29 +0900
+Message-ID: <20251111004529.496125921@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,76 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 08b68ca543ee9d5a8d2dc406165e4887dd8f170b ]
+[ Upstream commit 4405a214df146775338a1e6232701a29024b82e1 ]
 
-For Qualcomm SoCs which needs level shifter for SD card, extra delay is
-seen on receiver data path.
+Some x86/ACPI laptops with MIPI cameras have a INTC10DE or INTC10E0 ACPI
+device in the _DEP dependency list of the ACPI devices for the camera-
+sensors (which have flags.honor_deps set).
 
-To compensate this delay enable tuning for SDR50 mode for targets which
-has level shifter. SDHCI_SDR50_NEEDS_TUNING caps will be set for targets
-with level shifter on Qualcomm SOC's.
+These devices are for an Intel Vision CVS chip for which an out of tree
+driver is available [1].
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The camera sensor works fine without a driver being loaded for this
+ACPI device on the 2 laptops this was tested on:
+
+ThinkPad X1 Carbon Gen 12 (Meteor Lake)
+ThinkPad X1 2-in-1 Gen 10 (Arrow Lake)
+
+For now add these HIDs to acpi_ignore_dep_ids[] so that
+acpi_dev_ready_for_enumeration() will return true once the other _DEP
+dependencies are met and an i2c_client for the camera sensor will get
+instantiated.
+
+Link: https://github.com/intel/vision-drivers/ [1]
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20250829142748.21089-1-hansg@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/acpi/scan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 9d8e20dc8ca11..e7df864bdcaf6 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -81,6 +81,7 @@
- #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
- #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
- #define CORE_HC_SELECT_IN_EN	BIT(18)
-+#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
- #define CORE_HC_SELECT_IN_HS400	(6 << 19)
- #define CORE_HC_SELECT_IN_MASK	(7 << 19)
- 
-@@ -1133,6 +1134,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
- {
- 	struct mmc_ios *ios = &host->mmc->ios;
- 
-+	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
-+	    host->flags & SDHCI_SDR50_NEEDS_TUNING)
-+		return true;
-+
- 	/*
- 	 * Tuning is required for SDR104, HS200 and HS400 cards and
- 	 * if clock frequency is greater than 100MHz in these modes.
-@@ -1201,6 +1206,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
- 	struct mmc_ios ios = host->mmc->ios;
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
-+	u32 config;
- 
- 	if (!sdhci_msm_is_tuning_needed(host)) {
- 		msm_host->use_cdr = false;
-@@ -1217,6 +1224,14 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
- 	 */
- 	msm_host->tuning_done = 0;
- 
-+	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
-+	    host->flags & SDHCI_SDR50_NEEDS_TUNING) {
-+		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
-+		config &= ~CORE_HC_SELECT_IN_MASK;
-+		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
-+		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
-+	}
-+
- 	/*
- 	 * For HS400 tuning in HS200 timing requires:
- 	 * - select MCLK/2 in VENDOR_SPEC
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 7ecc401fb97f9..4ef94d06365fc 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -847,6 +847,8 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
+ static const char * const acpi_ignore_dep_ids[] = {
+ 	"PNP0D80", /* Windows-compatible System Power Management Controller */
+ 	"INT33BD", /* Intel Baytrail Mailbox Device */
++	"INTC10DE", /* Intel CVS LNL */
++	"INTC10E0", /* Intel CVS ARL */
+ 	"LATT2021", /* Lattice FW Update Client Driver */
+ 	NULL
+ };
 -- 
 2.51.0
 
