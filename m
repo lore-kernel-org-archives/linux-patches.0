@@ -1,93 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com [209.85.166.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462F426A0C7;
-	Tue, 11 Nov 2025 01:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EE32DA757
+	for <patches@lists.linux.dev>; Tue, 11 Nov 2025 01:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824123; cv=none; b=gzxVF/cZg9ayVi0ELFasEYzc5TL9Wel48RswOLXZjse/73alBvcqnyVKNRLy2gexM8SuDBAag+7G6fGPTDQQg93H8nvSpPiGXev99+cGfVTFYoxDq7nVUFARXJDXplLmIxN+cL8G2shCDvD6QrjlhOF10sHtyfASZdhmAALVUYU=
+	t=1762824123; cv=none; b=gzCU3E78JzMblu5DAa4c+MFteKkgFtre5lQKKn84MD2mdgT4EHPXTXwzUDiUf/K/IfGvbNSx8otdKfn7cdtSV90hR0HNDj8quUK3pXSRqwOm2tYfqu+nlCBpZt3TjinTby/rVac8hMcsR5x3PTn7/CzQFQzEl0dSGHWDFa3ETGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762824123; c=relaxed/simple;
-	bh=JWa8WG+jzriurd8seTIAi9KfnTzI2cM5Liu/iOcFVB0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQDtuvYJlaSJ1hAPBUOdk4eDAQvr2Umc7yaVzVBARwNGBiVLX9lLqp54IUPoeYkftB6AMOUPwdXgVqnanElubx2KiCcGTlkUADM4pxqD2V8OobdperZ08eVAdQSHW67ywO80MbwqnKiWsO8XRvU4Q1XLESu9Hz1WhTbBZC13GB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o0sPt6Q; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o0sPt6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D1FC19425;
-	Tue, 11 Nov 2025 01:22:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824123;
-	bh=JWa8WG+jzriurd8seTIAi9KfnTzI2cM5Liu/iOcFVB0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0o0sPt6Q0DOfpS9uvItHw1Z/hGcvLcFdrAe5DoBhQbgB0z4/57vnIfLDm13kjEPsl
-	 oxw3+l8KGsw9Jah0iyGjuMiYIpdVYd7p1D8rYS4lBdaB5dJuhauWHTtDKVASvAPdIt
-	 v+9wIpMpme/tFzTO8J1SOUZk13SjGyuc1o4lr9hM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 441/849] PCI: imx6: Enable the Vaux supply if available
-Date: Tue, 11 Nov 2025 09:40:11 +0900
-Message-ID: <20251111004547.094846194@linuxfoundation.org>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	bh=1Saewuj3B+oxPukwQPEoUCgMCPyS+mq1oCUOFby9KXU=;
+	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=LyfzCHLmailTwUNY5hZJlVVxIbEAexxdHN/EikyNedO8vHXjzxD4z4ABdKUPh1vkDfBwwwOWwTRq3gFjaRZhl46p6CyHNsND+QJlMXdtwXEYD2pz4Kamij7M90gOWP2rZf+x70OqJ2yR3+0iKen2EYOYcEy0lFG4pubj5B8zgXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-il1-f198.google.com with SMTP id e9e14a558f8ab-43331ea8ed8so35876265ab.3
+        for <patches@lists.linux.dev>; Mon, 10 Nov 2025 17:22:01 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762824121; x=1763428921;
+        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jgTHUyA6jLiZEgsIlU1BHXJL99ZEBvfYu/B6KIbfPcI=;
+        b=ZSBtITsvpTuO7HuKMqIYiobtxpc/wLZvq/Ucj+we+tH5fOhVKAjiV6CNzB2MTvVARY
+         JnzvDQlXyFegcC0GCsVAIwiBq/0Vp9YDi6OKiHeJk8v68w7k2JCPSi42zGnSSfIa72X+
+         SN/WOaBPZZM+nJEdpJTOwAtRVBBHAOt37+EOi/QckjGguwcJ4NI0bTxFLNflXiqYb49E
+         yCr9O4vpFyd+C2JbCSYh6or5ndH9FpPcw2PKkVvNYrvPtJS65XfuIVe7LUqeujbbXeFw
+         XnfK1FXs1Nk/ijzEcoqQDYIhelK10O1ycqvBDDeVH5RX9wdjmn7dY2TyGNEe8PxDBTnw
+         NBjA==
+X-Forwarded-Encrypted: i=1; AJvYcCWAEs6BVSqEwcYM4b6BUViVO/Xc38TgjKDhbf+rEbc8wD4n1rBzpyOd2IatSw+uc35leidtNUFr@lists.linux.dev
+X-Gm-Message-State: AOJu0YxXPjsijlWXsLA4XRiV9x8bQlPC22HlrYRXoTwY2A5d7pWjf7+E
+	YKH/okV0qjtQfWtvNZ5T6QhOVX+k7l3ia8/YsqKDAgnYFsX6iHIXXata0vYR41js7lkXFyVPHox
+	W8+gHxT9xdP40aNIvlGCO1Fk28A4zcN/OsXoZDNimLmoKk+LNtVaeQPUFtq8=
+X-Google-Smtp-Source: AGHT+IF3YFxFacr3KDbHpq5A+caT8jYHZKNqmASlSPxhn0zJLG8UjHgI2+NyHenfwkEKYFMzfCzIe/11H/4hPhr6H2dMvY/OyAng
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a92:d44d:0:b0:433:71a9:8f9e with SMTP id
+ e9e14a558f8ab-43371a99638mr90879525ab.7.1762824121147; Mon, 10 Nov 2025
+ 17:22:01 -0800 (PST)
+Date: Mon, 10 Nov 2025 17:22:01 -0800
+In-Reply-To: <20251111004535.668292559@linuxfoundation.org>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <69128fb9.a70a0220.22f260.011a.GAE@google.com>
+Subject: Re: [PATCH 6.12 391/565] jfs: fix uninitialized waitqueue in
+ transaction manager
+From: syzbot <syzbot@syzkaller.appspotmail.com>
+To: gregkh@linuxfoundation.org
+Cc: dave.kleikamp@oracle.com, gregkh@linuxfoundation.org, 
+	patches@lists.linux.dev, sashal@kernel.org, ssrane_b23@ee.vjti.ac.in, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+>
+> ------------------
+>
+> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+>
+> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
+>
+> The transaction manager initialization in txInit() was not properly
+> initializing TxBlock[0].waitor waitqueue, causing a crash when
+> txEnd(0) is called on read-only filesystems.
+>
+> When a filesystem is mounted read-only, txBegin() returns tid=0 to
+> indicate no transaction. However, txEnd(0) still gets called and
+> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
+> waitqueue was never initialized because the initialization loop
+> started at index 1 instead of 0.
+>
+> This causes a 'non-static key' lockdep warning and system crash:
+>   INFO: trying to register non-static key in txEnd
+>
+> Fix by ensuring all transaction blocks including TxBlock[0] have
+> their waitqueues properly initialized during txInit().
+>
+> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
+>
+> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/jfs/jfs_txnmgr.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
+> index be17e3c43582f..7840a03e5bcb7 100644
+> --- a/fs/jfs/jfs_txnmgr.c
+> +++ b/fs/jfs/jfs_txnmgr.c
+> @@ -272,14 +272,15 @@ int txInit(void)
+>  	if (TxBlock == NULL)
+>  		return -ENOMEM;
+>  
+> -	for (k = 1; k < nTxBlock - 1; k++) {
+> -		TxBlock[k].next = k + 1;
+> +	for (k = 0; k < nTxBlock; k++) {
+>  		init_waitqueue_head(&TxBlock[k].gcwait);
+>  		init_waitqueue_head(&TxBlock[k].waitor);
+>  	}
+> +
+> +	for (k = 1; k < nTxBlock - 1; k++) {
+> +		TxBlock[k].next = k + 1;
+> +	}
+>  	TxBlock[k].next = 0;
+> -	init_waitqueue_head(&TxBlock[k].gcwait);
+> -	init_waitqueue_head(&TxBlock[k].waitor);
+>  
+>  	TxAnchor.freetid = 1;
+>  	init_waitqueue_head(&TxAnchor.freewait);
+> -- 
+> 2.51.0
+>
+>
+>
 
-------------------
-
-From: Richard Zhu <hongxing.zhu@nxp.com>
-
-[ Upstream commit c221cbf8dc547eb8489152ac62ef103fede99545 ]
-
-When the 3.3Vaux supply is present, fetch it at the probe time and keep it
-enabled for the entire PCIe controller lifecycle so that the link can enter
-L2 state and the devices can signal wakeup using either Beacon or WAKE#
-mechanisms.
-
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: reworded the subject, description and error message]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250820022328.2143374-1-hongxing.zhu@nxp.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pci/controller/dwc/pci-imx6.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 80e48746bbaf6..db51e382a7cf3 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1745,6 +1745,10 @@ static int imx_pcie_probe(struct platform_device *pdev)
- 	pci->max_link_speed = 1;
- 	of_property_read_u32(node, "fsl,max-link-speed", &pci->max_link_speed);
- 
-+	ret = devm_regulator_get_enable_optional(&pdev->dev, "vpcie3v3aux");
-+	if (ret < 0 && ret != -ENODEV)
-+		return dev_err_probe(dev, ret, "failed to enable Vaux supply\n");
-+
- 	imx_pcie->vpcie = devm_regulator_get_optional(&pdev->dev, "vpcie");
- 	if (IS_ERR(imx_pcie->vpcie)) {
- 		if (PTR_ERR(imx_pcie->vpcie) != -ENODEV)
--- 
-2.51.0
-
-
+I see the command but can't find the corresponding bug.
+The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
+but the HASH does not correspond to any known bug.
+Please double check the address.
 
