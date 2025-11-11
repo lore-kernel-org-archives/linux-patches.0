@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A3248F6A;
-	Tue, 11 Nov 2025 01:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608F7304BDB;
+	Tue, 11 Nov 2025 01:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824415; cv=none; b=CjGRUH1O/yTOHcLHXG6xC/t5eMEQ6bs81amojPu+9/OW2nDEUWTBOwG/EkF2RD2eCOGV9a7rMVxqi3/nm77Hq8u+YtwvuIKvX3y1WP278aUHze8aonSmT9j0OzU5+C1VBz+ojvO1NaNammt2cbfPoGKchDA9KXgLCxPQFsMWKl4=
+	t=1762824417; cv=none; b=ot1Cis703ooWcVvfJEHoZb+zwZ09h0qiY5MgyD1QxNiX24m+Y0s33Nz0RBJmaZqlHwij5dQEXuukHuT5p9cB8YvUXIG+cD7j9woNbsyjo+N0PYWOVpjEUwiLHw66oX2W5jGejQoVooWxrv4f/zGNLX4DJpXb3F/0zdmDQjzPll8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824415; c=relaxed/simple;
-	bh=8oZ6961Y/t6T3M6isRmnHhSfam1Tr1/E0t/kqV6d94o=;
+	s=arc-20240116; t=1762824417; c=relaxed/simple;
+	bh=krjBI1iW/svi+kDvXRlTC0nItvDHVHJbLmpN3vCM2Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXIWpLHeHoaWhpiS+H5w2eSkey2db1YgG8W9nicBbny2KmVd4AB7pN1Pq6tfvPfTnfCyIfhi+U+H7ywjlZS5W0HToxppThJi8+SByZW/CnwHPxVKFcyP6y2mzNvWZnuSRuy5IqCYoUT5LgwkVMmc79XhjHZPcmMCuaffZarI1YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPcX7Bof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0a5bnZQT/JuOf9Fz17TlR6wKWrE19ZprUFrydFPmxiPhRYR/RbZQ+b4YnlzXt9XmI+kgD9EFIexcCgJFjGzydrBO1oz4PMSWwEjb7efWXqK2FdF/2UjFi++I+6iPm4lWiXwrJobzWZao8kWeRQIwTCecgaV3yTwGQ6oX5Z6jzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgyptyUH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPcX7Bof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEA5C4AF09;
-	Tue, 11 Nov 2025 01:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgyptyUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86D8C4AF0C;
+	Tue, 11 Nov 2025 01:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824414;
-	bh=8oZ6961Y/t6T3M6isRmnHhSfam1Tr1/E0t/kqV6d94o=;
+	s=korg; t=1762824417;
+	bh=krjBI1iW/svi+kDvXRlTC0nItvDHVHJbLmpN3vCM2Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPcX7Bofcy7oUpWHxRf2BbZjC8YO2hm/uCG1jnphydaWfZ/pX+V9Vhu5nRL4rRcFT
-	 ivm1+/ItGx3I8kYGkfSEqWx4TiuHC8iBol79FIKv9Yv0poj46UIvaYWW269OIKXMFy
-	 XBTEJAMyz5xDobhYho/hSuLdjigVNPUrVvmBZNbg=
+	b=vgyptyUHBwjO3N1Vy6OgArep/7K2zZrn1Wg1Lv5P74l14DQLkbMDosgc3Mb01tTZz
+	 hMQQ5Cuv8uinrIli/obdo1jLSejNoR6n1fJRXE9UtxjynCvd7W5VzVuOBVHjftxcpF
+	 fMvRJMlZnmNtTFBwQpunDcUwePJswO1ZEbkn4Oz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com,
-	Ivan Pravdin <ipravdin.official@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 439/565] Bluetooth: bcsp: receive data only if registered
-Date: Tue, 11 Nov 2025 09:44:55 +0900
-Message-ID: <20251111004536.758983356@linuxfoundation.org>
+Subject: [PATCH 6.17 455/849] drm/amdgpu: dont enable SMU on cyan skillfish
+Date: Tue, 11 Nov 2025 09:40:25 +0900
+Message-ID: <20251111004547.429016758@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +46,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Pravdin <ipravdin.official@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit ca94b2b036c22556c3a66f1b80f490882deef7a6 ]
+[ Upstream commit 94bd7bf2c920998b4c756bc8a54fd3dbdf7e4360 ]
 
-Currently, bcsp_recv() can be called even when the BCSP protocol has not
-been registered. This leads to a NULL pointer dereference, as shown in
-the following stack trace:
+Cyan skillfish uses different SMU firmware.
 
-    KASAN: null-ptr-deref in range [0x0000000000000108-0x000000000000010f]
-    RIP: 0010:bcsp_recv+0x13d/0x1740 drivers/bluetooth/hci_bcsp.c:590
-    Call Trace:
-     <TASK>
-     hci_uart_tty_receive+0x194/0x220 drivers/bluetooth/hci_ldisc.c:627
-     tiocsti+0x23c/0x2c0 drivers/tty/tty_io.c:2290
-     tty_ioctl+0x626/0xde0 drivers/tty/tty_io.c:2706
-     vfs_ioctl fs/ioctl.c:51 [inline]
-     __do_sys_ioctl fs/ioctl.c:907 [inline]
-     __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
-     do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-     do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-To prevent this, ensure that the HCI_UART_REGISTERED flag is set before
-processing received data. If the protocol is not registered, return
--EUNATCH.
-
-Reported-by: syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ed6852d4da4606c93da
-Tested-by: syzbot+4ed6852d4da4606c93da@syzkaller.appspotmail.com
-Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcsp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index 76878119d910c..6cb904b7b643c 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -582,6 +582,9 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
- 	struct bcsp_struct *bcsp = hu->priv;
- 	const unsigned char *ptr;
- 
-+	if (!test_bit(HCI_UART_REGISTERED, &hu->flags))
-+		return -EUNATCH;
-+
- 	BT_DBG("hu %p count %d rx_state %d rx_count %ld",
- 	       hu, count, bcsp->rx_state, bcsp->rx_count);
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index e814da2b14225..dd7b2b796427c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -2126,7 +2126,6 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
+ 	case IP_VERSION(11, 0, 5):
+ 	case IP_VERSION(11, 0, 9):
+ 	case IP_VERSION(11, 0, 7):
+-	case IP_VERSION(11, 0, 8):
+ 	case IP_VERSION(11, 0, 11):
+ 	case IP_VERSION(11, 0, 12):
+ 	case IP_VERSION(11, 0, 13):
+@@ -2134,6 +2133,10 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
+ 	case IP_VERSION(11, 5, 2):
+ 		amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
+ 		break;
++	case IP_VERSION(11, 0, 8):
++		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
++			amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
++		break;
+ 	case IP_VERSION(12, 0, 0):
+ 	case IP_VERSION(12, 0, 1):
+ 		amdgpu_device_ip_block_add(adev, &smu_v12_0_ip_block);
 -- 
 2.51.0
 
