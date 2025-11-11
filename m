@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EA62561A7;
-	Tue, 11 Nov 2025 01:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E71A248883;
+	Tue, 11 Nov 2025 01:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823101; cv=none; b=vBESeK3Vbzni3z/j6OHloetoUHaw1MO2KnkfcYTRvUZNSn41tff1R/EsABeDP3J/Bd3z2k6ENHli/IDe/lATFlzJgMX5RZRu+wO63YYpLS2zeBw7Mv0smBei8nm5XqaU0HTdSGWIG5wASawpIjR7MGYYlvYl6w7cPBwteEEDSzM=
+	t=1762823103; cv=none; b=HvnnI9u4sr1KP8YkB3iOtlSXY3/QW891NeVdH66dr4x2cin1Q5uFJn5fNRLVQbnJ0XrUM7c5trAKWFL1cX7ZXxrIfwQ3lzWj6bDTFwM8mjIBgo44OXcgib+dqWZk3TTf+Dw0OY8InFUv1jbcgZK8Yi3D1dc5j13sTLXbrrkR/9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823101; c=relaxed/simple;
-	bh=zSwFhE3voOcbN6v190NsPkn8QfSp/1NXbBxJF1jURj0=;
+	s=arc-20240116; t=1762823103; c=relaxed/simple;
+	bh=oRvSjvpmyn4T/thTbwVirwTyJdTRY2Mr+97DUTcwEZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFFVK7flkePOVXSPZIFigZsHhOHBhH2+e3HN+v8Iq0E6dkG+p1L5VbZMBNPRwn3mj9YDZhd2s897cnpzz4ucenIcBYEMX3AVlfX31rXzKnkQCJA0Qad/1icWkROGSVRixqNi0trA+g7csm3B6MgIyU4Tdg9UBMPp/npOYlfy0Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZZuCZlX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/B66UNcCHBlP6vav+L+qHE+AQvGQCsqwQN3Bbu/HHqwewbGrXo3gBtHz5l8JJYTzr28LwU7M4kiOaI9Xccq2A89WOBcyVd6rU6Mt/vQ+UzixYosw7PQdCxShF+leKC4iowXoEu/Je11N2QiFmnH4EOpIp2q47kSb5VKwr8cKYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSLDka8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZZuCZlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CD6C4AF09;
-	Tue, 11 Nov 2025 01:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSLDka8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1856C16AAE;
+	Tue, 11 Nov 2025 01:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823101;
-	bh=zSwFhE3voOcbN6v190NsPkn8QfSp/1NXbBxJF1jURj0=;
+	s=korg; t=1762823103;
+	bh=oRvSjvpmyn4T/thTbwVirwTyJdTRY2Mr+97DUTcwEZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZZuCZlXCXw7PXNH7nI33LaFEyDMMhN9R7z63y3/tixOQQOwO90RVSpxf1aVdfWAH
-	 NVKmPL2DrI3A+22OvAaX1wTmQ/XgvseHZMbFg8LJ/UHPzLmJG7E35/dKsxecDwFB9W
-	 hUdP06ivSyuQM8Vz3q9f6mg1RUS+sp99mhjC+LXg=
+	b=pSLDka8uojxuM+akNvPCEyJHwXof+euHk+XrTA4rJUrjZEvkgjBS+M0BlCHNh1iJh
+	 ua1Fc3Y3sZguaFUk6RCo+tLohvuj8SacNakptTgP9uZPw/Cijvfp3pbokW2tLzXlUR
+	 zqANs+9Kc49JoCa4tokfeoVBfXpHnwxKqVp2jEFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Ostrowski Rafal <rostrows@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Robin Chen <robin.chen@amd.com>,
 	Wayne Lin <wayne.lin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 231/849] drm/amd/display: Update tiled to tiled copy command
-Date: Tue, 11 Nov 2025 09:36:41 +0900
-Message-ID: <20251111004542.029922138@linuxfoundation.org>
+Subject: [PATCH 6.12 172/565] drm/amd/display: fix condition for setting timing_adjust_pending
+Date: Tue, 11 Nov 2025 09:40:28 +0900
+Message-ID: <20251111004530.806337506@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,42 +51,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ostrowski Rafal <rostrows@amd.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 19f76f2390be5abe8d5ed986780b73564ba2baca ]
+[ Upstream commit 1a6a3374ecb9899ccf0d209b5783a796bdba8cec ]
 
-[Why & How]
-Tiled command rect dimensions is 1 based, do rect_x/y - 1 internally
+timing_adjust_pending is used to defer certain programming sequences
+when OTG timing is about to be changed, like with VRR. Insufficient
+checking for timing change in this case caused a regression which
+reduces PSR Replay residency.
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Ostrowski Rafal <rostrows@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Robin Chen <robin.chen@amd.com>
 Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index f5ef1a07078e5..714c468c010d3 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -2072,8 +2072,8 @@ bool dmub_lsdma_send_tiled_to_tiled_copy_command(
- 	lsdma_data->u.tiled_copy_data.dst_swizzle_mode = params.swizzle_mode;
- 	lsdma_data->u.tiled_copy_data.src_element_size = params.element_size;
- 	lsdma_data->u.tiled_copy_data.dst_element_size = params.element_size;
--	lsdma_data->u.tiled_copy_data.rect_x           = params.rect_x;
--	lsdma_data->u.tiled_copy_data.rect_y           = params.rect_y;
-+	lsdma_data->u.tiled_copy_data.rect_x           = params.rect_x - 1;
-+	lsdma_data->u.tiled_copy_data.rect_y           = params.rect_y - 1;
- 	lsdma_data->u.tiled_copy_data.dcc              = params.dcc;
- 	lsdma_data->u.tiled_copy_data.tmz              = params.tmz;
- 	lsdma_data->u.tiled_copy_data.read_compress    = params.read_compress;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 84e377113e580..13d5f0451fecf 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -453,7 +453,9 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
+ 	 * avoid conflicting with firmware updates.
+ 	 */
+ 	if (dc->ctx->dce_version > DCE_VERSION_MAX) {
+-		if (dc->optimized_required || dc->wm_optimized_required) {
++		if ((dc->optimized_required || dc->wm_optimized_required) &&
++			(stream->adjust.v_total_max != adjust->v_total_max ||
++			stream->adjust.v_total_min != adjust->v_total_min)) {
+ 			stream->adjust.timing_adjust_pending = true;
+ 			return false;
+ 		}
 -- 
 2.51.0
 
