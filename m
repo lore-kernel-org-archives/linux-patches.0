@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F3212DDA1;
-	Tue, 11 Nov 2025 00:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BAB12DDA1;
+	Tue, 11 Nov 2025 00:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822292; cv=none; b=ZuCRlBziTz2wChXBOgz30p08FST9rep7Kbfn0XAlm1jx2cG48NZz+monZAWsaMEAFpvBVHWbkcO2sJKL3ZPcbTKGMMHTxI4B61R8SPL1nZOLGzDj6y+P2cphx+3gaDFVDhQblrJ8kAyHtpEnSl5Vx8NvDg7eHIlrJxs6MLNAWuQ=
+	t=1762822294; cv=none; b=FNCmBRAPdq1zZmY7Qy9qm+qcRqjTQDWgqBx4FpyoWON+caDPzzBTob7W9YRn+6OSzH5lqy8u+b6Zd60WYdRkjlIL8eNYKRv0tEHWvuRQqvD0ehwfna61RVtf3WaHgGI683XoHgw0rbglxBjR1Bx9kmExbZgT7PE1W/ZfZdLwGuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822292; c=relaxed/simple;
-	bh=3NwIJ4x0qJ4xMyM4SO79rVTTthq4p3FcAr2CabHbwRg=;
+	s=arc-20240116; t=1762822294; c=relaxed/simple;
+	bh=vKSoNeer2cw3zHSSRrrS2StK2b0ObShHLFz57fRERoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLKOLpZvt5MVJ5aTIu5ENSHuHi6j2kFoRaH29G6cPN7obIs1P7nKo9Yq4Bkg1Dm+Ms2zDVP+I0/FQt6osZ2JRc/S6g8eHT5z9PxsVvbVxQapvhlhlC30dbPvo+qX0T46yPlUop1eXJHiiXR8tqzQY8cs0syOUApOtY44TA7FmXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6g+q4uj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1ZhvPcCOtHdvzNKom3k1vN5a+47okbJkJu9H6kTIe27UBYlRN0guDEIhw31Xl4/8vzhr8LQb4772H9W/ZnlfWDY1v2KtLZh/PI+m8Lm59Z1Jz7ibDUgx6QpohkUiA0SWJTi9grMgrLtwDykgpgHhRelDd0uVgiEWLA+r7kJbyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMgczzDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6g+q4uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6DDC4CEF5;
-	Tue, 11 Nov 2025 00:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMgczzDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22769C4CEF5;
+	Tue, 11 Nov 2025 00:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822292;
-	bh=3NwIJ4x0qJ4xMyM4SO79rVTTthq4p3FcAr2CabHbwRg=;
+	s=korg; t=1762822294;
+	bh=vKSoNeer2cw3zHSSRrrS2StK2b0ObShHLFz57fRERoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6g+q4ujdaZqxdN/apYTcO8oiK8cjL/SR75LCsJiYvVx7ts/CuOi+ojRSAZ+WSbBZ
-	 pzq1m9ohThYK1kYdjCMV000K0A1C148wVWcIRzsqJ25pmUOegfLbwXr/5ExsRTcU1K
-	 Wv8EGxhQD7wHisn1WkFhPsorwQRTJ1v6QRILlIQ0=
+	b=fMgczzDw/tUXVFV9sipgUszVOxQaewLg5LlUqboorwrV65f50GyQDlTfzccCYrdSM
+	 CPhaunfcdg35sNEX2E7lZpnwho1Hwd355Q6+slOh77m2y7Tt0tVcTzroXjLdCedlCp
+	 C/tHrVPoxu0Zl5fcHyja72WNAPjj2GdZ4AhbRCKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 074/849] sfc: fix potential memory leak in efx_mae_process_mport()
-Date: Tue, 11 Nov 2025 09:34:04 +0900
-Message-ID: <20251111004538.212445283@linuxfoundation.org>
+Subject: [PATCH 6.12 020/565] wifi: ath11k: Add missing platform IDs for quirk table
+Date: Tue, 11 Nov 2025 09:37:56 +0900
+Message-ID: <20251111004527.326010628@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +48,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 46a499aaf8c27476fd05e800f3e947bfd71aa724 ]
+[ Upstream commit 0eb002c93c3b47f88244cecb1e356eaeab61a6bf ]
 
-In efx_mae_enumerate_mports(), memory allocated for mae_mport_desc is
-passed as a argument to efx_mae_process_mport(), but when the error path
-in efx_mae_process_mport() gets executed, the memory allocated for desc
-gets leaked.
+Lenovo platforms can come with one of two different IDs.
+The pm_quirk table was missing the second ID for each platform.
 
-Fix that by freeing the memory allocation before returning error.
+Add missing ID and some extra platform identification comments.
+Reported on https://bugzilla.kernel.org/show_bug.cgi?id=219196
 
-Fixes: a6a15aca4207 ("sfc: enumerate mports in ef100")
-Acked-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20251023141844.25847-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-on: P14s G4 AMD.
+
+Fixes: ce8669a27016 ("wifi: ath11k: determine PM policy based on machine model")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219196
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250929192146.1789648-1-mpearson-lenovo@squebb.ca
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/mae.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath11k/core.c | 54 +++++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/mae.c b/drivers/net/ethernet/sfc/mae.c
-index 6fd0c1e9a7d54..7cfd9000f79de 100644
---- a/drivers/net/ethernet/sfc/mae.c
-+++ b/drivers/net/ethernet/sfc/mae.c
-@@ -1090,6 +1090,9 @@ void efx_mae_remove_mport(void *desc, void *arg)
- 	kfree(mport);
- }
- 
-+/*
-+ * Takes ownership of @desc, even if it returns an error
-+ */
- static int efx_mae_process_mport(struct efx_nic *efx,
- 				 struct mae_mport_desc *desc)
- {
-@@ -1100,6 +1103,7 @@ static int efx_mae_process_mport(struct efx_nic *efx,
- 	if (!IS_ERR_OR_NULL(mport)) {
- 		netif_err(efx, drv, efx->net_dev,
- 			  "mport with id %u does exist!!!\n", desc->mport_id);
-+		kfree(desc);
- 		return -EEXIST;
- 	}
- 
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index afac4a1e9a1db..735032c353b2d 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -814,42 +814,84 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ static const struct dmi_system_id ath11k_pm_quirk_table[] = {
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* X13 G4 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21J3"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* X13 G4 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21J4"),
+ 		},
+ 	},
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* T14 G4 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K3"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* T14 G4 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21K4"),
+ 		},
+ 	},
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* P14s G4 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K5"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* P14s G4 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21K6"),
+ 		},
+ 	},
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* T16 G2 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K7"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* T16 G2 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21K8"),
+ 		},
+ 	},
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* P16s G2 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21K9"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* P16s G2 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21KA"),
+ 		},
+ 	},
+ 	{
+ 		.driver_data = (void *)ATH11K_PM_WOW,
+-		.matches = {
++		.matches = { /* T14s G4 AMD #1 */
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21F8"),
++		},
++	},
++	{
++		.driver_data = (void *)ATH11K_PM_WOW,
++		.matches = { /* T14s G4 AMD #2 */
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21F9"),
+ 		},
 -- 
 2.51.0
 
