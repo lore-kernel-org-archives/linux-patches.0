@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B262F39B1;
-	Tue, 11 Nov 2025 01:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149192F39B1;
+	Tue, 11 Nov 2025 01:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823247; cv=none; b=svrfJXss5tjVQL050eHN92lRNf2QRTQS1vFPRBRFU4lvKyc8JqS8rgrRmvLic25ysVllLUwiLdZ6BHMVGsugB7VtFEnTawUTAjnmneyPGDBX72jYzYIuB8D7cNR7YdmZ0424zFfIc3ioVzLABRT0InqCn5FObmsHT3DdtKFBDek=
+	t=1762823250; cv=none; b=TTUP/V07kPDWeB6OOGUtu1cSEUlt93ZMgZgN9T+Ej4HXaWkNoFBe9RpnDb4PkkTD2pfUMsRhEfvcLPrXZ+ZnRSJtbg4LFHh6JLXhYCwOb6uXmdcMHsUQzYSzazqIzLp+PE8/fW9DWUzE2AGZj2ZSEIGRPsB8wQm5ZX5OLoKg43M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823247; c=relaxed/simple;
-	bh=ch+EWr7evOAitxBZi/ODezADFhtcWOdlf56Pef3m5l8=;
+	s=arc-20240116; t=1762823250; c=relaxed/simple;
+	bh=D+faEirknAYxywRG/WD8sWA0shdZREpYZa9FfwrPvaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iUnQfY8QJ/6CH8VrfAAcFhrA1kM5AWXLewh46SWDa9/YLnuCMiZJ65AFLJkRnvCPG5ZIaI+k9DfftEQioPXzAHfvhsjotlIN4y51ynOXGK7bWA9OVqX/WphhCoWci52NEa8cJGIdaGeTspq9FV53Smv8ngK9ufZc0wDwZWadeFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwhGG6dx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gv9ljqUypTJ1WyN+LezOBnjGrn7P9uOM6SNaZmgPLP++0oPAl+DHazaFL1srPRx/qw58vtmLHON+nOlIOKUmGSx6ZWEGXI4Fz9vlSIls9kAGMkYmgCOrp21CDjmCyYZNl3u+2aQRIDzBChsfmx/XS8UCXxbuZCCERxbdA5hqx+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm2ZBKwc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwhGG6dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B851C16AAE;
-	Tue, 11 Nov 2025 01:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm2ZBKwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D03C4CEFB;
+	Tue, 11 Nov 2025 01:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823247;
-	bh=ch+EWr7evOAitxBZi/ODezADFhtcWOdlf56Pef3m5l8=;
+	s=korg; t=1762823249;
+	bh=D+faEirknAYxywRG/WD8sWA0shdZREpYZa9FfwrPvaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwhGG6dxcBQ8ongBafXBo7dxisXTBoZUSV69rPxg2JQS5JAlZWWV1kq44MqVmC+pn
-	 0O0YK2fneh/Wx4Qlu5u7bOSVHCPHfVxpRmnp9Cv7aVJdnoWzno0miil+PizigYwCvy
-	 CfgskadMNLR0r2i5sZsBXAdh6K6McTLKFHzUS4p0=
+	b=mm2ZBKwcGL7YbF4BYVj2g8e2dq1nZWMH2Bvds50bFpQIhSOPvk/3s0ThkpG4O/LdT
+	 txK09W8ciRM7ABqRjA2tgfjjE8IGXdEm5eGmVj/JnuYw6s/zSnji4ujoc7RjMalBZ7
+	 ByGrBnWSiWo/t8CZDRpKFsx6sA7OeDMR/wraaIl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 261/849] drm/xe/pf: Program LMTT directory pointer on all GTs within a tile
-Date: Tue, 11 Nov 2025 09:37:11 +0900
-Message-ID: <20251111004542.743641214@linuxfoundation.org>
+Subject: [PATCH 6.12 205/565] PCI/ERR: Update device error_state already after reset
+Date: Tue, 11 Nov 2025 09:41:01 +0900
+Message-ID: <20251111004531.538560849@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +45,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piotr Piórkowski <piotr.piorkowski@intel.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit ad69d62588cd6bf8cddaff5e3e2eb1b8dd876d35 ]
+[ Upstream commit 45bc82563d5505327d97963bc54d3709939fa8f8 ]
 
-Previously, the LMTT directory pointer was only programmed for primary GT
-within a tile. However, to ensure correct Local Memory access by VFs,
-the LMTT configuration must be programmed on all GTs within the tile.
-Lets program the LMTT directory pointer on every GT of the tile
-to guarantee proper LMEM access across all GTs on VFs.
+After a Fatal Error has been reported by a device and has been recovered
+through a Secondary Bus Reset, AER updates the device's error_state to
+pci_channel_io_normal before invoking its driver's ->resume() callback.
 
-HSD: 18042797646
-Bspec: 67468
-Signed-off-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Michał Winiarski <michal.winiarski@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://lore.kernel.org/r/20250805091850.1508240-1-piotr.piorkowski@intel.com
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+By contrast, EEH updates the error_state earlier, namely after resetting
+the device and before invoking its driver's ->slot_reset() callback.
+Commit c58dc575f3c8 ("powerpc/pseries: Set error_state to
+pci_channel_io_normal in eeh_report_reset()") explains in great detail
+that the earlier invocation is necessitated by various drivers checking
+accessibility of the device with pci_channel_offline() and avoiding
+accesses if it returns true.  It returns true for any other error_state
+than pci_channel_io_normal.
+
+The device should be accessible already after reset, hence the reasoning
+is that it's safe to update the error_state immediately afterwards.
+
+This deviation between AER and EEH seems problematic because drivers
+behave differently depending on which error recovery mechanism the
+platform uses.  Three drivers have gone so far as to update the
+error_state themselves, presumably to work around AER's behavior.
+
+For consistency, amend AER to update the error_state at the same recovery
+steps as EEH.  Drop the now unnecessary workaround from the three drivers.
+
+Keep updating the error_state before ->resume() in case ->error_detected()
+or ->mmio_enabled() return PCI_ERS_RESULT_RECOVERED, which causes
+->slot_reset() to be skipped.  There are drivers doing this even for Fatal
+Errors, e.g. mhi_pci_error_detected().
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/4517af6359ffb9d66152b827a5d2833459144e3f.1755008151.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_lmtt.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c | 1 -
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c    | 2 --
+ drivers/pci/pcie/err.c                              | 3 ++-
+ drivers/scsi/qla2xxx/qla_os.c                       | 5 -----
+ 4 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_lmtt.c b/drivers/gpu/drm/xe/xe_lmtt.c
-index a2000307d5bf9..a78c9d474a6ef 100644
---- a/drivers/gpu/drm/xe/xe_lmtt.c
-+++ b/drivers/gpu/drm/xe/xe_lmtt.c
-@@ -195,14 +195,17 @@ static void lmtt_setup_dir_ptr(struct xe_lmtt *lmtt)
- 	struct xe_tile *tile = lmtt_to_tile(lmtt);
- 	struct xe_device *xe = tile_to_xe(tile);
- 	dma_addr_t offset = xe_bo_main_addr(lmtt->pd->bo, XE_PAGE_SIZE);
-+	struct xe_gt *gt;
-+	u8 id;
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+index d7cdea8f604d0..91e7b38143ead 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_hw.c
+@@ -4215,7 +4215,6 @@ static pci_ers_result_t qlcnic_83xx_io_slot_reset(struct pci_dev *pdev)
+ 	struct qlcnic_adapter *adapter = pci_get_drvdata(pdev);
+ 	int err = 0;
  
- 	lmtt_debug(lmtt, "DIR offset %pad\n", &offset);
- 	lmtt_assert(lmtt, xe_bo_is_vram(lmtt->pd->bo));
- 	lmtt_assert(lmtt, IS_ALIGNED(offset, SZ_64K));
+-	pdev->error_state = pci_channel_io_normal;
+ 	err = pci_enable_device(pdev);
+ 	if (err)
+ 		goto disconnect;
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+index b3588a1ebc25f..5e170400c61b9 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+@@ -3767,8 +3767,6 @@ static int qlcnic_attach_func(struct pci_dev *pdev)
+ 	struct qlcnic_adapter *adapter = pci_get_drvdata(pdev);
+ 	struct net_device *netdev = adapter->netdev;
  
--	xe_mmio_write32(&tile->mmio,
--			GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
--			LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
-+	for_each_gt_on_tile(gt, tile, id)
-+		xe_mmio_write32(&gt->mmio,
-+				GRAPHICS_VER(xe) >= 20 ? XE2_LMEM_CFG : LMEM_CFG,
-+				LMEM_EN | REG_FIELD_PREP(LMTT_DIR_PTR, offset / SZ_64K));
- }
+-	pdev->error_state = pci_channel_io_normal;
+-
+ 	err = pci_enable_device(pdev);
+ 	if (err)
+ 		return err;
+diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
+index 628d192de90b2..e277f3735fe65 100644
+--- a/drivers/pci/pcie/err.c
++++ b/drivers/pci/pcie/err.c
+@@ -141,7 +141,8 @@ static int report_slot_reset(struct pci_dev *dev, void *data)
  
- /**
+ 	device_lock(&dev->dev);
+ 	pdrv = dev->driver;
+-	if (!pdrv || !pdrv->err_handler || !pdrv->err_handler->slot_reset)
++	if (!pci_dev_set_io_state(dev, pci_channel_io_normal) ||
++	    !pdrv || !pdrv->err_handler || !pdrv->err_handler->slot_reset)
+ 		goto out;
+ 
+ 	err_handler = pdrv->err_handler;
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 31535beaaa161..81c76678f25a8 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -7895,11 +7895,6 @@ qla2xxx_pci_slot_reset(struct pci_dev *pdev)
+ 	       "Slot Reset.\n");
+ 
+ 	ha->pci_error_state = QLA_PCI_SLOT_RESET;
+-	/* Workaround: qla2xxx driver which access hardware earlier
+-	 * needs error state to be pci_channel_io_online.
+-	 * Otherwise mailbox command timesout.
+-	 */
+-	pdev->error_state = pci_channel_io_normal;
+ 
+ 	pci_restore_state(pdev);
+ 
 -- 
 2.51.0
 
