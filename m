@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C96274FCB;
-	Tue, 11 Nov 2025 01:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90C027E7EB;
+	Tue, 11 Nov 2025 01:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825494; cv=none; b=snSNBNEmoLZrDppn2mXImvedreN0fn/H2nTdH59pVl+gREfmHc8ZjD4fj3tzH2ACmib2ZTv8ES9KkyBSY+67oRm+a8ucieScmQU7VRF9m42LhYi81rwAwBMkBy+3topcs3IC828bdTRKaCIIdhcOUwhgtwscOBB3Ny4rK+M48dc=
+	t=1762825496; cv=none; b=LZuv/I3QAQI862r2sBubHiOROxwW1s6+DazBvKgNOsch1Ccvs3gM5CIq9hwjmVawdTidfuBRuQB/TJWzNp2zm3T3A/r9pl+yUppcZKF8PzUkObZ3xsBhelpTg3C0heQkngZZCwgWxyeK+V6UUFo4tOdYep6NFbg7SSrLztf+YMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825494; c=relaxed/simple;
-	bh=8A9SbjLd6tua3UXnrzO4HCUE+wXyRmhlp+EmCM09nuU=;
+	s=arc-20240116; t=1762825496; c=relaxed/simple;
+	bh=Mc5ri5fNxD+/fojv3tWSRbhgVu2ILidmz3g6yB3P+Ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hiey+6dFnWCtTt632LwZIB0yxgpBHU5ZaKT+wm1OwLtIHHcuEniqVurO61L+k1usHX6BGvHl3Gu/8LT9tBqQuq1dSu+0mGelTENrD1/5Js3eRYOAdfPF3Feve0s2qvIkewRZcYQKrAktreZdr4VKRoNpXS9ccT6wtlAESNZfp5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZxrGO+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dJs+PiPDApp0uon8ybDLuy1Gkm39uOQG26AQvP3GlHsogqRU8CWqSBH/JsWRqU+ljZqkGDImJW/reRJ3jDIdT0Jy4UPW/jeYfN276lnhV6aodnB5miTSLytogSqn+BzO8Re8UMjd4rHasO9+kiTc8OtK1oPbX4fvIcJS54njczE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3UQhSq+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZxrGO+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC98C113D0;
-	Tue, 11 Nov 2025 01:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3UQhSq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFF0C113D0;
+	Tue, 11 Nov 2025 01:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825494;
-	bh=8A9SbjLd6tua3UXnrzO4HCUE+wXyRmhlp+EmCM09nuU=;
+	s=korg; t=1762825496;
+	bh=Mc5ri5fNxD+/fojv3tWSRbhgVu2ILidmz3g6yB3P+Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZxrGO+v3N9nrE0J/5EAe9Nno++HY/6LOT7mUzXfCUne1IeiJ7EJJfFDYWziB/aa9
-	 TK+H+R0tj0z3UjVH5j3Ge7uaB8xxtD5eGe8H9PGWhU5nwVfetCKkvC/BzKiH5soBIB
-	 LmGQzTuLSrXKi+K26k35P15Rv/aV8xnjFx/d3RXY=
+	b=C3UQhSq+4WT8SzEXppqXgB9Ura11wUtECN5s6O7PLiA+Fs3OUOnwam4Govo3zLnFs
+	 G/E3w19YSIKnfx8fwEub6adlpkzKkjRFcpeN5xFD9JeqE2v0M/3rh8UCWpvuLZZDkM
+	 VSJveIjM9K4MaApM4+OKrrH3A7nze7SL/gz8uJCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	Mario Limoncello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 826/849] drm/amd/display: Fix NULL deref in debugfs odm_combine_segments
-Date: Tue, 11 Nov 2025 09:46:36 +0900
-Message-ID: <20251111004556.398609458@linuxfoundation.org>
+Subject: [PATCH 6.17 827/849] drm/amdkfd: Dont clear PT after process killed
+Date: Tue, 11 Nov 2025 09:46:37 +0900
+Message-ID: <20251111004556.423195782@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -45,107 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 6dd97ceb645c08aca9fc871a3006e47fe699f0ac upstream.
+commit 597eb70f7ff7551ff795cd51754b81aabedab67b upstream.
 
-When a connector is connected but inactive (e.g., disabled by desktop
-environments), pipe_ctx->stream_res.tg will be destroyed. Then, reading
-odm_combine_segments causes kernel NULL pointer dereference.
+If process is killed. the vm entity is stopped, submit pt update job
+will trigger the error message "*ERROR* Trying to push to a killed
+entity", job will not execute.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 16 UID: 0 PID: 26474 Comm: cat Not tainted 6.17.0+ #2 PREEMPT(lazy)  e6a17af9ee6db7c63e9d90dbe5b28ccab67520c6
- Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN25WW 03/27/2025
- RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
- Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
- RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
- RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
- RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
- R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
- R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
- FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  seq_read_iter+0x125/0x490
-  ? __alloc_frozen_pages_noprof+0x18f/0x350
-  seq_read+0x12c/0x170
-  full_proxy_read+0x51/0x80
-  vfs_read+0xbc/0x390
-  ? __handle_mm_fault+0xa46/0xef0
-  ? do_syscall_64+0x71/0x900
-  ksys_read+0x73/0xf0
-  do_syscall_64+0x71/0x900
-  ? count_memcg_events+0xc2/0x190
-  ? handle_mm_fault+0x1d7/0x2d0
-  ? do_user_addr_fault+0x21a/0x690
-  ? exc_page_fault+0x7e/0x1a0
-  entry_SYSCALL_64_after_hwframe+0x6c/0x74
- RIP: 0033:0x7f44d4031687
- Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00>
- RSP: 002b:00007ffdb4b5f0b0 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
- RAX: ffffffffffffffda RBX: 00007f44d3f9f740 RCX: 00007f44d4031687
- RDX: 0000000000040000 RSI: 00007f44d3f5e000 RDI: 0000000000000003
- RBP: 0000000000040000 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000202 R12: 00007f44d3f5e000
- R13: 0000000000000003 R14: 0000000000000000 R15: 0000000000040000
-  </TASK>
- Modules linked in: tls tcp_diag inet_diag xt_mark ccm snd_hrtimer snd_seq_dummy snd_seq_midi snd_seq_oss snd_seq_midi_event snd_rawmidi snd_seq snd_seq_device x>
-  snd_hda_codec_atihdmi snd_hda_codec_realtek_lib lenovo_wmi_helpers think_lmi snd_hda_codec_generic snd_hda_codec_hdmi snd_soc_core kvm snd_compress uvcvideo sn>
-  platform_profile joydev amd_pmc mousedev mac_hid sch_fq_codel uinput i2c_dev parport_pc ppdev lp parport nvme_fabrics loop nfnetlink ip_tables x_tables dm_cryp>
- CR2: 0000000000000000
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:odm_combine_segments_show+0x93/0xf0 [amdgpu]
- Code: 41 83 b8 b0 00 00 00 01 75 6e 48 98 ba a1 ff ff ff 48 c1 e0 0c 48 8d 8c 07 d8 02 00 00 48 85 c9 74 2d 48 8b bc 07 f0 08 00 00 <48> 8b 07 48 8b 80 08 02 00>
- RSP: 0018:ffffd1bf4b953c58 EFLAGS: 00010286
- RAX: 0000000000005000 RBX: ffff8e35976b02d0 RCX: ffff8e3aeed052d8
- RDX: 00000000ffffffa1 RSI: ffff8e35a3120800 RDI: 0000000000000000
- RBP: 0000000000000000 R08: ffff8e3580eb0000 R09: ffff8e35976b02d0
- R10: ffffd1bf4b953c78 R11: 0000000000000000 R12: ffffd1bf4b953d08
- R13: 0000000000040000 R14: 0000000000000001 R15: 0000000000000001
- FS:  00007f44d3f9f740(0000) GS:ffff8e3caa47f000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000006485c2000 CR4: 0000000000f50ef0
- PKRU: 55555554
-
-Fix this by checking pipe_ctx->stream_res.tg before dereferencing.
-
-Fixes: 07926ba8a44f ("drm/amd/display: Add debugfs interface for ODM combine info")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Reviewed-by: Mario Limoncello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f19bbecd34e3c15eed7e5e593db2ac0fc7a0e6d8)
+(cherry picked from commit 10c382ec6c6d1e11975a11962bec21cba6360391)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -1301,7 +1301,8 @@ static int odm_combine_segments_show(str
- 	if (connector->status != connector_status_connected)
- 		return -ENODEV;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1263,6 +1263,10 @@ static int unmap_bo_from_gpuvm(struct kg
  
--	if (pipe_ctx != NULL && pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
-+	if (pipe_ctx && pipe_ctx->stream_res.tg &&
-+	    pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments)
- 		pipe_ctx->stream_res.tg->funcs->get_odm_combine_segments(pipe_ctx->stream_res.tg, &segments);
+ 	(void)amdgpu_vm_bo_unmap(adev, bo_va, entry->va);
  
- 	seq_printf(m, "%d\n", segments);
++	/* VM entity stopped if process killed, don't clear freed pt bo */
++	if (!amdgpu_vm_ready(vm))
++		return 0;
++
+ 	(void)amdgpu_vm_clear_freed(adev, vm, &bo_va->last_pt_update);
+ 
+ 	(void)amdgpu_sync_fence(sync, bo_va->last_pt_update, GFP_KERNEL);
 
 
