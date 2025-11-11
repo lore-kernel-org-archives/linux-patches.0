@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D134305E15;
-	Tue, 11 Nov 2025 01:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4733248F6A;
+	Tue, 11 Nov 2025 01:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824431; cv=none; b=Jyy/UwYPm00aALRcx3KOykhqc5k97/xrQYtV2riRWPTu36qav9LaNa7BspzUxd1Q+r61LvJAzdadTo+K/6CPFaY/rVjkAGSUY0Sgvh3l58h7oTgITsrlg0yvU7wzBRo1IAuHL9Kd/WnObn9Cap1j/OnokkZ6vZ35VHAPaIFzhjY=
+	t=1762824434; cv=none; b=AzbN2ZtEo1V0i7Dneowz82GWNhZZKCDLoXhfYF2Z9t/SQaFWDPEEx9Ka7EXoYQJ9jCH++8tn19BH/IzmGjdjqRxTIhQ8jmUPlXa269BFH7fH4ZQNwdr2l76de0Zl1DouTNYoXCAsVmBlVXaTy+KctDOSYlgIZ2m5MAQ4J8gIYAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824431; c=relaxed/simple;
-	bh=rrSyG3QnM23Kp4w/9W55iriQpK5mQmkdsLq2P+1eAmQ=;
+	s=arc-20240116; t=1762824434; c=relaxed/simple;
+	bh=iNvOSYOODysKgMjmeYsKGzNNEOwiBYpXH5VITYBdD98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oll+RIlqZ7LDpaMLmZXkICRjoPA15DciEf5ZZ9W2CPTj35wCcQQR5sMGjE+twyumUMcHyMb7l44SfPfq/3xk9f8Wou/NKXAvfgQ1d1oDIYjB2I88KerLVbCN3Hxi193lnF/RYUlYSkfbuRjXobPf/kkXxqhGCcAdZZlIgeTosMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Okso9HLX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dl+pkNE2Yc1PGrA+9WaRp1oKazla/2/NftjFOn9lglmCjO+N2+HLz0+34yVW5GCXrrrtHkMsdhyTEcgbDyVxdeF4J+Jt4msSkRwXCYe9sEq4YrJkAT/8gXyE76lvKFgcqtagYnN2M5vrXt+bk1AOhLfwr9KUMAV0v7e6wEktoLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6KgdSAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Okso9HLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B405C116D0;
-	Tue, 11 Nov 2025 01:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6KgdSAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75926C113D0;
+	Tue, 11 Nov 2025 01:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824431;
-	bh=rrSyG3QnM23Kp4w/9W55iriQpK5mQmkdsLq2P+1eAmQ=;
+	s=korg; t=1762824433;
+	bh=iNvOSYOODysKgMjmeYsKGzNNEOwiBYpXH5VITYBdD98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Okso9HLX2Ti9FTFAOKZqgS0L1R3X4hf+hl4qckRbEGMEztVfVbVns3IbRtzB/VAps
-	 hM+bPuWz6o+8y4M4L9rcmtRb291hY1Vlh4F/0PQX3KmkswJb6xsnnIXAaF4vezktvw
-	 oQUPxTaVkpGVMeRdEtjjLKyblvZRBbpP/g+xS7zo=
+	b=B6KgdSAqdPKpyxbTd1D5rVGM721ieWaO265JSqQXd6LfIvMi5lQpA39H7dP92nPLR
+	 owAe3Sg3zwPjGxz62HpDIRrmSu+y6pM8OgfBdbKJhWip71NwHYT8hqCtBbMz7ZRw83
+	 IdZDY3NckAqUfsX2ndfGdQ7BxeefxjESnsK06I9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 450/849] crypto: ccp: Skip SEV and SNP INIT for kdump boot
-Date: Tue, 11 Nov 2025 09:40:20 +0900
-Message-ID: <20251111004547.311251250@linuxfoundation.org>
+Subject: [PATCH 6.17 494/849] scsi: ufs: host: mediatek: Fix unbalanced IRQ enable issue
+Date: Tue, 11 Nov 2025 09:41:04 +0900
+Message-ID: <20251111004548.380602646@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,56 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 8c571019d8a817b701888926529a5d7a826b947b ]
+[ Upstream commit 91cad911edd1612ed28f5cfb2d4c53a8824951a5 ]
 
-Since SEV or SNP may already be initialized in the previous kernel,
-attempting to initialize them again in the kdump kernel can result
-in SNP initialization failures, which in turn lead to IOMMU
-initialization failures. Moreover, SNP/SEV guests are not run under a
-kdump kernel, so there is no need to initialize SEV or SNP during
-kdump boot.
+Resolve the issue of unbalanced IRQ enablement by setting the
+'is_mcq_intr_enabled' flag after the first successful IRQ enablement.
+Ensure proper tracking of the IRQ state and prevent potential mismatches
+in IRQ handling.
 
-Skip SNP and SEV INIT if doing kdump boot.
-
-Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/d884eff5f6180d8b8c6698a6168988118cf9cba1.1756157913.git.ashish.kalra@amd.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ufs/host/ufs-mediatek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 9f5ccc1720cbc..651346db6909d 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -28,6 +28,7 @@
- #include <linux/fs_struct.h>
- #include <linux/psp.h>
- #include <linux/amd-iommu.h>
-+#include <linux/crash_dump.h>
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 188f90e468c41..055b24758ca3d 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -2111,6 +2111,7 @@ static int ufs_mtk_config_mcq_irq(struct ufs_hba *hba)
+ 			return ret;
+ 		}
+ 	}
++	host->is_mcq_intr_enabled = true;
  
- #include <asm/smp.h>
- #include <asm/cacheflush.h>
-@@ -1345,6 +1346,15 @@ static int _sev_platform_init_locked(struct sev_platform_init_args *args)
- 	if (!psp_master || !psp_master->sev_data)
- 		return -ENODEV;
- 
-+	/*
-+	 * Skip SNP/SEV initialization under a kdump kernel as SEV/SNP
-+	 * may already be initialized in the previous kernel. Since no
-+	 * SNP/SEV guests are run under a kdump kernel, there is no
-+	 * need to initialize SNP or SEV during kdump boot.
-+	 */
-+	if (is_kdump_kernel())
-+		return 0;
-+
- 	sev = psp_master->sev_data;
- 
- 	if (sev->state == SEV_STATE_INIT)
+ 	return 0;
+ }
 -- 
 2.51.0
 
