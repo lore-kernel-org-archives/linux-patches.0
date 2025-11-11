@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF111F09B3;
-	Tue, 11 Nov 2025 01:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBDE1D86FF;
+	Tue, 11 Nov 2025 01:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823719; cv=none; b=Q5+OEHO65jdWozX4F6jt6lMTVtMxyBpO9jPumsif7i6cmwmSPtjxtKxsNhrjVz/xIIB0JInqW9iWkDWqX//aFb1d4rP2NAeHNC1pxH3WnrRetEVWh2LY3mg3RZAX2f2r01I/zoQ0ltp8lH/1PV46JL4VgCVb36IWC34PL9tHFV8=
+	t=1762823721; cv=none; b=b+TdVv7GVvnbTi/DyrHocN20eoXDL1gRJK1MrP1fYqCAS0bcDM+950OQcTCLcltjEfxj5H5WoQ1iLAyppEf3Xx/c2L1+jiiB4CVmAOif2iyP2LKIqc9RMitwzk0jXDJUyEfT6lvvzToxGinGlc7mijB/56oblpua1883/6VpxyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823719; c=relaxed/simple;
-	bh=0Y5vM24drnNVcjNRiPxnKm6ii86LIkoQxFVaV4zo6k8=;
+	s=arc-20240116; t=1762823721; c=relaxed/simple;
+	bh=1rlKJPV0hdr+nPwuuzuV/ekPk1to2oCM6XCpqfkw2fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1BBc1WLGn+tqbAk8OPppwsPcp6IhqdbvwHgY7owlTqRn2BsYFc9Z9KOjQnYsYWK2Hnk4oeCCbg9FFzDrV10NZX2aCT9nMBNL3zNmRVb/5Toqzr2ipWheEGwa4dESzAQswpeuk05kOjLUD0FSwYvX98k+DjiG9dggIQ2ALnIWiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFQDQG0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dYbnBidzRGYJCdF0I6E1f89wDSoX8ikACRCC3As0ibBD58KzCeNGc+1D7A4xtrqqHwrgOdX7idid2iihEhYvpI6HKvETy7Ez0LrD1tRDCV0mD0uONFCnjGrCTD7+yf9Cl0uoAsuiDop/GrITbBx8u+2OIPWQhxCdCc1F5Uv0xyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EEDD+3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFQDQG0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1589DC116B1;
-	Tue, 11 Nov 2025 01:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EEDD+3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE27C113D0;
+	Tue, 11 Nov 2025 01:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823719;
-	bh=0Y5vM24drnNVcjNRiPxnKm6ii86LIkoQxFVaV4zo6k8=;
+	s=korg; t=1762823721;
+	bh=1rlKJPV0hdr+nPwuuzuV/ekPk1to2oCM6XCpqfkw2fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFQDQG0S+NR1XRsaWFwKlTppizF9sIT5TUEY76qIpLGLs0bxSVNk10sHS2O20DZcn
-	 w2+Nfmqd6qeqBbZus4lToWZO9c3kuV1PGlujk/x+zM8iC5ii70mVJuWLlkHs4mO0K9
-	 jfpdbSj2/mj1CoCvb8WActlklnM4XMw2SM7hLnYw=
+	b=0EEDD+3QdtT2l6lTE0lk3Mjuyr1rd17hCsKc8lCBDKi04qnqRUPPMb8RBrOXYtW3o
+	 wjzBsNagmxjbT1oXDcpA8b1zyCwPTN2O5/7gWEzJK3ZlqLTflHKmk2xLIcC6mRDDkZ
+	 7LcHWXSsPzQCg/O4fGy84OazuEPZ8Nu0b9NhqqoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 356/849] scsi: mpi3mr: Fix controller init failure on fault during queue creation
-Date: Tue, 11 Nov 2025 09:38:46 +0900
-Message-ID: <20251111004545.025605025@linuxfoundation.org>
+Subject: [PATCH 6.12 307/565] drm/amdgpu: dont enable SMU on cyan skillfish
+Date: Tue, 11 Nov 2025 09:42:43 +0900
+Message-ID: <20251111004533.790733924@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +46,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 829fa1582b6ff607b0e2fe41ba1c45c77f686618 ]
+[ Upstream commit 94bd7bf2c920998b4c756bc8a54fd3dbdf7e4360 ]
 
-Firmware can enter a transient fault while creating operational queues.
-The driver fails the load immediately.
+Cyan skillfish uses different SMU firmware.
 
-Add a retry loop that checks controller status and history bit after
-queue creation. If either indicates a fault, retry init up to a set
-limit before failing.
-
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20250820084138.228471-3-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 9e18cc2747104..8fe6e0bf342e2 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -2353,6 +2353,8 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- {
- 	int retval = 0;
- 	u16 num_queues = 0, i = 0, msix_count_op_q = 1;
-+	u32 ioc_status;
-+	enum mpi3mr_iocstate ioc_state;
- 
- 	num_queues = min_t(int, mrioc->facts.max_op_reply_q,
- 	    mrioc->facts.max_op_req_q);
-@@ -2408,6 +2410,14 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- 		retval = -1;
- 		goto out_failed;
- 	}
-+	ioc_status = readl(&mrioc->sysif_regs->ioc_status);
-+	ioc_state = mpi3mr_get_iocstate(mrioc);
-+	if ((ioc_status & MPI3_SYSIF_IOC_STATUS_RESET_HISTORY) ||
-+	    ioc_state != MRIOC_STATE_READY) {
-+		mpi3mr_print_fault_info(mrioc);
-+		retval = -1;
-+		goto out_failed;
-+	}
- 	mrioc->num_op_reply_q = mrioc->num_op_req_q = i;
- 	ioc_info(mrioc,
- 	    "successfully created %d operational queue pairs(default/polled) queue = (%d/%d)\n",
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index e00b5e4542347..e09db65880e1a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -2040,13 +2040,16 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
+ 	case IP_VERSION(11, 0, 5):
+ 	case IP_VERSION(11, 0, 9):
+ 	case IP_VERSION(11, 0, 7):
+-	case IP_VERSION(11, 0, 8):
+ 	case IP_VERSION(11, 0, 11):
+ 	case IP_VERSION(11, 0, 12):
+ 	case IP_VERSION(11, 0, 13):
+ 	case IP_VERSION(11, 5, 0):
+ 		amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
+ 		break;
++	case IP_VERSION(11, 0, 8):
++		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
++			amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
++		break;
+ 	case IP_VERSION(12, 0, 0):
+ 	case IP_VERSION(12, 0, 1):
+ 		amdgpu_device_ip_block_add(adev, &smu_v12_0_ip_block);
 -- 
 2.51.0
 
