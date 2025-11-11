@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51984306B39;
-	Tue, 11 Nov 2025 01:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED7330C34A;
+	Tue, 11 Nov 2025 01:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823897; cv=none; b=frgixaBzxl1TgsfrHy5fIvH0Xe7t5TflBO7yRwqCjbO/S50i12Nb9lZptHKLl6GA6q0jd0tee2A1kGqLqqAeSXWTrxj0ZZPzhRtrDfUZDduJqq8a9MDzIGWXA+x5SjWsDn3V26ZmlkN9bWMavIL5g9ZCiErgTFpdEPr+iF4UB/4=
+	t=1762823899; cv=none; b=XUZ2T4cFcLH1hG2a4GZjuA0vvEWE268/q8ywZBVo0DH5eiJ+SThzMFkPJAtfB/RDWG5HHGKnZWP2cYipNB4IYBjg4ZrEprx9I+EvF4sqhvFXJm24f/ze4+pmnpEI/uAP5ob1ku9yStRcNCZC1Uk4U/YmA1ZmcU/Mdlj1UwqJr+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823897; c=relaxed/simple;
-	bh=8uUu4oCba0J3A6r0hmJ6+RDLJb0CAWz/JtbeLEVNsyM=;
+	s=arc-20240116; t=1762823899; c=relaxed/simple;
+	bh=3ouu/204WfrLlJBp1t5rwtcnZv9Hhp4u8pDepuswf1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSdt/ua/gV/tcTOhMAk+fiOhL2MWP2SG6eHqHAcrX6SmRVyG6rydFx+R0qUi4XOwaH+IrtVgtYkrAVy1pQ+NCqetHxlmyi+UZSOkfdjcJQxrgaBLCrJM9YAYiIobv6vwhdAB68rtU9gtdyS27e0xhgErD1XgrDxGC6esqHZttmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRX20t5r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D6uWLrJoKClUIR2P6xxXsqnxXO6RsIW91Io78vPjqSc7s5/ErpK8NJILbQiOVo+w+cGvb7EKJiNX5B//OVe/5yJFkRsy5cGX0sZTFMo/rAuybpyIQ0dsvyENn29pZEBqYITi04N/Qcffylvw9OXeUWu6wtoL4EX5Agf7en5weS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY63qf46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRX20t5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8114DC16AAE;
-	Tue, 11 Nov 2025 01:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY63qf46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C0CC16AAE;
+	Tue, 11 Nov 2025 01:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823896;
-	bh=8uUu4oCba0J3A6r0hmJ6+RDLJb0CAWz/JtbeLEVNsyM=;
+	s=korg; t=1762823899;
+	bh=3ouu/204WfrLlJBp1t5rwtcnZv9Hhp4u8pDepuswf1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRX20t5rD+/K3AXcyeiS+ViHeIMsRDCJOfsZzabAAWBBmT494GihOAIf9InQl2RAA
-	 xnXtDLffWYRVME0ryeQzOr+GQRqLKJ2h59im0wEu2UuHpQsctI0BrasevuegEwG1oy
-	 6SHUwwRlmE3neawU8l39EawtkfM1bNo4KrkZ/S/c=
+	b=JY63qf46oatdRyOJxy2ZQwtZImiTmbtMt4DegFEO26fLuEBqA+N6BMWa/+KClIaUY
+	 H/YCLAB+WwXfskyEHxUPpYaWz9nqsQkTnUv8nHmJBmi70IzOWrzbNX8kvjNIWHs0v8
+	 l3N0cOc6c1k0utrJsWK1JgMW1LY8hT77f530GXHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Clay King <clayking@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Ahern <dsahern@kernel.org>,
+	Mina Almasry <almasrymina@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 393/849] drm/amd/display: incorrect conditions for failing dto calculations
-Date: Tue, 11 Nov 2025 09:39:23 +0900
-Message-ID: <20251111004545.937874758@linuxfoundation.org>
+Subject: [PATCH 6.12 346/565] net: devmem: expose tcp_recvmsg_locked errors
+Date: Tue, 11 Nov 2025 09:43:22 +0900
+Message-ID: <20251111004534.658894871@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,43 +50,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clay King <clayking@amd.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 306cbcc6f687d791ab3cc8fbbe30f5286fd0d1e5 ]
+[ Upstream commit 18282100d7040614b553f1cad737cb689c04e2b9 ]
 
-[Why & How]
-Previously, when calculating dto phase, we would incorrectly fail when phase
-<=0 without additionally checking for the integer value. This meant that
-calculations would incorrectly fail when the desired pixel clock was an exact
-multiple of the reference clock.
+tcp_recvmsg_dmabuf can export the following errors:
+- EFAULT when linear copy fails
+- ETOOSMALL when cmsg put fails
+- ENODEV if one of the frags is readable
+- ENOMEM on xarray failures
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Clay King <clayking@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+But they are all ignored and replaced by EFAULT in the caller
+(tcp_recvmsg_locked). Expose real error to the userspace to
+add more transparency on what specifically fails.
+
+In non-devmem case (skb_copy_datagram_msg) doing `if (!copied)
+copied=-EFAULT` is ok because skb_copy_datagram_msg can return only EFAULT.
+
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250910162429.4127997-1-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-index 668ee2d405fdf..0b8ed9b94d3c5 100644
---- a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-@@ -619,7 +619,7 @@ void dccg401_set_dp_dto(
- 		dto_integer = div_u64(params->pixclk_hz, dto_modulo_hz);
- 		dto_phase_hz = params->pixclk_hz - dto_integer * dto_modulo_hz;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 795ffa62cc0e6..ad5f30cefdf96 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -2780,9 +2780,9 @@ static int tcp_recvmsg_locked(struct sock *sk, struct msghdr *msg, size_t len,
  
--		if (dto_phase_hz <= 0) {
-+		if (dto_phase_hz <= 0 && dto_integer <= 0) {
- 			/* negative pixel rate should never happen */
- 			BREAK_TO_DEBUGGER();
- 			return;
+ 				err = tcp_recvmsg_dmabuf(sk, skb, offset, msg,
+ 							 used);
+-				if (err <= 0) {
++				if (err < 0) {
+ 					if (!copied)
+-						copied = -EFAULT;
++						copied = err;
+ 
+ 					break;
+ 				}
 -- 
 2.51.0
 
