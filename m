@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373DB346FA2;
-	Tue, 11 Nov 2025 01:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C872346FA2;
+	Tue, 11 Nov 2025 01:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824252; cv=none; b=lM2kKXOy0q4BkzCvuZwIRcuo1rQ5JRI27OA7FJ2tqvAIzZOzO85DzhcSgA3oWBb+ltmt8fmxf8Zg/ZoXqB4+3pNqcrLKMOFnQf17NbQ6wJRko2vcGZdRqrsuquFE99fjq6FBcaUAZJRCv7ssWxPg/8asW8l5wYy4kWGDxLOSrvg=
+	t=1762824254; cv=none; b=S3KKpoV59KO2/KqE31nV0ndVsO9z1qCRmxRwi0nIfrj4Ar9exdfl7uH7O2+jM5NMnJFl1C2cn/ARwMRNddleliyKIUz/qKrFJGPhkIc/018Yi+zTv97sCel2tBHdRPtMqjDYhipTAUOdbi7G6lqDWaRL78TRLErPUzHB+MWavAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824252; c=relaxed/simple;
-	bh=pX180A4+ADs8DFMZALPf2YoWW/k9gpMUjnp9JCqUKIo=;
+	s=arc-20240116; t=1762824254; c=relaxed/simple;
+	bh=YmA6U8ooSspXArdv0g5X8BnzATDhFagMYQo+jT4xFMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVn4eWhb8dv6d/G4BtYgCN3NI5PM27dTlND3vFCjFsbU4xl1aEwRVvevSeDaEtyYHANk6uFjxzIk0B16I1C5Dfjn/ejPKoWv1V6Hvwz5fh8+5Ob+XkgAVTmgaTAVEM6qMf6GCqNPMQqIuIp/C5lb3dT/a4Exkq1SwSVSzEJIHd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2Qt0Yze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjirfs7hz1XR8mR9Eq/lvKCfObl46SeHM5Vz1JLDJptIR9SU8DpowIb6OyddW/J3JGzcXmhhsputpv1uqRCjJo/f9RqHQIIDN5a3jMwKcjFIexkRPZ+vdIS6FaTJiUiW8EqWof7tlpLPjjxCP7epcDRs8Z+Y3qDbAroHgkcSmvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W82CpCX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2Qt0Yze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEA8C19421;
-	Tue, 11 Nov 2025 01:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W82CpCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080CEC16AAE;
+	Tue, 11 Nov 2025 01:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824252;
-	bh=pX180A4+ADs8DFMZALPf2YoWW/k9gpMUjnp9JCqUKIo=;
+	s=korg; t=1762824254;
+	bh=YmA6U8ooSspXArdv0g5X8BnzATDhFagMYQo+jT4xFMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2Qt0YzeFammEMWBobAef63dipziq+6l342ERrAGvyszeQHunSXC0x0ql3eTo96nI
-	 oMB284tsXhhi0KHxC8GlfvD/7iMBxJLbgKbZCj9OMm6T763BwVcymSmP0xDbrrMQR+
-	 gIEtoliNsZa9Y1KDp5e0VLR6z99FotgIrl+Ziy84=
+	b=0W82CpCXM2NExe6oNt+bPWolIigBj6Z8lGMFnbFwLxRZWEmW9RBGF5EnKlrjNPlMJ
+	 CdovTXLnpC3/pJzYW/BtCPh8OLijTYCzncqRaxtTVSN/phlmBmh06AoPt5sojO8JnO
+	 O8OoisHlnbECUcQEz/OJDfYAxo5y+doutIMVlNtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Liu <xiang.liu@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jie Zhang <quic_jiezh@quicinc.com>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 453/849] drm/amdgpu: Correct info field of bad page threshold exceed CPER
-Date: Tue, 11 Nov 2025 09:40:23 +0900
-Message-ID: <20251111004547.380081674@linuxfoundation.org>
+Subject: [PATCH 6.17 471/849] dt-bindings: display/msm/gmu: Update Adreno 623 bindings
+Date: Tue, 11 Nov 2025 09:40:41 +0900
+Message-ID: <20251111004547.835770582@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,44 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Liu <xiang.liu@amd.com>
+From: Jie Zhang <quic_jiezh@quicinc.com>
 
-[ Upstream commit f320ed01cf5f2259e2035a56900952cb3cc77e7a ]
+[ Upstream commit c2cc1e60c1afff4f23c22561b57a5d5157dde20d ]
 
-Correct valid_bits and ms_chk_bits of section info field for bad page
-threshold exceed CPER to match OOB's behavior.
+Update Adreno 623's dt-binding to remove smmu_clk which is not required
+for this GMU.
 
-Signed-off-by: Xiang Liu <xiang.liu@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/672455/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/display/msm/gmu.yaml  | 34 +++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-index ee937d617c826..54de38dbaf2d5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cper.c
-@@ -68,7 +68,6 @@ void amdgpu_cper_entry_fill_hdr(struct amdgpu_device *adev,
- 	hdr->error_severity		= sev;
- 
- 	hdr->valid_bits.platform_id	= 1;
--	hdr->valid_bits.partition_id	= 1;
- 	hdr->valid_bits.timestamp	= 1;
- 
- 	amdgpu_cper_get_timestamp(&hdr->timestamp);
-@@ -220,7 +219,10 @@ int amdgpu_cper_entry_fill_bad_page_threshold_section(struct amdgpu_device *adev
- 	section->hdr.valid_bits.err_context_cnt = 1;
- 
- 	section->info.error_type = RUNTIME;
-+	section->info.valid_bits.ms_chk = 1;
- 	section->info.ms_chk_bits.err_type_valid = 1;
-+	section->info.ms_chk_bits.err_type = 1;
-+	section->info.ms_chk_bits.pcc = 1;
- 	section->ctx.reg_ctx_type = CPER_CTX_TYPE_CRASH;
- 	section->ctx.reg_arr_size = sizeof(section->ctx.reg_dump);
- 
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+index 4392aa7a4ffe2..afc1879357440 100644
+--- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -124,6 +124,40 @@ allOf:
+           contains:
+             enum:
+               - qcom,adreno-gmu-623.0
++    then:
++      properties:
++        reg:
++          items:
++            - description: Core GMU registers
++            - description: Resource controller registers
++            - description: GMU PDC registers
++        reg-names:
++          items:
++            - const: gmu
++            - const: rscc
++            - const: gmu_pdc
++        clocks:
++          items:
++            - description: GMU clock
++            - description: GPU CX clock
++            - description: GPU AXI clock
++            - description: GPU MEMNOC clock
++            - description: GPU AHB clock
++            - description: GPU HUB CX clock
++        clock-names:
++          items:
++            - const: gmu
++            - const: cxo
++            - const: axi
++            - const: memnoc
++            - const: ahb
++            - const: hub
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,adreno-gmu-635.0
+               - qcom,adreno-gmu-660.1
+               - qcom,adreno-gmu-663.0
 -- 
 2.51.0
 
