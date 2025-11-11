@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E71A248883;
-	Tue, 11 Nov 2025 01:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9BF248F6A;
+	Tue, 11 Nov 2025 01:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823103; cv=none; b=HvnnI9u4sr1KP8YkB3iOtlSXY3/QW891NeVdH66dr4x2cin1Q5uFJn5fNRLVQbnJ0XrUM7c5trAKWFL1cX7ZXxrIfwQ3lzWj6bDTFwM8mjIBgo44OXcgib+dqWZk3TTf+Dw0OY8InFUv1jbcgZK8Yi3D1dc5j13sTLXbrrkR/9c=
+	t=1762823106; cv=none; b=FvnRtqoOq2SkNCcAN+kFifNMwbb/gBYv2RncZOCT1NgPnCihYvoQOvVpfZMJFs6ZYlyl81MqYzmI2CrR1vaGHjWgCRlSUSYV+Lks3TtMavNBDRP4wTriUblbFU9sMgj+kMP3bgS7DBzH9K3P2D0zhZtHhkR54HBpl/EGGYtsHY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823103; c=relaxed/simple;
-	bh=oRvSjvpmyn4T/thTbwVirwTyJdTRY2Mr+97DUTcwEZw=;
+	s=arc-20240116; t=1762823106; c=relaxed/simple;
+	bh=PBSYkpkFvPYgKoXrizRIk/5BtJoCm5ebFn6H2nCTIEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/B66UNcCHBlP6vav+L+qHE+AQvGQCsqwQN3Bbu/HHqwewbGrXo3gBtHz5l8JJYTzr28LwU7M4kiOaI9Xccq2A89WOBcyVd6rU6Mt/vQ+UzixYosw7PQdCxShF+leKC4iowXoEu/Je11N2QiFmnH4EOpIp2q47kSb5VKwr8cKYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSLDka8u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iiE1smf80g0Nw0m7/6oULg4dzqKcPQehDzlw2D4izHF+Q7oLoXAcBHf/m7Dls+b7SI7PRV2jLHCwJJQKTE7QFKqvmE2xmgSCFYp1+CxMYDlgyHB0/lybZH2m4K/m39OuJv00Ws0JreDOX44cESlzeUoiJy5Yk/mWMhG5Hm1y3ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyTuilIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSLDka8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1856C16AAE;
-	Tue, 11 Nov 2025 01:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyTuilIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCAAC4CEFB;
+	Tue, 11 Nov 2025 01:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823103;
-	bh=oRvSjvpmyn4T/thTbwVirwTyJdTRY2Mr+97DUTcwEZw=;
+	s=korg; t=1762823105;
+	bh=PBSYkpkFvPYgKoXrizRIk/5BtJoCm5ebFn6H2nCTIEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSLDka8uojxuM+akNvPCEyJHwXof+euHk+XrTA4rJUrjZEvkgjBS+M0BlCHNh1iJh
-	 ua1Fc3Y3sZguaFUk6RCo+tLohvuj8SacNakptTgP9uZPw/Cijvfp3pbokW2tLzXlUR
-	 zqANs+9Kc49JoCa4tokfeoVBfXpHnwxKqVp2jEFo=
+	b=SyTuilITZ26XSA+GQO51IYlfvMLk3uQjE05pi13SCftsldJvlmKOmWVVJoYCXtnlz
+	 KLTJHJd7/+4v26/wuvIssdQdVWFfabqKEf8c5DKRpUWaYE849X2NwpVMSyfG0+Obju
+	 9aYKT0CAQMLy63c9kpmKMHImw8f1jbkMPiCUQZeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,12 +34,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/565] drm/amd/display: fix condition for setting timing_adjust_pending
-Date: Tue, 11 Nov 2025 09:40:28 +0900
-Message-ID: <20251111004530.806337506@linuxfoundation.org>
+Subject: [PATCH 6.17 232/849] drm/amd/display: fix condition for setting timing_adjust_pending
+Date: Tue, 11 Nov 2025 09:36:42 +0900
+Message-ID: <20251111004542.052018241@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -76,10 +76,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 84e377113e580..13d5f0451fecf 100644
+index dcc48b5238e53..bb189f6773397 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -453,7 +453,9 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
+@@ -459,7 +459,9 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
  	 * avoid conflicting with firmware updates.
  	 */
  	if (dc->ctx->dce_version > DCE_VERSION_MAX) {
