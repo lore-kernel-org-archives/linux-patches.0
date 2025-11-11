@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4227262A;
-	Tue, 11 Nov 2025 01:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520094204E;
+	Tue, 11 Nov 2025 01:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823033; cv=none; b=J8HsIQBlEm88+JQq+5XUIENgY+1rkjupuCadxxWwShaC/Ludf7gN2HUcj61/yPKqpSkUPP50DLJIsVyo3To3NkYEbcfl+2l8sjW+dFcNMmCL+K1iupaERqSHGl+QlLKaVUyG7L9+eYrlaXLWoQBx6vHjX59l6tg9SQSkFzrsVDs=
+	t=1762823035; cv=none; b=pPwHhbkq4oQKMFdcKBSjsUfLzaLb53brhV7QUH74NP3LNGr5m3DkLO9sa3B6K5hElzbyhSyEg5cch/7eyowpgM1tmig9+oWGG5rafMixfrROBILcNMACdE8FONyYG6CSyBKdG1jR0vDn70IkmYIhLkCM+W7dOHKZq4MbA+au1uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823033; c=relaxed/simple;
-	bh=OavhtcT7UlMg1hmqp5ZxI2nTAr/iBBYP4xYMQD2paUg=;
+	s=arc-20240116; t=1762823035; c=relaxed/simple;
+	bh=LBsbVQdBNXRT2evGwCTQdYzgF4GBfYmL/xxQKN9bhGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KA1XBazPwWrEdeigpYBjmW2s+hZbNbTZXWqBMrDwaeA+cVELFnz1oz1wptbWxSUEHEZ+3cx0zmxzOe2YuN+iXW4zutoh304hgaZMRzHcZq8CcxQcJ/hkIbw1frfACrsImtQpLG5TPnNo/MYMiTMvJAPSqGrr4VB4LNAzfjxNFx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is6NUQ+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjjh4/EYch2K3VKo8Y5IdkqpuZHykJR1KAXF/m54Iaw2CwgfxWXv2UD5ep7kyRPKbNwKVx4ZED7A07PHtXLIHT+3oP/m3hDOqAy16dBp2D2WiHDRD0s5UQl94qDuiBpwDaioWjAy2t3xMD35+9IGeL1JBzTpnl1FTg50BPFLcsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0Z3n+eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is6NUQ+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C10C4CEF5;
-	Tue, 11 Nov 2025 01:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0Z3n+eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E549BC4CEF5;
+	Tue, 11 Nov 2025 01:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823032;
-	bh=OavhtcT7UlMg1hmqp5ZxI2nTAr/iBBYP4xYMQD2paUg=;
+	s=korg; t=1762823035;
+	bh=LBsbVQdBNXRT2evGwCTQdYzgF4GBfYmL/xxQKN9bhGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Is6NUQ+x+dqbtzBoXiJ1PVpwcetSryIpnpc1bO2+C5fpeRrj8KdJTIacqNBqEoif6
-	 N6zU6Ha3eRp7Lm0Px33cLjqeh4QFfHxSoiGY+57cW1qcdQf6zq29FiyvmRhDA54dX9
-	 8vkIoWiqQXnSXYrLaVZOBvSldZuz9fHG5ze7QkfU=
+	b=S0Z3n+eoYW7K5Qn5uCymoR424n6GmlBBPN/oxpZTP8iHztPMOSSWSyFIRX1qDZesC
+	 sKBE0I/pDxctuxK8GEVAopt59izVnvQhqraXB4Z24w8y6iN2sEgBApYuStQiNRw8ec
+	 CvY+Km7wS4LirgoyNYch0ChfjvD2mjDj7/Da6jVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Lee Jones <lee@kernel.org>,
+	Ben Copeland <ben.copeland@linaro.org>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 218/849] mfd: simple-mfd-i2c: Add compatible strings for Layerscape QIXIS FPGA
-Date: Tue, 11 Nov 2025 09:36:28 +0900
-Message-ID: <20251111004541.710167645@linuxfoundation.org>
+Subject: [PATCH 6.12 159/565] hwmon: (asus-ec-sensors) increase timeout for locking ACPI mutex
+Date: Tue, 11 Nov 2025 09:40:15 +0900
+Message-ID: <20251111004530.512402261@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Ben Copeland <ben.copeland@linaro.org>
 
-[ Upstream commit 81a2c31257411296862487aaade98b7d9e25dc72 ]
+[ Upstream commit 584d55be66ef151e6ef9ccb3dcbc0a2155559be1 ]
 
-The QIXIS FPGA found on Layerscape boards such as LX2160AQDS, LS1028AQDS
-etc deals with power-on-reset timing, muxing etc. Use the simple-mfd-i2c
-as its core driver by adding its compatible string (already found in
-some dt files). By using the simple-mfd-i2c driver, any child device
-will have access to the i2c regmap created by it.
+Some motherboards require more time to acquire the ACPI mutex,
+causing "Failed to acquire mutex" messages to appear in the kernel log.
+Increase the timeout from 500ms to 800ms to accommodate these cases.
 
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20250707153120.1371719-1-ioana.ciornei@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Ben Copeland <ben.copeland@linaro.org>
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20250923192935.11339-3-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/simple-mfd-i2c.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/asus-ec-sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-index 22159913bea03..f7798bd922224 100644
---- a/drivers/mfd/simple-mfd-i2c.c
-+++ b/drivers/mfd/simple-mfd-i2c.c
-@@ -99,6 +99,8 @@ static const struct of_device_id simple_mfd_i2c_of_match[] = {
- 	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
- 	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
- 	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
-+	{ .compatible = "fsl,lx2160aqds-fpga" },
-+	{ .compatible = "fsl,ls1028aqds-fpga" },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index fdc157c7394d9..483dfb806cc51 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -49,7 +49,7 @@ static char *mutex_path_override;
+  */
+ #define ASUS_EC_MAX_BANK	3
+ 
+-#define ACPI_LOCK_DELAY_MS	500
++#define ACPI_LOCK_DELAY_MS	800
+ 
+ /* ACPI mutex for locking access to the EC for the firmware */
+ #define ASUS_HW_ACCESS_MUTEX_ASMX	"\\AMW0.ASMX"
 -- 
 2.51.0
 
