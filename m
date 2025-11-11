@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C5225A334;
-	Tue, 11 Nov 2025 01:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D449C253944;
+	Tue, 11 Nov 2025 01:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823088; cv=none; b=N5CxaMty7nbA6uyHFfZopuwkF+1oqApcW3x++rNKx3ezaN0Jm9FXO60Ysvb9dHdQsAjd5VSqxgvq7maKfNh6AuxHzYIA8VASur2/Igb/6tRSAfu6YWfOoPIpXwf7kyB3GKZkA8IUQ9/iTz0TZ/ydCs1XiQ7yPV8AOS988mh+j8U=
+	t=1762823089; cv=none; b=nXD5x766AK9n7QJUJtEQK2p/AuxLhTyKLoquTWzhskpberj9N7is1X6NZiOPCX68RfhFkXOgnWmkG5+EegnQnofAlLOdoBA1HUj+WdxVKLcPTBaMNArW4forXm+WPQGgx98WjqvvIrkDW4vdTDQBtoKLObYg+CeU90ft587P+nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823088; c=relaxed/simple;
-	bh=Jo9aXt4GzwpC1kJA1Bq2139nJrzCprVYyyDXMvI7tns=;
+	s=arc-20240116; t=1762823089; c=relaxed/simple;
+	bh=XGr202lKgCT+hN1/hynnVt2ZswvwCJMpn0JTgqhuP2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1mWOoxt67dYqN1V3SW3U2KVIc1wp6P9Tlr5ZoJGbFJTK6ezbaOZFBvDUeB/PW3vXEugQFqCYxKDoBRSC8b+pQ1XOeqMuA/wgMuRpA7Pqb9K6kNUewJiSKujCK/yth/H31MFjcNNhwKPFfJvIhb8WtJj72ub5MxB0nEPct039x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ot+haCHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGMq+prvH8sjmFsQdlyGPEriZQTVAebs8UGtz7Ia49earzbZFUheE1JO/PJFVIaIa4/iXRRbCuhZKqYI5QRvw/ZCAMcnme2RSdIR4owJrlUksTzlmp294VWOHVqei9tYta4x2oDnP9Q7EI1Ob/a864Sd8sRBFvcV5aNuCdaJ7xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+qT3U+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ot+haCHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A4EC16AAE;
-	Tue, 11 Nov 2025 01:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+qT3U+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F6BC19425;
+	Tue, 11 Nov 2025 01:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823087;
-	bh=Jo9aXt4GzwpC1kJA1Bq2139nJrzCprVYyyDXMvI7tns=;
+	s=korg; t=1762823089;
+	bh=XGr202lKgCT+hN1/hynnVt2ZswvwCJMpn0JTgqhuP2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ot+haCHstdMzlFxfPhVlZHcDr+YKEqt1rwV6xtyNwKAXab4peXw2/1raLyFZakCYp
-	 WBw0ec0qh6KO4WtYP99O8qQ08MNISW69lu0ZX2vx+kkekeyrmKEyCwAKirdwgz97ja
-	 TYFPke8E8P7KOVrnyckAAe/otFlq8Zh3bh9y1FL8=
+	b=U+qT3U+XxVqYYUYAQvMfm/7V1ieGhiDDzZF6c7haRfY/DCIkQm4vYHFZhCmflenr5
+	 8RR+cNP3GUAZqmApTgo7HZt8xqS8F9+7vcnmg4SpPvpMqGzLSUcWTzyKDlywPGil1l
+	 LcDQ9zJeqgudED4y/rjVDEsf32gbA/2eloYF5pk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Kehne <jens.kehne@agilent.com>,
-	Lee Jones <lee@kernel.org>,
+	Jann Horn <jann@thejh.net>,
+	Pranav Tyagi <pranav.tyagi03@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 169/565] mfd: da9063: Split chip variant reading in two bus transactions
-Date: Tue, 11 Nov 2025 09:40:25 +0900
-Message-ID: <20251111004530.736056465@linuxfoundation.org>
+Subject: [PATCH 6.12 147/565] futex: Dont leak robust_list pointer on exec race
+Date: Tue, 11 Nov 2025 09:40:03 +0900
+Message-ID: <20251111004530.246286248@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,90 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Kehne <jens.kehne@agilent.com>
+From: Pranav Tyagi <pranav.tyagi03@gmail.com>
 
-[ Upstream commit 9ac4890ac39352ccea132109e32911495574c3ec ]
+[ Upstream commit 6b54082c3ed4dc9821cdf0edb17302355cc5bb45 ]
 
-We observed the initial probe of the da9063 failing in
-da9063_get_device_type in about 30% of boots on a Xilinx ZynqMP based
-board. The problem originates in da9063_i2c_blockreg_read, which uses
-a single bus transaction to turn the register page and then read a
-register. On the bus, this should translate to a write to register 0,
-followed by a read to the target register, separated by a repeated
-start. However, we found that after the write to register 0, the
-controller sometimes continues directly with the register address of
-the read request, without sending the chip address or a repeated start
-in between, which makes the read request invalid.
+sys_get_robust_list() and compat_get_robust_list() use ptrace_may_access()
+to check if the calling task is allowed to access another task's
+robust_list pointer. This check is racy against a concurrent exec() in the
+target process.
 
-To fix this, separate turning the page and reading the register into
-two separate transactions. This brings the initialization code in line
-with the rest of the driver, which uses register maps (which to my
-knowledge do not use repeated starts after turning the page). This has
-been included in our kernel for several months and was recently
-included in a shipped product. For us, it reliably fixes the issue,
-and we have not observed any new issues.
+During exec(), a task may transition from a non-privileged binary to a
+privileged one (e.g., setuid binary) and its credentials/memory mappings
+may change. If get_robust_list() performs ptrace_may_access() before
+this transition, it may erroneously allow access to sensitive information
+after the target becomes privileged.
 
-While the underlying problem is probably with the i2c controller or
-its driver, I still propose a change here in the interest of
-robustness: First, I'm not sure this issue can be fixed on the
-controller side, since there are other issues related to repeated
-start which can't (AR# 60695, AR# 61664). Second, similar problems
-might exist with other controllers.
+A racy access allows an attacker to exploit a window during which
+ptrace_may_access() passes before a target process transitions to a
+privileged state via exec().
 
-Signed-off-by: Jens Kehne <jens.kehne@agilent.com>
-Link: https://lore.kernel.org/r/20250804133754.3496718-1-jens.kehne@agilent.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+For example, consider a non-privileged task T that is about to execute a
+setuid-root binary. An attacker task A calls get_robust_list(T) while T
+is still unprivileged. Since ptrace_may_access() checks permissions
+based on current credentials, it succeeds. However, if T begins exec
+immediately afterwards, it becomes privileged and may change its memory
+mappings. Because get_robust_list() proceeds to access T->robust_list
+without synchronizing with exec() it may read user-space pointers from a
+now-privileged process.
+
+This violates the intended post-exec access restrictions and could
+expose sensitive memory addresses or be used as a primitive in a larger
+exploit chain. Consequently, the race can lead to unauthorized
+disclosure of information across privilege boundaries and poses a
+potential security risk.
+
+Take a read lock on signal->exec_update_lock prior to invoking
+ptrace_may_access() and accessing the robust_list/compat_robust_list.
+This ensures that the target task's exec state remains stable during the
+check, allowing for consistent and synchronized validation of
+credentials.
+
+Suggested-by: Jann Horn <jann@thejh.net>
+Signed-off-by: Pranav Tyagi <pranav.tyagi03@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/linux-fsdevel/1477863998-3298-5-git-send-email-jann@thejh.net/
+Link: https://github.com/KSPP/linux/issues/119
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9063-i2c.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ kernel/futex/syscalls.c | 106 +++++++++++++++++++++-------------------
+ 1 file changed, 56 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/mfd/da9063-i2c.c b/drivers/mfd/da9063-i2c.c
-index c6235cd0dbdc4..1ec9ab56442df 100644
---- a/drivers/mfd/da9063-i2c.c
-+++ b/drivers/mfd/da9063-i2c.c
-@@ -37,9 +37,13 @@ enum da9063_page_sel_buf_fmt {
- 	DA9063_PAGE_SEL_BUF_SIZE,
- };
+diff --git a/kernel/futex/syscalls.c b/kernel/futex/syscalls.c
+index 4b6da9116aa6c..880c9bf2f3150 100644
+--- a/kernel/futex/syscalls.c
++++ b/kernel/futex/syscalls.c
+@@ -39,6 +39,56 @@ SYSCALL_DEFINE2(set_robust_list, struct robust_list_head __user *, head,
+ 	return 0;
+ }
  
-+enum da9063_page_sel_msgs {
-+	DA9063_PAGE_SEL_MSG = 0,
-+	DA9063_PAGE_SEL_CNT,
-+};
++static inline void __user *futex_task_robust_list(struct task_struct *p, bool compat)
++{
++#ifdef CONFIG_COMPAT
++	if (compat)
++		return p->compat_robust_list;
++#endif
++	return p->robust_list;
++}
 +
- enum da9063_paged_read_msgs {
--	DA9063_PAGED_READ_MSG_PAGE_SEL = 0,
--	DA9063_PAGED_READ_MSG_REG_SEL,
-+	DA9063_PAGED_READ_MSG_REG_SEL = 0,
- 	DA9063_PAGED_READ_MSG_DATA,
- 	DA9063_PAGED_READ_MSG_CNT,
- };
-@@ -65,10 +69,21 @@ static int da9063_i2c_blockreg_read(struct i2c_client *client, u16 addr,
- 		(page_num << DA9063_I2C_PAGE_SEL_SHIFT) & DA9063_REG_PAGE_MASK;
- 
- 	/* Write reg address, page selection */
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].addr = client->addr;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].flags = 0;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].len = DA9063_PAGE_SEL_BUF_SIZE;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].buf = page_sel_buf;
-+	xfer[DA9063_PAGE_SEL_MSG].addr = client->addr;
-+	xfer[DA9063_PAGE_SEL_MSG].flags = 0;
-+	xfer[DA9063_PAGE_SEL_MSG].len = DA9063_PAGE_SEL_BUF_SIZE;
-+	xfer[DA9063_PAGE_SEL_MSG].buf = page_sel_buf;
++static void __user *futex_get_robust_list_common(int pid, bool compat)
++{
++	struct task_struct *p = current;
++	void __user *head;
++	int ret;
 +
-+	ret = i2c_transfer(client->adapter, xfer, DA9063_PAGE_SEL_CNT);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Page switch failed: %d\n", ret);
-+		return ret;
++	scoped_guard(rcu) {
++		if (pid) {
++			p = find_task_by_vpid(pid);
++			if (!p)
++				return (void __user *)ERR_PTR(-ESRCH);
++		}
++		get_task_struct(p);
 +	}
 +
-+	if (ret != DA9063_PAGE_SEL_CNT) {
-+		dev_err(&client->dev, "Page switch failed to complete\n");
-+		return -EIO;
-+	}
++	/*
++	 * Hold exec_update_lock to serialize with concurrent exec()
++	 * so ptrace_may_access() is checked against stable credentials
++	 */
++	ret = down_read_killable(&p->signal->exec_update_lock);
++	if (ret)
++		goto err_put;
++
++	ret = -EPERM;
++	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
++		goto err_unlock;
++
++	head = futex_task_robust_list(p, compat);
++
++	up_read(&p->signal->exec_update_lock);
++	put_task_struct(p);
++
++	return head;
++
++err_unlock:
++	up_read(&p->signal->exec_update_lock);
++err_put:
++	put_task_struct(p);
++	return (void __user *)ERR_PTR(ret);
++}
++
+ /**
+  * sys_get_robust_list() - Get the robust-futex list head of a task
+  * @pid:	pid of the process [zero for current task]
+@@ -49,36 +99,14 @@ SYSCALL_DEFINE3(get_robust_list, int, pid,
+ 		struct robust_list_head __user * __user *, head_ptr,
+ 		size_t __user *, len_ptr)
+ {
+-	struct robust_list_head __user *head;
+-	unsigned long ret;
+-	struct task_struct *p;
+-
+-	rcu_read_lock();
+-
+-	ret = -ESRCH;
+-	if (!pid)
+-		p = current;
+-	else {
+-		p = find_task_by_vpid(pid);
+-		if (!p)
+-			goto err_unlock;
+-	}
+-
+-	ret = -EPERM;
+-	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
+-		goto err_unlock;
++	struct robust_list_head __user *head = futex_get_robust_list_common(pid, false);
  
- 	/* Select register address */
- 	xfer[DA9063_PAGED_READ_MSG_REG_SEL].addr = client->addr;
+-	head = p->robust_list;
+-	rcu_read_unlock();
++	if (IS_ERR(head))
++		return PTR_ERR(head);
+ 
+ 	if (put_user(sizeof(*head), len_ptr))
+ 		return -EFAULT;
+ 	return put_user(head, head_ptr);
+-
+-err_unlock:
+-	rcu_read_unlock();
+-
+-	return ret;
+ }
+ 
+ long do_futex(u32 __user *uaddr, int op, u32 val, ktime_t *timeout,
+@@ -455,36 +483,14 @@ COMPAT_SYSCALL_DEFINE3(get_robust_list, int, pid,
+ 			compat_uptr_t __user *, head_ptr,
+ 			compat_size_t __user *, len_ptr)
+ {
+-	struct compat_robust_list_head __user *head;
+-	unsigned long ret;
+-	struct task_struct *p;
+-
+-	rcu_read_lock();
+-
+-	ret = -ESRCH;
+-	if (!pid)
+-		p = current;
+-	else {
+-		p = find_task_by_vpid(pid);
+-		if (!p)
+-			goto err_unlock;
+-	}
+-
+-	ret = -EPERM;
+-	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
+-		goto err_unlock;
++	struct compat_robust_list_head __user *head = futex_get_robust_list_common(pid, true);
+ 
+-	head = p->compat_robust_list;
+-	rcu_read_unlock();
++	if (IS_ERR(head))
++		return PTR_ERR(head);
+ 
+ 	if (put_user(sizeof(*head), len_ptr))
+ 		return -EFAULT;
+ 	return put_user(ptr_to_compat(head), head_ptr);
+-
+-err_unlock:
+-	rcu_read_unlock();
+-
+-	return ret;
+ }
+ #endif /* CONFIG_COMPAT */
+ 
 -- 
 2.51.0
 
