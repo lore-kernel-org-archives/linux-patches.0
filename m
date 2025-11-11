@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF51DF258;
-	Tue, 11 Nov 2025 00:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D93C1DF258;
+	Tue, 11 Nov 2025 00:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822442; cv=none; b=sQ3S2Sa6CSjVibVOuYNvTJeIsfsJv99mSI1tEEIJetnieiQJBEWAvgWcS9SZ5o2iZPqc4hR7sL9q6LMDl+Ez7xsMfWxVXVno/jHSaoo4Mg9j7Hi6kklfftf7aG5jJIkA9WFoNtd1gW6sBBcsg+uJj2+gumQ7GOhVDl5Xe9K4/vc=
+	t=1762822444; cv=none; b=BvnEj58J97j/HBeyUkttIBDFTp8wh/riYkG1ZFRiN/Un6DjbHV+1jSb4G4HlV+dz8JIXd4LjHKdZaIFr6yhzyby4fvk+mHXKHKlVTyDnA0Ud37K6ZLU5rXfYfe3Vv5pQcxDjAudM0aBEnJDSwcPnzRDefJld2WXp+IyOOQhR3oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822442; c=relaxed/simple;
-	bh=xXpDNPWrOlnyiBz+JMhdey4hVDnLFhN2G8Hdi0oKTYM=;
+	s=arc-20240116; t=1762822444; c=relaxed/simple;
+	bh=PE2XE7kTrN/518qo/4Y5V4L5qgMoQzpSTcg+Ytap1iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okYe8NAiahBEkoEscS3m1YY8HY8orPr1nkpfg4e6zPWc2+WE/or8Kqp2a68AvTFh6ajBfRFojjFLyAk3mbJ/zOU8cPSP0BajJdkmmAnl3jzgyrp/zcwxzraWEqdYvd8thQ+j9piA4ZieQC/DT4Lx6fhxkMH8do/xnBFPtL3GfAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdHSc1JM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOoyzKN/raVrwVGUGs3GIl7XuCAp1m9z2bBeIV2nRXrKkcTwhENaIVaiYZHv/pLAZV8iF2h9zJR4kf5+VUBlKXgFLtzyYuxzhyzsM0LD/zueUv5vurzPLC493fDva5mxmsw+TAorruXwASe8W+Z7fM6MGPp0tFCS/XgBNZ3/p1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAsaDixf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdHSc1JM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75B2C19424;
-	Tue, 11 Nov 2025 00:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAsaDixf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C9DC4CEF5;
+	Tue, 11 Nov 2025 00:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822442;
-	bh=xXpDNPWrOlnyiBz+JMhdey4hVDnLFhN2G8Hdi0oKTYM=;
+	s=korg; t=1762822444;
+	bh=PE2XE7kTrN/518qo/4Y5V4L5qgMoQzpSTcg+Ytap1iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdHSc1JM5vNMaSpfxrbOQKHO6Jt4GdlOYhlvofsmbLjQMgZ91ybeA7JGHt1U5rDyJ
-	 1bLWEtm4KTZXSP9bG8gUe2nTjKv1woYwuvfoRGPH6KAHc+OcnS3MdCYIfbeO86KeA0
-	 tSwSFqUg3mMUxQ/xqWbXTl6bXyj4lEW6zfDMkuik=
+	b=aAsaDixf3yK+qYbedwD+86Y3257rYuFdtqW+GL9EBEefNoIlpO6Nm4pcxtLdxPpTc
+	 +Pf897NdFZpJaOIsPzaikcBVMvopbX7JHV2WRml0wIXS4Hvm7FQZ8TEmLL+nAYWS7n
+	 xHerOfvOQhx9CG1fZHP2+/xK8w1IoevOFZp/ASb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Smith <itistotalbotnet@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/565] sfc: fix potential memory leak in efx_mae_process_mport()
-Date: Tue, 11 Nov 2025 09:38:27 +0900
-Message-ID: <20251111004528.057191906@linuxfoundation.org>
+Subject: [PATCH 6.17 082/849] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Fiji
+Date: Tue, 11 Nov 2025 09:34:12 +0900
+Message-ID: <20251111004538.403589600@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: John Smith <itistotalbotnet@gmail.com>
 
-[ Upstream commit 46a499aaf8c27476fd05e800f3e947bfd71aa724 ]
+[ Upstream commit 07a13f913c291d6ec72ee4fc848d13ecfdc0e705 ]
 
-In efx_mae_enumerate_mports(), memory allocated for mae_mport_desc is
-passed as a argument to efx_mae_process_mport(), but when the error path
-in efx_mae_process_mport() gets executed, the memory allocated for desc
-gets leaked.
+Previously this was initialized with zero which represented PCIe Gen
+1.0 instead of using the
+maximum value from the speed table which is the behaviour of all other
+smumgr implementations.
 
-Fix that by freeing the memory allocation before returning error.
-
-Fixes: a6a15aca4207 ("sfc: enumerate mports in ef100")
-Acked-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20251023141844.25847-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 18edef19ea44 ("drm/amd/powerplay: implement fw image related smu interface for Fiji.")
+Signed-off-by: John Smith <itistotalbotnet@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c52238c9fb414555c68340cd80e487d982c1921c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/mae.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/mae.c b/drivers/net/ethernet/sfc/mae.c
-index 10709d828a636..21d5596460732 100644
---- a/drivers/net/ethernet/sfc/mae.c
-+++ b/drivers/net/ethernet/sfc/mae.c
-@@ -1101,6 +1101,9 @@ void efx_mae_remove_mport(void *desc, void *arg)
- 	kfree(mport);
- }
- 
-+/*
-+ * Takes ownership of @desc, even if it returns an error
-+ */
- static int efx_mae_process_mport(struct efx_nic *efx,
- 				 struct mae_mport_desc *desc)
- {
-@@ -1111,6 +1114,7 @@ static int efx_mae_process_mport(struct efx_nic *efx,
- 	if (!IS_ERR_OR_NULL(mport)) {
- 		netif_err(efx, drv, efx->net_dev,
- 			  "mport with id %u does exist!!!\n", desc->mport_id);
-+		kfree(desc);
- 		return -EEXIST;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
+index 5e43ad2b29564..e7e497b166b3e 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
+@@ -2024,7 +2024,7 @@ static int fiji_init_smc_table(struct pp_hwmgr *hwmgr)
+ 	table->VoltageResponseTime = 0;
+ 	table->PhaseResponseTime = 0;
+ 	table->MemoryThermThrottleEnable = 1;
+-	table->PCIeBootLinkLevel = 0;      /* 0:Gen1 1:Gen2 2:Gen3*/
++	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
+ 	table->PCIeGenInterval = 1;
+ 	table->VRConfig = 0;
  
 -- 
 2.51.0
