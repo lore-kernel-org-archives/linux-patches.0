@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C2525D209;
-	Tue, 11 Nov 2025 01:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA1E266B6F;
+	Tue, 11 Nov 2025 01:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823632; cv=none; b=rd9Jeo+L9ewfqyDLvj7gF3UDONV7v/udwxEX9FoY/xfv2s8ew4lhfkJzpac/mbXzHjGLw8bUUSyC0D14+SCtBGdcN3NjAL+TWYJNfTnov7BicLgM86Yf3krCoL33+c66HlIY4y89s/hPDD8hzXjrNgwzlNtCK1RxqQvUXI/O0rw=
+	t=1762823634; cv=none; b=WKfa7dmukMKt4I+ltqq4ZUvarEHIG4oGEZgaw0UhIJOJCqO2DYUyA0m3za4D7bMRWJ031sX2fZw2ljdDwr78YjpWIVLwnCrshjVLycnkABM/UyZ3aunohLOmSB2yCE2ddVm/NooNbWyDl7UafrsukY5FTK98CjskZJXCr9B9SAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823632; c=relaxed/simple;
-	bh=TboICJPvuCnUHM8FDxaBtaaWxC25mmV/jduLscEoawo=;
+	s=arc-20240116; t=1762823634; c=relaxed/simple;
+	bh=kNC7ZHvs7hlG8WigqK46TozOzZUaRzeKHBb30VleHFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYEjE33X/hRB+DQKDHWQWkUlqmCAAXWyz+BtnuvwXIJNsHCaWEWPcVVyNf7gPEHBhVRgg9xc3wYuvxXu3JUrb7Lr39+YC3g/0zNoFNeQrlhqNJhWN7neN/Ptj6FkbTHLekOBHpYBrk7Nr/l0B1LyrZIPhmkMC13BByXeLafz7ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gn8wvORC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HnPazL3OwmipUswwNJJps0xcRjuxaXYBNK7imUr5o0bkFYkzUTy0ug9JG915BYgUiDVHn4JPwRe/Zk4QQoIoamV7uWlg6cxYifDnro8BJDzHhygK72UsSfRcUUygvB0KSMEbYEAWxP/WKHVVq++wvOcb9EnmxJCQMUxxyHGtqfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1W72TPfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gn8wvORC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5088EC2BC86;
-	Tue, 11 Nov 2025 01:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1W72TPfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8145C4CEF5;
+	Tue, 11 Nov 2025 01:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823631;
-	bh=TboICJPvuCnUHM8FDxaBtaaWxC25mmV/jduLscEoawo=;
+	s=korg; t=1762823634;
+	bh=kNC7ZHvs7hlG8WigqK46TozOzZUaRzeKHBb30VleHFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gn8wvORCrnvHSN5sJd5xdZlYXCEZ/fn3IzsVdVFs4ZaFepJaEoheZyQv+Oq/wyf9G
-	 D0aS4YuvbuJ7LuM0AgNpWCLqkHEGrnkgtbsm/y2EGPyznR23j7iVCQdfKzGg4dRoNu
-	 deXW+8qv9nfhPso5DdR/FLTgbOjsz4VGAxs7RYfE=
+	b=1W72TPfulGt7kCXvGexIkvaZ3wgUpPfztefK5N8rz0CxFjVszaLvvzqB3DacAi5K9
+	 gDVS/6Veq8XQxU4nUHipwZPZyA+W1qPdUrW9/MOm+7YlEhZsdb/hsK/7Jh+cG2/aJv
+	 EtuNaez5IllTBnkBTxDbchDKiWEJETOagok5/HbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/565] tcp: use dst_dev_rcu() in tcp_fastopen_active_disable_ofo_check()
-Date: Tue, 11 Nov 2025 09:42:12 +0900
-Message-ID: <20251111004533.092397371@linuxfoundation.org>
+Subject: [PATCH 6.12 290/565] drm/panthor: check bo offset alignment in vm bind
+Date: Tue, 11 Nov 2025 09:42:26 +0900
+Message-ID: <20251111004533.400626766@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,42 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit b62a59c18b692f892dcb8109c1c2e653b2abc95c ]
+[ Upstream commit 5afa9d2a9bb1410f816e0123846047288b16e4b9 ]
 
-Use RCU to avoid a pair of atomic operations and a potential
-UAF on dst_dev()->flags.
+Fail early from panthor_vm_bind_prepare_op_ctx instead of late from
+ops->map_pages.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250828200116.3532255-1-olvaffe@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_fastopen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index 86c995dc1c5e5..f9460e7531ba7 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -575,11 +575,12 @@ void tcp_fastopen_active_disable_ofo_check(struct sock *sk)
- 		}
- 	} else if (tp->syn_fastopen_ch &&
- 		   atomic_read(&sock_net(sk)->ipv4.tfo_active_disable_times)) {
--		dst = sk_dst_get(sk);
--		dev = dst ? dst_dev(dst) : NULL;
-+		rcu_read_lock();
-+		dst = __sk_dst_get(sk);
-+		dev = dst ? dst_dev_rcu(dst) : NULL;
- 		if (!(dev && (dev->flags & IFF_LOOPBACK)))
- 			atomic_set(&sock_net(sk)->ipv4.tfo_active_disable_times, 0);
--		dst_release(dst);
-+		rcu_read_unlock();
- 	}
- }
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 2214dbf472fa4..d548a6e0311dd 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1219,7 +1219,7 @@ static int panthor_vm_prepare_map_op_ctx(struct panthor_vm_op_ctx *op_ctx,
+ 	    (flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) != DRM_PANTHOR_VM_BIND_OP_TYPE_MAP)
+ 		return -EINVAL;
  
+-	/* Make sure the VA and size are aligned and in-bounds. */
++	/* Make sure the VA and size are in-bounds. */
+ 	if (size > bo->base.base.size || offset > bo->base.base.size - size)
+ 		return -EINVAL;
+ 
+@@ -2389,7 +2389,7 @@ panthor_vm_bind_prepare_op_ctx(struct drm_file *file,
+ 	int ret;
+ 
+ 	/* Aligned on page size. */
+-	if (!IS_ALIGNED(op->va | op->size, vm_pgsz))
++	if (!IS_ALIGNED(op->va | op->size | op->bo_offset, vm_pgsz))
+ 		return -EINVAL;
+ 
+ 	switch (op->flags & DRM_PANTHOR_VM_BIND_OP_TYPE_MASK) {
 -- 
 2.51.0
 
