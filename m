@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1014C97;
-	Tue, 11 Nov 2025 00:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352ED4C97;
+	Tue, 11 Nov 2025 00:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822595; cv=none; b=jFyaIfA/NHyqUharPTN7Yscd2AS5cKiNNFY4D8qus00EVGtjka6sk1hDDD8VlYhopmhE+EZd4JEfg/54HblckfL04cBXNLgC55OqfYhLwX+Zs0Y0sY/9Wl1WS1gRAkN6S1GJwrRz5IODrg2VZtwiyAt9TQ1/PyaLPU2IuEwLz8Y=
+	t=1762822597; cv=none; b=ZsZF88EhTAqogmCl89I6EKY/QXdn3D7FLxxwiM0I1Q1dF5SBnGPlbf1Dmcv1/gzr/x/3cuOm9dbn0mLeJa9pfDzdc4MNiP4OsRSrGa9sdoqZKfEugf1NjKKYbBSyHpfko0S9wgOYSG2ZzHBr9fNhjZAt1zsSNxTsHjkQnRkKeiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822595; c=relaxed/simple;
-	bh=X4bHshdUPSahY1+xvfvgsQP8sE/bWi76sCWOjyQ0Rxk=;
+	s=arc-20240116; t=1762822597; c=relaxed/simple;
+	bh=yZ30SqsdCbUdOrd3nXnq5zZl0RvISKKkScZTwKv5vIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2vw6qNrCI3ygt2cMWQyh/uBIblES00HC1feTEcOIlIQnQciYk8VpLQ2HMc2oq8xB/PzM3LWKTze6u2gdEqDx9LF9/4FIFkYe8h8NWDmyeMTEZUKxBhaX32TIOuirOX+uoYEvxTaC5P6qSqxzI3hX9EEqvCdjPDemuOyu+2PWtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bz7KHwTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgvGKUCZsMKkMe/zACrshqz/g1mX600Z07uwsY/Z/WuHVcSXlwWasTE9wCBCE09P4r7BLb0f3fXqiHU/DxCmgXYt/ip6FyThCYPek3umkfhR51Vuo8GMA8o3UBpBTGaLt8FOQLZ0N94JW6cO7MmSNsIKMaJ9OTJxPAP/XVpyhEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVTnKL5Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bz7KHwTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8526DC19421;
-	Tue, 11 Nov 2025 00:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVTnKL5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FBBC116B1;
+	Tue, 11 Nov 2025 00:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822594;
-	bh=X4bHshdUPSahY1+xvfvgsQP8sE/bWi76sCWOjyQ0Rxk=;
+	s=korg; t=1762822597;
+	bh=yZ30SqsdCbUdOrd3nXnq5zZl0RvISKKkScZTwKv5vIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bz7KHwTK9ok+Rft4GGfmVMt8witjUz4+4Po+3GJ9OFSeVWobW9/TUFUArzQOE5JQQ
-	 ayir05I8k10sWq9W2+ncC+SCucF7CvDUmnZhv4IdeOu19FkW0pIsVS+G7UCYdV11hD
-	 WuoltDUFod/mnpntdgECc4MQHAJPgj3MUVx3aw5s=
+	b=TVTnKL5QgmJUwrRGJ5oKCr4EgDkinypzYwUhBlxaTOPCm9GUqGhy4puAkc243rCnU
+	 fvhYRTFjV4/zKoaKzym101PYTpEtTXGAWyj7NBD8GiYJHAHknL8SeSbvSl0DLJ+QEx
+	 /fC9rYxfiKIIbRwoX466GdbB4bUOAR4NBg/9Io8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 081/565] x86/CPU/AMD: Add RDSEED fix for Zen5
-Date: Tue, 11 Nov 2025 09:38:57 +0900
-Message-ID: <20251111004528.790455929@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Vineet Gupta <vgupta@kernel.org>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 144/849] arc: Fix __fls() const-foldability via __builtin_clzl()
+Date: Tue, 11 Nov 2025 09:35:14 +0900
+Message-ID: <20251111004539.885026039@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,79 +49,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Kees Cook <kees@kernel.org>
 
-commit 607b9fb2ce248cc5b633c5949e0153838992c152 upstream.
+[ Upstream commit a3fecb9160482367365cc384c59dd220b162b066 ]
 
-There's an issue with RDSEED's 16-bit and 32-bit register output
-variants on Zen5 which return a random value of 0 "at a rate inconsistent
-with randomness while incorrectly signaling success (CF=1)". Search the
-web for AMD-SB-7055 for more detail.
+While tracking down a problem where constant expressions used by
+BUILD_BUG_ON() suddenly stopped working[1], we found that an added static
+initializer was convincing the compiler that it couldn't track the state
+of the prior statically initialized value. Tracing this down found that
+ffs() was used in the initializer macro, but since it wasn't marked with
+__attribute__const__, the compiler had to assume the function might
+change variable states as a side-effect (which is not true for ffs(),
+which provides deterministic math results).
 
-Add a fix glue which checks microcode revisions.
+For arc architecture with CONFIG_ISA_ARCV2=y, the __fls() function
+uses __builtin_arc_fls() which lacks GCC's const attribute, preventing
+compile-time constant folding, and KUnit testing of ffs/fls fails on
+arc[3]. A patch[2] to GCC to solve this has been sent.
 
-  [ bp: Add microcode revisions checking, rewrite. ]
+Add a fix for this by handling compile-time constants with the standard
+__builtin_clzl() builtin (which has const attribute) while preserving
+the optimized arc-specific builtin for runtime cases. This has the added
+benefit of skipping runtime calculation of compile-time constant values.
+Even with the GCC bug fixed (which is about "attribute const") this is a
+good change to avoid needless runtime costs, and should be done
+regardless of the state of GCC's bug.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20251018024010.4112396-1-gourry@gourry.net
-[ bp: 6.12 backport: use the alternative microcode version checking. ]
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Build tested ARCH=arc allyesconfig with GCC arc-linux 15.2.0.
+
+Link: https://github.com/KSPP/linux/issues/364 [1]
+Link: https://gcc.gnu.org/pipermail/gcc-patches/2025-August/693273.html
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202508031025.doWxtzzc-lkp@intel.com/ [3]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/amd.c |   35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ arch/arc/include/asm/bitops.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1018,8 +1018,43 @@ static void init_amd_zen4(struct cpuinfo
- 	}
- }
- 
-+static bool check_rdseed_microcode(void)
-+{
-+	struct cpuinfo_x86 *c = &boot_cpu_data;
-+	union zen_patch_rev p;
-+	u32 min_rev = 0;
-+
-+	p.ext_fam	= c->x86 - 0xf;
-+	p.model		= c->x86_model;
-+	p.ext_model	= c->x86_model >> 4;
-+	p.stepping	= c->x86_stepping;
-+	/* reserved bits are expected to be 0 in test below */
-+	p.__reserved	= 0;
-+
-+	if (cpu_has(c, X86_FEATURE_ZEN5)) {
-+		switch (p.ucode_rev >> 8) {
-+		case 0xb0021:	min_rev = 0xb00215a; break;
-+		case 0xb1010:	min_rev = 0xb101054; break;
-+		default:
-+			pr_debug("%s: ucode_rev: 0x%x, current revision: 0x%x\n",
-+				 __func__, p.ucode_rev, c->microcode);
-+			return false;
-+		}
-+	}
-+
-+	if (!min_rev)
-+		return false;
-+
-+	return c->microcode >= min_rev;
-+}
-+
- static void init_amd_zen5(struct cpuinfo_x86 *c)
+diff --git a/arch/arc/include/asm/bitops.h b/arch/arc/include/asm/bitops.h
+index 5340c28713927..df894235fdbc6 100644
+--- a/arch/arc/include/asm/bitops.h
++++ b/arch/arc/include/asm/bitops.h
+@@ -133,6 +133,8 @@ static inline __attribute__ ((const)) int fls(unsigned int x)
+  */
+ static inline __attribute__ ((const)) unsigned long __fls(unsigned long x)
  {
-+	if (!check_rdseed_microcode()) {
-+		clear_cpu_cap(c, X86_FEATURE_RDSEED);
-+		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
-+		pr_emerg_once("RDSEED32 is broken. Disabling the corresponding CPUID bit.\n");
-+	}
++	if (__builtin_constant_p(x))
++		return x ? BITS_PER_LONG - 1 - __builtin_clzl(x) : 0;
+ 	/* FLS insn has exactly same semantics as the API */
+ 	return	__builtin_arc_fls(x);
  }
- 
- static void init_amd(struct cpuinfo_x86 *c)
+-- 
+2.51.0
+
 
 
