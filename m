@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BFF306491;
-	Tue, 11 Nov 2025 01:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8535D3064AB;
+	Tue, 11 Nov 2025 01:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825550; cv=none; b=hVeUtmB+STS+PSFYfUhDmuoDS8SPBAYn/OLot6ZTiyCGD2uxMqT2mSPpTajUmMvGxLSrJwQLQDyOeRc6VLG8HUOxJ+xvvCZRE06Yxnp6mktVheQ3qTDw5egLoqTxYMbc/qML2d7lJvSTdEd1LO3D2jooeuldC0szpEYghpl/Nk4=
+	t=1762825552; cv=none; b=bGdO/dvHFH/LsWV8ayQhW8vPM3YWbRfcK7Zyl+EKiiQMpl2Hh1wTv0/OAP3rY617idcH6grrhRLGjqESFXvnh5eEQZJXnimsIaDiYBxEPQPijBR0vbff5kNhntqLgz4niVUrVwURr4KkqNkfUQ/R2VWLQhQexVwwaFK6Onj11gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825550; c=relaxed/simple;
-	bh=zDQ5quEh/+ZJW2t5RP8rkyZ/2ARYXiD5PIgxBn9cZ6M=;
+	s=arc-20240116; t=1762825552; c=relaxed/simple;
+	bh=fmGK9sTPKpu9lsf9Pv2eNZOahb9GNLPHhtVJkwq7LVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+++/NEXzE3aif3JHehBdBfYvyBd/xB8XgpbkEGgVHOVjk7fAEgm/34DI0E0AbZ7JgPZVdCyH3FUxToF50/DUa3nMC60QLbT8baaA8Ay9lyFhh/yBISxA6JJ+sK8qTxm/qL28oGF9etXsGPy75CXSyqZ27R3lf8X6W3gh/xzQKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+JwUozv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VrTeBoLD4MCDV//4UYDiyyuvClg76negsfYWR1SIS1svOlwzLKNOxYU+Bs9iuSBI1hBzuY6VBeDlt9tVPgWg1vOz4gzCSuGhqzkzLsHk6tGKRKZYM6SV4/rZHobdN4z4/Qi4FRsQk4/rn2X40GPl5/K4a+SIt0zkAbbu+F5oL/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIR7wjXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+JwUozv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CC7C116D0;
-	Tue, 11 Nov 2025 01:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIR7wjXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E59C19424;
+	Tue, 11 Nov 2025 01:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825550;
-	bh=zDQ5quEh/+ZJW2t5RP8rkyZ/2ARYXiD5PIgxBn9cZ6M=;
+	s=korg; t=1762825552;
+	bh=fmGK9sTPKpu9lsf9Pv2eNZOahb9GNLPHhtVJkwq7LVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+JwUozvzzSAFMctCt8O3Y5R5FKq7NqfV4MWduU2SspTMruTaScnruSutbFsD6NMv
-	 7b+N660dBIII3jUtl3bpmmbJqenvlTjD4x4a8jI6cbnbWgIr0HtlaBJ62QJBJzePxF
-	 HiKoJoro5+POG1aB6t550yPbMJogmnk5jWTglKwI=
+	b=oIR7wjXO1uppZFpvpIrDm7CualYv+cXVcym7xFmifhf8CSyW0Imdfunx8SMeUeM64
+	 0sbCBQl0jBGpyoOIiN4F2KVSRkISkUMo9vgX1rwMobfXmouagILcfoCGBw3zBBQdmx
+	 trG/5I+kFDSIw8/V1H/GYWZkDG6IrwIoKefIs2kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.17 807/849] fscrypt: fix left shift underflow when inode->i_blkbits > PAGE_SHIFT
-Date: Tue, 11 Nov 2025 09:46:17 +0900
-Message-ID: <20251111004555.938394586@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.17 808/849] drm/sched: Fix deadlock in drm_sched_entity_kill_jobs_cb
+Date: Tue, 11 Nov 2025 09:46:18 +0900
+Message-ID: <20251111004555.960781175@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -44,107 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-commit 1e39da974ce621ed874c6d3aaf65ad14848c9f0d upstream.
+commit 487df8b698345dd5a91346335f05170ed5f29d4e upstream.
 
-When simulating an nvme device on qemu with both logical_block_size and
-physical_block_size set to 8 KiB, an error trace appears during
-partition table reading at boot time. The issue is caused by
-inode->i_blkbits being larger than PAGE_SHIFT, which leads to a left
-shift of -1 and triggering a UBSAN warning.
+The Mesa issue referenced below pointed out a possible deadlock:
 
-[    2.697306] ------------[ cut here ]------------
-[    2.697309] UBSAN: shift-out-of-bounds in fs/crypto/inline_crypt.c:336:37
-[    2.697311] shift exponent -1 is negative
-[    2.697315] CPU: 3 UID: 0 PID: 274 Comm: (udev-worker) Not tainted 6.18.0-rc2+ #34 PREEMPT(voluntary)
-[    2.697317] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    2.697320] Call Trace:
-[    2.697324]  <TASK>
-[    2.697325]  dump_stack_lvl+0x76/0xa0
-[    2.697340]  dump_stack+0x10/0x20
-[    2.697342]  __ubsan_handle_shift_out_of_bounds+0x1e3/0x390
-[    2.697351]  bh_get_inode_and_lblk_num.cold+0x12/0x94
-[    2.697359]  fscrypt_set_bio_crypt_ctx_bh+0x44/0x90
-[    2.697365]  submit_bh_wbc+0xb6/0x190
-[    2.697370]  block_read_full_folio+0x194/0x270
-[    2.697371]  ? __pfx_blkdev_get_block+0x10/0x10
-[    2.697375]  ? __pfx_blkdev_read_folio+0x10/0x10
-[    2.697377]  blkdev_read_folio+0x18/0x30
-[    2.697379]  filemap_read_folio+0x40/0xe0
-[    2.697382]  filemap_get_pages+0x5ef/0x7a0
-[    2.697385]  ? mmap_region+0x63/0xd0
-[    2.697389]  filemap_read+0x11d/0x520
-[    2.697392]  blkdev_read_iter+0x7c/0x180
-[    2.697393]  vfs_read+0x261/0x390
-[    2.697397]  ksys_read+0x71/0xf0
-[    2.697398]  __x64_sys_read+0x19/0x30
-[    2.697399]  x64_sys_call+0x1e88/0x26a0
-[    2.697405]  do_syscall_64+0x80/0x670
-[    2.697410]  ? __x64_sys_newfstat+0x15/0x20
-[    2.697414]  ? x64_sys_call+0x204a/0x26a0
-[    2.697415]  ? do_syscall_64+0xb8/0x670
-[    2.697417]  ? irqentry_exit_to_user_mode+0x2e/0x2a0
-[    2.697420]  ? irqentry_exit+0x43/0x50
-[    2.697421]  ? exc_page_fault+0x90/0x1b0
-[    2.697422]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[    2.697425] RIP: 0033:0x75054cba4a06
-[    2.697426] Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
-[    2.697427] RSP: 002b:00007fff973723a0 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
-[    2.697430] RAX: ffffffffffffffda RBX: 00005ea9a2c02760 RCX: 000075054cba4a06
-[    2.697432] RDX: 0000000000002000 RSI: 000075054c190000 RDI: 000000000000001b
-[    2.697433] RBP: 00007fff973723c0 R08: 0000000000000000 R09: 0000000000000000
-[    2.697434] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-[    2.697434] R13: 00005ea9a2c027c0 R14: 00005ea9a2be5608 R15: 00005ea9a2be55f0
-[    2.697436]  </TASK>
-[    2.697436] ---[ end trace ]---
+[ 1231.611031]  Possible interrupt unsafe locking scenario:
 
-This situation can happen for block devices because when
-CONFIG_TRANSPARENT_HUGEPAGE is enabled, the maximum logical_block_size
-is 64 KiB. set_init_blocksize() then sets the block device
-inode->i_blkbits to 13, which is within this limit.
+[ 1231.611033]        CPU0                    CPU1
+[ 1231.611034]        ----                    ----
+[ 1231.611035]   lock(&xa->xa_lock#17);
+[ 1231.611038]                                local_irq_disable();
+[ 1231.611039]                                lock(&fence->lock);
+[ 1231.611041]                                lock(&xa->xa_lock#17);
+[ 1231.611044]   <Interrupt>
+[ 1231.611045]     lock(&fence->lock);
+[ 1231.611047]
+                *** DEADLOCK ***
 
-File I/O does not trigger this problem because for filesystems that do
-not support the FS_LBS feature, sb_set_blocksize() prevents
-sb->s_blocksize_bits from being larger than PAGE_SHIFT. During inode
-allocation, alloc_inode()->inode_init_always() assigns inode->i_blkbits
-from sb->s_blocksize_bits. Currently, only xfs_fs_type has the FS_LBS
-flag, and since xfs I/O paths do not reach submit_bh_wbc(), it does not
-hit the left-shift underflow issue.
+In this example, CPU0 would be any function accessing job->dependencies
+through the xa_* functions that don't disable interrupts (eg:
+drm_sched_job_add_dependency(), drm_sched_entity_kill_jobs_cb()).
 
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Fixes: 47dd67532303 ("block/bdev: lift block size restrictions to 64k")
-Cc: stable@vger.kernel.org
-[EB: use folio_pos() and consolidate the two shifts by i_blkbits]
-Link: https://lore.kernel.org/r/20251105003642.42796-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+CPU1 is executing drm_sched_entity_kill_jobs_cb() as a fence signalling
+callback so in an interrupt context. It will deadlock when trying to
+grab the xa_lock which is already held by CPU0.
+
+Replacing all xa_* usage by their xa_*_irq counterparts would fix
+this issue, but Christian pointed out another issue: dma_fence_signal
+takes fence.lock and so does dma_fence_add_callback.
+
+  dma_fence_signal() // locks f1.lock
+  -> drm_sched_entity_kill_jobs_cb()
+  -> foreach dependencies
+     -> dma_fence_add_callback() // locks f2.lock
+
+This will deadlock if f1 and f2 share the same spinlock.
+
+To fix both issues, the code iterating on dependencies and re-arming them
+is moved out to drm_sched_entity_kill_jobs_work().
+
+Cc: stable@vger.kernel.org # v6.2+
+Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/issues/13908
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+[phasta: commit message nits]
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251104095358.15092-1-pierre-eric.pelloux-prayer@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/inline_crypt.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |   34 +++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/fs/crypto/inline_crypt.c b/fs/crypto/inline_crypt.c
-index 5dee7c498bc8..ed6e926226b5 100644
---- a/fs/crypto/inline_crypt.c
-+++ b/fs/crypto/inline_crypt.c
-@@ -333,8 +333,7 @@ static bool bh_get_inode_and_lblk_num(const struct buffer_head *bh,
- 	inode = mapping->host;
- 
- 	*inode_ret = inode;
--	*lblk_num_ret = ((u64)folio->index << (PAGE_SHIFT - inode->i_blkbits)) +
--			(bh_offset(bh) >> inode->i_blkbits);
-+	*lblk_num_ret = (folio_pos(folio) + bh_offset(bh)) >> inode->i_blkbits;
- 	return true;
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -173,26 +173,15 @@ int drm_sched_entity_error(struct drm_sc
  }
+ EXPORT_SYMBOL(drm_sched_entity_error);
  
--- 
-2.51.2
-
++static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
++					  struct dma_fence_cb *cb);
++
+ static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
+ {
+ 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
+-
+-	drm_sched_fence_scheduled(job->s_fence, NULL);
+-	drm_sched_fence_finished(job->s_fence, -ESRCH);
+-	WARN_ON(job->s_fence->parent);
+-	job->sched->ops->free_job(job);
+-}
+-
+-/* Signal the scheduler finished fence when the entity in question is killed. */
+-static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
+-					  struct dma_fence_cb *cb)
+-{
+-	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
+-						 finish_cb);
++	struct dma_fence *f;
+ 	unsigned long index;
+ 
+-	dma_fence_put(f);
+-
+ 	/* Wait for all dependencies to avoid data corruptions */
+ 	xa_for_each(&job->dependencies, index, f) {
+ 		struct drm_sched_fence *s_fence = to_drm_sched_fence(f);
+@@ -220,6 +209,21 @@ static void drm_sched_entity_kill_jobs_c
+ 		dma_fence_put(f);
+ 	}
+ 
++	drm_sched_fence_scheduled(job->s_fence, NULL);
++	drm_sched_fence_finished(job->s_fence, -ESRCH);
++	WARN_ON(job->s_fence->parent);
++	job->sched->ops->free_job(job);
++}
++
++/* Signal the scheduler finished fence when the entity in question is killed. */
++static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
++					  struct dma_fence_cb *cb)
++{
++	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
++						 finish_cb);
++
++	dma_fence_put(f);
++
+ 	INIT_WORK(&job->work, drm_sched_entity_kill_jobs_work);
+ 	schedule_work(&job->work);
+ }
 
 
