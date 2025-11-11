@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AE526E703;
-	Tue, 11 Nov 2025 01:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A9D2701DC;
+	Tue, 11 Nov 2025 01:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823054; cv=none; b=ZfUqqc8V4TutpH2BaCcqqQ6WY/FXnR/FlWLD6mM04LH4reGi+ZTT/2SVlHMkxjVJwTY11HHmX1pSQGdWO5ZKwR6ByCiWimPuanumxcZ7Rp6bWSTfzzQru39hkfYT3762nxePEFOalLF7oX/cECZYThlU22+fZ4V+PbG8xZtCosQ=
+	t=1762823057; cv=none; b=EfHEjOuQYneJftFFb9eAHBW10o9D2eIm8oVFlsQiePtMJdfICaigX8bmM5j/Lmoxx/QsJ1/60Rh5zy0utueqtAiJRK1ghtiVQT82ncirbTzEx4nSkfE5qWL3xj+wrH0J2lJgfXSFD3FmstVp7WCX+MkZufJQz4Bi/VKpBIkscsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823054; c=relaxed/simple;
-	bh=GbQX32j92UdVHxDE0m1f8+ensratgMT6qazyzZzL/zI=;
+	s=arc-20240116; t=1762823057; c=relaxed/simple;
+	bh=LYq5ZQ/cHQlAOiPQm51imo56oRyxEg4fZryKB36Tphg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lC2GQOy/KrREgQaYpGL7Cfpc4ckrk9rff2nRa6eUCI615emkBj+QJNdwqP+xyOCpzfhauVHTpR/hLMgV3WKXJFVK4CqJeJiABI4kGgSzwSXx2Rv9mQgqQjXbuUVA+bu8h+8Qgj5tIQ4oqsqIpWm2bVfpBkd5XgW0n6Ka78G+DT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqpisoNb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltrSAXKeVsNA56xwLRSDraabgdm2KJsS71bo1oSX/U04VxaLIJ3lV4utJVciQKv7gcWex0LjrhYmSSY7RF9AVeF7LgqutjB7DgBGUDpoJW3Mc+IQtuMURX5fs6QVroSqmnGJJrAsfpvNUgQgz1QD0NAgzirJRyRLg7DAHaIDhWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLelRdWa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqpisoNb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2E3C19424;
-	Tue, 11 Nov 2025 01:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLelRdWa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36845C19424;
+	Tue, 11 Nov 2025 01:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823054;
-	bh=GbQX32j92UdVHxDE0m1f8+ensratgMT6qazyzZzL/zI=;
+	s=korg; t=1762823056;
+	bh=LYq5ZQ/cHQlAOiPQm51imo56oRyxEg4fZryKB36Tphg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqpisoNb2/qkjTaLZiN61TtQUr9k26QSzwhFwr++FmDqg4vPrhSYnlmz7vMC1arkE
-	 Gxlbtox0HMHcwr3oI8nzkzyetDUPuthrDsJGxd8BDvywFg722KWfX/7pugJC0jXD7r
-	 zNMY3flbjsxvEIMBAejrTqzZM8PyPW9M+4ipsVUI=
+	b=XLelRdWaM5cFyTBaxwDJecGguMNgj+FXwlgas4rEQjN9Nf1NMA56gr1hhAaBjUuvb
+	 MoxD1C89ZPsaPLrplCdvZjpDnQtUqFNp2sCm6KAI4pS99r9fEv8VxSghQtUHl/M03z
+	 937tSeWUBRctNF0at6gMPRYmT+vbtRsa6iZHJhVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Lee Jones <lee@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 222/849] mfd: qnap-mcu: Include linux/types.h in qnap-mcu.h shared header
-Date: Tue, 11 Nov 2025 09:36:32 +0900
-Message-ID: <20251111004541.810904936@linuxfoundation.org>
+Subject: [PATCH 6.12 163/565] tools/power x86_energy_perf_policy: Fix incorrect fopen mode usage
+Date: Tue, 11 Nov 2025 09:40:19 +0900
+Message-ID: <20251111004530.604071412@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,50 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 5e1c88679174e4bfe5d152060b06d370bd85de80 ]
+[ Upstream commit 62127655b7ab7b8c2997041aca48a81bf5c6da0c ]
 
-Relying on other components to include those basic types is unreliable
-and may cause compile errors like:
+The fopen_or_die() function was previously hardcoded
+to open files in read-only mode ("r"), ignoring the
+mode parameter passed to it. This patch corrects
+fopen_or_die() to use the provided mode argument,
+allowing for flexible file access as intended.
 
-../include/linux/mfd/qnap-mcu.h:13:9: error: unknown type name ‘u32’
-   13 |         u32 baud_rate;
-      |         ^~~
-../include/linux/mfd/qnap-mcu.h:17:9: error: unknown type name ‘bool’
-   17 |         bool usb_led;
-      |         ^~~~
+Additionally, the call to fopen_or_die() in
+err_on_hypervisor() incorrectly used the mode
+"ro", which is not a valid fopen mode. This is
+fixed to use the correct "r" mode.
 
-So make sure, the types used in the header are available.
-
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250804130726.3180806-2-heiko@sntech.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mfd/qnap-mcu.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/mfd/qnap-mcu.h b/include/linux/mfd/qnap-mcu.h
-index 8d48c212fd444..42bf523f9a5b0 100644
---- a/include/linux/mfd/qnap-mcu.h
-+++ b/include/linux/mfd/qnap-mcu.h
-@@ -7,6 +7,8 @@
- #ifndef _LINUX_QNAP_MCU_H_
- #define _LINUX_QNAP_MCU_H_
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index ebda9c366b2ba..c883f211dbcc9 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -630,7 +630,7 @@ void cmdline(int argc, char **argv)
+  */
+ FILE *fopen_or_die(const char *path, const char *mode)
+ {
+-	FILE *filep = fopen(path, "r");
++	FILE *filep = fopen(path, mode);
  
-+#include <linux/types.h>
-+
- struct qnap_mcu;
+ 	if (!filep)
+ 		err(1, "%s: open failed", path);
+@@ -644,7 +644,7 @@ void err_on_hypervisor(void)
+ 	char *buffer;
  
- struct qnap_mcu_variant {
+ 	/* On VMs /proc/cpuinfo contains a "flags" entry for hypervisor */
+-	cpuinfo = fopen_or_die("/proc/cpuinfo", "ro");
++	cpuinfo = fopen_or_die("/proc/cpuinfo", "r");
+ 
+ 	buffer = malloc(4096);
+ 	if (!buffer) {
 -- 
 2.51.0
 
