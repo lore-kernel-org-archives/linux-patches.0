@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7894A2D94B7;
-	Tue, 11 Nov 2025 01:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B8FA944;
+	Tue, 11 Nov 2025 01:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824617; cv=none; b=DCaqZQ0OgkfU7e6yl/LrUiBMmuLcdTh6sgOGx2b6zC2YGeDlMaO/E4HgpP6gCkNzfboz9jEXQhvZRiYfRKdmW0g/8MSV/60JvpWvZI2iVA//osCESvTF/KGvKcSyOQQKwnk3VyVFeptgCZ/2Fi5J6YqFidVZFaN7qxT9ULQYhUo=
+	t=1762824619; cv=none; b=tNslKvERpQiA+iDaKUJBxRGCFIf3kOCywP0R9KF/OxXrozqveGf4nNl3gxq86BEwExAHG5xKsBj5vepwZ8RuxynTn5sIBdD8JXWGbh1ZmUAaw/Szbt+gKIqjfHBMmTUTf6LAAjzQUJWCtTG9jPX2EtwZL6vga8NQsEA5plSZcn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824617; c=relaxed/simple;
-	bh=MKJSs8M2dyojSlq7uvpevFh0/cma1U/LB9wOYQH0DJQ=;
+	s=arc-20240116; t=1762824619; c=relaxed/simple;
+	bh=PIMtKJmhSBoKcnrpudUKp5XQ+6G6m7QAfF6Y3uX/Qhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBgsCLjUWchAhiUXihQw4nlX8oIRwIpMsQBwV5O/MSc9ftAHb2+7pSMXKo/ygfXKkT7xLQAWXpzi3xY+JFSE70wk5mdf1NG1aaVJo/Fbf36CVTMfv4H73M/orf4T1L5ozrm+zg8Q1f6ZqLozTo2i5LZshCDCm9eU/w3rG+YFIGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izQaaDJx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YyqnBIqFgmdl0U9N4sIUrnf6nr4zoExik1gnHjQn/I7oxPSi1unIQaUR8Fi1q/1twxGSrCQfX1yo5OkauQSqsci9QbGjhAqxEhWZa1funHgDYoyf9jxx46dEyMkfdDtF7ao3QPeZc6+j/GG4Rhc4u0myQaCdOe0fiVGoxf6wAps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlv7whHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izQaaDJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16270C16AAE;
-	Tue, 11 Nov 2025 01:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlv7whHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ED1C4CEF5;
+	Tue, 11 Nov 2025 01:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824617;
-	bh=MKJSs8M2dyojSlq7uvpevFh0/cma1U/LB9wOYQH0DJQ=;
+	s=korg; t=1762824619;
+	bh=PIMtKJmhSBoKcnrpudUKp5XQ+6G6m7QAfF6Y3uX/Qhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izQaaDJxGPCfESbCy/Ent3uDUdWYMcGcrwnNnC8Fnjd3WkBVdKc8w8VqtqxvK0yad
-	 f9+2sNFuevl+eOfGZLeiWGnKI+Z/pYA0UC1dog4rcaNd1BoMvIDQ4hxaEQ+y//JjCC
-	 ZNwwn5demI5XrKYtMYAxEEKjRW8z+WdzzogUCV+k=
+	b=Mlv7whHcw00K4ypGaVcIjAlL0wSi1JDXFYVPakkxIw8KXpP6qa9ggjvQhZ26bfSmt
+	 JHw3HHcuJxwkDu40O9JLc4n4o1PmmpIJ8eeJQ1VMQ8svagUXRHNEtFIT+quT+FiLs7
+	 aZSKGJxmz7w/9TXLmD8y2CC1ZRfKFtpKKv4/wg3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fd749c74105b0e1b302@syzkaller.appspotmail.com,
-	Qingfang Deng <dqfext@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Thomas Graf <tgraf@suug.ch>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 444/565] 6pack: drop redundant locking and refcounting
-Date: Tue, 11 Nov 2025 09:45:00 +0900
-Message-ID: <20251111004536.874446734@linuxfoundation.org>
+Subject: [PATCH 6.17 535/849] net/cls_cgroup: Fix task_get_classid() during qdisc run
+Date: Tue, 11 Nov 2025 09:41:45 +0900
+Message-ID: <20251111004549.350552938@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,175 +51,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 38b04ed7072e54086102eae2d05d03ffcdb4b695 ]
+[ Upstream commit 66048f8b3cc7e462953c04285183cdee43a1cb89 ]
 
-The TTY layer already serializes line discipline operations with
-tty->ldisc_sem, so the extra disc_data_lock and refcnt in 6pack
-are unnecessary.
+During recent testing with the netem qdisc to inject delays into TCP
+traffic, we observed that our CLS BPF program failed to function correctly
+due to incorrect classid retrieval from task_get_classid(). The issue
+manifests in the following call stack:
 
-Removing them simplifies the code and also resolves a lockdep warning
-reported by syzbot. The warning did not indicate a real deadlock, since
-the write-side lock was only taken in process context with hardirqs
-disabled.
+        bpf_get_cgroup_classid+5
+        cls_bpf_classify+507
+        __tcf_classify+90
+        tcf_classify+217
+        __dev_queue_xmit+798
+        bond_dev_queue_xmit+43
+        __bond_start_xmit+211
+        bond_start_xmit+70
+        dev_hard_start_xmit+142
+        sch_direct_xmit+161
+        __qdisc_run+102             <<<<< Issue location
+        __dev_xmit_skb+1015
+        __dev_queue_xmit+637
+        neigh_hh_output+159
+        ip_finish_output2+461
+        __ip_finish_output+183
+        ip_finish_output+41
+        ip_output+120
+        ip_local_out+94
+        __ip_queue_xmit+394
+        ip_queue_xmit+21
+        __tcp_transmit_skb+2169
+        tcp_write_xmit+959
+        __tcp_push_pending_frames+55
+        tcp_push+264
+        tcp_sendmsg_locked+661
+        tcp_sendmsg+45
+        inet_sendmsg+67
+        sock_sendmsg+98
+        sock_write_iter+147
+        vfs_write+786
+        ksys_write+181
+        __x64_sys_write+25
+        do_syscall_64+56
+        entry_SYSCALL_64_after_hwframe+100
 
-Reported-by: syzbot+5fd749c74105b0e1b302@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68c858b0.050a0220.3c6139.0d1c.GAE@google.com/
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250925051059.26876-1-dqfext@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The problem occurs when multiple tasks share a single qdisc. In such cases,
+__qdisc_run() may transmit skbs created by different tasks. Consequently,
+task_get_classid() retrieves an incorrect classid since it references the
+current task's context rather than the skb's originating task.
+
+Given that dev_queue_xmit() always executes with bh disabled, we can use
+softirq_count() instead to obtain the correct classid.
+
+The simple steps to reproduce this issue:
+1. Add network delay to the network interface:
+  such as: tc qdisc add dev bond0 root netem delay 1.5ms
+2. Build two distinct net_cls cgroups, each with a network-intensive task
+3. Initiate parallel TCP streams from both tasks to external servers.
+
+Under this specific condition, the issue reliably occurs. The kernel
+eventually dequeues an SKB that originated from Task-A while executing in
+the context of Task-B.
+
+It is worth noting that it will change the established behavior for a
+slightly different scenario:
+
+  <sock S is created by task A>
+  <class ID for task A is changed>
+  <skb is created by sock S xmit and classified>
+
+prior to this patch the skb will be classified with the 'new' task A
+classid, now with the old/original one. The bpf_get_cgroup_classid_curr()
+function is a more appropriate choice for this case.
+
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Thomas Graf <tgraf@suug.ch>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250902062933.30087-1-laoar.shao@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/6pack.c | 57 ++++--------------------------------
- 1 file changed, 5 insertions(+), 52 deletions(-)
+ include/net/cls_cgroup.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
-index 3bf6785f90573..0c766c9c31955 100644
---- a/drivers/net/hamradio/6pack.c
-+++ b/drivers/net/hamradio/6pack.c
-@@ -115,8 +115,6 @@ struct sixpack {
+diff --git a/include/net/cls_cgroup.h b/include/net/cls_cgroup.h
+index 7e78e7d6f0152..668aeee9b3f66 100644
+--- a/include/net/cls_cgroup.h
++++ b/include/net/cls_cgroup.h
+@@ -63,7 +63,7 @@ static inline u32 task_get_classid(const struct sk_buff *skb)
+ 	 * calls by looking at the number of nested bh disable calls because
+ 	 * softirqs always disables bh.
+ 	 */
+-	if (in_serving_softirq()) {
++	if (softirq_count()) {
+ 		struct sock *sk = skb_to_full_sk(skb);
  
- 	struct timer_list	tx_t;
- 	struct timer_list	resync_t;
--	refcount_t		refcnt;
--	struct completion	dead;
- 	spinlock_t		lock;
- };
- 
-@@ -353,42 +351,13 @@ static void sp_bump(struct sixpack *sp, char cmd)
- 
- /* ----------------------------------------------------------------------- */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data, because the tty
-- * layer provides no locking at all - thus one cpu could be running
-- * sixpack_receive_buf while another calls sixpack_close, which zeroes
-- * tty->disc_data and frees the memory that sixpack_receive_buf is using.  The
-- * best way to fix this is to use a rwlock in the tty struct, but for now we
-- * use a single global rwlock for all ttys in ppp line discipline.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--                                                                                
--static struct sixpack *sp_get(struct tty_struct *tty)
--{
--	struct sixpack *sp;
--
--	read_lock(&disc_data_lock);
--	sp = tty->disc_data;
--	if (sp)
--		refcount_inc(&sp->refcnt);
--	read_unlock(&disc_data_lock);
--
--	return sp;
--}
--
--static void sp_put(struct sixpack *sp)
--{
--	if (refcount_dec_and_test(&sp->refcnt))
--		complete(&sp->dead);
--}
--
- /*
-  * Called by the TTY driver when there's room for more data.  If we have
-  * more packets to send, we send them here.
-  */
- static void sixpack_write_wakeup(struct tty_struct *tty)
- {
--	struct sixpack *sp = sp_get(tty);
-+	struct sixpack *sp = tty->disc_data;
- 	int actual;
- 
- 	if (!sp)
-@@ -400,7 +369,7 @@ static void sixpack_write_wakeup(struct tty_struct *tty)
- 		clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 		sp->tx_enable = 0;
- 		netif_wake_queue(sp->dev);
--		goto out;
-+		return;
- 	}
- 
- 	if (sp->tx_enable) {
-@@ -408,9 +377,6 @@ static void sixpack_write_wakeup(struct tty_struct *tty)
- 		sp->xleft -= actual;
- 		sp->xhead += actual;
- 	}
--
--out:
--	sp_put(sp);
- }
- 
- /* ----------------------------------------------------------------------- */
-@@ -430,7 +396,7 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
- 	if (!count)
- 		return;
- 
--	sp = sp_get(tty);
-+	sp = tty->disc_data;
- 	if (!sp)
- 		return;
- 
-@@ -446,7 +412,6 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
- 	}
- 	sixpack_decode(sp, cp, count1);
- 
--	sp_put(sp);
- 	tty_unthrottle(tty);
- }
- 
-@@ -561,8 +526,6 @@ static int sixpack_open(struct tty_struct *tty)
- 
- 	spin_lock_init(&sp->lock);
- 	spin_lock_init(&sp->rxlock);
--	refcount_set(&sp->refcnt, 1);
--	init_completion(&sp->dead);
- 
- 	/* !!! length of the buffers. MTU is IP MTU, not PACLEN!  */
- 
-@@ -638,19 +601,11 @@ static void sixpack_close(struct tty_struct *tty)
- {
- 	struct sixpack *sp;
- 
--	write_lock_irq(&disc_data_lock);
- 	sp = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!sp)
- 		return;
- 
--	/*
--	 * We have now ensured that nobody can start using ap from now on, but
--	 * we have to wait for all existing users to finish.
--	 */
--	if (!refcount_dec_and_test(&sp->refcnt))
--		wait_for_completion(&sp->dead);
-+	tty->disc_data = NULL;
- 
- 	/* We must stop the queue to avoid potentially scribbling
- 	 * on the free buffers. The sp->dead completion is not sufficient
-@@ -673,7 +628,7 @@ static void sixpack_close(struct tty_struct *tty)
- static int sixpack_ioctl(struct tty_struct *tty, unsigned int cmd,
- 		unsigned long arg)
- {
--	struct sixpack *sp = sp_get(tty);
-+	struct sixpack *sp = tty->disc_data;
- 	struct net_device *dev;
- 	unsigned int tmp, err;
- 
-@@ -725,8 +680,6 @@ static int sixpack_ioctl(struct tty_struct *tty, unsigned int cmd,
- 		err = tty_mode_ioctl(tty, cmd, arg);
- 	}
- 
--	sp_put(sp);
--
- 	return err;
- }
- 
+ 		/* If there is an sock_cgroup_classid we'll use that. */
 -- 
 2.51.0
 
