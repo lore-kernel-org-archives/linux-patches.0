@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE7214210;
-	Tue, 11 Nov 2025 01:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4C22652AF;
+	Tue, 11 Nov 2025 01:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824136; cv=none; b=My3pN3gmPpI/JfXiFgwaWbNs5EoqOkZ7dt1Cc6mKyIgmZfGpAyZT0XEm2L37LNaQE8UXS68GoDDvJ/doCY3XO5m+IQ+F0kNapP299BjMfM1Ti/fHcxXLrXtVhDl7gjNlaJHP6Lb3Mvk2gPLz4GWDL3bc8JIcy0567VwXgBdd670=
+	t=1762824139; cv=none; b=Y+Rl0V6ezJvF/xI3WNK3eiAP6k5NfoiM00+vLkrWL4Yw8IH2znV4hTAAG573OiqwQA43bveTg1rDARHp6zC8sQ9ddfCnzdccdkHZ62h0ye581LIJBKsw6QIsE3uWiVM4BnYgaOg4MV5Ojtaj7saVPSjy0f+opqB+GdhiPWzfZvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824136; c=relaxed/simple;
-	bh=rZzU+lPMGoSSS/N+yQacbxD2VpimDeeVlUPszSZuXVA=;
+	s=arc-20240116; t=1762824139; c=relaxed/simple;
+	bh=vE5yw0OV+aaEGrlUbuu8j5ZiCKSS+9y5hNwtv2yJ/Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVDq2DHsv+TOjfGsI2ib8bzHD4FFKK4yThaF3mHwhNMW3E0JoIKzdIxYoylUHAWoOsuJ0gbzSAtO7SSp2R98crD/kqixPAePZ8gxdZevI0g7TcmbLSIjEei1LhuB65kMdwLYK8+ZRhcx+TgS5K5SJJwd05sHZcS22alF5PRD6RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIU1oF0X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bp9nRvRUANrC1pag/0uRdaq7QFPAvQj5Lga+9y4DpeilT5JqmUpOSk6lGS+ZvZ6gA795kffXoqcax/4X/TDUO3oUc/2AL8v1eaGLfLBeTUtuKkAC7jpeAWIwg444emccnnqG3bJefNuSyvoF/8BHJPTkjR3Z5Xsjj+JknJH5zy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evEiCpnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIU1oF0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697F0C4CEFB;
-	Tue, 11 Nov 2025 01:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evEiCpnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F75C16AAE;
+	Tue, 11 Nov 2025 01:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824136;
-	bh=rZzU+lPMGoSSS/N+yQacbxD2VpimDeeVlUPszSZuXVA=;
+	s=korg; t=1762824139;
+	bh=vE5yw0OV+aaEGrlUbuu8j5ZiCKSS+9y5hNwtv2yJ/Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIU1oF0XylF7kOTGz++PQIHCky/Oy3MrKKnRDQxa5WC91+htC/P1370Fk3LnMODce
-	 deodahnE0iC8+YH7GFTPsEy0TMYyUm6dJcW0hWLw0vJe4NvkLCQn6A6CgN39llBAxC
-	 l9eaDssJCcm43acw3/YwzGrqbnmscpZQDwKEeHoY=
+	b=evEiCpnKdGYa55qlvVaVFHFm53yZU9Iekb3jF967t4XdubX4QUMbbbjv9Xw0fh96X
+	 1zwQdvT2mDzcUvGSFZyVF3uhanprggpQAknKOBlZ6m0N++CDuw4CuEIeMQEDVxBrq6
+	 AXzkEWWo1mG1CTOKvCm+ToyGoyhIA43XyYcX4mQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Colin Foster <colin.foster@in-advantage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 394/565] net: phy: clear link parameters on admin link down
-Date: Tue, 11 Nov 2025 09:44:10 +0900
-Message-ID: <20251111004535.736266718@linuxfoundation.org>
+Subject: [PATCH 6.17 444/849] smsc911x: add second read of EEPROM mac when possible corruption seen
+Date: Tue, 11 Nov 2025 09:40:14 +0900
+Message-ID: <20251111004547.168217801@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Colin Foster <colin.foster@in-advantage.com>
 
-[ Upstream commit 60f887b1290b43a4f5a3497982a725687b193fa4 ]
+[ Upstream commit 69777753a8919b0b8313c856e707e1d1fe5ced85 ]
 
-When a PHY is halted (e.g. `ip link set dev lan2 down`), several
-fields in struct phy_device may still reflect the last active
-connection. This leads to ethtool showing stale values even though
-the link is down.
+When the EEPROM MAC is read by way of ADDRH, it can return all 0s the
+first time. Subsequent reads succeed.
 
-Reset selected fields in _phy_state_machine() when transitioning
-to PHY_HALTED and the link was previously up:
+This is fully reproduceable on the Phytec PCM049 SOM.
 
-- speed/duplex -> UNKNOWN, but only in autoneg mode (in forced mode
-  these fields carry configuration, not status)
-- master_slave_state -> UNKNOWN if previously supported
-- mdix -> INVALID (state only, same meaning as "unknown")
-- lp_advertising -> always cleared
+Re-read the ADDRH when this behaviour is observed, in an attempt to
+correctly apply the EEPROM MAC address.
 
-The cleanup is skipped if the PHY is in PHY_ERROR state, so the
-last values remain available for diagnostics.
-
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250917094751.2101285-1-o.rempel@pengutronix.de
+Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
+Link: https://patch.msgid.link/20250903132610.966787-1-colin.foster@in-advantage.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/smsc/smsc911x.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index c9cfdc33fc5f1..707a6ff5242bd 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -1477,6 +1477,19 @@ static enum phy_state_work _phy_state_machine(struct phy_device *phydev)
- 		}
- 		break;
- 	case PHY_HALTED:
-+		if (phydev->link) {
-+			if (phydev->autoneg == AUTONEG_ENABLE) {
-+				phydev->speed = SPEED_UNKNOWN;
-+				phydev->duplex = DUPLEX_UNKNOWN;
-+			}
-+			if (phydev->master_slave_state !=
-+						MASTER_SLAVE_STATE_UNSUPPORTED)
-+				phydev->master_slave_state =
-+						MASTER_SLAVE_STATE_UNKNOWN;
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+			linkmode_zero(phydev->lp_advertising);
-+		}
-+		fallthrough;
- 	case PHY_ERROR:
- 		if (phydev->link) {
- 			phydev->link = 0;
+diff --git a/drivers/net/ethernet/smsc/smsc911x.c b/drivers/net/ethernet/smsc/smsc911x.c
+index 6ca290f7c0dfb..3ebd0664c697f 100644
+--- a/drivers/net/ethernet/smsc/smsc911x.c
++++ b/drivers/net/ethernet/smsc/smsc911x.c
+@@ -2162,10 +2162,20 @@ static const struct net_device_ops smsc911x_netdev_ops = {
+ static void smsc911x_read_mac_address(struct net_device *dev)
+ {
+ 	struct smsc911x_data *pdata = netdev_priv(dev);
+-	u32 mac_high16 = smsc911x_mac_read(pdata, ADDRH);
+-	u32 mac_low32 = smsc911x_mac_read(pdata, ADDRL);
++	u32 mac_high16, mac_low32;
+ 	u8 addr[ETH_ALEN];
+ 
++	mac_high16 = smsc911x_mac_read(pdata, ADDRH);
++	mac_low32 = smsc911x_mac_read(pdata, ADDRL);
++
++	/* The first mac_read in some setups can incorrectly read 0. Re-read it
++	 * to get the full MAC if this is observed.
++	 */
++	if (mac_high16 == 0) {
++		SMSC_TRACE(pdata, probe, "Re-read MAC ADDRH\n");
++		mac_high16 = smsc911x_mac_read(pdata, ADDRH);
++	}
++
+ 	addr[0] = (u8)(mac_low32);
+ 	addr[1] = (u8)(mac_low32 >> 8);
+ 	addr[2] = (u8)(mac_low32 >> 16);
 -- 
 2.51.0
 
