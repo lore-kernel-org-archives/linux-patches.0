@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706BD2DC350;
-	Tue, 11 Nov 2025 01:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7612DC35A;
+	Tue, 11 Nov 2025 01:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823209; cv=none; b=DuUIHA/hWG89uva6nE+JA+6/Mr7ClXSbnsneV+/0B/RNGqwMq6BiKlHRbtja/XaetgdXwSKVfKM5ZH/Cr7ku6UUJc6tMnX6pKu5CMLAF2c5xnEPQfR2bNVZw+SBFGExTCvoskkYCNvA5d/abwRYPnWLih0AThodUUa/vuqJUCLc=
+	t=1762823210; cv=none; b=sAhMFhtfQ16rl2hHQLcsXfJf7VlR1r1KFt4VhRzJvQ/dq0As/eoig+gIQCcfxp49haMmkALMrSbw/6czVIbJevC41APtogo6xOF4BrVN6FyHaeraz4AlHykUx1NxUbn0whuRK6QkYpY+06Tw5O1YBzOhZy1IzGh/P7sjtwK6Sjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823209; c=relaxed/simple;
-	bh=KJNjKRDthoFFJipdVWmaAN+472HYx+5IFPHIOVYnEpQ=;
+	s=arc-20240116; t=1762823210; c=relaxed/simple;
+	bh=dtq16UT8eGHiiwym3rlk0hFs8hdATeevvxShHfWZ0VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONE7wZlyeBSEN8Y50ElSl4kVlSFQJQmusdb4aDUepIgXIVleejVRnmVh7NEg2q7bA3LRf+4rFieWUEbQtty8eHaeYGablZl5Zvp3K706G9l4QJORAqaQXx2sggHdXuqt+kv5fRXtG028A2g6e9mrCiJNO+RJfeE8TtNPcaPC19M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0upo4dne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8/IjGGc0apE5dIQ/VpWLK2fIcbUNPtx7h+1L505pnj5zQ4wLoWmLoT1nmJw/Ax7RSk3VMy/6DK8ihxuE2lyb2ooqlE0Vyqo/1wk/KgIYcRPErZg1NaD37jkbZ1IZc5jz+bgxO0OtLK0z328moEpEn8L9ueCw2jybVl0WQ5eais=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stsF3hpc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0upo4dne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DA9C4AF09;
-	Tue, 11 Nov 2025 01:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stsF3hpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDB2C113D0;
+	Tue, 11 Nov 2025 01:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823208;
-	bh=KJNjKRDthoFFJipdVWmaAN+472HYx+5IFPHIOVYnEpQ=;
+	s=korg; t=1762823210;
+	bh=dtq16UT8eGHiiwym3rlk0hFs8hdATeevvxShHfWZ0VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0upo4dneAUOuy6mXwn/9pOS/vJyccMZ46SCw+L/CQ4D8YMKJHs3aBIXbVSVNNIeho
-	 KnAzlB6SKIxtloDlCWEqIkyEsouVOaT60pBJIta+LT9mYAS8hwnriuN1rfBmafQtpD
-	 /JAsCgcjJ1eFkvPad99Lh/6peXDpnoAwDkfQX95M=
+	b=stsF3hpc5OoonH9utBMKEa+Ayowe7oy5FP950soSUOwQTtRJSpGNtzYOfrZudk4Er
+	 OMFrEx1CVM7eJxCL2qCP30rFti5zgl/WHc9jEKQRMBDKS7JpiwddGQ7qrS+vibNqXD
+	 ZQXLmmCLOBzHEXz67z/7fpfJvTOCboeTFhOWdijU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoffrey McRae <geoffrey.mcrae@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Seyediman Seyedarab <ImanDevel@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/565] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
-Date: Tue, 11 Nov 2025 09:40:53 +0900
-Message-ID: <20251111004531.360105997@linuxfoundation.org>
+Subject: [PATCH 6.12 188/565] drm/nouveau: replace snprintf() with scnprintf() in nvkm_snprintbf()
+Date: Tue, 11 Nov 2025 09:40:44 +0900
+Message-ID: <20251111004531.161736423@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,51 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey McRae <geoffrey.mcrae@amd.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
+[ Upstream commit 6510b62fe9303aaf48ff136ff69186bcfc32172d ]
 
-Some kfd ioctls may not be available depending on the kernel version the
-user is running, as such we need to report -ENOTTY so userland can
-determine the cause of the ioctl failure.
+snprintf() returns the number of characters that *would* have been
+written, which can overestimate how much you actually wrote to the
+buffer in case of truncation. That leads to 'data += this' advancing
+the pointer past the end of the buffer and size going negative.
 
-Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Switching to scnprintf() prevents potential buffer overflows and ensures
+consistent behavior when building the output string.
+
+Signed-off-by: Seyediman Seyedarab <ImanDevel@gmail.com>
+Link: https://lore.kernel.org/r/20250724195913.60742-1-ImanDevel@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/core/enum.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 67b5f3d7ff8e9..fc473e3ba2d00 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -3253,8 +3253,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 	int retcode = -EINVAL;
- 	bool ptrace_attached = false;
- 
--	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
-+	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
- 
- 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
- 		u32 amdkfd_size;
-@@ -3267,8 +3269,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 			asize = amdkfd_size;
- 
- 		cmd = ioctl->cmd;
--	} else
-+	} else {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
- 
- 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
- 
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/enum.c b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+index b9581feb24ccb..a23b40b27b81b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/enum.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+@@ -44,7 +44,7 @@ nvkm_snprintbf(char *data, int size, const struct nvkm_bitfield *bf, u32 value)
+ 	bool space = false;
+ 	while (size >= 1 && bf->name) {
+ 		if (value & bf->mask) {
+-			int this = snprintf(data, size, "%s%s",
++			int this = scnprintf(data, size, "%s%s",
+ 					    space ? " " : "", bf->name);
+ 			size -= this;
+ 			data += this;
 -- 
 2.51.0
 
