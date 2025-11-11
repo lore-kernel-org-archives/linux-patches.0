@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466AA4C97;
-	Tue, 11 Nov 2025 00:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F484C97;
+	Tue, 11 Nov 2025 00:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822193; cv=none; b=nUoA2w1uYk89McaKrHPPse/I1O1uQ6j50DI+x+y259tsHMHwz34U8mBctayK01evSWyMksPGdSSnZgT2DyX9F6OrhbUd/JR4rLFQZUIWMREEWyb6NZ4NFdzfuIKzF9acup22EQ8qoHvf4Lrh5HyQHh7ZjKyECxFXMXVbwhW/mLw=
+	t=1762822195; cv=none; b=VdPAl5VeH/n0kzVseewdAosaHghDSSLWt31Ykr0+Q3yUaYZ4UvcPb287NyQMNsH7vloZL5+aOqlaU1hwylBHklNyCSUoQhx5ZU2Jy0uZtE9QxFy8hoaZ57YaQ9ytbOA3ReXQSuyBxxnrpQUDTDw7iZ8U+Uv8zqjkl3wJ0VaumEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822193; c=relaxed/simple;
-	bh=t8hRWniw7BnVYnIecsA3aqZpFgyEZMI26D7odEUVbZM=;
+	s=arc-20240116; t=1762822195; c=relaxed/simple;
+	bh=uRXVkMb4hSPe5OTq5vL4HKZOTwlmzelOsHeqwfREnUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAz4LMgPqau3vjlYNvec8qgYxIkGlWQjjk87acCgQv4t8jRhEVcQX0f4/dUMsKsrLcTYJqfzEh4EhFUM+MnK643UmiQ0tMp0lSqXBs5v8OY/6Bx3ObA+rsXhox9iwOqTtMskYm0V8Enzss77NNCXk87+bPxtgG1LF5AulOEyKws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUn8iZq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qahu1i6Gepo6VPonGlJikkc73BacYtqidyvMXZkH5DxA78gcLofQd9yYlbQlXN21dTCEcSvX7Vwm8Ic0zijl+uBsbz5V8ViWuBAcPMXnwrR/WZAy7Teknz8A90Dtx6gk5ua89E41DKwmQq0aZmUzUAsoc7xOLIL51ClZyDmWbJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQISJRaO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUn8iZq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98A6C4CEF5;
-	Tue, 11 Nov 2025 00:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQISJRaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14588C4CEF5;
+	Tue, 11 Nov 2025 00:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822193;
-	bh=t8hRWniw7BnVYnIecsA3aqZpFgyEZMI26D7odEUVbZM=;
+	s=korg; t=1762822195;
+	bh=uRXVkMb4hSPe5OTq5vL4HKZOTwlmzelOsHeqwfREnUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUn8iZq4dmj4o6PxJc0nCdnS1wR6cehSu5RGgzVA1RdPdYTLRTM51UfbnmyHLeWwH
-	 iPHJCAd/i1CcsugC5n+vqMECn2vvbvACnRoSapmZmKo3cu3o1KswolmYemO8x5C8sp
-	 NQbDU3yntKuB3oXGN+IZrRgWqF/8ZDPhPJmejMJA=
+	b=hQISJRaOpA2vO8OiQsp71C38tfKIUennZ8MoZUchafXTJO9qvy4cVmlFHch+evIxT
+	 M6ljUMtjUeK477l15+uZHR5V1ICVzDAVTxgV06Fjj2iaTBoFgW4SUow6idM14JBFc/
+	 nn0WYjiGCnkGHfYpzyOZ4v194iSjeJ839yzf8N6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 054/849] libbpf: Fix powerpcs stack register definition in bpf_tracing.h
-Date: Tue, 11 Nov 2025 09:33:44 +0900
-Message-ID: <20251111004537.741844654@linuxfoundation.org>
+Subject: [PATCH 6.17 055/849] ASoC: mediatek: Fix double pm_runtime_disable in remove functions
+Date: Tue, 11 Nov 2025 09:33:45 +0900
+Message-ID: <20251111004537.767528816@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7221b9caf84b3294688228a19273d74ea19a2ee4 ]
+[ Upstream commit 79a6f2da168543c0431ade57428f673c19c5b72f ]
 
-retsnoop's build on powerpc (ppc64le) architecture ([0]) failed due to
-wrong definition of PT_REGS_SP() macro. Looking at powerpc's
-implementation of stack unwinding in perf_callchain_user_64() clearly
-shows that stack pointer register is gpr[1].
+Both mt8195-afe-pcm and mt8365-afe-pcm drivers use devm_pm_runtime_enable()
+in probe function, which automatically calls pm_runtime_disable() on device
+removal via devres mechanism. However, the remove callbacks explicitly call
+pm_runtime_disable() again, resulting in double pm_runtime_disable() calls.
 
-Fix libbpf's definition of __PT_SP_REG for powerpc to fix all this.
+Fix by removing the redundant pm_runtime_disable() calls from remove
+functions, letting the devres framework handle it automatically.
 
-  [0] https://kojipkgs.fedoraproject.org/work/tasks/1544/137921544/build.log
-
-Fixes: 138d6153a139 ("samples/bpf: Enable powerpc support")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/20251020203643.989467-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2ca0ec01d49c ("ASoC: mediatek: mt8195-afe-pcm: Simplify runtime PM during probe")
+Fixes: e1991d102bc2 ("ASoC: mediatek: mt8365: Add the AFE driver support")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251020170440.585-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_tracing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 1 -
+ sound/soc/mediatek/mt8365/mt8365-afe-pcm.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
-index a8f6cd4841b03..dbe32a5d02cd7 100644
---- a/tools/lib/bpf/bpf_tracing.h
-+++ b/tools/lib/bpf/bpf_tracing.h
-@@ -311,7 +311,7 @@ struct pt_regs___arm64 {
- #define __PT_RET_REG regs[31]
- #define __PT_FP_REG __unsupported__
- #define __PT_RC_REG gpr[3]
--#define __PT_SP_REG sp
-+#define __PT_SP_REG gpr[1]
- #define __PT_IP_REG nip
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 5d025ad72263f..c63b3444bc176 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -3176,7 +3176,6 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
  
- #elif defined(bpf_target_sparc)
+ static void mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
+ {
+-	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mt8195_afe_runtime_suspend(&pdev->dev);
+ }
+diff --git a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+index 10793bbe9275d..d48252cd96ac4 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
++++ b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+@@ -2238,7 +2238,6 @@ static void mt8365_afe_pcm_dev_remove(struct platform_device *pdev)
+ 
+ 	mt8365_afe_disable_top_cg(afe, MT8365_TOP_CG_AFE);
+ 
+-	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mt8365_afe_runtime_suspend(&pdev->dev);
+ }
 -- 
 2.51.0
 
