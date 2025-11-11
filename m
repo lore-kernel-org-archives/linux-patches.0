@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886D34A3D3;
-	Tue, 11 Nov 2025 01:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6DC34A796;
+	Tue, 11 Nov 2025 01:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825334; cv=none; b=Tha1q92my8s6EFh2NVuS9YL8lDcatHZrqsPU1t04WqoN4fyWZxm9uHPX8oGIj2fKudhZIZqe2YnuUQ0KNzSrtyw/PhPr5AZIUgbUPttNPAsbW4/p0VG6BptF612dZ87hLcbsK2gnZadSXm9hyB5CH3ZiIzJHOHsVV5DyQvAa8nU=
+	t=1762825336; cv=none; b=oKIqHfvI393XwF2lCVnuUYFmfDRQ3/Dxf/2Po7fg9yRapQNjjb4U3oc9VKKMq1yzQZlXkSWJY5yZtcX8Jq0UGBc7jCVetKx8uoQRAYBOaAIpo1n8SvW8NWUn0tvrUYFvNDfou/QJD9x57f9bsxuU32x9pj62JXZXOIi/GOxCFBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825334; c=relaxed/simple;
-	bh=C9rcMefQ4SWHLT0+zH207qN9ptFbNwpFrVwLltKEJhk=;
+	s=arc-20240116; t=1762825336; c=relaxed/simple;
+	bh=3XfSQ+drwwxRNKDBB/o9qqTEjEP6XdsmiGnb7t58qfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQ9BzaCp3ltEDr7pgAEJHjX4Gu931R9xGZ16ZzjLJa2rt+aUIG2OyAqhG0W68IlGZn6tI3kQpqFKBakvXVByoFUJjJy+XrgDg83S83MyqXZH66K591G8G/6yMFIjNoHLnIEhyF0TAsR98KPf2SvVwc41RkNt+Rd4db7X30nqY64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVvZUKP7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxGGm0Ue8qGl6FGPnTvYrnWw20Qc+9S3B7d1lQnEMrKiqZy4e4R9kFiMTbxZ7UwYUlzJkkkFtpiReftQ/IEySfXQtKdAMOG/6freQdpXteiXIauKHK4wzhiQypfjlZibE8Qb9Nr3RpJkhYAxH1tYVJID93TMBzqU9UkfktEsAb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUa8iUbu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVvZUKP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C05C2BCB1;
-	Tue, 11 Nov 2025 01:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUa8iUbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8913C116D0;
+	Tue, 11 Nov 2025 01:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825333;
-	bh=C9rcMefQ4SWHLT0+zH207qN9ptFbNwpFrVwLltKEJhk=;
+	s=korg; t=1762825336;
+	bh=3XfSQ+drwwxRNKDBB/o9qqTEjEP6XdsmiGnb7t58qfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVvZUKP7UUAqUSqZFBoW80WDhvjlQyIhLlkPXtfJr8T431SSV7jsroU+B9qAiscGu
-	 dx2UGlJM/t5kmR/tVSce5KG9Y9qN8MKxl3J3bfgI5kUdFoXvF/o+iAQm1QJq/RtxF/
-	 mjDJM6zQC/z91rxYYkg5V6uxCnmMMB7+TwEhUH+0=
+	b=DUa8iUbuvWQfo/HSSa9crraMXw/sDZ/h17z1S9W75i4QnWKt4sdejjxPKRAOZ1qJH
+	 3FeJNIGNSvY8WJxRdiVn1UJCpP9ekfxv1dwpg/cM5RQGm4cfdTbqJQGXP9z6vwRvN2
+	 +NomPDW+XDCG+oe3ZehcACqT9jw9FdSO/pc6mU/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Randall P. Embry" <rpembry@gmail.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Hoyoung Seo <hy50.seo@samsung.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 715/849] 9p: sysfs_init: dont hardcode error to ENOMEM
-Date: Tue, 11 Nov 2025 09:44:45 +0900
-Message-ID: <20251111004553.719125449@linuxfoundation.org>
+Subject: [PATCH 6.17 716/849] scsi: ufs: core: Include UTP error in INT_FATAL_ERRORS
+Date: Tue, 11 Nov 2025 09:44:46 +0900
+Message-ID: <20251111004553.743809799@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,44 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randall P. Embry <rpembry@gmail.com>
+From: Hoyoung Seo <hy50.seo@samsung.com>
 
-[ Upstream commit 528f218b31aac4bbfc58914d43766a22ab545d48 ]
+[ Upstream commit 558ae4579810fa0fef011944230c65a6f3087f85 ]
 
-v9fs_sysfs_init() always returned -ENOMEM on failure;
-return the actual sysfs_create_group() error instead.
+When a UTP error occurs in isolation, UFS is not currently recoverable.
+This is because the UTP error is not considered fatal in the error
+handling code, leading to either an I/O timeout or an OCS error.
 
-Signed-off-by: Randall P. Embry <rpembry@gmail.com>
-Message-ID: <20250926-v9fs_misc-v1-3-a8b3907fc04d@codewreck.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Add the UTP error flag to INT_FATAL_ERRORS so the controller will be
+reset in this situation.
+
+  sd 0:0:0:0: [sda] tag#38 UNKNOWN(0x2003) Result: hostbyte=0x07
+  driverbyte=DRIVER_OK cmd_age=0s
+  sd 0:0:0:0: [sda] tag#38 CDB: opcode=0x28 28 00 00 51 24 e2 00 00 08 00
+  I/O error, dev sda, sector 42542864 op 0x0:(READ) flags 0x80700 phys_seg
+  8 prio class 2
+  OCS error from controller = 9 for tag 39
+  pa_err[1] = 0x80000010 at 2667224756 us
+  pa_err: total cnt=2
+  dl_err[0] = 0x80000002 at 2667148060 us
+  dl_err[1] = 0x80002000 at 2667282844 us
+  No record of nl_err
+  No record of tl_err
+  No record of dme_err
+  No record of auto_hibern8_err
+  fatal_err[0] = 0x804 at 2667282836 us
+
+  ---------------------------------------------------
+  		REGISTER
+  ---------------------------------------------------
+                             NAME	      OFFSET	         VALUE
+                      STD HCI SFR	  0xfffffff0	           0x0
+                             AHIT	        0x18	         0x814
+                 INTERRUPT STATUS	        0x20	        0x1000
+                 INTERRUPT ENABLE	        0x24	       0x70ef5
+
+[mkp: commit desc]
+
+Signed-off-by: Hoyoung Seo <hy50.seo@samsung.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Message-Id: <20250930061428.617955-1-hy50.seo@samsung.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/ufs/ufshci.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index 714cfe76ee651..a59c26cc3c7d9 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -597,13 +597,16 @@ static const struct attribute_group v9fs_attr_group = {
+diff --git a/include/ufs/ufshci.h b/include/ufs/ufshci.h
+index 612500a7088f0..e64b701321010 100644
+--- a/include/ufs/ufshci.h
++++ b/include/ufs/ufshci.h
+@@ -180,6 +180,7 @@ static inline u32 ufshci_version(u32 major, u32 minor)
+ #define UTP_TASK_REQ_COMPL			0x200
+ #define UIC_COMMAND_COMPL			0x400
+ #define DEVICE_FATAL_ERROR			0x800
++#define UTP_ERROR				0x1000
+ #define CONTROLLER_FATAL_ERROR			0x10000
+ #define SYSTEM_BUS_FATAL_ERROR			0x20000
+ #define CRYPTO_ENGINE_FATAL_ERROR		0x40000
+@@ -199,7 +200,8 @@ static inline u32 ufshci_version(u32 major, u32 minor)
+ 				CONTROLLER_FATAL_ERROR |\
+ 				SYSTEM_BUS_FATAL_ERROR |\
+ 				CRYPTO_ENGINE_FATAL_ERROR |\
+-				UIC_LINK_LOST)
++				UIC_LINK_LOST |\
++				UTP_ERROR)
  
- static int __init v9fs_sysfs_init(void)
- {
-+	int ret;
-+
- 	v9fs_kobj = kobject_create_and_add("9p", fs_kobj);
- 	if (!v9fs_kobj)
- 		return -ENOMEM;
- 
--	if (sysfs_create_group(v9fs_kobj, &v9fs_attr_group)) {
-+	ret = sysfs_create_group(v9fs_kobj, &v9fs_attr_group);
-+	if (ret) {
- 		kobject_put(v9fs_kobj);
--		return -ENOMEM;
-+		return ret;
- 	}
- 
- 	return 0;
+ /* HCS - Host Controller Status 30h */
+ #define DEVICE_PRESENT				0x1
 -- 
 2.51.0
 
