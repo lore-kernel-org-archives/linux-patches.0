@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4733248F6A;
-	Tue, 11 Nov 2025 01:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B822248F6A;
+	Tue, 11 Nov 2025 01:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824434; cv=none; b=AzbN2ZtEo1V0i7Dneowz82GWNhZZKCDLoXhfYF2Z9t/SQaFWDPEEx9Ka7EXoYQJ9jCH++8tn19BH/IzmGjdjqRxTIhQ8jmUPlXa269BFH7fH4ZQNwdr2l76de0Zl1DouTNYoXCAsVmBlVXaTy+KctDOSYlgIZ2m5MAQ4J8gIYAw=
+	t=1762824436; cv=none; b=Yen8xTSgGEyRz4UyHG6wmQwh0MWfkOibUbOPftOOGyRjTcL7qJmZ21F7wfxuHdMegkF788roxEfFxHLmE+/QccHe2jy7jFIBeGgBpY7D++OPUmwRKUcM96v8mn/oMa3My4/aiS9fM+LWwLU6uPGbsP2CZ8qTYJpeUO+oXdgY4wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824434; c=relaxed/simple;
-	bh=iNvOSYOODysKgMjmeYsKGzNNEOwiBYpXH5VITYBdD98=;
+	s=arc-20240116; t=1762824436; c=relaxed/simple;
+	bh=EDgPxygAcfd7vIwr20QZtfIi+alRfJTASYhikEKOe+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dl+pkNE2Yc1PGrA+9WaRp1oKazla/2/NftjFOn9lglmCjO+N2+HLz0+34yVW5GCXrrrtHkMsdhyTEcgbDyVxdeF4J+Jt4msSkRwXCYe9sEq4YrJkAT/8gXyE76lvKFgcqtagYnN2M5vrXt+bk1AOhLfwr9KUMAV0v7e6wEktoLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6KgdSAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fieFd0862Yo7z1Xc672PuB71a4OodsLKpsStE1tYfFE3k1sGQ/8BP6daW3xvl0766uROB3Q3NYJv9ztH2JXGwBF1GGYjCsW5p1goTnXeJmzJTeeCbnnC3Fk1fnEhau6wjS+6My/NzGzWbW8zRpnuQyvCEEP21VjT1WcmQEaCqfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDT/AQ/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6KgdSAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75926C113D0;
-	Tue, 11 Nov 2025 01:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDT/AQ/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF951C116D0;
+	Tue, 11 Nov 2025 01:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824433;
-	bh=iNvOSYOODysKgMjmeYsKGzNNEOwiBYpXH5VITYBdD98=;
+	s=korg; t=1762824436;
+	bh=EDgPxygAcfd7vIwr20QZtfIi+alRfJTASYhikEKOe+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6KgdSAqdPKpyxbTd1D5rVGM721ieWaO265JSqQXd6LfIvMi5lQpA39H7dP92nPLR
-	 owAe3Sg3zwPjGxz62HpDIRrmSu+y6pM8OgfBdbKJhWip71NwHYT8hqCtBbMz7ZRw83
-	 IdZDY3NckAqUfsX2ndfGdQ7BxeefxjESnsK06I9Q=
+	b=EDT/AQ/ufmEY9skMrg5I1+4F9o99Cyt31u038dVixVGGdxE/hJimFVSVQ1DizbmsP
+	 q+NiMOOzILmXuk3XuShQsZrOC++SnAMIbDRZJ5q+qFeUQj1V43wzgGQeUrOC6NomGF
+	 mkKT+yObgdlX3thKufPEBgkNJ1NQ3bMLnQwXObBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 494/849] scsi: ufs: host: mediatek: Fix unbalanced IRQ enable issue
-Date: Tue, 11 Nov 2025 09:41:04 +0900
-Message-ID: <20251111004548.380602646@linuxfoundation.org>
+Subject: [PATCH 6.12 445/565] page_pool: Clamp pool size to max 16K pages
+Date: Tue, 11 Nov 2025 09:45:01 +0900
+Message-ID: <20251111004536.897788761@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 91cad911edd1612ed28f5cfb2d4c53a8824951a5 ]
+[ Upstream commit a1b501a8c6a87c9265fd03bd004035199e2e8128 ]
 
-Resolve the issue of unbalanced IRQ enablement by setting the
-'is_mcq_intr_enabled' flag after the first successful IRQ enablement.
-Ensure proper tracking of the IRQ state and prevent potential mismatches
-in IRQ handling.
+page_pool_init() returns E2BIG when the page_pool size goes above 32K
+pages. As some drivers are configuring the page_pool size according to
+the MTU and ring size, there are cases where this limit is exceeded and
+the queue creation fails.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The page_pool size doesn't have to cover a full queue, especially for
+larger ring size. So clamp the size instead of returning an error. Do
+this in the core to avoid having each driver do the clamping.
+
+The current limit was deemed to high [1] so it was reduced to 16K to avoid
+page waste.
+
+[1] https://lore.kernel.org/all/1758532715-820422-3-git-send-email-tariqt@nvidia.com/
+
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250926131605.2276734-2-dtatulea@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/page_pool.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 188f90e468c41..055b24758ca3d 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -2111,6 +2111,7 @@ static int ufs_mtk_config_mcq_irq(struct ufs_hba *hba)
- 			return ret;
- 		}
- 	}
-+	host->is_mcq_intr_enabled = true;
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index cc0dce5246a2b..458b040a8655d 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -208,11 +208,7 @@ static int page_pool_init(struct page_pool *pool,
+ 		return -EINVAL;
  
- 	return 0;
- }
+ 	if (pool->p.pool_size)
+-		ring_qsize = pool->p.pool_size;
+-
+-	/* Sanity limit mem that can be pinned down */
+-	if (ring_qsize > 32768)
+-		return -E2BIG;
++		ring_qsize = min(pool->p.pool_size, 16384);
+ 
+ 	/* DMA direction is either DMA_FROM_DEVICE or DMA_BIDIRECTIONAL.
+ 	 * DMA_BIDIRECTIONAL is for allowing page used for DMA sending,
 -- 
 2.51.0
 
