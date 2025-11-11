@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D1341C62;
-	Tue, 11 Nov 2025 01:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AF141C62;
+	Tue, 11 Nov 2025 01:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822815; cv=none; b=DIzb9+EkHOXrDeLWtkgbvuYOnGRDm2Ks35FH8C0XbPDBdVhcdZrhTy2KEzgpAsg+3yr3nUuCa4MzMTCll+DiKCo0sMrVVHKbTXKLoOwQi42fOzeLQlPPMbhE3t4fjNZ8i9sZdyKLUeEzX/8k2ZjU6Fe4mXO/aOOazk/xcoJzBPQ=
+	t=1762822817; cv=none; b=N1JlGqedpnmEvjriBM8BtbikOrgW05hQ+RpR+eZCiPFnqZuLstnIKeTPWKI5Ke/V63abHrY/Pw37TDIR8Q76IJ91yJ1O4WnxYrXbQFPSo25D7iMZHV15i7qJpBMjQWeMfuRMWcNudUMwCseQZqsjfKE2jCQModpSEUHIL5R3GtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822815; c=relaxed/simple;
-	bh=ScOzjLb5tPHjCrZb+1W+YzGYBH/YCBsgnbSVlZxCbsA=;
+	s=arc-20240116; t=1762822817; c=relaxed/simple;
+	bh=kqirs/veu0Wj6BT3kxwOPo411PAR8ISia2VgstOYqZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO5DIZWNUbZxzHiO0/Ov1izkTjl0mslVRwiRggFYmaOxOi92CsIcVb0HKrZPOWSlbgr//wgs5tHl3TpQmMIJDbGD46SEEdbZ3mXlvUCFlIM3mwMYMn0MIFOgAOa8KrOakeTdcvPT/5+c3+oZbNtNN4NGuTcBWvHGs5Y2MGG1JHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GplZFLp4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrYcrd0/CtSZeZFAPowV1fNVXfVaNGMkNtf6cCrghYMMJlKi6RejneRv2Zl5raXfdPDe7i1NVf+Hdf0Ivoa1O87TzYqHk78chEp8LtPp/C53J0bFmwrWPLrTJYJ4+y/euzit6H+HcgIKw4SpawuPd2pNDWu08ETYMktsD6rmcYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOGhdHAb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GplZFLp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF0EC19425;
-	Tue, 11 Nov 2025 01:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOGhdHAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C2BC4CEFB;
+	Tue, 11 Nov 2025 01:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822815;
-	bh=ScOzjLb5tPHjCrZb+1W+YzGYBH/YCBsgnbSVlZxCbsA=;
+	s=korg; t=1762822817;
+	bh=kqirs/veu0Wj6BT3kxwOPo411PAR8ISia2VgstOYqZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GplZFLp4GzDW2VKaq0rxL0rnfZVt73Dp+Y08xGWcm1Fy0r5UMBn7aP22wV4V1ptaW
-	 it6UM9sDF41SG6ZU1CoCLmvg4kP71b8hTiI7hcKiUJD+itUQGJvmwDQu7mYmi2rbWI
-	 /sEhMK0D8xj7CoK+IT3MWo8fFnogFfA86mYjqpbk=
+	b=OOGhdHAbwzwLmFn0gtGlDf8GF5ErDc0qHAwksGs+XbBKgvDul3QoiWB6gRKD/PTrY
+	 7ayXOf4PUEgJdW6Sfr6vmrU/JoymeYnWfz/aS2WEaBqDDK0PEh/fMmgfiMs1LCvDGo
+	 ZLlzKfRBlNyLSwF3yFwymjTxqMjgjc/wstPYk//Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hans de Goede <hansg@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/565] thermal: gov_step_wise: Allow cooling level to be reduced earlier
-Date: Tue, 11 Nov 2025 09:39:30 +0900
-Message-ID: <20251111004529.518387972@linuxfoundation.org>
+Subject: [PATCH 6.17 177/849] ACPICA: dispatcher: Use acpi_ds_clear_operands() in acpi_ds_call_control_method()
+Date: Tue, 11 Nov 2025 09:35:47 +0900
+Message-ID: <20251111004540.714055221@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,83 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 2e82368359f63567862a0d438710ddffcb1ace83 ]
+[ Upstream commit e9dff11a7a50fcef23fe3e8314fafae6d5641826 ]
 
-The current behavior of the Step-wise thermal governor is to increase
-the cooling level one step at a time after trip point threshold passing
-by thermal zone temperature until the temperature stops to rise.  Then,
-nothing is done until the temperature decreases below the (possibly
-updated) trip point threshold, at which point the cooling level is
-reduced straight to the applicable minimum.
+When deleting the previous walkstate operand stack
+acpi_ds_call_control_method() was deleting obj_desc->Method.param_count
+operands. But Method.param_count does not necessarily match
+this_walk_state->num_operands, it may be either less or more.
 
-While this generally works, it is not in agreement with the throttling
-logic description comment in step_wise_manage() any more after some
-relatively recent changes, and in the case of passive cooling, it may
-lead to undesirable performance oscillations between high and low
-levels.
+After correcting the for loop to check `i < this_walk_state->num_operands`
+the code is identical to acpi_ds_clear_operands(), so just outright
+replace the code with acpi_ds_clear_operands() to fix this.
 
-For this reason, modify the governor's cooling device state selection
-function, get_target_state(), to reduce cooling by one level even if
-the temperature is still above the thermal zone threshold, but the
-temperature has started to fall down.  However, ensure that the cooling
-level will remain above the applicable minimum in that case to pull
-the zone temperature further down, possibly until it falls below the
-trip threshold (which may now be equal to the low temperature of the
-trip).
-
-Doing so should help higher performance to be restored earlier in some
-cases which is desirable especially for passive trip points with
-relatively high hysteresis values.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/1947735.tdWV9SEqCh@rafael.j.wysocki
-[ rjw: Changelog edits ]
+Link: https://github.com/acpica/acpica/commit/53fc0220
+Signed-off-by: Hans de Goede <hansg@kernel.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/gov_step_wise.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsmethod.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/thermal/gov_step_wise.c b/drivers/thermal/gov_step_wise.c
-index ea4bf88d37f33..b038f042ed74e 100644
---- a/drivers/thermal/gov_step_wise.c
-+++ b/drivers/thermal/gov_step_wise.c
-@@ -20,7 +20,9 @@
-  * If the temperature is higher than a trip point,
-  *    a. if the trend is THERMAL_TREND_RAISING, use higher cooling
-  *       state for this trip point
-- *    b. if the trend is THERMAL_TREND_DROPPING, do nothing
-+ *    b. if the trend is THERMAL_TREND_DROPPING, use a lower cooling state
-+ *       for this trip point, but keep the cooling state above the applicable
-+ *       minimum
-  * If the temperature is lower than a trip point,
-  *    a. if the trend is THERMAL_TREND_RAISING, do nothing
-  *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
-@@ -51,6 +53,17 @@ static unsigned long get_target_state(struct thermal_instance *instance,
- 	if (throttle) {
- 		if (trend == THERMAL_TREND_RAISING)
- 			return clamp(cur_state + 1, instance->lower, instance->upper);
-+
-+		/*
-+		 * If the zone temperature is falling, the cooling level can
-+		 * be reduced, but it should still be above the lower state of
-+		 * the given thermal instance to pull the temperature further
-+		 * down.
-+		 */
-+		if (trend == THERMAL_TREND_DROPPING)
-+			return clamp(cur_state - 1,
-+				     min(instance->lower + 1, instance->upper),
-+				     instance->upper);
- 	} else if (trend == THERMAL_TREND_DROPPING) {
- 		if (cur_state <= instance->lower)
- 			return THERMAL_NO_TARGET;
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index fef6fb29ece4d..e707a70368026 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -546,14 +546,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 	 * Delete the operands on the previous walkstate operand stack
+ 	 * (they were copied to new objects)
+ 	 */
+-	for (i = 0; i < obj_desc->method.param_count; i++) {
+-		acpi_ut_remove_reference(this_walk_state->operands[i]);
+-		this_walk_state->operands[i] = NULL;
+-	}
+-
+-	/* Clear the operand stack */
+-
+-	this_walk_state->num_operands = 0;
++	acpi_ds_clear_operands(this_walk_state);
+ 
+ 	ACPI_DEBUG_PRINT((ACPI_DB_DISPATCH,
+ 			  "**** Begin nested execution of [%4.4s] **** WalkState=%p\n",
 -- 
 2.51.0
 
