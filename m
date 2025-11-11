@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71F8244693;
-	Tue, 11 Nov 2025 00:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DB324113D;
+	Tue, 11 Nov 2025 00:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822795; cv=none; b=pwEABbNeGwj3BWoEUrX7V5uIURQmXjnMt3ljJAV3n/Wb8ehoWSkxPV6yrxIF3TE+pUm8VkcNXJmINbNyMoYhqkaphAyMRcr8JcVUZRq8Nt05E4fB+9LKVSM9XlSUVxByCwbXrJUu/nHbhsnR5Wc/qiGX8hbMBVg39ZO+saetSjI=
+	t=1762822797; cv=none; b=Ns2wSO+v/6rVpaxsYkkuBwqhIKd/tO0IfFw6edzZJ3o2dSUupTVdxl7jQ/kH0aTIXwYHYxtLEz0OskWQIaSHKk+cMGjqWVqylS1HjLfa83+oFYGBeugQyX4d2yECuE3LpZSifVooukg2r9ZEFJfHRzLYqLkvMWcmRjXIG6RdCHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822795; c=relaxed/simple;
-	bh=27OVNvLiVGlmnfBD5YG8DviGxivhjxZOSzzng1rtyUM=;
+	s=arc-20240116; t=1762822797; c=relaxed/simple;
+	bh=XqmY4NC5c2UI1ZVVMEbeWzWl4BZNoA1XVEJF9PwFdHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYNgm7xBjNmt7QxOJjMgafiKKGE3SkKELaJ5AqM+gMusxue/OyRv2H8CaGAoYgTNXICxEyKvyEWq5wk4oDGeRd6rH12T8RTAJEm5OQ3P1fy1vJPvOfHrJpzibeRLnsZTu01RDrYNx0nRBNakN9oI/167jXGMBArlhVlsSkFgkgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQ2g9Zs5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WbQVss1l7HkZHxYho/H2+N297e3qInH/hl8fNMXieGkGfwZSLXY8vzvER9uLZzH/cGW9jfp/mCzU0YLcXKbsoGNUKBvlkq/xnw9F/0g8jYCvUMYEdKxVt/BZRJ3WAkPZEcSbAuAMLtKDqL9Mb9Szcq2nYzmpPkDD250z/Wk0X+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgId473N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQ2g9Zs5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CA2C4CEF5;
-	Tue, 11 Nov 2025 00:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgId473N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A4DC19425;
+	Tue, 11 Nov 2025 00:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822795;
-	bh=27OVNvLiVGlmnfBD5YG8DviGxivhjxZOSzzng1rtyUM=;
+	s=korg; t=1762822797;
+	bh=XqmY4NC5c2UI1ZVVMEbeWzWl4BZNoA1XVEJF9PwFdHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQ2g9Zs5FmP6pcsVpVw4lAuQowug9mwztp1o6Q8byFRmBkwPTzC2PsLEWixom2IDH
-	 H8Tw6Xfcgo2DkoTzveXFEeH2M/pwkSqNhaLu2jGEp/JTFqft3MlH7xqvF3dEK4lQad
-	 sulwrz80OFGgQ9SfQlemfefxy3tn5EpQ+Ou8qwW8=
+	b=VgId473NcOtbkobSagft3NtAxvzeQmbeT7XGqemeXxJ61gQuh3mH1FDtcKn/ZTIVp
+	 CfTpT/Rf4pIk/Jx30RqCMhYKU7jVT21NQIdWejAPqYCzxX0qWpu6jZBMW2gE0aMg63
+	 2kCTiAFE4WenbqD5Ldj5Kta3cpnpXHUirF5Mpfkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Travkin <nikita@trvn.ru>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 173/849] firmware: qcom: tzmem: disable sc7180 platform
-Date: Tue, 11 Nov 2025 09:35:43 +0900
-Message-ID: <20251111004540.619399923@linuxfoundation.org>
+Subject: [PATCH 6.12 102/565] ACPI: sysfs: Use ACPI_FREE() for freeing an ACPI object
+Date: Tue, 11 Nov 2025 09:39:18 +0900
+Message-ID: <20251111004529.250337205@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 3cc9a8cadaf66e1a53e5fee48f8bcdb0a3fd5075 ]
+[ Upstream commit 149139ddcb99583fdec8d1eaf7dada41e5896101 ]
 
-When SHM bridge is enabled, assigning RMTFS memory causes the calling
-core to hang if the system is running in EL1.
+Since str_obj is allocated by ACPICA in acpi_evaluate_object_typed(),
+it should be free with ACPI_FREE() rather than with kfree(), so use
+the former instead of the latter for freeing it.
 
-Disable SHM bridge on sc7180 devices to avoid that hang.
-
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20250822061946.472594-1-kaushlendra.kumar@intel.com
+[ rjw: Subject and changelog rewrite ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_tzmem.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/device_sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index ea0a353556570..12e448669b8bd 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -77,6 +77,7 @@ static bool qcom_tzmem_using_shm_bridge;
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index 3961fc47152c0..cd199fbe4dc90 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -464,7 +464,7 @@ static ssize_t description_show(struct device *dev,
  
- /* List of machines that are known to not support SHM bridge correctly. */
- static const char *const qcom_tzmem_blacklist[] = {
-+	"qcom,sc7180", /* hang in rmtfs memory assignment */
- 	"qcom,sc8180x",
- 	"qcom,sdm670", /* failure in GPU firmware loading */
- 	"qcom,sdm845", /* reset in rmtfs memory assignment */
+ 	buf[result++] = '\n';
+ 
+-	kfree(str_obj);
++	ACPI_FREE(str_obj);
+ 
+ 	return result;
+ }
 -- 
 2.51.0
 
