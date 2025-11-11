@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A403469F2;
-	Tue, 11 Nov 2025 01:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA97255F5E;
+	Tue, 11 Nov 2025 01:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824201; cv=none; b=P6YtISn6SM4+14iAQ7VkOgL6okbqtwMX5nOiRpXbRBXfdQjm3eNlWSMUTLqAIXNYjKQZMRO0WsuzAJ6dww4LpPjRcrqx4kELCujLh9R57dbBFDHJ6WoJkw2JkLKnFbrcEzVFssHhKBT8TxBbEYnVfNH6xgKQ7kQ/LKDnRnK5+Yo=
+	t=1762824203; cv=none; b=orOlL6qlz8IQxO/o6fRLg0MtyXZCrqLD+p7WebBiTLjMixfOQ4tCDdNbvHYLSJ5LxvKrHjVT9rnRohYc7t3Ma2rDtKSx96cM5NF2j+28vewCd5UgMg/kb91Ed7srtKaHdLyCCuDiF5cjaqNivUeG4SYS4kzgNjxX05TdMt9D03s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824201; c=relaxed/simple;
-	bh=3AR8Vl1OiMR9bSmR14vjmioDL+M6R09T35dKcUAFs/4=;
+	s=arc-20240116; t=1762824203; c=relaxed/simple;
+	bh=yYEHAgJwx+nPs4tHVlzx/48GTiGQwonKWsXgxnWKgHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEPiP5FRZyOfk7uD5r4RECd2Hb4Xx+pTNyqmjIVa+Z1smAmkkvCEDcCQztMHQSvEqGV7xfqkAGC6+35sgmVP9nlum8oR02IcA7xCMTvDSLogV6eYmp8CXGGkPtj8U8aEBLGk/zNZGnGmngJX9jMfLUI1SX8GU+nNqYl6Z3iNo54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOkLKRNH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cOVX8a+kgLD6B4V4Zs4EhW9hl9/SOxuzlJhHK+BFpoToiKwyuPgFKWk6C+EMHocOrbsEC7pqEiyVmP7/cn7nHYd4lzl0gtTA750DR0hpaHTw4KG0cTV6iAKl8zKT3W5EfCD1o/qposGA3eD+d6iKEMIOuUBxumV9opdUPCrMqjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkXlRgeQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOkLKRNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729C0C116B1;
-	Tue, 11 Nov 2025 01:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkXlRgeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06796C16AAE;
+	Tue, 11 Nov 2025 01:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824200;
-	bh=3AR8Vl1OiMR9bSmR14vjmioDL+M6R09T35dKcUAFs/4=;
+	s=korg; t=1762824203;
+	bh=yYEHAgJwx+nPs4tHVlzx/48GTiGQwonKWsXgxnWKgHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOkLKRNH9Xo9E9uk4quhHooQ4mr4f4zOSf3A3YFdPCJDogN4YSkobGULtI8ISA0wh
-	 tq5Dl9/ViTW/XbAvKmSXEaQzEcou804bJbZ0929ZOzWl/CIm6o0IOaaS/Cj3SezqG1
-	 VciAykWDMQ6FpfLGH2+mKD/XgN2rut4dGxN0q0Z0=
+	b=BkXlRgeQvJ0y4BbCAsiH4T0Hqd+bKshlkvSkE76iZjFYoPnKw4nwRbzfWdNX3jPLe
+	 tTudQEEP6ksJwSevSF7uAolqf/v5tX+g4L04IDyVj0sps6eo4Tk2dGVtrPSz23e2Qa
+	 FF9S8O1HmnhiuKF+5bD1em5GOOJwUUwlc8g1Ff44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 452/849] bus: mhi: host: pci_generic: Add support for all Foxconn T99W696 SKU variants
-Date: Tue, 11 Nov 2025 09:40:22 +0900
-Message-ID: <20251111004547.355741066@linuxfoundation.org>
+Subject: [PATCH 6.17 461/849] selftests: ncdevmem: dont retry EFAULT
+Date: Tue, 11 Nov 2025 09:40:31 +0900
+Message-ID: <20251111004547.573571372@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,50 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 376358bb9770e5313d22d8784511497096cdb75f ]
+[ Upstream commit 8c0b9ed2401b9b3f164c8c94221899a1ace6e9ab ]
 
-Since there are too many variants available for Foxconn T99W696 modem, and
-they all share the same configuration, use PCI_ANY_ID as the subsystem
-device ID to match each possible SKUs and support all of them.
+devmem test fails on NIPA. Most likely we get skb(s) with readable
+frags (why?) but the failure manifests as an OOM. The OOM happens
+because ncdevmem spams the following message:
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-[mani: reworded subject/description and dropped the fixes tag]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250819020013.122162-1-slark_xiao@163.com
+  recvmsg ret=-1
+  recvmsg: Bad address
+
+As of today, ncdevmem can't deal with various reasons of EFAULT:
+- falling back to regular recvmsg for non-devmem skbs
+- increasing ctrl_data size (can't happen with ncdevmem's large buffer)
+
+Exit (cleanly) with error when recvmsg returns EFAULT. This should at
+least cause the test to cleanup its state.
+
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250904182710.1586473-1-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pci_generic.c | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ tools/testing/selftests/drivers/net/hw/ncdevmem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 4edb5bb476baf..4564e2528775e 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -917,20 +917,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* Telit FE990A */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
--	/* Foxconn T99W696.01, Lenovo Generic SKU */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe142),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
--	/* Foxconn T99W696.02, Lenovo X1 Carbon SKU */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe143),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
--	/* Foxconn T99W696.03, Lenovo X1 2in1 SKU */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe144),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
--	/* Foxconn T99W696.04, Lenovo PRC SKU */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe145),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
--	/* Foxconn T99W696.00, Foxconn SKU */
--	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, 0xe146),
-+	/* Foxconn T99W696, all variants */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, PCI_VENDOR_ID_FOXCONN, PCI_ANY_ID),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w696_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+diff --git a/tools/testing/selftests/drivers/net/hw/ncdevmem.c b/tools/testing/selftests/drivers/net/hw/ncdevmem.c
+index 72f828021f832..147976e55dac2 100644
+--- a/tools/testing/selftests/drivers/net/hw/ncdevmem.c
++++ b/tools/testing/selftests/drivers/net/hw/ncdevmem.c
+@@ -631,6 +631,10 @@ static int do_server(struct memory_buffer *mem)
+ 			continue;
+ 		if (ret < 0) {
+ 			perror("recvmsg");
++			if (errno == EFAULT) {
++				pr_err("received EFAULT, won't recover");
++				goto err_close_client;
++			}
+ 			continue;
+ 		}
+ 		if (ret == 0) {
 -- 
 2.51.0
 
