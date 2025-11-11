@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA7222301;
-	Tue, 11 Nov 2025 01:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2134426560B;
+	Tue, 11 Nov 2025 01:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824567; cv=none; b=oXCWkiAJgnI/6jS7TRQppQB/oD1Apq2OBFYcYyztYL1TQFXr3BPQUXUcRrnEdGyG0OX3/sHeKvjXGRfDMFn/5fxQxoANiAlNeWQfFpNcSPDt/pyjJ3SUxiOOjwEik6cXR0P5GV8rOv/gQMd0VJd8wRu9pPgog+P2EM93loq5S2w=
+	t=1762824570; cv=none; b=EJOM7hXojFpvk+H7dTT3JmrGOFGuJHTaKZpVwwTjf/5TXoR43JnUftLMKPg5JSJthPKwGtHfrUb3ubzbWZUlGqG5z2b/ruojwNwGjPPc9nu0S0s/oEsLZvbd6PX9ncxMnVYYiv1OiAkKxPBOgK0IOwH6lZ/QdseiQJeFLErZELs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824567; c=relaxed/simple;
-	bh=NfLbOmu8X45X/nwzth9yQ04sIZEB0/4eDa2JWHejbio=;
+	s=arc-20240116; t=1762824570; c=relaxed/simple;
+	bh=/hwFxUSCjlV5r5W78CQ/KPLfSqsoNk7mBE99+zSjQfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdOJ76P9OsDh1qf/0S+IvZ3Ol35Kkor+6sJXQTpjR2CxxWcoyMMTHhoIHPnI5KlyhRvxrSN4ctwf9T+3klP4XYolqvBWJvbzAVlsZdJdK/HrKeaGDALsvRROKqKrw8egPg9p14iaYBHFuEI4JfrndiDNpw86kRCbLEaP3z/Uamk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBm9zKET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdIfwf8Af5LI7eA3kaOGhxnDL5uaETHbzMNWRa4QFOaOH4DVyeVyRJr/9qEbrx3L2L9DsL0YjMW1+IhrI5kjBSAV2b+RMXIPV2HG1ClrCuNw+kTwjGGB74upda7H2nPAt2/2dfQIwD80awMA5ssrrIiZwQR9dWIEveoEL2zajPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1redgKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBm9zKET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4DBC4AF0B;
-	Tue, 11 Nov 2025 01:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1redgKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53DAC16AAE;
+	Tue, 11 Nov 2025 01:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824567;
-	bh=NfLbOmu8X45X/nwzth9yQ04sIZEB0/4eDa2JWHejbio=;
+	s=korg; t=1762824570;
+	bh=/hwFxUSCjlV5r5W78CQ/KPLfSqsoNk7mBE99+zSjQfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBm9zKET+7CMXBAiX5Sigm7rz+ZgoXwDHOoplfAUGn4YwPIfskSLIciMW/zZ/YrH4
-	 rSuZ2+QGYRP/Rb4JojLo3lVpPjtTth/NkL7n18CqTKpFM3gpszuQgquVO0GhjddLOz
-	 MQRi5TZoi6ybE7BzQHLKrDIOjW6tl+xiDIC5DERE=
+	b=M1redgKqu1klGN8wRX1rY8usEsFzgtj6L0vlu4+2LV8xrNNFuB//bbdPQev/bBMHx
+	 24P/XF/ayu6/D4aLdx46oKIpATQ6xrCF1l+NQ1YWIY0KTUeZhu3f4uV9a0nZN38Kl+
+	 Psh41zBK50LpUpDm5TgrMHK3eG90b4S6EPNwYIxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 525/849] udp_tunnel: use netdev_warn() instead of netdev_WARN()
-Date: Tue, 11 Nov 2025 09:41:35 +0900
-Message-ID: <20251111004549.113731433@linuxfoundation.org>
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Sasha Levin <sashal@kernel.org>,
+	Ryan Wanner <ryan.wanner@microchip.com>
+Subject: [PATCH 6.12 471/565] clk: at91: clk-sam9x60-pll: force write to PLL_UPDT register
+Date: Tue, 11 Nov 2025 09:45:27 +0900
+Message-ID: <20251111004537.505219144@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,216 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit dc2f650f7e6857bf384069c1a56b2937a1ee370d ]
+[ Upstream commit af98caeaa7b6ad11eb7b7c8bfaddc769df2889f3 ]
 
-netdev_WARN() uses WARN/WARN_ON to print a backtrace along with
-file and line information. In this case, udp_tunnel_nic_register()
-returning an error is just a failed operation, not a kernel bug.
+This register is important for sequencing the commands to PLLs, so
+actually write the update bits with regmap_write_bits() instead of
+relying on a read/modify/write regmap command that could skip the actual
+hardware write if the value is identical to the one read.
 
-udp_tunnel_nic_register() can fail due to a memory allocation
-failure (kzalloc() or udp_tunnel_nic_alloc()).
-This is a normal runtime error and not a kernel bug.
+It's changed when modification is needed to the PLL, when
+read-only operation is done, we could keep the call to
+regmap_update_bits().
 
-Replace netdev_WARN() with netdev_warn() accordingly.
+Add a comment to the sam9x60_div_pll_set_div() function that uses this
+PLL_UPDT register so that it's used consistently, according to the
+product's datasheet.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250910195031.3784748-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Tested-by: Ryan Wanner <ryan.wanner@microchip.com> # on sama7d65 and sam9x75
+Link: https://lore.kernel.org/r/20250827150811.82496-1-nicolas.ferre@microchip.com
+[claudiu.beznea: fix "Alignment should match open parenthesis"
+ checkpatch.pl check]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel_nic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/at91/clk-sam9x60-pll.c | 75 ++++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 36 deletions(-)
 
-diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
-index ff66db48453cf..944b3cf25468e 100644
---- a/net/ipv4/udp_tunnel_nic.c
-+++ b/net/ipv4/udp_tunnel_nic.c
-@@ -930,7 +930,7 @@ udp_tunnel_nic_netdevice_event(struct notifier_block *unused,
+diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
+index fda0411022246..e05d036252e0e 100644
+--- a/drivers/clk/at91/clk-sam9x60-pll.c
++++ b/drivers/clk/at91/clk-sam9x60-pll.c
+@@ -93,8 +93,8 @@ static int sam9x60_frac_pll_set(struct sam9x60_pll_core *core)
  
- 		err = udp_tunnel_nic_register(dev);
- 		if (err)
--			netdev_WARN(dev, "failed to register for UDP tunnel offloads: %d", err);
-+			netdev_warn(dev, "failed to register for UDP tunnel offloads: %d", err);
- 		return notifier_from_errno(err);
+ 	spin_lock_irqsave(core->lock, flags);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
+ 	regmap_read(regmap, AT91_PMC_PLL_CTRL1, &val);
+ 	cmul = (val & core->layout->mul_mask) >> core->layout->mul_shift;
+ 	cfrac = (val & core->layout->frac_mask) >> core->layout->frac_shift;
+@@ -128,17 +128,17 @@ static int sam9x60_frac_pll_set(struct sam9x60_pll_core *core)
+ 		udelay(10);
  	}
- 	/* All other events will need the udp_tunnel_nic state */
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
+ 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL,
+ 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	while (!sam9x60_pll_ready(regmap, core->id))
+ 		cpu_relax();
+@@ -164,8 +164,8 @@ static void sam9x60_frac_pll_unprepare(struct clk_hw *hw)
+ 
+ 	spin_lock_irqsave(core->lock, flags);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
+ 
+ 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0, AT91_PMC_PLL_CTRL0_ENPLL, 0);
+ 
+@@ -173,9 +173,9 @@ static void sam9x60_frac_pll_unprepare(struct clk_hw *hw)
+ 		regmap_update_bits(regmap, AT91_PMC_PLL_ACR,
+ 				   AT91_PMC_PLL_ACR_UTMIBG | AT91_PMC_PLL_ACR_UTMIVR, 0);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	spin_unlock_irqrestore(core->lock, flags);
+ }
+@@ -262,8 +262,8 @@ static int sam9x60_frac_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
+ 
+ 	spin_lock_irqsave(core->lock, irqflags);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
+-			   core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
++			  core->id);
+ 	regmap_read(regmap, AT91_PMC_PLL_CTRL1, &val);
+ 	cmul = (val & core->layout->mul_mask) >> core->layout->mul_shift;
+ 	cfrac = (val & core->layout->frac_mask) >> core->layout->frac_shift;
+@@ -275,18 +275,18 @@ static int sam9x60_frac_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
+ 		     (frac->mul << core->layout->mul_shift) |
+ 		     (frac->frac << core->layout->frac_shift));
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
+ 			   AT91_PMC_PLL_CTRL0_ENLOCK | AT91_PMC_PLL_CTRL0_ENPLL,
+ 			   AT91_PMC_PLL_CTRL0_ENLOCK |
+ 			   AT91_PMC_PLL_CTRL0_ENPLL);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	while (!sam9x60_pll_ready(regmap, core->id))
+ 		cpu_relax();
+@@ -338,7 +338,10 @@ static const struct clk_ops sam9x60_frac_pll_ops_chg = {
+ 	.restore_context = sam9x60_frac_pll_restore_context,
+ };
+ 
+-/* This function should be called with spinlock acquired. */
++/* This function should be called with spinlock acquired.
++ * Warning: this function must be called only if the same PLL ID was set in
++ *          PLL_UPDT register previously.
++ */
+ static void sam9x60_div_pll_set_div(struct sam9x60_pll_core *core, u32 div,
+ 				    bool enable)
+ {
+@@ -350,9 +353,9 @@ static void sam9x60_div_pll_set_div(struct sam9x60_pll_core *core, u32 div,
+ 			   core->layout->div_mask | ena_msk,
+ 			   (div << core->layout->div_shift) | ena_val);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	while (!sam9x60_pll_ready(regmap, core->id))
+ 		cpu_relax();
+@@ -366,8 +369,8 @@ static int sam9x60_div_pll_set(struct sam9x60_pll_core *core)
+ 	unsigned int val, cdiv;
+ 
+ 	spin_lock_irqsave(core->lock, flags);
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
+ 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
+ 	cdiv = (val & core->layout->div_mask) >> core->layout->div_shift;
+ 
+@@ -398,15 +401,15 @@ static void sam9x60_div_pll_unprepare(struct clk_hw *hw)
+ 
+ 	spin_lock_irqsave(core->lock, flags);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_ID_MSK, core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_ID_MSK, core->id);
+ 
+ 	regmap_update_bits(regmap, AT91_PMC_PLL_CTRL0,
+ 			   core->layout->endiv_mask, 0);
+ 
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT,
+-			   AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
+-			   AT91_PMC_PLL_UPDT_UPDATE | core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT,
++			  AT91_PMC_PLL_UPDT_UPDATE | AT91_PMC_PLL_UPDT_ID_MSK,
++			  AT91_PMC_PLL_UPDT_UPDATE | core->id);
+ 
+ 	spin_unlock_irqrestore(core->lock, flags);
+ }
+@@ -518,8 +521,8 @@ static int sam9x60_div_pll_set_rate_chg(struct clk_hw *hw, unsigned long rate,
+ 	div->div = DIV_ROUND_CLOSEST(parent_rate, rate) - 1;
+ 
+ 	spin_lock_irqsave(core->lock, irqflags);
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
+-			   core->id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
++			  core->id);
+ 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
+ 	cdiv = (val & core->layout->div_mask) >> core->layout->div_shift;
+ 
+@@ -574,8 +577,8 @@ static int sam9x60_div_pll_notifier_fn(struct notifier_block *notifier,
+ 	div->div = div->safe_div;
+ 
+ 	spin_lock_irqsave(core.lock, irqflags);
+-	regmap_update_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
+-			   core.id);
++	regmap_write_bits(regmap, AT91_PMC_PLL_UPDT, AT91_PMC_PLL_UPDT_ID_MSK,
++			  core.id);
+ 	regmap_read(regmap, AT91_PMC_PLL_CTRL0, &val);
+ 	cdiv = (val & core.layout->div_mask) >> core.layout->div_shift;
+ 
 -- 
 2.51.0
 
