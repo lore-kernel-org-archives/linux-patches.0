@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CF81D86FF;
-	Tue, 11 Nov 2025 01:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E97346A16;
+	Tue, 11 Nov 2025 01:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824213; cv=none; b=QtnhFSJ1P9PQ+utofF6UgWC8sS/WAoPBlYfz/eh6QpV0NGvkAWfy1JpeGT3LHwRCQculJ6MZhWjIAT/ozCQd0boGnabjLXwuhL0lL/7EuSY1jPsoHGGY6WdncSR3hLgnW2ZDB423MtiM8q/Pup3JmRoq4HuSKMejsXeyk38sJJE=
+	t=1762824214; cv=none; b=goRTF7GDEaVDloPEOAQfSAZWIwBYPDc4O/q6xyVdJslwFt2Q5NDSek7az0if1TEcz/EHNUUQRkO6f28PL3QgqRQ1HnMKXcF/Gwagk8EnyDQR1eaW+ikPCBEKhwCODLu1JqztnXF43kKaee+Wx1Cm8VCkxfPWmNpFpw4j0xBRtTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824213; c=relaxed/simple;
-	bh=omJjpcDGGgqO6+97A+NIWZkZ5uV69sWZJ1Rn2YyOI3M=;
+	s=arc-20240116; t=1762824214; c=relaxed/simple;
+	bh=18vP2UBUI1oZqlSVcyaP71FNlsh1scRvejeIbAama+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CnGgGjSAwVOeNuw1WEcq6BSfal6Bv+noUCKFh9Orbq3hu1p2Vcdf57DBWcvO2kSZplxr6n8AAVIK7rOS0yEgA37rZQgF6YL7KHGSD/V1UNIOS5i3tNAWEpmkXhS/mPS1SiRtASvePalpvd9H6yFtmZErGR22izMohXwb9//M+64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iuj3OmeX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQOkV1tuHDHTKdrp4C62YSuGfqBnLqmrWf1l8QS0eNS3RUHi1NXpAUp/VAHrRJWhKTp3Nu4NKPt8Wz7y2aoMqWMXJE/EVjetbKT9YYkKLj/W6+66svWunbNb5VmbAdMA6xijq9FikfK/B2p5WOxKqm1j0s9cUM6GpEOnBzx2CZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNJvGH2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iuj3OmeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917EC19422;
-	Tue, 11 Nov 2025 01:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNJvGH2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72348C116D0;
+	Tue, 11 Nov 2025 01:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824212;
-	bh=omJjpcDGGgqO6+97A+NIWZkZ5uV69sWZJ1Rn2YyOI3M=;
+	s=korg; t=1762824214;
+	bh=18vP2UBUI1oZqlSVcyaP71FNlsh1scRvejeIbAama+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iuj3OmeXjV6rc0qqwlukkMaFl5B7IjNlE1/+MplqFbBL56lhV6zdhtjSc7NaSDw0g
-	 eNPVynPUeBHFWNl331E6mq+pAiwqEMpmr12NbIJNIc4rGUSwAbtKcI6L3NDbfVsb1T
-	 OtL8mSOXCGVAui4kkMf0hfYRQFC1m4rqpMa6RHHE=
+	b=hNJvGH2vbdGdxGtKutQZuHbabqNLJ+fi85Iug3xasY1MsoIz0SDx5gX0DHT8yb01G
+	 TBgsHd8pKAAuqjOR7i+5rRcykUy/VqqAwuiY1jadQwv4xCrItRQeYo3xpSfZzl7Czo
+	 7EIozTDHFrHyoxU8mchwHafC9FWO8pkrbu0OOhxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Wu <william.wu@rock-chips.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 463/849] usb: gadget: f_hid: Fix zero length packet transfer
-Date: Tue, 11 Nov 2025 09:40:33 +0900
-Message-ID: <20251111004547.622673197@linuxfoundation.org>
+Subject: [PATCH 6.12 412/565] net: dsa: microchip: Set SPI as bus interface during reset for KSZ8463
+Date: Tue, 11 Nov 2025 09:44:28 +0900
+Message-ID: <20251111004536.137622191@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +48,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Wu <william.wu@rock-chips.com>
+From: Bastien Curutchet <bastien.curutchet@bootlin.com>
 
-[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
+[ Upstream commit a0b977a3d19368b235f2a6c06e800fb25452029b ]
 
-Set the hid req->zero flag of ep0/in_ep to true by default,
-then the UDC drivers can transfer a zero length packet at
-the end if the hid transfer with size divisible to EPs max
-packet size according to the USB 2.0 spec.
+At reset, the KSZ8463 uses a strap-based configuration to set SPI as
+bus interface. SPI is the only bus supported by the driver. If the
+required pull-ups/pull-downs are missing (by mistake or by design to
+save power) the pins may float and the configuration can go wrong
+preventing any communication with the switch.
 
-Signed-off-by: William Wu <william.wu@rock-chips.com>
-Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Introduce a ksz8463_configure_straps_spi() function called during the
+device reset. It relies on the 'straps-rxd-gpios' OF property and the
+'reset' pinmux configuration to enforce SPI as bus interface.
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Link: https://patch.msgid.link/20250918-ksz-strap-pins-v3-3-16662e881728@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 45 ++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 8e1d1e8840503..307ea563af95e 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -511,7 +511,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 0a34fd6887fc0..1da2310442fc5 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -23,6 +23,7 @@
+ #include <linux/of_mdio.h>
+ #include <linux/of_net.h>
+ #include <linux/micrel_phy.h>
++#include <linux/pinctrl/consumer.h>
+ #include <net/dsa.h>
+ #include <net/ieee8021q.h>
+ #include <net/pkt_cls.h>
+@@ -4715,6 +4716,38 @@ static int ksz_parse_drive_strength(struct ksz_device *dev)
+ 	return 0;
+ }
+ 
++static int ksz8463_configure_straps_spi(struct ksz_device *dev)
++{
++	struct pinctrl *pinctrl;
++	struct gpio_desc *rxd0;
++	struct gpio_desc *rxd1;
++
++	rxd0 = devm_gpiod_get_index_optional(dev->dev, "straps-rxd", 0, GPIOD_OUT_LOW);
++	if (IS_ERR(rxd0))
++		return PTR_ERR(rxd0);
++
++	rxd1 = devm_gpiod_get_index_optional(dev->dev, "straps-rxd", 1, GPIOD_OUT_HIGH);
++	if (IS_ERR(rxd1))
++		return PTR_ERR(rxd1);
++
++	if (!rxd0 && !rxd1)
++		return 0;
++
++	if ((rxd0 && !rxd1) || (rxd1 && !rxd0))
++		return -EINVAL;
++
++	pinctrl = devm_pinctrl_get_select(dev->dev, "reset");
++	if (IS_ERR(pinctrl))
++		return PTR_ERR(pinctrl);
++
++	return 0;
++}
++
++static int ksz8463_release_straps_spi(struct ksz_device *dev)
++{
++	return pinctrl_select_default_state(dev->dev);
++}
++
+ int ksz_switch_register(struct ksz_device *dev)
+ {
+ 	const struct ksz_chip_data *info;
+@@ -4730,10 +4763,22 @@ int ksz_switch_register(struct ksz_device *dev)
+ 		return PTR_ERR(dev->reset_gpio);
+ 
+ 	if (dev->reset_gpio) {
++		if (of_device_is_compatible(dev->dev->of_node, "microchip,ksz8463")) {
++			ret = ksz8463_configure_straps_spi(dev);
++			if (ret)
++				return ret;
++		}
++
+ 		gpiod_set_value_cansleep(dev->reset_gpio, 1);
+ 		usleep_range(10000, 12000);
+ 		gpiod_set_value_cansleep(dev->reset_gpio, 0);
+ 		msleep(100);
++
++		if (of_device_is_compatible(dev->dev->of_node, "microchip,ksz8463")) {
++			ret = ksz8463_release_straps_spi(dev);
++			if (ret)
++				return ret;
++		}
  	}
  
- 	req->status   = 0;
--	req->zero     = 0;
-+	req->zero     = 1;
- 	req->length   = count;
- 	req->complete = f_hidg_req_complete;
- 	req->context  = hidg;
-@@ -967,7 +967,7 @@ static int hidg_setup(struct usb_function *f,
- 	return -EOPNOTSUPP;
- 
- respond:
--	req->zero = 0;
-+	req->zero = 1;
- 	req->length = length;
- 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
- 	if (status < 0)
+ 	mutex_init(&dev->dev_mutex);
 -- 
 2.51.0
 
