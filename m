@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D3343D6C;
-	Tue, 11 Nov 2025 01:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEBA2820A0;
+	Tue, 11 Nov 2025 01:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825175; cv=none; b=KDovIvxlQeDrbnjEhA4YZHYkpTnB+VJ/ondWoPbUtxmCLCwrSIqozpZt7jdZ5woXWQYJISDKWEC0ACs0JBVE3PhWwXN3cmdVaMtYbGS2NYKQ4rpS/zmZkehzdyWR2EDX4KXq6S8+K5xZdqDdISGiai4LPglG3qt2vXLuJ8sm/3Y=
+	t=1762825177; cv=none; b=CJCkpsPSjQfzsWfrKcS6+V/2gtS8UV9QjRdCFL0+16tiD3tOxNs+z/SF4KF7Q1QiItFMJRSnXHploLma4Jy7/I3X0F6HUzwFnXhVDnU2c9FrOuIkv6RF2EhOOO6GiFcjnIzUoqPrzPBFzC/ZUu2LSnLnxv9quYi7RvFQH0Oy0Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825175; c=relaxed/simple;
-	bh=XQenK4I9/WSxGM8STqaFQWamcExZaduL5e0Pqlg85Oc=;
+	s=arc-20240116; t=1762825177; c=relaxed/simple;
+	bh=f4yxDUyg1jRZLlpJgMcjPP4hkKr9l933Cb2L1WdMWsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ty5Hf+ODHoLegea9DxZyVVtNUWBtDDmyB0eXHXJkobZTn6lF/E0nTCCNT0I30mpR3R/2vxXbbRfxqFHi2Mb1ty6L0UFUQqwMLnF6BfAMYoIXgibdjVQaj0R9GfYu6CfzTYLJ1ofFyjDBdIG2gZoKSOK6QqSGhZZyabfpVoGNvaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2Kh7h5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmuLv4nncaW8RyD6GfXIIT3Ltg0TTyfJsbMO9NLSKH+E7ctklsqjdcwGDsg/hQPdjP3vUQ0ky9zVibfbSdICHaT9XEz0t1X5xeOfWSHitFusoug8Q6m0K2jWkiL24hLaIjjc/Z5KU2tCq4wEmkrbkOB6f+dAZ/XOmDv2JZiMQZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kY1fAdJY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2Kh7h5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8B0C116B1;
-	Tue, 11 Nov 2025 01:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kY1fAdJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1BDC19425;
+	Tue, 11 Nov 2025 01:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825174;
-	bh=XQenK4I9/WSxGM8STqaFQWamcExZaduL5e0Pqlg85Oc=;
+	s=korg; t=1762825177;
+	bh=f4yxDUyg1jRZLlpJgMcjPP4hkKr9l933Cb2L1WdMWsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2Kh7h5cXQ4ihS5otXLQCGpRhsIe5bOjIIJWlVmH3RUjwXYRzJu9FfyPkbg7DjFOX
-	 dPSnMvPs175gTXDKDhdbjl7hjfbUdu6Y781/4Atj+CHhyRj5lfLlPQnLX7QVu8kmQn
-	 nH8jZXdWIBzBQZTaecHZg2op2dBfe1tkJF36qw9I=
+	b=kY1fAdJYd4+sEMT3rrLtboTL7qGuuhCkWvQs9BlTmPG8YjU2DN7YcKPMSzX2ytojm
+	 GyJriBo0ljTTr8NVDqI/pYn3Z2mnyQ5csKxobdZDKU5n3YN34OSNpJXyUZD8Anhrd6
+	 1Om9mvoqzqnOc9XIPgnMW7vG4xXbBqWiALbsOoH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	austinchang <austinchang@synology.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 692/849] btrfs: mark dirty extent range for out of bound prealloc extents
-Date: Tue, 11 Nov 2025 09:44:22 +0900
-Message-ID: <20251111004553.161851374@linuxfoundation.org>
+Subject: [PATCH 6.17 666/849] Bluetooth: btusb: Add new VID/PID 13d3/3633 for MT7922
+Date: Tue, 11 Nov 2025 09:43:56 +0900
+Message-ID: <20251111004552.525905685@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,102 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: austinchang <austinchang@synology.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 3b1a4a59a2086badab391687a6a0b86e03048393 ]
+[ Upstream commit 70cd38d22d4659ca8133c7124528c90678215dda ]
 
-In btrfs_fallocate(), when the allocated range overlaps with a prealloc
-extent and the extent starts after i_size, the range doesn't get marked
-dirty in file_extent_tree. This results in persisting an incorrect
-disk_i_size for the inode when not using the no-holes feature.
+Add VID 13d3 & PID 3633 for MediaTek MT7922 USB Bluetooth chip.
 
-This is reproducible since commit 41a2ee75aab0 ("btrfs: introduce
-per-inode file extent tree"), then became hidden since commit 3d7db6e8bd22
-("btrfs: don't allocate file extent tree for non regular files") and then
-visible again after commit 8679d2687c35 ("btrfs: initialize
-inode::file_extent_tree after i_mode has been set"), which fixes the
-previous commit.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-The following reproducer triggers the problem:
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3633 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-$ cat test.sh
-
-MNT=/mnt/test
-DEV=/dev/vdb
-
-mkdir -p $MNT
-
-mkfs.btrfs -f -O ^no-holes $DEV
-mount $DEV $MNT
-
-touch $MNT/file1
-fallocate -n -o 1M -l 2M $MNT/file1
-
-umount $MNT
-mount $DEV $MNT
-
-len=$((1 * 1024 * 1024))
-
-fallocate -o 1M -l $len $MNT/file1
-
-du --bytes $MNT/file1
-
-umount $MNT
-mount $DEV $MNT
-
-du --bytes $MNT/file1
-
-umount $MNT
-
-Running the reproducer gives the following result:
-
-$ ./test.sh
-(...)
-2097152 /mnt/test/file1
-1048576 /mnt/test/file1
-
-The difference is exactly 1048576 as we assigned.
-
-Fix by adding a call to btrfs_inode_set_file_extent_range() in
-btrfs_fallocate_update_isize().
-
-Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
-Signed-off-by: austinchang <austinchang@synology.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 204674934795c..9f6dcae252189 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2855,12 +2855,22 @@ static int btrfs_fallocate_update_isize(struct inode *inode,
- {
- 	struct btrfs_trans_handle *trans;
- 	struct btrfs_root *root = BTRFS_I(inode)->root;
-+	u64 range_start;
-+	u64 range_end;
- 	int ret;
- 	int ret2;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b231caa84757c..5e9ebf0c53125 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -701,6 +701,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3615), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3633), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x35f5, 0x7922), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- 	if (mode & FALLOC_FL_KEEP_SIZE || end <= i_size_read(inode))
- 		return 0;
- 
-+	range_start = round_down(i_size_read(inode), root->fs_info->sectorsize);
-+	range_end = round_up(end, root->fs_info->sectorsize);
-+
-+	ret = btrfs_inode_set_file_extent_range(BTRFS_I(inode), range_start,
-+						range_end - range_start);
-+	if (ret)
-+		return ret;
-+
- 	trans = btrfs_start_transaction(root, 1);
- 	if (IS_ERR(trans))
- 		return PTR_ERR(trans);
 -- 
 2.51.0
 
