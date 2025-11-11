@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A03054DF;
-	Tue, 11 Nov 2025 01:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6923054D7;
+	Tue, 11 Nov 2025 01:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825504; cv=none; b=S4AOqCxMjmxPXadNv5J4ddkUMts+RuvZ9pSv1VE25J4EDkbIVEba95t7kV20gAZ+dZ5a/5QbVypwlWMKWV6YWiXfY8DkybtdPVtgWVZHFLRFK/bgcTuWikmkITsF+HR2OGWZMppxcVOe6sodAYwjc3VsiFA+T0Y8tApNQEBs9bQ=
+	t=1762825506; cv=none; b=jAK3vvU4NS9u55xsawnme7P9aSe2kaqXe8kY/3XcPyRCiqY9ebjfZqLMvrybVA8/DkWdHi7bZ7KM8paKi2QLGNoHzoEdNInfNxV2vpJv5/wskygG2dJKRVQ/t1B226J3mkX2hd2WlZikaaJUSeI5IymN0iPYCW9yYRrzevaBRSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825504; c=relaxed/simple;
-	bh=g1Nxlx/F2XWa576eVsrF+O87w0ALUIGR0zxZ8cDImik=;
+	s=arc-20240116; t=1762825506; c=relaxed/simple;
+	bh=T7AESE98bVYIIJwBxUd0vokOMz2B1nky1h6a9EYjdck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiAVQW51SxyYQrUKAIVqbQjacjh/DCLLG+++8x76R/Dk5Q4UcWV8raJp1ScmbILBzgP7dZaapZyAKUbQvzjJvjPLh+KhoX2zOfbhWNho+4ZVY8w9vv3ZOtE7TbJExBUaLEoZoTfiHuW2qk+/vwCmx3BJp9uIhe3YInO2D4kOyfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gi2O30IY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1JeLcLJe8rv7YJOyrxBb8+8eglm+Xaf5DJNucfJiYZe2MOhsYLaYntw9gXtai/kQ2uHs2uy4cIgK87cwJX+33FxzuWAG/4HwCsLVKePQin2TWbOSnzhRgn9QpGTCmlL3fnH9W32fLeA2/tfJFprSQQycvO3KkZ/WOqThdQlE98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03GlwOWL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gi2O30IY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A8AC19424;
-	Tue, 11 Nov 2025 01:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03GlwOWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF31C4CEF5;
+	Tue, 11 Nov 2025 01:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825503;
-	bh=g1Nxlx/F2XWa576eVsrF+O87w0ALUIGR0zxZ8cDImik=;
+	s=korg; t=1762825506;
+	bh=T7AESE98bVYIIJwBxUd0vokOMz2B1nky1h6a9EYjdck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gi2O30IYPK7iDjES87zjTeL5HU/IE9m//0f64+fRr8jwxHVckvDVLpXXq7oIw6VMU
-	 D1EF0UADpvkxeLXfnYUJdvBgVE32YAncEP3oNu4J+BOzGcDFJdONdqRKM1LJlW1/Ih
-	 4w2477BUDjh3Z8C+z6yebEYQRH6y5zbYf9iBUpmA=
+	b=03GlwOWLTumHEsrpoygaEqv54VrDkJhYG/ERSSfkKHCFQBelGlvhJ4IDJxkHnccls
+	 EgA/T/ITJ1VfQBqI7Ca+FMG19diA8OPFt4CQhBWWjUDulnBwH6S5vb+fqkUHY8ygUt
+	 HZQKNhDMPVNgc+fMKnEwD/xZOrXjrQfdkD1J+zps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.17 830/849] lib/crypto: curve25519-hacl64: Fix older clang KASAN workaround for GCC
-Date: Tue, 11 Nov 2025 09:46:40 +0900
-Message-ID: <20251111004556.493788997@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.17 831/849] scsi: ufs: ufs-pci: Fix S0ix/S3 for Intel controllers
+Date: Tue, 11 Nov 2025 09:46:41 +0900
+Message-ID: <20251111004556.517454071@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,37 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 2b81082ad37cc3f28355fb73a6a69b91ff7dbf20 upstream.
+commit bb44826c3bdbf1fa3957008a04908f45e5666463 upstream.
 
-Commit 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with
-clang-17 and older") inadvertently disabled KASAN in curve25519-hacl64.o
-for GCC unconditionally because clang-min-version will always evaluate
-to nothing for GCC. Add a check for CONFIG_CC_IS_CLANG to avoid applying
-the workaround for GCC, which is only needed for clang-17 and older.
+Intel platforms with UFS, can support Suspend-to-Idle (S0ix) and
+Suspend-to-RAM (S3).  For S0ix the link state should be HIBERNATE.  For
+S3, state is lost, so the link state must be OFF.  Driver policy,
+expressed by spm_lvl, can be 3 (link HIBERNATE, device SLEEP) for S0ix
+but must be changed to 5 (link OFF, device POWEROFF) for S3.
 
+Fix support for S0ix/S3 by switching spm_lvl as needed.  During suspend
+->prepare(), if the suspend target state is not Suspend-to-Idle, ensure
+the spm_lvl is at least 5 to ensure that resume will be possible from
+deep sleep states.  During suspend ->complete(), restore the spm_lvl to
+its original value that is suitable for S0ix.
+
+This fix is first needed in Intel Alder Lake based controllers.
+
+Fixes: 7dc9fb47bc9a ("scsi: ufs: ufs-pci: Add support for Intel ADL")
 Cc: stable@vger.kernel.org
-Fixes: 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with clang-17 and older")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20251103-curve25519-hacl64-fix-kasan-workaround-v2-1-ab581cbd8035@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251024085918.31825-2-adrian.hunter@intel.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufshcd-pci.c |   67 ++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 65 insertions(+), 2 deletions(-)
 
---- a/lib/crypto/Makefile
-+++ b/lib/crypto/Makefile
-@@ -48,7 +48,7 @@ libcurve25519-generic-y				:= curve25519
- libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)	:= curve25519-hacl64.o
- libcurve25519-generic-y				+= curve25519-generic.o
- # clang versions prior to 18 may blow out the stack with KASAN
--ifeq ($(call clang-min-version, 180000),)
-+ifeq ($(CONFIG_CC_IS_CLANG)_$(call clang-min-version, 180000),y_)
- KASAN_SANITIZE_curve25519-hacl64.o := n
- endif
+--- a/drivers/ufs/host/ufshcd-pci.c
++++ b/drivers/ufs/host/ufshcd-pci.c
+@@ -15,6 +15,7 @@
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/pm_qos.h>
++#include <linux/suspend.h>
+ #include <linux/debugfs.h>
+ #include <linux/uuid.h>
+ #include <linux/acpi.h>
+@@ -31,6 +32,7 @@ struct intel_host {
+ 	u32		dsm_fns;
+ 	u32		active_ltr;
+ 	u32		idle_ltr;
++	int		saved_spm_lvl;
+ 	struct dentry	*debugfs_root;
+ 	struct gpio_desc *reset_gpio;
+ };
+@@ -347,6 +349,7 @@ static int ufs_intel_common_init(struct
+ 	host = devm_kzalloc(hba->dev, sizeof(*host), GFP_KERNEL);
+ 	if (!host)
+ 		return -ENOMEM;
++	host->saved_spm_lvl = -1;
+ 	ufshcd_set_variant(hba, host);
+ 	intel_dsm_init(host, hba->dev);
+ 	if (INTEL_DSM_SUPPORTED(host, RESET)) {
+@@ -538,6 +541,66 @@ static int ufshcd_pci_restore(struct dev
+ 
+ 	return ufshcd_system_resume(dev);
+ }
++
++static int ufs_intel_suspend_prepare(struct device *dev)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++	struct intel_host *host = ufshcd_get_variant(hba);
++	int err;
++
++	/*
++	 * Only s2idle (S0ix) retains link state.  Force power-off
++	 * (UFS_PM_LVL_5) for any other case.
++	 */
++	if (pm_suspend_target_state != PM_SUSPEND_TO_IDLE && hba->spm_lvl < UFS_PM_LVL_5) {
++		host->saved_spm_lvl = hba->spm_lvl;
++		hba->spm_lvl = UFS_PM_LVL_5;
++	}
++
++	err = ufshcd_suspend_prepare(dev);
++
++	if (err < 0 && host->saved_spm_lvl != -1) {
++		hba->spm_lvl = host->saved_spm_lvl;
++		host->saved_spm_lvl = -1;
++	}
++
++	return err;
++}
++
++static void ufs_intel_resume_complete(struct device *dev)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++	struct intel_host *host = ufshcd_get_variant(hba);
++
++	ufshcd_resume_complete(dev);
++
++	if (host->saved_spm_lvl != -1) {
++		hba->spm_lvl = host->saved_spm_lvl;
++		host->saved_spm_lvl = -1;
++	}
++}
++
++static int ufshcd_pci_suspend_prepare(struct device *dev)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++
++	if (!strcmp(hba->vops->name, "intel-pci"))
++		return ufs_intel_suspend_prepare(dev);
++
++	return ufshcd_suspend_prepare(dev);
++}
++
++static void ufshcd_pci_resume_complete(struct device *dev)
++{
++	struct ufs_hba *hba = dev_get_drvdata(dev);
++
++	if (!strcmp(hba->vops->name, "intel-pci")) {
++		ufs_intel_resume_complete(dev);
++		return;
++	}
++
++	ufshcd_resume_complete(dev);
++}
+ #endif
+ 
+ /**
+@@ -611,8 +674,8 @@ static const struct dev_pm_ops ufshcd_pc
+ 	.thaw		= ufshcd_system_resume,
+ 	.poweroff	= ufshcd_system_suspend,
+ 	.restore	= ufshcd_pci_restore,
+-	.prepare	= ufshcd_suspend_prepare,
+-	.complete	= ufshcd_resume_complete,
++	.prepare	= ufshcd_pci_suspend_prepare,
++	.complete	= ufshcd_pci_resume_complete,
+ #endif
+ };
  
 
 
