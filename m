@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A621DF258;
-	Tue, 11 Nov 2025 00:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98C41DF258;
+	Tue, 11 Nov 2025 00:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822374; cv=none; b=efoq7o6Yjoqcfzx2MwLTvCHoQmLqlJavZMcOtt3h1SOKoIpbUzmDjqQNXPZitEW3D+XPkhFhJtMdrs0YvdpRtNERBscGjpB5C1r4xltlcbKJS6RgAgf8lw2BNeDtrk/q1EMnc9jPteFgRupPAaiH7CLzgnVPYsADaCqUtfuIWwE=
+	t=1762822376; cv=none; b=GTbVV0ZL4pZtwT2kElcoCIEOmyy7vMgqtWRSY9Do2Xt9AkAm7kFHyv2HobfQ5BEcrbAAnbfi+2AuOU2/fI25HeBw/Z84/B8QtFCTA9OP6rfPvBU3RqRW+Ev74AlGpugNV166g+qXml8ZsI3EEONeR//mIggQ5VzYcbHWPYSFJ68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822374; c=relaxed/simple;
-	bh=+4pNrCigWj+T9qEfeqDydw5oPrCSZC/oyeIHrX6XYBY=;
+	s=arc-20240116; t=1762822376; c=relaxed/simple;
+	bh=dZv1bGUx2buxkQPq5nP/9NdS07y0LIBHa2IA7qdN8vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOnHqFiVw3fb/hG1PltLBk9PBROp7K7KCH1UxnSqDpWh6dWfiaqPbQ4tHd0xfvlec6jsxb0AwvK+a86ZFk900Yd8M0Ua0wXS1fXDOfzt91RBvAAFb/lQjanq2BmAHHOXkes2p2J8dISqCo+Gw5EZqY2O7Lh1dgaYefduCjJIXDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JR1Yc5Iy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYxLqooedNtwkwH6LJ6PxNUe/7F6hlMGNdoBl++s8wQbBec5Y/BI/5PbiHnckJorJ4RS56F8LP9KCGwsnef4E6y0zZjV0VneTA0HaVmlZmXkFCpXEBNne5BxPGnImasmbCLIvQep0PzvnworsTXu0Uf2IYKUYsaNdSJqqyl/dL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzWOMj7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JR1Yc5Iy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6104C4AF0B;
-	Tue, 11 Nov 2025 00:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzWOMj7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B56C16AAE;
+	Tue, 11 Nov 2025 00:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822374;
-	bh=+4pNrCigWj+T9qEfeqDydw5oPrCSZC/oyeIHrX6XYBY=;
+	s=korg; t=1762822376;
+	bh=dZv1bGUx2buxkQPq5nP/9NdS07y0LIBHa2IA7qdN8vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JR1Yc5IyEvv+pCxd0JehqLZHNO7XHAWaYPjvdFocTi9zZhEXM7i+kSTKFEDZarGN5
-	 jFbND6xEfJ5/SyNujb5LGYVvzeh4vbjjWEuYLr282JEd6c4+m11jwcnd6wVw+M7HJF
-	 +3h6GVj3iafXZ7F6iSZI2hWPj3bGtpG/AuCJaPyU=
+	b=OzWOMj7tKR+jxU4aTS0duYGV8hwqKv8mj5G4S+eZX2W4RNH3Q2pWdYmuwbT7JIXm1
+	 49d0eQiRFsnCHb8zm4Ot5YTJ+iP7Wsp3iQTzqlhx/4UCJ27sQDDJNFyvp52gxe+NsR
+	 iSrmJWHAl5KQj3gnQ2jvYx4J+nWwWytXQL0a018k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/565] ASoC: Intel: avs: Disable periods-elapsed work when closing PCM
-Date: Tue, 11 Nov 2025 09:38:13 +0900
-Message-ID: <20251111004527.726111747@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.17 095/849] s390/pci: Avoid deadlock between PCI error recovery and mlx5 crdump
+Date: Tue, 11 Nov 2025 09:34:25 +0900
+Message-ID: <20251111004538.707971758@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-[ Upstream commit 845f716dc5f354c719f6fda35048b6c2eca99331 ]
+commit 0fd20f65df6aa430454a0deed8f43efa91c54835 upstream.
 
-avs_dai_fe_shutdown() handles the shutdown procedure for HOST HDAudio
-stream while period-elapsed work services its IRQs. As the former
-frees the DAI's private context, these two operations shall be
-synchronized to avoid slab-use-after-free or worse errors.
+Do not block PCI config accesses through pci_cfg_access_lock() when
+executing the s390 variant of PCI error recovery: Acquire just
+device_lock() instead of pci_dev_lock() as powerpc's EEH and
+generig PCI AER processing do.
 
-Fixes: 0dbb186c3510 ("ASoC: Intel: avs: Update stream status in a separate thread")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20251023092348.3119313-3-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+During error recovery testing a pair of tasks was reported to be hung:
+
+mlx5_core 0000:00:00.1: mlx5_health_try_recover:338:(pid 5553): health recovery flow aborted, PCI reads still not working
+INFO: task kmcheck:72 blocked for more than 122 seconds.
+      Not tainted 5.14.0-570.12.1.bringup7.el9.s390x #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kmcheck         state:D stack:0     pid:72    tgid:72    ppid:2      flags:0x00000000
+Call Trace:
+ [<000000065256f030>] __schedule+0x2a0/0x590
+ [<000000065256f356>] schedule+0x36/0xe0
+ [<000000065256f572>] schedule_preempt_disabled+0x22/0x30
+ [<0000000652570a94>] __mutex_lock.constprop.0+0x484/0x8a8
+ [<000003ff800673a4>] mlx5_unload_one+0x34/0x58 [mlx5_core]
+ [<000003ff8006745c>] mlx5_pci_err_detected+0x94/0x140 [mlx5_core]
+ [<0000000652556c5a>] zpci_event_attempt_error_recovery+0xf2/0x398
+ [<0000000651b9184a>] __zpci_event_error+0x23a/0x2c0
+INFO: task kworker/u1664:6:1514 blocked for more than 122 seconds.
+      Not tainted 5.14.0-570.12.1.bringup7.el9.s390x #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u1664:6 state:D stack:0     pid:1514  tgid:1514  ppid:2      flags:0x00000000
+Workqueue: mlx5_health0000:00:00.0 mlx5_fw_fatal_reporter_err_work [mlx5_core]
+Call Trace:
+ [<000000065256f030>] __schedule+0x2a0/0x590
+ [<000000065256f356>] schedule+0x36/0xe0
+ [<0000000652172e28>] pci_wait_cfg+0x80/0xe8
+ [<0000000652172f94>] pci_cfg_access_lock+0x74/0x88
+ [<000003ff800916b6>] mlx5_vsc_gw_lock+0x36/0x178 [mlx5_core]
+ [<000003ff80098824>] mlx5_crdump_collect+0x34/0x1c8 [mlx5_core]
+ [<000003ff80074b62>] mlx5_fw_fatal_reporter_dump+0x6a/0xe8 [mlx5_core]
+ [<0000000652512242>] devlink_health_do_dump.part.0+0x82/0x168
+ [<0000000652513212>] devlink_health_report+0x19a/0x230
+ [<000003ff80075a12>] mlx5_fw_fatal_reporter_err_work+0xba/0x1b0 [mlx5_core]
+
+No kernel log of the exact same error with an upstream kernel is
+available - but the very same deadlock situation can be constructed there,
+too:
+
+- task: kmcheck
+  mlx5_unload_one() tries to acquire devlink lock while the PCI error
+  recovery code has set pdev->block_cfg_access by way of
+  pci_cfg_access_lock()
+- task: kworker
+  mlx5_crdump_collect() tries to set block_cfg_access through
+  pci_cfg_access_lock() while devlink_health_report() had acquired
+  the devlink lock.
+
+A similar deadlock situation can be reproduced by requesting a
+crdump with
+  > devlink health dump show pci/<BDF> reporter fw_fatal
+
+while PCI error recovery is executed on the same <BDF> physical function
+by mlx5_core's pci_error_handlers. On s390 this can be injected with
+  > zpcictl --reset-fw <BDF>
+
+Tests with this patch failed to reproduce that second deadlock situation,
+the devlink command is rejected with "kernel answers: Permission denied" -
+and we get a kernel log message of:
+
+mlx5_core 1ed0:00:00.1: mlx5_crdump_collect:50:(pid 254382): crdump: failed to lock vsc gw err -5
+
+because the config read of VSC_SEMAPHORE is rejected by the underlying
+hardware.
+
+Two prior attempts to address this issue have been discussed and
+ultimately rejected [see link], with the primary argument that s390's
+implementation of PCI error recovery is imposing restrictions that
+neither powerpc's EEH nor PCI AER handling need. Tests show that PCI
+error recovery on s390 is running to completion even without blocking
+access to PCI config space.
+
+Link: https://lore.kernel.org/all/20251007144826.2825134-1-gbayer@linux.ibm.com/
+Cc: stable@vger.kernel.org
+Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/avs/pcm.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/pci/pci_event.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 3041717632ed0..dee871910d211 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -551,6 +551,7 @@ static void avs_dai_fe_shutdown(struct snd_pcm_substream *substream, struct snd_
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -187,7 +187,7 @@ static pci_ers_result_t zpci_event_attem
+ 	 * is unbound or probed and that userspace can't access its
+ 	 * configuration space while we perform recovery.
+ 	 */
+-	pci_dev_lock(pdev);
++	device_lock(&pdev->dev);
+ 	if (pdev->error_state == pci_channel_io_perm_failure) {
+ 		ers_res = PCI_ERS_RESULT_DISCONNECT;
+ 		goto out_unlock;
+@@ -254,7 +254,7 @@ static pci_ers_result_t zpci_event_attem
+ 	if (driver->err_handler->resume)
+ 		driver->err_handler->resume(pdev);
+ out_unlock:
+-	pci_dev_unlock(pdev);
++	device_unlock(&pdev->dev);
+ 	zpci_report_status(zdev, "recovery", status_str);
  
- 	data = snd_soc_dai_get_dma_data(dai, substream);
- 
-+	disable_work_sync(&data->period_elapsed_work);
- 	snd_hdac_ext_stream_release(data->host_stream, HDAC_EXT_STREAM_TYPE_HOST);
- 	avs_dai_shutdown(substream, dai);
- }
--- 
-2.51.0
-
+ 	return ers_res;
 
 
