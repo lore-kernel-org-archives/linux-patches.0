@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B20A4C97;
-	Tue, 11 Nov 2025 00:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35494C97;
+	Tue, 11 Nov 2025 00:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822493; cv=none; b=X+54sZpNrbPkCDdXVzCnq+oqe3Of9srEb6kxP5wvk+yNGKl/5v3ziYUSqw/GOLuebmHnPTBjIAb995NjkeUMiZArWCjqtVWNntMBe++ZfkAMlPlwY73d+Q8OYZ+TYV+EVIMznnCG5q7F2IphibpgIkESsK1zBBPkpLDwaEtGdqs=
+	t=1762822495; cv=none; b=b6h06wqai3W0Nzxg4Rdjto8awBchx4v0JlRluEjXKj26YPjiPGJcWXSlwOjDvVzpp5kMdY4tqtLjpY1o6iBkbEsLdmqBFSUE23tPdkUj+JmSNM0NM7PuRdOgv7YWJNxKkDhbio6pMoOKNk0T0Faix5DyZSocE0p674ZD8A13qIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822493; c=relaxed/simple;
-	bh=HKT5ZWFRPjjdQkP/Fq39quOnqOQSLi6eq0g4YTzblls=;
+	s=arc-20240116; t=1762822495; c=relaxed/simple;
+	bh=1npvLL02tXhungK3R1o+PU+nu0ptWVVf1IqyI1X8KYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfaZOXNPPIO7wd6UKZiLu33HuW8zDIIIdl2oGEZojZDRd1+272B0nG8xkKyZsAtZfqJXWA7j6soUynKC/klocz5dWRqlgH/6VHeQZH29OGT6YaM4HKSM4V94T3l1Eajq0Sobup8o66hA/itw5f8XeaUcIeWk2fHNTLfc+WlWHvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idFBLfEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHEbFtbKtEL+f66cTkbymhg4K104G66d0lJjHpT979hXs5uLhRyNUEF39uqfyvZiswxpp68Ijvncr/+4mLMiZmtx/b4crbTuRzXyerCA9A9/FFqM1hmUwUtXA76ov98Woc6bCDwSqGLMj/qRnewWx6RapufdkkdypYJAMwoxTBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oap6xpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idFBLfEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB07DC16AAE;
-	Tue, 11 Nov 2025 00:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oap6xpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561C4C116B1;
+	Tue, 11 Nov 2025 00:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822493;
-	bh=HKT5ZWFRPjjdQkP/Fq39quOnqOQSLi6eq0g4YTzblls=;
+	s=korg; t=1762822495;
+	bh=1npvLL02tXhungK3R1o+PU+nu0ptWVVf1IqyI1X8KYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idFBLfEba87wSbYPvUl8LGBtkoKvdKjAGBQJ4xeuTPJJ+BWYt+JmYBg5vt5l4GOHg
-	 cCTlpAxNN4wag5ZLP6Hweq81lAqEJiZbUGmAGMvdqBpD7+2FieBdBb9S6Aus9OuAW6
-	 +nNChtFvQbTIaF0GhMytjkA8OajmOLRQg12uADek=
+	b=2oap6xpEg7RL3IyoUoJPInzzSreJe4xARAP+VS5fY3jsue0lsM6YhdJ82uTCx0ocO
+	 H4/T+1wdfMbypJVoBgx2ZheqY1hzChoirITcP5fRjrxkGvHAh1yvWnxZg2SS2GDQRe
+	 8fhoSS3xns/LGiYW29ot+EqptwgVzcY+zSLwr1K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 061/565] block: make REQ_OP_ZONE_OPEN a write operation
-Date: Tue, 11 Nov 2025 09:38:37 +0900
-Message-ID: <20251111004528.299648360@linuxfoundation.org>
+	John Smith <itistotalbotnet@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 083/849] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Iceland
+Date: Tue, 11 Nov 2025 09:34:13 +0900
+Message-ID: <20251111004538.426882377@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,62 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: John Smith <itistotalbotnet@gmail.com>
 
-commit 19de03b312d69a7e9bacb51c806c6e3f4207376c upstream.
+[ Upstream commit 501672e3c1576aa9a8364144213c77b98a31a42c ]
 
-A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
-a zoned block device to the explicitly open condition
-(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
-operation.
+Previously this was initialized with zero which represented PCIe Gen
+1.0 instead of using the
+maximum value from the speed table which is the behaviour of all other
+smumgr implementations.
 
-Change this operation code to be an odd number to reflect this. The
-following operation numbers are changed to keep the numbering compact.
-
-No problems were reported without this change as this operation has no
-data. However, this unifies the zone operation to reflect that they
-modify the device state and also allows strengthening checks in the
-block layer, e.g. checking if this operation is not issued against a
-read-only device.
-
-Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 18aafc59b106 ("drm/amd/powerplay: implement fw related smu interface for iceland.")
+Signed-off-by: John Smith <itistotalbotnet@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 92b0a6ae6672857ddeabf892223943d2f0e06c97)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blk_types.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/blk_types.h
-+++ b/include/linux/blk_types.h
-@@ -338,15 +338,15 @@ enum req_op {
- 	/* write the zero filled sector many times */
- 	REQ_OP_WRITE_ZEROES	= (__force blk_opf_t)9,
- 	/* Open a zone */
--	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)10,
-+	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)11,
- 	/* Close a zone */
--	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)11,
-+	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)13,
- 	/* Transition a zone to full */
--	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)13,
-+	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)15,
- 	/* reset a zone write pointer */
--	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
-+	REQ_OP_ZONE_RESET	= (__force blk_opf_t)17,
- 	/* reset all the zone present on the device */
--	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
-+	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)19,
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
+index 17d2f5bff4a7e..49c32183878de 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
+@@ -2028,7 +2028,7 @@ static int iceland_init_smc_table(struct pp_hwmgr *hwmgr)
+ 	table->VoltageResponseTime  = 0;
+ 	table->PhaseResponseTime  = 0;
+ 	table->MemoryThermThrottleEnable  = 1;
+-	table->PCIeBootLinkLevel = 0;
++	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
+ 	table->PCIeGenInterval = 1;
  
- 	/* Driver private requests */
- 	REQ_OP_DRV_IN		= (__force blk_opf_t)34,
+ 	result = iceland_populate_smc_svi2_config(hwmgr, table);
+-- 
+2.51.0
+
 
 
