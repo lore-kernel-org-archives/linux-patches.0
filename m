@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0592DD60E;
-	Tue, 11 Nov 2025 01:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C100345CD8;
+	Tue, 11 Nov 2025 01:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824162; cv=none; b=H0u0r78ZpHmpSv9blvDVuxGtuXuU0zomVxl0QZweD9avCUyGWiDpmvxLes9VhPkSKIZNqea552F4/56q8GK7GXN53R2DA0PBLtTonjH8K9VdvSmAsFG+RR3K2zyh3gi1rrrV5g49vX5K52nghBQ0hB22iG1aJ8Qfu7C6Jl3MmGk=
+	t=1762824165; cv=none; b=GeN9TuIbLwx98ch/Q2aIWRLX8SzIyGMh3UHTz6qyPXY7GL/iQMTj/V74Vk+WQemlPWdzSp1xJd3eSQxvQA7TrLTRdNtF24/M0Nga2Zur4hwxNQC515PAqfcx5EwXBIqQK0lCi4GipJDkA+DnTUKO4VkxXrOWDTFjF0CrPTu0MTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824162; c=relaxed/simple;
-	bh=davBmLpiSr4JyGa4YvYwDvkT6lnLhkAxZsOJu6uAXDM=;
+	s=arc-20240116; t=1762824165; c=relaxed/simple;
+	bh=g/Hq2uAVogcSmxpQuyBgN/SX2ZrC6G2MVrF5bnWZkVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZG8Xd1Iws5irtAthCuqM/dffBGpW2rcDRjVIRjrP4ESjzJbqMwE91zOSvYuY+jk03IypUWID7biI8r+sRiPKcuJ7uHvC/pQi6ZG+RZ+syolk0k/6SbgHmcR7z9CDJhdIKcCoj6WKPc/H9J8hk6Zm/hFo5+69SKzhWmQ3FU1fOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaZTuEz3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hXerAZssq9dhDxr0jmj0I0BJPEoog8zRoTHHeisoDCrZVPfLi4uUpgLsxCwrHWxINnHl1jiE8krugmiTlKt4uRowpDVn73PFInoKr+YYgIRKBihoQ1mAkhMfOyoD+wuGX9g2peH5gijHsrT5u8gZA+N0rLqClkIcsfSt4jrikJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sn5au44Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaZTuEz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B104C19421;
-	Tue, 11 Nov 2025 01:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sn5au44Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B34C4CEFB;
+	Tue, 11 Nov 2025 01:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824162;
-	bh=davBmLpiSr4JyGa4YvYwDvkT6lnLhkAxZsOJu6uAXDM=;
+	s=korg; t=1762824164;
+	bh=g/Hq2uAVogcSmxpQuyBgN/SX2ZrC6G2MVrF5bnWZkVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IaZTuEz3DZoiPXJzEqrQTyI6PKmn9UEBCXMxLCKhNcqctyErtdab45Iw61Y9GtHSA
-	 dpuHbh8agE75ZRUEwtko94wjFA5y6BxAyITDoUsG/2TwEmOLTHMldPLqnVdTRp4FnH
-	 Vqfx+K4ZidifVajsML22OTWdZPOrpuaoYQlwIRek=
+	b=Sn5au44QeU9QqFiXw2v25NQX+muvxtelyajav8NTRE4CMzwSyfZOZb4SosWUsmw5g
+	 lwpmCrnK6/U19/XB3HXe+KtTl0pVjm4W7Yik7egVSFNmLtalzv7wHi9NREv9PYIZyB
+	 8IrkYKIyvIvwy3ajdJNEjbzOgjM7P7qPV/94hZ70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Andrei Otcheretianski <andrei.otcheretianski@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Sairaj Kodilkar <sarunkod@amd.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 399/565] wifi: mac80211: Track NAN interface start/stop
-Date: Tue, 11 Nov 2025 09:44:15 +0900
-Message-ID: <20251111004535.848112330@linuxfoundation.org>
+Subject: [PATCH 6.17 449/849] iommu/amd: Reuse device table for kdump
+Date: Tue, 11 Nov 2025 09:40:19 +0900
+Message-ID: <20251111004547.288258424@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +49,231 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 8f79d2f13dd3b0af00a5303d4ff913767dd7684e ]
+[ Upstream commit 38e5f33ee3596f37ee8d1e694073a17590904004 ]
 
-In case that NAN is started, mark the device as non idle,
-and set LED triggering similar to scan and ROC. Set the
-device to idle once NAN is stopped.
+After a panic if SNP is enabled in the previous kernel then the kdump
+kernel boots with IOMMU SNP enforcement still enabled.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Reviewed-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250908140015.2711d62fce22.I9b9f826490e50967a66788d713b0eba985879873@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+IOMMU device table register is locked and exclusive to the previous
+kernel. Attempts to copy old device table from the previous kernel
+fails in kdump kernel as hardware ignores writes to the locked device
+table base address register as per AMD IOMMU spec Section 2.12.2.1.
+
+This causes the IOMMU driver (OS) and the hardware to reference
+different memory locations. As a result, the IOMMU hardware cannot
+process the command which results in repeated "Completion-Wait loop
+timed out" errors and a second kernel panic: "Kernel panic - not
+syncing: timer doesn't work through Interrupt-remapped IO-APIC".
+
+Reuse device table instead of copying device table in case of kdump
+boot and remove all copying device table code.
+
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Link: https://lore.kernel.org/r/3a31036fb2f7323e6b1a1a1921ac777e9f7bdddc.1756157913.git.ashish.kalra@amd.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c         | 20 +++++++++++++++++---
- net/mac80211/ieee80211_i.h |  2 ++
- net/mac80211/iface.c       |  9 +++++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
+ drivers/iommu/amd/init.c | 104 +++++++++++++--------------------------
+ 1 file changed, 34 insertions(+), 70 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 2890dde9b3bf4..2df4df75f1957 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -285,6 +285,9 @@ static int ieee80211_start_nan(struct wiphy *wiphy,
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index d0cd40ee0dec6..f2991c11867cb 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -406,6 +406,9 @@ static void iommu_set_device_table(struct amd_iommu *iommu)
  
- 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
+ 	BUG_ON(iommu->mmio_base == NULL);
  
-+	if (sdata->u.nan.started)
-+		return -EALREADY;
-+
- 	ret = ieee80211_check_combinations(sdata, NULL, 0, 0, -1);
- 	if (ret < 0)
- 		return ret;
-@@ -294,12 +297,18 @@ static int ieee80211_start_nan(struct wiphy *wiphy,
- 		return ret;
- 
- 	ret = drv_start_nan(sdata->local, sdata, conf);
--	if (ret)
-+	if (ret) {
- 		ieee80211_sdata_stop(sdata);
-+		return ret;
-+	}
- 
--	sdata->u.nan.conf = *conf;
-+	sdata->u.nan.started = true;
-+	ieee80211_recalc_idle(sdata->local);
- 
--	return ret;
-+	sdata->u.nan.conf.master_pref = conf->master_pref;
-+	sdata->u.nan.conf.bands = conf->bands;
-+
-+	return 0;
- }
- 
- static void ieee80211_stop_nan(struct wiphy *wiphy,
-@@ -307,8 +316,13 @@ static void ieee80211_stop_nan(struct wiphy *wiphy,
- {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
- 
-+	if (!sdata->u.nan.started)
++	if (is_kdump_kernel())
 +		return;
 +
- 	drv_stop_nan(sdata->local, sdata);
-+	sdata->u.nan.started = false;
- 	ieee80211_sdata_stop(sdata);
-+	ieee80211_recalc_idle(sdata->local);
+ 	entry = iommu_virt_to_phys(dev_table);
+ 	entry |= (dev_table_size >> 12) - 1;
+ 	memcpy_toio(iommu->mmio_base + MMIO_DEV_TABLE_OFFSET,
+@@ -646,7 +649,10 @@ static inline int __init alloc_dev_table(struct amd_iommu_pci_seg *pci_seg)
+ 
+ static inline void free_dev_table(struct amd_iommu_pci_seg *pci_seg)
+ {
+-	iommu_free_pages(pci_seg->dev_table);
++	if (is_kdump_kernel())
++		memunmap((void *)pci_seg->dev_table);
++	else
++		iommu_free_pages(pci_seg->dev_table);
+ 	pci_seg->dev_table = NULL;
  }
  
- static int ieee80211_nan_change_conf(struct wiphy *wiphy,
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 2f017dbbcb975..f0ac51cf66e61 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -949,11 +949,13 @@ struct ieee80211_if_mntr {
-  * struct ieee80211_if_nan - NAN state
-  *
-  * @conf: current NAN configuration
-+ * @started: true iff NAN is started
-  * @func_lock: lock for @func_inst_ids
-  * @function_inst_ids: a bitmap of available instance_id's
-  */
- struct ieee80211_if_nan {
- 	struct cfg80211_nan_conf conf;
-+	bool started;
+@@ -1127,15 +1133,12 @@ static void set_dte_bit(struct dev_table_entry *dte, u8 bit)
+ 	dte->data[i] |= (1UL << _bit);
+ }
  
- 	/* protects function_inst_ids */
- 	spinlock_t func_lock;
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 209d6ffa8e426..69a8a2c21d8df 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -108,6 +108,7 @@ static u32 __ieee80211_recalc_idle(struct ieee80211_local *local,
+-static bool __copy_device_table(struct amd_iommu *iommu)
++static bool __reuse_device_table(struct amd_iommu *iommu)
  {
- 	bool working, scanning, active;
- 	unsigned int led_trig_start = 0, led_trig_stop = 0;
-+	struct ieee80211_sub_if_data *iter;
+-	u64 int_ctl, int_tab_len, entry = 0;
+ 	struct amd_iommu_pci_seg *pci_seg = iommu->pci_seg;
+-	struct dev_table_entry *old_devtb = NULL;
+-	u32 lo, hi, devid, old_devtb_size;
++	u32 lo, hi, old_devtb_size;
+ 	phys_addr_t old_devtb_phys;
+-	u16 dom_id, dte_v, irq_v;
+-	u64 tmp;
++	u64 entry;
  
- 	lockdep_assert_wiphy(local->hw.wiphy);
+ 	/* Each IOMMU use separate device table with the same size */
+ 	lo = readl(iommu->mmio_base + MMIO_DEV_TABLE_OFFSET);
+@@ -1160,66 +1163,20 @@ static bool __copy_device_table(struct amd_iommu *iommu)
+ 		pr_err("The address of old device table is above 4G, not trustworthy!\n");
+ 		return false;
+ 	}
+-	old_devtb = (cc_platform_has(CC_ATTR_HOST_MEM_ENCRYPT) && is_kdump_kernel())
+-		    ? (__force void *)ioremap_encrypted(old_devtb_phys,
+-							pci_seg->dev_table_size)
+-		    : memremap(old_devtb_phys, pci_seg->dev_table_size, MEMREMAP_WB);
+-
+-	if (!old_devtb)
+-		return false;
  
-@@ -118,6 +119,14 @@ static u32 __ieee80211_recalc_idle(struct ieee80211_local *local,
- 	working = !local->ops->remain_on_channel &&
- 		  !list_empty(&local->roc_list);
+-	pci_seg->old_dev_tbl_cpy = iommu_alloc_pages_sz(
+-		GFP_KERNEL | GFP_DMA32, pci_seg->dev_table_size);
++	/*
++	 * Re-use the previous kernel's device table for kdump.
++	 */
++	pci_seg->old_dev_tbl_cpy = iommu_memremap(old_devtb_phys, pci_seg->dev_table_size);
+ 	if (pci_seg->old_dev_tbl_cpy == NULL) {
+-		pr_err("Failed to allocate memory for copying old device table!\n");
+-		memunmap(old_devtb);
++		pr_err("Failed to remap memory for reusing old device table!\n");
+ 		return false;
+ 	}
  
-+	list_for_each_entry(iter, &local->interfaces, list) {
-+		if (iter->vif.type == NL80211_IFTYPE_NAN &&
-+		    iter->u.nan.started) {
-+			working = true;
-+			break;
+-	for (devid = 0; devid <= pci_seg->last_bdf; ++devid) {
+-		pci_seg->old_dev_tbl_cpy[devid] = old_devtb[devid];
+-		dom_id = old_devtb[devid].data[1] & DEV_DOMID_MASK;
+-		dte_v = old_devtb[devid].data[0] & DTE_FLAG_V;
+-
+-		if (dte_v && dom_id) {
+-			pci_seg->old_dev_tbl_cpy[devid].data[0] = old_devtb[devid].data[0];
+-			pci_seg->old_dev_tbl_cpy[devid].data[1] = old_devtb[devid].data[1];
+-			/* Reserve the Domain IDs used by previous kernel */
+-			if (ida_alloc_range(&pdom_ids, dom_id, dom_id, GFP_ATOMIC) != dom_id) {
+-				pr_err("Failed to reserve domain ID 0x%x\n", dom_id);
+-				memunmap(old_devtb);
+-				return false;
+-			}
+-			/* If gcr3 table existed, mask it out */
+-			if (old_devtb[devid].data[0] & DTE_FLAG_GV) {
+-				tmp = (DTE_GCR3_30_15 | DTE_GCR3_51_31);
+-				pci_seg->old_dev_tbl_cpy[devid].data[1] &= ~tmp;
+-				tmp = (DTE_GCR3_14_12 | DTE_FLAG_GV);
+-				pci_seg->old_dev_tbl_cpy[devid].data[0] &= ~tmp;
+-			}
+-		}
+-
+-		irq_v = old_devtb[devid].data[2] & DTE_IRQ_REMAP_ENABLE;
+-		int_ctl = old_devtb[devid].data[2] & DTE_IRQ_REMAP_INTCTL_MASK;
+-		int_tab_len = old_devtb[devid].data[2] & DTE_INTTABLEN_MASK;
+-		if (irq_v && (int_ctl || int_tab_len)) {
+-			if ((int_ctl != DTE_IRQ_REMAP_INTCTL) ||
+-			    (int_tab_len != DTE_INTTABLEN_512 &&
+-			     int_tab_len != DTE_INTTABLEN_2K)) {
+-				pr_err("Wrong old irq remapping flag: %#x\n", devid);
+-				memunmap(old_devtb);
+-				return false;
+-			}
+-
+-			pci_seg->old_dev_tbl_cpy[devid].data[2] = old_devtb[devid].data[2];
+-		}
+-	}
+-	memunmap(old_devtb);
+-
+ 	return true;
+ }
+ 
+-static bool copy_device_table(void)
++static bool reuse_device_table(void)
+ {
+ 	struct amd_iommu *iommu;
+ 	struct amd_iommu_pci_seg *pci_seg;
+@@ -1227,17 +1184,17 @@ static bool copy_device_table(void)
+ 	if (!amd_iommu_pre_enabled)
+ 		return false;
+ 
+-	pr_warn("Translation is already enabled - trying to copy translation structures\n");
++	pr_warn("Translation is already enabled - trying to reuse translation structures\n");
+ 
+ 	/*
+ 	 * All IOMMUs within PCI segment shares common device table.
+-	 * Hence copy device table only once per PCI segment.
++	 * Hence reuse device table only once per PCI segment.
+ 	 */
+ 	for_each_pci_segment(pci_seg) {
+ 		for_each_iommu(iommu) {
+ 			if (pci_seg->id != iommu->pci_seg->id)
+ 				continue;
+-			if (!__copy_device_table(iommu))
++			if (!__reuse_device_table(iommu))
+ 				return false;
+ 			break;
+ 		}
+@@ -2916,8 +2873,8 @@ static void early_enable_iommu(struct amd_iommu *iommu)
+  * This function finally enables all IOMMUs found in the system after
+  * they have been initialized.
+  *
+- * Or if in kdump kernel and IOMMUs are all pre-enabled, try to copy
+- * the old content of device table entries. Not this case or copy failed,
++ * Or if in kdump kernel and IOMMUs are all pre-enabled, try to reuse
++ * the old content of device table entries. Not this case or reuse failed,
+  * just continue as normal kernel does.
+  */
+ static void early_enable_iommus(void)
+@@ -2925,18 +2882,25 @@ static void early_enable_iommus(void)
+ 	struct amd_iommu *iommu;
+ 	struct amd_iommu_pci_seg *pci_seg;
+ 
+-	if (!copy_device_table()) {
++	if (!reuse_device_table()) {
+ 		/*
+-		 * If come here because of failure in copying device table from old
++		 * If come here because of failure in reusing device table from old
+ 		 * kernel with all IOMMUs enabled, print error message and try to
+ 		 * free allocated old_dev_tbl_cpy.
+ 		 */
+-		if (amd_iommu_pre_enabled)
+-			pr_err("Failed to copy DEV table from previous kernel.\n");
++		if (amd_iommu_pre_enabled) {
++			pr_err("Failed to reuse DEV table from previous kernel.\n");
++			/*
++			 * Bail out early if unable to remap/reuse DEV table from
++			 * previous kernel if SNP enabled as IOMMU commands will
++			 * time out without DEV table and cause kdump boot panic.
++			 */
++			BUG_ON(check_feature(FEATURE_SNP));
 +		}
-+	}
-+
- 	scanning = test_bit(SCAN_SW_SCANNING, &local->scanning) ||
- 		   test_bit(SCAN_ONCHANNEL_SCANNING, &local->scanning);
  
+ 		for_each_pci_segment(pci_seg) {
+ 			if (pci_seg->old_dev_tbl_cpy != NULL) {
+-				iommu_free_pages(pci_seg->old_dev_tbl_cpy);
++				memunmap((void *)pci_seg->old_dev_tbl_cpy);
+ 				pci_seg->old_dev_tbl_cpy = NULL;
+ 			}
+ 		}
+@@ -2946,7 +2910,7 @@ static void early_enable_iommus(void)
+ 			early_enable_iommu(iommu);
+ 		}
+ 	} else {
+-		pr_info("Copied DEV table from previous kernel.\n");
++		pr_info("Reused DEV table from previous kernel.\n");
+ 
+ 		for_each_pci_segment(pci_seg) {
+ 			iommu_free_pages(pci_seg->dev_table);
 -- 
 2.51.0
 
