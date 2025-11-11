@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE53343214;
-	Tue, 11 Nov 2025 01:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42902D9497;
+	Tue, 11 Nov 2025 01:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823548; cv=none; b=arC3wwaL2X91Yy9+zvb3Sr9yjMbZa7zpY38EMCBhxSJf9q+2bTeRpPLvEyIKyXcPD1uZ8S79YPJiplRX76uAMwjUxzHJE16sv04R7RtbYpKpM5TfrEkF5jG/lJiYQQvaIukHLmnyOO9mkaAWjPR8qvjdYGVk/+C7e2hkXjQZjJM=
+	t=1762823551; cv=none; b=boXoSyrYIkAUWNn66La4fSXvjkvlTgm8iTGD55Wk+T+5ai2rXSUkvCFHV0ydw0IUc/0s/tbP7Wk0FDoDTnlY0RvoTsRdGpL1okgSFqZz7f/OlhMCOL0/K66rlIeHtFQS0OBLwKScJReujC0366sZCgkv2zgFFe20LohfROBgf6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823548; c=relaxed/simple;
-	bh=P7eUPrTIQ7GWFnUOzid5p8BOEgKMZJ+O891XT8/Iv7Y=;
+	s=arc-20240116; t=1762823551; c=relaxed/simple;
+	bh=eoDRwpVkre8Mun/kcOVethtcIob7gJe0FMWCK3VU2h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UakluGQOW2ALI18t8WkkLqVK1Xw/CGBXqlSPMETxMZMS04ckAtdpSgWnxO2KEXymBb2rUiO4rs3hppC++g2yU0cdd6hec/sipGnxGbXY3t7ZJPqYFH00YW4EtcgPZ37IAq/lGd4o5ceWGoj7dkgRMhnqoXmQluU+6lv2hnf+u90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7BoueKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GxKSwsWstZJccEsIJtNNsBXrsVZglMEfrsPagnjcSk8BRCcYg8jcwCd2lvyjHhOAqjjlLi9nYL8KneGjzOztSw8JxUO4+fTm9bKa0+ePDjD3Q/Lqy7hfcLX59DI8FjaDvNuM7AfDIhwv05QB2+vslkaDhjrnfSG5bmT4XEuH3zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgEZN0M8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7BoueKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3580CC4CEFB;
-	Tue, 11 Nov 2025 01:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgEZN0M8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF7EC19424;
+	Tue, 11 Nov 2025 01:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823548;
-	bh=P7eUPrTIQ7GWFnUOzid5p8BOEgKMZJ+O891XT8/Iv7Y=;
+	s=korg; t=1762823550;
+	bh=eoDRwpVkre8Mun/kcOVethtcIob7gJe0FMWCK3VU2h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7BoueKc7wg6wdSnyr/rXGFa2tCXzkPoGI9LKB2BaBCXleRjSFR7U66h2grxXdJzU
-	 zRtRFlFuSJAb4mFN2P2VeKwyzHn3PvLRMvFFTGToiVXJtr6IhLuJCF4sQN5zsWsj97
-	 A1x9jcEdToJBhHn4YOCzOa9sHzVbVkuz/rI7Wrm8=
+	b=DgEZN0M84Ogggyus3yWDRzkowTO+hSE8JjfXGA0SRzsh9evrSjTMLjsVRsgPcgLIX
+	 Pe1pPnRjAacnpHRT0rViuskUlAwEb8gaoPe7ozcDb1E497S9Yhpa/oYXQIVT91JFzC
+	 R4klps/PMvkELFI6zD5XjbwLqFMk2rJUc/LjC0DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	raub camaioni <raubcameo@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 321/849] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
-Date: Tue, 11 Nov 2025 09:38:11 +0900
-Message-ID: <20251111004544.175658292@linuxfoundation.org>
+Subject: [PATCH 6.12 268/565] drm/amdgpu: Respect max pixel clock for HDMI and DVI-D (v2)
+Date: Tue, 11 Nov 2025 09:42:04 +0900
+Message-ID: <20251111004532.918446000@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,60 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: raub camaioni <raubcameo@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
+[ Upstream commit 585b2f685c56c5095cc22c7202bf74d8e9a73cdd ]
 
-This fix is already present in f_ecm.c and was never
-propagated to f_ncm.c
+Update the legacy (non-DC) display code to respect the maximum
+pixel clock for HDMI and DVI-D. Reject modes that would require
+a higher pixel clock than can be supported.
 
-When creating multiple NCM ethernet devices
-on a composite usb gadget device
-each MAC address on the HOST side will be identical.
-Having the same MAC on different network interfaces is bad.
+Also update the maximum supported HDMI clock value depending on
+the ASIC type.
 
-This fix updates the MAC address inside the
-ncm_strings_defs global during the ncm_bind call.
-This ensures each device has a unique MAC.
-In f_ecm.c ecm_string_defs is updated in the same way.
+For reference, see the DC code:
+check max_hdmi_pixel_clock in dce*_resource.c
 
-The defunct MAC assignment in ncm_alloc has been removed.
+v2:
+Fix maximum clocks for DVI-D and DVI/HDMI adapters.
 
-Signed-off-by: raub camaioni <raubcameo@gmail.com>
-Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_connectors.c    | 57 ++++++++++++++-----
+ 1 file changed, 44 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index 0148d60926dcf..0e38330271d5a 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1465,6 +1465,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+index 344e0a9ee08a9..f9e679de79a7c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -1195,29 +1195,60 @@ static void amdgpu_connector_dvi_force(struct drm_connector *connector)
+ 		amdgpu_connector->use_digital = true;
+ }
  
- 	ncm_opts->bound = true;
- 
-+	ncm_string_defs[1].s = ncm->ethaddr;
++/**
++ * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
++ */
++static int amdgpu_max_hdmi_pixel_clock(const struct amdgpu_device *adev)
++{
++	if (adev->asic_type >= CHIP_POLARIS10)
++		return 600000;
++	else if (adev->asic_type >= CHIP_TONGA)
++		return 300000;
++	else
++		return 297000;
++}
 +
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
- 	if (IS_ERR(us))
-@@ -1759,7 +1761,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- 		mutex_unlock(&opts->lock);
- 		return ERR_PTR(-EINVAL);
- 	}
--	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
++/**
++ * Validates the given display mode on DVI and HDMI connectors,
++ * including analog signals on DVI-I.
++ */
+ static enum drm_mode_status amdgpu_connector_dvi_mode_valid(struct drm_connector *connector,
+ 					    struct drm_display_mode *mode)
+ {
+ 	struct drm_device *dev = connector->dev;
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 	struct amdgpu_connector *amdgpu_connector = to_amdgpu_connector(connector);
++	const int max_hdmi_pixel_clock = amdgpu_max_hdmi_pixel_clock(adev);
++	const int max_dvi_single_link_pixel_clock = 165000;
++	int max_digital_pixel_clock_khz;
  
- 	spin_lock_init(&ncm->lock);
- 	ncm_reset_values(ncm);
+ 	/* XXX check mode bandwidth */
+ 
+-	if (amdgpu_connector->use_digital && (mode->clock > 165000)) {
+-		if ((amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I) ||
+-		    (amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D) ||
+-		    (amdgpu_connector->connector_object_id == CONNECTOR_OBJECT_ID_HDMI_TYPE_B)) {
+-			return MODE_OK;
+-		} else if (connector->display_info.is_hdmi) {
+-			/* HDMI 1.3+ supports max clock of 340 Mhz */
+-			if (mode->clock > 340000)
+-				return MODE_CLOCK_HIGH;
+-			else
+-				return MODE_OK;
+-		} else {
+-			return MODE_CLOCK_HIGH;
++	if (amdgpu_connector->use_digital) {
++		switch (amdgpu_connector->connector_object_id) {
++		case CONNECTOR_OBJECT_ID_HDMI_TYPE_A:
++			max_digital_pixel_clock_khz = max_hdmi_pixel_clock;
++			break;
++		case CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I:
++		case CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D:
++			max_digital_pixel_clock_khz = max_dvi_single_link_pixel_clock;
++			break;
++		case CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I:
++		case CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D:
++		case CONNECTOR_OBJECT_ID_HDMI_TYPE_B:
++			max_digital_pixel_clock_khz = max_dvi_single_link_pixel_clock * 2;
++			break;
+ 		}
++
++		/* When the display EDID claims that it's an HDMI display,
++		 * we use the HDMI encoder mode of the display HW,
++		 * so we should verify against the max HDMI clock here.
++		 */
++		if (connector->display_info.is_hdmi)
++			max_digital_pixel_clock_khz = max_hdmi_pixel_clock;
++
++		if (mode->clock > max_digital_pixel_clock_khz)
++			return MODE_CLOCK_HIGH;
+ 	}
+ 
+ 	/* check against the max pixel clock */
 -- 
 2.51.0
 
