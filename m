@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D504C97;
-	Tue, 11 Nov 2025 00:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0614C97;
+	Tue, 11 Nov 2025 00:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822698; cv=none; b=NHImtFuK8WodDtRT0KdEcUjvlcmanWYyizzNpC0An5XRtulpHqaEWCcJTH2khRwJOV+e+qngv3nzU/K33tardfQ01MphfpZnjNk1ye06As9EJZuEi59kJTPirbSv0AjeTEm7Si4Ji5mMA+LIZhYXfeCMwuvVpAdS79gYh2xFJgM=
+	t=1762822701; cv=none; b=WQQYJiZl4H3d1pQeCMhyoFHugpQZIvMGSFuLzeW7JA72o8lYOs+f1qA63syKAbUGbQy/nQyPns6I7b2rpvP3flysY7oD2g/bIsMY4qXkxo2h4RrreSqX8nk9PcvcRt0KrmOPY86FzdZuZzWTZXaTUaUXzDW0q61JS8GUQdoFlqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822698; c=relaxed/simple;
-	bh=IFnm84dQs5BWuwb0TO4mdJTcothIXyi6JAxjDxhc5Ro=;
+	s=arc-20240116; t=1762822701; c=relaxed/simple;
+	bh=IomGVz87cm44dirXA3Ch8Z8pqyE8FVD/SaKlbQY6rNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGB/NL7nOYv6xSGMFKzbTKmA1Y5Ij9fHVV9iwBUPec663JrSN+uwYizAzz+8eBYOYZ0b9vEZ3sNS6FM6hkaUy7fd6wNOjcg44q/NHx+ZGEv8xuqJcGLtt+0ZjLo0dIgCCSuigk8yGyBAd2ZcVfssjqJSi0N3a/7lMWvWx1hYTZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nY6OvaxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aev7w1R9/z8xkHL3RUC2sKfCn/y+6IC0fgiH4VeuNQ9fcOznCcYN3KESJgL69Jwi+Ho78QZmAokGXCOhKXudKTfXBm3R7iAl+AHroBlzlgoPRqMl6ribCVtkfOi03PGiZnCb6svMzfTRje0g8HXYcUbY4QuRFR8uO9a+lihNYI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyr+KTMZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY6OvaxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62025C19422;
-	Tue, 11 Nov 2025 00:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyr+KTMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FA3C19425;
+	Tue, 11 Nov 2025 00:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822698;
-	bh=IFnm84dQs5BWuwb0TO4mdJTcothIXyi6JAxjDxhc5Ro=;
+	s=korg; t=1762822701;
+	bh=IomGVz87cm44dirXA3Ch8Z8pqyE8FVD/SaKlbQY6rNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nY6OvaxLWtBJsfYrM7kR5ZqKg+lV4b8f/+/WPj1IldXDX5cCsD7ix0PdvMzYDaT6V
-	 alVoBTS0AUC7RKqIrKpMgK8g700KEKt4ig6S93lCESbJcCgFGb2/djRtbJpOVxZ0ob
-	 7C/AyuAnsNG3WCTHfbdxlVvdpm3rEOkvcdJ7WIFo=
+	b=cyr+KTMZqoI5F85+V4lKyVAWYLHLUQoUDUHVGz6RgW62w4iYzidpYtUgnC6tXZ/6m
+	 UHGGaS353Ms8EQsYb2N6ODKIUEmD/8F6USv4Ck6MON0um4r95xxR+TJMjVnYWTyhPj
+	 2ZIiSHvdF1/+4B4inP17JDgcXU0DwDLa3vTEy7Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Chen <ryan_chen@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/565] soc: aspeed: socinfo: Add AST27xx silicon IDs
-Date: Tue, 11 Nov 2025 09:39:04 +0900
-Message-ID: <20251111004528.949944768@linuxfoundation.org>
+Subject: [PATCH 6.17 151/849] thermal: gov_step_wise: Allow cooling level to be reduced earlier
+Date: Tue, 11 Nov 2025 09:35:21 +0900
+Message-ID: <20251111004540.074020205@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +47,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryan Chen <ryan_chen@aspeedtech.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c30dcfd4b5a0f0e3fe7138bf287f6de6b1b00278 ]
+[ Upstream commit 2e82368359f63567862a0d438710ddffcb1ace83 ]
 
-Extend the ASPEED SoC info driver to support AST27XX silicon IDs.
+The current behavior of the Step-wise thermal governor is to increase
+the cooling level one step at a time after trip point threshold passing
+by thermal zone temperature until the temperature stops to rise.  Then,
+nothing is done until the temperature decreases below the (possibly
+updated) trip point threshold, at which point the cooling level is
+reduced straight to the applicable minimum.
 
-Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-Link: https://patch.msgid.link/20250807005208.3517283-1-ryan_chen@aspeedtech.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+While this generally works, it is not in agreement with the throttling
+logic description comment in step_wise_manage() any more after some
+relatively recent changes, and in the case of passive cooling, it may
+lead to undesirable performance oscillations between high and low
+levels.
+
+For this reason, modify the governor's cooling device state selection
+function, get_target_state(), to reduce cooling by one level even if
+the temperature is still above the thermal zone threshold, but the
+temperature has started to fall down.  However, ensure that the cooling
+level will remain above the applicable minimum in that case to pull
+the zone temperature further down, possibly until it falls below the
+trip threshold (which may now be equal to the low temperature of the
+trip).
+
+Doing so should help higher performance to be restored earlier in some
+cases which is desirable especially for passive trip points with
+relatively high hysteresis values.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/1947735.tdWV9SEqCh@rafael.j.wysocki
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-socinfo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/thermal/gov_step_wise.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
-index 3f759121dc00a..67e9ac3d08ecc 100644
---- a/drivers/soc/aspeed/aspeed-socinfo.c
-+++ b/drivers/soc/aspeed/aspeed-socinfo.c
-@@ -27,6 +27,10 @@ static struct {
- 	{ "AST2620", 0x05010203 },
- 	{ "AST2605", 0x05030103 },
- 	{ "AST2625", 0x05030403 },
-+	/* AST2700 */
-+	{ "AST2750", 0x06000003 },
-+	{ "AST2700", 0x06000103 },
-+	{ "AST2720", 0x06000203 },
- };
- 
- static const char *siliconid_to_name(u32 siliconid)
+diff --git a/drivers/thermal/gov_step_wise.c b/drivers/thermal/gov_step_wise.c
+index d1bb59f1dfbd3..b7938bddd9a6a 100644
+--- a/drivers/thermal/gov_step_wise.c
++++ b/drivers/thermal/gov_step_wise.c
+@@ -20,7 +20,9 @@
+  * If the temperature is higher than a trip point,
+  *    a. if the trend is THERMAL_TREND_RAISING, use higher cooling
+  *       state for this trip point
+- *    b. if the trend is THERMAL_TREND_DROPPING, do nothing
++ *    b. if the trend is THERMAL_TREND_DROPPING, use a lower cooling state
++ *       for this trip point, but keep the cooling state above the applicable
++ *       minimum
+  * If the temperature is lower than a trip point,
+  *    a. if the trend is THERMAL_TREND_RAISING, do nothing
+  *    b. if the trend is THERMAL_TREND_DROPPING, use lower cooling
+@@ -51,6 +53,17 @@ static unsigned long get_target_state(struct thermal_instance *instance,
+ 	if (throttle) {
+ 		if (trend == THERMAL_TREND_RAISING)
+ 			return clamp(cur_state + 1, instance->lower, instance->upper);
++
++		/*
++		 * If the zone temperature is falling, the cooling level can
++		 * be reduced, but it should still be above the lower state of
++		 * the given thermal instance to pull the temperature further
++		 * down.
++		 */
++		if (trend == THERMAL_TREND_DROPPING)
++			return clamp(cur_state - 1,
++				     min(instance->lower + 1, instance->upper),
++				     instance->upper);
+ 	} else if (trend == THERMAL_TREND_DROPPING) {
+ 		if (cur_state <= instance->lower)
+ 			return THERMAL_NO_TARGET;
 -- 
 2.51.0
 
