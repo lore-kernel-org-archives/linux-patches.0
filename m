@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E4733C534;
-	Tue, 11 Nov 2025 01:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0E33C534;
+	Tue, 11 Nov 2025 01:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823461; cv=none; b=sAtXG4BmVX6pqCCVK7qCnUx4/RqCIKB0hDmWmg/OoR7meSA84arAk1LCTQ/uzBMkv/E/Y8ekCaFdGSI5yAQ6am2sS+JUuwv3iMhPnIBUEjkceP3/LsHLE4qkPNXAMVK78wn1zaD3uKXWQjbNu0nLH+4RM2kRKUw/ciTiYQIuFec=
+	t=1762823463; cv=none; b=C4qwjK+5FBLOLJFFQdHyG5SzIG3K7OWiBdgC1Dwyi9YxOgAtkW7r44cIgsT9uuQB7Fh5/SVCosSmIE8ehww23b3N5is8tFwoSC5XHW//CyaHftw6obdJl3SToHyv1z85NF/VqRX6a8yGOo5Lv9M9pY8Lh7q/vmO8ZMXLkGfADxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823461; c=relaxed/simple;
-	bh=tKr5Qs44xTy7AB5CFwKsw7cbhapNOzA0420aeCCgMOc=;
+	s=arc-20240116; t=1762823463; c=relaxed/simple;
+	bh=MtbDxVtBzV9vnhr+zrenADOYhvDEq5+oNg9Js5x79YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHjGJldzfNMT9/6CPRVhQC57Y4Dg743gySVPJTo0fTdbEBP5ef+zpWliRWCoXrY1qpd8R/4z9pLaY+jDqpt5s+I/Gr5guxaPD1E5S3zcSTl4vi/LW8Nbkn2uxRueT0+7arx+H/5ioZN3QIVUpf9A755Ugo5R4gz8AwtkblrS02U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1SOfTNX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrtUnqyCog4dOD64jfwburtTLaDqjAqAgCB6VS42pmNr4ZiwrZmDnm1Z1SYAsR7RyWNLL+o6FaXkSxeTkheZcCawfccTDEDJJeKLRfAgNNvd/CBwd9V+t8++9hSIeKl3XgVPi4lNVYg45+zWq5l4Qgum/mAprs4iviqtgbC4PT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zONq/H/1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1SOfTNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FF6C4CEF5;
-	Tue, 11 Nov 2025 01:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zONq/H/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BB1C113D0;
+	Tue, 11 Nov 2025 01:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823461;
-	bh=tKr5Qs44xTy7AB5CFwKsw7cbhapNOzA0420aeCCgMOc=;
+	s=korg; t=1762823463;
+	bh=MtbDxVtBzV9vnhr+zrenADOYhvDEq5+oNg9Js5x79YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1SOfTNXoV6GZOwZ3G2v0q/4PLDEVtKC3V9ul2mEmCOaLq7bpeajzUNoMrxeCYt12
-	 xEA1yavAXtjTsmwQbJvKasjVMrlESgws0bcEdF8UEexyivYFyfNV9kYDaHDryBtD+z
-	 GSadn3YZRgrcV0riCUSqs+CvtuK7wqVX0fMMqvO8=
+	b=zONq/H/1ax83ax4wqQLUM0F7Kn9BpjEWem/y11Fuq1hiL7gFDwS+3uv9199MWvdfH
+	 uHoUL2CQi9ngsvgFT1cv7DtxJYjGsLk8UnfBOpCH4+Mf5RXjbcM6Ytia4lmSCfFttW
+	 hrtfUYOJMFmtnN58hQtEjkB8Q1HRHFENa/t/zP38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francisco Gutierrez <frankramirez@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/565] scsi: pm80xx: Fix race condition caused by static variables
-Date: Tue, 11 Nov 2025 09:41:47 +0900
-Message-ID: <20251111004532.553732427@linuxfoundation.org>
+Subject: [PATCH 6.17 287/849] drm/tidss: Set crtc modesetting parameters with adjusted mode
+Date: Tue, 11 Nov 2025 09:37:37 +0900
+Message-ID: <20251111004543.350929348@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,96 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francisco Gutierrez <frankramirez@google.com>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit d6477ee38ccfbeaed885733c13f41d9076e2f94a ]
+[ Upstream commit cfb29225db20c56432a8525366321c0c09edfb2e ]
 
-Eliminate the use of static variables within the log pull implementation
-to resolve a race condition and prevent data gaps when pulling logs from
-multiple controllers in parallel, ensuring each operation is properly
-isolated.
+TIDSS uses crtc_* fields to propagate its registers and set the
+clock rates. So set the CRTC modesetting timing parameters with
+the adjusted mode when needed, to set correct values.
 
-Signed-off-by: Francisco Gutierrez <frankramirez@google.com>
-Link: https://lore.kernel.org/r/20250723183543.1443301-1-frankramirez@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Link: https://lore.kernel.org/r/20250624080402.302526-1-j-choudhary@ti.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_ctl.c  | 22 ++++++++++++----------
- drivers/scsi/pm8001/pm8001_init.c |  1 +
- drivers/scsi/pm8001/pm8001_sas.h  |  4 ++++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
-index 85ff95c6543a5..0e7497e490f40 100644
---- a/drivers/scsi/pm8001/pm8001_ctl.c
-+++ b/drivers/scsi/pm8001/pm8001_ctl.c
-@@ -534,23 +534,25 @@ static ssize_t pm8001_ctl_iop_log_show(struct device *cdev,
- 	char *str = buf;
- 	u32 read_size =
- 		pm8001_ha->main_cfg_tbl.pm80xx_tbl.event_log_size / 1024;
--	static u32 start, end, count;
- 	u32 max_read_times = 32;
- 	u32 max_count = (read_size * 1024) / (max_read_times * 4);
- 	u32 *temp = (u32 *)pm8001_ha->memoryMap.region[IOP].virt_ptr;
+diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
+index 17efd77ce7f23..da89fd01c3376 100644
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -91,7 +91,7 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
+ 	struct dispc_device *dispc = tidss->dispc;
+ 	struct tidss_crtc *tcrtc = to_tidss_crtc(crtc);
+ 	u32 hw_videoport = tcrtc->hw_videoport;
+-	const struct drm_display_mode *mode;
++	struct drm_display_mode *mode;
+ 	enum drm_mode_status ok;
  
--	if ((count % max_count) == 0) {
--		start = 0;
--		end = max_read_times;
--		count = 0;
-+	mutex_lock(&pm8001_ha->iop_log_lock);
-+
-+	if ((pm8001_ha->iop_log_count % max_count) == 0) {
-+		pm8001_ha->iop_log_start = 0;
-+		pm8001_ha->iop_log_end = max_read_times;
-+		pm8001_ha->iop_log_count = 0;
- 	} else {
--		start = end;
--		end = end + max_read_times;
-+		pm8001_ha->iop_log_start = pm8001_ha->iop_log_end;
-+		pm8001_ha->iop_log_end = pm8001_ha->iop_log_end + max_read_times;
+ 	dev_dbg(ddev->dev, "%s\n", __func__);
+@@ -108,6 +108,9 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
+ 		return -EINVAL;
  	}
  
--	for (; start < end; start++)
--		str += sprintf(str, "%08x ", *(temp+start));
--	count++;
-+	for (; pm8001_ha->iop_log_start < pm8001_ha->iop_log_end; pm8001_ha->iop_log_start++)
-+		str += sprintf(str, "%08x ", *(temp+pm8001_ha->iop_log_start));
-+	pm8001_ha->iop_log_count++;
-+	mutex_unlock(&pm8001_ha->iop_log_lock);
- 	return str - buf;
++	if (drm_atomic_crtc_needs_modeset(crtc_state))
++		drm_mode_set_crtcinfo(mode, 0);
++
+ 	return dispc_vp_bus_check(dispc, hw_videoport, crtc_state);
  }
- static DEVICE_ATTR(iop_log, S_IRUGO, pm8001_ctl_iop_log_show, NULL);
-diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
-index b53b1ae5b74c3..5317f82c51fd4 100644
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -550,6 +550,7 @@ static struct pm8001_hba_info *pm8001_pci_alloc(struct pci_dev *pdev,
- 	pm8001_ha->id = pm8001_id++;
- 	pm8001_ha->logging_level = logging_level;
- 	pm8001_ha->non_fatal_count = 0;
-+	mutex_init(&pm8001_ha->iop_log_lock);
- 	if (link_rate >= 1 && link_rate <= 15)
- 		pm8001_ha->link_rate = (link_rate << 8);
- 	else {
-diff --git a/drivers/scsi/pm8001/pm8001_sas.h b/drivers/scsi/pm8001/pm8001_sas.h
-index c46470e0cf63b..efb6dc26bc35b 100644
---- a/drivers/scsi/pm8001/pm8001_sas.h
-+++ b/drivers/scsi/pm8001/pm8001_sas.h
-@@ -537,6 +537,10 @@ struct pm8001_hba_info {
- 	u32 ci_offset;
- 	u32 pi_offset;
- 	u32 max_memcnt;
-+	u32 iop_log_start;
-+	u32 iop_log_end;
-+	u32 iop_log_count;
-+	struct mutex iop_log_lock;
- };
  
- struct pm8001_work {
 -- 
 2.51.0
 
