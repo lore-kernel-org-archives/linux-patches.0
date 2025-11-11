@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF2C2DC776;
-	Tue, 11 Nov 2025 01:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73DF335095;
+	Tue, 11 Nov 2025 01:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825307; cv=none; b=F6TLUt+3niLYq9PhGv4/nbEno2EG+FD9Z8V9GOT+3cSTnG5c5P9kfXDYF+1hi6jwPyaclpruwxaaAyU2oQ2aPLyIK095ADQBskWnQlVBNQoAE5qJplvEO00B8WOmwJQY68C5xs/kJlmS15I0KdJWottm7XZrPfqnNGAcjknVzPo=
+	t=1762825309; cv=none; b=XxU9AR+qobOIrjHSSL1sbNc9PSoAgqQtMCAZY4AYiD5R5HTb9H0fcMrTZIVxxa6cq0NNlYQRQ4VxubwyIy/CbCNxt4my2KS10ZpDWGJIfcYeKmyLQsZD3WtzvgmSzvSp8y/f5d8uY98t/Ff9BPlxr0JPmCq75WaaRV07W3FTISk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825307; c=relaxed/simple;
-	bh=ZIH09JvRoRtFqxD+LTT/JXPwpD7zZfm2AgCaF4NdxsE=;
+	s=arc-20240116; t=1762825309; c=relaxed/simple;
+	bh=onvhz68yEVLUK//9KDx5TM9RGeswb3KZ4bC+ORPB5og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/npcXrSzxK+EmIXRTVFlUkryaOxIj5+21ycId2fwKz8MWlGfwFiYvhTEutwAg3qKEgXTgW9SQs5jFDZCOBmXCzqKWKuGKuZWlL1zvMdCP4sJGhuNyskKQ8r2VRWyFNEY+RBxMk6qTM7M8yNWGI/DFaIc3+P0J/GNGpHchdDOuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uchykxIR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CD/zKsE6ZfwC0xsCYpd8zqOdO5wolkWIUUPUmyi7gdchTx+Tg4v5g0msva1sNuKqySME1ZjNBPuzwqWSB51lkI9ffm4iEwLqybPCfgFRzrkhreCynl1WxITTx7RpNzDTZnJ4DHBug1u4GHmOwwfhTshttFFCmvo0+V6DWQ/7UCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDIYshuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uchykxIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E24FC116B1;
-	Tue, 11 Nov 2025 01:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDIYshuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D17EC113D0;
+	Tue, 11 Nov 2025 01:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825306;
-	bh=ZIH09JvRoRtFqxD+LTT/JXPwpD7zZfm2AgCaF4NdxsE=;
+	s=korg; t=1762825309;
+	bh=onvhz68yEVLUK//9KDx5TM9RGeswb3KZ4bC+ORPB5og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uchykxIRyhL+7AxuSUTa2j8iLVARky0ymPGaksEbzJTvyuU+gFAei+aUy67cgYqTe
-	 fZKwrRm9+Ciky1y8LcabESn1N3aWU6HxqELBLf9SoLanS0WsVQt8Gz7bg//9AJxotx
-	 oGOwqkqpUgtt1oZNCcj+pU8RrrCew/zvdVY6HXvY=
+	b=bDIYshuQfoMPoyCZ4fc5nRiPeSAcfe9C7XDlyHranlkfg9bewFwlV7CR00NzRs+Ez
+	 QlnN51OItj3D/9lobtexTEQlXF12wQFIBUJ9hvQYuvDmc99mWQ2dL3jznS+oTKg+H3
+	 E+bRELsIDR2cB/ML1OtWXtjz8vmj1AYCZjetmqw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.17 746/849] Revert "wifi: ath10k: avoid unnecessary wait for service ready message"
-Date: Tue, 11 Nov 2025 09:45:16 +0900
-Message-ID: <20251111004554.473220104@linuxfoundation.org>
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.17 747/849] tracing: tprobe-events: Fix to register tracepoint correctly
+Date: Tue, 11 Nov 2025 09:45:17 +0900
+Message-ID: <20251111004554.497407349@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,85 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 2469bb6a6af944755a7d7daf66be90f3b8decbf9 upstream.
+commit 10d9dda426d684e98b17161f02f77894c6de9b60 upstream.
 
-This reverts commit 51a73f1b2e56b0324b4a3bb8cebc4221b5be4c7a.
+Since __tracepoint_user_init() calls tracepoint_user_register() without
+initializing tuser->tpoint with given tracpoint, it does not register
+tracepoint stub function as callback correctly, and tprobe does not work.
 
-Although this commit benefits QCA6174, it breaks QCA988x and
-QCA9984 [1][2]. Since it is not likely to root cause/fix this
-issue in a short time, revert it to get those chips back.
+Initializing tuser->tpoint correctly before tracepoint_user_register()
+so that it sets up tracepoint callback.
 
-Compile tested only.
+I confirmed below example works fine again.
 
-Fixes: 51a73f1b2e56 ("wifi: ath10k: avoid unnecessary wait for service ready message")
-Link: https://lore.kernel.org/ath10k/6d41bc00602c33ffbf68781f563ff2e6c6915a3e.camel@gmail.com # [1]
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220671 # [2]
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+echo "t sched_switch preempt prev_pid=prev->pid next_pid=next->pid" > /sys/kernel/tracing/dynamic_events
+echo 1 > /sys/kernel/tracing/events/tracepoints/sched_switch/enable
+cat /sys/kernel/tracing/trace_pipe
+
+Link: https://lore.kernel.org/all/176244793514.155515.6466348656998627773.stgit@devnote2/
+
+Fixes: 2867495dea86 ("tracing: tprobe-events: Register tracepoint when enable tprobe event")
+Reported-by: Beau Belgrave <beaub@linux.microsoft.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251027-ath10k-revert-polling-first-change-v1-1-89aaf3bcbfa1@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Tested-by: Beau Belgrave <beaub@linux.microsoft.com>
+Reviewed-by: Beau Belgrave <beaub@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c |   39 +++++++++++++++++-----------------
- 1 file changed, 20 insertions(+), 19 deletions(-)
+ kernel/trace/trace_fprobe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1764,32 +1764,33 @@ void ath10k_wmi_put_wmi_channel(struct a
+diff --git a/kernel/trace/trace_fprobe.c b/kernel/trace/trace_fprobe.c
+index ad9d6347b5fa..fd1b108ab639 100644
+--- a/kernel/trace/trace_fprobe.c
++++ b/kernel/trace/trace_fprobe.c
+@@ -106,13 +106,14 @@ static struct tracepoint_user *__tracepoint_user_init(const char *name, struct t
+ 	if (!tuser->name)
+ 		return NULL;
  
- int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
- {
--	unsigned long timeout = jiffies + WMI_SERVICE_READY_TIMEOUT_HZ;
- 	unsigned long time_left, i;
++	/* Register tracepoint if it is loaded. */
+ 	if (tpoint) {
++		tuser->tpoint = tpoint;
+ 		ret = tracepoint_user_register(tuser);
+ 		if (ret)
+ 			return ERR_PTR(ret);
+ 	}
  
--	/* Sometimes the PCI HIF doesn't receive interrupt
--	 * for the service ready message even if the buffer
--	 * was completed. PCIe sniffer shows that it's
--	 * because the corresponding CE ring doesn't fires
--	 * it. Workaround here by polling CE rings. Since
--	 * the message could arrive at any time, continue
--	 * polling until timeout.
--	 */
--	do {
-+	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
-+						WMI_SERVICE_READY_TIMEOUT_HZ);
-+	if (!time_left) {
-+		/* Sometimes the PCI HIF doesn't receive interrupt
-+		 * for the service ready message even if the buffer
-+		 * was completed. PCIe sniffer shows that it's
-+		 * because the corresponding CE ring doesn't fires
-+		 * it. Workaround here by polling CE rings once.
-+		 */
-+		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
-+
- 		for (i = 0; i < CE_COUNT; i++)
- 			ath10k_hif_send_complete_check(ar, i, 1);
- 
--		/* The 100 ms granularity is a tradeoff considering scheduler
--		 * overhead and response latency
--		 */
- 		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
--							msecs_to_jiffies(100));
--		if (time_left)
--			return 0;
--	} while (time_before(jiffies, timeout));
-+							WMI_SERVICE_READY_TIMEOUT_HZ);
-+		if (!time_left) {
-+			ath10k_warn(ar, "polling timed out\n");
-+			return -ETIMEDOUT;
-+		}
-+
-+		ath10k_warn(ar, "service ready completion received, continuing normally\n");
-+	}
- 
--	ath10k_warn(ar, "failed to receive service ready completion\n");
--	return -ETIMEDOUT;
-+	return 0;
- }
- 
- int ath10k_wmi_wait_for_unified_ready(struct ath10k *ar)
+-	tuser->tpoint = tpoint;
+ 	tuser->refcount = 1;
+ 	INIT_LIST_HEAD(&tuser->list);
+ 	list_add(&tuser->list, &tracepoint_user_list);
+-- 
+2.51.2
+
 
 
