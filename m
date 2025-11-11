@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C825224113D;
-	Tue, 11 Nov 2025 00:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F339A4C97;
+	Tue, 11 Nov 2025 00:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822573; cv=none; b=p3tpxa+Gx8pP5PqLHcCbqOpmj7FszG8IvMv32GB0291rTwYfvyNHe7IgKYIoAvNG1t7ozTgMwHRWMQTGn6svEnhx9QA7/e3GiDdZOVXT3LzC9ku+hPzjm+cLK/QFBBoZMDxEwgL2z7oTPEUHsKMfS0+cR0UAdDTAziA7pK6LvUQ=
+	t=1762822576; cv=none; b=WSDj3E+RWMTwxN5MkmZCik44AKK5d1EO8dLt70wEQhPkK6iKypXaPHYJAti0bB4Z23l1AUEltyg+ak9LspB7VX3MkyQI+hirvbWc4j9sj3YDZb4fpLmL55XlcwJ93KuHc/VboGOS47rpYYtx3qJnDhsa6KxWyBKm5/25iOZXFP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822573; c=relaxed/simple;
-	bh=YrOPYrWLTACaHrF23owHTe+46E7WoMYdwPlQet79ZCA=;
+	s=arc-20240116; t=1762822576; c=relaxed/simple;
+	bh=KS6j4HDsgB+RFDksp+DxnRiGuOtws83aNLGBe/Zdfuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHOzvbB/uxxYRTBlvHOEdgUFAcoY3zJILdFhA7r8WkLn0HFRInX9HAnvWh2QoEPHK7Kv1YDBT1TMUgfbNNXiu0wsH596HSIilTZdbKia5w/XeOHTiy7JdfcLG/gz67sdEZ3DawSDnyey1QvGUQEGbmbBoHrbJ9bUsuMH2ThDd2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srovob6N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YREJwiOa9U16PrfQPynggmNZ1umzEHBY+jdJG8Lf9TLAhR1gmSTFVxbPVex7lCXkfyGC9q+InmKYBhzDvhERFkvtPtZk/UquOaFlsBfCVB+E2bKGfHj12JOSS8Q57gKJJPYiF8n/H9b8SZdvwPkEf1/bbcJjdcAd3Shj+6wwBDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YU0sC5KL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srovob6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FBBC4CEF5;
-	Tue, 11 Nov 2025 00:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YU0sC5KL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D518C19422;
+	Tue, 11 Nov 2025 00:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822573;
-	bh=YrOPYrWLTACaHrF23owHTe+46E7WoMYdwPlQet79ZCA=;
+	s=korg; t=1762822575;
+	bh=KS6j4HDsgB+RFDksp+DxnRiGuOtws83aNLGBe/Zdfuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srovob6NZ2AHUzEkD7rXsN3WNqbEWqWTp6i1KKduglCuVzvpEwNVuRqJLApGPdetm
-	 g8ceMTCJeghR6pOpi76E5MpxdUKl1t7FFEb3+RhxTioTRf/hBwz8Giu7w08iMYl4Sz
-	 uBnA4ew3vTgPupb68BHcpXnR7ivfdBPakuBL4NTk=
+	b=YU0sC5KLfJObrBfrdvmC0unceERuL4/SIbrFssC38BYRBiYOO11qEZ3KgVytfkhwG
+	 GmLhagkGr/RIMyDkc8w7mExSzYHTQi80xz4YVw7sQLzTSNV49BhJRBor3aJizntENS
+	 KXog+e1iMxNeQhUO7500QTwxcJkB2VQQu3Q2LMEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Harini T <harini.t@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/565] sched_ext: Mark scx_bpf_dsq_move_set_[slice|vtime]() with KF_RCU
-Date: Tue, 11 Nov 2025 09:38:53 +0900
-Message-ID: <20251111004528.697634109@linuxfoundation.org>
+Subject: [PATCH 6.17 140/849] arm64: versal-net: Update rtc calibration value
+Date: Tue, 11 Nov 2025 09:35:10 +0900
+Message-ID: <20251111004539.780468134@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Harini T <harini.t@amd.com>
 
-[ Upstream commit 54e96258a6930909b690fd7e8889749231ba8085 ]
+[ Upstream commit b60b74f82e3ed4910a5f96a412e89bdd44875842 ]
 
-scx_bpf_dsq_move_set_slice() and scx_bpf_dsq_move_set_vtime() take a DSQ
-iterator argument which has to be valid. Mark them with KF_RCU.
+As per the design specification
+"The 16-bit Seconds Calibration Value represents the number of
+Oscillator Ticks that are required to measure the largest time period
+that is less than or equal to 1 second.
+For an oscillator that is 32.768kHz, this value will be 0x7FFF."
 
-Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
-Cc: stable@vger.kernel.org # v6.12+
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ scx_bpf_dsq_move_set_* => scx_bpf_dispatch_from_dsq_set_* ]
+Signed-off-by: Harini T <harini.t@amd.com>
+Link: https://lore.kernel.org/r/20250710061309.25601-1-harini.t@amd.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/xilinx/versal-net.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6493,8 +6493,8 @@ BTF_KFUNCS_START(scx_kfunc_ids_dispatch)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_nr_slots)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_cancel)
- BTF_ID_FLAGS(func, scx_bpf_consume)
--BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice)
--BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime)
-+BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_vtime_from_dsq, KF_RCU)
- BTF_KFUNCS_END(scx_kfunc_ids_dispatch)
-@@ -6593,8 +6593,8 @@ __bpf_kfunc_end_defs();
+diff --git a/arch/arm64/boot/dts/xilinx/versal-net.dtsi b/arch/arm64/boot/dts/xilinx/versal-net.dtsi
+index fc9f49e57385a..c037a78199670 100644
+--- a/arch/arm64/boot/dts/xilinx/versal-net.dtsi
++++ b/arch/arm64/boot/dts/xilinx/versal-net.dtsi
+@@ -556,7 +556,7 @@
+ 			reg = <0 0xf12a0000 0 0x100>;
+ 			interrupts = <0 200 4>, <0 201 4>;
+ 			interrupt-names = "alarm", "sec";
+-			calibration = <0x8000>;
++			calibration = <0x7FFF>;
+ 		};
  
- BTF_KFUNCS_START(scx_kfunc_ids_unlocked)
- BTF_ID_FLAGS(func, scx_bpf_create_dsq, KF_SLEEPABLE)
--BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice)
--BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime)
-+BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_slice, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq_set_vtime, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_from_dsq, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dispatch_vtime_from_dsq, KF_RCU)
- BTF_KFUNCS_END(scx_kfunc_ids_unlocked)
+ 		sdhci0: mmc@f1040000 {
+-- 
+2.51.0
+
 
 
