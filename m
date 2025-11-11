@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356F5339714;
-	Tue, 11 Nov 2025 01:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C893339B58;
+	Tue, 11 Nov 2025 01:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824985; cv=none; b=kHdC1gjyxynj5THdVcM/CeFpZ4Vo1jn3pyjno3+54ciBmPSvDLE8XZ2zye6x/aLeUfxCPhkCWc17NInLvCNsmfkLj1/wcHeCDJkdg2SjfS//0SkJ0UfSGBEJpScvPkyQcn29FsF0WTTC3TA3DT4Rgq5Q6QQr5etob5up+Qpoh0s=
+	t=1762824987; cv=none; b=UAC+i1OUqQRcB9O5bM+UKzXWVeeZAnyqZrja18hrc8InBJWTVa73Y3ScLnY8yWgtjwC7gaAvU4RBfdz4oATb47XkwNHDNPEyARv7U6RuGIWoF7dt7z6zfnkXajldC7CQgLFEu/BmiVEGPQOQVsLrBEBstBkPz0mHwvMi/OmquW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824985; c=relaxed/simple;
-	bh=zgwAyvqob9y5kYABM+jibA3OJfIdbnV1ciIlCD6W11w=;
+	s=arc-20240116; t=1762824987; c=relaxed/simple;
+	bh=z53kIwrqqJJzbx/u36MA/Dv1zPV2tLQ7A/2O/KchetI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLJYQ4QWRUSD1klYwZW2tLH7C1xhC5cdzbWfJknlxooO9dJZvrcB/Viaxjc9DGuUh3CsyU0CFhZNWexOg3SYG/uIYEx58oun8cYq1eTvvNLY34JJFHaUgofncdPuc18/tM5wrdfbZDRYuzPWVoJxRCYY5bummHB8yaWe9zKVong=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQ8JFKzf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MFiNTLUz2wV1VAW/znUKPsgmCwm3iPRUlJjDPiPEFqSwgKsWwo4VpKhEdUCqS4QuFjnCrk8gLy+BsWRiiIKWgL4MUem1kEoMMkurCV5NPAyhTgYLUrnU4LiCv1ru4tufqjLKY9bkm/fYcu+5AalZQyyOlRvWJjakUDDFi6r+jX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw+NeTNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQ8JFKzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B61C4CEFB;
-	Tue, 11 Nov 2025 01:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw+NeTNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE92BC19421;
+	Tue, 11 Nov 2025 01:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824984;
-	bh=zgwAyvqob9y5kYABM+jibA3OJfIdbnV1ciIlCD6W11w=;
+	s=korg; t=1762824987;
+	bh=z53kIwrqqJJzbx/u36MA/Dv1zPV2tLQ7A/2O/KchetI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQ8JFKzf8JczzjMxhjLswf8Gc1GS9cwxX6jnX0xIMR4Uus1Z9eE2gn2biHeW/1SxS
-	 cExVR4T7HyjP8rHonnK5QU9AT/t2Fybt8oTFPetjOpVwoZ7JuihlKV+qMV4Yfb6MeM
-	 pqvM6S79uEONMkBYPXYoCVWu8KbMjViY5rN76pho=
+	b=Qw+NeTNQAhlVM3Qj1fcN4QoO6NK9fb3xRoGxuaEGp+X5yVdzfQyRE1OeJbV6w8JAR
+	 leC7M4uJzAf1RmM9zGhoZMHgCAw5Mzg46QhbpEYakobdUFjlVCROwmiqKTZhKJDYLc
+	 UCmZwCLTQd3BfXpmaHxIXFir1NsW0H1mlQHcUCa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 610/849] crypto: hisilicon/qm - invalidate queues in use
-Date: Tue, 11 Nov 2025 09:43:00 +0900
-Message-ID: <20251111004551.174052410@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Subject: [PATCH 6.12 563/565] drm/amdgpu: Fix function header names in amdgpu_connectors.c
+Date: Tue, 11 Nov 2025 09:46:59 +0900
+Message-ID: <20251111004539.686378928@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,151 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 85acd1b26b8f5b838887dc965dc3aa2c0253f4d1 ]
+commit 38ab33dbea594700c8d6cc81eec0a54e95d3eb2f upstream.
 
-Before the device reset, although the driver has set the queue
-status to intercept doorbells sent by the task process, the reset
-thread is isolated from the user-mode task process, so the task process
-may still send doorbells. Therefore, before the reset, the queue is
-directly invalidated, and the device directly discards the doorbells
-sent by the process.
+Align the function headers for `amdgpu_max_hdmi_pixel_clock` and
+`amdgpu_connector_dvi_mode_valid` with the function implementations so
+they match the expected kdoc style.
 
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c:1199: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+ * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
+drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c:1212: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+ * Validates the given display mode on DVI and HDMI connectors.
+
+Fixes: 585b2f685c56 ("drm/amdgpu: Respect max pixel clock for HDMI and DVI-D (v2)")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/qm.c | 53 ++++++++++++++++++++++++++---------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 102aff9ea19a0..822202e0f11b6 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -45,6 +45,8 @@
- 
- #define QM_SQ_TYPE_MASK			GENMASK(3, 0)
- #define QM_SQ_TAIL_IDX(sqc)		((le16_to_cpu((sqc).w11) >> 6) & 0x1)
-+#define QM_SQC_DISABLE_QP		(1U << 6)
-+#define QM_XQC_RANDOM_DATA		0xaaaa
- 
- /* cqc shift */
- #define QM_CQ_HOP_NUM_SHIFT		0
-@@ -3179,6 +3181,9 @@ static int qm_eq_aeq_ctx_cfg(struct hisi_qm *qm)
- 
- 	qm_init_eq_aeq_status(qm);
- 
-+	/* Before starting the dev, clear the memory and then configure to device using. */
-+	memset(qm->qdma.va, 0, qm->qdma.size);
-+
- 	ret = qm_eq_ctx_cfg(qm);
- 	if (ret) {
- 		dev_err(dev, "Set eqc failed!\n");
-@@ -3190,9 +3195,13 @@ static int qm_eq_aeq_ctx_cfg(struct hisi_qm *qm)
- 
- static int __hisi_qm_start(struct hisi_qm *qm)
- {
-+	struct device *dev = &qm->pdev->dev;
- 	int ret;
- 
--	WARN_ON(!qm->qdma.va);
-+	if (!qm->qdma.va) {
-+		dev_err(dev, "qm qdma is NULL!\n");
-+		return -EINVAL;
-+	}
- 
- 	if (qm->fun_type == QM_HW_PF) {
- 		ret = hisi_qm_set_vft(qm, 0, qm->qp_base, qm->qp_num);
-@@ -3266,7 +3275,7 @@ static int qm_restart(struct hisi_qm *qm)
- 	for (i = 0; i < qm->qp_num; i++) {
- 		qp = &qm->qp_array[i];
- 		if (atomic_read(&qp->qp_status.flags) == QP_STOP &&
--		    qp->is_resetting == true) {
-+		    qp->is_resetting == true && qp->is_in_kernel == true) {
- 			ret = qm_start_qp_nolock(qp, 0);
- 			if (ret < 0) {
- 				dev_err(dev, "Failed to start qp%d!\n", i);
-@@ -3298,24 +3307,44 @@ static void qm_stop_started_qp(struct hisi_qm *qm)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -1196,7 +1196,10 @@ static void amdgpu_connector_dvi_force(s
  }
  
  /**
-- * qm_clear_queues() - Clear all queues memory in a qm.
-- * @qm: The qm in which the queues will be cleared.
-+ * qm_invalid_queues() - invalid all queues in use.
-+ * @qm: The qm in which the queues will be invalidated.
-  *
-- * This function clears all queues memory in a qm. Reset of accelerator can
-- * use this to clear queues.
-+ * This function invalid all queues in use. If the doorbell command is sent
-+ * to device in user space after the device is reset, the device discards
-+ * the doorbell command.
+- * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
++ * amdgpu_max_hdmi_pixel_clock - Return max supported HDMI (TMDS) pixel clock
++ * @adev: pointer to amdgpu_device
++ *
++ * Return: maximum supported HDMI (TMDS) pixel clock in KHz.
   */
--static void qm_clear_queues(struct hisi_qm *qm)
-+static void qm_invalid_queues(struct hisi_qm *qm)
+ static int amdgpu_max_hdmi_pixel_clock(const struct amdgpu_device *adev)
  {
- 	struct hisi_qp *qp;
-+	struct qm_sqc *sqc;
-+	struct qm_cqc *cqc;
- 	int i;
- 
-+	/*
-+	 * Normal stop queues is no longer used and does not need to be
-+	 * invalid queues.
-+	 */
-+	if (qm->status.stop_reason == QM_NORMAL)
-+		return;
-+
-+	if (qm->status.stop_reason == QM_DOWN)
-+		hisi_qm_cache_wb(qm);
-+
- 	for (i = 0; i < qm->qp_num; i++) {
- 		qp = &qm->qp_array[i];
--		if (qp->is_in_kernel && qp->is_resetting)
-+		if (!qp->is_resetting)
-+			continue;
-+
-+		/* Modify random data and set sqc close bit to invalid queue. */
-+		sqc = qm->sqc + i;
-+		cqc = qm->cqc + i;
-+		sqc->w8 = cpu_to_le16(QM_XQC_RANDOM_DATA);
-+		sqc->w13 = cpu_to_le16(QM_SQC_DISABLE_QP);
-+		cqc->w8 = cpu_to_le16(QM_XQC_RANDOM_DATA);
-+		if (qp->is_in_kernel)
- 			memset(qp->qdma.va, 0, qp->qdma.size);
- 	}
--
--	memset(qm->qdma.va, 0, qm->qdma.size);
+@@ -1209,8 +1212,14 @@ static int amdgpu_max_hdmi_pixel_clock(c
  }
  
  /**
-@@ -3372,7 +3401,7 @@ int hisi_qm_stop(struct hisi_qm *qm, enum qm_stop_reason r)
- 		}
- 	}
- 
--	qm_clear_queues(qm);
-+	qm_invalid_queues(qm);
- 	qm->status.stop_reason = QM_NORMAL;
- 
- err_unlock:
-@@ -4770,8 +4799,6 @@ void hisi_qm_dev_shutdown(struct pci_dev *pdev)
- 	ret = hisi_qm_stop(qm, QM_DOWN);
- 	if (ret)
- 		dev_err(&pdev->dev, "Fail to stop qm in shutdown!\n");
--
--	hisi_qm_cache_wb(qm);
- }
- EXPORT_SYMBOL_GPL(hisi_qm_dev_shutdown);
- 
--- 
-2.51.0
-
+- * Validates the given display mode on DVI and HDMI connectors,
+- * including analog signals on DVI-I.
++ * amdgpu_connector_dvi_mode_valid - Validate a mode on DVI/HDMI connectors
++ * @connector: DRM connector to validate the mode on
++ * @mode: display mode to validate
++ *
++ * Validate the given display mode on DVI and HDMI connectors, including
++ * analog signals on DVI-I.
++ *
++ * Return: drm_mode_status indicating whether the mode is valid.
+  */
+ static enum drm_mode_status amdgpu_connector_dvi_mode_valid(struct drm_connector *connector,
+ 					    struct drm_display_mode *mode)
 
 
