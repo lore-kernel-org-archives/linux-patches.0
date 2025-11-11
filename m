@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EB42AE8D;
-	Tue, 11 Nov 2025 00:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972C34C97;
+	Tue, 11 Nov 2025 00:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822227; cv=none; b=iEMNxoEYAfbt202u94UR2lWojFj2FFSfyYD/I578eRS8zdH5Icza11PHpqn/g5Rbhy1WSpV2F8KW1ouA5jhTzyuQaK9OAwVN8A+q/PW38OMRJqFO2Wpzm3pdKDwIbkDRI+PqWjrLISWFqjtHTQiCiJDxAAx3tt+wjzugVSNXUyY=
+	t=1762822229; cv=none; b=DHclDOXmbhH2W1lPXZqdTA+JwS6bX7WSeZrisxXSi8qzJKhDfopZ/SqouRkNvivy5bkfOARNBlj7ZnJPIQHAhImjLoUN1Em56lx7IuU/yliYIMXRqqFEAPU1Exi7wUN/+RdIjitsKd7vDjXj/v3OyY+iqLqrd5bjTebQAYwP25k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822227; c=relaxed/simple;
-	bh=IBOAfQGOXhpkA4V7u+I8yDNDk/qQ/sqBTAMw3XxTI4U=;
+	s=arc-20240116; t=1762822229; c=relaxed/simple;
+	bh=aQH/kLC0dg2EojRf8H0IM1GDWh81HFtBT+uSCTjL8/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8OGr/ciiZackDasB/ZuM/zijB19WAd++kfGWcJlkYP3t+6lvC8Y6l/jkf4SOiXdqIlpzREREAhrUxQgrlabgSd0kMOVlHCo7CKUsBPIRCopeyEwZnzLSYhF33mH0f/fHGnOEOulNaPGGoOcYPMvmIUODmneZcWsoHAe7qk3Yyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRv1/EFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ptJ5/xJ4JkKrFrG1zn/qKvE46HAA+mduYN1nUke/G83rsPC/DjG64a4h3oSVrngicXvSuXDGO91WRL/H00dNw5lnVZR4y1Nms0JLb56Jof08kemWAOe5vHEQEDAa8ifHsZ7kv3LIrTJZOD7XDdH8NcOKgKhN7HD7GWTEqSBuSP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaZvre7x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRv1/EFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FA7C16AAE;
-	Tue, 11 Nov 2025 00:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaZvre7x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0D3C116B1;
+	Tue, 11 Nov 2025 00:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822226;
-	bh=IBOAfQGOXhpkA4V7u+I8yDNDk/qQ/sqBTAMw3XxTI4U=;
+	s=korg; t=1762822229;
+	bh=aQH/kLC0dg2EojRf8H0IM1GDWh81HFtBT+uSCTjL8/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRv1/EFXS8feUBlnLEjj8KuyvVrDzABXByy+50IEiB+LOOI8b2SKRcgGRcWiMjzHw
-	 f2ZhSQ/ibgYrPdtFRtGnS1iGFs/RVp8IOW4lUXwDoxcEGbCpcdfmDWbpgZJYD5BSTu
-	 othQUOC7hnI9rSlwjbPF1ufxQsLgOkq+n35ccw9k=
+	b=EaZvre7xbRfgmMQ8NNjk/wU0fzXLnjhAwW6otfD3WHyfbglY55q5nV4+nxQqZnuLc
+	 C6kRp6gzYE7GgJalMkzOKPsh/41gOXe+KuGZMLH3fKEyktrLXPkEN0cw+oeF+vTk8k
+	 GNQ4o3LihrUGKXzjZvs/JTwpmUmMohWwWvlfmgtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 007/565] virtio-net: drop the multi-buffer XDP packet in zerocopy
-Date: Tue, 11 Nov 2025 09:37:43 +0900
-Message-ID: <20251111004527.016529811@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 062/849] Bluetooth: ISO: Fix another instance of dst_type handling
+Date: Tue, 11 Nov 2025 09:33:52 +0900
+Message-ID: <20251111004537.931894668@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 1ab665817448c31f4758dce43c455bd4c5e460aa upstream.
+[ Upstream commit c403da5e98b04a2aec9cfb25cbeeb28d7ce29975 ]
 
-In virtio-net, we have not yet supported multi-buffer XDP packet in
-zerocopy mode when there is a binding XDP program. However, in that
-case, when receiving multi-buffer XDP packet, we skip the XDP program
-and return XDP_PASS. As a result, the packet is passed to normal network
-stack which is an incorrect behavior (e.g. a XDP program for packet
-count is installed, multi-buffer XDP packet arrives and does go through
-XDP program. As a result, the packet count does not increase but the
-packet is still received from network stack).This commit instead returns
-XDP_ABORTED in that case.
+Socket dst_type cannot be directly assigned to hci_conn->type since
+there domain is different which may lead to the wrong address type being
+used.
 
-Fixes: 99c861b44eb1 ("virtio_net: xsk: rx: support recv merge mode")
-Cc: stable@vger.kernel.org
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Link: https://patch.msgid.link/20251022155630.49272-1-minhquangbui99@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a5ad251b7cd ("Bluetooth: ISO: Fix possible circular locking dependency")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/bluetooth/iso.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1314,9 +1314,14 @@ static struct sk_buff *virtnet_receive_x
- 	ret = XDP_PASS;
- 	rcu_read_lock();
- 	prog = rcu_dereference(rq->xdp_prog);
--	/* TODO: support multi buffer. */
--	if (prog && num_buf == 1)
--		ret = virtnet_xdp_handler(prog, xdp, dev, xdp_xmit, stats);
-+	if (prog) {
-+		/* TODO: support multi buffer. */
-+		if (num_buf == 1)
-+			ret = virtnet_xdp_handler(prog, xdp, dev, xdp_xmit,
-+						  stats);
-+		else
-+			ret = XDP_ABORTED;
-+	}
- 	rcu_read_unlock();
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 4351b0b794e57..6e2923b301505 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2035,7 +2035,13 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 		}
  
- 	switch (ret) {
+ 		bacpy(&iso_pi(sk)->dst, &hcon->dst);
+-		iso_pi(sk)->dst_type = hcon->dst_type;
++
++		/* Convert from HCI to three-value type */
++		if (hcon->dst_type == ADDR_LE_DEV_PUBLIC)
++			iso_pi(sk)->dst_type = BDADDR_LE_PUBLIC;
++		else
++			iso_pi(sk)->dst_type = BDADDR_LE_RANDOM;
++
+ 		iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
+ 		memcpy(iso_pi(sk)->base, iso_pi(parent)->base, iso_pi(parent)->base_len);
+ 		iso_pi(sk)->base_len = iso_pi(parent)->base_len;
+-- 
+2.51.0
+
 
 
