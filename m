@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFAF2561A7;
-	Tue, 11 Nov 2025 01:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C887026CE04;
+	Tue, 11 Nov 2025 01:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824382; cv=none; b=D4msO09Y3JjvNKQ0M/aSS0JN1rG0FtyN0j/XaJ0TK0dNplIxzSkzNHnUWIPlPP7K8DHavmUHkkqslX69XVLGnUdqlrztrzrEo5jJ4b4E6U94DsuW+sp+qpYhFJ9hgojVxTEXdARGsU3v51+Gut18xVRUKT2An+TMKxXQkNnmrV8=
+	t=1762824384; cv=none; b=hJRVDWC4rjSOFLS9z+fwRwlW5szxOr1a46jwud1SlFJ7/HFQf/d39tPY4ESL80IKtacCHp1YRpkQDpj0rctFet3D6UHyNfywAjf9KTW1D94WpxBblNTKHaSwykIxLiOVYniApkCdLYiazWtJ18hEcaxhn6BY319C9QauW3bmC/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824382; c=relaxed/simple;
-	bh=LNA7VhGLp9fF1Zx+k1Bw5lwboeTJoSxzfVCg3Dpvg38=;
+	s=arc-20240116; t=1762824384; c=relaxed/simple;
+	bh=If2jfMna7+U3SlcUA/pnMKvzx0bNIhcQEnmG3zbexBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DprxXcKYr4PKGsUpbaL+xUIxiSJJhWrU3baf2ccl4+W61ycf8q3QGvChjl6N8B0pWjATnuDBwC8+o1XwG+ILsGjGTY6m7WTZxbdZe/JDmSHE2sBbU6WA4JyKWnCygcGeIcRsGZQmkBQpQdosrOu9M3lCU4ScnKJl5PNGbi9aRp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXcfM+Q9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PU9/jQOVYCXjGSzURU6K6dOSYuYrde9KAQ4OAUBEPCD7eEc6jaV9B3gBkvJUZCKbiNzqAp85hj+O/llyevKomvxrMflDBAiAXpDpe09eIOsAAOuLnoSTfq8N60yc+ru+Dtzf5BSnotl+6abGmnk1A9LNf6yeJF9nJIcXDODcLh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBUFyxXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXcfM+Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1283C4AF0B;
-	Tue, 11 Nov 2025 01:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBUFyxXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670FDC4CEFB;
+	Tue, 11 Nov 2025 01:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824382;
-	bh=LNA7VhGLp9fF1Zx+k1Bw5lwboeTJoSxzfVCg3Dpvg38=;
+	s=korg; t=1762824384;
+	bh=If2jfMna7+U3SlcUA/pnMKvzx0bNIhcQEnmG3zbexBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXcfM+Q94uUe8eEexEhtPJi5b4tENNscJCudWKwJqzumSUanbDoSGhyvc//vuNZVb
-	 CD6EQsGDTIvaixk97xABX/NAtub4okWnaNOkQZ399kercWes/ORrj7Dlt8MxeEFYKa
-	 282sCtZ2iGUHMTkzRztSn2gjLyzFoogr4UVpqKFE=
+	b=nBUFyxXJy/1RqKsSl5nMpJQ+kpVj8G6mlsHKOplDXJoAQSHs4Koc+hUPa+UmpBdPX
+	 waGSOKXf2AijobBePOqLQN2Z308InkxyAbLYCgVFAgbiefvuDdFRuqrE2lDZKn+UAe
+	 IRdkf7CYiioYDkjuRi1BE3EDmyCDgzYQ9WZmO9DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Yao <hao.yao@intel.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 484/849] media: ov08x40: Fix the horizontal flip control
-Date: Tue, 11 Nov 2025 09:40:54 +0900
-Message-ID: <20251111004548.141717101@linuxfoundation.org>
+Subject: [PATCH 6.12 433/565] vfio/pci: Fix INTx handling on legacy non-PCI 2.3 devices
+Date: Tue, 11 Nov 2025 09:44:49 +0900
+Message-ID: <20251111004536.615917339@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,41 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Yao <hao.yao@intel.com>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit c7df6f339af94689fdc433887f9fbb480bf8a4ed ]
+[ Upstream commit 8b9f128947dd72e0fcf256088a673abac9b720bf ]
 
-The datasheet of ov08x40 doesn't match the hardware behavior.
-0x3821[2] == 1 is the original state and 0 the horizontal flip enabled.
+PCI devices prior to PCI 2.3 both use level interrupts and do not support
+interrupt masking, leading to a failure when passed through to a KVM guest on
+at least the ppc64 platform. This failure manifests as receiving and
+acknowledging a single interrupt in the guest, while the device continues to
+assert the level interrupt indicating a need for further servicing.
 
-Signed-off-by: Hao Yao <hao.yao@intel.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Tested-by: Hans de Goede <hansg@kernel.org> # ThinkPad X1 Carbon Gen 12 & Gen 13
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+When lazy IRQ masking is used on DisINTx- (non-PCI 2.3) hardware, the following
+sequence occurs:
+
+ * Level IRQ assertion on device
+ * IRQ marked disabled in kernel
+ * Host interrupt handler exits without clearing the interrupt on the device
+ * Eventfd is delivered to userspace
+ * Guest processes IRQ and clears device interrupt
+ * Device de-asserts INTx, then re-asserts INTx while the interrupt is masked
+ * Newly asserted interrupt acknowledged by kernel VMM without being handled
+ * Software mask removed by VFIO driver
+ * Device INTx still asserted, host controller does not see new edge after EOI
+
+The behavior is now platform-dependent.  Some platforms (amd64) will continue
+to spew IRQs for as long as the INTX line remains asserted, therefore the IRQ
+will be handled by the host as soon as the mask is dropped.  Others (ppc64) will
+only send the one request, and if it is not handled no further interrupts will
+be sent.  The former behavior theoretically leaves the system vulnerable to
+interrupt storm, and the latter will result in the device stalling after
+receiving exactly one interrupt in the guest.
+
+Work around this by disabling lazy IRQ masking for DisINTx- INTx devices.
+
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Link: https://lore.kernel.org/r/333803015.1744464.1758647073336.JavaMail.zimbra@raptorengineeringinc.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov08x40.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/i2c/ov08x40.c b/drivers/media/i2c/ov08x40.c
-index e0094305ca2ab..90887fc54fb0e 100644
---- a/drivers/media/i2c/ov08x40.c
-+++ b/drivers/media/i2c/ov08x40.c
-@@ -1648,7 +1648,7 @@ static int ov08x40_set_ctrl_hflip(struct ov08x40 *ov08x, u32 ctrl_val)
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 565966351dfad..b2cf1af7fb0c7 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -304,9 +304,14 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
  
- 	return ov08x40_write_reg(ov08x, OV08X40_REG_MIRROR,
- 				 OV08X40_REG_VALUE_08BIT,
--				 ctrl_val ? val | BIT(2) : val & ~BIT(2));
-+				 ctrl_val ? val & ~BIT(2) : val | BIT(2));
- }
+ 	vdev->irq_type = VFIO_PCI_INTX_IRQ_INDEX;
  
- static int ov08x40_set_ctrl_vflip(struct ov08x40 *ov08x, u32 ctrl_val)
++	if (!vdev->pci_2_3)
++		irq_set_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
++
+ 	ret = request_irq(pdev->irq, vfio_intx_handler,
+ 			  irqflags, ctx->name, ctx);
+ 	if (ret) {
++		if (!vdev->pci_2_3)
++			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
+ 		vdev->irq_type = VFIO_PCI_NUM_IRQS;
+ 		kfree(name);
+ 		vfio_irq_ctx_free(vdev, ctx, 0);
+@@ -352,6 +357,8 @@ static void vfio_intx_disable(struct vfio_pci_core_device *vdev)
+ 		vfio_virqfd_disable(&ctx->unmask);
+ 		vfio_virqfd_disable(&ctx->mask);
+ 		free_irq(pdev->irq, ctx);
++		if (!vdev->pci_2_3)
++			irq_clear_status_flags(pdev->irq, IRQ_DISABLE_UNLAZY);
+ 		if (ctx->trigger)
+ 			eventfd_ctx_put(ctx->trigger);
+ 		kfree(ctx->name);
 -- 
 2.51.0
 
