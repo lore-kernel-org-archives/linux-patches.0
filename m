@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11500333443;
-	Tue, 11 Nov 2025 01:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDDE26ED5E;
+	Tue, 11 Nov 2025 01:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823381; cv=none; b=FQjbXNKjfFXrLWmc1mIDMBHpaOo3t6CCnIh5E9lmM6Giyrl1uYHeRp635MGNAobX5Suszg6wCP8JmaGc9C166I0okUcV+z+C9deUBRkMA0qtDEYqz2NgsV6nwXn1CW/sz4ug5wG44TUUAdL03PerEE0nZ99tu2cm8HbWi0/bzDs=
+	t=1762823383; cv=none; b=WxT9GZPNeMsGsJJyku2pItdeAFmnd3nRr0aNjq6NbdsYKDqXa/beP8yMyiBHUJRI9wb7UoWMOe17iJiaBkKmEMQ0xoZpVFI5tzuzx3jjhA4rOXnAFdoAYeHTHFyn26hUhg+KvYoKCImPwu9TmXb/mISGAYszLDX93QwsIl2kfmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823381; c=relaxed/simple;
-	bh=Werwz94Znl7xLYwhnmjzb8LBojsaf4IV+wZbvmmAa9A=;
+	s=arc-20240116; t=1762823383; c=relaxed/simple;
+	bh=4Gf5DcR0ZvFoqHzHpLB5aBnisnQUXC5karz4Y5QDvsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kv2TyhmZOOn2Cx52elPZT0jnVekLL6PooNK/CXW6IG/+jF8GQUDVV9R1oxBdXI3bZmoynm+Tcuc8E6p3Vqzo5Dy9YCQAm/uhgs1x6YhfbQh4kzMu2fGPM5e/ZY5fOHYFU5yoKQjPWheIiz0fs1ldIuWRnFNXMN9zUOv7HeihsaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCb7m8M8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MX79jVOKCPR5DlMUJPH25G6MxoWxS5LgDMZtenr1HcPmpXPysMCB8ucTNYKmA8vastaBsf9ozWF4r+S4QQB2hD3tlVkn59RsbB57AJQYkC1pnsvCGKEIVWCSnr8fhUJRevkaoiYY2JH9gfEfKJ1IXME8eJKnPxSjd6QmowBAuEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcXxu+0u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCb7m8M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630A6C116B1;
-	Tue, 11 Nov 2025 01:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcXxu+0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F763C113D0;
+	Tue, 11 Nov 2025 01:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823380;
-	bh=Werwz94Znl7xLYwhnmjzb8LBojsaf4IV+wZbvmmAa9A=;
+	s=korg; t=1762823382;
+	bh=4Gf5DcR0ZvFoqHzHpLB5aBnisnQUXC5karz4Y5QDvsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCb7m8M87wPoCzA2aaOAmkkoqax+eQidZKBt26+7rW5zdkHiBnDi7g+THF4axsx9m
-	 nN/S5wA6h52E5YlqXfhNPLM1Zruj8il3wfhA7hsQlQ1H+bYX/tR7dKseSt1WzpnqaE
-	 OTDlcwJrCG8ymwqX9KHVQUXxClB3rZ00AlP3t3kk=
+	b=XcXxu+0ud6NVi6kzzBvCbmTuko5erODpf4sBKLc33FaciAsHP86EnsumKuoSUrONB
+	 rSHnMkeAypqP5Qsu5i6oHOlegQse2WCrSlxn0lzlWNZ3LB2EJi/kPgKSGxByR/rUeW
+	 l1au2gSQof3XvsCfLQ9CZQPXuOP7cKueoNLKmfzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kuan-Chung Chen <damon.chen@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/565] drm/amd/pm: Use cached metrics data on arcturus
-Date: Tue, 11 Nov 2025 09:40:42 +0900
-Message-ID: <20251111004531.117801606@linuxfoundation.org>
+Subject: [PATCH 6.12 231/565] wifi: rtw89: fix BSSID comparison for non-transmitted BSSID
+Date: Tue, 11 Nov 2025 09:41:27 +0900
+Message-ID: <20251111004532.113766549@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -52,35 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Kuan-Chung Chen <damon.chen@realtek.com>
 
-[ Upstream commit 2f3b1ccf83be83a3330e38194ddfd1a91fec69be ]
+[ Upstream commit c4c16c88e78417424b4e3f33177e84baf0bc9a99 ]
 
-Cached metrics data validity is 1ms on arcturus. It's not reasonable for
-any client to query gpu_metrics at a faster rate and constantly
-interrupt PMFW.
+For non-transmitted connections, beacons are received from the
+transmitted BSSID. Fix this to avoid missing beacon statistics.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250811123950.15697-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-index d4b954b22441c..3e52668a98b4c 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -2326,7 +2326,7 @@ static ssize_t arcturus_get_gpu_metrics(struct smu_context *smu,
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index df8fad7a2aea6..1147abf771547 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -2074,6 +2074,7 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 	struct ieee80211_bss_conf *bss_conf;
+ 	struct rtw89_vif_link *rtwvif_link;
+ 	const u8 *bssid = iter_data->bssid;
++	const u8 *target_bssid;
  
- 	ret = smu_cmn_get_metrics_table(smu,
- 					&metrics,
--					true);
-+					false);
- 	if (ret)
- 		return ret;
+ 	if (rtwdev->scanning &&
+ 	    (ieee80211_is_beacon(hdr->frame_control) ||
+@@ -2098,7 +2099,10 @@ static void rtw89_vif_rx_stats_iter(void *data, u8 *mac,
+ 		goto out;
+ 	}
  
+-	if (!ether_addr_equal(bss_conf->bssid, bssid))
++	target_bssid = ieee80211_is_beacon(hdr->frame_control) &&
++		       bss_conf->nontransmitted ?
++		       bss_conf->transmitter_bssid : bss_conf->bssid;
++	if (!ether_addr_equal(target_bssid, bssid))
+ 		goto out;
+ 
+ 	if (ieee80211_is_beacon(hdr->frame_control)) {
 -- 
 2.51.0
 
