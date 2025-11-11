@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AF141C62;
-	Tue, 11 Nov 2025 01:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BC441C62;
+	Tue, 11 Nov 2025 01:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822817; cv=none; b=N1JlGqedpnmEvjriBM8BtbikOrgW05hQ+RpR+eZCiPFnqZuLstnIKeTPWKI5Ke/V63abHrY/Pw37TDIR8Q76IJ91yJ1O4WnxYrXbQFPSo25D7iMZHV15i7qJpBMjQWeMfuRMWcNudUMwCseQZqsjfKE2jCQModpSEUHIL5R3GtU=
+	t=1762822820; cv=none; b=jigJVgBWCqsaWtY4nrb5pAl1+2QpNSWQt6nss0oBxiEoiP2YSwhg3gqMs2DirSFfKxL/I+D45cxA7WwCLXLDJV755lmCiw5AQ9gNsxR87KvSZclvFFd3N/Irsl64adKrxp065Q5W7/RGRFcElGf/AKRtvDfyomMp4cVbRtP47FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822817; c=relaxed/simple;
-	bh=kqirs/veu0Wj6BT3kxwOPo411PAR8ISia2VgstOYqZk=;
+	s=arc-20240116; t=1762822820; c=relaxed/simple;
+	bh=p7wA+0y1UPxL9l3yJ/sP+dsnJmmOAWS0T/vO6zpZsuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrYcrd0/CtSZeZFAPowV1fNVXfVaNGMkNtf6cCrghYMMJlKi6RejneRv2Zl5raXfdPDe7i1NVf+Hdf0Ivoa1O87TzYqHk78chEp8LtPp/C53J0bFmwrWPLrTJYJ4+y/euzit6H+HcgIKw4SpawuPd2pNDWu08ETYMktsD6rmcYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOGhdHAb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4iKfaWugQXUEFuPJVnOIGu1BZlCY/RWckApK2v+LTsXm90+2Mv+T2MpN2rPbUMJtKg9fTq9JCBxDRbjybX12KyJP1vEvc3savH6n8FiXCX2EnZyNV2W0jZwVCzplvW6VfVEIbZpXOm6ZKizaoBIERVjEss2HVgo45h9VWoPMqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtoK2EyM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOGhdHAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C2BC4CEFB;
-	Tue, 11 Nov 2025 01:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtoK2EyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64039C4CEF5;
+	Tue, 11 Nov 2025 01:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822817;
-	bh=kqirs/veu0Wj6BT3kxwOPo411PAR8ISia2VgstOYqZk=;
+	s=korg; t=1762822820;
+	bh=p7wA+0y1UPxL9l3yJ/sP+dsnJmmOAWS0T/vO6zpZsuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOGhdHAbwzwLmFn0gtGlDf8GF5ErDc0qHAwksGs+XbBKgvDul3QoiWB6gRKD/PTrY
-	 7ayXOf4PUEgJdW6Sfr6vmrU/JoymeYnWfz/aS2WEaBqDDK0PEh/fMmgfiMs1LCvDGo
-	 ZLlzKfRBlNyLSwF3yFwymjTxqMjgjc/wstPYk//Q=
+	b=rtoK2EyMpau1k7VStk955R0U7E2vOpZIUXAnn8EIxUWXraRgO6b+hJvAEIBlzrxLz
+	 5ofGuQS9Jg+gbMrnsaB5HO0JCHVlKQyUn8dZ4OlNNrq2Vs049lSuhm50vPyXDUWIpA
+	 luIjk0ulTzpsvaNmrIxq2bgqRYyl/R9ziCF9PRrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 177/849] ACPICA: dispatcher: Use acpi_ds_clear_operands() in acpi_ds_call_control_method()
-Date: Tue, 11 Nov 2025 09:35:47 +0900
-Message-ID: <20251111004540.714055221@linuxfoundation.org>
+Subject: [PATCH 6.12 115/565] thermal: intel: selftests: workload_hint: Mask unsupported types
+Date: Tue, 11 Nov 2025 09:39:31 +0900
+Message-ID: <20251111004529.543376478@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit e9dff11a7a50fcef23fe3e8314fafae6d5641826 ]
+[ Upstream commit 0115d063559fa6d25e41751cf455dda40aa2c856 ]
 
-When deleting the previous walkstate operand stack
-acpi_ds_call_control_method() was deleting obj_desc->Method.param_count
-operands. But Method.param_count does not necessarily match
-this_walk_state->num_operands, it may be either less or more.
+The workload hint may contain some other hints which are not defined.
+So mask out unsupported types. Currently only lower 4 bits of workload
+type hints are defined.
 
-After correcting the for loop to check `i < this_walk_state->num_operands`
-the code is identical to acpi_ds_clear_operands(), so just outright
-replace the code with acpi_ds_clear_operands() to fix this.
-
-Link: https://github.com/acpica/acpica/commit/53fc0220
-Signed-off-by: Hans de Goede <hansg@kernel.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20250828201541.931425-1-srinivas.pandruvada@linux.intel.com
+[ rjw: Subject cleanup ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ .../selftests/thermal/intel/workload_hint/workload_hint_test.c  | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index fef6fb29ece4d..e707a70368026 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -546,14 +546,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 	 * Delete the operands on the previous walkstate operand stack
- 	 * (they were copied to new objects)
- 	 */
--	for (i = 0; i < obj_desc->method.param_count; i++) {
--		acpi_ut_remove_reference(this_walk_state->operands[i]);
--		this_walk_state->operands[i] = NULL;
--	}
--
--	/* Clear the operand stack */
--
--	this_walk_state->num_operands = 0;
-+	acpi_ds_clear_operands(this_walk_state);
- 
- 	ACPI_DEBUG_PRINT((ACPI_DB_DISPATCH,
- 			  "**** Begin nested execution of [%4.4s] **** WalkState=%p\n",
+diff --git a/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c b/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
+index 217c3a641c537..ecf8b06c1ddf6 100644
+--- a/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
++++ b/tools/testing/selftests/thermal/intel/workload_hint/workload_hint_test.c
+@@ -146,6 +146,8 @@ int main(int argc, char **argv)
+ 			ret = sscanf(index_str, "%d", &index);
+ 			if (ret < 0)
+ 				break;
++
++			index &= 0x0f;
+ 			if (index > WORKLOAD_TYPE_MAX_INDEX)
+ 				printf("Invalid workload type index\n");
+ 			else
 -- 
 2.51.0
 
