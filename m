@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B0F345CD8;
-	Tue, 11 Nov 2025 01:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E22266EFC;
+	Tue, 11 Nov 2025 01:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823636; cv=none; b=QVEkVP9luc8vkPVmy2nT13jiX+pGNa3Z9c5SsREVP6RP2AUcwvs6Su+g8+BaX96mOs+NHp+pVkZcJ1QcY4sAWF8eYFpGUyVdCumxZW0XhZz79jse3DYdr983Oew5k3nZYzNxlTO8OC7xJpyFRt2urplca4Iy5hxxvQoNpaeO7BE=
+	t=1762823638; cv=none; b=YSrRVyW6Y6QSYFDfTRVFQodEzP+9LcqaPKPE+lIsY32N0e3SRdUUZpTXp7OVDB5rqBXqvKPPp7rTJgImc9VMAE19FvFHbF6ydNsbTaw5lXNXHy0iFrP+nlZ6I/YKTV//GFo9l+7EhspQf/crim+Gq8mMuiSrk0c80Cqj6goOCyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823636; c=relaxed/simple;
-	bh=VxH1kU4/3MP6NU2h5HHDNZ608ZHfM0PYaJ3b5RPyU4E=;
+	s=arc-20240116; t=1762823638; c=relaxed/simple;
+	bh=Dci36EaUYWP2wthdu6I6wpcYZmnyOoUshp81hv3kJyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTz4S3tSo5ZEyIV9F3biS5zDhjsZrlKyJhyonorvfsDyFpBeie7nltUE2mifWxfuECp75l05qxuxM+NuyNBIOY5iI2HdcfJTNc0N+21jOD7OIQPZ0JtzMg5a57dFNASO+9lzcpVeHstLmdv/FDXM7l0S+sFRvp89TjfswJQT+ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyUNN9gu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e1jBHo2JlRgf7StiHU6KgmG4f6l3kgxoCkH0X0delljkfzkaIClJBk0xdk6xsvDs1ghxnMVROHV7oiizyhrcasPynv3tFikkv6VtWFnNpMdT+ta8Dq/G711Fs6lCLlfQh67OEQB5jMVOmCWMc/6CEfB+FCclRtICMMGFmDoIQ2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaBDdIsw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyUNN9gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED807C113D0;
-	Tue, 11 Nov 2025 01:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaBDdIsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A65C4CEF5;
+	Tue, 11 Nov 2025 01:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823636;
-	bh=VxH1kU4/3MP6NU2h5HHDNZ608ZHfM0PYaJ3b5RPyU4E=;
+	s=korg; t=1762823638;
+	bh=Dci36EaUYWP2wthdu6I6wpcYZmnyOoUshp81hv3kJyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyUNN9gu8SFQ7nwQ/3VgwJEn18zhYhJ9dhrQ6jZgpJKWKZZ8yNED/I9TCu90yWn5S
-	 JKDukp9Yx9tncoyllvd/dbWoBhKKx7zUkDw5XbJCm5f3g5RozCNg8rG5HBCBXQ5fo4
-	 Bz9Ytl8D5B4ke/hVxf93r0pypVafvOO77uiJOmqg=
+	b=AaBDdIswDjSOqDkE9k5QipAmkQaiK6IrED/bTOzECpjvDgHV9fT0eIi27ZPA6Ekr+
+	 yN8b8+bKa1+hRLQB+6ug3Ct2eqJ0MhOSNDP3usRlZeO61jHbAZeU9xsWldQZH8AoJ/
+	 eOsHAbLJ+p4le42KDbVA80nG8OP63yuwM/NNUD1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xichao Zhao <zhao.xichao@vivo.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Philip=20M=C3=BCller?= <philm@manjaro.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 340/849] tty: serial: Modify the use of dev_err_probe()
-Date: Tue, 11 Nov 2025 09:38:30 +0900
-Message-ID: <20251111004544.639599594@linuxfoundation.org>
+Subject: [PATCH 6.12 291/565] drm: panel-backlight-quirks: Make EDID match optional
+Date: Tue, 11 Nov 2025 09:42:27 +0900
+Message-ID: <20251111004533.423140006@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xichao Zhao <zhao.xichao@vivo.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 706c3c02eecd41dc675e9102b3719661cd3e30e2 ]
+[ Upstream commit 9931e4be11f2129a20ffd908bc364598a63016f8 ]
 
-The dev_err_probe() doesn't do anything when error is '-ENOMEM'.
-Make the following two changes:
-(1) Replace -ENOMEM with -ENOSPC in max3100_probe().
-(2) Just return -ENOMEM instead in max310x_probe().
+Currently, having a valid panel_id match is required to use the quirk
+system. For certain devices, we know that all SKUs need a certain quirk.
+Therefore, allow not specifying ident by only checking for a match
+if panel_id is non-zero.
 
-Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20250819120927.607744-1-zhao.xichao@vivo.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Philip Müller <philm@manjaro.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://lore.kernel.org/r/20250829145541.512671-2-lkml@antheas.dev
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max3100.c | 2 +-
- drivers/tty/serial/max310x.c | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_panel_backlight_quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
-index 67d80f8f801e9..3faa1b6aa3eed 100644
---- a/drivers/tty/serial/max3100.c
-+++ b/drivers/tty/serial/max3100.c
-@@ -705,7 +705,7 @@ static int max3100_probe(struct spi_device *spi)
- 			break;
- 	if (i == MAX_MAX3100) {
- 		mutex_unlock(&max3100s_lock);
--		return dev_err_probe(dev, -ENOMEM, "too many MAX3100 chips\n");
-+		return dev_err_probe(dev, -ENOSPC, "too many MAX3100 chips\n");
- 	}
+diff --git a/drivers/gpu/drm/drm_panel_backlight_quirks.c b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+index c477d98ade2b4..99d8b6b2d6bd2 100644
+--- a/drivers/gpu/drm/drm_panel_backlight_quirks.c
++++ b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+@@ -49,7 +49,7 @@ static bool drm_panel_min_backlight_quirk_matches(const struct drm_panel_min_bac
+ 	if (!dmi_match(quirk->dmi_match.field, quirk->dmi_match.value))
+ 		return false;
  
- 	max3100s[i] = kzalloc(sizeof(struct max3100_port), GFP_KERNEL);
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index d9a0100b92d2b..e8749b8629703 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1269,8 +1269,7 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
- 	/* Alloc port structure */
- 	s = devm_kzalloc(dev, struct_size(s, p, devtype->nr), GFP_KERNEL);
- 	if (!s)
--		return dev_err_probe(dev, -ENOMEM,
--				     "Error allocating port structure\n");
-+		return -ENOMEM;
+-	if (!drm_edid_match(edid, &quirk->ident))
++	if (quirk->ident.panel_id && !drm_edid_match(edid, &quirk->ident))
+ 		return false;
  
- 	/* Always ask for fixed clock rate from a property. */
- 	device_property_read_u32(dev, "clock-frequency", &uartclk);
+ 	return true;
 -- 
 2.51.0
 
