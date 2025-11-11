@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90C027E7EB;
-	Tue, 11 Nov 2025 01:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2278A27FD4A;
+	Tue, 11 Nov 2025 01:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825496; cv=none; b=LZuv/I3QAQI862r2sBubHiOROxwW1s6+DazBvKgNOsch1Ccvs3gM5CIq9hwjmVawdTidfuBRuQB/TJWzNp2zm3T3A/r9pl+yUppcZKF8PzUkObZ3xsBhelpTg3C0heQkngZZCwgWxyeK+V6UUFo4tOdYep6NFbg7SSrLztf+YMY=
+	t=1762825499; cv=none; b=NsNRXOEKT74LsnLH7ZNPx3WPQjuenuRUdd6gO2fUQ9tTyhmi4tb9+fYQZ7cngRtzMbQEdHVGoAUOeKVIPNMfoi4hZTNXStNofw6rHZlDCKMRfgDwb7AqfoaL6GYlg+eL9WJGD+um4enTH7kJ9Lbpu6suFwZRKvDHcJH3+I7ALxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825496; c=relaxed/simple;
-	bh=Mc5ri5fNxD+/fojv3tWSRbhgVu2ILidmz3g6yB3P+Ss=;
+	s=arc-20240116; t=1762825499; c=relaxed/simple;
+	bh=1QjS+so41qFLO8No/jh5ta5GLLtCb5qNtGNcuR4a4FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dJs+PiPDApp0uon8ybDLuy1Gkm39uOQG26AQvP3GlHsogqRU8CWqSBH/JsWRqU+ljZqkGDImJW/reRJ3jDIdT0Jy4UPW/jeYfN276lnhV6aodnB5miTSLytogSqn+BzO8Re8UMjd4rHasO9+kiTc8OtK1oPbX4fvIcJS54njczE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3UQhSq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZ4FHy7zFSvbv8B+USIjhqsCr74ZG0kMuEvbTdzzqQRqg+3m9oQOb13lN4cOzlZomjOhXtAkO0QC1ob1S6mp38xytFCcxv+kWiXF9ZJtBG4uwaHruFY8tEpLENGq6z8yLxLUZIIRjzbD5llto7MBMjT1uCBeuunDUS+If6oyOKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhn3wwrK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3UQhSq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFF0C113D0;
-	Tue, 11 Nov 2025 01:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhn3wwrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83808C19424;
+	Tue, 11 Nov 2025 01:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825496;
-	bh=Mc5ri5fNxD+/fojv3tWSRbhgVu2ILidmz3g6yB3P+Ss=;
+	s=korg; t=1762825498;
+	bh=1QjS+so41qFLO8No/jh5ta5GLLtCb5qNtGNcuR4a4FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3UQhSq+4WT8SzEXppqXgB9Ura11wUtECN5s6O7PLiA+Fs3OUOnwam4Govo3zLnFs
-	 G/E3w19YSIKnfx8fwEub6adlpkzKkjRFcpeN5xFD9JeqE2v0M/3rh8UCWpvuLZZDkM
-	 VSJveIjM9K4MaApM4+OKrrH3A7nze7SL/gz8uJCQ=
+	b=fhn3wwrKve/YNrroBjLlakordH+DoV+9QpRsHjRgCijSMkDHW+94Ap8I8fQfYGcHW
+	 ga+mMfOdaIuXeL6RLmmWDJZ5KyTO3jFWleUUkm5MmbLSd0RMgaULXsfTs0Xb3tKCnm
+	 HqmPs84Cneg/bm0zHwbhPLpYIXqu79sjSTmLB8bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 827/849] drm/amdkfd: Dont clear PT after process killed
-Date: Tue, 11 Nov 2025 09:46:37 +0900
-Message-ID: <20251111004556.423195782@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Lei Yang <leiyang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 828/849] virtio-net: fix received length check in big packets
+Date: Tue, 11 Nov 2025 09:46:38 +0900
+Message-ID: <20251111004556.445914620@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -45,44 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-commit 597eb70f7ff7551ff795cd51754b81aabedab67b upstream.
+commit 0c716703965ffc5ef4311b65cb5d84a703784717 upstream.
 
-If process is killed. the vm entity is stopped, submit pt update job
-will trigger the error message "*ERROR* Trying to push to a killed
-entity", job will not execute.
+Since commit 4959aebba8c0 ("virtio-net: use mtu size as buffer length
+for big packets"), when guest gso is off, the allocated size for big
+packets is not MAX_SKB_FRAGS * PAGE_SIZE anymore but depends on
+negotiated MTU. The number of allocated frags for big packets is stored
+in vi->big_packets_num_skbfrags.
 
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 10c382ec6c6d1e11975a11962bec21cba6360391)
+Because the host announced buffer length can be malicious (e.g. the host
+vhost_net driver's get_rx_bufs is modified to announce incorrect
+length), we need a check in virtio_net receive path. Currently, the
+check is not adapted to the new change which can lead to NULL page
+pointer dereference in the below while loop when receiving length that
+is larger than the allocated one.
+
+This commit fixes the received length check corresponding to the new
+change.
+
+Fixes: 4959aebba8c0 ("virtio-net: use mtu size as buffer length for big packets")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Link: https://patch.msgid.link/20251030144438.7582-1-minhquangbui99@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/virtio_net.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1263,6 +1263,10 @@ static int unmap_bo_from_gpuvm(struct kg
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -910,17 +910,6 @@ static struct sk_buff *page_to_skb(struc
+ 		goto ok;
+ 	}
  
- 	(void)amdgpu_vm_bo_unmap(adev, bo_va, entry->va);
- 
-+	/* VM entity stopped if process killed, don't clear freed pt bo */
-+	if (!amdgpu_vm_ready(vm))
-+		return 0;
+-	/*
+-	 * Verify that we can indeed put this data into a skb.
+-	 * This is here to handle cases when the device erroneously
+-	 * tries to receive more than is possible. This is usually
+-	 * the case of a broken device.
+-	 */
+-	if (unlikely(len > MAX_SKB_FRAGS * PAGE_SIZE)) {
+-		net_dbg_ratelimited("%s: too much data\n", skb->dev->name);
+-		dev_kfree_skb(skb);
+-		return NULL;
+-	}
+ 	BUG_ON(offset >= PAGE_SIZE);
+ 	while (len) {
+ 		unsigned int frag_size = min((unsigned)PAGE_SIZE - offset, len);
+@@ -2112,9 +2101,19 @@ static struct sk_buff *receive_big(struc
+ 				   struct virtnet_rq_stats *stats)
+ {
+ 	struct page *page = buf;
+-	struct sk_buff *skb =
+-		page_to_skb(vi, rq, page, 0, len, PAGE_SIZE, 0);
++	struct sk_buff *skb;
 +
- 	(void)amdgpu_vm_clear_freed(adev, vm, &bo_va->last_pt_update);
++	/* Make sure that len does not exceed the size allocated in
++	 * add_recvbuf_big.
++	 */
++	if (unlikely(len > (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE)) {
++		pr_debug("%s: rx error: len %u exceeds allocated size %lu\n",
++			 dev->name, len,
++			 (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE);
++		goto err;
++	}
  
- 	(void)amdgpu_sync_fence(sync, bo_va->last_pt_update, GFP_KERNEL);
++	skb = page_to_skb(vi, rq, page, 0, len, PAGE_SIZE, 0);
+ 	u64_stats_add(&stats->bytes, len - vi->hdr_len);
+ 	if (unlikely(!skb))
+ 		goto err;
 
 
