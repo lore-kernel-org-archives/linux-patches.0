@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026E305E3A;
-	Tue, 11 Nov 2025 01:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4997C26ED5E;
+	Tue, 11 Nov 2025 01:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823375; cv=none; b=eSmHBO51Fk3vkIKT+nq7BJgN9c509D67nZ6eSgzFq0t7IyKBlZGGwEUgKByGFn7MDaZ9Lu3S0Xe6UHlTvpn2kIzLftebWtSeipAs25/pv4jQmAAkohaASRuXMNLWc5bziIMlRwq4h31u3YaoioUuh35Z8HNoOx2lG2hGPmTdioc=
+	t=1762823378; cv=none; b=AVL6iX7HsXSwfVFhu2t66Ygt79ncD7t2gF6Xzv62YVELf58Dj2CuD5Xao1J5TnY+4kkAYVDewbZMKmS+L8gxTKSDlQ6QB+ntgUxXiQOO3ptYtfw/qgPS4NK+RC6ZFXSFLeSN2/dW+WjPByl9UVoxlJ+yXyN8UbuHpbhcagfurKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823375; c=relaxed/simple;
-	bh=K4WAVLN7q5rUazgtzb+eX1PwRbikDXtH8nl2umbM/8E=;
+	s=arc-20240116; t=1762823378; c=relaxed/simple;
+	bh=He3eKPcpLM8NlRJcMVptUSQGTraR+EAhSuafU6FX9i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2wKSTUnUW/BcuA2vybJJZCKXdP7u4FDHMHM9iM1dARg06Ux0QEwVcp889I0zOsDlaDuOi08+l/r2LRPHnAzVCUEB+tzEV4HPixS1RuRppHSkwKxPXlhIQFdH5n3u5CdTDSrbk26OBaLjuxX3xkRyY1efdlb+0Ykg12EP/VS85U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFejr8YZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jh5thxG18etrNZwiSYnZjfUPV33qMyoU7EjwkTMZF1dEb4PH/+nnsIJmWZGMtMFcCGZgRQVqHYCW3wJvN5VzbUxIAzwGr4SZe0GmiwDuO1vzBHV0IExQW0vYrECRhRAmN2iva90sW0Plh8y5AD49Bi2uuW8NXaVqOXcA8RwCkjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6CCtaPx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFejr8YZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BE4C113D0;
-	Tue, 11 Nov 2025 01:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6CCtaPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D59C116B1;
+	Tue, 11 Nov 2025 01:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823375;
-	bh=K4WAVLN7q5rUazgtzb+eX1PwRbikDXtH8nl2umbM/8E=;
+	s=korg; t=1762823378;
+	bh=He3eKPcpLM8NlRJcMVptUSQGTraR+EAhSuafU6FX9i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFejr8YZ7Q3s3gAW7A35+/93mAwi8FzSf7e5NrgjIL/iKM8AoaNE6celsK1+h/Tnx
-	 4Z4KQEvqfjyGXONqgYpp3VBo54Tik1F2c/RI+V4Y31ErDpCGljWRO415Q+N1Ygnef/
-	 f1wc+UI7QeNOqMa4qLRDkREkf55wy7MKwLhDMQmg=
+	b=K6CCtaPxd3/vd5/gFxAl21cfjxZ5Gj64bp8ruJkldWzF65VOpux9FeMDmEL5OHGDq
+	 pEZ3Ub4eYn5o9ZxnRe0GxCRQ1gDiZpOtbOjXHC8pl3NDT7lDgFrn8ARyNY8yztTWXz
+	 bX+Y4bezm282bTCIRNTftEenApnW0ssiEVXYUpnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Marcos Del Sol Vives <marcos@orca.pet>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 286/849] drm/bridge: cdns-dsi: Dont fail on MIPI_DSI_MODE_VIDEO_BURST
-Date: Tue, 11 Nov 2025 09:37:36 +0900
-Message-ID: <20251111004543.326722257@linuxfoundation.org>
+Subject: [PATCH 6.12 192/565] PCI: Disable MSI on RDC PCI to PCIe bridges
+Date: Tue, 11 Nov 2025 09:40:48 +0900
+Message-ID: <20251111004531.247305531@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Marcos Del Sol Vives <marcos@orca.pet>
 
-[ Upstream commit 7070f55f294745c5a3c033623b76309f3512be67 ]
+[ Upstream commit ebc7086b39e5e4f3d3ca82caaea20538c9b62d42 ]
 
-While the cdns-dsi does not support DSI burst mode, the burst mode is
-essentially DSI event mode with more versatile clocking and timings.
-Thus cdns-dsi doesn't need to fail if the DSI peripheral driver requests
-MIPI_DSI_MODE_VIDEO_BURST.
+RDC PCI to PCIe bridges, present on Vortex86DX3 and Vortex86EX2 SoCs, do
+not support MSIs. If enabled, interrupts generated by PCIe devices never
+reach the processor.
 
-In my particular use case, this allows the use of ti-sn65dsi83 driver.
+I have contacted the manufacturer (DM&P) and they confirmed that PCI MSIs
+need to be disabled for them.
 
-Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
-Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Link: https://lore.kernel.org/r/20250723-cdns-dsi-impro-v5-15-e61cc06074c2@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Marcos Del Sol Vives <marcos@orca.pet>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250705233209.721507-1-marcos@orca.pet
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/pci/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-index 9f1c460d5f0d4..0cc83bdb130fc 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -1088,10 +1088,6 @@ static int cdns_dsi_attach(struct mipi_dsi_host *host,
- 	if (output->dev)
- 		return -EBUSY;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index db609d26811ba..aa4733787cd7e 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -2719,6 +2719,7 @@ static void quirk_disable_msi(struct pci_dev *dev)
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_8131_BRIDGE, quirk_disable_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_VIA, 0xa238, quirk_disable_msi);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x5a3f, quirk_disable_msi);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_RDC, 0x1031, quirk_disable_msi);
  
--	/* We do not support burst mode yet. */
--	if (dev->mode_flags & MIPI_DSI_MODE_VIDEO_BURST)
--		return -ENOTSUPP;
--
- 	/*
- 	 * The host <-> device link might be described using an OF-graph
- 	 * representation, in this case we extract the device of_node from
+ /*
+  * The APC bridge device in AMD 780 family northbridges has some random
 -- 
 2.51.0
 
