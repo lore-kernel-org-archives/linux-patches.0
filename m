@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8535D3064AB;
-	Tue, 11 Nov 2025 01:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCAC298CDE;
+	Tue, 11 Nov 2025 01:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825552; cv=none; b=bGdO/dvHFH/LsWV8ayQhW8vPM3YWbRfcK7Zyl+EKiiQMpl2Hh1wTv0/OAP3rY617idcH6grrhRLGjqESFXvnh5eEQZJXnimsIaDiYBxEPQPijBR0vbff5kNhntqLgz4niVUrVwURr4KkqNkfUQ/R2VWLQhQexVwwaFK6Onj11gc=
+	t=1762825555; cv=none; b=SL3X+RE1diR0rWP+A6qGINYmAir7i8BaZ6kLpi4UAVoO3rKjQeWtfRhJubAicX/YBispkGae2u6whUPZWs2apbYdw1nYLXzGvw41YXYHFI1VG91SF8N3ao0sx4+Jsdnx2xmnLWztnMVbY/kGhfZV23yE+eoOF9t/d7VLaQI8++k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825552; c=relaxed/simple;
-	bh=fmGK9sTPKpu9lsf9Pv2eNZOahb9GNLPHhtVJkwq7LVE=;
+	s=arc-20240116; t=1762825555; c=relaxed/simple;
+	bh=Sh4hyQBcmIyGsCnVZRsWJXcAILxxntlZyllwpR4CyLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VrTeBoLD4MCDV//4UYDiyyuvClg76negsfYWR1SIS1svOlwzLKNOxYU+Bs9iuSBI1hBzuY6VBeDlt9tVPgWg1vOz4gzCSuGhqzkzLsHk6tGKRKZYM6SV4/rZHobdN4z4/Qi4FRsQk4/rn2X40GPl5/K4a+SIt0zkAbbu+F5oL/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIR7wjXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=keM4xyUYM/Gb1ajJWflpU6sADdj3klyn6SAVHIqkpD8iU8UlULKnw1PsgpcGo01krOD70ZzKUhWPFJhXDhMHi3LMou2MmfJWZZt6nK4w/JdcVWkBabHzlmWoDaMoo6HSBolA3FUHczU1exmZpJXBLsnj+xZKSbJxUE0pTLSA7Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZ6ArYXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIR7wjXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E59C19424;
-	Tue, 11 Nov 2025 01:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZ6ArYXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD8EC4CEFB;
+	Tue, 11 Nov 2025 01:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825552;
-	bh=fmGK9sTPKpu9lsf9Pv2eNZOahb9GNLPHhtVJkwq7LVE=;
+	s=korg; t=1762825554;
+	bh=Sh4hyQBcmIyGsCnVZRsWJXcAILxxntlZyllwpR4CyLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIR7wjXO1uppZFpvpIrDm7CualYv+cXVcym7xFmifhf8CSyW0Imdfunx8SMeUeM64
-	 0sbCBQl0jBGpyoOIiN4F2KVSRkISkUMo9vgX1rwMobfXmouagILcfoCGBw3zBBQdmx
-	 trG/5I+kFDSIw8/V1H/GYWZkDG6IrwIoKefIs2kI=
+	b=ZZ6ArYXPDFcx1MV9yerfdwlBSopUFStGts13xA4xAsxBpujOagrllZEvdLE7HC6QM
+	 ReclI+0Nd9hM274JBBdKDr+4vq4krYPABsR+4NZ+ONKu4tdlWHmawI13NjMo9uUOrW
+	 jFYKHQUQzr19TaIoF2RdfBwBFzvXXfpVlkjGIzp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.17 808/849] drm/sched: Fix deadlock in drm_sched_entity_kill_jobs_cb
-Date: Tue, 11 Nov 2025 09:46:18 +0900
-Message-ID: <20251111004555.960781175@linuxfoundation.org>
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.17 809/849] Bluetooth: MGMT: Fix OOB access in parse_adv_monitor_pattern()
+Date: Tue, 11 Nov 2025 09:46:19 +0900
+Message-ID: <20251111004555.985044226@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -46,123 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-commit 487df8b698345dd5a91346335f05170ed5f29d4e upstream.
+commit 8d59fba49362c65332395789fd82771f1028d87e upstream.
 
-The Mesa issue referenced below pointed out a possible deadlock:
+In the parse_adv_monitor_pattern() function, the value of
+the 'length' variable is currently limited to HCI_MAX_EXT_AD_LENGTH(251).
+The size of the 'value' array in the mgmt_adv_pattern structure is 31.
+If the value of 'pattern[i].length' is set in the user space
+and exceeds 31, the 'patterns[i].value' array can be accessed
+out of bound when copied.
 
-[ 1231.611031]  Possible interrupt unsafe locking scenario:
+Increasing the size of the 'value' array in
+the 'mgmt_adv_pattern' structure will break the userspace.
+Considering this, and to avoid OOB access revert the limits for 'offset'
+and 'length' back to the value of HCI_MAX_AD_LENGTH.
 
-[ 1231.611033]        CPU0                    CPU1
-[ 1231.611034]        ----                    ----
-[ 1231.611035]   lock(&xa->xa_lock#17);
-[ 1231.611038]                                local_irq_disable();
-[ 1231.611039]                                lock(&fence->lock);
-[ 1231.611041]                                lock(&xa->xa_lock#17);
-[ 1231.611044]   <Interrupt>
-[ 1231.611045]     lock(&fence->lock);
-[ 1231.611047]
-                *** DEADLOCK ***
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-In this example, CPU0 would be any function accessing job->dependencies
-through the xa_* functions that don't disable interrupts (eg:
-drm_sched_job_add_dependency(), drm_sched_entity_kill_jobs_cb()).
-
-CPU1 is executing drm_sched_entity_kill_jobs_cb() as a fence signalling
-callback so in an interrupt context. It will deadlock when trying to
-grab the xa_lock which is already held by CPU0.
-
-Replacing all xa_* usage by their xa_*_irq counterparts would fix
-this issue, but Christian pointed out another issue: dma_fence_signal
-takes fence.lock and so does dma_fence_add_callback.
-
-  dma_fence_signal() // locks f1.lock
-  -> drm_sched_entity_kill_jobs_cb()
-  -> foreach dependencies
-     -> dma_fence_add_callback() // locks f2.lock
-
-This will deadlock if f1 and f2 share the same spinlock.
-
-To fix both issues, the code iterating on dependencies and re-arming them
-is moved out to drm_sched_entity_kill_jobs_work().
-
-Cc: stable@vger.kernel.org # v6.2+
-Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
-Link: https://gitlab.freedesktop.org/mesa/mesa/-/issues/13908
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-[phasta: commit message nits]
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251104095358.15092-1-pierre-eric.pelloux-prayer@amd.com
+Fixes: db08722fc7d4 ("Bluetooth: hci_core: Fix missing instances using HCI_MAX_AD_LENGTH")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   34 +++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ include/net/bluetooth/mgmt.h |    2 +-
+ net/bluetooth/mgmt.c         |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -173,26 +173,15 @@ int drm_sched_entity_error(struct drm_sc
- }
- EXPORT_SYMBOL(drm_sched_entity_error);
+--- a/include/net/bluetooth/mgmt.h
++++ b/include/net/bluetooth/mgmt.h
+@@ -775,7 +775,7 @@ struct mgmt_adv_pattern {
+ 	__u8 ad_type;
+ 	__u8 offset;
+ 	__u8 length;
+-	__u8 value[31];
++	__u8 value[HCI_MAX_AD_LENGTH];
+ } __packed;
  
-+static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
-+					  struct dma_fence_cb *cb);
-+
- static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
- {
- 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
--
--	drm_sched_fence_scheduled(job->s_fence, NULL);
--	drm_sched_fence_finished(job->s_fence, -ESRCH);
--	WARN_ON(job->s_fence->parent);
--	job->sched->ops->free_job(job);
--}
--
--/* Signal the scheduler finished fence when the entity in question is killed. */
--static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
--					  struct dma_fence_cb *cb)
--{
--	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
--						 finish_cb);
-+	struct dma_fence *f;
- 	unsigned long index;
+ #define MGMT_OP_ADD_ADV_PATTERNS_MONITOR	0x0052
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5395,9 +5395,9 @@ static u8 parse_adv_monitor_pattern(stru
+ 	for (i = 0; i < pattern_count; i++) {
+ 		offset = patterns[i].offset;
+ 		length = patterns[i].length;
+-		if (offset >= HCI_MAX_EXT_AD_LENGTH ||
+-		    length > HCI_MAX_EXT_AD_LENGTH ||
+-		    (offset + length) > HCI_MAX_EXT_AD_LENGTH)
++		if (offset >= HCI_MAX_AD_LENGTH ||
++		    length > HCI_MAX_AD_LENGTH ||
++		    (offset + length) > HCI_MAX_AD_LENGTH)
+ 			return MGMT_STATUS_INVALID_PARAMS;
  
--	dma_fence_put(f);
--
- 	/* Wait for all dependencies to avoid data corruptions */
- 	xa_for_each(&job->dependencies, index, f) {
- 		struct drm_sched_fence *s_fence = to_drm_sched_fence(f);
-@@ -220,6 +209,21 @@ static void drm_sched_entity_kill_jobs_c
- 		dma_fence_put(f);
- 	}
- 
-+	drm_sched_fence_scheduled(job->s_fence, NULL);
-+	drm_sched_fence_finished(job->s_fence, -ESRCH);
-+	WARN_ON(job->s_fence->parent);
-+	job->sched->ops->free_job(job);
-+}
-+
-+/* Signal the scheduler finished fence when the entity in question is killed. */
-+static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
-+					  struct dma_fence_cb *cb)
-+{
-+	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
-+						 finish_cb);
-+
-+	dma_fence_put(f);
-+
- 	INIT_WORK(&job->work, drm_sched_entity_kill_jobs_work);
- 	schedule_work(&job->work);
- }
+ 		p = kmalloc(sizeof(*p), GFP_KERNEL);
 
 
