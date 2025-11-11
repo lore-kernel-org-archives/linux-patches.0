@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B62214210;
-	Tue, 11 Nov 2025 00:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809DF4086A;
+	Tue, 11 Nov 2025 00:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822381; cv=none; b=tgm+jPZGlryqLGlw/xzlELnPa4FCHQ9IA2bh4A8MnsmGkr0z7QE/D2MsoC5wgWGyiW4TTYT0H55ySBuzmQUbceh6syNO2JQeJq3wuoxg/2yNsH2dSJmhudfRbcTdUlnj2Q4E2A77euJ4zPcpDizPYr9QkRRfZvzSlFpzVDzRlW0=
+	t=1762822383; cv=none; b=mBgwMzDwv/u9qieq8G6D6mxSm2MDA7NeWvX4Bm1oqdqC3adnu8bl3T4tY2+2w4ynw3ilaZkUgxLFg6fnlG2pCkT/OcMtpNJikvz8aaBCNtxkx9mKNcUG81oY1VT7RdaWwsTkYjnC6XBrHQbJ0cgcfVqdnshr0iEZM45gkqiel60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822381; c=relaxed/simple;
-	bh=MULBda9FXiu8hpGZPpEbREbRYW6BtbIUwrgj2FfaN30=;
+	s=arc-20240116; t=1762822383; c=relaxed/simple;
+	bh=+ozxxLSJzG5IkB6U4KotJ3bYmLGmJ2lOm3vZoRKOVnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7c/ViWZytEy38SYjJAKZMyc+UbTpzdXaL2Sa4HoKpE0dSIxhN70INSNwpE3XphIgORWCd7lr02C+TtKZymQT5a9uXjI32Rr1gbMXwlP+ztZEP0+GAB/mmGclUkS4nbWbU+P00CiockOL1lJS+EIEvigBbz1BiH90VO57seL5Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8BbjFmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTysCZ/B8T9vOKqzuKP+yFUHqZEQ2nlgvYZMwxxyzdR5rooW8kDfiU+SeSJJXb7o/B+MOeVD9SkS+46D+r96sqbCckYAedbvc6GYYC3lfJYbOYmhcZoH5Xa8bWWMWdrbd9a8cg/U4MI1EpUwPhap1dUXbjXW+8QOkTkqVvpuars=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4iSWdfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8BbjFmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC67AC16AAE;
-	Tue, 11 Nov 2025 00:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4iSWdfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F247C4CEFB;
+	Tue, 11 Nov 2025 00:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822381;
-	bh=MULBda9FXiu8hpGZPpEbREbRYW6BtbIUwrgj2FfaN30=;
+	s=korg; t=1762822383;
+	bh=+ozxxLSJzG5IkB6U4KotJ3bYmLGmJ2lOm3vZoRKOVnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8BbjFmzUcEh3Bs9NRUwXAF2pKZa4zR5sHr34lkZNH4pcb1H+bo3AFGxPwVqE9Nro
-	 D1t2wDv3BcsIGM/TqpluNLFdM98aipbxYwtOeWIsYSf10NG38BrEBhVBKiSw5MsVdR
-	 y5Dcop2XS5lAOdmIQ39CEf07NXQJciUXRHA7Hwyc=
+	b=s4iSWdfnQJcch7EIHiMhKhg5mAkf7GzL8Xi18vz5WPTXNrUDahQGlrefr6wy6EmE8
+	 EXeohSVIByhiXKRIY7JqLNkHqBuVURXkA71XP8IPvy7n6Dh3bOe9v/hvYF/YHTOKen
+	 d1RewtCzWQHkypvdmXL/77viEkwt+a1SshcLGhO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.17 097/849] s390/mm: Fix memory leak in add_marker() when kvrealloc() fails
-Date: Tue, 11 Nov 2025 09:34:27 +0900
-Message-ID: <20251111004538.753043770@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 039/565] libbpf: Fix powerpcs stack register definition in bpf_tracing.h
+Date: Tue, 11 Nov 2025 09:38:15 +0900
+Message-ID: <20251111004527.776182381@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 07ad45e06b4039adf96882aefcb1d3299fb7c305 upstream.
+[ Upstream commit 7221b9caf84b3294688228a19273d74ea19a2ee4 ]
 
-The function has a memory leak when kvrealloc() fails.
-The function directly assigns NULL to the markers pointer, losing the
-reference to the previously allocated memory. This causes kvfree() in
-pt_dump_init() to free NULL instead of the leaked memory.
+retsnoop's build on powerpc (ppc64le) architecture ([0]) failed due to
+wrong definition of PT_REGS_SP() macro. Looking at powerpc's
+implementation of stack unwinding in perf_callchain_user_64() clearly
+shows that stack pointer register is gpr[1].
 
-Fix by:
-1. Using kvrealloc() uniformly for all allocations
-2. Using a temporary variable to preserve the original pointer until
-   allocation succeeds
-3. Removing the error path that sets markers_cnt=0 to keep
-   consistency between markers and markers_cnt
+Fix libbpf's definition of __PT_SP_REG for powerpc to fix all this.
 
-Found via static analysis and this is similar to commit 42378a9ca553
-("bpf, verifier: Fix memory leak in array reallocation for stack state")
+  [0] https://kojipkgs.fedoraproject.org/work/tasks/1544/137921544/build.log
 
-Fixes: d0e7915d2ad3 ("s390/mm/ptdump: Generate address marker array dynamically")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 138d6153a139 ("samples/bpf: Enable powerpc support")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/20251020203643.989467-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/dump_pagetables.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ tools/lib/bpf/bpf_tracing.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -291,16 +291,14 @@ static int ptdump_cmp(const void *a, con
+diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
+index a8f6cd4841b03..dbe32a5d02cd7 100644
+--- a/tools/lib/bpf/bpf_tracing.h
++++ b/tools/lib/bpf/bpf_tracing.h
+@@ -311,7 +311,7 @@ struct pt_regs___arm64 {
+ #define __PT_RET_REG regs[31]
+ #define __PT_FP_REG __unsupported__
+ #define __PT_RC_REG gpr[3]
+-#define __PT_SP_REG sp
++#define __PT_SP_REG gpr[1]
+ #define __PT_IP_REG nip
  
- static int add_marker(unsigned long start, unsigned long end, const char *name)
- {
--	size_t oldsize, newsize;
-+	struct addr_marker *new;
-+	size_t newsize;
- 
--	oldsize = markers_cnt * sizeof(*markers);
--	newsize = oldsize + 2 * sizeof(*markers);
--	if (!oldsize)
--		markers = kvmalloc(newsize, GFP_KERNEL);
--	else
--		markers = kvrealloc(markers, newsize, GFP_KERNEL);
--	if (!markers)
--		goto error;
-+	newsize = (markers_cnt + 2) * sizeof(*markers);
-+	new = kvrealloc(markers, newsize, GFP_KERNEL);
-+	if (!new)
-+		return -ENOMEM;
-+	markers = new;
- 	markers[markers_cnt].is_start = 1;
- 	markers[markers_cnt].start_address = start;
- 	markers[markers_cnt].size = end - start;
-@@ -312,9 +310,6 @@ static int add_marker(unsigned long star
- 	markers[markers_cnt].name = name;
- 	markers_cnt++;
- 	return 0;
--error:
--	markers_cnt = 0;
--	return -ENOMEM;
- }
- 
- static int pt_dump_init(void)
+ #elif defined(bpf_target_sparc)
+-- 
+2.51.0
+
 
 
