@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2189D2BE7B8;
-	Tue, 11 Nov 2025 01:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650452BE7B8;
+	Tue, 11 Nov 2025 01:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824902; cv=none; b=omC/XzYxmC2WYdb3K1esZFOzY6dNWECm1HA8iYn56r2h2qwm15g4izeC+q6ap0DJT41Ul0lR0Zy6bHMa7kzr6LZ4aFTvQ1msOVaIO8OLVa4QD+dy9VTalVNf5IYzP0katZERgESV/xNsQiFgC9aJeyXCSUPfUpWx+lBqO42eYJw=
+	t=1762824904; cv=none; b=QeminNBWgac8+f81IylV8RWYq0AS/W7R6M00/FbT2wWH8Iy1QvcUVxahn2ZXTBQr8yrjQeD0/DPfF03ZahoamjU/zUT7UdnCy8solD0pJcLcsmC0EUr3XZFpV8942XZSlzTwqA1UU4Gflk7/YRBq4YiRUowMHCJ11RieN/oKdeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824902; c=relaxed/simple;
-	bh=A3Wbc1lHIKVxJfLyM4YDp7ATYOVOY7MiN7ayuNJEZiM=;
+	s=arc-20240116; t=1762824904; c=relaxed/simple;
+	bh=vxMEefYS6s6wdiorTMsU9JjdLaMqW+rFlbaIR0DKgA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2rOrAYMao7SFtU0+/zw/yBf9mHiprnWBDNFYJilmeLsk7LeYLD05btyGn9Gay7G10YgXoZjW5hZgMm/6y49aJFKxKbXvpLCXD4tEhF8PNqhzIfNtmVukaS1XCuUkGnNQq7orfXp7CsyxM81Me/JKQLW4yf/X8QzmexSvVhaUYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN99hwV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=arADdtTzIGOMdqSerqirr0AUhvtGfEGQ/dpmIl547SxdF99fp8pMmEMRrpn9ZdcmoImWJ9QtGBfrgX+bBpLWAryVslzxLCuvjlNu8skQxt1ZKD7suJJz6tLcLCT/agOIfRZMUZsKURVUhDrffl3YzaCeZjYMlZqrKCQYP2ErivQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhFJhfCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN99hwV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B520BC16AAE;
-	Tue, 11 Nov 2025 01:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhFJhfCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2837C116D0;
+	Tue, 11 Nov 2025 01:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824902;
-	bh=A3Wbc1lHIKVxJfLyM4YDp7ATYOVOY7MiN7ayuNJEZiM=;
+	s=korg; t=1762824904;
+	bh=vxMEefYS6s6wdiorTMsU9JjdLaMqW+rFlbaIR0DKgA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EN99hwV2woBfYDiO7T8tprFrx1JPjd9o7gTPSZmOacrR0UvHvQUZ6uSwylUDyWa5O
-	 gyQWSqXYxVQbRYl4M/Pd8aZJGnBJln2AiJqIjsi91OnuV48RLtf8/wEJLCOP9Re4Hm
-	 3xpjS8zHQbkbsQfhbzFYiUDeYNGUQQ7d3PV3QPPI=
+	b=UhFJhfCGnyv8RRKttMVQPTAbDX3fVp55i/VhIsUsnXleXJMpQRccJ26KBqhsBR9Sq
+	 I0JagDfxPpsRABUopXyHBQgv1+UF1MVmZTCQdSNq4N69k3EXgoO9hI4cYtY3WxV4le
+	 WkHycaMOfcg0j+ONSFUjUHIWNamrjnqmWKbxFJM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 547/565] parisc: Avoid crash due to unaligned access in unwinder
-Date: Tue, 11 Nov 2025 09:46:43 +0900
-Message-ID: <20251111004539.300134028@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 595/849] net: phy: clear link parameters on admin link down
+Date: Tue, 11 Nov 2025 09:42:45 +0900
+Message-ID: <20251111004550.806945427@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,98 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit fd9f30d1038ee1624baa17a6ff11effe5f7617cb upstream.
+[ Upstream commit 60f887b1290b43a4f5a3497982a725687b193fa4 ]
 
-Guenter Roeck reported this kernel crash on his emulated B160L machine:
+When a PHY is halted (e.g. `ip link set dev lan2 down`), several
+fields in struct phy_device may still reflect the last active
+connection. This leads to ethtool showing stale values even though
+the link is down.
 
-Starting network: udhcpc: started, v1.36.1
- Backtrace:
-  [<104320d4>] unwind_once+0x1c/0x5c
-  [<10434a00>] walk_stackframe.isra.0+0x74/0xb8
-  [<10434a6c>] arch_stack_walk+0x28/0x38
-  [<104e5efc>] stack_trace_save+0x48/0x5c
-  [<105d1bdc>] set_track_prepare+0x44/0x6c
-  [<105d9c80>] ___slab_alloc+0xfc4/0x1024
-  [<105d9d38>] __slab_alloc.isra.0+0x58/0x90
-  [<105dc80c>] kmem_cache_alloc_noprof+0x2ac/0x4a0
-  [<105b8e54>] __anon_vma_prepare+0x60/0x280
-  [<105a823c>] __vmf_anon_prepare+0x68/0x94
-  [<105a8b34>] do_wp_page+0x8cc/0xf10
-  [<105aad88>] handle_mm_fault+0x6c0/0xf08
-  [<10425568>] do_page_fault+0x110/0x440
-  [<10427938>] handle_interruption+0x184/0x748
-  [<11178398>] schedule+0x4c/0x190
-  BUG: spinlock recursion on CPU#0, ifconfig/2420
-  lock: terminate_lock.2+0x0/0x1c, .magic: dead4ead, .owner: ifconfig/2420, .owner_cpu: 0
+Reset selected fields in _phy_state_machine() when transitioning
+to PHY_HALTED and the link was previously up:
 
-While creating the stack trace, the unwinder uses the stack pointer to guess
-the previous frame to read the previous stack pointer from memory.  The crash
-happens, because the unwinder tries to read from unaligned memory and as such
-triggers the unalignment trap handler which then leads to the spinlock
-recursion and finally to a deadlock.
+- speed/duplex -> UNKNOWN, but only in autoneg mode (in forced mode
+  these fields carry configuration, not status)
+- master_slave_state -> UNKNOWN if previously supported
+- mdix -> INVALID (state only, same meaning as "unknown")
+- lp_advertising -> always cleared
 
-Fix it by checking the alignment before accessing the memory.
+The cleanup is skipped if the PHY is in PHY_ERROR state, so the
+last values remain available for diagnostics.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250917094751.2101285-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/unwind.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/phy/phy.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/parisc/kernel/unwind.c b/arch/parisc/kernel/unwind.c
-index f7e0fee5ee55..7ac88ff13d3c 100644
---- a/arch/parisc/kernel/unwind.c
-+++ b/arch/parisc/kernel/unwind.c
-@@ -35,6 +35,8 @@
- 
- #define KERNEL_START (KERNEL_BINARY_TEXT_START)
- 
-+#define ALIGNMENT_OK(ptr, type) (((ptr) & (sizeof(type) - 1)) == 0)
-+
- extern struct unwind_table_entry __start___unwind[];
- extern struct unwind_table_entry __stop___unwind[];
- 
-@@ -257,12 +259,15 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
- 	if (pc_is_kernel_fn(pc, _switch_to) ||
- 	    pc == (unsigned long)&_switch_to_ret) {
- 		info->prev_sp = info->sp - CALLEE_SAVE_FRAME_SIZE;
--		info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
-+		if (ALIGNMENT_OK(info->prev_sp, long))
-+			info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
-+		else
-+			info->prev_ip = info->prev_sp = 0;
- 		return 1;
- 	}
- 
- #ifdef CONFIG_IRQSTACKS
--	if (pc == (unsigned long)&_call_on_stack) {
-+	if (pc == (unsigned long)&_call_on_stack && ALIGNMENT_OK(info->sp, long)) {
- 		info->prev_sp = *(unsigned long *)(info->sp - FRAME_SIZE - REG_SZ);
- 		info->prev_ip = *(unsigned long *)(info->sp - FRAME_SIZE - RP_OFFSET);
- 		return 1;
-@@ -370,8 +375,10 @@ static void unwind_frame_regs(struct unwind_frame_info *info)
- 			info->prev_sp = info->sp - frame_size;
- 			if (e->Millicode)
- 				info->rp = info->r31;
--			else if (rpoffset)
-+			else if (rpoffset && ALIGNMENT_OK(info->prev_sp, long))
- 				info->rp = *(unsigned long *)(info->prev_sp - rpoffset);
-+			else
-+				info->rp = 0;
- 			info->prev_ip = info->rp;
- 			info->rp = 0;
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index e046dd858f151..02da4a203ddd4 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -1548,6 +1548,19 @@ static enum phy_state_work _phy_state_machine(struct phy_device *phydev)
  		}
+ 		break;
+ 	case PHY_HALTED:
++		if (phydev->link) {
++			if (phydev->autoneg == AUTONEG_ENABLE) {
++				phydev->speed = SPEED_UNKNOWN;
++				phydev->duplex = DUPLEX_UNKNOWN;
++			}
++			if (phydev->master_slave_state !=
++						MASTER_SLAVE_STATE_UNSUPPORTED)
++				phydev->master_slave_state =
++						MASTER_SLAVE_STATE_UNKNOWN;
++			phydev->mdix = ETH_TP_MDI_INVALID;
++			linkmode_zero(phydev->lp_advertising);
++		}
++		fallthrough;
+ 	case PHY_ERROR:
+ 		if (phydev->link) {
+ 			phydev->link = 0;
 -- 
-2.51.2
+2.51.0
 
 
 
