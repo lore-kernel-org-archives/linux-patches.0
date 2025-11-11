@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724E72701D1;
-	Tue, 11 Nov 2025 01:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0152701D1;
+	Tue, 11 Nov 2025 01:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823364; cv=none; b=msIwKiCuXaQLKx7SPIkwdMv1Gu1pQewb6E9NIkdKCi831IrnA3a31nWOTF68JUM8BOyzGotCygdZItztaMXQERW4nbsFOoQfBhdZ5VaeCgNJL2hFLYnsY+w8+ruODgDNsDIsGI2sUs4pFcLVFHEWgeVK3jraiGZVmjEUtR0udc8=
+	t=1762823366; cv=none; b=LeaJA07WEdNu+3Nh3+vK6Rf5WJGZrRSDLxRZvCQyuZ4GvL0XvXWSK8jjCx4AyjA8Gfqa2Auw7Y+DFMaKUyq9p7OtKGJZvumTzMTFHT8rLjwsVsXCyv80cmGVrUc9t99hrQsCzpasSCAWa23MJcYqZyeY3yVfIR355sAOAnS62s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823364; c=relaxed/simple;
-	bh=JcvVAHFfnpb2IlJc7jBjSyh7wuMWBEtG2ujTrBcSe2U=;
+	s=arc-20240116; t=1762823366; c=relaxed/simple;
+	bh=bp/SWDKgqEM3bWxtajt/MMHC0W6vofcgyTr4zsvTpVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7fDwJF2zkvCTotn3CsTzgGxRyQXppdYrNVRiwSFoHSzHCGnBwBWnTaH25j+ybIkh2Q8MUe1//HWoHLN30PzRLar1ZFV7mrkArvsfQIduoG+KndZ/WM0bkzVwyh5uYkkYONf44JV97e87JRSADJQgHQPQnYErZb7nJk8mR1HzTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXnURVWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKYZ4J5dsaFPlBpjhWHkHKd3FZLYx2obWewqYARUoIAV+/G5QT6gGCEOoAO8MCkTruWx03xrxSc5N2/rYjSPhmS44motk2os0obNSv5XE//yzSn2h0K6kWbsP4MZtTzMy+aoC8ZovVvEwqZvTqJ2vY5ux0t/lMdRYOmUmjWnhhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/amaeRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXnURVWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FF2C19421;
-	Tue, 11 Nov 2025 01:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/amaeRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7F5C2BCAF;
+	Tue, 11 Nov 2025 01:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823364;
-	bh=JcvVAHFfnpb2IlJc7jBjSyh7wuMWBEtG2ujTrBcSe2U=;
+	s=korg; t=1762823366;
+	bh=bp/SWDKgqEM3bWxtajt/MMHC0W6vofcgyTr4zsvTpVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXnURVWiRbgNQh2HpeyvKgVElmV7lsAIqAIywg7/85U8Bo66+IrQ0Jrmuu7GmwZX9
-	 I/fZ3VWblKKDjqa4JxRouh9FuT+c0/IxyWtKfyDoPDzNrNzpB943SEJmak6F7zQTM6
-	 BH+tEBaR12RH0dM7CJ/6ZRxOrkTgundo/Oi7bbms=
+	b=h/amaeRvwuY3ESjKF9inuafNgu7r6NNwj4FrceyuHdW+T+FaoR45Pazy6/SJ4Wim1
+	 S+lQdEqv17rrAWqOGQKSgSPYns/KUkd84bNEDFs54DXhdnczqlaiTDGDUj23QPu1qA
+	 F5eVym2RidyiKFgZiKmkut0DO6smOUxtIxmqZAgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiang Liu <gerry@linux.alibaba.com>,
-	Meng Li <li.meng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Parth Pancholi <parth.pancholi@toradex.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 248/849] drm/amd/amdgpu: Release xcp drm memory after unplug
-Date: Tue, 11 Nov 2025 09:36:58 +0900
-Message-ID: <20251111004542.428545210@linuxfoundation.org>
+Subject: [PATCH 6.17 284/849] drm/tidss: Use the crtc_* timings when programming the HW
+Date: Tue, 11 Nov 2025 09:37:34 +0900
+Message-ID: <20251111004543.282532059@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -53,145 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meng Li <li.meng@amd.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit e6c2b0f23221ed43c4cc6f636e9ab7862954d562 ]
+[ Upstream commit 478306edc23eec4f0ec24a46222485910c66212d ]
 
-Add a new API amdgpu_xcp_drm_dev_free().
-After unplug xcp device, need to release xcp drm memory etc.
+Use the crtc_* fields from drm_display_mode, instead of the "logical"
+fields. This shouldn't change anything in practice, but afaiu the crtc_*
+fields are the correct ones to use here.
 
-Co-developed-by: Jiang Liu <gerry@linux.alibaba.com>
-Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
-Signed-off-by: Meng Li <li.meng@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Tested-by: Parth Pancholi <parth.pancholi@toradex.com>
+Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Link: https://lore.kernel.org/r/20250723-cdns-dsi-impro-v5-3-e61cc06074c2@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c     |  1 +
- drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c | 56 +++++++++++++++++----
- drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h |  1 +
- 3 files changed, 49 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c  |  2 +-
+ drivers/gpu/drm/tidss/tidss_dispc.c | 16 ++++++++--------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-index c417f86892207..699acc1b46b59 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xcp.c
-@@ -406,6 +406,7 @@ void amdgpu_xcp_dev_unplug(struct amdgpu_device *adev)
- 		p_ddev->primary->dev = adev->xcp_mgr->xcp[i].pdev;
- 		p_ddev->driver =  adev->xcp_mgr->xcp[i].driver;
- 		p_ddev->vma_offset_manager = adev->xcp_mgr->xcp[i].vma_offset_manager;
-+		amdgpu_xcp_drm_dev_free(p_ddev);
- 	}
+diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
+index a2f40a5c77030..17efd77ce7f23 100644
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -225,7 +225,7 @@ static void tidss_crtc_atomic_enable(struct drm_crtc *crtc,
+ 	tidss_runtime_get(tidss);
+ 
+ 	r = dispc_vp_set_clk_rate(tidss->dispc, tcrtc->hw_videoport,
+-				  mode->clock * 1000);
++				  mode->crtc_clock * 1000);
+ 	if (r != 0)
+ 		return;
+ 
+diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+index c0277fa36425e..3f6cff2ab1b29 100644
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -1215,13 +1215,13 @@ void dispc_vp_enable(struct dispc_device *dispc, u32 hw_videoport,
+ 
+ 	dispc_set_num_datalines(dispc, hw_videoport, fmt->data_width);
+ 
+-	hfp = mode->hsync_start - mode->hdisplay;
+-	hsw = mode->hsync_end - mode->hsync_start;
+-	hbp = mode->htotal - mode->hsync_end;
++	hfp = mode->crtc_hsync_start - mode->crtc_hdisplay;
++	hsw = mode->crtc_hsync_end - mode->crtc_hsync_start;
++	hbp = mode->crtc_htotal - mode->crtc_hsync_end;
+ 
+-	vfp = mode->vsync_start - mode->vdisplay;
+-	vsw = mode->vsync_end - mode->vsync_start;
+-	vbp = mode->vtotal - mode->vsync_end;
++	vfp = mode->crtc_vsync_start - mode->crtc_vdisplay;
++	vsw = mode->crtc_vsync_end - mode->crtc_vsync_start;
++	vbp = mode->crtc_vtotal - mode->crtc_vsync_end;
+ 
+ 	dispc_vp_write(dispc, hw_videoport, DISPC_VP_TIMING_H,
+ 		       FLD_VAL(hsw - 1, 7, 0) |
+@@ -1263,8 +1263,8 @@ void dispc_vp_enable(struct dispc_device *dispc, u32 hw_videoport,
+ 		       FLD_VAL(ivs, 12, 12));
+ 
+ 	dispc_vp_write(dispc, hw_videoport, DISPC_VP_SIZE_SCREEN,
+-		       FLD_VAL(mode->hdisplay - 1, 11, 0) |
+-		       FLD_VAL(mode->vdisplay - 1, 27, 16));
++		       FLD_VAL(mode->crtc_hdisplay - 1, 11, 0) |
++		       FLD_VAL(mode->crtc_vdisplay - 1, 27, 16));
+ 
+ 	VP_REG_FLD_MOD(dispc, hw_videoport, DISPC_VP_CONTROL, 1, 0, 0);
  }
- 
-diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-index 8bc36f04b1b71..44009aa8216ed 100644
---- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-+++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.c
-@@ -46,18 +46,29 @@ static const struct drm_driver amdgpu_xcp_driver = {
- 
- static int8_t pdev_num;
- static struct xcp_device *xcp_dev[MAX_XCP_PLATFORM_DEVICE];
-+static DEFINE_MUTEX(xcp_mutex);
- 
- int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- {
- 	struct platform_device *pdev;
- 	struct xcp_device *pxcp_dev;
- 	char dev_name[20];
--	int ret;
-+	int ret, i;
-+
-+	guard(mutex)(&xcp_mutex);
- 
- 	if (pdev_num >= MAX_XCP_PLATFORM_DEVICE)
- 		return -ENODEV;
- 
--	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", pdev_num);
-+	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		if (!xcp_dev[i])
-+			break;
-+	}
-+
-+	if (i >= MAX_XCP_PLATFORM_DEVICE)
-+		return -ENODEV;
-+
-+	snprintf(dev_name, sizeof(dev_name), "amdgpu_xcp_%d", i);
- 	pdev = platform_device_register_simple(dev_name, -1, NULL, 0);
- 	if (IS_ERR(pdev))
- 		return PTR_ERR(pdev);
-@@ -73,8 +84,8 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- 		goto out_devres;
- 	}
- 
--	xcp_dev[pdev_num] = pxcp_dev;
--	xcp_dev[pdev_num]->pdev = pdev;
-+	xcp_dev[i] = pxcp_dev;
-+	xcp_dev[i]->pdev = pdev;
- 	*ddev = &pxcp_dev->drm;
- 	pdev_num++;
- 
-@@ -89,16 +100,43 @@ int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev)
- }
- EXPORT_SYMBOL(amdgpu_xcp_drm_dev_alloc);
- 
--void amdgpu_xcp_drv_release(void)
-+static void free_xcp_dev(int8_t index)
- {
--	for (--pdev_num; pdev_num >= 0; --pdev_num) {
--		struct platform_device *pdev = xcp_dev[pdev_num]->pdev;
-+	if ((index < MAX_XCP_PLATFORM_DEVICE) && (xcp_dev[index])) {
-+		struct platform_device *pdev = xcp_dev[index]->pdev;
- 
- 		devres_release_group(&pdev->dev, NULL);
- 		platform_device_unregister(pdev);
--		xcp_dev[pdev_num] = NULL;
-+
-+		xcp_dev[index] = NULL;
-+		pdev_num--;
-+	}
-+}
-+
-+void amdgpu_xcp_drm_dev_free(struct drm_device *ddev)
-+{
-+	int8_t i;
-+
-+	guard(mutex)(&xcp_mutex);
-+
-+	for (i = 0; i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		if ((xcp_dev[i]) && (&xcp_dev[i]->drm == ddev)) {
-+			free_xcp_dev(i);
-+			break;
-+		}
-+	}
-+}
-+EXPORT_SYMBOL(amdgpu_xcp_drm_dev_free);
-+
-+void amdgpu_xcp_drv_release(void)
-+{
-+	int8_t i;
-+
-+	guard(mutex)(&xcp_mutex);
-+
-+	for (i = 0; pdev_num && i < MAX_XCP_PLATFORM_DEVICE; i++) {
-+		free_xcp_dev(i);
- 	}
--	pdev_num = 0;
- }
- EXPORT_SYMBOL(amdgpu_xcp_drv_release);
- 
-diff --git a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-index c1c4b679bf95c..580a1602c8e36 100644
---- a/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-+++ b/drivers/gpu/drm/amd/amdxcp/amdgpu_xcp_drv.h
-@@ -25,5 +25,6 @@
- #define _AMDGPU_XCP_DRV_H_
- 
- int amdgpu_xcp_drm_dev_alloc(struct drm_device **ddev);
-+void amdgpu_xcp_drm_dev_free(struct drm_device *ddev);
- void amdgpu_xcp_drv_release(void);
- #endif /* _AMDGPU_XCP_DRV_H_ */
 -- 
 2.51.0
 
