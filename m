@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D40311C33;
-	Tue, 11 Nov 2025 01:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCB132B9BE;
+	Tue, 11 Nov 2025 01:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824916; cv=none; b=i1Su4x41w2UNo93Jcz4oViUC/sdDwoICzSojUDmmBGaO5lShZbIkbamzcm/GlN7mFDNucCb6R+2JvdQlgA6SqQIsEGhMcttN6WeffDWjV08pS9h7QHmquNY+Ae6ky9hzyUaOWUae1Y52N6zjVUp3ioDlCUzJqxuqj7bU05x4P2w=
+	t=1762824919; cv=none; b=gVpen3hzqLsYmA+thR563Np9WCEYMGIe5P2AtrZhMU+tXFJb04CbnXNPGcPx2KhnKKrMrskKdXMVWbvPez8O1aeX+FyRQTvfQsjjEdv7nEwAj2SqfVrUyWEIk438Orf+69rhByDWIlkR36OoR4IHjaeYTY9M/5DuZLcZxycE/wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824916; c=relaxed/simple;
-	bh=67rD1WXet/MTv2EgzIFEMWxXf5y9LtaRC8VpJP0LlT8=;
+	s=arc-20240116; t=1762824919; c=relaxed/simple;
+	bh=xKaCIQ5e9vMnmtBer83FkHqDDfPITv+mBgEEpuKzI8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHhUIRK2jQEHIC5DzmYbP1wg5Jv6KAjbAPPnYAfOXmTAxhv26Yg4XkK15MTd0jRQWP7tGQN46KIlO17MaQ6rHelfoPD35/6+yoex/Wk8J8CPbLJ/5X3mj+kDlqRjI4f2VFMUWqYCuTGfqEQpTwhPIImvCmIB5m0nz0pUlowmYnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHJKlAyo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPMcZgNsM4m4rpEkNbsEV9FYSQ4T9TTeu0vo4n9Zsjpp7E+T1szfwNZiFGhvYzX2goLt5jFd5VC/Ws2H4WvLuk+yhjMzOqF+vKjpl6nZlFLUDFNOXVCAy5xwPEdup5xk01GdJl+hdME9dddVzhQJNLsQeVN1cIQeerQ/tE4VHiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0e9T30s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHJKlAyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACD3C4CEFB;
-	Tue, 11 Nov 2025 01:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0e9T30s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9F8C19422;
+	Tue, 11 Nov 2025 01:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824916;
-	bh=67rD1WXet/MTv2EgzIFEMWxXf5y9LtaRC8VpJP0LlT8=;
+	s=korg; t=1762824918;
+	bh=xKaCIQ5e9vMnmtBer83FkHqDDfPITv+mBgEEpuKzI8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHJKlAyoTrpP2sHiJ2h6mLE20F+CRlyjinEhCBjYRhgn4EN4lLJrt/xB6lbkSshQ8
-	 ZIDXimdKR18bRTeLEoKdx5JPVfKSZYlDWwXiBydVuri7Qtio2wyhpDPpSnLR2Xo7qM
-	 pwtV7cNIOM0MA52uA9IM7/cvtTFKGAD5DgUV0e+I=
+	b=T0e9T30sma5qY27FwYKnZFp3Bqg2UdJSgNWqcwC1BSYqGUzyj1ShuHRfKuQA4QFHB
+	 JigLf2nnGGppIhCNQGcOR58A/5A9/xWov3Eqjkm7a8oVs17uHuhp5H0YfTzoJK6XAK
+	 IO3RCxk8YVp43hsd85IK6wXHMlcoqlielGpiVbEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vivek Pernamitta <quic_vpernami@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 597/849] bus: mhi: core: Improve mhi_sync_power_up handling for SYS_ERR state
-Date: Tue, 11 Nov 2025 09:42:47 +0900
-Message-ID: <20251111004550.853909406@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 550/565] smb: client: validate change notify buffer before copy
+Date: Tue, 11 Nov 2025 09:46:46 +0900
+Message-ID: <20251111004539.368888921@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-[ Upstream commit aa1a0e93ed21a06acb7ca9d4a4a9fce75ea53d0c ]
+commit 4012abe8a78fbb8869634130024266eaef7081fe upstream.
 
-Allow mhi_sync_power_up to handle SYS_ERR during power-up, reboot,
-or recovery. This is to avoid premature exit when MHI_PM_IN_ERROR_STATE is
-observed during above mentioned system states.
+SMB2_change_notify called smb2_validate_iov() but ignored the return
+code, then kmemdup()ed using server provided OutputBufferOffset/Length.
 
-To achieve this, treat SYS_ERR as a valid state and let its handler process
-the error and queue the next transition to Mission Mode instead of aborting
-early.
+Check the return of smb2_validate_iov() and bail out on error.
 
-Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250912-uevent_vdev_next-20250911-v4-5-fa2f6ccd301b@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Discovered with help from the ZeroPath security tooling.
+
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: stable@vger.kernel.org
+Fixes: e3e9463414f61 ("smb3: improve SMB3 change notification support")
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/internal.h | 2 ++
- drivers/bus/mhi/host/pm.c       | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2pdu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 034be33565b78..9f815cfac763e 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -170,6 +170,8 @@ enum mhi_pm_state {
- 							MHI_PM_IN_ERROR_STATE(pm_state))
- #define MHI_PM_IN_SUSPEND_STATE(pm_state)		(pm_state & \
- 							(MHI_PM_M3_ENTER | MHI_PM_M3))
-+#define MHI_PM_FATAL_ERROR(pm_state)			((pm_state == MHI_PM_FW_DL_ERR) || \
-+							(pm_state >= MHI_PM_SYS_ERR_FAIL))
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4074,9 +4074,12 @@ replay_again:
  
- #define NR_OF_CMD_RINGS					1
- #define CMD_EL_PER_RING					128
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 33d92bf2fc3ed..31b20c07de9ee 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -1279,7 +1279,7 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
- 		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
- 	wait_event_timeout(mhi_cntrl->state_event,
- 			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
--			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-+			   MHI_PM_FATAL_ERROR(mhi_cntrl->pm_state),
- 			   msecs_to_jiffies(timeout_ms));
+ 		smb_rsp = (struct smb2_change_notify_rsp *)rsp_iov.iov_base;
  
- 	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
--- 
-2.51.0
-
+-		smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
+-				le32_to_cpu(smb_rsp->OutputBufferLength), &rsp_iov,
++		rc = smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
++				le32_to_cpu(smb_rsp->OutputBufferLength),
++				&rsp_iov,
+ 				sizeof(struct file_notify_information));
++		if (rc)
++			goto cnotify_exit;
+ 
+ 		*out_data = kmemdup((char *)smb_rsp + le16_to_cpu(smb_rsp->OutputBufferOffset),
+ 				le32_to_cpu(smb_rsp->OutputBufferLength), GFP_KERNEL);
 
 
