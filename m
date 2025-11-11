@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AC133FE34;
-	Tue, 11 Nov 2025 01:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA29248883;
+	Tue, 11 Nov 2025 01:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823449; cv=none; b=AgxMjTbioeRuK5g1VDegk1FmLrCqBmo13jDekJxGKul+sIgss2wHmteOFv/Qg+XxR9msE/43j732FQEenNc24CBm0xF1ic5mRbNo3mGqAGtZos8xBK6OWxuz5NF4/qGUlT8miytv/ozJ7JXwxg9hZIofatEP+0OirJ0ItZ7nTBg=
+	t=1762823452; cv=none; b=YSrCa+7CChy0TtbBGcc5uHTfh9Z+r0JhwuU0GpRbnkxgdRfSHhHt1Dn/2q6UxZxR+X/uR4gzzAPu6pW5YsyZavn6YC+tTz0PobAtMpxFhVY1U1QbXSCw6JM/0+JGOr4CO9f0NyNk9FunvWwOMIpwZO9tgYJYuYmuG+Fg/faqrkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823449; c=relaxed/simple;
-	bh=vA4G/PjU7LfNw9tE1t3nNAXYlgeStv2N4ITikmnEX9s=;
+	s=arc-20240116; t=1762823452; c=relaxed/simple;
+	bh=v5x84/pI+pOpqXV9le+fdA6yNOhu2sdNls6sBXTz3IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWaT42tRBNHRzYtz9iOX/KcO2pe4mpiGRBlbb7TOIcua2OaRKKww2sXmLdq4V2TX3hIrEAe9gXRprv1aI40hNk0vg4M9F43mn3EY893e7wjqUhMVUxdehPOhTxjCVXUUO6hTyD52qNxK6j4ex8KbY7LmdxYntkP/u2Dbk4X7Iik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kT7gT3sG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mIlW/+z+U8+G9tXuTF4TRW4QnYIobpC7JyDQZNZkqM4e1s8KZqzmmaHjU3OXSlxyLVl7DoDqLZFqLw0wACa+D0PAafFIZOppgIbN9RdtwB4LkgHQwfXyoTfkYtjC2D1pSDrOMoTaQiDgFbBX9Lwi79BLgWoA7gcYSTV9HZS36uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F00v38Ry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kT7gT3sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480C8C16AAE;
-	Tue, 11 Nov 2025 01:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F00v38Ry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A37BC113D0;
+	Tue, 11 Nov 2025 01:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823449;
-	bh=vA4G/PjU7LfNw9tE1t3nNAXYlgeStv2N4ITikmnEX9s=;
+	s=korg; t=1762823451;
+	bh=v5x84/pI+pOpqXV9le+fdA6yNOhu2sdNls6sBXTz3IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kT7gT3sGAfJa3dP2pB5p0cFyrH3mjNFGAtxCWWB1UiU2fkJHz/YOwOIaFPNphyUwj
-	 TIWR75pbnuEYiumyyzdeIwJkDZ6hOYzLsy4+DyMSrreNi72OpPSzQp+qLQ5V6XKB0p
-	 ZwXo9qR5QfVqpLTm2BzHcZKEun5cZWadHHe/jIuk=
+	b=F00v38RyOAutbpOHA2uiklEF9n4ny7ByvucojLwpoGnW8sERLDl924ZrXFDuy7UnG
+	 Q7ZnBrlBZO/4HqBKs73Lr/twfB2MuRznOWOQlTBghWaM/ZY8kEiNtRH0E4k8jGueLG
+	 8WmPI6vHSVZY5oK20SVLk9rOSBDQsMC6bb8DJoXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 302/849] net: phy: mscc: report and configure in-band auto-negotiation for SGMII/QSGMII
-Date: Tue, 11 Nov 2025 09:37:52 +0900
-Message-ID: <20251111004543.710167069@linuxfoundation.org>
+Subject: [PATCH 6.12 249/565] scsi: mpi3mr: Fix I/O failures during controller reset
+Date: Tue, 11 Nov 2025 09:41:45 +0900
+Message-ID: <20251111004532.510765438@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,175 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit df979273bd716a93ca9ffa8f84aeb205c9bf2ab6 ]
+[ Upstream commit b7b2176e30fc8e57664e5a8a23387af66eb7f72b ]
 
-The following Vitesse/Microsemi/Microchip PHYs, among those supported by
-this driver, have the host interface configurable as SGMII or QSGMII:
-- VSC8504
-- VSC8514
-- VSC8552
-- VSC8562
-- VSC8572
-- VSC8574
-- VSC8575
-- VSC8582
-- VSC8584
+I/Os can race with controller reset and fail.
 
-All these PHYs are documented to have bit 7 of "MAC SerDes PCS Control"
-as "MAC SerDes ANEG enable".
+Block requests at the mid layer when reset starts using
+scsi_host_block(), and resume with scsi_host_unblock() after reset
+completes.
 
-Out of these, I could test the VSC8514 quad PHY in QSGMII. This works
-both with the in-band autoneg on and off, on the NXP LS1028A-RDB and
-T1040-RDB boards.
-
-Notably, the bit is sticky (survives soft resets), so giving Linux the
-tools to read and modify this settings makes it robust to changes made
-to it by previous boot layers (U-Boot).
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20250813074454.63224-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://lore.kernel.org/r/20250820084138.228471-4-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc.h      |  3 +++
- drivers/net/phy/mscc/mscc_main.c | 40 ++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 3 +++
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
-index 2bfe314ef881c..2d8eca54c40a2 100644
---- a/drivers/net/phy/mscc/mscc.h
-+++ b/drivers/net/phy/mscc/mscc.h
-@@ -196,6 +196,9 @@ enum rgmii_clock_delay {
- #define MSCC_PHY_EXTENDED_INT_MS_EGR	  BIT(9)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 08c751884b327..82cbe98e8a044 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -5372,6 +5372,7 @@ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
+ 	    mpi3mr_reset_rc_name(reset_reason));
  
- /* Extended Page 3 Registers */
-+#define MSCC_PHY_SERDES_PCS_CTRL	  16
-+#define MSCC_PHY_SERDES_ANEG		  BIT(7)
-+
- #define MSCC_PHY_SERDES_TX_VALID_CNT	  21
- #define MSCC_PHY_SERDES_TX_CRC_ERR_CNT	  22
- #define MSCC_PHY_SERDES_RX_VALID_CNT	  28
-diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
-index 24c75903f5354..ef0ef1570d392 100644
---- a/drivers/net/phy/mscc/mscc_main.c
-+++ b/drivers/net/phy/mscc/mscc_main.c
-@@ -2202,6 +2202,28 @@ static int vsc85xx_read_status(struct phy_device *phydev)
- 	return genphy_read_status(phydev);
- }
- 
-+static unsigned int vsc85xx_inband_caps(struct phy_device *phydev,
-+					phy_interface_t interface)
-+{
-+	if (interface != PHY_INTERFACE_MODE_SGMII &&
-+	    interface != PHY_INTERFACE_MODE_QSGMII)
-+		return 0;
-+
-+	return LINK_INBAND_DISABLE | LINK_INBAND_ENABLE;
-+}
-+
-+static int vsc85xx_config_inband(struct phy_device *phydev, unsigned int modes)
-+{
-+	u16 reg_val = 0;
-+
-+	if (modes == LINK_INBAND_ENABLE)
-+		reg_val = MSCC_PHY_SERDES_ANEG;
-+
-+	return phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_3,
-+				MSCC_PHY_SERDES_PCS_CTRL, MSCC_PHY_SERDES_ANEG,
-+				reg_val);
-+}
-+
- static int vsc8514_probe(struct phy_device *phydev)
- {
- 	struct vsc8531_private *vsc8531;
-@@ -2414,6 +2436,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8514,
-@@ -2437,6 +2461,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8530,
-@@ -2557,6 +2583,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC856X,
-@@ -2579,6 +2607,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8572,
-@@ -2605,6 +2635,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8574,
-@@ -2631,6 +2663,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8575,
-@@ -2655,6 +2689,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8582,
-@@ -2679,6 +2715,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_sset_count = &vsc85xx_get_sset_count,
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- },
- {
- 	.phy_id		= PHY_ID_VSC8584,
-@@ -2704,6 +2742,8 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.get_strings    = &vsc85xx_get_strings,
- 	.get_stats      = &vsc85xx_get_stats,
- 	.link_change_notify = &vsc85xx_link_change_notify,
-+	.inband_caps    = vsc85xx_inband_caps,
-+	.config_inband  = vsc85xx_config_inband,
- }
- 
- };
+ 	mrioc->device_refresh_on = 0;
++	scsi_block_requests(mrioc->shost);
+ 	mrioc->reset_in_progress = 1;
+ 	mrioc->stop_bsgs = 1;
+ 	mrioc->prev_reset_result = -1;
+@@ -5480,6 +5481,7 @@ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
+ 	if (!retval) {
+ 		mrioc->diagsave_timeout = 0;
+ 		mrioc->reset_in_progress = 0;
++		scsi_unblock_requests(mrioc->shost);
+ 		mrioc->pel_abort_requested = 0;
+ 		if (mrioc->pel_enabled) {
+ 			mrioc->pel_cmds.retry_count = 0;
+@@ -5504,6 +5506,7 @@ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
+ 		mrioc->device_refresh_on = 0;
+ 		mrioc->unrecoverable = 1;
+ 		mrioc->reset_in_progress = 0;
++		scsi_unblock_requests(mrioc->shost);
+ 		mrioc->stop_bsgs = 0;
+ 		retval = -1;
+ 		mpi3mr_flush_cmds_for_unrecovered_controller(mrioc);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 1930e47cbf7bd..894d358ade75b 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2839,12 +2839,14 @@ static void mpi3mr_preparereset_evt_th(struct mpi3mr_ioc *mrioc,
+ 		    "prepare for reset event top half with rc=start\n");
+ 		if (mrioc->prepare_for_reset)
+ 			return;
++		scsi_block_requests(mrioc->shost);
+ 		mrioc->prepare_for_reset = 1;
+ 		mrioc->prepare_for_reset_timeout_counter = 0;
+ 	} else if (evtdata->reason_code == MPI3_EVENT_PREPARE_RESET_RC_ABORT) {
+ 		dprint_event_th(mrioc,
+ 		    "prepare for reset top half with rc=abort\n");
+ 		mrioc->prepare_for_reset = 0;
++		scsi_unblock_requests(mrioc->shost);
+ 		mrioc->prepare_for_reset_timeout_counter = 0;
+ 	}
+ 	if ((event_reply->msg_flags & MPI3_EVENT_NOTIFY_MSGFLAGS_ACK_MASK)
 -- 
 2.51.0
 
