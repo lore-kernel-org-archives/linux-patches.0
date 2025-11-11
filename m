@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C00346A14;
-	Tue, 11 Nov 2025 01:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A25346E45;
+	Tue, 11 Nov 2025 01:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823657; cv=none; b=kwhQNnWZH1mVYvwK7BLjMbWAbvo7J8gG8r2kDpnWDdpHkUDJXyejCH0q4h+wMwLoeMEWtyuFX8Qm284QeajmpqZVvScn5PcH2bkcUWMme9AAvNGj1VWo+AJswyYwH2q24zPFyZStRgvL8vsf/H1FZ5mi5B4uX8tXQ9NDErMT2IY=
+	t=1762823660; cv=none; b=d51vJNTa+5arngLOPOCuSdnwLHzy/VJxyREF7OwwtMdwndmf80+trkd6Ag/ozW3qf3d5bPiOmLLSRNnjT0ID7Y6uHp5zJhgzUK1Uk9CRF2L/9quX9hClRzEraLEh/dJISY709ANRho1jwtlucPvCQJFmhbseDUcXFIgKhDCvfxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823657; c=relaxed/simple;
-	bh=nHGQn38TqpZt6Xw4mni11NNiRty+eVdyeRQ5wiVuUaE=;
+	s=arc-20240116; t=1762823660; c=relaxed/simple;
+	bh=gvPaIz96l6y8st3SQkooKkBeWUfSbuKSGr74dbn6FZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exKoananr7Z/5Vi/MA8RSN2xYkJZ2hwquhy75LHG7zTXXJoxbZsvtQYWUaoP/xSG1tfwFvKcuiN146lpDG10vkuMjnrHf4UvJN7P2kykiSHUN0iNva94lsXKM+iISvRzDaTf/IYtdrOyJ/XPnGQ5baZbgt713oWulRJ0RTSCEHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoCBWv/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=czxvUgP0LOI92b7xGvcgaaQSj5+WpI1d40v38SmPS2gejS6LrW+Afta8Bxoxpzut13H9wUxOwJU1aeG5YzlLyh3UAK8D15c/UvYIVAiLAQWXkD2livCqYjKsdo7ZkQkD7Gjta5Cka4o9Ur06LRJorkzlUAKrqg4U7NBQc3YL6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtwtYLAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoCBWv/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8733C116B1;
-	Tue, 11 Nov 2025 01:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtwtYLAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32759C4CEF5;
+	Tue, 11 Nov 2025 01:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823657;
-	bh=nHGQn38TqpZt6Xw4mni11NNiRty+eVdyeRQ5wiVuUaE=;
+	s=korg; t=1762823659;
+	bh=gvPaIz96l6y8st3SQkooKkBeWUfSbuKSGr74dbn6FZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZoCBWv/ujFsU/oSKG1bvLoYn9FtIyvhD6eYSDbNY6HJpnVDJEBvMp8TlCqUASZfvB
-	 REYk+Jr9dHR19JIpbr3gmeJFm+g+iu8enZzOH3We0IJtfDNVo62GNmtim2PNVZ19kW
-	 ssvGTeijQxLKlvtqp516cIdExY3+ciwLkkxIldjI=
+	b=QtwtYLAF/rtzYewYPIsTNGH1bY5x5Wdpi9nhOHnX6BKnU4j0NecGOujr6fqPRlgvX
+	 2H/Ydd5GH97Z5xgKjflUzjioFnt9iwtzyuIed27eMvjQK9WNcVFbfh/xsbufxOQGqB
+	 sK87vFCJ2hrivW8CzYXDQKqi62D9sPNnldim3Tbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 277/565] crypto: qat - use kcalloc() in qat_uclo_map_objs_from_mof()
-Date: Tue, 11 Nov 2025 09:42:13 +0900
-Message-ID: <20251111004533.113987767@linuxfoundation.org>
+Subject: [PATCH 6.12 295/565] media: adv7180: Only validate format in querystd
+Date: Tue, 11 Nov 2025 09:42:31 +0900
+Message-ID: <20251111004533.514713778@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -47,47 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 4c634b6b3c77bba237ee64bca172e73f9cee0cb2 ]
+[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
 
-As noted in the kernel documentation [1], open-coded multiplication in
-allocator arguments is discouraged because it can lead to integer overflow.
+The .querystd callback should not program the device with the detected
+standard, it should only report the standard to user-space. User-space
+may then use .s_std to set the standard, if it wants to use it.
 
-Use kcalloc() to gain built-in overflow protection, making memory
-allocation safer when calculating allocation size compared to explicit
-multiplication.  Similarly, use size_add() instead of explicit addition
-for 'uobj_chunk_num + sobj_chunk_num'.
+All that is required of .querystd is to setup the auto detection of
+standards and report its findings.
 
-Link: https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments #1
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+While at it add some documentation on why this can't happen while
+streaming and improve the error handling using a scoped guard.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_uclo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_uclo.c b/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-index 7ea40b4f6e5b4..1bde198c0bc07 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_uclo.c
-@@ -1746,7 +1746,7 @@ static int qat_uclo_map_objs_from_mof(struct icp_qat_mof_handle *mobj_handle)
- 	if (sobj_hdr)
- 		sobj_chunk_num = sobj_hdr->num_chunks;
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 6eb55f0d89dc9..f3f47beff76bb 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -357,32 +357,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
+ static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
+ {
+ 	struct adv7180_state *state = to_state(sd);
+-	int err = mutex_lock_interruptible(&state->mutex);
+-	if (err)
+-		return err;
+-
+-	if (state->streaming) {
+-		err = -EBUSY;
+-		goto unlock;
+-	}
++	int ret;
  
--	mobj_hdr = kzalloc((uobj_chunk_num + sobj_chunk_num) *
-+	mobj_hdr = kcalloc(size_add(uobj_chunk_num, sobj_chunk_num),
- 			   sizeof(*mobj_hdr), GFP_KERNEL);
- 	if (!mobj_hdr)
- 		return -ENOMEM;
+-	err = adv7180_set_video_standard(state,
+-			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
+-	if (err)
+-		goto unlock;
++	guard(mutex)(&state->mutex);
+ 
+-	msleep(100);
+-	__adv7180_status(state, NULL, std);
++	/*
++	 * We can't sample the standard if the device is streaming as that would
++	 * interfere with the capture session as the VID_SEL reg is touched.
++	 */
++	if (state->streaming)
++		return -EBUSY;
+ 
+-	err = v4l2_std_to_adv7180(state->curr_norm);
+-	if (err < 0)
+-		goto unlock;
++	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
++	ret = adv7180_set_video_standard(state,
++					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
++	if (ret)
++		return ret;
+ 
+-	err = adv7180_set_video_standard(state, err);
++	/* Allow some time for the autodetection to run. */
++	msleep(100);
+ 
+-unlock:
+-	mutex_unlock(&state->mutex);
+-	return err;
++	return __adv7180_status(state, NULL, std);
+ }
+ 
+ static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
 -- 
 2.51.0
 
