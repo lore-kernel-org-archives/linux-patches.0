@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DC3257AD1;
-	Tue, 11 Nov 2025 00:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312FB1C6FE1;
+	Tue, 11 Nov 2025 00:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822717; cv=none; b=ANLczsfd9AVQHL8UHaS+r5LnRxH70VSiiNZatLN74T8OwbBe69I9xhLnjq5SAHAjA2gfRDu5jepaPkyYg02GVzZ9uotDqiUot4EBPPBZE1yqiWOm3YzR0wB0oALeGxo5nGgyNUi1w6n7dzQSOZu7JGEcGFX3irnQfiOWkh+eQLE=
+	t=1762822720; cv=none; b=n9QnFZYoe6N1UJpkmMVANnOMvmKDkN8XDjazhAir9oocXnpX60kFINE/DXwj+gOTF9DNtp720L+NAMXDsLnR3VWPdDcLCfMeQbgQ0Fu5h7ijkHM+PBeNP7WW9zBNZIqpWAJJIdcg4I+4MBRMyRfz8zGi4gXNF0FjJ8hvBaxs0JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822717; c=relaxed/simple;
-	bh=uZDVG00fe+s2RQUNIJt3AoCM9cJKA5KmDXaKlWVHntA=;
+	s=arc-20240116; t=1762822720; c=relaxed/simple;
+	bh=kAVxVOjgVrgH1XYJKKDIvewkFgRF9+v6ypsWWgw/IIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y81wsOVxiWmL8cI+gimIiwbxJ8Z5O4ZXiGMswfQ/wbiPfJUHkTlEStYiKHvK71NpPuVw/3OISyS765pEAFmF5TBUypmDlhCOiqJyBBBYOYGOViHhLeR2ldTjU1eeI4Sfl6WmJIVLrQ98zzK2CqCjyuVxk4HUfJSh04/j/FRPer8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAiq5YZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ry1ecgoa6+ZIwyPYLRpNy3Pa1iWnG1kd1r5WT4hvVWRrG9UjVCJZvVz+h2aQdEpOzk3FYbTGUesYlk5WMcZ3xyL2djXZsXBowc+mk1w4k/W3LuVzaYdHKI6pdKAWNjc7lA7ame1BVSY00rBktaemMw+upEuloBvwIPIhgmGvX4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpPt0Dgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAiq5YZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9CCC113D0;
-	Tue, 11 Nov 2025 00:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpPt0Dgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF077C4CEF5;
+	Tue, 11 Nov 2025 00:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822717;
-	bh=uZDVG00fe+s2RQUNIJt3AoCM9cJKA5KmDXaKlWVHntA=;
+	s=korg; t=1762822720;
+	bh=kAVxVOjgVrgH1XYJKKDIvewkFgRF9+v6ypsWWgw/IIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAiq5YZPWZTnqwIZ2HUlkLv9JamVJfZfzQZJ6Y1hCFJjHnkKzwOXwwMMJmQNYHIz8
-	 F1lgIeNV/HhUuapFT9PNjmqMXt3Qcql4GtoODzhTRjA8LRy7t6PuEEAewrABiIDSI3
-	 ptnWU5+tVmFYpKtftYsuYM3ymoO5AzTexmDcZOBo=
+	b=LpPt0DgpXJZPmef98d/CMf1OdAozLHWi5RFhFFEfjyz2aYPU1aCeQLkFBVXg+ePKT
+	 JrF9pXrc3pZrr6X1jy3BTidJO6awnUYMDXhS3o3oVT7mF8sbzrrVOPOQh7M6QciUkE
+	 OmgzSsbDLq+ZSl5PZjtxxsuIIxZpBd9prgAXVQ5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 154/849] hwmon: (k10temp) Add thermal support for AMD Family 1Ah-based models
-Date: Tue, 11 Nov 2025 09:35:24 +0900
-Message-ID: <20251111004540.147993914@linuxfoundation.org>
+Subject: [PATCH 6.12 092/565] soc: ti: pruss: dont use %pK through printk
+Date: Tue, 11 Nov 2025 09:39:08 +0900
+Message-ID: <20251111004529.034571818@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avadhut Naik <avadhut.naik@amd.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit f116af2eb51ed9df24911537fda32a033f1c58da ]
+[ Upstream commit a5039648f86424885aae37f03dc39bc9cb972ecb ]
 
-Add thermal info support for newer AMD Family 1Ah-based models.
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
-Link: https://lore.kernel.org/r/20250729001644.257645-1-avadhut.naik@amd.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20250811-restricted-pointers-soc-v2-1-7af7ed993546@linutronix.de
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/k10temp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/soc/ti/pruss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
-index babf2413d666f..2f90a2e9ad496 100644
---- a/drivers/hwmon/k10temp.c
-+++ b/drivers/hwmon/k10temp.c
-@@ -84,6 +84,13 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
-  */
- #define AMD_I3255_STR				"3255"
+diff --git a/drivers/soc/ti/pruss.c b/drivers/soc/ti/pruss.c
+index 3ec758f50e248..f588153e8178d 100644
+--- a/drivers/soc/ti/pruss.c
++++ b/drivers/soc/ti/pruss.c
+@@ -449,7 +449,7 @@ static int pruss_of_setup_memories(struct device *dev, struct pruss *pruss)
+ 		pruss->mem_regions[i].pa = res.start;
+ 		pruss->mem_regions[i].size = resource_size(&res);
  
-+/*
-+ * PCI Device IDs for AMD's Family 1Ah-based SOCs.
-+ * Defining locally as IDs are not shared.
-+ */
-+#define PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3	0x12cb
-+#define PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3	0x127b
-+
- struct k10temp_data {
- 	struct pci_dev *pdev;
- 	void (*read_htcreg)(struct pci_dev *pdev, u32 *regval);
-@@ -556,7 +563,9 @@ static const struct pci_device_id k10temp_id_table[] = {
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3) },
-+	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
-+	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
- 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
- 	{}
- };
+-		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %pK\n",
++		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %p\n",
+ 			mem_names[i], &pruss->mem_regions[i].pa,
+ 			pruss->mem_regions[i].size, pruss->mem_regions[i].va);
+ 	}
 -- 
 2.51.0
 
