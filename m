@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E791DF258;
-	Tue, 11 Nov 2025 00:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFFD4C97;
+	Tue, 11 Nov 2025 00:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822759; cv=none; b=dCiHBpSeIupinwek6R5Twnu2Pl7GAlOjZFkYTv5Ii6j2RShdMfD5RViCOmG6aJYULLCuaMOBHfvPUBLOUBc/NTHCkwW1zDnHlMa5qXk3V0BPp7inLiJgRLKTofLneX4hbPq2cLop847swkI2k/Ebxf5tRl6O+iPQMlz3OiPZtUw=
+	t=1762822762; cv=none; b=OPAJkOGGKZMLXPek4E7zyLXdSCWZdAOFg7/e/HPQSWQUfHc3lrDg6EeBzU0gFtPGrkKqRfonYpH5OUqiVZlYz32iwfbBOR2E3GEu+bO1SQWiFGGIodL9ri4j2V9n++cQjQUNFfx6/PZ/I3edZSbDQtGWW16uiu+M9u1nIKfuTVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822759; c=relaxed/simple;
-	bh=ldR89eCnD3upbcGo+JWeWOa4dIh4dhh+Ljqc4CP8u4A=;
+	s=arc-20240116; t=1762822762; c=relaxed/simple;
+	bh=xkA4pfjBRzOG0VGVa/tVSV6L33uPXN6KGxHGdy+H+zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckqppqkd/yAikeBb4EV3W6fkE2FrVjsb0aG+cYGvednq+r0zss1QIYVsXCuk7f59qFOspVg1CDQ8fG28sqThMqrdqv+BdRABVPnlOJbRozk2lXv9PecBrfIgy9uo2uxP3ofbBnt4i7+9D0flzkGSVzsnXQCs60/rtJ28Rw6RmhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKX6tWGj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4cQNY5f7XeoX0W080N+fffoDpj/CiHI45gML1QUilTnE+jV3PJzqR8tEYS2Gh2pi7jHlBKpeZv/0+LHxeUM1N8uL3inO6PnuT2l59bNtvTD48Bv3xROT4wngJG5E8qsHJJki6+oHPB52nmtpuYR2Tw/xCJ1SZaCnl+Lv6kzaaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsFfKneR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKX6tWGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731F5C4CEF5;
-	Tue, 11 Nov 2025 00:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsFfKneR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE818C116B1;
+	Tue, 11 Nov 2025 00:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822759;
-	bh=ldR89eCnD3upbcGo+JWeWOa4dIh4dhh+Ljqc4CP8u4A=;
+	s=korg; t=1762822762;
+	bh=xkA4pfjBRzOG0VGVa/tVSV6L33uPXN6KGxHGdy+H+zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKX6tWGjohGhyxHAe5NJTARCEq4gS/e0Erqo82qgs9nEyCR/AsSfeRjv+gKKmUmC4
-	 S7CDh1XnRUi6h9h3PKClTGPX+ZUfH4Q2iCPSzYexUuHsFQ/rJC0WT3PW8JvLUYnSJ+
-	 /yba6G9h3/GJ0V7dROqjFYotYj9JR1qtEZjq/5UI=
+	b=CsFfKneRGGJRZpFubOrsYkdylIRLHiJbh4w1lPaZvn1tNIscFcaT0Lo99obKIFw/E
+	 oFeptrVlDF0EJfk+MzJJFtylyRapv+3xhg/g7Cr0EO6Fddjoi/YtlMu5tw4WTgBsMf
+	 65i8TIGQ71rdr+EPHtIxLEu4PSN7Q1xDbf2nclPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 064/565] s390/mm: Fix memory leak in add_marker() when kvrealloc() fails
-Date: Tue, 11 Nov 2025 09:38:40 +0900
-Message-ID: <20251111004528.377785617@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 100/565] irqchip/sifive-plic: Respect mask state when setting affinity
+Date: Tue, 11 Nov 2025 09:39:16 +0900
+Message-ID: <20251111004529.202960184@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -50,69 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-commit 07ad45e06b4039adf96882aefcb1d3299fb7c305 upstream.
+[ Upstream commit adecf78df945f4c7a1d29111b0002827f487df51 ]
 
-The function has a memory leak when kvrealloc() fails.
-The function directly assigns NULL to the markers pointer, losing the
-reference to the previously allocated memory. This causes kvfree() in
-pt_dump_init() to free NULL instead of the leaked memory.
+plic_set_affinity() always calls plic_irq_enable(), which clears up the
+priority setting even the interrupt is only masked. This unmasks the
+interrupt unexpectly.
 
-Fix by:
-1. Using kvrealloc() uniformly for all allocations
-2. Using a temporary variable to preserve the original pointer until
-   allocation succeeds
-3. Removing the error path that sets markers_cnt=0 to keep
-   consistency between markers and markers_cnt
+Replace the plic_irq_enable/disable() with plic_irq_toggle() to avoid
+changing the priority setting.
 
-Found via static analysis and this is similar to commit 42378a9ca553
-("bpf, verifier: Fix memory leak in array reallocation for stack state")
-
-Fixes: d0e7915d2ad3 ("s390/mm/ptdump: Generate address marker array dynamically")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Nam Cao <namcao@linutronix.de> # VisionFive 2
+Tested-by: Chen Wang <unicorn_wang@outlook.com> # Pioneerbox
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/all/20250811002633.55275-1-inochiama@gmail.com
+Link: https://lore.kernel.org/lkml/20250722224513.22125-1-inochiama@gmail.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/dump_pagetables.c |   19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -247,16 +247,14 @@ static int ptdump_cmp(const void *a, con
+diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
+index 9c4af7d588463..c0cf4fed13e09 100644
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -179,12 +179,14 @@ static int plic_set_affinity(struct irq_data *d,
+ 	if (cpu >= nr_cpu_ids)
+ 		return -EINVAL;
  
- static int add_marker(unsigned long start, unsigned long end, const char *name)
- {
--	size_t oldsize, newsize;
-+	struct addr_marker *new;
-+	size_t newsize;
+-	plic_irq_disable(d);
++	/* Invalidate the original routing entry */
++	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
  
--	oldsize = markers_cnt * sizeof(*markers);
--	newsize = oldsize + 2 * sizeof(*markers);
--	if (!oldsize)
--		markers = kvmalloc(newsize, GFP_KERNEL);
--	else
--		markers = kvrealloc(markers, newsize, GFP_KERNEL);
--	if (!markers)
--		goto error;
-+	newsize = (markers_cnt + 2) * sizeof(*markers);
-+	new = kvrealloc(markers, newsize, GFP_KERNEL);
-+	if (!new)
-+		return -ENOMEM;
-+	markers = new;
- 	markers[markers_cnt].is_start = 1;
- 	markers[markers_cnt].start_address = start;
- 	markers[markers_cnt].size = end - start;
-@@ -268,9 +266,6 @@ static int add_marker(unsigned long star
- 	markers[markers_cnt].name = name;
- 	markers_cnt++;
- 	return 0;
--error:
--	markers_cnt = 0;
--	return -ENOMEM;
+ 	irq_data_update_effective_affinity(d, cpumask_of(cpu));
+ 
++	/* Setting the new routing entry if irq is enabled */
+ 	if (!irqd_irq_disabled(d))
+-		plic_irq_enable(d);
++		plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
+ 
+ 	return IRQ_SET_MASK_OK_DONE;
  }
- 
- static int pt_dump_init(void)
+-- 
+2.51.0
+
 
 
