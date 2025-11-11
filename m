@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42364C97;
-	Tue, 11 Nov 2025 00:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CEF4086A;
+	Tue, 11 Nov 2025 00:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822536; cv=none; b=P4kIvs+oXuG0bUfL/hON4c0uiWveU48Oql4itwtLdFvyodS7/SAJ9scJvJEm/ofD6Jr3gVwcvjum51VR4ou4/En3AD154XpCVeT7TrtUSKbF9yB96AGG8j8qrqPWZW312Uwqi1L1+60NATXr3ONrzX+5BTxZFzasxTtNapnQcV8=
+	t=1762822539; cv=none; b=F96YbrYtLoLDxblmra2Pjqg5X1ghxMd1AYSyjOHqgyksO+f8HxEyh/bxxmMPVza7BTuevQImy23o+ltIznK/V4/LFA0bTxvYD1nvxwcAH+NLuwkM4FVJOfS5y2H+s98syu4fgE8v6i0A2zU3mgklMw31UYXBSvqsD2l9IVbpefA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822536; c=relaxed/simple;
-	bh=xULsslHUPj45kgDuifVkKabVLoFmzHXkiW9mnmczbtk=;
+	s=arc-20240116; t=1762822539; c=relaxed/simple;
+	bh=mLAbZWt94PTOtXEifTefyp2iBHzy6ZaQlw4nH2UfIu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDF5ei3uW8d93S8oOCIjSJVIJLuxCMYshp98QHoywf3DmGpOsK1f4DkQYpozbMAamfZTSWsoQaBILvaHsIaGPnoi9yP5/4jf+M55D/PKK8+NO2nkM+L9Qb+U6qnsDr0vs9rz68eOtjXQ4t7+BKvrs7Grt0fRJXc0VIBa7mgbchE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsVxDx5r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dheFPslYUw0uXfh4pkwbd52xXlApv/A31oQ8OsegsGtQocNjtEEjzHPJcs/EqjhoeWs9vGC1isymik6fFq0vjlPgpI55/GDC74yrZU7j9h1hBI6h3YSfXjQwPbhy2gVQ5hjCXPlNtVDZM8Sw7O8bqcQEt7tIlfPpmkGtjBcr8cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq4rwBXX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsVxDx5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6363EC19425;
-	Tue, 11 Nov 2025 00:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq4rwBXX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA258C16AAE;
+	Tue, 11 Nov 2025 00:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822536;
-	bh=xULsslHUPj45kgDuifVkKabVLoFmzHXkiW9mnmczbtk=;
+	s=korg; t=1762822539;
+	bh=mLAbZWt94PTOtXEifTefyp2iBHzy6ZaQlw4nH2UfIu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsVxDx5r41CJvVmmH+aYUlRVAwIQwBU9PZn1GLv7J9qsq2jg9/wUw9qorFJKlY/Ch
-	 E2g+93T9ROroRaxAzRqzJV/EkvkCVDR6F6S40h7yTjV+UE8FdOVQO7EBpoD/wtctw2
-	 3EOuCBBlzx1gZcHjkBYVqAtE1i91DRreVQlzBfPs=
+	b=fq4rwBXXOzy5dYN6xbkRAHehiILWv6pjO9aFk8u5tl1OXU/Br84rj4/kOzoIBJJGV
+	 WMkj2gni2Rbl7p6Rcmw1DLiAbcKhUcKBaVS5nXW4NrKZ8m8rw67VTIK+GX2zCFe7bL
+	 QXnzvbkdzjhBtzI31gXGFXC9B/n5Y+qdnZjGmjhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 122/849] spi: spi-qpic-snand: handle use_ecc parameter of qcom_spi_config_cw_read()
-Date: Tue, 11 Nov 2025 09:34:52 +0900
-Message-ID: <20251111004539.346972829@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Peter Schneider <pschneider1968@googlemail.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.12 070/565] drm/ast: Clear preserved bits from register output value
+Date: Tue, 11 Nov 2025 09:38:46 +0900
+Message-ID: <20251111004528.526435608@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +51,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 9c45f95222beecd6a284fd1284d54dd7a772cf59 ]
+commit a9fb41b5def8e1e0103d5fd1453787993587281e upstream.
 
-During raw read, neither the status of the ECC correction nor the erased
-state of the codeword gets checked by the qcom_spi_read_cw_raw() function,
-so in case of raw access reading the corresponding registers via DMA is
-superfluous.
+Preserve the I/O register bits in __ast_write8_i_masked() as specified
+by preserve_mask. Accidentally OR-ing the output value into these will
+overwrite the register's previous settings.
 
-Extend the qcom_spi_config_cw_read() function to evaluate the existing
-(but actually unused) 'use_ecc' parameter, and configure reading only
-the flash status register when ECC is not used.
+Fixes display output on the AST2300, where the screen can go blank at
+boot. The driver's original commit 312fec1405dd ("drm: Initial KMS
+driver for AST (ASpeed Technologies) 2000 series (v2)") already added
+the broken code. Commit 6f719373b943 ("drm/ast: Blank with VGACR17 sync
+enable, always clear VGACRB6 sync off") triggered the bug.
 
-With the change, the code gets in line with the corresponding part of
-the config_nand_cw_read() function in the qcom_nandc driver.
-
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250808-qpic-snand-handle-use_ecc-v1-1-67289fbb5e2f@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: Peter Schneider <pschneider1968@googlemail.com>
+Closes: https://lore.kernel.org/dri-devel/a40caf8e-58ad-4f9c-af7f-54f6f69c29bb@googlemail.com/
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: 6f719373b943 ("drm/ast: Blank with VGACR17 sync enable, always clear VGACRB6 sync off")
+Fixes: 312fec1405dd ("drm: Initial KMS driver for AST (ASpeed Technologies) 2000 series (v2)")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Nick Bowler <nbowler@draconx.ca>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.5+
+Link: https://patch.msgid.link/20251024073626.129032-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qpic-snand.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/ast/ast_drv.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 780abb967822a..5a247eebde4d9 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -494,9 +494,14 @@ qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int c
- 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
- 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
- 
--	qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
--	qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
--			  NAND_BAM_NEXT_SGL);
-+	if (use_ecc) {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 2, 0);
-+		qcom_read_reg_dma(snandc, NAND_ERASED_CW_DETECT_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	} else {
-+		qcom_read_reg_dma(snandc, NAND_FLASH_STATUS, 1,
-+				  NAND_BAM_NEXT_SGL);
-+	}
+--- a/drivers/gpu/drm/ast/ast_drv.h
++++ b/drivers/gpu/drm/ast/ast_drv.h
+@@ -286,13 +286,13 @@ static inline void __ast_write8_i(void _
+ 	__ast_write8(addr, reg + 1, val);
  }
  
- static int qcom_spi_block_erase(struct qcom_nand_controller *snandc)
--- 
-2.51.0
-
+-static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 read_mask,
++static inline void __ast_write8_i_masked(void __iomem *addr, u32 reg, u8 index, u8 preserve_mask,
+ 					 u8 val)
+ {
+-	u8 tmp = __ast_read8_i_masked(addr, reg, index, read_mask);
++	u8 tmp = __ast_read8_i_masked(addr, reg, index, preserve_mask);
+ 
+-	tmp |= val;
+-	__ast_write8_i(addr, reg, index, tmp);
++	val &= ~preserve_mask;
++	__ast_write8_i(addr, reg, index, tmp | val);
+ }
+ 
+ static inline u32 ast_read32(struct ast_device *ast, u32 reg)
 
 
