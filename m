@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4AD2D979C;
-	Tue, 11 Nov 2025 01:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B321E343D6A;
+	Tue, 11 Nov 2025 01:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824097; cv=none; b=iJGphGE3D3oIAcn8Ar2bXmNmzRJqIGekY3LFBMdIgq3GEsCbpr3w8XdxpdSEHnJSZA9fJftt3Hwf3QD4q75KIBUct2aq8GVmI2GPSEul2zUINe5dTP0UyYvGcUUMtYSHNSVeRFjBTZdpmoZXSZt1RjVdIZuKfoExAnx7YXMzKyQ=
+	t=1762824099; cv=none; b=LSZSGZFOLcbHfnQ8EavPV2U5NEgHPPnlbwuAYffqoPJceXIHv4dzUCOzM+nGFEDMHc4TvErBp5U0GQRvK9qZB3vcpVQ9C2+UeDcwIROt1eMUUWcEhPRq+p0Vr10jWYx0ETYUIfBrOlv3ch6GXStrTGxsgDcLQVB678cnOxUaNM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824097; c=relaxed/simple;
-	bh=pLPO7s+ywDCeoAX2TsyaIgCxniKRr39Jn7A1k6rC5yI=;
+	s=arc-20240116; t=1762824099; c=relaxed/simple;
+	bh=KjMvWbDPJUEVes2yndLr4E8dWSR18jHtmhuHnRwOM6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZbDWjXT1XKH32zYrQWlZX0qxhA4M4994BGILDcKf0g1Xa8vUpYKjFZTyu+IX9JGz/QKHm389PfrIDphWY3jRPlnwtkpOXSrgt5Di8dLW715B0UR3hIRrM+3ar1hzt0Vk1/5K1iIajN2bXdmyKNqa7B9Q87D3s3rUpGrCPtmjH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb7LvAd+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASmaM+VfX6jD95Lno0yp5JsODmbnKJJ69iUx9nv8K1dEnOGtiYLThbfkyaJDDwMSUqRxmRSs2kLiFgbl9R9z5nB7v52n35iWy1FUDZ+iQjXDQN1pt32Q9L2oOpdUy0uQQhG6kblQhXt0YtrVl9h5gRe2YYYPJ0OoaKmqBUJ6LXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXLpcvwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb7LvAd+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD32EC19424;
-	Tue, 11 Nov 2025 01:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXLpcvwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D805C113D0;
+	Tue, 11 Nov 2025 01:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824097;
-	bh=pLPO7s+ywDCeoAX2TsyaIgCxniKRr39Jn7A1k6rC5yI=;
+	s=korg; t=1762824099;
+	bh=KjMvWbDPJUEVes2yndLr4E8dWSR18jHtmhuHnRwOM6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gb7LvAd+tiiMOSpG2wyK6iV2uZAfmprRUTrgQhfywM7EGXhDIDR3WuvoNyTWpCBmn
-	 qX/VwD3HfEpLRUCYoK7+ogPqpRPIuAzVKUdNPaRf2OprtFMfkMfM9thdhK8tyjZj9K
-	 xORQA1nGtG3SXWTh4fiOTDRmso8YqNGu2ejEnfSI=
+	b=SXLpcvwjYGrttU3xkEPJGm16KwsnVlqUjVLWR3IzTmLdrqjUXnk4IBTqS/L7/HzfT
+	 QTrpPdkZqHlwchYfHvI0Teq2tYAFofZgCQapkVv+Lmu2P+hLxX5WaZNE8s8oIgppsG
+	 NCd0pWmIpoQeg7Y9v37HvtEknCtkEJKENHe8Dy/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 436/849] media: verisilicon: Explicitly disable selection api ioctls for decoders
-Date: Tue, 11 Nov 2025 09:40:06 +0900
-Message-ID: <20251111004546.974931381@linuxfoundation.org>
+Subject: [PATCH 6.12 387/565] ipv6: np->rxpmtu race annotation
+Date: Tue, 11 Nov 2025 09:44:03 +0900
+Message-ID: <20251111004535.578610128@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +51,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
+[ Upstream commit 9fba1eb39e2f74d2002c5cbcf1d4435d37a4f752 ]
 
-Call the dedicated v4l2_disable_ioctl helper instead of manually
-checking whether the current context is an encoder for the selection
-api ioctls.
+Add READ_ONCE() annotations because np->rxpmtu can be changed
+while udpv6_recvmsg() and rawv6_recvmsg() read it.
 
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Since this is a very rarely used feature, and that udpv6_recvmsg()
+and rawv6_recvmsg() read np->rxopt anyway, change the test order
+so that np->rxpmtu does not need to be in a hot cache line.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250916160951.541279-4-edumazet@google.com
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
- drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/raw.c | 2 +-
+ net/ipv6/udp.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index fa972effd4a2c..9d5e50fedae1f 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -917,6 +917,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
- 		vpu->decoder = func;
- 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
- 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
-+		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
-+		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
- 	}
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index 328419e05c815..d148f1b03c5d0 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -445,7 +445,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (flags & MSG_ERRQUEUE)
+ 		return ipv6_recv_error(sk, msg, len, addr_len);
  
- 	video_set_drvdata(vfd, vpu);
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index 7c3515cf7d64a..4598f9b4bd21c 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -663,8 +663,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
- 	struct hantro_ctx *ctx = fh_to_ctx(priv);
+-	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
++	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
+ 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
+ 	skb = skb_recv_datagram(sk, flags, &err);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 57e38e5e4be92..9b93df668025d 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -394,7 +394,7 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 	if (flags & MSG_ERRQUEUE)
+ 		return ipv6_recv_error(sk, msg, len, addr_len);
  
- 	switch (sel->target) {
-@@ -696,8 +695,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
- 	struct vb2_queue *vq;
+-	if (np->rxpmtu && np->rxopt.bits.rxpmtu)
++	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
+ 		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
  
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
- 
- 	/* Change not allowed if the queue is streaming. */
+ try_again:
 -- 
 2.51.0
 
