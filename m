@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730B626560B;
-	Tue, 11 Nov 2025 01:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0860E2D94AB;
+	Tue, 11 Nov 2025 01:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824572; cv=none; b=Mt0Iqbu2t8lTivdoo9hqqw4h1vECdIGLMejdcroqqs2gpjMYU6tdFvIEm4BGr1zcuW1x9K/wdih2WVGIQyxb45S6QnEK0W5Wyqk8Bb1Cd8S3dbHxGSTqTgLVKZza2i3EAsVkJRbKF7HaTbYiqIWbvDQBLmRWN4/0hEMHO62CITg=
+	t=1762824575; cv=none; b=S8wpTzCo1OjS8zNtk6uRn2W6RaTjea5F8fdAwlxhXd48wh8wBpgLrVRyrG8LtEnmCWJ/lVWXuvaW47VcW89wHNU+DwzMBfttymz91SFPxsOX9dyatkVoI6WoOH9qZjFlJSf7AUe+H3OqYjnhPvPnxlpFZCn2tKQLzCEBw8KBPTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824572; c=relaxed/simple;
-	bh=dg0C5Poynn2Q7UnDJ/hSJHoAaTGrlYdJ5Jl4yzw2Gy0=;
+	s=arc-20240116; t=1762824575; c=relaxed/simple;
+	bh=SYMPS5mP7g0Sv41PczP4vQV9TkEnasUULphEnp/HhvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oL9KE45uRevATa4l7EP0HsqVAtFf+Nb9H3RmU/F4ueaAQOJZ/4izk4azRHevGnaKozb4oHDqu1D6z1q1/zzjtODV9kkkxIQ5nkiyX68fAW/2usDRkAA73k9Bpm07tHn2aQ9KUXaNnd+T3IE5MfAXjFno5qt5IPk1o6VjlACRe80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOqmXBOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YduuAUwNEuQYV5O4g3YJXZ/rdJ3E0MddiK/RSSBEJVDjbXQqDHVgRrrCNUao+gbpzCLf/coGCDfCKBYS242JBQfxEHiTjcf/wF2zmuIUlBFWxqq/bCoHQ0ju7THbj83vzQh6oWE1+OHvRdeDj6UMaeWr/3vtvTPcON0WruqSlIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krn8ydM/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOqmXBOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5226C4CEFB;
-	Tue, 11 Nov 2025 01:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krn8ydM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FA5C4CEFB;
+	Tue, 11 Nov 2025 01:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824572;
-	bh=dg0C5Poynn2Q7UnDJ/hSJHoAaTGrlYdJ5Jl4yzw2Gy0=;
+	s=korg; t=1762824574;
+	bh=SYMPS5mP7g0Sv41PczP4vQV9TkEnasUULphEnp/HhvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOqmXBOI8cYnoMNxHwuwjoOlcEajz0Yp5jFuE7TvG5+pb7NK7KH3ed4AgMY6UrZ6j
-	 GvfOESFr++2rRPMgSoMW6L/qgXsIiJyEHKx4gp+aPSDJ3tImkVjL/zSIeOpwF7GR7B
-	 zXwtdF02ydSx+fdX0w4dCz/luDaUCTpLOkmt9j10=
+	b=krn8ydM/kW34rf0XZ1nE+HPjHyBU/WZImmtdqN3npnajwOQ9Hs+jmDnAJbd38/Ew6
+	 7w/DQH/qbcEF3SfSKDH/opXlemARnHXQQebiVgsuekk8eickLUZQNOPtULzLhkRhBN
+	 wDWHxM1iqFe9reyY0SAHzNcVbcykuSftJTb+7vCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 526/849] HID: asus: add Z13 folio to generic group for multitouch to work
-Date: Tue, 11 Nov 2025 09:41:36 +0900
-Message-ID: <20251111004549.136543847@linuxfoundation.org>
+Subject: [PATCH 6.12 472/565] 9p/trans_fd: p9_fd_request: kick rx thread if EPOLLIN
+Date: Tue, 11 Nov 2025 09:45:28 +0900
+Message-ID: <20251111004537.530112851@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +49,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit b595974b4afe0e171dd707da570964ff642742e3 ]
+[ Upstream commit e8fe3f07a357c39d429e02ca34f740692d88967a ]
 
-The Asus Z13 folio has a multitouch touchpad that needs to bind
-to the hid-multitouch driver in order to work properly. So bind
-it to the HID_GROUP_GENERIC group to release the touchpad and
-move it to the bottom so that the comment applies to it.
+p9_read_work() doesn't set Rworksched and doesn't do schedule_work(m->rq)
+if list_empty(&m->req_list).
 
-While at it, change the generic KEYBOARD3 name to Z13_FOLIO.
+However, if the pipe is full, we need to read more data and this used to
+work prior to commit aaec5a95d59615 ("pipe_read: don't wake up the writer
+if the pipe is still full").
 
-Reviewed-by: Luke D. Jones <luke@ljones.dev>
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+p9_read_work() does p9_fd_read() -> ... -> anon_pipe_read() which (before
+the commit above) triggered the unnecessary wakeup. This wakeup calls
+p9_pollwake() which kicks p9_poll_workfn() -> p9_poll_mux(), p9_poll_mux()
+will notice EPOLLIN and schedule_work(&m->rq).
+
+This no longer happens after the optimization above, change p9_fd_request()
+to use p9_poll_mux() instead of only checking for EPOLLOUT.
+
+Reported-by: syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com
+Tested-by: syzbot+d1b5dace43896bc386c3@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68a2de8f.050a0220.e29e5.0097.GAE@google.com/
+Link: https://lore.kernel.org/all/67dedd2f.050a0220.31a16b.003f.GAE@google.com/
+Co-developed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Message-ID: <20250819161013.GB11345@redhat.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 6 +++---
- drivers/hid/hid-ids.h  | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/9p/trans_fd.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 8db9d4e7c3b0b..a444d41e53b6c 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1387,9 +1387,6 @@ static const struct hid_device_id asus_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
- 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
--	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3),
--	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
- 	    USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR),
- 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
-@@ -1419,6 +1416,9 @@ static const struct hid_device_id asus_devices[] = {
- 	 * Note bind to the HID_GROUP_GENERIC group, so that we only bind to the keyboard
- 	 * part, while letting hid-multitouch.c handle the touchpad.
- 	 */
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO),
-+	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		USB_VENDOR_ID_ASUSTEK, USB_DEVICE_ID_ASUSTEK_T101HA_KEYBOARD) },
- 	{ }
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index ded5348d190c5..5721b8414bbdf 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -223,7 +223,7 @@
- #define USB_DEVICE_ID_ASUSTEK_ROG_KEYBOARD3 0x1822
- #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD	0x1866
- #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2	0x19b6
--#define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD3	0x1a30
-+#define USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO		0x1a30
- #define USB_DEVICE_ID_ASUSTEK_ROG_Z13_LIGHTBAR		0x18c6
- #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY		0x1abe
- #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index 7e9d731c45976..5bdfc25689169 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -665,7 +665,6 @@ static void p9_poll_mux(struct p9_conn *m)
+ 
+ static int p9_fd_request(struct p9_client *client, struct p9_req_t *req)
+ {
+-	__poll_t n;
+ 	int err;
+ 	struct p9_trans_fd *ts = client->trans;
+ 	struct p9_conn *m = &ts->conn;
+@@ -685,13 +684,7 @@ static int p9_fd_request(struct p9_client *client, struct p9_req_t *req)
+ 	list_add_tail(&req->req_list, &m->unsent_req_list);
+ 	spin_unlock(&m->req_lock);
+ 
+-	if (test_and_clear_bit(Wpending, &m->wsched))
+-		n = EPOLLOUT;
+-	else
+-		n = p9_fd_poll(m->client, NULL, NULL);
+-
+-	if (n & EPOLLOUT && !test_and_set_bit(Wworksched, &m->wsched))
+-		schedule_work(&m->wq);
++	p9_poll_mux(m);
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
