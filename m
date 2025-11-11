@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443501DF258;
-	Tue, 11 Nov 2025 00:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51FA1DF258;
+	Tue, 11 Nov 2025 00:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822708; cv=none; b=UeCpO8MEgrqz2X/S7L+pFoam3gyIYH3wF90Zy+PgUqpQwiWPJ3OCD3x/CJq5JtMhXZ2Qbc4ql/dpgkzvGbvYsKy+VmWDJ58UpWWi/QbGt08SSLC4vGmZmwp4cbva7YmHHt665ov0moMZhzwUKUEwAwp5QDlmwk38PVytpNxgPng=
+	t=1762822710; cv=none; b=QkK8LEejzzTSVu/mUN+3QdfSkSXGs3LqbYJ47fMI2tPSPJHM9HDxBYrs6unPDCoHbtWjWGLaeyA7M/qN8m2pMQ/xLKSXLhMV9eW3L70GPaEvStE2eLUGhpRc8LKZA+u440JXSzgoR3QAOlfKPIHJTDfVDM7siM0+Z8TmFfNlPPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822708; c=relaxed/simple;
-	bh=ismkj4svXZizxt7pQQAEAslYesChDy+r7vNtjcaRAoU=;
+	s=arc-20240116; t=1762822710; c=relaxed/simple;
+	bh=Gd+Xq+b/mUsKXNg9TJRG4jCbJnhRggjjQrVGqrMcrJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJFjyXYF3hwkBua1T3dCIkFdRdNIvRXwQk1sVlzp8lP1HcaG40SBDhtaUsb2aumfxAa8vEyGcp8CCAfNDUonyOkXRxNFkQQ+xsy5ze/iHFaCA6xmZzP84kexIS//H9WzeStMybfzhxi4JgEJgNq/cV9q9GqMyknnV/e0O6JysM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU6eqNgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JCobu72HR82IcFJ0THOyB1RC9mw9olE6zpJYHIYMyiJ8uJhDvHHqwxdCsxGCbIf2VhRCpROI0bQbqNcmTyLpBflNWb1Tsy+LiiubwdkBS2oPq1Yg0FVZd1EmVtX6NbqcVBnihS1bxTDD1WEFoO2Pgi264nYF7SHakJC0wQg/B2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFywcQ1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU6eqNgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A02C4CEFB;
-	Tue, 11 Nov 2025 00:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFywcQ1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A07C19424;
+	Tue, 11 Nov 2025 00:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822708;
-	bh=ismkj4svXZizxt7pQQAEAslYesChDy+r7vNtjcaRAoU=;
+	s=korg; t=1762822710;
+	bh=Gd+Xq+b/mUsKXNg9TJRG4jCbJnhRggjjQrVGqrMcrJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AU6eqNgopNq8ntV5J7NDsdFcmdjPocI/qcC91QdLyz2yEA1BHyCj8GNnqSDenR3Fm
-	 li98Nt2sGkknezP+/MJgA6yTbUa0VnfD3Bpewdy+ehogO+4WxuCv0n89OJazQB0Szb
-	 exyHBHiWyTwxy2vSO60B9nHTEWBuDutlSbBRSjhI=
+	b=nFywcQ1OK0zQzGEn8pRvEvSh9qQ9BKtMDLVVSyr6kaHT79bxyHsb/pYbTr/e/jTIH
+	 NEcK32/VoP+ePM5Ju0SilghJx72GmskIlDwTkmF6/Cy3xLJ8E6bB1SUwJij/bYTU3P
+	 ksb4fIeOEY+ayM3YPWktiCEIw56sZB+9kefghv9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Steev Klimaszewski <steev@kali.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 063/565] regmap: slimbus: fix bus_context pointer in regmap init calls
-Date: Tue, 11 Nov 2025 09:38:39 +0900
-Message-ID: <20251111004528.351703351@linuxfoundation.org>
+	Jens Reidel <adrian@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 090/565] soc: qcom: smem: Fix endian-unaware access of num_entries
+Date: Tue, 11 Nov 2025 09:39:06 +0900
+Message-ID: <20251111004528.992267550@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -55,98 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Jens Reidel <adrian@mainlining.org>
 
-commit 434f7349a1f00618a620b316f091bd13a12bc8d2 upstream.
+[ Upstream commit 19e7aa0e9e46d0ad111a4af55b3d681b6ad945e0 ]
 
-Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
-wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
-That commit breaks audio playback, for instance, on sdm845 Thundercomm
-Dragonboard 845c board:
+Add a missing le32_to_cpu when accessing num_entries, which is always a
+little endian integer.
 
- Unable to handle kernel paging request at virtual address ffff8000847cbad4
- ...
- CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
- Hardware name: Thundercomm Dragonboard 845c (DT)
- ...
- Call trace:
-  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
-  slim_read+0x48/0x74 [slimbus]
-  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
-  _regmap_raw_read+0xe8/0x174
-  _regmap_bus_read+0x44/0x80
-  _regmap_read+0x60/0xd8
-  _regmap_update_bits+0xf4/0x140
-  _regmap_select_page+0xa8/0x124
-  _regmap_raw_write_impl+0x3b8/0x65c
-  _regmap_bus_raw_write+0x60/0x80
-  _regmap_write+0x58/0xc0
-  regmap_write+0x4c/0x80
-  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
-  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
-  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
-  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
-  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
-  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
-  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
-  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
-  __arm64_sys_ioctl+0xac/0x104
-  invoke_syscall+0x48/0x104
-  el0_svc_common.constprop.0+0x40/0xe0
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x34/0xec
-  el0t_64_sync_handler+0xa0/0xf0
-  el0t_64_sync+0x198/0x19c
+Fixes booting on Xiaomi Mi 9T (xiaomi-davinci) in big endian.
 
-The __devm_regmap_init_slimbus() started to be used instead of
-__regmap_init_slimbus() after the commit mentioned above and turns out
-the incorrect bus_context pointer (3rd argument) was used in
-__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
-to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
-the first user of devm_regmap_init_slimbus() but we should fix it till
-the point where __devm_regmap_init_slimbus() was introduced therefore
-two "Fixes" tags.
-
-While at this, also correct the same argument in __regmap_init_slimbus().
-
-Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
-Cc: stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251022201013.1740211-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Link: https://lore.kernel.org/r/20250726235646.254730-1-adrian@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-slimbus.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/regmap/regmap-slimbus.c
-+++ b/drivers/base/regmap/regmap-slimbus.c
-@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(str
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index e4411771f482f..db77642776f93 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -892,7 +892,7 @@ static u32 qcom_smem_get_item_count(struct qcom_smem *smem)
+ 	if (IS_ERR_OR_NULL(ptable))
+ 		return SMEM_ITEM_COUNT;
  
--	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
--			     lock_key, lock_name);
-+	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
+-	info = (struct smem_info *)&ptable->entry[ptable->num_entries];
++	info = (struct smem_info *)&ptable->entry[le32_to_cpu(ptable->num_entries)];
+ 	if (memcmp(info->magic, SMEM_INFO_MAGIC, sizeof(info->magic)))
+ 		return SMEM_ITEM_COUNT;
  
-@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbu
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
- 
--	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
--				  lock_key, lock_name);
-+	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
- 
+-- 
+2.51.0
+
 
 
