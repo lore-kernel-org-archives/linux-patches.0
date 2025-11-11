@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D81C6FE1;
-	Tue, 11 Nov 2025 00:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D65E214210;
+	Tue, 11 Nov 2025 00:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822777; cv=none; b=ha6Uz3XVN4sK5MvuzbrXxCL6vyIqSXwtVk9yOrf5cgiDC01zdz/VJ3gbKQmD6Uc+XaPLgg2rBauJARApopyIXBlpEYZHg2uCwx41iPqxKr6NqMS0rEfpXCVeS1PxSlW5DnSXeITOC5HQdBClLAjov8kYa383WBXTryBBqo03424=
+	t=1762822779; cv=none; b=tQn9m1dPDNYYe9dSE7fhVvDv5v3MRl64fItRJmDZUZ5uiUsV4m3QHkfgE5xnNG/9e7pamJINEULohvz7mhIe8genJSxEZWn2wV7tcauFRDggMK/T0+I9pfGulO63yYfyvNm41fZ561nnSPJPtQOBvTKKJb2rSf7n3+EY6wHpBow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822777; c=relaxed/simple;
-	bh=xOCBnGooxB38jhc9ToLfva3xtcG+oeVg7Gjz/Yggtgc=;
+	s=arc-20240116; t=1762822779; c=relaxed/simple;
+	bh=IICWdzN8ppyacUp6o6dClvqsFRRFunMSD21GmlIoE7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h151Ug7GyOGnuyvCFZw3WGe9XuzgH7PpgzeSw1GHbOgq7M1LWaWooKkfSL1mXOTYlyR7bojSwLHlVrb7cWsFs/JevX9T3z52hoP/r/R9HdDOcbrlHPH6CgwCR9mjpuCFaU9Y8kJyex3pN3d/c+mXQp7LVq1v1nPyLWVvinpRsvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEo47eZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwDyATmq98lV15kp0oPJx+LfoN5os1frBCm37YgoJ+0hT5gr50EKSjrTdqxe3pgd5fjVAWkY/5P7cKpe5Tb2ysL7FB/4rVrOLO3ZKaTHfVe+sKMnet3Koy0MRWxzCOc005dGUSDUalcuaQfVZfoet2TvRwTMlsm4myTl3lHXCYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVx6L4uC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEo47eZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756EFC113D0;
-	Tue, 11 Nov 2025 00:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVx6L4uC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC12DC116B1;
+	Tue, 11 Nov 2025 00:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822776;
-	bh=xOCBnGooxB38jhc9ToLfva3xtcG+oeVg7Gjz/Yggtgc=;
+	s=korg; t=1762822779;
+	bh=IICWdzN8ppyacUp6o6dClvqsFRRFunMSD21GmlIoE7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEo47eZiByeKZAWJmiLgcPdiFVLBpe4/etPL8NZN12XpG6eAaYX40XyekIfYaijjJ
-	 /dEvjmsEwuyXh/6L6QyfEuBA9Yt3DW35yQ59QjvlHBx21yOn3+KfamKjAn0hwBn3yL
-	 gZdodF7jCvHRVaXAPEdbJf+dzVQUnRydaMQDWqg8=
+	b=HVx6L4uCLmuN5LioZu0v/9ykjyqrMlZbC38vpTJs4/Oc9ykYm36woZ1yad/59K2AG
+	 8x/cNvEP77C8kZWHfqmEYOTL/LibO0TZMCnOA1jFcoGiQTFayy6p1oSd3KC1xn3616
+	 NBwJxSrAiTXgoIuaXH1p0nnHaXuPhKpSyF/ogi88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Vineet Gupta <vgupta@kernel.org>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 169/849] soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
-Date: Tue, 11 Nov 2025 09:35:39 +0900
-Message-ID: <20251111004540.519770248@linuxfoundation.org>
+Subject: [PATCH 6.12 107/565] arc: Fix __fls() const-foldability via __builtin_clzl()
+Date: Tue, 11 Nov 2025 09:39:23 +0900
+Message-ID: <20251111004529.361676958@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
+[ Upstream commit a3fecb9160482367365cc384c59dd220b162b066 ]
 
-Add missing Tegra114 nvmem cells and fuse lookups which were added for
-Tegra124+ but omitted for Tegra114.
+While tracking down a problem where constant expressions used by
+BUILD_BUG_ON() suddenly stopped working[1], we found that an added static
+initializer was convincing the compiler that it couldn't track the state
+of the prior statically initialized value. Tracing this down found that
+ffs() was used in the initializer macro, but since it wasn't marked with
+__attribute__const__, the compiler had to assume the function might
+change variable states as a side-effect (which is not true for ffs(),
+which provides deterministic math results).
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+For arc architecture with CONFIG_ISA_ARCV2=y, the __fls() function
+uses __builtin_arc_fls() which lacks GCC's const attribute, preventing
+compile-time constant folding, and KUnit testing of ffs/fls fails on
+arc[3]. A patch[2] to GCC to solve this has been sent.
+
+Add a fix for this by handling compile-time constants with the standard
+__builtin_clzl() builtin (which has const attribute) while preserving
+the optimized arc-specific builtin for runtime cases. This has the added
+benefit of skipping runtime calculation of compile-time constant values.
+Even with the GCC bug fixed (which is about "attribute const") this is a
+good change to avoid needless runtime costs, and should be done
+regardless of the state of GCC's bug.
+
+Build tested ARCH=arc allyesconfig with GCC arc-linux 15.2.0.
+
+Link: https://github.com/KSPP/linux/issues/364 [1]
+Link: https://gcc.gnu.org/pipermail/gcc-patches/2025-August/693273.html
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202508031025.doWxtzzc-lkp@intel.com/ [3]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/fuse/fuse-tegra30.c | 122 ++++++++++++++++++++++++++
- 1 file changed, 122 insertions(+)
+ arch/arc/include/asm/bitops.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
-index e24ab5f7d2bf1..524fa1b0cd3d6 100644
---- a/drivers/soc/tegra/fuse/fuse-tegra30.c
-+++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
-@@ -117,6 +117,124 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
- #endif
- 
- #ifdef CONFIG_ARCH_TEGRA_114_SOC
-+static const struct nvmem_cell_info tegra114_fuse_cells[] = {
-+	{
-+		.name = "tsensor-cpu1",
-+		.offset = 0x084,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu2",
-+		.offset = 0x088,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-common",
-+		.offset = 0x08c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu0",
-+		.offset = 0x098,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "xusb-pad-calibration",
-+		.offset = 0x0f0,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu3",
-+		.offset = 0x12c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-gpu",
-+		.offset = 0x154,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-mem0",
-+		.offset = 0x158,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-mem1",
-+		.offset = 0x15c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-pllx",
-+		.offset = 0x160,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	},
-+};
-+
-+static const struct nvmem_cell_lookup tegra114_fuse_lookups[] = {
-+	{
-+		.nvmem_name = "fuse",
-+		.cell_name = "xusb-pad-calibration",
-+		.dev_id = "7009f000.padctl",
-+		.con_id = "calibration",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-common",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "common",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu0",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu0",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu1",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu1",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu2",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu2",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu3",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu3",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-mem0",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "mem0",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-mem1",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "mem1",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-gpu",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "gpu",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-pllx",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "pllx",
-+	},
-+};
-+
- static const struct tegra_fuse_info tegra114_fuse_info = {
- 	.read = tegra30_fuse_read,
- 	.size = 0x2a0,
-@@ -127,6 +245,10 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
- 	.init = tegra30_fuse_init,
- 	.speedo_init = tegra114_init_speedo_data,
- 	.info = &tegra114_fuse_info,
-+	.lookups = tegra114_fuse_lookups,
-+	.num_lookups = ARRAY_SIZE(tegra114_fuse_lookups),
-+	.cells = tegra114_fuse_cells,
-+	.num_cells = ARRAY_SIZE(tegra114_fuse_cells),
- 	.soc_attr_group = &tegra_soc_attr_group,
- 	.clk_suspend_on = false,
- };
+diff --git a/arch/arc/include/asm/bitops.h b/arch/arc/include/asm/bitops.h
+index f5a936496f060..24981bba974d3 100644
+--- a/arch/arc/include/asm/bitops.h
++++ b/arch/arc/include/asm/bitops.h
+@@ -133,6 +133,8 @@ static inline __attribute__ ((const)) int fls(unsigned int x)
+  */
+ static inline __attribute__ ((const)) unsigned long __fls(unsigned long x)
+ {
++	if (__builtin_constant_p(x))
++		return x ? BITS_PER_LONG - 1 - __builtin_clzl(x) : 0;
+ 	/* FLS insn has exactly same semantics as the API */
+ 	return	__builtin_arc_fls(x);
+ }
 -- 
 2.51.0
 
