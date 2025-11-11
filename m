@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17521F5F6;
-	Tue, 11 Nov 2025 01:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE2B7262A;
+	Tue, 11 Nov 2025 01:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822958; cv=none; b=j7j6cPpZe+NACVKi5QB5AUcLP9c3Uo1BHi/leAj1qd1mED/bm4n8vClesZ9yWjyWdw3irHLPSjmWOzsPLK7EeN97QBb+VDlAoU6JGBQ7+BblBG13qUR+dWBwGh/lPDYaeUtZpLc4/51uscoEVRv143Cmcgi8l6UzznN9pnDkjwM=
+	t=1762822960; cv=none; b=Q2J+hBDcsfALliLexjqNhOZfibso32ML/jNaiDMkW2HlaFY42mpizRAA5X24Wz7I7TUvxSXW+pqq6JxS8UbHfg2RHFWSjtpIURvFsAiDHcvjmtUo00dD0s/bxpl2AzfMIDdELItCT225C7Hz6InsR+x+AUqSjWXXf5SNDXZfPqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822958; c=relaxed/simple;
-	bh=r/JDgMjqQdW94k3Ey/MQ4LBcrOHUAzNNANSXNx5bbrw=;
+	s=arc-20240116; t=1762822960; c=relaxed/simple;
+	bh=y1rFbtkNrWXz/9DErEMK9p7+zBEdbjvWIJJLAdWrfl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VhT2U0FS5mo2bSM4GwEK+JtxWwk+YeHu5YvUB+hQaEJkBpmdEaolZOwB+/UaiAlvsx3FdS6Puz+/qUa11BGe6AqxZm/K+mRI6BKF6+p/TCptNqExi4e2Ei4WIGLE5TKTYSQVe5W68msIkMo47nclLSUHpJQ7W0jKf33xPJUlSOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y++O7mQp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QyPvX9/gr8yMPIF9KYfsid5lM++EyQDqzuPiflOGyPf3l/5hmTgueiN/Da4aITebw8zqTnHjDf7gni0vq6ayjG9Btj9oXMHq5pZTIUwjIdAwCZ+CgGgby7O0tY1S3566kup19mS7/7ApVkpW8ljBBNuvT8K9DvaNDVfFHNqvBeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkWaa2Bv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y++O7mQp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BACC2BCB0;
-	Tue, 11 Nov 2025 01:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkWaa2Bv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85B9C4CEF5;
+	Tue, 11 Nov 2025 01:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822957;
-	bh=r/JDgMjqQdW94k3Ey/MQ4LBcrOHUAzNNANSXNx5bbrw=;
+	s=korg; t=1762822960;
+	bh=y1rFbtkNrWXz/9DErEMK9p7+zBEdbjvWIJJLAdWrfl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y++O7mQpfaf0xoYaDWj6e1SEXpXW5U/mIFQh1sJVMOvQgfZYPneUGY7XQp15W4mUv
-	 mjcQCcf+0Mw8kUghL36mkUdrGEQNxe+t6Gztmr1zR/RAIQxQDiED0f/sV2BEqw0WRO
-	 UH5cWf97yy5Dk8xiG1ruFd8tpXRrfscPUJ0e6UnU=
+	b=JkWaa2BvkBfMYnUgjodNCFc61RbJfOOVpGbq1SfeiWY/Vq58eQHc/pttgWSBhm+9I
+	 +HPkKS8sPbIgo2/OPrD/144sYt23/2ACdNNgImUVjJ6V/gudPIa2QWwAu1skl/VbDV
+	 oSpL1HHv6FBG21xpsBJuoG1LGG9q3GVTVEKmqSYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/565] selftests/bpf: Fix bpf_prog_detach2 usage in test_lirc_mode2
-Date: Tue, 11 Nov 2025 09:39:21 +0900
-Message-ID: <20251111004529.319050347@linuxfoundation.org>
+Subject: [PATCH 6.12 141/565] video: backlight: lp855x_bl: Set correct EPROM start for LP8556
+Date: Tue, 11 Nov 2025 09:39:57 +0900
+Message-ID: <20251111004530.114192407@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -45,42 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 98857d111c53954aa038fcbc4cf48873e4240f7c ]
+[ Upstream commit 07c7efda24453e05951fb2879f5452b720b91169 ]
 
-Commit e9fc3ce99b34 ("libbpf: Streamline error reporting for high-level
-APIs") redefined the way that bpf_prog_detach2() returns. Therefore, adapt
-the usage in test_lirc_mode2_user.c.
+According to LP8556 datasheet EPROM region starts at 0x98 so adjust value
+in the driver accordingly.
 
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250828-selftests-bpf-v1-1-c7811cd8b98c@suse.com
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250909074304.92135-2-clamor95@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_lirc_mode2_user.c | 2 +-
+ drivers/video/backlight/lp855x_bl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_lirc_mode2_user.c b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-index 4694422aa76c3..88e4aeab21b7b 100644
---- a/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-+++ b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-@@ -74,7 +74,7 @@ int main(int argc, char **argv)
+diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
+index 7075bfab59c4d..d191560ce285f 100644
+--- a/drivers/video/backlight/lp855x_bl.c
++++ b/drivers/video/backlight/lp855x_bl.c
+@@ -22,7 +22,7 @@
+ #define LP855X_DEVICE_CTRL		0x01
+ #define LP855X_EEPROM_START		0xA0
+ #define LP855X_EEPROM_END		0xA7
+-#define LP8556_EPROM_START		0xA0
++#define LP8556_EPROM_START		0x98
+ #define LP8556_EPROM_END		0xAF
  
- 	/* Let's try detach it before it was ever attached */
- 	ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
--	if (ret != -1 || errno != ENOENT) {
-+	if (ret != -ENOENT) {
- 		printf("bpf_prog_detach2 not attached should fail: %m\n");
- 		return 1;
- 	}
+ /* LP8555/7 Registers */
 -- 
 2.51.0
 
