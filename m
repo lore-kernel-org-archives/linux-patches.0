@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9071F4169;
-	Tue, 11 Nov 2025 01:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A489825A334;
+	Tue, 11 Nov 2025 01:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824069; cv=none; b=BMqNmYcIcUCmkEsbrVgB2JTd9uJmnm+nWSxWVsXAfmdfVhKTRuEyJF4X38SJHbJuucMXYPXQIAQ8TVnIpj70NzzYSr+6W93WnptFmKlczKsKCWtni6VAmCfwjclVZAMCdmfyE3JvThNLqgcI9ZwAAWEzBhFCEuRldF0wMuu+Dkk=
+	t=1762824071; cv=none; b=MZYGQjDJ8I8BvUSIpszih3a+7HkLdz6eS0b1Hv0nli41XiGckIXgUk3JFsrqhW8K6yjoyBxtvsha15w+4/305bdm/f3+yjN3gb0Al73TZflVy/6FFP2uK04E6SnVMUg4jpiT01ggAP0qoSDX9V6+JT1NmmzlbKZtarSyPFYKSXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824069; c=relaxed/simple;
-	bh=ihEnE40IbP+d48j6uvKI5MYF94f5GWChobsU1TrmYuc=;
+	s=arc-20240116; t=1762824071; c=relaxed/simple;
+	bh=ehYKDwXcD3dH5bsLqSF/T1s6XJPNUEy/+Yw9zS42aBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l+RTmeW0FHCzzT96cXj/j+Z/Fw8PnKZcujnU++2imTBqGAqwfraBHVCdEf1v3evfTkIrgLSQ65vhqhnc6pPhuPlyHRoherAgNi04XvGOia1WMpWyqAQb+3Bx1sG1JO/eyLsdtnzVdlm5WDClPq3bqbr8Qsm1bkJNOKHmcXSck70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcUqjSK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d+EmCYuvCWowYuEKuXhkRVrN8iKFc2nx6sURFmp0/8eHmkuIMgNkBCj1Bw8z6qkP0QULErrpS3RV/taXBKisIHz5AJxIgQN3Ym6VaJyWbWoUjZY2yqkRr/PkhqekUguuCtOvvMq1hwXE6TICItXvdcFPriZESOY3dNen9QOTTN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVyvuN4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcUqjSK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBF4C4CEFB;
-	Tue, 11 Nov 2025 01:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVyvuN4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A80C116B1;
+	Tue, 11 Nov 2025 01:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824069;
-	bh=ihEnE40IbP+d48j6uvKI5MYF94f5GWChobsU1TrmYuc=;
+	s=korg; t=1762824071;
+	bh=ehYKDwXcD3dH5bsLqSF/T1s6XJPNUEy/+Yw9zS42aBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcUqjSK7P3JA6Fw+/+7S2BZ8CGKCGHdzkukzDTlJOSIqWLIgX+9nkOMa00VAOyeW9
-	 iB6dfZ+TILivWz2gnXHezoruGNv3RZ35oasxdR7xaY8MejXmeyHclr/raPsnshXfBp
-	 Zg+J1lBz0CQmKHGsiJNMVp3R7xAEFtGVmqoU3GHU=
+	b=cVyvuN4fWXugRtl4krWNm2ypcmPhSmn3tK4dEWh1IiIYTjJdunQ3o8GY/+1oiUPfe
+	 xzhmxv+0xVSGDp91V5MIQ1RbNDC1oV/MeF0T1KR5IX9ZuEcr6pIHEAFUM29EaNHdXT
+	 +30TfHKpO1yRWxtObRYyta6fyKT2ie+dfhxCwuZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Forest Crossman <cyrozap@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 381/565] usb: mon: Increase BUFF_MAX to 64 MiB to support multi-MB URBs
-Date: Tue, 11 Nov 2025 09:43:57 +0900
-Message-ID: <20251111004535.442441605@linuxfoundation.org>
+Subject: [PATCH 6.17 431/849] netlink: specs: fou: change local-v6/peer-v6 check
+Date: Tue, 11 Nov 2025 09:40:01 +0900
+Message-ID: <20251111004546.853601036@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +49,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Forest Crossman <cyrozap@gmail.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit 368ed48a5ef52e384f54d5809f0a0b79ac567479 ]
+[ Upstream commit 9f9581ba74a931843c6d807ecfeaff9fb8c1b731 ]
 
-The usbmon binary interface currently truncates captures of large
-transfers from higher-speed USB devices. Because a single event capture
-is limited to one-fifth of the total buffer size, the current maximum
-size of a captured URB is around 240 KiB. This is insufficient when
-capturing traffic from modern devices that use transfers of several
-hundred kilobytes or more, as truncated URBs can make it impossible for
-user-space USB analysis tools like Wireshark to properly defragment and
-reassemble higher-level protocol packets in the captured data.
+While updating the binary min-len implementation, I noticed that
+the only user, should AFAICT be using exact-len instead.
 
-The root cause of this issue is the 1200 KiB BUFF_MAX limit, which has
-not been changed since the binary interface was introduced in 2006.
+In net/ipv4/fou_core.c FOU_ATTR_LOCAL_V6 and FOU_ATTR_PEER_V6
+are only used for singular IPv6 addresses, and there are AFAICT
+no known implementations trying to send more, it therefore
+appears safe to change it to an exact-len policy.
 
-To resolve this issue, this patch increases BUFF_MAX to 64 MiB. The
-original comment for BUFF_MAX based the limit's calculation on a
-saturated 480 Mbit/s bus. Applying the same logic to a modern USB 3.2
-Gen 2×2 20 Gbit/s bus (~2500 MB/s over a 20ms window) indicates the
-buffer should be at least 50 MB. The new limit of 64 MiB covers that,
-plus a little extra for any overhead.
+This patch therefore changes the local-v6/peer-v6 attributes to
+use an exact-len check, instead of a min-len check.
 
-With this change, both users and developers should now be able to debug
-and reverse engineer modern USB devices even when running unmodified
-distro kernels.
-
-Please note that this change does not affect the default buffer size. A
-larger buffer is only allocated when a user explicitly requests it via
-the MON_IOCT_RING_SIZE ioctl, so the change to the maximum buffer size
-should not unduly increase memory usage for users that don't
-deliberately request a larger buffer.
-
-Link: https://lore.kernel.org/CAO3ALPzdUkmMr0YMrODLeDSLZqNCkWcAP8NumuPHLjNJ8wC1kQ@mail.gmail.com
-Signed-off-by: Forest Crossman <cyrozap@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/CAO3ALPxU5RzcoueC454L=WZ1qGMfAcnxm+T+p+9D8O9mcrUbCQ@mail.gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://patch.msgid.link/20250902154640.759815-2-ast@fiberby.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mon/mon_bin.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ Documentation/netlink/specs/fou.yaml | 4 ++--
+ net/ipv4/fou_nl.c                    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/mon/mon_bin.c b/drivers/usb/mon/mon_bin.c
-index afb71c18415dd..01aa6a795d275 100644
---- a/drivers/usb/mon/mon_bin.c
-+++ b/drivers/usb/mon/mon_bin.c
-@@ -68,18 +68,20 @@
-  * The magic limit was calculated so that it allows the monitoring
-  * application to pick data once in two ticks. This way, another application,
-  * which presumably drives the bus, gets to hog CPU, yet we collect our data.
-- * If HZ is 100, a 480 mbit/s bus drives 614 KB every jiffy. USB has an
-- * enormous overhead built into the bus protocol, so we need about 1000 KB.
-+ *
-+ * Originally, for a 480 Mbit/s bus this required a buffer of about 1 MB. For
-+ * modern 20 Gbps buses, this value increases to over 50 MB. The maximum
-+ * buffer size is set to 64 MiB to accommodate this.
-  *
-  * This is still too much for most cases, where we just snoop a few
-  * descriptor fetches for enumeration. So, the default is a "reasonable"
-- * amount for systems with HZ=250 and incomplete bus saturation.
-+ * amount for typical, low-throughput use cases.
-  *
-  * XXX What about multi-megabyte URBs which take minutes to transfer?
-  */
--#define BUFF_MAX  CHUNK_ALIGN(1200*1024)
--#define BUFF_DFL   CHUNK_ALIGN(300*1024)
--#define BUFF_MIN     CHUNK_ALIGN(8*1024)
-+#define BUFF_MAX  CHUNK_ALIGN(64*1024*1024)
-+#define BUFF_DFL      CHUNK_ALIGN(300*1024)
-+#define BUFF_MIN        CHUNK_ALIGN(8*1024)
- 
- /*
-  * The per-event API header (2 per URB).
+diff --git a/Documentation/netlink/specs/fou.yaml b/Documentation/netlink/specs/fou.yaml
+index 57735726262ec..8e7974ec453fc 100644
+--- a/Documentation/netlink/specs/fou.yaml
++++ b/Documentation/netlink/specs/fou.yaml
+@@ -52,7 +52,7 @@ attribute-sets:
+         name: local-v6
+         type: binary
+         checks:
+-          min-len: 16
++          exact-len: 16
+       -
+         name: peer-v4
+         type: u32
+@@ -60,7 +60,7 @@ attribute-sets:
+         name: peer-v6
+         type: binary
+         checks:
+-          min-len: 16
++          exact-len: 16
+       -
+         name: peer-port
+         type: u16
+diff --git a/net/ipv4/fou_nl.c b/net/ipv4/fou_nl.c
+index 3d9614609b2d3..506260b4a4dc2 100644
+--- a/net/ipv4/fou_nl.c
++++ b/net/ipv4/fou_nl.c
+@@ -18,9 +18,9 @@ const struct nla_policy fou_nl_policy[FOU_ATTR_IFINDEX + 1] = {
+ 	[FOU_ATTR_TYPE] = { .type = NLA_U8, },
+ 	[FOU_ATTR_REMCSUM_NOPARTIAL] = { .type = NLA_FLAG, },
+ 	[FOU_ATTR_LOCAL_V4] = { .type = NLA_U32, },
+-	[FOU_ATTR_LOCAL_V6] = { .len = 16, },
++	[FOU_ATTR_LOCAL_V6] = NLA_POLICY_EXACT_LEN(16),
+ 	[FOU_ATTR_PEER_V4] = { .type = NLA_U32, },
+-	[FOU_ATTR_PEER_V6] = { .len = 16, },
++	[FOU_ATTR_PEER_V6] = NLA_POLICY_EXACT_LEN(16),
+ 	[FOU_ATTR_PEER_PORT] = { .type = NLA_BE16, },
+ 	[FOU_ATTR_IFINDEX] = { .type = NLA_S32, },
+ };
 -- 
 2.51.0
 
