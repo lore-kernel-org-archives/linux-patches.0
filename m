@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49402E9EB1;
-	Tue, 11 Nov 2025 01:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723832E9EB1;
+	Tue, 11 Nov 2025 01:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823823; cv=none; b=O1D2A9lT4d24GnjLHi4u5hwIdIsroyXUPmz1iIZCjyo+1hMLlAcPP5MpIfbjqVfnxdqtmeNacFP/GUX6fSa9jJJPA0i1UVxVB90NAJSRIJdiGvVx/9viQXpF+uQNNt2qba/yzEb2gPSnpnWKl+Df/EDbHDXufk24DWLacdv+SOU=
+	t=1762823826; cv=none; b=rjqoxpgj48w/q3tEoIiLgEQqKHYimr6+gdHGEOmDVHzyMHWJ7PzD55twQwSu/UfraK0W9oixFsWlhfuPuGMLYY4mwnu2At8gz+j62Zab+68ydHvK3v2t29nI3tJnjwv9OAMwAw/Ll8E+6sv5p4DuVVJzczPYEeq6xgfphGdkSp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823823; c=relaxed/simple;
-	bh=GgJcYL//oSEcrBbxg43O8gsHS579786yilEng3sKe9w=;
+	s=arc-20240116; t=1762823826; c=relaxed/simple;
+	bh=RZSfBXNyt6hBBwSlhnvYDksGFf2HpRnHKcgRirjHUlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1O8BvxLqQY4+7AafXyZaAuNgkXBbo1dk5RLjTzoIAD3XwHSlY9V6fh07Pj0D5ZNnRE4dOSVMoaOiEcr7+YXvOtwXzAnJa05yWuH4k0xIVP93D4OSxqDDvfxzrJE7AJpOaMJo2ZEQqTJn9DAAM2VUQNud510qdmdTTSWLLz+gr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGa3bXUz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hito8ItI5anRQI8rj9jtrplBfPt+GH2bW/iIKuBbhlpPLeNrMCgq1RuGcgZfUDbX1MhYu0CLRTpcgvGkeeAIu9DjIaFhVsHSko/ZDs7O6JypH2Le/sy54u5RcAhmrnccGhF96qlLwc/dKzYgOh7AVSYeLmJ/eT35YsBP9+MD+K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCS1y2gg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGa3bXUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096BCC16AAE;
-	Tue, 11 Nov 2025 01:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCS1y2gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547B3C113D0;
+	Tue, 11 Nov 2025 01:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823823;
-	bh=GgJcYL//oSEcrBbxg43O8gsHS579786yilEng3sKe9w=;
+	s=korg; t=1762823825;
+	bh=RZSfBXNyt6hBBwSlhnvYDksGFf2HpRnHKcgRirjHUlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGa3bXUzxt/dQz7MTMosujnHt4G1nr233KSVt3phCoSEp7RlpiX9CR4VtjmXcRANU
-	 +mgDR5kLsRKm4CBFmIJg1xt4c9oTq/m4rwerBilmuRzCdZg37wOOehWxo+7jMSX2/d
-	 GJzVK/65GIsZtKfMCbO2xxaPr2rIRZsMF6+GBO/A=
+	b=tCS1y2ggr4Y2Mpztz/GAJEcxRBmSTwillznelh95oMDdzhTyPwOecGQjZ86d64UBD
+	 5bhhie3JUPg6D0UOC2IIf4FFDieIwZin/hT2BJU7xZtna6bD1dICBE2fydwi/cOhSY
+	 CNO1ZwboFem5qtmwTuae3ikcXh/cX3o/Jm9WxLj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Summers <stuart.summers@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Michael Dege <michael.dege@renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 379/849] drm/xe: Cancel pending TLB inval workers on teardown
-Date: Tue, 11 Nov 2025 09:39:09 +0900
-Message-ID: <20251111004545.593599495@linuxfoundation.org>
+Subject: [PATCH 6.12 332/565] phy: renesas: r8a779f0-ether-serdes: add new step added to latest datasheet
+Date: Tue, 11 Nov 2025 09:43:08 +0900
+Message-ID: <20251111004534.352113138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +47,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stuart Summers <stuart.summers@intel.com>
+From: Michael Dege <michael.dege@renesas.com>
 
-[ Upstream commit 76186a253a4b9eb41c5a83224c14efdf30960a71 ]
+[ Upstream commit e4a8db93b5ec9bca1cc66b295544899e3afd5e86 ]
 
-Add a new _fini() routine on the GT TLB invalidation
-side to handle this worker cleanup on driver teardown.
+R-Car S4-8 datasheet Rev.1.20 describes some additional register
+settings at the end of the initialization.
 
-v2: Move the TLB teardown to the gt fini() routine called during
-    gt_init rather than in gt_alloc. This way the GT structure stays
-    alive for while we reset the TLB state.
-
-Signed-off-by: Stuart Summers <stuart.summers@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://lore.kernel.org/r/20250826182911.392550-3-stuart.summers@intel.com
+Signed-off-by: Michael Dege <michael.dege@renesas.com>
+Link: https://lore.kernel.org/r/20250703-renesas-serdes-update-v4-2-1db5629cac2b@renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c                  |  2 ++
- drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c | 12 ++++++++++++
- drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h |  1 +
- 3 files changed, 15 insertions(+)
+ drivers/phy/renesas/r8a779f0-ether-serdes.c | 28 +++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
-index 4d74a4983fd07..2f4c52716e75b 100644
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -605,6 +605,8 @@ static void xe_gt_fini(void *arg)
- 	struct xe_gt *gt = arg;
- 	int i;
- 
-+	xe_gt_tlb_invalidation_fini(gt);
-+
- 	for (i = 0; i < XE_ENGINE_CLASS_MAX; ++i)
- 		xe_hw_fence_irq_finish(&gt->fence_irq[i]);
- 
-diff --git a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-index 086c12ee3d9de..64cd6cf0ab8df 100644
---- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-+++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-@@ -173,6 +173,18 @@ void xe_gt_tlb_invalidation_reset(struct xe_gt *gt)
- 	mutex_unlock(&gt->uc.guc.ct.lock);
+diff --git a/drivers/phy/renesas/r8a779f0-ether-serdes.c b/drivers/phy/renesas/r8a779f0-ether-serdes.c
+index f1f1da4a0b1fe..737672113e304 100644
+--- a/drivers/phy/renesas/r8a779f0-ether-serdes.c
++++ b/drivers/phy/renesas/r8a779f0-ether-serdes.c
+@@ -49,6 +49,13 @@ static void r8a779f0_eth_serdes_write32(void __iomem *addr, u32 offs, u32 bank,
+ 	iowrite32(data, addr + offs);
  }
  
-+/**
-+ *
-+ * xe_gt_tlb_invalidation_fini - Clean up GT TLB invalidation state
-+ *
-+ * Cancel pending fence workers and clean up any additional
-+ * GT TLB invalidation state.
-+ */
-+void xe_gt_tlb_invalidation_fini(struct xe_gt *gt)
++static u32 r8a779f0_eth_serdes_read32(void __iomem *addr, u32 offs,  u32 bank)
 +{
-+	xe_gt_tlb_invalidation_reset(gt);
++	iowrite32(bank, addr + R8A779F0_ETH_SERDES_BANK_SELECT);
++
++	return ioread32(addr + offs);
 +}
 +
- static bool tlb_invalidation_seqno_past(struct xe_gt *gt, int seqno)
+ static int
+ r8a779f0_eth_serdes_reg_wait(struct r8a779f0_eth_serdes_channel *channel,
+ 			     u32 offs, u32 bank, u32 mask, u32 expected)
+@@ -274,6 +281,7 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
+ *channel)
  {
- 	int seqno_recv = READ_ONCE(gt->tlb_invalidation.seqno_recv);
-diff --git a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-index f7f0f2eaf4b59..3e4cff3922d6f 100644
---- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-+++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-@@ -16,6 +16,7 @@ struct xe_vm;
- struct xe_vma;
+ 	int ret;
++	u32 val;
  
- int xe_gt_tlb_invalidation_init_early(struct xe_gt *gt);
-+void xe_gt_tlb_invalidation_fini(struct xe_gt *gt);
+ 	ret = r8a779f0_eth_serdes_chan_setting(channel);
+ 	if (ret)
+@@ -287,6 +295,26 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
  
- void xe_gt_tlb_invalidation_reset(struct xe_gt *gt);
- int xe_gt_tlb_invalidation_ggtt(struct xe_gt *gt);
+ 	r8a779f0_eth_serdes_write32(channel->addr, 0x03d0, 0x380, 0x0000);
+ 
++	val = r8a779f0_eth_serdes_read32(channel->addr, 0x00c0, 0x180);
++	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val | BIT(8));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 1);
++	if (ret)
++		return ret;
++	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val & ~BIT(8));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 0);
++	if (ret)
++		return ret;
++
++	val = r8a779f0_eth_serdes_read32(channel->addr, 0x0144, 0x180);
++	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val | BIT(4));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 1);
++	if (ret)
++		return ret;
++	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val & ~BIT(4));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 0);
++	if (ret)
++		return ret;
++
+ 	return r8a779f0_eth_serdes_monitor_linkup(channel);
+ }
+ 
 -- 
 2.51.0
 
