@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BED26ED5E;
-	Tue, 11 Nov 2025 01:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3932609FD;
+	Tue, 11 Nov 2025 01:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824469; cv=none; b=INYGPEUBfHfaclfHXRFoZ5Qbabsm7Ls57Jm2OIcTy2f0LbacX/DyMPYRpgZCdrd+2E40GosgepvcicsCXuwKTqqnc1/IZXHouThezhRc+pX2ur2+571w49brWwU9K1zwo8pBU4+wR6GIrkwu6rR5unhS/AEiIeEy509DI8Ev49k=
+	t=1762824472; cv=none; b=Fu4IHpfrz0/WVd1i2oxDt5QRY82bgHM6eP7xhQ8ujM60o+TLgzvANzatCOBPiYNOGrTkV8uCKz+xZVv7lY6csLKrJq2+DxSIJyPi1srjbwpJgY0sFzZjUUYEGkDJAWkR5wZrLrcpvvkejeuF9L7RxD7tkRNkDWyMP1mToSOh6bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824469; c=relaxed/simple;
-	bh=dCATCRaAn34DO2/+ThL+Vvc96E4HJiUnRmkdHFvYFCc=;
+	s=arc-20240116; t=1762824472; c=relaxed/simple;
+	bh=wFCl8y4fyrBdX0yVkBmqEfsfUTkj32BnNd+aWBvyXa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSf0WtMYeB6SrhRYM1v6Jb21OQO9bVg2ZaV+lrddYWdBGnCPuup1pAs7ZDDr9YM99dWxghYel4jGkVufrWk317JdJibndHm3gfDYzcbFf8K6Oga1cdk0a5TALcSOfgBTOn1ON6Ulf3MA4uw3Ec7bE2EpXlXVVTu88y1vqyMhlCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVs6Pmdm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dC5AbjejA4hkumrB6u2JiKVHumNT0AwDixXYAHfLW0PtnGS7xCxGr+RsRyHHpqc39tYtxqQHHiYQmzFe7bUvt5mMr+fSBb255cP8deGBLZibsn/FxuA4PA7i38s1z3OKtz1WuZuQfUV+KHRpYju0I25iq7ru/AI/7YgVvIVSYDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gllEidIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVs6Pmdm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C393C116B1;
-	Tue, 11 Nov 2025 01:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gllEidIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAA9C116B1;
+	Tue, 11 Nov 2025 01:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824469;
-	bh=dCATCRaAn34DO2/+ThL+Vvc96E4HJiUnRmkdHFvYFCc=;
+	s=korg; t=1762824471;
+	bh=wFCl8y4fyrBdX0yVkBmqEfsfUTkj32BnNd+aWBvyXa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVs6PmdmzhdO/T+VihQn1UK297LZtQtthp3ztkeJQ/Y29QW11WyW/0V8F+BfbAvFy
-	 tKElZKQil/Ej65dCaZt1KgvZZ/TglTzoTLXohwQ2ilC6zXcNOMkNewWcwhdTNNfnt5
-	 hkdMl4/kJANIwLgRh73piPhOnQ80Jygm0NEC+aB4=
+	b=gllEidIEFnp34PTI5/u0Yabn9NWznzrvwxMhjtaU43mNLg8JXlLFxXahWcM+AJqSS
+	 xgyAmZQvQtHc0QDnUs3s8S+FEy+j6lMZ4+h9QF33o8t4eNYMoMeieO6x6OwR9rNmW3
+	 gJf4qPfz1f4zecm/HTiGmWnXasDS1RkcNUsByimY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Dege <michael.dege@renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Mauri Carvalho <mcarvalho3@lenovo.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Mario Limonciello <Mario.Limonciello@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 506/849] phy: renesas: r8a779f0-ether-serdes: add new step added to latest datasheet
-Date: Tue, 11 Nov 2025 09:41:16 +0900
-Message-ID: <20251111004548.663862233@linuxfoundation.org>
+Subject: [PATCH 6.12 453/565] drm/amd/display: Add fallback path for YCBCR422
+Date: Tue, 11 Nov 2025 09:45:09 +0900
+Message-ID: <20251111004537.082307214@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +51,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Dege <michael.dege@renesas.com>
+From: Mario Limonciello <Mario.Limonciello@amd.com>
 
-[ Upstream commit e4a8db93b5ec9bca1cc66b295544899e3afd5e86 ]
+[ Upstream commit db291ed1732e02e79dca431838713bbf602bda1c ]
 
-R-Car S4-8 datasheet Rev.1.20 describes some additional register
-settings at the end of the initialization.
+[Why]
+DP validation may fail with multiple displays and higher color depths.
+The sink may support others though.
 
-Signed-off-by: Michael Dege <michael.dege@renesas.com>
-Link: https://lore.kernel.org/r/20250703-renesas-serdes-update-v4-2-1db5629cac2b@renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[How]
+When DP bandwidth validation fails, progressively fallback through:
+- YUV422 8bpc (bandwidth efficient)
+- YUV422 6bpc (reduced color depth)
+- YUV420 (last resort)
+
+This resolves cases where displays would show no image due to insufficient
+DP link bandwidth for the requested RGB mode.
+
+Suggested-by: Mauri Carvalho <mcarvalho3@lenovo.com>
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Mario Limonciello <Mario.Limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/r8a779f0-ether-serdes.c | 28 +++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 45 +++++++++++++++----
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  1 +
+ 2 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/renesas/r8a779f0-ether-serdes.c b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-index 3b2d8cef75e52..4d12d091b0ab0 100644
---- a/drivers/phy/renesas/r8a779f0-ether-serdes.c
-+++ b/drivers/phy/renesas/r8a779f0-ether-serdes.c
-@@ -49,6 +49,13 @@ static void r8a779f0_eth_serdes_write32(void __iomem *addr, u32 offs, u32 bank,
- 	iowrite32(data, addr + offs);
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index c314c213c21c3..271710104f0e5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6162,7 +6162,8 @@ static void fill_stream_properties_from_drm_display_mode(
+ 			&& aconnector->force_yuv420_output)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR420;
+ 	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR422)
+-			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
++			&& aconnector
++			&& aconnector->force_yuv422_output)
+ 		timing_out->pixel_encoding = PIXEL_ENCODING_YCBCR422;
+ 	else if ((connector->display_info.color_formats & DRM_COLOR_FORMAT_YCBCR444)
+ 			&& stream->signal == SIGNAL_TYPE_HDMI_TYPE_A)
+@@ -7421,6 +7422,7 @@ create_validate_stream_for_sink(struct drm_connector *connector,
+ 		bpc_limit = 8;
  
-+static u32 r8a779f0_eth_serdes_read32(void __iomem *addr, u32 offs,  u32 bank)
-+{
-+	iowrite32(bank, addr + R8A779F0_ETH_SERDES_BANK_SELECT);
-+
-+	return ioread32(addr + offs);
-+}
-+
- static int
- r8a779f0_eth_serdes_reg_wait(struct r8a779f0_eth_serdes_channel *channel,
- 			     u32 offs, u32 bank, u32 mask, u32 expected)
-@@ -274,6 +281,7 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
- *channel)
- {
- 	int ret;
-+	u32 val;
+ 	do {
++		drm_dbg_kms(connector->dev, "Trying with %d bpc\n", requested_bpc);
+ 		stream = create_stream_for_sink(connector, drm_mode,
+ 						dm_state, old_stream,
+ 						requested_bpc);
+@@ -7456,16 +7458,41 @@ create_validate_stream_for_sink(struct drm_connector *connector,
  
- 	ret = r8a779f0_eth_serdes_chan_setting(channel);
- 	if (ret)
-@@ -287,6 +295,26 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
+ 	} while (stream == NULL && requested_bpc >= bpc_limit);
  
- 	r8a779f0_eth_serdes_write32(channel->addr, 0x03d0, 0x380, 0x0000);
+-	if ((dc_result == DC_FAIL_ENC_VALIDATE ||
+-	     dc_result == DC_EXCEED_DONGLE_CAP) &&
+-	     !aconnector->force_yuv420_output) {
+-		DRM_DEBUG_KMS("%s:%d Retry forcing yuv420 encoding\n",
+-				     __func__, __LINE__);
+-
+-		aconnector->force_yuv420_output = true;
++	switch (dc_result) {
++	/*
++	 * If we failed to validate DP bandwidth stream with the requested RGB color depth,
++	 * we try to fallback and configure in order:
++	 * YUV422 (8bpc, 6bpc)
++	 * YUV420 (8bpc, 6bpc)
++	 */
++	case DC_FAIL_ENC_VALIDATE:
++	case DC_EXCEED_DONGLE_CAP:
++	case DC_NO_DP_LINK_BANDWIDTH:
++		/* recursively entered twice and already tried both YUV422 and YUV420 */
++		if (aconnector->force_yuv422_output && aconnector->force_yuv420_output)
++			break;
++		/* first failure; try YUV422 */
++		if (!aconnector->force_yuv422_output) {
++			drm_dbg_kms(connector->dev, "%s:%d Validation failed with %d, retrying w/ YUV422\n",
++				    __func__, __LINE__, dc_result);
++			aconnector->force_yuv422_output = true;
++		/* recursively entered and YUV422 failed, try YUV420 */
++		} else if (!aconnector->force_yuv420_output) {
++			drm_dbg_kms(connector->dev, "%s:%d Validation failed with %d, retrying w/ YUV420\n",
++				    __func__, __LINE__, dc_result);
++			aconnector->force_yuv420_output = true;
++		}
+ 		stream = create_validate_stream_for_sink(connector, drm_mode,
+-						dm_state, old_stream);
++							 dm_state, old_stream);
++		aconnector->force_yuv422_output = false;
+ 		aconnector->force_yuv420_output = false;
++		break;
++	case DC_OK:
++		break;
++	default:
++		drm_dbg_kms(connector->dev, "%s:%d Unhandled validation failure %d\n",
++			    __func__, __LINE__, dc_result);
++		break;
+ 	}
  
-+	val = r8a779f0_eth_serdes_read32(channel->addr, 0x00c0, 0x180);
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val | BIT(8));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 1);
-+	if (ret)
-+		return ret;
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val & ~BIT(8));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 0);
-+	if (ret)
-+		return ret;
-+
-+	val = r8a779f0_eth_serdes_read32(channel->addr, 0x0144, 0x180);
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val | BIT(4));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 1);
-+	if (ret)
-+		return ret;
-+	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val & ~BIT(4));
-+	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 0);
-+	if (ret)
-+		return ret;
-+
- 	return r8a779f0_eth_serdes_monitor_linkup(channel);
- }
+ 	return stream;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 47f6569be54cb..2c0e1180706fa 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -724,6 +724,7 @@ struct amdgpu_dm_connector {
  
+ 	bool fake_enable;
+ 	bool force_yuv420_output;
++	bool force_yuv422_output;
+ 	struct dsc_preferred_settings dsc_settings;
+ 	union dp_downstream_port_present mst_downstream_port_present;
+ 	/* Cached display modes */
 -- 
 2.51.0
 
