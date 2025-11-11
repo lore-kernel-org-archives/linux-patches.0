@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4962FF143;
-	Tue, 11 Nov 2025 01:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3C341C69;
+	Tue, 11 Nov 2025 01:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825450; cv=none; b=Rr4Jx4oyEBnvg4OQUmYwOsahN31MC9qcWybdxJilyfBym41IQfJToouu//kU+HCgGkyg+PTJoQqhKjzah/V51e/fPtvGKId2IDG57iiVYGLX1SN7YzGQX05G1uwNlvUWg2Us33At4BlCgx+PSFZgNMOFkztrIBF6czqvmZWNFM8=
+	t=1762825452; cv=none; b=mddF9QvVzsmwUEeEHtanxh1/toH1JXuMPoh4gC+dG6/u9Yz9qpx2SEYOA/yk2RKdNA4t+ZzFfBW1gS+L+1nUceT6tw7BCxuNKQgGT/hJJoDJQk8k3MMPZmFUx9+YSuqZ+yXp5cSJlPmJcqVApoXT23X945IESx+sZizE24bUw7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825450; c=relaxed/simple;
-	bh=Z/X8bxL4av4VfNFe7wEfmsXRY4cp9eHqH5V8vnEeDgE=;
+	s=arc-20240116; t=1762825452; c=relaxed/simple;
+	bh=3KQ8HWD0UFg0qpPhqOVXjiiPW6W8dhnBp1ZhN9AbGg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2SF9ugvYF9pBddVCT0fNfj4vaKhuXvQFpbbnfQoZwlfU93D4Vt5/ooKQSxz7FvuiuHR6x+JThFAq68K1J1OzX82NnMamvuLZ32Pp1oGt7XR1b1XDcmB9VrdAB4t4tA3hPtWcNOJ1wfAtluP6w7QqEl6syI+MBIvzNUmFKJxEH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Op/8m8pl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/tQ0Gh2ndZbXVJk3fOqyAmE4Yckx5cUjLZc44m27vzIQRgNujGeGjHl1wk2xQTPIRRfCtn4UuhMhsAMo3feEjA7tsStDlZ0Cheov6EMqTXyHA60siTRESWupspkZYVA10eGqCYIwHv6hTiHVaXESLLn7oocRARAsZFc/HU9aVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkSEQjf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Op/8m8pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9372C16AAE;
-	Tue, 11 Nov 2025 01:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkSEQjf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD35C116B1;
+	Tue, 11 Nov 2025 01:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825450;
-	bh=Z/X8bxL4av4VfNFe7wEfmsXRY4cp9eHqH5V8vnEeDgE=;
+	s=korg; t=1762825452;
+	bh=3KQ8HWD0UFg0qpPhqOVXjiiPW6W8dhnBp1ZhN9AbGg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Op/8m8pl5ISPlKMMXFbOj2/R/6T1HNBYESyN4/fVMkwv/s6cNsqKCpIvTSUKTy3T4
-	 dtq8Aa08YnEN5drBOKCMBFhSIngfz1ewUbJZkJAReVgFJ1mkQCKyHMZGZp7BIglp+G
-	 AxC7h7sxGIsdlgSzhcEhPN+MAst1vNPvjxWy6bfQ=
+	b=WkSEQjf4ytWKc0w3nruPh4jLtoNQQl/Za7lI55aSEu//+QXbPeLHENIQpKEoLVd++
+	 JUx6gWeT3RE1b4BQRaFUgj+5m2leEFyJihlK2b4gscYtOgNeAxHCUqLuB8VZj7VC7M
+	 HicGokwQAjwnrmTUcl1LbSQqdjjfZpUKBc9bOS0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 763/849] selftests: netdevsim: Fix ethtool-coalesce.sh fail by installing ethtool-common.sh
-Date: Tue, 11 Nov 2025 09:45:33 +0900
-Message-ID: <20251111004554.878696890@linuxfoundation.org>
+Subject: [PATCH 6.17 764/849] net: vlan: sync VLAN features with lower device
+Date: Tue, 11 Nov 2025 09:45:34 +0900
+Message-ID: <20251111004554.903325473@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -51,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit d01f8136d46b925798abcf86b35a4021e4cfb8bb ]
+[ Upstream commit c211f5d7cbd5cb34489d526648bb9c8ecc907dee ]
 
-The script "ethtool-common.sh" is not installed in INSTALL_PATH, and
-triggers some errors when I try to run the test
-'drivers/net/netdevsim/ethtool-coalesce.sh':
+After registering a VLAN device and setting its feature flags, we need to
+synchronize the VLAN features with the lower device. For example, the VLAN
+device does not have the NETIF_F_LRO flag, it should be synchronized with
+the lower device based on the NETIF_F_UPPER_DISABLES definition.
 
-  TAP version 13
-  1..1
-  # timeout set to 600
-  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
-  # ./ethtool-coalesce.sh: line 4: ethtool-common.sh: No such file or directory
-  # ./ethtool-coalesce.sh: line 25: make_netdev: command not found
-  # ethtool: bad command line argument(s)
-  # ./ethtool-coalesce.sh: line 124: check: command not found
-  # ./ethtool-coalesce.sh: line 126: [: -eq: unary operator expected
-  # FAILED /0 checks
-  not ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh # exit=1
+As the dev->vlan_features has changed, we need to call
+netdev_update_features(). The caller must run after netdev_upper_dev_link()
+links the lower devices, so this patch adds the netdev_update_features()
+call in register_vlan_dev().
 
-Install this file to avoid this error. After this patch:
-
-  TAP version 13
-  1..1
-  # timeout set to 600
-  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
-  # PASSED all 22 checks
-  ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh
-
-Fixes: fbb8531e58bd ("selftests: extract common functions in ethtool-common.sh")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Link: https://patch.msgid.link/20251030040340.3258110-1-wangliang74@huawei.com
+Fixes: fd867d51f889 ("net/core: generic support for disabling netdev features down stack")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20251030073539.133779-1-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/netdevsim/Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/8021q/vlan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/Makefile b/tools/testing/selftests/drivers/net/netdevsim/Makefile
-index 07b7c46d33118..abe5bea5afb3b 100644
---- a/tools/testing/selftests/drivers/net/netdevsim/Makefile
-+++ b/tools/testing/selftests/drivers/net/netdevsim/Makefile
-@@ -18,4 +18,8 @@ TEST_PROGS = devlink.sh \
- 	tc-mq-visibility.sh \
- 	udp_tunnel_nic.sh \
+diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
+index fda3a80e9340c..2b74ed56eb166 100644
+--- a/net/8021q/vlan.c
++++ b/net/8021q/vlan.c
+@@ -193,6 +193,8 @@ int register_vlan_dev(struct net_device *dev, struct netlink_ext_ack *extack)
+ 	vlan_group_set_device(grp, vlan->vlan_proto, vlan_id, dev);
+ 	grp->nr_vlan_devs++;
  
-+TEST_FILES := \
-+	ethtool-common.sh
-+# end of TEST_FILES
++	netdev_update_features(dev);
 +
- include ../../../lib.mk
+ 	return 0;
+ 
+ out_unregister_netdev:
 -- 
 2.51.0
 
