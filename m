@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA0F25EF81;
-	Tue, 11 Nov 2025 01:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D38C346E6C;
+	Tue, 11 Nov 2025 01:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823701; cv=none; b=cDa4IPfgDp9pBmBjzGJ1FG/nWH2wso3u4hkd8iL0RW00qQ91u/gQ2tLr3ZTTlNIbb9lRUUnsEZjG7jQK/zgNXTaINd5E5xWHdx9EnHnrqaNuitK1eXCYkVIql+0KviiBltJGMOskExx0E2Sujk2qJBvFsQnbLuNTInniF6s33vk=
+	t=1762823703; cv=none; b=DSR4AZw+drYbNQnOAV3HFsOtyZfW730OMsCTPEbo/dXmFKeMjCEo1W3sj+CUmceS9G6GDQqngjpUuwOdE2oFcqBb8Bq1GptgvjlFkaSRmlU4zVTT0H7v3ZRH9OXLJ0sZzPrPx2/8nJq3no+M8tZsTVFrBlOcyI8R7QEjyliYO4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823701; c=relaxed/simple;
-	bh=fkaT8skzYxl85U157kXaCBh7GAyvAoVQVRNB8hA3R5E=;
+	s=arc-20240116; t=1762823703; c=relaxed/simple;
+	bh=PZHIm+hXJR6GF0PX/1ws4MM0WvurwfqkNbX+EHxSKMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENVb8GPLppD5sLROrTi0cjX41gLptx5blD484e01pJfL67o6YrulsmsJaFZzU0lsx8rvodu8YuucTpmST09auy+4DAFeADzTa5/7xzSi1gvjwF4klwCiOmdrQ9mTu2AwYCaKXZF2IaXHgSw2CkkIZUL04KrLF56yn8AvcYK47Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFWQALdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLxLT0pVbOIJWBqcA9Kvzya+/Zrb4VHhxi8iKLKj/DmX25j3SA2Tewip5+7s1QqdbeOPv9K6GQVdb7AzlV48VugpfCEI3w3FNn6kIbm86/BFbEsLOZPcBy6eLpQHTWTaz1ynGfChEwQ5riTXDxA5LQd5Ew+gpAVmY6NQ6JANoUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEQEsj0t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFWQALdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB41CC4AF09;
-	Tue, 11 Nov 2025 01:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEQEsj0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F05BC4CEFB;
+	Tue, 11 Nov 2025 01:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823701;
-	bh=fkaT8skzYxl85U157kXaCBh7GAyvAoVQVRNB8hA3R5E=;
+	s=korg; t=1762823703;
+	bh=PZHIm+hXJR6GF0PX/1ws4MM0WvurwfqkNbX+EHxSKMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFWQALdRjCLKPYgf++zOur1zRdZomnWLxcm+dKqemc6e30zCedMuodFaUsq5db6/z
-	 aEqdEJi698UXqeM85rnpmo71WUd7rr9xmUe7R94tL8Tl7iVbWNXp7E2zuzpsqIbyRq
-	 fbqoDncJHD02SAFs/lQms/OnC1pbvlCMXMypTB3k=
+	b=OEQEsj0t9v7dlZTI6z+if/Fk7v/DMxp1H15Ataf9oEGAdiIo+7HDr6EApLFEwkigd
+	 Y5VV7d8H4Dv+kUnJ73sS10b2yc4if46mddrV6MsysnIT/obA8z2ju1y/LULhKZ4gu0
+	 djPBJotlZP8JuLF//KoOHdSM8IWZ+rBxnvZkDjTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/565] iommu/amd: Skip enabling command/event buffers for kdump
-Date: Tue, 11 Nov 2025 09:42:39 +0900
-Message-ID: <20251111004533.694778666@linuxfoundation.org>
+Subject: [PATCH 6.17 353/849] scsi: mpi3mr: Fix device loss during enclosure reboot due to zero link speed
+Date: Tue, 11 Nov 2025 09:38:43 +0900
+Message-ID: <20251111004544.955175215@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,81 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
+[ Upstream commit d6c8e8b7c98c3cb326515ef4bc5c57e16ac5ae4e ]
 
-After a panic if SNP is enabled in the previous kernel then the kdump
-kernel boots with IOMMU SNP enforcement still enabled.
+During enclosure reboot or expander reset, firmware may report a link
+speed of 0 in "Device Add" events while the link is still coming up.
+The driver drops such devices, leaving them missing even after the link
+recovers.
 
-IOMMU command buffers and event buffer registers remain locked and
-exclusive to the previous kernel. Attempts to enable command and event
-buffers in the kdump kernel will fail, as hardware ignores writes to
-the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
+Fix this by treating link speed 0 as 1.5 Gbps during device addition so
+the device is exposed to the OS. The actual link speed will be updated
+later when link-up events arrive.
 
-Skip enabling command buffers and event buffers for kdump boot as they
-are already enabled in the previous kernel.
-
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://lore.kernel.org/r/20250820084138.228471-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c        |  8 ++++----
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 11 +++++++++--
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index f5b544e0f230b..af147d279a294 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -816,11 +816,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index e467b56949e98..1582cdbc66302 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2049,8 +2049,8 @@ static void mpi3mr_fwevt_bh(struct mpi3mr_ioc *mrioc,
+ 	if (!fwevt->process_evt)
+ 		goto evt_ack;
  
- 	BUG_ON(iommu->cmd_buf == NULL);
+-	dprint_event_bh(mrioc, "processing event(0x%02x) in the bottom half handler\n",
+-	    fwevt->event_id);
++	dprint_event_bh(mrioc, "processing event(0x%02x) -(0x%08x) in the bottom half handler\n",
++			fwevt->event_id, fwevt->evt_ctx);
  
--	entry = iommu_virt_to_phys(iommu->cmd_buf);
--	entry |= MMIO_CMD_SIZE_512;
--
--	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Command buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->cmd_buf);
-+		entry |= MMIO_CMD_SIZE_512;
-+		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
+ 	switch (fwevt->event_id) {
+ 	case MPI3_EVENT_DEVICE_ADDED:
+@@ -3076,8 +3076,8 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
+ 	}
+ 	if (process_evt_bh || ack_req) {
+ 		dprint_event_th(mrioc,
+-			"scheduling bottom half handler for event(0x%02x),ack_required=%d\n",
+-			evt_type, ack_req);
++		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
++		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
+ 		sz = event_reply->event_data_length * 4;
+ 		fwevt = mpi3mr_alloc_fwevt(sz);
+ 		if (!fwevt) {
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index c8d6ced5640e9..d70f002d6487d 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -413,9 +413,11 @@ static void mpi3mr_remove_device_by_sas_address(struct mpi3mr_ioc *mrioc,
+ 			 sas_address, hba_port);
+ 	if (tgtdev) {
+ 		if (!list_empty(&tgtdev->list)) {
+-			list_del_init(&tgtdev->list);
+ 			was_on_tgtdev_list = 1;
+-			mpi3mr_tgtdev_put(tgtdev);
++			if (tgtdev->state == MPI3MR_DEV_REMOVE_HS_STARTED) {
++				list_del_init(&tgtdev->list);
++				mpi3mr_tgtdev_put(tgtdev);
++			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
+@@ -2079,6 +2081,8 @@ int mpi3mr_expander_add(struct mpi3mr_ioc *mrioc, u16 handle)
+ 				link_rate = (expander_pg1.negotiated_link_rate &
+ 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_MASK) >>
+ 				    MPI3_SAS_NEG_LINK_RATE_LOGICAL_SHIFT;
++				if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++					link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
+ 				mpi3mr_update_links(mrioc, sas_address_parent,
+ 				    handle, i, link_rate, hba_port);
+ 			}
+@@ -2388,6 +2392,9 @@ int mpi3mr_report_tgtdev_to_sas_transport(struct mpi3mr_ioc *mrioc,
  
- 	amd_iommu_reset_cmd_buffer(iommu);
- }
-@@ -869,10 +874,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
+ 	link_rate = mpi3mr_get_sas_negotiated_logical_linkrate(mrioc, tgtdev);
  
- 	BUG_ON(iommu->evt_buf == NULL);
++	if (link_rate < MPI3_SAS_NEG_LINK_RATE_1_5)
++		link_rate = MPI3_SAS_NEG_LINK_RATE_1_5;
++
+ 	mpi3mr_update_links(mrioc, sas_address_parent, tgtdev->dev_handle,
+ 	    parent_phy_number, link_rate, hba_port);
  
--	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
--
--	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Event buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
-+		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
- 
- 	/* set head and tail to zero manually */
- 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
 -- 
 2.51.0
 
