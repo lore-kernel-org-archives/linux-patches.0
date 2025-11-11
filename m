@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330CC4C97;
-	Tue, 11 Nov 2025 00:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8012B24113D;
+	Tue, 11 Nov 2025 00:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822129; cv=none; b=N2TjLst9Q1in29HGlw5vCnu3XnSnx7GW/EtH2K6/+sZVGoHwLEXN57uVv0ILMj6O68pWby2P/von4i6C5+/vMZgmU/gPxsiwh1KbWKKU37qSG5r/3XG3RalUWyn5DOuFwK2I5OzW24oO7xYpysNWqO0TgquarXmo1LjXBmd+uHI=
+	t=1762822131; cv=none; b=iguMfmu7XCGW2aGapoPs/wjTZ3BoLk6S8ZPUngyK95sMEiKFTzi02KuH6nXpPYFOnO2V+38vT2BnxfYvScJ7lRv8jjXZdoaoeO3QyXWmtpUk7XJRnc+kvqIIJB+y27SWePsQrtX7b44P0sk6YiLtqYiQqmql7u/9cRee6eU1XB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822129; c=relaxed/simple;
-	bh=WrkpoqO0AiSCXGu0jdOpQtaMumtqNZbiUqplvlHxnzY=;
+	s=arc-20240116; t=1762822131; c=relaxed/simple;
+	bh=ZooPDpFxMiDqdeUSDwEUm6fuEAEPXDLz8X6pVk5GNm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jObjAud8YWCxNrk2WQatR6il2uzSFv7a5NWrEhonXvUnNVgep1ezCw4CMz0X5Luggu8/mBFq442/eYQ736HcsSzuWRmk2jaB7VoofOVHRkh1fpS4zt71HFz5Dv1/0IDib5qhPL17I9s+WsU87zdzBDo9U4jJ1uh4ZxdgkS37OzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g2mCh8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CZw6pr1iDKNw5gA5ayYzcPweHCEZOPa0oFIm8c9V+xGHx/4GKC0xT29VXaLNC+DAgUaRCMxPTbX10AmkiYNl4HHxDCJzC19jkQWL6gTgDEEnZpmh6uTKsPLHPmMNwBnUBKYvrcBh+6mzjiyFHUzXuPraWBdpv5Y0VfGBjIeP2TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdKFYyIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g2mCh8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D93C4CEF5;
-	Tue, 11 Nov 2025 00:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdKFYyIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D58AC113D0;
+	Tue, 11 Nov 2025 00:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822129;
-	bh=WrkpoqO0AiSCXGu0jdOpQtaMumtqNZbiUqplvlHxnzY=;
+	s=korg; t=1762822131;
+	bh=ZooPDpFxMiDqdeUSDwEUm6fuEAEPXDLz8X6pVk5GNm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g2mCh8xsiZhvq4CtCCt0ANm+7T8MagnWqmfbo55suFaNV03K6rb0CE3sFxGqt09C
-	 44x/oASZugYOQCEPzybnjGa3GAamUOKCG9FftjIKzUnYuvOQf3sZUX62wHD6LUafqW
-	 DtuMEjWSAppGWpY+oIyjxJ0/Nz4isiYoFO4YC+pw=
+	b=pdKFYyIeSE3VgaprtqcRJlPkOwKfTR+FFETkBwzmMdnjUhPgVewVHTrYnVhgO1h1i
+	 wwoRTQTL6XWGzXdEWbNWBR2OiGMslVoRgSwOay4k+hDDoel+DJmlku+nLj3Usnak7F
+	 weTN3jPx2AxBp6KGerelLikPXjVm2p+TSyExJcPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.17 027/849] x86/CPU/AMD: Add RDSEED fix for Zen5
-Date: Tue, 11 Nov 2025 09:33:17 +0900
-Message-ID: <20251111004537.106768902@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 006/849] net: usb: asix_devices: Check return value of usbnet_get_endpoints
+Date: Tue, 11 Nov 2025 09:32:56 +0900
+Message-ID: <20251111004536.615396862@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,48 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 607b9fb2ce248cc5b633c5949e0153838992c152 upstream.
+commit dc89548c6926d68dfdda11bebc1a5258bc41d887 upstream.
 
-There's an issue with RDSEED's 16-bit and 32-bit register output
-variants on Zen5 which return a random value of 0 "at a rate inconsistent
-with randomness while incorrectly signaling success (CF=1)". Search the
-web for AMD-SB-7055 for more detail.
+The code did not check the return value of usbnet_get_endpoints.
+Add checks and return the error if it fails to transfer the error.
 
-Add a fix glue which checks microcode revisions.
+Found via static anlaysis and this is similar to
+commit 07161b2416f7 ("sr9800: Add check for usbnet_get_endpoints").
 
-  [ bp: Add microcode revisions checking, rewrite. ]
-
+Fixes: 933a27d39e0e ("USB: asix - Add AX88178 support and many other changes")
+Fixes: 2e55cc7210fe ("[PATCH] USB: usbnet (3/9) module for ASIX Ethernet adapters")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20251018024010.4112396-1-gourry@gourry.net
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20251026164318.57624-1-linmq006@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/usb/asix_devices.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1018,8 +1018,18 @@ static void init_amd_zen4(struct cpuinfo
- 	}
- }
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -230,7 +230,9 @@ static int ax88172_bind(struct usbnet *d
+ 	int i;
+ 	unsigned long gpio_bits = dev->driver_info->data;
  
-+static const struct x86_cpu_id zen5_rdseed_microcode[] = {
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x02, 0x1, 0x0b00215a),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x11, 0x0, 0x0b101054),
-+};
-+
- static void init_amd_zen5(struct cpuinfo_x86 *c)
- {
-+	if (!x86_match_min_microcode_rev(zen5_rdseed_microcode)) {
-+		clear_cpu_cap(c, X86_FEATURE_RDSEED);
-+		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
-+		pr_emerg_once("RDSEED32 is broken. Disabling the corresponding CPUID bit.\n");
-+	}
- }
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		goto out;
  
- static void init_amd(struct cpuinfo_x86 *c)
+ 	/* Toggle the GPIOs in a manufacturer/model specific way */
+ 	for (i = 2; i >= 0; i--) {
+@@ -848,7 +850,9 @@ static int ax88772_bind(struct usbnet *d
+ 
+ 	dev->driver_priv = priv;
+ 
+-	usbnet_get_endpoints(dev, intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
+ 
+ 	/* Maybe the boot loader passed the MAC address via device tree */
+ 	if (!eth_platform_get_mac_address(&dev->udev->dev, buf)) {
+@@ -1281,7 +1285,9 @@ static int ax88178_bind(struct usbnet *d
+ 	int ret;
+ 	u8 buf[ETH_ALEN] = {0};
+ 
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
+ 
+ 	/* Get the MAC address */
+ 	ret = asix_read_cmd(dev, AX_CMD_READ_NODE_ID, 0, 0, ETH_ALEN, buf, 0);
 
 
