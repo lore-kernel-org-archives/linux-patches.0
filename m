@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D162472A6;
-	Tue, 11 Nov 2025 01:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989642472A6;
+	Tue, 11 Nov 2025 01:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824872; cv=none; b=MqcXCDIKE1TuYv2QKURb85ZijjR6PYAKtdJNMqg8UhhXJxDZWQpaP7ze0K3WLOYd5seFEAa7sNu+FDbeBQ+UNYGbfQi7cL8uQSt7XYg0nF34douuMcfjegVCbaJydu+X3VRL7panr6nCBpfNg7Ce4n8/NFHpbVkXALVXlNeZjPY=
+	t=1762824874; cv=none; b=QUgioDLB/9UPM+fRtRCEIPSlEURCu8s49D8mLLlzW4Azbvmcl3ARY8OSuoKpkMzsqSBq7mbKhnt5CX2z4p51n9aUfCxB/xA24p3ki1ig6qD0qlnaGxGy88pJrobZtF0zLfMedwpgqG5nPEGrT1ZQutRRgi7WcUMJ966y4C3SKs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824872; c=relaxed/simple;
-	bh=4G9RXbZ39Ea5JmxKZ4FQVg6CHuvICWU+1CuTb2rF0is=;
+	s=arc-20240116; t=1762824874; c=relaxed/simple;
+	bh=2b0Dccu1W4uckJGNSmqDOUxX9lpQl+cqUUGfiYBAKbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3P9Zmo/d6WK6k6QFVvPtehd3fTdPJcGdotraUB18IFSOW9VEsXMX+rNTQDwsGIvbFO/ZSc21ZfNVZpJ5Kf8+Fn1jkoW97R52irFYjdC8bld+13dknP2riL0At8dEZgC6Y0NInjvqU2fA7RKQP39+9/yvnZ4lOhzSopHDuD7XvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDMOkq2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxnC9qA0gIz0RVC5Lmqf+Xd324zViyDzFNtT397fWLaYAr4fKKBrVsZrIlMlDzr1uIYwaSwl0O2Unl9aOFVNcz3Ro4jTqciZJ93QvNJnUgWa4JXN7SBqcvOdm3cXRl01yhuG0ICh/sLQcxZ1sbyYYCGQEDWX9KW8Ykm/JZ475+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McSECGO4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDMOkq2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE35C4CEF5;
-	Tue, 11 Nov 2025 01:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McSECGO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAACC16AAE;
+	Tue, 11 Nov 2025 01:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824871;
-	bh=4G9RXbZ39Ea5JmxKZ4FQVg6CHuvICWU+1CuTb2rF0is=;
+	s=korg; t=1762824874;
+	bh=2b0Dccu1W4uckJGNSmqDOUxX9lpQl+cqUUGfiYBAKbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDMOkq2MkbbzOl0Rx1UwnEyUH97FCttdpO6Y7NSACuNGORcCdzAKAI0UYgant7Qc2
-	 xu0N93oPFhSujbHXs/BSTGj/bc+VLC++gK7YWHSAWH8jpcrB91SCNDoU0BkWuwJnQQ
-	 CtuKY5m/Xd9AtGNCHeY43KVKmMIRzV1gc6UCxGeg=
+	b=McSECGO45zQaJGqNEPnzjynNU9PCHb/qjRs37Ndl//VaegjCU09/axycyWLdBRYha
+	 vSV9IUL0LD+jmO7kIcWG01Nd8OuwdUb20VJExlse8hfFQv8uDR6og0trkWAkaeEEiv
+	 KnKEv3lsRNx5NfM6OHx1UpVVDKixmOFcqOQxWL2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 541/565] net: bridge: fix MST static key usage
-Date: Tue, 11 Nov 2025 09:46:37 +0900
-Message-ID: <20251111004539.154734787@linuxfoundation.org>
+Subject: [PATCH 6.17 589/849] bnxt_en: Add fw log trace support for 5731X/5741X chips
+Date: Tue, 11 Nov 2025 09:42:39 +0900
+Message-ID: <20251111004550.661030110@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +50,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Shruti Parab <shruti.parab@broadcom.com>
 
-[ Upstream commit ee87c63f9b2a418f698d79c2991347e31a7d2c27 ]
+[ Upstream commit ba1aefee2e9835fe6e07b86cb7020bd2550a81ee ]
 
-As Ido pointed out, the static key usage in MST is buggy and should use
-inc/dec instead of enable/disable because we can have multiple bridges
-with MST enabled which means a single bridge can disable MST for all.
-Use static_branch_inc/dec to avoid that. When destroying a bridge decrement
-the key if MST was enabled.
+These older chips now support the fw log traces via backing store
+qcaps_v2. No other backing store memory types are supported besides
+the fw trace types.
 
-Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Closes: https://lore.kernel.org/netdev/20251104120313.1306566-1-razor@blackwall.org/T/#m6888d87658f94ed1725433940f4f4ebb00b5a68b
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251105111919.1499702-3-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250917040839.1924698-6-michael.chan@broadcom.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_if.c      |  1 +
- net/bridge/br_mst.c     | 10 ++++++++--
- net/bridge/br_private.h |  5 +++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c          | 9 +++++++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h          | 3 ++-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c | 3 ++-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h | 1 +
+ 4 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
-index 2450690f98cfa..6ffc81eedf074 100644
---- a/net/bridge/br_if.c
-+++ b/net/bridge/br_if.c
-@@ -386,6 +386,7 @@ void br_dev_delete(struct net_device *dev, struct list_head *head)
- 		del_nbp(p);
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 0f3cc21ab0320..60e20b7642174 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -265,6 +265,7 @@ const u16 bnxt_bstore_to_trace[] = {
+ 	[BNXT_CTX_CA1]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA1_TRACE,
+ 	[BNXT_CTX_CA2]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_CA2_TRACE,
+ 	[BNXT_CTX_RIGP1]	= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_RIGP1_TRACE,
++	[BNXT_CTX_KONG]		= DBG_LOG_BUFFER_FLUSH_REQ_TYPE_AFM_KONG_HWRM_TRACE,
+ };
  
-+	br_mst_uninit(br);
- 	br_recalculate_neigh_suppress_enabled(br);
+ static struct workqueue_struct *bnxt_pf_wq;
+@@ -9155,7 +9156,7 @@ static int bnxt_backing_store_cfg_v2(struct bnxt *bp, u32 ena)
+ 	int rc = 0;
+ 	u16 type;
  
- 	br_fdb_delete_by_port(br, NULL, 0, 1);
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index 3f24b4ee49c27..43a300ae6bfaf 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -22,6 +22,12 @@ bool br_mst_enabled(const struct net_device *dev)
- }
- EXPORT_SYMBOL_GPL(br_mst_enabled);
+-	for (type = BNXT_CTX_SRT; type <= BNXT_CTX_RIGP1; type++) {
++	for (type = BNXT_CTX_SRT; type <= BNXT_CTX_KONG; type++) {
+ 		ctxm = &ctx->ctx_arr[type];
+ 		if (!bnxt_bs_trace_avail(bp, type))
+ 			continue;
+@@ -9305,6 +9306,10 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
+ 	if (!ctx || (ctx->flags & BNXT_CTX_FLAG_INITED))
+ 		return 0;
  
-+void br_mst_uninit(struct net_bridge *br)
-+{
-+	if (br_opt_get(br, BROPT_MST_ENABLED))
-+		static_branch_dec(&br_mst_used);
-+}
++	ena = 0;
++	if (!(bp->flags & BNXT_FLAG_CHIP_P5_PLUS))
++		goto skip_legacy;
 +
- int br_mst_get_info(const struct net_device *dev, u16 msti, unsigned long *vids)
- {
- 	const struct net_bridge_vlan_group *vg;
-@@ -225,9 +231,9 @@ int br_mst_set_enabled(struct net_bridge *br, bool on,
- 		return err;
+ 	ctxm = &ctx->ctx_arr[BNXT_CTX_QP];
+ 	l2_qps = ctxm->qp_l2_entries;
+ 	qp1_qps = ctxm->qp_qp1_entries;
+@@ -9313,7 +9318,6 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
+ 	ctxm = &ctx->ctx_arr[BNXT_CTX_SRQ];
+ 	srqs = ctxm->srq_l2_entries;
+ 	max_srqs = ctxm->max_entries;
+-	ena = 0;
+ 	if ((bp->flags & BNXT_FLAG_ROCE_CAP) && !is_kdump_kernel()) {
+ 		pg_lvl = 2;
+ 		if (BNXT_SW_RES_LMT(bp)) {
+@@ -9407,6 +9411,7 @@ static int bnxt_alloc_ctx_mem(struct bnxt *bp)
+ 		ena |= FUNC_BACKING_STORE_CFG_REQ_ENABLES_TQM_SP << i;
+ 	ena |= FUNC_BACKING_STORE_CFG_REQ_DFLT_ENABLES;
  
- 	if (on)
--		static_branch_enable(&br_mst_used);
-+		static_branch_inc(&br_mst_used);
++skip_legacy:
+ 	if (bp->fw_cap & BNXT_FW_CAP_BACKING_STORE_V2)
+ 		rc = bnxt_backing_store_cfg_v2(bp, ena);
  	else
--		static_branch_disable(&br_mst_used);
-+		static_branch_dec(&br_mst_used);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 119d4ef6ef660..2317172166c7d 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1968,10 +1968,11 @@ struct bnxt_ctx_mem_type {
+ #define BNXT_CTX_CA1	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA1_TRACE
+ #define BNXT_CTX_CA2	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_CA2_TRACE
+ #define BNXT_CTX_RIGP1	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_RIGP1_TRACE
++#define BNXT_CTX_KONG	FUNC_BACKING_STORE_QCAPS_V2_REQ_TYPE_AFM_KONG_HWRM_TRACE
  
- 	br_opt_toggle(br, BROPT_MST_ENABLED, on);
- 	return 0;
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 40dcffc2132ed..741b0b8c4babb 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -1923,6 +1923,7 @@ int br_mst_fill_info(struct sk_buff *skb,
- 		     const struct net_bridge_vlan_group *vg);
- int br_mst_process(struct net_bridge_port *p, const struct nlattr *mst_attr,
- 		   struct netlink_ext_ack *extack);
-+void br_mst_uninit(struct net_bridge *br);
- #else
- static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
- {
-@@ -1958,6 +1959,10 @@ static inline int br_mst_process(struct net_bridge_port *p,
- {
- 	return -EOPNOTSUPP;
- }
-+
-+static inline void br_mst_uninit(struct net_bridge *br)
-+{
-+}
- #endif
+ #define BNXT_CTX_MAX	(BNXT_CTX_TIM + 1)
+ #define BNXT_CTX_L2_MAX	(BNXT_CTX_FTQM + 1)
+-#define BNXT_CTX_V2_MAX	(BNXT_CTX_RIGP1 + 1)
++#define BNXT_CTX_V2_MAX	(BNXT_CTX_KONG + 1)
+ #define BNXT_CTX_INV	((u16)-1)
  
- struct nf_br_ops {
+ struct bnxt_ctx_mem_info {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+index 18d6c94d5cb82..a0a37216efb3b 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+@@ -36,6 +36,7 @@ static const u16 bnxt_bstore_to_seg_id[] = {
+ 	[BNXT_CTX_CA1]			= BNXT_CTX_MEM_SEG_CA1,
+ 	[BNXT_CTX_CA2]			= BNXT_CTX_MEM_SEG_CA2,
+ 	[BNXT_CTX_RIGP1]		= BNXT_CTX_MEM_SEG_RIGP1,
++	[BNXT_CTX_KONG]			= BNXT_CTX_MEM_SEG_KONG,
+ };
+ 
+ static int bnxt_dbg_hwrm_log_buffer_flush(struct bnxt *bp, u16 type, u32 flags,
+@@ -359,7 +360,7 @@ static u32 bnxt_get_ctx_coredump(struct bnxt *bp, void *buf, u32 offset,
+ 
+ 	if (buf)
+ 		buf += offset;
+-	for (type = 0 ; type <= BNXT_CTX_RIGP1; type++) {
++	for (type = 0; type <= BNXT_CTX_KONG; type++) {
+ 		struct bnxt_ctx_mem_type *ctxm = &ctx->ctx_arr[type];
+ 		bool trace = bnxt_bs_trace_avail(bp, type);
+ 		u32 seg_id = bnxt_bstore_to_seg_id[type];
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
+index d1cd6387f3ab4..8d0f58c74cc32 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.h
+@@ -102,6 +102,7 @@ struct bnxt_driver_segment_record {
+ #define BNXT_CTX_MEM_SEG_CA1	0x9
+ #define BNXT_CTX_MEM_SEG_CA2	0xa
+ #define BNXT_CTX_MEM_SEG_RIGP1	0xb
++#define BNXT_CTX_MEM_SEG_KONG	0xd
+ 
+ #define BNXT_CRASH_DUMP_LEN	(8 << 20)
+ 
 -- 
 2.51.0
 
