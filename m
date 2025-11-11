@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCF12DEA9D;
-	Tue, 11 Nov 2025 01:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B4226CE37;
+	Tue, 11 Nov 2025 01:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823140; cv=none; b=t8NWSoUt1OlOv+kQhccnyZqRjpH6qD7ynygSgMzP11Fey9905M8OD9mKn1n6pTXcRDeS7PIcZ4Zr1xBIZ2t/MASoRGvD4pFlR36FCYNbhwGcPKvB2QPdGZvAP/tlDX4//t80oi4H/8fJPhPUQ3KMyandGfJz0N8APZMdpvNBY4M=
+	t=1762823142; cv=none; b=VLjh2zTH5/JN0K6IoWH6umT9EacNrX5NAT5/HG8f8a4bXg96tpRmDYbIzTrb0k8U7BpLWch4L0gZEUQf16dFabH2OrUDr+Fq4V6YvKCirtAbDerEgCGoLNPaRaofVvjILdVEwSWDXRK15LZgIBYsP0YIc5BXSUjjk1F4oqbaJuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823140; c=relaxed/simple;
-	bh=JnF02ApenazAgjaRg5roIeHbSXOzbPCcQ1edTPbuW90=;
+	s=arc-20240116; t=1762823142; c=relaxed/simple;
+	bh=1KqUIx3DzQwDGXHoSPGcRaNUSB2kH0XaO3IECzcvtPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVym2MDckU2PSb8+sz4QLu+pBPYECsS+NTVu9RyMpIEMBQcd+b7MLcBpbwhC5X9OCpYBdtIDF4hb7mMwWAlVP3NkjfWBmSn/pIm0lpghD0pTmEhSzXvNsjqhh0/Th2FC5ep7SI90SCpndWj/PHKl5Llq1t+bKCWyJPO+XtJwRwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQfJ3PLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+7qR/fn9kNj9srZDztt3lydETDvoA/CJXqOVB11ip7n8IXDoWAyHa4pjN0V061/LGfDagrH5pDIoCOCHhZjokPDS3xiXdcLmsMXRsH5v77PO2ZdaKe8f13bmfO76AeaC8jx+F9vMYVRvTqNpgkTYhA4KQxEL2+VJdx0zq8JZPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8ZQ4uN3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQfJ3PLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5157AC4CEFB;
-	Tue, 11 Nov 2025 01:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8ZQ4uN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E589CC16AAE;
+	Tue, 11 Nov 2025 01:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823139;
-	bh=JnF02ApenazAgjaRg5roIeHbSXOzbPCcQ1edTPbuW90=;
+	s=korg; t=1762823142;
+	bh=1KqUIx3DzQwDGXHoSPGcRaNUSB2kH0XaO3IECzcvtPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQfJ3PLLZADTeOjL2PqbfPdP578GYlilTX4IdZ9KHKeVk4aNw6+OJSZYmDggOI962
-	 Z6irjMHNlIuZAakiaHoVXiBTqMJTutDxDei2EuUNk8wdNgfWG0KKsnKRVBii1Lge+W
-	 6mK+Kgpd6pbz7+KKBwqwHZRZe3Je8wmf+a3wn5bA=
+	b=h8ZQ4uN32uX10aynHf3mVg02okZq/N6MJU5L2gVsC5anYAoMu0e4/6f/Vsmn68MOg
+	 FHv2c99DVJFAw/ouUqIL26dQi+Rax+2KuqHx9sdDK89P8kceCDaOSjaLMvGfhLAl6p
+	 mZflNXmDM5nkAGKOHDrRW+ay7rh+B+eQRthNV6pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Maarten Lankhorst <dev@lankhorst.se>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 238/849] drm/amd/display: Increase AUX Intra-Hop Done Max Wait Duration
-Date: Tue, 11 Nov 2025 09:36:48 +0900
-Message-ID: <20251111004542.194942759@linuxfoundation.org>
+Subject: [PATCH 6.12 179/565] drm/xe: Fix oops in xe_gem_fault when running core_hotunplug test.
+Date: Tue, 11 Nov 2025 09:40:35 +0900
+Message-ID: <20251111004530.959519556@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,61 +47,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit e3419e1e44b87d4176fb98679a77301b1ca40f63 ]
+[ Upstream commit 1cda3c755bb7770be07d75949bb0f45fb88651f6 ]
 
-[WHY]
-In the worst case, AUX intra-hop done can take hundreds of milliseconds as
-each retimer in a link might have to wait a full AUX_RD_INTERVAL to send
-LT abort downstream.
+I saw an oops in xe_gem_fault when running the xe-fast-feedback
+testlist against the realtime kernel without debug options enabled.
 
-[HOW]
-Wait 300ms for each retimer in a link to allow time to propagate a LT abort
-without infinitely waiting on intra-hop done.
-For no-retimer case, keep the max duration at 10ms.
+The panic happens after core_hotunplug unbind-rebind finishes.
+Presumably what happens is that a process mmaps, unlocks because
+of the FAULT_FLAG_RETRY_NOWAIT logic, has no process memory left,
+causing ttm_bo_vm_dummy_page() to return VM_FAULT_NOPAGE, since
+there was nothing left to populate, and then oopses in
+"mem_type_is_vram(tbo->resource->mem_type)" because tbo->resource
+is NULL.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It's convoluted, but fits the data and explains the oops after
+the test exits.
+
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20250715152057.23254-2-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/link/protocols/link_dp_training.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-index 2dc1a660e5045..134093ce5a8e8 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-@@ -1018,7 +1018,12 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
- {
- 	enum dc_status status;
- 	uint8_t sink_status = 0;
--	uint8_t i;
-+	uint32_t i;
-+	uint8_t lttpr_count = dp_parse_lttpr_repeater_count(link->dpcd_caps.lttpr_caps.phy_repeater_cnt);
-+	uint32_t intra_hop_disable_time_ms = (lttpr_count > 0 ? lttpr_count * 300 : 10);
+diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
+index b5058a35c4513..b71156e9976aa 100644
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1218,22 +1218,26 @@ static vm_fault_t xe_gem_fault(struct vm_fault *vmf)
+ 		ret = ttm_bo_vm_fault_reserved(vmf, vmf->vma->vm_page_prot,
+ 					       TTM_BO_VM_NUM_PREFAULT);
+ 		drm_dev_exit(idx);
 +
-+	// Each hop could theoretically take over 256ms (max 128b/132b AUX RD INTERVAL)
-+	// To be safe, allow 300ms per LTTPR and 10ms for no LTTPR case
++		if (ret == VM_FAULT_RETRY &&
++		    !(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
++			goto out;
++
++		/*
++		 * ttm_bo_vm_reserve() already has dma_resv_lock.
++		 */
++		if (ret == VM_FAULT_NOPAGE &&
++		    mem_type_is_vram(tbo->resource->mem_type)) {
++			mutex_lock(&xe->mem_access.vram_userfault.lock);
++			if (list_empty(&bo->vram_userfault_link))
++				list_add(&bo->vram_userfault_link,
++					 &xe->mem_access.vram_userfault.list);
++			mutex_unlock(&xe->mem_access.vram_userfault.lock);
++		}
+ 	} else {
+ 		ret = ttm_bo_vm_dummy_page(vmf, vmf->vma->vm_page_prot);
+ 	}
  
- 	/* clear training pattern set */
- 	status = dpcd_set_training_pattern(link, DP_TRAINING_PATTERN_VIDEOIDLE);
-@@ -1028,7 +1033,7 @@ static enum link_training_result dpcd_exit_training_mode(struct dc_link *link, e
- 
- 	if (encoding == DP_128b_132b_ENCODING) {
- 		/* poll for intra-hop disable */
--		for (i = 0; i < 10; i++) {
-+		for (i = 0; i < intra_hop_disable_time_ms; i++) {
- 			if ((core_link_read_dpcd(link, DP_SINK_STATUS, &sink_status, 1) == DC_OK) &&
- 					(sink_status & DP_INTRA_HOP_AUX_REPLY_INDICATION) == 0)
- 				break;
+-	if (ret == VM_FAULT_RETRY && !(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
+-		goto out;
+-	/*
+-	 * ttm_bo_vm_reserve() already has dma_resv_lock.
+-	 */
+-	if (ret == VM_FAULT_NOPAGE && mem_type_is_vram(tbo->resource->mem_type)) {
+-		mutex_lock(&xe->mem_access.vram_userfault.lock);
+-		if (list_empty(&bo->vram_userfault_link))
+-			list_add(&bo->vram_userfault_link, &xe->mem_access.vram_userfault.list);
+-		mutex_unlock(&xe->mem_access.vram_userfault.lock);
+-	}
+-
+ 	dma_resv_unlock(tbo->base.resv);
+ out:
+ 	if (needs_rpm)
 -- 
 2.51.0
 
