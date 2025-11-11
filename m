@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A29E2741C9;
-	Tue, 11 Nov 2025 01:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BED26ED5E;
+	Tue, 11 Nov 2025 01:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824467; cv=none; b=rJC5NbrN9rCw14W34tzI/iQW13L97A/n6xiYEPMSiKnMHn0c/BlT3NVWionW85GW2NQtixal616qBWD0QrQOAG5VuP2eBRMPyLqbcQVClPriV4qWb6z+ysV4RrUCYIg0tlkN20FIk9Krb/mUkOeaV7heMtYxHpGqhS+kg8sNLlk=
+	t=1762824469; cv=none; b=INYGPEUBfHfaclfHXRFoZ5Qbabsm7Ls57Jm2OIcTy2f0LbacX/DyMPYRpgZCdrd+2E40GosgepvcicsCXuwKTqqnc1/IZXHouThezhRc+pX2ur2+571w49brWwU9K1zwo8pBU4+wR6GIrkwu6rR5unhS/AEiIeEy509DI8Ev49k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824467; c=relaxed/simple;
-	bh=wy47GdRzKuwHNdUC5Bx7aS3pFeKCr2NwpecUePLn2Pk=;
+	s=arc-20240116; t=1762824469; c=relaxed/simple;
+	bh=dCATCRaAn34DO2/+ThL+Vvc96E4HJiUnRmkdHFvYFCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AI6L4A1FUfs8wobCImB9JVrHH8sJZaSIYijPN2fYrYMgty5/JN74G9Y87CRwWCA0jSY8oCo+oNCIKO+4q7EUqbT+vTyc7jA46Ayla5I4xAmGGEF89TH8LJnjoc+PhSw4xeGVnAMRD0dbcxhfzrXl+izutk7+PjYkrWrpz7CSdhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5sijHFP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSf0WtMYeB6SrhRYM1v6Jb21OQO9bVg2ZaV+lrddYWdBGnCPuup1pAs7ZDDr9YM99dWxghYel4jGkVufrWk317JdJibndHm3gfDYzcbFf8K6Oga1cdk0a5TALcSOfgBTOn1ON6Ulf3MA4uw3Ec7bE2EpXlXVVTu88y1vqyMhlCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVs6Pmdm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5sijHFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC66C4CEF5;
-	Tue, 11 Nov 2025 01:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVs6Pmdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C393C116B1;
+	Tue, 11 Nov 2025 01:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824467;
-	bh=wy47GdRzKuwHNdUC5Bx7aS3pFeKCr2NwpecUePLn2Pk=;
+	s=korg; t=1762824469;
+	bh=dCATCRaAn34DO2/+ThL+Vvc96E4HJiUnRmkdHFvYFCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5sijHFPxJ0WhXqofTZFNq2HloB72wDCFCs8fcUM9rLjmoR88EKO6wn23LnRQY2E1
-	 3Z2LVVMtaKCNDgihfF1sYUkpTWR+qkrDJ9sLMv+6EsXepXyWafLs86IqtG5EAGSHWu
-	 eA7oCKsfOnK3SS3i0CFUSfbN40UdJi2lQf+0rgJo=
+	b=iVs6PmdmzhdO/T+VihQn1UK297LZtQtthp3ztkeJQ/Y29QW11WyW/0V8F+BfbAvFy
+	 tKElZKQil/Ej65dCaZt1KgvZZ/TglTzoTLXohwQ2ilC6zXcNOMkNewWcwhdTNNfnt5
+	 hkdMl4/kJANIwLgRh73piPhOnQ80Jygm0NEC+aB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Michael Dege <michael.dege@renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 452/565] char: misc: restrict the dynamic range to exclude reserved minors
-Date: Tue, 11 Nov 2025 09:45:08 +0900
-Message-ID: <20251111004537.058519784@linuxfoundation.org>
+Subject: [PATCH 6.17 506/849] phy: renesas: r8a779f0-ether-serdes: add new step added to latest datasheet
+Date: Tue, 11 Nov 2025 09:41:16 +0900
+Message-ID: <20251111004548.663862233@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,102 +47,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Michael Dege <michael.dege@renesas.com>
 
-[ Upstream commit 31b636d2c41613e3bd36256a4bd53e9dacfa2677 ]
+[ Upstream commit e4a8db93b5ec9bca1cc66b295544899e3afd5e86 ]
 
-When this was first reported [1], the possibility of having sufficient
-number of dynamic misc devices was theoretical, in the case of dlm driver.
-In practice, its userspace never created more than one device.
+R-Car S4-8 datasheet Rev.1.20 describes some additional register
+settings at the end of the initialization.
 
-What we know from commit ab760791c0cf ("char: misc: Increase the maximum
-number of dynamic misc devices to 1048448"), is that the miscdevice
-interface has been used for allocating more than the single-shot devices it
-was designed for. And it is not only coresight_tmc, but many other drivers
-are able to create multiple devices.
-
-On systems like the ones described in the above commit, it is certain that
-the dynamic allocation will allocate certain reserved minor numbers,
-leading to failures when a later driver tries to claim its reserved number.
-
-Instead of excluding the historically statically allocated range from
-dynamic allocation, restrict the latter to minors above 255. That also
-removes the need for DYNAMIC_MINORS and the convolution in allocating minor
-numbers, simplifying the code.
-
-Since commit ab760791c0cf ("char: misc: Increase the maximum number of
-dynamic misc devices to 1048448") has been applied, such range is already
-possible. And given such devices already need to be dynamically created,
-there should be no systems where this might become a problem.
-
-[1] https://lore.kernel.org/all/1257813017-28598-3-git-send-email-cascardo@holoscopio.com/
-
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Link: https://lore.kernel.org/r/20250423-misc-dynrange-v4-1-133b5ae4ca18@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Michael Dege <michael.dege@renesas.com>
+Link: https://lore.kernel.org/r/20250703-renesas-serdes-update-v4-2-1db5629cac2b@renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 28 +++++-----------------------
- 1 file changed, 5 insertions(+), 23 deletions(-)
+ drivers/phy/renesas/r8a779f0-ether-serdes.c | 28 +++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index 792a1412faffe..8d8c4bcf07e1c 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -58,9 +58,8 @@ static LIST_HEAD(misc_list);
- static DEFINE_MUTEX(misc_mtx);
- 
- /*
-- * Assigned numbers, used for dynamic minors
-+ * Assigned numbers.
-  */
--#define DYNAMIC_MINORS 128 /* like dynamic majors */
- static DEFINE_IDA(misc_minors_ida);
- 
- static int misc_minor_alloc(int minor)
-@@ -69,34 +68,17 @@ static int misc_minor_alloc(int minor)
- 
- 	if (minor == MISC_DYNAMIC_MINOR) {
- 		/* allocate free id */
--		ret = ida_alloc_max(&misc_minors_ida, DYNAMIC_MINORS - 1, GFP_KERNEL);
--		if (ret >= 0) {
--			ret = DYNAMIC_MINORS - ret - 1;
--		} else {
--			ret = ida_alloc_range(&misc_minors_ida, MISC_DYNAMIC_MINOR + 1,
--					      MINORMASK, GFP_KERNEL);
--		}
-+		ret = ida_alloc_range(&misc_minors_ida, MISC_DYNAMIC_MINOR + 1,
-+				      MINORMASK, GFP_KERNEL);
- 	} else {
--		/* specific minor, check if it is in dynamic or misc dynamic range  */
--		if (minor < DYNAMIC_MINORS) {
--			minor = DYNAMIC_MINORS - minor - 1;
--			ret = ida_alloc_range(&misc_minors_ida, minor, minor, GFP_KERNEL);
--		} else if (minor > MISC_DYNAMIC_MINOR) {
--			ret = ida_alloc_range(&misc_minors_ida, minor, minor, GFP_KERNEL);
--		} else {
--			/* case of non-dynamic minors, no need to allocate id */
--			ret = 0;
--		}
-+		ret = ida_alloc_range(&misc_minors_ida, minor, minor, GFP_KERNEL);
- 	}
- 	return ret;
+diff --git a/drivers/phy/renesas/r8a779f0-ether-serdes.c b/drivers/phy/renesas/r8a779f0-ether-serdes.c
+index 3b2d8cef75e52..4d12d091b0ab0 100644
+--- a/drivers/phy/renesas/r8a779f0-ether-serdes.c
++++ b/drivers/phy/renesas/r8a779f0-ether-serdes.c
+@@ -49,6 +49,13 @@ static void r8a779f0_eth_serdes_write32(void __iomem *addr, u32 offs, u32 bank,
+ 	iowrite32(data, addr + offs);
  }
  
- static void misc_minor_free(int minor)
++static u32 r8a779f0_eth_serdes_read32(void __iomem *addr, u32 offs,  u32 bank)
++{
++	iowrite32(bank, addr + R8A779F0_ETH_SERDES_BANK_SELECT);
++
++	return ioread32(addr + offs);
++}
++
+ static int
+ r8a779f0_eth_serdes_reg_wait(struct r8a779f0_eth_serdes_channel *channel,
+ 			     u32 offs, u32 bank, u32 mask, u32 expected)
+@@ -274,6 +281,7 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
+ *channel)
  {
--	if (minor < DYNAMIC_MINORS)
--		ida_free(&misc_minors_ida, DYNAMIC_MINORS - minor - 1);
--	else if (minor > MISC_DYNAMIC_MINOR)
--		ida_free(&misc_minors_ida, minor);
-+	ida_free(&misc_minors_ida, minor);
+ 	int ret;
++	u32 val;
+ 
+ 	ret = r8a779f0_eth_serdes_chan_setting(channel);
+ 	if (ret)
+@@ -287,6 +295,26 @@ static int r8a779f0_eth_serdes_hw_init_late(struct r8a779f0_eth_serdes_channel
+ 
+ 	r8a779f0_eth_serdes_write32(channel->addr, 0x03d0, 0x380, 0x0000);
+ 
++	val = r8a779f0_eth_serdes_read32(channel->addr, 0x00c0, 0x180);
++	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val | BIT(8));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 1);
++	if (ret)
++		return ret;
++	r8a779f0_eth_serdes_write32(channel->addr, 0x00c0, 0x180, val & ~BIT(8));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0100, 0x180, BIT(0), 0);
++	if (ret)
++		return ret;
++
++	val = r8a779f0_eth_serdes_read32(channel->addr, 0x0144, 0x180);
++	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val | BIT(4));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 1);
++	if (ret)
++		return ret;
++	r8a779f0_eth_serdes_write32(channel->addr, 0x0144, 0x180, val & ~BIT(4));
++	ret = r8a779f0_eth_serdes_reg_wait(channel, 0x0180, 0x180, BIT(0), 0);
++	if (ret)
++		return ret;
++
+ 	return r8a779f0_eth_serdes_monitor_linkup(channel);
  }
  
- #ifdef CONFIG_PROC_FS
 -- 
 2.51.0
 
