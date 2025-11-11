@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9BD29A30A;
-	Tue, 11 Nov 2025 01:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D3229A30A;
+	Tue, 11 Nov 2025 01:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825540; cv=none; b=NxpVAWYS8jWgCLRMPFKGyHmtblqY0myrfWhDdkRIFRa/LvqRztbQrBUwZPrz4N93IQ1LSJPEd8UammV/7YBTbneSK0CsdieztQgaGkN0ylG8ePV5quIkKS1YmsyJz3FiE7491mlYbgsrxTq+jPVAYCi1sEfgbpj4uAemnxVQZpE=
+	t=1762825543; cv=none; b=GTYhLYGPZtaHMLuRz+RBbz7TOb+w5Vy5yKGfP9rHWidI2CZd2z/AALH7m8usGvMaMbUk3bIMp/M1bUHWgsTBzYIDQBqq8oSDblKozwsIkid1CKU+IU2RY3K0DLZAUYPLThbGD4uuLwoFaQ/6xu+KrnOEzXFF6bv2Tp4ZExKALN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825540; c=relaxed/simple;
-	bh=2m6nStoP5wYtlJ//pevfJEPMiwDZB9NDt0qPoNMvLxo=;
+	s=arc-20240116; t=1762825543; c=relaxed/simple;
+	bh=VCrWwMySMzkGM1n0wmMvQ2u364EyozNQZ+lIcYiVLnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzRwtqkzzwLkyhGsitCkgxw3Mr+1F1Sx+dKW2mjpG6Pk2mGQtS7YB3ao2kdl6pO/RgafQ4CvwBUWGBtyoM9/dLLkd4lC/cBOgggWxHrsLLbhiyc+6KTZbg0aoK/BitiGLbm5JNaA5UhXH5eDy89mBcq8YIHSdyJtTyTE8OagP+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lv6z3SRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHedxiMQkx1BBM7ntAortE5LC9mISz8PvSS8p7xiDu68B9sjK7TdpCXMhZLOHPu0LbpnJ5sHm0XvSz7RMnrGp5uC9g5aBatIK+nB+CguIkfeenphjLQqeP07J6sHxmViitX5CQqEH33how/JGLd1CZa4+7nig8z32O0Qjreoa/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olIyFwrq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lv6z3SRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67510C19422;
-	Tue, 11 Nov 2025 01:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olIyFwrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6C7C113D0;
+	Tue, 11 Nov 2025 01:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825540;
-	bh=2m6nStoP5wYtlJ//pevfJEPMiwDZB9NDt0qPoNMvLxo=;
+	s=korg; t=1762825543;
+	bh=VCrWwMySMzkGM1n0wmMvQ2u364EyozNQZ+lIcYiVLnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lv6z3SRmwsAX4WwOdNU6bAo7T2ZA5y06UQ2WJyyUBBRIHnob8wszwJjzBRYqnwv/S
-	 LHI1k0IzLDOkgTQX92U6ndqGS2XY9YOsjm1QUKutQRxCsmGyPalZBcx8YI4rBUaNsH
-	 q6CG6OSjsj1kEVRYNYrCm2DH86NRunnfmvZapuFM=
+	b=olIyFwrqytrrGcEBnodNGTVvc8t+wI05Ht6aiNy2zD987AP2i+WvOVd9zXAflK8/E
+	 +C9r9PDCECwbnp14mFv7nY2VstghvQxcnkyTV0dYQ/QTsAgAamddV/fOt9lO5HDkKj
+	 Jna3SbirRezXvf0Mst1w5tF9R/80+ZsyevopFXpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 844/849] drm/amdgpu/userq: assign an error code for invalid userq va
-Date: Tue, 11 Nov 2025 09:46:54 +0900
-Message-ID: <20251111004556.824718318@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.17 845/849] drm/msm/dpu: Fix adjusted mode clock check for 3d merge
+Date: Tue, 11 Nov 2025 09:46:55 +0900
+Message-ID: <20251111004556.847128693@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -50,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-commit 883bd89d00085c2c5f1efcd25861745cb039f9e3 upstream.
+commit f5d079564c44baaeedf5e25f4b943aa042ea0eb1 upstream.
 
-It should return an error code if userq VA validation fails.
+Since 3D merge allows for larger modes to be supported across 2 layer
+mixers, filter modes based on adjusted mode clock / 2 when 3d merge is
+supported.
 
-Fixes: 9e46b8bb0539 ("drm/amdgpu: validate userq buffer virtual address and size")
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 62b7d6835288 ("drm/msm/dpu: Filter modes based on adjusted mode clock")
+Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Tested-by: Abel Vesa <abel.vesa@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/676353/
+Link: https://lore.kernel.org/r/20250923-modeclk-fix-v2-1-01fcd0b2465a@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -71,6 +71,7 @@ int amdgpu_userq_input_va_validate(struc
- 		return 0;
- 	}
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1546,6 +1546,9 @@ static enum drm_mode_status dpu_crtc_mod
+ 	adjusted_mode_clk = dpu_core_perf_adjusted_mode_clk(mode->clock,
+ 							    dpu_kms->perf.perf_cfg);
  
-+	r = -EINVAL;
- out_err:
- 	amdgpu_bo_unreserve(vm->root.bo);
- 	return r;
-@@ -476,6 +477,7 @@ amdgpu_userq_create(struct drm_file *fil
- 	if (amdgpu_userq_input_va_validate(&fpriv->vm, args->in.queue_va, args->in.queue_size) ||
- 	    amdgpu_userq_input_va_validate(&fpriv->vm, args->in.rptr_va, AMDGPU_GPU_PAGE_SIZE) ||
- 	    amdgpu_userq_input_va_validate(&fpriv->vm, args->in.wptr_va, AMDGPU_GPU_PAGE_SIZE)) {
-+		r = -EINVAL;
- 		kfree(queue);
- 		goto unlock;
- 	}
++	if (dpu_kms->catalog->caps->has_3d_merge)
++		adjusted_mode_clk /= 2;
++
+ 	/*
+ 	 * The given mode, adjusted for the perf clock factor, should not exceed
+ 	 * the max core clock rate
 
 
