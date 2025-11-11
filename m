@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37DE248F6A;
-	Tue, 11 Nov 2025 01:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A962248F6A;
+	Tue, 11 Nov 2025 01:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824419; cv=none; b=a6Bn0sUEdDqv1uWtncu5oCu0ssDA0A/gdwFnnLnGKbiT4c0zqjPZTy1ybo5ETTX5f8U7re4dbHjKGqaTx8osN4GQ3E76h1+AcaZ64Tw7InmA1YQ1hotBUA1HqVyU2X/BNKYFu4XUE5wIA/qy7UIm9hi92VogSAq1y6X94GO3Mm8=
+	t=1762824422; cv=none; b=InK6a+m52cNe1pL+20gaPW6lPoLuJXQOzkB9Ta0o3mRvFy6H5Q8LWfU7YXb5AQXRXZe9NdLXIavhN5otVdT6iWtmChWwaZ9oT/uH8ggwru5dL3HjjnF57idUpEUqFQCc6P2j69wO9Zeiv9C5iAv+DR5K6nfn9HYQuSoqkYrFYVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824419; c=relaxed/simple;
-	bh=wExKomsksmWmWxeEtjBTaUDJGFtjHB5naps03LFJN+U=;
+	s=arc-20240116; t=1762824422; c=relaxed/simple;
+	bh=lKtqPsZsdui0cAMRgQyt82xU/yaLmiU1gX9WXFGzvDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ph8urSmlcSh1OoQUbmErMWEUHLFWfD4wSuTLEUXGeb1d006YF8pWUJA8LikSR3nMznEJm81sAA3cKUHIKrIDUI91agGJXMmN4XC72nK4LeLpEKLhFTdxaLtTDQbNpfdlo1vm3ngzr+R3VSu/Rdm2cct0PfQcCaeEenf89HcXiHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZL4/Hwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWZ0zjH82Clv6y+Cn7A+l1+H9UVtZiGb4NmZ0gJkNmORT6e3suBRor2oyHcC7Ge0x/Cqazf/H5pQugN76ButXboLKWsVqGiBpYNE/yIzfOCKbUAO9hACAJGYH0pSmv3TXZPz117tO+m9r/c2qE/EGchtcXFa+3ftnpvYureArYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARi1MXhc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZL4/Hwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F66BC116B1;
-	Tue, 11 Nov 2025 01:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARi1MXhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CB2C113D0;
+	Tue, 11 Nov 2025 01:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824419;
-	bh=wExKomsksmWmWxeEtjBTaUDJGFtjHB5naps03LFJN+U=;
+	s=korg; t=1762824422;
+	bh=lKtqPsZsdui0cAMRgQyt82xU/yaLmiU1gX9WXFGzvDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZL4/HweWVPEC1DmMzvn3sMBB8ih6iecu8FATiqNG8FXtRsdjQQdJrDOPb2M4Wv4T
-	 R+cQdqXdU6fH2p5GJH6k8XUnkQhB0x/FgatJZtMJQ+C8qj5qjSgcPclLKcVOrIg+Cy
-	 TagAkyUqph5K9REu07vwbqaDXrvtGYf2MX/h5JrA=
+	b=ARi1MXhcy62A6My4HX60xrirZNLgjh1nCV1TuD/CmyUYpq3X2CpGLaESAQd9HGBv4
+	 lbWhQ50WbqSup/7ubLlfBVkWtQCcQs/ml5g77asFm+WYnH/LinORqYc5cLmthzRHbV
+	 Ps4ExGp5hCi55dyRZNBtY/Eg8xqmclsQYwF9ZROE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 491/849] selftests: mptcp: join: allow more time to send ADD_ADDR
-Date: Tue, 11 Nov 2025 09:41:01 +0900
-Message-ID: <20251111004548.311837287@linuxfoundation.org>
+Subject: [PATCH 6.12 440/565] ALSA: usb-audio: add mono main switch to Presonus S1824c
+Date: Tue, 11 Nov 2025 09:44:56 +0900
+Message-ID: <20251111004536.782602170@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-[ Upstream commit e2cda6343bfe459c3331db5afcd675ab333112dd ]
+[ Upstream commit 659169c4eb21f8d9646044a4f4e1bc314f6f9d0c ]
 
-When many ADD_ADDR need to be sent, it can take some time to send each
-of them, and create new subflows. Some CIs seem to occasionally have
-issues with these tests, especially with "debug" kernels.
+The 1824c does not have the A/B switch that the 1810c has,
+but instead it has a mono main switch that sums the two
+main output channels to mono.
 
-Two subtests will now run for a slightly longer time: the last two where
-3 or more ADD_ADDR are sent during the test.
-
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250907-net-next-mptcp-add_addr-retrans-adapt-v1-3-824cc805772b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/mixer_s1810c.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index 5579709c36533..725f1a00bbf19 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2151,7 +2151,8 @@ signal_address_tests()
- 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.4.1 flags signal
- 		pm_nl_set_limits $ns2 3 3
--		run_tests $ns1 $ns2 10.0.1.1
-+		speed=slow \
-+			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 3 3 3
- 		chk_add_nr 3 3
- 	fi
-@@ -2163,7 +2164,8 @@ signal_address_tests()
- 		pm_nl_add_endpoint $ns1 10.0.3.1 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.14.1 flags signal
- 		pm_nl_set_limits $ns2 3 3
--		run_tests $ns1 $ns2 10.0.1.1
-+		speed=slow \
-+			run_tests $ns1 $ns2 10.0.1.1
- 		join_syn_tx=3 \
- 			chk_join_nr 1 1 1
- 		chk_add_nr 3 3
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index 65bdda0841048..2413a6d96971c 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -93,6 +93,7 @@ struct s1810c_ctl_packet {
+ 
+ #define SC1810C_CTL_LINE_SW	0
+ #define SC1810C_CTL_MUTE_SW	1
++#define SC1824C_CTL_MONO_SW	2
+ #define SC1810C_CTL_AB_SW	3
+ #define SC1810C_CTL_48V_SW	4
+ 
+@@ -123,6 +124,7 @@ struct s1810c_state_packet {
+ #define SC1810C_STATE_48V_SW	58
+ #define SC1810C_STATE_LINE_SW	59
+ #define SC1810C_STATE_MUTE_SW	60
++#define SC1824C_STATE_MONO_SW	61
+ #define SC1810C_STATE_AB_SW	62
+ 
+ struct s1810_mixer_state {
+@@ -502,6 +504,15 @@ static const struct snd_kcontrol_new snd_s1810c_mute_sw = {
+ 	.private_value = (SC1810C_STATE_MUTE_SW | SC1810C_CTL_MUTE_SW << 8)
+ };
+ 
++static const struct snd_kcontrol_new snd_s1824c_mono_sw = {
++	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
++	.name = "Mono Main Out Switch",
++	.info = snd_ctl_boolean_mono_info,
++	.get = snd_s1810c_switch_get,
++	.put = snd_s1810c_switch_set,
++	.private_value = (SC1824C_STATE_MONO_SW | SC1824C_CTL_MONO_SW << 8)
++};
++
+ static const struct snd_kcontrol_new snd_s1810c_48v_sw = {
+ 	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
+ 	.name = "48V Phantom Power On Mic Inputs Switch",
+@@ -588,8 +599,17 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
+-	if (ret < 0)
+-		return ret;
++	// The 1824c has a Mono Main switch instead of a
++	// A/B select switch.
++	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
++		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
++		if (ret < 0)
++			return ret;
++	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
++		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
++		if (ret < 0)
++			return ret;
++	}
++
+ 	return ret;
+ }
 -- 
 2.51.0
 
