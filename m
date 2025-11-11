@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616EA4C97;
-	Tue, 11 Nov 2025 00:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4B34C97;
+	Tue, 11 Nov 2025 00:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822402; cv=none; b=A5eFoD5/T4TY8Zvr9VT7VNU8AbZPaC18h5uZTb2TpqfeQqJv9dP4DX1aYHGxrK5XBndOsoaYwhwi+K0DgjDAM1BflC5vq75xUUA1EKSxchPWnuWmAKimyz6yopVKjgspewo9mhmh4Q9tZbCL+IeLx/NP/My3rMSfTzNJpPtSViE=
+	t=1762822404; cv=none; b=UasS5LyKf2Wu9IGhNeV1U/MfAQfGk916wPIuW7tJpLp+ltS0U1ELiHXOKDu2/61EfowG/XAqY4la8dDznPdohUbNVNqiWFEm8Lh7NaI+0CvssE9HHB0A2h71v7W+nHehcvy9GF3GOkL+ccj6Kd7HGyswDltBfLRXCaKqLiRoSSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822402; c=relaxed/simple;
-	bh=JuwhFDiPMhQlKT3rCQZOlaScnVQk832qro1z4qxErpI=;
+	s=arc-20240116; t=1762822404; c=relaxed/simple;
+	bh=JsVEzLrH0rkkkzI8oss3/dNpmy95IXtwFGPQYEH3PEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WL8EaHf4SkLMMSz+jMLx2InNRgZxvWpj8eAUkTz35cD4D8eHUF+RRFkB4CfWUmfr/0XMfE5wOn4K3KTcCJeSTmIh8Wv921dUc/39KSfkKWFrdeWFlIRQPRtOoVtxUHwooFOItQw+MRGh2+ZG13g2RmGsqwBIZbuK8YV1lJ7dXhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTjgJy43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FDBdDtsflrJic76YEAS3Fxk7G/2rm/xSzJVR8P0OFFr5C8ocmy+m2ffVF0xkQdlBcJ1dT5EO4KZVZz8BwM+x9JkJqKu7+SREiFszlSU1mWE/pNGm2AAYBz6WSbbXPGi7+/JxXx4fq7jdvtEgmVboZbFERFuNmcbu53wFvCPDUWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvRFj63D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTjgJy43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C237DC4CEF5;
-	Tue, 11 Nov 2025 00:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvRFj63D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1B4C19421;
+	Tue, 11 Nov 2025 00:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822402;
-	bh=JuwhFDiPMhQlKT3rCQZOlaScnVQk832qro1z4qxErpI=;
+	s=korg; t=1762822404;
+	bh=JsVEzLrH0rkkkzI8oss3/dNpmy95IXtwFGPQYEH3PEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTjgJy43PORPKe0I9F5zXEMw6cPxAUbRnqWo1Jax+CrFovetfZSqz23jMCM2ioc7f
-	 ZR/UlQ7kDFekIHTNLKuQWHi3QQQAm+eqBc/+shmi/w5Msy0WJKM8RA0/NjJiFqIdqt
-	 /1aIFvM51w5JpUg1sPSbS/jsoL5IKf+a8pANOOks=
+	b=AvRFj63DdZLOZ4gIRDGLNZBpDd9S4MGtZeCldH3oklHak1AEdT0p3sLN84JQloQm2
+	 aCkpv1d6oHa9LgBzYF4FzKs2IEfXU/jOMNn0ySFETgauPhbzjEPbR5ga7mWHFpyEAr
+	 x+yAIk2q6TC38L7lVGIdwUIBvxOfVdOZUrCqSQ/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/565] Bluetooth: ISO: Fix BIS connection dst_type handling
-Date: Tue, 11 Nov 2025 09:38:19 +0900
-Message-ID: <20251111004527.869081465@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.17 101/849] drm/sched: Fix race in drm_sched_entity_select_rq()
+Date: Tue, 11 Nov 2025 09:34:31 +0900
+Message-ID: <20251111004538.847593803@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit f0c200a4a537f8f374584a974518b0ce69eda76c ]
+commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 upstream.
 
-Socket dst_type cannot be directly assigned to hci_conn->type since
-there domain is different which may lead to the wrong address type being
-used.
+In a past bug fix it was forgotten that entity access must be protected
+by the entity lock. That's a data race and potentially UB.
 
-Fixes: 6a5ad251b7cd ("Bluetooth: ISO: Fix possible circular locking dependency")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move the spin_unlock() to the appropriate position.
+
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index f48a694b004ab..c9a262f97678b 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1927,7 +1927,7 @@ static void iso_conn_ready(struct iso_conn *conn)
- 		 */
- 		if (!bacmp(&hcon->dst, BDADDR_ANY)) {
- 			bacpy(&hcon->dst, &iso_pi(parent)->dst);
--			hcon->dst_type = iso_pi(parent)->dst_type;
-+			hcon->dst_type = le_addr_type(iso_pi(parent)->dst_type);
- 		}
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -553,10 +553,11 @@ void drm_sched_entity_select_rq(struct d
+ 		drm_sched_rq_remove_entity(entity->rq, entity);
+ 		entity->rq = rq;
+ 	}
+-	spin_unlock(&entity->lock);
  
- 		if (ev3) {
--- 
-2.51.0
-
+ 	if (entity->num_sched_list == 1)
+ 		entity->sched_list = NULL;
++
++	spin_unlock(&entity->lock);
+ }
+ 
+ /**
 
 
