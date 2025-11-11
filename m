@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46155272E7C;
-	Tue, 11 Nov 2025 01:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D049272E7C;
+	Tue, 11 Nov 2025 01:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823961; cv=none; b=u2nCeemYujq2Gffzo2ss1VfoS4WBCYNUj8etz1ataG+FVsfP1emOTB2nuMYDz1M6OC4VG8XNAtuD5V4qNB4FZAxmiu1KzzPpaV+mS4B3VcIdjYSXRAD/VTUf/0M69EejpbnwQ2RqN8GZPkO4cjQhJnyvGyJQHL6nniZEx4+zggA=
+	t=1762823963; cv=none; b=GBK+xkjwkgNCf8Xh8smiXAuBx4oo4jorrWj+Ah5KAonPLwVXA1IC/6IBVbXqWmX6pHb/fiN/JE06Jeg5GA0YMtSOkBmQ1D1Hhreurt2vBm6EG4nUdlYRJMjo108SK84yqmv0VntAq6rHfwEfzkS9LiP2IWgrW3g8z+XtBhbixw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823961; c=relaxed/simple;
-	bh=ekX3ODG7w98dyd2A5F9iHRXBIox3VoUZKzhRWv7f9GE=;
+	s=arc-20240116; t=1762823963; c=relaxed/simple;
+	bh=ih+h+3nkgF0vkEhRpOXPZ7+fdXDJvPvJuwKhr1Eg2uA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbDZBavyhGigvrO3gAeDwLWBnmN3uSdqD3ingdT05sx1rWbAXBPQpGK3bxoF0lCxk8eyxb6dCwdeGmdIoJgi2Ie5jDHDijxmeu0g+nWMicpP9ep+kOWUEEY9m1LrT1G8SBSECpDtmr45MnkWwctl8yEUQdTu7VbH01kBJtz2tn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoivM7jU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RxDeLVo4MPqpaG6pl+zn1c11aALEhImrAwX5/UfIHNzjDnasPhRwRI/lBj7fHBhv3LPrWvB9G0m4nKPedj+v9rMB4ojiX8h1TFZPbaZJI1jtOilghXYUrZoMAiqgYYNmKyPx8xBBhEbhpPChoR1dsbwjj02AMOQN2ueaoRjzvH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Sk14AWu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoivM7jU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF62C4AF09;
-	Tue, 11 Nov 2025 01:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Sk14AWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D732C113D0;
+	Tue, 11 Nov 2025 01:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823961;
-	bh=ekX3ODG7w98dyd2A5F9iHRXBIox3VoUZKzhRWv7f9GE=;
+	s=korg; t=1762823963;
+	bh=ih+h+3nkgF0vkEhRpOXPZ7+fdXDJvPvJuwKhr1Eg2uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoivM7jUde0W9yfhEebBGLJHFUoXNhkNmw9VBbPtnlXQQ17L9pylKf/Mb0P1hiQJP
-	 Mhcuo9ysPncK1TyQVSq76h4GmUwSGFS2haiSSS3D+k356whHBe+OFWNqufO5CG/8Md
-	 Kdz34hw8BPAT0jggw5ibmwf3vfZ2ROfnaX9Tveys=
+	b=2Sk14AWuO0c1DkjaShItSVFuipg1wykAgjAYkDAJEtCnX5CEQ1S2QGuhXKlw6lR7C
+	 jYMRlCR8ND8I/mJh5ivan8XYKmCTT6nYohYOPr8SNMSp2klebnr4m+eHuXjinFsmIV
+	 Pd0jNC1QCTCagMNSOTIYLtBkQj7858EaiDarx5ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 322/565] scsi: ufs: host: mediatek: Enhance recovery on resume failure
-Date: Tue, 11 Nov 2025 09:42:58 +0900
-Message-ID: <20251111004534.129637046@linuxfoundation.org>
+Subject: [PATCH 6.12 358/565] ALSA: serial-generic: remove shared static buffer
+Date: Tue, 11 Nov 2025 09:43:34 +0900
+Message-ID: <20251111004534.923531634@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,48 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit 15ef3f5aa822f32524cba1463422a2c9372443f0 ]
+[ Upstream commit 84973249011fda3ff292f83439a062fec81ef982 ]
 
-Improve the recovery process for failed resume operations. Log the
-device's power status and return 0 if both resume and recovery fail to
-prevent I/O hang.
+If multiple instances of this driver are instantiated and try to send
+concurrently then the single static buffer snd_serial_generic_tx_work()
+will cause corruption in the data output.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Move the buffer into the per-instance driver data to avoid this.
+
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-mediatek.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/drivers/serial-generic.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 2be74662f960b..7d7664f5b72a5 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1564,8 +1564,21 @@ static int ufs_mtk_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	}
+diff --git a/sound/drivers/serial-generic.c b/sound/drivers/serial-generic.c
+index 36409a56c675e..d0e2e656c31c1 100644
+--- a/sound/drivers/serial-generic.c
++++ b/sound/drivers/serial-generic.c
+@@ -37,6 +37,8 @@ MODULE_LICENSE("GPL");
+ #define SERIAL_TX_STATE_ACTIVE	1
+ #define SERIAL_TX_STATE_WAKEUP	2
  
- 	return 0;
++#define INTERNAL_BUF_SIZE 256
 +
- fail:
--	return ufshcd_link_recovery(hba);
-+	/*
-+	 * Check if the platform (parent) device has resumed, and ensure that
-+	 * power, clock, and MTCMOS are all turned on.
-+	 */
-+	err = ufshcd_link_recovery(hba);
-+	if (err) {
-+		dev_err(hba->dev, "Device PM: req=%d, status:%d, err:%d\n",
-+			hba->dev->power.request,
-+			hba->dev->power.runtime_status,
-+			hba->dev->power.runtime_error);
-+	}
-+
-+	return 0; /* Cannot return a failure, otherwise, the I/O will hang. */
+ struct snd_serial_generic {
+ 	struct serdev_device *serdev;
+ 
+@@ -51,6 +53,7 @@ struct snd_serial_generic {
+ 	struct work_struct tx_work;
+ 	unsigned long tx_state;
+ 
++	char tx_buf[INTERNAL_BUF_SIZE];
+ };
+ 
+ static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
+@@ -61,11 +64,8 @@ static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
+ 	schedule_work(&drvdata->tx_work);
  }
  
- static void ufs_mtk_dbg_register_dump(struct ufs_hba *hba)
+-#define INTERNAL_BUF_SIZE 256
+-
+ static void snd_serial_generic_tx_work(struct work_struct *work)
+ {
+-	static char buf[INTERNAL_BUF_SIZE];
+ 	int num_bytes;
+ 	struct snd_serial_generic *drvdata = container_of(work, struct snd_serial_generic,
+ 						   tx_work);
+@@ -78,8 +78,10 @@ static void snd_serial_generic_tx_work(struct work_struct *work)
+ 		if (!test_bit(SERIAL_MODE_OUTPUT_OPEN, &drvdata->filemode))
+ 			break;
+ 
+-		num_bytes = snd_rawmidi_transmit_peek(substream, buf, INTERNAL_BUF_SIZE);
+-		num_bytes = serdev_device_write_buf(drvdata->serdev, buf, num_bytes);
++		num_bytes = snd_rawmidi_transmit_peek(substream, drvdata->tx_buf,
++						      INTERNAL_BUF_SIZE);
++		num_bytes = serdev_device_write_buf(drvdata->serdev, drvdata->tx_buf,
++						    num_bytes);
+ 
+ 		if (!num_bytes)
+ 			break;
 -- 
 2.51.0
 
