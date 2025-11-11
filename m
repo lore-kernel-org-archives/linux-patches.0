@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BDB2DE707;
-	Tue, 11 Nov 2025 01:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46A61D86FF;
+	Tue, 11 Nov 2025 01:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824226; cv=none; b=PVNH5dxs2qzltdh7uQNJfspcjPYBnWkmqC6we3r/kwqzy/n6M2297L1qIXdVGSF1uNyE3RzcqVMV80YfmhNVRTE7n6bpzxHL9DehmbRCcwBI+udOTnAli4zxJrbJGQc9IpALShxpCwFB+og2mD1uqDK8+f4+injMRewo9lQJE4c=
+	t=1762824228; cv=none; b=aoPuCoiX2Qnc5BkM7E9irbpiXow3c+otLExO0F4ppHlUJBV2PHOO6JJaGnVk9FVTCdgvj5q0TXnHoqN5qdvpc/TDF38lyew7ZN06itfEsoGon7xehkN8aZIBQ2v0fAnrYZ2VtiEFr9C40+xhY9C3vVt67y3+ELxfrr+G7wMKzac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824226; c=relaxed/simple;
-	bh=O6ADUg+x+IvWaNgc+7nV+tHeeayo3pZHwLbLtaXu0QE=;
+	s=arc-20240116; t=1762824228; c=relaxed/simple;
+	bh=YXH6aS2rQv2Ggmg7Dx2hLhr9zNpPxMot3LXgp0qu/5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6lVTzgnXWsw7lRAoX7kI8ij/Nv+BFs9GBERWLFsDl7ScnCPeW8kGSXEPpx7gQxoQxOgx1UQxuTFu+Pn2MI0tOFtvLwcmQud3UttX8FRzXGTXAFE9hV5iY5syatY+jts5ZZ/LxlG4PxXlyQp4YwOQTwFeZVlKuCVrFFuHwYiE5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeLdOOVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkxpGTQEFQ+O2Q4B3MaEzMfERNWRuSstRLSEsA+oKyP01/6n+T0Ig1XZSfvyRcwkecB2p3n07zLRxI9GNgar2SD9MYJxxg+fVCyeCEAeFyF8f/+5XVCBH9wW2oGoEl+xBBoW0fck14DdtKyu+y6K034/vsejY+wpjHDmKbBMdoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpCVtwPA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeLdOOVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B7AC4CEFB;
-	Tue, 11 Nov 2025 01:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpCVtwPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62976C116B1;
+	Tue, 11 Nov 2025 01:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824226;
-	bh=O6ADUg+x+IvWaNgc+7nV+tHeeayo3pZHwLbLtaXu0QE=;
+	s=korg; t=1762824228;
+	bh=YXH6aS2rQv2Ggmg7Dx2hLhr9zNpPxMot3LXgp0qu/5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeLdOOVqxyFLsRBimt1LyrNwr2iZfNjenT4Swi4IThh0FdqHBHKZmFetvEKAGUaQW
-	 NC5wjALZkIAwXo7QhjbUDzQAW108x3Vh2nGZzESXmSxt9zv5D3yjmXPxKgjd2+2G7/
-	 704eIQdUJYjpufMMQHAdgRvQjLFhDApzkfRIfROs=
+	b=wpCVtwPA5f91PnFIoIprapaxrrnFPCmfCbPZwHn9Lqyyr9gKmhHTFgEpCdhTWFScS
+	 VI7wMSlocujLbgUuoOUo7cckWOJyhCkkgOVfiitmSBBjJGU5IjyOKFujl9T9buePKX
+	 WFKYYSDD1bKJEg/0U+griIry8XnuZ1A2WOiAsZ1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunHao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 401/565] r8169: set EEE speed down ratio to 1
-Date: Tue, 11 Nov 2025 09:44:17 +0900
-Message-ID: <20251111004535.893368189@linuxfoundation.org>
+Subject: [PATCH 6.17 466/849] serdev: Drop dev_pm_domain_detach() call
+Date: Tue, 11 Nov 2025 09:40:36 +0900
+Message-ID: <20251111004547.694322902@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ChunHao Lin <hau@realtek.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit bf7154ffb1c65a201906296a9d3eb22e9daa5ffc ]
+[ Upstream commit e3fa89f3a768a9c61cf1bfe86b939ab5f36a9744 ]
 
-EEE speed down means speed down MAC MCU clock. It is not from spec.
-It is kind of Realtek specific power saving feature. But enable it
-may cause some issues, like packet drop or interrupt loss. Different
-hardware may have different issues.
+Starting with commit f99508074e78 ("PM: domains: Detach on
+device_unbind_cleanup()"), there is no longer a need to call
+dev_pm_domain_detach() in the bus remove function. The
+device_unbind_cleanup() function now handles this to avoid
+invoking devres cleanup handlers while the PM domain is
+powered off, which could otherwise lead to failures as
+described in the above-mentioned commit.
 
-EEE speed down ratio (mac ocp 0xe056[7:4]) is used to set EEE speed
-down rate. The larger this value is, the more power can save. But it
-actually save less power then we expected. And, as mentioned above,
-will impact compatibility. So set it to 1 (mac ocp 0xe056[7:4] = 0)
-, which means not to speed down, to improve compatibility.
+Drop the explicit dev_pm_domain_detach() call and rely instead
+on the flags passed to dev_pm_domain_attach() to power off the
+domain.
 
-Signed-off-by: ChunHao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20250918023425.3463-1-hau@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250827101747.928265-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serdev/core.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 80b5262d0d572..bec5f68237753 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -3467,7 +3467,7 @@ static void rtl_hw_start_8168h_1(struct rtl8169_private *tp)
- 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
- 	}
+diff --git a/drivers/tty/serdev/core.c b/drivers/tty/serdev/core.c
+index d16c207a1a9b2..b33e708cb2455 100644
+--- a/drivers/tty/serdev/core.c
++++ b/drivers/tty/serdev/core.c
+@@ -399,15 +399,12 @@ static int serdev_drv_probe(struct device *dev)
+ 	const struct serdev_device_driver *sdrv = to_serdev_device_driver(dev->driver);
+ 	int ret;
  
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xe052, 0x6000, 0x8008);
- 	r8168_mac_ocp_modify(tp, 0xe0d6, 0x01ff, 0x017f);
- 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
-@@ -3572,7 +3572,7 @@ static void rtl_hw_start_8117(struct rtl8169_private *tp)
- 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
- 	}
+-	ret = dev_pm_domain_attach(dev, PD_FLAG_ATTACH_POWER_ON);
++	ret = dev_pm_domain_attach(dev, PD_FLAG_ATTACH_POWER_ON |
++					PD_FLAG_DETACH_POWER_OFF);
+ 	if (ret)
+ 		return ret;
  
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_write(tp, 0xea80, 0x0003);
- 	r8168_mac_ocp_modify(tp, 0xe052, 0x0000, 0x0009);
- 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
-@@ -3772,7 +3772,7 @@ static void rtl_hw_start_8125_common(struct rtl8169_private *tp)
- 	r8168_mac_ocp_modify(tp, 0xc0b4, 0x0000, 0x000c);
- 	r8168_mac_ocp_modify(tp, 0xeb6a, 0x00ff, 0x0033);
- 	r8168_mac_ocp_modify(tp, 0xeb50, 0x03e0, 0x0040);
--	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0030);
-+	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xe040, 0x1000, 0x0000);
- 	r8168_mac_ocp_modify(tp, 0xea1c, 0x0003, 0x0001);
- 	if (tp->mac_version == RTL_GIGA_MAC_VER_65 ||
+-	ret = sdrv->probe(to_serdev_device(dev));
+-	if (ret)
+-		dev_pm_domain_detach(dev, true);
+-
+-	return ret;
++	return sdrv->probe(to_serdev_device(dev));
+ }
+ 
+ static void serdev_drv_remove(struct device *dev)
+@@ -415,8 +412,6 @@ static void serdev_drv_remove(struct device *dev)
+ 	const struct serdev_device_driver *sdrv = to_serdev_device_driver(dev->driver);
+ 	if (sdrv->remove)
+ 		sdrv->remove(to_serdev_device(dev));
+-
+-	dev_pm_domain_detach(dev, true);
+ }
+ 
+ static const struct bus_type serdev_bus_type = {
 -- 
 2.51.0
 
