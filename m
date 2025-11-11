@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AD3DDAB;
-	Tue, 11 Nov 2025 01:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D091C28E;
+	Tue, 11 Nov 2025 01:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824830; cv=none; b=BDw8IeQeHc5aeAlvniYL22cgUxHqOy8vOh1HSEa9DeG9OEilEz8Meskvgz8+lBkePcZsVe3fR9FWTeJXAQ3frJPFJCfiHJpodxrYyOZkolzdKMno/Rbg1JglbKmeRVelq/pKRkLGi+v3+E2+XgAALs8FKAHaeWa1bgEPNRpSMbk=
+	t=1762824832; cv=none; b=PufsAu47JGgTM+5mo8hcsBUlA40/M/n89Dv6Ns+RJGF4Tw0w1HMhWkp4EzcxgJxh/VRxe3A/HnczFnXapB3JCgjucv2Dz6knvZge4rUaBgdZyC9ls9gu2wuzN4tKdBj8MFz0mK2ny3xGuMpfgJvIIIgu60YPk+T6d9DtqLwhwvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824830; c=relaxed/simple;
-	bh=hTaeJkrXWbLIa8dnpeSz18k9t7iiub3LcgpuB0Yffg4=;
+	s=arc-20240116; t=1762824832; c=relaxed/simple;
+	bh=ATjGa/j/QR5bPYzljkVS0CIj8BB951KRIpYadsoNY2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMksdCrkYhY43givT6Ok/m8ZQjobR34KVjvD9Im+kBcurryYxHVkrOz/uug7Y1mys+BpHqYq6ug2yaoDQXfMXdQdQcXskyFvX0RP0uODu4drihzVbBrRlOY6JvVcnAwks0Xtkc2GvsxLw5S36VHyhGkE2NlZRlEBsr490nFs1Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzGG63Eo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snVSlvKyqIbUP5flNj4NRqbh7AoMgZwloRuRlF0qKgcmyEJL9sAW7jKdY0DkMvdlJOMxDqs8k4I2XPNAqzV68HCd+1TICIFjTwvN3/ISEuyph8YMQtwYEiyckJyFPMsvYwR9ARRw6vy/ySkKfxOx24rki79djo5SbV7HsWixWnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTfIy0+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzGG63Eo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C404C116D0;
-	Tue, 11 Nov 2025 01:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTfIy0+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558B2C4CEFB;
+	Tue, 11 Nov 2025 01:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824830;
-	bh=hTaeJkrXWbLIa8dnpeSz18k9t7iiub3LcgpuB0Yffg4=;
+	s=korg; t=1762824832;
+	bh=ATjGa/j/QR5bPYzljkVS0CIj8BB951KRIpYadsoNY2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzGG63EobJDDAXwYF2SgbW5jTKGj7rPqLhPEib41EfpyZ77s/6mAkmzb3uFysVQcM
-	 u9G5TDSMrZzXwMY64erthwBkXXRC7gsPO5XCLzA3lhRcX2cZ+ccrzTYdRf66OxUJX4
-	 NjFMzyq6qYp4M/FdQIfYYF+Fzj1MNxe6BY+2K0xQ=
+	b=fTfIy0+ypi1/ILTvJ9a0rP1/lrtAXXeNgcDDkydZRJEBEpqX4I96sSyyQrwNgnLbH
+	 rE8yJXz9LJBQZEo7AeyERltZMqXXHgHGs+7JLePPCZEcIM7Omjeht7+M2HevdkC1jo
+	 fNvds1OblbsX8fIoCkg/sM+tbXH37+FRhMVQ+qdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Mohammad Heib <mheib@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 482/565] LoongArch: Handle new atomic instructions for probes
-Date: Tue, 11 Nov 2025 09:45:38 +0900
-Message-ID: <20251111004537.767447256@linuxfoundation.org>
+Subject: [PATCH 6.12 526/565] net: ionic: add dma_wmb() before ringing TX doorbell
+Date: Tue, 11 Nov 2025 09:46:22 +0900
+Message-ID: <20251111004538.799392068@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -51,77 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit db740f5689e61f2e75b73e5c8e7c985a3b4bc045 ]
+[ Upstream commit d261f5b09c28850dc63ca1d3018596f829f402d5 ]
 
-The atomic instructions sc.q, llacq.{w/d}, screl.{w/d} were newly added
-in the LoongArch Reference Manual v1.10, it is necessary to handle them
-in insns_not_supported() to avoid putting a breakpoint in the middle of
-a ll/sc atomic sequence, otherwise it will loop forever for kprobes and
-uprobes.
+The TX path currently writes descriptors and then immediately writes to
+the MMIO doorbell register to notify the NIC.  On weakly ordered
+architectures, descriptor writes may still be pending in CPU or DMA
+write buffers when the doorbell is issued, leading to the device
+fetching stale or incomplete descriptors.
 
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Add a dma_wmb() in ionic_txq_post() to ensure all descriptor writes are
+visible to the device before the doorbell MMIO write.
+
+Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
+Signed-off-by: Mohammad Heib <mheib@redhat.com>
+Link: https://patch.msgid.link/20251031155203.203031-1-mheib@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/inst.h |  5 +++++
- arch/loongarch/kernel/inst.c      | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/include/asm/inst.h b/arch/loongarch/include/asm/inst.h
-index 3089785ca97e7..bec5b63e46888 100644
---- a/arch/loongarch/include/asm/inst.h
-+++ b/arch/loongarch/include/asm/inst.h
-@@ -77,6 +77,10 @@ enum reg2_op {
- 	iocsrwrh_op     = 0x19205,
- 	iocsrwrw_op     = 0x19206,
- 	iocsrwrd_op     = 0x19207,
-+	llacqw_op	= 0xe15e0,
-+	screlw_op	= 0xe15e1,
-+	llacqd_op	= 0xe15e2,
-+	screld_op	= 0xe15e3,
- };
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+index 0f5758c273c22..3a094d3ea6f4f 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+@@ -29,6 +29,10 @@ static void ionic_tx_clean(struct ionic_queue *q,
  
- enum reg2i5_op {
-@@ -189,6 +193,7 @@ enum reg3_op {
- 	fldxd_op	= 0x7068,
- 	fstxs_op	= 0x7070,
- 	fstxd_op	= 0x7078,
-+	scq_op		= 0x70ae,
- 	amswapw_op	= 0x70c0,
- 	amswapd_op	= 0x70c1,
- 	amaddw_op	= 0x70c2,
-diff --git a/arch/loongarch/kernel/inst.c b/arch/loongarch/kernel/inst.c
-index 14d7d700bcb98..e6896a40017ea 100644
---- a/arch/loongarch/kernel/inst.c
-+++ b/arch/loongarch/kernel/inst.c
-@@ -139,6 +139,9 @@ bool insns_not_supported(union loongarch_instruction insn)
- 	case amswapw_op ... ammindbdu_op:
- 		pr_notice("atomic memory access instructions are not supported\n");
- 		return true;
-+	case scq_op:
-+		pr_notice("sc.q instruction is not supported\n");
-+		return true;
- 	}
+ static inline void ionic_txq_post(struct ionic_queue *q, bool ring_dbell)
+ {
++	/* Ensure TX descriptor writes reach memory before NIC reads them.
++	 * Prevents device from fetching stale descriptors.
++	 */
++	dma_wmb();
+ 	ionic_q_post(q, ring_dbell);
+ }
  
- 	switch (insn.reg2i14_format.opcode) {
-@@ -150,6 +153,15 @@ bool insns_not_supported(union loongarch_instruction insn)
- 		return true;
- 	}
- 
-+	switch (insn.reg2_format.opcode) {
-+	case llacqw_op:
-+	case llacqd_op:
-+	case screlw_op:
-+	case screld_op:
-+		pr_notice("llacq and screl instructions are not supported\n");
-+		return true;
-+	}
-+
- 	switch (insn.reg1i21_format.opcode) {
- 	case bceqz_op:
- 		pr_notice("bceqz and bcnez instructions are not supported\n");
 -- 
 2.51.0
 
