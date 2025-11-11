@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6FD26D4C1;
-	Tue, 11 Nov 2025 01:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62191F874C;
+	Tue, 11 Nov 2025 01:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762825352; cv=none; b=XYLiopDdGsGe/wvnPme9kG7bRFbghef2PjKmYQOInf0JW6yGFC4qhJnhkt2gvxt/DAiG0f7R8Lm0ztEXZ9Uli5oOoy5OhU3Crq9vYZWRB5epEOesylmjS+9+Kt6jglY8L83LmuEmsE6tOxXrnIzBBAinOsS7FoaBgTqSMTUOgEQ=
+	t=1762825355; cv=none; b=dhhJNxPJaL72FYirzubug7c/lqxP33QH7TAV46aUcxMzReLrPnqL31lv/vzqWsgnb1YtzC6Lwps091UZivsoIq4ccBl6N855kSKjp5qzAVmKA40ymDQfww7p5yxOrk4NYvW0g4Oe8fJoTGs1Ad90LVoktioHROYZv43t/fnEvnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762825352; c=relaxed/simple;
-	bh=lvUTLfkow3el2Oiatq1S6zFW944dp+CM5I1tiNz1axA=;
+	s=arc-20240116; t=1762825355; c=relaxed/simple;
+	bh=VZjfb/97u9E6+ILv/NUK5vtggt5DkBjfowBEVx3EqUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fal8BpGdAgg0eW4tNnILMuJTJ/Kk3Vw2yMhFyiLFiIF1816UqK7irlpBQIOh9TpooJVpvtWm/H6ILnAzmAFmOeM8atQJ9Bg/gbJZFlJikC5z7FHgtzwnsxuFZBXcubZL7zRZnE1een2vMBXHtwqIJlpjS5fqQFSVbbDB3/cGU+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbkkQvoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1uUhUcJv8ZjWsonhgx/u2x4OK4x6txxqLC2xDJmh50xgAk7Be/bDOHPIlJIPfzFbQCEXSClXIAsRSAlVikTfTeqXNQ2yLv6Ev38r/UWC2TmhLuANWjtN2GbGXZ/cesJfeE2VJ5gETz2bCiKXHPwL5GiEo7sb5+deG/z/3IykwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4HA1K0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbkkQvoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA1DC4CEF5;
-	Tue, 11 Nov 2025 01:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4HA1K0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7F9C116D0;
+	Tue, 11 Nov 2025 01:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762825352;
-	bh=lvUTLfkow3el2Oiatq1S6zFW944dp+CM5I1tiNz1axA=;
+	s=korg; t=1762825354;
+	bh=VZjfb/97u9E6+ILv/NUK5vtggt5DkBjfowBEVx3EqUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbkkQvoHm5tlI1dpt6Vvrgjuep3tRuMj55IS1SbcbynkfYYkoxO/qQuFgY1LiIH8m
-	 8Epl1nfV0JzA44L54Sp83pyZ3UdNVAHP+y09zYBCBrx1Hk4VG4qE4wFws/aM+RBsPx
-	 +6yuB7TpzgQGFhhinSOT/jJfchG4RtvruXfofk9U=
+	b=G4HA1K0P/7x3cKCuLeezKiNYdJPiBt0jR9Vr5kUfrX62cGBwD/qlqFBCLQRqaBY/M
+	 IVU7S5TOQEUjP3AEBpI46X3REgDROaPuqo2MMA0AqQGZcbuwB46mSCvc6OXs+kuId5
+	 N4ChhEfqtystO7K72SC9bhtioWfQEEcsRSqwTj+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 767/849] gpiolib: fix invalid pointer access in debugfs
-Date: Tue, 11 Nov 2025 09:45:37 +0900
-Message-ID: <20251111004554.972860010@linuxfoundation.org>
+Subject: [PATCH 6.17 768/849] net: mdio: Check regmap pointer returned by device_node_to_regmap()
+Date: Tue, 11 Nov 2025 09:45:38 +0900
+Message-ID: <20251111004554.996224176@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
 References: <20251111004536.460310036@linuxfoundation.org>
@@ -52,51 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 2f6115ad8864cf3f48598f26c74c7c8e5c391919 ]
+[ Upstream commit b2b526c2cf57d14ee269e012ed179081871f45a1 ]
 
-If the memory allocation in gpiolib_seq_start() fails, the s->private
-field remains uninitialized and is later dereferenced without checking
-in gpiolib_seq_stop(). Initialize s->private to NULL before calling
-kzalloc() and check it before dereferencing it.
+The call to device_node_to_regmap() in airoha_mdio_probe() can return
+an ERR_PTR() if regmap initialization fails. Currently, the driver
+stores the pointer without validation, which could lead to a crash
+if it is later dereferenced.
 
-Fixes: e348544f7994 ("gpio: protect the list of GPIO devices with SRCU")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20251103141132.53471-1-brgl@bgdev.pl
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Add an IS_ERR() check and return the corresponding error code to make
+the probe path more robust.
+
+Fixes: 67e3ba978361 ("net: mdio: Add MDIO bus controller for Airoha AN7583")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251031161607.58581-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/mdio/mdio-airoha.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 74d54513730a7..4aa66d7b08598 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -5285,6 +5285,8 @@ static void *gpiolib_seq_start(struct seq_file *s, loff_t *pos)
- 	struct gpio_device *gdev;
- 	loff_t index = *pos;
+diff --git a/drivers/net/mdio/mdio-airoha.c b/drivers/net/mdio/mdio-airoha.c
+index 1dc9939c8d7d4..52e7475121eaf 100644
+--- a/drivers/net/mdio/mdio-airoha.c
++++ b/drivers/net/mdio/mdio-airoha.c
+@@ -219,6 +219,8 @@ static int airoha_mdio_probe(struct platform_device *pdev)
+ 	priv = bus->priv;
+ 	priv->base_addr = addr;
+ 	priv->regmap = device_node_to_regmap(dev->parent->of_node);
++	if (IS_ERR(priv->regmap))
++		return PTR_ERR(priv->regmap);
  
-+	s->private = NULL;
-+
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return NULL;
-@@ -5318,7 +5320,11 @@ static void *gpiolib_seq_next(struct seq_file *s, void *v, loff_t *pos)
- 
- static void gpiolib_seq_stop(struct seq_file *s, void *v)
- {
--	struct gpiolib_seq_priv *priv = s->private;
-+	struct gpiolib_seq_priv *priv;
-+
-+	priv = s->private;
-+	if (!priv)
-+		return;
- 
- 	srcu_read_unlock(&gpio_devices_srcu, priv->idx);
- 	kfree(priv);
+ 	priv->clk = devm_clk_get_enabled(dev, NULL);
+ 	if (IS_ERR(priv->clk))
 -- 
 2.51.0
 
