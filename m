@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3554A1D6DB5;
-	Tue, 11 Nov 2025 00:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764171DF258;
+	Tue, 11 Nov 2025 00:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822553; cv=none; b=pZyEkY5EmGQrgzGqCq0GGk/urc/dKz37bgYDgGxY6x7sui4PQQ/gdoJRuDpWyKedx+kGGvdes7Q+W5a/nWegpPkGJfIvQlCa/FeJLbp0v/gRTGvvNm/WQfj58WAWKNNQ5ye9RTJhbAuv8PNzJgy4UHDhevhAhhmadlXo2pLqy8o=
+	t=1762822555; cv=none; b=OfxCsba2oTIllyWNp5Q8gmubTCOxYD+0cUBy0hSto2isgAOKxRohm97HxAQWoBfEQC8Y7jjCnhEB2JTHcm2XBAZ5rF5pMEITiEHkIBllqlh1PLNv3lqgyN7NTsYqZOLeYGzA4hnKEj3kxB4m8USQ8dH+F+zSREXypmShxmAA5NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822553; c=relaxed/simple;
-	bh=3Ti1G9QVBqF+PiUywr0fRXmi3GDgSl8sbTB0T9mP1tc=;
+	s=arc-20240116; t=1762822555; c=relaxed/simple;
+	bh=g45syoHhH73B8adJE7NfjdoZzJbgbw+9iLQwWrf7JcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0IwCd3TZd/gm8tvvUv2l9eicLIc+sYYONGJcoQUDJGlBa/7lXEMWn/oZnux+jKcUU6vhydBnQJPVYEEWOZpI8hQUwgkTrLS0bTuNB3afkSgL3r+1+cQj17gwYOqXSS6meO6EGOQINEeQPed+NTevgY3DRHntERFd0egTlIhrGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qt9YZCPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMIeacB6MOSEHlJqs8C99Y6vXcEb+QcGufz4bPkN1VmpMEFfXgHR9qaKpXbQaTzRdUbWljpn/wpMnax9JARdyvyHm+fIy1WXJV4jMUhNWjRoKU+sErlOZ3VjUeSz/UW6QFEJbGSdvmjhOI+IWxj9aevpHkrqgNOz0dTx0q6SMLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBi/7OC1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt9YZCPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B8DC4AF09;
-	Tue, 11 Nov 2025 00:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBi/7OC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D933C4CEFB;
+	Tue, 11 Nov 2025 00:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822553;
-	bh=3Ti1G9QVBqF+PiUywr0fRXmi3GDgSl8sbTB0T9mP1tc=;
+	s=korg; t=1762822555;
+	bh=g45syoHhH73B8adJE7NfjdoZzJbgbw+9iLQwWrf7JcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qt9YZCPg3G5QK3IENdCiOImf+MLAyf17/8VtIUTKfvkK21F01iCEX+ClhvAitU59Q
-	 RQkUZd7wCPCRApzM1tzaSy3lX7UakU4ACbC74hgDKyTUoD6WMo+2UGNtvivTg35k5I
-	 V9Jh4/Fvrbp6q+8/4n7VazMhuu6Ux1fLstR0Y6Kw=
+	b=HBi/7OC1oT2pAKHfprfCT92e7h9V9DNorf3E7kvo3AWf5X1EGNpKiKIrE308cHIXS
+	 QQ/H6KhfmN3xcNnNdvzsY003ZrY1E51//ah8m4pljZ7KtDS4nEFypfQTFBQd/WlMXB
+	 03ZqvOGqv7uj/qCb4uiNjKIkIf8wTbm3ie/ISqOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Grisham <josh@joshuagrisham.com>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/565] ACPI: fan: Add fan speed reporting for fans with only _FST
-Date: Tue, 11 Nov 2025 09:38:49 +0900
-Message-ID: <20251111004528.596874553@linuxfoundation.org>
+Subject: [PATCH 6.17 136/849] ACPI: sysfs: Use ACPI_FREE() for freeing an ACPI object
+Date: Tue, 11 Nov 2025 09:35:06 +0900
+Message-ID: <20251111004539.684649732@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,232 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Grisham <josh@joshuagrisham.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 6c00f29f74cb2c063b6f31a0b6d73f9db132b9ac ]
+[ Upstream commit 149139ddcb99583fdec8d1eaf7dada41e5896101 ]
 
-Add support for ACPI fans with _FST to report their speed even if they do
-not support fan control.
+Since str_obj is allocated by ACPICA in acpi_evaluate_object_typed(),
+it should be free with ACPI_FREE() rather than with kfree(), so use
+the former instead of the latter for freeing it.
 
-As suggested by Armin Wolf [1] and per the Windows Thermal Management
-Design Guide [2], Samsung Galaxy Book series devices (and possibly many
-more devices where the Windows guide was strictly followed) only implement
-the _FST method and do not support ACPI-based fan control.
-
-Currently, these fans are not supported by the kernel driver but this patch
-will make some very small adjustments to allow them to be supported.
-
-This patch is tested and working for me on a Samsung Galaxy Book2 Pro whose
-DSDT (and several other Samsung Galaxy Book series notebooks which
-currently have the same issue) can be found at [3].
-
-Link: https://lore.kernel.org/platform-driver-x86/53c5075b-1967-45d0-937f-463912dd966d@gmx.de [1]
-Link: https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/design-guide [2]
-Link: https://github.com/joshuagrisham/samsung-galaxybook-extras/tree/8e3087a06b8bdcdfdd081367af4b744a56cc4ee9/dsdt [3]
-
-Signed-off-by: Joshua Grisham <josh@joshuagrisham.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20250222094407.9753-1-josh@joshuagrisham.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20250822061946.472594-1-kaushlendra.kumar@intel.com
+[ rjw: Subject and changelog rewrite ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: d91a1d129b63 ("ACPI: fan: Use platform device for devres-related actions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/fan.h       |    1 +
- drivers/acpi/fan_attr.c  |   37 ++++++++++++++++++++++---------------
- drivers/acpi/fan_core.c  |   25 ++++++++++++++++++-------
- drivers/acpi/fan_hwmon.c |    8 ++++++++
- 4 files changed, 49 insertions(+), 22 deletions(-)
+ drivers/acpi/device_sysfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/fan.h
-+++ b/drivers/acpi/fan.h
-@@ -49,6 +49,7 @@ struct acpi_fan_fst {
- struct acpi_fan {
- 	acpi_handle handle;
- 	bool acpi4;
-+	bool has_fst;
- 	struct acpi_fan_fif fif;
- 	struct acpi_fan_fps *fps;
- 	int fps_count;
---- a/drivers/acpi/fan_attr.c
-+++ b/drivers/acpi/fan_attr.c
-@@ -75,15 +75,6 @@ int acpi_fan_create_attributes(struct ac
- 	struct acpi_fan *fan = acpi_driver_data(device);
- 	int i, status;
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index 3961fc47152c0..cd199fbe4dc90 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -464,7 +464,7 @@ static ssize_t description_show(struct device *dev,
  
--	sysfs_attr_init(&fan->fine_grain_control.attr);
--	fan->fine_grain_control.show = show_fine_grain_control;
--	fan->fine_grain_control.store = NULL;
--	fan->fine_grain_control.attr.name = "fine_grain_control";
--	fan->fine_grain_control.attr.mode = 0444;
--	status = sysfs_create_file(&device->dev.kobj, &fan->fine_grain_control.attr);
--	if (status)
--		return status;
--
- 	/* _FST is present if we are here */
- 	sysfs_attr_init(&fan->fst_speed.attr);
- 	fan->fst_speed.show = show_fan_speed;
-@@ -92,7 +83,19 @@ int acpi_fan_create_attributes(struct ac
- 	fan->fst_speed.attr.mode = 0444;
- 	status = sysfs_create_file(&device->dev.kobj, &fan->fst_speed.attr);
- 	if (status)
--		goto rem_fine_grain_attr;
-+		return status;
-+
-+	if (!fan->acpi4)
-+		return 0;
-+
-+	sysfs_attr_init(&fan->fine_grain_control.attr);
-+	fan->fine_grain_control.show = show_fine_grain_control;
-+	fan->fine_grain_control.store = NULL;
-+	fan->fine_grain_control.attr.name = "fine_grain_control";
-+	fan->fine_grain_control.attr.mode = 0444;
-+	status = sysfs_create_file(&device->dev.kobj, &fan->fine_grain_control.attr);
-+	if (status)
-+		goto rem_fst_attr;
+ 	buf[result++] = '\n';
  
- 	for (i = 0; i < fan->fps_count; ++i) {
- 		struct acpi_fan_fps *fps = &fan->fps[i];
-@@ -109,18 +112,18 @@ int acpi_fan_create_attributes(struct ac
- 
- 			for (j = 0; j < i; ++j)
- 				sysfs_remove_file(&device->dev.kobj, &fan->fps[j].dev_attr.attr);
--			goto rem_fst_attr;
-+			goto rem_fine_grain_attr;
- 		}
- 	}
- 
- 	return 0;
- 
--rem_fst_attr:
--	sysfs_remove_file(&device->dev.kobj, &fan->fst_speed.attr);
--
- rem_fine_grain_attr:
- 	sysfs_remove_file(&device->dev.kobj, &fan->fine_grain_control.attr);
- 
-+rem_fst_attr:
-+	sysfs_remove_file(&device->dev.kobj, &fan->fst_speed.attr);
-+
- 	return status;
- }
- 
-@@ -129,9 +132,13 @@ void acpi_fan_delete_attributes(struct a
- 	struct acpi_fan *fan = acpi_driver_data(device);
- 	int i;
- 
-+	sysfs_remove_file(&device->dev.kobj, &fan->fst_speed.attr);
-+
-+	if (!fan->acpi4)
-+		return;
-+
- 	for (i = 0; i < fan->fps_count; ++i)
- 		sysfs_remove_file(&device->dev.kobj, &fan->fps[i].dev_attr.attr);
- 
--	sysfs_remove_file(&device->dev.kobj, &fan->fst_speed.attr);
- 	sysfs_remove_file(&device->dev.kobj, &fan->fine_grain_control.attr);
- }
---- a/drivers/acpi/fan_core.c
-+++ b/drivers/acpi/fan_core.c
-@@ -208,12 +208,16 @@ static const struct thermal_cooling_devi
-  * --------------------------------------------------------------------------
- */
- 
-+static bool acpi_fan_has_fst(struct acpi_device *device)
-+{
-+	return acpi_has_method(device->handle, "_FST");
-+}
-+
- static bool acpi_fan_is_acpi4(struct acpi_device *device)
- {
- 	return acpi_has_method(device->handle, "_FIF") &&
- 	       acpi_has_method(device->handle, "_FPS") &&
--	       acpi_has_method(device->handle, "_FSL") &&
--	       acpi_has_method(device->handle, "_FST");
-+	       acpi_has_method(device->handle, "_FSL");
- }
- 
- static int acpi_fan_get_fif(struct acpi_device *device)
-@@ -337,7 +341,12 @@ static int acpi_fan_probe(struct platfor
- 	device->driver_data = fan;
- 	platform_set_drvdata(pdev, fan);
- 
--	if (acpi_fan_is_acpi4(device)) {
-+	if (acpi_fan_has_fst(device)) {
-+		fan->has_fst = true;
-+		fan->acpi4 = acpi_fan_is_acpi4(device);
-+	}
-+
-+	if (fan->acpi4) {
- 		result = acpi_fan_get_fif(device);
- 		if (result)
- 			return result;
-@@ -345,7 +354,9 @@ static int acpi_fan_probe(struct platfor
- 		result = acpi_fan_get_fps(device);
- 		if (result)
- 			return result;
-+	}
- 
-+	if (fan->has_fst) {
- 		result = devm_acpi_fan_create_hwmon(device);
- 		if (result)
- 			return result;
-@@ -353,9 +364,9 @@ static int acpi_fan_probe(struct platfor
- 		result = acpi_fan_create_attributes(device);
- 		if (result)
- 			return result;
-+	}
- 
--		fan->acpi4 = true;
--	} else {
-+	if (!fan->acpi4) {
- 		result = acpi_device_update_power(device, NULL);
- 		if (result) {
- 			dev_err(&device->dev, "Failed to set initial power state\n");
-@@ -401,7 +412,7 @@ err_remove_link:
- err_unregister:
- 	thermal_cooling_device_unregister(cdev);
- err_end:
--	if (fan->acpi4)
-+	if (fan->has_fst)
- 		acpi_fan_delete_attributes(device);
+-	kfree(str_obj);
++	ACPI_FREE(str_obj);
  
  	return result;
-@@ -411,7 +422,7 @@ static void acpi_fan_remove(struct platf
- {
- 	struct acpi_fan *fan = platform_get_drvdata(pdev);
- 
--	if (fan->acpi4) {
-+	if (fan->has_fst) {
- 		struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
- 
- 		acpi_fan_delete_attributes(device);
---- a/drivers/acpi/fan_hwmon.c
-+++ b/drivers/acpi/fan_hwmon.c
-@@ -43,6 +43,10 @@ static umode_t acpi_fan_hwmon_is_visible
- 		case hwmon_fan_input:
- 			return 0444;
- 		case hwmon_fan_target:
-+			/* Only acpi4 fans support fan control. */
-+			if (!fan->acpi4)
-+				return 0;
-+
- 			/*
- 			 * When in fine grain control mode, not every fan control value
- 			 * has an associated fan performance state.
-@@ -57,6 +61,10 @@ static umode_t acpi_fan_hwmon_is_visible
- 	case hwmon_power:
- 		switch (attr) {
- 		case hwmon_power_input:
-+			/* Only acpi4 fans support fan control. */
-+			if (!fan->acpi4)
-+				return 0;
-+
- 			/*
- 			 * When in fine grain control mode, not every fan control value
- 			 * has an associated fan performance state.
+ }
+-- 
+2.51.0
+
 
 
