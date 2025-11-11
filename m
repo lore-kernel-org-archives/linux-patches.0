@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE4E345CBE;
-	Tue, 11 Nov 2025 01:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37BB34676D;
+	Tue, 11 Nov 2025 01:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824167; cv=none; b=Vft9FFEj6p+1PB4d9z+3diNdWZKPbjDfvviFs65HiY9sObxGV8QH6P0GUUUfyb+Z5D9lkZCAeRAWjOsFP+vSOxdXZcbpATRMNzyrzTbEsjC/3d4EY0NW2HQeM7t8m/1ig6mkZTsqhT4/oo1wEIuLFAEmOQl8qRzq9/G6XubZphI=
+	t=1762824169; cv=none; b=KtFNLW9qvE7hrQ4+c1lgfuvG8cwgqv89iaHdvbvI+oJOnIlWWfULZQFz2iGcjdrSXHIKbZgzWaQlI93iRhpxtrM2q5cjEF4G1STrAgWPgxfikDTkLTAi/Zz/hG5LudRmtBZFU7n+kDJQT0Ye6krtKVeW+Ci3lencJClN/MG9qBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824167; c=relaxed/simple;
-	bh=BNnXRM1DV1Hpd3DirFFP0fTk3C7xm6ty3mTafVSHHsM=;
+	s=arc-20240116; t=1762824169; c=relaxed/simple;
+	bh=U5HNWWi5mIIyUqCtiaimQKo99BLl+miY0KeKWCw7hw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oj1kQNUWPiW4aoHLqveyfoQspcGI9ilY6k2KNJn1Zc9MYIGlUyqan7hMeGZ/doBqqkcxrX2uKP+fXgj+8+B6LdGIcJodaPUYwgwWMUJBq1FaxkjZaODI2bmuzZfXliqYiyLuVsJQiNh/c4zy1/obyJPnzeIUly35M2cMu6NvSZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSDs5FNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T2i20J+XZshCu+DQrPwEE1Q/2HdD0JA3TlB93c+AZXZow22AuI/aewRWvbSUcCsmOwlf4tD/rWSomB3ZXaM4sSsSBWsBA+EzC/Gi/IorwaYhoxmq0foSKhPYsb7c7+iArtXGv+EfhCrAVyR6iP6MyvC8eDaZ3kvRRoha3nfT4HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2plKmpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSDs5FNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991ACC19424;
-	Tue, 11 Nov 2025 01:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2plKmpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E255EC4CEF5;
+	Tue, 11 Nov 2025 01:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824166;
-	bh=BNnXRM1DV1Hpd3DirFFP0fTk3C7xm6ty3mTafVSHHsM=;
+	s=korg; t=1762824169;
+	bh=U5HNWWi5mIIyUqCtiaimQKo99BLl+miY0KeKWCw7hw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSDs5FNjVfurmcz1KTE0jzqr7N37+2HKx76ndMjydeG6VOeKDf68XqQQ23tQrKfaO
-	 iX7lP565fxRvby/k1I/SHS9JraoZKrbUJe4csy2qL2eCu7AzIcVpuVAybj6h4r0JSg
-	 BSycOBZV0TGgYNctoZk+0qOsR07Kei6MLxSXr4mM=
+	b=L2plKmpu45l1DrkqBw/kWo3hmXhJ6v0L+eMurMI31EW0jFv+Zil7+OCD//oebP7nF
+	 pRlvAAPCC+8I4mUgSMWLzssBu8/PrKfy8totP64YBp7sYoWL8GFaGNaMfW3CmwlW8F
+	 rBNMePe9KTlOVSp6X8ip6xEgK5SdciwkukvV4nSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Brahmajit Das <listout@listout.xyz>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	AceLan Kao <acelan.kao@canonical.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Denis Benato <benato.denis96@gmail.com>,
+	=?UTF-8?q?Merthan=20Karaka=C5=9F?= <m3rthn.k@gmail.com>,
+	Eric Naim <dnaim@cachyos.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 400/565] net: intel: fm10k: Fix parameter idx set but not used
-Date: Tue, 11 Nov 2025 09:44:16 +0900
-Message-ID: <20251111004535.869904497@linuxfoundation.org>
+Subject: [PATCH 6.12 363/565] drm/amd: Avoid evicting resources at S5
+Date: Tue, 11 Nov 2025 09:43:39 +0900
+Message-ID: <20251111004535.033781019@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
 References: <20251111004526.816196597@linuxfoundation.org>
@@ -47,96 +51,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
+[ Upstream commit 531df041f2a5296174abd8292d298eb62fe1ea97 ]
 
-Variable idx is set in the loop, but is never used resulting in dead
-code. Building with GCC 16, which enables
--Werror=unused-but-set-parameter= by default results in build error.
-This patch removes the idx parameter, since all the callers of the
-fm10k_unbind_hw_stats_q as 0 as idx anyways.
+Normally resources are evicted on dGPUs at suspend or hibernate and
+on APUs at hibernate.  These steps are unnecessary when using the S4
+callbacks to put the system into S5.
 
-Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: AceLan Kao <acelan.kao@canonical.com>
+Cc: Kai-Heng Feng <kaihengf@nvidia.com>
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: Denis Benato <benato.denis96@gmail.com>
+Cc: Merthan Karakaş <m3rthn.k@gmail.com>
+Tested-by: Eric Naim <dnaim@cachyos.org>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
- drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-index f51a63fca513e..1f919a50c7653 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- /**
-  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
-  *  @q: pointer to the ring of hardware statistics queue
-- *  @idx: index pointing to the start of the ring iteration
-  *  @count: number of queues to iterate over
-  *
-  *  Function invalidates the index values for the queues so any updates that
-  *  may have happened are ignored and the base for the queue stats is reset.
-  **/
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
- {
- 	u32 i;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 7ff81bd1ec200..7a8a53fbe918c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4731,6 +4731,10 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ 	if ((adev->in_s3 || adev->in_s0ix) && (adev->flags & AMD_IS_APU))
+ 		return 0;
  
--	for (i = 0; i < count; i++, idx++, q++) {
-+	for (i = 0; i < count; i++, q++) {
- 		q->rx_stats_idx = 0;
- 		q->tx_stats_idx = 0;
- 	}
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-index 4c48fb73b3e78..13fca6a91a01b 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
- void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- 			     u32 idx, u32 count);
- #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
- s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
- #endif /* _FM10K_COMMON_H_ */
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-index 98861cc6df7cc..797b99af0c453 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
- 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
- 
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_pf(hw, stats);
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-index 7fb1961f29210..6861a0bdc14e1 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
- 				     struct fm10k_hw_stats *stats)
- {
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_vf(hw, stats);
++	/* No need to evict when going to S5 through S4 callbacks */
++	if (system_state == SYSTEM_POWER_OFF)
++		return 0;
++
+ 	ret = amdgpu_ttm_evict_resources(adev, TTM_PL_VRAM);
+ 	if (ret)
+ 		DRM_WARN("evicting device resources failed\n");
 -- 
 2.51.0
 
