@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5260C2D9497;
-	Tue, 11 Nov 2025 01:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9071F4169;
+	Tue, 11 Nov 2025 01:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824067; cv=none; b=ZQHRkhrfZQXXWEhc61bgwilccfyAAqlrWHfNI6oIN2CEUqUiNkYMqXVWsjtpZRBU/YaOQyeuSk+9I8gX/lz7mFnaPFCQJKWwl1OnSrecirRK4XUThSSCGlRf5hMdHRMrCVGSEA1CL2yEK9hKPFbP4YGWxvm6m3O+kOn9o7nxG+4=
+	t=1762824069; cv=none; b=BMqNmYcIcUCmkEsbrVgB2JTd9uJmnm+nWSxWVsXAfmdfVhKTRuEyJF4X38SJHbJuucMXYPXQIAQ8TVnIpj70NzzYSr+6W93WnptFmKlczKsKCWtni6VAmCfwjclVZAMCdmfyE3JvThNLqgcI9ZwAAWEzBhFCEuRldF0wMuu+Dkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824067; c=relaxed/simple;
-	bh=wr3ZarjXOGGbeWbj8QBMAT91SEAdaFSil4L/MLwywnQ=;
+	s=arc-20240116; t=1762824069; c=relaxed/simple;
+	bh=ihEnE40IbP+d48j6uvKI5MYF94f5GWChobsU1TrmYuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A0mWtmRPEs8MqXxPTEivvOJ4HMxS+3PAh5fdC9z3ejC84CQi/o5kiAKzWy8eAu3/CrlYHc7hRHPhnLJ4K3zNA+NNpntENhHF6HPJf3d6i2zE5MTc0llQ8m7ftObf/TGSLuVjXkyPA+2mqsyCMJWl2njHjIbRXxbBVs0K80wNwhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjupI+zu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l+RTmeW0FHCzzT96cXj/j+Z/Fw8PnKZcujnU++2imTBqGAqwfraBHVCdEf1v3evfTkIrgLSQ65vhqhnc6pPhuPlyHRoherAgNi04XvGOia1WMpWyqAQb+3Bx1sG1JO/eyLsdtnzVdlm5WDClPq3bqbr8Qsm1bkJNOKHmcXSck70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcUqjSK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjupI+zu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03EFC4CEFB;
-	Tue, 11 Nov 2025 01:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcUqjSK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBF4C4CEFB;
+	Tue, 11 Nov 2025 01:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824067;
-	bh=wr3ZarjXOGGbeWbj8QBMAT91SEAdaFSil4L/MLwywnQ=;
+	s=korg; t=1762824069;
+	bh=ihEnE40IbP+d48j6uvKI5MYF94f5GWChobsU1TrmYuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjupI+zu43umquuBfzRokORDuYYsBWUifQb8s8pHbtuFo9G5B6kJ2Y3GuMOFlSw1h
-	 LjrLCjmhiQ7I5K14CfJiFt5lnpx3cOEj+qx3lnHmC8hUx/6RtBkyekAkQXiK6UoujM
-	 ZxvqV0lJU7sZ6kkJVVPVuul4LSfKrWaDGVM1EbiU=
+	b=hcUqjSK7P3JA6Fw+/+7S2BZ8CGKCGHdzkukzDTlJOSIqWLIgX+9nkOMa00VAOyeW9
+	 iB6dfZ+TILivWz2gnXHezoruGNv3RZ35oasxdR7xaY8MejXmeyHclr/raPsnshXfBp
+	 Zg+J1lBz0CQmKHGsiJNMVp3R7xAEFtGVmqoU3GHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.17 430/849] ixgbe: reduce number of reads when getting OROM data
-Date: Tue, 11 Nov 2025 09:40:00 +0900
-Message-ID: <20251111004546.829815006@linuxfoundation.org>
+	Forest Crossman <cyrozap@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 381/565] usb: mon: Increase BUFF_MAX to 64 MiB to support multi-MB URBs
+Date: Tue, 11 Nov 2025 09:43:57 +0900
+Message-ID: <20251111004535.442441605@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,151 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Forest Crossman <cyrozap@gmail.com>
 
-[ Upstream commit 08a1af326a80b88324acd73877db81ae927b1219 ]
+[ Upstream commit 368ed48a5ef52e384f54d5809f0a0b79ac567479 ]
 
-Currently, during locating the CIVD section, the ixgbe driver loops
-over the OROM area and at each iteration reads only OROM-datastruct-size
-amount of data. This results in many small reads and is inefficient.
+The usbmon binary interface currently truncates captures of large
+transfers from higher-speed USB devices. Because a single event capture
+is limited to one-fifth of the total buffer size, the current maximum
+size of a captured URB is around 240 KiB. This is insufficient when
+capturing traffic from modern devices that use transfers of several
+hundred kilobytes or more, as truncated URBs can make it impossible for
+user-space USB analysis tools like Wireshark to properly defragment and
+reassemble higher-level protocol packets in the captured data.
 
-Optimize this by reading the entire OROM bank into memory once before
-entering the loop. This significantly reduces the probing time.
+The root cause of this issue is the 1200 KiB BUFF_MAX limit, which has
+not been changed since the binary interface was introduced in 2006.
 
-Without this patch probing time may exceed over 25s, whereas with this
-patch applied average time of probe is not greater than 5s.
+To resolve this issue, this patch increases BUFF_MAX to 64 MiB. The
+original comment for BUFF_MAX based the limit's calculation on a
+saturated 480 Mbit/s bus. Applying the same logic to a modern USB 3.2
+Gen 2×2 20 Gbit/s bus (~2500 MB/s over a 20ms window) indicates the
+buffer should be at least 50 MB. The new limit of 64 MiB covers that,
+plus a little extra for any overhead.
 
-without the patch:
-[14:12:22] ixgbe: Copyright (c) 1999-2016 Intel Corporation.
-[14:12:25] ixgbe 0000:21:00.0: Multiqueue Enabled: Rx Queue count = 63, Tx Queue count = 63 XDP Queue count = 0
-[14:12:25] ixgbe 0000:21:00.0: 63.012 Gb/s available PCIe bandwidth (16.0 GT/s PCIe x4 link)
-[14:12:26] ixgbe 0000:21:00.0: MAC: 7, PHY: 27, PBA No: N55484-001
-[14:12:26] ixgbe 0000:21:00.0: 20:3a:43:09:3a:12
-[14:12:26] ixgbe 0000:21:00.0: Intel(R) 10 Gigabit Network Connection
-[14:12:50] ixgbe 0000:21:00.0 ens2f0np0: renamed from eth0
+With this change, both users and developers should now be able to debug
+and reverse engineer modern USB devices even when running unmodified
+distro kernels.
 
-with the patch:
-[14:18:18] ixgbe: Copyright (c) 1999-2016 Intel Corporation.
-[14:18:19] ixgbe 0000:21:00.0: Multiqueue Enabled: Rx Queue count = 63, Tx Queue count = 63 XDP Queue count = 0
-[14:18:19] ixgbe 0000:21:00.0: 63.012 Gb/s available PCIe bandwidth (16.0 GT/s PCIe x4 link)
-[14:18:19] ixgbe 0000:21:00.0: MAC: 7, PHY: 27, PBA No: N55484-001
-[14:18:19] ixgbe 0000:21:00.0: 20:3a:43:09:3a:12
-[14:18:19] ixgbe 0000:21:00.0: Intel(R) 10 Gigabit Network Connection
-[14:18:22] ixgbe 0000:21:00.0 ens2f0np0: renamed from eth0
+Please note that this change does not affect the default buffer size. A
+larger buffer is only allocated when a user explicitly requests it via
+the MON_IOCT_RING_SIZE ioctl, so the change to the maximum buffer size
+should not unduly increase memory usage for users that don't
+deliberately request a larger buffer.
 
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/CAO3ALPzdUkmMr0YMrODLeDSLZqNCkWcAP8NumuPHLjNJ8wC1kQ@mail.gmail.com
+Signed-off-by: Forest Crossman <cyrozap@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/CAO3ALPxU5RzcoueC454L=WZ1qGMfAcnxm+T+p+9D8O9mcrUbCQ@mail.gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c | 59 +++++++++++++------
- 1 file changed, 40 insertions(+), 19 deletions(-)
+ drivers/usb/mon/mon_bin.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-index bfeef5b0b99d8..e5f0399657097 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
-@@ -3008,50 +3008,71 @@ static int ixgbe_get_nvm_srev(struct ixgbe_hw *hw,
-  * Searches through the Option ROM flash contents to locate the CIVD data for
-  * the image.
-  *
-- * Return: the exit code of the operation.
-+ * Return: -ENOMEM when cannot allocate memory, -EDOM for checksum violation,
-+ *	   -ENODATA when cannot find proper data, -EIO for faulty read or
-+ *	   0 on success.
+diff --git a/drivers/usb/mon/mon_bin.c b/drivers/usb/mon/mon_bin.c
+index afb71c18415dd..01aa6a795d275 100644
+--- a/drivers/usb/mon/mon_bin.c
++++ b/drivers/usb/mon/mon_bin.c
+@@ -68,18 +68,20 @@
+  * The magic limit was calculated so that it allows the monitoring
+  * application to pick data once in two ticks. This way, another application,
+  * which presumably drives the bus, gets to hog CPU, yet we collect our data.
+- * If HZ is 100, a 480 mbit/s bus drives 614 KB every jiffy. USB has an
+- * enormous overhead built into the bus protocol, so we need about 1000 KB.
 + *
-+ *	   On success @civd stores collected data.
++ * Originally, for a 480 Mbit/s bus this required a buffer of about 1 MB. For
++ * modern 20 Gbps buses, this value increases to over 50 MB. The maximum
++ * buffer size is set to 64 MiB to accommodate this.
+  *
+  * This is still too much for most cases, where we just snoop a few
+  * descriptor fetches for enumeration. So, the default is a "reasonable"
+- * amount for systems with HZ=250 and incomplete bus saturation.
++ * amount for typical, low-throughput use cases.
+  *
+  * XXX What about multi-megabyte URBs which take minutes to transfer?
   */
- static int
- ixgbe_get_orom_civd_data(struct ixgbe_hw *hw, enum ixgbe_bank_select bank,
- 			 struct ixgbe_orom_civd_info *civd)
- {
--	struct ixgbe_orom_civd_info tmp;
-+	u32 orom_size = hw->flash.banks.orom_size;
-+	u8 *orom_data;
- 	u32 offset;
- 	int err;
+-#define BUFF_MAX  CHUNK_ALIGN(1200*1024)
+-#define BUFF_DFL   CHUNK_ALIGN(300*1024)
+-#define BUFF_MIN     CHUNK_ALIGN(8*1024)
++#define BUFF_MAX  CHUNK_ALIGN(64*1024*1024)
++#define BUFF_DFL      CHUNK_ALIGN(300*1024)
++#define BUFF_MIN        CHUNK_ALIGN(8*1024)
  
-+	orom_data = kzalloc(orom_size, GFP_KERNEL);
-+	if (!orom_data)
-+		return -ENOMEM;
-+
-+	err = ixgbe_read_flash_module(hw, bank,
-+				      IXGBE_E610_SR_1ST_OROM_BANK_PTR, 0,
-+				      orom_data, orom_size);
-+	if (err) {
-+		err = -EIO;
-+		goto cleanup;
-+	}
-+
- 	/* The CIVD section is located in the Option ROM aligned to 512 bytes.
- 	 * The first 4 bytes must contain the ASCII characters "$CIV".
- 	 * A simple modulo 256 sum of all of the bytes of the structure must
- 	 * equal 0.
- 	 */
--	for (offset = 0; (offset + SZ_512) <= hw->flash.banks.orom_size;
--	     offset += SZ_512) {
-+	for (offset = 0; offset + SZ_512 <= orom_size; offset += SZ_512) {
-+		struct ixgbe_orom_civd_info *tmp;
- 		u8 sum = 0;
- 		u32 i;
- 
--		err = ixgbe_read_flash_module(hw, bank,
--					      IXGBE_E610_SR_1ST_OROM_BANK_PTR,
--					      offset,
--					      (u8 *)&tmp, sizeof(tmp));
--		if (err)
--			return err;
-+		BUILD_BUG_ON(sizeof(*tmp) > SZ_512);
-+
-+		tmp = (struct ixgbe_orom_civd_info *)&orom_data[offset];
- 
- 		/* Skip forward until we find a matching signature */
--		if (memcmp(IXGBE_OROM_CIV_SIGNATURE, tmp.signature,
--			   sizeof(tmp.signature)))
-+		if (memcmp(IXGBE_OROM_CIV_SIGNATURE, tmp->signature,
-+			   sizeof(tmp->signature)))
- 			continue;
- 
- 		/* Verify that the simple checksum is zero */
--		for (i = 0; i < sizeof(tmp); i++)
--			sum += ((u8 *)&tmp)[i];
-+		for (i = 0; i < sizeof(*tmp); i++)
-+			sum += ((u8 *)tmp)[i];
-+
-+		if (sum) {
-+			err = -EDOM;
-+			goto cleanup;
-+		}
- 
--		if (sum)
--			return -EDOM;
-+		*civd = *tmp;
-+		err = 0;
- 
--		*civd = tmp;
--		return 0;
-+		goto cleanup;
- 	}
- 
--	return -ENODATA;
-+	err = -ENODATA;
-+cleanup:
-+	kfree(orom_data);
-+	return err;
- }
- 
- /**
+ /*
+  * The per-event API header (2 per URB).
 -- 
 2.51.0
 
