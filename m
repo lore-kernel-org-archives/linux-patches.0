@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C9F4C97;
-	Tue, 11 Nov 2025 00:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4177124113D;
+	Tue, 11 Nov 2025 00:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822274; cv=none; b=UtwLdq57qLzX3KbxGth4nqefgcbSNnMT4Rcn9M+wA/uNpc1zpKRHTBShkVHJbhvYhFCr1/bhC2Ic7ESCTzx6BgRHZdWOrFJ8MjbqH9GY99rAQYMa0tK0LTusLgIhOqV8jwrG2p0/eILuWJZPJ8TacdWc/cC/JlzXOWn0H976oPc=
+	t=1762822276; cv=none; b=G39gos9fmQhkW+/lH6vn6pifzsMnhOgIdP9rfd+eQFMFrzimLvWkYcf0l40ANuiB3rH2e3vAuZ00LmGRdabX/C0tkMp0vryBqgIefC0VCln22zTZZZO5dRk00WnYesRqv9JiOvRKgoPQp5CsGXxEgECcA6vEm7Nhvb6cAjApleI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822274; c=relaxed/simple;
-	bh=bVYw2gKJOhk2FoXHKCtYxEAfZaViFnOK2aLOxnn5Wlo=;
+	s=arc-20240116; t=1762822276; c=relaxed/simple;
+	bh=wlxCFQBya+qzMl4TtmWf2ewDzqGceLzFw5exlwvAOy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SeXzNlp50MeqQCVgKJk1r9rFyvbsx/0ux06JLuf8fCO6knlsc4AKYf062Y2hllcHKZbso1XYNI34k9PosBY0x/O84m0i1Up8f0zazMxYIpRAE4nHVjVcsE0In/YEqcSG0dnCfjkMVxkuHc2HyKnn43M/QW5tIiB/OSGDTrbVjg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASC7Dwt+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DMS7vH4eq3/oNQUdvrUatPpxxq6q7c2e2d+6CH8Wbx+jirM17C/oNlOoPofylRnmhzs1d9BOSGFKusMh0TE+X9dkBj6eFjBAzpT4lGRlJ5dHTth1fuLQrRTvqP/UuKOzaEUG0aJUfjcsK236oJ5aww9GOUTQNJiqDXz34xM5QUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7PIsgJ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASC7Dwt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5E2C19421;
-	Tue, 11 Nov 2025 00:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7PIsgJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4868C113D0;
+	Tue, 11 Nov 2025 00:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822273;
-	bh=bVYw2gKJOhk2FoXHKCtYxEAfZaViFnOK2aLOxnn5Wlo=;
+	s=korg; t=1762822276;
+	bh=wlxCFQBya+qzMl4TtmWf2ewDzqGceLzFw5exlwvAOy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASC7Dwt+IRC6FzTRKsj3cXpu/IlyDGKhOnqxmXOBnuO0SE28UtRgJjo2rp3an7+Ml
-	 w0nDxpo7RfRGtR9IxoxEu7Z6YyNigFQ3KQf5rM4toM/x0nXztmUTFLYJuFidzdvyCo
-	 rBtnytDbFd5zcfYWrayyh3zvzJ9h3MnnLK8rcXK4=
+	b=Z7PIsgJ7WaU0+/ylE4Dy4+azLq4fisSq8TtkXHvUmYp8itPf9vn4bSLB6/c+aAu/g
+	 RNOnWf2HuYBFdnUasD7FysGhjWBC8Hlajxqfq7y8btWL7TFnrvl9qrQYvmWCWouKg0
+	 SLtxrF6IWxO410dVUeTIDcz4d9BnMMwTiHFXv2wU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@vger.kernnel.org,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 016/565] s390/pci: Restore IRQ unconditionally for the zPCI device
-Date: Tue, 11 Nov 2025 09:37:52 +0900
-Message-ID: <20251111004527.233806157@linuxfoundation.org>
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 071/849] drm/etnaviv: fix flush sequence logic
+Date: Tue, 11 Nov 2025 09:34:01 +0900
+Message-ID: <20251111004538.141575237@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,86 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 
-commit b45873c3f09153d1ad9b3a7bf9e5c0b0387fd2ea upstream.
+[ Upstream commit a042beac6e6f8ac1e923784cfff98b47cbabb185 ]
 
-Commit c1e18c17bda6 ("s390/pci: add zpci_set_irq()/zpci_clear_irq()"),
-introduced the zpci_set_irq() and zpci_clear_irq(), to be used while
-resetting a zPCI device.
+The current logic uses the flush sequence from the current address
+space. This is harmless when deducing the flush requirements for the
+current submit, as either the incoming address space is the same one
+as the currently active one or we switch context, in which case the
+flush is unconditional.
 
-Commit da995d538d3a ("s390/pci: implement reset_slot for hotplug
-slot"), mentions zpci_clear_irq() being called in the path for
-zpci_hot_reset_device().  But that is not the case anymore and these
-functions are not called outside of this file. Instead
-zpci_hot_reset_device() relies on zpci_disable_device() also clearing
-the IRQs, but misses to reset the zdev->irqs_registered flag.
+However, this sequence is also stored as the current flush sequence
+of the GPU. If we switch context the stored flush sequence will no
+longer belong to the currently active address space. This incoherency
+can then cause missed flushes, resulting in translation errors.
 
-However after a CLP disable/enable reset, the device's IRQ are
-unregistered, but the flag zdev->irq_registered does not get cleared. It
-creates an inconsistent state and so arch_restore_msi_irqs() doesn't
-correctly restore the device's IRQ. This becomes a problem when a PCI
-driver tries to restore the state of the device through
-pci_restore_state(). Restore IRQ unconditionally for the device and remove
-the irq_registered flag as its redundant.
-
-Fixes: c1e18c17bda6 ("s390/pci: add zpci_set_irq()/zpci_clear_irq()")
-Cc: stable@vger.kernnel.org
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 27b67278e007 ("drm/etnaviv: rework MMU handling")
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://lore.kernel.org/r/20251021093723.3887980-1-l.stach@pengutronix.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/pci.h |    1 -
- arch/s390/pci/pci_irq.c     |    9 +--------
- 2 files changed, 1 insertion(+), 9 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/include/asm/pci.h
-+++ b/arch/s390/include/asm/pci.h
-@@ -141,7 +141,6 @@ struct zpci_dev {
- 	u8		has_resources	: 1;
- 	u8		is_physfn	: 1;
- 	u8		util_str_avail	: 1;
--	u8		irqs_registered	: 1;
- 	u8		tid_avail	: 1;
- 	u8		reserved	: 1;
- 	unsigned int	devfn;		/* DEVFN part of the RID*/
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -107,9 +107,6 @@ static int zpci_set_irq(struct zpci_dev
- 	else
- 		rc = zpci_set_airq(zdev);
- 
--	if (!rc)
--		zdev->irqs_registered = 1;
--
- 	return rc;
- }
- 
-@@ -123,9 +120,6 @@ static int zpci_clear_irq(struct zpci_de
- 	else
- 		rc = zpci_clear_airq(zdev);
- 
--	if (!rc)
--		zdev->irqs_registered = 0;
--
- 	return rc;
- }
- 
-@@ -427,8 +421,7 @@ bool arch_restore_msi_irqs(struct pci_de
- {
- 	struct zpci_dev *zdev = to_zpci(pdev);
- 
--	if (!zdev->irqs_registered)
--		zpci_set_irq(zdev);
-+	zpci_set_irq(zdev);
- 	return true;
- }
- 
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+index b13a17276d07c..88385dc3b30d8 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+@@ -347,7 +347,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
+ 	u32 link_target, link_dwords;
+ 	bool switch_context = gpu->exec_state != exec_state;
+ 	bool switch_mmu_context = gpu->mmu_context != mmu_context;
+-	unsigned int new_flush_seq = READ_ONCE(gpu->mmu_context->flush_seq);
++	unsigned int new_flush_seq = READ_ONCE(mmu_context->flush_seq);
+ 	bool need_flush = switch_mmu_context || gpu->flush_seq != new_flush_seq;
+ 	bool has_blt = !!(gpu->identity.minor_features5 &
+ 			  chipMinorFeatures5_BLT_ENGINE);
+-- 
+2.51.0
+
 
 
