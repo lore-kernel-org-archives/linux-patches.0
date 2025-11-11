@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE061DF258;
-	Tue, 11 Nov 2025 00:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3004C97;
+	Tue, 11 Nov 2025 00:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822755; cv=none; b=Wrk0RsMlBB60r6GGZx3KDlyJ2qvf85zscceQx9G+9nwrA9HYFmNUVZm5VZ3Myp1NnzYZdCPThmxwks9wBjhn6Xb5gykadWcXhRHjpp+lrukhfr668t0/3vQB+q57duam9Bzng04HWRGtHXv9GMbfLzP5uON23r+j7ftXeXBCj6A=
+	t=1762822757; cv=none; b=h5oEIHY731p0/voj3EJ9U2YOFitRvB5yfS2S1v6GwRuhokhUeJUsFIbxRpaU7qiIP956ID9EGdB9/hRXUHJn93yFBDN3tJ7GJouVnjqsUECcnyoBv+iHvVkT4Tja/BFDd47Ww0STRsM3chURkpMvW1nUAGox1J/9lJpUNmtzIqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822755; c=relaxed/simple;
-	bh=XGQLx+dmqAHoT4gfo51eYwxxLQtD5QKdTtb72CLjvQw=;
+	s=arc-20240116; t=1762822757; c=relaxed/simple;
+	bh=u6+iwWDTut//Vy+SxhiuU2xH752qowu/GIPcH7GufSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FF3t8IKBzBn4chSLsNZneN1T7QOM5KTuw2eW+JbZFJp9wwZgPU+24IeyBKuA+Qfn2Z1votJIKdgzyQ35ApWYA/7nAWET2BFhZ+4Izz5xC4qELoh/Yht3yONFKHyGmGeqyipsQYwf9v8zo4uB+/Zy5ehXKahk1uFUvFwdqwP8RK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9/Iy4JR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4k9+6q6mxyVul2r4uZzmgsFbARwipp+J3BirwhfgEUuAfzbf5V344/WcUZc17iI1s+JQ+MNSY2JeSjnpRt9c32b6oQHzyBBm+qiNJSMeGzfH2/AMke/7FQnthdbVJfRmqJ9cP3/x2FZtmjx4J6pqWaScKc9mIjJV3CZX+nQWDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JD/MClY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9/Iy4JR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCACC116B1;
-	Tue, 11 Nov 2025 00:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JD/MClY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C07C19424;
+	Tue, 11 Nov 2025 00:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762822755;
-	bh=XGQLx+dmqAHoT4gfo51eYwxxLQtD5QKdTtb72CLjvQw=;
+	s=korg; t=1762822757;
+	bh=u6+iwWDTut//Vy+SxhiuU2xH752qowu/GIPcH7GufSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9/Iy4JR4jhYVLhCFkJUifIa9JFnnFa/7PhbwITP75eMqKftHOCYbtgKY4QJ6/uUx
-	 lULF9YYGUi3YyJqYYx5wWe17cv1JKLN5+Hbq17WTBt3iRuhCXUvNYos58pX7uC9x6p
-	 EH5dYhWraXhrlleWq4zSVvsO/vCovd3Gf817tCWQ=
+	b=2JD/MClYS57Sn+eDJ4a/iJXwMtF0/dCwIk6sgsYyy2Y0R2lGmNnuZBL+D+Dt4Pr/L
+	 dVLWgtCPFX2/S+l8zLKqSD+kR51bbwtW96Qsl2LUubuaUelmPHhuLPggXjeUcOLtDt
+	 qhX9Gi9xOT37vT35hWOHekc+IiTbQc5DB9arKd3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/565] firewire: ohci: move self_id_complete tracepoint after validating register
-Date: Tue, 11 Nov 2025 09:39:15 +0900
-Message-ID: <20251111004529.181660006@linuxfoundation.org>
+Subject: [PATCH 6.17 162/849] hwmon: sy7636a: add alias
+Date: Tue, 11 Nov 2025 09:35:32 +0900
+Message-ID: <20251111004540.346859977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +47,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 696968262aeee51e1c0529c3c060ddd180702e02 ]
+[ Upstream commit 80038a758b7fc0cdb6987532cbbf3f75b13e0826 ]
 
-The value of OHCI1394_SelfIDCount register includes an error-indicating
-bit. It is safer to place the tracepoint probe after validating the
-register value.
+Add module alias to have it autoloaded.
 
-Link: https://lore.kernel.org/r/20250823030954.268412-2-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://lore.kernel.org/r/20250909080249.30656-1-andreas@kemnade.info
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/ohci.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/hwmon/sy7636a-hwmon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
-index 7ee55c2804ded..90fcab1f65bcd 100644
---- a/drivers/firewire/ohci.c
-+++ b/drivers/firewire/ohci.c
-@@ -2060,6 +2060,9 @@ static void bus_reset_work(struct work_struct *work)
- 		ohci_notice(ohci, "self ID receive error\n");
- 		return;
- 	}
-+
-+	trace_self_id_complete(ohci->card.index, reg, ohci->self_id, has_be_header_quirk(ohci));
-+
- 	/*
- 	 * The count in the SelfIDCount register is the number of
- 	 * bytes in the self ID receive buffer.  Since we also receive
-@@ -2228,15 +2231,8 @@ static irqreturn_t irq_handler(int irq, void *data)
- 	if (event & OHCI1394_busReset)
- 		reg_write(ohci, OHCI1394_IntMaskClear, OHCI1394_busReset);
+diff --git a/drivers/hwmon/sy7636a-hwmon.c b/drivers/hwmon/sy7636a-hwmon.c
+index ed110884786b4..a12fc0ce70e76 100644
+--- a/drivers/hwmon/sy7636a-hwmon.c
++++ b/drivers/hwmon/sy7636a-hwmon.c
+@@ -104,3 +104,4 @@ module_platform_driver(sy7636a_sensor_driver);
  
--	if (event & OHCI1394_selfIDComplete) {
--		if (trace_self_id_complete_enabled()) {
--			u32 reg = reg_read(ohci, OHCI1394_SelfIDCount);
--
--			trace_self_id_complete(ohci->card.index, reg, ohci->self_id,
--					       has_be_header_quirk(ohci));
--		}
-+	if (event & OHCI1394_selfIDComplete)
- 		queue_work(selfid_workqueue, &ohci->bus_reset_work);
--	}
- 
- 	if (event & OHCI1394_RQPkt)
- 		tasklet_schedule(&ohci->ar_request_ctx.tasklet);
+ MODULE_DESCRIPTION("SY7636A sensor driver");
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS("platform:sy7636a-temperature");
 -- 
 2.51.0
 
