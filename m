@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1249B1D86FF;
-	Tue, 11 Nov 2025 01:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ED726B76A;
+	Tue, 11 Nov 2025 01:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824731; cv=none; b=rT+jqBfvkdsd7dU9HOY40lGXePmWjg6AEFD7SLR6/8XXLtl8/nVula7jaCg7Q3tqYqRwfbl+Qs7hnl5WzXCwEumpoiskhvT/f2ooa6Iicexzfqzppi6uYtCCOHh+lPzZlSixF1nvf8XyenmiOcScjNBDl0mbdauzcOA3TE7gTNY=
+	t=1762824733; cv=none; b=RkiFG5HRvz5ApWg3EPT5/2ich3Y3UWhlWwezo5h0qs6YUxSfNfsr+SkVbD1Hxq+EkE/nfw1I9vC4UJ1RGaE6RnFq3Q+3MO3jxe0Q7F9vROHpLvBtZiCj5zMQZfDyTm4uDJKxH+ttNxAmvHqkzxEurmbrkuqW3uNzWzzGGGxTWxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824731; c=relaxed/simple;
-	bh=NmOsgLiDgu8G5787qnntXzk+xC3ufACIxVlaHuPQm20=;
+	s=arc-20240116; t=1762824733; c=relaxed/simple;
+	bh=pt0/cspQLNc/Ls6QWX90vpBHd+tlIREkrjtrCi6SMfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXIzy9uNNDAbFHoTkrrS3OJohtEk1vB+vAN4EnfM9MfWjg18W2Xb5muLocqNBJ3OsL8TmOCMhLGrVHMkTmY2y33ER6dlTHPOn7Zj8bmGzXs1feqw4u9GhtON9IvGpKSvp/pOMSZgtAmVdjB7CynVzr33JctYxF/lTg3XHPvY/SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnsn8130; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dyYBkZfxSWdH4flJq9+Y9lFtN+Iv3ZaTxhHDv9VpUQQdhFDP2zuk9G2RVIrZEArd+K4FVBjdEtR7dND0bjIWsY0j5INyzVC5/vs82p4ccCHCSLV1bZgDQbeEMpQBwK6WcABd06LhovqptmqFmqQVFG5Dcrx1mGqB8YvUpYTm/6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRaoQPNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnsn8130"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCE4C4CEFB;
-	Tue, 11 Nov 2025 01:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRaoQPNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D579FC4CEFB;
+	Tue, 11 Nov 2025 01:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824730;
-	bh=NmOsgLiDgu8G5787qnntXzk+xC3ufACIxVlaHuPQm20=;
+	s=korg; t=1762824733;
+	bh=pt0/cspQLNc/Ls6QWX90vpBHd+tlIREkrjtrCi6SMfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnsn8130YDhuNhy9y9O/dLDuZ9O5lkCOsOCqQUQTnCoFF08Zbvg+Koh9zzoz0vAqZ
-	 vZBdxd0CmBrgEWXKxhXDbAYhKGikTdqL+sbLAt5+B9eNN/oqnVZbl/3croZRsdHHOB
-	 Y/8sw5GuEPk4mxqUDwg3AnCeWKnzXPDtC+tS7OHo=
+	b=fRaoQPNuBGzVLAOXdch5PVYOi05hk+CQEq0rx/6Fd8B81thYNB9AG31jdmv8vU6kQ
+	 wuX0d6Iw6kleaVqmPOVJl5bWqDtTlXEfZSqkKBlv7K1EYMYApvKwXQMn/yExysWsBZ
+	 8QsHDAYwtag3M9/Y9ROvvnZ3YeceNgMOBsN9mLqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asiacn <710187964@qq.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 559/849] drm/amd/display/dml2: Guard dml21_map_dc_state_into_dml_display_cfg with DC_FP_START
-Date: Tue, 11 Nov 2025 09:42:09 +0900
-Message-ID: <20251111004549.926540023@linuxfoundation.org>
+Subject: [PATCH 6.12 507/565] riscv: stacktrace: Disable KASAN checks for non-current tasks
+Date: Tue, 11 Nov 2025 09:46:03 +0900
+Message-ID: <20251111004538.351877475@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,72 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit c97a7dccb3ed680031011cfc1457506e6de49c9a ]
+[ Upstream commit 060ea84a484e852b52b938f234bf9b5503a6c910 ]
 
-dml21_map_dc_state_into_dml_display_cfg calls (the call is usually
-inlined by the compiler) populate_dml21_surface_config_from_plane_state
-and populate_dml21_plane_config_from_plane_state which may use FPU.  In
-a x86-64 build:
+Unwinding the stack of a task other than current, KASAN would report
+"BUG: KASAN: out-of-bounds in walk_stackframe+0x41c/0x460"
 
-    $ objdump --disassemble=dml21_map_dc_state_into_dml_display_cfg \
-    > drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.o |
-    > grep %xmm -c
-    63
+There is a same issue on x86 and has been resolved by the commit
+84936118bdf3 ("x86/unwind: Disable KASAN checks for non-current tasks")
+The solution could be applied to RISC-V too.
 
-Thus it needs to be guarded with DC_FP_START.  But we must note that the
-current code quality of the in-kernel FPU use in AMD dml2 is very much
-problematic: we are actually calling DC_FP_START in dml21_wrapper.c
-here, and this translation unit is built with CC_FLAGS_FPU.  Strictly
-speaking this does not make any sense: with CC_FLAGS_FPU the compiler is
-allowed to generate FPU uses anywhere in the translated code, perhaps
-out of the DC_FP_START guard.  This problematic pattern also occurs in
-at least dml2_wrapper.c, dcn35_fpu.c, and dcn351_fpu.c.  Thus we really
-need a careful audit and refactor for the in-kernel FPU uses, and this
-patch is simply whacking a mole.  However per the reporter, whacking
-this mole is enough to make a 9060XT "just work."
+This patch also can solve the issue:
+https://seclists.org/oss-sec/2025/q4/23
 
-Reported-by: Asiacn <710187964@qq.com>
-Closes: https://github.com/loongson-community/discussions/issues/102
-Tested-by: Asiacn <710187964@qq.com>
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Co-developed-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251022072608.743484-1-zhangchunyan@iscas.ac.cn
+[pjw@kernel.org: clean up checkpatch issues]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/riscv/kernel/stacktrace.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-index 03de3cf06ae59..059ede6ff2561 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -224,7 +224,9 @@ static bool dml21_mode_check_and_programming(const struct dc *in_dc, struct dc_s
- 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index d4355c770c36a..5a0c0d5b449ed 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -16,6 +16,22 @@
  
- 	/* Populate stream, plane mappings and other fields in display config. */
-+	DC_FP_START();
- 	result = dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
-+	DC_FP_END();
- 	if (!result)
- 		return false;
+ #ifdef CONFIG_FRAME_POINTER
  
-@@ -279,7 +281,9 @@ static bool dml21_check_mode_support(const struct dc *in_dc, struct dc_state *co
- 	dml_ctx->config.svp_pstate.callbacks.release_phantom_streams_and_planes(in_dc, context);
++/*
++ * This disables KASAN checking when reading a value from another task's stack,
++ * since the other task could be running on another CPU and could have poisoned
++ * the stack in the meantime.
++ */
++#define READ_ONCE_TASK_STACK(task, x)			\
++({							\
++	unsigned long val;				\
++	unsigned long addr = x;				\
++	if ((task) == current)				\
++		val = READ_ONCE(addr);			\
++	else						\
++		val = READ_ONCE_NOCHECK(addr);		\
++	val;						\
++})
++
+ extern asmlinkage void handle_exception(void);
+ extern unsigned long ret_from_exception_end;
  
- 	mode_support->dml2_instance = dml_init->dml2_instance;
-+	DC_FP_START();
- 	dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
-+	DC_FP_END();
- 	dml_ctx->v21.mode_programming.dml2_instance->scratch.build_mode_programming_locals.mode_programming_params.programming = dml_ctx->v21.mode_programming.programming;
- 	DC_FP_START();
- 	is_supported = dml2_check_mode_supported(mode_support);
+@@ -69,8 +85,9 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			fp = frame->ra;
+ 			pc = regs->ra;
+ 		} else {
+-			fp = frame->fp;
+-			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
++			fp = READ_ONCE_TASK_STACK(task, frame->fp);
++			pc = READ_ONCE_TASK_STACK(task, frame->ra);
++			pc = ftrace_graph_ret_addr(current, &graph_idx, pc,
+ 						   &frame->ra);
+ 			if (pc >= (unsigned long)handle_exception &&
+ 			    pc < (unsigned long)&ret_from_exception_end) {
 -- 
 2.51.0
 
