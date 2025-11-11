@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0762737E3;
-	Tue, 11 Nov 2025 01:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD22330B1F;
+	Tue, 11 Nov 2025 01:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762823359; cv=none; b=GxnLsVuUYmSQLT4NMm8ZXfypT+d61v4qOSg5cKfmVoxZYP4y/JZEiXGH/QU5Jhk/PaZgx3kZbNnKYYYgi6KYDyfhph2v9lUdUmTQF1LbjgCz/454n7vfsMQoqSwipQy8lNTbr4VUqeJ2OoaKJ92Y43TkFTdGVxpKYGOgE75sktQ=
+	t=1762823362; cv=none; b=PaK0Z0kmEv/66ZBfX4hKMV43/pcKiv/mdd+ylexiMjkF898sCdDrv5x+lMKamiUX5ZWT2k0a3e1FgIPgEeFpz5pCbOKsLXO3sgD4qpj7K3HFOuNBZL5JRHNqBrLl92bTuhDDha6G0H05M26/fhxRZyYib7/FLo71CnHJcRIJ50Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762823359; c=relaxed/simple;
-	bh=ODgxG7yG7ULg8B83+ImQIAfq80PjxjunM5x6Rf0UDUg=;
+	s=arc-20240116; t=1762823362; c=relaxed/simple;
+	bh=1iPYQACMc+UECu9iugUf2DOPCeQmbQWEVs8KVeX8BLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KU318fuPlAw0cfajVgsOURu0If21lzOq+MIkLOI0csM5IBFl+cwipoZyAAwT/ghB+zVi2NZH+Y4IR2UhVuVgwyBNmB3w63Bhh7+pb/Yq9FEFlwSSbt0ZuZt66tbeZ/8sMb6jbxkoDly2mVW1t7s0wVzDRdZHWp0y/MzwptoHFbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz4IuAiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AMCQD0GcB7suwpTCeGT1erz5eRp0iYabptmSXlqLNixKdmwpGebnNL5FCoXo2FMkXM+LtCilEOLI1sGBXLdtk2hhBQ3Xknkubf1vXwUow8eRf2QXNcFWRh8R3lEtrRmQOv74/jZe8CFChLC+T3sdY27mOGZc7yn0oYB9akOD+IE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAtpJl6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz4IuAiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FDCC19424;
-	Tue, 11 Nov 2025 01:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAtpJl6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49B5C113D0;
+	Tue, 11 Nov 2025 01:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762823359;
-	bh=ODgxG7yG7ULg8B83+ImQIAfq80PjxjunM5x6Rf0UDUg=;
+	s=korg; t=1762823362;
+	bh=1iPYQACMc+UECu9iugUf2DOPCeQmbQWEVs8KVeX8BLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gz4IuAiwZOxbU3rZZNMipj45h9gZw7YBcR2nZilGaFa61lbVEDMAUnidCW3mAJuvB
-	 VOE//L14SycQUjPxPCUxCNe6SbGKh0B1jky7FKDcQgk3Of9DFxHA0KRSoA85+yWaMP
-	 cqoD9tnSk9eF610wGDy8cjpzjXTET60/CGqIU/YE=
+	b=VAtpJl6xFymmB7HKui4aVBTZzhChU34FFC7OiginBTk2K1NafOepjBKdY3wBERgMt
+	 DKY+CBeoj76fWt+4WJEjG2ME9oH28LLtdo7OpzkOgZ9HJmGCP2C/4zxy1i9ygC7Dp9
+	 O6hXxfcU86WdfwfEdU/r9Ga3nWT7GSxkGEAGlnSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 283/849] media: amphion: Delete v4l2_fh synchronously in .release()
-Date: Tue, 11 Nov 2025 09:37:33 +0900
-Message-ID: <20251111004543.261174727@linuxfoundation.org>
+Subject: [PATCH 6.12 227/565] iio: adc: spear_adc: mask SPEAR_ADC_STATUS channel and avg sample before setting register
+Date: Tue, 11 Nov 2025 09:41:23 +0900
+Message-ID: <20251111004532.025172121@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
-References: <20251111004536.460310036@linuxfoundation.org>
+In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
+References: <20251111004526.816196597@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
 
-[ Upstream commit 19fb9c5b815f70eb90d5b545f65b83bc9c490ecd ]
+[ Upstream commit d75c7021c08e8ae3f311ef2464dca0eaf75fab9f ]
 
-The v4l2_fh initialized and added in vpu_v4l2_open() is delete and
-cleaned up when the last reference to the vpu_inst is released. This may
-happen later than at vpu_v4l2_close() time.
+avg sample info is a bit field coded inside the following
+bits: 5,6,7 and 8 of a device status register.
 
-Not deleting and cleaning up the v4l2_fh when closing the file handle to
-the video device is not ideal, as the v4l2_fh will still be present in
-the video device's fh_list, and will store a copy of events queued to
-the video device. There may also be other side effects of keeping alive
-an object that represents an open file handle after the file handle is
-closed.
+Channel num info the same, but over bits: 1, 2 and 3.
 
-The v4l2_fh instance is embedded in the vpu_inst structure, and is
-accessed in two different ways:
+Mask both values in order to avoid touching other register bits,
+since the first info (avg sample), came from DT.
 
-- in vpu_notify_eos() and vpu_notify_source_change(), to queue V4L2
-  events to the file handle ; and
-
-- through the driver to access the v4l2_fh.m2m_ctx pointer.
-
-The v4l2_fh.m2m_ctx pointer is not touched by v4l2_fh_del() and
-v4l2_fh_exit(). It is set to NULL by the driver when closing the file
-handle, in vpu_v4l2_close().
-
-The vpu_notify_eos() and vpu_notify_source_change() functions are called
-in vpu_set_last_buffer_dequeued() and vdec_handle_resolution_change()
-respectively, only if the v4l2_fh.m2m_ctx pointer is not NULL. There is
-therefore a guarantee that no new event will be queued to the v4l2_fh
-after vpu_v4l2_close() destroys the m2m_ctx.
-
-The vpu_notify_eos() function is also called from vpu_vb2_buf_finish(),
-which is guaranteed to be called for all queued buffers when
-vpu_v4l2_close() calls v4l2_m2m_ctx_release(), and will not be called
-later.
-
-It is therefore safe to assume that the driver will not touch the
-v4l2_fh, except to check the m2m_ctx pointer, after vpu_v4l2_close()
-destroys the m2m_ctx. We can safely delete and cleanup the v4l2_fh
-synchronously in vpu_v4l2_close().
-
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250717221559.158872-1-rodrigo.gobbi.7@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iio/adc/spear_adc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index 74668fa362e24..1c3740baf6942 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -718,8 +718,6 @@ static int vpu_v4l2_release(struct vpu_inst *inst)
+diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
+index b6dd096391c11..39c383631a595 100644
+--- a/drivers/iio/adc/spear_adc.c
++++ b/drivers/iio/adc/spear_adc.c
+@@ -14,6 +14,7 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/completion.h>
+@@ -29,9 +30,9 @@
  
- 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
- 	mutex_destroy(&inst->lock);
--	v4l2_fh_del(&inst->fh);
--	v4l2_fh_exit(&inst->fh);
+ /* Bit definitions for SPEAR_ADC_STATUS */
+ #define SPEAR_ADC_STATUS_START_CONVERSION	BIT(0)
+-#define SPEAR_ADC_STATUS_CHANNEL_NUM(x)		((x) << 1)
++#define SPEAR_ADC_STATUS_CHANNEL_NUM_MASK	GENMASK(3, 1)
+ #define SPEAR_ADC_STATUS_ADC_ENABLE		BIT(4)
+-#define SPEAR_ADC_STATUS_AVG_SAMPLE(x)		((x) << 5)
++#define SPEAR_ADC_STATUS_AVG_SAMPLE_MASK	GENMASK(8, 5)
+ #define SPEAR_ADC_STATUS_VREF_INTERNAL		BIT(9)
  
- 	call_void_vop(inst, cleanup);
+ #define SPEAR_ADC_DATA_MASK		0x03ff
+@@ -157,8 +158,8 @@ static int spear_adc_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CHAN_INFO_RAW:
+ 		mutex_lock(&st->lock);
  
-@@ -788,6 +786,8 @@ int vpu_v4l2_open(struct file *file, struct vpu_inst *inst)
- 
- 	return 0;
- error:
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
- 	vpu_inst_put(inst);
- 	return ret;
- }
-@@ -807,6 +807,9 @@ int vpu_v4l2_close(struct file *file)
- 	call_void_vop(inst, release);
- 	vpu_inst_unlock(inst);
- 
-+	v4l2_fh_del(&inst->fh);
-+	v4l2_fh_exit(&inst->fh);
-+
- 	vpu_inst_unregister(inst);
- 	vpu_inst_put(inst);
- 
+-		status = SPEAR_ADC_STATUS_CHANNEL_NUM(chan->channel) |
+-			SPEAR_ADC_STATUS_AVG_SAMPLE(st->avg_samples) |
++		status = FIELD_PREP(SPEAR_ADC_STATUS_CHANNEL_NUM_MASK, chan->channel) |
++			FIELD_PREP(SPEAR_ADC_STATUS_AVG_SAMPLE_MASK, st->avg_samples) |
+ 			SPEAR_ADC_STATUS_START_CONVERSION |
+ 			SPEAR_ADC_STATUS_ADC_ENABLE;
+ 		if (st->vref_external == 0)
 -- 
 2.51.0
 
