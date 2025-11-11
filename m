@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65B72D9798;
-	Tue, 11 Nov 2025 01:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453ABDF76;
+	Tue, 11 Nov 2025 01:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824935; cv=none; b=kaRbsUlt9U4nFoOurXUhOd9f9P9GcyKKfeym9akN7liqmCLYpGm4c151ATNG4SXTXnuoKu/cvInnCM6mSCRyKKlGFKOiCcedJZiu2hJS9h2jgMf1ufPejeECVF4R9znn0kiCD8v2wXbDPNRfM7tNxJmXlevAxip7y6lPNr6o9Bo=
+	t=1762824938; cv=none; b=X9T/HPB1+bitce60j4tHr6eaWStnKAJI6J7hGQUOj/6kzbktWPqE6oMxkTCrgPQ6v3gmfVuojP86bDWR2kelPAUU7MAYdyO5xhhpqduN60TkmspfUH3pBXIkyxUr1Tyh4X0Qn1t/w7rBGsDTEx4xrhiDuBZbNG8ULtDUOHWFhNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824935; c=relaxed/simple;
-	bh=AztoaQPR3MA4gGW3mfRfB5DsyL746fZvvygBoYo/8Uo=;
+	s=arc-20240116; t=1762824938; c=relaxed/simple;
+	bh=jhV3iXm4ClNrX3FYViHB3stdgwTdTo+WunpHEWvfPH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYY0RW6juRwhS5Eljc2Q7DSZcDpoFNA7TVdVPn3hJnt3YjyJr4WBzI0QpfUVHhFvcQFihiMa6AwudIKhMKFu3aN9lhhbU6nXBEebTk7BSMc95W2/PVo3LmsEYnY7CKlutAGKTPHtFvYTBqubTJup07bmTLpU3ptZ+hTjd81Qi+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiQQD2mN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDETnH2ngVt4x0gXPYfhKBcDlDpL5PTKODTiTHFb9xaLgJPVo6WUBPSBMu5oYx5tT677QTt0sJTOerYIHi7NzORVckZngDdVuCi/cgyT/U/W5J18nnp2ijZRM5U8C7nqoNS83NCrZydxbh1j+Cl3DGxU0Nrde9U8ikzvtITva0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaRx1wO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiQQD2mN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45580C16AAE;
-	Tue, 11 Nov 2025 01:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaRx1wO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3DBC16AAE;
+	Tue, 11 Nov 2025 01:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824935;
-	bh=AztoaQPR3MA4gGW3mfRfB5DsyL746fZvvygBoYo/8Uo=;
+	s=korg; t=1762824938;
+	bh=jhV3iXm4ClNrX3FYViHB3stdgwTdTo+WunpHEWvfPH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BiQQD2mNj4xWMYAtZWnD6fy+3+cm6HBqjrp5wTrZxsI+0jTUahVv6Tgf4yenWqsCl
-	 T3ya9fxOGC6LqEQO4pdKj6tK7aiFgYQ+4sLsP+8o8KouMjqHjqwtvoFxLhOQPOp1dO
-	 TqXrV+Jwl8TbBmn9n+pT5a494SrUyTTVQ7Ooh0NI=
+	b=XaRx1wO7Nd5VemWXY3s9C3UtzsqndRMr5qrWfrm1b4KMr4h6m3E3pkX+hgaOb5yRe
+	 UP3VG6pMrxmGjpX7i9UzmNJnUybaM26jbEfHkUZ63MCdhkd5S9vx3H0lfuSztcKkNl
+	 fieJbxcwrLhGZjeSbAQSI3rRtNSbTsCbOAI6MOgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Shruti Parab <shruti.parab@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Michael Chan <michael.chan@broadcom.com>
-Subject: [PATCH 6.12 530/565] bnxt_en: Add mem_valid bit to struct bnxt_ctx_mem_type
-Date: Tue, 11 Nov 2025 09:46:26 +0900
-Message-ID: <20251111004538.892041139@linuxfoundation.org>
+	Ilan Peer <ilan.peer@intel.com>,
+	Andrei Otcheretianski <andrei.otcheretianski@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 601/849] wifi: mac80211: Get the correct interface for non-netdev skb status
+Date: Tue, 11 Nov 2025 09:42:51 +0900
+Message-ID: <20251111004550.953803617@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +49,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 0b350b4927e69d66629099dbb32cad8d2d56a26d ]
+[ Upstream commit c7b5355b37a59c927b2374e9f783acd004d00960 ]
 
-Add a new bit to struct bnxt_ctx_mem_type to indicate that host
-memory has been successfully allocated for this context memory type.
-In the next patches, we'll be adding some additional context memory
-types for FW debugging/logging.  If memory cannot be allocated for
-any of these new types, we will not abort and the cleared mem_valid
-bit will indicate to skip configuring the memory type.
+The function ieee80211_sdata_from_skb() always returned the P2P Device
+interface in case the skb was not associated with a netdev and didn't
+consider the possibility that an NAN Device interface is also enabled.
 
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
-Signed-of-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20241115151438.550106-3-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5204943a4c6e ("bnxt_en: Fix warning in bnxt_dl_reload_down()")
+To support configurations where both P2P Device and a NAN Device
+interface are active, extend the function to match the correct
+interface based on address 2 in the 802.11 MAC header.
+
+Since the 'p2p_sdata' field in struct ieee80211_local is no longer
+needed, remove it.
+
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250908140015.5252d2579a49.Id4576531c6b2ad83c9498b708dc0ade6b0214fa8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
- drivers/net/ethernet/broadcom/bnxt/bnxt.h | 1 +
- 2 files changed, 6 insertions(+)
+ net/mac80211/ieee80211_i.h |  2 --
+ net/mac80211/iface.c       | 16 +---------------
+ net/mac80211/status.c      | 21 +++++++++++++++++++--
+ 3 files changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 30d8e8b34dfb9..abf8984ac5e20 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -8791,6 +8791,8 @@ static int bnxt_setup_ctxm_pg_tbls(struct bnxt *bp,
- 		rc = bnxt_alloc_ctx_pg_tbls(bp, &ctx_pg[i], mem_size, pg_lvl,
- 					    ctxm->init_value ? ctxm : NULL);
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index 8afa2404eaa8e..140dc7e32d4aa 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -1665,8 +1665,6 @@ struct ieee80211_local {
+ 	struct idr ack_status_frames;
+ 	spinlock_t ack_status_lock;
+ 
+-	struct ieee80211_sub_if_data __rcu *p2p_sdata;
+-
+ 	/* virtual monitor interface */
+ 	struct ieee80211_sub_if_data __rcu *monitor_sdata;
+ 	struct ieee80211_chan_req monitor_chanreq;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 07ba68f7cd817..abc8cca54f4e1 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -611,10 +611,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 
+ 		spin_unlock_bh(&sdata->u.nan.func_lock);
+ 		break;
+-	case NL80211_IFTYPE_P2P_DEVICE:
+-		/* relies on synchronize_rcu() below */
+-		RCU_INIT_POINTER(local->p2p_sdata, NULL);
+-		fallthrough;
+ 	default:
+ 		wiphy_work_cancel(sdata->local->hw.wiphy, &sdata->work);
+ 		/*
+@@ -1405,6 +1401,7 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+ 		ieee80211_recalc_idle(local);
+ 
+ 		netif_carrier_on(dev);
++		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
+ 		break;
+ 	default:
+ 		if (coming_up) {
+@@ -1468,17 +1465,6 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
+ 			sdata->vif.type != NL80211_IFTYPE_STATION);
  	}
-+	if (!rc)
-+		ctxm->mem_valid = 1;
- 	return rc;
+ 
+-	switch (sdata->vif.type) {
+-	case NL80211_IFTYPE_P2P_DEVICE:
+-		rcu_assign_pointer(local->p2p_sdata, sdata);
+-		break;
+-	case NL80211_IFTYPE_MONITOR:
+-		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
+-		break;
+-	default:
+-		break;
+-	}
+-
+ 	/*
+ 	 * set_multicast_list will be invoked by the networking core
+ 	 * which will check whether any increments here were done in
+diff --git a/net/mac80211/status.c b/net/mac80211/status.c
+index a362254b310cd..4b38aa0e902a8 100644
+--- a/net/mac80211/status.c
++++ b/net/mac80211/status.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2008-2010	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+- * Copyright 2021-2024  Intel Corporation
++ * Copyright 2021-2025  Intel Corporation
+  */
+ 
+ #include <linux/export.h>
+@@ -572,6 +572,7 @@ static struct ieee80211_sub_if_data *
+ ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
+ {
+ 	struct ieee80211_sub_if_data *sdata;
++	struct ieee80211_hdr *hdr = (void *)skb->data;
+ 
+ 	if (skb->dev) {
+ 		list_for_each_entry_rcu(sdata, &local->interfaces, list) {
+@@ -585,7 +586,23 @@ ieee80211_sdata_from_skb(struct ieee80211_local *local, struct sk_buff *skb)
+ 		return NULL;
+ 	}
+ 
+-	return rcu_dereference(local->p2p_sdata);
++	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
++		switch (sdata->vif.type) {
++		case NL80211_IFTYPE_P2P_DEVICE:
++			break;
++		case NL80211_IFTYPE_NAN:
++			if (sdata->u.nan.started)
++				break;
++			fallthrough;
++		default:
++			continue;
++		}
++
++		if (ether_addr_equal(sdata->vif.addr, hdr->addr2))
++			return sdata;
++	}
++
++	return NULL;
  }
  
-@@ -8861,6 +8863,8 @@ static int bnxt_backing_store_cfg_v2(struct bnxt *bp, u32 ena)
- 	for (type = 0 ; type < BNXT_CTX_V2_MAX; type++) {
- 		ctxm = &ctx->ctx_arr[type];
- 
-+		if (!ctxm->mem_valid)
-+			continue;
- 		rc = bnxt_hwrm_func_backing_store_cfg_v2(bp, ctxm, ctxm->last);
- 		if (rc)
- 			return rc;
-@@ -8890,6 +8894,7 @@ void bnxt_free_ctx_mem(struct bnxt *bp)
- 
- 		kfree(ctx_pg);
- 		ctxm->pg_info = NULL;
-+		ctxm->mem_valid = 0;
- 	}
- 
- 	ctx->flags &= ~BNXT_CTX_FLAG_INITED;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index cb934f175a3e4..d4e63bf599666 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1892,6 +1892,7 @@ struct bnxt_ctx_mem_type {
- 	u32	max_entries;
- 	u32	min_entries;
- 	u8	last:1;
-+	u8	mem_valid:1;
- 	u8	split_entry_cnt;
- #define BNXT_MAX_SPLIT_ENTRY	4
- 	union {
+ static void ieee80211_report_ack_skb(struct ieee80211_local *local,
 -- 
 2.51.0
 
