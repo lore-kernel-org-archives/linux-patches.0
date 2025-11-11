@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC12D979C;
-	Tue, 11 Nov 2025 01:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A12343D86;
+	Tue, 11 Nov 2025 01:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762824111; cv=none; b=lWImhBsP9WdgKfFVSO8uo6etAnYAbkvWoXVZ1nmMH+T40kbEB7TcEc0v99RUHvnio6BrBrym2JGzgjDS6efyiIVOW+kN/L/JMq5ZtsLFZ0yPTsjWVzgOJ8lyBw/tzkG6fRIsQ+gEBd32efE7O7jH/XBkEGhQ+cevZe0KqnGAeWw=
+	t=1762824113; cv=none; b=HJIMDpPHgVsBP32cORc115nehbD4kGxY7/Yrd9O3yy0LO19WjZHRlXwIjHpKF0NCEE4nxOG0gbTbQY0cMbWW38O39mZaujtxLpU2ekFM7L6BDx67V9OhkTYfG45/PjEsHc1JTH9/+MC5WVJWI0mNPvA6UOQ7cuPk4RbR389eKm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762824111; c=relaxed/simple;
-	bh=Ke2Rohbq/7XkB97B+1oYH3zMogC5vwr4zwPOygFSZ6E=;
+	s=arc-20240116; t=1762824113; c=relaxed/simple;
+	bh=trVAscobxmPU6ggE3jlUszyWHBCHyWSRdJHezX+CGyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5txiUptHO0omL0xBkWU4Gb0QIo3aEi3M4nIcjdMrhyNO+GIVz5OIyWDqBcgDnhcEKTnPeHbaOu9+Ln9c7M9ANTXrKhaQxXKpAqOxWgUW06P9QN6V4GrHOdPKSEUOAnfzmOIvygIaYgiKXb6JNfy9WiJl8aGOaVBK/lpNnPJNak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQxgXgzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jNbuy0uLfrrxi+2aoe+4EBuFGqHdTkgg4KmUiSWg42UnqsGsNq9hIrIu/afxyZ3EY9GqNFNh6uOcMjbbOYRsDuKHWQ4nF/pSeATGL3I8RumICcdIlMWng/Iy2uoEP2K6s+FfrgFxUXovPg/NAvAf7/b3zCJWgPAbvRWabvKWlMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c14OQ/rt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQxgXgzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31445C16AAE;
-	Tue, 11 Nov 2025 01:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c14OQ/rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7608CC116D0;
+	Tue, 11 Nov 2025 01:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1762824111;
-	bh=Ke2Rohbq/7XkB97B+1oYH3zMogC5vwr4zwPOygFSZ6E=;
+	s=korg; t=1762824113;
+	bh=trVAscobxmPU6ggE3jlUszyWHBCHyWSRdJHezX+CGyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQxgXgzLVG7cyD6GU9UDR8qtQnSZrBY0zI1I6hk397+RBqkIW72o5WpWVIzoKdYPv
-	 XJZ3pMSFkfJAGzoqB+2MTj6FMOWDHp7svfZd5Por7L2lKw+tr54ZpbAIKkvNXGajQ+
-	 tzaXK4q+d3xmVxMcBD9BGI4n9twA5au1PYEGQS/8=
+	b=c14OQ/rtrS0zZQ2+ijoGceO03SulPRFwNtDmL6t0NwSQIu/xMKqZObpFiTs6GmV08
+	 pWVzyoL19MUkhsbovnFIh2tauun+x3WPkBu9jPug7W0/hwALMxywSCVDR7r4A5MZxL
+	 J56K1RHXbCprDX7TZoMnwbc9YHuohK/E8kIAqv5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dumitrescu <vdumitrescu@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/565] IB/ipoib: Ignore L3 master device
-Date: Tue, 11 Nov 2025 09:44:05 +0900
-Message-ID: <20251111004535.621967574@linuxfoundation.org>
+Subject: [PATCH 6.17 439/849] platform/x86/intel-uncore-freq: Present unique domain ID per package
+Date: Tue, 11 Nov 2025 09:40:09 +0900
+Message-ID: <20251111004547.045818492@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251111004526.816196597@linuxfoundation.org>
-References: <20251111004526.816196597@linuxfoundation.org>
+In-Reply-To: <20251111004536.460310036@linuxfoundation.org>
+References: <20251111004536.460310036@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +45,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vlad Dumitrescu <vdumitrescu@nvidia.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 42f993d3439827c4959ea77e60620d7ebfb3a477 ]
+[ Upstream commit a191224186ec16a4cb1775b2a647ea91f5c139e1 ]
 
-Currently, all master upper netdevices (e.g., bond, VRF) are treated
-equally.
+In partitioned systems, the domain ID is unique in the partition and a
+package can have multiple partitions.
 
-When a VRF netdevice is used over an IPoIB netdevice, the expected
-netdev resolution is on the lower IPoIB device which has the IP address
-assigned to it and not the VRF device.
+Some user-space tools, such as turbostat, assume the domain ID is unique
+per package. These tools map CPU power domains, which are unique to a
+package. However, this approach does not work in partitioned systems.
 
-The rdma_cm module (CMA) tries to match incoming requests to a
-particular netdevice. When successful, it also validates that the return
-path points to the same device by performing a routing table lookup.
-Currently, the former would resolve to the VRF netdevice, while the
-latter to the correct lower IPoIB netdevice, leading to failure in
-rdma_cm.
+There is no architectural definition of "partition" to present to user
+space.
 
-Improve this by ignoring the VRF master netdevice, if it exists, and
-instead return the lower IPoIB device.
+To support these tools, set the domain_id to be unique per package. For
+compute die IDs, uniqueness can be achieved using the platform info
+cdie_mask, mirroring the behavior observed in non-partitioned systems.
 
-Signed-off-by: Vlad Dumitrescu <vdumitrescu@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20250916111103.84069-5-edwards@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+For IO dies, which lack a direct CPU relationship, any unique logical
+ID can be assigned. Here domain IDs for IO dies are configured after all
+compute domain IDs. During the probe, keep the index of the next IO
+domain ID after the last IO domain ID of the current partition. Since
+CPU packages are symmetric, partition information is same for all
+packages.
+
+The Intel Speed Select driver has already implemented a similar change
+to make the domain ID unique, with compute dies listed first, followed
+by I/O dies.
+
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://lore.kernel.org/r/20250903191154.1081159-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ .../uncore-frequency/uncore-frequency-tpmi.c  | 74 ++++++++++++++++++-
+ 1 file changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index 4e31bb0b6466d..d65f3a5963651 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -317,26 +317,27 @@ static bool ipoib_is_dev_match_addr_rcu(const struct sockaddr *addr,
+diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
+index 3e531fd1c6297..1237d95708865 100644
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
+@@ -374,6 +374,77 @@ static void uncore_set_agent_type(struct tpmi_uncore_cluster_info *cluster_info)
+ 	cluster_info->uncore_data.agent_type_mask = FIELD_GET(UNCORE_AGENT_TYPES, status);
  }
  
- /*
-- * Find the master net_device on top of the given net_device.
-+ * Find the L2 master net_device on top of the given net_device.
-  * @dev: base IPoIB net_device
-  *
-- * Returns the master net_device with a reference held, or the same net_device
-- * if no master exists.
-+ * Returns the L2 master net_device with reference held if the L2 master
-+ * exists (such as bond netdevice), or returns same netdev with reference
-+ * held when master does not exist or when L3 master (such as VRF netdev).
-  */
- static struct net_device *ipoib_get_master_net_dev(struct net_device *dev)
++#define MAX_PARTITIONS	2
++
++/* IO domain ID start index for a partition */
++static u8 io_die_start[MAX_PARTITIONS];
++
++/* Next IO domain ID index after the current partition IO die IDs */
++static u8 io_die_index_next;
++
++/* Lock to protect io_die_start, io_die_index_next */
++static DEFINE_MUTEX(domain_lock);
++
++static void set_domain_id(int id,  int num_resources,
++			  struct oobmsm_plat_info *plat_info,
++			  struct tpmi_uncore_cluster_info *cluster_info)
++{
++	u8 part_io_index, cdie_range, pkg_io_index, max_dies;
++
++	if (plat_info->partition >= MAX_PARTITIONS) {
++		cluster_info->uncore_data.domain_id = id;
++		return;
++	}
++
++	if (cluster_info->uncore_data.agent_type_mask & AGENT_TYPE_CORE) {
++		cluster_info->uncore_data.domain_id = cluster_info->cdie_id;
++		return;
++	}
++
++	/* Unlikely but cdie_mask may have holes, so take range */
++	cdie_range = fls(plat_info->cdie_mask) - ffs(plat_info->cdie_mask) + 1;
++	max_dies = topology_max_dies_per_package();
++
++	/*
++	 * If the CPU doesn't enumerate dies, then use current cdie range
++	 * as the max.
++	 */
++	if (cdie_range > max_dies)
++		max_dies = cdie_range;
++
++	guard(mutex)(&domain_lock);
++
++	if (!io_die_index_next)
++		io_die_index_next = max_dies;
++
++	if (!io_die_start[plat_info->partition]) {
++		io_die_start[plat_info->partition] = io_die_index_next;
++		/*
++		 * number of IO dies = num_resources - cdie_range. Hence
++		 * next partition io_die_index_next is set after IO dies
++		 * in the current partition.
++		 */
++		io_die_index_next += (num_resources - cdie_range);
++	}
++
++	/*
++	 * Index from IO die start within the partition:
++	 * This is the first valid domain after the cdies.
++	 * For example the current resource index 5 and cdies end at
++	 * index 3 (cdie_cnt = 4). Then the IO only index 5 - 4 = 1.
++	 */
++	part_io_index = id - cdie_range;
++
++	/*
++	 * Add to the IO die start index for this partition in this package
++	 * to make unique in the package.
++	 */
++	pkg_io_index = io_die_start[plat_info->partition] + part_io_index;
++
++	/* Assign this to domain ID */
++	cluster_info->uncore_data.domain_id = pkg_io_index;
++}
++
+ /* Callback for sysfs read for TPMI uncore values. Called under mutex locks. */
+ static int uncore_read(struct uncore_data *data, unsigned int *value, enum uncore_index index)
  {
- 	struct net_device *master;
+@@ -610,11 +681,12 @@ static int uncore_probe(struct auxiliary_device *auxdev, const struct auxiliary_
+ 			cluster_info->uncore_data.package_id = pkg;
+ 			/* There are no dies like Cascade Lake */
+ 			cluster_info->uncore_data.die_id = 0;
+-			cluster_info->uncore_data.domain_id = i;
+ 			cluster_info->uncore_data.cluster_id = j;
  
- 	rcu_read_lock();
+ 			set_cdie_id(i, cluster_info, plat_info);
+ 
++			set_domain_id(i, num_resources, plat_info, cluster_info);
 +
- 	master = netdev_master_upper_dev_get_rcu(dev);
-+	if (!master || netif_is_l3_master(master))
-+		master = dev;
-+
- 	dev_hold(master);
- 	rcu_read_unlock();
+ 			cluster_info->uncore_root = tpmi_uncore;
  
--	if (master)
--		return master;
--
--	dev_hold(dev);
--	return dev;
-+	return master;
- }
- 
- struct ipoib_walk_data {
-@@ -485,7 +486,7 @@ static struct net_device *ipoib_get_net_dev_by_params(
- 	if (ret)
- 		return NULL;
- 
--	/* See if we can find a unique device matching the L2 parameters */
-+	/* See if we can find a unique device matching the pkey and GID */
- 	matches = __ipoib_get_net_dev_by_params(dev_list, port, pkey_index,
- 						gid, NULL, &net_dev);
- 
-@@ -498,7 +499,7 @@ static struct net_device *ipoib_get_net_dev_by_params(
- 
- 	dev_put(net_dev);
- 
--	/* Couldn't find a unique device with L2 parameters only. Use L3
-+	/* Couldn't find a unique device with pkey and GID only. Use L3
- 	 * address to uniquely match the net device */
- 	matches = __ipoib_get_net_dev_by_params(dev_list, port, pkey_index,
- 						gid, addr, &net_dev);
+ 			if (TPMI_MINOR_VERSION(pd_info->ufs_header_ver) >= UNCORE_ELC_SUPPORTED_VERSION)
 -- 
 2.51.0
 
