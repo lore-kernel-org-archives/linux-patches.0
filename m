@@ -1,93 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F227F4F5;
-	Wed, 12 Nov 2025 02:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DE02F56;
+	Wed, 12 Nov 2025 02:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762912853; cv=none; b=aZ6BPTcCpZVq7J8YPsnfFsGnaZfLfPh3yR8jHCTZdYKcLl1od9/pGyW2/NnGWiQocR9MEfSoR8CMcsVQgZHq3vEQjFoPtMqwGzniQxsQNLpP/mdeWfUDDCZd52P93uzMB9AtvrZ8aEW1YErNjQc0tL9dKipUvL2n+XHx3T9me9k=
+	t=1762915908; cv=none; b=hL+E/FoM8L1JpmVdO8IEzLfCzP3zUQhAggtukoNZk7V8fWT8eU7G2ROxgXZ+4AY10FXfF+QKnmHLSEwWn3GO6AMDwEbRJMRsYlc699jUSoFFzIT5Wt/G50JmJP/pQZ6g+b46yKl5hv0EO4RHUJtcwuyV0OgD0NyBAP/sJFCS/nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762912853; c=relaxed/simple;
-	bh=bmOHQWtKrHPntI9DeDNIWpuAgYazNgi4duLqiFfEnvQ=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=sFjEpFMLojTM4bRLX0yD9PYN03fOx8ln4rRf513gn6R7QBrL6DRh8UQ4woDWcVPcn24lltkdCNLD42/A1GDezW2tnUgPfeBYYfzVSoHpdw/5kLS+82tw84fBKzoHLzNsglps0EFAdwa5O66OcUlkCs+0SICMkwxOVVNmkxwtcH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZRBGDHvT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762915908; c=relaxed/simple;
+	bh=FnjXGdhmi9cjf/H5GCn36qDisNiZcHAbPNAmtaAypr4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uiB9Dorv5oUxIHSswBbY/RxNBieCOqI1YBJWEh0yrmUR5DdyS0BKq1BiyLjj3SpWLA9MdpUSmPB8R4nzCR80/fd/5uR2pqrnh8DSzv0R5sYiEWiy2Ak+unRjnBwgwjQILIRRBLw+fJYAtTBiD60ArVM1Y7T9jiozvJXtzCFVXB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cj8UfccO; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZRBGDHvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DCEC16AAE;
-	Wed, 12 Nov 2025 02:00:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762912852;
-	bh=bmOHQWtKrHPntI9DeDNIWpuAgYazNgi4duLqiFfEnvQ=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ZRBGDHvTwVZgG2vuUoyWLjDWMBOrtkEXeNMuDphzzKwHtO/pyy9jL/8NVquwpSRZ1
-	 KfVjxByxLTOEKWZHTSPhIXTBSxRzcXnCVRpw8ARkqLzpKHBF3UtnyPa/DfrotlKE1i
-	 M+hCq3y28JeymcTsVxEoJ6AuUmjElJM1px2jNRLX46fiUDLeqXOIdDhGaOfa0sdWnB
-	 ljT1dJHzE68dXgSzqrynRWRX7ksbPd79IJhNLIe2c220w2kfxAbXbUMbD7SMP0yueO
-	 h3QzdQ6cFb2vzkLjhkWM850fjp6KiLFQc5fLOY0S36PoTH4MAHHvb7uuBkXnN3F+p8
-	 lp5HfcCwv+RNg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADEA7380DBCD;
-	Wed, 12 Nov 2025 02:00:23 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cj8UfccO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762915907; x=1794451907;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=FnjXGdhmi9cjf/H5GCn36qDisNiZcHAbPNAmtaAypr4=;
+  b=cj8UfccOQkts/ePUxPAylk/f5d6dilwOQiZWQ8cvUPb97Af3lSesVwSo
+   t35lZn4emoq7VoVuC+YPv6qBZgSknWSAmRqR+H7kfKnCU3QLcXq2Y04vx
+   YxfNfDNZVdAnAQcJpYvQIjkCaSoglLE8dT4m+DmZhErn1zvwQRNiIvZeh
+   dGRr+xKBGuqptU4QNuST5BhUpGmt2WwZ/Nj5ktkwOPrdK9mA8ezZzthU7
+   T2RIG9KQ0+AW1EXVvBz6SCK/r2jj3xsEA0HatDZe46hnymhpVJ+SCaFNG
+   sDohsybFrJ3TuJSoU2UU0qnzGuLtzrd4hS080zP18WnzuNExGpmJYmAF+
+   A==;
+X-CSE-ConnectionGUID: ttO7uX8MRs2P6ucMBU2fXw==
+X-CSE-MsgGUID: t2H3pBZgSx+hT8rWvAilTw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11610"; a="87605768"
+X-IronPort-AV: E=Sophos;i="6.19,298,1754982000"; 
+   d="scan'208";a="87605768"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 18:51:46 -0800
+X-CSE-ConnectionGUID: Z7I0266wRPKqUZSzlavn7g==
+X-CSE-MsgGUID: ezqtxvUdTBKU2eF/psZZfA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,298,1754982000"; 
+   d="scan'208";a="189830912"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 18:51:41 -0800
+Message-ID: <b556b673-300f-486e-8891-809519b98797@linux.intel.com>
+Date: Wed, 12 Nov 2025 10:47:38 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v2] net: netcp: ethss: Fix type of first
- parameter
- in hwtstamp stubs
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <176291282249.3632748.2889753579213224698.git-patchwork-notify@kernel.org>
-Date: Wed, 12 Nov 2025 02:00:22 +0000
-References: 
- <20251110-netcp_ethss-fix-cpts-stubs-clang-wifpts-v2-1-aa6204ec1f43@kernel.org>
-In-Reply-To: 
- <20251110-netcp_ethss-fix-cpts-stubs-clang-wifpts-v2-1-aa6204ec1f43@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, nick.desaulniers+lkml@gmail.com,
- morbo@google.com, justinstitt@google.com, vadim.fedorenko@linux.dev,
- kory.maincent@bootlin.com, netdev@vger.kernel.org, llvm@lists.linux.dev,
- patches@lists.linux.dev
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/5] iommu: Lock group->mutex in
+ iommu_deferred_attach()
+To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, afael@kernel.org,
+ bhelgaas@google.com, alex@shazbot.org, jgg@nvidia.com, kevin.tian@intel.com
+Cc: will@kernel.org, robin.murphy@arm.com, lenb@kernel.org,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
+ linux-pci@vger.kernel.org, kvm@vger.kernel.org, patches@lists.linux.dev,
+ pjaroszynski@nvidia.com, vsethi@nvidia.com, helgaas@kernel.org,
+ etzhao1900@gmail.com
+References: <cover.1762835355.git.nicolinc@nvidia.com>
+ <11b3ab833d717feb41ce23ae6ebdc3af13ea55a7.1762835355.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <11b3ab833d717feb41ce23ae6ebdc3af13ea55a7.1762835355.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello:
-
-This patch was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Mon, 10 Nov 2025 13:55:34 -0700 you wrote:
-> When building without CONFIG_TI_CPTS, there are a series of errors from
-> -Wincompatible-pointer-types:
+On 11/11/25 13:12, Nicolin Chen wrote:
+> The iommu_deferred_attach() function invokes __iommu_attach_device(), but
+> doesn't hold the group->mutex like other __iommu_attach_device() callers.
 > 
->   drivers/net/ethernet/ti/netcp_ethss.c:3831:27: error: initialization of 'int (*)(void *, struct kernel_hwtstamp_config *)' from incompatible pointer type 'int (*)(struct gbe_intf *, struct kernel_hwtstamp_config *)' [-Wincompatible-pointer-types]
->    3831 |         .hwtstamp_get   = gbe_hwtstamp_get,
->         |                           ^~~~~~~~~~~~~~~~
->   drivers/net/ethernet/ti/netcp_ethss.c:3831:27: note: (near initialization for 'gbe_module.hwtstamp_get')
->   drivers/net/ethernet/ti/netcp_ethss.c:2758:19: note: 'gbe_hwtstamp_get' declared here
->    2758 | static inline int gbe_hwtstamp_get(struct gbe_intf *gbe_intf,
->         |                   ^~~~~~~~~~~~~~~~
->   drivers/net/ethernet/ti/netcp_ethss.c:3832:27: error: initialization of 'int (*)(void *, struct kernel_hwtstamp_config *, struct netlink_ext_ack *)' from incompatible pointer type 'int (*)(struct gbe_intf *, struct kernel_hwtstamp_config *, struct netlink_ext_ack *)' [-Wincompatible-pointer-types]
->    3832 |         .hwtstamp_set   = gbe_hwtstamp_set,
->         |                           ^~~~~~~~~~~~~~~~
->   drivers/net/ethernet/ti/netcp_ethss.c:3832:27: note: (near initialization for 'gbe_module.hwtstamp_set')
->   drivers/net/ethernet/ti/netcp_ethss.c:2764:19: note: 'gbe_hwtstamp_set' declared here
->    2764 | static inline int gbe_hwtstamp_set(struct gbe_intf *gbe_intf,
->         |                   ^~~~~~~~~~~~~~~~
+> Though there is no pratical bug being triggered so far, it would be better
+> to apply the same locking to this __iommu_attach_device(), since the IOMMU
+> drivers nowaday are more aware of the group->mutex -- some of them use the
+> iommu_group_mutex_assert() function that could be potentially in the path
+> of an attach_dev callback function invoked by the __iommu_attach_device().
 > 
-> [...]
+> Worth mentioning that the iommu_deferred_attach() will soon need to check
+> group->resetting_domain that must be locked also.
+> 
+> Thus, grab the mutex to guard __iommu_attach_device() like other callers.
+> 
+> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
+> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> ---
+>   drivers/iommu/iommu.c | 13 ++++++++++---
+>   1 file changed, 10 insertions(+), 3 deletions(-)
 
-Here is the summary with links:
-  - [net-next,v2] net: netcp: ethss: Fix type of first parameter in hwtstamp stubs
-    https://git.kernel.org/netdev/net-next/c/34bff6f03c13
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
