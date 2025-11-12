@@ -1,105 +1,117 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E32628A701
-	for <patches@lists.linux.dev>; Wed, 12 Nov 2025 11:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C15030BB86
+	for <patches@lists.linux.dev>; Wed, 12 Nov 2025 12:26:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762946082; cv=none; b=dkbGI6MNTJY0Aix7zwGx4a9V7fB2/yC/3+VJlFbCXenI11u65o2m52uXWqHmOXZDcJksn5uDxessDA92XwJP+UAfKHZEWRoV8UH3VA8J9jUie6k5wds0/+o+Phkrjm0vb+kp1XtJb/lHLVXlbWiQELVYTP/QNqMKcLM/GV+AUmI=
+	t=1762950378; cv=none; b=XR1ztNNbo/VH7gE3/sXoMehQ+cZTuHI4abtyOWf+adALwJupiDn3asIva8cgtJ62BMtKGAprIWkDXhIraHqQLDnCR/zICzT+WQma/RXdiJJ/Eho4erIpaXNQbpI8uR6mY27SicP0hikwzrmjWHtvTL9hMuQPJHP7iOI5qcaH3dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762946082; c=relaxed/simple;
-	bh=h6hMfbhgFDo+gCBofNGaIGR6RdADey1hjtSNOkDpSwU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tzQVHfNUQDg0vRfY7pX3cEsUpgCKE6v96LyggPPvsjc19trwOYfZRWWaSbuDZMdaHcAEd+FXzTNzt7sEc2p7xImQ+GL2PenczFlufMgNXgHRk3xCzuFXNU1EKix2wIdDxR7Q3ffJD2EDfAiGjBiez3PT6PUJbPEqV2oQ3GkNxE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KcK1Jrbx; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762950378; c=relaxed/simple;
+	bh=CqNDDDxa3uN4xlxw7lBpImiMSDLKKefKhEv5FAtJBl0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M8hdFLfcrqnh7RKEYzIF2zid9wBnarhQ2DBrg5VGRB0c0FbzRt4ZF5JlM+EmS7uI8keDEPp8stLNOa8yAHk4O+tOA7gQ/VEWJxsTjfCLlx82XERWc7GC9CF58aH6HixTMXMjuWaiIUhHxk6OO1/lj/VaXmwsCWgpzF+pLOd0bJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=B+U+9B8V; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KcK1Jrbx"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b9a5f4435adso84112a12.3
-        for <patches@lists.linux.dev>; Wed, 12 Nov 2025 03:14:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762946080; x=1763550880; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h6hMfbhgFDo+gCBofNGaIGR6RdADey1hjtSNOkDpSwU=;
-        b=KcK1JrbxKGxfxkQF9IGkWbuniAgJ9I3DiLUBO+Hc3EOKqv+x/rpSPSE67NPYtjRv/M
-         dJJApBPFk8+OoXhGywTJltKXfnvlN3zJ5JVVWO29Ie9vM3amKAsibGA3iYvJJfynP25A
-         Qg9y9gdCHMOz6UTW96Ri2OqMBFv1kep7Iv9NLRPfUUrdNci56PWrgcHjuAOLsrrdXZz0
-         +79sh6IT+ED44L1/0Z038mhnMnA3eLNfJAKjxG5DZVZedfkld0sfMeEP5tMYh7LLNNiy
-         67LAEUyV0CnV51AtuN7jg//7wGVERlN0aa3CYvFElk6dMG7SH/aBEQhm1CweYhCxy9n4
-         N3wA==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="B+U+9B8V"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1762950375;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CqNDDDxa3uN4xlxw7lBpImiMSDLKKefKhEv5FAtJBl0=;
+	b=B+U+9B8VhPXTg/LlYymIgcQsmtVy9mRIdclifCp+HQOBN4+xsKTWpBb/dYkJ5iSQVZI3QB
+	54fHK7jjaWxmAB1GnIyv9wI5r2geM8FsTL/vBoWoWed0d2EvgphLI/xw9S/3Jz3oC/I7jk
+	EuiE59ZsuWvw7gXfO2hm3QHsC3Ro/JQ=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-uUMfMPHxO4OaKzTgqdVmlQ-1; Wed, 12 Nov 2025 07:26:13 -0500
+X-MC-Unique: uUMfMPHxO4OaKzTgqdVmlQ-1
+X-Mimecast-MFC-AGG-ID: uUMfMPHxO4OaKzTgqdVmlQ_1762950372
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-297f3710070so22470245ad.2
+        for <patches@lists.linux.dev>; Wed, 12 Nov 2025 04:26:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762946080; x=1763550880;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=h6hMfbhgFDo+gCBofNGaIGR6RdADey1hjtSNOkDpSwU=;
-        b=fv+Z0MCIAIUZjcLesRqwt1TecE1EP7p3TotcfEFYOeG1VIUg1sR8SSB/T+Mh1QQa0q
-         6afg0GWiCgViHouplV9SQC1ZobTuVh0T7w38po4l/pSCQF/vCwWLDGIBxcMp2Jx2jz7V
-         0atmjxf8f1ZZD+axDygX9ug58teKjyy/9IH9Jf3x5QTWmN37R61ssE2ekbDQiC24VbOJ
-         H5le+ZVWKe2baW4ssHdGt+ecaq9blmBNXI7v2pMNpFoYJxj1wDCry3T7FSYVIIXii/QX
-         +4KPN3vmB8Iv0EE9Ota/CSTpu/YPIH1cO14i9Nlw/gbwaNPjZF+yTUe5xO/cc2yOHMJx
-         UpGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUb/JcPvv5cQwYR8knJL8wsiYCJFnXVMrs4L+bdC2HN8w2lp4yvJFyBB0iuKaPDeUe5rZxnlWyT@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyo6H2LhCqAwkSwG3uC+8u8BRsFNHmc6E/+mVNtUpDMA9PPwV8l
-	pS+91bevvGjckY/zP+PRaD0u3s7v+1Waq2Gs/Y6A+ZIR+TfzObSCG0bWbTmKpz5S76wzE/ooAIK
-	pJXkbkZ83v/U/1SdJbzzFHmxev6Z6Hj0=
-X-Gm-Gg: ASbGncsuJSipmsLfCzYeQK9MOtiDC3rxbYqiIauo7NA6b7Rrmy2MpfuZGF12jHBvTQe
-	Ovem9bKtg89ljMxmZjfHSnGym7BaxVDyIYYTbsljR9KTJUD7RQaTV7ZFP6W4wMKj0tLFKpWn8v/
-	xjiHzt2grIVeTDlA+Ttxgnwlo5lTwu8yZbjgMYZzOrrzzgCxTLELwxdP2wEK4i71LwkVtD0ZEj4
-	bbvAtfK0/S0VLlUofDihiuL9CbF4xG+Wj/WGK7zVj9vnoIoq7VEvPmb0rWz8ouYQSMYqnQW+tIZ
-	Vi5jKqVsAaUumfrnOtDpvpNQ5Os5aQULxmwWa65/P1X+5mrakzF5sSOuZaEmKCuwdXVtnPszLMB
-	rW49qt5Ymg09UzA==
-X-Google-Smtp-Source: AGHT+IH+LDSJrK2CxsT+xWZOdZ7gKFmElQbYj/uFX0H6HJGbyKRr591NNlUWdNkrfJ7Nf3ybqLt6vVVhtmriacHHU64=
-X-Received: by 2002:a17:902:c409:b0:295:3262:c695 with SMTP id
- d9443c01a7336-2984ed6e08dmr21652545ad.3.1762946079913; Wed, 12 Nov 2025
- 03:14:39 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762950372; x=1763555172;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CqNDDDxa3uN4xlxw7lBpImiMSDLKKefKhEv5FAtJBl0=;
+        b=IlEdl74onroB+X9m3IefQv++ayBVESAA83lOM8gVq2HmrBD/b78fERg3bVNnLIqko3
+         hHCC70mIVoVYqsCKTgQcUrXjSaaV7t6vcu94EKCo+o5zwCBeyloc1ZKz/jyStRajoEgd
+         O/cLVAe/jmpDGX2UIe4jXI9OfLvx84xLySF7VAKy8br30UkFRwg1HvqFBuQz43UTelYT
+         FUi97hnHJym3Bbv9RNQj/5CLBYkStEuyCKzl+SdyU7EICKvmDMJMjrnk7t36YJxnOAC7
+         9NfUybv/ndEVT9ZA7VjQzUXRfsWlKmGBQSReSWbzFj27uruYidmOwdoVI2zjMvgSqqfe
+         mz8g==
+X-Forwarded-Encrypted: i=1; AJvYcCVHUMiwq3BCIT2T8B/UweCGuNwR+3lS40Dbjub2CiViBQhSc+kCv+GeVEUhAQlepFIEqS7m/7H8@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2/MsV2nSlFFVChk2iRoy4NEcX4m3DWGpPVb9usfcxavlgGKsD
+	zH326UqCBuq7lHz4nS8n4BoMxNj3e1cYKyFzktg4T3iBFIZXt740FYYMQBCLEl+t6Zd1aG7/s2O
+	oAoS9rvzbhQ6AGn9CTNeNbUQ5n+dM3sblFgAbpr1pM5rG7rGcoCebpdcL/kE=
+X-Gm-Gg: ASbGncuNOzE0lp6+iMb6/5bx5V6yEDfK07CdO84jrukW0CCz9wc3yARylBiklQJpLA6
+	9X3nH/hfBTAlzzXZiAgjFt62pYNr9jvzWRpnVdNL+2WJMyGfutcL/URnaSG8jsAY0EogvlTCsNW
+	gWWhc0Ju5P7EFr+L93mfRwy960BtBlLrS3sLpaaCpDJSYfOMYzGPnocGk8QAP9aiK0tQR6vo0+p
+	tS8MR6aS9TNap/IFKv3HNrf78Gave5X01Plb0AZKv1bUAyUeA1zda48iYU9p0Z9totvlSFwPr+a
+	KbcfX6DrsAcF4+PlMBd27d6sHi048MxZyO01NgMLgut7QXdEHQi2KwQ09VVIlY+9qX3kGPmFoOX
+	WN2DH6YpnM5bhycKsTi3akspEfg==
+X-Received: by 2002:a17:902:ea09:b0:24e:3cf2:2453 with SMTP id d9443c01a7336-2984ee04f44mr35020325ad.61.1762950372264;
+        Wed, 12 Nov 2025 04:26:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGotUeN2bXs86xhnkFf71Twk4l7K85JeCXAv2Ic+UsZ9JWvOMbc7w1rl78D10uve93JRS66cw==
+X-Received: by 2002:a17:902:ea09:b0:24e:3cf2:2453 with SMTP id d9443c01a7336-2984ee04f44mr35019995ad.61.1762950371815;
+        Wed, 12 Nov 2025 04:26:11 -0800 (PST)
+Received: from [10.200.68.138] (nat-pool-muc-u.redhat.com. [149.14.88.27])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2984dce80f3sm29309275ad.106.2025.11.12.04.26.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Nov 2025 04:26:11 -0800 (PST)
+Message-ID: <3b1b371eed29291182e2e90451d262ed24d1e3ed.camel@redhat.com>
+Subject: Re: [PATCH 6.12 084/565] drm/sched: Re-group and rename the entity
+ run-queue lock
+From: Philipp Stanner <pstanner@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Tvrtko Ursulin
+ <tvrtko.ursulin@igalia.com>, Christian =?ISO-8859-1?Q?K=F6nig?=
+ <christian.koenig@amd.com>, Alex Deucher <alexander.deucher@amd.com>, Luben
+ Tuikov <ltuikov89@gmail.com>, Matthew Brost <matthew.brost@intel.com>,
+ Sasha Levin <sashal@kernel.org>
+Date: Wed, 12 Nov 2025 13:26:01 +0100
+In-Reply-To: <2025111200-handoff-boxing-aa92@gregkh>
+References: <20251111004526.816196597@linuxfoundation.org>
+	 <20251111004528.857251276@linuxfoundation.org>
+	 <b239f2abb28d4e5dfc36c67bb6b88975a63c11e6.camel@redhat.com>
+	 <2025111200-handoff-boxing-aa92@gregkh>
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110095025.1475896-1-ojeda@kernel.org> <20251110095025.1475896-10-ojeda@kernel.org>
- <98e549da-b7d5-45bc-8a9c-d05eb06a75e6@nvidia.com>
-In-Reply-To: <98e549da-b7d5-45bc-8a9c-d05eb06a75e6@nvidia.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 12 Nov 2025 12:14:26 +0100
-X-Gm-Features: AWmQ_bm8KNkpZ7dumhoSEH6BrwUYU-Dw3GKK1Imj_lLMN6rly1tXHJZJQTQ0s2c
-Message-ID: <CANiq72mcQJnW-F+nb=Vseoa_amcwwhkC26N9BOs12MVfMVOdVA@mail.gmail.com>
-Subject: Re: [PATCH 09/18] rust: proc-macro2: enable support in kbuild
-To: John Hubbard <jhubbard@nvidia.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: rjY1-XutKM-D8qrIlNYJVeRuoHarwtYZ4HqnnNiDxfM_1762950372
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 10, 2025 at 8:34=E2=80=AFPM John Hubbard <jhubbard@nvidia.com> =
-wrote:
->
-> Looks good. But for future code and commit log readers, should
-> we leave a small comment, to explain that this was vendored in,
-> and therefore excluded from "make rustfmt"?
->
-> An alternative approach might be to create a "vendored" subdir,
-> to make it clear which parts of the Rust for Linux code are
-> special in that way.
+On Wed, 2025-11-12 at 09:59 +0900, Greg Kroah-Hartman wrote:
+> On Tue, Nov 11, 2025 at 03:30:45PM +0100, Philipp Stanner wrote:
+> > On Tue, 2025-11-11 at 09:39 +0900, Greg Kroah-Hartman wrote:
+> > > 6.12-stable review patch.=C2=A0 If anyone has any objections, please
+> > > let me know.
+> >=20
+> > This and patch 83 are mere code improvements, not bug fixes.
+>=20
+> But as the patch says:
+>=20
+> > > Stable-dep-of: d25e3a610bae ("drm/sched: Fix race in
+> > > drm_sched_entity_select_rq()")
+>=20
+> That is a bugfix, right?=C2=A0 So this is needed here too.
 
-Sure, that can help, I will add it.
+I had a tag-overflow in my mind.
 
-The subdir makes sense, although it makes it into a different level
-than the other crates and I don't see it done with a folder in other
-cases either. Hmm... I will think about it.
+That one is a bug fix. OK then.
 
-Thanks for taking a look!
+P.
 
-Cheers,
-Miguel
