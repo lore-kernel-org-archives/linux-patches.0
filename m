@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DE02F56;
-	Wed, 12 Nov 2025 02:51:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB74C2D2384;
+	Wed, 12 Nov 2025 05:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762915908; cv=none; b=hL+E/FoM8L1JpmVdO8IEzLfCzP3zUQhAggtukoNZk7V8fWT8eU7G2ROxgXZ+4AY10FXfF+QKnmHLSEwWn3GO6AMDwEbRJMRsYlc699jUSoFFzIT5Wt/G50JmJP/pQZ6g+b46yKl5hv0EO4RHUJtcwuyV0OgD0NyBAP/sJFCS/nc=
+	t=1762925207; cv=none; b=amYtjfS1wubYkSgRjrksW7mV/MRRdfKvU5xYs9S982y7gohwolF+h98YzZRuGUmkwjmU1uySwe8Jhb2UeNxkmPQPQH0G6iuo2/4a3vuHKee7Hf+xGyTsY7qXVvPEXmIRxASHWwiJtN93RLuk26ZIFiZJ/GHzWri4ZZRFstW2wj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762915908; c=relaxed/simple;
-	bh=FnjXGdhmi9cjf/H5GCn36qDisNiZcHAbPNAmtaAypr4=;
+	s=arc-20240116; t=1762925207; c=relaxed/simple;
+	bh=J2yCx8gANXEoEptcoVy/jvxBGR0sLdZaZJNtdCJDhDQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uiB9Dorv5oUxIHSswBbY/RxNBieCOqI1YBJWEh0yrmUR5DdyS0BKq1BiyLjj3SpWLA9MdpUSmPB8R4nzCR80/fd/5uR2pqrnh8DSzv0R5sYiEWiy2Ak+unRjnBwgwjQILIRRBLw+fJYAtTBiD60ArVM1Y7T9jiozvJXtzCFVXB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cj8UfccO; arc=none smtp.client-ip=198.175.65.9
+	 In-Reply-To:Content-Type; b=agRMFCJtTtFX3XIiMR8uvqZE5HbEO1iLICvChIcjTgUilj3roJQI8cDloDw9a+rY6BqUwQiUWN21ilKo2qcdU2GvhPx2qkUTzmiQ+9Ea+qzSmlDzdDZJygErTJhvQlMo34OaX/K1kGHMehCnlZOd1yePDdz6aNBgj3YNY46otYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CEPWaH13; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cj8UfccO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CEPWaH13"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762915907; x=1794451907;
+  t=1762925206; x=1794461206;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=FnjXGdhmi9cjf/H5GCn36qDisNiZcHAbPNAmtaAypr4=;
-  b=cj8UfccOQkts/ePUxPAylk/f5d6dilwOQiZWQ8cvUPb97Af3lSesVwSo
-   t35lZn4emoq7VoVuC+YPv6qBZgSknWSAmRqR+H7kfKnCU3QLcXq2Y04vx
-   YxfNfDNZVdAnAQcJpYvQIjkCaSoglLE8dT4m+DmZhErn1zvwQRNiIvZeh
-   dGRr+xKBGuqptU4QNuST5BhUpGmt2WwZ/Nj5ktkwOPrdK9mA8ezZzthU7
-   T2RIG9KQ0+AW1EXVvBz6SCK/r2jj3xsEA0HatDZe46hnymhpVJ+SCaFNG
-   sDohsybFrJ3TuJSoU2UU0qnzGuLtzrd4hS080zP18WnzuNExGpmJYmAF+
-   A==;
-X-CSE-ConnectionGUID: ttO7uX8MRs2P6ucMBU2fXw==
-X-CSE-MsgGUID: t2H3pBZgSx+hT8rWvAilTw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11610"; a="87605768"
+  bh=J2yCx8gANXEoEptcoVy/jvxBGR0sLdZaZJNtdCJDhDQ=;
+  b=CEPWaH13QuEHeyuMYIU1ab3uCDunT91ibG8+ITiwmGV/4rNBp0FVol4V
+   0z8xBgPDrfPVWk6HdgpC7Defilr/MJa2GtSZlzk/NFTxtJTK4UUlkOSsO
+   p4CnXaCDA+h8F/7Tf801CtamAQhuPe5m4e5ACvbPLk+MIlzHAn7QU+Og6
+   uyfLG5LJSqBnGZkt3qk2HDAHbCGwgxZkk9c9KUjcFXz+5NeM5QArLRCYk
+   BeMQu+wJlrIl3ov+RTlVM+ko2m6a07fPGEKkiiHhCu7le1LXoNVBDOZrQ
+   Qpvk2HC/+VA3cRMgMFkeYN5WIAK95wLxmoWU7QPM3X7qInRxl7nYBrbmB
+   w==;
+X-CSE-ConnectionGUID: v0nmhBdOR8iGFElsGJG/YA==
+X-CSE-MsgGUID: 6YchQTQuRT+OPI4XQlrrOw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11610"; a="76331296"
 X-IronPort-AV: E=Sophos;i="6.19,298,1754982000"; 
-   d="scan'208";a="87605768"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 18:51:46 -0800
-X-CSE-ConnectionGUID: Z7I0266wRPKqUZSzlavn7g==
-X-CSE-MsgGUID: ezqtxvUdTBKU2eF/psZZfA==
+   d="scan'208";a="76331296"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 21:26:45 -0800
+X-CSE-ConnectionGUID: 2KuqqVv9TuS5cZ/Ryocc5Q==
+X-CSE-MsgGUID: jYiQEfIURoe/1ab0ampM7A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,298,1754982000"; 
-   d="scan'208";a="189830912"
+   d="scan'208";a="189381942"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 18:51:41 -0800
-Message-ID: <b556b673-300f-486e-8891-809519b98797@linux.intel.com>
-Date: Wed, 12 Nov 2025 10:47:38 +0800
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 21:26:41 -0800
+Message-ID: <f6e4ca74-2b76-4662-97eb-a1c5eab62c9a@linux.intel.com>
+Date: Wed, 12 Nov 2025 13:22:38 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,8 +52,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] iommu: Lock group->mutex in
- iommu_deferred_attach()
+Subject: Re: [PATCH v5 2/5] iommu: Tiny domain for iommu_setup_dma_ops()
 To: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, afael@kernel.org,
  bhelgaas@google.com, alex@shazbot.org, jgg@nvidia.com, kevin.tian@intel.com
 Cc: will@kernel.org, robin.murphy@arm.com, lenb@kernel.org,
@@ -63,33 +62,27 @@ Cc: will@kernel.org, robin.murphy@arm.com, lenb@kernel.org,
  pjaroszynski@nvidia.com, vsethi@nvidia.com, helgaas@kernel.org,
  etzhao1900@gmail.com
 References: <cover.1762835355.git.nicolinc@nvidia.com>
- <11b3ab833d717feb41ce23ae6ebdc3af13ea55a7.1762835355.git.nicolinc@nvidia.com>
+ <431cccb8279eb84376c641981f57e9ceece8febf.1762835355.git.nicolinc@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <11b3ab833d717feb41ce23ae6ebdc3af13ea55a7.1762835355.git.nicolinc@nvidia.com>
+In-Reply-To: <431cccb8279eb84376c641981f57e9ceece8febf.1762835355.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/11/25 13:12, Nicolin Chen wrote:
-> The iommu_deferred_attach() function invokes __iommu_attach_device(), but
-> doesn't hold the group->mutex like other __iommu_attach_device() callers.
+> This function can only be called on the default_domain. Trivally pass it
+> in. In all three existing cases, the default domain was just attached to
+> the device.
 > 
-> Though there is no pratical bug being triggered so far, it would be better
-> to apply the same locking to this __iommu_attach_device(), since the IOMMU
-> drivers nowaday are more aware of the group->mutex -- some of them use the
-> iommu_group_mutex_assert() function that could be potentially in the path
-> of an attach_dev callback function invoked by the __iommu_attach_device().
+> This avoids iommu_setup_dma_ops() calling iommu_get_domain_for_dev() the
+> that will be used by external callers.
 > 
-> Worth mentioning that the iommu_deferred_attach() will soon need to check
-> group->resetting_domain that must be locked also.
-> 
-> Thus, grab the mutex to guard __iommu_attach_device() like other callers.
-> 
-> Reviewed-by: Jason Gunthorpe<jgg@nvidia.com>
-> Reviewed-by: Kevin Tian<kevin.tian@intel.com>
+> Suggested-by: Jason Gunthorpe<jgg@nvidia.com>
 > Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 > ---
->   drivers/iommu/iommu.c | 13 ++++++++++---
->   1 file changed, 10 insertions(+), 3 deletions(-)
+>   drivers/iommu/dma-iommu.h | 5 +++--
+>   drivers/iommu/dma-iommu.c | 4 +---
+>   drivers/iommu/iommu.c     | 6 +++---
+>   3 files changed, 7 insertions(+), 8 deletions(-)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
