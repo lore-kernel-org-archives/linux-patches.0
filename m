@@ -1,126 +1,105 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F6F34C121
-	for <patches@lists.linux.dev>; Wed, 12 Nov 2025 18:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E14F2D837C;
+	Wed, 12 Nov 2025 18:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762972503; cv=none; b=IUsk5khxRS0mVRtAJwMLaEOqe+/5jkmCEfv0Vg0Jryxc9TLSAB9BWSjwpm0fRD8W/NjcI96OIdkHEcqh/eMJsmLG+dVDUdqpE3RfbKUtzofKC4lp9ivZ+SDVVwaLf6i0syfIJRqrC/3blWMJ/lgYXNM1mzwKUMnELwtilokC8Z4=
+	t=1762973079; cv=none; b=uuIdniiTcC0OVB3bsqhOIXIk7FRkYQZQlwR2keXNerrnTt+PG9KQHPaDu2HVEUqNG15K9g42I6laEVVzRSh3wP6/y6eLByDYuqbqfdiwJ2zdKdIX7/3ElhpuUyycU5jKhXleUEAWxxqDZwUvbClJnhgJ+zW+Z89H9MK8vOQ6l5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762972503; c=relaxed/simple;
-	bh=CiCb/WxR5IiY4zTCVf9V+wc+I2yi8BeC/aaOHbPg3pA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mgsYU7uV9gVwqJ33DzOD0z4p5hFyUlrw4wJ+brb82QLCcL0tK5PRzlBbFjY6zZ9upQZ2FJY6F1KdYyWD/O3VrZ86YDXVomg7vfu8dsYUs4iDhd1dk2aOgQ87DnrIy/sX6gk6kH6F19Fc75t02Tlm4kM74qLZPVI663jo5TFQj3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkrq5pUP; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762973079; c=relaxed/simple;
+	bh=055fA2CcwKNGCqakO62I6DCYxSUugUIeFCK4IyWOGVg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lCAicJTtuFchIhSrVEjK7pf26SJ0r9/G7yj8hSNqLCZZ261vsuqtzan28+ZXnqnN74WkK1sRWJoMFU7S4qwwWQc2WEbBGfOU8RtOe1lObYucKxgi3ODFwv2A4tWrbDkhUPsI+w2FAyW8kCodPSetp7OdR0YTZQoj8OOM//+Xduk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A995IPFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkrq5pUP"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-37b999d0c81so4212321fa.2
-        for <patches@lists.linux.dev>; Wed, 12 Nov 2025 10:35:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762972499; x=1763577299; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jjohzFTrNt1dds0Ak9mhbsBPxnWVffo9MAGuUzPAPSI=;
-        b=gkrq5pUPmo2IsppKM83/Q7ELylLhS5Gg+hlQ5gQMfcWlhmVR1UCsR1n3CFUuwghuRP
-         HPzvqZ5Dzk4gtRWMh0wivwEikYtmxR/8YMB3oFpCa9W2pT3eTUzRozBQ7OaTMRIaozQx
-         YvFDUYzhQt15Nkx5VnUdv9lPatkFBGhTlm7Qc7nHWj+026imrcaK+6D+dPnyx0vobQL4
-         8s3jBKeKJUSarbjPCEoGslKOnjeKkbB7U93EsR8EF7NjAhmG03VwOG8ntiT8rlXP3J8/
-         0Z0LI1xZ0biosgR+uH/ry57ckA4W8MEuWzWTF1zd7igMv7iGOupDv6FU3ZdJ0CAGPcsH
-         zuMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762972499; x=1763577299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jjohzFTrNt1dds0Ak9mhbsBPxnWVffo9MAGuUzPAPSI=;
-        b=nXhyGsDCKlOMbFcpXk4ULrAuXnHsVOw1F2If9NpPCsaTr4qA0Lv5VhXfmoqGy9guiy
-         33Sade6c3BIpr75t74iRLNIXCJoNk/YY5/q/Px2vxHNPjubQtrUoR/Ghv5YZuvIQhLPP
-         K0ysRsi69VPJTa+h2FQcf5rj5ihrfOHZy1DA4lUoMuR/1rausUIAdGEi11j8iGJ+x+Fn
-         cI6a86ZS+7FvBQFPdpVIUZMx3/xFtzmuPuqD3d5mw8vZT8tHqzxk/qFPhhvJy9VZ6ehL
-         QPRrHUocmVKIfPxuCbeWRIxHjd+A1lzjmn2BMNqvPHjIra2Pv29mNjo5cQeJG8r/DchN
-         Y4zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUmKg8MC9mrDRh9GoAQdAl3XGaBapU/CgRQKRLs+Ew6xWScxrAESTzCqjbZ0zPjuxIL4mqxjUDz@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz+2SvHhZV1HQKnsPPAAHMHZmeKlFHfKKtdN0lYA0pGjpJ89NDn
-	D+jFx5GLtqOjEgNhQXUq1nC1yGkkWcuMrh3YQ0ya7Tb4IAxQxTGu+D97jgZVWDsk0HdduLyXDo0
-	J+fmOK5qctm0pOEWZ0Di68buVvTouIk6BQCQj
-X-Gm-Gg: ASbGnctPrYp/pt26p9hdUVdnfHzIAfvhN3Q0PP44ZnlZ/92/FbQzrpL1bvMu98fK4lY
-	DhqCo+T33y1Bbt+Iw7Pgx0piQMGJi1bzmEThdRDcvV28hSg+KELj27hDsDwyPZrjces9Np7Zka4
-	dfCb8KlFtNUJIhybXpU+o0QDsp71VRkNlZI/RD0vH4KQJo0M57oIyyd0i77FWWTbA230GiVdYED
-	oRuM32obKPkv/bXj81BjLOhPLOrcjY8G/565YMk3fdLnX5dc2M9tnPGmxaA
-X-Google-Smtp-Source: AGHT+IEa3xVTKMLat1Wb0V6k6SNt6JXXRV4if7NrYfYOs9e0hkHkyyXtZb+lc0TmiRtVlY0vx8iH0c8Q2gESBvg9vVA=
-X-Received: by 2002:a2e:98d2:0:b0:37a:9558:5bf8 with SMTP id
- 38308e7fff4ca-37b8c3dca00mr9373041fa.32.1762972499219; Wed, 12 Nov 2025
- 10:34:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A995IPFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961ACC4AF09;
+	Wed, 12 Nov 2025 18:44:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762973079;
+	bh=055fA2CcwKNGCqakO62I6DCYxSUugUIeFCK4IyWOGVg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=A995IPFpTapVlJqGhwaAGw7ocQ0uSewMFDBBtyk/BARi8MMR+cA6dsgCYGiNXIE92
+	 QdoFNxhg6k4otIJmkKSGNernxl7SW5/5f4/BCgg9532ZL/JaEtqWDXzwAZrS4rah8L
+	 +aJrO/gdz4vp9iKRGafW6voDJ3QD1ETuJiQG14wO43H2Dao2q9bRva+QSC4X3+rsT6
+	 ezgXhParowvCx/yKoCVXDjdfIs26fpujzTVG7+zj41pLJwPDOa5VAKH3zAEfpoQL9x
+	 2j6MrBHdg7iBpgj6BOc+gr1mZf3VLDhlHWhq7RovvvLOCSZAYFIIJe4a6aqOUdOI05
+	 UGCRHep8+/4rA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 12 Nov 2025 11:44:30 -0700
+Subject: [PATCH] pinctrl: airoha: Fix AIROHA_PINCTRL_CONFS_DRIVE_E2 in
+ an7583_pinctrl_match_data
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251111012348.571643096@linuxfoundation.org>
-In-Reply-To: <20251111012348.571643096@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Thu, 13 Nov 2025 00:04:47 +0530
-X-Gm-Features: AWmQ_bkg2w5p36Lweybo9KaHemnwRDH-EtITn2wPi38Rv8gnjjgkxCZ4pHNcSPE
-Message-ID: <CAC-m1rqHCCMwVu4WVVV4w0SXuZNuv+e+Q1qZUzVrxH+=EeGJNw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/562] 6.12.58-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251112-pinctrl-airoha-fix-an7583-drive-e2-confg-usage-v1-1-d2550d55e988@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAI3VFGkC/x2NQQrCMBAAv1L27EKSGhS/Ih426aZdkE3ZaBFK/
+ 97gcQ4zs0NjE27wGHYw3qRJ1Q7+MkBeSGdGmTpDcCF67wOuovljbySxuhAW+SHpLd5HnEw2Rg6
+ Yq5YZv426nVK55lKCS9FBj67GXfkPn6/jOAGR+b8jgAAAAA==
+X-Change-ID: 20251112-pinctrl-airoha-fix-an7583-drive-e2-confg-usage-bbf4cff20b50
+To: Linus Walleij <linus.walleij@linaro.org>, 
+ Christian Marangi <ansuelsmth@gmail.com>, 
+ Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: linux-mediatek@lists.infradead.org, linux-gpio@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1870; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=055fA2CcwKNGCqakO62I6DCYxSUugUIeFCK4IyWOGVg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJkiV6fY70/MEmkRqhM71vLBzL0kvufblMQer7viT7N6H
+ zO2xYl3lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIn84GVkWLlfgW3R/fOeiTdq
+ 54Vzn2Wf+df0bOzvrqrujLPak2fnazMyXOJbaVHMqD7nyLf2SH/N7Nkiu00XX1khNe2n8b9dXP6
+ ybAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-HIII greg,
+Clang warns (or errors with CONFIG_WERROR=y / W=e):
 
-On Tue, Nov 11, 2025 at 7:07=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.58 release.
-> There are 562 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 13 Nov 2025 01:22:51 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.58-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+  pinctrl/mediatek/pinctrl-airoha.c:2064:41: error: variable 'an7583_pinctrl_drive_e2_conf' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+   2064 | static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
+        |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Due to a typo, an7583_pinctrl_drive_e2_conf is only used within
+ARRAY_SIZE() (hence no instance of -Wunused-variable), which is
+evaluated at compile time, so it will not be needed in the final object
+file.
 
-Build and Boot Report for 6.12.58-rc2
+Fix the .confs assignment for AIROHA_PINCTRL_CONFS_DRIVE_E2 in
+an7583_pinctrl_match_data to clear up the warning.
 
-The kernel version 6.12.58-rc2 was built and boot-tested using qemu-x86_64
-and qemu-arm64 with the default configuration (defconfig). The build and bo=
-ot
-processes completed successfully, and the kernel operated as expected
-in the virtualized environments without any issues.
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2142
+Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Build Details :
-Builds : arm64, x86_64
-Kernel Version: 6.12.58-rc2
-Configuration : defconfig
-Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git
-Commit :
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index bfcedc7f920b..706532a820b0 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -2993,7 +2993,7 @@ static const struct airoha_pinctrl_match_data an7583_pinctrl_match_data = {
+ 			.num_confs = ARRAY_SIZE(an7583_pinctrl_pulldown_conf),
+ 		},
+ 		[AIROHA_PINCTRL_CONFS_DRIVE_E2] = {
+-			.confs = en7581_pinctrl_drive_e2_conf,
++			.confs = an7583_pinctrl_drive_e2_conf,
+ 			.num_confs = ARRAY_SIZE(an7583_pinctrl_drive_e2_conf),
+ 		},
+ 		[AIROHA_PINCTRL_CONFS_DRIVE_E4] = {
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+---
+base-commit: 57916750bc0886917ea2c6209ca6a56acb7b8182
+change-id: 20251112-pinctrl-airoha-fix-an7583-drive-e2-confg-usage-bbf4cff20b50
 
 Best regards,
-Dileep Malepu
+--  
+Nathan Chancellor <nathan@kernel.org>
+
