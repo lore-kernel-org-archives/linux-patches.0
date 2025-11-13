@@ -1,179 +1,125 @@
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010020.outbound.protection.outlook.com [52.101.85.20])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3842F30E857;
-	Thu, 13 Nov 2025 07:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763019299; cv=fail; b=gDBzCIEmeJqh9I5p1gBYw5wSm4V0KjmfcoLza+k5vZFRDRltLJ5Xdseu/8IcV8wG4Ww2S8YAk0Cp+p+bbQUs3WgroV3HItsVWt69xa8h437l1lzX9bjYgk3jPdoMWcXVK6gftRIKWOaORZG9CyQK0j6BMQTrgXlQ/l8pv5bRpiw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763019299; c=relaxed/simple;
-	bh=VdgN71Y472ndn1eHAM1178hUgCslTQqL8xnilIYACbI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UcM5XhxlwZYq2X1dk9Z33aAnwANcpYm30GfSOxvtt0E9B91C38A618D3Iouqg3wQpoL1V0J3oBk/r5kpFD31EG/9/ZSOEXWuLkZs4zsk6Z2OuyIksSw33ncb5NTLCxOguGhMlF8p9znrrbDlyOVFAgVl7iPP/4gkfpFEsFTgIv0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LbwEYlhQ; arc=fail smtp.client-ip=52.101.85.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FE629ACC6
+	for <patches@lists.linux.dev>; Thu, 13 Nov 2025 09:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763024984; cv=none; b=GU+v8itF0up96QqZ6v++HObY7FAQ5oUS7kO8QBWxAPOu9hkpqZg62U978hfDUg5OmKw+n58UkAaeTpZbhyWkGYC512arai4OqK9gJk54nhUEVnJrviWn9JkapsdtXuujazccKAFgY3zzK/jhRZtPCWghrBWRGTysc5udC0qDRPY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763024984; c=relaxed/simple;
+	bh=Rp7Z8Nbk+XngHPvukR28mGt8Tvb9RTvzouJkBVBA+tw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=npxgvFSwV+jkU16vS6jzK539kGtgk0HGeGPHKVRmLissdUrc9pQ090+OmDnmRP8iVyYmtfv2R07wAPLYKUMWznfJYVnpLXX8NzarjAB61dszroLiMQl6vNGsk/PdSA4g6eq5Z/57cJ30wkl7GPYySpbJbzcxxfkyamHitqIXGyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=Tt3fERR1; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LbwEYlhQ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mndNhZJbwOjJrTZz7tRcq0FEhmq0BDXwS6vFz3WC1cweTc5L+FbBcJvnDmGaKnsaS9o45moI6OWQWyNZtVDGMHXvDWWkGDeJ4chgCNYdA+RKx0lOahakZgZLgKnjAZn3cxizLjGTNF/x8ffBa72xQ7Wv89FIAPfcV8nCpjhUWYj4G+HouP1nkhBN1E2DAQPF+TYxuiEREvct94GqNhr/l/PFZ8BwLFcM9v6wCeUjgjB2fWzDdKGxKaYodSVOwyTy8wvGJUteZXlHFsPv4RbpYmypiTgG0rjKCcEl5IMUPSYlAsgCOAHAzq4Ih+PpCkRQRzFlIjVxhcsf62GqoLm3ug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aCZ0XglH34C/Iul5rD9pykqKZznnRfeyxZ4h5peZcrw=;
- b=cPLnnTlHj4VlwYPPq2dm35m5RjKFXjDWGSDTjptqnYxFQmLn9RCAx7xnOyU4AN9e1DHUcsJyGFTTAbaNM5VwHBS21CgqRPla9dkjJNJq390Z7A1Uu6MD3kdzSb5pq/hUCi8b87FBziyNFvch1i19EvOp/illQ3IzIwZUBYJ/aR7A9JbyxPGUPbpLbWU8am58B2yEMGhmvyhTfIhca8MzF7x7UNDx8a2qtaDJ66YXyyy9LxSsxuickma+Wp46cIVYOZVEod82BL/kFNOFZVA0sAHtL9Kww9S4HQ+J64jgkZ4AG9lr/BXyN1WGoaa+nokP2MEV93Cy5PNgUSTE7duo0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linux.alibaba.com
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aCZ0XglH34C/Iul5rD9pykqKZznnRfeyxZ4h5peZcrw=;
- b=LbwEYlhQRjcXXkXrMl6jCzBEZek8PaeTJJZk3Ofa0KXW1s0398gF6/Hlf/i55BOv4cXniHFCVN8NYfiGe4wuDgxtHd4o9CLkh1YvAh8vFp2SiBXhVCEizCFYNDLBKcjkxCZ2Z3gFxP03nqTMYMHe0muejVtWTGx4T9Ig4eNeyatW9Rv6juIbdelykPZm/UWh7IK/fPIh4mnGQ0zpdU8jFEXGWRDuK9ejCq6ziVYWSbTRteCPk34bTDoz3GEXQtS7/ZzE/3+P6LRfb4r99qovWWN4CGVK5BKskMu25IprQaEYPSWMFCb17OXxyGBy5NpsXj9w80dX9zs+b8bUrmaWzA==
-Received: from MN0P223CA0003.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:52b::30)
- by CY8PR12MB7683.namprd12.prod.outlook.com (2603:10b6:930:86::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.15; Thu, 13 Nov
- 2025 07:34:45 +0000
-Received: from BL02EPF0001A0FF.namprd03.prod.outlook.com
- (2603:10b6:208:52b:cafe::a0) by MN0P223CA0003.outlook.office365.com
- (2603:10b6:208:52b::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.17 via Frontend Transport; Thu,
- 13 Nov 2025 07:34:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF0001A0FF.mail.protection.outlook.com (10.167.242.106) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9320.13 via Frontend Transport; Thu, 13 Nov 2025 07:34:44 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 12 Nov
- 2025 23:34:30 -0800
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 12 Nov
- 2025 23:34:29 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 12 Nov 2025 23:34:28 -0800
-Date: Wed, 12 Nov 2025 23:34:27 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shuai Xue <xueshuai@linux.alibaba.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, Alex Williamson <alex@shazbot.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	<dri-devel@lists.freedesktop.org>, <iommu@lists.linux.dev>, Joerg Roedel
-	<joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, <kvm@vger.kernel.org>,
-	<linaro-mm-sig@lists.linaro.org>, <linux-kselftest@vger.kernel.org>,
-	<linux-media@vger.kernel.org>, Robin Murphy <robin.murphy@arm.com>, "Shuah
- Khan" <shuah@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>, Will Deacon
-	<will@kernel.org>, Krishnakant Jaju <kjaju@nvidia.com>, Leon Romanovsky
-	<leon@kernel.org>, Matt Ochs <mochs@nvidia.com>, <patches@lists.linux.dev>,
-	Simona Vetter <simona.vetter@ffwll.ch>, Vivek Kasireddy
-	<vivek.kasireddy@intel.com>, Xu Yilun <yilun.xu@linux.intel.com>
-Subject: Re: [PATCH 0/9] Initial DMABUF support for iommufd
-Message-ID: <aRWKA4zBwi+JagaT@Asurada-Nvidia>
-References: <0-v1-af84a3ab44f5+f68-iommufd_buf_jgg@nvidia.com>
- <aQ4x7UiMMCB0m0dH@Asurada-Nvidia>
- <29f0cddc-3c23-4ab1-92d9-8c9918ddc187@linux.alibaba.com>
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="Tt3fERR1"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E29C0103D144D;
+	Thu, 13 Nov 2025 10:09:26 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1763024972; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=K7E9QF6PoTwdjOzELtXjqU+UET+KoQv5bYJIbXqp7B0=;
+	b=Tt3fERR1JHfof1JWppuTTQolC40L4kIY2MoOtBs+1zGebPUwDPibQEQzeuinqGtS4xoecw
+	PIYv0HFCSRqK/aK1DkKA27Fd9BxgUE39oDlBDk1v3Qh7jqIElGsNAmYlsi9C+dGIddWRWK
+	hv+ydRd6py9mGjKILUVxXnpi4IsLZivZmxOAKq5D8OSynjrRZBTh0i4NBWmVVUDH+0MH/V
+	Ib/zUMSa0HRpRfOUtVPzmYPfGJ9HxiJItLhSg7VEUsB85wWlaJc075oRKnYeU6zxzCrCFU
+	kJmYEPz6Oanl5yfEqqN4q5Ptyi3LOFAbffafzYJUIt+EICoKOHqDZXUQUmHihg==
+Date: Thu, 13 Nov 2025 10:09:24 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, tiwai@suse.de,
+	niklas.soderlund+renesas@ragnatech.se, lirongqing@baidu.com,
+	viro@zeniv.linux.org.uk, theo.lebrun@bootlin.com,
+	arkadiusz.bokowy@gmail.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/562] 6.12.58-rc2 review
+Message-ID: <aRWgRG5VmLHFZDWp@duo.ucw.cz>
+References: <20251111012348.571643096@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vkMACDBEIuRlEgTs"
 Content-Disposition: inline
-In-Reply-To: <29f0cddc-3c23-4ab1-92d9-8c9918ddc187@linux.alibaba.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FF:EE_|CY8PR12MB7683:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86ce6efc-9f1a-4dc8-444c-08de22871df5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|82310400026|36860700013|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?1zZhUM7ULSyU3f13CFdfioGK84MVCTv+Ki10q46C18JP00K4NFFqzl6VcRU9?=
- =?us-ascii?Q?AQmL51ssyfDEOgYaPOCW9OI9wfcWN6j4utknwwEHoi+1oppZm3pDqT31VC+E?=
- =?us-ascii?Q?NFKJ8gSBs8glV7S5FKBv0IMVi1EuJtKJaBVbCjKo84m/dIkB/pMuem0mHAHQ?=
- =?us-ascii?Q?CPb40kIZt5/wLxNfmrCVM/8MiiGiTGC2DJj4DzMS8G3TtUElGRz+n/iYu6yJ?=
- =?us-ascii?Q?58rLjf891Dg8KTdibjpx+M6kJ6momA9YyhT3GXQRy75CIfU05lVqbe2U6lVK?=
- =?us-ascii?Q?WrWCJR2WmRCb21cQtEr1P5MVX+h/hm5sPs1ryUvImOEG5JlxE39t37TWQGsZ?=
- =?us-ascii?Q?mezvU9plvy3BeweWeYV8hvibOmfmjS64zW4ZH0DvQ9FSftbCQF9orBS2Sun4?=
- =?us-ascii?Q?ydx6A0cnzXd8dxS8mhfpDvienfLiFUjba2qpBNzA0XEOl3XJCq6XPjUyVVl/?=
- =?us-ascii?Q?ZY3rWobUfjnB42slj+36s6EW4y1RE6hR8dlQ2C226A1ABCZLwml6zTTuR9X2?=
- =?us-ascii?Q?TvDFwtkUUHTtjmnHPG1NFdYr+MMRw42dROaJeUxZHHMJz5NspI5XKdoi6u2T?=
- =?us-ascii?Q?EJZ7D0T7yVmUELStMvRFJfaAOXixNXF6yM/uFFqQ5DEaDzQzj78fc3UHjYcb?=
- =?us-ascii?Q?rMqbQdn5UVlM433fWVFqeSzifWz0uqoE8CfdhYf9/odrTvHDWVOViI+y6W3S?=
- =?us-ascii?Q?NQUXYHGssxoEGLKQjQAgNwmDmZTxLWsukBpW2cKyKt+CTTIbHSddEgbi1Nv5?=
- =?us-ascii?Q?MAqEtYL1ptny2ywLXKdfhigEIxgowQdqNmIgkZwaDN7QkUof/HcxRRWlun/T?=
- =?us-ascii?Q?EpD79KMyndP6c4gaMTR/X71+SRnRWPstg3i+hI7n7E5oqt6awnNltvSOGTpS?=
- =?us-ascii?Q?PIdVcHphy9upgWbNjOEvwtOayc2jxlEc+f67+3TlDL7NAznhbYC5pX84iNBS?=
- =?us-ascii?Q?mXLWypu2Lx9Wt7RGDk5kDFDuMShZy5mWo5+UNBMx2pHvEK+HX1KeM/pl9ly4?=
- =?us-ascii?Q?VLQuPSi474LkCuS2RfFOoWNCM5Q/fy0qfg0iYGQHoQt2Q9hHPRb6Qv9z7RAj?=
- =?us-ascii?Q?qQl+vP27dQGc8WGICPQa61QiU8x6VrmNIhsZTi6VXmzHtJkzt/4xDDJszwUS?=
- =?us-ascii?Q?8Ae1aTpKxGJO5+9epYT7e3ShHF2S84KHocnKlOJI8CMTBmIwD/cnyRF9c3Mf?=
- =?us-ascii?Q?i50JtrF95aDLB9R6igjrTfNXfL3MiL80MKN7hpr1Ww7Hq7xuRWRfDdULGmlQ?=
- =?us-ascii?Q?oD7YVKVzlcaHIjFBZoPdU0ST2y+LM0pIKgUUGjZ04vc3ZyG6sMELeVXTVNNL?=
- =?us-ascii?Q?VPcM32/ezw3lWID2AOfamHoLUpQqu1+U3g0B3o4YOwmDQpwD9eYvgOBtyTFZ?=
- =?us-ascii?Q?koctQNO4/+T1FHLpRTV4u2PBOMkF6PQWe3AIpZ1qHc/tb2kBpEE7pvYb93aW?=
- =?us-ascii?Q?ggeMn1FGIyoGU8v9+2uGspCGa/G4uHkK0rWqZrpllj/vpuL0jR/kLdkGqTW3?=
- =?us-ascii?Q?JoGxbwyWJPVJRi/NFPtBbbtOmUzH6DtbXWUyzGX5/alZZEQ/J2tgI2zwqM9X?=
- =?us-ascii?Q?S0fBKKMM5dnR1LHJWbA=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(82310400026)(36860700013)(7416014)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2025 07:34:44.9865
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86ce6efc-9f1a-4dc8-444c-08de22871df5
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF0001A0FF.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7683
+In-Reply-To: <20251111012348.571643096@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, Nov 13, 2025 at 02:33:01PM +0800, Shuai Xue wrote:
-> Could you share more details for testing?, e.g. QEMU cmdline,
-> Guest kernel version.
 
-My v6.8 and v6.14 kernels can boot cleanly in the VM.
+--vkMACDBEIuRlEgTs
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-vm_image=PATH-to-FILE
-e1000_rom=PATH-to-FILE
-qemu-system-aarch64 \
-	-object iommufd,id=iommufd0 \
-	-machine hmat=on -machine virt,accel=kvm,gic-version=3,ras=on,highmem-mmio-size=4T \
-	-cpu host -smp cpus=62 -m size=16G,slots=2,maxmem=256G -nographic \
-	-object memory-backend-ram,size=8G,id=m0 -object memory-backend-ram,size=8G,id=m1 \
-	-numa node,memdev=m0,cpus=0-61,nodeid=0 -numa node,memdev=m1,nodeid=1 \
-	-numa node,nodeid=2 -numa node,nodeid=3 -numa node,nodeid=4 -numa node,nodeid=5 \
-	-numa node,nodeid=6 -numa node,nodeid=7 -numa node,nodeid=8 -numa node,nodeid=9 \
-	-device pxb-pcie,id=pcie.1,bus_nr=1,bus=pcie.0 -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1,accel=on,ats=on,ril=off,pasid=on,oas=48 \
-	-device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1,io-reserve=0 \
-	-device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.port1,rombar=0,id=dev0,iommufd=iommufd0 \
-	-object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
-	-object acpi-generic-initiator,id=gi1,pci-dev=dev0,node=3 \
-	-object acpi-generic-initiator,id=gi2,pci-dev=dev0,node=4 \
-	-object acpi-generic-initiator,id=gi3,pci-dev=dev0,node=5 \
-	-object acpi-generic-initiator,id=gi4,pci-dev=dev0,node=6 \
-	-object acpi-generic-initiator,id=gi5,pci-dev=dev0,node=7 \
-	-object acpi-generic-initiator,id=gi6,pci-dev=dev0,node=8 \
-	-object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
-	-bios /usr/share/AAVMF/AAVMF_CODE.fd \
-	-device nvme,drive=nvme0,serial=deadbeaf1,bus=pcie.0 \
-	-drive file=${vm_image},index=0,media=disk,format=qcow2,if=none,id=nvme0 \
-	-device e1000,romfile=${e1000_rom},netdev=net0,bus=pcie.0 \
-	-netdev user,id=net0,hostfwd=tcp::5558-:22,hostfwd=tcp::5586-:5586
+Hi!
 
-Nicolin
+> This is the start of the stable review cycle for the 6.12.58 release.
+> There are 562 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+I don't believe Sasha or his automation did good job here. It is wrong
+to sign-off patches just because of LLM output.
+
+> Takashi Iwai <tiwai@suse.de>
+>     ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
+
+If the check triggers, we'll be breaking someone's audio.
+
+> Niklas S=F6derlund <niklas.soderlund+renesas@ragnatech.se>
+>     net: sh_eth: Disable WoL if system can not suspend
+
+WoL is used for powering up systems, too. Congratulations, this patch
+breaks that.
+
+> Li RongQing <lirongqing@baidu.com>
+>     x86/kvm: Prefer native qspinlock for dedicated vCPUs irrespective of =
+PV_UNHALT
+
+Looking at the code, that should really be "goto out".
+
+> Al Viro <viro@zeniv.linux.org.uk>
+>     allow finish_no_open(file, ERR_PTR(-E...))
+
+Not sure what bug this is supposed to fix. Sounds like preparation for
+something we don't have.
+
+> Th=E9o Lebrun <theo.lebrun@bootlin.com>
+>     net: macb: avoid dealing with endianness in macb_set_hwaddr()
+
+First, this does not fix any bugs. Second, code was "cpu_to_le32", now
+it is equivalent of "le32_to_cpu".
+
+> Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+>     Bluetooth: btusb: Check for unexpected bytes when defragmenting HCI f=
+rames
+
+BTUSB_BARROT is "write only". That value is never checked.
+
+Best regards,
+								Pavel
+--=20
+In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
+Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--vkMACDBEIuRlEgTs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaRWgRAAKCRAw5/Bqldv6
+8mSuAKCxatrZYWRdTsqb+VMeMJcO5rylqgCfW1YNLeoPMoUzaELhp79o4uuu9Lg=
+=4tVS
+-----END PGP SIGNATURE-----
+
+--vkMACDBEIuRlEgTs--
