@@ -1,103 +1,101 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61B32D877B
-	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 07:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41A62D877B
+	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 07:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763365614; cv=none; b=ijmIkMcIEer59PE99CLLCQnvr4QJERW6QNR1kw0sEQuqgy7wuumx8+VL9WReiuRb1B5QENdzPgIGKSWqM8f9y4vTaSlU7hs152lS3sZJOPPabNAWgk2HA/zGlyoU0fFFh9Qyq2j/RZBKBCTDTehBW50FhVL1AqJF/SDnbJ8Zn9k=
+	t=1763365677; cv=none; b=FDgPuLByOGvTZ7TfcgO0ngXAkCJxz24si7bcdyXl+JsbANod+ugu6ezKY24buztJ3R0Kud/51AxygL2hpowzynftBBVpYH0bPlVJU95xkMQHdjAADrrrAzGzwtext7c6kGGJC364chkFOg190qRG6BV6BBomDgBTEMv5n4OTuQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763365614; c=relaxed/simple;
-	bh=ObmpRVCC1Puh2FN4TUTSDuNBSGR1J6ACRGZuF8hCM1w=;
+	s=arc-20240116; t=1763365677; c=relaxed/simple;
+	bh=6h03JxPLBCObWAwhJP4a2KbRLMtLdHN8HAsaICDJ4Jw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NmV3UwrRHKgCTHcMsz9zn4lfT+/57W8s2dftxYuOzdtzUQc+ID1GmIh47fekXWWEARlUKBebhyp7hDP+RwZ1hqJa9FqrtAEWzQZ09QWF9ByE72ByOqNzn/G4P1b5molCCZ5YbikFHvMiBJDKgP3q6bwilTRPJ8At4T7Qi20iIU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d3gd08eL; arc=none smtp.client-ip=209.85.214.178
+	 To:Cc:Content-Type; b=K2OREZVzJtdrR/dkl9LKSrzZmfrOtScdKYOUZlrVTO0qCApcujoE4cyyTAgEJdGOPspsTkV66uYlpw75qGnKHKm+Z5BTYWDYLJOhvfPKzn1jWu1wecs409ebXv3XB83cTZvhmFP6G8zY7k3iUHLo3Ycc2nLOeZqd81w6mDUWVn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MqLRPx4/; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d3gd08eL"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-29800ac4ef3so10783455ad.1
-        for <patches@lists.linux.dev>; Sun, 16 Nov 2025 23:46:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MqLRPx4/"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2960771ec71so7278235ad.0
+        for <patches@lists.linux.dev>; Sun, 16 Nov 2025 23:47:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763365612; x=1763970412; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1763365675; x=1763970475; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ObmpRVCC1Puh2FN4TUTSDuNBSGR1J6ACRGZuF8hCM1w=;
-        b=d3gd08eLUlM/BJ2daDn09kzZAB7sixharLEnxS7KdB2Fi+EUem87o9o54+Xo+Qa6Nq
-         gvfnhwJN4ffY/BSmg0PAUULLX4mUQjUQ2pBrB5iTC3UbQgtwn6iitx21pg3SdqfB09Yz
-         nHj2wojOO0ilWX6ucVVP0YL0NxTpQ0uq8/yPVu+X37RdonhpOOA7DuoMtp/qYz6l5O2M
-         YwqM05YMmuAAV33wCVOHK+LT1PLuLmt+06V5sSUAdAaDmYB8txqfBZZqVz0qgC071gGA
-         +YgGkeQ+rUMTVYV8Gg/cOY+1SroAuz4Tl4psHHWkG6OyL+Zsy+5j58B+xRI7/S5HCqfh
-         OVOA==
+        bh=6h03JxPLBCObWAwhJP4a2KbRLMtLdHN8HAsaICDJ4Jw=;
+        b=MqLRPx4/5iSGgPY7/KLOw1OJtwXK28B4jjoS/y7nRvM9f9YmccXKqCxjUT5jUd4h5W
+         vD3j403JMfXlGfJgdQrv/DVxMMWD2h0e/2jkpJG7jaMsXgu7YL6wstiJXtWBZBMBABhV
+         Ct4S25HhI15eiT4EnUWqtEydj0mVJKd38zlK4L12CUM3JWL0B0hwTd0M6ulYIvmmLqia
+         zUQ/PoB0KP9A6m7exwYQMMuvK++EFsL7W8vPzsoEGI5piRS4eAPMGPieHc6/rDPg/tKz
+         HOtgVCFs6IEN+1LdZYtSPDN/p/w2G1UbxWkcKRTHDbuIwaRLyv+fiC2+ml9+RIgcl0i+
+         8yBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763365612; x=1763970412;
+        d=1e100.net; s=20230601; t=1763365675; x=1763970475;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ObmpRVCC1Puh2FN4TUTSDuNBSGR1J6ACRGZuF8hCM1w=;
-        b=lvZn7boC1XLCvHaaZv78SwQ4gesEUHEI0dwNdqaIpc44g/y3yBWJEyXSZ+Qe5diyEw
-         M3BMo0fh+o0k39j4H2MNHKJ2dmR4Hujx3oBSjqo5OYgS2PN7UVQIRZEe3AWLibVprJFj
-         IwjzLpNpv7xeoekImpooPQZvXs5C2iEBNppQCW0p2d9pV7pPTBTqzBXKSMVWbrKiMc6q
-         gxAkcwPa5FjXSXEWD1bbStLuJp0R9p99tGuF4hyg7wb2rF849mE5E9SjUJarmTKbla2P
-         auKLvcH17oe1dvVdR7fj2jsDh3U87xE09ev08wf/1IePNnp29kDk1OadOjrvyfK5qKzE
-         eYjA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2Y6CUSpgAnAaUTGmSSLk0WjFx8PfN02xnh4UL6eER8/FjY7oAKDbwdwme9PSpkGboQ70IxC1I@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx6+HnvmYwAvICG88MOr22FoUFJdBnVYlgeaEHSNojL3HOVEm18
-	HaWa2DFiV+daweNc7at4jORuQ95+Un7W2GeAKVISuVvvXPmUJ+FIhK0rrX8mG/6d1w4/gqO9/3S
-	0M8qsHNfsfYpwtOMmVS8fzslQP2SMdYw=
-X-Gm-Gg: ASbGnctrGnhG7lAL9C3D3toJzSCiyMFDognPZ0CaSnifXmpWPkAmS2ZErdITQTObtJR
-	nh9ZKIqfcULR9VkSUJK5Qx1Y1J/CDt75tr3j03P7u7RqN+EuE/kK8xFY+XDmdnyXZE9+HaOBmZY
-	JK42VT2SdVZGUL9Re3ed1CMw0+9lMcaUuSHN6UrD0N1u9b6lqCE8e6YPo8CtVCoTq2CzbVjnW59
-	yqncVR4R9dTkZKQQc4QkNgfUrOFT/6pW16twZOMPnu3fs+/esl5tNbhqiI8+82dvFRXENOZHOnE
-	viQFDQsS0FsIHlL2WT+PKW74QmWQgCb5fZM3wDUNwz284rdC4XFRM0FozoPGlCBntxoFva44d6A
-	FLlEfQ4Mw36KoQYplYT0Xcfll
-X-Google-Smtp-Source: AGHT+IHcyHCJS+XHOfR1eZy7OnTrmnx2eonBofGVOY9uvH4vy2lj6EpJkn3+qRUAndgLxU1J4hPJkhNm7LJiEaSgXd4=
-X-Received: by 2002:a05:693c:6319:b0:2a4:5129:fe99 with SMTP id
- 5a478bee46e88-2a4add16638mr4149911eec.2.1763365612090; Sun, 16 Nov 2025
- 23:46:52 -0800 (PST)
+        bh=6h03JxPLBCObWAwhJP4a2KbRLMtLdHN8HAsaICDJ4Jw=;
+        b=P8GNyOgqZ5RZh8/q2QPfmR6I0kqlcEZdiAxgY8G9Nsj9pqSf3fXYpmZIUD2WATfkRy
+         HDNwBswmEEQTpS8353KJu3PcH4enEieRLYxdnGlgO/NZhFrbVBR8LyKV0MIBUj1GJ/ES
+         Q+jv0ys3Szm4QCte74uWKBHjaZoF6NJxOC0jtnhRwrJjHnRO8RGEFIaWPKIOFgrOBbb2
+         pPJ04NiXiYp6sR4QHdBKGNyBLmzZIM0WVWoTrnuvwH1XdQpfmRVkg4rvg00RZcDUAhA2
+         FEzrzPqcG9atYy9Q/ItyW/xSxNuq6VuYXIYgzqj1dxGKnfUJvKBdALt3XLEnIhPWi/SO
+         GNXg==
+X-Forwarded-Encrypted: i=1; AJvYcCVdVZ6Cq8KchOn7Q1IGGfJTdD/yxRy4X6WN7KvueeXv6oHNO4mK2XpRGvBbUekeb8g6M3G/vnCu@lists.linux.dev
+X-Gm-Message-State: AOJu0YxXR3I33lFLpV+FeXk7tt/9gkLfpuDxfnaqRWLnEsNTwysJW9h3
+	q8rs3rLVPyjuxI2p3xR8PA6lMW8zoferxW85bLJISz3Hr0g3Few6vNdDP11Y34J3OlmdJ/ZRVEP
+	cGvKKz9JjH4NlWh56prnsqROAvtTv/z0=
+X-Gm-Gg: ASbGncvgLV6NHrha9GmwlL1wbCmThY+Y77N9wzg9V6BJgk7bAgosFZDRhYjzu+W7/KL
+	CsFWmlD7b1DLxzMzHxeQnjSdslnIWp3EN48ZfHEHHatDnuIUnnzE3J81CoOygyTS5cwxVH3/PIA
+	Z5kkMyGMKfTdc1u2WDK4LxwObFOliCqrFdAOTLnz3Q30pUoT5fm2sLczu0gefkXXWOo/fj+OU7q
+	pD4tjoT4BuL68B46Bks8p7CiEmYoBGFPnsOWCzwNprYjCJXwhoOwObpxApYHyO5Mjps2aelnozG
+	fVPswTIbYpPM1zSb8vCEnw957FpRG3tTRuku+SstaVMlXzivsSkRuGg9fazAs1d6sXKAsl6AQzw
+	IWnM=
+X-Google-Smtp-Source: AGHT+IFFDBs3uvggDFXgm4+aW5NTqsoiQZXkDqUFQSMJ0CthFqmTdAaDC8RRnD9kMAtxX7gN4X6R4AMduf8hjUblQ4Y=
+X-Received: by 2002:a05:7301:1627:b0:2a4:3593:2c07 with SMTP id
+ 5a478bee46e88-2a4ada4d389mr3165047eec.0.1763365675064; Sun, 16 Nov 2025
+ 23:47:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110113528.1658238-1-ojeda@kernel.org> <20251110113528.1658238-2-ojeda@kernel.org>
-In-Reply-To: <20251110113528.1658238-2-ojeda@kernel.org>
+References: <20251110113528.1658238-1-ojeda@kernel.org> <aRHSLChi5HYXW4-9@google.com>
+ <20251110133843.37ff0749@eugeo>
+In-Reply-To: <20251110133843.37ff0749@eugeo>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 17 Nov 2025 08:46:39 +0100
-X-Gm-Features: AWmQ_bknbkpZ3ljEJgnqzyAN5abYU0FTf1nfb1wVbwRK92rcRHx3LRnBCnh3VYA
-Message-ID: <CANiq72nFxpNP3JH-ENKRM72phHXYSMfp_7X89-q4UuGH-OyT-A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust: device: make example buildable
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <raemoar63@gmail.com>, 
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+Date: Mon, 17 Nov 2025 08:47:42 +0100
+X-Gm-Features: AWmQ_bmSKtV3tIFKwvS6r_Sme3lOlGmgdURMZ2zwl8YB1szsDQkVnRqRV3WGudE
+Message-ID: <CANiq72mO_g4uXV5GBGKECx4BMO3XHPNgYzmyjX7Q=Lfoyu=How@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust: allow `unreachable_pub` for doctests
+To: Gary Guo <gary@garyguo.net>
+Cc: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
+	David Gow <davidgow@google.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Rae Moar <raemoar63@gmail.com>, linux-kselftest@vger.kernel.org, 
+	kunit-dev@googlegroups.com, Boqun Feng <boqun.feng@gmail.com>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Miguel Ojeda <ojeda@kernel.org>
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 10, 2025 at 12:35=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
+On Mon, Nov 10, 2025 at 2:38=E2=80=AFPM Gary Guo <gary@garyguo.net> wrote:
 >
-> This example can easily be made buildable, thus do so.
->
-> It would have triggered an `unreachable_pub` warning without the previous
-> commit.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> We shouldn't
+> try to enable all clippy lints on doc tests, especially that clippy
+> doesn't run today on rustdocs at all.
 
-Greg et al.: a quick Acked-by would be appreciated.
+You mean on Cargo / userspace projects, right?
 
-I can also pick the first patch without this one if preferred.
-
-Thanks!
+Yeah, I think they want to change that -- it is a part of the kernel
+build that works better than the usual Rust project, in the sense that
+Clippy is quite important to have in order to enforce things like `//
+SAFETY: ...` comments.
 
 Cheers,
 Miguel
