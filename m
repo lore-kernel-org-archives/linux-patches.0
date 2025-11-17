@@ -1,103 +1,105 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A943234572B
-	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 21:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A4734C9AF
+	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 21:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763413379; cv=none; b=jEC1VSaB9nhccMSR8E/FBLiDPJDZdCLvoHKukp3ig5xd6s8ef6El8xIm+Li62QkdWj0koU1NOCYQ66BlrpDRoHMdbd25OfYM55sHYSPeLADBMnEil2tzXfzf0/Tbi8XKA405mmDvLFyu2creQEouPr2Y2oEwOiDzfb3Pnd5R6CA=
+	t=1763413382; cv=none; b=oX1AKM5Ytht8BbpzZDgvjqNSwKKSF1mD3u4Vq5q1S5CkQXRA8twD7v2kTYLEtLwPxhSj9Sju3ESPpVEU1TMrNvxwdcL2OwYKDyQ9bqR1ChRIyakKO7CqZZ7Xe9PpccfbGTtvsLK4+UWDjVxuvv9f4SVPy8Tf0YsyM09xk3np8Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763413379; c=relaxed/simple;
-	bh=Jx+mIImXSNDfgYqmNpofAZfv7KprXxOGtDGrhRPT+Hk=;
+	s=arc-20240116; t=1763413382; c=relaxed/simple;
+	bh=iP6TspFv6C7dt+qkcsFWTPUOXmBMAp/00Ut2BHL86o4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S7PJ1TWYN5TvG7z9RanXg1yzOQod6F8XMovcxhEpDVF4F73h+7VIEXtQde1nlqMd29WAhzVd9gOfHHnxnYc962DqN3U2XpliO4IoYS1LGyIo5q6xRb32Jvx6fctrpMKiF3l+X0+1OdDtPpEz3mQPDt4uEIzBrExhlp0UEqzHxfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZxpDHw+1; arc=none smtp.client-ip=209.85.215.182
+	 To:Cc:Content-Type; b=LT6YWauqpeOFJDbWbj5RAkdwuhmhYEcnVh+vjvTSig9CnrgtyFroUycuLGYfIaD3wHA2oXOPkMv491vq8aBEeZtB9F0DHcmncVHfXDTVHzw4ldPuPOmn2ihaQFEtkicQdZrVXEJrC37L39fwsyiX2oQU/WDJZgwuKSJYWy0yMQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BqWR0805; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxpDHw+1"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-bc144564e07so147627a12.3
-        for <patches@lists.linux.dev>; Mon, 17 Nov 2025 13:02:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqWR0805"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-34384760ce1so889939a91.0
+        for <patches@lists.linux.dev>; Mon, 17 Nov 2025 13:03:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763413377; x=1764018177; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1763413380; x=1764018180; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jx+mIImXSNDfgYqmNpofAZfv7KprXxOGtDGrhRPT+Hk=;
-        b=ZxpDHw+1y+BIVg2Sn2pZscnAaz3VVWd7YMdRASJulISGwZXxyqzWaIybGCT7xG3LmD
-         UWD40rsNndZyUR5qSi7JC23wIlGvAQ1or06leD1CvmAkySahf0KXhH/xvVqZtHCe+mQK
-         62pbL8SH1GUUP/6VMY5n+JznCFU3PV0BUt8Uyx29ycHHWQsdiyb0WF+6IoKDPG3NHgdD
-         cI9IQSW19M7X7IkN0bv7QyeyjxsAuFe6f2Af2du1GGIZGr8RcJa3vXwjbmAUPsBiloCX
-         faDjZzfTISUDW6RPLmZ20zzmeuWf1vaV0vcCpnrnvzKfAJFTKSyBZsG12KUdicMwwrin
-         blcw==
+        bh=iP6TspFv6C7dt+qkcsFWTPUOXmBMAp/00Ut2BHL86o4=;
+        b=BqWR08052RdVtO5V5imKdcennJ5GuCCsB/Kajto6A2no1uG+UEuiWw4ZBc7UTMuFuv
+         BnJJAsKafsdR08oeN56+3naFe/tNvkrls2EoELz05BTl3atnYroYRw0boIzd0IxFeVJC
+         JH25UrmaHV+YvZHWL3Ci//0NuhqMbA1b2IpGrjBBroWXVIkLTfQ4xoNMinoXRcU17o5N
+         BSuJDoq3nJ7qBhmVCZeHl4ELvKn1vLXmxcYF0aufzW7SLeiVtmLBHkKbsdIE09NZn8OB
+         EVcbn3tYmVQQQUFjngSZ1HjJA+nFvYIAvyKpI560E08qJ54ugwdRH2Ke1+3BuI9joP8D
+         Rhgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763413377; x=1764018177;
+        d=1e100.net; s=20230601; t=1763413380; x=1764018180;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Jx+mIImXSNDfgYqmNpofAZfv7KprXxOGtDGrhRPT+Hk=;
-        b=JesMcTP9A3clIedd2lB3VNdTjaUqyhWHN7hUbEC9gtS/uu2stqwEo6PDYm5WsfNlgw
-         wjsqXgNM8lRovoBEaqkM2kF7DQmGV6hHBHDZENa4LDp1h66ORBME9ZV5m3+bjvtYnGhR
-         +6DgwjhDCxSOR6XJlQLmdPBeo7NKcnOqmfz29R6KCq0YFOfL41vGqXQe6ruuA6PTbfaZ
-         2kQB0IqMfYWX2BKO21P32Za2nrUl3Yj/ZtIjPLvNJPsOeRVNrH/w/VQCxEMDKKatz7ui
-         NeL3CPZLT3vc5ysCmfYRfLkUzuPsqUag054AXbyQKq7QrCNis5WjnGXlxumx5sIr7xGq
-         LhzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVLfEbyJglQS1eEFeLNFhavVbFVjY5mSXOXuFTchIjbHsm6YzJdnUhXWad5HEEGh9c8/wfK6PVf@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZjsQnlo6KWsDuXDCu1FsCSC+ySRtHeo4zR+ztFm/UY+tMalMQ
-	1GaBP5zQpp9P9ZELon3qMLp28C0x97J7eQOIQ7TIUzJBBXXqEBBe8tn+AGhaG3fG7jRxY3svtZI
-	ngdcSTgvNebX4CfQjUu37kLE0x/1FwTI=
-X-Gm-Gg: ASbGncsgiph4VLmedc5psxPkiRIbYBFlSLW7mXluISWSq69ACOeljPpz0J1SkT97Xjk
-	TPuB6g+LD8G66O4nO9dg7rhr9CyjgJCR+oHvh3Etj16HbosoAABvjMLMNFIwvkrZXxHgWQiUqHX
-	+UHSWTKWvDLGsaMSG18XmCbuV10GQ9n7NC0dIxJFz/gM4Cz7B3aFov83Fd/EKoXR/l1Hc2PMy6W
-	TfYkrlHPRpE8qSNnVwc988O1ZaiZkPk/QMbbsOyyvTzlfHyL6v1j64xhIZLNN+iY1b6BawB+yQa
-	5xLdGSDwFcHypr8UfprS4OEmapUpE0xZr6zjPVvSwmBObULhoA0M3voblpOLFdOAxxqfRuw/3Y5
-	wPBo=
-X-Google-Smtp-Source: AGHT+IEfpg5rcBX3WhvIWQ/UIkVD2lfXwiuAfVldmSreQrz3l7c83vqeEp8kW1iCh0Sg9GCSFOezGN+qgrUI5cjThig=
-X-Received: by 2002:a05:7301:19a3:b0:2a4:5129:fe99 with SMTP id
- 5a478bee46e88-2a6c9b2447bmr78698eec.2.1763413376824; Mon, 17 Nov 2025
- 13:02:56 -0800 (PST)
+        bh=iP6TspFv6C7dt+qkcsFWTPUOXmBMAp/00Ut2BHL86o4=;
+        b=dLMxQ+dOqyA8i/SepSm8Gza31bPwADVb5lxlC4sCWW/X8VQxnWgVcTEOsV0X3Fauh5
+         yEFwsNDVqWP/ZKJhBp0YX1hy9pq9xmEXFYd4QrRQniaa2PT6JviKksKzQMHGzTxo8bta
+         aLYbcUHrhd7/O1NyEQJ8ypgQCCxaaqQY/hxcswLDhAsH5LVG5rM5NEQE76uI4rVc29R0
+         sggJwomltJpcawZnFqZPiH04mOJv6vLFUmLQUbqXhEXARpA58oEMNK7buqoyphBVcYI8
+         FJG/ZL+BQZslH5aaWNz5sBJ4PUfLeD0CP/IM9tTJKOvJm4p7WdRDctjgusGG4Dy8HfIz
+         qjZA==
+X-Forwarded-Encrypted: i=1; AJvYcCXLd2tUoIN6a32Zw22VYKECfowmBMINWFDSEimji7LSyqocqXxTGuVzDdCN4X5rBvHdqQQSvZaX@lists.linux.dev
+X-Gm-Message-State: AOJu0YzfJc87hX4anLFjw3cNsb8IumbPEnakOl7bHtbWuIXcLPBh+JzR
+	9Bp0ZW6ZYX4F0TOV1yszJZHXePSG4VTYhIfGgsOauBRJypc0wzexhLQIBv2hQgdDLhw2krrA/Ge
+	+Et+Fu7wuQ5BpMfY1dxoMV3hfRh5DxnI=
+X-Gm-Gg: ASbGncs/spQ16vZiHq24WMO1/hCqSJGuqTQGqyUsAStoE972BS/BZd37eQdF3CGi0IJ
+	gK4uO2u4T2yvNolW76DSmWo4E9W9DvGpGSi8At0aVNaiZYEBsFzwtBJgLJVnFflDd/AuGd2177O
+	IggysmQVMw0eIXqEwJnR94pp68IvlNPZQEZdm5VAw/frOWJ321Yqu0F4fx7TpFaMIufHoSZ+kdd
+	LwpfGo6XJXCgCg0H5QM3isYzRrw1eNe4eLk15K9uTqI0Ce+FsC1V5cD7ux4DpNhQq+TiPLwfSEn
+	KFaxAzatBZFoKhKsEjRKFU3+Y+XD9TZe2g8LnWS1qSU+q3pp8Ww38Iw+km2fVnqnmKYmPRGkWe+
+	/kurGLINIgwoNLw==
+X-Google-Smtp-Source: AGHT+IGlfQGUdtSox02ATWkbxSbcf1jC5YZXySUNyLmlrEZvBMimdky+/XqX+bymvXPFrGG75BWC3U7j6V3cT8HAU7U=
+X-Received: by 2002:a05:7022:310:b0:11b:98e8:624e with SMTP id
+ a92af1059eb24-11c796b9796mr80353c88.4.1763413380425; Mon, 17 Nov 2025
+ 13:03:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110113528.1658238-1-ojeda@kernel.org>
-In-Reply-To: <20251110113528.1658238-1-ojeda@kernel.org>
+References: <20251117080714.876978-1-ojeda@kernel.org>
+In-Reply-To: <20251117080714.876978-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 17 Nov 2025 22:02:42 +0100
-X-Gm-Features: AWmQ_bkaYzRIEOl89GTZlEKTMKuZ_To2Yp8qyNl_-3c2oE8WhLT2HaZf1WZMoBI
-Message-ID: <CANiq72=n3DGg0gfrVq9+b41Ri6M3efWZxnzqwXkOFRt4ozN3dA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] rust: allow `unreachable_pub` for doctests
+Date: Mon, 17 Nov 2025 22:02:48 +0100
+X-Gm-Features: AWmQ_bkVH0zwZmTGtxY2a6yQt4iofNRpnQgdcxIiUj_oO7rEMvoYnw_JJyWw_ro
+Message-ID: <CANiq72=-w2p8sQgUKYgPG3Tx9GSUNgcVUp24k0ck2RqYgupCVg@mail.gmail.com>
+Subject: Re: [PATCH] rust: allow `clippy::disallowed_names` for doctests
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
-	David Gow <davidgow@google.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Rae Moar <raemoar63@gmail.com>, linux-kselftest@vger.kernel.org, 
-	kunit-dev@googlegroups.com, Boqun Feng <boqun.feng@gmail.com>, 
+Cc: Benno Lossin <lossin@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
+	rust-for-linux@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, Rae Moar <raemoar63@gmail.com>, 
+	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 10, 2025 at 12:35=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
+On Mon, Nov 17, 2025 at 9:07=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> Examples (i.e. doctests) may want to show public items such as structs,
-> thus the `unreachable_pub` warning is not very helpful.
+> Examples (i.e. doctests) may want to use names such as `foo`, thus the
+> `clippy::disallowed_names` lint gets in the way.
 >
 > Thus allow it for all doctests.
 >
-> In addition, remove it from the existing `expect`s we have in a couple
+> In addition, remove it from the existing `expect`s we have in a few
 > doctests.
 >
+> This does not mean that we should stop trying to find good names for
+> our examples, though.
+>
 > Suggested-by: Alice Ryhl <aliceryhl@google.com>
-> Link: https://lore.kernel.org/rust-for-linux/aRG9VjsaCjsvAwUn@google.com/
+> Link: https://lore.kernel.org/rust-for-linux/aRHSLChi5HYXW4-9@google.com/
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Applied (this one only) to `rust-next` -- thanks everyone!
+Applied to `rust-next` -- thanks everyone!
 
 Cheers,
 Miguel
