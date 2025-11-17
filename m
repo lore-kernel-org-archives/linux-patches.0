@@ -1,126 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C263257854;
-	Mon, 17 Nov 2025 08:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6BB30ACE3
+	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 09:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763366855; cv=none; b=emV9tS2SNga/nDzU/2UhXtLyzc/Urgv1rdcylf4RicKcX2LGhTBv3dCgyb+o5F5K7w+22eGuZ+orREC3V9bEgeWDUCDXAkcLG8oBw4z6o5Yn+uR1eZOATOCmrkapPlkf5X2iH/0D0OycVcpDpYlwN07VlfJ6rf2DA/Ci7OiCSdM=
+	t=1763372963; cv=none; b=srymWv1AGzJL6wXhegEW6XKXRCtIv6xwKjar0y+Uqc0ah7IR6o3aKusCOZ5wLxerlYxS7kSjPIeWpoinm1xdpuNKYo4mGcR2th7H5upBXg6UprS228sQdYQxQowYM3oJhJOXEljZa586Rl2DIZo79MeJYhY3I+tc4v7tpTrOSlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763366855; c=relaxed/simple;
-	bh=0Y5joTHEG/T4wEe9HK5MTUHfE2O5S+RqR6z9Pchq/hY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mZ0iAT0jFXsUykfrrcOY4GniwDEpou2m/0DJHte6TqWoJfhs+YOGzbnyZRirjcHs32N8CJEvsnKReK4Hs6XeAyZfNr8u8cqmH9hvo9q1BOIStrD7qK2WxcTm7vjJqxjqy+LQNgNgIWullE98BHfA2Eum4dkHRwUJ6Yfg6SwV2TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dd+UuJ5o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763372963; c=relaxed/simple;
+	bh=CNE7KbqVQWvI2RgEONt3Y8S0ouzZQLAbHpNMtvz0fgY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d/OSIpfAMaTvn/GXKDq9z13LvCF3cbjccUva1qw07Ss9sGhqhVlQu+LJviFstKI3F84d0oNJxoWPIkuD7o7oZfR7w/I36CDhCRdwdyKCJa0q40wF259MlBOaoCQtg6edcLS5RiSJaHnB3Noo5UC8j+FklMlwJRPOM08dYJrOLEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=F3JkCQHy; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dd+UuJ5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C67BC19423;
-	Mon, 17 Nov 2025 08:07:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763366854;
-	bh=0Y5joTHEG/T4wEe9HK5MTUHfE2O5S+RqR6z9Pchq/hY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Dd+UuJ5oxIfrTXcwJ2PAegOpNUSgHq8wDM4fcFWSpND6r873Yo5wV1XjrVT9c4Kpf
-	 NkbpMlahDDwsjoYnXrIg2KIg6Ws6Gk4gLV6nxrWLokj/2u31JLC91YDRLiAVZI233J
-	 sOEdlZ86xfJlNlFgULl+O1PMuYWasyyPTWkouLegKA1nTMaR8Z7m0HMYPWYwJ3pwHt
-	 c+GDyHOFqviQEz9OJFyoqYb8URptVzAICJEa3711Rr6BszfOEXfwuGTnKAcAAAanV0
-	 zj9sM2LGj3OqDXInD7dzC65m0BDweA0doYsroJTdRZsOw29v4K7Br42o7NJS8YUEPm
-	 M2vp0mYgPCLAw==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Benno Lossin <lossin@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>
-Cc: rust-for-linux@vger.kernel.org,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Rae Moar <raemoar63@gmail.com>,
-	linux-kselftest@vger.kernel.org,
-	kunit-dev@googlegroups.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: allow `clippy::disallowed_names` for doctests
-Date: Mon, 17 Nov 2025 09:07:13 +0100
-Message-ID: <20251117080714.876978-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="F3JkCQHy"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4779cc419b2so15907935e9.3
+        for <patches@lists.linux.dev>; Mon, 17 Nov 2025 01:49:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1763372959; x=1763977759; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CNE7KbqVQWvI2RgEONt3Y8S0ouzZQLAbHpNMtvz0fgY=;
+        b=F3JkCQHyIeKq8QkhwjDhtta1RcIcsvLNYy3H1tRLc0vQrrvkS9hVM9nARsP6nGCACs
+         IEekbVfObVLez8MR42dDkdj+LHSbmXftIWvhiIp3nVb0kEt2Bt1wCwq9SBy4jDPxz6JX
+         R8pBdDnUQh/6lfPzA4zZrXW0iy3R8XPHS3/120UdyQhN2yRrxC3RVi3/732CnRHtpnC+
+         +N4Hsr107UbVIO6Vxp+cBHjBMUpCw70FAlm5FBXYNkqs1viteeWVzVMGCzgzCuAX2V3m
+         6y+Wx7IHl5ixoAuNUtkUYfqsObmwRCj+qRJzI0YNW08UTO4RSEBGuNoH/nbK9gKvTpa8
+         VM9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763372959; x=1763977759;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CNE7KbqVQWvI2RgEONt3Y8S0ouzZQLAbHpNMtvz0fgY=;
+        b=ow07mT0oj+/9XD0oux1tTTDUmjBXIe9hyFfBcuFHHCZxjI6tBQelgpB7t/3AtemKhm
+         qVCQoSVLn4qLeKynKlTaOmnAf5YDoCjQdaOmxu/ll6l3n0UMKJggI70TWMH8iJxqWU/O
+         Ns1RIVcJ91KtE1l3+RFnXDyvHi2BhPavMqpj7mz6AEWO1HP8neea+i+oaBtUQzzSK1xV
+         sg6bSDymIT+ZR6B+SAYSBNfBxsqf1TMkZ8DMzrmyYzPK5XsPlhHTwprWy+tlUH5A2Pfj
+         o/x5+45iKVxGb6Qo+5NnGriO0MT5SgClWkA4BBWhEQftZrUra77sZdrQUodM+shLBPaI
+         ovNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUPzzhWDftfI7teD12I7NYQ7hxu4oBoV8SafJos7pA8UmjiCxJf+7SlyUB9adsX3+/iZk2tF+QB@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2fcurp0wGyn2vAjmb6JlnlkK/tKltjI7jkqxYl1sQaXEeV6VH
+	OiZb8wnxjlmKgwkJ+3pvv+E9gHSmHOoXXG/QjIboOgMNwXE32r53ZxYY55Xi0ujd9AKkO7a7Pua
+	nDQt1smnUoUbsV/L2HMiZHV/3E9pUFhDi18xJrg4O
+X-Gm-Gg: ASbGncvThqWel8IMYXtJ4wnh/wHUhzii5VNZZ/dg/cfCBKP2sXeCXThGeqbEQFHiyp9
+	ticnLeTsoXliMjqt9GOOZJ4yQaVYgjBtPQAJ8BuZhV8BRQHl1vEqgyVe4dvr7/i0Z2Hu9DmrHxd
+	A4Ka7nDtMnFuh3sjS2K7fANAPWev/vmgBugjl9FImhCSNJ/HKfqLQ/914A87xMpsPUrh/HI74VY
+	K2lBxifE/TBnimgPe+jZCf3KJUHxLS3n3RUXCr3K/2yZQZoE1dnXhVeEYrwQLxaqCNNseZV5NDl
+	TPtY3KM2pRBOWA4DO+O0ESNnRR887h+FsQ0r
+X-Google-Smtp-Source: AGHT+IH8YCYGV2S+juLRjDKyn40UwfPsqkcXdTOnoi2W85HbpkME845DVwjXxLdf4j6VbBFEphOGCaajGpmsgMuealQ=
+X-Received: by 2002:a05:6000:220b:b0:42b:2fb5:73c9 with SMTP id
+ ffacd0b85a97d-42b595bbaa9mr10050073f8f.58.1763372958607; Mon, 17 Nov 2025
+ 01:49:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251117080714.876978-1-ojeda@kernel.org>
+In-Reply-To: <20251117080714.876978-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Mon, 17 Nov 2025 10:49:06 +0100
+X-Gm-Features: AWmQ_bkzFWgbscghZI6cgaoGm_Ak95pUyQ19oba0Tx8hSJRrA-n1VAVT0JCDMZE
+Message-ID: <CAH5fLgjWFUwMaxPYGRR2YC8FCv9ex-YpM-VWrkVZ7Wgf8Qbtig@mail.gmail.com>
+Subject: Re: [PATCH] rust: allow `clippy::disallowed_names` for doctests
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Benno Lossin <lossin@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
+	rust-for-linux@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Rae Moar <raemoar63@gmail.com>, linux-kselftest@vger.kernel.org, 
+	kunit-dev@googlegroups.com, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Examples (i.e. doctests) may want to use names such as `foo`, thus the
-`clippy::disallowed_names` lint gets in the way.
+On Mon, Nov 17, 2025 at 9:07=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Examples (i.e. doctests) may want to use names such as `foo`, thus the
+> `clippy::disallowed_names` lint gets in the way.
+>
+> Thus allow it for all doctests.
+>
+> In addition, remove it from the existing `expect`s we have in a few
+> doctests.
+>
+> This does not mean that we should stop trying to find good names for
+> our examples, though.
+>
+> Suggested-by: Alice Ryhl <aliceryhl@google.com>
+> Link: https://lore.kernel.org/rust-for-linux/aRHSLChi5HYXW4-9@google.com/
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Thus allow it for all doctests.
-
-In addition, remove it from the existing `expect`s we have in a few
-doctests.
-
-This does not mean that we should stop trying to find good names for
-our examples, though.
-
-Suggested-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/rust-for-linux/aRHSLChi5HYXW4-9@google.com/
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/kernel/init.rs         | 3 +--
- rust/kernel/types.rs        | 1 -
- scripts/rustdoc_test_gen.rs | 2 +-
- 3 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-index e476d81c1a27..899b9a962762 100644
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -30,7 +30,7 @@
- //! ## General Examples
- //!
- //! ```rust
--//! # #![expect(clippy::disallowed_names, clippy::undocumented_unsafe_blocks)]
-+//! # #![expect(clippy::undocumented_unsafe_blocks)]
- //! use kernel::types::Opaque;
- //! use pin_init::pin_init_from_closure;
- //!
-@@ -67,7 +67,6 @@
- //! ```
- //!
- //! ```rust
--//! # #![expect(clippy::disallowed_names)]
- //! use kernel::{prelude::*, types::Opaque};
- //! use core::{ptr::addr_of_mut, marker::PhantomPinned, pin::Pin};
- //! # mod bindings {
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index 835824788506..9c5e7dbf1632 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -289,7 +289,6 @@ fn drop(&mut self) {
- /// # Examples
- ///
- /// ```
--/// # #![expect(clippy::disallowed_names)]
- /// use kernel::types::Opaque;
- /// # // Emulate a C struct binding which is from C, maybe uninitialized or not, only the C side
- /// # // knows.
-diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
-index 0e6a0542d1bd..be0561049660 100644
---- a/scripts/rustdoc_test_gen.rs
-+++ b/scripts/rustdoc_test_gen.rs
-@@ -208,7 +208,7 @@ macro_rules! assert_eq {{
-     #[allow(unused)]
-     static __DOCTEST_ANCHOR: i32 = ::core::line!() as i32 + {body_offset} + 1;
-     {{
--        #![allow(unreachable_pub)]
-+        #![allow(unreachable_pub, clippy::disallowed_names)]
-         {body}
-         main();
-     }}
--- 
-2.51.2
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
