@@ -1,61 +1,61 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331BC322A29
-	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 21:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE7932548A
+	for <patches@lists.linux.dev>; Mon, 17 Nov 2025 21:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763414656; cv=none; b=YqHS9J7QXWQ5zt5ANwvC9aHlWSoqfrJVz3D3Ja7vQj8C6cghAyzRrCYsHTRktYU6kikyh9Nb+E9jjEYVBRqDjbnr8+F3kEp5T7ovkETkbkzHImMYDaetiBly3f2i39VBXGzeddmdF4GiXBcd14USA8I2o8M5sb+ELfJ8oiP7cOo=
+	t=1763414833; cv=none; b=br1bSuVJaEbqctdib83PtAvYnpLhh/OOMVdZJR0xyBHWV8pU55cVaAuzk/dDcz8cwfu0NwQacwwbYSbDSsVAnqcyPogAbSszi9Sld9AplsWH3LJXo+g/SmrpLfSf+tzxDyp+oubKzIq5BqtnV0ovFIHRi0kQP9HxF1YbF4jNlYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763414656; c=relaxed/simple;
-	bh=G4tcmLmD4TGgP90V5T3RjMU67lyU6CakfI184VKf+7g=;
+	s=arc-20240116; t=1763414833; c=relaxed/simple;
+	bh=7fPlXJYjsSilCDIe8k2o+rTnQyrHViW9qFIFSlnjorI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GfSYaDflMKmi05qSFm59YkngrWMmi6iVsSPgch/NXjGlrIRPEwKjLfzhZx7MV7KTw5H43JF0cYY3rB+M64+ZT3EfU0Xf/Bbnm7pMfqbFTWG5s91w4Uf591NphJ6b6EEPijZmHjmR/yI2IVPsQ8QEdMXM5cDXkKOyKsZejnI7fhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RlB58u7z; arc=none smtp.client-ip=209.85.215.179
+	 To:Cc:Content-Type; b=mnEiHzsp+C9WXX+9TVtYmR84IhS1Owo7ezyk/YOuXk2+C+kBSsQM2Kc8asXIgv8TdDY5ffeLDH203E8heZEumCtF2Kgm1wq7UqM+AF/fvDOvtt5Lc9KcT+WnO8UPpaQAIeay1XbgDuk/xQKVDF59gin+qIAVIfpKHRXdAcAcxQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LBHFMk0W; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RlB58u7z"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b9da0ae5763so392581a12.0
-        for <patches@lists.linux.dev>; Mon, 17 Nov 2025 13:24:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LBHFMk0W"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b983fbc731bso344114a12.2
+        for <patches@lists.linux.dev>; Mon, 17 Nov 2025 13:27:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763414654; x=1764019454; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1763414830; x=1764019630; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G4tcmLmD4TGgP90V5T3RjMU67lyU6CakfI184VKf+7g=;
-        b=RlB58u7ztdQhj/d7yQtEKK2mmdeVftz3MZrOKt5CMot6KVA7q2YQl0q5gHk/fTYCHv
-         SJEzGvJiYyKfaiFeRlyWd/5w78m2TcT/zN0rPiPNh+3mQbV97WXAS1FwiZfmh6jvvo9g
-         5g+LZ0RI/CyFX/UaZfYXnsmokVz8LgLMM9AyenhM4FySdUWN373lyHf0o4bBOg6ByrrY
-         MKQeaJtDD6aHxxSOpFlMpauRyOm/35OUIprWAGTeiaOu0wKq1QsUB2AIo401wNsgudGD
-         X2/BMajkxRZ9swYyjoi1qInCA2/0YNH6cCvYDau2IVzJYZSSlGS9M1vdu4tbKUA2MY8E
-         JTNQ==
+        bh=7fPlXJYjsSilCDIe8k2o+rTnQyrHViW9qFIFSlnjorI=;
+        b=LBHFMk0W/h3UnDVJmZ9WTbvdIhB9ku4nvtPfzz0L097VGSKjqVV9lU6izinxZi+Sza
+         Lbx4rc4I4q6OqY+li72y48PBGdjsjrmEgNOK8cmFnX6jSqFXAQ1ZoTPe84bcomfaD4aA
+         McCjT0OOD9/1P4Qc2ezI4tma/lQ6ynIEtkq2ZaMZ4A5PDU0ZxJYn8d6uvBvkATU01Evg
+         cx2dC7XpWeVQY9DyBlGeODWko+EgXADUCAS+tcnJL734fNVnU8YQRgsHovzMuxILPRqU
+         0Th2HxtWpbDpz+U6CXQf+tM3rHH11kJuHFraB2HZvOxTMce/tQ8oWxwrvuUnujkf50Fj
+         rT7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763414654; x=1764019454;
+        d=1e100.net; s=20230601; t=1763414830; x=1764019630;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=G4tcmLmD4TGgP90V5T3RjMU67lyU6CakfI184VKf+7g=;
-        b=AqzWlkd0ZZSXb0Ho0NGBaP237SXwyMYYR7lMvFkNomiGB3ZoGtnVue7U0DAxV/p+3K
-         AAFLDBBj8jS/yCxGyLTPT8QefLuf4cfVlvSL8JTkQuG3QtLlaJSPcYmXj8vZovl40Mko
-         iY+GH6B7KI7/E5fYOkBMWa7iwc8GnuVT38DwHZfKqCMbiNg9RKvxBhq41mDnyAcivHMY
-         K6t2RVBMZVWadB21QKn/wLCvXvPmgqpncRJhX6bxvuRknH65rWbtgvq8EmUhaEmpeT3k
-         raBiA8mnIub8VSF2R4pBnGJBqDIKGbyJDGvNRwIXPZ+Q+oQ0esn6orJFTQ84W2+ZQo4U
-         JdSA==
-X-Forwarded-Encrypted: i=1; AJvYcCV5cuz0Mnmo48Zj66nxeBO35vHcXGMGlAR+uvDQqPQIGLWNq8jgac5IwpMmSl+BJbUj1BbPOavT@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNHvFOyXblF3wrgAOKf6HJdggNrphdI7mpAz+hVcJw22ooqU2Y
-	HkuNs9zmpos+x4rcUJoQe1ZJlDnkxkCUe2/QlzhPG+EbQXzlqMgZaWLiHQEVWJJSCZnf/CmzpAS
-	cgILbpxr3lOYy+q+I9TZkr+TKzsCNZUM=
-X-Gm-Gg: ASbGncsPhb0sz6DMlC64Aqj2BRh5eg44lLPsiSDk7sQ5LntB4oWHFxdsh7Mz+jZrmVk
-	b0h3KOnMeEDJVeobtgvvkaqGt+b2MJvboF47T/CK+abJbQqA6noQRykJqR+tJxCLfMcYHjKI8lM
-	XD59oGd0v8HpOEy9RMWHZ5oQMmyDuzT+0Flh+kOx0wmSVitNTuRMDEB5/f++ZkCK5UlpyNp8wNN
-	x9mGED5KTpcTzVbys4I/9ncnWqJTf4k78Q4DG44rmxcZIaDkfSfQa+dKFf66Z89r33EW1fF1A5j
-	AH+QUYa6/7VA/c+HOeZhFfjMMQO/OMcBwROATjUXGGPbg/DEo/lsx43ZgYKWbNY4DE8qHF74/8H
-	8NjU=
-X-Google-Smtp-Source: AGHT+IF5e9mxc2TlUqR/IuIzDsINCnyxiPRtbODMMA08p3mcq7TW15LDpP62M3hfNnb4H0E7VwOv9J4UgcE6VN2HjBo=
-X-Received: by 2002:a05:693c:2888:b0:2a4:3593:5fc6 with SMTP id
- 5a478bee46e88-2a4ab7784bcmr4270948eec.0.1763414654473; Mon, 17 Nov 2025
- 13:24:14 -0800 (PST)
+        bh=7fPlXJYjsSilCDIe8k2o+rTnQyrHViW9qFIFSlnjorI=;
+        b=Fmkt0y3TvPEWCjMb18akDNxsAVVFVvjdc5rszXCi0XYfrYdgvPJ1G5ioktGO3nTFRA
+         J/bFWXkA7k6jVbG3WBpKHuTFiTG5nEsaIgqDUyPtcqvQE1DBqjWPdv2dny/LkOq8Ikk1
+         iMcvLZxZ+yaG8hI2Yt53IU/uvSlHYM4U44rr629JvP1nNSD3C8vjGQtCUjZkCYkEP8cV
+         wPbnsa2ms1JGq6MFCDCrmASGU++b/1jT+kyioG4ZVIzlFNdwkmRPk7OzrPzpIcoUGxHt
+         Fe+Fxs34h8KHCeqxZONtzAQGtLbJk4d8+FgEjn7IZfxNHzlSX284T+sZbsvjd3ppcBV0
+         tfOw==
+X-Forwarded-Encrypted: i=1; AJvYcCXRZCDjOF8bsXrytM2nqZelOOKw+NHYmV4E1197Mia+M3rDQGDeUjhWmyX1fzq+5xgF8s2d30V/@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz3iSb+sdCszd6PUtjXvFrviaZWRT/W3WNBQ9t3tVQrwpAnjYGH
+	mRgMcYuEc5mDrvdqJgZ2KH4kbf2jJ34UxRr/g+NyGco7cbtdbr6DJbVYS6tLAh+mXBDiAWCvziG
+	FbsR5nmUQHbDJ2cY1tMWerjXVkJv1x9Q=
+X-Gm-Gg: ASbGncvlak0Invclpn7RIBi/MotKZkY62Q//Z21Uyl5KqKViH8LeiPFegZnkrz1e/Yx
+	ksUzJIZ8x68cyungtB0kLkHkNMl4f0i3Zyexnl4KZ0LVDZCJcbL1JOU3P9wrySvFCrJyx5DLRs+
+	vX7Q8mK28iytDrXcbd26DCGaBV2GVr80SpqVSGUrC4pYk9ch53hQPismi7cEA6/J5vUnQW3YPUl
+	I6Y91n4jxmX3TRMGV3mVfZQzCmrqGAw1MfkNU82fkqe3dL/pTsZpt5OfmHvWpX7liEeWOlLtqNC
+	IiVAHdYNotA7e6zpSyR8z1/N5tgKxCLmvuDOWAPIKyAhLorAHaGRAjPrGERyY6D9yrZKLSrFCVw
+	BOhLRshyyN8vTSQ==
+X-Google-Smtp-Source: AGHT+IEdsu/Qgk454YfNKkEm3dxgZd63f+Euy5hTycBzZybjRHcCjF7RFqpoUEYdE2tEOHrEkK6aqX8cPhz5W4io1bA=
+X-Received: by 2002:a05:7300:d0a7:b0:2a4:3593:5fc7 with SMTP id
+ 5a478bee46e88-2a4ab8a954cmr4688445eec.1.1763414830128; Mon, 17 Nov 2025
+ 13:27:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,9 +66,9 @@ References: <20251117080714.876978-1-ojeda@kernel.org> <CANiq72=-w2p8sQgUKYgPG3T
  <da4877d2-65fd-4ad2-ac31-68d55bda7c07@nvidia.com>
 In-Reply-To: <da4877d2-65fd-4ad2-ac31-68d55bda7c07@nvidia.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 17 Nov 2025 22:24:02 +0100
-X-Gm-Features: AWmQ_bn2evH1S1qhbERgt7QMqGn0X-tvVoVxDBYpFTLNd4sEA7R3dYLfxUq4l5U
-Message-ID: <CANiq72ki4nMTzTnLN2hH6XY_88=dsEYO8fxr=rUaDnxktPtarw@mail.gmail.com>
+Date: Mon, 17 Nov 2025 22:26:57 +0100
+X-Gm-Features: AWmQ_bmCoQhe0tDaYS23xSdPDegbNWBwAWpbPsNqHFk8KCfWm6zlxE8mP2aCibo
+Message-ID: <CANiq72mXN3U-oZDMfkCNTNLtvReZjROdgNmUDQ0H=kDP5FbopQ@mail.gmail.com>
 Subject: Re: [PATCH] rust: allow `clippy::disallowed_names` for doctests
 To: John Hubbard <jhubbard@nvidia.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Benno Lossin <lossin@kernel.org>, 
@@ -86,23 +86,18 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, Nov 17, 2025 at 10:13=E2=80=AFPM John Hubbard <jhubbard@nvidia.com>=
  wrote:
 >
-> Is rust-next a rebasing branch? I was going to request a non-empty commit
-> body, in order to make it more immediately clear what this does. Somethin=
-g
-> like:
->
 > The current set of disallowed names is inherited from clippy's defaults [=
 1],
 > which are "foo", "baz", and "quux". This may be extended via .clipy.toml,
 > which so far has no entries for disallowed names.
 
-What do you mean by "non-empty commit body"? The commit has several
-short paragraphs and mentions the `foo` example (precisely to hint at
-what the lint does).
+As for this paragraph, I am confused why we would want to add it.
 
-But, sure, I am happy to add a Link: tag to the lint -- I typically
-add those when enabling a lint (e.g. commit db4f72c904cb ("rust:
-enable `clippy::undocumented_unsafe_blocks` lint")).
+This isn't about extending the disallowed names or about how the lint
+works in general. It is just about disabling the lint entirely for
+doctests.
+
+So adding that paragraph would make it the commit more confusing.
 
 Cheers,
 Miguel
