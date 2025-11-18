@@ -1,61 +1,60 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12C43730D1
-	for <patches@lists.linux.dev>; Tue, 18 Nov 2025 16:21:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C084636C5A3
+	for <patches@lists.linux.dev>; Tue, 18 Nov 2025 16:26:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763482867; cv=none; b=An+n393kozbrYXm8joM92IIhhSvXeIzHV8Wq9mGeRRvPf0BjWJ8uuadcluE0xWs1P49kp2oCajTOu9OxnW1Se8fUZAYIl6EVTDIfH8Q9I4NqzJo8yiPdxwmZKTp/sGveQcHQ2FWU1pCfo3KyRRcfClypguf48hBYXxSNLocHd0Y=
+	t=1763483213; cv=none; b=AbE6H4CK/+C63rldc5d8G+YRhfdMJzYY3R6IS5zLWpnKrxo/NXPtJeAOZggtlt4ZXYGIB1UK3abXM/cyRzsKldoooW+dhZIozj7+7zK6BFaibk1U3rlf+NlS7Cm7hM3W4V/bvSToULy5j5cF+17qn8cImwDPzeBjBYvFq4j2Zfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763482867; c=relaxed/simple;
-	bh=faOfBULiO6Qp0WVmE8McFWL4GEnAP8ye2ZQBGtxMog4=;
+	s=arc-20240116; t=1763483213; c=relaxed/simple;
+	bh=FwtecA3cou5swpKk+7V9h8LfHIUHPkUFVZFloQEb+dQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ppA6T/AxTec+IlXdxYqrKcNcge/FkuoKeUwzyQbrwNGpgdXDdzM0LiPPmX/u61OxPCGHZli54iInadLGcVgfAknuUTSj22Iy68hmsQgJ7d84LAWhDqNZaPbWWqQkwFPEuUgepONDAuAZf6pOAa82Gr/UIFn3o4IRZzc0jmOmGYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aX9IRVj6; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=pC2sU3pUNayNb0Ts24SKJKkMGHDMFqjf7ZZJYmO5hPCYP0oHtw2KUN1Udoteju7CUdXuO51JDQAbXsNRTAB/Y2CTVd9LybHLCZrRqh9jP+ZNL8IFyS2gdjpoDmD3/p8jN53GTq5gjXKF8gC8GtXJ8aiBA2ZgN5Io8NIXL3yJQMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ug6ld80G; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aX9IRVj6"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7ba92341f07so263429b3a.1
-        for <patches@lists.linux.dev>; Tue, 18 Nov 2025 08:21:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ug6ld80G"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-295c64cb951so242935ad.0
+        for <patches@lists.linux.dev>; Tue, 18 Nov 2025 08:26:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763482865; x=1764087665; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1763483211; x=1764088011; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=faOfBULiO6Qp0WVmE8McFWL4GEnAP8ye2ZQBGtxMog4=;
-        b=aX9IRVj6E1yobXvmX3lmf/RBill7IpzUrv8soa7CX8ijCCIkdol5Ai8laU6Usqin81
-         QO9Uq8xdCdB04X1trCBZ5jO5WluRsByh1Ddunrcxd4a8nJ0+q5t4U/vtvSou2FEK5/Jn
-         /Qd4ccn7NDfV6XzzEOKv+005X2OOTTl2N7SNGlDKssd7IsDqpxv9QJKR5jN1Av3h8BfJ
-         NDasYceTAVLcN6L8OmKuIpP6oqw/lkehUeuKmyQ+iUn+GLf/ftuNaYXatOZWy7vWKihR
-         55WnwNoE00TtPKahb7tcuvQtqq+QcRFpsZaOUOTwy/IFdkb7BlD2Z8G/DlwWBpZaHg6w
-         MxQQ==
+        bh=FwtecA3cou5swpKk+7V9h8LfHIUHPkUFVZFloQEb+dQ=;
+        b=Ug6ld80Gedkwb6YqPq2VRY3+0HoPs0ZVFH06MJqlAUgtTUyE/lv6gMF8rR+gXAx6ta
+         tzhrnO0npfKO76BvyvKsSXdBXDCf4Zh13FIPylz3KQjISBYSiZCP5kORvnSnehzqG4r8
+         pFQBDZj3mZxMatQJm7/Qh18+Ibrb064qxctU8KDSefp4AF1qTQi+7/EYPkMMgFnMxbut
+         3eUCHYHG+Jg5DdWGd1q6aOWh64C1m+gWiLlOIhU8XpFXuaQWa6Qxn4FOOlpu350vZV27
+         MhE6LJaruZ+fux/rnQCcmby/sp4UD0yw1wcZrAGDWOSNE6/uWv7f40DPPB2LdrDMBecA
+         +v7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763482865; x=1764087665;
+        d=1e100.net; s=20230601; t=1763483211; x=1764088011;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=faOfBULiO6Qp0WVmE8McFWL4GEnAP8ye2ZQBGtxMog4=;
-        b=WVJ7QF5lWB4lgXnF3AtpEx90sdJZA5r+UVhSbo7aKSlc1+iRMDxZSOc53wtM/lxQns
-         xPAT3kIkIhxRkgFsCGokvMRSmxZPgjVSKDu5azKEc7H2YLYgxg/HHyCJZ6aHSPE2iZmF
-         n+rxRawRDDx4OQ0eg444JwTc3MGMFsmaTXc+MNozZB5kJ3UNeHZIFciQ6tZPAAsZE58U
-         ZbH8L34pJtSfHKXj/RxGYp+rwRmT20VoerAiewr9eMSq2HrqeeJUvEeSZBrqUhqWIr3x
-         r/yabRZZY+xPbBDcfuwZGtbDECqbFPRwA+OMFMsaX5IRYqODpvaa/m22xT3xOnN48Ze5
-         9dHw==
-X-Forwarded-Encrypted: i=1; AJvYcCUy5/QyuHynrOhxC9MICDIBAAHLMin3GHx3VnubVH4BtqpDbqnv1PO6SatzoGnwN1U+TTkJ4rVi@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2JAbk13UWNzTmhA8WmnMwDzSmD5RAth6GuuGsUZoiBAv7Bjlt
-	GwRoLk5QktVSWs09iAg9RTRkP6DbviOiApBbXGbROodysuVy4YY2kV6DTlszmRu7dcVj/Acb1mF
-	LBzkV9gd/HFHmcEsgOaRsVV6SvJ9uyZk=
-X-Gm-Gg: ASbGncv8wFKhAsPz9LMWAc2sUyEnt5ZOfWgTxM68gQS9LTT/zRBbV5jnckZvYBDNm9Y
-	BmR9c8krYEv+QqjJS3emPcEfCHUKn9V/jwolSAI5qgauyQtbqI6OLnQYY4ZnWR8LUHfJyJnm6xA
-	gKC2BG+iVynPu6/HGqe7ri+twSq9I6ivitBEPlTiz+c8YDsg5Ts7Zbd9gXPu4TRd9ziCHicCId5
-	AMZ2aTWcyJXPIiN8gm5BKTfS77TqIzoAaH9ScDHqlLUsnuLjMdUtwhFu6bqJeqC4TnTUZJzje+1
-	kEtyPyxdgcEk2vTOC9dwDfYUnNNonmVuaHCQKlV622Wjk8nvAd6VbEOxb/7Mm9nWnBwwHOxnQEc
-	qyfAaJLBYztnImg==
-X-Google-Smtp-Source: AGHT+IFVRdNsejBm6GKYlYca1Ngn1yJHjVdLnMU26Ia9C7PKBAIRtq1oGRAnFqiiyXtONzw3uw69CCzFP8m6+uCM7y0=
-X-Received: by 2002:a05:7022:ea46:10b0:11b:65e:f33 with SMTP id
- a92af1059eb24-11c78ddf633mr1026663c88.1.1763482864497; Tue, 18 Nov 2025
- 08:21:04 -0800 (PST)
+        bh=FwtecA3cou5swpKk+7V9h8LfHIUHPkUFVZFloQEb+dQ=;
+        b=tSVQajlZESQHews5AwoppSvBzL3DfeOhYZo6lvAzGWwfZyUV4WYt1HX5n9fBQsn19+
+         5x1/2k8gUgyBm170lk6EE8ojlRWDR2XyQ2xR1mlTUBmnMIvqLOS+tu336tfOU7wWgnQG
+         4qXc4hg2u8yjw8KGbFW/wRBFkAk7TVg7zVTwsXBdEawgFxoId1/P8zKYK9E8gSpltjSi
+         0xl6ksjFmxXhU1Uprv3pjB1/+OmfE+ovY4Cn/SukDdPjHpq/b05HVco3yNrNu/XjrKrN
+         HKxcYmHR6NjjUUHb9SPeDgxqRFTYDbf7XwUaVlc1PacO9GKL3yu+FnmeUw7RDPDpk8cK
+         Urag==
+X-Forwarded-Encrypted: i=1; AJvYcCU3fWYjeNv8v4yZ3vRScpB8rAsVQ4JUzARtAX39u+BYfelAmEkT7lTFWbNQDT3Ouy8ziy2k186+@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz1Pehd0Nfk4hV9XBLHBzOAK2OvOlGiNaaPVVGzHhWgVEOIQwzN
+	K2mmf32EvJ5RHTVIov60hjs8Zyt6BDH2yYnBqRnJDnNEPGtAWPf+8rpJr3LS9e52srx3/fqg8L/
+	lIg+XtFn7tDhoMeAllNuX4gtGHi05/WznFvQTwBh+U+VyTwKQZnIQT7Ml
+X-Gm-Gg: ASbGncvjqL/gd2s0dYaN18mSG4CGgsujOXDi9w1e6+MIUg5GeTYSxSihzCHhI5oM/3V
+	duU9GZwf7gK9ZXD3cOIJDLEG+rfM9YJbbyrANSLV4u9qkafq8TWtao+l7lsN2IibAGI1L9vF7hP
+	Fk68bpQ3vlzNEtDb5XmpQ0mPqKv8IfUbgdSbBLzeulH53AaM/aJ7a31Q59VDWOlHnacyt4NfDpQ
+	+U70NkvvtoZCEe0iDpbuOISOBtwgI3Ql+P8ClGwkr8Ycv5Uk5BW3F4EsKqHGPd+NB8gDRI1ARF/
+	UII=
+X-Google-Smtp-Source: AGHT+IEttx3J/mC4gE4KpQ4cPRjj+rRjuHjvkWN8RJrR+j19dbMNf6uYkFpkl0xwq9jCxBWF224ugSC9ScsaeVYU4f0=
+X-Received: by 2002:a05:7022:4387:b0:119:e56b:c1e1 with SMTP id
+ a92af1059eb24-11c88f6e153mr87381c88.12.1763483210529; Tue, 18 Nov 2025
+ 08:26:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,12 +63,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20251110131913.1789896-1-ojeda@kernel.org> <20251118145741.1042013-1-gprocida@google.com>
 In-Reply-To: <20251118145741.1042013-1-gprocida@google.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 18 Nov 2025 17:20:50 +0100
-X-Gm-Features: AWmQ_bnVmxUteFT3dr5VfpkhZiAQKyOG1ub40EZh79PVRCrhks9ZqnFaWxh_hDc
-Message-ID: <CANiq72nsU1YH3ihkaTiVjF_YUZY2nSKbc7j3xLTcHDC-4-Y5iQ@mail.gmail.com>
+From: Sami Tolvanen <samitolvanen@google.com>
+Date: Tue, 18 Nov 2025 08:26:13 -0800
+X-Gm-Features: AWmQ_bkpM4OnhqoM9DwukpapoYV-fxdR_ddUQfMp-wv3ty5dsyWJZ2MH8TZJaP0
+Message-ID: <CABCJKuc0ZwN23MX4mV=vVne1giR=iWKSvqFg1oKMqxUcnOWiCg@mail.gmail.com>
 Subject: Re: [PATCH v2] gendwarfksyms: Skip files with no exports
-To: Giuliano Procida <gprocida@google.com>, Sami Tolvanen <samitolvanen@google.com>
+To: Giuliano Procida <gprocida@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	linux-modules@vger.kernel.org, linux-kbuild@vger.kernel.org, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -82,27 +81,38 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 18, 2025 at 3:58=E2=80=AFPM Giuliano Procida <gprocida@google.c=
+Hi Giuliano,
+
+On Tue, Nov 18, 2025 at 6:58=E2=80=AFAM Giuliano Procida <gprocida@google.c=
 om> wrote:
+>
+> Hi.
+>
+> > Thus do the last one: don't attempt to process files if we have no symb=
+ol
+> > versions to calculate.
 >
 > This results in the -T foo option being ignored in the case there were
 > no symbols. I think it would be better, consistent with the
 > documentation and expectations, for the file to be produced empty.
->
+
+The kernel build doesn't produce empty symtypes files because symbol
+versioning is skipped for (non-Rust) object files that have no
+exports, and before rustc 1.91, we never ran gendwarfksyms for Rust
+object files that didn't have exports.
+
 > This means that just the for loop should be skipped, say by adding the
 > condition there with &&.
->
+
+No, I think the current behavior is correct, we shouldn't produce empty fil=
+es.
+
 > If you disagree, then please update the documentation to match the new
 > behaviour.
 
-Sounds reasonable. If there were users relying on that, then it may be
-best to keep the behavior as it was. But up to the maintainers what
-would make the most sense here of course (moving Sami to the To:).
+I re-read the documentation and it doesn't really state how the -T
+flag behaves if the tool is used to process a file with no exports.
+While this doesn't impact kernel builds, a patch to clarify the
+documentation is always welcome!
 
-Since the commit is in mainline and it seems you already thought about
-the solution, I imagine a patch would be welcome.
-
-Thanks!
-
-Cheers,
-Miguel
+Sami
