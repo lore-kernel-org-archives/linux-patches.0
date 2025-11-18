@@ -1,113 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C59242D79;
-	Mon, 17 Nov 2025 23:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF012AD35
+	for <patches@lists.linux.dev>; Tue, 18 Nov 2025 00:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763420658; cv=none; b=ardhTcvnehUptKC1dEyoEE0oVluZuFLFFrk9nurkMzls5RmB5CqNvicKxHLxXB60BuHob+GCOXnO1GRHrVQTTeTiY8Kj+/80rAqIpCLWJ1T8/l3LLAn2yJpkSEooi7YAJuejB/EPxNeiRQE8AXAL6pH9LH3MfLOlT22XmZtVe0U=
+	t=1763425684; cv=none; b=KNW26u909QmDxnofHf2hSGfzOK5r/8tbKYDf+AiM8Vf1oDJIFFDazCZEQsklGpgAoWxflAnimedbbc4OGVozEDfeKZDATDBVrR3GafHTZlP7HsSU3Mio3Bv8pgtxyAArxujPfJ7JPHwnLuxorE0OC0rOLV0qBaT0TCeg7teinyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763420658; c=relaxed/simple;
-	bh=WDy4B5MpxbqhpxY50CYIosUO/OJPo/Xo2FnrKtc4l60=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Q+W5XDnEFHVzuZugauy7B0EDn2Y8bkHX1lvQESX15QYBptn80xPi6VaobFLIuiYfu5R3ykS5A9lg1VUJvhBy1prX2XqvMfQjwSVyzoRSfQ8uOqHJ58U3gKk6P2XF296Ieu7v1/H0wapEmfxAkmPV9Ty0pkYMKPWbRiGbFDcoAZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AN5kg5me; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763425684; c=relaxed/simple;
+	bh=+8oNPNB9Rc4fJQykTNInDqBGbchJPu9APD58id/v5/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gLsu/qvTM5LOsLJo2MAHKUqPYHdUWmbRAHnWQcFg4ofP5YOzTcttF1k7IeTYr0bga7Pg9FEtgqHzAwn7Mo22hJeVkPcugYzGzBycAzh6oJxuIHbNrhiQI2HX7NP3IoVDxDiV9Q0Wck0XAWyqIyvEOf3mresBZc/CgXldp9vQjEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UHjWshKK; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AN5kg5me"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95830C4CEF1;
-	Mon, 17 Nov 2025 23:04:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763420657;
-	bh=WDy4B5MpxbqhpxY50CYIosUO/OJPo/Xo2FnrKtc4l60=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=AN5kg5meQGtxz+cRYWriS1/NMxGsJvAXW55WuzhlF2cIbIvnOE+HfQBZhFGA6vVZ4
-	 8/j7sqTlUgXCEkiA3Qi/pKj3WUAx/Us/2n94lIn3wYzKfhM2j3rDD0E4hU/ugNra1U
-	 e3JvfcVnnLQ9t1rQkOJk0h5o9kvhwTrStYRikWEfhVTI1h4tfVRfXtFwEeGs7mQZXZ
-	 pwjJpJkNsBuQTkHXYq3skt71fl1OAxKlWY8to3xGrBMmVMjJ2Srn8IvlU8YJ20RMSW
-	 cedp5OC03/dJ83o3lt14fTLY9VdwdAcgsudVwaBOibWtfmn+3Q+gDXmr78dtHQNYLQ
-	 KD43b9+WrkRhw==
-Date: Mon, 17 Nov 2025 17:04:14 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: joro@8bytes.org, rafael@kernel.org, bhelgaas@google.com,
-	alex@shazbot.org, jgg@nvidia.com, kevin.tian@intel.com,
-	will@kernel.org, robin.murphy@arm.com, lenb@kernel.org,
-	baolu.lu@linux.intel.com, linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
-	kvm@vger.kernel.org, patches@lists.linux.dev,
-	pjaroszynski@nvidia.com, vsethi@nvidia.com, etzhao1900@gmail.com
-Subject: Re: [PATCH v5 4/5] iommu: Introduce iommu_dev_reset_prepare() and
- iommu_dev_reset_done()
-Message-ID: <20251117230414.GA2537490@bhelgaas>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UHjWshKK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763425682; x=1794961682;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=+8oNPNB9Rc4fJQykTNInDqBGbchJPu9APD58id/v5/Q=;
+  b=UHjWshKKBxHVmBfu2pWqKrMvzg05Rp/C8+byMSmoRNVbA9m2HOzMm6qb
+   ChoK6iGHv8kvlV+U8wcZDE2GiLrcB4wsNTVnWN/zso88JYEnIzHiFHgdr
+   teT5qmJ/cf/0m8QeP1wIsIHLl4suOzwvsBCdbLhxbTvDyoGUJIUcKx+6l
+   DUaLad1gDK6i+Kp83lxePiFUuUCi/FSSrHsgfflQge6EdJp0OBlYk9AOA
+   hoE37HbGpOFg1xIzjY51Z3zgE9rivuWQ+JK6PAfu/l0H0JR3OOW7K3Zvr
+   ps72g3cR1PhtoB9X9JyY4SHBdqdJ3vS/FrDq7t24Px8jqVTxy57vkDE1F
+   A==;
+X-CSE-ConnectionGUID: iuVqRHEKQ2aZZuOwJCH/ew==
+X-CSE-MsgGUID: Kc25z0r+QCKAlBLwZ/HOQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82827584"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; 
+   d="scan'208";a="82827584"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2025 16:28:02 -0800
+X-CSE-ConnectionGUID: kOzx7zz4QCKzZpZED4uTcA==
+X-CSE-MsgGUID: Xy7QuMeXSPaSpH6a1GyooA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; 
+   d="scan'208";a="191039469"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2025 16:28:01 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com,
+	christophe.jaillet@wanadoo.fr
+Subject: [PATCH] fs/resctrl: Consider sparse masks when initializing new group's allocation
+Date: Mon, 17 Nov 2025 16:42:45 -0800
+Message-ID: <abbbb008bc09d982d715e79d3b885c10f92c64e0.1763426240.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <28af027371a981a2b4154633e12cdb1e5a11da4a.1762835355.git.nicolinc@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 10, 2025 at 09:12:54PM -0800, Nicolin Chen wrote:
-> PCIe permits a device to ignore ATS invalidation TLPs, while processing a
-> reset. This creates a problem visible to the OS where an ATS invalidation
-> command will time out. E.g. an SVA domain will have no coordination with a
-> reset event and can racily issue ATS invalidations to a resetting device.
+A new resource group is intended to be created with sane defaults. For
+a cache resource this means all cache portions the new group could possibly
+allocate into. This includes unused cache portions and shareable cache
+portions used by other groups and hardware.
 
-s/TLPs, while/TLPs while/
+New resource group creation does not take sparse masks into account. After
+determining the bitmask reflecting the new group's possible allocations the
+bitmask is forced to be contiguous even if the system supports sparse masks.
+For example, a new group could by default allocate into a large portion of
+cache represented by 0xff0f, but it is instead created with a mask of 0xf.
 
-> The OS should do something to mitigate this as we do not want production
-> systems to be reporting critical ATS failures, especially in a hypervisor
-> environment. Broadly, OS could arrange to ignore the timeouts, block page
-> table mutations to prevent invalidations, or disable and block ATS.
-> 
-> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
-> block ATS before initiating a Function Level Reset. It also mentions that
-> other reset methods could have the same vulnerability as well.
-> 
-> Provide a callback from the PCI subsystem that will enclose the reset and
-> have the iommu core temporarily change all the attached domain to BLOCKED.
-> After attaching a BLOCKED domain, IOMMU hardware would fence any incoming
-> ATS queries. And IOMMU drivers should also synchronously stop issuing new
-> ATS invalidations and wait for all ATS invalidations to complete. This can
-> avoid any ATS invaliation timeouts.
-> 
-> However, if there is a domain attachment/replacement happening during an
-> ongoing reset, ATS routines may be re-activated between the two function
-> calls. So, introduce a new resetting_domain in the iommu_group structure
-> to reject any concurrent attach_dev/set_dev_pasid call during a reset for
-> a concern of compatibility failure. Since this changes the behavior of an
-> attach operation, update the uAPI accordingly.
-> 
-> Note that there are two corner cases:
->  1. Devices in the same iommu_group
->     Since an attachment is always per iommu_group, disallowing one device
->     to switch domains (or HWPTs in iommufd) would have to disallow others
->     in the same iommu_group to switch domains as well. So, play safe by
->     preventing a shared iommu_group from going through the iommu reset.
->  2. SRIOV devices that its PF is resetting while its VF isn't
+Do not force a contiguous allocation range if the system supports sparse
+masks.
 
-Slightly awkward.  Maybe:
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+Not a stable candidate because nobody has complained about this and it is
+not a serious issue but instead an optimization. Discovered during code
+inspection as part of review of:
+https://lore.kernel.org/lkml/c5807e73e0f4068392036a867d24a8e21c200421.1761464280.git.christophe.jaillet@wanadoo.fr/
 
-  2. An SR-IOV PF that is being reset while its VF is not
+Tested on system that supports sparse masks.
+---
+ fs/resctrl/rdtgroup.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-(Obviously resetting a PF destroys all the VFs, which I guess is what
-you're hinting at below.)
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 0320360cd7a6..41ce4b377af4 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -3383,11 +3383,12 @@ static u32 cbm_ensure_valid(u32 _val, struct rdt_resource *r)
+ {
+ 	unsigned int cbm_len = r->cache.cbm_len;
+ 	unsigned long first_bit, zero_bit;
+-	unsigned long val = _val;
++	unsigned long val;
+ 
+-	if (!val)
+-		return 0;
++	if (!_val || r->cache.arch_has_sparse_bitmasks)
++		return _val;
+ 
++	val = _val;
+ 	first_bit = find_first_bit(&val, cbm_len);
+ 	zero_bit = find_next_zero_bit(&val, cbm_len, first_bit);
+ 
+-- 
+2.50.1
 
->     In such case, the VF itself is already broken. So, there is no point
->     in preventing PF from going through the iommu reset.
-
-> + * iommu_dev_reset_prepare() - Block IOMMU to prepare for a device reset
-> + * @dev: device that is going to enter a reset routine
-> + *
-> + * When certain device is entering a reset routine, it wants to block any IOMMU
-> + * activity during the reset routine. This includes blocking any translation as
-> + * well as cache invalidation (especially the device cache).
-> + *
-> + * This function attaches all RID/PASID of the device's to IOMMU_DOMAIN_BLOCKED
-> + * allowing any blocked-domain-supporting IOMMU driver to pause translation and
-> + * cahce invalidation, but leaves the software domain pointers intact so later
-
-s/cahce/cache/
