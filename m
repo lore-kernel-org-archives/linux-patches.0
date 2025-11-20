@@ -1,120 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3153446C2;
-	Thu, 20 Nov 2025 20:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD7B1624C5
+	for <patches@lists.linux.dev>; Thu, 20 Nov 2025 21:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763670174; cv=none; b=H6nRS94uXcb0J/0xOarkaBG+CWB7ksZZIlnuIf3ZdYZIqlBozlESpWO6E1BkNXhGhXwjor3BzOw5mi4jSBM9uUmn0CkTvrwbm4iptuAXiHfU3DNmyTWVq8Q81nRZ1CkT8mVmEMSVnhnkPc0LfYmyUnKmy250Jr6NZ0h+QG70x3Q=
+	t=1763673243; cv=none; b=ixYX/EItjAehSmWHpTxtrgle8ePxiWTIxWbst8A5gPGjHlFnQQIfVZpnBvbggTp9CBSIilaLW2LR8B8lFqG2EKUuokNLykwCiOf2eBEVmOpnC5GNMHKw0avH1Lp33Kmcal8Ad08YjCmsvAyxhgj4H2DpcrTpWTxOPXIrOO+11oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763670174; c=relaxed/simple;
-	bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ZBmuFY7703VsjCkXUIc1BALFw5vo6622l5U0MlxNHUoicIOsXKCkcCIt51ougyr/tT6np0fcHhJltEAvKucVvaNKEAJV8UqV4PEd/2zA5mGCRIuVUmJnFYGp+w0+VVGo7M4qirKsnpbDfdZC118xeYUUALwLfnxeSan69qabRQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kl30p+in; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763673243; c=relaxed/simple;
+	bh=cQMX/usI8gqcSln2UFa8v99XXRwzaizYb3BPi10FYFo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yrj8igUeIfw1fOpNMRxB0EvnEcqrYeVBbrIQD9rI34+4Jo6wmax+e+2P53kVZJzmQs0jvU6Dkc/Wh3VIgS61tMY9wZtt9ILddRMxRVXQAU9Y4rny/r24I2sj9qnObH9mA4sNIRnFiSVZbJKUNkLAN5gkI31gZ3tmxnVUGn3y92Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UlCQH59/; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kl30p+in"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C1AC4CEF1;
-	Thu, 20 Nov 2025 20:22:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763670173;
-	bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Kl30p+inpq2mHmQcIL1RIejwVOf55PNSFWxKiy5AgFAw/5LDhRWN/OLdTMC3fq3YI
-	 ZxAXY+LWkYbfVhfqfeKF2DRBIjtd5NdP/lSmn5qcW0pamzMnqFNAJELUq44JP7ki+8
-	 vPuY0E5MoLAK6y2P9jLGQTGm93D14nVs2fjgMiGWQ5LcOI0RqEkBI1gcAhh4wmv7kz
-	 YW4JfvrQdtBYdBhckq8YYf9QQcgVHukTSwznADVn0EMQRGqZDiBgReBSwTobNn5oXZ
-	 kl/k36C0WL68eI3LuU8WP5wQc0MXra9BaSpLlucIVlJ/DcjWfpXgx3Gm7TqhbOn+lW
-	 NYxR5RmTfd9+A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 20 Nov 2025 13:22:46 -0700
-Subject: [PATCH] backlight: aw99706: Fix unused function warnings from
- suspend/resume ops
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UlCQH59/"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-59583505988so1876432e87.1
+        for <patches@lists.linux.dev>; Thu, 20 Nov 2025 13:14:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763673238; x=1764278038; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4d7IAZGUxK1m7h2GDkMHE2QpE3zLGipSmtQ9os7xNBI=;
+        b=UlCQH59/Y32GTeplAN4HnqCyhVrNeN380OxNEtKWGWqpgV+YO3d8dwr4ww5DpBqEN0
+         E1Em5PTbVsxYQWGqtxCqBBawl5Tno9QQaHhsmxJxvXjkpMMwipz9JZ4itMpwEFUHFxxy
+         XypjWlX9zVaTz7wqzJXKpu/Or4Xwbmm3WmSoz02OdziWfwMoYPRtsxuOydqyUFcHTPBh
+         CPcHB9qet4EBbtHWzbUzHU3l9iiHyzkVAuV8HvTzJhiemkGRxaoO+9KWsfyBlZ0keJ6g
+         Yl7I+qp5PvK47sTbkIH+aoH5nzgFcv+D/uLX3hZ8dwqnv3tMjXdEd2e6zVE5j8n5mUs7
+         YcJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763673238; x=1764278038;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4d7IAZGUxK1m7h2GDkMHE2QpE3zLGipSmtQ9os7xNBI=;
+        b=U0z6iSy1LumBBqh5P0uxaFTVbkG2yZc6jPyldHoNuFDB5W7WP/giilkJIjTOGPbL4P
+         BzlFUuvSKAVfewHLw2JtDL3lQZ5n7LTh+7oAxsQ69AZA3QRMgNeZHoFG+nzcwovuB5Rm
+         BHhv+d12vEsIcxQfUB/EPeO6wuOUh8I22P2tKfVWFOh7mhgYlbOw7ibaB7CkvHRik5kO
+         WEyjvzs3zHMfH9RXJp6AimulvETV0mCUSPEntm1E0i+OW6oHXqJL7tVluB6nNwuhM4AS
+         JzABpCilBZAbXK1VEPJVC4jX424iBzUEK4tj5lMTPz4CpNbV/S2U6OClc8nQVMTdif+A
+         vY1g==
+X-Gm-Message-State: AOJu0YzE/em+8Gj40ZHdAC9dk4S2KicQaomOAH7qkyyFb6fi9p3CinQU
+	fUqBTJ4UIsVwsQ8O1pjE1awGgrMKXFmeD0+xoPcZi0LRAFyAxwUaV+PE
+X-Gm-Gg: ASbGncuBReXrLOqcuuBDLUV05/1laWVuWxEf5tQn5ljx1Zm1HUQKzaJYYAjMomLSpDv
+	lTuL/81rd8qqqPstwgF9v1g1bQOqMuzjZJJcVm3C7cbYFZXMZXi7v2Wwv35NIglASFHD9ii9kgy
+	o2QdnKa02gCdXP7M9HFSA42Yn3ivcXpZYh5ATG7IzrdgB0cWM59myMyVKgABZWvVGpuHE6l4uu7
+	NcVoRqo1FPq6AM2tFyyPdro+cZ8eLE2Nug2DqL7usH6v/PbxstKFsiNQzT/6eYP8ss5iU1/C/sB
+	FH0rDrV/fHFhjlEMG+jicvL5lVvEA/4AFEDuuOZdwbSePd4XjaneMVcwwL39z9x+aaj/TIE7I/W
+	qTlqapPk/BJHWk7nCth1BD+BGzgezumVvujg9BTW3QJAU2zHbzfb6kFWOmRUEOUNKv4a1I3QLrK
+	2Y2WWDu6Mi
+X-Google-Smtp-Source: AGHT+IGhpshH5PO4QTdDzSqAVgMyMOZ968ZCv3rtjofzqeUqpZ5T2qu6vbZdUcrZQBx0KF/2QP0meA==
+X-Received: by 2002:a05:6512:1293:b0:595:8a7d:87cc with SMTP id 2adb3069b0e04-5969ea2237dmr1408150e87.16.1763673238128;
+        Thu, 20 Nov 2025 13:13:58 -0800 (PST)
+Received: from localhost ([109.167.240.218])
+        by smtp.gmail.com with UTF8SMTPSA id 2adb3069b0e04-5969dbc5964sm991716e87.70.2025.11.20.13.13.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Nov 2025 13:13:57 -0800 (PST)
+From: Askar Safin <safinaskar@gmail.com>
+To: Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	kernel-janitors@vger.kernel.org
+Subject: [PATCH] fs/splice.c: trivial fix: pipes -> pipe's
+Date: Thu, 20 Nov 2025 21:13:16 +0000
+Message-ID: <20251120211316.706725-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251120-backlight-aw99706-fix-unused-pm-functions-v1-1-8b9c17c4e783@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJV4H2kC/yWNywrCMBAAf6Xs2YUktA31V8RDutm08RFLN1Gh9
- N+NehwYZjYQXiMLHJsNVn5GiY9UQR8aoNmliTH6ymCU6bQ2CkdH11uc5ozuNQxW9RjiG0sqwh6
- XO4aSKNeIYGBjbUetZ+qh9paVq/p7nc5/ljJemPJ3APv+AYV/7xCNAAAA
-X-Change-ID: 20251120-backlight-aw99706-fix-unused-pm-functions-fe2775c4dec6
-To: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>, 
- Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>, 
- Pengyu Luo <mitltlatltl@gmail.com>, Junjie Cao <caojunjie650@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2470; i=nathan@kernel.org;
- h=from:subject:message-id; bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJnyFbO9UhiOJ9/hyQ2e4vlUSDUp6szMO6c+3Vyg4rxJb
- V7SJYHkjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRkHWMDEsnPbvjHiKul/Ym
- zEjVUmvBnxurJPMXCDy67bay+qxM0BFGhq28S8+l8V2Qv3/piaFg1rLPzzq4p15u694v8CBB+o2
- 1IycA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-When building for a platform without CONFIG_PM_SLEEP, such as s390,
-there are two unused function warnings:
+Trivial fix.
 
-  drivers/video/backlight/aw99706.c:436:12: error: 'aw99706_resume' defined but not used [-Werror=unused-function]
-    436 | static int aw99706_resume(struct device *dev)
-        |            ^~~~~~~~~~~~~~
-  drivers/video/backlight/aw99706.c:429:12: error: 'aw99706_suspend' defined but not used [-Werror=unused-function]
-    429 | static int aw99706_suspend(struct device *dev)
-        |            ^~~~~~~~~~~~~~~
-
-SET_SYSTEM_SLEEP_PM_OPS, used within SIMPLE_DEV_PM_OPS, expands to
-nothing when CONFIG_PM_SLEEP is not set, so these functions are
-completely unused in this configuration.
-
-SIMPLE_DEV_PM_OPS is deprecated in favor of DEFINE_SIMPLE_DEV_PM_OPS,
-which avoids this issue by using pm_sleep_ptr to make these callbacks
-NULL when CONFIG_PM_SLEEP is unset while making the callback functions
-always appear used to the compiler regardless of configuration. Switch
-to DEFINE_SIMPLE_DEV_PM_OPS for aw99706_pm_ops to clear up the warning.
-
-Additionally, wrap the pointer to aw99706_pm_ops in pm_ptr() in
-aw99706_i2c_driver to ensure that the structure is completely eliminated
-in configurations without CONFIG_PM.
-
-Fixes: 88a8e9b49ee8 ("backlight: aw99706: Add support for Awinic AW99706 backlight")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Askar Safin <safinaskar@gmail.com>
 ---
- drivers/video/backlight/aw99706.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/splice.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/backlight/aw99706.c b/drivers/video/backlight/aw99706.c
-index b7c1d24b17ac..df5b23b2f753 100644
---- a/drivers/video/backlight/aw99706.c
-+++ b/drivers/video/backlight/aw99706.c
-@@ -440,7 +440,7 @@ static int aw99706_resume(struct device *dev)
- 	return aw99706_hw_init(aw);
- }
+diff --git a/fs/splice.c b/fs/splice.c
+index f5094b6d0..d338fe56b 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1498,7 +1498,7 @@ static int pipe_to_user(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
  
--static SIMPLE_DEV_PM_OPS(aw99706_pm_ops, aw99706_suspend, aw99706_resume);
-+static DEFINE_SIMPLE_DEV_PM_OPS(aw99706_pm_ops, aw99706_suspend, aw99706_resume);
- 
- static const struct i2c_device_id aw99706_ids[] = {
- 	{ "aw99706" },
-@@ -461,7 +461,7 @@ static struct i2c_driver aw99706_i2c_driver = {
- 	.driver = {
- 		.name = "aw99706",
- 		.of_match_table = aw99706_match_table,
--		.pm = &aw99706_pm_ops,
-+		.pm = pm_ptr(&aw99706_pm_ops),
- 	},
- };
- 
+ /*
+  * For lack of a better implementation, implement vmsplice() to userspace
+- * as a simple copy of the pipes pages to the user iov.
++ * as a simple copy of the pipe's pages to the user iov.
+  */
+ static ssize_t vmsplice_to_user(struct file *file, struct iov_iter *iter,
+ 				unsigned int flags)
 
----
-base-commit: 1704e206cb98c5e43af1483e3b07450055a31008
-change-id: 20251120-backlight-aw99706-fix-unused-pm-functions-fe2775c4dec6
-
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
+base-commit: fd95357fd8c6778ac7dea6c57a19b8b182b6e91f
+-- 
+2.47.3
 
