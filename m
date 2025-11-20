@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEF6301716;
-	Thu, 20 Nov 2025 12:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D91270541;
+	Thu, 20 Nov 2025 12:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640521; cv=none; b=B1wuFexkfwRxBleQ8dn38zMptkptdyeXRVk7SVoYSn12mIlN7F4yWjbfnoI2LN1aCWehk/+y7dUmyH9mMwop3Ue6m9k5j6BjeOXs6UPUkUb2pHSSwReAr4ytzVoLEOYnTpn0yjNBWZ6l19yO87CgeyCxIUfu1ecOfpGcyZOuuxI=
+	t=1763640522; cv=none; b=BB+c/DCSehScU4BV2hBcFo0UWilaGyi2dPkJwX9zFGafKX9U3Fzg0s6L6O2kh27vlsfrcIRDjBPRpqZW+bPlJFRVRn90Vz6Bdry6W+kl4QDpa+CVGJXJVkKwEcc1JlMaC1OP1nSdAmPlcWUZMrRd9/NxHVTFctTSXAV9kqk+KoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763640521; c=relaxed/simple;
-	bh=ni2W4UAQnFQ2jAFq1mxr3FDeIT0IHfWxq3lcKF2ZCGY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cTQrlWUxB1gjyz5mJWt8jPtFnZHuUQWagIR0HYd2H9HDbr4A0sarJZl6Fo1q490oaz/qVHGbW/hS6zbzBU5Gy+uFKf7K1ACTSGRZpdI5NwXVkIilGTkE3bsPSkS3R6O80hHtbtvZFsNafV9TcmPnXHnbZvmYGpdwcFPfS1pRUaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fxyWepUU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763640522; c=relaxed/simple;
+	bh=805vRHwxQfqCRldiuSJO2HRMXlve6C1ugXw7UP48feo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DVuIcauFU+lH+GaE5vc0Sov/t4w+ycsDGLG//YhWPl8/x3pJCM5LeY2wrjEVZRq/hVY+RorECpO3J8MdRMKh4+LbT5e6WfrWK/zFr6eJLxfEHBLKt4Jg9yFgMfWx9h7fbOA9nDH1NWDjujS7F88redx2iidYqTjG3Vjv0FWf3Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bo9uQocT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fxyWepUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B046C4CEF1;
-	Thu, 20 Nov 2025 12:08:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bo9uQocT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53F2C116D0;
+	Thu, 20 Nov 2025 12:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640520;
-	bh=ni2W4UAQnFQ2jAFq1mxr3FDeIT0IHfWxq3lcKF2ZCGY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=fxyWepUUsSAqZx4Bee/fZGU+hBLQY1PP8bhikw7FNQxkT7B6cC3gN9XibfpLbOIOy
-	 FK8iQiLkFvnClyfE8TCUyUIBjgtL58itWzLDR4xrgGP3W44JNYtrCyNhv0orfFLCk/
-	 XXPFoTjw6WUM3lshFnXZCSevqD4q5TJvs3iSq/Sm1lrKIZ2nkGESvyMOuMmKw7W/DO
-	 LJ46Cf632E80ogBM8azFXOPgTGXQSewHOiEo/NFrnyEBn4hkhMPNN7+cEZSC/Xpd4z
-	 qCfO3mHe+gZYGR9BwTdyXlwMU7F3OII7qw97sZx+w1RLSmgIlEq2KZ2MTf1bY7JB98
-	 yvprU8wI8R+ww==
+	s=k20201202; t=1763640521;
+	bh=805vRHwxQfqCRldiuSJO2HRMXlve6C1ugXw7UP48feo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bo9uQocT7avg23DjjkbNHaP7H4dmjA/YeFhmrSSG6FthFrdoMY+fxiylq18t7Zwxk
+	 J60u5ZcaU98zwJg0lneLupsroPwVhDJLnQJ13wbEyonExbku9Fv/PKHbl5OCo+YxyQ
+	 vVfdIPtLHomZTFea9jH0h/lP42uEtIu/02C7TKiFwweI7KZM+liWWBQryhoS1ZXGFB
+	 Ev31V2BnmTy0uYT5Ux8s5tMOy6umvnzjGhX00vFHnVkvJkZNviWKxkJt/qw3Aneqvs
+	 eGaeHBYcju4OzzV8gMrkH3jXHLus2FVncwPd/pHKc/aJ6pnjVBvwroPwiZEU6PBPOM
+	 zItJmum8ARjog==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Baojun Xu <baojun.xu@ti.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Alvaro Gamez Machado <alvaro.gamez@hazent.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kailang@realtek.com,
-	sbinding@opensource.cirrus.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.17] ALSA: hda/tas2781: Add new quirk for HP new projects
-Date: Thu, 20 Nov 2025 07:08:10 -0500
-Message-ID: <20251120120838.1754634-1-sashal@kernel.org>
+	michal.simek@amd.com,
+	linux-spi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.4] spi: xilinx: increase number of retries before declaring stall
+Date: Thu, 20 Nov 2025 07:08:11 -0500
+Message-ID: <20251120120838.1754634-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
+References: <20251120120838.1754634-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,228 +54,379 @@ X-stable-base: Linux 6.17.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Alvaro Gamez Machado <alvaro.gamez@hazent.com>
 
-[ Upstream commit 7a39c723b7472b8aaa2e0a67d2b6c7cf1c45cafb ]
+[ Upstream commit 939edfaa10f1d22e6af6a84bf4bd96dc49c67302 ]
 
-Add new vendor_id and subsystem_id in quirk for HP new projects.
+SPI devices using a (relative) slow frequency need a larger time.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20251108142325.2563-1-baojun.xu@ti.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+For instance, microblaze running at 83.25MHz and performing a
+3 bytes transaction using a 10MHz/16 = 625kHz needed this stall
+value increased to at least 20. The SPI device is quite slow, but
+also is the microblaze, so set this value to 32 to give it even
+more margin.
+
+Signed-off-by: Alvaro Gamez Machado <alvaro.gamez@hazent.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20251106134545.31942-1-alvaro.gamez@hazent.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile my findings:
+## COMPREHENSIVE ANALYSIS: spi: xilinx: increase number of retries
+before declaring stall
 
-## COMPREHENSIVE ANALYSIS
+### 1. COMMIT MESSAGE ANALYSIS
 
-### 1. COMMIT OVERVIEW
+The commit message clearly describes a real-world problem:
+- **Problem**: SPI devices using slow frequencies need more time before
+  being declared stalled
+- **Specific case**: Microblaze CPU at 83.25MHz performing 3-byte
+  transaction at 625kHz SPI frequency
+- **Evidence**: Author empirically determined the value needed to be at
+  least 20; chose 32 for safety margin
+- **Tags**: Has "Reviewed-by" and "Link" tags, but **NO "Fixes:" or "Cc:
+  stable@vger.kernel.org" tags**
 
-**Mainline Commit**: 7a39c723b7472b8aaa2e0a67d2b6c7cf1c45cafb
-**Date**: November 9, 2025
-**Author**: Baojun Xu (Texas Instruments - TAS2781 chip manufacturer)
-**Subject**: "ALSA: hda/tas2781: Add new quirk for HP new projects"
-**Present in**: v6.18-rc6
+### 2. DEEP CODE RESEARCH
 
-### 2. WHAT THIS COMMIT DOES
+#### A. HOW THE BUG WAS INTRODUCED:
 
-The commit adds 9 new PCI quirk entries to the Realtek HD-audio codec
-driver:
+The stall detection mechanism was originally introduced in **commit
+5a1314fa697fc6** (2017-11-21) by Ricardo Ribalda. That commit added
+stall detection logic with `stalled = 10` as a retry counter to detect
+when the Xilinx SPI core gets permanently stuck due to unknown commands
+not in the hardware lookup table.
 
-**6 HP Merino models** (0x103c:0x8ed5 through 0x8eda):
-- HP Merino13X, Merino13, Merino14, Merino16, Merino14W, Merino16W
-- Mapped to `ALC245_FIXUP_TAS2781_SPI_2` (TAS2781 via SPI bus)
+The original commit message explained:
+> "When the core is configured in C_SPI_MODE > 0, it integrates a lookup
+table that automatically configures the core in dual or quad mode based
+on the command (first byte on the tx fifo). Unfortunately, that list
+mode_?_memoy_*.mif does not contain all the supported commands by the
+flash... this leads into a stall that can only be recovered with a soft
+reset."
 
-**3 HP Lampas models** (0x103c:0x8f40 through 0x8f42):
-- HP Lampas14, Lampas16, LampasW14
-- Mapped to `ALC287_FIXUP_TAS2781_I2C` (TAS2781 via I2C bus)
+The original commit **was tagged with "Cc: stable@vger.kernel.org"** and
+was successfully backported to all major stable branches (verified
+present in 6.6.y, 6.1.y, 5.15.y, 5.10.y, 4.19.y).
 
-### 3. TECHNICAL ANALYSIS - HOW THIS WORKS
+#### B. DETAILED CODE ANALYSIS:
 
-**The Infrastructure (already exists in 6.17 stable)**:
+The code is in `xilinx_spi_txrx_bufs()` function at line 303:
 
-The TAS2781 fixup infrastructure was introduced in commit aeeb85f26c3bbe
-on July 9, 2025, as part of a major Realtek driver refactoring. I
-verified it exists in the current 6.17.8 stable tree:
+```c
+rx_words = n_words;
+stalled = 10;  // ← Original value too low for slow configurations
+while (rx_words) {
+    if (rx_words == n_words && !(stalled--) &&
+        !(sr & XSPI_SR_TX_EMPTY_MASK) &&
+        (sr & XSPI_SR_RX_EMPTY_MASK)) {
+        dev_err(&spi->dev,
+            "Detected stall. Check C_SPI_MODE and C_SPI_MEMORY\n");
+        xspi_init_hw(xspi);
+        return -EIO;  // ← Transaction fails
+    }
+    // ... read data from RX FIFO ...
+}
+```
 
-- **Fixup functions** at lines 3016-3031:
-  - `tas2781_fixup_tias_i2c()` - sets up I2C-connected TAS2781 chips
-  - `tas2781_fixup_spi()` - sets up SPI-connected TAS2781 chips
+**What the buggy code does:**
+- Initializes `stalled` counter to 10
+- In the polling loop, decrements `stalled` on each iteration when no
+  data is available yet
+- If counter reaches 0 and RX FIFO is still empty (but TX FIFO not
+  empty), declares a hardware stall
+- Returns -EIO, causing the SPI transaction to fail
 
-- **Fixup enum entries** at lines 3704, 3706:
-  - `ALC287_FIXUP_TAS2781_I2C`
-  - `ALC245_FIXUP_TAS2781_SPI_2`
+**Why it's wrong:**
+- The value 10 was chosen empirically in 2017, but it doesn't account
+  for **very slow SPI frequencies combined with slow CPUs**
+- With 625kHz SPI clock and 83.25MHz CPU, the legitimate data transfer
+  time can exceed 10 polling loop iterations
+- This causes **false positive stall detection** - the hardware is
+  working correctly, just slowly
 
-- **Fixup implementations** at lines 5979-5990 calling
-  `comp_generic_fixup()`
+**The race condition:**
+- CPU polling loop runs much faster than slow SPI hardware can transfer
+  data
+- Counter expires before legitimate data arrives in RX FIFO
+- Hardware appears "stalled" when it's actually just slow
 
-**What happens without this patch**:
+#### C. THE FIX EXPLAINED:
 
-The `comp_generic_fixup()` function (line 2884) sets up component
-bindings between the HDA codec driver and the TAS2781 amplifier driver.
-Without the correct quirk entry mapping the subsystem ID to the fixup:
+The fix changes line 303 from:
+```c
+stalled = 10;  // Old: Too short for slow configurations
+```
+to:
+```c
+stalled = 32;  // New: More margin for slow hardware
+```
 
-1. The kernel won't recognize these HP laptop models
-2. The TAS2781 audio amplifier chips won't be properly initialized
-3. **Audio output (speakers) will not work** on these devices
-4. Users will have non-functional hardware
+**Why this solves the problem:**
+- Gives slow SPI transactions 3.2x more time before declaring a stall
+- Author tested with real hardware (microblaze + 625kHz SPI) and found
+  20 was sufficient
+- Chose 32 to provide additional safety margin
+- Still provides stall detection for genuine hardware hangs (from the
+  original 2017 issue)
 
-This is identical to how CS35L41 amplifiers are handled (lines
-2969-2992) - without quirk entries, the hardware doesn't work.
+**Subtle implications:**
+- Genuine hardware stalls will take slightly longer to detect (32 loop
+  iterations vs 10)
+- This is acceptable because: (1) genuine stalls are rare, (2) the delay
+  is still very short (microseconds to milliseconds), (3) avoiding false
+  positives is more important for reliability
 
-### 4. BUG CLASSIFICATION
+### 3. SECURITY ASSESSMENT
 
-**Type**: Hardware enablement / Device ID addition
-**Severity**: HIGH - Complete loss of audio output functionality
-**Impact**: Users with these specific HP laptop models (new 2025
-releases) will have no working speakers
+**No security implications.** This is a timing/reliability issue, not a
+security vulnerability. No CVE, no memory safety issues, no privilege
+escalation.
 
-### 5. STABLE KERNEL RULES ASSESSMENT
+### 4. FEATURE VS BUG FIX CLASSIFICATION
 
-This commit falls squarely into the **ALLOWED EXCEPTION CATEGORIES**:
+**This is definitively a BUG FIX:**
+- Fixes incorrect hardcoded timeout value
+- The original value causes false stall detection on slow hardware
+- Subject uses "increase" rather than "fix", but the intent is clearly
+  to fix a problem
+- **NOT a feature addition** - doesn't add new functionality, just
+  corrects an inadequate constant
 
-**Category 1: NEW DEVICE IDs**
-- ✅ Adding subsystem IDs (PCI vendor:device pairs) to existing driver
-- ✅ The driver (Realtek ALC269) already exists in stable
-- ✅ The fixup infrastructure (TAS2781 support) already exists in stable
-- ✅ Only the device IDs are new - trivial one-line additions
+**Does NOT fall under exception categories** (device IDs, quirks, DT,
+build fixes), but doesn't need to - it's a straightforward bug fix.
 
-**Category 2: QUIRKS and WORKAROUNDS**
-- ✅ Hardware-specific quirks for real devices
-- ✅ Fixes broken/non-functional hardware (speakers don't work without
-  this)
-- ✅ Standard pattern used throughout the ALSA subsystem
+### 5. CODE CHANGE SCOPE ASSESSMENT
 
-**Comparison to established precedent**:
-- Similar to commit 1036e9bd513bd "ALSA: hda/realtek: Add quirk entry
-  for HP ZBook 17 G6" (explicitly marked Cc: stable)
-- Pattern matches dozens of other quirk additions already in stable
-  trees
-- Same author (Baojun Xu) has submitted multiple similar commits that
-  were backported
+- **Files changed**: 1 (drivers/spi/spi-xilinx.c)
+- **Lines changed**: 1 (1 insertion, 1 deletion)
+- **Complexity**: Trivial - changes a single integer constant
+- **Scope**: Extremely localized - only affects stall detection timeout
 
-### 6. CODE ANALYSIS
+**Assessment**: Minimal scope, surgical fix. This is the ideal type of
+change for stable trees.
 
-**Change scope**: MINIMAL and SURGICAL
-- **9 lines added**, 0 lines removed
-- Single file modified: `sound/hda/codecs/realtek/alc269.c`
-- Only touches the quirk table - a static data structure
-- No logic changes, no API changes, no new functions
+### 6. BUG TYPE AND SEVERITY
 
-**Regression risk**: EXTREMELY LOW
-- Pure data additions to a lookup table
-- Cannot affect existing hardware (different subsystem IDs)
-- Only affects users with these exact HP laptop models
-- If something goes wrong, only affects these 9 specific device
-  configurations
-- The fixup code being called is already tested and in use by 50+ other
-  devices
+- **Type**: False positive error detection / incorrect timeout
+- **Manifestation**: SPI transactions fail with -EIO error on slow
+  hardware configurations
+- **Severity**: **MEDIUM**
+  - Not a crash, panic, or data corruption
+  - Not a security issue
+  - Causes service disruption: SPI devices fail to work properly
+  - Affects specific configurations (slow SPI + slow CPU)
+  - User-visible impact: Device failures, spurious error messages
 
-### 7. TESTING AND VALIDATION
+### 7. USER IMPACT EVALUATION
 
-**Mainline stability**:
-- Committed November 9, 2025 to v6.18-rc6
-- Clean commit with proper sign-offs
-- Author is from Texas Instruments (TAS2781 chip vendor)
-- Part of ongoing hardware support maintenance
+**Who is affected:**
+- Users of Xilinx SPI controllers (common in AMD/Xilinx FPGA-based
+  embedded systems)
+- Particularly affects:
+  - Microblaze soft-core CPU users
+  - Systems with slow SPI clock frequencies (< 1MHz)
+  - Embedded systems with constrained CPU speeds
+- Examples: Industrial control systems, FPGA-based embedded devices,
+  custom hardware with Xilinx IP cores
 
-**Similar commits already backported**:
-- Multiple TAS2781 quirk additions already in stable trees
-- Pattern matches hundreds of similar quirk additions
-- The ALSA maintainer (Takashi Iwai) approved and signed off
+**Impact scope:**
+- **Moderate user base**: Xilinx SPI is used in FPGA designs but not as
+  widespread as generic SPI controllers
+- **High impact for affected users**: Complete SPI failure for those
+  with slow configurations
+- **Verifiable issue**: Author has real hardware that triggers this bug
 
-### 8. USER IMPACT
+**Call analysis**: The `xilinx_spi_txrx_bufs()` function is the main
+data transfer function called for every SPI transaction on affected
+hardware. It's in the critical path for all SPI operations.
 
-**Affected users**:
-- Owners of HP Merino/Lampas series laptops (2025 models)
-- These are new commercial/consumer HP products
-- Without this patch: **Complete audio failure** (speakers don't work)
+### 8. REGRESSION RISK ANALYSIS
 
-**Benefits of backporting**:
-- Enables working audio hardware on new devices
-- Users can run stable kernels without losing functionality
-- Prevents need for custom patches or mainline-only kernels
+**Risk level: VERY LOW**
 
-**Risk of NOT backporting**:
-- Users with these laptops forced to use mainline kernels (less stable)
-- Bug reports and support burden for distributions
-- Poor user experience with "stable" kernels
+**Reasons:**
+1. **Minimal change**: Single constant value modification
+2. **Direction of change**: Increasing a timeout is inherently safer
+   than decreasing it
+3. **Tested**: Author has tested with real hardware
+4. **Reviewed**: Ricardo Ribalda (the original stall detection author!)
+   reviewed it
+5. **Backward compatible**: Doesn't change behavior for properly
+   functioning hardware
+6. **Limited scope**: Only affects stall detection timing, not data path
+   logic
 
-### 9. DEPENDENCY ANALYSIS
+**Potential risks:**
+- Genuine hardware stalls detected slightly later (32 iterations vs 10)
+  - Mitigation: Still quick enough (microseconds), rare occurrence
+- None identified that would break working systems
 
-**Dependencies**: NONE - all infrastructure exists
-- TAS2781 fixup functions: ✅ Present in 6.17 stable (verified at lines
-  3016-3031)
-- Fixup enum values: ✅ Present in 6.17 stable (verified at lines 3704,
-  3706)
-- Component binding infrastructure: ✅ Present (comp_generic_fixup at
-  line 2884)
+### 9. MAINLINE STABILITY
 
-**Backport complexity**: TRIVIAL
-- Patch applies cleanly to 6.17 stable (already backported to other
-  stable trees)
-- No context changes needed
-- Standard quirk table addition
+- **Commit date**: November 7, 2024 (appears as 2025 but likely 2024)
+- **Testing evidence**:
+  - Reviewed-by: Ricardo Ribalda (original stall detection author)
+  - Author tested with real hardware (microblaze + slow SPI)
+- **Mainline presence**: In v6.18-rc6 (recent mainline development
+  kernel)
+- **Time in mainline**: Very recent - approximately 2 weeks if November
+  2024
 
-### 10. MAINTAINER SIGNALS
+**Concern**: This is quite recent. Ideally would benefit from more time
+in mainline (several weeks to months) before backporting.
 
-- ❌ No explicit "Cc: stable@vger.kernel.org" tag
-- ❌ No "Fixes:" tag (this enables new hardware, doesn't fix a
-  regression)
-- ✅ But: Fits established pattern of hardware quirks routinely
-  backported
-- ✅ Already backported to multiple stable trees (commits 05c33655cef92,
-  a612312d5c015)
-- ✅ Stable maintainer (Sasha Levin) already picked this up for
-  backporting
+### 10. DEPENDENCY CHECK
 
-### 11. FINAL ASSESSMENT
+**No dependencies identified:**
+- Change is self-contained (single constant)
+- Doesn't depend on other commits
+- Doesn't require API changes
+- The stall detection code (commit 5a1314fa697fc6 from 2017) is already
+  present in all stable branches
+- Will apply cleanly to any stable branch that has the original stall
+  detection code
 
-This commit is a **textbook example** of hardware quirk additions that
-stable kernel rules explicitly allow. It:
+**Verified**: The original stall detection code is present in:
+- ✅ stable/linux-6.6.y
+- ✅ stable/linux-6.1.y
+- ✅ stable/linux-5.15.y
+- ✅ stable/linux-5.10.y
+- ✅ stable/linux-4.19.y
 
-1. **Fixes real hardware** (non-functional speakers on new HP laptops)
-2. **Minimal code change** (9 data-only lines)
-3. **Zero regression risk** (only affects 9 specific device IDs)
-4. **Infrastructure exists** (all TAS2781 support already in place)
-5. **Matches established pattern** (hundreds of similar quirks in
-   stable)
-6. **High user benefit** (enables critical hardware functionality)
+### 11. PRACTICAL VS THEORETICAL
 
-The fact that it lacks explicit stable tags is irrelevant - this type of
-hardware enablement is routinely backported as part of normal stable
-tree maintenance. The commit is already being picked up by stable
-maintainers for multiple trees.
+**Highly practical:**
+- Author encountered this bug with real hardware (microblaze @ 83.25MHz,
+  SPI @ 625kHz)
+- Provides specific reproduction case
+- Not a theoretical race or corner case
+- Users with slow SPI configurations will hit this reliably
+
+### BACKPORT DECISION ANALYSIS
+
+#### Alignment with Stable Kernel Rules:
+
+1. **Obviously correct**: ✅ **YES**
+   - Trivial change (increase timeout constant)
+   - Reviewed by the original stall detection author
+   - Logic is straightforward
+
+2. **Fixes real bug**: ✅ **YES**
+   - False stall detection on slow hardware
+   - Author has reproducible case
+   - Affects real users
+
+3. **Important issue**: ⚠️ **MODERATE**
+   - Causes SPI transaction failures
+   - NOT a crash, security issue, or data corruption
+   - Affects specific configurations (slow SPI/CPU)
+   - Severity: Service disruption for affected users
+
+4. **Small and contained**: ✅ **YES**
+   - Single line change
+   - No architectural changes
+   - Minimal scope
+
+5. **No new features**: ✅ **YES**
+   - Pure bug fix
+   - No new APIs or functionality
+
+6. **Clean application**: ✅ **YES**
+   - Should apply cleanly to all stable branches
+   - Original code is present in all major LTS kernels
+
+#### Considerations:
+
+**In favor of backporting:**
+- Extremely low regression risk (1 line, timeout increase)
+- Fixes real-world bug with reproducible case
+- Reviewed by original code author
+- Small, obviously correct change
+- Helps users with slow SPI configurations
+- Original stall detection is already in stable branches
+
+**Against backporting or requiring caution:**
+- No "Cc: stable@vger.kernel.org" tag (maintainer didn't explicitly
+  request it)
+- No "Fixes:" tag (though logically fixes commit 5a1314fa697fc6)
+- Very recent in mainline (limited testing time)
+- Moderate severity (not critical crash/security/corruption)
+- Affects niche configurations (slow SPI on Xilinx hardware)
+
+#### Risk vs Benefit Trade-off:
+
+**Benefit**:
+- Enables SPI functionality for slow Xilinx configurations
+- Prevents spurious transaction failures
+- Minimal user-visible change (just works better)
+
+**Risk**:
+- Virtually none - increasing timeout is safe
+- Genuine stalls detected marginally slower (acceptable)
+
+**Trade-off**: **Favorable** - High benefit for affected users,
+negligible risk
+
+### FINAL ASSESSMENT
+
+This commit represents a **textbook stable backport candidate** from a
+technical perspective:
+- Trivial, obviously correct change
+- Fixes a real bug affecting actual users
+- Zero risk of regression
+- Small, contained scope
+
+However, it has **two procedural concerns**:
+1. **No explicit stable tag**: The maintainer/author didn't tag it with
+   "Cc: stable@vger.kernel.org", suggesting they may not have considered
+   it critical enough for backporting
+2. **Very recent**: Limited testing time in mainline (approximately 2
+   weeks)
+
+The absence of the stable tag is notable because the **original stall
+detection commit (5a1314fa697fc6) DID have the stable tag**, indicating
+the original author (Ricardo Ribalda) understood stable backporting.
+Ricardo also reviewed this current patch, so his review implies approval
+of the technical approach.
+
+Despite the lack of an explicit stable tag, the technical merits
+strongly support backporting:
+- It's an adjustment to an already-backported feature
+- The change is trivial and safe
+- It fixes a real problem for a subset of users
+- Regression risk is negligible
+
+The commit should be backported to **all stable branches that contain
+the original stall detection code** (5a1314fa697fc6), which includes at
+minimum: 6.6.y, 6.1.y, 5.15.y, 5.10.y, and 4.19.y.
+
+**Recommendation**: This would benefit from a few more weeks in mainline
+for additional testing, but can be safely backported. The lack of a
+stable tag is the only significant concern, but the technical merits
+outweigh this procedural consideration.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/spi/spi-xilinx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 28297e936a96f..d1b9f43c883c2 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6683,6 +6683,15 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8e60, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed5, "HP Merino13X", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed6, "HP Merino13", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed7, "HP Merino14", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed8, "HP Merino16", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed9, "HP Merino14W", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8eda, "HP Merino16W", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8f40, "HP Lampas14", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x103c, 0x8f41, "HP Lampas16", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x103c, 0x8f42, "HP LampasW14", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x1032, "ASUS VivoBook X513EA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
+index d59cc8a184846..c86dc56f38b45 100644
+--- a/drivers/spi/spi-xilinx.c
++++ b/drivers/spi/spi-xilinx.c
+@@ -300,7 +300,7 @@ static int xilinx_spi_txrx_bufs(struct spi_device *spi, struct spi_transfer *t)
+ 
+ 		/* Read out all the data from the Rx FIFO */
+ 		rx_words = n_words;
+-		stalled = 10;
++		stalled = 32;
+ 		while (rx_words) {
+ 			if (rx_words == n_words && !(stalled--) &&
+ 			    !(sr & XSPI_SR_TX_EMPTY_MASK) &&
 -- 
 2.51.0
 
