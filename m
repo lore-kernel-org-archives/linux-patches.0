@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50BC32E756;
-	Thu, 20 Nov 2025 12:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178E520459A;
+	Thu, 20 Nov 2025 12:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640523; cv=none; b=BS/NOAmWKsKRaA4RgmFSzCFAX2S0e+k/Tpmh6xgqSCUm2SVNw44o1hYz5L0dZ5+ydTwYZwzXFfcO+6whp8fRl5E3myDQD/0EcrZfiLoOnpDEq6ZQyfBBgVWKTLeX+wj+UsfDTPL8oR24atwVEIOrR1vErgdi2KPOS/Nu9MXH8Sw=
+	t=1763640527; cv=none; b=tLtsRIEvlCLyOsrlRFtDA1aIcaXgnuSqJExqCVzd1X8oNtIOwjqIc/QY6KFTkCDKMPjLvNwCp2gizkG4t0Vg3zxSjyAmHubEtV4B2EpVjZWWXsIyUTugbhv0kXE54W30tDhp2a1OeQhOvakuPpiZD8EDcp9UMmhSk8aOD8FYSxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763640523; c=relaxed/simple;
-	bh=vLa+qy4ZLWkLdMe1PHH9YtPVGT3bCcAStpSHwrqt5O8=;
+	s=arc-20240116; t=1763640527; c=relaxed/simple;
+	bh=j7Co4OxTEZ4CrlT1U0i7c2HLKp7Y8nlM3jKDiCoJiZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZJPoRQo10T3WmY8m9bjSDPGzM2DaNBW7aSGX3WhJKW7LLPOrsI8XkIA8yU+PE4rNs8rpRZOGsQC0hI2V8vxMs3LjE9VbULkzGZEtz7k3MxAjBO+fqY4JcEFkBwT5eugrAU2t83M5ckNIw2DJsQXyGKtYEjHxkH1XifKrp7FXnRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uRHbNrOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N45FC0xkiFdhopUVSX34Vnd0sKOPws+eZz6B7lTiK7icpU+OLxJeV5ch6zNbbh054XxlSvppwyp9L812bf/hjJ5+5a7GDwvgZgyiV1l0/t8hCgdZ0x6GozU8cjLdNb6+Cm57wwYbsBI2UY86DmsavOX1U2qfO2NT8EXYAjgk8x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kKHrVLkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uRHbNrOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C57C19421;
-	Thu, 20 Nov 2025 12:08:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kKHrVLkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79CBC4CEF1;
+	Thu, 20 Nov 2025 12:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640523;
-	bh=vLa+qy4ZLWkLdMe1PHH9YtPVGT3bCcAStpSHwrqt5O8=;
+	s=k20201202; t=1763640524;
+	bh=j7Co4OxTEZ4CrlT1U0i7c2HLKp7Y8nlM3jKDiCoJiZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRHbNrORNiipQBtlZrlehZQ6I1fU6aj8ccsr+dYE4vvbULXDsLL+hiEaWSD6yaGTQ
-	 vinyDX1Zb3xCtmV4oJD3oKchJ9mtb5/PIvE1+G16yBAGcMEvuYLTBsBVjTp/cvSJaj
-	 Xe5US+Pa/RURdRsyZjxDkJ6D+XEi5tfUgBs9S15PBV61aMorQ/aj/oIBzK7JvQtTaJ
-	 2sag/TrtnrSqayO+rLD63J2bJ6qbPk57nhF2pxOrbLoeRWrpi2Xv0XVt/NvOSQGhbk
-	 0fiuIramw1R9v/P+GoMgdH7CInMPIZFbsyV8/rAABVo0IOX7zgHeRvrz5/cgSPMuJ2
-	 4GJDSbLMzBhMA==
+	b=kKHrVLkh4V4Z3glqLlzug0jZzMyR5Z29NrsC/RnwCpr0mZz/zdQTX+nGDhn5wFzdH
+	 DkFUudXcYjzPYjGg02WN2niSdwoJ+iGHOT3D1um7fgDojIyvjmnChEeHx1tAW+vISt
+	 tEZ9XaLV2RHIQJEsIpQtseJKLxNyGdI2lROJc9eTcgWvEW1+mPxZtGG5oh+1ywJsyv
+	 7npbGQjqiNViIZnNlEwfksa7n/hT0o+zdF8VxAn86w84KcuDzamVTMKJAymPGlHu/q
+	 fFYUf7ztNww5DxkvkbHXBao4jpNSt+BrAtLl1V3L8K/s1wu8YppYwD+Y4lQNLClLQo
+	 NSYx1UiXgaAgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Niranjan H Y <niranjan.hy@ti.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mstrozek@opensource.cirrus.com,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.17] ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
-Date: Thu, 20 Nov 2025 07:08:12 -0500
-Message-ID: <20251120120838.1754634-3-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] ACPI: MRRM: Fix memory leaks and improve error handling
+Date: Thu, 20 Nov 2025 07:08:13 -0500
+Message-ID: <20251120120838.1754634-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
 References: <20251120120838.1754634-1-sashal@kernel.org>
@@ -51,311 +50,179 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niranjan H Y <niranjan.hy@ti.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit eb2d6774cc0d9d6ab8f924825695a85c14b2e0c2 ]
+[ Upstream commit 4b93d211bbffd3dce76664d95f2306d23e7215ce ]
 
-"struct sdca_control" declares "values" field as integer array.
-But the memory allocated to it is of char array. This causes
-crash for sdca_parse_function API. This patch addresses the
-issue by allocating correct data size.
+Add proper error handling and resource cleanup to prevent memory leaks
+in add_boot_memory_ranges(). The function now checks for NULL return
+from kobject_create_and_add(), uses local buffer for range names to
+avoid dynamic allocation, and implements a cleanup path that removes
+previously created sysfs groups and kobjects on failure.
 
-Signed-off-by: Niranjan H Y <niranjan.hy@ti.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251110152646.192-1-niranjan.hy@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This prevents resource leaks when kobject creation or sysfs group
+creation fails during boot memory range initialization.
+
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20251030023228.3956296-1-kaushlendra.kumar@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me do a comprehensive analysis of this commit.
+The following analysis evaluates whether the commit "ACPI: MRRM: Fix
+memory leaks and improve error handling" should be backported to stable
+kernel trees.
 
-## COMPREHENSIVE ANALYSIS
+### 1. Comprehensive Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+**A. Problem Description**
+The commit addresses multiple defects in the `add_boot_memory_ranges()`
+function within `drivers/acpi/acpi_mrrm.c`:
+1. **Memory Leak (Critical):** The original code used `name =
+   kasprintf(GFP_KERNEL, "range%d", i)` inside a loop to generate
+   kobject names. `kobject_create_and_add()` makes its own copy of the
+   name. The original pointer `name` was never freed, leading to a
+   memory leak for every memory range entry every time the system boots.
+2. **Missing Error Checks:**
+    - The code failed to check if the parent kobject `pkobj` was
+      successfully created (NULL check missing).
+    - The code failed to check if the child kobject `kobj` was
+      successfully created before passing it to `sysfs_create_groups()`.
+      If `kobj` were NULL (e.g., OOM), `sysfs_create_groups()` would
+      dereference it, causing a crash.
+3. **Incomplete Cleanup:** If an error occurred during the loop (e.g.,
+   one range failed to create), the function returned an error code but
+   left previously created kobjects and sysfs groups valid and attached,
+   leading to a partially initialized and potentially unstable state.
 
-**Subject:** ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
+**B. Code Research & Fix Verification**
+- **Leak Fix:** The commit replaces `kasprintf` (dynamic allocation)
+  with `char name[16]` and `scnprintf` (stack allocation). The format
+  string is "range%d". Since `range` is 5 bytes and `%d` (integer) is at
+  most 10 digits + sign, 16 bytes is sufficient to hold the string
+  without overflow. This completely eliminates the memory leak.
+- **Robustness:** It adds explicit checks (`if (!pkobj)`, `if (!kobj)`)
+  which prevents potential NULL pointer dereferences.
+- **Cleanup:** It allocates a temporary array `kobjs` to track created
+  objects. If any step fails, the `cleanup` label iterates through this
+  array to unwind the changes (`sysfs_remove_groups` and `kobject_put`),
+  ensuring "all-or-nothing" semantics.
 
-**Key Information:**
-- **Problem:** The `values` field in `struct sdca_control` is declared
-  as an integer array (`int *`), but memory allocated is for a char
-  array
-- **Impact:** "This causes crash for sdca_parse_function API"
-- **Solution:** Allocate correct data size using `sizeof(int)`
-- **Signals:** "bug fix", "crash" - STRONG YES signals
-- **No tags:** No "Fixes:" tag, no "Cc: stable@vger.kernel.org" tag
+**C. Context & History**
+- The affected file `drivers/acpi/acpi_mrrm.c` was introduced in kernel
+  v6.16 (commit `b9020bdb9f76`).
+- The buggy function `add_boot_memory_ranges` was introduced shortly
+  after in the same cycle.
+- Since the current HEAD is `stable/linux-6.17.y`, this code is present
+  and buggy in the current stable tree (6.17.y) and the previous one
+  (6.16.y).
 
-### 2. DEEP CODE RESEARCH
+### 2. Stable Kernel Rules Assessment
 
-#### A. Understanding How the Bug Was Introduced
+- **Obviously Correct and Tested:** **Yes.** The fix uses standard
+  kernel APIs (`kcalloc`, `kfree`, `kobject_put`) and standard error
+  handling patterns. The stack buffer size is safe.
+- **Fixes a Real Bug:** **Yes.** It fixes a guaranteed memory leak on
+  boot and prevents crashes under low-memory conditions.
+- **Important Issue:** **Yes.** While the leak size per boot is small
+  (number of memory ranges), memory leaks are considered defects that
+  should be fixed in stable, especially when the fix is low-risk. The
+  crash prevention (NULL dereference) is also significant.
+- **Small and Contained:** **Yes.** The changes are limited to one
+  function `add_boot_memory_ranges` in one file.
+- **No New Features/APIs:** **Yes.** The logic remains the same; only
+  the implementation implementation is made correct and robust.
 
-The bug was introduced in commit **50a479527ef01f** by Charles Keepax on
-**July 18, 2025**:
-- Commit: "ASoC: SDCA: Add support for -cn- value properties"
-- This commit added support for Control Number value properties in SDCA
-  DisCo parsing
-- First appeared in **v6.17-rc1**
+### 3. Risk vs. Benefit
 
-The SDCA subsystem itself was added in **v6.13** (commit 3a513da1ae339,
-Oct 16, 2024), so this bug does NOT affect older kernels.
+- **Benefit:** Stops memory leaks on supported hardware. Prevents
+  potential kernel oops during boot if memory is constrained. Ensures
+  clean failure state.
+- **Risk:** **Low.** The new cleanup logic is straightforward. The array
+  allocation `kcalloc` is checked. The logic handles the `acpi_mrrm`
+  subsystem which is a specific driver, limiting the blast radius of any
+  regression to just this ACPI feature.
 
-#### B. Technical Analysis of the Bug
+### 4. Conclusion
 
-**The Structure:**
-
-```759:776:include/sound/sdca_function.h
-struct sdca_control {
-        const char *label;
-        int sel;
-
-        int nbits;
-        int *values;
-        u64 cn_list;
-        int interrupt_position;
-
-        enum sdca_control_datatype type;
-        struct sdca_control_range range;
-        enum sdca_access_mode mode;
-        u8 layers;
-
-        bool deferrable;
-        bool has_default;
-        bool has_fixed;
-};
-```
-
-Note line 764: `int *values;` - This is a pointer to an integer array.
-
-**The Buggy Code:**
-
-```897:897:sound/soc/sdca/sdca_functions.c
-        control->values = devm_kzalloc(dev, hweight64(control->cn_list),
-GFP_KERNEL);
-```
-
-**The Problem:**
-- `hweight64(control->cn_list)` returns the number of bits set in
-  `cn_list` (e.g., if 4 bits are set, it returns 4)
-- The buggy code allocates only 4 bytes (treating values as char array)
-- But `control->values` is an `int*` array, so we need 4 × sizeof(int) =
-  **16 bytes** on most architectures
-
-**How the Bug Manifests:**
-
-```850:850:sound/soc/sdca/sdca_functions.c
-                control->values[i] = tmp;
-```
-
-When the code writes `u32` values into the undersized buffer:
-- **Heap buffer overflow** occurs
-- Adjacent memory gets corrupted
-- Kernel crashes (as stated in commit message)
-- Potential security vulnerability (heap overflow)
-
-**Pattern Comparison:**
-Looking at similar allocations in the same file:
-
-```985:986:sound/soc/sdca/sdca_functions.c
-        num_controls = hweight64(control_list);
-        controls = devm_kcalloc(dev, num_controls, sizeof(*controls),
-GFP_KERNEL);
-```
-
-```1682:1683:sound/soc/sdca/sdca_functions.c
-        num_pins = hweight64(pin_list);
-        pins = devm_kcalloc(dev, num_pins, sizeof(*pins), GFP_KERNEL);
-```
-
-These allocations correctly use `devm_kcalloc()` with proper sizing. The
-buggy line 897 is the **ONLY instance** of this incorrect pattern.
-
-#### C. Explanation of the Fix
-
-The fix changes:
-```c
-- control->values = devm_kzalloc(dev, hweight64(control->cn_list),
-  GFP_KERNEL);
-+ control->values = devm_kcalloc(dev, hweight64(control->cn_list),
-+                                sizeof(int), GFP_KERNEL);
-```
-
-This correctly allocates `hweight64(control->cn_list) × sizeof(int)`
-bytes, preventing the buffer overflow.
-
-### 3. SECURITY ASSESSMENT
-
-**Severity:** HIGH
-- **Bug Type:** Heap buffer overflow
-- **Trigger:** Parsing MIPI SDCA DisCo properties from ACPI firmware
-- **Impact:** Kernel crash (confirmed in commit message), memory
-  corruption
-- **Exploitability:** Low to Medium (requires specially crafted ACPI
-  firmware tables, typically controlled by OEM/BIOS)
-- **No CVE assigned** (yet)
-
-### 4. FEATURE VS BUG FIX CLASSIFICATION
-
-**Classification:** PURE BUG FIX
-- Fixes a crash-causing heap buffer overflow
-- No new functionality added
-- Changes allocation size calculation only
-- Aligns with existing patterns in the same file
-
-### 5. CODE CHANGE SCOPE ASSESSMENT
-
-**Scope:** MINIMAL
-- **1 file changed:** sound/soc/sdca/sdca_functions.c
-- **2 lines changed:** +2 insertions, -1 deletion
-- **Surgical fix:** Only changes the allocation call
-- **No API changes**
-- **No behavior changes** (except preventing the crash)
-
-### 6. BUG TYPE AND SEVERITY
-
-**Type:** Heap buffer overflow / Memory allocation bug
-
-**Severity:** **CRITICAL**
-- Causes kernel crashes in production
-- Affects all systems with SDCA-capable SoundWire audio devices
-- Memory corruption can lead to unpredictable behavior
-- Data integrity risk
-
-### 7. USER IMPACT EVALUATION
-
-**Affected Users:**
-- Systems with SDCA (SoundWire Device Class for Audio) hardware
-- Modern Intel platforms with SoundWire audio codecs
-- Primarily laptops and mobile devices with recent audio hardware
-
-**Impact Scope:**
-- SDCA is relatively new (added in 6.13)
-- Growing adoption in modern audio hardware
-- Bug affects ALL SDCA users who parse control properties
-- Function `sdca_parse_function()` is core to SDCA initialization
-
-### 8. REGRESSION RISK ANALYSIS
-
-**Risk Level:** VERY LOW
-- Extremely small, focused change
-- Only fixes allocation size - no logic changes
-- Makes buggy code match other correct patterns in same file
-- Already reviewed by Charles Keepax (SDCA maintainer/author)
-- Uses standard `devm_kcalloc()` API
-- No dependencies on other code
-
-### 9. MAINLINE STABILITY
-
-**Status:**
-- Committed to mainline: **November 10, 2025** (eb2d6774cc0d9)
-- Committed by: Mark Brown (sound subsystem maintainer)
-- Reviewed by: Charles Keepax (original SDCA author)
-- **Already backported** to stable branches by Sasha Levin (stable
-  maintainer)
-
-### 10. AFFECTED KERNEL VERSIONS
-
-**Versions with the bug:**
-- **v6.17** and later (bug introduced in v6.17-rc1)
-- **6.17.y stable** (confirmed to have the bug)
-
-**Versions WITHOUT the bug:**
-- **v6.16 and earlier** (bug not present - verified)
-- v6.13-6.16 have SDCA but not the buggy code path
-
-**Backport Status:**
-- Already being staged for 6.17.y stable (commits eb36bb6148dac and
-  d461d1dba9b84)
-
-### 11. DEPENDENCY CHECK
-
-**Dependencies:** NONE
-- Self-contained fix
-- No prerequisite commits needed
-- No API changes that would block backporting
-- Uses existing `devm_kcalloc()` API present in all stable kernels
-
-### 12. STABLE KERNEL RULES COMPLIANCE
-
-✅ **Obviously correct:** Yes - simple allocation size fix matching
-existing patterns
-✅ **Fixes real bug:** Yes - causes kernel crashes
-✅ **Important issue:** Yes - crash bug in core audio subsystem code
-✅ **Small and contained:** Yes - 2 lines changed, 1 file
-✅ **No new features:** Yes - pure bug fix
-✅ **No new APIs:** Yes - uses existing APIs
-
-## BACKPORTING DECISION
-
-### Should this be backported to stable?
-
-**YES** - This is an excellent candidate for stable backporting.
-
-### Reasoning:
-
-**STRONG YES Signals:**
-1. **Fixes kernel crashes** - Users experience crashes when SDCA audio
-   devices parse control properties
-2. **Memory safety bug** - Heap buffer overflow is a critical security
-   concern
-3. **Surgical fix** - Only 2 lines changed, extremely low regression
-   risk
-4. **Obviously correct** - Matches the pattern used elsewhere in the
-   same file
-5. **Reviewed and tested** - Already in mainline, reviewed by subsystem
-   experts
-6. **Already being backported** - Stable maintainer has already picked
-   it up
-7. **Small scope** - Only affects SDCA subsystem, won't impact other
-   code
-8. **No dependencies** - Can be cleanly applied to any kernel with SDCA
-   support
-
-**Risk vs Benefit:**
-- **Benefit:** Prevents kernel crashes on systems with SDCA audio
-  hardware
-- **Risk:** Near zero - the fix is trivial and matches existing correct
-  code
-- **Trade-off:** Strongly favors backporting
-
-**Affected Stable Trees:**
-- **6.17.y** - MUST have this fix (currently has the bug)
-- Future 6.18+ stable trees will also need it
-
-**Note:** This fix is only relevant for stable trees that have the buggy
-commit 50a479527ef01f ("ASoC: SDCA: Add support for -cn- value
-properties"). Based on research:
-- 6.16.y and earlier: NOT AFFECTED (don't have the buggy code)
-- 6.17.y: AFFECTED - needs this fix
-
-### Conclusion:
-
-This commit meets all criteria for stable kernel backporting. It fixes a
-critical crash bug with minimal risk, in a well-understood subsystem,
-with a tiny, surgical change that's obviously correct. The stable
-maintainer has already recognized this and is staging the backport.
+This commit is a textbook stable backport candidate. It fixes a clear
+implementation flaw (allocated memory never freed) and missing error
+checks in code that exists in currently supported stable trees. The fix
+is safe, correct, and improves kernel reliability.
 
 **YES**
 
- sound/soc/sdca/sdca_functions.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpi_mrrm.c | 43 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
-index 13f68f7b6dd6a..0ccb6775f4de3 100644
---- a/sound/soc/sdca/sdca_functions.c
-+++ b/sound/soc/sdca/sdca_functions.c
-@@ -894,7 +894,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
- 		return ret;
+diff --git a/drivers/acpi/acpi_mrrm.c b/drivers/acpi/acpi_mrrm.c
+index a6dbf623e5571..6d69554c940ed 100644
+--- a/drivers/acpi/acpi_mrrm.c
++++ b/drivers/acpi/acpi_mrrm.c
+@@ -152,26 +152,49 @@ ATTRIBUTE_GROUPS(memory_range);
+ 
+ static __init int add_boot_memory_ranges(void)
+ {
+-	struct kobject *pkobj, *kobj;
++	struct kobject *pkobj, *kobj, **kobjs;
+ 	int ret = -EINVAL;
+-	char *name;
++	char name[16];
++	int i;
+ 
+ 	pkobj = kobject_create_and_add("memory_ranges", acpi_kobj);
++	if (!pkobj)
++		return -ENOMEM;
+ 
+-	for (int i = 0; i < mrrm_mem_entry_num; i++) {
+-		name = kasprintf(GFP_KERNEL, "range%d", i);
+-		if (!name) {
+-			ret = -ENOMEM;
+-			break;
+-		}
++	kobjs = kcalloc(mrrm_mem_entry_num, sizeof(*kobjs), GFP_KERNEL);
++	if (!kobjs) {
++		kobject_put(pkobj);
++		return -ENOMEM;
++	}
+ 
++	for (i = 0; i < mrrm_mem_entry_num; i++) {
++		scnprintf(name, sizeof(name), "range%d", i);
+ 		kobj = kobject_create_and_add(name, pkobj);
++		if (!kobj) {
++			ret = -ENOMEM;
++			goto cleanup;
++		}
+ 
+ 		ret = sysfs_create_groups(kobj, memory_range_groups);
+-		if (ret)
+-			return ret;
++		if (ret) {
++			kobject_put(kobj);
++			goto cleanup;
++		}
++		kobjs[i] = kobj;
  	}
  
--	control->values = devm_kzalloc(dev, hweight64(control->cn_list), GFP_KERNEL);
-+	control->values = devm_kcalloc(dev, hweight64(control->cn_list),
-+				       sizeof(int), GFP_KERNEL);
- 	if (!control->values)
- 		return -ENOMEM;
++	kfree(kobjs);
++	return 0;
++
++cleanup:
++	for (int j = 0; j < i; j++) {
++		if (kobjs[j]) {
++			sysfs_remove_groups(kobjs[j], memory_range_groups);
++			kobject_put(kobjs[j]);
++		}
++	}
++	kfree(kobjs);
++	kobject_put(pkobj);
+ 	return ret;
+ }
  
 -- 
 2.51.0
