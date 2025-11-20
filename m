@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAA13314D2;
-	Thu, 20 Nov 2025 12:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29DE331237;
+	Thu, 20 Nov 2025 12:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640542; cv=none; b=sdHkzu2Wm+AUlIeCi0EUkAONbswX0aoJceqVs2DnTXfBTAcNz3Q3mRcR+XxN5zZXL0Hr16AeQ7sUcQT5OstO8JOalesymNV947YydE+LChFZfCHe8pX+RIg4KwoZxLW7irmGYv36AopnZ8f9wpyWMCgnirNea/LaOAlVWHxSGgI=
+	t=1763640543; cv=none; b=Tp5Hjs6/gKvlW5H7Fuf8YCDikjoVnB0D1m59m7ZDMWApVrQ2XN5sjkCZJd5z4G+fs3vyG6T+51DRxk6iKVq8alptFeVZ7dCxHTCjJIXGMHaopzJHy98zWzR53134gx34ypxChZ/eiekuP63bzakSJ1S/qqTbDkq60sAIy0I/p+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763640542; c=relaxed/simple;
-	bh=w/7NENUHlPsr+PyflJqQzI7fK452R/+YdgEjA2s0XAQ=;
+	s=arc-20240116; t=1763640543; c=relaxed/simple;
+	bh=Kh+Dhhd7Mq48Eq2DCUiG1MGuK5WuDse6vloL2WX0Aqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C+TvjVggBl2Xz+hHWLFCNPxcyD6nBLPIp++gLaxPTaXc4JgJ8X3P+CwDYNFwJ411yzCZM1oQvvD3vJ7wuscA53LeIbbXOwXYaYrOI6S0LWUbwliCJAq9xLG/9huWROdk617BxcaMVr6Ox4JHnE+SK/M7l7xHRTlqdbCjOjG6e+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ogAWQLcO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kHf1l5WrYVHeZymy7m3mKvKe/cxHdbfIYcLV2reePh6rtl09b0i67LIEofEWuV3qJTacxH3GHIazqIR3RjfEMSNFxopUNVZ3vKVRekF2lPOfn74/ITkBX7IEmKFiil2i0N7DqJkSKnN9jV9OozwJ3gnTXWq27MyZUzmeqHDs630=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r1L+kfs7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ogAWQLcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337CFC4CEF1;
-	Thu, 20 Nov 2025 12:09:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r1L+kfs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD0FC116B1;
+	Thu, 20 Nov 2025 12:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640541;
-	bh=w/7NENUHlPsr+PyflJqQzI7fK452R/+YdgEjA2s0XAQ=;
+	s=k20201202; t=1763640543;
+	bh=Kh+Dhhd7Mq48Eq2DCUiG1MGuK5WuDse6vloL2WX0Aqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogAWQLcOEIwAkM2T3mqEy0O4tUvUeB+JoEh5flCaNIYDHAFopyUfN2MFrwzUJpwL6
-	 xqJtazwTKspn1ai37+IUXPpXb7yjeXCL8RV6tFXOtU7f+6rBJq9Vj11+U0dUhUYV1J
-	 bzGV8fIMM5sW41oNU2Ur3i0C8zWoowJlRsbG8rT1YNTHRr3sdcRble+7SDg5WvyJnz
-	 Z2/Vlk7lMxC+5COBUBVTPPetPAUwA8TEvdiFCHH6CN+KljTdFPGXMvN4pb6vJ8LGmM
-	 i54Dx0a0HCtHowkUy5Y/wwjw/K/FgcVX7O9IoaoJuldLAbuUTwIa6/LPDPsW64vH6T
-	 uF+9ijZXI7LKg==
+	b=r1L+kfs7CGe/vasfbjB0QjaTVb+xUFth3jp6hH8huf7hgy9scMQdiQavWv7wC+wdQ
+	 z9B/5OwgIn8U0kPyFn9swMXSdh3TycqkabHGaOyVcgz+A08ZxjzYRV7/QoE3aEgWsa
+	 RqSzjOcprcfARpukSsJKBASaUB/Zjl5VaKKdZGSohzeiXfWMNR0GBMPpbBseUJxtUD
+	 jQHnjkeR2AXcQ2SnSeTVvgnVpq2NUjnjwAJhnsFgVGZ4fpYmSZg63Wm4NzFNSUTaCO
+	 lasND53pb+C/DtY9B37DVIm6C0OnZolnbFegmFea/4nOGw5l4A+iRJuzWkH8rKxWx7
+	 Mi0KYj1CIDV0Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+Cc: Robin Gong <yibin.gong@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.17-6.1] drm/vmwgfx: Use kref in vmw_bo_dirty
-Date: Thu, 20 Nov 2025 07:08:21 -0500
-Message-ID: <20251120120838.1754634-12-sashal@kernel.org>
+	shawnguo@kernel.org,
+	linux-spi@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.17-5.4] spi: imx: keep dma request disabled before dma transfer setup
+Date: Thu, 20 Nov 2025 07:08:22 -0500
+Message-ID: <20251120120838.1754634-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
 References: <20251120120838.1754634-1-sashal@kernel.org>
@@ -51,562 +55,303 @@ X-stable-base: Linux 6.17.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Robin Gong <yibin.gong@nxp.com>
 
-[ Upstream commit c1962742ffff7e245f935903a4658eb6f94f6058 ]
+[ Upstream commit 86d57d9c07d54e8cb385ffe800930816ccdba0c1 ]
 
-Rather than using an ad hoc reference count use kref which is atomic
-and has underflow warnings.
+Since sdma hardware configure postpone to transfer phase, have to disable
+dma request before dma transfer setup because there is a hardware
+limitation on sdma event enable(ENBLn) as below:
 
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20251030193640.153697-1-ian.forbes@broadcom.com
+"It is thus essential for the Arm platform to program them before any DMA
+ request is triggered to the SDMA, otherwise an unpredictable combination
+ of channels may be started."
+
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+Link: https://patch.msgid.link/20251024055320.408482-1-carlos.song@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me document my findings.
+Now let me create a comprehensive analysis report:
 
-## COMPREHENSIVE ANALYSIS
+## COMPREHENSIVE COMMIT ANALYSIS
 
-### STEP 1: COMMIT MESSAGE ANALYSIS
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "drm/vmwgfx: Use kref in vmw_bo_dirty"
+**Subject:** "spi: imx: keep dma request disabled before dma transfer
+setup"
 
-**Commit Message Content:**
-- States: "Rather than using an ad hoc reference count use kref which is
-  atomic and has underflow warnings."
-- Signed-off-by Ian Forbes and Zack Rusin (Broadcom maintainers)
-- **No "Fixes:" tag** - doesn't point to a specific bug-introducing
-  commit
-- **No "Cc: stable@vger.kernel.org" tag** - maintainer didn't explicitly
-  request stable backporting
-- **No CVE or security mention** - no explicit security vulnerability
-  referenced
-- **Already backported:** Sasha Levin has already backported this
-  (commit fe0f068d3c0e1 with "Upstream commit c1962742ffff7")
+**Key findings:**
+- No "Cc: stable@vger.kernel.org" tag
+- No "Fixes:" tag
+- No CVE mentioned
+- However, the commit message cites a **hardware limitation** from
+  official documentation
+- Quote from i.MX hardware manual: *"It is thus essential for the Arm
+  platform to program them before any DMA request is triggered to the
+  SDMA, otherwise an unpredictable combination of channels may be
+  started."*
 
-**Key Indicators:**
-- The message describes converting from "ad hoc reference count" to
-  "kref"
-- Emphasizes two benefits: "atomic" and "underflow warnings"
-- The mention of "atomic" strongly suggests fixing a threading/race
-  condition issue
+### 2. DEEP CODE RESEARCH (MANDATORY ANALYSIS)
 
-### STEP 2: DEEP CODE RESEARCH
+#### A. HOW THE BUG WAS INTRODUCED:
 
-**A. How the Bug Was Introduced:**
+The timing violation was created by the interaction of two changes:
 
-The vulnerable code was introduced in commit **b7468b15d27106** by
-Thomas Hellstrom on **March 27, 2019** titled "drm/vmwgfx: Implement an
-infrastructure for write-coherent resources". This was part of a new
-infrastructure for handling dirty page tracking for buffer objects.
+**First change (2016, commit 2b0fd069ec159d, v4.10+):**
+- The SPI driver started enabling DMA request bits (TEDEN/RXDEN) in
+  `mx51_setup_wml()` during transfer setup
+- This function is called early in the transfer process, before DMA
+  descriptors are configured
 
-Original implementation used a simple `unsigned int ref_count` member in
-the `struct vmw_bo_dirty`.
+**Second change (2018, commit 107d06441b709d, v5.0+):**
+- The SDMA driver was modified to enable the ENBLn (event enable)
+  register earlier in `dmaengine_slave_config()`
+- This enforced the hardware requirement that "all DMA channel
+  programming must occur BEFORE any DMA request is triggered"
+- The commit message explicitly references the i.MX6 Solo Lite Reference
+  Manual section 40.8.28
 
-**B. Detailed Code Analysis:**
+**Result:** The SPI driver violated the hardware requirement by enabling
+DMA requests (TEDEN/RXDEN) before the SDMA channels were fully
+programmed.
 
-**ORIGINAL VULNERABLE CODE (current stable kernels):**
+#### B. TECHNICAL MECHANISM OF THE BUG:
 
-In `vmw_bo_dirty_add()`:
+**Before this fix:**
+1. `mx51_setup_wml()` is called → sets TEDEN and RXDEN bits (DMA request
+   enable)
+2. `dmaengine_prep_slave_sg()` is called → prepares DMA descriptors
+3. `dma_async_issue_pending()` is called → queues DMA transfers
+4. `mx51_ecspi_trigger()` is called → starts the transfer
+
+**Problem:** DMA requests are enabled at step 1, but the SDMA hardware
+isn't fully programmed until step 3. This violates the i.MX SDMA
+hardware requirement.
+
+**After this fix:**
+1. `mx51_setup_wml()` is called → only sets watermark levels (DMA
+   request bits removed)
+2. `dmaengine_prep_slave_sg()` is called → prepares DMA descriptors
+3. `dma_async_issue_pending()` is called → queues DMA transfers
+4. `mx51_ecspi_trigger()` is called → **NOW** enables TEDEN/RXDEN and
+   starts transfer
+
+**Solution:** DMA requests are only enabled after SDMA channels are
+fully configured.
+
+#### C. CODE CHANGES EXPLAINED:
+
+**Change 1** - Remove early DMA enable from `mx51_setup_wml()`:
 ```c
-if (dirty) {
-    dirty->ref_count++;  // NON-ATOMIC READ-MODIFY-WRITE
-    return 0;
+// Before: enabled TEDEN and RXDEN during setup
+writel(... | MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN | ...)
+
+// After: removed these bits from setup
+writel(... | MX51_ECSPI_DMA_RXTDEN, ...)  // only RXTDEN remains
+```
+
+**Change 2** - Add conditional DMA enable to `mx51_ecspi_trigger()`:
+```c
+// New code distinguishes DMA mode from PIO mode
+if (spi_imx->usedma) {
+    // Enable DMA requests (TEDEN/RXDEN) only when using DMA
+    reg = readl(spi_imx->base + MX51_ECSPI_DMA);
+    reg |= MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN;
+    writel(reg, spi_imx->base + MX51_ECSPI_DMA);
+} else {
+    // Original PIO mode trigger
+    ...
 }
 ```
 
-In `vmw_bo_dirty_release()`:
+**Change 3** - Call trigger after DMA setup in `spi_imx_dma_transfer()`:
 ```c
-if (dirty && --dirty->ref_count == 0) {  // NON-ATOMIC DECREMENT AND
-CHECK
-    kvfree(dirty);
-    vbo->dirty = NULL;
-}
+dma_async_issue_pending(controller->dma_tx);
+
+spi_imx->devtype_data->trigger(spi_imx);  // Added line
+
+transfer_timeout = spi_imx_calculate_timeout(...);
 ```
 
-**THE BUG MECHANISM:**
-
-The operations `dirty->ref_count++` and `--dirty->ref_count` are **NOT
-atomic**. They compile to:
-1. Load ref_count from memory into register
-2. Increment/decrement register
-3. Store register back to memory
-
-**RACE CONDITION SCENARIO:**
-
-Thread A (CPU 0) and Thread B (CPU 1) both call `vmw_bo_dirty_add()` on
-the same vbo:
-
-```
-Time | Thread A (CPU 0)           | Thread B (CPU 1)           |
-ref_count
------|----------------------------|----------------------------|--------
---
-T0   | Load ref_count=1           |                            | 1
-T1   |                            | Load ref_count=1           | 1
-T2   | Increment: register=2      |                            | 1
-T3   |                            | Increment: register=2      | 1
-T4   | Store: ref_count=2         |                            | 2
-T5   |                            | Store: ref_count=2         | 2
-(WRONG!)
-```
-
-**Expected:** ref_count should be 3 (two increments from initial value
-of 1)
-**Actual:** ref_count is 2 (lost update)
-
-**CONSEQUENCES:**
-- **Use-After-Free (UAF):** If ref_count is too low, the last release
-  will free the memory while other threads still hold references.
-  Accessing freed memory leads to crashes or exploitable security
-  vulnerabilities.
-- **Memory Leak:** If ref_count is too high, it may never reach 0, so
-  memory is never freed.
-
-**WHERE THE RACES OCCUR:**
-
-From my grep analysis, `vmw_bo_dirty_add()` and `vmw_bo_dirty_release()`
-are called from:
-- `vmwgfx_validation.c`: In loops during buffer validation (can be
-  concurrent)
-- `vmwgfx_resource.c`: Multiple places during resource operations
-- `vmwgfx_kms.c`: Framebuffer operations
-- `vmwgfx_surface.c`: Surface handling
-- `vmwgfx_bo.c`: Buffer object lifecycle
-
-**CRITICAL: NO LOCKS PROTECT THESE OPERATIONS**
-
-My grep for locks around vmw_bo_dirty operations found **no results**.
-The refcount is completely unprotected.
-
-**C. How the Fix Works:**
-
-The patch replaces the manual refcount with Linux kernel's standard
-`kref` API:
-
-1. **Structure change:** `unsigned int ref_count` → `struct kref
-   ref_count`
-2. **Initialization:** `dirty->ref_count = 1` →
-   `kref_init(&dirty->ref_count)`
-3. **Increment:** `dirty->ref_count++` → `kref_get(&dirty->ref_count)`
-4. **Decrement:** `if (dirty && --dirty->ref_count == 0)` → `if (dirty
-   && kref_put(&dirty->ref_count, (void *)kvfree))`
-
-**Why This Works:**
-- `kref` uses **atomic operations** internally (atomic_t)
-- `kref_get()` uses `atomic_inc_not_zero()` - atomic increment
-- `kref_put()` uses `atomic_dec_and_test()` - atomic decrement and test
-- These atomic operations are guaranteed by hardware to be indivisible
-- **Underflow detection:** kref has built-in warnings for underflow
-  (decrementing below 0), helping catch bugs
-
-**D. Subsystem Context:**
-
-**vmwgfx driver:** VMware SVGA graphics driver for virtualized graphics
-- Mature driver in kernel since ~2009
-- Active development: 906 commits since 2019
-- **History of refcounting issues:**
-  - Multiple "Fix Use-after-free in validation" commits
-  - "Fix gem refcounting and memory evictions"
-  - "Make sure the screen surface is ref counted"
-  - "Fix race issue calling pin_user_pages"
-  - "Fix mob cursor allocation race"
-  - "Fix up user_dmabuf refcounting"
-
-This history demonstrates that vmwgfx has had **persistent refcounting
-and race condition problems**.
-
-### STEP 3: SECURITY ASSESSMENT
-
-**Potential Security Impact:**
-
-While no CVE is assigned, the race condition can cause:
-
-1. **Use-After-Free (UAF):** If ref_count drops to 0 prematurely, memory
-   is freed while still referenced. UAF vulnerabilities are often
-   exploitable for arbitrary code execution or privilege escalation.
-
-2. **Memory Safety:** The vmwgfx driver runs in kernel space with full
-   privileges. A UAF in the driver can compromise kernel memory safety.
-
-3. **Memory Leak:** Less severe, but can cause system instability over
-   time.
-
-**Severity Assessment:** MEDIUM to HIGH
-- No known CVE or active exploitation
-- But UAF potential makes it significant
-- vmwgfx is used in virtualized environments (common deployment)
-
-### STEP 4: FEATURE VS BUG FIX CLASSIFICATION
-
-**Classification:** **BUG FIX** (with hardening characteristics)
-
-This is clearly fixing a bug:
-- **Bug:** Non-atomic reference counting allowing race conditions
-- **Fix:** Replace with atomic reference counting
-
-Not a new feature because:
-- Doesn't add new functionality
-- Doesn't change driver behavior for correct usage
-- Improves correctness and safety of existing code
-
-**Exception Categories:** None apply (not a device ID, not a quirk, not
-a build fix, not documentation)
-
-### STEP 5: CODE CHANGE SCOPE ASSESSMENT
-
-**Files Changed:** 1 file (`drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c`)
-
-**Lines Changed:**
-- Added: 5 lines
-- Removed: 7 lines
-- Net change: -2 lines
-
-**Complexity:** Very low
-- Simple structure member type change
-- Straightforward API replacements
-- No algorithmic changes
-- No control flow changes
-
-**Scope:** Very contained and localized
-
-### STEP 6: BUG TYPE AND SEVERITY
-
-**Bug Type:** Race condition / concurrency bug (non-atomic reference
-counting)
-
-**Manifestation:**
-- Use-after-free (crash, potential security exploit)
-- Memory leak (system instability)
-- Kernel oops/panic
-
-**Severity:** **HIGH**
-- Can cause kernel crashes (oops, panic)
-- Potential security vulnerability (UAF)
-- Affects core driver functionality (buffer object management)
-
-**Likelihood:**
-- MEDIUM - requires concurrent operations on same buffer object
-- More likely in multi-CPU systems under heavy load
-- Virtualized environments often have multiple vCPUs
-
-### STEP 7: USER IMPACT EVALUATION
-
-**Who is Affected:**
-- **VMware virtualized graphics users** (very common)
-- VMware Workstation, VMware ESXi guests
-- Cloud environments using VMware
-- Desktop Linux users running in VMware VMs
-
-**Usage Frequency:**
-- vmwgfx is the standard graphics driver for VMware guests
-- Widely deployed in enterprise and cloud environments
-- Common in desktop virtualization scenarios
-
-**Impact Scale:** MEDIUM to HIGH
-- Affects a significant user base (VMware is widely used)
-- Core graphics functionality
-- Bug exists since 2019 in all stable kernels (5.10+)
-
-### STEP 8: REGRESSION RISK ANALYSIS
-
-**Risk Assessment:** **VERY LOW**
-
-**Why Low Risk:**
-1. **Standard API:** kref is a well-tested, standard kernel API used
-   throughout the kernel
-2. **Mechanical transformation:** Simple 1:1 replacement of operations
-3. **Small change:** Only 12 lines modified in a single file
-4. **Same semantics:** kref provides identical semantics to manual
-   refcounting, just atomic
-5. **No functional changes:** Doesn't change driver logic or behavior
-
-**Testing Considerations:**
-- In mainline since October 30, 2025 (recent, but in v6.18-rc6)
-- Has Signed-off-by from maintainers (reviewed)
-- Simple enough that code inspection verifies correctness
-
-**Potential Regression Scenarios:**
-- None identified
-- The change makes behavior *more* correct, not different
-
-### STEP 9: MAINLINE STABILITY
-
-**Mainline Status:**
-- Committed on October 30, 2025
-- In v6.18-rc6 (unreleased as of analysis date)
-- About 2-3 weeks in mainline development
-
-**Review/Testing:**
-- Signed-off-by: Ian Forbes (author)
-- Signed-off-by: Zack Rusin (vmwgfx maintainer)
-- No Tested-by or Reviewed-by tags visible
-
-**Maturity:** Recent commit, but simple and obviously correct
-
-### STEP 10: HISTORICAL COMMIT REVIEW
-
-**Already Backported:** YES
-- Sasha Levin has already backported this to stable (commit
-  fe0f068d3c0e1)
-- Shows stable maintainers consider it appropriate for backporting
-
-### CONDITIONAL DEEPER INVESTIGATION
-
-**DEPENDENCY CHECK:**
-
-Does this depend on other commits? **NO**
-- kref API has existed in kernel since early days
-- No new API calls introduced
-- Self-contained change
-
-**API/ABI CHANGES:**
-
-Does this change userspace-visible behavior? **NO**
-- Internal driver change only
-- No new syscalls, ioctls, or interfaces
-- No changes to /proc, /sys, or UAPI headers
-
-**SUBSYSTEM EXISTENCE:**
-
-Does this code exist in stable trees?
-
-Checked versions:
-- v6.17: **YES** - vulnerable code present
-- v6.6 (LTS): **YES** - vulnerable code present
-- v6.1 (LTS): **YES** - vulnerable code present
-- v5.15 (LTS): **YES** - vulnerable code present
-- v5.10 (LTS): **YES** - vulnerable code present
-- v5.4 (LTS): **NO** - file doesn't exist
-
-**Backport Scope:** Can be backported to all LTS kernels from 5.10
-onwards
-
-**CODE PATH IMPORTANCE:**
-
-Using call site analysis:
-- Called from validation code (core graphics path)
-- Called from resource management (buffer lifecycle)
-- Called from KMS operations (display management)
-
-**Impact:** Core code paths used in normal graphics operations
-
-**PRACTICAL VS THEORETICAL:**
-
-Is this a real-world bug? **LIKELY YES**
-- No explicit bug report found
-- But race conditions are notoriously hard to reproduce
-- vmwgfx has had multiple refcounting bugs (suggests this is a real
-  problem area)
-- The fact that maintainers made this change suggests it addresses a
-  concern
-- Sasha Levin backported it (stable maintainer sees value)
-
-**COMPLETENESS:**
-
-Is this a partial fix? **NO**
-- Complete replacement of all refcount operations
-- No follow-up patches needed
-- Self-contained fix
-
----
-
-## DECISION FRAMEWORK APPLICATION
-
-### Stable Kernel Rules Assessment:
-
-1. **Obviously correct and tested?** ✅ YES
-   - Mechanical transformation using standard API
-   - Simple enough to verify by inspection
-   - Already used throughout kernel
-
-2. **Fixes a real bug affecting users?** ✅ YES
-   - Race condition in reference counting is a real bug
-   - Can cause UAF or memory leak
-   - Affects widely-used driver
-
-3. **Fixes an important issue?** ✅ YES
-   - Potential UAF (security/stability)
-   - Kernel crash potential
-   - Memory safety issue
-
-4. **Small and contained?** ✅ YES
-   - 12 lines changed
-   - Single file
-   - Localized impact
-
-5. **No new features/APIs?** ✅ YES
-   - Pure bug fix
-   - Uses existing kref API
-
-6. **Applies cleanly?** ✅ YES
-   - Code structure unchanged since 2019
-   - Should apply to all affected stable trees
-
-### Strong YES Signals:
-
-✅ Fixes race condition (serious bug class)
-✅ Potential UAF vulnerability
-✅ Small, surgical fix
-✅ Uses standard kernel API (kref)
-✅ Already backported by Sasha Levin
-✅ Affects LTS kernels dating back to 5.10
-✅ Code exists in all modern stable trees
-✅ Subsystem with history of similar bugs
-✅ Core driver functionality affected
-
-### Strong NO Signals:
-
-❌ No "Cc: stable" tag (but Sasha already backported it)
-❌ No "Fixes:" tag (doesn't point to original commit)
-❌ No explicit bug report (but race conditions are hard to reproduce)
-❌ Recent commit (only ~2 weeks in mainline)
-
-### Borderline Considerations:
-
-⚠️ **Recent commit:** Only in v6.18-rc6, but change is simple and safe
-⚠️ **No explicit bug report:** However, maintainers deemed it necessary
-⚠️ **Proactive hardening:** But addresses a real race condition, not
-theoretical
-
----
-
-## RISK VS BENEFIT ANALYSIS
-
-**Benefits of Backporting:**
-- Prevents potential UAF vulnerabilities (HIGH security value)
-- Prevents kernel crashes from race condition (HIGH stability value)
-- Prevents memory leaks (MEDIUM stability value)
-- Improves thread safety in multi-CPU systems (HIGH correctness value)
-- Consistent with driver's history of needing refcount fixes (HIGH
-  preventive value)
-- Helps VMware guest users (MEDIUM user base impact)
-
-**Risks of Backporting:**
-- Very minimal regression risk (VERY LOW)
-- kref is standard and well-tested
-- Mechanical API replacement
-- No functional behavior changes
-
-**Risk/Benefit Trade-off:** **STRONGLY FAVORABLE**
-
-The benefits (preventing UAF, crashes, improving safety) far outweigh
-the minimal risks (virtually none).
-
----
-
-## CONCLUSION
-
-This commit replaces non-atomic reference counting with the kernel's
-standard atomic `kref` API in the vmwgfx driver's dirty page tracking
-code. The original implementation uses unprotected `ref_count++` and
-`--ref_count` operations that can race on multi-CPU systems, potentially
-causing use-after-free vulnerabilities or memory leaks.
-
-**Technical Merit:**
-- **Real bug:** Non-atomic refcounting IS a race condition bug, even
-  without a specific report
-- **Clear mechanism:** The race condition pathways are evident from code
-  analysis
-- **Standard fix:** Using kref is the correct, kernel-standard solution
-- **Well-scoped:** Small, surgical change with no functional side
-  effects
-
-**Alignment with Stable Kernel Rules:**
-- ✅ Obviously correct (standard API usage)
-- ✅ Fixes real bug (race condition → UAF/leak)
-- ✅ Important issue (kernel stability/security)
-- ✅ Small and contained (12 lines, 1 file)
-- ✅ No new features (pure bug fix)
-- ✅ Clean backport (code unchanged since 2019)
-
-**Precedent:**
-The fact that Sasha Levin (stable kernel maintainer) has already
-backported this commit demonstrates that stable maintainers view this as
-appropriate stable material. This provides strong precedent for the
-decision.
-
-**User Impact:**
-VMware virtualized graphics users (enterprise, cloud, desktop
-virtualization) would benefit from improved stability and security. The
-bug has existed since 2019 and affects all LTS kernels from 5.10
-onwards.
-
-**Final Assessment:**
-While this lacks explicit "Fixes:" and "Cc: stable" tags, it fixes a
-genuine threading bug with serious consequences (UAF potential) using a
-safe, standard solution. The change is small, obviously correct, and
-carries virtually no regression risk. The fact that it's already been
-backported by stable maintainers reinforces this decision.
+#### D. ROOT CAUSE:
+Improper ordering of hardware register configuration. The driver enabled
+DMA event requests before the associated DMA engine was fully
+configured, violating i.MX SDMA hardware requirements documented in the
+reference manual.
+
+### 3. SECURITY ASSESSMENT
+
+**Not a security vulnerability** in the traditional sense, but:
+- **Data integrity issue:** "unpredictable combination of channels may
+  be started"
+- This could cause wrong DMA channels to transfer data to/from wrong
+  memory locations
+- Potential for data corruption or information disclosure if wrong
+  memory is accessed
+- No CVE assigned, but the impact is serious
+
+### 4. FEATURE VS BUG FIX CLASSIFICATION
+
+**CLEARLY A BUG FIX:**
+- Fixes incorrect hardware programming sequence
+- Addresses a documented hardware limitation
+- No new features added
+- Changes only fix the timing/ordering of existing operations
+
+### 5. CODE CHANGE SCOPE ASSESSMENT
+
+**Small and surgical:**
+- 1 file changed: `drivers/spi/spi-imx.c`
+- ~20 lines changed (12 insertions, 8 deletions based on diff)
+- Changes are localized to 3 functions
+- No API changes, no new exports
+- Simple logic changes with clear intent
+
+### 6. BUG TYPE AND SEVERITY
+
+**Bug Type:** Hardware timing violation / incorrect programming sequence
+
+**Severity: HIGH**
+- Can cause "unpredictable combination of channels" to start
+- May result in DMA transfers to/from wrong memory addresses
+- Affects all i.MX SoCs using SPI with DMA (widely deployed)
+- Data corruption potential
+- Referenced in official hardware documentation as a critical
+  requirement
+
+### 7. USER IMPACT EVALUATION
+
+**HIGH IMPACT:**
+- **Affected hardware:** All i.MX SoCs (i.MX51, i.MX53, i.MX6, i.MX7,
+  i.MX8) using SPI with DMA
+- **Usage:** i.MX is widely used in:
+  - Industrial systems
+  - Automotive applications
+  - Embedded devices
+  - IoT systems
+- **Failure mode:** Unpredictable - may cause intermittent data
+  corruption during SPI DMA transfers
+- **Existing since:** v4.10 (2017) with the timing issue, became more
+  critical after v5.0 (2019)
+
+### 8. REGRESSION RISK ANALYSIS
+
+**LOW RISK:**
+- Fix implements the documented hardware requirement
+- Changes are simple and well-contained
+- Logic is straightforward: delay DMA request enable until after SDMA
+  configuration
+- No complex state changes or race conditions introduced
+- Follows the pattern already established in SDMA driver documentation
+
+**Testing evidence:**
+- Has authors from NXP (hardware manufacturer) - Robin Gong and Carlos
+  Song
+- Link to patch submission:
+  https://patch.msgid.link/20251024055320.408482-1-carlos.song@nxp.com
+- Signed off by SPI maintainer Mark Brown
+
+### 9. MAINLINE STABILITY
+
+**Good signs:**
+- Committed October 24, 2025 (recent)
+- In v6.18-rc6
+- Authors are from NXP (the hardware manufacturer)
+- Has maintainer sign-off
+
+### 10. HISTORICAL PATTERNS
+
+This fix is similar in nature to:
+- Hardware errata fixes for i.MX (ERR009165 series)
+- Other timing-related DMA fixes in the kernel
+- Follows stable kernel precedent for hardware requirement compliance
+  fixes
+
+### VERDICT
+
+This commit should **DEFINITELY** be backported to stable trees.
+
+**Why it meets stable criteria:**
+
+1. **Fixes a real bug:** Violates documented hardware requirements from
+   i.MX reference manual
+2. **Affects users:** All i.MX SoC users with SPI DMA (widespread in
+   embedded/industrial systems)
+3. **Data integrity issue:** Can cause wrong DMA channels to start,
+   leading to data corruption
+4. **Small and contained:** Only ~20 lines changed in one file, surgical
+   fix
+5. **Obviously correct:** Implements the documented hardware requirement
+   correctly
+6. **Low regression risk:** Simple timing fix with clear hardware
+   documentation backing it
+7. **Long-standing issue:** Bug existed since v4.10 (2017), affects many
+   stable trees still in use
+
+**Stable trees affected:** All stable kernels from v4.10+ that have
+both:
+- The original code (commit 2b0fd069ec159d, v4.10+)
+- The SDMA enforcement (commit 107d06441b709d, v5.0+)
+
+Most critically affects v5.0+ stable trees where both conditions are
+met.
+
+**Backporting considerations:**
+- Should apply cleanly to recent stable trees (6.6.y, 6.1.y, 5.15.y,
+  5.10.y, 5.4.y)
+- May need minor context adjustments for older trees
+- Check that `spi_imx->usedma` field exists in target kernel version
 
 **YES**
 
- drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/spi/spi-imx.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-index 7de20e56082c8..fd4e76486f2d1 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-@@ -32,22 +32,22 @@ enum vmw_bo_dirty_method {
- 
- /**
-  * struct vmw_bo_dirty - Dirty information for buffer objects
-+ * @ref_count: Reference count for this structure. Must be first member!
-  * @start: First currently dirty bit
-  * @end: Last currently dirty bit + 1
-  * @method: The currently used dirty method
-  * @change_count: Number of consecutive method change triggers
-- * @ref_count: Reference count for this structure
-  * @bitmap_size: The size of the bitmap in bits. Typically equal to the
-  * nuber of pages in the bo.
-  * @bitmap: A bitmap where each bit represents a page. A set bit means a
-  * dirty page.
-  */
- struct vmw_bo_dirty {
-+	struct   kref ref_count;
- 	unsigned long start;
- 	unsigned long end;
- 	enum vmw_bo_dirty_method method;
- 	unsigned int change_count;
--	unsigned int ref_count;
- 	unsigned long bitmap_size;
- 	unsigned long bitmap[];
- };
-@@ -221,7 +221,7 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
- 	int ret;
- 
- 	if (dirty) {
--		dirty->ref_count++;
-+		kref_get(&dirty->ref_count);
- 		return 0;
- 	}
- 
-@@ -235,7 +235,7 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
- 	dirty->bitmap_size = num_pages;
- 	dirty->start = dirty->bitmap_size;
- 	dirty->end = 0;
--	dirty->ref_count = 1;
-+	kref_init(&dirty->ref_count);
- 	if (num_pages < PAGE_SIZE / sizeof(pte_t)) {
- 		dirty->method = VMW_BO_DIRTY_PAGETABLE;
- 	} else {
-@@ -274,10 +274,8 @@ void vmw_bo_dirty_release(struct vmw_bo *vbo)
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 155ddeb8fcd46..bbf1fd4fe1e92 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -519,9 +519,15 @@ static void mx51_ecspi_trigger(struct spi_imx_data *spi_imx)
  {
- 	struct vmw_bo_dirty *dirty = vbo->dirty;
+ 	u32 reg;
  
--	if (dirty && --dirty->ref_count == 0) {
--		kvfree(dirty);
-+	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
- 		vbo->dirty = NULL;
--	}
+-	reg = readl(spi_imx->base + MX51_ECSPI_CTRL);
+-	reg |= MX51_ECSPI_CTRL_XCH;
+-	writel(reg, spi_imx->base + MX51_ECSPI_CTRL);
++	if (spi_imx->usedma) {
++		reg = readl(spi_imx->base + MX51_ECSPI_DMA);
++		reg |= MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN;
++		writel(reg, spi_imx->base + MX51_ECSPI_DMA);
++	} else {
++		reg = readl(spi_imx->base + MX51_ECSPI_CTRL);
++		reg |= MX51_ECSPI_CTRL_XCH;
++		writel(reg, spi_imx->base + MX51_ECSPI_CTRL);
++	}
  }
  
- /**
+ static void mx51_ecspi_disable(struct spi_imx_data *spi_imx)
+@@ -759,7 +765,6 @@ static void mx51_setup_wml(struct spi_imx_data *spi_imx)
+ 	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml - 1) |
+ 		MX51_ECSPI_DMA_TX_WML(tx_wml) |
+ 		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
+-		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
+ 		MX51_ECSPI_DMA_RXTDEN, spi_imx->base + MX51_ECSPI_DMA);
+ }
+ 
+@@ -1520,6 +1525,8 @@ static int spi_imx_dma_transfer(struct spi_imx_data *spi_imx,
+ 	reinit_completion(&spi_imx->dma_tx_completion);
+ 	dma_async_issue_pending(controller->dma_tx);
+ 
++	spi_imx->devtype_data->trigger(spi_imx);
++
+ 	transfer_timeout = spi_imx_calculate_timeout(spi_imx, transfer->len);
+ 
+ 	/* Wait SDMA to finish the data transfer.*/
 -- 
 2.51.0
 
