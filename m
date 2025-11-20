@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D91270541;
-	Thu, 20 Nov 2025 12:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50BC32E756;
+	Thu, 20 Nov 2025 12:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640522; cv=none; b=BB+c/DCSehScU4BV2hBcFo0UWilaGyi2dPkJwX9zFGafKX9U3Fzg0s6L6O2kh27vlsfrcIRDjBPRpqZW+bPlJFRVRn90Vz6Bdry6W+kl4QDpa+CVGJXJVkKwEcc1JlMaC1OP1nSdAmPlcWUZMrRd9/NxHVTFctTSXAV9kqk+KoQ=
+	t=1763640523; cv=none; b=BS/NOAmWKsKRaA4RgmFSzCFAX2S0e+k/Tpmh6xgqSCUm2SVNw44o1hYz5L0dZ5+ydTwYZwzXFfcO+6whp8fRl5E3myDQD/0EcrZfiLoOnpDEq6ZQyfBBgVWKTLeX+wj+UsfDTPL8oR24atwVEIOrR1vErgdi2KPOS/Nu9MXH8Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763640522; c=relaxed/simple;
-	bh=805vRHwxQfqCRldiuSJO2HRMXlve6C1ugXw7UP48feo=;
+	s=arc-20240116; t=1763640523; c=relaxed/simple;
+	bh=vLa+qy4ZLWkLdMe1PHH9YtPVGT3bCcAStpSHwrqt5O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DVuIcauFU+lH+GaE5vc0Sov/t4w+ycsDGLG//YhWPl8/x3pJCM5LeY2wrjEVZRq/hVY+RorECpO3J8MdRMKh4+LbT5e6WfrWK/zFr6eJLxfEHBLKt4Jg9yFgMfWx9h7fbOA9nDH1NWDjujS7F88redx2iidYqTjG3Vjv0FWf3Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bo9uQocT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZJPoRQo10T3WmY8m9bjSDPGzM2DaNBW7aSGX3WhJKW7LLPOrsI8XkIA8yU+PE4rNs8rpRZOGsQC0hI2V8vxMs3LjE9VbULkzGZEtz7k3MxAjBO+fqY4JcEFkBwT5eugrAU2t83M5ckNIw2DJsQXyGKtYEjHxkH1XifKrp7FXnRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uRHbNrOR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bo9uQocT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53F2C116D0;
-	Thu, 20 Nov 2025 12:08:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uRHbNrOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C57C19421;
+	Thu, 20 Nov 2025 12:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640521;
-	bh=805vRHwxQfqCRldiuSJO2HRMXlve6C1ugXw7UP48feo=;
+	s=k20201202; t=1763640523;
+	bh=vLa+qy4ZLWkLdMe1PHH9YtPVGT3bCcAStpSHwrqt5O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bo9uQocT7avg23DjjkbNHaP7H4dmjA/YeFhmrSSG6FthFrdoMY+fxiylq18t7Zwxk
-	 J60u5ZcaU98zwJg0lneLupsroPwVhDJLnQJ13wbEyonExbku9Fv/PKHbl5OCo+YxyQ
-	 vVfdIPtLHomZTFea9jH0h/lP42uEtIu/02C7TKiFwweI7KZM+liWWBQryhoS1ZXGFB
-	 Ev31V2BnmTy0uYT5Ux8s5tMOy6umvnzjGhX00vFHnVkvJkZNviWKxkJt/qw3Aneqvs
-	 eGaeHBYcju4OzzV8gMrkH3jXHLus2FVncwPd/pHKc/aJ6pnjVBvwroPwiZEU6PBPOM
-	 zItJmum8ARjog==
+	b=uRHbNrORNiipQBtlZrlehZQ6I1fU6aj8ccsr+dYE4vvbULXDsLL+hiEaWSD6yaGTQ
+	 vinyDX1Zb3xCtmV4oJD3oKchJ9mtb5/PIvE1+G16yBAGcMEvuYLTBsBVjTp/cvSJaj
+	 Xe5US+Pa/RURdRsyZjxDkJ6D+XEi5tfUgBs9S15PBV61aMorQ/aj/oIBzK7JvQtTaJ
+	 2sag/TrtnrSqayO+rLD63J2bJ6qbPk57nhF2pxOrbLoeRWrpi2Xv0XVt/NvOSQGhbk
+	 0fiuIramw1R9v/P+GoMgdH7CInMPIZFbsyV8/rAABVo0IOX7zgHeRvrz5/cgSPMuJ2
+	 4GJDSbLMzBhMA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alvaro Gamez Machado <alvaro.gamez@hazent.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+Cc: Niranjan H Y <niranjan.hy@ti.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
-	linux-spi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.17-5.4] spi: xilinx: increase number of retries before declaring stall
-Date: Thu, 20 Nov 2025 07:08:11 -0500
-Message-ID: <20251120120838.1754634-2-sashal@kernel.org>
+	mstrozek@opensource.cirrus.com,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.17] ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
+Date: Thu, 20 Nov 2025 07:08:12 -0500
+Message-ID: <20251120120838.1754634-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
 References: <20251120120838.1754634-1-sashal@kernel.org>
@@ -54,379 +54,309 @@ X-stable-base: Linux 6.17.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvaro Gamez Machado <alvaro.gamez@hazent.com>
+From: Niranjan H Y <niranjan.hy@ti.com>
 
-[ Upstream commit 939edfaa10f1d22e6af6a84bf4bd96dc49c67302 ]
+[ Upstream commit eb2d6774cc0d9d6ab8f924825695a85c14b2e0c2 ]
 
-SPI devices using a (relative) slow frequency need a larger time.
+"struct sdca_control" declares "values" field as integer array.
+But the memory allocated to it is of char array. This causes
+crash for sdca_parse_function API. This patch addresses the
+issue by allocating correct data size.
 
-For instance, microblaze running at 83.25MHz and performing a
-3 bytes transaction using a 10MHz/16 = 625kHz needed this stall
-value increased to at least 20. The SPI device is quite slow, but
-also is the microblaze, so set this value to 32 to give it even
-more margin.
-
-Signed-off-by: Alvaro Gamez Machado <alvaro.gamez@hazent.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20251106134545.31942-1-alvaro.gamez@hazent.com
+Signed-off-by: Niranjan H Y <niranjan.hy@ti.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251110152646.192-1-niranjan.hy@ti.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## COMPREHENSIVE ANALYSIS: spi: xilinx: increase number of retries
-before declaring stall
+Now let me do a comprehensive analysis of this commit.
+
+## COMPREHENSIVE ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a real-world problem:
-- **Problem**: SPI devices using slow frequencies need more time before
-  being declared stalled
-- **Specific case**: Microblaze CPU at 83.25MHz performing 3-byte
-  transaction at 625kHz SPI frequency
-- **Evidence**: Author empirically determined the value needed to be at
-  least 20; chose 32 for safety margin
-- **Tags**: Has "Reviewed-by" and "Link" tags, but **NO "Fixes:" or "Cc:
-  stable@vger.kernel.org" tags**
+**Subject:** ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
+
+**Key Information:**
+- **Problem:** The `values` field in `struct sdca_control` is declared
+  as an integer array (`int *`), but memory allocated is for a char
+  array
+- **Impact:** "This causes crash for sdca_parse_function API"
+- **Solution:** Allocate correct data size using `sizeof(int)`
+- **Signals:** "bug fix", "crash" - STRONG YES signals
+- **No tags:** No "Fixes:" tag, no "Cc: stable@vger.kernel.org" tag
 
 ### 2. DEEP CODE RESEARCH
 
-#### A. HOW THE BUG WAS INTRODUCED:
+#### A. Understanding How the Bug Was Introduced
 
-The stall detection mechanism was originally introduced in **commit
-5a1314fa697fc6** (2017-11-21) by Ricardo Ribalda. That commit added
-stall detection logic with `stalled = 10` as a retry counter to detect
-when the Xilinx SPI core gets permanently stuck due to unknown commands
-not in the hardware lookup table.
+The bug was introduced in commit **50a479527ef01f** by Charles Keepax on
+**July 18, 2025**:
+- Commit: "ASoC: SDCA: Add support for -cn- value properties"
+- This commit added support for Control Number value properties in SDCA
+  DisCo parsing
+- First appeared in **v6.17-rc1**
 
-The original commit message explained:
-> "When the core is configured in C_SPI_MODE > 0, it integrates a lookup
-table that automatically configures the core in dual or quad mode based
-on the command (first byte on the tx fifo). Unfortunately, that list
-mode_?_memoy_*.mif does not contain all the supported commands by the
-flash... this leads into a stall that can only be recovered with a soft
-reset."
+The SDCA subsystem itself was added in **v6.13** (commit 3a513da1ae339,
+Oct 16, 2024), so this bug does NOT affect older kernels.
 
-The original commit **was tagged with "Cc: stable@vger.kernel.org"** and
-was successfully backported to all major stable branches (verified
-present in 6.6.y, 6.1.y, 5.15.y, 5.10.y, 4.19.y).
+#### B. Technical Analysis of the Bug
 
-#### B. DETAILED CODE ANALYSIS:
+**The Structure:**
 
-The code is in `xilinx_spi_txrx_bufs()` function at line 303:
+```759:776:include/sound/sdca_function.h
+struct sdca_control {
+        const char *label;
+        int sel;
 
-```c
-rx_words = n_words;
-stalled = 10;  // ← Original value too low for slow configurations
-while (rx_words) {
-    if (rx_words == n_words && !(stalled--) &&
-        !(sr & XSPI_SR_TX_EMPTY_MASK) &&
-        (sr & XSPI_SR_RX_EMPTY_MASK)) {
-        dev_err(&spi->dev,
-            "Detected stall. Check C_SPI_MODE and C_SPI_MEMORY\n");
-        xspi_init_hw(xspi);
-        return -EIO;  // ← Transaction fails
-    }
-    // ... read data from RX FIFO ...
-}
+        int nbits;
+        int *values;
+        u64 cn_list;
+        int interrupt_position;
+
+        enum sdca_control_datatype type;
+        struct sdca_control_range range;
+        enum sdca_access_mode mode;
+        u8 layers;
+
+        bool deferrable;
+        bool has_default;
+        bool has_fixed;
+};
 ```
 
-**What the buggy code does:**
-- Initializes `stalled` counter to 10
-- In the polling loop, decrements `stalled` on each iteration when no
-  data is available yet
-- If counter reaches 0 and RX FIFO is still empty (but TX FIFO not
-  empty), declares a hardware stall
-- Returns -EIO, causing the SPI transaction to fail
+Note line 764: `int *values;` - This is a pointer to an integer array.
 
-**Why it's wrong:**
-- The value 10 was chosen empirically in 2017, but it doesn't account
-  for **very slow SPI frequencies combined with slow CPUs**
-- With 625kHz SPI clock and 83.25MHz CPU, the legitimate data transfer
-  time can exceed 10 polling loop iterations
-- This causes **false positive stall detection** - the hardware is
-  working correctly, just slowly
+**The Buggy Code:**
 
-**The race condition:**
-- CPU polling loop runs much faster than slow SPI hardware can transfer
-  data
-- Counter expires before legitimate data arrives in RX FIFO
-- Hardware appears "stalled" when it's actually just slow
-
-#### C. THE FIX EXPLAINED:
-
-The fix changes line 303 from:
-```c
-stalled = 10;  // Old: Too short for slow configurations
-```
-to:
-```c
-stalled = 32;  // New: More margin for slow hardware
+```897:897:sound/soc/sdca/sdca_functions.c
+        control->values = devm_kzalloc(dev, hweight64(control->cn_list),
+GFP_KERNEL);
 ```
 
-**Why this solves the problem:**
-- Gives slow SPI transactions 3.2x more time before declaring a stall
-- Author tested with real hardware (microblaze + 625kHz SPI) and found
-  20 was sufficient
-- Chose 32 to provide additional safety margin
-- Still provides stall detection for genuine hardware hangs (from the
-  original 2017 issue)
+**The Problem:**
+- `hweight64(control->cn_list)` returns the number of bits set in
+  `cn_list` (e.g., if 4 bits are set, it returns 4)
+- The buggy code allocates only 4 bytes (treating values as char array)
+- But `control->values` is an `int*` array, so we need 4 × sizeof(int) =
+  **16 bytes** on most architectures
 
-**Subtle implications:**
-- Genuine hardware stalls will take slightly longer to detect (32 loop
-  iterations vs 10)
-- This is acceptable because: (1) genuine stalls are rare, (2) the delay
-  is still very short (microseconds to milliseconds), (3) avoiding false
-  positives is more important for reliability
+**How the Bug Manifests:**
+
+```850:850:sound/soc/sdca/sdca_functions.c
+                control->values[i] = tmp;
+```
+
+When the code writes `u32` values into the undersized buffer:
+- **Heap buffer overflow** occurs
+- Adjacent memory gets corrupted
+- Kernel crashes (as stated in commit message)
+- Potential security vulnerability (heap overflow)
+
+**Pattern Comparison:**
+Looking at similar allocations in the same file:
+
+```985:986:sound/soc/sdca/sdca_functions.c
+        num_controls = hweight64(control_list);
+        controls = devm_kcalloc(dev, num_controls, sizeof(*controls),
+GFP_KERNEL);
+```
+
+```1682:1683:sound/soc/sdca/sdca_functions.c
+        num_pins = hweight64(pin_list);
+        pins = devm_kcalloc(dev, num_pins, sizeof(*pins), GFP_KERNEL);
+```
+
+These allocations correctly use `devm_kcalloc()` with proper sizing. The
+buggy line 897 is the **ONLY instance** of this incorrect pattern.
+
+#### C. Explanation of the Fix
+
+The fix changes:
+```c
+- control->values = devm_kzalloc(dev, hweight64(control->cn_list),
+  GFP_KERNEL);
++ control->values = devm_kcalloc(dev, hweight64(control->cn_list),
++                                sizeof(int), GFP_KERNEL);
+```
+
+This correctly allocates `hweight64(control->cn_list) × sizeof(int)`
+bytes, preventing the buffer overflow.
 
 ### 3. SECURITY ASSESSMENT
 
-**No security implications.** This is a timing/reliability issue, not a
-security vulnerability. No CVE, no memory safety issues, no privilege
-escalation.
+**Severity:** HIGH
+- **Bug Type:** Heap buffer overflow
+- **Trigger:** Parsing MIPI SDCA DisCo properties from ACPI firmware
+- **Impact:** Kernel crash (confirmed in commit message), memory
+  corruption
+- **Exploitability:** Low to Medium (requires specially crafted ACPI
+  firmware tables, typically controlled by OEM/BIOS)
+- **No CVE assigned** (yet)
 
 ### 4. FEATURE VS BUG FIX CLASSIFICATION
 
-**This is definitively a BUG FIX:**
-- Fixes incorrect hardcoded timeout value
-- The original value causes false stall detection on slow hardware
-- Subject uses "increase" rather than "fix", but the intent is clearly
-  to fix a problem
-- **NOT a feature addition** - doesn't add new functionality, just
-  corrects an inadequate constant
-
-**Does NOT fall under exception categories** (device IDs, quirks, DT,
-build fixes), but doesn't need to - it's a straightforward bug fix.
+**Classification:** PURE BUG FIX
+- Fixes a crash-causing heap buffer overflow
+- No new functionality added
+- Changes allocation size calculation only
+- Aligns with existing patterns in the same file
 
 ### 5. CODE CHANGE SCOPE ASSESSMENT
 
-- **Files changed**: 1 (drivers/spi/spi-xilinx.c)
-- **Lines changed**: 1 (1 insertion, 1 deletion)
-- **Complexity**: Trivial - changes a single integer constant
-- **Scope**: Extremely localized - only affects stall detection timeout
-
-**Assessment**: Minimal scope, surgical fix. This is the ideal type of
-change for stable trees.
+**Scope:** MINIMAL
+- **1 file changed:** sound/soc/sdca/sdca_functions.c
+- **2 lines changed:** +2 insertions, -1 deletion
+- **Surgical fix:** Only changes the allocation call
+- **No API changes**
+- **No behavior changes** (except preventing the crash)
 
 ### 6. BUG TYPE AND SEVERITY
 
-- **Type**: False positive error detection / incorrect timeout
-- **Manifestation**: SPI transactions fail with -EIO error on slow
-  hardware configurations
-- **Severity**: **MEDIUM**
-  - Not a crash, panic, or data corruption
-  - Not a security issue
-  - Causes service disruption: SPI devices fail to work properly
-  - Affects specific configurations (slow SPI + slow CPU)
-  - User-visible impact: Device failures, spurious error messages
+**Type:** Heap buffer overflow / Memory allocation bug
+
+**Severity:** **CRITICAL**
+- Causes kernel crashes in production
+- Affects all systems with SDCA-capable SoundWire audio devices
+- Memory corruption can lead to unpredictable behavior
+- Data integrity risk
 
 ### 7. USER IMPACT EVALUATION
 
-**Who is affected:**
-- Users of Xilinx SPI controllers (common in AMD/Xilinx FPGA-based
-  embedded systems)
-- Particularly affects:
-  - Microblaze soft-core CPU users
-  - Systems with slow SPI clock frequencies (< 1MHz)
-  - Embedded systems with constrained CPU speeds
-- Examples: Industrial control systems, FPGA-based embedded devices,
-  custom hardware with Xilinx IP cores
+**Affected Users:**
+- Systems with SDCA (SoundWire Device Class for Audio) hardware
+- Modern Intel platforms with SoundWire audio codecs
+- Primarily laptops and mobile devices with recent audio hardware
 
-**Impact scope:**
-- **Moderate user base**: Xilinx SPI is used in FPGA designs but not as
-  widespread as generic SPI controllers
-- **High impact for affected users**: Complete SPI failure for those
-  with slow configurations
-- **Verifiable issue**: Author has real hardware that triggers this bug
-
-**Call analysis**: The `xilinx_spi_txrx_bufs()` function is the main
-data transfer function called for every SPI transaction on affected
-hardware. It's in the critical path for all SPI operations.
+**Impact Scope:**
+- SDCA is relatively new (added in 6.13)
+- Growing adoption in modern audio hardware
+- Bug affects ALL SDCA users who parse control properties
+- Function `sdca_parse_function()` is core to SDCA initialization
 
 ### 8. REGRESSION RISK ANALYSIS
 
-**Risk level: VERY LOW**
-
-**Reasons:**
-1. **Minimal change**: Single constant value modification
-2. **Direction of change**: Increasing a timeout is inherently safer
-   than decreasing it
-3. **Tested**: Author has tested with real hardware
-4. **Reviewed**: Ricardo Ribalda (the original stall detection author!)
-   reviewed it
-5. **Backward compatible**: Doesn't change behavior for properly
-   functioning hardware
-6. **Limited scope**: Only affects stall detection timing, not data path
-   logic
-
-**Potential risks:**
-- Genuine hardware stalls detected slightly later (32 iterations vs 10)
-  - Mitigation: Still quick enough (microseconds), rare occurrence
-- None identified that would break working systems
+**Risk Level:** VERY LOW
+- Extremely small, focused change
+- Only fixes allocation size - no logic changes
+- Makes buggy code match other correct patterns in same file
+- Already reviewed by Charles Keepax (SDCA maintainer/author)
+- Uses standard `devm_kcalloc()` API
+- No dependencies on other code
 
 ### 9. MAINLINE STABILITY
 
-- **Commit date**: November 7, 2024 (appears as 2025 but likely 2024)
-- **Testing evidence**:
-  - Reviewed-by: Ricardo Ribalda (original stall detection author)
-  - Author tested with real hardware (microblaze + slow SPI)
-- **Mainline presence**: In v6.18-rc6 (recent mainline development
-  kernel)
-- **Time in mainline**: Very recent - approximately 2 weeks if November
-  2024
+**Status:**
+- Committed to mainline: **November 10, 2025** (eb2d6774cc0d9)
+- Committed by: Mark Brown (sound subsystem maintainer)
+- Reviewed by: Charles Keepax (original SDCA author)
+- **Already backported** to stable branches by Sasha Levin (stable
+  maintainer)
 
-**Concern**: This is quite recent. Ideally would benefit from more time
-in mainline (several weeks to months) before backporting.
+### 10. AFFECTED KERNEL VERSIONS
 
-### 10. DEPENDENCY CHECK
+**Versions with the bug:**
+- **v6.17** and later (bug introduced in v6.17-rc1)
+- **6.17.y stable** (confirmed to have the bug)
 
-**No dependencies identified:**
-- Change is self-contained (single constant)
-- Doesn't depend on other commits
-- Doesn't require API changes
-- The stall detection code (commit 5a1314fa697fc6 from 2017) is already
-  present in all stable branches
-- Will apply cleanly to any stable branch that has the original stall
-  detection code
+**Versions WITHOUT the bug:**
+- **v6.16 and earlier** (bug not present - verified)
+- v6.13-6.16 have SDCA but not the buggy code path
 
-**Verified**: The original stall detection code is present in:
-- ✅ stable/linux-6.6.y
-- ✅ stable/linux-6.1.y
-- ✅ stable/linux-5.15.y
-- ✅ stable/linux-5.10.y
-- ✅ stable/linux-4.19.y
+**Backport Status:**
+- Already being staged for 6.17.y stable (commits eb36bb6148dac and
+  d461d1dba9b84)
 
-### 11. PRACTICAL VS THEORETICAL
+### 11. DEPENDENCY CHECK
 
-**Highly practical:**
-- Author encountered this bug with real hardware (microblaze @ 83.25MHz,
-  SPI @ 625kHz)
-- Provides specific reproduction case
-- Not a theoretical race or corner case
-- Users with slow SPI configurations will hit this reliably
+**Dependencies:** NONE
+- Self-contained fix
+- No prerequisite commits needed
+- No API changes that would block backporting
+- Uses existing `devm_kcalloc()` API present in all stable kernels
 
-### BACKPORT DECISION ANALYSIS
+### 12. STABLE KERNEL RULES COMPLIANCE
 
-#### Alignment with Stable Kernel Rules:
+✅ **Obviously correct:** Yes - simple allocation size fix matching
+existing patterns
+✅ **Fixes real bug:** Yes - causes kernel crashes
+✅ **Important issue:** Yes - crash bug in core audio subsystem code
+✅ **Small and contained:** Yes - 2 lines changed, 1 file
+✅ **No new features:** Yes - pure bug fix
+✅ **No new APIs:** Yes - uses existing APIs
 
-1. **Obviously correct**: ✅ **YES**
-   - Trivial change (increase timeout constant)
-   - Reviewed by the original stall detection author
-   - Logic is straightforward
+## BACKPORTING DECISION
 
-2. **Fixes real bug**: ✅ **YES**
-   - False stall detection on slow hardware
-   - Author has reproducible case
-   - Affects real users
+### Should this be backported to stable?
 
-3. **Important issue**: ⚠️ **MODERATE**
-   - Causes SPI transaction failures
-   - NOT a crash, security issue, or data corruption
-   - Affects specific configurations (slow SPI/CPU)
-   - Severity: Service disruption for affected users
+**YES** - This is an excellent candidate for stable backporting.
 
-4. **Small and contained**: ✅ **YES**
-   - Single line change
-   - No architectural changes
-   - Minimal scope
+### Reasoning:
 
-5. **No new features**: ✅ **YES**
-   - Pure bug fix
-   - No new APIs or functionality
+**STRONG YES Signals:**
+1. **Fixes kernel crashes** - Users experience crashes when SDCA audio
+   devices parse control properties
+2. **Memory safety bug** - Heap buffer overflow is a critical security
+   concern
+3. **Surgical fix** - Only 2 lines changed, extremely low regression
+   risk
+4. **Obviously correct** - Matches the pattern used elsewhere in the
+   same file
+5. **Reviewed and tested** - Already in mainline, reviewed by subsystem
+   experts
+6. **Already being backported** - Stable maintainer has already picked
+   it up
+7. **Small scope** - Only affects SDCA subsystem, won't impact other
+   code
+8. **No dependencies** - Can be cleanly applied to any kernel with SDCA
+   support
 
-6. **Clean application**: ✅ **YES**
-   - Should apply cleanly to all stable branches
-   - Original code is present in all major LTS kernels
+**Risk vs Benefit:**
+- **Benefit:** Prevents kernel crashes on systems with SDCA audio
+  hardware
+- **Risk:** Near zero - the fix is trivial and matches existing correct
+  code
+- **Trade-off:** Strongly favors backporting
 
-#### Considerations:
+**Affected Stable Trees:**
+- **6.17.y** - MUST have this fix (currently has the bug)
+- Future 6.18+ stable trees will also need it
 
-**In favor of backporting:**
-- Extremely low regression risk (1 line, timeout increase)
-- Fixes real-world bug with reproducible case
-- Reviewed by original code author
-- Small, obviously correct change
-- Helps users with slow SPI configurations
-- Original stall detection is already in stable branches
+**Note:** This fix is only relevant for stable trees that have the buggy
+commit 50a479527ef01f ("ASoC: SDCA: Add support for -cn- value
+properties"). Based on research:
+- 6.16.y and earlier: NOT AFFECTED (don't have the buggy code)
+- 6.17.y: AFFECTED - needs this fix
 
-**Against backporting or requiring caution:**
-- No "Cc: stable@vger.kernel.org" tag (maintainer didn't explicitly
-  request it)
-- No "Fixes:" tag (though logically fixes commit 5a1314fa697fc6)
-- Very recent in mainline (limited testing time)
-- Moderate severity (not critical crash/security/corruption)
-- Affects niche configurations (slow SPI on Xilinx hardware)
+### Conclusion:
 
-#### Risk vs Benefit Trade-off:
-
-**Benefit**:
-- Enables SPI functionality for slow Xilinx configurations
-- Prevents spurious transaction failures
-- Minimal user-visible change (just works better)
-
-**Risk**:
-- Virtually none - increasing timeout is safe
-- Genuine stalls detected marginally slower (acceptable)
-
-**Trade-off**: **Favorable** - High benefit for affected users,
-negligible risk
-
-### FINAL ASSESSMENT
-
-This commit represents a **textbook stable backport candidate** from a
-technical perspective:
-- Trivial, obviously correct change
-- Fixes a real bug affecting actual users
-- Zero risk of regression
-- Small, contained scope
-
-However, it has **two procedural concerns**:
-1. **No explicit stable tag**: The maintainer/author didn't tag it with
-   "Cc: stable@vger.kernel.org", suggesting they may not have considered
-   it critical enough for backporting
-2. **Very recent**: Limited testing time in mainline (approximately 2
-   weeks)
-
-The absence of the stable tag is notable because the **original stall
-detection commit (5a1314fa697fc6) DID have the stable tag**, indicating
-the original author (Ricardo Ribalda) understood stable backporting.
-Ricardo also reviewed this current patch, so his review implies approval
-of the technical approach.
-
-Despite the lack of an explicit stable tag, the technical merits
-strongly support backporting:
-- It's an adjustment to an already-backported feature
-- The change is trivial and safe
-- It fixes a real problem for a subset of users
-- Regression risk is negligible
-
-The commit should be backported to **all stable branches that contain
-the original stall detection code** (5a1314fa697fc6), which includes at
-minimum: 6.6.y, 6.1.y, 5.15.y, 5.10.y, and 4.19.y.
-
-**Recommendation**: This would benefit from a few more weeks in mainline
-for additional testing, but can be safely backported. The lack of a
-stable tag is the only significant concern, but the technical merits
-outweigh this procedural consideration.
+This commit meets all criteria for stable kernel backporting. It fixes a
+critical crash bug with minimal risk, in a well-understood subsystem,
+with a tiny, surgical change that's obviously correct. The stable
+maintainer has already recognized this and is staging the backport.
 
 **YES**
 
- drivers/spi/spi-xilinx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sdca/sdca_functions.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
-index d59cc8a184846..c86dc56f38b45 100644
---- a/drivers/spi/spi-xilinx.c
-+++ b/drivers/spi/spi-xilinx.c
-@@ -300,7 +300,7 @@ static int xilinx_spi_txrx_bufs(struct spi_device *spi, struct spi_transfer *t)
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index 13f68f7b6dd6a..0ccb6775f4de3 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -894,7 +894,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
+ 		return ret;
+ 	}
  
- 		/* Read out all the data from the Rx FIFO */
- 		rx_words = n_words;
--		stalled = 10;
-+		stalled = 32;
- 		while (rx_words) {
- 			if (rx_words == n_words && !(stalled--) &&
- 			    !(sr & XSPI_SR_TX_EMPTY_MASK) &&
+-	control->values = devm_kzalloc(dev, hweight64(control->cn_list), GFP_KERNEL);
++	control->values = devm_kcalloc(dev, hweight64(control->cn_list),
++				       sizeof(int), GFP_KERNEL);
+ 	if (!control->values)
+ 		return -ENOMEM;
+ 
 -- 
 2.51.0
 
