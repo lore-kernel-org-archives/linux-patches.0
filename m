@@ -1,103 +1,120 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773EB30100C
-	for <patches@lists.linux.dev>; Thu, 20 Nov 2025 19:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3153446C2;
+	Thu, 20 Nov 2025 20:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763668336; cv=none; b=duJk6szfnWVvISdJTj8zve72lLAeVNA5V4VspMu2kN1lZcBifSVS6QBfCKl7oS2bn/4DguTJMs9IeVw6PxxWfAMET9EsE2obLvSdPtvZmX10z4QZle5y8ZqEatMyExSn9u1pkZy5DrGNHKt57Z/ogUxoob4G3P8HFzfld4+jCR4=
+	t=1763670174; cv=none; b=H6nRS94uXcb0J/0xOarkaBG+CWB7ksZZIlnuIf3ZdYZIqlBozlESpWO6E1BkNXhGhXwjor3BzOw5mi4jSBM9uUmn0CkTvrwbm4iptuAXiHfU3DNmyTWVq8Q81nRZ1CkT8mVmEMSVnhnkPc0LfYmyUnKmy250Jr6NZ0h+QG70x3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763668336; c=relaxed/simple;
-	bh=u2+T1r+sWsvkftBxAcy6kHz++p4wMgmzB+K5Zky2h7w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PcgLpEkz4Onw0fJAJZysZdhv4eN2yBw6buV1mGAnU9wU8/ZMmMcq1hJpVvp6M6vQhivZKiHVehv+OPWq/wRcJM6sTcJGZq4dcEiLDQijdMcksVGZBEpnccqJu69xIeN/x2Hk+8BLn1qxYRBACEdnApXY1zAqfGlYuDemVK2Z+ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BqB/VdSx; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763670174; c=relaxed/simple;
+	bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ZBmuFY7703VsjCkXUIc1BALFw5vo6622l5U0MlxNHUoicIOsXKCkcCIt51ougyr/tT6np0fcHhJltEAvKucVvaNKEAJV8UqV4PEd/2zA5mGCRIuVUmJnFYGp+w0+VVGo7M4qirKsnpbDfdZC118xeYUUALwLfnxeSan69qabRQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kl30p+in; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqB/VdSx"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-37a48fc491aso11279221fa.1
-        for <patches@lists.linux.dev>; Thu, 20 Nov 2025 11:52:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763668333; x=1764273133; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Er2FJbbUBh6YnvwnjR3JbLaZQz/HmWBPLBBSx8YXc30=;
-        b=BqB/VdSxkYcEtiNBM8QlxEGg+eYs56XM+/SbMtqTfn5dw945sHNKqQUKzjzuH7eC4G
-         gJTkcsAZBmE68wiVt2DsoJOSxR84LI7JSlcw6a5GvXxI3u0WzyaY6AVgtQmKBWJ4T+w8
-         Mmncjy7zV0gku1D+ZKBgOZYWjDwS2D6+S1IXhyi0biHJuqYRnrZInQu8tpOyciLrmcr0
-         Dc0tWQ0x8x6krYxB5J5oTTr0gnjt4O3chWYqGoY+8io7gp9Wfz+jNVQQEp9aLkqZunbN
-         hM4oqJvb5QjeoEKW7PaT58X4HBwTwLdi60b8Kq/o8e2Lsma5YKgAlQDn2MErju6+E0gp
-         UZpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763668333; x=1764273133;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Er2FJbbUBh6YnvwnjR3JbLaZQz/HmWBPLBBSx8YXc30=;
-        b=dxNqBD/7zoJMvErlyTb8sx3KUJOTWyoJLJfpwV0oXYOd0oSM/XbMelTlPWA8g5q/UO
-         YUa3Y4blOyq/bgBky/x972SgSMxHEi9taweIcdo3bf2eBhIC/hKkzAJ6Sa/fpx9B1exo
-         5DIQwYH7HcpX33S2y8Im0V+YIrrKImGi2CKle0CzAReVZldJLgkVpovhxgJXIoNO2SNS
-         3vfdLpz9CngM1+IPldC6nPIi5xtRp4pUZ63b/Abmw0gHkMFFRmRL9ZwR0WPXZ6mtiwWi
-         bZefen8u4pZMy97pCw7xWqXaH86syAzUdFDLIft9U8Xe3iYURTa/wYQ8j8j3KkwMzQ0g
-         uZNg==
-X-Gm-Message-State: AOJu0Yy1ce5vvMUFXs1e1C5iNVgxmItQRgbiyUA7c7kP3+TXt5+CjX+w
-	oQIZA/ag9kGIC7iNAlgptRnsUTrWyGVmPYDndD552lrZ5BazB1myCD0g
-X-Gm-Gg: ASbGncsv3rBqHjmGjFuLoULtZXOyo/8XeOyWdLT2VjJKwrx0Lm/eoZO4M9XRMOXvWBj
-	wc/2JoLwsBi2MrxojCSCCfmL1xM4hJnTt4NuyybSHXHTNVI7QkAk+5Q3zccvm0/iNrqc59ZgbSc
-	sjc3wiVpjgcB7JD6/fkp2Oqotdy/ceTlT+pJpMVYmTVpbcm7x8lkXxgQ0vzBlsReKD8ypaW1Tf8
-	Lz/TR0Ut1sycLNFZve/CB6/e8Xt6wtcTL8a0Bi511N21z4BGUVByXqTeffEuu0syoRngxOrRbsK
-	oGbw42kdEE0rSRdZs3DPW7mx6twQGsAw4/ESnYqF+5F0m8ke/HSaHYEemJ+qwyIOnqIBG4V1uYr
-	0Op33fbM7hKMFH+6XiC9obSYbWKVxNVrBj02QnBWbWk/6/xN11Ib+3FWk19Xe4mqJMM7ifE9f1p
-	BSVj4K/az1
-X-Google-Smtp-Source: AGHT+IGO95a2DriC/sUFBPYgQuutgp8Cgi9UCTrUgdhkhO22s+KUmGoBKxdV94i/DlK6/m1jFIzlDQ==
-X-Received: by 2002:a2e:7205:0:b0:37a:4714:ff39 with SMTP id 38308e7fff4ca-37ccecd68aemr7615261fa.23.1763668332347;
-        Thu, 20 Nov 2025 11:52:12 -0800 (PST)
-Received: from localhost ([109.167.240.218])
-        by smtp.gmail.com with UTF8SMTPSA id 38308e7fff4ca-37cc6b4b47fsm6967301fa.2.2025.11.20.11.52.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Nov 2025 11:52:11 -0800 (PST)
-From: Askar Safin <safinaskar@gmail.com>
-To: Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	kernel-janitors@vger.kernel.org
-Subject: [PATCH] include/linux/fs.h: trivial fix: regualr -> regular
-Date: Thu, 20 Nov 2025 19:51:40 +0000
-Message-ID: <20251120195140.571608-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kl30p+in"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C1AC4CEF1;
+	Thu, 20 Nov 2025 20:22:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763670173;
+	bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Kl30p+inpq2mHmQcIL1RIejwVOf55PNSFWxKiy5AgFAw/5LDhRWN/OLdTMC3fq3YI
+	 ZxAXY+LWkYbfVhfqfeKF2DRBIjtd5NdP/lSmn5qcW0pamzMnqFNAJELUq44JP7ki+8
+	 vPuY0E5MoLAK6y2P9jLGQTGm93D14nVs2fjgMiGWQ5LcOI0RqEkBI1gcAhh4wmv7kz
+	 YW4JfvrQdtBYdBhckq8YYf9QQcgVHukTSwznADVn0EMQRGqZDiBgReBSwTobNn5oXZ
+	 kl/k36C0WL68eI3LuU8WP5wQc0MXra9BaSpLlucIVlJ/DcjWfpXgx3Gm7TqhbOn+lW
+	 NYxR5RmTfd9+A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 20 Nov 2025 13:22:46 -0700
+Subject: [PATCH] backlight: aw99706: Fix unused function warnings from
+ suspend/resume ops
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251120-backlight-aw99706-fix-unused-pm-functions-v1-1-8b9c17c4e783@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAJV4H2kC/yWNywrCMBAAf6Xs2YUktA31V8RDutm08RFLN1Gh9
+ N+NehwYZjYQXiMLHJsNVn5GiY9UQR8aoNmliTH6ymCU6bQ2CkdH11uc5ozuNQxW9RjiG0sqwh6
+ XO4aSKNeIYGBjbUetZ+qh9paVq/p7nc5/ljJemPJ3APv+AYV/7xCNAAAA
+X-Change-ID: 20251120-backlight-aw99706-fix-unused-pm-functions-fe2775c4dec6
+To: Lee Jones <lee@kernel.org>, Daniel Thompson <danielt@kernel.org>, 
+ Jingoo Han <jingoohan1@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pengyu Luo <mitltlatltl@gmail.com>, Junjie Cao <caojunjie650@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2470; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=D4nR4AaepjgwbZ3lVY7RfDmYBfaka+Jn2iZsXq8hE8U=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJnyFbO9UhiOJ9/hyQ2e4vlUSDUp6szMO6c+3Vyg4rxJb
+ V7SJYHkjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRkHWMDEsnPbvjHiKul/Ym
+ zEjVUmvBnxurJPMXCDy67bay+qxM0BFGhq28S8+l8V2Qv3/piaFg1rLPzzq4p15u694v8CBB+o2
+ 1IycA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Trivial fix.
+When building for a platform without CONFIG_PM_SLEEP, such as s390,
+there are two unused function warnings:
 
-Signed-off-by: Askar Safin <safinaskar@gmail.com>
+  drivers/video/backlight/aw99706.c:436:12: error: 'aw99706_resume' defined but not used [-Werror=unused-function]
+    436 | static int aw99706_resume(struct device *dev)
+        |            ^~~~~~~~~~~~~~
+  drivers/video/backlight/aw99706.c:429:12: error: 'aw99706_suspend' defined but not used [-Werror=unused-function]
+    429 | static int aw99706_suspend(struct device *dev)
+        |            ^~~~~~~~~~~~~~~
+
+SET_SYSTEM_SLEEP_PM_OPS, used within SIMPLE_DEV_PM_OPS, expands to
+nothing when CONFIG_PM_SLEEP is not set, so these functions are
+completely unused in this configuration.
+
+SIMPLE_DEV_PM_OPS is deprecated in favor of DEFINE_SIMPLE_DEV_PM_OPS,
+which avoids this issue by using pm_sleep_ptr to make these callbacks
+NULL when CONFIG_PM_SLEEP is unset while making the callback functions
+always appear used to the compiler regardless of configuration. Switch
+to DEFINE_SIMPLE_DEV_PM_OPS for aw99706_pm_ops to clear up the warning.
+
+Additionally, wrap the pointer to aw99706_pm_ops in pm_ptr() in
+aw99706_i2c_driver to ensure that the structure is completely eliminated
+in configurations without CONFIG_PM.
+
+Fixes: 88a8e9b49ee8 ("backlight: aw99706: Add support for Awinic AW99706 backlight")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- include/linux/fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/backlight/aw99706.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index dd3b57cfa..247e37090 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3103,7 +3103,7 @@ static inline bool inode_wrong_type(const struct inode *inode, umode_t mode)
-  * file_start_write - get write access to a superblock for regular file io
-  * @file: the file we want to write to
-  *
-- * This is a variant of sb_start_write() which is a noop on non-regualr file.
-+ * This is a variant of sb_start_write() which is a noop on non-regular file.
-  * Should be matched with a call to file_end_write().
-  */
- static inline void file_start_write(struct file *file)
+diff --git a/drivers/video/backlight/aw99706.c b/drivers/video/backlight/aw99706.c
+index b7c1d24b17ac..df5b23b2f753 100644
+--- a/drivers/video/backlight/aw99706.c
++++ b/drivers/video/backlight/aw99706.c
+@@ -440,7 +440,7 @@ static int aw99706_resume(struct device *dev)
+ 	return aw99706_hw_init(aw);
+ }
+ 
+-static SIMPLE_DEV_PM_OPS(aw99706_pm_ops, aw99706_suspend, aw99706_resume);
++static DEFINE_SIMPLE_DEV_PM_OPS(aw99706_pm_ops, aw99706_suspend, aw99706_resume);
+ 
+ static const struct i2c_device_id aw99706_ids[] = {
+ 	{ "aw99706" },
+@@ -461,7 +461,7 @@ static struct i2c_driver aw99706_i2c_driver = {
+ 	.driver = {
+ 		.name = "aw99706",
+ 		.of_match_table = aw99706_match_table,
+-		.pm = &aw99706_pm_ops,
++		.pm = pm_ptr(&aw99706_pm_ops),
+ 	},
+ };
+ 
 
-base-commit: fd95357fd8c6778ac7dea6c57a19b8b182b6e91f
--- 
-2.47.3
+---
+base-commit: 1704e206cb98c5e43af1483e3b07450055a31008
+change-id: 20251120-backlight-aw99706-fix-unused-pm-functions-fe2775c4dec6
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
