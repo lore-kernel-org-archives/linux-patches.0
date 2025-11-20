@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551232E733;
-	Thu, 20 Nov 2025 12:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D91E33122F;
+	Thu, 20 Nov 2025 12:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640541; cv=none; b=jYGbT8cyus++EQgd9oko8x9ySCnSah+taKUVMH0uV75LLaUzo4w3MbBiuQWEXh99VntDTqDtSuptUpbPwaBmqp0bElaEGEJ2DK2aTfTLbWuzsD/ctZpnw/XIjhUJfT19OlLJGxdiDxH/86l1sOl1Ddi+zdskkdeAgu6IdgtKmlg=
+	t=1763640541; cv=none; b=p2TiMr8P8QIeG08DZ2MaiHgD6bomG+cWBvQJ0/BrX4l8O1wkYKKqqDfV+bVefZejN11dyyMOqtjr80x6RuceZVf1cT77Mfw32TXNEUeGY0ugsDWAS0OD7DSu5TTDSloyCg0lOfIYQzB+hMPpO3WYgRyaMxg1OZOjJ9RVvzjoatU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763640541; c=relaxed/simple;
-	bh=dHdiqclNgshIpbh6Bo2FKYIxbGzT6Wmk88nZ1/oUxxY=;
+	bh=UK9kvzcaIRXXWLsztDfmVZhpgSVBaCQEabrCeC+aqDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=px0cN1UQTiFlfGavBGWSvdCrr6YUXBarmeHh4BeBFEjW4P2WlaKa8Ple0NzOl24tq3LkFKLmr5n+z7rJ+oXLNneqHB7IETJP3E+OQBxB0yHljtZH44Kv2oiRqbLSvWLgmkqrBzYKSkActcjnwnrtwRMs/1a4WiT7L9YOn4DM394=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9nTfUEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XJOf7eU4vxu5hujsqc3IzNofnefP25axqeDELBSKTLsAJRTcjfI1ei/FsdE+RF2IgtoewJk5slxgpF5u69QYMwPDFe0YPClsCNNkNX1sTK4ie3pAxkn+uOo4V5+vt8BGTVcOnnIBHJERQicI+/wuWq2Cb+6PV32WpsXktJ1Jdco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCTipmjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9nTfUEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D47FC4CEF1;
-	Thu, 20 Nov 2025 12:08:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCTipmjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1151C16AAE;
+	Thu, 20 Nov 2025 12:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640540;
-	bh=dHdiqclNgshIpbh6Bo2FKYIxbGzT6Wmk88nZ1/oUxxY=;
+	s=k20201202; t=1763640538;
+	bh=UK9kvzcaIRXXWLsztDfmVZhpgSVBaCQEabrCeC+aqDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9nTfUEcIvrlEA1xyvBv4JuAB+uMQemkaGw+4Z8uChvujMhU5etYJJfI6c1O+6e6R
-	 DAGWiEv8C7/+NGPaIe9ZnRaexluzOTjikNohkDldz7ds4nJ8Bj6mmz2qcE7KZQ3iko
-	 b47HqSSzzUlOqyD09K6PUZ9fWhnrIPr1AKcESU2FCnecmrtK7ODaOnAHI+/6eRtxUv
-	 U5zBD3l0fQVAz5x844xOwLT5Fn8RR3qM/qUT15cAEkL0RG0YRgljf9rEHAqhIq9NS5
-	 bPauZNeZN9rHsDU8d0AqMFsm8MYz+qyFxjB8rq+K6Fva1D7/fxKYs5U96al3WGQR3u
-	 AblzIcJuu0zWg==
+	b=GCTipmjPECFQJ3349CqpnzhwJ7FTCpCRd1kRWRvpOU7u5agd+S0Qeawgq6+xyRjAH
+	 f/Qez1F+SdafPQGPnAVdltYfxGoiojFS4WMHaSL3w2PGa5y29NJVm0vy8YspktfnCD
+	 X0X5ssgTXQ/jxYTsVDR79G2xmBDPFlzBPj1m8CBJ/MxecI36DQiUGYYRMwy38mEeZF
+	 KZT0lSCFaU2exsGZgey5I7LNekK3RccQwtRVt+07ZMMKlL5ZYJk8G9fX9jZWR0KVW8
+	 7/IqxRtaC+/M2UUSzAY2f8ebssFgST6glNC3Kw9ZIxJ3C5AhKeFFmaOo684oZbSU1Z
+	 XLvddsUOfxmEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+Cc: Pauli Virtanen <pav@iki.fi>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	peterz@infradead.org,
-	mingo@redhat.com,
-	acme@kernel.org,
-	namhyung@kernel.org,
-	linux-perf-users@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.4] Revert "perf/x86: Always store regs->ip in perf_callchain_kernel()"
-Date: Thu, 20 Nov 2025 07:08:20 -0500
-Message-ID: <20251120120838.1754634-11-sashal@kernel.org>
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.4] Bluetooth: L2CAP: export l2cap_chan_hold for modules
+Date: Thu, 20 Nov 2025 07:08:19 -0500
+Message-ID: <20251120120838.1754634-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
 References: <20251120120838.1754634-1-sashal@kernel.org>
@@ -58,313 +55,177 @@ X-stable-base: Linux 6.17.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 6d08340d1e354787d6c65a8c3cdd4d41ffb8a5ed ]
+[ Upstream commit e060088db0bdf7932e0e3c2d24b7371c4c5b867c ]
 
-This reverts commit 83f44ae0f8afcc9da659799db8693f74847e66b3.
+l2cap_chan_put() is exported, so export also l2cap_chan_hold() for
+modules.
 
-Currently we store initial stacktrace entry twice for non-HW ot_regs, which
-means callers that fail perf_hw_regs(regs) condition in perf_callchain_kernel.
+l2cap_chan_hold() has use case in net/bluetooth/6lowpan.c
 
-It's easy to reproduce this bpftrace:
-
-  # bpftrace -e 'tracepoint:sched:sched_process_exec { print(kstack()); }'
-  Attaching 1 probe...
-
-        bprm_execve+1767
-        bprm_execve+1767
-        do_execveat_common.isra.0+425
-        __x64_sys_execve+56
-        do_syscall_64+133
-        entry_SYSCALL_64_after_hwframe+118
-
-When perf_callchain_kernel calls unwind_start with first_frame, AFAICS
-we do not skip regs->ip, but it's added as part of the unwind process.
-Hence reverting the extra perf_callchain_store for non-hw regs leg.
-
-I was not able to bisect this, so I'm not really sure why this was needed
-in v5.2 and why it's not working anymore, but I could see double entries
-as far as v5.10.
-
-I did the test for both ORC and framepointer unwind with and without the
-this fix and except for the initial entry the stacktraces are the same.
-
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20251104215405.168643-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me compile my comprehensive analysis:
+Perfect! Now I have all the information needed for a comprehensive
+analysis.
 
-## COMPREHENSIVE ANALYSIS: Perf Stack Trace Duplicate Entry Bug
+## COMPREHENSIVE ANALYSIS
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. COMMIT MESSAGE AND CODE ANALYSIS
 
-**Subject**: Revert "perf/x86: Always store regs->ip in
-perf_callchain_kernel()"
+**What the commit does:**
+This commit adds a single line `EXPORT_SYMBOL_GPL(l2cap_chan_hold);` to
+export the existing `l2cap_chan_hold()` function for use by kernel
+modules. The function already exists and is used internally - this just
+makes it available to loadable modules.
 
-**Key Information**:
-- This is a **revert** of commit
-  83f44ae0f8afcc9da659799db8693f74847e66b3
-- **Problem**: Stores initial stacktrace entry **twice** for non-HW
-  pt_regs
-- **Reproducer provided**: Easy reproduction with bpftrace showing
-  duplicate `bprm_execve+1767` entry
-- **Testing**: Tested with both ORC and framepointer unwinders
-- **Maintainer support**: Acked-by Song Liu (original author), Steven
-  Rostedt (tracing), signed by Alexei Starovoitov (BPF)
-- **Note**: This is commit 46b2650126939 which is a backport of mainline
-  fix 6d08340d1e354
+**Why it exists:**
+The commit message states: "l2cap_chan_put() is exported, so export also
+l2cap_chan_hold() for modules. l2cap_chan_hold() has use case in
+net/bluetooth/6lowpan.c"
 
-### 2. DEEP CODE RESEARCH AND TECHNICAL ANALYSIS
+This creates symmetry - `l2cap_chan_put()` (line 517 in the diff
+context) is already exported, so `l2cap_chan_hold()` should be too.
 
-**Understanding the Bug Mechanism**:
+### 2. DEEP CODE RESEARCH - THE DEPENDENCY RELATIONSHIP
 
-The bug occurs in `perf_callchain_kernel()` function. Let me trace
-through the code flow:
+I conducted extensive research and discovered this commit is part of a
+**two-commit series**:
 
-**Current buggy code (lines 2790-2796)**:
+**Commit 1 (THIS COMMIT):** e060088db0bdf - "Bluetooth: L2CAP: export
+l2cap_chan_hold for modules"
+- Authored: Mon Nov 3 20:29:48 2025 +0200
+- First appeared in: v6.18-rc6
+
+**Commit 2 (THE BUG FIX):** 98454bc812f3 - "Bluetooth: 6lowpan: Don't
+hold spin lock over sleeping functions"
+- Authored: Mon Nov 3 20:29:49 2025 +0200 (1 second later!)
+- First appeared in: v6.18-rc6
+- Fixes a real kernel bug: "sleeping function called from invalid
+  context"
+
+**The dependency:** The bug fix (commit 2) adds calls to
+`l2cap_chan_hold()` in net/bluetooth/6lowpan.c:
 ```c
-if (perf_callchain_store(entry, regs->ip))  // ALWAYS stores regs->ip
-first
-    return;
-
-if (perf_hw_regs(regs))
-    unwind_start(&state, current, regs, NULL);
-else
-    unwind_start(&state, current, NULL, (void *)regs->sp);  // Also
-stores regs->ip during unwind!
+l2cap_chan_hold(peer->chan);
 ```
 
-**Fixed code**:
-```c
-if (perf_hw_regs(regs)) {
-    if (perf_callchain_store(entry, regs->ip))  // Only store for HW
-regs
-        return;
-    unwind_start(&state, current, regs, NULL);
-} else {
-    unwind_start(&state, current, NULL, (void *)regs->sp);  // Let
-unwinder add regs->ip
-}
-```
+**The problem without this export:**
+- 6lowpan can be built as a module (CONFIG_BT_6LOWPAN=m according to
+  Kconfig)
+- If the bug fix is backported without the export, the 6lowpan module
+  will fail to load with:
+  ```
+  ERROR: modpost: "l2cap_chan_hold" [net/bluetooth/6lowpan.ko]
+  undefined!
+  ```
+- This would be a **build failure** or **module load failure** depending
+  on when the error is caught
 
-**What is `perf_hw_regs()`?**
-From line 2774-2777, it checks if registers came from an IRQ/exception
-handler:
-```c
-static bool perf_hw_regs(struct pt_regs *regs)
-{
-    return regs->flags & X86_EFLAGS_FIXED;
-}
-```
+### 3. WHAT THE BUG FIX SOLVES
 
-**The Two Paths**:
+The companion bug fix (98454bc812f3) addresses a serious issue:
+- **Bug type:** Sleeping function called from invalid context (spinlock
+  held while calling sleeping function)
+- **Severity:** HIGH - causes kernel warnings/splats, potential deadlock
+- **Symptom:** `BUG: sleeping function called from invalid context at
+  kernel/locking/mutex.c:575`
+- **Fix:** Use refcounting (`l2cap_chan_hold()/l2cap_chan_put()`)
+  instead of spinlocks
+- **Fixes tag:** Points to commit 90305829635d
 
-1. **HW regs path** (IRQ/exception context):
-   - Registers captured by hardware interrupt
-   - `perf_hw_regs(regs)` returns `true`
-   - Need to explicitly store `regs->ip`
-   - Call `unwind_start(&state, current, regs, NULL)` with full regs
+### 4. BACKPORT VERIFICATION
 
-2. **Non-HW regs path** (software context like tracepoints):
-   - Registers captured by `perf_arch_fetch_caller_regs()` (line 614-619
-     in perf_event.h)
-   - `perf_hw_regs(regs)` returns `false`
-   - Call `unwind_start(&state, current, NULL, (void *)regs->sp)` with
-     only stack pointer
-   - **The unwinder automatically includes regs->ip during the unwinding
-     process**
-   - **BUG**: The buggy code ALSO stores it explicitly, causing
-     duplication
+I verified that **both commits have already been backported together**
+to multiple stable trees (6.17.y, 6.6.y, and others). The stable
+maintainers correctly identified this as a dependency pair and
+backported them together.
 
-**Bug Introduction History**:
+### 5. CLASSIFICATION: IS THIS A FEATURE OR A FIX?
 
-The buggy commit 83f44ae0f8afcc9da659799db8693f74847e66b3 was introduced
-in June 2019 (v5.2-rc7) to fix a different issue where RIP wasn't being
-saved for BPF selftests. However, that fix was overly broad - it
-unconditionally stored regs->ip even for non-HW regs where the unwinder
-would already include it.
+**This is a DEPENDENCY for a BUG FIX**, which falls under the stable
+kernel rule exception:
 
-**Affected Versions**: v5.2 through v6.17 (over 6 years of stable
-kernels!)
+From the stable rules: "**STABLE-SPECIFIC BACKPORTS:** Sometimes a
+mainline fix requires backporting with modifications. May need
+additional context or helper patches."
 
-### 3. SECURITY ASSESSMENT
+This export is:
+- ✅ Required infrastructure for a real bug fix
+- ✅ Trivial (single line addition)
+- ✅ Zero risk of regression (only makes an existing function available
+  to modules)
+- ✅ Already validated by the fact it's been backported to multiple
+  stable trees
+- ✅ Prevents build/load failures when the bug fix is present
 
-**No security implications** - this is a correctness bug in stack trace
-generation, not a security vulnerability. No CVE, no privilege
-escalation, no information leak beyond what's already visible.
+### 6. STABLE KERNEL RULES ASSESSMENT
 
-### 4. FEATURE VS BUG FIX CLASSIFICATION
+**Does it meet stable criteria?**
+- ✅ **Obviously correct:** One-line export, identical to existing
+  l2cap_chan_put() export
+- ✅ **Fixes a real problem:** Enables the bug fix to work when 6lowpan
+  is built as a module
+- ✅ **Small and contained:** Single line change
+- ✅ **No new features:** Just exports existing function
+- ✅ **Required for other fix:** Without this, the bug fix causes
+  build/load failures
+- ✅ **Build fix category:** Prevents "undefined symbol" errors
 
-**Definitively a BUG FIX**:
-- Fixes incorrect stack trace output (duplicate entries)
-- Does NOT add new functionality
-- Restores correct behavior that was broken in v5.2
+**Risk assessment:**
+- **Regression risk:** VERY LOW - only exports an existing function, no
+  behavior change
+- **User impact if not backported:** HIGH - 6lowpan module fails to load
+  after bug fix is applied
+- **User impact if backported:** NONE - transparent infrastructure
+  change
 
-### 5. CODE CHANGE SCOPE ASSESSMENT
+### 7. EVIDENCE OF ACCEPTANCE
 
-**Extremely small and surgical**:
-- **1 file changed**: `arch/x86/events/core.c`
-- **7 lines modified**: Moving the `perf_callchain_store()` call inside
-  the `if` block
-- **Single function affected**: `perf_callchain_kernel()`
-- **No API changes, no new exports, no dependencies**
+The commit has already been backported to numerous stable trees,
+confirming that stable maintainers consider this appropriate for stable:
+- stable/linux-6.17.y
+- stable/linux-6.6.y
+- Multiple other stable branches
 
-### 6. BUG TYPE AND SEVERITY
-
-**Bug Type**: Logic error - incorrect conditional placement causing
-duplicate stack trace entry
-
-**Severity**: **MEDIUM to HIGH**
-- **User-visible**: YES - anyone using perf/eBPF tools sees duplicate
-  entries
-- **Functional impact**: Corrupts observability data, misleading
-  debugging information
-- **Common scenario**: Affects ALL users collecting stack traces from
-  tracepoints, kprobes, raw_tp
-- **No system crashes**: But breaks critical debugging/profiling
-  workflows
-
-### 7. USER IMPACT EVALUATION
-
-**Very High Impact**:
-
-**Affected Users**:
-- **eBPF/BPF users**: bpftrace, bcc tools (very common in production)
-- **Performance engineers**: Using perf for profiling with stack traces
-- **System administrators**: Debugging with tracepoints
-- **Cloud providers**: Running observability tools
-- **Container environments**: Kubernetes/Docker using eBPF monitoring
-
-**Real-world scenario**:
-```bash
-# bpftrace -e 'tracepoint:sched:sched_process_exec { print(kstack()); }'
-bprm_execve+1767
-bprm_execve+1767    # <-- DUPLICATE! Confusing and wrong
-do_execveat_common.isra.0+425
-...
-```
-
-This makes stack traces misleading and harder to analyze. For production
-observability, **correct stack traces are essential**.
-
-### 8. REGRESSION RISK ANALYSIS
-
-**Very Low Regression Risk**:
-
-1. **Simple revert**: Reverting a previous change, well understood
-2. **Tested thoroughly**:
-   - Tested with ORC and framepointer unwinders
-   - BPF selftests added (commit 5b98eca7fae8e)
-   - Easy reproduction case provided
-3. **Maintainer consensus**: Multiple Acked-by from subsystem
-   maintainers
-4. **In mainline since Nov 2025**: Has been in v6.18-rc6+ for testing
-5. **Localized change**: Only affects one function, no ripple effects
-
-### 9. MAINLINE STABILITY
-
-**Strong mainline stability**:
-- **Mainline commit**: 6d08340d1e354 (Nov 5, 2025)
-- **First appeared**: v6.18-rc6
-- **Testing**: Includes reproducible test case and BPF selftests
-- **Reviews**: Acked by Song Liu (original author acknowledging the
-  revert is correct)
-- **Signed-off**: Alexei Starovoitov (BPF maintainer)
-
-### 10. STABLE KERNEL RULES COMPLIANCE
-
-**Checking against stable kernel criteria**:
-
-1. ✅ **Obviously correct**: YES - simple logic fix, moves conditional
-   correctly
-2. ✅ **Fixes real bug**: YES - duplicate stack trace entries (easy to
-   reproduce)
-3. ✅ **Important issue**: YES - breaks observability for common
-   workflows
-4. ✅ **Small and contained**: YES - 7 lines in one function
-5. ✅ **No new features**: CORRECT - only fixes existing functionality
-6. ✅ **Applies cleanly**: YES - this IS a stable backport
-   (46b2650126939)
-
-**Backport Status**: This commit (46b2650126939) is already a backport
-to stable of mainline commit 6d08340d1e354, committed by Sasha Levin on
-Nov 17, 2025.
-
-### ADDITIONAL CONTEXT
-
-**Why was the original fix needed in 2019?**
-The original commit 83f44ae0f8afcc9da659799db8693f74847e66b3 was fixing
-a BPF selftest where RIP wasn't being saved. However, the fix was too
-broad and caused this duplication issue.
-
-**Why revert now?**
-The author (Jiri Olsa) notes: "I was not able to bisect this, so I'm not
-really sure why this was needed in v5.2 and why it's not working
-anymore, but I could see double entries as far as v5.10." The unwinder
-behavior has evolved, and the explicit store is no longer needed (and
-causes duplication) for non-HW regs.
-
-**Related commits**:
-- There's a companion fix (e9e73b80b50ef) for fgraph/BPF stack unwinding
-  also backported
-- BPF selftests added to prevent regression
+Both commits (the export and the bug fix) were backported together as a
+pair, which is the correct approach.
 
 ### CONCLUSION
 
-This commit fixes a **real, user-visible bug** that affects a **very
-common use case** (stack trace collection via perf/eBPF tools). The bug
-has existed since v5.2 (2019) and affects ALL stable kernels from v5.2
-through v6.17.
+This commit is a **critical dependency** for the bug fix commit
+98454bc812f3. It's a textbook example of a "helper patch" that enables a
+bug fix to work correctly. The stable kernel rules explicitly allow such
+patches, and the fact that it's already been widely backported confirms
+this assessment.
 
-**Correctness**: The fix is small, surgical, well-tested, and has strong
-maintainer support.
-
-**Impact**: High - affects production observability workflows used by
-system administrators, performance engineers, and cloud providers.
-
-**Risk**: Very low - simple logic fix, thoroughly tested, in mainline
-since Nov 2025.
-
-**Stable Tree Alignment**: This perfectly fits stable kernel criteria -
-it's a small, obviously correct fix for an important user-visible bug
-that affects commonly-used functionality.
+The commit prevents build failures and ensures the 6lowpan module can
+load properly after the bug fix is applied. Without it, users with
+CONFIG_BT_6LOWPAN=m would experience broken functionality.
 
 **YES**
 
- arch/x86/events/core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 7610f26dfbd90..38f7102e2dacc 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -2787,13 +2787,13 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
- 		return;
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index d08320380ad67..35c57657bcf4e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -497,6 +497,7 @@ void l2cap_chan_hold(struct l2cap_chan *c)
  
--	if (perf_callchain_store(entry, regs->ip))
--		return;
--
--	if (perf_hw_regs(regs))
-+	if (perf_hw_regs(regs)) {
-+		if (perf_callchain_store(entry, regs->ip))
-+			return;
- 		unwind_start(&state, current, regs, NULL);
--	else
-+	} else {
- 		unwind_start(&state, current, NULL, (void *)regs->sp);
-+	}
+ 	kref_get(&c->kref);
+ }
++EXPORT_SYMBOL_GPL(l2cap_chan_hold);
  
- 	for (; !unwind_done(&state); unwind_next_frame(&state)) {
- 		addr = unwind_get_return_address(&state);
+ struct l2cap_chan *l2cap_chan_hold_unless_zero(struct l2cap_chan *c)
+ {
 -- 
 2.51.0
 
