@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640C32DEA7E;
-	Fri, 21 Nov 2025 13:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2881F09B3;
+	Fri, 21 Nov 2025 13:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731210; cv=none; b=IGUFukqpL7aec0WPUYHL1PtT2dz0cLDQ3U/FOmAk32LHuAzSmR6O+uu5gqtCvdkg+zo6LLWewyWuqsR6KSpcblZXq0NF/akbB3Q1PB9er2dlnEOzjB2Ttq8/WvkO+LDUmk/PYy7ckElDItmUEMQGjPjpLtHBYe0IMpR6gP+g/oY=
+	t=1763731213; cv=none; b=ib6bl4xAfF2d7yovDyZB7+2nFhvze2xORWa+ly6iKWyUvKrWSaaOYtLJqY/SL5/73Qf+h/wSePapUCKCZTaRVvrqvqNO4QqQkyGvuMfiEhi1KW5DvGVaLEQuZZAvnQ/CpGL4yuWxo02nVmMg4e125y+4WcejkHMfpSI60+aUEb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731210; c=relaxed/simple;
-	bh=7CF/UM7r6PuSbPSJ6DpCPoXVzAsCnvy1M7TL7CJgIX4=;
+	s=arc-20240116; t=1763731213; c=relaxed/simple;
+	bh=Nqu9GgO/QliyMDtuL9cek70DlYbVuTj2OD3dY1WLBRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyZDn5/mO5uUfw8+04FK5q/H6cvHFCEwUUsBgAc48lRFl8GTg2FESP6K7fEPlrLq0STBFWqiMR03XrbD3bEfhzrBTMwgT10DPPhHIWFrbvAYvERHN8vw4zBc189XT6Iwi9r0qjx+krVSsG9Vco6INc1fmC3lhhU7X9uUrOGVpu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Zbnldtl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI4QcavwboNrnOjz2kOj5TSD9Y6Dp7O9gl0oG+MKMypEa2R7QeiDS59w6L00ZaO3zHkH6m8apotAsG7aLF1CXWrmZ3Pfky0fKxMDysU01RKIxgv9HO89UQHudFFCRiPUVewu1GZrQih8txCVxbG6Sw5ERjfW0yfKhS0nEiY/hYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0BGWhDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Zbnldtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D930CC16AAE;
-	Fri, 21 Nov 2025 13:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0BGWhDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F34C4CEF1;
+	Fri, 21 Nov 2025 13:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731210;
-	bh=7CF/UM7r6PuSbPSJ6DpCPoXVzAsCnvy1M7TL7CJgIX4=;
+	s=korg; t=1763731213;
+	bh=Nqu9GgO/QliyMDtuL9cek70DlYbVuTj2OD3dY1WLBRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Zbnldtl/Djxg6kBoJympHCwWqgmfEqfyLGN7A/dSFCGlVH2RT1m7PJ96QjFbbVdu
-	 +V4+n3UUX/qs+fw1MarqGjf8WMjc+1JPSRxmppKDdnNa/Plh/oWhACvzHXmIztEP7t
-	 Cd4IIKjNz19rO7tTybrF4H8XnGz8u0lt3fH/XElg=
+	b=z0BGWhDGYI/iJlLXoK/2/3BGAoTFgm88QRrbN1AZEV1sMpUXJZyZj2HOtHjcIOMni
+	 JmOWYWL+mEIVKIk4Lt0jdSpEPLALwXLkIkZUYF3q1C3LfI0C/0tgAEecefmkxxIRVu
+	 VJPbN//U/K6ET4qRq5lAsioh8rk7kqsNdLLTrU4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 129/247] sched_ext: Fix unsafe locking in the scx_dump_state()
-Date: Fri, 21 Nov 2025 14:11:16 +0100
-Message-ID: <20251121130159.357259455@linuxfoundation.org>
+Subject: [PATCH 6.17 130/247] perf header: Write bpf_prog (infos|btfs)_cnt to data file
+Date: Fri, 21 Nov 2025 14:11:17 +0100
+Message-ID: <20251121130159.392849036@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,131 +59,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Thomas Falcon <thomas.falcon@intel.com>
 
-[ Upstream commit 5f02151c411dda46efcc5dc57b0845efcdcfc26d ]
+[ Upstream commit 85c894a80ac46aa177df04e0a33bcad409b7d64f ]
 
-For built with CONFIG_PREEMPT_RT=y kernels, the dump_lock will be converted
-sleepable spinlock and not disable-irq, so the following scenarios occur:
+With commit f0d0f978f3f5830a ("perf header: Don't write empty BPF/BTF
+info"), the write_bpf_( prog_info() | btf() ) functions exit without
+writing anything if env->bpf_prog.(infos| btfs)_cnt is zero.
 
-inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-irq_work/0/27 [HC0[0]:SC0[0]:HE1:SE1] takes:
-(&rq->__lock){?...}-{2:2}, at: raw_spin_rq_lock_nested+0x2b/0x40
-{IN-HARDIRQ-W} state was registered at:
-   lock_acquire+0x1e1/0x510
-   _raw_spin_lock_nested+0x42/0x80
-   raw_spin_rq_lock_nested+0x2b/0x40
-   sched_tick+0xae/0x7b0
-   update_process_times+0x14c/0x1b0
-   tick_periodic+0x62/0x1f0
-   tick_handle_periodic+0x48/0xf0
-   timer_interrupt+0x55/0x80
-   __handle_irq_event_percpu+0x20a/0x5c0
-   handle_irq_event_percpu+0x18/0xc0
-   handle_irq_event+0xb5/0x150
-   handle_level_irq+0x220/0x460
-   __common_interrupt+0xa2/0x1e0
-   common_interrupt+0xb0/0xd0
-   asm_common_interrupt+0x2b/0x40
-   _raw_spin_unlock_irqrestore+0x45/0x80
-   __setup_irq+0xc34/0x1a30
-   request_threaded_irq+0x214/0x2f0
-   hpet_time_init+0x3e/0x60
-   x86_late_time_init+0x5b/0xb0
-   start_kernel+0x308/0x410
-   x86_64_start_reservations+0x1c/0x30
-   x86_64_start_kernel+0x96/0xa0
-   common_startup_64+0x13e/0x148
+process_bpf_( prog_info() | btf() ), however, still expect a "count"
+value to exist in the data file. If btf information is empty, for
+example, process_bpf_btf will read garbage or some other data as the
+number of btf nodes in the data file. As a result, the data file will
+not be processed correctly.
 
- other info that might help us debug this:
- Possible unsafe locking scenario:
+Instead, write the count to the data file and exit if it is zero.
 
-        CPU0
-        ----
-   lock(&rq->__lock);
-   <Interrupt>
-     lock(&rq->__lock);
-
-  *** DEADLOCK ***
-
- stack backtrace:
- CPU: 0 UID: 0 PID: 27 Comm: irq_work/0
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x8c/0xd0
-  dump_stack+0x14/0x20
-  print_usage_bug+0x42e/0x690
-  mark_lock.part.44+0x867/0xa70
-  ? __pfx_mark_lock.part.44+0x10/0x10
-  ? string_nocheck+0x19c/0x310
-  ? number+0x739/0x9f0
-  ? __pfx_string_nocheck+0x10/0x10
-  ? __pfx_check_pointer+0x10/0x10
-  ? kvm_sched_clock_read+0x15/0x30
-  ? sched_clock_noinstr+0xd/0x20
-  ? local_clock_noinstr+0x1c/0xe0
-  __lock_acquire+0xc4b/0x62b0
-  ? __pfx_format_decode+0x10/0x10
-  ? __pfx_string+0x10/0x10
-  ? __pfx___lock_acquire+0x10/0x10
-  ? __pfx_vsnprintf+0x10/0x10
-  lock_acquire+0x1e1/0x510
-  ? raw_spin_rq_lock_nested+0x2b/0x40
-  ? __pfx_lock_acquire+0x10/0x10
-  ? dump_line+0x12e/0x270
-  ? raw_spin_rq_lock_nested+0x20/0x40
-  _raw_spin_lock_nested+0x42/0x80
-  ? raw_spin_rq_lock_nested+0x2b/0x40
-  raw_spin_rq_lock_nested+0x2b/0x40
-  scx_dump_state+0x3b3/0x1270
-  ? finish_task_switch+0x27e/0x840
-  scx_ops_error_irq_workfn+0x67/0x80
-  irq_work_single+0x113/0x260
-  irq_work_run_list.part.3+0x44/0x70
-  run_irq_workd+0x6b/0x90
-  ? __pfx_run_irq_workd+0x10/0x10
-  smpboot_thread_fn+0x529/0x870
-  ? __pfx_smpboot_thread_fn+0x10/0x10
-  kthread+0x305/0x3f0
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x40/0x70
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-
-This commit therefore use rq_lock_irqsave/irqrestore() to replace
-rq_lock/unlock() in the scx_dump_state().
-
-Fixes: 07814a9439a3 ("sched_ext: Print debug dump after an error exit")
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f0d0f978f3f5830a ("perf header: Don't write empty BPF/BTF info")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Thomas Falcon <thomas.falcon@intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/header.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index e1b502ef1243c..313206067ea3d 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4270,7 +4270,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 		size_t avail, used;
- 		bool idle;
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 4f2a6e10ed5cc..4e12be579140a 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1022,12 +1022,9 @@ static int write_bpf_prog_info(struct feat_fd *ff,
  
--		rq_lock(rq, &rf);
-+		rq_lock_irqsave(rq, &rf);
+ 	down_read(&env->bpf_progs.lock);
  
- 		idle = list_empty(&rq->scx.runnable_list) &&
- 			rq->curr->sched_class == &idle_sched_class;
-@@ -4339,7 +4339,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 		list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node)
- 			scx_dump_task(&s, &dctx, p, ' ');
- 	next:
--		rq_unlock(rq, &rf);
-+		rq_unlock_irqrestore(rq, &rf);
- 	}
+-	if (env->bpf_progs.infos_cnt == 0)
+-		goto out;
+-
+ 	ret = do_write(ff, &env->bpf_progs.infos_cnt,
+ 		       sizeof(env->bpf_progs.infos_cnt));
+-	if (ret < 0)
++	if (ret < 0 || env->bpf_progs.infos_cnt == 0)
+ 		goto out;
  
- 	dump_newline(&s);
+ 	root = &env->bpf_progs.infos;
+@@ -1067,13 +1064,10 @@ static int write_bpf_btf(struct feat_fd *ff,
+ 
+ 	down_read(&env->bpf_progs.lock);
+ 
+-	if (env->bpf_progs.btfs_cnt == 0)
+-		goto out;
+-
+ 	ret = do_write(ff, &env->bpf_progs.btfs_cnt,
+ 		       sizeof(env->bpf_progs.btfs_cnt));
+ 
+-	if (ret < 0)
++	if (ret < 0 || env->bpf_progs.btfs_cnt == 0)
+ 		goto out;
+ 
+ 	root = &env->bpf_progs.btfs;
 -- 
 2.51.0
 
