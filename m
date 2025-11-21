@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021A22FF173;
-	Fri, 21 Nov 2025 13:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D691A00F0;
+	Fri, 21 Nov 2025 13:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732768; cv=none; b=IDWKREjPpAyvqotWxMy1KUolYrx8O/qeXIKQs0TiTgsdMDiIuN+a4Zm7+d+tOOCwTnYsTC+va23W6l5V8Ty4Y48Pi1EWkmmulyzl2JAtmUtPVgE5TdqqCbcYax7kj2b67oTxbMkDU7bql6xPuUU/yOqeSHJ55DLyBHeDX6pA09s=
+	t=1763732771; cv=none; b=tcV41S8yFlzjKdGR7uOQkxrh0Ng52dMYlFnLL1jpVbqFPOXSt8mFJQA121o50l2OM8lAasQ3MJHFajymOznj8gio8Qq2f13TnK9PBzgjmYWVwXGWao2+6jGf3bBQAF4Pa+J4Mrpg229GS3rRqTyXN/jnZ6UERL5O8kdIwrbWtbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732768; c=relaxed/simple;
-	bh=/7couot9xJevDkx5M3hmrmNGgT3w8zkEPOf9uj4vn5U=;
+	s=arc-20240116; t=1763732771; c=relaxed/simple;
+	bh=8NcDsVwfotTJGAxFdf6tTwPy/KhFbv06HCfCTeSOKds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uqeL+EWjRdEg/IfvHZ4tGfQLwoX1PsunCsN/nWKd1zdRYz8kj+PWWUiLyZcdNtCC+8wszzokS+AeMca1g0E9nrw45641HKgqvYeQiLnHJpDxrgl3Pq0sciksUgXZdHh0+RJTwIQEj9AmadmTmm/nOEFSPGmBg682teMiWGBPFWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjnmfHx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WRRo6WP5RIWDB9aFMrwZ2OtDsS9O/QMf3o57eyE2koYwQk9DiZWNxeCJQUEFJA/UBW2uGGK3NcDPXHluBr7jNFl3sEPtUvZP8VXBHR4RvxuBkXIZJezQ0sXanuP6vGcQFLETV2WyHhEFrYYDtHYu9HhHf2D8v9eKJ32kyueBSsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly42quwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjnmfHx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F060C4CEF1;
-	Fri, 21 Nov 2025 13:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly42quwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A41EC4CEF1;
+	Fri, 21 Nov 2025 13:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732767;
-	bh=/7couot9xJevDkx5M3hmrmNGgT3w8zkEPOf9uj4vn5U=;
+	s=korg; t=1763732770;
+	bh=8NcDsVwfotTJGAxFdf6tTwPy/KhFbv06HCfCTeSOKds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjnmfHx1wGRXYpSeT4jwmp6Ct8G/5DjuvYs9CfLEB4B+tPOwlt0/VXq+i+OrM/7BH
-	 1Y1CbS7FjkowhuWGuqbMm4/hEmFyhIvIuvzTpVkDKz+D+taKVkO+FDBicS9QVE5Cdd
-	 /LaRHuIR9ElDAX2vvNLK10mvxUndZ9IOOZPatUVs=
+	b=Ly42quwBKwGuJWPhJy/nQiA2/Aj+2LzBCkuxYbZCi61YOxaKFLKIa8NwsLkC33MvW
+	 O1pmKb4qeyzXiRpd1JUSQstLFWOS+fpOYmFUR1qyrqHKw/ph8kbNDTU4n/Md6jd1jh
+	 6DJGPMZXBJsKLx52Mcx4Dw7t4vGRkJp1RGT1JF8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 235/529] drm/amd/display: Fix DVI-D/HDMI adapters
-Date: Fri, 21 Nov 2025 14:08:54 +0100
-Message-ID: <20251121130239.380339712@linuxfoundation.org>
+Subject: [PATCH 6.6 236/529] drm/amd/display: Disable VRR on DCE 6
+Date: Fri, 21 Nov 2025 14:08:55 +0100
+Message-ID: <20251121130239.415476045@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -55,50 +56,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 489f0f600ce2c0dae640df9035e1d82677d2580f ]
+[ Upstream commit 043c87d7d56e135393f8aab927148096e2d17589 ]
 
-When the EDID has the HDMI bit, we should simply select
-the HDMI signal type even on DVI ports.
+DCE 6 was not advertised as being able to support VRR,
+so let's mark it as unsupported for now.
 
-For reference see, the legacy amdgpu display code:
-amdgpu_atombios_encoder_get_encoder_mode
-which selects ATOM_ENCODER_MODE_HDMI for the same case.
-
-This commit fixes DVI connectors to work with DVI-D/HDMI
-adapters so that they can now produce output over these
-connectors for HDMI monitors with higher bandwidth modes.
-With this change, even HDMI audio works through DVI.
-
-For testing, I used a CAA-DMDHFD3 DVI-D/HDMI adapter
-with the following GPUs:
-
-Tahiti (DCE 6) - DC can now output 4K 30 Hz over DVI
-Polaris 10 (DCE 11.2) - DC can now output 4K 60 Hz over DVI
+The VRR implementation in amdgpu_dm depends on the VUPDATE
+interrupt which is not registered for DCE 6.
 
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_detection.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 +++-
+ drivers/gpu/drm/amd/display/dc/dc_helper.c        | 5 +++++
+ drivers/gpu/drm/amd/display/dc/dm_services.h      | 2 ++
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_detection.c b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-index c7a9e286a5d4d..978e09284da0e 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -1113,6 +1113,10 @@ static bool detect_link_and_local_sink(struct dc_link *link,
- 		if (sink->sink_signal == SIGNAL_TYPE_HDMI_TYPE_A &&
- 		    !sink->edid_caps.edid_hdmi)
- 			sink->sink_signal = SIGNAL_TYPE_DVI_SINGLE_LINK;
-+		else if (dc_is_dvi_signal(sink->sink_signal) &&
-+			 aud_support->hdmi_audio_native &&
-+			 sink->edid_caps.edid_hdmi)
-+			sink->sink_signal = SIGNAL_TYPE_HDMI_TYPE_A;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 8421e5f0737bf..4ffab762de543 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9243,6 +9243,8 @@ static void get_freesync_config_for_crtc(
+ 		} else {
+ 			config.state = VRR_STATE_INACTIVE;
+ 		}
++	} else {
++		config.state = VRR_STATE_UNSUPPORTED;
+ 	}
+ out:
+ 	new_crtc_state->freesync_config = config;
+@@ -10838,7 +10840,7 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
  
- 		if (link->local_sink && dc_is_dp_signal(sink_caps.signal))
- 			dp_trace_init(link);
+ 	dm_con_state = to_dm_connector_state(connector->state);
+ 
+-	if (!adev->dm.freesync_module)
++	if (!adev->dm.freesync_module || !dc_supports_vrr(sink->ctx->dce_version))
+ 		goto update;
+ 
+ 	/* Some eDP panels only have the refresh rate range info in DisplayID */
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_helper.c b/drivers/gpu/drm/amd/display/dc/dc_helper.c
+index 3907eeff560ce..0713a503f7f6d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dc_helper.c
+@@ -744,3 +744,8 @@ char *dce_version_to_string(const int version)
+ 		return "Unknown";
+ 	}
+ }
++
++bool dc_supports_vrr(const enum dce_version v)
++{
++	return v >= DCE_VERSION_8_0;
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/dm_services.h b/drivers/gpu/drm/amd/display/dc/dm_services.h
+index d0eed3b4771e6..f2ab2c42781a4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dm_services.h
++++ b/drivers/gpu/drm/amd/display/dc/dm_services.h
+@@ -294,4 +294,6 @@ void dm_dtn_log_end(struct dc_context *ctx,
+ 
+ char *dce_version_to_string(const int version);
+ 
++bool dc_supports_vrr(const enum dce_version v);
++
+ #endif /* __DM_SERVICES_H__ */
 -- 
 2.51.0
 
