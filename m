@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E6D26CE33;
-	Fri, 21 Nov 2025 13:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58D6190477;
+	Fri, 21 Nov 2025 13:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731586; cv=none; b=Bj2OmY0GGC+dJaSSsGoyOs1wjgFVdCtTrMMZ8BrPCfL5Xkpms1S65YAE0V0T1g1IkNCQkxtQI5jneXwmqUfkou1akWDrtnLq2rhTYBGaVedcjio8FR1TKBO2Y4l1ew1xT5y9jlUwe8xtPHmlnj2xh2nss36FJ3Y6J5b8ubMBgDE=
+	t=1763731589; cv=none; b=B2tLUpEF1BokhkiSseXH2d9RpQLHbE4RBl/r4a5J5LH49TWkZNMTuy7QCK41SSp0Qn8GA68UayGQcJ0CZvcVWcmFlGDyRkjdnzRRjBZ8t8kc55QQZ8p+26IEY+vxzmhW/Qv5vQRqIz/ShSGJRdECEOUOyoDgKuJr9fxfEkpuLDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731586; c=relaxed/simple;
-	bh=mAM2C41XQ23We/nFcXMtp5uB8dNnvo79TMPjsB9rXLg=;
+	s=arc-20240116; t=1763731589; c=relaxed/simple;
+	bh=/2/nYg1l6QlFrvB5qXtNTfCQgRvcgihI12QEKUuBWIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nk7bVDYW+a/IFQWb0M7k49yupYUoWirKv49432uwoerY/MdtSYM5NgrtpgkjEHiGTZGW2W07xkfFSmwl7UXQeKfTFwW/T3dzWB/drTenwbKyiEiMO0lCuhClzrqityAetNNDfEG1ChMco7+nz7SsFhCq+7FjLD/rZSdLy8EJwwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXVH3M82; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlrhR5l6J9DnuXTu2vdUjjqQhjrg+WDTs89+7hj/pr3mCJ9qBZ8IrGAa7fi1aTb3NcfseLKUBPfmWCn70qY/nNnA1gjndFsw/WFvGE5CpFyCC/ZIHjyJuwDzUnTuzA0QtFUDnsox5IrymR7CJpJw9KkJC/4LRn7+GiQUQ0+qZKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwseR29b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXVH3M82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38850C4CEF1;
-	Fri, 21 Nov 2025 13:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwseR29b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13544C4CEF1;
+	Fri, 21 Nov 2025 13:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731586;
-	bh=mAM2C41XQ23We/nFcXMtp5uB8dNnvo79TMPjsB9rXLg=;
+	s=korg; t=1763731589;
+	bh=/2/nYg1l6QlFrvB5qXtNTfCQgRvcgihI12QEKUuBWIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXVH3M82S6kd6b7FbkYKkiGcK+ExEK1+fqX18FoF96ZCEXUb0RpNSCP9yPqzo2zVY
-	 CoQvgmMl/5UdO3D/QyEBxUFYcc1mcfi1aqwrt9hEDKzxa2TZID5WOg4fMqWSSvHxzQ
-	 3aW65SYnl2aUMbguCWWuLVp9CDliatc9jUS/gwJc=
+	b=TwseR29bRD0CGDreiuZCAEICY/M8Eu+J3JLxcoPiQLr4amFQIg1cnQAPz2kNK8SgR
+	 fibfirW+p+LfIkFhIwF/Vz2+3IRcUqUQ0qyRvgs/KKo8fUT1ZxdS8lLNEXiD89m2+D
+	 KNuHToaT6CRRghFWMmHL0d7/MVTNd7AmrLz4Gz7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/185] drm/i915: Fix conversion between clock ticks and nanoseconds
-Date: Fri, 21 Nov 2025 14:10:30 +0100
-Message-ID: <20251121130143.990155373@linuxfoundation.org>
+Subject: [PATCH 6.12 004/185] smb: client: fix refcount leak in smb2_set_path_attr
+Date: Fri, 21 Nov 2025 14:10:31 +0100
+Message-ID: <20251121130144.026399590@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,57 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 7d44ad6b43d0be43d080180413a1b6c24cfbd266 ]
+[ Upstream commit b540de9e3b4fab3b9e10f30714a6f5c1b2a50ec3 ]
 
-When tick values are large, the multiplication by NSEC_PER_SEC is larger
-than 64 bits and results in bad conversions.
+Fix refcount leak in `smb2_set_path_attr` when path conversion fails.
 
-The issue is seen in PMU busyness counters that look like they have
-wrapped around due to bad conversion. i915 PMU implementation returns
-monotonically increasing counters. If a count is lesser than previous
-one, it will only return the larger value until the smaller value
-catches up. The user will see this as zero delta between two
-measurements even though the engines are busy.
+Function `cifs_get_writable_path` returns `cfile` with its reference
+counter `cfile->count` increased on success. Function `smb2_compound_op`
+would decrease the reference counter for `cfile`, as stated in its
+comment. By calling `smb2_rename_path`, the reference counter of `cfile`
+would leak if `cifs_convert_path_to_utf16` fails in `smb2_set_path_attr`.
 
-Fix it by using mul_u64_u32_div()
-
-Fixes: 77cdd054dd2c ("drm/i915/pmu: Connect engine busyness stats from GuC to pmu")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14955
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://lore.kernel.org/r/20251016000350.1152382-2-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 2ada9cb1df3f5405a01d013b708b1b0914efccfe)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo: Added the Fixes tag while cherry-picking to fixes]
+Fixes: 8de9e86c67ba ("cifs: create a helper to find a writeable handle by path name")
+Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c b/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-index 6e63505fe4781..f01399c78c99d 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-@@ -209,7 +209,7 @@ static u64 div_u64_roundup(u64 nom, u32 den)
- 
- u64 intel_gt_clock_interval_to_ns(const struct intel_gt *gt, u64 count)
- {
--	return div_u64_roundup(count * NSEC_PER_SEC, gt->clock_frequency);
-+	return mul_u64_u32_div(count, NSEC_PER_SEC, gt->clock_frequency);
- }
- 
- u64 intel_gt_pm_interval_to_ns(const struct intel_gt *gt, u64 count)
-@@ -219,7 +219,7 @@ u64 intel_gt_pm_interval_to_ns(const struct intel_gt *gt, u64 count)
- 
- u64 intel_gt_ns_to_clock_interval(const struct intel_gt *gt, u64 ns)
- {
--	return div_u64_roundup(gt->clock_frequency * ns, NSEC_PER_SEC);
-+	return mul_u64_u32_div(ns, gt->clock_frequency, NSEC_PER_SEC);
- }
- 
- u64 intel_gt_ns_to_pm_interval(const struct intel_gt *gt, u64 ns)
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index cb049bc70e0cb..1c65787657ddc 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -1132,6 +1132,8 @@ static int smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
+ 	smb2_to_name = cifs_convert_path_to_utf16(to_name, cifs_sb);
+ 	if (smb2_to_name == NULL) {
+ 		rc = -ENOMEM;
++		if (cfile)
++			cifsFileInfo_put(cfile);
+ 		goto smb2_rename_path;
+ 	}
+ 	in_iov.iov_base = smb2_to_name;
 -- 
 2.51.0
 
