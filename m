@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F3E35958;
-	Fri, 21 Nov 2025 13:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8B3491C2;
+	Fri, 21 Nov 2025 13:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732621; cv=none; b=ErZ6p426ixTW5RDIg7zMf6hy89bk1hOuVQiVQj2bf/tTV2JkaQfRgsqjIZtdY21Z7Us6syRXcGw3ha2HuWRFHzOd3OWREDk4kiljZ57h0d9mO/1VwI3wjjeKQ1LmHIOUW5hLxDWB1Dv0hEsj1prit2SsV3lgbXD/EYiK7TuZs+M=
+	t=1763732624; cv=none; b=IEVf1ikuZxO/99z+4zLY7Hh5KRBqucZd/EoBLG/2++tdtwJEm2vf4CE56H22EDvqz2mP/bZSvYnPy5iwBkExDQwVIm9oX2LMxgbQlB2l+6vhc0aLX6sqCG5YithHn7HXQlUiBpCz7YN3+2GFRN9gno1lnyddvNWg5YcKCrj6c1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732621; c=relaxed/simple;
-	bh=a3RpxfJsNgLe9+YXK/9MB7sjDcxlaxsuFmrApmdD580=;
+	s=arc-20240116; t=1763732624; c=relaxed/simple;
+	bh=x3b48/7KXJV3jNHcOccF0n1MClREp8QQh6JswJBSWkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rly2KeIZf8SBQ0FZFhUV6zTwTHHXRyq+fh1JC+rW0K4SwrNA1NLqnEjMGeFPOAwOWbGX7q2axpDCn+GJ9AR310QnrVJ0LOsE7KZn908BDsp1n0ctjqMdqXGsR2wfgGnnzyxq3lYuf3vrVOhzaSQmySvQTLBbLySXcHpa0gTGxeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfYLYvi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=seusAv3ORYTpjhYw6QgIH7GE7CM0sx8lJyHixaJGvgvFVZVjvdJJMd+kIrXut/NMol6aacNdrq6XDiZn4zH7YKs0XKBGvELAwaeMB/0UmIcgFQrOYHFPw4F10Gc/lVSdw9BWOQ1EMltsDzrIZeL1V0BphzK4nSSCJjPJpgDZS2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdkf7kj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfYLYvi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D070EC4CEF1;
-	Fri, 21 Nov 2025 13:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdkf7kj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D77C4CEF1;
+	Fri, 21 Nov 2025 13:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732621;
-	bh=a3RpxfJsNgLe9+YXK/9MB7sjDcxlaxsuFmrApmdD580=;
+	s=korg; t=1763732624;
+	bh=x3b48/7KXJV3jNHcOccF0n1MClREp8QQh6JswJBSWkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfYLYvi469w+UJvwFR0G2MFVd5/9QiY1LlahikiXoChVVgfMIQAl84ET3cNXmDmrP
-	 0o2aCdyLzeAj9/2aR/EWK328hFS97YoPdaAgU7klZ/zXn7jkfxJQXWaSroTp7U3Bjl
-	 4KwmnAQF4jb34ZpSiZOA3otEB8UWxacKUHJtmx90=
+	b=gdkf7kj9CMCs+0o/xTGayMeU/kRWB1oANgRQ1c4fon1XJGNED88pYnV5RqmSCkvr6
+	 gM9Mxtn2xQnPcN/gdCuw4+LIRVO3e5P5Y5me4oWtD58Cd9sYR2TaV2FUxxR1VvTZDd
+	 nWDf4YUjx7M+hBFx6pOImJxnDwfQ9QR9336nB2V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/529] drm/amdkfd: Tie UNMAP_LATENCY to queue_preemption
-Date: Fri, 21 Nov 2025 14:07:47 +0100
-Message-ID: <20251121130236.997281517@linuxfoundation.org>
+Subject: [PATCH 6.6 186/529] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
+Date: Fri, 21 Nov 2025 14:08:05 +0100
+Message-ID: <20251121130237.637564900@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -46,51 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Juraj Šarinay <juraj@sarinay.com>
 
-[ Upstream commit f3820e9d356132e18405cd7606e22dc87ccfa6d1 ]
+[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
 
-When KFD asks CP to preempt queues, other than preempt CP queues, CP
-also requests SDMA to preempt SDMA queues with UNMAP_LATENCY timeout.
-Currently queue_preemption_timeout_ms is 9000 ms by default but can be
-configured via module parameter. KFD_UNMAP_LATENCY_MS is hard coded as
-4000 ms though. This patch ties KFD_UNMAP_LATENCY_MS to
-queue_preemption_timeout_ms so in a slow system such as emulator, both
-CP and SDMA slowness are taken into account.
+An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
+A delay of 700 ms is not sufficient for cryptographic operations on smart
+cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
+or 3072-bit RSA. To prevent brute-force attacks, passports and similar
+documents introduce even longer delays into access control protocols
+(BAC/PACE).
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The timeout should be higher, but not too much. The expiration allows
+us to detect that a NFC target has disappeared.
+
+Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/net/nfc/nci_core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 27c9d5c43765a..b475c2ab9768a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -111,7 +111,14 @@
+diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
+index ea8595651c384..e066bdbc807be 100644
+--- a/include/net/nfc/nci_core.h
++++ b/include/net/nfc/nci_core.h
+@@ -52,7 +52,7 @@ enum nci_state {
+ #define NCI_RF_DISC_SELECT_TIMEOUT		5000
+ #define NCI_RF_DEACTIVATE_TIMEOUT		30000
+ #define NCI_CMD_TIMEOUT				5000
+-#define NCI_DATA_TIMEOUT			700
++#define NCI_DATA_TIMEOUT			3000
  
- #define KFD_KERNEL_QUEUE_SIZE 2048
- 
--#define KFD_UNMAP_LATENCY_MS	(4000)
-+/*  KFD_UNMAP_LATENCY_MS is the timeout CP waiting for SDMA preemption. One XCC
-+ *  can be associated to 2 SDMA engines. queue_preemption_timeout_ms is the time
-+ *  driver waiting for CP returning the UNMAP_QUEUE fence. Thus the math is
-+ *  queue_preemption_timeout_ms = sdma_preemption_time * 2 + cp workload
-+ *  The format here makes CP workload 10% of total timeout
-+ */
-+#define KFD_UNMAP_LATENCY_MS	\
-+	((queue_preemption_timeout_ms - queue_preemption_timeout_ms / 10) >> 1)
- 
- #define KFD_MAX_SDMA_QUEUES	128
+ struct nci_dev;
  
 -- 
 2.51.0
