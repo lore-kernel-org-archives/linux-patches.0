@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A0126CE33;
-	Fri, 21 Nov 2025 13:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA2E26CE33;
+	Fri, 21 Nov 2025 13:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732013; cv=none; b=lT7/oYS+XdDisHjovwYySFPvK16GZ+moOzxN6cYdnBV280ejY5Ka/EHEivYdpJ9JcQ2ztwbuzpjw1t09GQuGqCtGOpz/1+QEUjsuxMgjFQ1nDKGLMBPCFtXGo6J+mODViTYyHmFY6ILH3S3tYOXongPRx8kxjn7apYlfHziz1zo=
+	t=1763732016; cv=none; b=feoYFSisNjWUSN6MLxO5YTFSQQ8Znlr4PpWtWL+pilpjEGEiXaKUbvUWqotD0bqPdRR2utzbiexuppXc7OJPgtRg7OhHbZ4rRvbYWae1wZ7d77Cq7fCf+dE/Y+Jqo2Zf5UNCg+PDoGTIDh6PnqTemKxvnWlswhbJQlujuXAsfC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732013; c=relaxed/simple;
-	bh=NQ4twKWoVLB6Jrq6Kw4iTCP4uP8HHZK+EjF8tA62n3I=;
+	s=arc-20240116; t=1763732016; c=relaxed/simple;
+	bh=uZ+9yy/22RHpHTF1PK1YB7b9bNedIO/s7hVaL+K5qv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKIEIptbXrJolR5J8WZ+qdccCt6KMUHJ5tSeuw+MZIqU0nzRO8Z0WowHrHVVnKj2H1ZwIaSHi8w0QH3/5upUwQqOLxhwfAPbtDP0Hy+jm0MNpKAm3akLPt16fSUGYm/g8YDJG02V7pbmsn62IOLHRl1b8AHnVUWatKRJgC8KlFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9Xd9u8b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEA5z5zODWH2cWMGK4K6KMwH/nz10fGaE604RzqODqGG/4cu9ldTa/f0hZXLv5T+PhLZBTRgQfhNe2eGCNIXpk88rOnJf6zobxXwA4EJVD3x7iVee3kYWSRMyT67/Bz8DMW0bhxmY26NHmOTbHOGl0duLjpI/m8FAU7iWV90XO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSQTWwZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9Xd9u8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA43C4CEF1;
-	Fri, 21 Nov 2025 13:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSQTWwZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21844C4CEF1;
+	Fri, 21 Nov 2025 13:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732013;
-	bh=NQ4twKWoVLB6Jrq6Kw4iTCP4uP8HHZK+EjF8tA62n3I=;
+	s=korg; t=1763732016;
+	bh=uZ+9yy/22RHpHTF1PK1YB7b9bNedIO/s7hVaL+K5qv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9Xd9u8bmIRjQe0UbF2DJz9qhkbazc4bIrLI0feeSGZmtLZmkxtX6xQMJqHXABo5F
-	 gncLt7qXD8HVEVUlv90OMmTKRT/6zW/lkL5jpf9AFT4XEgH6Bbp9et2IP1jrBZ0lu9
-	 x0Gxan3hICPHdkShaBIMp9OjPinQV8uFBBEtbzT8=
+	b=NSQTWwZTnMKyJkijPLaokniAAqWaCwiOW91FzxbhMaQzUUKlrvrM480aVoPCrhlsv
+	 w5o07tqtooxNlNrS447QvMfAlhhR6Q3dhSl25YzhiwjX3bQYMT8dMhMGrOzO7MhKAE
+	 CzLN6xLZiE1Z6rPn2hD7SQEwX3KseyCKEqwpbNXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	David Hildenbrand <david@redhat.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 126/185] mm/shmem: fix THP allocation and fallback loop
-Date: Fri, 21 Nov 2025 14:12:33 +0100
-Message-ID: <20251121130148.422647467@linuxfoundation.org>
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Alexey Charkov <alchark@gmail.com>,
+	Hugh Cole-Baker <sigmaris@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 127/185] mmc: sdhci-of-dwcmshc: Change DLL_STRBIN_TAPNUM_DEFAULT to 0x4
+Date: Fri, 21 Nov 2025 14:12:34 +0100
+Message-ID: <20251121130148.459835139@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -61,68 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit fc745ff317566ec299e16346ebb9eacc8fe5b9d2 upstream.
+commit a28352cf2d2f8380e7aca8cb61682396dca7a991 upstream.
 
-The order check and fallback loop is updating the index value on every
-loop.  This will cause the index to be wrongly aligned by a larger value
-while the loop shrinks the order.
+strbin signal delay under 0x8 configuration is not stable after massive
+test. The recommandation of it should be 0x4.
 
-This may result in inserting and returning a folio of the wrong index and
-cause data corruption with some userspace workloads [1].
-
-[kasong@tencent.com: introduce a temporary variable to improve code]
-  Link: https://lkml.kernel.org/r/20251023065913.36925-1-ryncsn@gmail.com
-  Link: https://lore.kernel.org/linux-mm/CAMgjq7DqgAmj25nDUwwu1U2cSGSn8n4-Hqpgottedy0S6YYeUw@mail.gmail.com/ [1]
-Link: https://lkml.kernel.org/r/20251022105719.18321-1-ryncsn@gmail.com
-Link: https://lore.kernel.org/linux-mm/CAMgjq7DqgAmj25nDUwwu1U2cSGSn8n4-Hqpgottedy0S6YYeUw@mail.gmail.com/ [1]
-Fixes: e7a2ab7b3bb5 ("mm: shmem: add mTHP support for anonymous shmem")
-Closes: https://lore.kernel.org/linux-mm/CAMgjq7DqgAmj25nDUwwu1U2cSGSn8n4-Hqpgottedy0S6YYeUw@mail.gmail.com/
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Tested-by: Alexey Charkov <alchark@gmail.com>
+Tested-by: Hugh Cole-Baker <sigmaris@gmail.com>
+Fixes: 08f3dff799d4 ("mmc: sdhci-of-dwcmshc: add rockchip platform support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1785,6 +1785,7 @@ static struct folio *shmem_alloc_and_add
- 	struct shmem_inode_info *info = SHMEM_I(inode);
- 	unsigned long suitable_orders = 0;
- 	struct folio *folio = NULL;
-+	pgoff_t aligned_index;
- 	long pages;
- 	int error, order;
- 
-@@ -1798,10 +1799,12 @@ static struct folio *shmem_alloc_and_add
- 		order = highest_order(suitable_orders);
- 		while (suitable_orders) {
- 			pages = 1UL << order;
--			index = round_down(index, pages);
--			folio = shmem_alloc_folio(gfp, order, info, index);
--			if (folio)
-+			aligned_index = round_down(index, pages);
-+			folio = shmem_alloc_folio(gfp, order, info, aligned_index);
-+			if (folio) {
-+				index = aligned_index;
- 				goto allocated;
-+			}
- 
- 			if (pages == HPAGE_PMD_NR)
- 				count_vm_event(THP_FILE_FALLBACK);
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -94,7 +94,7 @@
+ #define DLL_TXCLK_TAPNUM_DEFAULT	0x10
+ #define DLL_TXCLK_TAPNUM_90_DEGREES	0xA
+ #define DLL_TXCLK_TAPNUM_FROM_SW	BIT(24)
+-#define DLL_STRBIN_TAPNUM_DEFAULT	0x8
++#define DLL_STRBIN_TAPNUM_DEFAULT	0x4
+ #define DLL_STRBIN_TAPNUM_FROM_SW	BIT(24)
+ #define DLL_STRBIN_DELAY_NUM_SEL	BIT(26)
+ #define DLL_STRBIN_DELAY_NUM_OFFSET	16
 
 
