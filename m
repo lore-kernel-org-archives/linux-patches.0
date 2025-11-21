@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DB234C9A7;
-	Fri, 21 Nov 2025 13:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036FF34D917;
+	Fri, 21 Nov 2025 13:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732238; cv=none; b=STE/LPvqW255Tg6F0kqaNeD1TSgDVlcVaxrIN7JwMq/gJmRzomTbwel0XIYRi6lcRc3VDgiiwP4XYD42dPJuNLMBnkg/rCP/xHzDi7WXR5TuBF9eHixPSApw8vGVd5Z7x4aN6RM9r7a621xNlqjBFxviPIUYqJdG4BUSg3ttF5c=
+	t=1763732242; cv=none; b=XmNlnrU29wz8K4jsRNWVWezuFnaaoVN8wVQ8MB6WbwaIXDZTN3K7I9jHJFdnSGj7XeHnpYwZoYYBsg35fZXS+Za+DpwbVsfzdQpoO78OWLReR7YtxOwpPEpapoWOumHaOA8z0Tv8lcExZA9NkG0hF8pFsD2DdvlfjvHv3IS4yFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732238; c=relaxed/simple;
-	bh=W6zl6cs3l6Z8Ced2xkvcMQOTKl+M7Z2yrCBw4KElxk4=;
+	s=arc-20240116; t=1763732242; c=relaxed/simple;
+	bh=hC5a4gP42qwR5rnw1vPHnghN3IwSpNnC2bdKZ5YLrR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmwHeGVOXu0LUlZztKCh9cjB0EaLkGlgyT4dtWrYV3i217E/HCioCohQl8Opp+N0pqdAQVQZlSawSxgqCOvqACs5lV1iy1KZVDry3WcKLiRGzX9PnExrDs572cdt2CdWmBYUws+ClyoVa44fqJR4xKcXqCea53dTM4Y1qYEHjyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7RU2J/G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qc6kNmCHbueDKkwmxagahM+4xRtu0XSS8oTpmdxOkzZQsDWCVJebJeiRq/SvJ10K+XmejeKTq8cFFp2ZR0wtcdFCU5i3NqAFJriCA5mf4nEVaxSWrRLnJHtgQ19ePHfM2+obMtR+sHPyhaZ/kSxKz/7zFAuoEFelV4ypZOD0cVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XU9jBw+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7RU2J/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F592C4CEFB;
-	Fri, 21 Nov 2025 13:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XU9jBw+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2ECC116C6;
+	Fri, 21 Nov 2025 13:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732238;
-	bh=W6zl6cs3l6Z8Ced2xkvcMQOTKl+M7Z2yrCBw4KElxk4=;
+	s=korg; t=1763732241;
+	bh=hC5a4gP42qwR5rnw1vPHnghN3IwSpNnC2bdKZ5YLrR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7RU2J/Gu0G5Vrt66WDvAAL7/WMyFOXddCq6vg0fN07PO7oKwL6WSkm2+eHiCC40E
-	 q++T85IbenR1stBsKcB1U5rV500zFtwiFxVShQI68R31n2rN0Bbl2GgpZTihTybf7T
-	 0x/iAYG7FIRtvYuRFIvzx5nA3+XXuBiaP6qBijaA=
+	b=XU9jBw+iqaiFW5nROWtsq42J79qEvNLeoLSr3Nw2nwpk2pYtahhoZ4rd5PYjnMKeM
+	 sThZRIcGk/1wHX8vagZTcJnpXxZIICFAuucS21xnbB7TpH5vxLWB8UX1oLsocfMhFC
+	 R5jaLOKTMEu91dG4f+WHsyQZj+/KDM99CLwTIN2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Hongyan Xia <hongyan.xia2@arm.com>,
-	John Stultz <jstultz@google.com>
-Subject: [PATCH 6.6 051/529] sched/pelt: Avoid underestimation of task utilization
-Date: Fri, 21 Nov 2025 14:05:50 +0100
-Message-ID: <20251121130232.828187990@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 025/529] crypto: aspeed-acry - Convert to platform remove callback returning void
+Date: Fri, 21 Nov 2025 14:05:24 +0100
+Message-ID: <20251121130231.895793641@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -47,80 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 50181c0cff31281b9f1071575ffba8a102375ece upstream.
+[ Upstream commit 8819da7e685008de2c1926c067a388b1ecaeb8aa ]
 
-Lukasz Luba reported that a thread's util_est can significantly decrease as
-a result of sharing the CPU with other threads.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-The use case can be easily reproduced with a periodic task TA that runs 1ms
-and sleeps 100us. When the task is alone on the CPU, its max utilization and
-its util_est is around 888. If another similar task starts to run on the
-same CPU, TA will have to share the CPU runtime and its maximum utilization
-will decrease around half the CPU capacity (512) then TA's util_est will
-follow this new maximum trend which is only the result of sharing the CPU
-with others tasks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Such situation can be detected with runnable_avg wich is close or
-equal to util_avg when TA is alone, but increases above util_avg when TA
-shares the CPU with other threads and wait on the runqueue.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-[ We prefer an util_est that overestimate rather than under estimate
-  because in 1st case we will not provide enough performance to the
-  task which will remain under-provisioned, whereas in the other case we
-  will create some idle time which will enable to reduce contention and
-  as a result reduces the util_est so the overestimate will be transient
-  whereas the underestimate will remain. ]
-
-[ mingo: Refined the changelog, added comments from the LKML discussion. ]
-
-Reported-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/lkml/CAKfTPtDd-HhF-YiNTtL9i5k0PfJbF819Yxu4YquzfXgwi7voyw@mail.gmail.com/#t
-Link: https://lore.kernel.org/r/20231122140119.472110-1-vincent.guittot@linaro.org
-Cc: Hongyan Xia <hongyan.xia2@arm.com>
-Cc: John Stultz <jstultz@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 3c9bf72cc1ce ("crypto: aspeed - fix double free caused by devm")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/crypto/aspeed/aspeed-acry.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4836,6 +4836,11 @@ static inline unsigned long task_util(st
- 	return READ_ONCE(p->se.avg.util_avg);
+diff --git a/drivers/crypto/aspeed/aspeed-acry.c b/drivers/crypto/aspeed/aspeed-acry.c
+index 247c568aa8dfe..b4613bd4ad964 100644
+--- a/drivers/crypto/aspeed/aspeed-acry.c
++++ b/drivers/crypto/aspeed/aspeed-acry.c
+@@ -794,7 +794,7 @@ static int aspeed_acry_probe(struct platform_device *pdev)
+ 	return rc;
  }
  
-+static inline unsigned long task_runnable(struct task_struct *p)
-+{
-+	return READ_ONCE(p->se.avg.runnable_avg);
-+}
-+
- static inline unsigned long _task_util_est(struct task_struct *p)
+-static int aspeed_acry_remove(struct platform_device *pdev)
++static void aspeed_acry_remove(struct platform_device *pdev)
  {
- 	struct util_est ue = READ_ONCE(p->se.avg.util_est);
-@@ -4955,6 +4960,14 @@ static inline void util_est_update(struc
- 		return;
+ 	struct aspeed_acry_dev *acry_dev = platform_get_drvdata(pdev);
  
- 	/*
-+	 * To avoid underestimate of task utilization, skip updates of EWMA if
-+	 * we cannot grant that thread got all CPU time it wanted.
-+	 */
-+	if ((ue.enqueued + UTIL_EST_MARGIN) < task_runnable(p))
-+		goto done;
-+
-+
-+	/*
- 	 * Update Task's estimated utilization
- 	 *
- 	 * When *p completes an activation we can consolidate another sample
+@@ -802,15 +802,13 @@ static int aspeed_acry_remove(struct platform_device *pdev)
+ 	crypto_engine_exit(acry_dev->crypt_engine_rsa);
+ 	tasklet_kill(&acry_dev->done_task);
+ 	clk_disable_unprepare(acry_dev->clk);
+-
+-	return 0;
+ }
+ 
+ MODULE_DEVICE_TABLE(of, aspeed_acry_of_matches);
+ 
+ static struct platform_driver aspeed_acry_driver = {
+ 	.probe		= aspeed_acry_probe,
+-	.remove		= aspeed_acry_remove,
++	.remove_new	= aspeed_acry_remove,
+ 	.driver		= {
+ 		.name   = KBUILD_MODNAME,
+ 		.of_match_table = aspeed_acry_of_matches,
+-- 
+2.51.0
+
 
 
