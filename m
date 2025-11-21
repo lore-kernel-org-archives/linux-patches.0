@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0266334DB41;
-	Fri, 21 Nov 2025 13:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB3634D917;
+	Fri, 21 Nov 2025 13:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733013; cv=none; b=EzZw3boq3ASwX8G4wWkROqV11mHW748vRxsk74bm4U0cKFPn99KssQGQfF3YHHSTL8N3iU6o2QcVdKEgAO1t1cK453jRTz2dzJweEVfI/OG6c8jP77JjNPJJWO/vrswV9XVwrcBVib+ZF2M3ucvVig9Gz5ApYskalZ4bmTBifY8=
+	t=1763733015; cv=none; b=RhOiGlJa3SgQyCwnEIH9KeQj5Gw3XlvSU5PvjxsL0+HkUZ5EfwtO40go1NKsAntNgIttrgHIJjsvexlz30POh4NYnqWjX4wUyqlkiW1TBfauxYXFrSWrZUSDiV0E3ugXMgpXbqm0ZmEdiwyEzEQ1Z6Ux/COq8HQ7Loc3ROFEZmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733013; c=relaxed/simple;
-	bh=UtMynFHEn7at+o5F/31uXgdcCguRSgikXYEO3wqo7FA=;
+	s=arc-20240116; t=1763733015; c=relaxed/simple;
+	bh=jAJceNT+P0W2L8DXgWF27buBz4zgPN0AFAE7hCQ1UpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ann7X5y1QAxoUk9On8ZOptYx+DjnQ+C7sOYGfJBDLQRbOUEHr7Si2wHNujr0E8l+skdLT6U5F7wrDXqM5WurNTARWw+t9ZQZddwWutSKOEvnZsJ7Wuuw2B/sfERi4mHF3U94y9XAL04SD9PQpftzVXqzs2lEzE6bNeYCEVCW4n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d53ue0tZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IuWPCbh6TO3apJCFvTslqZt0kDbe3WTqmyofdpCiWNsSmGQveKe/wIjkaIlVX7EzUocwvPi2nzzdjV+Zom3CcsUb1DVNtmqDUQBlicDbLyr94MVfRdYPxd0MFPpffeiTVdA1SlEaM6Sxb0wLZ1s3r1EHo0gBDVzzikBFkgDUwCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muYEjCVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d53ue0tZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693C8C4CEF1;
-	Fri, 21 Nov 2025 13:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muYEjCVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473EBC116C6;
+	Fri, 21 Nov 2025 13:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733012;
-	bh=UtMynFHEn7at+o5F/31uXgdcCguRSgikXYEO3wqo7FA=;
+	s=korg; t=1763733015;
+	bh=jAJceNT+P0W2L8DXgWF27buBz4zgPN0AFAE7hCQ1UpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d53ue0tZh6sMtGZhCYL+oDca8VtordVHj4w7pXacb6jcJmiTkc7bU9JNhFOGRgvJs
-	 y0I+PK2DMV88Tldrvem6VX2Ys9C0wY+2mYrSQwZS98r42wVbps108kPeDAYL0gFuvj
-	 3J+U+JRt+nog0zsHjO7T1mbb5homI1YaDBiUZQPs=
+	b=muYEjCVDnT2zZMQtyhYqnJEF0j1d9ygMNXqrqsKr2JMLNrZbF1CoNQuPUEkyEmnut
+	 kQ5CrzYYXsJJR//GCorGxnMsH+UPgOCUg0qN8O+m1+Vkb9nCZr8KnXw6XdZWIvRKTj
+	 yj6CmzIY58ovk1y32NMzNH9lUbO3msF3VZVup870=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Dahl Juhl <juhl.emildahl@gmail.com>,
 	Sascha Hauer <s.hauer@pengutronix.de>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 321/529] tools: lib: thermal: dont preserve owner in install
-Date: Fri, 21 Nov 2025 14:10:20 +0100
-Message-ID: <20251121130242.448543192@linuxfoundation.org>
+Subject: [PATCH 6.6 322/529] tools: lib: thermal: use pkg-config to locate libnl3
+Date: Fri, 21 Nov 2025 14:10:21 +0100
+Message-ID: <20251121130242.483508316@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,39 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Dahl Juhl <juhl.emildahl@gmail.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit 1375152bb02ab2a8435e87ea27034482dbc95f57 ]
+[ Upstream commit b31f7f725cd932e2c2b41f3e4b66273653953687 ]
 
-Instead of preserving mode, timestamp, and owner, for the object files
-during installation, just preserve the mode and timestamp.
+To make libthermal more cross compile friendly use pkg-config to locate
+libnl3. Only if that fails fall back to hardcoded /usr/include/libnl3.
 
-When installing as root, the installed files should be owned by root.
-When installing as user, --preserve=ownership doesn't work anyway. This
-makes --preserve=ownership rather pointless.
-
-Signed-off-by: Emil Dahl Juhl <juhl.emildahl@gmail.com>
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/thermal/Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/tools/lib/thermal/Makefile b/tools/lib/thermal/Makefile
-index 8890fd57b110c..1694889847caf 100644
+index 1694889847caf..8d21ea1950a31 100644
 --- a/tools/lib/thermal/Makefile
 +++ b/tools/lib/thermal/Makefile
-@@ -147,7 +147,7 @@ endef
- install_lib: libs
- 	$(call QUIET_INSTALL, $(LIBTHERMAL_ALL)) \
- 		$(call do_install_mkdir,$(libdir_SQ)); \
--		cp -fpR $(LIBTHERMAL_ALL) $(DESTDIR)$(libdir_SQ)
-+		cp -fR --preserve=mode,timestamp $(LIBTHERMAL_ALL) $(DESTDIR)$(libdir_SQ)
+@@ -59,8 +59,12 @@ else
+   CFLAGS := -g -Wall
+ endif
  
- install_headers:
- 	$(call QUIET_INSTALL, headers) \
++NL3_CFLAGS = $(shell pkg-config --cflags libnl-3.0 2>/dev/null)
++ifeq ($(NL3_CFLAGS),)
++NL3_CFLAGS = -I/usr/include/libnl3
++endif
++
+ INCLUDES = \
+--I/usr/include/libnl3 \
+ -I$(srctree)/tools/lib/thermal/include \
+ -I$(srctree)/tools/lib/ \
+ -I$(srctree)/tools/include \
+@@ -72,6 +76,7 @@ INCLUDES = \
+ override CFLAGS += $(EXTRA_WARNINGS)
+ override CFLAGS += -Werror -Wall
+ override CFLAGS += -fPIC
++override CFLAGS += $(NL3_CFLAGS)
+ override CFLAGS += $(INCLUDES)
+ override CFLAGS += -fvisibility=hidden
+ override CFGLAS += -Wl,-L.
 -- 
 2.51.0
 
