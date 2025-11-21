@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986434BA4E;
-	Fri, 21 Nov 2025 13:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A0634C828;
+	Fri, 21 Nov 2025 13:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732105; cv=none; b=IFhVtfUOSbHYw+fOTE4LFgabaJsPJGjlfYb/s2ChmIr7AZJr7ok2+A0fBlQHCfwPpks36bJhrnoOI5L9NF1viYKG4RFIwX/OWFTJ896UGEwPUB6L1eaOM8bPigOFeckA2xYNJEb2H0KoYNeR1YOwCTHEjwJoWbZCVY+AKGeSDzk=
+	t=1763732108; cv=none; b=qcdbNboOucLsDYzAs3eQOC4zmkqnaVw6HoB+a3Z5QcSOiBRI7fiJYKokZ2PFjkYn1szeJiu1qSJgyWv+3TR0xdOvPoMyswLxvnlUDK0/WWo6VzN6ZGKvbackDPV251bfu80Q4hGrFUXh+2KgsZQyHUR0hY2zmqHK9WGZCTXLfvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732105; c=relaxed/simple;
-	bh=Sks7V1H2+1/vdsYYVgRjV1GuYwY+MCWBdYYNZduCzWE=;
+	s=arc-20240116; t=1763732108; c=relaxed/simple;
+	bh=0lPQOXxbTvv301mqzd5vjZfAPEjGGPIuU5p9VBrMLlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5q7n3CAJ2bNIyFBJWybukV8VUpOaaZxU+iNuOBl19UZCAQA0FsgkhRvzIQmlqcP/Bi+Dz0PNH42i1bas/gLnjcKLR+Cr7WoYEYwQtog2xWJAW3kiEo6VXf4PsLMl0kvXs+HChh/cQiS97VHSJAcYMha9tz83GwddUDT0UkP2o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLuhaUiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kcu7PtuFMibj333+Klu0UxPPqMlVacM18soO61mvHS9XACy3mOim2TXceWxkdTKTO6e+sgQ05aiUU36yVZUiW5AOITgHnas1x99zLtJyrzRWzxsvFUozwRmIRuy6EYyFTyuJobSkEfE83+O1aLQyUYOqKkv/4IEUVyDrrfgdO08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlHBPp1V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLuhaUiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B8DC4CEF1;
-	Fri, 21 Nov 2025 13:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlHBPp1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE91C4CEF1;
+	Fri, 21 Nov 2025 13:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732105;
-	bh=Sks7V1H2+1/vdsYYVgRjV1GuYwY+MCWBdYYNZduCzWE=;
+	s=korg; t=1763732108;
+	bh=0lPQOXxbTvv301mqzd5vjZfAPEjGGPIuU5p9VBrMLlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLuhaUiYjn5ZqYOh0v1SZdzETPrvs3mN3BhdVzNqE/gi1WtDCzvA/eNdS9EVcYWjF
-	 Hj0mLDh/syn1jvQ/0AbAM2RC3GTVgK4ghzSWbCV2mNSueOHQ00NJhoEHv3eNm7ddlk
-	 2qE4ueJjMeMF9IDXlvk1pCVbojh0scbzUeOvfudM=
+	b=NlHBPp1VOzHeE3IHzSINaiqvQialXedS6FLSkqcltytk9gX0TIpuZ1+8aVyBcXuh7
+	 gLCHcoqcqmMgyYYxmbYa47ewSdoMJR96CMvAgMFWwyqyDcZAR7LomY51+6bzDg7AHx
+	 cnJ7GT+8A1q2kr3H2tay2MfEQDDUrhvnsmq8dsxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhao <yan.y.zhao@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com,
+	Hillf Danton <hdanton@sina.com>,
+	Vishal Annapurve <vannapurve@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/185] KVM: guest_memfd: Remove RCU-protected attribute from slot->gmem.file
-Date: Fri, 21 Nov 2025 14:13:11 +0100
-Message-ID: <20251121130149.796294327@linuxfoundation.org>
+Subject: [PATCH 6.12 165/185] KVM: guest_memfd: Remove bindings on memslot deletion when gmem is dying
+Date: Fri, 21 Nov 2025 14:13:12 +0100
+Message-ID: <20251121130149.833204911@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,154 +53,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhao <yan.y.zhao@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 67b43038ce14d6b0673bdffb2052d879065c94ae ]
+[ Upstream commit ae431059e75d36170a5ae6b44cc4d06d43613215 ]
 
-Remove the RCU-protected attribute from slot->gmem.file. No need to use RCU
-primitives rcu_assign_pointer()/synchronize_rcu() to update this pointer.
+When unbinding a memslot from a guest_memfd instance, remove the bindings
+even if the guest_memfd file is dying, i.e. even if its file refcount has
+gone to zero.  If the memslot is freed before the file is fully released,
+nullifying the memslot side of the binding in kvm_gmem_release() will
+write to freed memory, as detected by syzbot+KASAN:
 
-- slot->gmem.file is updated in 3 places:
-  kvm_gmem_bind(), kvm_gmem_unbind(), kvm_gmem_release().
-  All of them are protected by kvm->slots_lock.
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in kvm_gmem_release+0x176/0x440 virt/kvm/guest_memfd.c:353
+  Write of size 8 at addr ffff88807befa508 by task syz.0.17/6022
 
-- slot->gmem.file is read in 2 paths:
-  (1) kvm_gmem_populate
-        kvm_gmem_get_file
-        __kvm_gmem_get_pfn
+  CPU: 0 UID: 0 PID: 6022 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+   print_address_description mm/kasan/report.c:378 [inline]
+   print_report+0xca/0x240 mm/kasan/report.c:482
+   kasan_report+0x118/0x150 mm/kasan/report.c:595
+   kvm_gmem_release+0x176/0x440 virt/kvm/guest_memfd.c:353
+   __fput+0x44c/0xa70 fs/file_table.c:468
+   task_work_run+0x1d4/0x260 kernel/task_work.c:227
+   resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
+   exit_to_user_mode_loop+0xe9/0x130 kernel/entry/common.c:43
+   exit_to_user_mode_prepare include/linux/irq-entry-common.h:225 [inline]
+   syscall_exit_to_user_mode_work include/linux/entry-common.h:175 [inline]
+   syscall_exit_to_user_mode include/linux/entry-common.h:210 [inline]
+   do_syscall_64+0x2bd/0xfa0 arch/x86/entry/syscall_64.c:100
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7fbeeff8efc9
+   </TASK>
 
-  (2) kvm_gmem_get_pfn
-         kvm_gmem_get_file
-         __kvm_gmem_get_pfn
+  Allocated by task 6023:
+   kasan_save_stack mm/kasan/common.c:56 [inline]
+   kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
+   poison_kmalloc_redzone mm/kasan/common.c:397 [inline]
+   __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:414
+   kasan_kmalloc include/linux/kasan.h:262 [inline]
+   __kmalloc_cache_noprof+0x3e2/0x700 mm/slub.c:5758
+   kmalloc_noprof include/linux/slab.h:957 [inline]
+   kzalloc_noprof include/linux/slab.h:1094 [inline]
+   kvm_set_memory_region+0x747/0xb90 virt/kvm/kvm_main.c:2104
+   kvm_vm_ioctl_set_memory_region+0x6f/0xd0 virt/kvm/kvm_main.c:2154
+   kvm_vm_ioctl+0x957/0xc60 virt/kvm/kvm_main.c:5201
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  Path (1) kvm_gmem_populate() requires holding kvm->slots_lock, so
-  slot->gmem.file is protected by the kvm->slots_lock in this path.
+  Freed by task 6023:
+   kasan_save_stack mm/kasan/common.c:56 [inline]
+   kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
+   kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+   poison_slab_object mm/kasan/common.c:252 [inline]
+   __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:284
+   kasan_slab_free include/linux/kasan.h:234 [inline]
+   slab_free_hook mm/slub.c:2533 [inline]
+   slab_free mm/slub.c:6622 [inline]
+   kfree+0x19a/0x6d0 mm/slub.c:6829
+   kvm_set_memory_region+0x9c4/0xb90 virt/kvm/kvm_main.c:2130
+   kvm_vm_ioctl_set_memory_region+0x6f/0xd0 virt/kvm/kvm_main.c:2154
+   kvm_vm_ioctl+0x957/0xc60 virt/kvm/kvm_main.c:5201
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  Path (2) kvm_gmem_get_pfn() does not require holding kvm->slots_lock.
-  However, it's also not guarded by rcu_read_lock() and rcu_read_unlock().
-  So synchronize_rcu() in kvm_gmem_unbind()/kvm_gmem_release() actually
-  will not wait for the readers in kvm_gmem_get_pfn() due to lack of RCU
-  read-side critical section.
+Deliberately don't acquire filemap invalid lock when the file is dying as
+the lifecycle of f_mapping is outside the purview of KVM.  Dereferencing
+the mapping is *probably* fine, but there's no need to invalidate anything
+as memslot deletion is responsible for zapping SPTEs, and the only code
+that can access the dying file is kvm_gmem_release(), whose core code is
+mutually exclusive with unbinding.
 
-  The path (2) kvm_gmem_get_pfn() is safe without RCU protection because:
-  a) kvm_gmem_bind() is called on a new memslot, before the memslot is
-     visible to kvm_gmem_get_pfn().
-  b) kvm->srcu ensures that kvm_gmem_unbind() and freeing of a memslot
-     occur after the memslot is no longer visible to kvm_gmem_get_pfn().
-  c) get_file_active() ensures that kvm_gmem_get_pfn() will not access the
-     stale file if kvm_gmem_release() sets it to NULL.  This is because if
-     kvm_gmem_release() occurs before kvm_gmem_get_pfn(), get_file_active()
-     will return NULL; if get_file_active() does not return NULL,
-     kvm_gmem_release() should not occur until after kvm_gmem_get_pfn()
-     releases the file reference.
+Note, the mutual exclusivity is also what makes it safe to access the
+bindings on a dying gmem instance.  Unbinding either runs with slots_lock
+held, or after the last reference to the owning "struct kvm" is put, and
+kvm_gmem_release() nullifies the slot pointer under slots_lock, and puts
+its reference to the VM after that is done.
 
-Signed-off-by: Yan Zhao <yan.y.zhao@intel.com>
-Message-ID: <20241104084303.29909-1-yan.y.zhao@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: ae431059e75d ("KVM: guest_memfd: Remove bindings on memslot deletion when gmem is dying")
+Reported-by: syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68fa7a22.a70a0220.3bf6c6.008b.GAE@google.com
+Tested-by: syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com
+Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
+Cc: stable@vger.kernel.org
+Cc: Hillf Danton <hdanton@sina.com>
+Reviewed-By: Vishal Annapurve <vannapurve@google.com>
+Link: https://patch.msgid.link/20251104011205.3853541-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kvm_host.h |    7 ++++++-
- virt/kvm/guest_memfd.c   |   34 +++++++++++++++++++++-------------
- 2 files changed, 27 insertions(+), 14 deletions(-)
+ virt/kvm/guest_memfd.c |   45 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -608,7 +608,12 @@ struct kvm_memory_slot {
- 
- #ifdef CONFIG_KVM_PRIVATE_MEM
- 	struct {
--		struct file __rcu *file;
-+		/*
-+		 * Writes protected by kvm->slots_lock.  Acquiring a
-+		 * reference via kvm_gmem_get_file() is protected by
-+		 * either kvm->slots_lock or kvm->srcu.
-+		 */
-+		struct file *file;
- 		pgoff_t pgoff;
- 	} gmem;
- #endif
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -261,15 +261,19 @@ static int kvm_gmem_release(struct inode
- 	 * dereferencing the slot for existing bindings needs to be protected
- 	 * against memslot updates, specifically so that unbind doesn't race
- 	 * and free the memslot (kvm_gmem_get_file() will return NULL).
-+	 *
-+	 * Since .release is called only when the reference count is zero,
-+	 * after which file_ref_get() and get_file_active() fail,
-+	 * kvm_gmem_get_pfn() cannot be using the file concurrently.
-+	 * file_ref_put() provides a full barrier, and get_file_active() the
-+	 * matching acquire barrier.
- 	 */
- 	mutex_lock(&kvm->slots_lock);
- 
- 	filemap_invalidate_lock(inode->i_mapping);
- 
- 	xa_for_each(&gmem->bindings, index, slot)
--		rcu_assign_pointer(slot->gmem.file, NULL);
--
--	synchronize_rcu();
-+		WRITE_ONCE(slot->gmem.file, NULL);
- 
- 	/*
- 	 * All in-flight operations are gone and new bindings can be created.
-@@ -298,8 +302,7 @@ static inline struct file *kvm_gmem_get_
- 	/*
- 	 * Do not return slot->gmem.file if it has already been closed;
- 	 * there might be some time between the last fput() and when
--	 * kvm_gmem_release() clears slot->gmem.file, and you do not
--	 * want to spin in the meanwhile.
-+	 * kvm_gmem_release() clears slot->gmem.file.
- 	 */
- 	return get_file_active(&slot->gmem.file);
+@@ -534,31 +534,50 @@ err:
+ 	return r;
  }
-@@ -510,11 +513,11 @@ int kvm_gmem_bind(struct kvm *kvm, struc
- 	}
  
- 	/*
--	 * No synchronize_rcu() needed, any in-flight readers are guaranteed to
--	 * be see either a NULL file or this new file, no need for them to go
--	 * away.
-+	 * memslots of flag KVM_MEM_GUEST_MEMFD are immutable to change, so
-+	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
-+	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
- 	 */
--	rcu_assign_pointer(slot->gmem.file, file);
-+	WRITE_ONCE(slot->gmem.file, file);
- 	slot->gmem.pgoff = start;
- 
- 	xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL);
-@@ -550,8 +553,12 @@ void kvm_gmem_unbind(struct kvm_memory_s
- 
- 	filemap_invalidate_lock(file->f_mapping);
- 	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
--	rcu_assign_pointer(slot->gmem.file, NULL);
--	synchronize_rcu();
+-void kvm_gmem_unbind(struct kvm_memory_slot *slot)
++static void __kvm_gmem_unbind(struct kvm_memory_slot *slot, struct kvm_gmem *gmem)
+ {
+ 	unsigned long start = slot->gmem.pgoff;
+ 	unsigned long end = start + slot->npages;
+-	struct kvm_gmem *gmem;
++
++	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
 +
 +	/*
 +	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
 +	 * cannot see this memslot.
 +	 */
 +	WRITE_ONCE(slot->gmem.file, NULL);
++}
++
++void kvm_gmem_unbind(struct kvm_memory_slot *slot)
++{
+ 	struct file *file;
+ 
+ 	/*
+-	 * Nothing to do if the underlying file was already closed (or is being
+-	 * closed right now), kvm_gmem_release() invalidates all bindings.
++	 * Nothing to do if the underlying file was _already_ closed, as
++	 * kvm_gmem_release() invalidates and nullifies all bindings.
+ 	 */
+-	file = kvm_gmem_get_file(slot);
+-	if (!file)
++	if (!slot->gmem.file)
+ 		return;
+ 
+-	gmem = file->private_data;
+-
+-	filemap_invalidate_lock(file->f_mapping);
+-	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
++	file = kvm_gmem_get_file(slot);
+ 
+ 	/*
+-	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
+-	 * cannot see this memslot.
++	 * However, if the file is _being_ closed, then the bindings need to be
++	 * removed as kvm_gmem_release() might not run until after the memslot
++	 * is freed.  Note, modifying the bindings is safe even though the file
++	 * is dying as kvm_gmem_release() nullifies slot->gmem.file under
++	 * slots_lock, and only puts its reference to KVM after destroying all
++	 * bindings.  I.e. reaching this point means kvm_gmem_release() hasn't
++	 * yet destroyed the bindings or freed the gmem_file, and can't do so
++	 * until the caller drops slots_lock.
+ 	 */
+-	WRITE_ONCE(slot->gmem.file, NULL);
++	if (!file) {
++		__kvm_gmem_unbind(slot, slot->gmem.file->private_data);
++		return;
++	}
++
++	filemap_invalidate_lock(file->f_mapping);
++	__kvm_gmem_unbind(slot, file->private_data);
  	filemap_invalidate_unlock(file->f_mapping);
  
  	fput(file);
-@@ -563,11 +570,12 @@ static struct folio *__kvm_gmem_get_pfn(
- 					pgoff_t index, kvm_pfn_t *pfn,
- 					bool *is_prepared, int *max_order)
- {
-+	struct file *gmem_file = READ_ONCE(slot->gmem.file);
- 	struct kvm_gmem *gmem = file->private_data;
- 	struct folio *folio;
- 
--	if (file != slot->gmem.file) {
--		WARN_ON_ONCE(slot->gmem.file);
-+	if (file != gmem_file) {
-+		WARN_ON_ONCE(gmem_file);
- 		return ERR_PTR(-EFAULT);
- 	}
- 
 
 
