@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED72A3F9D2;
-	Fri, 21 Nov 2025 13:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB062EA46B;
+	Fri, 21 Nov 2025 13:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730928; cv=none; b=dcqCtCks8LfPuVeaGhLKSSZi8iUUPODr1qh8XIt4XbNQmkYd6eEIA+4ctbfRL4JlcHI+DL1N43YfamnSoAgbOr5mphojgPXZ4ACzt9cOL1jsfTrbd/b5U+61vFh26W1Vtr1OTWzNL6ZqK2xdF2pYdeNMpt6s1MyOtznFXKuNXRY=
+	t=1763730931; cv=none; b=DhaS63N91UvGGPpmVd1PIJlcT0iEbNdv1T/fjPHNF1uw0i06uZRA+cC0nau2RfXk+fuUdoxl15W0INgAM+o3Y+2AESI4pkRZQzeZ35YXWZN80OXt7F8crdQbOKoEwfRGspZPxitMq/McTax6Z0PLAHUUq1xFrE+W3xc2DHbzMJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730928; c=relaxed/simple;
-	bh=QLwipdWQcfxEy4gT3589nfZJx2sqPRV6ASC2LnzRJHw=;
+	s=arc-20240116; t=1763730931; c=relaxed/simple;
+	bh=tVye0QXRpCstWaOoi7YEGyzQ32WYtez70NJex5LcEPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0DoL+uL9huHdEkN6Uk6FRBIuvD2Q4oJUW8md8BponbJWL1BdN+Isf7Y3ToK1gj4WknhgxNlKVXgYjVQ+oTmjI+Of5DbRjWw8OtnkI6HxoKERQFE2FkoLaoOsvWownsw2NiEzTzJdS0sKzDT7jgu1PG2V7uDj791/jo+Q8sQLaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyJHe1fU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFSZh5pNXc4vrsgQUi+Kqp1eghWuig2yu3ttZW8OSb5DlMzGPxoPuldhAwwnY1iRlQLMRLUoZptyg+qpPyTJEAACpQZGy/WHKooG1sGHt4VsiKhu468DahtIIqa8YfPeaG7HWFzB2iFElIX7aAyhdvw351y0L8IcbD/Dq+WPlTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVgzGhnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyJHe1fU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F49C4CEF1;
-	Fri, 21 Nov 2025 13:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVgzGhnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B149C4CEF1;
+	Fri, 21 Nov 2025 13:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730927;
-	bh=QLwipdWQcfxEy4gT3589nfZJx2sqPRV6ASC2LnzRJHw=;
+	s=korg; t=1763730930;
+	bh=tVye0QXRpCstWaOoi7YEGyzQ32WYtez70NJex5LcEPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyJHe1fUrgUyL8o7hzVIMAzrJmFiN8gn39Y5EaiUs5piTF8b7FKvzqmdKTzWrSjJD
-	 eXyZARiOg1Dc9hBpZ2Z9XmI33mbuy3sPhkUhh8vGniwdRmKB4inN03OgtxRtSHlS+t
-	 LZEpwgGwnzfyKgViPPa9QVD6pAHGjWQxnpL/3s3Q=
+	b=KVgzGhnIdWGAcPdtzJ/WgwaMOeWVQzlxuw6szcTbcJh9ZbO8L+Qvt8M46D+khRFUs
+	 cL2dHvcLOoIPnDqrdw88fZrnNh4CvkwjXBTWy10gUhP8Yih3jd8pjQcvv1vTiUi+jH
+	 BHTLnfjXJBhwewpY4txcwAgna1Fdrrax1Q0kL0GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Kim <jonathan.kim@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
+	Joshua Watt <jpewhacker@gmail.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 030/247] drm/amdkfd: fix suspend/resume all calls in mes based eviction path
-Date: Fri, 21 Nov 2025 14:09:37 +0100
-Message-ID: <20251121130155.685554184@linuxfoundation.org>
+Subject: [PATCH 6.17 031/247] NFS4: Apply delay_retrans to async operations
+Date: Fri, 21 Nov 2025 14:09:38 +0100
+Message-ID: <20251121130155.721506734@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,139 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Kim <jonathan.kim@amd.com>
+From: Joshua Watt <jpewhacker@gmail.com>
 
-[ Upstream commit 079ae5118e1f0dcf5b1ab68ffdb5760b06ed79a2 ]
+[ Upstream commit 7a84394f02ab1985ebbe0a8d6f6d69bd040de4b3 ]
 
-Suspend/resume all gangs should be done with the device lock is held.
+The setting of delay_retrans is applied to synchronous RPC operations
+because the retransmit count is stored in same struct nfs4_exception
+that is passed each time an error is checked. However, for asynchronous
+operations (READ, WRITE, LOCKU, CLOSE, DELEGRETURN), a new struct
+nfs4_exception is made on the stack each time the task callback is
+invoked. This means that the retransmit count is always zero and thus
+delay_retrans never takes effect.
 
-Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Apply delay_retrans to these operations by tracking and updating their
+retransmit count.
+
+Change-Id: Ieb33e046c2b277cb979caa3faca7f52faf0568c9
+Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/amdkfd/kfd_device_queue_manager.c | 73 ++++++-------------
- 1 file changed, 21 insertions(+), 52 deletions(-)
+ fs/nfs/nfs4proc.c       | 13 +++++++++++++
+ include/linux/nfs_xdr.h |  1 +
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 6c5c7c1bf5eda..6e7bc983fc0b6 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -1209,6 +1209,15 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
- 	pr_debug_ratelimited("Evicting process pid %d queues\n",
- 			    pdd->process->lead_thread->pid);
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index b76da06864e53..e5fa29dcdd114 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3636,6 +3636,7 @@ struct nfs4_closedata {
+ 	} lr;
+ 	struct nfs_fattr fattr;
+ 	unsigned long timestamp;
++	unsigned short retrans;
+ };
  
-+	if (dqm->dev->kfd->shared_resources.enable_mes) {
-+		pdd->last_evict_timestamp = get_jiffies_64();
-+		retval = suspend_all_queues_mes(dqm);
-+		if (retval) {
-+			dev_err(dev, "Suspending all queues failed");
-+			goto out;
-+		}
-+	}
-+
- 	/* Mark all queues as evicted. Deactivate all active queues on
- 	 * the qpd.
- 	 */
-@@ -1221,23 +1230,27 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
- 		decrement_queue_count(dqm, qpd, q);
+ static void nfs4_free_closedata(void *data)
+@@ -3664,6 +3665,7 @@ static void nfs4_close_done(struct rpc_task *task, void *data)
+ 		.state = state,
+ 		.inode = calldata->inode,
+ 		.stateid = &calldata->arg.stateid,
++		.retrans = calldata->retrans,
+ 	};
  
- 		if (dqm->dev->kfd->shared_resources.enable_mes) {
--			int err;
--
--			err = remove_queue_mes(dqm, q, qpd);
--			if (err) {
-+			retval = remove_queue_mes(dqm, q, qpd);
-+			if (retval) {
- 				dev_err(dev, "Failed to evict queue %d\n",
- 					q->properties.queue_id);
--				retval = err;
-+				goto out;
- 			}
- 		}
+ 	if (!nfs4_sequence_done(task, &calldata->res.seq_res))
+@@ -3711,6 +3713,7 @@ static void nfs4_close_done(struct rpc_task *task, void *data)
+ 		default:
+ 			task->tk_status = nfs4_async_handle_exception(task,
+ 					server, task->tk_status, &exception);
++			calldata->retrans = exception.retrans;
+ 			if (exception.retry)
+ 				goto out_restart;
  	}
--	pdd->last_evict_timestamp = get_jiffies_64();
--	if (!dqm->dev->kfd->shared_resources.enable_mes)
-+
-+	if (!dqm->dev->kfd->shared_resources.enable_mes) {
-+		pdd->last_evict_timestamp = get_jiffies_64();
- 		retval = execute_queues_cpsch(dqm,
- 					      qpd->is_debug ?
- 					      KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES :
- 					      KFD_UNMAP_QUEUES_FILTER_DYNAMIC_QUEUES, 0,
- 					      USE_DEFAULT_GRACE_PERIOD);
-+	} else {
-+		retval = resume_all_queues_mes(dqm);
-+		if (retval)
-+			dev_err(dev, "Resuming all queues failed");
-+	}
+@@ -5593,9 +5596,11 @@ static int nfs4_read_done_cb(struct rpc_task *task, struct nfs_pgio_header *hdr)
+ 			.inode = hdr->inode,
+ 			.state = hdr->args.context->state,
+ 			.stateid = &hdr->args.stateid,
++			.retrans = hdr->retrans,
+ 		};
+ 		task->tk_status = nfs4_async_handle_exception(task,
+ 				server, task->tk_status, &exception);
++		hdr->retrans = exception.retrans;
+ 		if (exception.retry) {
+ 			rpc_restart_call_prepare(task);
+ 			return -EAGAIN;
+@@ -5709,10 +5714,12 @@ static int nfs4_write_done_cb(struct rpc_task *task,
+ 			.inode = hdr->inode,
+ 			.state = hdr->args.context->state,
+ 			.stateid = &hdr->args.stateid,
++			.retrans = hdr->retrans,
+ 		};
+ 		task->tk_status = nfs4_async_handle_exception(task,
+ 				NFS_SERVER(inode), task->tk_status,
+ 				&exception);
++		hdr->retrans = exception.retrans;
+ 		if (exception.retry) {
+ 			rpc_restart_call_prepare(task);
+ 			return -EAGAIN;
+@@ -6726,6 +6733,7 @@ struct nfs4_delegreturndata {
+ 	struct nfs_fh fh;
+ 	nfs4_stateid stateid;
+ 	unsigned long timestamp;
++	unsigned short retrans;
+ 	struct {
+ 		struct nfs4_layoutreturn_args arg;
+ 		struct nfs4_layoutreturn_res res;
+@@ -6746,6 +6754,7 @@ static void nfs4_delegreturn_done(struct rpc_task *task, void *calldata)
+ 		.inode = data->inode,
+ 		.stateid = &data->stateid,
+ 		.task_is_privileged = data->args.seq_args.sa_privileged,
++		.retrans = data->retrans,
+ 	};
  
- out:
- 	dqm_unlock(dqm);
-@@ -3098,61 +3111,17 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
- 	return ret;
- }
+ 	if (!nfs4_sequence_done(task, &data->res.seq_res))
+@@ -6817,6 +6826,7 @@ static void nfs4_delegreturn_done(struct rpc_task *task, void *calldata)
+ 		task->tk_status = nfs4_async_handle_exception(task,
+ 				data->res.server, task->tk_status,
+ 				&exception);
++		data->retrans = exception.retrans;
+ 		if (exception.retry)
+ 			goto out_restart;
+ 	}
+@@ -7093,6 +7103,7 @@ struct nfs4_unlockdata {
+ 	struct file_lock fl;
+ 	struct nfs_server *server;
+ 	unsigned long timestamp;
++	unsigned short retrans;
+ };
  
--static int kfd_dqm_evict_pasid_mes(struct device_queue_manager *dqm,
--				   struct qcm_process_device *qpd)
--{
--	struct device *dev = dqm->dev->adev->dev;
--	int ret = 0;
--
--	/* Check if process is already evicted */
--	dqm_lock(dqm);
--	if (qpd->evicted) {
--		/* Increment the evicted count to make sure the
--		 * process stays evicted before its terminated.
--		 */
--		qpd->evicted++;
--		dqm_unlock(dqm);
--		goto out;
--	}
--	dqm_unlock(dqm);
--
--	ret = suspend_all_queues_mes(dqm);
--	if (ret) {
--		dev_err(dev, "Suspending all queues failed");
--		goto out;
--	}
--
--	ret = dqm->ops.evict_process_queues(dqm, qpd);
--	if (ret) {
--		dev_err(dev, "Evicting process queues failed");
--		goto out;
--	}
--
--	ret = resume_all_queues_mes(dqm);
--	if (ret)
--		dev_err(dev, "Resuming all queues failed");
--
--out:
--	return ret;
--}
--
- int kfd_evict_process_device(struct kfd_process_device *pdd)
- {
- 	struct device_queue_manager *dqm;
- 	struct kfd_process *p;
--	int ret = 0;
+ static struct nfs4_unlockdata *nfs4_alloc_unlockdata(struct file_lock *fl,
+@@ -7147,6 +7158,7 @@ static void nfs4_locku_done(struct rpc_task *task, void *data)
+ 	struct nfs4_exception exception = {
+ 		.inode = calldata->lsp->ls_state->inode,
+ 		.stateid = &calldata->arg.stateid,
++		.retrans = calldata->retrans,
+ 	};
  
- 	p = pdd->process;
- 	dqm = pdd->dev->dqm;
+ 	if (!nfs4_sequence_done(task, &calldata->res.seq_res))
+@@ -7180,6 +7192,7 @@ static void nfs4_locku_done(struct rpc_task *task, void *data)
+ 			task->tk_status = nfs4_async_handle_exception(task,
+ 					calldata->server, task->tk_status,
+ 					&exception);
++			calldata->retrans = exception.retrans;
+ 			if (exception.retry)
+ 				rpc_restart_call_prepare(task);
+ 	}
+diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
+index ac4bff6e99135..ea437e468a91c 100644
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -1659,6 +1659,7 @@ struct nfs_pgio_header {
+ 	void			*netfs;
+ #endif
  
- 	WARN(debug_evictions, "Evicting pid %d", p->lead_thread->pid);
- 
--	if (dqm->dev->kfd->shared_resources.enable_mes)
--		ret = kfd_dqm_evict_pasid_mes(dqm, &pdd->qpd);
--	else
--		ret = dqm->ops.evict_process_queues(dqm, &pdd->qpd);
--
--	return ret;
-+	return dqm->ops.evict_process_queues(dqm, &pdd->qpd);
- }
- 
- int reserve_debug_trap_vmid(struct device_queue_manager *dqm,
++	unsigned short		retrans;
+ 	int			pnfs_error;
+ 	int			error;		/* merge with pnfs_error */
+ 	unsigned int		good_bytes;	/* boundary of good data */
 -- 
 2.51.0
 
