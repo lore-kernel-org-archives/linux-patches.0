@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AE934676C;
-	Fri, 21 Nov 2025 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7B819E97F;
+	Fri, 21 Nov 2025 13:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733109; cv=none; b=oWf6gXLXyBY/dBWeYI2403gitPVn4N3FvstFOJVyF5e91qgN25KlvTw9sTmQ0A3UQ5EZmtJ5nhd7JWZi7t/dVsYHrNtJGqj2pRsEFh4Dnm2oz90qA0smtE2OeYuP8moUlej62nMvLBy3yX9a9F2nJsNmqOjRI2xxz0DgFhDvVbk=
+	t=1763733112; cv=none; b=FB5TsAkpMiNOS6h4OXLRo41D49OuVyz9i2mPJCBfSSWPW4BzUHzGnHN6gnlxgYWh05hF1wqf1XtSZ/ezshLXI9w+LPcSs0+h6DyzZ4kbU/n6q8c6mm3pIFFhZ44BSRvtG4RY1DdUueZcRlqwtAUx4v1PQOyCHeokDZB6pRkjK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733109; c=relaxed/simple;
-	bh=P3ftVvbL2UiDQlfVeYl6kwbfvejN2RVMfbtDjiePcZg=;
+	s=arc-20240116; t=1763733112; c=relaxed/simple;
+	bh=dRbiWtrFxe29HS4+QjC/XTnKWumiSdaME4gGUuQKrTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DG+USx42T0L6Q8svs/fGJPa2GOsn7kuHt7jrnz8BAU+ROn+GEFLF/7siGfqIuh4QeG3fpL5igqZ5g/nr5iqjwy6chp0r8fTgXBmfMg+g0hYoydYWCJBps6B5OcHdX1l15yzN+5Jc6CH7siJzbkKS+6/kDsNccPxjEOX5Of/mDFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPlrTkGi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sm9mO4+87gh/LnegTPA6Gji1hUOptic1AbV/r3olYukaa39b77ADeLKdi4cqPJGerLELUls19PNhFOG5C1mY7gm/E6k12KOzJ/jCNqjDEkpVgIBvCZnzz3nuGKtIzDDjHz0eJsOSvN6vvGgb5W5Xelfen/3lgNgl88Ez4p2h3Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Gc9wBfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPlrTkGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F8EC4CEF1;
-	Fri, 21 Nov 2025 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Gc9wBfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6001C4CEFB;
+	Fri, 21 Nov 2025 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733109;
-	bh=P3ftVvbL2UiDQlfVeYl6kwbfvejN2RVMfbtDjiePcZg=;
+	s=korg; t=1763733112;
+	bh=dRbiWtrFxe29HS4+QjC/XTnKWumiSdaME4gGUuQKrTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPlrTkGivkLSCia56S6XRIA/brErRHUchod0PiNOPLY9JaNVEov/Ulb+hnXYBaha9
-	 xj0SmFUWCQQ5AZeE36Mv2QwoMNu9tO8HOQDC8yKugecuy+R+ju8LliMvccCVEBQ5IA
-	 ua6XgXEPunGld3VigpPZluZk7tOU4EimX0mq+2go=
+	b=2Gc9wBfuyhPva8I9uAthRpWBFOPaVuZjidqX08jQMsSpMkdwuLXW3NebvS63vhwe/
+	 M6i1BATa0V86RwJGlZrvvkTONXzWf/KMUBlngIE6EdFlujohFZrAQswxl9nF0qPW/X
+	 tx3NY/uHXafGxU9OO5KdbSlXP4LM136k5xJZsAJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Wanner <Ryan.Wanner@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 311/529] clk: at91: clk-master: Add check for divide by 3
-Date: Fri, 21 Nov 2025 14:10:10 +0100
-Message-ID: <20251121130242.090022086@linuxfoundation.org>
+Subject: [PATCH 6.6 348/529] sctp: Hold RCU read lock while iterating over address list
+Date: Fri, 21 Nov 2025 14:10:47 +0100
+Message-ID: <20251121130243.413477907@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,36 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Wanner <Ryan.Wanner@microchip.com>
+From: Stefan Wiehler <stefan.wiehler@nokia.com>
 
-[ Upstream commit e0237f5635727d64635ec6665e1de9f4cacce35c ]
+[ Upstream commit 38f50242bf0f237cdc262308d624d333286ec3c5 ]
 
-A potential divider for the master clock is div/3. The register
-configuration for div/3 is MASTER_PRES_MAX. The current bit shifting
-method does not work for this case. Checking for MASTER_PRES_MAX will
-ensure the correct decimal value is stored in the system.
+With CONFIG_PROVE_RCU_LIST=y and by executing
 
-Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+  $ netcat -l --sctp &
+  $ netcat --sctp localhost &
+  $ ss --sctp
+
+one can trigger the following Lockdep-RCU splat(s):
+
+  WARNING: suspicious RCU usage
+  6.18.0-rc1-00093-g7f864458e9a6 #5 Not tainted
+  -----------------------------
+  net/sctp/diag.c:76 RCU-list traversed in non-reader section!!
+
+  other info that might help us debug this:
+
+  rcu_scheduler_active = 2, debug_locks = 1
+  2 locks held by ss/215:
+   #0: ffff9c740828bec0 (nlk_cb_mutex-SOCK_DIAG){+.+.}-{4:4}, at: __netlink_dump_start+0x84/0x2b0
+   #1: ffff9c7401d72cd0 (sk_lock-AF_INET6){+.+.}-{0:0}, at: sctp_sock_dump+0x38/0x200
+
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 215 Comm: ss Not tainted 6.18.0-rc1-00093-g7f864458e9a6 #5 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x90
+   lockdep_rcu_suspicious.cold+0x4e/0xa3
+   inet_sctp_diag_fill.isra.0+0x4b1/0x5d0
+   sctp_sock_dump+0x131/0x200
+   sctp_transport_traverse_process+0x170/0x1b0
+   ? __pfx_sctp_sock_filter+0x10/0x10
+   ? __pfx_sctp_sock_dump+0x10/0x10
+   sctp_diag_dump+0x103/0x140
+   __inet_diag_dump+0x70/0xb0
+   netlink_dump+0x148/0x490
+   __netlink_dump_start+0x1f3/0x2b0
+   inet_diag_handler_cmd+0xcd/0x100
+   ? __pfx_inet_diag_dump_start+0x10/0x10
+   ? __pfx_inet_diag_dump+0x10/0x10
+   ? __pfx_inet_diag_dump_done+0x10/0x10
+   sock_diag_rcv_msg+0x18e/0x320
+   ? __pfx_sock_diag_rcv_msg+0x10/0x10
+   netlink_rcv_skb+0x4d/0x100
+   netlink_unicast+0x1d7/0x2b0
+   netlink_sendmsg+0x203/0x450
+   ____sys_sendmsg+0x30c/0x340
+   ___sys_sendmsg+0x94/0xf0
+   __sys_sendmsg+0x83/0xf0
+   do_syscall_64+0xbb/0x390
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   ...
+   </TASK>
+
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251028161506.3294376-2-stefan.wiehler@nokia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-master.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sctp/diag.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/at91/clk-master.c b/drivers/clk/at91/clk-master.c
-index 15c46489ba850..4c87a0f789de1 100644
---- a/drivers/clk/at91/clk-master.c
-+++ b/drivers/clk/at91/clk-master.c
-@@ -580,6 +580,9 @@ clk_sama7g5_master_recalc_rate(struct clk_hw *hw,
- {
- 	struct clk_master *master = to_clk_master(hw);
+diff --git a/net/sctp/diag.c b/net/sctp/diag.c
+index c3d6b92dd3862..d92b210c70f8e 100644
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -73,19 +73,23 @@ static int inet_diag_msg_sctpladdrs_fill(struct sk_buff *skb,
+ 	struct nlattr *attr;
+ 	void *info = NULL;
  
-+	if (master->div == MASTER_PRES_MAX)
-+		return DIV_ROUND_CLOSEST_ULL(parent_rate, 3);
-+
- 	return DIV_ROUND_CLOSEST_ULL(parent_rate, (1 << master->div));
++	rcu_read_lock();
+ 	list_for_each_entry_rcu(laddr, address_list, list)
+ 		addrcnt++;
++	rcu_read_unlock();
+ 
+ 	attr = nla_reserve(skb, INET_DIAG_LOCALS, addrlen * addrcnt);
+ 	if (!attr)
+ 		return -EMSGSIZE;
+ 
+ 	info = nla_data(attr);
++	rcu_read_lock();
+ 	list_for_each_entry_rcu(laddr, address_list, list) {
+ 		memcpy(info, &laddr->a, sizeof(laddr->a));
+ 		memset(info + sizeof(laddr->a), 0, addrlen - sizeof(laddr->a));
+ 		info += addrlen;
+ 	}
++	rcu_read_unlock();
+ 
+ 	return 0;
  }
- 
 -- 
 2.51.0
 
