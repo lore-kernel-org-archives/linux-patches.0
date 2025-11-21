@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921C1346A06;
-	Fri, 21 Nov 2025 13:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2E434CFA0;
+	Fri, 21 Nov 2025 13:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732143; cv=none; b=m5qGlkRTSgL1h0SJ2HkCfNIvAdPqfDJRYMC8/BcHJK7TGUnDYtxKLwI4QwNsBrAcTtVh6WZpbtyI8iPXmUvYbhTvvjjdp2xla7NOIpGihbCNrFLDO9zU4Qdzid1VkrWBiQYRYPKP2iD+gcz43AC7UUjypdn50F+0Yt4Z8uG2Ygk=
+	t=1763732146; cv=none; b=ujhka6y+ALC/9DhK8zilsxuTciz69YydwDPYBBu4s9skb99BGQBwlxxuCWsxGyFREUP3kOJyFjJQ4aSnRb3uRE+Rpi2BLxizDNa6+gdgxuhV6s2XY95T73diQaL3vMPi0/VjmfgAoZ07vTueISrF3SYaAlSx5wMMTLfek5e9I5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732143; c=relaxed/simple;
-	bh=CQsCZugfXZwXbWt/bfpLZRdy5pFE2ZA2c42XigCUCqI=;
+	s=arc-20240116; t=1763732146; c=relaxed/simple;
+	bh=OZMg2Z7Ffyf8oVJWzxgCltgpEb3UZ07Y2mPGx62Zsw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipALYQ0B3FNp0WikiYUCEaKY+Q86RoaxHwHfkdXQ20UVztQS/eDLnipUHav74ma87nKI5WbS+zBUbS5NL91sOCcUV44yeUS/fE5GHaPQaj/yyIWMITEVEN25+Ftis4hc7vGNYjtq6c6XD9LyLPQunRP5kZjQC6uWeQWTHNPneNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYoyVRtg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv1wEc8COENjRJJOZEdXEAqPcA7yQ7PmT6il37DyqxwGhkv6NK/wJSt75hTpw3BLM5tbUodSCwb40vEA2guKGqAutV3cdW8cYegLbHyrBpgZ2g6LhFVYoDbJSgm+qn/rkHsa0yMTIPbqyQDyaqxju2qRVaN90wDFAtZRTPz13jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsHBxyNl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYoyVRtg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2E9C4CEFB;
-	Fri, 21 Nov 2025 13:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsHBxyNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E323C4CEF1;
+	Fri, 21 Nov 2025 13:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732143;
-	bh=CQsCZugfXZwXbWt/bfpLZRdy5pFE2ZA2c42XigCUCqI=;
+	s=korg; t=1763732146;
+	bh=OZMg2Z7Ffyf8oVJWzxgCltgpEb3UZ07Y2mPGx62Zsw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYoyVRtgI76C5p7xW14TXBE+VdLIjAZSKIwZKWUYEtrDBEjce8b0/7jzBQmUk+AsP
-	 qagGyxO83km60ByOxpOSkpd0s1ZDDyMGCHfMFSlMUMHd1FwqA+EFugi0A4wb1RSAlT
-	 NauN6HbQPlgPQkoAnMnkrWD4TjwCYPBtpe39uyFQ=
+	b=nsHBxyNlTUJrRDrKlqRdkjtg3rxJu2PxnYeb6ObSaTyghICw2hPgDZt1KM1tuPYyc
+	 bVDKSkWxV2W54w7W0EWxHUndqZ6tq8RHfUnEIy2vW+sd79km/Ag8MH9yPA/Y18MZ8o
+	 xY6nOkFNTH7j13CwND10N82M3womUtYt44he7dXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik M <quic_karm@quicinc.com>,
-	Muna Sinada <muna.sinada@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/529] wifi: ath12k: free skb during idr cleanup callback
-Date: Fri, 21 Nov 2025 14:05:18 +0100
-Message-ID: <20251121130231.685464175@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 002/529] net: usb: asix_devices: Check return value of usbnet_get_endpoints
+Date: Fri, 21 Nov 2025 14:05:01 +0100
+Message-ID: <20251121130231.080850022@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,107 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik M <quic_karm@quicinc.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 92282074e1d2e7b6da5c05fe38a7cc974187fe14 ]
+commit dc89548c6926d68dfdda11bebc1a5258bc41d887 upstream.
 
-ath12k just like ath11k [1] did not handle skb cleanup during idr
-cleanup callback. Both ath12k_mac_vif_txmgmt_idr_remove() and
-ath12k_mac_tx_mgmt_pending_free() performed idr cleanup and DMA
-unmapping for skb but only ath12k_mac_tx_mgmt_pending_free() freed
-skb. As a result, during vdev deletion a memory leak occurs.
+The code did not check the return value of usbnet_get_endpoints.
+Add checks and return the error if it fails to transfer the error.
 
-Refactor all clean up steps into a new function. New function
-ath12k_mac_tx_mgmt_free() creates a centralized area where idr
-cleanup, DMA unmapping for skb and freeing skb is performed. Utilize
-skb pointer given by idr_remove(), instead of passed as a function
-argument because IDR will be protected by locking. This will prevent
-concurrent modification of the same IDR.
+Found via static anlaysis and this is similar to
+commit 07161b2416f7 ("sr9800: Add check for usbnet_get_endpoints").
 
-Now ath12k_mac_tx_mgmt_pending_free() and
-ath12k_mac_vif_txmgmt_idr_remove() call ath12k_mac_tx_mgmt_free().
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Link: https://lore.kernel.org/r/1637832614-13831-1-git-send-email-quic_srirrama@quicinc.com > # [1]
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Karthik M <quic_karm@quicinc.com>
-Signed-off-by: Muna Sinada <muna.sinada@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250923220316.1595758-1-muna.sinada@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 933a27d39e0e ("USB: asix - Add AX88178 support and many other changes")
+Fixes: 2e55cc7210fe ("[PATCH] USB: usbnet (3/9) module for ASIX Ethernet adapters")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://patch.msgid.link/20251026164318.57624-1-linmq006@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 34 ++++++++++++++-------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ drivers/net/usb/asix_devices.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index e1db6e69d2207..010413bfdb141 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4743,23 +4743,32 @@ static void ath12k_mgmt_over_wmi_tx_drop(struct ath12k *ar, struct sk_buff *skb)
- 		wake_up(&ar->txmgmt_empty_waitq);
- }
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -230,7 +230,9 @@ static int ax88172_bind(struct usbnet *d
+ 	int i;
+ 	unsigned long gpio_bits = dev->driver_info->data;
  
--int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
-+static void ath12k_mac_tx_mgmt_free(struct ath12k *ar, int buf_id)
- {
--	struct sk_buff *msdu = skb;
-+	struct sk_buff *msdu;
- 	struct ieee80211_tx_info *info;
--	struct ath12k *ar = ctx;
--	struct ath12k_base *ab = ar->ab;
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		goto out;
  
- 	spin_lock_bh(&ar->txmgmt_idr_lock);
--	idr_remove(&ar->txmgmt_idr, buf_id);
-+	msdu = idr_remove(&ar->txmgmt_idr, buf_id);
- 	spin_unlock_bh(&ar->txmgmt_idr_lock);
--	dma_unmap_single(ab->dev, ATH12K_SKB_CB(msdu)->paddr, msdu->len,
-+
-+	if (!msdu)
-+		return;
-+
-+	dma_unmap_single(ar->ab->dev, ATH12K_SKB_CB(msdu)->paddr, msdu->len,
- 			 DMA_TO_DEVICE);
+ 	/* Toggle the GPIOs in a manufacturer/model specific way */
+ 	for (i = 2; i >= 0; i--) {
+@@ -848,7 +850,9 @@ static int ax88772_bind(struct usbnet *d
  
- 	info = IEEE80211_SKB_CB(msdu);
- 	memset(&info->status, 0, sizeof(info->status));
+ 	dev->driver_priv = priv;
  
--	ath12k_mgmt_over_wmi_tx_drop(ar, skb);
-+	ath12k_mgmt_over_wmi_tx_drop(ar, msdu);
-+}
-+
-+int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
-+{
-+	struct ath12k *ar = ctx;
-+
-+	ath12k_mac_tx_mgmt_free(ar, buf_id);
+-	usbnet_get_endpoints(dev, intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
  
- 	return 0;
- }
-@@ -4768,17 +4777,10 @@ static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
- {
- 	struct ieee80211_vif *vif = ctx;
- 	struct ath12k_skb_cb *skb_cb = ATH12K_SKB_CB(skb);
--	struct sk_buff *msdu = skb;
- 	struct ath12k *ar = skb_cb->ar;
--	struct ath12k_base *ab = ar->ab;
+ 	/* Maybe the boot loader passed the MAC address via device tree */
+ 	if (!eth_platform_get_mac_address(&dev->udev->dev, buf)) {
+@@ -1281,7 +1285,9 @@ static int ax88178_bind(struct usbnet *d
+ 	int ret;
+ 	u8 buf[ETH_ALEN] = {0};
  
--	if (skb_cb->vif == vif) {
--		spin_lock_bh(&ar->txmgmt_idr_lock);
--		idr_remove(&ar->txmgmt_idr, buf_id);
--		spin_unlock_bh(&ar->txmgmt_idr_lock);
--		dma_unmap_single(ab->dev, skb_cb->paddr, msdu->len,
--				 DMA_TO_DEVICE);
--	}
-+	if (skb_cb->vif == vif)
-+		ath12k_mac_tx_mgmt_free(ar, buf_id);
+-	usbnet_get_endpoints(dev,intf);
++	ret = usbnet_get_endpoints(dev, intf);
++	if (ret)
++		return ret;
  
- 	return 0;
- }
--- 
-2.51.0
-
+ 	/* Get the MAC address */
+ 	ret = asix_read_cmd(dev, AX_CMD_READ_NODE_ID, 0, 0, ETH_ALEN, buf, 0);
 
 
