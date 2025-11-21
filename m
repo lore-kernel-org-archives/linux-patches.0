@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547B92765FF;
-	Fri, 21 Nov 2025 13:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6F2F6577;
+	Fri, 21 Nov 2025 13:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731017; cv=none; b=OBHgEqHPxOGwkGWrMG2xpIBBD5bGq8ouTta015qdp2pEhXArEdr9jR2grN1ZJj6PXZxawa1zy3WhtDzcBaTweoyRS9OZT4dHEbogE+i0nxVLUwYU5yjkuauf4z+l+FyOEQ4xj0v+VD+U7fvFvziHWrpH8zA37TfMxVqTqm+I0do=
+	t=1763731019; cv=none; b=DWZXkxEgsGQZOyKO0zztdatOQsV6PhB3eeYn4nj+kUkIXM5HTG9DtEpqr2JjZaXWgzEUiGgZ53NiL+lMpyRh/rnfa/daLFDOWzZ2c4emYqiAjHiiLsgDA2hp7i7xtYxbpXxz1adqxvFUQJ56u+t51lsLXFyvCiWzu3WFCRezQrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731017; c=relaxed/simple;
-	bh=JSf3zAIhAvHzXaLV4Y7h12E0Fi6AdWtNtd2JnFS0/WE=;
+	s=arc-20240116; t=1763731019; c=relaxed/simple;
+	bh=xk7rWPE0MsIoatnLtVHoaUuct7OJm/5jfxdRFebS8S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bE3FSMbvrycbTrugc3aA4fhKTc7ING80PFlVW231pGPygwjuULAiJ7BG85DgwG1mvMzXdfWpF+iZS/AopDA3vHxhzVWhdQ+PqRqRqh9DKZQG6eMiCG14squzAGJ6Vz8F7l85cxJZyi8M+a75Qc1Oczz7p0nbAy4GFAm3pLO8ktw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRl9wL8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a6U0mm18Dsv4FDETUhCGjTal4t4B5dgXFbxS9yxl75t4iXtLD+W4M82YvoZUbisXmhZXxD1RQbrWhjBFZtcjezyA+h3FgI8mXiFVKvae8CwP6SWxUlSmy0UO9ZgSrDgGMXfC3KRAPRSSma5+J+aTBdk9PrZdy98snE4lRs82fog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXpXdeGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRl9wL8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE2BC4CEF1;
-	Fri, 21 Nov 2025 13:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXpXdeGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3ACC4CEF1;
+	Fri, 21 Nov 2025 13:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731016;
-	bh=JSf3zAIhAvHzXaLV4Y7h12E0Fi6AdWtNtd2JnFS0/WE=;
+	s=korg; t=1763731019;
+	bh=xk7rWPE0MsIoatnLtVHoaUuct7OJm/5jfxdRFebS8S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRl9wL8qj000bwX/pp56fp+b8WI0mjzy3xjQBGYtqKuPF9A4SmkAbH7N0IV/hA2Tu
-	 mq3TfHAey1auuUYZaBZxKNuPlOe84cVM83gfZLhcEPq+mo1dcNBSAIryseVJJcNORi
-	 Y6W3qz1sM0hFhkUv7KEkFeNjILhRZ68kwr2UVseQ=
+	b=TXpXdeGomAGYMMk0qAkNNylkrjilFoIUdAWsij+7MTaIlZ6Cm1hXTkxHmbyMtpRX7
+	 AfwmI0ybJrYalozgoQaQ4CM3ke8pkqE81yYmFrBIYkTVctZKfxksgaQw73l7UC+02w
+	 urSbHTlf7un9PS1ziMidVfvDmddMSj/uuFrG/1u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 062/247] net: dsa: tag_brcm: do not mark link local traffic as offloaded
-Date: Fri, 21 Nov 2025 14:10:09 +0100
-Message-ID: <20251121130156.828482482@linuxfoundation.org>
+Subject: [PATCH 6.17 063/247] net/smc: fix mismatch between CLC header and proposal
+Date: Fri, 21 Nov 2025 14:10:10 +0100
+Message-ID: <20251121130156.863846285@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -47,72 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 762e7e174da91cf4babfe77e45bc6b67334b1503 ]
+[ Upstream commit ec33f2e5a2d0dbbfd71435209aee812fdc9369b8 ]
 
-Broadcom switches locally terminate link local traffic and do not
-forward it, so we should not mark it as offloaded.
+The current CLC proposal message construction uses a mix of
+`ini->smc_type_v1/v2` and `pclc_base->hdr.typev1/v2` to decide whether
+to include optional extensions (IPv6 prefix extension for v1, and v2
+extension). This leads to a critical inconsistency: when
+`smc_clc_prfx_set()` fails - for example, in IPv6-only environments with
+only link-local addresses, or when the local IP address and the outgoing
+interface’s network address are not in the same subnet.
 
-In some situations we still want/need to flood this traffic, e.g. if STP
-is disabled, or it is explicitly enabled via the group_fwd_mask. But if
-the skb is marked as offloaded, the kernel will assume this was already
-done in hardware, and the packets never reach other bridge ports.
+As a result, the proposal message is assembled using the stale
+`ini->smc_type_v1` value—causing the IPv6 prefix extension to be
+included even though the header indicates v1 is not supported.
+The peer then receives a malformed CLC proposal where the header type
+does not match the payload, and immediately resets the connection.
 
-So ensure that link local traffic is never marked as offloaded, so that
-the kernel can forward/flood these packets in software if needed.
+The fix ensures consistency between the CLC header flags and the actual
+payload by synchronizing `ini->smc_type_v1` with `pclc_base->hdr.typev1`
+when prefix setup fails.
 
-Since the local termination in not configurable, check the destination
-MAC, and never mark packets as offloaded if it is a link local ether
-address.
-
-While modern switches set the tag reason code to BRCM_EG_RC_PROT_TERM
-for trapped link local traffic, they also set it for link local traffic
-that is flooded (01:80:c2:00:00:10 to 01:80:c2:00:00:2f), so we cannot
-use it and need to look at the destination address for them as well.
-
-Fixes: 964dbf186eaa ("net: dsa: tag_brcm: add support for legacy tags")
-Fixes: 0e62f543bed0 ("net: dsa: Fix duplicate frames flooded by learning")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251109134635.243951-1-jonas.gorski@gmail.com
+Fixes: 8c3dca341aea ("net/smc: build and send V2 CLC proposal")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20251107024029.88753-1-alibuda@linux.alibaba.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag_brcm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/smc/smc_clc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/dsa/tag_brcm.c b/net/dsa/tag_brcm.c
-index d9c77fa553b53..eadb358179ce3 100644
---- a/net/dsa/tag_brcm.c
-+++ b/net/dsa/tag_brcm.c
-@@ -176,7 +176,8 @@ static struct sk_buff *brcm_tag_rcv_ll(struct sk_buff *skb,
- 	/* Remove Broadcom tag and update checksum */
- 	skb_pull_rcsum(skb, BRCM_TAG_LEN);
- 
--	dsa_default_offload_fwd_mark(skb);
-+	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
-+		dsa_default_offload_fwd_mark(skb);
- 
- 	return skb;
- }
-@@ -250,7 +251,8 @@ static struct sk_buff *brcm_leg_tag_rcv(struct sk_buff *skb,
- 	/* Remove Broadcom tag and update checksum */
- 	skb_pull_rcsum(skb, len);
- 
--	dsa_default_offload_fwd_mark(skb);
-+	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
-+		dsa_default_offload_fwd_mark(skb);
- 
- 	dsa_strip_etype_header(skb, len);
- 
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index 09745baa10170..27750a695ed8b 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -890,6 +890,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini)
+ 				return SMC_CLC_DECL_CNFERR;
+ 			}
+ 			pclc_base->hdr.typev1 = SMC_TYPE_N;
++			ini->smc_type_v1 = SMC_TYPE_N;
+ 		} else {
+ 			pclc_base->iparea_offset = htons(sizeof(*pclc_smcd));
+ 			plen += sizeof(*pclc_prfx) +
 -- 
 2.51.0
 
