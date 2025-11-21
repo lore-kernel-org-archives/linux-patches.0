@@ -1,93 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD078332909;
-	Fri, 21 Nov 2025 18:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56691FF61E
+	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 18:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763748054; cv=none; b=E91BAbA50MziDePBcteuQyS9oWk9c8+1ODAkpH+8IOf9pMPpbOsAe8q9q1gCuIaJlbhOkK6ep4vW87JRCXRnOa4shupkg2+/sX+V5lZ0gGz87mzZmRunUJl+a8WaqkqFvjXqEWSMkGsAgxGvCQne7Vue4JTpgZRo6LyOFgd1ask=
+	t=1763748759; cv=none; b=t8zkUTl2axqIO4JHP2THhNSdU2JuwYccJOSTDHkLq5EMFR0dxLqbk4j1P2wXe+regwoT+dhT5z4GXOoZA8owon6/QHpAciBHKxqyHbPKWaMhndiP7XxU5N/jMRqHSNURBJVjgidCHUnIm0xJmaAwbBFTHcqzwYWyX6EjDTuAFUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763748054; c=relaxed/simple;
-	bh=CZHQnN3iOCJ6aN0E5u5hK1R02monCvhynklOLawB+FQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MCZ9cVXSCjG6RxgjOpOJXz80Z6ty0GQQbcH1HokIwz5B1FRLA1l9xVex4cPGobMy9f+6CJqFnqrHKWaIE1SQIlD51P4dVG6IL9ySDy1y5Rl33EXNLTjM/H2fYw2+Xw1U6wOFEIbTkdtz7TcDP+9tiYK63/y+3YGGCHFGm9nE8Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aERrClO1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763748759; c=relaxed/simple;
+	bh=LPrDGpbQnKvwM7kMqfxF5Ldd1SuXNo98KEBkPC8gibg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jjDek93dAMO2LkcHYRKqUFd3I6+plVvLA4+U8W+WpYmP0Cfu7uSPKTA22aeAWc6x4FbRO7X2nh7vStJXrXqTRkrNCNoXjE486WzqiHiGd9bmUZ1CV4HFnS8U1oU3NvH4PhFjFWO3Ec1xktZuun+ECWwKvWuqLvKJX4kyFQhNiJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+2m67l2; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aERrClO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBCAC16AAE;
-	Fri, 21 Nov 2025 18:00:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763748054;
-	bh=CZHQnN3iOCJ6aN0E5u5hK1R02monCvhynklOLawB+FQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aERrClO1nZEVOGDNM/yjtuedLrKj0ht6vKFy4SL08A+VU6hRFYCXisY6O9OCKFS3X
-	 yivuNVF4+31DClBs72OZ/2lXc+vWiCyu0FyQzPoVNW8CAcDXLrD6aETyy95B2RT/7+
-	 Wdb08ip1N1eB/ZL2PVOOGyzDlWE7TYZ3LY2K/nDvNl8tz2dDJ/8O74uA/Fz2lb6xW+
-	 NyQ/C8+SfHBs0rt2p/4A+H8sLB976pGv58enbOwk3tPEb9sHkhv7gvt6+Ps4Y2lRos
-	 W6WHnwdnTh27h7l51afVwft+9ma/J6xNDiklN2Lg0aS1r4Txhg39CDqisP2SpmGo53
-	 vc7hMKLLA4/rQ==
-Date: Fri, 21 Nov 2025 10:00:53 -0800
-From: Kees Cook <kees@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Russell King - ARM Linux <linux@armlinux.org.uk>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>
-Subject: Re: [PATCH 5.15 000/411] 5.15.186-rc1 review
-Message-ID: <202511210951.39AA2F97@keescook>
-References: <20250623130632.993849527@linuxfoundation.org>
- <CA+G9fYuU5uSG1MKdYPoaC6O=-w5z6BtLtwd=+QBzrtZ1uQ8VXg@mail.gmail.com>
- <2025062439-tamer-diner-68e9@gregkh>
- <CA+G9fYvUG9=yGCp1W9-9+dhA6xLRo7mrL=7x9kBNJmzg7TCn7w@mail.gmail.com>
- <2025062517-lucrative-justness-83fe@gregkh>
- <202511061127.52ECA4AB40@keescook>
- <2025112157-renewable-batboy-7b5c@gregkh>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+2m67l2"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7c66822dd6dso95973b3a.0
+        for <patches@lists.linux.dev>; Fri, 21 Nov 2025 10:12:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763748757; x=1764353557; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RR/i1yaFaavbNdSsVmJ9IzHV+HQy5kzJWXUbmdZhUUo=;
+        b=R+2m67l2drwZHJLfKyVFYvDBMndDe65aAU+9nZPK+R0Yqie+ClSdMrK65JXya7WG6s
+         09j32KlsdsI6ytiC4sFnQAVCIMFPC8YFJxdDSATpGsNELXNC8zZEdmVK1rzN9Ytdv2eV
+         360yLhczrcvl5JgcjDqPEs8U2MQVgeoZtcOJAUS8mE0fot/tzaVIwdbP7D0tn3xL0GLa
+         0L5DIyBjVtCtnArbI0KhihxSjosCGy7m5oXA7Rhtir6Zh0MebZ4kT5O9Cy0bkKfbPIai
+         RezBvadLEH/mKRpxg+xRF2u/gsiwIUVD/pIBK5nKTGs+5yTbIsEDRqPtXFRisu4WNv8V
+         bZJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763748757; x=1764353557;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RR/i1yaFaavbNdSsVmJ9IzHV+HQy5kzJWXUbmdZhUUo=;
+        b=MnbbJOrHc/2eNl5GUFuroEe2bypJJcqHzBwUCjHaVZx9DOgBAqgGjJM1N8f2TeUTw9
+         uv3bhwmtxw2KTrBEP2eGXMyD5GdPHYAFSnEXOXW2sNOHqNDQnUzmLCnFHLWUaY93HDWR
+         139jJna1zW4Hc2gJj0sefoEncOC0U3S1CsIZsVpEX2SdYpJ5A1teAbpsxCyM/qs/KUoR
+         kjUDHVX9GHURNr0xXWWxDvqg1tJ2smK70gweuRsf4tMToz99sEaJ2Y4f0KNuXnxWv55q
+         sth8piONS/1w/ivWX4Bq0CGhfXRlQlRsYIdRux6+8sXTVskpKrllq1163FjYByepN25x
+         y3RA==
+X-Gm-Message-State: AOJu0Ywo838aLvnLPYftIXKnamc8Ow0rCW5k4jUp5WhPf4KB7QG2PnEE
+	N8d70tC4nNmd5D+zy2s259I2ps55K3h1yDDKIGqjscW+TGSK/qwGaPwz
+X-Gm-Gg: ASbGncvGBwv4FeZ0RtGTofOOoyW37hhqyrEAVecjV3ipM0YNRKhpIOguRGMirY84TwB
+	YKnin26xsAlHNZoXL1hugBZkehSL6qxtoh9/3ZRi7gGRcSXpl/SsN3tvesAf+tVQCKLXYBz7Mlj
+	1kIVeXZanWAuIotEW4i1z1YpA5jPVQtn1lIHorEehE1Yam9srTKyjNUKe8k+ot7S1R3cz19BOjA
+	TJ6o7wT2VNH7exQY9OpPAhHqkalkJlNx9Rc9YJ5tws8+VMFi5oXDRUyOPYAKkBIjHkwufT2H1MI
+	+OuuP5N/xBXmjpkgo3o96yXNyX7cePVgOmDIxPK2+hTERKiKe+tbgxRG4D8Mn7DYYRcH6rPepHp
+	2xv1wYF0i/VsUXiZjfFwJO44WBYAmbH1+6ByJZdh/SABOR+1Kg+M2ScPi2vqpqNikGEJJ8Rv/I1
+	dl15m+EK+5j5MvvOXN3cMPzfYq54lbU/kYsimdYA==
+X-Google-Smtp-Source: AGHT+IF/fz6OcfhFX3lvq9ZzMVTzDGYHMbljXg6ptX45yQgciSaOLtMD5D+NHOa0dapg4ZJBqlUhVg==
+X-Received: by 2002:a17:90b:2b8f:b0:343:85eb:4fc7 with SMTP id 98e67ed59e1d1-347298501abmr7984056a91.6.1763748756719;
+        Fri, 21 Nov 2025 10:12:36 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7c3f1262364sm6701964b3a.58.2025.11.21.10.12.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Nov 2025 10:12:36 -0800 (PST)
+Message-ID: <ef85c608-7f90-4c22-85f7-eafbb88e3665@gmail.com>
+Date: Fri, 21 Nov 2025 10:12:33 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025112157-renewable-batboy-7b5c@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/529] 6.6.117-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20251121130230.985163914@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 21, 2025 at 10:36:22AM +0100, Greg Kroah-Hartman wrote:
-> On Thu, Nov 06, 2025 at 11:32:18AM -0800, Kees Cook wrote:
-> > This thread got pointed out to me. You can put this back in if you want;
-> > you just need the other associated fix (which had a bit of an obscure
-> > Fixes tag):
+On 11/21/25 05:04, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.117 release.
+> There are 529 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> What exactly is "this" commit?
+> Responses should be made by Sun, 23 Nov 2025 13:01:08 +0000.
+> Anything received after that time might be too late.
 > 
-> > d8720235d5b5 ("scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops")
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.117-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 > 
-> Can you give a list of git ids asked for here?  This thread is confusing
-> :)
+> thanks,
+> 
+> greg k-h
 
-Sorry! For stable, you want these, if they're not already present:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-960013ec5b5e ("net: qede: Initialize qede_ll_ops with designated initializer")
-d8720235d5b5 ("scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops")
-e136a4062174 ("randstruct: gcc-plugin: Remove bogus void member")
-f39f18f3c353 ("randstruct: gcc-plugin: Fix attribute addition")
-
-
-An additional bit of confusion is that the fix in 960013ec5b5e landed
-twice via 2 trees:
-6b3ab7f2cbfa ("net: qede: Initialize qede_ll_ops with designated initializer")
-960013ec5b5e ("net: qede: Initialize qede_ll_ops with designated initializer")
-
-Obviously either is fine.
-
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Kees Cook
+Florian
