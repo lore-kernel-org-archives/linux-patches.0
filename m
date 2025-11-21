@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25F929ACCD;
-	Fri, 21 Nov 2025 13:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF90934DB64;
+	Fri, 21 Nov 2025 13:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732262; cv=none; b=uhkIBXJGc4kdVyW0w24FustBfi9JxufIQjOlHQykf9xy1Ebw0A6a2jDbcwTdkGmp+wILrdImBj+V6W4re+PoJEdYczWLt7BiTGXjw4kwygjG0SFztVLvTJgSgx/iyUAIkxPRWN3QwqbKZDbR7GhBzZtCcmqOCnN2UB4+T5k2t8k=
+	t=1763732264; cv=none; b=iMG72fyY1wdfGrv+gHiKNe1k2WMRdroy/7X5IqAOwx6wZnFZfXlcVP11JkV0yf50w+kDcCvIC9+DhCY/SqICZGKO58xyipIduR95UMHg+y6+LQYAxRoNYOWsDgIroq60kF8wDpTZaB4bPqZATeu7QyuYFKPq5dTJxOZFg1iwMyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732262; c=relaxed/simple;
-	bh=IGHVt0plmNgwJLR6qdFCg/3pv7+PAXiMAmjlErmNnEc=;
+	s=arc-20240116; t=1763732264; c=relaxed/simple;
+	bh=G3kMQcvZPN9vPREnI/vagQ6Z2H5hBVL/J3hj+JovrPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVzBo9mePZxdgDCcXIKyt/cE+/QlPSwCt3QrYp4+Cw8YSAv1mP4QDEm14fJTC5Jm/wJHTOR84vbpQx1aXyNJ1Yg01uXGL/Cb6wtYx4ACz9yYrpziAhuUXNHnqVypKlMeZIXNnXSSStGm+XBjhbSMhEqDWDRE6TDPTp01b/jcQWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxGpfXV/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJvpil4yHj3KdAOCvR5Al3GDC5Sb1hRctRchm5Y60kz27oYCpe0vAlVTImOhjA2Bj8lyaV5rcmT74l+P7nfB/vY0oUq0b4l0TWHw9CFQEehj+W3Pl4R3rduLbjQztJyvIjhPRQ/KUlGg3OdQkwqIW/z2SiAiS0Z11DiuSffnDBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFC4+sxn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxGpfXV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B25FC4CEF1;
-	Fri, 21 Nov 2025 13:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFC4+sxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460BEC4CEF1;
+	Fri, 21 Nov 2025 13:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732261;
-	bh=IGHVt0plmNgwJLR6qdFCg/3pv7+PAXiMAmjlErmNnEc=;
+	s=korg; t=1763732264;
+	bh=G3kMQcvZPN9vPREnI/vagQ6Z2H5hBVL/J3hj+JovrPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxGpfXV/e3VHNNLkcvPidtt3UWVkh4rc6xEZv/azJNf15WIPun1Eb7gGNG1D1gr7F
-	 k5XHyOvSAqT8SF55B26YxoWARtU8eWAlhIsWE4pAMEtkRu0QUocAj41Ebc7Lig8LlV
-	 0ScZfGbPYIfqMZdlMDHGdNq2Hm1m7JgmDlFWEv5Y=
+	b=zFC4+sxn7CGUhrmAneRLsJ2xhBtbLAZQhmxoIza2JrRzT23p4wfrxvfkUU25IK4Qb
+	 SuCmOwX6H7aROb0tSQhagSM9uR7fq3scL/qfoH6+dtQGCuUyawEaxOgq6hllfghr1W
+	 6IXeVqVNJWDXmnSmZWsf96X+xRfPAkFRREwSa7C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/529] crypto: aspeed - fix double free caused by devm
-Date: Fri, 21 Nov 2025 14:05:25 +0100
-Message-ID: <20251121130231.930992395@linuxfoundation.org>
+Subject: [PATCH 6.6 027/529] ASoC: Intel: avs: Unprepare a stream when XRUN occurs
+Date: Fri, 21 Nov 2025 14:05:26 +0100
+Message-ID: <20251121130231.965695680@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,46 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 3c9bf72cc1ced1297b235f9422d62b613a3fdae9 ]
+[ Upstream commit cfca1637bc2b6b1e4f191d2f0b25f12402fbbb26 ]
 
-The clock obtained via devm_clk_get_enabled() is automatically managed
-by devres and will be disabled and freed on driver detach. Manually
-calling clk_disable_unprepare() in error path and remove function
-causes double free.
+The pcm->prepare() function may be called multiple times in a row by the
+userspace, as mentioned in the documentation. The driver shall take that
+into account and prevent redundancy. However, the exact same function is
+called during XRUNs and in such case, the particular stream shall be
+reset and setup anew.
 
-Remove the manual clock cleanup in both aspeed_acry_probe()'s error
-path and aspeed_acry_remove().
-
-Fixes: 2f1cf4e50c95 ("crypto: aspeed - Add ACRY RSA driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 9114700b496c ("ASoC: Intel: avs: Generic PCM FE operations")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20251023092348.3119313-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/aspeed/aspeed-acry.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/intel/avs/pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/aspeed/aspeed-acry.c b/drivers/crypto/aspeed/aspeed-acry.c
-index b4613bd4ad964..8ca0913d94abf 100644
---- a/drivers/crypto/aspeed/aspeed-acry.c
-+++ b/drivers/crypto/aspeed/aspeed-acry.c
-@@ -789,7 +789,6 @@ static int aspeed_acry_probe(struct platform_device *pdev)
- err_engine_rsa_start:
- 	crypto_engine_exit(acry_dev->crypt_engine_rsa);
- clk_exit:
--	clk_disable_unprepare(acry_dev->clk);
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 781019685b941..9251c38cf9d12 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -611,6 +611,8 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	host_stream = data->host_stream;
  
- 	return rc;
- }
-@@ -801,7 +800,6 @@ static void aspeed_acry_remove(struct platform_device *pdev)
- 	aspeed_acry_unregister(acry_dev);
- 	crypto_engine_exit(acry_dev->crypt_engine_rsa);
- 	tasklet_kill(&acry_dev->done_task);
--	clk_disable_unprepare(acry_dev->clk);
- }
++	if (runtime->state == SNDRV_PCM_STATE_XRUN)
++		hdac_stream(host_stream)->prepared = false;
+ 	if (hdac_stream(host_stream)->prepared)
+ 		return 0;
  
- MODULE_DEVICE_TABLE(of, aspeed_acry_of_matches);
 -- 
 2.51.0
 
