@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E89341ADF;
-	Fri, 21 Nov 2025 13:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7B434DB4A;
+	Fri, 21 Nov 2025 13:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732542; cv=none; b=I3hG2/hNcd/tENtoPK+c4tvOoEfM7IOHIh2jPDehwaJzYuMTvL3vUgySwMnD6ReOQwUpkxwucId128BxjK0gI5a/c67nQ29hoxdg0Ds5EHYb3/X4eZhtKyXiiq0rZxBBcOcBOmA/KaMTu5hJenaiYt0xraRvFhm83vPtrORQCF8=
+	t=1763732544; cv=none; b=PetJOd9JZ9oCEzQrv+Mxc38PlFjkwHUkTsUmyE4w66IEUtXPqrrgfht1ESjyBsglh406a+EvA4dSGqMRjU1iVuFhVWJq4RdjW6bw72rd5MzENO64vqqnRQ6hp349Ae/hNDiY8/sQfj1/WEfY4NOrMaKLJg/rV7u/Z6vqtX4QH8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732542; c=relaxed/simple;
-	bh=cK/Tof/r2vt6I6PLznSHaA1KlHC2whgGHESXNsOzp/w=;
+	s=arc-20240116; t=1763732544; c=relaxed/simple;
+	bh=ijIranvC4FyW/XMQ3fm2CKXfRfGrTMrIXf1nQ698fmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMaK3SeSnSWWVhbJDncwdhMpywemtr+Y+3HHQVJ2eLM1rwsmC3D0gSVSRK0SNsGiuN6YVQOjE1H2bYe+c4POkHNK3c0HKdbFwBn4VqIri3wqKbkUiLVfDB5rFsdGA6a2edFKZPW44+OTGNziCPkxyRI2IV+BJdMgkwwW3Z/5Tbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssgE7xiZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUT6A+Fst/lZE1h18mYy7/YM43nP9IXMXHKHlALZb3SIItig4Dl7VFpMQCeZvlGPboCin+VzzgZfZOz5PNgkSBHnbYVaPBIlW3vLryfcNjSvqvOGpM8eIUMtA/ryBj9wEN9QRji9syVudwO1DwmJWdbDgjiTV9TnuOdfNRGI8P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvtjqdNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssgE7xiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7068CC116C6;
-	Fri, 21 Nov 2025 13:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvtjqdNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BDCC4CEF1;
+	Fri, 21 Nov 2025 13:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732541;
-	bh=cK/Tof/r2vt6I6PLznSHaA1KlHC2whgGHESXNsOzp/w=;
+	s=korg; t=1763732544;
+	bh=ijIranvC4FyW/XMQ3fm2CKXfRfGrTMrIXf1nQ698fmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssgE7xiZYyhbgerPe7JhKMP6zBcJsNmWM7HKG2Ffx3Y7xfpiGno4kgbjKIohUsBio
-	 p3Y7SRqqsMpHcG1H9dDMtctdWLSJAXmIlwA6UI0ilF0NllD1qM7SvQJmqxrcQJ3wn0
-	 dzJn5xf2ekdtMxkqVPjJoan7jIP4V2sMLjRpmEZ8=
+	b=fvtjqdNQ2oEA0i93rPMPyGsjEQHA+z1Za2hZcWi3WaRXVEBTTks/Xc9bvAQ/FQ4WS
+	 OnjH+thqoZQCNNZIKyq39Fl7pcAzCczxG/Er6m9jCJwKRIoxdqJAhCR1gw00szOLux
+	 1uDJshIvWFDvys6olCMk35j8J0JNO2j6rlQvb8pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sungho Kim <sungho.kim@furiosa.ai>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/529] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
-Date: Fri, 21 Nov 2025 14:07:36 +0100
-Message-ID: <20251121130236.605945504@linuxfoundation.org>
+Subject: [PATCH 6.6 158/529] PCI/P2PDMA: Fix incorrect pointer usage in devm_kfree() call
+Date: Fri, 21 Nov 2025 14:07:37 +0100
+Message-ID: <20251121130236.641009498@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Sungho Kim <sungho.kim@furiosa.ai>
 
-[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
+[ Upstream commit 6238784e502b6a9fbeb3a6b77284b29baa4135cc ]
 
-Initially, trace_sock_exceed_buf_limit() was invoked when
-__sk_mem_raise_allocated() failed due to the memcg limit or the
-global limit.
+The error handling path in pci_p2pdma_add_resource() contains a bug in its
+`pgmap_free` label.
 
-However, commit d6f19938eb031 ("net: expose sk wmem in
-sock_exceed_buf_limit tracepoint") somehow suppressed the event
-only when memcg failed to charge for SK_MEM_RECV, although the
-memcg failure for SK_MEM_SEND still triggers the event.
+Memory is allocated for the `p2p_pgmap` struct, and the pointer is stored
+in `p2p_pgmap`. However, the error path calls devm_kfree() with `pgmap`,
+which is a pointer to a member field within the `p2p_pgmap` struct, not the
+base pointer of the allocation.
 
-Let's restore the event for SK_MEM_RECV.
+Correct the bug by passing the correct base pointer, `p2p_pgmap`, to
+devm_kfree().
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sungho Kim <sungho.kim@furiosa.ai>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Link: https://patch.msgid.link/20250820105714.2939896-1-sungho.kim@furiosa.ai
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pci/p2pdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 9918a9a337b61..23c11c656dafa 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3141,8 +3141,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
- 		}
- 	}
- 
--	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
--		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
-+	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
- 
- 	sk_memory_allocated_sub(sk, amt);
- 
+diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+index b8becc7257cda..0f1e431bbfc20 100644
+--- a/drivers/pci/p2pdma.c
++++ b/drivers/pci/p2pdma.c
+@@ -351,7 +351,7 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
+ pages_free:
+ 	devm_memunmap_pages(&pdev->dev, pgmap);
+ pgmap_free:
+-	devm_kfree(&pdev->dev, pgmap);
++	devm_kfree(&pdev->dev, p2p_pgmap);
+ 	return error;
+ }
+ EXPORT_SYMBOL_GPL(pci_p2pdma_add_resource);
 -- 
 2.51.0
 
