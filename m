@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5942534D92D;
-	Fri, 21 Nov 2025 13:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC7F34B1B7;
+	Fri, 21 Nov 2025 13:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732230; cv=none; b=rcTWLb4MVyUKUovL8nHz/KAe5WyfS05g7I9hOSyaQPflOzRyi53mM0PIF0X16U+LuVr7zxCkzs86YZtmXKhPTP0CuKotXt0QjqiLQqG9uwEWh0rdO/c7QP3QJLwCbqqT0WtUpwjkg0w/35lUT8R1Vh7FPBzEmYNzrdhVHJajdeA=
+	t=1763732233; cv=none; b=U5N05J1yW3CcKjhF/9fjF9vymsDi/EwRjV2JEc0CiLb3cygP03irkBxOpeEiAh2/bAV4wDGS3qjVS2PJDORu7s7YxrGO+3oMrT6fZsaDSEhxYQKugYZ0zrFcrgsPet4mWFzcVZOB0vBamG5h3uGAGNGV2MWCzJ0GRrEMc7pT42k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732230; c=relaxed/simple;
-	bh=okQl4U54iQfN+wUuPfOm3XZLKLiP8E0acNuBpWvETNM=;
+	s=arc-20240116; t=1763732233; c=relaxed/simple;
+	bh=2GvRhmbnGh2oD1QWcOyK/CrJ4YjYKrDwym5gdbN2gsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Orf2iUIY/ZP8caPgXij8hSb08qqMCBATR4XiRJa5yXjcWTgA+fySUTXcwSHzMSw5QrYE3HzT1pzj84AeuI9aLRbAkG118EIBLH9U38XIdhzePERwFCmGT1am9joqak3j2xKVtUYDpjV9ZoWG57TzDVmDSCV4DIL4/t81sq2rngM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uE8t/Hy4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKBHTwMPVc0rMlg6PaQoJU+oCsHSdcw/TZe162vlh74yHl9lprFIL9tAYPW1kuDqsbRwDeQFkAVDJwe2ZSwx4DNXfr+cz0CQDwccEdPFmqffRs3QKDAed3VPmEkrjM7kB58ptOVcXR6LDTSD1DL2Dgvbj6OYKYcKse9HypDKug0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHnah9yB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uE8t/Hy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08CBC4CEF1;
-	Fri, 21 Nov 2025 13:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHnah9yB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FD5C4CEF1;
+	Fri, 21 Nov 2025 13:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732230;
-	bh=okQl4U54iQfN+wUuPfOm3XZLKLiP8E0acNuBpWvETNM=;
+	s=korg; t=1763732233;
+	bh=2GvRhmbnGh2oD1QWcOyK/CrJ4YjYKrDwym5gdbN2gsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uE8t/Hy4cMl9NtfidHN5xwKwFG+lTySDmruokDW/gAZnWWAwwr6+yCurEHzbff5Hi
-	 SpA4jVp3FviDaIf+n8mrvRR788FIhdvgq8yYEnTFqipbUNEj7SfRihYEEFJvmvGE0A
-	 O+x2V2F98ahu7JnJ69hZGYOoTbqf22f2bnaMcaxc=
+	b=lHnah9yBQbiWRmsGk80VcVPFob58uSmTKLJskL9eMWhZSnqI+pEb3M0zp1FmSf2Ch
+	 TuCFD7h1eVwj3+92pc0PY5AYVC7tLzyVGheCpQE/odXcw/Cc80Kl1pAJjWHQ4uQ7dw
+	 G0kWnYm+iAk9uRUTopxIZPamG7xk9rPxcsQhLcz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Doug Smythies <dsmythies@telus.net>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Christian Loehle <christian.loehle@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/529] cpuidle: governors: menu: Rearrange main loop in menu_select()
-Date: Fri, 21 Nov 2025 14:05:47 +0100
-Message-ID: <20251121130232.714911156@linuxfoundation.org>
+Subject: [PATCH 6.6 049/529] cpuidle: governors: menu: Select polling state in some more cases
+Date: Fri, 21 Nov 2025 14:05:48 +0100
+Message-ID: <20251121130232.753206150@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,106 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 17224c1d2574d29668c4879e1fbf36d6f68cd22b ]
+[ Upstream commit db86f55bf81a3a297be05ee8775ae9a8c6e3a599 ]
 
-Reduce the indentation level in the main loop of menu_select() by
-rearranging some checks and assignments in it.
+A throughput regression of 11% introduced by commit 779b1a1cb13a ("cpuidle:
+governors: menu: Avoid selecting states with too much latency") has been
+reported and it is related to the case when the menu governor checks if
+selecting a proper idle state instead of a polling one makes sense.
 
-No intentional functional impact.
+In particular, it is questionable to do so if the exit latency of the
+idle state in question exceeds the predicted idle duration, so add a
+check for that, which is sufficient to make the reported regression go
+away, and update the related code comment accordingly.
 
+Fixes: 779b1a1cb13a ("cpuidle: governors: menu: Avoid selecting states with too much latency")
+Closes: https://lore.kernel.org/linux-pm/004501dc43c9$ec8aa930$c59ffb90$@telus.net/
+Reported-by: Doug Smythies <dsmythies@telus.net>
+Tested-by: Doug Smythies <dsmythies@telus.net>
+Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/2389215.ElGaqSPkdT@rafael.j.wysocki
-Stable-dep-of: db86f55bf81a ("cpuidle: governors: menu: Select polling state in some more cases")
+Link: https://patch.msgid.link/12786727.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/governors/menu.c |   70 ++++++++++++++++++++-------------------
- 1 file changed, 36 insertions(+), 34 deletions(-)
+ drivers/cpuidle/governors/menu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/drivers/cpuidle/governors/menu.c
 +++ b/drivers/cpuidle/governors/menu.c
-@@ -348,45 +348,47 @@ static int menu_select(struct cpuidle_dr
- 		if (s->exit_latency_ns > latency_req)
+@@ -355,10 +355,13 @@ static int menu_select(struct cpuidle_dr
+ 
+ 		/*
+ 		 * Use a physical idle state, not busy polling, unless a timer
+-		 * is going to trigger soon enough.
++		 * is going to trigger soon enough or the exit latency of the
++		 * idle state in question is greater than the predicted idle
++		 * duration.
+ 		 */
+ 		if ((drv->states[idx].flags & CPUIDLE_FLAG_POLLING) &&
+-		    s->target_residency_ns <= data->next_timer_ns) {
++		    s->target_residency_ns <= data->next_timer_ns &&
++		    s->exit_latency_ns <= predicted_ns) {
+ 			predicted_ns = s->target_residency_ns;
+ 			idx = i;
  			break;
- 
--		if (s->target_residency_ns > predicted_ns) {
--			/*
--			 * Use a physical idle state, not busy polling, unless
--			 * a timer is going to trigger soon enough.
--			 */
--			if ((drv->states[idx].flags & CPUIDLE_FLAG_POLLING) &&
--			    s->target_residency_ns <= data->next_timer_ns) {
--				predicted_ns = s->target_residency_ns;
--				idx = i;
--				break;
--			}
--			if (predicted_ns < TICK_NSEC)
--				break;
--
--			if (!tick_nohz_tick_stopped()) {
--				/*
--				 * If the state selected so far is shallow,
--				 * waking up early won't hurt, so retain the
--				 * tick in that case and let the governor run
--				 * again in the next iteration of the loop.
--				 */
--				predicted_ns = drv->states[idx].target_residency_ns;
--				break;
--			}
-+		if (s->target_residency_ns <= predicted_ns) {
-+			idx = i;
-+			continue;
-+		}
-+
-+		/*
-+		 * Use a physical idle state, not busy polling, unless a timer
-+		 * is going to trigger soon enough.
-+		 */
-+		if ((drv->states[idx].flags & CPUIDLE_FLAG_POLLING) &&
-+		    s->target_residency_ns <= data->next_timer_ns) {
-+			predicted_ns = s->target_residency_ns;
-+			idx = i;
-+			break;
-+		}
- 
-+		if (predicted_ns < TICK_NSEC)
-+			break;
-+
-+		if (!tick_nohz_tick_stopped()) {
- 			/*
--			 * If the state selected so far is shallow and this
--			 * state's target residency matches the time till the
--			 * closest timer event, select this one to avoid getting
--			 * stuck in the shallow one for too long.
-+			 * If the state selected so far is shallow, waking up
-+			 * early won't hurt, so retain the tick in that case and
-+			 * let the governor run again in the next iteration of
-+			 * the idle loop.
- 			 */
--			if (drv->states[idx].target_residency_ns < TICK_NSEC &&
--			    s->target_residency_ns <= delta_tick)
--				idx = i;
--
--			return idx;
-+			predicted_ns = drv->states[idx].target_residency_ns;
-+			break;
- 		}
- 
--		idx = i;
-+		/*
-+		 * If the state selected so far is shallow and this state's
-+		 * target residency matches the time till the closest timer
-+		 * event, select this one to avoid getting stuck in the shallow
-+		 * one for too long.
-+		 */
-+		if (drv->states[idx].target_residency_ns < TICK_NSEC &&
-+		    s->target_residency_ns <= delta_tick)
-+			idx = i;
-+
-+		return idx;
- 	}
- 
- 	if (idx == -1)
 
 
