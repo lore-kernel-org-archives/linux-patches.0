@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374D7309EE8;
-	Fri, 21 Nov 2025 13:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2092FC88B;
+	Fri, 21 Nov 2025 13:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733198; cv=none; b=C2kfpTfGHNDfvMrXGC1xGh+UgR3Cm5tqtANVGqQwwrvhSMGbnt5vlWGLanmFE5M8pYqH8SMaygXcz5aJjhm1ylmy/Znm9u/VlpIsw9ZXAZgMRnjIcymP2h6T1dO9TyDpPVhRM45DBiv58IY0okTBbC0axMZ6xDKx+jpmiAYGGhw=
+	t=1763733201; cv=none; b=t+r0Nxk/3uOqDkmtfR0zZem/QBxiw4p9MTWuo81CHkgSAEC+uPsDB+kyOp9wwA09mq75Jj6258lFfONi8RruhvEIBI06Ve8/1DXEVOCu3rnVQ2RWup/Qkiq2CLWiKpGPkEh+eH7NT1qxL8sd88PkCq80qJZ3uZLTqASruoGucXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733198; c=relaxed/simple;
-	bh=6qYvPG/KXsk41au9sAwqp0xARvNYURVQYoBoQjKQTIw=;
+	s=arc-20240116; t=1763733201; c=relaxed/simple;
+	bh=WD1DQk1FVpkP7L1p+GRmko+ZdJba9X/CICgG/9p4TfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HerN5w5LQC7auTsxOK//xbyzHo5zuYGpT8qR4geTcIK1cIpEL3CCGZl+ji10yslffmyO1hFakf+g8NMuA49AWR+c1NIqMTioaT2uk2gQ3LcTE5HKUVcU35x7MLVRXwge+XDbOWTfWwy5s+RQ3/gr3O4EXnnD8I31xDlrrBtlVKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TE1XMrI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDurO6ARqTnIwtqEkfdqEA76Zv5l0VQJAGE8vjazyXoaTjXVb4u8Q83xAaWhIVchUekuKxlH+Reh9BqNKfODnCR/E97x/09b4Wwfa562u5N+7/tDco4TpEFgRXCFEKUBNONwXY4DzNOV1/SvQJvg2kpj6orDPntbUvus/u4qFQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzcbvYOP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TE1XMrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8551EC4CEF1;
-	Fri, 21 Nov 2025 13:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzcbvYOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75A2C4CEF1;
+	Fri, 21 Nov 2025 13:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733198;
-	bh=6qYvPG/KXsk41au9sAwqp0xARvNYURVQYoBoQjKQTIw=;
+	s=korg; t=1763733201;
+	bh=WD1DQk1FVpkP7L1p+GRmko+ZdJba9X/CICgG/9p4TfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TE1XMrIgarRTL8vyHv/Taey6/dKXXVjgeSiHSj8+qrGULKqDSCnMnD77OZAvN2c6
-	 pec1fuGl+amNbV/Bu+UKs7di7rJn41s0p8VbhEY9xHx2r8mKz7nV26piD7G84xj34Y
-	 UhvZKCvg8lzee4XPbfIddhNtz8aJtfO04fKLxi6Y=
+	b=HzcbvYOPtLUkOcDh3CcKyVCeDeroFkB6qOzP0QDrageCPepIs+EIeVnz7fU8Cy/DS
+	 HEQBt+AD5kSp6bkL9oWlAgo0+K7t0CH8D74v0idrE1VNK0lTn/3Lj7MygfYgQyoMg9
+	 EZNk1iPvXIAEuiH5WrHKTM7IcYLPWwrqG9d5TmWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin Willi <martin@strongswan.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 352/529] bnxt_en: Fix a possible memory leak in bnxt_ptp_init
-Date: Fri, 21 Nov 2025 14:10:51 +0100
-Message-ID: <20251121130243.554819536@linuxfoundation.org>
+Subject: [PATCH 6.6 353/529] wifi: mac80211_hwsim: Limit destroy_on_close radio removal to netgroup
+Date: Fri, 21 Nov 2025 14:10:52 +0100
+Message-ID: <20251121130243.590536667@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,42 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Martin Willi <martin@strongswan.org>
 
-[ Upstream commit deb8eb39164382f1f67ef8e8af9176baf5e10f2d ]
+[ Upstream commit c74619e7602e88a0239cd4999571dd31081e9adf ]
 
-In bnxt_ptp_init(), when ptp_clock_register() fails, the driver is
-not freeing the memory allocated for ptp_info->pin_config.  Fix it
-to unconditionally free ptp_info->pin_config in bnxt_ptp_free().
+hwsim radios marked destroy_on_close are removed when the Netlink socket
+that created them is closed. As the portid is not unique across network
+namespaces, closing a socket in one namespace may remove radios in another
+if it has the destroy_on_close flag set.
 
-Fixes: caf3eedbcd8d ("bnxt_en: 1PPS support for 5750X family chips")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20251104005700.542174-3-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Instead of matching the network namespace, match the netgroup of the radio
+to limit radio removal to those that have been created by the closing
+Netlink socket. The netgroup of a radio identifies the network namespace
+it was created in, and matching on it removes a destroy_on_close radio
+even if it has been moved to another namespace.
+
+Fixes: 100cb9ff40e0 ("mac80211_hwsim: Allow managing radios from non-initial namespaces")
+Signed-off-by: Martin Willi <martin@strongswan.org>
+Link: https://patch.msgid.link/20251103082436.30483-1-martin@strongswan.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index bbe8657f6545b..404b433f1bc08 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -917,9 +917,9 @@ static void bnxt_ptp_free(struct bnxt *bp)
- 	if (ptp->ptp_clock) {
- 		ptp_clock_unregister(ptp->ptp_clock);
- 		ptp->ptp_clock = NULL;
--		kfree(ptp->ptp_info.pin_config);
--		ptp->ptp_info.pin_config = NULL;
- 	}
-+	kfree(ptp->ptp_info.pin_config);
-+	ptp->ptp_info.pin_config = NULL;
- }
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index f5f48f7e6d26e..1214e7dcc8124 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -6189,14 +6189,15 @@ static struct genl_family hwsim_genl_family __ro_after_init = {
+ 	.n_mcgrps = ARRAY_SIZE(hwsim_mcgrps),
+ };
  
- int bnxt_ptp_init(struct bnxt *bp)
+-static void remove_user_radios(u32 portid)
++static void remove_user_radios(u32 portid, int netgroup)
+ {
+ 	struct mac80211_hwsim_data *entry, *tmp;
+ 	LIST_HEAD(list);
+ 
+ 	spin_lock_bh(&hwsim_radio_lock);
+ 	list_for_each_entry_safe(entry, tmp, &hwsim_radios, list) {
+-		if (entry->destroy_on_close && entry->portid == portid) {
++		if (entry->destroy_on_close && entry->portid == portid &&
++		    entry->netgroup == netgroup) {
+ 			list_move(&entry->list, &list);
+ 			rhashtable_remove_fast(&hwsim_radios_rht, &entry->rht,
+ 					       hwsim_rht_params);
+@@ -6221,7 +6222,7 @@ static int mac80211_hwsim_netlink_notify(struct notifier_block *nb,
+ 	if (state != NETLINK_URELEASE)
+ 		return NOTIFY_DONE;
+ 
+-	remove_user_radios(notify->portid);
++	remove_user_radios(notify->portid, hwsim_net_get_netgroup(notify->net));
+ 
+ 	if (notify->portid == hwsim_net_get_wmediumd(notify->net)) {
+ 		printk(KERN_INFO "mac80211_hwsim: wmediumd released netlink"
 -- 
 2.51.0
 
