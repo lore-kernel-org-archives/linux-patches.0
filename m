@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86299346E51;
-	Fri, 21 Nov 2025 13:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F16346E46;
+	Fri, 21 Nov 2025 13:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731052; cv=none; b=U2EziaPGrPZXw8D1WJ3A2jnBt5mizq/JMJwAFIaXkEK2WgLexrlttVBOWJZNAoqyWOvEJKlCgwyHeY8CfHBGsUbAss0RzXYztIMIwM/cn6Upgq/R3odLar07/D0uuJFdXNgGfcg6qeCmersf6pOpMIRiSuqmi4nJ5D8f4me8cTc=
+	t=1763731055; cv=none; b=Q7gJh5mm79Aem2EiNvjFVx0V1m0LNlfl2D56bVeCLxLxD5oF9UR0ud4prhgOjnuk5ttM5q81pMptZdaScJbb+OJl/iCByzGOZe1/cFtVX7kaakLzUei0Hd0uJae3dC10uIBZO4yzv1bKaxaHYC5gPR24c/qypn3qDBTEtB9b2/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731052; c=relaxed/simple;
-	bh=lC1vMU7fxTnwGdRr1HerRWEMozFRNnqgwzW1A4iKshY=;
+	s=arc-20240116; t=1763731055; c=relaxed/simple;
+	bh=Oeit348/hU5826Xe4ST+vB+1fNIPlLXkGgA8UiaJsIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgfUJVWuFYu70Lg/h4ASFhy0AELLAXh+0DSGCQIrTRAiFqY4cl90meodTGWbcWwltmu7iTDvuJeG4BUFjlSXgTi2ySfkkYSlGd6njsOM27oau1em2FvZ7a0zmPwf49vYwci3S3MZkE+OfinjtPtx4PrbQJbfFSy5C1xAI2+luMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCXapFJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkemZK06iH8KUhtmB+0KVRa1kDSWsvkCH9PyF17/qWjP3A3X5+RDIBmnHZPReNz/dbIDych0qrWdmdZnWmGmsIpeRDKSgb5wc8qTgKwHm4cRN+I20JiGnPLA1rCjvaDDi8pe66lJre5GsprGv0gHHnBkiLXBmawMS6cH9NsrJPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZXlJJn/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCXapFJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1D3C4CEF1;
-	Fri, 21 Nov 2025 13:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZXlJJn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74998C4CEFB;
+	Fri, 21 Nov 2025 13:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731052;
-	bh=lC1vMU7fxTnwGdRr1HerRWEMozFRNnqgwzW1A4iKshY=;
+	s=korg; t=1763731054;
+	bh=Oeit348/hU5826Xe4ST+vB+1fNIPlLXkGgA8UiaJsIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCXapFJI9PquoK0w9a5AY3cG/gtA1IR+8AbKseO8iINjyzlpPXgVH6bdTfzDS6fKq
-	 ggAATh850x/y0ugIHU4RUz7d5of/zfziDdfy0+03vxD9LbpHLoNWYJL08u2m9lhBSy
-	 DBJ6+n/OA1hKLjSVU/JJApwtESgUhEa4gC7FOsO4=
+	b=NZXlJJn/DOqrDJ+b3pM2iEr7/2OMluZyj99+Cefrft+8qZ3/v+K20Z8izModpRSEo
+	 9Qd3yTLpjLZKEMu20Tjt5I0FmlYqoqNAQLHtGa51ivqo8rJY8oBb1wbAPQXy1trFtP
+	 DvpQJUqOkkUjza54zajgkDXLzAtBM/b0PHs60tR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com,
-	Ranganath V N <vnranganath.20@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 073/247] net: sched: act_ife: initialize struct tc_ife to fix KMSAN kernel-infoleak
-Date: Fri, 21 Nov 2025 14:10:20 +0100
-Message-ID: <20251121130157.218742497@linuxfoundation.org>
+Subject: [PATCH 6.17 047/247] erofs: avoid infinite loop due to incomplete zstd-compressed data
+Date: Fri, 21 Nov 2025 14:09:54 +0100
+Message-ID: <20251121130156.290880520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,67 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranganath V N <vnranganath.20@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit ce50039be49eea9b4cd8873ca6eccded1b4a130a ]
+[ Upstream commit f2a12cc3b97f062186568a7b94ddb7aa2ef68140 ]
 
-Fix a KMSAN kernel-infoleak detected  by the syzbot .
+Currently, the decompression logic incorrectly spins if compressed
+data is truncated in crafted (deliberately corrupted) images.
 
-[net?] KMSAN: kernel-infoleak in __skb_datagram_iter
-
-In tcf_ife_dump(), the variable 'opt' was partially initialized using a
-designatied initializer. While the padding bytes are reamined
-uninitialized. nla_put() copies the entire structure into a
-netlink message, these uninitialized bytes leaked to userspace.
-
-Initialize the structure with memset before assigning its fields
-to ensure all members and padding are cleared prior to beign copied.
-
-This change silences the KMSAN report and prevents potential information
-leaks from the kernel memory.
-
-This fix has been tested and validated by syzbot. This patch closes the
-bug reported at the following syzkaller link and ensures no infoleak.
-
-Reported-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c85cae3350b7d486aee
-Tested-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
-Fixes: ef6980b6becb ("introduce IFE action")
-Signed-off-by: Ranganath V N <vnranganath.20@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251109091336.9277-3-vnranganath.20@gmail.com
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7c35de4df105 ("erofs: Zstandard compression support")
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/r/50958.1761605413@localhost
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ife.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/erofs/decompressor_zstd.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index 107c6d83dc5c4..7c6975632fc2e 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -644,13 +644,15 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
- 	unsigned char *b = skb_tail_pointer(skb);
- 	struct tcf_ife_info *ife = to_ife(a);
- 	struct tcf_ife_params *p;
--	struct tc_ife opt = {
--		.index = ife->tcf_index,
--		.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
--		.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
--	};
-+	struct tc_ife opt;
- 	struct tcf_t t;
+diff --git a/fs/erofs/decompressor_zstd.c b/fs/erofs/decompressor_zstd.c
+index b4bfe14229f9f..e38d93bb21048 100644
+--- a/fs/erofs/decompressor_zstd.c
++++ b/fs/erofs/decompressor_zstd.c
+@@ -172,7 +172,6 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
+ 	dctx.bounce = strm->bounce;
  
-+	memset(&opt, 0, sizeof(opt));
-+
-+	opt.index = ife->tcf_index,
-+	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
-+	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
-+
- 	spin_lock_bh(&ife->tcf_lock);
- 	opt.action = ife->tcf_action;
- 	p = rcu_dereference_protected(ife->params,
+ 	do {
+-		dctx.avail_out = out_buf.size - out_buf.pos;
+ 		dctx.inbuf_sz = in_buf.size;
+ 		dctx.inbuf_pos = in_buf.pos;
+ 		err = z_erofs_stream_switch_bufs(&dctx, &out_buf.dst,
+@@ -188,14 +187,18 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
+ 		in_buf.pos = dctx.inbuf_pos;
+ 
+ 		zerr = zstd_decompress_stream(stream, &out_buf, &in_buf);
+-		if (zstd_is_error(zerr) || (!zerr && rq->outputsize)) {
++		dctx.avail_out = out_buf.size - out_buf.pos;
++		if (zstd_is_error(zerr) ||
++		    ((rq->outputsize + dctx.avail_out) && (!zerr || (zerr > 0 &&
++				!(rq->inputsize + in_buf.size - in_buf.pos))))) {
+ 			erofs_err(sb, "failed to decompress in[%u] out[%u]: %s",
+ 				  rq->inputsize, rq->outputsize,
+-				  zerr ? zstd_get_error_name(zerr) : "unexpected end of stream");
++				  zstd_is_error(zerr) ? zstd_get_error_name(zerr) :
++					"unexpected end of stream");
+ 			err = -EFSCORRUPTED;
+ 			break;
+ 		}
+-	} while (rq->outputsize || out_buf.pos < out_buf.size);
++	} while (rq->outputsize + dctx.avail_out);
+ 
+ 	if (dctx.kout)
+ 		kunmap_local(dctx.kout);
 -- 
 2.51.0
 
