@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF6F2F6577;
-	Fri, 21 Nov 2025 13:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCD734679A;
+	Fri, 21 Nov 2025 13:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731019; cv=none; b=DWZXkxEgsGQZOyKO0zztdatOQsV6PhB3eeYn4nj+kUkIXM5HTG9DtEpqr2JjZaXWgzEUiGgZ53NiL+lMpyRh/rnfa/daLFDOWzZ2c4emYqiAjHiiLsgDA2hp7i7xtYxbpXxz1adqxvFUQJ56u+t51lsLXFyvCiWzu3WFCRezQrg=
+	t=1763731023; cv=none; b=ThK/N3ALKCA9sacy5J4UdcHqynmApfLOltTjkqKQHtqeun4F7YAVwpofrHtyAc0s4KhJWJ8YH+mHLlmabRN/U5t/2oIWdCGF+31ScS6EmQdAJ+5LNZ6g1T4peB7ebygRQbYwwfLz3Oxw00noeM6Tx3q9Ovx3Rmy6qc3IbbueAPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731019; c=relaxed/simple;
-	bh=xk7rWPE0MsIoatnLtVHoaUuct7OJm/5jfxdRFebS8S8=;
+	s=arc-20240116; t=1763731023; c=relaxed/simple;
+	bh=72EaicwGIfSIp2ztO1z5/BM5HuqY7B8Aac5J4kxhUgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a6U0mm18Dsv4FDETUhCGjTal4t4B5dgXFbxS9yxl75t4iXtLD+W4M82YvoZUbisXmhZXxD1RQbrWhjBFZtcjezyA+h3FgI8mXiFVKvae8CwP6SWxUlSmy0UO9ZgSrDgGMXfC3KRAPRSSma5+J+aTBdk9PrZdy98snE4lRs82fog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXpXdeGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtlI6wAldGjo4XzJ3F53uZSJhrdPZcO7d2RT9IVlSF/IumCUSaU2UPlHqLBH76CKYA9fK2svh1+i0JFGe3zPxCF5f4k4b5QcRx7wjqDASEWwtmdccnvRbvSUqAgfo+mulN4PAnh+BQU75xckq8o03PHU5UdUdFUsuJQUfxixNX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrf7OWgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXpXdeGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3ACC4CEF1;
-	Fri, 21 Nov 2025 13:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrf7OWgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADFDC4CEF1;
+	Fri, 21 Nov 2025 13:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731019;
-	bh=xk7rWPE0MsIoatnLtVHoaUuct7OJm/5jfxdRFebS8S8=;
+	s=korg; t=1763731022;
+	bh=72EaicwGIfSIp2ztO1z5/BM5HuqY7B8Aac5J4kxhUgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXpXdeGomAGYMMk0qAkNNylkrjilFoIUdAWsij+7MTaIlZ6Cm1hXTkxHmbyMtpRX7
-	 AfwmI0ybJrYalozgoQaQ4CM3ke8pkqE81yYmFrBIYkTVctZKfxksgaQw73l7UC+02w
-	 urSbHTlf7un9PS1ziMidVfvDmddMSj/uuFrG/1u8=
+	b=xrf7OWgF90I35WCQApn6/AXxAcD+d/y7f6mU8NdsY6p0cXLEkbVuM2/czQJoz2FB6
+	 IW18Dlw6Zukt36fyIuuzPOMpVFje6PdvKXsjzSmoYksMCM5Jj2rA129cMGlk/PazG7
+	 HkLgK2/OqteOxSYn/MArBRtY7GfhcpIQt50/nnfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 063/247] net/smc: fix mismatch between CLC header and proposal
-Date: Fri, 21 Nov 2025 14:10:10 +0100
-Message-ID: <20251121130156.863846285@linuxfoundation.org>
+Subject: [PATCH 6.17 046/247] wifi: ath11k: zero init info->status in wmi_process_mgmt_tx_comp()
+Date: Fri, 21 Nov 2025 14:09:53 +0100
+Message-ID: <20251121130156.255498477@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -46,57 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit ec33f2e5a2d0dbbfd71435209aee812fdc9369b8 ]
+[ Upstream commit 9065b968752334f972e0d48e50c4463a172fc2a7 ]
 
-The current CLC proposal message construction uses a mix of
-`ini->smc_type_v1/v2` and `pclc_base->hdr.typev1/v2` to decide whether
-to include optional extensions (IPv6 prefix extension for v1, and v2
-extension). This leads to a critical inconsistency: when
-`smc_clc_prfx_set()` fails - for example, in IPv6-only environments with
-only link-local addresses, or when the local IP address and the outgoing
-interface’s network address are not in the same subnet.
+When reporting tx completion using ieee80211_tx_status_xxx() family of
+functions, the status part of the struct ieee80211_tx_info nested in the
+skb is used to report things like transmit rates & retry count to mac80211
 
-As a result, the proposal message is assembled using the stale
-`ini->smc_type_v1` value—causing the IPv6 prefix extension to be
-included even though the header indicates v1 is not supported.
-The peer then receives a malformed CLC proposal where the header type
-does not match the payload, and immediately resets the connection.
+On the TX data path, this is correctly memset to 0 before calling
+ieee80211_tx_status_ext(), but on the tx mgmt path this was not done.
 
-The fix ensures consistency between the CLC header flags and the actual
-payload by synchronizing `ini->smc_type_v1` with `pclc_base->hdr.typev1`
-when prefix setup fails.
+This leads to mac80211 treating garbage values as valid transmit counters
+(like tx retries for example) and accounting them as real statistics that
+makes their way to userland via station dump.
 
-Fixes: 8c3dca341aea ("net/smc: build and send V2 CLC proposal")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20251107024029.88753-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The same issue was resolved in ath12k by commit 9903c0986f78 ("wifi:
+ath12k: Add memset and update default rate value in wmi tx completion")
+
+Tested-on: QCN9074 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251104083957.717825-1-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_clc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/wmi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index 09745baa10170..27750a695ed8b 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -890,6 +890,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini)
- 				return SMC_CLC_DECL_CNFERR;
- 			}
- 			pclc_base->hdr.typev1 = SMC_TYPE_N;
-+			ini->smc_type_v1 = SMC_TYPE_N;
- 		} else {
- 			pclc_base->iparea_offset = htons(sizeof(*pclc_smcd));
- 			plen += sizeof(*pclc_prfx) +
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 0491e3fd6b5e1..e3b444333deed 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -5961,6 +5961,9 @@ static int wmi_process_mgmt_tx_comp(struct ath11k *ar,
+ 	dma_unmap_single(ar->ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
+ 
+ 	info = IEEE80211_SKB_CB(msdu);
++	memset(&info->status, 0, sizeof(info->status));
++	info->status.rates[0].idx = -1;
++
+ 	if ((!(info->flags & IEEE80211_TX_CTL_NO_ACK)) &&
+ 	    !tx_compl_param->status) {
+ 		info->flags |= IEEE80211_TX_STAT_ACK;
 -- 
 2.51.0
 
