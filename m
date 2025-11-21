@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195BE2641CA;
-	Fri, 21 Nov 2025 13:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41292745E;
+	Fri, 21 Nov 2025 13:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732299; cv=none; b=rrhM7TCHGtlU77FpFtGG0VJJEFuO1zjwt3j5K1hopsoPEEhLLWgn5Zj9Uc0aPxa83yljIxQ+Smft7VNnTbcjmQM/tUqF355KGDC6OJ1UVK+iTtMh7z/1TT3EDJDuzikycflJmzG9kaHEmyPOX4s9FtnDetzdb/oHs5UsOW3L5Ds=
+	t=1763732302; cv=none; b=Hr0nH/Cbq1XqLbSrLkQL+qnontVGToIaF1YsfqxPjoUD+bTv3H4OdF4q5+BS8YtuLJF+Ost9r+ObjilrhHu6Vlj/lB/R5tm9K9/YjDV8mecBLA4mfFAES9HHcYbPNHXcoPFiN9ehxXYQ4mavioCv8ki6KtwxNJMdq4vKTtAtnIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732299; c=relaxed/simple;
-	bh=u+fF+mlMWpGCCn1xpuQk7X/KqNFekoR7jgRA3DC5mB4=;
+	s=arc-20240116; t=1763732302; c=relaxed/simple;
+	bh=LnMKVntT5OvZVdIuA0Tbzffaw2JxpGv8MEquHevzHX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFp2XFMyRpIvP6sFL1xYV8v+a0XbzAocrTSS3JhnynCBHVo4wWjkZrvhcKmOTW7D9QqwxX2taVQq/tgqYJa5c+JMi9H6gd3knAVcGmzdjtQ2zv6ALWVnlO5nlvswt9wkXIu1YiyoaFrTKnoZBksE6FpcsrWHoRtRkUMz1IOnz3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYwqv2yV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrkZSIjbgMkAQchK4/MEXLM/hsMvkzkI683rI1Pe82IrhjySa0CwdkYGNBswyDjJOfBdo5PgdyFP1+Gvtu3Dcehd5YW0RoH2+fnic8RsOfPgr33CesGzXSH/u6tbAcmIKr9Zwk8XQUfikcd/3VRRmK0HutgTp4v5ALfyLuilwx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5B0CVtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYwqv2yV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F67C4CEF1;
-	Fri, 21 Nov 2025 13:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5B0CVtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A49C4CEF1;
+	Fri, 21 Nov 2025 13:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732298;
-	bh=u+fF+mlMWpGCCn1xpuQk7X/KqNFekoR7jgRA3DC5mB4=;
+	s=korg; t=1763732301;
+	bh=LnMKVntT5OvZVdIuA0Tbzffaw2JxpGv8MEquHevzHX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYwqv2yV1+b6QFUnge6mDSwwt/rhbX9ZfPYGy01X2pSExItv4LEEcrICFDQsZ9Nlz
-	 fnp2Zqg6qYAzrkmC2Ynxdu3iNWOyOTcGtVJVTa0mWsfElYqHsuWPpHHrKoq7hWfS2M
-	 Zq2NwQ3lusX7FrGheUlJtBWyAHT4slDgKJZW12WU=
+	b=l5B0CVtvNiO4S1p0tDjjiO8EPAZtmaI0XybieTtyw3kK0AD4iXaQNSaj2ZA/5U1fr
+	 vVRfBItK8gqPxsYRAlBDNGKf0zW1sntHtd3xQ1EUWQu3kR5dEKh4FoPzHB+v0kqJw7
+	 Zb+XH0yoAe6zdcYSROivcDBcxEkShQzeyOXj/UCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Ruehl <chris.ruehl@gtsys.com.hk>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Avadhut Naik <avadhut.naik@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/529] power: supply: qcom_battmgr: add OOI chemistry
-Date: Fri, 21 Nov 2025 14:06:12 +0100
-Message-ID: <20251121130233.621851164@linuxfoundation.org>
+Subject: [PATCH 6.6 074/529] hwmon: (k10temp) Add thermal support for AMD Family 1Ah-based models
+Date: Fri, 21 Nov 2025 14:06:13 +0100
+Message-ID: <20251121130233.657525594@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,35 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
+From: Avadhut Naik <avadhut.naik@amd.com>
 
-[ Upstream commit fee0904441325d83e7578ca457ec65a9d3f21264 ]
+[ Upstream commit f116af2eb51ed9df24911537fda32a033f1c58da ]
 
-The ASUS S15 xElite model report the Li-ion battery with an OOI, hence this
-update the detection and return the appropriate type.
+Add thermal info support for newer AMD Family 1Ah-based models.
 
-Signed-off-by: Christopher Ruehl <chris.ruehl@gtsys.com.hk>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
+Link: https://lore.kernel.org/r/20250729001644.257645-1-avadhut.naik@amd.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/k10temp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 190e8a4cfa97f..c1cb338e54bbc 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -975,7 +975,8 @@ static void qcom_battmgr_sc8280xp_strcpy(char *dest, const char *src)
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index c906731c6c2d3..759855412e50d 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -84,6 +84,13 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
+  */
+ #define AMD_I3255_STR				"3255"
  
- static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry)
- {
--	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
-+	if ((!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN)) ||
-+	    (!strncmp(chemistry, "OOI", BATTMGR_CHEMISTRY_LEN)))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
- 	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LIPO;
++/*
++ * PCI Device IDs for AMD's Family 1Ah-based SOCs.
++ * Defining locally as IDs are not shared.
++ */
++#define PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3	0x12cb
++#define PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3	0x127b
++
+ struct k10temp_data {
+ 	struct pci_dev *pdev;
+ 	void (*read_htcreg)(struct pci_dev *pdev, u32 *regval);
+@@ -545,7 +552,9 @@ static const struct pci_device_id k10temp_id_table[] = {
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M00H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M20H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M50H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_1AH_M90H_DF_F3) },
+ 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
+ 	{}
+ };
 -- 
 2.51.0
 
