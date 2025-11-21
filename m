@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF86827147D;
-	Fri, 21 Nov 2025 13:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21AB30F93B;
+	Fri, 21 Nov 2025 13:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731404; cv=none; b=JLJzNZF9xVlup1jJ2HWtF4RedZZTXcLtI2KFWcwfossZE93llx6KFqKconhIinkYOIgMzwnHFVA2yn4zQrCwgX0Ih46mBXS64v7K8CRbVVTsAsy8MsgUPfFA43ydEVJUjFf3MvMC9y1cM8LnBGg3SZyH74UMSfW9Z4HoxFLAtfY=
+	t=1763731407; cv=none; b=GfWI+OIOG//IySpyLFRFjD4NLcwtGAbkpyMkh5NHT83G4Fjt6DAX19X4kvXp18KuXQ69QTYLJ+sGIJ8cRNmnb/OW5XcgqObfCJfzDVDhYJYhQtC3FR7+gKlucKeVAEl5T+c8pvB3T24R9gMxEmxYnrsANIYASVvIqkvvtYC5qP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731404; c=relaxed/simple;
-	bh=XZml1nDTEHMy2xCJhjQ+3FHBa5Uq+kRb0TI6doJ20R4=;
+	s=arc-20240116; t=1763731407; c=relaxed/simple;
+	bh=iZc/zKU05dwFMYdUNhpQUN/AWRoiPAC+rg3+DLbnz2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U3Xv3LVud1nDaqsKnLJakDRDKUsJxSR7JoV/hWnk14j8pZlSL1vbLwlyX/nYgftZ8JlikuClMIYWnZIoLyVsc0ZFU99bBo85Xc36smf5OnhY5npla9uvyWbs9NxIP8jFdJZYNKNyGcDapO62gJ2VTzxWv1kr3Pt3B5FXOwPNxdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAyO4HwQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjHKhNYCla8DrfqvwidTRlKz3cdQ5X5TGliGh3qsez0etwhDmaOeRFp0LQ59RgVKXomLfG9cGXcT9Yt/mF345rXIUc2BNsx2DWDXOP4MX+xqruUWV62SQzJU+kP9Nol7EtodRf3x0ngLtTG1jG/aHwlwOfz0OABSDRIurIrPSGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LThU1my2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAyO4HwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B0EC4CEF1;
-	Fri, 21 Nov 2025 13:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LThU1my2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2632BC116C6;
+	Fri, 21 Nov 2025 13:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731404;
-	bh=XZml1nDTEHMy2xCJhjQ+3FHBa5Uq+kRb0TI6doJ20R4=;
+	s=korg; t=1763731407;
+	bh=iZc/zKU05dwFMYdUNhpQUN/AWRoiPAC+rg3+DLbnz2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAyO4HwQDvugxSftjVdpCjg+hC7U2Mt8t3WdnkI8VNV2kryrfXyhEZcSzEtq1/Oh6
-	 bgijvdVKf/GD7MCjVDMPOOzCGzh4qiy8VkEkWSHa61ZACzS78zIrKqcLPk7O8P9FOD
-	 U8eAJXlNtulN0Uj4kGzF478JhzNmw6VpndZA2bPw=
+	b=LThU1my2u5MszpNnCLjTkPWdkB5mkiy5wGo7Rv15Hj71ZQhMQhaMKJfGIRdzXZYxV
+	 /SmMZdZWv3eyELYZARmZSJjlwt0Vaz1RmyArrapP4guqmvzUVAwA2uA4All+M+X+v9
+	 xDkK5jELlSeV3e1yeJSs7XtQkDKb9KsABKWj4s+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
-	David Rientjes <rientjes@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Baoquan He <bhe@redhat.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 197/247] codetag: debug: handle existing CODETAG_EMPTY in mark_objexts_empty for slabobj_ext
-Date: Fri, 21 Nov 2025 14:12:24 +0100
-Message-ID: <20251121130201.794152934@linuxfoundation.org>
+Subject: [PATCH 6.17 198/247] crash: fix crashkernel resource shrink
+Date: Fri, 21 Nov 2025 14:12:25 +0100
+Message-ID: <20251121130201.830397782@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -50,150 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit 1abbdf3d57aa964e572940d67c9ec5dc87710738 upstream.
+commit 00fbff75c5acb4755f06f08bd1071879c63940c5 upstream.
 
-When alloc_slab_obj_exts() fails and then later succeeds in allocating a
-slab extension vector, it calls handle_failed_objexts_alloc() to mark all
-objects in the vector as empty.  As a result all objects in this slab
-(slabA) will have their extensions set to CODETAG_EMPTY.
+When crashkernel is configured with a high reservation, shrinking its
+value below the low crashkernel reservation causes two issues:
 
-Later on if this slabA is used to allocate a slabobj_ext vector for
-another slab (slabB), we end up with the slabB->obj_exts pointing to a
-slabobj_ext vector that itself has a non-NULL slabobj_ext equal to
-CODETAG_EMPTY.  When slabB gets freed, free_slab_obj_exts() is called to
-free slabB->obj_exts vector.
+1. Invalid crashkernel resource objects
+2. Kernel crash if crashkernel shrinking is done twice
 
-free_slab_obj_exts() calls mark_objexts_empty(slabB->obj_exts) which will
-generate a warning because it expects slabobj_ext vectors to have a NULL
-obj_ext, not CODETAG_EMPTY.
+For example, with crashkernel=200M,high, the kernel reserves 200MB of high
+memory and some default low memory (say 256MB).  The reservation appears
+as:
 
-Modify mark_objexts_empty() to skip the warning and setting the obj_ext
-value if it's already set to CODETAG_EMPTY.
+cat /proc/iomem | grep -i crash
+af000000-beffffff : Crash kernel
+433000000-43f7fffff : Crash kernel
 
+If crashkernel is then shrunk to 50MB (echo 52428800 >
+/sys/kernel/kexec_crash_size), /proc/iomem still shows 256MB reserved:
+af000000-beffffff : Crash kernel
 
-To quickly detect this WARN, I modified the code from
-WARN_ON(slab_exts[offs].ref.ct) to BUG_ON(slab_exts[offs].ref.ct == 1);
+Instead, it should show 50MB:
+af000000-b21fffff : Crash kernel
 
-We then obtained this message:
+Further shrinking crashkernel to 40MB causes a kernel crash with the
+following trace (x86):
 
-[21630.898561] ------------[ cut here ]------------
-[21630.898596] kernel BUG at mm/slub.c:2050!
-[21630.898611] Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-[21630.900372] Modules linked in: squashfs isofs vfio_iommu_type1
-vhost_vsock vfio vhost_net vmw_vsock_virtio_transport_common vhost tap
-vhost_iotlb iommufd vsock binfmt_misc nfsv3 nfs_acl nfs lockd grace
-netfs tls rds dns_resolver tun brd overlay ntfs3 exfat btrfs
-blake2b_generic xor xor_neon raid6_pq loop sctp ip6_udp_tunnel
-udp_tunnel nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct
-nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4
-nf_tables rfkill ip_set sunrpc vfat fat joydev sg sch_fq_codel nfnetlink
-virtio_gpu sr_mod cdrom drm_client_lib virtio_dma_buf drm_shmem_helper
-drm_kms_helper drm ghash_ce backlight virtio_net virtio_blk virtio_scsi
-net_failover virtio_console failover virtio_mmio dm_mirror
-dm_region_hash dm_log dm_multipath dm_mod fuse i2c_dev virtio_pci
-virtio_pci_legacy_dev virtio_pci_modern_dev virtio virtio_ring autofs4
-aes_neon_bs aes_ce_blk [last unloaded: hwpoison_inject]
-[21630.909177] CPU: 3 UID: 0 PID: 3787 Comm: kylin-process-m Kdump:
-loaded Tainted: G        W           6.18.0-rc1+ #74 PREEMPT(voluntary)
-[21630.910495] Tainted: [W]=WARN
-[21630.910867] Hardware name: QEMU KVM Virtual Machine, BIOS unknown
-2/2/2022
-[21630.911625] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS
-BTYPE=--)
-[21630.912392] pc : __free_slab+0x228/0x250
-[21630.912868] lr : __free_slab+0x18c/0x250[21630.913334] sp :
-ffff8000a02f73e0
-[21630.913830] x29: ffff8000a02f73e0 x28: fffffdffc43fc800 x27:
-ffff0000c0011c40
-[21630.914677] x26: ffff0000c000cac0 x25: ffff00010fe5e5f0 x24:
-ffff000102199b40
-[21630.915469] x23: 0000000000000003 x22: 0000000000000003 x21:
-ffff0000c0011c40
-[21630.916259] x20: fffffdffc4086600 x19: fffffdffc43fc800 x18:
-0000000000000000
-[21630.917048] x17: 0000000000000000 x16: 0000000000000000 x15:
-0000000000000000
-[21630.917837] x14: 0000000000000000 x13: 0000000000000000 x12:
-ffff70001405ee66
-[21630.918640] x11: 1ffff0001405ee65 x10: ffff70001405ee65 x9 :
-ffff800080a295dc
-[21630.919442] x8 : ffff8000a02f7330 x7 : 0000000000000000 x6 :
-0000000000003000
-[21630.920232] x5 : 0000000024924925 x4 : 0000000000000001 x3 :
-0000000000000007
-[21630.921021] x2 : 0000000000001b40 x1 : 000000000000001f x0 :
-0000000000000001
-[21630.921810] Call trace:
-[21630.922130]  __free_slab+0x228/0x250 (P)
-[21630.922669]  free_slab+0x38/0x118
-[21630.923079]  free_to_partial_list+0x1d4/0x340
-[21630.923591]  __slab_free+0x24c/0x348
-[21630.924024]  ___cache_free+0xf0/0x110
-[21630.924468]  qlist_free_all+0x78/0x130
-[21630.924922]  kasan_quarantine_reduce+0x114/0x148
-[21630.925525]  __kasan_slab_alloc+0x7c/0xb0
-[21630.926006]  kmem_cache_alloc_noprof+0x164/0x5c8
-[21630.926699]  __alloc_object+0x44/0x1f8
-[21630.927153]  __create_object+0x34/0xc8
-[21630.927604]  kmemleak_alloc+0xb8/0xd8
-[21630.928052]  kmem_cache_alloc_noprof+0x368/0x5c8
-[21630.928606]  getname_flags.part.0+0xa4/0x610
-[21630.929112]  getname_flags+0x80/0xd8
-[21630.929557]  vfs_fstatat+0xc8/0xe0
-[21630.929975]  __do_sys_newfstatat+0xa0/0x100
-[21630.930469]  __arm64_sys_newfstatat+0x90/0xd8
-[21630.931046]  invoke_syscall+0xd4/0x258
-[21630.931685]  el0_svc_common.constprop.0+0xb4/0x240
-[21630.932467]  do_el0_svc+0x48/0x68
-[21630.932972]  el0_svc+0x40/0xe0
-[21630.933472]  el0t_64_sync_handler+0xa0/0xe8
-[21630.934151]  el0t_64_sync+0x1ac/0x1b0
-[21630.934923] Code: aa1803e0 97ffef2b a9446bf9 17ffff9c (d4210000)
-[21630.936461] SMP: stopping secondary CPUs
-[21630.939550] Starting crashdump kernel...
-[21630.940108] Bye!
+BUG: kernel NULL pointer dereference, address: 0000000000000038
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+<snip...>
+Call Trace: <TASK>
+? __die_body.cold+0x19/0x27
+? page_fault_oops+0x15a/0x2f0
+? search_module_extables+0x19/0x60
+? search_bpf_extables+0x5f/0x80
+? exc_page_fault+0x7e/0x180
+? asm_exc_page_fault+0x26/0x30
+? __release_resource+0xd/0xb0
+release_resource+0x26/0x40
+__crash_shrink_memory+0xe5/0x110
+crash_shrink_memory+0x12a/0x190
+kexec_crash_size_store+0x41/0x80
+kernfs_fop_write_iter+0x141/0x1f0
+vfs_write+0x294/0x460
+ksys_write+0x6d/0xf0
+<snip...>
 
-Link: https://lkml.kernel.org/r/20251029014317.1533488-1-hao.ge@linux.dev
-Fixes: 09c46563ff6d ("codetag: debug: introduce OBJEXTS_ALLOC_FAIL to mark failed slab_ext allocations")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: gehao <gehao@kylinos.cn>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Vlastimil Babka <vbabka@suse.cz>
+This happens because __crash_shrink_memory()/kernel/crash_core.c
+incorrectly updates the crashk_res resource object even when
+crashk_low_res should be updated.
+
+Fix this by ensuring the correct crashkernel resource object is updated
+when shrinking crashkernel memory.
+
+Link: https://lkml.kernel.org/r/20251101193741.289252-1-sourabhjain@linux.ibm.com
+Fixes: 16c6006af4d4 ("kexec: enable kexec_crash_size to support two crash kernel regions")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Zhen Lei <thunder.leizhen@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/crash_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -1970,7 +1970,11 @@ static inline void mark_objexts_empty(st
- 	if (slab_exts) {
- 		unsigned int offs = obj_to_index(obj_exts_slab->slab_cache,
- 						 obj_exts_slab, obj_exts);
--		/* codetag should be NULL */
-+
-+		if (unlikely(is_codetag_empty(&slab_exts[offs].ref)))
-+			return;
-+
-+		/* codetag should be NULL here */
- 		WARN_ON(slab_exts[offs].ref.ct);
- 		set_codetag_empty(&slab_exts[offs].ref);
+--- a/kernel/crash_core.c
++++ b/kernel/crash_core.c
+@@ -367,7 +367,7 @@ static int __crash_shrink_memory(struct
+ 		old_res->start = 0;
+ 		old_res->end   = 0;
+ 	} else {
+-		crashk_res.end = ram_res->start - 1;
++		old_res->end = ram_res->start - 1;
  	}
+ 
+ 	crash_free_reserved_phys_range(ram_res->start, ram_res->end);
 
 
