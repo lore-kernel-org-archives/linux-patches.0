@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF41D1F09B3;
-	Fri, 21 Nov 2025 13:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F06F26E6F4;
+	Fri, 21 Nov 2025 13:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731195; cv=none; b=VSaLbu5fK7kSXMadyx+M5AK/9AqbabX70qb380ol4s4yGVQlUd3kB50DUeNyMjrDN1jiGEt17jxihdOMMtow8AyiW72yF6Fy1lUODRZy+ycnkbBROS76GcbCgKrmCTfScwIyl2Zbiotgr1MiJ9qBlt3dwGMkIpgjdnDEfh11yrs=
+	t=1763731198; cv=none; b=sEQDVWqkmgaZvCBoT9wGxK2ORg+FYA6U7QtftIKVVX8HtKFNVomjPV2AMhPwE/DAUQv5tWAoxYK9P9vqd/UUBXvvlXrG47iX8Oat6QsoqX9Sg033iFlOI4tf+AhF2BSAMhIR4hX3NKmYlnZ3Z5x4YNxtfz/gYbfp8akNk3kXBiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731195; c=relaxed/simple;
-	bh=QF/YtFzd8uX0Kc6yDpPq/EM7SM5K3XWZwQtJpcjAlVw=;
+	s=arc-20240116; t=1763731198; c=relaxed/simple;
+	bh=m0NWgeqrSxErVqHoIvbc8iTKlv37Z6CmcGtC7d36oKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxlEv0zsR86Yit4gslyXTreKPNlJnhs7oj14+31BfmSqYrTsIaCtKUNnGwKBfwEaxXDW2t5oF82MmjvuXTPwp3o43caEw3afvIpiI4d4hI8wNJK5pSN5ahhp79MqvQIqRDoJI5tKC0g4ZlQHuBznlFBCoXOtlBAWS28FqLwR/68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DR/0lqo9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F2unvQjTIqOqOBqaqzfC3Uod9eTSwK/k4Q9mxF3/903rfrguuAoTdDxw6loBoBHunryZeVxPcjjTLc/ohALuxWhqvwVpv71UYOkOBMlU7aHeVSCEU6TQz4Okupb8bnpXo9iUapR8f7rFezB2pqBj4rRE3ya7q4ZpXfw4jUvJ89k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxvxPAQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DR/0lqo9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4A6C4CEF1;
-	Fri, 21 Nov 2025 13:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxvxPAQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF0CC4CEF1;
+	Fri, 21 Nov 2025 13:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731195;
-	bh=QF/YtFzd8uX0Kc6yDpPq/EM7SM5K3XWZwQtJpcjAlVw=;
+	s=korg; t=1763731198;
+	bh=m0NWgeqrSxErVqHoIvbc8iTKlv37Z6CmcGtC7d36oKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DR/0lqo9YvRg04TRkpblsEWwRkKm2DRjCVAkdvtluak6pwT9JwrRARSR4BZkWLp/h
-	 4aBZP+mvJ4E/YEFYEvXVn7mCEyFgAwBjlmRg6RtfyP01RkA9lGKwJGKVFft5kFfFxn
-	 E/b7t45ezD0i1+qDlQbKiTKcH31hu1C7B8nS8BuE=
+	b=kxvxPAQJtUr005pFJuqpgSOZKSwYCh9JtBNAX4BhaSN1RVNdKrldkNI59e8o0OQ8l
+	 tP7XV/9uJL555BxkL9Mh6pSaeUaA0svYLARz7JcKUELhZwZnkrIVOuGiwnzqOLunys
+	 Gp40XuWeQpYAmtMmcG5BL35dvfFcEINgROenwyLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/247] net/mlx5: Store the global doorbell in mlx5_priv
-Date: Fri, 21 Nov 2025 14:10:26 +0100
-Message-ID: <20251121130157.431229063@linuxfoundation.org>
+Subject: [PATCH 6.17 117/247] drm/client: fix MODULE_PARM_DESC string for "active"
+Date: Fri, 21 Nov 2025 14:11:04 +0100
+Message-ID: <20251121130158.782067033@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,379 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit aa4595d0ada65d5d44fa924a42a87c175d9d88e3 ]
+[ Upstream commit 0a4a18e888ae8c8004582f665c5792c84a681668 ]
 
-The global doorbell is used for more than just Ethernet resources, so
-move it out of mlx5e_hw_objs into a common place (mlx5_priv), to avoid
-non-Ethernet modules (e.g. HWS, ASO) depending on Ethernet structs.
+The MODULE_PARM_DESC string for the "active" parameter is missing a
+space and has an extraneous trailing ']' character. Correct these.
 
-Use this opportunity to consolidate it with the 'uar' pointer already
-there, which was used as an RX doorbell. Underneath the 'uar' pointer is
-identical to 'bfreg->up', so store a single resource and use that
-instead.
+Before patch:
+$ modinfo -p ./drm_client_lib.ko
+active:Choose which drm client to start, default isfbdev] (string)
 
-For CQ doorbells, care is taken to always use bfreg->up->index instead
-of bfreg->index, which may refer to a subsequent UAR page from the same
-ALLOC_UAR batch on some NICs.
+After patch:
+$ modinfo -p ./drm_client_lib.ko
+active:Choose which drm client to start, default is fbdev (string)
 
-This paves the way for cleanly supporting multiple doorbells in the
-Ethernet driver.
-
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e5eba42f0134 ("mlx5: Fix default values in create CQ")
+Fixes: f7b42442c4ac ("drm/log: Introduce a new boot logger to draw the kmsg on the screen")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20251112010920.2355712-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c                       |  4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/cq.c          |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en/params.c   |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c      |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en_common.c   | 11 +----------
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c     | 10 +++++-----
- drivers/net/ethernet/mellanox/mlx5/core/eq.c          |  4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c     |  8 ++++----
- drivers/net/ethernet/mellanox/mlx5/core/main.c        | 11 +++++------
- .../ethernet/mellanox/mlx5/core/steering/hws/send.c   |  8 ++++----
- drivers/net/ethernet/mellanox/mlx5/core/wc.c          |  4 ++--
- include/linux/mlx5/driver.h                           |  3 +--
- 12 files changed, 29 insertions(+), 40 deletions(-)
+ drivers/gpu/drm/clients/drm_client_setup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index 9c8003a783343..a23b364e24ffe 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -648,7 +648,7 @@ int mlx5_ib_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags)
- {
- 	struct mlx5_core_dev *mdev = to_mdev(ibcq->device)->mdev;
- 	struct mlx5_ib_cq *cq = to_mcq(ibcq);
--	void __iomem *uar_page = mdev->priv.uar->map;
-+	void __iomem *uar_page = mdev->priv.bfreg.up->map;
- 	unsigned long irq_flags;
- 	int ret = 0;
+diff --git a/drivers/gpu/drm/clients/drm_client_setup.c b/drivers/gpu/drm/clients/drm_client_setup.c
+index 72480db1f00d0..515aceac22b18 100644
+--- a/drivers/gpu/drm/clients/drm_client_setup.c
++++ b/drivers/gpu/drm/clients/drm_client_setup.c
+@@ -13,8 +13,8 @@
+ static char drm_client_default[16] = CONFIG_DRM_CLIENT_DEFAULT;
+ module_param_string(active, drm_client_default, sizeof(drm_client_default), 0444);
+ MODULE_PARM_DESC(active,
+-		 "Choose which drm client to start, default is"
+-		 CONFIG_DRM_CLIENT_DEFAULT "]");
++		 "Choose which drm client to start, default is "
++		 CONFIG_DRM_CLIENT_DEFAULT);
  
-@@ -923,7 +923,7 @@ static int create_cq_kernel(struct mlx5_ib_dev *dev, struct mlx5_ib_cq *cq,
- 		 cq->buf.frag_buf.page_shift -
- 		 MLX5_ADAPTER_PAGE_SHIFT);
- 
--	*index = dev->mdev->priv.uar->index;
-+	*index = dev->mdev->priv.bfreg.up->index;
- 
- 	return 0;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cq.c b/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-index 1fd403713bafc..35039a95dcfd4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cq.c
-@@ -145,7 +145,7 @@ int mlx5_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
- 		mlx5_core_dbg(dev, "failed adding CP 0x%x to debug file system\n",
- 			      cq->cqn);
- 
--	cq->uar = dev->priv.uar;
-+	cq->uar = dev->priv.bfreg.up;
- 	cq->irqn = eq->core.irqn;
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index 06e1a04e693f3..c24cb2ab91cb1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -810,7 +810,7 @@ static void mlx5e_build_common_cq_param(struct mlx5_core_dev *mdev,
- {
- 	void *cqc = param->cqc;
- 
--	MLX5_SET(cqc, cqc, uar_page, mdev->priv.uar->index);
-+	MLX5_SET(cqc, cqc, uar_page, mdev->priv.bfreg.up->index);
- 	if (MLX5_CAP_GEN(mdev, cqe_128_always) && cache_line_size() >= 128)
- 		MLX5_SET(cqc, cqc, cqe_sz, CQE_STRIDE_128_PAD);
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-index 391b4e9c9dc49..7c1d9a9ea4645 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-@@ -334,7 +334,7 @@ static int mlx5e_ptp_alloc_txqsq(struct mlx5e_ptp *c, int txq_ix,
- 	sq->mdev      = mdev;
- 	sq->ch_ix     = MLX5E_PTP_CHANNEL_IX;
- 	sq->txq_ix    = txq_ix;
--	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map   = mdev->priv.bfreg.map;
- 	sq->min_inline_mode = params->tx_min_inline_mode;
- 	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu);
- 	sq->stats     = &c->priv->ptp_stats.sq[tc];
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_common.c b/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-index 6ed3a32b7e226..e9e36358c39d1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-@@ -163,17 +163,11 @@ int mlx5e_create_mdev_resources(struct mlx5_core_dev *mdev, bool create_tises)
- 		goto err_dealloc_transport_domain;
- 	}
- 
--	err = mlx5_alloc_bfreg(mdev, &res->bfreg, false, false);
--	if (err) {
--		mlx5_core_err(mdev, "alloc bfreg failed, %d\n", err);
--		goto err_destroy_mkey;
--	}
--
- 	if (create_tises) {
- 		err = mlx5e_create_tises(mdev, res->tisn);
- 		if (err) {
- 			mlx5_core_err(mdev, "alloc tises failed, %d\n", err);
--			goto err_destroy_bfreg;
-+			goto err_destroy_mkey;
- 		}
- 		res->tisn_valid = true;
- 	}
-@@ -190,8 +184,6 @@ int mlx5e_create_mdev_resources(struct mlx5_core_dev *mdev, bool create_tises)
- 
- 	return 0;
- 
--err_destroy_bfreg:
--	mlx5_free_bfreg(mdev, &res->bfreg);
- err_destroy_mkey:
- 	mlx5_core_destroy_mkey(mdev, res->mkey);
- err_dealloc_transport_domain:
-@@ -209,7 +201,6 @@ void mlx5e_destroy_mdev_resources(struct mlx5_core_dev *mdev)
- 	mdev->mlx5e_res.dek_priv = NULL;
- 	if (res->tisn_valid)
- 		mlx5e_destroy_tises(mdev, res->tisn);
--	mlx5_free_bfreg(mdev, &res->bfreg);
- 	mlx5_core_destroy_mkey(mdev, res->mkey);
- 	mlx5_core_dealloc_transport_domain(mdev, res->td.tdn);
- 	mlx5_core_dealloc_pd(mdev, res->pdn);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 2c82c5100af3c..1a90fd1d44edb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -1551,7 +1551,7 @@ static int mlx5e_alloc_xdpsq(struct mlx5e_channel *c,
- 	sq->pdev      = c->pdev;
- 	sq->mkey_be   = c->mkey_be;
- 	sq->channel   = c;
--	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map   = mdev->priv.bfreg.map;
- 	sq->min_inline_mode = params->tx_min_inline_mode;
- 	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN;
- 	sq->xsk_pool  = xsk_pool;
-@@ -1636,7 +1636,7 @@ static int mlx5e_alloc_icosq(struct mlx5e_channel *c,
- 	int err;
- 
- 	sq->channel   = c;
--	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map   = mdev->priv.bfreg.map;
- 	sq->reserved_room = param->stop_room;
- 
- 	param->wq.db_numa_node = cpu_to_node(c->cpu);
-@@ -1721,7 +1721,7 @@ static int mlx5e_alloc_txqsq(struct mlx5e_channel *c,
- 	sq->priv      = c->priv;
- 	sq->ch_ix     = c->ix;
- 	sq->txq_ix    = txq_ix;
--	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map   = mdev->priv.bfreg.map;
- 	sq->min_inline_mode = params->tx_min_inline_mode;
- 	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu);
- 	sq->max_sq_mpw_wqebbs = mlx5e_get_max_sq_aligned_wqebbs(mdev);
-@@ -1797,7 +1797,7 @@ static int mlx5e_create_sq(struct mlx5_core_dev *mdev,
- 	MLX5_SET(sqc,  sqc, flush_in_error_en, 1);
- 
- 	MLX5_SET(wq,   wq, wq_type,       MLX5_WQ_TYPE_CYCLIC);
--	MLX5_SET(wq,   wq, uar_page,      mdev->mlx5e_res.hw_objs.bfreg.index);
-+	MLX5_SET(wq,   wq, uar_page,      mdev->priv.bfreg.index);
- 	MLX5_SET(wq,   wq, log_wq_pg_sz,  csp->wq_ctrl->buf.page_shift -
- 					  MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(wq, wq, dbr_addr,      csp->wq_ctrl->db.dma);
-@@ -2292,7 +2292,7 @@ static int mlx5e_create_cq(struct mlx5e_cq *cq, struct mlx5e_cq_param *param)
- 	MLX5_SET(cqc, cqc, cq_period_mode, mlx5e_cq_period_mode(param->cq_period_mode));
- 
- 	MLX5_SET(cqc,   cqc, c_eqn_or_apu_element, eqn);
--	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.uar->index);
-+	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.bfreg.up->index);
- 	MLX5_SET(cqc,   cqc, log_page_size, cq->wq_ctrl.buf.page_shift -
- 					    MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(cqc, cqc, dbr_addr,      cq->wq_ctrl.db.dma);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eq.c b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
-index f3c714ebd9cb4..25499da177bc4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eq.c
-@@ -307,7 +307,7 @@ create_map_eq(struct mlx5_core_dev *dev, struct mlx5_eq *eq,
- 
- 	eqc = MLX5_ADDR_OF(create_eq_in, in, eq_context_entry);
- 	MLX5_SET(eqc, eqc, log_eq_size, eq->fbc.log_sz);
--	MLX5_SET(eqc, eqc, uar_page, priv->uar->index);
-+	MLX5_SET(eqc, eqc, uar_page, priv->bfreg.up->index);
- 	MLX5_SET(eqc, eqc, intr, vecidx);
- 	MLX5_SET(eqc, eqc, log_page_size,
- 		 eq->frag_buf.page_shift - MLX5_ADAPTER_PAGE_SHIFT);
-@@ -320,7 +320,7 @@ create_map_eq(struct mlx5_core_dev *dev, struct mlx5_eq *eq,
- 	eq->eqn = MLX5_GET(create_eq_out, out, eq_number);
- 	eq->irqn = pci_irq_vector(dev->pdev, vecidx);
- 	eq->dev = dev;
--	eq->doorbell = priv->uar->map + MLX5_EQ_DOORBELL_OFFSET;
-+	eq->doorbell = priv->bfreg.up->map + MLX5_EQ_DOORBELL_OFFSET;
- 
- 	err = mlx5_debug_eq_add(dev, eq);
- 	if (err)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-index 58bd749b5e4de..129725159a935 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-@@ -100,7 +100,7 @@ static int create_aso_cq(struct mlx5_aso_cq *cq, void *cqc_data)
- 
- 	MLX5_SET(cqc,   cqc, cq_period_mode, MLX5_CQ_PERIOD_MODE_START_FROM_EQE);
- 	MLX5_SET(cqc,   cqc, c_eqn_or_apu_element, eqn);
--	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.uar->index);
-+	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.bfreg.up->index);
- 	MLX5_SET(cqc,   cqc, log_page_size, cq->wq_ctrl.buf.page_shift -
- 					    MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(cqc, cqc, dbr_addr,      cq->wq_ctrl.db.dma);
-@@ -129,7 +129,7 @@ static int mlx5_aso_create_cq(struct mlx5_core_dev *mdev, int numa_node,
- 		return -ENOMEM;
- 
- 	MLX5_SET(cqc, cqc_data, log_cq_size, 1);
--	MLX5_SET(cqc, cqc_data, uar_page, mdev->priv.uar->index);
-+	MLX5_SET(cqc, cqc_data, uar_page, mdev->priv.bfreg.up->index);
- 	if (MLX5_CAP_GEN(mdev, cqe_128_always) && cache_line_size() >= 128)
- 		MLX5_SET(cqc, cqc_data, cqe_sz, CQE_STRIDE_128_PAD);
- 
-@@ -163,7 +163,7 @@ static int mlx5_aso_alloc_sq(struct mlx5_core_dev *mdev, int numa_node,
- 	struct mlx5_wq_param param;
- 	int err;
- 
--	sq->uar_map = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map = mdev->priv.bfreg.map;
- 
- 	param.db_numa_node = numa_node;
- 	param.buf_numa_node = numa_node;
-@@ -203,7 +203,7 @@ static int create_aso_sq(struct mlx5_core_dev *mdev, int pdn,
- 	MLX5_SET(sqc, sqc, ts_format, ts_format);
- 
- 	MLX5_SET(wq,   wq, wq_type,       MLX5_WQ_TYPE_CYCLIC);
--	MLX5_SET(wq,   wq, uar_page,      mdev->mlx5e_res.hw_objs.bfreg.index);
-+	MLX5_SET(wq,   wq, uar_page,      mdev->priv.bfreg.index);
- 	MLX5_SET(wq,   wq, log_wq_pg_sz,  sq->wq_ctrl.buf.page_shift -
- 					  MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(wq, wq, dbr_addr,      sq->wq_ctrl.db.dma);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 8517d4e5d5efc..3df7401f2256c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1340,10 +1340,9 @@ static int mlx5_load(struct mlx5_core_dev *dev)
- {
- 	int err;
- 
--	dev->priv.uar = mlx5_get_uars_page(dev);
--	if (IS_ERR(dev->priv.uar)) {
--		mlx5_core_err(dev, "Failed allocating uar, aborting\n");
--		err = PTR_ERR(dev->priv.uar);
-+	err = mlx5_alloc_bfreg(dev, &dev->priv.bfreg, false, false);
-+	if (err) {
-+		mlx5_core_err(dev, "Failed allocating bfreg, %d\n", err);
- 		return err;
- 	}
- 
-@@ -1454,7 +1453,7 @@ static int mlx5_load(struct mlx5_core_dev *dev)
- err_irq_table:
- 	mlx5_pagealloc_stop(dev);
- 	mlx5_events_stop(dev);
--	mlx5_put_uars_page(dev, dev->priv.uar);
-+	mlx5_free_bfreg(dev, &dev->priv.bfreg);
- 	return err;
- }
- 
-@@ -1479,7 +1478,7 @@ static void mlx5_unload(struct mlx5_core_dev *dev)
- 	mlx5_irq_table_destroy(dev);
- 	mlx5_pagealloc_stop(dev);
- 	mlx5_events_stop(dev);
--	mlx5_put_uars_page(dev, dev->priv.uar);
-+	mlx5_free_bfreg(dev, &dev->priv.bfreg);
- }
- 
- int mlx5_init_one_devl_locked(struct mlx5_core_dev *dev)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/send.c
-index b0595c9b09e42..24ef7d66fa8aa 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/send.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/send.c
-@@ -690,7 +690,7 @@ static int hws_send_ring_alloc_sq(struct mlx5_core_dev *mdev,
- 	size_t buf_sz;
- 	int err;
- 
--	sq->uar_map = mdev->mlx5e_res.hw_objs.bfreg.map;
-+	sq->uar_map = mdev->priv.bfreg.map;
- 	sq->mdev = mdev;
- 
- 	param.db_numa_node = numa_node;
-@@ -764,7 +764,7 @@ static int hws_send_ring_create_sq(struct mlx5_core_dev *mdev, u32 pdn,
- 	MLX5_SET(sqc, sqc, ts_format, ts_format);
- 
- 	MLX5_SET(wq, wq, wq_type, MLX5_WQ_TYPE_CYCLIC);
--	MLX5_SET(wq, wq, uar_page, mdev->mlx5e_res.hw_objs.bfreg.index);
-+	MLX5_SET(wq, wq, uar_page, mdev->priv.bfreg.index);
- 	MLX5_SET(wq, wq, log_wq_pg_sz, sq->wq_ctrl.buf.page_shift - MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(wq, wq, dbr_addr, sq->wq_ctrl.db.dma);
- 
-@@ -940,7 +940,7 @@ static int hws_send_ring_create_cq(struct mlx5_core_dev *mdev,
- 				  (__be64 *)MLX5_ADDR_OF(create_cq_in, in, pas));
- 
- 	MLX5_SET(cqc, cqc, c_eqn_or_apu_element, eqn);
--	MLX5_SET(cqc, cqc, uar_page, mdev->priv.uar->index);
-+	MLX5_SET(cqc, cqc, uar_page, mdev->priv.bfreg.up->index);
- 	MLX5_SET(cqc, cqc, log_page_size, cq->wq_ctrl.buf.page_shift - MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(cqc, cqc, dbr_addr, cq->wq_ctrl.db.dma);
- 
-@@ -963,7 +963,7 @@ static int hws_send_ring_open_cq(struct mlx5_core_dev *mdev,
- 	if (!cqc_data)
- 		return -ENOMEM;
- 
--	MLX5_SET(cqc, cqc_data, uar_page, mdev->priv.uar->index);
-+	MLX5_SET(cqc, cqc_data, uar_page, mdev->priv.bfreg.up->index);
- 	MLX5_SET(cqc, cqc_data, log_cq_size, ilog2(queue->num_entries));
- 
- 	err = hws_send_ring_alloc_cq(mdev, numa_node, queue, cqc_data, cq);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/wc.c b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-index 2f0316616fa40..0d3591ff22733 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
-@@ -94,7 +94,7 @@ static int create_wc_cq(struct mlx5_wc_cq *cq, void *cqc_data)
- 
- 	MLX5_SET(cqc,   cqc, cq_period_mode, MLX5_CQ_PERIOD_MODE_START_FROM_EQE);
- 	MLX5_SET(cqc,   cqc, c_eqn_or_apu_element, eqn);
--	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.uar->index);
-+	MLX5_SET(cqc,   cqc, uar_page,      mdev->priv.bfreg.up->index);
- 	MLX5_SET(cqc,   cqc, log_page_size, cq->wq_ctrl.buf.page_shift -
- 					    MLX5_ADAPTER_PAGE_SHIFT);
- 	MLX5_SET64(cqc, cqc, dbr_addr,      cq->wq_ctrl.db.dma);
-@@ -116,7 +116,7 @@ static int mlx5_wc_create_cq(struct mlx5_core_dev *mdev, struct mlx5_wc_cq *cq)
- 		return -ENOMEM;
- 
- 	MLX5_SET(cqc, cqc, log_cq_size, TEST_WC_LOG_CQ_SZ);
--	MLX5_SET(cqc, cqc, uar_page, mdev->priv.uar->index);
-+	MLX5_SET(cqc, cqc, uar_page, mdev->priv.bfreg.up->index);
- 	if (MLX5_CAP_GEN(mdev, cqe_128_always) && cache_line_size() >= 128)
- 		MLX5_SET(cqc, cqc, cqe_sz, CQE_STRIDE_128_PAD);
- 
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 10fe492e1fedc..c185f082748ae 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -611,7 +611,7 @@ struct mlx5_priv {
- 	struct mlx5_ft_pool		*ft_pool;
- 
- 	struct mlx5_bfreg_data		bfregs;
--	struct mlx5_uars_page	       *uar;
-+	struct mlx5_sq_bfreg bfreg;
- #ifdef CONFIG_MLX5_SF
- 	struct mlx5_vhca_state_notifier *vhca_state_notifier;
- 	struct mlx5_sf_dev_table *sf_dev_table;
-@@ -657,7 +657,6 @@ struct mlx5e_resources {
- 		u32                        pdn;
- 		struct mlx5_td             td;
- 		u32			   mkey;
--		struct mlx5_sq_bfreg       bfreg;
- #define MLX5_MAX_NUM_TC 8
- 		u32                        tisn[MLX5_MAX_PORTS][MLX5_MAX_NUM_TC];
- 		bool			   tisn_valid;
+ /**
+  * drm_client_setup() - Setup in-kernel DRM clients
 -- 
 2.51.0
 
