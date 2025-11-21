@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB3634D917;
-	Fri, 21 Nov 2025 13:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AC134DB44;
+	Fri, 21 Nov 2025 13:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733015; cv=none; b=RhOiGlJa3SgQyCwnEIH9KeQj5Gw3XlvSU5PvjxsL0+HkUZ5EfwtO40go1NKsAntNgIttrgHIJjsvexlz30POh4NYnqWjX4wUyqlkiW1TBfauxYXFrSWrZUSDiV0E3ugXMgpXbqm0ZmEdiwyEzEQ1Z6Ux/COq8HQ7Loc3ROFEZmE=
+	t=1763733018; cv=none; b=t4m/CbBFqju2STyq8vAl08dtP5wSdJewttLKVB575qo6o1HhehRbN519HDpsORv/lFCFHoW3W96BfVQl9Nc8nzhHyDWOhgQ+wZW0QEGS+9/vxwp3vgdiUjk2EKCcgnzjY6KEjV80NcUJcSbgZ9axhR6LctqeUAdRxlJz83T2A/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733015; c=relaxed/simple;
-	bh=jAJceNT+P0W2L8DXgWF27buBz4zgPN0AFAE7hCQ1UpM=;
+	s=arc-20240116; t=1763733018; c=relaxed/simple;
+	bh=J0EUDyWh0Lf+2zM8HlCcBT73P+N0e330zGscyzG+aUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IuWPCbh6TO3apJCFvTslqZt0kDbe3WTqmyofdpCiWNsSmGQveKe/wIjkaIlVX7EzUocwvPi2nzzdjV+Zom3CcsUb1DVNtmqDUQBlicDbLyr94MVfRdYPxd0MFPpffeiTVdA1SlEaM6Sxb0wLZ1s3r1EHo0gBDVzzikBFkgDUwCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muYEjCVD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q04f95lvnZB7FyDIc9TLe6N6AbDgI7RrhSHoIDB+4fcaomfI0vaV3FJcozvLIHjcuwrt7zEhMtT3NtzeEjLhfj90WGFWacxY9utIyJ9P0mvhYD2t4oalXsbpYkY59Gm4HCSxZjkCWLasK8YvECUb3AzX9xczRTcKFXXBAvPhyDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DASbj46O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muYEjCVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473EBC116C6;
-	Fri, 21 Nov 2025 13:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DASbj46O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411ABC4CEFB;
+	Fri, 21 Nov 2025 13:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733015;
-	bh=jAJceNT+P0W2L8DXgWF27buBz4zgPN0AFAE7hCQ1UpM=;
+	s=korg; t=1763733018;
+	bh=J0EUDyWh0Lf+2zM8HlCcBT73P+N0e330zGscyzG+aUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muYEjCVDnT2zZMQtyhYqnJEF0j1d9ygMNXqrqsKr2JMLNrZbF1CoNQuPUEkyEmnut
-	 kQ5CrzYYXsJJR//GCorGxnMsH+UPgOCUg0qN8O+m1+Vkb9nCZr8KnXw6XdZWIvRKTj
-	 yj6CmzIY58ovk1y32NMzNH9lUbO3msF3VZVup870=
+	b=DASbj46OQLyuOYhzA7jd45oSL2wYfl3EjJnUCb7eiJ34LGy5A+WV1zPBi/4jhXR7P
+	 lSM9A0HkWSe3LGV3C0LLntBP6ggCQkHeTdJIn48vyuQtZYEO1mVS1hq4b0/U/hUc38
+	 srrwrSzI8UKRhAxwNn2eI6Jkabm8O/NijIgBTAGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+48b0652a95834717f190@syzkaller.appspotmail.com,
+	Helge Deller <deller@gmx.de>,
+	Albin Babu Varghese <albinbabuvarghese20@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 322/529] tools: lib: thermal: use pkg-config to locate libnl3
-Date: Fri, 21 Nov 2025 14:10:21 +0100
-Message-ID: <20251121130242.483508316@linuxfoundation.org>
+Subject: [PATCH 6.6 323/529] fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds
+Date: Fri, 21 Nov 2025 14:10:22 +0100
+Message-ID: <20251121130242.518382971@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,47 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
 
-[ Upstream commit b31f7f725cd932e2c2b41f3e4b66273653953687 ]
+[ Upstream commit 3637d34b35b287ab830e66048841ace404382b67 ]
 
-To make libthermal more cross compile friendly use pkg-config to locate
-libnl3. Only if that fails fall back to hardcoded /usr/include/libnl3.
+Add bounds checking to prevent writes past framebuffer boundaries when
+rendering text near screen edges. Return early if the Y position is off-screen
+and clip image height to screen boundary. Break from the rendering loop if the
+X position is off-screen. When clipping image width to fit the screen, update
+the character count to match the clipped width to prevent buffer size
+mismatches.
 
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Without the character count update, bit_putcs_aligned and bit_putcs_unaligned
+receive mismatched parameters where the buffer is allocated for the clipped
+width but cnt reflects the original larger count, causing out-of-bounds writes.
+
+Reported-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=48b0652a95834717f190
+Suggested-by: Helge Deller <deller@gmx.de>
+Tested-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
+Signed-off-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/thermal/Makefile | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/bitblit.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/tools/lib/thermal/Makefile b/tools/lib/thermal/Makefile
-index 1694889847caf..8d21ea1950a31 100644
---- a/tools/lib/thermal/Makefile
-+++ b/tools/lib/thermal/Makefile
-@@ -59,8 +59,12 @@ else
-   CFLAGS := -g -Wall
- endif
+diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
+index a4b4e1ec702e5..8563264d11fac 100644
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -168,6 +168,11 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 	image.height = vc->vc_font.height;
+ 	image.depth = 1;
  
-+NL3_CFLAGS = $(shell pkg-config --cflags libnl-3.0 2>/dev/null)
-+ifeq ($(NL3_CFLAGS),)
-+NL3_CFLAGS = -I/usr/include/libnl3
-+endif
++	if (image.dy >= info->var.yres)
++		return;
 +
- INCLUDES = \
---I/usr/include/libnl3 \
- -I$(srctree)/tools/lib/thermal/include \
- -I$(srctree)/tools/lib/ \
- -I$(srctree)/tools/include \
-@@ -72,6 +76,7 @@ INCLUDES = \
- override CFLAGS += $(EXTRA_WARNINGS)
- override CFLAGS += -Werror -Wall
- override CFLAGS += -fPIC
-+override CFLAGS += $(NL3_CFLAGS)
- override CFLAGS += $(INCLUDES)
- override CFLAGS += -fvisibility=hidden
- override CFGLAS += -Wl,-L.
++	image.height = min(image.height, info->var.yres - image.dy);
++
+ 	if (attribute) {
+ 		buf = kmalloc(cellsize, GFP_ATOMIC);
+ 		if (!buf)
+@@ -181,6 +186,18 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
+ 			cnt = count;
+ 
+ 		image.width = vc->vc_font.width * cnt;
++
++		if (image.dx >= info->var.xres)
++			break;
++
++		if (image.dx + image.width > info->var.xres) {
++			image.width = info->var.xres - image.dx;
++			cnt = image.width / vc->vc_font.width;
++			if (cnt == 0)
++				break;
++			image.width = cnt * vc->vc_font.width;
++		}
++
+ 		pitch = DIV_ROUND_UP(image.width, 8) + scan_align;
+ 		pitch &= ~scan_align;
+ 		size = pitch * image.height + buf_align;
 -- 
 2.51.0
 
