@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C79A2FF173;
-	Fri, 21 Nov 2025 13:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAF634DB64;
+	Fri, 21 Nov 2025 13:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732756; cv=none; b=PAlHmDd2jqIjyCr4QD0PK41PmytDDvQLAWOR05CsjkcxEALhYLbtKjlv15ji5WTaNQDKsQXZZEtr5xBSBQfCHZPtr0LIcs4X9af5J8j3P1mVvRc4Gwui4tkco8ZK6w6UMzNbfXLxevuadpziD8/OZ86LgEZswOXNp9wGP7GegsE=
+	t=1763732759; cv=none; b=eVFBJVIFb1WWQqfaL7jlN8H6NsQrwHf4Xzckm9ilKW9Ho0iRu+9msmBM25mXtk3jfRz8Qy4XFD5+YQNDK5OKpYGGvthNQStUdoQSZvqY/3BOgDQ3rruJ3MzZNVdb9npZLagIxug0sqWNHGhTH+6EuY5ttm8m0+KuVGH3zHVrZh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732756; c=relaxed/simple;
-	bh=hJmWwqH2VeefJu2I4Ffti8KG3fE1vcFiVB5ruDNEZLk=;
+	s=arc-20240116; t=1763732759; c=relaxed/simple;
+	bh=lqQpN0WGg4mzrBFoaBZitWCJTLHUgg+OZiUa0v6nJtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deGaSc8mFJUILEyJ1rgIG+KGVF2uSLRImJwixXD1NUjzjoLJ78X01j4WYJIv70J2tW1Vpue1o7xuUAux+iiI9GlbSJCePHPlAvem+Ecu1t/pFJXDX/RcNrl5acV3TupsRixSiWnKVyFBMYMoQ9jgKBPK29R4BgF/CyrTUviNY2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWG+BMKn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S3vrn+IagE49LgVf0q3izEKE6Zd2lJbFUp78pzuZ5xdFVb4oaNnVkh+W3GUCTRI8nkh2rXVIj9v6ljO5eANgDv+HFfdXOmTp47XVxNu66C/aKC8R9KwId/Qu1EOB0E0UmprfXcsRzVxHoQT2LOTB9s3IELTu8AnS+eluBUP1RJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlzAXgZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWG+BMKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DBFC4CEF1;
-	Fri, 21 Nov 2025 13:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlzAXgZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3411C4CEFB;
+	Fri, 21 Nov 2025 13:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732756;
-	bh=hJmWwqH2VeefJu2I4Ffti8KG3fE1vcFiVB5ruDNEZLk=;
+	s=korg; t=1763732759;
+	bh=lqQpN0WGg4mzrBFoaBZitWCJTLHUgg+OZiUa0v6nJtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWG+BMKny6bUSocjCx9rINHLsINYoCRnNeqhqiEw6tJTwOlliPWH8q+IOMTLM+D//
-	 2V1ZaiQwQRd+ztHTE36QDtypzpbiiG7W2v75zbGSJlCxMRvohxac3mQh6ACez3GjBY
-	 75Bx4sz+YUjkUNwd/yGhO+G/J35bi2CWJ57G2XoM=
+	b=SlzAXgZIARnmY/dzdezGrBlpjkkuR5RucuZQA9NjYyb87VUPJV/li9D93WNaZc7of
+	 ME7yq7lj7nntdhrSmWM96bSyFEBV5bD+kvqaEVCjjC719/ZeCVL2BHUrXW6AP2Mwct
+	 teonxOg95dZQRv94Fz39fLrgfkmjGWNG2Vjglp/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/529] ALSA: serial-generic: remove shared static buffer
-Date: Fri, 21 Nov 2025 14:08:51 +0100
-Message-ID: <20251121130239.273600647@linuxfoundation.org>
+Subject: [PATCH 6.6 206/529] scsi: ufs: host: mediatek: Enhance recovery on hibernation exit failure
+Date: Fri, 21 Nov 2025 14:08:25 +0100
+Message-ID: <20251121130238.347673232@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,69 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 84973249011fda3ff292f83439a062fec81ef982 ]
+[ Upstream commit faac32d4ece30609f1a0930ca0ae951cf6dc1786 ]
 
-If multiple instances of this driver are instantiated and try to send
-concurrently then the single static buffer snd_serial_generic_tx_work()
-will cause corruption in the data output.
+Improve the recovery process for hibernation exit failures. Trigger the
+error handler and break the suspend operation to ensure effective
+recovery from hibernation errors. Activate the error handling mechanism
+by ufshcd_force_error_recovery and scheduling the error handler work.
 
-Move the buffer into the per-instance driver data to avoid this.
-
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/serial-generic.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/ufs/core/ufshcd.c       |  3 ++-
+ drivers/ufs/host/ufs-mediatek.c | 14 +++++++++++---
+ include/ufs/ufshcd.h            |  1 +
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/sound/drivers/serial-generic.c b/sound/drivers/serial-generic.c
-index c8db6c75d133d..8b8e9e871ed37 100644
---- a/sound/drivers/serial-generic.c
-+++ b/sound/drivers/serial-generic.c
-@@ -37,6 +37,8 @@ MODULE_LICENSE("GPL");
- #define SERIAL_TX_STATE_ACTIVE	1
- #define SERIAL_TX_STATE_WAKEUP	2
- 
-+#define INTERNAL_BUF_SIZE 256
-+
- struct snd_serial_generic {
- 	struct serdev_device *serdev;
- 
-@@ -51,6 +53,7 @@ struct snd_serial_generic {
- 	struct work_struct tx_work;
- 	unsigned long tx_state;
- 
-+	char tx_buf[INTERNAL_BUF_SIZE];
- };
- 
- static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
-@@ -61,11 +64,8 @@ static void snd_serial_generic_tx_wakeup(struct snd_serial_generic *drvdata)
- 	schedule_work(&drvdata->tx_work);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 2080b251580c8..1e08bf4dfb034 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6341,13 +6341,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
+ 	}
  }
  
--#define INTERNAL_BUF_SIZE 256
--
- static void snd_serial_generic_tx_work(struct work_struct *work)
+-static void ufshcd_force_error_recovery(struct ufs_hba *hba)
++void ufshcd_force_error_recovery(struct ufs_hba *hba)
  {
--	static char buf[INTERNAL_BUF_SIZE];
- 	int num_bytes;
- 	struct snd_serial_generic *drvdata = container_of(work, struct snd_serial_generic,
- 						   tx_work);
-@@ -78,8 +78,10 @@ static void snd_serial_generic_tx_work(struct work_struct *work)
- 		if (!test_bit(SERIAL_MODE_OUTPUT_OPEN, &drvdata->filemode))
- 			break;
+ 	spin_lock_irq(hba->host->host_lock);
+ 	hba->force_reset = true;
+ 	ufshcd_schedule_eh_work(hba);
+ 	spin_unlock_irq(hba->host->host_lock);
+ }
++EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery);
  
--		num_bytes = snd_rawmidi_transmit_peek(substream, buf, INTERNAL_BUF_SIZE);
--		num_bytes = serdev_device_write_buf(drvdata->serdev, buf, num_bytes);
-+		num_bytes = snd_rawmidi_transmit_peek(substream, drvdata->tx_buf,
-+						      INTERNAL_BUF_SIZE);
-+		num_bytes = serdev_device_write_buf(drvdata->serdev, drvdata->tx_buf,
-+						    num_bytes);
+ static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
+ {
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 6f2e5b83ff0c9..c80780ade5aa5 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1363,7 +1363,7 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
+ 	}
+ }
  
- 		if (!num_bytes)
- 			break;
+-static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
++static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
+ {
+ 	int ret;
+ 
+@@ -1374,8 +1374,16 @@ static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
+ 	ufs_mtk_wait_idle_state(hba, 5);
+ 
+ 	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
+-	if (ret)
++	if (ret) {
+ 		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
++
++		ufshcd_force_error_recovery(hba);
++
++		/* trigger error handler and break suspend */
++		ret = -EBUSY;
++	}
++
++	return ret;
+ }
+ 
+ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+@@ -1386,7 +1394,7 @@ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
+ 
+ 	if (status == PRE_CHANGE) {
+ 		if (ufshcd_is_auto_hibern8_supported(hba))
+-			ufs_mtk_auto_hibern8_disable(hba);
++			return ufs_mtk_auto_hibern8_disable(hba);
+ 		return 0;
+ 	}
+ 
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index e9db9682316a2..9eaf47dcc7277 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -1425,5 +1425,6 @@ int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask);
+ int ufshcd_write_ee_control(struct ufs_hba *hba);
+ int ufshcd_update_ee_control(struct ufs_hba *hba, u16 *mask,
+ 			     const u16 *other_mask, u16 set, u16 clr);
++void ufshcd_force_error_recovery(struct ufs_hba *hba);
+ 
+ #endif /* End of Header */
 -- 
 2.51.0
 
