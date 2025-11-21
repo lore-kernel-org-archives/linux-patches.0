@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF55226CE33;
-	Fri, 21 Nov 2025 13:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0960C332904;
+	Fri, 21 Nov 2025 13:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731421; cv=none; b=rXuiJKuXVnmj/bRhaz1Q7YnclWMoCy1Yjo0LZXNFggo3+QCXYro+2o38vbCHAUAN0P5STHib7thG668eoqry48FxMvMqp+EFI4AaYeAY7wWirhY0Q2DXFsH/JZ3TVmcI6DbEfgP3akUYLwCiBq7t4ln+mCdN2n4jiv9zQAsZ+Y0=
+	t=1763731425; cv=none; b=nQDKg2uoWmtFqEP0nXpY0siZQ++yvXoyCAf+jXig4mT1wC1lvMMGZXa44xX3GqFKn/XXp8koonxhoPjmyYhyE8S20Vo1LjklJDr+4c4fSC7Nl9ZIaLyIM/K0l+NI9Pm8fUiJdjgXyWDeT8241/t76fWzw1I/yoCg4z1YRLK6Tp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731421; c=relaxed/simple;
-	bh=Km/xiGScPwTRDjCL/MVKEnlh0snBKxfxQc7mT+juMis=;
+	s=arc-20240116; t=1763731425; c=relaxed/simple;
+	bh=T2OTFISfSblVGjO95Zm+s0JHCYadv5KdXYds6FZ9tNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RljfNl/KfVrjg6/jYyQq4Ozs9pJ4zv54Tp5undNMCLo7kPLu1fPJIGkKS7tqEQeKGS5vSyssxtjvDS8lcIzocyPJEIFk0ICv5hUTdey+iienKmYcoVk7RZqoRv66ymxDfdC5IeyxEJ2R8KhIxnZjaHK6nTfOVKxWewNiHmkJi+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/BDy4ZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dQj/Q6mDXISBdjWWZrdKBIx4UwygeDnlZ14Wk5kpZfmIGD/SE7UHErUZxjJaZuWkI7SnARaPu6bdPNvDxMpQ8pphtoNMlAtuHyaCPWPQdKfJ6L3hn/wKduOdhb7Vv63itsKnGqfnminUz+g3W/2Li7xTt87iptcHhIAWe4nPdWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSkK7sAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/BDy4ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AD4C4CEF1;
-	Fri, 21 Nov 2025 13:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSkK7sAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B944C4CEFB;
+	Fri, 21 Nov 2025 13:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731421;
-	bh=Km/xiGScPwTRDjCL/MVKEnlh0snBKxfxQc7mT+juMis=;
+	s=korg; t=1763731424;
+	bh=T2OTFISfSblVGjO95Zm+s0JHCYadv5KdXYds6FZ9tNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/BDy4ZKvPYBYj7LBU/lSnZtvgFy37YgVE8rHgqATT0B+db222dCpdzsSVWjsAe+l
-	 zH92Xpp4n0bQogYfYgV8h2grvi9mnk9YRyK4EywKkhl91XuLaVdLsIPrmBDuLmUiKP
-	 4GtdddQYVns42LZGKq5btFpKf7T0R1g8KE78VEZo=
+	b=wSkK7sAzulJN6UgbPkgE31juxSE0aXn+t/+hAAR4/arqRYZmv+SQ7pN5A/hzREF1h
+	 rJrTNq76SWhjc8mq+amsCk1n/i8voV1puKYYKXd2OKfrRESOkVrz5ybcQKX5d2kSJ1
+	 SWbo/GS9vKdDJDiIXqq/kpzHzfz/e7VUMxQKW58k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.17 203/247] x86/CPU/AMD: Add additional fixed RDSEED microcode revisions
-Date: Fri, 21 Nov 2025 14:12:30 +0100
-Message-ID: <20251121130202.010237768@linuxfoundation.org>
+	Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	sunliming <sunliming@kylinos.cn>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 204/247] selftests/user_events: fix type cast for write_index packed member in perf_test
+Date: Fri, 21 Nov 2025 14:12:31 +0100
+Message-ID: <20251121130202.046413676@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,42 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
 
-commit e1a97a627cd01d73fac5dd054d8f3de601ef2781 upstream.
+commit 216158f063fe24fb003bd7da0cd92cd6e2c4d48b upstream.
 
-Microcode that resolves the RDSEED failure (SB-7055 [1]) has been released for
-additional Zen5 models to linux-firmware [2]. Update the zen5_rdseed_microcode
-array to cover these new models.
+Accessing 'reg.write_index' directly triggers a -Waddress-of-packed-member
+warning due to potential unaligned pointer access:
 
-Fixes: 607b9fb2ce24 ("x86/CPU/AMD: Add RDSEED fix for Zen5")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7055.html [1]
-Link: https://gitlab.com/kernel-firmware/linux-firmware/-/commit/6167e5566900cf236f7a69704e8f4c441bc7212a [2]
-Link: https://patch.msgid.link/20251113223608.1495655-1-mario.limonciello@amd.com
+perf_test.c:239:38: warning: taking address of packed member 'write_index'
+of class or structure 'user_reg' may result in an unaligned pointer value
+[-Waddress-of-packed-member]
+  239 |         ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
+      |                                             ^~~~~~~~~~~~~~~
+
+Since write(2) works with any alignment. Casting '&reg.write_index'
+explicitly to 'void *' to suppress this warning.
+
+Link: https://lkml.kernel.org/r/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com
+Fixes: 42187bdc3ca4 ("selftests/user_events: Add perf self-test for empty arguments events")
+Signed-off-by: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
+Cc: Beau Belgrave <beaub@linux.microsoft.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: sunliming <sunliming@kylinos.cn>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/testing/selftests/user_events/perf_test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1020,7 +1020,14 @@ static void init_amd_zen4(struct cpuinfo
+--- a/tools/testing/selftests/user_events/perf_test.c
++++ b/tools/testing/selftests/user_events/perf_test.c
+@@ -236,7 +236,7 @@ TEST_F(user, perf_empty_events) {
+ 	ASSERT_EQ(1 << reg.enable_bit, self->check);
  
- static const struct x86_cpu_id zen5_rdseed_microcode[] = {
- 	ZEN_MODEL_STEP_UCODE(0x1a, 0x02, 0x1, 0x0b00215a),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x08, 0x1, 0x0b008121),
- 	ZEN_MODEL_STEP_UCODE(0x1a, 0x11, 0x0, 0x0b101054),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x24, 0x0, 0x0b204037),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x44, 0x0, 0x0b404035),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x44, 0x1, 0x0b404108),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x60, 0x0, 0x0b600037),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x68, 0x0, 0x0b608038),
-+	ZEN_MODEL_STEP_UCODE(0x1a, 0x70, 0x0, 0x0b700037),
- 	{},
- };
- 
+ 	/* Ensure write shows up at correct offset */
+-	ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
++	ASSERT_NE(-1, write(self->data_fd, (void *)&reg.write_index,
+ 					sizeof(reg.write_index)));
+ 	val = (void *)(((char *)perf_page) + perf_page->data_offset);
+ 	ASSERT_EQ(PERF_RECORD_SAMPLE, *val);
 
 
