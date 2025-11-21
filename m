@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6688219E97F;
-	Fri, 21 Nov 2025 13:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBB7330B19;
+	Fri, 21 Nov 2025 13:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731101; cv=none; b=Pc5L9zlSUI10hh+JLaL/UqeqIYSkrVP97IRoQv5I/6LLIVOrP7bIzkTc+8knmy0/wMBB6yyMVi0B3hxMFQ1uk/A8xWRNgZ5TMVFWCq4Bx/GCSkBjUwyCK9cogP7597n7eH/1zINTCiupGoT44wt44lI6vFbJfvSQR/b5ttX8V6g=
+	t=1763731104; cv=none; b=K06p/yFSEVqF3Di+szK1QmssjfivqYtPqHhlerkp2fiuyaQIj0UUVmpJax1e1PkfSwTWOmYoxpGyu+9f832MG7JiykuD8NjkY2qk8p71yufFDQO5sqJVgB200AJtNuTp9ooUq0K4hfi36i2BQ1V8xys590pyBlZzoupdNQfuw6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731101; c=relaxed/simple;
-	bh=uKO7YmR95XeEiXV5sIDiItB8jSMja/ug0YX5nG+YpGw=;
+	s=arc-20240116; t=1763731104; c=relaxed/simple;
+	bh=mt3eQw/L6jd2lZN44emRD1FA/RhwHQdG6C1X1p3zizg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QMXKHF/f5ngjbIFD/Qdz2+7kQAtiX47yxSV3PaDyk4bjLLkmDfcV2d7MapetzjByt5D/5hW2eMPJrG6zss15hm2yCiAk5IqF3dTb5HQeew/dBF7EwEkTp0TW9aZLTK3GoROafij4J7vQQ3jd6vXA7hn3BIt/hyiWsaI1n5W9tHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfJTpUhk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wk3z+mE1Mi/jLqTJanGh8U7seYLx1Xid3UywLICy4eQRh00vxhTrLY3GRJQX9Wkk6egynCOkiNc36ZLqXjdE3bhhGJxWtNDWSeXcdrIDi6Kpd/+88/2PTS24NuApxGxtjW+jgjVkRuUQLrUjKQSg0sjBYh1+bxx1lnDnEu7yVYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPi4szUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfJTpUhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE518C4CEF1;
-	Fri, 21 Nov 2025 13:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPi4szUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A04C4CEF1;
+	Fri, 21 Nov 2025 13:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731101;
-	bh=uKO7YmR95XeEiXV5sIDiItB8jSMja/ug0YX5nG+YpGw=;
+	s=korg; t=1763731104;
+	bh=mt3eQw/L6jd2lZN44emRD1FA/RhwHQdG6C1X1p3zizg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfJTpUhkLO12fTLIqoKwxybOWSYKBaRXaaY2fqa2EKj8SpJ6rnJ6OY5yB8W6ZnuS8
-	 elOx/E/uNea0WWCFWkRV42vN+S/S6pUsr7ae87fAHfFxFeI6qX4ZgxoXtkEbHotuaU
-	 MzPI7ZwivvcZCyASr0y/fmGWaIIA3xDrXpkw5Gmk=
+	b=QPi4szUbobEP7/L2if2+wB/wW5FLE3pBOaO42l00U7yPjOSS6sabnmn899TC73PgH
+	 RYOMcbV1qurLJjJ8OYh5lXvUBtBVYARc0kyUVpC6GI5FsHQQvl0wkD/kX52IGiWEWn
+	 7JweXcD0IhCod8neR7fzatf/vZ0se8VwBgw1EaGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Aaron Rainbolt <arainbolt@kfocus.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 091/247] ACPI: CPPC: Limit perf ctrs in PCC check only to online CPUs
-Date: Fri, 21 Nov 2025 14:10:38 +0100
-Message-ID: <20251121130157.859266817@linuxfoundation.org>
+Subject: [PATCH 6.17 092/247] cpufreq: intel_pstate: Check IDA only before MSR_IA32_PERF_CTL writes
+Date: Fri, 21 Nov 2025 14:10:39 +0100
+Message-ID: <20251121130157.894918678@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,43 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 0fce75870666b46b700cfbd3216380b422f975da ]
+[ Upstream commit 4b747cc628d8f500d56cf1338280eacc66362ff3 ]
 
-per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
-CPU via acpi_soft_cpu_online() --> __acpi_processor_start() -->
-acpi_cppc_processor_probe().
+Commit ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in
+legacy mode") introduced a check for feature X86_FEATURE_IDA to verify
+turbo mode support. Although this is the correct way to check for turbo
+mode support, it causes issues on some platforms that disable turbo
+during OS boot, but enable it later [1]. Before adding this feature
+check, users were able to get turbo mode frequencies by writing 0 to
+/sys/devices/system/cpu/intel_pstate/no_turbo post-boot.
 
-However the function cppc_perf_ctrs_in_pcc() checks if the CPPC
-perf-ctrs are in a PCC region for all the present CPUs, which breaks
-when the kernel is booted with "nosmt=force".
+To restore the old behavior on the affected systems while still
+addressing the unchecked MSR issue on some Skylake-X systems, check
+X86_FEATURE_IDA only immediately before updates of MSR_IA32_PERF_CTL
+that may involve setting the Turbo Engage Bit (bit 32).
 
-Hence, limit the check only to the online CPUs.
-
-Fixes: ae2df912d1a5 ("ACPI: CPPC: Disable FIE if registers in PCC regions")
-Reviewed-by: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://patch.msgid.link/20251107074145.2340-5-gautham.shenoy@amd.com
+Fixes: ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in legacy mode")
+Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2122531 [1]
+Tested-by: Aaron Rainbolt <arainbolt@kfocus.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+[ rjw: Subject adjustment, changelog edits ]
+Link: https://patch.msgid.link/20251111010840.141490-1-srinivas.pandruvada@linux.intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 51e925f289bf3..002c3dde283ff 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1435,7 +1435,7 @@ bool cppc_perf_ctrs_in_pcc(void)
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index fc02a3542f656..99c80249fde88 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -603,9 +603,6 @@ static bool turbo_is_disabled(void)
  {
- 	int cpu;
+ 	u64 misc_en;
  
--	for_each_present_cpu(cpu) {
-+	for_each_online_cpu(cpu) {
- 		struct cpc_register_resource *ref_perf_reg;
- 		struct cpc_desc *cpc_desc;
+-	if (!cpu_feature_enabled(X86_FEATURE_IDA))
+-		return true;
+-
+ 	rdmsrq(MSR_IA32_MISC_ENABLE, misc_en);
  
+ 	return !!(misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE);
+@@ -2141,7 +2138,8 @@ static u64 atom_get_val(struct cpudata *cpudata, int pstate)
+ 	u32 vid;
+ 
+ 	val = (u64)pstate << 8;
+-	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
++	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
++	    cpu_feature_enabled(X86_FEATURE_IDA))
+ 		val |= (u64)1 << 32;
+ 
+ 	vid_fp = cpudata->vid.min + mul_fp(
+@@ -2306,7 +2304,8 @@ static u64 core_get_val(struct cpudata *cpudata, int pstate)
+ 	u64 val;
+ 
+ 	val = (u64)pstate << 8;
+-	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
++	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
++	    cpu_feature_enabled(X86_FEATURE_IDA))
+ 		val |= (u64)1 << 32;
+ 
+ 	return val;
 -- 
 2.51.0
 
