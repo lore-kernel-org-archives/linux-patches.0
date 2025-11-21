@@ -1,54 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF5D54763;
-	Fri, 21 Nov 2025 13:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C5C1F09AC;
+	Fri, 21 Nov 2025 13:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731361; cv=none; b=Gl++ZYD1I2eOPnwskQzyxR2LoRP2c+auYu7D4UOAYXxdmAAs+AweXfmkVbg71NmoA5urmwTmo9082XP3dE1AfFhSISqfL46QrIAhZ7tbBl8l1QiM/RIzpI4EJNk3t5pNwJ7O+/lKYiEEAqQGyAW4NpG5w7JoA1nlF8jFZPPHRq4=
+	t=1763731364; cv=none; b=LEHPz0R6rGvB/nUCkUfDKvj4EeIdaVND+ipbvUvMW6Ok1NDU9iYMhChziNLCfWETvlTx2uye96qx8fldwZ2kwyEr3tx9Al75LZG+7CVlwuMoK/zuhUgqqjULtBWTQ7i6W8bw0aMp1iEhDuRqpPKhdfiWucc7gTjDWrOYZCkMWbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731361; c=relaxed/simple;
-	bh=Y4/fPPodj75Iuv7whpf7nwnZVs/z74V/u9mhFYt6c+g=;
+	s=arc-20240116; t=1763731364; c=relaxed/simple;
+	bh=U7VvmRicGYgHQmBJeSC0AhtEypocmIWVgXnrazat+zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNDwKJ6+uqfmFklA4P31ym4MQ3HtpJTDghk1W6BOlKCeiMFyh9tn6kS8Yvc6vqkjQVAg6+QST5zkoOzcJql6DSY7OfyWpaXwLniHaKOVfeZ3OeUXJQAwZqvJD5/YSdpPBmA2615KMwQRa4FQuY0nJrKEZvj/MevbqLMf7gLy9Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcGaTwHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VsR4CUnzLZxVUWPeDKhN6jQccuwzYAX9MWsDElul57sN92yk4IBeFVrT1eJU6r20hZLO8bLSoguBoWGR+aYip4QGwUjkEhQDtRjtAHwhR9cIOvezHIiWma7FPR95IIM/mMdjy1mdInMODaaOB4YqO4NzdO4OuXwsL8FxChFqM0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9lJ3GDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcGaTwHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23565C4CEF1;
-	Fri, 21 Nov 2025 13:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9lJ3GDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E20DC4CEFB;
+	Fri, 21 Nov 2025 13:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731361;
-	bh=Y4/fPPodj75Iuv7whpf7nwnZVs/z74V/u9mhFYt6c+g=;
+	s=korg; t=1763731364;
+	bh=U7VvmRicGYgHQmBJeSC0AhtEypocmIWVgXnrazat+zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcGaTwHKH9pk/O69WIt8OZK80jms4HeRszpP1ESd3lae2P3iIVSM2MpsSB+IgrJlw
-	 ifPX2nA4Ai4K4bVqN5hMxwiPVMstfLbH7lHYUCCMOLrvzNqnfxG2mZ8d1khAt+LhfV
-	 MXbpxPWKYUEQ8BATJuXrCrZA70BUGgY+A5Ns9hvI=
+	b=L9lJ3GDtC7kOD9W4D6A6dKHG+3Sw+H2OOn5jFy8iJDP71qEaVaZ0OFwatwlbUzFvA
+	 BnUvwFauqpOKM61LxPNIp6hTOVPESsZIT1SSeayWsP9Lqeo65rtKdZ90mY0KHeQCTl
+	 sWrTkcRqfKrfkMD0otFX6iuhv4ZCK+8GTDLe9mxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Pankaj Raghav <kernel@pankajraghav.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 181/247] mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order
-Date: Fri, 21 Nov 2025 14:12:08 +0100
-Message-ID: <20251121130201.219084291@linuxfoundation.org>
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.17 155/247] KVM: nSVM: Always recalculate LBR MSR intercepts in svm_update_lbrv()
+Date: Fri, 21 Nov 2025 14:11:42 +0100
+Message-ID: <20251121130200.286703242@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -67,121 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-commit fa5a061700364bc28ee1cb1095372f8033645dcb upstream.
+commit fbe5e5f030c22ae717ee422aaab0e00ea84fab5e upstream.
 
-folio split clears PG_has_hwpoisoned, but the flag should be preserved in
-after-split folios containing pages with PG_hwpoisoned flag if the folio
-is split to >0 order folios.  Scan all pages in a to-be-split folio to
-determine which after-split folios need the flag.
+svm_update_lbrv() is called when MSR_IA32_DEBUGCTLMSR is updated, and on
+nested transitions where LBRV is used. It checks whether LBRV enablement
+needs to be changed in the current VMCB, and if it does, it also
+recalculate intercepts to LBR MSRs.
 
-An alternatives is to change PG_has_hwpoisoned to PG_maybe_hwpoisoned to
-avoid the scan and set it on all after-split folios, but resulting false
-positive has undesirable negative impact.  To remove false positive,
-caller of folio_test_has_hwpoisoned() and folio_contain_hwpoisoned_page()
-needs to do the scan.  That might be causing a hassle for current and
-future callers and more costly than doing the scan in the split code.
-More details are discussed in [1].
+However, there are cases where intercepts need to be updated even when
+LBRV enablement doesn't. Example scenario:
+- L1 has MSR_IA32_DEBUGCTLMSR cleared.
+- L1 runs L2 without LBR_CTL_ENABLE (no LBRV).
+- L2 sets DEBUGCTLMSR_LBR in MSR_IA32_DEBUGCTLMSR, svm_update_lbrv()
+  sets LBR_CTL_ENABLE in VMCB02 and disables intercepts to LBR MSRs.
+- L2 exits to L1, svm_update_lbrv() is not called on this transition.
+- L1 clears MSR_IA32_DEBUGCTLMSR, svm_update_lbrv() finds that
+  LBR_CTL_ENABLE is already cleared in VMCB01 and does nothing.
+- Intercepts remain disabled, L1 reads to LBR MSRs read the host MSRs.
 
-This issue can be exposed via:
-1. splitting a has_hwpoisoned folio to >0 order from debugfs interface;
-2. truncating part of a has_hwpoisoned folio in
-   truncate_inode_partial_folio().
+Fix it by always recalculating intercepts in svm_update_lbrv().
 
-And later accesses to a hwpoisoned page could be possible due to the
-missing has_hwpoisoned folio flag.  This will lead to MCE errors.
-
-Link: https://lore.kernel.org/all/CAHbLzkoOZm0PXxE9qwtF4gKR=cpRXrSrJ9V9Pm2DJexs985q4g@mail.gmail.com/ [1]
-Link: https://lkml.kernel.org/r/20251023030521.473097-1-ziy@nvidia.com
-Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Cc: Pankaj Raghav <kernel@pankajraghav.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when L2 is running")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://patch.msgid.link/20251108004524.1600006-3-yosry.ahmed@linux.dev
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/svm.c |   29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3271,6 +3271,14 @@ bool can_split_folio(struct folio *folio
- 					caller_pins;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -852,25 +852,29 @@ void svm_copy_lbrs(struct vmcb *to_vmcb,
+ 	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
  }
  
-+static bool page_range_has_hwpoisoned(struct page *page, long nr_pages)
+-void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++static void __svm_enable_lbrv(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+ 	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+-	svm_recalc_lbr_msr_intercepts(vcpu);
+ 
+ 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
+ 	if (is_guest_mode(vcpu))
+ 		svm_copy_lbrs(svm->vmcb, svm->vmcb01.ptr);
+ }
+ 
+-static void svm_disable_lbrv(struct kvm_vcpu *vcpu)
++void svm_enable_lbrv(struct kvm_vcpu *vcpu)
 +{
-+	for (; nr_pages; page++, nr_pages--)
-+		if (PageHWPoison(page))
-+			return true;
-+	return false;
++	__svm_enable_lbrv(vcpu);
++	svm_recalc_lbr_msr_intercepts(vcpu);
 +}
 +
- /*
-  * It splits @folio into @new_order folios and copies the @folio metadata to
-  * all the resulting folios.
-@@ -3278,17 +3286,24 @@ bool can_split_folio(struct folio *folio
- static void __split_folio_to_order(struct folio *folio, int old_order,
- 		int new_order)
++static void __svm_disable_lbrv(struct kvm_vcpu *vcpu)
  {
-+	/* Scan poisoned pages when split a poisoned folio to large folios */
-+	const bool handle_hwpoison = folio_test_has_hwpoisoned(folio) && new_order;
- 	long new_nr_pages = 1 << new_order;
- 	long nr_pages = 1 << old_order;
- 	long i;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
  
-+	folio_clear_has_hwpoisoned(folio);
-+
-+	/* Check first new_nr_pages since the loop below skips them */
-+	if (handle_hwpoison &&
-+	    page_range_has_hwpoisoned(folio_page(folio, 0), new_nr_pages))
-+		folio_set_has_hwpoisoned(folio);
+ 	KVM_BUG_ON(sev_es_guest(vcpu->kvm), vcpu->kvm);
+ 	svm->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
+-	svm_recalc_lbr_msr_intercepts(vcpu);
+ 
  	/*
- 	 * Skip the first new_nr_pages, since the new folio from them have all
- 	 * the flags from the original folio.
- 	 */
- 	for (i = new_nr_pages; i < nr_pages; i += new_nr_pages) {
- 		struct page *new_head = &folio->page + i;
--
- 		/*
- 		 * Careful: new_folio is not a "real" folio before we cleared PageTail.
- 		 * Don't pass it around before clear_compound_head().
-@@ -3330,6 +3345,10 @@ static void __split_folio_to_order(struc
- 				 (1L << PG_dirty) |
- 				 LRU_GEN_MASK | LRU_REFS_MASK));
+ 	 * Move the LBR msrs back to the vmcb01 to avoid copying them
+@@ -899,13 +903,18 @@ void svm_update_lbrv(struct kvm_vcpu *vc
+ 			    (is_guest_mode(vcpu) && guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+ 			    (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK));
  
-+		if (handle_hwpoison &&
-+		    page_range_has_hwpoisoned(new_head, new_nr_pages))
-+			folio_set_has_hwpoisoned(new_folio);
-+
- 		new_folio->mapping = folio->mapping;
- 		new_folio->index = folio->index + i;
+-	if (enable_lbrv == current_enable_lbrv)
+-		return;
++	if (enable_lbrv && !current_enable_lbrv)
++		__svm_enable_lbrv(vcpu);
++	else if (!enable_lbrv && current_enable_lbrv)
++		__svm_disable_lbrv(vcpu);
  
-@@ -3430,8 +3449,6 @@ static int __split_unmapped_folio(struct
- 	if (folio_test_anon(folio))
- 		mod_mthp_stat(order, MTHP_STAT_NR_ANON, -1);
+-	if (enable_lbrv)
+-		svm_enable_lbrv(vcpu);
+-	else
+-		svm_disable_lbrv(vcpu);
++	/*
++	 * During nested transitions, it is possible that the current VMCB has
++	 * LBR_CTL set, but the previous LBR_CTL had it cleared (or vice versa).
++	 * In this case, even though LBR_CTL does not need an update, intercepts
++	 * do, so always recalculate the intercepts here.
++	 */
++	svm_recalc_lbr_msr_intercepts(vcpu);
+ }
  
--	folio_clear_has_hwpoisoned(folio);
--
- 	/*
- 	 * split to new_order one order at a time. For uniform split,
- 	 * folio is split to new_order directly.
+ void disable_nmi_singlestep(struct vcpu_svm *svm)
 
 
