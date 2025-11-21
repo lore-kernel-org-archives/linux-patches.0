@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53653348477;
-	Fri, 21 Nov 2025 13:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A560A34FF4E;
+	Fri, 21 Nov 2025 13:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733481; cv=none; b=ZeVzXAL6ht5buzp+jYj6rZ10NnscisrG9Z/SVLSdMYrtWTZZ/EhY1nv+0sp6W0YHxJvvFovzZrV4EvTdoSE1QrarCRep/ldPg6FUd49nHgzdwZr0kHNtFOzkx6cSVHiYZBXuJlwwtW/hlF3AJnRtKtiYgDVG5vsnjZyxytqWVwY=
+	t=1763733483; cv=none; b=i9oswLl1k3s7SYLIRAF9kJhVWx7z7T2fwt5Y13Bw2YI5g0omLKybNoczP4M917WQfEEh8ZTBWpbweHvOt3NElmnPwmjWqoLArZ0+ekYLmbGcu+hZhC0JkfSMPfNpLAf/uGtsnyS5iqpEKxkk2OsqE2oAEPEn7Of/rlqXGdVQASU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733481; c=relaxed/simple;
-	bh=tDfFMaN8YzZtGGkm99bcCdUtnyi6OlIJnkUK0Lpr4fc=;
+	s=arc-20240116; t=1763733483; c=relaxed/simple;
+	bh=4VwISEVh/2yIm4CHK7hs5r//CYRzGy+gKKGq0Ux/DeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4VWXUjJyOPPePckMArFVVppLfBeCueDDx3XmTwNFI3hPYHDwZbTCqvcWite0MvxBRlgS0omDrznIdbgiPdCfXZo6Ls4Xvu86wXC4OR22yX+brJGps2S0HfC/w3mU6bInrQj50cDcjUgyhLTyeGYCMBCZhbyEEZvmir/7twcuKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOPU4LSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=frtRcn2I2Gnwl7er+im+TTEEpaw3y4lP+ce7D0groTPcZfns3zldjIy3S8fmq1D6tnvG0QXR94QBK23iL6cR0qZaeciF8RgDwlsGe4U39+n9mLFoFue5A00c9vdWytTgGzAhpoU0xZwJkDNcmFB0Dfr5psHc4tMoR1TuRT/12UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejm3sxE1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOPU4LSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5042C4CEF1;
-	Fri, 21 Nov 2025 13:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejm3sxE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA15C4CEF1;
+	Fri, 21 Nov 2025 13:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733480;
-	bh=tDfFMaN8YzZtGGkm99bcCdUtnyi6OlIJnkUK0Lpr4fc=;
+	s=korg; t=1763733483;
+	bh=4VwISEVh/2yIm4CHK7hs5r//CYRzGy+gKKGq0Ux/DeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOPU4LSdDAIsBdc/ccKkiqWNY5uWrqM8XNL5oupMmE4rZWyRLXlys0mARzRcUIiHW
-	 bvHJHIQVfaKanOfGCA8F+jPracNwNs6elBLkkA4Bug+hvANjeQaEv4bzPGYY7q6LDq
-	 mad/O0Gkl7U1qLKXV1heCymCV6trYTLjSa3fRHAI=
+	b=ejm3sxE1iaPUpQCz28b7VLM6SeEOA8v0HOPJzfPMRuO+ATUDubEoNsQ3+3+dBPX/W
+	 6iQpVyac3nKLJ+TZzIi1PToH9xiYlcjxorV77eH8BIr2RMS5pq4C4ZOr0M96b/byLZ
+	 kT54GZRliyq/HbsFJv85Ij0mnRdnHMpnwwiyJAFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	sunliming <sunliming@kylinos.cn>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 482/529] selftests/user_events: fix type cast for write_index packed member in perf_test
-Date: Fri, 21 Nov 2025 14:13:01 +0100
-Message-ID: <20251121130248.158508128@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 483/529] LoongArch: Use physical addresses for CSR_MERRENTRY/CSR_TLBRENTRY
+Date: Fri, 21 Nov 2025 14:13:02 +0100
+Message-ID: <20251121130248.194476296@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -56,53 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 216158f063fe24fb003bd7da0cd92cd6e2c4d48b upstream.
+commit 4e67526840fc55917581b90f6a4b65849a616dd8 upstream.
 
-Accessing 'reg.write_index' directly triggers a -Waddress-of-packed-member
-warning due to potential unaligned pointer access:
+Now we use virtual addresses to fill CSR_MERRENTRY/CSR_TLBRENTRY, but
+hardware hope physical addresses. Now it works well because the high
+bits are ignored above PA_BITS (48 bits), but explicitly use physical
+addresses can avoid potential bugs. So fix it.
 
-perf_test.c:239:38: warning: taking address of packed member 'write_index'
-of class or structure 'user_reg' may result in an unaligned pointer value
-[-Waddress-of-packed-member]
-  239 |         ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
-      |                                             ^~~~~~~~~~~~~~~
-
-Since write(2) works with any alignment. Casting '&reg.write_index'
-explicitly to 'void *' to suppress this warning.
-
-Link: https://lkml.kernel.org/r/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com
-Fixes: 42187bdc3ca4 ("selftests/user_events: Add perf self-test for empty arguments events")
-Signed-off-by: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
-Cc: Beau Belgrave <beaub@linux.microsoft.com>
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: sunliming <sunliming@kylinos.cn>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/user_events/perf_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/traps.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/user_events/perf_test.c b/tools/testing/selftests/user_events/perf_test.c
-index 5288e768b207..68625362add2 100644
---- a/tools/testing/selftests/user_events/perf_test.c
-+++ b/tools/testing/selftests/user_events/perf_test.c
-@@ -236,7 +236,7 @@ TEST_F(user, perf_empty_events) {
- 	ASSERT_EQ(1 << reg.enable_bit, self->check);
+--- a/arch/loongarch/kernel/traps.c
++++ b/arch/loongarch/kernel/traps.c
+@@ -1097,8 +1097,8 @@ static void configure_exception_vector(v
+ 	tlbrentry = (unsigned long)exception_handlers + 80*VECSIZE;
  
- 	/* Ensure write shows up at correct offset */
--	ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
-+	ASSERT_NE(-1, write(self->data_fd, (void *)&reg.write_index,
- 					sizeof(reg.write_index)));
- 	val = (void *)(((char *)perf_page) + perf_page->data_offset);
- 	ASSERT_EQ(PERF_RECORD_SAMPLE, *val);
--- 
-2.52.0
-
+ 	csr_write64(eentry, LOONGARCH_CSR_EENTRY);
+-	csr_write64(eentry, LOONGARCH_CSR_MERRENTRY);
+-	csr_write64(tlbrentry, LOONGARCH_CSR_TLBRENTRY);
++	csr_write64(__pa(eentry), LOONGARCH_CSR_MERRENTRY);
++	csr_write64(__pa(tlbrentry), LOONGARCH_CSR_TLBRENTRY);
+ }
+ 
+ void per_cpu_trap_init(int cpu)
 
 
