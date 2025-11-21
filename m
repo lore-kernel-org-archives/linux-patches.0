@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7E22737FC;
-	Fri, 21 Nov 2025 13:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244872DEA7E;
+	Fri, 21 Nov 2025 13:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731451; cv=none; b=h2Jnmyd37u/oo6frMeU1ssvIhYEtBqRdLwoDgTuJOfP1rc8LOlQi0ZZQCAdAS0o/6nEGkduNC5G1BS88eAqY00c9pPFVZwoJ2YM2/CPy98UYMz1IsSaUzU/xLi9MgHc18Wl9nUEkG9wY2NKRWbOjjR6PW6qfRI7GB+Vz6cF3llc=
+	t=1763731454; cv=none; b=GmNdoYyDV5S8cCAkvrU+Qs4NvqD4xXk7w8YEJHi5qbUpQjS0Uzzh6w/eFXS7a54qvaoN4Am4zyJk6SzLmqyBD285+RMw+XgQNfb68pO5LrSLCuIcAs+gDLpWRD1wMGJkb+h8qnsrJj5SxMgVPk3rS81D0YmzFjxlqM6swX40k5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731451; c=relaxed/simple;
-	bh=rCK+Lw07UmlPT/CvhrBz0EKCORuh1S7495vxA67gS8M=;
+	s=arc-20240116; t=1763731454; c=relaxed/simple;
+	bh=7rJp4aogbdKe+q2ROCvQwVQTRANguRyS9kHIkiRVn+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6exBISDbmCBHJfI3/n2ijTJQxkxLEBY3ekrzr8cFVlEErhkQfGB5PgmwNbu1XPmg2Qt9oCVsWko0oodpwvrGwsCQE/mlbE+z7LRd9/uBxK78rJFHPGnRh4uC3bb6NNnp5y0KrqR2B3n64iETG6eObSPW/ooioetARdgN5y6jEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soWXSm79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6nLC4kMGgJa9Ks8E7Qg+BTt2QYMsx7DtBjmeXOHrxDvAe4negPWfWusZ+Bdlt/GNAkhUuCwr+nnQHYNo2gJRBNge9syc2/OqqbnXtdYE+IQMkl8fCeJyNa7ri++/8g+GJHDcPo3IkisaYWUsEYJAzTx4P2VS9H9Zmb8Pb95Hd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Dwdjai9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soWXSm79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806D3C4CEF1;
-	Fri, 21 Nov 2025 13:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Dwdjai9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42725C4CEF1;
+	Fri, 21 Nov 2025 13:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731450;
-	bh=rCK+Lw07UmlPT/CvhrBz0EKCORuh1S7495vxA67gS8M=;
+	s=korg; t=1763731453;
+	bh=7rJp4aogbdKe+q2ROCvQwVQTRANguRyS9kHIkiRVn+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soWXSm794pEdvL+WykYsaE+jWaCufDgLa/+KJbUTXtT6vv7cR5XWhtwuZ1HWBPV+w
-	 tD3H1K36qnvxow20L0ExIOtH2TcxrIC0rrRwKQ02GOC3URs0eu6wHXQRPLGdOKTh5m
-	 2p1/BMEI+9F+iieUV19bzTyP0gMm8w0kcno3+GNU=
+	b=1Dwdjai92WKKBwsIeBq9bO8tUDrUHw1wKSgozhzKnAnrCFPh1XtPkJnJQQQmfsRKj
+	 EM+l+hVNk44L9E+6g9ktElW5SVAROqgctzlJjmqyrc7PgJFKfTourpbrHTDsh3Zdfn
+	 DJsG5jhAcnzwl6oZ+8AQen0U0NsPkokyAc3ONXcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Askar Safin <safinaskar@gmail.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 212/247] PM: hibernate: Emit an error when image writing fails
-Date: Fri, 21 Nov 2025 14:12:39 +0100
-Message-ID: <20251121130202.336509718@linuxfoundation.org>
+Subject: [PATCH 6.17 213/247] PM: hibernate: Use atomic64_t for compressed_size variable
+Date: Fri, 21 Nov 2025 14:12:40 +0100
+Message-ID: <20251121130202.373982527@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,15 +53,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 62b9ca1706e1bbb60d945a58de7c7b5826f6b2a2 upstream.
+commit 66ededc694f1d06a71ca35a3c8e3689e9b85b3ce upstream.
 
-If image writing fails, a return code is passed up to the caller, but
-none of the callers log anything to the log and so the only record
-of it is the return code that userspace gets.
+`compressed_size` can overflow, showing nonsensical values.
 
-Adjust the logging so that the image size and speed of writing is
-only emitted on success and if there is an error, it's saved to the
-logs.
+Change from `atomic_t` to `atomic64_t` to prevent overflow.
 
 Fixes: a06c6f5d3cc9 ("PM: hibernate: Move to crypto APIs for LZO compression")
 Reported-by: Askar Safin <safinaskar@gmail.com>
@@ -69,34 +65,52 @@ Closes: https://lore.kernel.org/linux-pm/20251105180506.137448-1-safinaskar@gmai
 Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Tested-by: Askar Safin <safinaskar@gmail.com>
 Cc: 6.9+ <stable@vger.kernel.org> # 6.9+
-[ rjw: Added missing braces after "else", changelog edits ]
-Link: https://patch.msgid.link/20251106045158.3198061-2-superm1@kernel.org
+Link: https://patch.msgid.link/20251106045158.3198061-3-superm1@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/swap.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ kernel/power/swap.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 --- a/kernel/power/swap.c
 +++ b/kernel/power/swap.c
-@@ -877,11 +877,14 @@ out_finish:
- 	stop = ktime_get();
- 	if (!ret)
- 		ret = err2;
--	if (!ret)
-+	if (!ret) {
-+		swsusp_show_speed(start, stop, nr_to_write, "Wrote");
-+		pr_info("Image size after compression: %d kbytes\n",
-+			(atomic_read(&compressed_size) / 1024));
- 		pr_info("Image saving done\n");
--	swsusp_show_speed(start, stop, nr_to_write, "Wrote");
--	pr_info("Image size after compression: %d kbytes\n",
--		(atomic_read(&compressed_size) / 1024));
-+	} else {
-+		pr_err("Image saving failed: %d\n", ret);
-+	}
+@@ -635,7 +635,7 @@ struct cmp_data {
+ };
  
- out_clean:
- 	hib_finish_batch(&hb);
+ /* Indicates the image size after compression */
+-static atomic_t compressed_size = ATOMIC_INIT(0);
++static atomic64_t compressed_size = ATOMIC_INIT(0);
+ 
+ /*
+  * Compression function that runs in its own thread.
+@@ -664,7 +664,7 @@ static int compress_threadfn(void *data)
+ 		d->ret = crypto_acomp_compress(d->cr);
+ 		d->cmp_len = d->cr->dlen;
+ 
+-		atomic_set(&compressed_size, atomic_read(&compressed_size) + d->cmp_len);
++		atomic64_add(d->cmp_len, &compressed_size);
+ 		atomic_set_release(&d->stop, 1);
+ 		wake_up(&d->done);
+ 	}
+@@ -696,7 +696,7 @@ static int save_compressed_image(struct
+ 
+ 	hib_init_batch(&hb);
+ 
+-	atomic_set(&compressed_size, 0);
++	atomic64_set(&compressed_size, 0);
+ 
+ 	/*
+ 	 * We'll limit the number of threads for compression to limit memory
+@@ -879,8 +879,8 @@ out_finish:
+ 		ret = err2;
+ 	if (!ret) {
+ 		swsusp_show_speed(start, stop, nr_to_write, "Wrote");
+-		pr_info("Image size after compression: %d kbytes\n",
+-			(atomic_read(&compressed_size) / 1024));
++		pr_info("Image size after compression: %lld kbytes\n",
++			(atomic64_read(&compressed_size) / 1024));
+ 		pr_info("Image saving done\n");
+ 	} else {
+ 		pr_err("Image saving failed: %d\n", ret);
 
 
