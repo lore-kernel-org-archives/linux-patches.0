@@ -1,55 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CB334B1B7;
-	Fri, 21 Nov 2025 13:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954BC34C9AB;
+	Fri, 21 Nov 2025 13:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732072; cv=none; b=sLmsROTu4THlAKR8qO2VUP9WEhKJMCMfaSRKjyH++GgsX4Q9y0xeqAW5isPoN350RK9AT0vScmcpeklwBddv49ZsVp92eZoRDWrQFTdM7yYDBLxdlrKELUqnbtua3o0i7xjWICkkRx48aCn4YdQ/hSNGl/DTrtGBf+fANWxUYBE=
+	t=1763732074; cv=none; b=N4wedD8qO4ElQ1F7yWdrEblVJPiroy5UyGifet2LkdI9OF/c4FcaGQJfTIdy4/HuyR1phymrKV03C0t6JHBvN5HESq15AOYeRcXNSaP7TCfg9xHyQ2CfAyU4/j8wrJinD3zCmHCKRckjKjlaFYarM6DMaD9o8vHBwWSmpJxuQaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732072; c=relaxed/simple;
-	bh=rgnsdCYTIACZt9+mf80x7C+qd7mn0CgZxmOUxFIi5nc=;
+	s=arc-20240116; t=1763732074; c=relaxed/simple;
+	bh=WU+GSraDYtSElWWX7qe1ddCCzJQePD/HGPWZSSr9Fc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pm6Gq7VEQ5VbFb5NjOwGwnmfdXrquVqlDyMQcyVIzR6QrEBgxtSs3H0ZRlxbbOdhbvUdwzxfTc9J7YPEXCcD7M1kgBpFlGMLQmxcWKKy9XxLIOsoB3J7Pshy+QaMMYZmt1zZW7LChUUGpHwcZcJdsfkjwAtv1u7/KEBz+oqHQZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Se5b8uDW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMXaPRBaXOJARFhZ4yXsdlw/f+nQCn8vtPr0a1sCclpGWhTud9R/MRmM0f6vUvaBn8jdawBJ45JsysOQ/jZFRvSsWIOx2gvTqy16zMqucMNq8UbdadcODVxhz2PIGqTwO0S40HZnuTQws2uSWJ9VIhHMcvXxSEEX7GklnDTkyd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=on/mnCWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Se5b8uDW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904BEC4CEF1;
-	Fri, 21 Nov 2025 13:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="on/mnCWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B68C4CEF1;
+	Fri, 21 Nov 2025 13:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732071;
-	bh=rgnsdCYTIACZt9+mf80x7C+qd7mn0CgZxmOUxFIi5nc=;
+	s=korg; t=1763732074;
+	bh=WU+GSraDYtSElWWX7qe1ddCCzJQePD/HGPWZSSr9Fc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Se5b8uDWg6G34h2Vpa1Fsbu1LfEkqVO0pDUE//yeZP4rZT2IURxxZveSq68DXg9OH
-	 i1xqJT5E3akM5DbzjZfzm75yWl1cKcGY+gnLcqY/ffv6HY+1b/OqKqoS1RO4PxPVgy
-	 z4KNRes9c5QebR6kNHtlqqtYcsYqlxePaHPQjmAA=
+	b=on/mnCWslQ9P5J8Ps/itn4yhE5firFQ5opQBjaa2r32AcGdR7h4JpxrE2LM14xwEa
+	 lTDLaw//ieSxputMM7KLjG/kSLZI24naP0DJKZRgteYD1MRonPKBRRKPMLIDqhYQy7
+	 0/spler8rinRgBnjDwLgtHy7jJdiBY/QzP4tAdKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zi Yan <ziy@nvidia.com>,
-	syzbot+e6367ea2fdab6ed46056@syzkaller.appspotmail.com,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
 	David Hildenbrand <david@redhat.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Miaohe Lin <linmiaohe@huawei.com>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Pankaj Raghav <kernel@pankajraghav.com>,
 	Barry Song <baohua@kernel.org>,
 	Dev Jain <dev.jain@arm.com>,
 	Jane Chu <jane.chu@oracle.com>,
-	Lance Yang <lance.yang@linux.dev>,
 	Liam Howlett <liam.howlett@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
+	Luis Chamberalin <mcgrof@kernel.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Nico Pache <npache@redhat.com>,
 	Ryan Roberts <ryan.roberts@arm.com>,
-	Christian Brauner <brauner@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 179/185] mm/huge_memory: do not change split_huge_page*() target order silently
-Date: Fri, 21 Nov 2025 14:13:26 +0100
-Message-ID: <20251121130150.350977461@linuxfoundation.org>
+Subject: [PATCH 6.12 180/185] mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order
+Date: Fri, 21 Nov 2025 14:13:27 +0100
+Message-ID: <20251121130150.388048495@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -70,110 +69,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Zi Yan <ziy@nvidia.com>
 
-commit 77008e1b2ef73249bceb078a321a3ff6bc087afb upstream.
+commit fa5a061700364bc28ee1cb1095372f8033645dcb upstream.
 
-Page cache folios from a file system that support large block size (LBS)
-can have minimal folio order greater than 0, thus a high order folio might
-not be able to be split down to order-0.  Commit e220917fa507 ("mm: split
-a folio in minimum folio order chunks") bumps the target order of
-split_huge_page*() to the minimum allowed order when splitting a LBS
-folio.  This causes confusion for some split_huge_page*() callers like
-memory failure handling code, since they expect after-split folios all
-have order-0 when split succeeds but in reality get min_order_for_split()
-order folios and give warnings.
+folio split clears PG_has_hwpoisoned, but the flag should be preserved in
+after-split folios containing pages with PG_hwpoisoned flag if the folio
+is split to >0 order folios.  Scan all pages in a to-be-split folio to
+determine which after-split folios need the flag.
 
-Fix it by failing a split if the folio cannot be split to the target
-order.  Rename try_folio_split() to try_folio_split_to_order() to reflect
-the added new_order parameter.  Remove its unused list parameter.
+An alternatives is to change PG_has_hwpoisoned to PG_maybe_hwpoisoned to
+avoid the scan and set it on all after-split folios, but resulting false
+positive has undesirable negative impact.  To remove false positive,
+caller of folio_test_has_hwpoisoned() and folio_contain_hwpoisoned_page()
+needs to do the scan.  That might be causing a hassle for current and
+future callers and more costly than doing the scan in the split code.
+More details are discussed in [1].
 
-[The test poisons LBS folios, which cannot be split to order-0 folios, and
-also tries to poison all memory.  The non split LBS folios take more
-memory than the test anticipated, leading to OOM.  The patch fixed the
-kernel warning and the test needs some change to avoid OOM.]
+This issue can be exposed via:
+1. splitting a has_hwpoisoned folio to >0 order from debugfs interface;
+2. truncating part of a has_hwpoisoned folio in
+   truncate_inode_partial_folio().
 
-Link: https://lkml.kernel.org/r/20251017013630.139907-1-ziy@nvidia.com
-Fixes: e220917fa507 ("mm: split a folio in minimum folio order chunks")
+And later accesses to a hwpoisoned page could be possible due to the
+missing has_hwpoisoned folio flag.  This will lead to MCE errors.
+
+Link: https://lore.kernel.org/all/CAHbLzkoOZm0PXxE9qwtF4gKR=cpRXrSrJ9V9Pm2DJexs985q4g@mail.gmail.com/ [1]
+Link: https://lkml.kernel.org/r/20251023030521.473097-1-ziy@nvidia.com
+Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
 Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reported-by: syzbot+e6367ea2fdab6ed46056@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68d2c943.a70a0220.1b52b.02b3.GAE@google.com/
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
 Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
 Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Pankaj Raghav <kernel@pankajraghav.com>
 Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
 Cc: Dev Jain <dev.jain@arm.com>
 Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Nico Pache <npache@redhat.com>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Christian Brauner <brauner@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/huge_mm.h |   21 +++++++--------------
- mm/huge_memory.c        |    7 +------
- 2 files changed, 8 insertions(+), 20 deletions(-)
+ mm/huge_memory.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/include/linux/huge_mm.h
-+++ b/include/linux/huge_mm.h
-@@ -353,20 +353,7 @@ int min_order_for_split(struct folio *fo
- int split_folio_to_list(struct folio *folio, struct list_head *list);
- static inline int split_huge_page(struct page *page)
- {
--	struct folio *folio = page_folio(page);
--	int ret = min_order_for_split(folio);
--
--	if (ret < 0)
--		return ret;
--
--	/*
--	 * split_huge_page() locks the page before splitting and
--	 * expects the same page that has been split to be locked when
--	 * returned. split_folio(page_folio(page)) cannot be used here
--	 * because it converts the page to folio and passes the head
--	 * page to be split.
--	 */
--	return split_huge_page_to_list_to_order(page, NULL, ret);
-+	return split_huge_page_to_list_to_order(page, NULL, 0);
- }
- void deferred_split_folio(struct folio *folio, bool partially_mapped);
- 
-@@ -538,6 +525,12 @@ static inline int split_huge_page(struct
- 	return 0;
- }
- 
-+static inline int min_order_for_split(struct folio *folio)
-+{
-+	VM_WARN_ON_ONCE_FOLIO(1, folio);
-+	return -EINVAL;
-+}
-+
- static inline int split_folio_to_list(struct folio *folio, struct list_head *list)
- {
- 	return 0;
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -3597,12 +3597,7 @@ int min_order_for_split(struct folio *fo
- 
- int split_folio_to_list(struct folio *folio, struct list_head *list)
- {
--	int ret = min_order_for_split(folio);
--
--	if (ret < 0)
--		return ret;
--
--	return split_huge_page_to_list_to_order(&folio->page, list, ret);
-+	return split_huge_page_to_list_to_order(&folio->page, list, 0);
+@@ -3091,9 +3091,17 @@ static void lru_add_page_tail(struct fol
+ 	}
  }
  
- /*
++static bool page_range_has_hwpoisoned(struct page *page, long nr_pages)
++{
++	for (; nr_pages; page++, nr_pages--)
++		if (PageHWPoison(page))
++			return true;
++	return false;
++}
++
+ static void __split_huge_page_tail(struct folio *folio, int tail,
+ 		struct lruvec *lruvec, struct list_head *list,
+-		unsigned int new_order)
++		unsigned int new_order, const bool handle_hwpoison)
+ {
+ 	struct page *head = &folio->page;
+ 	struct page *page_tail = head + tail;
+@@ -3170,6 +3178,11 @@ static void __split_huge_page_tail(struc
+ 		folio_set_large_rmappable(new_folio);
+ 	}
+ 
++	/* Set has_hwpoisoned flag on new_folio if any of its pages is HWPoison */
++	if (handle_hwpoison &&
++	    page_range_has_hwpoisoned(page_tail, 1 << new_order))
++		folio_set_has_hwpoisoned(new_folio);
++
+ 	/* Finally unfreeze refcount. Additional reference from page cache. */
+ 	page_ref_unfreeze(page_tail,
+ 		1 + ((!folio_test_anon(folio) || folio_test_swapcache(folio)) ?
+@@ -3194,6 +3207,8 @@ static void __split_huge_page(struct pag
+ 		pgoff_t end, unsigned int new_order)
+ {
+ 	struct folio *folio = page_folio(page);
++	/* Scan poisoned pages when split a poisoned folio to large folios */
++	const bool handle_hwpoison = folio_test_has_hwpoisoned(folio) && new_order;
+ 	struct page *head = &folio->page;
+ 	struct lruvec *lruvec;
+ 	struct address_space *swap_cache = NULL;
+@@ -3217,8 +3232,14 @@ static void __split_huge_page(struct pag
+ 
+ 	ClearPageHasHWPoisoned(head);
+ 
++	/* Check first new_nr pages since the loop below skips them */
++	if (handle_hwpoison &&
++	    page_range_has_hwpoisoned(folio_page(folio, 0), new_nr))
++		folio_set_has_hwpoisoned(folio);
++
+ 	for (i = nr - new_nr; i >= new_nr; i -= new_nr) {
+-		__split_huge_page_tail(folio, i, lruvec, list, new_order);
++		__split_huge_page_tail(folio, i, lruvec, list, new_order,
++				       handle_hwpoison);
+ 		/* Some pages can be beyond EOF: drop them from page cache */
+ 		if (head[i].index >= end) {
+ 			struct folio *tail = page_folio(head + i);
 
 
