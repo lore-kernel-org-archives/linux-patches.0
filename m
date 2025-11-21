@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AB1274FE3;
-	Fri, 21 Nov 2025 13:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C551F09AC;
+	Fri, 21 Nov 2025 13:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731150; cv=none; b=MbpPUOO0ZFkixHi7Sp5ZbRNFrYfDmU/lX1atsdxiyUIe+Z4o9O7Fw9hlGo7o8jo9RSAV26+wR5AHcdvAwzA70bluJnHXn/8aGkGE3hGfIfYddWbsPAqsHVmnqDJwY+JwO97UHcsw+GVsmQYqWcl0tBdE2YW2pbNR6hXKrlu1gnQ=
+	t=1763731152; cv=none; b=M6MlOxu7Tk2qYvakQPk5uxLfdyWRPfud02EkXGAGymCHWI5sACYZMkeI6Cc4U9gmli9SCRJ8vR1BBX3PppFnS7W4Xctq8C9Y6CuUwq0q4ll9BzG7MRWL/4VME1b5UCW8H3zAsU3ZNkuu1TTYHAE/6pP/+qbzwhEekv7QoigNUjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731150; c=relaxed/simple;
-	bh=o5d5O7Q1K1A6W1tcSX98hXurm9rJZvayEs5MTDg+w9U=;
+	s=arc-20240116; t=1763731152; c=relaxed/simple;
+	bh=yjGfu0SGWewX1PAJ8lpiSTnj08nNV/iVh+ga/1apuYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eR47FRlOj6X4rtsqy0tgy8RE1J81oW5UNWSKNqDCGpwHlvqIje1nsq0rG4VCW/i2ZjXj0sTuZ1Oc7IJy6K6MFDYTetoJyRiJ2NiQqHAnm0DoPY/X2pa8eMQkd12O4wO6OFxnji5ze3pGhydGq9gii4cgJtulgYuTQD3B7txdjds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su2HXTcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUI4Vr3fCz8YoCXYoRwNG7XzCEoMRaWGBWk4+t1DponPUh0kHMFKlyfL156mbWeUmQImb/CloAP0DtIm7ob4MmdQyozmBqrDA1m9Mrb+PEOi3MT8/rUUcuYoEQrlEelzRt8/KV8U2qfrDaYyduJ9bk0MAta6dxXsvEjbfb8atCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMEZyxZ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su2HXTcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7757AC4CEF1;
-	Fri, 21 Nov 2025 13:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMEZyxZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD78C4CEF1;
+	Fri, 21 Nov 2025 13:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731149;
-	bh=o5d5O7Q1K1A6W1tcSX98hXurm9rJZvayEs5MTDg+w9U=;
+	s=korg; t=1763731152;
+	bh=yjGfu0SGWewX1PAJ8lpiSTnj08nNV/iVh+ga/1apuYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Su2HXTcTMuMQkr4dbItsU3EDu/UprBTeVJM9hgPisOyetCLtHcFYGIKKhQPEtOjfd
-	 8yBBvx7+z8m64+hNjSw7NNzRMbbGEH/0LJ47RK+BqQb2EeQGdH4kZlDukv57wdSRv8
-	 vWRwNKPwZJfisOXeZgeTD9l6MorqobJpbWusyoaU=
+	b=MMEZyxZ/dbnNWeURwhLNoFTkP9HG3JoWESvn13Hy+MMdf7CD8rl3RH3kiqyUpVX1f
+	 dfGVTnDUCZHskVdWuB6Co84u3eJgLdUKEUaAl0OwiTJxI3TrwEbh2d2Sg2Frx5SiBH
+	 ubTnDjNCDMee8Zt67QzXiB4pbtb/gzmsRkpo7PmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	NeilBrown <neil@brown.name>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 107/247] NFS: Check the TLS certificate fields in nfs_match_client()
-Date: Fri, 21 Nov 2025 14:10:54 +0100
-Message-ID: <20251121130158.427552459@linuxfoundation.org>
+Subject: [PATCH 6.17 108/247] simplify nfs_atomic_open_v23()
+Date: Fri, 21 Nov 2025 14:10:55 +0100
+Message-ID: <20251121130158.462319756@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit fb2cba0854a7f315c8100a807a6959b99d72479e ]
+[ Upstream commit aae9db5739164353fa1894db000fabad940a835b ]
 
-If the TLS security policy is of type RPC_XPRTSEC_TLS_X509, then the
-cert_serial and privkey_serial fields need to match as well since they
-define the client's identity, as presented to the server.
+1) finish_no_open() takes ERR_PTR() as dentry now.
+2) caller of ->atomic_open() will call d_lookup_done() itself, no
+need to do it here.
 
-Fixes: 90c9550a8d65 ("NFS: support the kernel keyring for TLS")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: 85d2c2392ac6 ("NFSv2/v3: Fix error handling in nfs_atomic_open_v23()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nfs/dir.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 4e3dcc157a83c..54699299d5b16 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -338,6 +338,14 @@ static struct nfs_client *nfs_match_client(const struct nfs_client_initdata *dat
- 		/* Match the xprt security policy */
- 		if (clp->cl_xprtsec.policy != data->xprtsec.policy)
- 			continue;
-+		if (clp->cl_xprtsec.policy == RPC_XPRTSEC_TLS_X509) {
-+			if (clp->cl_xprtsec.cert_serial !=
-+			    data->xprtsec.cert_serial)
-+				continue;
-+			if (clp->cl_xprtsec.privkey_serial !=
-+			    data->xprtsec.privkey_serial)
-+				continue;
-+		}
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index d812179239362..c8dd1d0b8d850 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2260,7 +2260,7 @@ int nfs_atomic_open_v23(struct inode *dir, struct dentry *dentry,
+ 			struct file *file, unsigned int open_flags,
+ 			umode_t mode)
+ {
+-
++	struct dentry *res = NULL;
+ 	/* Same as look+open from lookup_open(), but with different O_TRUNC
+ 	 * handling.
+ 	 */
+@@ -2275,21 +2275,15 @@ int nfs_atomic_open_v23(struct inode *dir, struct dentry *dentry,
+ 		if (error)
+ 			return error;
+ 		return finish_open(file, dentry, NULL);
+-	} else if (d_in_lookup(dentry)) {
++	}
++	if (d_in_lookup(dentry)) {
+ 		/* The only flags nfs_lookup considers are
+ 		 * LOOKUP_EXCL and LOOKUP_RENAME_TARGET, and
+ 		 * we want those to be zero so the lookup isn't skipped.
+ 		 */
+-		struct dentry *res = nfs_lookup(dir, dentry, 0);
+-
+-		d_lookup_done(dentry);
+-		if (unlikely(res)) {
+-			if (IS_ERR(res))
+-				return PTR_ERR(res);
+-			return finish_no_open(file, res);
+-		}
++		res = nfs_lookup(dir, dentry, 0);
+ 	}
+-	return finish_no_open(file, NULL);
++	return finish_no_open(file, res);
  
- 		refcount_inc(&clp->cl_count);
- 		return clp;
+ }
+ EXPORT_SYMBOL_GPL(nfs_atomic_open_v23);
 -- 
 2.51.0
 
