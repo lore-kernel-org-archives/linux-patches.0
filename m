@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990A41F09B3;
-	Fri, 21 Nov 2025 13:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658F726E6F4;
+	Fri, 21 Nov 2025 13:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731181; cv=none; b=sLCLFEOgKD7wbif7/nMlnQMVwnnYymQZiAB8ccEUoiu3dltAgO/bopWJAvtQYgdqmwax3R0r2qhedWO7b4x5KjX5oV2jLUPYX59FfK0TaUbdHHdK3FkcK5vkUc3UG3i+JS2EOS+1c9xt0Q/GD8Wi1pRf51tZovdB0ptaHhaFj4U=
+	t=1763731184; cv=none; b=cMFifyf+VX0Cb55JTe+QScC/asYd019TKUMt3YUC56GyVT6Sb0diWSIatQVG2XJjADzNK+dH/x/YwhDJ3OspRTcZ7pxMigrvWADuI2SvTI8y2OC7xsdD6R5I2/r1rFDGeIRXoIv6MzBzO9QknczpLIUNnWComs0iuOlkyCEiRvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731181; c=relaxed/simple;
-	bh=qAD1+3hFDrnE6fypgSziLWSkhQXI/zZ9pfZVJ26bcrE=;
+	s=arc-20240116; t=1763731184; c=relaxed/simple;
+	bh=vCpWiO3bQYlX9JvZlMkakrZWO5TyeTyDM7YD4DCNqXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+QcmZhE2TqqD839e0lYxbWcj3nApABAHIsm6MObkYGmtcZrnvaTr8ma6agY7clUlLfq5Wu0KbaF58saoGTtYxXkUrOFuj5kpOePaxVClNfQk61pNkvGfCbZUEUpqTlfog2SQVrSK/dxZKZD/Yr1M0Qg7gm2Yvhig29tzB9gZxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVVcOdmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8aStcGMhvq++M8qAPbk0H6+RsurTJMKc0r2TR92Z3GrLZtBs10ciTg6UWj3bw5j48jLg+yWbo8PQ5jxmivhEwrIz3GgCsuQMbH31FMQ9alN3xpqxhUHlM9svFtxL9adkIhuOYqg/7b2Jt0oSjgV/cr0DRmj4nFjBsls8eNyb7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vId28rbQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVVcOdmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25374C4CEF1;
-	Fri, 21 Nov 2025 13:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vId28rbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0613C4CEF1;
+	Fri, 21 Nov 2025 13:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731181;
-	bh=qAD1+3hFDrnE6fypgSziLWSkhQXI/zZ9pfZVJ26bcrE=;
+	s=korg; t=1763731184;
+	bh=vCpWiO3bQYlX9JvZlMkakrZWO5TyeTyDM7YD4DCNqXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVVcOdmQk7ru9LR4tvMpOCtJgswIfnizA/aiIvvNqOF1eRMxjbehXolxDeoGSEEbt
-	 b0ljyw5Y0rJNQHYVoEBYksiE0naWV7jvACFRbhPn38u5WDugrq8jRdBGsDhpoFGel9
-	 h4peSJLqKjEkcibWiJMeekP/IdgblWJ2eZaa6TBE=
+	b=vId28rbQNAKUcq4tdm+DOgzAuY/xTGrU+WK5b2kHcv+wgduJ4IDchpURIM72xfzPT
+	 iHKESh9L5AdkrxCAlNNJ3vctPfHKzVfOtfol56GsS6FKWm1Sb8E3tAxWTNq1d60N3q
+	 AYzIboWlQL4MGec08+pA+zExcTkGHJh9XhYRpMEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Alyssa Ross <hi@alyssa.is>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 084/247] wifi: iwlwifi: mld: always take beacon ies in link grading
-Date: Fri, 21 Nov 2025 14:10:31 +0100
-Message-ID: <20251121130157.611375938@linuxfoundation.org>
+Subject: [PATCH 6.17 085/247] virtio-net: fix incorrect flags recording in big mode
+Date: Fri, 21 Nov 2025 14:10:32 +0100
+Message-ID: <20251121130157.646603682@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,69 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 
-[ Upstream commit 1a222625b468effd13d1ebb662c36a41c28a835a ]
+[ Upstream commit 0eff2eaa5322b5b141ff5d5ded26fac4a52b5f7b ]
 
-One of the factors of a link's grade is the channel load, which is
-calculated from the AP's bss load element.
-The current code takes this element from the beacon for an active link,
-and from bss->ies for an inactive link.
+The purpose of commit 703eec1b2422 ("virtio_net: fixing XDP for fully
+checksummed packets handling") is to record the flags in advance, as
+their value may be overwritten in the XDP case. However, the flags
+recorded under big mode are incorrect, because in big mode, the passed
+buf does not point to the rx buffer, but rather to the page of the
+submitted buffer. This commit fixes this issue.
 
-bss->ies is set to either the beacon's ies or to the probe response
-ones, with preference to the probe response (meaning that if there was
-even one probe response, the ies of it will be stored in bss->ies and
-won't be overiden by the beacon ies).
+For the small mode, the commit c11a49d58ad2 ("virtio_net: Fix mismatched
+buf address when unmapping for small packets") fixed it.
 
-The probe response can be very old, i.e. from the connection time,
-where a beacon is updated before each link selection (which is
-triggered only after a passive scan).
-
-In such case, the bss load element in the probe response will not
-include the channel load caused by the STA, where the beacon will.
-
-This will cause the inactive link to always have a lower channel
-load, and therefore an higher grade than the active link's one.
-
-This causes repeated link switches, causing the throughput to drop.
-
-Fix this by always taking the ies from the beacon, as those are for
-sure new.
-
-Fixes: d1e879ec600f ("wifi: iwlwifi: add iwlmld sub-driver")
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251110145652.b493dbb1853a.I058ba7309c84159f640cc9682d1bda56dd56a536@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Tested-by: Alyssa Ross <hi@alyssa.is>
+Fixes: 703eec1b2422 ("virtio_net: fixing XDP for fully checksummed packets handling")
+Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20251111090828.23186-1-xuanzhuo@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/link.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/net/virtio_net.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/link.c b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-index 131190977d4b0..5b10e1e443178 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/link.c
-@@ -701,18 +701,13 @@ static int
- iwl_mld_get_chan_load_from_element(struct iwl_mld *mld,
- 				   struct ieee80211_bss_conf *link_conf)
- {
--	struct ieee80211_vif *vif = link_conf->vif;
- 	const struct cfg80211_bss_ies *ies;
- 	const struct element *bss_load_elem = NULL;
- 	const struct ieee80211_bss_load_elem *bss_load;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 35bdbf1f45ee6..36b1bc0d56846 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2632,22 +2632,28 @@ static void receive_buf(struct virtnet_info *vi, struct receive_queue *rq,
+ 		return;
+ 	}
  
- 	guard(rcu)();
+-	/* 1. Save the flags early, as the XDP program might overwrite them.
++	/* About the flags below:
++	 * 1. Save the flags early, as the XDP program might overwrite them.
+ 	 * These flags ensure packets marked as VIRTIO_NET_HDR_F_DATA_VALID
+ 	 * stay valid after XDP processing.
+ 	 * 2. XDP doesn't work with partially checksummed packets (refer to
+ 	 * virtnet_xdp_set()), so packets marked as
+ 	 * VIRTIO_NET_HDR_F_NEEDS_CSUM get dropped during XDP processing.
+ 	 */
+-	flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
  
--	if (ieee80211_vif_link_active(vif, link_conf->link_id))
--		ies = rcu_dereference(link_conf->bss->beacon_ies);
+-	if (vi->mergeable_rx_bufs)
++	if (vi->mergeable_rx_bufs) {
++		flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
+ 		skb = receive_mergeable(dev, vi, rq, buf, ctx, len, xdp_xmit,
+ 					stats);
+-	else if (vi->big_packets)
++	} else if (vi->big_packets) {
++		void *p = page_address((struct page *)buf);
++
++		flags = ((struct virtio_net_common_hdr *)p)->hdr.flags;
+ 		skb = receive_big(dev, vi, rq, buf, len, stats);
 -	else
--		ies = rcu_dereference(link_conf->bss->ies);
--
-+	ies = rcu_dereference(link_conf->bss->beacon_ies);
- 	if (ies)
- 		bss_load_elem = cfg80211_find_elem(WLAN_EID_QBSS_LOAD,
- 						   ies->data, ies->len);
++	} else {
++		flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
+ 		skb = receive_small(dev, vi, rq, buf, ctx, len, xdp_xmit, stats);
++	}
+ 
+ 	if (unlikely(!skb))
+ 		return;
 -- 
 2.51.0
 
