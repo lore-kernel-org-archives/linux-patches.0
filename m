@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE0D3F9D2;
-	Fri, 21 Nov 2025 13:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C954E34C81E;
+	Fri, 21 Nov 2025 13:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732871; cv=none; b=W/N9PbFcU3erfbpTURygcaaVEM/PlSE9TQZmBXKUOAJdvaQuJAdCPtlFmZzJQJ8ggkdP8WTJ5oZbwdNsUzv6G0b/xQIsbKkduPJDrhOWVF46mIdhqtPb3lDQosYY/Q34+DRnbRjBq6NpgTstoXVl1zoAFvAiQS9L4Ged5mfO2eI=
+	t=1763732874; cv=none; b=NzkEHPlP/NZA0fkAmnZY+CmU66Ppg9yWGyIgFL1/eO2k5umShm7djAFZL9546JcutRXRX7E1LDQbjsc0ssXmVD+Ikve8S4/2u3SFEZB5kIcXVt47YcYC0Q3mIn9Z5moU5ZoRRxAUyPM9kYiNOu095jktpnZFatipC7/CKuI9A3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732871; c=relaxed/simple;
-	bh=Z3rQjr/xz5gGxUertnAuoVbVjUzHn9QmvKLCDJEBU08=;
+	s=arc-20240116; t=1763732874; c=relaxed/simple;
+	bh=h6ZAR3zjvosUL3ktOxv28excRQ4H2M/4zTKzbZGYOdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckpMxj/REhr0jO8tnIQocL4a8fEvaqTrvMNuqRdZ7cBLxu4F3q/uCJ/6ndtAcdilxeRPDtRz4JNQ0I+zChJcEw2turefHUYskBn5AWsuUze5T2Gq8YO49vjUmYJ6FquWMJZk4Q83hOHfE00MuJRLdMsad5t+ErMRosIy3kJZrbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FqKbwJq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dyYhkwkZN4yEGRq582bx7LY5J/1ymvGJ5CQbuC/DdsUrM04D0b/32orO3O1DY86v8CR34QndtOcU5xSGvr074IEMa8zCg4Vp2jw2vYp2RzW3TLUPkC3F+j/WRYvdQ6zmbE/1gd9AYswFn35fPx28FowreEmaAtzGTQ+DugZrFrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ss16fnPw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FqKbwJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26188C4CEF1;
-	Fri, 21 Nov 2025 13:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ss16fnPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A65C4CEFB;
+	Fri, 21 Nov 2025 13:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732871;
-	bh=Z3rQjr/xz5gGxUertnAuoVbVjUzHn9QmvKLCDJEBU08=;
+	s=korg; t=1763732874;
+	bh=h6ZAR3zjvosUL3ktOxv28excRQ4H2M/4zTKzbZGYOdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FqKbwJqISsexGb/vsC8qt/91h0RZUvS5D3FF/XByo30tbAYjBmsCRaFWO2O1nSTO
-	 NZkn5yguGY2QO7zI5mXcVrVmwIQa7BTcT0VGWVeDzOxMv0YYrRaIFVL4m85bLBXH/K
-	 MZMteI1QYHiZb0ZAyDsC67BL4GULjNNasOsk8hME=
+	b=Ss16fnPwdrCzAJPaU7nmQ008ZlrXuPYHvZOS1VNIc5ciNWHWmipRgSPVsztJaKvXt
+	 9NuVQivOSxIIleUDTKeuRCvGRS9qMO0G+yKY3MXqrTo64l5LhufpFEEfI9BlXuajcL
+	 jc5TMOctW8OIEZaPBSaCHkgU7ORPFvSRLOi3THPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 271/529] nfs4_setup_readdir(): insufficient locking for ->d_parent->d_inode dereferencing
-Date: Fri, 21 Nov 2025 14:09:30 +0100
-Message-ID: <20251121130240.663234662@linuxfoundation.org>
+Subject: [PATCH 6.6 272/529] net: bridge: Install FDB for bridge MAC on VLAN 0
+Date: Fri, 21 Nov 2025 14:09:31 +0100
+Message-ID: <20251121130240.699278139@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,38 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit a890a2e339b929dbd843328f9a92a1625404fe63 ]
+[ Upstream commit cd9a9562b2559973aa1b68c3af63021a2c5fd022 ]
 
-Theoretically it's an oopsable race, but I don't believe one can manage
-to hit it on real hardware; might become doable on a KVM, but it still
-won't be easy to attack.
+Currently, after the bridge is created, the FDB does not hold an FDB entry
+for the bridge MAC on VLAN 0:
 
-Anyway, it's easy to deal with - since xdr_encode_hyper() is just a call of
-put_unaligned_be64(), we can put that under ->d_lock and be done with that.
+ # ip link add name br up type bridge
+ # ip -br link show dev br
+ br               UNKNOWN        92:19:8c:4e:01:ed <BROADCAST,MULTICAST,UP,LOWER_UP>
+ # bridge fdb show | grep 92:19:8c:4e:01:ed
+ 92:19:8c:4e:01:ed dev br vlan 1 master br permanent
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Later when the bridge MAC is changed, or in fact when the address is given
+during netdevice creation, the entry appears:
+
+ # ip link add name br up address 00:11:22:33:44:55 type bridge
+ # bridge fdb show | grep 00:11:22:33:44:55
+ 00:11:22:33:44:55 dev br vlan 1 master br permanent
+ 00:11:22:33:44:55 dev br master br permanent
+
+However when the bridge address is set by the user to the current bridge
+address before the first port is enslaved, none of the address handlers
+gets invoked, because the address is not actually changed. The address is
+however marked as NET_ADDR_SET. Then when a port is enslaved, the address
+is not changed, because it is NET_ADDR_SET. Thus the VLAN 0 entry is not
+added, and it has not been added previously either:
+
+ # ip link add name br up type bridge
+ # ip -br link show dev br
+ br               UNKNOWN        7e:f0:a8:1a:be:c2 <BROADCAST,MULTICAST,UP,LOWER_UP>
+ # ip link set dev br addr 7e:f0:a8:1a:be:c2
+ # ip link add name v up type veth
+ # ip link set dev v master br
+ # ip -br link show dev br
+ br               UNKNOWN        7e:f0:a8:1a:be:c2 <BROADCAST,MULTICAST,UP,LOWER_UP>
+ # bridge fdb | grep 7e:f0:a8:1a:be:c2
+ 7e:f0:a8:1a:be:c2 dev br vlan 1 master br permanent
+
+Then when the bridge MAC is used as DMAC, and br_handle_frame_finish()
+looks up an FDB entry with VLAN=0, it doesn't find any, and floods the
+traffic instead of passing it up.
+
+Fix this by simply adding the VLAN 0 FDB entry for the bridge itself always
+on netdevice creation. This also makes the behavior consistent with how
+ports are treated: ports always have an FDB entry for each member VLAN as
+well as VLAN 0.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/415202b2d1b9b0899479a502bbe2ba188678f192.1758550408.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index cfeef23ac9412..92e40e41443cd 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -362,7 +362,9 @@ static void nfs4_setup_readdir(u64 cookie, __be32 *verifier, struct dentry *dent
- 	*p++ = htonl(attrs);                           /* bitmap */
- 	*p++ = htonl(12);             /* attribute buffer length */
- 	*p++ = htonl(NF4DIR);
-+	spin_lock(&dentry->d_lock);
- 	p = xdr_encode_hyper(p, NFS_FILEID(d_inode(dentry->d_parent)));
-+	spin_unlock(&dentry->d_lock);
+diff --git a/net/bridge/br.c b/net/bridge/br.c
+index a45db67197226..d466febcf9abe 100644
+--- a/net/bridge/br.c
++++ b/net/bridge/br.c
+@@ -37,6 +37,11 @@ static int br_device_event(struct notifier_block *unused, unsigned long event, v
+ 	int err;
  
- 	readdir->pgbase = (char *)p - (char *)start;
- 	readdir->count -= readdir->pgbase;
+ 	if (netif_is_bridge_master(dev)) {
++		struct net_bridge *br = netdev_priv(dev);
++
++		if (event == NETDEV_REGISTER)
++			br_fdb_change_mac_address(br, dev->dev_addr);
++
+ 		err = br_vlan_bridge_event(dev, event, ptr);
+ 		if (err)
+ 			return notifier_from_errno(err);
 -- 
 2.51.0
 
