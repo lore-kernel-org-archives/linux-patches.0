@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C634E345CAA;
-	Fri, 21 Nov 2025 13:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A111A34DB4A;
+	Fri, 21 Nov 2025 13:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733001; cv=none; b=cZgLgfnAsYOE9olHf2mAnOp29/hsMdSJKLhKJYWy5x2lEncbC7hfnNutH5lhWBaRdl8/rjh6Ik5lw2fZesA2Ptxz67N1UhrFszjb6h3LIoOgOD+40pjD6hw1ruZcUQ7X8tFV+7XAsY/8KKX3t1FKPYUn1ehM6tBQALJqv50LLq4=
+	t=1763733004; cv=none; b=KmZwhXamTKbJhrQ1Z02HObmd1aCGqsSArLSJ+qfNTkhEfh7EE6d/hdE/lWx7HaOiC5uvgvVd0b24mkm67BPNSrmwVGgFRHd8NEovHvTUG31aZZxD4QgqRLkva1kojxcZhNDnVds08XOy8oC+FQ+VJvEzTOdArypYIoI4GArp9fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733001; c=relaxed/simple;
-	bh=apZ5t8jZPxcJ+bTswT6Vc8oWLwaHrTkTQoDiXUzvFp0=;
+	s=arc-20240116; t=1763733004; c=relaxed/simple;
+	bh=0pml3A/P7t+lMlNAT4jMezfvsVbnAToJcDXw2dF3sXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPUpR79P4K7TfQRP/1YEvS0DEwPNLCFbrxdwTalQFaNYbh+8wRrkfXc234IuaJbg2DoLEmh6di42OTYoc0dAZVoTS7QGyAC/H/cvR5XVJ4y0/7DwNGQexSAglo9yiUMqzrcg8eFf0EEFDInmVHMwmyy+0DA92abvLt8hxmGZe7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNqZYSoi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZMarbsEZ3OjWI480hoeLcQwRsGZjweB6ONOSVtL57lthcHNYz5nTlI3bwUX9bibOmBnCfem9a/RnumNu6RDs84eLStMh8fCWB5sHcvtC8gbgSqcQUE2MjwhusjXV5VLBx4MMQuAyBhb26bRhY8zqo+O+VdqIRz3o4/vEXwKhT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acSMd4AF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNqZYSoi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D570AC4CEF1;
-	Fri, 21 Nov 2025 13:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acSMd4AF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06C1C4CEF1;
+	Fri, 21 Nov 2025 13:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733001;
-	bh=apZ5t8jZPxcJ+bTswT6Vc8oWLwaHrTkTQoDiXUzvFp0=;
+	s=korg; t=1763733004;
+	bh=0pml3A/P7t+lMlNAT4jMezfvsVbnAToJcDXw2dF3sXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNqZYSoiUpYS3P8cqnVNiOU0E18+6AlELZ9P0v9S8o3VRdhaA5hwMBRopuUbGgBgD
-	 0sf11mT81/NRrCqeTbKedhZr+tql+Yl88Av9cVJPd4+jm1/LpjXKhi80UkqRcjlJGV
-	 hWkTV7/pRGXs4B+RK3qdfJjObYNjPYgFoYg4Y0oM=
+	b=acSMd4AFhM3a5xN5sG2NiHTCUdwgI3kcyMem9NGwANhGC7j+vbL3Gxq1JEp8Bbpd5
+	 bDJZoTPH+xwW9Wmasj8M1+WGKJSFNtieV2y3BD6rrI2wT3eGtBSN5mDOnmCgzJfkDo
+	 +5EKiMNcQ5sAmgZM5ErhBE7On4d7Gwl1zgVbb1/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Primoz Fiser <primoz.fiser@norik.com>,
-	Mark Brown <broonie@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 283/529] ASoC: tlv320aic3x: Fix class-D initialization for tlv320aic3007
-Date: Fri, 21 Nov 2025 14:09:42 +0100
-Message-ID: <20251121130241.099808568@linuxfoundation.org>
+Subject: [PATCH 6.6 284/529] net/mlx5e: Dont query FEC statistics when FEC is disabled
+Date: Fri, 21 Nov 2025 14:09:43 +0100
+Message-ID: <20251121130241.134528535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,97 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Primoz Fiser <primoz.fiser@norik.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 733a763dd8b3ac2858dd238a91bb3a2fdff4739e ]
+[ Upstream commit 6b81b8a0b1978284e007566d7a1607b47f92209f ]
 
-The problem of having class-D initialization sequence in probe using
-regmap_register_patch() is that it will do hardware register writes
-immediately after being called as it bypasses regcache. Afterwards, in
-aic3x_init() we also perform codec soft reset, rendering class-D init
-sequence pointless. This issue is even more apparent when using reset
-GPIO line, since in that case class-D amplifier initialization fails
-with "Failed to init class D: -5" message as codec is already held in
-reset state after requesting the reset GPIO and hence hardware I/O
-fails with -EIO errno.
+Update mlx5e_stats_fec_get() to check the active FEC mode and skip
+statistics collection when FEC is disabled.
 
-Thus move class-D amplifier initialization sequence from probe function
-to aic3x_set_power() just before the usual regcache sync. Use bypassed
-regmap_multi_reg_write_bypassed() function to make sure, class-D init
-sequence is performed in proper order as described in the datasheet.
-
-Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
-Link: https://patch.msgid.link/20250925085929.2581749-1-primoz.fiser@norik.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Link: https://patch.msgid.link/20250924124037.1508846-3-vadim.fedorenko@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic3x.c | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_stats.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
-index 56e795a00e22f..591f6c9f9d3a6 100644
---- a/sound/soc/codecs/tlv320aic3x.c
-+++ b/sound/soc/codecs/tlv320aic3x.c
-@@ -121,6 +121,16 @@ static const struct reg_default aic3x_reg[] = {
- 	{ 108, 0x00 }, { 109, 0x00 },
- };
- 
-+static const struct reg_sequence aic3007_class_d[] = {
-+	/* Class-D speaker driver init; datasheet p. 46 */
-+	{ AIC3X_PAGE_SELECT, 0x0D },
-+	{ 0xD, 0x0D },
-+	{ 0x8, 0x5C },
-+	{ 0x8, 0x5D },
-+	{ 0x8, 0x5C },
-+	{ AIC3X_PAGE_SELECT, 0x00 },
-+};
-+
- static bool aic3x_volatile_reg(struct device *dev, unsigned int reg)
- {
- 	switch (reg) {
-@@ -1393,6 +1403,10 @@ static int aic3x_set_power(struct snd_soc_component *component, int power)
- 			gpiod_set_value(aic3x->gpio_reset, 0);
- 		}
- 
-+		if (aic3x->model == AIC3X_MODEL_3007)
-+			regmap_multi_reg_write_bypassed(aic3x->regmap, aic3007_class_d,
-+							ARRAY_SIZE(aic3007_class_d));
-+
- 		/* Sync reg_cache with the hardware */
- 		regcache_cache_only(aic3x->regmap, false);
- 		regcache_sync(aic3x->regmap);
-@@ -1723,17 +1737,6 @@ static void aic3x_configure_ocmv(struct device *dev, struct aic3x_priv *aic3x)
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+index 4b96ad657145b..1c69244e00d75 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+@@ -1339,16 +1339,13 @@ static void fec_set_rs_stats(struct ethtool_fec_stats *fec_stats, u32 *ppcnt)
  }
  
--
--static const struct reg_sequence aic3007_class_d[] = {
--	/* Class-D speaker driver init; datasheet p. 46 */
--	{ AIC3X_PAGE_SELECT, 0x0D },
--	{ 0xD, 0x0D },
--	{ 0x8, 0x5C },
--	{ 0x8, 0x5D },
--	{ 0x8, 0x5C },
--	{ AIC3X_PAGE_SELECT, 0x00 },
--};
--
- int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver_data)
+ static void fec_set_block_stats(struct mlx5e_priv *priv,
++				int mode,
+ 				struct ethtool_fec_stats *fec_stats)
  {
- 	struct aic3x_priv *aic3x;
-@@ -1825,13 +1828,6 @@ int aic3x_probe(struct device *dev, struct regmap *regmap, kernel_ulong_t driver
- 
- 	aic3x_configure_ocmv(dev, aic3x);
- 
--	if (aic3x->model == AIC3X_MODEL_3007) {
--		ret = regmap_register_patch(aic3x->regmap, aic3007_class_d,
--					    ARRAY_SIZE(aic3007_class_d));
--		if (ret != 0)
--			dev_err(dev, "Failed to init class D: %d\n", ret);
--	}
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u32 out[MLX5_ST_SZ_DW(ppcnt_reg)] = {};
+ 	u32 in[MLX5_ST_SZ_DW(ppcnt_reg)] = {};
+ 	int sz = MLX5_ST_SZ_BYTES(ppcnt_reg);
+-	int mode = fec_active_mode(mdev);
 -
- 	ret = devm_snd_soc_register_component(dev, &soc_component_dev_aic3x, &aic3x_dai, 1);
- 	if (ret)
- 		return ret;
+-	if (mode == MLX5E_FEC_NOFEC)
+-		return;
+ 
+ 	MLX5_SET(ppcnt_reg, in, local_port, 1);
+ 	MLX5_SET(ppcnt_reg, in, grp, MLX5_PHYSICAL_LAYER_COUNTERS_GROUP);
+@@ -1389,11 +1386,14 @@ static void fec_set_corrected_bits_total(struct mlx5e_priv *priv,
+ void mlx5e_stats_fec_get(struct mlx5e_priv *priv,
+ 			 struct ethtool_fec_stats *fec_stats)
+ {
+-	if (!MLX5_CAP_PCAM_FEATURE(priv->mdev, ppcnt_statistical_group))
++	int mode = fec_active_mode(priv->mdev);
++
++	if (mode == MLX5E_FEC_NOFEC ||
++	    !MLX5_CAP_PCAM_FEATURE(priv->mdev, ppcnt_statistical_group))
+ 		return;
+ 
+ 	fec_set_corrected_bits_total(priv, fec_stats);
+-	fec_set_block_stats(priv, fec_stats);
++	fec_set_block_stats(priv, mode, fec_stats);
+ }
+ 
+ #define PPORT_ETH_EXT_OFF(c) \
 -- 
 2.51.0
 
