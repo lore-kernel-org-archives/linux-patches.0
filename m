@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B7734D386;
-	Fri, 21 Nov 2025 13:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494D734CFDB;
+	Fri, 21 Nov 2025 13:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733146; cv=none; b=Qotwdmgh4KgXqJ23xCO4aHaeyGdG03YBbOyU36C4WPqfrWvySLZ68HsNzPBv1c1fISUYbl7AdDR0Mzv5GNr1Dvk7AvBUKKxsEJK61zsE7HSrP0i6w86bXGPWrmud7u4u63XjYoeTQVrflS9gr5X3AL8oZ65d6RZUijo3ApeT4as=
+	t=1763733149; cv=none; b=T078Qzc8eivFR0uCRa+obtOh3HYbXMB50V6A/4dR/wW9fdAk+W/R0OeePp6GBt9TjUdftMk73sbrjP9/w5+tkwQfoaIPezxMHFUIqgB8kWTGQXrNPqKXaEpdHGLQNuQqxNMyOku/AxS+8i9wV4i5tAXu899k7Ikj6vj7y9FdMpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733146; c=relaxed/simple;
-	bh=iAbkt7+1szicb3OKdhgKPkwhR9ku2rnzNRNFURzkCxA=;
+	s=arc-20240116; t=1763733149; c=relaxed/simple;
+	bh=hwEQ++xL32SxkEakiWnH/ZEaSbVhksbN4bGn4bNtt8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bT7sIzYiMPhPi0+h0fv1SzZTGAJzfhePp5WTUJ93Xn//F5LlFcS4cbcM+jkBB2zkgf8W8ekoITC0VzY1brOGuxfO3ZQkg6SEgmYuDmyQvxE4R/JqBeP4OQcTvAN3RmsIy20trZmNmekRYiHD3hZYHvBnnM+BtZj1j1ObyBuJ6t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWeeGtjn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wg1yS+HgxYNkB++57qtalH0cbGgzwA3h4ab1rvCImJq1fT0xaGupZAn6jrYmLCIiMwixwFwqjXodhVnvvSSHzTIYP8jL0hbvlwMpwFOCs2jDaKkm2b8SYIVwR8uLjFBuRKbPACaLe504q73lVTHD8nVGaQPix2UGgHb9TNZB67Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StKJVJcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWeeGtjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124FAC4CEF1;
-	Fri, 21 Nov 2025 13:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StKJVJcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA573C4CEF1;
+	Fri, 21 Nov 2025 13:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733146;
-	bh=iAbkt7+1szicb3OKdhgKPkwhR9ku2rnzNRNFURzkCxA=;
+	s=korg; t=1763733149;
+	bh=hwEQ++xL32SxkEakiWnH/ZEaSbVhksbN4bGn4bNtt8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWeeGtjnOor6WY6Cmd+TQEKjpxP0flQFK9JCA3ECz/NKLz0uzrCIA3FVhBz2dt6iC
-	 4vIWPR98wdassknrhX2D8NGx9ltPUhNO36WsLbcVTuEkyWv11pdehG18qRIdf27r0H
-	 OhUj8yc2qrk0Vav/PV70WlOpGUXjxMTE+jjguAS8=
+	b=StKJVJcLCgvRoA1QsRRVEqezL1+bf1mavjHBXD7XqRUVqKOsdPwFEsqvy788/3KIT
+	 +B+zd+/vemHJrf6mu0xktERTDAaMOXfYyUeWXeHKqCdCWLj9kiiAG48zcrYKMzbxDu
+	 oeZfIVJiRDVHCYta6h7E+F7KOB+P1dXMla48PYmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
+	Jay Shin <jaeshin@redhat.com>,
 	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 367/529] smb: client: validate change notify buffer before copy
-Date: Fri, 21 Nov 2025 14:11:06 +0100
-Message-ID: <20251121130244.086285627@linuxfoundation.org>
+Subject: [PATCH 6.6 368/529] smb: client: fix potential UAF in smb2_close_cached_fid()
+Date: Fri, 21 Nov 2025 14:11:07 +0100
+Message-ID: <20251121130244.121385841@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,43 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit 4012abe8a78fbb8869634130024266eaef7081fe upstream.
+commit 734e99623c5b65bf2c03e35978a0b980ebc3c2f8 upstream.
 
-SMB2_change_notify called smb2_validate_iov() but ignored the return
-code, then kmemdup()ed using server provided OutputBufferOffset/Length.
+find_or_create_cached_dir() could grab a new reference after kref_put()
+had seen the refcount drop to zero but before cfid_list_lock is acquired
+in smb2_close_cached_fid(), leading to use-after-free.
 
-Check the return of smb2_validate_iov() and bail out on error.
+Switch to kref_put_lock() so cfid_release() is called with
+cfid_list_lock held, closing that gap.
 
-Discovered with help from the ZeroPath security tooling.
-
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Fixes: ebe98f1447bb ("cifs: enable caching of directories for which a lease is held")
 Cc: stable@vger.kernel.org
-Fixes: e3e9463414f61 ("smb3: improve SMB3 change notification support")
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/smb/client/cached_dir.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4068,9 +4068,12 @@ replay_again:
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -362,11 +362,11 @@ out:
+ 			 * lease. Release one here, and the second below.
+ 			 */
+ 			cfid->has_lease = false;
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
++			close_cached_dir(cfid);
+ 		}
+ 		spin_unlock(&cfids->cfid_list_lock);
  
- 		smb_rsp = (struct smb2_change_notify_rsp *)rsp_iov.iov_base;
+-		kref_put(&cfid->refcount, smb2_close_cached_fid);
++		close_cached_dir(cfid);
+ 	} else {
+ 		*ret_cfid = cfid;
+ 		atomic_inc(&tcon->num_remote_opens);
+@@ -406,12 +406,14 @@ int open_cached_dir_by_dentry(struct cif
  
--		smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
--				le32_to_cpu(smb_rsp->OutputBufferLength), &rsp_iov,
-+		rc = smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
-+				le32_to_cpu(smb_rsp->OutputBufferLength),
-+				&rsp_iov,
- 				sizeof(struct file_notify_information));
-+		if (rc)
-+			goto cnotify_exit;
+ static void
+ smb2_close_cached_fid(struct kref *ref)
++__releases(&cfid->cfids->cfid_list_lock)
+ {
+ 	struct cached_fid *cfid = container_of(ref, struct cached_fid,
+ 					       refcount);
+ 	int rc;
  
- 		*out_data = kmemdup((char *)smb_rsp + le16_to_cpu(smb_rsp->OutputBufferOffset),
- 				le32_to_cpu(smb_rsp->OutputBufferLength), GFP_KERNEL);
+-	spin_lock(&cfid->cfids->cfid_list_lock);
++	lockdep_assert_held(&cfid->cfids->cfid_list_lock);
++
+ 	if (cfid->on_list) {
+ 		list_del(&cfid->entry);
+ 		cfid->on_list = false;
+@@ -446,7 +448,7 @@ void drop_cached_dir_by_name(const unsig
+ 	spin_lock(&cfid->cfids->cfid_list_lock);
+ 	if (cfid->has_lease) {
+ 		cfid->has_lease = false;
+-		kref_put(&cfid->refcount, smb2_close_cached_fid);
++		close_cached_dir(cfid);
+ 	}
+ 	spin_unlock(&cfid->cfids->cfid_list_lock);
+ 	close_cached_dir(cfid);
+@@ -455,7 +457,7 @@ void drop_cached_dir_by_name(const unsig
+ 
+ void close_cached_dir(struct cached_fid *cfid)
+ {
+-	kref_put(&cfid->refcount, smb2_close_cached_fid);
++	kref_put_lock(&cfid->refcount, smb2_close_cached_fid, &cfid->cfids->cfid_list_lock);
+ }
+ 
+ /*
+@@ -566,7 +568,7 @@ cached_dir_offload_close(struct work_str
+ 
+ 	WARN_ON(cfid->on_list);
+ 
+-	kref_put(&cfid->refcount, smb2_close_cached_fid);
++	close_cached_dir(cfid);
+ 	cifs_put_tcon(tcon, netfs_trace_tcon_ref_put_cached_close);
+ }
+ 
+@@ -743,7 +745,7 @@ static void cfids_laundromat_worker(stru
+ 			 * Drop the ref-count from above, either the lease-ref (if there
+ 			 * was one) or the extra one acquired.
+ 			 */
+-			kref_put(&cfid->refcount, smb2_close_cached_fid);
++			close_cached_dir(cfid);
+ 	}
+ 	queue_delayed_work(cfid_put_wq, &cfids->laundromat_work,
+ 			   dir_cache_timeout * HZ);
 
 
