@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28576190477;
-	Fri, 21 Nov 2025 13:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F48A190477;
+	Fri, 21 Nov 2025 13:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731552; cv=none; b=ac63UcUe3AnGt4ndNE3cGZUZB2A45OcMBvJ1t7gKRqN/P+lWjwfJcEDVImLJqndyqyxZF6HQ+niOqVZN0QJSTg4GgiIvagImEndRBfNJ4SlGTwzX6mUAFjoK1Vxb81ob211SNW9LqyY25X8usfXWSfqmgoCpJqPC3PHMW/2jjcg=
+	t=1763731555; cv=none; b=ZkgOkdmzZgpI9ayiCwQPzeGxqL6o0b7UvhWlozP4aBQ0wuhRMBb7stlqmUNj65jakEFDiKzQwzc8tyh8wb4oJ3Rrzae0SAAnIUqcawQ51grVSZngnS5lX5Xusf/y/obWcYVePmTm91BNXR9tVP6N26YyFOFNGgCU0E1VBM0errs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731552; c=relaxed/simple;
-	bh=8qOCg76eZ186Ylt2kxaish4AdX+BvuyyAMcgZyvE5Ao=;
+	s=arc-20240116; t=1763731555; c=relaxed/simple;
+	bh=n7k00I3nzAs1usam1SzcjExMLn9nPHDCsdVZHg/klEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3XuoDUkcZCzmcn/XD8Itc2EKt/dawsr3xlWTz29+3gjd2fTn2J3Rb9ucJftT7r02DAuZdetqgOwOThI0kewS0E+tcDJMw2Rddi9bAEfi2j2U5sUeNdOT5djdbtCOKXWikRY82C0SD6KfRHcy/fMj4pN0WwU+M104VRzDFT6dhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K12rBYRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VaT92aKQQ7OlGzqvvbgJlZGGNEcebXsJbwYniIECG9i3ACIB40xFuIeSMVw2z2dQ8tZsZ2UF+pe/1GtdWmhvYzy1VZry5TPUif69dzIyZi3eOoScCtoW1bMFAI5QrHxEI6Ew1rWPdpLRD9qAlZgn6xHUGC16w2hXoDwrWZu4OSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNfYRa5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K12rBYRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A819AC4CEF1;
-	Fri, 21 Nov 2025 13:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNfYRa5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF9DC4CEF1;
+	Fri, 21 Nov 2025 13:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731552;
-	bh=8qOCg76eZ186Ylt2kxaish4AdX+BvuyyAMcgZyvE5Ao=;
+	s=korg; t=1763731554;
+	bh=n7k00I3nzAs1usam1SzcjExMLn9nPHDCsdVZHg/klEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K12rBYRugLjd132gulq7Ln5s4WU7cD8YRDG84MB2zH9GN85jOcYMrCJIx25kfUqbx
-	 nN4rIPQvgsGRjegTwsBVDvrJ3oUassGW+6p1uX5tz/4MIme2uLD6uMr87WB/2v5uD+
-	 L1/oeRb5mq+bLCgyS8pLtp6wIQ+wHSXtiF3F9UN8=
+	b=pNfYRa5qut9m86U9yBk6epO0+utYNZcNRiPJ69C/DiM/FxxhGUWZTomc2dyc0IArB
+	 BIoXD1wrFJ1hr01h6Io46bszWWtqVngaD9RcyKXezQQuOAfgE3KBCIsxoGaxTZiPWy
+	 h6gu1rfXa1vmDa0bTcbUM/UopR0s6BwiE6jUC64I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 247/247] net: phy: micrel: Fix lan8814_config_init
-Date: Fri, 21 Nov 2025 14:13:14 +0100
-Message-ID: <20251121130203.607530142@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.17 227/247] pmdomain: imx: Fix reference count leak in imx_gpc_remove
+Date: Fri, 21 Nov 2025 14:12:54 +0100
+Message-ID: <20251121130202.882101241@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,38 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit bf91f4bc9c1dfba75e457e6a5f11e3cda658729a upstream.
+commit bbde14682eba21d86f5f3d6fe2d371b1f97f1e61 upstream.
 
-The blamed commit introduced the function lanphy_modify_page_reg which
-as name suggests it, it modifies the registers. In the same commit we
-have started to use this function inside the drivers. The problem is
-that in the function lan8814_config_init we passed the wrong page number
-when disabling the aneg towards host side. We passed extended page number
-4(LAN8814_PAGE_COMMON_REGS) instead of extended page
-5(LAN8814_PAGE_PORT_REGS)
+of_get_child_by_name() returns a node pointer with refcount incremented, we
+should use of_node_put() on it when not needed anymore. Add the missing
+of_node_put() to avoid refcount leak.
 
-Fixes: a0de636ed7a264 ("net: phy: micrel: Introduce lanphy_modify_page_reg")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250925064702.3906950-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/imx/gpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4328,7 +4328,7 @@ static int lan8814_config_init(struct ph
- 	struct kszphy_priv *lan8814 = phydev->priv;
+--- a/drivers/pmdomain/imx/gpc.c
++++ b/drivers/pmdomain/imx/gpc.c
+@@ -537,6 +537,8 @@ static void imx_gpc_remove(struct platfo
+ 			return;
+ 		}
+ 	}
++
++	of_node_put(pgc_node);
+ }
  
- 	/* Disable ANEG with QSGMII PCS Host side */
--	lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
-+	lanphy_modify_page_reg(phydev, LAN8814_PAGE_PORT_REGS,
- 			       LAN8814_QSGMII_PCS1G_ANEG_CONFIG,
- 			       LAN8814_QSGMII_PCS1G_ANEG_CONFIG_ANEG_ENA,
- 			       0);
+ static struct platform_driver imx_gpc_driver = {
 
 
