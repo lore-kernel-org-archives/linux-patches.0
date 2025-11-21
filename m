@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3931534678E;
-	Fri, 21 Nov 2025 13:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C17F2765FF;
+	Fri, 21 Nov 2025 13:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730968; cv=none; b=oJ4aMkJ7xsc0sKmOVMRLbzxj4whUJN9LMyZSL+Br7ht9ZqATh2XR+qPycdouH7JogTAUJUS5mC685QgZFttuG+YEyDVfsadBJrr6P5h93BV6HV1lRMLCCFBVaCB8Mz9bd6h8M/uzGjHJerSi+q00S2sWo/wryDJVe50Yiit7iFA=
+	t=1763730971; cv=none; b=oRAp/I1JRo+kMzIiSxb5+Tm4Lxoiksb3R18uooCwzkgXhHy/rYpBjuU0/6jq0n6KAJpBa9ckBKbUqQTkAJNUjv4Uf6R6IXQfzB7Mbr1HqC4LBBUgz5CgMMEFlg57OFCyesGoGLCeX2in4oBBm+X+Lnmz7fRzgR7hw+9l9qkOoWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730968; c=relaxed/simple;
-	bh=cIjQI+mGtRoK9cQTRwd0xnqg/RPXe8QPMpH0vhXSS6U=;
+	s=arc-20240116; t=1763730971; c=relaxed/simple;
+	bh=PKfU3GdScT5pBZI0gJWbTa1wXOHvJB/6ZKzRNY873XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvL2WTX/QC7K20El0/XqyAiAj3fzfUNWpvVx8y86PqRf0OjCvcbIzCsSyuvRzX3RtIcUsd8zNSg9o9wKQcRmwMuhdrh2+WfeGyuaLgT3phGv1E2BoGPHgRUPf1q5CaB+W3FPFVQH68AabHVM0xQaz5qvZyIhqndgctbxdY6+tf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8i3FWBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pNzIGXZDvuPZcpdqt59+FGKvaxneY+VrdQhV6gm23iKRi3nY24oxPwvwXZWgdXMhuvW8UAtcAy+yKllT5D0YSMdimQbpu8792AZNVKcmHFjfTXWnvHVYA0L+YRxnAe4CJ12GusohXg0q07QNrlTiqCuregDqt6JgqfAgBdZ8CZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xMMVXR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8i3FWBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F53BC4CEFB;
-	Fri, 21 Nov 2025 13:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xMMVXR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4F8C4CEFB;
+	Fri, 21 Nov 2025 13:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730968;
-	bh=cIjQI+mGtRoK9cQTRwd0xnqg/RPXe8QPMpH0vhXSS6U=;
+	s=korg; t=1763730970;
+	bh=PKfU3GdScT5pBZI0gJWbTa1wXOHvJB/6ZKzRNY873XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8i3FWByfCsCmXmhDwaEs6xkwq15N7pp5xiiFaWuxHagZJoP5C8LvRjmACCD5r2J+
-	 HIUNod+9cE8pn99DWmRxOW5Qd+IjGT/0tyU8/WQfHuRDpofp398UJg07TXOXe8gTXK
-	 42On9uJgOzIMTqc9TkZAfl8tqe2SexjbFl1MrJ5s=
+	b=0xMMVXR16h5sfCgt5gi7zPzH4jHdQR2x+kxYgpbmfaJxyAINeiyn42JjZVLLGHwYP
+	 UrBqFRv2mmzHFW5rCVDCP8eD78ovEj16BGLxv3P6/d1czgkk22YmqLZuy8EgIox/yM
+	 lDib8MK2YjjmsKAMGIwM6do0gRyu4RcFULlsaAok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sharique Mohammad <sharq0406@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 043/247] ASoC: max98090/91: fixed max98091 ALSA widget powering up/down
-Date: Fri, 21 Nov 2025 14:09:50 +0100
-Message-ID: <20251121130156.148775951@linuxfoundation.org>
+Subject: [PATCH 6.17 012/247] drm/xe: Move declarations under conditional branch
+Date: Fri, 21 Nov 2025 14:09:19 +0100
+Message-ID: <20251121130155.041252327@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharique Mohammad <sharq0406@gmail.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 7a37291ed40a33a5f6c3d370fdde5ee0d8f7d0e4 ]
+[ Upstream commit 9cd27eec872f0b95dcdd811edc39d2d32e4158c8 ]
 
-The widgets DMIC3_ENA and DMIC4_ENA must be defined in the DAPM
-suppy widget, just like DMICL_ENA and DMICR_ENA. Whenever they
-are turned on or off, the required startup or shutdown sequences
-must be taken care by the max98090_shdn_event.
+The xe_device_shutdown() function was needing a few declarations
+that were only required under a specific condition. This change
+moves those declarations to be within that conditional branch
+to avoid unnecessary declarations.
 
-Signed-off-by: Sharique Mohammad <sharq0406@gmail.com>
-Link: https://patch.msgid.link/20251015134215.750001-1-sharq0406@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20251007100208.1407021-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: b11a020d914c ("drm/xe: Do clean shutdown also when using flr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index 22177c1ce1602..cb1508fc99f89 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -1234,9 +1234,11 @@ static const struct snd_soc_dapm_widget max98091_dapm_widgets[] = {
- 	SND_SOC_DAPM_INPUT("DMIC4"),
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index d399c2628fa33..528e818edbd7f 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -962,12 +962,12 @@ void xe_device_remove(struct xe_device *xe)
  
- 	SND_SOC_DAPM_SUPPLY("DMIC3_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
--		 M98090_DIGMIC3_SHIFT, 0, NULL, 0),
-+		 M98090_DIGMIC3_SHIFT, 0, max98090_shdn_event,
-+			SND_SOC_DAPM_POST_PMU),
- 	SND_SOC_DAPM_SUPPLY("DMIC4_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
--		 M98090_DIGMIC4_SHIFT, 0, NULL, 0),
-+		 M98090_DIGMIC4_SHIFT, 0, max98090_shdn_event,
-+			 SND_SOC_DAPM_POST_PMU),
- };
+ void xe_device_shutdown(struct xe_device *xe)
+ {
+-	struct xe_gt *gt;
+-	u8 id;
+-
+ 	drm_dbg(&xe->drm, "Shutting down device\n");
  
- static const struct snd_soc_dapm_route max98090_dapm_routes[] = {
+ 	if (xe_driver_flr_disabled(xe)) {
++		struct xe_gt *gt;
++		u8 id;
++
+ 		xe_display_pm_shutdown(xe);
+ 
+ 		xe_irq_suspend(xe);
 -- 
 2.51.0
 
