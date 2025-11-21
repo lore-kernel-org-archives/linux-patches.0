@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814EA190477;
-	Fri, 21 Nov 2025 13:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043302765FF;
+	Fri, 21 Nov 2025 13:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731621; cv=none; b=kt6Tt0uF+xopDUpJ9Ra8E+9PvSxK3ZOlDGgsxhQZ9M5miUaqbHgbZz9g5/0uITEHH95MNQ86V+fVeEPWkPb3tVFjsjnxyRJs+rShYRPYv6sM/Wf1pwLW8yDk3R03YOV7ziLp9nZtT8wUzBLDGkvsg0dIQhl3yfeDUDBSoBAFARk=
+	t=1763731624; cv=none; b=hOAWkUpmAN1VYktD2iPrwFi2qQhy9Icgdhoq3MzdmtulGh6uRMxAxIwJJT6CYjSxp+wFxbv11eXZ0GAc0sQbxvRYy/dNqgqXCSdfoBkHS0mQv5/G9xrn2nuzTkQUY8ueBaB74YO6xY4eu/Lf6LBrC3GBlUINzwTzea+L01Ru1g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731621; c=relaxed/simple;
-	bh=r+NlQhpyhTuFCJLUeLcOtjTMRZGxJCyIoGKAa16bCFk=;
+	s=arc-20240116; t=1763731624; c=relaxed/simple;
+	bh=IujCfdGpL4+kUIjAvmtL5Yhs6nh4KLMf9/V/+qgxURE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgXfsLgMhe+iO1tjuyOEE6oo+yI9+0spu3Xp51az1vKA2llbIEEJhuwL0MCSMSVPW0qQgKdH4356CIJFMexsZU1GlaXJLQ9C4p3S/2H3LpTzxurmC316VAr5mG6J9sNdhfPeRZTaNXp93h04n75rqOVzWZ5V92ruMjsRTnC5Zo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEqWJz4U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kdYvI7M1wnw0G0+BDhSyBw8xbl89VzttAh0lJBnWPgoQZ7+bO6MJCAQ3ZO8jj12C3jYnVdlLjIoqbWqdkRi9lToYBhkZBmJFORy4QTGNQ0+4vAEIwY+K7JR+qzjXV6T/KwCY3wUtPg6Ln36Fle8/TXOaer1gq/vA83G7XILGA1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6sHRniM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEqWJz4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39DBC4CEF1;
-	Fri, 21 Nov 2025 13:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6sHRniM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A94C4CEF1;
+	Fri, 21 Nov 2025 13:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731621;
-	bh=r+NlQhpyhTuFCJLUeLcOtjTMRZGxJCyIoGKAa16bCFk=;
+	s=korg; t=1763731623;
+	bh=IujCfdGpL4+kUIjAvmtL5Yhs6nh4KLMf9/V/+qgxURE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEqWJz4UjwihP+DeO7yAA9B0QsjNytlLsrZlqMy1Gg5JCOxyv7nAqdMuPMSprahYS
-	 CH2D0B2CLEba7BJfqZq/oedGYtOrBu4oulBNsb4WhCB1GSSx03ILEEMIHpDTjy9u1i
-	 aoOVJz5nqPQZnNXhD/uAavFW3vtzJUEqqcc8Atg8=
+	b=e6sHRniMDKG3bwKJqDrb3uu6CmrzQvIFvdjd89MExAsW5AsRpdfGzbe3ARIYLcdcN
+	 IH5ODUoIjHMfBrPpQ6sIiXP2s6npdB8ID5fXGobQHnj9KAKIVzJ+boXOWzhGxjB/9L
+	 VweNlzgTOiEPj+mN7WjljnjYenC8WQTesqU+FbfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Makarenko <oleg@makarenk.ooo>,
-	Jiri Kosina <jkosina@suse.com>,
+	Seunghun Han <kkamagui@gmail.com>,
+	Jihoon Kwon <jimmyxyz010315@gmail.com>,
+	Jaehun Gou <p22gone@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/185] HID: quirks: Add ALWAYS_POLL quirk for VRS R295 steering wheel
-Date: Fri, 21 Nov 2025 14:10:51 +0100
-Message-ID: <20251121130144.747683130@linuxfoundation.org>
+Subject: [PATCH 6.12 025/185] exfat: fix improper check of dentry.stream.valid_size
+Date: Fri, 21 Nov 2025 14:10:52 +0100
+Message-ID: <20251121130144.782488607@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -45,51 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Makarenko <oleg@makarenk.ooo>
+From: Jaehun Gou <p22gone@gmail.com>
 
-[ Upstream commit 1141ed52348d3df82d3fd2316128b3fc6203a68c ]
+[ Upstream commit 82ebecdc74ff555daf70b811d854b1f32a296bea ]
 
-This patch adds ALWAYS_POLL quirk for the VRS R295 steering wheel joystick.
-This device reboots itself every 8-10 seconds if it is not polled.
+We found an infinite loop bug in the exFAT file system that can lead to a
+Denial-of-Service (DoS) condition. When a dentry in an exFAT filesystem is
+malformed, the following system calls — SYS_openat, SYS_ftruncate, and
+SYS_pwrite64 — can cause the kernel to hang.
 
-Signed-off-by: Oleg Makarenko <oleg@makarenk.ooo>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Root cause analysis shows that the size validation code in exfat_find()
+does not check whether dentry.stream.valid_size is negative. As a result,
+the system calls mentioned above can succeed and eventually trigger the DoS
+issue.
+
+This patch adds a check for negative dentry.stream.valid_size to prevent
+this vulnerability.
+
+Co-developed-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Co-developed-by: Jihoon Kwon <jimmyxyz010315@gmail.com>
+Signed-off-by: Jihoon Kwon <jimmyxyz010315@gmail.com>
+Signed-off-by: Jaehun Gou <p22gone@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ fs/exfat/namei.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 63eb60effcaaf..4b85d9088a61b 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1420,6 +1420,7 @@
+diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
+index e9624eb61cbc9..f0fda34694044 100644
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -635,10 +635,14 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
  
- #define USB_VENDOR_ID_VRS	0x0483
- #define USB_DEVICE_ID_VRS_DFP	0xa355
-+#define USB_DEVICE_ID_VRS_R295	0xa44c
+ 	info->type = exfat_get_entry_type(ep);
+ 	info->attr = le16_to_cpu(ep->dentry.file.attr);
+-	info->size = le64_to_cpu(ep2->dentry.stream.valid_size);
+ 	info->valid_size = le64_to_cpu(ep2->dentry.stream.valid_size);
+ 	info->size = le64_to_cpu(ep2->dentry.stream.size);
  
- #define USB_VENDOR_ID_VTL		0x0306
- #define USB_DEVICE_ID_VTL_MULTITOUCH_FF3F	0xff3f
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 468a47de96b10..75480ec3c15a2 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -207,6 +207,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UCLOGIC, USB_DEVICE_ID_UCLOGIC_TABLET_KNA5), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UCLOGIC, USB_DEVICE_ID_UCLOGIC_TABLET_TWA60), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGTIZER, USB_DEVICE_ID_UGTIZER_TABLET_WP5540), HID_QUIRK_MULTI_INPUT },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_R295), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_MEDIA_TABLET_10_6_INCH), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_MEDIA_TABLET_14_1_INCH), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_SIRIUS_BATTERY_FREE_TABLET), HID_QUIRK_MULTI_INPUT },
++	if (info->valid_size < 0) {
++		exfat_fs_error(sb, "data valid size is invalid(%lld)", info->valid_size);
++		return -EIO;
++	}
++
+ 	if (unlikely(EXFAT_B_TO_CLU_ROUND_UP(info->size, sbi) > sbi->used_clusters)) {
+ 		exfat_fs_error(sb, "data size is invalid(%lld)", info->size);
+ 		return -EIO;
 -- 
 2.51.0
 
