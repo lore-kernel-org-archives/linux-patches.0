@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61D131158A;
-	Fri, 21 Nov 2025 13:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03D82989A2;
+	Fri, 21 Nov 2025 13:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730914; cv=none; b=hu/msPTPsFPI96n2HzAlovR0RpJKU/gwbXEamwlwfbM7CkNEgSM/XuWpUXioHoq2BP/XMZz15m13DQejH7Ta9N9C78R+GaQGbJ88LubOltedG5do4yqoSq7gvdo0REKYavmWbv88+dmk3fkKs3wN67yqHZV/WXgrGXN/TQ2KY3w=
+	t=1763730916; cv=none; b=sp1O6/sDncKVg6paye04fmDvlYMPbQPBmwvIn/NATh5f7ayhH6l4+MbxWUQQ8q+eg+iOhz3a2q5WGjD8TpNcvjzzi81L0PXKgJ9yaZjrn8y1jSObyDlq7ISRlGcAVkYylvxiSEMBS0h07Z9xEkP0E9J7/I+qrn3tHibu5WV7ggw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730914; c=relaxed/simple;
-	bh=4APoSwc0nvA3QTCqza9bwK666n2gKRXN562+v4t3iYg=;
+	s=arc-20240116; t=1763730916; c=relaxed/simple;
+	bh=WfPc+S4EWYIBQhZ17M33wGFOm2vMjgTCgUMV0CU/1w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X+eQIkUto+KvSalSF9mfrATnq3JFXzRVdk3MGEV3K71HlX+SbAdXa9Ej0yaxNfdhJcD38gLc6cYFzTvWlzcMRpZ+xnv9p5IWDue0OLo8rfFl+WDdbPC2i08k8ELd6Ip0n/ApdtaCSNMOFI2CbRAw+25q7BnrdI694A916iBa57c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNixHlmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WDDssi1oRZHXMdYh0ENj7uW7IE5e+zTdCO+yvUPCWkiZo6DTZWu02dWgEJeuLtt7di0QroG14gm9KsEusdMVDb3eSsk9AL2zj2a8naumrQypCW6HqlgPcsrpIBo7OpMsvhGMORlRMD/E0W/tZR4w2gHaylRceIfJqD2WZxCwHjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhIVNjBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNixHlmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385E6C4CEF1;
-	Fri, 21 Nov 2025 13:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhIVNjBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F2CC4CEFB;
+	Fri, 21 Nov 2025 13:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730913;
-	bh=4APoSwc0nvA3QTCqza9bwK666n2gKRXN562+v4t3iYg=;
+	s=korg; t=1763730916;
+	bh=WfPc+S4EWYIBQhZ17M33wGFOm2vMjgTCgUMV0CU/1w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNixHlmQY6cw1ZVjZV2At+RO8IJ11ZLgnzr4CFLg5RJajDw6ImWRUbs+utHHEPCya
-	 hhRNsvFY8YLyQwRPVmdwN00HCPVU7JAFR/Bi8Tno/2qZhIPfIeGVINBNXBelH+G42P
-	 Oi6uzudF9+YDVSOzWb4riziQWegDnXM0Q1s5lSYg=
+	b=hhIVNjBFN1jEqVSlkjB/YObqEIqGvFbkQFgVH1oVfBl7moIplm/YYgtENNKkeLQMZ
+	 z8tqpLHCV66vmeElIqBA8Iv9JpCCUlABcJR4rINWP1DKM5jK5JZlFjDYYr+uBdxAKH
+	 kZMdW1tuNV436P0NaDLfSeJI17vg3fKvG8w1vdw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Mangesh Gadre <Mangesh.Gadre@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 026/247] drm/amdgpu: remove two invalid BUG_ON()s
-Date: Fri, 21 Nov 2025 14:09:33 +0100
-Message-ID: <20251121130155.543145417@linuxfoundation.org>
+Subject: [PATCH 6.17 027/247] drm/amdgpu: hide VRAM sysfs attributes on GPUs without VRAM
+Date: Fri, 21 Nov 2025 14:09:34 +0100
+Message-ID: <20251121130155.579249466@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -55,46 +56,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 5d55ed19d4190d2c210ac05ac7a53f800a8c6fe5 ]
+[ Upstream commit 33cc891b56b93cad1a83263eaf2e417436f70c82 ]
 
-Those can be triggered trivially by userspace.
+Otherwise accessing them can cause a crash.
 
 Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Timur Kristóf <timur.kristof@gmail.com>
+Tested-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index c37527704d433..25a5f7fa5077d 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -5864,8 +5864,6 @@ static void gfx_v11_0_ring_emit_ib_gfx(struct amdgpu_ring *ring,
- 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
- 	u32 header, control = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+index 78f9e86ccc099..832ab87eb3451 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
+@@ -234,6 +234,9 @@ static umode_t amdgpu_vram_attrs_is_visible(struct kobject *kobj,
+ 	    !adev->gmc.vram_vendor)
+ 		return 0;
  
--	BUG_ON(ib->flags & AMDGPU_IB_FLAG_CE);
--
- 	header = PACKET3(PACKET3_INDIRECT_BUFFER, 2);
++	if (!ttm_resource_manager_used(&adev->mman.vram_mgr.manager))
++		return 0;
++
+ 	return attr->mode;
+ }
  
- 	control |= ib->length_dw | (vmid << 24);
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index fd44d5503e282..329632388b43e 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -4421,8 +4421,6 @@ static void gfx_v12_0_ring_emit_ib_gfx(struct amdgpu_ring *ring,
- 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
- 	u32 header, control = 0;
- 
--	BUG_ON(ib->flags & AMDGPU_IB_FLAG_CE);
--
- 	header = PACKET3(PACKET3_INDIRECT_BUFFER, 2);
- 
- 	control |= ib->length_dw | (vmid << 24);
 -- 
 2.51.0
 
