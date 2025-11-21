@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBF32765FF;
-	Fri, 21 Nov 2025 13:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED80A27147D;
+	Fri, 21 Nov 2025 13:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731307; cv=none; b=YWePeFYUk5SyJA44C8mCjJv4S06JwE2szc69aGnZZ8o6fJowem3jZjOSQBUw6jpzL4bpj63TqkYW+PmV8S88vQLJUHWYs3jDxwSMJf2P5yXeYcrBnaorfOfwxFSPL63TwzWjQTZbmnFx17PijBatqQVahMpNOTsPrh4+6Ygl+6E=
+	t=1763731310; cv=none; b=mAyylybK4PKJ3ypay0JgLUY5s1J4Wobn0f0gBTeA/kT32m/BFSlHbs2gTStcfd7vj9OH8AVNM/JjULAgADwmrXOI7RdvI4HnTWbwwxwTzYWIwDPydwq+LUvuouYaiLopHLfWHh54EAf2BVdG6PTUraSCI7w8rlS1rgZ8nWrN1/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731307; c=relaxed/simple;
-	bh=7ECNSA7L+rsMpNtp8ZAZ/iKcBXHEr8YRuF+Gzgh/n6M=;
+	s=arc-20240116; t=1763731310; c=relaxed/simple;
+	bh=P0tECnlOGox1/3rjnREKKll7rfiYqCebQycXvlW/Vr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ArJOBWFYOcnpSjnjVhj5/kKnW24fEjdK0uCiPhptEqgkBJ3ULmIFYyy9VJjnYXTVDLq76sqcqK25YyMHea2T2DEcp6GDRYWle6HeQHXwCjEI39XwqKYxTByMkErs2qEBvhSBxd85++7ElpnfK7TIDMnWCE3VnGSrPg8iGiuNHA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oe95wDhm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uirdr1GRzUMwFDWbZr0FnGSxn/96CYv27tldbugbiMC6n07/0ZMle8+eMWmaL9704yCV7wtL+XTX4gpiSkf/WoUE0qoo1itYMXp4ozKbmU/HGwYh9NxveCxE5DBQh9Sq+v//NszUVcbF9cltWeduJv0KmULb77tI5j4uMLpVt/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRkV6u3k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe95wDhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58C1C4CEF1;
-	Fri, 21 Nov 2025 13:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRkV6u3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403A2C4CEF1;
+	Fri, 21 Nov 2025 13:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731307;
-	bh=7ECNSA7L+rsMpNtp8ZAZ/iKcBXHEr8YRuF+Gzgh/n6M=;
+	s=korg; t=1763731309;
+	bh=P0tECnlOGox1/3rjnREKKll7rfiYqCebQycXvlW/Vr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oe95wDhmvRSieuEecVXbq0d9S2PDnY3+2tiLPjn8Zp0VPNH2BCtpBtJNndtdacSP3
-	 i7wCvv7/Nhk+WOcFo1tlYljFXUr8VPj1owu04tevGGTZB/V8LtTYNSlpIlmSW/sqXa
-	 ROG531hZwBKMG1bL/5UhaVsCse3DoSnB1jieVYBY=
+	b=vRkV6u3kpb3rfshnSWoDRO9/fLxywEZnrRKMH7tixCNi7gflwcsoY8xek6FepiXM0
+	 E/bTrGCHTR3pcHBVifpxULyyKtLe+nK/OBfMEH5D5REyGNl4kiMhk2M8FnXqeH5Zfe
+	 k36rnag+XZwefsaGm+GX7A/hNfmkiToMXAIuTFE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	craftfever <craftfever@airmail.cc>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	xu xin <xu.xin16@zte.com.cn>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Alexander Graf <graf@amazon.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 163/247] ksm: use range-walk function to jump over holes in scan_get_next_rmap_item
-Date: Fri, 21 Nov 2025 14:11:50 +0100
-Message-ID: <20251121130200.571882692@linuxfoundation.org>
+Subject: [PATCH 6.17 164/247] kho: warn and fail on metadata or preserved memory in scratch area
+Date: Fri, 21 Nov 2025 14:11:51 +0100
+Message-ID: <20251121130200.607393324@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,212 +62,318 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+From: Pasha Tatashin <pasha.tatashin@soleen.com>
 
-commit f5548c318d6520d4fa3c5ed6003eeb710763cbc5 upstream.
+commit e38f65d317df1fd2dcafe614d9c537475ecf9992 upstream.
 
-Currently, scan_get_next_rmap_item() walks every page address in a VMA to
-locate mergeable pages.  This becomes highly inefficient when scanning
-large virtual memory areas that contain mostly unmapped regions, causing
-ksmd to use large amount of cpu without deduplicating much pages.
+Patch series "KHO: kfence + KHO memory corruption fix", v3.
 
-This patch replaces the per-address lookup with a range walk using
-walk_page_range().  The range walker allows KSM to skip over entire
-unmapped holes in a VMA, avoiding unnecessary lookups.  This problem was
-previously discussed in [1].
+This series fixes a memory corruption bug in KHO that occurs when KFENCE
+is enabled.
 
-Consider the following test program which creates a 32 TiB mapping in the
-virtual address space but only populates a single page:
+The root cause is that KHO metadata, allocated via kzalloc(), can be
+randomly serviced by kfence_alloc().  When a kernel boots via KHO, the
+early memblock allocator is restricted to a "scratch area".  This forces
+the KFENCE pool to be allocated within this scratch area, creating a
+conflict.  If KHO metadata is subsequently placed in this pool, it gets
+corrupted during the next kexec operation.
 
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/mman.h>
+Google is using KHO and have had obscure crashes due to this memory
+corruption, with stacks all over the place.  I would prefer this fix to be
+properly backported to stable so we can also automatically consume it once
+we switch to the upstream KHO.
 
-/* 32 TiB */
-const size_t size = 32ul * 1024 * 1024 * 1024 * 1024;
+Patch 1/3 introduces a debug-only feature (CONFIG_KEXEC_HANDOVER_DEBUG)
+that adds checks to detect and fail any operation that attempts to place
+KHO metadata or preserved memory within the scratch area.  This serves as
+a validation and diagnostic tool to confirm the problem without affecting
+production builds.
 
-int main() {
-        char *area = mmap(NULL, size, PROT_READ | PROT_WRITE,
-                          MAP_NORESERVE | MAP_PRIVATE | MAP_ANON, -1, 0);
+Patch 2/3 Increases bitmap to PAGE_SIZE, so buddy allocator can be used.
 
-        if (area == MAP_FAILED) {
-                perror("mmap() failed\n");
-                return -1;
-        }
+Patch 3/3 Provides the fix by modifying KHO to allocate its metadata
+directly from the buddy allocator instead of slab.  This bypasses the
+KFENCE interception entirely.
 
-        /* Populate a single page such that we get an anon_vma. */
-        *area = 0;
 
-        /* Enable KSM. */
-        madvise(area, size, MADV_MERGEABLE);
-        pause();
-        return 0;
-}
+This patch (of 3):
 
-$ ./ksm-sparse  &
-$ echo 1 > /sys/kernel/mm/ksm/run
+It is invalid for KHO metadata or preserved memory regions to be located
+within the KHO scratch area, as this area is overwritten when the next
+kernel is loaded, and used early in boot by the next kernel.  This can
+lead to memory corruption.
 
-Without this patch ksmd uses 100% of the cpu for a long time (more then 1
-hour in my test machine) scanning all the 32 TiB virtual address space
-that contain only one mapped page.  This makes ksmd essentially deadlocked
-not able to deduplicate anything of value.  With this patch ksmd walks
-only the one mapped page and skips the rest of the 32 TiB virtual address
-space, making the scan fast using little cpu.
+Add checks to kho_preserve_* and KHO's internal metadata allocators
+(xa_load_or_alloc, new_chunk) to verify that the physical address of the
+memory does not overlap with any defined scratch region.  If an overlap is
+detected, the operation will fail and a WARN_ON is triggered.  To avoid
+performance overhead in production kernels, these checks are enabled only
+when CONFIG_KEXEC_HANDOVER_DEBUG is selected.
 
-Link: https://lkml.kernel.org/r/20251023035841.41406-1-pedrodemargomes@gmail.com
-Link: https://lkml.kernel.org/r/20251022153059.22763-1-pedrodemargomes@gmail.com
-Link: https://lore.kernel.org/linux-mm/423de7a3-1c62-4e72-8e79-19a6413e420c@redhat.com/ [1]
-Fixes: 31dbd01f3143 ("ksm: Kernel SamePage Merging")
-Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
-Co-developed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: craftfever <craftfever@airmail.cc>
-Closes: https://lkml.kernel.org/r/020cf8de6e773bb78ba7614ef250129f11a63781@murena.io
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: xu xin <xu.xin16@zte.com.cn>
+[rppt@kernel.org: fix KEXEC_HANDOVER_DEBUG Kconfig dependency]
+  Link: https://lkml.kernel.org/r/aQHUyyFtiNZhx8jo@kernel.org
+[pasha.tatashin@soleen.com: build fix]
+  Link: https://lkml.kernel.org/r/CA+CK2bBnorfsTymKtv4rKvqGBHs=y=MjEMMRg_tE-RME6n-zUw@mail.gmail.com
+Link: https://lkml.kernel.org/r/20251021000852.2924827-1-pasha.tatashin@soleen.com
+Link: https://lkml.kernel.org/r/20251021000852.2924827-2-pasha.tatashin@soleen.com
+Fixes: fc33e4b44b27 ("kexec: enable KHO support for memory preservation")
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Signed-off-by: Mike Rapoport <rppt@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Matlack <dmatlack@google.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Samiullah Khawaja <skhawaja@google.com>
+Cc: Tejun Heo <tj@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/ksm.c |  113 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 104 insertions(+), 9 deletions(-)
+ kernel/Kconfig.kexec             |    9 ++++++
+ kernel/Makefile                  |    1 
+ kernel/kexec_handover.c          |   57 ++++++++++++++++++++++++++-------------
+ kernel/kexec_handover_debug.c    |   25 +++++++++++++++++
+ kernel/kexec_handover_internal.h |   20 +++++++++++++
+ 5 files changed, 93 insertions(+), 19 deletions(-)
+ create mode 100644 kernel/kexec_handover_debug.c
+ create mode 100644 kernel/kexec_handover_internal.h
 
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -2458,6 +2458,95 @@ static bool should_skip_rmap_item(struct
- 	return true;
+--- a/kernel/Kconfig.kexec
++++ b/kernel/Kconfig.kexec
+@@ -109,6 +109,15 @@ config KEXEC_HANDOVER
+ 	  to keep data or state alive across the kexec. For this to work,
+ 	  both source and target kernels need to have this option enabled.
+ 
++config KEXEC_HANDOVER_DEBUG
++	bool "Enable Kexec Handover debug checks"
++	depends on KEXEC_HANDOVER
++	help
++	  This option enables extra sanity checks for the Kexec Handover
++	  subsystem. Since, KHO performance is crucial in live update
++	  scenarios and the extra code might be adding overhead it is
++	  only optionally enabled.
++
+ config CRASH_DUMP
+ 	bool "kernel crash dumps"
+ 	default ARCH_DEFAULT_CRASH_DUMP
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -82,6 +82,7 @@ obj-$(CONFIG_KEXEC) += kexec.o
+ obj-$(CONFIG_KEXEC_FILE) += kexec_file.o
+ obj-$(CONFIG_KEXEC_ELF) += kexec_elf.o
+ obj-$(CONFIG_KEXEC_HANDOVER) += kexec_handover.o
++obj-$(CONFIG_KEXEC_HANDOVER_DEBUG) += kexec_handover_debug.o
+ obj-$(CONFIG_BACKTRACE_SELF_TEST) += backtracetest.o
+ obj-$(CONFIG_COMPAT) += compat.o
+ obj-$(CONFIG_CGROUPS) += cgroup/
+--- a/kernel/kexec_handover.c
++++ b/kernel/kexec_handover.c
+@@ -8,6 +8,7 @@
+ 
+ #define pr_fmt(fmt) "KHO: " fmt
+ 
++#include <linux/cleanup.h>
+ #include <linux/cma.h>
+ #include <linux/count_zeros.h>
+ #include <linux/debugfs.h>
+@@ -21,6 +22,7 @@
+ 
+ #include <asm/early_ioremap.h>
+ 
++#include "kexec_handover_internal.h"
+ /*
+  * KHO is tightly coupled with mm init and needs access to some of mm
+  * internal APIs.
+@@ -93,26 +95,26 @@ struct kho_serialization {
+ 
+ static void *xa_load_or_alloc(struct xarray *xa, unsigned long index, size_t sz)
+ {
+-	void *elm, *res;
++	void *res = xa_load(xa, index);
+ 
+-	elm = xa_load(xa, index);
+-	if (elm)
+-		return elm;
++	if (res)
++		return res;
++
++	void *elm __free(kfree) = kzalloc(sz, GFP_KERNEL);
+ 
+-	elm = kzalloc(sz, GFP_KERNEL);
+ 	if (!elm)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	if (WARN_ON(kho_scratch_overlap(virt_to_phys(elm), sz)))
++		return ERR_PTR(-EINVAL);
++
+ 	res = xa_cmpxchg(xa, index, NULL, elm, GFP_KERNEL);
+ 	if (xa_is_err(res))
+-		res = ERR_PTR(xa_err(res));
+-
+-	if (res) {
+-		kfree(elm);
++		return ERR_PTR(xa_err(res));
++	else if (res)
+ 		return res;
+-	}
+ 
+-	return elm;
++	return no_free_ptr(elm);
  }
  
-+struct ksm_next_page_arg {
-+	struct folio *folio;
-+	struct page *page;
-+	unsigned long addr;
-+};
-+
-+static int ksm_next_page_pmd_entry(pmd_t *pmdp, unsigned long addr, unsigned long end,
-+		struct mm_walk *walk)
-+{
-+	struct ksm_next_page_arg *private = walk->private;
-+	struct vm_area_struct *vma = walk->vma;
-+	pte_t *start_ptep = NULL, *ptep, pte;
-+	struct mm_struct *mm = walk->mm;
-+	struct folio *folio;
-+	struct page *page;
-+	spinlock_t *ptl;
-+	pmd_t pmd;
-+
-+	if (ksm_test_exit(mm))
-+		return 0;
-+
-+	cond_resched();
-+
-+	pmd = pmdp_get_lockless(pmdp);
-+	if (!pmd_present(pmd))
-+		return 0;
-+
-+	if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && pmd_leaf(pmd)) {
-+		ptl = pmd_lock(mm, pmdp);
-+		pmd = pmdp_get(pmdp);
-+
-+		if (!pmd_present(pmd)) {
-+			goto not_found_unlock;
-+		} else if (pmd_leaf(pmd)) {
-+			page = vm_normal_page_pmd(vma, addr, pmd);
-+			if (!page)
-+				goto not_found_unlock;
-+			folio = page_folio(page);
-+
-+			if (folio_is_zone_device(folio) || !folio_test_anon(folio))
-+				goto not_found_unlock;
-+
-+			page += ((addr & (PMD_SIZE - 1)) >> PAGE_SHIFT);
-+			goto found_unlock;
-+		}
-+		spin_unlock(ptl);
-+	}
-+
-+	start_ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
-+	if (!start_ptep)
-+		return 0;
-+
-+	for (ptep = start_ptep; addr < end; ptep++, addr += PAGE_SIZE) {
-+		pte = ptep_get(ptep);
-+
-+		if (!pte_present(pte))
-+			continue;
-+
-+		page = vm_normal_page(vma, addr, pte);
-+		if (!page)
-+			continue;
-+		folio = page_folio(page);
-+
-+		if (folio_is_zone_device(folio) || !folio_test_anon(folio))
-+			continue;
-+		goto found_unlock;
-+	}
-+
-+not_found_unlock:
-+	spin_unlock(ptl);
-+	if (start_ptep)
-+		pte_unmap(start_ptep);
-+	return 0;
-+found_unlock:
-+	folio_get(folio);
-+	spin_unlock(ptl);
-+	if (start_ptep)
-+		pte_unmap(start_ptep);
-+	private->page = page;
-+	private->folio = folio;
-+	private->addr = addr;
-+	return 1;
-+}
-+
-+static struct mm_walk_ops ksm_next_page_ops = {
-+	.pmd_entry = ksm_next_page_pmd_entry,
-+	.walk_lock = PGWALK_RDLOCK,
-+};
-+
- static struct ksm_rmap_item *scan_get_next_rmap_item(struct page **page)
+ static void __kho_unpreserve(struct kho_mem_track *track, unsigned long pfn,
+@@ -263,15 +265,19 @@ static_assert(sizeof(struct khoser_mem_c
+ static struct khoser_mem_chunk *new_chunk(struct khoser_mem_chunk *cur_chunk,
+ 					  unsigned long order)
  {
- 	struct mm_struct *mm;
-@@ -2545,21 +2634,27 @@ next_mm:
- 			ksm_scan.address = vma->vm_end;
+-	struct khoser_mem_chunk *chunk;
++	struct khoser_mem_chunk *chunk __free(kfree) = NULL;
  
- 		while (ksm_scan.address < vma->vm_end) {
-+			struct ksm_next_page_arg ksm_next_page_arg;
- 			struct page *tmp_page = NULL;
--			struct folio_walk fw;
- 			struct folio *folio;
- 
- 			if (ksm_test_exit(mm))
- 				break;
- 
--			folio = folio_walk_start(&fw, vma, ksm_scan.address, 0);
--			if (folio) {
--				if (!folio_is_zone_device(folio) &&
--				     folio_test_anon(folio)) {
--					folio_get(folio);
--					tmp_page = fw.page;
--				}
--				folio_walk_end(&fw, vma);
-+			int found;
+ 	chunk = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (!chunk)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
 +
-+			found = walk_page_range_vma(vma, ksm_scan.address,
-+						    vma->vm_end,
-+						    &ksm_next_page_ops,
-+						    &ksm_next_page_arg);
++	if (WARN_ON(kho_scratch_overlap(virt_to_phys(chunk), PAGE_SIZE)))
++		return ERR_PTR(-EINVAL);
 +
-+			if (found > 0) {
-+				folio = ksm_next_page_arg.folio;
-+				tmp_page = ksm_next_page_arg.page;
-+				ksm_scan.address = ksm_next_page_arg.addr;
-+			} else {
-+				VM_WARN_ON_ONCE(found < 0);
-+				ksm_scan.address = vma->vm_end - PAGE_SIZE;
+ 	chunk->hdr.order = order;
+ 	if (cur_chunk)
+ 		KHOSER_STORE_PTR(cur_chunk->hdr.next, chunk);
+-	return chunk;
++	return no_free_ptr(chunk);
+ }
+ 
+ static void kho_mem_ser_free(struct khoser_mem_chunk *first_chunk)
+@@ -292,14 +298,17 @@ static int kho_mem_serialize(struct kho_
+ 	struct khoser_mem_chunk *chunk = NULL;
+ 	struct kho_mem_phys *physxa;
+ 	unsigned long order;
++	int err = -ENOMEM;
+ 
+ 	xa_for_each(&ser->track.orders, order, physxa) {
+ 		struct kho_mem_phys_bits *bits;
+ 		unsigned long phys;
+ 
+ 		chunk = new_chunk(chunk, order);
+-		if (!chunk)
++		if (IS_ERR(chunk)) {
++			err = PTR_ERR(chunk);
+ 			goto err_free;
++		}
+ 
+ 		if (!first_chunk)
+ 			first_chunk = chunk;
+@@ -309,8 +318,10 @@ static int kho_mem_serialize(struct kho_
+ 
+ 			if (chunk->hdr.num_elms == ARRAY_SIZE(chunk->bitmaps)) {
+ 				chunk = new_chunk(chunk, order);
+-				if (!chunk)
++				if (IS_ERR(chunk)) {
++					err = PTR_ERR(chunk);
+ 					goto err_free;
++				}
  			}
  
- 			if (tmp_page) {
+ 			elm = &chunk->bitmaps[chunk->hdr.num_elms];
+@@ -327,7 +338,7 @@ static int kho_mem_serialize(struct kho_
+ 
+ err_free:
+ 	kho_mem_ser_free(first_chunk);
+-	return -ENOMEM;
++	return err;
+ }
+ 
+ static void __init deserialize_bitmap(unsigned int order,
+@@ -380,8 +391,8 @@ static void __init kho_mem_deserialize(c
+  * area for early allocations that happen before page allocator is
+  * initialized.
+  */
+-static struct kho_scratch *kho_scratch;
+-static unsigned int kho_scratch_cnt;
++struct kho_scratch *kho_scratch;
++unsigned int kho_scratch_cnt;
+ 
+ /*
+  * The scratch areas are scaled by default as percent of memory allocated from
+@@ -684,6 +695,9 @@ int kho_preserve_folio(struct folio *fol
+ 	if (kho_out.finalized)
+ 		return -EBUSY;
+ 
++	if (WARN_ON(kho_scratch_overlap(pfn << PAGE_SHIFT, PAGE_SIZE << order)))
++		return -EINVAL;
++
+ 	return __kho_preserve_order(track, pfn, order);
+ }
+ EXPORT_SYMBOL_GPL(kho_preserve_folio);
+@@ -713,6 +727,11 @@ int kho_preserve_phys(phys_addr_t phys,
+ 	if (!PAGE_ALIGNED(phys) || !PAGE_ALIGNED(size))
+ 		return -EINVAL;
+ 
++	if (WARN_ON(kho_scratch_overlap(start_pfn << PAGE_SHIFT,
++					nr_pages << PAGE_SHIFT))) {
++		return -EINVAL;
++	}
++
+ 	while (pfn < end_pfn) {
+ 		const unsigned int order =
+ 			min(count_trailing_zeros(pfn), ilog2(end_pfn - pfn));
+--- /dev/null
++++ b/kernel/kexec_handover_debug.c
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * kexec_handover_debug.c - kexec handover optional debug functionality
++ * Copyright (C) 2025 Google LLC, Pasha Tatashin <pasha.tatashin@soleen.com>
++ */
++
++#define pr_fmt(fmt) "KHO: " fmt
++
++#include "kexec_handover_internal.h"
++
++bool kho_scratch_overlap(phys_addr_t phys, size_t size)
++{
++	phys_addr_t scratch_start, scratch_end;
++	unsigned int i;
++
++	for (i = 0; i < kho_scratch_cnt; i++) {
++		scratch_start = kho_scratch[i].addr;
++		scratch_end = kho_scratch[i].addr + kho_scratch[i].size;
++
++		if (phys < scratch_end && (phys + size) > scratch_start)
++			return true;
++	}
++
++	return false;
++}
+--- /dev/null
++++ b/kernel/kexec_handover_internal.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef LINUX_KEXEC_HANDOVER_INTERNAL_H
++#define LINUX_KEXEC_HANDOVER_INTERNAL_H
++
++#include <linux/kexec_handover.h>
++#include <linux/types.h>
++
++extern struct kho_scratch *kho_scratch;
++extern unsigned int kho_scratch_cnt;
++
++#ifdef CONFIG_KEXEC_HANDOVER_DEBUG
++bool kho_scratch_overlap(phys_addr_t phys, size_t size);
++#else
++static inline bool kho_scratch_overlap(phys_addr_t phys, size_t size)
++{
++	return false;
++}
++#endif /* CONFIG_KEXEC_HANDOVER_DEBUG */
++
++#endif /* LINUX_KEXEC_HANDOVER_INTERNAL_H */
 
 
