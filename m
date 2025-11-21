@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28CD264612;
-	Fri, 21 Nov 2025 13:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69636264612;
+	Fri, 21 Nov 2025 13:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731281; cv=none; b=abUSt/7SMXLmrYRFKbeiz+GxHifoMwpuC+DgYs+N6RHyo6UbRHvKaheY9bBEdAYRGJ9y7vh/9ycDqM+z1cCGhoL/asLP8aRY0mywAWycmzz4WXg1m9o0e0OORq4t2fLbBr6hTgsGzTqygnzvqEXNNQ1V1MOCawaew47LbEwekPc=
+	t=1763731284; cv=none; b=nHqX/R8CuUHie9uJP32YTpdvsqGE21v7b7dtYO9Mx0LjfGOhoRGM68dOvkIobRLF0ZIjJ40+UY71Pyo1tD97YJMSDLDlxo69htHDDD+snoSLzfjuOCG9te+wWUWope3u7ERbwkGtYVBPpscRgjmW+jMiLeCgLs3A+vqANUyhhWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731281; c=relaxed/simple;
-	bh=VJcST6xD0RE88+R08zXmA8kIl39qXrhkyf6LmjsDEQ8=;
+	s=arc-20240116; t=1763731284; c=relaxed/simple;
+	bh=FYLN6Xl3Evm9od3e874g4J82eZZI5seGOtA6DisBIZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDuuOhDNdjXee8dO0L7n8MHLlX4oNcxKB2Do3IlwxplIIRHmMqWIvVeTlrxJeTeD8ymqOZ1ciRRhmtOZKhxdNXir5RhKDBJswnluUrcJ9y7gAOENHZ5fKXh2awRJiVUBjFxalyjrsblw4KBIcADTUXHBBaR92ie7RgpMoA9KKu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjXX7BIu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tYkz5K0iUI1EgoWUBKeEiJkibxWOnlUdl5kBxxa5KBJnSDaV6zV4iErwZ/22Dv45AcZ3v5U27ptUi30iXV+g4jScW/Sim+b5lAfnW2qlZZYo2VNE+rLK03Ukb+oAWYebua/kABvIAVdA6UOBhcj8Jr4zBuJtmZhs1DFFIL8r6l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEhUF0/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjXX7BIu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288E5C4CEF1;
-	Fri, 21 Nov 2025 13:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEhUF0/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FA9C4CEF1;
+	Fri, 21 Nov 2025 13:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731281;
-	bh=VJcST6xD0RE88+R08zXmA8kIl39qXrhkyf6LmjsDEQ8=;
+	s=korg; t=1763731284;
+	bh=FYLN6Xl3Evm9od3e874g4J82eZZI5seGOtA6DisBIZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjXX7BIumLilpy60jZ2rqpIwgUq+wgG+hJ4MRPdAGDridwB/sOQpb+KNxJqKBe878
-	 JYfLDOJRMThQ86p9xc6d7cRwHfLnx0+ln+Ozuy9ul4iTLIcZ5sbkX1nhDXxyZ9Fbs3
-	 g6mZbckwwRS7mGwSGgBV+Ov6clWfgBvwaovucuaA=
+	b=lEhUF0/aW3QIuGJp72yqYyjeH5QeweSlLxscNzKG1E/WuSFsoTIC7SQhSabG/IjHp
+	 na8XV2lWslSwET4EIzW1ntueqUANUqB3szTM26q7mGXaGxaffxch58MmivXRK/wUT8
+	 R7EKJo5R/OisnxwZJBcgOGksawr9fCWOmADWkIyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Hu <nick.hu@sifive.com>,
+	syzbot+9c47ad18f978d4394986@syzkaller.appspotmail.com,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Eslam Khafagy <eslam.medhat1993@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 120/247] irqchip/riscv-intc: Add missing free() callback in riscv_intc_domain_ops
-Date: Fri, 21 Nov 2025 14:11:07 +0100
-Message-ID: <20251121130158.890712977@linuxfoundation.org>
+Subject: [PATCH 6.17 121/247] posix-timers: Plug potential memory leak in do_timer_create()
+Date: Fri, 21 Nov 2025 14:11:08 +0100
+Message-ID: <20251121130158.927339722@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,40 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Hu <nick.hu@sifive.com>
+From: Eslam Khafagy <eslam.medhat1993@gmail.com>
 
-[ Upstream commit 14473a1f88596fd729e892782efc267c0097dd1d ]
+[ Upstream commit e0fd4d42e27f761e9cc82801b3f183e658dc749d ]
 
-The irq_domain_free_irqs() helper requires that the irq_domain_ops->free
-callback is implemented. Otherwise, the kernel reports the warning message
-"NULL pointer, cannot free irq" when irq_dispose_mapping() is invoked to
-release the per-HART local interrupts.
+When posix timer creation is set to allocate a given timer ID and the
+access to the user space value faults, the function terminates without
+freeing the already allocated posix timer structure.
 
-Set irq_domain_ops->free to irq_domain_free_irqs_top() to cure that.
+Move the allocation after the user space access to cure that.
 
-Fixes: 832f15f42646 ("RISC-V: Treat IPIs as normal Linux IRQs")
-Signed-off-by: Nick Hu <nick.hu@sifive.com>
+[ tglx: Massaged change log ]
+
+Fixes: ec2d0c04624b3 ("posix-timers: Provide a mechanism to allocate a given timer ID")
+Reported-by: syzbot+9c47ad18f978d4394986@syzkaller.appspotmail.com
+Suggested-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Signed-off-by: Eslam Khafagy <eslam.medhat1993@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251114-rv-intc-fix-v1-1-a3edd1c1a868@sifive.com
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://patch.msgid.link/20251114122739.994326-1-eslam.medhat1993@gmail.com
+Closes: https://lore.kernel.org/all/69155df4.a70a0220.3124cb.0017.GAE@google.com/T/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-intc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/time/posix-timers.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
-index e5805885394ee..70290b35b3173 100644
---- a/drivers/irqchip/irq-riscv-intc.c
-+++ b/drivers/irqchip/irq-riscv-intc.c
-@@ -166,7 +166,8 @@ static int riscv_intc_domain_alloc(struct irq_domain *domain,
- static const struct irq_domain_ops riscv_intc_domain_ops = {
- 	.map	= riscv_intc_domain_map,
- 	.xlate	= irq_domain_xlate_onecell,
--	.alloc	= riscv_intc_domain_alloc
-+	.alloc	= riscv_intc_domain_alloc,
-+	.free	= irq_domain_free_irqs_top,
- };
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 8b582174b1f94..42db8396f1999 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -476,12 +476,6 @@ static int do_timer_create(clockid_t which_clock, struct sigevent *event,
+ 	if (!kc->timer_create)
+ 		return -EOPNOTSUPP;
  
- static struct fwnode_handle *riscv_intc_hwnode(void)
+-	new_timer = alloc_posix_timer();
+-	if (unlikely(!new_timer))
+-		return -EAGAIN;
+-
+-	spin_lock_init(&new_timer->it_lock);
+-
+ 	/* Special case for CRIU to restore timers with a given timer ID. */
+ 	if (unlikely(current->signal->timer_create_restore_ids)) {
+ 		if (copy_from_user(&req_id, created_timer_id, sizeof(req_id)))
+@@ -491,6 +485,12 @@ static int do_timer_create(clockid_t which_clock, struct sigevent *event,
+ 			return -EINVAL;
+ 	}
+ 
++	new_timer = alloc_posix_timer();
++	if (unlikely(!new_timer))
++		return -EAGAIN;
++
++	spin_lock_init(&new_timer->it_lock);
++
+ 	/*
+ 	 * Add the timer to the hash table. The timer is not yet valid
+ 	 * after insertion, but has a unique ID allocated.
 -- 
 2.51.0
 
