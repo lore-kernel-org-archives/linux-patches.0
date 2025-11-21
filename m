@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C0E3176E1;
-	Fri, 21 Nov 2025 13:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E2264612;
+	Fri, 21 Nov 2025 13:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731509; cv=none; b=htJgRmn2bFcloQx4iF4esW/M4Y+9KbNO0cE1/cZRfsy/3U2CNR0qyC0JetvaddxFQxB722uS4G9jeuw5IsDCRBZFG8lQZlbu+hhg0ykj7nhcNnC3pGgG/fCXhdBPvxdQ3HLNzYFiGZxAgwOhVuRY3rs1xubWcGtjjD0UW4IzeQ8=
+	t=1763731512; cv=none; b=URwLtS693rVVPMJNM3NUrNNhFBO8nCCJpzmaA2XHfLC00LdH/mGykH3zLsU0JC7zngJFC1cb6UW3mL7LRcT24xc8O3fHup0996OWnEgqBoTNaKuFJujbpwqCfEU4KcsyBvtEk1Es6jJ08ir/WrBYwVUs5ha7PtK3moypHnwzxzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731509; c=relaxed/simple;
-	bh=tQfWbu+KEifAFYvGnSDCp1ePYFXoL9OFuHsOOSpJyHg=;
+	s=arc-20240116; t=1763731512; c=relaxed/simple;
+	bh=IxBBeK0O4ZqA3gPbvAaFzFKcYoCEOuhGq3WpRMCmQf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oz4h5igXRsJ2rSWDO71tOCL9RjohE6v2brqtKAPlw8S8P0Jh3XC05sZ8BeGz+yXLjb6tCxDlvqlBSKg5c+mj+cG4mQHMfwd9LqIfRHYY9dF600Hmhpl64Q1H6fktC2lW52Zu4H2bVo+xrgxteIFq/yp/hVF86Sg7Q9WkuIpaOt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDjM0Ecl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YsTq/Mei3FBg6sQbk9gsdCU0zr+IjzCD2z00OQ0r5olEUBSDGJoBykB+H0bI6w/+S09oc4WnIihASj1jfPcIagHv3xJojb9bo2cCyugykHkE0Kt4EXuAI8tr7Lu3nhbNIiIwvE5/ni6My7cDsQz9xBpoBSviiaFgp5TDVJ2Q858=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9WG/rQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDjM0Ecl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81133C4CEF1;
-	Fri, 21 Nov 2025 13:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9WG/rQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B33C4CEF1;
+	Fri, 21 Nov 2025 13:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731508;
-	bh=tQfWbu+KEifAFYvGnSDCp1ePYFXoL9OFuHsOOSpJyHg=;
+	s=korg; t=1763731511;
+	bh=IxBBeK0O4ZqA3gPbvAaFzFKcYoCEOuhGq3WpRMCmQf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDjM0Ecl96TUupzQjOqsDGg9wVkAhw0bOSBlr+a3mnkGc0H6/LaInStf9QLcWHD42
-	 yj4gxoRb1iFlSWIRydy+54mD5FvyCr1lpBsVZvzTn1zP6M4D02dcx2C3say5sZ5R9c
-	 Ot7VsjPswM6i+FJRNbA0JUlRPUXxIxjJ54+dKxn4=
+	b=X9WG/rQepJ+fnj+WRy/HOZ2SK2IcGvlWw7zX2lmQH05y2LxmNJaqOcjhEOBfS8f+7
+	 BnMJvjeWop9uGhPbVCQ5fwZ/vERFuLbQ9GscthaCyPpVt562mcwhVDQtagYe0ccF/M
+	 MORAcWEdorGDhtakyDyI5vwPKji45Xj1PkQmD7zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.17 225/247] drm/xe/xe3: Add WA_14024681466 for Xe3_LPG
-Date: Fri, 21 Nov 2025 14:12:52 +0100
-Message-ID: <20251121130202.810246392@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 234/247] selftests: mptcp: join: userspace: longer transfer
+Date: Fri, 21 Nov 2025 14:13:01 +0100
+Message-ID: <20251121130203.134788382@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,51 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 0b2f7be548006b0651e1e8320790f49723265cbc upstream.
+commit 290493078b96ce2ce3e60f55c23654acb678042a upstream.
 
-Apply WA_14024681466 to Xe3_LPG graphics IP versions from 30.00 to 30.05.
+In rare cases, when the test environment is very slow, some userspace
+tests can fail because some expected events have not been seen.
 
-v2: (Matthew Roper)
-   - Remove stepping filter as workaround applies to all steppings.
-   - Add an engine class filter so it only applies to the RENDER engine.
+Because the tests are expecting a long on-going connection, and they are
+not waiting for the end of the transfer, it is fine to make the
+connection longer. This connection will be killed at the end, after the
+verifications, so making it longer doesn't change anything, apart from
+avoid it to end before the end of the verifications
 
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Link: https://patch.msgid.link/20251027092643.335904-1-nitin.r.gote@intel.com
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 071089a69e199bd810ff31c4c933bd528e502743)
-Cc: stable@vger.kernel.org # v6.16+
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+To play it safe, all userspace tests not waiting for the end of the
+transfer are now sharing a longer file (128KB) at slow speed.
+
+Fixes: 4369c198e599 ("selftests: mptcp: test userspace pm out of transfer")
+Cc: stable@vger.kernel.org
+Fixes: b2e2248f365a ("selftests: mptcp: userspace pm create id 0 subflow")
+Fixes: e3b47e460b4b ("selftests: mptcp: userspace pm remove initial subflow")
+Fixes: b9fb176081fb ("selftests: mptcp: userspace pm send RM_ADDR for ID 0")
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251110-net-mptcp-sft-join-unstable-v1-4-a4332c714e10@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/regs/xe_gt_regs.h |    1 +
- drivers/gpu/drm/xe/xe_wa.c           |    4 ++++
- 2 files changed, 5 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-@@ -168,6 +168,7 @@
- 
- #define XEHP_SLICE_COMMON_ECO_CHICKEN1		XE_REG_MCR(0x731c, XE_REG_OPTION_MASKED)
- #define   MSC_MSAA_REODER_BUF_BYPASS_DISABLE	REG_BIT(14)
-+#define   FAST_CLEAR_VALIGN_FIX			REG_BIT(13)
- 
- #define XE2LPM_CCCHKNREG1			XE_REG(0x82a8)
- 
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -890,6 +890,10 @@ static const struct xe_rtp_entry_sr lrc_
- 		       ENGINE_CLASS(RENDER)),
- 	  XE_RTP_ACTIONS(SET(CHICKEN_RASTER_1, DIS_CLIP_NEGATIVE_BOUNDING_BOX))
- 	},
-+	{ XE_RTP_NAME("14024681466"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(SET(XEHP_SLICE_COMMON_ECO_CHICKEN1, FAST_CLEAR_VALIGN_FIX))
-+	},
- };
- 
- static __maybe_unused const struct xe_rtp_entry oob_was[] = {
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3620,7 +3620,7 @@ userspace_tests()
+ 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
+ 		set_userspace_pm $ns1
+ 		pm_nl_set_limits $ns2 2 2
+-		{ speed=5 \
++		{ test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 		wait_mpj $ns1
+@@ -3653,7 +3653,7 @@ userspace_tests()
+ 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
+ 		set_userspace_pm $ns2
+ 		pm_nl_set_limits $ns1 0 1
+-		{ speed=5 \
++		{ test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 		wait_mpj $ns2
+@@ -3681,7 +3681,7 @@ userspace_tests()
+ 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
+ 		set_userspace_pm $ns2
+ 		pm_nl_set_limits $ns1 0 1
+-		{ speed=5 \
++		{ test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 		wait_mpj $ns2
+@@ -3702,7 +3702,7 @@ userspace_tests()
+ 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
+ 		set_userspace_pm $ns2
+ 		pm_nl_set_limits $ns1 0 1
+-		{ speed=5 \
++		{ test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 		wait_mpj $ns2
+@@ -3726,7 +3726,7 @@ userspace_tests()
+ 	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
+ 		set_userspace_pm $ns1
+ 		pm_nl_set_limits $ns2 1 1
+-		{ speed=5 \
++		{ test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 		wait_mpj $ns1
 
 
