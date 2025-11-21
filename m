@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CAD346FD2;
-	Fri, 21 Nov 2025 13:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9712745E;
+	Fri, 21 Nov 2025 13:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733364; cv=none; b=aNLjyzq3aokSsblfNAl4tRCYrrtXJ6Xl4tiTUZANRRl0h2Qr167HcjWeDig6+pXldRdTWqgfif6D+Bl1poo3HvCGPHDWWJajxBxzbfFHFUSmqise8OPkf3ZmTQ7zHF1Umu1JE04s8NQ5X0Ttmk3ooCWOwQOVaQzchHJ6dyBr4wQ=
+	t=1763733367; cv=none; b=g3YzkYAtEk0sMN35jkkjc4PPmiz8ozlXVb3dvjfGIz135TBVpYbpw3/zmjajn5kn633IF6tCpci7NCx/8+E+gvDFR8mEr3BLIw71w+ZkUUencIxz27Lf7txiR6ZwdxqmwLwDHWbVIWGq4aZXBxB5zKZeh8GvsnpwGg0OmSkqqBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733364; c=relaxed/simple;
-	bh=fU5YlP0L7DeNo9NWSQHEmzMYmbWnGmdFJOPszv89Gkk=;
+	s=arc-20240116; t=1763733367; c=relaxed/simple;
+	bh=XxzYmgQzSk+TzTv2h8iaRuxASDHk0+Fmsrp8YK1Q/6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alg8c405dCnVJzLt0tlsl5R3bf+FQs2nxKTZQMWfpigOtr3dHjQpWc7l3g2XtxLVbMPt2TDe0oSt17dQoxY651CyUlpeQZz2GO0kEZ9nVPFl8cQ1jS0finSEBJcWXnUF192VDwaQQlGqgTiEj8QaomjU0UI+WjnXGuXKvZaJWq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtYRc3GV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7xRo6jf6aqHiqoN5yl4dt2zc26NBExXE1/YeqS1uTYewMzTG2gv84r8srkeLyGwfw91czK45nuerBkmGkdsdF1dWZ7UdiNNOLgbaeJ8suWpCRtu+Yvq/m6f2VR92P1iYgHqgT2IAYCCdUz7fm5ElVfs1lU86yk0MIuYkvHX6gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rtexo16W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtYRc3GV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D2DC4CEF1;
-	Fri, 21 Nov 2025 13:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rtexo16W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E654C4CEF1;
+	Fri, 21 Nov 2025 13:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733364;
-	bh=fU5YlP0L7DeNo9NWSQHEmzMYmbWnGmdFJOPszv89Gkk=;
+	s=korg; t=1763733366;
+	bh=XxzYmgQzSk+TzTv2h8iaRuxASDHk0+Fmsrp8YK1Q/6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtYRc3GVEhvF5xT6Qg5Y1rgk8btJq9G7qYzSzg14jFhC3lRNq6bI+KTkLbuTmHVVA
-	 dGr1xMLWibf4bKBBO9Tn4hW5x75tVKYgqd79WL3E/YDk48NFqO5/JR3iPigbm4b/ED
-	 xCS27gErWV6K64hjsdx6/fiwr26DDzM7xWCR/smY=
+	b=Rtexo16WChdeRVa53ohySbmAj25HW96MuLa16Ky5GSNGpibX6Tdo0T/VjDcGhIsbg
+	 SHDiOHrFkM559CghsrPmO6AnUZg0gurOHANzLcmd4Z9m7ytytzoQUINkIMUPLnwpR0
+	 xG/EpTFZh+o4NLdxWWqNSDxNKXWj72s1OY8IQe/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 443/529] acpi: numa: Add setting of generic port system locality attributes
-Date: Fri, 21 Nov 2025 14:12:22 +0100
-Message-ID: <20251121130246.773981247@linuxfoundation.org>
+Subject: [PATCH 6.6 444/529] base/node / ACPI: Enumerate node access class for struct access_coordinate
+Date: Fri, 21 Nov 2025 14:12:23 +0100
+Message-ID: <20251121130246.808885622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -55,89 +55,201 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit a3a3e341f169511823f7b2d140a0bdfbd620dcbd ]
+[ Upstream commit 11270e526276ffad4c4237acb393da82a3287487 ]
 
-Add generic port support for the parsing of HMAT system locality sub-table.
-The attributes will be added to the third array member of the access
-coordinates in order to not mix with the existing memory attributes. It
-only provides the system locality attributes from initiator to the
-generic port targets and is missing the rest of the data to the actual
-memory device.
+Both generic node and HMAT handling code have been using magic numbers to
+indicate access classes for 'struct access_coordinate'. Introduce enums to
+enumerate the access0 and access1 classes shared by the two subsystems.
+Update the function parameters and callers as appropriate to utilize the
+new enum.
 
-The complete attributes will be updated when a memory device is
-attached and the system locality information is calculated end to end.
+Access0 is named to ACCESS_COORDINATE_LOCAL in order to indicate that the
+access class is for 'struct access_coordinate' between a target node and
+the nearest initiator node.
 
-Through hmat_update_target_attrs(), the best performance attributes will
-be setup in target->coord.
+Access1 is named to ACCESS_COORDINATE_CPU in order to indicate that the
+access class is for 'struct access_coordinate' between a target node and
+the nearest CPU node.
 
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/170319618135.2212653.13778540010384821833.stgit@djiang5-mobl3
+Link: https://lore.kernel.org/r/20240308220055.2172956-3-dave.jiang@intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Stable-dep-of: 214291cbaace ("acpi/hmat: Fix lockdep warning for hmem_register_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/acpi/numa/hmat.c | 26 ++++++++++++++------------
+ drivers/base/node.c      |  6 +++---
+ include/linux/node.h     | 18 +++++++++++++++---
+ 3 files changed, 32 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 4cae2e84251a2..8a1802e078f3c 100644
+index 8a1802e078f3c..570be52c8d90a 100644
 --- a/drivers/acpi/numa/hmat.c
 +++ b/drivers/acpi/numa/hmat.c
-@@ -61,6 +61,7 @@ struct target_cache {
+@@ -59,9 +59,7 @@ struct target_cache {
+ };
+ 
  enum {
- 	NODE_ACCESS_CLASS_0 = 0,
- 	NODE_ACCESS_CLASS_1,
-+	NODE_ACCESS_CLASS_GENPORT_SINK,
+-	NODE_ACCESS_CLASS_0 = 0,
+-	NODE_ACCESS_CLASS_1,
+-	NODE_ACCESS_CLASS_GENPORT_SINK,
++	NODE_ACCESS_CLASS_GENPORT_SINK = ACCESS_COORDINATE_MAX,
  	NODE_ACCESS_CLASS_MAX,
  };
  
-@@ -654,6 +655,11 @@ static void hmat_update_target_attrs(struct memory_target *target,
- 	u32 best = 0;
- 	int i;
+@@ -333,11 +331,11 @@ static __init void hmat_update_target(unsigned int tgt_pxm, unsigned int init_px
  
-+	/* Don't update for generic port if there's no device handle */
-+	if (access == NODE_ACCESS_CLASS_GENPORT_SINK &&
-+	    !(*(u16 *)target->gen_port_device_handle))
-+		return;
-+
- 	bitmap_zero(p_nodes, MAX_NUMNODES);
- 	/*
- 	 * If the Address Range Structure provides a local processor pxm, set
-@@ -723,6 +729,14 @@ static void __hmat_register_target_initiators(struct memory_target *target,
+ 	if (target && target->processor_pxm == init_pxm) {
+ 		hmat_update_target_access(target, type, value,
+-					  NODE_ACCESS_CLASS_0);
++					  ACCESS_COORDINATE_LOCAL);
+ 		/* If the node has a CPU, update access 1 */
+ 		if (node_state(pxm_to_node(init_pxm), N_CPU))
+ 			hmat_update_target_access(target, type, value,
+-						  NODE_ACCESS_CLASS_1);
++						  ACCESS_COORDINATE_CPU);
  	}
  }
  
-+static void hmat_register_generic_target_initiators(struct memory_target *target)
-+{
-+	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
-+
-+	__hmat_register_target_initiators(target, p_nodes,
-+					  NODE_ACCESS_CLASS_GENPORT_SINK);
-+}
-+
- static void hmat_register_target_initiators(struct memory_target *target)
+@@ -668,7 +666,8 @@ static void hmat_update_target_attrs(struct memory_target *target,
+ 	 */
+ 	if (target->processor_pxm != PXM_INVAL) {
+ 		cpu_nid = pxm_to_node(target->processor_pxm);
+-		if (access == 0 || node_state(cpu_nid, N_CPU)) {
++		if (access == ACCESS_COORDINATE_LOCAL ||
++		    node_state(cpu_nid, N_CPU)) {
+ 			set_bit(target->processor_pxm, p_nodes);
+ 			return;
+ 		}
+@@ -696,7 +695,8 @@ static void hmat_update_target_attrs(struct memory_target *target,
+ 		list_for_each_entry(initiator, &initiators, node) {
+ 			u32 value;
+ 
+-			if (access == 1 && !initiator->has_cpu) {
++			if (access == ACCESS_COORDINATE_CPU &&
++			    !initiator->has_cpu) {
+ 				clear_bit(initiator->processor_pxm, p_nodes);
+ 				continue;
+ 			}
+@@ -741,8 +741,10 @@ static void hmat_register_target_initiators(struct memory_target *target)
  {
  	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
-@@ -774,6 +788,17 @@ static void hmat_register_target(struct memory_target *target)
- 	 */
- 	hmat_register_target_devices(target);
  
-+	/*
-+	 * Register generic port perf numbers. The nid may not be
-+	 * initialized and is still NUMA_NO_NODE.
-+	 */
-+	mutex_lock(&target_lock);
-+	if (*(u16 *)target->gen_port_device_handle) {
-+		hmat_register_generic_target_initiators(target);
-+		target->registered = true;
-+	}
-+	mutex_unlock(&target_lock);
+-	__hmat_register_target_initiators(target, p_nodes, 0);
+-	__hmat_register_target_initiators(target, p_nodes, 1);
++	__hmat_register_target_initiators(target, p_nodes,
++					  ACCESS_COORDINATE_LOCAL);
++	__hmat_register_target_initiators(target, p_nodes,
++					  ACCESS_COORDINATE_CPU);
+ }
+ 
+ static void hmat_register_target_cache(struct memory_target *target)
+@@ -813,8 +815,8 @@ static void hmat_register_target(struct memory_target *target)
+ 	if (!target->registered) {
+ 		hmat_register_target_initiators(target);
+ 		hmat_register_target_cache(target);
+-		hmat_register_target_perf(target, NODE_ACCESS_CLASS_0);
+-		hmat_register_target_perf(target, NODE_ACCESS_CLASS_1);
++		hmat_register_target_perf(target, ACCESS_COORDINATE_LOCAL);
++		hmat_register_target_perf(target, ACCESS_COORDINATE_CPU);
+ 		target->registered = true;
+ 	}
+ 	mutex_unlock(&target_lock);
+@@ -886,7 +888,7 @@ static int hmat_calculate_adistance(struct notifier_block *self,
+ 		return NOTIFY_OK;
+ 
+ 	mutex_lock(&target_lock);
+-	hmat_update_target_attrs(target, p_nodes, 1);
++	hmat_update_target_attrs(target, p_nodes, ACCESS_COORDINATE_CPU);
+ 	mutex_unlock(&target_lock);
+ 
+ 	perf = &target->coord[1];
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index 9a312650bd57e..2b398c8a0f06c 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -126,7 +126,7 @@ static void node_access_release(struct device *dev)
+ }
+ 
+ static struct node_access_nodes *node_init_node_access(struct node *node,
+-						       unsigned int access)
++						       enum access_coordinate_class access)
+ {
+ 	struct node_access_nodes *access_node;
+ 	struct device *dev;
+@@ -191,7 +191,7 @@ static struct attribute *access_attrs[] = {
+  * @access: The access class the for the given attributes
+  */
+ void node_set_perf_attrs(unsigned int nid, struct access_coordinate *coord,
+-			 unsigned int access)
++			 enum access_coordinate_class access)
+ {
+ 	struct node_access_nodes *c;
+ 	struct node *node;
+@@ -689,7 +689,7 @@ int register_cpu_under_node(unsigned int cpu, unsigned int nid)
+  */
+ int register_memory_node_under_compute_node(unsigned int mem_nid,
+ 					    unsigned int cpu_nid,
+-					    unsigned int access)
++					    enum access_coordinate_class access)
+ {
+ 	struct node *init_node, *targ_node;
+ 	struct node_access_nodes *initiator, *target;
+diff --git a/include/linux/node.h b/include/linux/node.h
+index 25b66d705ee2e..dfc004e4bee74 100644
+--- a/include/linux/node.h
++++ b/include/linux/node.h
+@@ -34,6 +34,18 @@ struct access_coordinate {
+ 	unsigned int write_latency;
+ };
+ 
++/*
++ * ACCESS_COORDINATE_LOCAL correlates to ACCESS CLASS 0
++ *	- access_coordinate between target node and nearest initiator node
++ * ACCESS_COORDINATE_CPU correlates to ACCESS CLASS 1
++ *	- access_coordinate between target node and nearest CPU node
++ */
++enum access_coordinate_class {
++	ACCESS_COORDINATE_LOCAL,
++	ACCESS_COORDINATE_CPU,
++	ACCESS_COORDINATE_MAX
++};
 +
- 	/*
- 	 * Skip offline nodes. This can happen when memory
- 	 * marked EFI_MEMORY_SP, "specific purpose", is applied
+ enum cache_indexing {
+ 	NODE_CACHE_DIRECT_MAP,
+ 	NODE_CACHE_INDEXED,
+@@ -66,7 +78,7 @@ struct node_cache_attrs {
+ #ifdef CONFIG_HMEM_REPORTING
+ void node_add_cache(unsigned int nid, struct node_cache_attrs *cache_attrs);
+ void node_set_perf_attrs(unsigned int nid, struct access_coordinate *coord,
+-			 unsigned access);
++			 enum access_coordinate_class access);
+ #else
+ static inline void node_add_cache(unsigned int nid,
+ 				  struct node_cache_attrs *cache_attrs)
+@@ -75,7 +87,7 @@ static inline void node_add_cache(unsigned int nid,
+ 
+ static inline void node_set_perf_attrs(unsigned int nid,
+ 				       struct access_coordinate *coord,
+-				       unsigned access)
++				       enum access_coordinate_class access)
+ {
+ }
+ #endif
+@@ -137,7 +149,7 @@ extern void unregister_memory_block_under_nodes(struct memory_block *mem_blk);
+ 
+ extern int register_memory_node_under_compute_node(unsigned int mem_nid,
+ 						   unsigned int cpu_nid,
+-						   unsigned access);
++						   enum access_coordinate_class access);
+ #else
+ static inline void node_dev_init(void)
+ {
 -- 
 2.51.0
 
