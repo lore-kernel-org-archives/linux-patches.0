@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A4330AABC;
-	Fri, 21 Nov 2025 13:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0118352FAB;
+	Fri, 21 Nov 2025 13:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732710; cv=none; b=GC6kqF2n3cQnLiGZtl+dM5NmA1q35jXCWe4VUA3EOQwW8Muhe8e+CNXuKEJbQ5+JHAlpkZVBwG136qjB1LkJqHHGLviIOD9jhncnutR+GXi6JzD4upOepk19ud1xTIjZTCWIVpHVIiK0Tw9b/qeMfjpscj0gfHv7pAHUJF5GU/c=
+	t=1763732714; cv=none; b=tb98zfILEVh1e87a+34EQZpTP3i71mbVJtfRwQ+MBBBKakVHhAZ9R4X92eF5kH04+SQQ9gcgZbbJxyKlRlZ/r2o8HgpduAVcEq+lfaTJ2gaSG7V8xdmRlXNy509LbFtKOSBHuBxpAwmHGTEQV3Rr0S8mAHcheNLXQK6gcl0IE8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732710; c=relaxed/simple;
-	bh=ULAOVPYQ57L4vEQDM7AqvqtZb9xmQK/l4SMivOUsxRc=;
+	s=arc-20240116; t=1763732714; c=relaxed/simple;
+	bh=PKF19zBjoF1S1+6gVjkPW6NvGxG5OVADg+dTmM3NE1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Spd7SKwTk+6PPdvgvk+0zk8bh4IsIQFLkgJOEkj1yFLPGUE58OgsiZEbBB3suZTYwRPK/oVx2lQdg0G9Q+6EUeRETg/AjdMXk4zo23ZjCIydXOYopvhw7CQCScDwKL640ROybm8tLnIACnawbcr3nn0M+urz7jqmPrG1elRNvHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrSPmxkW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K44udkLq8rKVZsh26PMuLa8+/iIz10q3BmTumiXUTtOInQ2XxFoi1kitg9jKw25Qcrc27KHSlK3LL++JPRUOxIXZi6aWiAaknfH6OkQVSdyU7CjWNyKxZxBqhs9rYfqrew5m+C3jP8/D2ifWEFxmMtuuD9gKjEpvhWYBy47VHbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aan9te2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrSPmxkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F58C4CEF1;
-	Fri, 21 Nov 2025 13:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aan9te2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10344C4CEF1;
+	Fri, 21 Nov 2025 13:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732710;
-	bh=ULAOVPYQ57L4vEQDM7AqvqtZb9xmQK/l4SMivOUsxRc=;
+	s=korg; t=1763732713;
+	bh=PKF19zBjoF1S1+6gVjkPW6NvGxG5OVADg+dTmM3NE1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrSPmxkWEqV9eKwB0O3uG8VaZ5+RTVyZ/98e9uRtkgr0a/mBcRQV5Ye6BbIIad51P
-	 dfKFvfmSWH/nszlF7M8RhRZUyaG/qqfWkO55ZIk6+ARAd7xU6dfRnlhaaMvNb9Ao8w
-	 JK54smrW3r+I17WHDjtjkmslQugtSjgLaaGW6T1Q=
+	b=aan9te2KPiYNJvbSFV1EPE4OwaDsjh36GimnfDbXUJVl/Z/8uZ98KOKNPGnmDQF05
+	 0xICilqWLFjFeKfZWhYFP0TQnxMrU+YSqwuyB5+s05UYqkMa0hcp8JFKds40/Rr67u
+	 kPikH+8xcx3eMg7PmAw7vHtBdyUkA34/RjdyAi9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/529] selftests: traceroute: Use require_command()
-Date: Fri, 21 Nov 2025 14:08:36 +0100
-Message-ID: <20251121130238.736079872@linuxfoundation.org>
+Subject: [PATCH 6.6 218/529] netfilter: nf_reject: dont reply to icmp error messages
+Date: Fri, 21 Nov 2025 14:08:37 +0100
+Message-ID: <20251121130238.771397994@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,76 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 47efbac9b768553331b9459743a29861e0acd797 ]
+[ Upstream commit db99b2f2b3e2cd8227ac9990ca4a8a31a1e95e56 ]
 
-Use require_command() so that the test will return SKIP (4) when a
-required command is not present.
+tcp reject code won't reply to a tcp reset.
 
-Before:
+But the icmp reject 'netdev' family versions will reply to icmp
+dst-unreach errors, unlike icmp_send() and icmp6_send() which are used
+by the inet family implementation (and internally by the REJECT target).
 
- # ./traceroute.sh
- SKIP: Could not run IPV6 test without traceroute6
- SKIP: Could not run IPV4 test without traceroute
- $ echo $?
- 0
+Check for the icmp(6) type and do not respond if its an unreachable error.
 
-After:
+Without this, something like 'ip protocol icmp reject', when used
+in a netdev chain attached to 'lo', cause a packet loop.
 
- # ./traceroute.sh
- TEST: traceroute6 not installed                                    [SKIP]
- $ echo $?
- 4
+Same for two hosts that both use such a rule: each error packet
+will be replied to.
 
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-6-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Such situation persist until the (bogus) rule is amended to ratelimit or
+checks the icmp type before the reject statement.
+
+As the inet versions don't do this make the netdev ones follow along.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/traceroute.sh | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 25 ++++++++++++++++++++++++
+ net/ipv6/netfilter/nf_reject_ipv6.c | 30 +++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+)
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index de9ca97abc306..9cb5e96e64333 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -209,11 +209,6 @@ setup_traceroute6()
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 2d663fe50f876..2064b40130412 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -71,6 +71,27 @@ struct sk_buff *nf_reject_skb_v4_tcp_reset(struct net *net,
+ }
+ EXPORT_SYMBOL_GPL(nf_reject_skb_v4_tcp_reset);
  
- run_traceroute6()
- {
--	if [ ! -x "$(command -v traceroute6)" ]; then
--		echo "SKIP: Could not run IPV6 test without traceroute6"
--		return
--	fi
--
- 	setup_traceroute6
- 
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
-@@ -278,11 +273,6 @@ setup_traceroute()
- 
- run_traceroute()
- {
--	if [ ! -x "$(command -v traceroute)" ]; then
--		echo "SKIP: Could not run IPV4 test without traceroute"
--		return
--	fi
--
- 	setup_traceroute
- 
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
-@@ -316,6 +306,9 @@ do
- 	esac
- done
- 
-+require_command traceroute6
-+require_command traceroute
++static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
++{
++	const struct iphdr *iph = ip_hdr(skb);
++	u8 *tp, _type;
++	int thoff;
 +
- run_tests
++	if (iph->protocol != IPPROTO_ICMP)
++		return false;
++
++	thoff = skb_network_offset(skb) + sizeof(*iph);
++
++	tp = skb_header_pointer(skb,
++				thoff + offsetof(struct icmphdr, type),
++				sizeof(_type), &_type);
++
++	if (!tp)
++		return false;
++
++	return *tp == ICMP_DEST_UNREACH;
++}
++
+ struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
+ 					 struct sk_buff *oldskb,
+ 					 const struct net_device *dev,
+@@ -91,6 +112,10 @@ struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
+ 	if (ip_hdr(oldskb)->frag_off & htons(IP_OFFSET))
+ 		return NULL;
  
- printf "\nTests passed: %3d\n" ${nsuccess}
++	/* don't reply to ICMP_DEST_UNREACH with ICMP_DEST_UNREACH. */
++	if (nf_skb_is_icmp_unreach(oldskb))
++		return NULL;
++
+ 	/* RFC says return as much as we can without exceeding 576 bytes. */
+ 	len = min_t(unsigned int, 536, oldskb->len);
+ 
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index f3579bccf0a51..a19ca1907de36 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -91,6 +91,32 @@ struct sk_buff *nf_reject_skb_v6_tcp_reset(struct net *net,
+ }
+ EXPORT_SYMBOL_GPL(nf_reject_skb_v6_tcp_reset);
+ 
++static bool nf_skb_is_icmp6_unreach(const struct sk_buff *skb)
++{
++	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
++	u8 proto = ip6h->nexthdr;
++	u8 _type, *tp;
++	int thoff;
++	__be16 fo;
++
++	thoff = ipv6_skip_exthdr(skb, ((u8 *)(ip6h + 1) - skb->data), &proto, &fo);
++
++	if (thoff < 0 || thoff >= skb->len || fo != 0)
++		return false;
++
++	if (proto != IPPROTO_ICMPV6)
++		return false;
++
++	tp = skb_header_pointer(skb,
++				thoff + offsetof(struct icmp6hdr, icmp6_type),
++				sizeof(_type), &_type);
++
++	if (!tp)
++		return false;
++
++	return *tp == ICMPV6_DEST_UNREACH;
++}
++
+ struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
+ 					 struct sk_buff *oldskb,
+ 					 const struct net_device *dev,
+@@ -104,6 +130,10 @@ struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
+ 	if (!nf_reject_ip6hdr_validate(oldskb))
+ 		return NULL;
+ 
++	/* Don't reply to ICMPV6_DEST_UNREACH with ICMPV6_DEST_UNREACH */
++	if (nf_skb_is_icmp6_unreach(oldskb))
++		return NULL;
++
+ 	/* Include "As much of invoking packet as possible without the ICMPv6
+ 	 * packet exceeding the minimum IPv6 MTU" in the ICMP payload.
+ 	 */
 -- 
 2.51.0
 
