@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5113A291;
-	Fri, 21 Nov 2025 13:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA2934D38E;
+	Fri, 21 Nov 2025 13:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732684; cv=none; b=AA09FE/n/nBVFXn+jLegBZ2OqjWlNEestA+96QHTIB0rByFsq2tqsYqr3PmeTLto3eRNPvMpiLIX9tXvCtw/ytQgshn6pf7tPGVD3FFxTnWGi1XLx12o2vl8hko/ETyRl45bqq+a+QXuQMFYVtg21OPSKDKav/3KHrdrrFMc7PM=
+	t=1763732687; cv=none; b=YrOJMNK4MYSozQEbqZTjfCuRSIf4RVq8ToAcTfXoli7TpkrUsh2Nc1I/fsgKUvts6szrWJOEwdGRLgWFtliPwG+ur6TrCKanbxsxVhw9pnz1dbPu3tuHCiN2mQ4SJnjpF5Bfvmfcjp49jfFEB7GuiUO3E8e9GExH/7hSDXhHF8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732684; c=relaxed/simple;
-	bh=563dIynpa1KoKmTxMr8B9yvfiW9bgTaLL/v0OdsAbds=;
+	s=arc-20240116; t=1763732687; c=relaxed/simple;
+	bh=gcMgInKFkZS5zk+JzAUxASSrTtH5GuHTXHL+VKi36sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+hGZ/GKjuDmIOK4vLj+/kKQ54duPdr/8Or+nseKAK0Ack5nwtcNb92Z3zSdOaUgzKMK9Ds6QEW+RSpuVNlftO3jobp5qCagYJ2/QpDnxhRVnXhgegLY2qasTlu9O7CNTpKO71nriPiPejr6nFNpp+lkCVh43K8EaYpqwiagXao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2Vh/kY/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PpOqEbclVydiRo4Md3F0Bczu2kwtYW15jd4FRxxJcyFu9ZoynPbFi9b/AqG0RNXV3hLISoGbVouENf3nLzPvcRviyir3D+7uPO5/Sx0aH2xtwrgUN3ucaBMIF4ppZBcXzAqoGhrLbBTedK0PSSRHiArnr0u1hSYkIF8lLr/EARw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stUgOPEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2Vh/kY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A42C4CEF1;
-	Fri, 21 Nov 2025 13:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stUgOPEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90792C4CEF1;
+	Fri, 21 Nov 2025 13:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732684;
-	bh=563dIynpa1KoKmTxMr8B9yvfiW9bgTaLL/v0OdsAbds=;
+	s=korg; t=1763732686;
+	bh=gcMgInKFkZS5zk+JzAUxASSrTtH5GuHTXHL+VKi36sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2Vh/kY/16Zy6aqQi11bF1dcCRcNJOlhuLOIkxVFMSyyC3UPPIo8tqZCdcPqRjm0c
-	 +DiI25ezJqGdozDaj7iipfVNVmR/nq6cb1vvY4GnA6OJSLhZoe93TuoWrddUWo9Cia
-	 7WcZ4gBtRy1XwUgvF4GRAuPb7hdfRnPpZrjpa0c4=
+	b=stUgOPEkWDzOJ4i7ZNhoT1Gai2lst6l6yua+UXXg49TWrk/YJGvLQbtdZ4/PjT9vw
+	 p5pkAVgkpDFd1ih8/GdJMDqMqEN65POOs9G2EbIoXK84OW1ftbJVigYJdcZHryA8Mh
+	 1qr5jJzNdOs7A3Tf7HRxPNkcCSGQxpA/+nAulsA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksander Jan Bajkowski <olek2@wp.pl>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/529] mips: lantiq: danube: add missing device_type in pci node
-Date: Fri, 21 Nov 2025 14:07:52 +0100
-Message-ID: <20251121130237.174523807@linuxfoundation.org>
+Subject: [PATCH 6.6 174/529] mips: lantiq: xway: sysctrl: rename stp clock
+Date: Fri, 21 Nov 2025 14:07:53 +0100
+Message-ID: <20251121130237.210396816@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -53,32 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit d66949a1875352d2ddd52b144333288952a9e36f ]
+[ Upstream commit b0d04fe6a633ada2c7bc1b5ddd011cbd85961868 ]
 
-This fixes the following warning:
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: pci@e105400 (lantiq,pci-xway): 'device_type' is a required property
-	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml#
+Bindig requires a node name matching ‘^gpio@[0-9a-f]+$’. This patch
+changes the clock name from “stp” to “gpio”.
 
 Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/lantiq/danube.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/lantiq/xway/sysctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
-index 0a942bc091436..650400bd5725f 100644
---- a/arch/mips/boot/dts/lantiq/danube.dtsi
-+++ b/arch/mips/boot/dts/lantiq/danube.dtsi
-@@ -104,6 +104,8 @@
- 				  0x1000000 0 0x00000000 0xae00000 0 0x200000>; /* io space */
- 			reg = <0x7000000 0x8000		/* config space */
- 				0xe105400 0x400>;	/* pci bridge */
-+
-+			device_type = "pci";
- 		};
- 	};
- };
+diff --git a/arch/mips/lantiq/xway/sysctrl.c b/arch/mips/lantiq/xway/sysctrl.c
+index 4c72b59fdf98c..492f375bf1290 100644
+--- a/arch/mips/lantiq/xway/sysctrl.c
++++ b/arch/mips/lantiq/xway/sysctrl.c
+@@ -466,7 +466,7 @@ void __init ltq_soc_init(void)
+ 	/* add our generic xway clocks */
+ 	clkdev_add_pmu("10000000.fpi", NULL, 0, 0, PMU_FPI);
+ 	clkdev_add_pmu("1e100a00.gptu", NULL, 1, 0, PMU_GPT);
+-	clkdev_add_pmu("1e100bb0.stp", NULL, 1, 0, PMU_STP);
++	clkdev_add_pmu("1e100bb0.gpio", NULL, 1, 0, PMU_STP);
+ 	clkdev_add_pmu("1e100c00.serial", NULL, 0, 0, PMU_ASC1);
+ 	clkdev_add_pmu("1e104100.dma", NULL, 1, 0, PMU_DMA);
+ 	clkdev_add_pmu("1e100800.spi", NULL, 1, 0, PMU_SPI);
 -- 
 2.51.0
 
