@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6D830F951;
-	Fri, 21 Nov 2025 13:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99DE2F1FEF;
+	Fri, 21 Nov 2025 13:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733335; cv=none; b=er/MrGEBa8QgHKMXUSWiELz9rDOc1o0kiEUvjcqhMVIVYZ1mUP+PyvKYq/7sLPNgfrJ1H5dfPN+KZNWjz5zC+l4J/SXG/oSZdHiAzCeKnAJd44CGdpOMMJix54Y+E9wbnHMDKggw/U8JnXp4gmBkCy4W72fRRw6Of21Xw756jBk=
+	t=1763733338; cv=none; b=ZbHi8+jmsPrXSl1GSfrqF5qvk+GWyuUwQoMJhYdisgc1jSDRzAv9aqrhEx5VuKsgWVkIxz80NzfWzzCWP86PAcwlmbCHLmMxbN7fKFpXXKBSoex8vM5Ppu7Efb4KFQ+MvcRVhOqQaf9M4dW0AUz6mZC0vxipZTMPa7f8yDNmrOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733335; c=relaxed/simple;
-	bh=vHpnXiMyh7rxe7AKzosbNoVnRqmhblwsUxT0oOk+8ak=;
+	s=arc-20240116; t=1763733338; c=relaxed/simple;
+	bh=WSG7OhIDVYCoL2sr0+evi6NL0RFP3J5wJHE1OIQA5v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPVC8qSy2rAEztdOoHGHthrqjpK11eE4DZjgV5rA14gOuCURgny/SEZfVkgunqdTAMFLPNBxyfxzcZCWNQ7wnbLTO8PjuHZy6P2xjGbip56DxfnP/yZ1HCEpDfX3h4Bx5Bu2NHqzmLFFv0Y4MASBzVWBI0YSMOjqQoWBcxUgrek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jr1JmLUF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qnnjPOZFPhleMqgdcK49x9US15F64+Z9Olhh5PfzLea9yehqi/cIkN6uP7Vmxj5EitkDWmM1ZdR87Wr8O7KrpKAAXOnRBZ3P/0fuRuJhORFwuD0fwNrE9hHYDjEFC3Y1rGFXFClTWCc+8Xz4OCzq06KHER29HBqKT18cr7nHDA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AHLj21B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jr1JmLUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9E6C4CEF1;
-	Fri, 21 Nov 2025 13:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AHLj21B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4E2C16AAE;
+	Fri, 21 Nov 2025 13:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733335;
-	bh=vHpnXiMyh7rxe7AKzosbNoVnRqmhblwsUxT0oOk+8ak=;
+	s=korg; t=1763733338;
+	bh=WSG7OhIDVYCoL2sr0+evi6NL0RFP3J5wJHE1OIQA5v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jr1JmLUFZjQ1oRRXjhu3eGujZuOdtL9foT+skE2YglbkbV/oIsgDHv5MDadf3dXlo
-	 LtWUszAgykdb3rNXkCOpO10q02nYkMUryUvAW6iL/p1LMvDEsrXnvlahCnYWujZCLU
-	 vfuy8TEfrNar0+bwEGvzoirEVlz02fUPjAv5Uyno=
+	b=2AHLj21BaN3Ax4l3Bzl6cRqoUKopY7LJHDZa0Mueu0mMUicNs7Cui60v8q6vnRddV
+	 CvcVo9c+LEp/Nabbmt+2zVzXlJxJOLh7lBOqe4MmdhSSYh5AJz4dStmMtt9sNpTDFh
+	 9WIrb34NKL7BP9rv+zCHVJFEAHLCfTH0afnMNdWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Haein Lee <lhi0729@kaist.ac.kr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 434/529] NFSv4: Fix an incorrect parameter when calling nfs4_call_sync()
-Date: Fri, 21 Nov 2025 14:12:13 +0100
-Message-ID: <20251121130246.456601261@linuxfoundation.org>
+Subject: [PATCH 6.6 435/529] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
+Date: Fri, 21 Nov 2025 14:12:14 +0100
+Message-ID: <20251121130246.491887143@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,54 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Haein Lee <lhi0729@kaist.ac.kr>
 
-[ Upstream commit 1f214e9c3aef2d0936be971072e991d78a174d71 ]
+[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
 
-The Smatch static checker noted that in _nfs4_proc_lookupp(), the flag
-RPC_TASK_TIMEOUT is being passed as an argument to nfs4_init_sequence(),
-which is clearly incorrect.
-Since LOOKUPP is an idempotent operation, nfs4_init_sequence() should
-not ask the server to cache the result. The RPC_TASK_TIMEOUT flag needs
-to be passed down to the RPC layer.
+In snd_usb_create_streams(), for UAC version 3 devices, the Interface
+Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
+call fails, a fallback routine attempts to obtain the IAD from the next
+interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
+assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
+without performing a NULL check. This can lead to a NULL pointer
+dereference when usb_ifnum_to_if() fails to find the interface descriptor.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Fixes: 76998ebb9158 ("NFSv4: Observe the NFS_MOUNT_SOFTREVAL flag in _nfs4_proc_lookupp")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
+snd_usb_mixer_controls_badd() to prevent the dereference.
+
+This issue was discovered by syzkaller, which triggered the bug by sending
+a crafted USB device descriptor.
+
+Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
+Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
+Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 92e40e41443cd..a0a71a163ffed 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4578,16 +4578,19 @@ static int _nfs4_proc_lookupp(struct inode *inode,
- 	};
- 	unsigned short task_flags = 0;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index cc051756a4220..787cdeddbdf44 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -3079,6 +3079,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
+ 	int i;
  
--	if (NFS_SERVER(inode)->flags & NFS_MOUNT_SOFTREVAL)
-+	if (server->flags & NFS_MOUNT_SOFTREVAL)
- 		task_flags |= RPC_TASK_TIMEOUT;
-+	if (server->caps & NFS_CAP_MOVEABLE)
-+		task_flags |= RPC_TASK_MOVEABLE;
+ 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
++	if (!assoc)
++		return -EINVAL;
  
- 	args.bitmask = nfs4_bitmask(server, fattr->label);
- 
- 	nfs_fattr_init(fattr);
-+	nfs4_init_sequence(&args.seq_args, &res.seq_res, 0, 0);
- 
- 	dprintk("NFS call  lookupp ino=0x%lx\n", inode->i_ino);
--	status = nfs4_call_sync(clnt, server, &msg, &args.seq_args,
--				&res.seq_res, task_flags);
-+	status = nfs4_do_call_sync(clnt, server, &msg, &args.seq_args,
-+				   &res.seq_res, task_flags);
- 	dprintk("NFS reply lookupp: %d\n", status);
- 	return status;
- }
+ 	/* Detect BADD capture/playback channels from AS EP descriptors */
+ 	for (i = 0; i < assoc->bInterfaceCount; i++) {
 -- 
 2.51.0
 
