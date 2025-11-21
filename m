@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE6630EF7F;
-	Fri, 21 Nov 2025 13:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404D434C990;
+	Fri, 21 Nov 2025 13:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732932; cv=none; b=GksRA1Po0jNcisCUIFNV+paK6pOo2Jg8rSvNMobOb5Qljh8pOg+Cj6R3wPM6vtO+PEG0sIqPvU+xvwIzwKkDI79Y+8ceIxHL98u7a03kmAPW43mBVXu3Py/HgWEismENtjYCKqerzfpiSTNNPuuy27i8csgKNhMJHJqJJV6ytAA=
+	t=1763732935; cv=none; b=KwP/G0wCClkWHH28xttdzpH7GwYsAzDaMbbqDvxr9csX6rBeQrSgfdwwrU0U4o8oYNnnWLLmiocYwA/kp7BWPxBPBzhmSsvKEsOny6O92BeMlr6rf7OOU4/7n98AQTF0v2akyrLUAJe+rrMX+YlL/UOtdhFoRhjrn+fTqOiN2+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732932; c=relaxed/simple;
-	bh=vGktwZ4KHByPOjJQEVlpoQXas4arj/JEstQX61EhSpo=;
+	s=arc-20240116; t=1763732935; c=relaxed/simple;
+	bh=GLFhhwoQ3c6L1ge/k+suuxfBtWB5MlWg0/sjjB/8V9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hI1FxeWNvDpoyYanJ0aViOzvx4/rUlDHYoPFgzWck96i8k2gN5ID+vYDvllDALKT+FuKsszX32TEhbAvd8WyAu0I4R7A+A9CdlCsg7a/GltQsJcyMJ4UcKMS3fKR8CQPxvosHz/jJcWlumgJIyn0LVIHRaMhbkzgPI6wVSd+Xxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVJGt53a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FM/HADXYTj9KGpH3r+yyNK0Mdxw8IyXGpvdN0bv47h3u3B3XiXnnKhfMbeMkUcwYIwjhi1hJRX5UN52h11uXrmC8WRbyy3xq2Bu3jCQ8lmuL1vtpy7GhRSnoEN5w1PUVVYQ6II5fs/jm66p/0k+AeydFlY7Sa/zRX6jnxAoDSs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Inima+ns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVJGt53a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED990C4CEF1;
-	Fri, 21 Nov 2025 13:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Inima+ns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10C3C4CEF1;
+	Fri, 21 Nov 2025 13:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732932;
-	bh=vGktwZ4KHByPOjJQEVlpoQXas4arj/JEstQX61EhSpo=;
+	s=korg; t=1763732935;
+	bh=GLFhhwoQ3c6L1ge/k+suuxfBtWB5MlWg0/sjjB/8V9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVJGt53aGa82HgesWBIy2ARWTFO5ezgHdu/iRryciIVbJfa/k4jWhmQ9BQSlrWJLM
-	 NjCCneab+4DZ1aPW1QsP7Fh/fBYz/2+LBFR+aZ5HXX2I0bcks3J2/SyIEC2FLi1lk5
-	 cjiT0KDrBPhta65zn47+zMjdrE53iP6apnCE5sCA=
+	b=Inima+ns1B7lw6XoMMs8S04wLbTh57+A5eNMpKufr+YUUGU/3iquEQAbQDdeu816E
+	 MJW8zWyrdG2ZvCeEBXoO6MM2yjY6r7wQlHcI6eoN3JxnQ9PAn/5AeTapmm7j4kBsJQ
+	 sPxW7wRReEs3z2bK7lbkAFFNjKCBP/B7VURYNw8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Konstantin Sinyuk <konstantin.sinyuk@intel.com>,
+	Koby Elbaz <koby.elbaz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 294/529] ftrace: Fix softlockup in ftrace_module_enable
-Date: Fri, 21 Nov 2025 14:09:53 +0100
-Message-ID: <20251121130241.488982044@linuxfoundation.org>
+Subject: [PATCH 6.6 277/529] accel/habanalabs/gaudi2: read preboot status after recovering from dirty state
+Date: Fri, 21 Nov 2025 14:09:36 +0100
+Message-ID: <20251121130240.886306321@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
 
-[ Upstream commit 4099b98203d6b33d990586542fa5beee408032a3 ]
+[ Upstream commit a0d866bab184161ba155b352650083bf6695e50e ]
 
-A soft lockup was observed when loading amdgpu module.
-If a module has a lot of tracable functions, multiple calls
-to kallsyms_lookup can spend too much time in RCU critical
-section and with disabled preemption, causing kernel panic.
-This is the same issue that was fixed in
-commit d0b24b4e91fc ("ftrace: Prevent RCU stall on PREEMPT_VOLUNTARY
-kernels") and commit 42ea22e754ba ("ftrace: Add cond_resched() to
-ftrace_graph_set_hash()").
+Dirty state can occur when the host VM undergoes a reset while the
+device does not. In such a case, the driver must reset the device before
+it can be used again. As part of this reset, the device capabilities
+are zeroed. Therefore, the driver must read the Preboot status again to
+learn the Preboot state, capabilities, and security configuration.
 
-Fix it the same way by adding cond_resched() in ftrace_module_enable.
-
-Link: https://lore.kernel.org/aMQD9_lxYmphT-up@vova-pc
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
+Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ftrace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/accel/habanalabs/gaudi2/gaudi2.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index 15785a729a0cd..398992597685b 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -6873,6 +6873,8 @@ void ftrace_module_enable(struct module *mod)
- 		if (!within_module(rec->ip, mod))
- 			break;
- 
-+		cond_resched();
+diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
+index 31c74ca70a2e5..01df5435d92c4 100644
+--- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
++++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
+@@ -2985,7 +2985,6 @@ static int gaudi2_early_init(struct hl_device *hdev)
+ 	rc = hl_fw_read_preboot_status(hdev);
+ 	if (rc) {
+ 		if (hdev->reset_on_preboot_fail)
+-			/* we are already on failure flow, so don't check if hw_fini fails. */
+ 			hdev->asic_funcs->hw_fini(hdev, true, false);
+ 		goto pci_fini;
+ 	}
+@@ -2997,6 +2996,13 @@ static int gaudi2_early_init(struct hl_device *hdev)
+ 			dev_err(hdev->dev, "failed to reset HW in dirty state (%d)\n", rc);
+ 			goto pci_fini;
+ 		}
 +
- 		/* Weak functions should still be ignored */
- 		if (!test_for_valid_rec(rec)) {
- 			/* Clear all other flags. Should not be enabled anyway */
++		rc = hl_fw_read_preboot_status(hdev);
++		if (rc) {
++			if (hdev->reset_on_preboot_fail)
++				hdev->asic_funcs->hw_fini(hdev, true, false);
++			goto pci_fini;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
