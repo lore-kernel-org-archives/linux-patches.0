@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BE3346E57;
-	Fri, 21 Nov 2025 13:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D2F346E57;
+	Fri, 21 Nov 2025 13:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732091; cv=none; b=CG+gWWLEVzEunc2GsDUYa1/CtSUdctkh4EUqXh8/uh7wc78jp5RMuEfOt/CdtWWHuoKU3D+Fbymc3WWsfV8TZj3g5wNMY6w/RTyalQYBzV6IQgavd1rAz2vaZBsdzLZXMpbEqlVhrtyw42VLe6nhwYn0OhlDo6zyq02oVupN/DE=
+	t=1763732094; cv=none; b=fYTg10wIxaRMXFR84HWPEkvyjsnoboUllHcLBdroVyZOBZPkE20b1hUSahgCtrVk4bw/h2CTBiBax66PCuXFeT31U69Svoe+P2Nj3ZQB3OoD6WIIzZBDtmonplaZQ2Bo0cAMDKxTY5gNZgWq6W90JenzKeUDq1hxOVX+FySTeUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732091; c=relaxed/simple;
-	bh=29KXPScK/1V5VgP/QNZdSsXC/ZMh1NkpsptJseTsU9U=;
+	s=arc-20240116; t=1763732094; c=relaxed/simple;
+	bh=3EAArkDAUu7qO3Vcj/WWaAFFjFxAjBuJyTYuE2mHgU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPJgaZ4i7IQI+/laZF7LvBH1VcJw4G03X/l+JYQlSjTt1L8InY9+icItpl99w89XTcNKrBNm8aZhvQn5RCTh7DpRKx9v/ehNCtO+13SEGYcZ5/CsUcGmwnBBa1m1pwIz9TFwLvSBJ3uYF8tPgm3MTwFNyluHM5Roaj9ECsBnGM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stF24waL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qnlsmBc3WiKglRmTjjeU0AW61HSHDut40Ms91m29jjwysNj3Ifq9mj4wfiLZZZVy/MdcYg9qaNzp0ObzTj9RSnPurLzFptKan79kl7S9P08Rq71UUr7XwYo7L41CkXOZ3dt7ivyl5vLu2EBue2QjaAJWwdGwVd22ffk5AWkHGoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhPgcp2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stF24waL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C630DC116C6;
-	Fri, 21 Nov 2025 13:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhPgcp2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF370C4CEF1;
+	Fri, 21 Nov 2025 13:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732091;
-	bh=29KXPScK/1V5VgP/QNZdSsXC/ZMh1NkpsptJseTsU9U=;
+	s=korg; t=1763732094;
+	bh=3EAArkDAUu7qO3Vcj/WWaAFFjFxAjBuJyTYuE2mHgU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stF24waLr/sD8qGQRooyE9gpbR4EoPStFH/jfaOGOhIXakHnfus4kEpBOf7csIxto
-	 YPb938bMYsTF+34U6PuWQGmo5c4qMkXsEcaStu1AyCqm5Vr/MaCKiwgpXaTet2uv4F
-	 vCHq70p0hZeRYl3znlxMm6t0p/rsSsXjT1kWx1CA=
+	b=fhPgcp2Fvux3HJ9lIF3h2J6VtLxuosM4y5nbBmAegBEviz1Hje1qTXKfSusBWR53Z
+	 WD4p2tjP+r+SsnGPt5Hg25GkQwL6ulyClb1cqFmwOdEvvgoqVoFBzZNtTNz+b9QD7r
+	 OYlqJ1zFTlzUoSLXa0AKb7Jlxjqy0Bj/37lghTYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 159/185] mptcp: fix MSG_PEEK stream corruption
-Date: Fri, 21 Nov 2025 14:13:06 +0100
-Message-ID: <20251121130149.612279185@linuxfoundation.org>
+Subject: [PATCH 6.12 160/185] wifi: cfg80211: add an hrtimer based delayed work item
+Date: Fri, 21 Nov 2025 14:13:07 +0100
+Message-ID: <20251121130149.649140818@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -54,119 +52,225 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 8e04ce45a8db7a080220e86e249198fa676b83dc ]
+[ Upstream commit 7ceba45a6658ce637da334cd0ebf27f4ede6c0fe ]
 
-If a MSG_PEEK | MSG_WAITALL read operation consumes all the bytes in the
-receive queue and recvmsg() need to waits for more data - i.e. it's a
-blocking one - upon arrival of the next packet the MPTCP protocol will
-start again copying the oldest data present in the receive queue,
-corrupting the data stream.
+The normal timer mechanism assume that timeout further in the future
+need a lower accuracy. As an example, the granularity for a timer
+scheduled 4096 ms in the future on a 1000 Hz system is already 512 ms.
+This granularity is perfectly sufficient for e.g. timeouts, but there
+are other types of events that will happen at a future point in time and
+require a higher accuracy.
 
-Address the issue explicitly tracking the peeked sequence number,
-restarting from the last peeked byte.
+Add a new wiphy_hrtimer_work type that uses an hrtimer internally. The
+API is almost identical to the existing wiphy_delayed_work and it can be
+used as a drop-in replacement after minor adjustments. The work will be
+scheduled relative to the current time with a slack of 1 millisecond.
 
-Fixes: ca4fb892579f ("mptcp: add MSG_PEEK support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-2-38ffff5a9ec8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context ]
+CC: stable@vger.kernel.org # 6.4+
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251028125710.7f13a2adc5eb.I01b5af0363869864b0580d9c2a1770bafab69566@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ replaced hrtimer_setup() call with hrtimer_init() and manual timer.function assignment ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Note: this is the patch Sasha sent for the v6.6 which applies on v6.12
-without conflicts. On v6.12, Sasha sent another version with dependences
-that caused some issues, see:
- https://lore.kernel.org/bbe84711-95b2-4257-9f01-560b4473a3da@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/mptcp/protocol.c |   36 +++++++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+ include/net/cfg80211.h |   78 +++++++++++++++++++++++++++++++++++++++++++++++++
+ net/wireless/core.c    |   56 +++++++++++++++++++++++++++++++++++
+ net/wireless/trace.h   |   21 +++++++++++++
+ 3 files changed, 155 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1977,19 +1977,35 @@ static void mptcp_rcv_space_adjust(struc
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -6105,6 +6105,11 @@ static inline void wiphy_delayed_work_in
+  * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
+  * use just cancel_work() instead of cancel_work_sync(), it requires
+  * being in a section protected by wiphy_lock().
++ *
++ * Note that these are scheduled with a timer where the accuracy
++ * becomes less the longer in the future the scheduled timer is. Use
++ * wiphy_hrtimer_work_queue() if the timer must be not be late by more
++ * than approximately 10 percent.
+  */
+ void wiphy_delayed_work_queue(struct wiphy *wiphy,
+ 			      struct wiphy_delayed_work *dwork,
+@@ -6176,6 +6181,79 @@ void wiphy_delayed_work_flush(struct wip
+ bool wiphy_delayed_work_pending(struct wiphy *wiphy,
+ 				struct wiphy_delayed_work *dwork);
  
- static int __mptcp_recvmsg_mskq(struct mptcp_sock *msk,
- 				struct msghdr *msg,
--				size_t len, int flags,
-+				size_t len, int flags, int copied_total,
- 				struct scm_timestamping_internal *tss,
- 				int *cmsg_flags)
++struct wiphy_hrtimer_work {
++	struct wiphy_work work;
++	struct wiphy *wiphy;
++	struct hrtimer timer;
++};
++
++enum hrtimer_restart wiphy_hrtimer_work_timer(struct hrtimer *t);
++
++static inline void wiphy_hrtimer_work_init(struct wiphy_hrtimer_work *hrwork,
++					   wiphy_work_func_t func)
++{
++	hrtimer_init(&hrwork->timer, CLOCK_BOOTTIME, HRTIMER_MODE_REL);
++	hrwork->timer.function = wiphy_hrtimer_work_timer;
++	wiphy_work_init(&hrwork->work, func);
++}
++
++/**
++ * wiphy_hrtimer_work_queue - queue hrtimer work for the wiphy
++ * @wiphy: the wiphy to queue for
++ * @hrwork: the high resolution timer worker
++ * @delay: the delay given as a ktime_t
++ *
++ * Please refer to wiphy_delayed_work_queue(). The difference is that
++ * the hrtimer work uses a high resolution timer for scheduling. This
++ * may be needed if timeouts might be scheduled further in the future
++ * and the accuracy of the normal timer is not sufficient.
++ *
++ * Expect a delay of a few milliseconds as the timer is scheduled
++ * with some slack and some more time may pass between queueing the
++ * work and its start.
++ */
++void wiphy_hrtimer_work_queue(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork,
++			      ktime_t delay);
++
++/**
++ * wiphy_hrtimer_work_cancel - cancel previously queued hrtimer work
++ * @wiphy: the wiphy, for debug purposes
++ * @hrtimer: the hrtimer work to cancel
++ *
++ * Cancel the work *without* waiting for it, this assumes being
++ * called under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_hrtimer_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_hrtimer_work *hrtimer);
++
++/**
++ * wiphy_hrtimer_work_flush - flush previously queued hrtimer work
++ * @wiphy: the wiphy, for debug purposes
++ * @hrwork: the hrtimer work to flush
++ *
++ * Flush the work (i.e. run it if pending). This must be called
++ * under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_hrtimer_work_flush(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork);
++
++/**
++ * wiphy_hrtimer_work_pending - Find out whether a wiphy hrtimer
++ * work item is currently pending.
++ *
++ * @wiphy: the wiphy, for debug purposes
++ * @hrwork: the hrtimer work in question
++ *
++ * Return: true if timer is pending, false otherwise
++ *
++ * Please refer to the wiphy_delayed_work_pending() documentation as
++ * this is the equivalent function for hrtimer based delayed work
++ * items.
++ */
++bool wiphy_hrtimer_work_pending(struct wiphy *wiphy,
++				struct wiphy_hrtimer_work *hrwork);
++
+ /**
+  * enum ieee80211_ap_reg_power - regulatory power for an Access Point
+  *
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1763,6 +1763,62 @@ bool wiphy_delayed_work_pending(struct w
+ }
+ EXPORT_SYMBOL_GPL(wiphy_delayed_work_pending);
+ 
++enum hrtimer_restart wiphy_hrtimer_work_timer(struct hrtimer *t)
++{
++	struct wiphy_hrtimer_work *hrwork =
++		container_of(t, struct wiphy_hrtimer_work, timer);
++
++	wiphy_work_queue(hrwork->wiphy, &hrwork->work);
++
++	return HRTIMER_NORESTART;
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_timer);
++
++void wiphy_hrtimer_work_queue(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork,
++			      ktime_t delay)
++{
++	trace_wiphy_hrtimer_work_queue(wiphy, &hrwork->work, delay);
++
++	if (!delay) {
++		hrtimer_cancel(&hrwork->timer);
++		wiphy_work_queue(wiphy, &hrwork->work);
++		return;
++	}
++
++	hrwork->wiphy = wiphy;
++	hrtimer_start_range_ns(&hrwork->timer, delay,
++			       1000 * NSEC_PER_USEC, HRTIMER_MODE_REL);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_queue);
++
++void wiphy_hrtimer_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_hrtimer_work *hrwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	hrtimer_cancel(&hrwork->timer);
++	wiphy_work_cancel(wiphy, &hrwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_cancel);
++
++void wiphy_hrtimer_work_flush(struct wiphy *wiphy,
++			      struct wiphy_hrtimer_work *hrwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	hrtimer_cancel(&hrwork->timer);
++	wiphy_work_flush(wiphy, &hrwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_flush);
++
++bool wiphy_hrtimer_work_pending(struct wiphy *wiphy,
++				struct wiphy_hrtimer_work *hrwork)
++{
++	return hrtimer_is_queued(&hrwork->timer);
++}
++EXPORT_SYMBOL_GPL(wiphy_hrtimer_work_pending);
++
+ static int __init cfg80211_init(void)
  {
- 	struct sk_buff *skb, *tmp;
-+	int total_data_len = 0;
- 	int copied = 0;
+ 	int err;
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -304,6 +304,27 @@ TRACE_EVENT(wiphy_delayed_work_queue,
+ 		  __entry->delay)
+ );
  
- 	skb_queue_walk_safe(&msk->receive_queue, skb, tmp) {
--		u32 offset = MPTCP_SKB_CB(skb)->offset;
-+		u32 delta, offset = MPTCP_SKB_CB(skb)->offset;
- 		u32 data_len = skb->len - offset;
--		u32 count = min_t(size_t, len - copied, data_len);
-+		u32 count;
- 		int err;
- 
-+		if (flags & MSG_PEEK) {
-+			/* skip already peeked skbs */
-+			if (total_data_len + data_len <= copied_total) {
-+				total_data_len += data_len;
-+				continue;
-+			}
++TRACE_EVENT(wiphy_hrtimer_work_queue,
++	TP_PROTO(struct wiphy *wiphy, struct wiphy_work *work,
++		 ktime_t delay),
++	TP_ARGS(wiphy, work, delay),
++	TP_STRUCT__entry(
++		WIPHY_ENTRY
++		__field(void *, instance)
++		__field(void *, func)
++		__field(ktime_t, delay)
++	),
++	TP_fast_assign(
++		WIPHY_ASSIGN;
++		__entry->instance = work;
++		__entry->func = work->func;
++		__entry->delay = delay;
++	),
++	TP_printk(WIPHY_PR_FMT " instance=%p func=%pS delay=%llu",
++		  WIPHY_PR_ARG, __entry->instance, __entry->func,
++		  __entry->delay)
++);
 +
-+			/* skip the already peeked data in the current skb */
-+			delta = copied_total - total_data_len;
-+			offset += delta;
-+			data_len -= delta;
-+		}
-+
-+		count = min_t(size_t, len - copied, data_len);
-+
- 		if (!(flags & MSG_TRUNC)) {
- 			err = skb_copy_datagram_msg(skb, offset, msg, count);
- 			if (unlikely(err < 0)) {
-@@ -2006,22 +2022,19 @@ static int __mptcp_recvmsg_mskq(struct m
- 
- 		copied += count;
- 
--		if (count < data_len) {
--			if (!(flags & MSG_PEEK)) {
-+		if (!(flags & MSG_PEEK)) {
-+			msk->bytes_consumed += count;
-+			if (count < data_len) {
- 				MPTCP_SKB_CB(skb)->offset += count;
- 				MPTCP_SKB_CB(skb)->map_seq += count;
--				msk->bytes_consumed += count;
-+				break;
- 			}
--			break;
--		}
- 
--		if (!(flags & MSG_PEEK)) {
- 			/* we will bulk release the skb memory later */
- 			skb->destructor = NULL;
- 			WRITE_ONCE(msk->rmem_released, msk->rmem_released + skb->truesize);
- 			__skb_unlink(skb, &msk->receive_queue);
- 			__kfree_skb(skb);
--			msk->bytes_consumed += count;
- 		}
- 
- 		if (copied >= len)
-@@ -2245,7 +2258,8 @@ static int mptcp_recvmsg(struct sock *sk
- 	while (copied < len) {
- 		int err, bytes_read;
- 
--		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags, &tss, &cmsg_flags);
-+		bytes_read = __mptcp_recvmsg_mskq(msk, msg, len - copied, flags,
-+						  copied, &tss, &cmsg_flags);
- 		if (unlikely(bytes_read < 0)) {
- 			if (!copied)
- 				copied = bytes_read;
+ TRACE_EVENT(wiphy_work_worker_start,
+ 	TP_PROTO(struct wiphy *wiphy),
+ 	TP_ARGS(wiphy),
 
 
