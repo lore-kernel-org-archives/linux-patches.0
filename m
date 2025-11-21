@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D81434FF7A;
-	Fri, 21 Nov 2025 13:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2737130AD04;
+	Fri, 21 Nov 2025 13:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733033; cv=none; b=OE6HAoICJjZ1IGUF4d5K+gvMjwjtVlctiGp+s4RNn5iX/T9R+An8XaTTdbn8N7sENquJv9mSsfsgQujGaE4fqa1GhDd6Kh8HvDvtatjcvg+55nmwvuHlFpR0T8MGD3kLxQkn9/XSqYpFYdv+nsIJUyycmmkDm2gU6Ux2ZYNHSFY=
+	t=1763733036; cv=none; b=Jl7SQBOB/klQo760HzqeWYDWpMHshKpXtJtpsZx+CtEDu9W3k9qeqIFcRxaUwIQh3erOd90j8c5UG4RdvNyMJtcCPFkgfKMx+ECmKU1B/ut6lTJY4jmytcqPG31vVwwN8ORUxOBm32lLqdIm0JNOvKx3e4h0i/WPhenZ6EnDV40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733033; c=relaxed/simple;
-	bh=ABf7/qULSZpV4b5wWgNg9+dURdTrQQnYIgXjHYzFdR8=;
+	s=arc-20240116; t=1763733036; c=relaxed/simple;
+	bh=+HbrgTrr3yfTjlznnSw3OK/r+V/ZxTg8AxHl22obq44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlSlWgK2fHMh+ONQ0xf+kqZI6iHp6I/JFCGWgeART7OIyKXK//IZzPh+1ig873Aol0GTk/CEAtea7IHiFxWZ+Xxl4ZUij1O0nvFAkUEQdOnsopjwsG8bmUmWD8dj7chhVtVqJujrmEwQy7HfKeU/llcYLsMUn8tvM/EaFg1sfnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pE+dwoA7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNATWB7k0Zxuo7Yk/kHeIX64GQ107WfUSRn669+ZWjpi/Cp7YNU7LjgSIKsSii028+jYhICIff8sQcS/UsYmX64lQpHhtd/flCk7IzW/kzvuN7kXzeiIo/KS24p19Os0JvbxoOLCZXM/kdmpIGE5qSoCBq2nhLTkStJpn2wNhNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLuAG7a6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pE+dwoA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5874C4CEF1;
-	Fri, 21 Nov 2025 13:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLuAG7a6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E01C4CEF1;
+	Fri, 21 Nov 2025 13:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733033;
-	bh=ABf7/qULSZpV4b5wWgNg9+dURdTrQQnYIgXjHYzFdR8=;
+	s=korg; t=1763733036;
+	bh=+HbrgTrr3yfTjlznnSw3OK/r+V/ZxTg8AxHl22obq44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pE+dwoA7VEDle0N9dO543G8KybpHNtVMi7QZH/w0QvKDSltH8t3Lxtm4kIC9Ei/7P
-	 cWF03MByG9VQMAFslOHmaCeE5fA7+cI4hBzcdpsZar69aH8F6HlYHmn4ksCXYpmar7
-	 lA0/HGKHnfI1JSXtEmZJPW0AzO4uKCjydFh0/2us=
+	b=hLuAG7a6M/U3CwSAD834GbpuyauR7pTwV9QqcXYJVCyZsNHY6I51tSyBVTGEG+CXl
+	 HJrEA2MM1PPwwhqGtemP1jzmp4hwR1GB5L45z9fUK+2WfonVfHEeObXCHItQZPguZH
+	 uVRCi7Rqit7twNfbidZIKE5bgMs3AXR/sNQ9Yd3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 328/529] ceph: refactor wake_up_bit() pattern of calling
-Date: Fri, 21 Nov 2025 14:10:27 +0100
-Message-ID: <20251121130242.698638094@linuxfoundation.org>
+Subject: [PATCH 6.6 329/529] ALSA: hda/realtek: Audio disappears on HP 15-fc000 after warm boot again
+Date: Fri, 21 Nov 2025 14:10:28 +0100
+Message-ID: <20251121130242.734073705@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,76 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 53db6f25ee47cb1265141d31562604e56146919a ]
+[ Upstream commit f4b3cef55f5f96fdb4e7f9ca90b7d6213689faeb ]
 
-The wake_up_bit() is called in ceph_async_unlink_cb(),
-wake_async_create_waiters(), and ceph_finish_async_create().
-It makes sense to switch on clear_bit() function, because
-it makes the code much cleaner and easier to understand.
-More important rework is the adding of smp_mb__after_atomic()
-memory barrier after the bit modification and before
-wake_up_bit() call. It can prevent potential race condition
-of accessing the modified bit in other threads. Luckily,
-clear_and_wake_up_bit() already implements the required
-functionality pattern:
+There was a similar bug in the past (Bug 217440), which was fixed for
+this laptop.
+The same issue is occurring again as of kernel v.6.12.2. The symptoms
+are very similar - initially audio works but after a warm reboot, the
+audio completely disappears until the computer is powered off (there
+is no audio output at all).
 
-static inline void clear_and_wake_up_bit(int bit, unsigned long *word)
-{
-	clear_bit_unlock(bit, word);
-	/* See wake_up_bit() for which memory barrier you need to use. */
-	smp_mb__after_atomic();
-	wake_up_bit(word, bit);
-}
+The issue is also related by caused by a different change now. By
+bisecting different kernel versions, I found that reverting
+cc3d0b5dd989 in patch_realtek.c[*] restores the sound and it works
+fine after the reboot.
 
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[*] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/sound/pci/hda/patch_realtek.c?h=v6.12.2&id=4ed7f16070a8475c088ff423b2eb11ba15eb89b6
+
+[ patch description reformatted by tiwai ]
+
+Fixes: cc3d0b5dd989 ("ALSA: hda/realtek: Update ALC256 depop procedure")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220109
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/5317ca723c82447a938414fcca85cbf5@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/dir.c  | 3 +--
- fs/ceph/file.c | 6 ++----
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
-index 1395b71df5ccc..529dd07fa459f 100644
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -1213,8 +1213,7 @@ static void ceph_async_unlink_cb(struct ceph_mds_client *mdsc,
- 	spin_unlock(&fsc->async_unlink_conflict_lock);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 5fe6b71d90f4f..65c9d47f03af5 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3644,6 +3644,15 @@ static void alc256_shutup(struct hda_codec *codec)
+ 		hp_pin = 0x21;
  
- 	spin_lock(&dentry->d_lock);
--	di->flags &= ~CEPH_DENTRY_ASYNC_UNLINK;
--	wake_up_bit(&di->flags, CEPH_DENTRY_ASYNC_UNLINK_BIT);
-+	clear_and_wake_up_bit(CEPH_DENTRY_ASYNC_UNLINK_BIT, &di->flags);
- 	spin_unlock(&dentry->d_lock);
+ 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
++
++	/* 3k pull low control for Headset jack. */
++	/* NOTE: call this before clearing the pin, otherwise codec stalls */
++	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
++	 * when booting with headset plugged. So skip setting it for the codec alc257
++	 */
++	if (spec->en_3kpull_low)
++		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
++
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
- 	synchronize_rcu();
-diff --git a/fs/ceph/file.c b/fs/ceph/file.c
-index e12657b4c3e04..0ec78d87519ba 100644
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -539,8 +539,7 @@ static void wake_async_create_waiters(struct inode *inode,
+ 	if (hp_pin_sense) {
+@@ -3654,14 +3663,6 @@ static void alc256_shutup(struct hda_codec *codec)
  
- 	spin_lock(&ci->i_ceph_lock);
- 	if (ci->i_ceph_flags & CEPH_I_ASYNC_CREATE) {
--		ci->i_ceph_flags &= ~CEPH_I_ASYNC_CREATE;
--		wake_up_bit(&ci->i_ceph_flags, CEPH_ASYNC_CREATE_BIT);
-+		clear_and_wake_up_bit(CEPH_ASYNC_CREATE_BIT, &ci->i_ceph_flags);
+ 		msleep(75);
  
- 		if (ci->i_ceph_flags & CEPH_I_ASYNC_CHECK_CAPS) {
- 			ci->i_ceph_flags &= ~CEPH_I_ASYNC_CHECK_CAPS;
-@@ -716,8 +715,7 @@ static int ceph_finish_async_create(struct inode *dir, struct inode *inode,
- 	}
- 
- 	spin_lock(&dentry->d_lock);
--	di->flags &= ~CEPH_DENTRY_ASYNC_CREATE;
--	wake_up_bit(&di->flags, CEPH_DENTRY_ASYNC_CREATE_BIT);
-+	clear_and_wake_up_bit(CEPH_DENTRY_ASYNC_CREATE_BIT, &di->flags);
- 	spin_unlock(&dentry->d_lock);
- 
- 	return ret;
+-	/* 3k pull low control for Headset jack. */
+-	/* NOTE: call this before clearing the pin, otherwise codec stalls */
+-	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+-	 * when booting with headset plugged. So skip setting it for the codec alc257
+-	 */
+-		if (spec->en_3kpull_low)
+-			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
+-
+ 		if (!spec->no_shutup_pins)
+ 			snd_hda_codec_write(codec, hp_pin, 0,
+ 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
 -- 
 2.51.0
 
