@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E59334367;
-	Fri, 21 Nov 2025 13:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7E22737FC;
+	Fri, 21 Nov 2025 13:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731448; cv=none; b=q3ymj5tcaBnKtfWKaRprmZxttGxvwjRmnAjE3biEAk4uhjiPv6B7MVHQASHqjjywvnbogPJ5zH3ifmCrwm1aXXOuRHvX15h2oAK8okL1S1c89E1qoE6qWdBY1ge/8aEY5ArEftKGu2/0JoKnCWvxq+12nhqSeRu6Ph3L46RFyxw=
+	t=1763731451; cv=none; b=h2Jnmyd37u/oo6frMeU1ssvIhYEtBqRdLwoDgTuJOfP1rc8LOlQi0ZZQCAdAS0o/6nEGkduNC5G1BS88eAqY00c9pPFVZwoJ2YM2/CPy98UYMz1IsSaUzU/xLi9MgHc18Wl9nUEkG9wY2NKRWbOjjR6PW6qfRI7GB+Vz6cF3llc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731448; c=relaxed/simple;
-	bh=N5aJ57JNbeFTd8Xqg4HHpZ1yVQIzCXbwc2RWw7ZlhyA=;
+	s=arc-20240116; t=1763731451; c=relaxed/simple;
+	bh=rCK+Lw07UmlPT/CvhrBz0EKCORuh1S7495vxA67gS8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2x2pOrHVzwSUbKoJX2mXa9ilmQjpPJXMxE4wvwFN45iwJ1//BBYhXPiHqZaBwWjzWnvOyOJbcAeYvV/RQqvFKESr5gbjjflvC2VGpV/2A+NVR8h6A+sxSHnSSMWXA/n+dD1inEaReUfRk3MH/7nNVnr4pO1bscnpcQzaHIllqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/dqr4mU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6exBISDbmCBHJfI3/n2ijTJQxkxLEBY3ekrzr8cFVlEErhkQfGB5PgmwNbu1XPmg2Qt9oCVsWko0oodpwvrGwsCQE/mlbE+z7LRd9/uBxK78rJFHPGnRh4uC3bb6NNnp5y0KrqR2B3n64iETG6eObSPW/ooioetARdgN5y6jEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soWXSm79; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/dqr4mU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDD5C4CEF1;
-	Fri, 21 Nov 2025 13:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soWXSm79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806D3C4CEF1;
+	Fri, 21 Nov 2025 13:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731448;
-	bh=N5aJ57JNbeFTd8Xqg4HHpZ1yVQIzCXbwc2RWw7ZlhyA=;
+	s=korg; t=1763731450;
+	bh=rCK+Lw07UmlPT/CvhrBz0EKCORuh1S7495vxA67gS8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/dqr4mUmRfCivFfDQzr7gS+1MS0ZRKzPLjQkVT5ByIgc43l4mYUGnQD5cMjd0Q75
-	 r7OgY9vYfG/Wz1vbwkGh5yDjCq7fhRzH1iWvpFhlUrk+cBm2ITcD2Kz3ZBz4ZB1yI8
-	 ANHSx0vEYr7nkJjhyA1HA4+kKTGgvAhQd/Gb9qQ4=
+	b=soWXSm794pEdvL+WykYsaE+jWaCufDgLa/+KJbUTXtT6vv7cR5XWhtwuZ1HWBPV+w
+	 tD3H1K36qnvxow20L0ExIOtH2TcxrIC0rrRwKQ02GOC3URs0eu6wHXQRPLGdOKTh5m
+	 2p1/BMEI+9F+iieUV19bzTyP0gMm8w0kcno3+GNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.17 211/247] EDAC/altera: Use INTTEST register for Ethernet and USB SBE injection
-Date: Fri, 21 Nov 2025 14:12:38 +0100
-Message-ID: <20251121130202.300924326@linuxfoundation.org>
+	Askar Safin <safinaskar@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.17 212/247] PM: hibernate: Emit an error when image writing fails
+Date: Fri, 21 Nov 2025 14:12:39 +0100
+Message-ID: <20251121130202.336509718@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 281326be67252ac5794d1383f67526606b1d6b13 upstream.
+commit 62b9ca1706e1bbb60d945a58de7c7b5826f6b2a2 upstream.
 
-The current single-bit error injection mechanism flips bits directly in ECC RAM
-by performing write and read operations. When the ECC RAM is actively used by
-the Ethernet or USB controller, this approach sometimes trigger a false
-double-bit error.
+If image writing fails, a return code is passed up to the caller, but
+none of the callers log anything to the log and so the only record
+of it is the return code that userspace gets.
 
-Switch both Ethernet and USB EDAC devices to use the INTTEST register
-(altr_edac_a10_device_inject_fops) for single-bit error injection, similar to
-the existing double-bit error injection method.
+Adjust the logging so that the image size and speed of writing is
+only emitted on success and if there is an error, it's saved to the
+logs.
 
-Fixes: 064acbd4f4ab ("EDAC, altera: Add Stratix10 peripheral support")
-Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251111081333.1279635-1-niravkumarlaxmidas.rabara@altera.com
+Fixes: a06c6f5d3cc9 ("PM: hibernate: Move to crypto APIs for LZO compression")
+Reported-by: Askar Safin <safinaskar@gmail.com>
+Closes: https://lore.kernel.org/linux-pm/20251105180506.137448-1-safinaskar@gmail.com/
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: Askar Safin <safinaskar@gmail.com>
+Cc: 6.9+ <stable@vger.kernel.org> # 6.9+
+[ rjw: Added missing braces after "else", changelog edits ]
+Link: https://patch.msgid.link/20251106045158.3198061-2-superm1@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/power/swap.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1369,7 +1369,7 @@ static const struct edac_device_prv_data
- 	.ue_set_mask = ALTR_A10_ECC_TDERRA,
- 	.set_err_ofst = ALTR_A10_ECC_INTTEST_OFST,
- 	.ecc_irq_handler = altr_edac_a10_ecc_irq,
--	.inject_fops = &altr_edac_a10_device_inject2_fops,
-+	.inject_fops = &altr_edac_a10_device_inject_fops,
- };
+--- a/kernel/power/swap.c
++++ b/kernel/power/swap.c
+@@ -877,11 +877,14 @@ out_finish:
+ 	stop = ktime_get();
+ 	if (!ret)
+ 		ret = err2;
+-	if (!ret)
++	if (!ret) {
++		swsusp_show_speed(start, stop, nr_to_write, "Wrote");
++		pr_info("Image size after compression: %d kbytes\n",
++			(atomic_read(&compressed_size) / 1024));
+ 		pr_info("Image saving done\n");
+-	swsusp_show_speed(start, stop, nr_to_write, "Wrote");
+-	pr_info("Image size after compression: %d kbytes\n",
+-		(atomic_read(&compressed_size) / 1024));
++	} else {
++		pr_err("Image saving failed: %d\n", ret);
++	}
  
- #endif	/* CONFIG_EDAC_ALTERA_ETHERNET */
-@@ -1459,7 +1459,7 @@ static const struct edac_device_prv_data
- 	.ue_set_mask = ALTR_A10_ECC_TDERRA,
- 	.set_err_ofst = ALTR_A10_ECC_INTTEST_OFST,
- 	.ecc_irq_handler = altr_edac_a10_ecc_irq,
--	.inject_fops = &altr_edac_a10_device_inject2_fops,
-+	.inject_fops = &altr_edac_a10_device_inject_fops,
- };
- 
- #endif	/* CONFIG_EDAC_ALTERA_USB */
+ out_clean:
+ 	hib_finish_batch(&hb);
 
 
