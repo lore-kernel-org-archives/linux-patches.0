@@ -1,125 +1,113 @@
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C941B314D2F
-	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 13:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C153351FA6;
+	Fri, 21 Nov 2025 13:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732817; cv=none; b=R8nOXYhw4+bwsIlQEnB5b+FI5CXY4Mq2aLt+wGSIxjrmeQB+g8TivW9E3ho9jUCbQ7d+rorZijShd1nqZiRu4hNnyl7DtMaxNUsf3dGbb4ZaWJX2tgGH6gs27VrTjdqMOjPqmFaJd/j66bHLkDFly6idKrCP4xv9g/5PsPo89Ow=
+	t=1763732820; cv=none; b=C7iMEw1znIp4uagQvgrJ7P36gBEy0gq96UftE0b0zAvY6u2bjzjQ/khHR+MhWA7FM/7VUYvPXtreUMabQpyfT1F3RKmBcYeNXJ1vOAM8wTQAxn3QzxzoNZWhs341s0Z8XkjJl4TrZtbvMK19zqb7KC02kyuPOv9DkTMKldsGc+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732817; c=relaxed/simple;
-	bh=kS3u8fbyJUVfH7ZouDgx6pPG5LryYlblfHXZF1UMjzc=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=YpVvIrFjuPj+RHh7QD7ZqYnPfCio72MApm6cu8kpiH4I/jQt9Yc+CvcSCIoB9P85jXeE4LzuEIs+IlO/ZR/xjqFVfcRPU6zJEeG/PhV0A2V4Iqd10UHsUl6YiXRElH0ZJyP6GYNZRnrR264nKXbVTLyspuGjMwl6WvSk2pfwGCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-4330f62ef60so19246075ab.0
-        for <patches@lists.linux.dev>; Fri, 21 Nov 2025 05:46:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763732815; x=1764337615;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jfM96cPDGqpbPBn7PPbQ4n5yVw9OLFafeLZIYjP6vEg=;
-        b=J0tWMFSwuf2goEtOXj+qj3LDkl5qLafSAgstinuJ1t2CVhJnzeDJZYiWkK6IEwdspM
-         MNae9dd9pQADk/07N6CzhczIH3pQe+LWlEdVYwkLIpuuk0gthvDhUlgmewIRBu4dou3U
-         joKsR9GHxJD8GcDtw5HByxEIXRuEIpXaMT2e7KCKfCfvTqIrLAI07aSyrrmG08DswWb+
-         GTMxTTbi5NnRGNvNzUAI+M8brqLgG6A6cUVT9/5E//vv+zdWL9Xg4h0UAlIE4pNAOBcR
-         POTPsC+1ubPbQ8fB6tHUfSRELu2inThUcW0eOTPSRqQzrF2FZKq2Di6u+yn9aXvqcLsJ
-         wrng==
-X-Forwarded-Encrypted: i=1; AJvYcCUsdUeenNdFp2wDWkW0IuqZ84rOsK6aq0jKKlDPoB/2FoaJeknarEgvRANdnDA+cata5sC1y28/@lists.linux.dev
-X-Gm-Message-State: AOJu0YzS6YWjyHuNPp8GZcdWu/soCjWCnw+ucqWiGfHianAAnCvD56xc
-	aSs5xRM2YLnJ+aF2xyWm53iI0pw3fNNprQNl4h7RWMgRZF7bZs95FbizJKWdFD9yaH534sQavpY
-	zU/jCTO2PArIRDBwWD5sOPSrm9iBr2Rmsq0HNZURtHFtKJRbMreVGT2KPkxA=
-X-Google-Smtp-Source: AGHT+IHaeW1/gE1ZzEFWFfTj6KK9QOuddSw168iFNmQa5PZLlhIEVAFnmkaLSDS87hZOc0qRjL8wFnvOvPIkFlAaq3urMSTR6Xub
+	s=arc-20240116; t=1763732820; c=relaxed/simple;
+	bh=edq9AjZxs7i0hMHNJpGX7AszfcoBakMVhRm2GtKDrhg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U1a9K/tMbAu5UCMEYpl6JKunGfqLDFHYKziU7R1ChJZgfXubiM230mCw03eWtZpfGQg2ijW/gL09Ty6+k5COhmY3c699sIVU9f5BAIjAJ+rW/tbCfXL8B/eGiprE2YjbfgZuhYTqbJalumKKFIk3XSJkTQFcQCtOTkC/NULBQos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShlFM+r4; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShlFM+r4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4927BC4CEF1;
+	Fri, 21 Nov 2025 13:46:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1763732819;
+	bh=edq9AjZxs7i0hMHNJpGX7AszfcoBakMVhRm2GtKDrhg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ShlFM+r4UozmGuGZOHVYS46Xj+9MApuLZWcPc6M0FeOB8uvzTiy4eK9iJ8i/kreBL
+	 Hxvv63i5wc++l3jG9V7ycuhUiwiGsrovoAhaFzIv+MqslrEn6q8Jc3e2SksMkwrN1H
+	 W36GqT585WkVieq4swbfSvRYIfK4aZaWG/kcj+N0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 255/529] net: phy: clear link parameters on admin link down
+Date: Fri, 21 Nov 2025 14:09:14 +0100
+Message-ID: <20251121130240.094487729@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
+References: <20251121130230.985163914@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:1aab:b0:430:c491:583b with SMTP id
- e9e14a558f8ab-435b8e598d6mr18972995ab.14.1763732814933; Fri, 21 Nov 2025
- 05:46:54 -0800 (PST)
-Date: Fri, 21 Nov 2025 05:46:54 -0800
-In-Reply-To: <20251121130240.021598827@linuxfoundation.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69206d4e.a70a0220.d98e3.0046.GAE@google.com>
-Subject: Re: [PATCH 6.6 253/529] jfs: fix uninitialized waitqueue in
- transaction manager
-From: syzbot <syzbot@syzkaller.appspotmail.com>
-To: gregkh@linuxfoundation.org
-Cc: dave.kleikamp@oracle.com, gregkh@linuxfoundation.org, 
-	patches@lists.linux.dev, sashal@kernel.org, ssrane_b23@ee.vjti.ac.in, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
->
-> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
->
-> The transaction manager initialization in txInit() was not properly
-> initializing TxBlock[0].waitor waitqueue, causing a crash when
-> txEnd(0) is called on read-only filesystems.
->
-> When a filesystem is mounted read-only, txBegin() returns tid=0 to
-> indicate no transaction. However, txEnd(0) still gets called and
-> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-> waitqueue was never initialized because the initialization loop
-> started at index 1 instead of 0.
->
-> This causes a 'non-static key' lockdep warning and system crash:
->   INFO: trying to register non-static key in txEnd
->
-> Fix by ensuring all transaction blocks including TxBlock[0] have
-> their waitqueues properly initialized during txInit().
->
-> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
->
-> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/jfs/jfs_txnmgr.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-> index dccc8b3f10459..42fb833ef2834 100644
-> --- a/fs/jfs/jfs_txnmgr.c
-> +++ b/fs/jfs/jfs_txnmgr.c
-> @@ -272,14 +272,15 @@ int txInit(void)
->  	if (TxBlock == NULL)
->  		return -ENOMEM;
->  
-> -	for (k = 1; k < nTxBlock - 1; k++) {
-> -		TxBlock[k].next = k + 1;
-> +	for (k = 0; k < nTxBlock; k++) {
->  		init_waitqueue_head(&TxBlock[k].gcwait);
->  		init_waitqueue_head(&TxBlock[k].waitor);
->  	}
-> +
-> +	for (k = 1; k < nTxBlock - 1; k++) {
-> +		TxBlock[k].next = k + 1;
-> +	}
->  	TxBlock[k].next = 0;
-> -	init_waitqueue_head(&TxBlock[k].gcwait);
-> -	init_waitqueue_head(&TxBlock[k].waitor);
->  
->  	TxAnchor.freetid = 1;
->  	init_waitqueue_head(&TxAnchor.freewait);
-> -- 
-> 2.51.0
->
->
->
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+------------------
+
+From: Oleksij Rempel <o.rempel@pengutronix.de>
+
+[ Upstream commit 60f887b1290b43a4f5a3497982a725687b193fa4 ]
+
+When a PHY is halted (e.g. `ip link set dev lan2 down`), several
+fields in struct phy_device may still reflect the last active
+connection. This leads to ethtool showing stale values even though
+the link is down.
+
+Reset selected fields in _phy_state_machine() when transitioning
+to PHY_HALTED and the link was previously up:
+
+- speed/duplex -> UNKNOWN, but only in autoneg mode (in forced mode
+  these fields carry configuration, not status)
+- master_slave_state -> UNKNOWN if previously supported
+- mdix -> INVALID (state only, same meaning as "unknown")
+- lp_advertising -> always cleared
+
+The cleanup is skipped if the PHY is in PHY_ERROR state, so the
+last values remain available for diagnostics.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250917094751.2101285-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/phy/phy.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index df54c137c5f5f..cf171bdd667aa 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -1482,6 +1482,19 @@ void phy_state_machine(struct work_struct *work)
+ 		}
+ 		break;
+ 	case PHY_HALTED:
++		if (phydev->link) {
++			if (phydev->autoneg == AUTONEG_ENABLE) {
++				phydev->speed = SPEED_UNKNOWN;
++				phydev->duplex = DUPLEX_UNKNOWN;
++			}
++			if (phydev->master_slave_state !=
++						MASTER_SLAVE_STATE_UNSUPPORTED)
++				phydev->master_slave_state =
++						MASTER_SLAVE_STATE_UNKNOWN;
++			phydev->mdix = ETH_TP_MDI_INVALID;
++			linkmode_zero(phydev->lp_advertising);
++		}
++		fallthrough;
+ 	case PHY_ERROR:
+ 		if (phydev->link) {
+ 			phydev->link = 0;
+-- 
+2.51.0
+
+
 
