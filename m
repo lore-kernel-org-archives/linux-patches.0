@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3452343C0;
-	Fri, 21 Nov 2025 13:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47082343C0;
+	Fri, 21 Nov 2025 13:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732629; cv=none; b=Clv9PTaYiTIWH8MhjlNtxxRkRhkPfx6Q9dZm14D3rck1ifTuWk0lug1EYi7Ed2pNafNRtwg5V7+Wpbo0xP/p5EpKhIabpyKN8Dt2o1etg0vherADTqNaSg8g/dh8xBw1JwR28ihsXo9z01d0npFwlS94lHkPiSlyAIFkVldzWBQ=
+	t=1763732632; cv=none; b=rx7sZ0/4UJlDygt+uMzbmUJlZ1nAynbfkvsuxbDtvYyDVMR56N7MPgL9oN+uaHjeveg94BrT8C7p6h2T0b9d7cggXYjBmv+kAXNGBNAp9Bcji7Qj9+1j3pYRW3bx7n1tBh6bDsbPyHHUdKxPZeS8rV1qcBva7asVY8Eruaeb4AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732629; c=relaxed/simple;
-	bh=kaz1M/1NIvojfMbmjo8ROAvRRrowLLSbhH6IjhddJqs=;
+	s=arc-20240116; t=1763732632; c=relaxed/simple;
+	bh=OlKVUKvVqz8q0f7s/xChWJKoSkqxj0gkMNEnSrXVvl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z753SexLp75aITS2+QCXWGuJ1CmOy+7AfKYy5VLViGvCQKVogPxZGTVw7UMMysVmQArHWEGO9K4kNwEWQnOxgE864llZuGfRcPn06Sm1c43eqJCMSwKal4kSJVSKH1e6XWgotOER+dPhY+ajjQtDLqupTvR55I7K6aBnxGyqivA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N70GJRms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xh/MXA2OsWMg/ETSFOLcXAqxeRX8d85+SvFTYhvD/d/byIUZ1EP0R/eULvjUg159b3vu03Ho5y89XDd8oK8fisOUne71xkVK7xrrhgqLkWFI6E2WpFrcAgjdEqQvh/p6Q157TJckGsLa8Boaml/2mtp6FuOhXSKlpDvd2z2bAyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFX87/0M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N70GJRms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66759C4CEF1;
-	Fri, 21 Nov 2025 13:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFX87/0M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552FFC4CEF1;
+	Fri, 21 Nov 2025 13:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732629;
-	bh=kaz1M/1NIvojfMbmjo8ROAvRRrowLLSbhH6IjhddJqs=;
+	s=korg; t=1763732632;
+	bh=OlKVUKvVqz8q0f7s/xChWJKoSkqxj0gkMNEnSrXVvl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N70GJRmsUysjrgLWblxdApK9WG+QGncpCJTouIMSoVKjd3nWaEVtFixU+0KOZ7CVu
-	 /KcEtkam3w65X2fjov5xW/aBSU1JOy581PH5ZUza1KXDRILoz/73zpDOGJkI0p09Xd
-	 wQoGTrWwQwl1GAqZ8nI31snev/2bI2abbfIGC3Jg=
+	b=RFX87/0MPJAR7TNHb5Vf+IWa116yvorHSRC5dZYZ5/ypxkq0yqR0zNDhCVZpjFUge
+	 8y94MlgPsvlCZSu91iagKANmgsUXvoXahGmUoOqeeVCQAidHpELgasVWNsIYRkWDsF
+	 tLRdO5GxlbYzzFIRN6X4fpqpBbvQdPW1VOmpmt6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 188/529] media: adv7180: Do not write format to device in set_fmt
-Date: Fri, 21 Nov 2025 14:08:07 +0100
-Message-ID: <20251121130237.708170445@linuxfoundation.org>
+Subject: [PATCH 6.6 189/529] media: adv7180: Only validate format in querystd
+Date: Fri, 21 Nov 2025 14:08:08 +0100
+Message-ID: <20251121130237.742980760@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -55,43 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 46c1e7814d1c3310ef23c01ed1a582ef0c8ab1d2 ]
+[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
 
-The .set_fmt callback should not write the new format directly do the
-device, it should only store it and have it applied by .s_stream.
+The .querystd callback should not program the device with the detected
+standard, it should only report the standard to user-space. User-space
+may then use .s_std to set the standard, if it wants to use it.
 
-The .s_stream callback already calls adv7180_set_field_mode() so it's
-safe to remove programming of the device and just store the format and
-have .s_stream apply it.
+All that is required of .querystd is to setup the auto detection of
+standards and report its findings.
+
+While at it add some documentation on why this can't happen while
+streaming and improve the error handling using a scoped guard.
 
 Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 831ce10718550..ef2c769929a97 100644
+index ef2c769929a97..ecb0e7b1f2a5f 100644
 --- a/drivers/media/i2c/adv7180.c
 +++ b/drivers/media/i2c/adv7180.c
-@@ -803,14 +803,7 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
- 	ret = adv7180_mbus_fmt(sd,  &format->format);
- 
- 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
--		if (state->field != format->format.field) {
--			guard(mutex)(&state->mutex);
+@@ -356,32 +356,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
+ static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
+ {
+ 	struct adv7180_state *state = to_state(sd);
+-	int err = mutex_lock_interruptible(&state->mutex);
+-	if (err)
+-		return err;
 -
--			state->field = format->format.field;
--			adv7180_set_power(state, false);
--			adv7180_set_field_mode(state);
--			adv7180_set_power(state, true);
--		}
-+		state->field = format->format.field;
- 	} else {
- 		framefmt = v4l2_subdev_get_try_format(sd, sd_state, 0);
- 		*framefmt = format->format;
+-	if (state->streaming) {
+-		err = -EBUSY;
+-		goto unlock;
+-	}
++	int ret;
+ 
+-	err = adv7180_set_video_standard(state,
+-			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
+-	if (err)
+-		goto unlock;
++	guard(mutex)(&state->mutex);
+ 
+-	msleep(100);
+-	__adv7180_status(state, NULL, std);
++	/*
++	 * We can't sample the standard if the device is streaming as that would
++	 * interfere with the capture session as the VID_SEL reg is touched.
++	 */
++	if (state->streaming)
++		return -EBUSY;
+ 
+-	err = v4l2_std_to_adv7180(state->curr_norm);
+-	if (err < 0)
+-		goto unlock;
++	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
++	ret = adv7180_set_video_standard(state,
++					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
++	if (ret)
++		return ret;
+ 
+-	err = adv7180_set_video_standard(state, err);
++	/* Allow some time for the autodetection to run. */
++	msleep(100);
+ 
+-unlock:
+-	mutex_unlock(&state->mutex);
+-	return err;
++	return __adv7180_status(state, NULL, std);
+ }
+ 
+ static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
 -- 
 2.51.0
 
