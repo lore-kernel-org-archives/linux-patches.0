@@ -1,106 +1,106 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5AC2E0B77
-	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 18:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0132F069E
+	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 21:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763751539; cv=none; b=VdmhthshVq9pNcw4ITf7ZNt5lysW3rnTaoOxGPk/qh+ImsczJK8xQuiKXeeFhH8aO1sM3zx212jScZF1LIgv5gSWyRE8JAEdigroXiMAlmZleOxr0kNUd6Zu+iSgO+77hZJH/55k5Q0CcM2YJ9LDNWWdGGcTX6n8ObxXXTnWPUg=
+	t=1763759650; cv=none; b=TXGn79Jc2nQVROotBY3j1mtgyztGm0R94vrPYAP1XpxNrxTyE7OKcLJdmwYSMszvTIWwLzgLr6wvfnsQAIZzd9E/yHmPZBcSnUR9YyhUfFAzPSdDextehdyrZig+p7EKpWYMYXaMCmpzbI8mYBS3bZHaVLdj5Ym2kd+s4ctGyUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763751539; c=relaxed/simple;
-	bh=OD2BPBJ+WpYdSJqGl29PTyCpt5wg8lF186uyL6ulPYo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ny5FmaJJdkVIClzJm2NNzLicdTz1cCQhDwMEb9gKve2OoMnY1BUaiMK4U8jZvVBZe+TNyF5UrvNeZixCPiXJAOrOLcIoIlW92ay2HEwBil6EBm8FT7A2RXWQjBu9d2zcGWYxLa5JqFP6GEsXp0k1L7LNuZLL4ostG1AtKVAHgGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=kFxLsKiy; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1763759650; c=relaxed/simple;
+	bh=pEFooFR78YrhIvGWQXoeWCNC2kSSj2NyKh3ms4wsbIU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f7S081nqYN889T6J5/7RtEC2IbxV8lCI9ehLFT0/MA1cRbr20OEwDT4kYtWB9h3CDWBvkUS2DPBF883thAltXc1Zivr9aHKSYLN9fZi5zCBrDNO8UEQqSZgU6ix6IiZMr0Gsr4U330PnVXp6V86lcJhP73uVpW8cg20K97rd9po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=QSH+eBmK; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="kFxLsKiy"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b71397df721so435664866b.1
-        for <patches@lists.linux.dev>; Fri, 21 Nov 2025 10:58:57 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="QSH+eBmK"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-29812589890so29458055ad.3
+        for <patches@lists.linux.dev>; Fri, 21 Nov 2025 13:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1763751535; x=1764356335; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFzITl85/n2wxKTQjOLP5oK8q+GJ7Cr55qPMQ6tPpzE=;
-        b=kFxLsKiy/31tgDRulTrBzgBQlGzsbBaO6NUA6V6FsFvqHX7B/TMGK8fL1wfJTMmiW8
-         byz5zBBAArNopb02Q55G8huJzmFe+TFIwnzog8G0a0+Qw/Jq5l/GlQ+kcywZe1jZIO/O
-         gR6dVeffBDgZBNdZh4qqY1kblUzyijrCGDD+5EVBVLPOgnHCUB5b8zyWv7YGYyLTA1qI
-         QU3un9XLRB/qIwwrN07wr0fFujvgdAqv5WudrNj8OBMAPG/Y3nTiCI7VCqlJfegfD+eq
-         hqn2fQkJpsZIksk22RvHBncy7uR/hu3hrwAFbEUJQZAnfo30rVIUPbLHHfuNmOKOuvLw
-         TAvw==
+        d=linuxtx.org; s=google; t=1763759647; x=1764364447; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DefMfvVzY19z1+5A+UQbLAdG6uc9MBGDJLgUd7SbSRA=;
+        b=QSH+eBmKdC18T3kLqDgSOwd3PB43/zAyMzO130yt+tpEwQDm/kfTwM3QD49NWnf9KB
+         UUDBA1glGcnAPIFHS8Vdv8WK2dGgb+Sxvx0e9CLThKWFPiGrckxkXndEDoPFQvWneN8J
+         DBV/jY09cT6zm+r+NI3jR3Boz4+IHCU8t58sE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763751535; x=1764356335;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fFzITl85/n2wxKTQjOLP5oK8q+GJ7Cr55qPMQ6tPpzE=;
-        b=jt9EYlmW46lbYWiOOlGxVJ20jd7Mq9+MY7bMtEwb/XnSWYjOIdE16zM1VlP1+cOkoO
-         fk4DnKkVgrh2TMJlz8/V/iKNAyNXg4MXFR6cvc2fHxOHfmTjs/5LnDhpwASDIE76A96F
-         Wo9uHdTY8eVf0Ewmpw9bDAVZ9ZAiSaU1ot+Gwtj9mcfhc6n0BF3GJ/nvS4oJXMaCiBsF
-         AKciayoWdYdPMA3k9ZTsZc86SA5Zzs96M4nSJ+MtDmbD8JKI6sXGKwY+9BdODoilW3t8
-         cLi7uevRl5k3UJIEfgMOskPImhvb+H9UNx/cTTYpa+g/NeUWqZeg5PNzdhwEzIF9+ZbO
-         Qkyg==
-X-Forwarded-Encrypted: i=1; AJvYcCVC28U1dOHfujmPbI1WWA+UwcrY++j0D1gUv2LaVXdyBIKao0QeTOaibWpaXTHkSLH2nEmnNyM2@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzjfej9Z9CJXH0De3hoLCXpnHsaFsymM45NGAC6vsWXkJl/skna
-	0svzA3lqs7nHw4GONER6DX2jOMJo52PGjl/gUrwzYegMfUEjjIhd0A6v4Ba+2qINPSaPIuRCZF2
-	V2iog34jKvI6T7sS0U735RaqRdBEEAfa5sSHqs7yYqQ==
-X-Gm-Gg: ASbGncvtWwB89BgRGjUeTbGZUSnZFhrIRr+8WdeD/Zh7YUXBlLqaVrXDTh5hotkOshb
-	US/HkCwevb4e55NN7EXe+VcAuQ3ejJXoH5tIiaAYl3AD8FBA/+Um/+2CF1ecNYV/vKYV73QgDeN
-	J7Z3vm9/KOpmOmmMhfaaYwyKPOBuND470DRhvhttVGtATaF90JRfjDFDE5NC+6n5jE0on9SouKv
-	ZT/C6I2wuTLZ4dHwPEKAmXwbp8No6J958ZFvyzkNGSIVzVNiRVvr8/3ntkaxXPTVLOY0VhLTmis
-	Vj73mg==
-X-Google-Smtp-Source: AGHT+IG76ktUz04yjmfFAFe+FBW8iYZfGik4rFERzzHnYuCkGxcwG0i1C2FkLzqA9pN8F/lFTANRSliwzFOY1jzUYsQ=
-X-Received: by 2002:a17:906:c14a:b0:b6d:3a00:983a with SMTP id
- a640c23a62f3a-b7671709c17mr368806266b.38.1763751535510; Fri, 21 Nov 2025
- 10:58:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763759647; x=1764364447;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DefMfvVzY19z1+5A+UQbLAdG6uc9MBGDJLgUd7SbSRA=;
+        b=FYokMy1XQfhchZhcUrBLbrl414GEH02tceq1vyQqnuRDjuyC7bRkJVCNROu1umW2Pj
+         H3Fz1Pwa1w18y9oct2zOW/o3dAAvGLKKh5JGBvrcbLEeqRUfCKNgg5EIyNZ8XciyyJTP
+         eWf7/a/uSsa3sexco5D9r//Ml4SszGPHuqx6gdH1DVAmI7V+OiZC7eq+gs+8WfSN6eZI
+         GYPpQcTNoq4LMPuZkzSwPqiY6f7qtOv0lSxf6Zlj+7HguX+Upe5b9qkQMG9qiyEPpDgB
+         PEjtqFNkedHX9cIeLzmiYqiy87VQDlRz7Q+6/dD2ewFJXozcTwgPCrAjqY1IigsrXK4g
+         Hfmg==
+X-Forwarded-Encrypted: i=1; AJvYcCVWv+lmK0oNT9+PCsva/PC5HUwd9cGsRMQQM5YMRKw24qdGGoGXeDjHKasTga4EMYbWxOJe+Bba@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywd6kLNZzrhKgOxTK2KdGFvjU5Bk8GrVQT/wDWi9cF9i+hg6JE2
+	Ew42NbA4eqoG/q7RSvmVxX8spSBLCUSpwq1WD5tcTf+nqjV9/T4orRkrDn+0kU1w+A==
+X-Gm-Gg: ASbGncvJWFj8yE7yktPF0hHgueyWjoXM76drriBTbAn56Jo/6J4BK4NsEs3XTK1gnxo
+	kXIFrwbHkrAD5yCYqyXNyK6JvZmNmv7uqgng1PS7evUfLZNt+SYDrBn011ljQ4p+Opv6WQB6HJ1
+	wWtQXuy1jMtjFpisIqOHN1tfiuqm15wp2HKCvVLGwJbKN0HVbEZ4OxcmBTXBNbUVimPYG4hiBD1
+	dySH3ZLba+rdwQqmD5hLO78s+tg2zu68EAOqUR1WQEL3BnnFTDpR0HF1fCS/hUX++jUwXsFIE/j
+	OGvTa03lu9xvKqHNyCps7Uah3h6XHu4aNB9RmHKMB1mrZEKba+DUhSUfKsGFcbmv0bLwPjkuuTp
+	yjPTbxE+Bkhw7M2XiH9/g7E1OGjRRd4fwqkngsOwxE8PAAFb6lifDVxzvyvEH+f2qteDWBocRWE
+	IMX3NC9KRNksWf2vKkCxwt+MLFE9rxdWzs
+X-Google-Smtp-Source: AGHT+IGoICO5vKGUzbvGQPv8FA6NHPI2AeaS2RMHkJJXNl2UM/lBqDzjcLi9woXD/2w5OzxK19kA7g==
+X-Received: by 2002:a17:902:d587:b0:295:592e:7633 with SMTP id d9443c01a7336-29b6bf3b62bmr46414455ad.29.1763759647409;
+        Fri, 21 Nov 2025 13:14:07 -0800 (PST)
+Received: from fedora64.linuxtx.org ([216.147.123.192])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b105f79sm64411075ad.20.2025.11.21.13.14.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Nov 2025 13:14:06 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Fri, 21 Nov 2025 14:14:03 -0700
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.17 000/244] 6.17.9-rc2 review
+Message-ID: <aSDWG9xH4l9QJYQK@fedora64.linuxtx.org>
+References: <20251121160640.254872094@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251121160640.254872094@linuxfoundation.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20251121160640.254872094@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Sat, 22 Nov 2025 00:28:18 +0530
-X-Gm-Features: AWmQ_bmv5hZsmWYOBkRJLiSLXVbu9rpn7KMv-kwMFVHeSRgi59ua3hkQmuXQ4_o
-Message-ID: <CAG=yYwkt+GD=FHtSq+7w=-Q3jEQS-qnaG+-KS87qkVebUa+ozw@mail.gmail.com>
-Subject: Re: [PATCH 6.17 000/244] 6.17.9-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
 
- hello
+On Fri, Nov 21, 2025 at 05:07:19PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.17.9 release.
+> There are 244 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 23 Nov 2025 16:05:54 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.9-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Compiled and booted  6.17.9-rc2+
+Tested rc2 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-// sudo dmesg -l err shows error
-
-// [   21.490792] ee1004 3-0051: probe with driver ee1004 failed with error -5
-
-The error above got fixed NOW.
-THANKS
-
-As per dmidecode command.
-Version: AMD Ryzen 3 3250U with Radeon Graphics
-
-Processor Information
-        Socket Designation: FP5
-        Type: Central Processor
-        Family: Zen
-        Manufacturer: Advanced Micro Devices, Inc.
-        ID: 81 0F 81 00 FF FB 8B 17
-        Signature: Family 23, Model 24, Stepping 1
-
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
-
---
-software engineer
-rajagiri school of engineering and technology
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
