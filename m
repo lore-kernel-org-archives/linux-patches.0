@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF7336D4F0;
-	Fri, 21 Nov 2025 13:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B93D36D4F0;
+	Fri, 21 Nov 2025 13:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733027; cv=none; b=Ggaf1Pt3kDDHT5cwBQa5F+mycLFw0lAniRL0ShaISuNlc8vDsf8TXvl+8hj8OpHvbCYw9y+cecnQY/cmIh6hHV/qLVaMZQTJcNYkJQMrQAJ9duF5fRQCqOY1P0M/97cEYgeEprX5e70SHgASZsDOVSphHDt09lccIaAAG4qSUxo=
+	t=1763733030; cv=none; b=bA9SEyCHUaW/m6MbQjdweG2gCdAVKXg/1yigpJmlba6EHdJKesLkp0ZWoaYSQ/7L02zc1vhKSAQWSn7fp9hfAnhsiXfqnNKOICteMs/3d7I3Q2PvIYu9NM2BRdtyjDeEteleaVQ/XjQ0mBGmFmBcFNaMGTx2WN4o5zLRaWxUeMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733027; c=relaxed/simple;
-	bh=gSCmMRx6GyByx5Is0M7vv0oJA1tssGXP52aCBR2ZDkk=;
+	s=arc-20240116; t=1763733030; c=relaxed/simple;
+	bh=geyb733oI7ZFL4JXYDK8ueS4VqLp4LuHE1s+g41CXxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNiosQxOUHf3xlnbeun/i0MDx728uh1MYF/ZUiVWxgEZbhvERrQHOapvCovAXgcTYtn8GAQipajh+WAA0KoIHo2KOEe+o46p4/lwiBMva4m8imYEgPlfjqg6esnc87TYMSh4MUoqtd2+3T3kmJY18GZoqmMLOjUQN2M/K+6Zy/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZu8eEM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4Fgj9uy2ITSLGwJB26vz3med5IMQKY7NiylOKQLZemd/LhqfQdNk4fnutcViVwBJGW7JkCaFtWgx7DEzQPK21VblyDSez+cY+uG8Dq3iTMeltf6xxuKJkbf3WvXtChcUnh+YMV7BmC2LBjmS9vCt7OwB4nuwA3E4aMgcsiHHfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEJeHLuG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZu8eEM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032D4C4CEF1;
-	Fri, 21 Nov 2025 13:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEJeHLuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA09CC4CEF1;
+	Fri, 21 Nov 2025 13:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733027;
-	bh=gSCmMRx6GyByx5Is0M7vv0oJA1tssGXP52aCBR2ZDkk=;
+	s=korg; t=1763733030;
+	bh=geyb733oI7ZFL4JXYDK8ueS4VqLp4LuHE1s+g41CXxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZu8eEM9KoEVVvbWif8Jjv6jUb2mhJNc9xz9XDM7NwlukNAwzG1TaqdYx7ZwRtT+n
-	 ylLkD2iPrY8dwpe+KwP2RO8L0wXeBzFjOcIzYISHHf8nICPr/3J/TeeC0Jsktd4FL9
-	 vfgROfcAjXHthNClfcZy1FIYlpZqBe4yfWEpTuFA=
+	b=bEJeHLuGxwmbiHwTp/lS79NQO3i7loNZPU9BeSSZoQ+5VWA74vb5Vlgs5h3/9AkA1
+	 efLIzCmwetABrGMm06CB0tieNB7UNMi0MyMZtWgtcJA0l7Fcxb3FQvxyuidAQKsID7
+	 2O+/g7Kf04PKkzDHAMZnADPBAVpb96VshIq4p6Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valerio Setti <vsetti@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/529] ASoC: meson: aiu-encoder-i2s: fix bit clock polarity
-Date: Fri, 21 Nov 2025 14:10:25 +0100
-Message-ID: <20251121130242.627283632@linuxfoundation.org>
+Subject: [PATCH 6.6 327/529] ceph: add checking of wait_for_completion_killable() return value
+Date: Fri, 21 Nov 2025 14:10:26 +0100
+Message-ID: <20251121130242.663386470@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,51 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valerio Setti <vsetti@baylibre.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 4c4ed5e073a923fb3323022e1131cb51ad8df7a0 ]
+[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
 
-According to I2S specs audio data is sampled on the rising edge of the
-clock and it can change on the falling one. When operating in normal mode
-this SoC behaves the opposite so a clock polarity inversion is required
-in this case.
+The Coverity Scan service has detected the calling of
+wait_for_completion_killable() without checking the return
+value in ceph_lock_wait_for_completion() [1]. The CID 1636232
+defect contains explanation: "If the function returns an error
+value, the error value may be mistaken for a normal value.
+In ceph_lock_wait_for_completion(): Value returned from
+a function is not checked for errors before being used. (CWE-252)".
 
-This was tested on an OdroidC2 (Amlogic S905 SoC) board.
+The patch adds the checking of wait_for_completion_killable()
+return value and return the error code from
+ceph_lock_wait_for_completion().
 
-Signed-off-by: Valerio Setti <vsetti@baylibre.com>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Tested-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20251007-fix-i2s-polarity-v1-1-86704d9cda10@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/aiu-encoder-i2s.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ceph/locks.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/meson/aiu-encoder-i2s.c b/sound/soc/meson/aiu-encoder-i2s.c
-index a0dd914c8ed13..3b4061508c180 100644
---- a/sound/soc/meson/aiu-encoder-i2s.c
-+++ b/sound/soc/meson/aiu-encoder-i2s.c
-@@ -236,8 +236,12 @@ static int aiu_encoder_i2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
- 	    inv == SND_SOC_DAIFMT_IB_IF)
- 		val |= AIU_CLK_CTRL_LRCLK_INVERT;
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index cb51c7e9c8e22..02f5fbe83aa46 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -219,7 +219,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
+ 	if (err && err != -ERESTARTSYS)
+ 		return err;
  
--	if (inv == SND_SOC_DAIFMT_IB_NF ||
--	    inv == SND_SOC_DAIFMT_IB_IF)
-+	/*
-+	 * The SoC changes data on the rising edge of the bitclock
-+	 * so an inversion of the bitclock is required in normal mode
-+	 */
-+	if (inv == SND_SOC_DAIFMT_NB_NF ||
-+	    inv == SND_SOC_DAIFMT_NB_IF)
- 		val |= AIU_CLK_CTRL_AOCLK_INVERT;
+-	wait_for_completion_killable(&req->r_safe_completion);
++	err = wait_for_completion_killable(&req->r_safe_completion);
++	if (err)
++		return err;
++
+ 	return 0;
+ }
  
- 	/* Signal skew */
-@@ -328,4 +332,3 @@ const struct snd_soc_dai_ops aiu_encoder_i2s_dai_ops = {
- 	.startup	= aiu_encoder_i2s_startup,
- 	.shutdown	= aiu_encoder_i2s_shutdown,
- };
--
 -- 
 2.51.0
 
