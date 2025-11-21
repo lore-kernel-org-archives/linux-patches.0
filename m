@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED7C2745E;
-	Fri, 21 Nov 2025 13:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BF52FC89C;
+	Fri, 21 Nov 2025 13:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733355; cv=none; b=eGeUC0pKBj77hF2ulWwju6x4cvOq8W1qla6wUhd/lqIhI+PYotEYoOkyWyfYRwjVaC+NIZ9NVn0TwXl0iRpXI/v4D0/6xBYcdDjsWZvSiwK9fuYCppLcxfHI8NDib/6pWRxEEIS6PNJzkmHgxsu1KvdOjSAMf1izR/qfztGT378=
+	t=1763733358; cv=none; b=jpu5q0EHmWAXVJ8nIhbeJ9ixy7FJlUX8lVAOk2IJyRGWXuTKbSpAhkTF+NyhEGRkO39bNxto1wZ1I4sIy6Oo8MCxMeirE7iL4UAaZfsNp8pgwhJVoPY9AWKvgrzl0p+BEmc6h06Y8z86e2F++4N1muO+h0u0IA/JFql6JoV+Av8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733355; c=relaxed/simple;
-	bh=7ePMngGWpOVXCK8BIfFVsXlHhFLy7HEb7EYa9JcqDu4=;
+	s=arc-20240116; t=1763733358; c=relaxed/simple;
+	bh=xiyyDhejQxJaQ2HZPa/tZrbnVcmDJfupa6gaOoLTmf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKUlvpib89rX9kBfwjTWVM4GceOzzsFBm+ISRbg/Ta9n4C1SED8w/ddHO+xGiCMFWsGEgfIna7p3ocF3zlxtXl835RwJO3ipvpLUQpTklYlBcV+sryK9uvYSV/fRQcldaaaNpWYH0nKG9cmDlwEDd3Es5pqPeqte5Jp9oq+4AEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn0p4O5b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cj48c/nMRnTtkekirKAUjcC5P390VM+/nbbOc5L/RHbyElOHC4Q5C4dKP2SDy4Z7ufKdsCqndiKKCdozR16Toc9IIZvmkVGXODZO0FtOsQ81WLspQsAHFRJyVVqzrvLQEiaa9VwKc4BvmEWI5vytQmxSxKCqk2w6nbwZV21HbkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJyTvnyl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn0p4O5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5BAC4CEF1;
-	Fri, 21 Nov 2025 13:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJyTvnyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE52BC4CEF1;
+	Fri, 21 Nov 2025 13:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733355;
-	bh=7ePMngGWpOVXCK8BIfFVsXlHhFLy7HEb7EYa9JcqDu4=;
+	s=korg; t=1763733358;
+	bh=xiyyDhejQxJaQ2HZPa/tZrbnVcmDJfupa6gaOoLTmf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wn0p4O5bfkd2cDZiWGduHhf3yK9BkTBamlmm1ugBiqwAW7PGGBlXS2jFxRqrrgDfI
-	 ZFVb8Em9ptOUGXomo2FrdAo2srf3SRhKSZkK2vXreJbUKHVDrWquB/xDgTeVtegOpr
-	 DCILKSGcXzbTc+wqjgGWSwRsTtuILwoOOylpR9ic=
+	b=wJyTvnylIiSoIM2KD2pJ5L5tK8FEg7cduPKMleYPqrJaij3WT/nI4ur2VVcEhnSgE
+	 UffcD3NsksgkU1wjsu/12vHNId2i9gG0Q4QErPySNSnO5x/dYzZopVfBg9zRIoBbvr
+	 32mRG4qPHsGCU375oYUU34vr7euXPqpJXud/J8L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 440/529] acpi: numa: Create enum for memory_target access coordinates indexing
-Date: Fri, 21 Nov 2025 14:12:19 +0100
-Message-ID: <20251121130246.669176142@linuxfoundation.org>
+Subject: [PATCH 6.6 441/529] acpi: numa: Add genport target allocation to the HMAT parsing
+Date: Fri, 21 Nov 2025 14:12:20 +0100
+Message-ID: <20251121130246.704252737@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -55,74 +55,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 69b789b64456093819f730b3f9c13a593a5485d9 ]
+[ Upstream commit 6373c48b8c9dfb5c1e09fdb538e700d9cc91c45e ]
 
-Create enums to provide named indexing for the access coordinate array.
-This is in preparation for adding generic port support which will add a
-third index in the array to keep the generic port attributes separate from
-the memory attributes.
+Add SRAT parsing for the HMAT init in order to collect the device handle
+from the Generic Port Affinity Structure. The device handle will serve as
+the key to search for target data.
+
+Consolidate the common code with alloc_memory_target() in a helper function
+alloc_target().
 
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/170319616332.2212653.3872789279950567889.stgit@djiang5-mobl3
+Link: https://lore.kernel.org/r/170319616951.2212653.14862375982250406464.stgit@djiang5-mobl3
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Stable-dep-of: 214291cbaace ("acpi/hmat: Fix lockdep warning for hmem_register_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/acpi/numa/hmat.c | 59 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 83bc2b69401bf..ca7aedfbb5f2d 100644
+index ca7aedfbb5f2d..21722cbec324d 100644
 --- a/drivers/acpi/numa/hmat.c
 +++ b/drivers/acpi/numa/hmat.c
-@@ -58,12 +58,18 @@ struct target_cache {
- 	struct node_cache_attrs cache_attrs;
- };
- 
-+enum {
-+	NODE_ACCESS_CLASS_0 = 0,
-+	NODE_ACCESS_CLASS_1,
-+	NODE_ACCESS_CLASS_MAX,
-+};
-+
- struct memory_target {
- 	struct list_head node;
- 	unsigned int memory_pxm;
- 	unsigned int processor_pxm;
- 	struct resource memregions;
--	struct access_coordinate coord[2];
-+	struct access_coordinate coord[NODE_ACCESS_CLASS_MAX];
+@@ -72,6 +72,7 @@ struct memory_target {
+ 	struct access_coordinate coord[NODE_ACCESS_CLASS_MAX];
  	struct list_head caches;
  	struct node_cache_attrs cache_attrs;
++	u8 gen_port_device_handle[ACPI_SRAT_DEVICE_HANDLE_SIZE];
  	bool registered;
-@@ -339,10 +345,12 @@ static __init int hmat_parse_locality(union acpi_subtable_headers *header,
- 			if (mem_hier == ACPI_HMAT_MEMORY) {
- 				target = find_mem_target(targs[targ]);
- 				if (target && target->processor_pxm == inits[init]) {
--					hmat_update_target_access(target, type, value, 0);
-+					hmat_update_target_access(target, type, value,
-+								  NODE_ACCESS_CLASS_0);
- 					/* If the node has a CPU, update access 1 */
- 					if (node_state(pxm_to_node(inits[init]), N_CPU))
--						hmat_update_target_access(target, type, value, 1);
-+						hmat_update_target_access(target, type, value,
-+									  NODE_ACCESS_CLASS_1);
- 				}
- 			}
- 		}
-@@ -726,8 +734,8 @@ static void hmat_register_target(struct memory_target *target)
- 	if (!target->registered) {
- 		hmat_register_target_initiators(target);
- 		hmat_register_target_cache(target);
--		hmat_register_target_perf(target, 0);
--		hmat_register_target_perf(target, 1);
-+		hmat_register_target_perf(target, NODE_ACCESS_CLASS_0);
-+		hmat_register_target_perf(target, NODE_ACCESS_CLASS_1);
- 		target->registered = true;
+ };
+ 
+@@ -126,8 +127,7 @@ static __init void alloc_memory_initiator(unsigned int cpu_pxm)
+ 	list_add_tail(&initiator->node, &initiators);
+ }
+ 
+-static __init void alloc_memory_target(unsigned int mem_pxm,
+-		resource_size_t start, resource_size_t len)
++static __init struct memory_target *alloc_target(unsigned int mem_pxm)
+ {
+ 	struct memory_target *target;
+ 
+@@ -135,7 +135,7 @@ static __init void alloc_memory_target(unsigned int mem_pxm,
+ 	if (!target) {
+ 		target = kzalloc(sizeof(*target), GFP_KERNEL);
+ 		if (!target)
+-			return;
++			return NULL;
+ 		target->memory_pxm = mem_pxm;
+ 		target->processor_pxm = PXM_INVAL;
+ 		target->memregions = (struct resource) {
+@@ -148,6 +148,19 @@ static __init void alloc_memory_target(unsigned int mem_pxm,
+ 		INIT_LIST_HEAD(&target->caches);
  	}
- 	mutex_unlock(&target_lock);
+ 
++	return target;
++}
++
++static __init void alloc_memory_target(unsigned int mem_pxm,
++				       resource_size_t start,
++				       resource_size_t len)
++{
++	struct memory_target *target;
++
++	target = alloc_target(mem_pxm);
++	if (!target)
++		return;
++
+ 	/*
+ 	 * There are potentially multiple ranges per PXM, so record each
+ 	 * in the per-target memregions resource tree.
+@@ -158,6 +171,18 @@ static __init void alloc_memory_target(unsigned int mem_pxm,
+ 				start, start + len, mem_pxm);
+ }
+ 
++static __init void alloc_genport_target(unsigned int mem_pxm, u8 *handle)
++{
++	struct memory_target *target;
++
++	target = alloc_target(mem_pxm);
++	if (!target)
++		return;
++
++	memcpy(target->gen_port_device_handle, handle,
++	       ACPI_SRAT_DEVICE_HANDLE_SIZE);
++}
++
+ static __init const char *hmat_data_type(u8 type)
+ {
+ 	switch (type) {
+@@ -499,6 +524,27 @@ static __init int srat_parse_mem_affinity(union acpi_subtable_headers *header,
+ 	return 0;
+ }
+ 
++static __init int srat_parse_genport_affinity(union acpi_subtable_headers *header,
++					      const unsigned long end)
++{
++	struct acpi_srat_generic_affinity *ga = (void *)header;
++
++	if (!ga)
++		return -EINVAL;
++
++	if (!(ga->flags & ACPI_SRAT_GENERIC_AFFINITY_ENABLED))
++		return 0;
++
++	/* Skip PCI device_handle for now */
++	if (ga->device_handle_type != 0)
++		return 0;
++
++	alloc_genport_target(ga->proximity_domain,
++			     (u8 *)ga->device_handle);
++
++	return 0;
++}
++
+ static u32 hmat_initiator_perf(struct memory_target *target,
+ 			       struct memory_initiator *initiator,
+ 			       struct acpi_hmat_locality *hmat_loc)
+@@ -878,6 +924,13 @@ static __init int hmat_init(void)
+ 				ACPI_SRAT_TYPE_MEMORY_AFFINITY,
+ 				srat_parse_mem_affinity, 0) < 0)
+ 		goto out_put;
++
++	if (acpi_table_parse_entries(ACPI_SIG_SRAT,
++				     sizeof(struct acpi_table_srat),
++				     ACPI_SRAT_TYPE_GENERIC_PORT_AFFINITY,
++				     srat_parse_genport_affinity, 0) < 0)
++		goto out_put;
++
+ 	acpi_put_table(tbl);
+ 
+ 	status = acpi_get_table(ACPI_SIG_HMAT, 0, &tbl);
 -- 
 2.51.0
 
