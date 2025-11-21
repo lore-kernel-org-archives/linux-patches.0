@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E623534D92D;
-	Fri, 21 Nov 2025 13:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CA529ACCD;
+	Fri, 21 Nov 2025 13:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732121; cv=none; b=mLs3p+kEAS9g8h26jku7klXbdTl8w7ukSdAb0SPS6klvM68wpyAomRMtk34DZG6OPtXJDuqyWsGU8LByJOJJt5Nx32G+SGe9STcLHmVrzIioDjZm/Gsr6/e5G6tQ0yDIKvDQryDKDEzfMwcnoSWk8pLU8HrYO3962lbmvHVjapc=
+	t=1763732123; cv=none; b=LzCHw6E923zZevHrwEClWwKGXszZCCBnn5J+6VeBs5v5Yv+qISCfO+0mH5AkeObdADyY2fMwL07SuuLLaoJjbgdB5kd1/7T1eIaz+cTZnPiUpt5O627Ci5EpUlRpjd5BTkjH44qx5Smr+IoAosYzKI1zQfGWX+/aVb9tOjUEwUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732121; c=relaxed/simple;
-	bh=x/xHnD+5AtUkoGyAh5nVirLAeNLjek6udoNwXFnIYcs=;
+	s=arc-20240116; t=1763732123; c=relaxed/simple;
+	bh=BcxnpgB//q9Nh8MYdo1WmNtKLiCKJ+LrtdUqrHNFrnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esuKTwfK6nyoIiEtZRHshQOuQh2jm1shhw3QhgghEJHFsZK4+X6TQ2QfYdd1zo7z+T9tOqZWv9jhZHAoqI30jUxGPFJOqp901j5Oa+6+wiWXU6+SkSR3g4dSbixbblPZroZAFgvL+/1GusRtYPFQuEQqrt/ysXRvQCLLBvmF0D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvrE9n2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmz6RYAD5K6aYv9eLZmaj3e4diMeINey0pPgxvfvOebJudFSxd10PtPmIIICZpPtqL31z0LFcDFAfNw5LYVgZxsycQdZbcphHy0saR4bpyHh82BH+hEtK/O3aG+/EE/B9jGbBuLHsPlI5aMxFS4sVZq44p4qJyii9Je9kTO0MvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lK2rGNXz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvrE9n2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0DFC4CEFB;
-	Fri, 21 Nov 2025 13:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lK2rGNXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1210C4CEF1;
+	Fri, 21 Nov 2025 13:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732120;
-	bh=x/xHnD+5AtUkoGyAh5nVirLAeNLjek6udoNwXFnIYcs=;
+	s=korg; t=1763732123;
+	bh=BcxnpgB//q9Nh8MYdo1WmNtKLiCKJ+LrtdUqrHNFrnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvrE9n2W9KR6ih0Wo1EttSzAH9yknkRsuiTtl3aN9hyMbf4QQyA3uj1kMtaTKvOpR
-	 I/HjN8qzinLixUR3Z8sTe5DIEKDNE3J9rXjo6xm+LS7IzoSMnm9eMs+DkBoDjCZ6G5
-	 uC+nETX3rV3SKjXv4Qv3sz8HdPGRdjSgb+mUBtgM=
+	b=lK2rGNXz1XlGRJS4hJlfHtk8MRL2CJ6hDzjPUZ3PTt5ZLcA03YHxsfZBtml6cSyHy
+	 GVcnRrV6SuFLQGIRoHPJTOUtyDC6dcWzE9uLLtn+eZQ4U4Se79nVOtbntIOWh5f7j3
+	 DwXsM2WgLQfcz/0dWS6hzEcXl6Ly/+HX/csm0ypw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 011/529] fbdev: valkyriefb: Fix reference count leak in valkyriefb_init
-Date: Fri, 21 Nov 2025 14:05:10 +0100
-Message-ID: <20251121130231.401823629@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 012/529] mptcp: drop bogus optimization in __mptcp_check_push()
+Date: Fri, 21 Nov 2025 14:05:11 +0100
+Message-ID: <20251121130231.439303009@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -50,40 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit eb53368f8d6e2dfba84c8a94d245719bcf9ae270 upstream.
+commit 27b0e701d3872ba59c5b579a9e8a02ea49ad3d3b upstream.
 
-The of_find_node_by_name() function returns a device tree node with its
-reference count incremented. The caller is responsible for calling
-of_node_put() to release this reference when done.
+Accessing the transmit queue without owning the msk socket lock is
+inherently racy, hence __mptcp_check_push() could actually quit early
+even when there is pending data.
 
-Found via static analysis.
+That in turn could cause unexpected tx lock and timeout.
 
-Fixes: cc5d0189b9ba ("[PATCH] powerpc: Remove device_node addrs/n_addr")
+Dropping the early check avoids the race, implicitly relaying on later
+tests under the relevant lock. With such change, all the other
+mptcp_send_head() call sites are now under the msk socket lock and we
+can additionally drop the now unneeded annotation on the transmit head
+pointer accesses.
+
+Fixes: 6e628cd3a8f7 ("mptcp: use mptcp release_cb for delayed tasks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-1-38ffff5a9ec8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/valkyriefb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/protocol.c |   11 ++++-------
+ net/mptcp/protocol.h |    2 +-
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/video/fbdev/valkyriefb.c
-+++ b/drivers/video/fbdev/valkyriefb.c
-@@ -329,11 +329,13 @@ static int __init valkyriefb_init(void)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1044,7 +1044,7 @@ static void __mptcp_clean_una(struct soc
+ 			if (WARN_ON_ONCE(!msk->recovery))
+ 				break;
  
- 		if (of_address_to_resource(dp, 0, &r)) {
- 			printk(KERN_ERR "can't find address for valkyrie\n");
-+			of_node_put(dp);
- 			return 0;
+-			WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
++			msk->first_pending = mptcp_send_next(sk);
  		}
  
- 		frame_buffer_phys = r.start;
- 		cmap_regs_phys = r.start + 0x304000;
-+		of_node_put(dp);
- 	}
- #endif /* ppc (!CONFIG_MAC) */
+ 		dfrag_clear(sk, dfrag);
+@@ -1588,7 +1588,7 @@ static int __subflow_push_pending(struct
  
+ 			mptcp_update_post_push(msk, dfrag, ret);
+ 		}
+-		WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
++		msk->first_pending = mptcp_send_next(sk);
+ 
+ 		if (msk->snd_burst <= 0 ||
+ 		    !sk_stream_memory_free(ssk) ||
+@@ -1900,7 +1900,7 @@ static int mptcp_sendmsg(struct sock *sk
+ 			get_page(dfrag->page);
+ 			list_add_tail(&dfrag->list, &msk->rtx_queue);
+ 			if (!msk->first_pending)
+-				WRITE_ONCE(msk->first_pending, dfrag);
++				msk->first_pending = dfrag;
+ 		}
+ 		pr_debug("msk=%p dfrag at seq=%llu len=%u sent=%u new=%d\n", msk,
+ 			 dfrag->data_seq, dfrag->data_len, dfrag->already_sent,
+@@ -2899,7 +2899,7 @@ static void __mptcp_clear_xmit(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct mptcp_data_frag *dtmp, *dfrag;
+ 
+-	WRITE_ONCE(msk->first_pending, NULL);
++	msk->first_pending = NULL;
+ 	list_for_each_entry_safe(dfrag, dtmp, &msk->rtx_queue, list)
+ 		dfrag_clear(sk, dfrag);
+ }
+@@ -3456,9 +3456,6 @@ void __mptcp_data_acked(struct sock *sk)
+ 
+ void __mptcp_check_push(struct sock *sk, struct sock *ssk)
+ {
+-	if (!mptcp_send_head(sk))
+-		return;
+-
+ 	if (!sock_owned_by_user(sk))
+ 		__mptcp_subflow_push_pending(sk, ssk, false);
+ 	else
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -379,7 +379,7 @@ static inline struct mptcp_data_frag *mp
+ {
+ 	const struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+-	return READ_ONCE(msk->first_pending);
++	return msk->first_pending;
+ }
+ 
+ static inline struct mptcp_data_frag *mptcp_send_next(struct sock *sk)
 
 
