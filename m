@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C4A27B358;
-	Fri, 21 Nov 2025 13:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3931534678E;
+	Fri, 21 Nov 2025 13:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730965; cv=none; b=TH5dbVaHTNespD2J/qukvAavNfRmrUMuthB6nu0VLdCBYMhV8wW6aVDloJ8ChXgooYG6kd+yiqea96WYYlTAgqrQZnR2XQUvgAqvVkzV6n3t/fhpXFWZ70MINkTN5DgJ27Jcf9juAoI5Q7uH8LQuw4oZVUIBSj/t54gU4P+CiCY=
+	t=1763730968; cv=none; b=oJ4aMkJ7xsc0sKmOVMRLbzxj4whUJN9LMyZSL+Br7ht9ZqATh2XR+qPycdouH7JogTAUJUS5mC685QgZFttuG+YEyDVfsadBJrr6P5h93BV6HV1lRMLCCFBVaCB8Mz9bd6h8M/uzGjHJerSi+q00S2sWo/wryDJVe50Yiit7iFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730965; c=relaxed/simple;
-	bh=88YJIPgUNzK9d+I1wWfWKLYlD+Cn2v2YZqbNtU160B0=;
+	s=arc-20240116; t=1763730968; c=relaxed/simple;
+	bh=cIjQI+mGtRoK9cQTRwd0xnqg/RPXe8QPMpH0vhXSS6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnyWQ7VecvEA5dox78+Air7h+3G/hw+Tgr8Wu83hyqx19fvbWhPnfDPyOmN8mrJ529mNxYk+XejkIAeH+uAD2sVkaaB4q8Td1F0klCEduV+bczY2GRY3HUbFz0oAk8NJSqHvVap/Id9W08Gl0zM7kJKtHzQaIarVCAFlmX81OyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke6rpWaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvL2WTX/QC7K20El0/XqyAiAj3fzfUNWpvVx8y86PqRf0OjCvcbIzCsSyuvRzX3RtIcUsd8zNSg9o9wKQcRmwMuhdrh2+WfeGyuaLgT3phGv1E2BoGPHgRUPf1q5CaB+W3FPFVQH68AabHVM0xQaz5qvZyIhqndgctbxdY6+tf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8i3FWBy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke6rpWaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982CDC116D0;
-	Fri, 21 Nov 2025 13:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8i3FWBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F53BC4CEFB;
+	Fri, 21 Nov 2025 13:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730965;
-	bh=88YJIPgUNzK9d+I1wWfWKLYlD+Cn2v2YZqbNtU160B0=;
+	s=korg; t=1763730968;
+	bh=cIjQI+mGtRoK9cQTRwd0xnqg/RPXe8QPMpH0vhXSS6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ke6rpWaMR3Ix2wGGrkHDZe7Ym3az5wgoTpmdk4UXc7Ws2U5+ue4keSYAU5c45qdwO
-	 2DRC1L3DzmCzUi71FZSj2RaBVMNKVqOUm8HhujFhUEweIZ6K0oU7bKYeFEXlbtn5Fq
-	 ApQ7pzy7J99ovsdtogj14Y0y2HpHi+2dpz7Srn5A=
+	b=C8i3FWByfCsCmXmhDwaEs6xkwq15N7pp5xiiFaWuxHagZJoP5C8LvRjmACCD5r2J+
+	 HIUNod+9cE8pn99DWmRxOW5Qd+IjGT/0tyU8/WQfHuRDpofp398UJg07TXOXe8gTXK
+	 42On9uJgOzIMTqc9TkZAfl8tqe2SexjbFl1MrJ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Sharique Mohammad <sharq0406@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 042/247] HID: logitech-hidpp: Add HIDPP_QUIRK_RESET_HI_RES_SCROLL
-Date: Fri, 21 Nov 2025 14:09:49 +0100
-Message-ID: <20251121130156.112801293@linuxfoundation.org>
+Subject: [PATCH 6.17 043/247] ASoC: max98090/91: fixed max98091 ALSA widget powering up/down
+Date: Fri, 21 Nov 2025 14:09:50 +0100
+Message-ID: <20251121130156.148775951@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,113 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+From: Sharique Mohammad <sharq0406@gmail.com>
 
-[ Upstream commit ed80cc4667ac997b84546e6d35f0a0ae525d239c ]
+[ Upstream commit 7a37291ed40a33a5f6c3d370fdde5ee0d8f7d0e4 ]
 
-The Logitech G502 Hero Wireless's high resolution scrolling resets after
-being unplugged without notifying the driver, causing extremely slow
-scrolling.
+The widgets DMIC3_ENA and DMIC4_ENA must be defined in the DAPM
+suppy widget, just like DMICL_ENA and DMICR_ENA. Whenever they
+are turned on or off, the required startup or shutdown sequences
+must be taken care by the max98090_shdn_event.
 
-The only indication of this is a battery update packet, so add a quirk to
-detect when the device is unplugged and re-enable the scrolling.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218037
-Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sharique Mohammad <sharq0406@gmail.com>
+Link: https://patch.msgid.link/20251015134215.750001-1-sharq0406@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ sound/soc/codecs/max98090.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index aaef405a717ee..5e763de4b94fd 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -75,6 +75,7 @@ MODULE_PARM_DESC(disable_tap_to_click,
- #define HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS	BIT(27)
- #define HIDPP_QUIRK_HI_RES_SCROLL_1P0		BIT(28)
- #define HIDPP_QUIRK_WIRELESS_STATUS		BIT(29)
-+#define HIDPP_QUIRK_RESET_HI_RES_SCROLL		BIT(30)
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index 22177c1ce1602..cb1508fc99f89 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -1234,9 +1234,11 @@ static const struct snd_soc_dapm_widget max98091_dapm_widgets[] = {
+ 	SND_SOC_DAPM_INPUT("DMIC4"),
  
- /* These are just aliases for now */
- #define HIDPP_QUIRK_KBD_SCROLL_WHEEL HIDPP_QUIRK_HIDPP_WHEELS
-@@ -193,6 +194,7 @@ struct hidpp_device {
- 	void *private_data;
+ 	SND_SOC_DAPM_SUPPLY("DMIC3_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC3_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC3_SHIFT, 0, max98090_shdn_event,
++			SND_SOC_DAPM_POST_PMU),
+ 	SND_SOC_DAPM_SUPPLY("DMIC4_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC4_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC4_SHIFT, 0, max98090_shdn_event,
++			 SND_SOC_DAPM_POST_PMU),
+ };
  
- 	struct work_struct work;
-+	struct work_struct reset_hi_res_work;
- 	struct kfifo delayed_work_fifo;
- 	struct input_dev *delayed_input;
- 
-@@ -3836,6 +3838,7 @@ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
- 	struct hidpp_report *answer = hidpp->send_receive_buf;
- 	struct hidpp_report *report = (struct hidpp_report *)data;
- 	int ret;
-+	int last_online;
- 
- 	/*
- 	 * If the mutex is locked then we have a pending answer from a
-@@ -3877,6 +3880,7 @@ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
- 			"See: https://gitlab.freedesktop.org/jwrdegoede/logitech-27mhz-keyboard-encryption-setup/\n");
- 	}
- 
-+	last_online = hidpp->battery.online;
- 	if (hidpp->capabilities & HIDPP_CAPABILITY_HIDPP20_BATTERY) {
- 		ret = hidpp20_battery_event_1000(hidpp, data, size);
- 		if (ret != 0)
-@@ -3901,6 +3905,11 @@ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
- 			return ret;
- 	}
- 
-+	if (hidpp->quirks & HIDPP_QUIRK_RESET_HI_RES_SCROLL) {
-+		if (last_online == 0 && hidpp->battery.online == 1)
-+			schedule_work(&hidpp->reset_hi_res_work);
-+	}
-+
- 	if (hidpp->quirks & HIDPP_QUIRK_HIDPP_WHEELS) {
- 		ret = hidpp10_wheel_raw_event(hidpp, data, size);
- 		if (ret != 0)
-@@ -4274,6 +4283,13 @@ static void hidpp_connect_event(struct work_struct *work)
- 	hidpp->delayed_input = input;
- }
- 
-+static void hidpp_reset_hi_res_handler(struct work_struct *work)
-+{
-+	struct hidpp_device *hidpp = container_of(work, struct hidpp_device, reset_hi_res_work);
-+
-+	hi_res_scroll_enable(hidpp);
-+}
-+
- static DEVICE_ATTR(builtin_power_supply, 0000, NULL, NULL);
- 
- static struct attribute *sysfs_attrs[] = {
-@@ -4404,6 +4420,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	}
- 
- 	INIT_WORK(&hidpp->work, hidpp_connect_event);
-+	INIT_WORK(&hidpp->reset_hi_res_work, hidpp_reset_hi_res_handler);
- 	mutex_init(&hidpp->send_mutex);
- 	init_waitqueue_head(&hidpp->wait);
- 
-@@ -4499,6 +4516,7 @@ static void hidpp_remove(struct hid_device *hdev)
- 
- 	hid_hw_stop(hdev);
- 	cancel_work_sync(&hidpp->work);
-+	cancel_work_sync(&hidpp->reset_hi_res_work);
- 	mutex_destroy(&hidpp->send_mutex);
- }
- 
-@@ -4546,6 +4564,9 @@ static const struct hid_device_id hidpp_devices[] = {
- 	{ /* Keyboard MX5500 (Bluetooth-receiver in HID proxy mode) */
- 	  LDJ_DEVICE(0xb30b),
- 	  .driver_data = HIDPP_QUIRK_HIDPP_CONSUMER_VENDOR_KEYS },
-+	{ /* Logitech G502 Lightspeed Wireless Gaming Mouse */
-+	  LDJ_DEVICE(0x407f),
-+	  .driver_data = HIDPP_QUIRK_RESET_HI_RES_SCROLL },
- 
- 	{ LDJ_DEVICE(HID_ANY_ID) },
- 
+ static const struct snd_soc_dapm_route max98090_dapm_routes[] = {
 -- 
 2.51.0
 
