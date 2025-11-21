@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B48350A2A;
-	Fri, 21 Nov 2025 13:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B584E2D73A4;
+	Fri, 21 Nov 2025 13:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733314; cv=none; b=T4bHVWgqgpg6SuRVOytq+wGfh97AK9p/DnOxWNhnynpxMpipN+XhgV2XUmgEuqHFCIrSrCJa1Xq7RaCSHg/MD8UuQGfBhLHnjNV0MiiiJ0pNtL7GMtUEQsEvJ7/SSsR3r/feEV33S4TQ2stWHXoFLr2Qto/yNGstlV8HrIFg5OA=
+	t=1763733316; cv=none; b=j5mlPTVBLQtm6z4wBMx9TIfVI3cu1fe6IxJjY7tp05NZINOKrUUXg0+QH2LywiSHshCGWbbS94/q57L8nRoICGCpUoDeuob8otPQOdxA7asHFaL05Q21JPS4faCkqXnMlDJEWunRQkMETpBuuRx/kRM+vdaIUYNJ2JeNCzzAMgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733314; c=relaxed/simple;
-	bh=tmhOkKadNlfFx6xf8M/7wVM8e2lVe4m+6GocpCzzvV0=;
+	s=arc-20240116; t=1763733316; c=relaxed/simple;
+	bh=3WAwhyajiCS8DtcCLzWunZLow1Fg/4HGUL9G2CNR6Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EITOp7Cw4SiVQir3AYtUl+P/DSehdgMS+waw2ukT2GY6p1a0utJrOhr1WfrYahNpVYfr9J8H4WjNZaf8tfwo+Ot9Ag7F6ClpPbnCGBmqrHOymJq52P2LjBM/bYL6mLzHjsc7YsKv3irJqOibbt8chR7UniVwTo9gbLsMDhcJFiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sp2f8X4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/S4wDafUdyKydj8RoqFue2RMHhaOr49rPJtBdjRidUrI/RS0kqgR6m8nA7DpqoMGDWJ6lqI3pnJOqvQT4qzTsnUY3WcjBQJQTpwMbLwUxvnxl7AMC6kPYrLMCXrgOpBUeAZ2/27p4GkkC7NLvuZaMxXRUN79uPxvoEFqPKNiCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXUPFW1M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sp2f8X4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D84C4CEF1;
-	Fri, 21 Nov 2025 13:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXUPFW1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFFFC4CEF1;
+	Fri, 21 Nov 2025 13:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733312;
-	bh=tmhOkKadNlfFx6xf8M/7wVM8e2lVe4m+6GocpCzzvV0=;
+	s=korg; t=1763733315;
+	bh=3WAwhyajiCS8DtcCLzWunZLow1Fg/4HGUL9G2CNR6Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sp2f8X4QVrLDmROFg1+PQnNSfVlcD/oithDSKQQnKtPJpsnnnZrNmCpzOEQVGRt3e
-	 mBWn8S7X+nzSTRm5M2/Zh/wrJXkSjnRIeOjYxMHoCLMAdzqRC/Aa/pgyh7OJ5v8sJq
-	 CbLEKkylUu8gkVaQZsRB+OjFaM+MqSP0T5tu9uok=
+	b=MXUPFW1MvQ1HOOZlxwslDc05BVr0F+GZgKhudn1QmS2W0WW6NEzTtSFtIADlcNAFD
+	 2E45Ocv3UeWrQ4ywfF93gLCosmC2GYMwMA7gcVqcxhuOpUcp0eVoSb8l+dhO5yaVIP
+	 fPmLADA1BndMZhfm1U0lhMLrPf8CI2mxmRjN0UYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 392/529] smb/server: fix possible refcount leak in smb2_sess_setup()
-Date: Fri, 21 Nov 2025 14:11:31 +0100
-Message-ID: <20251121130244.970144238@linuxfoundation.org>
+Subject: [PATCH 6.6 383/529] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
+Date: Fri, 21 Nov 2025 14:11:22 +0100
+Message-ID: <20251121130244.651722017@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,35 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
 
-[ Upstream commit 379510a815cb2e64eb0a379cb62295d6ade65df0 ]
+[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
 
-Reference count of ksmbd_session will leak when session need reconnect.
-Fix this by adding the missing ksmbd_user_session_put().
+openSBI v1.7 adds harts checks for ipi operations. Especially it
+adds comparison between hmask passed as an argument from linux
+and mask of online harts (from openSBI side). If they don't
+fit each other the error occurs.
 
-Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When cpu is offline, cpu_online_mask is explicitly cleared in
+__cpu_disable. However, there is no explicit clearing of
+mm_cpumask. mm_cpumask is used for rfence operations that
+call openSBI RFENCE extension which uses ipi to remote harts.
+If hart is offline there may be error if mask of linux is not
+as mask of online harts in openSBI.
+
+this patch adds explicit clearing of mm_cpumask for offline hart.
+
+Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
+[pjw@kernel.org: rewrote subject line for clarity]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 1 +
+ arch/riscv/kernel/cpu-hotplug.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index b3fa983a522fb..9f64808c7917c 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1793,6 +1793,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index 6b710ef9d9aef..2114903ee3ad4 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -61,6 +61,7 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
  
- 		if (ksmbd_conn_need_reconnect(conn)) {
- 			rc = -EFAULT;
-+			ksmbd_user_session_put(sess);
- 			sess = NULL;
- 			goto out_err;
- 		}
+ 	pr_notice("CPU%u: off\n", cpu);
+ 
++	clear_tasks_mm_cpumask(cpu);
+ 	/* Verify from the firmware if the cpu is really stopped*/
+ 	if (cpu_ops[cpu]->cpu_is_stopped)
+ 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
 -- 
 2.51.0
 
