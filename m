@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A200190477;
-	Fri, 21 Nov 2025 13:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146233E366;
+	Fri, 21 Nov 2025 13:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731665; cv=none; b=Ph64PCJqyoRF/ag+ykY0/mXiYsUDHz1SiD2I/pu61hKEzBszOZCOcPHLzQJ9BGXDMKqWhtLqaSNnSwuuTge88Y1sl+dXoRJDM1iZ4kyNsElgAnPvwrgOzk7MWrP+z19SVz0ukNQAMl3RK9G3Q/wisk7kegJPpP3Xjv7FFD0fRJg=
+	t=1763731668; cv=none; b=BW/NwFZU3bsEQNrWESN37NDSiVvuIbWSrYXh8A0QDLFpjLttn6N5xXkICLn3aNWGLccIaskhLCGXNGbj+l5BzxoYC+w87uJt8an4mWKagnxHzAPSRFDhQAlSD2CdiPTMm9g4eHdKm6TrFFnoIrCb09jaVRcau6nlekbMwR7xVy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731665; c=relaxed/simple;
-	bh=sHaASRuJz3jerCzTL1RkCRv6L9O/6J3yxHI2NWNmhRc=;
+	s=arc-20240116; t=1763731668; c=relaxed/simple;
+	bh=vLVAgGzCmqFBtPlonoR4+4Ih813G+aHMorIddLBDXo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5r7FYuc2RxjsOY0Lzi9zYFT8Fafe6dqQydPG5moizEHlJhqK1tV6sgmhKg6l38e0T2SPecGswGV/4Cy78ZzCm/pTQbvDStwYuDbypbz+LK6xCL7pvA1U+gSMfRz/Bu6lMDEIz4CS65NajHaG88+I602+TbihRPwinJzDDEcSpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ms45BKcY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPRt6pS6Ck6MEua88t2JcHFTLbr/IUlZRKTPs5GsV0MHi28kWlY5Q4fflaaG6nKLdrAuyoLruEO1A4KNMQ/k02UqeSWsT4NsvYaUQslKuNR1khKyWCWiA07RNPeMTaqjOcNIpB/HzmyGR4uay1raT3W4U5GinjUedtUWrkt9mjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dX8qVx0g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ms45BKcY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6CEC4CEF1;
-	Fri, 21 Nov 2025 13:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX8qVx0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F97C4CEF1;
+	Fri, 21 Nov 2025 13:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731664;
-	bh=sHaASRuJz3jerCzTL1RkCRv6L9O/6J3yxHI2NWNmhRc=;
+	s=korg; t=1763731667;
+	bh=vLVAgGzCmqFBtPlonoR4+4Ih813G+aHMorIddLBDXo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ms45BKcYpxBRTtV5xQEHKF50JJfeN8Hyu9ZjdvRh7Fu+j6m0uaop10rJm3DsDAOMx
-	 t4+juFRTvR9gCGsJ8A6hNH8eubG9nNKd7Nm56hk6Zk3H6QcDcHHJ+y3hSea3SiHT5i
-	 bNKx6s8gRsI8tqIErhXnhoYuHMlGLzlqMhhKo44M=
+	b=dX8qVx0geevtbYclZBiRLCfBNZN5rpdppKcarZaI2DSmNhlEj+TXmzAKf+AmkEruC
+	 +/SZqxkb88sIQWBo/2VW7YSsj//db1MFYWey5Ug9i2W+gnBqboN83POGu8obFD26os
+	 2x94RsU6qcyleBpxoywPbgD8XZMULs33p3++X+1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rtm@csail.mit.edu,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/185] NFSD: Skip close replay processing if XDR encoding fails
-Date: Fri, 21 Nov 2025 14:11:05 +0100
-Message-ID: <20251121130145.254116677@linuxfoundation.org>
+Subject: [PATCH 6.12 039/185] Bluetooth: MGMT: cancel mesh send timer when hdev removed
+Date: Fri, 21 Nov 2025 14:11:06 +0100
+Message-ID: <20251121130145.290549474@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,41 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit ff8141e49cf70d2d093a5228f5299ce188de6142 ]
+[ Upstream commit 55fb52ffdd62850d667ebed842815e072d3c9961 ]
 
-The replay logic added by commit 9411b1d4c7df ("nfsd4: cleanup
-handling of nfsv4.0 closed stateid's") cannot be done if encoding
-failed due to a short send buffer; there's no guarantee that the
-operation encoder has actually encoded the data that is being copied
-to the replay cache.
+mesh_send_done timer is not canceled when hdev is removed, which causes
+crash if the timer triggers after hdev is gone.
 
-Reported-by: rtm@csail.mit.edu
-Closes: https://lore.kernel.org/linux-nfs/c3628d57-94ae-48cf-8c9e-49087a28cec9@oracle.com/T/#t
-Fixes: 9411b1d4c7df ("nfsd4: cleanup handling of nfsv4.0 closed stateid's")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cancel the timer when MGMT removes the hdev, like other MGMT timers.
+
+Should fix the BUG: sporadically seen by BlueZ test bot
+(in "Mesh - Send cancel - 1" test).
+
+Log:
+------
+BUG: KASAN: slab-use-after-free in run_timer_softirq+0x76b/0x7d0
+...
+Freed by task 36:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_save_free_info+0x3a/0x60
+ __kasan_slab_free+0x43/0x70
+ kfree+0x103/0x500
+ device_release+0x9a/0x210
+ kobject_put+0x100/0x1e0
+ vhci_release+0x18b/0x240
+------
+
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Link: https://lore.kernel.org/linux-bluetooth/67364c09.0c0a0220.113cba.39ff@mx.google.com/
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-index 66383eeeed15a..e6b000a4a31aa 100644
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5800,8 +5800,7 @@ nfsd4_encode_operation(struct nfsd4_compoundres *resp, struct nfsd4_op *op)
- 		 */
- 		warn_on_nonidempotent_op(op);
- 		xdr_truncate_encode(xdr, op_status_offset + XDR_UNIT);
--	}
--	if (so) {
-+	} else if (so) {
- 		int len = xdr->buf->len - (op_status_offset + XDR_UNIT);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 57295c3a8920f..c54cc701cdd48 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9492,6 +9492,7 @@ void mgmt_index_removed(struct hci_dev *hdev)
+ 	cancel_delayed_work_sync(&hdev->discov_off);
+ 	cancel_delayed_work_sync(&hdev->service_cache);
+ 	cancel_delayed_work_sync(&hdev->rpa_expired);
++	cancel_delayed_work_sync(&hdev->mesh_send_done);
+ }
  
- 		so->so_replay.rp_status = op->status;
+ void mgmt_power_on(struct hci_dev *hdev, int err)
 -- 
 2.51.0
 
