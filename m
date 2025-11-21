@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD82D73B0;
-	Fri, 21 Nov 2025 13:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27788266584;
+	Fri, 21 Nov 2025 13:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733592; cv=none; b=Cp/iXQYIgtUTIBpMvJPE1ywfFnzOLWcyzp+q2unh1leY4DeAu/fj1paHmPGgndCr5sOO/baXKGruaGpQVoHB4dA0rZdpWLonYIP5/Fp/NvP5wX/IKh+1k0Z+PRsf2C60fWTMhveaEFkwzZ3FW8f2BzIZcb4sngNCsTCO10BM0vo=
+	t=1763733595; cv=none; b=DunTZm/WXo6pndFqSY+70dyC2C5l/aUBm5H85kuhWba4+aubuFTyv3xCRUWytoCdHigTSgGwg3q5XL+MNkQtOUYJjCq7WexhpxAqb9P2sMb8zk3Nf7nQW5V2TA9WZ+w+cFaUixl9b3n5v7oF7PurUUyD+JGti/SKtBKl+B1+35s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733592; c=relaxed/simple;
-	bh=OaktdN7sQaucr+EbkR0UItVCnanBVB8Pg6lGwBsSruw=;
+	s=arc-20240116; t=1763733595; c=relaxed/simple;
+	bh=JD64n9XOLikdXBJCngF+0aYIt9DmWnF7yaGeBQBnjJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hl0DDKMV4AVOVQVMAFHlgMpCZ57yoSeyU+KcaqCGUqP53JF/kQQfP/fyobtNUnppl+P9ZGpVnrLZKc7s4Ze1RxbisUB5+o6k+8XvQl6PEAz1b0cyVMt9Q1hkQPGU8y+n8b+JwtXBfgLkNpb8Hvw/evJtdJiuj1TDH3UJqffRN0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shCOt52Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PxZjFRs7+5SF2tBAB/1nv12hNATlNVaHvRwHhaVtNikS2rWg8kptYF2HQFQ21nsJxuU7HtP43CUTNyq2nqXpBLcb1H5MVK4/R1vjaJKStm7YFXM+gIlvWMElEIaYqEYZJ/OpHt7yAadWG4O3h3YrVlCrBCUbyGhY+FsV9dS+AHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQQbNG3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shCOt52Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA343C4CEF1;
-	Fri, 21 Nov 2025 13:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQQbNG3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB08C116C6;
+	Fri, 21 Nov 2025 13:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733592;
-	bh=OaktdN7sQaucr+EbkR0UItVCnanBVB8Pg6lGwBsSruw=;
+	s=korg; t=1763733595;
+	bh=JD64n9XOLikdXBJCngF+0aYIt9DmWnF7yaGeBQBnjJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shCOt52ZdeLHfOvgqlLcMR9/IwAXMSk6UG+uF5SIIjMKvwwl8TbH53kFCTsJdnJCr
-	 QnD8GJ3FBuBmnBj21RMdy6mULgWmZ8ro9kioaFpkSdrOO3Aydk23+rioQjoOMn37Ij
-	 igGVtoW6+9Q+ai27d5gpy5s0WAS7Tt2npV9SVTM4=
+	b=sQQbNG3w6HfYeDcArk8Y4lvAwFxlM73bziByO/363gtTtv/RR7NOnB4JvvO7Wbc4N
+	 mKKNh7vqKKAnsv6NVKik3GLJsy1efEO81Q+xkelatWEtgFUcS0HKMRJppnp+vU94oc
+	 5VIuDE+ijCMAXJ0mwwK7+ivnUvvQnbbXAWxQA+7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 494/529] btrfs: ensure no dirty metadata is written back for an fs with errors
-Date: Fri, 21 Nov 2025 14:13:13 +0100
-Message-ID: <20251121130248.586791272@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	Google Big Sleep <big-sleep-vuln-reports@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 521/529] mm/secretmem: fix use-after-free race in fault handler
+Date: Fri, 21 Nov 2025 14:13:40 +0100
+Message-ID: <20251121130249.583474069@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,81 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-[ Upstream commit 2618849f31e7cf51fadd4a5242458501a6d5b315 ]
+commit 6f86d0534fddfbd08687fa0f01479d4226bc3c3d upstream.
 
-[BUG]
-During development of a minor feature (make sure all btrfs_bio::end_io()
-is called in task context), I noticed a crash in generic/388, where
-metadata writes triggered new works after btrfs_stop_all_workers().
+When a page fault occurs in a secret memory file created with
+`memfd_secret(2)`, the kernel will allocate a new folio for it, mark the
+underlying page as not-present in the direct map, and add it to the file
+mapping.
 
-It turns out that it can even happen without any code modification, just
-using RAID5 for metadata and the same workload from generic/388 is going
-to trigger the use-after-free.
+If two tasks cause a fault in the same page concurrently, both could end
+up allocating a folio and removing the page from the direct map, but only
+one would succeed in adding the folio to the file mapping.  The task that
+failed undoes the effects of its attempt by (a) freeing the folio again
+and (b) putting the page back into the direct map.  However, by doing
+these two operations in this order, the page becomes available to the
+allocator again before it is placed back in the direct mapping.
 
-[CAUSE]
-If btrfs hits an error, the fs is marked as error, no new
-transaction is allowed thus metadata is in a frozen state.
+If another task attempts to allocate the page between (a) and (b), and the
+kernel tries to access it via the direct map, it would result in a
+supervisor not-present page fault.
 
-But there are some metadata modifications before that error, and they are
-still in the btree inode page cache.
+Fix the ordering to restore the direct map before the folio is freed.
 
-Since there will be no real transaction commit, all those dirty folios
-are just kept as is in the page cache, and they can not be invalidated
-by invalidate_inode_pages2() call inside close_ctree(), because they are
-dirty.
-
-And finally after btrfs_stop_all_workers(), we call iput() on btree
-inode, which triggers writeback of those dirty metadata.
-
-And if the fs is using RAID56 metadata, this will trigger RMW and queue
-new works into rmw_workers, which is already stopped, causing warning
-from queue_work() and use-after-free.
-
-[FIX]
-Add a special handling for write_one_eb(), that if the fs is already in
-an error state, immediately mark the bbio as failure, instead of really
-submitting them.
-
-Then during close_ctree(), iput() will just discard all those dirty
-tree blocks without really writing them back, thus no more new jobs for
-already stopped-and-freed workqueues.
-
-The extra discard in write_one_eb() also acts as an extra safenet.
-E.g. the transaction abort is triggered by some extent/free space
-tree corruptions, and since extent/free space tree is already corrupted
-some tree blocks may be allocated where they shouldn't be (overwriting
-existing tree blocks). In that case writing them back will further
-corrupting the fs.
-
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20251031120955.92116-1-lance.yang@linux.dev
+Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Reported-by: Google Big Sleep <big-sleep-vuln-reports@google.com>
+Closes: https://lore.kernel.org/linux-mm/CAEXGt5QeDpiHTu3K9tvjUTPqo+d-=wuCNYPa+6sWKrdQJ-ATdg@mail.gmail.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ mm/secretmem.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1751,6 +1751,14 @@ static noinline_for_stack void write_one
- 			unlock_page(p);
- 		}
- 	}
-+	/*
-+	 * If the fs is already in error status, do not submit any writeback
-+	 * but immediately finish it.
-+	 */
-+	if (unlikely(BTRFS_FS_ERROR(fs_info))) {
-+		btrfs_bio_end_io(bbio, errno_to_blk_status(BTRFS_FS_ERROR(fs_info)));
-+		return;
-+	}
- 	btrfs_submit_bio(bbio, 0);
- }
+--- a/mm/secretmem.c
++++ b/mm/secretmem.c
+@@ -84,13 +84,13 @@ retry:
+ 		__folio_mark_uptodate(folio);
+ 		err = filemap_add_folio(mapping, folio, offset, gfp);
+ 		if (unlikely(err)) {
+-			folio_put(folio);
+ 			/*
+ 			 * If a split of large page was required, it
+ 			 * already happened when we marked the page invalid
+ 			 * which guarantees that this call won't fail
+ 			 */
+ 			set_direct_map_default_noflush(page);
++			folio_put(folio);
+ 			if (err == -EEXIST)
+ 				goto retry;
  
 
 
