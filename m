@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29F42DCF55;
-	Fri, 21 Nov 2025 13:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D991C5D77;
+	Fri, 21 Nov 2025 13:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733387; cv=none; b=i1P2uqC1HtNokgJx7r9HeS0I6iMCUuoA1ZXF6tQOLWZshe+aMyVG3bk/xDN/nRQJDcNC7TIHIyvCYsGG/JLQPOi+rRaWNTgGU6V6FiBcimRZdmxvIOIw8c6KMx62IknepOHpyWUUouiHEWhbZvJfT+UZyzWodON+fjxnOO06y0g=
+	t=1763733390; cv=none; b=t08QS/7KFw7sd4p5BFLRIMozPMMVST9r34l0HY/DcULS/iBB3XT3X+G/BePxTFHeFlwDJZIskHhvEkTxkl6joUWuRInohg2t7qm/8Fb2qgEI4G2OBEI7YpD+EtaznkimxOKQmvpYcghHD+/R8nFFxf6bvTmPGzp1it7zpkJJVpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733387; c=relaxed/simple;
-	bh=OUHuSespMvVjU54JaAFjHTWmMQ8BjceobL1QcUnyYOA=;
+	s=arc-20240116; t=1763733390; c=relaxed/simple;
+	bh=Ik/z6Dr640/e7wVwIm9zt5zCQhtJqIixwxyLVVvpUpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxBgIVxkkaqd3GzTJ/CMqkQ19kcf0eUkBMauhay2NMvcICSB8Gv67cH8Zrh186ObPmM/TQqmYcZYg3XbGGeebj5uMdXIIaBb0j3PN9JS6/Y0Rn1upM48pFyPx1+UIG+gUns3BplHVgWSmhN4QSwpW5VQI24ICAo2Bq6tySG2Q3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY4TOa6D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxxTCaTYZxmWTGPfnSPKtFTF3RsivM0ovqWCt2AXX1gcJAd4cGxK8q8G5au0ojSKTAx/V+5X+DF8ft66wDJGl9m0zmchxUvjV/RFCmDZleX5jp3fYLBQptghYxWZXKBuz6tRnMGv0En1RG5mebpdoCsU2XRdEJrMTOJw4U1vzjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubi3ZBVh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY4TOa6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB902C4CEF1;
-	Fri, 21 Nov 2025 13:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubi3ZBVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD11C4CEF1;
+	Fri, 21 Nov 2025 13:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733387;
-	bh=OUHuSespMvVjU54JaAFjHTWmMQ8BjceobL1QcUnyYOA=;
+	s=korg; t=1763733390;
+	bh=Ik/z6Dr640/e7wVwIm9zt5zCQhtJqIixwxyLVVvpUpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mY4TOa6DdqCxonomAMMIIMbc9cdx33qfT7PhUZP7xHKf2QGPz/zlb2DEJWKhfFXEl
-	 MQ12U+IpqaK+ivp8h2eRirwMEgJ/IPI+suMRpJZ9HI6cRH2ehzg1Lt9RygD4VBT33L
-	 gBV0al3XZp9ebdbjy31l9ymw1A2leZpAJNPd1k7Y=
+	b=ubi3ZBVhjdsyKhSDBZWyUQaM5tgPN0Z+ei7hq9eoyh3y4syagGL6qX53elzG4BGiY
+	 Is3sk5OGFFp6j1JiMuO5PcfrotoO1t9sI4ZkhhIxTeU/ojC/YIfSfhjbt3qx8bxVng
+	 bAycp7QMTXPXisk1IiGodYvhy6+SkllcY3cH1I1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Eric Dumazet <edumazet@google.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Wenshan Lan <jetlan9@163.com>,
+	Rajani Kantha <681739313@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 450/529] net: allow small head cache usage with large MAX_SKB_FRAGS values
-Date: Fri, 21 Nov 2025 14:12:29 +0100
-Message-ID: <20251121130247.021846331@linuxfoundation.org>
+Subject: [PATCH 6.6 451/529] net: dsa: improve shutdown sequence
+Date: Fri, 21 Nov 2025 14:12:30 +0100
+Message-ID: <20251121130247.056744917@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,146 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 14ad6ed30a10afbe91b0749d6378285f4225d482 ]
+[ Upstream commit 6c24a03a61a245fe34d47582898331fa034b6ccd ]
 
-Sabrina reported the following splat:
+Alexander Sverdlin presents 2 problems during shutdown with the
+lan9303 driver. One is specific to lan9303 and the other just happens
+to reproduce there.
 
-    WARNING: CPU: 0 PID: 1 at net/core/dev.c:6935 netif_napi_add_weight_locked+0x8f2/0xba0
-    Modules linked in:
-    CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.14.0-rc1-net-00092-g011b03359038 #996
-    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
-    RIP: 0010:netif_napi_add_weight_locked+0x8f2/0xba0
-    Code: e8 c3 e6 6a fe 48 83 c4 28 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc c7 44 24 10 ff ff ff ff e9 8f fb ff ff e8 9e e6 6a fe <0f> 0b e9 d3 fe ff ff e8 92 e6 6a fe 48 8b 04 24 be ff ff ff ff 48
-    RSP: 0000:ffffc9000001fc60 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffff88806ce48128 RCX: 1ffff11001664b9e
-    RDX: ffff888008f00040 RSI: ffffffff8317ca42 RDI: ffff88800b325cb6
-    RBP: ffff88800b325c40 R08: 0000000000000001 R09: ffffed100167502c
-    R10: ffff88800b3a8163 R11: 0000000000000000 R12: ffff88800ac1c168
-    R13: ffff88800ac1c168 R14: ffff88800ac1c168 R15: 0000000000000007
-    FS:  0000000000000000(0000) GS:ffff88806ce00000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffff888008201000 CR3: 0000000004c94001 CR4: 0000000000370ef0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    Call Trace:
-    <TASK>
-    gro_cells_init+0x1ba/0x270
-    xfrm_input_init+0x4b/0x2a0
-    xfrm_init+0x38/0x50
-    ip_rt_init+0x2d7/0x350
-    ip_init+0xf/0x20
-    inet_init+0x406/0x590
-    do_one_initcall+0x9d/0x2e0
-    do_initcalls+0x23b/0x280
-    kernel_init_freeable+0x445/0x490
-    kernel_init+0x20/0x1d0
-    ret_from_fork+0x46/0x80
-    ret_from_fork_asm+0x1a/0x30
-    </TASK>
-    irq event stamp: 584330
-    hardirqs last  enabled at (584338): [<ffffffff8168bf87>] __up_console_sem+0x77/0xb0
-    hardirqs last disabled at (584345): [<ffffffff8168bf6c>] __up_console_sem+0x5c/0xb0
-    softirqs last  enabled at (583242): [<ffffffff833ee96d>] netlink_insert+0x14d/0x470
-    softirqs last disabled at (583754): [<ffffffff8317c8cd>] netif_napi_add_weight_locked+0x77d/0xba0
+The first problem is that lan9303 is unique among DSA drivers in that it
+calls dev_get_drvdata() at "arbitrary runtime" (not probe, not shutdown,
+not remove):
 
-on kernel built with MAX_SKB_FRAGS=45, where SKB_WITH_OVERHEAD(1024)
-is smaller than GRO_MAX_HEAD.
+phy_state_machine()
+-> ...
+   -> dsa_user_phy_read()
+      -> ds->ops->phy_read()
+         -> lan9303_phy_read()
+            -> chip->ops->phy_read()
+               -> lan9303_mdio_phy_read()
+                  -> dev_get_drvdata()
 
-Such built additionally contains the revert of the single page frag cache
-so that napi_get_frags() ends up using the page frag allocator, triggering
-the splat.
+But we never stop the phy_state_machine(), so it may continue to run
+after dsa_switch_shutdown(). Our common pattern in all DSA drivers is
+to set drvdata to NULL to suppress the remove() method that may come
+afterwards. But in this case it will result in an NPD.
 
-Note that the underlying issue is independent from the mentioned
-revert; address it ensuring that the small head cache will fit either TCP
-and GRO allocation and updating napi_alloc_skb() and __netdev_alloc_skb()
-to select kmalloc() usage for any allocation fitting such cache.
+The second problem is that the way in which we set
+dp->master->dsa_ptr = NULL; is concurrent with receive packet
+processing. dsa_switch_rcv() checks once whether dev->dsa_ptr is NULL,
+but afterwards, rather than continuing to use that non-NULL value,
+dev->dsa_ptr is dereferenced again and again without NULL checks:
+dsa_master_find_slave() and many other places. In between dereferences,
+there is no locking to ensure that what was valid once continues to be
+valid.
 
-Reported-by: Sabrina Dubroca <sd@queasysnail.net>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Both problems have the common aspect that closing the master interface
+solves them.
+
+In the first case, dev_close(master) triggers the NETDEV_GOING_DOWN
+event in dsa_slave_netdevice_event() which closes slave ports as well.
+dsa_port_disable_rt() calls phylink_stop(), which synchronously stops
+the phylink state machine, and ds->ops->phy_read() will thus no longer
+call into the driver after this point.
+
+In the second case, dev_close(master) should do this, as per
+Documentation/networking/driver.rst:
+
+| Quiescence
+| ----------
+|
+| After the ndo_stop routine has been called, the hardware must
+| not receive or transmit any data.  All in flight packets must
+| be aborted. If necessary, poll or wait for completion of
+| any reset commands.
+
+So it should be sufficient to ensure that later, when we zeroize
+master->dsa_ptr, there will be no concurrent dsa_switch_rcv() call
+on this master.
+
+The addition of the netif_device_detach() function is to ensure that
+ioctls, rtnetlinks and ethtool requests on the slave ports no longer
+propagate down to the driver - we're no longer prepared to handle them.
+
+The race condition actually did not exist when commit 0650bf52b31f
+("net: dsa: be compatible with masters which unregister on shutdown")
+first introduced dsa_switch_shutdown(). It was created later, when we
+stopped unregistering the slave interfaces from a bad spot, and we just
+replaced that sequence with a racy zeroization of master->dsa_ptr
+(one which doesn't ensure that the interfaces aren't up).
+
+Reported-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Closes: https://lore.kernel.org/netdev/2d2e3bba17203c14a5ffdabc174e3b6bbb9ad438.camel@siemens.com/
+Closes: https://lore.kernel.org/netdev/c1bf4de54e829111e0e4a70e7bd1cf523c9550ff.camel@siemens.com/
+Fixes: ee534378f005 ("net: dsa: fix panic when DSA master device unbinds on shutdown")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20240913203549.3081071-1-vladimir.oltean@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Minor context change fixed. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+[ Modification: Using dp->master and dp->slave instead of dp->conduit and dp->user ]
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/gro.h |  3 +++
- net/core/gro.c    |  3 ---
- net/core/skbuff.c | 10 +++++++---
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ net/dsa/dsa.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/net/gro.h b/include/net/gro.h
-index 018343254c90a..9260ed367c919 100644
---- a/include/net/gro.h
-+++ b/include/net/gro.h
-@@ -10,6 +10,9 @@
- #include <linux/skbuff.h>
- #include <net/udp.h>
+diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
+index 07736edc8b6a5..c9bf1a9a6c99b 100644
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -1613,6 +1613,7 @@ EXPORT_SYMBOL_GPL(dsa_unregister_switch);
+ void dsa_switch_shutdown(struct dsa_switch *ds)
+ {
+ 	struct net_device *master, *slave_dev;
++	LIST_HEAD(close_list);
+ 	struct dsa_port *dp;
  
-+/* This should be increased if a protocol with a bigger head is added. */
-+#define GRO_MAX_HEAD (MAX_HEADER + 128)
+ 	mutex_lock(&dsa2_mutex);
+@@ -1622,10 +1623,16 @@ void dsa_switch_shutdown(struct dsa_switch *ds)
+ 
+ 	rtnl_lock();
+ 
++	dsa_switch_for_each_cpu_port(dp, ds)
++		list_add(&dp->master->close_list, &close_list);
 +
- struct napi_gro_cb {
- 	union {
- 		struct {
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 397cf59842503..b8cc44406e69b 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -6,9 +6,6 @@
++	dev_close_many(&close_list, true);
++
+ 	dsa_switch_for_each_user_port(dp, ds) {
+ 		master = dsa_port_to_master(dp);
+ 		slave_dev = dp->slave;
  
- #define MAX_GRO_SKBS 8
++		netif_device_detach(slave_dev);
+ 		netdev_upper_dev_unlink(master, slave_dev);
+ 	}
  
--/* This should be increased if a protocol with a bigger head is added. */
--#define GRO_MAX_HEAD (MAX_HEADER + 128)
--
- static DEFINE_SPINLOCK(offload_lock);
- struct list_head offload_base __read_mostly = LIST_HEAD_INIT(offload_base);
- /* Maximum number of GRO_NORMAL skbs to batch up for list-RX */
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 867832f8bbaea..073e2c5274079 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -67,6 +67,7 @@
- #include <net/dst.h>
- #include <net/sock.h>
- #include <net/checksum.h>
-+#include <net/gro.h>
- #include <net/gso.h>
- #include <net/ip6_checksum.h>
- #include <net/xfrm.h>
-@@ -96,7 +97,9 @@ static struct kmem_cache *skbuff_ext_cache __ro_after_init;
- 
- static struct kmem_cache *skb_small_head_cache __ro_after_init;
- 
--#define SKB_SMALL_HEAD_SIZE SKB_HEAD_ALIGN(MAX_TCP_HEADER)
-+#define GRO_MAX_HEAD_PAD (GRO_MAX_HEAD + NET_SKB_PAD + NET_IP_ALIGN)
-+#define SKB_SMALL_HEAD_SIZE SKB_HEAD_ALIGN(max(MAX_TCP_HEADER, \
-+					       GRO_MAX_HEAD_PAD))
- 
- /* We want SKB_SMALL_HEAD_CACHE_SIZE to not be a power of two.
-  * This should ensure that SKB_SMALL_HEAD_HEADROOM is a unique
-@@ -708,7 +711,7 @@ struct sk_buff *__netdev_alloc_skb(struct net_device *dev, unsigned int len,
- 	/* If requested length is either too small or too big,
- 	 * we use kmalloc() for skb->head allocation.
- 	 */
--	if (len <= SKB_WITH_OVERHEAD(1024) ||
-+	if (len <= SKB_WITH_OVERHEAD(SKB_SMALL_HEAD_CACHE_SIZE) ||
- 	    len > SKB_WITH_OVERHEAD(PAGE_SIZE) ||
- 	    (gfp_mask & (__GFP_DIRECT_RECLAIM | GFP_DMA))) {
- 		skb = __alloc_skb(len, gfp_mask, SKB_ALLOC_RX, NUMA_NO_NODE);
-@@ -785,7 +788,8 @@ struct sk_buff *__napi_alloc_skb(struct napi_struct *napi, unsigned int len,
- 	 * When the small frag allocator is available, prefer it over kmalloc
- 	 * for small fragments
- 	 */
--	if ((!NAPI_HAS_SMALL_PAGE_FRAG && len <= SKB_WITH_OVERHEAD(1024)) ||
-+	if ((!NAPI_HAS_SMALL_PAGE_FRAG &&
-+	     len <= SKB_WITH_OVERHEAD(SKB_SMALL_HEAD_CACHE_SIZE)) ||
- 	    len > SKB_WITH_OVERHEAD(PAGE_SIZE) ||
- 	    (gfp_mask & (__GFP_DIRECT_RECLAIM | GFP_DMA))) {
- 		skb = __alloc_skb(len, gfp_mask, SKB_ALLOC_RX | SKB_ALLOC_NAPI,
 -- 
 2.51.0
 
