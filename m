@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E412DEA7E;
-	Fri, 21 Nov 2025 13:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAA11F09B3;
+	Fri, 21 Nov 2025 13:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731595; cv=none; b=X/xjjaebjvhlGGz2SnZjDNVF0othOJXPMbmAJWmIWQwLW4cxEFQneKbDxo/VmKrD6ETzyNdro4ieofxQjGPEXNmbDqhnkvp7tyMoBawgf9R3h91kaV3oy45XSIeqJiSvrespkxRCU9pt6+gp5NXkbWwsMoXQrS/QMHgayb4t2ds=
+	t=1763731598; cv=none; b=PbbXpaTXLhreZN6aWdPvSnhO3Pobup0as4YPl/gHMItWVwIwnAaKIRIRcRpjgSfVHoIoprBL79qdAoYgfvW+X6ith/tvfjykHJblx918NZsOrI2YZtirKpxAVtYN8fDz2MG05ja27tkR3hmw9IozhZb+xxMhHj9hpwD9bIB9pwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731595; c=relaxed/simple;
-	bh=BVd4YJaXaBu6huSevF2TXd2W4pComrNkeToByOJKouI=;
+	s=arc-20240116; t=1763731598; c=relaxed/simple;
+	bh=SuaAFycqUEu3JxUoUxASGf/vgiXEiG0ooKUy4BCGCnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/vfmDrwLgaU+m7vQGGqFJXMKQ6Sva2rC8713dEHedVkljr0zw/rbZJ7mcQCogllzESmYGu/y8OgScsqrAzZKJG+eGeDVoJzM8Zzu1HpedFjK5Rdx/dlqJnDDpXle33YiGCFuSTXG6TNsL1e3NOWUPs1/XfI2H1YnHGJt9Sj8Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT+Ok64d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WNmN6BbtmATZ3pgyS5+AJTWarQDjpB5g73P16Q3qOmFDzFuLPmsZ9Aty+5gKNFnkl4CfwdYcK2xvI1UFHBR9AiwYiJmsdwYp9MH6fFqp/VR70KhfdCtxk3FpqF1N55gcMYJt7q5tLOPLulcfqAXPWoOhXQqF15VMrwwcwwGgblM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8fwCbHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT+Ok64d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D75C4CEF1;
-	Fri, 21 Nov 2025 13:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8fwCbHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2258C4CEF1;
+	Fri, 21 Nov 2025 13:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731595;
-	bh=BVd4YJaXaBu6huSevF2TXd2W4pComrNkeToByOJKouI=;
+	s=korg; t=1763731598;
+	bh=SuaAFycqUEu3JxUoUxASGf/vgiXEiG0ooKUy4BCGCnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT+Ok64dsC9BNY1BzJmLl/4IEOiB9dX0p6Gfivh7BWwuiBf6YfcWrzRNlY9Bz6pFu
-	 a0hI4pqxUIOllt9wRMcmz7ou72D9rmz/KpqfoYQ/2N0zEoppmhJVdMRd/LuJEFLDHv
-	 4/GRtMXvHDNSCmKpOk2cQndOUqJeiOlqoQ4uuEw0=
+	b=H8fwCbHHan3izQT5BzEynKm7JH8xmQInWFdZ90QgfGBeHB6b11X3a/YGdK1T1J0SC
+	 assaFdqlfjqamM1vJ2gSrUrwYL8p/ypL/qJVgVaM2zYy7W7sp9uNjXX+Sot6OS+qZ1
+	 KnnCVJ3EhgTHegaoZ8Y7j6+vROGBGdo+4PEqld+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/185] drm/amd: Fix suspend failure with secure display TA
-Date: Fri, 21 Nov 2025 14:10:33 +0100
-Message-ID: <20251121130144.097359965@linuxfoundation.org>
+Subject: [PATCH 6.12 007/185] drm/xe/guc: Synchronize Dead CT worker with unbind
+Date: Fri, 21 Nov 2025 14:10:34 +0100
+Message-ID: <20251121130144.133982141@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,45 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
 
-[ Upstream commit b09cb2996cdf50cd1ab4020e002c95d742c81313 ]
+[ Upstream commit 95af8f4fdce8349a5fe75264007f1af2aa1082ea ]
 
-commit c760bcda83571 ("drm/amd: Check whether secure display TA loaded
-successfully") attempted to fix extra messages, but failed to port the
-cleanup that was in commit 5c6d52ff4b61e ("drm/amd: Don't try to enable
-secure display TA multiple times") to prevent multiple tries.
+Cancel and wait for any Dead CT worker to complete before continuing
+with device unbinding. Else the worker will end up using resources freed
+by the undind operation.
 
-Add that to the failure handling path even on a quick failure.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4679
-Fixes: c760bcda8357 ("drm/amd: Check whether secure display TA loaded successfully")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4104c0a454f6a4d1e0d14895d03c0e7bdd0c8240)
+Cc: Zhanjun Dong <zhanjun.dong@intel.com>
+Fixes: d2c5a5a926f4 ("drm/xe/guc: Dead CT helper")
+Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://patch.msgid.link/20251103123144.3231829-6-balasubramani.vivekanandan@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 492671339114e376aaa38626d637a2751cdef263)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index a8358d1d1acbc..fa84208eed18e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -2174,8 +2174,11 @@ static int psp_securedisplay_initialize(struct psp_context *psp)
- 	if (!ret && !psp->securedisplay_context.context.resp_status) {
- 		psp->securedisplay_context.context.initialized = true;
- 		mutex_init(&psp->securedisplay_context.mutex);
--	} else
-+	} else {
-+		/* don't try again */
-+		psp->securedisplay_context.context.bin_desc.size_bytes = 0;
- 		return ret;
-+	}
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index d692e279d9fbf..7619b48dbfe43 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -188,6 +188,9 @@ static void guc_ct_fini(struct drm_device *drm, void *arg)
+ {
+ 	struct xe_guc_ct *ct = arg;
  
- 	mutex_lock(&psp->securedisplay_context.mutex);
- 
++#if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
++	cancel_work_sync(&ct->dead.worker);
++#endif
+ 	ct_exit_safe_mode(ct);
+ 	destroy_workqueue(ct->g2h_wq);
+ 	xa_destroy(&ct->fence_lookup);
 -- 
 2.51.0
 
