@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBB7330B19;
-	Fri, 21 Nov 2025 13:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DF3275B18;
+	Fri, 21 Nov 2025 13:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731104; cv=none; b=K06p/yFSEVqF3Di+szK1QmssjfivqYtPqHhlerkp2fiuyaQIj0UUVmpJax1e1PkfSwTWOmYoxpGyu+9f832MG7JiykuD8NjkY2qk8p71yufFDQO5sqJVgB200AJtNuTp9ooUq0K4hfi36i2BQ1V8xys590pyBlZzoupdNQfuw6w=
+	t=1763731107; cv=none; b=T7YMujkf8BAa3zzlu2LzGGk/olB4BsO3MbpHFx4CM0aZVD5N+A0HaeSjEVla4J6wXo3tpi83Mc6bk500XdkDwG254JqwojcRdhBHk4R3nfWTiAiEHq1+rhdEw8km10dMImBUm/2ciPIl64QQHVdd8GJhM2lqYN+uWH9W4qkYm74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731104; c=relaxed/simple;
-	bh=mt3eQw/L6jd2lZN44emRD1FA/RhwHQdG6C1X1p3zizg=;
+	s=arc-20240116; t=1763731107; c=relaxed/simple;
+	bh=KoT2/F2OvEmeNFsVOkvcbzYQsLt1xmlNsPnwE9d1j7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wk3z+mE1Mi/jLqTJanGh8U7seYLx1Xid3UywLICy4eQRh00vxhTrLY3GRJQX9Wkk6egynCOkiNc36ZLqXjdE3bhhGJxWtNDWSeXcdrIDi6Kpd/+88/2PTS24NuApxGxtjW+jgjVkRuUQLrUjKQSg0sjBYh1+bxx1lnDnEu7yVYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPi4szUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IU5LIiQLg06nVHO3O+kUHkF3fzN6x5nK9T3Th7WznN6GS+WlskeE5/XcGwhVOWL10TuzvXyfo0iJ9D9Yzxaj/J80Ud0y3eEpEiNi5r9cLU4ubOTv1u/L8wgJN3PZ+3aKwUBIL+Lznm6CErqeWROmI+HJxQmc1sRuPctdakWSomk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6i2OSaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPi4szUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A04C4CEF1;
-	Fri, 21 Nov 2025 13:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6i2OSaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACF2C4CEF1;
+	Fri, 21 Nov 2025 13:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731104;
-	bh=mt3eQw/L6jd2lZN44emRD1FA/RhwHQdG6C1X1p3zizg=;
+	s=korg; t=1763731107;
+	bh=KoT2/F2OvEmeNFsVOkvcbzYQsLt1xmlNsPnwE9d1j7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPi4szUbobEP7/L2if2+wB/wW5FLE3pBOaO42l00U7yPjOSS6sabnmn899TC73PgH
-	 RYOMcbV1qurLJjJ8OYh5lXvUBtBVYARc0kyUVpC6GI5FsHQQvl0wkD/kX52IGiWEWn
-	 7JweXcD0IhCod8neR7fzatf/vZ0se8VwBgw1EaGU=
+	b=x6i2OSaPfdR5ODetffxdQGb799ygmE3egBrxotd8Xo6q+DIAQdhZWZ/q3vWltxoOg
+	 MYAQkMeYWXfGewouuwTRklGp8lIcoEMZrhWgATsLjkO1ui5ZkIXT2OvDe/7s3Yrf2U
+	 1hcrt//V6O6lhoitBJE/gsU3DJiTLEggcoFVYsmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Rainbolt <arainbolt@kfocus.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 092/247] cpufreq: intel_pstate: Check IDA only before MSR_IA32_PERF_CTL writes
-Date: Fri, 21 Nov 2025 14:10:39 +0100
-Message-ID: <20251121130157.894918678@linuxfoundation.org>
+Subject: [PATCH 6.17 093/247] Bluetooth: L2CAP: export l2cap_chan_hold for modules
+Date: Fri, 21 Nov 2025 14:10:40 +0100
+Message-ID: <20251121130157.930046562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,70 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 4b747cc628d8f500d56cf1338280eacc66362ff3 ]
+[ Upstream commit e060088db0bdf7932e0e3c2d24b7371c4c5b867c ]
 
-Commit ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in
-legacy mode") introduced a check for feature X86_FEATURE_IDA to verify
-turbo mode support. Although this is the correct way to check for turbo
-mode support, it causes issues on some platforms that disable turbo
-during OS boot, but enable it later [1]. Before adding this feature
-check, users were able to get turbo mode frequencies by writing 0 to
-/sys/devices/system/cpu/intel_pstate/no_turbo post-boot.
+l2cap_chan_put() is exported, so export also l2cap_chan_hold() for
+modules.
 
-To restore the old behavior on the affected systems while still
-addressing the unchecked MSR issue on some Skylake-X systems, check
-X86_FEATURE_IDA only immediately before updates of MSR_IA32_PERF_CTL
-that may involve setting the Turbo Engage Bit (bit 32).
+l2cap_chan_hold() has use case in net/bluetooth/6lowpan.c
 
-Fixes: ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in legacy mode")
-Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2122531 [1]
-Tested-by: Aaron Rainbolt <arainbolt@kfocus.org>
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-[ rjw: Subject adjustment, changelog edits ]
-Link: https://patch.msgid.link/20251111010840.141490-1-srinivas.pandruvada@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index fc02a3542f656..99c80249fde88 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -603,9 +603,6 @@ static bool turbo_is_disabled(void)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index d08320380ad67..35c57657bcf4e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -497,6 +497,7 @@ void l2cap_chan_hold(struct l2cap_chan *c)
+ 
+ 	kref_get(&c->kref);
+ }
++EXPORT_SYMBOL_GPL(l2cap_chan_hold);
+ 
+ struct l2cap_chan *l2cap_chan_hold_unless_zero(struct l2cap_chan *c)
  {
- 	u64 misc_en;
- 
--	if (!cpu_feature_enabled(X86_FEATURE_IDA))
--		return true;
--
- 	rdmsrq(MSR_IA32_MISC_ENABLE, misc_en);
- 
- 	return !!(misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE);
-@@ -2141,7 +2138,8 @@ static u64 atom_get_val(struct cpudata *cpudata, int pstate)
- 	u32 vid;
- 
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
-+	    cpu_feature_enabled(X86_FEATURE_IDA))
- 		val |= (u64)1 << 32;
- 
- 	vid_fp = cpudata->vid.min + mul_fp(
-@@ -2306,7 +2304,8 @@ static u64 core_get_val(struct cpudata *cpudata, int pstate)
- 	u64 val;
- 
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled) &&
-+	    cpu_feature_enabled(X86_FEATURE_IDA))
- 		val |= (u64)1 << 32;
- 
- 	return val;
 -- 
 2.51.0
 
