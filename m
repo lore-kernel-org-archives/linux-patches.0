@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ED523183B;
-	Fri, 21 Nov 2025 13:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33CE45948;
+	Fri, 21 Nov 2025 13:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730953; cv=none; b=ilyxnLaagpgeqxewffFAcY4fI/ncKUpExKxZ2OQZovSJLCkipX4jA84wGYHQX1DMAHyAxxZCXSeqZGXk4VuK/1LJbaFz3COrhp59/6fCd73ZBJ9U1N040DKQbHETNecFplzrlmfEcvb2yXVQ/ug+ohHMKwZzG1TDX+TywRt12TM=
+	t=1763730956; cv=none; b=EENS23vwDtlsN+tzc8YUzl1HjWIhvkx85Hkvo181VEEoA+WpstTKpztqbsYLUJsv+ImrY+iajoGV3F60tUsMSeYNgOnM7Io34SmwBCbQfVh2GtSq00g4YpdDQ9dj5yVA2oTcJm9+9GJWGarQ/9BeGSZBZoBRNx7BKr+QF1PlMIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730953; c=relaxed/simple;
-	bh=CJg93SGIaExKqOY30e8/Lva8bMCZOuC3hR/Ko5yIBtc=;
+	s=arc-20240116; t=1763730956; c=relaxed/simple;
+	bh=i0H1aM7tlb2fAP1eSVbMFpjD4i/sggnZjeGJ/Nc12vQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y6Om8bP2ryBIFfUSqg9+DtsdUSCa6b181b8F0oObi9aUnZWD6+My9B5ctCQzaS237Jq1hqjSg4Fnj9Lj5SJ+cHxhnqCJjqo4npbJ7/3TdnRtaWdWSpEg9vlIg2pBotbHI0bBzEr413N2Ue5i4Wpat5YdzQXMIoIPi4neO+bEHy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjbP8Fap; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dW5BOZNi5C9dH7ADJ2oiUPg+nU3wyFgP6tn0G3pir+1x9adlWIUCqFofh3u0PzC59YPy4ml9jENBbkCBNtOep9S88ZuuDrnWVZfMBYcFqkPrfAT7xFPSSkHvg3r899pYWBXFCEv35lxO73Is6gsJM55x5Io1rKnJ08/lFpx0hxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ2jTgqO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjbP8Fap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108D5C4CEF1;
-	Fri, 21 Nov 2025 13:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ2jTgqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75F7C4CEF1;
+	Fri, 21 Nov 2025 13:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730953;
-	bh=CJg93SGIaExKqOY30e8/Lva8bMCZOuC3hR/Ko5yIBtc=;
+	s=korg; t=1763730956;
+	bh=i0H1aM7tlb2fAP1eSVbMFpjD4i/sggnZjeGJ/Nc12vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjbP8FapnZPVE3OYYCoqawZirz99mjTjoE+6lUXwzGwjRxEkeCrsgXlZzsRLGViGF
-	 qhMF2Ii1VNjHP0zFb/cEl6pifhzpyW9HifAtQdXlxgA+OCOISAFClSPYszwFovZ2MH
-	 V3WSKCojq3pHpZGTWpsL9Jbf7I5rAYF6s3191MQ0=
+	b=KJ2jTgqOHmgJHKk2QRpytdxz08GroSbXttsyKxiqWihxdDdSdVt2SSaxJmYR1j3nl
+	 QDFwzU1TH6xmSiC7jhpSQB8dSyJRQcBjzXiy/iyy84f00Lhp3mrVZ/pAWBdx6uNFOi
+	 Et0CJyIJtWqTwBvRF3KvTRArSK+45J1FStJCxvJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	Jihoon Kwon <jimmyxyz010315@gmail.com>,
-	Jaehun Gou <p22gone@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 038/247] exfat: fix improper check of dentry.stream.valid_size
-Date: Fri, 21 Nov 2025 14:09:45 +0100
-Message-ID: <20251121130155.971633588@linuxfoundation.org>
+Subject: [PATCH 6.17 039/247] io_uring: fix unexpected placement on same size resizing
+Date: Fri, 21 Nov 2025 14:09:46 +0100
+Message-ID: <20251121130156.007069191@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -47,61 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaehun Gou <p22gone@gmail.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 82ebecdc74ff555daf70b811d854b1f32a296bea ]
+[ Upstream commit 437c23357d897f5b5b7d297c477da44b56654d46 ]
 
-We found an infinite loop bug in the exFAT file system that can lead to a
-Denial-of-Service (DoS) condition. When a dentry in an exFAT filesystem is
-malformed, the following system calls — SYS_openat, SYS_ftruncate, and
-SYS_pwrite64 — can cause the kernel to hang.
+There might be many reasons why a user is resizing a ring, e.g. moving
+to huge pages or for some memory compaction using IORING_SETUP_NO_MMAP.
+Don't bypass resizing, the user will definitely be surprised seeing 0
+while the rings weren't actually moved to a new place.
 
-Root cause analysis shows that the size validation code in exfat_find()
-does not check whether dentry.stream.valid_size is negative. As a result,
-the system calls mentioned above can succeed and eventually trigger the DoS
-issue.
-
-This patch adds a check for negative dentry.stream.valid_size to prevent
-this vulnerability.
-
-Co-developed-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Co-developed-by: Jihoon Kwon <jimmyxyz010315@gmail.com>
-Signed-off-by: Jihoon Kwon <jimmyxyz010315@gmail.com>
-Signed-off-by: Jaehun Gou <p22gone@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/namei.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ io_uring/register.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index f5f1c4e8a29fd..d8964d7368142 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -642,10 +642,14 @@ static int exfat_find(struct inode *dir, struct qstr *qname,
+diff --git a/io_uring/register.c b/io_uring/register.c
+index b1772a470bf6e..dacbe8596b5c2 100644
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -426,13 +426,6 @@ static int io_register_resize_rings(struct io_ring_ctx *ctx, void __user *arg)
+ 	if (unlikely(ret))
+ 		return ret;
  
- 	info->type = exfat_get_entry_type(ep);
- 	info->attr = le16_to_cpu(ep->dentry.file.attr);
--	info->size = le64_to_cpu(ep2->dentry.stream.valid_size);
- 	info->valid_size = le64_to_cpu(ep2->dentry.stream.valid_size);
- 	info->size = le64_to_cpu(ep2->dentry.stream.size);
- 
-+	if (info->valid_size < 0) {
-+		exfat_fs_error(sb, "data valid size is invalid(%lld)", info->valid_size);
-+		return -EIO;
-+	}
-+
- 	if (unlikely(EXFAT_B_TO_CLU_ROUND_UP(info->size, sbi) > sbi->used_clusters)) {
- 		exfat_fs_error(sb, "data size is invalid(%lld)", info->size);
- 		return -EIO;
+-	/* nothing to do, but copy params back */
+-	if (p.sq_entries == ctx->sq_entries && p.cq_entries == ctx->cq_entries) {
+-		if (copy_to_user(arg, &p, sizeof(p)))
+-			return -EFAULT;
+-		return 0;
+-	}
+-
+ 	size = rings_size(p.flags, p.sq_entries, p.cq_entries,
+ 				&sq_array_offset);
+ 	if (size == SIZE_MAX)
 -- 
 2.51.0
 
