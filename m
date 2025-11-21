@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A68283CA3;
-	Fri, 21 Nov 2025 13:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFE62745E;
+	Fri, 21 Nov 2025 13:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731959; cv=none; b=j1DHdGvOCXXIw8sgRzoRjKbS6fpP/f5n4gVGK2DRlo3hwCEjWuVc7KTmFpeaiWr+uodO2ri3FQ/m699MTC5nSeEvH4H2S8h6cRyxPiF/lCNhAFKhwoNxXHGYEU4x3rwzThAqVCWjAhKE+vAPTyO7z2UfsH+naCsztJ+mV+1aYH4=
+	t=1763731962; cv=none; b=I1IJ0rtf/Vtt6gAl3DXCqVZk6wX+Cnm1j14sENR47/DCxpgclR2JZ0GCB8C6aoQrwC7OZKHOtxgi0uCv4IyYq4FQRVlVRsIddRFsg6u5T4i7gV93/Qx4AvLVghdEgpApCse2qg8vhWUa70CtXHbiOZBKA6UsEawJj4K00626Bl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731959; c=relaxed/simple;
-	bh=oZJKmkSx+hiT7PMTyX/l7pzaapHgV0p7/5rbB8DehLE=;
+	s=arc-20240116; t=1763731962; c=relaxed/simple;
+	bh=dxZmRo/tlji1VDCp1WKmIa6FBkiZIGzYumrPSAyUJeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXhNQbAq+PjWaz5Ey7C7cG0B2+P74zKYtDo0QPJTF+E9FbPUTW0dNzYabKy0pXzsmqVNBLS8aVrAqIO9dRSEFqiEvUu1TbsSdSJWJY4rVg/7wFp9EmZ78JspK0Gle8iCoS51HmU8PgobWYLEATmkLLJXNEgwpQvP/qD/vQvot3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWgZZ8SV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEupa+hREeMxhNqM53cX7H5c7f+tgqkGR36D2vvrVZHdOeRtukiCpBM1az0L/W95cvp+MweFtZvsqmYFllBA9+lXhP8mjCPIZMdrf/D0H7/yVCjUW/HmU/wjddLasAc5NNy2Im0OTjBP9k50ZI2OYsLPqAFo01DE1vtTXxhS080=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEYsN+RJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWgZZ8SV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DF2C4CEF1;
-	Fri, 21 Nov 2025 13:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEYsN+RJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4FFC4CEF1;
+	Fri, 21 Nov 2025 13:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731958;
-	bh=oZJKmkSx+hiT7PMTyX/l7pzaapHgV0p7/5rbB8DehLE=;
+	s=korg; t=1763731961;
+	bh=dxZmRo/tlji1VDCp1WKmIa6FBkiZIGzYumrPSAyUJeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWgZZ8SVNdFFeyEtcLFL4Lp4470OicN7rokwU9M2YWpLV5Q8f9uHTBt8dZSQ6g9A5
-	 qH+TeH4RQrEbYUJaF9TtgUphRZnrFcz4ZF/y2+uJnauj0RrLzyeA2yndGZW72L3Lyj
-	 7vFEP3SU31UOLA4dq/SeMpEFeEju1llVWg3BxLCM=
+	b=eEYsN+RJtVjbT1kQELS+mQKl2/aGDNNGVI6t9XP+wwp7KGVnDx87ro+7EluI1OMXZ
+	 0U+A+fPuMUIqdPX0+wjNiZhTceURC5hzXh7lP0Ltkkz7YeS7dZA0U5d0qj3v+uEJJh
+	 orbORxGj1w8maM0Su22MByJAQxonBSw8gO8rcsAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.12 140/185] EDAC/altera: Handle OCRAM ECC enable after warm reset
-Date: Fri, 21 Nov 2025 14:12:47 +0100
-Message-ID: <20251121130148.927263683@linuxfoundation.org>
+Subject: [PATCH 6.12 141/185] EDAC/altera: Use INTTEST register for Ethernet and USB SBE injection
+Date: Fri, 21 Nov 2025 14:12:48 +0100
+Message-ID: <20251121130148.963151273@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,53 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
 
-commit fd3ecda38fe0cb713d167b5477d25f6b350f0514 upstream.
+commit 281326be67252ac5794d1383f67526606b1d6b13 upstream.
 
-The OCRAM ECC is always enabled either by the BootROM or by the Secure Device
-Manager (SDM) during a power-on reset on SoCFPGA.
+The current single-bit error injection mechanism flips bits directly in ECC RAM
+by performing write and read operations. When the ECC RAM is actively used by
+the Ethernet or USB controller, this approach sometimes trigger a false
+double-bit error.
 
-However, during a warm reset, the OCRAM content is retained to preserve data,
-while the control and status registers are reset to their default values. As
-a result, ECC must be explicitly re-enabled after a warm reset.
+Switch both Ethernet and USB EDAC devices to use the INTTEST register
+(altr_edac_a10_device_inject_fops) for single-bit error injection, similar to
+the existing double-bit error injection method.
 
-Fixes: 17e47dc6db4f ("EDAC/altera: Add Stratix10 OCRAM ECC support")
+Fixes: 064acbd4f4ab ("EDAC, altera: Add Stratix10 peripheral support")
 Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Acked-by: Dinh Nguyen <dinguyen@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251111080801.1279401-1-niravkumarlaxmidas.rabara@altera.com
+Link: https://patch.msgid.link/20251111081333.1279635-1-niravkumarlaxmidas.rabara@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/edac/altera_edac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/edac/altera_edac.c
 +++ b/drivers/edac/altera_edac.c
-@@ -1184,10 +1184,22 @@ altr_check_ocram_deps_init(struct altr_e
- 	if (ret)
- 		return ret;
+@@ -1369,7 +1369,7 @@ static const struct edac_device_prv_data
+ 	.ue_set_mask = ALTR_A10_ECC_TDERRA,
+ 	.set_err_ofst = ALTR_A10_ECC_INTTEST_OFST,
+ 	.ecc_irq_handler = altr_edac_a10_ecc_irq,
+-	.inject_fops = &altr_edac_a10_device_inject2_fops,
++	.inject_fops = &altr_edac_a10_device_inject_fops,
+ };
  
--	/* Verify OCRAM has been initialized */
-+	/*
-+	 * Verify that OCRAM has been initialized.
-+	 * During a warm reset, OCRAM contents are retained, but the control
-+	 * and status registers are reset to their default values. Therefore,
-+	 * ECC must be explicitly re-enabled in the control register.
-+	 * Error condition: if INITCOMPLETEA is clear and ECC_EN is already set.
-+	 */
- 	if (!ecc_test_bits(ALTR_A10_ECC_INITCOMPLETEA,
--			   (base + ALTR_A10_ECC_INITSTAT_OFST)))
--		return -ENODEV;
-+			   (base + ALTR_A10_ECC_INITSTAT_OFST))) {
-+		if (!ecc_test_bits(ALTR_A10_ECC_EN,
-+				   (base + ALTR_A10_ECC_CTRL_OFST)))
-+			ecc_set_bits(ALTR_A10_ECC_EN,
-+				     (base + ALTR_A10_ECC_CTRL_OFST));
-+		else
-+			return -ENODEV;
-+	}
+ #endif	/* CONFIG_EDAC_ALTERA_ETHERNET */
+@@ -1459,7 +1459,7 @@ static const struct edac_device_prv_data
+ 	.ue_set_mask = ALTR_A10_ECC_TDERRA,
+ 	.set_err_ofst = ALTR_A10_ECC_INTTEST_OFST,
+ 	.ecc_irq_handler = altr_edac_a10_ecc_irq,
+-	.inject_fops = &altr_edac_a10_device_inject2_fops,
++	.inject_fops = &altr_edac_a10_device_inject_fops,
+ };
  
- 	/* Enable IRQ on Single Bit Error */
- 	writel(ALTR_A10_ECC_SERRINTEN, (base + ALTR_A10_ECC_ERRINTENS_OFST));
+ #endif	/* CONFIG_EDAC_ALTERA_USB */
 
 
