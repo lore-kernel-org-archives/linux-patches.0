@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D2F33506C;
-	Fri, 21 Nov 2025 13:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6B931578E;
+	Fri, 21 Nov 2025 13:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731029; cv=none; b=dn1kEfxlfvm4aIcFloT5XVpZRweMNP2teyK2bAq1IhF9sxgmL7ET2k4ILLXj9TLAdaCqlZU/wGouDiw8zIGGEU12acoCjXFgG+y30dkweOQowYoyGJ9bJT6vNHLTTC4Oke33dYZBX/pY3v6J2gmA8OL8zvls30zSjHKTqoB/SO4=
+	t=1763731032; cv=none; b=AsdeDBZPC2AP94W6UGCAkiQ7o7jY3nQlFbB8xPyAPthdvhmBNW+lJsqYglEjo5q46Q3vIaDaCsRjrttEsrYyVGNsV8quBlekJxHAriBX8jhFDLFDWY8iRJPfsVh9nqeocsdWI7Zxnd09EO+7/dqqziaB1JS9elwtFHqF4Z1LTfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731029; c=relaxed/simple;
-	bh=CwVs4SjtVGIhPxuUwRMxfhCseMNcrYwDFq/nW3FuvqA=;
+	s=arc-20240116; t=1763731032; c=relaxed/simple;
+	bh=07lj6hf6oE4HFQN9E+aEYNVwQIuTFeUdp+yI/CtFfoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qO8//bjVghQt2bma+GFyIjP4UvnxkXoySXW+L1pwKozcSzNfDger1F485FFnWHyuo3suwpKrg426QtA6K+/tDFzqh73Jm7GxCUv/7aeYzR++aI/D+PHfmWT7nmmlYw0WyYSgHZNF90ba7ssRDN3VSuQ5Pr4wnUb36cfyk6qfmn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNyrvila; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9BiDSGUR9Bo88s7Cex7BJzYjPO3zycTT3LhSYoIoWHxlBPE/gQpEvi9FZ1vSOyJguANvSTpJxTq7ADFOI49pMGhcZv/j9PakEOd1dFqOrVS3w6rI5W+1q+/6YabQiUmibySf50KPbNRIXLjSXUnq/OklvhveRS8NfNn6+77dEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hqp2Ob2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNyrvila"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F440C4CEF1;
-	Fri, 21 Nov 2025 13:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hqp2Ob2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619A5C4CEFB;
+	Fri, 21 Nov 2025 13:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731028;
-	bh=CwVs4SjtVGIhPxuUwRMxfhCseMNcrYwDFq/nW3FuvqA=;
+	s=korg; t=1763731031;
+	bh=07lj6hf6oE4HFQN9E+aEYNVwQIuTFeUdp+yI/CtFfoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNyrvilaqnghY9jWTLOzHZJeB8nFtPjhkx+6ktyKiLRe4mU2tfunI/z+SaAvQfnny
-	 q1W37ihV6Im3XU2Ku1am1ec6nhtBvFc9EhRIEuIAlVdfXt4ccXC/yOSaoyhp13O5/e
-	 tJlc3hV8rZt7ndlNCw1W1sTkcRz2stg+JehnFrcU=
+	b=Hqp2Ob2vCQIGQAmP/XJt4Bkdmuoy6bXPGXLrWej2JCRVgL3DoYHgDqT6eCTSXLS5d
+	 ffAM21RRqNG38Prm+7InWSVPP4jwAfcI0UEbOB2WdvjoMHeBAzOUy3h8XxxhAmM8xI
+	 UI23uN8tJS/mN26AMNKt0tqPLw8yaliAo+UjvtvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aksh Garg <a-garg7@ti.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 065/247] net: ethernet: ti: am65-cpsw-qos: fix IET verify/response timeout
-Date: Fri, 21 Nov 2025 14:10:12 +0100
-Message-ID: <20251121130156.935355327@linuxfoundation.org>
+Subject: [PATCH 6.17 066/247] net: ethernet: ti: am65-cpsw-qos: fix IET verify retry mechanism
+Date: Fri, 21 Nov 2025 14:10:13 +0100
+Message-ID: <20251121130156.971213316@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,73 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Aksh Garg <a-garg7@ti.com>
 
-[ Upstream commit 49b3916465176a5abcb29a0e464825f553d55d58 ]
+[ Upstream commit d4b00d132d7cb70a74bc039c91c1d6120943c71b ]
 
-The CPSW module uses the MAC_VERIFY_CNT bit field in the
-CPSW_PN_IET_VERIFY_REG_k register to set the verify/response timeout
-count. This register specifies the number of clock cycles to wait before
-resending a verify packet if the verification fails.
+The am65_cpsw_iet_verify_wait() function attempts verification 20 times,
+toggling the AM65_CPSW_PN_IET_MAC_LINKFAIL bit in each iteration. When
+the LINKFAIL bit transitions from 1 to 0, the MAC merge layer initiates
+the verification process and waits for the timeout configured in
+MAC_VERIFY_CNT before automatically retransmitting. The MAC_VERIFY_CNT
+register is configured according to the user-defined verify/response
+timeout in am65_cpsw_iet_set_verify_timeout_count(). As per IEEE 802.3
+Clause 99, the hardware performs this automatic retry up to 3 times.
 
-The verify/response timeout count, as being set by the function
-am65_cpsw_iet_set_verify_timeout_count() is hardcoded for 125MHz
-clock frequency, which varies based on PHY mode and link speed.
+Current implementation toggles LINKFAIL after the user-configured
+verify/response timeout in each iteration, forcing the hardware to
+restart verification instead of respecting the MAC_VERIFY_CNT timeout.
+This bypasses the hardware's automatic retry mechanism.
 
-The respective clock frequencies are as follows:
-- RGMII mode:
-  * 1000 Mbps: 125 MHz
-  * 100 Mbps: 25 MHz
-  * 10 Mbps: 2.5 MHz
-- QSGMII/SGMII mode: 125 MHz (all speeds)
-
-Fix this by adding logic to calculate the correct timeout counts
-based on the actual PHY interface mode and link speed.
+Fix this by moving the LINKFAIL bit toggle outside the retry loop and
+reducing the retry count from 20 to 3. The software now only monitors
+the status register while the hardware autonomously handles the 3
+verification attempts at proper MAC_VERIFY_CNT intervals.
 
 Fixes: 49a2eb9068246 ("net: ethernet: ti: am65-cpsw-qos: Add Frame Preemption MAC Merge support")
 Signed-off-by: Aksh Garg <a-garg7@ti.com>
-Link: https://patch.msgid.link/20251106092305.1437347-2-a-garg7@ti.com
+Link: https://patch.msgid.link/20251106092305.1437347-3-a-garg7@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-qos.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-qos.c | 27 +++++++++++++------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/ethernet/ti/am65-cpsw-qos.c b/drivers/net/ethernet/ti/am65-cpsw-qos.c
-index fa96db7c1a130..ad06942ce461a 100644
+index ad06942ce461a..66e8b224827b6 100644
 --- a/drivers/net/ethernet/ti/am65-cpsw-qos.c
 +++ b/drivers/net/ethernet/ti/am65-cpsw-qos.c
-@@ -276,9 +276,31 @@ static int am65_cpsw_iet_set_verify_timeout_count(struct am65_cpsw_port *port)
- 	/* The number of wireside clocks contained in the verify
- 	 * timeout counter. The default is 0x1312d0
- 	 * (10ms at 125Mhz in 1G mode).
-+	 * The frequency of the clock depends on the link speed
-+	 * and the PHY interface.
- 	 */
--	val = 125 * HZ_PER_MHZ;	/* assuming 125MHz wireside clock */
-+	switch (port->slave.phy_if) {
-+	case PHY_INTERFACE_MODE_RGMII:
-+	case PHY_INTERFACE_MODE_RGMII_ID:
-+	case PHY_INTERFACE_MODE_RGMII_RXID:
-+	case PHY_INTERFACE_MODE_RGMII_TXID:
-+		if (port->qos.link_speed == SPEED_1000)
-+			val = 125 * HZ_PER_MHZ;	/* 125 MHz at 1000Mbps*/
-+		else if (port->qos.link_speed == SPEED_100)
-+			val = 25 * HZ_PER_MHZ;	/* 25 MHz at 100Mbps*/
-+		else
-+			val = (25 * HZ_PER_MHZ) / 10;	/* 2.5 MHz at 10Mbps*/
-+		break;
+@@ -317,20 +317,21 @@ static int am65_cpsw_iet_verify_wait(struct am65_cpsw_port *port)
+ 	u32 ctrl, status;
+ 	int try;
+ 
+-	try = 20;
+-	do {
+-		/* Reset the verify state machine by writing 1
+-		 * to LINKFAIL
+-		 */
+-		ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
+-		ctrl |= AM65_CPSW_PN_IET_MAC_LINKFAIL;
+-		writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
++	try = 3;
+ 
+-		/* Clear MAC_LINKFAIL bit to start Verify. */
+-		ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
+-		ctrl &= ~AM65_CPSW_PN_IET_MAC_LINKFAIL;
+-		writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
++	/* Reset the verify state machine by writing 1
++	 * to LINKFAIL
++	 */
++	ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
++	ctrl |= AM65_CPSW_PN_IET_MAC_LINKFAIL;
++	writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
+ 
++	/* Clear MAC_LINKFAIL bit to start Verify. */
++	ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
++	ctrl &= ~AM65_CPSW_PN_IET_MAC_LINKFAIL;
++	writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
 +
-+	case PHY_INTERFACE_MODE_QSGMII:
-+	case PHY_INTERFACE_MODE_SGMII:
-+		val = 125 * HZ_PER_MHZ;	/* 125 MHz */
-+		break;
++	do {
+ 		msleep(port->qos.iet.verify_time_ms);
  
-+	default:
-+		netdev_err(port->ndev, "selected mode does not supported IET\n");
-+		return -EOPNOTSUPP;
-+	}
- 	val /= MILLIHZ_PER_HZ;		/* count per ms timeout */
- 	val *= verify_time_ms;		/* count for timeout ms */
+ 		status = readl(port->port_base + AM65_CPSW_PN_REG_IET_STATUS);
+@@ -352,7 +353,7 @@ static int am65_cpsw_iet_verify_wait(struct am65_cpsw_port *port)
+ 			netdev_dbg(port->ndev, "MAC Merge verify error\n");
+ 			return -ENODEV;
+ 		}
+-	} while (try-- > 0);
++	} while (--try > 0);
  
+ 	netdev_dbg(port->ndev, "MAC Merge verify timeout\n");
+ 	return -ETIMEDOUT;
 -- 
 2.51.0
 
