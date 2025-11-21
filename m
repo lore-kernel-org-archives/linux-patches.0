@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9781E351FDB;
-	Fri, 21 Nov 2025 13:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3AC3358B7;
+	Fri, 21 Nov 2025 13:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733295; cv=none; b=qbQebh17uzCl1LKqYOygynEvYL/kNYDYN4mXmcE4SOgDild1Mg70I+7lKf9V1YjN3yR7Npu0MEmw7y3S20u/YxC5BCPJ3civJgC8dZrcRQ9O0WhRADs+fsE7/UkCFGqpu6B7asaRAPsYp4N+1yV4sJlCrn792NarLOBS9YBZPnY=
+	t=1763733300; cv=none; b=U4cPwhFu7VlIzBaZSQa4PUtcPI0hz+fIEJneZXo4ZMRGHidzzgfiiz8r0G7+mudTXx/I8FsPid47BT5Fr77OzZrgLSbNMNrS9QmiBf/iHW664Z2NlRuFBSzYcQpoLAhd/YViL4HESIJQMEDftmbZIIlXJtspOncnwT70o4JQtDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733295; c=relaxed/simple;
-	bh=9ONQtvdy1W/XoRrE2ziDKfLGDILlCbIXmPpA6zNHdsw=;
+	s=arc-20240116; t=1763733300; c=relaxed/simple;
+	bh=guKnSdDZk4mBeTK3CkiTkGe5mSyIWVsp7c5Vg28Xhys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9toLDgdphov4oGjDVCGMUBkys9n7ny+FoVyFA1TcRIIaui4BHkyyLzGi95ysTacG4/jQIc8ONn54TA1PbFJUnohVFlRSnlaq4XQ8+ogYXiNUrudxyRZSArp6yNQ7XOPj9pnMnqQfJ+x9dpkHZ+631xRWOT8JR5LI0Ha99FMyjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn2pS30g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2xExcnTczTKp7f22IzLrp8UYSnXIVcRv2FuZqLUnHucLM60ZAONBe1HAVTNxnY1em8Sk6ckc0GnkPJmnT7w1I+MdJhadhYRcNaV467r4ej65FgHuUvQMkr4MXzmI/qlqQDQbJ7RaSvxTXaC762BNxbbax0b69PMbx5CJ+NDPd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9/dRv4B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn2pS30g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E590C116C6;
-	Fri, 21 Nov 2025 13:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9/dRv4B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2639EC4CEF1;
+	Fri, 21 Nov 2025 13:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733295;
-	bh=9ONQtvdy1W/XoRrE2ziDKfLGDILlCbIXmPpA6zNHdsw=;
+	s=korg; t=1763733298;
+	bh=guKnSdDZk4mBeTK3CkiTkGe5mSyIWVsp7c5Vg28Xhys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cn2pS30gkcEJ8cO2Xtb9WBR/PAqOoOsGmn+mtLKlqi1OU+doB1lHT9MBeKxDn76wI
-	 pwso2viSWpCFGryXkoK2K01e6RCrkLfYNPlI9XGXE0qpbXejFeTAu7NtBKsWDkaj+I
-	 /CXpIr34f80+u8pAed4V7mMhoPsYfJAh9RWQvFUQ=
+	b=t9/dRv4BeoAFML+jN/uuSy4nYG2Q4rB7JOPQrGqqJMNGu9hum2a4JjYWTQzkyNnep
+	 kXm2PDYKsLjVProGMYK5WtK4z40iDhJ4q43CyrHhH8XGKrhrst6jdGEswSTyEijqBs
+	 +YjVZ7BQKoDXIWQD7x6fY1TvqwvcVuQku4/HelFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Harris <chris.harris79@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Joshua Watt <jpewhacker@gmail.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 418/529] ACPI: CPPC: Check _CPC validity for only the online CPUs
-Date: Fri, 21 Nov 2025 14:11:57 +0100
-Message-ID: <20251121130245.890266795@linuxfoundation.org>
+Subject: [PATCH 6.6 387/529] NFS4: Fix state renewals missing after boot
+Date: Fri, 21 Nov 2025 14:11:26 +0100
+Message-ID: <20251121130244.792979828@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Joshua Watt <jpewhacker@gmail.com>
 
-[ Upstream commit 6dd3b8a709a130a4d55c866af9804c81b8486d28 ]
+[ Upstream commit 9bb3baa9d1604cd20f49ae7dac9306b4037a0e7a ]
 
-per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
-CPUs via acpi_soft_cpu_online() --> __acpi_processor_start() -->
-acpi_cppc_processor_probe().
+Since the last renewal time was initialized to 0 and jiffies start
+counting at -5 minutes, any clients connected in the first 5 minutes
+after a reboot would have their renewal timer set to a very long
+interval. If the connection was idle, this would result in the client
+state timing out on the server and the next call to the server would
+return NFS4ERR_BADSESSION.
 
-However the function acpi_cpc_valid() checks for the validity of the
-_CPC object for all the present CPUs. This breaks when the kernel is
-booted with "nosmt=force".
+Fix this by initializing the last renewal time to the current jiffies
+instead of 0.
 
-Hence check the validity of the _CPC objects of only the online CPUs.
-
-Fixes: 2aeca6bd0277 ("ACPI: CPPC: Check present CPUs for determining _CPC is valid")
-Reported-by: Christopher Harris <chris.harris79@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAM+eXpdDT7KjLV0AxEwOLkSJ2QtrsvGvjA2cCHvt1d0k2_C4Cw@mail.gmail.com/
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
-Tested-by: Chrisopher Harris <chris.harris79@gmail.com>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://patch.msgid.link/20251107074145.2340-3-gautham.shenoy@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 10d531427ba77..39f248be9611f 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -445,7 +445,7 @@ bool acpi_cpc_valid(void)
- 	if (acpi_disabled)
- 		return false;
- 
--	for_each_present_cpu(cpu) {
-+	for_each_online_cpu(cpu) {
- 		cpc_ptr = per_cpu(cpc_desc_ptr, cpu);
- 		if (!cpc_ptr)
- 			return false;
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index f6dc42de48f03..32b1147fcafc4 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -222,6 +222,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	clp->cl_state = 1 << NFS4CLNT_LEASE_EXPIRED;
+ 	clp->cl_mvops = nfs_v4_minor_ops[cl_init->minorversion];
+ 	clp->cl_mig_gen = 1;
++	clp->cl_last_renewal = jiffies;
+ #if IS_ENABLED(CONFIG_NFS_V4_1)
+ 	init_waitqueue_head(&clp->cl_lock_waitq);
+ #endif
 -- 
 2.51.0
 
