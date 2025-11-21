@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4001F09B3;
-	Fri, 21 Nov 2025 13:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2C034029C;
+	Fri, 21 Nov 2025 13:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731116; cv=none; b=MimJHvJi7pEkjRJyHdROFu26K1h5HFO6GeBsQ78FPAQXILa08iD2K2JVDx6RCws+7ofryuN6mA9rggP+h4x8NaUJ13uhrH6liXUOVdzNfrl7q7dkeiXYxcS7bZBettuzTNNKQXGfoonn/kY1lhb7nW249eNMcVRCJ81eQcBDAzI=
+	t=1763731118; cv=none; b=jdLrfkee0x9XQ7d71c4HCRMWJUnK/usXXtDGa5s3GT2lJqdhu6jySv9WE/flEGJc05IT8TPEchObVYmyUdtHUwog9Uzm7mLuQtiyBgJ9FQYl7kdX/vFtkBM+dJD7voLJ0PJ/IAGDfVgQy1lQGO/7NXuYLKTi4Fia2en2F3SG3H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731116; c=relaxed/simple;
-	bh=3F39PmUWWmOnB0PHfssgC+OEDbZlUP5mo+UbQ/ktbjY=;
+	s=arc-20240116; t=1763731118; c=relaxed/simple;
+	bh=NBtwdBv020MQaoXkY0w+D5nvOFn8x5WD0ggJGTBaSMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qX8l1Dy0hfRFgnrq0daPTMMnTCUPCzEOqZEh+BeVGJ4VmMR8LmYeb2csB9yFZJe4HkBAbQ0uPDbOZKp/wHEaAI2Iwwh4UQGJj7vqen7DJiNCGiHhsUknw+UHm82EvJey1++CU5049O09RPuKtOkrTVBTJ82mFww6+0SHM0SVBJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEElPdyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l5637xZ5bl1A8FwniwWoewMTgefJuKPc2EM9MRZTKrwTLnnGFsjNZZb6RXSAYPBjz2r9veyQU+juydF06oRh/SXLfF5IBvvWdPEbOj7Ijj+p+J4Kgu/BCwwj6VEUkBvEXotKxA9DV6ZSZ8gnWah6aoxj3V8M22dyvOvvF4FFySo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZ7L9+M2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEElPdyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7261CC4CEF1;
-	Fri, 21 Nov 2025 13:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZ7L9+M2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EFEC4CEF1;
+	Fri, 21 Nov 2025 13:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731115;
-	bh=3F39PmUWWmOnB0PHfssgC+OEDbZlUP5mo+UbQ/ktbjY=;
+	s=korg; t=1763731118;
+	bh=NBtwdBv020MQaoXkY0w+D5nvOFn8x5WD0ggJGTBaSMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEElPdyIQf6cDDheIJT6aVKv9kQhTryeCIqMEnVMcWGJujKPGq61HinYAHxg3ct7i
-	 6ApcnTkYR8Xh1/ZQtGS9EnWP7hsPtcyGIhVygDYU3z4mF2B0ezv9vjd9+TNxOPMbfr
-	 CBkUE2/8WGkY7dKO621ZRzg5yDgPP1rpqeK+Qaas=
+	b=wZ7L9+M2+W2qBXitP2+Si9DPojkWyoD4TVmcPX7IOec04jX0Br2V8tXRk3kM//701
+	 GGTdn1s3onjSHTSOMuLdkOfQQnH2Rk6Mi7YVo9CjIgbmVhjPSkBHJpuAusElMIrdFu
+	 tCoyIWAxNPuOmZ2jyXK64CdzA/hu/aYzyeDwZWPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Zongyong <wuzongyong@linux.alibaba.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 096/247] acpi,srat: Fix incorrect device handle check for Generic Initiator
-Date: Fri, 21 Nov 2025 14:10:43 +0100
-Message-ID: <20251121130158.037013816@linuxfoundation.org>
+Subject: [PATCH 6.17 097/247] regulator: fixed: fix GPIO descriptor leak on register failure
+Date: Fri, 21 Nov 2025 14:10:44 +0100
+Message-ID: <20251121130158.072689827@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7c3643f204edf1c5edb12b36b34838683ee5f8dc ]
+[ Upstream commit 636f4618b1cd96f6b5a2b8c7c4f665c8533ecf13 ]
 
-The Generic Initiator Affinity Structure in SRAT table uses device
-handle type field to indicate the device type. According to ACPI
-specification, the device handle type value of 1 represents PCI device,
-not 0.
+In the commit referenced by the Fixes tag,
+devm_gpiod_get_optional() was replaced by manual
+GPIO management, relying on the regulator core to release the
+GPIO descriptor. However, this approach does not account for the
+error path: when regulator registration fails, the core never
+takes over the GPIO, resulting in a resource leak.
 
-Fixes: 894c26a1c274 ("ACPI: Support Generic Initiator only domains")
-Reported-by: Wu Zongyong <wuzongyong@linux.alibaba.com>
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20250913023224.39281-1-xueshuai@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Add gpiod_put() before returning on regulator registration failure.
+
+Fixes: 5e6f3ae5c13b ("regulator: fixed: Let core handle GPIO descriptor")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251028172828.625-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/srat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/fixed.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
-index 53816dfab6452..aa87ee1583a4e 100644
---- a/drivers/acpi/numa/srat.c
-+++ b/drivers/acpi/numa/srat.c
-@@ -237,7 +237,7 @@ acpi_table_print_srat_entry(struct acpi_subtable_header *header)
- 		struct acpi_srat_generic_affinity *p =
- 			(struct acpi_srat_generic_affinity *)header;
+diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
+index 1cb647ed70c62..a2d16e9abfb58 100644
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -334,6 +334,7 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 		ret = dev_err_probe(&pdev->dev, PTR_ERR(drvdata->dev),
+ 				    "Failed to register regulator: %ld\n",
+ 				    PTR_ERR(drvdata->dev));
++		gpiod_put(cfg.ena_gpiod);
+ 		return ret;
+ 	}
  
--		if (p->device_handle_type == 0) {
-+		if (p->device_handle_type == 1) {
- 			/*
- 			 * For pci devices this may be the only place they
- 			 * are assigned a proximity domain
 -- 
 2.51.0
 
