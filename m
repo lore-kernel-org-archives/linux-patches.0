@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB289275B18;
-	Fri, 21 Nov 2025 13:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C68274FE3;
+	Fri, 21 Nov 2025 13:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731560; cv=none; b=VEtp+IPCmC8OBgjyB33X9/OyFm+Mw+Pzxrgn++KEEUR0HfkbfGV2rSxDWUwdHWGvPKQz/IJDn9jvDPCflZi2ugwYti/EMbovkfr5AzUhGF3owUlInVCktKR8dzUPRLNDeRfSdsBSNN2lV+x1QQKORwFgQayXY1p2sdC/xBXJ/6o=
+	t=1763731564; cv=none; b=hd4QKfwq+PYGPR9cNKU3UsK6MFn4REy+ljwmRk6PA9qNKJuv7CDsm4RREDgiJSQbWEWm+wTqnB0Q5MJDPlutkuaYSv/2ez0iTavSxPgDj6jWEClKzBi25LeJSBLgcpTbR9LPdxNgdcuLuCaUd6q1F3T6r8HDiPCdQZRXG7vEGf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731560; c=relaxed/simple;
-	bh=NeztcHSB27qOC6lGCgj7yFKaOeP2pzDDmu6iPFEGmg0=;
+	s=arc-20240116; t=1763731564; c=relaxed/simple;
+	bh=tJrhTZcLj39nLvgSDpemiszWzI4diyURUJNk60wN6Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTbwr1wCTfr40P0y9Phfo6G655FfeMntut2wtyt5QaO42EXCC2DU7X68O7W8rC1W7tlz1K3uz11txP8U+pXJsbHMijrPqhHk9o7mebYrOVUkDiN2A0Eqzco/SxJbrgeKTUuswQE37la4Q0oeKfeuDpKpRW9A069nmHKa2DDRRrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo30JAm2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLkE5VmDmjgfdmGl7TZjDN+tMrKkXss/x16RnJqtuglDrLyy7bNmpdOEahznvqotJQHkLo9TE/L4lPDbK9uNiI2M5R7UrlWIN7fstxumog/P3OMkErx3ivHtTMskeCH7lJMgeGEjqa/u+bmv7SLph7RbqaaZAORI/GN/yLCpd2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQStGtPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo30JAm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443A7C4CEF1;
-	Fri, 21 Nov 2025 13:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQStGtPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA6FC4CEF1;
+	Fri, 21 Nov 2025 13:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731560;
-	bh=NeztcHSB27qOC6lGCgj7yFKaOeP2pzDDmu6iPFEGmg0=;
+	s=korg; t=1763731563;
+	bh=tJrhTZcLj39nLvgSDpemiszWzI4diyURUJNk60wN6Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fo30JAm2anaWbSWp69hqB3dLQR5GPguDUXOr0BCDXnZ1Tf240fRTqhn/mwUNfRTQX
-	 ylIFmAYg5IxxRTt1PfzQ3smfxbS+g65o8BK1ANRQ20DNURzCYUBL8CiIK4r50DqBEX
-	 fRF8rWpoxD4XqqcNJilIkn8zkv7Pgd4CqhoSDdYQ=
+	b=tQStGtPRPL9VW07/8eM1t9y2QFUU7NfWKlm4caBgwBwNLYOMBJU/qOGMl8Z36HFYr
+	 26TnJ0TeRgEn9dxGUkuQ+7w3SvtDHiTNlb857VWu7qerSFBmsQSChWcpbnbfPl/Da9
+	 VP6Ea7DrEXsNWKjXLZ9gZBfqZSLkF1mecv2xSJmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.17 229/247] pmdomain: samsung: Rework legacy splash-screen handover workaround
-Date: Fri, 21 Nov 2025 14:12:56 +0100
-Message-ID: <20251121130202.953894341@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 230/247] selftests: mptcp: connect: fix fallback note due to OoO
+Date: Fri, 21 Nov 2025 14:12:57 +0100
+Message-ID: <20251121130202.989974740@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit fccac54b0d3d0602f177bb79f203ae6fbea0e32a upstream.
+commit 63c643aa7b7287fdbb0167063785f89ece3f000f upstream.
 
-Limit the workaround for the lack of the proper splash-screen handover
-handling to the legacy ARM 32bit systems and replace forcing a sync_state
-by explicite power domain shutdown. This approach lets compiler to
-optimize it out on newer ARM 64bit systems.
+The "fallback due to TCP OoO" was never printed because the stat_ooo_now
+variable was checked twice: once in the parent if-statement, and one in
+the child one. The second condition was then always true then, and the
+'else' branch was never taken.
 
-Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
-Fixes: 0745658aebbe ("pmdomain: samsung: Fix splash-screen handover by enforcing a sync_state")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The idea is that when there are more ACK + MP_CAPABLE than expected, the
+test either fails if there was no out of order packets, or a notice is
+printed.
+
+Fixes: 69ca3d29a755 ("mptcp: update selftest for fallback due to OoO")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251110-net-mptcp-sft-join-unstable-v1-1-a4332c714e10@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/samsung/exynos-pm-domains.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pmdomain/samsung/exynos-pm-domains.c b/drivers/pmdomain/samsung/exynos-pm-domains.c
-index f53e1bd24798..5c3aa8983087 100644
---- a/drivers/pmdomain/samsung/exynos-pm-domains.c
-+++ b/drivers/pmdomain/samsung/exynos-pm-domains.c
-@@ -128,6 +128,15 @@ static int exynos_pd_probe(struct platform_device *pdev)
- 	pd->pd.power_on = exynos_pd_power_on;
- 	pd->local_pwr_cfg = pm_domain_cfg->local_pwr_cfg;
- 
-+	/*
-+	 * Some Samsung platforms with bootloaders turning on the splash-screen
-+	 * and handing it over to the kernel, requires the power-domains to be
-+	 * reset during boot.
-+	 */
-+	if (IS_ENABLED(CONFIG_ARM) &&
-+	    of_device_is_compatible(np, "samsung,exynos4210-pd"))
-+		exynos_pd_power_off(&pd->pd);
-+
- 	on = readl_relaxed(pd->base + 0x4) & pd->local_pwr_cfg;
- 
- 	pm_genpd_init(&pd->pd, NULL, !on);
-@@ -146,15 +155,6 @@ static int exynos_pd_probe(struct platform_device *pdev)
- 				parent.np, child.np);
- 	}
- 
--	/*
--	 * Some Samsung platforms with bootloaders turning on the splash-screen
--	 * and handing it over to the kernel, requires the power-domains to be
--	 * reset during boot. As a temporary hack to manage this, let's enforce
--	 * a sync_state.
--	 */
--	if (!ret)
--		of_genpd_sync_state(np);
--
- 	pm_runtime_enable(dev);
- 	return ret;
- }
--- 
-2.52.0
-
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -492,7 +492,7 @@ do_transfer()
+ 				  "than expected (${expect_synrx})"
+ 		retc=1
+ 	fi
+-	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} ] && [ ${stat_ooo_now} -eq 0 ]; then
++	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} ]; then
+ 		if [ ${stat_ooo_now} -eq 0 ]; then
+ 			mptcp_lib_pr_fail "lower MPC ACK rx (${stat_ackrx_now_l})" \
+ 					  "than expected (${expect_ackrx})"
 
 
