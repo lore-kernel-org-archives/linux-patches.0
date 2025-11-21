@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830A534CFC7;
-	Fri, 21 Nov 2025 13:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3B43A291;
+	Fri, 21 Nov 2025 13:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732387; cv=none; b=IlaMlmOg2W/vgfmhmt4dBFeeezmY643Sb/ssW5daJkBMzUzNL7Cjw2Q//Wum6bT/TVlj/IHbm/QoQUNU3w7jdTEqI8yrFcfXd7DY6Ks+ulm+HRDghg9J/y4DlxdMxlrnBiW+6lt82Y+b77t28UIVN0bO1KZZxgtjktOS27Yrydk=
+	t=1763732390; cv=none; b=twq+Tp2MnntSxp/YMxkei02wr0vRHYUHQUyo/emJYT0L3GLNGskyXNtC0lDTf/v2HTbq7WbpeHZmjoSxEVImPhvW5KYh5Ij0OKtzxiO5jWcMmpaa/P0AnuyTgj97jGZfTqul1riRRtdXHCP4aKFMy4L2cPWbIt5+svIwsaC2bGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732387; c=relaxed/simple;
-	bh=6fEvEaHN0E4F1Unj0DuChPeUXhhc50Es839cJ0eGsxI=;
+	s=arc-20240116; t=1763732390; c=relaxed/simple;
+	bh=wL7RQPtdehHbUoHWzhqWCDFEOgHiev0oeZhdS/YCHik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JidBDvKR2gGsCtwOqp8Can5tKERCgwUdkKx9ibjWIVBUJX/2T9lLdb5aYanl6BPgoG2/dqc7YeefFUClac8K/72hFKgs/YgOnheUzalzQMtbeBbyxQ/C5ITE0XEN7ld63miBo3x6VCnWZE174zYizJef4+oVPDvuBc5AY2SATis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwJhZQy+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BmxtMwFAnYFyp2y0kVDLHms7tz9O1oM5Gd4b4N6/eXYpG4g7hZw3iFtf1rh0LVGuEjo3fg8Mm16G6w7XQjieqR70lapMnOmDtnQWYm+iLb564Ysp+H+PwWXzITUsxkUg65W7B4MC/nOaa3YsZCb21SJBhp77arawPFrRtmakqhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdAIeV8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwJhZQy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA26C4CEF1;
-	Fri, 21 Nov 2025 13:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdAIeV8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D13C4CEF1;
+	Fri, 21 Nov 2025 13:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732387;
-	bh=6fEvEaHN0E4F1Unj0DuChPeUXhhc50Es839cJ0eGsxI=;
+	s=korg; t=1763732390;
+	bh=wL7RQPtdehHbUoHWzhqWCDFEOgHiev0oeZhdS/YCHik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwJhZQy+LgH8Wah8v7A2flyzz3eUgBvXKCd2L5uIDQgZri2DPPF0XYf29BIcT7zkY
-	 bGw9xQwtu7y4XUfi5KGkTc+v0+7/xGyutQ/+ZW0fPBpkgmsBRu9CxUEcS3kbVidtzR
-	 t70c6WDYmbXdz0Vqri90ELPOzRqPwpaEx+O/jk/4=
+	b=WdAIeV8B7wSN2OTT8kDFYWzmaCjvB8ceARSqt3FnpNQVIPd4R0nm65Yuilr4brNI/
+	 ISDsCQ/+nDKHs6yjgARfkbzx6eSMElSBZh3Lt4h9Sn002+TFX+IQOy9xx+7bpb2To+
+	 HRw080UPbEw+UCCXj8FqQyz9i+p+uUSPG/OeW8js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ben Copeland <ben.copeland@linaro.org>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/529] uprobe: Do not emulate/sstep original instruction when ip is changed
-Date: Fri, 21 Nov 2025 14:06:43 +0100
-Message-ID: <20251121130234.724927482@linuxfoundation.org>
+Subject: [PATCH 6.6 105/529] hwmon: (asus-ec-sensors) increase timeout for locking ACPI mutex
+Date: Fri, 21 Nov 2025 14:06:44 +0100
+Message-ID: <20251121130234.760384523@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,48 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Ben Copeland <ben.copeland@linaro.org>
 
-[ Upstream commit 4363264111e1297fa37aa39b0598faa19298ecca ]
+[ Upstream commit 584d55be66ef151e6ef9ccb3dcbc0a2155559be1 ]
 
-If uprobe handler changes instruction pointer we still execute single
-step) or emulate the original instruction and increment the (new) ip
-with its length.
+Some motherboards require more time to acquire the ACPI mutex,
+causing "Failed to acquire mutex" messages to appear in the kernel log.
+Increase the timeout from 500ms to 800ms to accommodate these cases.
 
-This makes the new instruction pointer bogus and application will
-likely crash on illegal instruction execution.
-
-If user decided to take execution elsewhere, it makes little sense
-to execute the original instruction, so let's skip it.
-
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20250916215301.664963-3-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Ben Copeland <ben.copeland@linaro.org>
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20250923192935.11339-3-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hwmon/asus-ec-sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index a554f43d3ceb9..6304238293ae1 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -2255,6 +2255,13 @@ static void handle_swbp(struct pt_regs *regs)
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index ce2f14a62754e..bc2197f1dfb7f 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -49,7 +49,7 @@ static char *mutex_path_override;
+  */
+ #define ASUS_EC_MAX_BANK	3
  
- 	handler_chain(uprobe, regs);
+-#define ACPI_LOCK_DELAY_MS	500
++#define ACPI_LOCK_DELAY_MS	800
  
-+	/*
-+	 * If user decided to take execution elsewhere, it makes little sense
-+	 * to execute the original instruction, so let's skip it.
-+	 */
-+	if (instruction_pointer(regs) != bp_vaddr)
-+		goto out;
-+
- 	if (arch_uprobe_skip_sstep(&uprobe->arch, regs))
- 		goto out;
- 
+ /* ACPI mutex for locking access to the EC for the firmware */
+ #define ASUS_HW_ACCESS_MUTEX_ASMX	"\\AMW0.ASMX"
 -- 
 2.51.0
 
