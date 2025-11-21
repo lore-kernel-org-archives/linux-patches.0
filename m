@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644C91A00F0;
-	Fri, 21 Nov 2025 13:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319FE35292A;
+	Fri, 21 Nov 2025 13:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733241; cv=none; b=O76mZcXEHpnL3PLj60bzeSjL+qtnSlYPR3FhCuERWO8po34R9wMD+Sr2wnxKjbe0DRCLQf+x6cu8dSccvw4shQL07ArkI6kAUrGdiXZK70TX8vC5/3h2tbOpaHtjBUourahjcHGL3Ou0tefLKXgn6NulO+1oeJePIvMNZWO8l48=
+	t=1763733244; cv=none; b=p/x1+wB/hUVH+v8yfCuoujttwcVWWUdjdVtYqcEjbRfSuMvhco/TsEaF8RdUK2BXRaov0byzM3Js+jBVp4kT/h9HWy8eKjyVULfzaCtuGZhnUFsGtzspg6/hB50D3cBwQEE997n9xOxkUQkv14O8Eib4FifxzwgXePengSTjSwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733241; c=relaxed/simple;
-	bh=Zcl5wqq1EeC7nPcZdQivxQ3WyuWxS7sPlzOZWvHUI9E=;
+	s=arc-20240116; t=1763733244; c=relaxed/simple;
+	bh=hAuPARZCqmovAr9j2jPOV1lvJeS8BgPslVZoadPhbtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oydYyIvms3GhLIZBMJAbwsh34eMKJYayE7zRjiuKIohMVl6iCkC3A19jQapG8OKt3SWVSqQwvF6ZSs6Lr6i/EitDzOIAoRn/J917925JKKZZLrr4RrIcx3sim7HelnVotHy2200u7lr3A8quCwisbcI/0Vo9HKlJA03KbmGA23Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/BDwmF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qc/md6zUZvBwnz14qNnIFDHs1TFT2DoROhjuiyaIeJVdlhX0zDV48FsYtZhoFJktJtSrMEefL/wLRnWedveU6t6hI/XGEmvrzSziBdITFEnsTOMX5nJX2w4q8bUYx9+2F339bjNQyJ83l0srmxjd9byYrFaJuiewOEXNptOqK/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mwwlHp1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/BDwmF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F79C116C6;
-	Fri, 21 Nov 2025 13:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mwwlHp1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF584C4CEF1;
+	Fri, 21 Nov 2025 13:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733241;
-	bh=Zcl5wqq1EeC7nPcZdQivxQ3WyuWxS7sPlzOZWvHUI9E=;
+	s=korg; t=1763733244;
+	bh=hAuPARZCqmovAr9j2jPOV1lvJeS8BgPslVZoadPhbtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/BDwmF4ArXl43NWmivuYyh8m9J3g40eujQAc7ssEJQKHQftAnit4hMoMlHgyUqUg
-	 vDp9ccM4kMN5hxOMtXfdbLqh/xgkGX8egH+KUGtaVex5mZOeLxKmi1jwp9RNL5ZLXE
-	 CCtWbKLTpRrBHA3hoAvXQqlwEd/aRHS2zkC8pXJQ=
+	b=mwwlHp1viFHmMKTIKfcrb3aGM7iZVAnUpn/ZeKMWbwpRjE+l2kVRDraLyNUgMG/nC
+	 chvdq0dVxW0ovCDpl/6tNA3ytaDD9fCmh1jueMbVBNHpl/M+pb8qzKCEYyqxCutQ8j
+	 Rm58av9AkeyQmR6ZCdCD+spxzivpF4F7JOwkf14U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 401/529] Bluetooth: 6lowpan: Dont hold spin lock over sleeping functions
-Date: Fri, 21 Nov 2025 14:11:40 +0100
-Message-ID: <20251121130245.289619732@linuxfoundation.org>
+Subject: [PATCH 6.6 402/529] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
+Date: Fri, 21 Nov 2025 14:11:41 +0100
+Message-ID: <20251121130245.324645176@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,147 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 98454bc812f3611551e4b1f81732da4aa7b9597e ]
+[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
 
-disconnect_all_peers() calls sleeping function (l2cap_chan_close) under
-spinlock.  Holding the lock doesn't actually do any good -- we work on a
-local copy of the list, and the lock doesn't protect against peer->chan
-having already been freed.
+syzbot reported a possible shift-out-of-bounds [1]
 
-Fix by taking refcounts of peer->chan instead.  Clean up the code and
-old comments a bit.
+Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
 
-Take devices_lock instead of RCU, because the kfree_rcu();
-l2cap_chan_put(); construct in chan_close_cb() does not guarantee
-peer->chan is necessarily valid in RCU.
+It is unclear if some sctp users are setting very large rto_alpha
+and/or rto_beta.
 
-Also take l2cap_chan_lock() which is required for l2cap_chan_close().
+In order to prevent user regression, perform the test at run time.
 
-Log: (bluez 6lowpan-tester Client Connect - Disable)
-------
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:575
-...
-<TASK>
-...
-l2cap_send_disconn_req (net/bluetooth/l2cap_core.c:938 net/bluetooth/l2cap_core.c:1495)
-...
-? __pfx_l2cap_chan_close (net/bluetooth/l2cap_core.c:809)
-do_enable_set (net/bluetooth/6lowpan.c:1048 net/bluetooth/6lowpan.c:1068)
-------
+Also add READ_ONCE() annotations as sysctl values can change under us.
 
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[1]
+
+UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
+shift exponent 64 is too large for 32-bit type 'unsigned int'
+CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+  ubsan_epilogue lib/ubsan.c:233 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
+  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
+  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
+  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
+  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
+  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
+
+Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
+Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 68 ++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 25 deletions(-)
+ net/sctp/transport.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 820376eee8bc3..e65d4754c94f4 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -52,6 +52,11 @@ static bool enable_6lowpan;
- static struct l2cap_chan *listen_chan;
- static DEFINE_MUTEX(set_lock);
+diff --git a/net/sctp/transport.c b/net/sctp/transport.c
+index 31eca29b6cfbf..abb44c0ac1a0b 100644
+--- a/net/sctp/transport.c
++++ b/net/sctp/transport.c
+@@ -495,6 +495,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
  
-+enum {
-+	LOWPAN_PEER_CLOSING,
-+	LOWPAN_PEER_MAXBITS
-+};
-+
- struct lowpan_peer {
- 	struct list_head list;
- 	struct rcu_head rcu;
-@@ -60,6 +65,8 @@ struct lowpan_peer {
- 	/* peer addresses in various formats */
- 	unsigned char lladdr[ETH_ALEN];
- 	struct in6_addr peer_addr;
-+
-+	DECLARE_BITMAP(flags, LOWPAN_PEER_MAXBITS);
- };
- 
- struct lowpan_btle_dev {
-@@ -1013,41 +1020,52 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- static void disconnect_all_peers(void)
- {
- 	struct lowpan_btle_dev *entry;
--	struct lowpan_peer *peer, *tmp_peer, *new_peer;
--	struct list_head peers;
--
--	INIT_LIST_HEAD(&peers);
-+	struct lowpan_peer *peer;
-+	int nchans;
- 
--	/* We make a separate list of peers as the close_cb() will
--	 * modify the device peers list so it is better not to mess
--	 * with the same list at the same time.
-+	/* l2cap_chan_close() cannot be called from RCU, and lock ordering
-+	 * chan->lock > devices_lock prevents taking write side lock, so copy
-+	 * then close.
- 	 */
- 
- 	rcu_read_lock();
-+	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list)
-+		list_for_each_entry_rcu(peer, &entry->peers, list)
-+			clear_bit(LOWPAN_PEER_CLOSING, peer->flags);
-+	rcu_read_unlock();
- 
--	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
--		list_for_each_entry_rcu(peer, &entry->peers, list) {
--			new_peer = kmalloc(sizeof(*new_peer), GFP_ATOMIC);
--			if (!new_peer)
--				break;
-+	do {
-+		struct l2cap_chan *chans[32];
-+		int i;
- 
--			new_peer->chan = peer->chan;
--			INIT_LIST_HEAD(&new_peer->list);
-+		nchans = 0;
- 
--			list_add(&new_peer->list, &peers);
--		}
--	}
-+		spin_lock(&devices_lock);
- 
--	rcu_read_unlock();
-+		list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-+			list_for_each_entry_rcu(peer, &entry->peers, list) {
-+				if (test_and_set_bit(LOWPAN_PEER_CLOSING,
-+						     peer->flags))
-+					continue;
- 
--	spin_lock(&devices_lock);
--	list_for_each_entry_safe(peer, tmp_peer, &peers, list) {
--		l2cap_chan_close(peer->chan, ENOENT);
-+				l2cap_chan_hold(peer->chan);
-+				chans[nchans++] = peer->chan;
- 
--		list_del_rcu(&peer->list);
--		kfree_rcu(peer, rcu);
--	}
--	spin_unlock(&devices_lock);
-+				if (nchans >= ARRAY_SIZE(chans))
-+					goto done;
-+			}
-+		}
-+
-+done:
-+		spin_unlock(&devices_lock);
-+
-+		for (i = 0; i < nchans; ++i) {
-+			l2cap_chan_lock(chans[i]);
-+			l2cap_chan_close(chans[i], ENOENT);
-+			l2cap_chan_unlock(chans[i]);
-+			l2cap_chan_put(chans[i]);
-+		}
-+	} while (nchans);
- }
- 
- struct set_enable {
+ 	if (tp->rttvar || tp->srtt) {
+ 		struct net *net = tp->asoc->base.net;
++		unsigned int rto_beta, rto_alpha;
+ 		/* 6.3.1 C3) When a new RTT measurement R' is made, set
+ 		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
+ 		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
+@@ -506,10 +507,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
+ 		 * For example, assuming the default value of RTO.Alpha of
+ 		 * 1/8, rto_alpha would be expressed as 3.
+ 		 */
+-		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
+-			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
+-		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
+-			+ (rtt >> net->sctp.rto_alpha);
++		rto_beta = READ_ONCE(net->sctp.rto_beta);
++		if (rto_beta < 32)
++			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
++				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
++		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
++		if (rto_alpha < 32)
++			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
++				+ (rtt >> rto_alpha);
+ 	} else {
+ 		/* 6.3.1 C2) When the first RTT measurement R is made, set
+ 		 * SRTT <- R, RTTVAR <- R/2.
 -- 
 2.51.0
 
