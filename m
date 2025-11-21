@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2EE2737FC;
-	Fri, 21 Nov 2025 13:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4C830AADC;
+	Fri, 21 Nov 2025 13:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731715; cv=none; b=mOWn2R+thpPY0Q7eeFYOhEgQ1j40sA4epQXNEqtRn+UqKV86TVBfO2eByvVrHQ0YRT1svqMvZJY3YG0hBXi0Upja8Hg3e0MPOSf3PzArW5u3y3XFUw9Eexqg28nib+cx5lIHRHXA7H3q9qefxKbbCsgS3tzS79ecKCF9o0INcTA=
+	t=1763731718; cv=none; b=epfJQzhjtdCcXmhSP6ptzbjQR5g6Vz5rc1+LazfryFRltxh5uSEx5ExFNXaNM6tKpnoNO+dEFzwiB/G5TIRL99bhAXKi43XkA6mP+d6QCClDh52hOfpv7IT2ulUjUR7OXCArMlx1tcUsCxbKiNhTd/1XnpCXFUwmnbfFRhOAO2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731715; c=relaxed/simple;
-	bh=rO+tCPNdNuA4qm5Wtz6AdNX4r4rDBfFSxdO7nnzR6oc=;
+	s=arc-20240116; t=1763731718; c=relaxed/simple;
+	bh=1FXBdTE3d1yBYDNr7w5NS3SC+roI2vy5aezhcMQpW0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehrvRa2xGM8lIJMZhFV8x3FLMIGxOJCoJgETDKYfwPFBs4NE3IE1vzbvcaAiMXbBAZ96lLeWN4370rHcGSVUBm3yhHHQ9/7ySZkrOSnPhum14PHlwkOJmr0pKyJb3x6I10yogHSl6nP2Blu39NRi7Mo+3w4MnlRkBhiPQlHt1Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvF2z27U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBUCRMYmMn9uYwbZhFe5zyWmIUiijRoz4oNlrSp79wfnHEYZHdNVckzj7w+MgMQPKytmfGUMTFhn/1Dqche5yP/UTgDuPjpiZd6Vzbyo7aO3DX7E7GEr3brJ3KjPRxF9IMpLWwYcUI4IhbA69pvFCx9ofDAILWleGBq1qEPquu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcZzIXj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvF2z27U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6ACC4CEF1;
-	Fri, 21 Nov 2025 13:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcZzIXj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA45C4CEF1;
+	Fri, 21 Nov 2025 13:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731715;
-	bh=rO+tCPNdNuA4qm5Wtz6AdNX4r4rDBfFSxdO7nnzR6oc=;
+	s=korg; t=1763731717;
+	bh=1FXBdTE3d1yBYDNr7w5NS3SC+roI2vy5aezhcMQpW0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvF2z27U1YL558jcxXFQIeNCoOcXD3OQEB8en4tfDCzmeV4auCnsdfdJkz74JiVud
-	 Zv0Io55CK4ASKQsDFCW9Zk3MtY3O6SDYvp7AnZqRWPSyvPfJ+NLKaWE/LOWuNi0p51
-	 EpUnQI2oU1a9VubzeZjsuX1QcZVYm4+W0StIAoFc=
+	b=QcZzIXj9uskWeDHYCx1E6vK6XmNZsvjWiXDlpRF5DluB0rpWjNE8Y86HApYqYDUcT
+	 gyUBUj/xPCeKXPHf9eSmMPsBQA+ffdyZfExlLtrmdHrhueo6yhtmPACAq/6XeePTff
+	 DOxpukX/iNHa/k3OrcmqSuA50TNt0Rk8RZjHNIWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aksh Garg <a-garg7@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/185] net: ethernet: ti: am65-cpsw-qos: fix IET verify retry mechanism
-Date: Fri, 21 Nov 2025 14:11:15 +0100
-Message-ID: <20251121130145.612624829@linuxfoundation.org>
+Subject: [PATCH 6.12 057/185] net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps
+Date: Fri, 21 Nov 2025 14:11:24 +0100
+Message-ID: <20251121130145.935217902@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,85 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit d4b00d132d7cb70a74bc039c91c1d6120943c71b ]
+[ Upstream commit 43b27d1bd88a4bce34ec2437d103acfae9655f9e ]
 
-The am65_cpsw_iet_verify_wait() function attempts verification 20 times,
-toggling the AM65_CPSW_PN_IET_MAC_LINKFAIL bit in each iteration. When
-the LINKFAIL bit transitions from 1 to 0, the MAC merge layer initiates
-the verification process and waits for the timeout configured in
-MAC_VERIFY_CNT before automatically retransmitting. The MAC_VERIFY_CNT
-register is configured according to the user-defined verify/response
-timeout in am65_cpsw_iet_set_verify_timeout_count(). As per IEEE 802.3
-Clause 99, the hardware performs this automatic retry up to 3 times.
+Add validation to reject rates exceeding 255 Gbps that would overflow
+the 8 bits max bandwidth field.
 
-Current implementation toggles LINKFAIL after the user-configured
-verify/response timeout in each iteration, forcing the hardware to
-restart verification instead of respecting the MAC_VERIFY_CNT timeout.
-This bypasses the hardware's automatic retry mechanism.
-
-Fix this by moving the LINKFAIL bit toggle outside the retry loop and
-reducing the retry count from 20 to 3. The software now only monitors
-the status register while the hardware autonomously handles the 3
-verification attempts at proper MAC_VERIFY_CNT intervals.
-
-Fixes: 49a2eb9068246 ("net: ethernet: ti: am65-cpsw-qos: Add Frame Preemption MAC Merge support")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
-Link: https://patch.msgid.link/20251106092305.1437347-3-a-garg7@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d8880795dabf ("net/mlx5e: Implement DCBNL IEEE max rate")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1762681073-1084058-5-git-send-email-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-qos.c | 27 +++++++++++++------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-qos.c b/drivers/net/ethernet/ti/am65-cpsw-qos.c
-index ad06942ce461a..66e8b224827b6 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-qos.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-qos.c
-@@ -317,20 +317,21 @@ static int am65_cpsw_iet_verify_wait(struct am65_cpsw_port *port)
- 	u32 ctrl, status;
- 	int try;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 99ee288ed43a4..154f8d9eec02a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -596,11 +596,13 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 	u8 max_bw_value[IEEE_8021QAZ_MAX_TCS];
+ 	u8 max_bw_unit[IEEE_8021QAZ_MAX_TCS];
+ 	__u64 upper_limit_mbps;
++	__u64 upper_limit_gbps;
+ 	int i;
  
--	try = 20;
--	do {
--		/* Reset the verify state machine by writing 1
--		 * to LINKFAIL
--		 */
--		ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
--		ctrl |= AM65_CPSW_PN_IET_MAC_LINKFAIL;
--		writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
-+	try = 3;
+ 	memset(max_bw_value, 0, sizeof(max_bw_value));
+ 	memset(max_bw_unit, 0, sizeof(max_bw_unit));
+ 	upper_limit_mbps = 255 * MLX5E_100MB;
++	upper_limit_gbps = 255 * MLX5E_1GB;
  
--		/* Clear MAC_LINKFAIL bit to start Verify. */
--		ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
--		ctrl &= ~AM65_CPSW_PN_IET_MAC_LINKFAIL;
--		writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
-+	/* Reset the verify state machine by writing 1
-+	 * to LINKFAIL
-+	 */
-+	ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
-+	ctrl |= AM65_CPSW_PN_IET_MAC_LINKFAIL;
-+	writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
- 
-+	/* Clear MAC_LINKFAIL bit to start Verify. */
-+	ctrl = readl(port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
-+	ctrl &= ~AM65_CPSW_PN_IET_MAC_LINKFAIL;
-+	writel(ctrl, port->port_base + AM65_CPSW_PN_REG_IET_CTRL);
-+
-+	do {
- 		msleep(port->qos.iet.verify_time_ms);
- 
- 		status = readl(port->port_base + AM65_CPSW_PN_REG_IET_STATUS);
-@@ -352,7 +353,7 @@ static int am65_cpsw_iet_verify_wait(struct am65_cpsw_port *port)
- 			netdev_dbg(port->ndev, "MAC Merge verify error\n");
- 			return -ENODEV;
+ 	for (i = 0; i <= mlx5_max_tc(mdev); i++) {
+ 		if (!maxrate->tc_maxrate[i]) {
+@@ -612,10 +614,16 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 						  MLX5E_100MB);
+ 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
+ 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
+-		} else {
++		} else if (max_bw_value[i] <= upper_limit_gbps) {
+ 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
+ 						  MLX5E_1GB);
+ 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
++		} else {
++			netdev_err(netdev,
++				   "tc_%d maxrate %llu Kbps exceeds limit %llu\n",
++				   i, maxrate->tc_maxrate[i],
++				   upper_limit_gbps);
++			return -EINVAL;
  		}
--	} while (try-- > 0);
-+	} while (--try > 0);
+ 	}
  
- 	netdev_dbg(port->ndev, "MAC Merge verify timeout\n");
- 	return -ETIMEDOUT;
 -- 
 2.51.0
 
