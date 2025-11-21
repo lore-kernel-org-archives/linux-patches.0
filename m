@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D4730101A;
-	Fri, 21 Nov 2025 13:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB633BBA0;
+	Fri, 21 Nov 2025 13:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732192; cv=none; b=KzIQyIYlYWrHDm9G4UF9carSDq594wRTMEiEzNFpCs6V2XndhcLbW8H0QnqGRdr5iGg9rcDCM7r64C0d0SXSoWjPUW/93s4GwDeaf6GayUsjLggha/6jPv0XmMWtoVCuQu4196A4LHupnjOp8V9dcmBsfA88ElUl1e+3T3GBkvw=
+	t=1763732195; cv=none; b=ldH95Dt57j/L+vMcr2J+NldnhF+Ib50SnZiMnDdMxsBnlSnRHdWNUhnKMO7QKfva9aw/ovzLbKrgDND4XZwdaigEwmSVtseScUGn+tqi9Ytu2r0QPp3JTwMwAup3uWMZ5qEY/uKFOppmG2qC8WhSsei0vBKp27GZYRJX2jJVfQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732192; c=relaxed/simple;
-	bh=AXqbfKoRI5pRIirCBGoe3Ff7OaJp2dncy8yBkg4H4Gg=;
+	s=arc-20240116; t=1763732195; c=relaxed/simple;
+	bh=Mtyw4uaFaAWl1FBbHPvQAr5A2XXXqOu8obSRl0JVqlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+6P8GWy3Sd0FQAccN1BcAS7Bcm5wpgjiaGmB0YvRlPN8RKFhUyvm/za36+NrHRTiWN4bXN9sKZMbsP+YntIEjvYnH9/+CGZcOFxs1E2H3aMg1Rv+6LHHnMFi8dBKpTeAg+MDwf5Pskg6Jcy2XsSdPVGfWhfney4m+83v770xas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3LdYGk1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BnPf3ZySwwuj3MibfGrsW9mk49GBqWgVkNAlBrSziybbff4H+V6iK3PJiaVxmEUWkmsS8LiGtDuBMei67rJIQKhwTlihCD+1H5yVGrnH4LsXUl+OmWD3O2NWxCcHWPkjMRxcvizZdWNO49RiWa0pyxxbXG7SBANrhr1eT10x46o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0OWRwSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3LdYGk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F00C4CEF1;
-	Fri, 21 Nov 2025 13:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0OWRwSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016C9C4CEF1;
+	Fri, 21 Nov 2025 13:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732192;
-	bh=AXqbfKoRI5pRIirCBGoe3Ff7OaJp2dncy8yBkg4H4Gg=;
+	s=korg; t=1763732195;
+	bh=Mtyw4uaFaAWl1FBbHPvQAr5A2XXXqOu8obSRl0JVqlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3LdYGk1fXKfVoztwZjeFmILgAcR8oZjcBDBhlJa3xtkJGNlV9R5QUkJstag3JZtF
-	 UtG2/Vb4X3x+uB4tJH8YnduyU4yQg5OQPDDDDUZIHHHTOL0+ksRt5dJwEsb2ZhKrfY
-	 2jT7gp4eqNjpWzMB2UoiL9lKIrKep7ygsJQmrGLo=
+	b=e0OWRwSFrbwN4Zfzy+17pMJb1sIlYQPTX6OaTv6fQQxmaCz7gICm8M1v7Rb7mhVu7
+	 QQAQApYOdwUacMIUgIrI6h4ZCUmPQ9EmVhM8UBFkbWHriDML4OZrSpDhYZnl3gX6Ad
+	 Ta75hrUzGXnBM10g6ppvgInF9uPtS0/U3vnkdW+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/529] drm/etnaviv: fix flush sequence logic
-Date: Fri, 21 Nov 2025 14:05:35 +0100
-Message-ID: <20251121130232.285196476@linuxfoundation.org>
+Subject: [PATCH 6.6 037/529] net: hns3: return error code when function fails
+Date: Fri, 21 Nov 2025 14:05:36 +0100
+Message-ID: <20251121130232.322368739@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,44 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit a042beac6e6f8ac1e923784cfff98b47cbabb185 ]
+[ Upstream commit 03ca7c8c42be913529eb9f188278114430c6abbd ]
 
-The current logic uses the flush sequence from the current address
-space. This is harmless when deducing the flush requirements for the
-current submit, as either the incoming address space is the same one
-as the currently active one or we switch context, in which case the
-flush is unconditional.
+Currently, in hclge_mii_ioctl(), the operation to
+read the PHY register (SIOCGMIIREG) always returns 0.
 
-However, this sequence is also stored as the current flush sequence
-of the GPU. If we switch context the stored flush sequence will no
-longer belong to the currently active address space. This incoherency
-can then cause missed flushes, resulting in translation errors.
+This patch changes the return type of hclge_read_phy_reg(),
+returning an error code when the function fails.
 
-Fixes: 27b67278e007 ("drm/etnaviv: rework MMU handling")
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://lore.kernel.org/r/20251021093723.3887980-1-l.stach@pengutronix.de
+Fixes: 024712f51e57 ("net: hns3: add ioctl support for imp-controlled PHYs")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20251023131338.2642520-2-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +--
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c | 9 ++++++---
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h | 2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-index b13a17276d07c..88385dc3b30d8 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-@@ -347,7 +347,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
- 	u32 link_target, link_dwords;
- 	bool switch_context = gpu->exec_state != exec_state;
- 	bool switch_mmu_context = gpu->mmu_context != mmu_context;
--	unsigned int new_flush_seq = READ_ONCE(gpu->mmu_context->flush_seq);
-+	unsigned int new_flush_seq = READ_ONCE(mmu_context->flush_seq);
- 	bool need_flush = switch_mmu_context || gpu->flush_seq != new_flush_seq;
- 	bool has_blt = !!(gpu->identity.minor_features5 &
- 			  chipMinorFeatures5_BLT_ENGINE);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 789f72d1067f8..2fa64099e8be2 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -9346,8 +9346,7 @@ static int hclge_mii_ioctl(struct hclge_dev *hdev, struct ifreq *ifr, int cmd)
+ 		/* this command reads phy id and register at the same time */
+ 		fallthrough;
+ 	case SIOCGMIIREG:
+-		data->val_out = hclge_read_phy_reg(hdev, data->reg_num);
+-		return 0;
++		return hclge_read_phy_reg(hdev, data->reg_num, &data->val_out);
+ 
+ 	case SIOCSMIIREG:
+ 		return hclge_write_phy_reg(hdev, data->reg_num, data->val_in);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
+index 80079657afebe..b8dbf932caf94 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
+@@ -274,7 +274,7 @@ void hclge_mac_stop_phy(struct hclge_dev *hdev)
+ 	phy_stop(phydev);
+ }
+ 
+-u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
++int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val)
+ {
+ 	struct hclge_phy_reg_cmd *req;
+ 	struct hclge_desc desc;
+@@ -286,11 +286,14 @@ u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
+ 	req->reg_addr = cpu_to_le16(reg_addr);
+ 
+ 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
+-	if (ret)
++	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to read phy reg, ret = %d.\n", ret);
++		return ret;
++	}
+ 
+-	return le16_to_cpu(req->reg_val);
++	*val = le16_to_cpu(req->reg_val);
++	return 0;
+ }
+ 
+ int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
+index 4200d0b6d9317..21d434c82475b 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
+@@ -13,7 +13,7 @@ int hclge_mac_connect_phy(struct hnae3_handle *handle);
+ void hclge_mac_disconnect_phy(struct hnae3_handle *handle);
+ void hclge_mac_start_phy(struct hclge_dev *hdev);
+ void hclge_mac_stop_phy(struct hclge_dev *hdev);
+-u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr);
++int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val);
+ int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val);
+ 
+ #endif
 -- 
 2.51.0
 
