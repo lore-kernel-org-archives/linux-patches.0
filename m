@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6143A34EF19;
-	Fri, 21 Nov 2025 13:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53653348477;
+	Fri, 21 Nov 2025 13:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733477; cv=none; b=ebb18clbdatot+zXkcAcphUWX3pScWcIjXsiA13CM5IJCsu8ysexS6w6FyltrRL08UfHpSXvtJ/Sj9S1/anJr5FMf28zPNv3KNSgZ9p/Rlsf32KsXT1pHQ2bTuz/R/WNaiKPkU46FHWMlF4OiUwydUvPeHeGD6N0WQG/4nBYQUI=
+	t=1763733481; cv=none; b=ZeVzXAL6ht5buzp+jYj6rZ10NnscisrG9Z/SVLSdMYrtWTZZ/EhY1nv+0sp6W0YHxJvvFovzZrV4EvTdoSE1QrarCRep/ldPg6FUd49nHgzdwZr0kHNtFOzkx6cSVHiYZBXuJlwwtW/hlF3AJnRtKtiYgDVG5vsnjZyxytqWVwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733477; c=relaxed/simple;
-	bh=DX8xHgO3c72RSXkei1fAWhuSv16FAd36eUCurKPm7Xw=;
+	s=arc-20240116; t=1763733481; c=relaxed/simple;
+	bh=tDfFMaN8YzZtGGkm99bcCdUtnyi6OlIJnkUK0Lpr4fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZLtiaf2Q1Y/UR9fR8A9yfuC4DvtadX1/xDbuYExyRE46xn4Ms1U5MnAd4PybT/BGU24xN7pkDiaqqj7jtMtzsgdEIXQhdhEVfDdW6WeAwaV/uoJoYHLwt0l8kbZlxk+p2NPPxJFYSVbAe/jLIkyyJRuDm5uWF70jX2rKCO5MA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVkuuaF0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V4VWXUjJyOPPePckMArFVVppLfBeCueDDx3XmTwNFI3hPYHDwZbTCqvcWite0MvxBRlgS0omDrznIdbgiPdCfXZo6Ls4Xvu86wXC4OR22yX+brJGps2S0HfC/w3mU6bInrQj50cDcjUgyhLTyeGYCMBCZhbyEEZvmir/7twcuKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOPU4LSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVkuuaF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6D3C4CEF1;
-	Fri, 21 Nov 2025 13:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOPU4LSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5042C4CEF1;
+	Fri, 21 Nov 2025 13:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733477;
-	bh=DX8xHgO3c72RSXkei1fAWhuSv16FAd36eUCurKPm7Xw=;
+	s=korg; t=1763733480;
+	bh=tDfFMaN8YzZtGGkm99bcCdUtnyi6OlIJnkUK0Lpr4fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVkuuaF0PzsP2cIlpBTCORORFf15LFNwFCjC0pC6FfRGZbtm4vvm0IWVIh18nUPnl
-	 7fxVibX1JQo5O7ZAZZldi7X3JwDlF4QJstH+CwvGIahUnfaVZjaldDDtQAmOyelnHU
-	 2n0TXK/QRtehLC/nN2dS6frGxC9pa2c98iyYokeM=
+	b=wOPU4LSdDAIsBdc/ccKkiqWNY5uWrqM8XNL5oupMmE4rZWyRLXlys0mARzRcUIiHW
+	 bvHJHIQVfaKanOfGCA8F+jPracNwNs6elBLkkA4Bug+hvANjeQaEv4bzPGYY7q6LDq
+	 mad/O0Gkl7U1qLKXV1heCymCV6trYTLjSa3fRHAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.6 481/529] x86/microcode/AMD: Add Zen5 model 0x44, stepping 0x1 minrev
-Date: Fri, 21 Nov 2025 14:13:00 +0100
-Message-ID: <20251121130248.123430353@linuxfoundation.org>
+	Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	sunliming <sunliming@kylinos.cn>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 482/529] selftests/user_events: fix type cast for write_index packed member in perf_test
+Date: Fri, 21 Nov 2025 14:13:01 +0100
+Message-ID: <20251121130248.158508128@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,32 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
 
-commit dd14022a7ce96963aa923e35cf4bcc8c32f95840 upstream.
+commit 216158f063fe24fb003bd7da0cd92cd6e2c4d48b upstream.
 
-Add the minimum Entrysign revision for that model+stepping to the list
-of minimum revisions.
+Accessing 'reg.write_index' directly triggers a -Waddress-of-packed-member
+warning due to potential unaligned pointer access:
 
-Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/e94dd76b-4911-482f-8500-5c848a3df026@citrix.com
+perf_test.c:239:38: warning: taking address of packed member 'write_index'
+of class or structure 'user_reg' may result in an unaligned pointer value
+[-Waddress-of-packed-member]
+  239 |         ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
+      |                                             ^~~~~~~~~~~~~~~
+
+Since write(2) works with any alignment. Casting '&reg.write_index'
+explicitly to 'void *' to suppress this warning.
+
+Link: https://lkml.kernel.org/r/20251106095532.15185-1-ankitkhushwaha.linux@gmail.com
+Fixes: 42187bdc3ca4 ("selftests/user_events: Add perf self-test for empty arguments events")
+Signed-off-by: Ankit Khushwaha <ankitkhushwaha.linux@gmail.com>
+Cc: Beau Belgrave <beaub@linux.microsoft.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: sunliming <sunliming@kylinos.cn>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/user_events/perf_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -214,6 +214,7 @@ static bool need_sha_check(u32 cur_rev)
- 	case 0xb1010: return cur_rev <= 0xb101046; break;
- 	case 0xb2040: return cur_rev <= 0xb204031; break;
- 	case 0xb4040: return cur_rev <= 0xb404031; break;
-+	case 0xb4041: return cur_rev <= 0xb404101; break;
- 	case 0xb6000: return cur_rev <= 0xb600031; break;
- 	case 0xb6080: return cur_rev <= 0xb608031; break;
- 	case 0xb7000: return cur_rev <= 0xb700031; break;
+diff --git a/tools/testing/selftests/user_events/perf_test.c b/tools/testing/selftests/user_events/perf_test.c
+index 5288e768b207..68625362add2 100644
+--- a/tools/testing/selftests/user_events/perf_test.c
++++ b/tools/testing/selftests/user_events/perf_test.c
+@@ -236,7 +236,7 @@ TEST_F(user, perf_empty_events) {
+ 	ASSERT_EQ(1 << reg.enable_bit, self->check);
+ 
+ 	/* Ensure write shows up at correct offset */
+-	ASSERT_NE(-1, write(self->data_fd, &reg.write_index,
++	ASSERT_NE(-1, write(self->data_fd, (void *)&reg.write_index,
+ 					sizeof(reg.write_index)));
+ 	val = (void *)(((char *)perf_page) + perf_page->data_offset);
+ 	ASSERT_EQ(PERF_RECORD_SAMPLE, *val);
+-- 
+2.52.0
+
 
 
