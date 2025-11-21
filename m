@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96852332904;
-	Fri, 21 Nov 2025 13:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702D82745E;
+	Fri, 21 Nov 2025 13:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731941; cv=none; b=PiBPBDp/DFTwnMXCZMSixYLRSzCPbl758tItFNuYZRKXCPKACQVyTZxjmP67hjJCXQOMP+zQMlR1PactkooSKRlM157khH3hHtgmfLS6jBWTlxbNZJ+2bseOqDjn2OsAoIgqbH+xCunzU3j9RjgDEe/V85wpk63deJC8JL6ZPuY=
+	t=1763731944; cv=none; b=j/9rssBFr9TahIey8q6HKUKWB/HFgG5FwSUvcd0F9j+wxHMW0UL2K8ovmSgxGS5HCtMhNecFhEqM61YfrikqnGzF9Gn5INyfWfDXfkrVJIVrCRoTHZD0+mY5fdX7+eTFdLc2EdmFkNBkBpdgHCFQLVuWV7yxHAjuTZCgjV9QU98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731941; c=relaxed/simple;
-	bh=BT0f1X799ahFFW4+Gz+VY1gqUWtSrAOCYV7kqaRsj2I=;
+	s=arc-20240116; t=1763731944; c=relaxed/simple;
+	bh=5qJXHh8XxRN1SvNdaV/wnSHWAXlIVPGupsqUHe/KOeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYpkVa71P/TCzjoGKPk4Bd2v8GISHwxNCGqlYkj2GQ9koYWQCkXoXfNdSCpAGeVGu2aWh8KkKnsQt6B2/IZNrPA9oPXnxcHIq606vk7o3WNS0h/9FxRS18Kwo579cBxycznEVJ68fEU23STXp+ZGvohopGAprDMTSqaOv/zM0Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YES6Xu4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ng32lApz281iuvHxocJWhd8SAZbv5eWPhaHNGHGaxASVHj9KwURKy+nPtpfkIMkfaS48cTxZ8EOQ+Ad1zYcWAVvgsG8OGC5pYe+KKASatIlhCN8sw92kaDiCgLt5ubnRHpZrE3Xwb81jDFBPltN5IE4MD2LkwBgwnb17cyjlPKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbiz7W1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YES6Xu4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6788C4CEF1;
-	Fri, 21 Nov 2025 13:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbiz7W1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB85BC4CEF1;
+	Fri, 21 Nov 2025 13:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731941;
-	bh=BT0f1X799ahFFW4+Gz+VY1gqUWtSrAOCYV7kqaRsj2I=;
+	s=korg; t=1763731944;
+	bh=5qJXHh8XxRN1SvNdaV/wnSHWAXlIVPGupsqUHe/KOeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YES6Xu4LCiDql4EAAWejnnftSQImU1YTXgEtxJBdaAi5w1emWbpweJyUUsIN12wI4
-	 5/KEg3bMnYsKjkPTwcmpGO3BcWD79JWSOmh9KJykUowTq3SpR0UM+KY8Fj5iy7bmmg
-	 QX0j/EzZxb9/o0152lSl/NccM9PwF39FAx0GfS8E=
+	b=qbiz7W1nFVv5bhoBuTwxuoxikgTfq1mmDPm1raasot5de8qJRzQuXmJORSsD2WrJP
+	 PFG4lSqLh2667vLYcP40T5SsAUKK75neP9YWqQL9+u825cLf3Spa51SFTsp2BF9wB7
+	 UxtfV7/yW+3yEwjqXjJNrF9+vpjkiGTk/VYQU5lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 135/185] spi: Try to get ACPI GPIO IRQ earlier
-Date: Fri, 21 Nov 2025 14:12:42 +0100
-Message-ID: <20251121130148.746433702@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.12 136/185] x86/microcode/AMD: Add Zen5 model 0x44, stepping 0x1 minrev
+Date: Fri, 21 Nov 2025 14:12:43 +0100
+Message-ID: <20251121130148.781746625@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -50,55 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
+commit dd14022a7ce96963aa923e35cf4bcc8c32f95840 upstream.
 
-Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
-acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
-on the SPI device.
+Add the minimum Entrysign revision for that model+stepping to the list
+of minimum revisions.
 
-If there is no driver for the SPI device then the move to spi_probe()
-results in acpi_dev_gpio_irq_get() never getting called. This may
-cause problems by leaving the GPIO pin floating because this call is
-responsible for setting up the GPIO pin direction and/or bias according
-to the values from the ACPI tables.
-
-Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
-to ensure the GPIO pin is always correctly setup, while keeping the
-acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
--EPROBE_DEFER returns caused by the GPIO controller not having a driver
-yet.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=302348
-Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 50cef76d5cb0 ("x86/microcode/AMD: Load only SHA256-checksummed patches")
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/e94dd76b-4911-482f-8500-5c848a3df026@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kernel/cpu/microcode/amd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2879,6 +2879,16 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
- 
-+	/*
-+	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
-+	 * the GPIO controller does not have a driver yet. This needs to be done
-+	 * here too, because this call sets the GPIO direction and/or bias.
-+	 * Setting these needs to be done even if there is no driver, in which
-+	 * case spi_probe() will never get called.
-+	 */
-+	if (spi->irq < 0)
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+
- 	acpi_device_set_enumerated(adev);
- 
- 	adev->power.flags.ignore_parent = true;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -212,6 +212,7 @@ static bool need_sha_check(u32 cur_rev)
+ 	case 0xb1010: return cur_rev <= 0xb101046; break;
+ 	case 0xb2040: return cur_rev <= 0xb204031; break;
+ 	case 0xb4040: return cur_rev <= 0xb404031; break;
++	case 0xb4041: return cur_rev <= 0xb404101; break;
+ 	case 0xb6000: return cur_rev <= 0xb600031; break;
+ 	case 0xb6080: return cur_rev <= 0xb608031; break;
+ 	case 0xb7000: return cur_rev <= 0xb700031; break;
 
 
