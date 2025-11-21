@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE64B3F9D2;
-	Fri, 21 Nov 2025 13:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7621F09B3;
+	Fri, 21 Nov 2025 13:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731935; cv=none; b=GqZSdY34TF+yhlsdkUhYHG3diNMB1uoPUA9Orokisuuz1Ev75k8BFkZYEylqYMrUJdxbDOAMNTfufSwpi+DRHsDfuYemowfBm0WO8wQMU0CHapcHyWq4mXrwQRjYODalVQuuXioq0uwLdzT/ywOvgqsaja1z+JLUx7kMryFhgUc=
+	t=1763731938; cv=none; b=khxRJd1vdP+/ZerD6OA8nfHPbjBepbI8Cpily+dhkSw5Qda7rSK3kZJsYFgldMkg8/yRxpFBQXfay74WOTpSZ5ZtkpPeNyCriDzxLYMtRXir51GzwhKJIPomXr8izER6MGx4037tK8mC4NcatdxUxziSHGUbiuz4IGDhm9D5VO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731935; c=relaxed/simple;
-	bh=sJoJo+ULJAqVt05skj+fCbUnQdrGE7Ee+i/L1i99O5w=;
+	s=arc-20240116; t=1763731938; c=relaxed/simple;
+	bh=vZRfWjYkSesOn3i2PaYErBU78Cu2sHiJIZKvz2kEdHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/KLCOEiP2RMk+NNevc9UFPR2h6lqTKIVujm3PG/52vkIqsVm6uPD3nN96gIED4JR62Qe3vPHu0UyzkzQqIaBhxdmHbu55NJazsxWEZgtboKlkdAQ8O0irqPiCX8st0g3T2JP5/zNjEeAPYNZCNzyJJ7N7hPCGm7SWRjvnv6jA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fS9NAAJt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RrtZCQFa/43tE9kg0oMURUDzx21RjkIIB6bkT/cgdCYCbKy/7gakUjSACye4z+VV6ZcucoQbKfwp9Fi7U+PsGpF3wCBHLFGZeLPRdNG1jzfQCGOqFenuUG07mPGo97d4t62kCGeHE1mFvCuuiE3HqyhBDlx4ukDQ7lp2xINMSSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaAJyPf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fS9NAAJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2374DC4CEF1;
-	Fri, 21 Nov 2025 13:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaAJyPf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2784FC4CEF1;
+	Fri, 21 Nov 2025 13:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731935;
-	bh=sJoJo+ULJAqVt05skj+fCbUnQdrGE7Ee+i/L1i99O5w=;
+	s=korg; t=1763731938;
+	bh=vZRfWjYkSesOn3i2PaYErBU78Cu2sHiJIZKvz2kEdHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fS9NAAJtDe72eSHFtALy5kWi5KVdqYrz3U0/6AV23aoSH3AU14y7PPI6ppoXkP4vc
-	 XR3GakFbB4/f2PN57R2ayMBxan1HPf2up4UVk4F5yc21VBeURNHskMioomBuJq966H
-	 O0UCKC2f9dHlCrfpMkyVtklSaGnYaZpS5o3K+o1g=
+	b=OaAJyPf5juhG5xn9okNh6fy0EFsG8cwnpIa7GsjQ012h3r50xHW1ooZn3ccPR4Qid
+	 WWGfb3i7O4ft2DhmkBuiTW/elYRlDiK+ccO7mKIHBgJP2pW9yH8fGy12eMx07KNmK+
+	 m1qRx/ds7sfUlOejsqiK5dQU3KS9QYn/F7hEsEsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Longfang Liu <liulongfang@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 133/185] crypto: hisilicon/qm - Fix device reference leak in qm_get_qos_value
-Date: Fri, 21 Nov 2025 14:12:40 +0100
-Message-ID: <20251121130148.675126729@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 134/185] smb: client: fix cifs_pick_channel when channel needs reconnect
+Date: Fri, 21 Nov 2025 14:12:41 +0100
+Message-ID: <20251121130148.710628781@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,43 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit 59b0afd01b2ce353ab422ea9c8375b03db313a21 upstream.
+commit 79280191c2fd7f24899bbd640003b5389d3c109c upstream.
 
-The qm_get_qos_value() function calls bus_find_device_by_name() which
-increases the device reference count, but fails to call put_device()
-to balance the reference count and lead to a device reference leak.
+cifs_pick_channel iterates candidate channels using cur. The
+reconnect-state test mistakenly used a different variable.
 
-Add put_device() calls in both the error path and success path to
-properly balance the reference count.
+This checked the wrong slot and would cause us to skip a healthy channel
+and to dispatch on one that needs reconnect, occasionally failing
+operations when a channel was down.
 
-Found via static analysis.
+Fix by replacing for the correct variable.
 
-Fixes: 22d7a6c39cab ("crypto: hisilicon/qm - add pci bdf number check")
+Fixes: fc43a8ac396d ("cifs: cifs_pick_channel should try selecting active channels")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Longfang Liu <liulongfang@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/qm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -3688,10 +3688,12 @@ static ssize_t qm_get_qos_value(struct h
- 	pdev = container_of(dev, struct pci_dev, dev);
- 	if (pci_physfn(pdev) != qm->pdev) {
- 		pci_err(qm->pdev, "the pdev input does not match the pf!\n");
-+		put_device(dev);
- 		return -EINVAL;
- 	}
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -1050,7 +1050,7 @@ struct TCP_Server_Info *cifs_pick_channe
+ 		if (!server || server->terminate)
+ 			continue;
  
- 	*fun_index = pdev->devfn;
-+	put_device(dev);
+-		if (CIFS_CHAN_NEEDS_RECONNECT(ses, i))
++		if (CIFS_CHAN_NEEDS_RECONNECT(ses, cur))
+ 			continue;
  
- 	return 0;
- }
+ 		/*
 
 
