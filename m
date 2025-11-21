@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D5C267F57;
-	Fri, 21 Nov 2025 13:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C0E3176E1;
+	Fri, 21 Nov 2025 13:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731506; cv=none; b=oOoGM8hjazTkc2j9hy8dhjIN9rzXhhsKayRwu7ExmkHN0JUZjO/xQ47XxR0QReDCNOOOqQfntkhPVy8TWvnG98a0++hdxahoYlFScoYHuvssXeGiVQQVLWKnv3O+2VYMf5IQ/XGPWAa90E8Tnq8TT/1c45Og4j9K9bF+tqLPey0=
+	t=1763731509; cv=none; b=htJgRmn2bFcloQx4iF4esW/M4Y+9KbNO0cE1/cZRfsy/3U2CNR0qyC0JetvaddxFQxB722uS4G9jeuw5IsDCRBZFG8lQZlbu+hhg0ykj7nhcNnC3pGgG/fCXhdBPvxdQ3HLNzYFiGZxAgwOhVuRY3rs1xubWcGtjjD0UW4IzeQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731506; c=relaxed/simple;
-	bh=8uPidkjyXiV3086O5t2cIdQhqkJCR91KTnD6z8r6Pzg=;
+	s=arc-20240116; t=1763731509; c=relaxed/simple;
+	bh=tQfWbu+KEifAFYvGnSDCp1ePYFXoL9OFuHsOOSpJyHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucMR+H+J/9osN/f9SzBKVJMmZ8wnkPXq2ocX2KfwBaLLrEEYPNWWw0kp00Qraqz1x7ZWddqLkzuXP60YbQTHdu8GhvPg19UvAhJV3bHVrVJ9gAgvhWGtqwVbGQU9f+/0ode9hLg5BH5ulVvwyPPMeRVMTitw+AdduI0gj9AfG94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylHZXJC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oz4h5igXRsJ2rSWDO71tOCL9RjohE6v2brqtKAPlw8S8P0Jh3XC05sZ8BeGz+yXLjb6tCxDlvqlBSKg5c+mj+cG4mQHMfwd9LqIfRHYY9dF600Hmhpl64Q1H6fktC2lW52Zu4H2bVo+xrgxteIFq/yp/hVF86Sg7Q9WkuIpaOt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDjM0Ecl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylHZXJC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91973C4CEF1;
-	Fri, 21 Nov 2025 13:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDjM0Ecl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81133C4CEF1;
+	Fri, 21 Nov 2025 13:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731506;
-	bh=8uPidkjyXiV3086O5t2cIdQhqkJCR91KTnD6z8r6Pzg=;
+	s=korg; t=1763731508;
+	bh=tQfWbu+KEifAFYvGnSDCp1ePYFXoL9OFuHsOOSpJyHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylHZXJC8GwinRLkhw3p/74VqOiZA3GwFqxkVKSbBvBFaFYnbUvPhv1DO2TsimCndr
-	 s4IEI3+cG2ViY12XeP0qamQZNIgS55FhS5yQpaRqLBl9c3AZHxrHyrqjWowX53uumD
-	 S/wBUC3JR6QtmBpOQynLhk70Ao6fUTahb4Sm0YYM=
+	b=YDjM0Ecl96TUupzQjOqsDGg9wVkAhw0bOSBlr+a3mnkGc0H6/LaInStf9QLcWHD42
+	 yj4gxoRb1iFlSWIRydy+54mD5FvyCr1lpBsVZvzTn1zP6M4D02dcx2C3say5sZ5R9c
+	 Ot7VsjPswM6i+FJRNbA0JUlRPUXxIxjJ54+dKxn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Barry Song <baohua@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 187/247] mm/mremap: honour writable bit in mremap pte batching
-Date: Fri, 21 Nov 2025 14:12:14 +0100
-Message-ID: <20251121130201.434661089@linuxfoundation.org>
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.17 225/247] drm/xe/xe3: Add WA_14024681466 for Xe3_LPG
+Date: Fri, 21 Nov 2025 14:12:52 +0100
+Message-ID: <20251121130202.810246392@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -57,51 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-commit 04d1c9d60c6ec4c0003d433572eaa45f8b217788 upstream.
+commit 0b2f7be548006b0651e1e8320790f49723265cbc upstream.
 
-Currently mremap folio pte batch ignores the writable bit during figuring
-out a set of similar ptes mapping the same folio.  Suppose that the first
-pte of the batch is writable while the others are not - set_ptes will end
-up setting the writable bit on the other ptes, which is a violation of
-mremap semantics.  Therefore, use FPB_RESPECT_WRITE to check the writable
-bit while determining the pte batch.
+Apply WA_14024681466 to Xe3_LPG graphics IP versions from 30.00 to 30.05.
 
-Link: https://lkml.kernel.org/r/20251028063952.90313-1-dev.jain@arm.com
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Fixes: f822a9a81a31 ("mm: optimize mremap() by PTE batching")
-Reported-by: David Hildenbrand <david@redhat.com>
-Debugged-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>	[6.17+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+v2: (Matthew Roper)
+   - Remove stepping filter as workaround applies to all steppings.
+   - Add an engine class filter so it only applies to the RENDER engine.
+
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patch.msgid.link/20251027092643.335904-1-nitin.r.gote@intel.com
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 071089a69e199bd810ff31c4c933bd528e502743)
+Cc: stable@vger.kernel.org # v6.16+
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mremap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h |    1 +
+ drivers/gpu/drm/xe/xe_wa.c           |    4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index bd7314898ec5..419a0ea0a870 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -187,7 +187,7 @@ static int mremap_folio_pte_batch(struct vm_area_struct *vma, unsigned long addr
- 	if (!folio || !folio_test_large(folio))
- 		return 1;
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -168,6 +168,7 @@
  
--	return folio_pte_batch(folio, ptep, pte, max_nr);
-+	return folio_pte_batch_flags(folio, NULL, ptep, &pte, max_nr, FPB_RESPECT_WRITE);
- }
+ #define XEHP_SLICE_COMMON_ECO_CHICKEN1		XE_REG_MCR(0x731c, XE_REG_OPTION_MASKED)
+ #define   MSC_MSAA_REODER_BUF_BYPASS_DISABLE	REG_BIT(14)
++#define   FAST_CLEAR_VALIGN_FIX			REG_BIT(13)
  
- static int move_ptes(struct pagetable_move_control *pmc,
--- 
-2.52.0
-
+ #define XE2LPM_CCCHKNREG1			XE_REG(0x82a8)
+ 
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -890,6 +890,10 @@ static const struct xe_rtp_entry_sr lrc_
+ 		       ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(CHICKEN_RASTER_1, DIS_CLIP_NEGATIVE_BOUNDING_BOX))
+ 	},
++	{ XE_RTP_NAME("14024681466"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005), ENGINE_CLASS(RENDER)),
++	  XE_RTP_ACTIONS(SET(XEHP_SLICE_COMMON_ECO_CHICKEN1, FAST_CLEAR_VALIGN_FIX))
++	},
+ };
+ 
+ static __maybe_unused const struct xe_rtp_entry oob_was[] = {
 
 
