@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BEA2874F6;
-	Fri, 21 Nov 2025 13:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A68283CA3;
+	Fri, 21 Nov 2025 13:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731956; cv=none; b=N4mFyXYPIKi6qhHUuSv3qzjKLQlkc46shGewVPjZjPFWugX0SNrajmO+stzqwT9T5eSb7Wu/IjKnvr7PonV+tMnl1Q3OL/a4U2dljvDIi/tmozvTW7yXoV1muIqOjSLjJwWJRBkyiLoOW/g+jZY9MMQNk3wGW96dd62N6SETCf0=
+	t=1763731959; cv=none; b=j1DHdGvOCXXIw8sgRzoRjKbS6fpP/f5n4gVGK2DRlo3hwCEjWuVc7KTmFpeaiWr+uodO2ri3FQ/m699MTC5nSeEvH4H2S8h6cRyxPiF/lCNhAFKhwoNxXHGYEU4x3rwzThAqVCWjAhKE+vAPTyO7z2UfsH+naCsztJ+mV+1aYH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731956; c=relaxed/simple;
-	bh=qgnWTxE0JdCnHZt9znke5GJjlsIEvKHmf+Z4SxIlNfw=;
+	s=arc-20240116; t=1763731959; c=relaxed/simple;
+	bh=oZJKmkSx+hiT7PMTyX/l7pzaapHgV0p7/5rbB8DehLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5k0gTTQkWkq5kpBsejXTwnJk9qdqBfVDIr2wgVF5ejGrxOpGw7QMGMhHSGaYal6fstUFNeXwXNcwtZl+GrBs+vHXLqgQi81+hDeEd/pS9q6CZR21eetz4HzIjlldNe3KKcm783vHaQTQRNVIMTIQkwExeiybRQHzpYot3Uhlpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi/1lvUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXhNQbAq+PjWaz5Ey7C7cG0B2+P74zKYtDo0QPJTF+E9FbPUTW0dNzYabKy0pXzsmqVNBLS8aVrAqIO9dRSEFqiEvUu1TbsSdSJWJY4rVg/7wFp9EmZ78JspK0Gle8iCoS51HmU8PgobWYLEATmkLLJXNEgwpQvP/qD/vQvot3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWgZZ8SV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi/1lvUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EBCC4CEF1;
-	Fri, 21 Nov 2025 13:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWgZZ8SV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DF2C4CEF1;
+	Fri, 21 Nov 2025 13:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731956;
-	bh=qgnWTxE0JdCnHZt9znke5GJjlsIEvKHmf+Z4SxIlNfw=;
+	s=korg; t=1763731958;
+	bh=oZJKmkSx+hiT7PMTyX/l7pzaapHgV0p7/5rbB8DehLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wi/1lvUp1V8iCmc89YUEG0Ke5dSdz3CjhirHflqDnBG6OJZyJyR+7owPkfL/HYVqK
-	 R/OzRMzMCHCiciHxJx5y4Jzr/gU3JBOnjKo3SCecEoNUoJRL4FEuBEnXUPBplU6hJG
-	 DANk/rcDcXLbF8kz7TOTzZcN0sqkCcHUw0qq4euY=
+	b=NWgZZ8SVNdFFeyEtcLFL4Lp4470OicN7rokwU9M2YWpLV5Q8f9uHTBt8dZSQ6g9A5
+	 qH+TeH4RQrEbYUJaF9TtgUphRZnrFcz4ZF/y2+uJnauj0RrLzyeA2yndGZW72L3Lyj
+	 7vFEP3SU31UOLA4dq/SeMpEFeEju1llVWg3BxLCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.12 122/185] selftests/tracing: Run sample events to clear page cache events
-Date: Fri, 21 Nov 2025 14:12:29 +0100
-Message-ID: <20251121130148.278915387@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.12 140/185] EDAC/altera: Handle OCRAM ECC enable after warm reset
+Date: Fri, 21 Nov 2025 14:12:47 +0100
+Message-ID: <20251121130148.927263683@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
 
-commit dd4adb986a86727ed8f56c48b6d0695f1e211e65 upstream.
+commit fd3ecda38fe0cb713d167b5477d25f6b350f0514 upstream.
 
-The tracing selftest "event-filter-function.tc" was failing because it
-first runs the "sample_events" function that triggers the kmem_cache_free
-event and it looks at what function was used during a call to "ls".
+The OCRAM ECC is always enabled either by the BootROM or by the Secure Device
+Manager (SDM) during a power-on reset on SoCFPGA.
 
-But the first time it calls this, it could trigger events that are used to
-pull pages into the page cache.
+However, during a warm reset, the OCRAM content is retained to preserve data,
+while the control and status registers are reset to their default values. As
+a result, ECC must be explicitly re-enabled after a warm reset.
 
-The rest of the test uses the function it finds during that call to see if
-it will be called in subsequent "sample_events" calls. But if there's no
-need to pull pages into the page cache, it will not trigger that function
-and the test will fail.
-
-Call the "sample_events" twice to trigger all the page cache work before
-it calls it to find a function to use in subsequent checks.
-
+Fixes: 17e47dc6db4f ("EDAC/altera: Add Stratix10 OCRAM ECC support")
+Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: eb50d0f250e96 ("selftests/ftrace: Choose target function for filter test from samples")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20251111080801.1279401-1-niravkumarlaxmidas.rabara@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/edac/altera_edac.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-@@ -20,6 +20,10 @@ sample_events() {
- echo 0 > tracing_on
- echo 0 > events/enable
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1184,10 +1184,22 @@ altr_check_ocram_deps_init(struct altr_e
+ 	if (ret)
+ 		return ret;
  
-+# Clear functions caused by page cache; run sample_events twice
-+sample_events
-+sample_events
-+
- echo "Get the most frequently calling function"
- echo > trace
- sample_events
+-	/* Verify OCRAM has been initialized */
++	/*
++	 * Verify that OCRAM has been initialized.
++	 * During a warm reset, OCRAM contents are retained, but the control
++	 * and status registers are reset to their default values. Therefore,
++	 * ECC must be explicitly re-enabled in the control register.
++	 * Error condition: if INITCOMPLETEA is clear and ECC_EN is already set.
++	 */
+ 	if (!ecc_test_bits(ALTR_A10_ECC_INITCOMPLETEA,
+-			   (base + ALTR_A10_ECC_INITSTAT_OFST)))
+-		return -ENODEV;
++			   (base + ALTR_A10_ECC_INITSTAT_OFST))) {
++		if (!ecc_test_bits(ALTR_A10_ECC_EN,
++				   (base + ALTR_A10_ECC_CTRL_OFST)))
++			ecc_set_bits(ALTR_A10_ECC_EN,
++				     (base + ALTR_A10_ECC_CTRL_OFST));
++		else
++			return -ENODEV;
++	}
+ 
+ 	/* Enable IRQ on Single Bit Error */
+ 	writel(ALTR_A10_ECC_SERRINTEN, (base + ALTR_A10_ECC_ERRINTENS_OFST));
 
 
