@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B831834EEE7;
-	Fri, 21 Nov 2025 13:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF25934D90E;
+	Fri, 21 Nov 2025 13:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732695; cv=none; b=fF8buAv3iWNqk1emzsoykIykmGBMdOtQOEAJiED1bd9Mdhb7ARMx1Gz7x4YQGtpLpKjkHmiXxqqryOUPWa4hBIcUcW4HIAQGXZlFD35CqAM593DzlYUioM8FrXrMm+V/b+1kGtjhuaDZLJDsFdXQgZHgz1pWboPTn4SoK5sirVs=
+	t=1763732698; cv=none; b=lQXOJOT4TsZM+qp1itXBziZgU7fsQCVqfU69oOg0rHwsEhKoGg5/c6zRibJXDwunh4KBAxjIN0eLJyzHa+DgW5kHoScc7Uf4rCn86cBwYSdTUhAF4jb4yotH/xqaffFuAxzmBHU34u4+PdrKNQpf24KDECkYgD7HBg8/2T5DyAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732695; c=relaxed/simple;
-	bh=0Stl4b1HPFelTDuSELirBinZL3a4d9bOmN0qoEyyE+g=;
+	s=arc-20240116; t=1763732698; c=relaxed/simple;
+	bh=PqsdcOHQhogSMQcmxE1b2S21Hd5C02xn7L3Ur5ZHmfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJ3tscZiw3Dtmqx0GWi25nMJS0x5gJFDE7KkYrmGN1Q/GVAy4VQrPcoFNKSbz4pC3GMfZZELibh/B7TFKYtdxeXUX6VZAP/KErJP9Ab1NwIYlnlu/H0CVbwnGN49F5QPfyL2RSCP8gkBt+qYa/+U0ek8++GC6alTzUCoY1xfdWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUMVuVt8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RBNmUF89WARFlgZVirR37Kid+MG4MD43WuDd/jKajK0RbtRuJEan7G2i6lG+lsmyL5gaHhrm5AArXHyNgCLbI15DyO3kKBZ3UOM34KWp9BdS7UfLQPYlAB31p6m6iJl3PihAAkreSEg8hq41F/+d5vEp6j2vXupA0/00X14GFvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lywXrcde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUMVuVt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2D3C116C6;
-	Fri, 21 Nov 2025 13:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lywXrcde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DA2C4CEF1;
+	Fri, 21 Nov 2025 13:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732695;
-	bh=0Stl4b1HPFelTDuSELirBinZL3a4d9bOmN0qoEyyE+g=;
+	s=korg; t=1763732698;
+	bh=PqsdcOHQhogSMQcmxE1b2S21Hd5C02xn7L3Ur5ZHmfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUMVuVt8kV2kzSIdc+TkaxKtVe9NcmyXf5/r2K8LUrD3f6Gtr6oYQ0yKgBDIIsx0N
-	 G3ffNvGtEdlavinmAYrp8teGsEChGlTGn0zSuUtJtOMTFCjyIURJFpLfNQIMNhBmSn
-	 DISmK4bsoPPE9UlYeOeo0lnLCKH+DZGrblKP/Y54=
+	b=lywXrcdez62n+qL15Qw0HA8mARzkWW3+/IHE18zKV7azbDf+P5bqN6gM3bRpJHhaV
+	 n+nHWpTJZ4td7J9RRrac40urDV5ragqgOOt1vemlSwaa1j0X8LM0SwD7n9REx3OXKX
+	 q6uWCAw/8AKAnYa3g/LRgszgmLX2zBDQZnuOE9Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/529] media: i2c: og01a1b: Specify monochrome media bus format instead of Bayer
-Date: Fri, 21 Nov 2025 14:08:23 +0100
-Message-ID: <20251121130238.276814458@linuxfoundation.org>
+Subject: [PATCH 6.6 213/529] phy: rockchip: phy-rockchip-inno-csidphy: allow writes to grf register 0
+Date: Fri, 21 Nov 2025 14:08:32 +0100
+Message-ID: <20251121130238.593235911@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,56 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Michael Riesch <michael.riesch@collabora.com>
 
-[ Upstream commit bfbd5aa5347fbd11ade188b316b800bfb27d9e22 ]
+[ Upstream commit 8c7c19466c854fa86b82d2148eaa9bf0e6531423 ]
 
-The OmniVision OG01A1B image sensor is a monochrome sensor, it supports
-8-bit and 10-bit RAW output formats only.
+The driver for the Rockchip MIPI CSI-2 DPHY uses GRF register offset
+value 0 to sort out undefined registers. However, the RK3588 CSIDPHY GRF
+this offset is perfectly fine (in fact, register 0 is the only one in
+this register file).
+Introduce a boolean variable to indicate valid registers and allow writes
+to register 0.
 
-That said the planar greyscale Y8/Y10 media formats are more appropriate
-for the sensor instead of the originally and arbitrary selected SGRBG one,
-since there is no red, green or blue color components.
-
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Michael Riesch <michael.riesch@collabora.com>
+Link: https://lore.kernel.org/r/20250616-rk3588-csi-dphy-v4-4-a4f340a7f0cf@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/og01a1b.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
-index 365ce56845836..9bd204911651e 100644
---- a/drivers/media/i2c/og01a1b.c
-+++ b/drivers/media/i2c/og01a1b.c
-@@ -676,7 +676,7 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
- {
- 	fmt->width = mode->width;
- 	fmt->height = mode->height;
--	fmt->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	fmt->code = MEDIA_BUS_FMT_Y10_1X10;
- 	fmt->field = V4L2_FIELD_NONE;
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+index 98c92d6c482fe..279e19e7546b6 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+@@ -87,10 +87,11 @@ struct dphy_reg {
+ 	u32 offset;
+ 	u32 mask;
+ 	u32 shift;
++	u8 valid;
+ };
+ 
+ #define PHY_REG(_offset, _width, _shift) \
+-	{ .offset = _offset, .mask = BIT(_width) - 1, .shift = _shift, }
++	{ .offset = _offset, .mask = BIT(_width) - 1, .shift = _shift, .valid = 1, }
+ 
+ static const struct dphy_reg rk1808_grf_dphy_regs[] = {
+ 	[GRF_DPHY_CSIPHY_FORCERXMODE] = PHY_REG(RK1808_GRF_PD_VI_CON_OFFSET, 4, 0),
+@@ -145,7 +146,7 @@ static inline void write_grf_reg(struct rockchip_inno_csidphy *priv,
+ 	const struct dphy_drv_data *drv_data = priv->drv_data;
+ 	const struct dphy_reg *reg = &drv_data->grf_regs[index];
+ 
+-	if (reg->offset)
++	if (reg->valid)
+ 		regmap_write(priv->grf, reg->offset,
+ 			     HIWORD_UPDATE(value, reg->mask, reg->shift));
  }
- 
-@@ -867,7 +867,7 @@ static int og01a1b_enum_mbus_code(struct v4l2_subdev *sd,
- 	if (code->index > 0)
- 		return -EINVAL;
- 
--	code->code = MEDIA_BUS_FMT_SGRBG10_1X10;
-+	code->code = MEDIA_BUS_FMT_Y10_1X10;
- 
- 	return 0;
- }
-@@ -879,7 +879,7 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
- 	if (fse->index >= ARRAY_SIZE(supported_modes))
- 		return -EINVAL;
- 
--	if (fse->code != MEDIA_BUS_FMT_SGRBG10_1X10)
-+	if (fse->code != MEDIA_BUS_FMT_Y10_1X10)
- 		return -EINVAL;
- 
- 	fse->min_width = supported_modes[fse->index].width;
 -- 
 2.51.0
 
