@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CFD2F6577;
-	Fri, 21 Nov 2025 13:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A321E2F6577;
+	Fri, 21 Nov 2025 13:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731345; cv=none; b=sh4qvBC2Va6o6Q6v5b+Av6zIEJPiX1K2JYrR+xeW8oymv4kBEpeIvm8Es9zS0oSVKQ1usk+S8IYyhLvJzQCjrBEyYjkU8rfFmpsYcV/mvamF3QO0MoRAmMVDi9pbCNHR38iC6floUtHPSHbh0muMbuG6IRt+WlWHG2NsQZYApCc=
+	t=1763731347; cv=none; b=L7IpwQnpwES+GBOwgS8U/VzzxB2GuQNWvrJszmOz7+5Qmjioeij8Q6HaMyNT7RQ12cj3yaoSZqWbD/Pq4GYz57O/uoDKgnVGWR1HzXo0//Pz4K7/j/EZ6jbyyiMfQnLY9aJ4LfhstyeBT0avKQYvIWzsjH18gvSVV3iSm2ycFC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731345; c=relaxed/simple;
-	bh=R9feXb1OKTfIUoa1QSzyLTBOVc7eEZAd8wiAh60BKMA=;
+	s=arc-20240116; t=1763731347; c=relaxed/simple;
+	bh=Z1ClbecyOEX99EHbIxOXMsHW0jkl4wdk5Rj6Hk0Cy64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUzqTYYEfp6WF+yG6nSyBh44LYvzNWyfwzwrN5bONJt+ziwSpZm1MKXJn2M0xPORz8tPXlQzfkDYIDahSn6saUgpkjKl+5UGXP18dJSiqRXWDVBldUONzSkrseIu6tZCsQpJRVAplIWghIErVExv/PJDB3aYEXMAfM3wUPXyJRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NM8tChEl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hI1FqO1hRu4L56W7QeO613HTriA+zmoeYxYX3w/lhhf/7BQjRYoKefrBPCwtSEJAeX1nMc3cO4XLgkZCHIi29KfWhPiaBZNuPbKK5CFM2aV5OJ/sF60E9SQSWLWqYi+bW6kX6AddgfWHSA0wf1ipRNtoR/tcE53j4z750r92OoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+r5N/FO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NM8tChEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5985BC4CEF1;
-	Fri, 21 Nov 2025 13:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+r5N/FO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CFEC4CEF1;
+	Fri, 21 Nov 2025 13:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731344;
-	bh=R9feXb1OKTfIUoa1QSzyLTBOVc7eEZAd8wiAh60BKMA=;
+	s=korg; t=1763731347;
+	bh=Z1ClbecyOEX99EHbIxOXMsHW0jkl4wdk5Rj6Hk0Cy64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NM8tChElNlqg8MQRtoLi/IavXVz5t9BQ7TrVI5HqlAbTPdu1hWfgdkDG273VAmnxz
-	 2kLpN0X+TYJDkbP2YSj5PjwBoPWIiyDYUqXYtc8YeCspabKdlVzypj1RodTAPUHLCF
-	 ltMqa8wHVLti5c8bstSqF0YvUimy1+l6+2Zu1Rwk=
+	b=k+r5N/FO3p0WqXQpOMg/mYV7CjqVzLjL6o1Zh0fAy0gcdSma6mYZOlxT2Qwob7JDB
+	 RzQyec1a0TJoFY6A1+wZXCklfc+tFW9+felg+7srIOsmixhxf2qr1+yJw2wYse5PYi
+	 Sz5DqXUB4s7JclMTIslrYkJDESfyE5JXmSwYheJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	ze zuo <zuoze1@huawei.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+24d8b70f039151f65590@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 175/247] mm/damon/sysfs: change next_update_jiffies to a global variable
-Date: Fri, 21 Nov 2025 14:12:02 +0100
-Message-ID: <20251121130201.000614541@linuxfoundation.org>
+Subject: [PATCH 6.17 176/247] nilfs2: avoid having an active sc_timer before freeing sci
+Date: Fri, 21 Nov 2025 14:12:03 +0100
+Message-ID: <20251121130201.036491661@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,78 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 9fd7bb5083d1e1027b8ac1e365c29921ab88b177 upstream.
+commit 9a6b60cb147d53968753a34805211d2e5e08c027 upstream.
 
-In DAMON's damon_sysfs_repeat_call_fn(), time_before() is used to compare
-the current jiffies with next_update_jiffies to determine whether to
-update the sysfs files at this moment.
+Because kthread_stop did not stop sc_task properly and returned -EINTR,
+the sc_timer was not properly closed, ultimately causing the problem [1]
+reported by syzbot when freeing sci due to the sc_timer not being closed.
 
-On 32-bit systems, the kernel initializes jiffies to "-5 minutes" to make
-jiffies wrap bugs appear earlier. However, this causes time_before() in
-damon_sysfs_repeat_call_fn() to unexpectedly return true during the first
-5 minutes after boot on 32-bit systems (see [1] for more explanation,
-which fixes another jiffies-related issue before). As a result, DAMON
-does not update sysfs files during that period.
+Because the thread sc_task main function nilfs_segctor_thread() returns 0
+when it succeeds, when the return value of kthread_stop() is not 0 in
+nilfs_segctor_destroy(), we believe that it has not properly closed
+sc_timer.
 
-There is also an issue unrelated to the system's word size[2]: if the
-user stops DAMON just after next_update_jiffies is updated and restarts
-it after 'refresh_ms' or a longer delay, next_update_jiffies will retain
-an older value, causing time_before() to return false and the update to
-happen earlier than expected.
+We use timer_shutdown_sync() to sync wait for sc_timer to shutdown, and
+set the value of sc_task to NULL under the protection of lock
+sc_state_lock, so as to avoid the issue caused by sc_timer not being
+properly shutdowned.
 
-Fix these issues by making next_update_jiffies a global variable and
-initializing it each time DAMON is started.
+[1]
+ODEBUG: free active (active state 0) object: 00000000dacb411a object type: timer_list hint: nilfs_construction_timeout
+Call trace:
+ nilfs_segctor_destroy fs/nilfs2/segment.c:2811 [inline]
+ nilfs_detach_log_writer+0x668/0x8cc fs/nilfs2/segment.c:2877
+ nilfs_put_super+0x4c/0x12c fs/nilfs2/super.c:509
 
-Link: https://lkml.kernel.org/r/20251030020746.967174-3-yanquanmin1@huawei.com
-Link: https://lkml.kernel.org/r/20250822025057.1740854-1-ekffu200098@gmail.com [1]
-Link: https://lore.kernel.org/all/20251029013038.66625-1-sj@kernel.org/ [2]
-Fixes: d809a7c64ba8 ("mm/damon/sysfs: implement refresh_ms file internal work")
-Suggested-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: ze zuo <zuoze1@huawei.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20251029225226.16044-1-konishi.ryusuke@gmail.com
+Fixes: 3f66cc261ccb ("nilfs2: use kthread_create and kthread_stop for the log writer thread")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+24d8b70f039151f65590@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=24d8b70f039151f65590
+Tested-by: syzbot+24d8b70f039151f65590@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Cc: <stable@vger.kernel.org>	[6.12+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nilfs2/segment.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1514,16 +1514,17 @@ static struct damon_ctx *damon_sysfs_bui
- 	return ctx;
- }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2768,7 +2768,12 @@ static void nilfs_segctor_destroy(struct
  
-+static unsigned long damon_sysfs_next_update_jiffies;
-+
- static int damon_sysfs_repeat_call_fn(void *data)
- {
- 	struct damon_sysfs_kdamond *sysfs_kdamond = data;
--	static unsigned long next_update_jiffies;
- 
- 	if (!sysfs_kdamond->refresh_ms)
- 		return 0;
--	if (time_before(jiffies, next_update_jiffies))
-+	if (time_before(jiffies, damon_sysfs_next_update_jiffies))
- 		return 0;
--	next_update_jiffies = jiffies +
-+	damon_sysfs_next_update_jiffies = jiffies +
- 		msecs_to_jiffies(sysfs_kdamond->refresh_ms);
- 
- 	if (!mutex_trylock(&damon_sysfs_lock))
-@@ -1569,6 +1570,9 @@ static int damon_sysfs_turn_damon_on(str
+ 	if (sci->sc_task) {
+ 		wake_up(&sci->sc_wait_daemon);
+-		kthread_stop(sci->sc_task);
++		if (kthread_stop(sci->sc_task)) {
++			spin_lock(&sci->sc_state_lock);
++			sci->sc_task = NULL;
++			timer_shutdown_sync(&sci->sc_timer);
++			spin_unlock(&sci->sc_state_lock);
++		}
  	}
- 	kdamond->damon_ctx = ctx;
  
-+	damon_sysfs_next_update_jiffies =
-+		jiffies + msecs_to_jiffies(kdamond->refresh_ms);
-+
- 	repeat_call_control->fn = damon_sysfs_repeat_call_fn;
- 	repeat_call_control->data = kdamond;
- 	repeat_call_control->repeat = true;
+ 	spin_lock(&sci->sc_state_lock);
 
 
