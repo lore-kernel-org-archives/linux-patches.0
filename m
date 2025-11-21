@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD7934BA42;
-	Fri, 21 Nov 2025 13:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B057734B69B;
+	Fri, 21 Nov 2025 13:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732134; cv=none; b=tkYAChOCustTIjMw4VTPGjXfWp1jc1o5rF2QoryBwzBpEFcCZw9cVdXhbHgJRsSdBNNHaBFt/Ds0WhoICAaScWdVLF69LdKKJJPt+rNHy/DUHHVaXgnmCXKHsRwRDpe11Klr2RFVfCwyzzqG7kqyUDO7rVWZXaK2Rw5Pajy24ew=
+	t=1763732137; cv=none; b=X4qcoaDJ/aM/N7de3IxK0Qlh1fdK3PhNgUGb5Kddea5mW0vj+7kUm3jlBykG/LLs+cEd4p6G9MGN1wGD12zI5g+frGvaiOmr/xL8d7zl/xlMNx/uGOvONsZxBtsHJzabtrZzBqCFI71vgmmurQ8WiWPURaO/Tm6aPX8uvhSe0QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732134; c=relaxed/simple;
-	bh=Zabtz/njPa/OZbF588fjgFgwm61hQvMUGrn9whyjOM0=;
+	s=arc-20240116; t=1763732137; c=relaxed/simple;
+	bh=9U7hToCMwbTPZhoktmyRUZggMYn7IqNB7Du/zC7p4k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVUGfaFxtP6pgIoJdzyIksnrk7jw1s72W2vl58W8QJ+X3tEGJHHQy/6883db/VEo5YUux32jgeAL/BPi89LfnpBV0Z5rVoyjg6MsOYvj62tiYzGgmkG8znHcfaD6qjnAuQ7bBOWSjULhIahvuoGQACgLKe+/oigW/+Nmi07K3kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WD78DzrU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bd7N+mm3qJBYLjsxYX62I2XEGUhgFKJ2b0kXvkXI0xwBKCbXdzTWRKCpHW4pxy7/5cVEnVh8i1iQOt6EKQE9wNGsE+YZFvC/645tyqg8Nc/EL9fypK/NKujHZFMlFZGOOD3NTsVGBFfVst1tDcv4DgPPfHijMAW46MYiB4EYwos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N57Gotx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WD78DzrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F8DC4CEF1;
-	Fri, 21 Nov 2025 13:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N57Gotx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36752C4CEF1;
+	Fri, 21 Nov 2025 13:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732134;
-	bh=Zabtz/njPa/OZbF588fjgFgwm61hQvMUGrn9whyjOM0=;
+	s=korg; t=1763732137;
+	bh=9U7hToCMwbTPZhoktmyRUZggMYn7IqNB7Du/zC7p4k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WD78DzrUV/hwQ/f4ffp8D63ernl3xcqFsX5x+IGJDndI52JXj7K3/Y6WIUq6oZiOx
-	 82mYJ8eXvS9YpxkxcVAtEcQH3yNwlFCPYbnkgykuxyIuYnC+OqQAXxvFfNPrVAudK3
-	 9eUgo18x54ZIadkWYjZmhBky3AJ0PK49JV/gviqM=
+	b=N57Gotx38i0mAh7z6QdNrlJM5YHq72FNTG5Z9Un5EhVM5l1RJuA3HTc+dpkXTXZZv
+	 pLIKF+HZYG/M+mXkD4rXV/Elyln0t6PuqbqxWetXUzKW9M9Hs613HwBL1cpvgSjzW0
+	 lz1f5OM54l+hWQENTlht2CKESIOjFIYZ3lc3cibo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Chao Gao <chao.gao@intel.com>
-Subject: [PATCH 6.6 016/529] x86/fpu: Ensure XFD state on signal delivery
-Date: Fri, 21 Nov 2025 14:05:15 +0100
-Message-ID: <20251121130231.580394852@linuxfoundation.org>
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 017/529] wifi: ath10k: Fix memory leak on unsupported WMI command
+Date: Fri, 21 Nov 2025 14:05:16 +0100
+Message-ID: <20251121130231.615240007@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,64 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-commit 388eff894d6bc5f921e9bfff0e4b0ab2684a96e9 upstream.
+[ Upstream commit 2e9c1da4ee9d0acfca2e0a3d78f3d8cb5802da1b ]
 
-Sean reported [1] the following splat when running KVM tests:
+ath10k_wmi_cmd_send takes ownership of the passed buffer (skb) and has the
+responsibility to release it in case of error. This patch fixes missing
+free in case of early error due to unhandled WMI command ID.
 
-   WARNING: CPU: 232 PID: 15391 at xfd_validate_state+0x65/0x70
-   Call Trace:
-    <TASK>
-    fpu__clear_user_states+0x9c/0x100
-    arch_do_signal_or_restart+0x142/0x210
-    exit_to_user_mode_loop+0x55/0x100
-    do_syscall_64+0x205/0x2c0
-    entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
 
-Chao further identified [2] a reproducible scenario involving signal
-delivery: a non-AMX task is preempted by an AMX-enabled task which
-modifies the XFD MSR.
-
-When the non-AMX task resumes and reloads XSTATE with init values,
-a warning is triggered due to a mismatch between fpstate::xfd and the
-CPU's current XFD state. fpu__clear_user_states() does not currently
-re-synchronize the XFD state after such preemption.
-
-Invoke xfd_update_state() which detects and corrects the mismatch if
-there is a dynamic feature.
-
-This also benefits the sigreturn path, as fpu__restore_sig() may call
-fpu__clear_user_states() when the sigframe is inaccessible.
-
-[ dhansen: minor changelog munging ]
-
-Closes: https://lore.kernel.org/lkml/aDCo_SczQOUaB2rS@google.com [1]
-Fixes: 672365477ae8a ("x86/fpu: Update XFD state where required")
-Reported-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Tested-by: Chao Gao <chao.gao@intel.com>
-Link: https://lore.kernel.org/all/aDWbctO%2FRfTGiCg3@intel.com [2]
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20250610001700.4097-1-chang.seok.bae%40intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 553215592f14 ("ath10k: warn if give WMI command is not supported")
+Suggested-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250926195656.187970-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath10k/wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -757,6 +757,9 @@ void fpu__clear_user_states(struct fpu *
- 	    !fpregs_state_valid(fpu, smp_processor_id()))
- 		os_xrstor_supervisor(fpu->fpstate);
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index 340502c47a10d..a15b73d502c0d 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -1936,6 +1936,7 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
+ 	if (cmd_id == WMI_CMD_UNSUPPORTED) {
+ 		ath10k_warn(ar, "wmi command %d is not supported by firmware\n",
+ 			    cmd_id);
++		dev_kfree_skb_any(skb);
+ 		return ret;
+ 	}
  
-+	/* Ensure XFD state is in sync before reloading XSTATE */
-+	xfd_update_state(fpu->fpstate);
-+
- 	/* Reset user states in registers. */
- 	restore_fpregs_from_init_fpstate(XFEATURE_MASK_USER_RESTORE);
- 
+-- 
+2.51.0
+
 
 
