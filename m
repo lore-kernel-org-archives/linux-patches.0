@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5702334DCEA;
-	Fri, 21 Nov 2025 13:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2830A34C81E;
+	Fri, 21 Nov 2025 13:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732360; cv=none; b=oVNuybZ/wwovic22YMa5MK5z1+aGgGOU4SDBXqZwA6LvCO+AefSdc3apjpy4FOqiMGTygr4Pnugx72SpIJpw//MO7wZ8U15VrZzjbG8Yyz5fqy5i9lbX1FTIDgyuB4h4hEG727fxMxxt5FmDDzy5DeDUbV51XHRdR5fa3ohlXm0=
+	t=1763732363; cv=none; b=BQ5XfDACypJuHr4yiMzdJoKW8JA1tIRQbJWs/3e6xwQ9Cx2Rxicu5RSFVepP84ni/Lky4EDoX338Hg3AJEODUfweD1Rbvmxt/FTZDbYxy27WFfZ2q8gp2tr4xcdxFwGcU1kiXcTj5mTRL7Ce5TF4MNfzCBSRo+pxmb3/kA1dUhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732360; c=relaxed/simple;
-	bh=FJArwWMiGRZMhMEqeGmt/w81jlUbbYCQr1x53EM7R0s=;
+	s=arc-20240116; t=1763732363; c=relaxed/simple;
+	bh=QvKQ42RIW8rp8Lijdn2GJ4hSUbgHFtTV5EROCpHcnfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyuR6UZ9VVRtFD4HP2xTVYEVFadG/aPGXxv8ElWSV60RzQSsVOdNgNvNnqPbAqz5yk4fVaTisok9tFoE+0tvmmqs77b4AfKJ6gv5CNVs74sWKgcA2EJLSekbFN+T/kkwOQq9JdWD4L2MenqRofEIOG1Wc5BGFPEeRsuDn4M1EJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AasHcrV9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RudEAwMawzbRTPPOJYBYbNkjzsLvvMnmKtP9VEuqIuZ5c2h1cOYEIkYlP2KBfrZcJKmkTI7czGSedoureL6BMCaSZyoZZG6DQ34nmsiukbwVM1l1V6fdbzQhAAmq/VJ/XLYojapY/X4pz/dO7QyZwQt7JubFgmbG4zf401gDkXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvlYlbs4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AasHcrV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD283C4CEF1;
-	Fri, 21 Nov 2025 13:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvlYlbs4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9992BC4CEF1;
+	Fri, 21 Nov 2025 13:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732359;
-	bh=FJArwWMiGRZMhMEqeGmt/w81jlUbbYCQr1x53EM7R0s=;
+	s=korg; t=1763732362;
+	bh=QvKQ42RIW8rp8Lijdn2GJ4hSUbgHFtTV5EROCpHcnfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AasHcrV9QTHk2fEk7d7nqIs5xZ1FQRihowYD4fJ/NEvUq4kghxJzIBoQlz1bGhvww
-	 lchIFMwT63VAOOTLI4gcewRqVs5MeOEuvA746eVzmAQcdFc7a36ZrictwhYSosHYsQ
-	 0FOCTcRz0MI0ZeBR09zcALsRf2SCeGHH7COQqtGg=
+	b=vvlYlbs40jlpx7TOJm6lLz3IxZhyxAhYQZvWnZWbr9g8QZQE8gN/eZqWbiJ/OIbYD
+	 gBtzOfi4lK3PCnL4v3n38F50U+UassUdDF3sIjYHBH68237WwR37Elty7hVxpIJmzu
+	 m9CBByvCdquKbid5imy2tpNcI91ZxJqhKOq8kQog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Janne Grunau <j@jannau.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Neal Gompa <neal@gompa.dev>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/529] tools/cpupower: fix error return value in cpupower_write_sysfs()
-Date: Fri, 21 Nov 2025 14:06:31 +0100
-Message-ID: <20251121130234.303097627@linuxfoundation.org>
+Subject: [PATCH 6.6 093/529] pmdomain: apple: Add "apple,t8103-pmgr-pwrstate"
+Date: Fri, 21 Nov 2025 14:06:32 +0100
+Message-ID: <20251121130234.338125431@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,42 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 57b100d4cf14276e0340eecb561005c07c129eb8 ]
+[ Upstream commit 442816f97a4f84cb321d3359177a3b9b0ce48a60 ]
 
-The cpupower_write_sysfs() function currently returns -1 on
-write failure, but the function signature indicates it should
-return an unsigned int. Returning -1 from an unsigned function
-results in a large positive value rather than indicating
-an error condition.
+After discussion with the devicetree maintainers we agreed to not extend
+lists with the generic compatible "apple,pmgr-pwrstate" anymore [1]. Use
+"apple,t8103-pmgr-pwrstate" as base compatible as it is the SoC the
+driver and bindings were written for.
 
-Fix this by returning 0 on failure, which is more appropriate
-for an unsigned return type and maintains consistency with typical
-success/failure semantics where 0 indicates failure and non-zero
-indicates success (bytes written).
+[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
 
-Link: https://lore.kernel.org/r/20250828063000.803229-1-kaushlendra.kumar@intel.com
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/lib/cpupower.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/apple/pmgr-pwrstate.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/power/cpupower/lib/cpupower.c b/tools/power/cpupower/lib/cpupower.c
-index 7a2ef691b20e1..c2a7af89a67bb 100644
---- a/tools/power/cpupower/lib/cpupower.c
-+++ b/tools/power/cpupower/lib/cpupower.c
-@@ -55,7 +55,7 @@ unsigned int cpupower_write_sysfs(const char *path, char *buf, size_t buflen)
- 	if (numwritten < 1) {
- 		perror(path);
- 		close(fd);
--		return -1;
-+		return 0;
- 	}
+diff --git a/drivers/pmdomain/apple/pmgr-pwrstate.c b/drivers/pmdomain/apple/pmgr-pwrstate.c
+index d62a776c89a12..e592f819c8fa0 100644
+--- a/drivers/pmdomain/apple/pmgr-pwrstate.c
++++ b/drivers/pmdomain/apple/pmgr-pwrstate.c
+@@ -306,6 +306,7 @@ static int apple_pmgr_ps_probe(struct platform_device *pdev)
+ }
  
- 	close(fd);
+ static const struct of_device_id apple_pmgr_ps_of_match[] = {
++	{ .compatible = "apple,t8103-pmgr-pwrstate" },
+ 	{ .compatible = "apple,pmgr-pwrstate" },
+ 	{}
+ };
 -- 
 2.51.0
 
