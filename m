@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D440D30101A;
-	Fri, 21 Nov 2025 13:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB6934C990;
+	Fri, 21 Nov 2025 13:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732412; cv=none; b=FjpKV6liapjghbi052VBSA3DZoEnBTbVqnqx+zmSvfmW3rifxHCpFpSp0krQLg/tulLIY46k7OGdjz+YoeTct0h2wdfCGlhzMPpdD6560twLGmNaR7kegCFasf8muURbG57iORq8xTmM7iHR/11cxuyScK1/4J2iSBXilfJ2f5o=
+	t=1763732415; cv=none; b=otVIQjQdJK9MEjp24g1N/aXAVoE4yEEIfDqHFDuHVECKuBPOhMfMadYQPd63fpEmHHoTgw2pOncOFJrJ91zIqAxoemG+BMUrDQx+ILqkORiF0FVVEajD85oYJeuXdgltrHqZ4Fu2WDR81X2c1gvv20hHvvdNckHSlE9FCrzkwvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732412; c=relaxed/simple;
-	bh=pV2dtIwAlhpuST4UQV96m5n76kcA3M1kzMOPbp1dXC4=;
+	s=arc-20240116; t=1763732415; c=relaxed/simple;
+	bh=4arBIfOSL30BudKCKTYT2FnLpg8QJo3wWJorgCIG51A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbtcPrYytiiWUBbVc5nVQNY43ayspJAlRwc/kJ7FPlEHPAggxP7W65o343bR3q+x009fWMFXk88ZC02ifMTawPKvNd9exvs2HHx7qQFIa6OFgQY2Cs8OZRv4/f63Le9iDKYye/VN4nht7Dmz0lhhNMomD7sM958ioq4p+Ss8+Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un5WMFkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJ9uUximyKs73kkTwB0iwoj7K8fiMPQk+kfD40rIN32JdCjwKnYEnEgNJv5V0yRbh/Sn6qH5xTHzAgu9ek3ZapO7GnawXqhDsWF/aB6OLz4zjBUflagg23LCmuppaWqjlG4hh04NNS88rsHZrUucsvCJjiK/GM9DCk0JmkP+71s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9ySpIVW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un5WMFkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60213C4CEF1;
-	Fri, 21 Nov 2025 13:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9ySpIVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AB0C4CEF1;
+	Fri, 21 Nov 2025 13:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732412;
-	bh=pV2dtIwAlhpuST4UQV96m5n76kcA3M1kzMOPbp1dXC4=;
+	s=korg; t=1763732415;
+	bh=4arBIfOSL30BudKCKTYT2FnLpg8QJo3wWJorgCIG51A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un5WMFkkle53VPs/gTPgbIqqz5gkI3qsSqj7SC740LQEy7H0f87c75wQ1PzN7ptat
-	 keIr+FF9RVL9EDAz6k+gQiyiS5wtPGcfKqr/jIWgZioUJVCEaZkKwSXC4NNL10qbWh
-	 kZZUSLOWHlOjfGf4s/AHmWGtMgksK2mGRPwtVgeM=
+	b=j9ySpIVWGLoEeAf/Q/V+UWS8gg52ecAg6CNtbUfAm9AdI6w6Z9JCU61ZT/PGsyN8r
+	 iTqAxXwKKYPbwOb4+pCUayBwOU0G7RIZNgS+9r1uClQTCAWhKAfcBABemaddCkZhcT
+	 rJ/ErVxTySlSqNjRefcnBuQ8MaFpesYiQjMky6kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Lee Jones <lee@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/529] mfd: madera: Work around false-positive -Wininitialized warning
-Date: Fri, 21 Nov 2025 14:06:52 +0100
-Message-ID: <20251121130235.045577671@linuxfoundation.org>
+Subject: [PATCH 6.6 096/529] cpuidle: Fail cpuidle device registration if there is one already
+Date: Fri, 21 Nov 2025 14:06:35 +0100
+Message-ID: <20251121130234.443233745@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,59 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 364752aa0c6ab0a06a2d5bfdb362c1ca407f1a30 ]
+[ Upstream commit 7b1b7961170e4fcad488755e5ffaaaf9bd527e8f ]
 
-clang-21 warns about one uninitialized variable getting dereferenced
-in madera_dev_init:
+Refuse to register a cpuidle device if the given CPU has a cpuidle
+device already and print a message regarding it.
 
-drivers/mfd/madera-core.c:739:10: error: variable 'mfd_devs' is uninitialized when used here [-Werror,-Wuninitialized]
-  739 |                               mfd_devs, n_devs,
-      |                               ^~~~~~~~
-drivers/mfd/madera-core.c:459:33: note: initialize the variable 'mfd_devs' to silence this warning
-  459 |         const struct mfd_cell *mfd_devs;
-      |                                        ^
-      |                                         = NULL
+Without this, an attempt to register a new cpuidle device without
+unregistering the existing one leads to the removal of the existing
+cpuidle device without removing its sysfs interface.
 
-The code is actually correct here because n_devs is only nonzero
-when mfd_devs is a valid pointer, but this is impossible for the
-compiler to see reliably.
-
-Change the logic to check for the pointer as well, to make this easier
-for the compiler to follow.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250807071932.4085458-1-arnd@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/madera-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpuidle/cpuidle.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/madera-core.c b/drivers/mfd/madera-core.c
-index bdbd5bfc97145..2f74a8c644a32 100644
---- a/drivers/mfd/madera-core.c
-+++ b/drivers/mfd/madera-core.c
-@@ -456,7 +456,7 @@ int madera_dev_init(struct madera *madera)
- 	struct device *dev = madera->dev;
- 	unsigned int hwid;
- 	int (*patch_fn)(struct madera *) = NULL;
--	const struct mfd_cell *mfd_devs;
-+	const struct mfd_cell *mfd_devs = NULL;
- 	int n_devs = 0;
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 737a026ef58a3..6704d610573ad 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -634,8 +634,14 @@ static void __cpuidle_device_init(struct cpuidle_device *dev)
+ static int __cpuidle_register_device(struct cpuidle_device *dev)
+ {
+ 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
++	unsigned int cpu = dev->cpu;
  	int i, ret;
  
-@@ -670,7 +670,7 @@ int madera_dev_init(struct madera *madera)
- 		goto err_reset;
++	if (per_cpu(cpuidle_devices, cpu)) {
++		pr_info("CPU%d: cpuidle device already registered\n", cpu);
++		return -EEXIST;
++	}
++
+ 	if (!try_module_get(drv->owner))
+ 		return -EINVAL;
+ 
+@@ -647,7 +653,7 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
+ 			dev->states_usage[i].disable |= CPUIDLE_STATE_DISABLED_BY_USER;
  	}
  
--	if (!n_devs) {
-+	if (!n_devs || !mfd_devs) {
- 		dev_err(madera->dev, "Device ID 0x%x not a %s\n", hwid,
- 			madera->type_name);
- 		ret = -ENODEV;
+-	per_cpu(cpuidle_devices, dev->cpu) = dev;
++	per_cpu(cpuidle_devices, cpu) = dev;
+ 	list_add(&dev->device_list, &cpuidle_detected_devices);
+ 
+ 	ret = cpuidle_coupled_register_device(dev);
 -- 
 2.51.0
 
