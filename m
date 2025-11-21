@@ -1,36 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1904D275B18;
-	Fri, 21 Nov 2025 13:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF5D54763;
+	Fri, 21 Nov 2025 13:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731359; cv=none; b=On0bHe1U6JWD0V6hU0lt/v2mOjl7+GvWvsd3OVe5SL4nAK66HN9upw2EIp7urOMmMnwUVfeljzqpw4FAufTZCc1HpZbonT5rroCpMcR6RWO//Ax2MAGx/Z9vonKpItlReZZGk+L7c+kYJnIgig98L6mL8fvkikvjmfp8AhVwu/k=
+	t=1763731361; cv=none; b=Gl++ZYD1I2eOPnwskQzyxR2LoRP2c+auYu7D4UOAYXxdmAAs+AweXfmkVbg71NmoA5urmwTmo9082XP3dE1AfFhSISqfL46QrIAhZ7tbBl8l1QiM/RIzpI4EJNk3t5pNwJ7O+/lKYiEEAqQGyAW4NpG5w7JoA1nlF8jFZPPHRq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731359; c=relaxed/simple;
-	bh=H7n5sSb9xZODVAN028BV35a2fjM4VsVLvt9+gC/seGM=;
+	s=arc-20240116; t=1763731361; c=relaxed/simple;
+	bh=Y4/fPPodj75Iuv7whpf7nwnZVs/z74V/u9mhFYt6c+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYmzs5QtmCGnalp4Q2GM7LqydX5EcjRsg2irX5Lr/Z0kXMDy6Ex38fLtjVHdc+ZWkQzkfcOfnYmCjRSGDLMFycyr1WoqPgtI9855cQdKQZsqss1jQKA1oo9z/CKO7Tf/6Hkq3DTM7rxpdzpgN1lnm3l2X93d+73xiJUppHhNRkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBuLmaXe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MNDwKJ6+uqfmFklA4P31ym4MQ3HtpJTDghk1W6BOlKCeiMFyh9tn6kS8Yvc6vqkjQVAg6+QST5zkoOzcJql6DSY7OfyWpaXwLniHaKOVfeZ3OeUXJQAwZqvJD5/YSdpPBmA2615KMwQRa4FQuY0nJrKEZvj/MevbqLMf7gLy9Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcGaTwHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBuLmaXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C66EC4CEF1;
-	Fri, 21 Nov 2025 13:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcGaTwHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23565C4CEF1;
+	Fri, 21 Nov 2025 13:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731358;
-	bh=H7n5sSb9xZODVAN028BV35a2fjM4VsVLvt9+gC/seGM=;
+	s=korg; t=1763731361;
+	bh=Y4/fPPodj75Iuv7whpf7nwnZVs/z74V/u9mhFYt6c+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBuLmaXekQaqVY4RluR6aJ4TPF3gXgZoZ8v73qMFWPeDtxXOrfiBMKJdfsx2BaoKD
-	 Hlu9SN2WK40/4Uj6QCbKFtw6QcZYLDg22+qkQHg8YowKzuCfY5nRiLuCwxHtYln2L3
-	 8MDtQbRuPeGoTq3tQUpuGdt0mmX7X/uvRl0Oh9xI=
+	b=hcGaTwHKH9pk/O69WIt8OZK80jms4HeRszpP1ESd3lae2P3iIVSM2MpsSB+IgrJlw
+	 ifPX2nA4Ai4K4bVqN5hMxwiPVMstfLbH7lHYUCCMOLrvzNqnfxG2mZ8d1khAt+LhfV
+	 MXbpxPWKYUEQ8BATJuXrCrZA70BUGgY+A5Ns9hvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.17 180/247] wifi: mac80211: reject address change while connecting
-Date: Fri, 21 Nov 2025 14:12:07 +0100
-Message-ID: <20251121130201.182920283@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Pankaj Raghav <kernel@pankajraghav.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Luis Chamberalin <mcgrof@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 181/247] mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order
+Date: Fri, 21 Nov 2025 14:12:08 +0100
+Message-ID: <20251121130201.219084291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -49,60 +67,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit a9da90e618cd0669a22bcc06a96209db5dd96e9b upstream.
+commit fa5a061700364bc28ee1cb1095372f8033645dcb upstream.
 
-While connecting, the MAC address can already no longer be
-changed. The change is already rejected if netif_carrier_ok(),
-but of course that's not true yet while connecting. Check for
-auth_data or assoc_data, so the MAC address cannot be changed.
+folio split clears PG_has_hwpoisoned, but the flag should be preserved in
+after-split folios containing pages with PG_hwpoisoned flag if the folio
+is split to >0 order folios.  Scan all pages in a to-be-split folio to
+determine which after-split folios need the flag.
 
-Also more comprehensively check that there are no stations on
-the interface being changed - if any peer station is added it
-will know about our address already, so we cannot change it.
+An alternatives is to change PG_has_hwpoisoned to PG_maybe_hwpoisoned to
+avoid the scan and set it on all after-split folios, but resulting false
+positive has undesirable negative impact.  To remove false positive,
+caller of folio_test_has_hwpoisoned() and folio_contain_hwpoisoned_page()
+needs to do the scan.  That might be causing a hassle for current and
+future callers and more costly than doing the scan in the split code.
+More details are discussed in [1].
 
-Cc: stable@vger.kernel.org
-Fixes: 3c06e91b40db ("wifi: mac80211: Support POWERED_ADDR_CHANGE feature")
-Link: https://patch.msgid.link/20251105154119.f9f6c1df81bb.I9bb3760ede650fb96588be0d09a5a7bdec21b217@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This issue can be exposed via:
+1. splitting a has_hwpoisoned folio to >0 order from debugfs interface;
+2. truncating part of a has_hwpoisoned folio in
+   truncate_inode_partial_folio().
+
+And later accesses to a hwpoisoned page could be possible due to the
+missing has_hwpoisoned folio flag.  This will lead to MCE errors.
+
+Link: https://lore.kernel.org/all/CAHbLzkoOZm0PXxE9qwtF4gKR=cpRXrSrJ9V9Pm2DJexs985q4g@mail.gmail.com/ [1]
+Link: https://lkml.kernel.org/r/20251023030521.473097-1-ziy@nvidia.com
+Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Pankaj Raghav <kernel@pankajraghav.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/iface.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ mm/huge_memory.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -223,6 +223,10 @@ static int ieee80211_can_powered_addr_ch
- 	if (netif_carrier_ok(sdata->dev))
- 		return -EBUSY;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3271,6 +3271,14 @@ bool can_split_folio(struct folio *folio
+ 					caller_pins;
+ }
  
-+	/* if any stations are set known (so they know this vif too), reject */
-+	if (sta_info_get_by_idx(sdata, 0))
-+		return -EBUSY;
++static bool page_range_has_hwpoisoned(struct page *page, long nr_pages)
++{
++	for (; nr_pages; page++, nr_pages--)
++		if (PageHWPoison(page))
++			return true;
++	return false;
++}
 +
- 	/* First check no ROC work is happening on this iface */
- 	list_for_each_entry(roc, &local->roc_list, list) {
- 		if (roc->sdata != sdata)
-@@ -242,12 +246,16 @@ static int ieee80211_can_powered_addr_ch
- 			ret = -EBUSY;
- 	}
+ /*
+  * It splits @folio into @new_order folios and copies the @folio metadata to
+  * all the resulting folios.
+@@ -3278,17 +3286,24 @@ bool can_split_folio(struct folio *folio
+ static void __split_folio_to_order(struct folio *folio, int old_order,
+ 		int new_order)
+ {
++	/* Scan poisoned pages when split a poisoned folio to large folios */
++	const bool handle_hwpoison = folio_test_has_hwpoisoned(folio) && new_order;
+ 	long new_nr_pages = 1 << new_order;
+ 	long nr_pages = 1 << old_order;
+ 	long i;
  
-+	/*
-+	 * More interface types could be added here but changing the
-+	 * address while powered makes the most sense in client modes.
-+	 */
- 	switch (sdata->vif.type) {
- 	case NL80211_IFTYPE_STATION:
- 	case NL80211_IFTYPE_P2P_CLIENT:
--		/* More interface types could be added here but changing the
--		 * address while powered makes the most sense in client modes.
--		 */
-+		/* refuse while connecting */
-+		if (sdata->u.mgd.auth_data || sdata->u.mgd.assoc_data)
-+			return -EBUSY;
- 		break;
- 	default:
- 		ret = -EOPNOTSUPP;
++	folio_clear_has_hwpoisoned(folio);
++
++	/* Check first new_nr_pages since the loop below skips them */
++	if (handle_hwpoison &&
++	    page_range_has_hwpoisoned(folio_page(folio, 0), new_nr_pages))
++		folio_set_has_hwpoisoned(folio);
+ 	/*
+ 	 * Skip the first new_nr_pages, since the new folio from them have all
+ 	 * the flags from the original folio.
+ 	 */
+ 	for (i = new_nr_pages; i < nr_pages; i += new_nr_pages) {
+ 		struct page *new_head = &folio->page + i;
+-
+ 		/*
+ 		 * Careful: new_folio is not a "real" folio before we cleared PageTail.
+ 		 * Don't pass it around before clear_compound_head().
+@@ -3330,6 +3345,10 @@ static void __split_folio_to_order(struc
+ 				 (1L << PG_dirty) |
+ 				 LRU_GEN_MASK | LRU_REFS_MASK));
+ 
++		if (handle_hwpoison &&
++		    page_range_has_hwpoisoned(new_head, new_nr_pages))
++			folio_set_has_hwpoisoned(new_folio);
++
+ 		new_folio->mapping = folio->mapping;
+ 		new_folio->index = folio->index + i;
+ 
+@@ -3430,8 +3449,6 @@ static int __split_unmapped_folio(struct
+ 	if (folio_test_anon(folio))
+ 		mod_mthp_stat(order, MTHP_STAT_NR_ANON, -1);
+ 
+-	folio_clear_has_hwpoisoned(folio);
+-
+ 	/*
+ 	 * split to new_order one order at a time. For uniform split,
+ 	 * folio is split to new_order directly.
 
 
