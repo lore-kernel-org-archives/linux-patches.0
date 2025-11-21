@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34FB3491D0;
-	Fri, 21 Nov 2025 13:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728BA34DB4B;
+	Fri, 21 Nov 2025 13:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732547; cv=none; b=tL9nJRjo6FZ1Kn/h0yEeUHxXDmdiZYqANxRbX+vcJDmdSOZt/3jR50mTvBq8DG7e/OzVJYNzezMkNGaVTwo9AtXMMLUaFMZw1mcJp6ECWDW77Qw9/CnP/Zl6W/ZyapFLqH3kVnvK2t/h4aLVLAO67LKTQeXsmELI/0JpT5wln+c=
+	t=1763732550; cv=none; b=FrV3AOfJtBi9OnAjGYJYs/XoTOfSngEN2T4wCJMGv6w2Tj4gPnO8fkiR1XJAf9IjFu8ctHn9v0VTPYkg2VSt34Ao4mzgAs3yehezIkE+57aGoK3karz5Q9icgd675IWTRnwWLXgQKmxG05xoccy+tMrwRBSQyn5rJWUNHsFRgeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732547; c=relaxed/simple;
-	bh=1ag3cyHjTE1P61L76Fhg0NpF6OQ6eSe8cT8N2Ujtqak=;
+	s=arc-20240116; t=1763732550; c=relaxed/simple;
+	bh=xZgN8RbGaxsS1GcvStDNyWaPNJuHjDIMuV0+V0ZhM0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNAn4jbfBuSDZlK2YMlAoxjbjTO8f+nFYu/HShyYKmuODEOhn0Doq2lkIMqaCaK/zJ2QneJFB2LOEEXh/IXqdezZX+yqHll+V8PKuo4Bqa70I078hVo4drq5gsw/Il3dygLCTU3YOqggVpArZQ5s6K/YyY5u3zSL65bT2kUAmuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zerVuI12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ax5fKLDQg83FDMX1oPP+Pv3kORvL4Z03h/66jSLc4QpQQNqI0vWFew9pU5oIM+sJwPmJyX2BAnLPUmsaC66ld59pvJkgNTIw46A+3TmPNcub8DRvUSrADWS7NJbmYN5ifpUT9IuOyuqWI78doUaU4oF4ZAQ7d/SshHLcl0+yHtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaULRCsF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zerVuI12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A3FC4CEF1;
-	Fri, 21 Nov 2025 13:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaULRCsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0351C4CEF1;
+	Fri, 21 Nov 2025 13:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732547;
-	bh=1ag3cyHjTE1P61L76Fhg0NpF6OQ6eSe8cT8N2Ujtqak=;
+	s=korg; t=1763732550;
+	bh=xZgN8RbGaxsS1GcvStDNyWaPNJuHjDIMuV0+V0ZhM0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zerVuI12Uc1iyVwtsvVMMxoBH0OHwuI/rJD5mE3XzRkl1ZsLN/8F76KdRsGkFAagj
-	 TAyhj9CxDfh13cD0Of1zICDf0C+Z4OelitRFVfedBHlrr5H4vpU6BKtQGUBcPygnRZ
-	 vzfiMLf+xwMt81zB2JYz1UNobtec1bBVpMIGwNxw=
+	b=oaULRCsFc03K5dxUQC6fDcD86zC8Woo3A2C+rgdoQW95nl2RG2bSSEKVerTD4uDKL
+	 U7tdHSCQI+/OgokgYwPHOdrlN+lYbxh//+TLA3+NEmElWceATlitZp4KUlEQM4cZKE
+	 WHH8sXLPpYGypr6CsotW0n06ZWjzpehr3JfvmQ0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/529] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
-Date: Fri, 21 Nov 2025 14:07:38 +0100
-Message-ID: <20251121130236.677002907@linuxfoundation.org>
+Subject: [PATCH 6.6 133/529] drm/tidss: Set crtc modesetting parameters with adjusted mode
+Date: Fri, 21 Nov 2025 14:07:12 +0100
+Message-ID: <20251121130235.751252550@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -50,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
+[ Upstream commit cfb29225db20c56432a8525366321c0c09edfb2e ]
 
-Just add fixed struct size validations for UAC2 and UAC3 effect
-units.  The descriptor has a variable-length array, so it should be
-validated with a proper function later once when the unit is really
-parsed and used by the driver (currently only referred partially for
-the input terminal parsing).
+TIDSS uses crtc_* fields to propagate its registers and set the
+clock rates. So set the CRTC modesetting timing parameters with
+the adjusted mode when needed, to set correct values.
 
-Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Link: https://lore.kernel.org/r/20250624080402.302526-1-j-choudhary@ti.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index a0d55b77c9941..4bb4893f6e74f 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
--	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
-+	/* just a stop-gap, it should be a proper function for the array
-+	 * once if the unit is really parsed/used
-+	 */
-+	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor),
- 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
- 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
- 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
-@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
--	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
-+	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
- 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
+diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
+index df177881b9d32..356b7566013b1 100644
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -91,7 +91,7 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
+ 	struct dispc_device *dispc = tidss->dispc;
+ 	struct tidss_crtc *tcrtc = to_tidss_crtc(crtc);
+ 	u32 hw_videoport = tcrtc->hw_videoport;
+-	const struct drm_display_mode *mode;
++	struct drm_display_mode *mode;
+ 	enum drm_mode_status ok;
+ 
+ 	dev_dbg(ddev->dev, "%s\n", __func__);
+@@ -108,6 +108,9 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
+ 		return -EINVAL;
+ 	}
+ 
++	if (drm_atomic_crtc_needs_modeset(crtc_state))
++		drm_mode_set_crtcinfo(mode, 0);
++
+ 	return dispc_vp_bus_check(dispc, hw_videoport, crtc_state);
+ }
+ 
 -- 
 2.51.0
 
