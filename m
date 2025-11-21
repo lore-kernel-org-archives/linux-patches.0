@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809143469EC;
-	Fri, 21 Nov 2025 13:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026113469EC;
+	Fri, 21 Nov 2025 13:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730903; cv=none; b=Mmeq+tw28wML5FH0Sje8d6YoLzDG0h1ZoYzc9lww4B2Hjt89sFl6zohZgolleCIDUmjxW1unfVvOq7pTg4knFZOYE4fx5W0MN9mIXo/jCVmCN6peEq6+qU4f/fuFHLHnrZ79cf9bY879hAYfbfyQ8PaXrSV/1MYLQKZkHFob9GY=
+	t=1763730908; cv=none; b=neIy+O7jZQDNoBEVE740ObjOAXCXEhuzLDoiY9+PZ5aLiHeH0qA/CCrD01wi57dMcgBL644CKs16EgkbS9C5C2+AuRppbQu/iFX7NFoAiocPbM5VE8GlPdOGJM01nCc51Utyq7IvqSYLi3rBv4oiYabpxVKiwSh86uwnO0nvv/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730903; c=relaxed/simple;
-	bh=isecYQOEe9aQkZnwISk5vO41H1zUEWTx/8zkfJzauOQ=;
+	s=arc-20240116; t=1763730908; c=relaxed/simple;
+	bh=uGbbMbhEpukgFKIOPRcj0VOOTlKoZ7787yD0E1+IAvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zh0ZAj3eY4p/2mtMPJFeXMgasx5+JjbB8XTUtpv3U59j3UaE0eosaLTQ/hpAGQhbJJ5P+VnZLkkw671tbRkP11+AcuzqN0HP0Skq5f2ttB8LiINguTCW43hSg0lUno/LgWWrtQLzjp4o1HRt7lGxxEcd2WqoMsTMQ68sdxodQXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enXnzbuy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9g3jHuZ4djo/InsF3mICOl6UBK/0S8JTgOKkKmbdeY+tPfCWcw28qdUpCrSDEJusP5wAJg9PRoirjg7TJAGSPJ0TUiQHimLaYr4X+Up3kH9J555oZLfqLr+OqKA/oNzGRP+dUL3/yfU1uQxBsJVO4fXwkKlbZE7nuClwNwSyZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1t6aE4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enXnzbuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E2C4CEF1;
-	Fri, 21 Nov 2025 13:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1t6aE4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D71C4CEFB;
+	Fri, 21 Nov 2025 13:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730901;
-	bh=isecYQOEe9aQkZnwISk5vO41H1zUEWTx/8zkfJzauOQ=;
+	s=korg; t=1763730907;
+	bh=uGbbMbhEpukgFKIOPRcj0VOOTlKoZ7787yD0E1+IAvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=enXnzbuy7s6U69O7dsapPzo13Qo1j/zxkT9fQPctAFV7fbDP8AIlazu9MEUGV1Qy2
-	 Bp1G91+m3Od6zgqy5ZTY+KpyVdsRFJ3SR1w14JKXmsjeLuAF7iA2wK/KhpGMu8b9+U
-	 T4+myRJkruYuTdlttPpCmogkOpJt5lzcokoveZ4Y=
+	b=X1t6aE4NdWnA8isRGaTO1ZiFMsVK4RfSSWV0tLVyRzlpihQ01fpVsS1j3qJa9SG9a
+	 Ai21vk7SgL9CGp0yrbdqZ1CC3EU54HZ2rm8HuXNq/Y6QHWVyrYTdMwaDMqS5e+0WJC
+	 Bj6XZFoP6oXMDR7LaSFaJbUVzKPJVoGqo81xHbf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 022/247] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
-Date: Fri, 21 Nov 2025 14:09:29 +0100
-Message-ID: <20251121130155.399512319@linuxfoundation.org>
+Subject: [PATCH 6.17 024/247] fs: return EOPNOTSUPP from file_setattr/file_getattr syscalls
+Date: Fri, 21 Nov 2025 14:09:31 +0100
+Message-ID: <20251121130155.471328969@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+From: Andrey Albershteyn <aalbersh@redhat.com>
 
-[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
+[ Upstream commit d90ad28e8aa482e397150e22f3762173d918a724 ]
 
-openSBI v1.7 adds harts checks for ipi operations. Especially it
-adds comparison between hmask passed as an argument from linux
-and mask of online harts (from openSBI side). If they don't
-fit each other the error occurs.
+These syscalls call to vfs_fileattr_get/set functions which return
+ENOIOCTLCMD if filesystem doesn't support setting file attribute on an
+inode. For syscalls EOPNOTSUPP would be more appropriate return error.
 
-When cpu is offline, cpu_online_mask is explicitly cleared in
-__cpu_disable. However, there is no explicit clearing of
-mm_cpumask. mm_cpumask is used for rfence operations that
-call openSBI RFENCE extension which uses ipi to remote harts.
-If hart is offline there may be error if mask of linux is not
-as mask of online harts in openSBI.
-
-this patch adds explicit clearing of mm_cpumask for offline hart.
-
-Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
-[pjw@kernel.org: rewrote subject line for clarity]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu-hotplug.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/file_attr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
-index a1e38ecfc8be2..3f50d3dd76c6f 100644
---- a/arch/riscv/kernel/cpu-hotplug.c
-+++ b/arch/riscv/kernel/cpu-hotplug.c
-@@ -54,6 +54,7 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
+diff --git a/fs/file_attr.c b/fs/file_attr.c
+index 460b2dd21a852..1dcec88c06805 100644
+--- a/fs/file_attr.c
++++ b/fs/file_attr.c
+@@ -416,6 +416,8 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
+ 	}
  
- 	pr_notice("CPU%u: off\n", cpu);
+ 	error = vfs_fileattr_get(filepath.dentry, &fa);
++	if (error == -ENOIOCTLCMD || error == -ENOTTY)
++		error = -EOPNOTSUPP;
+ 	if (error)
+ 		return error;
  
-+	clear_tasks_mm_cpumask(cpu);
- 	/* Verify from the firmware if the cpu is really stopped*/
- 	if (cpu_ops->cpu_is_stopped)
- 		ret = cpu_ops->cpu_is_stopped(cpu);
+@@ -483,6 +485,8 @@ SYSCALL_DEFINE5(file_setattr, int, dfd, const char __user *, filename,
+ 	if (!error) {
+ 		error = vfs_fileattr_set(mnt_idmap(filepath.mnt),
+ 					 filepath.dentry, &fa);
++		if (error == -ENOIOCTLCMD || error == -ENOTTY)
++			error = -EOPNOTSUPP;
+ 		mnt_drop_write(filepath.mnt);
+ 	}
+ 
 -- 
 2.51.0
 
