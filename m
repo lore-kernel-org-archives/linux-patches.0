@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4540F3491D5;
-	Fri, 21 Nov 2025 13:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B489349AF4;
+	Fri, 21 Nov 2025 13:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732310; cv=none; b=KcA7MauXxKt9hH4nCbqdNn16YLlZVatz9KDQsX8RmtUXMdzb3U4swrGn9yqIYRv/2HmDR34pK0D1r1YDPlZqbTVGDEtnMvfveFzKLC448vraPiVPHnEZYkR3OSCvf1qC8k5OoVs03mI2LMhF4sIyRvkHbrJlO1httVIyIeAODVM=
+	t=1763732313; cv=none; b=kEX6ESio7OWVFNxII/z6Q7cv+ChcBAFYJKygzcmSE/uxxxfI1L/HdsXxnItDX79eJczIs+OcGHCNNyvVeOY9gcB6CvfY96ZbHV48NqwpQd7NtofGHAHwFLmqYdBwBZoeey5g49j60DxNlrdrJRyOaOYSiBOwY8gV8L8YRAm4D2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732310; c=relaxed/simple;
-	bh=ZcFE7u72Lua0KIvuQLOuZmzNvpse4QnBSLEyG1Poh0g=;
+	s=arc-20240116; t=1763732313; c=relaxed/simple;
+	bh=5NUKpm/8Q5lSjC1F09NwDBtNc4PZyeQssDwa3ED+fzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGAzjbCgL6y9bGwA59CzrDIf8Nx29njPGwAWiH0asIKIYWKVoVTq5M9wDQiHcFIv4OyAJrsSikTH8Moxe6Ydf46q2hQc8cFuqO2MWeRBJTdgHuSR2g8hMgm/+IPhqLUGM/AUcXYr2RaeH/iVh9G8JInrbr/XjBbph/RrBHa7qTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwTXuIZe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZHdtEvijvRspbMIXi1/5XEy21EAMacD0Ikpp07CTDPjif3shwLJQ6N5xl59nM+7SWY9pwb1wvf5Y1IOFv09hHlXdnZp+2NqKG8gqkUbzp0RRB0T6GB1edSIAnw58V7nVyOQpIQL0V6tfZ1L5Am1IiwXfVEeXTOAmmU5Ge1EkWD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFuMGCj1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwTXuIZe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC764C4CEF1;
-	Fri, 21 Nov 2025 13:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFuMGCj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5DDC4CEF1;
+	Fri, 21 Nov 2025 13:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732310;
-	bh=ZcFE7u72Lua0KIvuQLOuZmzNvpse4QnBSLEyG1Poh0g=;
+	s=korg; t=1763732312;
+	bh=5NUKpm/8Q5lSjC1F09NwDBtNc4PZyeQssDwa3ED+fzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwTXuIZeObp6u65DeH8jQ4HOibop/d5HCs1irwjXfvjGZJr6z3pkDSZ+wCQhBC31N
-	 EHNnYsh7ZqDJBMRov6jqwvbwsKH6vmPrwLFOCCpKmtVfAtv/13S7NMo67guxW8C94i
-	 uC56G7OVeshYZFe+luFLgIlB/8NS6gS1m8MwHToo=
+	b=JFuMGCj1b9JOdfYPxblmAv0YR/3cVTk86lfNNdD9N3DFSsXmIm9yIWLa5H256s07N
+	 /ACn8DI9WvB31nIVy017rIEVP0qPzLgk+k9dzoL+3t3jm0i4I2nQYi6gnqk0KdVY2L
+	 V9bFfuPxSICOYsRg/g3RXdFOlKPljXAVHNTRc2yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/529] pinctrl: keembay: release allocated memory in detach path
-Date: Fri, 21 Nov 2025 14:06:16 +0100
-Message-ID: <20251121130233.762500049@linuxfoundation.org>
+Subject: [PATCH 6.6 060/529] spi: loopback-test: Dont use %pK through printk
+Date: Fri, 21 Nov 2025 14:05:59 +0100
+Message-ID: <20251121130233.156976331@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -46,60 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit aae7a2876c3b39d07aa7655ea082af8e7862f3a5 ]
+[ Upstream commit b832b19318534bb4f1673b24d78037fee339c679 ]
 
-Unlike all the other allocations in this driver, the memory for storing
-the pin function descriptions allocated with kcalloc() and later resized
-with krealloc() is never freed. Use devres like elsewhere to handle
-that. While at it - replace krealloc() with more suitable
-devm_krealloc_array().
+In the past %pK was preferable to %p as it would not leak raw pointer
+values into the kernel log.
+Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
+the regular %p has been improved to avoid this issue.
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping locks in atomic contexts.
 
-Note: the logic in this module is pretty convoluted and could probably
-use some revisiting, we should probably be able to calculate the exact
-amount of memory needed in advance or even skip the allocation
-altogether and just add each function to the radix tree separately.
+Switch to the regular pointer formatting which is safer and
+easier to reason about.
+There are still a few users of %pK left, but these use it through seq_file,
+for which its usage is safe.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20250811-restricted-pointers-spi-v1-1-32c47f954e4d@linutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-keembay.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-loopback-test.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-keembay.c b/drivers/pinctrl/pinctrl-keembay.c
-index 152c35bce8ecc..94b11a23829f6 100644
---- a/drivers/pinctrl/pinctrl-keembay.c
-+++ b/drivers/pinctrl/pinctrl-keembay.c
-@@ -1606,7 +1606,8 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
- 	 * being part of 8 (hw maximum) globally unique muxes.
- 	 */
- 	kpc->nfuncs = 0;
--	keembay_funcs = kcalloc(kpc->npins * 8, sizeof(*keembay_funcs), GFP_KERNEL);
-+	keembay_funcs = devm_kcalloc(kpc->dev, kpc->npins * 8,
-+				     sizeof(*keembay_funcs), GFP_KERNEL);
- 	if (!keembay_funcs)
- 		return -ENOMEM;
+diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
+index 69b6c87c5525e..41e1fb27a9f34 100644
+--- a/drivers/spi/spi-loopback-test.c
++++ b/drivers/spi/spi-loopback-test.c
+@@ -447,7 +447,7 @@ static void spi_test_dump_message(struct spi_device *spi,
+ 	int i;
+ 	u8 b;
  
-@@ -1637,7 +1638,9 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
+-	dev_info(&spi->dev, "  spi_msg@%pK\n", msg);
++	dev_info(&spi->dev, "  spi_msg@%p\n", msg);
+ 	if (msg->status)
+ 		dev_info(&spi->dev, "    status:        %i\n",
+ 			 msg->status);
+@@ -457,15 +457,15 @@ static void spi_test_dump_message(struct spi_device *spi,
+ 		 msg->actual_length);
+ 
+ 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
+-		dev_info(&spi->dev, "    spi_transfer@%pK\n", xfer);
++		dev_info(&spi->dev, "    spi_transfer@%p\n", xfer);
+ 		dev_info(&spi->dev, "      len:    %i\n", xfer->len);
+-		dev_info(&spi->dev, "      tx_buf: %pK\n", xfer->tx_buf);
++		dev_info(&spi->dev, "      tx_buf: %p\n", xfer->tx_buf);
+ 		if (dump_data && xfer->tx_buf)
+ 			spi_test_print_hex_dump("          TX: ",
+ 						xfer->tx_buf,
+ 						xfer->len);
+ 
+-		dev_info(&spi->dev, "      rx_buf: %pK\n", xfer->rx_buf);
++		dev_info(&spi->dev, "      rx_buf: %p\n", xfer->rx_buf);
+ 		if (dump_data && xfer->rx_buf)
+ 			spi_test_print_hex_dump("          RX: ",
+ 						xfer->rx_buf,
+@@ -559,7 +559,7 @@ static int spi_check_rx_ranges(struct spi_device *spi,
+ 		/* if still not found then something has modified too much */
+ 		/* we could list the "closest" transfer here... */
+ 		dev_err(&spi->dev,
+-			"loopback strangeness - rx changed outside of allowed range at: %pK\n",
++			"loopback strangeness - rx changed outside of allowed range at: %p\n",
+ 			addr);
+ 		/* do not return, only set ret,
+ 		 * so that we list all addresses
+@@ -697,7 +697,7 @@ static int spi_test_translate(struct spi_device *spi,
  	}
  
- 	/* Reallocate memory based on actual number of functions */
--	new_funcs = krealloc(keembay_funcs, kpc->nfuncs * sizeof(*new_funcs), GFP_KERNEL);
-+	new_funcs = devm_krealloc_array(kpc->dev, keembay_funcs,
-+					kpc->nfuncs, sizeof(*new_funcs),
-+					GFP_KERNEL);
- 	if (!new_funcs) {
- 		kfree(keembay_funcs);
- 		return -ENOMEM;
+ 	dev_err(&spi->dev,
+-		"PointerRange [%pK:%pK[ not in range [%pK:%pK[ or [%pK:%pK[\n",
++		"PointerRange [%p:%p[ not in range [%p:%p[ or [%p:%p[\n",
+ 		*ptr, *ptr + len,
+ 		RX(0), RX(SPI_TEST_MAX_SIZE),
+ 		TX(0), TX(SPI_TEST_MAX_SIZE));
 -- 
 2.51.0
 
