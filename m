@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66DC3358BE;
-	Fri, 21 Nov 2025 13:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAABD350A3D;
+	Fri, 21 Nov 2025 13:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733527; cv=none; b=d804vNl+kySsE5IPxn9ux4wrbygNSL0TrjaWJ0fkNW4Rwee3q7uEnWbiQ++KuQ0N3COvWYxpg/cUBs2DN8kCu0MuTfvlOhLMmq/7vvAY2NwvAR50WlWxVSzkqpFto536YH4qZfjU2wHvV40rri5UTei45SP2oS/oYaLPpX7JOnM=
+	t=1763733529; cv=none; b=tsUWV/JnqVqncljTKRxp6fXpAT/DcZG0fxokJ/jFQwIYldqNvO7ZxikWjE4e2XU36PKUeZbgnXqKMnVLjmOsTVAOnL9CYmWtX+yElNXSn8PmvUsqXn8cPDFyPYxDhfHAMtlkbW2H0p2XnAUNvw6eqyCcKqjYsd/pQGkt7GUlwao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733527; c=relaxed/simple;
-	bh=/yPJIkFM8N5Mjz5+AwG2I8WL+pXzt97053mHR4BDYqE=;
+	s=arc-20240116; t=1763733529; c=relaxed/simple;
+	bh=YIw2+djKyzll9vTxc747enP37y7gVkZe57RyJqw0Af4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzX7tE0XTOcY+ljaH+jCh+d8/RDcG7nCUX1thi2bZ+XDg299Kig1QWLvxz48FYSHcBlwz+TqT5OZmJWfT/SdMYvdRyeiQb6MdrxoWNt2bA7J5CvNLNamtOA+hQfLWyH3k51k0WQiNA5yU0MFdveI6oWpD/jJAg7oIeG/YvorGlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcqBNnVL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPiFycBXpnP6kfPIF+aVUUsBkb75Qy6M5YbNH0uqjrdvoeZQGCLpvde75SX8UEtpc7Y3zAmYoXCuU6KwGw1lqh8xP1g3yKqHA1oc+zIf8b2APHZqcnZkl6Pgd6CZtG3HE3zIuL+HnIotxO7QTuF1SJRb7r0iYNIuE6wQcrtadmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyH+QJje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcqBNnVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B28C4CEF1;
-	Fri, 21 Nov 2025 13:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyH+QJje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0DAC4CEF1;
+	Fri, 21 Nov 2025 13:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733526;
-	bh=/yPJIkFM8N5Mjz5+AwG2I8WL+pXzt97053mHR4BDYqE=;
+	s=korg; t=1763733529;
+	bh=YIw2+djKyzll9vTxc747enP37y7gVkZe57RyJqw0Af4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcqBNnVLdZ23R2y9/yvBrqdb8m5UxKZQyP0BdH32bvkf0UNigmjnC8we8Rt6hz5d6
-	 Bgn6BE1vkFWmSKK7w6UWLfttdzHpKBAnSHgUwBNWzm5IGm8hvvs6QACoQLQ2jHSp7p
-	 5hreN935+I0gfdmJtMgnZFV6njDAmduw3TlsWp94=
+	b=kyH+QJjeGFIl+urFaaF6sdevlbrTBW+lFYEISnaJQWyuCjDO/vkLCT95nLESltcZB
+	 0gsX5wv8CMOVfpqoM1ccE9u80sNY5rQtQWEu/lJydnaBdZlT03E8SLnNL4V87LMvug
+	 Fo3bkeVGDMO96kWNrrI0onpad1Rpmy61EUyUm2SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 455/529] mtd: onenand: Pass correct pointer to IRQ handler
-Date: Fri, 21 Nov 2025 14:12:34 +0100
-Message-ID: <20251121130247.197879758@linuxfoundation.org>
+	"jingxian.li" <jingxian.li@shopee.com>
+Subject: [PATCH 6.6 492/529] Revert "perf dso: Add missed dso__put to dso__load_kcore"
+Date: Fri, 21 Nov 2025 14:13:11 +0100
+Message-ID: <20251121130248.512582668@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,38 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: "jingxian.li" <jingxian.li@shopee.com>
 
-[ Upstream commit 97315e7c901a1de60e8ca9b11e0e96d0f9253e18 ]
+This reverts commit e5de9ea7796e79f3cd082624f788cc3442bff2a8.
 
-This was supposed to pass "onenand" instead of "&onenand" with the
-ampersand.  Passing a random stack address which will be gone when the
-function ends makes no sense.  However the good thing is that the pointer
-is never used, so this doesn't cause a problem at run time.
+The patch introduced `map__zput(new_node->map)` in the kcore load
+path, causing a segmentation fault when running `perf c2c report`.
 
-Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue arises because `maps__merge_in` directly modifies and
+inserts the caller's `new_map`, causing it to be freed prematurely
+while still referenced by kmaps.
+
+Later branchs (6.12, 6.15, 6.16) are not affected because they use
+a different merge approach with a lazily sorted array, which avoids
+modifying the original `new_map`.
+
+Fixes: e5de9ea7796e ("perf dso: Add missed dso__put to dso__load_kcore")
+
+Signed-off-by: jingxian.li <jingxian.li@shopee.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/onenand/onenand_samsung.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/symbol.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/onenand/onenand_samsung.c b/drivers/mtd/nand/onenand/onenand_samsung.c
-index fd6890a03d557..0e21d443078e4 100644
---- a/drivers/mtd/nand/onenand/onenand_samsung.c
-+++ b/drivers/mtd/nand/onenand/onenand_samsung.c
-@@ -906,7 +906,7 @@ static int s3c_onenand_probe(struct platform_device *pdev)
- 			err = devm_request_irq(&pdev->dev, r->start,
- 					       s5pc110_onenand_irq,
- 					       IRQF_SHARED, "onenand",
--					       &onenand);
-+					       onenand);
- 			if (err) {
- 				dev_err(&pdev->dev, "failed to get irq\n");
- 				return err;
--- 
-2.51.0
-
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -1366,7 +1366,6 @@ static int dso__load_kcore(struct dso *d
+ 				goto out_err;
+ 			}
+ 		}
+-		map__zput(new_node->map);
+ 		free(new_node);
+ 	}
+ 
 
 
