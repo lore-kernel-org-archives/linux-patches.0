@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28D12737FC;
-	Fri, 21 Nov 2025 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50A5264612;
+	Fri, 21 Nov 2025 13:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731398; cv=none; b=DKGAd98kZNXZ4Ja65LoSvI3DuzQCWyBmBVvKPfGk+NIs3iovgorUVL/mg3ERVFpqZ/fPTc4+++6B6gIv4IaO4TeqDCJYF62j6dUkjdA5zmXAfOwMhoz0quoYN/RolrDvE5jtadD2/ri9FnVGiZnM1/croaM+x8THKbKOWQZBZP8=
+	t=1763731401; cv=none; b=OtYWdrjKkRSfITZtFn2KIhbNu+JubzQVhEqX3F0eBLtKECQGhLs9A8AQ3V8aFk9tNrS2IMsudr+OjgmCOoqPks2WNNrqeylcTGug7zMHjZOpNREjiWFO8Oa3fzkjymi4nfENRz+DC4tp8Z+DObo3OAzegM5jORhPqyI79WxRvZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731398; c=relaxed/simple;
-	bh=aXiI+rZBa68lCRw2OfS+ilueOp6Ue96wqH2X3Kcjk2c=;
+	s=arc-20240116; t=1763731401; c=relaxed/simple;
+	bh=Q+TyeNao4gtVh56UtbKYKg/RA5pDrHZi/+s45PS1Xxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4ie5mSdLNDiITfctVs2Y0KxIhwAHk03wntdnRKAKFF1s9SUwdBBcqpszo/H61y7SZZW6FgQRRHwNlE+tDJq7ZuN8HGCkTBG6XkgHGJ0BIWQ0Axat7zW2xpjI4LM81AMJa2tdpfSoh3No9VM0dgoVoqLtWR1Lc1mh7GxBcKJ47Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WX6/kSUd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sD2+MH6DLxQ+Lb1TUnQYBy9kSwO6Y7RavI6gP1rkouv9IkjCKYr9U7Ch20t9Vtv2akRx23cKiDHFh57R5mWFs9+8HhqSRRcyfYO3B0oPUZjSmjfl4AzDbYOGONe9ugyZaQBW62eieJ9sR5iHzARL3rJ+LQ8cyMKA4ryyqaAJAh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqAOILMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WX6/kSUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5727FC4CEF1;
-	Fri, 21 Nov 2025 13:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqAOILMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE1CC4CEF1;
+	Fri, 21 Nov 2025 13:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731398;
-	bh=aXiI+rZBa68lCRw2OfS+ilueOp6Ue96wqH2X3Kcjk2c=;
+	s=korg; t=1763731401;
+	bh=Q+TyeNao4gtVh56UtbKYKg/RA5pDrHZi/+s45PS1Xxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WX6/kSUdVjiSp0vYzn2KButfHmGaaM4R0+Xmrnfpa4GQpDB69LXlsOjbncfufxXCc
-	 Hu6/qOuhqgHmB9aW2cNLaUI/Ehr1KxHkI276/woqI391Lp3tWwRiFYNwktfTdugHG5
-	 8S77we81yujyF4r5hwnMlGzvcIflbKkYlSti1z/k=
+	b=HqAOILMzBIsVsRV0jRZFyx2tUt5cXVv3feZmHfK9GbgU3jbpYqwAOvV0E7vgbjCk3
+	 PjxlUsiu165l5V5tL08d1LAsEFqzPpJR0TqIkYnNxer4kZXY9vSemAg12iQDnTrsHE
+	 ts3Hqv2NrUjS3nZxivDVjyfwYlwvxfPJ3Rn77iQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com,
-	Hillf Danton <hdanton@sina.com>,
-	Vishal Annapurve <vannapurve@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.17 152/247] KVM: guest_memfd: Remove bindings on memslot deletion when gmem is dying
-Date: Fri, 21 Nov 2025 14:11:39 +0100
-Message-ID: <20251121130200.179916067@linuxfoundation.org>
+	Huang Ying <ying.huang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Chris Li <chrisl@kernel.org>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 188/247] mm, swap: fix potential UAF issue for VMA readahead
+Date: Fri, 21 Nov 2025 14:12:15 +0100
+Message-ID: <20251121130201.470915647@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,172 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit ae431059e75d36170a5ae6b44cc4d06d43613215 upstream.
+commit 1c2a936edd71e133f2806e68324ec81a4eb07588 upstream.
 
-When unbinding a memslot from a guest_memfd instance, remove the bindings
-even if the guest_memfd file is dying, i.e. even if its file refcount has
-gone to zero.  If the memslot is freed before the file is fully released,
-nullifying the memslot side of the binding in kvm_gmem_release() will
-write to freed memory, as detected by syzbot+KASAN:
+Since commit 78524b05f1a3 ("mm, swap: avoid redundant swap device
+pinning"), the common helper for allocating and preparing a folio in the
+swap cache layer no longer tries to get a swap device reference
+internally, because all callers of __read_swap_cache_async are already
+holding a swap entry reference.  The repeated swap device pinning isn't
+needed on the same swap device.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in kvm_gmem_release+0x176/0x440 virt/kvm/guest_memfd.c:353
-  Write of size 8 at addr ffff88807befa508 by task syz.0.17/6022
+Caller of VMA readahead is also holding a reference to the target entry's
+swap device, but VMA readahead walks the page table, so it might encounter
+swap entries from other devices, and call __read_swap_cache_async on
+another device without holding a reference to it.
 
-  CPU: 0 UID: 0 PID: 6022 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
-   print_address_description mm/kasan/report.c:378 [inline]
-   print_report+0xca/0x240 mm/kasan/report.c:482
-   kasan_report+0x118/0x150 mm/kasan/report.c:595
-   kvm_gmem_release+0x176/0x440 virt/kvm/guest_memfd.c:353
-   __fput+0x44c/0xa70 fs/file_table.c:468
-   task_work_run+0x1d4/0x260 kernel/task_work.c:227
-   resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
-   exit_to_user_mode_loop+0xe9/0x130 kernel/entry/common.c:43
-   exit_to_user_mode_prepare include/linux/irq-entry-common.h:225 [inline]
-   syscall_exit_to_user_mode_work include/linux/entry-common.h:175 [inline]
-   syscall_exit_to_user_mode include/linux/entry-common.h:210 [inline]
-   do_syscall_64+0x2bd/0xfa0 arch/x86/entry/syscall_64.c:100
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7fbeeff8efc9
-   </TASK>
+So it is possible to cause a UAF when swapoff of device A raced with
+swapin on device B, and VMA readahead tries to read swap entries from
+device A.  It's not easy to trigger, but in theory, it could cause real
+issues.
 
-  Allocated by task 6023:
-   kasan_save_stack mm/kasan/common.c:56 [inline]
-   kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
-   poison_kmalloc_redzone mm/kasan/common.c:397 [inline]
-   __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:414
-   kasan_kmalloc include/linux/kasan.h:262 [inline]
-   __kmalloc_cache_noprof+0x3e2/0x700 mm/slub.c:5758
-   kmalloc_noprof include/linux/slab.h:957 [inline]
-   kzalloc_noprof include/linux/slab.h:1094 [inline]
-   kvm_set_memory_region+0x747/0xb90 virt/kvm/kvm_main.c:2104
-   kvm_vm_ioctl_set_memory_region+0x6f/0xd0 virt/kvm/kvm_main.c:2154
-   kvm_vm_ioctl+0x957/0xc60 virt/kvm/kvm_main.c:5201
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Make VMA readahead try to get the device reference first if the swap
+device is a different one from the target entry.
 
-  Freed by task 6023:
-   kasan_save_stack mm/kasan/common.c:56 [inline]
-   kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
-   kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
-   poison_slab_object mm/kasan/common.c:252 [inline]
-   __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:284
-   kasan_slab_free include/linux/kasan.h:234 [inline]
-   slab_free_hook mm/slub.c:2533 [inline]
-   slab_free mm/slub.c:6622 [inline]
-   kfree+0x19a/0x6d0 mm/slub.c:6829
-   kvm_set_memory_region+0x9c4/0xb90 virt/kvm/kvm_main.c:2130
-   kvm_vm_ioctl_set_memory_region+0x6f/0xd0 virt/kvm/kvm_main.c:2154
-   kvm_vm_ioctl+0x957/0xc60 virt/kvm/kvm_main.c:5201
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Deliberately don't acquire filemap invalid lock when the file is dying as
-the lifecycle of f_mapping is outside the purview of KVM.  Dereferencing
-the mapping is *probably* fine, but there's no need to invalidate anything
-as memslot deletion is responsible for zapping SPTEs, and the only code
-that can access the dying file is kvm_gmem_release(), whose core code is
-mutually exclusive with unbinding.
-
-Note, the mutual exclusivity is also what makes it safe to access the
-bindings on a dying gmem instance.  Unbinding either runs with slots_lock
-held, or after the last reference to the owning "struct kvm" is put, and
-kvm_gmem_release() nullifies the slot pointer under slots_lock, and puts
-its reference to the VM after that is done.
-
-Reported-by: syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68fa7a22.a70a0220.3bf6c6.008b.GAE@google.com
-Tested-by: syzbot+2479e53d0db9b32ae2aa@syzkaller.appspotmail.com
-Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
-Cc: stable@vger.kernel.org
-Cc: Hillf Danton <hdanton@sina.com>
-Reviewed-By: Vishal Annapurve <vannapurve@google.com>
-Link: https://patch.msgid.link/20251104011205.3853541-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lkml.kernel.org/r/20251111-swap-fix-vma-uaf-v1-1-41c660e58562@tencent.com
+Fixes: 78524b05f1a3 ("mm, swap: avoid redundant swap device pinning")
+Suggested-by: Huang Ying <ying.huang@linux.alibaba.com>
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Acked-by: Chris Li <chrisl@kernel.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/guest_memfd.c |   45 ++++++++++++++++++++++++++++++++-------------
- 1 file changed, 32 insertions(+), 13 deletions(-)
+ mm/swap_state.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -523,31 +523,50 @@ err:
- 	return r;
- }
+--- a/mm/swap_state.c
++++ b/mm/swap_state.c
+@@ -746,6 +746,8 @@ static struct folio *swap_vma_readahead(
  
--void kvm_gmem_unbind(struct kvm_memory_slot *slot)
-+static void __kvm_gmem_unbind(struct kvm_memory_slot *slot, struct kvm_gmem *gmem)
- {
- 	unsigned long start = slot->gmem.pgoff;
- 	unsigned long end = start + slot->npages;
--	struct kvm_gmem *gmem;
+ 	blk_start_plug(&plug);
+ 	for (addr = start; addr < end; ilx++, addr += PAGE_SIZE) {
++		struct swap_info_struct *si = NULL;
 +
-+	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
-+
-+	/*
-+	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
-+	 * cannot see this memslot.
-+	 */
-+	WRITE_ONCE(slot->gmem.file, NULL);
-+}
-+
-+void kvm_gmem_unbind(struct kvm_memory_slot *slot)
-+{
- 	struct file *file;
- 
- 	/*
--	 * Nothing to do if the underlying file was already closed (or is being
--	 * closed right now), kvm_gmem_release() invalidates all bindings.
-+	 * Nothing to do if the underlying file was _already_ closed, as
-+	 * kvm_gmem_release() invalidates and nullifies all bindings.
- 	 */
--	file = kvm_gmem_get_file(slot);
--	if (!file)
-+	if (!slot->gmem.file)
- 		return;
- 
--	gmem = file->private_data;
--
--	filemap_invalidate_lock(file->f_mapping);
--	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
-+	file = kvm_gmem_get_file(slot);
- 
- 	/*
--	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
--	 * cannot see this memslot.
-+	 * However, if the file is _being_ closed, then the bindings need to be
-+	 * removed as kvm_gmem_release() might not run until after the memslot
-+	 * is freed.  Note, modifying the bindings is safe even though the file
-+	 * is dying as kvm_gmem_release() nullifies slot->gmem.file under
-+	 * slots_lock, and only puts its reference to KVM after destroying all
-+	 * bindings.  I.e. reaching this point means kvm_gmem_release() hasn't
-+	 * yet destroyed the bindings or freed the gmem_file, and can't do so
-+	 * until the caller drops slots_lock.
- 	 */
--	WRITE_ONCE(slot->gmem.file, NULL);
-+	if (!file) {
-+		__kvm_gmem_unbind(slot, slot->gmem.file->private_data);
-+		return;
-+	}
-+
-+	filemap_invalidate_lock(file->f_mapping);
-+	__kvm_gmem_unbind(slot, file->private_data);
- 	filemap_invalidate_unlock(file->f_mapping);
- 
- 	fput(file);
+ 		if (!pte++) {
+ 			pte = pte_offset_map(vmf->pmd, addr);
+ 			if (!pte)
+@@ -759,8 +761,19 @@ static struct folio *swap_vma_readahead(
+ 			continue;
+ 		pte_unmap(pte);
+ 		pte = NULL;
++		/*
++		 * Readahead entry may come from a device that we are not
++		 * holding a reference to, try to grab a reference, or skip.
++		 */
++		if (swp_type(entry) != swp_type(targ_entry)) {
++			si = get_swap_device(entry);
++			if (!si)
++				continue;
++		}
+ 		folio = __read_swap_cache_async(entry, gfp_mask, mpol, ilx,
+ 						&page_allocated, false);
++		if (si)
++			put_swap_device(si);
+ 		if (!folio)
+ 			continue;
+ 		if (page_allocated) {
 
 
