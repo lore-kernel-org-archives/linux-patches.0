@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741311F09B3;
-	Fri, 21 Nov 2025 13:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A6330F93B;
+	Fri, 21 Nov 2025 13:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731301; cv=none; b=eCF94wxDgQDTADTmo19h3Y+8iNb3U39EppSEjXXSVKDY8dIdgvQZ3P/e4yxr+W0oJlIsjrtPSkx2l1NRhC0NKhBK/hUsTkFVtnaSzcDv8OAuDtZqbWzj1Rc5av3Ku02T91UFDGSuXb/DoECErAP2z2UgfGFij1wTqHew0KKXckY=
+	t=1763731304; cv=none; b=RG+kdrAuZnVvEUEq6zIFzOOhozXpYnXJDvDMnXqZ0KXvhMJERrKl8aul9msbzaT8oJJ/fVfJ7yRgdT56Yzt2qhJfXgtFu7LzFCxoQg/Ga1r3x97xyqAfEBWJCWmFfhmHkudk5P4W8DUae1lUU64mwLnkGeWKfRssRCuXkOUZv4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731301; c=relaxed/simple;
-	bh=Xh3rysbrFf6r8Mp9Tj9WOhssj7Rtdbrh59stRD4lT/c=;
+	s=arc-20240116; t=1763731304; c=relaxed/simple;
+	bh=GYEGcx16RY4jxIViPCeyRiMosG5tmMX/F4OczQxx7mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3MKngyioNoc76Af+UxS1FFeo1ug31kg6RfnMU0BB1CZsxV3MtHl4K1kLol7AMkhookHkEjmFeNMyXYz8kvyMlOsYUvZzwL8kOQwPCzQ1lpEe086JVZ+E/c27O3SIZwlkoEUTNtNNYKzwd5N5aZB4BYugRLsAA2QUYebegNqodo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjbaeuC/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rz04vY5c+6/uvzdZUtUWqtQSMiL6BugMG0DMa8N8PNhqG4YES+6Pf6tnO0TlFzg6YPu/1/xdGbBkwvp3Vult5ba+qvG7a1a7jGWM1L+M1Nc5LW1oBi5VOZOZulz8nrbOnw9Xr7IXcUgWzE83E65WLn9TfrCcIHcQtoSf2H6eG2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYK5eWra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjbaeuC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9424C4CEF1;
-	Fri, 21 Nov 2025 13:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYK5eWra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F7FC116C6;
+	Fri, 21 Nov 2025 13:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731301;
-	bh=Xh3rysbrFf6r8Mp9Tj9WOhssj7Rtdbrh59stRD4lT/c=;
+	s=korg; t=1763731304;
+	bh=GYEGcx16RY4jxIViPCeyRiMosG5tmMX/F4OczQxx7mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CjbaeuC/5DmLV5sLJwzP1kXe/bd4SR8DykJwCVx31X/SAhbZKwvlPQNdk2JJUmkmE
-	 9UkQGP2PWW+Pu3eiQOKZ88ZTVz856MyXtNghUn5B76+I+Er0fXXBALuy+gAe7oYpQx
-	 CjXYX+bSIOsNzpNr5O7QWUSf77uIdj/BQV2rb0z8=
+	b=tYK5eWrahxTwQmVQR9b0ch/KfsDZ8qADxozwE6XupAM13ENWZ58BoJpxlY+OBrFuK
+	 BgLTx876tA58lPVzoJqhXTy7EWpBW2/dUFdCMia+ETvLFHQF/XkoeqG4nP5aOwNFlP
+	 JZZv8auRkv3qNnFY7sU2qtnTPa2tVMdiVwCtCuYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Maydell <peter.maydell@linaro.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.17 153/247] KVM: arm64: Make all 32bit ID registers fully writable
-Date: Fri, 21 Nov 2025 14:11:40 +0100
-Message-ID: <20251121130200.215352680@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.17 162/247] ksmbd: close accepted socket when per-IP limit rejects connection
+Date: Fri, 21 Nov 2025 14:11:49 +0100
+Message-ID: <20251121130200.536251000@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,123 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit 3f9eacf4f0705876a5d6526d7d320ca91d7d7a16 upstream.
+commit 98a5fd31cbf72d46bf18e50b3ab0ce86d5f319a9 upstream.
 
-32bit ID registers aren't getting much love these days, and are
-often missed in updates. One of these updates broke restoring
-a GICv2 guest on a GICv3 machine.
+When the per-IP connection limit is exceeded in ksmbd_kthread_fn(),
+the code sets ret = -EAGAIN and continues the accept loop without
+closing the just-accepted socket. That leaks one socket per rejected
+attempt from a single IP and enables a trivial remote DoS.
 
-Instead of performing a piecemeal fix, just bite the bullet
-and make all 32bit ID regs fully writable. KVM itself never
-relies on them for anything, and if the VMM wants to mess up
-the guest, so be it.
+Release client_sk before continuing.
 
-Fixes: 5cb57a1aff755 ("KVM: arm64: Zero ID_AA64PFR0_EL1.GIC when no GICv3 is presented to the guest")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
+This bug was found with ZeroPath.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20251030122707.2033690-2-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/sys_regs.c |   59 ++++++++++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 28 deletions(-)
+ fs/smb/server/transport_tcp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2515,19 +2515,23 @@ static bool bad_redir_trap(struct kvm_vc
- 	.val = 0,				\
- }
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -284,8 +284,11 @@ static int ksmbd_kthread_fn(void *p)
+ 			}
+ 		}
+ 		up_read(&conn_list_lock);
+-		if (ret == -EAGAIN)
++		if (ret == -EAGAIN) {
++			/* Per-IP limit hit: release the just-accepted socket. */
++			sock_release(client_sk);
+ 			continue;
++		}
  
--/* sys_reg_desc initialiser for known cpufeature ID registers */
--#define AA32_ID_SANITISED(name) {		\
--	ID_DESC(name),				\
--	.visibility = aa32_id_visibility,	\
--	.val = 0,				\
--}
--
- /* sys_reg_desc initialiser for writable ID registers */
- #define ID_WRITABLE(name, mask) {		\
- 	ID_DESC(name),				\
- 	.val = mask,				\
- }
- 
-+/*
-+ * 32bit ID regs are fully writable when the guest is 32bit
-+ * capable. Nothing in the KVM code should rely on 32bit features
-+ * anyway, only 64bit, so let the VMM do its worse.
-+ */
-+#define AA32_ID_WRITABLE(name) {		\
-+	ID_DESC(name),				\
-+	.visibility = aa32_id_visibility,	\
-+	.val = GENMASK(31, 0),			\
-+}
-+
- /* sys_reg_desc initialiser for cpufeature ID registers that need filtering */
- #define ID_FILTERED(sysreg, name, mask) {	\
- 	ID_DESC(sysreg),				\
-@@ -3039,40 +3043,39 @@ static const struct sys_reg_desc sys_reg
- 
- 	/* AArch64 mappings of the AArch32 ID registers */
- 	/* CRm=1 */
--	AA32_ID_SANITISED(ID_PFR0_EL1),
--	AA32_ID_SANITISED(ID_PFR1_EL1),
-+	AA32_ID_WRITABLE(ID_PFR0_EL1),
-+	AA32_ID_WRITABLE(ID_PFR1_EL1),
- 	{ SYS_DESC(SYS_ID_DFR0_EL1),
- 	  .access = access_id_reg,
- 	  .get_user = get_id_reg,
- 	  .set_user = set_id_dfr0_el1,
- 	  .visibility = aa32_id_visibility,
- 	  .reset = read_sanitised_id_dfr0_el1,
--	  .val = ID_DFR0_EL1_PerfMon_MASK |
--		 ID_DFR0_EL1_CopDbg_MASK, },
-+	  .val = GENMASK(31, 0) },
- 	ID_HIDDEN(ID_AFR0_EL1),
--	AA32_ID_SANITISED(ID_MMFR0_EL1),
--	AA32_ID_SANITISED(ID_MMFR1_EL1),
--	AA32_ID_SANITISED(ID_MMFR2_EL1),
--	AA32_ID_SANITISED(ID_MMFR3_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR0_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR1_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR2_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR3_EL1),
- 
- 	/* CRm=2 */
--	AA32_ID_SANITISED(ID_ISAR0_EL1),
--	AA32_ID_SANITISED(ID_ISAR1_EL1),
--	AA32_ID_SANITISED(ID_ISAR2_EL1),
--	AA32_ID_SANITISED(ID_ISAR3_EL1),
--	AA32_ID_SANITISED(ID_ISAR4_EL1),
--	AA32_ID_SANITISED(ID_ISAR5_EL1),
--	AA32_ID_SANITISED(ID_MMFR4_EL1),
--	AA32_ID_SANITISED(ID_ISAR6_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR0_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR1_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR2_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR3_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR4_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR5_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR4_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR6_EL1),
- 
- 	/* CRm=3 */
--	AA32_ID_SANITISED(MVFR0_EL1),
--	AA32_ID_SANITISED(MVFR1_EL1),
--	AA32_ID_SANITISED(MVFR2_EL1),
-+	AA32_ID_WRITABLE(MVFR0_EL1),
-+	AA32_ID_WRITABLE(MVFR1_EL1),
-+	AA32_ID_WRITABLE(MVFR2_EL1),
- 	ID_UNALLOCATED(3,3),
--	AA32_ID_SANITISED(ID_PFR2_EL1),
-+	AA32_ID_WRITABLE(ID_PFR2_EL1),
- 	ID_HIDDEN(ID_DFR1_EL1),
--	AA32_ID_SANITISED(ID_MMFR5_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR5_EL1),
- 	ID_UNALLOCATED(3,7),
- 
- 	/* AArch64 ID registers */
+ skip_max_ip_conns_limit:
+ 		if (server_conf.max_connections &&
 
 
