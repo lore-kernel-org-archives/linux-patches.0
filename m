@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3AC3358B7;
-	Fri, 21 Nov 2025 13:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E22344058;
+	Fri, 21 Nov 2025 13:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733300; cv=none; b=U4cPwhFu7VlIzBaZSQa4PUtcPI0hz+fIEJneZXo4ZMRGHidzzgfiiz8r0G7+mudTXx/I8FsPid47BT5Fr77OzZrgLSbNMNrS9QmiBf/iHW664Z2NlRuFBSzYcQpoLAhd/YViL4HESIJQMEDftmbZIIlXJtspOncnwT70o4JQtDk=
+	t=1763733301; cv=none; b=rydgQ8FzJm2mikUZSWkZh4XMeE/xkYnA4T7fp7nlRk5Rob+ECbvKHMtrSnnMPZ+bNCVU1p56ikFgDbJbXdMS3KUxCeGC2ifsIUxXL48EzLo0W25qwNdw8v7d6mvebbGwRBJ1o/AOGviRCRWfYbP0WM1zSMXhSfE4LOK48mVGAk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733300; c=relaxed/simple;
-	bh=guKnSdDZk4mBeTK3CkiTkGe5mSyIWVsp7c5Vg28Xhys=;
+	s=arc-20240116; t=1763733301; c=relaxed/simple;
+	bh=Xm8gX2SQkagqvYlsoLE7Uv5f7dLgdd1iQM0cqAXJe8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2xExcnTczTKp7f22IzLrp8UYSnXIVcRv2FuZqLUnHucLM60ZAONBe1HAVTNxnY1em8Sk6ckc0GnkPJmnT7w1I+MdJhadhYRcNaV467r4ej65FgHuUvQMkr4MXzmI/qlqQDQbJ7RaSvxTXaC762BNxbbax0b69PMbx5CJ+NDPd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9/dRv4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmB5a+3fGpooO2nfqW+AqYI7JNasw4t350MDJfvFNyB68kcwlDONZnqHvuEtFrtJAZ9zon6xiTgzapesQABMbMtmeQjT1vS8urRI4r7YjTYIgtU6TxWlIi+xTF7nK3BEyq7YYUWqfpfpg/CxTigse3RQGiGI0ahVzxw/qKv8wtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=My+Vbd+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9/dRv4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2639EC4CEF1;
-	Fri, 21 Nov 2025 13:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="My+Vbd+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E81C4CEF1;
+	Fri, 21 Nov 2025 13:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733298;
-	bh=guKnSdDZk4mBeTK3CkiTkGe5mSyIWVsp7c5Vg28Xhys=;
+	s=korg; t=1763733301;
+	bh=Xm8gX2SQkagqvYlsoLE7Uv5f7dLgdd1iQM0cqAXJe8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9/dRv4BeoAFML+jN/uuSy4nYG2Q4rB7JOPQrGqqJMNGu9hum2a4JjYWTQzkyNnep
-	 kXm2PDYKsLjVProGMYK5WtK4z40iDhJ4q43CyrHhH8XGKrhrst6jdGEswSTyEijqBs
-	 +YjVZ7BQKoDXIWQD7x6fY1TvqwvcVuQku4/HelFA=
+	b=My+Vbd+JXHMp+jkkIhPSst5sQUfitPyBMab5IeXt3U3CmPmGf9FK6KX4ueu1npye6
+	 m4TH9AIDUswuxLsfUF8mxpVYKD4ZSJTAR85Pjhckrh25M/WDk/GhCWaq8gDbvtasnk
+	 DXrttu0J2Vo9vD7fwAQdcK97lJY2rOvYXZDRdqWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Watt <jpewhacker@gmail.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Tristan Lobb <tristan.lobb@it-lobb.de>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 387/529] NFS4: Fix state renewals missing after boot
-Date: Fri, 21 Nov 2025 14:11:26 +0100
-Message-ID: <20251121130244.792979828@linuxfoundation.org>
+Subject: [PATCH 6.6 388/529] HID: quirks: avoid Cooler Master MM712 dongle wakeup bug
+Date: Fri, 21 Nov 2025 14:11:27 +0100
+Message-ID: <20251121130244.827737884@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,39 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Watt <jpewhacker@gmail.com>
+From: Tristan Lobb <tristan.lobb@it-lobb.de>
 
-[ Upstream commit 9bb3baa9d1604cd20f49ae7dac9306b4037a0e7a ]
+[ Upstream commit 0be4253bf878d9aaa2b96031ac8683fceeb81480 ]
 
-Since the last renewal time was initialized to 0 and jiffies start
-counting at -5 minutes, any clients connected in the first 5 minutes
-after a reboot would have their renewal timer set to a very long
-interval. If the connection was idle, this would result in the client
-state timing out on the server and the next call to the server would
-return NFS4ERR_BADSESSION.
+The Cooler Master Mice Dongle includes a vendor defined HID interface
+alongside its mouse interface. Not polling it will cause the mouse to
+stop responding to polls on any interface once woken up again after
+going into power saving mode.
 
-Fix this by initializing the last renewal time to the current jiffies
-instead of 0.
+Add the HID_QUIRK_ALWAYS_POLL quirk alongside the Cooler Master VID and
+the Dongle's PID.
 
-Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Tristan Lobb <tristan.lobb@it-lobb.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index f6dc42de48f03..32b1147fcafc4 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -222,6 +222,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
- 	clp->cl_state = 1 << NFS4CLNT_LEASE_EXPIRED;
- 	clp->cl_mvops = nfs_v4_minor_ops[cl_init->minorversion];
- 	clp->cl_mig_gen = 1;
-+	clp->cl_last_renewal = jiffies;
- #if IS_ENABLED(CONFIG_NFS_V4_1)
- 	init_waitqueue_head(&clp->cl_lock_waitq);
- #endif
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 8de59d8a54580..be24029782b10 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -332,6 +332,9 @@
+ #define USB_DEVICE_ID_CODEMERCS_IOW_FIRST	0x1500
+ #define USB_DEVICE_ID_CODEMERCS_IOW_LAST	0x15ff
+ 
++#define USB_VENDOR_ID_COOLER_MASTER	0x2516
++#define USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE	0x01b7
++
+ #define USB_VENDOR_ID_CORSAIR		0x1b1c
+ #define USB_DEVICE_ID_CORSAIR_K90	0x1b02
+ #define USB_DEVICE_ID_CORSAIR_K70R      0x1b09
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 64f9728018b88..468a47de96b10 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -57,6 +57,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_FLIGHT_SIM_YOKE), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_PEDALS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_THROTTLE), HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_COOLER_MASTER, USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB_RAPIDFIRE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K70RGB), HID_QUIRK_NO_INIT_REPORTS },
 -- 
 2.51.0
 
