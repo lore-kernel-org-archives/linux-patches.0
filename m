@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43C2874F6;
-	Fri, 21 Nov 2025 13:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9323E2745E;
+	Fri, 21 Nov 2025 13:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731826; cv=none; b=lTuuugscRIbFL/0IMXFs6qAPH09pEHhgHvVp6td54pG/9R+lhORYSrpX2a6d901t60rYWJjDi3gvcX0cyM2Asum5uDKihjfU4mQAjHr3fRI/hYMJFtAzd0V69Pl7I3tf+48BQajPXSK2yBCqVKuxviR9oRNwSUUwsWsmQ4CFNJY=
+	t=1763731829; cv=none; b=ELysCarG4nYMtrFGDh+Lceq1SNk+iauZ+Pl2r5+C31VtINPXz0GNt0VAk+PISiMT8VvmbKqdfvpDQkt11ZhEsSzyCTrjtTENMPs9wUjybeSJSegs4dVX+2BG1805tVqqwwDF2hny8dx7Y5mnczpL444JKUJhkSfU2wv49foH7fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731826; c=relaxed/simple;
-	bh=TcNsIkRPxbLAm/Nq2hOx1XE0L6pvCA686l0bYLOlmjw=;
+	s=arc-20240116; t=1763731829; c=relaxed/simple;
+	bh=TFxfTH+2U6FvZpFC8JAyiSsLVQ90u1ImHQf56bd7qX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/x6Re8G3zodaA/Su/KLuaWzdgv9O1LUvaSs7XL2Nu3hgBFkNIp+zxywY+h3uFKCtVRHS4Zt2SFgHlghxfb+WDwowc5B088dicZwo3zWHBHpgBrEx2gxRQxpbBtCKS0bsSe0zMID4x+YoOaZnmYXyglt2aNjkMGTr6dCeY50cL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeAxD4++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vf/KPXLSyO3aAG081++5ltUfEBVdagLjMAf41MfjZGIpC93ihFOXy4uMHJQtZfhVlcyCUQ1SaNMnhV4cqd1Dzb2dQpXzenyg6L8vprih6EvDFD5WCf0v9nRr3hIpgxerD5SjaaiBSMO7By0Rb3H18qNmYKEZKuphjxG8h99h83c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrOTzi16; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeAxD4++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA18C4CEF1;
-	Fri, 21 Nov 2025 13:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrOTzi16"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBEAC4CEF1;
+	Fri, 21 Nov 2025 13:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731826;
-	bh=TcNsIkRPxbLAm/Nq2hOx1XE0L6pvCA686l0bYLOlmjw=;
+	s=korg; t=1763731829;
+	bh=TFxfTH+2U6FvZpFC8JAyiSsLVQ90u1ImHQf56bd7qX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeAxD4++vuTJR5EV/FFCKHhwvxrze64ZbyVy+Yd9w83+MVZizQNJomvRoBQaS9ZMs
-	 h+ppGpin4HzmVnrdGls1m37EPSY9gjYASOqt66pIqbe0xLpTQ5AVcaqK4BFJ32/z7q
-	 T5GI3BTBGjIIeq4foNzpmZY4m+JFRNxxMZ23B6KU=
+	b=UrOTzi164wCvP3fWQKAKhkxY2gncVtvIGFep10t0zw4dLzXWnCKDJSFKvwalRg2cu
+	 hNmWn0+RbraswQmeGWMvxZjjqHzuB8AzvwzEUUmybwWwW0j12hFsEyR6wp+qfrgca9
+	 S4wzyAxUh1fydiuSasgki1pP5jhwj3xI+ICaACY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Andrei Vagin <avagin@google.com>,
-	Jan Kara <jack@suse.cz>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/185] fs/namespace: correctly handle errors returned by grab_requested_mnt_ns
-Date: Fri, 21 Nov 2025 14:12:02 +0100
-Message-ID: <20251121130147.295930289@linuxfoundation.org>
+Subject: [PATCH 6.12 096/185] sched_ext: Fix unsafe locking in the scx_dump_state()
+Date: Fri, 21 Nov 2025 14:12:03 +0100
+Message-ID: <20251121130147.331728530@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,138 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit 78f0e33cd6c939a555aa80dbed2fec6b333a7660 ]
+[ Upstream commit 5f02151c411dda46efcc5dc57b0845efcdcfc26d ]
 
-grab_requested_mnt_ns was changed to return error codes on failure, but
-its callers were not updated to check for error pointers, still checking
-only for a NULL return value.
+For built with CONFIG_PREEMPT_RT=y kernels, the dump_lock will be converted
+sleepable spinlock and not disable-irq, so the following scenarios occur:
 
-This commit updates the callers to use IS_ERR() or IS_ERR_OR_NULL() and
-PTR_ERR() to correctly check for and propagate errors.
+inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
+irq_work/0/27 [HC0[0]:SC0[0]:HE1:SE1] takes:
+(&rq->__lock){?...}-{2:2}, at: raw_spin_rq_lock_nested+0x2b/0x40
+{IN-HARDIRQ-W} state was registered at:
+   lock_acquire+0x1e1/0x510
+   _raw_spin_lock_nested+0x42/0x80
+   raw_spin_rq_lock_nested+0x2b/0x40
+   sched_tick+0xae/0x7b0
+   update_process_times+0x14c/0x1b0
+   tick_periodic+0x62/0x1f0
+   tick_handle_periodic+0x48/0xf0
+   timer_interrupt+0x55/0x80
+   __handle_irq_event_percpu+0x20a/0x5c0
+   handle_irq_event_percpu+0x18/0xc0
+   handle_irq_event+0xb5/0x150
+   handle_level_irq+0x220/0x460
+   __common_interrupt+0xa2/0x1e0
+   common_interrupt+0xb0/0xd0
+   asm_common_interrupt+0x2b/0x40
+   _raw_spin_unlock_irqrestore+0x45/0x80
+   __setup_irq+0xc34/0x1a30
+   request_threaded_irq+0x214/0x2f0
+   hpet_time_init+0x3e/0x60
+   x86_late_time_init+0x5b/0xb0
+   start_kernel+0x308/0x410
+   x86_64_start_reservations+0x1c/0x30
+   x86_64_start_kernel+0x96/0xa0
+   common_startup_64+0x13e/0x148
 
-This also makes sure that the logic actually works and mount namespace
-file descriptors can be used to refere to mounts.
+ other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Christian Brauner <brauner@kernel.org> says:
+        CPU0
+        ----
+   lock(&rq->__lock);
+   <Interrupt>
+     lock(&rq->__lock);
 
-Rework the patch to be more ergonomic and in line with our overall error
-handling patterns.
+  *** DEADLOCK ***
 
-Fixes: 7b9d14af8777 ("fs: allow mount namespace fd")
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Andrei Vagin <avagin@google.com>
-Link: https://patch.msgid.link/20251111062815.2546189-1-avagin@google.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+ stack backtrace:
+ CPU: 0 UID: 0 PID: 27 Comm: irq_work/0
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x8c/0xd0
+  dump_stack+0x14/0x20
+  print_usage_bug+0x42e/0x690
+  mark_lock.part.44+0x867/0xa70
+  ? __pfx_mark_lock.part.44+0x10/0x10
+  ? string_nocheck+0x19c/0x310
+  ? number+0x739/0x9f0
+  ? __pfx_string_nocheck+0x10/0x10
+  ? __pfx_check_pointer+0x10/0x10
+  ? kvm_sched_clock_read+0x15/0x30
+  ? sched_clock_noinstr+0xd/0x20
+  ? local_clock_noinstr+0x1c/0xe0
+  __lock_acquire+0xc4b/0x62b0
+  ? __pfx_format_decode+0x10/0x10
+  ? __pfx_string+0x10/0x10
+  ? __pfx___lock_acquire+0x10/0x10
+  ? __pfx_vsnprintf+0x10/0x10
+  lock_acquire+0x1e1/0x510
+  ? raw_spin_rq_lock_nested+0x2b/0x40
+  ? __pfx_lock_acquire+0x10/0x10
+  ? dump_line+0x12e/0x270
+  ? raw_spin_rq_lock_nested+0x20/0x40
+  _raw_spin_lock_nested+0x42/0x80
+  ? raw_spin_rq_lock_nested+0x2b/0x40
+  raw_spin_rq_lock_nested+0x2b/0x40
+  scx_dump_state+0x3b3/0x1270
+  ? finish_task_switch+0x27e/0x840
+  scx_ops_error_irq_workfn+0x67/0x80
+  irq_work_single+0x113/0x260
+  irq_work_run_list.part.3+0x44/0x70
+  run_irq_workd+0x6b/0x90
+  ? __pfx_run_irq_workd+0x10/0x10
+  smpboot_thread_fn+0x529/0x870
+  ? __pfx_smpboot_thread_fn+0x10/0x10
+  kthread+0x305/0x3f0
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x40/0x70
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+
+This commit therefore use rq_lock_irqsave/irqrestore() to replace
+rq_lock/unlock() in the scx_dump_state().
+
+Fixes: 07814a9439a3 ("sched_ext: Print debug dump after an error exit")
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c             | 32 ++++++++++++++++----------------
- include/uapi/linux/mount.h |  2 +-
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ kernel/sched/ext.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index cc4926d53e7de..035d6f1f0b6ef 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -158,7 +158,8 @@ static void mnt_ns_release(struct mnt_namespace *ns)
- 		kfree(ns);
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index be2e836e10e93..ad1d438b3085c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4966,7 +4966,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
+ 		size_t avail, used;
+ 		bool idle;
+ 
+-		rq_lock(rq, &rf);
++		rq_lock_irqsave(rq, &rf);
+ 
+ 		idle = list_empty(&rq->scx.runnable_list) &&
+ 			rq->curr->sched_class == &idle_sched_class;
+@@ -5034,7 +5034,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
+ 		list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node)
+ 			scx_dump_task(&s, &dctx, p, ' ');
+ 	next:
+-		rq_unlock(rq, &rf);
++		rq_unlock_irqrestore(rq, &rf);
  	}
- }
--DEFINE_FREE(mnt_ns_release, struct mnt_namespace *, if (_T) mnt_ns_release(_T))
-+DEFINE_FREE(mnt_ns_release, struct mnt_namespace *,
-+	    if (!IS_ERR(_T)) mnt_ns_release(_T))
  
- static void mnt_ns_tree_remove(struct mnt_namespace *ns)
- {
-@@ -5325,7 +5326,7 @@ static int copy_mnt_id_req(const struct mnt_id_req __user *req,
- 	ret = copy_struct_from_user(kreq, sizeof(*kreq), req, usize);
- 	if (ret)
- 		return ret;
--	if (kreq->spare != 0)
-+	if (kreq->mnt_ns_fd != 0 && kreq->mnt_ns_id)
- 		return -EINVAL;
- 	/* The first valid unique mount id is MNT_UNIQUE_ID_OFFSET + 1. */
- 	if (kreq->mnt_id <= MNT_UNIQUE_ID_OFFSET)
-@@ -5342,16 +5343,12 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
- {
- 	struct mnt_namespace *mnt_ns;
- 
--	if (kreq->mnt_ns_id && kreq->spare)
--		return ERR_PTR(-EINVAL);
--
--	if (kreq->mnt_ns_id)
--		return lookup_mnt_ns(kreq->mnt_ns_id);
--
--	if (kreq->spare) {
-+	if (kreq->mnt_ns_id) {
-+		mnt_ns = lookup_mnt_ns(kreq->mnt_ns_id);
-+	} else if (kreq->mnt_ns_fd) {
- 		struct ns_common *ns;
- 
--		CLASS(fd, f)(kreq->spare);
-+		CLASS(fd, f)(kreq->mnt_ns_fd);
- 		if (fd_empty(f))
- 			return ERR_PTR(-EBADF);
- 
-@@ -5366,6 +5363,8 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
- 	} else {
- 		mnt_ns = current->nsproxy->mnt_ns;
- 	}
-+	if (!mnt_ns)
-+		return ERR_PTR(-ENOENT);
- 
- 	refcount_inc(&mnt_ns->passive);
- 	return mnt_ns;
-@@ -5390,8 +5389,8 @@ SYSCALL_DEFINE4(statmount, const struct mnt_id_req __user *, req,
- 		return ret;
- 
- 	ns = grab_requested_mnt_ns(&kreq);
--	if (!ns)
--		return -ENOENT;
-+	if (IS_ERR(ns))
-+		return PTR_ERR(ns);
- 
- 	if (kreq.mnt_ns_id && (ns != current->nsproxy->mnt_ns) &&
- 	    !ns_capable_noaudit(ns->user_ns, CAP_SYS_ADMIN))
-@@ -5500,8 +5499,8 @@ static void __free_klistmount_free(const struct klistmount *kls)
- static inline int prepare_klistmount(struct klistmount *kls, struct mnt_id_req *kreq,
- 				     size_t nr_mnt_ids)
- {
--
- 	u64 last_mnt_id = kreq->param;
-+	struct mnt_namespace *ns;
- 
- 	/* The first valid unique mount id is MNT_UNIQUE_ID_OFFSET + 1. */
- 	if (last_mnt_id != 0 && last_mnt_id <= MNT_UNIQUE_ID_OFFSET)
-@@ -5515,9 +5514,10 @@ static inline int prepare_klistmount(struct klistmount *kls, struct mnt_id_req *
- 	if (!kls->kmnt_ids)
- 		return -ENOMEM;
- 
--	kls->ns = grab_requested_mnt_ns(kreq);
--	if (!kls->ns)
--		return -ENOENT;
-+	ns = grab_requested_mnt_ns(kreq);
-+	if (IS_ERR(ns))
-+		return PTR_ERR(ns);
-+	kls->ns = ns;
- 
- 	kls->mnt_parent_id = kreq->mnt_id;
- 	return 0;
-diff --git a/include/uapi/linux/mount.h b/include/uapi/linux/mount.h
-index 225bc366ffcbf..dbf65f2ffcf33 100644
---- a/include/uapi/linux/mount.h
-+++ b/include/uapi/linux/mount.h
-@@ -186,7 +186,7 @@ struct statmount {
-  */
- struct mnt_id_req {
- 	__u32 size;
--	__u32 spare;
-+	__u32 mnt_ns_fd;
- 	__u64 mnt_id;
- 	__u64 param;
- 	__u64 mnt_ns_id;
+ 	if (seq_buf_has_overflowed(&s) && dump_len >= sizeof(trunc_marker))
 -- 
 2.51.0
 
