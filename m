@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2092FC88B;
-	Fri, 21 Nov 2025 13:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524D7278E63;
+	Fri, 21 Nov 2025 13:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733201; cv=none; b=t+r0Nxk/3uOqDkmtfR0zZem/QBxiw4p9MTWuo81CHkgSAEC+uPsDB+kyOp9wwA09mq75Jj6258lFfONi8RruhvEIBI06Ve8/1DXEVOCu3rnVQ2RWup/Qkiq2CLWiKpGPkEh+eH7NT1qxL8sd88PkCq80qJZ3uZLTqASruoGucXY=
+	t=1763733204; cv=none; b=kJJmjLGqIiio4NeOnAfsv1xOltivfFj710i3dm1o/S7qrCQCrrQDpdlOouhL9du2N4wegNROKLNPXyRk45WCt4i52FT/AVdvcoc3+PBb+g79IQuH4tF5xqT8tSxkbQ7qfxuMp5wNKW0sXJCQPR3WGQO/ppReDcl0pkNNOlppsEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733201; c=relaxed/simple;
-	bh=WD1DQk1FVpkP7L1p+GRmko+ZdJba9X/CICgG/9p4TfA=;
+	s=arc-20240116; t=1763733204; c=relaxed/simple;
+	bh=bKn74NTNUI2zIwVIEoES6I8sDDCJLr92dhAH/nVN0V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDurO6ARqTnIwtqEkfdqEA76Zv5l0VQJAGE8vjazyXoaTjXVb4u8Q83xAaWhIVchUekuKxlH+Reh9BqNKfODnCR/E97x/09b4Wwfa562u5N+7/tDco4TpEFgRXCFEKUBNONwXY4DzNOV1/SvQJvg2kpj6orDPntbUvus/u4qFQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzcbvYOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsAgkX+vAfDe6HzDXZHUn8v3mfrEP2wWwcLXts7dHd1o7T8r39Xy5v3Qmf4BqNh1ltlRNQFnG8GI+wKREuRMR2Uj28aMrT7KJZvcQwr3DIfar81H6nynvFtsRBBgvgOQdorRCXMyUDqV3KKqHJJNqIe5neFzcFAvGSuBJ5iAHko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEJaDJY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzcbvYOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75A2C4CEF1;
-	Fri, 21 Nov 2025 13:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEJaDJY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995DFC4CEFB;
+	Fri, 21 Nov 2025 13:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733201;
-	bh=WD1DQk1FVpkP7L1p+GRmko+ZdJba9X/CICgG/9p4TfA=;
+	s=korg; t=1763733204;
+	bh=bKn74NTNUI2zIwVIEoES6I8sDDCJLr92dhAH/nVN0V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzcbvYOPtLUkOcDh3CcKyVCeDeroFkB6qOzP0QDrageCPepIs+EIeVnz7fU8Cy/DS
-	 HEQBt+AD5kSp6bkL9oWlAgo0+K7t0CH8D74v0idrE1VNK0lTn/3Lj7MygfYgQyoMg9
-	 EZNk1iPvXIAEuiH5WrHKTM7IcYLPWwrqG9d5TmWI=
+	b=UEJaDJY5eUKweBlG2EZsALWibTQhc9lpoaXb6UexqGz5vehs0QJyLT8eb4nO4CuUn
+	 /jcEqfjyoGCw8yzs+8l9FzctVfqCSIX8PYEYKKQjSw/m9BI6nqzORB5JFDQu/+np6p
+	 JmjvuIKf1UkGJV1VOBIac9Li3S+jMQrzC/tZvZAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Willi <martin@strongswan.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 353/529] wifi: mac80211_hwsim: Limit destroy_on_close radio removal to netgroup
-Date: Fri, 21 Nov 2025 14:10:52 +0100
-Message-ID: <20251121130243.590536667@linuxfoundation.org>
+Subject: [PATCH 6.6 354/529] net/mlx5e: Use extack in get module eeprom by page callback
+Date: Fri, 21 Nov 2025 14:10:53 +0100
+Message-ID: <20251121130243.625796780@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,61 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Willi <martin@strongswan.org>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit c74619e7602e88a0239cd4999571dd31081e9adf ]
+[ Upstream commit b5100b72da688282558b28255c03a2d72241a729 ]
 
-hwsim radios marked destroy_on_close are removed when the Netlink socket
-that created them is closed. As the portid is not unique across network
-namespaces, closing a socket in one namespace may remove radios in another
-if it has the destroy_on_close flag set.
+In case of errors in get module eeprom by page, reflect it through
+extack instead of a dmesg print.
+While at it, make the messages more human friendly.
 
-Instead of matching the network namespace, match the netgroup of the radio
-to limit radio removal to those that have been created by the closing
-Netlink socket. The netgroup of a radio identifies the network namespace
-it was created in, and matching on it removes a destroy_on_close radio
-even if it has been moved to another namespace.
-
-Fixes: 100cb9ff40e0 ("mac80211_hwsim: Allow managing radios from non-initial namespaces")
-Signed-off-by: Martin Willi <martin@strongswan.org>
-Link: https://patch.msgid.link/20251103082436.30483-1-martin@strongswan.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20240808055927.2059700-10-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d1c94bc5b90c ("net/mlx5e: Fix return value in case of module EEPROM read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index f5f48f7e6d26e..1214e7dcc8124 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -6189,14 +6189,15 @@ static struct genl_family hwsim_genl_family __ro_after_init = {
- 	.n_mcgrps = ARRAY_SIZE(hwsim_mcgrps),
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 54379297a7489..b189220f8a877 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -1842,8 +1842,10 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 		if (size_read == -EINVAL)
+ 			return -EINVAL;
+ 		if (size_read < 0) {
+-			netdev_err(priv->netdev, "%s: mlx5_query_module_eeprom_by_page failed:0x%x\n",
+-				   __func__, size_read);
++			NL_SET_ERR_MSG_FMT_MOD(
++				extack,
++				"Query module eeprom by page failed, read %u bytes, err %d\n",
++				i, size_read);
+ 			return i;
+ 		}
  
--static void remove_user_radios(u32 portid)
-+static void remove_user_radios(u32 portid, int netgroup)
- {
- 	struct mac80211_hwsim_data *entry, *tmp;
- 	LIST_HEAD(list);
- 
- 	spin_lock_bh(&hwsim_radio_lock);
- 	list_for_each_entry_safe(entry, tmp, &hwsim_radios, list) {
--		if (entry->destroy_on_close && entry->portid == portid) {
-+		if (entry->destroy_on_close && entry->portid == portid &&
-+		    entry->netgroup == netgroup) {
- 			list_move(&entry->list, &list);
- 			rhashtable_remove_fast(&hwsim_radios_rht, &entry->rht,
- 					       hwsim_rht_params);
-@@ -6221,7 +6222,7 @@ static int mac80211_hwsim_netlink_notify(struct notifier_block *nb,
- 	if (state != NETLINK_URELEASE)
- 		return NOTIFY_DONE;
- 
--	remove_user_radios(notify->portid);
-+	remove_user_radios(notify->portid, hwsim_net_get_netgroup(notify->net));
- 
- 	if (notify->portid == hwsim_net_get_wmediumd(notify->net)) {
- 		printk(KERN_INFO "mac80211_hwsim: wmediumd released netlink"
 -- 
 2.51.0
 
